@@ -1,22 +1,28 @@
 (function(window, document, framework) {
 
-  framework.init = function() {
-    if(!framework._init) {
-      framework._init = true;
-      console.log("Framwork init!");
-    }
-  };
-
-  if ( document.readyState === "complete" ) {
-    setTimeout( framework.init, 1 );
-  } else {
-    if ( document.addEventListener ) {
-      document.addEventListener( "DOMContentLoaded", framework.init, false );
-      window.addEventListener( "load", framework.init, false );
-    } else if ( document.attachEvent ) {
-      document.attachEvent( "onreadystatechange", framework.init );
-      window.attachEvent( "onload", framework.init );
-    }
+  // Start initalizing the framework
+  function initalize() {
+    
+    
+    framework.trigger("initalized");
   }
 
-})(this, document, this.FW || {});
+  // DOM has completed
+  function completed() {
+    document.removeEventListener( "DOMContentLoaded", completed, false );
+    window.removeEventListener( "load", completed, false );
+    framework.trigger("ready");
+    initalize();
+  }
+
+  // When the DOM is ready, call .ready()
+  if ( document.readyState === "complete" ) {
+    // DOM is already ready, run .ready() via setTimeout
+    setTimeout( completed );
+  } else {
+    // DOM isn't ready yet, add event listeners for when it is
+    document.addEventListener( "DOMContentLoaded", completed, false );
+    window.addEventListener( "load", completed, false );
+  }
+
+})(this, document, this.FM = this.FM || {});
