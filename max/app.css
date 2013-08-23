@@ -58,8 +58,8 @@ body {
   bottom: 0;
 }
 
-/* Generic style for all buttons in .bar-title */
-.bar-title [class*="button"] {
+/* Generic style for all buttons in .bar-header */
+.bar-header [class*="button"] {
   position: relative;
   z-index: 10; /* Places buttons over full width title */
   font-size: 12px;
@@ -78,16 +78,16 @@ body {
 
 /* Hacky way to right align buttons outside of flex-box system
    Note: is only absolutely positioned button, would be better if flex-box had an "align right" option */
-.bar-title .title + [class*="button"]:last-child,
-.bar-title .button + [class*="button"]:last-child,
-.bar-title [class*="button"].pull-right {
+.bar-header .title + [class*="button"]:last-child,
+.bar-header .button + [class*="button"]:last-child,
+.bar-header [class*="button"].pull-right {
   position: absolute;
   top: 5px;
   right: 5px;
 }
 
 /* Override standard button active states */
-.bar-title .button:active {
+.bar-header .button:active {
   color: #fff;
   background-color: #0876b1;
 }
@@ -160,5 +160,87 @@ body {
 }
 .bar-header .button-next:active:before {
   box-shadow: inset 0 -3px 3px rgba(0, 0, 0, .2);
+}
+
+
+[class*="button"] {
+  position: relative;
+  display: inline-block;
+  padding: 4px 12px;
+  margin: 0;
+  font-weight: bold;
+  line-height: 18px;
+  color: #333;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  vertical-align: top;
+  cursor: pointer;
+  background-color: #f8f8f8;
+  background-image: -webkit-linear-gradient(top, #f8f8f8 0, #d4d4d4 100%);
+  background-image: linear-gradient(to bottom, #f8f8f8 0, #d4d4d4 100%);
+  border: 1px solid rgba(0, 0, 0, .3);
+  border-radius: 3px;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, .4), 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+/* Active */
+[class*="button"]:active {
+  padding-top: 5px;
+  padding-bottom: 3px;
+  color: #333;
+  background-color: #ccc;
+  background-image: none;
+  box-shadow: inset 0 3px 3px rgba(0, 0, 0, .2);
+}
+
+/* Button modifiers
+-------------------------------------------------- */
+
+/* Overriding styles for buttons with modifiers  */
+.button-main,
+.button-positive,
+.button-negative {
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);
+}
+
+/* Main button */
+.button-main {
+  background-color: #1eafe7;
+  background-image: -webkit-linear-gradient(top, #1eafe7 0, #1a97c8 100%);
+  background-image: linear-gradient(to bottom, #1eafe7 0, #1a97c8 100%);
+  border: 1px solid #117aaa;
+}
+
+/* Positive button  */
+.button-positive {
+  background-color: #34ba15;
+  background-image: -webkit-linear-gradient(top, #34ba15 0, #2da012 100%);
+  background-image: linear-gradient(to bottom, #34ba15 0, #2da012 100%);
+  border: 1px solid #278f0f;
+}
+
+/* Negative button  */
+.button-negative {
+  background-color: #e71e1e;
+  background-image: -webkit-linear-gradient(top, #e71e1e 0,#c71a1a 100%);
+  background-image: linear-gradient(to bottom, #e71e1e 0, #c71a1a 100%);
+  border: 1px solid #b51a1a;
+}
+
+/* Active state for buttons with modifiers */
+.button-main:active,
+.button-positive:active,
+.button-negative:active {
+  color: #fff;
+}
+.button-main:active {
+  background-color: #0876b1;
+}
+.button-positive:active {
+  background-color: #298f11;
+}
+.button-negative:active {
+  background-color: #b21a1a;
 }
 
