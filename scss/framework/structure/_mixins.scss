@@ -6,8 +6,12 @@
   // Give desktop users something to play with
 	&:hover {
     color: $color;
-		background-color: lighten($bgColor, 10%);
     text-decoration: none;
+
+    // TODO: Verify if we should keep this or not. Feels weird on Safari
+    // Since the button shows the hover state after clicking, but we only
+    // want it on desktop
+		//background-color: lighten($bgColor, 10%);
   }
 	&:active {
 		background-color: darken($bgColor, 10%);
