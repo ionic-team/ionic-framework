@@ -31,7 +31,8 @@
     float: right;
   }
 
-  > i {
+  // Align icons to the right
+  > i:last-child {
     float: right;
   }
 
@@ -74,6 +75,10 @@ a.list-item {
     text-decoration: none;
     //background-color: $list-group-hover-bg;
   }
+}
+
+.list-divider {
+  padding: 5px 15px;
 }
 
 // Custom content options

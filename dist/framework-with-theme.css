@@ -14,6 +14,10 @@ body {
 a {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
+ul {
+  margin: 0;
+  padding: 0; }
+
 .content {
   position: fixed;
   top: 0;
@@ -29,14 +33,6 @@ a {
 .content > * {
   -webkit-transform: translateZ(0px);
   transform: translateZ(0px); }
-
-/* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
-   Note: For these to work, content must come after both bars in the markup */
-.bar ~ .content {
-  top: 44px; }
-
-.bar ~ .content {
-  bottom: 51px; }
 
 .bar {
   position: fixed;
@@ -88,6 +84,14 @@ a {
 .bar-footer {
   bottom: 0; }
 
+/* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
+   Note: For these to work, content must come after both bars in the markup */
+.bar ~ .content {
+  top: 50px; }
+
+.bar ~ .content {
+  bottom: 51px; }
+
 .button {
   position: relative;
   display: inline-block;
@@ -110,7 +114,7 @@ a {
     margin-bottom: 0; }
   .list-item > .badge {
     float: right; }
-  .list-item > i {
+  .list-item > i:last-child {
     float: right; }
   .list-item > .badge + .badge {
     margin-right: 5px; }
@@ -121,6 +125,9 @@ a {
 
 a.list-item:hover, a.list-item:focus {
   text-decoration: none; }
+
+.list-divider {
+  padding: 5px 15px; }
 
 .list-item-heading {
   margin-top: 0;
@@ -157,3 +164,8 @@ a.list-item:hover, a.list-item:focus {
   border: 1px solid #dddddd; }
   .button-default:active {
     background-color: #eeeeee; }
+
+.list-divider {
+  background-color: whitesmoke;
+  color: #222222;
+  font-weight: bold; }
