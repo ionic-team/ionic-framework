@@ -154,10 +154,36 @@ a.list-item:hover, a.list-item:focus {
     border-top-width: 1px; }
   .bar.bar-default {
     background-color: white;
-    border-color: #dddddd; }
+    border-color: #dddddd;
+    color: #333333; }
   .bar.bar-secondary {
     background-color: whitesmoke;
-    border-color: #cccccc; }
+    border-color: #cccccc;
+    color: #333333; }
+  .bar.bar-primary {
+    background-color: #6999e9;
+    border-color: #5981c5;
+    color: white; }
+  .bar.bar-info {
+    background-color: #60d2e6;
+    border-color: #51b3c4;
+    color: white; }
+  .bar.bar-success {
+    background-color: #89c163;
+    border-color: #71a052;
+    color: white; }
+  .bar.bar-warning {
+    background-color: #f0b840;
+    border-color: #cf9a29;
+    color: white; }
+  .bar.bar-danger {
+    background-color: #de5645;
+    border-color: #bc4435;
+    color: white; }
+  .bar.bar-dark {
+    background-color: #444444;
+    border-color: #111111;
+    color: white; }
 
 .button {
   color: #222222;

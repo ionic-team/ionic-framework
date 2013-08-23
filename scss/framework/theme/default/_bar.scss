@@ -15,10 +15,42 @@
   &.bar-default {
     background-color: $barDefaultBackground;
     border-color: $barDefaultBorderColor;
+    color: $darkColor;
   }
   &.bar-secondary {
     background-color: $barSecondaryBackground;
     border-color: $barSecondaryBorderColor;
+    color: $darkColor;
+  }
+  &.bar-primary {
+    background-color: $barPrimaryBackground;
+    border-color: $barPrimaryBorderColor;
+    color: $lightColor;
+  }
+  &.bar-info {
+    background-color: $barInfoBackground;
+    border-color: $barInfoBorderColor;
+    color: $lightColor;
+  }
+  &.bar-success {
+    background-color: $barSuccessBackground;
+    border-color: $barSuccessBorderColor;
+    color: $lightColor;
+  }
+  &.bar-warning {
+    background-color: $barWarningBackground;
+    border-color: $barWarningBorderColor;
+    color: $lightColor;
+  }
+  &.bar-danger {
+    background-color: $barDangerBackground;
+    border-color: $barDangerBorderColor;
+    color: $lightColor;
+  }
+  &.bar-dark {
+    background-color: $barDarkBackground;
+    border-color: $barDarkBorderColor;
+    color: $lightColor;
   }
 
   /*
