@@ -19,42 +19,49 @@
 
   // A link has been clicked
   function linkClick(e) {
-    var
-    target = e.target,
-    href = target.getAttribute("href");
-
-    // data-previous="true"
-    // shortcut if they just want to go to the previous page
-    if(target.dataset.previous === "true") {
-      window.history.back();
-      return preventDefault(e);
-    }
 
     // if they clicked a link while scrolling don't nav to it
-    if(framework.isScrolling || href === "#") {
-      return preventDefault(e);
+    if(framework.isScrolling) {
+      e.preventDefault();
+      return false;
+    }
+
+    var
+    target = e.target;
+
+    // data-history-go="-1"
+    // shortcut if they just want to use window.history.go()
+    if(target.dataset.historyGo) {
+      window.history.go( parseInt(target.dataset.historyGo, 10) );
+      e.preventDefault();
+      return false;
     }
 
     // only intercept the nav click if they're going to the same domain
     if (location.protocol === target.protocol && location.host === target.host) {
       // this link is an anchor to the same page
-      if(href.indexOf("#") === 0) {
-        hashLinkClick(target, href);
+      if(target.getAttribute("href").indexOf("#") === 0) {
+        hashLinkClick(target);
       } else {
-        pageLinkClick(target, href);
+        pageLinkClick(target);
       }
-      return preventDefault(e);
+      e.preventDefault();
+      return false;
     }
   }
 
   // they are navigating to another URL within the same domain
-  function pageLinkClick(target, href) {
-    console.log("pageLinkClick, get:", href);
+  function pageLinkClick(target) {
+    console.log("pageLinkClick, get:", target.href);
+
+    push({
+      url: target.href
+    });
   }
 
   // they are navigation to an anchor within the same page
-  function hashLinkClick(target, href) {
-    console.log("hashLinkClick, get:", href);
+  function hashLinkClick(target) {
+    console.log("hashLinkClick, get:", target.href);
   }
 
   function touchEnd(e) {
@@ -65,9 +72,28 @@
     
   }
 
-  function preventDefault(e) {
-    e.preventDefault();
-    return false;
+  function push(options) {
+    framework.isRequesting = true;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', options.url, true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+        if(xhr.status === 200) {
+          successRequest(xhr, options);
+        } else {
+          failedRequest(options.url);
+        }
+      }
+    };
+    xhr.send();
+  }
+
+  function successRequest(xhr, options) {
+    framework.isRequesting = false;
+  }
+
+  function failedRequest(options) {
+    framework.isRequesting = false;
   }
 
   framework.on("ready", function(){
