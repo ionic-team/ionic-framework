@@ -1,0 +1,15 @@
+{
+  "name": "framework",
+  "private": true,
+  "version": "0.0.01",
+  "devDependencies": {
+    "grunt": "~0.4.0",
+    "grunt-contrib-watch": "~0.1.0",
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/zurb/foundation/blob/master/LICENSE"
+    }
+  ]
+}
