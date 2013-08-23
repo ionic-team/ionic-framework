@@ -1,0 +1,43 @@
+// Make sure the charset is set appropriately
+@charset "UTF-8";
+
+// This includes all of the foundation global elements that are needed to work with any of the other files.
+@import "foundation/variables";
+
+// Foundation Components
+@import
+  "foundation/components/global",
+  "foundation/components/grid",
+  "foundation/components/visibility",
+  "foundation/components/block-grid",
+  "foundation/components/type",
+  "foundation/components/buttons",
+  "foundation/components/forms",
+  "foundation/components/button-groups",
+  "foundation/components/dropdown-buttons",
+  "foundation/components/split-buttons",
+  "foundation/components/flex-video",
+  "foundation/components/section",
+  "foundation/components/top-bar",
+  "foundation/components/orbit",
+  "foundation/components/reveal",
+  "foundation/components/joyride",
+  "foundation/components/clearing",
+  "foundation/components/alert-boxes",
+  "foundation/components/breadcrumbs",
+  "foundation/components/custom-forms",
+  "foundation/components/keystrokes",
+  "foundation/components/labels",
+  "foundation/components/inline-lists",
+  "foundation/components/pagination",
+  "foundation/components/panels",
+  "foundation/components/pricing-tables",
+  "foundation/components/progress-bars",
+  "foundation/components/side-nav",
+  "foundation/components/sub-nav",
+  "foundation/components/switch",
+  "foundation/components/magellan",
+  "foundation/components/tables",
+  "foundation/components/thumbs",
+  "foundation/components/tooltips",
+  "foundation/components/dropdown";

@@ -44,11 +44,17 @@ audio:not([controls]) {
 }
 
 /**
- * Address styling not present in IE 8/9.
+ * Address `[hidden]` styling not present in IE 8/9.
+ * Hide the `template` element in IE, Safari, and Firefox < 22.
  */
 
-[hidden] {
+[hidden],
+template {
     display: none;
+}
+
+script {
+  display: none !important;
 }
 
 /* ==========================================================================
@@ -78,6 +84,14 @@ body {
 /* ==========================================================================
    Links
    ========================================================================== */
+
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+
+a {
+    background: transparent;
+}
 
 /**
  * Address `outline` inconsistency between Chrome and other browsers.
