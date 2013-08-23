@@ -13,3 +13,11 @@ body {
 
 a {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+
+.button {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  margin: 0; }
