@@ -1,21 +1,21 @@
-(function(window, document, $) {
+(function(window, document, framework) {
 
-  $.init = function() {
-    if(!$._init) {
-      $._init = true;
+  framework.init = function() {
+    if(!framework._init) {
+      framework._init = true;
       console.log("Framwork init!");
     }
   };
 
   if ( document.readyState === "complete" ) {
-    setTimeout( $.init, 1 );
+    setTimeout( framework.init, 1 );
   } else {
     if ( document.addEventListener ) {
-      document.addEventListener( "DOMContentLoaded", $.init, false );
-      window.addEventListener( "load", $.init, false );
+      document.addEventListener( "DOMContentLoaded", framework.init, false );
+      window.addEventListener( "load", framework.init, false );
     } else if ( document.attachEvent ) {
-      document.attachEvent( "onreadystatechange", $.init );
-      window.attachEvent( "onload", $.init );
+      document.attachEvent( "onreadystatechange", framework.init );
+      window.attachEvent( "onload", framework.init );
     }
   }
 
