@@ -8,32 +8,26 @@
 }
 
 .button-default {
-  @include button-style($buttonDefaultBackground, $buttonDefaultBorder);
+  @include button-style($buttonDefaultBackground, $buttonDefaultBorder, $darkColor);
 }
 .button-secondary {
-  @include button-style($buttonSecondaryBackground, $buttonSecondaryBorder);
+  @include button-style($buttonSecondaryBackground, $buttonSecondaryBorder, $darkColor);
 }
 .button-primary {
-  color: $lightColor;
-  @include button-style($buttonPrimaryBackground, $buttonPrimaryBorder);
+  @include button-style($buttonPrimaryBackground, $buttonPrimaryBorder, $lightColor);
 }
 .button-info {
-  color: $lightColor;
-  @include button-style($buttonInfoBackground, $buttonInfoBorder);
+  @include button-style($buttonInfoBackground, $buttonInfoBorder, $lightColor);
 }
 .button-success {
-  color: $lightColor;
-  @include button-style($buttonSuccessBackground, $buttonSuccessBorder);
+  @include button-style($buttonSuccessBackground, $buttonSuccessBorder, $lightColor);
 }
 .button-warning {
-  color: $lightColor;
-  @include button-style($buttonWarningBackground, $buttonWarningBorder);
+  @include button-style($buttonWarningBackground, $buttonWarningBorder, $lightColor);
 }
 .button-danger {
-  color: $lightColor;
-  @include button-style($buttonDangerBackground, $buttonDangerBorder);
+  @include button-style($buttonDangerBackground, $buttonDangerBorder, $lightColor);
 }
 .button-dark {
-  color: $lightColor;
-  @include button-style($buttonDarkBackground, $buttonDarkBorder);
+  @include button-style($buttonDarkBackground, $buttonDarkBorder, $lightColor);
 }
