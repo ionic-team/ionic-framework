@@ -1,8 +1,25 @@
 .bar {
   background-color: $barBackground;
-  border-bottom: $barBorderBottom;
+  border-style: solid;
+  border-width: 0;
 
   padding: $barPaddingPortrait;
+
+  &.bar-header {
+    border-bottom-width: 1px;
+  }
+  &.bar-footer {
+    border-top-width: 1px;
+  }
+
+  &.bar-default {
+    background-color: $barDefaultBackground;
+    border-color: $barDefaultBorderColor;
+  }
+  &.bar-secondary {
+    background-color: $barSecondaryBackground;
+    border-color: $barSecondaryBorderColor;
+  }
 
   /*
   Disabled temporarily because it's annoying for testing.
@@ -11,13 +28,4 @@
   }
   */
 
-
-  &.bar-default {
-    background-color: $barDefaultBackground;
-    border-bottom: $barDefaultBorderBottom;
-  }
-  &.bar-secondary {
-    background-color: $barSecondaryBackground;
-    border-bottom: $barSecondaryBorderBottom;
-  }
 }

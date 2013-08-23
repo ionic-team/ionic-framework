@@ -139,7 +139,8 @@ a.list-item:hover, a.list-item:focus {
 
 .bar {
   background-color: white;
-  border-bottom: 1px solid #dddddd;
+  border-style: solid;
+  border-width: 0;
   padding: 10px;
   /*
   Disabled temporarily because it's annoying for testing.
@@ -147,12 +148,16 @@ a.list-item:hover, a.list-item:focus {
     padding: $barPaddingLandscape;
   }
   */ }
+  .bar.bar-header {
+    border-bottom-width: 1px; }
+  .bar.bar-footer {
+    border-top-width: 1px; }
   .bar.bar-default {
     background-color: white;
-    border-bottom: 1px solid #dddddd; }
+    border-color: #dddddd; }
   .bar.bar-secondary {
     background-color: whitesmoke;
-    border-bottom: 1px solid #cccccc; }
+    border-color: #cccccc; }
 
 .button {
   color: #222222;
