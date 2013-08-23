@@ -1,0 +1,20 @@
+
+// Make sure iOS Safari doesn't scale fonts on orientation changes
+html {
+  -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+}
+
+body {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  font: 14px/1.25 "Helvetica Neue", sans-serif;
+}
+
+// Remove tap highlight color on Safari
+a {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
