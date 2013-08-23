@@ -39,3 +39,7 @@ ul { margin: 0; padding: 0; }
   -webkit-transform: translateZ(0px);
           transform: translateZ(0px);
 }
+
+.content-padded {
+  padding: $contentPadding;
+}

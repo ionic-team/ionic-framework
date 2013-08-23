@@ -10,6 +10,10 @@ $fontSizeLarge: ceil($baseFontSize * 1.25);
 $baseLineHeight:        1.428571429; // 20/14
 $baseLineHeightComputed:    floor($baseFontSize * $baseLineHeight); // ~20px
 
+// Content stuff
+$contentPadding: 10px;
+
+// Bar stuff
 $barHeight: 50px !default;
 $barLineHeight: 50px !default;
 $barTitleFontSize: $fontSizeLarge;
@@ -17,5 +21,7 @@ $barTitleLineHeightComputed: $baseLineHeightComputed;
 $barPaddingVertical: (($barHeight - $baseLineHeightComputed) / 2);
 
 
+
 // Lists
 $listItemBorder: 1px solid #ddd;
+

@@ -1,0 +1,64 @@
+.button-group {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle; // match .button alignment given font-size hack above
+
+  > .button {
+    position: relative;
+    float: left;
+    // Bring the "active" button to the front
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      z-index: 2;
+    }
+    &:focus {
+      // Remove focus outline when dropdown JS adds it after closing the menu
+      outline: none;
+    }
+  }
+}
+
+
+.button-group {
+  .button + .button,
+  .button + .button-group,
+  .button-group + .button,
+  .button-group + .button-group {
+    margin-left: -1px;
+  }
+}
+
+.button-group > .button:not(:first-child):not(:last-child) {
+  border-radius: 0;
+}
+
+// Set corners individual because sometimes a single button can be in a .button-group and we need :first-child and :last-child to both match
+.button-group > .button:first-child {
+  margin-left: 0;
+  &:not(:last-child) {
+    @include border-right-radius(0);
+  }
+}
+// Need .dropdown-toggle since :last-child doesn't apply given a .dropdown-menu immediately after it
+.button-group > .button:last-child:not(:first-child) {
+  @include border-left-radius(0);
+}
+
+// Custom edits for including button-groups within button-groups (useful for including dropdown buttons within a button-group)
+.button-group > .button-group {
+  float: left;
+}
+.button-group > .button-group:not(:first-child):not(:last-child) > .button {
+  border-radius: 0;
+}
+.button-group > .button-group:first-child {
+  > .button:last-child,
+  > .dropdown-toggle {
+    @include border-right-radius(0);
+  }
+}
+.button-group > .button-group:last-child > .button:first-child {
+  @include border-left-radius(0);
+}
