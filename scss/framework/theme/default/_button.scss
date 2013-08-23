@@ -1,15 +1,39 @@
-
 .button {
 	color: $buttonColor;
 	border-radius: $buttonBorderRadius;
+  border-width: $buttonBorderWidth;
+  border-style: solid;
 	padding: $buttonPadding;
+
 }
 
 .button-default {
-	background-color: $buttonDefaultBackground;
-	border: $buttonBorderWidth solid $buttonDefaultBorder;
-
-	&:active {
-		background-color: $buttonDefaultBackgroundActive;
-	}
+  @include button-style($buttonDefaultBackground, $buttonDefaultBorder);
+}
+.button-secondary {
+  @include button-style($buttonSecondaryBackground, $buttonSecondaryBorder);
+}
+.button-primary {
+  color: $lightColor;
+  @include button-style($buttonPrimaryBackground, $buttonPrimaryBorder);
+}
+.button-info {
+  color: $lightColor;
+  @include button-style($buttonInfoBackground, $buttonInfoBorder);
+}
+.button-success {
+  color: $lightColor;
+  @include button-style($buttonSuccessBackground, $buttonSuccessBorder);
+}
+.button-warning {
+  color: $lightColor;
+  @include button-style($buttonWarningBackground, $buttonWarningBorder);
+}
+.button-danger {
+  color: $lightColor;
+  @include button-style($buttonDangerBackground, $buttonDangerBorder);
+}
+.button-dark {
+  color: $lightColor;
+  @include button-style($buttonDarkBackground, $buttonDarkBorder);
 }

@@ -1,0 +1,12 @@
+@mixin button-style($bgColor, $borderColor) {
+	background-color: $bgColor;
+	border-color: $borderColor;
+
+  // Give desktop users something to play with
+	&:hover {
+		background-color: lighten($bgColor, 10%);
+  }
+	&:active {
+		background-color: darken($bgColor, 10%);
+	}
+}
