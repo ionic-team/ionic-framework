@@ -1,11 +1,11 @@
-// Make sure the charset is set appropriately
 @charset "UTF-8";
 
-// This includes all of the foundation global elements that are needed to work with any of the other files.
+// This includes all of the framework global elements that are needed to work with any of the other files.
 @import "foundation/variables";
 
 // Foundation Components
 @import
+  ""
   "foundation/components/global",
   "foundation/components/grid",
   "foundation/components/visibility",
