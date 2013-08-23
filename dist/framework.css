@@ -1,0 +1,54 @@
+/*
+Syntax error: Invalid CSS after "  """: expected selector or at-rule, was ""framework/comp..."
+        on line 6 of scss/framework.scss
+
+1: @charset "UTF-8";
+2: 
+3: // Framework Components
+4: @import
+5:   ""
+6:   "framework/components/global",
+7:   "framework/components/grid",
+8:   "framework/components/visibility",
+9:   "framework/components/block-grid",
+10:   "framework/components/type",
+11:   "framework/components/buttons",
+
+Backtrace:
+scss/framework.scss:6
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/scss/parser.rb:1136:in `expected'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/scss/parser.rb:1072:in `expected'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/scss/parser.rb:28:in `parse'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/engine.rb:342:in `_to_tree'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/engine.rb:315:in `_render'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/engine.rb:262:in `render'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/plugin/compiler.rb:341:in `update_stylesheet'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/plugin/compiler.rb:203:in `update_stylesheets'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/plugin/compiler.rb:201:in `each'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/plugin/compiler.rb:201:in `update_stylesheets'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/plugin/compiler.rb:299:in `watch'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/vendor/listen/lib/listen/multi_listener.rb:86:in `call'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/vendor/listen/lib/listen/multi_listener.rb:86:in `on_change'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/vendor/listen/lib/listen/multi_listener.rb:95:in `initialize_adapter'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/vendor/listen/lib/listen/adapters/polling.rb:55:in `call'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/vendor/listen/lib/listen/adapters/polling.rb:55:in `poll'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/vendor/listen/lib/listen/adapters/polling.rb:31:in `start'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/vendor/listen/lib/listen/adapters/polling.rb:31:in `initialize'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/vendor/listen/lib/listen/adapters/polling.rb:31:in `new'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/vendor/listen/lib/listen/adapters/polling.rb:31:in `start'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/vendor/listen/lib/listen/multi_listener.rb:44:in `start'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/plugin/compiler.rb:307:in `watch'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/plugin.rb:107:in `send'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/plugin.rb:107:in `method_missing'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/exec.rb:444:in `watch_or_update'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/exec.rb:307:in `process_result'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/exec.rb:41:in `parse'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/exec.rb:21:in `parse!'
+/Library/Ruby/Gems/1.8/gems/sass-3.2.5/bin/sass:8
+/usr/bin/sass:19:in `load'
+/usr/bin/sass:19
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Syntax error: Invalid CSS after \"  \"\"\": expected selector or at-rule, was \"\"framework/comp...\"\A         on line 6 of scss/framework.scss\A \A 1: @charset \"UTF-8\";\A 2: \A 3: // Framework Components\A 4: @import\A 5:   \"\"\A 6:   \"framework/components/global\",\A 7:   \"framework/components/grid\",\A 8:   \"framework/components/visibility\",\A 9:   \"framework/components/block-grid\",\A 10:   \"framework/components/type\",\A 11:   \"framework/components/buttons\","; }
