@@ -16,41 +16,67 @@
     background-color: $barDefaultBackground;
     border-color: $barDefaultBorderColor;
     color: $darkColor;
+    .tab-item a {
+      color: $darkColor;
+    }
   }
   &.bar-secondary {
     background-color: $barSecondaryBackground;
     border-color: $barSecondaryBorderColor;
     color: $darkColor;
+    .tab-item a {
+      color: $darkColor;
+    }
   }
   &.bar-primary {
     background-color: $barPrimaryBackground;
     border-color: $barPrimaryBorderColor;
     color: $lightColor;
+    .tab-item a {
+      color: $lightColor;
+    }
   }
   &.bar-info {
     background-color: $barInfoBackground;
     border-color: $barInfoBorderColor;
     color: $lightColor;
+    .tab-item a {
+      color: $lightColor;
+    }
   }
   &.bar-success {
     background-color: $barSuccessBackground;
     border-color: $barSuccessBorderColor;
     color: $lightColor;
+    .tab-item a {
+      color: $lightColor;
+    }
   }
   &.bar-warning {
     background-color: $barWarningBackground;
     border-color: $barWarningBorderColor;
     color: $lightColor;
+    .tab-item a {
+      color: $lightColor;
+    }
   }
   &.bar-danger {
     background-color: $barDangerBackground;
     border-color: $barDangerBorderColor;
     color: $lightColor;
+
+    .tab-item a {
+      color: $lightColor;
+    }
   }
   &.bar-dark {
     background-color: $barDarkBackground;
     border-color: $barDarkBorderColor;
     color: $lightColor;
+
+    .tab-item a {
+      color: $lightColor;
+    }
   }
 
   /*

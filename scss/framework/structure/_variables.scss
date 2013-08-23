@@ -1,4 +1,5 @@
 $sansFontFamily:        "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$lightSansFontFamily:        "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $serifFontFamily:       Georgia, "Times New Roman", Times, serif !default;
 $monoFontFamily:        Monaco, Menlo, Consolas, "Courier New", monospace !default;
 
@@ -14,8 +15,8 @@ $baseLineHeightComputed:    floor($baseFontSize * $baseLineHeight); // ~20px
 $contentPadding: 10px;
 
 // Bar stuff
-$barHeight: 50px !default;
-$barLineHeight: 50px !default;
+$barHeight: 98px !default;
+$barLineHeight: 98px !default;
 $barTitleFontSize: $fontSizeLarge;
 $barTitleLineHeightComputed: $baseLineHeightComputed;
 $barPaddingVertical: (($barHeight - $baseLineHeightComputed) / 2);

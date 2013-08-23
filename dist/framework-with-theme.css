@@ -37,6 +37,14 @@ ul {
 .content-padded {
   padding: 10px; }
 
+.button {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  margin: 0; }
+
 .bar {
   position: fixed;
   right: 0;
@@ -47,7 +55,7 @@ ul {
   -webkit-box-orient: horizontal;
   box-orient: horizontal;
   box-sizing: border-box;
-  height: 50px;
+  height: 98px;
   /*
   .title + .button:last-child,
   .button + .button:last-child,
@@ -67,7 +75,7 @@ ul {
     */
     line-height: 20px;
     margin: 0;
-    padding: 15px 0px;
+    padding: 39px 0px;
     text-align: center;
     white-space: nowrap;
     font-size: 18px;
@@ -90,18 +98,54 @@ ul {
 /* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
    Note: For these to work, content must come after both bars in the markup */
 .bar ~ .content {
-  top: 50px; }
+  top: 98px; }
 
 .bar ~ .content {
   bottom: 51px; }
 
-.button {
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
+/* Bar docked to bottom used for primary app navigation */
+.tabs {
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 50px;
+  padding: 0;
+  box-sizing: border-box;
+  position: fixed; }
+
+.tabs-inner {
+  display: -webkit-box;
+  display: box;
+  height: 100%;
+  list-style: none;
+  -webkit-box-orient: horizontal;
+  box-orient: horizontal; }
+
+/* Navigational tab */
+.tab-item {
+  height: 100%;
+  padding-top: 9px;
   text-align: center;
-  cursor: pointer;
-  margin: 0; }
+  box-sizing: border-box;
+  -webkit-box-flex: 1;
+  box-flex: 1; }
+
+/* Active state for tab */
+.tab-item.active {
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5); }
+
+/* Icon for tab  */
+.tab-item i {
+  display: block;
+  margin: 0 auto; }
+
+/* Label for tab */
+.tab-label {
+  margin-top: 1px;
+  font-size: 10px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.3); }
 
 .button-group {
   position: relative;
@@ -205,34 +249,59 @@ a.list-item:hover, a.list-item:focus {
     background-color: white;
     border-color: #dddddd;
     color: #333333; }
+    .bar.bar-default .tab-item a {
+      color: #333333; }
   .bar.bar-secondary {
     background-color: whitesmoke;
     border-color: #cccccc;
     color: #333333; }
+    .bar.bar-secondary .tab-item a {
+      color: #333333; }
   .bar.bar-primary {
     background-color: #6999e9;
     border-color: #5981c5;
     color: white; }
+    .bar.bar-primary .tab-item a {
+      color: white; }
   .bar.bar-info {
     background-color: #60d2e6;
     border-color: #51b3c4;
     color: white; }
+    .bar.bar-info .tab-item a {
+      color: white; }
   .bar.bar-success {
     background-color: #89c163;
     border-color: #71a052;
     color: white; }
+    .bar.bar-success .tab-item a {
+      color: white; }
   .bar.bar-warning {
     background-color: #f0b840;
     border-color: #cf9a29;
     color: white; }
+    .bar.bar-warning .tab-item a {
+      color: white; }
   .bar.bar-danger {
     background-color: #de5645;
     border-color: #bc4435;
     color: white; }
+    .bar.bar-danger .tab-item a {
+      color: white; }
   .bar.bar-dark {
     background-color: #444444;
     border-color: #111111;
     color: white; }
+    .bar.bar-dark .tab-item a {
+      color: white; }
+
+.tabs {
+  font-size: 20px;
+  height: 98px; }
+
+.tab-item a {
+  font-family: "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+.tab-item i {
+  font-size: 40px; }
 
 .button {
   color: #222222;
