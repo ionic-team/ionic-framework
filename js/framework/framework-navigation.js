@@ -79,21 +79,63 @@
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4) {
         if(xhr.status === 200) {
-          successRequest(xhr, options);
+          successPageLoad(xhr, options);
         } else {
-          failedRequest(options.url);
+          failedPageLoad(options.url);
         }
       }
     };
     xhr.send();
   }
 
-  function successRequest(xhr, options) {
+  function successPageLoad(xhr, options) {
+    var data = parseXHR(xhr, options);
     framework.isRequesting = false;
   }
 
-  function failedRequest(options) {
+  function failedPageLoad(options) {
+    framework.trigger("pageloadfailed");
     framework.isRequesting = false;
+  }
+
+  function parseXHR(xhr, options) {
+    var 
+    container,
+    tmp,
+    data = {};
+
+    data.url = options.url;
+
+    if (!xhr.responseText) return data;
+
+    container = document.createElement('div');
+    container.innerHTML = xhr.responseText;
+
+    tmp = container.querySelector("title");
+    if(tmp) {
+      data.title = tmp.innerText;
+    } else {
+      tmp = container.querySelector("h1");
+      if(tmp) {
+        data.title = tmp.innerText;
+      } else {
+        data.title = data.url;
+      }
+    }
+
+    tmp = container.querySelector("main");
+    if(tmp) {
+      data.main = tmp.innerHTML;
+    } else {
+      tmp = container.querySelector("body");
+      if(tmp) {
+        data.main = tmp.innerHTML;
+      } else {
+        data.main = container.innerHTML;
+      }
+    }
+
+    return data;
   }
 
   framework.on("ready", function(){
