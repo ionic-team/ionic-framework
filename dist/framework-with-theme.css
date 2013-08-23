@@ -23,9 +23,12 @@ a {
   margin: 0; }
 
 .button {
-  color: #333333;
-  border-radius: 2px; }
+  color: #222222;
+  border-radius: 2px;
+  padding: 10px 10px; }
 
 .button-default {
-  background-color: #fff;
+  background-color: white;
   border: 1px solid #dddddd; }
+  .button-default:active {
+    background-color: #eeeeee; }

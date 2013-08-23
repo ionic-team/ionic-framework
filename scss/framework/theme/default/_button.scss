@@ -1,9 +1,15 @@
+
 .button {
-	color: #333333;
-	border-radius: 2px;
+	color: $buttonColor;
+	border-radius: $buttonBorderRadius;
+	padding: $buttonPadding;
 }
 
 .button-default {
-	background-color: #fff;
-	border: 1px solid #ddd;
+	background-color: $buttonDefaultBackground;
+	border: $buttonBorderWidth solid $buttonDefaultBorder;
+
+	&:active {
+		background-color: $buttonDefaultBackgroundActive;
+	}
 }
