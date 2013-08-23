@@ -1,3 +1,44 @@
+
+// Use Flexbox for our header and footer bars
 .bar {
-	
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 10;
+
+	display: -webkit-box;
+  display: box;
+  -webkit-box-orient: horizontal;
+  box-orient: horizontal;
+
+  box-sizing: border-box;
+
+
+  // Title inside of a bar is centered
+  .title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .title a {
+    color: inherit;
+  }
 }
+
+
+// Header at top
+.bar-header {
+  top: 0;
+}
+
+// Footer at bottom
+.bar-footer {
+  bottom: 0;
+}
+
+

@@ -1,0 +1,20 @@
+.bar {
+  background-color: $barBackground;
+  border-bottom: $barBorderBottom;
+
+  padding: $barPaddingPortrait;
+
+  @media screen and (orientation : landscape) {
+    padding: $barPaddingLandscape;
+  }
+
+
+  &.bar-default {
+    background-color: $barDefaultBackground;
+    border-bottom: $barDefaultBorderBottom;
+  }
+  &.bar-secondary {
+    background-color: $barSecondaryBackground;
+    border-bottom: $barSecondaryBorderBottom;
+  }
+}

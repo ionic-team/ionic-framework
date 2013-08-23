@@ -1,3 +1,4 @@
+//
 // Buttons
 $buttonColor: #222;
 $buttonPadding: 10px 10px;
@@ -8,3 +9,18 @@ $buttonDefaultBackground: #fff;
 $buttonDefaultBackgroundActive: #eee;
 $buttonDefaultBorder: #ddd;
 
+
+//
+// Bars
+$barPaddingPortrait: 10px;
+$barPaddingLandscape : 5px;
+
+$barBackground: white;
+$barBorderBottom: 1px solid #ddd;
+
+// Bar variations
+$barDefaultBackground: #fff;
+$barDefaultBorderBottom: 1px solid #ddd;
+
+$barSecondaryBackground: #f5f5f5;
+$barSecondaryBorderBottom: 1px solid #ccc;
