@@ -248,7 +248,7 @@ a.list-item:hover, a.list-item:focus {
   .button-default:hover {
     color: #333333;
     text-decoration: none; }
-  .button-default:active {
+  .button-default.active, .button-default:active {
     background-color: #e6e6e6;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15); }
 
@@ -259,7 +259,7 @@ a.list-item:hover, a.list-item:focus {
   .button-secondary:hover {
     color: #333333;
     text-decoration: none; }
-  .button-secondary:active {
+  .button-secondary.active, .button-secondary:active {
     background-color: gainsboro;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15); }
 
@@ -270,7 +270,7 @@ a.list-item:hover, a.list-item:focus {
   .button-primary:hover {
     color: white;
     text-decoration: none; }
-  .button-primary:active {
+  .button-primary.active, .button-primary:active {
     background-color: #3d7be2;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15); }
 
@@ -281,7 +281,7 @@ a.list-item:hover, a.list-item:focus {
   .button-info:hover {
     color: white;
     text-decoration: none; }
-  .button-info:active {
+  .button-info.active, .button-info:active {
     background-color: #34c6df;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15); }
 
@@ -292,7 +292,7 @@ a.list-item:hover, a.list-item:focus {
   .button-success:hover {
     color: white;
     text-decoration: none; }
-  .button-success:active {
+  .button-success.active, .button-success:active {
     background-color: #6fac45;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15); }
 
@@ -303,7 +303,7 @@ a.list-item:hover, a.list-item:focus {
   .button-warning:hover {
     color: white;
     text-decoration: none; }
-  .button-warning:active {
+  .button-warning.active, .button-warning:active {
     background-color: #eba612;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15); }
 
@@ -314,7 +314,7 @@ a.list-item:hover, a.list-item:focus {
   .button-danger:hover {
     color: white;
     text-decoration: none; }
-  .button-danger:active {
+  .button-danger.active, .button-danger:active {
     background-color: #cc3724;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15); }
 
@@ -325,7 +325,7 @@ a.list-item:hover, a.list-item:focus {
   .button-dark:hover {
     color: white;
     text-decoration: none; }
-  .button-dark:active {
+  .button-dark.active, .button-dark:active {
     background-color: #2b2b2b;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15); }
 

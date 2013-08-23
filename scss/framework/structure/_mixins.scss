@@ -13,7 +13,7 @@
     // want it on desktop
 		//background-color: lighten($bgColor, 10%);
   }
-	&:active {
+	&.active, &:active {
 		background-color: darken($bgColor, 10%);
     box-shadow: inset 0px 1px 3px rgba(0,0,0,0.15);
 	}
