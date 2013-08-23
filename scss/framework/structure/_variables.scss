@@ -1,0 +1,21 @@
+$sansFontFamily:        "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$serifFontFamily:       Georgia, "Times New Roman", Times, serif !default;
+$monoFontFamily:        Monaco, Menlo, Consolas, "Courier New", monospace !default;
+
+$baseFontSize: 14px !default;
+$baseFontFamily: $sansFontFamily;
+
+$fontSizeLarge: ceil($baseFontSize * 1.25);
+
+$baseLineHeight:        1.428571429; // 20/14
+$baseLineHeightComputed:    floor($baseFontSize * $baseLineHeight); // ~20px
+
+$barHeight: 50px !default;
+$barLineHeight: 50px !default;
+$barTitleFontSize: $fontSizeLarge;
+$barTitleLineHeightComputed: $baseLineHeightComputed;
+$barPaddingVertical: (($barHeight - $baseLineHeightComputed) / 2);
+
+
+// Lists
+$listItemBorder: 1px solid #ddd;

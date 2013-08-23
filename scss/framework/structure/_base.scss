@@ -18,3 +18,31 @@ body {
 a {
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
+.content {
+	position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  background-color: #fff;
+
+   -webkit-overflow-scrolling: touch;
+}
+
+/* Hack to force all relatively and absolutely positioned elements still render while scrolling
+   Note: This is a bug for "-webkit-overflow-scrolling: touch" (via ratchet) */
+.content > * {
+  -webkit-transform: translateZ(0px);
+          transform: translateZ(0px);
+}
+
+/* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
+   Note: For these to work, content must come after both bars in the markup */
+.bar ~ .content {
+  top: 44px;
+}
+.bar ~ .content {
+  bottom: 51px;
+}

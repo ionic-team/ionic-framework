@@ -14,6 +14,30 @@ body {
 a {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
+.content {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  background-color: #fff;
+  -webkit-overflow-scrolling: touch; }
+
+/* Hack to force all relatively and absolutely positioned elements still render while scrolling
+   Note: This is a bug for "-webkit-overflow-scrolling: touch" (via ratchet) */
+.content > * {
+  -webkit-transform: translateZ(0px);
+  transform: translateZ(0px); }
+
+/* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
+   Note: For these to work, content must come after both bars in the markup */
+.bar ~ .content {
+  top: 44px; }
+
+.bar ~ .content {
+  bottom: 51px; }
+
 .bar {
   position: fixed;
   right: 0;
@@ -23,17 +47,40 @@ a {
   display: box;
   -webkit-box-orient: horizontal;
   box-orient: horizontal;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  height: 50px;
+  /*
+  .title + .button:last-child,
+  .button + .button:last-child,
+  .button.pull-right {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+  */ }
   .bar .title {
+    /*
     position: absolute;
     top: 0;
     left: 0;
     display: block;
     width: 100%;
+    */
+    line-height: 20px;
+    margin: 0;
+    padding: 15px 0px;
     text-align: center;
-    white-space: nowrap; }
+    white-space: nowrap;
+    font-size: 18px;
+    -webkit-box-flex: 3;
+    -moz-box-flex: 3;
+    box-flex: 3; }
   .bar .title a {
     color: inherit; }
+  .bar .button {
+    -webkit-box-flex: 0;
+    -moz-box-flex: 0;
+    box-flex: 0; }
 
 .bar-header {
   top: 0; }
@@ -49,13 +96,50 @@ a {
   cursor: pointer;
   margin: 0; }
 
+.list {
+  margin-bottom: 20px;
+  padding-left: 0; }
+
+.list-item {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  margin-bottom: -1px;
+  border: 1px solid #dddddd; }
+  .list-item:last-child {
+    margin-bottom: 0; }
+  .list-item > .badge {
+    float: right; }
+  .list-item > i {
+    float: right; }
+  .list-item > .badge + .badge {
+    margin-right: 5px; }
+  .list-item.active, .list-item.active:hover, .list-item.active:focus {
+    z-index: 2; }
+    .list-item.active .list-item-heading, .list-item.active:hover .list-item-heading, .list-item.active:focus .list-item-heading {
+      color: inherit; }
+
+a.list-item:hover, a.list-item:focus {
+  text-decoration: none; }
+
+.list-item-heading {
+  margin-top: 0;
+  margin-bottom: 5px; }
+
+.list-item-text {
+  margin-bottom: 0;
+  line-height: 1.3; }
+
 .bar {
   background-color: white;
   border-bottom: 1px solid #dddddd;
-  padding: 10px; }
-  @media screen and (orientation: landscape) {
-    .bar {
-      padding: 5px; } }
+  padding: 10px;
+  /*
+  Disabled temporarily because it's annoying for testing.
+  @media screen and (orientation : landscape) {
+    padding: $barPaddingLandscape;
+  }
+  */ }
   .bar.bar-default {
     background-color: white;
     border-bottom: 1px solid #dddddd; }

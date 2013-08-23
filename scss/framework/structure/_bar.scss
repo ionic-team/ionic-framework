@@ -13,21 +13,52 @@
 
   box-sizing: border-box;
 
+  height: $barHeight;
 
   // Title inside of a bar is centered
   .title {
+    /*
     position: absolute;
     top: 0;
     left: 0;
     display: block;
     width: 100%;
+    */
+
+    line-height: $barTitleLineHeightComputed;
+
+    margin: 0;
+    padding: $barPaddingVertical 0px;
+
     text-align: center;
     white-space: nowrap;
+    font-size: $barTitleFontSize;
+
+    -webkit-box-flex: 3;
+    -moz-box-flex: 3;
+    box-flex: 3;
   }
 
   .title a {
     color: inherit;
   }
+
+  .button {
+    -webkit-box-flex: 0;
+    -moz-box-flex: 0;
+    box-flex: 0;
+  }
+
+  // Place the last button in a bar on the right of the bar
+  /*
+  .title + .button:last-child,
+  .button + .button:last-child,
+  .button.pull-right {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+  */
 }
 
 

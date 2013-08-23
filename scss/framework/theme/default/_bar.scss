@@ -4,9 +4,12 @@
 
   padding: $barPaddingPortrait;
 
+  /*
+  Disabled temporarily because it's annoying for testing.
   @media screen and (orientation : landscape) {
     padding: $barPaddingLandscape;
   }
+  */
 
 
   &.bar-default {
