@@ -55,7 +55,7 @@ ul {
   -webkit-box-orient: horizontal;
   box-orient: horizontal;
   box-sizing: border-box;
-  height: 98px;
+  height: 60px;
   /*
   .title + .button:last-child,
   .button + .button:last-child,
@@ -75,7 +75,7 @@ ul {
     */
     line-height: 20px;
     margin: 0;
-    padding: 39px 0px;
+    padding: 20px 0px;
     text-align: center;
     white-space: nowrap;
     font-size: 18px;
@@ -98,7 +98,7 @@ ul {
 /* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
    Note: For these to work, content must come after both bars in the markup */
 .bar ~ .content {
-  top: 98px; }
+  top: 60px; }
 
 .bar ~ .content {
   bottom: 51px; }
@@ -295,13 +295,13 @@ a.list-item:hover, a.list-item:focus {
       color: white; }
 
 .tabs {
-  font-size: 20px;
-  height: 98px; }
+  font-size: 16px;
+  height: 60px; }
 
 .tab-item a {
   font-family: "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif; }
 .tab-item i {
-  font-size: 40px; }
+  font-size: 25px; }
 
 .button {
   color: #222222;
