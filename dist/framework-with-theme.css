@@ -44,6 +44,8 @@ ul {
   text-align: center;
   cursor: pointer;
   margin: 0; }
+  .button.button-borderless {
+    border: none; }
 
 .bar {
   position: fixed;
@@ -55,7 +57,7 @@ ul {
   -webkit-box-orient: horizontal;
   box-orient: horizontal;
   box-sizing: border-box;
-  height: 60px;
+  height: 50px;
   /*
   .title + .button:last-child,
   .button + .button:last-child,
@@ -73,9 +75,8 @@ ul {
     display: block;
     width: 100%;
     */
-    line-height: 20px;
+    line-height: 30px;
     margin: 0;
-    padding: 20px 0px;
     text-align: center;
     white-space: nowrap;
     font-size: 18px;
@@ -98,10 +99,10 @@ ul {
 /* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
    Note: For these to work, content must come after both bars in the markup */
 .bar ~ .content {
-  top: 60px; }
+  top: 50px; }
 
 .bar ~ .content {
-  bottom: 51px; }
+  bottom: 50px; }
 
 /* Bar docked to bottom used for primary app navigation */
 .tabs {
@@ -124,15 +125,19 @@ ul {
 /* Navigational tab */
 .tab-item {
   height: 100%;
-  padding-top: 9px;
   text-align: center;
   box-sizing: border-box;
   -webkit-box-flex: 1;
   box-flex: 1; }
+  .tab-item a {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 100%; }
 
 /* Active state for tab */
-.tab-item.active {
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5); }
+.tab-item.active, .tab-item:active {
+  background-color: rgba(0, 0, 0, 0.2); }
 
 /* Icon for tab  */
 .tab-item i {
@@ -144,8 +149,7 @@ ul {
   margin-top: 1px;
   font-size: 10px;
   font-weight: bold;
-  color: #fff;
-  text-shadow: 0 1px rgba(0, 0, 0, 0.3); }
+  color: #fff; }
 
 .button-group {
   position: relative;
@@ -216,8 +220,10 @@ ul {
     .list-item.active .list-item-heading, .list-item.active:hover .list-item-heading, .list-item.active:focus .list-item-heading {
       color: inherit; }
 
-a.list-item:hover, a.list-item:focus {
+a.list-item {
   text-decoration: none; }
+  a.list-item:hover, a.list-item:focus {
+    text-decoration: none; }
 
 .list-divider {
   padding: 5px 15px; }
@@ -299,7 +305,8 @@ a.list-item:hover, a.list-item:focus {
   height: 60px; }
 
 .tab-item a {
-  font-family: "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  font-family: "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 200; }
 .tab-item i {
   font-size: 25px; }
 

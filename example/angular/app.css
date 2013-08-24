@@ -1,0 +1,27 @@
+.pane {
+  position: fixed;
+  width: 100%;
+}
+.reveal-animation {
+  /*
+  -webkit-transform: translate3d(0%, 0, 0);
+          transform: translate3d(0%, 0, 0);
+
+ -webkit-transition: -webkit-transform 1s ease-in-out;
+         transition:         transform 1s ease-in-out;
+  */
+}
+.reveal-animation.ng-enter {
+  -webkit-transition: 0.2s linear all;
+  -webkit-transform:translate3d(100%,0,0) ;
+}
+.reveal-animation.ng-enter-active {
+  -webkit-transform:translate3d(0,0,0) ;
+}
+.reveal-animation.ng-leave {
+  -webkit-transition: 0.2s linear all;
+  -webkit-transform:translate3d(0,0,0);
+}
+.reveal-animation.ng-leave-active {
+  -webkit-transform:translate3d(-100%,0,0);
+}

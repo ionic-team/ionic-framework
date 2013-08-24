@@ -28,7 +28,7 @@
     line-height: $barTitleLineHeightComputed;
 
     margin: 0;
-    padding: $barPaddingVertical 0px;
+    //padding: $barPaddingVertical 0px;
 
     text-align: center;
     white-space: nowrap;
@@ -79,5 +79,5 @@
   top: $barHeight;
 }
 .bar ~ .content {
-  bottom: 51px;
+  bottom: $barHeight;
 }

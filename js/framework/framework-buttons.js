@@ -18,6 +18,8 @@
     if(event.target && event.target.classList.contains('button')) {
       event.target.classList.remove('active');
     }
+
+    // TODO: Process the click? Set flag to not process other click events
   };
 
   document.addEventListener('touchstart', framework.Button.prototype._onTouchStart);

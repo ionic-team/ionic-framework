@@ -21,16 +21,23 @@
 /* Navigational tab */
 .tab-item {
   height: 100%;
-  padding-top: 9px;
   text-align: center;
   box-sizing: border-box;
   -webkit-box-flex: 1;
           box-flex: 1;
+
+  a {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 /* Active state for tab */
-.tab-item.active {
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, .5);
+.tab-item.active, .tab-item:active {
+  //box-shadow: inset 0 0 1px rgba(0, 0, 0, .12);
+  background-color: rgba(0,0,0,0.2);
 }
 
 /* Icon for tab  */
@@ -45,5 +52,4 @@
   font-size: 10px;
   font-weight: bold;
   color: #fff;
-  text-shadow: 0 1px rgba(0, 0, 0, .3);
 }

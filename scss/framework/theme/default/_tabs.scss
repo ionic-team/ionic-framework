@@ -5,6 +5,11 @@
 .tab-item {
   a {
     font-family: $lightSansFontFamily;
+    font-weight: 200;
+
+    .active, &:active {
+      //box-shadow: inset 0 0 10px rgba(0, 0, 0, .12);
+    }
   }
   i {
     font-size: 25px;
