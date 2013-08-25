@@ -12,7 +12,7 @@ Framework!
 
 Page events happen in the order shown and described below:
 
- 1. __pageinit__: The user clicked an internal webapp link, which triggers this event before the next page is either requested from the server or retrieved from the cache.
+ 1. __pageinit__: The user clicked an internal webapp link, which triggers this event before the next page is either requested from the server or retrieved from the cache. The event's detail data contains the URL to request.
    -  __pageinitfailed__: This event is triggered when something has gone wrong while trying to receive data for the next page to show. 
  2. __pagecreate__: This event is trigger after the new page has been added to the DOM. However, the new page has not started the transition to be in view yet, and the old page is still in view for the user. 
  3. __pageload__: The new page the user will view has already been received from the server or cache, and has been placed into the DOM. However, it has not started or ended the page transition, it is not in view for the user, and the old page it's replacing is still in view.
