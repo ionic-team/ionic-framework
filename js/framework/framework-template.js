@@ -54,6 +54,6 @@
 
   }
 
-  framework.on("pageview", initTemplates);
+  framework.on("pagecreate", initTemplates);
 
 })(this, document, FM = this.FM || {});
