@@ -18,7 +18,7 @@ ul {
   margin: 0;
   padding: 0; }
 
-.content {
+main {
   position: fixed;
   top: 0;
   right: 0;
@@ -30,7 +30,7 @@ ul {
 
 /* Hack to force all relatively and absolutely positioned elements still render while scrolling
    Note: This is a bug for "-webkit-overflow-scrolling: touch" (via ratchet) */
-.content > * {
+main > * {
   -webkit-transform: translateZ(0px);
   transform: translateZ(0px); }
 
@@ -98,10 +98,10 @@ ul {
 
 /* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
    Note: For these to work, content must come after both bars in the markup */
-.bar ~ .content {
+.bar ~ main {
   top: 50px; }
 
-.bar ~ .content {
+.bar ~ main {
   bottom: 50px; }
 
 /* Bar docked to bottom used for primary app navigation */

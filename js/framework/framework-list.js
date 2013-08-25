@@ -1,5 +1,5 @@
 (function(window, document, framework) {
-  framework.Tabs = function() {}
+  framework.List = function() {}
 
   framework.List.prototype._TAB_ITEM_CLASS = 'tab-item';
 
@@ -16,8 +16,8 @@
     }
   };
 
-  document.addEventListener('mousedown', framework.Tabs.prototype._onTouchStart);
-  document.addEventListener('touchstart', framework.Tabs.prototype._onTouchStart);
-  document.addEventListener('touchend', framework.Tabs.prototype._onTouchEnd);
+  document.addEventListener('mousedown', framework.List.prototype._onTouchStart);
+  document.addEventListener('touchstart', framework.List.prototype._onTouchStart);
+  document.addEventListener('touchend', framework.List.prototype._onTouchEnd);
 
 })(this, document, this.FM = this.FM || {});
