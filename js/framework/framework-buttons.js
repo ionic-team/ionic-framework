@@ -26,4 +26,4 @@
   document.addEventListener('touchend', framework.Button.prototype._onTouchEnd);
   document.addEventListener('touchcancel', framework.Button.prototype._onTouchEnd);
 
-})(this, document, this.FM = this.FM || {});
+})(this, document, FM = this.FM || {});

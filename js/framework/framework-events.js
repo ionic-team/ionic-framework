@@ -17,7 +17,9 @@
   // Some convenient top-level event functions
 
   framework.trigger = function(type, data) {
-    window.dispatchEvent(new CustomEvent(type, data));
+    window.dispatchEvent(new CustomEvent(type, {
+      detail: data
+    }));
   };
 
   framework.on = function(type, callback, element) {
@@ -94,4 +96,5 @@
   window.addEventListener('touchend', _touchEnd);
   window.addEventListener('click', _click);
   window.addEventListener('popstate', _popstate);
-})(this, document, this.FM = this.FM || {});
+
+})(this, document, FM = this.FM || {});

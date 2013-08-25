@@ -22,4 +22,4 @@
   document.addEventListener('touchstart', framework.Tabs.prototype._onTouchStart);
   document.addEventListener('touchend', framework.Tabs.prototype._onTouchEnd);
 
-})(this, document, this.FM = this.FM || {});
+})(this, document, FM = this.FM || {});

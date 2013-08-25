@@ -1,19 +1,29 @@
 (function(window, document, location, framework) {
 
   var  
-  x;
+  x,
+  link;
 
   // Add listeners to each link in the document
-  framework.addLinkListeners = function() {
+  function addNavListeners() {
     for(x = 0; x < document.links.length; x++) {
-      document.links[x].addEventListener('click', linkClick, false);
+      link = document.links[x];
+      // double check we didnt already add this event
+      if(!link._hasClick) {
+        link.addEventListener('click', linkClick, false);
+        link._hasClick = true;
+      }
     }
   }
 
-  // Remove listeners to each link in the document
-  framework.removeLinkListeners = function() {
-    for(x = 0; x < document.links.length; x++) {
-      document.links[x].removeEventListener('click', linkClick, false);
+  // Remove listeners from the links in the inactive page element
+  function removeInactivePageNavListeners(e) {
+    var element = document.getElementById(e.detail.id);
+    if(element) {
+      links = element.querySelectorAll("a");
+      for(x = 0; x < links.length; x++) {
+        links[x].removeEventListener('click', linkClick, false);
+      }
     }
   }
 
@@ -37,14 +47,25 @@
       return false;
     }
 
-    // only intercept the nav click if they're going to the same domain
+    // only intercept the nav click if they're going to the same domain or page
     if (location.protocol === target.protocol && location.host === target.host) {
-      // this link is an anchor to the same page
+      
+      // trigger the event that a new page should be shown
+      framework.trigger("pageinit", target.href);
+
+      // decide how to handle this click depending on the href
       if(target.getAttribute("href").indexOf("#") === 0) {
+        // this click is going to another element within this same page
         hashLinkClick(target);
+
       } else {
+        // this click is going to another page in the same domain
         pageLinkClick(target);
+
       }
+
+      // stop the browser itself from continuing on with this click
+      // the above code will take care of the navigation
       e.preventDefault();
       return false;
     }
@@ -52,7 +73,6 @@
 
   // they are navigating to another URL within the same domain
   function pageLinkClick(target) {
-    console.log("pageLinkClick, get:", target.href);
 
     push({
       url: target.href
@@ -62,14 +82,6 @@
   // they are navigation to an anchor within the same page
   function hashLinkClick(target) {
     console.log("hashLinkClick, get:", target.href);
-  }
-
-  function touchEnd(e) {
-    framework.trigger("touchEnd");
-  }
-
-  function popstate(e) {
-    
   }
 
   function push(options) {
@@ -89,12 +101,21 @@
   }
 
   function successPageLoad(xhr, options) {
-    var data = parseXHR(xhr, options);
     framework.isRequesting = false;
+    
+    var data = parseXHR(xhr, options);
+    insertPageIntoDom(data);
+
+    framework.trigger("pagetransition", {
+      newActivePageId: data.id, 
+      url: data.url,
+      title: data.title
+    });
+
   }
 
   function failedPageLoad(options) {
-    framework.trigger("pageloadfailed");
+    framework.trigger("pageinitfailed");
     framework.isRequesting = false;
   }
 
@@ -111,41 +132,62 @@
     container = document.createElement('div');
     container.innerHTML = xhr.responseText;
 
+    // get the title of the page
     tmp = container.querySelector("title");
     if(tmp) {
       data.title = tmp.innerText;
     } else {
-      tmp = container.querySelector("h1");
-      if(tmp) {
-        data.title = tmp.innerText;
-      } else {
-        data.title = data.url;
-      }
+      data.title = data.url;
     }
 
+    // get the main content of the page
     tmp = container.querySelector("main");
     if(tmp) {
-      data.main = tmp.innerHTML;
-    } else {
-      tmp = container.querySelector("body");
-      if(tmp) {
-        data.main = tmp.innerHTML;
+      // get an id for this element
+      if(!tmp.id || tmp.id === "") {
+        // it doesn't already have an id, so build a random one for it
+        data.id = "pg" + Math.floor( Math.random() * 999999 );
       } else {
-        data.main = container.innerHTML;
+        // use their existing id
+        data.id = tmp.id;
       }
+      data.main = tmp.innerHTML;
     }
 
     return data;
   }
 
-  framework.on("ready", function(){
-    // DOM is ready
-    framework.addLinkListeners();
-  });
+  function insertPageIntoDom(data) {
+    if(data && data.main) {
+      // get the first main element
+      var oldMainElement = document.querySelector("main");
 
-  window.addEventListener('touchstart', function () { framework.isScrolling = false; });
-  window.addEventListener('touchmove', function () { framework.isScrolling = true; })
-  window.addEventListener('touchend', touchEnd);
-  window.addEventListener('popstate', popstate);
+      // build a new main element to hold the new data
+      var newMainElement = document.createElement("main");
+      newMainElement.id = data.id;
+      newMainElement.innerHTML = data.main;
 
-})(this, document, location, this.FM = this.FM || {});
+      // insert the new main element before the old main element
+      oldMainElement.parentNode.insertBefore(newMainElement, oldMainElement);
+
+      // inform the framework that a new page has been added to the DOM
+      framework.trigger("pagecreate", {
+        id: data.id, 
+        url: data.url,
+        title: data.title
+      });
+
+    } else {
+      // something is wrong with the data, trigger that the page init failed
+      framework.trigger("pageinitfailed");
+    }
+  }
+
+  // after a page has been added to the DOM
+  framework.on("pagecreate", addNavListeners);
+
+  // before a page is about to be removed from the DOM
+  framework.on("pageremove", removeInactivePageNavListeners);
+  
+
+})(this, document, location, FM = this.FM || {});

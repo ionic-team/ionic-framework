@@ -20,4 +20,4 @@
   document.addEventListener('touchstart', framework.List.prototype._onTouchStart);
   document.addEventListener('touchend', framework.List.prototype._onTouchEnd);
 
-})(this, document, this.FM = this.FM || {});
+})(this, document, FM = this.FM || {});
