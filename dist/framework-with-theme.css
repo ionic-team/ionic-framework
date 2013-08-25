@@ -409,3 +409,6 @@ a.list-item {
   background-color: whitesmoke;
   color: #222222;
   font-weight: bold; }
+
+a.list-item {
+  color: #333333; }
