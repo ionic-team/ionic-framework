@@ -75,9 +75,9 @@
 
 /* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
    Note: For these to work, content must come after both bars in the markup */
-.bar ~ .content {
+.bar ~ main {
   top: $barHeight;
 }
-.bar ~ .content {
+.bar ~ main {
   bottom: $barHeight;
 }

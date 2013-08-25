@@ -21,7 +21,7 @@ a {
 
 ul { margin: 0; padding: 0; }
 
-.content {
+main {
 	position: fixed;
   top: 0;
   right: 0;
@@ -35,7 +35,7 @@ ul { margin: 0; padding: 0; }
 
 /* Hack to force all relatively and absolutely positioned elements still render while scrolling
    Note: This is a bug for "-webkit-overflow-scrolling: touch" (via ratchet) */
-.content > * {
+main > * {
   -webkit-transform: translateZ(0px);
           transform: translateZ(0px);
 }
