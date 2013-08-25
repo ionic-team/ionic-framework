@@ -14,6 +14,29 @@ body {
 a {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
+ul {
+  margin: 0;
+  padding: 0; }
+
+.content {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  background-color: #fff;
+  -webkit-overflow-scrolling: touch; }
+
+/* Hack to force all relatively and absolutely positioned elements still render while scrolling
+   Note: This is a bug for "-webkit-overflow-scrolling: touch" (via ratchet) */
+.content > * {
+  -webkit-transform: translateZ(0px);
+  transform: translateZ(0px); }
+
+.content-padded {
+  padding: 10px; }
+
 .button {
   position: relative;
   display: inline-block;
@@ -21,3 +44,194 @@ a {
   text-align: center;
   cursor: pointer;
   margin: 0; }
+  .button.button-borderless {
+    border: none; }
+
+.bar {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  display: -webkit-box;
+  display: box;
+  -webkit-box-orient: horizontal;
+  box-orient: horizontal;
+  box-sizing: border-box;
+  height: 50px;
+  /*
+  .title + .button:last-child,
+  .button + .button:last-child,
+  .button.pull-right {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+  */ }
+  .bar .title {
+    /*
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    */
+    line-height: 30px;
+    margin: 0;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 18px;
+    -webkit-box-flex: 3;
+    -moz-box-flex: 3;
+    box-flex: 3; }
+  .bar .title a {
+    color: inherit; }
+  .bar .button {
+    -webkit-box-flex: 0;
+    -moz-box-flex: 0;
+    box-flex: 0; }
+
+.bar-header {
+  top: 0; }
+
+.bar-footer {
+  bottom: 0; }
+
+/* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
+   Note: For these to work, content must come after both bars in the markup */
+.bar ~ .content {
+  top: 50px; }
+
+.bar ~ .content {
+  bottom: 50px; }
+
+/* Bar docked to bottom used for primary app navigation */
+.tabs {
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 50px;
+  padding: 0;
+  box-sizing: border-box;
+  position: fixed; }
+
+.tabs-inner {
+  display: -webkit-box;
+  display: box;
+  height: 100%;
+  list-style: none;
+  -webkit-box-orient: horizontal;
+  box-orient: horizontal; }
+
+/* Navigational tab */
+.tab-item {
+  height: 100%;
+  text-align: center;
+  box-sizing: border-box;
+  -webkit-box-flex: 1;
+  box-flex: 1; }
+  .tab-item a {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 100%; }
+
+/* Active state for tab */
+.tab-item.active, .tab-item:active {
+  background-color: rgba(0, 0, 0, 0.2); }
+
+/* Icon for tab  */
+.tab-item i {
+  display: block;
+  margin: 0 auto; }
+
+/* Label for tab */
+.tab-label {
+  margin-top: 1px;
+  font-size: 10px;
+  font-weight: bold;
+  color: #fff; }
+
+.button-group {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle; }
+  .button-group > .button {
+    position: relative;
+    float: left; }
+    .button-group > .button:hover, .button-group > .button:focus, .button-group > .button:active, .button-group > .button.active {
+      z-index: 2; }
+    .button-group > .button:focus {
+      outline: none; }
+
+.button-group .button + .button,
+.button-group .button + .button-group,
+.button-group .button-group + .button,
+.button-group .button-group + .button-group {
+  margin-left: -1px; }
+
+.button-group > .button:not(:first-child):not(:last-child) {
+  border-radius: 0; }
+
+.button-group > .button:first-child {
+  margin-left: 0; }
+  .button-group > .button:first-child:not(:last-child) {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0; }
+
+.button-group > .button:last-child:not(:first-child) {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0; }
+
+.button-group > .button-group {
+  float: left; }
+
+.button-group > .button-group:not(:first-child):not(:last-child) > .button {
+  border-radius: 0; }
+
+.button-group > .button-group:first-child > .button:last-child,
+.button-group > .button-group:first-child > .dropdown-toggle {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0; }
+
+.button-group > .button-group:last-child > .button:first-child {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0; }
+
+.list {
+  margin-bottom: 20px;
+  padding-left: 0; }
+
+.list-item {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  margin-bottom: -1px;
+  border: 1px solid #dddddd; }
+  .list-item:last-child {
+    margin-bottom: 0; }
+  .list-item > .badge {
+    float: right; }
+  .list-item > i:last-child {
+    float: right; }
+  .list-item > .badge + .badge {
+    margin-right: 5px; }
+  .list-item.active, .list-item.active:hover, .list-item.active:focus {
+    z-index: 2; }
+    .list-item.active .list-item-heading, .list-item.active:hover .list-item-heading, .list-item.active:focus .list-item-heading {
+      color: inherit; }
+
+a.list-item {
+  text-decoration: none; }
+  a.list-item:hover, a.list-item:focus {
+    text-decoration: none; }
+
+.list-divider {
+  padding: 5px 15px; }
+
+.list-item-heading {
+  margin-top: 0;
+  margin-bottom: 5px; }
+
+.list-item-text {
+  margin-bottom: 0;
+  line-height: 1.3; }
