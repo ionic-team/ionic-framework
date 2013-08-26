@@ -1,3 +1,4 @@
+@charset "UTF-8";
 html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%; }
@@ -44,11 +45,13 @@ main > * {
 
 .button {
   position: relative;
-  display: inline-block;
+  display: block;
   vertical-align: middle;
   text-align: center;
   cursor: pointer;
   margin: 0; }
+  .button.button-inline {
+    display: inline-block; }
   .button.button-borderless {
     border: none; }
 
@@ -331,7 +334,8 @@ a.list-item {
     text-decoration: none; }
   .button-default.active, .button-default:active {
     background-color: #e6e6e6;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15); }
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    border-color: #c4c4c4; }
 
 .button-secondary {
   color: #333333;
@@ -342,7 +346,8 @@ a.list-item {
     text-decoration: none; }
   .button-secondary.active, .button-secondary:active {
     background-color: gainsboro;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15); }
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    border-color: #b3b3b3; }
 
 .button-primary {
   color: white;
@@ -353,7 +358,8 @@ a.list-item {
     text-decoration: none; }
   .button-primary.active, .button-primary:active {
     background-color: #3d7be2;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15); }
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    border-color: #3d67ae; }
 
 .button-info {
   color: white;
@@ -364,7 +370,8 @@ a.list-item {
     text-decoration: none; }
   .button-info.active, .button-info:active {
     background-color: #34c6df;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15); }
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    border-color: #3998a9; }
 
 .button-success {
   color: white;
@@ -375,7 +382,8 @@ a.list-item {
     text-decoration: none; }
   .button-success.active, .button-success:active {
     background-color: #6fac45;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15); }
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    border-color: #597e41; }
 
 .button-warning {
   color: white;
@@ -386,7 +394,8 @@ a.list-item {
     text-decoration: none; }
   .button-warning.active, .button-warning:active {
     background-color: #eba612;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15); }
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    border-color: #a47a21; }
 
 .button-danger {
   color: white;
@@ -397,7 +406,8 @@ a.list-item {
     text-decoration: none; }
   .button-danger.active, .button-danger:active {
     background-color: #cc3724;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15); }
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    border-color: #94362a; }
 
 .button-dark {
   color: white;
@@ -408,7 +418,8 @@ a.list-item {
     text-decoration: none; }
   .button-dark.active, .button-dark:active {
     background-color: #2b2b2b;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15); }
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    border-color: black; }
 
 .list-divider {
   background-color: whitesmoke;

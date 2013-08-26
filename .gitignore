@@ -2,3 +2,6 @@
 *.sw[mpcod]
 
 .sass-cache/
+framework.sublime-project
+
+framework.sublime-workspace

@@ -1,12 +1,16 @@
 .button {
 	position: relative;
-	display: inline-block;
+	display: block;
 	vertical-align: middle;
 	text-align: center;
 	cursor: pointer;
 	margin: 0;
 
-  &.button-borderless {
+	&.button-inline {
+		display: inline-block;
+	}
+
+	&.button-borderless {
     border: none;
   }
 }
