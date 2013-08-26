@@ -15,11 +15,13 @@ $baseLineHeightComputed:    floor($baseFontSize * $baseLineHeight); // ~20px
 $contentPadding: 10px;
 
 // Bar stuff
-$barHeight: 50px !default;
-$barLineHeight: 50px !default;
+$barHeight: 44px !default;
+$barLineHeight: 44px !default;
 $barTitleFontSize: $fontSizeLarge;
-$barTitleLineHeightComputed: 30px;//$barHeight - 2;
+$barTitleLineHeightComputed: 26px;//$barHeight - 2;
 $barPaddingVertical: (($barHeight - $baseLineHeightComputed) / 2);
+$barPaddingPortrait: 8px;
+$barPaddingLandscape : 5px;
 
 
 

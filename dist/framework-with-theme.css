@@ -78,6 +78,12 @@ main > * {
   overflow: auto;
   height: 0; }
 
+.ptr-content .pulling {
+  display: none; }
+
+.ptr-content .refreshing {
+  display: none; }
+
 .button {
   position: relative;
   display: block;
@@ -100,7 +106,8 @@ main > * {
   -webkit-box-orient: horizontal;
   box-orient: horizontal;
   box-sizing: border-box;
-  height: 50px;
+  height: 44px;
+  padding: 8px;
   /*
   .title + .button:last-child,
   .button + .button:last-child,
@@ -118,7 +125,7 @@ main > * {
     display: block;
     width: 100%;
     */
-    line-height: 30px;
+    line-height: 26px;
     margin: 0;
     text-align: center;
     white-space: nowrap;
@@ -142,10 +149,10 @@ main > * {
 /* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
    Note: For these to work, content must come after both bars in the markup */
 .bar-header ~ main, .has-header {
-  top: 50px; }
+  top: 44px; }
 
 .has-footer {
-  bottom: 50px; }
+  bottom: 44px; }
 
 /* Bar docked to bottom used for primary app navigation */
 .tabs {
@@ -319,7 +326,6 @@ a.list-item {
   background-color: white;
   border-style: solid;
   border-width: 0;
-  padding: 10px;
   /*
   Disabled temporarily because it's annoying for testing.
   @media screen and (orientation : landscape) {
