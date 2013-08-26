@@ -12,30 +12,19 @@
     newMainElement.innerHTML = data.main;
 
     var oldMainElement = document.querySelector("main");
-    oldMainElement.className += " hide remove-element";
 
-    insertPageIntoDom(newMainElement, oldMainElement, data);
-
-    history.pushState({}, data.title, data.url);
-
-    framework.trigger("pageview");
-    framework.trigger("pageremove");
-  }
-
-  // insert the new main element before the old main element
-  function insertPageIntoDom(newMainElement, oldMainElement, data) {
-    oldMainElement.parentNode.insertBefore(newMainElement, oldMainElement);
-
-    // inform the framework that a new page has been added to the DOM
+    oldMainElement.parentNode.replaceChild(newMainElement, oldMainElement);
     framework.trigger("pagecreate", {
       id: data.id, 
       url: data.url,
       title: data.title
     });
-  }
 
+    history.pushState({}, data.title, data.url);
+
+    framework.trigger("pageview");
+  }
   
   framework.on("pageloaded", initTransition);
-
 
 })(this, document, FM = this.FM || {});

@@ -11,11 +11,13 @@
     el,
     tmp,
     emptyTemplates = [],
-    container;
+    container,
+    templateElements;
 
     // collect up all the templates currently in the DOM
-    for(x=0; x<document.all.length; x++) {
-      el = document.all[x];
+    templateElements = document.body.querySelectorAll("[data-template]");
+    for(x=0; x<templateElements.length; x++) {
+      el = templateElements[x];
 
       if(el.dataset.template && !el.tSet) {
         // this element is either supplying template
@@ -55,7 +57,7 @@
         container = document.createElement("div");
         container.innerHTML = tmp;
 
-        el.parentNode.replaceChild(container.children[0], el);
+        el.parentNode.replaceChild(container.children[0].cloneNode(true), el);
       }
     }
 

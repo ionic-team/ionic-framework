@@ -1,54 +1,30 @@
 (function(window, document, location, framework) {
 
   var  
-  x, 
-  y,
-  link,
-  element;
+  x,
+  el;
 
   // Add listeners to each link in the document
-  function addNavListeners() {
-    for(x = 0; x < document.links.length; x++) {
-      link = document.links[x];
-      // double check we didnt already add this event
-      if(!link._hasClick) {
-        link.addEventListener('click', linkClick, false);
-        link._hasClick = true;
+  function click(e) {
+    // an element has been clicked. If its a link its good to go
+    // if its not a link then jump up its parents until you find
+    // its wrapping link. If you never find a link do nothing.
+    if(e.target) {
+      el = e.target;
+      if(el.tagName === "A") {
+        return linkClick(e, el);
+      }
+      while(el.parentElement) {
+        el = el.parentElement;
+        if(el.tagName === "A") {
+          return linkClick(e, el);
+        }
       }
     }
-  }
-
-  // Remove listeners from the links in the inactive page element
-  function removePages(e) {
-    var removeElements = document.body.getElementsByClassName("remove-element");
-
-    for(x = 0; x < removeElements.length; x++) {
-      element = removeElements[x];
-      links = element.querySelectorAll("a");
-      for(y = 0; y < links.length; y++) {
-        links[y].removeEventListener('click', linkClick, false);
-      }
-
-      element.parentNode.removeChild(element);
-    }
-  }
-
-  var _init = false;
-  function locationChange(e) {
-    if(!_init) {
-      _init = true;
-      return;
-    }
-
-    requestData({
-      url: location.href,
-      success: successPageLoad,
-      fail: failedPageLoad
-    });
   }
 
   // A link has been clicked
-  function linkClick(e) {
+  function linkClick(e, el) {
 
     // if they clicked a link while scrolling don't nav to it
     if(framework.isScrolling) {
@@ -58,27 +34,27 @@
 
     // data-history-go="-1"
     // shortcut if they just want to use window.history.go()
-    if(e.currentTarget.dataset.historyGo) {
-      window.history.go( parseInt(e.currentTarget.dataset.historyGo, 10) );
+    if(el.dataset.historyGo) {
+      window.history.go( parseInt(el.dataset.historyGo, 10) );
       e.preventDefault();
       return false;
     }
 
     // only intercept the nav click if they're going to the same domain or page
-    if (location.protocol === e.currentTarget.protocol && location.host === e.currentTarget.host) {
+    if (location.protocol === el.protocol && location.host === el.host) {
       
       // trigger the event that a new page should be shown
-      framework.trigger("pageinit", e.currentTarget.href);
+      framework.trigger("pageinit", el.href);
 
       // decide how to handle this click depending on the href
-      if(e.currentTarget.getAttribute("href").indexOf("#") === 0) {
+      if(el.getAttribute("href").indexOf("#") === 0) {
         // this click is going to another element within this same page
         
 
       } else {
         // this click is going to another page in the same domain
         requestData({
-          url: e.currentTarget.href,
+          url: el.href,
           success: successPageLoad,
           fail: failedPageLoad
         });
@@ -89,6 +65,19 @@
       e.preventDefault();
       return false;
     }
+  }
+
+  function locationChange(e) {
+    if(!framework._initPopstate) {
+      framework._initPopstate = true;
+      return;
+    }
+
+    requestData({
+      url: location.href,
+      success: successPageLoad,
+      fail: failedPageLoad
+    });
   }
 
   function requestData(options) {
@@ -155,12 +144,8 @@
     return data;
   }
 
-  // after a page has been added to the DOM
-  framework.on("ready", addNavListeners);
-  framework.on("pagecreate", addNavListeners);
-
-  // before a page is about to be removed from the DOM
-  framework.on("pageremove", removePages);
+  // listen to every click
+  document.addEventListener("click", click, false);
 
   // listen to when the location changes
   framework.on("popstate", locationChange);
