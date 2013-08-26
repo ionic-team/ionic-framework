@@ -129,10 +129,10 @@ main > * {
 
 /* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
    Note: For these to work, content must come after both bars in the markup */
-.bar ~ main {
+.bar-header ~ main {
   top: 50px; }
 
-.bar ~ main {
+.has-footer {
   bottom: 50px; }
 
 /* Bar docked to bottom used for primary app navigation */
