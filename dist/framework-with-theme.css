@@ -66,6 +66,18 @@ main > * {
 .show {
   display: block; }
 
+.ptr-capable {
+  -webkit-user-drag: element; }
+
+.ptr-content {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  height: 0; }
+
 .button {
   position: relative;
   display: block;
@@ -129,7 +141,7 @@ main > * {
 
 /* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
    Note: For these to work, content must come after both bars in the markup */
-.bar-header ~ main {
+.bar-header ~ main, .has-header {
   top: 50px; }
 
 .has-footer {
@@ -487,3 +499,6 @@ a.list-item {
 
 a.list-item {
   color: #333333; }
+
+.ptr-content {
+  background: #eee; }
