@@ -12,10 +12,3 @@ window.FM.on('tap', function(e) {
     event: e
   });
 });
-window.FM.on('click', function(e) {
-  console.log('GOT CLICK', e);
-  logEvent({
-    type: 'click',
-    event: e
-  });
-});
