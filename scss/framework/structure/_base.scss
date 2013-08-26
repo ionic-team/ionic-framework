@@ -1,3 +1,9 @@
+*, *:before, *:after {
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: 
+  border-box; 
+  box-sizing: border-box;
+ }
 
 // Make sure iOS Safari doesn't scale fonts on orientation changes
 html {

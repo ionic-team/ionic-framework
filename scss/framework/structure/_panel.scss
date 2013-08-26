@@ -1,8 +1,8 @@
 
 
 /* the page content the panel should move around */
-.panel-page-container {
-  
+.panel-page-container > * {
+  width: 400px;
   left: 100px;
 }
 
