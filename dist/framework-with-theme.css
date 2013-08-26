@@ -1,4 +1,3 @@
-@charset "UTF-8";
 html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%; }
@@ -36,6 +35,12 @@ main > * {
 
 .content-padded {
   padding: 10px; }
+
+.hide {
+  display: none; }
+
+.show {
+  display: block; }
 
 .button {
   position: relative;

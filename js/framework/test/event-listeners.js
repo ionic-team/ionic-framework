@@ -22,16 +22,16 @@
     console.log('pageinitfailed');
   });
 
+  framework.on('pageloaded', function(e){
+    console.log('pageloaded,', e.detail.data.url, ", Title:", e.detail.data.title);
+  });
+
   framework.on('pagecreate', function(e){
-    console.log('pagecreate, id:', e.detail.id, ", URL:", e.detail.url);
+    console.log('pagecreate,', e.detail.url);
   });
 
   framework.on('pagetransition', function(e){
     console.log('pagetransition, newActivePageId:', e.detail.newActivePageId);
-  });
-
-  framework.on('pageload', function(){
-    console.log('pageload');
   });
 
   framework.on('pageview', function(){

@@ -43,3 +43,10 @@ main > * {
 .content-padded {
   padding: $contentPadding;
 }
+
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+}

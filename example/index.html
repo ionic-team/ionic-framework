@@ -26,33 +26,37 @@
 
     <script src="app.js"></script>
   </head>
-  <body ontouchstart="">
+  <body>
 
-    <header class="bar bar-header bar-secondary" data-template="primary-header">
-      <a class="button button-previous" href="#">
-        <i class="icon-arrow-left"></i>
-      </a>
-      <h1 class="title">Willkommen!</h1>
-      <a class="button button-next" href="#">
-        <i class="icon-arrow-right"></i>
-      </a>
-    </header>
+    <section>
 
-    <main>
-      <p>
-        <a class="button button-default" href="buttons.html">Button Examples</a>
-      </p>
-      <p>
-        <a class="button button-default" href="listview.html">List View Example</a>
-      </p>
-      <p>
-        <a class="button button-default" href="grid.html">Grid Example</a>
-      </p>
-    </main>
+      <header class="bar bar-header bar-secondary" data-template="primary-header">
+        <a class="button button-previous" data-history-go="-1" href="#">
+          <i class="icon-arrow-left"></i>
+        </a>
+        <h1 class="title">Willkommen!</h1>
+        <a class="button button-next" data-history-go="1" href="#">
+          <i class="icon-arrow-right"></i>
+        </a>
+      </header>
 
-    <footer class="bar bar-footer bar-secondary">
-      <h1 class="title">Auf Wiedersehen</h1>
-    </footer>
+      <main>
+        <p>
+          <a class="button button-default" href="buttons.html">Button Examples</a>
+        </p>
+        <p>
+          <a class="button button-default" href="listview.html">List View Example</a>
+        </p>
+        <p>
+          <a class="button button-default" href="grid.html">Grid Example</a>
+        </p>
+      </main>
+
+      <footer class="bar bar-footer bar-secondary">
+        <h1 class="title">Auf Wiedersehen</h1>
+      </footer>
+
+    </section>
 
     <script src="../js/jquery/jquery-1.10.2.js"></script>
     <script src="../js/framework/framework-events.js"></script>

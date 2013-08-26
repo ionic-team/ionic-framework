@@ -1,8 +1,10 @@
 (function(window, document, location, framework) {
 
   var  
-  x,
-  link;
+  x, 
+  y,
+  link,
+  element;
 
   // Add listeners to each link in the document
   function addNavListeners() {
@@ -17,14 +19,32 @@
   }
 
   // Remove listeners from the links in the inactive page element
-  function removeInactivePageNavListeners(e) {
-    var element = document.getElementById(e.detail.id);
-    if(element) {
+  function removePages(e) {
+    var removeElements = document.body.getElementsByClassName("remove-element");
+
+    for(x = 0; x < removeElements.length; x++) {
+      element = removeElements[x];
       links = element.querySelectorAll("a");
-      for(x = 0; x < links.length; x++) {
-        links[x].removeEventListener('click', linkClick, false);
+      for(y = 0; y < links.length; y++) {
+        links[y].removeEventListener('click', linkClick, false);
       }
+
+      element.parentNode.removeChild(element);
     }
+  }
+
+  var _init = false;
+  function locationChange(e) {
+    if(!_init) {
+      _init = true;
+      return;
+    }
+
+    requestData({
+      url: location.href,
+      success: successPageLoad,
+      fail: failedPageLoad
+    });
   }
 
   // A link has been clicked
@@ -36,32 +56,32 @@
       return false;
     }
 
-    var
-    target = e.target;
-
     // data-history-go="-1"
     // shortcut if they just want to use window.history.go()
-    if(target.dataset.historyGo) {
-      window.history.go( parseInt(target.dataset.historyGo, 10) );
+    if(e.currentTarget.dataset.historyGo) {
+      window.history.go( parseInt(e.currentTarget.dataset.historyGo, 10) );
       e.preventDefault();
       return false;
     }
 
     // only intercept the nav click if they're going to the same domain or page
-    if (location.protocol === target.protocol && location.host === target.host) {
+    if (location.protocol === e.currentTarget.protocol && location.host === e.currentTarget.host) {
       
       // trigger the event that a new page should be shown
-      framework.trigger("pageinit", target.href);
+      framework.trigger("pageinit", e.currentTarget.href);
 
       // decide how to handle this click depending on the href
-      if(target.getAttribute("href").indexOf("#") === 0) {
+      if(e.currentTarget.getAttribute("href").indexOf("#") === 0) {
         // this click is going to another element within this same page
-        hashLinkClick(target);
+        
 
       } else {
         // this click is going to another page in the same domain
-        pageLinkClick(target);
-
+        requestData({
+          url: e.currentTarget.href,
+          success: successPageLoad,
+          fail: failedPageLoad
+        });
       }
 
       // stop the browser itself from continuing on with this click
@@ -71,29 +91,16 @@
     }
   }
 
-  // they are navigating to another URL within the same domain
-  function pageLinkClick(target) {
-
-    push({
-      url: target.href
-    });
-  }
-
-  // they are navigation to an anchor within the same page
-  function hashLinkClick(target) {
-    console.log("hashLinkClick, get:", target.href);
-  }
-
-  function push(options) {
+  function requestData(options) {
     framework.isRequesting = true;
     var xhr = new XMLHttpRequest();
     xhr.open('GET', options.url, true);
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4) {
         if(xhr.status === 200) {
-          successPageLoad(xhr, options);
+          options.success(xhr, options);
         } else {
-          failedPageLoad(options.url);
+          options.fail(xhr, options);
         }
       }
     };
@@ -102,21 +109,17 @@
 
   function successPageLoad(xhr, options) {
     framework.isRequesting = false;
-    
-    var data = parseXHR(xhr, options);
-    insertPageIntoDom(data);
-
-    framework.trigger("pagetransition", {
-      newActivePageId: data.id, 
-      url: data.url,
-      title: data.title
+    framework.trigger("pageloaded", {
+      data: parseXHR(xhr, options)
     });
-
   }
 
-  function failedPageLoad(options) {
-    framework.trigger("pageinitfailed");
+  function failedPageLoad(xhr, options) {
     framework.isRequesting = false;
+    framework.trigger("pageinitfailed", {
+      responseText: xhr.responseText,
+      responseStatus: xhr.status
+    });
   }
 
   function parseXHR(xhr, options) {
@@ -143,51 +146,24 @@
     // get the main content of the page
     tmp = container.querySelector("main");
     if(tmp) {
-      // get an id for this element
-      if(!tmp.id || tmp.id === "") {
-        // it doesn't already have an id, so build a random one for it
-        data.id = "pg" + Math.floor( Math.random() * 999999 );
-      } else {
-        // use their existing id
-        data.id = tmp.id;
-      }
       data.main = tmp.innerHTML;
+    } else {
+      // something is wrong with the data, trigger that the page init failed
+      framework.trigger("pageinitfailed");
     }
 
     return data;
   }
 
-  function insertPageIntoDom(data) {
-    if(data && data.main) {
-      // get the first main element
-      var oldMainElement = document.querySelector("main");
-
-      // build a new main element to hold the new data
-      var newMainElement = document.createElement("main");
-      newMainElement.id = data.id;
-      newMainElement.innerHTML = data.main;
-
-      // insert the new main element before the old main element
-      oldMainElement.parentNode.insertBefore(newMainElement, oldMainElement);
-
-      // inform the framework that a new page has been added to the DOM
-      framework.trigger("pagecreate", {
-        id: data.id, 
-        url: data.url,
-        title: data.title
-      });
-
-    } else {
-      // something is wrong with the data, trigger that the page init failed
-      framework.trigger("pageinitfailed");
-    }
-  }
-
   // after a page has been added to the DOM
+  framework.on("ready", addNavListeners);
   framework.on("pagecreate", addNavListeners);
 
   // before a page is about to be removed from the DOM
-  framework.on("pageremove", removeInactivePageNavListeners);
+  framework.on("pageremove", removePages);
+
+  // listen to when the location changes
+  framework.on("popstate", locationChange);
   
 
 })(this, document, location, FM = this.FM || {});

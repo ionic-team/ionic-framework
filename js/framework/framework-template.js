@@ -9,13 +9,15 @@
     var 
     x,
     el,
-    emptyTemplates = [];
+    tmp,
+    emptyTemplates = [],
+    container;
 
     // collect up all the templates currently in the DOM
     for(x=0; x<document.all.length; x++) {
       el = document.all[x];
 
-      if(el.dataset.template && !el._templateSet) {
+      if(el.dataset.template && !el.tSet) {
         // this element is either supplying template
         // data or it needs to be filled with template data
 
@@ -34,26 +36,32 @@
           // lasts for as long as the browser is open and survives over page 
           // reloads and restores. Opening a page in a new tab or window will 
           // cause a new session to be initiated.
-          sessionStorage.setItem(el.dataset.template, el.innerHTML);          
+          sessionStorage.setItem("t:" + el.dataset.template, el.outerHTML);          
         }
 
         // remember that this is set so we don't bother doing all this 
         // code again for the same element in the future
-        el._templateIsSet = true;
+        el.tSet = true;
       }
     }
 
     // go through each empty template and build it up with existing template data
     for(x=0; x<emptyTemplates.length; x++) {
+      el = emptyTemplates[x];
       tmp = sessionStorage.getItem("t:" + el.dataset.template);
       if(tmp) {
         // we've got template data, plug it into this element's innerHTML
-        emptyTemplates[x].innerHTML = tmp;
+
+        container = document.createElement("div");
+        container.innerHTML = tmp;
+
+        el.parentNode.replaceChild(container.children[0], el);
       }
     }
 
   }
 
+  framework.on("ready", initTemplates);
   framework.on("pagecreate", initTemplates);
 
 })(this, document, FM = this.FM || {});
