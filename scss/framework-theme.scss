@@ -1,15 +1,16 @@
 @charset "UTF-8";
 
 
-// Components
+// Component Themes
 @import
   "framework/theme-variables",
+
   "framework/theme/alerts",
   "framework/theme/bar",
-  "framework/theme/tabs",
   "framework/theme/button",
   "framework/theme/icon",
   "framework/theme/listview",
-  "framework/theme/pull-to-refresh",
   "framework/theme/panel",
-  "framework/theme/table";
+  "framework/theme/pull-to-refresh",
+  "framework/theme/table",
+  "framework/theme/tabs";
