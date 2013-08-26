@@ -53,7 +53,6 @@
       tmp = sessionStorage.getItem("t:" + el.dataset.template);
       if(tmp) {
         // we've got template data, plug it into this element's innerHTML
-
         container = document.createElement("div");
         container.innerHTML = tmp;
 

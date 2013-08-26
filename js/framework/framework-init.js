@@ -10,6 +10,9 @@
 
     // trigger that the start page is in view
     framework.trigger("pageview");
+
+    // trigger that the webapp has been initalized
+    framework.trigger("initalized");
   }
 
   // When the DOM is ready, initalize the webapp

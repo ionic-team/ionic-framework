@@ -30,10 +30,6 @@
     console.log('pagecreate,', e.detail.url);
   });
 
-  framework.on('pagetransition', function(e){
-    console.log('pagetransition, newActivePageId:', e.detail.newActivePageId);
-  });
-
   framework.on('pageview', function(){
     console.log('pageview');
   });

@@ -68,8 +68,8 @@
   }
 
   function locationChange(e) {
-    if(!framework._initPopstate) {
-      framework._initPopstate = true;
+    if(!this._initPopstate) {
+      this._initPopstate = true;
       return;
     }
 
@@ -81,7 +81,6 @@
   }
 
   function requestData(options) {
-    framework.isRequesting = true;
     var xhr = new XMLHttpRequest();
     xhr.open('GET', options.url, true);
     xhr.onreadystatechange = function() {
@@ -97,14 +96,15 @@
   }
 
   function successPageLoad(xhr, options) {
-    framework.isRequesting = false;
+    var data = parseXHR(xhr, options);
     framework.trigger("pageloaded", {
-      data: parseXHR(xhr, options)
+      data: data
     });
+    history.pushState({}, data.title, data.url);
+    document.title = data.title;
   }
 
   function failedPageLoad(xhr, options) {
-    framework.isRequesting = false;
     framework.trigger("pageinitfailed", {
       responseText: xhr.responseText,
       responseStatus: xhr.status
