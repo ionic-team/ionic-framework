@@ -12,3 +12,10 @@ window.FM.on('tap', function(e) {
     event: e
   });
 });
+window.FM.on('touch', function(e) {
+  console.log('GOT TOUCH', e);
+  logEvent({
+    type: 'touch',
+    event: e
+  });
+});
