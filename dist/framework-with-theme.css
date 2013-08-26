@@ -84,6 +84,15 @@ main > * {
 .ptr-content .refreshing {
   display: none; }
 
+.panel-content {
+  width: 17em;
+  min-height: 100%;
+  max-height: none;
+  border-width: 0;
+  position: absolute;
+  top: 0;
+  display: block; }
+
 .button {
   position: relative;
   display: block;
@@ -148,7 +157,7 @@ main > * {
 
 /* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
    Note: For these to work, content must come after both bars in the markup */
-.bar-header ~ main, .has-header {
+.has-header {
   top: 44px; }
 
 .has-footer {
