@@ -1,14 +1,28 @@
 
+
+/* the page content the panel should move around */
+.panel-page-container {
+  
+  left: 100px;
+}
+
+
+/* the container of panel content to show */
 .panel-content {
-  width: 17em;
+  width: $panelViewWidth;
   min-height: 100%;
-  max-height: none;
+  max-height: 100%;
   border-width: 0;
   position: absolute;
   top: 0;
   display: block;
 }
 
-.panel-content {
+.panel-reveal {
+  z-index: 0;
+  left: $panelViewWidth * -1;
+}
+
+.panel-reveal-open {
 
 }
