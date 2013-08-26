@@ -11,10 +11,12 @@
   // Simple touch gesture that triggers an event when an element is touched
   framework.Gesture.Touch = {
     handle: function(e) {
-      framework.EventController.trigger('touch', {
-        cancelable: true,
-        bubbles: true
-      });
+      if(e.type == 'touchstart') {
+        framework.EventController.trigger('touch', {
+          cancelable: true,
+          bubbles: true
+        });
+      }
     }
   };
 
@@ -23,20 +25,21 @@
     handle: function(e) {
       switch(e.type) {
         case 'touchstart':
+          this._touchStartX = e.touches[0].clientX;
+          this._touchStartY = e.touches[0].clientY;
+
           // We are now touching
           this._isTouching = true;
           // Reset the movement indicator
           this._hasMoved = false;
           break;
         case 'touchmove':
-          this._touchStartX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-          this._touchStartY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
-
-          var x = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX,
-              y = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+          var x = e.touches[0].clientX;
+              y = e.touches[0].clientY;
 
           // Check if the finger moved more than 10px, and then indicate we should cancel the tap
           if (Math.abs(x - this._touchStartX) > 10 || Math.abs(y - this._touchStartY) > 10) {
+            console.log('HAS MOVED');
             this._hasMoved = true;
           }
           break;
