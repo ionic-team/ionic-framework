@@ -1,27 +1,4 @@
 @charset "UTF-8";
-.alert {
-  padding: 8px 35px 8px 14px; }
-
-.alert h4 {
-  margin: 0; }
-
-.alert .close {
-  position: relative;
-  top: -2px;
-  right: -21px;
-  line-height: 1.42857; }
-
-.alert-block {
-  padding-top: 14px;
-  padding-bottom: 14px; }
-
-.alert-block > p,
-.alert-block > ul {
-  margin-bottom: 0; }
-
-.alert-block p + p {
-  margin-top: 5px; }
-
 html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%; }
@@ -32,8 +9,7 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
-  margin: 0;
-  font: 14px/1.25 "Helvetica Neue", sans-serif; }
+  margin: 0; }
 
 a {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
@@ -59,7 +35,6 @@ main {
   bottom: 0;
   left: 0;
   overflow: auto;
-  background-color: #fff;
   -webkit-overflow-scrolling: touch; }
 
 /* Hack to force all relatively and absolutely positioned elements still render while scrolling
@@ -71,59 +46,35 @@ main > * {
 .content-padded {
   padding: 10px; }
 
-.ptr-capable {
-  -webkit-user-drag: element; }
+.alert {
+  padding: 8px 35px 8px 14px; }
 
-.ptr-content {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: auto;
-  height: 0; }
-
-.ptr-content .pulling {
-  display: none; }
-
-.ptr-content .refreshing {
-  display: none; }
-
-/* the page content the panel should move around */
-.panel-page-container {
-  left: 100px; }
-
-/* the container of panel content to show */
-.panel-content {
-  width: 17em;
-  min-height: 100%;
-  max-height: 100%;
-  border-width: 0;
-  position: absolute;
-  top: 0;
-  display: block; }
-
-.panel-reveal {
-  z-index: 0;
-  left: -17em; }
-
-.button {
-  position: relative;
-  display: block;
-  vertical-align: middle;
-  text-align: center;
-  cursor: pointer;
+.alert h4 {
   margin: 0; }
-  .button.button-inline {
-    display: inline-block; }
-  .button.button-borderless {
-    border: none; }
+
+.alert .close {
+  position: relative;
+  top: -2px;
+  right: -21px;
+  line-height: 1.42857; }
+
+.alert-block {
+  padding-top: 14px;
+  padding-bottom: 14px; }
+
+.alert-block > p,
+.alert-block > ul {
+  margin-bottom: 0; }
+
+.alert-block p + p {
+  margin-top: 5px; }
 
 .bar {
   position: fixed;
   right: 0;
   left: 0;
   z-index: 10;
+  width: 100%;
   display: -webkit-box;
   display: box;
   -webkit-box-orient: horizontal;
@@ -177,52 +128,17 @@ main > * {
 .has-footer {
   bottom: 44px; }
 
-/* Bar docked to bottom used for primary app navigation */
-.tabs {
-  right: 0;
-  left: 0;
-  bottom: 0;
-  height: 50px;
-  padding: 0;
-  box-sizing: border-box;
-  position: fixed; }
-
-.tabs-inner {
-  display: -webkit-box;
-  display: box;
-  height: 100%;
-  list-style: none;
-  -webkit-box-orient: horizontal;
-  box-orient: horizontal; }
-
-/* Navigational tab */
-.tab-item {
-  height: 100%;
-  text-align: center;
-  box-sizing: border-box;
-  -webkit-box-flex: 1;
-  box-flex: 1; }
-  .tab-item a {
-    text-decoration: none;
-    display: block;
-    width: 100%;
-    height: 100%; }
-
-/* Active state for tab */
-.tab-item.active, .tab-item:active {
-  background-color: rgba(0, 0, 0, 0.2); }
-
-/* Icon for tab  */
-.tab-item i {
+.button {
+  position: relative;
   display: block;
-  margin: 0 auto; }
-
-/* Label for tab */
-.tab-label {
-  margin-top: 1px;
-  font-size: 10px;
-  font-weight: bold;
-  color: #fff; }
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  margin: 0; }
+  .button.button-inline {
+    display: inline-block; }
+  .button.button-borderless {
+    border: none; }
 
 .button-group {
   position: relative;
@@ -308,6 +224,97 @@ a.list-item {
 .list-item-text {
   margin-bottom: 0;
   line-height: 1.3; }
+
+/* the page content the panel should move around */
+.panel-page-container {
+  left: 100px; }
+
+/* the container of panel content to show */
+.panel-content {
+  width: 17em;
+  min-height: 100%;
+  max-height: 100%;
+  border-width: 0;
+  position: absolute;
+  top: 0;
+  display: block; }
+
+.panel-reveal {
+  z-index: 0;
+  left: -17em; }
+
+.ptr-capable {
+  -webkit-user-drag: element; }
+
+.ptr-content {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  height: 0; }
+
+.ptr-content .pulling {
+  display: none; }
+
+.ptr-content .refreshing {
+  display: none; }
+
+/* Bar docked to bottom used for primary app navigation */
+.tabs {
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 50px;
+  padding: 0;
+  box-sizing: border-box;
+  position: fixed; }
+
+.tabs-inner {
+  display: -webkit-box;
+  display: box;
+  height: 100%;
+  list-style: none;
+  -webkit-box-orient: horizontal;
+  box-orient: horizontal; }
+
+/* Navigational tab */
+.tab-item {
+  height: 100%;
+  text-align: center;
+  box-sizing: border-box;
+  -webkit-box-flex: 1;
+  box-flex: 1; }
+  .tab-item a {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 100%; }
+
+/* Active state for tab */
+.tab-item.active, .tab-item:active {
+  background-color: rgba(0, 0, 0, 0.2); }
+
+/* Icon for tab  */
+.tab-item i {
+  display: block;
+  margin: 0 auto; }
+
+/* Label for tab */
+.tab-label {
+  margin-top: 1px;
+  font-size: 10px;
+  font-weight: bold;
+  color: #fff; }
+
+body {
+  font-size: 14px;
+  line-height: 1.25;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+main {
+  background-color: white; }
 
 .alert {
   margin-bottom: 1.42857;
@@ -407,16 +414,6 @@ a.list-item {
     color: white; }
     .bar.bar-dark .tab-item a {
       color: white; }
-
-.tabs {
-  font-size: 16px;
-  height: 60px; }
-
-.tab-item a {
-  font-family: "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 200; }
-.tab-item i {
-  font-size: 25px; }
 
 .button {
   color: #222222;
@@ -529,8 +526,18 @@ a.list-item {
 a.list-item {
   color: #333333; }
 
+.panel-content {
+  background: #eeeeee; }
+
 .ptr-content {
   background: #eee; }
 
-.panel-content {
-  background: #eeeeee; }
+.tabs {
+  font-size: 16px;
+  height: 60px; }
+
+.tab-item a {
+  font-family: "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 200; }
+.tab-item i {
+  font-size: 25px; }

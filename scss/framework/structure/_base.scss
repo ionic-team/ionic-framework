@@ -12,7 +12,6 @@ body {
   bottom: 0;
   left: 0;
   margin: 0;
-  font: 14px/1.25 "Helvetica Neue", sans-serif;
 }
 
 // Remove tap highlight color on Safari
@@ -40,8 +39,6 @@ main {
   bottom: 0;
   left: 0;
   overflow: auto;
-  background-color: #fff;
-
    -webkit-overflow-scrolling: touch;
 }
 
