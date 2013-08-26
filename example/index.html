@@ -5,67 +5,43 @@
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-
-    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    
-    <!-- Set a shorter title for iOS6 devices when saved to home screen -->
-    <meta name="apple-mobile-web-app-title" content="">
-
-    <!-- Set Apple icons for when prototype is saved to home screen -->
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="touch-icons/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="touch-icons/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="touch-icons/apple-touch-icon-57x57.png">
-
-    <link rel="stylesheet" href="../dist/framework-with-theme.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="../../dist/framework-with-theme.css">
     <link rel="stylesheet" href="app.css">
-
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-animate.min.js"></script>
+    
     <script src="app.js"></script>
   </head>
   <body>
 
     <section>
 
-      <header class="bar bar-header bar-secondary" data-template="primary-header">
-        <a class="button button-previous" data-history-go="-1" href="#">
-          <i class="icon-arrow-left"></i>
-        </a>
-        <h1 class="title">Willkommen!</h1>
-        <a class="button button-next" data-history-go="1" href="#">
-          <i class="icon-arrow-right"></i>
-        </a>
+      <header class="bar bar-header bar-dark">
+        <h1 class="title">Framework!!</h1>
       </header>
 
-      <main>
-        <p>
-          <a class="button button-default" href="buttons.html">Button Examples</a>
-        </p>
-        <p>
-          <a class="button button-default" href="listview.html">List View Example</a>
-        </p>
-        <p>
-          <a class="button button-default" href="grid.html">Grid Example</a>
-        </p>
+      <main class="content-padded">
+        <p><a class="button button-default" href="alerts.html">Alerts</a></p>
+        <p><a class="button button-default" href="buttons.html">Buttons</a></p>
+        <p><a class="button button-default" href="button-groups.html">Button Groups</a></p>
+        <p><a class="button button-default" href="footers.html">Footers</a></p>
+        <p><a class="button button-default" href="grids.html">Grids</a></p>
+        <p><a class="button button-default" href="headers.html">Headers</a></p>
+        <p><a class="button button-default" href="input-slider.html">Input: Slider</a></p>
+        <p><a class="button button-default" href="input-text.html">Input: Text</a></p>
+        <p><a class="button button-default" href="input-toggle.html">Input: Toggle</a></p>
+        <p><a class="button button-default" href="lists.html">Lists</a></p>
+        <p><a class="button button-default" href="modals.html">Modals</a></p>
+        <p><a class="button button-default" href="panels.html">Panels</a></p>
+        <p><a class="button button-default" href="popovers.html">Popovers</a></p>
+        <p><a class="button button-default" href="pull-to-refresh.html">Pull To Refresh</a></p>
+        <p><a class="button button-default" href="tab-bars.html">Tab Bars</a></p>
       </main>
 
-      <footer class="bar bar-footer bar-secondary">
-        <h1 class="title">Auf Wiedersehen</h1>
-      </footer>
-
     </section>
-
-    <script src="../js/jquery/jquery-1.10.2.js"></script>
-    <script src="../js/framework/framework-events.js"></script>
-    <script src="../js/framework/framework-transition.js"></script>
-    <script src="../js/framework/framework-navigation.js"></script>
-    <script src="../js/framework/framework-template.js"></script>
-    <script src="../js/framework/framework-buttons.js"></script>
-    <script src="../js/framework/test/event-listeners.js"></script>
-    <script src="../js/framework/framework-init.js"></script>
 
   </body>
 </html>
