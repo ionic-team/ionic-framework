@@ -2,7 +2,7 @@
   * Simple gesture controllers with some common gestures that emit
   * gesture events.
   *
-  * Much adapted from github.com/EightMedia/Hammer.js
+  * Much adapted from github.com/EightMedia/Hammer.js - thanks!
   */
 (function(window, document, framework) {
   // Gesture support
@@ -55,27 +55,180 @@
     }
   };
 
-  // A swipe-left gesture that emits the 'swipeleft' event when a left swipe
-  // is performed
-  framework.Gesture.SwipeLeft = {
+  // The gesture is over, trigger a release event
+  framework.Gesture.Release = {
     handle: function(e) {
+      if(e.type === 'touchend') {
+        framework.EventController.trigger('release', {
+          cancelable: true,
+          bubbles: true
+        });
+      }
     }
   };
+
+  // A swipe gesture that emits the 'swipe' event when a left swipe happens
+  framework.Gesture.Swipe = {
+    swipe_velocity: 0.7,
+    handle: function(e) {
+      if(e.type == 'touchend') {
+
+        if(e.velocityX > this.swipe_velocity ||
+            e.velocityY > this.swipe_velocity) {
+
+          // trigger swipe events, both a general swipe,
+          // and a directional swipe
+          framework.EventController.trigger('swipe', {
+            gesture: e,
+            cancelable: true,
+            bubbles: true
+          });
+          framework.EventController.trigger('swipe' + e.direction, {
+            gesture: e,
+            cancelable: true,
+            bubbles: true
+          });
+        }
+      }
+    }
+  };
+
 
   framework.GestureController  = {
     gestures: [
       framework.Gesture.Touch,
-      framework.Gesture.Tap
+      framework.Gesture.Tap,
+      framework.Gesture.Swipe
     ],
+
+    _annotateGestureEvent: function(e) {
+      // If this doesn't have touches, we need to grab the last set that did
+      var touches = e.touches;
+      if((!touches || !touches.length) && this._lastMoveEvent) {
+        touches = this._lastMoveEvent.touches;
+      }
+
+      e.center = this.getCenter(touches);
+      var startEv = this.currentGesture.startEvent;
+      var delta_time = e.timeStamp - startEv.timeStamp;
+      var delta_x = e.center.pageX - startEv.center.pageX;
+      var delta_y = e.center.pageY - startEv.center.pageY;
+      var velocity = this.getVelocity(delta_time, delta_x, delta_y);
+
+      framework.Utils.extend(e, {
+        touches         : touches,
+        deltaTime       : delta_time,
+
+        deltaX          : delta_x,
+        deltaY          : delta_y,
+
+        velocityX       : velocity.x,
+        velocityY       : velocity.y,
+
+        distance        : this.getDistance(startEv.center, e.center),
+        angle           : this.getAngle(startEv.center, e.center),
+        //interimAngle    : this.current.lastEvent && Hammer.utils.getAngle(this.current.lastEvent.center, e.center),
+        direction       : this.getDirection(startEv.center, e.center),
+        //interimDirection: this.current.lastEvent && Hammer.utils.getDirection(this.current.lastEvent.center, e.center),
+
+        scale           : this.getScale(startEv.touches, touches),
+        rotation        : this.getRotation(startEv.touches, touches),
+
+        startEvent      : startEv
+      });
+
+
+      return e;
+    },
+
+    _getFakeEvent: function(e) {
+      return {
+        center      : this.getCenter(e.touches),
+        timeStamp   : new Date().getTime(),
+        target      : e.target,
+        touches     : e.touches,
+        eventType   : e.type,
+        srcEvent    : e,
+
+        /*
+        // prevent the browser default actions
+        // mostly used to disable scrolling of the browser
+        preventDefault: function() {
+          if(this.srcEvent.preventManipulation) {
+            this.srcEvent.preventManipulation();
+          }
+
+          if(this.srcEvent.preventDefault) {
+            this.srcEvent.preventDefault();
+          }
+        },
+        */
+
+        /**
+         * stop bubbling the event up to its parents
+         */
+        stopPropagation: function() {
+          this.srcEvent.stopPropagation();
+        },
+
+        //immediately stop gesture detection
+        //might be useful after a swipe was detected
+        //@return {*}
+        stopDetect: function() {
+          return Hammer.detection.stopDetect();
+        }
+      };
+    },
+
+    startGesture: function(e) {
+      console.log('START GESTURE');
+      // We only want to process one gesture at a time
+      if(this.currentGesture) {
+        return;
+      }
+
+      e = this._getFakeEvent(e);
+
+      this.currentGesture = e;
+      this.currentGesture.startEvent = framework.Utils.extend({}, e);
+      
+      if((e.touches && e.touches.length) || !this._lastMoveEvent) {
+        this._lastMoveEvent = e;
+      }
+
+      this.detectGesture(e);
+    },
     detectGesture: function(e) {
       var i;
 
+      if(e.touches && e.touches.length) {
+        this._lastMoveEvent = e;
+      }
+      
+      var eventData = this._annotateGestureEvent(e);
+      console.log("Event velocity:", eventData.velocityX, eventData.velocityY);
+
       for(i = 0; i < this.gestures.length; i++) {
-        if(this.gestures[i].handle(e)) {
-          console.log('GESTURECONTROLLER: Gesture handled');
+        if(this.gestures[i].handle(eventData) == false) {
+          console.log('GESTURECONTROLLER: Gesture handled and stopped.');
+          this.endGesture(eventData);
           return;
         }
       }
+
+      if(this.currentGesture) {
+        // Store this event so we can access it again later
+        this.currentGesture.lastEvent = eventData;
+      }
+
+      // It's over!
+      if(e.type === 'touchend' || e.type === 'touchcancel') {
+        this.endGesture(eventData);
+      }
+    },
+    endGesture: function(e) {
+      this.currentGesture = null;
+      this._lastMoveEvent = null;
     },
 
     /**
@@ -155,10 +308,10 @@
             y = Math.abs(touch1.pageY - touch2.pageY);
 
         if(x >= y) {
-            return touch1.pageX - touch2.pageX > 0 ? Hammer.DIRECTION_LEFT : Hammer.DIRECTION_RIGHT;
+            return touch1.pageX - touch2.pageX > 0 ? 'left' : 'right';
         }
         else {
-            return touch1.pageY - touch2.pageY > 0 ? Hammer.DIRECTION_UP : Hammer.DIRECTION_DOWN;
+            return touch1.pageY - touch2.pageY > 0 ? 'up': 'down';
         }
     },
 

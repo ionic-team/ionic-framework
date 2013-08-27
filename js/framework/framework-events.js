@@ -53,7 +53,7 @@
      */
     handleTouchStart: function(e) {
       console.log("EVENT: touchstart", e);
-      framework.GestureController.detectGesture(e);
+      framework.GestureController.startGesture(e);
     },
 
     /**
