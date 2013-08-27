@@ -98,7 +98,8 @@
     gestures: [
       framework.Gesture.Touch,
       framework.Gesture.Tap,
-      framework.Gesture.Swipe
+      framework.Gesture.Swipe,
+      framework.Gesture.Release,
     ],
 
     _annotateGestureEvent: function(e) {
@@ -147,7 +148,7 @@
         timeStamp   : new Date().getTime(),
         target      : e.target,
         touches     : e.touches,
-        eventType   : e.type,
+        type: e.type,
         srcEvent    : e,
 
         /*
@@ -206,10 +207,9 @@
       }
       
       var eventData = this._annotateGestureEvent(e);
-      console.log("Event velocity:", eventData.velocityX, eventData.velocityY);
 
       for(i = 0; i < this.gestures.length; i++) {
-        if(this.gestures[i].handle(eventData) == false) {
+        if(this.gestures[i].handle(eventData) === false) {
           console.log('GESTURECONTROLLER: Gesture handled and stopped.');
           this.endGesture(eventData);
           return;
