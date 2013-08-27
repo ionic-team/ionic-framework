@@ -13,20 +13,24 @@
 
     <section class="panel-page-container">
 
+      <section data-panel="left-panel" class="panel-content">
+        Panel!
+      </section>
+
       <header class="bar bar-header bar-dark">
         <h1 class="title">Panels</h1>
       </header>
 
       <main class="content-padded has-header">
         <p>A whole bunch of content</p>
-        <a class="button button-primary" href="#">Panel</a>
+        <a class="button button-primary" data-toggle-panel="left-panel" href="#">Panel</a>
       </main>
 
     </section>
 
-    <section class="panel-content panel-reveal">
-      Panel!
-    </section>
 
+    <script src="../../js/framework/framework-gestures.js"></script>
+    <script src="../../js/framework/framework-events.js"></script>
+    <script src="../../js/framework/framework-panel.js"></script>
   </body>
 </html>

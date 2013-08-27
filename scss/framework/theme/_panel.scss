@@ -1,4 +1,5 @@
 
 .panel-content {
-  background: $panelBackground;
+  background: $panelBackgroundColor;
+  border-right: 1px solid $panelInsetBorderColor;
 }

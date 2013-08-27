@@ -108,4 +108,5 @@ $infoBorder:              darken(adjust-hue($infoBackground, -10), 7%);
 
 
 // Panels
-$panelBackground:         #eee;
+$panelBackgroundColor:    #eee;
+$panelInsetBorderColor:   #bbb;
