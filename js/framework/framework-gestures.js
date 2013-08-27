@@ -12,10 +12,7 @@
   framework.Gesture.Touch = {
     handle: function(e) {
       if(e.type == 'touchstart') {
-        framework.EventController.trigger('touch', {
-          cancelable: true,
-          bubbles: true
-        });
+        framework.GestureController.triggerGestureEvent('touch', e);
       }
     }
   };
@@ -45,10 +42,7 @@
           break;
         case 'touchend':
           if(this._hasMoved == false) {
-            framework.EventController.trigger('tap', {
-              cancelable: true,
-              bubbles: true
-            });
+            framework.GestureController.triggerGestureEvent('tap', e);
           }
           break;
       }
@@ -59,10 +53,7 @@
   framework.Gesture.Release = {
     handle: function(e) {
       if(e.type === 'touchend') {
-        framework.EventController.trigger('release', {
-          cancelable: true,
-          bubbles: true
-        });
+        framework.GestureController.triggerGestureEvent('release', e);
       }
     }
   };
@@ -78,16 +69,8 @@
 
           // trigger swipe events, both a general swipe,
           // and a directional swipe
-          framework.EventController.trigger('swipe', {
-            gesture: e,
-            cancelable: true,
-            bubbles: true
-          });
-          framework.EventController.trigger('swipe' + e.direction, {
-            gesture: e,
-            cancelable: true,
-            bubbles: true
-          });
+          framework.GestureController.triggerGestureEvent('swipe', e);
+          framework.GestureController.triggerGestureEvent('swipe' + e.direction, e);
         }
       }
     }
@@ -101,6 +84,10 @@
       framework.Gesture.Swipe,
       framework.Gesture.Release,
     ],
+
+    triggerGestureEvent: function(type, e) {
+      framework.EventController.trigger(type, framework.Utils.extend({}, e));
+    },
 
     _annotateGestureEvent: function(e) {
       // If this doesn't have touches, we need to grab the last set that did

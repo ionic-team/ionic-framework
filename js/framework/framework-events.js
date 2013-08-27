@@ -21,8 +21,9 @@
      */
     trigger: function(eventType, data) {
       // TODO: Do we need to use the old-school createEvent stuff?
+      var event = new CustomEvent(eventType, data);
 
-      window.dispatchEvent(new CustomEvent(eventType, data));
+      data.target && data.target.dispatchEvent(event) || window.dispatchEvent(event);
     },
   
     /**

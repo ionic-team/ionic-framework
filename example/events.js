@@ -32,8 +32,6 @@ window.FM.on('swipe', function(e) {
     type: 'swipe',
     event: e
   });
-
-  e.target.classList.add('swipeleft');
 });
 window.FM.on('swiperight', function(e) {
   console.log('GOT SWIPE RIGHT', e);
