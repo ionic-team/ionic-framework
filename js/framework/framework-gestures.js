@@ -2,221 +2,556 @@
   * Simple gesture controllers with some common gestures that emit
   * gesture events.
   *
-  * Much adapted from github.com/EightMedia/Hammer.js - thanks!
+  * Ported from github.com/EightMedia/framework.Gestures.js - thanks!
   */
 (function(window, document, framework) {
-  // Gesture support
-  framework.Gesture = {}
+  
+  /**
+   * framework.Gestures
+   * use this to create instances
+   * @param   {HTMLElement}   element
+   * @param   {Object}        options
+   * @returns {framework.Gestures.Instance}
+   * @constructor
+   */
+  framework.Gesture = function(element, options) {
+    return new framework.Gestures.Instance(element, options || {});
+  };
 
-  // Simple touch gesture that triggers an event when an element is touched
-  framework.Gesture.Touch = {
-    handle: function(e) {
-      if(e.type == 'touchstart') {
-        framework.GestureController.triggerGestureEvent('touch', e);
+  framework.Gestures = {};
+
+  // default settings
+  framework.Gestures.defaults = {
+    // add styles and attributes to the element to prevent the browser from doing
+    // its native behavior. this doesnt prevent the scrolling, but cancels
+    // the contextmenu, tap highlighting etc
+    // set to false to disable this
+    stop_browser_behavior: {
+      // this also triggers onselectstart=false for IE
+      userSelect: 'none',
+      // this makes the element blocking in IE10 >, you could experiment with the value
+      // see for more options this issue; https://github.com/EightMedia/hammer.js/issues/241
+      touchAction: 'none',
+      touchCallout: 'none',
+      contentZooming: 'none',
+      userDrag: 'none',
+      tapHighlightColor: 'rgba(0,0,0,0)'
+    }
+
+                           // more settings are defined per gesture at gestures.js
+  };
+
+  // detect touchevents
+  framework.Gestures.HAS_POINTEREVENTS = window.navigator.pointerEnabled || window.navigator.msPointerEnabled;
+  framework.Gestures.HAS_TOUCHEVENTS = ('ontouchstart' in window);
+
+  // dont use mouseevents on mobile devices
+  framework.Gestures.MOBILE_REGEX = /mobile|tablet|ip(ad|hone|od)|android|silk/i;
+  framework.Gestures.NO_MOUSEEVENTS = framework.Gestures.HAS_TOUCHEVENTS && window.navigator.userAgent.match(framework.Gestures.MOBILE_REGEX);
+
+  // eventtypes per touchevent (start, move, end)
+  // are filled by framework.Gestures.event.determineEventTypes on setup
+  framework.Gestures.EVENT_TYPES = {};
+
+  // direction defines
+  framework.Gestures.DIRECTION_DOWN = 'down';
+  framework.Gestures.DIRECTION_LEFT = 'left';
+  framework.Gestures.DIRECTION_UP = 'up';
+  framework.Gestures.DIRECTION_RIGHT = 'right';
+
+  // pointer type
+  framework.Gestures.POINTER_MOUSE = 'mouse';
+  framework.Gestures.POINTER_TOUCH = 'touch';
+  framework.Gestures.POINTER_PEN = 'pen';
+
+  // touch event defines
+  framework.Gestures.EVENT_START = 'start';
+  framework.Gestures.EVENT_MOVE = 'move';
+  framework.Gestures.EVENT_END = 'end';
+
+  // hammer document where the base events are added at
+  framework.Gestures.DOCUMENT = window.document;
+
+  // plugins namespace
+  framework.Gestures.plugins = {};
+
+  // if the window events are set...
+  framework.Gestures.READY = false;
+
+  /**
+   * setup events to detect gestures on the document
+   */
+  function setup() {
+    if(framework.Gestures.READY) {
+      return;
+    }
+
+    // find what eventtypes we add listeners to
+    framework.Gestures.event.determineEventTypes();
+
+    // Register all gestures inside framework.Gestures.gestures
+    for(var name in framework.Gestures.gestures) {
+      if(framework.Gestures.gestures.hasOwnProperty(name)) {
+        framework.Gestures.detection.register(framework.Gestures.gestures[name]);
       }
+    }
+
+    // Add touch events on the document
+    framework.Gestures.event.onTouch(framework.Gestures.DOCUMENT, framework.Gestures.EVENT_MOVE, framework.Gestures.detection.detect);
+    framework.Gestures.event.onTouch(framework.Gestures.DOCUMENT, framework.Gestures.EVENT_END, framework.Gestures.detection.detect);
+
+    // framework.Gestures is ready...!
+    framework.Gestures.READY = true;
+  }
+
+  /**
+   * create new hammer instance
+   * all methods should return the instance itself, so it is chainable.
+   * @param   {HTMLElement}       element
+   * @param   {Object}            [options={}]
+   * @returns {framework.Gestures.Instance}
+   * @constructor
+   */
+  framework.Gestures.Instance = function(element, options) {
+    var self = this;
+
+    // setup framework.GesturesJS window events and register all gestures
+    // this also sets up the default options
+    setup();
+
+    this.element = element;
+
+    // start/stop detection option
+    this.enabled = true;
+
+    // merge options
+    this.options = framework.Gestures.utils.extend(
+        framework.Gestures.utils.extend({}, framework.Gestures.defaults),
+        options || {});
+
+    // add some css to the element to prevent the browser from doing its native behavoir
+    if(this.options.stop_browser_behavior) {
+      framework.Gestures.utils.stopDefaultBrowserBehavior(this.element, this.options.stop_browser_behavior);
+    }
+
+    // start detection on touchstart
+    framework.Gestures.event.onTouch(element, framework.Gestures.EVENT_START, function(ev) {
+      if(self.enabled) {
+        framework.Gestures.detection.startDetect(self, ev);
+      }
+    });
+
+    // return instance
+    return this;
+  };
+
+
+  framework.Gestures.Instance.prototype = {
+    /**
+     * bind events to the instance
+     * @param   {String}      gesture
+     * @param   {Function}    handler
+     * @returns {framework.Gestures.Instance}
+     */
+    on: function onEvent(gesture, handler){
+      var gestures = gesture.split(' ');
+      for(var t=0; t<gestures.length; t++) {
+        this.element.addEventListener(gestures[t], handler, false);
+      }
+      return this;
+    },
+
+
+    /**
+     * unbind events to the instance
+     * @param   {String}      gesture
+     * @param   {Function}    handler
+     * @returns {framework.Gestures.Instance}
+     */
+    off: function offEvent(gesture, handler){
+      var gestures = gesture.split(' ');
+      for(var t=0; t<gestures.length; t++) {
+        this.element.removeEventListener(gestures[t], handler, false);
+      }
+      return this;
+    },
+
+
+    /**
+     * trigger gesture event
+     * @param   {String}      gesture
+     * @param   {Object}      eventData
+     * @returns {framework.Gestures.Instance}
+     */
+    trigger: function triggerEvent(gesture, eventData){
+      // create DOM event
+      var event = framework.Gestures.DOCUMENT.createEvent('Event');
+      event.initEvent(gesture, true, true);
+      event.gesture = eventData;
+
+      // trigger on the target if it is in the instance element,
+      // this is for event delegation tricks
+      var element = this.element;
+      if(framework.Gestures.utils.hasParent(eventData.target, element)) {
+        element = eventData.target;
+      }
+
+      element.dispatchEvent(event);
+      return this;
+    },
+
+
+    /**
+     * enable of disable hammer.js detection
+     * @param   {Boolean}   state
+     * @returns {framework.Gestures.Instance}
+     */
+    enable: function enable(state) {
+      this.enabled = state;
+      return this;
     }
   };
 
-  // Simple tap gesture
-  framework.Gesture.Tap = {
-    handle: function(e) {
-      switch(e.type) {
-        case 'touchstart':
-          this._touchStartX = e.touches[0].clientX;
-          this._touchStartY = e.touches[0].clientY;
+  /**
+   * this holds the last move event,
+   * used to fix empty touchend issue
+   * see the onTouch event for an explanation
+   * @type {Object}
+   */
+  var last_move_event = null;
 
-          // We are now touching
-          this._isTouching = true;
-          // Reset the movement indicator
-          this._hasMoved = false;
-          break;
-        case 'touchmove':
-          var x = e.touches[0].clientX;
-              y = e.touches[0].clientY;
 
-          // Check if the finger moved more than 10px, and then indicate we should cancel the tap
-          if (Math.abs(x - this._touchStartX) > 10 || Math.abs(y - this._touchStartY) > 10) {
-            console.log('HAS MOVED');
-            this._hasMoved = true;
-          }
-          break;
-        case 'touchend':
-          if(this._hasMoved == false) {
-            framework.GestureController.triggerGestureEvent('tap', e);
-          }
-          break;
+  /**
+   * when the mouse is hold down, this is true
+   * @type {Boolean}
+   */
+  var enable_detect = false;
+
+
+  /**
+   * when touch events have been fired, this is true
+   * @type {Boolean}
+   */
+  var touch_triggered = false;
+
+
+  framework.Gestures.event = {
+    /**
+     * simple addEventListener
+     * @param   {HTMLElement}   element
+     * @param   {String}        type
+     * @param   {Function}      handler
+     */
+    bindDom: function(element, type, handler) {
+      var types = type.split(' ');
+      for(var t=0; t<types.length; t++) {
+        element.addEventListener(types[t], handler, false);
       }
-    }
-  };
-
-  // The gesture is over, trigger a release event
-  framework.Gesture.Release = {
-    handle: function(e) {
-      if(e.type === 'touchend') {
-        framework.GestureController.triggerGestureEvent('release', e);
-      }
-    }
-  };
-
-  // A swipe gesture that emits the 'swipe' event when a left swipe happens
-  framework.Gesture.Swipe = {
-    swipe_velocity: 0.7,
-    handle: function(e) {
-      if(e.type == 'touchend') {
-
-        if(e.velocityX > this.swipe_velocity ||
-            e.velocityY > this.swipe_velocity) {
-
-          // trigger swipe events, both a general swipe,
-          // and a directional swipe
-          framework.GestureController.triggerGestureEvent('swipe', e);
-          framework.GestureController.triggerGestureEvent('swipe' + e.direction, e);
-        }
-      }
-    }
-  };
-
-
-  framework.GestureController  = {
-    gestures: [
-      framework.Gesture.Touch,
-      framework.Gesture.Tap,
-      framework.Gesture.Swipe,
-      framework.Gesture.Release,
-    ],
-
-    triggerGestureEvent: function(type, e) {
-      framework.EventController.trigger(type, framework.Utils.extend({}, e));
     },
 
-    _annotateGestureEvent: function(e) {
-      // If this doesn't have touches, we need to grab the last set that did
-      var touches = e.touches;
-      if((!touches || !touches.length) && this._lastMoveEvent) {
-        touches = this._lastMoveEvent.touches;
-      }
 
-      e.center = this.getCenter(touches);
-      var startEv = this.currentGesture.startEvent;
-      var delta_time = e.timeStamp - startEv.timeStamp;
-      var delta_x = e.center.pageX - startEv.center.pageX;
-      var delta_y = e.center.pageY - startEv.center.pageY;
-      var velocity = this.getVelocity(delta_time, delta_x, delta_y);
+    /**
+     * touch events with mouse fallback
+     * @param   {HTMLElement}   element
+     * @param   {String}        eventType        like framework.Gestures.EVENT_MOVE
+     * @param   {Function}      handler
+     */
+    onTouch: function onTouch(element, eventType, handler) {
+      var self = this;
 
-      framework.Utils.extend(e, {
-        touches         : touches,
-        deltaTime       : delta_time,
+      this.bindDom(element, framework.Gestures.EVENT_TYPES[eventType], function bindDomOnTouch(ev) {
+        var sourceEventType = ev.type.toLowerCase();
 
-        deltaX          : delta_x,
-        deltaY          : delta_y,
-
-        velocityX       : velocity.x,
-        velocityY       : velocity.y,
-
-        distance        : this.getDistance(startEv.center, e.center),
-        angle           : this.getAngle(startEv.center, e.center),
-        //interimAngle    : this.current.lastEvent && Hammer.utils.getAngle(this.current.lastEvent.center, e.center),
-        direction       : this.getDirection(startEv.center, e.center),
-        //interimDirection: this.current.lastEvent && Hammer.utils.getDirection(this.current.lastEvent.center, e.center),
-
-        scale           : this.getScale(startEv.touches, touches),
-        rotation        : this.getRotation(startEv.touches, touches),
-
-        startEvent      : startEv
-      });
-
-
-      return e;
-    },
-
-    _getFakeEvent: function(e) {
-      return {
-        center      : this.getCenter(e.touches),
-        timeStamp   : new Date().getTime(),
-        target      : e.target,
-        touches     : e.touches,
-        type: e.type,
-        srcEvent    : e,
-
-        /*
-        // prevent the browser default actions
-        // mostly used to disable scrolling of the browser
-        preventDefault: function() {
-          if(this.srcEvent.preventManipulation) {
-            this.srcEvent.preventManipulation();
-          }
-
-          if(this.srcEvent.preventDefault) {
-            this.srcEvent.preventDefault();
-          }
-        },
-        */
-
-        /**
-         * stop bubbling the event up to its parents
-         */
-        stopPropagation: function() {
-          this.srcEvent.stopPropagation();
-        },
-
-        //immediately stop gesture detection
-        //might be useful after a swipe was detected
-        //@return {*}
-        stopDetect: function() {
-          return Hammer.detection.stopDetect();
-        }
-      };
-    },
-
-    startGesture: function(e) {
-      console.log('START GESTURE');
-      // We only want to process one gesture at a time
-      if(this.currentGesture) {
-        return;
-      }
-
-      e = this._getFakeEvent(e);
-
-      this.currentGesture = e;
-      this.currentGesture.startEvent = framework.Utils.extend({}, e);
-      
-      if((e.touches && e.touches.length) || !this._lastMoveEvent) {
-        this._lastMoveEvent = e;
-      }
-
-      this.detectGesture(e);
-    },
-    detectGesture: function(e) {
-      var i;
-
-      if(e.touches && e.touches.length) {
-        this._lastMoveEvent = e;
-      }
-      
-      var eventData = this._annotateGestureEvent(e);
-
-      for(i = 0; i < this.gestures.length; i++) {
-        if(this.gestures[i].handle(eventData) === false) {
-          console.log('GESTURECONTROLLER: Gesture handled and stopped.');
-          this.endGesture(eventData);
+        // onmouseup, but when touchend has been fired we do nothing.
+        // this is for touchdevices which also fire a mouseup on touchend
+        if(sourceEventType.match(/mouse/) && touch_triggered) {
           return;
         }
+
+        // mousebutton must be down or a touch event
+        else if( sourceEventType.match(/touch/) ||   // touch events are always on screen
+          sourceEventType.match(/pointerdown/) || // pointerevents touch
+          (sourceEventType.match(/mouse/) && ev.which === 1)   // mouse is pressed
+          ){
+            enable_detect = true;
+          }
+
+        // mouse isn't pressed
+        else if(sourceEventType.match(/mouse/) && ev.which !== 1) {
+          enable_detect = false;
+        }
+
+
+        // we are in a touch event, set the touch triggered bool to true,
+        // this for the conflicts that may occur on ios and android
+        if(sourceEventType.match(/touch|pointer/)) {
+          touch_triggered = true;
+        }
+
+        // count the total touches on the screen
+        var count_touches = 0;
+
+        // when touch has been triggered in this detection session
+        // and we are now handling a mouse event, we stop that to prevent conflicts
+        if(enable_detect) {
+          // update pointerevent
+          if(framework.Gestures.HAS_POINTEREVENTS && eventType != framework.Gestures.EVENT_END) {
+            count_touches = framework.Gestures.PointerEvent.updatePointer(eventType, ev);
+          }
+          // touch
+          else if(sourceEventType.match(/touch/)) {
+            count_touches = ev.touches.length;
+          }
+          // mouse
+          else if(!touch_triggered) {
+            count_touches = sourceEventType.match(/up/) ? 0 : 1;
+          }
+
+          // if we are in a end event, but when we remove one touch and
+          // we still have enough, set eventType to move
+          if(count_touches > 0 && eventType == framework.Gestures.EVENT_END) {
+            eventType = framework.Gestures.EVENT_MOVE;
+          }
+          // no touches, force the end event
+          else if(!count_touches) {
+            eventType = framework.Gestures.EVENT_END;
+          }
+
+          // store the last move event
+          if(count_touches || last_move_event === null) {
+            last_move_event = ev;
+          }
+
+          // trigger the handler
+          handler.call(framework.Gestures.detection, self.collectEventData(element, eventType, self.getTouchList(last_move_event, eventType), ev));
+
+          // remove pointerevent from list
+          if(framework.Gestures.HAS_POINTEREVENTS && eventType == framework.Gestures.EVENT_END) {
+            count_touches = framework.Gestures.PointerEvent.updatePointer(eventType, ev);
+          }
+        }
+
+        //debug(sourceEventType +" "+ eventType);
+
+        // on the end we reset everything
+        if(!count_touches) {
+          last_move_event = null;
+          enable_detect = false;
+          touch_triggered = false;
+          framework.Gestures.PointerEvent.reset();
+        }
+      });
+    },
+
+
+    /**
+     * we have different events for each device/browser
+     * determine what we need and set them in the framework.Gestures.EVENT_TYPES constant
+     */
+    determineEventTypes: function determineEventTypes() {
+      // determine the eventtype we want to set
+      var types;
+
+      // pointerEvents magic
+      if(framework.Gestures.HAS_POINTEREVENTS) {
+        types = framework.Gestures.PointerEvent.getEvents();
+      }
+      // on Android, iOS, blackberry, windows mobile we dont want any mouseevents
+      else if(framework.Gestures.NO_MOUSEEVENTS) {
+        types = [
+          'touchstart',
+          'touchmove',
+          'touchend touchcancel'];
+      }
+      // for non pointer events browsers and mixed browsers,
+      // like chrome on windows8 touch laptop
+      else {
+        types = [
+          'touchstart mousedown',
+          'touchmove mousemove',
+          'touchend touchcancel mouseup'];
       }
 
-      if(this.currentGesture) {
-        // Store this event so we can access it again later
-        this.currentGesture.lastEvent = eventData;
+      framework.Gestures.EVENT_TYPES[framework.Gestures.EVENT_START]  = types[0];
+      framework.Gestures.EVENT_TYPES[framework.Gestures.EVENT_MOVE]   = types[1];
+      framework.Gestures.EVENT_TYPES[framework.Gestures.EVENT_END]    = types[2];
+    },
+
+
+    /**
+     * create touchlist depending on the event
+     * @param   {Object}    ev
+     * @param   {String}    eventType   used by the fakemultitouch plugin
+     */
+    getTouchList: function getTouchList(ev/*, eventType*/) {
+      // get the fake pointerEvent touchlist
+      if(framework.Gestures.HAS_POINTEREVENTS) {
+        return framework.Gestures.PointerEvent.getTouchList();
+      }
+      // get the touchlist
+      else if(ev.touches) {
+        return ev.touches;
+      }
+      // make fake touchlist from mouse position
+      else {
+        ev.indentifier = 1;
+        return [ev];
+      }
+    },
+
+
+    /**
+     * collect event data for framework.Gestures js
+     * @param   {HTMLElement}   element
+     * @param   {String}        eventType        like framework.Gestures.EVENT_MOVE
+     * @param   {Object}        eventData
+     */
+    collectEventData: function collectEventData(element, eventType, touches, ev) {
+
+      // find out pointerType
+      var pointerType = framework.Gestures.POINTER_TOUCH;
+      if(ev.type.match(/mouse/) || framework.Gestures.PointerEvent.matchType(framework.Gestures.POINTER_MOUSE, ev)) {
+        pointerType = framework.Gestures.POINTER_MOUSE;
       }
 
-      // It's over!
-      if(e.type === 'touchend' || e.type === 'touchcancel') {
-        this.endGesture(eventData);
+      return {
+        center      : framework.Gestures.utils.getCenter(touches),
+                    timeStamp   : new Date().getTime(),
+                    target      : ev.target,
+                    touches     : touches,
+                    eventType   : eventType,
+                    pointerType : pointerType,
+                    srcEvent    : ev,
+
+                    /**
+                     * prevent the browser default actions
+                     * mostly used to disable scrolling of the browser
+                     */
+                    preventDefault: function() {
+                      if(this.srcEvent.preventManipulation) {
+                        this.srcEvent.preventManipulation();
+                      }
+
+                      if(this.srcEvent.preventDefault) {
+                        this.srcEvent.preventDefault();
+                      }
+                    },
+
+                    /**
+                     * stop bubbling the event up to its parents
+                     */
+                    stopPropagation: function() {
+                      this.srcEvent.stopPropagation();
+                    },
+
+                    /**
+                     * immediately stop gesture detection
+                     * might be useful after a swipe was detected
+                     * @return {*}
+                     */
+                    stopDetect: function() {
+                      return framework.Gestures.detection.stopDetect();
+                    }
+      };
+    }
+  };
+
+  framework.Gestures.PointerEvent = {
+    /**
+     * holds all pointers
+     * @type {Object}
+     */
+    pointers: {},
+
+    /**
+     * get a list of pointers
+     * @returns {Array}     touchlist
+     */
+    getTouchList: function() {
+      var self = this;
+      var touchlist = [];
+
+      // we can use forEach since pointerEvents only is in IE10
+      Object.keys(self.pointers).sort().forEach(function(id) {
+        touchlist.push(self.pointers[id]);
+      });
+      return touchlist;
+    },
+
+    /**
+     * update the position of a pointer
+     * @param   {String}   type             framework.Gestures.EVENT_END
+     * @param   {Object}   pointerEvent
+     */
+    updatePointer: function(type, pointerEvent) {
+      if(type == framework.Gestures.EVENT_END) {
+        this.pointers = {};
       }
+      else {
+        pointerEvent.identifier = pointerEvent.pointerId;
+        this.pointers[pointerEvent.pointerId] = pointerEvent;
+      }
+
+      return Object.keys(this.pointers).length;
     },
-    endGesture: function(e) {
-      this.currentGesture = null;
-      this._lastMoveEvent = null;
+
+    /**
+     * check if ev matches pointertype
+     * @param   {String}        pointerType     framework.Gestures.POINTER_MOUSE
+     * @param   {PointerEvent}  ev
+     */
+    matchType: function(pointerType, ev) {
+      if(!ev.pointerType) {
+        return false;
+      }
+
+      var types = {};
+      types[framework.Gestures.POINTER_MOUSE] = (ev.pointerType == ev.MSPOINTER_TYPE_MOUSE || ev.pointerType == framework.Gestures.POINTER_MOUSE);
+      types[framework.Gestures.POINTER_TOUCH] = (ev.pointerType == ev.MSPOINTER_TYPE_TOUCH || ev.pointerType == framework.Gestures.POINTER_TOUCH);
+      types[framework.Gestures.POINTER_PEN] = (ev.pointerType == ev.MSPOINTER_TYPE_PEN || ev.pointerType == framework.Gestures.POINTER_PEN);
+      return types[pointerType];
     },
+
+
+    /**
+     * get events
+     */
+    getEvents: function() {
+      return [
+        'pointerdown MSPointerDown',
+      'pointermove MSPointerMove',
+      'pointerup pointercancel MSPointerUp MSPointerCancel'
+        ];
+    },
+
+    /**
+     * reset the list
+     */
+    reset: function() {
+      this.pointers = {};
+    }
+  };
+
+
+  framework.Gestures.utils = {
+    /**
+     * extend method,
+     * also used for cloning when dest is an empty object
+     * @param   {Object}    dest
+     * @param   {Object}    src
+     * @parm	{Boolean}	merge		do a merge
+     * @returns {Object}    dest
+     */
+    extend: function extend(dest, src, merge) {
+      for (var key in src) {
+        if(dest[key] !== undefined && merge) {
+          continue;
+        }
+        dest[key] = src[key];
+      }
+      return dest;
+    },
+
 
     /**
      * find if a node is in the given parent
@@ -226,13 +561,13 @@
      * @returns {boolean}       has_parent
      */
     hasParent: function(node, parent) {
-        while(node){
-            if(node == parent) {
-                return true;
-            }
-            node = node.parentNode;
+      while(node){
+        if(node == parent) {
+          return true;
         }
-        return false;
+        node = node.parentNode;
+      }
+      return false;
     },
 
 
@@ -242,17 +577,17 @@
      * @returns {Object}    center
      */
     getCenter: function getCenter(touches) {
-        var valuesX = [], valuesY = [];
+      var valuesX = [], valuesY = [];
 
-        for(var t= 0,len=touches.length; t<len; t++) {
-            valuesX.push(touches[t].pageX);
-            valuesY.push(touches[t].pageY);
-        }
+      for(var t= 0,len=touches.length; t<len; t++) {
+        valuesX.push(touches[t].pageX);
+        valuesY.push(touches[t].pageY);
+      }
 
-        return {
-            pageX: ((Math.min.apply(Math, valuesX) + Math.max.apply(Math, valuesX)) / 2),
-            pageY: ((Math.min.apply(Math, valuesY) + Math.max.apply(Math, valuesY)) / 2)
-        };
+      return {
+        pageX: ((Math.min.apply(Math, valuesX) + Math.max.apply(Math, valuesX)) / 2),
+          pageY: ((Math.min.apply(Math, valuesY) + Math.max.apply(Math, valuesY)) / 2)
+      };
     },
 
 
@@ -264,10 +599,10 @@
      * @returns {Object}    velocity
      */
     getVelocity: function getVelocity(delta_time, delta_x, delta_y) {
-        return {
-            x: Math.abs(delta_x / delta_time) || 0,
-            y: Math.abs(delta_y / delta_time) || 0
-        };
+      return {
+        x: Math.abs(delta_x / delta_time) || 0,
+        y: Math.abs(delta_y / delta_time) || 0
+      };
     },
 
 
@@ -278,9 +613,9 @@
      * @returns {Number}    angle
      */
     getAngle: function getAngle(touch1, touch2) {
-        var y = touch2.pageY - touch1.pageY,
-            x = touch2.pageX - touch1.pageX;
-        return Math.atan2(y, x) * 180 / Math.PI;
+      var y = touch2.pageY - touch1.pageY,
+      x = touch2.pageX - touch1.pageX;
+      return Math.atan2(y, x) * 180 / Math.PI;
     },
 
 
@@ -288,18 +623,18 @@
      * angle to direction define
      * @param   {Touch}     touch1
      * @param   {Touch}     touch2
-     * @returns {String}    direction constant, like Hammer.DIRECTION_LEFT
+     * @returns {String}    direction constant, like framework.Gestures.DIRECTION_LEFT
      */
     getDirection: function getDirection(touch1, touch2) {
-        var x = Math.abs(touch1.pageX - touch2.pageX),
-            y = Math.abs(touch1.pageY - touch2.pageY);
+      var x = Math.abs(touch1.pageX - touch2.pageX),
+      y = Math.abs(touch1.pageY - touch2.pageY);
 
-        if(x >= y) {
-            return touch1.pageX - touch2.pageX > 0 ? 'left' : 'right';
-        }
-        else {
-            return touch1.pageY - touch2.pageY > 0 ? 'up': 'down';
-        }
+      if(x >= y) {
+        return touch1.pageX - touch2.pageX > 0 ? framework.Gestures.DIRECTION_LEFT : framework.Gestures.DIRECTION_RIGHT;
+      }
+      else {
+        return touch1.pageY - touch2.pageY > 0 ? framework.Gestures.DIRECTION_UP : framework.Gestures.DIRECTION_DOWN;
+      }
     },
 
 
@@ -310,9 +645,9 @@
      * @returns {Number}    distance
      */
     getDistance: function getDistance(touch1, touch2) {
-        var x = touch2.pageX - touch1.pageX,
-            y = touch2.pageY - touch1.pageY;
-        return Math.sqrt((x*x) + (y*y));
+      var x = touch2.pageX - touch1.pageX,
+      y = touch2.pageY - touch1.pageY;
+      return Math.sqrt((x*x) + (y*y));
     },
 
 
@@ -324,12 +659,12 @@
      * @returns {Number}    scale
      */
     getScale: function getScale(start, end) {
-        // need two fingers...
-        if(start.length >= 2 && end.length >= 2) {
-            return this.getDistance(end[0], end[1]) /
-                this.getDistance(start[0], start[1]);
-        }
-        return 1;
+      // need two fingers...
+      if(start.length >= 2 && end.length >= 2) {
+        return this.getDistance(end[0], end[1]) /
+          this.getDistance(start[0], start[1]);
+      }
+      return 1;
     },
 
 
@@ -340,12 +675,12 @@
      * @returns {Number}    rotation
      */
     getRotation: function getRotation(start, end) {
-        // need two fingers
-        if(start.length >= 2 && end.length >= 2) {
-            return this.getAngle(end[1], end[0]) -
-                this.getAngle(start[1], start[0]);
-        }
-        return 0;
+      // need two fingers
+      if(start.length >= 2 && end.length >= 2) {
+        return this.getAngle(end[1], end[0]) -
+          this.getAngle(start[1], start[0]);
+      }
+      return 0;
     },
 
 
@@ -355,7 +690,7 @@
      * @returns  {Boolean}   is_vertical
      */
     isVertical: function isVertical(direction) {
-        return (direction == Hammer.DIRECTION_UP || direction == Hammer.DIRECTION_DOWN);
+      return (direction == framework.Gestures.DIRECTION_UP || direction == framework.Gestures.DIRECTION_DOWN);
     },
 
 
@@ -365,46 +700,721 @@
      * @param   {Object}        css_props
      */
     stopDefaultBrowserBehavior: function stopDefaultBrowserBehavior(element, css_props) {
-        var prop,
-            vendors = ['webkit','khtml','moz','Moz','ms','o',''];
+      var prop,
+      vendors = ['webkit','khtml','moz','Moz','ms','o',''];
 
-        if(!css_props || !element.style) {
-            return;
-        }
+      if(!css_props || !element.style) {
+        return;
+      }
 
-        // with css properties for modern browsers
-        for(var i = 0; i < vendors.length; i++) {
-            for(var p in css_props) {
-                if(css_props.hasOwnProperty(p)) {
-                    prop = p;
+      // with css properties for modern browsers
+      for(var i = 0; i < vendors.length; i++) {
+        for(var p in css_props) {
+          if(css_props.hasOwnProperty(p)) {
+            prop = p;
 
-                    // vender prefix at the property
-                    if(vendors[i]) {
-                        prop = vendors[i] + prop.substring(0, 1).toUpperCase() + prop.substring(1);
-                    }
-
-                    // set the style
-                    element.style[prop] = css_props[p];
-                }
+            // vender prefix at the property
+            if(vendors[i]) {
+              prop = vendors[i] + prop.substring(0, 1).toUpperCase() + prop.substring(1);
             }
-        }
 
-        // also the disable onselectstart
-        if(css_props.userSelect == 'none') {
-            element.onselectstart = function() {
-                return false;
-            };
+            // set the style
+            element.style[prop] = css_props[p];
+          }
         }
-        
-        // and disable ondragstart
-        if(css_props.userDrag == 'none') {
-            element.ondragstart = function() {
-                return false;
-            };
-        }
+      }
+
+      // also the disable onselectstart
+      if(css_props.userSelect == 'none') {
+        element.onselectstart = function() {
+          return false;
+        };
+      }
     }
+  };
 
-  }
+
+  framework.Gestures.detection = {
+    // contains all registred framework.Gestures.gestures in the correct order
+    gestures: [],
+
+    // data of the current framework.Gestures.gesture detection session
+    current: null,
+
+    // the previous framework.Gestures.gesture session data
+    // is a full clone of the previous gesture.current object
+    previous: null,
+
+    // when this becomes true, no gestures are fired
+    stopped: false,
 
 
+    /**
+     * start framework.Gestures.gesture detection
+     * @param   {framework.Gestures.Instance}   inst
+     * @param   {Object}            eventData
+     */
+    startDetect: function startDetect(inst, eventData) {
+      // already busy with a framework.Gestures.gesture detection on an element
+      if(this.current) {
+        return;
+      }
+
+      this.stopped = false;
+
+      this.current = {
+        inst        : inst, // reference to framework.GesturesInstance we're working for
+        startEvent  : framework.Gestures.utils.extend({}, eventData), // start eventData for distances, timing etc
+        lastEvent   : false, // last eventData
+        name        : '' // current gesture we're in/detected, can be 'tap', 'hold' etc
+      };
+
+      this.detect(eventData);
+    },
+
+
+    /**
+     * framework.Gestures.gesture detection
+     * @param   {Object}    eventData
+     */
+    detect: function detect(eventData) {
+      if(!this.current || this.stopped) {
+        return;
+      }
+
+      // extend event data with calculations about scale, distance etc
+      eventData = this.extendEventData(eventData);
+
+      // instance options
+      var inst_options = this.current.inst.options;
+
+      // call framework.Gestures.gesture handlers
+      for(var g=0,len=this.gestures.length; g<len; g++) {
+        var gesture = this.gestures[g];
+
+        // only when the instance options have enabled this gesture
+        if(!this.stopped && inst_options[gesture.name] !== false) {
+          // if a handler returns false, we stop with the detection
+          if(gesture.handler.call(gesture, eventData, this.current.inst) === false) {
+            this.stopDetect();
+            break;
+          }
+        }
+      }
+
+      // store as previous event event
+      if(this.current) {
+        this.current.lastEvent = eventData;
+      }
+
+      // endevent, but not the last touch, so dont stop
+      if(eventData.eventType == framework.Gestures.EVENT_END && !eventData.touches.length-1) {
+        this.stopDetect();
+      }
+
+      return eventData;
+    },
+
+
+    /**
+     * clear the framework.Gestures.gesture vars
+     * this is called on endDetect, but can also be used when a final framework.Gestures.gesture has been detected
+     * to stop other framework.Gestures.gestures from being fired
+     */
+    stopDetect: function stopDetect() {
+      // clone current data to the store as the previous gesture
+      // used for the double tap gesture, since this is an other gesture detect session
+      this.previous = framework.Gestures.utils.extend({}, this.current);
+
+      // reset the current
+      this.current = null;
+
+      // stopped!
+      this.stopped = true;
+    },
+
+
+    /**
+     * extend eventData for framework.Gestures.gestures
+     * @param   {Object}   ev
+     * @returns {Object}   ev
+     */
+    extendEventData: function extendEventData(ev) {
+      var startEv = this.current.startEvent;
+
+      // if the touches change, set the new touches over the startEvent touches
+      // this because touchevents don't have all the touches on touchstart, or the
+      // user must place his fingers at the EXACT same time on the screen, which is not realistic
+      // but, sometimes it happens that both fingers are touching at the EXACT same time
+      if(startEv && (ev.touches.length != startEv.touches.length || ev.touches === startEv.touches)) {
+        // extend 1 level deep to get the touchlist with the touch objects
+        startEv.touches = [];
+        for(var i=0,len=ev.touches.length; i<len; i++) {
+          startEv.touches.push(framework.Gestures.utils.extend({}, ev.touches[i]));
+        }
+      }
+
+      var delta_time = ev.timeStamp - startEv.timeStamp,
+          delta_x = ev.center.pageX - startEv.center.pageX,
+          delta_y = ev.center.pageY - startEv.center.pageY,
+          velocity = framework.Gestures.utils.getVelocity(delta_time, delta_x, delta_y);
+
+      framework.Gestures.utils.extend(ev, {
+        deltaTime   : delta_time,
+
+        deltaX      : delta_x,
+        deltaY      : delta_y,
+
+        velocityX   : velocity.x,
+        velocityY   : velocity.y,
+
+        distance    : framework.Gestures.utils.getDistance(startEv.center, ev.center),
+        angle       : framework.Gestures.utils.getAngle(startEv.center, ev.center),
+        direction   : framework.Gestures.utils.getDirection(startEv.center, ev.center),
+
+        scale       : framework.Gestures.utils.getScale(startEv.touches, ev.touches),
+        rotation    : framework.Gestures.utils.getRotation(startEv.touches, ev.touches),
+
+        startEvent  : startEv
+      });
+
+      return ev;
+    },
+
+
+    /**
+     * register new gesture
+     * @param   {Object}    gesture object, see gestures.js for documentation
+     * @returns {Array}     gestures
+     */
+    register: function register(gesture) {
+      // add an enable gesture options if there is no given
+      var options = gesture.defaults || {};
+      if(options[gesture.name] === undefined) {
+        options[gesture.name] = true;
+      }
+
+      // extend framework.Gestures default options with the framework.Gestures.gesture options
+      framework.Gestures.utils.extend(framework.Gestures.defaults, options, true);
+
+      // set its index
+      gesture.index = gesture.index || 1000;
+
+      // add framework.Gestures.gesture to the list
+      this.gestures.push(gesture);
+
+      // sort the list by index
+      this.gestures.sort(function(a, b) {
+        if (a.index < b.index) {
+          return -1;
+        }
+        if (a.index > b.index) {
+          return 1;
+        }
+        return 0;
+      });
+
+      return this.gestures;
+    }
+  };
+
+
+  framework.Gestures.gestures = framework.Gestures.gestures || {};
+
+  /**
+   * Custom gestures
+   * ==============================
+   *
+   * Gesture object
+   * --------------------
+   * The object structure of a gesture:
+   *
+   * { name: 'mygesture',
+   *   index: 1337,
+   *   defaults: {
+   *     mygesture_option: true
+   *   }
+   *   handler: function(type, ev, inst) {
+   *     // trigger gesture event
+   *     inst.trigger(this.name, ev);
+   *   }
+   * }
+
+   * @param   {String}    name
+   * this should be the name of the gesture, lowercase
+   * it is also being used to disable/enable the gesture per instance config.
+   *
+   * @param   {Number}    [index=1000]
+   * the index of the gesture, where it is going to be in the stack of gestures detection
+   * like when you build an gesture that depends on the drag gesture, it is a good
+   * idea to place it after the index of the drag gesture.
+   *
+   * @param   {Object}    [defaults={}]
+   * the default settings of the gesture. these are added to the instance settings,
+   * and can be overruled per instance. you can also add the name of the gesture,
+   * but this is also added by default (and set to true).
+   *
+   * @param   {Function}  handler
+   * this handles the gesture detection of your custom gesture and receives the
+   * following arguments:
+   *
+   *      @param  {Object}    eventData
+   *      event data containing the following properties:
+   *          timeStamp   {Number}        time the event occurred
+   *          target      {HTMLElement}   target element
+   *          touches     {Array}         touches (fingers, pointers, mouse) on the screen
+   *          pointerType {String}        kind of pointer that was used. matches framework.Gestures.POINTER_MOUSE|TOUCH
+   *          center      {Object}        center position of the touches. contains pageX and pageY
+   *          deltaTime   {Number}        the total time of the touches in the screen
+   *          deltaX      {Number}        the delta on x axis we haved moved
+   *          deltaY      {Number}        the delta on y axis we haved moved
+   *          velocityX   {Number}        the velocity on the x
+   *          velocityY   {Number}        the velocity on y
+   *          angle       {Number}        the angle we are moving
+   *          direction   {String}        the direction we are moving. matches framework.Gestures.DIRECTION_UP|DOWN|LEFT|RIGHT
+   *          distance    {Number}        the distance we haved moved
+   *          scale       {Number}        scaling of the touches, needs 2 touches
+   *          rotation    {Number}        rotation of the touches, needs 2 touches *
+   *          eventType   {String}        matches framework.Gestures.EVENT_START|MOVE|END
+   *          srcEvent    {Object}        the source event, like TouchStart or MouseDown *
+   *          startEvent  {Object}        contains the same properties as above,
+   *                                      but from the first touch. this is used to calculate
+   *                                      distances, deltaTime, scaling etc
+   *
+   *      @param  {framework.Gestures.Instance}    inst
+   *      the instance we are doing the detection for. you can get the options from
+   *      the inst.options object and trigger the gesture event by calling inst.trigger
+   *
+   *
+   * Handle gestures
+   * --------------------
+   * inside the handler you can get/set framework.Gestures.detection.current. This is the current
+   * detection session. It has the following properties
+   *      @param  {String}    name
+   *      contains the name of the gesture we have detected. it has not a real function,
+  *      only to check in other gestures if something is detected.
+    *      like in the drag gesture we set it to 'drag' and in the swipe gesture we can
+    *      check if the current gesture is 'drag' by accessing framework.Gestures.detection.current.name
+    *
+    *      @readonly
+    *      @param  {framework.Gestures.Instance}    inst
+    *      the instance we do the detection for
+    *
+    *      @readonly
+    *      @param  {Object}    startEvent
+    *      contains the properties of the first gesture detection in this session.
+    *      Used for calculations about timing, distance, etc.
+    *
+    *      @readonly
+    *      @param  {Object}    lastEvent
+    *      contains all the properties of the last gesture detect in this session.
+    *
+    * after the gesture detection session has been completed (user has released the screen)
+    * the framework.Gestures.detection.current object is copied into framework.Gestures.detection.previous,
+    * this is usefull for gestures like doubletap, where you need to know if the
+      * previous gesture was a tap
+      *
+      * options that have been set by the instance can be received by calling inst.options
+      *
+      * You can trigger a gesture event by calling inst.trigger("mygesture", event).
+      * The first param is the name of your gesture, the second the event argument
+      *
+      *
+      * Register gestures
+      * --------------------
+      * When an gesture is added to the framework.Gestures.gestures object, it is auto registered
+      * at the setup of the first framework.Gestures instance. You can also call framework.Gestures.detection.register
+      * manually and pass your gesture object as a param
+      *
+      */
+
+      /**
+       * Hold
+       * Touch stays at the same place for x time
+       * @events  hold
+       */
+      framework.Gestures.gestures.Hold = {
+        name: 'hold',
+        index: 10,
+        defaults: {
+          hold_timeout	: 500,
+          hold_threshold	: 1
+        },
+        timer: null,
+        handler: function holdGesture(ev, inst) {
+          switch(ev.eventType) {
+            case framework.Gestures.EVENT_START:
+              // clear any running timers
+              clearTimeout(this.timer);
+
+              // set the gesture so we can check in the timeout if it still is
+              framework.Gestures.detection.current.name = this.name;
+
+              // set timer and if after the timeout it still is hold,
+              // we trigger the hold event
+              this.timer = setTimeout(function() {
+                if(framework.Gestures.detection.current.name == 'hold') {
+                  inst.trigger('hold', ev);
+                }
+              }, inst.options.hold_timeout);
+              break;
+
+              // when you move or end we clear the timer
+            case framework.Gestures.EVENT_MOVE:
+              if(ev.distance > inst.options.hold_threshold) {
+                clearTimeout(this.timer);
+              }
+              break;
+
+            case framework.Gestures.EVENT_END:
+              clearTimeout(this.timer);
+              break;
+          }
+        }
+      };
+
+
+  /**
+   * Tap/DoubleTap
+   * Quick touch at a place or double at the same place
+   * @events  tap, doubletap
+   */
+  framework.Gestures.gestures.Tap = {
+    name: 'tap',
+    index: 100,
+    defaults: {
+      tap_max_touchtime	: 250,
+      tap_max_distance	: 10,
+      tap_always			: true,
+      doubletap_distance	: 20,
+      doubletap_interval	: 300
+    },
+    handler: function tapGesture(ev, inst) {
+      if(ev.eventType == framework.Gestures.EVENT_END) {
+        // previous gesture, for the double tap since these are two different gesture detections
+        var prev = framework.Gestures.detection.previous,
+        did_doubletap = false;
+
+        // when the touchtime is higher then the max touch time
+        // or when the moving distance is too much
+        if(ev.deltaTime > inst.options.tap_max_touchtime ||
+            ev.distance > inst.options.tap_max_distance) {
+              return;
+            }
+
+        // check if double tap
+        if(prev && prev.name == 'tap' &&
+            (ev.timeStamp - prev.lastEvent.timeStamp) < inst.options.doubletap_interval &&
+            ev.distance < inst.options.doubletap_distance) {
+              inst.trigger('doubletap', ev);
+              did_doubletap = true;
+            }
+
+        // do a single tap
+        if(!did_doubletap || inst.options.tap_always) {
+          framework.Gestures.detection.current.name = 'tap';
+          inst.trigger(framework.Gestures.detection.current.name, ev);
+        }
+      }
+    }
+  };
+
+
+  /**
+   * Swipe
+   * triggers swipe events when the end velocity is above the threshold
+   * @events  swipe, swipeleft, swiperight, swipeup, swipedown
+   */
+  framework.Gestures.gestures.Swipe = {
+    name: 'swipe',
+    index: 40,
+    defaults: {
+      // set 0 for unlimited, but this can conflict with transform
+      swipe_max_touches  : 1,
+      swipe_velocity     : 0.7
+    },
+    handler: function swipeGesture(ev, inst) {
+      if(ev.eventType == framework.Gestures.EVENT_END) {
+        // max touches
+        if(inst.options.swipe_max_touches > 0 &&
+            ev.touches.length > inst.options.swipe_max_touches) {
+              return;
+            }
+
+        // when the distance we moved is too small we skip this gesture
+        // or we can be already in dragging
+        if(ev.velocityX > inst.options.swipe_velocity ||
+            ev.velocityY > inst.options.swipe_velocity) {
+              // trigger swipe events
+              inst.trigger(this.name, ev);
+              inst.trigger(this.name + ev.direction, ev);
+            }
+      }
+    }
+  };
+
+
+  /**
+   * Drag
+   * Move with x fingers (default 1) around on the page. Blocking the scrolling when
+   * moving left and right is a good practice. When all the drag events are blocking
+   * you disable scrolling on that area.
+   * @events  drag, drapleft, dragright, dragup, dragdown
+   */
+  framework.Gestures.gestures.Drag = {
+    name: 'drag',
+    index: 50,
+    defaults: {
+      drag_min_distance : 10,
+      // Set correct_for_drag_min_distance to true to make the starting point of the drag
+      // be calculated from where the drag was triggered, not from where the touch started.
+      // Useful to avoid a jerk-starting drag, which can make fine-adjustments
+      // through dragging difficult, and be visually unappealing.
+      correct_for_drag_min_distance : true,
+      // set 0 for unlimited, but this can conflict with transform
+      drag_max_touches  : 1,
+      // prevent default browser behavior when dragging occurs
+      // be careful with it, it makes the element a blocking element
+      // when you are using the drag gesture, it is a good practice to set this true
+      drag_block_horizontal   : false,
+      drag_block_vertical     : false,
+      // drag_lock_to_axis keeps the drag gesture on the axis that it started on,
+      // It disallows vertical directions if the initial direction was horizontal, and vice versa.
+      drag_lock_to_axis       : false,
+      // drag lock only kicks in when distance > drag_lock_min_distance
+      // This way, locking occurs only when the distance has become large enough to reliably determine the direction
+      drag_lock_min_distance : 25
+    },
+    triggered: false,
+    handler: function dragGesture(ev, inst) {
+      // current gesture isnt drag, but dragged is true
+      // this means an other gesture is busy. now call dragend
+      if(framework.Gestures.detection.current.name != this.name && this.triggered) {
+        inst.trigger(this.name +'end', ev);
+        this.triggered = false;
+        return;
+      }
+
+      // max touches
+      if(inst.options.drag_max_touches > 0 &&
+          ev.touches.length > inst.options.drag_max_touches) {
+            return;
+          }
+
+      switch(ev.eventType) {
+        case framework.Gestures.EVENT_START:
+          this.triggered = false;
+          break;
+
+        case framework.Gestures.EVENT_MOVE:
+          // when the distance we moved is too small we skip this gesture
+          // or we can be already in dragging
+          if(ev.distance < inst.options.drag_min_distance &&
+              framework.Gestures.detection.current.name != this.name) {
+                return;
+              }
+
+          // we are dragging!
+          if(framework.Gestures.detection.current.name != this.name) {
+            framework.Gestures.detection.current.name = this.name;
+            if (inst.options.correct_for_drag_min_distance) {
+              // When a drag is triggered, set the event center to drag_min_distance pixels from the original event center.
+              // Without this correction, the dragged distance would jumpstart at drag_min_distance pixels instead of at 0.
+              // It might be useful to save the original start point somewhere
+              var factor = Math.abs(inst.options.drag_min_distance/ev.distance);
+              framework.Gestures.detection.current.startEvent.center.pageX += ev.deltaX * factor;
+              framework.Gestures.detection.current.startEvent.center.pageY += ev.deltaY * factor;
+
+              // recalculate event data using new start point
+              ev = framework.Gestures.detection.extendEventData(ev);
+            }
+          }
+
+          // lock drag to axis?
+          if(framework.Gestures.detection.current.lastEvent.drag_locked_to_axis || (inst.options.drag_lock_to_axis && inst.options.drag_lock_min_distance<=ev.distance)) {
+            ev.drag_locked_to_axis = true;
+          }
+          var last_direction = framework.Gestures.detection.current.lastEvent.direction;
+          if(ev.drag_locked_to_axis && last_direction !== ev.direction) {
+            // keep direction on the axis that the drag gesture started on
+            if(framework.Gestures.utils.isVertical(last_direction)) {
+              ev.direction = (ev.deltaY < 0) ? framework.Gestures.DIRECTION_UP : framework.Gestures.DIRECTION_DOWN;
+            }
+            else {
+              ev.direction = (ev.deltaX < 0) ? framework.Gestures.DIRECTION_LEFT : framework.Gestures.DIRECTION_RIGHT;
+            }
+          }
+
+          // first time, trigger dragstart event
+          if(!this.triggered) {
+            inst.trigger(this.name +'start', ev);
+            this.triggered = true;
+          }
+
+          // trigger normal event
+          inst.trigger(this.name, ev);
+
+          // direction event, like dragdown
+          inst.trigger(this.name + ev.direction, ev);
+
+          // block the browser events
+          if( (inst.options.drag_block_vertical && framework.Gestures.utils.isVertical(ev.direction)) ||
+              (inst.options.drag_block_horizontal && !framework.Gestures.utils.isVertical(ev.direction))) {
+                ev.preventDefault();
+              }
+          break;
+
+        case framework.Gestures.EVENT_END:
+          // trigger dragend
+          if(this.triggered) {
+            inst.trigger(this.name +'end', ev);
+          }
+
+          this.triggered = false;
+          break;
+      }
+    }
+  };
+
+
+  /**
+   * Transform
+   * User want to scale or rotate with 2 fingers
+   * @events  transform, pinch, pinchin, pinchout, rotate
+   */
+  framework.Gestures.gestures.Transform = {
+    name: 'transform',
+    index: 45,
+    defaults: {
+      // factor, no scale is 1, zoomin is to 0 and zoomout until higher then 1
+      transform_min_scale     : 0.01,
+      // rotation in degrees
+      transform_min_rotation  : 1,
+      // prevent default browser behavior when two touches are on the screen
+      // but it makes the element a blocking element
+      // when you are using the transform gesture, it is a good practice to set this true
+      transform_always_block  : false
+    },
+    triggered: false,
+    handler: function transformGesture(ev, inst) {
+      // current gesture isnt drag, but dragged is true
+      // this means an other gesture is busy. now call dragend
+      if(framework.Gestures.detection.current.name != this.name && this.triggered) {
+        inst.trigger(this.name +'end', ev);
+        this.triggered = false;
+        return;
+      }
+
+      // atleast multitouch
+      if(ev.touches.length < 2) {
+        return;
+      }
+
+      // prevent default when two fingers are on the screen
+      if(inst.options.transform_always_block) {
+        ev.preventDefault();
+      }
+
+      switch(ev.eventType) {
+        case framework.Gestures.EVENT_START:
+          this.triggered = false;
+          break;
+
+        case framework.Gestures.EVENT_MOVE:
+          var scale_threshold = Math.abs(1-ev.scale);
+          var rotation_threshold = Math.abs(ev.rotation);
+
+          // when the distance we moved is too small we skip this gesture
+          // or we can be already in dragging
+          if(scale_threshold < inst.options.transform_min_scale &&
+              rotation_threshold < inst.options.transform_min_rotation) {
+                return;
+              }
+
+          // we are transforming!
+          framework.Gestures.detection.current.name = this.name;
+
+          // first time, trigger dragstart event
+          if(!this.triggered) {
+            inst.trigger(this.name +'start', ev);
+            this.triggered = true;
+          }
+
+          inst.trigger(this.name, ev); // basic transform event
+
+          // trigger rotate event
+          if(rotation_threshold > inst.options.transform_min_rotation) {
+            inst.trigger('rotate', ev);
+          }
+
+          // trigger pinch event
+          if(scale_threshold > inst.options.transform_min_scale) {
+            inst.trigger('pinch', ev);
+            inst.trigger('pinch'+ ((ev.scale < 1) ? 'in' : 'out'), ev);
+          }
+          break;
+
+        case framework.Gestures.EVENT_END:
+          // trigger dragend
+          if(this.triggered) {
+            inst.trigger(this.name +'end', ev);
+          }
+
+          this.triggered = false;
+          break;
+      }
+    }
+  };
+
+
+  /**
+   * Touch
+   * Called as first, tells the user has touched the screen
+   * @events  touch
+   */
+  framework.Gestures.gestures.Touch = {
+    name: 'touch',
+    index: -Infinity,
+    defaults: {
+      // call preventDefault at touchstart, and makes the element blocking by
+      // disabling the scrolling of the page, but it improves gestures like
+      // transforming and dragging.
+      // be careful with using this, it can be very annoying for users to be stuck
+      // on the page
+      prevent_default: false,
+
+      // disable mouse events, so only touch (or pen!) input triggers events
+      prevent_mouseevents: false
+    },
+    handler: function touchGesture(ev, inst) {
+      if(inst.options.prevent_mouseevents && ev.pointerType == framework.Gestures.POINTER_MOUSE) {
+        ev.stopDetect();
+        return;
+      }
+
+      if(inst.options.prevent_default) {
+        ev.preventDefault();
+      }
+
+      if(ev.eventType ==  framework.Gestures.EVENT_START) {
+        inst.trigger(this.name, ev);
+      }
+    }
+  };
+
+
+  /**
+   * Release
+   * Called as last, tells the user has released the screen
+   * @events  release
+   */
+  framework.Gestures.gestures.Release = {
+    name: 'release',
+    index: Infinity,
+    handler: function releaseGesture(ev, inst) {
+      if(ev.eventType ==  framework.Gestures.EVENT_END) {
+        inst.trigger(this.name, ev);
+      }
+    }
+  };
 })(this, document, FM = this.FM || {});

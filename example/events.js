@@ -5,35 +5,47 @@ var logEvent = function(data) {
   console.log(data.event);
   e.appendChild(l);
 }
-window.FM.on('tap', function(e) {
+
+var tb = document.getElementById('tap-button');
+var sb = document.getElementById('swipe-button');
+
+window.FM.onGesture('tap', function(e) {
   console.log('GOT TAP', e);
   logEvent({
     type: 'tap',
     event: e
   });
-});
-window.FM.on('touch', function(e) {
+}, tb);
+window.FM.onGesture('touch', function(e) {
   console.log('GOT TOUCH', e);
   logEvent({
     type: 'touch',
     event: e
   });
-});
-window.FM.on('release', function(e) {
+}, tb);
+
+window.FM.onGesture('tap', function(e) {
+  console.log('GOT TAP', e);
+  logEvent({
+    type: 'tap',
+    event: e
+  });
+}, tb);
+window.FM.onGesture('release', function(e) {
   console.log('GOT RELEASE', e);
   logEvent({
     type: 'release',
     event: e
   });
-});
-window.FM.on('swipe', function(e) {
+}, tb);
+window.FM.onGesture('swipe', function(e) {
   console.log('GOT SWIPE', e);
   logEvent({
     type: 'swipe',
     event: e
   });
-});
-window.FM.on('swiperight', function(e) {
+}, sb);
+window.FM.onGesture('swiperight', function(e) {
   console.log('GOT SWIPE RIGHT', e);
   logEvent({
     type: 'swiperight',
@@ -41,8 +53,8 @@ window.FM.on('swiperight', function(e) {
   });
 
   e.target.classList.add('swiperight');
-});
-window.FM.on('swipeleft', function(e) {
+}, sb);
+window.FM.onGesture('swipeleft', function(e) {
   console.log('GOT SWIPE LEFT', e);
   logEvent({
     type: 'swipeleft',
@@ -50,18 +62,18 @@ window.FM.on('swipeleft', function(e) {
   });
 
   e.target.classList.add('swipeleft');
-});
-window.FM.on('swipeup', function(e) {
+}, sb);
+window.FM.onGesture('swipeup', function(e) {
   console.log('GOT SWIPE UP', e);
   logEvent({
     type: 'swipeup',
     event: e
   });
-});
-window.FM.on('swipedown', function(e) {
+}, sb);
+window.FM.onGesture('swipedown', function(e) {
   console.log('GOT SWIPE DOWN', e);
   logEvent({
     type: 'swipedown',
     event: e
   });
-});
+}, sb);

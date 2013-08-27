@@ -13,75 +13,36 @@
 (function(window, document, framework) {
   framework.EventController = {
 
-    // A map of event types that we virtually detect and emit
-    VIRTUAL_EVENT_TYPES: ['tap', 'swipeleft', 'swiperight'],
-  
-    /**
-     * Trigger a new event.
-     */
+    // Trigger a new event
     trigger: function(eventType, data) {
       // TODO: Do we need to use the old-school createEvent stuff?
       var event = new CustomEvent(eventType, data);
 
+      // Make sure to trigger the event on the given target, or dispatch it from
+      // the window if we don't have an event target
       data.target && data.target.dispatchEvent(event) || window.dispatchEvent(event);
     },
   
-    /**
-     * Shorthand for binding a new event listener to the given
-     * event type.
-     */
+    // Bind an event
     on: function(type, callback, element) {
-      var i;
       var e = element || window;
-      /*
-      var virtualTypes = framework.EventController.VIRTUAL_EVENT_TYPES;
-
-      for(i = 0; i < virtualTypes.length; i++) {
-        if(type.toLowerCase() == virtualTypes[i]) {
-          // TODO: listen for virtual event
-          return;
-        }
-      }
-      */
-
-      // Native listener
       e.addEventListener(type, callback);
     },
 
-
-    /**
-     * Process a touchstart event.
-     */
-    handleTouchStart: function(e) {
-      console.log("EVENT: touchstart", e);
-      framework.GestureController.startGesture(e);
+    off: function(type, callback, element) {
+      element.removeEventListener(type, callback);
     },
 
-    /**
-     * Process a touchmove event.
-     */
-    handleTouchMove: function(e) {
-      console.log("EVENT: touchmove", e);
-      framework.GestureController.detectGesture(e);
-
+    // Register for a new gesture event on the given element
+    onGesture: function(type, callback, element) {
+      var gesture = new framework.Gesture(element);
+      gesture.on(type, callback);
+      return gesture;
     },
 
-    /**
-     * Process a touchend event.
-     */
-    handleTouchEnd: function(e) {
-      console.log("EVENT: touchend", e);
-      framework.GestureController.detectGesture(e);
-    },
-
-
-    /**
-     * Process a touchcancel event.
-     */
-    handleTouchCancel: function(e) {
-      this._hasMoved = false;
-      this._touchStartX = null;
-      this._touchStartY = null;
+    // Unregister a previous gesture event
+    offGesture: function(gesture, type, callback) {
+      gesture.off(type, callback);
     },
 
     // With a click event, we need to check the target
@@ -122,13 +83,12 @@
   
   // Map some convenient top-level functions for event handling
   framework.on = framework.EventController.on;
+  framework.off = framework.EventController.off;
   framework.trigger = framework.EventController.trigger;
+  framework.onGesture = framework.EventController.onGesture;
+  framework.offGesture = framework.EventController.offGesture;
 
   // Set up various listeners
-  window.addEventListener('touchstart', framework.EventController.handleTouchStart);
-  window.addEventListener('touchmove', framework.EventController.handleTouchMove);
-  window.addEventListener('touchcancel', framework.EventController.handleTouchCancel);
-  window.addEventListener('touchend', framework.EventController.handleTouchEnd);
   window.addEventListener('click', framework.EventController.handleClick);
   window.addEventListener('popstate', framework.EventController.handlePopState);
 
