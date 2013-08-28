@@ -31,14 +31,14 @@
 
         // remove the panel-active css classes from each of the previously active panels
         for(x=0; x<panelsActive.length; x++) {
-          panelsActive[x].className = panelsActive[x].className.replace(PANEL_ACTIVE, "").trim();
+          panelsActive[x].classList.remove(PANEL_ACTIVE);
         }
 
         // activate the panel we want open by adding the panel-active css classes
-        panel.className += " " + PANEL_ACTIVE;
+        panel.classList.add(PANEL_ACTIVE);
 
         // add to <body> that there is a panel open
-        document.body.className += " " + PANEL_OPENED;
+        document.body.classList.add(PANEL_OPENED);
       }
     },
 
@@ -48,7 +48,7 @@
         isPanelOpen = false;
 
         // remove from <body> so that no panels should be open
-        document.body.className = document.body.className.replace(PANEL_OPENED, "").trim();
+        document.body.classList.remove(PANEL_OPENED);
       }
     }
 
