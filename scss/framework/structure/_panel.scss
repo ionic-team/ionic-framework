@@ -1,5 +1,5 @@
 
-[data-panel] {
+.ion-panel {
   display: none;
   min-height: 100%;
   max-height: 100%;
@@ -7,7 +7,7 @@
   top: 0;
   z-index: 0;
 }
-.panel-active {
+.ion-panel-active {
   display: block;
   width: $panelOpenWidth;
 }
@@ -26,11 +26,11 @@ header, main, footer {
   transform: translate3d(0, 0, 0);
 }
 
-.panel-opened > section > header,
-.panel-opened > section > main,
-.panel-opened > section > footer 
+.ion-panel-opened > section > header,
+.ion-panel-opened > section > main,
+.ion-panel-opened > section > footer 
 {
-    -webkit-transform: translate3d($panelOpenWidth, 0,0 );
-    -moz-transform: translate3d($panelOpenWidth, 0,0 );
-    transform: translate3d($panelOpenWidth, 0,0 );
+  -webkit-transform: translate3d($panelOpenWidth, 0,0 );
+  -moz-transform: translate3d($panelOpenWidth, 0,0 );
+  transform: translate3d($panelOpenWidth, 0,0 );
 }
