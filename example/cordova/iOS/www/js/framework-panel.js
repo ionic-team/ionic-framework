@@ -51,6 +51,6 @@
     }
   }
   
-  framework.onGesture("tap", onTap, document.getElementById('open-panel'));
+  //framework.onGesture("tap", onTap, document.getElementById('open-panel'));
 
 })(this, document, FM = this.FM || {});
