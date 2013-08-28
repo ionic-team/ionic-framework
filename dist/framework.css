@@ -227,7 +227,14 @@ a.list-item {
   max-height: 100%;
   position: absolute;
   top: 0;
+  bottom: 0;
   z-index: 0; }
+
+.ion-panel-active-left {
+  left: 0; }
+
+.ion-panel-active-right {
+  right: 0; }
 
 .ion-panel-active {
   display: block;
@@ -244,12 +251,19 @@ a.list-item {
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0); }
 
-.ion-panel-opened .bar-header,
-.ion-panel-opened .content,
-.ion-panel-opened .bar-footer {
+.ion-panel-left .bar-header,
+.ion-panel-left .content,
+.ion-panel-left .bar-footer {
   -webkit-transform: translate3d(270px, 0, 0);
   -moz-transform: translate3d(270px, 0, 0);
   transform: translate3d(270px, 0, 0); }
+
+.ion-panel-right .bar-header,
+.ion-panel-right .content,
+.ion-panel-right .bar-footer {
+  -webkit-transform: translate3d(-270px, 0, 0);
+  -moz-transform: translate3d(-270px, 0, 0);
+  transform: translate3d(-270px, 0, 0); }
 
 .ptr-capable {
   -webkit-user-drag: element; }
@@ -535,8 +549,13 @@ a.list-item {
   color: #333333; }
 
 .ion-panel {
-  background: #eeeeee;
+  background: #eeeeee; }
+
+.ion-panel-left .ion-panel {
   border-right: 1px solid #bbbbbb; }
+
+.ion-panel-right .ion-panel {
+  border-left: 1px solid #bbbbbb; }
 
 .ptr-content {
   background: #eee; }

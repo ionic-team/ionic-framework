@@ -14,12 +14,13 @@
     <section data-default-panel="my-left-panel">
 
       <header class="bar bar-header bar-dark">
-        <button class="button" data-toggle-panel="my-left-panel"></button>
+        <button class="button" data-panel-toggle="my-left-panel"></button>
         <h1 class="title">Panels</h1>
+        <button class="button" data-panel-toggle="my-right-panel" data-panel-direction="right"></button>
       </header>
 
       <main class="content content-padded has-header">
-        <p><button class="button button-primary" data-toggle-panel="my-other-left-panel">Other Left Side Panel</button></p>
+        <p><button class="button button-primary" data-panel-toggle="my-other-left-panel">Other Left Side Panel</button></p>
         <p id="event-log"></p>
       </main>
 
@@ -32,6 +33,10 @@
 
     <section id="my-left-panel" class="ion-panel">
       This is my default left side panel!
+    </section>
+
+    <section id="my-right-panel" class="ion-panel">
+      This is my right side panel!
     </section>
 
     <section id="my-other-left-panel" class="ion-panel">

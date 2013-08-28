@@ -5,19 +5,23 @@
   isPanelOpen,
 
   PANEL_ACTIVE = "ion-panel-active",
-  PANEL_OPENED = "ion-panel-opened";
+  PANEL_ACTIVE_LEFT = "ion-panel-active-left",
+  PANEL_ACTIVE_RIGHT = "ion-panel-active-right",
+
+  PANEL_OPEN_LEFT = "ion-panel-left",
+  PANEL_OPEN_RIGHT = "ion-panel-right";
 
   ion.Panel = {
 
-    toggle: function(panelId) {
+    toggle: function(panelId, options) {
       if(isPanelOpen) {
         this.close();
       } else {
-        this.open(panelId);
+        this.open(panelId, options);
       }
     },
 
-    open: function(panelId) {
+    open: function(panelId, options) {
       // see if there is an element with this id
       var panel = document.getElementById(panelId);
       if(panel) {
@@ -38,7 +42,14 @@
         panel.classList.add(PANEL_ACTIVE);
 
         // add to <body> that there is a panel open
-        document.body.classList.add(PANEL_OPENED);
+        if(options && options.direction === "right") {
+          panel.classList.add(PANEL_ACTIVE_RIGHT);
+          document.body.classList.add(PANEL_OPEN_RIGHT);
+        } else {
+          // left is the default
+          panel.classList.add(PANEL_ACTIVE_LEFT);
+          document.body.classList.add(PANEL_OPEN_LEFT);
+        }
       }
     },
 
@@ -48,7 +59,9 @@
         isPanelOpen = false;
 
         // remove from <body> so that no panels should be open
-        document.body.classList.remove(PANEL_OPENED);
+        var className = document.body.className;
+        className = className.replace(PANEL_OPEN_LEFT, "").replace(PANEL_OPEN_RIGHT, "").trim();
+        document.body.className = className;
       }
     }
 

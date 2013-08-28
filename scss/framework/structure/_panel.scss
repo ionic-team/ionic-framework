@@ -5,8 +5,18 @@
   max-height: 100%;
   position: absolute;
   top: 0;
+  bottom: 0;
   z-index: 0;
 }
+
+.ion-panel-active-left {
+  left: 0;
+}
+
+.ion-panel-active-right {
+  right: 0;
+}
+
 .ion-panel-active {
   display: block;
   width: $panelOpenWidth;
@@ -26,11 +36,20 @@
   transform: translate3d(0, 0, 0);
 }
 
-.ion-panel-opened .bar-header,
-.ion-panel-opened .content,
-.ion-panel-opened .bar-footer
+.ion-panel-left .bar-header,
+.ion-panel-left .content,
+.ion-panel-left .bar-footer
 {
   -webkit-transform: translate3d($panelOpenWidth, 0,0 );
   -moz-transform: translate3d($panelOpenWidth, 0,0 );
   transform: translate3d($panelOpenWidth, 0,0 );
+}
+
+.ion-panel-right .bar-header,
+.ion-panel-right .content,
+.ion-panel-right .bar-footer
+{
+  -webkit-transform: translate3d( ($panelOpenWidth * -1), 0,0 );
+  -moz-transform: translate3d( ($panelOpenWidth * -1), 0,0 );
+  transform: translate3d( ($panelOpenWidth * -1), 0,0 );
 }

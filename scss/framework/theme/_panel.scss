@@ -1,5 +1,12 @@
 
 .ion-panel {
   background: $panelBackgroundColor;
+}
+
+.ion-panel-left .ion-panel {
   border-right: 1px solid $panelInsetBorderColor;
+}
+
+.ion-panel-right .ion-panel {
+  border-left: 1px solid $panelInsetBorderColor;
 }
