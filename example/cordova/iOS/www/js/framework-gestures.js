@@ -1176,8 +1176,8 @@
       // prevent default browser behavior when dragging occurs
       // be careful with it, it makes the element a blocking element
       // when you are using the drag gesture, it is a good practice to set this true
-      drag_block_horizontal   : false,
-      drag_block_vertical     : false,
+      drag_block_horizontal   : true,
+      drag_block_vertical     : true,
       // drag_lock_to_axis keeps the drag gesture on the axis that it started on,
       // It disallows vertical directions if the initial direction was horizontal, and vice versa.
       drag_lock_to_axis       : false,

@@ -10,7 +10,7 @@
 <body>
   <section class="panel-page-container">
     
-    <section data-panel="left-panel" class="panel-content">
+    <section id="this-panel" data-panel="left-panel" class="panel-content">
       Panel!
     </section>
     
@@ -20,7 +20,8 @@
     
     <main class="content-padded has-header">
       <p>A whole bunch of content</p>
-      <a class="button button-primary" data-toggle-panel="left-panel" href="#">Panel</a>
+      <a class="button button-primary" id="open-panel" data-toggle-panel="left-panel" href="#">Panel</a>
+      
     </main>
     
   </section>

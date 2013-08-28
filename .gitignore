@@ -1,5 +1,5 @@
 .DS_Store
-*.sw[mpcod]
+*.sw[mnpcod]
 
 .sass-cache/
 framework.sublime-project

@@ -51,6 +51,12 @@
     handleClick: function(e) {
       var target = e.target;
 
+      if(framework.Gestures.HAS_TOUCHEVENTS) {
+        // We don't allow any clicks on mobile
+        e.preventDefault();
+        return false;
+      }
+
       if (
         !  target
         || e.which > 1
@@ -65,14 +71,11 @@
         //|| target.getAttribute('data-ignore') == 'push'
       ) {
         // Allow it
-        console.log("EVENT: click", e);
         return;
       }
       // We need to cancel this one
       e.preventDefault();
 
-      // TODO: should we do this?
-      // e.stopPropagation();
     },
     
     handlePopState: function(event) {
@@ -89,7 +92,7 @@
   framework.offGesture = framework.EventController.offGesture;
 
   // Set up various listeners
-  window.addEventListener('click', framework.EventController.handleClick);
-  window.addEventListener('popstate', framework.EventController.handlePopState);
+	window.addEventListener('click', framework.EventController.handleClick);
+  //window.addEventListener('popstate', framework.EventController.handlePopState);
 
 })(this, document, FM = this.FM || {});

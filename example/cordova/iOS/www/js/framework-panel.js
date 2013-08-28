@@ -6,10 +6,11 @@
   isPanelOpen;
 
   function onTap(e) {
+    var el = e.target;
+    return togglePanel(e, el, el.dataset.togglePanel);
+		
     if(e.target) {
-      el = e.target;
       if(el.dataset.togglePanel) {
-        return togglePanel(e, el, el.dataset.togglePanel);
       }
       while(el.parentElement) {
         el = el.parentElement;
@@ -50,6 +51,6 @@
     }
   }
   
-  framework.on("click", onTap);
+  framework.onGesture("tap", onTap, document.getElementById('open-panel'));
 
 })(this, document, FM = this.FM || {});

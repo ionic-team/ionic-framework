@@ -8,6 +8,24 @@ var logEvent = function(data) {
 
 var tb = document.getElementById('tap-button');
 var sb = document.getElementById('swipe-button');
+var rb = document.getElementById('remove-box-overlay');
+
+window.FM.on('click', function(e) {
+  console.log('GOT CLICK', e);
+  logEvent({
+    type: 'click',
+    event: e
+  });
+}, tb);
+
+window.FM.onGesture('tap', function(e) {
+  e.target.parentNode.removeChild(e.target);
+  console.log('GOT CLICK ON BOX', e);
+  logEvent({
+    type: 'clickbox',
+    event: e
+  });
+}, rb);
 
 window.FM.onGesture('tap', function(e) {
   console.log('GOT TAP', e);
@@ -24,13 +42,6 @@ window.FM.onGesture('touch', function(e) {
   });
 }, tb);
 
-window.FM.onGesture('tap', function(e) {
-  console.log('GOT TAP', e);
-  logEvent({
-    type: 'tap',
-    event: e
-  });
-}, tb);
 window.FM.onGesture('release', function(e) {
   console.log('GOT RELEASE', e);
   logEvent({
