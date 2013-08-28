@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+  <link rel="stylesheet" href="../../../dist/framework.css">
+  <script src="angular-1.2.0rc1.min.js"></script>
+  <script src="angular-touch.js"></script>
+  <script src="app.js"></script>
+
+  <script src="../../../js/framework/ion-panel.js"></script>
+  <script src="../../../js/framework/glue/angular-glue.js"></script>
+</head>
+<body ng-app="Chat">
+  <section class="panel-page-container" ng-controller="RoomsCtrl">
+    
+    <section id="this-panel" class="panel-content" ng-class="{'ion-panel-opened': isPanelShowing}">
+      <ul class="list">
+        <li class="list-item">
+          Max Lynch
+        </li>
+      </ul>
+    </section>
+    
+    <section id="that-panel" class="panel-content" ng-class="{'ion-panel-opened': isPanelShowing}">
+      <ul class="list">
+        <li class="list-item">
+          Max Lynch
+        </li>
+      </ul>
+    </section>
+
+    <section>
+    
+      <header class="bar bar-header bar-dark">
+        <button class="button button-dark" ng-click="openPanel()">Rooms</button>
+        <h1 class="title">Feeds</h1>
+      </header>
+      
+      <main class="content has-header">
+        <ul class="list">
+          <li class="list-item" ng-repeat="room in rooms">
+            {{room.name}}
+          </li>
+        </ul>
+      </main>
+    </section>
+    
+  </section>
+
+</body>
+</html>
