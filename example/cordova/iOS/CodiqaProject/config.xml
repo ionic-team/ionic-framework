@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<widget>
+    <preference name="AllowInlineMediaPlayback" value="false" />
+    <preference name="AutoHideSplashScreen" value="true" />
+    <preference name="BackupWebStorage" value="cloud" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="EnableLocation" value="false" /><!-- DEPRECATED -->
+    <preference name="EnableViewportScale" value="false" />
+    <preference name="FadeSplashScreen" value="true" />
+    <preference name="FadeSplashScreenDuration" value=".25" />
+    <preference name="HideKeyboardFormAccessoryBar" value="false" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="true" />
+    <preference name="KeyboardShrinksView" value="false" />
+    <preference name="MediaPlaybackRequiresUserAction" value="false" />
+    <preference name="ShowSplashScreenSpinner" value="true" />
+    <preference name="SuppressesIncrementalRendering" value="false" />
+    <preference name="TopActivityIndicator" value="gray" />
+
+    <content src="index.html" />
+
+    <plugins>
+        <plugin name="Device" value="CDVDevice" />
+        <plugin name="Logger" value="CDVLogger" />
+        <plugin name="Compass" value="CDVLocation" />
+        <plugin name="Accelerometer" value="CDVAccelerometer" />
+        <plugin name="Camera" value="CDVCamera" />
+        <plugin name="NetworkStatus" value="CDVConnection" />
+        <plugin name="Contacts" value="CDVContacts" />
+        <plugin name="Echo" value="CDVEcho" />
+        <plugin name="File" value="CDVFile" />
+        <plugin name="FileTransfer" value="CDVFileTransfer" />
+        <plugin name="Geolocation" value="CDVLocation" />
+        <plugin name="Notification" value="CDVNotification" />
+        <plugin name="Media" value="CDVSound" />
+        <plugin name="Capture" value="CDVCapture" />
+        <plugin name="SplashScreen" value="CDVSplashScreen" />
+        <plugin name="Battery" value="CDVBattery" />
+        <plugin name="Globalization" value="CDVGlobalization" />
+        <plugin name="InAppBrowser" value="CDVInAppBrowser" />
+    </plugins>
+
+    <access origin="*" />
+</widget>

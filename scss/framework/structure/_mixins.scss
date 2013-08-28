@@ -14,8 +14,8 @@
 		//background-color: lighten($bgColor, 10%);
   }
 	&.active, &:active {
-		background-color: darken($bgColor, 10%);
-    box-shadow: inset 0px 1px 3px rgba(0,0,0,0.15);
+		background-color: darken($bgColor, 8%);
+    box-shadow: inset 0px 1px 3px rgba(0,0,0,0.12);
     border-color: darken($borderColor, 10%);
 	}
 }

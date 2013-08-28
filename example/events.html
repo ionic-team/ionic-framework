@@ -12,12 +12,38 @@
         -webkit-transition: 0.1s ease-in-out all;
         -webkit-transform:translate3d(120%,0,0) ;
       }
+      #remove-box {
+        width: 200px;
+        height: 200px;
+      }
+      .relative {
+        position: relative;
+      }
+      button {
+        width: 100px;
+        height: 100px;
+      }
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        background-color: red;
+      }
     </style>
   </head>
   <body>
     <div class="content content-padded">
-      <a href="#" class="button button-success">Tap me!</a>
-      <a href="#" class="button button-success">Swipe me!</a>
+      <a href="#" id="tap-button" class="button button-success">Tap me!</a>
+      <a href="#" id="swipe-button" class="button button-success">Swipe me!</a>
+      <div id="remove-box" class="relative">
+        <div id="remove-box-overlay" class="overlay">Tap to remove me</div>
+        <form action="/badurl">
+          <button type="submit">Under click</button>
+        </form>
+      </div>
       <div id="event-log"></div>
     </div>
     <script src="../../js/framework/framework-utils.js"></script>

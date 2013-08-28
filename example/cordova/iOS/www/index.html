@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+  <link rel="stylesheet" href="css/framework.css">
+  <script src="js/angular-1.2.0rc1.min.js"></script>
+</head>
+<body ng-app="Chat">
+  <section class="panel-page-container">
+    
+    <section id="this-panel" data-panel="left-panel" class="panel-content">
+      
+    </section>
+    
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Feeds</h1>
+    </header>
+    
+    <main class="content-padded has-header">
+      <ul class="list" ng-controller="RoomsCtrl">
+        <li class="list-item" ng-repeat="room in rooms">
+          {{room.name}}
+        </li>
+      </ul>
+    </main>
+    
+  </section>
+  
+  <script src="js/framework-gestures.js"></script>
+  <script src="js/framework-events.js"></script>
+  <script src="js/framework-panel.js"></script>
+
+
+</body>
+</html>

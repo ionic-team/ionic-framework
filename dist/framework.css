@@ -438,8 +438,8 @@ main {
     color: #333333;
     text-decoration: none; }
   .button-default.active, .button-default:active {
-    background-color: #e6e6e6;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    background-color: #ebebeb;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
     border-color: #c4c4c4; }
 
 .button-secondary {
@@ -450,8 +450,8 @@ main {
     color: #333333;
     text-decoration: none; }
   .button-secondary.active, .button-secondary:active {
-    background-color: gainsboro;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    background-color: #e1e1e1;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
     border-color: #b3b3b3; }
 
 .button-primary {
@@ -462,8 +462,8 @@ main {
     color: white;
     text-decoration: none; }
   .button-primary.active, .button-primary:active {
-    background-color: #3d7be2;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    background-color: #4581e4;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
     border-color: #3d67ae; }
 
 .button-info {
@@ -474,8 +474,8 @@ main {
     color: white;
     text-decoration: none; }
   .button-info.active, .button-info:active {
-    background-color: #34c6df;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    background-color: #3dc8e0;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
     border-color: #3998a9; }
 
 .button-success {
@@ -486,8 +486,8 @@ main {
     color: white;
     text-decoration: none; }
   .button-success.active, .button-success:active {
-    background-color: #6fac45;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    background-color: #73b447;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
     border-color: #597e41; }
 
 .button-warning {
@@ -498,8 +498,8 @@ main {
     color: white;
     text-decoration: none; }
   .button-warning.active, .button-warning:active {
-    background-color: #eba612;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    background-color: #edaa1a;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
     border-color: #a47a21; }
 
 .button-danger {
@@ -510,8 +510,8 @@ main {
     color: white;
     text-decoration: none; }
   .button-danger.active, .button-danger:active {
-    background-color: #cc3724;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    background-color: #d43926;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
     border-color: #94362a; }
 
 .button-dark {
@@ -522,8 +522,8 @@ main {
     color: white;
     text-decoration: none; }
   .button-dark.active, .button-dark:active {
-    background-color: #2b2b2b;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    background-color: #303030;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
     border-color: black; }
 
 .list-divider {

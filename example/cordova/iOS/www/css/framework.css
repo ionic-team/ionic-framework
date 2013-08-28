@@ -1,0 +1,542 @@
+@charset "UTF-8";
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%; }
+
+body {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0; }
+
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+
+ul {
+  margin: 0;
+  padding: 0; }
+
+main {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch; }
+
+/* Hack to force all relatively and absolutely positioned elements still render while scrolling
+   Note: This is a bug for "-webkit-overflow-scrolling: touch" (via ratchet) */
+main > * {
+  -webkit-transform: translateZ(0px);
+  transform: translateZ(0px); }
+
+.content-padded {
+  padding: 10px; }
+
+.alert {
+  padding: 8px 35px 8px 14px; }
+
+.alert h4 {
+  margin: 0; }
+
+.alert .close {
+  position: relative;
+  top: -2px;
+  right: -21px;
+  line-height: 1.42857; }
+
+.alert-block {
+  padding-top: 14px;
+  padding-bottom: 14px; }
+
+.alert-block > p,
+.alert-block > ul {
+  margin-bottom: 0; }
+
+.alert-block p + p {
+  margin-top: 5px; }
+
+.bar {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  display: -webkit-box;
+  display: box;
+  -webkit-box-orient: horizontal;
+  box-orient: horizontal;
+  box-sizing: border-box;
+  height: 44px;
+  padding: 8px;
+  /*
+  .title + .button:last-child,
+  .button + .button:last-child,
+  .button.pull-right {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+  */ }
+  .bar .title {
+    /*
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    */
+    line-height: 26px;
+    margin: 0;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 18px;
+    -webkit-box-flex: 3;
+    -moz-box-flex: 3;
+    box-flex: 3; }
+  .bar .title a {
+    color: inherit; }
+  .bar .button {
+    -webkit-box-flex: 0;
+    -moz-box-flex: 0;
+    box-flex: 0; }
+
+.bar-header {
+  top: 0; }
+
+.bar-footer {
+  bottom: 0; }
+
+/* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
+   Note: For these to work, content must come after both bars in the markup */
+.has-header {
+  top: 44px; }
+
+.has-footer {
+  bottom: 44px; }
+
+.button {
+  position: relative;
+  display: block;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  margin: 0; }
+  .button.button-inline {
+    display: inline-block; }
+  .button.button-borderless {
+    border: none; }
+
+.button-group {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle; }
+  .button-group > .button {
+    position: relative;
+    float: left; }
+    .button-group > .button:hover, .button-group > .button:focus, .button-group > .button:active, .button-group > .button.active {
+      z-index: 2; }
+    .button-group > .button:focus {
+      outline: none; }
+
+.button-group .button + .button,
+.button-group .button + .button-group,
+.button-group .button-group + .button,
+.button-group .button-group + .button-group {
+  margin-left: -1px; }
+
+.button-group > .button:not(:first-child):not(:last-child) {
+  border-radius: 0; }
+
+.button-group > .button:first-child {
+  margin-left: 0; }
+  .button-group > .button:first-child:not(:last-child) {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0; }
+
+.button-group > .button:last-child:not(:first-child) {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0; }
+
+.button-group > .button-group {
+  float: left; }
+
+.button-group > .button-group:not(:first-child):not(:last-child) > .button {
+  border-radius: 0; }
+
+.button-group > .button-group:first-child > .button:last-child,
+.button-group > .button-group:first-child > .dropdown-toggle {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0; }
+
+.button-group > .button-group:last-child > .button:first-child {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0; }
+
+.list {
+  margin-bottom: 20px;
+  padding-left: 0; }
+
+.list-item {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  margin-bottom: -1px;
+  border: 1px solid #dddddd; }
+  .list-item:last-child {
+    margin-bottom: 0; }
+  .list-item > .badge {
+    float: right; }
+  .list-item > i:last-child {
+    float: right; }
+  .list-item > .badge + .badge {
+    margin-right: 5px; }
+  .list-item.active, .list-item.active:hover, .list-item.active:focus {
+    z-index: 2; }
+    .list-item.active .list-item-heading, .list-item.active:hover .list-item-heading, .list-item.active:focus .list-item-heading {
+      color: inherit; }
+
+a.list-item {
+  text-decoration: none; }
+  a.list-item:hover, a.list-item:focus {
+    text-decoration: none; }
+
+.list-divider {
+  padding: 5px 15px; }
+
+.list-item-heading {
+  margin-top: 0;
+  margin-bottom: 5px; }
+
+.list-item-text {
+  margin-bottom: 0;
+  line-height: 1.3; }
+
+/* the container of panel content to show */
+.panel-content {
+  display: block;
+  width: 17em;
+  min-height: 100%;
+  max-height: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 0; }
+
+header, main, footer {
+  left: 0;
+  right: 0;
+  -webkit-transition: -webkit-transform 200ms ease;
+  -moz-transition: -moz-transform 200ms ease;
+  transition: transform 200ms ease;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0); }
+
+.ptr-capable {
+  -webkit-user-drag: element; }
+
+.ptr-content {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  height: 0; }
+
+.ptr-content .pulling {
+  display: none; }
+
+.ptr-content .refreshing {
+  display: none; }
+
+/* Bar docked to bottom used for primary app navigation */
+.tabs {
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 50px;
+  padding: 0;
+  box-sizing: border-box;
+  position: fixed; }
+
+.tabs-inner {
+  display: -webkit-box;
+  display: box;
+  height: 100%;
+  list-style: none;
+  -webkit-box-orient: horizontal;
+  box-orient: horizontal; }
+
+/* Navigational tab */
+.tab-item {
+  height: 100%;
+  text-align: center;
+  box-sizing: border-box;
+  -webkit-box-flex: 1;
+  box-flex: 1; }
+  .tab-item a {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 100%; }
+
+/* Active state for tab */
+.tab-item.active, .tab-item:active {
+  background-color: rgba(0, 0, 0, 0.2); }
+
+/* Icon for tab  */
+.tab-item i {
+  display: block;
+  margin: 0 auto; }
+
+/* Label for tab */
+.tab-label {
+  margin-top: 1px;
+  font-size: 10px;
+  font-weight: bold;
+  color: #fff; }
+
+body {
+  font-size: 14px;
+  line-height: 1.25;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+main {
+  background-color: white; }
+
+.alert {
+  margin-bottom: 1.42857;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  background-color: #fcf8e3;
+  border: 1px solid #fbeed5; }
+
+.alert,
+.alert h4 {
+  color: #c09853; }
+
+.alert-success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #468847; }
+
+.alert-success h4 {
+  color: #468847; }
+
+.alert-danger,
+.alert-error {
+  background-color: #f2dede;
+  border-color: #eed3d7;
+  color: #b94a48; }
+
+.alert-danger h4,
+.alert-error h4 {
+  color: #b94a48; }
+
+.alert-info {
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  color: #3a87ad; }
+
+.alert-info h4 {
+  color: #3a87ad; }
+
+.bar {
+  background-color: white;
+  border-style: solid;
+  border-width: 0;
+  /*
+  Disabled temporarily because it's annoying for testing.
+  @media screen and (orientation : landscape) {
+    padding: $barPaddingLandscape;
+  }
+  */ }
+  .bar.bar-header {
+    border-bottom-width: 1px; }
+  .bar.bar-footer {
+    border-top-width: 1px; }
+  .bar.bar-default {
+    background-color: white;
+    border-color: #dddddd;
+    color: #333333; }
+    .bar.bar-default .tab-item a {
+      color: #333333; }
+  .bar.bar-secondary {
+    background-color: whitesmoke;
+    border-color: #cccccc;
+    color: #333333; }
+    .bar.bar-secondary .tab-item a {
+      color: #333333; }
+  .bar.bar-primary {
+    background-color: #6999e9;
+    border-color: #5981c5;
+    color: white; }
+    .bar.bar-primary .tab-item a {
+      color: white; }
+  .bar.bar-info {
+    background-color: #60d2e6;
+    border-color: #51b3c4;
+    color: white; }
+    .bar.bar-info .tab-item a {
+      color: white; }
+  .bar.bar-success {
+    background-color: #89c163;
+    border-color: #71a052;
+    color: white; }
+    .bar.bar-success .tab-item a {
+      color: white; }
+  .bar.bar-warning {
+    background-color: #f0b840;
+    border-color: #cf9a29;
+    color: white; }
+    .bar.bar-warning .tab-item a {
+      color: white; }
+  .bar.bar-danger {
+    background-color: #de5645;
+    border-color: #bc4435;
+    color: white; }
+    .bar.bar-danger .tab-item a {
+      color: white; }
+  .bar.bar-dark {
+    background-color: #444444;
+    border-color: #111111;
+    color: white; }
+    .bar.bar-dark .tab-item a {
+      color: white; }
+
+.button {
+  color: #222222;
+  border-radius: 2px;
+  border-width: 1px;
+  border-style: solid;
+  padding: 10px 15px; }
+
+.button-default {
+  color: #333333;
+  background-color: white;
+  border-color: #dddddd; }
+  .button-default:hover {
+    color: #333333;
+    text-decoration: none; }
+  .button-default.active, .button-default:active {
+    background-color: #ebebeb;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
+    border-color: #c4c4c4; }
+
+.button-secondary {
+  color: #333333;
+  background-color: whitesmoke;
+  border-color: #cccccc; }
+  .button-secondary:hover {
+    color: #333333;
+    text-decoration: none; }
+  .button-secondary.active, .button-secondary:active {
+    background-color: #e1e1e1;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
+    border-color: #b3b3b3; }
+
+.button-primary {
+  color: white;
+  background-color: #6999e9;
+  border-color: #5981c5; }
+  .button-primary:hover {
+    color: white;
+    text-decoration: none; }
+  .button-primary.active, .button-primary:active {
+    background-color: #4581e4;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
+    border-color: #3d67ae; }
+
+.button-info {
+  color: white;
+  background-color: #60d2e6;
+  border-color: #51b3c4; }
+  .button-info:hover {
+    color: white;
+    text-decoration: none; }
+  .button-info.active, .button-info:active {
+    background-color: #3dc8e0;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
+    border-color: #3998a9; }
+
+.button-success {
+  color: white;
+  background-color: #89c163;
+  border-color: #71a052; }
+  .button-success:hover {
+    color: white;
+    text-decoration: none; }
+  .button-success.active, .button-success:active {
+    background-color: #73b447;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
+    border-color: #597e41; }
+
+.button-warning {
+  color: white;
+  background-color: #f0b840;
+  border-color: #cf9a29; }
+  .button-warning:hover {
+    color: white;
+    text-decoration: none; }
+  .button-warning.active, .button-warning:active {
+    background-color: #edaa1a;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
+    border-color: #a47a21; }
+
+.button-danger {
+  color: white;
+  background-color: #de5645;
+  border-color: #bc4435; }
+  .button-danger:hover {
+    color: white;
+    text-decoration: none; }
+  .button-danger.active, .button-danger:active {
+    background-color: #d43926;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
+    border-color: #94362a; }
+
+.button-dark {
+  color: white;
+  background-color: #444444;
+  border-color: #111111; }
+  .button-dark:hover {
+    color: white;
+    text-decoration: none; }
+  .button-dark.active, .button-dark:active {
+    background-color: #303030;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
+    border-color: black; }
+
+.list-divider {
+  background-color: whitesmoke;
+  color: #222222;
+  font-weight: bold; }
+
+a.list-item {
+  color: #333333; }
+
+.panel-content {
+  background: #eeeeee;
+  border-right: 1px solid #bbbbbb; }
+
+.ptr-content {
+  background: #eee; }
+
+.tabs {
+  font-size: 16px;
+  height: 60px; }
+
+.tab-item a {
+  font-family: "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 200; }
+.tab-item i {
+  font-size: 25px; }
