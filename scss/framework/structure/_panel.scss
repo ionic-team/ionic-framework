@@ -1,27 +1,36 @@
 
-
-/* the container of panel content to show */
-.panel-content {
-  display: block;
-  width: $panelViewWidth;
+[data-panel] {
+  display: none;
   min-height: 100%;
   max-height: 100%;
   position: absolute;
   top: 0;
   z-index: 0;
-
+}
+.panel-active {
+  display: block;
+  width: $panelOpenWidth;
 }
 
 header, main, footer {
-
+  z-index: 100;
   left: 0;
   right: 0;
   
-  -webkit-transition: -webkit-transform 200ms ease;
-  -moz-transition: -moz-transform 200ms ease;
-  transition: transform 200ms ease;
+  -webkit-transition: -webkit-transform $panelAnimationSpeed ease;
+  -moz-transition: -moz-transform $panelAnimationSpeed ease;
+  transition: transform $panelAnimationSpeed ease;
 
-  -webkit-transform: translate3d(0,0,0);
-  -moz-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.panel-opened > section > header,
+.panel-opened > section > main,
+.panel-opened > section > footer 
+{
+    -webkit-transform: translate3d($panelOpenWidth, 0,0 );
+    -moz-transform: translate3d($panelOpenWidth, 0,0 );
+    transform: translate3d($panelOpenWidth, 0,0 );
 }

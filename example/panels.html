@@ -5,32 +5,40 @@
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <!--<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">-->
     <link rel="stylesheet" href="../../dist/framework.css">
 
   </head>
   <body>
 
-    <section class="panel-page-container">
-
-      <section data-panel="left-panel" class="panel-content">
-        Panel!
-      </section>
+    <section data-default-panel="my-left-panel">
 
       <header class="bar bar-header bar-dark">
+        <button class="button" data-toggle-panel="my-left-panel"></button>
         <h1 class="title">Panels</h1>
       </header>
 
       <main class="content-padded has-header">
-        <p>A whole bunch of content</p>
-        <a class="button button-primary" data-toggle-panel="left-panel" href="#">Panel</a>
+        <p><button class="button button-primary" data-toggle-panel="my-other-left-panel">Other Left Side Panel</button></p>
+        <p id="event-log"></p>
       </main>
+
+      <footer class="bar bar-footer bar-dark">
+        <h3 class="title">Panels</h3>
+      </footer>
 
     </section>
 
 
-    <script src="../../js/framework/framework-gestures.js"></script>
-    <script src="../../js/framework/framework-events.js"></script>
+    <section data-panel="my-left-panel">
+      This is my default left side panel!
+    </section>
+
+    <section data-panel="my-other-left-panel">
+      This is my other left side panel!
+    </section>
+
+
     <script src="../../js/framework/framework-panel.js"></script>
   </body>
 </html>

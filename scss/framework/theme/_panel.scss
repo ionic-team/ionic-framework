@@ -1,5 +1,5 @@
 
-.panel-content {
+[data-panel] {
   background: $panelBackgroundColor;
   border-right: 1px solid $panelInsetBorderColor;
 }
