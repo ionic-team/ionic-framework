@@ -1,5 +1,6 @@
 .DS_Store
 *.sw[mnpcod]
+example/cordova/iOS/www/js/framework
 
 example/cordova/iOS/www/js/framework
 .sass-cache/

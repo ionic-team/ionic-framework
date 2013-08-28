@@ -1,16 +1,23 @@
 var chat = angular.module('Chat', ['ngTouch']);
 
-chat.controller('MenuCtrl', function($scope) {
+chat.service('MenuService', function() {
+  this.openPanel = function() {
+    console.log('Opening panel');
+  }
 });
 
-chat.controller('RoomsCtrl', function($scope) {
+chat.controller('MenuCtrl', function($scope) {
+  $scope.isPanelShowing = false;
+});
+
+chat.controller('RoomsCtrl', function($scope, MenuService) {
   $scope.rooms = [
     { name: 'All', key: 'all' },
     { name: 'Marketing', key: 'marketing' }
   ];
   
   $scope.openPanel = function() {
-    $scope.isPanelShowing = true;
+    MenuService.openPanel();
   };
 
   $scope.showAlert = function() {

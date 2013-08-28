@@ -7,12 +7,21 @@
   <link rel="stylesheet" href="css/framework.css">
   <script src="js/angular-1.2.0rc1.min.js"></script>
   <script src="js/angular-touch.js"></script>
+  <script src="js/app.js"></script>
+
+  <script src="js/framework/framework-panel.js"></script>
+  <script src="js/framework/glue/angular-touch.js"></script>
 </head>
 <body ng-app="Chat">
   <section class="panel-page-container">
     
-    <section id="this-panel" class="panel-content" ng-class="{'panel-open': isPanelShowing}" ng-controller="MenuCtrl">
-    </section>
+    <panel id="this-panel" class="panel-content" ng-class="{'panel-open': isPanelShowing}" ng-controller="MenuCtrl">
+      <ul class="list">
+        <li class="list-item">
+          Max Lynch
+        </li>
+      </ul>
+    </panel>
 
     <section ng-controller="RoomsCtrl">
     
@@ -31,14 +40,6 @@
     </section>
     
   </section>
-  
-  <script src="js/app.js"></script>
-  <!--
-  <script src="js/framework-gestures.js"></script>
-  <script src="js/framework-events.js"></script>
-  -->
-  <script src="js/framework-panel.js"></script>
-
 
 </body>
 </html>
