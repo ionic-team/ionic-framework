@@ -233,7 +233,7 @@ a.list-item {
   display: block;
   width: 270px; }
 
-header, main, footer {
+.bar-header, .content, .bar-footer {
   z-index: 100;
   left: 0;
   right: 0;
@@ -244,9 +244,9 @@ header, main, footer {
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0); }
 
-.ion-panel-opened > section > header,
-.ion-panel-opened > section > main,
-.ion-panel-opened > section > footer {
+.ion-panel-opened .bar-header,
+.ion-panel-opened .content,
+.ion-panel-opened .bar-footer {
   -webkit-transform: translate3d(270px, 0, 0);
   -moz-transform: translate3d(270px, 0, 0);
   transform: translate3d(270px, 0, 0); }
