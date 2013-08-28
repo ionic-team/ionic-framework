@@ -1,6 +1,7 @@
 .DS_Store
 *.sw[mnpcod]
 
+example/cordova/iOS/www/js/framework
 .sass-cache/
 framework.sublime-project
 
