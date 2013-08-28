@@ -59,9 +59,11 @@
         isPanelOpen = false;
 
         // remove from <body> so that no panels should be open
-        var className = document.body.className;
-        className = className.replace(PANEL_OPEN_LEFT, "").replace(PANEL_OPEN_RIGHT, "").trim();
-        document.body.className = className;
+        // using the replace method so that it changes the classnames in one go
+        document.body.className = document.body.className
+                                                         .replace(PANEL_OPEN_LEFT, "")
+                                                         .replace(PANEL_OPEN_RIGHT, "")
+                                                         .trim();
       }
     }
 
