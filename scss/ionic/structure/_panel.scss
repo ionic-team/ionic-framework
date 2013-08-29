@@ -1,8 +1,12 @@
+//
+// Side panel structure
+// Author: Adam Bradley <adam@drifty.com>
 
 .ion-panel {
   display: none;
   min-height: 100%;
   max-height: 100%;
+  width: $panelWidth;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -11,51 +15,8 @@
   -webkit-overflow-scrolling: touch;
 }
 
-.ion-panel-active-left {
-  left: 0;
-}
-
-.ion-panel-active-right {
-  right: 0;
-}
-
-.ion-panel-active {
-  display: block;
-  width: $panelOpenWidth;
-}
-
-.bar-header, .content, .bar-footer {
-  z-index: 100;
-  left: 0;
-  right: 0;
-  
-  -webkit-transition: -webkit-transform $panelAnimationSpeed ease;
-  -moz-transition: -moz-transform $panelAnimationSpeed ease;
-  transition: transform $panelAnimationSpeed ease;
-
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-}
-
-.ion-panel-left .bar-header,
-.ion-panel-left .content,
-.ion-panel-left .bar-footer
-{
-  -webkit-transform: translate3d($panelOpenWidth, 0,0 );
-  -moz-transform: translate3d($panelOpenWidth, 0,0 );
-  transform: translate3d($panelOpenWidth, 0,0 );
-}
-
-.ion-panel-right .bar-header,
-.ion-panel-right .content,
-.ion-panel-right .bar-footer
-{
-  -webkit-transform: translate3d( ($panelOpenWidth * -1), 0,0 );
-  -moz-transform: translate3d( ($panelOpenWidth * -1), 0,0 );
-  transform: translate3d( ($panelOpenWidth * -1), 0,0 );
-}
-
+.ion-panel-left { left: 0; }
+.ion-panel-right { right: 0; }
 
 .ion-panel-animated {
   -webkit-transition: -webkit-transform $panelAnimationSpeed ease;

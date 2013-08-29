@@ -7,5 +7,5 @@ release:
 
 cordova:
 	@cp -R js/ example/cordova/iOS/www/js
-	@cp dist/framework.css example/cordova/iOS/www/css
+	@cp dist/ionic.css example/cordova/iOS/www/css
 
