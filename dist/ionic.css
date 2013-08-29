@@ -447,6 +447,9 @@ main {
   border-style: solid;
   padding: 10px 15px; }
 
+a.button {
+  text-decoration: none; }
+
 .button-default {
   color: #333333;
   background-color: white;

@@ -6,6 +6,10 @@
 	padding: $buttonPadding;
 }
 
+a.button {
+  text-decoration: none;
+}
+
 .button-default {
   @include button-style($buttonDefaultBackground, $buttonDefaultBorder, $darkColor);
 }
