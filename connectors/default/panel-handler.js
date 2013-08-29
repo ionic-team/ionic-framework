@@ -1,17 +1,24 @@
 (function(window, document, ion) {
 
   function click(e) {
-    if(e.target.dataset.panelToggle) {
+    panelToggle(e, e.target);
+  }
 
-      var options = {
-        direction: (e.target.dataset.panelDirection === "right" ? "right" : "left")
-      };
+  function panelToggle(e, el) {
+    if(el) {
+      if(el.dataset.panelToggle) {
 
-      ion.Panel.toggle(e.target.dataset.panelToggle, options);
-      
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
+        var options = {
+          direction: (el.dataset.panelDirection === "right" ? "right" : "left")
+        };
+
+        ion.Panel.toggle(el.dataset.panelToggle, options);
+
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+      panelToggle(e, el.parentNode);
     }
   }
 
