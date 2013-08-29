@@ -6,7 +6,7 @@
 
   function panelToggle(e, el) {
     if(el) {
-      if(el.dataset.panelToggle) {
+      if(el.dataset && el.dataset.panelToggle) {
 
         var options = {
           direction: (el.dataset.panelDirection === "right" ? "right" : "left")
