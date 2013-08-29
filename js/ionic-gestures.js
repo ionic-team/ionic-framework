@@ -2,26 +2,26 @@
   * Simple gesture controllers with some common gestures that emit
   * gesture events.
   *
-  * Ported from github.com/EightMedia/framework.Gestures.js - thanks!
+  * Ported from github.com/EightMedia/ion.Gestures.js - thanks!
   */
-(function(window, document, framework) {
+(function(window, document, ion) {
   
   /**
-   * framework.Gestures
+   * ion.Gestures
    * use this to create instances
    * @param   {HTMLElement}   element
    * @param   {Object}        options
-   * @returns {framework.Gestures.Instance}
+   * @returns {ion.Gestures.Instance}
    * @constructor
    */
-  framework.Gesture = function(element, options) {
-    return new framework.Gestures.Instance(element, options || {});
+  ion.Gesture = function(element, options) {
+    return new ion.Gestures.Instance(element, options || {});
   };
 
-  framework.Gestures = {};
+  ion.Gestures = {};
 
   // default settings
-  framework.Gestures.defaults = {
+  ion.Gestures.defaults = {
     // add styles and attributes to the element to prevent the browser from doing
     // its native behavior. this doesnt prevent the scrolling, but cancels
     // the contextmenu, tap highlighting etc
@@ -42,66 +42,66 @@
   };
 
   // detect touchevents
-  framework.Gestures.HAS_POINTEREVENTS = window.navigator.pointerEnabled || window.navigator.msPointerEnabled;
-  framework.Gestures.HAS_TOUCHEVENTS = ('ontouchstart' in window);
+  ion.Gestures.HAS_POINTEREVENTS = window.navigator.pointerEnabled || window.navigator.msPointerEnabled;
+  ion.Gestures.HAS_TOUCHEVENTS = ('ontouchstart' in window);
 
   // dont use mouseevents on mobile devices
-  framework.Gestures.MOBILE_REGEX = /mobile|tablet|ip(ad|hone|od)|android|silk/i;
-  framework.Gestures.NO_MOUSEEVENTS = framework.Gestures.HAS_TOUCHEVENTS && window.navigator.userAgent.match(framework.Gestures.MOBILE_REGEX);
+  ion.Gestures.MOBILE_REGEX = /mobile|tablet|ip(ad|hone|od)|android|silk/i;
+  ion.Gestures.NO_MOUSEEVENTS = ion.Gestures.HAS_TOUCHEVENTS && window.navigator.userAgent.match(ion.Gestures.MOBILE_REGEX);
 
   // eventtypes per touchevent (start, move, end)
-  // are filled by framework.Gestures.event.determineEventTypes on setup
-  framework.Gestures.EVENT_TYPES = {};
+  // are filled by ion.Gestures.event.determineEventTypes on setup
+  ion.Gestures.EVENT_TYPES = {};
 
   // direction defines
-  framework.Gestures.DIRECTION_DOWN = 'down';
-  framework.Gestures.DIRECTION_LEFT = 'left';
-  framework.Gestures.DIRECTION_UP = 'up';
-  framework.Gestures.DIRECTION_RIGHT = 'right';
+  ion.Gestures.DIRECTION_DOWN = 'down';
+  ion.Gestures.DIRECTION_LEFT = 'left';
+  ion.Gestures.DIRECTION_UP = 'up';
+  ion.Gestures.DIRECTION_RIGHT = 'right';
 
   // pointer type
-  framework.Gestures.POINTER_MOUSE = 'mouse';
-  framework.Gestures.POINTER_TOUCH = 'touch';
-  framework.Gestures.POINTER_PEN = 'pen';
+  ion.Gestures.POINTER_MOUSE = 'mouse';
+  ion.Gestures.POINTER_TOUCH = 'touch';
+  ion.Gestures.POINTER_PEN = 'pen';
 
   // touch event defines
-  framework.Gestures.EVENT_START = 'start';
-  framework.Gestures.EVENT_MOVE = 'move';
-  framework.Gestures.EVENT_END = 'end';
+  ion.Gestures.EVENT_START = 'start';
+  ion.Gestures.EVENT_MOVE = 'move';
+  ion.Gestures.EVENT_END = 'end';
 
   // hammer document where the base events are added at
-  framework.Gestures.DOCUMENT = window.document;
+  ion.Gestures.DOCUMENT = window.document;
 
   // plugins namespace
-  framework.Gestures.plugins = {};
+  ion.Gestures.plugins = {};
 
   // if the window events are set...
-  framework.Gestures.READY = false;
+  ion.Gestures.READY = false;
 
   /**
    * setup events to detect gestures on the document
    */
   function setup() {
-    if(framework.Gestures.READY) {
+    if(ion.Gestures.READY) {
       return;
     }
 
     // find what eventtypes we add listeners to
-    framework.Gestures.event.determineEventTypes();
+    ion.Gestures.event.determineEventTypes();
 
-    // Register all gestures inside framework.Gestures.gestures
-    for(var name in framework.Gestures.gestures) {
-      if(framework.Gestures.gestures.hasOwnProperty(name)) {
-        framework.Gestures.detection.register(framework.Gestures.gestures[name]);
+    // Register all gestures inside ion.Gestures.gestures
+    for(var name in ion.Gestures.gestures) {
+      if(ion.Gestures.gestures.hasOwnProperty(name)) {
+        ion.Gestures.detection.register(ion.Gestures.gestures[name]);
       }
     }
 
     // Add touch events on the document
-    framework.Gestures.event.onTouch(framework.Gestures.DOCUMENT, framework.Gestures.EVENT_MOVE, framework.Gestures.detection.detect);
-    framework.Gestures.event.onTouch(framework.Gestures.DOCUMENT, framework.Gestures.EVENT_END, framework.Gestures.detection.detect);
+    ion.Gestures.event.onTouch(ion.Gestures.DOCUMENT, ion.Gestures.EVENT_MOVE, ion.Gestures.detection.detect);
+    ion.Gestures.event.onTouch(ion.Gestures.DOCUMENT, ion.Gestures.EVENT_END, ion.Gestures.detection.detect);
 
-    // framework.Gestures is ready...!
-    framework.Gestures.READY = true;
+    // ion.Gestures is ready...!
+    ion.Gestures.READY = true;
   }
 
   /**
@@ -109,13 +109,13 @@
    * all methods should return the instance itself, so it is chainable.
    * @param   {HTMLElement}       element
    * @param   {Object}            [options={}]
-   * @returns {framework.Gestures.Instance}
+   * @returns {ion.Gestures.Instance}
    * @constructor
    */
-  framework.Gestures.Instance = function(element, options) {
+  ion.Gestures.Instance = function(element, options) {
     var self = this;
 
-    // setup framework.GesturesJS window events and register all gestures
+    // setup ion.GesturesJS window events and register all gestures
     // this also sets up the default options
     setup();
 
@@ -125,19 +125,19 @@
     this.enabled = true;
 
     // merge options
-    this.options = framework.Gestures.utils.extend(
-        framework.Gestures.utils.extend({}, framework.Gestures.defaults),
+    this.options = ion.Gestures.utils.extend(
+        ion.Gestures.utils.extend({}, ion.Gestures.defaults),
         options || {});
 
     // add some css to the element to prevent the browser from doing its native behavoir
     if(this.options.stop_browser_behavior) {
-      framework.Gestures.utils.stopDefaultBrowserBehavior(this.element, this.options.stop_browser_behavior);
+      ion.Gestures.utils.stopDefaultBrowserBehavior(this.element, this.options.stop_browser_behavior);
     }
 
     // start detection on touchstart
-    framework.Gestures.event.onTouch(element, framework.Gestures.EVENT_START, function(ev) {
+    ion.Gestures.event.onTouch(element, ion.Gestures.EVENT_START, function(ev) {
       if(self.enabled) {
-        framework.Gestures.detection.startDetect(self, ev);
+        ion.Gestures.detection.startDetect(self, ev);
       }
     });
 
@@ -146,12 +146,12 @@
   };
 
 
-  framework.Gestures.Instance.prototype = {
+  ion.Gestures.Instance.prototype = {
     /**
      * bind events to the instance
      * @param   {String}      gesture
      * @param   {Function}    handler
-     * @returns {framework.Gestures.Instance}
+     * @returns {ion.Gestures.Instance}
      */
     on: function onEvent(gesture, handler){
       var gestures = gesture.split(' ');
@@ -166,7 +166,7 @@
      * unbind events to the instance
      * @param   {String}      gesture
      * @param   {Function}    handler
-     * @returns {framework.Gestures.Instance}
+     * @returns {ion.Gestures.Instance}
      */
     off: function offEvent(gesture, handler){
       var gestures = gesture.split(' ');
@@ -181,18 +181,18 @@
      * trigger gesture event
      * @param   {String}      gesture
      * @param   {Object}      eventData
-     * @returns {framework.Gestures.Instance}
+     * @returns {ion.Gestures.Instance}
      */
     trigger: function triggerEvent(gesture, eventData){
       // create DOM event
-      var event = framework.Gestures.DOCUMENT.createEvent('Event');
+      var event = ion.Gestures.DOCUMENT.createEvent('Event');
       event.initEvent(gesture, true, true);
       event.gesture = eventData;
 
       // trigger on the target if it is in the instance element,
       // this is for event delegation tricks
       var element = this.element;
-      if(framework.Gestures.utils.hasParent(eventData.target, element)) {
+      if(ion.Gestures.utils.hasParent(eventData.target, element)) {
         element = eventData.target;
       }
 
@@ -204,7 +204,7 @@
     /**
      * enable of disable hammer.js detection
      * @param   {Boolean}   state
-     * @returns {framework.Gestures.Instance}
+     * @returns {ion.Gestures.Instance}
      */
     enable: function enable(state) {
       this.enabled = state;
@@ -235,7 +235,7 @@
   var touch_triggered = false;
 
 
-  framework.Gestures.event = {
+  ion.Gestures.event = {
     /**
      * simple addEventListener
      * @param   {HTMLElement}   element
@@ -253,13 +253,13 @@
     /**
      * touch events with mouse fallback
      * @param   {HTMLElement}   element
-     * @param   {String}        eventType        like framework.Gestures.EVENT_MOVE
+     * @param   {String}        eventType        like ion.Gestures.EVENT_MOVE
      * @param   {Function}      handler
      */
     onTouch: function onTouch(element, eventType, handler) {
       var self = this;
 
-      this.bindDom(element, framework.Gestures.EVENT_TYPES[eventType], function bindDomOnTouch(ev) {
+      this.bindDom(element, ion.Gestures.EVENT_TYPES[eventType], function bindDomOnTouch(ev) {
         var sourceEventType = ev.type.toLowerCase();
 
         // onmouseup, but when touchend has been fired we do nothing.
@@ -295,8 +295,8 @@
         // and we are now handling a mouse event, we stop that to prevent conflicts
         if(enable_detect) {
           // update pointerevent
-          if(framework.Gestures.HAS_POINTEREVENTS && eventType != framework.Gestures.EVENT_END) {
-            count_touches = framework.Gestures.PointerEvent.updatePointer(eventType, ev);
+          if(ion.Gestures.HAS_POINTEREVENTS && eventType != ion.Gestures.EVENT_END) {
+            count_touches = ion.Gestures.PointerEvent.updatePointer(eventType, ev);
           }
           // touch
           else if(sourceEventType.match(/touch/)) {
@@ -309,12 +309,12 @@
 
           // if we are in a end event, but when we remove one touch and
           // we still have enough, set eventType to move
-          if(count_touches > 0 && eventType == framework.Gestures.EVENT_END) {
-            eventType = framework.Gestures.EVENT_MOVE;
+          if(count_touches > 0 && eventType == ion.Gestures.EVENT_END) {
+            eventType = ion.Gestures.EVENT_MOVE;
           }
           // no touches, force the end event
           else if(!count_touches) {
-            eventType = framework.Gestures.EVENT_END;
+            eventType = ion.Gestures.EVENT_END;
           }
 
           // store the last move event
@@ -323,11 +323,11 @@
           }
 
           // trigger the handler
-          handler.call(framework.Gestures.detection, self.collectEventData(element, eventType, self.getTouchList(last_move_event, eventType), ev));
+          handler.call(ion.Gestures.detection, self.collectEventData(element, eventType, self.getTouchList(last_move_event, eventType), ev));
 
           // remove pointerevent from list
-          if(framework.Gestures.HAS_POINTEREVENTS && eventType == framework.Gestures.EVENT_END) {
-            count_touches = framework.Gestures.PointerEvent.updatePointer(eventType, ev);
+          if(ion.Gestures.HAS_POINTEREVENTS && eventType == ion.Gestures.EVENT_END) {
+            count_touches = ion.Gestures.PointerEvent.updatePointer(eventType, ev);
           }
         }
 
@@ -338,7 +338,7 @@
           last_move_event = null;
           enable_detect = false;
           touch_triggered = false;
-          framework.Gestures.PointerEvent.reset();
+          ion.Gestures.PointerEvent.reset();
         }
       });
     },
@@ -346,18 +346,18 @@
 
     /**
      * we have different events for each device/browser
-     * determine what we need and set them in the framework.Gestures.EVENT_TYPES constant
+     * determine what we need and set them in the ion.Gestures.EVENT_TYPES constant
      */
     determineEventTypes: function determineEventTypes() {
       // determine the eventtype we want to set
       var types;
 
       // pointerEvents magic
-      if(framework.Gestures.HAS_POINTEREVENTS) {
-        types = framework.Gestures.PointerEvent.getEvents();
+      if(ion.Gestures.HAS_POINTEREVENTS) {
+        types = ion.Gestures.PointerEvent.getEvents();
       }
       // on Android, iOS, blackberry, windows mobile we dont want any mouseevents
-      else if(framework.Gestures.NO_MOUSEEVENTS) {
+      else if(ion.Gestures.NO_MOUSEEVENTS) {
         types = [
           'touchstart',
           'touchmove',
@@ -372,9 +372,9 @@
           'touchend touchcancel mouseup'];
       }
 
-      framework.Gestures.EVENT_TYPES[framework.Gestures.EVENT_START]  = types[0];
-      framework.Gestures.EVENT_TYPES[framework.Gestures.EVENT_MOVE]   = types[1];
-      framework.Gestures.EVENT_TYPES[framework.Gestures.EVENT_END]    = types[2];
+      ion.Gestures.EVENT_TYPES[ion.Gestures.EVENT_START]  = types[0];
+      ion.Gestures.EVENT_TYPES[ion.Gestures.EVENT_MOVE]   = types[1];
+      ion.Gestures.EVENT_TYPES[ion.Gestures.EVENT_END]    = types[2];
     },
 
 
@@ -385,8 +385,8 @@
      */
     getTouchList: function getTouchList(ev/*, eventType*/) {
       // get the fake pointerEvent touchlist
-      if(framework.Gestures.HAS_POINTEREVENTS) {
-        return framework.Gestures.PointerEvent.getTouchList();
+      if(ion.Gestures.HAS_POINTEREVENTS) {
+        return ion.Gestures.PointerEvent.getTouchList();
       }
       // get the touchlist
       else if(ev.touches) {
@@ -401,21 +401,21 @@
 
 
     /**
-     * collect event data for framework.Gestures js
+     * collect event data for ion.Gestures js
      * @param   {HTMLElement}   element
-     * @param   {String}        eventType        like framework.Gestures.EVENT_MOVE
+     * @param   {String}        eventType        like ion.Gestures.EVENT_MOVE
      * @param   {Object}        eventData
      */
     collectEventData: function collectEventData(element, eventType, touches, ev) {
 
       // find out pointerType
-      var pointerType = framework.Gestures.POINTER_TOUCH;
-      if(ev.type.match(/mouse/) || framework.Gestures.PointerEvent.matchType(framework.Gestures.POINTER_MOUSE, ev)) {
-        pointerType = framework.Gestures.POINTER_MOUSE;
+      var pointerType = ion.Gestures.POINTER_TOUCH;
+      if(ev.type.match(/mouse/) || ion.Gestures.PointerEvent.matchType(ion.Gestures.POINTER_MOUSE, ev)) {
+        pointerType = ion.Gestures.POINTER_MOUSE;
       }
 
       return {
-        center      : framework.Gestures.utils.getCenter(touches),
+        center      : ion.Gestures.utils.getCenter(touches),
                     timeStamp   : new Date().getTime(),
                     target      : ev.target,
                     touches     : touches,
@@ -450,13 +450,13 @@
                      * @return {*}
                      */
                     stopDetect: function() {
-                      return framework.Gestures.detection.stopDetect();
+                      return ion.Gestures.detection.stopDetect();
                     }
       };
     }
   };
 
-  framework.Gestures.PointerEvent = {
+  ion.Gestures.PointerEvent = {
     /**
      * holds all pointers
      * @type {Object}
@@ -480,11 +480,11 @@
 
     /**
      * update the position of a pointer
-     * @param   {String}   type             framework.Gestures.EVENT_END
+     * @param   {String}   type             ion.Gestures.EVENT_END
      * @param   {Object}   pointerEvent
      */
     updatePointer: function(type, pointerEvent) {
-      if(type == framework.Gestures.EVENT_END) {
+      if(type == ion.Gestures.EVENT_END) {
         this.pointers = {};
       }
       else {
@@ -497,7 +497,7 @@
 
     /**
      * check if ev matches pointertype
-     * @param   {String}        pointerType     framework.Gestures.POINTER_MOUSE
+     * @param   {String}        pointerType     ion.Gestures.POINTER_MOUSE
      * @param   {PointerEvent}  ev
      */
     matchType: function(pointerType, ev) {
@@ -506,9 +506,9 @@
       }
 
       var types = {};
-      types[framework.Gestures.POINTER_MOUSE] = (ev.pointerType == ev.MSPOINTER_TYPE_MOUSE || ev.pointerType == framework.Gestures.POINTER_MOUSE);
-      types[framework.Gestures.POINTER_TOUCH] = (ev.pointerType == ev.MSPOINTER_TYPE_TOUCH || ev.pointerType == framework.Gestures.POINTER_TOUCH);
-      types[framework.Gestures.POINTER_PEN] = (ev.pointerType == ev.MSPOINTER_TYPE_PEN || ev.pointerType == framework.Gestures.POINTER_PEN);
+      types[ion.Gestures.POINTER_MOUSE] = (ev.pointerType == ev.MSPOINTER_TYPE_MOUSE || ev.pointerType == ion.Gestures.POINTER_MOUSE);
+      types[ion.Gestures.POINTER_TOUCH] = (ev.pointerType == ev.MSPOINTER_TYPE_TOUCH || ev.pointerType == ion.Gestures.POINTER_TOUCH);
+      types[ion.Gestures.POINTER_PEN] = (ev.pointerType == ev.MSPOINTER_TYPE_PEN || ev.pointerType == ion.Gestures.POINTER_PEN);
       return types[pointerType];
     },
 
@@ -533,7 +533,7 @@
   };
 
 
-  framework.Gestures.utils = {
+  ion.Gestures.utils = {
     /**
      * extend method,
      * also used for cloning when dest is an empty object
@@ -623,17 +623,17 @@
      * angle to direction define
      * @param   {Touch}     touch1
      * @param   {Touch}     touch2
-     * @returns {String}    direction constant, like framework.Gestures.DIRECTION_LEFT
+     * @returns {String}    direction constant, like ion.Gestures.DIRECTION_LEFT
      */
     getDirection: function getDirection(touch1, touch2) {
       var x = Math.abs(touch1.pageX - touch2.pageX),
       y = Math.abs(touch1.pageY - touch2.pageY);
 
       if(x >= y) {
-        return touch1.pageX - touch2.pageX > 0 ? framework.Gestures.DIRECTION_LEFT : framework.Gestures.DIRECTION_RIGHT;
+        return touch1.pageX - touch2.pageX > 0 ? ion.Gestures.DIRECTION_LEFT : ion.Gestures.DIRECTION_RIGHT;
       }
       else {
-        return touch1.pageY - touch2.pageY > 0 ? framework.Gestures.DIRECTION_UP : framework.Gestures.DIRECTION_DOWN;
+        return touch1.pageY - touch2.pageY > 0 ? ion.Gestures.DIRECTION_UP : ion.Gestures.DIRECTION_DOWN;
       }
     },
 
@@ -690,7 +690,7 @@
      * @returns  {Boolean}   is_vertical
      */
     isVertical: function isVertical(direction) {
-      return (direction == framework.Gestures.DIRECTION_UP || direction == framework.Gestures.DIRECTION_DOWN);
+      return (direction == ion.Gestures.DIRECTION_UP || direction == ion.Gestures.DIRECTION_DOWN);
     },
 
 
@@ -734,14 +734,14 @@
   };
 
 
-  framework.Gestures.detection = {
-    // contains all registred framework.Gestures.gestures in the correct order
+  ion.Gestures.detection = {
+    // contains all registred ion.Gestures.gestures in the correct order
     gestures: [],
 
-    // data of the current framework.Gestures.gesture detection session
+    // data of the current ion.Gestures.gesture detection session
     current: null,
 
-    // the previous framework.Gestures.gesture session data
+    // the previous ion.Gestures.gesture session data
     // is a full clone of the previous gesture.current object
     previous: null,
 
@@ -750,12 +750,12 @@
 
 
     /**
-     * start framework.Gestures.gesture detection
-     * @param   {framework.Gestures.Instance}   inst
+     * start ion.Gestures.gesture detection
+     * @param   {ion.Gestures.Instance}   inst
      * @param   {Object}            eventData
      */
     startDetect: function startDetect(inst, eventData) {
-      // already busy with a framework.Gestures.gesture detection on an element
+      // already busy with a ion.Gestures.gesture detection on an element
       if(this.current) {
         return;
       }
@@ -763,8 +763,8 @@
       this.stopped = false;
 
       this.current = {
-        inst        : inst, // reference to framework.GesturesInstance we're working for
-        startEvent  : framework.Gestures.utils.extend({}, eventData), // start eventData for distances, timing etc
+        inst        : inst, // reference to ion.GesturesInstance we're working for
+        startEvent  : ion.Gestures.utils.extend({}, eventData), // start eventData for distances, timing etc
         lastEvent   : false, // last eventData
         name        : '' // current gesture we're in/detected, can be 'tap', 'hold' etc
       };
@@ -774,7 +774,7 @@
 
 
     /**
-     * framework.Gestures.gesture detection
+     * ion.Gestures.gesture detection
      * @param   {Object}    eventData
      */
     detect: function detect(eventData) {
@@ -788,7 +788,7 @@
       // instance options
       var inst_options = this.current.inst.options;
 
-      // call framework.Gestures.gesture handlers
+      // call ion.Gestures.gesture handlers
       for(var g=0,len=this.gestures.length; g<len; g++) {
         var gesture = this.gestures[g];
 
@@ -808,7 +808,7 @@
       }
 
       // endevent, but not the last touch, so dont stop
-      if(eventData.eventType == framework.Gestures.EVENT_END && !eventData.touches.length-1) {
+      if(eventData.eventType == ion.Gestures.EVENT_END && !eventData.touches.length-1) {
         this.stopDetect();
       }
 
@@ -817,14 +817,14 @@
 
 
     /**
-     * clear the framework.Gestures.gesture vars
-     * this is called on endDetect, but can also be used when a final framework.Gestures.gesture has been detected
-     * to stop other framework.Gestures.gestures from being fired
+     * clear the ion.Gestures.gesture vars
+     * this is called on endDetect, but can also be used when a final ion.Gestures.gesture has been detected
+     * to stop other ion.Gestures.gestures from being fired
      */
     stopDetect: function stopDetect() {
       // clone current data to the store as the previous gesture
       // used for the double tap gesture, since this is an other gesture detect session
-      this.previous = framework.Gestures.utils.extend({}, this.current);
+      this.previous = ion.Gestures.utils.extend({}, this.current);
 
       // reset the current
       this.current = null;
@@ -835,7 +835,7 @@
 
 
     /**
-     * extend eventData for framework.Gestures.gestures
+     * extend eventData for ion.Gestures.gestures
      * @param   {Object}   ev
      * @returns {Object}   ev
      */
@@ -850,16 +850,16 @@
         // extend 1 level deep to get the touchlist with the touch objects
         startEv.touches = [];
         for(var i=0,len=ev.touches.length; i<len; i++) {
-          startEv.touches.push(framework.Gestures.utils.extend({}, ev.touches[i]));
+          startEv.touches.push(ion.Gestures.utils.extend({}, ev.touches[i]));
         }
       }
 
       var delta_time = ev.timeStamp - startEv.timeStamp,
           delta_x = ev.center.pageX - startEv.center.pageX,
           delta_y = ev.center.pageY - startEv.center.pageY,
-          velocity = framework.Gestures.utils.getVelocity(delta_time, delta_x, delta_y);
+          velocity = ion.Gestures.utils.getVelocity(delta_time, delta_x, delta_y);
 
-      framework.Gestures.utils.extend(ev, {
+      ion.Gestures.utils.extend(ev, {
         deltaTime   : delta_time,
 
         deltaX      : delta_x,
@@ -868,12 +868,12 @@
         velocityX   : velocity.x,
         velocityY   : velocity.y,
 
-        distance    : framework.Gestures.utils.getDistance(startEv.center, ev.center),
-        angle       : framework.Gestures.utils.getAngle(startEv.center, ev.center),
-        direction   : framework.Gestures.utils.getDirection(startEv.center, ev.center),
+        distance    : ion.Gestures.utils.getDistance(startEv.center, ev.center),
+        angle       : ion.Gestures.utils.getAngle(startEv.center, ev.center),
+        direction   : ion.Gestures.utils.getDirection(startEv.center, ev.center),
 
-        scale       : framework.Gestures.utils.getScale(startEv.touches, ev.touches),
-        rotation    : framework.Gestures.utils.getRotation(startEv.touches, ev.touches),
+        scale       : ion.Gestures.utils.getScale(startEv.touches, ev.touches),
+        rotation    : ion.Gestures.utils.getRotation(startEv.touches, ev.touches),
 
         startEvent  : startEv
       });
@@ -894,13 +894,13 @@
         options[gesture.name] = true;
       }
 
-      // extend framework.Gestures default options with the framework.Gestures.gesture options
-      framework.Gestures.utils.extend(framework.Gestures.defaults, options, true);
+      // extend ion.Gestures default options with the ion.Gestures.gesture options
+      ion.Gestures.utils.extend(ion.Gestures.defaults, options, true);
 
       // set its index
       gesture.index = gesture.index || 1000;
 
-      // add framework.Gestures.gesture to the list
+      // add ion.Gestures.gesture to the list
       this.gestures.push(gesture);
 
       // sort the list by index
@@ -919,7 +919,7 @@
   };
 
 
-  framework.Gestures.gestures = framework.Gestures.gestures || {};
+  ion.Gestures.gestures = ion.Gestures.gestures || {};
 
   /**
    * Custom gestures
@@ -963,7 +963,7 @@
    *          timeStamp   {Number}        time the event occurred
    *          target      {HTMLElement}   target element
    *          touches     {Array}         touches (fingers, pointers, mouse) on the screen
-   *          pointerType {String}        kind of pointer that was used. matches framework.Gestures.POINTER_MOUSE|TOUCH
+   *          pointerType {String}        kind of pointer that was used. matches ion.Gestures.POINTER_MOUSE|TOUCH
    *          center      {Object}        center position of the touches. contains pageX and pageY
    *          deltaTime   {Number}        the total time of the touches in the screen
    *          deltaX      {Number}        the delta on x axis we haved moved
@@ -971,33 +971,33 @@
    *          velocityX   {Number}        the velocity on the x
    *          velocityY   {Number}        the velocity on y
    *          angle       {Number}        the angle we are moving
-   *          direction   {String}        the direction we are moving. matches framework.Gestures.DIRECTION_UP|DOWN|LEFT|RIGHT
+   *          direction   {String}        the direction we are moving. matches ion.Gestures.DIRECTION_UP|DOWN|LEFT|RIGHT
    *          distance    {Number}        the distance we haved moved
    *          scale       {Number}        scaling of the touches, needs 2 touches
    *          rotation    {Number}        rotation of the touches, needs 2 touches *
-   *          eventType   {String}        matches framework.Gestures.EVENT_START|MOVE|END
+   *          eventType   {String}        matches ion.Gestures.EVENT_START|MOVE|END
    *          srcEvent    {Object}        the source event, like TouchStart or MouseDown *
    *          startEvent  {Object}        contains the same properties as above,
    *                                      but from the first touch. this is used to calculate
    *                                      distances, deltaTime, scaling etc
    *
-   *      @param  {framework.Gestures.Instance}    inst
+   *      @param  {ion.Gestures.Instance}    inst
    *      the instance we are doing the detection for. you can get the options from
    *      the inst.options object and trigger the gesture event by calling inst.trigger
    *
    *
    * Handle gestures
    * --------------------
-   * inside the handler you can get/set framework.Gestures.detection.current. This is the current
+   * inside the handler you can get/set ion.Gestures.detection.current. This is the current
    * detection session. It has the following properties
    *      @param  {String}    name
    *      contains the name of the gesture we have detected. it has not a real function,
   *      only to check in other gestures if something is detected.
     *      like in the drag gesture we set it to 'drag' and in the swipe gesture we can
-    *      check if the current gesture is 'drag' by accessing framework.Gestures.detection.current.name
+    *      check if the current gesture is 'drag' by accessing ion.Gestures.detection.current.name
     *
     *      @readonly
-    *      @param  {framework.Gestures.Instance}    inst
+    *      @param  {ion.Gestures.Instance}    inst
     *      the instance we do the detection for
     *
     *      @readonly
@@ -1010,7 +1010,7 @@
     *      contains all the properties of the last gesture detect in this session.
     *
     * after the gesture detection session has been completed (user has released the screen)
-    * the framework.Gestures.detection.current object is copied into framework.Gestures.detection.previous,
+    * the ion.Gestures.detection.current object is copied into ion.Gestures.detection.previous,
     * this is usefull for gestures like doubletap, where you need to know if the
       * previous gesture was a tap
       *
@@ -1022,8 +1022,8 @@
       *
       * Register gestures
       * --------------------
-      * When an gesture is added to the framework.Gestures.gestures object, it is auto registered
-      * at the setup of the first framework.Gestures instance. You can also call framework.Gestures.detection.register
+      * When an gesture is added to the ion.Gestures.gestures object, it is auto registered
+      * at the setup of the first ion.Gestures instance. You can also call ion.Gestures.detection.register
       * manually and pass your gesture object as a param
       *
       */
@@ -1033,7 +1033,7 @@
        * Touch stays at the same place for x time
        * @events  hold
        */
-      framework.Gestures.gestures.Hold = {
+      ion.Gestures.gestures.Hold = {
         name: 'hold',
         index: 10,
         defaults: {
@@ -1043,30 +1043,30 @@
         timer: null,
         handler: function holdGesture(ev, inst) {
           switch(ev.eventType) {
-            case framework.Gestures.EVENT_START:
+            case ion.Gestures.EVENT_START:
               // clear any running timers
               clearTimeout(this.timer);
 
               // set the gesture so we can check in the timeout if it still is
-              framework.Gestures.detection.current.name = this.name;
+              ion.Gestures.detection.current.name = this.name;
 
               // set timer and if after the timeout it still is hold,
               // we trigger the hold event
               this.timer = setTimeout(function() {
-                if(framework.Gestures.detection.current.name == 'hold') {
+                if(ion.Gestures.detection.current.name == 'hold') {
                   inst.trigger('hold', ev);
                 }
               }, inst.options.hold_timeout);
               break;
 
               // when you move or end we clear the timer
-            case framework.Gestures.EVENT_MOVE:
+            case ion.Gestures.EVENT_MOVE:
               if(ev.distance > inst.options.hold_threshold) {
                 clearTimeout(this.timer);
               }
               break;
 
-            case framework.Gestures.EVENT_END:
+            case ion.Gestures.EVENT_END:
               clearTimeout(this.timer);
               break;
           }
@@ -1079,7 +1079,7 @@
    * Quick touch at a place or double at the same place
    * @events  tap, doubletap
    */
-  framework.Gestures.gestures.Tap = {
+  ion.Gestures.gestures.Tap = {
     name: 'tap',
     index: 100,
     defaults: {
@@ -1090,9 +1090,9 @@
       doubletap_interval	: 300
     },
     handler: function tapGesture(ev, inst) {
-      if(ev.eventType == framework.Gestures.EVENT_END) {
+      if(ev.eventType == ion.Gestures.EVENT_END) {
         // previous gesture, for the double tap since these are two different gesture detections
-        var prev = framework.Gestures.detection.previous,
+        var prev = ion.Gestures.detection.previous,
         did_doubletap = false;
 
         // when the touchtime is higher then the max touch time
@@ -1112,8 +1112,8 @@
 
         // do a single tap
         if(!did_doubletap || inst.options.tap_always) {
-          framework.Gestures.detection.current.name = 'tap';
-          inst.trigger(framework.Gestures.detection.current.name, ev);
+          ion.Gestures.detection.current.name = 'tap';
+          inst.trigger(ion.Gestures.detection.current.name, ev);
         }
       }
     }
@@ -1125,7 +1125,7 @@
    * triggers swipe events when the end velocity is above the threshold
    * @events  swipe, swipeleft, swiperight, swipeup, swipedown
    */
-  framework.Gestures.gestures.Swipe = {
+  ion.Gestures.gestures.Swipe = {
     name: 'swipe',
     index: 40,
     defaults: {
@@ -1134,7 +1134,7 @@
       swipe_velocity     : 0.7
     },
     handler: function swipeGesture(ev, inst) {
-      if(ev.eventType == framework.Gestures.EVENT_END) {
+      if(ev.eventType == ion.Gestures.EVENT_END) {
         // max touches
         if(inst.options.swipe_max_touches > 0 &&
             ev.touches.length > inst.options.swipe_max_touches) {
@@ -1161,7 +1161,7 @@
    * you disable scrolling on that area.
    * @events  drag, drapleft, dragright, dragup, dragdown
    */
-  framework.Gestures.gestures.Drag = {
+  ion.Gestures.gestures.Drag = {
     name: 'drag',
     index: 50,
     defaults: {
@@ -1189,7 +1189,7 @@
     handler: function dragGesture(ev, inst) {
       // current gesture isnt drag, but dragged is true
       // this means an other gesture is busy. now call dragend
-      if(framework.Gestures.detection.current.name != this.name && this.triggered) {
+      if(ion.Gestures.detection.current.name != this.name && this.triggered) {
         inst.trigger(this.name +'end', ev);
         this.triggered = false;
         return;
@@ -1202,46 +1202,46 @@
           }
 
       switch(ev.eventType) {
-        case framework.Gestures.EVENT_START:
+        case ion.Gestures.EVENT_START:
           this.triggered = false;
           break;
 
-        case framework.Gestures.EVENT_MOVE:
+        case ion.Gestures.EVENT_MOVE:
           // when the distance we moved is too small we skip this gesture
           // or we can be already in dragging
           if(ev.distance < inst.options.drag_min_distance &&
-              framework.Gestures.detection.current.name != this.name) {
+              ion.Gestures.detection.current.name != this.name) {
                 return;
               }
 
           // we are dragging!
-          if(framework.Gestures.detection.current.name != this.name) {
-            framework.Gestures.detection.current.name = this.name;
+          if(ion.Gestures.detection.current.name != this.name) {
+            ion.Gestures.detection.current.name = this.name;
             if (inst.options.correct_for_drag_min_distance) {
               // When a drag is triggered, set the event center to drag_min_distance pixels from the original event center.
               // Without this correction, the dragged distance would jumpstart at drag_min_distance pixels instead of at 0.
               // It might be useful to save the original start point somewhere
               var factor = Math.abs(inst.options.drag_min_distance/ev.distance);
-              framework.Gestures.detection.current.startEvent.center.pageX += ev.deltaX * factor;
-              framework.Gestures.detection.current.startEvent.center.pageY += ev.deltaY * factor;
+              ion.Gestures.detection.current.startEvent.center.pageX += ev.deltaX * factor;
+              ion.Gestures.detection.current.startEvent.center.pageY += ev.deltaY * factor;
 
               // recalculate event data using new start point
-              ev = framework.Gestures.detection.extendEventData(ev);
+              ev = ion.Gestures.detection.extendEventData(ev);
             }
           }
 
           // lock drag to axis?
-          if(framework.Gestures.detection.current.lastEvent.drag_locked_to_axis || (inst.options.drag_lock_to_axis && inst.options.drag_lock_min_distance<=ev.distance)) {
+          if(ion.Gestures.detection.current.lastEvent.drag_locked_to_axis || (inst.options.drag_lock_to_axis && inst.options.drag_lock_min_distance<=ev.distance)) {
             ev.drag_locked_to_axis = true;
           }
-          var last_direction = framework.Gestures.detection.current.lastEvent.direction;
+          var last_direction = ion.Gestures.detection.current.lastEvent.direction;
           if(ev.drag_locked_to_axis && last_direction !== ev.direction) {
             // keep direction on the axis that the drag gesture started on
-            if(framework.Gestures.utils.isVertical(last_direction)) {
-              ev.direction = (ev.deltaY < 0) ? framework.Gestures.DIRECTION_UP : framework.Gestures.DIRECTION_DOWN;
+            if(ion.Gestures.utils.isVertical(last_direction)) {
+              ev.direction = (ev.deltaY < 0) ? ion.Gestures.DIRECTION_UP : ion.Gestures.DIRECTION_DOWN;
             }
             else {
-              ev.direction = (ev.deltaX < 0) ? framework.Gestures.DIRECTION_LEFT : framework.Gestures.DIRECTION_RIGHT;
+              ev.direction = (ev.deltaX < 0) ? ion.Gestures.DIRECTION_LEFT : ion.Gestures.DIRECTION_RIGHT;
             }
           }
 
@@ -1258,13 +1258,13 @@
           inst.trigger(this.name + ev.direction, ev);
 
           // block the browser events
-          if( (inst.options.drag_block_vertical && framework.Gestures.utils.isVertical(ev.direction)) ||
-              (inst.options.drag_block_horizontal && !framework.Gestures.utils.isVertical(ev.direction))) {
+          if( (inst.options.drag_block_vertical && ion.Gestures.utils.isVertical(ev.direction)) ||
+              (inst.options.drag_block_horizontal && !ion.Gestures.utils.isVertical(ev.direction))) {
                 ev.preventDefault();
               }
           break;
 
-        case framework.Gestures.EVENT_END:
+        case ion.Gestures.EVENT_END:
           // trigger dragend
           if(this.triggered) {
             inst.trigger(this.name +'end', ev);
@@ -1282,7 +1282,7 @@
    * User want to scale or rotate with 2 fingers
    * @events  transform, pinch, pinchin, pinchout, rotate
    */
-  framework.Gestures.gestures.Transform = {
+  ion.Gestures.gestures.Transform = {
     name: 'transform',
     index: 45,
     defaults: {
@@ -1299,7 +1299,7 @@
     handler: function transformGesture(ev, inst) {
       // current gesture isnt drag, but dragged is true
       // this means an other gesture is busy. now call dragend
-      if(framework.Gestures.detection.current.name != this.name && this.triggered) {
+      if(ion.Gestures.detection.current.name != this.name && this.triggered) {
         inst.trigger(this.name +'end', ev);
         this.triggered = false;
         return;
@@ -1316,11 +1316,11 @@
       }
 
       switch(ev.eventType) {
-        case framework.Gestures.EVENT_START:
+        case ion.Gestures.EVENT_START:
           this.triggered = false;
           break;
 
-        case framework.Gestures.EVENT_MOVE:
+        case ion.Gestures.EVENT_MOVE:
           var scale_threshold = Math.abs(1-ev.scale);
           var rotation_threshold = Math.abs(ev.rotation);
 
@@ -1332,7 +1332,7 @@
               }
 
           // we are transforming!
-          framework.Gestures.detection.current.name = this.name;
+          ion.Gestures.detection.current.name = this.name;
 
           // first time, trigger dragstart event
           if(!this.triggered) {
@@ -1354,7 +1354,7 @@
           }
           break;
 
-        case framework.Gestures.EVENT_END:
+        case ion.Gestures.EVENT_END:
           // trigger dragend
           if(this.triggered) {
             inst.trigger(this.name +'end', ev);
@@ -1372,7 +1372,7 @@
    * Called as first, tells the user has touched the screen
    * @events  touch
    */
-  framework.Gestures.gestures.Touch = {
+  ion.Gestures.gestures.Touch = {
     name: 'touch',
     index: -Infinity,
     defaults: {
@@ -1387,7 +1387,7 @@
       prevent_mouseevents: false
     },
     handler: function touchGesture(ev, inst) {
-      if(inst.options.prevent_mouseevents && ev.pointerType == framework.Gestures.POINTER_MOUSE) {
+      if(inst.options.prevent_mouseevents && ev.pointerType == ion.Gestures.POINTER_MOUSE) {
         ev.stopDetect();
         return;
       }
@@ -1396,7 +1396,7 @@
         ev.preventDefault();
       }
 
-      if(ev.eventType ==  framework.Gestures.EVENT_START) {
+      if(ev.eventType ==  ion.Gestures.EVENT_START) {
         inst.trigger(this.name, ev);
       }
     }
@@ -1408,13 +1408,13 @@
    * Called as last, tells the user has released the screen
    * @events  release
    */
-  framework.Gestures.gestures.Release = {
+  ion.Gestures.gestures.Release = {
     name: 'release',
     index: Infinity,
     handler: function releaseGesture(ev, inst) {
-      if(ev.eventType ==  framework.Gestures.EVENT_END) {
+      if(ev.eventType ==  ion.Gestures.EVENT_END) {
         inst.trigger(this.name, ev);
       }
     }
   };
-})(this, document, FM = this.FM || {});
+})(this, document, ion = this.ion || {});

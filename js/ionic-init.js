@@ -1,4 +1,4 @@
-(function(window, document, framework) {
+(function(window, document, ion) {
 
   function initalize() {
     // remove the ready listeners
@@ -6,13 +6,13 @@
     window.removeEventListener( "load", initalize, false );
 
     // trigger that the DOM is ready
-    framework.trigger("ready");
+    ion.trigger("ready");
 
     // trigger that the start page is in view
-    framework.trigger("pageview");
+    ion.trigger("pageview");
 
     // trigger that the webapp has been initalized
-    framework.trigger("initalized");
+    ion.trigger("initalized");
   }
 
   // When the DOM is ready, initalize the webapp
@@ -25,4 +25,4 @@
     window.addEventListener( "load", initalize, false );
   }
 
-})(this, document, FM = this.FM || {});
+})(this, document, ion = this.ion || {});

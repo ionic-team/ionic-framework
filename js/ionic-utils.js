@@ -1,6 +1,6 @@
-(function(window, document, framework) {
+(function(window, document, ion) {
   
-  framework.Utils = {
+  ion.Utils = {
     /**
      * extend method,
      * also used for cloning when dest is an empty object
@@ -19,4 +19,4 @@
       return dest;
     },
   }
-})(this, document, FM = this.FM || {});
+})(this, document, ion = this.ion || {});

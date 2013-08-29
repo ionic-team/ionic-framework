@@ -1,6 +1,6 @@
 'use strict';
 
-(function(window, document, framework) {
+(function(window, document, ion) {
 
   // Loop through each element in the DOM and collect up all 
   // the templates it has. A template either has data to supply
@@ -62,7 +62,7 @@
 
   }
 
-  framework.on("ready", initTemplates);
-  framework.on("pagecreate", initTemplates);
+  ion.on("ready", initTemplates);
+  ion.on("pagecreate", initTemplates);
 
-})(this, document, FM = this.FM || {});
+})(this, document, ion = this.ion || {});

@@ -1,4 +1,4 @@
-(function(window, document, location, framework) {
+(function(window, document, location, ion) {
 
   var  
   x,
@@ -27,7 +27,7 @@
   function linkClick(e, el) {
 
     // if they clicked a link while scrolling don't nav to it
-    if(framework.isScrolling) {
+    if(ion.isScrolling) {
       e.preventDefault();
       return false;
     }
@@ -44,7 +44,7 @@
     if (location.protocol === el.protocol && location.host === el.host) {
       
       // trigger the event that a new page should be shown
-      framework.trigger("pageinit", el.href);
+      ion.trigger("pageinit", el.href);
 
       // decide how to handle this click depending on the href
       if(el.getAttribute("href").indexOf("#") === 0) {
@@ -97,7 +97,7 @@
 
   function successPageLoad(xhr, options) {
     var data = parseXHR(xhr, options);
-    framework.trigger("pageloaded", {
+    ion.trigger("pageloaded", {
       data: data
     });
     history.pushState({}, data.title, data.url);
@@ -105,7 +105,7 @@
   }
 
   function failedPageLoad(xhr, options) {
-    framework.trigger("pageinitfailed", {
+    ion.trigger("pageinitfailed", {
       responseText: xhr.responseText,
       responseStatus: xhr.status
     });
@@ -138,7 +138,7 @@
       data.main = tmp.innerHTML;
     } else {
       // something is wrong with the data, trigger that the page init failed
-      framework.trigger("pageinitfailed");
+      ion.trigger("pageinitfailed");
     }
 
     return data;
@@ -148,7 +148,7 @@
   document.addEventListener("click", click, false);
 
   // listen to when the location changes
-  framework.on("popstate", locationChange);
+  ion.on("popstate", locationChange);
   
 
-})(this, document, location, FM = this.FM || {});
+})(this, document, location, ion = this.ion || {});

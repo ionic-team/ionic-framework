@@ -3,7 +3,7 @@
 all: release
 
 release:
-	@sass -I scss/ scss/framework.scss:dist/framework.css
+	@sass -I scss/ scss/ionic.scss:dist/ionic.css
 
 cordova:
 	@cp -R js/ example/cordova/iOS/www/js

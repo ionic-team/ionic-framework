@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+
+// Component Themes
+@import
+  "ionic/theme-variables",
+
+  "ionic/theme/base",
+
+  "ionic/theme/alerts",
+  "ionic/theme/bar",
+  "ionic/theme/button",
+  "ionic/theme/icon",
+  "ionic/theme/listview",
+  "ionic/theme/panel",
+  "ionic/theme/pull-to-refresh",
+  "ionic/theme/table",
+  "ionic/theme/tabs";

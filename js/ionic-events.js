@@ -1,5 +1,5 @@
 /**
- * framework-events.js
+ * ion-events.js
  *
  * Author: Max Lynch <max@drifty.com>
  *
@@ -10,8 +10,8 @@
  * Portions lovingly adapted from github.com/maker/ratchet and github.com/alexgibson/tap.js - thanks guys!
  */
 
-(function(window, document, framework) {
-  framework.EventController = {
+(function(window, document, ion) {
+  ion.EventController = {
 
     // Trigger a new event
     trigger: function(eventType, data) {
@@ -35,7 +35,7 @@
 
     // Register for a new gesture event on the given element
     onGesture: function(type, callback, element) {
-      var gesture = new framework.Gesture(element);
+      var gesture = new ion.Gesture(element);
       gesture.on(type, callback);
       return gesture;
     },
@@ -51,7 +51,7 @@
     handleClick: function(e) {
       var target = e.target;
 
-      if(framework.Gestures.HAS_TOUCHEVENTS) {
+      if(ion.Gestures.HAS_TOUCHEVENTS) {
         // We don't allow any clicks on mobile
         e.preventDefault();
         return false;
@@ -85,14 +85,14 @@
   
   
   // Map some convenient top-level functions for event handling
-  framework.on = framework.EventController.on;
-  framework.off = framework.EventController.off;
-  framework.trigger = framework.EventController.trigger;
-  framework.onGesture = framework.EventController.onGesture;
-  framework.offGesture = framework.EventController.offGesture;
+  ion.on = ion.EventController.on;
+  ion.off = ion.EventController.off;
+  ion.trigger = ion.EventController.trigger;
+  ion.onGesture = ion.EventController.onGesture;
+  ion.offGesture = ion.EventController.offGesture;
 
   // Set up various listeners
-	window.addEventListener('click', framework.EventController.handleClick);
-  //window.addEventListener('popstate', framework.EventController.handlePopState);
+	window.addEventListener('click', ion.EventController.handleClick);
+  //window.addEventListener('popstate', ion.EventController.handlePopState);
 
-})(this, document, FM = this.FM || {});
+})(this, document, ion = this.ion || {});

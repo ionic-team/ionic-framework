@@ -1,4 +1,4 @@
-(function(window, document, framework) {
+(function(window, document, ion) {
 
   function initTransitions(e) {
     var data = e.detail.data;
@@ -22,11 +22,11 @@
   function noTransition(newMainElement, oldMainElement, data) {
     // entirely replace the old element, no transition
     oldMainElement.parentNode.replaceChild(newMainElement, oldMainElement);
-    framework.trigger("pagecreate", {
+    ion.trigger("pagecreate", {
       url: data.url,
       title: data.title
     });
-    framework.trigger("pageview");
+    ion.trigger("pageview");
   }
   
   function slideStart(newMainElement, oldMainElement, fromDirection) {
@@ -36,6 +36,6 @@
     // in the DOM, but their CSS classes will do the transitioning for us
   }
 
-  framework.on("pageloaded", initTransitions);
+  ion.on("pageloaded", initTransitions);
 
-})(this, document, FM = this.FM || {});
+})(this, document, ion = this.ion || {});
