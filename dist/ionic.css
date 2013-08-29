@@ -134,7 +134,8 @@ main > * {
   .button.button-inline {
     display: inline-block; }
   .button.button-borderless {
-    border: none; }
+    border: none;
+    padding: 2px 6px; }
 
 .button-group {
   position: relative;
@@ -545,6 +546,12 @@ a.button {
     background-color: #303030;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
     border-color: black; }
+
+.button-transparent {
+  background: transparent; }
+
+.button-borderless [class^="icon-"], [class*=" icon-"] {
+  font-size: 2.3em; }
 
 .list-divider {
   background-color: whitesmoke;

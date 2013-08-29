@@ -34,3 +34,10 @@ a.button {
 .button-dark {
   @include button-style($buttonDarkBackground, $buttonDarkBorder, $lightColor);
 }
+.button-transparent {
+  background: transparent;
+}
+
+.button-borderless [class^="icon-"], [class*=" icon-"] {
+  font-size: 2.3em;  
+}
