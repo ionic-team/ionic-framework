@@ -227,7 +227,8 @@ a.list-item {
   position: absolute;
   top: 0;
   bottom: 0;
-  z-index: 0; }
+  z-index: 0;
+  overflow: auto; }
 
 .ion-panel-active-left {
   left: 0; }
