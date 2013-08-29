@@ -55,3 +55,10 @@
   -moz-transform: translate3d( ($panelOpenWidth * -1), 0,0 );
   transform: translate3d( ($panelOpenWidth * -1), 0,0 );
 }
+
+
+.ion-panel-animated {
+  -webkit-transition: -webkit-transform $panelAnimationSpeed ease;
+  -moz-transition: -moz-transform $panelAnimationSpeed ease;
+  transition: transform $panelAnimationSpeed ease;
+}
