@@ -1,21 +1,27 @@
 
 // Fonts
+// -------------------------------
 $sansFontFamily:        "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $lightSansFontFamily:   "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $serifFontFamily:       Georgia, "Times New Roman", Times, serif !default;
 $monoFontFamily:        Monaco, Menlo, Consolas, "Courier New", monospace !default;
 
+
 // Base
+// -------------------------------
 $baseFontFamily: $sansFontFamily;
 $baseBackgroundColor: #fff;
+$textColor:             $grayDark !default;
 
 
 // Typography
+// -------------------------------
 $lightColor: #fff;
 $darkColor: #333;
 
 
 // Buttons
+// -------------------------------
 $buttonColor: #222;
 $buttonPadding: 10px 15px;
 $buttonBorderRadius: 2px;
@@ -54,8 +60,8 @@ $buttonDarkBackgroundActive: #eee;
 $buttonDarkBorder: #111;
 
 
-
 // Bars
+// -------------------------------
 $barBackground: white;
 
 // Bar variations
@@ -85,11 +91,13 @@ $barDarkBorderColor: #111;
 
 
 // Lists
+// -------------------------------
 $listDividerBackground: #f5f5f5;
 $listDividerColor: #222;
 
 
 // Form states and alerts
+// -------------------------------
 $warningText:             #c09853;
 $warningBackground:       #fcf8e3;
 $warningBorder:           darken(adjust-hue($warningBackground, -10), 3%);
@@ -108,5 +116,6 @@ $infoBorder:              darken(adjust-hue($infoBackground, -10), 7%);
 
 
 // Panels
+// -------------------------------
 $panelBackgroundColor:    #eee;
 $panelInsetBorderColor:   #bbb;

@@ -3,6 +3,8 @@
 
 // Component Themes
 @import
+  "ionic/structure-variables",
+  "ionic/mixins",
   "ionic/theme-variables",
 
   "ionic/theme/base",
@@ -11,6 +13,7 @@
   "ionic/theme/bar",
   "ionic/theme/button",
   "ionic/theme/icon",
+  "ionic/theme/form",
   "ionic/theme/listview",
   "ionic/theme/panel",
   "ionic/theme/pull-to-refresh",

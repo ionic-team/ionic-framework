@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Input: Text</title>
+    <title>Forms</title>
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -14,23 +14,29 @@
     <section>
 
       <header class="bar bar-header bar-dark">
-        <h1 class="title">Input: Text</h1>
+        <h1 class="title">Forms</h1>
       </header>
 
       <main class="content content-padded has-header">
         
-        <h2>Text input</h2>
-        <p>
-          <input type="text" placeholder="This is where text goes!">
-        </p>
-        
-        <h2>Search input</h2>
-        <p>
-          <input type="text" class="input-medium search-query" placeholder="Search">
-        </p>
-        
-        <h2>Textarea</h2>
-        <textarea></textarea>
+        <h2>Default form layout</h2>
+
+        <form>
+          <fieldset>
+            <legend>Legend</legend>
+            <label>Label name</label>
+            <input type="text" placeholder="Type something…">
+            <span class="help-block">Example block-level help text here.</span>
+            <label class="checkbox">
+              <input type="checkbox"> Check me out
+            </label>
+            <button type="submit" class="btn">Submit</button>
+          </fieldset>
+        </form>
+
+
+        <h2>Inline form layout</h2>
+
 
         <p><a class="button button-secondary" href="index.html">Homepage</a></p>
       </main>
