@@ -1,4 +1,3 @@
-@charset "UTF-8";
 *, *:before, *:after {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -189,7 +188,7 @@ main > * {
 .list-item {
   position: relative;
   display: block;
-  padding: 10px 15px;
+  padding: 15px 15px;
   margin-bottom: -1px;
   border: 1px solid #dddddd; }
   .list-item:last-child {
