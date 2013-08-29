@@ -7,7 +7,8 @@
   top: 0;
   bottom: 0;
   z-index: 0;
-  overflow: auto;
+  overflow-y: scroll; /* has to be scroll, not auto */
+  -webkit-overflow-scrolling: touch;
 }
 
 .ion-panel-active-left {
