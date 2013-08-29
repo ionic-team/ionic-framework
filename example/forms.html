@@ -36,7 +36,40 @@
 
 
         <h2>Inline form layout</h2>
+        <form class="form-inline">
+          <input type="text" class="input-small" placeholder="Email">
+          <input type="password" class="input-small" placeholder="Password">
+          <label class="checkbox">
+            <input type="checkbox"> Remember me
+          </label>
+          <button type="submit" class="btn">Sign in</button>
+        </form>
 
+
+        <h2>Horizontal form layout</h2>
+        <form class="form-horizontal">
+          <div class="control-group">
+            <label class="control-label" for="inputEmail">Email</label>
+            <div class="controls">
+              <input type="text" id="inputEmail" placeholder="Email">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputPassword">Password</label>
+            <div class="controls">
+              <input type="password" id="inputPassword" placeholder="Password">
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <label class="checkbox">
+                <input type="checkbox"> Remember me
+              </label>
+              <button type="submit" class="btn">Sign in</button>
+            </div>
+          </div>
+        </form>
+        
 
         <p><a class="button button-secondary" href="index.html">Homepage</a></p>
       </main>
