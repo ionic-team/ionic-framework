@@ -1,17 +1,18 @@
 .button {
 	position: relative;
-	display: block;
+	display: inline-block;
 	vertical-align: middle;
 	text-align: center;
 	cursor: pointer;
-	margin: 0;
 
-	&.button-inline {
-		display: inline-block;
-	}
+  &.button-block {
+    margin: $buttonBlockMargin;
+    display: block;
+  }
 
-	&.button-borderless {
+  &.button-clear {
+    background: none;
     border: none;
-    padding: 2px 6px;
+    padding: $buttonClearPadding;
   }
 }

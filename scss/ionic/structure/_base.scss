@@ -1,3 +1,4 @@
+// TODO: This might be inefficient?
 *, *:before, *:after {
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: 
@@ -63,7 +64,4 @@ main > * {
   z-index: 1;
   width: 100%;
   height: 100%;
-}
-
-.shadow {
 }

@@ -41,6 +41,7 @@ $contentPadding: 10px;
 // -------------------------
 $barHeight: 44px !default;
 $barLineHeight: 44px !default;
+$barButtonsLineHeight: 6px !default;
 $barTitleFontSize: $fontSizeLarge;
 $barTitleLineHeightComputed: 26px;//$barHeight - 2;
 $barPaddingVertical: (($barHeight - $baseLineHeightComputed) / 2);

@@ -7,11 +7,6 @@
   z-index: 10;
   width: 100%;
 
-	display: -webkit-box;
-  display: box;
-  -webkit-box-orient: horizontal;
-  box-orient: horizontal;
-
   box-sizing: border-box;
 
   height: $barHeight;
@@ -20,15 +15,12 @@
 
   // Title inside of a bar is centered
   .title {
-    /*
     position: absolute;
+    width: 100%;
     top: 0;
     left: 0;
-    display: block;
-    width: 100%;
-    */
 
-    line-height: $barTitleLineHeightComputed;
+    line-height: $barHeight;
 
     margin: 0;
     //padding: $barPaddingVertical 0px;
@@ -37,19 +29,11 @@
     white-space: nowrap;
     font-size: $barTitleFontSize;
 
-    -webkit-box-flex: 3;
-    -moz-box-flex: 3;
-    box-flex: 3;
   }
+
 
   .title a {
     color: inherit;
-  }
-
-  .button {
-    -webkit-box-flex: 0;
-    -moz-box-flex: 0;
-    box-flex: 0;
   }
 
   // Place the last button in a bar on the right of the bar
@@ -64,6 +48,19 @@
   */
 }
 
+.buttons {
+  position: absolute;
+  padding: $barPaddingPortrait;
+  line-height: $barButtonsLineHeight;
+}
+.buttons:first-child {
+  left: 0;
+  top: 0;
+}
+.buttons:last-child {
+  right: 0;
+  top: 0;
+}
 
 // Header at top
 .bar-header {
@@ -75,6 +72,10 @@
   bottom: 0;
 }
 
+// Don't render padding if the bar is just for tabs
+.bar-tabs {
+  padding: 0;
+}
 
 /* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
    Note: For these to work, content must come after both bars in the markup */

@@ -115,6 +115,14 @@
   ion.Gestures.Instance = function(element, options) {
     var self = this;
 
+    // A null element was passed into the instance, which means
+    // whatever lookup was done to find this element failed to find it
+    // so we can't listen for events on it.
+    if(element === null) {
+      console.error('Null element passed to gesture (element does not exist). Not listening for gesture');
+      return;
+    }
+
     // setup ion.GesturesJS window events and register all gestures
     // this also sets up the default options
     setup();

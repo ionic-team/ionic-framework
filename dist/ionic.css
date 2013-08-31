@@ -81,10 +81,6 @@ main > * {
   left: 0;
   z-index: 10;
   width: 100%;
-  display: -webkit-box;
-  display: box;
-  -webkit-box-orient: horizontal;
-  box-orient: horizontal;
   box-sizing: border-box;
   height: 44px;
   padding: 8px;
@@ -98,33 +94,39 @@ main > * {
   }
   */ }
   .bar .title {
-    /*
     position: absolute;
+    width: 100%;
     top: 0;
     left: 0;
-    display: block;
-    width: 100%;
-    */
-    line-height: 26px;
+    line-height: 44px;
     margin: 0;
     text-align: center;
     white-space: nowrap;
-    font-size: 18px;
-    -webkit-box-flex: 3;
-    -moz-box-flex: 3;
-    box-flex: 3; }
+    font-size: 18px; }
   .bar .title a {
     color: inherit; }
-  .bar .button {
-    -webkit-box-flex: 0;
-    -moz-box-flex: 0;
-    box-flex: 0; }
+
+.buttons {
+  position: absolute;
+  padding: 8px;
+  line-height: 6px; }
+
+.buttons:first-child {
+  left: 0;
+  top: 0; }
+
+.buttons:last-child {
+  right: 0;
+  top: 0; }
 
 .bar-header {
   top: 0; }
 
 .bar-footer {
   bottom: 0; }
+
+.bar-tabs {
+  padding: 0; }
 
 /* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
    Note: For these to work, content must come after both bars in the markup */
@@ -136,16 +138,17 @@ main > * {
 
 .button {
   position: relative;
-  display: block;
+  display: inline-block;
   vertical-align: middle;
   text-align: center;
-  cursor: pointer;
-  margin: 0; }
-  .button.button-inline {
-    display: inline-block; }
-  .button.button-borderless {
+  cursor: pointer; }
+  .button.button-block {
+    margin: 0 0 10px 0;
+    display: block; }
+  .button.button-clear {
+    background: none;
     border: none;
-    padding: 2px 6px; }
+    padding: 10px 0px; }
 
 .button-group {
   position: relative;
@@ -1086,10 +1089,10 @@ a.list-item {
   right: 0;
   left: 0;
   bottom: 0;
-  height: 50px;
+  width: 100%;
+  height: 100%;
   padding: 0;
-  box-sizing: border-box;
-  position: fixed; }
+  box-sizing: border-box; }
 
 .tabs-inner {
   display: -webkit-box;
@@ -1374,8 +1377,7 @@ a.list-item {
   background: #eee; }
 
 .tabs {
-  font-size: 16px;
-  height: 60px; }
+  font-size: 16px; }
 
 .tab-item a {
   font-family: "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;

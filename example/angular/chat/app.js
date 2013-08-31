@@ -9,10 +9,19 @@ chat.controller('RoomsCtrl', function($scope) {
     { name: 'All', key: 'all' },
     { name: 'Marketing', key: 'marketing' }
   ];
-  
-  $scope.openPanel = function() {
-    console.log('Open panel');
-    $scope.isPanelShowing = true;
-  };
+});
+
+// TODO: Move this to a directive corresponding to this panel
+// Grab the sections
+var page = document.getElementById('page');
+var leftPanel = document.getElementById('left-panel');
+var rightPanel = document.getElementById('right-panel');
+var controller = new ion.controllers.LeftRightPanelViewController({
+  left: leftPanel,
+  leftWidth: 270,
+  right: rightPanel,
+  rightWidth: 270,
+  center: page,
+  animateClass: 'ion-panel-animated'
 });
 

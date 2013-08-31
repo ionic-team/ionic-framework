@@ -7,47 +7,47 @@
   <link rel="stylesheet" href="../../../dist/ionic.css">
   <script src="angular-1.2.0rc1.min.js"></script>
   <script src="angular-touch.js"></script>
-  <script src="app.js"></script>
-
-  <script src="../../../js/framework/ion-panel.js"></script>
-  <script src="../../../js/framework/glue/angular-glue.js"></script>
 </head>
 <body ng-app="Chat">
-  <section class="panel-page-container" ng-controller="RoomsCtrl">
+  <div id="left-panel" class="ion-panel ion-panel-left">
+    <ul class="list">
+      <li class="list-item">
+        Max Lynch
+      </li>
+    </ul>
+  </div>
+  
+  <div id="right-panel" class="ion-panel ion-panel-right">
+    <ul class="list">
+      <li class="list-item">
+        Max Lynch
+      </li>
+    </ul>
+  </div>
+
+  <div id="page" class="full-section">
+  
+    <header class="bar bar-header bar-dark">
+      <button class="button button-dark">Rooms</button>
+      <h1 class="title">Feeds</h1>
+    </header>
     
-    <section id="this-panel" class="panel-content" ng-class="{'ion-panel-opened': isPanelShowing}">
-      <ul class="list">
-        <li class="list-item">
-          Max Lynch
+    <main class="content has-header">
+      <ul class="list" ng-controller="RoomsCtrl">
+        <li class="list-item" ng-repeat="room in rooms">
+          {{room.name}}
         </li>
       </ul>
-    </section>
-    
-    <section id="that-panel" class="panel-content" ng-class="{'ion-panel-opened': isPanelShowing}">
-      <ul class="list">
-        <li class="list-item">
-          Max Lynch
-        </li>
-      </ul>
-    </section>
+    </main>
+  </div>
 
-    <section>
-    
-      <header class="bar bar-header bar-dark">
-        <button class="button button-dark" ng-click="openPanel()">Rooms</button>
-        <h1 class="title">Feeds</h1>
-      </header>
-      
-      <main class="content has-header">
-        <ul class="list">
-          <li class="list-item" ng-repeat="room in rooms">
-            {{room.name}}
-          </li>
-        </ul>
-      </main>
-    </section>
-    
-  </section>
 
+  <script src="../../../js/ionic-events.js"></script>
+  <script src="../../../js/ionic-gestures.js"></script>
+  <script src="../../../js/controllers/ionic-leftrightpanel.js"></script>
+  <script src="../../../js/ionic-panel.js"></script>
+  <script src="../../../connectors/angular/angular-glue.js"></script>
+
+  <script src="app.js"></script>
 </body>
 </html>

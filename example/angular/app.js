@@ -1,3 +1,5 @@
+
+/*
 document.addEventListener('touchstart', function() {});
 
 var app = angular.module('peopleApp', ['ngRoute', 'ngAnimate']);
@@ -45,3 +47,4 @@ app.controller('CustomerCtrl', function($scope, $routeParams, Customers) {
   $scope.customer = customer;
   console.log('Showing user', id, customer);
 });
+*/
