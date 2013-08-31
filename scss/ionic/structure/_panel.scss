@@ -11,7 +11,10 @@
   top: 0;
   bottom: 0;
   z-index: 0;
-  overflow-y: scroll; /* has to be scroll, not auto */
+
+  // has to be scroll, not auto
+  overflow-y: scroll;
+
   -webkit-overflow-scrolling: touch;
 }
 

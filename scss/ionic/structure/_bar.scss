@@ -16,6 +16,8 @@
   // Title inside of a bar is centered
   .title {
     position: absolute;
+    z-index: 0;
+
     width: 100%;
     top: 0;
     left: 0;
@@ -50,8 +52,17 @@
 
 .buttons {
   position: absolute;
+
+  // Lift the buttons container above the title
+  z-index: 1;
+
   padding: $barPaddingPortrait;
   line-height: $barButtonsLineHeight;
+
+
+  .button {
+    line-height: 6px;
+  }
 }
 .buttons:first-child {
   left: 0;

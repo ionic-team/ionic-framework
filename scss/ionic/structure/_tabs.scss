@@ -1,13 +1,8 @@
-/* Bar docked to bottom used for primary app navigation */
-.tabs {
-  right: 0;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  box-sizing: border-box;
-}
+/**
+ * Tabs
+ * 
+ * A navigation bar with any number of tab items supported.
+ */
 
 .tabs-inner {
   display: -webkit-box;
