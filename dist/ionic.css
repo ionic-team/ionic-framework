@@ -116,7 +116,8 @@ main > * {
   padding: 8px;
   line-height: 6px; }
   .buttons .button {
-    line-height: 6px; }
+    padding: 6px 12px;
+    line-height: 14px; }
 
 .buttons:first-child {
   left: 0;
