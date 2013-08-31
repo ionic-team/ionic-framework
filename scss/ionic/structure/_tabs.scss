@@ -14,8 +14,7 @@
   display: box;
   height: 100%;
   list-style: none;
-  -webkit-box-orient: horizontal;
-          box-orient: horizontal;
+  @include box-orient(horizontal);
 }
 
 /* Navigational tab */
@@ -23,8 +22,11 @@
   height: 100%;
   text-align: center;
   box-sizing: border-box;
-  -webkit-box-flex: 1;
-          box-flex: 1;
+
+  @include box-flex(1);
+
+  // Required to force box elements to be the same size;
+  width: 0;
 
   a {
     text-decoration: none;

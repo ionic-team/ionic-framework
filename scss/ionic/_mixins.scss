@@ -1,3 +1,7 @@
+// _mixins.scss
+//
+// Useful utilities and mixins for SCSS files.
+
 @mixin button-style($bgColor, $borderColor, $color) {
   color: $color;
 	background-color: $bgColor;
@@ -403,6 +407,18 @@
 @mixin opacity($opacity) {
   opacity: $opacity / 100;
   filter: alpha(opacity=$opacity);
+}
+
+@mixin box-orient($orientation) {
+  box-orient: $orientation;
+  -webkit-box-orient: $orientation;
+  -moz-box-orient: $orientation;
+}
+
+@mixin box-flex($flex) {
+  box-flex: 1;
+  -webkit-box-flex: $flex;
+  -moz-box-flex: $flex;
 }
 
 

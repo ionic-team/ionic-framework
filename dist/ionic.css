@@ -1099,16 +1099,19 @@ a.list-item {
   display: box;
   height: 100%;
   list-style: none;
+  box-orient: horizontal;
   -webkit-box-orient: horizontal;
-  box-orient: horizontal; }
+  -moz-box-orient: horizontal; }
 
 /* Navigational tab */
 .tab-item {
   height: 100%;
   text-align: center;
   box-sizing: border-box;
+  box-flex: 1;
   -webkit-box-flex: 1;
-  box-flex: 1; }
+  -moz-box-flex: 1;
+  width: 0; }
   .tab-item a {
     text-decoration: none;
     display: block;
