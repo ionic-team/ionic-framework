@@ -103,13 +103,13 @@
       if(amount >= 0) {
         this._leftShowing = true;
         this._rightShowing = false;
-        this.right.style.display = 'none';
-        this.left.style.display = 'block';
+        this.right.style.zIndex = -1;
+        this.left.style.zIndex = 0;
       } else {
         this._rightShowing = true;
         this._leftShowing = false;
-        this.right.style.display = 'block';
-        this.left.style.display = 'none';
+        this.right.style.zIndex = 0;
+        this.left.style.zIndex = -1;
       }
     },
     snapToRest: function(e) {

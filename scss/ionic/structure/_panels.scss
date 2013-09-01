@@ -139,14 +139,12 @@
 .panel-success {
   @include panel-variant($panelSuccessBorder, $panelSuccessText, $panelSuccessHeadingBg, $panelSuccessBorder);
 }
-/*
 .panel-warning {
-  .panel-variant(@panel-warning-border; @panel-warning-text; @panel-warning-heading-bg; @panel-warning-border);
+  @include panel-variant($panelWarningBorder, $panelWarningText, $panelWarningHeadingBg, $panelWarningBorder);
 }
 .panel-danger {
-  .panel-variant(@panel-danger-border; @panel-danger-text; @panel-danger-heading-bg; @panel-danger-border);
+  @include panel-variant($panelDangerBorder, $panelDangerText, $panelDangerHeadingBg, $panelDangerBorder);
 }
 .panel-info {
-  .panel-variant(@panel-info-border; @panel-info-text; @panel-info-heading-bg; @panel-info-border);
+  @include panel-variant($panelInfoBorder, $panelInfoText, $panelInfoHeadingBg, $panelInfoBorder);
 }
-*/
