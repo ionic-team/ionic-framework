@@ -1,13 +1,12 @@
 
 .ion-panel {
-  background: $panelBackgroundColor;
-  width: $panelWidth;
+  background: $menuBackgroundColor;
 }
 
 .ion-panel-left .ion-panel {
-  border-right: 1px solid $panelInsetBorderColor;
+  border-right: 1px solid $menuInsetBorderColor;
 }
 
 .ion-panel-right .ion-panel {
-  border-left: 1px solid $panelInsetBorderColor;
+  border-left: 1px solid $menuInsetBorderColor;
 }

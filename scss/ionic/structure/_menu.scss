@@ -6,7 +6,7 @@
   display: none;
   min-height: 100%;
   max-height: 100%;
-  width: $panelWidth;
+  width: $menuWidth;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -22,7 +22,7 @@
 .menu-right { right: 0; }
 
 .menu-animated {
-  -webkit-transition: -webkit-transform $panelAnimationSpeed ease;
-  -moz-transition: -moz-transform $panelAnimationSpeed ease;
-  transition: transform $panelAnimationSpeed ease;
+  -webkit-transition: -webkit-transform $menuAnimationSpeed ease;
+  -moz-transition: -moz-transform $menuAnimationSpeed ease;
+  transition: transform $menuAnimationSpeed ease;
 }
