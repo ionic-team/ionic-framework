@@ -18,7 +18,7 @@
             <i class="icon-reorder"></i>
           </a>
         </div>
-        <h1 class="title">Panels</h1>
+        <h1 class="title">Chats</h1>
         <div class="buttons">
           <button id="right-button" class="button button-dark">
             <i class="icon-cog"></i>
@@ -27,17 +27,19 @@
       </header>
 
       <main class="content content-padded has-header">
-        <h2>Cheese!</h2>
+        <div class="panel">
+          <h2 class="title">What</h2>
+        </div>
       </main>
 
       <footer class="bar bar-footer bar-dark">
-        <h3 class="title">Panels</h3>
+        <h3 class="title"></h3>
       </footer>
 
     </section>
 
 
-    <section id="my-left-panel" class="ion-panel ion-panel-left">
+    <section id="my-left-panel" class="menu menu-left">
       <ul class="list">
         <li class="list-divider">Left Nav Things</li>
         <a href="#" class="list-item">
@@ -143,7 +145,7 @@
       </ul>
     </section>
 
-    <section id="my-right-panel" class="ion-panel ion-panel-right">
+    <section id="my-right-panel" class="menu menu-right">
       <ul class="list">
         <li class="list-divider">Left Nav Things</li>
         <a href="#" class="list-item">
@@ -265,7 +267,7 @@
         right: rightPanel,
         rightWidth: 270,
         center: page,
-        animateClass: 'ion-panel-animated'
+        animateClass: 'menu-animated'
       });
       window.ion.onGesture('tap', function(e) {
         controller.toggleLeft();
