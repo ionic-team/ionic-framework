@@ -1,5 +1,5 @@
 /**
- * The LeftRightPanelViewController makes it easy to have an interface
+ * The LeftRightMenuViewController makes it easy to have an interface
  * with two hidden menus: one on the left, and one on the right.
  *
  * The main content supports dragging to show either panel, or the panel can be
@@ -19,12 +19,12 @@
     this.right = options.right;
     this.rightWidth = options.rightWidth;
     this.center = options.center;
+    this.isLeftEnabled = options.isLeftEnabled == undefined ? true : options.isLeftEnabled;
+    this.isRightEnabled = options.isRightEnabled == undefined ? true : options.isRightEnabled;
       
     this._rightShowing = false;
     this._leftShowing = false;
 
-    this._isLeftEnabled = true;
-    this._isRightEnabled = true;
 
     // Bind release and drag listeners
     window.ion.onGesture('release', function(e) {
@@ -38,10 +38,10 @@
 
   ion.controllers.LeftRightMenuViewController.prototype = {
     setIsLeftEnabled: function(isLeftEnabled) {
-      this._isLeftEnabled = isLeftEnabled;
+      this.isLeftEnabled = isLeftEnabled;
     },
     setIsRightEnabled: function(isRightEnabled) {
-      this._isRightEnabled = isRightEnabled;
+      this.isRightEnabled = isRightEnabled;
     },
     toggleLeft: function() {
       var openAmount = this.getOpenAmount();
@@ -90,7 +90,7 @@
       var maxRight = this.rightWidth;
 
       // Check if we can move to that side, depending if the left/right panel is enabled
-      if((!this._isLeftEnabled && amount > 0) || (!this._isRightEnabled && amount < 0)) {
+      if((!this.isLeftEnabled && amount > 0) || (!this.isRightEnabled && amount < 0)) {
         return;
       }
 
@@ -103,13 +103,22 @@
       if(amount >= 0) {
         this._leftShowing = true;
         this._rightShowing = false;
-        this.right.style.zIndex = -1;
-        this.left.style.zIndex = 0;
+
+        if(this.isRightEnabled) {
+          this.right.style.zIndex = -1;
+        }
+        if(this.isLeftEnabled) {
+          this.left.style.zIndex = 0;
+        }
       } else {
         this._rightShowing = true;
         this._leftShowing = false;
-        this.right.style.zIndex = 0;
-        this.left.style.zIndex = -1;
+        if(this.isRightEnabled) {
+          this.right.style.zIndex = 0;
+        }
+        if(this.isLeftEnabled) {
+          this.left.style.zIndex = -1;
+        }
       }
     },
     snapToRest: function(e) {

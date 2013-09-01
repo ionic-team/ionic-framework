@@ -22,7 +22,7 @@
       </main>
 
       <footer class="bar bar-tabs bar-footer bar-success">
-        <nav class="tabs">
+        <nav id="tab-bar" class="tabs">
           <ul class="tabs-inner">
             <li class="tab-item">
               <a href="#">
@@ -54,5 +54,16 @@
 
     </section>
 
+    <script src="../../js/ionic-events.js"></script>
+    <script src="../../js/ionic-gestures.js"></script>
+    <script src="../../js/controllers/ionic-tabcontroller.js"></script>
+    <script>
+      
+      // Grab the sections
+      var tab = document.getElementById('tab-bar');
+      var controller = new ion.controllers.TabController({
+        tab: tab
+      });
+    </script>
   </body>
 </html>

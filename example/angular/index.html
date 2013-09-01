@@ -11,17 +11,17 @@
     
     <script src="/vendor/angular/1.2.0rc1/angular-1.2.0rc1.min.js"></script>
     <script src="/vendor/angular/1.2.0rc1/angular-touch.js"></script>
-    
-    <script src="app.js"></script>
-  </head>
-  <body ng-app="peopleApp">
-    <header class="bar bar-header bar-dark">
-      <h1 class="title">Customers</h1>
-    </header>
-
-    <main ng-controller="CustomersCtrl">
-      <div ng-view class="pane reveal-animation"></div>
-    </main>
     <script src="../../js/ionic-list.js"></script>
+    <script src="../../js/controllers/ionic-leftrightmenu.js"></script>
+    <script src="menu.js"></script>
+    
+  </head>
+  <body ng-app="ionic.menu">
+    <ionic-left-right-menu>
+      <ionic-menu side="left">
+      </ionic-menu>
+      <ionic-menu side="right">
+      </ionic-menu>
+    </ionic-left-right-menu>
   </body>
 </html>
