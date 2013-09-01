@@ -10,7 +10,7 @@
 (function(window, document, ion) {
   ion.controllers = ion.controllers || {};
 
-  ion.controllers.LeftRightPanelViewController = function(options) {
+  ion.controllers.LeftRightMenuViewController = function(options) {
     var _this = this;
 
     this.animateClass = options.animateClass;
@@ -36,7 +36,7 @@
     }, this.center);
   };
 
-  ion.controllers.LeftRightPanelViewController.prototype = {
+  ion.controllers.LeftRightMenuViewController.prototype = {
     setIsLeftEnabled: function(isLeftEnabled) {
       this._isLeftEnabled = isLeftEnabled;
     },

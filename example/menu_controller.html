@@ -10,7 +10,7 @@
   </head>
   <body>
 
-    <section id="page" class="full-section ion-panel-animated">
+    <section id="page" class="full-section menu-animated">
 
       <header class="bar bar-header bar-dark">
         <div class="buttons">
@@ -254,14 +254,14 @@
 
     <script src="../../js/ionic-events.js"></script>
     <script src="../../js/ionic-gestures.js"></script>
-    <script src="../../js/controllers/ionic-leftrightpanel.js"></script>
+    <script src="../../js/controllers/ionic-leftrightmenu.js"></script>
     <script>
       
       // Grab the sections
       var page = document.getElementById('page');
       var leftPanel = document.getElementById('my-left-panel');
       var rightPanel = document.getElementById('my-right-panel');
-      var controller = new ion.controllers.LeftRightPanelViewController({
+      var controller = new ion.controllers.LeftRightMenuViewController({
         left: leftPanel,
         leftWidth: 270,
         right: rightPanel,
