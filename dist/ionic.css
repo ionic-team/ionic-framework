@@ -1074,6 +1074,10 @@ a.list-item {
   -moz-transition: -moz-transform 200ms ease;
   transition: transform 200ms ease; }
 
+.panel {
+  margin: 10px;
+  background-color: #fff; }
+
 .ptr-capable {
   -webkit-user-drag: element; }
 
