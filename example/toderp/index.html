@@ -18,7 +18,7 @@
     
   </head>
   <body ng-app="toderp">
-    <div id="page" class="page">
+    <div id="page" class="page" ng-controller="TodaysTaskListCtrl">
       <div class="bar bar-header bar-dark">
         <div class="buttons">
           <a id="menu-button" class="button button-dark" href="#">
@@ -27,29 +27,27 @@
         </div>
         <h1 class="title">Today's Tasks</h1>
         <div class="buttons">
-          <button id="right-button" class="button button-dark">
+          <button id="right-button" class="button button-dark" ng-click="promptNewTask()">
             <i class="icon-plus"></i>
           </button>
         </div>
       </div>
 
       <div class="content has-header">
-        <ul class="list todays-tasks" ng-controller="TodaysTaskListCtrl">
-          <li class="list-item" ng-repeat="task in todaysTasks">
-            {{task.text}}
+        <ul class="list todays-tasks">
+          <li class="list-item" ng-repeat="task in tasks | todaysTasks">
+            <input type="checkbox" ng-model="task.isDone"> {{task.text}}
           </li>
         </ul>
       </div>
     </div>
     <div id="tasks-menu" class="menu menu-left" ng-controller="TaskListCtrl">
-      <ul class="list">
+      <ul id="tasks" class="list">
         <li class="list-divider">Tasks</li>
         <li class="list-item" ng-repeat="task in tasks">
           <a href="#">{{task.text}}</a>
         </li>
       </ul>
-    </div>
-    <div class="menu menu-right">
     </div>
     <script src="app.js"></script>
   </body>
