@@ -33,11 +33,13 @@ angular.module('toderp', [])
 
 .filter('todaysTasks', function() {
   return function(value) {
-    return value.sort(function(a, b) {
+    return value.filter(function(a) {
+      return !a.isDone;
+    }).sort(function(a, b) {
       if(a.priority > b.priority) return 1;
       if(a.priority < b.priority) return -1;
       return 0;
-    });
+    }).slice(0, 3);
   }
 })
 
@@ -47,7 +49,6 @@ angular.module('toderp', [])
 
   return {
     tasks: tasks,
-    todaysTasks: [ ],
     
     addTask: function(task) {
       this.tasks.push(task);
@@ -66,8 +67,6 @@ angular.module('toderp', [])
 }])
 
 .controller('TodaysTaskListCtrl', ['$scope', 'TaskListService', function($scope, TaskListService) {
-  //$scope.getTodaysTasks = TaskListService.getTodaysTasks;
-
   $scope.tasks = TaskListService.tasks;
 
   $scope.promptNewTask = function() {
@@ -107,6 +106,7 @@ ListViewController.prototype = {
 
   },
   _handleDrag: function(e) {
+    console.log('Dragging', e);
   },
   _handleSwipeRight: function(e) {
     console.log('SWIPRIGHT', e);
