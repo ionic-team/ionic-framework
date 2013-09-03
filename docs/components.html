@@ -8,6 +8,7 @@
     <link href="bootstrap3.css" rel="stylesheet">
     <link href="pygments.css" rel="stylesheet">
     <link href="/dist/ionic.css" rel="stylesheet">
+    <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
   </head>
   <body>
     <!-- Static navbar -->
@@ -63,12 +64,29 @@
             <div class="panel panel-default">
               <div class="panel-heading"><h3 class="panel-title">Styles</h3></div>
               <div class="panel-body">
-                <a href="#" class="button button-default">Button</a>
-                <a href="#" class="button button-secondary">Button</a>
-                <a href="#" class="button button-primary">Button</a>
-                <a href="#" class="button button-success">Button</a>
-                <a href="#" class="button button-warning">Button</a>
-                <a href="#" class="button button-danger">Button</a>
+                <!-- Standard white/grey button -->
+                <button type="button" class="button button-default">Default</button>
+
+                <!-- A secondary dark grey button -->
+                <button type="button" class="button button-secondary">Secondary</button>
+                
+                <!-- A dark button -->
+                <button type="button" class="button button-dark">Dark</button>
+
+                <!-- A blue button that can be used in lots of places -->
+                <button type="button" class="button button-primary">Primary</button>
+
+                <!-- A green button -->
+                <button type="button" class="button button-success">Success</button>
+
+                <!-- A cyan button -->
+                <button type="button" class="button button-info">Info</button>
+
+                <!-- An orange button, often used for warning messages -->
+                <button type="button" class="button button-warning">Warning</button>
+
+                <!-- Used for serious actions that have serious side effects -->
+                <button type="button" class="button button-danger">Danger</button>
               </div>
             </div>
             <div class="syntax"><pre><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;button button-primary&quot;</span><span class="nt">&gt;</span>Button<span class="nt">&lt;/a&gt;</span>
