@@ -1,6 +1,8 @@
 
 // Use Flexbox for our header and footer bars
 .bar {
+  @include disable-user-select();
+
   position: fixed;
   right: 0;
   left: 0;
@@ -87,6 +89,13 @@
 // Don't render padding if the bar is just for tabs
 .bar-tabs {
   padding: 0;
+}
+
+.bar-header-secondary {
+  top: $barHeight;
+}
+.bar-footer-secondary {
+  bottom: $barHeight;
 }
 
 /* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.

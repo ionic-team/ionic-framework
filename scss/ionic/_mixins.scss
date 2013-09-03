@@ -377,6 +377,13 @@
           user-select: $select;
 }
 
+@mixin disable-user-select() {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: -moz-none;
+  user-select: none;
+}
+
 // Resize anything
 @mixin resizable($direction) {
   resize: $direction; // Options: horizontal, vertical, both

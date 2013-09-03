@@ -45,7 +45,8 @@
       <ul id="tasks" class="list">
         <li class="list-divider">Tasks</li>
         <li class="list-item" ng-repeat="task in tasks">
-          <a href="#">{{task.text}}</a>
+          {{task.text}}
+          <a href="#" class="pull-right"><i class="icon-plus"></i></a>
         </li>
       </ul>
     </div>

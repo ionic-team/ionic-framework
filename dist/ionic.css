@@ -6,7 +6,11 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%; }
+  -ms-text-size-adjust: 100%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: -moz-none;
+  user-select: none; }
 
 body {
   position: fixed;
@@ -81,6 +85,10 @@ ul {
   margin-top: 5px; }
 
 .bar {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: -moz-none;
+  user-select: none;
   position: fixed;
   right: 0;
   left: 0;
@@ -137,6 +145,12 @@ ul {
 
 .bar-tabs {
   padding: 0; }
+
+.bar-header-secondary {
+  top: 44px; }
+
+.bar-footer-secondary {
+  bottom: 44px; }
 
 /* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
    Note: For these to work, content must come after both bars in the markup */
