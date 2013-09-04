@@ -18,10 +18,42 @@
   </head>
   <body ng-app="ionic.menu">
     <ionic-left-right-menu>
+      <section id="page" class="full-section menu-animated">
+
+        <header class="bar bar-header bar-dark">
+          <div class="buttons">
+            <a id="left-button" class="button button-dark" href="#">
+              <i class="icon-reorder"></i>
+            </a>
+          </div>
+          <h1 class="title">Chats</h1>
+          <div class="buttons">
+            <button id="right-button" class="button button-dark">
+              <i class="icon-cog"></i>
+            </button>
+          </div>
+        </header>
+      </section>
+
+      <div class="menu menu-left">
+        <ul class="list">
+          <li class="list-divider">Left Nav Things</li>
+        </ul>
+      </div>
+      <div class="menu menu-right">
+        <ul class="list">
+          <li class="list-divider">Right Nav Things</li>
+        </ul>
+      </div>
+      <!--
       <ionic-menu side="left">
       </ionic-menu>
+      <ionic-content>
+        <h2>ASDF</h2>
+      <ionic-content>
       <ionic-menu side="right">
       </ionic-menu>
+      -->
     </ionic-left-right-menu>
   </body>
 </html>
