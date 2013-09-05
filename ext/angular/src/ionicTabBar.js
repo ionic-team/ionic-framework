@@ -1,6 +1,9 @@
 angular.module('ionic.ui.tabbar', {})
 
-.controller('TabBarCtrl', function($scope) {
+.controller('TabBarCtrl', ['$scope', '$element', function($scope, $element) {
+  var tabs = $scope.tabs = [];
+
+  
   $scope.selectTab = function(index) {
   };
   $scope.beforeTabSelect = function(index) {
@@ -8,34 +11,41 @@ angular.module('ionic.ui.tabbar', {})
   $scope.tabSelected = function(index) {
   };
 
+  this.addTab = function(tab) {
+    tabs.push(tab);
+  };
+
   this.getSelectedTabIndex = function() {
     return $scope.selectedIndex;
-  }
+  };
 
   this.selectTabAtIndex = function(index) {
     $scope.selectedIndex = index;
   };
-})
+
+  this.getNumTabs = function() {
+    return tabs.length;
+  };
+}])
 
 .directive('tabBar', function() {
   return {
     restrict: 'E',
     replace: true,
+    scope: {},
     transclude: true,
     controller: 'TabBarCtrl',
     //templateUrl: 'ext/angular/tmpl/ionicTabBar.tmpl.html',
-    template: '<div class="full-section"></div>',
+    template: '<div class="view-wrapper" ng-transclude></div>',
   }
-})
-
-.controller('TabsCtrl', function($scope) {
 })
 
 .directive('tabs', function() {
   return {
     restrict: 'E',
     replace: true,
-    controller: 'TabBarCtrl',
+    require: '^tabBar',
+    transclude: true,
     template: '<footer class="bar bar-tabs bar-footer bar-success">' + 
   '<nav class="tabs">' + 
     '<ul class="tabs-inner">' + 
@@ -51,13 +61,13 @@ angular.module('ionic.ui.tabbar', {})
   return {
     restrict: 'E',
     replace: true,
-    controller: 'TabBarCtrl',
+    require: '^tabBar',
     scope: {
       text: '@',
       icon: '@',
       tabSelected: '@'
     },
-    link: function(scope, element, attrs, TabBarCtrl) {
+    link: function(scope, element, attrs, tabBar) {
       // Set a default item text if none is provided
       attrs.$observe('text', function(value) {
         scope.text = value || 'Item';
