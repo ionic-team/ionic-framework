@@ -68,14 +68,11 @@ describe('Tab Item directive', function() {
   beforeEach(inject(function($compile, $rootScope, $controller) {
     compile = $compile;
     scope = $rootScope;
+    //ctrl = $controller('TabBarCtrl', { $scope: scope, $element: null });
 
-    scope.tabs = [
-      { text: 'Home', icon: 'icon-home' },
-      { text: 'Fun', icon: 'icon-fun' },
-      { text: 'Beer', icon: 'icon-beer' },
-    ];
-
-    element = compile('<tab-bar><tabs><tab-item></tab-item></tabs></tab-bar>')(scope);
+    element = compile('<tab-bar><tabs>' +
+      '<tab-item active="true" text="Item" icon="icon-default"></tab-item>' + 
+      '</tabs></tab-bar>')(scope);
     scope.$digest();
   }));
   
@@ -88,6 +85,10 @@ describe('Tab Item directive', function() {
   });
 
   it('Click sets correct tab index', function() {
-    expect(element.find('i').hasClass('icon-default')).toEqual(true);
+    var a = element.find('a:eq(2)');
+    //spyOn(a, 'click');
+    spyOn(scope, 'selectTab');
+    a.click();
+    expect(scope.selectTab).toHaveBeenCalled();
   });
 })

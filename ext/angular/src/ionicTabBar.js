@@ -1,6 +1,7 @@
 angular.module('ionic.ui.tabbar', {})
 
 .controller('TabBarCtrl', ['$scope', '$element', function($scope, $element) {
+  console.log('Tab controller');
   var tabs = $scope.tabs = [];
 
   
@@ -21,6 +22,7 @@ angular.module('ionic.ui.tabbar', {})
 
   this.selectTabAtIndex = function(index) {
     $scope.selectedIndex = index;
+    console.log('Scope selected tab is', index);
   };
 
   this.getNumTabs = function() {
@@ -49,7 +51,7 @@ angular.module('ionic.ui.tabbar', {})
     template: '<footer class="bar bar-tabs bar-footer bar-success">' + 
   '<nav class="tabs">' + 
     '<ul class="tabs-inner">' + 
-      '<tab-item ng-repeat="tab in tabs">' + 
+      '<tab-item text="Item" icon="icon-default" ng-repeat="tab in tabs">' + 
       '</tab-item>' +
     '</ul>' +
   '</nav>' +
@@ -65,21 +67,35 @@ angular.module('ionic.ui.tabbar', {})
     scope: {
       text: '@',
       icon: '@',
-      tabSelected: '@'
+      active: '=',
+      tabSelected: '@',
     },
-    link: function(scope, element, attrs, tabBar) {
-      // Set a default item text if none is provided
-      attrs.$observe('text', function(value) {
-        scope.text = value || 'Item';
-      });
+    compile: function(element, attrs, transclude) {
+      return function(scope, element, attrs, tabBarCtrl) {
+        var getActive, setActive;
+
+        scope.$watch('active', function(active) {
+          console.log('ACTIVE CHANGED', active);
+        });
+      };
+    },
+    link: function(scope, element, attrs, tabBarCtrl) {
+
+      // Store the index of this list item, which
+      // specifies which tab item it is
+      scope.tabIndex = element.index();
+
+      scope.active = true;
+
+      scope.selectTab = function(index) {
+        console.log('SELECT TAB', index);
+        tabBarCtrl.selectTabAtIndex(index);
+      };
       
-      // Set a default item icon if none is provided
-      attrs.$observe('icon', function(value) {
-        scope.icon = value || 'icon-default';
-      });
+      tabBarCtrl.addTab(scope);
     },
-    template: '<li class="tab-item">' + 
-        '<a href="#" ng-click="selectTabItem($index)">' + 
+    template: '<li class="tab-item" ng-class="{active:active}">' + 
+        '<a href="#" ng-click="selectTab(tabIndex)">' + 
           '<i class="{{icon}}"></i>' +
           '{{text}}' +
         '</a></li>'
