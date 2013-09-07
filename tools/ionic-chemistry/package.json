@@ -1,0 +1,11 @@
+{
+  "name": "ionic-chemistry",
+  "version": "0.0.1",
+  "description": "A utility for starting Ionic projects.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Max Lynch <max@drifty.com>",
+  "license": "MIT"
+}
