@@ -21,6 +21,7 @@ module.exports = function(config) {
       'vendor/angular/1.2.0rc1/*',
       'ext/angular/src/**/*.js',
       'ext/angular/test/**/*.js',
+      'hacking/**/*.js'
     ],
 
 
