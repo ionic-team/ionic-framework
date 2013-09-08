@@ -1,4 +1,5 @@
 .DS_Store
+node_modules
 *.sw[mnpcod]
 example/cordova/iOS/www/js/framework
 
