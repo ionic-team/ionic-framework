@@ -1,6 +1,6 @@
 var fs = require('fs'),
+    ncp = require('ncp').ncp,
     path = require('path'),
-    wrench = require('wrench'),
     argv = require('optimist')
       .usage('Usage: ionic appname')
       .argv;
@@ -21,9 +21,17 @@ Ionic.prototype = {
     process.exit(1);
   },
 
+  _fail: function(msg) {
+    process.stderr.write(msg + '\n');
+    process.exit(1);
+  },
+
   _writeTemplateFolder: function() {
-    wrench.copyDirRecursive('template', this.appName, function(err, curFiles) {
-      console.log(curFiles);
+    console.log('Copying template to', this.targetPath);
+    ncp('template', this.appName, function(err) {
+      if(err) {
+        this._fail('Unable to build starter folder', err);
+      }
     });
   },
 
@@ -38,7 +46,7 @@ Ionic.prototype = {
     return response[0].trim();
   },
 
-  _checkTargetPath: function() {
+  _checkTargetPath: function() { 
     if(fs.existsSync(this.targetPath)) {
       var resp = this._ask('The ' + this.targetPath + ' directory already exists. Overwrite files? (y/n)')
       if(resp === 'y') {
@@ -48,7 +56,7 @@ Ionic.prototype = {
     }
     return true;
   },
-  
+
   run: function() {
     if(this._checkArgs() === false) {
       return this._printUsage();
