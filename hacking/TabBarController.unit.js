@@ -7,67 +7,67 @@ describe('TabBarController', function() {
     });
   })
 
-  it('Should add tabs', function() {
-    ctrl.addTab({
-      text: 'Item 1'
+  it('Should add Controllers', function() {
+    ctrl.addController({
+      title: 'Item 1'
     });
 
-    expect(ctrl.getTab(0).text).toEqual('Item 1');
+    expect(ctrl.getController(0).title).toEqual('Item 1');
   });
 
-  it('Should set tabs', function() {
-    var tabs = [
-      { text: 'Item 1' },
-      { text: 'Item 2' },
-      { text: 'Item 3' },
+  it('Should set Controllers', function() {
+    var Controllers = [
+      { title: 'Item 1' },
+      { title: 'Item 2' },
+      { title: 'Item 3' },
     ];
-    ctrl.setTabs(tabs);
+    ctrl.setControllers(Controllers);
 
-    expect(ctrl.getTabs()).toBe(tabs);
+    expect(ctrl.getControllers()).toBe(Controllers);
   });
 
-  it('Should select tab', function() {
-    tab = {
-      text: 'Item 1'
+  it('Should select Controller', function() {
+    Controller = {
+      title: 'Item 1'
     };
 
-    ctrl.addTab(tab);
+    ctrl.addController(Controller);
 
-    ctrl.selectTab(0);
+    ctrl.selectController(0);
 
-    expect(ctrl.getSelectedTab()).toEqual(tab);
+    expect(ctrl.getSelectedController()).toEqual(Controller);
   });
 
   it('Should trigger lifecycle methods', function() {
-    tab = {
-      text: 'Item 1'
+    Controller = {
+      title: 'Item 1'
     };
 
-    spyOn(ctrl, 'tabWillChange');
-    spyOn(ctrl, 'tabChanged');
+    spyOn(ctrl, 'controllerWillChange');
+    spyOn(ctrl, 'controllerChanged');
 
-    ctrl.addTab(tab);
-    ctrl.selectTab(0);
-    expect(ctrl.tabWillChange).toHaveBeenCalled();
-    expect(ctrl.tabChanged).toHaveBeenCalled();
+    ctrl.addController(Controller);
+    ctrl.selectController(0);
+    expect(ctrl.controllerWillChange).toHaveBeenCalled();
+    expect(ctrl.controllerChanged).toHaveBeenCalled();
   });
 
-  it('Should allow cancelling tab switch', function() {
+  it('Should allow cancelling Controller switch', function() {
     ctrl = new TabBarController({
       tabBar: new TabBar(),
-      tabWillChange: function(tab) { return false; }
+      controllerWillChange: function(Controller) { return false; }
     });
 
-    ctrl.addTab({
-      text: 'Item 1'
+    ctrl.addController({
+      title: 'Item 1'
     });
-    ctrl.addTab({
-      text: 'Item 2'
+    ctrl.addController({
+      title: 'Item 2'
     });
-    ctrl.selectTab(1);
+    ctrl.selectController(1);
 
-    // Make sure the tab didn't switch
-    expect(ctrl.getSelectedTab()).toBe(ctrl.getTab(0));
+    // Make sure the Controller didn't switch
+    expect(ctrl.getSelectedController()).toBe(ctrl.getController(0));
   });
 
 })
