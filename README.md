@@ -40,3 +40,10 @@ way is to use Python:
 
     http://localhost:8000/example/
    
+
+
+===============
+
+## LICENSE
+
+Ionic is licensed under the Apache 2.0 Open Source license. For more information, see the LICENSE file in this repository.
