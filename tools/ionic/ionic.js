@@ -11,12 +11,13 @@ Licensed under the Apache 2.0 license. See LICENSE For mroe.
 Copyright 2013 Drifty (http://drifty.com/)
 */
                    
-var argv = require('optimist').argv,
-    IonicStartTask = require('./lib/ionic/start.js');
+var IonicStartTask = require('./lib/ionic/start.js').IonicStartTask;
+
+var argv = require('optimist').argv;
 
 var TASKS = [
   {
-    title: 'New Project',
+    title: 'start',
     name: 'start',
     usage: 'appname',
     task: IonicStartTask
@@ -48,24 +49,21 @@ Ionic.prototype = {
     }
   },
 
-  _printUsage: function() {
+  _printGenericUsage: function() {
     this._printIonic();
-    process.stderr.write('Usage: ionic task args\n');
+    process.stderr.write('Usage: ionic task args\n\n===============\n\nAvailable tasks:\n\n');
+
+    for(var i = 0; i < TASKS.length; i++) {
+      var task = TASKS[i];
+      process.stderr.write('  ' + task.name + '\t\t' + task.task.HELP_LINE + '\n');
+    }
+
     process.exit(1);
   },
 
   _printIonic: function() {
     process.stdout.write('\n   __          __  \n');
     process.stdout.write('| /  \\ |\\ | | /  `\n' + '| \\__/ | \\| | \\__,\n\n');
-  },
-
-  _writeTemplateFolder: function() {
-    console.log('Copying template to', this.targetPath);
-    ncp('template', this.appName, function(err) {
-      if(err) {
-        this._fail('Unable to build starter folder', err);
-      }
-    });
   },
 
   // Prompt the user for a response
@@ -78,44 +76,17 @@ Ionic.prototype = {
     process.stdin.pause();
     return response[0].trim();
   },
-
-  _checkTargetPath: function() { 
-    if(fs.existsSync(this.targetPath)) {
-      var resp = this._ask('The ' + this.targetPath + ' directory already exists. Overwrite files? (y/n)')
-      if(resp === 'y') {
-        return true;
-      }
-      return false;
-    }
-    return true;
-  },
-
   _loadTaskRunner: function(which) {
 
   },
 
   run: function() {
     var task = this._tryBuildingTask();
-    if(task === false) {
-      return this._printUsage();
+    if(!task) {
+      return this._printGenericUsage();
     }
 
     console.log('Running', task.task.title, 'task...')
-
-    return
-
-    this.appName = argv._[0];
-    this.targetPath = path.resolve(this.appName);
-
-    // Make sure to create this, or ask them if they want to override it
-    if(this._checkTargetPath() === false) {
-      process.stderr.write('Not continuing.');
-      process.exit(1);
-    }
-
-    console.log('Creating Ionic app in folder', this.targetPath);
-
-    this._writeTemplateFolder();
   },
 
   fail: function(msg) {
