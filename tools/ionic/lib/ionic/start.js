@@ -12,9 +12,16 @@ IonicStartTask.HELP_LINE = 'Start a new Ionic project with the given name.';
 
 IonicStartTask.prototype = new IonicTask();
 
+IonicStartTask.prototype._printUsage = function() {
+  process.stderr.write('ionic start appname\n');
+}
 
 IonicStartTask.prototype.run = function(ionic) {
-  this.appName = argv._[0];
+  if(argv._.length < 2) {
+    ionic.fail('No app name specified');
+  }
+
+  this.appName = argv._[1];
   this.targetPath = path.resolve(this.appName);
 
   // Make sure to create this, or ask them if they want to override it
@@ -37,5 +44,15 @@ IonicStartTask.prototype._writeTemplateFolder = function() {
   });
 };
 
+IonicStartTask.prototype._checkTargetPath = function() { 
+  if(fs.existsSync(this.targetPath)) {
+    var resp = this.ask('The ' + this.targetPath + ' directory already exists. Overwrite files? (y/n)')
+    if(resp === 'y') {
+      return true;
+    }
+    return false;
+  }
+  return true;
+};
 
 exports.IonicStartTask = IonicStartTask;

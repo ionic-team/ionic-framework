@@ -6,7 +6,7 @@
 http://ionicframework.com/
 
 A utility for starting and administering Ionic based mobile app projects.
-Licensed under the Apache 2.0 license. See LICENSE For mroe.
+Licensed under the Apache 2.0 license. See LICENSE For more.
 
 Copyright 2013 Drifty (http://drifty.com/)
 */
@@ -33,11 +33,7 @@ Ionic.prototype = {
     }
     var taskName = argv._[0];
 
-    var task = this._getTaskWithName(taskName);
-
-    return {
-      task: task
-    }
+    return this._getTaskWithName(taskName);
   },
 
   _getTaskWithName: function(name) {
@@ -66,16 +62,6 @@ Ionic.prototype = {
     process.stdout.write('| /  \\ |\\ | | /  `\n' + '| \\__/ | \\| | \\__,\n\n');
   },
 
-  // Prompt the user for a response
-  ask: function(question) {
-    var response;
-
-    process.stdout.write(question + ' ');
-    process.stdin.resume();
-    response = fs.readSync(process.stdin.fd, 100, 0, "utf8");
-    process.stdin.pause();
-    return response[0].trim();
-  },
   _loadTaskRunner: function(which) {
 
   },
@@ -86,7 +72,10 @@ Ionic.prototype = {
       return this._printGenericUsage();
     }
 
-    console.log('Running', task.task.title, 'task...')
+    console.log('Running', task.title, 'task...')
+
+    var taskObj = new task.task();
+    taskObj.run(this);
   },
 
   fail: function(msg) {
