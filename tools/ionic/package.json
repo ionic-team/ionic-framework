@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "A utility for starting Ionic projects.",
   "homepage": "http://ionicframework.com/",
-  "main": "index.js",
+  "main": "ionic.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

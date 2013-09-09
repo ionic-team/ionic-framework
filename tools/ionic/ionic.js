@@ -3,43 +3,60 @@
 | /  \ |\ | | /  ` 
 | \__/ | \| | \__, 
 
+http://ionicframework.com/
+
+A utility for starting and administering Ionic based mobile app projects.
 Licensed under the Apache 2.0 license. See LICENSE For mroe.
 
 Copyright 2013 Drifty (http://drifty.com/)
 */
                    
-var fs = require('fs'),
-    ncp = require('ncp').ncp,
-    path = require('path'),
-    argv = require('optimist')
-      .usage('Usage: ionic appname')
-      .argv;
+var argv = require('optimist').argv,
+    IonicStartTask = require('./lib/ionic/start.js');
 
-Ionic = function() {
-};
+var TASKS = [
+  {
+    title: 'New Project',
+    name: 'start',
+    usage: 'appname',
+    task: IonicStartTask
+  }
+];
+
+Ionic = function() {};
 
 Ionic.prototype = {
-  _checkArgs: function() {
+  _tryBuildingTask: function() {
     if(argv._.length == 0) {
       return false;
     }
-    return true;
+    var taskName = argv._[0];
+
+    var task = this._getTaskWithName(taskName);
+
+    return {
+      task: task
+    }
+  },
+
+  _getTaskWithName: function(name) {
+    for(var i = 0; i < TASKS.length; i++) {
+      var t = TASKS[i];
+      if(t.name === name) {
+        return t;
+      }
+    }
   },
 
   _printUsage: function() {
     this._printIonic();
-    process.stderr.write('Usage: ionic appname\n');
+    process.stderr.write('Usage: ionic task args\n');
     process.exit(1);
   },
 
   _printIonic: function() {
     process.stdout.write('\n   __          __  \n');
     process.stdout.write('| /  \\ |\\ | | /  `\n' + '| \\__/ | \\| | \\__,\n\n');
-  },
-
-  _fail: function(msg) {
-    process.stderr.write(msg + '\n');
-    process.exit(1);
   },
 
   _writeTemplateFolder: function() {
@@ -52,7 +69,7 @@ Ionic.prototype = {
   },
 
   // Prompt the user for a response
-  _ask: function(question) {
+  ask: function(question) {
     var response;
 
     process.stdout.write(question + ' ');
@@ -73,12 +90,19 @@ Ionic.prototype = {
     return true;
   },
 
+  _loadTaskRunner: function(which) {
+
+  },
+
   run: function() {
-    if(this._checkArgs() === false) {
+    var task = this._tryBuildingTask();
+    if(task === false) {
       return this._printUsage();
     }
 
-    this._printIonic();
+    console.log('Running', task.task.title, 'task...')
+
+    return
 
     this.appName = argv._[0];
     this.targetPath = path.resolve(this.appName);
@@ -92,7 +116,13 @@ Ionic.prototype = {
     console.log('Creating Ionic app in folder', this.targetPath);
 
     this._writeTemplateFolder();
-  }
+  },
+
+  fail: function(msg) {
+    process.stderr.write(msg + '\n');
+    process.exit(1);
+  },
+
 };
 
 
