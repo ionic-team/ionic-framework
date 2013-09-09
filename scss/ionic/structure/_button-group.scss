@@ -75,7 +75,6 @@
 .button-bar > .button {
   @include box-flex(1);
   // Fix for box-flex width issue
-  width: 0;
 
   line-height: 8px;
   border-radius: 0;

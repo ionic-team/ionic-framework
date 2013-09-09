@@ -3,6 +3,9 @@
 .bar {
   @include disable-user-select();
 
+  display: -webkit-box;
+  display: box;
+
   position: fixed;
   left: 0;
   right: 0;
@@ -19,9 +22,9 @@
     position: absolute;
     z-index: 0;
 
-    width: 100%;
     top: 0;
     left: 0;
+    right: 0;
 
     line-height: $barHeight;
 
@@ -44,41 +47,20 @@
     color: inherit;
   }
 
+  .button {
+    @include box-flex(0);
+  }
+
   // Place the last button in a bar on the right of the bar
-  /*
   .title + .button:last-child,
-  .button + .button:last-child,
-  .button.pull-right {
+  > .button + > .button:last-child,
+  > .button.pull-right {
     position: absolute;
     top: 5px;
     right: 5px;
   }
-  */
 }
 
-.buttons {
-  position: absolute;
-
-  // Lift the buttons container above the title
-  z-index: 1;
-
-  padding: $barPaddingPortrait;
-  line-height: $barButtonsLineHeight;
-
-
-  .button {
-    padding: 6px 12px;
-    line-height: 14px;
-  }
-}
-.buttons:first-child {
-  left: 0;
-  top: 0;
-}
-.buttons:last-child {
-  right: 0;
-  top: 0;
-}
 
 // Header at top
 .bar-header {
