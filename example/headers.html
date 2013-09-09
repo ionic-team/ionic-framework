@@ -7,6 +7,12 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="../dist/ionic.css">
+    <style>
+      .bar {
+        position: relative;
+        top: 0;
+      }
+    </style>
 
   </head>
   <body>
@@ -30,6 +36,21 @@
           <a class="button">Danger</a>
         </div>
       </div>
+      <header class="bar bar-header bar-dark">
+        <div class="buttons">
+          <a class="button button-clear">Back</a>
+          <a class="button button-clear">This</a>
+        </div>
+        <div class="button-bar">
+          <a class="button">Success</a>
+          <a class="button">Warning</a>
+          <a class="button">Danger</a>
+        </div>
+        <div class="buttons">
+          <a class="button button-clear">Back</a>
+          <a class="button button-clear">This</a>
+        </div>
+      </header>
 
       <main class="content content-padded has-header">
         <p>Content element must have "has-header" as a classname.</p>

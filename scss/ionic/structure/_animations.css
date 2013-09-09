@@ -1,0 +1,7 @@
+.slide-in-up.enter {
+  -webkit-transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100%, 0);
+
+  -webkit-transition: -webkit-transform .25s ease-in-out, opacity 1ms .25s;
+  transition: transform .25s ease-in-out, opacity 1ms .25s;
+}

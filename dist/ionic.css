@@ -1,12 +1,6 @@
 @charset "UTF-8";
-*, *:before, *:after {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box; }
-
 html {
   -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: -moz-none;
