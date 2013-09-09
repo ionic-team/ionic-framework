@@ -4,16 +4,15 @@
   @include disable-user-select();
 
   position: fixed;
-  right: 0;
   left: 0;
+  right: 0;
   z-index: 10;
   width: 100%;
-
+  height: $barHeight;
+  padding: $barPaddingPortrait;
   box-sizing: border-box;
 
-  height: $barHeight;
 
-  padding: $barPaddingPortrait;
 
   // Title inside of a bar is centered
   .title {

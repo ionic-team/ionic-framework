@@ -1,10 +1,6 @@
 //
 // Forms
-// --------------------------------------------------
-
-
-// GENERAL STYLES
-// --------------
+// -------------------------------
 
 // Make all forms have space below them
 form {
@@ -55,10 +51,38 @@ textarea {
 label {
   display: block;
   margin-bottom: 5px;
+  border-top: 1px solid $inputBorder;
+  border-bottom: 1px solid $inputBorder;
+  padding: 4px 7px 3px;
 }
 
-// Form controls
-// -------------------------
+label input {
+  margin: 0;
+}
+
+.content-padded > label.input-wrapper,
+.content-padded > label.stacked,
+label.inset 
+{
+  border-left: 1px solid $inputBorder;
+  border-right: 1px solid $inputBorder;
+  @include border-radius(2px);
+}
+
+label.inset {
+  margin: $insetMargin;
+}
+
+label.stacked {
+  padding: 0;
+  border: 0;
+  input {
+    border: 1px solid $inputBorder;
+  }
+}
+
+// Form Controls
+// -------------------------------
 
 // Shared size and type resets
 select,
@@ -80,26 +104,23 @@ input[type="color"],
 .uneditable-input {
   display: inline-block;
   height: $baseLineHeightComputed + 14px;
-  padding: 4px 6px;
-  margin-bottom: $baseLineHeightComputed / 2;;
   font-size: $baseFontSize;
   line-height: $baseLineHeightComputed;
   color: $gray;
-  @include border-radius($inputBorderRadius);
   vertical-align: middle;
 }
 
-// Reset appearance properties for textual inputs and textarea
-// Declare width for legacy (can't be on input[type=*] selectors or it's too specific)
 input,
 textarea,
 .uneditable-input {
   width: 100%;
 }
+
 // Reset height since textareas have rows
 textarea {
   height: auto;
 }
+
 // Everything else
 textarea,
 input[type="text"],
@@ -118,24 +139,21 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
   background-color: $inputBackground;
-  border: 1px solid $inputBorder;
-  @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
-  @include transition(border linear .2s, box-shadow linear .2s);
+  border: 0;
 
   // Focus state
   &:focus {
-    border-color: rgba(82,168,236,.8);
     outline: 0;
     outline: thin dotted \9; /* IE6-9 */
-    @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6));
   }
 }
+
+
 
 // Position radios and checkboxes better
 input[type="radio"],
 input[type="checkbox"] {
   margin: 4px 0 0;
-  *margin-top: 0; /* IE7 */
   margin-top: 1px \9; /* IE8-9 */
   line-height: normal;
 }
@@ -182,7 +200,7 @@ input[type="checkbox"]:focus {
 
 
 // Uneditable inputs
-// -------------------------
+// -------------------------------
 
 // Make uneditable inputs look inactive
 .uneditable-input,
@@ -190,7 +208,6 @@ input[type="checkbox"]:focus {
   color: $grayLight;
   background-color: darken($inputBackground, 1%);
   border-color: $inputBorder;
-  @include box-shadow(inset 0 1px 2px rgba(0,0,0,.025));
   cursor: not-allowed;
 }
 
@@ -208,9 +225,7 @@ input[type="checkbox"]:focus {
 
 
 // Placeholder
-// -------------------------
-
-// Placeholder text gets special styles because when browsers invalidate entire lines if it doesn't understand a selector
+// -------------------------------
 input,
 textarea {
   @include placeholder();
@@ -218,7 +233,7 @@ textarea {
 
 
 // CHECKBOXES & RADIOS
-// -------------------
+// -------------------------------
 
 // Indent the labels to position radios/checkboxes as hanging
 .radio,
@@ -255,7 +270,7 @@ textarea {
 
 
 // INPUT SIZES
-// -----------
+// -------------------------------
 
 // General classes for quick sizes
 .input-mini       { width: 60px; }
@@ -295,7 +310,7 @@ textarea[class*="span"],
 
 
 // GRID SIZING FOR INPUTS
-// ----------------------
+// -------------------------------
 
 // Grid sizes
 @include grid-input($gridColumnWidth, $gridGutterWidth);
@@ -373,7 +388,6 @@ select:focus:invalid {
   border-color: #ee5f5b;
   &:focus {
     border-color: darken(#ee5f5b, 10%);
-    @include box-shadow(0 0 6px lighten(#ee5f5b, 20%));
   }
 }
 
@@ -441,9 +455,7 @@ select:focus:invalid {
   .uneditable-input {
     position: relative; // placed here by default so that on :focus we can place the input above the .add-on for full border and box-shadow goodness
     margin-bottom: 0; // prevent bottom margin from screwing up alignment in stacked forms
-    *margin-left: 0;
     vertical-align: top;
-    @include border-radius(0 $inputBorderRadius $inputBorderRadius 0);
     // Make input on top when focused so blue border and shadow always show
     &:focus {
       z-index: 2;
@@ -662,7 +674,6 @@ legend + .control-group {
     *display: inline-block;
     *padding-left: 20px;
     margin-left: $horizontalComponentOffset;
-    *margin-left: 0;
     &:first-child {
       *padding-left: $horizontalComponentOffset;
     }

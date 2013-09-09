@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Input: Text</title>
+    <title>Text Inputs</title>
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -11,29 +11,87 @@
   </head>
   <body>
 
-    <section>
+    <section class="view">
 
       <header class="bar bar-header bar-dark">
-        <h1 class="title">Input: Text</h1>
+        <h1 class="title">Text Inputs</h1>
       </header>
 
-      <main class="content content-padded has-header">
-        
-        <h2>Text input</h2>
-        <p>
-          <input type="text" placeholder="This is where text goes!">
-        </p>
-        
-        <h2>Search input</h2>
-        <p>
-          <input type="text" class="input-medium search-query" placeholder="Search">
-        </p>
-        
-        <h2>Textarea</h2>
-        <textarea></textarea>
+      <header class="bar bar-footer bar-dark">
+        <h1 class="title">Footer</h1>
+      </header>
+
+      <div class="content has-header has-footer">
+
+        <h3>Default Text Input, Not Inset, No Content Padding</h3>
+        <label class="input-wrapper">
+          <input type="text" placeholder="Email">
+        </label>
+
+        <h3>Default Text Input, Is Inset, No Content Padding</h3>
+        <label class="input-wrapper inset">
+          <input type="text" placeholder="Email">
+        </label>
+
+        <div class="content-padded">
+
+          <h3>Default Text Input, Not Inset, With Content Padding</h3>
+          <label class="input-wrapper">
+            <input type="text" placeholder="Email">
+          </label>
+
+          <h3>Default Text Input, Is Inset, With Content Padding</h3>
+          <label class="input-wrapper inset">
+            <input type="text" placeholder="Email">
+          </label>
+
+        </div>
+
+
+        <hr>
+
+
+        <h3>Stacked Label On Top Of Text Input, Not Inset, No Content Padding</h3>
+        <label class="input-wrapper">
+          <span class="input-label">Email</span>
+          <input type="text" placeholder="your@email.com">
+        </label>
+
+        <h3>Stacked Label On Top Of Text Input, Is Inset, No Content Padding</h3>
+        <label class="input-wrapper inset">
+          <span class="input-label">Email</span>
+          <input type="text" placeholder="Email">
+        </label>
+
+        <div class="content-padded">
+
+          <h3>Stacked Label On Top Of Text Input, Not Inset, With Content Padding</h3>
+          <label class="input-wrapper">
+            <span class="input-label">Email</span>
+            <input type="text" placeholder="Email">
+          </label>
+
+          <h3>Stacked Label On Top Of Text Input, Is Inset, With Content Padding</h3>
+          <label class="input-wrapper inset">
+            <span class="input-label">Email</span>
+            <input type="text" placeholder="Email">
+          </label>
+
+        </div>
+
+
+        <hr>
+
+
+        <h3>Inline Labeled Input</h3>
+        <label class="embed">
+          <span>Email:</span>
+          <input type="text" placeholder="your@email.com">
+        </label>
+
 
         <p><a class="button button-secondary" href="index.html">Homepage</a></p>
-      </main>
+      </div>
 
     </section>
 
