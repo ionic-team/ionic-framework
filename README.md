@@ -30,6 +30,11 @@ you'll be good to go.
 
 But we recommend using the `ionic` tool because it's faster and gives you a good starting structure for your app.
 
+### SASS 
+
+    sass --watch scss
+
+
 ## Running examples
 
 Ionic comes with many interesting examples showing the power of the framework. To

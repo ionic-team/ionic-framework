@@ -1,9 +1,8 @@
 
-
-$baseFontSize: 14px !default;
-
-$fontSizeLarge: ceil($baseFontSize * 1.25);
-
+// Typography
+// -------------------------------
+$baseFontSize:              14px !default;
+$fontSizeLarge:             ceil($baseFontSize * 1.25);
 $baseLineHeight:            1.428571429; // 20/14
 $baseLineHeightComputed:    floor($baseFontSize * $baseLineHeight); // ~20px
 $lineHeightComputed:        $baseLineHeightComputed;
@@ -11,47 +10,47 @@ $baseBorderRadius:          2px !default;
 
 
 // Content stuff
-// -------------------------
-$contentPadding: 10px;
-$roundedRadius: 5px;
+// -------------------------------
+$contentPadding:           10px;
+$roundedRadius:            5px; 
 
 
 // Bar stuff
-// -------------------------
-$barHeight: 44px !default;
-$barLineHeight: 44px !default;
-$barButtonsLineHeight: 6px !default;
-$barTitleFontSize: $fontSizeLarge;
-$barTitleLineHeightComputed: 26px;//$barHeight - 2;
-$barPaddingVertical: (($barHeight - $baseLineHeightComputed) / 2);
-$barPaddingPortrait: 8px;
-$barPaddingLandscape : 5px;
+// -------------------------------
+$barHeight:                    44px !default;
+$barLineHeight:                44px !default;
+$barButtonsLineHeight:         6px !default;
+$barTitleFontSize:             $fontSizeLarge;
+$barTitleLineHeightComputed:   26px;//$barHeight - 2;
+$barPaddingVertical:           (($barHeight - $baseLineHeightComputed) / 2);
+$barPaddingPortrait:           8px;
+$barPaddingLandscape:          5px;
 
 
 // Horizontal forms & lists
-// -------------------------
+// -------------------------------
 $horizontalComponentOffset:       180px !default;
 
 
 // Lists
-// -------------------------
+// -------------------------------
 $listItemBorder: 1px solid #ddd;
 
 
 // Menus
-// -------------------------
-$menuWidth: 270px;
-$menuAnimationSpeed: 200ms;
+// -------------------------------
+$menuWidth:              270px;
+$menuAnimationSpeed:     200ms;
 $menuBackgroundColor:    #eee;
 $menuInsetBorderColor:   #bbb;
 
 
 // GRID
-// --------------------------------------------------
+// -------------------------------
 
 
 // Default 940px grid
-// -------------------------
+// -------------------------------
 $gridColumns:             12 !default;
 $gridColumnWidth:         60px !default;
 $gridGutterWidth:         20px !default;
@@ -69,7 +68,7 @@ $gridRowWidth768:         ($gridColumns * $gridColumnWidth768) + ($gridGutterWid
 
 
 // Fluid grid
-// -------------------------
+// -------------------------------
 $fluidGridColumnWidth:    percentage($gridColumnWidth/$gridRowWidth) !default;
 $fluidGridGutterWidth:    percentage($gridGutterWidth/$gridRowWidth) !default;
 

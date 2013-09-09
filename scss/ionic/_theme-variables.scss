@@ -7,8 +7,7 @@ $brandWarning:         #f0ad4e;
 $brandDanger:          #d9534f;
 $brandInfo:            #5bc0de;
 
-
-// Grays
+// Global Gray Colors
 // -------------------------------
 $black:                 #000 !default;
 $grayDarker:            #222 !default;
@@ -19,7 +18,7 @@ $grayLighter:           #eee !default;
 $white:                 #fff !default;
 
 
-// Accent colors
+// Global Accent Colors
 // -------------------------------
 $blue:                  #049cdb !default;
 $blueDark:              #0064cd !default;
@@ -31,12 +30,19 @@ $pink:                  #c3325f !default;
 $purple:                #7a43b6 !default;
 
 
-// Fonts
+// Global Fonts
 // -------------------------------
 $sansFontFamily:        "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $lightSansFontFamily:   "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $serifFontFamily:       Georgia, "Times New Roman", Times, serif !default;
 $monoFontFamily:        Monaco, Menlo, Consolas, "Courier New", monospace !default;
+
+
+// Base
+// -------------------------------
+$baseFontFamily:         $sansFontFamily;
+$baseBackgroundColor:    #fff;
+$textColor:              $grayDark !default;
 
 
 // Forms
@@ -48,13 +54,6 @@ $inputDisabledBackground:       $grayLighter !default;
 $formActionsBackground:         #f5f5f5 !default;
 $inputHeight:                   $baseFontSize + 10px; // base line-height + 8px vertical padding + 2px top/bottom border
 $placeholderText:               $grayLight !default;
-
-
-// Base
-// -------------------------------
-$baseFontFamily: $sansFontFamily;
-$baseBackgroundColor: #fff;
-$textColor:             $grayDark !default;
 
 
 // Typography
