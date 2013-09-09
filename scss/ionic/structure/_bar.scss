@@ -49,6 +49,16 @@
 
   .button {
     @include box-flex(0);
+    line-height: $barButtonLineHeight;
+    font-size: 12px;
+  }
+
+  .button-bar {
+    line-height: $barButtonBarLineHeight;
+  }
+
+  .button-bar + .button, .button + .button-bar {
+    margin-left: 5px;
   }
 
   // Place the last button in a bar on the right of the bar

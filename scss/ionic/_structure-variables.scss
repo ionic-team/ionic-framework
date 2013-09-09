@@ -20,13 +20,17 @@ $roundedRadius:            5px;
 // -------------------------------
 $barHeight:                    44px !default;
 $barLineHeight:                44px !default;
-$barButtonsLineHeight:         6px !default;
+$barButtonLineHeight: 		   23px !default;
+$barButtonBarLineHeight: 	   18px !default;
 $barTitleFontSize:             $fontSizeLarge;
 $barTitleLineHeightComputed:   26px;//$barHeight - 2;
-$barPaddingVertical:           (($barHeight - $baseLineHeightComputed) / 2);
-$barPaddingPortrait:           8px;
+$barPaddingPortrait:           5px;
 $barPaddingLandscape:          5px;
 
+
+// Button bar stuff
+// -------------------------------
+$buttonBarButtonLineHeight:	   15px !default;
 
 // Horizontal forms & lists
 // -------------------------------
