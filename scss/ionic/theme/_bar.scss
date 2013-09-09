@@ -18,6 +18,7 @@
       color: $darkColor;
     }
   }
+
   &.bar-secondary {
     background-color: $barSecondaryBackground;
     border-color: $barSecondaryBorderColor;
@@ -77,11 +78,56 @@
     }
   }
 
-  /*
-  Disabled temporarily because it's annoying for testing.
-  @media screen and (orientation : landscape) {
-    padding: $barPaddingLandscape;
-  }
-  */
-
+  //
+  //Disabled temporarily because it's annoying for testing.
+  //@media screen and (orientation : landscape) {
+  //padding: $barPaddingLandscape;
+  //}
 }
+
+// Default styles for buttons inside of styled bars
+
+.bar-default {
+  .button {
+    @include button-style($buttonDefaultBackground, $buttonDefaultBorder, $darkColor);
+  }
+}
+
+.bar-secondary {
+  .button {
+    @include button-style($buttonSecondaryBackground, $buttonSecondaryBorder, $darkColor);
+  }
+}
+
+.bar-primary {
+  .button {
+    @include button-style($buttonPrimaryBackground, $buttonPrimaryBorder, $lightColor);
+  }
+}
+.bar-info {
+  .button {
+    @include button-style($buttonInfoBackground, $buttonInfoBorder, $lightColor);
+  }
+}
+.bar-success {
+  .button {
+    @include button-style($buttonSuccessBackground, $buttonSuccessBorder, $lightColor);
+  }
+}
+.bar-warning {
+  .button {
+    @include button-style($buttonWarningBackground, $buttonWarningBorder, $lightColor);
+  }
+}
+.bar-danger {
+  .button {
+    @include button-style($buttonDangerBackground, $buttonDangerBorder, $lightColor);
+  }
+}
+.bar-dark {
+  // A default style for buttons
+  .button {
+    @include button-style($buttonDarkBackground, $buttonDarkBorder, $lightColor);
+  }
+}
+

@@ -4,36 +4,42 @@
   border-width: $buttonBorderWidth;
   border-style: solid;
 	padding: $buttonPadding;
+
+  &.button-default {
+    @include button-style($buttonDefaultBackground, $buttonDefaultBorder, $darkColor);
+  }
+  &.button-secondary {
+    @include button-style($buttonSecondaryBackground, $buttonSecondaryBorder, $darkColor);
+  }
+  &.button-primary {
+    @include button-style($buttonPrimaryBackground, $buttonPrimaryBorder, $lightColor);
+  }
+  &.button-info {
+    @include button-style($buttonInfoBackground, $buttonInfoBorder, $lightColor);
+  }
+  &.button-success {
+    @include button-style($buttonSuccessBackground, $buttonSuccessBorder, $lightColor);
+  }
+  &.button-warning {
+    @include button-style($buttonWarningBackground, $buttonWarningBorder, $lightColor);
+  }
+  &.button-danger {
+    @include button-style($buttonDangerBackground, $buttonDangerBorder, $lightColor);
+  }
+  &.button-dark {
+    @include button-style($buttonDarkBackground, $buttonDarkBorder, $lightColor);
+  }
+  &.button-clear {
+    background: none;
+    border: none;
+    padding: $buttonClearPadding;
+  }
 }
 
 a.button {
   text-decoration: none;
 }
 
-.button-default {
-  @include button-style($buttonDefaultBackground, $buttonDefaultBorder, $darkColor);
-}
-.button-secondary {
-  @include button-style($buttonSecondaryBackground, $buttonSecondaryBorder, $darkColor);
-}
-.button-primary {
-  @include button-style($buttonPrimaryBackground, $buttonPrimaryBorder, $lightColor);
-}
-.button-info {
-  @include button-style($buttonInfoBackground, $buttonInfoBorder, $lightColor);
-}
-.button-success {
-  @include button-style($buttonSuccessBackground, $buttonSuccessBorder, $lightColor);
-}
-.button-warning {
-  @include button-style($buttonWarningBackground, $buttonWarningBorder, $lightColor);
-}
-.button-danger {
-  @include button-style($buttonDangerBackground, $buttonDangerBorder, $lightColor);
-}
-.button-dark {
-  @include button-style($buttonDarkBackground, $buttonDarkBorder, $lightColor);
-}
 .button-transparent {
   background: transparent;
 }

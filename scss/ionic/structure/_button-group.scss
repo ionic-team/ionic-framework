@@ -62,3 +62,33 @@
 .button-group > .button-group:last-child > .button:first-child {
   @include border-left-radius(0);
 }
+
+.button-bar {
+  display: -webkit-box;
+  display: box;
+
+  @include box-flex(1);
+  @include box-orient(horizontal);
+
+}
+
+.button-bar > .button {
+  @include box-flex(1);
+  // Fix for box-flex width issue
+  width: 0;
+
+  line-height: 8px;
+  border-radius: 0;
+  
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap;
+  display: block;
+  text-overflow: ellipsis;
+
+  border-width: 1px 0px 1px 1px;
+
+  &:last-child {
+    border-right-width: 1px;
+  }
+}
