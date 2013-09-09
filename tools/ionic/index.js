@@ -1,3 +1,13 @@
+/*
+   __          __  
+| /  \ |\ | | /  ` 
+| \__/ | \| | \__, 
+
+Licensed under the Apache 2.0 license. See LICENSE For mroe.
+
+Copyright 2013 Drifty (http://drifty.com/)
+*/
+                   
 var fs = require('fs'),
     ncp = require('ncp').ncp,
     path = require('path'),
@@ -17,8 +27,14 @@ Ionic.prototype = {
   },
 
   _printUsage: function() {
-    process.stderr.write('Usage: ionic appname');
+    this._printIonic();
+    process.stderr.write('Usage: ionic appname\n');
     process.exit(1);
+  },
+
+  _printIonic: function() {
+    process.stdout.write('\n   __          __  \n');
+    process.stdout.write('| /  \\ |\\ | | /  `\n' + '| \\__/ | \\| | \\__,\n\n');
   },
 
   _fail: function(msg) {
@@ -61,6 +77,8 @@ Ionic.prototype = {
     if(this._checkArgs() === false) {
       return this._printUsage();
     }
+
+    this._printIonic();
 
     this.appName = argv._[0];
     this.targetPath = path.resolve(this.appName);
