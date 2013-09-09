@@ -29,6 +29,11 @@
     margin: 0;
     //padding: $barPaddingVertical 0px;
 
+    min-width: 30px;
+
+    // Go into ellipsis if too small
+    text-overflow: ellipsis;
+
     text-align: center;
     white-space: nowrap;
     font-size: $barTitleFontSize;
