@@ -354,7 +354,7 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
   background-color: white;
-  border: 1px solid #cccccc;
+  border: 1px solid #999999;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -414,7 +414,7 @@ input[type="file"] {
 
 select {
   width: 220px;
-  border: 1px solid #cccccc;
+  border: 1px solid #999999;
   background-color: white; }
 
 select[multiple],
@@ -433,7 +433,7 @@ input[type="checkbox"]:focus {
 .uneditable-textarea {
   color: #999999;
   background-color: #fcfcfc;
-  border-color: #cccccc;
+  border-color: #999999;
   -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.025);
   -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.025);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.025);
@@ -615,7 +615,7 @@ input[readonly],
 select[readonly],
 textarea[readonly] {
   cursor: not-allowed;
-  background-color: #eeeeee; }
+  background-color: whitesmoke; }
 
 input[type="radio"][disabled],
 input[type="checkbox"][disabled],
@@ -836,7 +836,7 @@ select:focus:invalid {
     line-height: 1.42857;
     text-align: center;
     text-shadow: 0 1px 0 white;
-    background-color: #eeeeee;
+    background-color: whitesmoke;
     border: 1px solid #cccccc; }
   .input-append .add-on,
   .input-append .btn,
@@ -1111,160 +1111,6 @@ a.list-item {
   -webkit-transition: -webkit-transform 200ms ease;
   -moz-transition: -moz-transform 200ms ease;
   transition: transform 200ms ease; }
-
-.panel {
-  margin-bottom: 20px;
-  background-color: white;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05); }
-
-.panel-body {
-  padding: 15px;
-  *zoom: 1; }
-  .panel-body:before, .panel-body:after {
-    display: table;
-    content: "";
-    line-height: 0; }
-  .panel-body:after {
-    clear: both; }
-
-.panel > .list-group {
-  margin-bottom: 0; }
-  .panel > .list-group .list-group-item {
-    border-width: 1px 0; }
-    .panel > .list-group .list-group-item:first-child {
-      -webkit-border-top-right-radius: 0;
-      -moz-border-radius-topright: 0;
-      border-top-right-radius: 0;
-      -webkit-border-top-left-radius: 0;
-      -moz-border-radius-topleft: 0;
-      border-top-left-radius: 0; }
-    .panel > .list-group .list-group-item:last-child {
-      border-bottom: 0; }
-
-.panel-heading + .list-group .list-group-item:first-child {
-  border-top-width: 0; }
-
-.panel {
-  /*
-  > .panel-body + .table {
-    border-top: 1px solid @table-border-color;
-  }
-  */ }
-  .panel > .table {
-    margin-bottom: 0; }
-
-.panel-heading {
-  padding: 10px 15px;
-  border-bottom: 1px solid transparent;
-  -webkit-border-top-right-radius: 1px;
-  -moz-border-radius-topright: 1px;
-  border-top-right-radius: 1px;
-  -webkit-border-top-left-radius: 1px;
-  -moz-border-radius-topleft: 1px;
-  border-top-left-radius: 1px; }
-
-.panel-title {
-  margin-top: 0;
-  margin-bottom: 0;
-  font-size: 16px; }
-  .panel-title > a {
-    color: inherit; }
-
-.panel-footer {
-  padding: 10px 15px;
-  background-color: whitesmoke;
-  border-top: 1px solid #dddddd;
-  -webkit-border-bottom-right-radius: 1px;
-  -moz-border-radius-bottomright: 1px;
-  border-bottom-right-radius: 1px;
-  -webkit-border-bottom-left-radius: 1px;
-  -moz-border-radius-bottomleft: 1px;
-  border-bottom-left-radius: 1px; }
-
-.panel-group .panel {
-  margin-bottom: 0;
-  border-radius: 2px;
-  overflow: hidden; }
-  .panel-group .panel + .panel {
-    margin-top: 5px; }
-.panel-group .panel-heading {
-  border-bottom: 0; }
-  .panel-group .panel-heading + .panel-collapse .panel-body {
-    border-top: 1px solid #dddddd; }
-.panel-group .panel-footer {
-  border-top: 0; }
-  .panel-group .panel-footer + .panel-collapse .panel-body {
-    border-bottom: 1px solid #dddddd; }
-
-.panel-default {
-  border-color: #dddddd; }
-  .panel-default > .panel-heading {
-    color: #333333;
-    background-color: whitesmoke;
-    border-color: #dddddd; }
-    .panel-default > .panel-heading + .panel-collapse .panel-body {
-      border-top-color: #dddddd; }
-  .panel-default > .panel-footer + .panel-collapse .panel-body {
-    border-bottom-color: #dddddd; }
-
-.panel-primary {
-  border-color: #428bca; }
-  .panel-primary > .panel-heading {
-    color: white;
-    background-color: #428bca;
-    border-color: #428bca; }
-    .panel-primary > .panel-heading + .panel-collapse .panel-body {
-      border-top-color: #428bca; }
-  .panel-primary > .panel-footer + .panel-collapse .panel-body {
-    border-bottom-color: #428bca; }
-
-.panel-success {
-  border-color: #5cb85c; }
-  .panel-success > .panel-heading {
-    color: white;
-    background-color: #5cb85c;
-    border-color: #5cb85c; }
-    .panel-success > .panel-heading + .panel-collapse .panel-body {
-      border-top-color: #5cb85c; }
-  .panel-success > .panel-footer + .panel-collapse .panel-body {
-    border-bottom-color: #5cb85c; }
-
-.panel-warning {
-  border-color: #f0ad4e; }
-  .panel-warning > .panel-heading {
-    color: white;
-    background-color: #f0ad4e;
-    border-color: #f0ad4e; }
-    .panel-warning > .panel-heading + .panel-collapse .panel-body {
-      border-top-color: #f0ad4e; }
-  .panel-warning > .panel-footer + .panel-collapse .panel-body {
-    border-bottom-color: #f0ad4e; }
-
-.panel-danger {
-  border-color: #d9534f; }
-  .panel-danger > .panel-heading {
-    color: white;
-    background-color: #d9534f;
-    border-color: #d9534f; }
-    .panel-danger > .panel-heading + .panel-collapse .panel-body {
-      border-top-color: #d9534f; }
-  .panel-danger > .panel-footer + .panel-collapse .panel-body {
-    border-bottom-color: #d9534f; }
-
-.panel-info {
-  border-color: #5bc0de; }
-  .panel-info > .panel-heading {
-    color: white;
-    background-color: #5bc0de;
-    border-color: #5bc0de; }
-    .panel-info > .panel-heading + .panel-collapse .panel-body {
-      border-top-color: #5bc0de; }
-  .panel-info > .panel-footer + .panel-collapse .panel-body {
-    border-bottom-color: #5bc0de; }
 
 .ptr-capable {
   -webkit-user-drag: element; }
