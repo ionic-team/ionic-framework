@@ -21,33 +21,28 @@ body {
   bottom: 0;
   left: 0;
   margin: 0;
+  padding: 0;
+  overflow: hidden;
+  word-wrap: break-word;
+  text-rendering: optimizeLegibility;
+
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: none;
+          text-size-adjust: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-overflow-scrolling: touch;
 }
 
-// Remove tap highlight color on Safari
-a {
-	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-ul { margin: 0; padding: 0; }
-
-.page, .full-section {
-	position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
+.view {
   width: 100%;
   height: 100%;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  background-color: #fff;
 }
 
 .content {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  overflow: auto;
+  right: 0;
+  left: 0;
 }
 /* Hack to force all relatively and absolutely positioned elements still render while scrolling
    Note: This is a bug for "-webkit-overflow-scrolling: touch" (via ratchet) */
@@ -60,15 +55,25 @@ ul { margin: 0; padding: 0; }
   padding: $contentPadding;
 }
 
-// A section is a wrapper that contains objects that are positioned
-// together. For example, the entire contents of a page could
-// be a section, to make it easy to drag the section and expose panels
-// on the left and right sides of the app.
-.section {
-  position: fixed;
-  z-index: 1;
-}
-
 .rounded {
   border-radius: $roundedRadius;
+}
+
+// Remove tap highlight color on Safari
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.page, .full-section {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  background-color: #fff;
 }
