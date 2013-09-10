@@ -93,3 +93,13 @@
     border-right-width: 1px;
   }
 }
+
+// Buttons are used to group a set of buttons, useful
+// to pull a set of buttons to the right side of a header
+// bar, for example.
+.buttons {
+  display: -webkit-box;
+  display: box;
+  @include box-flex(1);
+  @include box-orient(horizontal);
+}

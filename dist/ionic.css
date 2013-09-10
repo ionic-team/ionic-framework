@@ -465,15 +465,18 @@ a {
     box-flex: 1;
     -webkit-box-flex: 0;
     -moz-box-flex: 0;
+    background-color: transparent;
     line-height: 23px;
-    font-size: 12px; }
+    font-size: 12px;
+    padding: 4px 12px; }
   .bar .button-bar {
     line-height: 18px; }
   .bar .button-bar + .button, .bar .button + .button-bar {
     margin-left: 5px; }
   .bar .title + .button:last-child,
   .bar > .button + .button:last-child,
-  .bar > .button.pull-right {
+  .bar > .button.pull-right,
+  .bar .title + .buttons {
     position: absolute;
     top: 5px;
     right: 5px; }
@@ -508,6 +511,9 @@ a {
   text-align: center;
   cursor: pointer;
   margin: 0; }
+  .button.button-icon {
+    background: none;
+    border: none; }
   .button.button-block {
     margin: 10px 0 10px 0;
     display: block;
@@ -600,6 +606,16 @@ a {
   padding: 8px 16px; }
   .button-bar > .button:last-child {
     border-right-width: 1px; }
+
+.buttons {
+  display: -webkit-box;
+  display: box;
+  box-flex: 1;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-orient: horizontal;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal; }
 
 form {
   margin: 0 0 1.42857; }
@@ -1974,6 +1990,10 @@ main {
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
     border-color: black; }
 
+.bar .button-icon {
+  background-color: transparent;
+  border: 1px solid transparent; }
+
 .button {
   color: #222222;
   border-radius: 2px;
@@ -2069,10 +2089,6 @@ main {
       background-color: #303030;
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
       border-color: black; }
-  .button.button-clear {
-    background: none;
-    border: none;
-    padding: 10px 0px; }
 
 a.button {
   text-decoration: none; }

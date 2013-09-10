@@ -30,11 +30,6 @@
   &.button-dark {
     @include button-style($buttonDarkBackground, $buttonDarkBorder, $lightColor);
   }
-  &.button-clear {
-    background: none;
-    border: none;
-    padding: $buttonClearPadding;
-  }
 }
 
 a.button {
