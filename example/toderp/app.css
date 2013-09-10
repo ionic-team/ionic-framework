@@ -1,0 +1,21 @@
+body {
+  background: url('bg-ex.jpg') no-repeat transparent;
+  background-size: cover;
+}
+.content {
+  background-color: transparent;
+}
+label {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+input {
+  background-color: transparent !important;
+}
+#login {
+  position: fixed;
+  bottom: 10px;
+  z-index: 4;
+  width: auto;
+  left: 10px;
+  right: 10px;
+}

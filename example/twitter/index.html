@@ -6,40 +6,27 @@
     <link rel="stylesheet" href="../../dist/ionic.css">
     <style>
     </style>
+    <script src="/vendor/angular/1.2.0rc2/angular-1.2.0rc2.min.js"></script>
+    <script src="/vendor/angular/1.2.0rc2/angular-touch.js"></script>
+    <script src="/vendor/angular/1.2.0rc2/angular-resource.js"></script>
+    <script src="app.js"></script>
   </head>	
-  <body>
-    <section>
+  <body ng-app="ionic.twitter">
+    <section ng-controller="SearchCtrl">
 
       <header class="bar bar-header bar-primary">
-        <a href="#" class="button">Back</a>
-        <h1 class="title">Twitter</h1>
+        <h1 class="title">Twitter Search</h1>
         <div class="buttons">
-          <a href="#" class="button button-icon"><i class="icon-search"></i></a>
-          <a href="#" class="button button-icon"><i class="icon-search"></i></a>
-          <a href="#" class="button button-icon"><i class="icon-search"></i></a>
           <a href="#" class="button button-icon"><i class="icon-search"></i></a>
         </div>
       </header>
       <div class="bar bar-header-secondary">
         <form>
-          <input type="search">
+          <input type="search" ng-keyup="search(value)">
         </form>
       </div>
-      <main class="content has-header">
+      <main class="content has-header has-secondary-header">
 
-        <form>
-        <div class="form-group inset">
-          <label class="input-wrapper row">
-            <span class="input-label col-xs-4">First Name</span>
-            <input class="col-xs-8" type="text" placeholder="John">
-          </label>
-          <label class="input-wrapper row">
-            <span class="input-label col-xs-4">Last Name</span>
-            <input class="col-xs-8" type="text" placeholder="Suhr">
-          </label>
-        </div>
-        <button id="login" class="button button-default button-block">Log in</button>
-        </form>
       </main>
     </section>
 

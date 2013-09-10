@@ -6,7 +6,7 @@
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="../dist/ionic.css">
+    <link rel="stylesheet" href="../../dist/ionic.css">
     <link rel="stylesheet" href="app.css">
     
     <script src="/vendor/angular/1.2.0rc1/angular-1.2.0rc1.min.js"></script>
@@ -18,6 +18,30 @@
     
   </head>
   <body ng-app="toderp">
+    <div id="login">
+      <main class="content content-padded has-header">
+        <div class="container" style="text-align: center">
+          <h1>ToDerp</h1>
+          <h3>Finish your Top Three Tasks Today</h3>
+        </div>
+        <form class="form-horizontal">
+         <div class="input-group inset">
+            <label class="input-wrapper row">
+              <span class="input-label col-xs-4">Email</span>
+              <input class="col-xs-8" type="email" placeholder="">
+            </label>
+            <label class="input-wrapper row">
+              <span class="input-label col-xs-4">Password</span>
+              <input class="col-xs-8" type="password" placeholder="">
+            </label>
+          </div>
+          <button class="button button-info button-block">Log in</button>
+        </form>
+        <button id="login" class="button button-default button-block">Create an account</button>
+      </main>
+    </section>
+    </div>
+    <!--
     <div id="page" class="page" ng-controller="TodaysTaskListCtrl">
       <div class="bar bar-header bar-dark">
         <div class="buttons">
@@ -50,6 +74,7 @@
         </li>
       </ul>
     </div>
+    -->
     <script src="app.js"></script>
   </body>
 </html>

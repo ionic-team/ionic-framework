@@ -8,6 +8,11 @@ $brand-warning:         #f0ad4e;
 $brand-danger:          #d9534f;
 $brand-info:            #5bc0de;
 
+// Scaffolding
+// -------------------------------
+$link-color:            $brand-primary !default;
+$link-hover-color:      darken($link-color, 15%) !default;
+
 
 // Global Gray Colors
 // -------------------------------
@@ -248,6 +253,20 @@ $menu-bg:                   #eee;
 $menu-inset-border-color:   #bbb;
 $menu-width:               270px;
 $menu-animation-speed:     200ms;
+
+
+// Badges
+// -------------------------
+$badge-color:                 #fff !default;
+$badge-link-hover-color:      #fff !default;
+$badge-bg:                    $gray-light !default;
+
+$badge-active-color:          $link-color !default;
+$badge-active-bg:             #fff !default;
+
+$badge-font-weight:           bold !default;
+$badge-line-height:           1 !default;
+$badge-border-radius:         10px !default;
 
 
 
