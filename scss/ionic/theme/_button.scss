@@ -13,22 +13,22 @@
     @include button-style($button-secondary-bg, $button-secondary-border, $gray-dark);
   }
   &.button-primary {
-    @include button-style($button-primary-bg, $button-primary-border, $gray-light);
+    @include button-style($button-primary-bg, $button-primary-border, $white);
   }
   &.button-info {
-    @include button-style($button-info-bg, $button-info-border, $gray-light);
+    @include button-style($button-info-bg, $button-info-border, $white);
   }
   &.button-success {
-    @include button-style($button-success-bg, $button-success-border, $gray-light);
+    @include button-style($button-success-bg, $button-success-border, $white);
   }
   &.button-warning {
-    @include button-style($button-warning-bg, $button-warning-border, $gray-light);
+    @include button-style($button-warning-bg, $button-warning-border, $white);
   }
   &.button-danger {
-    @include button-style($button-danger-bg, $buttonDangerBorder, $gray-light);
+    @include button-style($button-danger-bg, $buttonDangerBorder, $white);
   }
   &.button-dark {
-    @include button-style($button-dark-bg, $button-dark-border, $gray-light);
+    @include button-style($button-dark-bg, $button-dark-border, $white);
   }
 
   &.button-clear {

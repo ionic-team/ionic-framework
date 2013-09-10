@@ -1639,39 +1639,39 @@ main {
   .bar.bar-primary {
     background-color: #6999e9;
     border-color: #5981c5;
-    color: #999999; }
+    color: white; }
     .bar.bar-primary .tab-item a {
-      color: #999999; }
+      color: white; }
   .bar.bar-info {
     background-color: #60d2e6;
     border-color: #51b3c4;
-    color: #999999; }
+    color: white; }
     .bar.bar-info .tab-item a {
-      color: #999999; }
+      color: white; }
   .bar.bar-success {
     background-color: #89c163;
     border-color: #71a052;
-    color: #999999; }
+    color: white; }
     .bar.bar-success .tab-item a {
-      color: #999999; }
+      color: white; }
   .bar.bar-warning {
     background-color: #f0b840;
     border-color: #cf9a29;
-    color: #999999; }
+    color: white; }
     .bar.bar-warning .tab-item a {
-      color: #999999; }
+      color: white; }
   .bar.bar-danger {
     background-color: #de5645;
     border-color: #bc4435;
-    color: #999999; }
+    color: white; }
     .bar.bar-danger .tab-item a {
-      color: #999999; }
+      color: white; }
   .bar.bar-dark {
     background-color: #444444;
     border-color: #111111;
-    color: #999999; }
+    color: white; }
     .bar.bar-dark .tab-item a {
-      color: #999999; }
+      color: white; }
 
 .bar-default .button {
   color: #333333;
@@ -1698,11 +1698,11 @@ main {
     border-color: #b3b3b3; }
 
 .bar-primary .button {
-  color: #999999;
+  color: white;
   background-color: #6999e9;
   border-color: #5981c5; }
   .bar-primary .button:hover {
-    color: #999999;
+    color: white;
     text-decoration: none; }
   .bar-primary .button.active, .bar-primary .button:active {
     background-color: #4581e4;
@@ -1710,11 +1710,11 @@ main {
     border-color: #3d67ae; }
 
 .bar-info .button {
-  color: #999999;
+  color: white;
   background-color: #60d2e6;
   border-color: #51b3c4; }
   .bar-info .button:hover {
-    color: #999999;
+    color: white;
     text-decoration: none; }
   .bar-info .button.active, .bar-info .button:active {
     background-color: #3dc8e0;
@@ -1722,11 +1722,11 @@ main {
     border-color: #3998a9; }
 
 .bar-success .button {
-  color: #999999;
+  color: white;
   background-color: #89c163;
   border-color: #71a052; }
   .bar-success .button:hover {
-    color: #999999;
+    color: white;
     text-decoration: none; }
   .bar-success .button.active, .bar-success .button:active {
     background-color: #73b447;
@@ -1734,11 +1734,11 @@ main {
     border-color: #597e41; }
 
 .bar-warning .button {
-  color: #999999;
+  color: white;
   background-color: #f0b840;
   border-color: #cf9a29; }
   .bar-warning .button:hover {
-    color: #999999;
+    color: white;
     text-decoration: none; }
   .bar-warning .button.active, .bar-warning .button:active {
     background-color: #edaa1a;
@@ -1746,11 +1746,11 @@ main {
     border-color: #a47a21; }
 
 .bar-danger .button {
-  color: #999999;
+  color: white;
   background-color: #de5645;
   border-color: #bc4435; }
   .bar-danger .button:hover {
-    color: #999999;
+    color: white;
     text-decoration: none; }
   .bar-danger .button.active, .bar-danger .button:active {
     background-color: #d43926;
@@ -1758,11 +1758,11 @@ main {
     border-color: #94362a; }
 
 .bar-dark .button {
-  color: #999999;
+  color: white;
   background-color: #444444;
   border-color: #111111; }
   .bar-dark .button:hover {
-    color: #999999;
+    color: white;
     text-decoration: none; }
   .bar-dark .button.active, .bar-dark .button:active {
     background-color: #303030;
@@ -1803,66 +1803,66 @@ main {
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
       border-color: #b3b3b3; }
   .button.button-primary {
-    color: #999999;
+    color: white;
     background-color: #6999e9;
     border-color: #5981c5; }
     .button.button-primary:hover {
-      color: #999999;
+      color: white;
       text-decoration: none; }
     .button.button-primary.active, .button.button-primary:active {
       background-color: #4581e4;
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
       border-color: #3d67ae; }
   .button.button-info {
-    color: #999999;
+    color: white;
     background-color: #60d2e6;
     border-color: #51b3c4; }
     .button.button-info:hover {
-      color: #999999;
+      color: white;
       text-decoration: none; }
     .button.button-info.active, .button.button-info:active {
       background-color: #3dc8e0;
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
       border-color: #3998a9; }
   .button.button-success {
-    color: #999999;
+    color: white;
     background-color: #89c163;
     border-color: #71a052; }
     .button.button-success:hover {
-      color: #999999;
+      color: white;
       text-decoration: none; }
     .button.button-success.active, .button.button-success:active {
       background-color: #73b447;
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
       border-color: #597e41; }
   .button.button-warning {
-    color: #999999;
+    color: white;
     background-color: #f0b840;
     border-color: #cf9a29; }
     .button.button-warning:hover {
-      color: #999999;
+      color: white;
       text-decoration: none; }
     .button.button-warning.active, .button.button-warning:active {
       background-color: #edaa1a;
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
       border-color: #a47a21; }
   .button.button-danger {
-    color: #999999;
+    color: white;
     background-color: #de5645;
     border-color: #bc4435; }
     .button.button-danger:hover {
-      color: #999999;
+      color: white;
       text-decoration: none; }
     .button.button-danger.active, .button.button-danger:active {
       background-color: #d43926;
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
       border-color: #94362a; }
   .button.button-dark {
-    color: #999999;
+    color: white;
     background-color: #444444;
     border-color: #111111; }
     .button.button-dark:hover {
-      color: #999999;
+      color: white;
       text-decoration: none; }
     .button.button-dark.active, .button.button-dark:active {
       background-color: #303030;
