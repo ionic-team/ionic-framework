@@ -48,17 +48,20 @@ textarea {
 }
 
 .form-group {
+  border-top: $inputBorderWidth solid $inputBorderColor;
+  border-bottom: $inputBorderWidth solid $inputBorderColor;
   background-color: $inputBackground;
   overflow: hidden;
 }
 .content-padded > .form-group,
 .form-group.inset {
-  border-left: 1px solid $inputBorder;
-  border-right: 1px solid $inputBorder;
+  border-left: $inputBorderWidth solid $inputBorderColor;
+  border-right: $inputBorderWidth solid $inputBorderColor;
+  @include border-radius($inputBorderRadius);
 }
 
 .form-group .input-wrapper + .input-wrapper {
-  border-top: 0;
+  border-top: $inputBorderWidth solid $inputBorderColor;
 }
 
 .form-group + .form-group {
@@ -67,8 +70,6 @@ textarea {
 
 .input-wrapper {
   display: block;
-  border-top: 1px solid $inputBorder;
-  border-bottom: 1px solid $inputBorder;
   padding: 6px 8px 5px;
   overflow: hidden;
 
@@ -92,10 +93,11 @@ textarea {
 }
 
 .form-group.stacked-label input {
-  border: 1px solid $inputBorder;
+  border: $inputBorderWidth solid $inputBorderColor;
   background-color: $inputBackground;
   padding: 4px 8px 3px;
   overflow: hidden;
+  @include border-radius($inputBorderRadius);
 }
 
 
@@ -196,7 +198,7 @@ input[type="file"] {
 // Make select elements obey height by applying a border
 select {
   width: 220px; // default input width + 10px of padding that doesn't get applied
-  border: 1px solid $inputBorder;
+  border: $inputBorderWidth solid $inputBorderColor;
   background-color: $inputBackground; // Chrome on Linux and Mobile Safari need background-color
 }
 
@@ -223,7 +225,7 @@ input[type="checkbox"]:focus {
 .uneditable-textarea {
   color: $grayLight;
   background-color: darken($inputBackground, 1%);
-  border-color: $inputBorder;
+  border-color: $inputBorderColor;
   cursor: not-allowed;
 }
 

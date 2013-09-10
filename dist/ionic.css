@@ -639,24 +639,27 @@ textarea {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 .form-group {
+  border-top: 1px solid #bbbbbb;
+  border-bottom: 1px solid #bbbbbb;
   background-color: white;
   overflow: hidden; }
 
 .content-padded > .form-group,
 .form-group.inset {
   border-left: 1px solid #bbbbbb;
-  border-right: 1px solid #bbbbbb; }
+  border-right: 1px solid #bbbbbb;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px; }
 
 .form-group .input-wrapper + .input-wrapper {
-  border-top: 0; }
+  border-top: 1px solid #bbbbbb; }
 
 .form-group + .form-group {
   margin-top: 10px; }
 
 .input-wrapper {
   display: block;
-  border-top: 1px solid #bbbbbb;
-  border-bottom: 1px solid #bbbbbb;
   padding: 6px 8px 5px;
   overflow: hidden; }
   .input-wrapper input {
@@ -679,7 +682,10 @@ textarea {
   border: 1px solid #bbbbbb;
   background-color: white;
   padding: 4px 8px 3px;
-  overflow: hidden; }
+  overflow: hidden;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px; }
 
 select,
 textarea,
@@ -1208,22 +1214,22 @@ select:focus:invalid {
   margin-right: -1px; }
 .input-prepend .add-on:first-child,
 .input-prepend .btn:first-child {
-  -webkit-border-radius: 4px 0 0 4px;
-  -moz-border-radius: 4px 0 0 4px;
-  border-radius: 4px 0 0 4px; }
+  -webkit-border-radius: 2px 0 0 2px;
+  -moz-border-radius: 2px 0 0 2px;
+  border-radius: 2px 0 0 2px; }
 
 .input-append input,
 .input-append select,
 .input-append .uneditable-input {
-  -webkit-border-radius: 4px 0 0 4px;
-  -moz-border-radius: 4px 0 0 4px;
-  border-radius: 4px 0 0 4px; }
+  -webkit-border-radius: 2px 0 0 2px;
+  -moz-border-radius: 2px 0 0 2px;
+  border-radius: 2px 0 0 2px; }
   .input-append input + .btn-group .btn:last-child,
   .input-append select + .btn-group .btn:last-child,
   .input-append .uneditable-input + .btn-group .btn:last-child {
-    -webkit-border-radius: 0 4px 4px 0;
-    -moz-border-radius: 0 4px 4px 0;
-    border-radius: 0 4px 4px 0; }
+    -webkit-border-radius: 0 2px 2px 0;
+    -moz-border-radius: 0 2px 2px 0;
+    border-radius: 0 2px 2px 0; }
 .input-append .add-on,
 .input-append .btn,
 .input-append .btn-group {
@@ -1231,9 +1237,9 @@ select:focus:invalid {
 .input-append .add-on:last-child,
 .input-append .btn:last-child,
 .input-append .btn-group:last-child > .dropdown-toggle {
-  -webkit-border-radius: 0 4px 4px 0;
-  -moz-border-radius: 0 4px 4px 0;
-  border-radius: 0 4px 4px 0; }
+  -webkit-border-radius: 0 2px 2px 0;
+  -moz-border-radius: 0 2px 2px 0;
+  border-radius: 0 2px 2px 0; }
 
 .input-prepend.input-append input,
 .input-prepend.input-append select,
@@ -1244,21 +1250,21 @@ select:focus:invalid {
   .input-prepend.input-append input + .btn-group .btn,
   .input-prepend.input-append select + .btn-group .btn,
   .input-prepend.input-append .uneditable-input + .btn-group .btn {
-    -webkit-border-radius: 0 4px 4px 0;
-    -moz-border-radius: 0 4px 4px 0;
-    border-radius: 0 4px 4px 0; }
+    -webkit-border-radius: 0 2px 2px 0;
+    -moz-border-radius: 0 2px 2px 0;
+    border-radius: 0 2px 2px 0; }
 .input-prepend.input-append .add-on:first-child,
 .input-prepend.input-append .btn:first-child {
   margin-right: -1px;
-  -webkit-border-radius: 4px 0 0 4px;
-  -moz-border-radius: 4px 0 0 4px;
-  border-radius: 4px 0 0 4px; }
+  -webkit-border-radius: 2px 0 0 2px;
+  -moz-border-radius: 2px 0 0 2px;
+  border-radius: 2px 0 0 2px; }
 .input-prepend.input-append .add-on:last-child,
 .input-prepend.input-append .btn:last-child {
   margin-left: -1px;
-  -webkit-border-radius: 0 4px 4px 0;
-  -moz-border-radius: 0 4px 4px 0;
-  border-radius: 0 4px 4px 0; }
+  -webkit-border-radius: 0 2px 2px 0;
+  -moz-border-radius: 0 2px 2px 0;
+  border-radius: 0 2px 2px 0; }
 .input-prepend.input-append .btn-group:first-child {
   margin-left: 0; }
 

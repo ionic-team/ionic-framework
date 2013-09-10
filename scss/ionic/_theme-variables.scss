@@ -48,8 +48,9 @@ $textColor:              $grayDark !default;
 // Forms
 // -------------------------------
 $inputBackground:               $white !default;
-$inputBorder:                   #bbb !default;
-$inputBorderRadius:             4px !default;
+$inputBorderColor:              #bbb !default;
+$inputBorderWidth:              1px !default;
+$inputBorderRadius:             2px !default;
 $inputDisabledBackground:       $grayLighter !default;
 $formActionsBackground:         $grayLighter !default;
 $inputHeight:                   $baseFontSize + 10px; // base line-height + 8px vertical padding + 2px top/bottom border
