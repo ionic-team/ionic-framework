@@ -1,13 +1,12 @@
 .bar {
-  @include user-select(none);
-
-  display: -webkit-box;
-  display: box;
-
   position: fixed;
   left: 0;
   right: 0;
   z-index: 10;
+
+  display: -webkit-box;
+  display: box;
+
   width: 100%;
   height: $bar-height;
   padding: $bar-padding-portrait;
@@ -16,6 +15,8 @@
   background-color: $bar-bg;
   border-style: solid;
   border-width: 0;
+
+  @include user-select(none);
 
   &.bar-header {
     border-bottom-width: 1px;
@@ -222,9 +223,11 @@
 
 .bar-header-secondary {
   top: $bar-height;
+  display: block;
 }
 .bar-footer-secondary {
   bottom: $bar-height;
+  display: block;
 }
 
 /* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
