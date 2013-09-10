@@ -705,6 +705,13 @@ textarea {
   -moz-border-radius: 4px;
   border-radius: 4px; }
 
+.input-wrapper.row {
+  margin-left: 0;
+  margin-right: 0; }
+  .input-wrapper.row [class*='col-'] {
+    padding-left: 0;
+    padding-right: 0; }
+
 select,
 textarea,
 input[type="text"],

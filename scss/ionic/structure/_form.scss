@@ -1,4 +1,4 @@
-//
+
 // Forms
 // -------------------------------
 
@@ -98,6 +98,15 @@ textarea {
   padding: 4px 8px 3px;
   overflow: hidden;
   @include border-radius($input-border-radius);
+}
+.input-wrapper.row {
+  margin-left: 0;
+  margin-right: 0;
+
+  [class*='col-'] {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 
