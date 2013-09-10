@@ -1873,6 +1873,13 @@ main {
     background: none;
     border: none;
     padding: 10px 0px; }
+  .button.button-icon {
+    background: none;
+    border: none; }
+    .button.button-icon:active, .button.button-icon.active {
+      text-shadow: 0px 0px 10px white;
+      box-shadow: none;
+      background: none; }
 
 a.button {
   text-decoration: none; }

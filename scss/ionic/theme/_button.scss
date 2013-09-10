@@ -36,6 +36,16 @@
     border: none;
     padding: $button-clear-padding;
   }
+
+  &.button-icon {
+    background: none;
+    border: none;
+    &:active, &.active {
+      text-shadow: 0px 0px 10px #fff;
+      box-shadow: none;
+      background: none;
+    }
+  }
 }
 
 a.button {
