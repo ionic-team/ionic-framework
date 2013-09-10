@@ -33,7 +33,7 @@ body {
 
 .content {
   position: fixed;
-  overflow: auto;
+  overflow: auto; 
   right: 0;
   left: 0;
 }
@@ -46,6 +46,10 @@ body {
 
 .content-padded {
   padding: $contentPadding;
+}
+
+.inset {
+  margin: $insetMargin;
 }
 
 .rounded {

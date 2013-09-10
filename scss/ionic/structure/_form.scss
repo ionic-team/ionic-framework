@@ -47,39 +47,70 @@ textarea {
   font-family: $baseFontFamily; // And only set font-family here for those that need it (note the missing label element)
 }
 
-// Identify controls by their labels
-label {
+.input-wrapper {
   display: block;
-  margin-bottom: 5px;
   border-top: 1px solid $inputBorder;
   border-bottom: 1px solid $inputBorder;
   padding: 4px 7px 3px;
+
+  input {
+    margin: 0;
+    -webkit-appearance: none;
+  }
+
+  .input-label {
+    font-weight: bold;
+    line-height: $baseLineHeightComputed + $baseFontSize;
+  }
+
 }
 
-label input {
-  margin: 0;
-}
-
-.content-padded > label.input-wrapper,
-.content-padded > label.stacked,
-label.inset 
+.content-padded > .input-wrapper,
+.input-wrapper.inset 
 {
   border-left: 1px solid $inputBorder;
   border-right: 1px solid $inputBorder;
-  @include border-radius(2px);
+  @include border-radius($textInputBorderRadius);
+}
+.input-wrapper.row-fluid {
+  width: auto;
 }
 
-label.inset {
-  margin: $insetMargin;
-}
-
-label.stacked {
+.stacked-label {
   padding: 0;
-  border: 0;
   input {
     border: 1px solid $inputBorder;
   }
 }
+.stacked-label {
+  border: 0;
+  input {
+    border: 1px solid $inputBorder !important;
+    padding: $baseLineHeightComputed $baseLineHeightComputed/2 !important;
+    @include border-radius($textInputBorderRadius);
+  }
+  span {
+    font-weight: bold;
+    line-height: $baseLineHeightComputed;
+  }
+}
+.content > .input-wrapper.stacked-label input {
+    border-left: 0 !important;
+    border-right: 0 !important;
+    @include border-radius(0);
+}
+.content-padded > .input-wrapper.stacked-label,
+.content > .input-wrapper.stacked-label.inset 
+{
+  border: 0 !important;
+}
+.content > .input-wrapper.stacked-label.inset input {
+  border: 1px solid $inputBorder !important;
+}
+.input-wrapper + .input-wrapper {
+  border-top: 0 !important;
+}
+
 
 // Form Controls
 // -------------------------------
@@ -103,7 +134,7 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
   display: inline-block;
-  height: $baseLineHeightComputed + 14px;
+  height: $baseLineHeightComputed + $baseFontSize;
   font-size: $baseFontSize;
   line-height: $baseLineHeightComputed;
   color: $gray;
@@ -173,7 +204,6 @@ input[type="checkbox"] {
 select,
 input[type="file"] {
   height: $inputHeight; /* In IE7, the height of the select element cannot be changed by height, only font-size */
-  *margin-top: 4px; /* For IE7, add top margin to align select with labels */
   line-height: $inputHeight;
 }
 
