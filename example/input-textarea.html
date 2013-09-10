@@ -1,0 +1,198 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Text Area</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="../dist/ionic.css">
+
+  </head>
+  <body>
+
+    <section class="view">
+
+      <header class="bar bar-header bar-dark">
+        <h1 class="title">Text Area</h1>
+      </header>
+
+      <header class="bar bar-footer bar-dark">
+        <h1 class="title">Footer</h1>
+      </header>
+
+      <div class="content has-header has-footer">
+
+        <h3>Default Text Area, Not Inset, No Content Padding</h3>
+        <div class="input-group">
+          <label class="input-wrapper">
+            <textarea placeholder="First Name"></textarea>
+          </label>
+          <label class="input-wrapper">
+            <textarea placeholder="Last Name"></textarea>
+          </label>
+        </div>
+
+        <h3>Default Text Area, Is Inset, No Content Padding</h3>
+        <div class="input-group inset">
+          <label class="input-wrapper">
+            <textarea placeholder="First Name"></textarea>
+          </label>
+          <label class="input-wrapper">
+            <textarea placeholder="Last Name"></textarea>
+          </label>
+          <label class="input-wrapper">
+            <textarea placeholder="Email"></textarea>
+          </label>
+        </div>
+
+        <div class="content-padded">
+
+          <h3>Default Text Area, Not Inset, With Content Padding</h3>
+          <div class="input-group">
+            <label class="input-wrapper">
+              <textarea placeholder="Username"></textarea>
+            </label>
+            <label class="input-wrapper">
+              <textarea placeholder="Email"></textarea>
+            </label>
+          </div>
+
+          <div class="input-group">
+            <label class="input-wrapper">
+              <textarea placeholder="Filter by name"></textarea>
+            </label>
+          </div>
+
+          <h3>Default Text Area, Is Inset, With Content Padding</h3>
+          <div class="input-group inset">
+            <label class="input-wrapper">
+              <input type="email" placeholder="Email">
+            </label>
+            <label class="input-wrapper">
+              <input type="text" placeholder="Name">
+            </label>
+          </div>
+
+        </div>
+
+
+
+
+        <h3>Inline Label On Top Of Text Area, Not Inset, No Content Padding</h3>
+        <div class="input-group">
+          <label class="input-wrapper row">
+            <span class="input-label col-xs-4">Username</span>
+            <input class="col-xs-8" type="text" placeholder="@drifty">
+          </label>
+          <label class="input-wrapper row">
+            <span class="input-label col-xs-4">Email</span>
+            <input class="col-xs-8" type="email" placeholder="your@email.com">
+          </label>
+          <label class="input-wrapper row">
+            <span class="input-label col-xs-4">First Name</span>
+            <input class="col-xs-8" type="text" placeholder="Sir Derp">
+          </label>
+        </div>
+
+        <h3>Inline Label On Top Of Text Area, Is Inset, No Content Padding</h3>
+        <div class="input-group inset">
+          <label class="input-wrapper row">
+            <span class="input-label col-xs-4">Email</span>
+            <input class="col-xs-8" type="text" placeholder="your@email.com">
+          </label>
+        </div>
+
+        <div class="content-padded">
+
+          <h3>Inline Label On Top Of Text Area, Not Inset, With Content Padding</h3>
+          <div class="input-group">
+            <label class="input-wrapper row">
+              <span class="input-label col-xs-4">First Name</span>
+              <input class="col-xs-8" type="text" placeholder="John">
+            </label>
+            <label class="input-wrapper row">
+              <span class="input-label col-xs-4">Last Name</span>
+              <input class="col-xs-8" type="text" placeholder="Suhr">
+            </label>
+          </div>
+
+          <h3>Inline Label On Top Of Text Area, Is Inset, With Content Padding</h3>
+          <div class="input-group inset">
+            <label class="input-wrapper row">
+              <span class="input-label col-xs-4">Email</span>
+              <input class="col-xs-8" type="text" placeholder="your@email.com">
+            </label>
+          </div>
+          <div class="input-group inset">
+            <label class="input-wrapper row">
+              <span class="input-label col-xs-4">Filter By Name</span>
+              <input class="col-xs-8" type="text" placeholder="Enter keywords">
+            </label>
+          </div>
+
+        </div>
+
+
+
+
+        <h3>Stacked Label On Top Of Text Area, Not Inset, No Content Padding</h3>
+        <div class="input-group stacked-label">
+          <label class="input-wrapper">
+            <span class="input-label">First Name</span>
+            <input type="text" placeholder="Drifty">
+          </label>
+          <label class="input-wrapper">
+            <span class="input-label">Last Name</span>
+            <input type="text" placeholder="Co">
+          </label>
+          <label class="input-wrapper">
+            <span class="input-label">Email</span>
+            <input type="text" placeholder="your@email.com">
+          </label>
+        </div>
+        <div class="input-group stacked-label">
+          <label class="input-wrapper">
+            <span class="input-label">Filter By Name</span>
+            <input type="text" placeholder="">
+          </label>
+        </div>
+
+        <h3>Stacked Label On Top Of Text Area, Is Inset, No Content Padding</h3>
+        <div class="input-group stacked-label inset">
+          <label class="input-wrapper">
+            <span class="input-label">Email</span>
+            <input type="text" placeholder="your@email.com">
+          </label>
+        </div>
+
+        <div class="content-padded">
+
+          <h3>Stacked Label On Top Of Text Area, Not Inset, With Content Padding</h3>
+          <div class="input-group stacked-label">
+            <label class="input-wrapper">
+              <span class="input-label">Email</span>
+              <input type="text" placeholder="your@email.com">
+            </label>
+          </div>
+
+          <h3>Stacked Label On Top Of Text Area, Is Inset, With Content Padding</h3>
+          <div class="input-group stacked-label inset">
+            <label class="input-wrapper">
+              <span class="input-label">Email</span>
+              <input type="text" placeholder="your@email.com">
+            </label>
+          </div>
+
+        </div>
+
+
+
+        <p><a class="button button-secondary" href="index.html">Homepage</a></p>
+
+      </div>
+
+    </section>
+
+  </body>
+</html>
