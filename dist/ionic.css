@@ -374,7 +374,8 @@ body {
   position: fixed;
   overflow: auto;
   right: 0;
-  left: 0; }
+  left: 0;
+  bottom: 0; }
 
 /* Hack to force all relatively and absolutely positioned elements still render while scrolling
    Note: This is a bug for "-webkit-overflow-scrolling: touch" (via ratchet) */
@@ -508,8 +509,9 @@ a {
   cursor: pointer;
   margin: 0; }
   .button.button-block {
-    margin: 0 0 10px 0;
-    display: block; }
+    margin: 10px 0 10px 0;
+    display: block;
+    width: 100%; }
 
 .button-group {
   position: relative;
@@ -1977,7 +1979,8 @@ main {
   border-radius: 2px;
   border-width: 1px;
   border-style: solid;
-  padding: 4px 12px; }
+  padding: 12px 12px;
+  font-size: 16px; }
   .button.button-default {
     color: #333333;
     background-color: white;

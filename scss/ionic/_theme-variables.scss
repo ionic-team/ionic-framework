@@ -65,13 +65,14 @@ $darkColor:             #333;
 // Buttons
 // -------------------------------
 $buttonColor:           #222;
-$buttonPadding:         4px 12px;
+$buttonPadding:         12px 12px;
 $buttonClearPadding:    10px 0px;
 $buttonBorderRadius:    2px;
 $buttonBorderWidth:     1px;
+$buttonFontSize:        16px;
 
 // Button block that has spacing
-$buttonBlockMargin: 0 0 10px 0;
+$buttonBlockMargin: 10px 0 10px 0;
 
 $buttonDefaultBackground:        #fff;
 $buttonDefaultBackgroundActive:  #eee;

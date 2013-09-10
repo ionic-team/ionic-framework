@@ -4,6 +4,7 @@
   border-width: $buttonBorderWidth;
   border-style: solid;
 	padding: $buttonPadding;
+  font-size: $buttonFontSize;
 
   &.button-default {
     @include button-style($buttonDefaultBackground, $buttonDefaultBorder, $darkColor);

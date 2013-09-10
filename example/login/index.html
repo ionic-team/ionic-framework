@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../dist/ionic.css">
+    <style>
+      body {
+        background: url('bg-ex.jpg') no-repeat transparent;
+        background-size: cover;
+      }
+      .content {
+        background-color: transparent;
+      }
+      label {
+        background-color: rgba(255, 255, 255, 0.6);
+      }
+      input {
+        background-color: transparent !important;
+      }
+      #login {
+        position: fixed;
+        bottom: 10px;
+        z-index: 4;
+        width: auto;
+        left: 10px;
+        right: 10px;
+      }
+    </style>
+  </head>	
+  <body>
+    <section>
+
+      <header class="bar bar-header bar-danger">
+        <h1 class="title">Sign up for your account</h1>
+      </header>
+      <main class="content content-padded has-header">
+        <form class="form-horizontal">
+          <label class="input-wrapper row-fluid">
+            <span class="input-label span3">Full name</span>
+            <input class="span9" type="text" placeholder="">
+          </label>
+          <label class="input-wrapper row-fluid">
+            <span class="input-label span3">Email</span>
+            <input class="span9" type="email" placeholder="">
+          </label>
+          <label class="input-wrapper row-fluid">
+            <span class="input-label span3">Password</span>
+            <input class="span9" type="password" placeholder="">
+          </label>
+          <button class="button button-info button-block">Sign up</button>
+        </form>
+        <button id="login" class="button button-default button-block">Log in</button>
+      </main>
+    </section>
+
+  </body>
+</html>
