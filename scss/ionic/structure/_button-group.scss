@@ -75,9 +75,8 @@
 .button-bar > .button {
   @include box-flex(1);
   // Fix for box-flex width issue
-  width: 0;
 
-  line-height: 8px;
+  line-height: $buttonBarButtonLineHeight;
   border-radius: 0;
   
   overflow: hidden;
@@ -87,6 +86,8 @@
   text-overflow: ellipsis;
 
   border-width: 1px 0px 1px 1px;
+
+  padding: 8px 16px;
 
   &:last-child {
     border-right-width: 1px;

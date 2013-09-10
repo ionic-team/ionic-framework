@@ -435,29 +435,22 @@ a {
   -webkit-user-select: none;
   -moz-user-select: -moz-none;
   user-select: none;
+  display: -webkit-box;
+  display: box;
   position: fixed;
   left: 0;
   right: 0;
   z-index: 10;
   width: 100%;
   height: 44px;
-  padding: 8px;
-  box-sizing: border-box;
-  /*
-  .title + .button:last-child,
-  .button + .button:last-child,
-  .button.pull-right {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-  }
-  */ }
+  padding: 5px;
+  box-sizing: border-box; }
   .bar .title {
     position: absolute;
     z-index: 0;
-    width: 100%;
     top: 0;
     left: 0;
+    right: 0;
     line-height: 44px;
     margin: 0;
     min-width: 30px;
@@ -467,23 +460,22 @@ a {
     font-size: 18px; }
   .bar .title a {
     color: inherit; }
-
-.buttons {
-  position: absolute;
-  z-index: 1;
-  padding: 8px;
-  line-height: 6px; }
-  .buttons .button {
-    padding: 6px 12px;
-    line-height: 14px; }
-
-.buttons:first-child {
-  left: 0;
-  top: 0; }
-
-.buttons:last-child {
-  right: 0;
-  top: 0; }
+  .bar .button {
+    box-flex: 1;
+    -webkit-box-flex: 0;
+    -moz-box-flex: 0;
+    line-height: 23px;
+    font-size: 12px; }
+  .bar .button-bar {
+    line-height: 18px; }
+  .bar .button-bar + .button, .bar .button + .button-bar {
+    margin-left: 5px; }
+  .bar .title + .button:last-child,
+  .bar > .button + .button:last-child,
+  .bar > .button.pull-right {
+    position: absolute;
+    top: 5px;
+    right: 5px; }
 
 .bar-header {
   top: 0; }
@@ -595,15 +587,15 @@ a {
   box-flex: 1;
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
-  width: 0;
-  line-height: 8px;
+  line-height: 15px;
   border-radius: 0;
   overflow: hidden;
   text-align: center;
   white-space: nowrap;
   display: block;
   text-overflow: ellipsis;
-  border-width: 1px 0px 1px 1px; }
+  border-width: 1px 0px 1px 1px;
+  padding: 8px 16px; }
   .button-bar > .button:last-child {
     border-right-width: 1px; }
 
@@ -1985,7 +1977,7 @@ main {
   border-radius: 2px;
   border-width: 1px;
   border-style: solid;
-  padding: 10px 15px; }
+  padding: 4px 12px; }
   .button.button-default {
     color: #333333;
     background-color: white;
