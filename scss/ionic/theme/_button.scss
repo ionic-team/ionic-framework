@@ -1,39 +1,39 @@
 .button {
-	color: $buttonColor;
-	border-radius: $buttonBorderRadius;
-  border-width: $buttonBorderWidth;
+	color: $button-color;
+	border-radius: $button-border-radius;
+  border-width: $button-border-width;
   border-style: solid;
-	padding: $buttonPadding;
-  font-size: $buttonFontSize;
+	padding: $button-padding;
+  font-size: $button-font-size;
 
   &.button-default {
-    @include button-style($buttonDefaultBackground, $buttonDefaultBorder, $darkColor);
+    @include button-style($button-default-bg, $buttonDefaultBorder, $gray-dark);
   }
   &.button-secondary {
-    @include button-style($buttonSecondaryBackground, $buttonSecondaryBorder, $darkColor);
+    @include button-style($button-secondary-bg, $button-secondary-border, $gray-dark);
   }
   &.button-primary {
-    @include button-style($buttonPrimaryBackground, $buttonPrimaryBorder, $lightColor);
+    @include button-style($button-primary-bg, $button-primary-border, $gray-light);
   }
   &.button-info {
-    @include button-style($buttonInfoBackground, $buttonInfoBorder, $lightColor);
+    @include button-style($button-info-bg, $button-info-border, $gray-light);
   }
   &.button-success {
-    @include button-style($buttonSuccessBackground, $buttonSuccessBorder, $lightColor);
+    @include button-style($button-success-bg, $button-success-border, $gray-light);
   }
   &.button-warning {
-    @include button-style($buttonWarningBackground, $buttonWarningBorder, $lightColor);
+    @include button-style($button-warning-bg, $button-warning-border, $gray-light);
   }
   &.button-danger {
-    @include button-style($buttonDangerBackground, $buttonDangerBorder, $lightColor);
+    @include button-style($button-danger-bg, $buttonDangerBorder, $gray-light);
   }
   &.button-dark {
-    @include button-style($buttonDarkBackground, $buttonDarkBorder, $lightColor);
+    @include button-style($button-dark-bg, $button-dark-border, $gray-light);
   }
   &.button-clear {
     background: none;
     border: none;
-    padding: $buttonClearPadding;
+    padding: $button-clear-padding;
   }
 }
 

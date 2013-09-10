@@ -3,8 +3,7 @@
 // Make sure iOS Safari doesn't scale fonts on orientation changes
 html {
   -webkit-text-size-adjust: 100%;
-
-  @include disable-user-select();
+  @include user-select(none);
 }
 
 body {
@@ -46,15 +45,15 @@ body {
 }
 
 .content-padded {
-  padding: $contentPadding;
+  padding: $content-padding;
 }
 
 .inset {
-  margin: $insetMargin;
+  margin: $inset-margin;
 }
 
 .rounded {
-  border-radius: $roundedRadius;
+  border-radius: $border-radius-base;
 }
 
 // Remove tap highlight color on Safari

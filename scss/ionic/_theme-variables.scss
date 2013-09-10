@@ -1,169 +1,174 @@
 
 // Brand Colors
 // -------------------------------
-$brandPrimary:         #428bca;
-$brandSuccess:         #5cb85c;
-$brandWarning:         #f0ad4e;
-$brandDanger:          #d9534f;
-$brandInfo:            #5bc0de;
+$brand-primary:         #428bca;
+$brand-success:         #5cb85c;
+$brand-warning:         #f0ad4e;
+$brand-danger:          #d9534f;
+$brand-info:            #5bc0de;
+
 
 // Global Gray Colors
 // -------------------------------
 $black:                 #000 !default;
-$grayDarker:            #222 !default;
-$grayDark:              #333 !default;
-$gray:                  #555 !default;
-$grayLight:             #999 !default;
-$grayLighter:           #f5f5f5 !default;
+$gray-darker:           lighten(#000, 13.5%) !default; // #222
+$gray-dark:             lighten(#000, 20%) !default;   // #333
+$gray:                  lighten(#000, 33.5%) !default; // #555
+$gray-light:            lighten(#000, 60%) !default;   // #999
+$gray-lighter:          lighten(#000, 93.5%) !default; // #eee
 $white:                 #fff !default;
 
 
 // Global Accent Colors
 // -------------------------------
-$blue:                  #049cdb !default;
-$blueDark:              #0064cd !default;
-$green:                 #46a546 !default;
-$red:                   #9d261d !default;
-$yellow:                #ffc40d !default;
-$orange:                #f89406 !default;
-$pink:                  #c3325f !default;
-$purple:                #7a43b6 !default;
+$blue:                 #049cdb !default;
+$blue-dark:            #0064cd !default;
+$green:                #46a546 !default;
+$red:                  #9d261d !default;
+$yellow:               #ffc40d !default;
+$orange:               #f89406 !default;
+$pink:                 #c3325f !default;
+$purple:               #7a43b6 !default;
+
+$component-active-bg:            $brand-primary !default;
 
 
 // Global Fonts
 // -------------------------------
-$sansFontFamily:        "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$lightSansFontFamily:   "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$serifFontFamily:       Georgia, "Times New Roman", Times, serif !default;
-$monoFontFamily:        Monaco, Menlo, Consolas, "Courier New", monospace !default;
+$sans-font-family:         "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$light-sans-font-family:   "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$serif-font-family:        Georgia, "Times New Roman", Times, serif !default;
+$mono-font-family:         Monaco, Menlo, Consolas, "Courier New", monospace !default;
 
 
 // Base
 // -------------------------------
-$baseFontFamily:         $sansFontFamily;
-$baseBackgroundColor:    $white;
-$textColor:              $grayDark !default;
+$base-font-family:         $sans-font-family;
+$base-background-color:    $white;
 
 
 // Forms
 // -------------------------------
-$inputBackground:               $white !default;
-$inputBorderColor:              #bbb !default;
-$inputBorderWidth:              1px !default;
-$inputBorderRadius:             2px !default;
-$inputDisabledBackground:       $grayLighter !default;
-$formActionsBackground:         $grayLighter !default;
-$inputHeight:                   $baseFontSize + 10px; // base line-height + 8px vertical padding + 2px top/bottom border
-$placeholderText:               $grayLight !default;
+$input-bg:                        $white  !default;
+$input-bg-disabled:               $gray-lighter !default;
 
+$input-color:                     $gray !default;
+$input-border-color:              #ccc !default;
+$input-border-width:              1px !default;
+$input-border-radius:             $border-radius-base !default;
+$input-border-focus:              #66afe9 !default;
 
-// Typography
-// -------------------------------
-$lightColor:            #fff;
-$darkColor:             #333;
+$input-color-placeholder:         $gray-light !default;
+
+$legend-color:                    $gray-dark !default;
+$legend-border-color:             #e5e5e5 !default;
+
+$input-group-addon-bg:            $gray-lighter !default;
+$input-group-addon-border-color:  $input-border-color !default;
+
 
 
 // Buttons
 // -------------------------------
-$buttonColor:           #222;
-$buttonPadding:         12px 12px;
-$buttonClearPadding:    10px 0px;
-$buttonBorderRadius:    2px;
-$buttonBorderWidth:     1px;
-$buttonFontSize:        16px;
+$button-color:            #222;
+$button-padding:          12px 12px;
+$button-clear-padding:    10px 0px;
+$button-border-radius:    2px;
+$button-border-width:     1px;
+$button-font-size:        16px;
 
 // Button block that has spacing
-$buttonBlockMargin: 10px 0 10px 0;
+$button-block-margin: 10px 0 10px 0;
 
-$buttonDefaultBackground:        #fff;
-$buttonDefaultBackgroundActive:  #eee;
-$buttonDefaultBorder:            #ddd;
+$button-default-bg:           #fff;
+$button-default-bg-active:    #eee;
+$buttonDefaultBorder:         #ddd;
 
-$buttonSecondaryBackground:        #f5f5f5;
-$buttonSecondaryBackgroundActive:  #eee;
-$buttonSecondaryBorder:            #ccc;
+$button-secondary-bg:         #f5f5f5;
+$button-secondary-bg-active:  #eee;
+$button-secondary-border:     #ccc;
 
-$buttonPrimaryBackground:        #6999e9;
-$buttonPrimaryBackgroundActive:  #eee;
-$buttonPrimaryBorder:            #5981c5;
+$button-primary-bg:           #6999e9;
+$button-primary-bg-active:    #eee;
+$button-primary-border:       #5981c5;
 
-$buttonInfoBackground:        #60d2e6;
-$buttonInfoBackgroundActive:  #eee;
-$buttonInfoBorder:            #51b3c4;
+$button-info-bg:              #60d2e6;
+$button-info-bg-active:       #eee;
+$button-info-border:          #51b3c4;
 
-$buttonSuccessBackground:        #89c163;
-$buttonSuccessBackgroundActive:  #eee;
-$buttonSuccessBorder:            #71a052;
+$button-success-bg:           #89c163;
+$button-success-bg-active:    #eee;
+$button-success-border:       #71a052;
 
-$buttonWarningBackground:        #f0b840;
-$buttonWarningBackgroundActive:  #eee;
-$buttonWarningBorder:            #cf9a29;
+$button-warning-bg:           #f0b840;
+$button-warning-bg-active:    #eee;
+$button-warning-border:       #cf9a29;
 
-$buttonDangerBackground:        #de5645;
-$buttonDangerBackgroundActive:  #eee;
-$buttonDangerBorder:            #bc4435;
+$button-danger-bg:            #de5645;
+$button-danger-bg-active:     #eee;
+$buttonDangerBorder:          #bc4435;
 
-$buttonDarkBackground:        #444;
-$buttonDarkBackgroundActive:  #eee;
-$buttonDarkBorder:            #111;
+$button-dark-bg:              #444;
+$button-dark-bg-active:       #eee;
+$button-dark-border:          #111;
 
 
 // Bars
 // -------------------------------
-$barBackground: white;
+$bar-bg:                      #fff;
 
 // Bar variations
-$barDefaultBackground: #fff;
-$barDefaultBorderColor: #ddd;
+$bar-default-bg:              #fff;
+$bar-default-border-color:    #ddd;
 
-$barSecondaryBackground: #f5f5f5;
-$barSecondaryBorderColor: #ccc;
+$bar-secondary-bg:            #f5f5f5;
+$bar-secondary-border-color:  #ccc;
 
-$barPrimaryBackground: #6999e9;
-$barPrimaryBorderColor: #5981c5;
+$bar-primary-bg:              #6999e9;
+$bar-primary-border-color:    #5981c5;
 
-$barInfoBackground: #60d2e6;
-$barInfoBorderColor: #51b3c4;
+$bar-info-bg:                 #60d2e6;
+$bar-info-border-color:       #51b3c4;
 
-$barSuccessBackground: #89c163;
-$barSuccessBorderColor: #71a052;
+$bar-success-bg:              #89c163;
+$bar-success-border-color:    #71a052;
 
-$barWarningBackground: #f0b840;
-$barWarningBorderColor: #cf9a29;
+$bar-warning-bg:              #f0b840;
+$bar-warning-border-color:    #cf9a29;
 
-$barDangerBackground: #de5645;
-$barDangerBorderColor: #bc4435;
+$bar-danger-bg:               #de5645;
+$bar-danger-border-color:     #bc4435;
 
-$barDarkBackground: #444;
-$barDarkBorderColor: #111;
+$bar-dark-bg:                 #444;
+$bar-dark-border-color:       #111;
 
 
 // Lists
 // -------------------------------
-$listDividerBackground: #f5f5f5;
-$listDividerColor: #222;
+$list-divider-bg:       #f5f5f5;
+$list-divider-color:    #222;
 
 
-// Form states and alerts
+// Form States and Alerts
 // -------------------------------
-$warningText:             #c09853;
-$warningBackground:       #fcf8e3;
-$warningBorder:           darken(adjust-hue($warningBackground, -10), 3%);
+$warning-text:       #c09853;
+$warning-bg:         #fcf8e3;
+$warning-border:     darken(adjust-hue($warning-bg, -10), 3%);
 
-$errorText:               #b94a48;
-$errorBackground:         #f2dede;
-$errorBorder:             darken(adjust-hue($errorBackground, -10), 3%);
+$error-text:         #b94a48;
+$error-bg:           #f2dede;
+$error-border:       darken(adjust-hue($error-bg, -10), 3%);
 
-$successText:             #468847;
-$successBackground:       #dff0d8;
-$successBorder:           darken(adjust-hue($successBackground, -10), 5%);
+$success-text:       #468847;
+$success-bg:         #dff0d8;
+$success-border:     darken(adjust-hue($success-bg, -10), 5%);
 
-$infoText:                #3a87ad;
-$infoBackground:          #d9edf7;
-$infoBorder:              darken(adjust-hue($infoBackground, -10), 7%);
+$info-text:          #3a87ad;
+$info-bg:            #d9edf7;
+$info-border:        darken(adjust-hue($info-bg, -10), 7%);
 
 
-// Panels
+// Side Menu
 // -------------------------------
-$menuBackgroundColor:    #eee;
-$menuInsetBorderColor:   #bbb;
+$menu-bg:                   #eee;
+$menu-inset-border-color:   #bbb;

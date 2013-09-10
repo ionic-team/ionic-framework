@@ -1,7 +1,7 @@
 
 // Use Flexbox for our header and footer bars
 .bar {
-  @include disable-user-select();
+  @include user-select(none);
 
   display: -webkit-box;
   display: box;
@@ -11,8 +11,8 @@
   right: 0;
   z-index: 10;
   width: 100%;
-  height: $barHeight;
-  padding: $barPaddingPortrait;
+  height: $bar-height;
+  padding: $bar-padding-portrait;
   box-sizing: border-box;
 
 
@@ -26,7 +26,7 @@
     left: 0;
     right: 0;
 
-    line-height: $barHeight;
+    line-height: $bar-height;
 
     margin: 0;
     //padding: $barPaddingVertical 0px;
@@ -38,7 +38,7 @@
 
     text-align: center;
     white-space: nowrap;
-    font-size: $barTitleFontSize;
+    font-size: $bar-title-font-size;
 
   }
 
@@ -49,12 +49,12 @@
 
   .button {
     @include box-flex(0);
-    line-height: $barButtonLineHeight;
+    line-height: $bar-button-line-height;
     font-size: 12px;
   }
 
   .button-bar {
-    line-height: $barButtonBarLineHeight;
+    line-height: $bar-button-bar-line-height;
   }
 
   .button-bar + .button, .button + .button-bar {
@@ -88,19 +88,19 @@
 }
 
 .bar-header-secondary {
-  top: $barHeight;
+  top: $bar-height;
 }
 .bar-footer-secondary {
-  bottom: $barHeight;
+  bottom: $bar-height;
 }
 
 /* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
    Note: For these to work, content must come after both bars in the markup */
 .has-header {
-  top: $barHeight;
+  top: $bar-height;
 }
 
 .has-footer {
-  bottom: $barHeight;
+  bottom: $bar-height;
 }
 

@@ -7,15 +7,15 @@
 // -------------------------
 
 .alert {
-  margin-bottom: $baseLineHeight;
+  margin-bottom: $line-height-base;
   text-shadow: 0 1px 0 rgba(255,255,255,.5);
-  background-color: $warningBackground;
-  border: 1px solid $warningBorder;
+  background-color: $warning-bg;
+  border: 1px solid $warning-border;
 }
 .alert,
 .alert h4 {
   // Specified for the h4 to prevent conflicts of changing $headingsColor
-  color: $warningText;
+  color: $warning-text;
 }
 
 
@@ -23,29 +23,29 @@
 // -------------------------
 
 .alert-success {
-  background-color: $successBackground;
-  border-color: $successBorder;
-  color: $successText;
+  background-color: $success-bg;
+  border-color: $success-border;
+  color: $success-text;
 }
 .alert-success h4 {
-  color: $successText;
+  color: $success-text;
 }
 .alert-danger,
 .alert-error {
-  background-color: $errorBackground;
-  border-color: $errorBorder;
-  color: $errorText;
+  background-color: $error-bg;
+  border-color: $error-border;
+  color: $error-text;
 }
 .alert-danger h4,
 .alert-error h4 {
-  color: $errorText;
+  color: $error-text;
 }
 .alert-info {
-  background-color: $infoBackground;
-  border-color: $infoBorder;
-  color: $infoText;
+  background-color: $info-bg;
+  border-color: $info-border;
+  color: $info-text;
 }
 .alert-info h4 {
-  color: $infoText;
+  color: $info-text;
 }
 
