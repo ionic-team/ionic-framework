@@ -47,24 +47,24 @@ textarea {
   font-family: $base-font-family; // And only set font-family here for those that need it (note the missing label element)
 }
 
-.form-group {
+.input-group {
   border-top: $input-border-width solid $input-border-color;
   border-bottom: $input-border-width solid $input-border-color;
   background-color: $input-bg;
   overflow: hidden;
 }
-.content-padded > .form-group,
-.form-group.inset {
+.content-padded > .input-group,
+.input-group.inset {
   border-left: $input-border-width solid $input-border-color;
   border-right: $input-border-width solid $input-border-color;
   @include border-radius($input-border-radius);
 }
 
-.form-group .input-wrapper + .input-wrapper {
+.input-group .input-wrapper + .input-wrapper {
   border-top: $input-border-width solid $input-border-color;
 }
 
-.form-group + .form-group {
+.input-group + .input-group {
   margin-top: $content-padding;
 }
 
@@ -86,13 +86,13 @@ textarea {
   }
 }
 
-.form-group.stacked-label,
-.form-group.stacked-label .input-wrapper {
+.input-group.stacked-label,
+.input-group.stacked-label .input-wrapper {
   background-color: transparent;
   border: 0;
 }
 
-.form-group.stacked-label input {
+.input-group.stacked-label input {
   border: $input-border-width solid $input-border-color;
   background-color: $input-bg;
   padding: 4px 8px 3px;
