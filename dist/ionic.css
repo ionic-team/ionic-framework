@@ -638,62 +638,48 @@ select,
 textarea {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
+.form-group {
+  background-color: white;
+  overflow: hidden; }
+
+.content-padded > .form-group,
+.form-group.inset {
+  border-left: 1px solid #bbbbbb;
+  border-right: 1px solid #bbbbbb; }
+
+.form-group .input-wrapper + .input-wrapper {
+  border-top: 0; }
+
+.form-group + .form-group {
+  margin-top: 10px; }
+
 .input-wrapper {
   display: block;
-  border-top: 1px solid #999999;
-  border-bottom: 1px solid #999999;
-  padding: 4px 7px 3px; }
+  border-top: 1px solid #bbbbbb;
+  border-bottom: 1px solid #bbbbbb;
+  padding: 6px 8px 5px;
+  overflow: hidden; }
   .input-wrapper input {
+    background-color: transparent;
     margin: 0;
-    -webkit-appearance: none; }
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0; }
   .input-wrapper .input-label {
     font-weight: bold;
     line-height: 34px; }
 
-.content-padded > .input-wrapper,
-.input-wrapper.inset {
-  border-left: 1px solid #999999;
-  border-right: 1px solid #999999;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px; }
-
-.input-wrapper.row-fluid {
-  width: auto; }
-
-.stacked-label {
-  padding: 0; }
-  .stacked-label input {
-    border: 1px solid #999999; }
-
-.stacked-label {
+.form-group.stacked-label,
+.form-group.stacked-label .input-wrapper {
+  background-color: transparent;
   border: 0; }
-  .stacked-label input {
-    border: 1px solid #999999 !important;
-    padding: 20px 10px !important;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px; }
-  .stacked-label span {
-    font-weight: bold;
-    line-height: 20px; }
 
-.content > .input-wrapper.stacked-label input {
-  border-left: 0 !important;
-  border-right: 0 !important;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0; }
-
-.content-padded > .input-wrapper.stacked-label,
-.content > .input-wrapper.stacked-label.inset {
-  border: 0 !important; }
-
-.content > .input-wrapper.stacked-label.inset input {
-  border: 1px solid #999999 !important; }
-
-.input-wrapper + .input-wrapper {
-  border-top: 0 !important; }
+.form-group.stacked-label input {
+  border: 1px solid #bbbbbb;
+  background-color: white;
+  padding: 4px 8px 3px;
+  overflow: hidden; }
 
 select,
 textarea,
@@ -743,7 +729,6 @@ input[type="search"],
 input[type="tel"],
 input[type="color"],
 .uneditable-input {
-  background-color: white;
   border: 0; }
   textarea:focus,
   input[type="text"]:focus,
@@ -789,7 +774,7 @@ input[type="file"] {
 
 select {
   width: 220px;
-  border: 1px solid #999999;
+  border: 1px solid #bbbbbb;
   background-color: white; }
 
 select[multiple],
@@ -808,7 +793,7 @@ input[type="checkbox"]:focus {
 .uneditable-textarea {
   color: #999999;
   background-color: #fcfcfc;
-  border-color: #999999;
+  border-color: #bbbbbb;
   cursor: not-allowed; }
 
 .uneditable-input {

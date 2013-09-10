@@ -47,68 +47,55 @@ textarea {
   font-family: $baseFontFamily; // And only set font-family here for those that need it (note the missing label element)
 }
 
+.form-group {
+  background-color: $inputBackground;
+  overflow: hidden;
+}
+.content-padded > .form-group,
+.form-group.inset {
+  border-left: 1px solid $inputBorder;
+  border-right: 1px solid $inputBorder;
+}
+
+.form-group .input-wrapper + .input-wrapper {
+  border-top: 0;
+}
+
+.form-group + .form-group {
+  margin-top: $contentPadding;
+}
+
 .input-wrapper {
   display: block;
   border-top: 1px solid $inputBorder;
   border-bottom: 1px solid $inputBorder;
-  padding: 4px 7px 3px;
+  padding: 6px 8px 5px;
+  overflow: hidden;
 
   input {
+    background-color: transparent;
     margin: 0;
     -webkit-appearance: none;
+    @include border-radius(0);
   }
 
   .input-label {
     font-weight: bold;
     line-height: $baseLineHeightComputed + $baseFontSize;
   }
-
 }
 
-.content-padded > .input-wrapper,
-.input-wrapper.inset 
-{
-  border-left: 1px solid $inputBorder;
-  border-right: 1px solid $inputBorder;
-  @include border-radius($textInputBorderRadius);
-}
-.input-wrapper.row-fluid {
-  width: auto;
-}
-
-.stacked-label {
-  padding: 0;
-  input {
-    border: 1px solid $inputBorder;
-  }
-}
-.stacked-label {
+.form-group.stacked-label,
+.form-group.stacked-label .input-wrapper {
+  background-color: transparent;
   border: 0;
-  input {
-    border: 1px solid $inputBorder !important;
-    padding: $baseLineHeightComputed $baseLineHeightComputed/2 !important;
-    @include border-radius($textInputBorderRadius);
-  }
-  span {
-    font-weight: bold;
-    line-height: $baseLineHeightComputed;
-  }
 }
-.content > .input-wrapper.stacked-label input {
-    border-left: 0 !important;
-    border-right: 0 !important;
-    @include border-radius(0);
-}
-.content-padded > .input-wrapper.stacked-label,
-.content > .input-wrapper.stacked-label.inset 
-{
-  border: 0 !important;
-}
-.content > .input-wrapper.stacked-label.inset input {
-  border: 1px solid $inputBorder !important;
-}
-.input-wrapper + .input-wrapper {
-  border-top: 0 !important;
+
+.form-group.stacked-label input {
+  border: 1px solid $inputBorder;
+  background-color: $inputBackground;
+  padding: 4px 8px 3px;
+  overflow: hidden;
 }
 
 
@@ -169,7 +156,6 @@ input[type="search"],
 input[type="tel"],
 input[type="color"],
 .uneditable-input {
-  background-color: $inputBackground;
   border: 0;
 
   // Focus state
