@@ -76,7 +76,7 @@
   @include box-flex(1);
   // Fix for box-flex width issue
 
-  line-height: $buttonBarButtonLineHeight;
+  line-height: $button-bar-button-line-height;
   border-radius: 0;
   
   overflow: hidden;

@@ -1,92 +1,133 @@
+// Components
+// -------------------------
+// Based on 14px font-size and 1.428 line-height (~20px to start)
+
+$padding-base-vertical:          6px !default;
+$padding-base-horizontal:        12px !default;
+
+$padding-large-vertical:         10px !default;
+$padding-large-horizontal:       16px !default;
+
+$padding-small-vertical:         5px !default;
+$padding-small-horizontal:       10px !default;
+
+$line-height-large:              1.33 !default;
+$line-height-small:              1.5 !default;
+
+$border-radius-base:             4px !default;
+$border-radius-large:            6px !default;
+$border-radius-small:            3px !default;
+
+$caret-width-base:               4px !default;
+$caret-width-large:              5px !default;
+
 
 // Typography
-// -------------------------------
-$baseFontSize:              14px !default;
-$fontSizeLarge:             ceil($baseFontSize * 1.25);
-$baseLineHeight:            1.428571429; // 20/14
-$baseLineHeightComputed:    floor($baseFontSize * $baseLineHeight); // ~20px
-$lineHeightComputed:        $baseLineHeightComputed;
-$baseBorderRadius:          2px !default;
+// -------------------------
+
+$font-family-sans-serif:    "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-serif:         Georgia, "Times New Roman", Times, serif !default;
+$font-family-monospace:     Monaco, Menlo, Consolas, "Courier New", monospace !default;
+$font-family-base:          $font-family-sans-serif !default;
+
+$font-size-base:            14px !default;
+$font-size-large:           ceil($font-size-base * 1.25) !default; // ~18px
+$font-size-small:           ceil($font-size-base * 0.85) !default; // ~12px
+
+$line-height-base:          1.428571429 !default; // 20/14
+$line-height-computed:      floor($font-size-base * $line-height-base) !default; // ~20px
+
+$headings-font-family:      $font-family-base !default;
+$headings-font-weight:      500 !default;
+$headings-line-height:      1.1 !default;
 
 
 // Content stuff
 // -------------------------------
-$contentPadding:           10px;
-$insetMargin:              10px;
-$roundedRadius:            5px; 
+$content-padding:           10px;
+$inset-margin:              10px;
+$border-radius-base:        4px !default;
+$border-radius-large:       6px !default;
+$border-radius-small:       3px !default;
 
 
 // Bar stuff
 // -------------------------------
-$barHeight:                    44px !default;
-$barLineHeight:                44px !default;
-$barButtonLineHeight: 		   23px !default;
-$barButtonBarLineHeight: 	   18px !default;
-$barTitleFontSize:             $fontSizeLarge;
-$barTitleLineHeightComputed:   26px;//$barHeight - 2;
-$barPaddingPortrait:           5px;
-$barPaddingLandscape:          5px;
+$bar-height:                     44px !default;
+$bar-button-line-height: 		     23px !default;
+$bar-button-bar-line-height: 	   18px !default;
+$bar-title-font-size:            $font-size-large;
+$bar-padding-portrait:           5px;
+$bar-padding-landscape:          5px;
 
 
 // Button bar stuff
 // -------------------------------
-$buttonBarButtonLineHeight:	   15px !default;
+$button-bar-button-line-height:	 15px !default;
 
 
 // Forms
 // -------------------------------
-$textInputBorderRadius:     2px;
-
-
-// Horizontal forms & lists
-// -------------------------------
-$horizontalComponentOffset:       180px !default;
+$input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
+$input-height-large:             (floor($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2) !default;
+$input-height-small:             (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
 
 
 // Lists
 // -------------------------------
-$listItemBorder: 1px solid #ddd;
+$list-item-border:         1px solid #ddd;
 
 
 // Menus
 // -------------------------------
-$menuWidth:              270px;
-$menuAnimationSpeed:     200ms;
-$menuBackgroundColor:    #eee;
-$menuInsetBorderColor:   #bbb;
+$menu-width:               270px;
+$menu-animation-speed:     200ms;
 
 
-// GRID
+// Media queries breakpoints
 // -------------------------------
 
+// Extra small screen / phone
+$screen-xs:                  480px !default;
+$screen-phone:               $screen-xs !default;
 
-// Default 940px grid
+// Small screen / tablet
+$screen-sm:                  768px !default;
+$screen-tablet:              $screen-sm !default;
+
+// Medium screen / desktop
+$screen-md:                  992px !default;
+$screen-desktop:             $screen-md !default;
+
+// Large screen / wide desktop
+$screen-lg:                  1200px !default;
+$screen-lg-desktop:          $screen-lg !default;
+
+// So media queries don't overlap when required, provide a maximum
+$screen-xs-max:              ($screen-sm - 1) !default;
+$screen-sm-max:              ($screen-md - 1) !default;
+$screen-md-max:              ($screen-lg - 1) !default;
+
+
+// Grid system
 // -------------------------------
-$gridColumns:             12 !default;
-$gridColumnWidth:         60px !default;
-$gridGutterWidth:         20px !default;
-$gridRowWidth:            ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 1)) !default;
-
-// 1200px min
-$gridColumnWidth1200:     70px !default;
-$gridGutterWidth1200:     30px !default;
-$gridRowWidth1200:        ($gridColumns * $gridColumnWidth1200) + ($gridGutterWidth1200 * ($gridColumns - 1)) !default;
-
-// 768px-979px
-$gridColumnWidth768:      42px !default;
-$gridGutterWidth768:      20px !default;
-$gridRowWidth768:         ($gridColumns * $gridColumnWidth768) + ($gridGutterWidth768 * ($gridColumns - 1)) !default;
+// Number of columns in the grid system
+$grid-columns:              12 !default;
+// Padding, to be divided by two and applied to the left and right of all columns
+$grid-gutter-width:         30px !default;
+// Point at which the navbar stops collapsing
+$grid-float-breakpoint:     $screen-tablet !default;
 
 
-// Fluid grid
+// Container sizes
 // -------------------------------
-$fluidGridColumnWidth:    percentage($gridColumnWidth/$gridRowWidth) !default;
-$fluidGridGutterWidth:    percentage($gridGutterWidth/$gridRowWidth) !default;
 
-// 1200px min
-$fluidGridColumnWidth1200:     percentage($gridColumnWidth1200/$gridRowWidth1200) !default;
-$fluidGridGutterWidth1200:     percentage($gridGutterWidth1200/$gridRowWidth1200) !default;
+// Small screen / tablet
+$container-tablet:            ((720px + $grid-gutter-width)) !default;
 
-// 768px-979px
-$fluidGridColumnWidth768:      percentage($gridColumnWidth768/$gridRowWidth768) !default;
-$fluidGridGutterWidth768:      percentage($gridGutterWidth768/$gridRowWidth768) !default;
+// Medium screen / desktop
+$container-desktop:           ((940px + $grid-gutter-width)) !default;
+
+// Large screen / wide desktop
+$container-lg-desktop:        ((1140px + $grid-gutter-width)) !default;
+
