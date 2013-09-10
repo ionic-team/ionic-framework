@@ -470,7 +470,8 @@ a {
     background-color: transparent;
     line-height: 23px;
     font-size: 12px;
-    padding: 4px 12px; }
+    padding: 4px 12px;
+    z-index: 1; }
   .bar .button-bar {
     line-height: 18px; }
   .bar .button-bar + .button, .bar .button + .button-bar {

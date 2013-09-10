@@ -53,6 +53,9 @@
     line-height: $bar-button-line-height;
     font-size: 12px;
     padding: 4px 12px;
+
+    // Rise the button above the title
+    z-index: 1;
   }
 
   .button-bar {
