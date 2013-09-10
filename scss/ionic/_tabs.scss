@@ -4,6 +4,23 @@
  * A navigation bar with any number of tab items supported.
  */
 
+.tabs {
+  font-size: 16px;
+}
+.tab-item {
+  a {
+    font-family: $light-sans-font-family;
+    font-weight: 200;
+
+    .active, &:active {
+      //box-shadow: inset 0 0 10px rgba(0, 0, 0, .12);
+    }
+  }
+  i {
+    font-size: 25px;
+  }
+}
+
 .tabs-inner {
   display: -webkit-box;
   display: box;

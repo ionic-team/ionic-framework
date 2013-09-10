@@ -5,6 +5,24 @@
   border-style: solid;
 	padding: $button-padding;
   font-size: $button-font-size;
+  
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  margin: 0;
+
+  &.button-icon {
+    background: none;
+    border: none;
+  }
+
+  &.button-block {
+    margin: $button-block-margin;
+    display: block;
+    width: 100%;
+  }
 
   &.button-default {
     @include button-style($button-default-bg, $buttonDefaultBorder, $gray-dark);

@@ -1,4 +1,18 @@
 .bar {
+  @include user-select(none);
+
+  display: -webkit-box;
+  display: box;
+
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  width: 100%;
+  height: $bar-height;
+  padding: $bar-padding-portrait;
+  box-sizing: border-box;
+
   background-color: $bar-bg;
   border-style: solid;
   border-width: 0;
@@ -83,6 +97,61 @@
   //@media screen and (orientation : landscape) {
   //padding: $barPaddingLandscape;
   //}
+
+  // Title inside of a bar is centered
+  .title {
+    position: absolute;
+    z-index: 0;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    line-height: $bar-height;
+
+    margin: 0;
+    //padding: $barPaddingVertical 0px;
+
+    min-width: 30px;
+
+    // Go into ellipsis if too small
+    text-overflow: ellipsis;
+
+    text-align: center;
+    white-space: nowrap;
+    font-size: $bar-title-font-size;
+  }
+
+  .title a {
+    color: inherit;
+  }
+
+  .button {
+    @include box-flex(0);
+    background-color: transparent;
+    line-height: $bar-button-line-height;
+    font-size: 12px;
+    padding: 4px 12px;
+  }
+
+  .button-bar {
+    line-height: $bar-button-bar-line-height;
+  }
+
+  .button-bar + .button, .button + .button-bar {
+    margin-left: 5px;
+  }
+
+  // Place the last button in a bar on the right of the bar
+  .title + .button:last-child,
+  > .button + .button:last-child,
+  > .button.pull-right,
+  .title + .buttons {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+
 }
 
 // Default styles for buttons inside of styled bars
@@ -134,4 +203,36 @@
 .bar .button-icon {
   background-color: transparent;
   border: 1px solid transparent;
+}
+
+// Header at top
+.bar-header {
+  top: 0;
+}
+
+// Footer at bottom
+.bar-footer {
+  bottom: 0;
+}
+
+// Don't render padding if the bar is just for tabs
+.bar-tabs {
+  padding: 0;
+}
+
+.bar-header-secondary {
+  top: $bar-height;
+}
+.bar-footer-secondary {
+  bottom: $bar-height;
+}
+
+/* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
+   Note: For these to work, content must come after both bars in the markup */
+.has-header {
+  top: $bar-height;
+}
+
+.has-footer {
+  bottom: $bar-height;
 }

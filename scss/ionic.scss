@@ -1,2 +1,33 @@
-@import "ionic-structure";
-@import "ionic-theme";
+@charset "UTF-8";
+
+@import
+  // Variables
+  "mixins",
+  "variables",
+
+  // Base
+  "ionic/normalize",
+  "ionic/base",
+  "ionic/grid",
+
+  // Nav
+  "ionic/bar",
+  "ionic/tabs",
+  "ionic/menu",
+  "ionic/listview",
+
+  // Buttons
+  "ionic/button",
+  "ionic/button-group",
+
+  // Icons
+  "ionic/icon",
+
+  // Components
+  "ionic/alerts",
+  "ionic/card",
+  "ionic/form",
+  "ionic/table",
+
+  // Animations
+  "ionic/animations";

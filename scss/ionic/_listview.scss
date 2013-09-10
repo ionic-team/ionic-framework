@@ -63,12 +63,8 @@
 
 // Linked list items
 a.list-item {
-  //color: $list-group-link-color;
+  color: $gray-dark;
   text-decoration: none;
-
-  .list-item-heading {
-    //color: $list-group-link-heading-color;
-  }
 
   // Hover state
   &:hover,
@@ -79,6 +75,9 @@ a.list-item {
 }
 
 .list-divider {
+  background-color: $list-divider-bg;
+  color: $list-divider-color;
+  font-weight: bold;
   padding: 5px 15px;
 }
 
