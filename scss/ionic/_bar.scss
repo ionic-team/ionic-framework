@@ -44,51 +44,51 @@
   &.bar-primary {
     background-color: $bar-primary-bg;
     border-color: $bar-primary-border-color;
-    color: $gray-light;
+    color: $white;
     .tab-item a {
-      color: $gray-light;
+      color: $white;
     }
   }
   &.bar-info {
     background-color: $bar-info-bg;
     border-color: $bar-info-border-color;
-    color: $gray-light;
+    color: $white;
     .tab-item a {
-      color: $gray-light;
+      color: $white;
     }
   }
   &.bar-success {
     background-color: $bar-success-bg;
     border-color: $bar-success-border-color;
-    color: $gray-light;
+    color: $white;
     .tab-item a {
-      color: $gray-light;
+      color: $white;
     }
   }
   &.bar-warning {
     background-color: $bar-warning-bg;
     border-color: $bar-warning-border-color;
-    color: $gray-light;
+    color: $white;
     .tab-item a {
-      color: $gray-light;
+      color: $white;
     }
   }
   &.bar-danger {
     background-color: $bar-danger-bg;
     border-color: $bar-danger-border-color;
-    color: $gray-light;
+    color: $white;
 
     .tab-item a {
-      color: $gray-light;
+      color: $white;
     }
   }
   &.bar-dark {
     background-color: $bar-dark-bg;
     border-color: $bar-dark-border-color;
-    color: $gray-light;
+    color: $white;
 
     .tab-item a {
-      color: $gray-light;
+      color: $white;
     }
   }
 
@@ -170,33 +170,33 @@
 
 .bar-primary {
   .button {
-    @include button-style($button-primary-bg, $button-primary-border, $gray-light);
+    @include button-style($button-primary-bg, $button-primary-border, $white);
   }
 }
 .bar-info {
   .button {
-    @include button-style($button-info-bg, $button-info-border, $gray-light);
+    @include button-style($button-info-bg, $button-info-border, $white);
   }
 }
 .bar-success {
   .button {
-    @include button-style($button-success-bg, $button-success-border, $gray-light);
+    @include button-style($button-success-bg, $button-success-border, $white);
   }
 }
 .bar-warning {
   .button {
-    @include button-style($button-warning-bg, $button-warning-border, $gray-light);
+    @include button-style($button-warning-bg, $button-warning-border, $white);
   }
 }
 .bar-danger {
   .button {
-    @include button-style($button-danger-bg, $buttonDangerBorder, $gray-light);
+    @include button-style($button-danger-bg, $buttonDangerBorder, $white);
   }
 }
 .bar-dark {
   // A default style for buttons
   .button {
-    @include button-style($button-dark-bg, $button-dark-border, $gray-light);
+    @include button-style($button-dark-bg, $button-dark-border, $white);
   }
 }
 
