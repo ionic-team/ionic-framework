@@ -10,9 +10,9 @@
 .list-item {
   position: relative;
   display: block;
-  padding: 15px 15px;
   // Place the border on the list items and negative margin up for better styling
   margin-bottom: -1px;
+  padding: 15px 15px;
 
   //background-color: $list-group-bg;
   border: $list-item-border;
@@ -75,10 +75,10 @@ a.list-item {
 }
 
 .list-divider {
+  padding: 5px 15px;
   background-color: $list-divider-bg;
   color: $list-divider-color;
   font-weight: bold;
-  padding: 5px 15px;
 }
 
 // Custom content options

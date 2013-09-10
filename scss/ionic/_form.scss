@@ -8,27 +8,27 @@ form {
 }
 
 fieldset {
-  padding: 0;
   margin: 0;
+  padding: 0;
   border: 0;
 }
 
 // Groups of fields with labels on top (legends)
 legend {
   display: block;
-  width: 100%;
-  padding: 0;
   margin-bottom: $line-height-base;
-  font-size: $font-size-base * 1.5;
-  line-height: $line-height-base * 2;
-  color: $gray-dark;
+  padding: 0;
+  width: 100%;
   border: 0;
   border-bottom: 1px solid #e5e5e5;
+  color: $gray-dark;
+  font-size: $font-size-base * 1.5;
+  line-height: $line-height-base * 2;
 
   // Small
   small {
-    font-size: $line-height-base * .75;
     color: $gray-light;
+    font-size: $line-height-base * .75;
   }
 }
 
@@ -48,16 +48,16 @@ textarea {
 }
 
 .input-group {
+  overflow: hidden;
   border-top: $input-border-width solid $input-border-color;
   border-bottom: $input-border-width solid $input-border-color;
   background-color: $input-bg;
-  overflow: hidden;
 }
 .content-padded > .input-group,
 .input-group.inset {
-  border-left: $input-border-width solid $input-border-color;
-  border-right: $input-border-width solid $input-border-color;
   @include border-radius($input-border-radius);
+  border-right: $input-border-width solid $input-border-color;
+  border-left: $input-border-width solid $input-border-color;
 }
 
 .input-group .input-wrapper + .input-wrapper {
@@ -70,14 +70,14 @@ textarea {
 
 .input-wrapper {
   display: block;
-  padding: 6px 8px 5px;
   overflow: hidden;
+  padding: 6px 8px 5px;
 
   input {
-    background-color: transparent;
-    margin: 0;
-    -webkit-appearance: none;
     @include border-radius(0);
+    margin: 0;
+    background-color: transparent;
+    -webkit-appearance: none;
   }
 
   .input-label {
@@ -88,24 +88,24 @@ textarea {
 
 .input-group.stacked-label,
 .input-group.stacked-label .input-wrapper {
-  background-color: transparent;
   border: 0;
+  background-color: transparent;
 }
 
 .input-group.stacked-label input {
-  border: $input-border-width solid $input-border-color;
-  background-color: $input-bg;
-  padding: 4px 8px 3px;
-  overflow: hidden;
   @include border-radius($input-border-radius);
+  overflow: hidden;
+  padding: 4px 8px 3px;
+  border: $input-border-width solid $input-border-color;
+  background-color: $input-bg; 
 }
 .input-wrapper.row {
-  margin-left: 0;
   margin-right: 0;
+  margin-left: 0;
 
   [class*='col-'] {
-    padding-left: 0;
     padding-right: 0;
+    padding-left: 0;
   }
 }
 
@@ -133,10 +133,10 @@ input[type="color"],
 .uneditable-input {
   display: inline-block;
   height: $line-height-computed + $font-size-base;
-  font-size: $font-size-base;
-  line-height: $line-height-computed;
   color: $gray;
   vertical-align: middle;
+  font-size: $font-size-base;
+  line-height: $line-height-computed;
 }
 
 input,
@@ -245,8 +245,8 @@ textarea[disabled],
 input[readonly],
 select[readonly],
 textarea[readonly] {
-  cursor: not-allowed;
   background-color: $input-bg-disabled;
+  cursor: not-allowed;
 }
 // Explicitly reset the colors here
 input[type="radio"][disabled],

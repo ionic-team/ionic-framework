@@ -3,18 +3,18 @@
 // Author: Adam Bradley <adam@drifty.com>
 
 .menu {
-  min-height: 100%;
-  max-height: 100%;
-  width: $menu-width;
   position: absolute;
   top: 0;
   bottom: 0;
   z-index: 0;
 
-  background-color: #fff;
-
   // has to be scroll, not auto
   overflow-y: scroll;
+  min-height: 100%;
+  max-height: 100%;
+  width: $menu-width;
+
+  background-color: #fff;
 
   -webkit-overflow-scrolling: touch;
 }

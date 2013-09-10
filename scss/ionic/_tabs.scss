@@ -9,8 +9,8 @@
 }
 .tab-item {
   a {
-    font-family: $light-sans-font-family;
     font-weight: 200;
+    font-family: $light-sans-font-family;
 
     .active, &:active {
       //box-shadow: inset 0 0 10px rgba(0, 0, 0, .12);
@@ -22,29 +22,29 @@
 }
 
 .tabs-inner {
+  @include box-orient(horizontal);
   display: -webkit-box;
   display: box;
   height: 100%;
   list-style: none;
-  @include box-orient(horizontal);
 }
 
 /* Navigational tab */
 .tab-item {
-  height: 100%;
-  text-align: center;
-  box-sizing: border-box;
 
   @include box-flex(1);
+  box-sizing: border-box;
 
   // Required to force box elements to be the same size;
   width: 0;
+  height: 100%;
+  text-align: center;
 
   a {
-    text-decoration: none;
     display: block;
     width: 100%;
     height: 100%;
+    text-decoration: none;
   }
 }
 
@@ -63,7 +63,7 @@
 /* Label for tab */
 .tab-label {
   margin-top: 1px;
-  font-size: 10px;
-  font-weight: bold;
   color: #fff;
+  font-weight: bold;
+  font-size: 10px;
 }

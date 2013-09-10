@@ -64,30 +64,30 @@
 }
 
 .button-bar {
-  display: -webkit-box;
-  display: box;
 
   @include box-flex(1);
   @include box-orient(horizontal);
+  display: -webkit-box;
+  display: box;
 
 }
 
 .button-bar > .button {
   @include box-flex(1);
+  display: block;
+  
+  overflow: hidden;
+
+  padding: 8px 16px;
+
+  border-width: 1px 0px 1px 1px;
+  border-radius: 0;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   // Fix for box-flex width issue
 
   line-height: $button-bar-button-line-height;
-  border-radius: 0;
-  
-  overflow: hidden;
-  text-align: center;
-  white-space: nowrap;
-  display: block;
-  text-overflow: ellipsis;
-
-  border-width: 1px 0px 1px 1px;
-
-  padding: 8px 16px;
 
   &:last-child {
     border-right-width: 1px;
@@ -98,8 +98,8 @@
 // to pull a set of buttons to the right side of a header
 // bar, for example.
 .buttons {
-  display: -webkit-box;
-  display: box;
   @include box-flex(1);
   @include box-orient(horizontal);
+  display: -webkit-box;
+  display: box;
 }

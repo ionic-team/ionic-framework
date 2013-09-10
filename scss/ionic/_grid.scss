@@ -63,11 +63,11 @@
 .col-lg-11,
 .col-lg-12 {
   position: relative;
-  // Prevent columns from collapsing when empty
-  min-height: 1px;
+  padding-right: ($grid-gutter-width / 2);
   // Inner gutter via padding
   padding-left:  ($grid-gutter-width / 2);
-  padding-right: ($grid-gutter-width / 2);
+  // Prevent columns from collapsing when empty
+  min-height: 1px;
 }
 
 

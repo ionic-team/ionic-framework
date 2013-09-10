@@ -2,24 +2,23 @@
 
 // Make sure iOS Safari doesn't scale fonts on orientation changes
 html {
-  -webkit-text-size-adjust: 100%;
   @include user-select(none);
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  font-size: 14px;
-  line-height: 1.25;
-  font-family: $base-font-family;
-  
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  overflow: hidden;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   word-wrap: break-word;
+  font-size: 14px;
+  font-family: $base-font-family;
+  line-height: 1.25;
   text-rendering: optimizeLegibility;
 
   -webkit-font-smoothing: antialiased;
@@ -35,11 +34,11 @@ body {
 }
 
 .content {
-  position: fixed;
-  overflow: auto; 
+  position: fixed; 
   right: 0;
-  left: 0;
   bottom: 0;
+  left: 0;
+  overflow: auto;
 }
 /* Hack to force all relatively and absolutely positioned elements still render while scrolling
    Note: This is a bug for "-webkit-overflow-scrolling: touch" (via ratchet) */
@@ -72,9 +71,9 @@ a {
   bottom: 0;
   left: 0;
   z-index: 1;
+  overflow: auto;
   width: 100%;
   height: 100%;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
   background-color: #fff;
+  -webkit-overflow-scrolling: touch;
 }
