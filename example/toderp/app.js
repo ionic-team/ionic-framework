@@ -1,4 +1,4 @@
-angular.module('toderp', [])
+angular.module('toderp', ['firebase'])
 
 .factory('TaskStorageService', function() {
   return {

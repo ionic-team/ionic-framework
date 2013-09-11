@@ -1,4 +1,4 @@
-<html>
+<html ng-app="toderp">
   <head>
     <meta charset="utf-8">
     <title>ToDerp</title>
@@ -9,37 +9,74 @@
     <link rel="stylesheet" href="../../dist/ionic.css">
     <link rel="stylesheet" href="app.css">
     
-    <script src="/vendor/angular/1.2.0rc1/angular-1.2.0rc1.min.js"></script>
-    <script src="/vendor/angular/1.2.0rc1/angular-touch.js"></script>
+    <script src="/vendor/angular/1.2.0rc2/angular-1.2.0rc2.min.js"></script>
+    <script src="/vendor/angular/1.2.0rc2/angular-animate.js"></script>
+    <script src="/vendor/angular/1.2.0rc2/angular-touch.js"></script>
+    <script src="/vendor/angular/1.2.0rc2/angular-route.js"></script>
+
+    <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+    <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
+    <script src='https://cdn.firebase.com/libs/angularfire/0.3.0/angularfire.min.js'></script>
+
     <script src="../../js/ionic-list.js"></script>
     <script src="../../js/ionic-events.js"></script>
     <script src="../../js/ionic-gestures.js"></script>
     <script src="../../js/controllers/ionic-leftrightmenu.js"></script>
     
+    <script src="js/toderp.js"></script>
   </head>
-  <body ng-app="toderp">
-    <div id="login">
-      <main class="content content-padded has-header">
-        <div class="container" style="text-align: center">
-          <h1>ToDerp</h1>
-          <h3>Finish your Top Three Tasks Today</h3>
-        </div>
-        <form class="form-horizontal">
-         <div class="input-group inset">
-            <label class="input-wrapper row">
-              <span class="input-label col-xs-4">Email</span>
-              <input class="col-xs-8" type="email" placeholder="">
-            </label>
-            <label class="input-wrapper row">
-              <span class="input-label col-xs-4">Password</span>
-              <input class="col-xs-8" type="password" placeholder="">
-            </label>
+  <body ng-controller="ToderpCtrl">
+    <div ng-switch on="display.screen" class="reveal-animation">
+      <div id="login" ng-switch-when="login"ng-controller="LoginCtrl" class="pane">
+        <main class="content content-padded has-header">
+          <div class="container" style="text-align: center">
+            <h1>ToDerp</h1>
+            <h3>Finish your Top Three Tasks Today</h3>
           </div>
-          <button class="button button-info button-block">Log in</button>
-        </form>
-        <button id="login" class="button button-default button-block">Create an account</button>
-      </main>
-    </section>
+          <form class="form-horizontal" ng-submit="tryLogin(loginForm)">
+            <div class="input-group inset">
+              <label class="input-wrapper row">
+                <span class="input-label col-xs-4">Email</span>
+                <input class="col-xs-8" type="email" placeholder="" ng-model="loginForm.email">
+              </label>
+              <label class="input-wrapper row">
+                <span class="input-label col-xs-4">Password</span>
+                <input class="col-xs-8" type="password" placeholder="" ng-model="loginForm.password">
+              </label>
+            </div>
+            <div class="input-group inset">
+              <button class="button button-info button-block">Log in</button>
+              <div id="login-error" ng-show="loginError">Invalid email/password. Please try again.</div>
+            </div>
+          </form>
+          <button ng-click="showSignup()" id="signup-button" class="button button-default button-block">Create an account</button>
+        </main>
+      </div>
+
+      <div id="signup" ng-switch-when="signup" ng-controller="SignupCtrl" class="pane">
+        <header class="bar bar-header bar-danger">
+          <a href="#" class="button">Back</a>
+          <h1 class="title">Sign up (it's free!)</h1>
+        </header>
+        <main class="content content-padded has-header">
+          <form class="form-horizontal" ng-submit="trySignup(signupForm)">
+            <div class="input-group inset">
+              <label class="input-wrapper row">
+                <span class="input-label col-xs-4">Email</span>
+                <input class="col-xs-8" type="email" placeholder="" ng-model="signupForm.email">
+              </label>
+              <label class="input-wrapper row">
+                <span class="input-label col-xs-4">Password</span>
+                <input class="col-xs-8" type="password" placeholder="" ng-model="signupForm.password">
+              </label>
+            </div>
+            <div class="input-group inset">
+              <button class="button button-info button-block">Sign up</button>
+              <div id="signup-error" ng-show="signupError">Unable to signup, please try again.</div>
+            </div>
+          </form>
+        </main>
+      </div>
     </div>
     <!--
     <div id="page" class="page" ng-controller="TodaysTaskListCtrl">
@@ -75,6 +112,5 @@
       </ul>
     </div>
     -->
-    <script src="app.js"></script>
   </body>
 </html>

@@ -11,17 +11,58 @@
          transition:         transform 1s ease-in-out;
   */
 }
-.reveal-animation.ng-enter {
+.reveal-animation > .ng-enter {
   -webkit-transition: 0.2s linear all;
   -webkit-transform:translate3d(100%,0,0) ;
 }
-.reveal-animation.ng-enter-active {
+.reveal-animation > .ng-enter-active {
   -webkit-transform:translate3d(0,0,0) ;
 }
-.reveal-animation.ng-leave {
+.reveal-animation > .ng-leave {
   -webkit-transition: 0.2s linear all;
   -webkit-transform:translate3d(0,0,0);
 }
-.reveal-animation.ng-leave-active {
+.reveal-animation > .ng-leave-active {
   -webkit-transform:translate3d(-100%,0,0);
+}
+
+
+.animate-switch-container {
+  position:relative;
+  background:white;
+  border:1px solid black;
+  height:40px;
+  overflow:hidden;
+}
+ 
+.animate-switch-container > div {
+  padding:10px;
+}
+ 
+.animate-switch-container > .ng-enter,
+.animate-switch-container > .ng-leave {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+ 
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+}
+ 
+.animate-switch-container > .ng-enter {
+  top:-50px;
+}
+.animate-switch-container > .ng-enter.ng-enter-active {
+  top:0;
+}
+ 
+.animate-switch-container > .ng-leave {
+  top:0;
+}
+.animate-switch-container > .ng-leave.ng-leave-active {
+  top:50px;
 }
