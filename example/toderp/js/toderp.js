@@ -1,9 +1,19 @@
 angular.module('toderp', ['firebase', 'ngRoute', 'ngAnimate'])
 
-.controller('ToderpCtrl', function($scope) {
+.controller('ToderpCtrl', function($scope, $rootScope) {
   $scope.display = {
     screen: 'login'
   };
+  $rootScope.$on('angularFireAuth:login', function(evt, user) {
+    $scope.display.screen = 'tasks';
+  });
+  $rootScope.$on('angularFireAuth:logout', function(evt, user) {
+    console.log('Logged out!', evt, user);
+  });
+  $rootScope.$on('angularFireAuth:error', function(evt, err) {
+    console.log('Login Error!', evt, err);
+  });
+
   $scope.setScreen = function(screen) {
     $scope.display.screen = screen;
   };
@@ -14,16 +24,6 @@ angular.module('toderp', ['firebase', 'ngRoute', 'ngAnimate'])
   angularFireAuth.initialize(ref, {
     scope: $rootScope,
     name: 'user'
-  });
-
-  $rootScope.$on('angularFireAuth:login', function(evt, user) {
-    console.log('Logged in!', evt, user);
-  });
-  $rootScope.$on('angularFireAuth:logout', function(evt, user) {
-    console.log('Logged out!', evt, user);
-  });
-  $rootScope.$on('angularFireAuth:error', function(evt, err) {
-    console.log('Login Error!', evt, err);
   });
 
   return {
@@ -78,4 +78,7 @@ angular.module('toderp', ['firebase', 'ngRoute', 'ngAnimate'])
   $scope.trySignup = function(data) {
     AuthService.signup(data.email, data.password);
   };
+})
+
+.controller('TasksCtrl', function($scope) {
 });
