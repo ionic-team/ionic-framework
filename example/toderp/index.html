@@ -27,7 +27,9 @@
   </head>
   <body ng-controller="ToderpCtrl">
     <div ng-switch on="display.screen" class="reveal-animation">
-      <div id="login" ng-switch-when="login"ng-controller="LoginCtrl" class="pane">
+      <div id="start" ng-switch-when="splash" class="pane">
+      </div>
+      <div id="login" ng-switch-when="login" ng-controller="LoginCtrl" class="pane">
         <main class="content content-padded has-header">
           <div class="container" style="text-align: center">
             <h1>ToDerp</h1>
@@ -55,7 +57,7 @@
 
       <div id="signup" ng-switch-when="signup" ng-controller="SignupCtrl" class="pane">
         <header class="bar bar-header bar-danger">
-          <a href="#" class="button">Back</a>
+          <a href="#" class="button" ng-click="setScreen('login')">Back</a>
           <h1 class="title">Sign up (it's free!)</h1>
         </header>
         <main class="content content-padded has-header">

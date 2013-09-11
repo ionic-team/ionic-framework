@@ -1,14 +1,15 @@
 angular.module('toderp', ['firebase', 'ngRoute', 'ngAnimate'])
 
-.controller('ToderpCtrl', function($scope, $rootScope) {
+.controller('ToderpCtrl', function($scope, $rootScope, AuthService) {
   $scope.display = {
-    screen: 'login'
+    screen: 'splash'
   };
   $rootScope.$on('angularFireAuth:login', function(evt, user) {
     $scope.display.screen = 'tasks';
   });
   $rootScope.$on('angularFireAuth:logout', function(evt, user) {
     console.log('Logged out!', evt, user);
+    $scope.display.screen = 'login';
   });
   $rootScope.$on('angularFireAuth:error', function(evt, err) {
     console.log('Login Error!', evt, err);
@@ -23,6 +24,9 @@ angular.module('toderp', ['firebase', 'ngRoute', 'ngAnimate'])
   var ref = new Firebase('https://ionic-todo-demo.firebaseio.com/');
   angularFireAuth.initialize(ref, {
     scope: $rootScope,
+    callback: function(user, err) {
+      console.log('AUTH CHANGED', err, user);
+    },
     name: 'user'
   });
 
@@ -63,7 +67,6 @@ angular.module('toderp', ['firebase', 'ngRoute', 'ngAnimate'])
       .then(function(e) {
         $scope.loginError = false;
       }, function(e) {
-        $scope.display.screen = 'signup';
         $scope.loginError = true;
       });
   }
