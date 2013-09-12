@@ -2,11 +2,14 @@
 // Brand Colors
 // -------------------------------
 
-$brand-primary:         #428bca;
-$brand-success:         #5cb85c;
-$brand-warning:         #f0ad4e;
-$brand-danger:          #d9534f;
-$brand-info:            #5bc0de;
+$brand-default:            #fff;
+$brand-secondary:            #f5f5f5;
+$brand-primary:         #6999e9;
+$brand-success:         #89c163;
+$brand-warning:         #f0b840;
+$brand-danger:          #de5645;
+$brand-info:            #60d2e6;
+$brand-dark:            #444;
 
 // Scaffolding
 // -------------------------------
@@ -224,6 +227,30 @@ $bar-dark-border-color:       #111;
 $list-divider-bg:       #f5f5f5;
 $list-divider-color:    #222;
 $list-item-border:      1px solid #ddd;
+
+$list-default-background: $brand-default;
+$list-default-border: #ddd;
+
+$list-secondary-background: $brand-secondary;
+$list-secondary-border: #ddd;
+
+$list-success-background: $brand-success;
+$list-success-border: $brand-success;
+
+$list-primary-background: $brand-primary;
+$list-primary-border: $brand-primary;
+
+$list-info-background: $brand-info;
+$list-info-border: $brand-info;
+
+$list-warning-background: $brand-warning;
+$list-warning-border: $brand-warning;
+
+$list-danger-background: $brand-danger;
+$list-danger-border: $brand-danger;
+
+$list-dark-background: $brand-dark;
+$list-dark-border: $brand-dark;
 
 
 // Form States and Alerts

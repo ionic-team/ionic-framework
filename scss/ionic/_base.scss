@@ -38,8 +38,9 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
-  height: auto;
   overflow: auto;
+  // TODO: Fix the dynamic content height issue
+  //height: 100%;
 }
 /* Hack to force all relatively and absolutely positioned elements still render while scrolling
    Note: This is a bug for "-webkit-overflow-scrolling: touch" (via ratchet) */

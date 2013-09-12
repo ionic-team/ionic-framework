@@ -2,6 +2,12 @@
   // No need to set list-style: none; since .list-item is block level
   margin-bottom: 20px;
   padding-left: 0; // reset padding because ul and ol
+
+  @include list-style($list-default-background, $list-default-border, $gray-dark);
+
+  &.list-success {
+    @include list-style($list-success-background, $list-success-border, $white);
+  }
 }
 
 // Individual list items
@@ -14,7 +20,7 @@
   margin-bottom: -1px;
   padding: 15px 15px;
 
-  //background-color: $list-group-bg;
+  background-color: $list-default-background;
   border: $list-item-border;
 
   // Round the first and last items
@@ -59,6 +65,7 @@
       //color: lighten($list-group-active-bg, 40%);
     }
   }
+
 }
 
 // Linked list items
@@ -80,6 +87,7 @@ a.list-item {
   color: $list-divider-color;
   font-weight: bold;
 }
+
 
 // Custom content options
 // -------------------------
