@@ -86,6 +86,17 @@
           <h1 class="title">Your Tasks</h1>
         </header>
         <main class="content content-padded has-header">
+          <form ng-submit="addTask(task)">
+            <input type="text" ng-model="task.text">
+            <button type="submit" class="button button-block button-success">Add</button>
+          </form>
+          <div id="tasks">
+            <ul class="list">
+              <li class="list-item" ng-repeat="task in tasks">
+                {{task.text}}
+              </li>
+            </ul>
+          </div>
         </main>
       </div>
     </div>

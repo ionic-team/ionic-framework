@@ -38,6 +38,7 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
+  height: auto;
   overflow: auto;
 }
 /* Hack to force all relatively and absolutely positioned elements still render while scrolling

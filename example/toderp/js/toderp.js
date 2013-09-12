@@ -1,5 +1,7 @@
 angular.module('toderp', ['firebase', 'ngRoute', 'ngAnimate'])
 
+.constant('FIREBASE_URL', 'https://ionic-todo-demo.firebaseio.com/')
+
 .controller('ToderpCtrl', function($scope, $rootScope, AuthService) {
   $scope.display = {
     screen: 'splash'
@@ -20,8 +22,8 @@ angular.module('toderp', ['firebase', 'ngRoute', 'ngAnimate'])
   };
 })
 
-.factory('AuthService', function(angularFireAuth, $rootScope) {
-  var ref = new Firebase('https://ionic-todo-demo.firebaseio.com/');
+.factory('AuthService', function(angularFireAuth, $rootScope, FIREBASE_URL) {
+  var ref = new Firebase(FIREBASE_URL);
   angularFireAuth.initialize(ref, {
     scope: $rootScope,
     callback: function(user, err) {
@@ -56,6 +58,7 @@ angular.module('toderp', ['firebase', 'ngRoute', 'ngAnimate'])
 
 .controller('LoginCtrl', function($scope,  AuthService) {
   console.log('Created login Ctrl');
+
   $scope.loginForm = {
     email: 'max@drifty.com',
     password: 'test'
@@ -69,11 +72,11 @@ angular.module('toderp', ['firebase', 'ngRoute', 'ngAnimate'])
       }, function(e) {
         $scope.loginError = true;
       });
-  }
+  };
 
   $scope.showSignup = function() {
     $scope.setScreen('signup');
-  }
+  };
 })
 
 .controller('SignupCtrl', function($scope, AuthService) {
@@ -83,5 +86,18 @@ angular.module('toderp', ['firebase', 'ngRoute', 'ngAnimate'])
   };
 })
 
-.controller('TasksCtrl', function($scope) {
+.controller('TasksCtrl', function($scope, angularFireCollection, FIREBASE_URL) {
+  var taskRef = new Firebase(FIREBASE_URL + '/tasks');
+  $scope.tasks = angularFireCollection(taskRef);
+  $scope.addTask = function(task) {
+    var t = {};
+    t = angular.extend({
+      id: $scope.user.id
+    }, task);
+
+    console.log("Adding task:", t);
+    $scope.tasks.add(t);
+
+    $scope.task = {};
+  };
 });
