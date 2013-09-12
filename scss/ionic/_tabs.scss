@@ -6,46 +6,77 @@
 
 .tabs {
   font-size: 16px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: $tabs-height;
+
+  @include box-orient(horizontal);
+  display: -webkit-box;
+  display: box;
+    
+  @include tab-style($tabs-default-bg, $tabs-default-border-color, $gray-dark);
+
+  &.tabs-default {
+    @include tab-style($tabs-default-bg, $tabs-default-border-color, $gray-dark);
+  }
+  &.tabs-secondary {
+    @include tab-style($tabs-secondary-bg, $tabs-secondary-border-color, $gray-dark);
+  }
+  &.tabs-primary {
+    @include tab-style($tabs-primary-bg, $tabs-primary-border-color, $white);
+  }
+  &.tabs-success {
+    @include tab-style($tabs-success-bg, $tabs-success-border-color, $white);
+  }
+  &.tabs-info {
+    @include tab-style($tabs-info-bg, $tabs-info-border-color, $white);
+  }
+  &.tabs-warning {
+    @include tab-style($tabs-warning-bg, $tabs-warning-border-color, $white);
+  }
+  &.tabs-danger {
+    @include tab-style($tabs-danger-bg, $tabs-danger-border-color, $white);
+  }
+  &.tabs-dark {
+    @include tab-style($tabs-danger-bg, $tabs-danger-border-color, $white);
+  }
 }
 .tab-item {
-  a {
-    font-weight: 200;
-    font-family: $light-sans-font-family;
+  font-weight: 200;
+  font-family: $light-sans-font-family;
 
-    .active, &:active {
-      //box-shadow: inset 0 0 10px rgba(0, 0, 0, .12);
-    }
+  color: inherit;
+
+  //line-height: $tabs-height;
+
+  text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+
+  .active, &:active {
+    //box-shadow: inset 0 0 10px rgba(0, 0, 0, .12);
   }
+
   i {
     font-size: 25px;
   }
 }
 
-.tabs-inner {
-  @include box-orient(horizontal);
-  display: -webkit-box;
-  display: box;
-  height: 100%;
-  list-style: none;
-}
 
 /* Navigational tab */
 .tab-item {
-
-  @include box-flex(1);
-  box-sizing: border-box;
+  display: block;
 
   // Required to force box elements to be the same size;
   width: 0;
   height: 100%;
-  text-align: center;
+  
+  @include box-flex(1);
+  box-sizing: border-box;
 
-  a {
-    display: block;
-    width: 100%;
-    height: 100%;
-    text-decoration: none;
-  }
+  text-align: center;
+  text-decoration: none;
 }
 
 /* Active state for tab */

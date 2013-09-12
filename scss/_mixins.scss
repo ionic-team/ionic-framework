@@ -46,6 +46,18 @@
 	}
 }
 
+@mixin bar-style($bgColor, $borderColor, $color) {
+  background-color: $bgColor;
+  border-color: $borderColor;
+  color: $color;
+}
+
+@mixin tab-style($bgColor, $borderColor, $color) {
+  background-color: $bgColor;
+  border-color: $borderColor;
+  color: $color;
+}
+
 
 // UTILITY MIXINS
 // --------------------------------------------------

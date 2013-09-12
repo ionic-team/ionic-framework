@@ -26,71 +26,29 @@
   }
 
   &.bar-default {
-    background-color: $bar-default-bg;
-    border-color: $bar-default-border-color;
-    color: $gray-dark;
-    .tab-item a {
-      color: $gray-dark;
-    }
+    @include bar-style($bar-default-bg, $bar-default-border-color, $gray-dark);
   }
 
   &.bar-secondary {
-    background-color: $bar-secondary-bg;
-    border-color: $bar-secondary-border-color;
-    color: $gray-dark;
-    .tab-item a {
-      color: $gray-dark;
-    }
+    @include bar-style($bar-secondary-bg, $bar-secondary-border-color, $gray-dark);
   }
   &.bar-primary {
-    background-color: $bar-primary-bg;
-    border-color: $bar-primary-border-color;
-    color: $white;
-    .tab-item a {
-      color: $white;
-    }
+    @include bar-style($bar-primary-bg, $bar-primary-border-color, $white);
   }
   &.bar-info {
-    background-color: $bar-info-bg;
-    border-color: $bar-info-border-color;
-    color: $white;
-    .tab-item a {
-      color: $white;
-    }
+    @include bar-style($bar-info-bg, $bar-info-border-color, $white);
   }
   &.bar-success {
-    background-color: $bar-success-bg;
-    border-color: $bar-success-border-color;
-    color: $white;
-    .tab-item a {
-      color: $white;
-    }
+    @include bar-style($bar-success-bg, $bar-success-border-color, $white);
   }
   &.bar-warning {
-    background-color: $bar-warning-bg;
-    border-color: $bar-warning-border-color;
-    color: $white;
-    .tab-item a {
-      color: $white;
-    }
+    @include bar-style($bar-warning-bg, $bar-warning-border-color, $white);
   }
   &.bar-danger {
-    background-color: $bar-danger-bg;
-    border-color: $bar-danger-border-color;
-    color: $white;
-
-    .tab-item a {
-      color: $white;
-    }
+    @include bar-style($bar-danger-bg, $bar-danger-border-color, $white);
   }
   &.bar-dark {
-    background-color: $bar-dark-bg;
-    border-color: $bar-dark-border-color;
-    color: $white;
-
-    .tab-item a {
-      color: $white;
-    }
+    @include bar-style($bar-dark-bg, $bar-dark-border-color, $white);
   }
 
   //

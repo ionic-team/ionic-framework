@@ -1,36 +1,54 @@
-/*! normalize.css v2.1.2 | MIT License | git.io/normalize */
-
-/* ==========================================================================
-   HTML5 display definitions
-   ========================================================================== */
+/**
+* Adapted from normalize.css and some reset.css. We don't care even one
+* bit about IE, so we don't need any hacks for that in here.
+* 
+* There are probably other things we could remove here, as well.
+*
+* normalize.css v2.1.2 | MIT License | git.io/normalize
+*/
 
 /**
- * Correct `block` display not defined in IE 8/9.
+ * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+ * http://cssreset.com
  */
-
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-main,
-nav,
-section,
-summary {
-    display: block;
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
 }
 
-/**
- * Correct `inline-block` display not defined in IE 8/9.
- */
-
-audio,
-canvas,
-video {
-    display: inline-block;
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
 /**
@@ -44,7 +62,6 @@ audio:not([controls]) {
 }
 
 /**
- * Address `[hidden]` styling not present in IE 8/9.
  * Hide the `template` element in IE, Safari, and Firefox < 22.
  */
 
@@ -81,17 +98,6 @@ body {
     margin: 0;
 }
 
-/* ==========================================================================
-   Links
-   ========================================================================== */
-
-/**
- * Remove the gray background color from active links in IE 10.
- */
-
-a {
-    background: transparent;
-}
 
 /**
  * Address `outline` inconsistency between Chrome and other browsers.
@@ -124,13 +130,6 @@ h1 {
     margin: 0.67em 0;
 }
 
-/**
- * Address styling not present in IE 8/9, Safari 5, and Chrome.
- */
-
-abbr[title] {
-    border-bottom: 1px dotted;
-}
 
 /**
  * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
@@ -159,14 +158,6 @@ hr {
     height: 0;
 }
 
-/**
- * Address styling not present in IE 8/9.
- */
-
-mark {
-    background: #ff0;
-    color: #000;
-}
 
 /**
  * Correct font family set oddly in Safari 5 and Chrome.
@@ -223,42 +214,6 @@ sup {
 sub {
     bottom: -0.25em;
 }
-
-/* ==========================================================================
-   Embedded content
-   ========================================================================== */
-
-/**
- * Remove border when inside `a` element in IE 8/9.
- */
-
-img {
-    border: 0;
-}
-
-/**
- * Correct overflow displayed oddly in IE 9.
- */
-
-svg:not(:root) {
-    overflow: hidden;
-}
-
-/* ==========================================================================
-   Figures
-   ========================================================================== */
-
-/**
- * Address margin not present in IE 8/9 and Safari 5.
- */
-
-figure {
-    margin: 0;
-}
-
-/* ==========================================================================
-   Forms
-   ========================================================================== */
 
 /**
  * Define consistent border, margin, and padding.
@@ -340,17 +295,6 @@ input[type="submit"] {
 button[disabled],
 html input[disabled] {
     cursor: default;
-}
-
-/**
- * 1. Address box sizing set to `content-box` in IE 8/9.
- * 2. Remove excess padding in IE 8/9.
- */
-
-input[type="checkbox"],
-input[type="radio"] {
-    box-sizing: border-box; /* 1 */
-    padding: 0; /* 2 */
 }
 
 /**
