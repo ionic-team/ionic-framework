@@ -95,9 +95,9 @@
           </form>
           <div id="tasks">
             <ul class="list">
-              <li class="list-item" ng-repeat="task in tasks">
+              <li class="list-item" ng-repeat="task in todos">
                 {{task.text}}
-                <input type="checkbox" ng-model="task.completed">
+                <input type="checkbox" ng-model="task.completed" class="pull-right">
               </li>
             </ul>
           </div>
