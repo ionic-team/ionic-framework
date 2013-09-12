@@ -86,9 +86,9 @@ angular.module('toderp', ['firebase', 'ngRoute', 'ngAnimate'])
   };
 })
 
-.controller('TasksCtrl', function($scope, angularFireCollection, FIREBASE_URL) {
+.controller('TasksCtrl', function($scope, angularFire, FIREBASE_URL) {
   var taskRef = new Firebase(FIREBASE_URL + '/tasks');
-  $scope.tasks = angularFireCollection(taskRef);
+  $scope.tasks = angularFire(taskRef, $scope, 'tasks');
   $scope.addTask = function(task) {
     var t = {};
     t = angular.extend({
@@ -96,7 +96,7 @@ angular.module('toderp', ['firebase', 'ngRoute', 'ngAnimate'])
     }, task);
 
     console.log("Adding task:", t);
-    $scope.tasks.add(t);
+    $scope.tasks.push(t);
 
     $scope.task = {};
   };

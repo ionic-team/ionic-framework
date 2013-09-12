@@ -24,6 +24,9 @@
     <script src="../../js/controllers/ionic-leftrightmenu.js"></script>
     
     <script src="js/toderp.js"></script>
+    <style>
+      .content { height: 100%; }
+    </style>
   </head>
   <body ng-controller="ToderpCtrl">
     <div ng-switch on="display.screen" class="reveal-animation">
@@ -94,6 +97,7 @@
             <ul class="list">
               <li class="list-item" ng-repeat="task in tasks">
                 {{task.text}}
+                <input type="checkbox" ng-model="task.completed">
               </li>
             </ul>
           </div>
