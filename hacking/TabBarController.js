@@ -19,7 +19,7 @@ TabBarController.prototype = {
   _bindEvents: function() {
     var _this = this;
 
-    this.tabBar.onTabSelected = function(item, index) {
+    this.tabBar.tryTabSelect = function(index) {
       _this.setSelectedController(index);
     };
   },

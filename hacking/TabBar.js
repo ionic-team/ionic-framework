@@ -11,6 +11,7 @@ TabBarItem.prototype = {
     var item = document.createElement('a');
     item.className = 'tab-item';
 
+    // If there is an icon, add the icon element
     if(itemData.icon) {
       var icon = document.createElement('i');
       icon.className = itemData.icon;
@@ -108,7 +109,8 @@ TabBar.prototype = {
 
     if(!this._itemTapHandler) {
       this._itemTapHandler = function(e) {
-        _this.selectItem(this);
+        //_this.selectItem(this);
+        _this.trySelectItem(this);
       };
     }
     item.onTap = this._itemTapHandler;
@@ -131,7 +133,7 @@ TabBar.prototype = {
     // Select the new item
     if(this.selectedItem) {
       this.selectedItem.setSelected(true);
-      this.onTabSelected && this.onTabSelected(this.selectedItem, index);
+      //this.onTabSelected && this.onTabSelected(this.selectedItem, index);
     }
   },
 
@@ -141,6 +143,15 @@ TabBar.prototype = {
     for(var i = 0, j = this.items.length; i < j; i += 1) {
       if(this.items[i] == item) {
         this.setSelectedItem(i);
+        return;
+      }
+    }
+  },
+
+  trySelectItem: function(item) {
+    for(var i = 0, j = this.items.length; i < j; i += 1) {
+      if(this.items[i] == item) {
+        this.tryTabSelect && this.tryTabSelect(i);
         return;
       }
     }
