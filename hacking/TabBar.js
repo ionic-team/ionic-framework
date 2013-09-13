@@ -31,7 +31,8 @@ TabBarItem.prototype = {
     ionic.on('tap', this._tapHandler, this.el);
   },
 
-  onTap: function() {
+  onTap: function(e) {
+    console.log('On tap');
   },
 
   // Remove the event listeners from this object
@@ -92,7 +93,6 @@ TabBar.prototype = {
 
     if(!this._itemTapHandler) {
       this._itemTapHandler = function(e) {
-        console.log('TAB HANDERL', e, this);
         _this.selectItem(this);
       };
     }

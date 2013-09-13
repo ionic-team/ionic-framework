@@ -51,18 +51,16 @@ describe('TabBar view', function() {
 
 
   it('Should handle item click event', function() {
-    debugger;
     var item = items[0];
-    spyOn(item, 'onTap');
-    spyOn(tabBar, '_itemTapHandler');
+    spyOn(tabBar, 'selectItem');
 
     var event = new CustomEvent('tap', {
       target: item.el
     });
     item.el.dispatchEvent(event);
 
-    expect(item.onTap).toHaveBeenCalled();
-    expect(tabBar._itemTapHandler).toHaveBeenCalled();
+    //expect(item.onTap).toHaveBeenCalled();
+    expect(tabBar.selectItem).toHaveBeenCalled();
   });
 
 
