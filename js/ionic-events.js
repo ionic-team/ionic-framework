@@ -11,7 +11,8 @@
  */
 
 (function(window, document, ion) {
-  ion.EventController = {
+  ionic.EventController = {
+    VIRTUALIZED_EVENTS: ['tap', 'swipe', 'swiperight', 'swipeleft', 'drag', 'hold', 'release'],
 
     // Trigger a new event
     trigger: function(eventType, data) {
@@ -26,6 +27,17 @@
     // Bind an event
     on: function(type, callback, element) {
       var e = element || window;
+
+      // Bind a gesture if it's a virtual event
+      for(var i = 0, j = this.VIRTUALIZED_EVENTS.length; i < j; i++) {
+        if(type == this.VIRTUALIZED_EVENTS[i]) {
+          var gesture = new ionic.Gesture(element);
+          gesture.on(type, callback);
+          return gesture;
+        }
+      }
+
+      // Otherwise bind a normal event
       e.addEventListener(type, callback);
     },
 
@@ -35,7 +47,7 @@
 
     // Register for a new gesture event on the given element
     onGesture: function(type, callback, element) {
-      var gesture = new ion.Gesture(element);
+      var gesture = new ionic.Gesture(element);
       gesture.on(type, callback);
       return gesture;
     },
@@ -51,7 +63,7 @@
     handleClick: function(e) {
       var target = e.target;
 
-      if(ion.Gestures.HAS_TOUCHEVENTS) {
+      if(ionic.Gestures.HAS_TOUCHEVENTS) {
         // We don't allow any clicks on mobile
         e.preventDefault();
         return false;
@@ -85,14 +97,13 @@
   
   
   // Map some convenient top-level functions for event handling
-  ion.on = ion.EventController.on;
-  ion.off = ion.EventController.off;
-  ion.trigger = ion.EventController.trigger;
-  ion.onGesture = ion.EventController.onGesture;
-  ion.offGesture = ion.EventController.offGesture;
+  ionic.on = function() { ionic.EventController.on.apply(ionic.EventController, arguments); }
+  ionic.off = function() { ionic.EventController.off.apply(ionic.EventController, arguments); }
+  ionic.trigger = function() { ionic.EventController.trigger.apply(ionic.EventController.trigger, arguments); }
+  ionic.onGensture = function() { ionic.EventController.onGesture.apply(ionic.EventController.onGesture, arguments); }
+  ionic.offGensture = function() { ionic.EventController.offGesture.apply(ionic.EventController.offGesture, arguments); }
 
   // Set up various listeners
-	window.addEventListener('click', ion.EventController.handleClick);
-  //window.addEventListener('popstate', ion.EventController.handlePopState);
+  window.addEventListener('click', ionic.EventController.handleClick);
 
-})(this, document, ion = this.ion || {});
+})(this, document, ionic = this.ionic || {});

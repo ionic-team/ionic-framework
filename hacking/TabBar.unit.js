@@ -53,10 +53,46 @@ describe('TabBar view', function() {
     expect(items[2].el.classList.contains('active')).toEqual(false);
   });
 
-  it('Should set icon', function() {
+  it('Should set item icon', function() {
     items = tabBar.getItems();
 
     var item = items[0];
     expect(item.getIcon()).toBe(undefined);
+  });
+
+  it('Should handle item click event', function() {
+    var item = items[0];
+    spyOn(item, 'onTap');
+
+    var event = new CustomEvent('tap', {
+      target: item.el
+    });
+    item.el.dispatchEvent(event);
+
+    expect(item.onTap).toHaveBeenCalled();
+  });
+
+  it('Should unbind item on destroy', function() {
+    var item = items[0];
+    spyOn(item, 'onTap');
+
+    var event = new CustomEvent('tap', {
+      target: item.el
+    });
+    item.el.dispatchEvent(event);
+
+    expect(item.onTap).toHaveBeenCalled();
+
+    item.onTap.isSpy = false;
+    spyOn(item, 'onTap');
+
+    item.destroy();
+
+    var event = new CustomEvent('tap', {
+      target: item.el
+    });
+    item.el.dispatchEvent(event);
+
+    expect(item.onTap).not.toHaveBeenCalled();
   });
 });

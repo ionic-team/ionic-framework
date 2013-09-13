@@ -19,6 +19,9 @@ module.exports = function(config) {
       'https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js',
 
       'vendor/angular/1.2.0rc1/*',
+      'js/ionic-events.js',
+      'js/ionic-gestures.js',
+      'test/utils/**/*.js',
       //'ext/angular/src/**/*.js',
       //'ext/angular/test/**/*.js',
       'hacking/**/*.js',

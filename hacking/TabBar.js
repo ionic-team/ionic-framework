@@ -1,3 +1,5 @@
+(function(window, document, ionic) {
+
 TabBarItem = function(el) {
   this.el = el;
 
@@ -5,7 +7,7 @@ TabBarItem = function(el) {
 };
 TabBarItem.prototype = {
   _buildItem: function() {
-    var child, children = Array.prototype.slice.call(this.el.children);
+    var _this = this, child, children = Array.prototype.slice.call(this.el.children);
 
     for(var i = 0, j = children.length; i < j; i++) {
       child = children[i];
@@ -21,6 +23,22 @@ TabBarItem.prototype = {
 
     // Set the title to the text content of the tab.
     this.title = this.el.innerText.trim();
+
+    this._tapHandler = function(e) {
+      console.log('TAP', e);
+      _this.onTap();
+    };
+
+    ionic.on('click', this._tapHandler, this.el);
+    ionic.on('tap', this._tapHandler, this.el);
+  },
+
+  onTap: function() {},
+
+  // Remove the event listeners from this object
+  destroy: function() {
+    ionic.off('click', this._tapHandler, this.el);
+    ionic.off('tap', this._tapHandler, this.el);
   },
 
   getIcon: function() {
@@ -43,10 +61,36 @@ TabBarItem.prototype = {
 
 TabBar = function(opts) {
   this.el = opts.el;
+   
+  this.items = [];
+
   this._buildItems();
 };
 
 TabBar.prototype = {
+  addItem: function(item) {
+    this.items.push(item);
+    this._bindEventsOnItem(item);
+  },
+
+  removeItem: function(index) {
+    var item = this.items[index];
+    if(!item) {
+      return;
+    }
+    item.onSelect = undefined;
+    item.destroy();
+  },
+
+  _itemActivateHandler: function(e) {
+  },
+
+  _bindEventsOnItem: function(item) {
+    item.onSelect = function() {
+      console.log(item.title + ' selected!');
+    }
+  },
+
   getSelectedItem: function() {
     return this.selectedItem;
   },
@@ -67,17 +111,20 @@ TabBar.prototype = {
   },
 
   _buildItems: function() {
-    this.items = [];
 
-    var items = Array.prototype.slice.call(this.el.children);
+    var item, items = Array.prototype.slice.call(this.el.children);
 
     for(var i = 0, j = items.length; i < j; i += 1) {
-      this.items[i] = new TabBarItem(items[i]);
+      item =  new TabBarItem(items[i]);
+      this.items[i] = item;
+      this._bindEventsOnItem(item);
     }
   
     if(this.items.length > 0) {
       this.selectedItem = this.items[0];
     }
+
   }
 };
 
+})(this, document, ion = this.ionic || {});

@@ -1,6 +1,8 @@
 TabBarController = function(options) {
   this.tabBar = options.tabBar;
 
+  this._bindEvents();
+
   this.controllers = [];
 
   // Bind or set our tabWillChange callback
@@ -9,6 +11,12 @@ TabBarController = function(options) {
 };
 
 TabBarController.prototype = {
+  // Start listening for events on our tab bar
+  _bindEvents: function() {
+    this.tabBar.onTabSelected = function(e) {
+    };
+  },
+
   selectController: function(index) {
     var shouldChange = true;
 
