@@ -1,3 +1,5 @@
+(function(window, document, ionic) {
+
 TabBarController = function(options) {
   this.tabBar = options.tabBar;
 
@@ -77,3 +79,5 @@ TabBarController.prototype = {
     this.selectController(0);
   }
 }
+
+})(this, document, ion = this.ionic || {});

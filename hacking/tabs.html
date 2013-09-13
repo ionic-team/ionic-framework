@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tab Bars</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="../dist/ionic.css">
+  </head>
+  <body>
+
+    <section>
+
+      <header class="bar bar-header bar-dark">
+        <h1 class="title">Tab Bars</h1>
+      </header>
+
+      <main class="has-header">
+        
+      </main>
+      <nav id="tab-bar" class="tabs tabs-default">
+        <a class="tab-item" href="#">
+          <i class="icon-home"></i>
+          Friends
+        </a>
+        <a class="tab-item">
+          Enemies
+        </a>
+        <a class="tab-item">
+          Settings
+        </a>
+        <a class="tab-item">
+          More
+        </a>
+      </nav>
+    </section>
+
+    <script src="../../js/ionic-events.js"></script>
+    <script src="../../js/ionic-gestures.js"></script>
+    <script src="TabBar.js"></script>
+    <script src="TabBarController.js"></script>
+    <script>
+      // Grab the sections
+      var tab = document.getElementById('tab-bar');
+
+      var c = new TabBarController({
+        tabBar: new TabBar({ el: tab })
+      });
+    </script>
+  </body>
+</html>

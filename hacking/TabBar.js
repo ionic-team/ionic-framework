@@ -14,8 +14,8 @@ TabBarItem.prototype = {
 
       // Test if this is a "i" tag with icon in the class name
       // TODO: This heuristic might not be sufficient
-      if(child.tagName == 'i' && /icon/.test(child.className)) {
-        this.icon = child;
+      if(child.tagName.toLowerCase() == 'i' && /icon/.test(child.className)) {
+        this.icon = child.className;
         break;
       }
 
@@ -25,19 +25,17 @@ TabBarItem.prototype = {
     this.title = this.el.innerText.trim();
 
     this._tapHandler = function(e) {
-      console.log('TAP', e);
-      _this.onTap();
+      _this.onTap && _this.onTap(e);
     };
 
-    ionic.on('click', this._tapHandler, this.el);
     ionic.on('tap', this._tapHandler, this.el);
   },
 
-  onTap: function() {},
+  onTap: function() {
+  },
 
   // Remove the event listeners from this object
   destroy: function() {
-    ionic.off('click', this._tapHandler, this.el);
     ionic.off('tap', this._tapHandler, this.el);
   },
 
@@ -68,32 +66,45 @@ TabBar = function(opts) {
 };
 
 TabBar.prototype = {
+  // get all the items for the TabBar
+  getItems: function() {
+    return this.items;
+  },
+
+  // Add an item to the tab bar
   addItem: function(item) {
     this.items.push(item);
     this._bindEventsOnItem(item);
   },
 
+  // Remove an item from the tab bar
   removeItem: function(index) {
     var item = this.items[index];
     if(!item) {
       return;
     }
-    item.onSelect = undefined;
+    item.onTap = undefined;
     item.destroy();
   },
 
-  _itemActivateHandler: function(e) {
-  },
-
   _bindEventsOnItem: function(item) {
-    item.onSelect = function() {
-      console.log(item.title + ' selected!');
+    var _this = this;
+
+    if(!this._itemTapHandler) {
+      this._itemTapHandler = function(e) {
+        console.log('TAB HANDERL', e, this);
+        _this.selectItem(this);
+      };
     }
+    item.onTap = this._itemTapHandler;
   },
 
+  // Get the currently selected item
   getSelectedItem: function() {
     return this.selectedItem;
   },
+
+  // Set the currently selected item by index
   setSelectedItem: function(index) {
     this.selectedItem = this.items[index];
 
@@ -106,10 +117,18 @@ TabBar.prototype = {
     this.selectedItem && this.selectedItem.setSelected(true);
   },
 
-  getItems: function() {
-    return this.items;
+  // Select the given item assuming we can find it in our
+  // item list.
+  selectItem: function(item) {
+    for(var i = 0, j = this.items.length; i < j; i += 1) {
+      if(this.items[i] == item) {
+        this.setSelectedItem(i);
+        return;
+      }
+    }
   },
 
+  // Build the initial items list from the given DOM node.
   _buildItems: function() {
 
     var item, items = Array.prototype.slice.call(this.el.children);
@@ -124,6 +143,14 @@ TabBar.prototype = {
       this.selectedItem = this.items[0];
     }
 
+  },
+
+  // Destroy this tab bar
+  destroy: function() {
+    for(var i = 0, j = this.items.length; i < j; i += 1) {
+      this.items[i].destroy();
+    }
+    this.items.length = 0;
   }
 };
 
