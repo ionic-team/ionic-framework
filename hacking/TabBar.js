@@ -17,22 +17,18 @@ TabBarItem.prototype = {
         break;
       }
 
-      // Set the title to the text content of the tab.
-      this.title = child.innerText.trim();
     }
-  },
-  setIcon: function(iconClass) {
-    var child, children = this.el.children;
 
-    var hasIcon = false;
-    for(var i = 0, j = children.length; i < j; i++) {
-      child = children[i];
-
-    }
+    // Set the title to the text content of the tab.
+    this.title = this.el.innerText.trim();
   },
 
   getIcon: function() {
+    return this.icon;
+  },
 
+  getTitle: function() {
+    return this.title;
   },
 
   setSelected: function(isSelected) {
