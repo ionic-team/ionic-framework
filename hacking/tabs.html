@@ -16,8 +16,31 @@
         <h1 class="title">Tab Bars</h1>
       </header>
 
-      <main class="has-header">
-        
+      <main class="has-header content">
+        <div id="tab1">
+          <h2>Tab 1</h2>
+          <p>
+            Friends
+          </p>
+        </div>
+        <div id="tab2">
+          <h2>Tab 2</h2>
+          <p>
+            Friends
+          </p>
+        </div>
+        <div id="tab3">
+          <h2>Tab 3</h2>
+          <p>
+            Friends
+          </p>
+        </div>
+        <div id="tab4">
+          <h2>Tab 4</h2>
+          <p>
+            Friends
+          </p>
+        </div>
       </main>
       <nav id="tab-bar" class="tabs tabs-default">
         <a class="tab-item" href="#">
@@ -44,8 +67,14 @@
       // Grab the sections
       var tab = document.getElementById('tab-bar');
 
+      var tab1 = document.getElementById('tab1');
+      var tab2 = document.getElementById('tab2');
+      var tab3 = document.getElementById('tab3');
+      var tab4 = document.getElementById('tab4');
+
       var c = new TabBarController({
-        tabBar: new TabBar({ el: tab })
+        tabBar: new TabBar({ el: tab }),
+        controllers: [ { el: tab1 }, { el: tab2 }, { el: tab3 }, { el: tab4 }]
       });
     </script>
   </body>

@@ -6,6 +6,22 @@ TabBarItem = function(el) {
   this._buildItem();
 };
 TabBarItem.prototype = {
+  // Factory for creating an item from a given javascript object
+  create: function(itemData) {
+    var item = document.createElement('a');
+    item.className = 'tab-item';
+
+    if(itemData.icon) {
+      var icon = document.createElement('i');
+      icon.className = itemData.icon;
+      item.appendChild(icon);
+    }
+    item.appendChild(document.createTextNode(itemData.title));
+
+    return new TabBarItem(item);
+  },
+
+
   _buildItem: function() {
     var _this = this, child, children = Array.prototype.slice.call(this.el.children);
 
@@ -30,7 +46,6 @@ TabBarItem.prototype = {
 
     ionic.on('tap', this._tapHandler, this.el);
   },
-
   onTap: function(e) {
     console.log('On tap');
   },
@@ -114,7 +129,10 @@ TabBar.prototype = {
     }
 
     // Select the new item
-    this.selectedItem && this.selectedItem.setSelected(true);
+    if(this.selectedItem) {
+      this.selectedItem.setSelected(true);
+      this.onTabSelected && this.onTabSelected(this.selectedItem, index);
+    }
   },
 
   // Select the given item assuming we can find it in our

@@ -5,19 +5,25 @@ TabBarController = function(options) {
 
   this._bindEvents();
 
-  this.controllers = [];
+  this.controllers = options.controllers || [];
 
   // Bind or set our tabWillChange callback
   this.controllerWillChange = options.controllerWillChange || function(controller) {};
   this.controllerChanged = options.controllerChanged || function(controller) {};
+
+  this.setSelectedController(0);
 };
 
 TabBarController.prototype = {
   // Start listening for events on our tab bar
   _bindEvents: function() {
-    this.tabBar.onTabSelected = function(e) {
+    var _this = this;
+
+    this.tabBar.onTabSelected = function(item, index) {
+      _this.setSelectedController(index);
     };
   },
+
 
   selectController: function(index) {
     var shouldChange = true;
@@ -38,8 +44,26 @@ TabBarController.prototype = {
 
   // Force the selection of a controller at the given index
   setSelectedController: function(index) {
+    if(index >= this.controllers.length) {
+      return;
+    }
     this.selectedController = this.controllers[index];
     this.selectedIndex = index;
+
+    this._showController(index);
+    this.tabBar.setSelectedItem(index);
+  },
+
+  _showController: function(index) {
+    var c;
+
+    for(var i = 0, j = this.controllers.length; i < j; i ++) {
+      c = this.controllers[i];
+      c.el.style.display = 'none';
+    }
+
+    c = this.controllers[index];
+    c.el.style.display = 'block';
   },
 
   _clearSelected: function() {
@@ -65,6 +89,13 @@ TabBarController.prototype = {
   // Add a tab
   addController: function(controller) {
     this.controllers.push(controller);
+
+    var item = TabBarItem.prototype.create({
+      title: controller.title,
+      icon: controller.icon
+    });
+
+    this.tabBar.addItem(item);
 
     // If we don't have a selected controller yet, select the first one.
     if(!this.selectedController) {
