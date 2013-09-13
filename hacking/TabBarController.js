@@ -1,8 +1,3 @@
-TabBar = function(element) {
-  this.element = element;
-}
-TabBar.prototype = {};
-
 TabBarController = function(options) {
   this.tabBar = options.tabBar;
 

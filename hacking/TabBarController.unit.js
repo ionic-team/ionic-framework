@@ -2,8 +2,9 @@ describe('TabBarController', function() {
   var ctrl;
 
   beforeEach(function() {
+    var tabEl = $('<div class="tabs"></div>');
     ctrl = new TabBarController({
-      tabBar: new TabBar()
+      tabBar: new TabBar({ el: tabEl })
     });
   })
 
@@ -53,8 +54,9 @@ describe('TabBarController', function() {
   });
 
   it('Should allow cancelling Controller switch', function() {
+    var tabEl = $('<div class="tabs"></div>');
     ctrl = new TabBarController({
-      tabBar: new TabBar(),
+      tabBar: new TabBar({ el: tabEl }),
       controllerWillChange: function(Controller) { return false; }
     });
 

@@ -19,10 +19,10 @@ module.exports = function(config) {
       'https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js',
 
       'vendor/angular/1.2.0rc1/*',
-      'ext/angular/src/**/*.js',
-      'ext/angular/test/**/*.js',
+      //'ext/angular/src/**/*.js',
+      //'ext/angular/test/**/*.js',
       'hacking/**/*.js',
-      'test/**/*.js'
+      //'test/**/*.js'
     ],
 
 
