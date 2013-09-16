@@ -11,7 +11,7 @@ describe('TabBarController', function() {
   it('Should add Controllers', function() {
     ctrl.addController({
       title: 'Item 1',
-      icon: 'icon-home'
+      icon: 'icon-home',
     });
 
     expect(ctrl.getController(0).title).toEqual('Item 1');

@@ -148,6 +148,9 @@ TabBar.prototype = {
     }
   },
 
+  // Try to select a given item. This triggers an event such
+  // that the view controller managing this tab bar can decide
+  // whether to select the item or cancel it.
   trySelectItem: function(item) {
     for(var i = 0, j = this.items.length; i < j; i += 1) {
       if(this.items[i] == item) {

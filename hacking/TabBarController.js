@@ -59,11 +59,11 @@ TabBarController.prototype = {
 
     for(var i = 0, j = this.controllers.length; i < j; i ++) {
       c = this.controllers[i];
-      c.el.style.display = 'none';
+      c.detach && c.detach();
     }
 
     c = this.controllers[index];
-    c.el.style.display = 'block';
+    c.attach && c.attach();
   },
 
   _clearSelected: function() {

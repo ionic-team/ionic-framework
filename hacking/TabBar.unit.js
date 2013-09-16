@@ -52,7 +52,7 @@ describe('TabBar view', function() {
 
   it('Should handle item click event', function() {
     var item = items[0];
-    spyOn(tabBar, 'selectItem');
+    spyOn(tabBar, 'trySelectItem');
 
     var event = new CustomEvent('tap', {
       target: item.el
@@ -60,7 +60,7 @@ describe('TabBar view', function() {
     item.el.dispatchEvent(event);
 
     //expect(item.onTap).toHaveBeenCalled();
-    expect(tabBar.selectItem).toHaveBeenCalled();
+    expect(tabBar.trySelectItem).toHaveBeenCalled();
   });
 
 
