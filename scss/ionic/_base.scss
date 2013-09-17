@@ -29,6 +29,9 @@ body {
 }
 
 .view {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
 }
@@ -51,6 +54,21 @@ body {
 
 .content-padded {
   padding: $content-padding;
+}
+
+// Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
+// Note: For these to work, content must come after both bars in the markup
+.has-header {
+  top: $bar-height;
+}
+
+.has-footer {
+  bottom: $bar-height;
+}
+
+// Specify that a content area will have tabs
+.has-tabs {
+  bottom: $tabs-height;
 }
 
 .inset {
