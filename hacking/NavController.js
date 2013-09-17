@@ -40,6 +40,7 @@
       // Grab the top controller on the stack
       var next = this.controllers[this.controllers.length - 1];
 
+      // TODO: No DOM stuff here
       this.content.el.appendChild(next.el);
 
       // Switch to it (TODO: Animate or such things here)
@@ -66,6 +67,7 @@
 
       next = this.controllers[this.controllers.length - 1];
 
+      // TODO: No DOM stuff here
       this.content.el.appendChild(next.el);
 
       // Switch to it (TODO: Animate or such things here)
