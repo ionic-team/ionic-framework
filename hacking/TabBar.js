@@ -186,4 +186,4 @@ TabBar.prototype = {
   }
 };
 
-})(this, document, ion = this.ionic || {});
+})(this, document, this.ionic || {});
