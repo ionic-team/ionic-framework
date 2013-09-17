@@ -76,23 +76,24 @@
         this.el = opts.el;
       }
       controller.prototype = {
-        detach: function() {
-          //this.el.style.display = 'none';
-          var parentNode = this.el.parentNode;
-          if(!parentNode) {
-            return;
+        setVisible: function(isVisible) {
+          if(isVisible) {
+            //this.el.style.display = 'block';
+            if(this._lastNodeSpot) {
+              this._lastNodeParent.insertBefore(this.el, this._lastNodeSpot);
+            }
+          } else {
+            //this.el.style.display = 'none';
+            var parentNode = this.el.parentNode;
+            if(!parentNode) {
+              return;
+            }
+            var next = this.el.nextSibling;
+            this._lastNodeSpot = next;
+            this._lastNodeParent = parentNode;
+            parentNode.removeChild(this.el);
           }
-          var next = this.el.nextSibling;
-          this._lastNodeSpot = next;
-          this._lastNodeParent = parentNode;
-          parentNode.removeChild(this.el);
         },
-        attach: function() {
-          //this.el.style.display = 'block';
-          if(this._lastNodeSpot) {
-            this._lastNodeParent.insertBefore(this.el, this._lastNodeSpot);
-          }
-        }
       };
 
       var c1 = new controller({
