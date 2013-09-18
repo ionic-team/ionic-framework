@@ -3,33 +3,58 @@
     <meta charset="utf-8">
     <title>Panels</title>
 
-    <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="../dist/ionic.css">
-
+    <link href="../dist/ionic.css" rel="stylesheet">
   </head>
   <body>
 
-    <section data-default-panel="my-left-panel">
+    <section id="page" class="full-section menu-animated">
 
       <header class="bar bar-header bar-dark">
-        <button class="button button-borderless button-transparent " data-panel-toggle="my-left-panel">
-          <i class="icon-reorder"></i>
-        </button>
-        <h1 class="title">Panels</h1>
-        <button class="button button-borderless button-transparent " data-panel-toggle="my-right-panel" data-panel-direction="right">
-          <i class="icon-cog"></i>
-        </button>
+        <div class="buttons">
+          <a id="left-button" class="button button-dark" href="#">
+            <i class="icon-reorder"></i>
+          </a>
+        </div>
+        <h1 class="title">Chats</h1>
+        <div class="buttons">
+          <button id="right-button" class="button button-dark">
+            <i class="icon-cog"></i>
+          </button>
+        </div>
       </header>
 
       <main class="content content-padded has-header">
-        <p><button class="button button-primary" data-panel-toggle="my-other-left-panel">Other Left Side Panel</button></p>
-        <p><a class="button button-secondary" href="index.html">Homepage</a></p>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Panel title</h3>
+          </div>
+          <div class="panel-body">
+            Is this
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">Panel title</h3>
+          </div>
+          <div class="panel-body">
+            Is this
+          </div>
+        </div>
+        <div class="panel panel-danger">
+          <div class="panel-heading">
+            <h3 class="panel-title">Panel title</h3>
+          </div>
+          <div class="panel-body">
+            Is this
+          </div>
+        </div>
       </main>
 
       <footer class="bar bar-footer bar-dark">
-        <h3 class="title">Panels</h3>
+        <h3 class="title"></h3>
       </footer>
 
     </section>
@@ -143,7 +168,7 @@
 
     <section id="my-right-panel" class="menu menu-right">
       <ul class="list">
-        <li class="list-divider">Right Nav Things</li>
+        <li class="list-divider">Left Nav Things</li>
         <a href="#" class="list-item">
           Sasafras
           <i class="icon-arrow-right"></i>
@@ -247,12 +272,32 @@
       </ul>
     </section>
 
-    <section id="my-other-left-panel" class="menu menu-left">
-      This is my other left side panel!
-    </section>
 
+    <script src="../../js/ionic-events.js"></script>
+    <script src="../../js/ionic-gestures.js"></script>
+    <script src="../../js/controllers/ionic-leftrightmenu.js"></script>
+    <script>
+      
+      // Grab the sections
+      var page = document.getElementById('page');
+      var leftPanel = document.getElementById('my-left-panel');
+      var rightPanel = document.getElementById('my-right-panel');
+      var controller = new ion.controllers.LeftRightMenuViewController({
+        left: leftPanel,
+        leftWidth: 270,
+        right: rightPanel,
+        rightWidth: 270,
+        center: page,
+        animateClass: 'menu-animated'
+      });
+      window.ion.onGesture('tap', function(e) {
+        controller.toggleLeft();
+      }, document.getElementById('left-button'));
+      window.ion.onGesture('tap', function(e) {
+        controller.toggleRight();
+      }, document.getElementById('right-button'));
 
-    <script src="../../js/ionic-panel.js"></script>
-    <script src="../../connectors/default/panel-handler.js"></script>
+    </script>
   </body>
 </html>
+
