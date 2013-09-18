@@ -60,12 +60,14 @@ TabBarController.prototype = {
     for(var i = 0, j = this.controllers.length; i < j; i ++) {
       c = this.controllers[i];
       //c.detach && c.detach();
-      c.setVisible(false);
+      c.isVisible = false;
+      c.visibilityChanged && c.visibilityChanged();
     }
 
     c = this.controllers[index];
     //c.attach && c.attach();
-    c.setVisible(true);
+    c.isVisible = true;
+    c.visibilityChanged && c.visibilityChanged();
   },
 
   _clearSelected: function() {

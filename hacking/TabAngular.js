@@ -14,6 +14,19 @@ angular.module('ionic.ui', [])
 })
 
 .controller('TabsCtrl', function($scope) {
+  var _this = this;
+
+  angular.extend(this, TabBarController.prototype);
+
+  var tab = document.createElement('div');
+  tab.className = 'tabs';
+  TabBarController.call(this, {
+    tabBar: new TabBar({el: tab})
+  });
+
+  $scope.controllers = this.controllers;
+
+  /*
   // Controller stuff goes here
   $scope.items = [];
 
@@ -23,6 +36,7 @@ angular.module('ionic.ui', [])
       title: item.title
     });
   };
+  */
 })
 
 .directive('tabs', function() {
@@ -53,7 +67,7 @@ angular.module('ionic.ui', [])
       title: '@'
     },
     link: function(scope, element, attrs, tabsCtrl) {
-      tabsCtrl.addItem(scope);
+      tabsCtrl.addController(scope);
     }
   }
 })
@@ -66,8 +80,8 @@ angular.module('ionic.ui', [])
     transclude: true,
     replace: true,
     template: '<div class="tabs">' + 
-      '<a href="#" class="tab-item" ng-repeat="item in items">' +
-        '<i class="{{item.icon}}"></i> {{item.title}}' +
+      '<a href="#" class="tab-item" ng-repeat="controller in controllers">' +
+        '<i class="{{item.icon}}"></i> {{controller.title}}' +
       '</a>' +
     '</div>'
   }
