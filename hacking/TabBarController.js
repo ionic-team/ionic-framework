@@ -94,12 +94,10 @@ TabBarController.prototype = {
   addController: function(controller) {
     this.controllers.push(controller);
 
-    var item = TabBarItem.prototype.create({
+    this.tabBar.addItem({
       title: controller.title,
       icon: controller.icon
     });
-
-    this.tabBar.addItem(item);
 
     // If we don't have a selected controller yet, select the first one.
     if(!this.selectedController) {
