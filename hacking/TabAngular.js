@@ -27,18 +27,6 @@ angular.module('ionic.ui', [])
   });
 
   $scope.controllers = this.controllers;
-
-  /*
-  // Controller stuff goes here
-  $scope.items = [];
-
-  this.addItem = function(item) {
-    console.log('Adding item', item);
-    $scope.items.push({
-      title: item.title
-    });
-  };
-  */
 })
 
 .directive('tabs', function() {
