@@ -18,8 +18,10 @@ angular.module('ionic.ui', [])
 
   angular.extend(this, TabBarController.prototype);
 
+  // TODO: This dom thing is a temporary hack
   var tab = document.createElement('div');
   tab.className = 'tabs';
+
   TabBarController.call(this, {
     tabBar: new TabBar({el: tab})
   });
