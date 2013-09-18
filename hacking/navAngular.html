@@ -1,0 +1,35 @@
+<html ng-app="navTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Nav Bars</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="../dist/ionic.css">
+    <script src="/vendor/angular/1.2.0rc2/angular-1.2.0rc2.min.js"></script>
+    <script src="/vendor/angular/1.2.0rc2/angular-touch.js"></script>
+  </head>
+  <body>
+
+    <nav-controller>
+      <header id="nav-bar" class="bar bar-header bar-dark">
+        <h1 class="title"></h1>
+      </header>
+
+      <content class="has-header content" id="content">
+        <nav-content title="Home">
+          <h1>{{title}}</h1>
+        </nav-content>
+      </content>
+    </nav-controller>
+
+    <script src="NavController.js"></script>
+    <script src="NavAngular.js"></script>
+    <script>
+
+      angular.module('navTest', ['ionic.ui']);
+    </script>
+  </body>
+</html>
+
