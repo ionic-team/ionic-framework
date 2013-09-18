@@ -23,16 +23,23 @@
         </header>
         <content has-header="true" has-tabs="true">
           <h1>Home</h1>
+          <ul class="list" ng-controller="HomeCtrl">
+            <a href="#" class="list-item" ng-repeat="item in items">
+              {{item.title}}
+            </a>
+          </ul>
         </content>
       </tab-controller>
+
       <tab-controller title="About">
-        <header class="bar bar-header bar-dark">
+        <header class="bar bar-header bar-success">
           <h1 class="title">About</h1>
         </header>
         <content has-header="true" has-tabs="true">
           <h1>About Us</h1>
         </content>
       </tab-controller>
+
       <tab-controller title="Settings">
         <header class="bar bar-header bar-dark">
           <h1 class="title">Settings</h1>
@@ -46,7 +53,16 @@
     <script src="TabBarController.js"></script>
     <script src="TabAngular.js"></script>
     <script>
-      angular.module('tabsTest', ['ionic.ui']);
+      angular.module('tabsTest', ['ionic.ui'])
+
+      .controller('HomeCtrl', function($scope) {
+        $scope.items = [];
+        for(var i = 0; i < 100; i++) {
+          $scope.items.push({
+            title: 'Item ' + i
+          });
+        }
+      })
 
     </script>
   </body>

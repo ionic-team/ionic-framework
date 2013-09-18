@@ -1,4 +1,4 @@
-angular.module('ionic.ui', [])
+angular.module('ionic.ui', ['ngTouch'])
 
 .directive('content', function() {
   return {
@@ -73,7 +73,7 @@ angular.module('ionic.ui', [])
     require: '^tabs',
     transclude: true,
     replace: true,
-    template: '<div class="tabs">' + 
+    template: '<div class="tabs tabs-primary">' + 
       '<tab-item title="{{controller.title}}" icon="{{controller.icon}}" active="controller.isVisible" index="$index" ng-repeat="controller in controllers"></tab-item>' + 
     '</div>'
   }
