@@ -2,8 +2,8 @@
 // Brand Colors
 // -------------------------------
 
-$brand-default:            #fff;
-$brand-secondary:            #f5f5f5;
+$brand-default:         #fff;
+$brand-secondary:       #f5f5f5;
 $brand-primary:         #6999e9;
 $brand-success:         #89c163;
 $brand-warning:         #f0b840;
@@ -11,8 +11,10 @@ $brand-danger:          #de5645;
 $brand-info:            #60d2e6;
 $brand-dark:            #444;
 
+
 // Scaffolding
 // -------------------------------
+
 $link-color:            $brand-primary !default;
 $link-hover-color:      darken($link-color, 15%) !default;
 

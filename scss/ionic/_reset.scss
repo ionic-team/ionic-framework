@@ -1,6 +1,6 @@
 /**
 * Adapted from normalize.css and some reset.css. We don't care even one
-* bit about IE, so we don't need any hacks for that in here.
+* bit about old IE, so we don't need any hacks for that in here.
 * 
 * There are probably other things we could remove here, as well.
 *
@@ -119,16 +119,6 @@ a:hover {
 /* ==========================================================================
    Typography
    ========================================================================== */
-
-/**
- * Address variable `h1` font-size and margin within `section` and `article`
- * contexts in Firefox 4+, Safari 5, and Chrome.
- */
-
-h1 {
-    font-size: 2em;
-    margin: 0.67em 0;
-}
 
 
 /**
