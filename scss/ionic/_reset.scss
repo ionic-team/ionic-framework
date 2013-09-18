@@ -24,31 +24,24 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    font: inherit;
+    font-size: 100%;
 }
 
-body {
-	line-height: 1;
-}
 ol, ul {
-	list-style: none;
+    list-style: none;
 }
 blockquote, q {
-	quotes: none;
+    quotes: none;
 }
 blockquote:before, blockquote:after,
 q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
+    content: '';
+    content: none;
 }
 
 /**
@@ -85,7 +78,9 @@ script {
  */
 
 html {
+    @include user-select(none);
     font-family: sans-serif; /* 1 */
+    -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%; /* 2 */
     -webkit-text-size-adjust: 100%; /* 2 */
 }
@@ -96,8 +91,17 @@ html {
 
 body {
     margin: 0;
+    line-height: 1;
 }
 
+
+/* *
+ * Remove tap highlight color on Safari
+ */
+
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
 
 /**
  * Address `outline` inconsistency between Chrome and other browsers.
@@ -157,8 +161,8 @@ code,
 kbd,
 pre,
 samp {
-    font-family: monospace, serif;
     font-size: 1em;
+    font-family: monospace, serif;
 }
 
 /**
@@ -191,10 +195,10 @@ small {
 
 sub,
 sup {
-    font-size: 75%;
-    line-height: 0;
     position: relative;
     vertical-align: baseline;
+    font-size: 75%;
+    line-height: 0;
 }
 
 sup {
@@ -210,9 +214,9 @@ sub {
  */
 
 fieldset {
-    border: 1px solid #c0c0c0;
     margin: 0 2px;
     padding: 0.35em 0.625em 0.75em;
+    border: 1px solid #c0c0c0;
 }
 
 /**
@@ -221,8 +225,8 @@ fieldset {
  */
 
 legend {
-    border: 0; /* 1 */
     padding: 0; /* 2 */
+    border: 0; /* 1 */
 }
 
 /**
@@ -235,9 +239,9 @@ button,
 input,
 select,
 textarea {
-    font-family: inherit; /* 1 */
-    font-size: 100%; /* 2 */
     margin: 0; /* 3 */
+    font-size: 100%; /* 2 */
+    font-family: inherit; /* 1 */
 }
 
 /**
@@ -274,8 +278,8 @@ button,
 html input[type="button"], /* 1 */
 input[type="reset"],
 input[type="submit"] {
-    -webkit-appearance: button; /* 2 */
     cursor: pointer; /* 3 */
+    -webkit-appearance: button; /* 2 */
 }
 
 /**
@@ -294,10 +298,10 @@ html input[disabled] {
  */
 
 input[type="search"] {
-    -webkit-appearance: textfield; /* 1 */
-    -moz-box-sizing: content-box;
     -webkit-box-sizing: content-box; /* 2 */
+    -moz-box-sizing: content-box;
     box-sizing: content-box;
+    -webkit-appearance: textfield; /* 1 */
 }
 
 /**
@@ -316,8 +320,8 @@ input[type="search"]::-webkit-search-decoration {
 
 button::-moz-focus-inner,
 input::-moz-focus-inner {
-    border: 0;
     padding: 0;
+    border: 0;
 }
 
 /**
@@ -339,6 +343,6 @@ textarea {
  */
 
 table {
-    border-collapse: collapse;
     border-spacing: 0;
+    border-collapse: collapse;
 }

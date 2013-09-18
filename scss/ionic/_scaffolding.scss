@@ -1,10 +1,3 @@
-// TODO: This might be inefficient?
-
-// Make sure iOS Safari doesn't scale fonts on orientation changes
-html {
-  @include user-select(none);
-  -webkit-text-size-adjust: 100%;
-}
 
 body {
   position: fixed;
@@ -16,9 +9,9 @@ body {
   margin: 0;
   padding: 0;
   word-wrap: break-word;
-  font-size: 14px;
+  font-size: $font-size-base;
   font-family: $base-font-family;
-  line-height: 1.25;
+  line-height: $line-height-computed;
   text-rendering: optimizeLegibility;
 
   -webkit-font-smoothing: antialiased;
