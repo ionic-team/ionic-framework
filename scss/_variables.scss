@@ -303,6 +303,31 @@ $info-bg:            #d9edf7;
 $info-border:        darken(adjust-hue($info-bg, -10), 7%);
 
 
+// Toggle
+// -------------------------------
+
+$toggle-width:                    54px;
+$toggle-height:                   32px;
+$toggle-border-width:             2px;
+$toggle-border-radius:            20px;
+
+$toggle-switch-width:             $toggle-height - 4px;
+$toggle-switch-height:            $toggle-switch-width;
+$toggle-switch-radius:            50%;
+$toggle-switch-on-position:       $toggle-width - $toggle-switch-width - ($toggle-border-width * 2);
+
+$toggle-off-bg-color:             $gray-light;
+$toggle-off-border-color:         $toggle-off-bg-color;
+
+$toggle-on-bg-color:              $blue-dark;
+$toggle-on-border-color:          $toggle-on-bg-color;
+
+$toggle-switch-off-bg-color:      $white;
+$toggle-switch-on-bg-color:       $toggle-switch-off-bg-color;
+
+$toggle-transition-duration:      .1s;
+
+
 // Menus
 // -------------------------------
 

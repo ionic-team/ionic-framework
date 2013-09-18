@@ -1,0 +1,59 @@
+
+/* the overall container of the toggle */
+.toggle {
+  display: inline-block;
+}
+
+/* hide the actual checkbox */
+.toggle input {
+  display: none;
+}
+
+/* the background of the toggle's slide area */
+/* also the appearance when the slide is "off" */
+.toggle .slide {
+  display: inline-block;
+  box-sizing: border-box;
+  width: $toggle-width;
+  height: $toggle-height;
+  border: solid $toggle-border-width $toggle-off-border-color;
+  border-radius: $toggle-border-radius;
+  background-color: $toggle-off-bg-color;
+  cursor: pointer;
+
+  -webkit-transition-property: background-color, border;
+  -webkit-transition-duration: $toggle-transition-duration;   
+  -webkit-transition-timing-function: ease-in-out;
+
+  transition-property: background-color, border;
+  transition-duration: $toggle-transition-duration;   
+  transition-timing-function: ease-in-out;
+}
+
+/* the switch (dot) thats inside the toggle's slide area */
+/* also the appearance when the switch is "off" */
+.toggle .switch {
+  position: absolute;
+  display: block;
+  width: $toggle-switch-width;
+  height: $toggle-switch-height;
+  border-radius: $toggle-switch-radius;
+  background-color: $toggle-switch-off-bg-color;
+  -webkit-transition: -webkit-transform $toggle-transition-duration ease-in-out;
+  transition: -webkit-transform $toggle-transition-duration ease-in-out;
+}
+
+
+/* When the toggle is "on" */
+.toggle :checked + .slide {
+
+  /* the slide when the toggle is "on" */
+  border-color: $toggle-on-border-color;
+  background-color: $toggle-on-bg-color;
+
+  /* the switch when the toggle is "on" */
+  .switch {
+    background-color: $toggle-switch-on-bg-color;
+    -webkit-transform: translate3d($toggle-switch-on-position,0,0);
+  }
+}

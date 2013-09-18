@@ -49,6 +49,10 @@ body {
   padding: $content-padding;
 }
 
+.inset {
+  margin: $inset-margin;
+}
+
 // Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
 // Note: For these to work, content must come after both bars in the markup
 .has-header {
@@ -62,10 +66,6 @@ body {
 // Specify that a content area will have tabs
 .has-tabs {
   bottom: $tabs-height;
-}
-
-.inset {
-  margin: $inset-margin;
 }
 
 .rounded {
