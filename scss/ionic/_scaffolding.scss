@@ -79,11 +79,6 @@ body {
   border-radius: $border-radius-base;
 }
 
-// Remove tap highlight color on Safari
-a {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
 .page, .full-section {
   position: fixed;
   top: 0;

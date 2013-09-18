@@ -16,6 +16,11 @@ p {
   line-height: 1.4;
 }
 
+// Remove tap highlight color on Safari
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
 
 // Emphasis & misc
 // -------------------------
