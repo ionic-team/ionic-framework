@@ -90,6 +90,7 @@ TabBar.prototype = {
 
   // Add an item to the tab bar
   addItem: function(item) {
+    // Create a new TabItem
     this.items.push(item);
     this._bindEventsOnItem(item);
   },
