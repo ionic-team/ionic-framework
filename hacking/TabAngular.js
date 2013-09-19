@@ -34,11 +34,11 @@ angular.module('ionic.ui', ['ngTouch'])
 
   $scope.$watch('controllers', function(newV, oldV) {
     console.log("CControlelrs changed", newV, oldV);
-    $scope.$apply();
+    //$scope.$apply();
   });
 })
 
-.directive('tabs', function() {
+.directive('tabController', function() {
   return {
     restrict: 'E',
     replace: true,
@@ -55,17 +55,17 @@ angular.module('ionic.ui', ['ngTouch'])
 })
 
 // Generic controller directive
-.directive('tabController', function() {
+.directive('tabContent', function() {
   return {
-    restrict: 'E',
+    restrict: 'CA',
     replace: true,
     transclude: true,
     template: '<div ng-show="isVisible" ng-transclude></div>',
-    require: '^tabs',
-    scope: {
-      title: '@'
-    },
+    require: '^tabController',
+    scope: true,
     link: function(scope, element, attrs, tabsCtrl) {
+      scope.title = attrs.title;
+      scope.icon = attrs.icon;
       tabsCtrl.addController(scope);
     }
   }
@@ -75,9 +75,10 @@ angular.module('ionic.ui', ['ngTouch'])
 .directive('tabBar', function() {
   return {
     restrict: 'E',
-    require: '^tabs',
+    require: '^tabController',
     transclude: true,
     replace: true,
+    scope: true,
     template: '<div class="tabs tabs-primary">' + 
       '<tab-item title="{{controller.title}}" icon="{{controller.icon}}" active="controller.isVisible" index="$index" ng-repeat="controller in controllers"></tab-item>' + 
     '</div>'
@@ -88,7 +89,7 @@ angular.module('ionic.ui', ['ngTouch'])
   return {
     restrict: 'E',
     replace: true,
-    require: '^tabs',
+    require: '^tabController',
     scope: {
       title: '@',
       icon: '@',
@@ -97,15 +98,10 @@ angular.module('ionic.ui', ['ngTouch'])
       index: '='
     },
     link: function(scope, element, attrs, tabsCtrl) {
-      // Store the index of this list item, which
-      // specifies which tab item it is
-      //scope.tabIndex = element.index();
-
+      console.log('Linked item', scope);
       scope.selectTab = function(index) {
-        console.log('SELECT TAB', scope.index);
         tabsCtrl.selectController(scope.index);
       };
-      
     },
     template: 
       '<a href="#" ng-class="{active:active}" ng-click="selectTab()" class="tab-item">' +

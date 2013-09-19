@@ -9,13 +9,41 @@
     <link rel="stylesheet" href="../dist/ionic.css">
     <script src="/vendor/angular/1.2.0rc2/angular.js"></script>
     <script src="/vendor/angular/1.2.0rc2/angular-touch.js"></script>
+    <script src="/vendor/angular/1.2.0rc2/angular-animate.js"></script>
+    <style>
+      .reveal-animation {
+        /*
+        -webkit-transform: translate3d(0%, 0, 0);
+                transform: translate3d(0%, 0, 0);
+
+       -webkit-transition: -webkit-transform 1s ease-in-out;
+               transition:         transform 1s ease-in-out;
+        */
+      }
+      .reveal-animation.ng-enter {
+        -webkit-transition: .2s ease-in-out all;
+        -webkit-transform:translate3d(100%,0,0) ;
+      }
+      .reveal-animation.ng-enter-active {
+        -webkit-transform:translate3d(0,0,0) ;
+      }
+      .reveal-animation.ng-leave {
+        -webkit-transition: .2s ease-in-out all;
+        -webkit-transform:translate3d(0%,0,0);
+      }
+      .reveal-animation.ng-leave-active {
+        -webkit-transition: .2s ease-in-out all;
+        -webkit-transform:translate3d(-100%,0,0);
+      }
+    </style>
+
   </head>
   <body>
 
     <nav-controller>
       <nav-bar></nav-bar>
 
-      <content has-header="true" ng-controller="AppCtrl">
+      <content has-header="true" ng-controller="AppCtrl" class="reveal-animation">
       </content>
     </nav-controller>
 
@@ -30,7 +58,7 @@
 
         pageNumber++;
 
-        var el = $compile('<div title="Home: ' + pageNumber + '" ng-controller="CatsCtrl" nav-content has-header="true" ng-show="isVisible">' +
+        var el = $compile('<div title="Home: ' + pageNumber + '" ng-controller="CatsCtrl" nav-content has-header="true" class="reveal-animation" ng-show="isVisible">' +
           '<h1>' + pageNumber + '</h1>' +
           '<a href="#" class="button button-success" ng-click="goNext()">Next</a>' +
           '</div>')(childScope, cb);

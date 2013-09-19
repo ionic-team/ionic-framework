@@ -16,8 +16,8 @@
     </style>
   </head>
   <body>
-    <tabs>
-      <tab-controller title="Home">
+    <tab-controller>
+      <div title="Home" icon="icon-home" class="tab-content">
         <header class="bar bar-header bar-dark">
           <h1 class="title">Tab Bars</h1>
         </header>
@@ -29,26 +29,26 @@
             </a>
           </ul>
         </content>
-      </tab-controller>
+      </div>
 
-      <tab-controller title="About">
+      <div title="About" icon="icon-info" class="tab-content">
         <header class="bar bar-header bar-success">
           <h1 class="title">About</h1>
         </header>
         <content has-header="true" has-tabs="true">
           <h1>About Us</h1>
         </content>
-      </tab-controller>
+      </div>
 
-      <tab-controller title="Settings">
+      <div title="Settings" icon="icon-gear" class="tab-content">
         <header class="bar bar-header bar-dark">
           <h1 class="title">Settings</h1>
         </header>
         <content has-header="true" has-tabs="true">
           <h1>Settings</h1>
         </content>
-      </tab-controller>
-    </tabs>
+      </div>
+    </tab-controller>
 
     <script src="TabBarController.js"></script>
     <script src="TabAngular.js"></script>
