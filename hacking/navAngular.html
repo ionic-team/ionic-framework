@@ -7,33 +7,50 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="../dist/ionic.css">
-    <script src="/vendor/angular/1.2.0rc2/angular-1.2.0rc2.min.js"></script>
+    <script src="/vendor/angular/1.2.0rc2/angular.js"></script>
     <script src="/vendor/angular/1.2.0rc2/angular-touch.js"></script>
   </head>
   <body>
 
     <nav-controller>
-      <header id="nav-bar" class="bar bar-header bar-dark">
-        <h1 class="title">{{getTopController().title}}</h1>
-      </header>
+      <nav-bar></nav-bar>
 
-      <content has-header="true">
-        <div class="nav-content" title="Home" ng-controller="CatsCtrl">
-            <h1>Cats cradle</h2>
-            <a href="#" class="button button-success" ng-click="goNext()">Next</a>
-        </div>
+      <content has-header="true" ng-controller="AppCtrl">
       </content>
     </nav-controller>
 
     <script src="NavController.js"></script>
     <script src="NavAngular.js"></script>
     <script>
+      var pageNumber = 0;
+
+      var pushIt = function($scope, $compile, $element, cb) {
+        var childScope = $scope.$new();
+        childScope.isVisible = true;
+
+        pageNumber++;
+
+        var el = $compile('<div title="Home: ' + pageNumber + '" ng-controller="CatsCtrl" nav-content has-header="true" ng-show="isVisible">' +
+          '<h1>' + pageNumber + '</h1>' +
+          '<a href="#" class="button button-success" ng-click="goNext()">Next</a>' +
+          '</div>')(childScope, cb);
+      }
 
       angular.module('navTest', ['ionic.ui'])
 
-      .controller('CatsCtrl', function($scope) {
+      .controller('AppCtrl', function($scope, $compile, $element) {
+        pushIt($scope, $compile, $element, function(cloned, scope) {
+          $element.append(cloned);
+        })
+
+      })
+
+      .controller('CatsCtrl', function($scope, $compile, $element) {
+        console.log('Cats', $element);
         $scope.goNext = function() {
-          console.log('Going next', $scope);
+          pushIt($scope, $compile, $element, function(cloned, scope) {
+            $element.parent().append(cloned);
+          })
         };
       });
     </script>

@@ -5,15 +5,17 @@ angular.module('ionic.ui', ['ngTouch'])
     restrict: 'E',
     replace: true,
     transclude: true,
-    scope: {
-      hasHeader: '@',
-      hasTabs: '@'
-    },
-    template: '<div class="content" ng-class="{\'has-header\': hasHeader, \'has-tabs\': hasTabs}" ng-transclude></div>'
+    scope: true,
+    template: '<div class="content" ng-class="{\'has-header\': hasHeader, \'has-tabs\': hasTabs}"></div>',
+    compile: function(element, attr, transclude, navCtrl) {
+      return function($scope, $element, $attr) {
+        $scope.hasHeader = attr.hasHeader;
+      };
+    }
   }
 })
 
-.controller('NavCtrl', function($scope) {
+.controller('NavCtrl', function($scope, $element, $compile) {
   var _this = this;
 
 
@@ -39,14 +41,18 @@ angular.module('ionic.ui', ['ngTouch'])
     return $scope.controllers[$scope.controllers.length-1];
   }
 
-  $scope.push = this.push;
+  $scope.pushController = function(controller) {
+    //console.log('PUSHING OCNTROLLER', controller);
+    _this.push(controller);
+  }
+
+  $scope.navController = this;
 })
 
 .directive('navController', function() {
   return {
     restrict: 'E',
     replace: true,
-    scope: {},
     transclude: true,
     controller: 'NavCtrl',
     //templateUrl: 'ext/angular/tmpl/ionicTabBar.tmpl.html',
@@ -64,23 +70,27 @@ angular.module('ionic.ui', ['ngTouch'])
     require: '^navController',
     transclude: true,
     replace: true,
-    scope: {
-    },
-    template: '<header id="nav-bar" class="bar bar-header bar-dark">' +
-        '<h1 class="title">{{title}}</h1>' +
-      '</header>'
+    template: '<header class="bar bar-header bar-dark nav-bar">' + 
+        '<a href="#" ng-click="goBack()" class="button" ng-if="controllers.length > 1">Back</a>' +
+        '<h1 class="title">{{getTopController().title}}</h1>' + 
+      '</header>',
+    link: function(scope, element, attrs, navCtrl) {
+      scope.goBack = function() {
+        pageNumber--;
+        navCtrl.pop();
+      }
+    }
   }
 })
 
 .directive('navContent', function() {
   return {
-    restrict: 'C',
-    require: '^navController',
-    transclude: true,
-    replace: true,
-    template: '<div ng-transclude></div>',
-    link: function(scope, element, attrs, navCtrl) {
-      navCtrl.push(scope);
+    restrict: 'ECA',
+    scope: true,
+    link: function(scope, element, attrs) {
+      scope.title = attrs.title;
+      scope.isVisible = true;
+      scope.pushController(scope);
     }
   }
 });

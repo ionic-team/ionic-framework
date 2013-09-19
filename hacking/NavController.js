@@ -2,8 +2,6 @@
   NavController = function(opts) {
     var _this = this;
 
-    console.log('CONSTRUCTOR', this);
-
     this.navBar = opts.navBar;
     this.content = opts.content;
     this.controllers = opts.controllers || [];
@@ -24,8 +22,6 @@
       return this.controllers[this.controllers.length-1];
     },
     push: function(controller) {
-      console.log('PUSHING');
-
       var last = this.controllers[this.controllers.length - 1];
 
       this.controllers.push(controller);
@@ -51,7 +47,8 @@
 
       // TODO: No DOM stuff here
       //this.content.el.appendChild(next.el);
-      console.log('Top controller modified', this.topController);
+      next.isVisible = true;
+      next.visibilityChanged && next.visibilityChanged();
 
       this._updateNavBar();
 
@@ -68,6 +65,10 @@
 
       // Grab the controller behind the top one on the stack
       last = this.controllers.pop();
+      if(last) {
+        last.isVisible = false;
+        last.visibilityChanged && last.visibilityChanged();
+      }
       
       // Remove the old one
       //last && last.detach();
@@ -76,10 +77,10 @@
 
       // TODO: No DOM stuff here
       //this.content.el.appendChild(next.el);
+      next.isVisible = true;
+      next.visibilityChanged && next.visibilityChanged();
 
       // Switch to it (TODO: Animate or such things here)
-      this.topController = next;
-      console.log('Top controller modified', this.topController);
 
       this._updateNavBar();
 
@@ -87,11 +88,11 @@
     },
 
     _updateNavBar: function() {
-      if(!this.topController) {
+      if(!this.getTopController()) {
         return;
       }
 
-      this.navBar.setTitle(this.topController.title);
+      this.navBar.setTitle(this.getTopController().title);
 
       if(this.controllers.length > 1) {
         this.navBar.showBackButton(true);
