@@ -31,6 +31,11 @@ angular.module('ionic.ui', ['ngTouch'])
   });
 
   $scope.controllers = this.controllers;
+
+  $scope.$watch('controllers', function(newV, oldV) {
+    console.log("CControlelrs changed", newV, oldV);
+    $scope.$apply();
+  });
 })
 
 .directive('tabs', function() {

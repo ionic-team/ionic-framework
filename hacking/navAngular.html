@@ -14,13 +14,14 @@
 
     <nav-controller>
       <header id="nav-bar" class="bar bar-header bar-dark">
-        <h1 class="title"></h1>
+        <h1 class="title">{{getTopController().title}}</h1>
       </header>
 
-      <content class="has-header content" id="content">
-        <nav-content title="Home">
-          <h1>{{title}}</h1>
-        </nav-content>
+      <content has-header="true">
+        <div class="nav-content" title="Home" ng-controller="CatsCtrl">
+            <h1>Cats cradle</h2>
+            <a href="#" class="button button-success" ng-click="goNext()">Next</a>
+        </div>
       </content>
     </nav-controller>
 
@@ -28,7 +29,13 @@
     <script src="NavAngular.js"></script>
     <script>
 
-      angular.module('navTest', ['ionic.ui']);
+      angular.module('navTest', ['ionic.ui'])
+
+      .controller('CatsCtrl', function($scope) {
+        $scope.goNext = function() {
+          console.log('Going next', $scope);
+        };
+      });
     </script>
   </body>
 </html>
