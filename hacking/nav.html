@@ -27,26 +27,38 @@
     <script>
       // Grab the sections
       var navBar = document.getElementById('nav-bar');
+      var cd = document.getElementById('content');
+
+      var View = function(opts) {
+        this.el = opts.el;
+      };
+      var content = new View({
+        el: cd
+      });
+
 
       var controller = function(opts) {
         this.el = opts.el;
       }
       controller.prototype = {
-        detach: function() {
-          //this.el.style.display = 'none';
-          var parentNode = this.el.parentNode;
-          if(!parentNode) {
-            return;
-          }
-          var next = this.el.nextSibling;
-          this._lastNodeSpot = next;
-          this._lastNodeParent = parentNode;
-          parentNode.removeChild(this.el);
-        },
-        attach: function() {
-          //this.el.style.display = 'block';
-          if(this._lastNodeSpot) {
-            this._lastNodeParent.insertBefore(this.el, this._lastNodeSpot);
+        visibilityChanged: function() {
+          if(this.isVisible) {
+            //this.el.style.display = 'block';
+            if(this._lastNodeSpot) {
+              this._lastNodeParent.insertBefore(this.el, this._lastNodeSpot);
+            } else {
+              content.el.appendChild(this.el);
+            }
+          } else {
+            //this.el.style.display = 'none';
+            var parentNode = this.el.parentNode;
+            if(!parentNode) {
+              return;
+            }
+            var next = this.el.nextSibling;
+            this._lastNodeSpot = next;
+            this._lastNodeParent = parentNode;
+            parentNode.removeChild(this.el);
           }
         }
       };
@@ -61,21 +73,12 @@
         return c;
       };
 
-      var View = function(opts) {
-        this.el = opts.el;
-      };
-
       var page1 = createPage('Home');
       var page2 = createPage('About');
       var page3 = createPage('Cats');
       var page4 = createPage('Pizza');
 
       var pages = [page1, page2, page3, page4];
-
-      var cd = document.getElementById('content');
-      var content = new View({
-        el: cd
-      });
 
       var c = new NavController({
         navBar: new NavBar({ el: navBar }),

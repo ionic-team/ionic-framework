@@ -4,11 +4,18 @@ describe('TabBarController', function() {
   beforeEach(function() {
     var tabEl = $('<div class="tabs"></div>');
     ctrl = new TabBarController({
-      tabBar: new TabBar({ el: tabEl.get(0) })
+      tabBar: new TabBar({ 
+        el: tabEl.get(0),
+        itemAdded: function(item) {
+        },
+        itemRemoved: function(item) {
+        }
+      })
     });
   })
 
   it('Should add Controllers', function() {
+    debugger;
     ctrl.addController({
       title: 'Item 1',
       icon: 'icon-home',
