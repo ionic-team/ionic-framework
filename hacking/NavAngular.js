@@ -76,7 +76,6 @@ angular.module('ionic.ui', ['ngTouch'])
       '</header>',
     link: function(scope, element, attrs, navCtrl) {
       scope.goBack = function() {
-        pageNumber--;
         navCtrl.pop();
       }
     }
