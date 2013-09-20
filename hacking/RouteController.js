@@ -2,6 +2,11 @@
  * Adapted from Backbone.js
  */
 (function(window, document, ionic) {
+  var optionalParam = /\((.*?)\)/g;
+  var namedParam    = /(\(\?)?:\w+/g;
+  var splatParam    = /\*\w+/g;
+  var escapeRegExp  = /[\-{}\[\]+?.,\\\^$|#\s]/g;
+
   // Cached regex for stripping a leading hash/slash and trailing space.
   var routeStripper = /^[#\/]|\s+$/g;
 
@@ -15,6 +20,7 @@
     this.options = options;
 
     this.root = this.options.root || '/';
+    this.root = ('/' + this.root + '/').replace(rootStripper, '/');
 
     this.handlers = [];
 
@@ -25,16 +31,50 @@
   };
 
   RouteViewController.prototype = {
+    when: function(route, callback) {
+      var _this = this;
+
+      route = this._routeToRegExp(route);
+
+      this.handlers.unshift({
+        route: route,
+        callback: function(fragment)  {
+          var args = _this._extractParameters(route, fragment);
+          callback && callback.apply(_this, args);
+        }
+      });
+    },
+
+    // Convert a route string into a regular expression, suitable for matching
+    // against the current location hash.
+    _routeToRegExp: function(route) {
+      route = route.replace(escapeRegExp, '\\$&')
+                   .replace(optionalParam, '(?:$1)?')
+                   .replace(namedParam, function(match, optional){
+                     return optional ? match : '([^\/]+)';
+                   })
+                   .replace(splatParam, '(.*?)');
+      return new RegExp('^' + route + '$');
+    },
+
+    // Given a route, and a URL fragment that it matches, return the array of
+    // extracted decoded parameters. Empty or unmatched parameters will be
+    // treated as `null` to normalize cross-browser behavior.
+    _extractParameters: function(route, fragment) {
+      var params = route.exec(fragment).slice(1);
+      var extracted = [];
+      for(var i = 0; i < params.length; i++) {
+        if(param) {
+          extracted.push(decodeURIComponent(param));
+        }
+      }
+    },
 
     _bindEvents: function() {
       var _this = this;
 
       window.addEventListener('popstate', function(event) {
-        console.log("POP STATE", event, window.location, window.location.hash);
         _this.checkUrl(event);
-      });
-      window.addEventListener('pushstate', function(event) {
-        console.log("PUSH STATE", event, window.location);
       });
     },
     checkUrl: function(e) {
@@ -44,15 +84,11 @@
     },
     getFragment: function(fragment, forcePushState) {
       if (fragment == null) {
-        if (this._hasPushState || !this._wantsHashChange || forcePushState) {
-          fragment = this.location.pathname;
-          var root = this.root.replace(this.trailingSlash, '');
-          if (!fragment.indexOf(root)) fragment = fragment.substr(root.length);
-        } else {
-          fragment = this.getHash();
-        }
+        fragment = this.location.pathname;
+        var root = this.root.replace(this.trailingSlash, '');
+        if (!fragment.indexOf(root)) fragment = fragment.substr(root.length);
       }
-      return fragment.replace(this.routeStripper, '');
+      return fragment.replace(routeStripper, '');
     },
     getHash: function(window) {
       var match = (window || this).location.href.match(/#(.*)$/);

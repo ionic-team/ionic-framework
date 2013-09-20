@@ -15,13 +15,20 @@
       </header>
 
       <main class="has-header content">
-        <a href="#cats">Cats</a>
+        <a href="cats/">Cats</a>
       </main>
     </section>
 
     <script src="RouteController.js"></script>
     <script>
       var rc = new RouteViewController({
+        root: 'hacking/'
+      });
+      rc.when('route.html', function() {
+        console.log('Loaded');
+      });
+      rc.when('cats', function() {
+        console.log('Loaded');
       });
     </script>
   </body>
