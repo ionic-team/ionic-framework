@@ -42,21 +42,7 @@
           </p>
         </div>
       </main>
-      <nav id="tab-bar" class="tabs tabs-success">
-        <a class="tab-item" href="#">
-          <i class="icon-home"></i>
-          Friends
-        </a>
-        <a class="tab-item">
-          Enemies
-        </a>
-        <a class="tab-item">
-          Settings
-        </a>
-        <a class="tab-item">
-          More
-        </a>
-      </nav>
+      <nav id="tab-bar" class="tabs tabs-success"></nav>
     </section>
 
     <script src="../../js/ionic-events.js"></script>
@@ -76,8 +62,8 @@
         this.el = opts.el;
       }
       controller.prototype = {
-        setVisible: function(isVisible) {
-          if(isVisible) {
+        visibilityChanged: function() {
+          if(this.isVisible) {
             //this.el.style.display = 'block';
             if(this._lastNodeSpot) {
               this._lastNodeParent.insertBefore(this.el, this._lastNodeSpot);
@@ -100,18 +86,22 @@
         el: tab1
       });
       c1.title = 'Mice';
+      c1.icon = 'icon-home';
       var c2 = new controller({
         el: tab2
       });
       c2.title = 'Dogs';
+      c2.icon = 'icon-gear';
       var c3 = new controller({
         el: tab3
       });
       c3.title = 'Cats';
+      c3.icon = 'icon-plus';
       var c4 = new controller({
         el: tab4
       });
       c4.title = 'Cats';
+      c4.icon = 'icon-minus';
 
       var c = new TabBarController({
         tabBar: new TabBar({ el: tab }),

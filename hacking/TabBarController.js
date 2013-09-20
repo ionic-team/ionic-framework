@@ -5,7 +5,13 @@ TabBarController = function(options) {
 
   this._bindEvents();
 
-  this.controllers = options.controllers || [];
+  this.controllers = [];
+
+  var controllers = options.controllers || [];
+
+  for(var i = 0; i < controllers.length; i++) {
+    this.addController(controllers[i]);
+  }
 
   // Bind or set our tabWillChange callback
   this.controllerWillChange = options.controllerWillChange || function(controller) {};
@@ -110,7 +116,7 @@ TabBarController.prototype = {
     this.controllers = controllers;
     this._clearSelected();
     this.selectController(0);
-  }
+  },
 }
 
 })(this, document, ion = this.ionic || {});

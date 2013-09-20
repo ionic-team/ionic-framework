@@ -91,8 +91,19 @@ TabBar.prototype = {
   // Add an item to the tab bar
   addItem: function(item) {
     // Create a new TabItem
-    this.items.push(item);
-    this._bindEventsOnItem(item);
+    var tabItem = TabBarItem.prototype.create(item);
+
+    this.appendItemElement(tabItem);
+
+    this.items.push(tabItem);
+    this._bindEventsOnItem(tabItem);
+  },
+
+  appendItemElement: function(item) {
+    if(!this.el) {
+      return;
+    }
+    this.el.appendChild(item.el);
   },
 
   // Remove an item from the tab bar
