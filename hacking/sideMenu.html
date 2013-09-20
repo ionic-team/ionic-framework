@@ -10,7 +10,7 @@
   </head>
   <body>
 
-    <section>
+    <section id="content" class="full-section menu-animated">
 
       <header class="bar bar-header bar-dark">
         <a href="#" class="button"><i class="icon-reorder"></i></a>
@@ -21,12 +21,67 @@
         <h1>Swipe me, side to side</h1>
       </main>
     </section>
+    <section id="my-left-panel" class="menu menu-left">
+      <ul class="list">
+      </ul>
+    </section>
+    <section id="my-right-panel" class="menu menu-right">
+      <ul class="list">
+      </ul>
+    </section>
 
     <script src="../../js/ionic-events.js"></script>
     <script src="../../js/ionic-gestures.js"></script>
-    <script src="TabBar.js"></script>
-    <script src="TabBarController.js"></script>
+    <script src="SideMenu.js"></script>
+    <script src="SideMenuController.js"></script>
     <script>
+      var Controller = function(opts) {
+        var _this = this;
+
+        this.el = opts.el;
+        this.animateClass = opts.animateClass;
+
+        // Bind release and drag listeners
+        window.ionic.onGesture('drag', function(e) {
+          _this.onDrag && _this.onDrag(e);
+        }, this.el);
+
+        window.ionic.onGesture('release', function(e) {
+          _this.endDrag && _this._endDrag(e);
+        }, this.el);
+      };
+      Controller.prototype = {
+        onDrag: function(e) {},
+        endDrag: function(e) {},
+        getTranslateX: function() {
+          var r = /translate3d\((-?.+)px/;
+          var d = r.exec(this.el.style.webkitTransform);
+
+          if(d && d.length > 0) {
+            return parseFloat(d[1]);
+          }
+          return 0;
+        },
+        setTranslateX: function(amount) {
+          this.el.style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
+        },
+        enableAnimation: function() {
+          this.el.classList.add(this.animateClass);
+        },
+        disableAnimation: function() {
+          this.el.classList.remove(this.animateClass);
+        }
+      };
+
+      var l = new SideMenu({ el: document.getElementById('my-left-panel'), width: 270 });
+      var r = new SideMenu({ el: document.getElementById('my-right-panel'), width: 270 });
+      var c = new Controller({ el: document.createElement('content') });
+
+      var ctrl = new SideMenuController({
+        left: l,
+        right: r,
+        content: c
+      });
     </script>
   </body>
 </html>

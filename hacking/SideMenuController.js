@@ -18,7 +18,6 @@
     this.content.endDrag = function(e) {
       _this._endDrag(e);
     };
-
   };
 
   SideMenuController.prototype = {

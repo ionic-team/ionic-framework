@@ -100,8 +100,8 @@
   ionic.on = function() { ionic.EventController.on.apply(ionic.EventController, arguments); }
   ionic.off = function() { ionic.EventController.off.apply(ionic.EventController, arguments); }
   ionic.trigger = function() { ionic.EventController.trigger.apply(ionic.EventController.trigger, arguments); }
-  ionic.onGensture = function() { ionic.EventController.onGesture.apply(ionic.EventController.onGesture, arguments); }
-  ionic.offGensture = function() { ionic.EventController.offGesture.apply(ionic.EventController.offGesture, arguments); }
+  ionic.onGesture = function() { ionic.EventController.onGesture.apply(ionic.EventController.onGesture, arguments); }
+  ionic.offGesture = function() { ionic.EventController.offGesture.apply(ionic.EventController.offGesture, arguments); }
 
   // Set up various listeners
   window.addEventListener('click', ionic.EventController.handleClick);
