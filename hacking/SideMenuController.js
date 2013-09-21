@@ -18,6 +18,17 @@
     this.content.endDrag = function(e) {
       _this._endDrag(e);
     };
+
+    /*
+    // Bind release and drag listeners
+    window.ion.onGesture('release', function(e) {
+      _this._endDrag(e);
+    }, this.center);
+
+    window.ion.onGesture('drag', function(e) {
+      _this._handleDrag(e);
+    }, this.center);
+    */
   };
 
   SideMenuController.prototype = {
@@ -102,7 +113,6 @@
       // what the drag velocity is
       var ratio = this.getOpenRatio();
 
-
       if(ratio == 0)
         return;
 
@@ -115,36 +125,38 @@
       //this.openPercentage(0);
       //}
 
-      var sign = ratio && ratio / Math.abs(ratio);
-
-      // Left panel, More than positive half, too slow
-      if((ratio > 0.5 || ratio < -0.5) && velocityX < velocityThreshold) {
-        this.openPercentage(sign * 100);
-      }
-      // Left or Right Panel, Less than +/- half, too slow
-      else if(ratio <= 0.5 && ratio >= -0.5 && velocityX < velocityThreshold) {
+      // Going right, less than half, too slow (snap back)
+      if(ratio > 0 && ratio < 0.5 && direction == 'right' && velocityX < velocityThreshold) {
         this.openPercentage(0);
       }
 
-      // Left panel, Going left, quickly
-      else if(direction == 'left' && ratio >= 0 && velocityX >= velocityThreshold) {
-        this.openPercentage(0);
-      }
-
-      // Left panel, Going right, quickly
-      else if(direction == 'right' && ratio >= 0 && velocityX >= velocityThreshold) {
+      // Going left, more than half, too slow (snap back)
+      else if(ratio > 0.5 && direction == 'left' && velocityX < velocityThreshold) {
         this.openPercentage(100);
       }
 
-      // Right panel, Going left, quickly
-      else if(direction == 'left' && ratio <= 0 && velocityX >= velocityThreshold) {
-        this.openPercentage(-100);
+      // Going left, less than half, too slow (snap back)
+      else if(ratio < 0 && ratio > -0.5 && direction == 'left' && velocityX < velocityThreshold) {
+        this.openPercentage(0);
       }
 
-      // Right panel, Going right, quickly
-      else if(direction == 'right' && ratio <= 0 && velocityX >= velocityThreshold) {
-        this.openPercentage(0);
-      } else {
+      // Going right, more than half, too slow (snap back)
+      else if(ratio < 0.5 && direction == 'right' && velocityX < velocityThreshold) {
+        this.openPercentage(-100);
+      }
+      
+      // Going right, more than half, or quickly (snap open)
+      else if(direction == 'right' && ratio >= 0 && (ratio >= 0.5 || velocityX > velocityThreshold)) {
+        this.openPercentage(100);
+      }
+      
+      // Going left, more than half, or quickly (span open)
+      else if(direction == 'left' && ratio <= 0 && (ratio <= -0.5 || velocityX > velocityThreshold)) {
+        this.openPercentage(-100);
+      }
+      
+      // Snap back for safety
+      else {
         this.openPercentage(0);
       }
     },

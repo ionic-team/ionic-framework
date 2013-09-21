@@ -22,12 +22,10 @@
       </main>
     </section>
     <section id="my-left-panel" class="menu menu-left">
-      <ul class="list">
-      </ul>
+      <h1>LEFT</h1>
     </section>
     <section id="my-right-panel" class="menu menu-right">
-      <ul class="list">
-      </ul>
+      <h1>RIGHT</h1>
     </section>
 
     <script src="../../js/ionic-events.js"></script>
@@ -47,7 +45,7 @@
         }, this.el);
 
         window.ionic.onGesture('release', function(e) {
-          _this.endDrag && _this._endDrag(e);
+          _this.endDrag && _this.endDrag(e);
         }, this.el);
       };
       Controller.prototype = {
@@ -75,7 +73,7 @@
 
       var l = new SideMenu({ el: document.getElementById('my-left-panel'), width: 270 });
       var r = new SideMenu({ el: document.getElementById('my-right-panel'), width: 270 });
-      var c = new Controller({ el: document.createElement('content') });
+      var c = new Controller({ el: document.getElementById('content'), animateClass: 'menu-animated' });
 
       var ctrl = new SideMenuController({
         left: l,
