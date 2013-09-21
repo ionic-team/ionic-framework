@@ -15,12 +15,15 @@
   <body>
 
     <side-menu-controller>
-      <content has-header="true">
+      <div class="full-section" side-menu-content>
         <header class="bar bar-header bar-dark">
           <a href="#" class="button"><i class="icon-reorder"></i></a>
           <h1 class="title">Slide me</h1>
         </header>
-      </content>
+        <div class="content has-header">
+          <h1>Slide me side to side!</h1>
+        </div>
+      </div>
       <menu side="left">
         <h2>Left</h2>
       </menu>
@@ -28,6 +31,8 @@
         <h2>Right</h2>
       </menu>
     </side-menu-controller>
+    <script src="../../js/ionic-events.js"></script>
+    <script src="../../js/ionic-gestures.js"></script>
     <script src="SideMenuController.js"></script>
     <script src="SideMenuAngular.js"></script>
     <script>

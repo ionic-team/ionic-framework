@@ -1,21 +1,12 @@
-angular.module('ionic.ui', ['ngTouch'])
-
-.directive('content', function() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    scope: true,
-    template: '<div class="full-section menu-animated" ng-class="{\'has-header\': hasHeader, \'has-tabs\': hasTabs}" ng-transclude></div>',
-    compile: function(element, attr, transclude, navCtrl) {
-      return function($scope, $element, $attr) {
-        $scope.hasHeader = attr.hasHeader;
-      };
-    }
-  }
-})
+angular.module('ionic.ui', [])
 
 .controller('SideMenuCtrl', function($scope) {
+  var _this = this;
+
+  angular.extend(this, SideMenuController.prototype);
+
+  SideMenuController.call(this, {
+  });
 })
 
 .directive('sideMenuController', function() {
@@ -28,6 +19,26 @@ angular.module('ionic.ui', ['ngTouch'])
   }
 })
 
+.directive('sideMenuContent', function() {
+  return {
+    restrict: 'CA',
+    require: '^sideMenuController',
+    compile: function(element, attr, transclude, sideMenuCtrl) {
+      return function($scope, $element, $attr) {
+        window.ionic.onGesture('drag', function(e) {
+          sideMenuCtrl._handleDrag(e);
+        }, $element[0]);
+
+        window.ionic.onGesture('release', function(e) {
+          sideMenuCtrl._endDrag(e);
+        }, $element[0]);
+
+      };
+    }
+  }
+})
+
+
 .directive('menu', function() {
   return {
     restrict: 'E',
@@ -36,7 +47,7 @@ angular.module('ionic.ui', ['ngTouch'])
     transclude: true,
     scope: true,
     template: '<div class="menu menu-{{side}}" ng-transclude></div>',
-    compile: function(element, attr, transclude, navCtrl) {
+    compile: function(element, attr, transclude, sideMenuCtrl) {
       return function($scope, $element, $attr) {
         $scope.side = attr.side;
       };
