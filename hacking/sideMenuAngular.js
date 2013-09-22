@@ -8,16 +8,22 @@ angular.module('ionic.ui', [])
   SideMenuController.call(this, {
     left: {
       width: 270,
+      isEnabled: true,
       pushDown: function() {
+        $scope.leftZIndex = -1;
       },
       bringUp: function() {
+        $scope.leftZIndex = 0;
       }
     },
     right: {
       width: 270,
+      isEnabled: true,
       pushDown: function() {
+        $scope.rightZIndex = -1;
       },
       bringUp: function() {
+        $scope.rightZIndex = 0;
       }
     },
     content: {
@@ -35,14 +41,16 @@ angular.module('ionic.ui', [])
         return $scope.contentTranslateX || 0;
       },
       setTranslateX: function(amount) {
-        //this.el.style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
         $scope.contentTranslateX = amount;
+        $scope.$apply();
       },
       enableAnimation: function() {
         //this.el.classList.add(this.animateClass);
+        $scope.animationEnabled = true;
       },
       disableAnimation: function() {
         //this.el.classList.remove(this.animateClass);
+        $scope.animationEnabled = false;
       }
     }
   });
@@ -76,6 +84,16 @@ angular.module('ionic.ui', [])
 
         $scope.$watch('contentTranslateX', function(value) {
           console.log('Translate X changing', value);
+          $element[0].style.webkitTransform = 'translate3d(' + value + 'px, 0, 0)';
+        });
+
+        $scope.$watch('animationEnabled', function(isAnimationEnabled) {
+          if(isAnimationEnabled) {
+            $element[0].classList.add('menu-animated');
+          } else {
+            $element[0].classList.remove('menu-animated');
+          }
+
         });
       };
     }
