@@ -1,7 +1,7 @@
 <html ng-app="sideMenuTest">
   <head>
     <meta charset="utf-8">
-    <title>Nav Bars</title>
+    <title>Side Menus</title>
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -26,6 +26,11 @@
       </div>
       <menu side="left">
         <h2>Left</h2>
+        <ul class="list">
+          <a href="#" class="list-item" ng-repeat="item in list">
+            {{item.text}}
+          </a>
+        </ul>
       </menu>
       <menu side="right">
         <h2>Right</h2>

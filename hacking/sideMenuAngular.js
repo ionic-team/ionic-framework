@@ -83,7 +83,6 @@ angular.module('ionic.ui', [])
         }, $element[0]);
 
         $scope.$watch('contentTranslateX', function(value) {
-          console.log('Translate X changing', value);
           $element[0].style.webkitTransform = 'translate3d(' + value + 'px, 0, 0)';
         });
 
