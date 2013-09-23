@@ -1,0 +1,59 @@
+<html ng-app="ionic.photos">
+  <head>
+    <meta charset="utf-8">
+    <title>Photos</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../dist/ionic.css">
+    <link rel="stylesheet" href="app.css">
+    <style>
+      .swiperight {
+        -webkit-transition: 0.1s ease-in-out all;
+        -webkit-transform:translate3d(120%,0,0) ;
+      }
+      #remove-box {
+        width: 200px;
+        height: 200px;
+      }
+      .relative {
+        position: relative;
+      }
+      button {
+        width: 100px;
+        height: 100px;
+      }
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        background-color: red;
+      }
+    </style>
+    <script src="/vendor/angular/1.2.0rc2/angular-1.2.0rc2.min.js"></script>
+    <script src="/vendor/angular/1.2.0rc2/angular-touch.js"></script>
+  </head>
+  <body>
+    <tab-controller>
+      <div title="Home" icon="icon-home" class="tab-content">
+        <header class="bar bar-header bar-default">
+          <h1 class="title">Photos</h1>
+          <a href="#" class="button button-clear">Select</a>
+        </header>
+        <content has-header="true" has-tabs="true" ng-controller="PhotosCtrl">
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-3" ng-repeat="photo in photos">
+                Photo
+              </div>
+            </div>
+          </div>
+        </content>
+      </div>
+    </tab-controller>
+    <script src="app.js"></script>
+  </body>
+</html>
