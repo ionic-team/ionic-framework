@@ -119,4 +119,4 @@ TabBarController.prototype = {
   },
 }
 
-})(window.ionic);
+})(ionic = window.ionic || {});

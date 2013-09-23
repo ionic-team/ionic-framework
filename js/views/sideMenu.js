@@ -19,4 +19,4 @@
       this.el.style.zIndex = -1;
     }
   };
-})(window.ionic);
+})(ionic = window.ionic || {});

@@ -198,4 +198,4 @@ TabBar.prototype = {
   }
 };
 
-})(window.ionic);
+})(ionic = window.ionic || {});

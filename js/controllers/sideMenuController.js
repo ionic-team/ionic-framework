@@ -188,4 +188,4 @@
     }
   };
 
-})(window.ionic);
+})(ionic = window.ionic || {});
