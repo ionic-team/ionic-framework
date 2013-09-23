@@ -5,33 +5,42 @@
 [class^="icon-"],
 [class*=" icon-"] {
   display: inline;
+  margin-top: 0;
   width: auto;
   height: auto;
-  line-height: normal;
-  vertical-align: baseline;
   background-image: none;
   background-position: 0% 0%;
   background-repeat: repeat;
-  margin-top: 0;
+  vertical-align: baseline;
+  line-height: normal;
 }
 
-/* more sprites.less reset */
-.icon-white,
-.nav-pills > .active > a > [class^="icon-"],
-.nav-pills > .active > a > [class*=" icon-"],
-.nav-list > .active > a > [class^="icon-"],
-.nav-list > .active > a > [class*=" icon-"],
-.navbar-inverse .nav > .active > a > [class^="icon-"],
-.navbar-inverse .nav > .active > a > [class*=" icon-"],
-.dropdown-menu > li > a:hover > [class^="icon-"],
-.dropdown-menu > li > a:hover > [class*=" icon-"],
-.dropdown-menu > .active > a > [class^="icon-"],
-.dropdown-menu > .active > a > [class*=" icon-"],
-.dropdown-submenu:hover > a > [class^="icon-"],
-.dropdown-submenu:hover > a > [class*=" icon-"] {
-  background-image: none;
+.placeholder-icon {
+  input {
+    padding-left: 20px !important;
+  }
+
+  &:before {
+    position: absolute;
+    display: block;
+    color: $iconPlaceholder;
+    top: 16px;
+  }
 }
 
+.stacked-label .placeholder-icon {
+  input {
+    padding-left: 30px !important;
+  }
+
+  &:before {
+    position: absolute;
+    display: block;
+    color: $iconPlaceholder;
+    top: 57px;
+    left: 18px;
+  }
+}
 
 /* keeps Bootstrap styles with and without icons the same */
 .btn, .nav {
