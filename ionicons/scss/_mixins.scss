@@ -2,12 +2,12 @@
 // --------------------------
 
 @mixin icon($icon) {
-  @include icon-FontAwesome();
+  @include icon-Ionicon();
   content: $icon;
 }
 
-@mixin icon-FontAwesome() {
-  font-family: FontAwesome;
+@mixin icon-Ionicon() {
+  font-family: Ionicon;
   font-weight: normal;
   font-style: normal;
   text-decoration: inherit;

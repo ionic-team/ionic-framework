@@ -2,13 +2,13 @@
  * -------------------------- */
 
 @font-face {
-  font-family: 'FontAwesome';
-  src: url('#{$FontAwesomePath}/fontawesome-webfont.eot?v=#{$FontAwesomeVersion}');
-  src: url('#{$FontAwesomePath}/fontawesome-webfont.eot?#iefix&v=#{$FontAwesomeVersion}') format('embedded-opentype'),
-    url('#{$FontAwesomePath}/fontawesome-webfont.woff?v=#{$FontAwesomeVersion}') format('woff'),
-    url('#{$FontAwesomePath}/fontawesome-webfont.ttf?v=#{$FontAwesomeVersion}') format('truetype'),
-    url('#{$FontAwesomePath}/fontawesome-webfont.svg#fontawesomeregular?v=#{$FontAwesomeVersion}') format('svg');
-//  src: url('#{$FontAwesomePath}/FontAwesome.otf') format('opentype'); // used when developing fonts
+  font-family: 'Ionicon';
+  src: url('#{$IoniconPath}/ionicon-webfont.eot?v=#{$IoniconVersion}');
+  src: url('#{$IoniconPath}/ionicon-webfont.eot?#iefix&v=#{$IoniconVersion}') format('embedded-opentype'),
+    url('#{$IoniconPath}/ionicon-webfont.woff?v=#{$IoniconVersion}') format('woff'),
+    url('#{$IoniconPath}/ionicon-webfont.ttf?v=#{$IoniconVersion}') format('truetype'),
+    url('#{$IoniconPath}/ionicon-webfont.svg#ioniconsregular?v=#{$IoniconVersion}') format('svg');
+//  src: url('#{$IoniconPath}/Ionicon.otf') format('opentype'); // used when developing fonts
   font-weight: normal;
   font-style: normal;
 }

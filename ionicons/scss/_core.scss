@@ -3,7 +3,7 @@
 
 [class^="icon-"],
 [class*=" icon-"] {
-  @include icon-FontAwesome();
+  @include icon-Ionicon();
 }
 
 [class^="icon-"]:before,
