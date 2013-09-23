@@ -1,13 +1,14 @@
-(function(window, document, ion) {
-
-  ion.controllers = ion.controllers || {};
-
-  ion.controllers.ViewController = function(options) {
+(function(ionic) {
+  ionic.ViewController = function(options) {
+    this.init();
   };
 
-  ion.controllers.ViewController.prototype = {
+  ion.ViewController.prototype = {
+    // Initialize this view controller
+    init: function() {
+    },
     // Destroy this view controller, including all child views
     destroy: function() {
     }
   };
-})(this, document, ion = this.ion || {});
+})(this.ionic);
