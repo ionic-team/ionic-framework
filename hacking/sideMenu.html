@@ -30,8 +30,8 @@
 
     <script src="../../js/events.js"></script>
     <script src="../../js/gestures.js"></script>
-    <script src="SideMenu.js"></script>
-    <script src="SideMenuController.js"></script>
+    <script src="../../js/views/sideMenu.js"></script>
+    <script src="../../js/controllers/sideMenuController.js"></script>
     <script>
       var Controller = function(opts) {
         var _this = this;
@@ -71,11 +71,11 @@
         }
       };
 
-      var l = new SideMenu({ el: document.getElementById('my-left-panel'), width: 270 });
-      var r = new SideMenu({ el: document.getElementById('my-right-panel'), width: 270 });
+      var l = new ionic.ui.SideMenu({ el: document.getElementById('my-left-panel'), width: 270 });
+      var r = new ionic.ui.SideMenu({ el: document.getElementById('my-right-panel'), width: 270 });
       var c = new Controller({ el: document.getElementById('content'), animateClass: 'menu-animated' });
 
-      var ctrl = new SideMenuController({
+      var ctrl = new ionic.controllers.SideMenuController({
         left: l,
         right: r,
         content: c
