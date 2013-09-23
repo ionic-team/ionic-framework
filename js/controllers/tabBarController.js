@@ -1,6 +1,8 @@
 (function(ionic) {
 
-TabBarController = function(options) {
+ionic.controllers = ionic.controllers || {};
+
+ionic.controllers.TabBarController = function(options) {
   this.tabBar = options.tabBar;
 
   this._bindEvents();
@@ -20,7 +22,7 @@ TabBarController = function(options) {
   this.setSelectedController(0);
 };
 
-TabBarController.prototype = {
+ionic.controllers.TabBarController.prototype = {
   // Start listening for events on our tab bar
   _bindEvents: function() {
     var _this = this;

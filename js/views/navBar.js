@@ -1,42 +1,41 @@
 (function(ionic) {
+ionic.ui.NavBar = function(opts) {
+  this.el = opts.el;
 
-  NavBar = function(opts) {
-    this.el = opts.el;
+  this._titleEl = this.el.querySelector('.title');
+};
 
-    this._titleEl = this.el.querySelector('.title');
-  };
+ionic.ui.NavBar.prototype = {
+  shouldGoBack: function() {},
 
-  NavBar.prototype = {
-    shouldGoBack: function() {},
+  setTitle: function(title) {
+    if(!this._titleEl) {
+      return;
+    }
+    this._titleEl.innerHTML = title;
+  },
 
-    setTitle: function(title) {
-      if(!this._titleEl) {
-        return;
-      }
-      this._titleEl.innerHTML = title;
-    },
+  showBackButton: function(shouldShow) {
+    var _this = this;
 
-    showBackButton: function(shouldShow) {
-      var _this = this;
+    if(!this._currentBackButton) {
+      var back = document.createElement('a');
+      back.className = 'button back';
+      back.innerHTML = 'Back';
 
-      if(!this._currentBackButton) {
-        var back = document.createElement('a');
-        back.className = 'button back';
-        back.innerHTML = 'Back';
-
-        this._currentBackButton = back;
-        this._currentBackButton.onclick = function(event) {
-          _this.shouldGoBack && _this.shouldGoBack();
-        }
-      }
-
-      if(shouldShow && !this._currentBackButton.parentNode) {
-        // Prepend the back button
-        this.el.insertBefore(this._currentBackButton, this.el.firstChild);
-      } else if(!shouldShow && this._currentBackButton.parentNode) {
-        // Remove the back button if it's there
-        this._currentBackButton.parentNode.removeChild(this._currentBackButton);
+      this._currentBackButton = back;
+      this._currentBackButton.onclick = function(event) {
+        _this.shouldGoBack && _this.shouldGoBack();
       }
     }
-  };
+
+    if(shouldShow && !this._currentBackButton.parentNode) {
+      // Prepend the back button
+      this.el.insertBefore(this._currentBackButton, this.el.firstChild);
+    } else if(!shouldShow && this._currentBackButton.parentNode) {
+      // Remove the back button if it's there
+      this._currentBackButton.parentNode.removeChild(this._currentBackButton);
+    }
+  }
+};
 })(ionic = window.ionic || {});

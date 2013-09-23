@@ -1,11 +1,13 @@
 (function(ionic) {
 
-TabBarItem = function(el) {
+ionic.ui = ionic.ui || {};
+
+ionic.ui.TabBarItem = function(el) {
   this.el = el;
 
   this._buildItem();
 };
-TabBarItem.prototype = {
+ionic.ui.TabBarItem.prototype = {
   // Factory for creating an item from a given javascript object
   create: function(itemData) {
     var item = document.createElement('a');
@@ -74,7 +76,7 @@ TabBarItem.prototype = {
   }
 };
 
-TabBar = function(opts) {
+ionic.ui.TabBar = function(opts) {
   this.el = opts.el;
    
   this.items = [];
@@ -82,7 +84,7 @@ TabBar = function(opts) {
   this._buildItems();
 };
 
-TabBar.prototype = {
+ionic.ui.TabBar.prototype = {
   // get all the items for the TabBar
   getItems: function() {
     return this.items;
