@@ -136,12 +136,13 @@
 
     <script src="../../js/events.js"></script>
     <script src="../../js/gestures.js"></script>
+    <script src="../../js/views/tabBar.js"></script>
     <script src="../../js/controllers/tabBarController.js"></script>
     <script>
       // Grab the sections
       var tab = document.getElementById('tab-bar');
-      var controller = new ionic.controllers.TabController({
-        tab: tab
+      var controller = new ionic.controllers.TabBarController({
+        tabBar: new ionic.ui.TabBar({ el: tab })
       });
     </script>
   </body>
