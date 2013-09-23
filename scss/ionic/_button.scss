@@ -15,6 +15,12 @@
   &.button-icon {
     border: none;
     background: none;
+    padding: $button-clear-padding;
+  }
+
+  &.button-clear {
+    border: none;
+    background: none;
   }
 
   &.button-block {
@@ -45,12 +51,6 @@
   }
   &.button-dark {
     @include button-style($button-dark-bg, $button-dark-border, $white);
-  }
-
-  &.button-clear {
-    border: none;
-    background: none;
-    padding: $button-clear-padding;
   }
 
   &.button-icon {
