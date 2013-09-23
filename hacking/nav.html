@@ -20,10 +20,10 @@
       </main>
     </section>
 
-    <script src="../../js/ionic-events.js"></script>
-    <script src="../../js/ionic-gestures.js"></script>
-    <script src="NavBar.js"></script>
-    <script src="NavController.js"></script>
+    <script src="../../js/events.js"></script>
+    <script src="../../js/gestures.js"></script>
+    <script src="../../js/views/navBar.js"></script>
+    <script src="../../js/controllers/navController.js"></script>
     <script>
       // Grab the sections
       var navBar = document.getElementById('nav-bar');
@@ -80,8 +80,8 @@
 
       var pages = [page1, page2, page3, page4];
 
-      var c = new NavController({
-        navBar: new NavBar({ el: navBar }),
+      var c = new ionic.controllers.NavController({
+        navBar: new ionic.ui.NavBar({ el: navBar }),
         content: content
       });
       c.push(page1);

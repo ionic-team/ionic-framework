@@ -1,4 +1,7 @@
 (function(ionic) {
+
+ionic.ui = ionic.ui || {};
+
 ionic.ui.NavBar = function(opts) {
   this.el = opts.el;
 
