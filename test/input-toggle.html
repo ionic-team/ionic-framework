@@ -31,7 +31,7 @@
           <li class="list-item">
             Do Not Disturb
             <label class="toggle">
-               <input type="checkbox" name="doNotDistrube" checked="checked">
+               <input type="checkbox" name="doNotDisturb" checked="checked">
                <div class="slide">
                 <div class="switch"></div>
               </div>
@@ -39,10 +39,47 @@
           </li>
         </ul>
 
-        <p><a class="button button-secondary" href="index.html">Homepage</a></p>
+        <div class="inset">
+          <p>
+            <button id="btnTest1">Toggle Airplane Mode</button>
+          </p>
+
+          <p>
+            <button id="btnTest2">Toggle Do Not Disturb</button>
+          </p>
+
+          <p><a class="button button-secondary" href="index.html">Homepage</a></p>
+
+        </div>
       </main>
 
     </section>
+
+    <!-- for testing only -->
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script>
+
+      $("#btnTest1").click(function(){
+        var toggle = $("[name='airplaneMode']")
+        if( toggle.prop("checked") ) {
+          toggle.prop("checked", false);
+        } else {
+          toggle.prop("checked", true);
+        }
+        return;
+      });
+
+      $("#btnTest2").click(function(){
+        var toggle = $("[name='doNotDisturb']")
+        if( toggle.prop("checked") ) {
+          toggle.prop("checked", false);
+        } else {
+          toggle.prop("checked", true);
+        }
+        return;
+      });
+
+    </script>
 
   </body>
 </html>
