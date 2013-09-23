@@ -3,21 +3,21 @@
 // -------------------------------
 
 /* hide a radio button's icon by default */
-.radio-content {
+.radio-item {
   [class^="icon-"],
   [class*=" icon-"] {
     display: none;
   }
 }
 
-.radio-item input {
+.radio-list input[type="radio"] {
   /* hide any radio button inputs elements (the ugly circles) */
   display: none;
 
   /* when this radio-item is checked */
-  &:checked + .radio-content {
+  &:checked + .radio-item {
 
-    /* show the radio-content icon when checked */
+    /* show the radio-item icon when checked */
     [class^="icon-"],
     [class*=" icon-"] {
       position: absolute;
