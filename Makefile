@@ -11,3 +11,6 @@ cordova:
 
 watch:
 	@sass --watch scss/ionic.scss:dist/ionic.css
+
+watch-ionicons:
+	@sass --watch ionicons/scss/ionicons.scss:dist/ionicons.css
