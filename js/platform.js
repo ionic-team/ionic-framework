@@ -25,7 +25,9 @@
     // Check if we are running in Cordova, which will have
     // window.device available.
     isCordova: function() {
-      return 'device' in window;
+      return (window.cordova || window.PhoneGap || window.phonegap);
+      //&& /^file:\/{3}[^\/]/i.test(window.location.href) 
+      //&& /ios|iphone|ipod|ipad|android/i.test(navigator.userAgent);
     },
     isIOS7: function() {
       if(!window.device) {
