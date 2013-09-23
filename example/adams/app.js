@@ -1,2 +1,0 @@
-
-document.addEventListener('ontouchstart', function() {});
