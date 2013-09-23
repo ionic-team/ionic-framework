@@ -32,7 +32,7 @@
       <div id="start" ng-switch-when="splash" class="pane">
       </div>
       <div id="login" ng-switch-when="login" ng-controller="LoginCtrl" class="pane">
-        <main class="content content-padded has-header">
+        <main class="content padded has-header">
           <div class="container" style="text-align: center">
             <h1>ToDerp</h1>
             <h3>Finish your Top Three Tasks Today</h3>
@@ -62,7 +62,7 @@
           <a href="#" class="button" ng-click="setScreen('login')">Back</a>
           <h1 class="title">Sign up (it's free!)</h1>
         </header>
-        <main class="content content-padded has-header">
+        <main class="content padded has-header">
           <form class="form-horizontal" ng-submit="trySignup(signupForm)">
             <div class="input-group inset">
               <label class="input-wrapper row">
@@ -87,7 +87,7 @@
           <a href="#" class="button button-icon"><i class="icon-reorder"></i></a>
           <h1 class="title">Your Tasks</h1>
         </header>
-        <main class="content content-padded has-header">
+        <main class="content padded has-header">
           <form ng-submit="addTask(task)">
             <input type="text" ng-model="task.text">
             <button type="submit" class="button button-block button-success">Add</button>

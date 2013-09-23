@@ -53,7 +53,7 @@ textarea {
   border-bottom: $input-border-width solid $input-border-color;
   background-color: $input-bg;
 }
-.content-padded > .input-group,
+.padded > .input-group,
 .input-group.inset {
   @include border-radius($input-border-radius);
   border-right: $input-border-width solid $input-border-color;

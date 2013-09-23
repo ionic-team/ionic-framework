@@ -40,22 +40,12 @@ body {
   bottom: 0;
   left: 0;
   overflow: auto;
-  // TODO: Fix the dynamic content height issue
-  //height: 100%;
 }
 /* Hack to force all relatively and absolutely positioned elements still render while scrolling
    Note: This is a bug for "-webkit-overflow-scrolling: touch" (via ratchet) */
-.content > *, .content-padded > * {
+.content > * {
   -webkit-transform: translateZ(0px);
           transform: translateZ(0px);
-}
-
-.content-padded {
-  padding: $content-padding;
-}
-
-.inset {
-  margin: $inset-margin;
 }
 
 // Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
@@ -71,10 +61,6 @@ body {
 // Specify that a content area will have tabs
 .has-tabs {
   bottom: $tabs-height;
-}
-
-.rounded {
-  border-radius: $border-radius-base;
 }
 
 .page, .full-section {
