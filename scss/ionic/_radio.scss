@@ -1,0 +1,29 @@
+
+// Radio Buttons
+// -------------------------------
+
+/* hide a radio button's icon by default */
+.radio-content {
+  [class^="icon-"],
+  [class*=" icon-"] {
+    display: none;
+  }
+}
+
+.radio-item input {
+  /* hide any radio button inputs elements (the ugly circles) */
+  display: none;
+
+  /* when this radio-item is checked */
+  &:checked + .radio-content {
+
+    /* show the radio-content icon when checked */
+    [class^="icon-"],
+    [class*=" icon-"] {
+      position: absolute;
+      top: 16px;
+      right: $content-padding;
+      display: inline;
+    }
+  }
+}

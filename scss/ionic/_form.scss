@@ -236,31 +236,6 @@ textarea {
 }
 
 
-// Radio Buttons
-// -------------------------------
-
-/* hide a radio button's icon by default */
-.radio-item {
-  [class^="icon-"],
-  [class*=" icon-"] {
-    display: none;
-  }
-}
-
-.input-wrapper input[type="radio"] {
-  /* hide any radio button inputs (the ugly circles) */
-  display: none;
-
-  /* when this radio-item is checked */
-  &:checked + .radio-item {
-    [class^="icon-"],
-    [class*=" icon-"] {
-      display: inline;
-    }
-  }
-}
-
-
 // DISABLED STATE
 // -------------------------------
 
