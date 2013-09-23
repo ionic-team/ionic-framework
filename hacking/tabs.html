@@ -45,10 +45,10 @@
       <nav id="tab-bar" class="tabs tabs-success"></nav>
     </section>
 
-    <script src="../../js/ionic-events.js"></script>
-    <script src="../../js/ionic-gestures.js"></script>
-    <script src="TabBar.js"></script>
-    <script src="TabBarController.js"></script>
+    <script src="../../js/events.js"></script>
+    <script src="../../js/gestures.js"></script>
+    <script src="../../js/views/tabBar.js"></script>
+    <script src="../../js/controllers/tabBarController.js"></script>
     <script>
       // Grab the sections
       var tab = document.getElementById('tab-bar');
@@ -103,8 +103,8 @@
       c4.title = 'Cats';
       c4.icon = 'icon-minus';
 
-      var c = new TabBarController({
-        tabBar: new TabBar({ el: tab }),
+      var c = new ionic.controllers.TabBarController({
+        tabBar: new ionic.ui.TabBar({ el: tab }),
         controllers: [ c1, c2, c3, c4 ]
       });
     </script>
