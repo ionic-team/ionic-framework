@@ -10,7 +10,7 @@
  * Portions lovingly adapted from github.com/maker/ratchet and github.com/alexgibson/tap.js - thanks guys!
  */
 
-(function(window, document, ion) {
+(function(ionic) {
   ionic.EventController = {
     VIRTUALIZED_EVENTS: ['tap', 'swipe', 'swiperight', 'swipeleft', 'drag', 'hold', 'release'],
 
@@ -106,4 +106,4 @@
   // Set up various listeners
   window.addEventListener('click', ionic.EventController.handleClick);
 
-})(this, document, ionic = this.ionic || {});
+})(window.ionic);

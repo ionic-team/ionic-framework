@@ -1,4 +1,4 @@
-(function(window, document, ionic) {
+(function(ionic) {
 
 TabBarItem = function(el) {
   this.el = el;
@@ -198,4 +198,4 @@ TabBar.prototype = {
   }
 };
 
-})(this, document, this.ionic || {});
+})(window.ionic);

@@ -1,4 +1,4 @@
-(function(window, document, ionic) {
+(function(ionic) {
 
 TabBarController = function(options) {
   this.tabBar = options.tabBar;
@@ -119,4 +119,4 @@ TabBarController.prototype = {
   },
 }
 
-})(this, document, ion = this.ionic || {});
+})(window.ionic);

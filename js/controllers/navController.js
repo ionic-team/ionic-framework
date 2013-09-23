@@ -1,4 +1,4 @@
-(function(window, document, ionic) {
+(function(ionic) {
   NavController = function(opts) {
     var _this = this;
 
@@ -102,4 +102,4 @@
     },
 
   };
-})(this, document, this.ionic || {});
+})(window.ionic);

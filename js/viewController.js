@@ -11,4 +11,4 @@
     destroy: function() {
     }
   };
-})(this.ionic);
+})(window.ionic);

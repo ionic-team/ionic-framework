@@ -1,4 +1,4 @@
-(function(window, document, ionic) {
+(function(ionic) {
 
   SideMenuController = function(options) {
     var _this = this;
@@ -188,4 +188,4 @@
     }
   };
 
-})(this, document, ion = this.ionic || {});
+})(window.ionic);

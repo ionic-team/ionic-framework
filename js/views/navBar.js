@@ -1,4 +1,4 @@
-(function(window, document, ionic) {
+(function(ionic) {
 
   NavBar = function(opts) {
     this.el = opts.el;
@@ -39,5 +39,4 @@
       }
     }
   };
-})(this, document, ion = this.ionic || {});
-
+})(window.ionic);

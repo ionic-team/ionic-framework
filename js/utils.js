@@ -1,6 +1,6 @@
-(function(window, document, ion) {
+(function(ionic) {
   
-  ion.Utils = {
+  ionic.Utils = {
     /**
      * extend method,
      * also used for cloning when dest is an empty object
@@ -19,4 +19,4 @@
       return dest;
     },
   }
-})(this, document, ion = this.ion || {});
+})(window.ionic);

@@ -1,4 +1,4 @@
-(function(window, document, ionic) {
+(function(ionic) {
   SideMenu = function(opts) {
     this.el = opts.el;
     this.width = opts.width;
@@ -19,4 +19,4 @@
       this.el.style.zIndex = -1;
     }
   };
-})(this, document, ion = this.ionic || {});
+})(window.ionic);

@@ -2,9 +2,9 @@
   * Simple gesture controllers with some common gestures that emit
   * gesture events.
   *
-  * Ported from github.com/EightMedia/ionic.Gestures.js - thanks!
+  * Ported from github.com/EightMedia/hammer.js - thanks!
   */
-(function(window, document, ionic) {
+(function(ionic) {
   
   /**
    * ionic.Gestures
@@ -1425,4 +1425,4 @@
       }
     }
   };
-})(this, document, ionic = this.ionic || {});
+})(window.ionic);
