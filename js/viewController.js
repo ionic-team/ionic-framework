@@ -3,7 +3,7 @@
     this.init();
   };
 
-  ion.ViewController.prototype = {
+  ionic.ViewController.prototype = {
     // Initialize this view controller
     init: function() {
     },

@@ -5,14 +5,16 @@ function initalize() {
   document.removeEventListener( "DOMContentLoaded", initalize, false );
   window.removeEventListener( "load", initalize, false );
 
+  /*
   // trigger that the DOM is ready
-  ion.trigger("ready");
+  ionic.trigger("ready");
 
   // trigger that the start page is in view
-  ion.trigger("pageview");
+  ionic.trigger("pageview");
 
   // trigger that the webapp has been initalized
-  ion.trigger("initalized");
+  ionic.trigger("initalized");
+  */
 }
 
 // When the DOM is ready, initalize the webapp
