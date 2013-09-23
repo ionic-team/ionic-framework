@@ -92,7 +92,9 @@ textarea {
   background-color: transparent;
 }
 
-.input-group.stacked-label input {
+.input-group.stacked-label input,
+.input-group.stacked-label textarea
+{
   @include border-radius($input-border-radius);
   overflow: hidden;
   padding: 4px 8px 3px;
