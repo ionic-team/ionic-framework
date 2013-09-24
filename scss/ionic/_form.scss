@@ -243,16 +243,16 @@ input[type="range"] {
   margin-top: 20px;
   margin-bottom: 20px;
   width: auto;
-  height: 4px;
+  height: $range-track-height;
   outline: none;
-  border-radius: 4px;
-  background-color: #b3b3b4;
+  border-radius: $range-track-height;
+  background-color: $range-track-color;
   -webkit-appearance: none !important;
 
   &::-webkit-slider-thumb {
-    width: $toggle-switch-width;
-    height: $toggle-switch-height;
-    border-radius: $toggle-switch-radius;
+    width: $range-slider-width;
+    height: $range-slider-height;
+    border-radius: $range-slider-border-radius;
     background-color: $toggle-switch-off-bg-color;
     box-shadow: 0 0 2px rgba(0,0,0,.5), 0 5px 6px rgba(0,0,0,0.25);
     -webkit-appearance: none !important;

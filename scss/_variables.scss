@@ -137,6 +137,58 @@ $input-group-addon-bg:            $gray-lighter !default;
 $input-group-addon-border-color:  $input-border-color !default;
 
 
+// Toggle
+// -------------------------------
+
+$toggle-width:                    54px;
+$toggle-height:                   32px;
+$toggle-border-width:             2px;
+$toggle-border-radius:            20px;
+
+$toggle-switch-radius:            20px;
+
+$toggle-off-bg-color:             $white;
+$toggle-off-border-color:         #ddd;
+
+$toggle-on-bg-color:              #4bd863;
+$toggle-on-border-color:          $toggle-on-bg-color;
+
+$toggle-switch-off-bg-color:      $white;
+$toggle-switch-on-bg-color:       $toggle-switch-off-bg-color;
+
+$toggle-transition-duration:      .3s;
+
+
+// Range
+// -------------------------------
+
+$range-track-height:           4px;
+$range-track-color:            #ccc;
+$range-slider-width:           20px;
+$range-slider-height:          20px;
+$range-slider-border-radius:   10px;
+
+
+// Form States and Alerts
+// -------------------------------
+
+$warning-text:       #c09853;
+$warning-bg:         #fcf8e3;
+$warning-border:     darken(adjust-hue($warning-bg, -10), 3%);
+
+$error-text:         #b94a48;
+$error-bg:           #f2dede;
+$error-border:       darken(adjust-hue($error-bg, -10), 3%);
+
+$success-text:       #468847;
+$success-bg:         #dff0d8;
+$success-border:     darken(adjust-hue($success-bg, -10), 5%);
+
+$info-text:          #3a87ad;
+$info-bg:            #d9edf7;
+$info-border:        darken(adjust-hue($info-bg, -10), 7%);
+
+
 // Buttons
 // -------------------------------
 
@@ -222,6 +274,7 @@ $bar-danger-border-color:     #bc4435;
 $bar-dark-bg:                 #444;
 $bar-dark-border-color:       #111;
 
+
 // Tabs
 // -------------------------------
 $tabs-height:                 49px !default;
@@ -281,51 +334,6 @@ $list-danger-border: $brand-danger;
 
 $list-dark-background: $brand-dark;
 $list-dark-border: $brand-dark;
-
-
-// Form States and Alerts
-// -------------------------------
-
-$warning-text:       #c09853;
-$warning-bg:         #fcf8e3;
-$warning-border:     darken(adjust-hue($warning-bg, -10), 3%);
-
-$error-text:         #b94a48;
-$error-bg:           #f2dede;
-$error-border:       darken(adjust-hue($error-bg, -10), 3%);
-
-$success-text:       #468847;
-$success-bg:         #dff0d8;
-$success-border:     darken(adjust-hue($success-bg, -10), 5%);
-
-$info-text:          #3a87ad;
-$info-bg:            #d9edf7;
-$info-border:        darken(adjust-hue($info-bg, -10), 7%);
-
-
-// Toggle
-// -------------------------------
-
-$toggle-width:                    54px;
-$toggle-height:                   32px;
-$toggle-border-width:             2px;
-$toggle-border-radius:            20px;
-
-$toggle-switch-width:             $toggle-height - 4px;
-$toggle-switch-height:            $toggle-switch-width;
-$toggle-switch-radius:            50%;
-$toggle-switch-on-position:       $toggle-width - $toggle-switch-width - ($toggle-border-width * 2);
-
-$toggle-off-bg-color:             $gray-light;
-$toggle-off-border-color:         $toggle-off-bg-color;
-
-$toggle-on-bg-color:              $blue-dark;
-$toggle-on-border-color:          $toggle-on-bg-color;
-
-$toggle-switch-off-bg-color:      $white;
-$toggle-switch-on-bg-color:       $toggle-switch-off-bg-color;
-
-$toggle-transition-duration:      .1s;
 
 
 // Menus
