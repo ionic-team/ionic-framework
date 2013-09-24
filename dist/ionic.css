@@ -2140,11 +2140,11 @@ a.button {
 }
 */
 .slide-in-up.enter {
-  -webkit-transition: -webkit-transform 0.25s, opacity 0.25s;
-  transition: transform 0.25s, opacity 0.25s;
+  -webkit-transition: -webkit-transform 0.4s, opacity 0.4s;
+  transition: transform 0.4s, opacity 0.4s;
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
-  -webkit-transition-timing-function: cubic-bezier(0.1, 0.5, 0.1, 1); }
+  -webkit-transition-timing-function: cubic-bezier(0.1, 0.6, 0.1, 1); }
 .slide-in-up.enter-active {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0); }

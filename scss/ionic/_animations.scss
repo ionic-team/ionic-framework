@@ -1,5 +1,5 @@
-$bezier-function: cubic-bezier(.1, .5, .1, 1);
-
+$bezier-function: cubic-bezier(.1, .6, .1, 1);
+ 
 /*
 .slide-in-up.enter {
   -webkit-transform: translate3d(0, 100%, 0);
@@ -12,8 +12,8 @@ $bezier-function: cubic-bezier(.1, .5, .1, 1);
 
 .slide-in-up {
   &.enter {
-    -webkit-transition: -webkit-transform .25s, opacity .25s;
-            transition:         transform .25s, opacity .25s;
+    -webkit-transition: -webkit-transform .4s, opacity .4s;
+            transition:         transform .4s, opacity .4s;
 
     -webkit-transform: translate3d(0, 100%, 0);
             transform: translate3d(0, 100%, 0);
