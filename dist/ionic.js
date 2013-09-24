@@ -164,11 +164,11 @@ if ( document.readyState === "complete" ) {
         || e.metaKey
         || e.ctrlKey
         //|| isScrolling
-        || location.protocol !== target.protocol
-        || location.host     !== target.host
-        // Not sure abotu this one
-        //|| !target.hash && /#/.test(target.href)
-        || target.hash && target.href.replace(target.hash, '') === location.href.replace(location.hash, '')
+        // || location.protocol !== target.protocol
+        // || location.host     !== target.host
+        // // Not sure abotu this one
+        // //|| !target.hash && /#/.test(target.href)
+        // || target.hash && target.href.replace(target.hash, '') === location.href.replace(location.hash, '')
         //|| target.getAttribute('data-ignore') == 'push'
       ) {
         // Allow it
