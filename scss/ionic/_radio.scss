@@ -9,6 +9,9 @@
     display: none;
   }
 }
+.radio-list label.list-item {
+  cursor: pointer;
+}
 
 .radio-list input[type="radio"] {
   /* hide any radio button inputs elements (the ugly circles) */
