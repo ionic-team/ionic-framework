@@ -6,6 +6,7 @@
   position: fixed; 
 
   z-index: $zindex-modal;
+  visibility: hidden;
 
   top: 0;
 
@@ -16,7 +17,7 @@
 
   background-color: $modal-bg-color;
 
-  // Start it hidden
+  // Start hidden
   opacity: 0;
 
   // Start it down low
@@ -25,6 +26,8 @@
 
   // Active modal
   &.active {
+    visibility: visible;
+
     opacity: 1;
     height: 100%;
     // Put it up

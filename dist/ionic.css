@@ -1436,6 +1436,7 @@ address {
 .modal {
   position: fixed;
   z-index: 10;
+  visibility: hidden;
   top: 0;
   width: 100%;
   min-height: 100%;
@@ -1445,6 +1446,7 @@ address {
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0); }
   .modal.active {
+    visibility: visible;
     opacity: 1;
     height: 100%;
     -webkit-transform: translate3d(0, 0, 0);
@@ -2146,7 +2148,7 @@ a.button {
   transition: transform 0.25s, opacity 1ms 0.25s;
   -webkit-transition-timing-function: cubic-bezier(0.1, 0.5, 0.1, 1); }
 
-.slide-in-up.active {
+.slide-in-up.enter {
   -webkit-transition: -webkit-transform 0.25s;
   transition: transform 0.25s;
   -webkit-transition-timing-function: cubic-bezier(0.1, 0.5, 0.1, 1); }

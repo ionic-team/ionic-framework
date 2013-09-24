@@ -20,7 +20,7 @@ $bezier-function: cubic-bezier(.1, .5, .1, 1);
   -webkit-transition-timing-function: $bezier-function;
 }
 
-.slide-in-up.active {
+.slide-in-up.enter {
   -webkit-transition: -webkit-transform .25s;
           transition:         transform .25s;
   -webkit-transition-timing-function: $bezier-function;

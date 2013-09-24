@@ -41,14 +41,17 @@
 
       ionic.on('tap', function(e) {
         var modal = document.getElementById('modal');
-        modal.classList.add('active');
+        //modal.classList.add('active');
+        ionic.Animator.animate(modal, function() {
+          console.log('Animation finished');
+        });
         return false;
       }, open);
 
       var closer = document.getElementById('modal-closer');
       ionic.on('tap', function(e) {
         var modal = document.getElementById('modal');
-        modal.classList.remove('active');
+        //modal.classList.remove('active');
         return false;
       }, closer);
     </script>

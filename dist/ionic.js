@@ -32,9 +32,7 @@ if ( document.readyState === "complete" ) {
     detect: function() {
       var platforms = [];
 
-      console.log('Checking platforms');
       var platform = this._checkPlatforms(platforms);
-      console.log('Got platforms', platforms);
 
       for(var i = 0; i < platforms.length; i++) {
         document.body.classList.add('platform-' + platforms[i]);
@@ -53,7 +51,9 @@ if ( document.readyState === "complete" ) {
     // Check if we are running in Cordova, which will have
     // window.device available.
     isCordova: function() {
-      return 'device' in window;
+      return (window.cordova || window.PhoneGap || window.phonegap);
+      //&& /^file:\/{3}[^\/]/i.test(window.location.href) 
+      //&& /ios|iphone|ipod|ipad|android/i.test(navigator.userAgent);
     },
     isIOS7: function() {
       if(!window.device) {
@@ -1621,6 +1621,21 @@ if ( document.readyState === "complete" ) {
       if(ev.eventType ==  ionic.Gestures.EVENT_END) {
         inst.trigger(this.name, ev);
       }
+    }
+  };
+})(ionic = window.ionic || {});
+;(function(ionic) {
+  ionic.Animator = {
+    animate: function(element, fn) {
+      var endFunc = function() {
+        console.log('Animation finished for element', element);
+        element.removeEventListener('webkitTransitionEnd', endFunc);
+        element.removeEventListener('transitionEnd', endFunc);
+      };
+      element.addEventListener('webkitTransitionEnd', endFunc);
+      element.addEventListener('transitionEnd', endFunc);
+
+      element.classList.add('enter');
     }
   };
 })(ionic = window.ionic || {});

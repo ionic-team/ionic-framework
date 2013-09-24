@@ -4,9 +4,7 @@
     detect: function() {
       var platforms = [];
 
-      console.log('Checking platforms');
       var platform = this._checkPlatforms(platforms);
-      console.log('Got platforms', platforms);
 
       for(var i = 0; i < platforms.length; i++) {
         document.body.classList.add('platform-' + platforms[i]);
