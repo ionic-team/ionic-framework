@@ -11,28 +11,25 @@ $bezier-function: cubic-bezier(.1, .5, .1, 1);
 */
 
 .slide-in-up {
-  -webkit-transform: translate3d(0, 100%, 0);
-          transform: translate3d(0, 100%, 0);
-
-  -webkit-transition-timing-function: $bezier-function;
-
   &.enter {
+    -webkit-transition: -webkit-transform .25s, opacity .25s;
+            transition:         transform .25s, opacity .25s;
 
-    -webkit-transition: -webkit-transform .25s, opacity 1ms .25s;
-            transition:         transform .25s, opacity 1ms .25s;
+    -webkit-transform: translate3d(0, 100%, 0);
+            transform: translate3d(0, 100%, 0);
+
+    -webkit-transition-timing-function: $bezier-function;
 
   }
 
   &.enter-active {
-    -webkit-transition: -webkit-transform .25s;
-            transition:         transform .25s;
     -webkit-transform: translate3d(0, 0, 0);
             transform: translate3d(0, 0, 0);
   }
 
   &.leave {
-    -webkit-transition: -webkit-transform .25s, opacity 1ms .25s;
-            transition:         transform .25s, opacity 1ms .25s;
+    -webkit-transition: -webkit-transform .25s, opacity .25s;
+            transition:         transform .25s, opacity .25s;
   }
 
   &.leave-active {
