@@ -35,20 +35,22 @@
       </main>
     </div>
 
+    <script src="../dist/ionic.js"></script>
     <script>
       var open = document.getElementById('modal-opener');
-      open.addEventListener('click', function(e) {
+
+      ionic.on('tap', function(e) {
         var modal = document.getElementById('modal');
         modal.classList.add('active');
         return false;
-      });
+      }, open);
 
       var closer = document.getElementById('modal-closer');
-      closer.addEventListener('click', function(e) {
+      ionic.on('tap', function(e) {
         var modal = document.getElementById('modal');
         modal.classList.remove('active');
         return false;
-      });
+      }, closer);
     </script>
   </body>
 </html>
