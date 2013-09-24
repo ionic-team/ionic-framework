@@ -41,5 +41,16 @@
 
     </section>
 
+    <script>
+      // cache buster only for testing to make sure the page is always refreshed
+      for(var x=0; x<document.links.length; x++) {
+        document.links[x].href += "?r=" + Math.random();
+      }
+    </script>
+
+    <script src="../js/gestures.js"></script>
+    <script src="../js/events.js"></script>
+    <script src="../ext/simple/init.js"></script>
+
   </body>
 </html>
