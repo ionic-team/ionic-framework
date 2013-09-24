@@ -19,4 +19,4 @@
       return dest;
     },
   }
-})(ionic = window.ionic || {});
+})(window.ionic);

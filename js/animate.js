@@ -40,4 +40,4 @@
       };
     }
   };
-})(ionic = window.ionic || {});
+})(window.ionic);

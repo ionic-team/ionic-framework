@@ -1,14 +1,12 @@
 (function(ionic) {
 
-ionic.ui = ionic.ui || {};
-
-ionic.ui.NavBar = function(opts) {
+ionic.views.NavBar = function(opts) {
   this.el = opts.el;
 
   this._titleEl = this.el.querySelector('.title');
 };
 
-ionic.ui.NavBar.prototype = {
+ionic.views.NavBar.prototype = {
   shouldGoBack: function() {},
 
   setTitle: function(title) {
@@ -41,4 +39,4 @@ ionic.ui.NavBar.prototype = {
     }
   }
 };
-})(ionic = window.ionic || {});
+})(window.ionic);

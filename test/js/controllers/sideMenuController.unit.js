@@ -27,11 +27,11 @@ describe('SideMenuController', function() {
   };
 
   beforeEach(function() {
-    l = new SideMenu({ el: document.createElement('div'), width: 270 });
-    r = new SideMenu({ el: document.createElement('div'), width: 270 });
+    l = new ionic.views.SideMenu({ el: document.createElement('div'), width: 270 });
+    r = new ionic.views.SideMenu({ el: document.createElement('div'), width: 270 });
     c = new Controller({ el: document.createElement('div') });
 
-    ctrl = new SideMenuController({
+    ctrl = new ionic.controllers.SideMenuController({
       left: l,
       right: r,
       content: c

@@ -3,8 +3,8 @@ describe('TabBarController', function() {
 
   beforeEach(function() {
     var tabEl = $('<div class="tabs"></div>');
-    ctrl = new TabBarController({
-      tabBar: new TabBar({ 
+    ctrl = new ionic.controllers.TabBarController({
+      tabBar: new ionic.views.TabBar({ 
         el: tabEl.get(0)
       })
     });
@@ -65,8 +65,8 @@ describe('TabBarController', function() {
 
   it('Should allow cancelling Controller switch', function() {
     var tabEl = $('<div class="tabs"></div>');
-    ctrl = new TabBarController({
-      tabBar: new TabBar({ el: tabEl.get(0) }),
+    ctrl = new ionic.controllers.TabBarController({
+      tabBar: new ionic.views.TabBar({ el: tabEl.get(0) }),
       controllerWillChange: function(Controller) { return false; }
     });
 

@@ -1,13 +1,11 @@
 (function(ionic) {
 
-ionic.ui = ionic.ui || {};
-
-ionic.ui.TabBarItem = function(el) {
+ionic.views.TabBarItem = function(el) {
   this.el = el;
 
   this._buildItem();
 };
-ionic.ui.TabBarItem.prototype = {
+ionic.views.TabBarItem.prototype = {
   // Factory for creating an item from a given javascript object
   create: function(itemData) {
     var item = document.createElement('a');
@@ -21,7 +19,7 @@ ionic.ui.TabBarItem.prototype = {
     }
     item.appendChild(document.createTextNode(itemData.title));
 
-    return new ionic.ui.TabBarItem(item);
+    return new ionic.views.TabBarItem(item);
   },
 
 
@@ -76,7 +74,7 @@ ionic.ui.TabBarItem.prototype = {
   }
 };
 
-ionic.ui.TabBar = function(opts) {
+ionic.views.TabBar = function(opts) {
   this.el = opts.el;
    
   this.items = [];
@@ -84,7 +82,7 @@ ionic.ui.TabBar = function(opts) {
   this._buildItems();
 };
 
-ionic.ui.TabBar.prototype = {
+ionic.views.TabBar.prototype = {
   // get all the items for the TabBar
   getItems: function() {
     return this.items;
@@ -93,7 +91,7 @@ ionic.ui.TabBar.prototype = {
   // Add an item to the tab bar
   addItem: function(item) {
     // Create a new TabItem
-    var tabItem = ionic.ui.TabBarItem.prototype.create(item);
+    var tabItem = ionic.views.TabBarItem.prototype.create(item);
 
     this.appendItemElement(tabItem);
 
@@ -180,7 +178,7 @@ ionic.ui.TabBar.prototype = {
     var item, items = Array.prototype.slice.call(this.el.children);
 
     for(var i = 0, j = items.length; i < j; i += 1) {
-      item =  new ionic.ui.TabBarItem(items[i]);
+      item =  new ionic.views.TabBarItem(items[i]);
       this.items[i] = item;
       this._bindEventsOnItem(item);
     }
@@ -200,4 +198,4 @@ ionic.ui.TabBar.prototype = {
   }
 };
 
-})(ionic = window.ionic || {});
+})(window.ionic);

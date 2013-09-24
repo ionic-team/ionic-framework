@@ -17,15 +17,15 @@ describe('NavController', function() {
     navBarEl = document.createElement('div');
     contentEl = document.createElement('div');
 
-    ctrl = new NavController({
-      navBar: new NavBar({el: navBarEl }),
+    ctrl = new ionic.controllers.NavController({
+      navBar: new ionic.views.NavBar({el: navBarEl }),
       content: { el: contentEl }
     });
   });
 
   it('Should load controllers', function() {
-    ctrl = new NavController({
-      navBar: new NavBar({el: navBarEl }),
+    ctrl = new ionic.controllers.NavController({
+      navBar: new ionic.views.NavBar({el: navBarEl }),
       content: { el: contentEl },
       controllers: [{}]
     });

@@ -1,5 +1,9 @@
 window.ionic = {};
 
+// Create namespaces 
+ionic.controllers = {};
+ionic.views = {};
+
 function initalize() {
   // remove the ready listeners
   document.removeEventListener( "DOMContentLoaded", initalize, false );
@@ -64,7 +68,7 @@ if ( document.readyState === "complete" ) {
   }
 
   ionic.Platform.detect();
-})(ionic = window.ionic || {});
+})(window.ionic);
 ;(function(ionic) {
   
   ionic.Utils = {
@@ -86,7 +90,7 @@ if ( document.readyState === "complete" ) {
       return dest;
     },
   }
-})(ionic = window.ionic || {});
+})(window.ionic);
 ;/**
  * ion-events.js
  *
@@ -195,7 +199,7 @@ if ( document.readyState === "complete" ) {
   // Set up various listeners
   window.addEventListener('click', ionic.EventController.handleClick);
 
-})(ionic = window.ionic || {});
+})(window.ionic);
 ;/**
   * Simple gesture controllers with some common gestures that emit
   * gesture events.
@@ -1623,7 +1627,7 @@ if ( document.readyState === "complete" ) {
       }
     }
   };
-})(ionic = window.ionic || {});
+})(window.ionic);
 ;(function(ionic) {
   ionic.Animator = {
     animate: function(element, className, fn) {
@@ -1666,7 +1670,7 @@ if ( document.readyState === "complete" ) {
       };
     }
   };
-})(ionic = window.ionic || {});
+})(window.ionic);
 ;(function(ionic) {
   ionic.ViewController = function(options) {
     this.init();
@@ -1680,18 +1684,16 @@ if ( document.readyState === "complete" ) {
     destroy: function() {
     }
   };
-})(ionic = window.ionic || {});
+})(window.ionic);
 ;(function(ionic) {
 
-ionic.ui = ionic.ui || {};
-
-ionic.ui.NavBar = function(opts) {
+ionic.views.NavBar = function(opts) {
   this.el = opts.el;
 
   this._titleEl = this.el.querySelector('.title');
 };
 
-ionic.ui.NavBar.prototype = {
+ionic.views.NavBar.prototype = {
   shouldGoBack: function() {},
 
   setTitle: function(title) {
@@ -1724,18 +1726,18 @@ ionic.ui.NavBar.prototype = {
     }
   }
 };
-})(ionic = window.ionic || {});
+})(window.ionic);
 ;(function(ionic) {
 
-ionic.ui = ionic.ui || {};
+ionic.views = ionic.views || {};
 
-ionic.ui.SideMenu = function(opts) {
+ionic.views.SideMenu = function(opts) {
   this.el = opts.el;
   this.width = opts.width;
   this.isEnabled = opts.isEnabled || true;
 };
 
-ionic.ui.SideMenu.prototype = {
+ionic.views.SideMenu.prototype = {
   getFullWidth: function() {
     return this.width;
   },
@@ -1749,17 +1751,15 @@ ionic.ui.SideMenu.prototype = {
     this.el.style.zIndex = -1;
   }
 };
-})(ionic = window.ionic || {});
+})(window.ionic);
 ;(function(ionic) {
 
-ionic.ui = ionic.ui || {};
-
-ionic.ui.TabBarItem = function(el) {
+ionic.views.TabBarItem = function(el) {
   this.el = el;
 
   this._buildItem();
 };
-ionic.ui.TabBarItem.prototype = {
+ionic.views.TabBarItem.prototype = {
   // Factory for creating an item from a given javascript object
   create: function(itemData) {
     var item = document.createElement('a');
@@ -1773,7 +1773,7 @@ ionic.ui.TabBarItem.prototype = {
     }
     item.appendChild(document.createTextNode(itemData.title));
 
-    return new ionic.ui.TabBarItem(item);
+    return new ionic.views.TabBarItem(item);
   },
 
 
@@ -1828,7 +1828,7 @@ ionic.ui.TabBarItem.prototype = {
   }
 };
 
-ionic.ui.TabBar = function(opts) {
+ionic.views.TabBar = function(opts) {
   this.el = opts.el;
    
   this.items = [];
@@ -1836,7 +1836,7 @@ ionic.ui.TabBar = function(opts) {
   this._buildItems();
 };
 
-ionic.ui.TabBar.prototype = {
+ionic.views.TabBar.prototype = {
   // get all the items for the TabBar
   getItems: function() {
     return this.items;
@@ -1845,7 +1845,7 @@ ionic.ui.TabBar.prototype = {
   // Add an item to the tab bar
   addItem: function(item) {
     // Create a new TabItem
-    var tabItem = ionic.ui.TabBarItem.prototype.create(item);
+    var tabItem = ionic.views.TabBarItem.prototype.create(item);
 
     this.appendItemElement(tabItem);
 
@@ -1932,7 +1932,7 @@ ionic.ui.TabBar.prototype = {
     var item, items = Array.prototype.slice.call(this.el.children);
 
     for(var i = 0, j = items.length; i < j; i += 1) {
-      item =  new ionic.ui.TabBarItem(items[i]);
+      item =  new ionic.views.TabBarItem(items[i]);
       this.items[i] = item;
       this._bindEventsOnItem(item);
     }
@@ -1952,10 +1952,8 @@ ionic.ui.TabBar.prototype = {
   }
 };
 
-})(ionic = window.ionic || {});
+})(window.ionic);
 ;(function(ionic) {
-
-ionic.controllers = ionic.controllers || {};
 
 ionic.controllers.NavController = function(opts) {
   var _this = this;
@@ -2060,7 +2058,7 @@ ionic.controllers.NavController.prototype = {
   },
 
 };
-})(ionic = window.ionic || {});
+})(window.ionic);
 ;(function(ionic) {
 
 ionic.controllers = ionic.controllers || {};

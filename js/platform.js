@@ -36,4 +36,4 @@
   }
 
   ionic.Platform.detect();
-})(ionic = window.ionic || {});
+})(window.ionic);

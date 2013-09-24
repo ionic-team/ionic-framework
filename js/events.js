@@ -106,4 +106,4 @@
   // Set up various listeners
   window.addEventListener('click', ionic.EventController.handleClick);
 
-})(ionic = window.ionic || {});
+})(window.ionic);

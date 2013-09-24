@@ -7,7 +7,7 @@ describe('TabBar view', function() {
       '<a href="#" class="tab-item">Tab 2</a>' +
       '<a href="#" class="tab-item">Tab 3</a>');
 
-    tabBar = new TabBar({
+    tabBar = new ionic.views.TabBar({
       el: element.get(0)
     });
 
@@ -98,7 +98,7 @@ describe('TabBarItem view', function() {
       '<a href="#" class="tab-item">Tab 2</a>' +
       '<a href="#" class="tab-item">Tab 3</a>');
 
-    tabBar = new TabBar({
+    tabBar = new ionic.views.TabBar({
       el: element.get(0)
     });
 

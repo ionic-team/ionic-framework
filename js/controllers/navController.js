@@ -1,7 +1,5 @@
 (function(ionic) {
 
-ionic.controllers = ionic.controllers || {};
-
 ionic.controllers.NavController = function(opts) {
   var _this = this;
 
@@ -105,4 +103,4 @@ ionic.controllers.NavController.prototype = {
   },
 
 };
-})(ionic = window.ionic || {});
+})(window.ionic);

@@ -1,5 +1,9 @@
 window.ionic = {};
 
+// Create namespaces 
+ionic.controllers = {};
+ionic.views = {};
+
 function initalize() {
   // remove the ready listeners
   document.removeEventListener( "DOMContentLoaded", initalize, false );

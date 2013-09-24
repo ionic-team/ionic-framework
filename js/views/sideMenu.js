@@ -1,14 +1,14 @@
 (function(ionic) {
 
-ionic.ui = ionic.ui || {};
+ionic.views = ionic.views || {};
 
-ionic.ui.SideMenu = function(opts) {
+ionic.views.SideMenu = function(opts) {
   this.el = opts.el;
   this.width = opts.width;
   this.isEnabled = opts.isEnabled || true;
 };
 
-ionic.ui.SideMenu.prototype = {
+ionic.views.SideMenu.prototype = {
   getFullWidth: function() {
     return this.width;
   },
@@ -22,4 +22,4 @@ ionic.ui.SideMenu.prototype = {
     this.el.style.zIndex = -1;
   }
 };
-})(ionic = window.ionic || {});
+})(window.ionic);

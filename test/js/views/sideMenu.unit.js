@@ -3,7 +3,7 @@ describe('SideMenu', function() {
 
   beforeEach(function() {
     var d = document.createElement('div');
-    menu = new SideMenu({
+    menu = new ionic.views.SideMenu({
       el: d,
       width: 270
     });
