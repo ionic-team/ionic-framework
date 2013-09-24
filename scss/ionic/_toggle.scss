@@ -22,7 +22,7 @@
   background-color: $toggle-off-bg-color;
   cursor: pointer;
 
-  transition: $toggle-transition-duration + .1s ease;
+  transition: $toggle-transition-duration + .2s ease;
 }
 
 /* the switch (dot) thats inside the toggle's slide area */
@@ -38,7 +38,7 @@
   bottom: 0;
   right: $toggle-border-radius;
   
-  transition: .2s ease;
+  transition: $toggle-transition-duration ease;
   transition-property: left, right;
   transition-delay: 0s, .05s;
 }
@@ -51,7 +51,7 @@
   border-color: $toggle-on-border-color;
   background-color: #ccc;
   box-shadow: inset 0 0 0 $toggle-border-radius $toggle-on-bg-color;
-  transition: $toggle-transition-duration - .2s ease;
+  transition: $toggle-transition-duration ease;
 
   /* the switch when the toggle is "on" */
   .switch {

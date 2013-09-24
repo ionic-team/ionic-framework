@@ -2,9 +2,9 @@
 
   // add tap events to links
   function onLinkTap(e) {
-    window.location = this.href;
-    return false;
+    this.click();
   }
+  
   function addTapToLinks() {
     for(var x = 0; x < document.links.length; x++) {
       if(!document.links[x]._hasTap) {
@@ -13,7 +13,7 @@
       }
     }
   }
-  
+
   ionic.ResetTap = function() {
     addTapToLinks()
   };
