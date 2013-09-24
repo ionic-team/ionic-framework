@@ -3,7 +3,6 @@
 // --------------------------------------------------
 
 .alert {
-  margin-bottom: $line-height-base;
   padding: 8px 35px 8px 14px;
   border: 1px solid $warning-border;
   background-color: $warning-bg;
@@ -11,8 +10,6 @@
 }
 .alert,
 .alert h4 {
-  margin: 0;
-  // Specified for the h4 to prevent conflicts of changing $headingsColor
   color: $warning-text;
 }
 
