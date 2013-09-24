@@ -14,6 +14,7 @@ module.exports = function(grunt) {
           'js/utils.js',
           'js/events.js',
           'js/gestures.js',
+          'js/animate.js',
           'js/viewController.js',
           'js/views/**/*.js',
           'js/controllers/**/*.js'
@@ -32,6 +33,29 @@ module.exports = function(grunt) {
           document: true
         }
       }
+    },
+    sass: {
+      dist: {
+        files: {
+          'dist/ionic.css': 'scss/ionic.scss'
+        }
+      }
+    },
+    watch: {
+      scripts: {
+        files: ['js/**/*.js'],
+        tasks: ['concat'],
+        options: {
+          spawn: false
+        }
+      },
+      sass: {
+        files: ['scss/**/*.scss'],
+        tasks: ['sass'],
+        options: {
+          spawn: false
+        }
+      }
     }
   });
 
@@ -39,6 +63,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-sass');
 
   grunt.registerTask('default', ['jshint', 'concat']);
 };
