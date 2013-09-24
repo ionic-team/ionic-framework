@@ -6,7 +6,6 @@
   position: fixed; 
 
   z-index: $zindex-modal;
-  visibility: hidden;
 
   top: 0;
 
@@ -26,13 +25,10 @@
 
   // Active modal
   &.active {
-    visibility: visible;
-
+    -webkit-transform: translate3d(0, 0%, 0);
+            transform: translate3d(0, 0%, 0);
     opacity: 1;
     height: 100%;
-    // Put it up
-    -webkit-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0);
   }
 }
 

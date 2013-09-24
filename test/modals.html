@@ -38,20 +38,22 @@
     <script src="../dist/ionic.js"></script>
     <script>
       var open = document.getElementById('modal-opener');
+      var anim = ionic.Animator.animate(modal, function() {
+        console.log('Animation finished');
+      });
 
       ionic.on('tap', function(e) {
         var modal = document.getElementById('modal');
-        //modal.classList.add('active');
-        ionic.Animator.animate(modal, function() {
-          console.log('Animation finished');
-        });
+        modal.classList.add('active');
+        anim.enter();
         return false;
       }, open);
 
       var closer = document.getElementById('modal-closer');
       ionic.on('tap', function(e) {
         var modal = document.getElementById('modal');
-        //modal.classList.remove('active');
+        modal.classList.remove('active');
+        anim.leave();
         return false;
       }, closer);
     </script>
