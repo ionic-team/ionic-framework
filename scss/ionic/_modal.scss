@@ -1,0 +1,35 @@
+/**
+ * Modals are independent windows that slide in from off-screen.
+ */
+
+.modal {
+  position: fixed; 
+
+  z-index: $zindex-modal;
+
+  top: 0;
+
+  width: 100%;
+  min-height: 100%;
+
+  overflow: hidden;
+
+  background-color: $modal-bg-color;
+
+  // Start it hidden
+  opacity: 0;
+
+  // Start it down low
+  -webkit-transform: translate3d(0, 100%, 0);
+          transform: translate3d(0, 100%, 0);
+
+  // Active modal
+  &.active {
+    opacity: 1;
+    height: 100%;
+    // Put it up
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+}
+

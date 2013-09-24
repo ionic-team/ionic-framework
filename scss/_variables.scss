@@ -344,6 +344,11 @@ $menu-inset-border-color:   #bbb;
 $menu-width:               270px;
 $menu-animation-speed:     200ms;
 
+// Modals
+// -------------------------------
+
+$modal-bg-color:              #fff !default;
+
 
 // Badges
 // -------------------------
@@ -408,3 +413,7 @@ $container-desktop:           ((940px + $grid-gutter-width)) !default;
 // Large screen / wide desktop
 $container-lg-desktop:        ((1140px + $grid-gutter-width)) !default;
 
+
+// Z-Indexes
+
+$zindex-modal: 10;

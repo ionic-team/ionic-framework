@@ -1,7 +1,27 @@
+$bezier-function: cubic-bezier(.1, .5, .1, 1);
+
+/*
 .slide-in-up.enter {
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
 
   -webkit-transition: -webkit-transform .25s ease-in-out, opacity 1ms .25s;
   transition: transform .25s ease-in-out, opacity 1ms .25s;
+}
+*/
+
+.slide-in-up {
+  -webkit-transform: translate3d(0, 100%, 0);
+          transform: translate3d(0, 100%, 0);
+
+  -webkit-transition: -webkit-transform .25s, opacity 1ms .25s;
+          transition:         transform .25s, opacity 1ms .25s;
+
+  -webkit-transition-timing-function: $bezier-function;
+}
+
+.slide-in-up.active {
+  -webkit-transition: -webkit-transform .25s;
+          transition:         transform .25s;
+  -webkit-transition-timing-function: $bezier-function;
 }

@@ -1430,6 +1430,26 @@ address {
   -moz-transition: -moz-transform 200ms ease;
   transition: transform 200ms ease; }
 
+/**
+ * Modals are independent windows that slide in from off-screen.
+ */
+.modal {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  background-color: white;
+  opacity: 0;
+  -webkit-transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100%, 0); }
+  .modal.active {
+    opacity: 1;
+    height: 100%;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+
 .list {
   margin-bottom: 20px;
   padding-left: 0;
@@ -2110,8 +2130,23 @@ a.button {
 .alert-info h4 {
   color: #3a87ad; }
 
+/*
 .slide-in-up.enter {
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
-  -webkit-transition: -webkit-transform 0.25s ease-in-out, opacity 1ms 0.25s;
-  transition: transform 0.25s ease-in-out, opacity 1ms 0.25s; }
+
+  -webkit-transition: -webkit-transform .25s ease-in-out, opacity 1ms .25s;
+  transition: transform .25s ease-in-out, opacity 1ms .25s;
+}
+*/
+.slide-in-up {
+  -webkit-transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100%, 0);
+  -webkit-transition: -webkit-transform 0.25s, opacity 1ms 0.25s;
+  transition: transform 0.25s, opacity 1ms 0.25s;
+  -webkit-transition-timing-function: cubic-bezier(0.1, 0.5, 0.1, 1); }
+
+.slide-in-up.active {
+  -webkit-transition: -webkit-transform 0.25s;
+  transition: transform 0.25s;
+  -webkit-transition-timing-function: cubic-bezier(0.1, 0.5, 0.1, 1); }

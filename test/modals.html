@@ -17,11 +17,38 @@
       </header>
 
       <main class="content padded has-header">
-        todo
+        <a href="#" class="button button-warning" id="modal-opener">Open Modal</a>
         <p><a class="button button-secondary" href="index.html">Homepage</a></p>
       </main>
 
     </section>
 
+    <div id="modal" class="modal slide-in-up">
+      <header class="bar bar-header bar-success">
+        <h1 class="title">BOOM</h1>
+        <a href="#" class="button" id="modal-closer">Close</a>
+      </header>
+
+      <main class="content padded has-header">
+        <h2>I'm a thing</h2>
+        <div style="background-color: red; width: 100%; height: 1000px"></div>
+      </main>
+    </div>
+
+    <script>
+      var open = document.getElementById('modal-opener');
+      open.addEventListener('click', function(e) {
+        var modal = document.getElementById('modal');
+        modal.classList.add('active');
+        return false;
+      });
+
+      var closer = document.getElementById('modal-closer');
+      closer.addEventListener('click', function(e) {
+        var modal = document.getElementById('modal');
+        modal.classList.remove('active');
+        return false;
+      });
+    </script>
   </body>
 </html>
