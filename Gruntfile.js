@@ -20,6 +20,18 @@ module.exports = function(grunt) {
           'js/controllers/**/*.js'
         ],
         dest: 'dist/<%= pkg.name %>.js'
+      },
+      distAngular: {
+        src: [
+          'ext/angular/src/*.js'
+        ],
+        dest: 'dist/<%= pkg.name %>-angular.js'
+      },
+      distSimple: {
+        src: [
+          'ext/simple/*.js'
+        ],
+        dest: 'dist/<%= pkg.name %>-simple.js'
       }
     },
     jshint: {
@@ -43,7 +55,7 @@ module.exports = function(grunt) {
     },
     watch: {
       scripts: {
-        files: ['js/**/*.js'],
+        files: ['js/**/*.js', 'ext/**/*.js'],
         tasks: ['concat'],
         options: {
           spawn: false
