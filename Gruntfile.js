@@ -21,6 +21,10 @@ module.exports = function(grunt) {
         ],
         dest: 'dist/<%= pkg.name %>.js'
       },
+      cssWithIcons: {
+        src: ['ionicons/style.css', 'dist/ionic.css'],
+        dest: 'dist/ionicIcons.css'
+      },
       distAngular: {
         src: [
           'ext/angular/src/*.js'
@@ -32,6 +36,13 @@ module.exports = function(grunt) {
           'ext/simple/*.js'
         ],
         dest: 'dist/<%= pkg.name %>-simple.js'
+      }
+    },
+    copy: {
+      ionicons: {
+        files: [
+          { expand: true, src: ['ionicons/fonts/*'], dest: 'dist/fonts/', flatten: true}
+        ]
       }
     },
     jshint: {
@@ -63,7 +74,7 @@ module.exports = function(grunt) {
       },
       sass: {
         files: ['scss/**/*.scss'],
-        tasks: ['sass'],
+        tasks: ['sass', 'concat'],
         options: {
           spawn: false
         }
@@ -72,10 +83,11 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-sass');
 
-  grunt.registerTask('default', ['jshint', 'concat']);
+  grunt.registerTask('default', ['jshint', 'sass', 'concat']);
 };
