@@ -4,11 +4,11 @@
 
 $brand-default:         #fff;
 $brand-secondary:       #f5f5f5;
-$brand-primary:         #6999e9;
-$brand-success:         #89c163;
+$brand-primary:         #4a87ee;
+$brand-info:            #43cee6;
+$brand-success:         #66cc33;
 $brand-warning:         #f0b840;
-$brand-danger:          #de5645;
-$brand-info:            #60d2e6;
+$brand-danger:          #ef4e3a;
 $brand-dark:            #444;
 
 
@@ -204,37 +204,45 @@ $button-font-size:        16px;
 // Button block that has spacing
 $button-block-margin: 10px 0 10px 0;
 
-$button-default-bg:           #fff;
-$button-default-bg-active:    #eee;
-$buttonDefaultBorder:         #ddd;
+$button-default-bg:           $brand-default;
+$button-default-border:         #ddd;
+$button-default-active-bg:    #fafafa;
+$button-default-active-border:         #bbb;
 
-$button-secondary-bg:         #f5f5f5;
-$button-secondary-bg-active:  #eee;
-$button-secondary-border:     #ccc;
+$button-secondary-bg:         $brand-secondary;
+$button-secondary-border:     #bbb;
+$button-secondary-active-bg:  #e5e5e5;
+$button-secondary-active-border:     #999;
 
-$button-primary-bg:           #6999e9;
-$button-primary-bg-active:    #eee;
-$button-primary-border:       #5981c5;
+$button-primary-bg:           $brand-primary;
+$button-primary-border:       #3b6dc2;
+$button-primary-active-bg:    #4175ce;
+$button-primary-active-border:    #32599c;
 
-$button-info-bg:              #60d2e6;
-$button-info-bg-active:       #eee;
-$button-info-border:          #51b3c4;
+$button-info-bg:              $brand-info;
+$button-info-border:          #3bb3c8;
+$button-info-active-bg:       #3db8cd;
+$button-info-active-border:   #3293a4;
 
-$button-success-bg:           #89c163;
-$button-success-bg-active:    #eee;
-$button-success-border:       #71a052;
+$button-success-bg:           $brand-success;
+$button-success-border:       #5bb22f;
+$button-success-active-bg:    #55aa2b;
+$button-success-active-border:    #448922;
 
-$button-warning-bg:           #f0b840;
-$button-warning-bg-active:    #eee;
-$button-warning-border:       #cf9a29;
+$button-warning-bg:           $brand-warning;
+$button-warning-border:       #d29f31;
+$button-warning-active-bg:    #e2a114;
+$button-warning-active-border:       #b88517;
 
-$button-danger-bg:            #de5645;
-$button-danger-bg-active:     #eee;
-$buttonDangerBorder:          #bc4435;
+$button-danger-bg:            $brand-danger;
+$button-danger-border:        #c73927;
+$button-danger-active-bg:     #ce4331;
+$button-danger-active-border: #9f3527;
 
-$button-dark-bg:              #444;
-$button-dark-bg-active:       #eee;
+$button-dark-bg:              $brand-dark;
 $button-dark-border:          #111;
+$button-dark-active-bg:       #222;
+$button-dark-active-border:   #000;
 
 
 // Bars
@@ -283,7 +291,7 @@ $tabs-default-bg:              #fff;
 $tabs-default-border-color:    #ddd;
 
 $tabs-secondary-bg:            #f5f5f5;
-$tabs-secondary-border-color:  #ccc;
+$tabs-secondary-border-color:  #bbb;
 
 $tabs-primary-bg:              #6999e9;
 $tabs-primary-border-color:    #5981c5;

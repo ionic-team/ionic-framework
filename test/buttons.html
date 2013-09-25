@@ -26,11 +26,29 @@
           <a class="button button-warning">Warning</a>
           <a class="button button-danger">Danger</a>
           <a class="button button-dark">Dark</a>
+          <a class="button button-icon"><i class="icon-home"></i></a>
+          <a class="button button-clear">Borderless</a>
         </p>
         <p><a class="button button-secondary" href="index.html">Homepage</a></p>
       </main>
 
     </section>
 
+    <script>
+      var buttons = document.querySelectorAll('.button');
+      var a;
+      for(var i = 0; i < buttons.length; i++) {
+        a = buttons[i];
+        a.addEventListener('touchstart', function() {
+          this.classList.add('active');
+        });
+        a.addEventListener('touchend', function() {
+          this.classList.remove('active');
+        });
+        a.addEventListener('touchcancel', function() {
+          this.classList.remove('active');
+        });
+      }
+    </script>
   </body>
 </html>
