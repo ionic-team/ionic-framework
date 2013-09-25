@@ -7,7 +7,7 @@
  * detects special events like tap/swipe/etc. and emits them
  * as custom events that can be used in an app.
  *
- * Portions lovingly adapted from github.com/maker/ratchet and github.com/alexgibson/tap.js - thanks guys!
+ * Portions adapted from github.com/maker/ratchet and github.com/alexgibson/tap.js - thanks guys!
  */
 
 (function(ionic) {
@@ -16,9 +16,7 @@
 
     // Trigger a new event
     trigger: function(eventType, data) {
-      // TODO: Do we need to use the old-school createEvent stuff?
       var event = new CustomEvent(eventType, data);
-
       // Make sure to trigger the event on the given target, or dispatch it from
       // the window if we don't have an event target
       data.target && data.target.dispatchEvent(event) || window.dispatchEvent(event);
@@ -88,10 +86,6 @@
       // We need to cancel this one
       e.preventDefault();
 
-    },
-    
-    handlePopState: function(event) {
-      console.log("EVENT: popstate", event);
     },
   };
   
