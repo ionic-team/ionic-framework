@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Header</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="../dist/ionicons.css" rel="stylesheet">
+    <link href="../dist/ionic.css" rel="stylesheet">
+    <style>
+      .bar {
+        position: relative;
+        top: 0;
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <section>
+      <div class="bar bar-header bar-default">
+        <div class="button-bar">
+          <a href="#" class="button button-primary button-clear">Edit</a>
+          <a href="#" class="button button-clear">Teach</a>
+          <a href="#" class="button button-danger button-clear">Delete</a>
+        </div>
+      </div>
+
+      <main class="content padded has-header">
+        <p>Content element must have "has-header" as a classname.</p>
+        <p><a class="button button-secondary" href="index.html">Homepage</a></p>
+      </main>
+
+    </section>
+
+    <script>
+      var sec = document.getElementsByTagName('section')[0];
+      var types = ['default', 'secondary', 'primary', 'info', 'success', 'warning', 'danger', 'dark'];
+      for(var i = 0; i < types.length; i++) {
+        var t = types[i];
+        sec.innerHTML += '<div class="bar bar-header bar-' + t + '">' +
+          '<div class="button-bar">' +
+            '<a href="#" class="button button-clear">Edit</a>' +
+            '<a href="#" class="button button-clear">Teach</a>' +
+            '<a href="#" class="button button-clear">Delete</a>' +
+          '</div>' +
+        '</div>';
+      }
+      var buttons = document.querySelectorAll('.button');
+      var a;
+      for(var i = 0; i < buttons.length; i++) {
+        a = buttons[i];
+        a.addEventListener('touchstart', function() {
+          this.classList.add('active');
+        });
+        a.addEventListener('touchend', function() {
+          this.classList.remove('active');
+        });
+        a.addEventListener('touchcancel', function() {
+          this.classList.remove('active');
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -119,44 +119,52 @@
 .bar-default {
   .button {
     @include button-style($button-default-bg, $button-default-border, $button-default-active-bg, $button-default-active-border, $gray-dark);
+    @include button-clear($gray-dark, $bar-title-font-size);
   }
 }
 
 .bar-secondary {
   .button {
     @include button-style($button-secondary-bg, $button-secondary-border, $button-secondary-active-bg, $button-secondary-active-border, $gray-dark);
+    @include button-clear($gray-dark, $bar-title-font-size);
   }
 }
 
 .bar-primary {
   .button {
     @include button-style($button-primary-bg, $button-primary-border, $button-primary-active-bg, $button-primary-active-border, $white);
+    @include button-clear($white, $bar-title-font-size);
   }
 }
 .bar-info {
   .button {
     @include button-style($button-info-bg, $button-info-border, $button-info-active-bg, $button-info-active-border, $white);
+    @include button-clear($white, $bar-title-font-size);
   }
 }
 .bar-success {
   .button {
     @include button-style($button-success-bg, $button-success-border, $button-success-active-bg, $button-success-active-border, $white);
+    @include button-clear($white, $bar-title-font-size);
   }
 }
 .bar-warning {
   .button {
     @include button-style($button-warning-bg, $button-warning-border, $button-warning-active-bg, $button-warning-active-border, $white);
+    @include button-clear($white, $bar-title-font-size);
   }
 }
 .bar-danger {
   .button {
     @include button-style($button-danger-bg, $button-danger-border, $button-danger-active-bg, $button-danger-active-border, $white);
+    @include button-clear($white, $bar-title-font-size);
   }
 }
 .bar-dark {
   // A default style for buttons
   .button {
     @include button-style($button-dark-bg, $button-dark-border, $button-dark-active-bg, $button-dark-active-border, $white);
+    @include button-clear($white, $bar-title-font-size);
   }
 }
 

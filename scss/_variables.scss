@@ -76,8 +76,8 @@ $font-family-monospace:     Monaco, Menlo, Consolas, "Courier New", monospace !d
 $font-family-base:          $font-family-sans-serif !default;
 
 $font-size-base:            14px !default;
-$font-size-large:           ceil($font-size-base * 1.25) !default; // ~18px
-$font-size-small:           ceil($font-size-base * 0.85) !default; // ~12px
+$font-size-large:           17px !default; // ~18px
+$font-size-small:           11px !default;
 
 $line-height-base:          1.428571429 !default; // 20/14
 $line-height-computed:      floor($font-size-base * $line-height-base) !default; // ~20px
@@ -258,29 +258,29 @@ $bar-padding-landscape:          5px;
 $bar-bg:                      #fff;
 
 // Bar variations
-$bar-default-bg:              #fff;
+$bar-default-bg:              $brand-default;
 $bar-default-border-color:    #ddd;
 
-$bar-secondary-bg:            #f5f5f5;
-$bar-secondary-border-color:  #ccc;
+$bar-secondary-bg:            $brand-secondary;
+$bar-secondary-border-color:  $button-secondary-border;
 
-$bar-primary-bg:              #6999e9;
-$bar-primary-border-color:    #5981c5;
+$bar-primary-bg:              $brand-primary;
+$bar-primary-border-color:    $button-primary-border;
 
-$bar-info-bg:                 #60d2e6;
-$bar-info-border-color:       #51b3c4;
+$bar-info-bg:                 $brand-info;
+$bar-info-border-color:       $button-info-border;
 
-$bar-success-bg:              #89c163;
-$bar-success-border-color:    #71a052;
+$bar-success-bg:              $brand-success;
+$bar-success-border-color:    $button-success-border;
 
-$bar-warning-bg:              #f0b840;
-$bar-warning-border-color:    #cf9a29;
+$bar-warning-bg:              $brand-warning;
+$bar-warning-border-color:    $button-warning-border;
 
-$bar-danger-bg:               #de5645;
-$bar-danger-border-color:     #bc4435;
+$bar-danger-bg:               $brand-danger;
+$bar-danger-border-color:     $button-danger-border;
 
-$bar-dark-bg:                 #444;
-$bar-dark-border-color:       #111;
+$bar-dark-bg:                 $brand-dark;
+$bar-dark-border-color:       $button-dark-border;
 
 
 // Tabs
