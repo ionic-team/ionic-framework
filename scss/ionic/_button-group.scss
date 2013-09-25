@@ -75,6 +75,9 @@
 .button-bar > .button {
   @include box-flex(1);
   display: block;
+
+  // Fix for unequal widths of buttons
+  width: 0;
   
   overflow: hidden;
 

@@ -1887,11 +1887,12 @@ input[type="checkbox"][readonly] {
   .button.button-icon {
     border: none;
     background: none;
-    padding: 10px 0px; }
+    padding: 4px 5px; }
   .button.button-clear {
     border: none;
     background: none;
     box-shadow: none;
+    padding: 4px 5px;
     -webkit-transition: opacity 0.1s;
     transition: opacity 0.1s; }
     .button.button-clear:active, .button.button-clear.active {
@@ -2113,6 +2114,7 @@ a.button {
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
   display: block;
+  width: 0;
   overflow: hidden;
   padding: 8px 16px;
   border-width: 1px 0px 1px 1px;

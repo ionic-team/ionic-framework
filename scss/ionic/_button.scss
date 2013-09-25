@@ -1,15 +1,22 @@
 .button {
   position: relative;
+
   display: inline-block;
+
   margin: 0;
   padding: $button-padding;
+
   border-width: $button-border-width;
   border-style: solid;
   border-radius: $button-border-radius;
+
   color: $button-color;
+
   vertical-align: middle;
+
   text-align: center;
   font-size: $button-font-size;
+
   cursor: pointer;
 
   &.button-icon {
@@ -22,6 +29,7 @@
     border: none;
     background: none;
     box-shadow: none;
+    padding: $button-clear-padding;
 
     // A nice iOS 7 style fade click
     @include transition(opacity .1s);
