@@ -2,7 +2,7 @@
 //
 // Useful utilities and mixins for SCSS files.
 
-@mixin button-style($bgColor, $borderColor, $color) {
+@mixin button-style($bgColor, $borderColor, $activeBgColor, $activeBorderColor, $color) {
   color: $color;
 	background-color: $bgColor;
 	border-color: $borderColor;
@@ -18,9 +18,9 @@
 		//background-color: lighten($bgColor, 10%);
   }
 	&.active, &:active {
-		background-color: darken($bgColor, 8%);
-    box-shadow: inset 0px 1px 3px rgba(0,0,0,0.12);
-    border-color: darken($borderColor, 10%);
+		background-color: $activeBgColor;
+    box-shadow: inset 0px 1px 3px rgba(0,0,0,0.15);
+    border-color: $activeBorderColor;
 	}
 }
 
