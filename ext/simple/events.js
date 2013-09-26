@@ -53,6 +53,6 @@
   }
 
   // global tap event listener polyfill for HTML elements that were "tapped" by the user
-  ionic.on("tap", tapPolyfill, window);
+  //ionic.on("tap", tapPolyfill, window);
 
 })(this, document, ionic);

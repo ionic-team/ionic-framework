@@ -60,7 +60,8 @@ module.exports = function(grunt) {
     sass: {
       dist: {
         files: {
-          'dist/ionic.css': 'scss/ionic.scss'
+          'dist/ionic.css': 'scss/ionic.scss',
+          'dist/ionic-ios7.css': 'scss/ios7/ios7.scss'
         }
       }
     },
