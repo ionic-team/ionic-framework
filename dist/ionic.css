@@ -1188,6 +1188,9 @@ address {
     font-size: 12px;
     padding: 4px 12px;
     z-index: 1; }
+    .bar .button.button-clear {
+      line-height: 34px;
+      padding: 0 5px; }
   .bar .button-bar {
     line-height: 18px; }
   .bar .button-bar + .button, .bar .button + .button-bar {
@@ -1373,6 +1376,8 @@ address {
   -moz-box-orient: horizontal;
   display: -webkit-box;
   display: box;
+  border-top-width: 1px;
+  border-style: solid;
   background-color: white;
   border-color: #dddddd;
   color: #333333; }
@@ -1385,41 +1390,30 @@ address {
     border-color: #bbbbbb;
     color: #333333; }
   .tabs.tabs-primary {
-    background-color: #6999e9;
-    border-color: #5981c5;
+    background-color: #4a87ee;
+    border-color: #3b6dc2;
     color: white; }
   .tabs.tabs-success {
-    background-color: #89c163;
-    border-color: #71a052;
+    background-color: #66cc33;
+    border-color: #5bb22f;
     color: white; }
   .tabs.tabs-info {
-    background-color: #60d2e6;
-    border-color: #51b3c4;
+    background-color: #43cee6;
+    border-color: #3bb3c8;
     color: white; }
   .tabs.tabs-warning {
     background-color: #f0b840;
-    border-color: #cf9a29;
+    border-color: #d29f31;
     color: white; }
   .tabs.tabs-danger {
-    background-color: #de5645;
-    border-color: #bc4435;
+    background-color: #ef4e3a;
+    border-color: #c73927;
     color: white; }
   .tabs.tabs-dark {
-    background-color: #de5645;
-    border-color: #bc4435;
+    background-color: #ef4e3a;
+    border-color: #c73927;
     color: white; }
 
-.tab-item {
-  font-weight: 200;
-  font-family: "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: inherit;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden; }
-  .tab-item i {
-    font-size: 25px; }
-
-/* Navigational tab */
 .tab-item {
   display: block;
   width: 0;
@@ -1429,16 +1423,41 @@ address {
   -moz-box-flex: 1;
   box-sizing: border-box;
   text-align: center;
-  text-decoration: none; }
+  text-decoration: none;
+  font-weight: 400;
+  font-family: "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 10px;
+  color: inherit;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: 0.7; }
+  .tab-item i {
+    font-size: 32px; }
 
+/* Navigational tab */
 /* Active state for tab */
 .tab-item.active, .tab-item:active {
-  background-color: rgba(0, 0, 0, 0.2); }
+  opacity: 1; }
+  .tab-item.active.tab-item-default, .tab-item:active.tab-item-default {
+    color: white; }
+  .tab-item.active.tab-item-secondary, .tab-item:active.tab-item-secondary {
+    color: whitesmoke; }
+  .tab-item.active.tab-item-primary, .tab-item:active.tab-item-primary {
+    color: #4a87ee; }
+  .tab-item.active.tab-item-success, .tab-item:active.tab-item-success {
+    color: #66cc33; }
+  .tab-item.active.tab-item-danger, .tab-item:active.tab-item-danger {
+    color: #ef4e3a; }
+  .tab-item.active.tab-item-warning, .tab-item:active.tab-item-warning {
+    color: #f0b840; }
+  .tab-item.active.tab-item-dark, .tab-item:active.tab-item-dark {
+    color: #444444; }
 
 /* Icon for tab  */
 .tab-item i {
   display: block;
-  margin: 0 auto; }
+  margin: 1px auto -3px auto; }
 
 /* Label for tab */
 .tab-label {

@@ -92,7 +92,13 @@
     font-size: 12px;
     padding: 4px 12px;
     z-index: 1;
+
+    &.button-clear {
+      line-height: $bar-button-clear-line-height;
+      padding: 0 5px;
+    }
   }
+
 
   .button-bar {
     line-height: $bar-button-bar-line-height;

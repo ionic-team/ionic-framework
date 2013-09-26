@@ -5,11 +5,17 @@
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="../dist/ionicons.css" rel="stylesheet">
-    <link href="../dist/ionic.css" rel="stylesheet">
+    <link href="../dist/ionicIcons.css" rel="stylesheet">
     <style>
+      .content {
+        height: 100%;
+      }
+      .bar-header {
+        position: relative;
+      }
       .tabs {
         position: relative;
+        margin-top: 10px;
       }
     </style>
   </head>
@@ -26,124 +32,65 @@
       </main>
       
       <nav id="tab-bar" class="tabs tabs-default">
-        <a class="tab-item" href="#">
-          <i class="icon-home"></i>
+        <a class="tab-item tab-item-danger" href="#">
+          <i class="icon-star"></i>
           Friends
         </a>
-        <a class="tab-item">
+        <a class="tab-item tab-item-danger">
+          <i class="icon-star-filled"></i>
           Enemies
         </a>
-        <a class="tab-item">
+        <a class="tab-item tab-item-danger">
+          <i class="icon-clock"></i>
           Settings
         </a>
-        <a class="tab-item">
-          More
-        </a>
-      </nav>
-      <nav id="tab-bar" class="tabs tabs-secondary">
-        <a class="tab-item" href="#">
-          <i class="icon-home"></i>
-          Friends
-        </a>
-        <a class="tab-item">
-          Enemies
-        </a>
-        <a class="tab-item">
-          Settings
-        </a>
-        <a class="tab-item">
-          More
-        </a>
-      </nav>
-      <nav id="tab-bar" class="tabs tabs-primary">
-        <a class="tab-item" href="#">
-          <i class="icon-home"></i>
-          Friends
-        </a>
-        <a class="tab-item">
-          Enemies
-        </a>
-        <a class="tab-item">
-          Settings
-        </a>
-        <a class="tab-item">
-          More
-        </a>
-      </nav>
-      <nav id="tab-bar" class="tabs tabs-success">
-        <a class="tab-item" href="#">
-          <i class="icon-home"></i>
-          Friends
-        </a>
-        <a class="tab-item">
-          Enemies
-        </a>
-        <a class="tab-item">
-          Settings
-        </a>
-        <a class="tab-item">
-          More
-        </a>
-      </nav>
-      <nav id="tab-bar" class="tabs tabs-info">
-        <a class="tab-item" href="#">
-          <i class="icon-home"></i>
-          Friends
-        </a>
-        <a class="tab-item">
-          Enemies
-        </a>
-        <a class="tab-item">
-          Settings
-        </a>
-        <a class="tab-item">
-          More
-        </a>
-      </nav>
-      <nav id="tab-bar" class="tabs tabs-warning">
-        <a class="tab-item" href="#">
-          <i class="icon-home"></i>
-          Friends
-        </a>
-        <a class="tab-item">
-          Enemies
-        </a>
-        <a class="tab-item">
-          Settings
-        </a>
-        <a class="tab-item">
-          More
-        </a>
-      </nav>
-
-      <nav id="tab-bar" class="tabs tabs-danger">
-        <a class="tab-item" href="#">
-          <i class="icon-home"></i>
-          Friends
-        </a>
-        <a class="tab-item">
-          Enemies
-        </a>
-        <a class="tab-item">
-          Settings
-        </a>
-        <a class="tab-item">
+        <a class="tab-item tab-item-danger">
+          <i class="icon-keypad-filled"></i>
           More
         </a>
       </nav>
 
     </section>
 
-    <script src="../../js/events.js"></script>
-    <script src="../../js/gestures.js"></script>
-    <script src="../../js/views/tabBar.js"></script>
-    <script src="../../js/controllers/tabBarController.js"></script>
+    <script src="../dist/ionic.js"></script>
     <script>
-      // Grab the sections
-      var tab = document.getElementById('tab-bar');
-      var controller = new ionic.controllers.TabBarController({
-        tabBar: new ionic.ui.TabBar({ el: tab })
-      });
+      var sec = document.getElementsByTagName('section')[0];
+      var types = ['default', 'secondary', 'primary', 'info', 'success', 'warning', 'danger', 'dark'];
+      for(var i = 0; i < types.length; i++) {
+        var t = types[i];
+        sec.innerHTML += '<nav id="tab-bar" class="tabs tabs-' + t + '">' +
+          '<a class="tab-item" href="#">'+
+            '<i class="icon-star"></i>' +
+            'Friends' +
+          '</a>' +
+          '<a class="tab-item">' +
+            '<i class="icon-star-filled"></i>' +
+            'Enemies' +
+          '</a>' +
+          '<a class="tab-item">' +
+            '<i class="icon-clock"></i>' +
+            'Settings' +
+          '</a>' +
+          '<a class="tab-item">' +
+            '<i class="icon-keypad-filled"></i>' +
+            'More' +
+          '</a>' +
+        '</nav>';
+      }
+      var buttons = document.querySelectorAll('.tab-item');
+      var a;
+      for(var i = 0; i < buttons.length; i++) {
+        a = buttons[i];
+        a.addEventListener('touchstart', function() {
+          this.classList.add('active');
+        });
+        a.addEventListener('touchend', function() {
+          this.classList.remove('active');
+        });
+        a.addEventListener('touchcancel', function() {
+          this.classList.remove('active');
+        });
+      }
     </script>
   </body>
 </html>
