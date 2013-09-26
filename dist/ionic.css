@@ -1,11 +1,4 @@
 @charset "UTF-8";
-.platform-ios7 .bar {
-  height: 64px; }
-  .platform-ios7 .bar .title {
-    line-height: 84px; }
-.platform-ios7 .has-header {
-  top: 64px; }
-
 /**
 * Adapted from normalize.css and some reset.css. We don't care even one
 * bit about old IE, so we don't need any hacks for that in here.
@@ -375,6 +368,13 @@ body {
   height: 100%;
   background-color: #fff;
   -webkit-overflow-scrolling: touch; }
+
+.platform-ios7 .bar {
+  height: 64px; }
+  .platform-ios7 .bar .title {
+    line-height: 84px; }
+.platform-ios7 .has-header {
+  top: 64px; }
 
 .padded {
   padding: 10px; }
