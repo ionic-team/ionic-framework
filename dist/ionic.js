@@ -293,9 +293,15 @@ if ( document.readyState === "complete" ) {
     ionic.Gestures.event.determineEventTypes();
 
     // Register all gestures inside ionic.Gestures.gestures
-    for(var name in ionic.Gestures.gestures) {
-      if(ionic.Gestures.gestures.hasOwnProperty(name)) {
-        ionic.Gestures.detection.register(ionic.Gestures.gestures[name]);
+    if(this === this.window) {
+      // this is a window, then only allow the Tap gesture to be added
+      ionic.Gestures.detection.register(ionic.Gestures.gestures.Tap);
+    } else {
+      // everything else but the window
+      for(var name in ionic.Gestures.gestures) {
+        if(ionic.Gestures.gestures.hasOwnProperty(name)) {
+          ionic.Gestures.detection.register(ionic.Gestures.gestures[name]);
+        }
       }
     }
 
