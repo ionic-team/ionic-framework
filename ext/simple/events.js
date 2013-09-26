@@ -15,11 +15,11 @@
   }
 
   function tapPolyfill(e) {
-    // evaluate the actual source event, not the created event by gestures.js
-    if(!e.gesture) return;
+    // if the source event wasn't from a touch event then don't use this polyfill
+    if(!e.gesture || e.gesture.pointerType !== "touch") return;
 
     var 
-    e = e.gesture.srcEvent,
+    e = e.gesture.srcEvent, // evaluate the actual source event, not the created event by gestures.js
     ele = e.target;
 
     if(!e) return;
@@ -53,6 +53,6 @@
   }
 
   // global tap event listener polyfill for HTML elements that were "tapped" by the user
-  //ionic.on("tap", tapPolyfill, window);
+  ionic.on("tap", tapPolyfill, window);
 
 })(this, document, ionic);
