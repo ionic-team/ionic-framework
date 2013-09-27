@@ -1668,34 +1668,6 @@ window.ionic = {
 })(window.ionic);
 ;(function(ionic) {
 
-ionic.views.HeaderBar = function(opts) {
-  this.el = opts.el;
-
-  this._titleEl = this.el.querySelector('.title');
-};
-
-ionic.views.NavBar.prototype = {
-  resizeTitle: function() {
-    var e;
-    var j;
-    var children = this.el.children;
-
-    var title;
-    var titleWidth;
-
-    for(var i = 0; j = children.length; i < j; i++) {
-      e = children[i];
-      if(/h\d/.test(e.nodeName.toLowerCase())) {
-        title = e;
-      }
-    }
-
-    titleWidth = title.offsetWidth;
-  }
-};
-})(window.ionic);
-;(function(ionic) {
-
 ionic.views.NavBar = function(opts) {
   this.el = opts.el;
 
@@ -1738,29 +1710,34 @@ ionic.views.NavBar.prototype = {
 })(window.ionic);
 ;(function(ionic) {
 
-ionic.views = ionic.views || {};
+  ionic.views.HeaderBar = function(opts) {
+    this.el = opts.el;
 
-ionic.views.SideMenu = function(opts) {
-  this.el = opts.el;
-  this.width = opts.width;
-  this.isEnabled = opts.isEnabled || true;
-};
+    this._titleEl = this.el.querySelector('.title');
+  };
 
-ionic.views.SideMenu.prototype = {
-  getFullWidth: function() {
-    return this.width;
-  },
-  setIsEnabled: function(isEnabled) {
-    this.isEnabled = isEnabled;
-  },
-  bringUp: function() {
-    this.el.style.zIndex = 0;
-  },
-  pushDown: function() {
-    this.el.style.zIndex = -1;
-  }
-};
-})(window.ionic);
+  ionic.views.NavBar.prototype = {
+    resizeTitle: function() {
+      var 
+      e,
+      j,
+      i,
+      title,
+      titleWidth,
+      children = this.el.children;
+
+      for(i = 0, j = children.length; i < j; i++) {
+        e = children[i];
+        if(/h\d/.test(e.nodeName.toLowerCase())) {
+          title = e;
+        }
+      }
+
+      titleWidth = title.offsetWidth;
+    }
+  };
+
+})(ionic);
 ;(function(ionic) {
 
 ionic.views.TabBarItem = function(el) {
@@ -1961,6 +1938,31 @@ ionic.views.TabBar.prototype = {
   }
 };
 
+})(window.ionic);
+;(function(ionic) {
+
+ionic.views = ionic.views || {};
+
+ionic.views.SideMenu = function(opts) {
+  this.el = opts.el;
+  this.width = opts.width;
+  this.isEnabled = opts.isEnabled || true;
+};
+
+ionic.views.SideMenu.prototype = {
+  getFullWidth: function() {
+    return this.width;
+  },
+  setIsEnabled: function(isEnabled) {
+    this.isEnabled = isEnabled;
+  },
+  bringUp: function() {
+    this.el.style.zIndex = 0;
+  },
+  pushDown: function() {
+    this.el.style.zIndex = -1;
+  }
+};
 })(window.ionic);
 ;(function(ionic) {
 

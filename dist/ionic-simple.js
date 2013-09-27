@@ -1,10 +1,10 @@
 
 (function(window, document, ionic) {
 
-  ionic.simple = {
+  ionic.Components = {};
 
-    
-
+  ionic.registerComponent = function(name, className) {
+    this.Components[name] = className;
   };
 
   function initalize() {
@@ -30,13 +30,7 @@
 (function(window, document, ionic) {
 
   function initalize() {
-    
-    ionic.on("swipe", swipe, document.body)
-    
-  }
-
-  function swipe(e) {
-    alert(e.target.tagName)
+     ionic.registerComponent("toggle", "toggle");
   }
 
   ionic.on("domready", initalize);

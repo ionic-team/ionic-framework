@@ -16,7 +16,10 @@ module.exports = function(grunt) {
           'js/gestures.js',
           'js/animate.js',
           'js/viewController.js',
-          'js/views/**/*.js',
+          'js/views/navBar.js',
+          'js/views/headerBar.js',
+          'js/views/tabBar.js',
+          'js/views/sideMenu.js',
           'js/controllers/**/*.js',
           'js/tapPolyfill.js'
         ],
