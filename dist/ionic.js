@@ -10,7 +10,7 @@ window.ionic = {
     detect: function() {
       var platforms = [];
 
-      var platform = this._checkPlatforms(platforms);
+      this._checkPlatforms(platforms);
 
       for(var i = 0; i < platforms.length; i++) {
         document.body.classList.add('platform-' + platforms[i]);

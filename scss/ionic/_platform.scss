@@ -1,9 +1,9 @@
 .platform-ios7 {
   .bar {
-    height:             64px;
+    height: 64px;
 
-    .title {
-      line-height:        84px;
+    > * {
+      margin-top: 20px;
     }
   }
 

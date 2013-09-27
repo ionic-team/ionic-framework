@@ -370,13 +370,6 @@ body {
   background-color: #fff;
   -webkit-overflow-scrolling: touch; }
 
-.platform-ios7 .bar {
-  height: 64px; }
-  .platform-ios7 .bar .title {
-    line-height: 84px; }
-.platform-ios7 .has-header {
-  top: 64px; }
-
 .padded {
   padding: 10px; }
 
@@ -2244,3 +2237,10 @@ a.button {
 .slide-in-up.leave-active {
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0); }
+
+.platform-ios7 .bar {
+  height: 64px; }
+  .platform-ios7 .bar > * {
+    margin-top: 20px; }
+.platform-ios7 .has-header {
+  top: 64px; }

@@ -372,8 +372,8 @@ body {
 
 .platform-ios7 .bar {
   height: 64px; }
-  .platform-ios7 .bar .title {
-    line-height: 84px; }
+  .platform-ios7 .bar > * {
+    margin-top: 20px; }
 .platform-ios7 .has-header {
   top: 64px; }
 
