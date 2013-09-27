@@ -26,10 +26,6 @@ module.exports = function(grunt) {
         ],
         dest: 'dist/<%= pkg.name %>.js'
       },
-      cssWithIcons: {
-        src: ['ionicons/style.css', 'dist/ionic.css'],
-        dest: 'dist/ionicIcons.css'
-      },
       distAngular: {
         src: [
           'ext/angular/src/*.js'
