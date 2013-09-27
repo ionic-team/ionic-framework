@@ -1,35 +1,9 @@
-window.ionic = {};
 
 // Create namespaces 
-ionic.controllers = {};
-ionic.views = {};
-
-function initalize() {
-  // remove the ready listeners
-  document.removeEventListener( "DOMContentLoaded", initalize, false );
-  window.removeEventListener( "load", initalize, false );
-
-  /*
-  // trigger that the DOM is ready
-  ionic.trigger("ready");
-
-  // trigger that the start page is in view
-  ionic.trigger("pageview");
-
-  // trigger that the webapp has been initalized
-  ionic.trigger("initalized");
-  */
-}
-
-// When the DOM is ready, initalize the webapp
-if ( document.readyState === "complete" ) {
-  // DOM is already ready
-  setTimeout( initalize );
-} else {
-  // DOM isn't ready yet, add event listeners
-  document.addEventListener( "DOMContentLoaded", initalize, false );
-  window.addEventListener( "load", initalize, false );
-}
+window.ionic = {
+  controllers: {},
+  views: {}
+};
 ;(function(ionic) {
 
   ionic.Platform = {
@@ -114,7 +88,7 @@ if ( document.readyState === "complete" ) {
 
       // Make sure to trigger the event on the given target, or dispatch it from
       // the window if we don't have an event target
-      data.target && data.target.dispatchEvent(event) || window.dispatchEvent(event);
+      data && data.target && data.target.dispatchEvent(event) || window.dispatchEvent(event);
     },
   
     // Bind an event
@@ -2411,3 +2385,61 @@ ionic.controllers.TabBarController.prototype = {
 }
 
 })(ionic = window.ionic || {});
+;(function(window, document, ionic) {
+
+  // polyfill use to simulate native "tap"
+  function inputTapPolyfill(ele, e) {
+    if(ele.type === "radio" || ele.type === "checkbox") {
+      ele.checked = !ele.checked;
+    } else if(ele.type === "submit" || ele.type === "button") {
+      ele.click();
+    } else {
+      ele.focus();
+    }
+    e.stopPropagation();
+    e.preventDefault();
+    return false;
+  }
+
+  function tapPolyfill(e) {
+    // if the source event wasn't from a touch event then don't use this polyfill
+    if(!e.gesture || e.gesture.pointerType !== "touch") return;
+
+    var 
+    e = e.gesture.srcEvent, // evaluate the actual source event, not the created event by gestures.js
+    ele = e.target;
+
+    if(!e) return; 
+
+    while(ele) {
+      if( ele.tagName === "INPUT" || ele.tagName === "TEXTAREA" || ele.tagName === "SELECT" ) {
+        return inputTapPolyfill(ele, e);
+      } else if( ele.tagName === "LABEL" ) {
+        if(ele.control) {
+          return inputTapPolyfill(ele.control, e);
+        }
+      } else if( ele.tagName === "A" || ele.tagName === "BUTTON" ) {
+        ele.click();
+        e.stopPropagation();
+        e.preventDefault();
+        return false;
+      }
+      ele = ele.parentElement;
+    }
+
+    // they didn't tap one of the above elements
+    // if the currently active element is an input, and they tapped outside
+    // of the current input, then unset its focus (blur) so the keyboard goes away
+    var activeElement = document.activeElement;
+    if(activeElement && (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA" || activeElement.tagName === "SELECT")) {
+      activeElement.blur();
+      e.stopPropagation();
+      e.preventDefault();
+      return false;
+    }
+  }
+
+  // global tap event listener polyfill for HTML elements that were "tapped" by the user
+  ionic.on("tap", tapPolyfill, window);
+
+})(this, document, ionic);

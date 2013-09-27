@@ -22,7 +22,7 @@
     e = e.gesture.srcEvent, // evaluate the actual source event, not the created event by gestures.js
     ele = e.target;
 
-    if(!e) return;
+    if(!e) return; 
 
     while(ele) {
       if( ele.tagName === "INPUT" || ele.tagName === "TEXTAREA" || ele.tagName === "SELECT" ) {

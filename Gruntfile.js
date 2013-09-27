@@ -17,7 +17,8 @@ module.exports = function(grunt) {
           'js/animate.js',
           'js/viewController.js',
           'js/views/**/*.js',
-          'js/controllers/**/*.js'
+          'js/controllers/**/*.js',
+          'js/tapPolyfill.js'
         ],
         dest: 'dist/<%= pkg.name %>.js'
       },
