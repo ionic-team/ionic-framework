@@ -9,8 +9,8 @@ meaningful market share, or they were too focused on building mobile websites.
 Many were slow, had excessive DOM operations, and relied on bulky libraries like jQuery. They weren't built with
 performance and great design as the top concerns.
 
-With Ionic we've built a framework meant for native. We don't tie you to the URL bar, and we aren't dwelling on the past,
-worrying about supporting marginal or slow devices.
+With Ionic we've built a framework meant for native. We don't tie you to the URL bar, and we aren't dwelling on the past or
+worrying about supporting marginal, slow devices.
 
 It's important to realize that Ionic is not a replacement for frameworks used for building mobile web apps. There are a lot
 of great solutions that work well for websites, like [jQuery Mobile](http://jquerymobile.com/).
