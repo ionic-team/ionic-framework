@@ -11,10 +11,13 @@
   ionic.views.Toggle.prototype = {
 
     tap: function(e) {
-      alert( this.isOn() );
+      
     },
 
-    isOn: function() {
+    val: function(value) {
+      if(value === true || value === false) {
+        this.checkbox.checked = value;
+      }
       return this.checkbox.checked;
     }
 

@@ -1666,48 +1666,50 @@ window.ionic = {
     }
   };
 })(window.ionic);
-;(function(ionic) {
+;
+(function(ionic) {
 
-ionic.views.NavBar = function(opts) {
-  this.el = opts.el;
+  ionic.views.NavBar = function(opts) {
+    this.el = opts.el;
 
-  this._titleEl = this.el.querySelector('.title');
-};
+    this._titleEl = this.el.querySelector('.title');
+  };
 
-ionic.views.NavBar.prototype = {
-  shouldGoBack: function() {},
+  ionic.views.NavBar.prototype = {
+    shouldGoBack: function() {},
 
-  setTitle: function(title) {
-    if(!this._titleEl) {
-      return;
-    }
-    this._titleEl.innerHTML = title;
-  },
+    setTitle: function(title) {
+      if(!this._titleEl) {
+        return;
+      }
+      this._titleEl.innerHTML = title;
+    },
 
-  showBackButton: function(shouldShow) {
-    var _this = this;
+    showBackButton: function(shouldShow) {
+      var _this = this;
 
-    if(!this._currentBackButton) {
-      var back = document.createElement('a');
-      back.className = 'button back';
-      back.innerHTML = 'Back';
+      if(!this._currentBackButton) {
+        var back = document.createElement('a');
+        back.className = 'button back';
+        back.innerHTML = 'Back';
 
-      this._currentBackButton = back;
-      this._currentBackButton.onclick = function(event) {
-        _this.shouldGoBack && _this.shouldGoBack();
+        this._currentBackButton = back;
+        this._currentBackButton.onclick = function(event) {
+          _this.shouldGoBack && _this.shouldGoBack();
+        }
+      }
+
+      if(shouldShow && !this._currentBackButton.parentNode) {
+        // Prepend the back button
+        this.el.insertBefore(this._currentBackButton, this.el.firstChild);
+      } else if(!shouldShow && this._currentBackButton.parentNode) {
+        // Remove the back button if it's there
+        this._currentBackButton.parentNode.removeChild(this._currentBackButton);
       }
     }
+  };
 
-    if(shouldShow && !this._currentBackButton.parentNode) {
-      // Prepend the back button
-      this.el.insertBefore(this._currentBackButton, this.el.firstChild);
-    } else if(!shouldShow && this._currentBackButton.parentNode) {
-      // Remove the back button if it's there
-      this._currentBackButton.parentNode.removeChild(this._currentBackButton);
-    }
-  }
-};
-})(window.ionic);
+})(ionic);
 ;(function(ionic) {
 
   ionic.views.HeaderBar = function(opts) {
@@ -1939,31 +1941,31 @@ ionic.views.TabBar.prototype = {
 };
 
 })(window.ionic);
-;(function(ionic) {
+;
+(function(ionic) {
 
-ionic.views = ionic.views || {};
+  ionic.views.SideMenu = function(opts) {
+    this.el = opts.el;
+    this.width = opts.width;
+    this.isEnabled = opts.isEnabled || true;
+  };
 
-ionic.views.SideMenu = function(opts) {
-  this.el = opts.el;
-  this.width = opts.width;
-  this.isEnabled = opts.isEnabled || true;
-};
+  ionic.views.SideMenu.prototype = {
+    getFullWidth: function() {
+      return this.width;
+    },
+    setIsEnabled: function(isEnabled) {
+      this.isEnabled = isEnabled;
+    },
+    bringUp: function() {
+      this.el.style.zIndex = 0;
+    },
+    pushDown: function() {
+      this.el.style.zIndex = -1;
+    }
+  };
 
-ionic.views.SideMenu.prototype = {
-  getFullWidth: function() {
-    return this.width;
-  },
-  setIsEnabled: function(isEnabled) {
-    this.isEnabled = isEnabled;
-  },
-  bringUp: function() {
-    this.el.style.zIndex = 0;
-  },
-  pushDown: function() {
-    this.el.style.zIndex = -1;
-  }
-};
-})(window.ionic);
+})(ionic);
 ;
 (function(ionic) {
 
@@ -1977,10 +1979,13 @@ ionic.views.SideMenu.prototype = {
   ionic.views.Toggle.prototype = {
 
     tap: function(e) {
-      alert( this.isOn() );
+      
     },
 
-    isOn: function() {
+    val: function(value) {
+      if(value === true || value === false) {
+        this.checkbox.checked = value;
+      }
       return this.checkbox.checked;
     }
 
@@ -2093,199 +2098,197 @@ ionic.controllers.NavController.prototype = {
 
 };
 })(window.ionic);
-;(function(ionic) {
+;
+(function(ionic) {
 
-ionic.controllers = ionic.controllers || {};
+  ionic.controllers.SideMenuController = function(options) {
+    var self = this;
 
-ionic.controllers.SideMenuController = function(options) {
-  var _this = this;
+    self.left = options.left;
+    self.right = options.right;
+    self.content = options.content;
+      
+    self._rightShowing = false;
+    self._leftShowing = false;
 
+    this.content.onDrag = function(e) {
+      self._handleDrag(e);
+    };
 
-  this.left = options.left;
-  this.right = options.right;
-  this.content = options.content;
-    
-  this._rightShowing = false;
-  this._leftShowing = false;
+    this.content.endDrag = function(e) {
+      self._endDrag(e);
+    };
 
-  this.content.onDrag = function(e) {
-    _this._handleDrag(e);
+    /*
+    // Bind release and drag listeners
+    window.ion.onGesture('release', function(e) {
+      self._endDrag(e);
+    }, self.center);
+
+    window.ion.onGesture('drag', function(e) {
+      self._handleDrag(e);
+    }, self.center);
+    */
   };
 
-  this.content.endDrag = function(e) {
-    _this._endDrag(e);
+  ionic.controllers.SideMenuController.prototype = {
+    toggleLeft: function() {
+      var openAmount = this.getOpenAmount();
+      if(openAmount > 0) {
+        this.openPercentage(0);
+      } else {
+        this.openPercentage(100);
+      }
+    },
+    toggleRight: function() {
+      var openAmount = this.getOpenAmount();
+      if(openAmount < 0) {
+        this.openPercentage(0);
+      } else {
+        this.openPercentage(-100);
+      }
+    },
+    getOpenAmount: function() {
+      return this.content.getTranslateX() || 0;
+    },
+    getOpenRatio: function() {
+      var amount = this.getOpenAmount();
+      if(amount >= 0) {
+        return amount / this.left.width;
+      }
+      return amount / this.right.width;
+    },
+    getOpenPercentage: function() {
+      return this.getOpenRatio() * 100;
+    },
+    openPercentage: function(percentage) {
+      var p = percentage / 100;
+      var maxLeft = this.left.width;
+      var maxRight = this.right.width;
+      if(percentage >= 0) {
+        this.openAmount(maxLeft * p);
+      } else {
+        this.openAmount(maxRight * p);
+      }
+    },
+    openAmount: function(amount) {
+      var maxLeft = this.left.width;
+      var maxRight = this.right.width;
+
+      // Check if we can move to that side, depending if the left/right panel is enabled
+      if((!this.left.isEnabled && amount > 0) || (!this.right.isEnabled && amount < 0)) {
+        return;
+      }
+
+      if((this._leftShowing && amount > maxLeft) || (this._rightShowing && amount < -maxRight)) {
+        return;
+      }
+      
+      this.content.setTranslateX(amount);
+
+      if(amount >= 0) {
+        this._leftShowing = true;
+        this._rightShowing = false;
+
+        // Push the z-index of the right menu down
+        this.right.pushDown();
+        // Bring the z-index of the left menu up
+        this.left.bringUp();
+      } else {
+        this._rightShowing = true;
+        this._leftShowing = false;
+
+        // Bring the z-index of the right menu up
+        this.right.bringUp();
+        // Push the z-index of the left menu down
+        this.left.pushDown();
+      }
+    },
+    snapToRest: function(e) {
+      // We want to animate at the end of this
+      this.content.enableAnimation();
+      this._isDragging = false;
+
+      // Check how much the panel is open after the drag, and
+      // what the drag velocity is
+      var ratio = this.getOpenRatio();
+
+      if(ratio == 0)
+        return;
+
+      var velocityThreshold = 0.3;
+      var velocityX = e.gesture.velocityX
+      var direction = e.gesture.direction;
+
+      // Less than half, going left 
+      //if(ratio > 0 && ratio < 0.5 && direction == 'left' && velocityX < velocityThreshold) {
+      //this.openPercentage(0);
+      //}
+
+      // Going right, less than half, too slow (snap back)
+      if(ratio > 0 && ratio < 0.5 && direction == 'right' && velocityX < velocityThreshold) {
+        this.openPercentage(0);
+      }
+
+      // Going left, more than half, too slow (snap back)
+      else if(ratio > 0.5 && direction == 'left' && velocityX < velocityThreshold) {
+        this.openPercentage(100);
+      }
+
+      // Going left, less than half, too slow (snap back)
+      else if(ratio < 0 && ratio > -0.5 && direction == 'left' && velocityX < velocityThreshold) {
+        this.openPercentage(0);
+      }
+
+      // Going right, more than half, too slow (snap back)
+      else if(ratio < 0.5 && direction == 'right' && velocityX < velocityThreshold) {
+        this.openPercentage(-100);
+      }
+      
+      // Going right, more than half, or quickly (snap open)
+      else if(direction == 'right' && ratio >= 0 && (ratio >= 0.5 || velocityX > velocityThreshold)) {
+        this.openPercentage(100);
+      }
+      
+      // Going left, more than half, or quickly (span open)
+      else if(direction == 'left' && ratio <= 0 && (ratio <= -0.5 || velocityX > velocityThreshold)) {
+        this.openPercentage(-100);
+      }
+      
+      // Snap back for safety
+      else {
+        this.openPercentage(0);
+      }
+    },
+    _endDrag: function(e) {
+      this.snapToRest(e);
+    },
+    _initDrag: function(e) {
+      this.content.disableAnimation();
+      this._isDragging = true;
+      this._startX = 0;
+      this._offsetX = 0;
+      this._lastX = 0;
+    },
+    _handleDrag: function(e) {
+      if(!this._isDragging) {
+        this._initDrag(e);
+
+        this._startX = e.gesture.touches[0].pageX;
+        this._lastX = this._startX;
+
+        this._offsetX = this.getOpenAmount();
+      }
+      //console.log('Dragging page', this._startX, this._lastX, this._offsetX, e);
+      var newX = this._offsetX + (this._lastX - this._startX);
+
+      this.openAmount(newX);
+
+      this._lastX = e.gesture.touches[0].pageX;
+    }
   };
 
-  /*
-  // Bind release and drag listeners
-  window.ion.onGesture('release', function(e) {
-    _this._endDrag(e);
-  }, this.center);
-
-  window.ion.onGesture('drag', function(e) {
-    _this._handleDrag(e);
-  }, this.center);
-  */
-};
-
-ionic.controllers.SideMenuController.prototype = {
-  toggleLeft: function() {
-    var openAmount = this.getOpenAmount();
-    if(openAmount > 0) {
-      this.openPercentage(0);
-    } else {
-      this.openPercentage(100);
-    }
-  },
-  toggleRight: function() {
-    var openAmount = this.getOpenAmount();
-    if(openAmount < 0) {
-      this.openPercentage(0);
-    } else {
-      this.openPercentage(-100);
-    }
-  },
-  getOpenAmount: function() {
-    return this.content.getTranslateX() || 0;
-  },
-  getOpenRatio: function() {
-    var amount = this.getOpenAmount();
-    if(amount >= 0) {
-      return amount / this.left.width;
-    }
-    return amount / this.right.width;
-  },
-  getOpenPercentage: function() {
-    return this.getOpenRatio() * 100;
-  },
-  openPercentage: function(percentage) {
-    var p = percentage / 100;
-    var maxLeft = this.left.width;
-    var maxRight = this.right.width;
-    if(percentage >= 0) {
-      this.openAmount(maxLeft * p);
-    } else {
-      this.openAmount(maxRight * p);
-    }
-  },
-  openAmount: function(amount) {
-    var maxLeft = this.left.width;
-    var maxRight = this.right.width;
-
-    // Check if we can move to that side, depending if the left/right panel is enabled
-    if((!this.left.isEnabled && amount > 0) || (!this.right.isEnabled && amount < 0)) {
-      return;
-    }
-
-    if((this._leftShowing && amount > maxLeft) || (this._rightShowing && amount < -maxRight)) {
-      return;
-    }
-    
-    this.content.setTranslateX(amount);
-
-    if(amount >= 0) {
-      this._leftShowing = true;
-      this._rightShowing = false;
-
-      // Push the z-index of the right menu down
-      this.right.pushDown();
-      // Bring the z-index of the left menu up
-      this.left.bringUp();
-    } else {
-      this._rightShowing = true;
-      this._leftShowing = false;
-
-      // Bring the z-index of the right menu up
-      this.right.bringUp();
-      // Push the z-index of the left menu down
-      this.left.pushDown();
-    }
-  },
-  snapToRest: function(e) {
-    // We want to animate at the end of this
-    this.content.enableAnimation();
-    this._isDragging = false;
-
-    // Check how much the panel is open after the drag, and
-    // what the drag velocity is
-    var ratio = this.getOpenRatio();
-
-    if(ratio == 0)
-      return;
-
-    var velocityThreshold = 0.3;
-    var velocityX = e.gesture.velocityX
-    var direction = e.gesture.direction;
-
-    // Less than half, going left 
-    //if(ratio > 0 && ratio < 0.5 && direction == 'left' && velocityX < velocityThreshold) {
-    //this.openPercentage(0);
-    //}
-
-    // Going right, less than half, too slow (snap back)
-    if(ratio > 0 && ratio < 0.5 && direction == 'right' && velocityX < velocityThreshold) {
-      this.openPercentage(0);
-    }
-
-    // Going left, more than half, too slow (snap back)
-    else if(ratio > 0.5 && direction == 'left' && velocityX < velocityThreshold) {
-      this.openPercentage(100);
-    }
-
-    // Going left, less than half, too slow (snap back)
-    else if(ratio < 0 && ratio > -0.5 && direction == 'left' && velocityX < velocityThreshold) {
-      this.openPercentage(0);
-    }
-
-    // Going right, more than half, too slow (snap back)
-    else if(ratio < 0.5 && direction == 'right' && velocityX < velocityThreshold) {
-      this.openPercentage(-100);
-    }
-    
-    // Going right, more than half, or quickly (snap open)
-    else if(direction == 'right' && ratio >= 0 && (ratio >= 0.5 || velocityX > velocityThreshold)) {
-      this.openPercentage(100);
-    }
-    
-    // Going left, more than half, or quickly (span open)
-    else if(direction == 'left' && ratio <= 0 && (ratio <= -0.5 || velocityX > velocityThreshold)) {
-      this.openPercentage(-100);
-    }
-    
-    // Snap back for safety
-    else {
-      this.openPercentage(0);
-    }
-  },
-  _endDrag: function(e) {
-    this.snapToRest(e);
-  },
-  _initDrag: function(e) {
-    this.content.disableAnimation();
-    this._isDragging = true;
-    this._startX = 0;
-    this._offsetX = 0;
-    this._lastX = 0;
-  },
-  _handleDrag: function(e) {
-    if(!this._isDragging) {
-      this._initDrag(e);
-
-      this._startX = e.gesture.touches[0].pageX;
-      this._lastX = this._startX;
-
-      this._offsetX = this.getOpenAmount();
-    }
-    //console.log('Dragging page', this._startX, this._lastX, this._offsetX, e);
-    var newX = this._offsetX + (this._lastX - this._startX);
-
-    this.openAmount(newX);
-
-    this._lastX = e.gesture.touches[0].pageX;
-  }
-};
-
-})(ionic = window.ionic || {});
+})(ionic);
 ;(function(ionic) {
 
 ionic.controllers = ionic.controllers || {};
@@ -2428,13 +2431,11 @@ ionic.controllers.TabBarController.prototype = {
 
   function tapPolyfill(e) {
     // if the source event wasn't from a touch event then don't use this polyfill
-    if(!e.gesture || e.gesture.pointerType !== "touch") return;
+    if(!e.gesture || e.gesture.pointerType !== "touch" || !e.gesture.srcEvent) return;
 
     var 
     e = e.gesture.srcEvent, // evaluate the actual source event, not the created event by gestures.js
     ele = e.target;
-
-    if(!e) return; 
 
     while(ele) {
       if( ele.tagName === "INPUT" || ele.tagName === "TEXTAREA" || ele.tagName === "SELECT" ) {

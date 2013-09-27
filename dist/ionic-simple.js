@@ -7,34 +7,53 @@
     ionic.Components.push(instance);
   };
 
-  function onTap(e) {
+  ionic.component = function(el) {
+    if(el) {
+      for(var x = 0; x < ionic.Components.length; x++) {
+        if( ionic.Components[x].isComponent(el) ) {
+          // this element is a component, init its view
+          return ionic.Components[x].init(el);
+        }
+      }
+    }
+  };
+
+  function componentEvent(eventName, e) {
     if (!e.gesture || !e.gesture.srcEvent || !e.gesture.srcEvent.target) return;
 
     var 
-    x,
-    e = e.gesture.srcEvent,
-    el = e.target,
-    component;
+    component,
+    el = e.gesture.srcEvent.target; // get the original source event's target
 
     while(el) {
       // climb up the tree looking to see if the target
       // is or is in a registered component
-      for(x = 0; x < ionic.Components.length; x++) {
-        if( ionic.Components[x].isComponent(el) ) {
-          // this element is a component
-          // create its view and call it's event handler
-          component = ionic.Components[x].create(el);
-          component && component.tap && component.tap(e);
-          return;
-        }
+      component = ionic.component(el);
+      if(component) {
+        component[eventName] && component[eventName](e.gesture.srcEvent);
+        return;
       }
-
       // not sure if this element is a component yet,
       // keep climbing up the tree and check again
       el = el.parentElement;
     }
   }
+
+  function onTap(e) {
+    componentEvent("tap", e);
+  }
   ionic.on("tap", onTap, window);
+
+  function onDrag(e) {
+    componentEvent("drag", e);
+  }
+  ionic.on("drag", onDrag, window);
+
+  function onRelease(e) {
+    componentEvent("release", e);
+  }
+  ionic.on("release", onRelease, window);
+
 
   function initalize() {
     // remove the ready listeners
@@ -78,20 +97,34 @@
   ionic.registerComponent({
 
     isComponent: function(el) {
+      // this is a Toggle component if it has a "toggle" classname
       return el.classList.contains("toggle");
     },
 
-    create: function(el) {
+    init: function(el) {
       if(el) {
 
+        // check if we've already created a Toggle instance for this element
         if(!el._instance) {
-          
-         el._instance = new ionic.views.Toggle({ 
+
+          // find all the required elements that make up a toggle
+          var opts = { 
             el: el,
             checkbox: el.querySelector("input[type='checkbox']"),
             track: el.querySelector(".track"),
             handle: el.querySelector(".handle")
-          });
+          };
+
+          // validate its a well formed toggle with the required pieces
+          if(!opts.checkbox || !opts.track || !opts.handle) {
+            return;
+          }
+
+          // ensure the handle is draggable
+          opts.handle.draggable = true;
+
+          // initialize an instance of a Toggle
+          el._instance = new ionic.views.Toggle(opts);
         }
 
         return el._instance;
