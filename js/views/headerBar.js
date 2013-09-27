@@ -6,12 +6,9 @@
     this._titleEl = this.el.querySelector('.title');
   };
 
-  ionic.views.NavBar.prototype = {
+  ionic.views.HeaderBar.prototype = {
     resizeTitle: function() {
-      var 
-      e,
-      j,
-      i,
+      var e, j, i,
       title,
       titleWidth,
       children = this.el.children;
