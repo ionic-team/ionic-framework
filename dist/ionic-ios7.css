@@ -1614,17 +1614,21 @@ textarea {
 
 .input-group {
   overflow: hidden;
-  border-top: 1px solid #cccccc;
-  border-bottom: 1px solid #cccccc;
-  background-color: white; }
+  /*
+  border-top: $input-border-width solid $input-border-color;
+  border-bottom: $input-border-width solid $input-border-color;
+  background-color: $input-bg;
+  */ }
 
 .padded > .input-group,
 .input-group.inset {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
-  border-right: 1px solid #cccccc;
-  border-left: 1px solid #cccccc; }
+  /*
+  border-right: $input-border-width solid $input-border-color;
+  border-left: $input-border-width solid $input-border-color;
+  */ }
 
 .input-group .input-wrapper + .input-wrapper {
   border-top: 1px solid #cccccc; }
@@ -1924,7 +1928,8 @@ input[type="checkbox"][readonly] {
       opacity: 0.4; }
   .button.button-block {
     display: block;
-    margin: 10px 0 10px 0; }
+    margin: 10px 0 10px 0;
+    width: 100%; }
   .button.button-default {
     color: #333333;
     background-color: white;

@@ -1,0 +1,18 @@
+$toggle-width:                    54px;
+$toggle-height:                   32px;
+$toggle-border-width:             2px;
+$toggle-border-radius:            20px;
+
+$toggle-handle-radius:            20px;
+
+$toggle-off-bg-color:             #fff;
+$toggle-off-border-color:         #ddd;
+
+$toggle-on-bg-color:              #4bd863;
+$toggle-on-border-color:          $toggle-on-bg-color;
+
+$toggle-handle-off-bg-color:      #fff;
+$toggle-handle-on-bg-color:       $toggle-handle-off-bg-color;
+
+$toggle-transition-duration:      .2s;
+

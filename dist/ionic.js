@@ -1666,36 +1666,6 @@ window.ionic = {
     }
   };
 })(window.ionic);
-;(function(ionic) {
-
-  ionic.views.HeaderBar = function(opts) {
-    this.el = opts.el;
-
-    this._titleEl = this.el.querySelector('.title');
-  };
-
-  ionic.views.NavBar.prototype = {
-    resizeTitle: function() {
-      var 
-      e,
-      j,
-      i,
-      title,
-      titleWidth,
-      children = this.el.children;
-
-      for(i = 0, j = children.length; i < j; i++) {
-        e = children[i];
-        if(/h\d/.test(e.nodeName.toLowerCase())) {
-          title = e;
-        }
-      }
-
-      titleWidth = title.offsetWidth;
-    }
-  };
-
-})(ionic);
 ;
 (function(ionic) {
 
@@ -1740,27 +1710,29 @@ window.ionic = {
   };
 
 })(ionic);
-;
-(function(ionic) {
+;(function(ionic) {
 
-  ionic.views.SideMenu = function(opts) {
+  ionic.views.HeaderBar = function(opts) {
     this.el = opts.el;
-    this.width = opts.width;
-    this.isEnabled = opts.isEnabled || true;
+
+    this._titleEl = this.el.querySelector('.title');
   };
 
-  ionic.views.SideMenu.prototype = {
-    getFullWidth: function() {
-      return this.width;
-    },
-    setIsEnabled: function(isEnabled) {
-      this.isEnabled = isEnabled;
-    },
-    bringUp: function() {
-      this.el.style.zIndex = 0;
-    },
-    pushDown: function() {
-      this.el.style.zIndex = -1;
+  ionic.views.HeaderBar.prototype = {
+    resizeTitle: function() {
+      var e, j, i,
+      title,
+      titleWidth,
+      children = this.el.children;
+
+      for(i = 0, j = children.length; i < j; i++) {
+        e = children[i];
+        if(/h\d/.test(e.nodeName.toLowerCase())) {
+          title = e;
+        }
+      }
+
+      titleWidth = title.offsetWidth;
     }
   };
 
@@ -1966,6 +1938,31 @@ ionic.views.TabBar.prototype = {
 };
 
 })(window.ionic);
+;
+(function(ionic) {
+
+  ionic.views.SideMenu = function(opts) {
+    this.el = opts.el;
+    this.width = opts.width;
+    this.isEnabled = opts.isEnabled || true;
+  };
+
+  ionic.views.SideMenu.prototype = {
+    getFullWidth: function() {
+      return this.width;
+    },
+    setIsEnabled: function(isEnabled) {
+      this.isEnabled = isEnabled;
+    },
+    bringUp: function() {
+      this.el.style.zIndex = 0;
+    },
+    pushDown: function() {
+      this.el.style.zIndex = -1;
+    }
+  };
+
+})(ionic);
 ;
 (function(ionic) {
 
@@ -2413,3 +2410,59 @@ ionic.controllers.TabBarController.prototype = {
 }
 
 })(ionic = window.ionic || {});
+;(function(window, document, ionic) {
+
+  // polyfill use to simulate native "tap"
+  function inputTapPolyfill(ele, e) {
+    if(ele.type === "radio" || ele.type === "checkbox") {
+      ele.checked = !ele.checked;
+    } else if(ele.type === "submit" || ele.type === "button") {
+      ele.click();
+    } else {
+      ele.focus();
+    }
+    e.stopPropagation();
+    e.preventDefault();
+    return false;
+  }
+
+  function tapPolyfill(e) {
+    // if the source event wasn't from a touch event then don't use this polyfill
+    if(!e.gesture || e.gesture.pointerType !== "touch" || !e.gesture.srcEvent) return;
+
+    var 
+    e = e.gesture.srcEvent, // evaluate the actual source event, not the created event by gestures.js
+    ele = e.target;
+
+    while(ele) {
+      if( ele.tagName === "INPUT" || ele.tagName === "TEXTAREA" || ele.tagName === "SELECT" ) {
+        return inputTapPolyfill(ele, e);
+      } else if( ele.tagName === "LABEL" ) {
+        if(ele.control) {
+          return inputTapPolyfill(ele.control, e);
+        }
+      } else if( ele.tagName === "A" || ele.tagName === "BUTTON" ) {
+        ele.click();
+        e.stopPropagation();
+        e.preventDefault();
+        return false;
+      }
+      ele = ele.parentElement;
+    }
+
+    // they didn't tap one of the above elements
+    // if the currently active element is an input, and they tapped outside
+    // of the current input, then unset its focus (blur) so the keyboard goes away
+    var activeElement = document.activeElement;
+    if(activeElement && (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA" || activeElement.tagName === "SELECT")) {
+      activeElement.blur();
+      e.stopPropagation();
+      e.preventDefault();
+      return false;
+    }
+  }
+
+  // global tap event listener polyfill for HTML elements that were "tapped" by the user
+  ionic.on("tap", tapPolyfill, window);
+
+})(this, document, ionic);
