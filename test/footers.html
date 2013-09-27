@@ -7,6 +7,9 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="../dist/ionicons.css" rel="stylesheet">
     <link href="../dist/ionic.css" rel="stylesheet">
+    <style>
+      .hide{display:none;}
+    </style>
   </head>
   <body>
 
@@ -19,77 +22,39 @@
       <main class="content padded has-header has-footer">
         <p>Footer should always stay at the bottom of the screen, and on top of the main content.</p>
         <p>Content element must have "has-footer" as a classname.</p>
-        <ul>
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-          <li>asdf
-        </ul>
-        <p>Bottom of the list
+        <p><button id="btnAddMore">Dynamically Add More Content</button></p>
+        <div id="add-more"></div>
+        <p><button id="btnToggle">Toggle Content</button></p>
+        <p id="toggle-content" class="hide">
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+          Toggled content<br>
+        </p>
         <p><a class="button button-secondary" href="index.html">Homepage</a></p>
       </main>
 
@@ -101,6 +66,21 @@
     
     <script src="../dist/ionic.js"></script>
     <script src="../dist/ionic-simple.js"></script>
-
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+      $("#btnAddMore").click(function(){
+        var moreContent = [];
+        moreContent.push("<ul>");
+        for(var x=0; x<20; x++) {
+          moreContent.push("<li>Dynamically added content!");
+        }
+        moreContent.push("</ul>");
+        $("#add-more").append( moreContent.join('') );
+        return false;
+      });
+      $("#btnToggle").click(function(){
+        $("#toggle-content").toggle("hide")
+      });
+    </script>
   </body>
 </html>
