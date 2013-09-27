@@ -3,7 +3,7 @@ $toggle-height:                   32px;
 $toggle-border-width:             2px;
 $toggle-border-radius:            20px;
 
-$toggle-switch-radius:            20px;
+$toggle-handle-radius:            20px;
 
 $toggle-off-bg-color:             #fff;
 $toggle-off-border-color:         #ddd;
@@ -11,8 +11,8 @@ $toggle-off-border-color:         #ddd;
 $toggle-on-bg-color:              #4bd863;
 $toggle-on-border-color:          $toggle-on-bg-color;
 
-$toggle-switch-off-bg-color:      #fff;
-$toggle-switch-on-bg-color:       $toggle-switch-off-bg-color;
+$toggle-handle-off-bg-color:      #fff;
+$toggle-handle-on-bg-color:       $toggle-handle-off-bg-color;
 
 $toggle-transition-duration:      .2s;
 
@@ -42,16 +42,16 @@ $toggle-transition-duration:      .2s;
   transition: $toggle-transition-duration + .2s ease;
 }
 
-.toggle .switch {
-  /* the switch (circle) thats inside the toggle's track area */
-  /* also the appearance when the switch is "off" */
+.toggle .handle {
+  /* the handle (circle) thats inside the toggle's track area */
+  /* also the appearance when the handle is "off" */
   position: absolute;
   display: block;
   width: auto; /* override defaults */
   height: auto; /* override defaults */
   box-shadow: 0 0 2px rgba(0,0,0,.5), 0 4px 5px rgba(0,0,0,0.25);
-  border-radius: $toggle-switch-radius;
-  background-color: $toggle-switch-off-bg-color;
+  border-radius: $toggle-handle-radius;
+  background-color: $toggle-handle-off-bg-color;
   left: 0;
   top: 0;
   bottom: 0;
@@ -72,9 +72,9 @@ $toggle-transition-duration:      .2s;
   box-shadow: inset 0 0 0 $toggle-border-radius $toggle-on-bg-color;
   transition: $toggle-transition-duration ease;
 
-  /* the switch when the toggle is "on" */
-  .switch {
-    background-color: $toggle-switch-on-bg-color;
+  /* the handle when the toggle is "on" */
+  .handle {
+    background-color: $toggle-handle-on-bg-color;
     right: 0;
     left: $toggle-border-radius;
     -webkit-transform: none;

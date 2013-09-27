@@ -1,11 +1,40 @@
 
 (function(window, document, ionic) {
 
-  ionic.simple = {
+  ionic.Components = [];
 
-    
-
+  ionic.registerComponent = function(instance) {
+    ionic.Components.push(instance);
   };
+
+  function onTap(e) {
+    if (!e.gesture || !e.gesture.srcEvent || !e.gesture.srcEvent.target) return;
+
+    var 
+    x,
+    e = e.gesture.srcEvent,
+    el = e.target,
+    component;
+
+    while(el) {
+      // climb up the tree looking to see if the target
+      // is or is in a registered component
+      for(x = 0; x < ionic.Components.length; x++) {
+        if( ionic.Components[x].isComponent(el) ) {
+          // this element is a component
+          // create its view and call it's event handler
+          component = ionic.Components[x].create(el);
+          component && component.tap && component.tap(e);
+          return;
+        }
+      }
+
+      // not sure if this element is a component yet,
+      // keep climbing up the tree and check again
+      el = el.parentElement;
+    }
+  }
+  ionic.on("tap", onTap, window);
 
   function initalize() {
     // remove the ready listeners

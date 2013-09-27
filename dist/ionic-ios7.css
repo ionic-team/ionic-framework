@@ -1840,9 +1840,9 @@ input[type="checkbox"][readonly] {
   cursor: pointer;
   transition: 0.4s ease; }
 
-.toggle .switch {
-  /* the switch (circle) thats inside the toggle's track area */
-  /* also the appearance when the switch is "off" */
+.toggle .handle {
+  /* the handle (circle) thats inside the toggle's track area */
+  /* also the appearance when the handle is "off" */
   position: absolute;
   display: block;
   width: auto;
@@ -1867,8 +1867,8 @@ input[type="checkbox"][readonly] {
   background-color: #ccc;
   box-shadow: inset 0 0 0 20px #4bd863;
   transition: 0.2s ease;
-  /* the switch when the toggle is "on" */ }
-  .toggle :checked + .track .switch {
+  /* the handle when the toggle is "on" */ }
+  .toggle :checked + .track .handle {
     background-color: white;
     right: 0;
     left: 20px;

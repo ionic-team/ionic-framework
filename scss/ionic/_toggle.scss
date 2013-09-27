@@ -26,15 +26,15 @@
   transition-timing-function: ease-in-out;
 }
 
-/* the switch (circle) thats inside the toggle's track area */
-/* also the appearance when the switch is "off" */
-.toggle .switch {
+/* the handle (circle) thats inside the toggle's track area */
+/* also the appearance when the handle is "off" */
+.toggle .handle {
   position: absolute;
   display: block;
-  width: $toggle-switch-width;
-  height: $toggle-switch-height;
-  border-radius: $toggle-switch-radius;
-  background-color: $toggle-switch-off-bg-color;
+  width: $toggle-handle-width;
+  height: $toggle-handle-height;
+  border-radius: $toggle-handle-radius;
+  background-color: $toggle-handle-off-bg-color;
   transition: -webkit-transform $toggle-transition-duration ease-in-out;
 }
 
@@ -46,9 +46,9 @@
   border-color: $toggle-on-border-color;
   background-color: $toggle-on-bg-color;
 
-  /* the switch when the toggle is "on" */
-  .switch {
-    background-color: $toggle-switch-on-bg-color;
-    -webkit-transform: translate3d( $toggle-width - $toggle-switch-width - ($toggle-border-width * 2) ,0,0);
+  /* the handle when the toggle is "on" */
+  .handle {
+    background-color: $toggle-handle-on-bg-color;
+    -webkit-transform: translate3d( $toggle-width - $toggle-handle-width - ($toggle-border-width * 2) ,0,0);
   }
 }

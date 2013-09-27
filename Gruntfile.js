@@ -20,6 +20,7 @@ module.exports = function(grunt) {
           'js/views/headerBar.js',
           'js/views/tabBar.js',
           'js/views/sideMenu.js',
+          'js/views/toggleView.js',
           'js/controllers/**/*.js',
           'js/tapPolyfill.js'
         ],

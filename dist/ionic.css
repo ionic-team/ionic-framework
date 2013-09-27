@@ -1841,9 +1841,9 @@ input[type="checkbox"][readonly] {
   transition-duration: 0.1s;
   transition-timing-function: ease-in-out; }
 
-/* the switch (circle) thats inside the toggle's track area */
-/* also the appearance when the switch is "off" */
-.toggle .switch {
+/* the handle (circle) thats inside the toggle's track area */
+/* also the appearance when the handle is "off" */
+.toggle .handle {
   position: absolute;
   display: block;
   width: 28px;
@@ -1857,8 +1857,8 @@ input[type="checkbox"][readonly] {
   /* the track when the toggle is "on" */
   border-color: #5f85ef;
   background-color: #5f85ef;
-  /* the switch when the toggle is "on" */ }
-  .toggle :checked + .track .switch {
+  /* the handle when the toggle is "on" */ }
+  .toggle :checked + .track .handle {
     background-color: white;
     -webkit-transform: translate3d(22px, 0, 0); }
 
