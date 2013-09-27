@@ -49,4 +49,4 @@ way is to use Python:
 
 ## LICENSE
 
-Ionic is licensed under the Apache 2.0 Open Source license. For more information, see the LICENSE file in this repository.
+Ionic is licensed under the MIT Open Source license. For more information, see the LICENSE file in this repository.
