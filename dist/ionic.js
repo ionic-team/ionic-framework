@@ -1702,13 +1702,21 @@ ionic.views.HeaderBar = function(opts) {
 
 ionic.views.NavBar.prototype = {
   resizeTitle: function() {
-    var e,
-      children = this.el.children,
-      index = Array.prototype.indexOf.call(children, this.el);
+    var e;
+    var j;
+    var children = this.el.children;
 
-    for(var i = 0; i < index; i++) {
+    var title;
+    var titleWidth;
+
+    for(var i = 0; j = children.length; i < j; i++) {
       e = children[i];
+      if(/h\d/.test(e.nodeName.toLowerCase())) {
+        title = e;
+      }
     }
+
+    titleWidth = title.offsetWidth;
   }
 };
 })(window.ionic);
