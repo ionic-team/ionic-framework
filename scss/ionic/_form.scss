@@ -49,15 +49,19 @@ textarea {
 
 .input-group {
   overflow: hidden;
+  /*
   border-top: $input-border-width solid $input-border-color;
   border-bottom: $input-border-width solid $input-border-color;
   background-color: $input-bg;
+  */
 }
 .padded > .input-group,
 .input-group.inset {
   @include border-radius($input-border-radius);
+  /*
   border-right: $input-border-width solid $input-border-color;
   border-left: $input-border-width solid $input-border-color;
+  */
 }
 
 .input-group .input-wrapper + .input-wrapper {
