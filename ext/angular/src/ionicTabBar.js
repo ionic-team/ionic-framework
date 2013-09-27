@@ -1,61 +1,87 @@
-angular.module('ionic.ui.tabbar', {})
+angular.module('ionic.ui', [])
 
-.controller('TabBarCtrl', ['$scope', '$element', function($scope, $element) {
-  console.log('Tab controller');
-  var tabs = $scope.tabs = [];
+.directive('content', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    scope: {
+      hasHeader: '@',
+      hasTabs: '@'
+    },
+    template: '<div class="content" ng-class="{\'has-header\': hasHeader, \'has-tabs\': hasTabs}" ng-transclude></div>'
+  }
+})
 
-  
-  $scope.selectTab = function(index) {
-  };
-  $scope.beforeTabSelect = function(index) {
-  };
-  $scope.tabSelected = function(index) {
-  };
+.controller('TabsCtrl', function($scope) {
+  var _this = this;
 
-  this.addTab = function(tab) {
-    tabs.push(tab);
-  };
+  angular.extend(this, TabBarController.prototype);
 
-  this.getSelectedTabIndex = function() {
-    return $scope.selectedIndex;
-  };
+  TabBarController.call(this, {
+    tabBar: {
+      tryTabSelect: function() {},
+      setSelectedItem: function(index) {
+        console.log('TAB BAR SET SELECTED INDEX', index);
+      },
+      addItem: function(item) {
+        console.log('TAB BAR ADD ITEM', item);
+      }
+    }
+  });
 
-  this.selectTabAtIndex = function(index) {
-    $scope.selectedIndex = index;
-    console.log('Scope selected tab is', index);
-  };
+  $scope.controllers = this.controllers;
 
-  this.getNumTabs = function() {
-    return tabs.length;
-  };
-}])
+  $scope.$watch('controllers', function(newV, oldV) {
+    console.log("CControlelrs changed", newV, oldV);
+    //$scope.$apply();
+  });
+})
 
-.directive('tabBar', function() {
+.directive('tabController', function() {
   return {
     restrict: 'E',
     replace: true,
     scope: {},
     transclude: true,
-    controller: 'TabBarCtrl',
+    controller: 'TabsCtrl',
     //templateUrl: 'ext/angular/tmpl/ionicTabBar.tmpl.html',
-    template: '<div class="view-wrapper" ng-transclude></div>',
+    template: '<div class="view"><div ng-transclude></div><tab-bar></tab-bar></div>',
+    compile: function(element, attr, transclude, tabsCtrl) {
+      return function($scope, $element, $attr) {
+      };
+    }
   }
 })
 
-.directive('tabs', function() {
+// Generic controller directive
+.directive('tabContent', function() {
+  return {
+    restrict: 'CA',
+    replace: true,
+    transclude: true,
+    template: '<div ng-show="isVisible" ng-transclude></div>',
+    require: '^tabController',
+    scope: true,
+    link: function(scope, element, attrs, tabsCtrl) {
+      scope.title = attrs.title;
+      scope.icon = attrs.icon;
+      tabsCtrl.addController(scope);
+    }
+  }
+})
+
+
+.directive('tabBar', function() {
   return {
     restrict: 'E',
-    replace: true,
-    require: '^tabBar',
+    require: '^tabController',
     transclude: true,
-    template: '<footer class="bar bar-tabs bar-footer bar-success">' + 
-  '<nav class="tabs">' + 
-    '<ul class="tabs-inner">' + 
-      '<tab-item text="Item" icon="icon-default" ng-repeat="tab in tabs">' + 
-      '</tab-item>' +
-    '</ul>' +
-  '</nav>' +
-'</footer>'
+    replace: true,
+    scope: true,
+    template: '<div class="tabs tabs-primary">' + 
+      '<tab-item title="{{controller.title}}" icon="{{controller.icon}}" active="controller.isVisible" index="$index" ng-repeat="controller in controllers"></tab-item>' + 
+    '</div>'
   }
 })
 
@@ -63,42 +89,23 @@ angular.module('ionic.ui.tabbar', {})
   return {
     restrict: 'E',
     replace: true,
-    require: '^tabBar',
+    require: '^tabController',
     scope: {
-      text: '@',
+      title: '@',
       icon: '@',
       active: '=',
       tabSelected: '@',
+      index: '='
     },
-    compile: function(element, attrs, transclude) {
-      return function(scope, element, attrs, tabBarCtrl) {
-        var getActive, setActive;
-
-        scope.$watch('active', function(active) {
-          console.log('ACTIVE CHANGED', active);
-        });
-      };
-    },
-    link: function(scope, element, attrs, tabBarCtrl) {
-
-      // Store the index of this list item, which
-      // specifies which tab item it is
-      scope.tabIndex = element.index();
-
-      scope.active = true;
-
+    link: function(scope, element, attrs, tabsCtrl) {
+      console.log('Linked item', scope);
       scope.selectTab = function(index) {
-        console.log('SELECT TAB', index);
-        tabBarCtrl.selectTabAtIndex(index);
+        tabsCtrl.selectController(scope.index);
       };
-      
-      tabBarCtrl.addTab(scope);
     },
-    template: '<li class="tab-item" ng-class="{active:active}">' + 
-        '<a href="#" ng-click="selectTab(tabIndex)">' + 
-          '<i class="{{icon}}"></i>' +
-          '{{text}}' +
-        '</a></li>'
+    template: 
+      '<a href="#" ng-class="{active:active}" ng-click="selectTab()" class="tab-item">' +
+        '<i class="{{icon}}"></i> {{title}}' +
+      '</a>'
   }
 });
-

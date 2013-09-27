@@ -1,18 +1,69 @@
-<!DOCTYPE html>
-<html>
+<html ng-app="tabsTest">
   <head>
-    <link rel="stylesheet" href="/dist/ionic.css">
-    <script src="/vendor/angular/1.2.0rc1/angular-1.2.0rc1.min.js"></script>
-    <script src="/ext/angular/src/ionicContent.js"></script>
-    <script src="/ext/angular/src/ionicTabBar.js"></script>
+    <meta charset="utf-8">
+    <title>Tab Bars</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="../dist/ionic.css">
+    <script src="/vendor/angular/1.2.0rc2/angular-1.2.0rc2.min.js"></script>
+    <script src="/vendor/angular/1.2.0rc2/angular-touch.js"></script>
+    <style>
+      .content {
+        height: 100%;
+      }
+    </style>
   </head>
-  <body ng-app="ionic.ui.tabbar">
-    <tab-bar>
-      <tabs>
-        <tab-item active="true" text="Cats" icon="icon-default" />
-        <tab-item active="true" text="Cats" icon="icon-default" />
-        <tab-item active="true" text="Cats" icon="icon-default" />
-      </tabs>
-    </tab-bar>
+  <body>
+    <tab-controller>
+      <div title="Home" icon="icon-home" class="tab-content">
+        <header class="bar bar-header bar-dark">
+          <h1 class="title">Tab Bars</h1>
+        </header>
+        <content has-header="true" has-tabs="true">
+          <h1>Home</h1>
+          <ul class="list" ng-controller="HomeCtrl">
+            <a href="#" class="list-item" ng-repeat="item in items">
+              {{item.title}}
+            </a>
+          </ul>
+        </content>
+      </div>
+
+      <div title="About" icon="icon-info" class="tab-content">
+        <header class="bar bar-header bar-success">
+          <h1 class="title">About</h1>
+        </header>
+        <content has-header="true" has-tabs="true">
+          <h1>About Us</h1>
+        </content>
+      </div>
+
+      <div title="Settings" icon="icon-gear" class="tab-content">
+        <header class="bar bar-header bar-dark">
+          <h1 class="title">Settings</h1>
+        </header>
+        <content has-header="true" has-tabs="true">
+          <h1>Settings</h1>
+        </content>
+      </div>
+    </tab-controller>
+
+    <script src="TabBarController.js"></script>
+    <script src="TabAngular.js"></script>
+    <script>
+      angular.module('tabsTest', ['ionic.ui'])
+
+      .controller('HomeCtrl', function($scope) {
+        $scope.items = [];
+        for(var i = 0; i < 100; i++) {
+          $scope.items.push({
+            title: 'Item ' + i
+          });
+        }
+      })
+
+    </script>
   </body>
 </html>
