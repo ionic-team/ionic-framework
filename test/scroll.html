@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>iOS 7</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="../dist/ionicIcons.css" rel="stylesheet">
+    <script src="../vendor/angular/1.2.0rc2/angular-1.2.0rc2.min.js"></script>
+  </head>
+  <body ng-app ng-controller="AppCtrl">
+
+    <div ng-switch="currentPage">
+      <section>
+        <div class="bar bar-header bar-secondary">
+          <a href="#" class="button button-danger button-clear">Edit</a>
+          <h1 class="title">World Clock</h1>
+          <a href="#" class="button button-danger button-clear">Delete</a>
+        </div>
+        <div class="content">
+          <div style="width: 100%; background-color: #ccc; height: 2000px"></div>
+        </div>
+      </section>
+      <section id="page2">
+        <div class="bar bar-header bar-success">
+          <a href="#" class="button button-danger button-clear">Edit</a>
+          <h1 class="title">World Clock</h1>
+          <a href="#" class="button button-danger button-clear">Delete</a>
+        </div>
+        <div class="content">
+          <div style="width: 100%; background-color: #ccc; height: 2000px"></div>
+        </div>
+      </section>
+    </div>
+    <script>
+      angular.module('test', [])
+
+      .controller('AppCtrl', function($scope) {
+      });
+    </script>
+  </body>
+</html>

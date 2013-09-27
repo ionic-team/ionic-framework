@@ -1692,7 +1692,7 @@ if ( document.readyState === "complete" ) {
     }
   };
 })(window.ionic);
-;(function(ionic) {
+;;(function(ionic) {
 
 ionic.views.NavBar = function(opts) {
   this.el = opts.el;
