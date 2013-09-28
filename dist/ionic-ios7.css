@@ -366,9 +366,9 @@ body {
   background-color: #fff;
   -webkit-overflow-scrolling: touch; }
 
-.platform-ios7 .bar {
+.platform-ios7 .bar-header {
   height: 64px; }
-  .platform-ios7 .bar > * {
+  .platform-ios7 .bar-header > * {
     margin-top: 20px; }
 .platform-ios7 .has-header {
   margin-top: 64px; }

@@ -2329,9 +2329,9 @@ a.button {
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0); }
 
-.platform-ios7 .bar {
+.platform-ios7 .bar-header {
   height: 64px; }
-  .platform-ios7 .bar > * {
+  .platform-ios7 .bar-header > * {
     margin-top: 20px; }
 .platform-ios7 .has-header {
   margin-top: 64px; }
