@@ -324,8 +324,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-overflow-scrolling: touch; }
+  -webkit-tap-highlight-color: transparent; }
 
 .view {
   position: fixed;
@@ -334,25 +333,22 @@ body {
   width: 100%;
   height: 100%; }
 
-.content {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: auto; }
-
 /* Hack to force all relatively and absolutely positioned elements still render while scrolling
    Note: This is a bug for "-webkit-overflow-scrolling: touch" (via ratchet) */
 .content > * {
   -webkit-transform: translateZ(0px);
   transform: translateZ(0px); }
 
-.has-header {
-  top: 44px; }
+.content-wrapper {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch; }
 
-.has-footer {
-  bottom: 44px; }
+.has-header {
+  margin-top: 44px; }
 
 .has-tabs {
   bottom: 49px; }
@@ -375,7 +371,7 @@ body {
   .platform-ios7 .bar > * {
     margin-top: 20px; }
 .platform-ios7 .has-header {
-  top: 64px; }
+  margin-top: 64px; }
 
 .padded {
   padding: 10px; }
@@ -1111,7 +1107,7 @@ address {
   line-height: 1.42857; }
 
 .bar {
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   z-index: 10;
@@ -1134,35 +1130,35 @@ address {
   .bar.bar-footer {
     border-top-width: 1px; }
   .bar.bar-default {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.9);
     border-color: #dddddd;
     color: #333333; }
   .bar.bar-secondary {
-    background-color: whitesmoke;
+    background-color: rgba(245, 245, 245, 0.9);
     border-color: #bbbbbb;
     color: #333333; }
   .bar.bar-primary {
-    background-color: #4a87ee;
+    background-color: rgba(74, 135, 238, 0.9);
     border-color: #3b6dc2;
     color: white; }
   .bar.bar-info {
-    background-color: #43cee6;
+    background-color: rgba(67, 206, 230, 0.9);
     border-color: #3bb3c8;
     color: white; }
   .bar.bar-success {
-    background-color: #66cc33;
+    background-color: rgba(102, 204, 51, 0.9);
     border-color: #5bb22f;
     color: white; }
   .bar.bar-warning {
-    background-color: #f0b840;
+    background-color: rgba(240, 184, 64, 0.9);
     border-color: #d29f31;
     color: white; }
   .bar.bar-danger {
-    background-color: #ef4e3a;
+    background-color: rgba(239, 78, 58, 0.9);
     border-color: #c73927;
     color: white; }
   .bar.bar-dark {
-    background-color: #444444;
+    background-color: rgba(68, 68, 68, 0.9);
     border-color: #111111;
     color: white; }
   .bar .title {
@@ -2232,6 +2228,36 @@ a.button {
 
 .alert-info h4 {
   color: #3a87ad; }
+
+.card {
+  width: 100%;
+  background-color: white;
+  border-radius: 2px;
+  border: 1px solid #dddddd; }
+
+.card-header {
+  padding: 10px;
+  background-color: white; }
+  .card-header.card-header-secondary {
+    background-color: whitesmoke; }
+  .card-header.card-header-primary {
+    background-color: #4a87ee; }
+  .card-header.card-header-info {
+    background-color: #43cee6; }
+  .card-header.card-header-success {
+    background-color: #66cc33; }
+  .card-header.card-header-warning {
+    background-color: #f0b840; }
+  .card-header.card-header-danger {
+    background-color: #ef4e3a; }
+  .card-header.card-header-dark {
+    background-color: #444444; }
+
+.card-body {
+  padding: 10px; }
+
+.card-footer {
+  padding: 10px; }
 
 /*
 .slide-in-up.enter {

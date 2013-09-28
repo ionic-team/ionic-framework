@@ -23,7 +23,6 @@ body {
   -webkit-text-size-adjust: none;
           text-size-adjust: none;
   -webkit-tap-highlight-color: transparent;
-  -webkit-overflow-scrolling: touch;
 }
 
 .view {
@@ -35,12 +34,6 @@ body {
 }
 
 .content {
-  position: fixed; 
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: auto;
 }
 /* Hack to force all relatively and absolutely positioned elements still render while scrolling
    Note: This is a bug for "-webkit-overflow-scrolling: touch" (via ratchet) */
@@ -49,14 +42,25 @@ body {
           transform: translateZ(0px);
 }
 
+.content-wrapper {
+  position: absolute; 
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 // Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
 // Note: For these to work, content must come after both bars in the markup
 .has-header {
-  top: $bar-height;
+  //top: $bar-height;
+  margin-top: $bar-height;
 }
 
 .has-footer {
-  bottom: $bar-height;
+  //bottom: $bar-height;
+  //margin-bottom: $bar-height;
 }
 
 // Specify that a content area will have tabs

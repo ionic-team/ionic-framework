@@ -260,29 +260,30 @@ $bar-padding-landscape:          5px;
 
 $bar-bg:                      #fff;
 
+$bar-transparency: 0.9;
 // Bar variations
-$bar-default-bg:              $brand-default;
+$bar-default-bg:              rgba($brand-default, $bar-transparency);
 $bar-default-border-color:    #ddd;
 
-$bar-secondary-bg:            $brand-secondary;
+$bar-secondary-bg:            rgba($brand-secondary, $bar-transparency);
 $bar-secondary-border-color:  $button-secondary-border;
 
-$bar-primary-bg:              $brand-primary;
+$bar-primary-bg:              rgba($brand-primary, $bar-transparency);
 $bar-primary-border-color:    $button-primary-border;
 
-$bar-info-bg:                 $brand-info;
+$bar-info-bg:                 rgba($brand-info, $bar-transparency);
 $bar-info-border-color:       $button-info-border;
 
-$bar-success-bg:              $brand-success;
+$bar-success-bg:              rgba($brand-success, $bar-transparency);
 $bar-success-border-color:    $button-success-border;
 
-$bar-warning-bg:              $brand-warning;
+$bar-warning-bg:              rgba($brand-warning, $bar-transparency);
 $bar-warning-border-color:    $button-warning-border;
 
-$bar-danger-bg:               $brand-danger;
+$bar-danger-bg:               rgba($brand-danger, $bar-transparency);
 $bar-danger-border-color:     $button-danger-border;
 
-$bar-dark-bg:                 $brand-dark;
+$bar-dark-bg:                 rgba($brand-dark, $bar-transparency);
 $bar-dark-border-color:       $button-dark-border;
 
 

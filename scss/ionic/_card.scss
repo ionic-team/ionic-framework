@@ -1,0 +1,27 @@
+.card {
+  width: 100%;
+  background-color: white;
+  border-radius: 2px;
+  border: 1px solid #ddd;
+}
+
+.card-header {
+  padding: 10px;
+  background-color: $brand-default;
+
+  &.card-header-secondary { background-color: $brand-secondary; }
+  &.card-header-primary { background-color: $brand-primary; }
+  &.card-header-info { background-color: $brand-info; }
+  &.card-header-success { background-color: $brand-success; }
+  &.card-header-warning { background-color: $brand-warning; }
+  &.card-header-danger { background-color: $brand-danger; }
+  &.card-header-dark { background-color: $brand-dark; }
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.card-footer {
+  padding: 10px;
+}
