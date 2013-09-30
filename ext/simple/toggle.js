@@ -12,7 +12,7 @@
       if(el) {
 
         // check if we've already created a Toggle instance for this element
-        if(!el._instance) {
+        if(!el.component) {
 
           // find all the required elements that make up a toggle
           var opts = { 
@@ -23,18 +23,13 @@
           };
 
           // validate its a well formed toggle with the required pieces
-          if(!opts.checkbox || !opts.track || !opts.handle) {
-            return;
-          }
-
-          // ensure the handle is draggable
-          opts.handle.draggable = true;
+          if(!opts.checkbox || !opts.track || !opts.handle) return;
 
           // initialize an instance of a Toggle
-          el._instance = new ionic.views.Toggle(opts);
+          el.component = new ionic.views.Toggle(opts);
         }
 
-        return el._instance;
+        return el.component;
       }
     }
 

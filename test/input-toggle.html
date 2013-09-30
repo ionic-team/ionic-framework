@@ -30,7 +30,7 @@
           </li>
           <li class="list-item">
             Do Not Disturb
-            <label class="toggle">
+            <label class="toggle" id="doNotDisturb">
                <input type="checkbox" name="doNotDisturb" checked="checked">
                <div class="track">
                 <div class="handle"></div>
@@ -56,16 +56,16 @@
 
     </section>
 
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="../dist/ionic.js"></script>
     <script src="../dist/ionic-simple.js"></script>
 
 
     <!-- for testing only -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
 
       $("#btnTest1").click(function(){
-        var toggle = ionic.component( document.getElementById("airplaneMode") );
+        var toggle = $("#airplaneMode");
         if( toggle.val() === true ) {
           toggle.val(false);
         } else {
@@ -74,13 +74,14 @@
       });
 
       $("#btnTest2").click(function(){
-        var toggle = $("[name='doNotDisturb']")
-        if( toggle.prop("checked") ) {
-          toggle.prop("checked", false);
+        var toggle = $("#doNotDisturb");
+        val = toggle.val();
+        return
+        if( toggle.val() === true ) {
+          toggle.val(false);
         } else {
-          toggle.prop("checked", true);
+          toggle.val(true);
         }
-        return;
       });
 
     </script>

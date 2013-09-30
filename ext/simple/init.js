@@ -7,8 +7,16 @@
     ionic.Components.push(instance);
   };
 
+  ionic.get = function(elementId) {
+    return ionic.component( document.getElementById(elementId) );
+  };
+
   ionic.component = function(el) {
     if(el) {
+      if(el.component) {
+        // this element has already been initialized as a component
+        return el.component;
+      }
       for(var x = 0; x < ionic.Components.length; x++) {
         if( ionic.Components[x].isComponent(el) ) {
           // this element is a component, init its view
@@ -27,14 +35,20 @@
 
     while(el) {
       // climb up the tree looking to see if the target
-      // is or is in a registered component
-      component = ionic.component(el);
-      if(component) {
-        component[eventName] && component[eventName](e.gesture.srcEvent);
-        return;
+      // is or is in a registered component. If its already
+      // been set that its NOT a component don't bother.
+      if(el.isComponent !== false) {
+        component = ionic.component(el);
+        if(component) {
+          component[eventName] && component[eventName](e.gesture.srcEvent);
+          return;
+        }
+        // not sure if this element is a component yet,
+        // keep climbing up the tree and check again
+        // remember that this element is not a component so 
+        // it can skip this process in the future
+        el.isComponent = false;
       }
-      // not sure if this element is a component yet,
-      // keep climbing up the tree and check again
       el = el.parentElement;
     }
   }
