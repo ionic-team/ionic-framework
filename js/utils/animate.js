@@ -1,3 +1,4 @@
+
 (function(ionic) {
   ionic.Animator = {
     animate: function(element, className, fn) {
@@ -40,4 +41,4 @@
       };
     }
   };
-})(window.ionic);
+})(ionic);

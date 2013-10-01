@@ -1,3 +1,4 @@
+
 (function(ionic) {
 
   ionic.views.HeaderBar = function(opts) {

@@ -1909,6 +1909,13 @@ input[type="checkbox"][readonly] {
   border-radius: 50%;
   background-color: white;
   transition: -webkit-transform 0.1s ease-in-out; }
+  .toggle .handle:before {
+    position: absolute;
+    content: '.';
+    color: transparent;
+    left: -14px;
+    top: -11px;
+    padding: 14px 30px; }
 
 /* When the toggle is "on" */
 .toggle :checked + .track {

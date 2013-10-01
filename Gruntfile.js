@@ -9,32 +9,35 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [
+
+          // Base
           'js/ionic.js',
-          'js/platform.js',
-          'js/utils.js',
-          'js/events.js',
-          'js/gestures.js',
-          'js/animate.js',
-          'js/viewController.js',
-          'js/views/navBar.js',
-          'js/views/headerBar.js',
-          'js/views/tabBar.js',
-          'js/views/sideMenu.js',
+
+          // Utils
+          'js/utils/**/*.js',
+
+          // Views
+          'js/views/navBarView.js',
+          'js/views/headerBarView.js',
+          'js/views/sideMenuView.js',
+          'js/views/tabBarView.js',
           'js/views/toggleView.js',
-          'js/controllers/**/*.js',
-          'js/tapPolyfill.js'
+
+          // Controllers
+          'js/controllers/**/*.js'
+
         ],
         dest: 'dist/<%= pkg.name %>.js'
       },
       distAngular: {
         src: [
-          'ext/angular/src/*.js'
+          'js/ext/angular/src/*.js'
         ],
         dest: 'dist/<%= pkg.name %>-angular.js'
       },
       distSimple: {
         src: [
-          'ext/simple/*.js'
+          'js/ext/simple/*.js'
         ],
         dest: 'dist/<%= pkg.name %>-simple.js'
       }
