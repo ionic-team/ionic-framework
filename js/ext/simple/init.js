@@ -7,10 +7,6 @@
     ionic.Components.push(instance);
   };
 
-  ionic.get = function(elementId) {
-    return ionic.component( document.getElementById(elementId) );
-  };
-
   ionic.component = function(el) {
     if(el) {
       if(el.component) {

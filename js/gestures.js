@@ -93,6 +93,8 @@
     if(this === this.window) {
       // this is a window, then only allow the Tap gesture to be added
       ionic.Gestures.detection.register(ionic.Gestures.gestures.Tap);
+      ionic.Gestures.detection.register(ionic.Gestures.gestures.Drag);
+      ionic.Gestures.detection.register(ionic.Gestures.gestures.Release);
     } else {
       // everything else but the window
       for(var name in ionic.Gestures.gestures) {
