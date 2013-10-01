@@ -10,24 +10,21 @@ module.exports = function(grunt) {
       dist: {
         src: [
 
+          // Base
           'js/ionic.js',
-          'js/platform.js',
-          'js/utils.js',
-          'js/events.js',
-          'js/gestures.js',
-          'js/animate.js',
 
-          'js/viewController.js',
+          // Utils
+          'js/utils/**/*.js',
 
+          // Views
           'js/views/navBarView.js',
           'js/views/headerBarView.js',
           'js/views/sideMenuView.js',
           'js/views/tabBarView.js',
           'js/views/toggleView.js',
 
-          'js/controllers/**/*.js',
-
-          'js/tapPolyfill.js'
+          // Controllers
+          'js/controllers/**/*.js'
 
         ],
         dest: 'dist/<%= pkg.name %>.js'
