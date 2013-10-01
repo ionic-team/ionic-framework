@@ -16,9 +16,9 @@ angular.module('ionic.ui', [])
 .controller('TabsCtrl', function($scope) {
   var _this = this;
 
-  angular.extend(this, TabBarController.prototype);
+  angular.extend(this, ionic.controllers.TabBarController.prototype);
 
-  TabBarController.call(this, {
+  ionic.controllers.TabBarController.call(this, {
     tabBar: {
       tryTabSelect: function() {},
       setSelectedItem: function(index) {

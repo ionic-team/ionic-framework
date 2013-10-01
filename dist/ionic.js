@@ -2111,7 +2111,7 @@ ionic.controllers.NavController.prototype = {
 ;/**
  * Adapted from Backbone.js
  */
-(function(window, document, ionic) {
+(function(ionic) {
   var optionalParam = /\((.*?)\)/g;
   var namedParam    = /(\(\?)?:\w+/g;
   var splatParam    = /\*\w+/g;
@@ -2221,7 +2221,7 @@ ionic.controllers.NavController.prototype = {
       return matched;
     },
   };
-})(this, document, ion = this.ionic || {});
+})(window.ionic);
 ;
 (function(ionic) {
 
@@ -2415,8 +2415,6 @@ ionic.controllers.NavController.prototype = {
 })(ionic);
 ;(function(ionic) {
 
-ionic.controllers = ionic.controllers || {};
-
 ionic.controllers.TabBarController = function(options) {
   this.tabBar = options.tabBar;
 
@@ -2536,7 +2534,7 @@ ionic.controllers.TabBarController.prototype = {
   },
 }
 
-})(ionic = window.ionic || {});
+})(window.ionic);
 ;(function(window, document, ionic) {
 
   // polyfill use to simulate native "tap"

@@ -3,9 +3,9 @@ angular.module('ionic.ui', [])
 .controller('SideMenuCtrl', function($scope) {
   var _this = this;
 
-  angular.extend(this, SideMenuController.prototype);
+  angular.extend(this, ionic.controllers.SideMenuController.prototype);
 
-  SideMenuController.call(this, {
+  ionic.controllers.SideMenuController.call(this, {
     left: {
       width: 270,
       isEnabled: true,

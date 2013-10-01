@@ -19,9 +19,9 @@ angular.module('ionic.ui', ['ngTouch'])
   var _this = this;
 
 
-  angular.extend(this, NavController.prototype);
+  angular.extend(this, ionic.controllers.NavController.prototype);
 
-  NavController.call(this, {
+  ionic.controllers.NavController.call(this, {
     content: {
     },
     navBar: {

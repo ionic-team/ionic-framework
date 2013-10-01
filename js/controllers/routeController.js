@@ -1,7 +1,7 @@
 /**
  * Adapted from Backbone.js
  */
-(function(window, document, ionic) {
+(function(ionic) {
   var optionalParam = /\((.*?)\)/g;
   var namedParam    = /(\(\?)?:\w+/g;
   var splatParam    = /\*\w+/g;
@@ -111,4 +111,4 @@
       return matched;
     },
   };
-})(this, document, ion = this.ionic || {});
+})(window.ionic);
