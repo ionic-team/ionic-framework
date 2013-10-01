@@ -1,4 +1,4 @@
-angular.module('ionic.ui.nav', ['ionic.ui'])
+angular.module('ionic.ui.nav', [])
 
 .controller('NavCtrl', function($scope, $element, $compile) {
   var _this = this;

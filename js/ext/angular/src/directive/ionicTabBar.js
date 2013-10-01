@@ -1,4 +1,4 @@
-angular.module('ionic.ui.tabs', ['ionic.ui.content'])
+angular.module('ionic.ui.tabs', [])
 
 .controller('TabsCtrl', function($scope) {
   var _this = this;

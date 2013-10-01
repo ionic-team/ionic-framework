@@ -69,10 +69,11 @@
       </menu>
     </side-menu-controller>
     <script src="../../../../dist/ionic.js"></script>
-    <script src="../src/ionicSideMenu.js"></script>
-    <script src="../src/ionicTabBar.js"></script>
+    <script src="../src/directive/ionicContent.js"></script>
+    <script src="../src/directive/ionicSideMenu.js"></script>
+    <script src="../src/directive/ionicTabBar.js"></script>
     <script>
-      angular.module('sideMenuTest', ['ionic.ui'])
+      angular.module('sideMenuTest', ['ionic.ui.content', 'ionic.ui.sideMenu', 'ionic.ui.tabs'])
 
       /*
       var Controller = function(opts) {

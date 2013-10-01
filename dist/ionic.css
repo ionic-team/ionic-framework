@@ -391,7 +391,7 @@ body {
   text-size-adjust: none;
   -webkit-tap-highlight-color: transparent; }
 
-.view {
+.view-full {
   position: fixed;
   top: 0;
   left: 0;
