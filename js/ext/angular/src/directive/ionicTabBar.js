@@ -1,17 +1,4 @@
-angular.module('ionic.ui', [])
-
-.directive('content', function() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    scope: {
-      hasHeader: '@',
-      hasTabs: '@'
-    },
-    template: '<div class="content" ng-class="{\'has-header\': hasHeader, \'has-tabs\': hasTabs}" ng-transclude></div>'
-  }
-})
+angular.module('ionic.ui.tabs', ['ionic.ui.content'])
 
 .controller('TabsCtrl', function($scope) {
   var _this = this;

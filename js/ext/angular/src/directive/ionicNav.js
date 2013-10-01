@@ -1,23 +1,7 @@
-angular.module('ionic.ui', ['ngTouch'])
-
-.directive('content', function() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    scope: true,
-    template: '<div class="content" ng-class="{\'has-header\': hasHeader, \'has-tabs\': hasTabs}"></div>',
-    compile: function(element, attr, transclude, navCtrl) {
-      return function($scope, $element, $attr) {
-        $scope.hasHeader = attr.hasHeader;
-      };
-    }
-  }
-})
+angular.module('ionic.ui.nav', ['ionic.ui'])
 
 .controller('NavCtrl', function($scope, $element, $compile) {
   var _this = this;
-
 
   angular.extend(this, ionic.controllers.NavController.prototype);
 
@@ -42,7 +26,6 @@ angular.module('ionic.ui', ['ngTouch'])
   }
 
   $scope.pushController = function(controller) {
-    //console.log('PUSHING OCNTROLLER', controller);
     _this.push(controller);
   }
 

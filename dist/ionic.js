@@ -4,67 +4,50 @@ window.ionic = {
   controllers: {},
   views: {}
 };
-;(function(ionic) {
+;
+(function(ionic) {
+  ionic.Animator = {
+    animate: function(element, className, fn) {
+      return {
+        leave: function() {
+          var endFunc = function() {
+            console.log('Animation finished for element', element);
 
-  ionic.Platform = {
-    detect: function() {
-      var platforms = [];
+            element.classList.remove('leave');
+            element.classList.remove('leave-active');
 
-      this._checkPlatforms(platforms);
+            element.removeEventListener('webkitTransitionEnd', endFunc);
+            element.removeEventListener('transitionEnd', endFunc);
+          };
+          element.addEventListener('webkitTransitionEnd', endFunc);
+          element.addEventListener('transitionEnd', endFunc);
 
-      for(var i = 0; i < platforms.length; i++) {
-        document.body.classList.add('platform-' + platforms[i]);
-      }
+          element.classList.add('leave');
+          element.classList.add('leave-active');
+          return this;
+        },
+        enter: function() {
+          var endFunc = function() {
+            console.log('Animation finished for element', element);
 
-    },
-    _checkPlatforms: function(platforms) {
-      if(this.isCordova()) {
-        platforms.push('cordova');
-      }
-      if(this.isIOS7()) {
-        platforms.push('ios7');
-      }
-    },
+            element.classList.remove('enter');
+            element.classList.remove('enter-active');
 
-    // Check if we are running in Cordova, which will have
-    // window.device available.
-    isCordova: function() {
-      return (window.cordova || window.PhoneGap || window.phonegap);
-      //&& /^file:\/{3}[^\/]/i.test(window.location.href) 
-      //&& /ios|iphone|ipod|ipad|android/i.test(navigator.userAgent);
-    },
-    isIOS7: function() {
-      if(!window.device) {
-        return false;
-      }
-      return parseFloat(window.device.version) >= 7.0;
-    }
-  }
+            element.removeEventListener('webkitTransitionEnd', endFunc);
+            element.removeEventListener('transitionEnd', endFunc);
+          };
+          element.addEventListener('webkitTransitionEnd', endFunc);
+          element.addEventListener('transitionEnd', endFunc);
 
-  ionic.Platform.detect();
-})(window.ionic);
-;(function(ionic) {
-  
-  ionic.Utils = {
-    /**
-     * extend method,
-     * also used for cloning when dest is an empty object
-     * @param   {Object}    dest
-     * @param   {Object}    src
-     * @parm	{Boolean}	merge		do a merge
-     * @returns {Object}    dest
-     */
-    extend: function extend(dest, src, merge) {
-      for (var key in src) {
-        if(dest[key] !== undefined && merge) {
-          continue;
+          element.classList.add('enter');
+          element.classList.add('enter-active');
+
+          return this;
         }
-        dest[key] = src[key];
-      }
-      return dest;
-    },
-  }
-})(window.ionic);
+      };
+    }
+  };
+})(ionic);
 ;/**
  * ion-events.js
  *
@@ -270,6 +253,8 @@ window.ionic = {
     if(this === this.window) {
       // this is a window, then only allow the Tap gesture to be added
       ionic.Gestures.detection.register(ionic.Gestures.gestures.Tap);
+      ionic.Gestures.detection.register(ionic.Gestures.gestures.Drag);
+      ionic.Gestures.detection.register(ionic.Gestures.gestures.Release);
     } else {
       // everything else but the window
       for(var name in ionic.Gestures.gestures) {
@@ -1610,61 +1595,121 @@ window.ionic = {
   };
 })(window.ionic);
 ;(function(ionic) {
-  ionic.Animator = {
-    animate: function(element, className, fn) {
-      return {
-        leave: function() {
-          var endFunc = function() {
-            console.log('Animation finished for element', element);
 
-            element.classList.remove('leave');
-            element.classList.remove('leave-active');
+  ionic.Platform = {
+    detect: function() {
+      var platforms = [];
 
-            element.removeEventListener('webkitTransitionEnd', endFunc);
-            element.removeEventListener('transitionEnd', endFunc);
-          };
-          element.addEventListener('webkitTransitionEnd', endFunc);
-          element.addEventListener('transitionEnd', endFunc);
+      this._checkPlatforms(platforms);
 
-          element.classList.add('leave');
-          element.classList.add('leave-active');
-          return this;
-        },
-        enter: function() {
-          var endFunc = function() {
-            console.log('Animation finished for element', element);
+      for(var i = 0; i < platforms.length; i++) {
+        document.body.classList.add('platform-' + platforms[i]);
+      }
 
-            element.classList.remove('enter');
-            element.classList.remove('enter-active');
-
-            element.removeEventListener('webkitTransitionEnd', endFunc);
-            element.removeEventListener('transitionEnd', endFunc);
-          };
-          element.addEventListener('webkitTransitionEnd', endFunc);
-          element.addEventListener('transitionEnd', endFunc);
-
-          element.classList.add('enter');
-          element.classList.add('enter-active');
-
-          return this;
-        }
-      };
-    }
-  };
-})(window.ionic);
-;(function(ionic) {
-  ionic.ViewController = function(options) {
-    this.init();
-  };
-
-  ionic.ViewController.prototype = {
-    // Initialize this view controller
-    init: function() {
     },
-    // Destroy this view controller, including all child views
-    destroy: function() {
+    _checkPlatforms: function(platforms) {
+      if(this.isCordova()) {
+        platforms.push('cordova');
+      }
+      if(this.isIOS7()) {
+        platforms.push('ios7');
+      }
+    },
+
+    // Check if we are running in Cordova, which will have
+    // window.device available.
+    isCordova: function() {
+      return (window.cordova || window.PhoneGap || window.phonegap);
+      //&& /^file:\/{3}[^\/]/i.test(window.location.href) 
+      //&& /ios|iphone|ipod|ipad|android/i.test(navigator.userAgent);
+    },
+    isIOS7: function() {
+      if(!window.device) {
+        return false;
+      }
+      return parseFloat(window.device.version) >= 7.0;
     }
-  };
+  }
+
+  ionic.Platform.detect();
+})(window.ionic);
+;(function(window, document, ionic) {
+
+  // polyfill use to simulate native "tap"
+  function inputTapPolyfill(ele, e) {
+    if(ele.type === "radio" || ele.type === "checkbox") {
+      ele.checked = !ele.checked;
+    } else if(ele.type === "submit" || ele.type === "button") {
+      ele.click();
+    } else {
+      ele.focus();
+    }
+    e.stopPropagation();
+    e.preventDefault();
+    return false;
+  }
+
+  function tapPolyfill(e) {
+    // if the source event wasn't from a touch event then don't use this polyfill
+    if(!e.gesture || e.gesture.pointerType !== "touch" || !e.gesture.srcEvent) return;
+
+    var 
+    e = e.gesture.srcEvent, // evaluate the actual source event, not the created event by gestures.js
+    ele = e.target;
+
+    while(ele) {
+      if( ele.tagName === "INPUT" || ele.tagName === "TEXTAREA" || ele.tagName === "SELECT" ) {
+        return inputTapPolyfill(ele, e);
+      } else if( ele.tagName === "LABEL" ) {
+        if(ele.control) {
+          return inputTapPolyfill(ele.control, e);
+        }
+      } else if( ele.tagName === "A" || ele.tagName === "BUTTON" ) {
+        ele.click();
+        e.stopPropagation();
+        e.preventDefault();
+        return false;
+      }
+      ele = ele.parentElement;
+    }
+
+    // they didn't tap one of the above elements
+    // if the currently active element is an input, and they tapped outside
+    // of the current input, then unset its focus (blur) so the keyboard goes away
+    var activeElement = document.activeElement;
+    if(activeElement && (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA" || activeElement.tagName === "SELECT")) {
+      activeElement.blur();
+      e.stopPropagation();
+      e.preventDefault();
+      return false;
+    }
+  }
+
+  // global tap event listener polyfill for HTML elements that were "tapped" by the user
+  ionic.on("tap", tapPolyfill, window);
+
+})(this, document, ionic);
+;(function(ionic) {
+  
+  ionic.Utils = {
+    /**
+     * extend method,
+     * also used for cloning when dest is an empty object
+     * @param   {Object}    dest
+     * @param   {Object}    src
+     * @parm	{Boolean}	merge		do a merge
+     * @returns {Object}    dest
+     */
+    extend: function extend(dest, src, merge) {
+      for (var key in src) {
+        if(dest[key] !== undefined && merge) {
+          continue;
+        }
+        dest[key] = src[key];
+      }
+      return dest;
+    },
+  }
 })(window.ionic);
 ;
 (function(ionic) {
@@ -1710,7 +1755,8 @@ window.ionic = {
   };
 
 })(ionic);
-;(function(ionic) {
+;
+(function(ionic) {
 
   ionic.views.HeaderBar = function(opts) {
     this.el = opts.el;
@@ -1733,6 +1779,31 @@ window.ionic = {
       }
 
       titleWidth = title.offsetWidth;
+    }
+  };
+
+})(ionic);
+;
+(function(ionic) {
+
+  ionic.views.SideMenu = function(opts) {
+    this.el = opts.el;
+    this.width = opts.width;
+    this.isEnabled = opts.isEnabled || true;
+  };
+
+  ionic.views.SideMenu.prototype = {
+    getFullWidth: function() {
+      return this.width;
+    },
+    setIsEnabled: function(isEnabled) {
+      this.isEnabled = isEnabled;
+    },
+    bringUp: function() {
+      this.el.style.zIndex = 0;
+    },
+    pushDown: function() {
+      this.el.style.zIndex = -1;
     }
   };
 
@@ -1941,36 +2012,12 @@ ionic.views.TabBar.prototype = {
 ;
 (function(ionic) {
 
-  ionic.views.SideMenu = function(opts) {
-    this.el = opts.el;
-    this.width = opts.width;
-    this.isEnabled = opts.isEnabled || true;
-  };
-
-  ionic.views.SideMenu.prototype = {
-    getFullWidth: function() {
-      return this.width;
-    },
-    setIsEnabled: function(isEnabled) {
-      this.isEnabled = isEnabled;
-    },
-    bringUp: function() {
-      this.el.style.zIndex = 0;
-    },
-    pushDown: function() {
-      this.el.style.zIndex = -1;
-    }
-  };
-
-})(ionic);
-;
-(function(ionic) {
-
   ionic.views.Toggle = function(opts) {
     this.el = opts.el;
     this.checkbox = opts.checkbox;
     this.track = opts.track;
     this.handle = opts.handle;
+    this.openPercent = -1;
 
     // remember that this element, and all its children are apart of a component
     // and assign the component instance to each element so the lookups
@@ -1980,21 +2027,55 @@ ionic.views.TabBar.prototype = {
     this.track.isComponent = true;
     this.handle.component = this;
     this.handle.isComponent = true;
-
-    // ensure the handle is draggable
-    this.handle.draggable = true;
   };
 
   ionic.views.Toggle.prototype = {
 
     tap: function(e) {
-      e.stopPropa
-      return false;
+      this.val( !this.checkbox.checked );
+    },
+
+    drag: function(e) {
+      var slidePageLeft = this.track.offsetLeft + (this.handle.offsetWidth / 2);
+      var slidePageRight = this.track.offsetLeft + this.track.offsetWidth - (this.handle.offsetWidth / 2);
+
+      if(e.pageX >= slidePageRight - 4) {
+        this.val(true);
+      } else if(e.pageX <= slidePageLeft) {
+        this.val(false);
+      } else {
+        this.setOpenPercent( Math.round( (1 - ((slidePageRight - e.pageX) / (slidePageRight - slidePageLeft) )) * 100) );
+      }
+    },
+
+    setOpenPercent: function(openPercent) {
+      // only make a change if the new open percent has changed
+      if(this.openPercent < 0 || (openPercent < (this.openPercent - 3) || openPercent > (this.openPercent + 3) ) ) {
+        this.openPercent = openPercent;
+
+        if(openPercent === 0) {
+          this.val(false);
+        } else if(openPercent === 100) {
+          this.val(true);
+        } else {
+          var openPixel = Math.round( (openPercent / 100) * this.track.offsetWidth - (this.handle.offsetWidth) );
+          openPixel = (openPixel < 1 ? 0 : openPixel);
+          this.handle.style.webkitTransform = 'translate3d(' + openPixel + 'px,0,0)';
+        }
+      }
+    },
+
+    release: function(e) {
+      this.val( this.openPercent >= 50 );
     },
 
     val: function(value) {
       if(value === true || value === false) {
+        if(this.handle.style.webkitTransform !== "") {
+          this.handle.style.webkitTransform = "";
+        }
         this.checkbox.checked = value;
+        this.openPercent = (value ? 100 : 0);
       }
       return this.checkbox.checked;
     }
@@ -2535,59 +2616,17 @@ ionic.controllers.TabBarController.prototype = {
 }
 
 })(window.ionic);
-;(function(window, document, ionic) {
+;(function(ionic) {
+  ionic.ViewController = function(options) {
+    this.init();
+  };
 
-  // polyfill use to simulate native "tap"
-  function inputTapPolyfill(ele, e) {
-    if(ele.type === "radio" || ele.type === "checkbox") {
-      ele.checked = !ele.checked;
-    } else if(ele.type === "submit" || ele.type === "button") {
-      ele.click();
-    } else {
-      ele.focus();
+  ionic.ViewController.prototype = {
+    // Initialize this view controller
+    init: function() {
+    },
+    // Destroy this view controller, including all child views
+    destroy: function() {
     }
-    e.stopPropagation();
-    e.preventDefault();
-    return false;
-  }
-
-  function tapPolyfill(e) {
-    // if the source event wasn't from a touch event then don't use this polyfill
-    if(!e.gesture || e.gesture.pointerType !== "touch" || !e.gesture.srcEvent) return;
-
-    var 
-    e = e.gesture.srcEvent, // evaluate the actual source event, not the created event by gestures.js
-    ele = e.target;
-
-    while(ele) {
-      if( ele.tagName === "INPUT" || ele.tagName === "TEXTAREA" || ele.tagName === "SELECT" ) {
-        return inputTapPolyfill(ele, e);
-      } else if( ele.tagName === "LABEL" ) {
-        if(ele.control) {
-          return inputTapPolyfill(ele.control, e);
-        }
-      } else if( ele.tagName === "A" || ele.tagName === "BUTTON" ) {
-        ele.click();
-        e.stopPropagation();
-        e.preventDefault();
-        return false;
-      }
-      ele = ele.parentElement;
-    }
-
-    // they didn't tap one of the above elements
-    // if the currently active element is an input, and they tapped outside
-    // of the current input, then unset its focus (blur) so the keyboard goes away
-    var activeElement = document.activeElement;
-    if(activeElement && (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA" || activeElement.tagName === "SELECT")) {
-      activeElement.blur();
-      e.stopPropagation();
-      e.preventDefault();
-      return false;
-    }
-  }
-
-  // global tap event listener polyfill for HTML elements that were "tapped" by the user
-  ionic.on("tap", tapPolyfill, window);
-
-})(this, document, ionic);
+  };
+})(window.ionic);

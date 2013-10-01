@@ -1,4 +1,4 @@
-angular.module('ionic.ui', [])
+angular.module('ionic.ui.sideMenu', [])
 
 .controller('SideMenuCtrl', function($scope) {
   var _this = this;
