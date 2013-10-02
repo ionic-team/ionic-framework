@@ -1737,9 +1737,19 @@ window.ionic = {
     this.el = opts.el;
 
     this._titleEl = this.el.querySelector('.title');
+
+    if(opts.hidden) {
+      this.hide();
+    }
   };
 
   ionic.views.NavBar.prototype = {
+    hide: function() {
+      this.el.classList.add('hidden');
+    },
+    show: function() {
+      this.el.classList.remove('hidden');
+    },
     shouldGoBack: function() {},
 
     setTitle: function(title) {

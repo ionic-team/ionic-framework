@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /**
 * Adapted from normalize.css and some reset.css. We don't care even one
 * bit about old IE, so we don't need any hacks for that in here.
@@ -182,7 +181,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid silver; }
+  border: 1px solid #c0c0c0; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -372,6 +371,9 @@ body {
     margin-top: 20px; }
 .platform-ios7 .has-header {
   margin-top: 64px; }
+
+.hidden, .hide {
+  display: none !important; }
 
 .padded {
   padding: 10px; }
@@ -1771,7 +1773,7 @@ select:focus,
 input[type="file"]:focus,
 input[type="radio"]:focus,
 input[type="checkbox"]:focus {
-  outline: thin dotted #333333;
+  outline: thin dotted #333;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px; }
 
@@ -1858,7 +1860,7 @@ input[type="checkbox"][readonly] {
   right: 20px;
   transition: 0.2s ease;
   transition-property: left, right;
-  transition-delay: 0s, 0.05s; }
+  transition-delay: 0s, .05s; }
 
 .toggle :checked + .track {
   /* When the toggle is "on" */
@@ -1873,7 +1875,7 @@ input[type="checkbox"][readonly] {
     right: 0;
     left: 20px;
     -webkit-transform: none;
-    transition-delay: 0.05s, 0s; }
+    transition-delay: .05s, 0s; }
 
 /* hide a radio button's icon by default */
 .radio-item [class^="icon-"],
@@ -2050,7 +2052,7 @@ input[type="checkbox"][readonly] {
     border: none;
     background: none; }
     .button.button-icon:active, .button.button-icon.active {
-      text-shadow: 0px 0px 10px white;
+      text-shadow: 0px 0px 10px #fff;
       box-shadow: none;
       background: none; }
 
@@ -2233,7 +2235,7 @@ a.button {
   width: 100%;
   background-color: white;
   border-radius: 2px;
-  border: 1px solid #dddddd; }
+  border: 1px solid #ddd; }
 
 .card-header {
   padding: 10px;
@@ -2269,8 +2271,8 @@ a.button {
 }
 */
 .slide-in-up.enter {
-  -webkit-transition: -webkit-transform 0.4s, opacity 0.4s;
-  transition: transform 0.4s, opacity 0.4s;
+  -webkit-transition: -webkit-transform .4s, opacity .4s;
+  transition: transform .4s, opacity .4s;
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
   -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
@@ -2278,8 +2280,8 @@ a.button {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0); }
 .slide-in-up.leave {
-  -webkit-transition: -webkit-transform 0.25s, opacity 0.25s;
-  transition: transform 0.25s, opacity 0.25s; }
+  -webkit-transition: -webkit-transform .25s, opacity .25s;
+  transition: transform .25s, opacity .25s; }
 .slide-in-up.leave-active {
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0); }

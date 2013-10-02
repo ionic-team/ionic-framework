@@ -53,7 +53,8 @@ angular.module('ionic.ui.nav', [])
     require: '^navController',
     transclude: true,
     replace: true,
-    template: '<header class="bar bar-header bar-dark nav-bar">' + 
+    scope: true,
+    template: '<header class="bar bar-header bar-dark nav-bar" ng-class="{hidden: isHidden}">' + 
         '<a href="#" ng-click="goBack()" class="button" ng-if="controllers.length > 1">Back</a>' +
         '<h1 class="title">{{getTopController().title}}</h1>' + 
       '</header>',

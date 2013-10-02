@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @font-face {
   font-family: 'ionicon-test';
   src: url("fonts/ionicon-test.eot");
@@ -247,7 +246,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid silver; }
+  border: 1px solid #c0c0c0; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -430,6 +429,9 @@ body {
   height: 100%;
   background-color: #fff;
   -webkit-overflow-scrolling: touch; }
+
+.hidden, .hide {
+  display: none !important; }
 
 .padded {
   padding: 10px; }
@@ -1829,7 +1831,7 @@ select:focus,
 input[type="file"]:focus,
 input[type="radio"]:focus,
 input[type="checkbox"]:focus {
-  outline: thin dotted #333333;
+  outline: thin dotted #333;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px; }
 
@@ -2102,7 +2104,7 @@ input[type="checkbox"][readonly] {
     border: none;
     background: none; }
     .button.button-icon:active, .button.button-icon.active {
-      text-shadow: 0px 0px 10px white;
+      text-shadow: 0px 0px 10px #fff;
       box-shadow: none;
       background: none; }
 
@@ -2285,7 +2287,7 @@ a.button {
   width: 100%;
   background-color: white;
   border-radius: 2px;
-  border: 1px solid #dddddd; }
+  border: 1px solid #ddd; }
 
 .card-header {
   padding: 10px;
@@ -2321,8 +2323,8 @@ a.button {
 }
 */
 .slide-in-up.enter {
-  -webkit-transition: -webkit-transform 0.4s, opacity 0.4s;
-  transition: transform 0.4s, opacity 0.4s;
+  -webkit-transition: -webkit-transform .4s, opacity .4s;
+  transition: transform .4s, opacity .4s;
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
   -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
@@ -2330,8 +2332,8 @@ a.button {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0); }
 .slide-in-up.leave {
-  -webkit-transition: -webkit-transform 0.25s, opacity 0.25s;
-  transition: transform 0.25s, opacity 0.25s; }
+  -webkit-transition: -webkit-transform .25s, opacity .25s;
+  transition: transform .25s, opacity .25s; }
 .slide-in-up.leave-active {
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0); }
