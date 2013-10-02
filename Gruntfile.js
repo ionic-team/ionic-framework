@@ -5,10 +5,11 @@ module.exports = function(grunt) {
 
     concat: {
       options: {
-        separator: ';'
+        separator: ';\n'
       },
       dist: {
         src: [
+          'js/_license.js',
 
           // Base
           'js/ionic.js',
@@ -31,7 +32,7 @@ module.exports = function(grunt) {
       },
       distAngular: {
         src: [
-          'js/ext/angular/src/*.js'
+          'js/ext/angular/src/**/*.js'
         ],
         dest: 'dist/<%= pkg.name %>-angular.js'
       },

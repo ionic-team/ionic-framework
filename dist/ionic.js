@@ -1,3 +1,15 @@
+/*
+Copyright 2013 Drifty Co.
+http://drifty.com/
+
+Ionic - an amazing HTML5 mobile app framework.
+http://ionicframework.com/
+
+By @maxlynch, @helloimben, @adamdbradley <3
+
+Licensed under the MIT license. Please see LICENSE for more information.
+*/
+;
 
 // Create namespaces 
 window.ionic = {
@@ -5,6 +17,7 @@ window.ionic = {
   views: {}
 };
 ;
+
 (function(ionic) {
   ionic.Animator = {
     animate: function(element, className, fn) {
@@ -48,7 +61,8 @@ window.ionic = {
     }
   };
 })(ionic);
-;/**
+;
+/**
  * ion-events.js
  *
  * Author: Max Lynch <max@drifty.com>
@@ -158,7 +172,8 @@ window.ionic = {
   //window.addEventListener('click', ionic.EventController.handleClick);
 
 })(window.ionic);
-;/**
+;
+/**
   * Simple gesture controllers with some common gestures that emit
   * gesture events.
   *
@@ -1594,7 +1609,8 @@ window.ionic = {
     }
   };
 })(window.ionic);
-;(function(ionic) {
+;
+(function(ionic) {
 
   ionic.Platform = {
     detect: function() {
@@ -1633,7 +1649,8 @@ window.ionic = {
 
   ionic.Platform.detect();
 })(window.ionic);
-;(function(window, document, ionic) {
+;
+(function(window, document, ionic) {
 
   // polyfill use to simulate native "tap"
   function inputTapPolyfill(ele, e) {
@@ -1689,7 +1706,8 @@ window.ionic = {
   ionic.on("tap", tapPolyfill, window);
 
 })(this, document, ionic);
-;(function(ionic) {
+;
+(function(ionic) {
   
   ionic.Utils = {
     /**
@@ -1712,6 +1730,7 @@ window.ionic = {
   }
 })(window.ionic);
 ;
+
 (function(ionic) {
 
   ionic.views.NavBar = function(opts) {
@@ -1756,6 +1775,7 @@ window.ionic = {
 
 })(ionic);
 ;
+
 (function(ionic) {
 
   ionic.views.HeaderBar = function(opts) {
@@ -1784,6 +1804,7 @@ window.ionic = {
 
 })(ionic);
 ;
+
 (function(ionic) {
 
   ionic.views.SideMenu = function(opts) {
@@ -1808,7 +1829,8 @@ window.ionic = {
   };
 
 })(ionic);
-;(function(ionic) {
+;
+(function(ionic) {
 
 ionic.views.TabBarItem = function(el) {
   this.el = el;
@@ -2010,6 +2032,7 @@ ionic.views.TabBar.prototype = {
 
 })(window.ionic);
 ;
+
 (function(ionic) {
 
   ionic.views.Toggle = function(opts) {
@@ -2083,7 +2106,8 @@ ionic.views.TabBar.prototype = {
   };
 
 })(ionic);
-;(function(ionic) {
+;
+(function(ionic) {
 
 ionic.controllers.NavController = function(opts) {
   var _this = this;
@@ -2189,7 +2213,8 @@ ionic.controllers.NavController.prototype = {
 
 };
 })(window.ionic);
-;/**
+;
+/**
  * Adapted from Backbone.js
  */
 (function(ionic) {
@@ -2304,6 +2329,7 @@ ionic.controllers.NavController.prototype = {
   };
 })(window.ionic);
 ;
+
 (function(ionic) {
 
   ionic.controllers.SideMenuController = function(options) {
@@ -2494,7 +2520,8 @@ ionic.controllers.NavController.prototype = {
   };
 
 })(ionic);
-;(function(ionic) {
+;
+(function(ionic) {
 
 ionic.controllers.TabBarController = function(options) {
   this.tabBar = options.tabBar;
@@ -2616,7 +2643,8 @@ ionic.controllers.TabBarController.prototype = {
 }
 
 })(window.ionic);
-;(function(ionic) {
+;
+(function(ionic) {
   ionic.ViewController = function(options) {
     this.init();
   };
