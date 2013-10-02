@@ -1,30 +1,7 @@
 angular.module('ionic.ui.content', {})
 
-/*
-.directive('content', function() {
-  return {
-    restrict: 'E',
-    replace: true,
-    template: '<div class="content"></div>'
-  }
-});
-*/
-
-/*
-.directive('content', function() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    scope: {
-      hasHeader: '@',
-      hasTabs: '@'
-    },
-    template: '<div class="content" ng-class="{\'has-header\': hasHeader, \'has-tabs\': hasTabs}" ng-transclude></div>'
-  }
-})
-*/
-
+// The content directive is a core scrollable content area
+// that is part of many View hierarchies
 .directive('content', function() {
   return {
     restrict: 'E',
