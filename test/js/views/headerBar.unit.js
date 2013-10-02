@@ -1,8 +1,8 @@
 describe('HeaderBar View', function() {
+  var h;
   beforeEach(function() {
-    var h = document.createElement('header');
-    h.innerHTML = '<a class="button">Click</a><h2 class="title">What what what</h2>';
-    h.appendChild('h1');
+    h = document.createElement('header');
+    h.innerHTML = '<a class="button">Click</a><h1 class="title">What what what</h1>';
   });
 
   it('Should init', function() {
