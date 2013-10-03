@@ -32,7 +32,7 @@ angular.module('ionic.ui.nav', [])
   $scope.navController = this;
 })
 
-.directive('navController', function() {
+.directive('navCtrl', function() {
   return {
     restrict: 'E',
     replace: true,
