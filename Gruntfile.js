@@ -32,7 +32,8 @@ module.exports = function(grunt) {
       },
       distAngular: {
         src: [
-          'js/ext/angular/src/**/*.js'
+          'js/ext/angular/src/ionicAngular.js',
+          'js/ext/angular/src/directive/**/*.js'
         ],
         dest: 'dist/<%= pkg.name %>-angular.js'
       },

@@ -12,4 +12,9 @@ describe('Ionic Content directive', function() {
     element = compile('<content></content>')(scope);
     expect(element.hasClass('content')).toBe(true);
   });
+
+  it('Has header', function() {
+    element = compile('<content has-header="true"></content>')(scope);
+    expect(element.hasClass('has-header')).toEqual(true);
+  });
 });

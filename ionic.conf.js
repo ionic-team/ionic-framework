@@ -14,17 +14,20 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-
       // Include jQuery only for testing convience (lots of DOM checking for unit tests on directives)
       'https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js',
 
-      'vendor/angular/1.2.0rc1/*',
+      'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js',
+      'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-mocks.js',
+      'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js',
+      'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.js',
+
       'dist/ionic.js',
+      'dist/ionic-angular.js',
+
       'test/**/*.js',
-      //'ext/angular/src/**/*.js',
-      //'ext/angular/test/**/*.js',
-      //'hacking/**/*.js',
-      //'test/**/*.js'
+
+      'js/ext/angular/test/**/*.js'
     ],
 
 

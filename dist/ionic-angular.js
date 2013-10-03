@@ -1,3 +1,5 @@
+angular.module('ionic.ui', ['ionic.ui.content', 'ionic.ui.tabs', 'ionic.ui.nav', 'ionic.ui.sideMenu']);
+;
 angular.module('ionic.ui.content', {})
 
 // The content directive is a core scrollable content area
@@ -6,18 +8,18 @@ angular.module('ionic.ui.content', {})
   return {
     restrict: 'E',
     replace: true,
-    transclude: true,
-    scope: true,
-    template: '<div class="content" ng-class="{\'has-header\': hasHeader, \'has-tabs\': hasTabs}"></div>',
-    compile: function(element, attr, transclude, navCtrl) {
+    scope: false,
+    compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
-        $scope.hasHeader = attr.hasHeader;
-        $scope.hasTabs = attr.hasTabs;
+        $element.addClass('content');
 
-        var newScope = $scope.$parent.$new();
-
-        $element.append(transclude(newScope));
-      };
+        if(attr.hasHeader) {
+          $element.addClass('has-header');
+        }
+        if(attr.hasTabs) {
+          $element.addClass('has-tabs');
+        }
+      }
     }
   }
 })
@@ -83,7 +85,6 @@ angular.module('ionic.ui.nav', [])
         '<h1 class="title">{{getTopController().title}}</h1>' + 
       '</header>',
     link: function(scope, element, attrs, navCtrl) {
-      scope.isHidden = attrs.hidden;
       scope.goBack = function() {
         navCtrl.pop();
       }
@@ -319,5 +320,3 @@ angular.module('ionic.ui.tabs', [])
       '</a>'
   }
 });
-;
-angular.module('ionic.ui', ['ionic.ui.content', 'ionic.ui.tabs', 'ionic.ui.nav', 'ionic.ui.sideMenu']);
