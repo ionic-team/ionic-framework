@@ -1,5 +1,15 @@
 (function(ionic) {
 
+/**
+ * The NavController makes it easy to have a stack
+ * of views or screens that can be pushed and popped
+ * for a dynamic navigation flow. This API is modelled
+ * off of the UINavigationController in iOS.
+ *
+ * The NavController can drive a nav bar to show a back button
+ * if the stack can be poppped to go back to the last view, and
+ * it will handle updating the title of the nav bar and processing animations.
+ */
 ionic.controllers.NavController = function(opts) {
   var _this = this;
 
@@ -16,12 +26,26 @@ ionic.controllers.NavController = function(opts) {
 };
 
 ionic.controllers.NavController.prototype = {
+  /**
+   * @return {array} the array of controllers on the stack.
+   */
   getControllers: function() {
     return this.controllers;
   },
+
+  /**
+   * @return {object} the controller at the top of the stack.
+   */
   getTopController: function() {
     return this.controllers[this.controllers.length-1];
   },
+
+  /**
+   * Push a new controller onto the navigation stack. The new controller
+   * will automatically become the new visible view.
+   *
+   * @param {object} controller the controller to push on the stack.
+   */
   push: function(controller) {
     var last = this.controllers[this.controllers.length - 1];
 
@@ -56,6 +80,12 @@ ionic.controllers.NavController.prototype = {
     return controller;
   },
 
+  /**
+   * Pop the top controller off the stack, and show the last one. This is the
+   * "back" operation.
+   *
+   * @return {object} the last popped controller
+   */
   pop: function() {
     var next, last;
 
@@ -88,8 +118,9 @@ ionic.controllers.NavController.prototype = {
     return last;
   },
 
+  // Update the nav bar after a push or pop
   _updateNavBar: function() {
-    if(!this.getTopController()) {
+    if(!this.getTopController() || !this.navBar) {
       return;
     }
 
@@ -100,7 +131,6 @@ ionic.controllers.NavController.prototype = {
     } else {
       this.navBar.showBackButton(false);
     }
-  },
-
+  }
 };
 })(window.ionic);
