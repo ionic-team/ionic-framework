@@ -38,35 +38,34 @@
     <!-- Splash -->
     <script id="splash.html" type="text/ng-template">
       <div id="splash-view" class="view fade-in" nav-content nav-bar="false">
-        <img src="img/ionic.png" class="ionic-logo">
+        <img src="img/logo.svg" class="ionic-logo">
       </div>
     </script>
 
     <!-- Signup -->
     <script id="signup.html" type="text/ng-template">
-      <div title="Sign up" id="signup-view" class="view" nav-content ng-controller="SignupCtrl"></div>
+      <div title="Sign up" id="signup-view" class="view" nav-content ng-controller="SignupCtrl">
         <main class="content">
           <form class="form-horizontal" ng-submit="trySignup(signupForm)">
             <div class="container" style="text-align: center">
-              <h1>Toderp</h1>
-              <h4>What do you need to derp?</h4>
+              <div class="toderp-logo"></div>
             </div>
             <div class="input-group">
               <label class="input-wrapper row">
                 <span class="input-label col-xs-4">Full name</span>
-                <input class="col-xs-8" type="text" placeholder="" ng-model="signupForm.name">
+                <input class="col-xs-8" type="text" placeholder="" ng-model="signupForm.name" required>
               </label>
               <label class="input-wrapper row">
                 <span class="input-label col-xs-4">Email</span>
-                <input class="col-xs-8" type="email" placeholder="" ng-model="signupForm.email">
+                <input class="col-xs-8" type="email" placeholder="" ng-model="signupForm.email" required>
               </label>
               <label class="input-wrapper row">
                 <span class="input-label col-xs-4">Password</span>
-                <input class="col-xs-8" type="password" placeholder="" ng-model="signupForm.password">
+                <input class="col-xs-8" type="password" placeholder="" ng-model="signupForm.password" required>
               </label>
             </div>
             <div class="input-group">
-              <button class="button button-primary button-block">Get derp'n</button>
+              <button type="submit" class="button button-primary button-block">Get derp</button>
               <div id="signup-error" ng-show="signupError">Unable to signup, please try again.</div>
             </div>
           </form>

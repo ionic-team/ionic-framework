@@ -13,10 +13,22 @@
   margin-left: -128px;
   width: 256px;
 }
+.toderp-logo {
+  background: url('../img/toderp-logo.svg') no-repeat transparent;
+  background-size: contain;
+  width: 250px;
+  height: 100px;
+  margin: 40px auto;
+}
 #splash-view {
   opacity: 1;
 }
 #splash-view .ionic-logo {
+}
+
+#splash-view, #signup-view {
+  background: url('../img/splash.png') no-repeat transparent;
+  background-size: contain;
 }
 
 #signup-bottom {
@@ -25,4 +37,15 @@
   left: 0;
   width: 100%;
   text-align: center;
+  color: #fff;
+}
+#signup-bottom .button {
+  color: #4a87ee;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+  #signup-view {
+    background: url('../img/splash@2x.png') no-repeat transparent;
+    background-size: contain;
+  }
 }
