@@ -2271,21 +2271,21 @@ a.button {
   transition: transform .25s ease-in-out, opacity 1ms .25s;
 }
 */
-.slide-in-up.enter {
-  -webkit-transition: -webkit-transform 0.4s, opacity 0.4s;
-  transition: transform 0.4s, opacity 0.4s;
-  -webkit-transform: translate3d(0, 100%, 0);
-  transform: translate3d(0, 100%, 0);
-  -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
-.slide-in-up.enter-active {
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0); }
-.slide-in-up.leave {
-  -webkit-transition: -webkit-transform 0.25s, opacity 0.25s;
-  transition: transform 0.25s, opacity 0.25s; }
-.slide-in-up.leave-active {
-  -webkit-transform: translate3d(0, 100%, 0);
-  transform: translate3d(0, 100%, 0); }
+@-webkit-keyframes slide-in-up {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0); }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); } }
+
+.slide-in-up.active {
+  animation: slide-in-up 0.5s;
+  -webkit-animation: slide-in-up 0.5s;
+  -webkit-animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
 
 @keyframes fadein {
   from {

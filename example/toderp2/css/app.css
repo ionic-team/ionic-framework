@@ -28,7 +28,7 @@
 
 #splash-view, #signup-view {
   background: url('../img/splash.png') no-repeat transparent;
-  background-size: contain;
+  background-size: cover;
 }
 
 #signup-bottom {

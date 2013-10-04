@@ -38,7 +38,6 @@
     <!-- Splash -->
     <script id="splash.html" type="text/ng-template">
       <div id="splash-view" class="view fade-in" nav-content nav-bar="false">
-        <img src="img/logo.svg" class="ionic-logo">
       </div>
     </script>
 
@@ -52,26 +51,26 @@
             </div>
             <div class="input-group">
               <label class="input-wrapper row">
-                <span class="input-label col-xs-4">Full name</span>
+                <span class="input-label col-xs-3">Full name</span>
                 <input class="col-xs-8" type="text" placeholder="" ng-model="signupForm.name" required>
               </label>
               <label class="input-wrapper row">
-                <span class="input-label col-xs-4">Email</span>
+                <span class="input-label col-xs-3">Email</span>
                 <input class="col-xs-8" type="email" placeholder="" ng-model="signupForm.email" required>
               </label>
               <label class="input-wrapper row">
-                <span class="input-label col-xs-4">Password</span>
+                <span class="input-label col-xs-3">Password</span>
                 <input class="col-xs-8" type="password" placeholder="" ng-model="signupForm.password" required>
               </label>
             </div>
             <div class="input-group">
-              <button type="submit" class="button button-primary button-block">Get derp</button>
+              <button type="submit" class="button button-primary button-block">Get derp'n</button>
               <div id="signup-error" ng-show="signupError">Unable to signup, please try again.</div>
             </div>
           </form>
           <div id="signup-bottom">
             <h3>Already have an account?</h3>
-            <button class="button button-clear button-block">Sign in</button>
+            <button ng-click="showLogin()" class="button button-clear button-block">Sign in</button>
           </div>
         </main>
       </div>
@@ -79,8 +78,12 @@
 
     <!-- Login -->
     <script id="login.html" type="text/ng-template">
-      <div title="Login" id="login-view" class="view" nav-content ng-controller="LoginCtrl">
-        <main class="content padded">
+      <div id="login-view" class="modal slide-in-up" ng-controller="LoginCtrl">
+        <header class="bar bar-header bar-success">
+          <h1 class="title">Log in</h1>
+          <button class="button">Close</a>
+        </header>
+        <main class="content padded has-header">
           <form class="form-horizontal" ng-submit="tryLogin(loginForm)">
             <div class="input-group inset">
               <label class="input-wrapper row">

@@ -1733,6 +1733,51 @@ window.ionic = {
 
 (function(ionic) {
 
+  ionic.views.HeaderBar = function(opts) {
+    this.el = opts.el;
+
+    this._titleEl = this.el.querySelector('.title');
+  };
+
+  ionic.views.HeaderBar.prototype = {
+    resizeTitle: function() {
+      var e, j, i,
+      title,
+      titleWidth,
+      children = this.el.children;
+
+      for(i = 0, j = children.length; i < j; i++) {
+        e = children[i];
+        if(/h\d/.test(e.nodeName.toLowerCase())) {
+          title = e;
+        }
+      }
+
+      titleWidth = title.offsetWidth;
+    }
+  };
+
+})(ionic);
+;
+(function(ionic) {
+  ionic.views.Modal = function(opts) {
+    this.el = opts.el;
+  };
+
+  ionic.views.Modal.prototype = {
+    show: function() {
+      this.el.classList.add('active');
+    },
+    hide: function() {
+      this.el.classList.remove('active');
+    }
+  };
+
+})(ionic);
+;
+
+(function(ionic) {
+
   ionic.views.NavBar = function(opts) {
     this.el = opts.el;
 
@@ -1780,35 +1825,6 @@ window.ionic = {
         // Remove the back button if it's there
         this._currentBackButton.parentNode.removeChild(this._currentBackButton);
       }
-    }
-  };
-
-})(ionic);
-;
-
-(function(ionic) {
-
-  ionic.views.HeaderBar = function(opts) {
-    this.el = opts.el;
-
-    this._titleEl = this.el.querySelector('.title');
-  };
-
-  ionic.views.HeaderBar.prototype = {
-    resizeTitle: function() {
-      var e, j, i,
-      title,
-      titleWidth,
-      children = this.el.children;
-
-      for(i = 0, j = children.length; i < j; i++) {
-        e = children[i];
-        if(/h\d/.test(e.nodeName.toLowerCase())) {
-          title = e;
-        }
-      }
-
-      titleWidth = title.offsetWidth;
     }
   };
 

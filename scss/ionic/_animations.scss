@@ -9,33 +9,23 @@ $bezier-function: cubic-bezier(.1, .7, .1, 1);
   transition: transform .25s ease-in-out, opacity 1ms .25s;
 }
 */
-
-.slide-in-up {
-  &.enter {
-    -webkit-transition: -webkit-transform .4s, opacity .4s;
-            transition:         transform .4s, opacity .4s;
-
+@-webkit-keyframes slide-in-up {
+  0% {
+    opacity: 0;
     -webkit-transform: translate3d(0, 100%, 0);
             transform: translate3d(0, 100%, 0);
-
-    -webkit-transition-timing-function: $bezier-function;
-
   }
-
-  &.enter-active {
+  100% {
+    opacity: 1;
     -webkit-transform: translate3d(0, 0, 0);
             transform: translate3d(0, 0, 0);
   }
+}
 
-  &.leave {
-    -webkit-transition: -webkit-transform .25s, opacity .25s;
-            transition:         transform .25s, opacity .25s;
-  }
-
-  &.leave-active {
-    -webkit-transform: translate3d(0, 100%, 0);
-            transform: translate3d(0, 100%, 0);
-  }
+.slide-in-up.active {
+  animation: slide-in-up 0.5s;
+  -webkit-animation: slide-in-up 0.5s;
+  -webkit-animation-timing-function: $bezier-function;
 }
 
 @keyframes fadein {

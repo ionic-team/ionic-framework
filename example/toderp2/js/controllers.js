@@ -1,4 +1,4 @@
-angular.module('ionic.todo.controllers', ['ionic.todo', 'firebase'])
+angular.module('ionic.todo.controllers', ['ionic.todo', 'ionic.service.modal', 'firebase'])
 
 // The main controller for the application
 .controller('TodoCtrl', function($scope, $rootScope, AuthService) {
@@ -45,11 +45,18 @@ angular.module('ionic.todo.controllers', ['ionic.todo', 'firebase'])
 })
 
 // The signup form controller
-.controller('SignupCtrl', function($scope, AuthService) {
+.controller('SignupCtrl', function($scope, AuthService, Modal) {
   $scope.signupForm = {};
+
+  Modal.fromTemplateUrl('login.html', function(modal) {
+    $scope.loginModal = modal;
+  });
 
   $scope.trySignup = function(data) {
     AuthService.signup(data.email, data.password);
+  };
+
+  $scope.showLogin = function() {
   };
 })
 

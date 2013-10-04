@@ -18,11 +18,7 @@ module.exports = function(grunt) {
           'js/utils/**/*.js',
 
           // Views
-          'js/views/navBarView.js',
-          'js/views/headerBarView.js',
-          'js/views/sideMenuView.js',
-          'js/views/tabBarView.js',
-          'js/views/toggleView.js',
+          'js/views/**/*.js',
 
           // Controllers
           'js/controllers/**/*.js'
