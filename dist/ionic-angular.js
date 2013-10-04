@@ -1,5 +1,7 @@
 angular.module('ionic.ui', ['ionic.ui.content', 'ionic.ui.tabs', 'ionic.ui.nav', 'ionic.ui.sideMenu']);
 ;
+;
+;
 angular.module('ionic.service', [])
 
 .factory('TemplateLoader', ['$q', '$http', '$templateCache', function($q, $http, $templateCache) {
