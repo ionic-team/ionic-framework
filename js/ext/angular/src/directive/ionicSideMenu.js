@@ -71,7 +71,7 @@ angular.module('ionic.ui.sideMenu', [])
 .directive('sideMenuContent', function() {
   return {
     restrict: 'CA',
-    require: '^sideMenuController',
+    require: '^sideMenuCtrl',
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, sideMenuCtrl) {
         window.ionic.onGesture('drag', function(e) {
@@ -103,7 +103,7 @@ angular.module('ionic.ui.sideMenu', [])
 .directive('menu', function() {
   return {
     restrict: 'E',
-    require: '^sideMenuController',
+    require: '^sideMenuCtrl',
     replace: true,
     transclude: true,
     scope: true,
