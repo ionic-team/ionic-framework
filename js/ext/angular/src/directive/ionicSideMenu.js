@@ -25,33 +25,6 @@ angular.module('ionic.ui.sideMenu', [])
       bringUp: function() {
         $scope.rightZIndex = 0;
       }
-    },
-    content: {
-      onDrag: function(e) {},
-      endDrag: function(e) {},
-      getTranslateX: function() {
-        /*
-        var r = /translate3d\((-?.+)px/;
-        var d = r.exec(this.el.style.webkitTransform);
-
-        if(d && d.length > 0) {
-          return parseFloat(d[1]);
-        }
-        */
-        return $scope.contentTranslateX || 0;
-      },
-      setTranslateX: function(amount) {
-        $scope.contentTranslateX = amount;
-        $scope.$apply();
-      },
-      enableAnimation: function() {
-        //this.el.classList.add(this.animateClass);
-        $scope.animationEnabled = true;
-      },
-      disableAnimation: function() {
-        //this.el.classList.remove(this.animateClass);
-        $scope.animationEnabled = false;
-      }
     }
   });
 
@@ -64,7 +37,7 @@ angular.module('ionic.ui.sideMenu', [])
     controller: 'SideMenuCtrl',
     replace: true,
     transclude: true,
-    template: '<div class="view"><div ng-transclude></div></div>',
+    template: '<div class="view" ng-transclude></div>',
   }
 })
 
@@ -72,6 +45,7 @@ angular.module('ionic.ui.sideMenu', [])
   return {
     restrict: 'CA',
     require: '^sideMenuCtrl',
+    scope: true,
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, sideMenuCtrl) {
         window.ionic.onGesture('drag', function(e) {
@@ -82,17 +56,27 @@ angular.module('ionic.ui.sideMenu', [])
           sideMenuCtrl._endDrag(e);
         }, $element[0]);
 
-        $scope.$watch('contentTranslateX', function(value) {
-          $element[0].style.webkitTransform = 'translate3d(' + value + 'px, 0, 0)';
-        });
-
-        $scope.$watch('animationEnabled', function(isAnimationEnabled) {
-          if(isAnimationEnabled) {
+        sideMenuCtrl.setContent({
+          onDrag: function(e) {},
+          endDrag: function(e) {},
+          getTranslateX: function() {
+            return $scope.contentTranslateX || 0;
+          },
+          setTranslateX: function(amount) {
+            $scope.contentTranslateX = amount;
+            $scope.$apply();
+            $element[0].style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
+          },
+          enableAnimation: function() {
+            //this.el.classList.add(this.animateClass);
+            $scope.animationEnabled = true;
             $element[0].classList.add('menu-animated');
-          } else {
+          },
+          disableAnimation: function() {
+            //this.el.classList.remove(this.animateClass);
+            $scope.animationEnabled = false;
             $element[0].classList.remove('menu-animated');
           }
-
         });
       };
     }

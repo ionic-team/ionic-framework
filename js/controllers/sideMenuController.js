@@ -17,13 +17,15 @@
     this._leftShowing = false;
     this._isDragging = false;
 
-    this.content.onDrag = function(e) {
-      self._handleDrag(e);
-    };
+    if(this.content) {
+      this.content.onDrag = function(e) {
+        self._handleDrag(e);
+      };
 
-    this.content.endDrag = function(e) {
-      self._endDrag(e);
-    };
+      this.content.endDrag = function(e) {
+        self._endDrag(e);
+      };
+    }
   };
 
   ionic.controllers.SideMenuController.prototype = {
@@ -33,7 +35,17 @@
      * @param {object} content
      */
     setContent: function(content) {
+      var self = this;
+
       this.content = content;
+
+      this.content.onDrag = function(e) {
+        self._handleDrag(e);
+      };
+
+      this.content.endDrag = function(e) {
+        self._endDrag(e);
+      };
     },
 
     /**

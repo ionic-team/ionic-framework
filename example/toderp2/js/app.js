@@ -2,8 +2,6 @@ angular.module('ionic.todo', [
                'ionic.todo.services',
                'ionic.todo.controllers',
 
-               'ionic.service', 
-
                'ionic.ui.nav',
                'ionic.ui.sideMenu',
 
