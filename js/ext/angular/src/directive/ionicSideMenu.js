@@ -58,7 +58,7 @@ angular.module('ionic.ui.sideMenu', [])
   $scope.contentTranslateX = 0;
 })
 
-.directive('sideMenuController', function() {
+.directive('sideMenuCtrl', function() {
   return {
     restrict: 'E',
     controller: 'SideMenuCtrl',

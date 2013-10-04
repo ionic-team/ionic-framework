@@ -35,25 +35,36 @@
     </nav-ctrl>
 
     <!-- Splash -->
-    <script id="/splash.html" type="text/ng-template">
-      <div class="vc">
+    <script id="splash.html" type="text/ng-template">
+      <div class="view" nav-content>
         <h1>Toderp</h1>
       </div>
     </script>
 
     <!-- Login -->
-    <script id="/login.html" type="text/ng-template">
-      <div></div>
+    <script id="login.html" type="text/ng-template">
+      <div class="view" nav-content ng-controller="LoginCtrl">
+        <h1>Login</h1>
+      </div>
     </script>
 
     <!-- Signup -->
-    <script id="/signup.html" type="text/ng-template">
-      <div></div>
+    <script id="signup.html" type="text/ng-template">
+      <div class="view" nav-content ng-controller="SignupCtrl"></div>
     </script>
 
     <!-- Tasks -->
-    <script id="/tasks.html" type="text/ng-template">
-      <side-menu-ctrl>
+    <script id="tasks.html" type="text/ng-template">
+      <side-menu-ctrl nav-content class="view" ng-controller="TasksCtrl">
+        <div class="full-section" side-menu-content>
+          <header class="bar bar-header bar-dark">
+            <a href="#" class="button"><i class="icon-reorder"></i></a>
+            <h1 class="title">Slide me</h1>
+          </header>
+          <div class="content has-header">
+            <h1>Slide me side to side!</h1>
+          </div>
+        </div>
         <menu side="left">
           <header>
             <div class="toderp-logo"></div>
@@ -67,8 +78,6 @@
             </list>
           </content>
         </menu>
-        <view>
-        </view>
       </side-menu-ctrl>
     </script>
   </body>

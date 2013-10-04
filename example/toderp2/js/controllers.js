@@ -2,6 +2,14 @@ angular.module('ionic.todo.controllers', ['ionic.todo', 'firebase'])
 
 // The main controller for the application
 .controller('TodoCtrl', function($scope, $rootScope, AuthService) {
+  $scope.candy = 'yes';
+
+  $scope.navController.pushFromTemplate('splash.html');
+  $scope.navController.pushFromTemplate('login.html');
+  $scope.navController.pushFromTemplate('signup.html');
+  $scope.navController.pushFromTemplate('tasks.html');
+
+  console.log($scope);
   $rootScope.$on('angularFireAuth:login', function(evt, user) {
     $scope.display.screen = 'tasks';
   });
@@ -40,6 +48,9 @@ angular.module('ionic.todo.controllers', ['ionic.todo', 'firebase'])
   $scope.trySignup = function(data) {
     AuthService.signup(data.email, data.password);
   };
+})
+
+.controller('ProjectsCtrl', function($scope, angularFire, FIREBASE_URL) {
 })
 
 // The tasks controller (main app controller)

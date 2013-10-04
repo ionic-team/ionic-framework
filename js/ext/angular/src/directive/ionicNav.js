@@ -1,9 +1,22 @@
-angular.module('ionic.ui.nav', [])
+angular.module('ionic.ui.nav', ['ionic.service'])
 
-.controller('NavCtrl', function($scope, $element, $compile) {
+.controller('NavCtrl', ['$scope', '$element', '$compile', 'TemplateLoader', function($scope, $element, $compile, TemplateLoader) {
   var _this = this;
 
   angular.extend(this, ionic.controllers.NavController.prototype);
+
+  this.pushFromTemplate = function(tmpl) {
+    data = TemplateLoader.load(tmpl).then(function(data) {
+      console.log('Nav loaded template', data);
+
+      var childScope = $scope.$new();
+      childScope.isVisible = true;
+      
+      $compile(data)(childScope, function(cloned, scope) {
+        $element.append(cloned);
+      });
+    });
+  }
 
   ionic.controllers.NavController.call(this, {
     content: {
@@ -12,25 +25,19 @@ angular.module('ionic.ui.nav', [])
       shouldGoBack: function() {
       },
       setTitle: function(title) {
-        $scope.title = title;
+        $scope.navController.title = title;
       },
       showBackButton: function(show) {
       },
     }
   });
 
-  $scope.controllers = this.controllers;
-
-  $scope.getTopController = function() {
-    return $scope.controllers[$scope.controllers.length-1];
-  }
-
-  $scope.pushController = function(controller) {
-    _this.push(controller);
-  }
+  $scope.pushController = function(scope) {
+    _this.push(scope);
+  };
 
   $scope.navController = this;
-})
+}])
 
 .directive('navCtrl', function() {
   return {
@@ -39,7 +46,7 @@ angular.module('ionic.ui.nav', [])
     transclude: true,
     controller: 'NavCtrl',
     //templateUrl: 'ext/angular/tmpl/ionicTabBar.tmpl.html',
-    template: '<div class="view"><div ng-transclude></div></div>',
+    template: '<div class="view" ng-transclude></div>',
     compile: function(element, attr, transclude, navCtrl) {
       return function($scope, $element, $attr) {
       };
@@ -74,6 +81,15 @@ angular.module('ionic.ui.nav', [])
       scope.title = attrs.title;
       scope.isVisible = true;
       scope.pushController(scope);
+
+      scope.$watch('isVisible', function(value) {
+        console.log('Visiblity changed', value);
+        if(value) {
+          element[0].classList.remove('hidden');
+        } else {
+          element[0].classList.add('hidden');
+        }
+      });
     }
   }
 });
