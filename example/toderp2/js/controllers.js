@@ -5,9 +5,9 @@ angular.module('ionic.todo.controllers', ['ionic.todo', 'firebase'])
   $scope.candy = 'yes';
 
   $scope.navController.pushFromTemplate('splash.html');
-  $scope.navController.pushFromTemplate('login.html');
-  $scope.navController.pushFromTemplate('signup.html');
-  $scope.navController.pushFromTemplate('tasks.html');
+  //$scope.navController.pushFromTemplate('login.html');
+  //$scope.navController.pushFromTemplate('signup.html');
+  //$scope.navController.pushFromTemplate('tasks.html');
 
   console.log($scope);
   $rootScope.$on('angularFireAuth:login', function(evt, user) {

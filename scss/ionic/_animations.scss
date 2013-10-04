@@ -37,3 +37,18 @@ $bezier-function: cubic-bezier(.1, .7, .1, 1);
             transform: translate3d(0, 100%, 0);
   }
 }
+
+@keyframes fadein {
+    from { opacity:0; }
+    to { opacity:1; }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from { opacity:0; }
+    to { opacity:1; }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadein 0.5s;
+  -webkit-animation: fadein 0.5s;
+}

@@ -7,7 +7,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="../../dist/ionic.css">
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="css/app.css">
     
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-mocks.js"></script>
@@ -36,26 +36,26 @@
 
     <!-- Splash -->
     <script id="splash.html" type="text/ng-template">
-      <div class="view" nav-content>
-        <h1>Toderp</h1>
+      <div id="splash-view" class="view fade-in" nav-content>
+        <img src="img/ionic.png" class="ionic-logo">
       </div>
     </script>
 
     <!-- Login -->
     <script id="login.html" type="text/ng-template">
-      <div class="view" nav-content ng-controller="LoginCtrl">
+      <div id="login-view" class="view" nav-content ng-controller="LoginCtrl">
         <h1>Login</h1>
       </div>
     </script>
 
     <!-- Signup -->
     <script id="signup.html" type="text/ng-template">
-      <div class="view" nav-content ng-controller="SignupCtrl"></div>
+      <div id="signup-view" class="view" nav-content ng-controller="SignupCtrl"></div>
     </script>
 
     <!-- Tasks -->
     <script id="tasks.html" type="text/ng-template">
-      <side-menu-ctrl nav-content class="view" ng-controller="TasksCtrl">
+      <side-menu-ctrl id="tasks-view" nav-content class="view" ng-controller="TasksCtrl">
         <div class="full-section" side-menu-content>
           <header class="bar bar-header bar-dark">
             <a href="#" class="button"><i class="icon-reorder"></i></a>
