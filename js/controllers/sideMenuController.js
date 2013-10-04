@@ -1,15 +1,21 @@
 
 (function(ionic) {
-
+  /**
+   * The SideMenuController is a controller with a left and/or right menu that
+   * can be slid out and toggled. Seen on many an app.
+   *
+   * The right or left menu can be disabled or not used at all, if desired.
+   */
   ionic.controllers.SideMenuController = function(options) {
     var self = this;
 
-    self.left = options.left;
-    self.right = options.right;
-    self.content = options.content;
+    this.left = options.left;
+    this.right = options.right;
+    this.content = options.content;
       
-    self._rightShowing = false;
-    self._leftShowing = false;
+    this._rightShowing = false;
+    this._leftShowing = false;
+    this._isDragging = false;
 
     this.content.onDrag = function(e) {
       self._handleDrag(e);
@@ -18,20 +24,21 @@
     this.content.endDrag = function(e) {
       self._endDrag(e);
     };
-
-    /*
-    // Bind release and drag listeners
-    window.ion.onGesture('release', function(e) {
-      self._endDrag(e);
-    }, self.center);
-
-    window.ion.onGesture('drag', function(e) {
-      self._handleDrag(e);
-    }, self.center);
-    */
   };
 
   ionic.controllers.SideMenuController.prototype = {
+    /**
+     * Set the content view controller if not passed in the constructor options.
+     * 
+     * @param {object} content
+     */
+    setContent: function(content) {
+      this.content = content;
+    },
+
+    /**
+     * Toggle the left menu to open 100%
+     */
     toggleLeft: function() {
       var openAmount = this.getOpenAmount();
       if(openAmount > 0) {
@@ -40,6 +47,10 @@
         this.openPercentage(100);
       }
     },
+
+    /**
+     * Toggle the right menu to open 100%
+     */
     toggleRight: function() {
       var openAmount = this.getOpenAmount();
       if(openAmount < 0) {
@@ -48,9 +59,20 @@
         this.openPercentage(-100);
       }
     },
+
+
+    /**
+     * @return {float} The amount the side menu is open, either positive or negative for left (positive), or right (negative)
+     */
     getOpenAmount: function() {
       return this.content.getTranslateX() || 0;
     },
+
+    /**
+     * @return {float} The ratio of open amount over menu width. For example, a
+     * menu of width 100 open 50 pixels would be open 50% or a ratio of 0.5. Value is negative
+     * for right menu.
+     */
     getOpenRatio: function() {
       var amount = this.getOpenAmount();
       if(amount >= 0) {
@@ -58,9 +80,20 @@
       }
       return amount / this.right.width;
     },
+
+    /**
+     * @return {float} The percentage of open amount over menu width. For example, a
+     * menu of width 100 open 50 pixels would be open 50%. Value is negative
+     * for right menu.
+     */
     getOpenPercentage: function() {
       return this.getOpenRatio() * 100;
     },
+
+    /**
+     * Open the menu with a given percentage amount.
+     * @param {float} percentage The percentage (positive or negative for left/right) to open the menu.
+     */
     openPercentage: function(percentage) {
       var p = percentage / 100;
       var maxLeft = this.left.width;
@@ -71,6 +104,12 @@
         this.openAmount(maxRight * p);
       }
     },
+
+    /**
+     * Open the menu the given pixel amount.
+     * @param {float} amount the pixel amount to open the menu. Positive value for left menu,
+     * negative value for right menu (only one menu will be visible at a time).
+     */
     openAmount: function(amount) {
       var maxLeft = this.left.width;
       var maxRight = this.right.width;
@@ -104,6 +143,14 @@
         this.left.pushDown();
       }
     },
+
+    /**
+     * Given an event object, find the final resting position of this side
+     * menu. For example, if the user "throws" the content to the right and 
+     * releases the touch, the left menu should snap open (animated, of course).
+     *
+     * @param {Event} e the gesture event to use for snapping
+     */
     snapToRest: function(e) {
       // We want to animate at the end of this
       this.content.enableAnimation();
@@ -160,9 +207,13 @@
         this.openPercentage(0);
       }
     },
+
+    // End a drag with the given event
     _endDrag: function(e) {
       this.snapToRest(e);
     },
+
+    // Initialize a drag with the given event
     _initDrag: function(e) {
       this.content.disableAnimation();
       this._isDragging = true;
@@ -170,6 +221,8 @@
       this._offsetX = 0;
       this._lastX = 0;
     },
+    
+    // Handle a drag event
     _handleDrag: function(e) {
       if(!this._isDragging) {
         this._initDrag(e);
@@ -179,7 +232,7 @@
 
         this._offsetX = this.getOpenAmount();
       }
-      //console.log('Dragging page', this._startX, this._lastX, this._offsetX, e);
+
       var newX = this._offsetX + (this._lastX - this._startX);
 
       this.openAmount(newX);
