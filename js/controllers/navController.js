@@ -118,6 +118,24 @@ ionic.controllers.NavController.prototype = {
     return last;
   },
 
+  /**
+   * Show the NavBar (if any)
+   */
+  showNavBar: function() {
+    if(this.navBar) {
+      this.navBar.show();
+    }
+  },
+
+  /**
+   * Hide the NavBar (if any)
+   */
+  hideNavBar: function() {
+    if(this.navBar) {
+      this.navBar.hide();
+    }
+  },
+
   // Update the nav bar after a push or pop
   _updateNavBar: function() {
     if(!this.getTopController() || !this.navBar) {

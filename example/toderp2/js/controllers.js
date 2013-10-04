@@ -5,20 +5,19 @@ angular.module('ionic.todo.controllers', ['ionic.todo', 'firebase'])
   $scope.candy = 'yes';
 
   $scope.navController.pushFromTemplate('splash.html');
-  //$scope.navController.pushFromTemplate('login.html');
-  //$scope.navController.pushFromTemplate('signup.html');
-  //$scope.navController.pushFromTemplate('tasks.html');
 
-  console.log($scope);
   $rootScope.$on('angularFireAuth:login', function(evt, user) {
-    $scope.display.screen = 'tasks';
+    $scope.navController.pushFromTemplate('tasks.html');
   });
   $rootScope.$on('angularFireAuth:logout', function(evt, user) {
-    console.log('Logged out!', evt, user);
+    $scope.navController.pushFromTemplate('signup.html');
   });
   $rootScope.$on('angularFireAuth:error', function(evt, err) {
-    console.log('Login Error!', evt, err);
+    $scope.navController.pushFromTemplate('signup.html');
   });
+})
+
+.controller('SplashCtrl', function($scope) {
 })
 
 // The login form controller
@@ -28,6 +27,10 @@ angular.module('ionic.todo.controllers', ['ionic.todo', 'firebase'])
   $scope.loginForm = {
     email: 'max@drifty.com',
     password: 'test'
+  };
+
+  $scope.showSignup = function() {
+    $scope.navController.pushFromTemplate('signup.html');
   };
 
   $scope.tryLogin = function(data) {

@@ -40,12 +40,12 @@
   </head>
   <body>
 
-    <nav-controller>
+    <nav-ctrl>
       <nav-bar></nav-bar>
 
       <content has-header="true" ng-controller="AppCtrl" class="reveal-animation">
       </content>
-    </nav-controller>
+    </nav-ctrl>
 
     <script src="../../../../dist/ionic.js"></script>
     <script src="../../../../dist/ionic-angular.js"></script>
@@ -64,7 +64,7 @@
           '</div>')(childScope, cb);
       }
 
-      angular.module('navTest', ['ionic.ui'])
+      angular.module('navTest', ['ionic.ui.nav'])
 
       .controller('AppCtrl', function($scope, $compile, $element) {
         pushIt($scope, $compile, $element, function(cloned, scope) {

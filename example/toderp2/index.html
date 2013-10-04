@@ -32,26 +32,81 @@
 
     <!-- The root view controller -->
     <nav-ctrl ng-controller="TodoCtrl">
+      <nav-bar></nav-bar>
     </nav-ctrl>
 
     <!-- Splash -->
     <script id="splash.html" type="text/ng-template">
-      <div id="splash-view" class="view fade-in" nav-content>
+      <div id="splash-view" class="view fade-in" nav-content nav-bar="false">
         <img src="img/ionic.png" class="ionic-logo">
-      </div>
-    </script>
-
-    <!-- Login -->
-    <script id="login.html" type="text/ng-template">
-      <div id="login-view" class="view" nav-content ng-controller="LoginCtrl">
-        <h1>Login</h1>
       </div>
     </script>
 
     <!-- Signup -->
     <script id="signup.html" type="text/ng-template">
-      <div id="signup-view" class="view" nav-content ng-controller="SignupCtrl"></div>
+      <div title="Sign up" id="signup-view" class="view" nav-content ng-controller="SignupCtrl"></div>
+        <main class="content">
+          <form class="form-horizontal" ng-submit="trySignup(signupForm)">
+            <div class="container" style="text-align: center">
+              <h1>Toderp</h1>
+              <h4>What do you need to derp?</h4>
+            </div>
+            <div class="input-group">
+              <label class="input-wrapper row">
+                <span class="input-label col-xs-4">Full name</span>
+                <input class="col-xs-8" type="text" placeholder="" ng-model="signupForm.name">
+              </label>
+              <label class="input-wrapper row">
+                <span class="input-label col-xs-4">Email</span>
+                <input class="col-xs-8" type="email" placeholder="" ng-model="signupForm.email">
+              </label>
+              <label class="input-wrapper row">
+                <span class="input-label col-xs-4">Password</span>
+                <input class="col-xs-8" type="password" placeholder="" ng-model="signupForm.password">
+              </label>
+            </div>
+            <div class="input-group">
+              <button class="button button-primary button-block">Get derp'n</button>
+              <div id="signup-error" ng-show="signupError">Unable to signup, please try again.</div>
+            </div>
+          </form>
+          <div id="signup-bottom">
+            <h3>Already have an account?</h3>
+            <button class="button button-clear button-block">Sign in</button>
+          </div>
+        </main>
+      </div>
     </script>
+
+    <!-- Login -->
+    <script id="login.html" type="text/ng-template">
+      <div title="Login" id="login-view" class="view" nav-content ng-controller="LoginCtrl">
+        <main class="content padded">
+          <form class="form-horizontal" ng-submit="tryLogin(loginForm)">
+            <div class="input-group inset">
+              <label class="input-wrapper row">
+                <span class="input-label col-xs-4">Full name</span>
+                <input class="col-xs-8" type="text" placeholder="" ng-model="loginForm.name">
+              </label>
+              <label class="input-wrapper row">
+                <span class="input-label col-xs-4">Email</span>
+                <input class="col-xs-8" type="email" placeholder="" ng-model="loginForm.email">
+              </label>
+              <label class="input-wrapper row">
+                <span class="input-label col-xs-4">Password</span>
+                <input class="col-xs-8" type="password" placeholder="" ng-model="loginForm.password">
+              </label>
+            </div>
+            <div class="input-group inset">
+              <button class="button button-primary button-block">Log in</button>
+              <div id="login-error" ng-show="loginError">Invalid email/password. Please try again.</div>
+            </div>
+          </form>
+          <button ng-click="showSignup()" id="signup-button" class="button button-default button-block">Create an account</button>
+        </main>
+      </div>
+    </script>
+
 
     <!-- Tasks -->
     <script id="tasks.html" type="text/ng-template">

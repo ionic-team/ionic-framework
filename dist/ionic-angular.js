@@ -68,6 +68,12 @@ angular.module('ionic.ui.nav', ['ionic.service'])
     navBar: {
       shouldGoBack: function() {
       },
+      show: function() {
+        this.isVisible = true;
+      },
+      hide: function() {
+        this.isVisible = false;
+      },
       setTitle: function(title) {
         $scope.navController.title = title;
       },
@@ -101,15 +107,16 @@ angular.module('ionic.ui.nav', ['ionic.service'])
 .directive('navBar', function() {
   return {
     restrict: 'E',
-    require: '^navController',
+    require: '^navCtrl',
     transclude: true,
     replace: true,
     scope: true,
-    template: '<header class="bar bar-header bar-dark nav-bar" ng-class="{hidden: isHidden}">' + 
-        '<a href="#" ng-click="goBack()" class="button" ng-if="controllers.length > 1">Back</a>' +
-        '<h1 class="title">{{getTopController().title}}</h1>' + 
+    template: '<header class="bar bar-header bar-dark nav-bar" ng-class="{hidden: !navController.navBar.isVisible}">' + 
+        '<a href="#" ng-click="goBack()" class="button" ng-if="navController.controllers.length > 1">Back</a>' +
+        '<h1 class="title">{{navController.getTopController().title}}</h1>' + 
       '</header>',
     link: function(scope, element, attrs, navCtrl) {
+      scope.navController = navCtrl;
       scope.goBack = function() {
         navCtrl.pop();
       }
@@ -120,9 +127,17 @@ angular.module('ionic.ui.nav', ['ionic.service'])
 .directive('navContent', function() {
   return {
     restrict: 'ECA',
+    require: '^navCtrl',
     scope: true,
-    link: function(scope, element, attrs) {
+    link: function(scope, element, attrs, navCtrl) {
       scope.title = attrs.title;
+
+      if(attrs.navBar === "false") {
+        navCtrl.hideNavBar();
+      } else {
+        navCtrl.showNavBar();
+      }
+
       scope.isVisible = true;
       scope.pushController(scope);
 
