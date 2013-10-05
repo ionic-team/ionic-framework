@@ -29,8 +29,8 @@ angular.module('ionic.todo.controllers', ['ionic.todo', 'ionic.service.modal', '
     password: 'test'
   };
 
-  $scope.showSignup = function() {
-    $scope.navController.pushFromTemplate('signup.html');
+  $scope.close = function() {
+    $scope.modal.hide();
   };
 
   $scope.tryLogin = function(data) {
@@ -57,6 +57,7 @@ angular.module('ionic.todo.controllers', ['ionic.todo', 'ionic.service.modal', '
   };
 
   $scope.showLogin = function() {
+    $scope.loginModal && $scope.loginModal.show();
   };
 })
 

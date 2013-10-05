@@ -20,15 +20,19 @@
   opacity: 0;
 
   // Start it down low
-  -webkit-transform: translate3d(0, 100%, 0);
-          transform: translate3d(0, 100%, 0);
+ -webkit-transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100%, 0);
+  -webkit-transition: -webkit-transform 0.25s, opacity 0.25s;
+  transition: -webkit-transform 0.25s, opacity 0.25s;
+  -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
+  transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
 
   // Active modal
   &.active {
-    -webkit-transform: translate3d(0, 0%, 0);
-            transform: translate3d(0, 0%, 0);
     opacity: 1;
     height: 100%;
+   -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
   }
 }
 

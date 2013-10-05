@@ -81,7 +81,7 @@
       <div id="login-view" class="modal slide-in-up" ng-controller="LoginCtrl">
         <header class="bar bar-header bar-success">
           <h1 class="title">Log in</h1>
-          <button class="button">Close</a>
+          <button class="button" ng-click="close()">Close</button>
         </header>
         <main class="content padded has-header">
           <form class="form-horizontal" ng-submit="tryLogin(loginForm)">
@@ -104,7 +104,6 @@
               <div id="login-error" ng-show="loginError">Invalid email/password. Please try again.</div>
             </div>
           </form>
-          <button ng-click="showSignup()" id="signup-button" class="button button-default button-block">Create an account</button>
         </main>
       </div>
     </script>
