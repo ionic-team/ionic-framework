@@ -1556,19 +1556,9 @@ address {
   width: 100%;
   min-height: 100%;
   overflow: hidden;
-  background-color: white;
-  opacity: 0;
-  -webkit-transform: translate3d(0, 100%, 0);
-  transform: translate3d(0, 100%, 0);
-  -webkit-transition: -webkit-transform 0.25s, opacity 0.25s;
-  transition: -webkit-transform 0.25s, opacity 0.25s;
-  -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
-  transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
+  background-color: white; }
   .modal.active {
-    opacity: 1;
-    height: 100%;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0); }
+    height: 100%; }
 
 .list {
   margin-bottom: 20px;
