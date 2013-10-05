@@ -1,5 +1,56 @@
 angular.module('ionic.ui', ['ionic.ui.content', 'ionic.ui.tabs', 'ionic.ui.nav', 'ionic.ui.sideMenu']);
 ;
+angular.module('ionic.service.actionSheet', ['ionic.service', 'ionic.ui.actionSheet'])
+
+.factory('ActionSheet', ['$rootScope', '$document', '$compile', 'TemplateLoader', function($rootScope, $document, $compile, TemplateLoader) {
+  return {
+    /**
+     * Load an action sheet with the given template string.
+     *
+     * A new isolated scope will be created for the 
+     * action sheet and the new element will be appended into the body.
+     *
+     * @param {object} opts the options for this ActionSheet (see docs)
+     */
+    show: function(opts) {
+      var scope = $rootScope.$new(true);
+
+      angular.extend(scope, opts);
+
+      scope.cancel = function() {
+        scope.$destroy();
+        opts.cancel();
+      }
+
+      scope.buttonClicked = function(index) {
+        // Check if the button click event returned true, which means
+        // we can close the action sheet
+        if((opts.buttonClicked && opts.buttonClicked(index)) === true) {
+          scope.$destroy();
+        }
+      };
+
+      scope.destructiveButtonClicked = function() {
+        // Check if the destructive button click event returned true, which means
+        // we can close the action sheet
+        if((opts.destructiveButtonClicked && opts.destructiveButtonClicked()) === true) {
+          scope.$destroy();
+        }
+      }
+
+      // Compile the template
+      var element = $compile('<action-sheet buttons="buttons"></action-sheet>')(scope);
+
+      var scope = element.scope();
+
+      $document[0].body.appendChild(element[0]);
+
+      var sheet = ionic.views.ActionSheet({el: element[0] });
+      scope.sheet = sheet;
+      return sheet;
+    }
+  };
+}]);
 ;
 ;
 angular.module('ionic.service.modal', ['ionic.service'])
@@ -59,7 +110,34 @@ angular.module('ionic.service', [])
   }
 }]);
 ;
-angular.module('ionic.ui.content', {})
+angular.module('ionic.ui.actionSheet', [])
+
+.directive('actionSheet', function() {
+  return {
+    restrict: 'E',
+    scope: true,
+    replace: true,
+    link: function($scope, $element){
+      $scope.$on('$destroy', function() {
+        $element.remove();
+      });
+    },
+    template: '<div class="action-sheet">' +
+                '<div class="action-sheet-group">' +
+                  '<div class="action-sheet-title" ng-if="titleText">{{titleText}}</div>' +
+                  '<button class="button" ng-click="buttonClicked($index)" ng-repeat="button in buttons">{{button.text}}</button>' +
+                '</div>' +
+                '<div class="action-sheet-group" ng-if="destructiveText">' +
+                  '<button class="button destructive" ng-click="destructiveButtonClicked()">{{destructiveText}}</button>' +
+                '</div>' +
+                '<div class="action-sheet-group" ng-if="cancelText">' +
+                  '<button class="button" ng-click="cancel()">{{cancelText}}</button>' +
+                '</div>' +
+              '</div>'
+  }
+});
+;
+angular.module('ionic.ui.content', [])
 
 // The content directive is a core scrollable content area
 // that is part of many View hierarchies

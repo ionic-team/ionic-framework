@@ -1166,6 +1166,34 @@ address {
   font-style: normal;
   line-height: 1.42857; }
 
+.action-sheet {
+  position: fixed;
+  z-index: 10;
+  width: calc(100% - 30px);
+  bottom: 0;
+  left: 15px;
+  overflow: hidden; }
+  .action-sheet .button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border-radius: none;
+    background-color: transparent;
+    font-size: 18px;
+    color: #4a87ee; }
+    .action-sheet .button.destructive {
+      color: #ef4e3a; }
+
+.action-sheet-title {
+  font-size: 12px;
+  padding: 10px;
+  text-align: center; }
+
+.action-sheet-group {
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 10px; }
+
 .bar {
   position: absolute;
   left: 0;

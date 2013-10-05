@@ -1,4 +1,4 @@
-angular.module('ionic.ui.content', {})
+angular.module('ionic.ui.content', [])
 
 // The content directive is a core scrollable content area
 // that is part of many View hierarchies

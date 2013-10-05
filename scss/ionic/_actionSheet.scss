@@ -1,0 +1,40 @@
+.action-sheet {
+  position: fixed; 
+
+  z-index: $zindex-modal;
+
+  width: calc(100% - 30px);
+
+  bottom: 0;
+  left: 15px;
+
+  overflow: hidden;
+
+
+  .button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border-radius: none;
+    background-color: transparent;
+    font-size: 18px;
+
+    color: $brand-primary;
+
+    &.destructive {
+      color: $brand-danger;
+    }
+  }
+}
+
+.action-sheet-title {
+  font-size: 12px;
+  padding: 10px;
+  text-align: center;
+}
+
+.action-sheet-group {
+  border-radius: $sheet-border-radius;
+  background-color: rgba($sheet-bg-color, $sheet-opacity);
+  margin-bottom: 10px;
+}

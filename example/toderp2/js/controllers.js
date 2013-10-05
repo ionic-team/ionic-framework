@@ -1,4 +1,4 @@
-angular.module('ionic.todo.controllers', ['ionic.todo', 'ionic.service.modal', 'firebase'])
+angular.module('ionic.todo.controllers', ['ionic.todo'])
 
 // The main controller for the application
 .controller('TodoCtrl', function($scope, $rootScope, AuthService) {
@@ -45,7 +45,7 @@ angular.module('ionic.todo.controllers', ['ionic.todo', 'ionic.service.modal', '
 })
 
 // The signup form controller
-.controller('SignupCtrl', function($scope, AuthService, Modal) {
+.controller('SignupCtrl', function($scope, AuthService, Modal, ActionSheet) {
   $scope.signupForm = {};
 
   Modal.fromTemplateUrl('login.html', function(modal) {
@@ -57,7 +57,27 @@ angular.module('ionic.todo.controllers', ['ionic.todo', 'ionic.service.modal', '
   };
 
   $scope.showLogin = function() {
-    $scope.loginModal && $scope.loginModal.show();
+    //$scope.loginModal && $scope.loginModal.show();
+    ActionSheet.show({
+      buttons: [
+        { text: 'Option 1' },
+        { text: 'Option 2' },
+        { text: 'Option 3' },
+      ],
+      destructiveText: 'Delete life',
+      titleText: 'Are you sure about life?',
+      cancelText: 'Cancel',
+      cancel: function() {
+        console.log('CANCELLED');
+      },
+      buttonClicked: function(index) {
+        console.log('BUTTON CLICKED', index);
+        return true;
+      },
+      destructiveButtonClicked: function() {
+        return true;
+      }
+    });
   };
 })
 
