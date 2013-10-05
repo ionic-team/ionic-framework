@@ -10,6 +10,7 @@ $bezier-function: cubic-bezier(.1, .7, .1, 1);
   transition: -webkit-transform 0.25s, opacity 0.25s;
   -webkit-transition-timing-function: $bezier-function;
   transition-timing-function: $bezier-function;
+  -webkit-animation-fill-mode: forwards;
 }
 
 .slide-in-up.active {

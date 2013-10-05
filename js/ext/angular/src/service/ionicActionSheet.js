@@ -16,7 +16,8 @@ angular.module('ionic.service.actionSheet', ['ionic.service', 'ionic.ui.actionSh
       angular.extend(scope, opts);
 
       scope.cancel = function() {
-        scope.$destroy();
+        scope.sheet.hide();
+        //scope.$destroy();
         opts.cancel();
       }
 
@@ -24,7 +25,8 @@ angular.module('ionic.service.actionSheet', ['ionic.service', 'ionic.ui.actionSh
         // Check if the button click event returned true, which means
         // we can close the action sheet
         if((opts.buttonClicked && opts.buttonClicked(index)) === true) {
-          scope.$destroy();
+          scope.sheet.hide();
+          //scope.$destroy();
         }
       };
 
@@ -32,7 +34,8 @@ angular.module('ionic.service.actionSheet', ['ionic.service', 'ionic.ui.actionSh
         // Check if the destructive button click event returned true, which means
         // we can close the action sheet
         if((opts.destructiveButtonClicked && opts.destructiveButtonClicked()) === true) {
-          scope.$destroy();
+          scope.sheet.hide();
+          //scope.$destroy();
         }
       }
 
@@ -43,8 +46,11 @@ angular.module('ionic.service.actionSheet', ['ionic.service', 'ionic.ui.actionSh
 
       $document[0].body.appendChild(element[0]);
 
-      var sheet = ionic.views.ActionSheet({el: element[0] });
+      var sheet = new ionic.views.ActionSheet({el: element[0] });
       scope.sheet = sheet;
+
+      sheet.show();
+
       return sheet;
     }
   };

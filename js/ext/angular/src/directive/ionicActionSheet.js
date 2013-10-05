@@ -10,7 +10,7 @@ angular.module('ionic.ui.actionSheet', [])
         $element.remove();
       });
     },
-    template: '<div class="action-sheet">' +
+    template: '<div class="action-sheet slide-in-up">' +
                 '<div class="action-sheet-group">' +
                   '<div class="action-sheet-title" ng-if="titleText">{{titleText}}</div>' +
                   '<button class="button" ng-click="buttonClicked($index)" ng-repeat="button in buttons">{{button.text}}</button>' +

@@ -1172,6 +1172,8 @@ address {
   width: calc(100% - 30px);
   bottom: 0;
   left: 15px;
+  -webkit-transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100%, 0);
   overflow: hidden; }
   .action-sheet .button {
     display: block;
@@ -2342,7 +2344,8 @@ a.button {
   -webkit-transition: -webkit-transform 0.25s, opacity 0.25s;
   transition: -webkit-transform 0.25s, opacity 0.25s;
   -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
-  transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
+  transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
+  -webkit-animation-fill-mode: forwards; }
 
 .slide-in-up.active {
   opacity: 1;
