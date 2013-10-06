@@ -151,17 +151,21 @@ angular.module('ionic.ui.content', [])
   return {
     restrict: 'E',
     replace: true,
-    scope: false,
+    template: '<div class="content-wrapper"><div class="content"></div></div>',
+    transclude: true,
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
-        $element.addClass('content');
+        var c = $element.children().eq(0);
+
+        c.addClass('content');
 
         if(attr.hasHeader) {
-          $element.addClass('has-header');
+          c.addClass('has-header');
         }
         if(attr.hasTabs) {
-          $element.addClass('has-tabs');
+          c.addClass('has-tabs');
         }
+        c.append(transclude($scope));
       }
     }
   }

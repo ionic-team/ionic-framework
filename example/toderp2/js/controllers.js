@@ -21,7 +21,7 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
 })
 
 // The login form controller
-.controller('LoginCtrl', function($scope,  AuthService) {
+.controller('LoginCtrl', function($scope,  $rootScope, AuthService) {
   console.log('Created login Ctrl');
 
   $scope.loginForm = {
@@ -42,6 +42,10 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
         $scope.loginError = true;
       });
   };
+
+  $rootScope.$on('angularFireAuth:login', function(evt, user) {
+    $scope.modal.hide();
+  });
 })
 
 // The signup form controller
@@ -83,14 +87,13 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
   };
 })
 
-.controller('ProjectsCtrl', function($scope, angularFire, FIREBASE_URL) {
-})
 
 // The tasks controller (main app controller)
 .controller('TasksCtrl', function($scope, angularFire, FIREBASE_URL) {
   var taskRef = new Firebase(FIREBASE_URL + '/todos');
   $scope.todos = [];
   angularFire(taskRef, $scope, 'todos');
+
   $scope.addTask = function(task) {
     var t = {};
     t = angular.extend({
@@ -102,4 +105,28 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
 
     $scope.task = {};
   };
-});
+})
+
+.controller('ProjectsCtrl', function($scope, angularFire, FIREBASE_URL) {
+  var taskRef = new Firebase(FIREBASE_URL + '/projects');
+
+  $scope.newProject = {};
+
+  $scope.projects = [];
+  angularFire(taskRef, $scope, 'projects');
+
+  $scope.addProject = function(newProject) {
+    var p = {
+      title: newProject.title,
+      user_id: $scope.user.id,
+      tasks: []
+    };
+
+    console.log("Adding project:", p);
+
+    $scope.projects.push(t);
+
+    $scope.task = {};
+  };
+})
+

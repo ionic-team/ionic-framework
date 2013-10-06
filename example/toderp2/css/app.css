@@ -20,13 +20,17 @@
   height: 100px;
   margin: 40px auto;
 }
+.toderp-small-logo {
+  box-flex: 1;
+  -webkit-box-flex: 1;
+}
 #splash-view {
   opacity: 1;
 }
 #splash-view .ionic-logo {
 }
 
-#splash-view, #signup-view {
+#splash-view, #signup-view, #login-view {
   background: url('../img/splash.png') no-repeat transparent;
   background-size: cover;
 }
@@ -43,9 +47,10 @@
   color: #4a87ee;
 }
 
+
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
   #signup-view {
     background: url('../img/splash@2x.png') no-repeat transparent;
-    background-size: contain;
+    background-size: cover;
   }
 }

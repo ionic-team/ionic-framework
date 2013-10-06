@@ -6,6 +6,7 @@ angular.module('ionic.todo', [
                'ionic.service.actionSheet',
 
                'ionic.ui.nav',
+               'ionic.ui.content',
                'ionic.ui.sideMenu',
                'ionic.ui.actionSheet',
 
