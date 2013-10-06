@@ -37,6 +37,18 @@
     &:active, &.active {
       opacity: 0.4;
     }
+
+    &.button-outline {
+    background: none;
+    box-shadow: none;
+    padding: $button-clear-padding;
+
+    // A nice iOS 7 style fade click
+    @include transition(opacity .1s);
+
+    &:active, &.active {
+      opacity: 0.4;
+    }
   }
 
   &.button-block {
