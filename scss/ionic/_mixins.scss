@@ -36,6 +36,18 @@
   }
 }
 
+@mixin button-outline($color) {
+  &.button-outline {
+    border-color: $color;
+    color: $color;
+    &.active, &:active {
+      background-color: $color;
+      color: #fff;
+      box-shadow: none;
+    }
+  }
+}
+
 @mixin list-style($bgColor, $borderColor, $color) {
   color: $color;
 	background-color: $bgColor;
