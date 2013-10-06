@@ -57,7 +57,8 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
   };
 
   $scope.showLogin = function() {
-    //$scope.loginModal && $scope.loginModal.show();
+    $scope.loginModal && $scope.loginModal.show();
+    /*
     ActionSheet.show({
       buttons: [
         { text: 'Option 1' },
@@ -78,6 +79,7 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
         return true;
       }
     });
+    */
   };
 })
 
