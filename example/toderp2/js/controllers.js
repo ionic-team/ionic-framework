@@ -97,7 +97,7 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
   $scope.addTask = function(task) {
     var t = {};
     t = angular.extend({
-      id: $scope.user.id
+     id: $scope.user.id
     }, task);
 
     console.log("Adding task:", t);
@@ -124,9 +124,22 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
 
     console.log("Adding project:", p);
 
-    $scope.projects.push(t);
+    $scope.projects.push(p);
 
-    $scope.task = {};
+    // Reset the form
+    $scope.newProject = {};
   };
+
+  // Check if we need to create an initial list
+  taskRef.on('value', function(snapshot) {
+    if(!snapshot.val()) {
+      var title = prompt('Create your first list:');
+      if(title) {
+        $scope.addProject({
+          title: title
+        });
+      }
+    }
+  });
 })
 

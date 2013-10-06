@@ -30,7 +30,7 @@
 #splash-view .ionic-logo {
 }
 
-#splash-view, #signup-view, #login-view {
+#splash-view, #signup-view {
   background: url('../img/splash.png') no-repeat transparent;
   background-size: cover;
 }
