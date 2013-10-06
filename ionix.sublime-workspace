@@ -1,0 +1,203 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"siz",
+				"font-size"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/ben/git/framework-prototypes/scss/framework/theme/default/_variables.scss",
+		"/Users/ben/git/ionic-site/scss/_docs.scss",
+		"/Users/ben/git/framework-prototypes/scss/framework/structure/_mixins.scss",
+		"/Users/ben/git/framework-prototypes/scss/framework/theme/default/_button.scss",
+		"/Users/ben/git/framework-prototypes/scss/framework/structure/_button.scss",
+		"/Users/ben/git/ionic-site/css/bootstrap.css",
+		"/Users/ben/git/ionic-site/scss/_homepage.scss",
+		"/Users/ben/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/ben/git/framework-prototypes/Makefile",
+		"/Users/ben/git/mobilemaker/lib/sass/bootstrap/_navbar.scss",
+		"/Users/ben/git/mobilemaker/mobilemaker/templates/site/customers.html",
+		"/Users/ben/git/mobilemaker/lib/sass/site/_customers.scss",
+		"/Users/ben/git/mobilemaker/mobilemaker/templates/site/educational.html",
+		"/Users/ben/git/mobilemaker/mobilemaker/templates/site/nonprofit.html",
+		"/Users/ben/git/mobilemaker/mobilemaker/templates/site/features.html",
+		"/Users/ben/git/mobilemaker/lib/sass/site/_about.scss",
+		"/Users/ben/git/mobilemaker/mobilemaker/templates/site/about.html",
+		"/Users/ben/git/mobilemaker/lib/sass/site/_educational.scss",
+		"/Users/ben/git/mobilemaker/lib/sass/site/_signup.scss",
+		"/Users/ben/git/mobilemaker/lib/sass/site/_features.scss",
+		"/Users/ben/git/mobilemaker/lib/sass/site/_plans.scss",
+		"/Users/ben/git/mobilemaker/mobilemaker/templates/site/plans.html",
+		"/Users/ben/git/mobilemaker/lib/sass/site/_colors.scss",
+		"/Users/ben/git/mobilemaker/lib/sass/site/_support.scss",
+		"/Users/ben/git/mobilemaker/mobilemaker/templates/site/signup.html",
+		"/Users/ben/git/mobilemaker/lib/sass/site.scss",
+		"/Users/ben/git/mobilemaker/lib/sass/site/_assets.scss",
+		"/Users/ben/git/mobilemaker/lib/sass/bootstrap/_navs.scss",
+		"/Users/ben/git/mobilemaker/lib/sass/bootstrap/_buttons.scss",
+		"/Users/ben/git/mobilemaker/lib/sass/site/_site.scss",
+		"/Users/ben/Dropbox/codiqa/ website/2.0/template/index.html",
+		"/Users/ben/Dropbox/ ben_sperry/web/2013/css/main.css",
+		"/Users/ben/Dropbox/codiqa/ website/2.0/template/style.css",
+		"/Users/ben/Dropbox/codiqa/themes/custom_5-30-13/jquery.mobile-1.3.1/example.html",
+		"/Users/ben/Downloads/jquery-mobile-theme-164209-0/themes/jqm.css"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"p",
+			"body",
+			"h4",
+			"p {",
+			".p",
+			"cta",
+			"love",
+			"navbar-brand",
+			"codiqa",
+			"green",
+			"btn",
+			"green",
+			"logo",
+			"tree",
+			".btn-success",
+			"btn",
+			"free",
+			".form-control",
+			"form",
+			"border-radius",
+			"huge",
+			"tn btn-transparent btn-huge",
+			"green",
+			"\n}",
+			".container",
+			"fieldEmail",
+			"ui-li",
+			"box-shadow",
+			"ui-btn-down-c ui-shadow",
+			"0",
+			".ui-bar-a .ui-shadow, .ui-bar-b .ui-shadow, .ui-bar-c .ui-shadow",
+			".ui-btn-inner"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 193.0,
+	"status_bar_visible": true
+}
