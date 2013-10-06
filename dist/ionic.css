@@ -2355,7 +2355,7 @@ a.button {
 
 @keyframes fadein {
   from {
-    opacity: 0; }
+    opacity: 0.7; }
 
   to {
     opacity: 1; } }
@@ -2363,13 +2363,13 @@ a.button {
 @-webkit-keyframes fadein {
   /* Safari and Chrome */
   from {
-    opacity: 0; }
+    opacity: 0.7; }
 
   to {
     opacity: 1; } }
 
 .fade-in {
-  opacity: 0;
+  opacity: 0.7;
   animation: fadein 0.5s;
   -webkit-animation: fadein 0.5s; }
 
