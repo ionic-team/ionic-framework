@@ -2387,11 +2387,11 @@ a.button {
   padding: 10px; }
 
 .slide-in-up {
-  opacity: 0;
+  opacity: 0.5;
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
-  -webkit-transition: -webkit-transform 0.25s, opacity 0.25s;
-  transition: -webkit-transform 0.25s, opacity 0.25s;
+  -webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
+  transition: -webkit-transform 0.3s, opacity 0.2s;
   -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
   transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
   -webkit-animation-fill-mode: forwards; }
@@ -2403,7 +2403,7 @@ a.button {
 
 @keyframes fadein {
   from {
-    opacity: 0; }
+    opacity: 0.7; }
 
   to {
     opacity: 1; } }
