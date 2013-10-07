@@ -1,4 +1,5 @@
 angular.module('ionic.todo', [
+               'ionic.todo.filters',
                'ionic.todo.services',
                'ionic.todo.controllers',
 

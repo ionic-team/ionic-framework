@@ -119,7 +119,15 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
       title: project.title,
       tasks: angularFireCollection(ref.child('tasks'))
     };
-  }
+    $scope.clearActive();
+    project.isActive = true;
+  };
+
+  $scope.clearActive = function() {
+    angular.forEach($scope.projects, function(project) {
+      project.isActive = false;
+    });
+  };
 
   /**
    * Add a project to the projects list.
