@@ -151,6 +151,8 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
     var np = $scope.projects.add(p);
     np.setPriority(-(+new Date));
     $scope.setActiveProject(np);
+
+    $scope.sideMenuCtrl.toggleLeft();
   };
 
   var projectsRef = new Firebase(FIREBASE_URL + '/project_list');

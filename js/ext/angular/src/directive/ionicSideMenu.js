@@ -29,6 +29,7 @@ angular.module('ionic.ui.sideMenu', [])
   });
 
   $scope.contentTranslateX = 0;
+  $scope.sideMenuCtrl = this;
 })
 
 .directive('sideMenuCtrl', function() {
@@ -61,7 +62,6 @@ angular.module('ionic.ui.sideMenu', [])
           },
           setTranslateX: function(amount) {
             $scope.contentTranslateX = amount;
-            $scope.$apply();
             $element[0].style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
           },
           enableAnimation: function() {
