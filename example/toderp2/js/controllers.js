@@ -99,7 +99,7 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
 
     // Set the priorty for this project to the new date, so it will
     // sort higher
-    $scope.activeProject.project.setPriority(+new Date);
+    $scope.activeProject.project.setPriority(-(+new Date));
 
     $scope.newTask = {};
   };
@@ -147,7 +147,7 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
     $scope.newProject = {};
 
     var np = $scope.projects.add(p);
-    np.setPriority(+new Date);
+    np.setPriority(-(+new Date));
     $scope.setActiveProject(np);
   };
 
@@ -162,12 +162,14 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
       }
     }
   });
-  projectsRef.once('child_added', function(snapshot) {
-    $scope.setActiveProject(
-      angular.extend({
-        '$ref': snapshot.ref(),
-      }, snapshot.val())
-    )
+  projectsRef.on('child_added', function(snapshot, prevChildName) {
+    if(prevChildName === null) {
+      $scope.setActiveProject(
+        angular.extend({
+          '$ref': snapshot.ref(),
+        }, snapshot.val())
+      )
+    }
   });
 })
 

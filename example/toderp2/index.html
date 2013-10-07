@@ -120,7 +120,7 @@
               <input type="text" ng-model="newTask.title" placeholder="Add an item...">
             </form>
             <list>
-              <li class="list-item" ng-repeat="task in activeProject.tasks | reverse" ng-class="{completed: task.isCompleted}">
+              <li class="list-item" ng-repeat="task in activeProject.tasks" ng-class="{completed: task.isCompleted}">
                 {{task.title}}
               </li>
             </list>
@@ -137,7 +137,7 @@
               <input type="text" ng-model="newProject.title" placeholder="Create a new list...">
             </form>
             <list>
-            <a ng-click="setActiveProject(project)" class="list-item list-item-primary" ng-class="{active: project.isActive}" ng-repeat="project in projects | reverse">
+            <a ng-click="setActiveProject(project)" class="list-item list-item-primary" ng-class="{active: project.isActive}" ng-repeat="project in projects">
                 {{project.title}}
               </a>
             </list>
