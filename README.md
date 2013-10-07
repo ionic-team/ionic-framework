@@ -39,6 +39,8 @@ way is to use Python:
 
     python -m SimpleHTTPServer 8000
 
+    node_modules/grunt-cli/bin/grunt watch
+
     http://localhost:8000/example/
 
     http://localhost:8000/test/
