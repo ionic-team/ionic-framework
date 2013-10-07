@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /**
 * Adapted from normalize.css and some reset.css. We don't care even one
 * bit about old IE, so we don't need any hacks for that in here.
@@ -182,7 +181,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid silver; }
+  border: 1px solid #c0c0c0; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -1547,6 +1546,86 @@ address {
     z-index: 2; }
     .list-item.active .list-item-heading, .list-item.active:hover .list-item-heading, .list-item.active:focus .list-item-heading {
       color: inherit; }
+  .list-item.list-item-default {
+    /*
+    color: $color;
+    background-color: $bgColor;
+    border-color: $borderColor;
+    */ }
+    .list-item.list-item-default.active, .list-item.list-item-default:active {
+      color: #333333;
+      background-color: white;
+      border-color: #333333; }
+  .list-item.list-item-secondary {
+    /*
+    color: $color;
+    background-color: $bgColor;
+    border-color: $borderColor;
+    */ }
+    .list-item.list-item-secondary.active, .list-item.list-item-secondary:active {
+      color: #333333;
+      background-color: white;
+      border-color: #333333; }
+  .list-item.list-item-primary {
+    /*
+    color: $color;
+    background-color: $bgColor;
+    border-color: $borderColor;
+    */ }
+    .list-item.list-item-primary.active, .list-item.list-item-primary:active {
+      color: white;
+      background-color: #4a87ee;
+      border-color: #333333; }
+  .list-item.list-item-info {
+    /*
+    color: $color;
+    background-color: $bgColor;
+    border-color: $borderColor;
+    */ }
+    .list-item.list-item-info.active, .list-item.list-item-info:active {
+      color: white;
+      background-color: #43cee6;
+      border-color: #333333; }
+  .list-item.list-item-success {
+    /*
+    color: $color;
+    background-color: $bgColor;
+    border-color: $borderColor;
+    */ }
+    .list-item.list-item-success.active, .list-item.list-item-success:active {
+      color: white;
+      background-color: #66cc33;
+      border-color: #333333; }
+  .list-item.list-item-warning {
+    /*
+    color: $color;
+    background-color: $bgColor;
+    border-color: $borderColor;
+    */ }
+    .list-item.list-item-warning.active, .list-item.list-item-warning:active {
+      color: white;
+      background-color: #f0b840;
+      border-color: #333333; }
+  .list-item.list-item-danger {
+    /*
+    color: $color;
+    background-color: $bgColor;
+    border-color: $borderColor;
+    */ }
+    .list-item.list-item-danger.active, .list-item.list-item-danger:active {
+      color: white;
+      background-color: #ef4e3a;
+      border-color: #333333; }
+  .list-item.list-item-dark {
+    /*
+    color: $color;
+    background-color: $bgColor;
+    border-color: $borderColor;
+    */ }
+    .list-item.list-item-dark.active, .list-item.list-item-dark:active {
+      color: white;
+      background-color: #444444;
+      border-color: #333333; }
 
 a.list-item {
   color: #333333;
@@ -1768,7 +1847,7 @@ select:focus,
 input[type="file"]:focus,
 input[type="radio"]:focus,
 input[type="checkbox"]:focus {
-  outline: thin dotted #333333;
+  outline: thin dotted #333;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px; }
 
@@ -1855,7 +1934,7 @@ input[type="checkbox"][readonly] {
   right: 20px;
   transition: 0.2s ease;
   transition-property: left, right;
-  transition-delay: 0s, 0.05s; }
+  transition-delay: 0s, .05s; }
 
 .toggle :checked + .track {
   /* When the toggle is "on" */
@@ -1870,7 +1949,7 @@ input[type="checkbox"][readonly] {
     right: 0;
     left: 20px;
     -webkit-transform: none;
-    transition-delay: 0.05s, 0s; }
+    transition-delay: .05s, 0s; }
 
 /* hide a radio button's icon by default */
 .radio-item [class^="icon-"],
@@ -2095,7 +2174,7 @@ input[type="checkbox"][readonly] {
     border: none;
     background: none; }
     .button.button-icon:active, .button.button-icon.active {
-      text-shadow: 0px 0px 10px white;
+      text-shadow: 0px 0px 10px #fff;
       box-shadow: none;
       background: none; }
 
@@ -2278,7 +2357,7 @@ a.button {
   width: 100%;
   background-color: white;
   border-radius: 2px;
-  border: 1px solid #dddddd; }
+  border: 1px solid #ddd; }
 
 .card-header {
   padding: 10px;

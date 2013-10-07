@@ -91,11 +91,15 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
     if(!$scope.activeProject.tasks) {
       $scope.activeProject.tasks = [];
     }
-    $scope.activeProject.tasks.push({
+    $scope.activeProject.tasks.add({
       title: task.title,
       user_id: $scope.user.id,
       isCompleted: false
     });
+
+    // Set the priorty for this project to the new date, so it will
+    // sort higher
+    $scope.activeProject.project.setPriority(+new Date);
 
     $scope.newTask = {};
   };
@@ -104,12 +108,17 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
    * Set the current project
    */
   $scope.setActiveProject = function(project) {
+    // Grab the ref. It's the object on new project, and the $ref
+    // object on exist (for example, from the ng-repeat)
+    var ref = project;
     if(project.$ref) {
-      $scope.activeProject = angularFire(project.$ref, $scope, 'activeProject');
-    } else {
-      $scope.activeProject = angularFire(project, $scope, 'activeProject');
+      ref = project.$ref;
     }
-    //$scope.lastProject = project;
+    $scope.activeProject = {
+      project: ref,
+      title: project.title,
+      tasks: angularFireCollection(ref.child('tasks'))
+    };
   }
 
   /**
@@ -119,7 +128,8 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
     var p = {
       title: newProject.title,
       user_id: $scope.user.id,
-      tasks: []
+      tasks: [],
+      isActive: true
     };
 
     console.log("Adding project:", p);
@@ -128,7 +138,9 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
     // Reset the form
     $scope.newProject = {};
 
-    $scope.setActiveProject($scope.projects.add(p));
+    var np = $scope.projects.add(p);
+    np.setPriority(+new Date);
+    $scope.setActiveProject(np);
   };
 
   $scope.projects = angularFireCollection(new Firebase(FIREBASE_URL + '/project_list'), function(snapshot) {

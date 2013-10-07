@@ -70,6 +70,21 @@
 	}
 }
 
+//$bgColor, $borderColor, $color, 
+@mixin list-item-style-active($activeBgColor, $activeBorderColor, $activeColor) {
+  /*
+  color: $color;
+  background-color: $bgColor;
+  border-color: $borderColor;
+  */
+
+  &.active, &:active {
+    color: $activeColor;
+    background-color: $activeBgColor;
+    border-color: $activeBorderColor;
+  }
+};
+
 @mixin bar-style($bgColor, $borderColor, $color) {
   background-color: $bgColor;
   border-color: $borderColor;

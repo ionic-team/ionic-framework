@@ -136,7 +136,7 @@
               <input type="text" ng-model="newProject.title" placeholder="Create a new list...">
             </form>
             <list>
-              <a ng-click="setActiveProject(project)" class="list-item" ng-repeat="project in projects">
+            <a ng-click="setActiveProject(project)" class="list-item list-item-primary" ng-class="{active: project.isActive}" ng-repeat="project in projects">
                 {{project.title}}
               </a>
             </list>

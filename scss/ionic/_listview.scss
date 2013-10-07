@@ -52,7 +52,7 @@
   &.active,
   &.active:hover,
   &.active:focus {
-    z-index: 2; // Place active items above their siblings for proper border styling
+    z-index: 2; 
     //color: $list-group-active-color;
     //background-color: $list-group-active-bg;
     //border-color: $list-group-active-border;
@@ -66,6 +66,14 @@
     }
   }
 
+  &.list-item-default { @include list-item-style-active($brand-default, $gray-dark, $gray-dark); }
+  &.list-item-secondary { @include list-item-style-active($brand-default, $gray-dark, $gray-dark); }
+  &.list-item-primary { @include list-item-style-active($brand-primary, $gray-dark, $white); }
+  &.list-item-info { @include list-item-style-active($brand-info, $gray-dark, $white); }
+  &.list-item-success { @include list-item-style-active($brand-success, $gray-dark, $white); }
+  &.list-item-warning { @include list-item-style-active($brand-warning, $gray-dark, $white); }
+  &.list-item-danger { @include list-item-style-active($brand-danger, $gray-dark, $white); }
+  &.list-item-dark { @include list-item-style-active($brand-dark, $gray-dark, $white); }
 }
 
 // Linked list items
