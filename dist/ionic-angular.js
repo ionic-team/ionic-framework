@@ -308,6 +308,7 @@ angular.module('ionic.ui.sideMenu', [])
   });
 
   $scope.contentTranslateX = 0;
+
   $scope.sideMenuCtrl = this;
 })
 

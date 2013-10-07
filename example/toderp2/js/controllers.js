@@ -123,6 +123,9 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
     };
     $scope.clearActive();
     project.isActive = true;
+
+    // Close the side menu
+    $scope.sideMenuCtrl.toggleLeft();
   };
 
   $scope.clearActive = function() {
@@ -151,8 +154,6 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
     var np = $scope.projects.add(p);
     np.setPriority(-(+new Date));
     $scope.setActiveProject(np);
-
-    $scope.sideMenuCtrl.toggleLeft();
   };
 
   var projectsRef = new Firebase(FIREBASE_URL + '/project_list');
@@ -166,14 +167,12 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
       }
     }
   });
-  projectsRef.on('child_added', function(snapshot, prevChildName) {
-    if(prevChildName === null) {
+  projectsRef.once('child_added', function(snapshot, prevChildName) {
       $scope.setActiveProject(
         angular.extend({
           '$ref': snapshot.ref(),
         }, snapshot.val())
       )
-    }
   });
 })
 
