@@ -33,11 +33,8 @@ angular.module('ionic.ui.sideMenu', [])
 
 .directive('sideMenuCtrl', function() {
   return {
-    restrict: 'E',
+    restrict: 'CA',
     controller: 'SideMenuCtrl',
-    replace: true,
-    transclude: true,
-    template: '<div class="view" ng-transclude></div>',
   }
 })
 
@@ -90,11 +87,11 @@ angular.module('ionic.ui.sideMenu', [])
     require: '^sideMenuCtrl',
     replace: true,
     transclude: true,
-    scope: true,
-    template: '<div class="menu menu-{{side}}" ng-transclude></div>',
+    template: '<div class="menu menu-{{side}}"></div>',
     compile: function(element, attr, transclude, sideMenuCtrl) {
       return function($scope, $element, $attr) {
         $scope.side = attr.side;
+        $element.append(transclude($scope));
       };
     }
   }

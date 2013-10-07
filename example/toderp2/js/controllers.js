@@ -62,59 +62,59 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
 
   $scope.showLogin = function() {
     $scope.loginModal && $scope.loginModal.show();
-    /*
-    ActionSheet.show({
-      buttons: [
-        { text: 'Option 1' },
-        { text: 'Option 2' },
-        { text: 'Option 3' },
-      ],
-      destructiveText: 'Delete life',
-      titleText: 'Are you sure about life?',
-      cancelText: 'Cancel',
-      cancel: function() {
-        console.log('CANCELLED');
-      },
-      buttonClicked: function(index) {
-        console.log('BUTTON CLICKED', index);
-        return true;
-      },
-      destructiveButtonClicked: function() {
-        return true;
-      }
-    });
-    */
   };
 })
 
 
 // The tasks controller (main app controller)
-.controller('TasksCtrl', function($scope, angularFire, FIREBASE_URL) {
-  var taskRef = new Firebase(FIREBASE_URL + '/todos');
-  $scope.todos = [];
-  angularFire(taskRef, $scope, 'todos');
+.controller('TasksCtrl', function($scope, angularFire, angularFireCollection, FIREBASE_URL) {
+  /*
+  var lastProjectRef = new Firebase(FIREBASE_URL + '/lastproject');
+  var lastProjectPromise = angularFire(lastProjectRef, $scope, 'lastProject');
+  $scope.lastProject = null;
+  */
 
-  $scope.addTask = function(task) {
-    var t = {};
-    t = angular.extend({
-     id: $scope.user.id
-    }, task);
-
-    console.log("Adding task:", t);
-    $scope.todos.push(t);
-
-    $scope.task = {};
-  };
-})
-
-.controller('ProjectsCtrl', function($scope, angularFire, FIREBASE_URL) {
-  var taskRef = new Firebase(FIREBASE_URL + '/projects');
 
   $scope.newProject = {};
 
-  $scope.projects = [];
-  angularFire(taskRef, $scope, 'projects');
+  $scope.newTask = {};
 
+
+  /**
+   * Add a new tasks to the current project.
+   */
+  $scope.addTask = function(task) {
+    if(!$scope.activeProject) {
+      return;
+    }
+
+    if(!$scope.activeProject.tasks) {
+      $scope.activeProject.tasks = [];
+    }
+    $scope.activeProject.tasks.push({
+      title: task.title,
+      user_id: $scope.user.id,
+      isCompleted: false
+    });
+
+    $scope.newTask = {};
+  };
+
+  /**
+   * Set the current project
+   */
+  $scope.setActiveProject = function(project) {
+    if(project.$ref) {
+      $scope.activeProject = angularFire(project.$ref, $scope, 'activeProject');
+    } else {
+      $scope.activeProject = angularFire(project, $scope, 'activeProject');
+    }
+    //$scope.lastProject = project;
+  }
+
+  /**
+   * Add a project to the projects list.
+   */
   $scope.addProject = function(newProject) {
     var p = {
       title: newProject.title,
@@ -124,14 +124,14 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
 
     console.log("Adding project:", p);
 
-    $scope.projects.push(p);
 
     // Reset the form
     $scope.newProject = {};
+
+    $scope.setActiveProject($scope.projects.add(p));
   };
 
-  // Check if we need to create an initial list
-  taskRef.on('value', function(snapshot) {
+  $scope.projects = angularFireCollection(new Firebase(FIREBASE_URL + '/project_list'), function(snapshot) {
     if(!snapshot.val()) {
       var title = prompt('Create your first list:');
       if(title) {

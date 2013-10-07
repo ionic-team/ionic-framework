@@ -15,4 +15,4 @@ angular.module('ionic.todo', [
                'ngAnimate'])
 
 // Our Firebase URL
-.constant('FIREBASE_URL', 'https://ionic-todo-demo.firebaseio.com/');
+.constant('FIREBASE_URL', 'https://ionic-todo-demo.firebaseio.com/todo');

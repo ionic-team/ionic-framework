@@ -107,14 +107,22 @@
 
     <!-- Tasks -->
     <script id="tasks.html" type="text/ng-template">
-      <side-menu-ctrl id="tasks-view" nav-content class="view" ng-controller="TasksCtrl" nav-bar="false">
+      <div class="view" side-menu-ctrl id="tasks-view" nav-content class="view" ng-controller="TasksCtrl" nav-bar="false">
         <div class="full-section" side-menu-content>
           <header class="bar bar-header bar-secondary">
-            <a href="#" class="button"><i class="icon-reorder"></i></a>
-            <h1 class="title">{{activeList.title}}</h1>
+            <a href="#" class="button button-icon"><i class="icon-reorder"></i></a>
+            <h1 class="title">{{activeProject.title}}</h1>
+            <button class="button button-clear button-primary">Edit</button>
           </header>
           <div class="content has-header">
-            <h1>Slide me side to side!</h1>
+            <form ng-submit="addTask(newTask)">
+              <input type="text" ng-model="newTask.title" placeholder="Add an item...">
+            </form>
+            <list>
+              <li class="list-item" ng-repeat="task in activeProject.tasks" ng-class="{completed: task.isCompleted}">
+                {{task.title}}
+              </li>
+            </list>
           </div>
         </div>
         <menu side="left">
@@ -123,14 +131,14 @@
             <div class="toderp-small-logo"></div>
             <button class="button button-icon">S</button>
           </header>
-          <content has-header="true" ng-controller="ProjectsCtrl">
+          <content has-header="true">
             <form ng-submit="addProject(newProject)">
               <input type="text" ng-model="newProject.title" placeholder="Create a new list...">
             </form>
             <list>
-              <li class="list-item" ng-repeat="project in projects">
+              <a ng-click="setActiveProject(project)" class="list-item" ng-repeat="project in projects">
                 {{project.title}}
-              </li>
+              </a>
             </list>
           </content>
         </menu>

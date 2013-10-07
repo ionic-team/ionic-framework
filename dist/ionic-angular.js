@@ -226,10 +226,6 @@ angular.module('ionic.ui.nav', ['ionic.service'])
     controller: 'NavCtrl',
     //templateUrl: 'ext/angular/tmpl/ionicTabBar.tmpl.html',
     template: '<div class="view" ng-transclude></div>',
-    compile: function(element, attr, transclude, navCtrl) {
-      return function($scope, $element, $attr) {
-      };
-    }
   }
 })
 
@@ -237,7 +233,6 @@ angular.module('ionic.ui.nav', ['ionic.service'])
   return {
     restrict: 'E',
     require: '^navCtrl',
-    transclude: true,
     replace: true,
     scope: true,
     template: '<header class="bar bar-header bar-dark nav-bar" ng-class="{hidden: !navController.navBar.isVisible}">' + 
@@ -317,11 +312,8 @@ angular.module('ionic.ui.sideMenu', [])
 
 .directive('sideMenuCtrl', function() {
   return {
-    restrict: 'E',
+    restrict: 'CA',
     controller: 'SideMenuCtrl',
-    replace: true,
-    transclude: true,
-    template: '<div class="view" ng-transclude></div>',
   }
 })
 
@@ -374,11 +366,11 @@ angular.module('ionic.ui.sideMenu', [])
     require: '^sideMenuCtrl',
     replace: true,
     transclude: true,
-    scope: true,
-    template: '<div class="menu menu-{{side}}" ng-transclude></div>',
+    template: '<div class="menu menu-{{side}}"></div>',
     compile: function(element, attr, transclude, sideMenuCtrl) {
       return function($scope, $element, $attr) {
         $scope.side = attr.side;
+        $element.append(transclude($scope));
       };
     }
   }
