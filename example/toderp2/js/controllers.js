@@ -151,7 +151,8 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
     $scope.setActiveProject(np);
   };
 
-  $scope.projects = angularFireCollection(new Firebase(FIREBASE_URL + '/project_list'), function(snapshot) {
+  var projectsRef = new Firebase(FIREBASE_URL + '/project_list');
+  $scope.projects = angularFireCollection(projectsRef, function(snapshot) {
     if(!snapshot.val()) {
       var title = prompt('Create your first list:');
       if(title) {
@@ -160,6 +161,13 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
         });
       }
     }
+  });
+  projectsRef.once('child_added', function(snapshot) {
+    $scope.setActiveProject(
+      angular.extend({
+        '$ref': snapshot.ref(),
+      }, snapshot.val())
+    )
   });
 })
 
