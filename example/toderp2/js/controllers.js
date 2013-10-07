@@ -91,11 +91,13 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
     if(!$scope.activeProject.tasks) {
       $scope.activeProject.tasks = [];
     }
-    $scope.activeProject.tasks.add({
+    var task = $scope.activeProject.tasks.add({
       title: task.title,
       user_id: $scope.user.id,
       isCompleted: false
     });
+
+    task.setPriority(-(+new Date));
 
     // Set the priorty for this project to the new date, so it will
     // sort higher
@@ -117,7 +119,7 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
     $scope.activeProject = {
       project: ref,
       title: project.title,
-      tasks: angularFireCollection(ref.child('tasks'))
+      tasks: angularFireCollection(ref.child('tasks').limit(100))
     };
     $scope.clearActive();
     project.isActive = true;
@@ -152,7 +154,7 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
   };
 
   var projectsRef = new Firebase(FIREBASE_URL + '/project_list');
-  $scope.projects = angularFireCollection(projectsRef, function(snapshot) {
+  $scope.projects = angularFireCollection(projectsRef.limit(100), function(snapshot) {
     if(!snapshot.val()) {
       var title = prompt('Create your first list:');
       if(title) {
