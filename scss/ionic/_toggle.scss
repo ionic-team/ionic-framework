@@ -37,10 +37,11 @@
   background-color: $toggle-handle-off-bg-color;
   transition: -webkit-transform $toggle-transition-duration ease-in-out;
 
+  /* used to create a larger hit area to slide the handle */
   &:before {
     position: absolute;
-    content: '.';
-    color: transparent;
+    content: " ";
+    display: table;
     left: ( ($toggle-handle-width / 2) * -1);
     top: ( ($toggle-handle-height / 2) * -1) + 3;
     padding: ($toggle-handle-height / 2) ($toggle-handle-width + 2);
