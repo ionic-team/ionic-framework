@@ -1,4 +1,13 @@
-angular.module('ionic.ui', ['ionic.ui.content', 'ionic.ui.tabs', 'ionic.ui.nav', 'ionic.ui.sideMenu']);
+/**
+ * Create a wrapping module to ease having to include too many
+ * modules.
+ */
+angular.module('ionic.ui', ['ionic.ui.content',
+                            'ionic.ui.tabs',
+                            'ionic.ui.nav',
+                            'ionic.ui.sideMenu',
+                            'ionic.ui.list'
+                           ]);
 ;
 angular.module('ionic.service.actionSheet', ['ionic.service', 'ionic.ui.actionSheet'])
 
@@ -168,6 +177,18 @@ angular.module('ionic.ui.content', [])
         c.append(transclude($scope));
       }
     }
+  }
+})
+;
+angular.module('ionic.ui.list', ['ionic.service'])
+
+.directive('list', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    scope: {},
+    template: '<ul class="list-group" ng-transclude></ul>'
   }
 })
 ;

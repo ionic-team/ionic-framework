@@ -6,10 +6,7 @@ angular.module('ionic.todo', [
                'ionic.service.modal',
                'ionic.service.actionSheet',
 
-               'ionic.ui.nav',
-               'ionic.ui.content',
-               'ionic.ui.sideMenu',
-               'ionic.ui.actionSheet',
+               'ionic.ui',
 
                'firebase',
                'ngRoute',

@@ -137,7 +137,7 @@
               <input type="text" ng-model="newProject.title" placeholder="Create a new list...">
             </form>
             <list>
-            <a ng-click="selectProject(project)" class="list-item list-item-primary" ng-class="{active: project.$id == activeProject.project.name()}" ng-repeat="project in projects">
+              <a ng-click="selectProject(project)" class="list-item list-item-primary" ng-class="{active: project.$id == activeProject.project.name()}" ng-repeat="project in projects">
                 {{project.title}}
               </a>
             </list>
@@ -153,7 +153,7 @@
           <button class="button button-clear button-primary" ng-click="close()">Done</button>
         </header>
         <main class="content padded has-header">
-          <list header="GENERAL>
+          <list header="GENERAL">
             <a class="list-item" href="#" ng-click="logout()">Log out</a>
           </list>
         </main>
