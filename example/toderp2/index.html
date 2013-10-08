@@ -147,12 +147,15 @@
     </script>
 
     <script id="settings.html" type="text/ng-template">
-      <div id="login-view" class="modal slide-in-up" ng-controller="SettingsCtrl">
+      <div id="settings-view" class="modal slide-in-up" ng-controller="SettingsCtrl">
         <header class="bar bar-header bar-secondary">
           <h1 class="title">Settings</h1>
           <button class="button button-clear button-primary" ng-click="close()">Done</button>
         </header>
         <main class="content padded has-header">
+          <list header="GENERAL>
+            <a class="list-item" href="#" ng-click="logout()">Log out</a>
+          </list>
         </main>
       </div>
     </script>

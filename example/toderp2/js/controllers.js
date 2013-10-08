@@ -188,8 +188,11 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
   });
 })
 
-.controller('SettingsCtrl', function($scope) {
+.controller('SettingsCtrl', function($scope, AuthService) {
   $scope.close = function() {
     $scope.modal.hide();
   }
+  $scope.logout = function() {
+    AuthService.logout();
+  };
 })
