@@ -2504,6 +2504,12 @@ ionic.controllers.NavController.prototype = {
       }
     },
 
+    /**
+     * Close all menus.
+     */
+    close: function() {
+      this.openPercentage(0);
+    },
 
     /**
      * @return {float} The amount the side menu is open, either positive or negative for left (positive), or right (negative)

@@ -67,18 +67,25 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
 
 
 // The tasks controller (main app controller)
-.controller('TasksCtrl', function($scope, angularFire, angularFireCollection, FIREBASE_URL) {
+.controller('TasksCtrl', function($scope, angularFire, angularFireCollection, Modal, FIREBASE_URL) {
   /*
   var lastProjectRef = new Firebase(FIREBASE_URL + '/lastproject');
   var lastProjectPromise = angularFire(lastProjectRef, $scope, 'lastProject');
   $scope.lastProject = null;
   */
 
+  // Load our settings modal
+  Modal.fromTemplateUrl('settings.html', function(modal) {
+    $scope.settingsModal = modal;
+  });
 
   $scope.newProject = {};
 
   $scope.newTask = {};
 
+  $scope.showSettings = function() {
+    $scope.settingsModal && $scope.settingsModal.show();
+  };
 
   /**
    * Add a new tasks to the current project.
@@ -101,7 +108,7 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
 
     // Set the priorty for this project to the new date, so it will
     // sort higher
-    $scope.activeProject.project.setPriority(-(+new Date));
+    //$scope.activeProject.project.setPriority(-(+new Date));
 
     $scope.newTask = {};
   };
@@ -121,17 +128,11 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
       title: project.title,
       tasks: angularFireCollection(ref.child('tasks').limit(100))
     };
-    $scope.clearActive();
-    project.isActive = true;
-
-    // Close the side menu
-    $scope.sideMenuCtrl.toggleLeft();
   };
 
-  $scope.clearActive = function() {
-    angular.forEach($scope.projects, function(project) {
-      project.isActive = false;
-    });
+  $scope.selectProject = function(project) {
+    $scope.setActiveProject(project);
+    $scope.sideMenuCtrl.close();
   };
 
   /**
@@ -142,7 +143,6 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
       title: newProject.title,
       user_id: $scope.user.id,
       tasks: [],
-      isActive: true
     };
 
     console.log("Adding project:", p);
@@ -152,8 +152,15 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
     $scope.newProject = {};
 
     var np = $scope.projects.add(p);
-    np.setPriority(-(+new Date));
+    //np.setPriority(-(+new Date));
     $scope.setActiveProject(np);
+
+    // Set these explicitly, some firebase delay or something happening
+    // here.
+    $scope.activeProject.title = newProject.title;
+    $scope.activeProject.user_id = newProject.user_id;
+
+    $scope.sideMenuCtrl.close();
   };
 
   var projectsRef = new Firebase(FIREBASE_URL + '/project_list');
@@ -167,6 +174,8 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
       }
     }
   });
+
+  // Listen for the first child added so we can set it as the active project
   projectsRef.once('child_added', function(snapshot, prevChildName) {
       $scope.setActiveProject(
         angular.extend({
@@ -174,5 +183,10 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
         }, snapshot.val())
       )
   });
+  projectsRef.on('child_added', function(snapshot, prevChildName) {
+    console.log('CHILD ADDED', snapshot.val());
+  });
 })
 
+.controller('SettingsCtrl', function($scope) {
+})
