@@ -58,7 +58,7 @@
   }
 
   .toderp-small-logo {
-    background: url('../img/logo-header@2x.png') no-repeat transparent;
+    background-image: url('../img/logo-header@2x.png');
     background-size: 76px 21px;
   }
 }
