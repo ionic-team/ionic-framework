@@ -1124,6 +1124,9 @@ a.list-item {
   text-decoration: none; }
   a.list-item:hover, a.list-item:focus {
     text-decoration: none; }
+  a.list-item.slide-left {
+    margin-left: -100px;
+    -webkit-transition: margin-left 0.2s ease-in-out; }
 
 .list-divider {
   padding: 5px 15px;

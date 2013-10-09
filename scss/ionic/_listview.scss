@@ -87,6 +87,11 @@ a.list-item {
     text-decoration: none;
     //background-color: $list-group-hover-bg;
   }
+
+  &.slide-left {
+    margin-left: -100px;
+    -webkit-transition: margin-left 0.2s ease-in-out;
+  }
 }
 
 .list-divider {
