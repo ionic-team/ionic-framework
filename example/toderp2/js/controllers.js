@@ -67,7 +67,7 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
 
 
 // The tasks controller (main app controller)
-.controller('TasksCtrl', function($scope, angularFire, angularFireCollection, Modal, FIREBASE_URL) {
+.controller('TasksCtrl', function($scope, angularFire, angularFireCollection, Modal, ActionSheet, FIREBASE_URL) {
   /*
   var lastProjectRef = new Firebase(FIREBASE_URL + '/lastproject');
   var lastProjectPromise = angularFire(lastProjectRef, $scope, 'lastProject');
@@ -161,6 +161,26 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
     $scope.activeProject.user_id = newProject.user_id;
 
     $scope.sideMenuCtrl.close();
+  };
+
+  $scope.deleteProject = function(project) {
+    var ref = project;
+
+    ActionSheet.show({
+      buttons: [],
+      destructiveText: 'Delete Project',
+      cancelText: 'Cancel',
+      cancel: function() {
+        return true;
+      },
+      destructiveButtonClicked: function() {
+        if(project.$ref) {
+          ref = project.$ref;
+        }
+        ref.remove();
+        return true;
+      }
+    });
   };
 
   var projectsRef = new Firebase(FIREBASE_URL + '/project_list');
