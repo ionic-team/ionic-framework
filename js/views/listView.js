@@ -37,7 +37,6 @@
           // Slide the content over left by the button width
           content.style.right = buttonsWidth + 'px';
           content.style.left = -buttonsWidth + 'px';
-          content.classList.add('slide-left');
         }
       });
     },
@@ -53,7 +52,6 @@
           content = item;
         }
 
-        content.classList.remove('slide-left');
         content.style.right = 0;
         content.style.left = 0;
       });

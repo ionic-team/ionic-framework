@@ -98,10 +98,8 @@ a.list-item {
   z-index: 1;
 
   background-color: white;
-
-  &.slide-left {
-    -webkit-transition: margin-left 0.2s ease-in-out;
-  }
+    
+  -webkit-transition: left 1s ease-in-out, right 1s ease-in-out;
 }
 .list-item-buttons {
   position: absolute;

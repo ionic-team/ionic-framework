@@ -1044,9 +1044,8 @@ a.list-item {
   right: 0;
   bottom: 0;
   z-index: 1;
-  background-color: white; }
-  .list-item-content.slide-left {
-    -webkit-transition: margin-left 0.2s ease-in-out; }
+  background-color: white;
+  -webkit-transition: left 1s ease-in-out, right 1s ease-in-out; }
 
 .list-item-buttons {
   position: absolute;
