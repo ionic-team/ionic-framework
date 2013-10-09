@@ -78,10 +78,16 @@
   border-color: $borderColor;
   */
 
+
   &.active, &:active {
     color: $activeColor;
     background-color: $activeBgColor;
     border-color: $activeBorderColor;
+
+    .list-item-content {
+      background-color: $activeBgColor;
+      color: $activeColor;
+    }
   }
 };
 

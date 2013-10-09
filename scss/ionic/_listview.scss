@@ -18,7 +18,6 @@
   display: block;
   // Place the border on the list items and negative margin up for better styling
   margin-bottom: -1px;
-  padding: 15px 15px;
 
   background-color: $list-default-background;
   border: $list-item-border;
@@ -90,22 +89,26 @@ a.list-item {
 }
 
 .list-item-content {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  position: relative;
+
+  background-color: #fff;
+
   z-index: 1;
 
-  background-color: white;
-    
-  -webkit-transition: left 1s ease-in-out, right 1s ease-in-out;
+  padding: 15px 15px;
+
+  -webkit-transition: left 0.2s ease-in-out;
 }
 .list-item-buttons {
   position: absolute;
   z-index: 0;
   right: 0;
   top: 0;
+
+  .button {
+    border-radius: 0;
+    border: none;
+  }
 }
 
 

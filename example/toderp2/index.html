@@ -137,9 +137,14 @@
               <input type="text" ng-model="newProject.title" placeholder="Create a new list...">
             </form>
             <list>
-              <a ng-click="selectProject(project)" class="list-item list-item-primary" ng-class="{active: project.$id == activeProject.project.name()}" ng-repeat="project in projects">
-                {{project.title}}
-              </a>
+              <li class="list-item list-item-primary" ng-class="{active: project.$id == activeProject.project.name()}" ng-repeat="project in projects">
+                <div class="list-item-content" ng-click="selectProject(project)">
+                  {{project.title}}
+                </div>
+                <div class="list-item-buttons">
+                  <button class="button button-danger" ng-click="deleteProject(project)">Delete</button>
+                </div>
+              </li>
             </list>
           </content>
         </menu>

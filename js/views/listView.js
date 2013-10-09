@@ -7,10 +7,14 @@
 
     window.ionic.onGesture('swipeleft', function(e) {
       _this._handleSwipeLeft(e);
+      e.gesture.stopDetect();
+      return false;
     }, this.el);
 
     window.ionic.onGesture('swiperight', function(e) {
       _this._handleSwipeRight(e);
+      e.gesture.stopDetect();
+      return false;
     }, this.el);
   };
 
@@ -29,13 +33,16 @@
           content = item;
         }
 
+        if(!content) {
+          return;
+        }
+
         // Grab the buttons
         buttons = content.parentNode.querySelector('.list-item-buttons');
         if(buttons) {
           buttonsWidth = buttons.offsetWidth;
 
           // Slide the content over left by the button width
-          content.style.right = buttonsWidth + 'px';
           content.style.left = -buttonsWidth + 'px';
         }
       });
@@ -44,7 +51,8 @@
 
       window.requestAnimationFrame(function() {
         var item = e.target,
-          cl = item.classList;
+          cl = item.classList,
+          content;
 
         if(cl.contains('list-item')) {
           content = item.querySelector('.list-item-content');
@@ -52,7 +60,11 @@
           content = item;
         }
 
-        content.style.right = 0;
+        // This item didn't have content
+        if(!content) {
+          return;
+        }
+
         content.style.left = 0;
       });
     },

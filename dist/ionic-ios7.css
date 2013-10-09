@@ -324,7 +324,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
-  -webkit-tap-highlight-color: transparent; }
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-drag: none; }
 
 .view-full {
   position: fixed;
@@ -935,7 +936,6 @@ address {
   position: relative;
   display: block;
   margin-bottom: -1px;
-  padding: 15px 15px;
   background-color: white;
   border: 1px solid #dddddd; }
   .list-item:last-child {
@@ -960,6 +960,9 @@ address {
       color: #333333;
       background-color: white;
       border-color: #333333; }
+      .list-item.list-item-default.active .list-item-content, .list-item.list-item-default:active .list-item-content {
+        background-color: white;
+        color: #333333; }
   .list-item.list-item-secondary {
     /*
     color: $color;
@@ -970,6 +973,9 @@ address {
       color: #333333;
       background-color: white;
       border-color: #333333; }
+      .list-item.list-item-secondary.active .list-item-content, .list-item.list-item-secondary:active .list-item-content {
+        background-color: white;
+        color: #333333; }
   .list-item.list-item-primary {
     /*
     color: $color;
@@ -980,6 +986,9 @@ address {
       color: white;
       background-color: #4a87ee;
       border-color: #333333; }
+      .list-item.list-item-primary.active .list-item-content, .list-item.list-item-primary:active .list-item-content {
+        background-color: #4a87ee;
+        color: white; }
   .list-item.list-item-info {
     /*
     color: $color;
@@ -990,6 +999,9 @@ address {
       color: white;
       background-color: #43cee6;
       border-color: #333333; }
+      .list-item.list-item-info.active .list-item-content, .list-item.list-item-info:active .list-item-content {
+        background-color: #43cee6;
+        color: white; }
   .list-item.list-item-success {
     /*
     color: $color;
@@ -1000,6 +1012,9 @@ address {
       color: white;
       background-color: #66cc33;
       border-color: #333333; }
+      .list-item.list-item-success.active .list-item-content, .list-item.list-item-success:active .list-item-content {
+        background-color: #66cc33;
+        color: white; }
   .list-item.list-item-warning {
     /*
     color: $color;
@@ -1010,6 +1025,9 @@ address {
       color: white;
       background-color: #f0b840;
       border-color: #333333; }
+      .list-item.list-item-warning.active .list-item-content, .list-item.list-item-warning:active .list-item-content {
+        background-color: #f0b840;
+        color: white; }
   .list-item.list-item-danger {
     /*
     color: $color;
@@ -1020,6 +1038,9 @@ address {
       color: white;
       background-color: #ef4e3a;
       border-color: #333333; }
+      .list-item.list-item-danger.active .list-item-content, .list-item.list-item-danger:active .list-item-content {
+        background-color: #ef4e3a;
+        color: white; }
   .list-item.list-item-dark {
     /*
     color: $color;
@@ -1030,6 +1051,9 @@ address {
       color: white;
       background-color: #444444;
       border-color: #333333; }
+      .list-item.list-item-dark.active .list-item-content, .list-item.list-item-dark:active .list-item-content {
+        background-color: #444444;
+        color: white; }
 
 a.list-item {
   color: #333333;
@@ -1038,20 +1062,20 @@ a.list-item {
     text-decoration: none; }
 
 .list-item-content {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  position: relative;
+  background-color: #fff;
   z-index: 1;
-  background-color: white;
-  -webkit-transition: left 1s ease-in-out, right 1s ease-in-out; }
+  padding: 15px 15px;
+  -webkit-transition: left 0.2s ease-in-out; }
 
 .list-item-buttons {
   position: absolute;
   z-index: 0;
   right: 0;
   top: 0; }
+  .list-item-buttons .button {
+    border-radius: 0;
+    border: none; }
 
 .list-divider {
   padding: 5px 15px;
