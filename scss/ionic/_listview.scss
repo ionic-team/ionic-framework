@@ -87,12 +87,29 @@ a.list-item {
     text-decoration: none;
     //background-color: $list-group-hover-bg;
   }
+}
+
+.list-item-content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+
+  background-color: white;
 
   &.slide-left {
-    margin-left: -100px;
     -webkit-transition: margin-left 0.2s ease-in-out;
   }
 }
+.list-item-buttons {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  top: 0;
+}
+
 
 .list-divider {
   padding: 5px 15px;

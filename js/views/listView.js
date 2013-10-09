@@ -17,20 +17,48 @@
   ionic.views.List.prototype = {
     _handleSwipeLeft: function(e) {
       var item = e.target;
-      if(!item.classList.contains('list-item')) {
-        return;
-      }
+      var cl = item.classList;
+      var content;
+      var buttons;
+      var buttonsWidth;
 
-      item.classList.add('slide-left');
+      window.requestAnimationFrame(function() {
+        // Grab the content item
+        if(cl.contains('list-item')) {
+          content = item.querySelector('.list-item-content');
+        } else if(cl.contains('list-item-content')) {
+          content = item;
+        }
+
+        // Grab the buttons
+        buttons = content.parentNode.querySelector('.list-item-buttons');
+        if(buttons) {
+          buttonsWidth = buttons.offsetWidth;
+
+          // Slide the content over left by the button width
+          content.style.right = buttonsWidth + 'px';
+          content.style.left = -buttonsWidth + 'px';
+          content.classList.add('slide-left');
+        }
+      });
     },
     _handleSwipeRight: function(e) {
       var item = e.target;
-      if(!item.classList.contains('list-item')) {
-        return;
-      }
 
-      item.classList.remove('slide-left');
-    }
+      window.requestAnimationFrame(function() {
+        var cl = item.classList;
+
+        if(cl.contains('list-item')) {
+          content = item.querySelector('.list-item-content');
+        } else if(cl.contains('list-item-content')) {
+          content = item;
+        }
+
+        content.classList.remove('slide-left');
+        content.style.right = 0;
+        content.style.left = 0;
+      });
+    },
   };
 
 })(ionic);
