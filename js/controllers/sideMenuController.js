@@ -247,7 +247,7 @@
       }
 
       // Calculate difference from the tap points
-      if(Math.abs(this._lastX - this._startX) > this.dragThresholdX) {
+      if(!this._isDragging && Math.abs(this._lastX - this._startX) > this.dragThresholdX) {
         // if the difference is greater than threshold, start dragging using the current
         // point as the starting point
         this._startX = this._lastX
