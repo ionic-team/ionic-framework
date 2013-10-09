@@ -1796,13 +1796,12 @@ window.ionic = {
 
   ionic.views.List.prototype = {
     _handleSwipeLeft: function(e) {
-      var item = e.target;
-      var cl = item.classList;
-      var content;
-      var buttons;
-      var buttonsWidth;
 
       window.requestAnimationFrame(function() {
+        var item = e.target,
+          cl = item.classList,
+          content, buttons, buttonsWidth;
+
         // Grab the content item
         if(cl.contains('list-item')) {
           content = item.querySelector('.list-item-content');
@@ -1823,10 +1822,10 @@ window.ionic = {
       });
     },
     _handleSwipeRight: function(e) {
-      var item = e.target;
 
       window.requestAnimationFrame(function() {
-        var cl = item.classList;
+        var item = e.target,
+          cl = item.classList;
 
         if(cl.contains('list-item')) {
           content = item.querySelector('.list-item-content');
