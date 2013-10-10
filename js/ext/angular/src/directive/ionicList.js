@@ -12,7 +12,7 @@ angular.module('ionic.ui.list', ['ionic.service'])
                 ' <div class="list-item-content" ng-transclude>' +
                 ' </div>' +
                 ' <div class="list-item-buttons" ng-if="item.canSwipe">' +
-                '   <button class="button button-{{button.type}}" ng-repeat="button in item.buttons">{{item.button.text}}</button>' +
+                '   <button class="button" ng-class="button.type" ng-repeat="button in item.buttons">{{button.text}}</button>' +
                 ' </div>' +
                 '</li>',
     link: function($scope, $element, $attr) {
