@@ -11,30 +11,39 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.js"></script>
     <style>
-      .reveal-animation {
-        /*
-        -webkit-transform: translate3d(0%, 0, 0);
-                transform: translate3d(0%, 0, 0);
+.my-repeat-animation > .ng-enter, 
+.my-repeat-animation > .ng-leave, 
+.my-repeat-animation > .ng-move {
+  -webkit-transition: 0.2s linear all;
+  transition: 0.2s linear all;
+  position:relative;
+}
 
-       -webkit-transition: -webkit-transform 1s ease-in-out;
-               transition:         transform 1s ease-in-out;
-        */
-      }
-      .reveal-animation.ng-enter {
-        -webkit-transition: .2s ease-in-out all;
-        -webkit-transform:translate3d(100%,0,0) ;
-      }
-      .reveal-animation.ng-enter-active {
-        -webkit-transform:translate3d(0,0,0) ;
-      }
-      .reveal-animation.ng-leave {
-        -webkit-transition: .2s ease-in-out all;
-        -webkit-transform:translate3d(0%,0,0);
-      }
-      .reveal-animation.ng-leave-active {
-        -webkit-transition: .2s ease-in-out all;
-        -webkit-transform:translate3d(-100%,0,0);
-      }
+.my-repeat-animation > .ng-enter {
+  left:-10px;
+  opacity:0;
+}
+.my-repeat-animation > .ng-enter.ng-enter-active {
+  left:0;
+  opacity:1;
+}
+
+.my-repeat-animation > .ng-leave {
+  left:0;
+  opacity:1;
+}
+.my-repeat-animation > .ng-leave.ng-leave-active {
+  left:-10px;
+  opacity:0;
+}
+
+.my-repeat-animation > .ng-move {
+  opacity:0.5;
+}
+.my-repeat-animation > .ng-move.ng-move-active {
+  opacity:1;
+}
+
     </style>
 
   </head>
@@ -73,7 +82,7 @@
           </div>
         </li>
       </list>
-      <list items="items" is-editing="isEditingItems">
+      <list items="items" is-editing="isEditingItems" animation="my-repeat-animation">
       </list>
       <button ng-click="edit()" class="button button-success">Edit</button>
     </content>
@@ -81,7 +90,7 @@
     <script src="../../../../dist/ionic.js"></script>
     <script src="../../../../dist/ionic-angular.js"></script>
     <script>
-      angular.module('navTest', ['ionic.ui.list'])
+      angular.module('navTest', ['ionic.ui.list', 'ngAnimate'])
 
       .controller('TestCtrl', function($scope) {
         $scope.items = [
@@ -90,9 +99,15 @@
             canDelete: true,
             canSwipe: true,
             icon: 'icon-chevron-right',
+            hide: false,
             buttons: [{
               text: 'Kill',
-              type: 'button-danger'
+              type: 'button-danger',
+              buttonClicked: function(item) {
+                // Remove ourselves
+                //$scope.items.splice($scope.items.indexOf(item), 1);
+                item.hide = true;
+              }
             }]
           },
           {

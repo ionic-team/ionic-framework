@@ -1161,7 +1161,7 @@ a.list-item {
   background-color: #fff;
   z-index: 1;
   padding: 15px 15px;
-  -webkit-transition: left 0.2s ease-in-out; }
+  -webkit-transition: left 0.2s ease-in-out, right 0.2s ease-in-out; }
   .list-item-content > i:last-child {
     float: right; }
 
