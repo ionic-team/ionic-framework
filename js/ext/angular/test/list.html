@@ -1,0 +1,103 @@
+<html ng-app="navTest">
+  <head>
+    <meta charset="utf-8">
+    <title>List</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../dist/ionic.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.js"></script>
+    <style>
+      .reveal-animation {
+        /*
+        -webkit-transform: translate3d(0%, 0, 0);
+                transform: translate3d(0%, 0, 0);
+
+       -webkit-transition: -webkit-transform 1s ease-in-out;
+               transition:         transform 1s ease-in-out;
+        */
+      }
+      .reveal-animation.ng-enter {
+        -webkit-transition: .2s ease-in-out all;
+        -webkit-transform:translate3d(100%,0,0) ;
+      }
+      .reveal-animation.ng-enter-active {
+        -webkit-transform:translate3d(0,0,0) ;
+      }
+      .reveal-animation.ng-leave {
+        -webkit-transition: .2s ease-in-out all;
+        -webkit-transform:translate3d(0%,0,0);
+      }
+      .reveal-animation.ng-leave-active {
+        -webkit-transition: .2s ease-in-out all;
+        -webkit-transform:translate3d(-100%,0,0);
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <content has-header="true" ng-controller="TestCtrl" class="reveal-animation">
+      <list is-editing="isEditingItems">
+        <li href="#" class="list-item">
+          <div class="list-item-edit">
+            <button class="button button-icon"><i class="icon-minus-sign"></i></button>
+          </div>
+          <div class="list-item-content">
+            Item 1
+            <i class="icon-arrow-right"></i>
+          </div>
+          <div class="list-item-buttons">
+            <button class="button button-danger">Delete</button>
+          </div>
+        </li>
+        <li href="#" class="list-item">
+          <div class="list-item-content">
+            Item 2
+            <i class="icon-arrow-right"></i>
+          </div>
+          <div class="list-item-buttons">
+            <button class="button button-danger">Delete</button>
+          </div>
+        </li>
+        <li href="#" class="list-item">
+          <div class="list-item-content">
+            Item 3
+            <i class="icon-arrow-right"></i>
+          </div>
+          <div class="list-item-buttons">
+            <button class="button button-danger">Delete</button>
+          </div>
+        </li>
+      </list>
+      <list-items items="items" is-editing="isEditingItems">
+      </list-items>
+      <button ng-click="edit()" class="button button-success">Edit</button>
+    </content>
+
+    <script src="../../../../dist/ionic.js"></script>
+    <script src="../../../../dist/ionic-angular.js"></script>
+    <script>
+      angular.module('navTest', ['ionic.ui.list'])
+
+      .controller('TestCtrl', function($scope) {
+        $scope.items = [{
+          text: 'Item 1',
+          canDelete: true,
+          canSwipe: true,
+          buttons: [{
+            text: 'Kill'
+          }]
+        }];
+        $scope.edit = function() {
+          $scope.isEditingItems = !$scope.isEditingItems;
+        }
+      });
+
+    </script>
+  </body>
+</html>
+

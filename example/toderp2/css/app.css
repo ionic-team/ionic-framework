@@ -50,6 +50,13 @@
   color: #4a87ee;
 }
 
+/* Tasks view */
+
+#task-list {
+}
+#task-list .completed {
+  text-decoration: line-through;
+}
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
   #signup-view {

@@ -119,9 +119,10 @@
             <form ng-submit="addTask(newTask)">
               <input type="text" ng-model="newTask.title" placeholder="Add an item...">
             </form>
-            <list>
+            <list id="task-list">
               <li class="list-item" ng-repeat="task in activeProject.tasks" ng-class="{completed: task.isCompleted}">
-                {{task.title}}
+                <input type="checkbox" ng-model="task.isCompleted"> {{task.title}}
+                <input type="text" ng-model="task.title">
               </li>
             </list>
           </div>

@@ -88,6 +88,16 @@ a.list-item {
   }
 }
 
+.list-editing {
+  .list-item-content {
+    left: 50px;
+  }
+  .list-item-edit {
+    left: 0px;
+    opacity: 1;
+  }
+}
+
 .list-item-content {
   position: relative;
 
@@ -99,6 +109,25 @@ a.list-item {
 
   -webkit-transition: left 0.2s ease-in-out;
 }
+
+.list-item-edit {
+  position: absolute;
+  z-index: 0;
+  left: -48px;
+  top: 0;
+  width: 48px;
+  height: 100%;
+  line-height: 100%;
+  opacity: 0;
+
+  -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
+
+  i {
+    color: $brand-danger;
+    font-size: 36px;
+  }
+}
+
 .list-item-buttons {
   position: absolute;
   z-index: 0;

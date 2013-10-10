@@ -25,8 +25,8 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
   console.log('Created login Ctrl');
 
   $scope.loginForm = {
-    email: 'max@drifty.com',
-    password: 'test'
+    email: 'ihasmax@gmail.com',
+    password: 'traintown'
   };
 
   $scope.close = function() {

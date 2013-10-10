@@ -325,7 +325,8 @@ body {
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
   -webkit-tap-highlight-color: transparent;
-  -webkit-user-drag: none; }
+  -webkit-user-drag: none;
+  -webkit-user-select: none; }
 
 .view-full {
   position: fixed;
@@ -1061,12 +1062,32 @@ a.list-item {
   a.list-item:hover, a.list-item:focus {
     text-decoration: none; }
 
+.list-editing .list-item-content {
+  left: 50px; }
+.list-editing .list-item-edit {
+  left: 0px;
+  opacity: 1; }
+
 .list-item-content {
   position: relative;
   background-color: #fff;
   z-index: 1;
   padding: 15px 15px;
   -webkit-transition: left 0.2s ease-in-out; }
+
+.list-item-edit {
+  position: absolute;
+  z-index: 0;
+  left: -48px;
+  top: 0;
+  width: 48px;
+  height: 100%;
+  line-height: 100%;
+  opacity: 0;
+  -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
+  .list-item-edit i {
+    color: #ef4e3a;
+    font-size: 36px; }
 
 .list-item-buttons {
   position: absolute;
