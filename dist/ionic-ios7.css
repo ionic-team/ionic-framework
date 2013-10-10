@@ -1089,7 +1089,7 @@ a.list-item {
   -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
   .list-item-edit i {
     color: #ef4e3a;
-    font-size: 36px; }
+    font-size: 24px; }
 
 .list-item-buttons {
   position: absolute;

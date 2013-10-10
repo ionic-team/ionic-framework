@@ -5,7 +5,6 @@
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../../dist/ionic.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js"></script>
@@ -53,7 +52,7 @@
       <list is-editing="isEditingItems">
         <li href="#" class="list-item">
           <div class="list-item-edit">
-            <button class="button button-icon"><i class="icon-minus-sign"></i></button>
+            <button class="button button-icon"><i class="icon-minus-circled"></i></button>
           </div>
           <div class="list-item-content">
             Item 1
@@ -82,7 +81,7 @@
           </div>
         </li>
       </list>
-      <list items="items" is-editing="isEditingItems" animation="my-repeat-animation">
+      <list items="items" is-editing="isEditingItems" animation="my-repeat-animation" delete-icon="icon-minus-circled">
       </list>
       <button ng-click="edit()" class="button button-success">Edit</button>
     </content>

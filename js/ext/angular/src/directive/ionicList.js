@@ -7,7 +7,7 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
     transclude: true,
     template:   '<li class="list-item">' + 
                 ' <div class="list-item-edit" ng-if="item.canDelete">' +
-                '   <button class="button button-icon"><i class="icon-minus-sign"></i></button>' +
+                '   <button class="button button-icon"><i ng-class="deleteIcon"></i></button>' +
                 ' </div>' +
                 ' <div class="list-item-content" ng-transclude>' +
                 ' </div>' +
@@ -31,7 +31,8 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
     scope: {
       isEditing: '=',
       items: '=',
-      animation: '='
+      animation: '@',
+      deleteIcon: '@'
     },
     template: '<ul class="list" ng-class="{\'list-editing\': isEditing}">' +
                 '<list-item ng-repeat="item in items" canDelete="item.canDelete" canSwipe="item.canSwipe" animation="my-repeat-animation">' +
