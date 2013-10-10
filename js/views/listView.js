@@ -34,6 +34,7 @@
   ionic.views.List.prototype = {
     _initDrag: function() {
       this._offsetX = 0;
+      this._deltaSlowX = null;
       this._isDragging = false;
       this._currentDrag = null;
     },
@@ -47,11 +48,16 @@
         content = e.target;
       }
 
+      // If we don't have a content area as one of our children (or ourselves), skip
       if(!content) {
         return;
       }
 
+      // Make sure we aren't animating as we slide
       content.classList.remove('list-item-sliding');
+
+      // Grab the starting X point for the item (for example, so we can tell whether it is open or closed to start)
+      var offsetX = parseFloat(content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
 
       // Grab the buttons
       buttons = content.parentNode.querySelector('.list-item-buttons');
@@ -63,49 +69,54 @@
 
       this._currentDrag = {
         buttonsWidth: buttonsWidth,
-        content: content
+        content: content,
+        startOffsetX: offsetX
       };
     },
     _handleEndDrag: function(e) {
       var _this = this;
       
-      // If we are currently dragging, we want to snap back into place
-      if(this._currentDrag) {
-
-        // The final resting point X will be the width of the exposed buttons
-        var restingPoint = -this._currentDrag.buttonsWidth;
-
-        // Check if the drag didn't clear the buttons and we aren't moving fast enough to swipe open
-        if(e.gesture.deltaX > -this._currentDrag.buttonsWidth) {
-          if(e.gesture.direction == "left" && Math.abs(e.gesture.velocityX) < 0.3) {
-            restingPoint = 0;
-          } else if(e.gesture.direction == "right") {
-            restingPoint = 0;
-          }
-        }
-
-        var content = this._currentDrag.content;
-
-        var onRestingAnimationEnd = function(e) {
-          if(e.propertyName == '-webkit-transform') {
-            content.classList.remove('list-item-sliding');
-          }
-          e.target.removeEventListener('webkitTransitionEnd', onRestingAnimationEnd);
-        }
-
-        window.requestAnimationFrame(function() {
-          var currentX = parseFloat(_this._currentDrag.content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
-          if(currentX !== restingPoint) {
-            _this._currentDrag.content.classList.add('list-item-sliding');
-            _this._currentDrag.content.addEventListener('webkitTransitionEnd', onRestingAnimationEnd);
-          }
-          _this._currentDrag.content.style.webkitTransform = 'translate3d(' + restingPoint + 'px, 0, 0)';
-          _this._initDrag();
-        });
-
-      } else {
+      if(!this._currentDrag) {
         this._initDrag();
+        return;
       }
+
+      // If we are currently dragging, we want to snap back into place
+
+      // The final resting point X will be the width of the exposed buttons
+      var restingPoint = -this._currentDrag.buttonsWidth;
+
+      // Check if the drag didn't clear the buttons mid-point 
+      // and we aren't moving fast enough to swipe open
+      if(e.gesture.deltaX > -(this._currentDrag.buttonsWidth/2)) {
+
+        // If we are going left but too slow, or going right, go back to resting
+        if(e.gesture.direction == "left" && Math.abs(e.gesture.velocityX) < 0.3) {
+          restingPoint = 0;
+        } else if(e.gesture.direction == "right") {
+          restingPoint = 0;
+        }
+
+      }
+
+      var content = this._currentDrag.content;
+
+      var onRestingAnimationEnd = function(e) {
+        if(e.propertyName == '-webkit-transform') {
+          content.classList.remove('list-item-sliding');
+        }
+        e.target.removeEventListener('webkitTransitionEnd', onRestingAnimationEnd);
+      }
+
+      window.requestAnimationFrame(function() {
+        var currentX = parseFloat(_this._currentDrag.content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
+        if(currentX !== restingPoint) {
+          _this._currentDrag.content.classList.add('list-item-sliding');
+          _this._currentDrag.content.addEventListener('webkitTransitionEnd', onRestingAnimationEnd);
+        }
+        _this._currentDrag.content.style.webkitTransform = 'translate3d(' + restingPoint + 'px, 0, 0)';
+        _this._initDrag();
+      });
     },
 
     /**
@@ -114,34 +125,30 @@
     _handleDrag: function(e) {
       var _this = this, content, buttons;
 
-      if(!this._currentDrag) {
-        this._startDrag(e);
-      }
-
       window.requestAnimationFrame(function() {
 
         if(!_this._currentDrag) {
-          return;
+          _this._startDrag(e);
         }
 
-        // Calculate difference from the tap points
-        if(!_this._isDragging && Math.abs(e.gesture.deltaX) > _this.dragThresholdX) {
+        // Check if we should start dragging. Check if we've dragged past the threshold,
+        // or we are starting from the open state.
+        if(!_this._isDragging &&
+            ((Math.abs(e.gesture.deltaX) > _this.dragThresholdX) ||
+            (Math.abs(_this._currentDrag.startOffsetX) > 0)))
+        {
           _this._isDragging = true;
-
-          // Grab the starting X point for this item
-          _this._offsetX = parseFloat(_this._currentDrag.content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
         }
 
         if(_this._isDragging) {
 
           // Grab the new X point, capping it at zero
+          var newX = Math.min(0, _this._currentDrag.startOffsetX + e.gesture.deltaX);
 
-          var newX = Math.min(0, _this._offsetX + e.gesture.deltaX);
-          if(newX < -buttonsWidth && !_this._deltaSlowX) {
-            _this._deltaSlowX = e.gesture.deltaX;
-          }
+          // If the new X position is past the buttons, we need to slow down the drag (rubber band style)
           if(newX < -buttonsWidth) {
-            newX = Math.min(_this._deltaSlowX, _this._deltaSlowX + (((e.gesture.deltaX - _this._deltaSlowX) * 0.4)));
+            // Calculate the new X position, capped at the top of the buttons
+            newX = Math.min(-buttonsWidth, -buttonsWidth + (((e.gesture.deltaX + buttonsWidth) * 0.4)));
           }
 
           console.log(newX);
