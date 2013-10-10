@@ -1162,6 +1162,8 @@ a.list-item {
   z-index: 1;
   padding: 15px 15px;
   -webkit-transition: left 0.2s ease-in-out; }
+  .list-item-content > i:last-child {
+    float: right; }
 
 .list-item-edit {
   position: absolute;

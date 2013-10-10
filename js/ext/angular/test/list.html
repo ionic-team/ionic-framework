@@ -73,8 +73,8 @@
           </div>
         </li>
       </list>
-      <list-items items="items" is-editing="isEditingItems">
-      </list-items>
+      <list items="items" is-editing="isEditingItems">
+      </list>
       <button ng-click="edit()" class="button button-success">Edit</button>
     </content>
 
@@ -84,14 +84,44 @@
       angular.module('navTest', ['ionic.ui.list'])
 
       .controller('TestCtrl', function($scope) {
-        $scope.items = [{
-          text: 'Item 1',
-          canDelete: true,
-          canSwipe: true,
-          buttons: [{
-            text: 'Kill'
-          }]
-        }];
+        $scope.items = [
+          {
+            text: 'Item 1',
+            canDelete: true,
+            canSwipe: true,
+            icon: 'icon-chevron-right',
+            buttons: [{
+              text: 'Kill'
+            }]
+          },
+          {
+            text: 'Item 2',
+            canDelete: true,
+            canSwipe: true,
+            icon: 'icon-chevron-right',
+            buttons: [{
+              text: 'Kill'
+            }]
+          },
+          {
+            text: 'Item 3',
+            canDelete: true,
+            canSwipe: true,
+            icon: 'icon-chevron-right',
+            buttons: [{
+              text: 'Kill'
+            }]
+          },
+          {
+            text: 'Item 4',
+            canDelete: true,
+            canSwipe: true,
+            icon: 'icon-chevron-right',
+            buttons: [{
+              text: 'Kill'
+            }]
+          }
+        ];
         $scope.edit = function() {
           $scope.isEditingItems = !$scope.isEditingItems;
         }

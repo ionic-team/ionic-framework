@@ -108,6 +108,11 @@ a.list-item {
   padding: 15px 15px;
 
   -webkit-transition: left 0.2s ease-in-out;
+
+  // Align icons to the right
+  > i:last-child {
+    float: right;
+  }
 }
 
 .list-item-edit {

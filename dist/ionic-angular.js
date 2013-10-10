@@ -87,7 +87,7 @@ angular.module('ionic.service.modal', ['ionic.service'])
       var element = $compile(templateString)(scope);
       $document[0].body.appendChild(element[0]);
 
-      var modal = ionic.views.Modal({el: element[0] });
+      var modal = new ionic.views.Modal({el: element[0] });
       scope.modal = modal;
       return modal;
     },
@@ -182,22 +182,6 @@ angular.module('ionic.ui.content', [])
 ;
 angular.module('ionic.ui.list', ['ionic.service'])
 
-.directive('list', function() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    scope: {
-      isEditing: '='
-    },
-    template: '<ul class="list" ng-class="{\'list-editing\': isEditing}" ng-transclude></ul>',
-    link: function($scope, $element, $attr) {
-      var lv = new ionic.views.List({el: $element[0]});
-    }
-  }
-})
-
-
 .directive('listItem', function() {
   return {
     restrict: 'E',
@@ -218,10 +202,11 @@ angular.module('ionic.ui.list', ['ionic.service'])
   }
 })
 
-.directive('listItems', function() {
+.directive('list', function() {
   return {
     restrict: 'E',
     replace: true,
+    transclude: true,
     scope: {
       isEditing: '=',
       items: '='
@@ -229,10 +214,15 @@ angular.module('ionic.ui.list', ['ionic.service'])
     template: '<ul class="list" ng-class="{\'list-editing\': isEditing}">' +
                 '<list-item ng-repeat="item in items" canDelete="item.canDelete" canSwipe="item.canSwipe">' +
                 ' {{item.text}}' +
+                ' <i class="{{item.icon}}" ng-if="item.icon"></i>' + 
                 '</list-item>' + 
               '</ul>',
-    link: function($scope, $element, $attr) {
-      var lv = new ionic.views.List({el: $element[0]});
+    compile: function(element, attr, transclude) {
+      return function($scope, $element, $attr) {
+        var lv = new ionic.views.List({el: $element[0]});
+
+        $element.append(transclude($scope));
+      }
     }
   }
 })

@@ -17,7 +17,7 @@ angular.module('ionic.service.modal', ['ionic.service'])
       var element = $compile(templateString)(scope);
       $document[0].body.appendChild(element[0]);
 
-      var modal = ionic.views.Modal({el: element[0] });
+      var modal = new ionic.views.Modal({el: element[0] });
       scope.modal = modal;
       return modal;
     },
