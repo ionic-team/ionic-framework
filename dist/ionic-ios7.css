@@ -746,7 +746,8 @@ address {
 
 .bar .button-icon {
   background-color: transparent;
-  border: 1px solid transparent; }
+  border: 1px solid transparent;
+  font-size: 24px; }
 
 .bar-header {
   top: 0; }

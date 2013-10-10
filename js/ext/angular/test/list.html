@@ -92,6 +92,11 @@
       angular.module('navTest', ['ionic.ui.list', 'ngAnimate'])
 
       .controller('TestCtrl', function($scope) {
+        var removeItem = function(item) {
+          // Remove ourselves
+          $scope.items.splice($scope.items.indexOf(item), 1);
+        };
+
         $scope.items = [
           {
             text: 'Item 1',
@@ -102,10 +107,7 @@
             buttons: [{
               text: 'Kill',
               type: 'button-danger',
-              buttonClicked: function(item) {
-                // Remove ourselves
-                $scope.items.splice($scope.items.indexOf(item), 1);
-              }
+              buttonClicked: removeItem,
             }]
           },
           {
@@ -115,7 +117,8 @@
             icon: 'icon-chevron-right',
             buttons: [{
               text: 'Kill',
-              type: 'button-danger'
+              type: 'button-danger',
+              buttonClicked: removeItem,
             }]
           },
           {
@@ -125,7 +128,8 @@
             icon: 'icon-chevron-right',
             buttons: [{
               text: 'Kill',
-              type: 'button-danger'
+              type: 'button-danger',
+              buttonClicked: removeItem,
             }]
           },
           {
@@ -135,7 +139,8 @@
             icon: 'icon-chevron-right',
             buttons: [{
               text: 'Kill',
-              type: 'button-danger'
+              type: 'button-danger',
+              buttonClicked: removeItem,
             }]
           }
         ];

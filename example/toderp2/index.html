@@ -111,7 +111,7 @@
       <div class="view" side-menu-ctrl id="tasks-view" nav-content class="view" ng-controller="TasksCtrl" nav-bar="false">
         <div class="full-section" side-menu-content>
           <header class="bar bar-header bar-secondary">
-            <a href="#" class="button button-icon"><i class="icon-reorder"></i></a>
+            <a href="#" class="button button-icon"><i class="icon-navicon"></i></a>
             <h1 class="title">{{activeProject.title}}</h1>
             <button class="button button-clear button-primary">Edit</button>
           </header>
@@ -131,7 +131,7 @@
           <header class="bar bar-header bar-secondary">
             <button class="button button-clear button-primary">Edit</button>
             <div class="toderp-small-logo"></div>
-            <button class="button button-icon" ng-click="showSettings()">S</button>
+            <button class="button button-icon" ng-click="showSettings()"><i class="icon-gear-a"></i></button>
           </header>
           <content has-header="true">
             <form ng-submit="addProject(newProject)">
