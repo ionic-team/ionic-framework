@@ -1371,6 +1371,13 @@ table {
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
 
+a {
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent; }
+
+a:focus, button:focus {
+  outline: 0; }
+
 body {
   position: fixed;
   top: 0;
@@ -2165,6 +2172,9 @@ a.list-item {
   .list-item-content > i:last-child {
     float: right; }
 
+.list-item-sliding {
+  -webkit-transition: -webkit-transform 0.1s ease-in-out; }
+
 .list-item-edit {
   position: absolute;
   z-index: 0;
@@ -2183,8 +2193,10 @@ a.list-item {
   position: absolute;
   z-index: 0;
   right: 0;
-  top: 0; }
+  top: 0;
+  height: 100%; }
   .list-item-buttons .button {
+    height: 100%;
     border-radius: 0;
     border: none; }
 

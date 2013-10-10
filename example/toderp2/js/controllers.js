@@ -74,6 +74,8 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
   $scope.lastProject = null;
   */
 
+  $scope.isEditingProjects = false;
+
   // Load our settings modal
   Modal.fromTemplateUrl('settings.html', function(modal) {
     $scope.settingsModal = modal;
@@ -181,6 +183,10 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
         return true;
       }
     });
+  };
+
+  $scope.toggleProjectEditing = function() {
+    $scope.isEditingProjects = !$scope.isEditingProjects;
   };
 
   var projectsRef = new Firebase(FIREBASE_URL + '/project_list');

@@ -98,6 +98,7 @@ a.list-item {
   }
 }
 
+
 .list-item-content {
   position: relative;
 
@@ -113,6 +114,10 @@ a.list-item {
   > i:last-child {
     float: right;
   }
+}
+
+.list-item-sliding {
+  -webkit-transition: -webkit-transform 0.1s ease-in-out;
 }
 
 .list-item-edit {
@@ -138,8 +143,10 @@ a.list-item {
   z-index: 0;
   right: 0;
   top: 0;
+  height: 100%;
 
   .button {
+    height: 100%;
     border-radius: 0;
     border: none;
   }

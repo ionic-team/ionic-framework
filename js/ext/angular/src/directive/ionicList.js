@@ -27,7 +27,6 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
   return {
     restrict: 'E',
     replace: true,
-    transclude: true,
     scope: {
       isEditing: '=',
       items: '=',
@@ -47,8 +46,31 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
         if(attr.animation) {
           $element.addClass(attr.animation);
         }
+      }
+    }
+  }
+})
 
-        $element.append(transclude($scope));
+.directive('listSimple', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    scope: {
+      isEditing: '=',
+      items: '=',
+      animation: '@',
+      deleteIcon: '@'
+    },
+    template: '<ul class="list" ng-class="{\'list-editing\': isEditing}" ng-transclude>' +
+              '</ul>',
+    compile: function(element, attr, transclude) {
+      return function($scope, $element, $attr) {
+        var lv = new ionic.views.List({el: $element[0]});
+
+        if(attr.animation) {
+          $element.addClass(attr.animation);
+        }
       }
     }
   }

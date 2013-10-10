@@ -127,18 +127,24 @@
             </list>
           </div>
         </div>
+
+        <!-- The projects side menu -->
         <menu side="left">
           <header class="bar bar-header bar-secondary">
-            <button class="button button-clear button-primary">Edit</button>
+            <button class="button button-clear button-primary" ng-click="toggleProjectEditing()">Edit</button>
             <div class="toderp-small-logo"></div>
             <button class="button button-icon" ng-click="showSettings()"><i class="icon-gear-a"></i></button>
           </header>
+
           <content has-header="true">
             <form ng-submit="addProject(newProject)">
               <input type="text" ng-model="newProject.title" placeholder="Create a new list...">
             </form>
-            <list>
+            <list-simple is-editing="isEditingProjects">
               <li class="list-item list-item-primary" ng-class="{active: project.$id == activeProject.project.name()}" ng-repeat="project in projects">
+                <div class="list-item-edit">
+                  <i class="icon-minus-circled"></i>
+                </div>
                 <div class="list-item-content" ng-click="selectProject(project)">
                   {{project.title}}
                 </div>
@@ -146,7 +152,7 @@
                   <button class="button button-danger" ng-click="deleteProject(project)">Delete</button>
                 </div>
               </li>
-            </list>
+            </list-simple>
           </content>
         </menu>
       </side-menu-ctrl>

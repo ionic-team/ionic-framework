@@ -4,6 +4,17 @@
   @include box-sizing(border-box);
 }
 
+a {
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a, button {
+  &:focus {
+    outline: 0;
+  }
+}
+
 body {
   position: fixed;
   top: 0;
@@ -20,8 +31,10 @@ body {
   text-rendering: optimizeLegibility;
 
   -webkit-font-smoothing: antialiased;
+
   -webkit-text-size-adjust: none;
           text-size-adjust: none;
+
   -webkit-tap-highlight-color: transparent;
   -webkit-user-drag: none;
   -webkit-user-select: none;
