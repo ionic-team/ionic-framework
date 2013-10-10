@@ -1780,41 +1780,32 @@ window.ionic = {
 ;
 (function(ionic) {
 
+  /**
+   * The ListView handles a list of items. It will process drag animations, edit mode,
+   * and other operations that are common on mobile lists or table views.
+   */
   ionic.views.List = function(opts) {
     var _this = this;
 
     this.el = opts.el;
 
-    this.dragThresholdX = 10;
+    // The amount of dragging required to start sliding the element over (in pixels)
+    this.dragThresholdX = opts.dragThresholdX || 10;
       
+    // Start the drag states
     this._initDrag();
 
+    // Listen for drag and release events
     window.ionic.onGesture('drag', function(e) {
       _this._handleDrag(e);
     }, this.el);
     window.ionic.onGesture('release', function(e) {
       _this._handleEndDrag(e);
     }, this.el);
-
-    /*
-    window.ionic.onGesture('swipeleft', function(e) {
-      _this._handleSwipeLeft(e);
-      e.gesture.stopDetect();
-      return false;
-    }, this.el);
-
-    window.ionic.onGesture('swiperight', function(e) {
-      _this._handleSwipeRight(e);
-      e.gesture.stopDetect();
-      return false;
-    }, this.el);
-    */
   };
 
   ionic.views.List.prototype = {
     _initDrag: function() {
-      this._offsetX = 0;
-      this._deltaSlowX = null;
       this._isDragging = false;
       this._currentDrag = null;
     },

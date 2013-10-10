@@ -189,7 +189,7 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
     transclude: true,
     template:   '<li class="list-item">' + 
                 ' <div class="list-item-edit" ng-if="item.canDelete">' +
-                '   <button class="button button-icon"><i ng-class="deleteIcon"></i></button>' +
+                '   <button class="button button-icon" ng-click="deleteClicked()"><i ng-class="deleteIcon"></i></button>' +
                 ' </div>' +
                 ' <div class="list-item-content" ng-transclude>' +
                 ' </div>' +
@@ -198,8 +198,14 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
                 ' </div>' +
                 '</li>',
     link: function($scope, $element, $attr) {
+      // Triggered when a button is clicked
       $scope.buttonClicked = function(button) {
         button.buttonClicked && button.buttonClicked($scope.item);
+      }
+
+      // Triggered when the delete item is clicked
+      $scope.deleteClicked = function() {
+        $scope.item.deleteItem && $scope.item.deleteItem();
       }
     }
   }
