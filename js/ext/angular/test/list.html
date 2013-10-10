@@ -105,8 +105,7 @@
               type: 'button-danger',
               buttonClicked: function(item) {
                 // Remove ourselves
-                //$scope.items.splice($scope.items.indexOf(item), 1);
-                item.hide = true;
+                $scope.items.splice($scope.items.indexOf(item), 1);
               }
             }]
           },

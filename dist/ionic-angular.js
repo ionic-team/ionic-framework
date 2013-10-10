@@ -216,7 +216,7 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
       animation: '='
     },
     template: '<ul class="list" ng-class="{\'list-editing\': isEditing}">' +
-                '<list-item ng-repeat="item in items | filter:{hide:\'false\'}" canDelete="item.canDelete" canSwipe="item.canSwipe" animation="my-repeat-animation">' +
+                '<list-item ng-repeat="item in items" canDelete="item.canDelete" canSwipe="item.canSwipe" animation="my-repeat-animation">' +
                 ' {{item.text}}' +
                 ' <i class="{{item.icon}}" ng-if="item.icon"></i>' + 
                 '</list-item>' + 
