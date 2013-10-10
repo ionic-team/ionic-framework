@@ -90,7 +90,8 @@ a.list-item {
 
 .list-editing {
   .list-item-content {
-    left: 50px;
+    left: 48px;
+    width: unquote("calc(100% - 48px)");
   }
   .list-item-edit {
     left: 0px;
@@ -107,7 +108,11 @@ a.list-item {
 
   padding: 15px 15px;
 
-  -webkit-transition: left 0.2s ease-in-out, right 0.2s ease-in-out;
+
+  -webkit-transition-property: left, right, opacity, width;
+  -webkit-transition-duration: 0.2s;
+  -webkit-transition-timing-function: ease-in-out;
+
 
   // Align icons to the right
   > i:last-child {

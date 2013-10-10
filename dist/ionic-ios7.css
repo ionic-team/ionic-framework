@@ -1063,7 +1063,8 @@ a.list-item {
     text-decoration: none; }
 
 .list-editing .list-item-content {
-  left: 50px; }
+  left: 48px;
+  width: calc(100% - 48px); }
 .list-editing .list-item-edit {
   left: 0px;
   opacity: 1; }
@@ -1073,7 +1074,9 @@ a.list-item {
   background-color: #fff;
   z-index: 1;
   padding: 15px 15px;
-  -webkit-transition: left 0.2s ease-in-out, right 0.2s ease-in-out; }
+  -webkit-transition-property: left, right, opacity, width;
+  -webkit-transition-duration: 0.2s;
+  -webkit-transition-timing-function: ease-in-out; }
   .list-item-content > i:last-child {
     float: right; }
 
