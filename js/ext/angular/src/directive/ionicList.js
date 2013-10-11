@@ -33,6 +33,7 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
   return {
     restrict: 'E',
     replace: true,
+    transclude: true,
     scope: {
       isEditing: '=',
       items: '=',
@@ -52,6 +53,8 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
         if(attr.animation) {
           $element.addClass(attr.animation);
         }
+
+        $element.append(transclude($scope));
       }
     }
   }

@@ -166,7 +166,11 @@
         </header>
         <main class="content padded has-header">
           <list header="GENERAL">
-            <a class="list-item" href="#" ng-click="logout()">Log out</a>
+            <list-item>Account details <i class="icon-chevron-right"></i></list-item>
+            <list-item>Account details <toggle ng-model="settings.isSmallText"></toggle></i></list-item>
+          </list>
+          <list header="ACCOUNT">
+            <list-item ng-click="logout()">Log out</list-item>
           </list>
         </main>
       </div>
