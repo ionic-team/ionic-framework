@@ -1928,6 +1928,11 @@ window.ionic = {
           _this._startDrag(e);
         }
 
+        // We really aren't dragging
+        if(!_this._currentDrag) {
+          return;
+        }
+
         // Check if we should start dragging. Check if we've dragged past the threshold,
         // or we are starting from the open state.
         if(!_this._isDragging &&

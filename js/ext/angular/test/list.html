@@ -51,7 +51,10 @@
     <content has-header="true" ng-controller="TestCtrl" class="reveal-animation">
       <list is-editing="isEditingItems" animation="my-repeat-animation" delete-icon="icon-minus-circled" reorder-icon="icon-navicon">
         <list-item ng-repeat="item in items" 
+        buttons="item.buttons"
         can-delete="true"
+        can-reorder="true"
+        can-swipe="true"
                  on-delete="deleteProject(project)"
                  on-select="selectProject(project)">
           {{item.text}}
