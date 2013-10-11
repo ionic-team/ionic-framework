@@ -2286,6 +2286,7 @@ ionic.views.TabBar.prototype = {
     this.handle = opts.handle;
     this.openPercent = -1;
 
+    /*
     // remember that this element, and all its children are apart of a component
     // and assign the component instance to each element so the lookups
     // only has to go through this process just once
@@ -2294,6 +2295,7 @@ ionic.views.TabBar.prototype = {
     this.track.isComponent = true;
     this.handle.component = this;
     this.handle.isComponent = true;
+    */
   };
 
   ionic.views.Toggle.prototype = {

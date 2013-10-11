@@ -24,7 +24,7 @@ module.exports = function(grunt) {
           'js/controllers/**/*.js'
 
         ],
-        dest: 'dist/<%= pkg.name %>.js'
+        dest: 'dist/js/<%= pkg.name %>.js'
       },
       distAngular: {
         src: [
@@ -32,13 +32,7 @@ module.exports = function(grunt) {
           'js/ext/angular/src/service/**/*.js',
           'js/ext/angular/src/directive/**/*.js'
         ],
-        dest: 'dist/<%= pkg.name %>-angular.js'
-      },
-      distSimple: {
-        src: [
-          'js/ext/simple/*.js'
-        ],
-        dest: 'dist/<%= pkg.name %>-simple.js'
+        dest: 'dist/js/<%= pkg.name %>-angular.js'
       }
     },
     copy: {
@@ -63,8 +57,8 @@ module.exports = function(grunt) {
     sass: {
       dist: {
         files: {
-          'dist/ionic.css': 'scss/ionic/ionic.scss',
-          'dist/ionic-ios7.css': 'scss/ionic-ios7/ionic-ios7.scss'
+          'dist/css/ionic.css': 'scss/ionic/ionic.scss',
+          'dist/css/ionic-ios7.css': 'scss/ionic-ios7/ionic-ios7.scss'
         }
       }
     },
