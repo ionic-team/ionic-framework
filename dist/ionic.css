@@ -2028,6 +2028,9 @@ address {
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
       border-color: #52a329; }
 
+/**
+ * An individual list item.
+ */
 .list-item {
   position: relative;
   display: block;
@@ -2157,12 +2160,21 @@ a.list-item {
   a.list-item:hover, a.list-item:focus {
     text-decoration: none; }
 
+/**
+ * List editing styles. These trigger when the entire list goes into
+ * "edit mode"
+ */
 .list-editing .list-item-content {
-  margin-left: 48px; }
+  margin-left: 30px; }
 .list-editing .list-item-edit {
   left: 0px;
   opacity: 1; }
 
+/**
+ * The content area of a complex list item. This area can
+ * Slide left and right and be dragged to support different
+ * UI interactions.
+ */
 .list-item-content {
   position: relative;
   background-color: #fff;
@@ -2175,6 +2187,10 @@ a.list-item {
 .list-item-sliding {
   -webkit-transition: -webkit-transform 0.1s ease-in-out; }
 
+/**
+ * The left-side edit area of a complex list item. This area shows
+ * whe the list item is in edit mode.
+ */
 .list-item-edit {
   position: absolute;
   z-index: 0;
@@ -2185,10 +2201,16 @@ a.list-item {
   line-height: 100%;
   opacity: 0;
   -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
+  .list-item-edit .button {
+    height: 100%; }
   .list-item-edit i {
     color: #ef4e3a;
     font-size: 24px; }
 
+/**
+ * The hidden right-side buttons that can be exposed under a list item
+ * with dragging.
+ */
 .list-item-buttons {
   position: absolute;
   z-index: 0;
@@ -2200,6 +2222,9 @@ a.list-item {
     border-radius: 0;
     border: none; }
 
+/**
+ * A list divider.
+ */
 .list-divider {
   padding: 5px 15px;
   background-color: whitesmoke;
