@@ -16,69 +16,79 @@
         <h1 class="title">Customers</h1>
       </header>
 
-      <main class="has-header">
-        <ul class="list">
-          <a href="#" class="list-item">
-            Sasafras
-            <i class="icon-arrow-right"></i>
-          </a>
-          <a href="#" class="list-item">
-            Candy
-            <i class="icon-arrow-right"></i>
-          </a>
-          <li class="list-divider">Other things</li>
-          <a href="#" class="list-item">
-            Cheese cords
-            <i class="icon-arrow-right"></i>
-          </a>
-          <a href="#" class="list-item">
-            Cheese cords
-            <i class="icon-arrow-right"></i>
-          </a>
-          <a href="#" class="list-item">
-            Cheese cords
-            <i class="icon-arrow-right"></i>
-          </a>
-          <a href="#" class="list-item">
-            Cheese cords
-            <i class="icon-arrow-right"></i>
-          </a>
-          <a href="#" class="list-item">
-            Cheese cords
-            <i class="icon-arrow-right"></i>
-          </a>
-          <a href="#" class="list-item">
-            Cheese cords
-            <i class="icon-arrow-right"></i>
-          </a>
-          <a href="#" class="list-item">
-            Cheese cords
-            <i class="icon-arrow-right"></i>
-          </a>
-          <a href="#" class="list-item">
-            Cheese cords
-            <i class="icon-arrow-right"></i>
-          </a>
-          <a href="#" class="list-item">
-            Cheese cords
-            <i class="icon-arrow-right"></i>
-          </a>
-          <a href="#" class="list-item">
-            Cheese cords
-            <i class="icon-arrow-right"></i>
-          </a>
-          <a href="#" class="list-item">
-            Cheese cords
-            <i class="icon-arrow-right"></i>
-          </a>
-        </ul>
-        <p><a class="button button-secondary" href="index.html">Homepage</a></p>
+      <main class="content-wrapper">
+        <div class="content has-header">
+          <ul id="list" class="list">
+            <li href="#" class="list-item">
+              <div class="list-item-content">
+                Sasafras
+                <i class="icon-arrow-right"></i>
+              </div>
+              <div class="list-item-buttons">
+                <button class="button button-danger">Delete</button>
+              </div>
+            </li>
+            <a href="#" class="list-item">
+              Candy
+              <i class="icon-arrow-right"></i>
+            </a>
+            <li class="list-divider">Other things</li>
+            <a href="#" class="list-item">
+              Cheese cords
+              <i class="icon-arrow-right"></i>
+            </a>
+            <a href="#" class="list-item">
+              Cheese cords
+              <i class="icon-arrow-right"></i>
+            </a>
+            <a href="#" class="list-item">
+              Cheese cords
+              <i class="icon-arrow-right"></i>
+            </a>
+            <a href="#" class="list-item">
+              Cheese cords
+              <i class="icon-arrow-right"></i>
+            </a>
+            <a href="#" class="list-item">
+              Cheese cords
+              <i class="icon-arrow-right"></i>
+            </a>
+            <a href="#" class="list-item">
+              Cheese cords
+              <i class="icon-arrow-right"></i>
+            </a>
+            <a href="#" class="list-item">
+              Cheese cords
+              <i class="icon-arrow-right"></i>
+            </a>
+            <a href="#" class="list-item">
+              Cheese cords
+              <i class="icon-arrow-right"></i>
+            </a>
+            <a href="#" class="list-item">
+              Cheese cords
+              <i class="icon-arrow-right"></i>
+            </a>
+            <a href="#" class="list-item">
+              Cheese cords
+              <i class="icon-arrow-right"></i>
+            </a>
+            <a href="#" class="list-item">
+              Cheese cords
+              <i class="icon-arrow-right"></i>
+            </a>
+          </ul>
+          <p><a class="button button-secondary" href="index.html">Homepage</a></p>
+        </div>
       </main>
 
     </section>
     
     <script src="../dist/ionic.js"></script>
-    <script src="../dist/ionic-simple.js"></script>
 
+    <script>
+      var l = document.getElementById('list');
+      var list = new ionic.views.List({el: l});
+    </script>
   </body>
 </html>

@@ -10,15 +10,14 @@
   }
 }
 
-// Individual list items
-// -------------------------
-
+/**
+ * An individual list item.
+ */
 .list-item {
   position: relative;
   display: block;
   // Place the border on the list items and negative margin up for better styling
   margin-bottom: -1px;
-  padding: 15px 15px;
 
   background-color: $list-default-background;
   border: $list-item-border;
@@ -52,7 +51,7 @@
   &.active,
   &.active:hover,
   &.active:focus {
-    z-index: 2; // Place active items above their siblings for proper border styling
+    z-index: 2; 
     //color: $list-group-active-color;
     //background-color: $list-group-active-bg;
     //border-color: $list-group-active-border;
@@ -66,6 +65,15 @@
     }
   }
 
+  // Different themes for list items
+  &.list-item-default { @include list-item-style-active($brand-default, $gray-dark, $gray-dark); }
+  &.list-item-secondary { @include list-item-style-active($brand-default, $gray-dark, $gray-dark); }
+  &.list-item-primary { @include list-item-style-active($brand-primary, $gray-dark, $white); }
+  &.list-item-info { @include list-item-style-active($brand-info, $gray-dark, $white); }
+  &.list-item-success { @include list-item-style-active($brand-success, $gray-dark, $white); }
+  &.list-item-warning { @include list-item-style-active($brand-warning, $gray-dark, $white); }
+  &.list-item-danger { @include list-item-style-active($brand-danger, $gray-dark, $white); }
+  &.list-item-dark { @include list-item-style-active($brand-dark, $gray-dark, $white); }
 }
 
 // Linked list items
@@ -81,6 +89,105 @@ a.list-item {
   }
 }
 
+/**
+ * List editing styles. These trigger when the entire list goes into
+ * "edit mode"
+ */
+.list-editing {
+  .list-item-content {
+    margin-left: 30px;
+  }
+  .list-item-edit {
+    left: 0px;
+    opacity: 1;
+  }
+}
+
+
+
+/**
+ * The content area of a complex list item. This area can
+ * Slide left and right and be dragged to support different
+ * UI interactions.
+ */
+.list-item-content {
+  position: relative;
+
+  background-color: #fff;
+
+  z-index: 1;
+
+  padding: 15px 15px;
+
+  -webkit-transition: margin-left 0.2s ease-in-out, left 0.2s ease-in-out;
+
+  // Align icons to the right
+  > i:last-child {
+    float: right;
+  }
+
+  // Make every last form element go to the right of the item
+
+  > .toggle:last-child, input:last-child, > button:last-child {
+    float: right;
+  }
+  > .toggle:last-child {
+    margin-top: -5px;
+  }
+}
+
+.list-item-sliding {
+  -webkit-transition: -webkit-transform 0.1s ease-in-out;
+}
+
+/**
+ * The left-side edit area of a complex list item. This area shows
+ * whe the list item is in edit mode.
+ */
+.list-item-edit {
+  position: absolute;
+  z-index: 0;
+  left: -48px;
+  top: 0;
+  width: 48px;
+  height: 100%;
+  line-height: 100%;
+  opacity: 0;
+
+  -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
+
+  .button {
+    height: 100%;
+  }
+
+  i {
+    color: $brand-danger;
+    font-size: 24px;
+  }
+}
+
+/**
+ * The hidden right-side buttons that can be exposed under a list item
+ * with dragging.
+ */
+.list-item-buttons {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
+
+  .button {
+    height: 100%;
+    border-radius: 0;
+    border: none;
+  }
+}
+
+
+/**
+ * A list divider.
+ */
 .list-divider {
   padding: 5px 15px;
   background-color: $list-divider-bg;
@@ -88,9 +195,6 @@ a.list-item {
   font-weight: bold;
 }
 
-
-// Custom content options
-// -------------------------
 
 .list-item-heading {
   margin-top: 0;

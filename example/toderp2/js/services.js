@@ -14,7 +14,6 @@ angular.module('ionic.todo.services', ['ionic.todo', 'firebase'])
   });
 
   return {
-
     // Try to log in with the given email and pass
     login: function(email, password) {
       if(!email || !password) {
@@ -26,6 +25,10 @@ angular.module('ionic.todo.services', ['ionic.todo', 'firebase'])
         email: email,
         password: password
       });
+    },
+
+    logout: function() {
+      angularFireAuth.logout();
     },
 
     // Try to sign up with the given email and pass

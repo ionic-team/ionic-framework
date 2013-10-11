@@ -9,3 +9,7 @@ framework.sublime-project
 
 framework.sublime-workspace
 UserInterfaceState.xcuserstate
+
+*.sublime-project
+
+*.sublime-workspace

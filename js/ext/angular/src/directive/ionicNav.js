@@ -53,10 +53,6 @@ angular.module('ionic.ui.nav', ['ionic.service'])
     controller: 'NavCtrl',
     //templateUrl: 'ext/angular/tmpl/ionicTabBar.tmpl.html',
     template: '<div class="view" ng-transclude></div>',
-    compile: function(element, attr, transclude, navCtrl) {
-      return function($scope, $element, $attr) {
-      };
-    }
   }
 })
 
@@ -64,7 +60,6 @@ angular.module('ionic.ui.nav', ['ionic.service'])
   return {
     restrict: 'E',
     require: '^navCtrl',
-    transclude: true,
     replace: true,
     scope: true,
     template: '<header class="bar bar-header bar-dark nav-bar" ng-class="{hidden: !navController.navBar.isVisible}">' + 

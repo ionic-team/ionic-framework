@@ -2,13 +2,13 @@ $bezier-function: cubic-bezier(.1, .7, .1, 1);
  
 .slide-in-up {
   // Start hidden
-  opacity: 0.5;
+  opacity: 0;
   // Start it down low
  -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
 
-  -webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
-  transition: -webkit-transform 0.3s, opacity 0.2s;
+  -webkit-transition: -webkit-transform 0.4s, opacity 0.1s;
+  transition: -webkit-transform 0.4s, opacity 0.1s;
 
   -webkit-transition-timing-function: $bezier-function;
   transition-timing-function: $bezier-function;

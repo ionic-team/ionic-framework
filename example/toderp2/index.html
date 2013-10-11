@@ -6,7 +6,7 @@
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../dist/ionic.css">
+    <link rel="stylesheet" href="../../dist/css/ionic.css">
     <link rel="stylesheet" href="css/app.css">
     
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
@@ -19,10 +19,11 @@
     <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
     <script src='https://cdn.firebase.com/libs/angularfire/0.3.0/angularfire.min.js'></script>
 
-    <script src="../../dist/ionic.js"></script>
-    <script src="../../dist/ionic-angular.js"></script>
+    <script src="../../dist/js/ionic.js"></script>
+    <script src="../../dist/js/ionic-angular.js"></script>
     
     <script src="js/app.js"></script>
+    <script src="js/filters.js"></script>
     <script src="js/services.js"></script>
     <script src="js/controllers.js"></script>
     <style>
@@ -107,34 +108,72 @@
 
     <!-- Tasks -->
     <script id="tasks.html" type="text/ng-template">
-      <side-menu-ctrl id="tasks-view" nav-content class="view" ng-controller="TasksCtrl" nav-bar="false">
+      <div class="view" side-menu-ctrl id="tasks-view" nav-content class="view" ng-controller="TasksCtrl" nav-bar="false">
         <div class="full-section" side-menu-content>
           <header class="bar bar-header bar-secondary">
-            <a href="#" class="button"><i class="icon-reorder"></i></a>
-            <h1 class="title">{{activeList.title}}</h1>
+            <a href="#" class="button button-icon"><i class="icon-navicon"></i></a>
+            <h1 class="title">{{activeProject.title}}</h1>
+            <button class="button button-clear button-primary">Edit</button>
           </header>
           <div class="content has-header">
-            <h1>Slide me side to side!</h1>
+            <form ng-submit="addTask(newTask)">
+              <input type="text" ng-model="newTask.title" placeholder="Add an item...">
+            </form>
+            <list id="task-list">
+              <li class="list-item" ng-repeat="task in activeProject.tasks" ng-class="{completed: task.isCompleted}">
+                <input type="checkbox" ng-model="task.isCompleted"> {{task.title}}
+                <input type="text" ng-model="task.title">
+              </li>
+            </list>
           </div>
         </div>
+
+        <!-- The projects side menu -->
         <menu side="left">
           <header class="bar bar-header bar-secondary">
-            <button class="button button-clear">Edit</button>
+            <button class="button button-clear button-primary" ng-click="toggleProjectEditing()">Edit</button>
             <div class="toderp-small-logo"></div>
-            <button class="button button-icon">S</button>
+            <button class="button button-icon" ng-click="showSettings()"><i class="icon-gear-a"></i></button>
           </header>
-          <content has-header="true" ng-controller="ProjectsCtrl">
+
+          <content has-header="true">
             <form ng-submit="addProject(newProject)">
               <input type="text" ng-model="newProject.title" placeholder="Create a new list...">
             </form>
-            <list>
-              <li class="list-item" ng-repeat="project in projects">
-                {{project.title}}
+            <list-simple is-editing="isEditingProjects">
+              <li class="list-item list-item-primary" ng-class="{active: project.$id == activeProject.project.name()}" ng-repeat="project in projects">
+                <div class="list-item-edit">
+                  <button class="button button-icon" ng-click="deleteProject(project)"><i class="icon-minus-circled"></i></button>
+                </div>
+                <div class="list-item-content" ng-click="selectProject(project)">
+                  {{project.title}}
+                </div>
+                <div class="list-item-buttons">
+                  <button class="button button-danger" ng-click="deleteProject(project)">Delete</button>
+                </div>
               </li>
-            </list>
+            </list-simple>
           </content>
         </menu>
       </side-menu-ctrl>
+    </script>
+
+    <script id="settings.html" type="text/ng-template">
+      <div id="settings-view" class="modal slide-in-up" ng-controller="SettingsCtrl">
+        <header class="bar bar-header bar-secondary">
+          <h1 class="title">Settings</h1>
+          <button class="button button-clear button-primary" ng-click="close()">Done</button>
+        </header>
+        <main class="content padded has-header">
+          <list header="GENERAL">
+            <list-item>Account details <i class="icon-chevron-right"></i></list-item>
+            <list-item>Account details <toggle ng-model="settings.isSmallText"></toggle></i></list-item>
+          </list>
+          <list header="ACCOUNT">
+            <list-item ng-click="logout()">Log out</list-item>
+          </list>
+        </main>
+      </div>
     </script>
   </body>
 </html>

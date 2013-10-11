@@ -21,6 +21,9 @@
   margin: 40px auto;
 }
 .toderp-small-logo {
+  background: url('../img/logo-header.png') no-repeat transparent;
+  background-size: 76px 21px;
+  background-position: 50%;
   box-flex: 1;
   -webkit-box-flex: 1;
 }
@@ -30,7 +33,7 @@
 #splash-view .ionic-logo {
 }
 
-#splash-view, #signup-view, #login-view {
+#splash-view, #signup-view {
   background: url('../img/splash.png') no-repeat transparent;
   background-size: cover;
 }
@@ -47,10 +50,22 @@
   color: #4a87ee;
 }
 
+/* Tasks view */
+
+#task-list {
+}
+#task-list .completed {
+  text-decoration: line-through;
+}
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
   #signup-view {
     background: url('../img/splash@2x.png') no-repeat transparent;
     background-size: cover;
+  }
+
+  .toderp-small-logo {
+    background-image: url('../img/logo-header@2x.png');
+    background-size: 76px 21px;
   }
 }

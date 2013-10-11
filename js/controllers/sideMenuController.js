@@ -12,6 +12,7 @@
     this.left = options.left;
     this.right = options.right;
     this.content = options.content;
+    this.dragThresholdX = options.dragThresholdX || 10;
       
     this._rightShowing = false;
     this._leftShowing = false;
@@ -72,6 +73,12 @@
       }
     },
 
+    /**
+     * Close all menus.
+     */
+    close: function() {
+      this.openPercentage(0);
+    },
 
     /**
      * @return {float} The amount the side menu is open, either positive or negative for left (positive), or right (negative)
@@ -223,33 +230,37 @@
     // End a drag with the given event
     _endDrag: function(e) {
       this.snapToRest(e);
+      this._startX = null;
+      this._lastX = null;
+      this._offsetX = null;
     },
 
-    // Initialize a drag with the given event
-    _initDrag: function(e) {
-      this.content.disableAnimation();
-      this._isDragging = true;
-      this._startX = 0;
-      this._offsetX = 0;
-      this._lastX = 0;
-    },
-    
     // Handle a drag event
     _handleDrag: function(e) {
-      if(!this._isDragging) {
-        this._initDrag(e);
-
+      // If we don't have start coords, grab and store them
+      if(!this._startX) {
         this._startX = e.gesture.touches[0].pageX;
         this._lastX = this._startX;
+      } else {
+        // Grab the current tap coords
+        this._lastX = e.gesture.touches[0].pageX;
+      }
 
+      // Calculate difference from the tap points
+      if(!this._isDragging && Math.abs(this._lastX - this._startX) > this.dragThresholdX) {
+        // if the difference is greater than threshold, start dragging using the current
+        // point as the starting point
+        this._startX = this._lastX
+
+        this._isDragging = true;
+        // Initialize dragging
+        this.content.disableAnimation();
         this._offsetX = this.getOpenAmount();
       }
 
-      var newX = this._offsetX + (this._lastX - this._startX);
-
-      this.openAmount(newX);
-
-      this._lastX = e.gesture.touches[0].pageX;
+      if(this._isDragging) {
+        this.openAmount(this._offsetX + (this._lastX - this._startX));
+      }
     }
   };
 

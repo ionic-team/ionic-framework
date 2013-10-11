@@ -1,4 +1,15 @@
-angular.module('ionic.ui', ['ionic.ui.content', 'ionic.ui.tabs', 'ionic.ui.nav', 'ionic.ui.sideMenu']);
+/**
+ * Create a wrapping module to ease having to include too many
+ * modules.
+ */
+angular.module('ionic.ui', ['ionic.ui.content',
+                            'ionic.ui.tabs',
+                            'ionic.ui.nav',
+                            'ionic.ui.sideMenu',
+                            'ionic.ui.list',
+                            'ionic.ui.toggle'
+                           ]);
+
 ;
 angular.module('ionic.service.actionSheet', ['ionic.service', 'ionic.ui.actionSheet'])
 
@@ -78,7 +89,7 @@ angular.module('ionic.service.modal', ['ionic.service'])
       var element = $compile(templateString)(scope);
       $document[0].body.appendChild(element[0]);
 
-      var modal = ionic.views.Modal({el: element[0] });
+      var modal = new ionic.views.Modal({el: element[0] });
       scope.modal = modal;
       return modal;
     },
@@ -171,6 +182,93 @@ angular.module('ionic.ui.content', [])
   }
 })
 ;
+angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
+
+.directive('listItem', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template:   '<li class="list-item">' + 
+                ' <div class="list-item-edit" ng-if="item.canDelete">' +
+                '   <button class="button button-icon" ng-click="deleteClicked()"><i ng-class="deleteIcon"></i></button>' +
+                ' </div>' +
+                ' <div class="list-item-content" ng-transclude>' +
+                ' </div>' +
+                ' <div class="list-item-buttons" ng-if="item.canSwipe">' +
+                '   <button ng-click="buttonClicked(button)" class="button" ng-class="button.type" ng-repeat="button in item.buttons">{{button.text}}</button>' +
+                ' </div>' +
+                '</li>',
+    link: function($scope, $element, $attr) {
+      // Triggered when a button is clicked
+      $scope.buttonClicked = function(button) {
+        button.buttonClicked && button.buttonClicked($scope.item);
+      }
+
+      // Triggered when the delete item is clicked
+      $scope.deleteClicked = function() {
+        $scope.item.deleteItem && $scope.item.deleteItem();
+      }
+    }
+  }
+})
+
+.directive('list', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    scope: {
+      isEditing: '=',
+      items: '=',
+      animation: '@',
+      deleteIcon: '@'
+    },
+    template: '<ul class="list" ng-class="{\'list-editing\': isEditing}">' +
+                '<list-item ng-repeat="item in items" canDelete="item.canDelete" canSwipe="item.canSwipe" animation="my-repeat-animation">' +
+                ' {{item.text}}' +
+                ' <i class="{{item.icon}}" ng-if="item.icon"></i>' + 
+                '</list-item>' + 
+              '</ul>',
+    compile: function(element, attr, transclude) {
+      return function($scope, $element, $attr) {
+        var lv = new ionic.views.List({el: $element[0]});
+
+        if(attr.animation) {
+          $element.addClass(attr.animation);
+        }
+
+        $element.append(transclude($scope));
+      }
+    }
+  }
+})
+
+.directive('listSimple', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    scope: {
+      isEditing: '=',
+      items: '=',
+      animation: '@',
+      deleteIcon: '@'
+    },
+    template: '<ul class="list" ng-class="{\'list-editing\': isEditing}" ng-transclude>' +
+              '</ul>',
+    compile: function(element, attr, transclude) {
+      return function($scope, $element, $attr) {
+        var lv = new ionic.views.List({el: $element[0]});
+
+        if(attr.animation) {
+          $element.addClass(attr.animation);
+        }
+      }
+    }
+  }
+})
+;
 angular.module('ionic.ui.nav', ['ionic.service'])
 
 .controller('NavCtrl', ['$scope', '$element', '$compile', 'TemplateLoader', function($scope, $element, $compile, TemplateLoader) {
@@ -226,10 +324,6 @@ angular.module('ionic.ui.nav', ['ionic.service'])
     controller: 'NavCtrl',
     //templateUrl: 'ext/angular/tmpl/ionicTabBar.tmpl.html',
     template: '<div class="view" ng-transclude></div>',
-    compile: function(element, attr, transclude, navCtrl) {
-      return function($scope, $element, $attr) {
-      };
-    }
   }
 })
 
@@ -237,7 +331,6 @@ angular.module('ionic.ui.nav', ['ionic.service'])
   return {
     restrict: 'E',
     require: '^navCtrl',
-    transclude: true,
     replace: true,
     scope: true,
     template: '<header class="bar bar-header bar-dark nav-bar" ng-class="{hidden: !navController.navBar.isVisible}">' + 
@@ -313,15 +406,14 @@ angular.module('ionic.ui.sideMenu', [])
   });
 
   $scope.contentTranslateX = 0;
+
+  $scope.sideMenuCtrl = this;
 })
 
 .directive('sideMenuCtrl', function() {
   return {
-    restrict: 'E',
+    restrict: 'CA',
     controller: 'SideMenuCtrl',
-    replace: true,
-    transclude: true,
-    template: '<div class="view" ng-transclude></div>',
   }
 })
 
@@ -348,7 +440,6 @@ angular.module('ionic.ui.sideMenu', [])
           },
           setTranslateX: function(amount) {
             $scope.contentTranslateX = amount;
-            $scope.$apply();
             $element[0].style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
           },
           enableAnimation: function() {
@@ -374,11 +465,11 @@ angular.module('ionic.ui.sideMenu', [])
     require: '^sideMenuCtrl',
     replace: true,
     transclude: true,
-    scope: true,
-    template: '<div class="menu menu-{{side}}" ng-transclude></div>',
+    template: '<div class="menu menu-{{side}}"></div>',
     compile: function(element, attr, transclude, sideMenuCtrl) {
       return function($scope, $element, $attr) {
         $scope.side = attr.side;
+        $element.append(transclude($scope));
       };
     }
   }
@@ -482,3 +573,51 @@ angular.module('ionic.ui.tabs', [])
       '</a>'
   }
 });
+;
+angular.module('ionic.ui.toggle', [])
+
+// The content directive is a core scrollable content area
+// that is part of many View hierarchies
+.directive('toggle', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    require: '?ngModel',
+    template: '<div class="toggle">' +
+              ' <input type="checkbox">'+
+              ' <div class="track">' +
+              '   <div class="handle"></div>' +
+              ' </div>' +
+              '</div>',
+
+    link: function($scope, $element, $attr, ngModel) {
+      var checkbox, track, handle;
+
+      if(!ngModel) { return; }
+
+      checkbox = $element.children().eq(0);
+      track = $element.children().eq(1);
+      handle = track.children().eq(0);
+
+      if(!checkbox.length || !track.length || !handle.length) { return; }
+
+      $scope.toggle = new ionic.views.Toggle({ 
+        el: $element[0],
+        checkbox: checkbox[0],
+        track: track[0],
+        handle: handle[0]
+      });
+
+      $element.bind('click', function(e) {
+        $scope.toggle.tap(e);
+        $scope.$apply(function() {
+          ngModel.$setViewValue(checkbox[0].checked);
+        });
+      });
+
+      ngModel.$render = function() {
+        $scope.toggle.val(ngModel.$viewValue);
+      };
+    }
+  }
+})

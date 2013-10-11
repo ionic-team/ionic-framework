@@ -29,15 +29,14 @@ angular.module('ionic.ui.sideMenu', [])
   });
 
   $scope.contentTranslateX = 0;
+
+  $scope.sideMenuCtrl = this;
 })
 
 .directive('sideMenuCtrl', function() {
   return {
-    restrict: 'E',
+    restrict: 'CA',
     controller: 'SideMenuCtrl',
-    replace: true,
-    transclude: true,
-    template: '<div class="view" ng-transclude></div>',
   }
 })
 
@@ -64,7 +63,6 @@ angular.module('ionic.ui.sideMenu', [])
           },
           setTranslateX: function(amount) {
             $scope.contentTranslateX = amount;
-            $scope.$apply();
             $element[0].style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
           },
           enableAnimation: function() {
@@ -90,11 +88,11 @@ angular.module('ionic.ui.sideMenu', [])
     require: '^sideMenuCtrl',
     replace: true,
     transclude: true,
-    scope: true,
-    template: '<div class="menu menu-{{side}}" ng-transclude></div>',
+    template: '<div class="menu menu-{{side}}"></div>',
     compile: function(element, attr, transclude, sideMenuCtrl) {
       return function($scope, $element, $attr) {
         $scope.side = attr.side;
+        $element.append(transclude($scope));
       };
     }
   }
