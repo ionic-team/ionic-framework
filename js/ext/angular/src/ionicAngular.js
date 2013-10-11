@@ -7,6 +7,7 @@ angular.module('ionic.ui', ['ionic.ui.content',
                             'ionic.ui.nav',
                             'ionic.ui.sideMenu',
                             'ionic.ui.list',
+                            'ionic.ui.checkbox',
                             'ionic.ui.toggle'
                            ]);
 

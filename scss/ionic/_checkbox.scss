@@ -1,0 +1,20 @@
+
+.checkbox {
+
+  input {
+    display: none;
+  }
+
+  /* what the checkbox looks like when its not checked */
+  .handle {
+    width: 30px;
+    height: 30px;
+    background: red;
+  }
+
+  /* what it looks like when it is checked */
+  input:checked + .handle {
+    background: green;
+  }
+
+}

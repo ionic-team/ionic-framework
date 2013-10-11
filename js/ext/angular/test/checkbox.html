@@ -1,0 +1,45 @@
+<html ng-app="navTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Checkbox</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.js"></script>
+  </head>
+  <body>
+
+    <content has-header="true" ng-controller="TestCtrl" class="reveal-animation">
+      <p><checkbox ng-model="data.isLovely"></checkbox></p>
+      <button type="submit" class="button button-danger" ng-click="setToTrue()">Set to true</button>
+      <button type="submit" class="button button-danger" ng-click="setToFalse()">Set to false</button>
+      <button type="submit" class="button button-danger" ng-click="getValue()">Get Value</button>
+    </content>
+
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
+    <script>
+      angular.module('navTest', ['ionic.ui.checkbox', 'ionic.ui.content', 'ngAnimate', 'ngTouch'])
+
+      .controller('TestCtrl', function($scope) {
+        $scope.data = {};
+        $scope.getValue = function() {
+          console.log('Get Value', $scope.data);
+        }
+        $scope.setToTrue = function() {
+          $scope.data.isLovely = true;
+          return false;
+        }
+        $scope.setToFalse = function() {
+          $scope.data.isLovely = false;
+          return false;
+        }
+      });
+
+    </script>
+  </body>
+</html>
+
