@@ -1972,6 +1972,10 @@ window.ionic = {
   ReorderDrag.prototype = new DragOp();
   ReorderDrag.prototype.start = function(e) {
   };
+  ReorderDrag.prototype.drag = function(e) {
+  };
+  ReorderDrag.prototype.end = function(e) {
+  };
 
   /**
    * The ListView handles a list of items. It will process drag animations, edit mode,
