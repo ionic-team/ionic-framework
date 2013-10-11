@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /**
 * Adapted from normalize.css and some reset.css. We don't care even one
 * bit about old IE, so we don't need any hacks for that in here.
@@ -1094,7 +1093,7 @@ a.list-item {
   background-color: #fff;
   z-index: 2;
   padding: 15px 15px;
-  -webkit-transition: margin-left 0.2s ease-in-out, left 0.2s ease-in-out; }
+  -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
   .list-item-content > i:last-child {
     float: right; }
   .list-item-content > .toggle:last-child, .list-item-content input:last-child, .list-item-content > button:last-child {
@@ -1124,6 +1123,20 @@ a.list-item {
   .list-item-edit i {
     color: #ef4e3a;
     font-size: 24px; }
+  .list-item-edit.ng-enter {
+    -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    left: -48px;
+    opacity: 0; }
+  .list-item-edit.ng-enter-active {
+    opacity: 1;
+    left: 0; }
+  .list-item-edit.ng-leave {
+    -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    left: 0px;
+    opacity: 1; }
+  .list-item-edit.ng-leave-active {
+    opacity: 0;
+    left: -48px; }
 
 .list-item-drag {
   position: absolute;

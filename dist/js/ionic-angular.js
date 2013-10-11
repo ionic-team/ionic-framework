@@ -187,31 +187,37 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
 .directive('listItem', function() {
   return {
     restrict: 'E',
+    require: '^list',
     replace: true,
     transclude: true,
-    template:   '<li class="list-item">' + 
-                ' <div class="list-item-edit" ng-if="item.canDelete && isEditing">' +
-                '   <button class="button button-icon" ng-click="deleteClicked()"><i ng-class="deleteIcon"></i></button>' +
-                ' </div>' +
-                ' <div class="list-item-content" ng-transclude>' +
-                ' </div>' +
-                ' <div class="list-item-drag" ng-if="item.canReorder && isEditing">' + 
-                '   <button ng-click="startReorder()"><i ng-class="reorderIcon"></i></button>' +
-                ' </div>' +
-                ' <div class="list-item-buttons" ng-if="item.canSwipe && !isEditing">' +
-                '   <button ng-click="buttonClicked(button)" class="button" ng-class="button.type" ng-repeat="button in item.buttons">{{button.text}}</button>' +
-                ' </div>' +
-                '</li>',
-    link: function($scope, $element, $attr) {
-      // Triggered when a button is clicked
-      $scope.buttonClicked = function(button) {
-        button.buttonClicked && button.buttonClicked($scope.item);
-      }
+    scope: {
+      onSelect: '&',
+      onDelete: '&',
+      onButtonClicked: '&',
+      canDelete: '@',
+      canReorder: '@',
+      canSwipe: '@',
+      buttons: '=',
+    },
+    template:   '<li class="list-item">\
+                   <div class="list-item-edit" ng-if="canDelete && isEditing">\
+                     <button class="button button-icon" ng-click="onDelete()"><i ng-class="deleteIcon"></i></button>\
+                   </div>\
+                   <div class="list-item-content" ng-transclude>\
+                   </div>\
+                   <div class="list-item-drag" ng-if="canReorder && isEditing">\
+                     <button ng-click="startReorder()"><i ng-class="reorderIcon"></i></button>\
+                   </div>\
+                   <div class="list-item-buttons" ng-if="canSwipe && !isEditing">\
+                     <button ng-click="onButtonClicked(button)" class="button" ng-class="button.type" ng-repeat="button in buttons">{{button.text}}</button>\
+                   </div>\
+                </li>',
+    link: function($scope, $element, $attr, list) {
+      $scope.deleteIcon = list.scope.deleteIcon;
 
-      // Triggered when the delete item is clicked
-      $scope.deleteClicked = function() {
-        $scope.item.deleteItem && $scope.item.deleteItem();
-      }
+      list.scope.$watch('isEditing', function(v) {
+        $scope.isEditing = v;
+      });
     }
   }
 })
@@ -221,46 +227,27 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
     restrict: 'E',
     replace: true,
     transclude: true,
+
     scope: {
       isEditing: '=',
-      items: '=',
-      animation: '@',
-      deleteIcon: '@',
-      reorderIcon: '@'
-    },
-    template: '<ul class="list" ng-class="{\'list-editing\': isEditing}">' +
-                '<list-item ng-repeat="item in items" canDelete="item.canDelete" canSwipe="item.canSwipe" animation="my-repeat-animation">' +
-                ' {{item.text}}' +
-                ' <i class="{{item.icon}}" ng-if="item.icon"></i>' + 
-                '</list-item>' + 
-              '</ul>',
-    compile: function(element, attr, transclude) {
-      return function($scope, $element, $attr) {
-        var lv = new ionic.views.List({el: $element[0]});
-
-        if(attr.animation) {
-          $element.addClass(attr.animation);
-        }
-
-        $element.append(transclude($scope));
-      }
-    }
-  }
-})
-
-.directive('listSimple', function() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    scope: {
-      isEditing: '=',
-      items: '=',
-      animation: '@',
       deleteIcon: '@'
     },
-    template: '<ul class="list" ng-class="{\'list-editing\': isEditing}" ng-transclude>' +
-              '</ul>',
+
+    // So we can require being under this
+    controller: function($scope) {
+      var _this = this;
+
+      this.scope = $scope;
+
+      $scope.$watch('isEditing', function(v) {
+        _this.isEditing = true;
+        console.log('Is Editing Changed', v);
+      });
+    },
+
+    template: '<ul class="list" ng-class="{\'list-editing\': isEditing}" ng-transclude>\
+              </ul>',
+
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
         var lv = new ionic.views.List({el: $element[0]});
