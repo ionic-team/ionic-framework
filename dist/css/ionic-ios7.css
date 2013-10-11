@@ -1096,6 +1096,10 @@ a.list-item {
   -webkit-transition: margin-left 0.2s ease-in-out, left 0.2s ease-in-out; }
   .list-item-content > i:last-child {
     float: right; }
+  .list-item-content > .toggle:last-child, .list-item-content input:last-child, .list-item-content > button:last-child {
+    float: right; }
+  .list-item-content > .toggle:last-child {
+    margin-top: -5px; }
 
 .list-item-sliding {
   -webkit-transition: -webkit-transform 0.1s ease-in-out; }

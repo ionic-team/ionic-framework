@@ -1,0 +1,36 @@
+<html ng-app="navTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Toggle</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.js"></script>
+  </head>
+  <body>
+
+    <content has-header="true" ng-controller="TestCtrl" class="reveal-animation">
+      <form ng-submit="doIt()">
+        <toggle ng-model="data.isLovely"></toggle>
+        <button type="submit" class="button button-danger">Do it</button>
+    </content>
+
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
+    <script>
+      angular.module('navTest', ['ionic.ui.toggle', 'ngAnimate', 'ngTouch'])
+
+      .controller('TestCtrl', function($scope) {
+        $scope.data = {};
+        $scope.doIt = function() {
+          console.log('DOIT', $scope.data);
+        }
+      });
+
+    </script>
+  </body>
+</html>
+

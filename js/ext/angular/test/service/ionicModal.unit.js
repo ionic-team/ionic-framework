@@ -18,7 +18,7 @@ describe('Ionic Modal', function() {
     expect(modalInstance.el.classList.contains('active')).toBe(true);
   });
 
-  iit('Should show for dynamic template', function() {
+  it('Should show for dynamic template', function() {
     var template = '<div class="modal"></div>';
 
     var done = false;

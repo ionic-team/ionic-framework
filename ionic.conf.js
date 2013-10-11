@@ -22,8 +22,8 @@ module.exports = function(config) {
       'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js',
       'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.js',
 
-      'dist/ionic.js',
-      'dist/ionic-angular.js',
+      'dist/js/ionic.js',
+      'dist/js/ionic-angular.js',
 
       'test/**/*.js',
 

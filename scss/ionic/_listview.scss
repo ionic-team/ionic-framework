@@ -125,6 +125,15 @@ a.list-item {
   > i:last-child {
     float: right;
   }
+
+  // Make every last form element go to the right of the item
+
+  > .toggle:last-child, input:last-child, > button:last-child {
+    float: right;
+  }
+  > .toggle:last-child {
+    margin-top: -5px;
+  }
 }
 
 .list-item-sliding {
