@@ -7,6 +7,7 @@ angular.module('ionic.ui.toggle', [])
     restrict: 'E',
     replace: true,
     require: '?ngModel',
+    scope: true,
     template: '<div class="toggle">' +
               ' <input type="checkbox">'+
               ' <div class="track">' +

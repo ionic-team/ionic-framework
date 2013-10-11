@@ -1078,7 +1078,8 @@ a.list-item {
  * "edit mode"
  */
 .list-editing .list-item-content {
-  margin-left: 30px; }
+  margin-left: 30px;
+  margin-right: 30px; }
 .list-editing .list-item-edit {
   left: 0px;
   opacity: 1; }
@@ -1091,7 +1092,7 @@ a.list-item {
 .list-item-content {
   position: relative;
   background-color: #fff;
-  z-index: 1;
+  z-index: 2;
   padding: 15px 15px;
   -webkit-transition: margin-left 0.2s ease-in-out, left 0.2s ease-in-out; }
   .list-item-content > i:last-child {
@@ -1124,13 +1125,24 @@ a.list-item {
     color: #ef4e3a;
     font-size: 24px; }
 
+.list-item-drag {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  top: 0;
+  height: 100%; }
+  .list-item-drag .button {
+    height: 100%;
+    border-radius: 0;
+    border: none; }
+
 /**
  * The hidden right-side buttons that can be exposed under a list item
  * with dragging.
  */
 .list-item-buttons {
   position: absolute;
-  z-index: 0;
+  z-index: 1;
   right: 0;
   top: 0;
   height: 100%; }

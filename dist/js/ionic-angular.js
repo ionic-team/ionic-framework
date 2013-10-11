@@ -190,12 +190,15 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
     replace: true,
     transclude: true,
     template:   '<li class="list-item">' + 
-                ' <div class="list-item-edit" ng-if="item.canDelete">' +
+                ' <div class="list-item-edit" ng-if="item.canDelete && isEditing">' +
                 '   <button class="button button-icon" ng-click="deleteClicked()"><i ng-class="deleteIcon"></i></button>' +
                 ' </div>' +
                 ' <div class="list-item-content" ng-transclude>' +
                 ' </div>' +
-                ' <div class="list-item-buttons" ng-if="item.canSwipe">' +
+                ' <div class="list-item-drag" ng-if="item.canReorder && isEditing">' + 
+                '   <button ng-click="startReorder()"><i ng-class="reorderIcon"></i></button>' +
+                ' </div>' +
+                ' <div class="list-item-buttons" ng-if="item.canSwipe && !isEditing">' +
                 '   <button ng-click="buttonClicked(button)" class="button" ng-class="button.type" ng-repeat="button in item.buttons">{{button.text}}</button>' +
                 ' </div>' +
                 '</li>',
@@ -222,7 +225,8 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
       isEditing: '=',
       items: '=',
       animation: '@',
-      deleteIcon: '@'
+      deleteIcon: '@',
+      reorderIcon: '@'
     },
     template: '<ul class="list" ng-class="{\'list-editing\': isEditing}">' +
                 '<list-item ng-repeat="item in items" canDelete="item.canDelete" canSwipe="item.canSwipe" animation="my-repeat-animation">' +
@@ -583,6 +587,7 @@ angular.module('ionic.ui.toggle', [])
     restrict: 'E',
     replace: true,
     require: '?ngModel',
+    scope: true,
     template: '<div class="toggle">' +
               ' <input type="checkbox">'+
               ' <div class="track">' +
