@@ -143,7 +143,7 @@
             <list-simple is-editing="isEditingProjects">
               <li class="list-item list-item-primary" ng-class="{active: project.$id == activeProject.project.name()}" ng-repeat="project in projects">
                 <div class="list-item-edit">
-                  <i class="icon-minus-circled"></i>
+                  <button class="button button-icon" ng-click="deleteProject(project)"><i class="icon-minus-circled"></i></button>
                 </div>
                 <div class="list-item-content" ng-click="selectProject(project)">
                   {{project.title}}
