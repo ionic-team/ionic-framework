@@ -22,7 +22,7 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
                    <div class="list-item-content" ng-transclude>\
                    </div>\
                    <div class="list-item-drag" ng-if="canReorder && isEditing">\
-                     <button class="button button-icon" ng-click="startReorder()"><i ng-class="reorderIcon"></i></button>\
+                     <button data-ionic-action="reorder" class="button button-icon" ng-click="startReorder()"><i ng-class="reorderIcon"></i></button>\
                    </div>\
                    <div class="list-item-buttons" ng-if="canSwipe && !isEditing">\
                      <button ng-click="onButtonClicked(button)" class="button" ng-class="button.type" ng-repeat="button in buttons">{{button.text}}</button>\
