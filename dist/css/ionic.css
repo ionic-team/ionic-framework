@@ -2535,7 +2535,7 @@ input[type="checkbox"][readonly] {
     transition: background-color 0.1s ease-in-out; }
   .checkbox .handle:after {
     position: absolute;
-    top: 16px;
+    top: 37%;
     left: 14px;
     width: 14px;
     height: 7px;

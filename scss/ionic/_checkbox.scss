@@ -22,10 +22,10 @@
   /* the checkmark within the box */
   .handle:after {
     position: absolute;
-    top: ($checkbox-height / 2) + 2;
+    top: 37%;
     left: $checkbox-width / 2;
     width: $checkbox-width / 2;
-    height: $checkbox-height / 4;
+    height: $checkbox-width / 4;
     border: $checkbox-check-width solid $checkbox-check-color;
     border-top: none;
     border-right: none;
