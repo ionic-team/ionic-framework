@@ -247,14 +247,16 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
                    <div class="list-item-content" ng-transclude>\
                    </div>\
                    <div class="list-item-drag" ng-if="canReorder && isEditing">\
-                     <button ng-click="startReorder()"><i ng-class="reorderIcon"></i></button>\
+                     <button data-ionic-action="reorder" class="button button-icon" ng-click="startReorder()"><i ng-class="reorderIcon"></i></button>\
                    </div>\
                    <div class="list-item-buttons" ng-if="canSwipe && !isEditing">\
                      <button ng-click="onButtonClicked(button)" class="button" ng-class="button.type" ng-repeat="button in buttons">{{button.text}}</button>\
                    </div>\
                 </li>',
     link: function($scope, $element, $attr, list) {
+      $scope.isEditing = false;
       $scope.deleteIcon = list.scope.deleteIcon;
+      $scope.reorderIcon = list.scope.reorderIcon;
 
       list.scope.$watch('isEditing', function(v) {
         $scope.isEditing = v;
@@ -271,7 +273,8 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
 
     scope: {
       isEditing: '=',
-      deleteIcon: '@'
+      deleteIcon: '@',
+      reorderIcon: '@'
     },
 
     // So we can require being under this
