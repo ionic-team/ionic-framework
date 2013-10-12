@@ -1,5 +1,9 @@
 
 .checkbox {
+  position: relative;
+  display: inline-block;
+  padding: ($checkbox-height / 4) ($checkbox-width / 4);
+  cursor: pointer;
 
   input {
     display: none;
@@ -7,14 +11,39 @@
 
   /* what the checkbox looks like when its not checked */
   .handle {
-    width: 30px;
-    height: 30px;
-    background: red;
+    width: $checkbox-width;
+    height: $checkbox-height;
+    border: $checkbox-border-width solid $checkbox-off-border-color;
+    border-radius: $checkbox-border-radius;
+    background: $checkbox-off-bg-color;
+    transition: background-color .1s ease-in-out;
+  }
+
+  /* the checkmark within the box */
+  .handle:after {
+    position: absolute;
+    top: ($checkbox-height / 2) + 2;
+    left: $checkbox-width / 2;
+    width: $checkbox-width / 2;
+    height: $checkbox-height / 4;
+    border: $checkbox-check-width solid $checkbox-check-color;
+    border-top: none;
+    border-right: none;
+    content: '';
+    opacity: 0;
+    transition: opacity .1s ease-in-out;
+
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
   }
 
   /* what it looks like when it is checked */
   input:checked + .handle {
-    background: green;
+    background: $checkbox-on-bg-color;
+
+    &:after {
+      opacity: 1;
+    }
   }
 
 }

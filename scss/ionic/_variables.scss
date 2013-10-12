@@ -161,6 +161,24 @@ $toggle-handle-on-bg-color:       $toggle-handle-off-bg-color;
 $toggle-transition-duration:      .1s;
 
 
+// Checkbox
+// -------------------------------
+
+$checkbox-width:                  28px;
+$checkbox-height:                 28px;
+$checkbox-border-radius:          50%;
+$checkbox-border-width:           1px;
+
+$checkbox-off-bg-color:           #fff;
+$checkbox-off-border-color:       #049cdb;
+
+$checkbox-on-bg-color:            #049cdb;
+$checkbox-on-border-color:        #049cdb;
+
+$checkbox-check-width:            1px;
+$checkbox-check-color:            #fff;
+
+
 // Range
 // -------------------------------
 
@@ -289,6 +307,7 @@ $bar-dark-border-color:       $button-dark-border;
 
 // Tabs
 // -------------------------------
+
 $tabs-height:                 49px !default;
 
 $tabs-default-bg:              $brand-default;
@@ -356,19 +375,24 @@ $menu-inset-border-color:   #bbb;
 $menu-width:               270px;
 $menu-animation-speed:     200ms;
 
+
 // Modals
 // -------------------------------
 
 $modal-bg-color:              #fff !default;
 
+
 // Action Sheets
 // -------------------------------
+
 $sheet-bg-color:              rgba(255, 255, 255, 0.6) !default;
 $sheet-opacity:               0.95 !default;
 $sheet-border-radius:         3px !default;
 
+
 // Badges
 // -------------------------
+
 $badge-color:                 #fff !default;
 $badge-link-hover-color:      #fff !default;
 $badge-bg:                    $gray-light !default;
@@ -379,7 +403,6 @@ $badge-active-bg:             #fff !default;
 $badge-font-weight:           bold !default;
 $badge-line-height:           1 !default;
 $badge-border-radius:         10px !default;
-
 
 
 // Media queries breakpoints
@@ -407,30 +430,7 @@ $screen-sm-max:              ($screen-md - 1) !default;
 $screen-md-max:              ($screen-lg - 1) !default;
 
 
-// Grid system
-// -------------------------------
-
-// Number of columns in the grid system
-$grid-columns:              12 !default;
-// Padding, to be divided by two and applied to the left and right of all columns
-$grid-gutter-width:         30px !default;
-// Point at which the navbar stops collapsing
-$grid-float-breakpoint:     $screen-tablet !default;
-
-
-// Container sizes
-// -------------------------------
-
-// Small screen / tablet
-$container-tablet:            ((720px + $grid-gutter-width)) !default;
-
-// Medium screen / desktop
-$container-desktop:           ((940px + $grid-gutter-width)) !default;
-
-// Large screen / wide desktop
-$container-lg-desktop:        ((1140px + $grid-gutter-width)) !default;
-
-
 // Z-Indexes
+// -------------------------------
 
 $zindex-modal: 10;

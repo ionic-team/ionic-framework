@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: 'ionicons';
   src: url("fonts/ionicons.eot");
@@ -2516,16 +2517,40 @@ input[type="checkbox"][readonly] {
   background-color: transparent; }
 
 .checkbox {
+  position: relative;
+  display: inline-block;
+  padding: 7px 7px;
+  cursor: pointer;
   /* what the checkbox looks like when its not checked */
+  /* the checkmark within the box */
   /* what it looks like when it is checked */ }
   .checkbox input {
     display: none; }
   .checkbox .handle {
-    width: 30px;
-    height: 30px;
-    background: red; }
+    width: 28px;
+    height: 28px;
+    border: 1px solid #049cdb;
+    border-radius: 50%;
+    background: white;
+    transition: background-color 0.1s ease-in-out; }
+  .checkbox .handle:after {
+    position: absolute;
+    top: 16px;
+    left: 14px;
+    width: 14px;
+    height: 7px;
+    border: 1px solid white;
+    border-top: none;
+    border-right: none;
+    content: '';
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg); }
   .checkbox input:checked + .handle {
-    background: green; }
+    background: #049cdb; }
+    .checkbox input:checked + .handle:after {
+      opacity: 1; }
 
 /* the overall container of the toggle */
 .toggle {
