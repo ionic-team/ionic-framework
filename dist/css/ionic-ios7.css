@@ -935,6 +935,7 @@ address {
 .list {
   margin-bottom: 20px;
   padding-left: 0;
+  position: relative;
   color: #333333;
   background-color: white;
   border-color: #dddddd; }
@@ -1120,6 +1121,13 @@ a.list-item {
 
 .list-item-sliding {
   -webkit-transition: -webkit-transform 0.1s ease-in-out; }
+
+.list-item-reordering {
+  position: absolute;
+  width: 100%; }
+
+.list-item-placeholder {
+  opacity: 0.7; }
 
 /**
  * The left-side edit area of a complex list item. This area shows

@@ -1,5 +1,11 @@
 (function(ionic) {
   ionic.DomUtil = {
+    getChildIndex: function(element) {
+      return Array.prototype.slice.call(element.parentNode.children).indexOf(element);
+    },
+    swapNodes: function(src, dest) {
+      dest.parentNode.insertBefore(src, dest);
+    },
     /**
      * {returns} the closest parent matching the className
      */

@@ -1622,6 +1622,7 @@
   .ionic .list {
     margin-bottom: 20px;
     padding-left: 0;
+    position: relative;
     color: #333333;
     background-color: white;
     border-color: #dddddd; }
@@ -1790,6 +1791,11 @@
       margin-top: -5px; }
   .ionic .list-item-sliding {
     -webkit-transition: -webkit-transform 0.1s ease-in-out; }
+  .ionic .list-item-reordering {
+    position: absolute;
+    width: 100%; }
+  .ionic .list-item-placeholder {
+    opacity: 0.7; }
   .ionic .list-item-edit {
     position: absolute;
     z-index: 0;

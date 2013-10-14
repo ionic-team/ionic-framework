@@ -3,6 +3,8 @@
   margin-bottom: 20px;
   padding-left: 0; // reset padding because ul and ol
 
+  position: relative;
+
   @include list-style($list-default-background, $list-default-border, $gray-dark);
 
   &.list-success {
@@ -139,6 +141,15 @@ a.list-item {
 
 .list-item-sliding {
   -webkit-transition: -webkit-transform 0.1s ease-in-out;
+}
+
+.list-item-reordering {
+  position: absolute;
+  width: 100%;
+}
+
+.list-item-placeholder {
+  opacity: 0.7;
 }
 
 /**

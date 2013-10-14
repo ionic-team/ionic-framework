@@ -64,6 +64,12 @@ window.ionic = {
 ;
 (function(ionic) {
   ionic.DomUtil = {
+    getChildIndex: function(element) {
+      return Array.prototype.slice.call(element.parentNode.children).indexOf(element);
+    },
+    swapNodes: function(src, dest) {
+      dest.parentNode.insertBefore(src, dest);
+    },
     /**
      * {returns} the closest parent matching the className
      */
@@ -1834,7 +1840,7 @@ window.ionic = {
 })(ionic);
 ;
 (function(ionic) {
-  var DragOp = function() {}
+  var DragOp = function() {};
   DragOp.prototype = {
     start: function(e) {
     },
@@ -1846,6 +1852,7 @@ window.ionic = {
 
   var SlideDrag = function(opts) {
     this.dragThresholdX = opts.dragThresholdX || 10;
+    this.el = opts.el;
   };
 
   SlideDrag.prototype = new DragOp();
@@ -1963,18 +1970,128 @@ window.ionic = {
       }
       _this._currentDrag.content.style.webkitTransform = 'translate3d(' + restingPoint + 'px, 0, 0)';
 
-      //
+      // Kill the current drag
+      this._currentDrag = null;
+
+
+      // We are done, notify caller
       doneCallback && doneCallback();
     });
   }
 
-  var ReorderDrag = function() {}
+  var ReorderDrag = function(opts) {
+    this.dragThresholdY = opts.dragThresholdY || 0;
+    this.el = opts.el;
+  };
   ReorderDrag.prototype = new DragOp();
+
   ReorderDrag.prototype.start = function(e) {
+    var content;
+
+
+    // Grab the starting Y point for the item
+    var offsetY = this.el.style.top;//parseFloat(this.el.style.webkitTransform.replace('translate3d(', '').split(',')[1]) || 0;
+
+    var placeholder = this.el.cloneNode(true);
+
+    placeholder.classList.add('list-item-placeholder');
+
+    this.el.parentNode.insertBefore(placeholder, this.el);
+
+    this.el.classList.add('list-item-reordering');
+
+
+    this._currentDrag = {
+      startOffsetY: offsetY,
+      startOffsetTop: this.el.offsetTop,
+      placeholder: placeholder
+    };
   };
+
   ReorderDrag.prototype.drag = function(e) {
+    var _this = this;
+
+    window.requestAnimationFrame(function() {
+      // We really aren't dragging
+      if(!_this._currentDrag) {
+        return;
+      }
+
+      // Check if we should start dragging. Check if we've dragged past the threshold,
+      // or we are starting from the open state.
+      if(!_this._isDragging &&
+          ((Math.abs(e.gesture.deltaY) > _this.dragThresholdY) ||
+          (Math.abs(_this._currentDrag.startOffsetY) > 0)))
+      {
+        _this._isDragging = true;
+      }
+
+      if(_this._isDragging) {
+        var newY = _this._currentDrag.startOffsetTop + e.gesture.deltaY; //Math.min(0, _this._currentDrag.startOffsetY + e.gesture.deltaY);
+        console.log(newY);
+        
+        _this.el.style.top = newY + 'px';//webkitTransform = 'translate3d(0, ' + newY + 'px, 0)';
+
+        _this._currentDrag.currentY = newY;
+
+        _this._reorderItems();
+      }
+    });
   };
-  ReorderDrag.prototype.end = function(e) {
+
+  // When an item is dragged, we need to reorder any items for sorting purposes
+  ReorderDrag.prototype._reorderItems = function() {
+    var placeholder = this._currentDrag.placeholder;
+    var siblings = Array.prototype.slice.call(this._currentDrag.placeholder.parentNode.children);
+    
+    // Remove the floating element from the child search list
+    siblings.splice(siblings.indexOf(this.el), 1);
+
+    var index = siblings.indexOf(this._currentDrag.placeholder);
+    var topSibling = siblings[Math.max(0, index - 1)];
+    var bottomSibling = siblings[Math.min(siblings.length, index+1)];
+
+    /*
+    console.log('Reordering from index', index);
+    console.dir(this.el);
+    console.dir(topSibling);
+    console.dir(bottomSibling);
+    */
+
+
+    var thisOffsetTop = this._currentDrag.currentY;// + this._currentDrag.startOffsetTop;
+
+    console.log('Comparing', thisOffsetTop, 'with', (topSibling && topSibling.offsetTop + topSibling.offsetHeight/2), (bottomSibling && bottomSibling.offsetTop + bottomSibling.offsetHeight/2));
+
+    if(topSibling && (thisOffsetTop < topSibling.offsetTop + topSibling.offsetHeight/2)) {
+      console.log('Swapping up with index', index - 1);
+      ionic.DomUtil.swapNodes(this._currentDrag.placeholder, topSibling);
+      return index - 1;
+    } else if(bottomSibling && thisOffsetTop > (bottomSibling.offsetTop + bottomSibling.offsetHeight/2)) {
+      console.log('Swapping down with index', index + 1);
+      ionic.DomUtil.swapNodes(bottomSibling, this._currentDrag.placeholder);
+      return index + 1;
+    }
+  };
+
+  ReorderDrag.prototype.end = function(e, doneCallback) {
+    if(!this._currentDrag) {
+      doneCallback && doneCallback();
+      return;
+    }
+
+    var placeholder = this._currentDrag.placeholder;
+
+    // Reposition the element
+    this.el.classList.remove('list-item-reordering');
+    this.el.style.top = 0;
+
+    var finalPosition = ionic.DomUtil.getChildIndex(placeholder);
+    placeholder.parentNode.insertBefore(this.el, placeholder);
+    placeholder.parentNode.removeChild(placeholder);
+
+    this._currentDrag = null;
+    doneCallback && doneCallback();
   };
 
   /**
@@ -2004,22 +2121,35 @@ window.ionic = {
   ionic.views.List.prototype = {
     _initDrag: function() {
       this._isDragging = false;
-      this._currentDrag = null;
       this._dragOp = null;
+    },
+    // Return the list item from the given target
+    _getItem: function(target) {
+      while(target) {
+        if(target.classList.contains('list-item')) {
+          return target;
+        }
+        target = target.parentNode;
+      }
+      return null;
     },
     _startDrag: function(e) {
       this._isDragging = false;
 
       // Check if this is a reorder drag
       if(ionic.DomUtil.getParentOrSelfWithClass(e.target, 'list-item-drag') && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
-        this._dragOp = new ReorderDrag(this.el);
-        this._dragOp.start(e);
+        var item = this._getItem(e.target);
+
+        if(item) {
+          this._dragOp = new ReorderDrag({ el: item });
+          this._dragOp.start(e);
+        }
         return;
       } 
       
       // Or check if this is a swipe to the side drag
       if(e.gesture.direction == 'left' || e.gesture.direction == 'right') {
-        this._dragOp = new SlideDrag(this.el);
+        this._dragOp = new SlideDrag({ el: this.el });
         this._dragOp.start(e);
       }
     },
