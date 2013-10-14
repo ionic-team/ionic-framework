@@ -8,6 +8,44 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.js"></script>
+    <style>
+      .fade-out > .ng-enter, 
+      .fade-out > .ng-leave, 
+      .fade-out > .ng-move {
+        -webkit-transition: 0.2s linear all;
+        transition: 0.4s ease-out all;
+        position:relative;
+      }
+
+      .fade-out > .ng-enter {
+        left:-10px;
+        opacity:0;
+      }
+      .fade-out > .ng-enter.ng-enter-active {
+        left:0;
+        opacity:1;
+      }
+
+      .fade-out > .ng-leave {
+        left:0;
+        opacity:1;
+      }
+      .fade-out > .ng-leave.ng-leave-active {
+        left:-10px;
+        opacity:0;
+      }
+
+      .fade-out > .ng-move {
+        opacity:0.5;
+      }
+      .fade-out > .ng-move.ng-move-active {
+        opacity:1;
+      }
+
+      .completed {
+        text-decoration: line-through;
+      }
+    </style>
   </head>
   <body>
     <tab-controller>
@@ -18,14 +56,16 @@
           <button class="button button-clear button-primary" ng-click="isEditingItems = !isEditingItems">Edit</button>
         </header>
         <content has-header="true" has-tabs="true">
-          <list is-editing="isEditingItems" animation="my-repeat-animation" delete-icon="icon-minus-circled" reorder-icon="icon-navicon">
+          <list is-editing="isEditingItems" animation="fade-out" delete-icon="icon-minus-circled" reorder-icon="icon-navicon">
             <list-item ng-repeat="item in items" 
+            item="item"
             buttons="item.buttons"
             can-delete="true"
             can-reorder="true"
             can-swipe="true"
-                     on-delete="deleteProject(project)"
-                     on-select="selectProject(project)">
+            on-delete="deleteItem(item)"
+            ng-class="{completed: item.isCompleted}"
+            >
               {{item.title}}
               <i class="{{item.icon}}"></i>
             </list-item>
@@ -59,11 +99,37 @@
 
       .controller('HomeCtrl', function($scope) {
         $scope.items = [];
+
+        var removeItem = function(item, button) {
+          console.log('Removing item', item);
+          // Remove ourselves
+          $scope.items.splice($scope.items.indexOf(item), 1);
+        };
+        var completeItem = function(item, button) {
+          // Remove ourselves
+          console.log('Completing item', item);
+          item.isCompleted = true;
+        };
+
+        $scope.removeItem = function(item) {
+          removeItem(item);
+        };
+
         for(var i = 0; i < 30; i++) {
           $scope.items.push({
-            title: 'Task ' + (i + 1)
+            title: 'Task ' + (i + 1),
+            buttons: [{
+              text: 'Done',
+              type: 'button-success',
+              onButtonClicked: completeItem,
+            }, {
+              text: 'Delete',
+              type: 'button-danger',
+              onButtonClicked: removeItem,
+            }]
           });
         }
+
       })
 
     </script>
