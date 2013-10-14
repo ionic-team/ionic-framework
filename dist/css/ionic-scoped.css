@@ -908,7 +908,7 @@
   .ionic dl, .ionic dt, .ionic dd, .ionic ol, .ionic ul, .ionic li,
   .ionic fieldset, .ionic form, .ionic label, .ionic legend,
   .ionic table, .ionic caption, .ionic tbody, .ionic tfoot, .ionic thead, .ionic tr, .ionic th, .ionic td,
-  .ionic article, .ionic aside, .ionic canvas, .ionic details, .ionic embed,
+  .ionic article, .ionic aside, .ionic canvas, .ionic details, .ionic embed, .ionic fieldset,
   .ionic figure, .ionic figcaption, .ionic footer, .ionic header, .ionic hgroup,
   .ionic menu, .ionic nav, .ionic output, .ionic ruby, .ionic section, .ionic summary,
   .ionic time, .ionic mark, .ionic audio, .ionic video {
@@ -1852,10 +1852,6 @@
     line-height: 1.3; }
   .ionic form {
     margin: 0 0 1.42857; }
-  .ionic fieldset {
-    margin: 0;
-    padding: 0;
-    border: 0; }
   .ionic legend {
     display: block;
     margin-bottom: 1.42857;
@@ -1883,6 +1879,7 @@
   .ionic textarea {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
   .ionic .input-group {
+    display: block;
     overflow: hidden;
     border-top: 1px solid #cccccc;
     border-bottom: 1px solid #cccccc;
@@ -1915,6 +1912,7 @@
     .ionic .input-row .input-label {
       padding: 7px 10px 7px 3px;
       max-width: 200px;
+      color: black;
       font-weight: bold;
       flex: 1 0 100px; }
     .ionic .input-row [class^="icon-"], .ionic .input-row [class*=" icon-"] {

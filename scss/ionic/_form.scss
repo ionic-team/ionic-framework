@@ -7,12 +7,6 @@ form {
   margin: 0 0 $line-height-base;
 }
 
-fieldset {
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-
 // Groups of fields with labels on top (legends)
 legend {
   display: block;
@@ -52,6 +46,7 @@ textarea {
 // -------------------------------
 
 .input-group {
+  display: block;
   overflow: hidden;
   border-top: $input-border-width solid $input-border-color;
   border-bottom: $input-border-width solid $input-border-color;
@@ -90,6 +85,7 @@ textarea {
   .input-label {
     padding: 7px 10px 7px 3px;
     max-width: 200px;
+    color: $input-label-color;
     font-weight: bold;
     flex: 1 0 100px;
   }
