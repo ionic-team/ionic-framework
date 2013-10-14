@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @font-face {
   font-family: 'ionicons';
   src: url("fonts/ionicons.eot");
@@ -2308,21 +2307,17 @@ textarea {
 
 .input-group {
   overflow: hidden;
-  /*
-  border-top: $input-border-width solid $input-border-color;
-  border-bottom: $input-border-width solid $input-border-color;
-  background-color: $input-bg;
-  */ }
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+  background-color: white; }
 
 .padded > .input-group,
 .input-group.inset {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
-  /*
-  border-right: $input-border-width solid $input-border-color;
-  border-left: $input-border-width solid $input-border-color;
-  */ }
+  border-right: 1px solid #cccccc;
+  border-left: 1px solid #cccccc; }
 
 .input-group .input-wrapper + .input-wrapper {
   border-top: 1px solid #cccccc; }
