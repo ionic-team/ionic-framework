@@ -149,7 +149,7 @@
 
 
     // Grab the starting Y point for the item
-    var offsetY = this.el.style.top;//parseFloat(this.el.style.webkitTransform.replace('translate3d(', '').split(',')[1]) || 0;
+    var offsetY = this.el.offsetTop;//parseFloat(this.el.style.webkitTransform.replace('translate3d(', '').split(',')[1]) || 0;
 
     var placeholder = this.el.cloneNode(true);
 
@@ -161,8 +161,7 @@
 
 
     this._currentDrag = {
-      startOffsetY: offsetY,
-      startOffsetTop: this.el.offsetTop,
+      startOffsetTop: offsetY,
       placeholder: placeholder
     };
   };
@@ -178,18 +177,15 @@
 
       // Check if we should start dragging. Check if we've dragged past the threshold,
       // or we are starting from the open state.
-      if(!_this._isDragging &&
-          ((Math.abs(e.gesture.deltaY) > _this.dragThresholdY) ||
-          (Math.abs(_this._currentDrag.startOffsetY) > 0)))
-      {
+      if(!_this._isDragging && Math.abs(e.gesture.deltaY) > _this.dragThresholdY) {
         _this._isDragging = true;
       }
 
       if(_this._isDragging) {
-        var newY = _this._currentDrag.startOffsetTop + e.gesture.deltaY; //Math.min(0, _this._currentDrag.startOffsetY + e.gesture.deltaY);
+        var newY = _this._currentDrag.startOffsetTop + e.gesture.deltaY;
         console.log(newY);
         
-        _this.el.style.top = newY + 'px';//webkitTransform = 'translate3d(0, ' + newY + 'px, 0)';
+        _this.el.style.top = newY + 'px';
 
         _this._currentDrag.currentY = newY;
 
