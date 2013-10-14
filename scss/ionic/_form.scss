@@ -47,6 +47,10 @@ textarea {
   font-family: $base-font-family; // And only set font-family here for those that need it (note the missing label element)
 }
 
+
+// Input groups
+// -------------------------------
+
 .input-group {
   overflow: hidden;
   border-top: $input-border-width solid $input-border-color;
@@ -60,7 +64,7 @@ textarea {
   border-left: $input-border-width solid $input-border-color;
 }
 
-.input-group .input-wrapper + .input-wrapper {
+.input-group .input-row + .input-row {
   border-top: $input-border-width solid $input-border-color;
 }
 
@@ -68,9 +72,10 @@ textarea {
   margin-top: $content-padding;
 }
 
-.input-wrapper {
+.input-row {
   position: relative;
-  display: block;
+  display: -webkit-flex;
+  display: flex;
   overflow: hidden;
   padding: 6px 8px 5px;
 
@@ -78,19 +83,39 @@ textarea {
     @include border-radius(0);
     margin: 0;
     background-color: transparent;
+    flex: 1 0 220px;
     -webkit-appearance: none;
   }
 
   .input-label {
+    padding: 7px 10px 7px 3px;
+    max-width: 200px;
     font-weight: bold;
-    line-height: $line-height-computed + $font-size-base;
+    flex: 1 0 100px;
+  }
+  [class^="icon-"], [class*=" icon-"] {
+    display: inline-block;
+    text-align: center;
+    font-size: 16px;
+    flex: 0 0 24px;
+    align-self: center;
+  }
+  .placeholder-icon {
+    color: #999;
   }
 }
 
 .input-group.stacked-label,
-.input-group.stacked-label .input-wrapper {
+.input-group.stacked-label .input-row {
+  display: block;
   border: 0;
   background-color: transparent;
+
+  .input-label, [class^="icon-"], [class*=" icon-"] {
+    display: inline-block;
+    padding: 4px 0;
+    vertical-align: middle;
+  }
 }
 
 .input-group.stacked-label input,
@@ -104,15 +129,6 @@ textarea {
 }
 .input-group.stacked-label input {
   height: $line-height-computed + $font-size-base + 12px;
-}
-.input-wrapper.row {
-  margin-right: 0;
-  margin-left: 0;
-
-  [class*='col-'] {
-    padding-right: 0;
-    padding-left: 0;
-  }
 }
 
 

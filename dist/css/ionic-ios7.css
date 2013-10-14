@@ -314,7 +314,7 @@ a {
 a:focus, button:focus {
   outline: 0; }
 
-body {
+body, .ionic-body {
   position: fixed;
   top: 0;
   right: 0;
@@ -1237,48 +1237,64 @@ textarea {
 
 .input-group {
   overflow: hidden;
-  /*
-  border-top: $input-border-width solid $input-border-color;
-  border-bottom: $input-border-width solid $input-border-color;
-  background-color: $input-bg;
-  */ }
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+  background-color: white; }
 
 .padded > .input-group,
 .input-group.inset {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
-  /*
-  border-right: $input-border-width solid $input-border-color;
-  border-left: $input-border-width solid $input-border-color;
-  */ }
+  border-right: 1px solid #cccccc;
+  border-left: 1px solid #cccccc; }
 
-.input-group .input-wrapper + .input-wrapper {
+.input-group .input-row + .input-row {
   border-top: 1px solid #cccccc; }
 
 .input-group + .input-group {
   margin-top: 10px; }
 
-.input-wrapper {
+.input-row {
   position: relative;
-  display: block;
+  display: -webkit-flex;
+  display: flex;
   overflow: hidden;
   padding: 6px 8px 5px; }
-  .input-wrapper input {
+  .input-row input {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
     margin: 0;
     background-color: transparent;
+    flex: 1 0 220px;
     -webkit-appearance: none; }
-  .input-wrapper .input-label {
+  .input-row .input-label {
+    padding: 7px 10px 7px 3px;
+    max-width: 200px;
     font-weight: bold;
-    line-height: 34px; }
+    flex: 1 0 100px; }
+  .input-row [class^="icon-"], .input-row [class*=" icon-"] {
+    display: inline-block;
+    text-align: center;
+    font-size: 16px;
+    flex: 0 0 24px;
+    align-self: center; }
+  .input-row .placeholder-icon {
+    color: #999; }
 
 .input-group.stacked-label,
-.input-group.stacked-label .input-wrapper {
+.input-group.stacked-label .input-row {
+  display: block;
   border: 0;
   background-color: transparent; }
+  .input-group.stacked-label .input-label, .input-group.stacked-label [class^="icon-"], .input-group.stacked-label [class*=" icon-"],
+  .input-group.stacked-label .input-row .input-label,
+  .input-group.stacked-label .input-row [class^="icon-"],
+  .input-group.stacked-label .input-row [class*=" icon-"] {
+    display: inline-block;
+    padding: 4px 0;
+    vertical-align: middle; }
 
 .input-group.stacked-label input,
 .input-group.stacked-label textarea {
@@ -1292,13 +1308,6 @@ textarea {
 
 .input-group.stacked-label input {
   height: 46px; }
-
-.input-wrapper.row {
-  margin-right: 0;
-  margin-left: 0; }
-  .input-wrapper.row [class*='col-'] {
-    padding-right: 0;
-    padding-left: 0; }
 
 select,
 textarea,

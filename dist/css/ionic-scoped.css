@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .ionic {
   @font-face {
     font-family: 'ionicons';
@@ -1056,7 +1057,7 @@
     -webkit-tap-highlight-color: transparent; }
   .ionic a:focus, .ionic button:focus {
     outline: 0; }
-  .ionic body {
+  .ionic body, .ionic .ionic-body {
     position: fixed;
     top: 0;
     right: 0;
@@ -1271,34 +1272,50 @@
       background-color: rgba(255, 255, 255, 0.9);
       border-color: #dddddd;
       color: #333333; }
+      .ionic .bar.bar-default .title {
+        color: #333333; }
     .ionic .bar.bar-secondary {
       background-color: rgba(245, 245, 245, 0.9);
       border-color: #bbbbbb;
       color: #333333; }
+      .ionic .bar.bar-secondary .title {
+        color: #333333; }
     .ionic .bar.bar-primary {
       background-color: rgba(74, 135, 238, 0.9);
       border-color: #3b6dc2;
       color: white; }
+      .ionic .bar.bar-primary .title {
+        color: white; }
     .ionic .bar.bar-info {
       background-color: rgba(67, 206, 230, 0.9);
       border-color: #3bb3c8;
       color: white; }
+      .ionic .bar.bar-info .title {
+        color: white; }
     .ionic .bar.bar-success {
       background-color: rgba(102, 204, 51, 0.9);
       border-color: #5bb22f;
       color: white; }
+      .ionic .bar.bar-success .title {
+        color: white; }
     .ionic .bar.bar-warning {
       background-color: rgba(240, 184, 64, 0.9);
       border-color: #d29f31;
       color: white; }
+      .ionic .bar.bar-warning .title {
+        color: white; }
     .ionic .bar.bar-danger {
       background-color: rgba(239, 78, 58, 0.9);
       border-color: #c73927;
       color: white; }
+      .ionic .bar.bar-danger .title {
+        color: white; }
     .ionic .bar.bar-dark {
       background-color: rgba(68, 68, 68, 0.9);
       border-color: #111111;
       color: white; }
+      .ionic .bar.bar-dark .title {
+        color: white; }
     .ionic .bar .title {
       position: absolute;
       z-index: 0;
@@ -1877,29 +1894,49 @@
     border-radius: 2px;
     border-right: 1px solid #cccccc;
     border-left: 1px solid #cccccc; }
-  .ionic .input-group .input-wrapper + .input-wrapper {
+  .ionic .input-group .input-row + .input-row {
     border-top: 1px solid #cccccc; }
   .ionic .input-group + .input-group {
     margin-top: 10px; }
-  .ionic .input-wrapper {
+  .ionic .input-row {
     position: relative;
-    display: block;
+    display: -webkit-flex;
+    display: flex;
     overflow: hidden;
     padding: 6px 8px 5px; }
-    .ionic .input-wrapper input {
+    .ionic .input-row input {
       -webkit-border-radius: 0;
       -moz-border-radius: 0;
       border-radius: 0;
       margin: 0;
       background-color: transparent;
+      flex: 1 0 220px;
       -webkit-appearance: none; }
-    .ionic .input-wrapper .input-label {
+    .ionic .input-row .input-label {
+      padding: 7px 10px 7px 3px;
+      max-width: 200px;
       font-weight: bold;
-      line-height: 34px; }
+      flex: 1 0 100px; }
+    .ionic .input-row [class^="icon-"], .ionic .input-row [class*=" icon-"] {
+      display: inline-block;
+      text-align: center;
+      font-size: 16px;
+      flex: 0 0 24px;
+      align-self: center; }
+    .ionic .input-row .placeholder-icon {
+      color: #999; }
   .ionic .input-group.stacked-label,
-  .ionic .input-group.stacked-label .input-wrapper {
+  .ionic .input-group.stacked-label .input-row {
+    display: block;
     border: 0;
     background-color: transparent; }
+    .ionic .input-group.stacked-label .input-label, .ionic .input-group.stacked-label [class^="icon-"], .ionic .input-group.stacked-label [class*=" icon-"],
+    .ionic .input-group.stacked-label .input-row .input-label,
+    .ionic .input-group.stacked-label .input-row [class^="icon-"],
+    .ionic .input-group.stacked-label .input-row [class*=" icon-"] {
+      display: inline-block;
+      padding: 4px 0;
+      vertical-align: middle; }
   .ionic .input-group.stacked-label input,
   .ionic .input-group.stacked-label textarea {
     -webkit-border-radius: 2px;
@@ -1911,12 +1948,6 @@
     background-color: white; }
   .ionic .input-group.stacked-label input {
     height: 46px; }
-  .ionic .input-wrapper.row {
-    margin-right: 0;
-    margin-left: 0; }
-    .ionic .input-wrapper.row [class*='col-'] {
-      padding-right: 0;
-      padding-left: 0; }
   .ionic select,
   .ionic textarea,
   .ionic input[type="text"],

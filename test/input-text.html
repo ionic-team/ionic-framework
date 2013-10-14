@@ -24,26 +24,26 @@
 
           <h3>Default Text Input, Not Inset, No Content Padding</h3>
           <div class="input-group">
-            <label class="input-wrapper">
+            <label class="input-row">
               <input type="text" placeholder="First Name">
             </label>
-            <label class="input-wrapper">
+            <label class="input-row">
               <input type="text" placeholder="Last Name">
             </label>
-            <label class="input-wrapper">
+            <label class="input-row">
               <input type="email" placeholder="Email">
             </label>
           </div>
 
           <h3>Default Text Input, Is Inset, No Content Padding</h3>
           <div class="input-group inset">
-            <label class="input-wrapper">
+            <label class="input-row">
               <input type="text" placeholder="First Name">
             </label>
-            <label class="input-wrapper">
+            <label class="input-row">
               <input type="text" placeholder="Last Name">
             </label>
-            <label class="input-wrapper">
+            <label class="input-row">
               <input type="email" placeholder="Email">
             </label>
           </div>
@@ -52,26 +52,26 @@
 
             <h3>Default Text Input, Not Inset, With Content Padding</h3>
             <div class="input-group">
-              <label class="input-wrapper">
+              <label class="input-row">
                 <input type="text" placeholder="Username">
               </label>
-              <label class="input-wrapper">
+              <label class="input-row">
                 <input type="email" placeholder="Email">
               </label>
             </div>
 
             <div class="input-group">
-              <label class="input-wrapper">
+              <label class="input-row">
                 <input type="text" placeholder="Filter by name">
               </label>
             </div>
 
             <h3>Default Text Input, Is Inset, With Content Padding</h3>
             <div class="input-group inset">
-              <label class="input-wrapper">
+              <label class="input-row">
                 <input type="email" placeholder="Email">
               </label>
-              <label class="input-wrapper">
+              <label class="input-row">
                 <input type="text" placeholder="Name">
               </label>
             </div>
@@ -81,27 +81,42 @@
 
 
 
-          <h3>Inline Label On Top Of Text Input, Not Inset, No Content Padding</h3>
+          <h3>Label left of input, Not Inset, No Content Padding</h3>
           <div class="input-group">
-            <label class="input-wrapper row">
-              <span class="input-label col-xs-4">Username</span>
-              <input class="col-xs-8" type="text" placeholder="@drifty">
+            <label class="input-row">
+              <span class="input-label">Username</span>
+              <input type="text" placeholder="@drifty">
             </label>
-            <label class="input-wrapper row">
-              <span class="input-label col-xs-4">Email</span>
-              <input class="col-xs-8" type="email" placeholder="your@email.com">
+            <label class="input-row">
+              <span class="input-label">Email</span>
+              <input type="email" placeholder="your@email.com">
             </label>
-            <label class="input-wrapper row">
-              <span class="input-label col-xs-4">First Name</span>
-              <input class="col-xs-8" type="text" placeholder="Sir Derp">
+            <label class="input-row">
+              <span class="input-label">First Name</span>
+              <input type="text" placeholder="Sir Derp">
+            </label>
+          </div>
+
+
+          <h3>Label left of input, Not Inset, No Content Padding</h3>
+          <div class="input-group">
+            <label class="input-row">
+              <i class="icon-person"></i>
+              <span class="input-label">Username</span>
+              <input type="text" placeholder="@drifty">
+            </label>
+            <label class="input-row">
+              <i class="icon-email"></i>
+              <span class="input-label">Email</span>
+              <input type="email" placeholder="your@email.com">
             </label>
           </div>
 
           <h3>Inline Label On Top Of Text Input, Is Inset, No Content Padding</h3>
           <div class="input-group inset">
-            <label class="input-wrapper row">
-              <span class="input-label col-xs-4">Email</span>
-              <input class="col-xs-8" type="text" placeholder="your@email.com">
+            <label class="input-row">
+              <span class="input-label">Email</span>
+              <input type="text" placeholder="your@email.com">
             </label>
           </div>
 
@@ -109,27 +124,27 @@
 
             <h3>Inline Label On Top Of Text Input, Not Inset, With Content Padding</h3>
             <div class="input-group">
-              <label class="input-wrapper row">
-                <span class="input-label col-xs-4">First Name</span>
-                <input class="col-xs-8" type="text" placeholder="John">
+              <label class="input-row">
+                <span class="input-label">First Name</span>
+                <input type="text" placeholder="John">
               </label>
-              <label class="input-wrapper row">
-                <span class="input-label col-xs-4">Last Name</span>
-                <input class="col-xs-8" type="text" placeholder="Suhr">
+              <label class="input-row">
+                <span class="input-label">Last Name</span>
+                <input type="text" placeholder="Suhr">
               </label>
             </div>
 
             <h3>Inline Label On Top Of Text Input, Is Inset, With Content Padding</h3>
             <div class="input-group inset">
-              <label class="input-wrapper row">
-                <span class="input-label col-xs-4">Email</span>
-                <input class="col-xs-8" type="text" placeholder="your@email.com">
+              <label class="input-row">
+                <span class="input-label">Email</span>
+                <input type="text" placeholder="your@email.com">
               </label>
             </div>
             <div class="input-group inset">
-              <label class="input-wrapper row">
-                <span class="input-label col-xs-4">Filter By Name</span>
-                <input class="col-xs-8" type="text" placeholder="Enter keywords">
+              <label class="input-row">
+                <span class="input-label">Filter By Name</span>
+                <input type="text" placeholder="Enter keywords">
               </label>
             </div>
 
@@ -140,21 +155,21 @@
 
           <h3>Stacked Label On Top Of Text Input, Not Inset, No Content Padding</h3>
           <div class="input-group stacked-label">
-            <label class="input-wrapper">
+            <label class="input-row">
               <span class="input-label">First Name</span>
               <input type="text" placeholder="Drifty">
             </label>
-            <label class="input-wrapper">
+            <label class="input-row">
               <span class="input-label">Last Name</span>
               <input type="text" placeholder="Co">
             </label>
-            <label class="input-wrapper">
+            <label class="input-row">
               <span class="input-label">Email</span>
               <input type="text" placeholder="your@email.com">
             </label>
           </div>
           <div class="input-group stacked-label">
-            <label class="input-wrapper">
+            <label class="input-row">
               <span class="input-label">Filter By Name</span>
               <input type="text" placeholder="">
             </label>
@@ -162,7 +177,7 @@
 
           <h3>Stacked Label On Top Of Text Input, Is Inset, No Content Padding</h3>
           <div class="input-group stacked-label inset">
-            <label class="input-wrapper">
+            <label class="input-row">
               <span class="input-label">Email</span>
               <input type="text" placeholder="your@email.com">
             </label>
@@ -172,7 +187,7 @@
 
             <h3>Stacked Label On Top Of Text Input, Not Inset, With Content Padding</h3>
             <div class="input-group stacked-label">
-              <label class="input-wrapper">
+              <label class="input-row">
                 <span class="input-label">Email</span>
                 <input type="text" placeholder="your@email.com">
               </label>
@@ -180,7 +195,7 @@
 
             <h3>Stacked Label On Top Of Text Input, Is Inset, With Content Padding</h3>
             <div class="input-group stacked-label inset">
-              <label class="input-wrapper">
+              <label class="input-row">
                 <span class="input-label">Email</span>
                 <input type="text" placeholder="your@email.com">
               </label>
@@ -190,40 +205,27 @@
 
           <h3>Default Text Input, Not Inset, No Content Padding</h3>
           <div class="input-group">
-            <label class="input-wrapper">
-              <div class="icon-search placeholder-icon">
-                <input type="search" placeholder="Search">
-              </div>
+            <label class="input-row">
+              <i class="icon-search placeholder-icon"></i>
+              <input type="search" placeholder="Search">
             </label>
           </div>
 
           <h3>Default Text Input, Is Inset, No Content Padding</h3>
           <div class="input-group inset">
-            <label class="input-wrapper">
-              <div class="icon-star placeholder-icon">
-                <input type="text" placeholder="Favorites">
-              </div>
+            <label class="input-row">
+              <i class="icon-star placeholder-icon"></i>
+              <input type="text" placeholder="Favorites">
             </label>
           </div>
 
 
           <h3>Stacked Label On Top Of Text Input, Not Inset, No Content Padding</h3>
           <div class="input-group stacked-label">
-            <label class="input-wrapper">
+            <label class="input-row">
+              <i class="icon-email"></i> 
               <span class="input-label">Email</span>
-              <div class="icon-envelope placeholder-icon">
-                <input type="text" placeholder="your@email.com">
-              </div>
-            </label>
-          </div>
-
-          <h3>Stacked Label On Top Of Text Input, Is Inset, No Content Padding</h3>
-          <div class="input-group stacked-label inset">
-            <label class="input-wrapper">
-              <span class="input-label">Send Money</span>
-              <div class="icon-money placeholder-icon">
-                <input type="text" placeholder="Dollar Greens">
-              </div>
+              <input type="text" placeholder="your@email.com">
             </label>
           </div>
 
@@ -231,29 +233,26 @@
 
             <h3>Stacked Label On Top Of Text Input, Not Inset, With Content Padding</h3>
             <div class="input-group stacked-label">
-              <label class="input-wrapper">
+              <label class="input-row">
+                <i class="icon-cloud"></i> 
                 <span class="input-label">SaaS</span>
-                <div class="icon-cloud placeholder-icon">
-                  <input type="text" placeholder="Codiqa">
-                </div>
+                <input type="text" placeholder="Codiqa">
               </label>
             </div>
 
             <h3>Stacked Label On Top Of Text Input, Is Inset, With Content Padding</h3>
             <div class="input-group stacked-label inset">
-              <label class="input-wrapper">
+              <label class="input-row">
+                <i class="icon-headphone"></i> 
                 <span class="input-label">Favorite Music</span>
-                <div class="icon-headphones placeholder-icon">
-                  <input type="text" placeholder="Bee Gees">
-                </div>
+                <input type="text" placeholder="Bee Gees">
               </label>
             </div>
 
           </div>
 
-
-
           <p><a class="button button-secondary" href="index.html">Homepage</a></p>
+
         </div>
 
       </div>

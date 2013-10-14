@@ -51,20 +51,20 @@
               <div class="toderp-logo"></div>
             </div>
             <div class="input-group">
-              <label class="input-wrapper row">
-                <span class="input-label col-xs-3">Full name</span>
-                <input class="col-xs-8" type="text" placeholder="" ng-model="signupForm.name" required>
+              <label class="input-row">
+                <span class="input-label">Full name</span>
+                <input type="text" placeholder="" ng-model="signupForm.name" required>
               </label>
-              <label class="input-wrapper row">
-                <span class="input-label col-xs-3">Email</span>
-                <input class="col-xs-8" type="email" placeholder="" ng-model="signupForm.email" required>
+              <label class="input-row">
+                <span class="input-label">Email</span>
+                <input type="email" placeholder="" ng-model="signupForm.email" required>
               </label>
-              <label class="input-wrapper row">
-                <span class="input-label col-xs-3">Password</span>
-                <input class="col-xs-8" type="password" placeholder="" ng-model="signupForm.password" required>
+              <label class="input-row">
+                <span class="input-label">Password</span>
+                <input type="password" placeholder="" ng-model="signupForm.password" required>
               </label>
             </div>
-            <div class="input-group">
+            <div class="inset">
               <button type="submit" class="button button-primary button-block">Get derp'n</button>
               <div id="signup-error" ng-show="signupError">Unable to signup, please try again.</div>
             </div>
@@ -87,16 +87,16 @@
         <main class="content padded has-header">
           <form class="form-horizontal" ng-submit="tryLogin(loginForm)">
             <div class="input-group inset">
-              <label class="input-wrapper row">
+              <label class="input-row">
                 <span class="input-label col-xs-4">Email</span>
-                <input class="col-xs-8" type="email" placeholder="" ng-model="loginForm.email">
+                <input type="email" placeholder="" ng-model="loginForm.email">
               </label>
-              <label class="input-wrapper row">
+              <label class="input-row">
                 <span class="input-label col-xs-4">Password</span>
-                <input class="col-xs-8" type="password" placeholder="" ng-model="loginForm.password">
+                <input type="password" placeholder="" ng-model="loginForm.password">
               </label>
             </div>
-            <div class="input-group inset">
+            <div class="inset">
               <button class="button button-primary button-block">Log in</button>
               <div id="login-error" ng-show="loginError">Invalid email/password. Please try again.</div>
             </div>
