@@ -58,6 +58,7 @@ module.exports = function(grunt) {
       dist: {
         files: {
           'dist/css/ionic.css': 'scss/ionic/ionic.scss',
+          'dist/css/ionic-scoped.css': 'scss/ionic/ionic-scoped.scss',
           'dist/css/ionic-ios7.css': 'scss/ionic-ios7/ionic-ios7.scss'
         }
       }
