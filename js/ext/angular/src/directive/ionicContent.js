@@ -17,6 +17,9 @@ angular.module('ionic.ui.content', [])
         if(attr.hasHeader) {
           c.addClass('has-header');
         }
+        if(attr.hasFooter) {
+          c.addClass('has-footer');
+        }
         if(attr.hasTabs) {
           c.addClass('has-tabs');
         }

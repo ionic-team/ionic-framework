@@ -78,12 +78,12 @@ body, .ionic-body {
 
 .has-footer {
   //bottom: $bar-height;
-  //margin-bottom: $bar-height;
+  margin-bottom: $bar-height;
 }
 
 // Specify that a content area will have tabs
 .has-tabs {
-  bottom: $tabs-height;
+  margin-bottom: 84px;
 }
 
 .page, .full-section {

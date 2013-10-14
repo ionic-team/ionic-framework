@@ -60,7 +60,6 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
 
       $scope.$watch('isEditing', function(v) {
         _this.isEditing = true;
-        console.log('Is Editing Changed', v);
       });
     },
 

@@ -4,43 +4,46 @@
     <title>Tab Bars</title>
 
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="../../../../dist/ionic.css">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.js"></script>
-    <style>
-      .content {
-        height: 100%;
-      }
-    </style>
   </head>
   <body>
     <tab-controller>
-      <div title="Home" icon="icon-home" class="tab-content">
-        <header class="bar bar-header bar-dark">
-          <h1 class="title">Tab Bars</h1>
+
+      <div title="Home" icon-on="icon-ios7-filing" icon-off="icon-ios7-filing-outline" class="tab-content" ng-controller="HomeCtrl">
+        <header class="bar bar-header bar-secondary">
+          <h1 class="title">Tasks</h1>
+          <button class="button button-clear button-primary" ng-click="isEditingItems = !isEditingItems">Edit</button>
         </header>
         <content has-header="true" has-tabs="true">
-          <h1>Home</h1>
-          <ul class="list" ng-controller="HomeCtrl">
-            <a href="#" class="list-item" ng-repeat="item in items">
+          <list is-editing="isEditingItems" animation="my-repeat-animation" delete-icon="icon-minus-circled" reorder-icon="icon-navicon">
+            <list-item ng-repeat="item in items" 
+            buttons="item.buttons"
+            can-delete="true"
+            can-reorder="true"
+            can-swipe="true"
+                     on-delete="deleteProject(project)"
+                     on-select="selectProject(project)">
               {{item.title}}
-            </a>
-          </ul>
+              <i class="{{item.icon}}"></i>
+            </list-item>
+          </list>
         </content>
       </div>
 
-      <div title="About" icon="icon-info" class="tab-content">
-        <header class="bar bar-header bar-success">
-          <h1 class="title">About</h1>
+      <div title="About" icon-on="icon-ios7-clock" icon-off="icon-ios7-clock-outline" class="tab-content">
+        <header class="bar bar-header bar-secondary">
+          <h1 class="title">Deadlines</h1>
         </header>
         <content has-header="true" has-tabs="true">
-          <h1>About Us</h1>
+          <h1>Deadlines</h1>
         </content>
       </div>
 
-      <div title="Settings" icon="icon-gear" class="tab-content">
-        <header class="bar bar-header bar-dark">
+      <div title="Settings" icon-on="icon-ios7-gear" icon-off="icon-ios7-gear-outline" class="tab-content">
+        <header class="bar bar-header bar-secondary">
           <h1 class="title">Settings</h1>
         </header>
         <content has-header="true" has-tabs="true">
@@ -49,17 +52,16 @@
       </div>
     </tab-controller>
 
-    <script src="../../../../dist/ionic.js"></script>
-    <script src="../src/directive/ionicContent.js"></script>
-    <script src="../src/directive/ionicTabBar.js"></script>
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
-      angular.module('tabsTest', ['ionic.ui.tabs'])
+      angular.module('tabsTest', ['ionic.ui'])
 
       .controller('HomeCtrl', function($scope) {
         $scope.items = [];
-        for(var i = 0; i < 100; i++) {
+        for(var i = 0; i < 30; i++) {
           $scope.items.push({
-            title: 'Item ' + i
+            title: 'Task ' + (i + 1)
           });
         }
       })

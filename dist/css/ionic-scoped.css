@@ -1095,8 +1095,10 @@
     -webkit-overflow-scrolling: touch; }
   .ionic .has-header {
     margin-top: 44px; }
+  .ionic .has-footer {
+    margin-bottom: 44px; }
   .ionic .has-tabs {
-    bottom: 49px; }
+    margin-bottom: 84px; }
   .ionic .page, .ionic .full-section {
     position: fixed;
     top: 0;

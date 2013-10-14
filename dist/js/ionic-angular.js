@@ -214,6 +214,9 @@ angular.module('ionic.ui.content', [])
         if(attr.hasHeader) {
           c.addClass('has-header');
         }
+        if(attr.hasFooter) {
+          c.addClass('has-footer');
+        }
         if(attr.hasTabs) {
           c.addClass('has-tabs');
         }
@@ -285,7 +288,6 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
 
       $scope.$watch('isEditing', function(v) {
         _this.isEditing = true;
-        console.log('Is Editing Changed', v);
       });
     },
 
@@ -558,13 +560,21 @@ angular.module('ionic.ui.tabs', [])
   return {
     restrict: 'CA',
     replace: true,
-    transclude: true,
-    template: '<div ng-show="isVisible" ng-transclude></div>',
     require: '^tabController',
     scope: true,
     link: function(scope, element, attrs, tabsCtrl) {
+      scope.$watch('isVisible', function(value) {
+        if(!value) {
+          element[0].style.display = 'none';
+        } else {
+          element[0].style.display = 'block';
+        }
+      });
+
       scope.title = attrs.title;
       scope.icon = attrs.icon;
+      scope.iconOn = attrs.iconOn;
+      scope.iconOff = attrs.iconOff;
       tabsCtrl.addController(scope);
     }
   }
@@ -579,7 +589,7 @@ angular.module('ionic.ui.tabs', [])
     replace: true,
     scope: true,
     template: '<div class="tabs tabs-primary">' + 
-      '<tab-item title="{{controller.title}}" icon="{{controller.icon}}" active="controller.isVisible" index="$index" ng-repeat="controller in controllers"></tab-item>' + 
+      '<tab-item title="{{controller.title}}" icon="{{controller.icon}}" icon-on="{{controller.iconOn}}" icon-off="{{controller.iconOff}}" active="controller.isVisible" index="$index" ng-repeat="controller in controllers"></tab-item>' + 
     '</div>'
   }
 })
@@ -591,7 +601,8 @@ angular.module('ionic.ui.tabs', [])
     require: '^tabController',
     scope: {
       title: '@',
-      icon: '@',
+      iconOn: '@',
+      iconOff: '@',
       active: '=',
       tabSelected: '@',
       index: '='
@@ -604,7 +615,9 @@ angular.module('ionic.ui.tabs', [])
     },
     template: 
       '<a href="#" ng-class="{active:active}" ng-click="selectTab()" class="tab-item">' +
-        '<i class="{{icon}}"></i> {{title}}' +
+        '<i class="{{icon}}" ng-if="icon"></i>' +
+        '<i class="{{iconOn}}" ng-if="active"></i>' +
+        '<i class="{{iconOff}}" ng-if="!active"></i> {{title}}' +
       '</a>'
   }
 });

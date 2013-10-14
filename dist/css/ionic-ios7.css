@@ -359,8 +359,11 @@ body, .ionic-body {
 .has-header {
   margin-top: 44px; }
 
+.has-footer {
+  margin-bottom: 44px; }
+
 .has-tabs {
-  bottom: 49px; }
+  margin-bottom: 84px; }
 
 .page, .full-section {
   position: fixed;

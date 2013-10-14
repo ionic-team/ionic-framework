@@ -79,8 +79,6 @@
           newX = Math.min(-buttonsWidth, -buttonsWidth + (((e.gesture.deltaX + buttonsWidth) * 0.4)));
         }
 
-        console.log(newX);
-        
         _this._currentDrag.content.style.webkitTransform = 'translate3d(' + newX + 'px, 0, 0)';
       }
     });
@@ -183,7 +181,6 @@
 
       if(_this._isDragging) {
         var newY = _this._currentDrag.startOffsetTop + e.gesture.deltaY;
-        console.log(newY);
         
         _this.el.style.top = newY + 'px';
 
@@ -205,25 +202,12 @@
     var index = siblings.indexOf(this._currentDrag.placeholder);
     var topSibling = siblings[Math.max(0, index - 1)];
     var bottomSibling = siblings[Math.min(siblings.length, index+1)];
-
-    /*
-    console.log('Reordering from index', index);
-    console.dir(this.el);
-    console.dir(topSibling);
-    console.dir(bottomSibling);
-    */
-
-
     var thisOffsetTop = this._currentDrag.currentY;// + this._currentDrag.startOffsetTop;
 
-    console.log('Comparing', thisOffsetTop, 'with', (topSibling && topSibling.offsetTop + topSibling.offsetHeight/2), (bottomSibling && bottomSibling.offsetTop + bottomSibling.offsetHeight/2));
-
     if(topSibling && (thisOffsetTop < topSibling.offsetTop + topSibling.offsetHeight/2)) {
-      console.log('Swapping up with index', index - 1);
       ionic.DomUtil.swapNodes(this._currentDrag.placeholder, topSibling);
       return index - 1;
     } else if(bottomSibling && thisOffsetTop > (bottomSibling.offsetTop + bottomSibling.offsetHeight/2)) {
-      console.log('Swapping down with index', index + 1);
       ionic.DomUtil.swapNodes(bottomSibling, this._currentDrag.placeholder);
       return index + 1;
     }
