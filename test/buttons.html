@@ -5,18 +5,18 @@
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="../dist/ionicons.css" rel="stylesheet">
-    <link href="../dist/ionic.css" rel="stylesheet">
+    <link href="../dist/css/ionic.css" rel="stylesheet">
   </head>
   <body>
 
-    <section>
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Buttons</h1>
+    </header>
 
-      <header class="bar bar-header bar-dark">
-        <h1 class="title">Buttons</h1>
-      </header>
-
+    <div class="content-wrapper">
       <main class="content padded has-header">
+
+        <h3>Default (Block)</h3>
         <p>
           <a class="button button-default">Default</a>
           <a class="button button-secondary">Secondary</a>
@@ -27,9 +27,30 @@
           <a class="button button-danger">Danger</a>
           <a class="button button-dark">Dark</a>
         </p>
+
+        <h3>Inline (.button-inline override)</h3>
+        <p>
+          <a class="button button-default button-inline">Default</a>
+          <a class="button button-secondary button-inline">Secondary</a>
+          <a class="button button-primary button-inline">Primary</a>
+          <a class="button button-info button-inline">Info</a>
+          <a class="button button-success button-inline">Success</a>
+          <a class="button button-warning button-inline">Warning</a>
+          <a class="button button-danger button-inline">Danger</a>
+          <a class="button button-dark button-inline">Dark</a>
+        </p>
+
+        <h3>Icon (Inline Default)</h3>
         <p>
           <a class="button button-icon"><i class="icon-home"></i></a>
         </p>
+
+        <h3>Icon (.button-block override)</h3>
+        <p>
+          <a class="button button-icon button-block"><i class="icon-home"></i></a>
+        </p>
+
+        <h3>Outline (Inline Default)</h3>
         <p>
           <a class="button button-default button-outline">Default</a>
           <a class="button button-secondary button-outline">Secondary</a>
@@ -40,9 +61,20 @@
           <a class="button button-danger button-outline">Danger</a>
           <a class="button button-dark button-outline">Dark</a>
         </p>
+
+        <h3>Outline (.button-block override)</h3>
         <p>
-          <a class="button button-icon"><i class="icon-home"></i></a>
+          <a class="button button-default button-outline button-block">Default</a>
+          <a class="button button-secondary button-outline button-block">Secondary</a>
+          <a class="button button-primary button-outline button-block">Primary</a>
+          <a class="button button-info button-outline button-block">Info</a>
+          <a class="button button-success button-outline button-block">Success</a>
+          <a class="button button-warning button-outline button-block">Warning</a>
+          <a class="button button-danger button-outline button-block">Danger</a>
+          <a class="button button-dark button-outline button-block">Dark</a>
         </p>
+
+        <h3>Clear (Inline Default)</h3>
         <p>
           <a class="button button-default button-clear">Default</a>
           <a class="button button-secondary button-clear">Secondary</a>
@@ -53,29 +85,25 @@
           <a class="button button-danger button-clear">Danger</a>
           <a class="button button-dark button-clear">Dark</a>
         </p>
-        <p><a class="button button-secondary" href="index.html">Homepage</a></p>
+
+        <h3>Clear (.button-block override)</h3>
+        <p>
+          <a class="button button-default button-clear button-block">Default</a>
+          <a class="button button-secondary button-clear button-block">Secondary</a>
+          <a class="button button-primary button-clear button-block">Primary</a>
+          <a class="button button-info button-clear button-block">Info</a>
+          <a class="button button-success button-clear button-block">Success</a>
+          <a class="button button-warning button-clear button-block">Warning</a>
+          <a class="button button-danger button-clear button-block">Danger</a>
+          <a class="button button-dark button-clear button-block">Dark</a>
+        </p>
+
+        <p>
+          <a class="button button-secondary" href="index.html">Homepage</a>
+        </p>
+
       </main>
+    </div>
 
-    </section>
-    
-    <script src="../dist/ionic.js"></script>
-    <script src="../dist/ionic-simple.js"></script>
-
-    <script>
-      var buttons = document.querySelectorAll('.button');
-      var a;
-      for(var i = 0; i < buttons.length; i++) {
-        a = buttons[i];
-        a.addEventListener('touchstart', function() {
-          this.classList.add('active');
-        });
-        a.addEventListener('touchend', function() {
-          this.classList.remove('active');
-        });
-        a.addEventListener('touchcancel', function() {
-          this.classList.remove('active');
-        });
-      }
-    </script>
   </body>
 </html>

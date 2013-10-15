@@ -1551,8 +1551,8 @@ input[type="checkbox"][readonly] {
 
 .button {
   position: relative;
-  display: inline-block;
-  margin: 0;
+  display: block;
+  margin: 10px 0 10px 0;
   padding: 8px 12px;
   border-width: 1px;
   border-style: solid;
@@ -1563,22 +1563,24 @@ input[type="checkbox"][readonly] {
   font-size: 16px;
   cursor: pointer; }
   .button.button-icon {
-    border: none;
-    background: none;
-    padding: 4px 5px; }
-  .button.button-clear {
-    border: none;
-    background: none;
-    box-shadow: none;
+    display: inline-block;
+    margin: 0;
     padding: 4px 5px;
+    width: auto;
+    border: none;
+    background: none; }
+  .button.button-clear {
     -webkit-transition: opacity 0.1s;
-    transition: opacity 0.1s; }
+    transition: opacity 0.1s;
+    display: inline-block;
+    margin: 0;
+    padding: 4px 5px;
+    width: auto;
+    border: none;
+    background: none;
+    box-shadow: none; }
     .button.button-clear:active, .button.button-clear.active {
       opacity: 0.3; }
-  .button.button-block {
-    display: block;
-    margin: 10px 0 10px 0;
-    width: 100%; }
   .button.button-default {
     color: #333333;
     background-color: white;
@@ -1742,18 +1744,27 @@ input[type="checkbox"][readonly] {
         color: #fff;
         box-shadow: none; }
   .button.button-outline {
-    background: none;
-    box-shadow: none;
-    /* padding: $button-clear-padding; */
     -webkit-transition: opacity 0.1s;
-    transition: opacity 0.1s; }
+    transition: opacity 0.1s;
+    display: inline-block;
+    margin: 0;
+    width: auto;
+    background: none;
+    box-shadow: none; }
   .button.button-icon {
     border: none;
     background: none; }
     .button.button-icon:active, .button.button-icon.active {
-      text-shadow: 0px 0px 10px white;
+      background: none;
       box-shadow: none;
-      background: none; }
+      text-shadow: 0px 0px 10px white; }
+  .button.button-inline {
+    display: inline-block;
+    margin: 0;
+    width: auto; }
+  .button.button-block {
+    display: block;
+    margin: 10px 0 10px 0; }
 
 a.button {
   text-decoration: none; }

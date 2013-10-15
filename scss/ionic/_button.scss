@@ -1,9 +1,8 @@
 .button {
   position: relative;
+  display: block;
+  margin: $button-block-margin;
 
-  display: inline-block;
-
-  margin: 0;
   padding: $button-padding;
 
   border-width: $button-border-width;
@@ -20,29 +19,27 @@
   cursor: pointer;
 
   &.button-icon {
+    display: inline-block;
+    margin: 0;
+    padding: $button-clear-padding;
+    width: auto;
     border: none;
     background: none;
-    padding: $button-clear-padding;
   }
 
   &.button-clear {
+    @include transition(opacity .1s);
+    display: inline-block;
+    margin: 0;
+    padding: $button-clear-padding;
+    width: auto;
     border: none;
     background: none;
     box-shadow: none;
-    padding: $button-clear-padding;
-
-    // A nice iOS 7 style fade click
-    @include transition(opacity .1s);
 
     &:active, &.active {
       opacity: 0.3;
     }
-  }
-
-  &.button-block {
-    display: block;
-    margin: $button-block-margin;
-    width: 100%;
   }
 
   &.button-default {
@@ -85,28 +82,35 @@
   }
 
   &.button-outline {
-    background: none;
-    box-shadow: none;
-
-   /* padding: $button-clear-padding; */
-
-    // A nice iOS 7 style fade click
     @include transition(opacity .1s);
-
-    &:active, &.active {
-    } 
+    display: inline-block;
+    margin: 0;
+    width: auto;
+    background: none;
+    box-shadow: none; 
   }
-
 
   &.button-icon {
     border: none;
     background: none;
     &:active, &.active {
-      text-shadow: 0px 0px 10px #fff;
-      box-shadow: none;
       background: none;
+      box-shadow: none;
+      text-shadow: 0px 0px 10px #fff;
     }
   }
+
+  &.button-inline {
+    display: inline-block;
+    margin: 0;
+    width: auto;
+  }
+
+  &.button-block {
+    display: block;
+    margin: $button-block-margin; 
+  }
+
 }
 
 a.button {
