@@ -21,6 +21,10 @@
   // Place the border on the list items and negative margin up for better styling
   margin-bottom: -1px;
 
+  // Make sure the borders and stuff don't get hidden
+  // by children
+  z-index: 2;
+
   background-color: $list-default-background;
   border: $list-item-border;
 

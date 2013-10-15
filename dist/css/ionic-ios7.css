@@ -1002,6 +1002,7 @@ address {
   position: relative;
   display: block;
   margin-bottom: -1px;
+  z-index: 2;
   background-color: white;
   border: 1px solid #dddddd; }
   .list-item:last-child {

@@ -2,6 +2,7 @@
  * Adapted from Backbone.js
  */
 (function(ionic) {
+'use strict';
   var optionalParam = /\((.*?)\)/g;
   var namedParam    = /(\(\?)?:\w+/g;
   var splatParam    = /\*\w+/g;
@@ -16,7 +17,7 @@
   // Cached regex for removing a trailing slash.
   var trailingSlash = /\/$/;
 
-  RouteViewController = function(options) {
+  ionic.controllers.RouteViewController = function(options) {
     this.options = options;
 
     this.root = this.options.root || '/';
@@ -30,7 +31,7 @@
     this.history = window.history;
   };
 
-  RouteViewController.prototype = {
+  ionic.controllers.RouteViewController.prototype = {
     when: function(route, callback) {
       var _this = this;
 

@@ -1,4 +1,5 @@
 (function(ionic) {
+'use strict';
   ionic.views.Modal = function(opts) {
     this.el = opts.el;
   };

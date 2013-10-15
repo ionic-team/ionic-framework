@@ -1,4 +1,5 @@
 (function(ionic) {
+'use strict';
   var DragOp = function() {};
   DragOp.prototype = {
     start: function(e) {
@@ -16,7 +17,7 @@
 
   SlideDrag.prototype = new DragOp();
   SlideDrag.prototype.start = function(e) {
-    var content;
+    var content, buttons, offsetX, buttonsWidth;
 
     if(e.target.classList.contains('list-item-content')) {
       content = e.target;
@@ -33,7 +34,7 @@
     content.classList.remove('list-item-sliding');
 
     // Grab the starting X point for the item (for example, so we can tell whether it is open or closed to start)
-    var offsetX = parseFloat(content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
+    offsetX = parseFloat(content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
 
     // Grab the buttons
     buttons = content.parentNode.querySelector('.list-item-buttons');
@@ -51,7 +52,7 @@
   };
 
   SlideDrag.prototype.drag = function(e) {
-    var _this = this;
+    var _this = this, buttonsWidth;
 
     window.requestAnimationFrame(function() {
       // We really aren't dragging
@@ -69,6 +70,7 @@
       }
 
       if(_this._isDragging) {
+        buttonsWidth = _this._currentDrag.buttonsWidth;
 
         // Grab the new X point, capping it at zero
         var newX = Math.min(0, _this._currentDrag.startOffsetX + e.gesture.deltaX);

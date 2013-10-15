@@ -1,4 +1,5 @@
 (function(ionic) {
+'use strict';
 
   ionic.views.NavBar = function(opts) {
     this.el = opts.el;

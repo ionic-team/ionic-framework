@@ -1,5 +1,5 @@
-
 (function(ionic) {
+'use strict';
 
   ionic.views.HeaderBar = function(opts) {
     this.el = opts.el;

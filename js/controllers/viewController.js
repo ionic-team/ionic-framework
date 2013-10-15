@@ -1,4 +1,5 @@
 (function(ionic) {
+'use strict';
   ionic.ViewController = function(options) {
     this.init();
   };

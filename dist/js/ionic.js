@@ -1758,6 +1758,7 @@ window.ionic = {
 })(window.ionic);
 ;
 (function(ionic) {
+'use strict';
   /**
    * An ActionSheet is the slide up menu popularized on iOS.
    *
@@ -1784,8 +1785,8 @@ window.ionic = {
 
 })(ionic);
 ;
-
 (function(ionic) {
+'use strict';
 
   ionic.views.Checkbox = function(opts) {
     this.el = opts.el;
@@ -1810,8 +1811,8 @@ window.ionic = {
 
 })(ionic);
 ;
-
 (function(ionic) {
+'use strict';
 
   ionic.views.HeaderBar = function(opts) {
     this.el = opts.el;
@@ -1840,6 +1841,7 @@ window.ionic = {
 })(ionic);
 ;
 (function(ionic) {
+'use strict';
   var DragOp = function() {};
   DragOp.prototype = {
     start: function(e) {
@@ -1857,7 +1859,7 @@ window.ionic = {
 
   SlideDrag.prototype = new DragOp();
   SlideDrag.prototype.start = function(e) {
-    var content;
+    var content, buttons, offsetX, buttonsWidth;
 
     if(e.target.classList.contains('list-item-content')) {
       content = e.target;
@@ -1874,7 +1876,7 @@ window.ionic = {
     content.classList.remove('list-item-sliding');
 
     // Grab the starting X point for the item (for example, so we can tell whether it is open or closed to start)
-    var offsetX = parseFloat(content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
+    offsetX = parseFloat(content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
 
     // Grab the buttons
     buttons = content.parentNode.querySelector('.list-item-buttons');
@@ -1892,7 +1894,7 @@ window.ionic = {
   };
 
   SlideDrag.prototype.drag = function(e) {
-    var _this = this;
+    var _this = this, buttonsWidth;
 
     window.requestAnimationFrame(function() {
       // We really aren't dragging
@@ -1910,6 +1912,7 @@ window.ionic = {
       }
 
       if(_this._isDragging) {
+        buttonsWidth = _this._currentDrag.buttonsWidth;
 
         // Grab the new X point, capping it at zero
         var newX = Math.min(0, _this._currentDrag.startOffsetX + e.gesture.deltaX);
@@ -2164,6 +2167,7 @@ window.ionic = {
 })(ionic);
 ;
 (function(ionic) {
+'use strict';
   ionic.views.Modal = function(opts) {
     this.el = opts.el;
   };
@@ -2180,6 +2184,7 @@ window.ionic = {
 })(ionic);
 ;
 (function(ionic) {
+'use strict';
 
   ionic.views.NavBar = function(opts) {
     this.el = opts.el;
@@ -2233,8 +2238,8 @@ window.ionic = {
 
 })(ionic);
 ;
-
 (function(ionic) {
+'use strict';
 
   ionic.views.SideMenu = function(opts) {
     this.el = opts.el;
@@ -2260,6 +2265,7 @@ window.ionic = {
 })(ionic);
 ;
 (function(ionic) {
+'use strict';
 
 ionic.views.TabBarItem = function(el) {
   this.el = el;
@@ -2461,8 +2467,8 @@ ionic.views.TabBar.prototype = {
 
 })(window.ionic);
 ;
-
 (function(ionic) {
+'use strict';
 
   ionic.views.Toggle = function(opts) {
     this.el = opts.el;
@@ -2539,6 +2545,7 @@ ionic.views.TabBar.prototype = {
 })(ionic);
 ;
 (function(ionic) {
+'use strict';
 
 /**
  * The NavController makes it easy to have a stack
@@ -2697,6 +2704,7 @@ ionic.controllers.NavController.prototype = {
  * Adapted from Backbone.js
  */
 (function(ionic) {
+'use strict';
   var optionalParam = /\((.*?)\)/g;
   var namedParam    = /(\(\?)?:\w+/g;
   var splatParam    = /\*\w+/g;
@@ -2711,7 +2719,7 @@ ionic.controllers.NavController.prototype = {
   // Cached regex for removing a trailing slash.
   var trailingSlash = /\/$/;
 
-  RouteViewController = function(options) {
+  ionic.controllers.RouteViewController = function(options) {
     this.options = options;
 
     this.root = this.options.root || '/';
@@ -2725,7 +2733,7 @@ ionic.controllers.NavController.prototype = {
     this.history = window.history;
   };
 
-  RouteViewController.prototype = {
+  ionic.controllers.RouteViewController.prototype = {
     when: function(route, callback) {
       var _this = this;
 
@@ -3202,6 +3210,7 @@ ionic.controllers.TabBarController.prototype = {
 })(window.ionic);
 ;
 (function(ionic) {
+'use strict';
   ionic.ViewController = function(options) {
     this.init();
   };

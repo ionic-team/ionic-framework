@@ -1,4 +1,5 @@
 (function(ionic) {
+'use strict';
   /**
    * An ActionSheet is the slide up menu popularized on iOS.
    *

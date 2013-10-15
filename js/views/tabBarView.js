@@ -1,4 +1,5 @@
 (function(ionic) {
+'use strict';
 
 ionic.views.TabBarItem = function(el) {
   this.el = el;

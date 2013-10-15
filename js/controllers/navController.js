@@ -1,4 +1,5 @@
 (function(ionic) {
+'use strict';
 
 /**
  * The NavController makes it easy to have a stack

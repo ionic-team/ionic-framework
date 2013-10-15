@@ -1,5 +1,5 @@
-
 (function(ionic) {
+'use strict';
 
   ionic.views.SideMenu = function(opts) {
     this.el = opts.el;
