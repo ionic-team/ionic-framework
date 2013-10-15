@@ -8,7 +8,6 @@ angular.module('ionic.ui.sideMenu', [])
   ionic.controllers.SideMenuController.call(this, {
     left: {
       width: 270,
-      isEnabled: true,
       pushDown: function() {
         $scope.leftZIndex = -1;
       },
@@ -18,7 +17,6 @@ angular.module('ionic.ui.sideMenu', [])
     },
     right: {
       width: 270,
-      isEnabled: true,
       pushDown: function() {
         $scope.rightZIndex = -1;
       },
@@ -89,9 +87,16 @@ angular.module('ionic.ui.sideMenu', [])
     replace: true,
     transclude: true,
     template: '<div class="menu menu-{{side}}"></div>',
-    compile: function(element, attr, transclude, sideMenuCtrl) {
-      return function($scope, $element, $attr) {
+    compile: function(element, attr, transclude) {
+      return function($scope, $element, $attr, sideMenuCtrl) {
         $scope.side = attr.side;
+
+        if($scope.side == 'left') {
+          sideMenuCtrl.left.isEnabled = true;
+        } else if($scope.side == 'right') {
+          sideMenuCtrl.right.isEnabled = true;
+        }
+
         $element.append(transclude($scope));
       };
     }

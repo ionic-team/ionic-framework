@@ -6,14 +6,14 @@
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../../dist/ionic.css">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.js"></script>
   </head>
   <body>
 
-    <side-menu-ctrl>
+    <div side-menu-ctrl>
       <div class="full-section" side-menu-content>
         <header class="bar bar-header bar-dark">
           <a href="#" class="button"><i class="icon-reorder"></i></a>
@@ -34,9 +34,9 @@
       <menu side="right">
         <h2>Items</h2>
       </menu>
-    </side-menu-ctrl>
-    <script src="../../../../dist/ionic.js"></script>
-    <script src="../src/directive/ionicSideMenu.js"></script>
+    </div>
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
       angular.module('sideMenuTest', ['ionic.ui.sideMenu'])
 
