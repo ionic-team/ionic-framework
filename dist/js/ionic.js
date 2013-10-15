@@ -2364,23 +2364,38 @@ window.ionic = {
     _handleDrag: function(e) {
       var _this = this;
       window.requestAnimationFrame(function() {
+        var content;
+
         // We really aren't dragging
         if(!_this._currentDrag) {
           _this._startDrag(e);
         }
 
-        // Check if we should start dragging. Check if we've dragged past the threshold,
-        // or we are starting from the open state.
-        if(!_this._isDragging &&
-            ((Math.abs(e.gesture.deltaX) > _this.dragThresholdX) || (Math.abs(_this._currentDrag.startOffsetX) > 0)))
-        {
+        // Sanity
+        if(!_this._currentDrag) { return; }
+
+        // Check if we should start dragging. Check if we've dragged past the threshold.
+        if(!_this._isDragging && (Math.abs(e.gesture.deltaX) > _this.dragThresholdX)) {
           _this._isDragging = true;
         }
 
         if(_this._isDragging) {
-          // Grab the new X point, capping it at zero
-          var newX = Math.min(_this._currentDrag.content.offsetWidth, _this._currentDrag.startOffsetX + e.gesture.deltaX);
+          content = _this._currentDrag.content;
 
+          // Grab the new X point, capping it at zero
+          var newX = Math.min(content.offsetWidth, _this._currentDrag.startOffsetX + e.gesture.deltaX);
+
+          /*
+          var rightMostX = -(content.offsetWidth * Math.max(0, content.children.length - 1));
+
+          if(newX > 0) {
+            // We are dragging past the leftmost pane, rubber band
+            newX *= 0.4;
+          } else if(newX < rightMostX) {
+            // Dragging past the rightmost pane, rubber band
+            newX = Math.min(rightMostX, + (((e.gesture.deltaX + buttonsWidth) * 0.4)));
+          }
+          */
 
           _this._currentDrag.content.style.webkitTransform = 'translate3d(' + newX + 'px, 0, 0)';
         }
