@@ -1,11 +1,22 @@
-.hidden, .hide { display: none !important; }
+.hidden, 
+.hide { 
+  display: none !important; 
+}
 
 .padded {
   padding: $content-padding;
 }
 
+.padded-2 {
+  padding: $content-padding * 2;
+}
+
 .inset {
   margin: $inset-margin;
+}
+
+.inset-2 {
+  margin: $inset-margin * 2;
 }
 
 .rounded {

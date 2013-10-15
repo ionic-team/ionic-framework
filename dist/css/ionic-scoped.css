@@ -1066,6 +1066,7 @@
     overflow: hidden;
     margin: 0;
     padding: 0;
+    color: black;
     word-wrap: break-word;
     font-size: 14px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -1089,9 +1090,9 @@
   .ionic .content-wrapper {
     position: absolute;
     top: 0;
-    height: 100%;
-    width: 100%;
     overflow: auto;
+    width: 100%;
+    height: 100%;
     -webkit-overflow-scrolling: touch; }
   .ionic .has-header {
     margin-top: 44px; }
@@ -1111,20 +1112,25 @@
     height: 100%;
     background-color: #fff;
     -webkit-overflow-scrolling: touch; }
-  .ionic .hidden, .ionic .hide {
+  .ionic .hidden,
+  .ionic .hide {
     display: none !important; }
   .ionic .padded {
     padding: 10px; }
+  .ionic .padded-2 {
+    padding: 20px; }
   .ionic .inset {
     margin: 10px; }
+  .ionic .inset-2 {
+    margin: 20px; }
   .ionic .rounded {
     border-radius: 4px; }
   .ionic p {
     margin: 0 0 10px; }
   .ionic .lead {
     margin-bottom: 20px;
-    font-size: 16.1px;
     font-weight: 200;
+    font-size: 16.1px;
     line-height: 1.4; }
   .ionic small {
     font-size: 85%; }
@@ -1138,8 +1144,9 @@
     text-align: center; }
   .ionic h1, .ionic h2, .ionic h3, .ionic h4, .ionic h5, .ionic h6,
   .ionic .h1, .ionic .h2, .ionic .h3, .ionic .h4, .ionic .h5, .ionic .h6 {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: black;
     font-weight: 500;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     line-height: 1.1; }
     .ionic h1 small, .ionic h2 small, .ionic h3 small, .ionic h4 small, .ionic h5 small, .ionic h6 small,
     .ionic .h1 small, .ionic .h2 small, .ionic .h3 small, .ionic .h4 small, .ionic .h5 small, .ionic .h6 small {
@@ -1184,12 +1191,12 @@
   .ionic dd {
     margin-left: 0; }
   .ionic blockquote {
-    padding: 10px 20px;
     margin: 0 0 20px;
+    padding: 10px 20px;
     border-left: 5px solid gray; }
     .ionic blockquote p {
-      font-size: 17.5px;
       font-weight: 300;
+      font-size: 17.5px;
       line-height: 1.25; }
     .ionic blockquote p:last-child {
       margin-bottom: 0; }

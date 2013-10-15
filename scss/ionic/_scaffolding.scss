@@ -24,6 +24,7 @@ body, .ionic-body {
   overflow: hidden;
   margin: 0;
   padding: 0;
+  color: $base-color;
   word-wrap: break-word;
   font-size: $font-size-base;
   font-family: $base-font-family;
@@ -63,9 +64,9 @@ body, .ionic-body {
 .content-wrapper {
   position: absolute; 
   top: 0;
-  height: 100%;
-  width: 100%;
   overflow: auto;
+  width: 100%;
+  height: 100%;
   -webkit-overflow-scrolling: touch;
 }
 

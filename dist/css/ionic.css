@@ -1387,6 +1387,7 @@ body, .ionic-body {
   overflow: hidden;
   margin: 0;
   padding: 0;
+  color: black;
   word-wrap: break-word;
   font-size: 14px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -1415,9 +1416,9 @@ body, .ionic-body {
 .content-wrapper {
   position: absolute;
   top: 0;
-  height: 100%;
-  width: 100%;
   overflow: auto;
+  width: 100%;
+  height: 100%;
   -webkit-overflow-scrolling: touch; }
 
 .has-header {
@@ -1442,14 +1443,21 @@ body, .ionic-body {
   background-color: #fff;
   -webkit-overflow-scrolling: touch; }
 
-.hidden, .hide {
+.hidden,
+.hide {
   display: none !important; }
 
 .padded {
   padding: 10px; }
 
+.padded-2 {
+  padding: 20px; }
+
 .inset {
   margin: 10px; }
+
+.inset-2 {
+  margin: 20px; }
 
 .rounded {
   border-radius: 4px; }
@@ -1459,8 +1467,8 @@ p {
 
 .lead {
   margin-bottom: 20px;
-  font-size: 16.1px;
   font-weight: 200;
+  font-size: 16.1px;
   line-height: 1.4; }
 
 small {
@@ -1480,8 +1488,9 @@ cite {
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: black;
   font-weight: 500;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 1.1; }
   h1 small, h2 small, h3 small, h4 small, h5 small, h6 small,
   .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small {
@@ -1542,12 +1551,12 @@ dd {
   margin-left: 0; }
 
 blockquote {
-  padding: 10px 20px;
   margin: 0 0 20px;
+  padding: 10px 20px;
   border-left: 5px solid gray; }
   blockquote p {
-    font-size: 17.5px;
     font-weight: 300;
+    font-size: 17.5px;
     line-height: 1.25; }
   blockquote p:last-child {
     margin-bottom: 0; }

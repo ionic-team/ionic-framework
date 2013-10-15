@@ -11,8 +11,8 @@ p {
 }
 .lead {
   margin-bottom: $line-height-computed;
-  font-size: ($font-size-base * 1.15);
   font-weight: 200;
+  font-size: ($font-size-base * 1.15);
   line-height: 1.4;
 }
 
@@ -37,8 +37,9 @@ cite    { font-style: normal; }
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: $headings-font-family;
+  color: $base-color;
   font-weight: $headings-font-weight;
+  font-family: $headings-font-family;
   line-height: $headings-line-height;
   small {
     font-weight: normal;
@@ -84,17 +85,17 @@ dt {
   font-weight: bold;
 }
 dd {
-  margin-left: 0; // Undo browser default
+  margin-left: 0; // Undo browser default;
 }
 
 // Blockquotes
 blockquote {
-  padding: ($line-height-computed / 2) $line-height-computed;
   margin: 0 0 $line-height-computed;
+  padding: ($line-height-computed / 2) $line-height-computed;
   border-left: 5px solid gray;
   p {
-    font-size: ($font-size-base * 1.25);
     font-weight: 300;
+    font-size: ($font-size-base * 1.25);
     line-height: 1.25;
   }
   p:last-child {
@@ -104,7 +105,7 @@ blockquote {
     display: block;
     line-height: $line-height-base;
     &:before {
-      content: '\2014 \00A0';// EM DASH, NBSP
+      content: '\2014 \00A0';// EM DASH, NBSP;
     }
   }
 
@@ -123,7 +124,7 @@ blockquote {
         content: '';
       }
       &:after {
-        content: '\00A0 \2014';// NBSP, EM DASH
+        content: '\00A0 \2014';// NBSP, EM DASH;
       }
     }
   }
