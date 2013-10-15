@@ -1,10 +1,13 @@
 .slide-box {
   position: relative;
   white-space: nowrap;
-
   -webkit-transition: -webkit-transform 0 ease-in-out;
+
+  // Remove the gaps between slide content items
+  font-size: 0;
 }
-.slide-box.animate {
+.slide-box-animating {
+  -webkit-transition-duration: 0.2s;
 }
 .slide-box-content {
   display: inline-block;

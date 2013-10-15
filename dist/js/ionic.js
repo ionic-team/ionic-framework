@@ -2307,7 +2307,7 @@ window.ionic = {
       }
 
       // Disable transitions during drag
-      content.style.webkitTransitionDuration = '0';
+      content.classList.remove('slide-box-animating');
 
       // Grab the starting X point for the item (for example, so we can tell whether it is open or closed to start)
       offsetX = parseFloat(content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
@@ -2320,6 +2320,8 @@ window.ionic = {
 
     _handleEndDrag: function(e) {
       var _this = this;
+
+      var finalOffsetX, content, ratio, slideWidth, totalWidth, offsetX;
       
       // We didn't have a drag, so just init and leave
       if(!this._currentDrag) {
@@ -2329,25 +2331,29 @@ window.ionic = {
 
       // Snap to the correct spot
 
-      var content = this._currentDrag.content;
+      content = this._currentDrag.content;
 
       // Enable transition duration
-      content.style.webkitTransitionDuration = '0.2s';
+      content.classList.add('slide-box-animating');
 
-      var offsetX = Math.abs(parseFloat(content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0);
-      var slideWidth = content.offsetWidth;
-      var totalWidth = content.offsetWidth * content.children.length;
+      offsetX = parseFloat(content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
+      slideWidth = content.offsetWidth;
+      totalWidth = content.offsetWidth * content.children.length;
 
       // Calculate how far in this slide we've dragged
-      var ratio = (offsetX % slideWidth) / slideWidth;
+      ratio = (offsetX % slideWidth) / slideWidth;
 
-      var finalOffsetX = Math.min(totalWidth, Math.ceil(offsetX / slideWidth) * slideWidth);
-
-      if(ratio < 0.5) {
-        finalOffsetX = Math.max(0, Math.floor(offsetX / slideWidth) * slideWidth);
+      if(ratio >= 0) {
+        // Anything greater than zero is too far left
+        finalOffsetX = 0;
+      } else if(ratio >= -0.5) {
+        finalOffsetX = Math.max(0, Math.floor(Math.abs(offsetX) / slideWidth) * slideWidth);
+      } else {
+        // Sliiide to the right
+        finalOffsetX = Math.min(totalWidth - slideWidth, Math.ceil(Math.abs(offsetX) / slideWidth) * slideWidth);
       }
 
-
+      // Negative offsetX to slide correctly
       content.style.webkitTransform = 'translate3d(' + -finalOffsetX + 'px, 0, 0)';
 
       this._initDrag();
@@ -2373,7 +2379,8 @@ window.ionic = {
 
         if(_this._isDragging) {
           // Grab the new X point, capping it at zero
-          var newX = Math.min(0, _this._currentDrag.startOffsetX + e.gesture.deltaX);
+          var newX = Math.min(_this._currentDrag.content.offsetWidth, _this._currentDrag.startOffsetX + e.gesture.deltaX);
+
 
           _this._currentDrag.content.style.webkitTransform = 'translate3d(' + newX + 'px, 0, 0)';
         }

@@ -3090,7 +3090,11 @@ a.button {
 .slide-box {
   position: relative;
   white-space: nowrap;
-  -webkit-transition: -webkit-transform 0 ease-in-out; }
+  -webkit-transition: -webkit-transform 0 ease-in-out;
+  font-size: 0; }
+
+.slide-box-animating {
+  -webkit-transition-duration: 0.2s; }
 
 .slide-box-content {
   display: inline-block;
