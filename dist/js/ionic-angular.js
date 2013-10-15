@@ -33,7 +33,7 @@ angular.module('ionic.service.actionSheet', ['ionic.service', 'ionic.ui.actionSh
         scope.sheet.hide();
         //scope.$destroy();
         opts.cancel();
-      }
+      };
 
       scope.buttonClicked = function(index) {
         // Check if the button click event returned true, which means
@@ -51,17 +51,17 @@ angular.module('ionic.service.actionSheet', ['ionic.service', 'ionic.ui.actionSh
           scope.sheet.hide();
           //scope.$destroy();
         }
-      }
+      };
 
       // Compile the template
       var element = $compile('<action-sheet buttons="buttons"></action-sheet>')(scope);
 
-      var scope = element.scope();
+      var s = element.scope();
 
       $document[0].body.appendChild(element[0]);
 
       var sheet = new ionic.views.ActionSheet({el: element[0] });
-      scope.sheet = sheet;
+      s.sheet = sheet;
 
       sheet.show();
 
@@ -70,6 +70,16 @@ angular.module('ionic.service.actionSheet', ['ionic.service', 'ionic.ui.actionSh
   };
 }]);
 ;
+;
+angular.module('ionic.service.gesture', [])
+
+.factory('Gesture', [function() {
+  return {
+    on: function(eventType, cb, element) {
+      return window.ionic.onGesture(eventType, cb, element);
+    }
+  };
+}]);
 ;
 angular.module('ionic.service.modal', ['ionic.service'])
 
@@ -125,9 +135,12 @@ angular.module('ionic.service', [])
 
       return deferred.promise;
     }
-  }
+  };
 }]);
 ;
+(function() {
+'use strict';
+
 angular.module('ionic.ui.actionSheet', [])
 
 .directive('actionSheet', function() {
@@ -152,9 +165,14 @@ angular.module('ionic.ui.actionSheet', [])
                   '<button class="button" ng-click="cancel()">{{cancelText}}</button>' +
                 '</div>' +
               '</div>'
-  }
+  };
 });
+
+})();
 ;
+(function() {
+'use strict';
+
 angular.module('ionic.ui.checkbox', [])
 
 
@@ -193,8 +211,14 @@ angular.module('ionic.ui.checkbox', [])
         $scope.checkbox.val(ngModel.$viewValue);
       };
     }
-  }
+  };
 });
+
+})();
+;
+(function() {
+'use strict';
+
 angular.module('ionic.ui.content', [])
 
 // The content directive is a core scrollable content area
@@ -221,11 +245,15 @@ angular.module('ionic.ui.content', [])
           c.addClass('has-tabs');
         }
         c.append(transclude($scope));
-      }
+      };
     }
-  }
-})
+  };
+});
+})();
 ;
+(function() {
+'use strict';
+
 angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
 
 .directive('listItem', function() {
@@ -234,7 +262,6 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
     require: '^list',
     replace: true,
     transclude: true,
-    scope: true,
     scope: {
       item: '=',
       onSelect: '&',
@@ -270,7 +297,7 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
         $scope.isEditing = v;
       });
     }
-  }
+  };
 })
 
 .directive('list', function() {
@@ -306,11 +333,16 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
         if(attr.animation) {
           $element.addClass(attr.animation);
         }
-      }
+      };
     }
-  }
-})
+  };
+});
+
+})();
 ;
+(function() {
+'use strict';
+
 angular.module('ionic.ui.nav', ['ionic.service'])
 
 .controller('NavCtrl', ['$scope', '$element', '$compile', 'TemplateLoader', function($scope, $element, $compile, TemplateLoader) {
@@ -329,7 +361,7 @@ angular.module('ionic.ui.nav', ['ionic.service'])
         $element.append(cloned);
       });
     });
-  }
+  };
 
   ionic.controllers.NavController.call(this, {
     content: {
@@ -366,7 +398,7 @@ angular.module('ionic.ui.nav', ['ionic.service'])
     controller: 'NavCtrl',
     //templateUrl: 'ext/angular/tmpl/ionicTabBar.tmpl.html',
     template: '<div class="view" ng-transclude></div>',
-  }
+  };
 })
 
 .directive('navBar', function() {
@@ -383,9 +415,9 @@ angular.module('ionic.ui.nav', ['ionic.service'])
       scope.navController = navCtrl;
       scope.goBack = function() {
         navCtrl.pop();
-      }
+      };
     }
-  }
+  };
 })
 
 .directive('navContent', function() {
@@ -414,11 +446,27 @@ angular.module('ionic.ui.nav', ['ionic.service'])
         }
       });
     }
-  }
+  };
 });
-;
-angular.module('ionic.ui.sideMenu', [])
 
+})();
+;
+(function() {
+'use strict';
+
+/**
+ * @description
+ * The sideMenuCtrl lets you quickly have a draggable side
+ * left and/or right menu, which a center content area.
+ */
+
+angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
+
+/**
+ * The internal controller for the side menu controller. This
+ * extends our core Ionic side menu controller and exposes
+ * some side menu stuff on the current scope.
+ */
 .controller('SideMenuCtrl', function($scope) {
   var _this = this;
 
@@ -454,21 +502,22 @@ angular.module('ionic.ui.sideMenu', [])
   return {
     restrict: 'CA',
     controller: 'SideMenuCtrl',
-  }
+  };
 })
 
-.directive('sideMenuContent', function() {
+.directive('sideMenuContent', ['Gesture', function(Gesture) {
   return {
     restrict: 'CA',
     require: '^sideMenuCtrl',
     scope: true,
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, sideMenuCtrl) {
-        window.ionic.onGesture('drag', function(e) {
+
+        Gesture.on('drag', function(e) {
           sideMenuCtrl._handleDrag(e);
         }, $element[0]);
 
-        window.ionic.onGesture('release', function(e) {
+        Gesture.on('release', function(e) {
           sideMenuCtrl._endDrag(e);
         }, $element[0]);
 
@@ -495,8 +544,8 @@ angular.module('ionic.ui.sideMenu', [])
         });
       };
     }
-  }
-})
+  };
+}])
 
 
 .directive('menu', function() {
@@ -519,8 +568,9 @@ angular.module('ionic.ui.sideMenu', [])
         $element.append(transclude($scope));
       };
     }
-  }
-})
+  };
+});
+})();
 ;
 angular.module('ionic.ui.tabs', [])
 
@@ -562,7 +612,7 @@ angular.module('ionic.ui.tabs', [])
       return function($scope, $element, $attr) {
       };
     }
-  }
+  };
 })
 
 // Generic controller directive
@@ -587,7 +637,7 @@ angular.module('ionic.ui.tabs', [])
       scope.iconOff = attrs.iconOff;
       tabsCtrl.addController(scope);
     }
-  }
+  };
 })
 
 
@@ -601,7 +651,7 @@ angular.module('ionic.ui.tabs', [])
     template: '<div class="tabs tabs-primary">' + 
       '<tab-item title="{{controller.title}}" icon="{{controller.icon}}" icon-on="{{controller.iconOn}}" icon-off="{{controller.iconOff}}" active="controller.isVisible" index="$index" ng-repeat="controller in controllers"></tab-item>' + 
     '</div>'
-  }
+  };
 })
 
 .directive('tabItem', function() {
@@ -629,7 +679,7 @@ angular.module('ionic.ui.tabs', [])
         '<i class="{{iconOn}}" ng-if="active"></i>' +
         '<i class="{{iconOff}}" ng-if="!active"></i> {{title}}' +
       '</a>'
-  }
+  };
 });
 ;
 angular.module('ionic.ui.toggle', [])
@@ -678,5 +728,5 @@ angular.module('ionic.ui.toggle', [])
         $scope.toggle.val(ngModel.$viewValue);
       };
     }
-  }
-})
+  };
+});

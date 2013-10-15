@@ -1,4 +1,5 @@
 (function(ionic) {
+'use strict';
 
 ionic.controllers.TabBarController = function(options) {
   this.tabBar = options.tabBar;
@@ -117,6 +118,6 @@ ionic.controllers.TabBarController.prototype = {
     this._clearSelected();
     this.selectController(0);
   },
-}
+};
 
 })(window.ionic);

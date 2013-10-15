@@ -1,5 +1,19 @@
-angular.module('ionic.ui.sideMenu', [])
+(function() {
+'use strict';
 
+/**
+ * @description
+ * The sideMenuCtrl lets you quickly have a draggable side
+ * left and/or right menu, which a center content area.
+ */
+
+angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
+
+/**
+ * The internal controller for the side menu controller. This
+ * extends our core Ionic side menu controller and exposes
+ * some side menu stuff on the current scope.
+ */
 .controller('SideMenuCtrl', function($scope) {
   var _this = this;
 
@@ -35,21 +49,22 @@ angular.module('ionic.ui.sideMenu', [])
   return {
     restrict: 'CA',
     controller: 'SideMenuCtrl',
-  }
+  };
 })
 
-.directive('sideMenuContent', function() {
+.directive('sideMenuContent', ['Gesture', function(Gesture) {
   return {
     restrict: 'CA',
     require: '^sideMenuCtrl',
     scope: true,
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, sideMenuCtrl) {
-        window.ionic.onGesture('drag', function(e) {
+
+        Gesture.on('drag', function(e) {
           sideMenuCtrl._handleDrag(e);
         }, $element[0]);
 
-        window.ionic.onGesture('release', function(e) {
+        Gesture.on('release', function(e) {
           sideMenuCtrl._endDrag(e);
         }, $element[0]);
 
@@ -76,8 +91,8 @@ angular.module('ionic.ui.sideMenu', [])
         });
       };
     }
-  }
-})
+  };
+}])
 
 
 .directive('menu', function() {
@@ -100,5 +115,6 @@ angular.module('ionic.ui.sideMenu', [])
         $element.append(transclude($scope));
       };
     }
-  }
-})
+  };
+});
+})();

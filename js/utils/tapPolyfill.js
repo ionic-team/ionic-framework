@@ -18,9 +18,9 @@
     // if the source event wasn't from a touch event then don't use this polyfill
     if(!e.gesture || e.gesture.pointerType !== "touch" || !e.gesture.srcEvent) return;
 
-    var 
-    e = e.gesture.srcEvent, // evaluate the actual source event, not the created event by gestures.js
-    ele = e.target;
+    e = e.gesture.srcEvent; // evaluate the actual source event, not the created event by gestures.js
+
+    var ele = e.target;
 
     while(ele) {
       if( ele.tagName === "INPUT" || ele.tagName === "TEXTAREA" || ele.tagName === "SELECT" ) {

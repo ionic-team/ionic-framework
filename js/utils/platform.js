@@ -33,7 +33,7 @@
       }
       return parseFloat(window.device.version) >= 7.0;
     }
-  }
+  };
 
   ionic.Platform.detect();
 })(window.ionic);

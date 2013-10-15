@@ -1,3 +1,6 @@
+(function() {
+'use strict';
+
 angular.module('ionic.ui.content', [])
 
 // The content directive is a core scrollable content area
@@ -24,7 +27,8 @@ angular.module('ionic.ui.content', [])
           c.addClass('has-tabs');
         }
         c.append(transclude($scope));
-      }
+      };
     }
-  }
-})
+  };
+});
+})();

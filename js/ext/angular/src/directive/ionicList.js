@@ -1,3 +1,6 @@
+(function() {
+'use strict';
+
 angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
 
 .directive('listItem', function() {
@@ -6,7 +9,6 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
     require: '^list',
     replace: true,
     transclude: true,
-    scope: true,
     scope: {
       item: '=',
       onSelect: '&',
@@ -42,7 +44,7 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
         $scope.isEditing = v;
       });
     }
-  }
+  };
 })
 
 .directive('list', function() {
@@ -78,7 +80,9 @@ angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
         if(attr.animation) {
           $element.addClass(attr.animation);
         }
-      }
+      };
     }
-  }
-})
+  };
+});
+
+})();

@@ -18,5 +18,5 @@
       }
       return dest;
     },
-  }
+  };
 })(window.ionic);

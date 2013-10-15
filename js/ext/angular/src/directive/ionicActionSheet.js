@@ -1,3 +1,6 @@
+(function() {
+'use strict';
+
 angular.module('ionic.ui.actionSheet', [])
 
 .directive('actionSheet', function() {
@@ -22,5 +25,7 @@ angular.module('ionic.ui.actionSheet', [])
                   '<button class="button" ng-click="cancel()">{{cancelText}}</button>' +
                 '</div>' +
               '</div>'
-  }
+  };
 });
+
+})();

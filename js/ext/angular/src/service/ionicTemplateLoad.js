@@ -11,5 +11,5 @@ angular.module('ionic.service', [])
 
       return deferred.promise;
     }
-  }
+  };
 }]);

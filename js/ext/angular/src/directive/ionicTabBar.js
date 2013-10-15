@@ -38,7 +38,7 @@ angular.module('ionic.ui.tabs', [])
       return function($scope, $element, $attr) {
       };
     }
-  }
+  };
 })
 
 // Generic controller directive
@@ -63,7 +63,7 @@ angular.module('ionic.ui.tabs', [])
       scope.iconOff = attrs.iconOff;
       tabsCtrl.addController(scope);
     }
-  }
+  };
 })
 
 
@@ -77,7 +77,7 @@ angular.module('ionic.ui.tabs', [])
     template: '<div class="tabs tabs-primary">' + 
       '<tab-item title="{{controller.title}}" icon="{{controller.icon}}" icon-on="{{controller.iconOn}}" icon-off="{{controller.iconOff}}" active="controller.isVisible" index="$index" ng-repeat="controller in controllers"></tab-item>' + 
     '</div>'
-  }
+  };
 })
 
 .directive('tabItem', function() {
@@ -105,5 +105,5 @@ angular.module('ionic.ui.tabs', [])
         '<i class="{{iconOn}}" ng-if="active"></i>' +
         '<i class="{{iconOff}}" ng-if="!active"></i> {{title}}' +
       '</a>'
-  }
+  };
 });

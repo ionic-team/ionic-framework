@@ -94,7 +94,7 @@ window.ionic = {
       }
       return null;
     }
-  }
+  };
 })(window.ionic);
 ;
 /**
@@ -196,11 +196,11 @@ window.ionic = {
   
   
   // Map some convenient top-level functions for event handling
-  ionic.on = function() { ionic.EventController.on.apply(ionic.EventController, arguments); }
-  ionic.off = function() { ionic.EventController.off.apply(ionic.EventController, arguments); }
-  ionic.trigger = function() { ionic.EventController.trigger.apply(ionic.EventController.trigger, arguments); }
-  ionic.onGesture = function() { ionic.EventController.onGesture.apply(ionic.EventController.onGesture, arguments); }
-  ionic.offGesture = function() { ionic.EventController.offGesture.apply(ionic.EventController.offGesture, arguments); }
+  ionic.on = function() { ionic.EventController.on.apply(ionic.EventController, arguments); };
+  ionic.off = function() { ionic.EventController.off.apply(ionic.EventController, arguments); };
+  ionic.trigger = function() { ionic.EventController.trigger.apply(ionic.EventController.trigger, arguments); };
+  ionic.onGesture = function() { ionic.EventController.onGesture.apply(ionic.EventController.onGesture, arguments); };
+  ionic.offGesture = function() { ionic.EventController.offGesture.apply(ionic.EventController.offGesture, arguments); };
 
   // DISABLING FOR NOW. THE TAP CODE AT THE EXT LEVEL SHOULD BE DOING THIS
   // Set up various listeners
@@ -1672,7 +1672,7 @@ window.ionic = {
       }
       return parseFloat(window.device.version) >= 7.0;
     }
-  }
+  };
 
   ionic.Platform.detect();
 })(window.ionic);
@@ -1697,9 +1697,9 @@ window.ionic = {
     // if the source event wasn't from a touch event then don't use this polyfill
     if(!e.gesture || e.gesture.pointerType !== "touch" || !e.gesture.srcEvent) return;
 
-    var 
-    e = e.gesture.srcEvent, // evaluate the actual source event, not the created event by gestures.js
-    ele = e.target;
+    e = e.gesture.srcEvent; // evaluate the actual source event, not the created event by gestures.js
+
+    var ele = e.target;
 
     while(ele) {
       if( ele.tagName === "INPUT" || ele.tagName === "TEXTAREA" || ele.tagName === "SELECT" ) {
@@ -1754,7 +1754,7 @@ window.ionic = {
       }
       return dest;
     },
-  }
+  };
 })(window.ionic);
 ;
 (function(ionic) {
@@ -1848,7 +1848,7 @@ window.ionic = {
     },
     end: function(e) {
     }
-  }
+  };
 
   var SlideDrag = function(opts) {
     this.dragThresholdX = opts.dragThresholdX || 10;
@@ -1958,7 +1958,7 @@ window.ionic = {
         content.classList.remove('list-item-sliding');
       }
       e.target.removeEventListener('webkitTransitionEnd', onRestingAnimationEnd);
-    }
+    };
 
     window.requestAnimationFrame(function() {
       var currentX = parseFloat(_this._currentDrag.content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
@@ -1975,12 +1975,13 @@ window.ionic = {
       // We are done, notify caller
       doneCallback && doneCallback();
     });
-  }
+  };
 
   var ReorderDrag = function(opts) {
     this.dragThresholdY = opts.dragThresholdY || 0;
     this.el = opts.el;
   };
+
   ReorderDrag.prototype = new DragOp();
 
   ReorderDrag.prototype.start = function(e) {
@@ -2178,7 +2179,6 @@ window.ionic = {
 
 })(ionic);
 ;
-
 (function(ionic) {
 
   ionic.views.NavBar = function(opts) {
@@ -2218,7 +2218,7 @@ window.ionic = {
         this._currentBackButton = back;
         this._currentBackButton.onclick = function(event) {
           _this.shouldGoBack && _this.shouldGoBack();
-        }
+        };
       }
 
       if(shouldShow && !this._currentBackButton.parentNode) {
@@ -2562,7 +2562,7 @@ ionic.controllers.NavController = function(opts) {
   // TODO: Is this the best way?
   this.navBar.shouldGoBack = function() {
     _this.pop();
-  }
+  };
 };
 
 ionic.controllers.NavController.prototype = {
@@ -2808,8 +2808,9 @@ ionic.controllers.NavController.prototype = {
   };
 })(window.ionic);
 ;
-
 (function(ionic) {
+'use strict';
+
   /**
    * The SideMenuController is a controller with a left and/or right menu that
    * can be slid out and toggled. Seen on many an app.
@@ -2989,11 +2990,11 @@ ionic.controllers.NavController.prototype = {
       // what the drag velocity is
       var ratio = this.getOpenRatio();
 
-      if(ratio == 0)
+      if(ratio === 0)
         return;
 
       var velocityThreshold = 0.3;
-      var velocityX = e.gesture.velocityX
+      var velocityX = e.gesture.velocityX;
       var direction = e.gesture.direction;
 
       // Less than half, going left 
@@ -3060,7 +3061,7 @@ ionic.controllers.NavController.prototype = {
       if(!this._isDragging && Math.abs(this._lastX - this._startX) > this.dragThresholdX) {
         // if the difference is greater than threshold, start dragging using the current
         // point as the starting point
-        this._startX = this._lastX
+        this._startX = this._lastX;
 
         this._isDragging = true;
         // Initialize dragging
@@ -3077,6 +3078,7 @@ ionic.controllers.NavController.prototype = {
 })(ionic);
 ;
 (function(ionic) {
+'use strict';
 
 ionic.controllers.TabBarController = function(options) {
   this.tabBar = options.tabBar;
@@ -3195,7 +3197,7 @@ ionic.controllers.TabBarController.prototype = {
     this._clearSelected();
     this.selectController(0);
   },
-}
+};
 
 })(window.ionic);
 ;

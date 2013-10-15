@@ -80,7 +80,7 @@ describe('TabBar view', function() {
 
     tabBar.destroy();
 
-    var event = new CustomEvent('tap', {
+    event = new CustomEvent('tap', {
       target: item.el
     });
     item.el.dispatchEvent(event);
@@ -129,7 +129,7 @@ describe('TabBarItem view', function() {
 
     item.destroy();
 
-    var event = new CustomEvent('tap', {
+    event = new CustomEvent('tap', {
       target: item.el
     });
     item.el.dispatchEvent(event);

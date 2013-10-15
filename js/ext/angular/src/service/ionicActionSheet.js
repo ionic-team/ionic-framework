@@ -19,7 +19,7 @@ angular.module('ionic.service.actionSheet', ['ionic.service', 'ionic.ui.actionSh
         scope.sheet.hide();
         //scope.$destroy();
         opts.cancel();
-      }
+      };
 
       scope.buttonClicked = function(index) {
         // Check if the button click event returned true, which means
@@ -37,17 +37,17 @@ angular.module('ionic.service.actionSheet', ['ionic.service', 'ionic.ui.actionSh
           scope.sheet.hide();
           //scope.$destroy();
         }
-      }
+      };
 
       // Compile the template
       var element = $compile('<action-sheet buttons="buttons"></action-sheet>')(scope);
 
-      var scope = element.scope();
+      var s = element.scope();
 
       $document[0].body.appendChild(element[0]);
 
       var sheet = new ionic.views.ActionSheet({el: element[0] });
-      scope.sheet = sheet;
+      s.sheet = sheet;
 
       sheet.show();
 

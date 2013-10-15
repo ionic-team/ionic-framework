@@ -1,3 +1,6 @@
+(function() {
+'use strict';
+
 angular.module('ionic.ui.checkbox', [])
 
 
@@ -36,5 +39,7 @@ angular.module('ionic.ui.checkbox', [])
         $scope.checkbox.val(ngModel.$viewValue);
       };
     }
-  }
-})
+  };
+});
+
+})();

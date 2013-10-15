@@ -1,5 +1,6 @@
-
 (function(ionic) {
+'use strict';
+
   /**
    * The SideMenuController is a controller with a left and/or right menu that
    * can be slid out and toggled. Seen on many an app.
@@ -179,11 +180,11 @@
       // what the drag velocity is
       var ratio = this.getOpenRatio();
 
-      if(ratio == 0)
+      if(ratio === 0)
         return;
 
       var velocityThreshold = 0.3;
-      var velocityX = e.gesture.velocityX
+      var velocityX = e.gesture.velocityX;
       var direction = e.gesture.direction;
 
       // Less than half, going left 
@@ -250,7 +251,7 @@
       if(!this._isDragging && Math.abs(this._lastX - this._startX) > this.dragThresholdX) {
         // if the difference is greater than threshold, start dragging using the current
         // point as the starting point
-        this._startX = this._lastX
+        this._startX = this._lastX;
 
         this._isDragging = true;
         // Initialize dragging

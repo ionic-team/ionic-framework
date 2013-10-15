@@ -7,7 +7,7 @@
     },
     end: function(e) {
     }
-  }
+  };
 
   var SlideDrag = function(opts) {
     this.dragThresholdX = opts.dragThresholdX || 10;
@@ -117,7 +117,7 @@
         content.classList.remove('list-item-sliding');
       }
       e.target.removeEventListener('webkitTransitionEnd', onRestingAnimationEnd);
-    }
+    };
 
     window.requestAnimationFrame(function() {
       var currentX = parseFloat(_this._currentDrag.content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
@@ -134,12 +134,13 @@
       // We are done, notify caller
       doneCallback && doneCallback();
     });
-  }
+  };
 
   var ReorderDrag = function(opts) {
     this.dragThresholdY = opts.dragThresholdY || 0;
     this.el = opts.el;
   };
+
   ReorderDrag.prototype = new DragOp();
 
   ReorderDrag.prototype.start = function(e) {

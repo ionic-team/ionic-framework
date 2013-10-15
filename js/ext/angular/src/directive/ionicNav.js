@@ -1,3 +1,6 @@
+(function() {
+'use strict';
+
 angular.module('ionic.ui.nav', ['ionic.service'])
 
 .controller('NavCtrl', ['$scope', '$element', '$compile', 'TemplateLoader', function($scope, $element, $compile, TemplateLoader) {
@@ -16,7 +19,7 @@ angular.module('ionic.ui.nav', ['ionic.service'])
         $element.append(cloned);
       });
     });
-  }
+  };
 
   ionic.controllers.NavController.call(this, {
     content: {
@@ -53,7 +56,7 @@ angular.module('ionic.ui.nav', ['ionic.service'])
     controller: 'NavCtrl',
     //templateUrl: 'ext/angular/tmpl/ionicTabBar.tmpl.html',
     template: '<div class="view" ng-transclude></div>',
-  }
+  };
 })
 
 .directive('navBar', function() {
@@ -70,9 +73,9 @@ angular.module('ionic.ui.nav', ['ionic.service'])
       scope.navController = navCtrl;
       scope.goBack = function() {
         navCtrl.pop();
-      }
+      };
     }
-  }
+  };
 })
 
 .directive('navContent', function() {
@@ -101,5 +104,7 @@ angular.module('ionic.ui.nav', ['ionic.service'])
         }
       });
     }
-  }
+  };
 });
+
+})();

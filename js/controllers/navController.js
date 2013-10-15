@@ -22,7 +22,7 @@ ionic.controllers.NavController = function(opts) {
   // TODO: Is this the best way?
   this.navBar.shouldGoBack = function() {
     _this.pop();
-  }
+  };
 };
 
 ionic.controllers.NavController.prototype = {

@@ -1,4 +1,3 @@
-
 (function(ionic) {
 
   ionic.views.NavBar = function(opts) {
@@ -38,7 +37,7 @@
         this._currentBackButton = back;
         this._currentBackButton.onclick = function(event) {
           _this.shouldGoBack && _this.shouldGoBack();
-        }
+        };
       }
 
       if(shouldShow && !this._currentBackButton.parentNode) {

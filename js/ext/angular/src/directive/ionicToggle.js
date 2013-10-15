@@ -44,5 +44,5 @@ angular.module('ionic.ui.toggle', [])
         $scope.toggle.val(ngModel.$viewValue);
       };
     }
-  }
-})
+  };
+});

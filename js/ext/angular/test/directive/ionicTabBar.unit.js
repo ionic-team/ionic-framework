@@ -91,4 +91,4 @@ describe('Tab Item directive', function() {
     a.click();
     expect(scope.selectTab).toHaveBeenCalled();
   });
-})
+});

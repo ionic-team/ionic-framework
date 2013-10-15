@@ -8,7 +8,7 @@ describe('TabBarController', function() {
         el: tabEl.get(0)
       })
     });
-  })
+  });
 
   it('Should add Controllers', function() {
     ctrl.addController({
@@ -82,4 +82,4 @@ describe('TabBarController', function() {
     expect(ctrl.getSelectedController()).toBe(ctrl.getController(0));
   });
 
-})
+});

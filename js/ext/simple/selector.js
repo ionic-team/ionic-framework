@@ -9,30 +9,32 @@
       }
       return ret;
     }
-  }
+  };
 
   if (window.jQuery) {
     // if jQuery is present then it should be the default
     jq = window.jQuery;
 
+    var fnExtended = function() {
+      var 
+      x,
+      ret; // if incase this isn't an ionic component
+
+      for(x = 0; x < this.length; x++) {
+        ionic.component( this[x] );
+        if( this[x].component ) {
+          ret = this[x].component[name].apply(this[x].component, arguments);
+        }
+      }
+
+      // if this isn't an ionic component, run the usual jQuery fn
+      return jQueryFn.apply(this, arguments); 
+    };
+
     // extend the methods which are in ionic.fn and in jQuery.fn
     for(var name in ionic.fn) {
       var jQueryFn = jq.fn[name];
-      jq.fn[name] = function() {
-        var 
-        x,
-        ret; // if incase this isn't an ionic component
-
-        for(x = 0; x < this.length; x++) {
-          ionic.component( this[x] );
-          if( this[x].component ) {
-            ret = this[x].component[name].apply(this[x].component, arguments);
-          }
-        }
-
-        // if this isn't an ionic component, run the usual jQuery fn
-        return jQueryFn.apply(this, arguments); 
-      }
+      jq.fn[name] = fnExtended;
     }
 
   } else {
@@ -56,7 +58,7 @@
 
     $ = function(selector, context) {
       return jq.init(selector, context);
-    }
+    };
   }
 
 })(this, document, ionic);

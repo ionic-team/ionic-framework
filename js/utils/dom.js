@@ -30,5 +30,5 @@
       }
       return null;
     }
-  }
+  };
 })(window.ionic);

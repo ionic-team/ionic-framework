@@ -10,8 +10,8 @@ describe('NavController', function() {
       },
       attach: function() {
       }
-    }
-  }
+    };
+  };
 
   beforeEach(function() {
     navBarEl = document.createElement('div');
