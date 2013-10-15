@@ -46,11 +46,13 @@
 
   &.button-default {
     @include button-style($button-default-bg, $button-default-border, $button-default-active-bg, $button-default-active-border, $gray-dark);
-    @include button-clear($gray-dark);
+    @include button-clear($button-default-border);
+    @include button-outline($button-default-border, $gray-dark);
   }
   &.button-secondary {
     @include button-style($button-secondary-bg, $button-secondary-border, $button-secondary-active-bg, $button-secondary-active-border, $gray-dark);
-    @include button-clear($gray-dark);
+    @include button-clear($button-secondary-border);
+    @include button-outline($button-secondary-border, $gray-dark);
   }
   &.button-primary {
     @include button-style($button-primary-bg, $button-primary-border, $button-primary-active-bg, $button-primary-active-border, $white);

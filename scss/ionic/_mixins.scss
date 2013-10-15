@@ -36,10 +36,13 @@
   }
 }
 
-@mixin button-outline($color) {
+@mixin button-outline($color, $textColor:"") {
   &.button-outline {
     border-color: $color;
-    color: $color;
+    @if $textColor == "" {
+      $textColor: $color;
+    } 
+    color: $textColor;
     &.active, &:active {
       background-color: $color;
       color: #fff;

@@ -2247,9 +2247,16 @@
         box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
         border-color: #bbbbbb; }
       .ionic .button.button-default.button-clear {
-        color: #333333;
+        color: #dddddd;
         background: none;
         box-shadow: none; }
+      .ionic .button.button-default.button-outline {
+        border-color: #dddddd;
+        color: #333333; }
+        .ionic .button.button-default.button-outline.active, .ionic .button.button-default.button-outline:active {
+          background-color: #dddddd;
+          color: #fff;
+          box-shadow: none; }
     .ionic .button.button-secondary {
       color: #333333;
       background-color: whitesmoke;
@@ -2262,9 +2269,16 @@
         box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
         border-color: #999999; }
       .ionic .button.button-secondary.button-clear {
-        color: #333333;
+        color: #bbbbbb;
         background: none;
         box-shadow: none; }
+      .ionic .button.button-secondary.button-outline {
+        border-color: #bbbbbb;
+        color: #333333; }
+        .ionic .button.button-secondary.button-outline.active, .ionic .button.button-secondary.button-outline:active {
+          background-color: #bbbbbb;
+          color: #fff;
+          box-shadow: none; }
     .ionic .button.button-primary {
       color: white;
       background-color: #4a87ee;
