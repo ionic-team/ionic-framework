@@ -7,7 +7,7 @@ describe('Ionic Toggle', function() {
     el = $compile('<toggle ng-model="data.name"></toggle>')($rootScope);
   }));
 
-  iit('Should load', function() {
+  it('Should load', function() {
     var toggleView = el.scope().toggle;
     expect(toggleView).not.toEqual(null);
     expect(toggleView.checkbox).not.toEqual(null);
@@ -15,7 +15,7 @@ describe('Ionic Toggle', function() {
     expect(toggleView.handle).not.toEqual(null);
   });
 
-  iit('Should toggle', function() {
+  it('Should toggle', function() {
     var toggle = el.scope().toggle;
     expect(toggle.val()).toBe(false);
     el.click();
