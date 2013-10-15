@@ -121,7 +121,6 @@
             </form>
             <list id="task-list">
               <li class="list-item" ng-repeat="task in activeProject.tasks" ng-class="{completed: task.isCompleted}">
-                <input type="checkbox" ng-model="task.isCompleted"> {{task.title}}
                 <input type="text" ng-model="task.title">
               </li>
             </list>

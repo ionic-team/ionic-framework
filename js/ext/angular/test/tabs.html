@@ -52,6 +52,7 @@
 
       <div title="Home" icon-on="icon-ios7-filing" icon-off="icon-ios7-filing-outline" class="tab-content" ng-controller="HomeCtrl">
         <header class="bar bar-header bar-secondary">
+          <button class="button button-clear button-primary" ng-click="newTask()">New</button>
           <h1 class="title">Tasks</h1>
           <button class="button button-clear button-primary" ng-click="isEditingItems = !isEditingItems">Edit</button>
         </header>
@@ -90,31 +91,62 @@
           <h1>Settings</h1>
         </content>
       </div>
+      
     </tab-controller>
+
+    <script id="newTask.html" type="text/ng-template">
+      <div id="task-view" class="modal slide-in-up" ng-controller="TaskCtrl">
+        <header class="bar bar-header bar-secondary">
+          <h1 class="title">New Task</h1>
+          <button class="button button-clear button-primary" ng-click="close()">Done</button>
+        </header>
+        <main class="content padded has-header">
+          <input type="text" placeholder="I need to do this...">
+        </main>
+      </div>
+    </script>
 
     <script src="../../../../dist/js/ionic.js"></script>
     <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
-      angular.module('tabsTest', ['ionic.ui'])
+      angular.module('tabsTest', ['ionic.ui', 'ionic.service.modal', 'ionic.service.actionSheet'])
 
-      .controller('HomeCtrl', function($scope) {
+      .controller('HomeCtrl', function($scope, Modal, ActionSheet) {
         $scope.items = [];
 
+        Modal.fromTemplateUrl('newTask.html', function(modal) {
+          $scope.settingsModal = modal;
+        });
+
         var removeItem = function(item, button) {
-          console.log('Removing item', item);
-          // Remove ourselves
-          $scope.items.splice($scope.items.indexOf(item), 1);
+          ActionSheet.show({
+            buttons: [],
+            destructiveText: 'Delete Task',
+            cancelText: 'Cancel',
+            cancel: function() {
+              return true;
+            },
+            destructiveButtonClicked: function() {
+              $scope.items.splice($scope.items.indexOf(item), 1);
+              return true;
+            }
+          });
         };
+
         var completeItem = function(item, button) {
-          // Remove ourselves
-          console.log('Completing item', item);
           item.isCompleted = true;
         };
+
 
         $scope.removeItem = function(item) {
           removeItem(item);
         };
 
+        $scope.newTask = function() {
+          $scope.settingsModal.show();
+        };
+
+        // Create the items
         for(var i = 0; i < 30; i++) {
           $scope.items.push({
             title: 'Task ' + (i + 1),
@@ -131,6 +163,12 @@
         }
 
       })
+
+      .controller('TaskCtrl', function($scope) {
+        $scope.close = function() {
+          $scope.modal.hide();
+        }
+      });
 
     </script>
   </body>
