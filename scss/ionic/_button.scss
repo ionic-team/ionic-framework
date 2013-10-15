@@ -4,10 +4,12 @@
   margin: $button-block-margin;
 
   padding: $button-padding;
+  width: 100%;
 
-  border-width: $button-border-width;
+  border-width: 0;
   border-style: solid;
-  border-radius: $button-border-radius;
+  border-top-width: $button-border-width;
+  border-bottom-width: $button-border-width;
 
   color: $button-color;
 
@@ -115,4 +117,11 @@
 
 a.button {
   text-decoration: none;
+}
+
+.inset .button,
+.padded .button {
+  border-right-width: $button-border-width;
+  border-left-width: $button-border-width;
+  border-radius: $button-border-radius;
 }

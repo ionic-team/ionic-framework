@@ -3,21 +3,65 @@
   display: none !important; 
 }
 
+
+// Padded
+// -------------------------------
+
 .padded {
   padding: $content-padding;
+}
+
+.padded-top {
+  padding-top: $content-padding;
+}
+
+.padded-right {
+  padding-right: $content-padding;
+}
+
+.padded-bottom {
+  padding-bottom: $content-padding;
+}
+
+.padded-left {
+  padding-left: $content-padding;
 }
 
 .padded-2 {
   padding: $content-padding * 2;
 }
 
+
+// Inset 
+// -------------------------------
+
 .inset {
   margin: $inset-margin;
+}
+
+.inset-top {
+  margin-top: $inset-margin;
+}
+
+.inset-right {
+  margin-right: $inset-margin;
+}
+
+.inset-bottom {
+  margin-bottom: $inset-margin;
+}
+
+.inset-left {
+  margin-left: $inset-margin;
 }
 
 .inset-2 {
   margin: $inset-margin * 2;
 }
+
+
+// Rounded
+// -------------------------------
 
 .rounded {
   border-radius: $border-radius-base;

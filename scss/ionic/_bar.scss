@@ -1,22 +1,22 @@
 .bar {
+
+  @include user-select(none);
   position: absolute;
-  left: 0;
   right: 0;
+  left: 0;
   z-index: 10;
 
   display: -webkit-box;
   display: box;
+  box-sizing: border-box;
+  padding: $bar-padding-portrait;
 
   width: 100%;
   height: $bar-height;
-  padding: $bar-padding-portrait;
-  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
 
   background-color: $bar-bg;
-  border-style: solid;
-  border-width: 0;
-
-  @include user-select(none);
 
   &.bar-header {
     border-bottom-width: 1px;
@@ -60,25 +60,25 @@
   // Title inside of a bar is centered
   .title {
     position: absolute;
-    z-index: 0;
 
     top: 0;
-    left: 0;
     right: 0;
-
-    line-height: $bar-height;
+    left: 0;
+    z-index: 0;
 
     margin: 0;
     //padding: $barPaddingVertical 0px;
 
     min-width: 30px;
 
+    text-align: center;
+
     // Go into ellipsis if too small
     text-overflow: ellipsis;
-
-    text-align: center;
     white-space: nowrap;
     font-size: $bar-title-font-size;
+
+    line-height: $bar-height;
   }
 
   .title a {
@@ -87,15 +87,16 @@
 
   .button {
     @include box-flex(0);
-    background-color: transparent;
-    line-height: $bar-button-line-height;
-    font-size: 12px;
-    padding: 4px 12px;
     z-index: 1;
+    margin: 0;
+    padding: 4px 12px;
+    background-color: transparent;
+    font-size: 12px;
+    line-height: $bar-button-line-height;
 
     &.button-clear {
-      line-height: $bar-button-clear-line-height;
       padding: 0 5px;
+      line-height: $bar-button-clear-line-height;
     }
   }
 
@@ -175,8 +176,8 @@
 }
 
 .bar .button-icon {
-  background-color: transparent;
   border: 1px solid transparent;
+  background-color: transparent;
   font-size: 24px;
 }
 
@@ -195,11 +196,11 @@
   padding: 0;
 }
 
-.bar-header-secondary {
+.bar-subheader {
   top: $bar-height;
   display: block;
 }
-.bar-footer-secondary {
+.bar-subfooter {
   bottom: $bar-height;
   display: block;
 }

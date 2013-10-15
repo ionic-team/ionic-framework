@@ -5,7 +5,9 @@
 
   > .button {
     position: relative;
+    display: inline-block;
     float: left;
+    width: auto;
     // Bring the "active" button to the front
     &:hover,
     &:focus,
@@ -19,7 +21,6 @@
     }
   }
 }
-
 
 .button-group {
   .button + .button,
@@ -64,24 +65,22 @@
 }
 
 .button-bar {
-
   @include box-flex(1);
   @include box-orient(horizontal);
   display: -webkit-box;
   display: box;
-
 }
 
 .button-bar > .button {
   @include box-flex(1);
   display: block;
-
-  // Fix for unequal widths of buttons
-  width: 0;
   
   overflow: hidden;
 
   padding: 8px 16px;
+
+  // Fix for unequal widths of buttons
+  width: 0;
 
   border-width: 1px 0px 1px 1px;
   border-radius: 0;
