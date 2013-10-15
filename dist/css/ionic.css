@@ -1375,6 +1375,9 @@ a {
   -webkit-user-drag: none;
   -webkit-tap-highlight-color: transparent; }
 
+img {
+  -webkit-user-drag: none; }
+
 a:focus, button:focus {
   outline: 0; }
 
@@ -3083,6 +3086,19 @@ a.button {
 
 .card-footer {
   padding: 10px; }
+
+.slide-box {
+  position: relative;
+  white-space: nowrap;
+  -webkit-transition: -webkit-transform 0 ease-in-out; }
+
+.slide-box-content {
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+  height: 100%; }
+  .slide-box-content img {
+    width: 100%; }
 
 .slide-in-up {
   opacity: 0;

@@ -311,6 +311,9 @@ a {
   -webkit-user-drag: none;
   -webkit-tap-highlight-color: transparent; }
 
+img {
+  -webkit-user-drag: none; }
+
 a:focus, button:focus {
   outline: 0; }
 

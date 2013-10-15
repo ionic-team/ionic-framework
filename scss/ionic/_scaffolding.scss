@@ -8,6 +8,9 @@ a {
   -webkit-user-drag: none;
   -webkit-tap-highlight-color: transparent;
 }
+img {
+  -webkit-user-drag: none;
+}
 
 a, button {
   &:focus {

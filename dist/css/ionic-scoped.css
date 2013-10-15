@@ -1055,6 +1055,8 @@
   .ionic a {
     -webkit-user-drag: none;
     -webkit-tap-highlight-color: transparent; }
+  .ionic img {
+    -webkit-user-drag: none; }
   .ionic a:focus, .ionic button:focus {
     outline: 0; }
   .ionic body, .ionic .ionic-body {
