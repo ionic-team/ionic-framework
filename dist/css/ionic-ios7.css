@@ -390,41 +390,51 @@ body, .ionic-body {
 .hide {
   display: none !important; }
 
-.padded {
+.padding {
   padding: 10px; }
 
-.padded-top {
-  padding-top: 10px; }
-
-.padded-right {
-  padding-right: 10px; }
-
-.padded-bottom {
+.padding-vertical {
+  padding-top: 10px;
   padding-bottom: 10px; }
 
-.padded-left {
+.padding-horizontal {
+  padding-left: 10px;
+  padding-right: 10px; }
+
+.padding-top {
+  padding-top: 10px; }
+
+.padding-right {
+  padding-right: 10px; }
+
+.padding-bottom {
+  padding-bottom: 10px; }
+
+.padding-left {
   padding-left: 10px; }
 
-.padded-2 {
-  padding: 20px; }
-
-.inset {
+.margin {
   margin: 10px; }
 
-.inset-top {
-  margin-top: 10px; }
-
-.inset-right {
-  margin-right: 10px; }
-
-.inset-bottom {
+.margin-vertical {
+  margin-top: 10px;
   margin-bottom: 10px; }
 
-.inset-left {
-  margin-left: 10px; }
+.margin-horizontal {
+  margin-left: 10px;
+  margin-right: 10px; }
 
-.inset-2 {
-  margin: 20px; }
+.margin-top {
+  margin-top: 10px; }
+
+.margin-right {
+  margin-right: 10px; }
+
+.margin-bottom {
+  margin-bottom: 10px; }
+
+.margin-left {
+  margin-left: 10px; }
 
 .rounded {
   border-radius: 4px; }
@@ -1284,7 +1294,7 @@ textarea {
   background-color: white; }
 
 .padded > .input-group,
-.input-group.inset {
+.input-group.margin {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
@@ -1810,8 +1820,8 @@ input[type="checkbox"][readonly] {
 a.button {
   text-decoration: none; }
 
-.inset .button,
-.padded .button {
+.margin .button,
+.padding .button {
   border-right-width: 1px;
   border-left-width: 1px;
   border-radius: 2px; }

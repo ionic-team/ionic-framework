@@ -37,7 +37,7 @@
             <h3>Finish your Top Three Tasks Today</h3>
           </div>
           <form class="form-horizontal" ng-submit="tryLogin(loginForm)">
-            <div class="input-group inset">
+            <div class="input-group margin">
               <label class="input-wrapper row">
                 <span class="input-label col-xs-4">Email</span>
                 <input class="col-xs-8" type="email" placeholder="" ng-model="loginForm.email">
@@ -47,7 +47,7 @@
                 <input class="col-xs-8" type="password" placeholder="" ng-model="loginForm.password">
               </label>
             </div>
-            <div class="input-group inset">
+            <div class="input-group margin">
               <button class="button button-info button-block">Log in</button>
               <div id="login-error" ng-show="loginError">Invalid email/password. Please try again.</div>
             </div>
@@ -63,7 +63,7 @@
         </header>
         <main class="content padded has-header">
           <form class="form-horizontal" ng-submit="trySignup(signupForm)">
-            <div class="input-group inset">
+            <div class="input-group margin">
               <label class="input-wrapper row">
                 <span class="input-label col-xs-4">Email</span>
                 <input class="col-xs-8" type="email" placeholder="" ng-model="signupForm.email">
@@ -73,7 +73,7 @@
                 <input class="col-xs-8" type="password" placeholder="" ng-model="signupForm.password">
               </label>
             </div>
-            <div class="input-group inset">
+            <div class="input-group margin">
               <button class="button button-info button-block">Sign up</button>
               <div id="signup-error" ng-show="signupError">Unable to signup, please try again.</div>
             </div>

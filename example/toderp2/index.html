@@ -64,7 +64,7 @@
                 <input type="password" placeholder="" ng-model="signupForm.password" required>
               </label>
             </div>
-            <div class="inset">
+            <div class="margin">
               <button type="submit" class="button button-primary button-block">Get derp'n</button>
               <div id="signup-error" ng-show="signupError">Unable to signup, please try again.</div>
             </div>
@@ -84,9 +84,9 @@
           <h1 class="title">Log in</h1>
           <button class="button button-clear button-primary" ng-click="close()">Cancel</button>
         </header>
-        <main class="content padded has-header">
+        <main class="content padding has-header">
           <form class="form-horizontal" ng-submit="tryLogin(loginForm)">
-            <div class="input-group inset">
+            <div class="input-group margin">
               <label class="input-row">
                 <span class="input-label col-xs-4">Email</span>
                 <input type="email" placeholder="" ng-model="loginForm.email">
@@ -96,7 +96,7 @@
                 <input type="password" placeholder="" ng-model="loginForm.password">
               </label>
             </div>
-            <div class="inset">
+            <div class="margin">
               <button class="button button-primary button-block">Log in</button>
               <div id="login-error" ng-show="loginError">Invalid email/password. Please try again.</div>
             </div>
@@ -158,7 +158,7 @@
           <h1 class="title">Settings</h1>
           <button class="button button-clear button-primary" ng-click="close()">Done</button>
         </header>
-        <main class="content padded has-header">
+        <main class="content padding has-header">
           <list header="GENERAL">
             <list-item>Account details <i class="icon-chevron-right"></i></list-item>
             <list-item>Account details <toggle ng-model="settings.isSmallText"></toggle></i></list-item>

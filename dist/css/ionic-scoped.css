@@ -1115,30 +1115,38 @@
   .ionic .hidden,
   .ionic .hide {
     display: none !important; }
-  .ionic .padded {
+  .ionic .padding {
     padding: 10px; }
-  .ionic .padded-top {
-    padding-top: 10px; }
-  .ionic .padded-right {
-    padding-right: 10px; }
-  .ionic .padded-bottom {
+  .ionic .padding-vertical {
+    padding-top: 10px;
     padding-bottom: 10px; }
-  .ionic .padded-left {
+  .ionic .padding-horizontal {
+    padding-left: 10px;
+    padding-right: 10px; }
+  .ionic .padding-top {
+    padding-top: 10px; }
+  .ionic .padding-right {
+    padding-right: 10px; }
+  .ionic .padding-bottom {
+    padding-bottom: 10px; }
+  .ionic .padding-left {
     padding-left: 10px; }
-  .ionic .padded-2 {
-    padding: 20px; }
-  .ionic .inset {
+  .ionic .margin {
     margin: 10px; }
-  .ionic .inset-top {
-    margin-top: 10px; }
-  .ionic .inset-right {
-    margin-right: 10px; }
-  .ionic .inset-bottom {
+  .ionic .margin-vertical {
+    margin-top: 10px;
     margin-bottom: 10px; }
-  .ionic .inset-left {
+  .ionic .margin-horizontal {
+    margin-left: 10px;
+    margin-right: 10px; }
+  .ionic .margin-top {
+    margin-top: 10px; }
+  .ionic .margin-right {
+    margin-right: 10px; }
+  .ionic .margin-bottom {
+    margin-bottom: 10px; }
+  .ionic .margin-left {
     margin-left: 10px; }
-  .ionic .inset-2 {
-    margin: 20px; }
   .ionic .rounded {
     border-radius: 4px; }
   .ionic p {
@@ -1918,7 +1926,7 @@
     border-bottom: 1px solid #cccccc;
     background-color: white; }
   .ionic .padded > .input-group,
-  .ionic .input-group.inset {
+  .ionic .input-group.margin {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
@@ -2435,8 +2443,8 @@
       margin: 10px 0 10px 0; }
   .ionic a.button {
     text-decoration: none; }
-  .ionic .inset .button,
-  .ionic .padded .button {
+  .ionic .margin .button,
+  .ionic .padding .button {
     border-right-width: 1px;
     border-left-width: 1px;
     border-radius: 2px; }

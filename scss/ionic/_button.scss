@@ -122,8 +122,8 @@ a.button {
   text-decoration: none;
 }
 
-.inset .button,
-.padded .button {
+.margin .button,
+.padding .button {
   border-right-width: $button-border-width;
   border-left-width: $button-border-width;
   border-radius: $button-border-radius;

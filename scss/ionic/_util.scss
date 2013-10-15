@@ -4,59 +4,71 @@
 }
 
 
-// Padded
+// Content Padding
 // -------------------------------
 
-.padded {
+.padding {
   padding: $content-padding;
 }
 
-.padded-top {
+.padding-vertical {
   padding-top: $content-padding;
-}
-
-.padded-right {
-  padding-right: $content-padding;
-}
-
-.padded-bottom {
   padding-bottom: $content-padding;
 }
 
-.padded-left {
+.padding-horizontal {
+  padding-left: $content-padding;
+  padding-right: $content-padding;
+}
+
+.padding-top {
+  padding-top: $content-padding;
+}
+
+.padding-right {
+  padding-right: $content-padding;
+}
+
+.padding-bottom {
+  padding-bottom: $content-padding;
+}
+
+.padding-left {
   padding-left: $content-padding;
 }
 
-.padded-2 {
-  padding: $content-padding * 2;
-}
 
-
-// Inset 
+// Inset Margin
 // -------------------------------
 
-.inset {
+.margin {
   margin: $inset-margin;
 }
 
-.inset-top {
+.margin-vertical {
   margin-top: $inset-margin;
-}
-
-.inset-right {
-  margin-right: $inset-margin;
-}
-
-.inset-bottom {
   margin-bottom: $inset-margin;
 }
 
-.inset-left {
+.margin-horizontal {
   margin-left: $inset-margin;
+  margin-right: $inset-margin;
 }
 
-.inset-2 {
-  margin: $inset-margin * 2;
+.margin-top {
+  margin-top: $inset-margin;
+}
+
+.margin-right {
+  margin-right: $inset-margin;
+}
+
+.margin-bottom {
+  margin-bottom: $inset-margin;
+}
+
+.margin-left {
+  margin-left: $inset-margin;
 }
 
 
