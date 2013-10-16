@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @font-face {
   font-family: 'ionicons';
   src: url("fonts/ionicons.eot");
@@ -1246,7 +1245,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid silver; }
+  border: 1px solid #c0c0c0; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -2550,7 +2549,7 @@ select:focus,
 input[type="file"]:focus,
 input[type="radio"]:focus,
 input[type="checkbox"]:focus {
-  outline: thin dotted #333333;
+  outline: thin dotted #333;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px; }
 
@@ -2613,7 +2612,7 @@ input[type="checkbox"][readonly] {
     border: 1px solid #049cdb;
     border-radius: 50%;
     background: white;
-    transition: background-color 0.1s ease-in-out; }
+    transition: background-color .1s ease-in-out; }
   .checkbox .handle:after {
     position: absolute;
     top: 37%;
@@ -2625,7 +2624,7 @@ input[type="checkbox"][readonly] {
     border-right: none;
     content: '';
     opacity: 0;
-    transition: opacity 0.1s ease-in-out;
+    transition: opacity .1s ease-in-out;
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg); }
   .checkbox input:checked + .handle {
@@ -2929,7 +2928,7 @@ input[type="checkbox"][readonly] {
     .button.button-icon:active, .button.button-icon.active {
       background: none;
       box-shadow: none;
-      text-shadow: 0px 0px 10px white; }
+      text-shadow: 0px 0px 10px #fff; }
   .button.button-inline {
     display: inline-block;
     margin: 0;
@@ -3061,7 +3060,7 @@ a.button {
   width: 100%;
   background-color: white;
   border-radius: 2px;
-  border: 1px solid #dddddd; }
+  border: 1px solid #ddd; }
 
 .card-header {
   padding: 10px;
@@ -3088,9 +3087,16 @@ a.button {
   padding: 10px; }
 
 .slide-box {
+  overflow: hidden; }
+
+.slide-box-items {
   position: relative;
   white-space: nowrap;
-  -webkit-transition: -webkit-transform 0 ease-in-out; }
+  -webkit-transition: -webkit-transform 0 ease-in-out;
+  font-size: 0; }
+
+.slide-box-animating {
+  -webkit-transition-duration: 0.2s; }
 
 .slide-box-content {
   display: inline-block;
