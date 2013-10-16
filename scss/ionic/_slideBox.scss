@@ -15,7 +15,7 @@
 .slide-box-animating {
   -webkit-transition-duration: 0.2s;
 }
-.slide {
+.slide-box-slide {
   display: inline-block;
   vertical-align: top;
   width: 100%;
@@ -38,8 +38,7 @@
     margin: 0px 5px;
     color: #fff;
 
-    opacity: 0.5;
-
+    opacity: 0.3;
 
     &.active {
       -webkit-transition: opacity 0.4s ease-in;
