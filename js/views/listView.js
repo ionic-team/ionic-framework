@@ -10,6 +10,65 @@
     }
   };
 
+  var PullToRefreshDrag = function(opts) {
+    this.dragThresholdY = opts.dragThresholdY || 10;
+    this.el = opts.el;
+  };
+  PullToRefreshDrag.prototype = new DragOp();
+  PullToRefreshDrag.prototype.start = function(e) {
+    var content, refresher;
+
+    content = ionic.DomUtil.getParentOrSelfWithClass(e.target, 'list');
+    if(!content) { return; }
+
+    // Grab the refresher element that will show as you drag down
+    refresher = content.querySelector('.list-refresher');
+    if(!refresher) {
+      refresher = this._injectRefresher();
+    }
+
+    this._currentDrag = {
+      refresher: refresher,
+      content: content
+    };
+  };
+  PullToRefreshDrag.prototype._injectRefresher = function() {
+    var refresher = document.createElement('div');
+    refresher.className = 'list-refresher';
+    this.el.insertBefore(refresher, this.el.firstChild);
+    return refresher;
+  };
+  PullToRefreshDrag.prototype.drag = function(e) {
+    var _this = this;
+
+    window.requestAnimationFrame(function() {
+      // We really aren't dragging
+      if(!_this._currentDrag) {
+        return;
+      }
+
+      // Check if we should start dragging. Check if we've dragged past the threshold,
+      // or we are starting from the open state.
+      if(!_this._isDragging && Math.abs(e.gesture.deltaY) > _this.dragThresholdY) {
+        _this._isDragging = true;
+      }
+
+      if(_this._isDragging) {
+        var currentHeight = parseFloat(_this._currentDrag.refresher.style.height);
+        _this._currentDrag.refresher.style.height = e.gesture.deltaY + 'px';
+
+        var newHeight = parseFloat(_this._currentDrag.refresher.style.height = e.gesture.deltaY);
+        var firstChildHeight = parseFloat(_this._currentDrag.refresher.firstElementChild.style.height);
+        console.log('New Height must pass', firstChildHeight);
+        if(newHeight > firstChildHeight) {
+          console.log('PASSED', firstChildHeight);
+        }
+      }
+    });
+  };
+  PullToRefreshDrag.prototype.end = function(e) {
+  };
+
   var SlideDrag = function(opts) {
     this.dragThresholdX = opts.dragThresholdX || 10;
     this.el = opts.el;
@@ -236,6 +295,8 @@
     doneCallback && doneCallback();
   };
 
+
+
   /**
    * The ListView handles a list of items. It will process drag animations, edit mode,
    * and other operations that are common on mobile lists or table views.
@@ -261,10 +322,12 @@
   };
 
   ionic.views.List.prototype = {
+
     _initDrag: function() {
       this._isDragging = false;
       this._dragOp = null;
     },
+
     // Return the list item from the given target
     _getItem: function(target) {
       while(target) {
@@ -275,6 +338,8 @@
       }
       return null;
     },
+
+
     _startDrag: function(e) {
       this._isDragging = false;
 
@@ -286,15 +351,21 @@
           this._dragOp = new ReorderDrag({ el: item });
           this._dragOp.start(e);
         }
-        return;
-      } 
+      }
       
+      // Check if this is a "pull down" drag for pull to refresh
+      else if(e.gesture.direction == 'down') {
+        this._dragOp = new PullToRefreshDrag({ el: this.el });
+        this._dragOp.start(e);
+      } 
+
       // Or check if this is a swipe to the side drag
-      if(e.gesture.direction == 'left' || e.gesture.direction == 'right') {
+      else if(e.gesture.direction == 'left' || e.gesture.direction == 'right') {
         this._dragOp = new SlideDrag({ el: this.el });
         this._dragOp.start(e);
       }
     },
+
 
     _handleEndDrag: function(e) {
       var _this = this;
@@ -308,6 +379,7 @@
         _this._initDrag();
       });
     },
+
     /**
      * Process the drag event to move the item to the left or right.
      */

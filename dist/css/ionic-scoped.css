@@ -171,6 +171,9 @@
   /**
    * A list divider.
    */
+  /**
+   * List refreser elements
+   */
   /* the overall container of the toggle */
   /* hide the actual checkbox */
   /* the background of the toggle's track area */
@@ -1856,6 +1859,10 @@
   .ionic .list-item-text {
     margin-bottom: 0;
     line-height: 1.3; }
+  .ionic .list-refresher {
+    background-color: red;
+    height: 0;
+    overflow: hidden; }
   .ionic form {
     margin: 0 0 1.42857; }
   .ionic legend {

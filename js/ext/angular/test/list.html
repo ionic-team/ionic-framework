@@ -49,7 +49,10 @@
   <body>
 
     <content has-header="true" ng-controller="TestCtrl" class="reveal-animation">
-      <list is-editing="isEditingItems" animation="my-repeat-animation" delete-icon="icon-minus-circled" reorder-icon="icon-navicon">
+      <list is-editing="isEditingItems" on-refresh="refreshProjects()" animation="my-repeat-animation" delete-icon="icon-minus-circled" reorder-icon="icon-navicon">
+        <div class="list-refresher">
+          <div style="height: 100px; font-size: 30px; text-align: center">REFRESHING</div>
+        </div>
         <list-item ng-repeat="item in items" 
         buttons="item.buttons"
         can-delete="true"
@@ -73,6 +76,10 @@
         var removeItem = function(item) {
           // Remove ourselves
           $scope.items.splice($scope.items.indexOf(item), 1);
+        };
+
+        $scope.refreshProjects = function() {
+          alert('refreshing!');
         };
 
         $scope.items = [

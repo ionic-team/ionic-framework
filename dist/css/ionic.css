@@ -2291,6 +2291,14 @@ a.list-item {
   margin-bottom: 0;
   line-height: 1.3; }
 
+/**
+ * List refreser elements
+ */
+.list-refresher {
+  background-color: red;
+  height: 0;
+  overflow: hidden; }
+
 form {
   margin: 0 0 1.42857; }
 
