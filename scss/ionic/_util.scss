@@ -2,7 +2,25 @@
 .hide { 
   display: none !important; 
 }
+.show {
+  display: block !important;
+}
 
+.inline {
+  display: inline-block;
+}
+
+.block {
+  display: block;
+  clear: both;
+  &:after { 
+    display: block; 
+    visibility: hidden; 
+    clear: both; 
+    height: 0;
+    content: ".";
+  }
+}
 
 // Content Padding
 // -------------------------------
@@ -11,29 +29,23 @@
   padding: $content-padding;
 }
 
+.padding-top,
 .padding-vertical {
   padding-top: $content-padding;
-  padding-bottom: $content-padding;
 }
 
+.padding-right,
 .padding-horizontal {
-  padding-left: $content-padding;
   padding-right: $content-padding;
 }
 
-.padding-top {
-  padding-top: $content-padding;
-}
-
-.padding-right {
-  padding-right: $content-padding;
-}
-
-.padding-bottom {
+.padding-bottom,
+.padding-vertical {
   padding-bottom: $content-padding;
 }
 
-.padding-left {
+.padding-left,
+.padding-horizontal {
   padding-left: $content-padding;
 }
 
@@ -45,29 +57,23 @@
   margin: $inset-margin;
 }
 
+.margin-top,
 .margin-vertical {
   margin-top: $inset-margin;
-  margin-bottom: $inset-margin;
 }
 
+.margin-right,
 .margin-horizontal {
-  margin-left: $inset-margin;
   margin-right: $inset-margin;
 }
 
-.margin-top {
-  margin-top: $inset-margin;
-}
-
-.margin-right {
-  margin-right: $inset-margin;
-}
-
-.margin-bottom {
+.margin-bottom,
+.margin-vertical {
   margin-bottom: $inset-margin;
 }
 
-.margin-left {
+.margin-left,
+.margin-horizontal {
   margin-left: $inset-margin;
 }
 

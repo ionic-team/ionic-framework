@@ -1,11 +1,10 @@
 .button {
   position: relative;
-  display: block;
+  display: inline-block;
 
-  //margin: $button-block-margin;
+  margin: 0;
 
   padding: $button-padding;
-  width: 100%;
 
   border-width: 0;
   border-style: solid;
@@ -22,8 +21,6 @@
   cursor: pointer;
 
   &.button-icon {
-    display: inline-block;
-    margin: 0;
     padding: $button-clear-padding;
     width: auto;
     border: none;
@@ -32,10 +29,7 @@
 
   &.button-clear {
     @include transition(opacity .1s);
-    display: inline-block;
-    margin: 0;
     padding: $button-clear-padding;
-    width: auto;
     border: none;
     background: none;
     box-shadow: none;
@@ -88,9 +82,6 @@
 
   &.button-outline {
     @include transition(opacity .1s);
-    display: inline-block;
-    margin: 0;
-    width: auto;
     background: none;
     box-shadow: none; 
   }
@@ -105,26 +96,17 @@
     }
   }
 
-  &.button-inline {
-    display: inline-block;
-    margin: 0;
-    width: auto;
-  }
-
-  &.button-block {
-    display: block;
-    margin: $button-block-margin; 
-  }
-
 }
 
 a.button {
   text-decoration: none;
 }
 
+.margin.button,
 .margin .button,
 .padding .button {
   border-right-width: $button-border-width;
   border-left-width: $button-border-width;
   border-radius: $button-border-radius;
 }
+
