@@ -2125,7 +2125,7 @@
       border-right: none;
       content: '';
       opacity: 0;
-      transition: opacity 0.1s ease-in-out;
+      transition: opacity 0.05s ease-in-out;
       -webkit-transform: rotate(-45deg);
       transform: rotate(-45deg); }
     .ionic .checkbox input:checked + .handle {
