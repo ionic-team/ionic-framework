@@ -2311,6 +2311,51 @@ window.ionic = {
     },
 
     prependSlide: function(el) {
+      var content = this.el.firstElementChild;
+      if(!content) { return; }
+
+      var slideWidth = content.offsetWidth;
+      var offsetX = parseFloat(content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
+      var newOffsetX = Math.min(0, offsetX - slideWidth);
+          
+      content.insertBefore(el, content.firstChild);
+
+      content.classList.remove('slide-box-animating');
+      content.style.webkitTransform = 'translate3d(' + newOffsetX + 'px, 0, 0)';
+
+      this._prependPagerIcon();
+      this.slideIndex = (this.slideIndex + 1) % content.children.length;
+      this._updatePager();
+    },
+
+    appendSlide: function(el) {
+      var content = this.el.firstElementChild;
+      if(!content) { return; }
+
+      content.classList.remove('slide-box-animating');
+      content.appendChild(el);
+
+      this._appendPagerIcon();
+      this._updatePager();
+    },
+
+    removeSlide: function(index) {
+      var content = this.el.firstElementChild;
+      if(!content) { return; }
+
+      var items = this.el.firstElementChild;
+      items.removeChild(items.firstElementChild);
+
+      var slideWidth = content.offsetWidth;
+      var offsetX = parseFloat(content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
+      var newOffsetX = Math.min(0, offsetX + slideWidth);
+          
+      content.classList.remove('slide-box-animating');
+      content.style.webkitTransform = 'translate3d(' + newOffsetX + 'px, 0, 0)';
+
+      this._removePagerIcon();
+      this.slideIndex = Math.max(0, (this.slideIndex - 1) % content.children.length);
+      this._updatePager();
     },
 
     /**
@@ -2359,6 +2404,26 @@ window.ionic = {
       return this.slideIndex;
     },
 
+    _appendPagerIcon: function() {
+      if(!this.pager || !this.pager.children.length) { return; }
+
+      var newPagerChild = this.pager.children[0].cloneNode();
+      this.pager.appendChild(newPagerChild);
+    },
+
+    _prependPagerIcon: function() {
+      if(!this.pager || !this.pager.children.length) { return; }
+
+      var newPagerChild = this.pager.children[0].cloneNode();
+      this.pager.insertBefore(newPagerChild, this.pager.firstChild);
+    },
+
+    _removePagerIcon: function() {
+      if(!this.pager || !this.pager.children.length) { return; }
+
+      this.pager.removeChild(this.pager.firstElementChild);
+    },
+
     /**
      * If we have a pager, update the active page when the current slide
      * changes.
@@ -2367,6 +2432,14 @@ window.ionic = {
       if(!this.pager) {
         return;
       }
+
+      var numPagerChildren = this.pager.children.length;
+      if(!numPagerChildren) {
+        // No children to update
+        return;
+      }
+
+      // Update the active state of the pager icons
       for(var i = 0, j = this.pager.children.length; i < j; i++) {
         if(i == this.slideIndex) {
           this.pager.children[i].classList.add('active');
