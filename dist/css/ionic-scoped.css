@@ -1089,6 +1089,13 @@
     left: 0;
     width: 100%;
     height: 100%; }
+  .ionic .content:before,
+  .ionic .content:after {
+    content: "\00a0";
+    /* No-break space character */
+    display: block;
+    overflow: hidden;
+    height: 0; }
   .ionic .content > * {
     -webkit-transform: translateZ(0px);
     transform: translateZ(0px); }
@@ -2397,17 +2404,22 @@
         background: none;
         box-shadow: none;
         text-shadow: 0px 0px 10px white; }
-    .ionic .button.block {
+    .ionic .button.block, .ionic .button.button-full {
       margin-top: 10px;
       margin-bottom: 10px; }
+  .ionic .padding > .button.block:first-child {
+    margin-top: 0; }
   .ionic .button-full,
   .ionic .button-full > .button {
+    display: block;
     margin-right: 0;
     margin-left: 0;
     border-right-width: 0;
     border-left-width: 0;
     border-radius: 0; }
-  .ionic button.block {
+  .ionic button.block,
+  .ionic button.button-full,
+  .ionic .button-full > button.button {
     width: 100%; }
   .ionic a.button {
     text-decoration: none; }

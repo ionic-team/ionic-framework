@@ -55,7 +55,13 @@ body, .ionic-body {
   height: 100%;
 }
 
-.content {
+.content:before,
+.content:after {
+  // Uncollapse content margin if child elements DO have an margin
+  content: "\00a0"; /* No-break space character */
+  display: block;
+  overflow: hidden;
+  height: 0;
 }
 /* Hack to force all relatively and absolutely positioned elements still render while scrolling
    Note: This is a bug for "-webkit-overflow-scrolling: touch" (via ratchet) */

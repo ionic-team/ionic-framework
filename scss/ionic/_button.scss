@@ -95,15 +95,20 @@
     }
   }
 
-  &.block {
+  &.block, &.button-full {
     margin-top: $button-block-margin;
     margin-bottom: $button-block-margin;
   }
 
 }
 
+.padding > .button.block:first-child {
+  margin-top: 0;
+}
+
 .button-full,
 .button-full > .button {
+  display: block;
   margin-right: 0;
   margin-left: 0;
   border-right-width: 0;
@@ -111,7 +116,9 @@
   border-radius: 0;
 }
 
-button.block {
+button.block,
+button.button-full,
+.button-full > button.button  {
   width: 100%;
 }
 
