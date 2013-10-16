@@ -50,8 +50,16 @@
 
     <content has-header="true" ng-controller="TestCtrl" class="reveal-animation">
       <list is-editing="isEditingItems" on-refresh="refreshProjects()" animation="my-repeat-animation" delete-icon="icon-minus-circled" reorder-icon="icon-navicon">
-        <div class="list-refresher">
-          <div style="height: 100px; font-size: 30px; text-align: center">REFRESHING</div>
+        <list-refresher>
+          <pulling>
+            <div style="height: 100px; font-size: 30px; text-align: center">PULL TO REFRESH</div>
+          </pulling>
+          <holding>
+            <div style="height: 100px; font-size: 30px; text-align: center">RELEASE TO REFRESH</div>
+          </holding>
+          <refreshing>
+            <div style="height: 100px; font-size: 30px; text-align: center">REFRESHING</div>
+          </refreshing>
         </div>
         <list-item ng-repeat="item in items" 
         buttons="item.buttons"
