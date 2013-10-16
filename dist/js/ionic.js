@@ -2293,7 +2293,7 @@ window.ionic = {
   ionic.views.SlideBox.prototype = {
     _initDrag: function() {
       this._isDragging = false;
-      this._currentDrag = null;
+      this._drag = null;
     },
     _startDrag: function(e) {
       var offsetX, content;
@@ -2313,9 +2313,10 @@ window.ionic = {
       // Grab the starting X point for the item (for example, so we can tell whether it is open or closed to start)
       offsetX = parseFloat(content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
 
-      this._currentDrag = {
+      this._drag = {
         content: content,
-        startOffsetX: offsetX
+        startOffsetX: offsetX,
+        resist: 1
       };
     },
 
@@ -2327,14 +2328,14 @@ window.ionic = {
       window.requestAnimationFrame(function() {
       
         // We didn't have a drag, so just init and leave
-        if(!_this._currentDrag) {
+        if(!_this._drag) {
           _this._initDrag();
           return;
         }
 
         // Snap to the correct spot
 
-        content = _this._currentDrag.content;
+        content = _this._drag.content;
 
         // Enable transition duration
         content.classList.add('slide-box-animating');
@@ -2372,12 +2373,15 @@ window.ionic = {
         var content;
 
         // We really aren't dragging
-        if(!_this._currentDrag) {
+        if(!_this._drag) {
           _this._startDrag(e);
         }
 
         // Sanity
-        if(!_this._currentDrag) { return; }
+        if(!_this._drag) { return; }
+
+        // Stop any default events during the drag
+        e.preventDefault();
 
         // Check if we should start dragging. Check if we've dragged past the threshold.
         if(!_this._isDragging && (Math.abs(e.gesture.deltaX) > _this.dragThresholdX)) {
@@ -2385,24 +2389,23 @@ window.ionic = {
         }
 
         if(_this._isDragging) {
-          content = _this._currentDrag.content;
+          content = _this._drag.content;
 
           // Grab the new X point, capping it at zero
-          var newX = Math.min(0, _this._currentDrag.startOffsetX + e.gesture.deltaX);
+          var newX = _this._drag.startOffsetX + (e.gesture.deltaX / _this._drag.resist);
 
-          /*
           var rightMostX = -(content.offsetWidth * Math.max(0, content.children.length - 1));
 
           if(newX > 0) {
             // We are dragging past the leftmost pane, rubber band
-            newX *= 0.4;
+            _this._drag.resist = (newX / content.offsetWidth) + 1.4;
           } else if(newX < rightMostX) {
             // Dragging past the rightmost pane, rubber band
-            newX = Math.min(rightMostX, + (((e.gesture.deltaX + buttonsWidth) * 0.4)));
+            //newX = Math.min(rightMostX, + (((e.gesture.deltaX + buttonsWidth) * 0.4)));
+            _this._drag.resist = (Math.abs(newX) / content.offsetWidth) + 1.4;
           }
-          */
 
-          _this._currentDrag.content.style.webkitTransform = 'translate3d(' + newX + 'px, 0, 0)';
+          _this._drag.content.style.webkitTransform = 'translate3d(' + newX + 'px, 0, 0)';
         }
       });
     }
