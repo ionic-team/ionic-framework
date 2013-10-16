@@ -36,6 +36,16 @@
   };
 
   ionic.views.SlideBox.prototype = {
+    /**
+     * Tell the pager to update itself if content is added or
+     * removed. 
+     */
+    update: function() {
+      this._updatePager();
+    },
+
+    prependSlide: function(el) {
+    },
 
     /**
      * Slide to the given slide index.
@@ -140,16 +150,15 @@
           // TODO: Do we need this anymore?
           finalOffsetX = 0;
         } else if(ratio >= -0.5) {
-          // We are more than half-way through a drag
+          // We are less than half-way through a drag
           // Sliiide to the left
           finalOffsetX = Math.max(0, Math.floor(Math.abs(offsetX) / slideWidth) * slideWidth);
         } else {
-          // We are less than half-way through a drag
+          // We are more than half-way through a drag
           // Sliiide to the right
           finalOffsetX = Math.min(totalWidth - slideWidth, Math.ceil(Math.abs(offsetX) / slideWidth) * slideWidth);
         }
 
-        _this.slideIndex = Math.ceil(finalOffsetX / slideWidth);
 
         if(e.gesture.velocityX > _this.velocityXThreshold) {
           if(e.gesture.direction == 'left') {
@@ -158,6 +167,9 @@
             _this.slideToSlide(_this.slideIndex - 1);
           }
         } else {
+          // Calculate the new slide index (or "page")
+          _this.slideIndex = Math.ceil(finalOffsetX / slideWidth);
+
           // Negative offsetX to slide correctly
           content.style.webkitTransform = 'translate3d(' + -finalOffsetX + 'px, 0, 0)';
         }
@@ -176,7 +188,7 @@
       this._initDrag();
 
       // Make sure to grab the element we will slide as our target
-      content = ionic.DomUtil.getParentOrSelfWithClass(e.target, 'slide-box-items');
+      content = ionic.DomUtil.getParentOrSelfWithClass(e.target, 'slide-box-slides');
       if(!content) {
         return;
       }
@@ -222,7 +234,6 @@
         if(_this._isDragging) {
           content = _this._drag.content;
 
-          // Grab the new X point, capping it at zero
           var newX = _this._drag.startOffsetX + (e.gesture.deltaX / _this._drag.resist);
 
           var rightMostX = -(content.offsetWidth * Math.max(0, content.children.length - 1));
@@ -233,7 +244,7 @@
           } else if(newX < rightMostX) {
             // Dragging past the rightmost pane, rubber band
             //newX = Math.min(rightMostX, + (((e.gesture.deltaX + buttonsWidth) * 0.4)));
-            _this._drag.resist = (Math.abs(newX) / content.offsetWidth) + 1.4;
+            _this._drag.resist = (Math.abs(newX) / content.offsetWidth) - 0.6;
           }
 
           _this._drag.content.style.webkitTransform = 'translate3d(' + newX + 'px, 0, 0)';

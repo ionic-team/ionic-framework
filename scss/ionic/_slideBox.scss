@@ -4,7 +4,7 @@
   // Make sure items don't scroll over ever
   overflow: hidden;
 }
-.slide-box-items {
+.slide-box-slides {
   position: relative;
   white-space: nowrap;
   -webkit-transition: -webkit-transform 0 ease-in-out;
@@ -15,7 +15,7 @@
 .slide-box-animating {
   -webkit-transition-duration: 0.2s;
 }
-.slide-box-content {
+.slide {
   display: inline-block;
   vertical-align: top;
   width: 100%;

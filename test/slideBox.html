@@ -22,15 +22,17 @@
 
       <main class="content-wrapper">
         <div class="content has-header">
+          <button id="prepend" class="button button-primary">Prepend content</button>
+          <button id="append" class="button button-primary">Append content</button>
           <div class="slide-box" id="slide-box">
-            <div class="slide-box-items">
-              <div class="slide-box-content">
+            <div class="slide-box-slides">
+              <div class="slide">
                 <img src="http://1.bp.blogspot.com/-kXS3MLcpTPw/T4rZBW2p8DI/AAAAAAAABqI/tR5aiO4Cj58/s1600/cows2.jpg">
               </div>
-              <div class="slide-box-content">
+              <div class="slide">
                 <img src="http://farm6.staticflickr.com/5226/5663664227_ba5e573930_z.jpg">
               </div>
-              <div class="slide-box-content">
+              <div class="slide">
                 <img src="http://i677.photobucket.com/albums/vv137/smileytrucker/cow-toy-car-stuck-head-1259518194w.jpg">
               </div>
             </div>
@@ -52,6 +54,46 @@
       var box = new ionic.views.SlideBox({
         el: b
       });
+      document.getElementById('prepend').addEventListener('click', function(e) {
+        var content = document.createElement('div');
+        content.className = 'slide-box-content';
+        content.innerHTML = '<img src="http://1.bp.blogspot.com/-A1IIpwx7jnE/TymvyGvjxNI/AAAAAAAAHi4/80CCftqRY0o/s640/sweetheart2.jpg">';//http://1.bp.blogspot.com/_6bMuhb3yWOA/TSiS2nYfQoI/AAAAAAAAAGA/AXOlDxrmMNQ/s1600/cow.jpg">';
+
+
+        box.prependSlide(content);
+
+        /*
+        var items = b.querySelector('.slide-box-items');
+        items.insertBefore(content, items.firstChild);
+
+        var pager = document.querySelector('.slide-box-pager');
+        for(var i = 0; i < pager.children.length; i++) {
+          pager.children[i].innerHTML = parseInt(pager.children[i].innerHTML) + 1;
+        }
+
+        var count = document.createElement('span');
+        count.innerHTML = "1";
+        pager.insertBefore(count, pager.firstChild);
+        */
+      });
+      document.getElementById('append').addEventListener('click', function(e) {
+        var content = document.createElement('div');
+        content.className = 'slide-box-content';
+        content.innerHTML = '<img src="http://1.bp.blogspot.com/-A1IIpwx7jnE/TymvyGvjxNI/AAAAAAAAHi4/80CCftqRY0o/s640/sweetheart2.jpg">';//http://1.bp.blogspot.com/_6bMuhb3yWOA/TSiS2nYfQoI/AAAAAAAAAGA/AXOlDxrmMNQ/s1600/cow.jpg">';
+        var items = b.querySelector('.slide-box-items');
+
+        box.appendSlide(content);
+
+        /*
+        var pager = document.querySelector('.slide-box-pager');
+        var count = document.createElement('span');
+        count.innerHTML = pager.children.length + 1;
+        pager.appendChild(count);
+        */
+      });
+
+/*
+        */
     </script>
   </body>
 </html>

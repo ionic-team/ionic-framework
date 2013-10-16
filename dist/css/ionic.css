@@ -3025,7 +3025,7 @@ a.button {
   position: relative;
   overflow: hidden; }
 
-.slide-box-items {
+.slide-box-slides {
   position: relative;
   white-space: nowrap;
   -webkit-transition: -webkit-transform 0 ease-in-out;
@@ -3034,12 +3034,12 @@ a.button {
 .slide-box-animating {
   -webkit-transition-duration: 0.2s; }
 
-.slide-box-content {
+.slide {
   display: inline-block;
   vertical-align: top;
   width: 100%;
   height: 100%; }
-  .slide-box-content img {
+  .slide img {
     width: 100%; }
 
 .slide-box-pager {
