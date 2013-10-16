@@ -2295,17 +2295,29 @@ window.ionic = {
     /**
      * Slide to the given slide index.
      *
-     * @param {integer} the index of the slide to animate to.
+     * @param {int} the index of the slide to animate to.
      */
     slideToSlide: function(index) {
       var content = this.el.firstElementChild;
       if(!content) {
         return;
       }
+
+      // Get the width of one slide
       var slideWidth = content.offsetWidth;
+
+      // Calculate the new offsetX position which is just
+      // N slides to the left, where N is the given index
       var offsetX = index * slideWidth;
+
+      // Calculate the max X position we'd allow based on how many slides
+      // there are.
       var maxX = Math.max(0, content.children.length - 1) * slideWidth;
+
+      // Bounds the offset X position in the range maxX >= offsetX >= 0
       offsetX = offsetX < 0 ? 0 : offsetX > maxX ? maxX : offsetX;
+
+      // Animate and slide the slides over
       content.classList.add('slide-box-animating');
       content.style.webkitTransform = 'translate3d(' + -offsetX + 'px, 0, 0)';
 
@@ -2313,6 +2325,13 @@ window.ionic = {
       this.slideIndex = Math.ceil(offsetX / slideWidth);
     },
 
+    /**
+     * Get the currently set slide index. This method
+     * is updated before any transitions run, so the
+     * value could be early.
+     *
+     * @return {int} the current slide index
+     */
     getSlideIndex: function() {
       return this.slideIndex;
     },
@@ -2336,7 +2355,9 @@ window.ionic = {
           return;
         }
 
-        // Snap to the correct spot
+        // We did have a drag, so we need to snap to the correct spot
+
+        // Grab the content layer
         content = _this._drag.content;
 
         // Enable transition duration
@@ -2344,6 +2365,8 @@ window.ionic = {
 
         // Grab the current offset X position
         offsetX = parseFloat(content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
+
+        // Calculate how wide a single slide is, and their total width
         slideWidth = content.offsetWidth;
         totalWidth = content.offsetWidth * content.children.length;
 
@@ -2351,18 +2374,20 @@ window.ionic = {
         ratio = (offsetX % slideWidth) / slideWidth;
 
         if(ratio >= 0) {
-          // Anything greater than zero is too far left
+          // Anything greater than zero is too far left, this is an extreme case
+          // TODO: Do we need this anymore?
           finalOffsetX = 0;
         } else if(ratio >= -0.5) {
+          // We are more than half-way through a drag
+          // Sliiide to the left
           finalOffsetX = Math.max(0, Math.floor(Math.abs(offsetX) / slideWidth) * slideWidth);
         } else {
+          // We are less than half-way through a drag
           // Sliiide to the right
           finalOffsetX = Math.min(totalWidth - slideWidth, Math.ceil(Math.abs(offsetX) / slideWidth) * slideWidth);
         }
 
         _this.slideIndex = Math.ceil(finalOffsetX / slideWidth);
-
-        console.log('Slide index', slideIndex);
 
         // Negative offsetX to slide correctly
         content.style.webkitTransform = 'translate3d(' + -finalOffsetX + 'px, 0, 0)';
