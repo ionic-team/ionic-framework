@@ -6,6 +6,17 @@
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="../dist/css/ionic.css" rel="stylesheet">
+    <style>
+    body {
+      backgrbackground: -moz-linear-gradient(left,  rgba(0,0,0,0) 0%, rgba(0,0,0,0) 31%, rgba(0,0,0,0.65) 100%); /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0)), color-stop(31%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(0,0,0,0) 31%,rgba(0,0,0,0.65) 100%); /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(0,0,0,0) 31%,rgba(0,0,0,0.65) 100%); /* Opera 11.10+ */
+      background: -ms-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(0,0,0,0) 31%,rgba(0,0,0,0.65) 100%); /* IE10+ */
+      background: linear-gradient(to right,  rgba(0,0,0,0) 0%,rgba(0,0,0,0) 31%,rgba(0,0,0,0.65) 100%); /* W3C */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=1 ); /* IE6-9 */
+    }
+    </style>
   </head>
   <body>
 
@@ -18,136 +29,245 @@
 
         <div class="padding">
 
-          <h3>Default (Inline)</h3>
+          <h3>&lt;a&gt; default</h3>
           <p>
-            <a class="button button-default button-inline">Default</a>
-            <a class="button button-secondary button-inline">Secondary</a>
-            <a class="button button-primary button-inline">Primary</a>
-            <a class="button button-info button-inline">Info</a>
-            <a class="button button-success button-inline">Success</a>
-            <a class="button button-warning button-inline">Warning</a>
-            <a class="button button-danger button-inline">Danger</a>
-            <a class="button button-dark button-inline">Dark</a>
+            <a class="button button-default">.button-default</a>
+            <a class="button button-secondary">.button-secondary</a>
+            <a class="button button-primary">.button-primary</a>
+            <a class="button button-info">.button-info</a>
+            <a class="button button-success">.button-success</a>
+            <a class="button button-warning">.button-warning</a>
+            <a class="button button-danger">.button-danger</a>
+            <a class="button button-dark">.button-dark</a>
           </p>
 
-          <h3>Block (.block w/ parent .padding)</h3>
+          <hr>
+
+          <h3>&lt;button&gt; default</h3>
           <p>
-            <a class="button block button-default">Default</a>
-            <a class="button block button-secondary">Secondary</a>
-            <a class="button block button-primary">Primary</a>
-            <a class="button block button-info">Info</a>
-            <a class="button block button-success">Success</a>
-            <a class="button block button-warning">Warning</a>
-            <a class="button block button-danger">Danger</a>
-            <a class="button block button-dark">Dark</a>
+            <button class="button button-default">.button-default</button>
+            <button class="button button-secondary">.button-secondary</button>
+            <button class="button button-primary">.button-primary</button>
+            <button class="button button-info">.button-info</button>
+            <button class="button button-success">.button-success</button>
+            <button class="button button-warning">.button-warning</button>
+            <button class="button button-danger">.button-danger</button>
+            <button class="button button-dark">.button-dark</button>
           </p>
 
-          <h3>Icon (Inline Default)</h3>
+          <hr>
+
+          <h3>a.block (parent w/ padding)</h3>
+          <p>
+            <a class="button block button-default">.button-default</a>
+            <a class="button block button-secondary">.button-secondary</a>
+            <a class="button block button-primary">.button-primary</a>
+            <a class="button block button-info">.button-info</a>
+            <a class="button block button-success">.button-success</a>
+            <a class="button block button-warning">.button-warning</a>
+            <a class="button block button-danger">.button-danger</a>
+            <a class="button block button-dark">.button-dark</a>
+          </p>
+
+          <hr>
+
+          <h3>button.block (parent w/ padding)</h3>
+          <p>
+            <button class="button block button-default">.button-default</button>
+            <button class="button block button-secondary">.button-secondary</button>
+            <button class="button block button-primary">.button-primary</button>
+            <button class="button block button-info">.button-info</button>
+            <button class="button block button-success">.button-success</button>
+            <button class="button block button-warning">.button-warning</button>
+            <button class="button block button-danger">.button-danger</button>
+            <button class="button block button-dark">.button-dark</button>
+          </p>
+
+          <hr>
+
+          <h3>a.button-icon</h3>
           <p>
             <a class="button button-icon"><i class="icon-home"></i></a>
           </p>
 
-          <h3>Icon (.block override)</h3>
+          <hr>
+
+          <h3>button.button-icon</h3>
           <p>
-            <a class="button button-icon block"><i class="icon-home"></i></a>
+            <button class="button button-icon"><i class="icon-home"></i></button>
           </p>
 
-          <h3>Outline (Inline Default)</h3>
+          <hr>
+
+          <h3>a.block.button-icon</h3>
           <p>
-            <a class="button button-default button-outline">Default</a>
-            <a class="button button-secondary button-outline">Secondary</a>
-            <a class="button button-primary button-outline">Primary</a>
-            <a class="button button-info button-outline">Info</a>
-            <a class="button button-success button-outline">Success</a>
-            <a class="button button-warning button-outline">Warning</a>
-            <a class="button button-danger button-outline">Danger</a>
-            <a class="button button-dark button-outline">Dark</a>
+            <a class="button block button-icon"><i class="icon-home"></i></a>
           </p>
 
-          <h3>Outline (.block override)</h3>
+          <hr>
+
+          <h3>button.block.button-icon</h3>
           <p>
-            <a class="button button-default button-outline block">Default</a>
-            <a class="button button-secondary button-outline block">Secondary</a>
-            <a class="button button-primary button-outline block">Primary</a>
-            <a class="button button-info button-outline block">Info</a>
-            <a class="button button-success button-outline block">Success</a>
-            <a class="button button-warning button-outline block">Warning</a>
-            <a class="button button-danger button-outline block">Danger</a>
-            <a class="button button-dark button-outline block">Dark</a>
+            <button class="button block button-icon"><i class="icon-home"></i></button>
           </p>
 
-          <h3>Clear (Inline Default)</h3>
+          <hr>
+
+          <h3>a.button-outline</h3>
           <p>
-            <a class="button button-default button-clear">Default</a>
-            <a class="button button-secondary button-clear">Secondary</a>
-            <a class="button button-primary button-clear">Primary</a>
-            <a class="button button-info button-clear">Info</a>
-            <a class="button button-success button-clear">Success</a>
-            <a class="button button-warning button-clear">Warning</a>
-            <a class="button button-danger button-clear">Danger</a>
-            <a class="button button-dark button-clear">Dark</a>
+            <a class="button button-default button-outline">.button-default</a>
+            <a class="button button-secondary button-outline">.button-secondary</a>
+            <a class="button button-primary button-outline">.button-primary</a>
+            <a class="button button-info button-outline">.button-info</a>
+            <a class="button button-success button-outline">.button-success</a>
+            <a class="button button-warning button-outline">.button-warning</a>
+            <a class="button button-danger button-outline">.button-danger</a>
+            <a class="button button-dark button-outline">.button-dark</a>
           </p>
 
-          <h3>Clear (.block override)</h3>
+          <hr>
+
+          <h3>button.button-outline</h3>
           <p>
-            <a class="button button-default button-clear block">Default</a>
-            <a class="button button-secondary button-clear block">Secondary</a>
-            <a class="button button-primary button-clear block">Primary</a>
-            <a class="button button-info button-clear block">Info</a>
-            <a class="button button-success button-clear block">Success</a>
-            <a class="button button-warning button-clear block">Warning</a>
-            <a class="button button-danger button-clear block">Danger</a>
-            <a class="button button-dark button-clear block">Dark</a>
+            <button class="button button-default button-outline">.button-default</button>
+            <button class="button button-secondary button-outline">.button-secondary</button>
+            <button class="button button-primary button-outline">.button-primary</button>
+            <button class="button button-info button-outline">.button-info</button>
+            <button class="button button-success button-outline">.button-success</button>
+            <button class="button button-warning button-outline">.button-warning</button>
+            <button class="button button-danger button-outline">.button-danger</button>
+            <button class="button button-dark button-outline">.button-dark</button>
           </p>
+
+          <hr>
+
+          <h3>a.block.button-outline (parent w/ padding)</h3>
+          <p>
+            <a class="button button-default button-outline block">.button-default</a>
+            <a class="button button-secondary button-outline block">.button-secondary</a>
+            <a class="button button-primary button-outline block">.button-primary</a>
+            <a class="button button-info button-outline block">.button-info</a>
+            <a class="button button-success button-outline block">.button-success</a>
+            <a class="button button-warning button-outline block">.button-warning</a>
+            <a class="button button-danger button-outline block">.button-danger</a>
+            <a class="button button-dark button-outline block">.button-dark</a>
+          </p>
+
+          <hr>
+
+          <h3>button.block.button-outline (parent w/ padding)</h3>
+          <p>
+            <button class="button button-default button-outline block">.button-default</button>
+            <button class="button button-secondary button-outline block">.button-secondary</button>
+            <button class="button button-primary button-outline block">.button-primary</button>
+            <button class="button button-info button-outline block">.button-info</button>
+            <button class="button button-success button-outline block">.button-success</button>
+            <button class="button button-warning button-outline block">.button-warning</button>
+            <button class="button button-danger button-outline block">.button-danger</button>
+            <button class="button button-dark button-outline block">.button-dark</button>
+          </p>
+
+          <hr>
+
+          <h3>a.button-clear</h3>
+          <p>
+            <a class="button button-default button-clear">.button-default</a>
+            <a class="button button-secondary button-clear">.button-secondary</a>
+            <a class="button button-primary button-clear">.button-primary</a>
+            <a class="button button-info button-clear">.button-info</a>
+            <a class="button button-success button-clear">.button-success</a>
+            <a class="button button-warning button-clear">.button-warning</a>
+            <a class="button button-danger button-clear">.button-danger</a>
+            <a class="button button-dark button-clear">.button-dark</a>
+          </p>
+
+          <hr>
+
+          <h3>button.button-clear</h3>
+          <p>
+            <button class="button button-default button-clear">.button-default</button>
+            <button class="button button-secondary button-clear">.button-secondary</button>
+            <button class="button button-primary button-clear">.button-primary</button>
+            <button class="button button-info button-clear">.button-info</button>
+            <button class="button button-success button-clear">.button-success</button>
+            <button class="button button-warning button-clear">.button-warning</button>
+            <button class="button button-danger button-clear">.button-danger</button>
+            <button class="button button-dark button-clear">.button-dark</button>
+          </p>
+
+          <hr>
+
+          <h3>a.block.button-clear (parent w/ padding)</h3>
+          <p>
+            <a class="button button-default button-clear block">.button-default</a>
+            <a class="button button-secondary button-clear block">.button-secondary</a>
+            <a class="button button-primary button-clear block">.button-primary</a>
+            <a class="button button-info button-clear block">.button-info</a>
+            <a class="button button-success button-clear block">.button-success</a>
+            <a class="button button-warning button-clear block">.button-warning</a>
+            <a class="button button-danger button-clear block">.button-danger</a>
+            <a class="button button-dark button-clear block">.button-dark</a>
+          </p>
+
+          <hr>
+
+          <h3>button.block.button-clear (parent w/ padding)</h3>
+          <p>
+            <button class="button button-default button-clear block">.button-default</button>
+            <button class="button button-secondary button-clear block">.button-secondary</button>
+            <button class="button button-primary button-clear block">.button-primary</button>
+            <button class="button button-info button-clear block">.button-info</button>
+            <button class="button button-success button-clear block">.button-success</button>
+            <button class="button button-warning button-clear block">.button-warning</button>
+            <button class="button button-danger button-clear block">.button-danger</button>
+            <button class="button button-dark button-clear block">.button-dark</button>
+          </p>
+
         </div>
 
-        <h3>Block w/out padding</h3>
+        <hr>
+
+        <h3>a.block (parent w/out padding)</h3>
         <p>
-          <a class="button block button-default">Default</a>
-          <a class="button block button-secondary">Secondary</a>
-          <a class="button block button-primary">Primary</a>
-          <a class="button block button-info">Info</a>
-          <a class="button block button-success">Success</a>
-          <a class="button block button-warning">Warning</a>
-          <a class="button block button-danger">Danger</a>
-          <a class="button block button-dark">Dark</a>
+          <a class="button block button-default">.button-default</a>
+          <a class="button block button-secondary">.button-secondary</a>
+          <a class="button block button-primary">.button-primary</a>
+          <a class="button block button-info">.button-info</a>
+          <a class="button block button-success">.button-success</a>
+          <a class="button block button-warning">.button-warning</a>
+          <a class="button block button-danger">.button-danger</a>
+          <a class="button block button-dark">.button-dark</a>
         </p>
 
-        <h3>Block w/out parent padding but parent .margin</h3>
-        <p class="margin">
-          <a class="button block button-default">Default</a>
-          <a class="button block button-secondary">Secondary</a>
-          <a class="button block button-primary">Primary</a>
-          <a class="button block button-info">Info</a>
-          <a class="button block button-success">Success</a>
-          <a class="button block button-warning">Warning</a>
-          <a class="button block button-danger">Danger</a>
-          <a class="button block button-dark">Dark</a>
+        <hr>
+
+        <h3>a.block (.button-full on the parent)</h3>
+        <p class="button-full">
+          <a class="button block button-default">.button-default</a>
+          <a class="button block button-secondary">.button-secondary</a>
+          <a class="button block button-primary">.button-primary</a>
+          <a class="button block button-info">.button-info</a>
+          <a class="button block button-success">.button-success</a>
+          <a class="button block button-warning">.button-warning</a>
+          <a class="button block button-danger">.button-danger</a>
+          <a class="button block button-dark">.button-dark</a>
         </p>
 
-        <h3>&lt;a&gt; .block .margin set on each button and nothing on the parent</h3>
+        <hr>
+
+        <h3>button.block.button-full on each button and nothing on the parent</h3>
         <p>
-          <a class="button block margin button-default">Default</a>
-          <a class="button block margin button-secondary">Secondary</a>
-          <a class="button block margin button-primary">Primary</a>
-          <a class="button block margin button-info">Info</a>
-          <a class="button block margin button-success">Success</a>
-          <a class="button block margin button-warning">Warning</a>
-          <a class="button block margin button-danger">Danger</a>
-          <a class="button block margin button-dark">Dark</a>
+          <button class="button block button-full button-default">.button-default</button>
+          <button class="button block button-full button-secondary">.button-secondary</button>
+          <button class="button block button-full button-primary">.button-primary</button>
+          <button class="button block button-full button-info">.button-info</button>
+          <button class="button block button-full button-success">.button-success</button>
+          <button class="button block button-full button-warning">.button-warning</button>
+          <button class="button block button-full button-danger">.button-danger</button>
+          <button class="button block button-full button-dark">.button-dark</button>
         </p>
 
-        <h3>&lt;button&gt; .block .margin set on each button and nothing on the parent</h3>
-        <p>
-          <button class="button block margin button-default">Default</button>
-          <button class="button block margin button-secondary">Secondary</button>
-          <button class="button block margin button-primary">Primary</button>
-          <button class="button block margin button-info">Info</button>
-          <button class="button block margin button-success">Success</button>
-          <button class="button block margin button-warning">Warning</button>
-          <button class="button block margin button-danger">Danger</button>
-          <button class="button block margin button-dark">Dark</button>
-        </p>
+        <hr>
 
         <p>
           <a class="button button-secondary" href="index.html">Homepage</a>

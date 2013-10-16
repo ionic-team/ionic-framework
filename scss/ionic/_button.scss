@@ -6,10 +6,9 @@
 
   padding: $button-padding;
 
-  border-width: 0;
+  border-width: $button-border-width;
   border-style: solid;
-  border-top-width: $button-border-width;
-  border-bottom-width: $button-border-width;
+  border-radius: $button-border-radius;
 
   color: $button-color;
 
@@ -17,12 +16,12 @@
 
   text-align: center;
   font-size: $button-font-size;
+  line-height: $line-height-computed;
 
   cursor: pointer;
 
   &.button-icon {
     padding: $button-clear-padding;
-    width: auto;
     border: none;
     background: none;
   }
@@ -96,17 +95,27 @@
     }
   }
 
+  &.block {
+    margin-top: $button-block-margin;
+    margin-bottom: $button-block-margin;
+  }
+
+}
+
+.button-full,
+.button-full > .button {
+  margin-right: 0;
+  margin-left: 0;
+  border-right-width: 0;
+  border-left-width: 0;
+  border-radius: 0;
+}
+
+button.block {
+  width: 100%;
 }
 
 a.button {
   text-decoration: none;
-}
-
-.margin.button,
-.margin .button,
-.padding .button {
-  border-right-width: $button-border-width;
-  border-left-width: $button-border-width;
-  border-radius: $button-border-radius;
 }
 

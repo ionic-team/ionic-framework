@@ -61,7 +61,7 @@ $mono-font-family:         Monaco, Menlo, Consolas, "Courier New", monospace !de
 $base-font-family:          $sans-font-family;
 $base-background-color:     $white;
 $base-color:                #000;
-$content-padding:           10px;
+$content-padding:           10px !default;
 $inset-margin:              10px;
 $border-radius-base:        4px !default;
 $border-radius-large:       6px !default;
@@ -216,15 +216,13 @@ $info-border:        darken(adjust-hue($info-bg, -10), 7%);
 
 $button-bar-button-line-height:  15px !default;
 
-$button-color:            #222;
-$button-padding:          8px 12px;
-$button-clear-padding:    4px 5px;
-$button-border-radius:    2px;
-$button-border-width:     1px;
-$button-font-size:        16px;
-
-// Button block that has spacing
-$button-block-margin: 10px 0 10px 0;
+$button-color:                    #222;
+$button-padding:                  8px 12px;
+$button-block-margin:             10px !default;
+$button-clear-padding:            4px 5px;
+$button-border-radius:            2px;
+$button-border-width:             1px;
+$button-font-size:                16px;
 
 $button-default-bg:               $brand-default;
 $button-default-border:           #ddd;
