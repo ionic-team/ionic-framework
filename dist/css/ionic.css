@@ -1445,59 +1445,6 @@ body, .ionic-body {
   background-color: #fff;
   -webkit-overflow-scrolling: touch; }
 
-.hidden,
-.hide {
-  display: none !important; }
-
-.padding {
-  padding: 10px; }
-
-.padding-vertical {
-  padding-top: 10px;
-  padding-bottom: 10px; }
-
-.padding-horizontal {
-  padding-left: 10px;
-  padding-right: 10px; }
-
-.padding-top {
-  padding-top: 10px; }
-
-.padding-right {
-  padding-right: 10px; }
-
-.padding-bottom {
-  padding-bottom: 10px; }
-
-.padding-left {
-  padding-left: 10px; }
-
-.margin {
-  margin: 10px; }
-
-.margin-vertical {
-  margin-top: 10px;
-  margin-bottom: 10px; }
-
-.margin-horizontal {
-  margin-left: 10px;
-  margin-right: 10px; }
-
-.margin-top {
-  margin-top: 10px; }
-
-.margin-right {
-  margin-right: 10px; }
-
-.margin-bottom {
-  margin-bottom: 10px; }
-
-.margin-left {
-  margin-left: 10px; }
-
-.rounded {
-  border-radius: 4px; }
-
 p {
   margin: 0 0 10px; }
 
@@ -2707,9 +2654,9 @@ input[type="checkbox"][readonly] {
 
 .button {
   position: relative;
-  display: block;
+  display: inline-block;
+  margin: 0;
   padding: 8px 12px;
-  width: 100%;
   border-width: 0;
   border-style: solid;
   border-top-width: 1px;
@@ -2720,8 +2667,6 @@ input[type="checkbox"][readonly] {
   font-size: 16px;
   cursor: pointer; }
   .button.button-icon {
-    display: inline-block;
-    margin: 0;
     padding: 4px 5px;
     width: auto;
     border: none;
@@ -2729,10 +2674,7 @@ input[type="checkbox"][readonly] {
   .button.button-clear {
     -webkit-transition: opacity 0.1s;
     transition: opacity 0.1s;
-    display: inline-block;
-    margin: 0;
     padding: 4px 5px;
-    width: auto;
     border: none;
     background: none;
     box-shadow: none; }
@@ -2917,9 +2859,6 @@ input[type="checkbox"][readonly] {
   .button.button-outline {
     -webkit-transition: opacity 0.1s;
     transition: opacity 0.1s;
-    display: inline-block;
-    margin: 0;
-    width: auto;
     background: none;
     box-shadow: none; }
   .button.button-icon {
@@ -2929,17 +2868,11 @@ input[type="checkbox"][readonly] {
       background: none;
       box-shadow: none;
       text-shadow: 0px 0px 10px #fff; }
-  .button.button-inline {
-    display: inline-block;
-    margin: 0;
-    width: auto; }
-  .button.button-block {
-    display: block;
-    margin: 10px 0 10px 0; }
 
 a.button {
   text-decoration: none; }
 
+.margin.button,
 .margin .button,
 .padding .button {
   border-right-width: 1px;
@@ -3140,6 +3073,67 @@ a.button {
   opacity: 0;
   animation: fadein 0.5s;
   -webkit-animation: fadein 0.5s; }
+
+.hidden,
+.hide {
+  display: none !important; }
+
+.show {
+  display: block !important; }
+
+.inline {
+  display: inline-block; }
+
+.block {
+  display: block;
+  clear: both; }
+  .block:after {
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+    content: "."; }
+
+.padding {
+  padding: 10px; }
+
+.padding-top,
+.padding-vertical {
+  padding-top: 10px; }
+
+.padding-right,
+.padding-horizontal {
+  padding-right: 10px; }
+
+.padding-bottom,
+.padding-vertical {
+  padding-bottom: 10px; }
+
+.padding-left,
+.padding-horizontal {
+  padding-left: 10px; }
+
+.margin {
+  margin: 10px; }
+
+.margin-top,
+.margin-vertical {
+  margin-top: 10px; }
+
+.margin-right,
+.margin-horizontal {
+  margin-right: 10px; }
+
+.margin-bottom,
+.margin-vertical {
+  margin-bottom: 10px; }
+
+.margin-left,
+.margin-horizontal {
+  margin-left: 10px; }
+
+.rounded {
+  border-radius: 4px; }
 
 .platform-ios7 .bar-header {
   height: 64px; }

@@ -1113,43 +1113,6 @@
     height: 100%;
     background-color: #fff;
     -webkit-overflow-scrolling: touch; }
-  .ionic .hidden,
-  .ionic .hide {
-    display: none !important; }
-  .ionic .padding {
-    padding: 10px; }
-  .ionic .padding-vertical {
-    padding-top: 10px;
-    padding-bottom: 10px; }
-  .ionic .padding-horizontal {
-    padding-left: 10px;
-    padding-right: 10px; }
-  .ionic .padding-top {
-    padding-top: 10px; }
-  .ionic .padding-right {
-    padding-right: 10px; }
-  .ionic .padding-bottom {
-    padding-bottom: 10px; }
-  .ionic .padding-left {
-    padding-left: 10px; }
-  .ionic .margin {
-    margin: 10px; }
-  .ionic .margin-vertical {
-    margin-top: 10px;
-    margin-bottom: 10px; }
-  .ionic .margin-horizontal {
-    margin-left: 10px;
-    margin-right: 10px; }
-  .ionic .margin-top {
-    margin-top: 10px; }
-  .ionic .margin-right {
-    margin-right: 10px; }
-  .ionic .margin-bottom {
-    margin-bottom: 10px; }
-  .ionic .margin-left {
-    margin-left: 10px; }
-  .ionic .rounded {
-    border-radius: 4px; }
   .ionic p {
     margin: 0 0 10px; }
   .ionic .lead {
@@ -2213,9 +2176,9 @@
         display: inline; }
   .ionic .button {
     position: relative;
-    display: block;
+    display: inline-block;
+    margin: 0;
     padding: 8px 12px;
-    width: 100%;
     border-width: 0;
     border-style: solid;
     border-top-width: 1px;
@@ -2226,8 +2189,6 @@
     font-size: 16px;
     cursor: pointer; }
     .ionic .button.button-icon {
-      display: inline-block;
-      margin: 0;
       padding: 4px 5px;
       width: auto;
       border: none;
@@ -2235,10 +2196,7 @@
     .ionic .button.button-clear {
       -webkit-transition: opacity 0.1s;
       transition: opacity 0.1s;
-      display: inline-block;
-      margin: 0;
       padding: 4px 5px;
-      width: auto;
       border: none;
       background: none;
       box-shadow: none; }
@@ -2423,9 +2381,6 @@
     .ionic .button.button-outline {
       -webkit-transition: opacity 0.1s;
       transition: opacity 0.1s;
-      display: inline-block;
-      margin: 0;
-      width: auto;
       background: none;
       box-shadow: none; }
     .ionic .button.button-icon {
@@ -2435,15 +2390,9 @@
         background: none;
         box-shadow: none;
         text-shadow: 0px 0px 10px #fff; }
-    .ionic .button.button-inline {
-      display: inline-block;
-      margin: 0;
-      width: auto; }
-    .ionic .button.button-block {
-      display: block;
-      margin: 10px 0 10px 0; }
   .ionic a.button {
     text-decoration: none; }
+  .ionic .margin.button,
   .ionic .margin .button,
   .ionic .padding .button {
     border-right-width: 1px;
@@ -2585,6 +2534,52 @@
     opacity: 0;
     animation: fadein 0.5s;
     -webkit-animation: fadein 0.5s; }
+  .ionic .hidden,
+  .ionic .hide {
+    display: none !important; }
+  .ionic .show {
+    display: block !important; }
+  .ionic .inline {
+    display: inline-block; }
+  .ionic .block {
+    display: block;
+    clear: both; }
+    .ionic .block:after {
+      display: block;
+      visibility: hidden;
+      clear: both;
+      height: 0;
+      content: "."; }
+  .ionic .padding {
+    padding: 10px; }
+  .ionic .padding-top,
+  .ionic .padding-vertical {
+    padding-top: 10px; }
+  .ionic .padding-right,
+  .ionic .padding-horizontal {
+    padding-right: 10px; }
+  .ionic .padding-bottom,
+  .ionic .padding-vertical {
+    padding-bottom: 10px; }
+  .ionic .padding-left,
+  .ionic .padding-horizontal {
+    padding-left: 10px; }
+  .ionic .margin {
+    margin: 10px; }
+  .ionic .margin-top,
+  .ionic .margin-vertical {
+    margin-top: 10px; }
+  .ionic .margin-right,
+  .ionic .margin-horizontal {
+    margin-right: 10px; }
+  .ionic .margin-bottom,
+  .ionic .margin-vertical {
+    margin-bottom: 10px; }
+  .ionic .margin-left,
+  .ionic .margin-horizontal {
+    margin-left: 10px; }
+  .ionic .rounded {
+    border-radius: 4px; }
   .ionic .platform-ios7 .bar-header {
     height: 64px; }
     .ionic .platform-ios7 .bar-header > * {
