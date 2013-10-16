@@ -1,4 +1,6 @@
 .slide-box {
+  background-color: #000;
+  position: relative;
   // Make sure items don't scroll over ever
   overflow: hidden;
 }
@@ -21,5 +23,27 @@
 
   img {
     width: 100%;
+  }
+}
+
+.slide-box-pager {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+
+  > * {
+    display: inline-block;
+    text-decoration: none;
+    margin: 0px 5px;
+    color: #fff;
+
+    opacity: 0.5;
+
+
+    &.active {
+      -webkit-transition: opacity 0.4s ease-in;
+      opacity: 1;
+    }
   }
 }

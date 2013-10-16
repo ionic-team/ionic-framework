@@ -12,9 +12,19 @@
     var _this = this;
 
     this.el = opts.el;
+    this.pager = this.el.querySelector('.slide-box-pager');
 
+    // The drag threshold is the pixel delta that will trigger a drag (to 
+    // avoid accidental dragging)
     this.dragThresholdX = opts.dragThresholdX || 10;
+    // The velocity threshold is a velocity of drag that indicates a "swipe". This
+    // number is taken from hammer.js's calculations
     this.velocityXThreshold = opts.velocityXThreshold || 0.3;
+
+    // Initialize the slide index to the first page and update the pager
+    this.slideIndex = 0;
+    this._updatePager();
+
 
     // Listen for drag and release events
     window.ionic.onGesture('drag', function(e) {
@@ -58,6 +68,8 @@
 
       // Update the slide index
       this.slideIndex = Math.ceil(offsetX / slideWidth);
+
+      this._updatePager();
     },
 
     /**
@@ -69,6 +81,23 @@
      */
     getSlideIndex: function() {
       return this.slideIndex;
+    },
+
+    /**
+     * If we have a pager, update the active page when the current slide
+     * changes.
+     */
+    _updatePager: function() {
+      if(!this.pager) {
+        return;
+      }
+      for(var i = 0, j = this.pager.children.length; i < j; i++) {
+        if(i == this.slideIndex) {
+          this.pager.children[i].classList.add('active');
+        } else {
+          this.pager.children[i].classList.remove('active');
+        }
+      }
     },
 
     _initDrag: function() {

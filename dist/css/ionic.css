@@ -3021,6 +3021,8 @@ a.button {
   padding: 10px; }
 
 .slide-box {
+  background-color: #000;
+  position: relative;
   overflow: hidden; }
 
 .slide-box-items {
@@ -3039,6 +3041,21 @@ a.button {
   height: 100%; }
   .slide-box-content img {
     width: 100%; }
+
+.slide-box-pager {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center; }
+  .slide-box-pager > * {
+    display: inline-block;
+    text-decoration: none;
+    margin: 0px 5px;
+    color: #fff;
+    opacity: 0.5; }
+    .slide-box-pager > *.active {
+      -webkit-transition: opacity 0.4s ease-in;
+      opacity: 1; }
 
 .slide-in-up {
   opacity: 0;

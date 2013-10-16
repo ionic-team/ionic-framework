@@ -6,6 +6,11 @@
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="../dist/css/ionic.css" rel="stylesheet">
+    <style>
+      #slide-box {
+        max-height: 400px;
+      }
+    </style>
   </head>
   <body>
 
@@ -29,6 +34,11 @@
                 <img src="http://i677.photobucket.com/albums/vv137/smileytrucker/cow-toy-car-stuck-head-1259518194w.jpg">
               </div>
             </div>
+            <div class="slide-box-pager">
+              <span>1</span>
+              <span>2</span>
+              <span>3</span>
+            </div>
           </div>
         </div>
       </main>
@@ -39,7 +49,9 @@
 
     <script>
       var b = document.getElementById('slide-box');
-      var box = new ionic.views.SlideBox({el: b});
+      var box = new ionic.views.SlideBox({
+        el: b
+      });
     </script>
   </body>
 </html>
