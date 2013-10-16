@@ -1,4 +1,8 @@
 .slide-box {
+  // Make sure items don't scroll over ever
+  overflow: hidden;
+}
+.slide-box-items {
   position: relative;
   white-space: nowrap;
   -webkit-transition: -webkit-transform 0 ease-in-out;

@@ -2302,7 +2302,7 @@ window.ionic = {
       this._initDrag();
 
       // Make sure to grab the element we will slide as our target
-      content = ionic.DomUtil.getParentOrSelfWithClass(e.target, 'slide-box');
+      content = ionic.DomUtil.getParentOrSelfWithClass(e.target, 'slide-box-items');
       if(!content) {
         return;
       }
