@@ -2666,18 +2666,17 @@ input[type="checkbox"][readonly] {
   display: inline-block;
   margin: 0;
   padding: 8px 12px;
-  border-width: 0;
+  border-width: 1px;
   border-style: solid;
-  border-top-width: 1px;
-  border-bottom-width: 1px;
+  border-radius: 2px;
   color: #222222;
   vertical-align: middle;
   text-align: center;
   font-size: 16px;
+  line-height: 20px;
   cursor: pointer; }
   .button.button-icon {
     padding: 4px 5px;
-    width: auto;
     border: none;
     background: none; }
   .button.button-clear {
@@ -2877,16 +2876,23 @@ input[type="checkbox"][readonly] {
       background: none;
       box-shadow: none;
       text-shadow: 0px 0px 10px white; }
+  .button.block {
+    margin-top: 10px;
+    margin-bottom: 10px; }
+
+.button-full,
+.button-full > .button {
+  margin-right: 0;
+  margin-left: 0;
+  border-right-width: 0;
+  border-left-width: 0;
+  border-radius: 0; }
+
+button.block {
+  width: 100%; }
 
 a.button {
   text-decoration: none; }
-
-.margin.button,
-.margin .button,
-.padding .button {
-  border-right-width: 1px;
-  border-left-width: 1px;
-  border-radius: 2px; }
 
 .button-bar {
   box-flex: 1;

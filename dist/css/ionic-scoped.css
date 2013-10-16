@@ -2187,18 +2187,17 @@
     display: inline-block;
     margin: 0;
     padding: 8px 12px;
-    border-width: 0;
+    border-width: 1px;
     border-style: solid;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
+    border-radius: 2px;
     color: #222222;
     vertical-align: middle;
     text-align: center;
     font-size: 16px;
+    line-height: 20px;
     cursor: pointer; }
     .ionic .button.button-icon {
       padding: 4px 5px;
-      width: auto;
       border: none;
       background: none; }
     .ionic .button.button-clear {
@@ -2398,14 +2397,20 @@
         background: none;
         box-shadow: none;
         text-shadow: 0px 0px 10px white; }
+    .ionic .button.block {
+      margin-top: 10px;
+      margin-bottom: 10px; }
+  .ionic .button-full,
+  .ionic .button-full > .button {
+    margin-right: 0;
+    margin-left: 0;
+    border-right-width: 0;
+    border-left-width: 0;
+    border-radius: 0; }
+  .ionic button.block {
+    width: 100%; }
   .ionic a.button {
     text-decoration: none; }
-  .ionic .margin.button,
-  .ionic .margin .button,
-  .ionic .padding .button {
-    border-right-width: 1px;
-    border-left-width: 1px;
-    border-radius: 2px; }
   .ionic .button-bar {
     box-flex: 1;
     -webkit-box-flex: 1;

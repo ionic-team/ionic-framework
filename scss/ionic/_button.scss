@@ -82,7 +82,7 @@
   &.button-outline {
     @include transition(opacity .1s);
     background: none;
-    box-shadow: none; 
+    box-shadow: none;
   }
 
   &.button-icon {
