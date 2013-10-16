@@ -2280,6 +2280,7 @@ window.ionic = {
     this.el = opts.el;
 
     this.dragThresholdX = opts.dragThresholdX || 10;
+    this.velocityXThreshold = opts.velocityXThreshold || 0.3;
 
     // Listen for drag and release events
     window.ionic.onGesture('drag', function(e) {
@@ -2345,8 +2346,6 @@ window.ionic = {
       var _this = this,
           finalOffsetX, content, ratio, slideWidth, totalWidth, offsetX;
 
-      console.log("END");
-
       window.requestAnimationFrame(function() {
       
         // We didn't have a drag, so just init and leave
@@ -2389,8 +2388,16 @@ window.ionic = {
 
         _this.slideIndex = Math.ceil(finalOffsetX / slideWidth);
 
-        // Negative offsetX to slide correctly
-        content.style.webkitTransform = 'translate3d(' + -finalOffsetX + 'px, 0, 0)';
+        if(e.gesture.velocityX > _this.velocityXThreshold) {
+          if(e.gesture.direction == 'left') {
+            _this.slideToSlide(_this.slideIndex + 1);
+          } else if(e.gesture.direction == 'right') {
+            _this.slideToSlide(_this.slideIndex - 1);
+          }
+        } else {
+          // Negative offsetX to slide correctly
+          content.style.webkitTransform = 'translate3d(' + -finalOffsetX + 'px, 0, 0)';
+        }
 
         _this._initDrag();
       });
@@ -2402,7 +2409,6 @@ window.ionic = {
      */
     _startDrag: function(e) {
       var offsetX, content;
-      console.log("START");
 
       this._initDrag();
 
@@ -2430,7 +2436,7 @@ window.ionic = {
      */
     _handleDrag: function(e) {
       var _this = this;
-      console.log("DRAG");
+
       window.requestAnimationFrame(function() {
         var content;
 
