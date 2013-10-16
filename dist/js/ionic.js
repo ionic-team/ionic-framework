@@ -2291,10 +2291,90 @@ window.ionic = {
   };
 
   ionic.views.SlideBox.prototype = {
+
+    /**
+     * Slide to the given slide index.
+     *
+     * @param {integer} the index of the slide to animate to.
+     */
+    slideToSlide: function(index) {
+      var content = this.el.firstElementChild;
+      if(!content) {
+        return;
+      }
+      var slideWidth = content.offsetWidth;
+      var offsetX = index * slideWidth;
+      var maxX = Math.max(0, content.children.length - 1) * slideWidth;
+      offsetX = offsetX < 0 ? 0 : offsetX > maxX ? maxX : offsetX;
+      content.classList.add('slide-box-animating');
+      content.style.webkitTransform = 'translate3d(' + -offsetX + 'px, 0, 0)';
+
+      // Update the slide index
+      this.slideIndex = Math.ceil(offsetX / slideWidth);
+    },
+
+    getSlideIndex: function() {
+      return this.slideIndex;
+    },
+
     _initDrag: function() {
       this._isDragging = false;
       this._drag = null;
     },
+
+    _handleEndDrag: function(e) {
+      var _this = this,
+          finalOffsetX, content, ratio, slideWidth, totalWidth, offsetX;
+
+      console.log("END");
+
+      window.requestAnimationFrame(function() {
+      
+        // We didn't have a drag, so just init and leave
+        if(!_this._drag) {
+          _this._initDrag();
+          return;
+        }
+
+        // Snap to the correct spot
+        content = _this._drag.content;
+
+        // Enable transition duration
+        content.classList.add('slide-box-animating');
+
+        // Grab the current offset X position
+        offsetX = parseFloat(content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
+        slideWidth = content.offsetWidth;
+        totalWidth = content.offsetWidth * content.children.length;
+
+        // Calculate how far in this slide we've dragged
+        ratio = (offsetX % slideWidth) / slideWidth;
+
+        if(ratio >= 0) {
+          // Anything greater than zero is too far left
+          finalOffsetX = 0;
+        } else if(ratio >= -0.5) {
+          finalOffsetX = Math.max(0, Math.floor(Math.abs(offsetX) / slideWidth) * slideWidth);
+        } else {
+          // Sliiide to the right
+          finalOffsetX = Math.min(totalWidth - slideWidth, Math.ceil(Math.abs(offsetX) / slideWidth) * slideWidth);
+        }
+
+        _this.slideIndex = Math.ceil(finalOffsetX / slideWidth);
+
+        console.log('Slide index', slideIndex);
+
+        // Negative offsetX to slide correctly
+        content.style.webkitTransform = 'translate3d(' + -finalOffsetX + 'px, 0, 0)';
+
+        _this._initDrag();
+      });
+    },
+
+    /**
+     * Initialize a drag by grabbing the content area to drag, and any other
+     * info we might need for the dragging.
+     */
     _startDrag: function(e) {
       var offsetX, content;
       console.log("START");
@@ -2320,49 +2400,6 @@ window.ionic = {
       };
     },
 
-    _handleEndDrag: function(e) {
-      var _this = this;
-      console.log("END");
-
-      var finalOffsetX, content, ratio, slideWidth, totalWidth, offsetX;
-      window.requestAnimationFrame(function() {
-      
-        // We didn't have a drag, so just init and leave
-        if(!_this._drag) {
-          _this._initDrag();
-          return;
-        }
-
-        // Snap to the correct spot
-
-        content = _this._drag.content;
-
-        // Enable transition duration
-        content.classList.add('slide-box-animating');
-
-        offsetX = parseFloat(content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
-        slideWidth = content.offsetWidth;
-        totalWidth = content.offsetWidth * content.children.length;
-
-        // Calculate how far in this slide we've dragged
-        ratio = (offsetX % slideWidth) / slideWidth;
-
-        if(ratio >= 0) {
-          // Anything greater than zero is too far left
-          finalOffsetX = 0;
-        } else if(ratio >= -0.5) {
-          finalOffsetX = Math.max(0, Math.floor(Math.abs(offsetX) / slideWidth) * slideWidth);
-        } else {
-          // Sliiide to the right
-          finalOffsetX = Math.min(totalWidth - slideWidth, Math.ceil(Math.abs(offsetX) / slideWidth) * slideWidth);
-        }
-
-        // Negative offsetX to slide correctly
-        content.style.webkitTransform = 'translate3d(' + -finalOffsetX + 'px, 0, 0)';
-
-        _this._initDrag();
-      });
-    },
     /**
      * Process the drag event to move the item to the left or right.
      */
