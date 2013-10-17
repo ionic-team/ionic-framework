@@ -1523,17 +1523,22 @@ input[type="checkbox"][readonly] {
     -webkit-transform: none;
     transition-delay: 0.05s, 0s; }
 
+.radio-buttton-list .list-item-buttons {
+  visibility: hidden; }
 .radio-buttton-list [class^="icon-"],
 .radio-buttton-list [class*=" icon-"] {
   position: absolute;
   top: 25%;
   left: 25%;
-  visibility: hidden;
   font-size: 24px; }
 .radio-buttton-list input[type="radio"] {
   /* hide any radio button inputs elements (the ugly circles) */
   display: none; }
-  .radio-buttton-list input[type="radio"]:checked + [class^="icon-"], .radio-buttton-list input[type="radio"]:checked + [class*=" icon-"] {
+  .radio-buttton-list input[type="radio"]:checked ~ .list-item-content {
+    /* style the list item when its checked */
+    background: #f7f7f7; }
+  .radio-buttton-list input[type="radio"]:checked ~ .list-item-buttons {
+    /* show the icon when its checked */
     visibility: visible; }
 .radio-buttton-list .list-item-content {
   padding-right: 60px; }

@@ -2181,17 +2181,22 @@
     .ionic .toggle :checked + .track .handle {
       background-color: white;
       -webkit-transform: translate3d(22px, 0, 0); }
+  .ionic .radio-buttton-list .list-item-buttons {
+    visibility: hidden; }
   .ionic .radio-buttton-list [class^="icon-"],
   .ionic .radio-buttton-list [class*=" icon-"] {
     position: absolute;
     top: 25%;
     left: 25%;
-    visibility: hidden;
     font-size: 24px; }
   .ionic .radio-buttton-list input[type="radio"] {
     /* hide any radio button inputs elements (the ugly circles) */
     display: none; }
-    .ionic .radio-buttton-list input[type="radio"]:checked + [class^="icon-"], .ionic .radio-buttton-list input[type="radio"]:checked + [class*=" icon-"] {
+    .ionic .radio-buttton-list input[type="radio"]:checked ~ .list-item-content {
+      /* style the list item when its checked */
+      background: #f7f7f7; }
+    .ionic .radio-buttton-list input[type="radio"]:checked ~ .list-item-buttons {
+      /* show the icon when its checked */
       visibility: visible; }
   .ionic .radio-buttton-list .list-item-content {
     padding-right: 60px; }
