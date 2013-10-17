@@ -1,11 +1,14 @@
 
+// Toggle
+// -------------------------------
+
 /* the overall container of the toggle */
 .toggle {
   display: inline-block;
 }
 
-/* hide the actual checkbox */
-.toggle input {
+/* hide the actual <input type="checkbox"> */
+.toggle input[type="checkbox"] {
   display: none;
 }
 
@@ -21,9 +24,9 @@
   background-color: $toggle-off-bg-color;
   cursor: pointer;
 
-  transition-property: background-color, border;
-  transition-duration: $toggle-transition-duration;   
   transition-timing-function: ease-in-out;
+  transition-duration: $toggle-transition-duration;
+  transition-property: background-color, border;
 }
 
 /* the handle (circle) thats inside the toggle's track area */
@@ -40,11 +43,11 @@
   /* used to create a larger hit area to slide the handle */
   &:before {
     position: absolute;
-    content: " ";
+    top: -2px;
+    left: ( ($toggle-handle-width / 2) * -1) - 2;
     display: table;
-    left: ( ($toggle-handle-width / 2) * -1);
-    top: ( ($toggle-handle-height / 2) * -1) + 3;
-    padding: ($toggle-handle-height / 2) ($toggle-handle-width + 2);
+    padding: ($toggle-handle-height / 2) + 3 ($toggle-handle-width + 2);
+    content: " ";
   }
 }
 

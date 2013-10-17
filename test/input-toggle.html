@@ -5,37 +5,36 @@
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="../dist/ionicons.css" rel="stylesheet">
-    <link href="../dist/ionic.css" rel="stylesheet">
+    <link href="../dist/css/ionic.css" rel="stylesheet">
   </head>
   <body>
 
-    <section>
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Input: Toggle</h1>
+    </header>
 
-      <header class="bar bar-header bar-dark">
-        <h1 class="title">Input: Toggle</h1>
-      </header>
+    <div class="content-wrapper">
 
       <main class="content has-header">
         
         <ul class="list">
           <li class="list-item">
             Airplane Mode
-            <div class="toggle" id="airplaneMode">
+            <label class="toggle" id="airplaneMode">
                <input type="checkbox" name="airplaneMode">
                <div class="track">
                 <div class="handle"></div>
               </div>
-            </div>
+            </label>
           </li>
           <li class="list-item">
             Do Not Disturb
-            <div class="toggle" id="doNotDisturb">
+            <label class="toggle" id="doNotDisturb">
                <input type="checkbox" name="doNotDisturb" checked="checked">
                <div class="track">
                 <div class="handle"></div>
               </div>
-            </div>
+            </label>
           </li>
         </ul>
 
@@ -54,11 +53,11 @@
 
       </main>
 
-    </section>
+    </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="../dist/ionic.js"></script>
-    <script src="../dist/ionic-simple.js"></script>
+    <script src="../dist/js/ionic.js"></script>
+    <script src="../dist/js/ionic-simple.js"></script>
 
 
     <!-- for testing only -->
