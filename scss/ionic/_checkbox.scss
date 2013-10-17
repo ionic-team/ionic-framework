@@ -31,14 +31,14 @@
 /* the checkmark within the box */
 .checkbox input:after {
   position: absolute;
-  top: 37%;
+  top: 34%;
   left: 26%;
   display: table;
   width: $checkbox-width / 2;
-  height: $checkbox-width / 4;
+  height: ($checkbox-width / 3) + 1;
   border: $checkbox-check-width solid $checkbox-check-color;
-  border-top: none;
-  border-right: none;
+  border-top: 0;
+  border-right: 0;
   content: ' ';
   opacity: 0;
   transition: opacity .05s ease-in-out;
@@ -56,4 +56,17 @@
 /* what the checkmark looks like when its checked */
 .checkbox input:checked:after {
   opacity: 1;
+}
+
+/* make sure list item content have enough padding on left to fit the checkbox */
+.checkbox-item .list-item-content {
+  padding-left: ($list-item-padding * 2) + $checkbox-width;
+}
+
+/* position the checkbox to the left within a list item */
+.checkbox-item .checkbox {
+  position: absolute;
+  top: 1px;
+  left: $list-item-padding / 2;
+  z-index: 3;
 }
