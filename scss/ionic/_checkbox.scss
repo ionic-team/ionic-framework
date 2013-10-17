@@ -4,46 +4,56 @@
   display: inline-block;
   padding: ($checkbox-height / 4) ($checkbox-width / 4);
   cursor: pointer;
+}
 
-  input {
-    display: none;
-  }
+.checkbox input {
+  position: relative;
+  width: $checkbox-width;
+  height: $checkbox-height;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-appearance: none;
 
-  /* what the checkbox looks like when its not checked */
-  .handle {
-    width: $checkbox-width;
-    height: $checkbox-height;
+  &:before {
+    /* what the checkbox looks like when its not checked */
+    display: table;
+    width: 100%;
+    height: 100%;
     border: $checkbox-border-width solid $checkbox-off-border-color;
     border-radius: $checkbox-border-radius;
     background: $checkbox-off-bg-color;
+    content: ' ';
     transition: background-color .1s ease-in-out;
   }
+}
 
-  /* the checkmark within the box */
-  .handle:after {
-    position: absolute;
-    top: 37%;
-    left: $checkbox-width / 2;
-    width: $checkbox-width / 2;
-    height: $checkbox-width / 4;
-    border: $checkbox-check-width solid $checkbox-check-color;
-    border-top: none;
-    border-right: none;
-    content: '';
-    opacity: 0;
-    transition: opacity .05s ease-in-out;
+/* the checkmark within the box */
+.checkbox input:after {
+  position: absolute;
+  top: 37%;
+  left: 26%;
+  display: table;
+  width: $checkbox-width / 2;
+  height: $checkbox-width / 4;
+  border: $checkbox-check-width solid $checkbox-check-color;
+  border-top: none;
+  border-right: none;
+  content: ' ';
+  opacity: 0;
+  transition: opacity .05s ease-in-out;
 
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-  }
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
 
-  /* what it looks like when it is checked */
-  input:checked + .handle {
-    background: $checkbox-on-bg-color;
+/* what the background looks like when its checked */
+.checkbox input:checked:before {
+  border: 0;
+  background: $checkbox-on-bg-color;
+}
 
-    &:after {
-      opacity: 1;
-    }
-  }
-
+/* what the checkmark looks like when its checked */
+.checkbox input:checked:after {
+  opacity: 1;
 }
