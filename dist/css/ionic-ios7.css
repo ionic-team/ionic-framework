@@ -1445,24 +1445,6 @@ input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
   color: #999999; }
 
-input[type="range"] {
-  display: block;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: auto;
-  height: 4px;
-  outline: none;
-  border-radius: 4px;
-  background-color: #cccccc;
-  -webkit-appearance: none !important; }
-  input[type="range"]::-webkit-slider-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    background-color: white;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 0 5px 6px rgba(0, 0, 0, 0.25);
-    -webkit-appearance: none !important; }
-
 input[disabled],
 select[disabled],
 textarea[disabled],
@@ -1552,6 +1534,34 @@ input[type="checkbox"][readonly] {
   .radio-buttton-list input[type="radio"]:checked ~ .list-item-icon {
     /* show the checkmark icon when its checked */
     visibility: visible; }
+
+input[type="range"] {
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: auto;
+  height: 4px;
+  outline: none;
+  border-radius: 4px;
+  background-color: #cccccc;
+  -webkit-appearance: none !important; }
+  input[type="range"]::-webkit-slider-thumb {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 0 5px 6px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    -webkit-appearance: none !important; }
+  input[type="range"]::-webkit-slider-thumb:after {
+    /* create a larger (but hidden) hit area */
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    display: table;
+    padding: 20px;
+    content: ' '; }
 
 .button {
   position: relative;

@@ -2088,23 +2088,6 @@
   .ionic input::-webkit-input-placeholder,
   .ionic textarea::-webkit-input-placeholder {
     color: #999999; }
-  .ionic input[type="range"] {
-    display: block;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: auto;
-    height: 4px;
-    outline: none;
-    border-radius: 4px;
-    background-color: #cccccc;
-    -webkit-appearance: none !important; }
-    .ionic input[type="range"]::-webkit-slider-thumb {
-      width: 20px;
-      height: 20px;
-      border-radius: 10px;
-      background-color: white;
-      box-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 0 5px 6px rgba(0, 0, 0, 0.25);
-      -webkit-appearance: none !important; }
   .ionic input[disabled],
   .ionic select[disabled],
   .ionic textarea[disabled],
@@ -2225,6 +2208,33 @@
     .ionic .radio-buttton-list input[type="radio"]:checked ~ .list-item-icon {
       /* show the checkmark icon when its checked */
       visibility: visible; }
+  .ionic input[type="range"] {
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: auto;
+    height: 4px;
+    outline: none;
+    border-radius: 4px;
+    background-color: #cccccc;
+    -webkit-appearance: none !important; }
+    .ionic input[type="range"]::-webkit-slider-thumb {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      background-color: white;
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 0 5px 6px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      -webkit-appearance: none !important; }
+    .ionic input[type="range"]::-webkit-slider-thumb:after {
+      /* create a larger (but hidden) hit area */
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      display: table;
+      padding: 20px;
+      content: ' '; }
   .ionic .button {
     position: relative;
     display: inline-block;

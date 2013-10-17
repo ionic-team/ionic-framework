@@ -248,30 +248,6 @@ textarea {
 }
 
 
-// Range
-// -------------------------------
-input[type="range"] {
-  display: block;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: auto;
-  height: $range-track-height;
-  outline: none;
-  border-radius: $range-track-height;
-  background-color: $range-track-color;
-  -webkit-appearance: none !important;
-
-  &::-webkit-slider-thumb {
-    width: $range-slider-width;
-    height: $range-slider-height;
-    border-radius: $range-slider-border-radius;
-    background-color: $toggle-handle-off-bg-color;
-    box-shadow: 0 0 2px rgba(0,0,0,.5), 0 5px 6px rgba(0,0,0,0.25);
-    -webkit-appearance: none !important;
-  }
-}
-
-
 // DISABLED STATE
 // -------------------------------
 
