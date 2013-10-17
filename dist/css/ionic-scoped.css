@@ -169,13 +169,16 @@
    * with dragging.
    */
   /**
+   * Right-side icon that reused by components like radio buttons
+   */
+  /**
    * A list divider.
    */
   /**
    * List refreser elements
    */
   /* the overall container of the toggle */
-  /* hide the actual checkbox */
+  /* hide the actual <input type="checkbox"> */
   /* the background of the toggle's track area */
   /* also the track appearance when the toggle is "off" */
   /* the handle (circle) thats inside the toggle's track area */
@@ -1864,6 +1867,14 @@
       height: 100%;
       border-radius: 0;
       border: none; }
+  .ionic .list-item-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    padding: 13px;
+    height: 100%;
+    font-size: 24px; }
   .ionic .list-divider {
     padding: 5px 15px;
     background-color: whitesmoke;
@@ -2143,7 +2154,7 @@
         opacity: 1; }
   .ionic .toggle {
     display: inline-block; }
-  .ionic .toggle input {
+  .ionic .toggle input[type="checkbox"] {
     display: none; }
   .ionic .toggle .track {
     display: inline-block;
@@ -2154,9 +2165,9 @@
     border-radius: 20px;
     background-color: #e5e5e5;
     cursor: pointer;
-    transition-property: background-color, border;
+    transition-timing-function: ease-in-out;
     transition-duration: 0.1s;
-    transition-timing-function: ease-in-out; }
+    transition-property: background-color, border; }
   .ionic .toggle .handle {
     position: absolute;
     display: block;
@@ -2168,11 +2179,11 @@
     /* used to create a larger hit area to slide the handle */ }
     .ionic .toggle .handle:before {
       position: absolute;
-      content: " ";
+      top: -2px;
+      left: -16px;
       display: table;
-      left: -14px;
-      top: -11px;
-      padding: 14px 30px; }
+      padding: 17px 30px;
+      content: " "; }
   .ionic .toggle :checked + .track {
     /* the track when the toggle is "on" */
     border-color: #5f85ef;
@@ -2181,28 +2192,21 @@
     .ionic .toggle :checked + .track .handle {
       background-color: white;
       -webkit-transform: translate3d(22px, 0, 0); }
-  .ionic .radio-buttton-list .list-item-buttons {
+  .ionic .radio-buttton-list .list-item-content {
+    /* give some room to the right for the checkmark icon */
+    padding-right: 60px; }
+  .ionic .radio-buttton-list .list-item-icon {
+    /* checkmark icon will be hidden by default */
     visibility: hidden; }
-  .ionic .radio-buttton-list [class^="icon-"],
-  .ionic .radio-buttton-list [class*=" icon-"] {
-    position: absolute;
-    top: 25%;
-    left: 25%;
-    font-size: 24px; }
   .ionic .radio-buttton-list input[type="radio"] {
     /* hide any radio button inputs elements (the ugly circles) */
     display: none; }
     .ionic .radio-buttton-list input[type="radio"]:checked ~ .list-item-content {
-      /* style the list item when its checked */
+      /* style the list item content when its checked */
       background: #f7f7f7; }
-    .ionic .radio-buttton-list input[type="radio"]:checked ~ .list-item-buttons {
-      /* show the icon when its checked */
+    .ionic .radio-buttton-list input[type="radio"]:checked ~ .list-item-icon {
+      /* show the checkmark icon when its checked */
       visibility: visible; }
-  .ionic .radio-buttton-list .list-item-content {
-    padding-right: 60px; }
-  .ionic .radio-buttton-list .list-item-buttons {
-    z-index: 3;
-    width: 45px; }
   .ionic .button {
     position: relative;
     display: inline-block;

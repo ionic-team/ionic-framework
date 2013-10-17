@@ -1189,6 +1189,18 @@ a.list-item {
     border: none; }
 
 /**
+ * Right-side icon that reused by components like radio buttons
+ */
+.list-item-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  padding: 13px;
+  height: 100%;
+  font-size: 24px; }
+
+/**
  * A list divider.
  */
 .list-divider {
@@ -1523,28 +1535,23 @@ input[type="checkbox"][readonly] {
     -webkit-transform: none;
     transition-delay: 0.05s, 0s; }
 
-.radio-buttton-list .list-item-buttons {
+.radio-buttton-list .list-item-content {
+  /* give some room to the right for the checkmark icon */
+  padding-right: 60px; }
+
+.radio-buttton-list .list-item-icon {
+  /* checkmark icon will be hidden by default */
   visibility: hidden; }
-.radio-buttton-list [class^="icon-"],
-.radio-buttton-list [class*=" icon-"] {
-  position: absolute;
-  top: 25%;
-  left: 25%;
-  font-size: 24px; }
+
 .radio-buttton-list input[type="radio"] {
   /* hide any radio button inputs elements (the ugly circles) */
   display: none; }
   .radio-buttton-list input[type="radio"]:checked ~ .list-item-content {
-    /* style the list item when its checked */
+    /* style the list item content when its checked */
     background: #f7f7f7; }
-  .radio-buttton-list input[type="radio"]:checked ~ .list-item-buttons {
-    /* show the icon when its checked */
+  .radio-buttton-list input[type="radio"]:checked ~ .list-item-icon {
+    /* show the checkmark icon when its checked */
     visibility: visible; }
-.radio-buttton-list .list-item-content {
-  padding-right: 60px; }
-.radio-buttton-list .list-item-buttons {
-  z-index: 3;
-  width: 45px; }
 
 .button {
   position: relative;

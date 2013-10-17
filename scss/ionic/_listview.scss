@@ -233,6 +233,19 @@ a.list-item {
   }
 }
 
+/**
+ * Right-side icon that reused by components like radio buttons
+ */
+.list-item-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  padding: $list-item-padding - 2;
+  height: 100%;
+  font-size: 24px;
+}
+
 
 /**
  * A list divider.

@@ -2,42 +2,27 @@
 // Radio Buttons
 // -------------------------------
 
-.radio-buttton-list {
+.radio-buttton-list .list-item-content {
+  /* give some room to the right for the checkmark icon */
+  padding-right: $list-item-padding * 4;
+}
 
-  .list-item-buttons {
-    visibility: hidden;
+.radio-buttton-list .list-item-icon {
+  /* checkmark icon will be hidden by default */
+  visibility: hidden;
+}
+
+.radio-buttton-list input[type="radio"] {
+  /* hide any radio button inputs elements (the ugly circles) */
+  display: none;
+
+  &:checked ~ .list-item-content {
+    /* style the list item content when its checked */
+    background: #f7f7f7;
   }
 
-  [class^="icon-"],
-  [class*=" icon-"] {
-    position: absolute;
-    top: 25%;
-    left: 25%;
-    font-size: 24px;
+  &:checked ~ .list-item-icon {
+    /* show the checkmark icon when its checked */
+    visibility: visible;
   }
-
-  input[type="radio"] {
-    /* hide any radio button inputs elements (the ugly circles) */
-    display: none;
-
-    &:checked ~ .list-item-content {
-      /* style the list item when its checked */
-      background: #f7f7f7;
-    }
-
-    &:checked ~ .list-item-buttons {
-      /* show the icon when its checked */
-      visibility: visible;
-    }
-  }
-
-  .list-item-content {
-    padding-right: $list-item-padding * 4;
-  }
-
-  .list-item-buttons {
-    z-index: 3;
-    width: $list-item-padding * 3;
-  }
-
 }
