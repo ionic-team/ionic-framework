@@ -2,31 +2,34 @@
 // Radio Buttons
 // -------------------------------
 
-/* hide a radio button's icon by default */
-.radio-item {
+.radio-buttton-list {
+
   [class^="icon-"],
   [class*=" icon-"] {
-    display: none;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    visibility: hidden;
+    font-size: 24px;
   }
-}
-.radio-list label.list-item {
-  cursor: pointer;
-}
 
-.radio-list input[type="radio"] {
-  /* hide any radio button inputs elements (the ugly circles) */
-  display: none;
+  input[type="radio"] {
+    /* hide any radio button inputs elements (the ugly circles) */
+    display: none;
 
-  /* when this radio-item is checked */
-  &:checked + .radio-item {
-
-    /* show the radio-item icon when checked */
-    [class^="icon-"],
-    [class*=" icon-"] {
-      position: absolute;
-      top: 16px;
-      right: $content-padding;
-      display: inline;
+    &:checked + [class^="icon-"],
+    &:checked + [class*=" icon-"] {
+      visibility: visible;
     }
   }
+
+  .list-item-content {
+    padding-right: $list-item-padding * 4;
+  }
+
+  .list-item-buttons {
+    z-index: 3;
+    width: $list-item-padding * 3;
+  }
+
 }

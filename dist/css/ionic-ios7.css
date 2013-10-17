@@ -1109,7 +1109,7 @@ a.list-item {
   position: relative;
   background-color: #fff;
   z-index: 2;
-  padding: 15px 15px;
+  padding: 15px;
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
   .list-item-content > i:last-child {
     float: right; }
@@ -1523,26 +1523,23 @@ input[type="checkbox"][readonly] {
     -webkit-transform: none;
     transition-delay: 0.05s, 0s; }
 
-/* hide a radio button's icon by default */
-.radio-item [class^="icon-"],
-.radio-item [class*=" icon-"] {
-  display: none; }
-
-.radio-list label.list-item {
-  cursor: pointer; }
-
-.radio-list input[type="radio"] {
+.radio-buttton-list [class^="icon-"],
+.radio-buttton-list [class*=" icon-"] {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  visibility: hidden;
+  font-size: 24px; }
+.radio-buttton-list input[type="radio"] {
   /* hide any radio button inputs elements (the ugly circles) */
-  display: none;
-  /* when this radio-item is checked */ }
-  .radio-list input[type="radio"]:checked + .radio-item {
-    /* show the radio-item icon when checked */ }
-    .radio-list input[type="radio"]:checked + .radio-item [class^="icon-"],
-    .radio-list input[type="radio"]:checked + .radio-item [class*=" icon-"] {
-      position: absolute;
-      top: 16px;
-      right: 10px;
-      display: inline; }
+  display: none; }
+  .radio-buttton-list input[type="radio"]:checked + [class^="icon-"], .radio-buttton-list input[type="radio"]:checked + [class*=" icon-"] {
+    visibility: visible; }
+.radio-buttton-list .list-item-content {
+  padding-right: 60px; }
+.radio-buttton-list .list-item-buttons {
+  z-index: 3;
+  width: 45px; }
 
 .button {
   position: relative;

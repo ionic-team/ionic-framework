@@ -5,59 +5,44 @@
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="../dist/ionicons.css" rel="stylesheet">
-    <link href="../dist/ionic.css" rel="stylesheet">
+    <link href="../dist/css/ionic.css" rel="stylesheet">
   </head>
   <body>
 
-    <section class="view">
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Radio Buttons</h1>
+    </header>
 
-      <header class="bar bar-header bar-dark">
-        <h1 class="title">Radio Buttons</h1>
-      </header>
+    <header class="bar bar-footer bar-dark">
+      <h1 class="title">Footer</h1>
+    </header>
 
-      <header class="bar bar-footer bar-dark">
-        <h1 class="title">Footer</h1>
-      </header>
+    <div class="content-wrapper">
 
-      <div class="content has-header has-footer">
+      <div class="content has-header">
 
-        <div class="list radio-list">
+        <div class="radio-buttton-list">
+
           <label class="list-item">
-            <input type="radio" name="serverside" value="go" checked="checked">
-            <div class="radio-item">
+            <div class="list-item-content">
               Go
-              <i class="icon-ok"></i>
+            </div>
+            <div class="list-item-buttons">
+              <input type="radio" name="serverside" value="go" checked="checked">
+              <i class="icon-checkmark"></i>
             </div>
           </label>
+
           <label class="list-item">
-            <input type="radio" name="serverside" value="python">
-            <div class="radio-item">
+            <div class="list-item-content">
               Python
-              <i class="icon-ok"></i>
+            </div>
+            <div class="list-item-buttons">
+              <input type="radio" name="serverside" value="python">
+              <i class="icon-checkmark"></i>
             </div>
           </label>
-          <label class="list-item">
-            <input type="radio" name="serverside" value=".net">
-            <div class="radio-item">
-              .Net
-              <i class="icon-ok"></i>
-            </div>
-          </label>
-          <label class="list-item">
-            <input type="radio" name="serverside" value="ruby">
-            <div class="radio-item">
-              Ruby
-              <i class="icon-ok"></i>
-            </div>
-          </label>
-          <label class="list-item">
-            <input type="radio" name="serverside" value="java">
-            <div class="radio-item">
-              Java
-              <i class="icon-ok"></i>
-            </div>
-          </label>
+
         </div>
 
         <div class="padding">
@@ -66,10 +51,7 @@
 
       </div>
 
-    </section>
-    
-    <script src="../dist/ionic.js"></script>
-    <script src="../dist/ionic-simple.js"></script>
+    </div>
 
   </body>
 </html>
