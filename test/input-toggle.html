@@ -17,68 +17,51 @@
 
       <main class="content has-header">
         
-        <ul class="list">
+        <ul>
           <li class="list-item">
-            Airplane Mode
-            <label class="toggle" id="airplaneMode">
-               <input type="checkbox" name="airplaneMode">
+             <div class="list-item-content">
+              Flux Capacitor
+             </div>
+             <label class="list-item-buttons toggle">
+               <input type="checkbox" checked>
                <div class="handle"></div>
-            </label>
+             </label>
           </li>
           <li class="list-item">
-            Do Not Disturb
-            <label class="toggle" id="doNotDisturb">
-               <input type="checkbox" name="doNotDisturb" checked="checked">
+             <div class="list-item-content">
+              1.21 Gigawatts
+             </div>
+             <label class="list-item-buttons toggle">
+               <input type="checkbox" checked>
                <div class="handle"></div>
-            </label>
+             </label>
+          </li>
+          <li class="list-item">
+             <div class="list-item-content">
+              88 MPH
+             </div>
+             <label class="list-item-buttons toggle">
+               <input type="checkbox" checked>
+               <div class="handle"></div>
+             </label>
+          </li>
+          <li class="list-item">
+             <div class="list-item-content">
+              Plutonium Resupply
+             </div>
+             <label class="list-item-buttons toggle">
+               <input type="checkbox">
+               <div class="handle"></div>
+             </label>
           </li>
         </ul>
 
-        <div class="margin">
-          <p>
-            <button id="btnTest1">Toggle Airplane Mode</button>
-          </p>
-
-          <p>
-            <button id="btnTest2">Toggle Do Not Disturb</button>
-          </p>
-
-          <p><a class="button button-secondary" href="index.html">Homepage</a></p>
-
-        </div>
 
       </main>
 
     </div>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="../dist/js/ionic.js"></script>
-
-
-    <!-- for testing only -->
-    <script>
-
-      $("#btnTest1").click(function(){
-        var toggle = $("#airplaneMode");
-        if( toggle.val() === true ) {
-          toggle.val(false);
-        } else {
-          toggle.val(true);
-        }
-      });
-
-      $("#btnTest2").click(function(){
-        var toggle = $("#doNotDisturb");
-        val = toggle.val();
-        return
-        if( toggle.val() === true ) {
-          toggle.val(false);
-        } else {
-          toggle.val(true);
-        }
-      });
-
-    </script>
 
   </body>
 </html>

@@ -2193,6 +2193,11 @@
   .ionic .toggle input:checked + .handle {
     background-color: white;
     -webkit-transform: translate3d(22px, 0, 0); }
+  .ionic .list-item-buttons.toggle {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    z-index: 3; }
   .ionic .radio-buttton-list .list-item-content {
     /* give some room to the right for the checkmark icon */
     padding-right: 60px; }

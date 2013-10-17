@@ -70,3 +70,10 @@
   background-color: $toggle-handle-on-bg-color;
   -webkit-transform: translate3d( $toggle-width - $toggle-handle-width - ($toggle-border-width * 2) ,0,0);
 }
+
+.list-item-buttons.toggle {
+  position: absolute;
+  top: $list-item-padding / 3;
+  right: $list-item-padding;
+  z-index: 3;
+}

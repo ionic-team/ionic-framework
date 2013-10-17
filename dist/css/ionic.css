@@ -2679,6 +2679,12 @@ input[type="checkbox"][readonly] {
   background-color: white;
   -webkit-transform: translate3d(22px, 0, 0); }
 
+.list-item-buttons.toggle {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  z-index: 3; }
+
 .radio-buttton-list .list-item-content {
   /* give some room to the right for the checkmark icon */
   padding-right: 60px; }
