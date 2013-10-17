@@ -2591,72 +2591,94 @@ input[type="checkbox"][readonly] {
   position: relative;
   display: inline-block;
   padding: 7px 7px;
+  cursor: pointer; }
+
+.checkbox input {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  background: transparent;
   cursor: pointer;
-  /* what the checkbox looks like when its not checked */
-  /* the checkmark within the box */
-  /* what it looks like when it is checked */ }
-  .checkbox input {
-    display: none; }
-  .checkbox .handle {
-    width: 28px;
-    height: 28px;
+  -webkit-appearance: none; }
+  .checkbox input:before {
+    /* what the checkbox looks like when its not checked */
+    display: table;
+    width: 100%;
+    height: 100%;
     border: 1px solid #049cdb;
     border-radius: 50%;
     background: white;
+    content: ' ';
     transition: background-color 0.1s ease-in-out; }
-  .checkbox .handle:after {
-    position: absolute;
-    top: 37%;
-    left: 14px;
-    width: 14px;
-    height: 7px;
-    border: 1px solid white;
-    border-top: none;
-    border-right: none;
-    content: '';
-    opacity: 0;
-    transition: opacity 0.05s ease-in-out;
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg); }
-  .checkbox input:checked + .handle {
-    background: #049cdb; }
-    .checkbox input:checked + .handle:after {
-      opacity: 1; }
+
+/* the checkmark within the box */
+.checkbox input:after {
+  position: absolute;
+  top: 37%;
+  left: 26%;
+  display: table;
+  width: 14px;
+  height: 7px;
+  border: 1px solid white;
+  border-top: none;
+  border-right: none;
+  content: ' ';
+  opacity: 0;
+  transition: opacity 0.05s ease-in-out;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg); }
+
+/* what the background looks like when its checked */
+.checkbox input:checked:before {
+  border: 0;
+  background: #049cdb; }
+
+/* what the checkmark looks like when its checked */
+.checkbox input:checked:after {
+  opacity: 1; }
 
 /* the overall container of the toggle */
 .toggle {
+  position: relative;
   display: inline-block; }
 
-/* hide the actual <input type="checkbox"> */
-.toggle input[type="checkbox"] {
-  display: none; }
-
-/* the background of the toggle's track area */
-/* also the track appearance when the toggle is "off" */
-.toggle .track {
-  display: inline-block;
-  box-sizing: border-box;
+.toggle input {
+  /* set the actual checkbox input to have a width/height */
+  /* but hide its appearance, then use :after to style it */
   width: 54px;
   height: 32px;
-  border: solid 2px #e5e5e5;
-  border-radius: 20px;
-  background-color: #e5e5e5;
-  cursor: pointer;
-  transition-timing-function: ease-in-out;
-  transition-duration: 0.1s;
-  transition-property: background-color, border; }
+  border: 0;
+  background: transparent;
+  -webkit-appearance: none;
+  /* the track appearance when the toggle is "off" */ }
+  .toggle input:after {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border: solid 2px #e5e5e5;
+    border-radius: 20px;
+    background-color: #e5e5e5;
+    content: ' ';
+    cursor: pointer;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.1s;
+    transition-property: background-color, border; }
 
 /* the handle (circle) thats inside the toggle's track area */
 /* also the appearance when the handle is "off" */
 .toggle .handle {
   position: absolute;
+  top: 6px;
+  left: 2px;
   display: block;
   width: 28px;
   height: 28px;
   border-radius: 50%;
   background-color: white;
   transition: -webkit-transform 0.1s ease-in-out;
-  /* used to create a larger hit area to slide the handle */ }
+  /* used to create a larger (but hidden) hit area to slide the handle */ }
   .toggle .handle:before {
     position: absolute;
     top: -2px;
@@ -2665,15 +2687,15 @@ input[type="checkbox"][readonly] {
     padding: 17px 30px;
     content: " "; }
 
-/* When the toggle is "on" */
-.toggle :checked + .track {
-  /* the track when the toggle is "on" */
+/* The track when the toggle is "on" */
+.toggle input:checked:after {
   border-color: #5f85ef;
-  background-color: #5f85ef;
-  /* the handle when the toggle is "on" */ }
-  .toggle :checked + .track .handle {
-    background-color: white;
-    -webkit-transform: translate3d(22px, 0, 0); }
+  background-color: #5f85ef; }
+
+/* the handle when the toggle is "on" */
+.toggle input:checked + .handle {
+  background-color: white;
+  -webkit-transform: translate3d(22px, 0, 0); }
 
 .radio-buttton-list .list-item-content {
   /* give some room to the right for the checkmark icon */
