@@ -2679,7 +2679,12 @@ input[type="checkbox"][readonly] {
   background-color: white;
   -webkit-transform: translate3d(22px, 0, 0); }
 
-.list-item-buttons.toggle {
+/* make sure list item content have enough padding on right to fit the toggle */
+.toggle-item .list-item-content {
+  padding-right: 99px; }
+
+/* position the toggle to the right within a list item */
+.toggle-item .toggle {
   position: absolute;
   top: 5px;
   right: 15px;

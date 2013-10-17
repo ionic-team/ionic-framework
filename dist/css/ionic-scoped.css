@@ -185,6 +185,8 @@
   /* also the appearance when the handle is "off" */
   /* The track when the toggle is "on" */
   /* the handle when the toggle is "on" */
+  /* make sure list item content have enough padding on right to fit the toggle */
+  /* position the toggle to the right within a list item */
   @keyframes fadein {
     from {
       opacity: 0.7; }
@@ -2193,7 +2195,9 @@
   .ionic .toggle input:checked + .handle {
     background-color: white;
     -webkit-transform: translate3d(22px, 0, 0); }
-  .ionic .list-item-buttons.toggle {
+  .ionic .toggle-item .list-item-content {
+    padding-right: 99px; }
+  .ionic .toggle-item .toggle {
     position: absolute;
     top: 5px;
     right: 15px;
