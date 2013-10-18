@@ -127,72 +127,34 @@ a.list-item {
   padding: $list-item-padding;
 
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
-
-/*  // Align icons
-  > i:first-child {
-    float: left;
-  }
-  > i:last-child {
-    float: right;
-  }
-
-  // Make every last form element go to the right of the item
-
-  > .toggle:last-child, input:last-child, > button:last-child {
-    float: right;
-  }
-  > .toggle:last-child {
-    margin-top: -5px;
-  }*/
 }
 
-/**
- * Left-side icon
- */
 .list-icon-left .list-item-content {
-  padding-left: $list-item-padding * 4;
-}
+  padding-left: ($list-item-padding * 3);
 
-/**
- * Right-side icon
- */
-.list-icon-right .list-item-content {
-  padding-right: $list-item-padding * 4;
-}
-
-.align-icon-left, .align-icon-right {
-  position: absolute;
-  top: $list-item-padding - 4;
-  z-index: 3;
-  width: $icon-font-size + 4;
-  height: $icon-font-size + 4;
-  font-size: $icon-font-size;
-}
-
-.align-icon-left {
-  left: ($list-item-padding - 3);
-
-  &:after {
+  i {
     position: absolute;
-    width: $icon-font-size * 2;
-    height: 4px;
-    left: ($list-item-padding - 3) * -1;
-    top: ($list-item-padding * -1) + 2;
-    background: $list-default-background;
-    content: ' ';
+    top: ($list-item-padding / 2) + 3;
+    left: $list-item-padding / 2;
+    font-size: $icon-font-size;
   }
 }
-.list-item:first-child .align-icon-left:after {
-  display: none;
+
+.list-icon-right .list-item-content {
+  padding-right: ($list-item-padding * 3);
+
+  i {
+    position: absolute;
+    top: ($list-item-padding / 2) + 3;
+    right: $list-item-padding / 2;
+    font-size: $icon-font-size;
+  }
 }
 
-.item-opened .align-icon-left:after {
-  display: none;
+.list-icon-left.list-icon-right .list-item-content i:last-child {
+  left: auto;
 }
 
-.align-icon-right {
-  right: $list-item-padding - 3;
-}
 
 .list-item-sliding {
   -webkit-transition: -webkit-transform 0.1s ease-in-out;

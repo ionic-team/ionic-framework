@@ -161,12 +161,6 @@
    * UI interactions.
    */
   /**
-   * Left-side icon
-   */
-  /**
-   * Right-side icon
-   */
-  /**
    * The left-side edit area of a complex list item. This area shows
    * whe the list item is in edit mode.
    */
@@ -1816,50 +1810,23 @@
     z-index: 2;
     margin-top: -1px;
     padding: 15px;
-    -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
-    /*  // Align icons
-      > i:first-child {
-        float: left;
-      }
-      > i:last-child {
-        float: right;
-      }
-    
-      // Make every last form element go to the right of the item
-    
-      > .toggle:last-child, input:last-child, > button:last-child {
-        float: right;
-      }
-      > .toggle:last-child {
-        margin-top: -5px;
-      }*/ }
+    -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
   .ionic .list-icon-left .list-item-content {
-    padding-left: 60px; }
-  .ionic .list-icon-right .list-item-content {
-    padding-right: 60px; }
-  .ionic .align-icon-left, .ionic .align-icon-right {
-    position: absolute;
-    top: 11px;
-    z-index: 3;
-    width: 32px;
-    height: 32px;
-    font-size: 28px; }
-  .ionic .align-icon-left {
-    left: 12px; }
-    .ionic .align-icon-left:after {
+    padding-left: 45px; }
+    .ionic .list-icon-left .list-item-content i {
       position: absolute;
-      width: 56px;
-      height: 4px;
-      left: -12px;
-      top: -13px;
-      background: white;
-      content: ' '; }
-  .ionic .list-item:first-child .align-icon-left:after {
-    display: none; }
-  .ionic .item-opened .align-icon-left:after {
-    display: none; }
-  .ionic .align-icon-right {
-    right: 12px; }
+      top: 10.5px;
+      left: 7.5px;
+      font-size: 28px; }
+  .ionic .list-icon-right .list-item-content {
+    padding-right: 45px; }
+    .ionic .list-icon-right .list-item-content i {
+      position: absolute;
+      top: 10.5px;
+      right: 7.5px;
+      font-size: 28px; }
+  .ionic .list-icon-left.list-icon-right .list-item-content i:last-child {
+    left: auto; }
   .ionic .list-item-sliding {
     -webkit-transition: -webkit-transform 0.1s ease-in-out; }
   .ionic .list-item-reordering {
@@ -2667,44 +2634,38 @@
     animation: fadein 0.5s;
     -webkit-animation: fadein 0.5s; }
   .ionic .fill-icon {
-    background: black;
-    color: white !important;
-    border-radius: 6px; }
-    .ionic .fill-icon.align-icon-left, .ionic .fill-icon.align-icon-right {
-      position: absolute;
-      z-index: 3;
-      padding: 4px 3px;
-      width: 30px;
-      height: 31px;
-      font-size: 24px; }
-    .ionic .fill-icon.brand-default {
+    color: white !important; }
+    .ionic .fill-icon:before {
+      background: black;
+      position: relative;
+      border-radius: 6px;
+      padding: 1px; }
+    .ionic .fill-icon.brand-default:before {
       background: white; }
-    .ionic .fill-icon.brand-secondary {
+    .ionic .fill-icon.brand-secondary:before {
       background: whitesmoke; }
-    .ionic .fill-icon.brand-primary {
+    .ionic .fill-icon.brand-primary:before {
       background: #4a87ee; }
-    .ionic .fill-icon.brand-info {
+    .ionic .fill-icon.brand-info:before {
       background: #43cee6; }
-    .ionic .fill-icon.brand-success {
+    .ionic .fill-icon.brand-success:before {
       background: #66cc33; }
-    .ionic .fill-icon.brand-warning {
+    .ionic .fill-icon.brand-warning:before {
       background: #f0b840; }
-    .ionic .fill-icon.brand-danger {
+    .ionic .fill-icon.brand-danger:before {
       background: #ef4e3a; }
-    .ionic .fill-icon.brand-dark {
+    .ionic .fill-icon.brand-dark:before {
       background: #444444; }
-    .ionic .fill-icon.gray-darker {
+    .ionic .fill-icon.gray-darker:before {
       background: #222222; }
-    .ionic .fill-icon.gray-dark {
+    .ionic .fill-icon.gray-dark:before {
       background: #333333; }
-    .ionic .fill-icon.gray {
+    .ionic .fill-icon.gray:before {
       background: #555555; }
-    .ionic .fill-icon.gray-light {
+    .ionic .fill-icon.gray-light:before {
       background: #999999; }
-    .ionic .fill-icon.gray-lighter {
+    .ionic .fill-icon.gray-lighter:before {
       background: #eeeeee; }
-    .ionic .fill-icon.white {
-      background: white; }
   .ionic .hidden,
   .ionic .hide {
     display: none !important; }

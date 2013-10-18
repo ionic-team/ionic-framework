@@ -1114,63 +1114,26 @@ a.list-item {
   z-index: 2;
   margin-top: -1px;
   padding: 15px;
-  -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
-  /*  // Align icons
-    > i:first-child {
-      float: left;
-    }
-    > i:last-child {
-      float: right;
-    }
-  
-    // Make every last form element go to the right of the item
-  
-    > .toggle:last-child, input:last-child, > button:last-child {
-      float: right;
-    }
-    > .toggle:last-child {
-      margin-top: -5px;
-    }*/ }
+  -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
 
-/**
- * Left-side icon
- */
 .list-icon-left .list-item-content {
-  padding-left: 60px; }
-
-/**
- * Right-side icon
- */
-.list-icon-right .list-item-content {
-  padding-right: 60px; }
-
-.align-icon-left, .align-icon-right {
-  position: absolute;
-  top: 11px;
-  z-index: 3;
-  width: 32px;
-  height: 32px;
-  font-size: 28px; }
-
-.align-icon-left {
-  left: 12px; }
-  .align-icon-left:after {
+  padding-left: 45px; }
+  .list-icon-left .list-item-content i {
     position: absolute;
-    width: 56px;
-    height: 4px;
-    left: -12px;
-    top: -13px;
-    background: white;
-    content: ' '; }
+    top: 10.5px;
+    left: 7.5px;
+    font-size: 28px; }
 
-.list-item:first-child .align-icon-left:after {
-  display: none; }
+.list-icon-right .list-item-content {
+  padding-right: 45px; }
+  .list-icon-right .list-item-content i {
+    position: absolute;
+    top: 10.5px;
+    right: 7.5px;
+    font-size: 28px; }
 
-.item-opened .align-icon-left:after {
-  display: none; }
-
-.align-icon-right {
-  right: 12px; }
+.list-icon-left.list-icon-right .list-item-content i:last-child {
+  left: auto; }
 
 .list-item-sliding {
   -webkit-transition: -webkit-transform 0.1s ease-in-out; }
@@ -2027,44 +1990,38 @@ a.button {
   -webkit-animation: fadein 0.5s; }
 
 .fill-icon {
-  background: black;
-  color: white !important;
-  border-radius: 6px; }
-  .fill-icon.align-icon-left, .fill-icon.align-icon-right {
-    position: absolute;
-    z-index: 3;
-    padding: 4px 3px;
-    width: 30px;
-    height: 31px;
-    font-size: 24px; }
-  .fill-icon.brand-default {
+  color: white !important; }
+  .fill-icon:before {
+    background: black;
+    position: relative;
+    border-radius: 6px;
+    padding: 1px; }
+  .fill-icon.brand-default:before {
     background: white; }
-  .fill-icon.brand-secondary {
+  .fill-icon.brand-secondary:before {
     background: whitesmoke; }
-  .fill-icon.brand-primary {
+  .fill-icon.brand-primary:before {
     background: #4a87ee; }
-  .fill-icon.brand-info {
+  .fill-icon.brand-info:before {
     background: #43cee6; }
-  .fill-icon.brand-success {
+  .fill-icon.brand-success:before {
     background: #66cc33; }
-  .fill-icon.brand-warning {
+  .fill-icon.brand-warning:before {
     background: #f0b840; }
-  .fill-icon.brand-danger {
+  .fill-icon.brand-danger:before {
     background: #ef4e3a; }
-  .fill-icon.brand-dark {
+  .fill-icon.brand-dark:before {
     background: #444444; }
-  .fill-icon.gray-darker {
+  .fill-icon.gray-darker:before {
     background: #222222; }
-  .fill-icon.gray-dark {
+  .fill-icon.gray-dark:before {
     background: #333333; }
-  .fill-icon.gray {
+  .fill-icon.gray:before {
     background: #555555; }
-  .fill-icon.gray-light {
+  .fill-icon.gray-light:before {
     background: #999999; }
-  .fill-icon.gray-lighter {
+  .fill-icon.gray-lighter:before {
     background: #eeeeee; }
-  .fill-icon.white {
-    background: white; }
 
 .hidden,
 .hide {
