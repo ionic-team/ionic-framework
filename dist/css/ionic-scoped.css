@@ -161,15 +161,18 @@
    * UI interactions.
    */
   /**
+   * Left-side icon
+   */
+  /**
+   * Right-side icon
+   */
+  /**
    * The left-side edit area of a complex list item. This area shows
    * whe the list item is in edit mode.
    */
   /**
    * The hidden right-side buttons that can be exposed under a list item
    * with dragging.
-   */
-  /**
-   * Right-side icon that reused by components like radio buttons
    */
   /**
    * A list divider.
@@ -1674,14 +1677,16 @@
     position: relative;
     display: block;
     margin-bottom: -1px;
+    border-top: 1px solid #dddddd;
     z-index: 2;
     background-color: white;
-    border: 1px solid #dddddd; }
+    /*  // Align icons to the right
+      > i:last-child {
+        float: right;
+      }*/ }
     .ionic .list-item:last-child {
       margin-bottom: 0; }
     .ionic .list-item > .badge {
-      float: right; }
-    .ionic .list-item > i:last-child {
       float: right; }
     .ionic .list-item > .badge + .badge {
       margin-right: 5px; }
@@ -1807,15 +1812,54 @@
   .ionic .list-item-content {
     position: relative;
     background-color: #fff;
+    border: 1px solid #dddddd;
     z-index: 2;
+    margin-top: -1px;
     padding: 15px;
-    -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
-    .ionic .list-item-content > i:last-child {
-      float: right; }
-    .ionic .list-item-content > .toggle:last-child, .ionic .list-item-content input:last-child, .ionic .list-item-content > button:last-child {
-      float: right; }
-    .ionic .list-item-content > .toggle:last-child {
-      margin-top: -5px; }
+    -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
+    /*  // Align icons
+      > i:first-child {
+        float: left;
+      }
+      > i:last-child {
+        float: right;
+      }
+    
+      // Make every last form element go to the right of the item
+    
+      > .toggle:last-child, input:last-child, > button:last-child {
+        float: right;
+      }
+      > .toggle:last-child {
+        margin-top: -5px;
+      }*/ }
+  .ionic .list-icon-left .list-item-content {
+    padding-left: 60px; }
+  .ionic .list-icon-right .list-item-content {
+    padding-right: 60px; }
+  .ionic .align-icon-left, .ionic .align-icon-right {
+    position: absolute;
+    top: 11px;
+    z-index: 3;
+    width: 32px;
+    height: 32px;
+    font-size: 28px; }
+  .ionic .align-icon-left {
+    left: 12px; }
+    .ionic .align-icon-left:after {
+      position: absolute;
+      width: 56px;
+      height: 4px;
+      left: -12px;
+      top: -13px;
+      background: white;
+      content: ' '; }
+  .ionic .list-item:first-child .align-icon-left:after {
+    display: none; }
+  .ionic .item-opened .align-icon-left:after {
+    display: none; }
+  .ionic .align-icon-right {
+    right: 12px; }
   .ionic .list-item-sliding {
     -webkit-transition: -webkit-transform 0.1s ease-in-out; }
   .ionic .list-item-reordering {
@@ -1872,14 +1916,6 @@
       height: 100%;
       border-radius: 0;
       border: none; }
-  .ionic .list-item-icon {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 3;
-    padding: 13px;
-    height: 100%;
-    font-size: 24px; }
   .ionic .list-divider {
     padding: 5px 15px;
     background-color: whitesmoke;
@@ -2214,16 +2250,23 @@
   .ionic .radio-buttton-list .list-item-content {
     /* give some room to the right for the checkmark icon */
     padding-right: 60px; }
-  .ionic .radio-buttton-list .list-item-icon {
+  .ionic .radio-buttton-list .radio-button-icon {
     /* checkmark icon will be hidden by default */
-    visibility: hidden; }
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    visibility: hidden;
+    padding: 13px;
+    height: 100%;
+    font-size: 24px; }
   .ionic .radio-buttton-list input[type="radio"] {
     /* hide any radio button inputs elements (the ugly circles) */
     display: none; }
     .ionic .radio-buttton-list input[type="radio"]:checked ~ .list-item-content {
       /* style the list item content when its checked */
       background: #f7f7f7; }
-    .ionic .radio-buttton-list input[type="radio"]:checked ~ .list-item-icon {
+    .ionic .radio-buttton-list input[type="radio"]:checked ~ .radio-button-icon {
       /* show the checkmark icon when its checked */
       visibility: visible; }
   .ionic input[type="range"] {
@@ -2623,6 +2666,45 @@
     opacity: 0;
     animation: fadein 0.5s;
     -webkit-animation: fadein 0.5s; }
+  .ionic .fill-icon {
+    background: black;
+    color: white !important;
+    border-radius: 6px; }
+    .ionic .fill-icon.align-icon-left, .ionic .fill-icon.align-icon-right {
+      position: absolute;
+      z-index: 3;
+      padding: 4px 3px;
+      width: 30px;
+      height: 31px;
+      font-size: 24px; }
+    .ionic .fill-icon.brand-default {
+      background: white; }
+    .ionic .fill-icon.brand-secondary {
+      background: whitesmoke; }
+    .ionic .fill-icon.brand-primary {
+      background: #4a87ee; }
+    .ionic .fill-icon.brand-info {
+      background: #43cee6; }
+    .ionic .fill-icon.brand-success {
+      background: #66cc33; }
+    .ionic .fill-icon.brand-warning {
+      background: #f0b840; }
+    .ionic .fill-icon.brand-danger {
+      background: #ef4e3a; }
+    .ionic .fill-icon.brand-dark {
+      background: #444444; }
+    .ionic .fill-icon.gray-darker {
+      background: #222222; }
+    .ionic .fill-icon.gray-dark {
+      background: #333333; }
+    .ionic .fill-icon.gray {
+      background: #555555; }
+    .ionic .fill-icon.gray-light {
+      background: #999999; }
+    .ionic .fill-icon.gray-lighter {
+      background: #eeeeee; }
+    .ionic .fill-icon.white {
+      background: white; }
   .ionic .hidden,
   .ionic .hide {
     display: none !important; }
@@ -2653,22 +2735,38 @@
   .ionic .padding-left,
   .ionic .padding-horizontal {
     padding-left: 10px; }
-  .ionic .margin {
-    margin: 10px; }
-  .ionic .margin-top,
-  .ionic .margin-vertical {
-    margin-top: 10px; }
-  .ionic .margin-right,
-  .ionic .margin-horizontal {
-    margin-right: 10px; }
-  .ionic .margin-bottom,
-  .ionic .margin-vertical {
-    margin-bottom: 10px; }
-  .ionic .margin-left,
-  .ionic .margin-horizontal {
-    margin-left: 10px; }
   .ionic .rounded {
     border-radius: 4px; }
+  .ionic .brand-default {
+    color: white; }
+  .ionic .brand-secondary {
+    color: whitesmoke; }
+  .ionic .brand-primary {
+    color: #4a87ee; }
+  .ionic .brand-info {
+    color: #43cee6; }
+  .ionic .brand-success {
+    color: #66cc33; }
+  .ionic .brand-warning {
+    color: #f0b840; }
+  .ionic .brand-danger {
+    color: #ef4e3a; }
+  .ionic .brand-dark {
+    color: #444444; }
+  .ionic .black {
+    color: black; }
+  .ionic .gray-darker {
+    color: #222222; }
+  .ionic .gray-dark {
+    color: #333333; }
+  .ionic .gray {
+    color: #555555; }
+  .ionic .gray-light {
+    color: #999999; }
+  .ionic .gray-lighter {
+    color: #eeeeee; }
+  .ionic .white {
+    color: white; }
   .ionic .platform-ios7 .bar-header {
     height: 64px; }
     .ionic .platform-ios7 .bar-header > * {

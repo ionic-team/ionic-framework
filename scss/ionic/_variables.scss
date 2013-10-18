@@ -62,7 +62,6 @@ $base-font-family:          $sans-font-family;
 $base-background-color:     $white;
 $base-color:                #000;
 $content-padding:           10px !default;
-$inset-margin:              10px;
 $border-radius-base:        4px !default;
 $border-radius-large:       6px !default;
 $border-radius-small:       3px !default;
@@ -338,10 +337,11 @@ $tabs-dark-border-color:       $button-dark-border;
 // Lists
 // -------------------------------
 
-$list-divider-bg:       #f5f5f5;
-$list-divider-color:    #222;
-$list-item-border:      1px solid #ddd;
-$list-item-padding:     15px !default;
+$list-divider-bg:           #f5f5f5;
+$list-divider-color:        #222;
+$list-item-border-width:    1px !default;
+$list-item-border-color:    #ddd;
+$list-item-padding:         15px !default;
 
 $list-default-background: $brand-default;
 $list-default-border: #ddd;
@@ -366,6 +366,13 @@ $list-danger-border: $brand-danger;
 
 $list-dark-background: $brand-dark;
 $list-dark-border: $brand-dark;
+
+
+// Icons
+// -------------------------------
+
+$icon-font-size:              28px !default;
+$icon-fill-border-radius:     6px !default;
 
 
 // Menus

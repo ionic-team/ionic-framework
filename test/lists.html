@@ -5,90 +5,219 @@
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="../dist/ionicons.css" rel="stylesheet">
-    <link href="../dist/ionic.css" rel="stylesheet">
+    <link href="../dist/css/ionic.css" rel="stylesheet">
   </head>
   <body>
 
-    <section>
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Customers</h1>
+    </header>
 
-      <header class="bar bar-header bar-dark">
-        <h1 class="title">Customers</h1>
-      </header>
+    <main class="content-wrapper">
+      <div class="content has-header">
 
-      <main class="content-wrapper">
-        <div class="content has-header">
-          <ul id="list" class="list">
-            <li href="#" class="list-item">
-              <div class="list-item-content">
-                Sasafras
-                <i class="icon-arrow-right"></i>
-              </div>
-              <div class="list-item-buttons">
-                <button class="button button-danger">Delete</button>
-              </div>
-            </li>
-            <a href="#" class="list-item">
-              Candy
-              <i class="icon-arrow-right"></i>
-            </a>
-            <li class="list-divider">Other things</li>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-          </ul>
-          <p><a class="button button-secondary" href="index.html">Homepage</a></p>
+        <div class="list">
+
+          <a href="#" class="list-item">
+            <div class="list-item-content">
+              Madison, WI
+            </div>
+          </a>
+
+          <a href="#" class="list-item">
+            <div class="list-item-content slide-right">
+              Driving Directions
+            </div>
+          </a>
+
+          <a href="#" class="list-item">
+            <div class="list-item-content slide-left">
+              Settings
+            </div>
+            <div class="list-item-buttons">
+             <button class="button">Button</button>
+           </div>
+          </a>
+
         </div>
-      </main>
 
-    </section>
-    
-    <script src="../dist/ionic.js"></script>
+        <div class="list padding">
 
+          <a href="#" class="list-item list-icon-right">
+            <div class="list-item-content slide-right">
+              Madison, WI
+              <i class="align-icon-right icon-chevron-right"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-item list-icon-right">
+            <div class="list-item-content slide-left">
+              Driving Directions
+              <i class="align-icon-right icon-chevron-right"></i>
+            </div>
+            <div class="list-item-buttons">
+             <button class="button">Button</button>
+           </div>
+          </a>
+
+          <a href="#" class="list-item list-icon-right">
+            <div class="list-item-content">
+              Settings
+              <i class="align-icon-right icon-chevron-right"></i>
+            </div>
+          </a>
+
+        </div>
+
+        <div class="list padding-bottom">
+
+          <a href="#" class="list-item list-icon-left">
+            <div class="list-item-content slide-left">
+              <i class="align-icon-left icon-heart brand-danger"></i>
+              Madison, WI asdf
+            </div>
+            <div class="list-item-buttons">
+             <button class="button">Button</button>
+           </div>
+          </a>
+
+          <a href="#" class="list-item list-icon-left">
+            <div class="list-item-content slide-right">
+              <i class="align-icon-left icon-image brand-warning"></i>
+              Driving Directions
+            </div>
+          </a>
+
+          <a href="#" class="list-item list-icon-left">
+            <div class="list-item-content">
+              <i class="align-icon-left icon-ios7-cog gray"></i>
+              Settings
+            </div>
+          </a>
+
+        </div>
+
+        <div class="list padding-bottom">
+
+          <a href="#" class="list-item list-icon-left list-icon-right">
+            <div class="list-item-content">
+              <i class="align-icon-left icon-heart brand-danger fill-icon"></i>
+              Madison, WI
+              <i class="align-icon-right icon-chevron-right"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-item list-icon-left list-icon-right">
+            <div class="list-item-content slide-left">
+              <i class="align-icon-left icon-image brand-warning fill-icon"></i>
+              Driving Directions
+              <i class="align-icon-right icon-chevron-right"></i>
+            </div>
+            <div class="list-item-buttons">
+             <button class="button">Button</button>
+           </div>
+          </a>
+
+          <a href="#" class="list-item list-icon-left list-icon-right">
+            <div class="list-item-content slide-right">
+              <i class="align-icon-left icon-ios7-cog gray fill-icon"></i>
+              Settings
+              <i class="align-icon-right icon-chevron-right"></i>
+            </div>
+          </a>
+
+        </div>
+
+        <div class="list padding">
+
+          <a href="#" class="list-item list-icon-left list-icon-right">
+            <div class="list-item-content">
+              <i class="align-icon-left icon-heart brand-danger fill-icon"></i>
+              Madison, WI
+              <i class="align-icon-right icon-chevron-right"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-item list-icon-left list-icon-right">
+            <div class="list-item-content">
+              <i class="align-icon-left icon-image brand-warning fill-icon"></i>
+              Driving Directions
+              <i class="align-icon-right icon-chevron-right"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-item list-icon-left list-icon-right">
+            <div class="list-item-content slide-left slide-right">
+              <i class="align-icon-left icon-ios7-cog gray fill-icon"></i>
+              Settings
+              <i class="align-icon-right icon-chevron-right"></i>
+            </div>
+            <div class="list-item-buttons">
+             <button class="button">Button</button>
+           </div>
+          </a>
+
+        </div>
+
+        <div class="padding">
+          <button class="button button-secondary" id="btn-test-right">Test Slide Right</button>
+          <button class="button button-secondary" id="btn-test-left">Test Slide Left</button>
+        </div>
+
+        <div class="padding">
+          <a class="button button-secondary" href="index.html">Homepage</a>
+        </div>
+
+      </div>
+    </main>
+
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
-      var l = document.getElementById('list');
-      var list = new ionic.views.List({el: l});
+      $("#btn-test-left").click(function(){
+
+        if(this.isLeft) {
+          // back to normal
+          this.isLeft = false;
+          $(".slide-left").css({
+            left: "0"
+          })
+          $(".list").removeClass("item-opened");
+        } else {
+          // open
+          this.isLeft = true;
+          $(".slide-left").css({
+            left: "-72px"
+          })
+          $(".list").addClass("item-opened");
+        }
+
+
+        return false;
+      });
+
+      $("#btn-test-right").click(function(){
+
+        if(this.isRight) {
+          // back to normal
+          this.isRight = false;
+          $(".slide-right").css({
+            left: "0"
+          })
+          $(".list").removeClass("item-opened");
+        } else {
+          // open
+          this.isRight = true;
+          $(".slide-right").css({
+            left: "72px"
+          })
+          $(".list").addClass("item-opened");
+        }
+
+        return false;
+      });
     </script>
+
   </body>
 </html>

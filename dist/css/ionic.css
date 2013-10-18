@@ -2072,14 +2072,16 @@ address {
   position: relative;
   display: block;
   margin-bottom: -1px;
+  border-top: 1px solid #dddddd;
   z-index: 2;
   background-color: white;
-  border: 1px solid #dddddd; }
+  /*  // Align icons to the right
+    > i:last-child {
+      float: right;
+    }*/ }
   .list-item:last-child {
     margin-bottom: 0; }
   .list-item > .badge {
-    float: right; }
-  .list-item > i:last-child {
     float: right; }
   .list-item > .badge + .badge {
     margin-right: 5px; }
@@ -2217,15 +2219,67 @@ a.list-item {
 .list-item-content {
   position: relative;
   background-color: #fff;
+  border: 1px solid #dddddd;
   z-index: 2;
+  margin-top: -1px;
   padding: 15px;
-  -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
-  .list-item-content > i:last-child {
-    float: right; }
-  .list-item-content > .toggle:last-child, .list-item-content input:last-child, .list-item-content > button:last-child {
-    float: right; }
-  .list-item-content > .toggle:last-child {
-    margin-top: -5px; }
+  -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
+  /*  // Align icons
+    > i:first-child {
+      float: left;
+    }
+    > i:last-child {
+      float: right;
+    }
+  
+    // Make every last form element go to the right of the item
+  
+    > .toggle:last-child, input:last-child, > button:last-child {
+      float: right;
+    }
+    > .toggle:last-child {
+      margin-top: -5px;
+    }*/ }
+
+/**
+ * Left-side icon
+ */
+.list-icon-left .list-item-content {
+  padding-left: 60px; }
+
+/**
+ * Right-side icon
+ */
+.list-icon-right .list-item-content {
+  padding-right: 60px; }
+
+.align-icon-left, .align-icon-right {
+  position: absolute;
+  top: 11px;
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  font-size: 28px; }
+
+.align-icon-left {
+  left: 12px; }
+  .align-icon-left:after {
+    position: absolute;
+    width: 56px;
+    height: 4px;
+    left: -12px;
+    top: -13px;
+    background: white;
+    content: ' '; }
+
+.list-item:first-child .align-icon-left:after {
+  display: none; }
+
+.item-opened .align-icon-left:after {
+  display: none; }
+
+.align-icon-right {
+  right: 12px; }
 
 .list-item-sliding {
   -webkit-transition: -webkit-transform 0.1s ease-in-out; }
@@ -2296,18 +2350,6 @@ a.list-item {
     height: 100%;
     border-radius: 0;
     border: none; }
-
-/**
- * Right-side icon that reused by components like radio buttons
- */
-.list-item-icon {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 3;
-  padding: 13px;
-  height: 100%;
-  font-size: 24px; }
 
 /**
  * A list divider.
@@ -2705,9 +2747,16 @@ input[type="checkbox"][readonly] {
   /* give some room to the right for the checkmark icon */
   padding-right: 60px; }
 
-.radio-buttton-list .list-item-icon {
+.radio-buttton-list .radio-button-icon {
   /* checkmark icon will be hidden by default */
-  visibility: hidden; }
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  visibility: hidden;
+  padding: 13px;
+  height: 100%;
+  font-size: 24px; }
 
 .radio-buttton-list input[type="radio"] {
   /* hide any radio button inputs elements (the ugly circles) */
@@ -2715,7 +2764,7 @@ input[type="checkbox"][readonly] {
   .radio-buttton-list input[type="radio"]:checked ~ .list-item-content {
     /* style the list item content when its checked */
     background: #f7f7f7; }
-  .radio-buttton-list input[type="radio"]:checked ~ .list-item-icon {
+  .radio-buttton-list input[type="radio"]:checked ~ .radio-button-icon {
     /* show the checkmark icon when its checked */
     visibility: visible; }
 
@@ -3198,6 +3247,46 @@ a.button {
   animation: fadein 0.5s;
   -webkit-animation: fadein 0.5s; }
 
+.fill-icon {
+  background: black;
+  color: white !important;
+  border-radius: 6px; }
+  .fill-icon.align-icon-left, .fill-icon.align-icon-right {
+    position: absolute;
+    z-index: 3;
+    padding: 4px 3px;
+    width: 30px;
+    height: 31px;
+    font-size: 24px; }
+  .fill-icon.brand-default {
+    background: white; }
+  .fill-icon.brand-secondary {
+    background: whitesmoke; }
+  .fill-icon.brand-primary {
+    background: #4a87ee; }
+  .fill-icon.brand-info {
+    background: #43cee6; }
+  .fill-icon.brand-success {
+    background: #66cc33; }
+  .fill-icon.brand-warning {
+    background: #f0b840; }
+  .fill-icon.brand-danger {
+    background: #ef4e3a; }
+  .fill-icon.brand-dark {
+    background: #444444; }
+  .fill-icon.gray-darker {
+    background: #222222; }
+  .fill-icon.gray-dark {
+    background: #333333; }
+  .fill-icon.gray {
+    background: #555555; }
+  .fill-icon.gray-light {
+    background: #999999; }
+  .fill-icon.gray-lighter {
+    background: #eeeeee; }
+  .fill-icon.white {
+    background: white; }
+
 .hidden,
 .hide {
   display: none !important; }
@@ -3237,27 +3326,53 @@ a.button {
 .padding-horizontal {
   padding-left: 10px; }
 
-.margin {
-  margin: 10px; }
-
-.margin-top,
-.margin-vertical {
-  margin-top: 10px; }
-
-.margin-right,
-.margin-horizontal {
-  margin-right: 10px; }
-
-.margin-bottom,
-.margin-vertical {
-  margin-bottom: 10px; }
-
-.margin-left,
-.margin-horizontal {
-  margin-left: 10px; }
-
 .rounded {
   border-radius: 4px; }
+
+.brand-default {
+  color: white; }
+
+.brand-secondary {
+  color: whitesmoke; }
+
+.brand-primary {
+  color: #4a87ee; }
+
+.brand-info {
+  color: #43cee6; }
+
+.brand-success {
+  color: #66cc33; }
+
+.brand-warning {
+  color: #f0b840; }
+
+.brand-danger {
+  color: #ef4e3a; }
+
+.brand-dark {
+  color: #444444; }
+
+.black {
+  color: black; }
+
+.gray-darker {
+  color: #222222; }
+
+.gray-dark {
+  color: #333333; }
+
+.gray {
+  color: #555555; }
+
+.gray-light {
+  color: #999999; }
+
+.gray-lighter {
+  color: #eeeeee; }
+
+.white {
+  color: white; }
 
 .platform-ios7 .bar-header {
   height: 64px; }

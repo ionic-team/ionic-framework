@@ -1,0 +1,62 @@
+
+
+.fill-icon {
+  background: black;
+  color: white !important;
+  border-radius: $icon-fill-border-radius;
+
+  &.align-icon-left, 
+  &.align-icon-right {
+    position: absolute;
+    z-index: 3;
+    padding: 4px 3px;
+    width: $icon-font-size + 2;
+    height: $icon-font-size + 3;
+    font-size: $icon-font-size - 4;
+  }
+
+  &.brand-default {
+    background: $brand-default;
+  }
+  &.brand-secondary {
+    background: $brand-secondary;
+  }
+  &.brand-primary {
+    background: $brand-primary;
+  }
+  &.brand-info {
+    background: $brand-info;
+  }
+  &.brand-success {
+    background: $brand-success;
+  }
+  &.brand-warning {
+    background: $brand-warning;
+  }
+  &.brand-danger {
+    background: $brand-danger;
+  }
+  &.brand-dark {
+    background: $brand-dark;
+  }
+
+  &.gray-darker {
+    background: $gray-darker;
+  }
+  &.gray-dark {
+    background: $gray-dark;
+  }
+  &.gray {
+    background: $gray;
+  }
+  &.gray-light {
+    background: $gray-light;
+  }
+  &.gray-lighter {
+    background: $gray-lighter;
+  }
+  &.white {
+    background: $white;
+  }
+
+}

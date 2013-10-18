@@ -50,37 +50,60 @@
 }
 
 
-// Inset Margin
-// -------------------------------
-
-.margin {
-  margin: $inset-margin;
-}
-
-.margin-top,
-.margin-vertical {
-  margin-top: $inset-margin;
-}
-
-.margin-right,
-.margin-horizontal {
-  margin-right: $inset-margin;
-}
-
-.margin-bottom,
-.margin-vertical {
-  margin-bottom: $inset-margin;
-}
-
-.margin-left,
-.margin-horizontal {
-  margin-left: $inset-margin;
-}
-
-
 // Rounded
 // -------------------------------
 
 .rounded {
   border-radius: $border-radius-base;
 }
+
+// Colors
+// -------------------------------
+
+.brand-default {
+  color: $brand-default;
+}
+.brand-secondary {
+  color: $brand-secondary;
+}
+.brand-primary {
+  color: $brand-primary;
+}
+.brand-info {
+  color: $brand-info;
+}
+.brand-success {
+  color: $brand-success;
+}
+.brand-warning {
+  color: $brand-warning;
+}
+.brand-danger {
+  color: $brand-danger;
+}
+.brand-dark {
+  color: $brand-dark;
+}
+
+.black {
+  color: $black;
+}
+.gray-darker {
+  color: $gray-darker;
+}
+.gray-dark {
+  color: $gray-dark;
+}
+.gray {
+  color: $gray;
+}
+.gray-light {
+  color: $gray-light;
+}
+.gray-lighter {
+  color: $gray-lighter;
+}
+.white {
+  color: $white;
+}
+

@@ -19,14 +19,14 @@
   position: relative;
   display: block;
   // Place the border on the list items and negative margin up for better styling
-  margin-bottom: -1px;
+  margin-bottom: $list-item-border-width * -1;
+  border-top: $list-item-border-width solid $list-item-border-color;
 
   // Make sure the borders and stuff don't get hidden
   // by children
   z-index: 2;
 
   background-color: $list-default-background;
-  border: $list-item-border;
 
   // Round the first and last items
   &:first-child {
@@ -42,10 +42,10 @@
     float: right;
   }
 
-  // Align icons to the right
+/*  // Align icons to the right
   > i:last-child {
     float: right;
-  }
+  }*/
 
   > .badge + .badge {
     margin-right: 5px;
@@ -119,16 +119,19 @@ a.list-item {
  */
 .list-item-content {
   position: relative;
-
   background-color: #fff;
+  border: $list-item-border-width solid $list-item-border-color;
 
   z-index: 2;
-
+  margin-top: $list-item-border-width * -1;
   padding: $list-item-padding;
 
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
 
-  // Align icons to the right
+/*  // Align icons
+  > i:first-child {
+    float: left;
+  }
   > i:last-child {
     float: right;
   }
@@ -140,7 +143,55 @@ a.list-item {
   }
   > .toggle:last-child {
     margin-top: -5px;
+  }*/
+}
+
+/**
+ * Left-side icon
+ */
+.list-icon-left .list-item-content {
+  padding-left: $list-item-padding * 4;
+}
+
+/**
+ * Right-side icon
+ */
+.list-icon-right .list-item-content {
+  padding-right: $list-item-padding * 4;
+}
+
+.align-icon-left, .align-icon-right {
+  position: absolute;
+  top: $list-item-padding - 4;
+  z-index: 3;
+  width: $icon-font-size + 4;
+  height: $icon-font-size + 4;
+  font-size: $icon-font-size;
+}
+
+.align-icon-left {
+  left: ($list-item-padding - 3);
+
+  &:after {
+    position: absolute;
+    width: $icon-font-size * 2;
+    height: 4px;
+    left: ($list-item-padding - 3) * -1;
+    top: ($list-item-padding * -1) + 2;
+    background: $list-default-background;
+    content: ' ';
   }
+}
+.list-item:first-child .align-icon-left:after {
+  display: none;
+}
+
+.item-opened .align-icon-left:after {
+  display: none;
+}
+
+.align-icon-right {
+  right: $list-item-padding - 3;
 }
 
 .list-item-sliding {
@@ -232,20 +283,6 @@ a.list-item {
     border: none;
   }
 }
-
-/**
- * Right-side icon that reused by components like radio buttons
- */
-.list-item-icon {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 3;
-  padding: $list-item-padding - 2;
-  height: 100%;
-  font-size: 24px;
-}
-
 
 /**
  * A list divider.
