@@ -1827,6 +1827,27 @@
       font-size: 28px; }
   .ionic .list-icon-left.list-icon-right .list-item-content i:last-child {
     left: auto; }
+  .ionic .list-thumbnail h2 {
+    overflow: hidden;
+    margin: 0 0 8px 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 16px; }
+  .ionic .list-thumbnail p {
+    overflow: hidden;
+    margin-bottom: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap; }
+  .ionic .list-thumbnail .list-item-content {
+    padding-left: 95px;
+    min-height: 80px; }
+    .ionic .list-thumbnail .list-item-content img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      max-width: 80px;
+      max-height: 80px;
+      width: 100%; }
   .ionic .list-item-sliding {
     -webkit-transition: -webkit-transform 0.1s ease-in-out; }
   .ionic .list-item-reordering {

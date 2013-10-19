@@ -337,41 +337,44 @@ $tabs-dark-border-color:       $button-dark-border;
 // Lists
 // -------------------------------
 
-$list-divider-bg:           #f5f5f5;
-$list-divider-color:        #222;
-$list-item-border-width:    1px !default;
-$list-item-border-color:    #ddd;
-$list-item-padding:         15px !default;
+$list-divider-bg:                 #f5f5f5;
+$list-divider-color:              #222;
+$list-item-border-width:          1px !default;
+$list-item-border-color:          #ddd;
+$list-item-padding:               15px !default;
 
-$list-default-background: $brand-default;
-$list-default-border: #ddd;
+$list-default-background:         $brand-default;
+$list-default-border:             #ddd;
 
-$list-secondary-background: $brand-secondary;
-$list-secondary-border: #ddd;
+$list-secondary-background:       $brand-secondary;
+$list-secondary-border:           #ddd;
 
-$list-success-background: $brand-success;
-$list-success-border: $brand-success;
+$list-success-background:         $brand-success;
+$list-success-border:             $brand-success;
 
-$list-primary-background: $brand-primary;
-$list-primary-border: $brand-primary;
+$list-primary-background:         $brand-primary;
+$list-primary-border:             $brand-primary;
 
-$list-info-background: $brand-info;
-$list-info-border: $brand-info;
+$list-info-background:            $brand-info;
+$list-info-border:                $brand-info;
 
-$list-warning-background: $brand-warning;
-$list-warning-border: $brand-warning;
+$list-warning-background:         $brand-warning;
+$list-warning-border:             $brand-warning;
 
-$list-danger-background: $brand-danger;
-$list-danger-border: $brand-danger;
+$list-danger-background:          $brand-danger;
+$list-danger-border:              $brand-danger;
 
-$list-dark-background: $brand-dark;
-$list-dark-border: $brand-dark;
+$list-dark-background:            $brand-dark;
+$list-dark-border:                $brand-dark;
+
+$list-icon-font-size:             28px !default;
+
+$list-thumbnail-width:            80px !default;
 
 
 // Icons
 // -------------------------------
 
-$icon-font-size:              28px !default;
 $icon-fill-border-radius:     6px !default;
 
 

@@ -136,7 +136,7 @@ a.list-item {
     position: absolute;
     top: ($list-item-padding / 2) + 3;
     left: $list-item-padding / 2;
-    font-size: $icon-font-size;
+    font-size: $list-icon-font-size;
   }
 }
 
@@ -147,7 +147,7 @@ a.list-item {
     position: absolute;
     top: ($list-item-padding / 2) + 3;
     right: $list-item-padding / 2;
-    font-size: $icon-font-size;
+    font-size: $list-icon-font-size;
   }
 }
 
@@ -155,6 +155,34 @@ a.list-item {
   left: auto;
 }
 
+.list-thumbnail h2 {
+  overflow: hidden;
+  margin: 0 0 8px 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+}
+
+.list-thumbnail p {
+  overflow: hidden;
+  margin-bottom: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-thumbnail .list-item-content {
+  padding-left: $list-thumbnail-width + $list-item-padding;
+  min-height: $list-thumbnail-width;
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: $list-thumbnail-width;
+    max-height: $list-thumbnail-width;
+    width: 100%;
+  }
+}
 
 .list-item-sliding {
   -webkit-transition: -webkit-transform 0.1s ease-in-out;
