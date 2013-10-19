@@ -1811,20 +1811,21 @@
     margin-top: -1px;
     padding: 15px;
     -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
+  .ionic .list-item-content i {
+    position: absolute;
+    top: 0;
+    display: flex;
+    height: 100%;
+    font-size: 28px;
+    align-items: center; }
   .ionic .list-icon-left .list-item-content {
     padding-left: 45px; }
     .ionic .list-icon-left .list-item-content i {
-      position: absolute;
-      top: 10.5px;
-      left: 7.5px;
-      font-size: 28px; }
+      left: 7.5px; }
   .ionic .list-icon-right .list-item-content {
     padding-right: 45px; }
     .ionic .list-icon-right .list-item-content i {
-      position: absolute;
-      top: 10.5px;
-      right: 7.5px;
-      font-size: 28px; }
+      right: 7.5px; }
   .ionic .list-icon-left.list-icon-right .list-item-content i:last-child {
     left: auto; }
   .ionic .list-thumbnail h2 {

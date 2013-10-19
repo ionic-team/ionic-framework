@@ -2225,21 +2225,23 @@ a.list-item {
   padding: 15px;
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
 
+.list-item-content i {
+  position: absolute;
+  top: 0;
+  display: flex;
+  height: 100%;
+  font-size: 28px;
+  align-items: center; }
+
 .list-icon-left .list-item-content {
   padding-left: 45px; }
   .list-icon-left .list-item-content i {
-    position: absolute;
-    top: 10.5px;
-    left: 7.5px;
-    font-size: 28px; }
+    left: 7.5px; }
 
 .list-icon-right .list-item-content {
   padding-right: 45px; }
   .list-icon-right .list-item-content i {
-    position: absolute;
-    top: 10.5px;
-    right: 7.5px;
-    font-size: 28px; }
+    right: 7.5px; }
 
 .list-icon-left.list-icon-right .list-item-content i:last-child {
   left: auto; }

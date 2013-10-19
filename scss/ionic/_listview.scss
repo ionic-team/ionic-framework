@@ -129,14 +129,20 @@ a.list-item {
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
 }
 
+.list-item-content i {
+  position: absolute;
+  top: 0;
+  display: flex;
+  height: 100%;
+  font-size: $list-icon-font-size;
+  align-items: center;
+}
+
 .list-icon-left .list-item-content {
   padding-left: ($list-item-padding * 3);
 
   i {
-    position: absolute;
-    top: ($list-item-padding / 2) + 3;
     left: $list-item-padding / 2;
-    font-size: $list-icon-font-size;
   }
 }
 
@@ -144,10 +150,7 @@ a.list-item {
   padding-right: ($list-item-padding * 3);
 
   i {
-    position: absolute;
-    top: ($list-item-padding / 2) + 3;
     right: $list-item-padding / 2;
-    font-size: $list-icon-font-size;
   }
 }
 
