@@ -1277,6 +1277,7 @@ legend {
  * 1. Correct font family not being inherited in all browsers.
  * 2. Correct font size not being inherited in all browsers.
  * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
+ * 4. Remove any default :focus styles
  */
 button,
 input,
@@ -1287,7 +1288,13 @@ textarea {
   font-size: 100%;
   /* 2 */
   font-family: inherit;
-  /* 1 */ }
+  /* 1 */
+  outline-offset: 0;
+  /* 4 */
+  outline-style: none;
+  /* 4 */
+  outline-width: 0;
+  /* 4 */ }
 
 /**
  * Address Firefox 4+ setting `line-height` on `input` using `!important` in
