@@ -772,10 +772,13 @@ address {
     box-shadow: none;
     font-size: 17px; }
 
+.bar [class^="icon-"],
+.bar [class*=" icon-"] {
+  font-size: 24px; }
+
 .bar .button-icon {
   border: 1px solid transparent;
-  background-color: transparent;
-  font-size: 24px; }
+  background-color: transparent; }
 
 .bar-header {
   top: 0; }
@@ -805,6 +808,7 @@ address {
   bottom: 0;
   width: 100%;
   height: 49px;
+  z-index: 5;
   box-orient: horizontal;
   -webkit-box-orient: horizontal;
   -moz-box-orient: horizontal;
@@ -847,6 +851,9 @@ address {
     background-color: #ef4e3a;
     border-color: #c73927;
     color: white; }
+
+.tabs-top {
+  top: 44px; }
 
 .tab-item {
   display: block;
@@ -1182,7 +1189,7 @@ button.list-icon-right .list-item-content:after {
 .list-thumbnail .list-item-content {
   padding-left: 95px;
   min-height: 80px; }
-  .list-thumbnail .list-item-content img {
+  .list-thumbnail .list-item-content .thumbnail {
     position: absolute;
     top: 0;
     left: 0;
@@ -2010,15 +2017,86 @@ a.button {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0); }
 
-@keyframes fadein {
+.slide-in-slide-out.ng-enter, .slide-in-slide-out > .ng-enter {
+  -webkit-transition: 0.5s ease-in-out all;
+  -webkit-transform: translate3d(100%, 0, 0);
+  box-shadow: -1px 0px 10px rgba(0, 0, 0, 0.6); }
+.slide-in-slide-out.ng-enter-active, .slide-in-slide-out > .ng-enter-active {
+  -webkit-transform: translate3d(0, 0, 0); }
+.slide-in-slide-out.ng-leave, .slide-in-slide-out > .ng-leave {
+  -webkit-transition: 0.5s ease-in-out all;
+  -webkit-transform: translate3d(0%, 0, 0); }
+.slide-in-slide-out.ng-leave-active, .slide-in-slide-out > .ng-leave-active {
+  -webkit-transform: translate3d(-10%, 0, 0);
+  opacity: 0.8; }
+
+.slide-in-slide-out-reverse.ng-enter, .slide-in-slide-out-reverse > .ng-enter {
+  z-index: 1;
+  -webkit-transition: 0.5s ease-in-out all;
+  -webkit-transform: translate3d(-100%, 0, 0);
+  box-shadow: -1px 0px 10px rgba(0, 0, 0, 0.6); }
+.slide-in-slide-out-reverse.ng-enter-active, .slide-in-slide-out-reverse > .ng-enter-active {
+  -webkit-transform: translate3d(0, 0, 0); }
+.slide-in-slide-out-reverse.ng-leave, .slide-in-slide-out-reverse > .ng-leave {
+  z-index: 0;
+  -webkit-transition: 0.5s ease-in-out all;
+  -webkit-transform: translate3d(0%, 0, 0); }
+.slide-in-slide-out-reverse.ng-leave-active, .slide-in-slide-out-reverse > .ng-leave-active {
+  -webkit-transform: translate3d(10%, 0, 0);
+  opacity: 0.8; }
+
+/**
+ * An animation that fades out one content area and fades in another
+ */
+.fade-in-out.ng-enter, .fade-in-out > .ng-enter {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s ease-in-out; }
+.fade-in-out.ng-enter-active, .fade-in-out > .ng-enter-active {
+  opacity: 1; }
+.fade-in-out.ng-leave, .fade-in-out > .ng-leave {
+  opacity: 1;
+  -webkit-transition: opacity 0.3s ease-in-out; }
+.fade-in-out.ng-leave-active, .fade-in-out > .ng-leave-active {
+  opacity: 0; }
+
+.slide-left-fade-add {
+  -webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out; }
+
+.slide-left-fade-add-active {
+  -webkit-transform: translate3d(-120px, 0, 0);
+  opacity: 0; }
+
+.slide-left-fade-remove {
+  -webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  -webkit-transform: translate3d(120px, 0, 0);
+  opacity: 0; }
+
+.slide-left-fade-remove-active {
+  -webkit-transform: translate3d(0, 0, 0);
+  opacity: 1; }
+
+@-webkit-keyframes fadeOut {
   from {
-    opacity: 0.7; }
+    opacity: 1; }
+
+  to {
+    opacity: 0; } }
+
+@keyframes fadeOut {
+  from {
+    opacity: 1; }
+
+  to {
+    opacity: 0; } }
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0; }
 
   to {
     opacity: 1; } }
 
-@-webkit-keyframes fadein {
-  /* Safari and Chrome */
+@keyframes fadeIn {
   from {
     opacity: 0; }
 
@@ -2026,9 +2104,11 @@ a.button {
     opacity: 1; } }
 
 .fade-in {
-  opacity: 0;
-  animation: fadein 0.5s;
-  -webkit-animation: fadein 0.5s; }
+  -webkit-animation: fadeOut 0.3s;
+  animation: fadeOut 0.3s; }
+  .fade-in.active {
+    -webkit-animation: fadeIn 0.3s;
+    animation: fadeIn 0.3s; }
 
 .fill-icon {
   color: white !important; }

@@ -175,10 +175,14 @@
   }
 }
 
-.bar .button-icon {
-  border: 1px solid transparent;
-  background-color: transparent;
+.bar [class^="icon-"], 
+.bar [class*=" icon-"] {
   font-size: 24px;
+}
+
+.bar .button-icon {
+  border: $button-border-width solid transparent;
+  background-color: transparent;
 }
 
 // Header at top

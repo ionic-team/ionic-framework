@@ -190,7 +190,7 @@ button.list-icon-right {
   padding-left: $list-thumbnail-width + $list-item-padding;
   min-height: $list-thumbnail-width;
 
-  img {
+  .thumbnail {
     position: absolute;
     top: 0;
     left: 0;
