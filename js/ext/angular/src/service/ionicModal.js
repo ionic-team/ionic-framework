@@ -1,4 +1,4 @@
-angular.module('ionic.service.modal', ['ionic.service'])
+angular.module('ionic.service.modal', ['ionic.service.templateLoad'])
 
 
 .factory('Modal', ['$rootScope', '$document', '$compile', 'TemplateLoader', function($rootScope, $document, $compile, TemplateLoader) {

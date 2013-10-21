@@ -258,9 +258,13 @@ a.list-item {
  * List refreser elements
  */
 .list-refresher {
-  background-color: red;
   height: 0;
   overflow: hidden;
 }
+.list-refresher-content {
+  padding: 20px;
+  text-align: center;
+}
 .list-refreshing {
+  -webkit-transition: height 0.2s ease-in-out;
 }

@@ -6,9 +6,9 @@
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.js"></script>
+    <script src="/vendor/angular/angular-1.2.0rc2.min.js"></script>
+    <script src="/vendor/angular/angular-touch.js"></script>
+    <script src="/vendor/angular/angular-animate.js"></script>
     <style>
 .my-repeat-animation > .ng-enter, 
 .my-repeat-animation > .ng-leave, 
@@ -43,24 +43,30 @@
   opacity:1;
 }
 
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 40px;
+  margin: auto;
+  margin-bottom: 100px;
+}
+.spin-thing {
+  width: 10px;
+  height: 10px;
+  background-color: #4a87ee;
+  border-radius: 10px;
+}
     </style>
 
   </head>
   <body>
 
-    <content has-header="true" ng-controller="TestCtrl" class="reveal-animation">
-      <list is-editing="isEditingItems" on-refresh="refreshProjects()" animation="my-repeat-animation" delete-icon="icon-minus-circled" reorder-icon="icon-navicon">
+    <content ng-controller="TestCtrl" class="reveal-animation">
+      <list is-editing="isEditingItems" on-refresh-holding="almostRefreshing()" on-refresh-opening="almostRefreshProjects(ratio)" on-refresh="refreshProjects()" animation="my-repeat-animation" delete-icon="icon-minus-circled" reorder-icon="icon-navicon">
         <list-refresher>
-          <pulling>
-            <div style="height: 100px; font-size: 30px; text-align: center">PULL TO REFRESH</div>
-          </pulling>
-          <holding>
-            <div style="height: 100px; font-size: 30px; text-align: center">RELEASE TO REFRESH</div>
-          </holding>
-          <refreshing>
-            <div style="height: 100px; font-size: 30px; text-align: center">REFRESHING</div>
-          </refreshing>
-        </div>
+          <spinner ratio="refreshRatio.ratio"></spinner>
+        </list-refresher>
         <list-item ng-repeat="item in items" 
         buttons="item.buttons"
         can-delete="true"
@@ -78,16 +84,52 @@
     <script src="../../../../dist/js/ionic.js"></script>
     <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
-      angular.module('navTest', ['ionic.ui.list', 'ngAnimate'])
+      angular.module('navTest', ['ionic.ui.list', 'ionic.ui.content', 'ngAnimate'])
+
+      .directive('spinner', function() {
+        return {
+          restrict: 'E',
+          replace: true,
+          scope: {
+            ratio: '='
+          },
+          template: '<div class="spinner"><div class="spin-thing"></div></div>',
+          link: function($scope, $element, $attr) {
+            $scope.$watch('ratio', function(value) {
+              if(value > 0.97) {
+                value = 1;
+              }
+
+              var a = (value * 360) % 360;
+              var r = (a * Math.PI) / 180;
+              var x = (Math.sin(r) * 20) + 14;
+              var y = (Math.cos(r) * -20) + 14;
+
+              $element[0].firstElementChild.style.webkitTransform = 'translate3d(' + x + 'px, ' + y + 'px, 0)';
+              //$element[0].firstElementChild.setAttribute('d', anim);
+            });
+          }
+        }
+      })
 
       .controller('TestCtrl', function($scope) {
+        $scope.refreshRatio = { ratio: 0 };
         var removeItem = function(item) {
           // Remove ourselves
           $scope.items.splice($scope.items.indexOf(item), 1);
         };
 
+        $scope.almostRefreshing = function() {
+          console.log('HOLDING FOR REFRESH');
+        };
+        $scope.almostRefreshProjects = function(amt) {
+          console.log('ALMOST REFRESHING', amt);
+          $scope.refreshRatio.ratio = amt;
+          $scope.$apply();
+        };
+
         $scope.refreshProjects = function() {
-          alert('refreshing!');
+          console.log("REFRESHING");
         };
 
         $scope.items = [

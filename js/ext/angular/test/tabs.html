@@ -5,9 +5,9 @@
 
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.js"></script>
+    <script src="/vendor/angular/angular-1.2.0rc2.min.js"></script>
+    <script src="/vendor/angular/angular-touch.js"></script>
+    <script src="/vendor/angular/angular-animate.js"></script>
     <style>
       .fade-out > .ng-enter, 
       .fade-out > .ng-leave, 
@@ -48,9 +48,9 @@
     </style>
   </head>
   <body>
-    <tab-controller>
+    <tabs animation="fade-in-out">
 
-      <div title="Home" icon-on="icon-ios7-filing" icon-off="icon-ios7-filing-outline" class="tab-content" ng-controller="HomeCtrl">
+      <tab title="Home" icon-on="icon-ios7-filing" icon-off="icon-ios7-filing-outline" ng-controller="HomeCtrl">
         <header class="bar bar-header bar-secondary">
           <button class="button button-clear button-primary" ng-click="newTask()">New</button>
           <h1 class="title">Tasks</h1>
@@ -72,27 +72,27 @@
             </list-item>
           </list>
         </content>
-      </div>
+      </tab>
 
-      <div title="About" icon-on="icon-ios7-clock" icon-off="icon-ios7-clock-outline" class="tab-content">
+      <tab title="About" icon-on="icon-ios7-clock" icon-off="icon-ios7-clock-outline">
         <header class="bar bar-header bar-secondary">
           <h1 class="title">Deadlines</h1>
         </header>
         <content has-header="true" has-tabs="true">
           <h1>Deadlines</h1>
         </content>
-      </div>
+      </tab>
 
-      <div title="Settings" icon-on="icon-ios7-gear" icon-off="icon-ios7-gear-outline" class="tab-content">
+      <tab title="Settings" icon-on="icon-ios7-gear" icon-off="icon-ios7-gear-outline">
         <header class="bar bar-header bar-secondary">
           <h1 class="title">Settings</h1>
         </header>
         <content has-header="true" has-tabs="true">
           <h1>Settings</h1>
         </content>
-      </div>
+      </tab>
       
-    </tab-controller>
+    </tabs>
 
     <script id="newTask.html" type="text/ng-template">
       <div id="task-view" class="modal slide-in-up" ng-controller="TaskCtrl">

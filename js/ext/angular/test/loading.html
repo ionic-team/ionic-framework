@@ -1,0 +1,36 @@
+<html ng-app="ionic.example">
+  <head>
+    <meta charset="utf-8">
+    <title>Loading</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+
+    <script src="/vendor/angular/angular-1.2.0rc2.min.js"></script>
+    <script src="/vendor/angular/angular-touch.js"></script>
+    <script src="/vendor/angular/angular-animate.js"></script>
+  </head>
+  <body ng-controller="LoadingCtrl">
+    <button class="button button-dark" ng-click="startLoading()">Load</button>
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
+    <script>
+      angular.module('ionic.example', ['ionic.service.loading'])
+
+      .controller('LoadingCtrl', function($scope, Loading) {
+        $scope.startLoading = function() {
+          var loading = Loading.show({
+            animation: 'fade-in',
+            content: 'Loading'
+          });
+          setTimeout(function() {
+            loading.hide();
+          }, 2000);
+        };
+      });
+    </script>
+  </body>
+</html>
+

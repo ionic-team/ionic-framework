@@ -1842,6 +1842,8 @@ window.ionic = {
 ;
 (function(ionic) {
 'use strict';
+
+
   var DragOp = function() {};
   DragOp.prototype = {
     start: function(e) {
@@ -1852,11 +1854,25 @@ window.ionic = {
     }
   };
 
+
+  /**
+   * The Pull To Refresh drag operation handles the well-known
+   * "pull to refresh" concept seen on various apps. This lets
+   * the user indicate they want to refresh a given list by dragging
+   * down.
+   *
+   * @param {object} opts the options for the pull to refresh drag.
+   */
   var PullToRefreshDrag = function(opts) {
     this.dragThresholdY = opts.dragThresholdY || 10;
+    this.onRefreshOpening = opts.onRefreshOpening || function() {};
+    this.onRefresh = opts.onRefresh || function() {};
+    this.onRefreshHolding = opts.onRefreshHolding || function() {};
     this.el = opts.el;
   };
+
   PullToRefreshDrag.prototype = new DragOp();
+
   PullToRefreshDrag.prototype.start = function(e) {
     var content, refresher;
 
@@ -1869,17 +1885,23 @@ window.ionic = {
       refresher = this._injectRefresher();
     }
 
+    // Disable animations while dragging
+    refresher.classList.remove('list-refreshing');
+
     this._currentDrag = {
       refresher: refresher,
-      content: content
+      content: content,
+      isHolding: false
     };
   };
+
   PullToRefreshDrag.prototype._injectRefresher = function() {
     var refresher = document.createElement('div');
     refresher.className = 'list-refresher';
     this.el.insertBefore(refresher, this.el.firstChild);
     return refresher;
   };
+
   PullToRefreshDrag.prototype.drag = function(e) {
     var _this = this;
 
@@ -1896,20 +1918,58 @@ window.ionic = {
       }
 
       if(_this._isDragging) {
-        var currentHeight = parseFloat(_this._currentDrag.refresher.style.height);
-        _this._currentDrag.refresher.style.height = e.gesture.deltaY + 'px';
+        var refresher = _this._currentDrag.refresher;
 
-        var newHeight = parseFloat(_this._currentDrag.refresher.style.height = e.gesture.deltaY);
-        var firstChildHeight = parseFloat(_this._currentDrag.refresher.firstElementChild.style.height);
-        console.log('New Height must pass', firstChildHeight);
-        if(newHeight > firstChildHeight) {
-          console.log('PASSED', firstChildHeight);
+        var currentHeight = parseFloat(refresher.style.height);
+        refresher.style.height = e.gesture.deltaY + 'px';
+
+        var newHeight = parseFloat(refresher.style.height);
+        var firstChildHeight = parseFloat(refresher.firstElementChild.offsetHeight);
+
+        if(newHeight > firstChildHeight && !_this._currentDrag.isHolding) {
+          // The user is holding the refresh but hasn't let go of it
+          _this._currentDrag.isHolding = true;
+          _this.onRefreshHolding && _this.onRefreshHolding();
+        } else {
+          // Indicate what ratio of opening the list refresh drag is
+          var ratio = Math.min(1, newHeight / firstChildHeight);
+          _this.onRefreshOpening && _this.onRefreshOpening(ratio);
         }
       }
     });
   };
-  PullToRefreshDrag.prototype.end = function(e) {
+
+  PullToRefreshDrag.prototype.end = function(e, doneCallback) {
+    var _this = this;
+
+    // There is no drag, just end immediately
+    if(!this._currentDrag) {
+      return;
+    }
+
+    var refresher = this._currentDrag.refresher;
+
+    var currentHeight = parseFloat(refresher.style.height);
+    refresher.style.height = e.gesture.deltaY + 'px';
+
+    var firstChildHeight = parseFloat(refresher.firstElementChild.offsetHeight);
+
+    if(currentHeight > firstChildHeight) {
+      //this.refreshing();
+      refresher.classList.add('list-refreshing');
+      refresher.style.height = firstChildHeight + 'px';
+      this.onRefresh && _this.onRefresh();
+    } else {
+      // Enable animations
+      refresher.classList.add('list-refreshing');
+      refresher.style.height = '0px';
+      this.onRefresh && _this.onRefresh();
+    }
+
+    this._currentDrag = null;
+    doneCallback && doneCallback();
   };
+
 
   var SlideDrag = function(opts) {
     this.dragThresholdX = opts.dragThresholdX || 10;
@@ -2150,6 +2210,10 @@ window.ionic = {
 
     // The amount of dragging required to start sliding the element over (in pixels)
     this.dragThresholdX = opts.dragThresholdX || 10;
+
+    this.onRefresh = opts.onRefresh || function() {};
+    this.onRefreshOpening = opts.onRefreshOpening || function() {};
+    this.onRefreshHolding = opts.onRefreshHolding || function() {};
       
     // Start the drag states
     this._initDrag();
@@ -2164,6 +2228,14 @@ window.ionic = {
   };
 
   ionic.views.List.prototype = {
+    /**
+     * Called to tell the list to stop refreshing. This is useful
+     * if you are refreshing the list and are done with refreshing.
+     */
+    stopRefreshing: function() {
+      var refresher = this.el.querySelector('.list-refresher');
+      refresher.style.height = '0px';
+    },
 
     _initDrag: function() {
       this._isDragging = false;
@@ -2183,6 +2255,8 @@ window.ionic = {
 
 
     _startDrag: function(e) {
+      var _this = this;
+
       this._isDragging = false;
 
       // Check if this is a reorder drag
@@ -2197,7 +2271,18 @@ window.ionic = {
       
       // Check if this is a "pull down" drag for pull to refresh
       else if(e.gesture.direction == 'down') {
-        this._dragOp = new PullToRefreshDrag({ el: this.el });
+        this._dragOp = new PullToRefreshDrag({
+          el: this.el,
+          onRefresh: function() {
+            _this.onRefresh && _this.onRefresh();
+          },
+          onRefreshHolding: function() {
+            _this.onRefreshHolding && _this.onRefreshHolding();
+          },
+          onRefreshOpening: function(ratio) {
+            _this.onRefreshOpening && _this.onRefreshOpening(ratio);
+          }
+        });
         this._dragOp.start(e);
       } 
 
@@ -2230,9 +2315,48 @@ window.ionic = {
 
       if(!this._dragOp) {
         this._startDrag(e);
+        if(!this._dragOp) { return; }
       }
 
       this._dragOp.drag(e);
+    }
+  };
+
+})(ionic);
+;
+(function(ionic) {
+'use strict';
+  /**
+   * An ActionSheet is the slide up menu popularized on iOS.
+   *
+   * You see it all over iOS apps, where it offers a set of options 
+   * triggered after an action.
+   */
+  ionic.views.Loading = function(opts) {
+    var _this = this;
+
+    this.el = opts.el;
+    this._loadingBox = this.el.querySelector('.loading');
+  };
+
+  ionic.views.Loading.prototype = {
+    show: function() {
+      var _this = this;
+
+      if(this._loadingBox) {
+        window.requestAnimationFrame(function() {
+          _this.el.classList.add('active');
+
+          _this._loadingBox.style.marginLeft = (-_this._loadingBox.offsetWidth) / 2 + 'px';
+          _this._loadingBox.style.marginTop = (-_this._loadingBox.offsetHeight) / 2 + 'px';
+        });
+      }
+    },
+    hide: function() {
+      // Force a reflow so the animation will actually run
+      this.el.offsetWidth;
+
+      this.el.classList.remove('active');
     }
   };
 
@@ -2305,6 +2429,43 @@ window.ionic = {
         // Remove the back button if it's there
         this._currentBackButton.parentNode.removeChild(this._currentBackButton);
       }
+    }
+  };
+
+})(ionic);
+;
+(function(ionic) {
+'use strict';
+  /**
+   * An ActionSheet is the slide up menu popularized on iOS.
+   *
+   * You see it all over iOS apps, where it offers a set of options 
+   * triggered after an action.
+   */
+  ionic.views.Popup = function(opts) {
+    var _this = this;
+
+    this.el = opts.el;
+  };
+
+  ionic.views.Popup.prototype = {
+    setTitle: function(title) {
+      var title = el.querySelector('.popup-title');
+      title && title.innerHTML = title;
+    },
+    alert: function(message) {
+      var _this = this;
+
+      window.requestAnimationFrame(function() {
+        _this.setTitle(message);
+        _this.el.classList.add('active');
+      });
+    },
+    hide: function() {
+      // Force a reflow so the animation will actually run
+      this.el.offsetWidth;
+
+      this.el.classList.remove('active');
     }
   };
 
@@ -3584,6 +3745,10 @@ ionic.controllers.TabBarController.prototype = {
   // Get the currently selected tab
   getSelectedController: function() {
     return this.selectedController;
+  },
+
+  getSelectedIndex: function() {
+    return this.selectedIndex;
   },
 
   // Add a tab
