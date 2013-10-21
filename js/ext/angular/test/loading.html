@@ -22,12 +22,11 @@
       .controller('LoadingCtrl', function($scope, Loading) {
         $scope.startLoading = function() {
           var loading = Loading.show({
+            width: 200,
+            height: 100,
             animation: 'fade-in',
-            content: 'Loading'
+            content: 'Getting current location...'
           });
-          setTimeout(function() {
-            loading.hide();
-          }, 2000);
         };
       });
     </script>

@@ -28,9 +28,9 @@
     <div class="bar bar-header bar-dark">
       <h1 class="title">Map</h1>
     </div>
-    <content has-header="true">
+    <div class="content-plain has-header has-footer">
       <div id="map"></div>
-    </content>
+    </div>
     <div class="bar bar-footer bar-dark">
       <button ng-click="centerOnMe()" class="button button-icon"><i class="icon-ios7-navigate"></i></button>
     </div>
@@ -55,16 +55,17 @@
         if(!$scope.map) {
           return;
         }
-        var loading = Loading.show({
+
+        $scope.loading = Loading.show({
           content: 'Getting current location...',
           showBackdrop: false
         });
 
         navigator.geolocation.getCurrentPosition(function(pos) {
           $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-          loading.hide();
+          $scope.loading.hide();
         }, function(error) {
-          alert('Unable to get location');
+          alert('Unable to get location: ' + error.message);
         });
       };
     });

@@ -39,12 +39,15 @@
   left: 50%;
   top: 50%;
 
+  text-align: center;
+  text-overflow: ellipsis;
+
   border-radius: 5px;
   padding: 20px;
   background-color: rgba(0,0,0,0.7);
 
   color: #fff;
-  font-size: 20px;
+  font-size: 15px;
 
   h1,h2,h3,h4,h5 {
     color: #fff;

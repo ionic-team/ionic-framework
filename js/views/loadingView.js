@@ -10,6 +10,9 @@
     var _this = this;
 
     this.el = opts.el;
+
+    this.maxWidth = opts.maxWidth || 200;
+
     this._loadingBox = this.el.querySelector('.loading');
   };
 
@@ -18,12 +21,18 @@
       var _this = this;
 
       if(this._loadingBox) {
-        window.requestAnimationFrame(function() {
-          _this.el.classList.add('active');
+        //window.requestAnimationFrame(function() {
+          var lb = _this._loadingBox;
 
-          _this._loadingBox.style.marginLeft = (-_this._loadingBox.offsetWidth) / 2 + 'px';
-          _this._loadingBox.style.marginTop = (-_this._loadingBox.offsetHeight) / 2 + 'px';
-        });
+          var width = Math.min(_this.maxWidth, Math.max(window.outerWidth - 40, lb.offsetWidth));
+
+          lb.style.width = width;
+
+          lb.style.marginLeft = (-lb.offsetWidth) / 2 + 'px';
+          lb.style.marginTop = (-lb.offsetHeight) / 2 + 'px';
+
+          _this.el.classList.add('active');
+        //});
       }
     },
     hide: function() {

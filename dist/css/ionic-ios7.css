@@ -375,6 +375,14 @@ body, .ionic-body {
   height: 100%;
   -webkit-overflow-scrolling: touch; }
 
+.content-plain {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch; }
+
 .has-header {
   margin-top: 44px; }
 

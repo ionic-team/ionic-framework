@@ -14,8 +14,10 @@
 
   ionic.views.Popup.prototype = {
     setTitle: function(title) {
-      var title = el.querySelector('.popup-title');
-      title && title.innerHTML = title;
+      var titleEl = el.querySelector('.popup-title');
+      if(titleEl) {
+        titleEl.innerHTML = title;
+      }
     },
     alert: function(message) {
       var _this = this;

@@ -79,6 +79,20 @@ body, .ionic-body {
   -webkit-overflow-scrolling: touch;
 }
 
+.content-plain {
+  position: absolute; 
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  &.has-header {
+  }
+
+  &.has-footer {
+  }
+}
+
 // Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
 // Note: For these to work, content must come after both bars in the markup
 .has-header {

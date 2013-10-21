@@ -14,7 +14,9 @@ angular.module('ionic.service.loading', ['ionic.ui.loading'])
       var defaults = {
         content: '',
         animation: 'fade-in',
-        showBackdrop: true
+        showBackdrop: true,
+        maxWidth: 200,
+        showDelay: 2000
       };
 
       opts = angular.extend(defaults, opts);
@@ -37,7 +39,12 @@ angular.module('ionic.service.loading', ['ionic.ui.loading'])
 
       $document[0].body.appendChild(element[0]);
 
-      var loading = new ionic.views.Loading({el: element[0] });
+      var loading = new ionic.views.Loading({
+        el: element[0],
+        maxWidth: opts.maxWidth,
+        showDelay: opts.showDelay
+      });
+
       loading.show();
 
       scope.loading = loading;
