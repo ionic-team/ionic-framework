@@ -1,0 +1,64 @@
+<html ng-app="tabsTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Tab Bars</title>
+
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="/vendor/angular/angular-1.2.0rc2.min.js"></script>
+    <script src="/vendor/angular/angular-touch.js"></script>
+    <script src="/vendor/angular/angular-animate.js"></script>
+    <style>
+      .fade-out > .ng-enter, 
+      .fade-out > .ng-leave, 
+      .fade-out > .ng-move {
+        -webkit-transition: 0.2s linear all;
+        transition: 0.4s ease-out all;
+        position:relative;
+      }
+
+      .fade-out > .ng-enter {
+        left:-10px;
+        opacity:0;
+      }
+      .fade-out > .ng-enter.ng-enter-active {
+        left:0;
+        opacity:1;
+      }
+
+      .fade-out > .ng-leave {
+        left:0;
+        opacity:1;
+      }
+      .fade-out > .ng-leave.ng-leave-active {
+        left:-10px;
+        opacity:0;
+      }
+
+      .fade-out > .ng-move {
+        opacity:0.5;
+      }
+      .fade-out > .ng-move.ng-move-active {
+        opacity:1;
+      }
+
+      .completed {
+        text-decoration: line-through;
+      }
+    </style>
+  </head>
+  <body>
+    <tab-bar>
+      <tab-item title="Home"></tab-item>
+      <tab-item title="Item"></tab-item>
+      <tab-item title="Test"></tab-item>
+    </tab-bar>
+
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
+    <script>
+      angular.module('tabsTest', ['ionic.ui', 'ionic.service.modal', 'ionic.service.actionSheet'])
+
+    </script>
+  </body>
+</html>

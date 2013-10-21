@@ -22,17 +22,113 @@ $bezier-function: cubic-bezier(.1, .7, .1, 1);
     transform: translate3d(0, 0, 0);
 }
 
-@keyframes fadein {
-    from { opacity:0.7; }
-    to { opacity:1; }
+// A transition like the iOS nav controller where the old controller
+// slides out and the new one slides in. In this transition, the 
+// old controller slides out more slowly than the new one slides in.
+.slide-in-slide-out {
+  &.ng-enter, > .ng-enter {
+    -webkit-transition: 0.5s ease-in-out all;
+    -webkit-transform:translate3d(100%,0,0) ;
+    box-shadow: -1px 0px 10px rgba(0,0,0,0.6);
+  }
+  &.ng-enter-active, > .ng-enter-active {
+    -webkit-transform:translate3d(0,0,0) ;
+  }
+  &.ng-leave, > .ng-leave {
+    -webkit-transition: 0.5s ease-in-out all;
+    -webkit-transform:translate3d(0%,0,0);
+  }
+  &.ng-leave-active, > .ng-leave-active {
+    -webkit-transform:translate3d(-10%,0,0);
+    opacity: 0.8;
+  }
 }
-@-webkit-keyframes fadein { /* Safari and Chrome */
-    from { opacity:0; }
-    to { opacity:1; }
+
+.slide-in-slide-out-reverse {
+  &.ng-enter, > .ng-enter {
+    z-index: 1;
+    -webkit-transition: 0.5s ease-in-out all;
+    -webkit-transform:translate3d(-100%,0,0) ;
+    box-shadow: -1px 0px 10px rgba(0,0,0,0.6);
+  }
+  &.ng-enter-active, > .ng-enter-active {
+    -webkit-transform:translate3d(0,0,0) ;
+  }
+  &.ng-leave, > .ng-leave {
+    z-index: 0;
+    -webkit-transition: 0.5s ease-in-out all;
+    -webkit-transform:translate3d(0%,0,0);
+  }
+  &.ng-leave-active, > .ng-leave-active {
+    -webkit-transform:translate3d(10%,0,0);
+    opacity: 0.8;
+  }
+}
+
+/**
+ * An animation that fades out one content area and fades in another
+ */
+.fade-in-out {
+  &.ng-enter, > .ng-enter {
+    opacity: 0;
+    -webkit-transition: opacity 0.3s ease-in-out;
+  }
+  &.ng-enter-active, > .ng-enter-active {
+    opacity: 1;
+  }
+
+  &.ng-leave, > .ng-leave {
+    opacity: 1;
+    -webkit-transition: opacity 0.3s ease-in-out;
+  }
+
+  &.ng-leave-active, > .ng-leave-active {
+    opacity: 0;
+  }
+}
+
+.slide-left-fade-add {
+  -webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+.slide-left-fade-add-active {
+  //margin-left: -80px;
+  -webkit-transform: translate3d(-120px, 0, 0);
+  opacity: 0;
+}
+.slide-left-fade-remove {
+  -webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  -webkit-transform: translate3d(120px, 0, 0);
+  opacity: 0;
+}
+.slide-left-fade-remove-active {
+  //margin-left: -80px;
+  -webkit-transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
+
+@-webkit-keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@-webkit-keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .fade-in {
-  opacity: 0;
-  animation: fadein 0.5s;
-  -webkit-animation: fadein 0.5s;
+  -webkit-animation: fadeOut 0.3s;
+  animation: fadeOut 0.3s;
+  &.active {
+    -webkit-animation: fadeIn 0.3s;
+    animation: fadeIn 0.3s;
+  }
 }

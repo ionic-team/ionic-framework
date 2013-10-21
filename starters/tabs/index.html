@@ -1,0 +1,33 @@
+<html ng-app="ionic.example">
+  <head>
+    <meta charset="utf-8">
+    <title>Tabs</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="/dist/css/ionic.css">
+    <script src="/vendor/angular/angular-1.2.0rc2.min.js"></script>
+    <script src="/vendor/angular/angular-touch.js"></script>
+    <script src="/vendor/angular/angular-animate.js"></script>
+    <script src="/dist/js/ionic.js"></script>
+    <script src="/dist/js/ionic-angular.js"></script>
+  </head>
+  <body>
+    <tabs>
+      <tab title="Home" icon-on="icon-ios7-filing" icon-off="icon-ios7-filing-outline">
+        <h1>Home</h1>
+      </tab>
+      <tab title="Friends" icon-on="icon-ios7-clock" icon-off="icon-ios7-clock-outline">
+        <h1>Friends</h1>
+      </tab>
+
+      <tab title="Settings" icon-on="icon-ios7-gear" icon-off="icon-ios7-gear-outline">
+        <h1>Settings</h1>
+      </tab>
+    </tabs>
+  </body>
+
+  <script>
+    angular.module('ionic.example', ['ionic.ui.content', 'ionic.ui.tabs'])
+  </script>
+</html>

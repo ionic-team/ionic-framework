@@ -10,6 +10,7 @@
   bottom: 0;
   width: 100%;
   height: $tabs-height;
+  z-index: 5;
 
   @include box-orient(horizontal);
   display: -webkit-box;
@@ -44,6 +45,9 @@
   &.tabs-dark {
     @include tab-style($tabs-danger-bg, $tabs-danger-border-color, $white);
   }
+}
+.tabs-top {
+  top: $bar-height;
 }
 .tab-item {
   display: block;

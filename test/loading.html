@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Modals</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="../dist/css/ionic.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="loading" class="loading">
+      <h4>Loading</h4>
+    </div>
+
+    <button id="show" class="button">Show</button>
+    <script src="../dist/js/ionic.js"></script>
+    <script>
+      var loading = document.getElementById('loading');
+      var l = new ionic.views.Loading({el: loading});
+      var sb = document.getElementById('show');
+      sb.addEventListener('click', function(e) {
+        l.show();
+      });
+    </script>
+  </body>
+</html>

@@ -6,12 +6,18 @@
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../../dist/ionic.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.js"></script>
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="/vendor/angular/angular-1.2.0rc2.min.js"></script>
+    <script src="/vendor/angular/angular-touch.js"></script>
+    <script src="/vendor/angular/angular-animate.js"></script>
     <style>
-      .reveal-animation {
+.view {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+}
+      .slide-in-slide-out {
         /*
         -webkit-transform: translate3d(0%, 0, 0);
                 transform: translate3d(0%, 0, 0);
@@ -20,35 +26,28 @@
                transition:         transform 1s ease-in-out;
         */
       }
-      .reveal-animation.ng-enter {
-        -webkit-transition: .2s ease-in-out all;
-        -webkit-transform:translate3d(100%,0,0) ;
-      }
-      .reveal-animation.ng-enter-active {
-        -webkit-transform:translate3d(0,0,0) ;
-      }
-      .reveal-animation.ng-leave {
-        -webkit-transition: .2s ease-in-out all;
-        -webkit-transform:translate3d(0%,0,0);
-      }
-      .reveal-animation.ng-leave-active {
-        -webkit-transition: .2s ease-in-out all;
-        -webkit-transform:translate3d(-100%,0,0);
-      }
     </style>
 
   </head>
   <body>
 
-    <nav-ctrl>
+    <navs>
       <nav-bar></nav-bar>
 
-      <content has-header="true" ng-controller="AppCtrl" class="reveal-animation">
+      <content has-header="true" ng-controller="AppCtrl" class="slide-in-slide-out">
       </content>
-    </nav-ctrl>
+    </navs>
 
-    <script src="../../../../dist/ionic.js"></script>
-    <script src="../../../../dist/ionic-angular.js"></script>
+    <script id="page.html" type="text/ng-template">
+      <div title="Home" ng-controller="CatsCtrl" class="nav-content slide-in-slide-out">
+        <h1></h1>
+        <a href="#" class="button button-success" ng-click="goNext()">Next</a>
+        <list><list-item ng-repeat="item in items" on-select="goNext()">Test</list-item></list>
+      </div>
+    </script>
+
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
       var pageNumber = 0;
 
@@ -56,29 +55,27 @@
         var childScope = $scope.$new();
         childScope.isVisible = true;
 
+        var items = [];
+        for(var i = 0; i < 100; i++) {
+          items.push({});
+        }
+        childScope.items = items;
+
         pageNumber++;
 
-        var el = $compile('<div title="Home: ' + pageNumber + '" ng-controller="CatsCtrl" nav-content has-header="true" class="reveal-animation" ng-show="isVisible">' +
-          '<h1>' + pageNumber + '</h1>' +
-          '<a href="#" class="button button-success" ng-click="goNext()">Next</a>' +
-          '</div>')(childScope, cb);
       }
 
-      angular.module('navTest', ['ionic.ui.nav'])
+      angular.module('navTest', ['ionic.ui.nav', 'ionic.ui.content', 'ionic.ui.list', 'ngAnimate'])
 
       .controller('AppCtrl', function($scope, $compile, $element) {
-        pushIt($scope, $compile, $element, function(cloned, scope) {
-          $element.append(cloned);
-        })
-
+        $scope.navController.pushFromTemplate('page.html');
       })
 
       .controller('CatsCtrl', function($scope, $compile, $element) {
         console.log('Cats', $element);
         $scope.goNext = function() {
-          pushIt($scope, $compile, $element, function(cloned, scope) {
-            $element.parent().append(cloned);
-          })
+          $scope.isVisible = false;
+          $scope.navController.pushFromTemplate('page.html');
         };
       });
     </script>

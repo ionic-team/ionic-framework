@@ -6,7 +6,7 @@
 http://ionicframework.com/
 
 A utility for starting and administering Ionic based mobile app projects.
-Licensed under the Apache 2.0 license. See LICENSE For more.
+Licensed under the MITlicense. See LICENSE For more.
 
 Copyright 2013 Drifty (http://drifty.com/)
 */

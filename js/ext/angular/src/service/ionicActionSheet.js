@@ -1,4 +1,4 @@
-angular.module('ionic.service.actionSheet', ['ionic.service', 'ionic.ui.actionSheet'])
+angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ionic.ui.actionSheet'])
 
 .factory('ActionSheet', ['$rootScope', '$document', '$compile', 'TemplateLoader', function($rootScope, $document, $compile, TemplateLoader) {
   return {
