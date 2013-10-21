@@ -178,17 +178,12 @@
 
 .bar [class^="icon-"], 
 .bar [class*=" icon-"] {
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .bar .button-icon {
   border: $button-border-width solid transparent;
   background-color: transparent;
-
-  [class^="icon-"], 
-  [class*=" icon-"] {
-    font-size: 24px;
-  }
 }
 
 // Header at top

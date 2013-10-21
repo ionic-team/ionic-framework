@@ -145,7 +145,7 @@ a .list-item-content:after,
 button .list-item-content:after {
   position: absolute;
   top: 0;
-  right: $list-item-padding;
+  right: $list-item-padding - 4;
   display: flex;
   height: 100%;
   color: #ccc;

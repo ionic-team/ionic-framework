@@ -775,14 +775,11 @@ address {
 
 .bar [class^="icon-"],
 .bar [class*=" icon-"] {
-  font-size: 20px; }
+  font-size: 24px; }
 
 .bar .button-icon {
   border: 1px solid transparent;
   background-color: transparent; }
-  .bar .button-icon [class^="icon-"],
-  .bar .button-icon [class*=" icon-"] {
-    font-size: 24px; }
 
 .bar-header {
   top: 0; }
@@ -1157,7 +1154,7 @@ a .list-item-content:after,
 button .list-item-content:after {
   position: absolute;
   top: 0;
-  right: 15px;
+  right: 11px;
   display: flex;
   height: 100%;
   color: #ccc;

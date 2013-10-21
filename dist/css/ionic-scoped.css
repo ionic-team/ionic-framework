@@ -1534,13 +1534,10 @@
       font-size: 17px; }
   .ionic .bar [class^="icon-"],
   .ionic .bar [class*=" icon-"] {
-    font-size: 20px; }
+    font-size: 24px; }
   .ionic .bar .button-icon {
     border: 1px solid transparent;
     background-color: transparent; }
-    .ionic .bar .button-icon [class^="icon-"],
-    .ionic .bar .button-icon [class*=" icon-"] {
-      font-size: 24px; }
   .ionic .bar-header {
     top: 0; }
   .ionic .bar-footer {
@@ -1865,7 +1862,7 @@
   .ionic button .list-item-content:after {
     position: absolute;
     top: 0;
-    right: 15px;
+    right: 11px;
     display: flex;
     height: 100%;
     color: #ccc;
