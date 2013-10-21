@@ -169,6 +169,9 @@
    * with dragging.
    */
   /**
+   * A list header.
+   */
+  /**
    * A list divider.
    */
   /**
@@ -1646,6 +1649,7 @@
     margin-bottom: 20px;
     padding-left: 0;
     position: relative;
+    overflow: hidden;
     color: #333333;
     background-color: white;
     border-color: #dddddd; }
@@ -1671,13 +1675,11 @@
     position: relative;
     display: block;
     margin-bottom: -1px;
+    margin-left: -1px;
+    margin-right: -1px;
     border-top: 1px solid #dddddd;
     z-index: 2;
-    background-color: white;
-    /*  // Align icons to the right
-      > i:last-child {
-        float: right;
-      }*/ }
+    background-color: white; }
     .ionic .list-item:last-child {
       margin-bottom: 0; }
     .ionic .list-item > .badge {
@@ -1905,17 +1907,25 @@
       height: 100%;
       border-radius: 0;
       border: none; }
+  .ionic .list-header {
+    padding: 5px 15px;
+    margin-top: 20px;
+    background-color: transparent;
+    color: #222222;
+    font-weight: bold; }
   .ionic .list-divider {
     padding: 5px 15px;
     background-color: whitesmoke;
     color: #222222;
     font-weight: bold; }
-  .ionic .list-item-heading {
-    margin-top: 0;
-    margin-bottom: 5px; }
-  .ionic .list-item-text {
-    margin-bottom: 0;
-    line-height: 1.3; }
+  .ionic .list-divider,
+  .ionic .list-header {
+    margin-left: -1px;
+    margin-right: -1px; }
+  .ionic .padding .list-divider,
+  .ionic .padding .list-heading {
+    border-left: 1px solid #dddddd;
+    border-right: 1px solid #dddddd; }
   .ionic .list-refresher {
     background-color: red;
     height: 0;
@@ -2059,26 +2069,8 @@
   .ionic input[type="url"],
   .ionic input[type="search"],
   .ionic input[type="tel"],
-  .ionic input[type="color"],
-  .ionic .uneditable-input {
+  .ionic input[type="color"] {
     border: 0; }
-    .ionic textarea:focus,
-    .ionic input[type="text"]:focus,
-    .ionic input[type="password"]:focus,
-    .ionic input[type="datetime"]:focus,
-    .ionic input[type="datetime-local"]:focus,
-    .ionic input[type="date"]:focus,
-    .ionic input[type="month"]:focus,
-    .ionic input[type="time"]:focus,
-    .ionic input[type="week"]:focus,
-    .ionic input[type="number"]:focus,
-    .ionic input[type="email"]:focus,
-    .ionic input[type="url"]:focus,
-    .ionic input[type="search"]:focus,
-    .ionic input[type="tel"]:focus,
-    .ionic input[type="color"]:focus,
-    .ionic .uneditable-input:focus {
-      outline: 0; }
   .ionic input[type="radio"],
   .ionic input[type="checkbox"] {
     margin: 4px 0 0;
@@ -2101,13 +2093,6 @@
   .ionic select[multiple],
   .ionic select[size] {
     height: auto; }
-  .ionic select:focus,
-  .ionic input[type="file"]:focus,
-  .ionic input[type="radio"]:focus,
-  .ionic input[type="checkbox"]:focus {
-    outline: thin dotted #333333;
-    outline: 5px auto -webkit-focus-ring-color;
-    outline-offset: -2px; }
   .ionic input:-moz-placeholder,
   .ionic textarea:-moz-placeholder {
     color: #999999; }

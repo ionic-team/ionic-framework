@@ -4,6 +4,7 @@
   padding-left: 0; // reset padding because ul and ol
 
   position: relative;
+  overflow: hidden;
 
   @include list-style($list-default-background, $list-default-border, $gray-dark);
 
@@ -20,7 +21,10 @@
   display: block;
   // Place the border on the list items and negative margin up for better styling
   margin-bottom: $list-item-border-width * -1;
+  margin-left: $list-item-border-width * -1;
+  margin-right: $list-item-border-width * -1;
   border-top: $list-item-border-width solid $list-item-border-color;
+
 
   // Make sure the borders and stuff don't get hidden
   // by children
@@ -28,24 +32,14 @@
 
   background-color: $list-default-background;
 
-  // Round the first and last items
-  &:first-child {
-    //@include border-top-radius($list-group-border-radius);
-  }
   &:last-child {
     margin-bottom: 0;
-    //@include border-bottom-radius($list-group-border-radius);
   }
 
   // Align badges within list items
   > .badge {
     float: right;
   }
-
-/*  // Align icons to the right
-  > i:last-child {
-    float: right;
-  }*/
 
   > .badge + .badge {
     margin-right: 5px;
@@ -277,24 +271,41 @@ a.list-item {
   }
 }
 
+
+/**
+ * A list header.
+ */
+.list-header {
+  padding: $list-header-padding;
+  margin-top: $list-header-margin-top;
+  background-color: $list-header-bg;
+  color: $list-header-color;
+  font-weight: bold;
+}
+
+
 /**
  * A list divider.
  */
 .list-divider {
-  padding: 5px 15px;
+  padding: $list-divider-padding;
   background-color: $list-divider-bg;
   color: $list-divider-color;
   font-weight: bold;
 }
 
-
-.list-item-heading {
-  margin-top: 0;
-  margin-bottom: 5px;
+// inset so they layout the same as list items
+.list-divider,
+.list-header {
+  margin-left: $list-item-border-width * -1;
+  margin-right: $list-item-border-width * -1;
 }
-.list-item-text {
-  margin-bottom: 0;
-  line-height: 1.3;
+
+// make sure these have left/right borders when inset
+.padding .list-divider,
+.padding .list-heading {
+  border-left: $list-item-border-width solid $list-item-border-color;
+  border-right: $list-item-border-width solid $list-item-border-color;
 }
 
 /**

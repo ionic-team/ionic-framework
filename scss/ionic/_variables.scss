@@ -337,8 +337,15 @@ $tabs-dark-border-color:       $button-dark-border;
 // Lists
 // -------------------------------
 
+$list-header-bg:                  transparent;
+$list-header-color:               #222;
+$list-header-padding:             5px 15px;
+$list-header-margin-top:          20px !default;
+
 $list-divider-bg:                 #f5f5f5;
 $list-divider-color:              #222;
+$list-divider-padding:            5px 15px;
+
 $list-item-border-width:          1px !default;
 $list-item-border-color:          #ddd;
 $list-item-padding:               15px !default;

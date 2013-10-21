@@ -934,6 +934,7 @@ address {
   margin-bottom: 20px;
   padding-left: 0;
   position: relative;
+  overflow: hidden;
   color: #333333;
   background-color: white;
   border-color: #dddddd; }
@@ -963,13 +964,11 @@ address {
   position: relative;
   display: block;
   margin-bottom: -1px;
+  margin-left: -1px;
+  margin-right: -1px;
   border-top: 1px solid #dddddd;
   z-index: 2;
-  background-color: white;
-  /*  // Align icons to the right
-    > i:last-child {
-      float: right;
-    }*/ }
+  background-color: white; }
   .list-item:last-child {
     margin-bottom: 0; }
   .list-item > .badge {
@@ -1232,6 +1231,16 @@ a.list-item {
     border: none; }
 
 /**
+ * A list header.
+ */
+.list-header {
+  padding: 5px 15px;
+  margin-top: 20px;
+  background-color: transparent;
+  color: #222222;
+  font-weight: bold; }
+
+/**
  * A list divider.
  */
 .list-divider {
@@ -1240,13 +1249,15 @@ a.list-item {
   color: #222222;
   font-weight: bold; }
 
-.list-item-heading {
-  margin-top: 0;
-  margin-bottom: 5px; }
+.list-divider,
+.list-header {
+  margin-left: -1px;
+  margin-right: -1px; }
 
-.list-item-text {
-  margin-bottom: 0;
-  line-height: 1.3; }
+.padding .list-divider,
+.padding .list-heading {
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd; }
 
 /**
  * List refreser elements
@@ -1410,26 +1421,8 @@ input[type="email"],
 input[type="url"],
 input[type="search"],
 input[type="tel"],
-input[type="color"],
-.uneditable-input {
+input[type="color"] {
   border: 0; }
-  textarea:focus,
-  input[type="text"]:focus,
-  input[type="password"]:focus,
-  input[type="datetime"]:focus,
-  input[type="datetime-local"]:focus,
-  input[type="date"]:focus,
-  input[type="month"]:focus,
-  input[type="time"]:focus,
-  input[type="week"]:focus,
-  input[type="number"]:focus,
-  input[type="email"]:focus,
-  input[type="url"]:focus,
-  input[type="search"]:focus,
-  input[type="tel"]:focus,
-  input[type="color"]:focus,
-  .uneditable-input:focus {
-    outline: 0; }
 
 input[type="radio"],
 input[type="checkbox"] {
@@ -1457,14 +1450,6 @@ select {
 select[multiple],
 select[size] {
   height: auto; }
-
-select:focus,
-input[type="file"]:focus,
-input[type="radio"]:focus,
-input[type="checkbox"]:focus {
-  outline: thin dotted #333333;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px; }
 
 input:-moz-placeholder,
 textarea:-moz-placeholder {

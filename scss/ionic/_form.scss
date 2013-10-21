@@ -183,14 +183,8 @@ input[type="email"],
 input[type="url"],
 input[type="search"],
 input[type="tel"],
-input[type="color"],
-.uneditable-input {
+input[type="color"] {
   border: 0;
-
-  // Focus state
-  &:focus {
-    outline: 0;
-  }
 }
 
 
@@ -229,14 +223,6 @@ select {
 select[multiple],
 select[size] {
   height: auto;
-}
-
-// Focus for select, file, radio, and checkbox
-select:focus,
-input[type="file"]:focus,
-input[type="radio"]:focus,
-input[type="checkbox"]:focus {
-  @include tab-focus();
 }
 
 
