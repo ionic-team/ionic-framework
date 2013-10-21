@@ -18,12 +18,11 @@
         var opts = { 
           el: el,
           checkbox: el.querySelector("input[type='checkbox']"),
-          track: el.querySelector(".track"),
           handle: el.querySelector(".handle")
         };
 
         // validate its a well formed toggle with the required pieces
-        if(!opts.checkbox || !opts.track || !opts.handle) return;
+        if(!opts.checkbox || !opts.handle) return;
 
         // initialize an instance of a Toggle
         el.component = new ionic.views.Toggle(opts);

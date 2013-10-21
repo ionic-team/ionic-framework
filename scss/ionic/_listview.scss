@@ -4,6 +4,7 @@
   padding-left: 0; // reset padding because ul and ol
 
   position: relative;
+  overflow: hidden;
 
   @include list-style($list-default-background, $list-default-border, $gray-dark);
 
@@ -19,55 +20,40 @@
   position: relative;
   display: block;
   // Place the border on the list items and negative margin up for better styling
-  margin-bottom: -1px;
+  margin-bottom: $list-item-border-width * -1;
+  margin-left: $list-item-border-width * -1;
+  margin-right: $list-item-border-width * -1;
+  border-top: $list-item-border-width solid $list-item-border-color;
+
 
   // Make sure the borders and stuff don't get hidden
   // by children
   z-index: 2;
 
   background-color: $list-default-background;
-  border: $list-item-border;
 
-  // Round the first and last items
-  &:first-child {
-    //@include border-top-radius($list-group-border-radius);
-  }
   &:last-child {
     margin-bottom: 0;
-    //@include border-bottom-radius($list-group-border-radius);
   }
 
   // Align badges within list items
-  > .badge {
+  .badge {
     float: right;
   }
 
-  // Align icons to the right
-  > i:last-child {
-    float: right;
-  }
-
-  > .badge + .badge {
+  .badge + .badge {
     margin-right: 5px;
   }
-
-  // [converter] extracted a& to a.list-item
 
   // Active class on item itself, not parent
   &.active,
   &.active:hover,
   &.active:focus {
     z-index: 2; 
-    //color: $list-group-active-color;
-    //background-color: $list-group-active-bg;
-    //border-color: $list-group-active-border;
 
     // Force color to inherit for custom content
     .list-item-heading {
       color: inherit;
-    }
-    .list-item-text {
-      //color: lighten($list-group-active-bg, 40%);
     }
   }
 
@@ -119,27 +105,71 @@ a.list-item {
  */
 .list-item-content {
   position: relative;
-
   background-color: #fff;
+  border: $list-item-border-width solid $list-item-border-color;
 
   z-index: 2;
-
-  padding: 15px 15px;
+  margin-top: $list-item-border-width * -1;
+  padding: $list-item-padding;
 
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
+}
 
-  // Align icons to the right
-  > i:last-child {
-    float: right;
+.list-item-content i {
+  position: absolute;
+  top: 0;
+  display: flex;
+  height: 100%;
+  font-size: $list-icon-font-size;
+  align-items: center;
+}
+
+.list-icon-left .list-item-content {
+  padding-left: ($list-item-padding * 3);
+
+  i {
+    left: $list-item-padding / 2;
   }
+}
 
-  // Make every last form element go to the right of the item
+.list-icon-right .list-item-content {
+  padding-right: ($list-item-padding * 3);
 
-  > .toggle:last-child, input:last-child, > button:last-child {
-    float: right;
+  i {
+    right: $list-item-padding / 2;
   }
-  > .toggle:last-child {
-    margin-top: -5px;
+}
+
+.list-icon-left.list-icon-right .list-item-content i:last-child {
+  left: auto;
+}
+
+.list-thumbnail h2 {
+  overflow: hidden;
+  margin: 0 0 8px 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+}
+
+.list-thumbnail p {
+  overflow: hidden;
+  margin-bottom: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-thumbnail .list-item-content {
+  padding-left: $list-thumbnail-width + $list-item-padding;
+  min-height: $list-thumbnail-width;
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: $list-thumbnail-width;
+    max-height: $list-thumbnail-width;
+    width: 100%;
   }
 }
 
@@ -235,23 +265,39 @@ a.list-item {
 
 
 /**
+ * A list header.
+ */
+.list-header {
+  padding: $list-header-padding;
+  margin-top: $list-header-margin-top;
+  background-color: $list-header-bg;
+  color: $list-header-color;
+  font-weight: bold;
+}
+
+
+/**
  * A list divider.
  */
 .list-divider {
-  padding: 5px 15px;
+  padding: $list-divider-padding;
   background-color: $list-divider-bg;
   color: $list-divider-color;
   font-weight: bold;
 }
 
-
-.list-item-heading {
-  margin-top: 0;
-  margin-bottom: 5px;
+// inset so they layout the same as list items
+.list-divider,
+.list-header {
+  margin-left: $list-item-border-width * -1;
+  margin-right: $list-item-border-width * -1;
 }
-.list-item-text {
-  margin-bottom: 0;
-  line-height: 1.3;
+
+// make sure these have left/right borders when inset
+.padding .list-divider,
+.padding .list-heading {
+  border-left: $list-item-border-width solid $list-item-border-color;
+  border-right: $list-item-border-width solid $list-item-border-color;
 }
 
 /**

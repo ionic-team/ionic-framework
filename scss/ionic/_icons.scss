@@ -1,0 +1,52 @@
+
+.fill-icon {
+  color: white !important;
+  &:before {
+    background: black;
+    position: relative;
+    border-radius: $icon-fill-border-radius;
+    padding: 1px;
+  }
+
+  &.brand-default:before {
+    background: $brand-default;
+  }
+  &.brand-secondary:before {
+    background: $brand-secondary;
+  }
+  &.brand-primary:before {
+    background: $brand-primary;
+  }
+  &.brand-info:before {
+    background: $brand-info;
+  }
+  &.brand-success:before {
+    background: $brand-success;
+  }
+  &.brand-warning:before {
+    background: $brand-warning;
+  }
+  &.brand-danger:before {
+    background: $brand-danger;
+  }
+  &.brand-dark:before {
+    background: $brand-dark;
+  }
+
+  &.gray-darker:before {
+    background: $gray-darker;
+  }
+  &.gray-dark:before {
+    background: $gray-dark;
+  }
+  &.gray:before {
+    background: $gray;
+  }
+  &.gray-light:before {
+    background: $gray-light;
+  }
+  &.gray-lighter:before {
+    background: $gray-lighter;
+  }
+
+}

@@ -62,7 +62,6 @@ $base-font-family:          $sans-font-family;
 $base-background-color:     $white;
 $base-color:                #000;
 $content-padding:           10px !default;
-$inset-margin:              10px;
 $border-radius-base:        4px !default;
 $border-radius-large:       6px !default;
 $border-radius-small:       3px !default;
@@ -177,7 +176,7 @@ $checkbox-off-border-color:       #049cdb;
 $checkbox-on-bg-color:            #049cdb;
 $checkbox-on-border-color:        #049cdb;
 
-$checkbox-check-width:            1px;
+$checkbox-check-width:            3px;
 $checkbox-check-color:            #fff;
 
 
@@ -338,33 +337,52 @@ $tabs-dark-border-color:       $button-dark-border;
 // Lists
 // -------------------------------
 
-$list-divider-bg:       #f5f5f5;
-$list-divider-color:    #222;
-$list-item-border:      1px solid #ddd;
+$list-header-bg:                  transparent;
+$list-header-color:               #222;
+$list-header-padding:             5px 15px;
+$list-header-margin-top:          20px !default;
 
-$list-default-background: $brand-default;
-$list-default-border: #ddd;
+$list-divider-bg:                 #f5f5f5;
+$list-divider-color:              #222;
+$list-divider-padding:            5px 15px;
 
-$list-secondary-background: $brand-secondary;
-$list-secondary-border: #ddd;
+$list-item-border-width:          1px !default;
+$list-item-border-color:          #ddd;
+$list-item-padding:               15px !default;
 
-$list-success-background: $brand-success;
-$list-success-border: $brand-success;
+$list-default-background:         $brand-default;
+$list-default-border:             #ddd;
 
-$list-primary-background: $brand-primary;
-$list-primary-border: $brand-primary;
+$list-secondary-background:       $brand-secondary;
+$list-secondary-border:           #ddd;
 
-$list-info-background: $brand-info;
-$list-info-border: $brand-info;
+$list-success-background:         $brand-success;
+$list-success-border:             $brand-success;
 
-$list-warning-background: $brand-warning;
-$list-warning-border: $brand-warning;
+$list-primary-background:         $brand-primary;
+$list-primary-border:             $brand-primary;
 
-$list-danger-background: $brand-danger;
-$list-danger-border: $brand-danger;
+$list-info-background:            $brand-info;
+$list-info-border:                $brand-info;
 
-$list-dark-background: $brand-dark;
-$list-dark-border: $brand-dark;
+$list-warning-background:         $brand-warning;
+$list-warning-border:             $brand-warning;
+
+$list-danger-background:          $brand-danger;
+$list-danger-border:              $brand-danger;
+
+$list-dark-background:            $brand-dark;
+$list-dark-border:                $brand-dark;
+
+$list-icon-font-size:             28px !default;
+
+$list-thumbnail-width:            80px !default;
+
+
+// Icons
+// -------------------------------
+
+$icon-fill-border-radius:     6px !default;
 
 
 // Menus

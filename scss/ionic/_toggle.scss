@@ -1,35 +1,46 @@
 
+// Toggle
+// -------------------------------
+
 /* the overall container of the toggle */
 .toggle {
+  position: relative;
   display: inline-block;
 }
 
-/* hide the actual checkbox */
 .toggle input {
-  display: none;
-}
-
-/* the background of the toggle's track area */
-/* also the track appearance when the toggle is "off" */
-.toggle .track {
-  display: inline-block;
-  box-sizing: border-box;
+  /* set the actual checkbox input to have a width/height */
+  /* but hide its appearance, then use :after to style it */
   width: $toggle-width;
   height: $toggle-height;
-  border: solid $toggle-border-width $toggle-off-border-color;
-  border-radius: $toggle-border-radius;
-  background-color: $toggle-off-bg-color;
-  cursor: pointer;
+  border: 0;
+  background: transparent;
+  -webkit-appearance: none;
 
-  transition-property: background-color, border;
-  transition-duration: $toggle-transition-duration;   
-  transition-timing-function: ease-in-out;
+  /* the track appearance when the toggle is "off" */
+  &:after {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border: solid $toggle-border-width $toggle-off-border-color;
+    border-radius: $toggle-border-radius;
+    background-color: $toggle-off-bg-color;
+    content: ' ';
+    cursor: pointer;
+
+    transition-timing-function: ease-in-out;
+    transition-duration: $toggle-transition-duration;
+    transition-property: background-color, border;
+  }
 }
 
 /* the handle (circle) thats inside the toggle's track area */
 /* also the appearance when the handle is "off" */
 .toggle .handle {
   position: absolute;
+  top: ($toggle-height - $toggle-handle-height) + $toggle-border-width;
+  left: $toggle-border-width;
   display: block;
   width: $toggle-handle-width;
   height: $toggle-handle-height;
@@ -37,28 +48,38 @@
   background-color: $toggle-handle-off-bg-color;
   transition: -webkit-transform $toggle-transition-duration ease-in-out;
 
-  /* used to create a larger hit area to slide the handle */
+  /* used to create a larger (but hidden) hit area to slide the handle */
   &:before {
     position: absolute;
-    content: " ";
+    top: -2px;
+    left: ( ($toggle-handle-width / 2) * -1) - 2;
     display: table;
-    left: ( ($toggle-handle-width / 2) * -1);
-    top: ( ($toggle-handle-height / 2) * -1) + 3;
-    padding: ($toggle-handle-height / 2) ($toggle-handle-width + 2);
+    padding: ($toggle-handle-height / 2) + 3 ($toggle-handle-width + 2);
+    content: " ";
   }
 }
 
-
-/* When the toggle is "on" */
-.toggle :checked + .track {
-
-  /* the track when the toggle is "on" */
+/* The track when the toggle is "on" */
+.toggle input:checked:after {
   border-color: $toggle-on-border-color;
   background-color: $toggle-on-bg-color;
+}
 
   /* the handle when the toggle is "on" */
-  .handle {
-    background-color: $toggle-handle-on-bg-color;
-    -webkit-transform: translate3d( $toggle-width - $toggle-handle-width - ($toggle-border-width * 2) ,0,0);
-  }
+.toggle input:checked + .handle {
+  background-color: $toggle-handle-on-bg-color;
+  -webkit-transform: translate3d( $toggle-width - $toggle-handle-width - ($toggle-border-width * 2) ,0,0);
+}
+
+/* make sure list item content have enough padding on right to fit the toggle */
+.toggle-item .list-item-content {
+  padding-right: ($list-item-padding * 3) + $toggle-width;
+}
+
+/* position the toggle to the right within a list item */
+.toggle-item .toggle {
+  position: absolute;
+  top: $list-item-padding / 3;
+  right: $list-item-padding;
+  z-index: 3;
 }

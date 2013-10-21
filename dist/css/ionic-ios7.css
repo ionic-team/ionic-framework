@@ -198,6 +198,7 @@ legend {
  * 1. Correct font family not being inherited in all browsers.
  * 2. Correct font size not being inherited in all browsers.
  * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
+ * 4. Remove any default :focus styles
  */
 button,
 input,
@@ -208,7 +209,13 @@ textarea {
   font-size: 100%;
   /* 2 */
   font-family: inherit;
-  /* 1 */ }
+  /* 1 */
+  outline-offset: 0;
+  /* 4 */
+  outline-style: none;
+  /* 4 */
+  outline-width: 0;
+  /* 4 */ }
 
 /**
  * Address Firefox 4+ setting `line-height` on `input` using `!important` in
@@ -938,6 +945,7 @@ address {
   margin-bottom: 20px;
   padding-left: 0;
   position: relative;
+  overflow: hidden;
   color: #333333;
   background-color: white;
   border-color: #dddddd; }
@@ -967,16 +975,16 @@ address {
   position: relative;
   display: block;
   margin-bottom: -1px;
+  margin-left: -1px;
+  margin-right: -1px;
+  border-top: 1px solid #dddddd;
   z-index: 2;
-  background-color: white;
-  border: 1px solid #dddddd; }
+  background-color: white; }
   .list-item:last-child {
     margin-bottom: 0; }
-  .list-item > .badge {
+  .list-item .badge {
     float: right; }
-  .list-item > i:last-child {
-    float: right; }
-  .list-item > .badge + .badge {
+  .list-item .badge + .badge {
     margin-right: 5px; }
   .list-item.active, .list-item.active:hover, .list-item.active:focus {
     z-index: 2; }
@@ -1112,15 +1120,56 @@ a.list-item {
 .list-item-content {
   position: relative;
   background-color: #fff;
+  border: 1px solid #dddddd;
   z-index: 2;
-  padding: 15px 15px;
+  margin-top: -1px;
+  padding: 15px;
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
-  .list-item-content > i:last-child {
-    float: right; }
-  .list-item-content > .toggle:last-child, .list-item-content input:last-child, .list-item-content > button:last-child {
-    float: right; }
-  .list-item-content > .toggle:last-child {
-    margin-top: -5px; }
+
+.list-item-content i {
+  position: absolute;
+  top: 0;
+  display: flex;
+  height: 100%;
+  font-size: 28px;
+  align-items: center; }
+
+.list-icon-left .list-item-content {
+  padding-left: 45px; }
+  .list-icon-left .list-item-content i {
+    left: 7.5px; }
+
+.list-icon-right .list-item-content {
+  padding-right: 45px; }
+  .list-icon-right .list-item-content i {
+    right: 7.5px; }
+
+.list-icon-left.list-icon-right .list-item-content i:last-child {
+  left: auto; }
+
+.list-thumbnail h2 {
+  overflow: hidden;
+  margin: 0 0 8px 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px; }
+
+.list-thumbnail p {
+  overflow: hidden;
+  margin-bottom: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+
+.list-thumbnail .list-item-content {
+  padding-left: 95px;
+  min-height: 80px; }
+  .list-thumbnail .list-item-content img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 80px;
+    max-height: 80px;
+    width: 100%; }
 
 .list-item-sliding {
   -webkit-transition: -webkit-transform 0.1s ease-in-out; }
@@ -1193,6 +1242,16 @@ a.list-item {
     border: none; }
 
 /**
+ * A list header.
+ */
+.list-header {
+  padding: 5px 15px;
+  margin-top: 20px;
+  background-color: transparent;
+  color: #222222;
+  font-weight: bold; }
+
+/**
  * A list divider.
  */
 .list-divider {
@@ -1201,13 +1260,15 @@ a.list-item {
   color: #222222;
   font-weight: bold; }
 
-.list-item-heading {
-  margin-top: 0;
-  margin-bottom: 5px; }
+.list-divider,
+.list-header {
+  margin-left: -1px;
+  margin-right: -1px; }
 
-.list-item-text {
-  margin-bottom: 0;
-  line-height: 1.3; }
+.padding .list-divider,
+.padding .list-heading {
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd; }
 
 /**
  * List refreser elements
@@ -1377,26 +1438,8 @@ input[type="email"],
 input[type="url"],
 input[type="search"],
 input[type="tel"],
-input[type="color"],
-.uneditable-input {
+input[type="color"] {
   border: 0; }
-  textarea:focus,
-  input[type="text"]:focus,
-  input[type="password"]:focus,
-  input[type="datetime"]:focus,
-  input[type="datetime-local"]:focus,
-  input[type="date"]:focus,
-  input[type="month"]:focus,
-  input[type="time"]:focus,
-  input[type="week"]:focus,
-  input[type="number"]:focus,
-  input[type="email"]:focus,
-  input[type="url"]:focus,
-  input[type="search"]:focus,
-  input[type="tel"]:focus,
-  input[type="color"]:focus,
-  .uneditable-input:focus {
-    outline: 0; }
 
 input[type="radio"],
 input[type="checkbox"] {
@@ -1425,14 +1468,6 @@ select[multiple],
 select[size] {
   height: auto; }
 
-select:focus,
-input[type="file"]:focus,
-input[type="radio"]:focus,
-input[type="checkbox"]:focus {
-  outline: thin dotted #333333;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px; }
-
 input:-moz-placeholder,
 textarea:-moz-placeholder {
   color: #999999; }
@@ -1442,24 +1477,6 @@ textarea:-ms-input-placeholder {
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
   color: #999999; }
-
-input[type="range"] {
-  display: block;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: auto;
-  height: 4px;
-  outline: none;
-  border-radius: 4px;
-  background-color: #cccccc;
-  -webkit-appearance: none !important; }
-  input[type="range"]::-webkit-slider-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    background-color: white;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 0 5px 6px rgba(0, 0, 0, 0.25);
-    -webkit-appearance: none !important; }
 
 input[disabled],
 select[disabled],
@@ -1533,26 +1550,58 @@ input[type="checkbox"][readonly] {
     -webkit-transform: none;
     transition-delay: 0.05s, 0s; }
 
-/* hide a radio button's icon by default */
-.radio-item [class^="icon-"],
-.radio-item [class*=" icon-"] {
-  display: none; }
+.radio-buttton-list .list-item-content {
+  /* give some room to the right for the checkmark icon */
+  padding-right: 60px; }
 
-.radio-list label.list-item {
-  cursor: pointer; }
+.radio-buttton-list .radio-button-icon {
+  /* checkmark icon will be hidden by default */
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  visibility: hidden;
+  padding: 13px;
+  height: 100%;
+  font-size: 24px; }
 
-.radio-list input[type="radio"] {
+.radio-buttton-list input[type="radio"] {
   /* hide any radio button inputs elements (the ugly circles) */
-  display: none;
-  /* when this radio-item is checked */ }
-  .radio-list input[type="radio"]:checked + .radio-item {
-    /* show the radio-item icon when checked */ }
-    .radio-list input[type="radio"]:checked + .radio-item [class^="icon-"],
-    .radio-list input[type="radio"]:checked + .radio-item [class*=" icon-"] {
-      position: absolute;
-      top: 16px;
-      right: 10px;
-      display: inline; }
+  display: none; }
+  .radio-buttton-list input[type="radio"]:checked ~ .list-item-content {
+    /* style the list item content when its checked */
+    background: #f7f7f7; }
+  .radio-buttton-list input[type="radio"]:checked ~ .radio-button-icon {
+    /* show the checkmark icon when its checked */
+    visibility: visible; }
+
+input[type="range"] {
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: auto;
+  height: 4px;
+  outline: none;
+  border-radius: 4px;
+  background-color: #cccccc;
+  -webkit-appearance: none !important; }
+  input[type="range"]::-webkit-slider-thumb {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 0 5px 6px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    -webkit-appearance: none !important; }
+  input[type="range"]::-webkit-slider-thumb:after {
+    /* create a larger (but hidden) hit area */
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    display: table;
+    padding: 20px;
+    content: ' '; }
 
 .button {
   position: relative;
@@ -2041,6 +2090,40 @@ a.button {
     -webkit-animation: fadeIn 0.3s;
     animation: fadeIn 0.3s; }
 
+.fill-icon {
+  color: white !important; }
+  .fill-icon:before {
+    background: black;
+    position: relative;
+    border-radius: 6px;
+    padding: 1px; }
+  .fill-icon.brand-default:before {
+    background: white; }
+  .fill-icon.brand-secondary:before {
+    background: whitesmoke; }
+  .fill-icon.brand-primary:before {
+    background: #4a87ee; }
+  .fill-icon.brand-info:before {
+    background: #43cee6; }
+  .fill-icon.brand-success:before {
+    background: #66cc33; }
+  .fill-icon.brand-warning:before {
+    background: #f0b840; }
+  .fill-icon.brand-danger:before {
+    background: #ef4e3a; }
+  .fill-icon.brand-dark:before {
+    background: #444444; }
+  .fill-icon.gray-darker:before {
+    background: #222222; }
+  .fill-icon.gray-dark:before {
+    background: #333333; }
+  .fill-icon.gray:before {
+    background: #555555; }
+  .fill-icon.gray-light:before {
+    background: #999999; }
+  .fill-icon.gray-lighter:before {
+    background: #eeeeee; }
+
 .hidden,
 .hide {
   display: none !important; }
@@ -2080,24 +2163,50 @@ a.button {
 .padding-horizontal {
   padding-left: 10px; }
 
-.margin {
-  margin: 10px; }
-
-.margin-top,
-.margin-vertical {
-  margin-top: 10px; }
-
-.margin-right,
-.margin-horizontal {
-  margin-right: 10px; }
-
-.margin-bottom,
-.margin-vertical {
-  margin-bottom: 10px; }
-
-.margin-left,
-.margin-horizontal {
-  margin-left: 10px; }
-
 .rounded {
   border-radius: 4px; }
+
+.brand-default {
+  color: white; }
+
+.brand-secondary {
+  color: whitesmoke; }
+
+.brand-primary {
+  color: #4a87ee; }
+
+.brand-info {
+  color: #43cee6; }
+
+.brand-success {
+  color: #66cc33; }
+
+.brand-warning {
+  color: #f0b840; }
+
+.brand-danger {
+  color: #ef4e3a; }
+
+.brand-dark {
+  color: #444444; }
+
+.black {
+  color: black; }
+
+.gray-darker {
+  color: #222222; }
+
+.gray-dark {
+  color: #333333; }
+
+.gray {
+  color: #555555; }
+
+.gray-light {
+  color: #999999; }
+
+.gray-lighter {
+  color: #eeeeee; }
+
+.white {
+  color: white; }

@@ -5,90 +5,308 @@
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="../dist/ionicons.css" rel="stylesheet">
-    <link href="../dist/ionic.css" rel="stylesheet">
+    <link href="../dist/css/ionic.css" rel="stylesheet">
   </head>
   <body>
 
-    <section>
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Customers</h1>
+    </header>
 
-      <header class="bar bar-header bar-dark">
-        <h1 class="title">Customers</h1>
-      </header>
+    <main class="content-wrapper">
+      <div class="content has-header">
 
-      <main class="content-wrapper">
-        <div class="content has-header">
-          <ul id="list" class="list">
-            <li href="#" class="list-item">
-              <div class="list-item-content">
-                Sasafras
-                <i class="icon-arrow-right"></i>
-              </div>
-              <div class="list-item-buttons">
-                <button class="button button-danger">Delete</button>
-              </div>
-            </li>
-            <a href="#" class="list-item">
-              Candy
-              <i class="icon-arrow-right"></i>
-            </a>
-            <li class="list-divider">Other things</li>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-            <a href="#" class="list-item">
-              Cheese cords
-              <i class="icon-arrow-right"></i>
-            </a>
-          </ul>
-          <p><a class="button button-secondary" href="index.html">Homepage</a></p>
+        <div class="list">
+
+          <div class="list-header">
+            List Header
+          </div>
+
+          <a href="#" class="list-item">
+            <div class="list-item-content">
+              Madison, WI
+            </div>
+          </a>
+
+          <a href="#" class="list-item">
+            <div class="list-item-content slide-right">
+              Driving Directions
+            </div>
+          </a>
+
+          <div class="list-divider">
+            List Divider
+          </div>
+
+          <a href="#" class="list-item">
+            <div class="list-item-content slide-left">
+              Computers
+              <span class="badge">3</span>
+            </div>
+            <div class="list-item-buttons">
+             <button class="button">Button</button>
+           </div>
+          </a>
+
+          <a href="#" class="list-item">
+            <div class="list-item-content slide-left">
+              Monitors
+              <span class="badge">6</span>
+            </div>
+            <div class="list-item-buttons">
+             <button class="button">Button</button>
+           </div>
+          </a>
+
+          <a href="#" class="list-item">
+            <div class="list-item-content slide-left">
+              Multiple Badges
+              <span class="badge">62</span>
+              <span class="badge">4</span>
+              <span class="badge">143</span>
+            </div>
+            <div class="list-item-buttons">
+             <button class="button">Button</button>
+           </div>
+          </a>
+
         </div>
-      </main>
 
-    </section>
-    
-    <script src="../dist/ionic.js"></script>
+        <div class="list padding">
 
+          <a href="#" class="list-item list-icon-right">
+            <div class="list-item-content slide-right">
+              Madison, WI
+              <i class="icon-chevron-right"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-item list-icon-right">
+            <div class="list-item-content slide-left">
+              Driving Directions
+              <i class="icon-chevron-right"></i>
+            </div>
+            <div class="list-item-buttons">
+             <button class="button">Button</button>
+           </div>
+          </a>
+
+          <a href="#" class="list-item list-icon-right">
+            <div class="list-item-content">
+              Computers
+              <span class="badge">3</span>
+              <i class="icon-chevron-right"></i>
+            </div>
+          </a>
+
+        </div>
+
+        <div class="list padding-bottom">
+
+          <a href="#" class="list-item list-icon-left">
+            <div class="list-item-content slide-left">
+              <i class="icon-heart brand-danger"></i>
+              Madison, WI asdf
+            </div>
+            <div class="list-item-buttons">
+             <button class="button">Button</button>
+           </div>
+          </a>
+
+          <a href="#" class="list-item list-icon-left">
+            <div class="list-item-content slide-right">
+              <i class="icon-image brand-warning"></i>
+              Driving Directions
+            </div>
+          </a>
+
+          <a href="#" class="list-item list-icon-left">
+            <div class="list-item-content">
+              <i class="icon-ios7-cog gray"></i>
+              Settings
+            </div>
+          </a>
+
+        </div>
+
+        <div class="list padding-bottom">
+
+          <a href="#" class="list-item list-icon-left list-icon-right">
+            <div class="list-item-content">
+              <i class="icon-heart brand-danger fill-icon"></i>
+              Madison, WI
+              <i class="icon-chevron-right"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-item list-icon-left list-icon-right">
+            <div class="list-item-content slide-left">
+              <i class="icon-image brand-warning fill-icon"></i>
+              Driving Directions
+              <i class="icon-chevron-right"></i>
+            </div>
+            <div class="list-item-buttons">
+             <button class="button">Button</button>
+           </div>
+          </a>
+
+          <a href="#" class="list-item list-icon-left list-icon-right">
+            <div class="list-item-content slide-right">
+              <i class="icon-ios7-cog gray fill-icon"></i>
+              Settings
+              <i class="icon-chevron-right"></i>
+            </div>
+          </a>
+
+        </div>
+
+        <div class="list padding">
+
+          <a href="#" class="list-item list-icon-left list-icon-right">
+            <div class="list-item-content">
+              <i class="icon-heart brand-danger fill-icon"></i>
+              Madison, WI
+              <i class="icon-chevron-right"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-item list-icon-left list-icon-right">
+            <div class="list-item-content">
+              <i class="icon-image brand-warning fill-icon"></i>
+              Driving Directions
+              <i class="icon-chevron-right"></i>
+            </div>
+          </a>
+
+          <div class="list-divider">
+            List Divider
+          </div>
+
+          <a href="#" class="list-item list-icon-left list-icon-right">
+            <div class="list-item-content slide-left slide-right">
+              <i class="icon-ios7-cog gray fill-icon"></i>
+              This is a list item with really really really really really
+              really really really really long long long long long long
+              text text text texxxxxttt text testy text!!!
+              <i class="icon-chevron-right"></i>
+            </div>
+            <div class="list-item-buttons">
+             <button class="button">Button</button>
+           </div>
+          </a>
+
+        </div>
+
+        <div class="padding">
+          <button class="button button-secondary" id="btn-test-right">Test Slide Right</button>
+          <button class="button button-secondary" id="btn-test-left">Test Slide Left</button>
+        </div>
+
+        <hr>
+
+        <div class="list">
+
+          <a href="#" class="list-item list-thumbnail list-icon-right">
+            <div class="list-item-content">
+              <img src="//ecx.images-amazon.com/images/I/41D5vU4I1NL.jpg">
+              <h2>Pretty Hate Machine</h2>
+              <p>Nine Inch Nails</p>
+              <i class="icon-chevron-right"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-item list-thumbnail list-icon-right">
+            <div class="list-item-content">
+              <img src="//ecx.images-amazon.com/images/I/41H62046AHL.jpg">
+              <h2>Siamese Dream</h2>
+              <p>Smashing Pumpkins</p>
+              <i class="icon-chevron-right"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-item list-thumbnail list-icon-right">
+            <div class="list-item-content">
+              <img src="//ecx.images-amazon.com/images/I/51tr3o4kd9L.jpg">
+              <h2>Nevermind</h2>
+              <p>Nirvana</p>
+              <i class="icon-chevron-right"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-item list-thumbnail list-icon-right">
+            <div class="list-item-content">
+              <img src="//ecx.images-amazon.com/images/I/51j-SggaWSL.jpg">
+              <h2>License To Ill</h2>
+              <p>Bestie Boys</p>
+              <i class="icon-chevron-right"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-item list-thumbnail list-icon-right">
+            <div class="list-item-content">
+              <img src="//ecx.images-amazon.com/images/I/61e6mUocZNL.jpg">
+              <h2>Dookie</h2>
+              <p>Green Day</p>
+              <i class="icon-chevron-right"></i>
+            </div>
+          </a>
+
+        </div>
+
+        <div class="padding">
+          <a class="button button-secondary" href="index.html">Homepage</a>
+        </div>
+
+      </div>
+    </main>
+
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
-      var l = document.getElementById('list');
-      var list = new ionic.views.List({el: l});
+      $("#btn-test-left").click(function(){
+
+        if(this.isLeft) {
+          // back to normal
+          this.isLeft = false;
+          $(".slide-left").css({
+            left: "0"
+          })
+          $(".list").removeClass("item-opened");
+        } else {
+          // open
+          this.isLeft = true;
+          $(".slide-left").css({
+            left: "-72px"
+          })
+          $(".list").addClass("item-opened");
+        }
+
+
+        return false;
+      });
+
+      $("#btn-test-right").click(function(){
+
+        if(this.isRight) {
+          // back to normal
+          this.isRight = false;
+          $(".slide-right").css({
+            left: "0"
+          })
+          $(".list").removeClass("item-opened");
+        } else {
+          // open
+          this.isRight = true;
+          $(".slide-right").css({
+            left: "72px"
+          })
+          $(".list").addClass("item-opened");
+        }
+
+        return false;
+      });
     </script>
+
   </body>
 </html>

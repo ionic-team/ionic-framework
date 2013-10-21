@@ -5,36 +5,28 @@
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="../dist/ionicons.css" rel="stylesheet">
-    <link href="../dist/ionic.css" rel="stylesheet">
+    <link href="../dist/css/ionic.css" rel="stylesheet">
   </head>
   <body>
 
-    <section>
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Input: Range</h1>
+    </header>
 
-      <header class="bar bar-header bar-dark">
-        <h1 class="title">Input: Range</h1>
-      </header>
-
-      <main class="content has-header">
+    <div class="content-wrapper">
+      <main class="content has-header padding">
         
-        <ul class="list">
-          <li class="list-item">
-            Level of Awesomeness:
-            <input type="range" name="awesomeness" min="0" max="10" value="10">
-          </li>
-        </ul>
+        <p>
+          Level of Awesomeness:
+          <input type="range" name="awesomeness" min="0" max="10" value="10">
+        </p>
 
-        <div class="margin">
+        <div class="padding">
           <p><a class="button button-secondary" href="index.html">Homepage</a></p>
         </div>
 
       </main>
-
-    </section>
-    
-    <script src="../dist/ionic.js"></script>
-    <script src="../dist/ionic-simple.js"></script>
+    </div>
 
   </body>
 </html>

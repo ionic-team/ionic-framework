@@ -183,14 +183,8 @@ input[type="email"],
 input[type="url"],
 input[type="search"],
 input[type="tel"],
-input[type="color"],
-.uneditable-input {
+input[type="color"] {
   border: 0;
-
-  // Focus state
-  &:focus {
-    outline: 0;
-  }
 }
 
 
@@ -231,44 +225,12 @@ select[size] {
   height: auto;
 }
 
-// Focus for select, file, radio, and checkbox
-select:focus,
-input[type="file"]:focus,
-input[type="radio"]:focus,
-input[type="checkbox"]:focus {
-  @include tab-focus();
-}
-
 
 // Placeholder
 // -------------------------------
 input,
 textarea {
   @include placeholder();
-}
-
-
-// Range
-// -------------------------------
-input[type="range"] {
-  display: block;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: auto;
-  height: $range-track-height;
-  outline: none;
-  border-radius: $range-track-height;
-  background-color: $range-track-color;
-  -webkit-appearance: none !important;
-
-  &::-webkit-slider-thumb {
-    width: $range-slider-width;
-    height: $range-slider-height;
-    border-radius: $range-slider-border-radius;
-    background-color: $toggle-handle-off-bg-color;
-    box-shadow: 0 0 2px rgba(0,0,0,.5), 0 5px 6px rgba(0,0,0,0.25);
-    -webkit-appearance: none !important;
-  }
 }
 
 
