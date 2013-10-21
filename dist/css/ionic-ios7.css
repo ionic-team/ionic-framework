@@ -634,7 +634,8 @@ address {
   .bar .title + .buttons {
     position: absolute;
     top: 5px;
-    right: 5px; }
+    right: 5px;
+    bottom: 5px; }
 
 .bar-default .button {
   color: #333333;
@@ -774,11 +775,14 @@ address {
 
 .bar [class^="icon-"],
 .bar [class*=" icon-"] {
-  font-size: 24px; }
+  font-size: 20px; }
 
 .bar .button-icon {
   border: 1px solid transparent;
   background-color: transparent; }
+  .bar .button-icon [class^="icon-"],
+  .bar .button-icon [class*=" icon-"] {
+    font-size: 24px; }
 
 .bar-header {
   top: 0; }

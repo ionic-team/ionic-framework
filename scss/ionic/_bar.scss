@@ -117,6 +117,7 @@
     position: absolute;
     top: 5px;
     right: 5px;
+    bottom: 5px;
   }
 
 }
@@ -177,12 +178,17 @@
 
 .bar [class^="icon-"], 
 .bar [class*=" icon-"] {
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .bar .button-icon {
   border: $button-border-width solid transparent;
   background-color: transparent;
+
+  [class^="icon-"], 
+  [class*=" icon-"] {
+    font-size: 24px;
+  }
 }
 
 // Header at top

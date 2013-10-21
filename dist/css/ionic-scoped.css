@@ -1402,7 +1402,8 @@
     .ionic .bar .title + .buttons {
       position: absolute;
       top: 5px;
-      right: 5px; }
+      right: 5px;
+      bottom: 5px; }
   .ionic .bar-default .button {
     color: #333333;
     background-color: white;
@@ -1533,10 +1534,13 @@
       font-size: 17px; }
   .ionic .bar [class^="icon-"],
   .ionic .bar [class*=" icon-"] {
-    font-size: 24px; }
+    font-size: 20px; }
   .ionic .bar .button-icon {
     border: 1px solid transparent;
     background-color: transparent; }
+    .ionic .bar .button-icon [class^="icon-"],
+    .ionic .bar .button-icon [class*=" icon-"] {
+      font-size: 24px; }
   .ionic .bar-header {
     top: 0; }
   .ionic .bar-footer {
