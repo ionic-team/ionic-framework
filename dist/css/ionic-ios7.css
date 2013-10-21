@@ -1119,7 +1119,8 @@ a.list-item {
   border: 1px solid #dddddd;
   z-index: 2;
   margin-top: -1px;
-  padding: 15px;
+  padding: 15px 45px 15px 15px;
+  font-size: 16px;
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
 
 .list-item-content i {
@@ -1135,13 +1136,35 @@ a.list-item {
   .list-icon-left .list-item-content i {
     left: 7.5px; }
 
-.list-icon-right .list-item-content {
-  padding-right: 45px; }
-  .list-icon-right .list-item-content i {
-    right: 7.5px; }
+.list-icon-right .list-item-content i {
+  right: 7.5px; }
 
 .list-icon-left.list-icon-right .list-item-content i:last-child {
   left: auto; }
+
+a .list-item-content:after,
+button .list-item-content:after {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  display: flex;
+  height: 100%;
+  color: #ccc;
+  content: "\e0fc";
+  text-transform: none;
+  font-weight: normal;
+  font-style: normal;
+  font-variant: normal;
+  font-size: 16px;
+  font-family: 'ionicons';
+  line-height: 1;
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  align-items: center; }
+
+a.list-icon-right .list-item-content:after,
+button.list-icon-right .list-item-content:after {
+  display: none; }
 
 .list-thumbnail h2 {
   overflow: hidden;

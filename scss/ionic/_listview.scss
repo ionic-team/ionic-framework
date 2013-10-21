@@ -110,7 +110,8 @@ a.list-item {
 
   z-index: 2;
   margin-top: $list-item-border-width * -1;
-  padding: $list-item-padding;
+  padding: $list-item-padding ($list-item-padding * 3) $list-item-padding $list-item-padding;
+  font-size: $list-font-size;
 
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
 }
@@ -132,17 +133,43 @@ a.list-item {
   }
 }
 
-.list-icon-right .list-item-content {
-  padding-right: ($list-item-padding * 3);
-
-  i {
-    right: $list-item-padding / 2;
-  }
+.list-icon-right .list-item-content i {
+  right: $list-item-padding / 2;
 }
 
 .list-icon-left.list-icon-right .list-item-content i:last-child {
   left: auto;
 }
+
+a .list-item-content:after,
+button .list-item-content:after {
+  position: absolute;
+  top: 0;
+  right: $list-item-padding;
+  display: flex;
+  height: 100%;
+  color: #ccc;
+  content: "\e0fc"; // icon-chevron-right
+  text-transform: none;
+  font-weight: normal;
+  font-style: normal;
+  font-variant: normal;
+  font-size: 16px;
+  font-family: 'ionicons';
+  line-height: 1;
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  align-items: center;
+}
+
+// do not show the default right arrow when they want their own right side icon
+a.list-icon-right,
+button.list-icon-right {
+  .list-item-content:after {
+    display: none;
+  }
+}
+
 
 .list-thumbnail h2 {
   overflow: hidden;
