@@ -2087,9 +2087,9 @@ address {
   background-color: white; }
   .list-item:last-child {
     margin-bottom: 0; }
-  .list-item > .badge {
+  .list-item .badge {
     float: right; }
-  .list-item > .badge + .badge {
+  .list-item .badge + .badge {
     margin-right: 5px; }
   .list-item.active, .list-item.active:hover, .list-item.active:focus {
     z-index: 2; }

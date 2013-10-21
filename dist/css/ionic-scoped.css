@@ -1689,9 +1689,9 @@
     background-color: white; }
     .ionic .list-item:last-child {
       margin-bottom: 0; }
-    .ionic .list-item > .badge {
+    .ionic .list-item .badge {
       float: right; }
-    .ionic .list-item > .badge + .badge {
+    .ionic .list-item .badge + .badge {
       margin-right: 5px; }
     .ionic .list-item.active, .ionic .list-item.active:hover, .ionic .list-item.active:focus {
       z-index: 2; }

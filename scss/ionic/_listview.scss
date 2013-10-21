@@ -37,31 +37,23 @@
   }
 
   // Align badges within list items
-  > .badge {
+  .badge {
     float: right;
   }
 
-  > .badge + .badge {
+  .badge + .badge {
     margin-right: 5px;
   }
-
-  // [converter] extracted a& to a.list-item
 
   // Active class on item itself, not parent
   &.active,
   &.active:hover,
   &.active:focus {
     z-index: 2; 
-    //color: $list-group-active-color;
-    //background-color: $list-group-active-bg;
-    //border-color: $list-group-active-border;
 
     // Force color to inherit for custom content
     .list-item-heading {
       color: inherit;
-    }
-    .list-item-text {
-      //color: lighten($list-group-active-bg, 40%);
     }
   }
 
