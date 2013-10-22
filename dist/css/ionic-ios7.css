@@ -1428,8 +1428,7 @@ input[type="email"],
 input[type="url"],
 input[type="search"],
 input[type="tel"],
-input[type="color"],
-.uneditable-input {
+input[type="color"] {
   display: inline-block;
   height: 34px;
   color: #555555;
@@ -1438,8 +1437,7 @@ input[type="color"],
   line-height: 20px; }
 
 input,
-textarea,
-.uneditable-input {
+textarea {
   width: 100%; }
 
 textarea {
@@ -1461,11 +1459,6 @@ input[type="search"],
 input[type="tel"],
 input[type="color"] {
   border: 0; }
-
-input[type="radio"],
-input[type="checkbox"] {
-  margin: 4px 0 0;
-  line-height: normal; }
 
 input[type="file"],
 input[type="image"],

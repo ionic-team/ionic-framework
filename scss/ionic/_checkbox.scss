@@ -66,7 +66,10 @@
 /* position the checkbox to the left within a list item */
 .checkbox-item .checkbox {
   position: absolute;
-  top: 1px;
+  top: 0;
   left: $list-item-padding / 2;
   z-index: 3;
+  display: flex;
+  height: 100%;
+  align-items: center;
 }

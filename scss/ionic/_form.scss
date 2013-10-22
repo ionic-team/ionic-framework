@@ -147,8 +147,7 @@ input[type="email"],
 input[type="url"],
 input[type="search"],
 input[type="tel"],
-input[type="color"],
-.uneditable-input {
+input[type="color"] {
   display: inline-block;
   height: $line-height-computed + $font-size-base;
   color: $gray;
@@ -158,8 +157,7 @@ input[type="color"],
 }
 
 input,
-textarea,
-.uneditable-input {
+textarea {
   width: 100%;
 }
 
@@ -185,14 +183,6 @@ input[type="search"],
 input[type="tel"],
 input[type="color"] {
   border: 0;
-}
-
-
-// Position radios and checkboxes better
-input[type="radio"],
-input[type="checkbox"] {
-  margin: 4px 0 0;
-  line-height: normal;
 }
 
 // Reset width of input images, buttons, radios, checkboxes
