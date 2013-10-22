@@ -2333,7 +2333,7 @@ button.list-icon-right .list-item-content:after {
 .list-thumbnail .list-item-content {
   padding-left: 95px;
   min-height: 80px; }
-  .list-thumbnail .list-item-content .thumbnail {
+  .list-thumbnail .list-item-content img:first-child, .list-thumbnail .list-item-content .list-img {
     position: absolute;
     top: 0;
     left: 0;

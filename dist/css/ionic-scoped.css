@@ -1894,7 +1894,7 @@
   .ionic .list-thumbnail .list-item-content {
     padding-left: 95px;
     min-height: 80px; }
-    .ionic .list-thumbnail .list-item-content .thumbnail {
+    .ionic .list-thumbnail .list-item-content img:first-child, .ionic .list-thumbnail .list-item-content .list-img {
       position: absolute;
       top: 0;
       left: 0;
