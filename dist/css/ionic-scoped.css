@@ -2119,6 +2119,10 @@
   .ionic input[type="tel"],
   .ionic input[type="color"] {
     border: 0; }
+  .ionic input[type="radio"],
+  .ionic input[type="checkbox"] {
+    margin: 0;
+    line-height: normal; }
   .ionic input[type="file"],
   .ionic input[type="image"],
   .ionic input[type="submit"],
@@ -2177,7 +2181,7 @@
       display: table;
       width: 100%;
       height: 100%;
-      border: 1px solid #5f85ef;
+      border: 1px solid #4a87ee;
       border-radius: 50%;
       background: white;
       content: ' ';
@@ -2199,7 +2203,7 @@
     transform: rotate(-45deg); }
   .ionic .checkbox input:checked:before {
     border: 0;
-    background: #5f85ef; }
+    background: #4a87ee; }
   .ionic .checkbox input:checked:after {
     opacity: 1; }
   .ionic .checkbox-item .list-item-content {
@@ -2239,7 +2243,7 @@
       transition-property: background-color, border; }
   .ionic .toggle .handle {
     position: absolute;
-    top: 6px;
+    top: 2px;
     left: 2px;
     display: block;
     width: 28px;
@@ -2256,8 +2260,8 @@
       padding: 17px 30px;
       content: " "; }
   .ionic .toggle input:checked:after {
-    border-color: #5f85ef;
-    background-color: #5f85ef; }
+    border-color: #4a87ee;
+    background-color: #4a87ee; }
   .ionic .toggle input:checked + .handle {
     background-color: white;
     -webkit-transform: translate3d(22px, 0, 0); }

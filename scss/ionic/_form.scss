@@ -185,6 +185,13 @@ input[type="color"] {
   border: 0;
 }
 
+// Position radios and checkboxes better
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 0;
+  line-height: normal;
+}
+
 // Reset width of input images, buttons, radios, checkboxes
 input[type="file"],
 input[type="image"],

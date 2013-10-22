@@ -1460,6 +1460,11 @@ input[type="tel"],
 input[type="color"] {
   border: 0; }
 
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 0;
+  line-height: normal; }
+
 input[type="file"],
 input[type="image"],
 input[type="submit"],

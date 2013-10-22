@@ -2603,6 +2603,11 @@ input[type="tel"],
 input[type="color"] {
   border: 0; }
 
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 0;
+  line-height: normal; }
+
 input[type="file"],
 input[type="image"],
 input[type="submit"],
@@ -2669,7 +2674,7 @@ input[type="checkbox"][readonly] {
     display: table;
     width: 100%;
     height: 100%;
-    border: 1px solid #5f85ef;
+    border: 1px solid #4a87ee;
     border-radius: 50%;
     background: white;
     content: ' ';
@@ -2695,7 +2700,7 @@ input[type="checkbox"][readonly] {
 /* what the background looks like when its checked */
 .checkbox input:checked:before {
   border: 0;
-  background: #5f85ef; }
+  background: #4a87ee; }
 
 /* what the checkmark looks like when its checked */
 .checkbox input:checked:after {
@@ -2747,7 +2752,7 @@ input[type="checkbox"][readonly] {
 /* also the appearance when the handle is "off" */
 .toggle .handle {
   position: absolute;
-  top: 6px;
+  top: 2px;
   left: 2px;
   display: block;
   width: 28px;
@@ -2766,8 +2771,8 @@ input[type="checkbox"][readonly] {
 
 /* The track when the toggle is "on" */
 .toggle input:checked:after {
-  border-color: #5f85ef;
-  background-color: #5f85ef; }
+  border-color: #4a87ee;
+  background-color: #4a87ee; }
 
 /* the handle when the toggle is "on" */
 .toggle input:checked + .handle {

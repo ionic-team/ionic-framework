@@ -39,7 +39,7 @@
 /* also the appearance when the handle is "off" */
 .toggle .handle {
   position: absolute;
-  top: ($toggle-height - $toggle-handle-height) + $toggle-border-width;
+  top: $toggle-border-width;
   left: $toggle-border-width;
   display: block;
   width: $toggle-handle-width;
