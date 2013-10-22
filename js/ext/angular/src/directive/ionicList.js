@@ -1,7 +1,7 @@
 (function() {
 'use strict';
 
-angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
+angular.module('ionic.ui.list', ['ngAnimate'])
 
 .directive('listItem', function() {
   return {
