@@ -25,8 +25,7 @@ angular.module('ionic.ui.content', [])
         if(attr.hasTabs) {
           c.addClass('has-tabs');
         }
-        var e = transclude($scope);
-        console.log(e);
+        $element.append(transclude($scope));
       };
     }
   };
