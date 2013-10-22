@@ -634,7 +634,8 @@ address {
   .bar .title + .buttons {
     position: absolute;
     top: 5px;
-    right: 5px; }
+    right: 5px;
+    bottom: 5px; }
 
 .bar-default .button {
   color: #333333;
@@ -772,10 +773,13 @@ address {
     box-shadow: none;
     font-size: 17px; }
 
+.bar [class^="icon-"],
+.bar [class*=" icon-"] {
+  font-size: 24px; }
+
 .bar .button-icon {
   border: 1px solid transparent;
-  background-color: transparent;
-  font-size: 24px; }
+  background-color: transparent; }
 
 .bar-header {
   top: 0; }
@@ -1123,7 +1127,8 @@ a.list-item {
   border: 1px solid #dddddd;
   z-index: 2;
   margin-top: -1px;
-  padding: 15px;
+  padding: 15px 45px 15px 15px;
+  font-size: 16px;
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
 
 .list-item-content i {
@@ -1139,13 +1144,35 @@ a.list-item {
   .list-icon-left .list-item-content i {
     left: 7.5px; }
 
-.list-icon-right .list-item-content {
-  padding-right: 45px; }
-  .list-icon-right .list-item-content i {
-    right: 7.5px; }
+.list-icon-right .list-item-content i {
+  right: 7.5px; }
 
 .list-icon-left.list-icon-right .list-item-content i:last-child {
   left: auto; }
+
+a .list-item-content:after,
+button .list-item-content:after {
+  position: absolute;
+  top: 0;
+  right: 11px;
+  display: flex;
+  height: 100%;
+  color: #ccc;
+  content: "\e0fc";
+  text-transform: none;
+  font-weight: normal;
+  font-style: normal;
+  font-variant: normal;
+  font-size: 16px;
+  font-family: 'ionicons';
+  line-height: 1;
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  align-items: center; }
+
+a.list-icon-right .list-item-content:after,
+button.list-icon-right .list-item-content:after {
+  display: none; }
 
 .list-thumbnail h2 {
   overflow: hidden;
@@ -1163,7 +1190,7 @@ a.list-item {
 .list-thumbnail .list-item-content {
   padding-left: 95px;
   min-height: 80px; }
-  .list-thumbnail .list-item-content img {
+  .list-thumbnail .list-item-content .thumbnail {
     position: absolute;
     top: 0;
     left: 0;
@@ -1274,15 +1301,9 @@ a.list-item {
  * List refreser elements
  */
 .list-refresher {
+  background-color: red;
   height: 0;
   overflow: hidden; }
-
-.list-refresher-content {
-  padding: 20px;
-  text-align: center; }
-
-.list-refreshing {
-  -webkit-transition: height 0.2s ease-in-out; }
 
 form {
   margin: 0 0 1.42857; }

@@ -1,7 +1,7 @@
 (function() {
 'use strict';
 
-angular.module('ionic.ui.list', ['ionic.service.gesture', 'ngAnimate'])
+angular.module('ionic.ui.list', ['ionic.service', 'ngAnimate'])
 
 .directive('listItem', function() {
   return {
@@ -18,7 +18,7 @@ angular.module('ionic.ui.list', ['ionic.service.gesture', 'ngAnimate'])
       canSwipe: '@',
       buttons: '=',
     },
-    template:   '<li class="list-item" ng-click="onSelect()">\
+    template:   '<li class="list-item">\
                    <div class="list-item-edit" ng-if="canDelete && isEditing">\
                      <button class="button button-icon" ng-click="onDelete()"><i ng-class="deleteIcon"></i></button>\
                    </div>\
@@ -47,15 +47,6 @@ angular.module('ionic.ui.list', ['ionic.service.gesture', 'ngAnimate'])
   };
 })
 
-.directive('listRefresher', function() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<div class="list-refresher"><div class="list-refresher-content" ng-transclude></div></div>'
-  }
-})
-
 .directive('list', function() {
   return {
     restrict: 'E',
@@ -65,10 +56,7 @@ angular.module('ionic.ui.list', ['ionic.service.gesture', 'ngAnimate'])
     scope: {
       isEditing: '=',
       deleteIcon: '@',
-      reorderIcon: '@',
-      onRefreshOpening: '&',
-      onRefreshHolding: '&',
-      onRefresh: '&',
+      reorderIcon: '@'
     },
 
     // So we can require being under this
@@ -87,12 +75,7 @@ angular.module('ionic.ui.list', ['ionic.service.gesture', 'ngAnimate'])
 
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
-        var lv = new ionic.views.List({
-          el: $element[0],
-          onRefreshOpening: function(ratio) { $scope.onRefreshOpening({ratio: ratio}) },
-          onRefreshHolding: function() { $scope.onRefreshHolding(); },
-          onRefresh: function() { $scope.onRefresh(); }
-        });
+        var lv = new ionic.views.List({el: $element[0]});
 
         if(attr.animation) {
           $element.addClass(attr.animation);
