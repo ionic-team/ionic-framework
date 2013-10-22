@@ -190,8 +190,11 @@ $range-slider-height:          20px;
 $range-slider-border-radius:   10px;
 
 
-// Form States and Alerts
+// Alerts
 // -------------------------------
+
+$alert-padding:      8px 35px 8px 14px;
+$alert-margin:       $content-padding;
 
 $warning-text:       #c09853;
 $warning-bg:         #fcf8e3;

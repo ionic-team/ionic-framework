@@ -2608,6 +2608,7 @@
     position: relative;
     top: -1px; }
   .ionic .alert {
+    margin: 10px;
     padding: 8px 35px 8px 14px;
     border: 1px solid #fbeed5;
     background-color: #fcf8e3;

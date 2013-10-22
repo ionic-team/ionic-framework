@@ -3,7 +3,8 @@
 // --------------------------------------------------
 
 .alert {
-  padding: 8px 35px 8px 14px;
+  margin: $alert-margin;
+  padding: $alert-padding;
   border: 1px solid $warning-border;
   background-color: $warning-bg;
   text-shadow: 0 1px 0 rgba(255,255,255,.5);
