@@ -2786,7 +2786,7 @@ input[type="checkbox"][readonly] {
 /* position the toggle to the right within a list item */
 .toggle-item .toggle {
   position: absolute;
-  top: 5px;
+  top: 7.5px;
   right: 15px;
   z-index: 3; }
 

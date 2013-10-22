@@ -79,7 +79,7 @@
 /* position the toggle to the right within a list item */
 .toggle-item .toggle {
   position: absolute;
-  top: $list-item-padding / 3;
+  top: $list-item-padding / 2;
   right: $list-item-padding;
   z-index: 3;
 }
