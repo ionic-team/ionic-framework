@@ -1142,17 +1142,16 @@
   .ionic .content {
     position: absolute;
     width: 100%;
-    height: 100%;
     top: 0;
     bottom: 0;
     overflow: auto;
     -webkit-overflow-scrolling: touch; }
   .ionic .has-header {
-    margin-top: 44px; }
+    top: 44px; }
   .ionic .has-footer {
-    margin-bottom: 44px; }
+    bottom: 44px; }
   .ionic .has-tabs {
-    margin-bottom: 84px; }
+    bottom: 84px; }
   .ionic .page, .ionic .full-section {
     position: fixed;
     top: 0;

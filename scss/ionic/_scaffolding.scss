@@ -72,9 +72,8 @@ body, .ionic-body {
 
 
 .content {
-  position: absolute; 
+  position: absolute;
   width: 100%;
-  height: 100%;
   top: 0;
   bottom: 0;
   overflow: auto;
@@ -84,18 +83,16 @@ body, .ionic-body {
 // Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
 // Note: For these to work, content must come after both bars in the markup
 .has-header {
-  //top: $bar-height;
-  margin-top: $bar-height;
+  top: $bar-height;
 }
 
 .has-footer {
-  //bottom: $bar-height;
-  margin-bottom: $bar-height;
+  bottom: $bar-height;
 }
 
 // Specify that a content area will have tabs
 .has-tabs {
-  margin-bottom: 84px;
+  bottom: 84px;
 }
 
 .page, .full-section {

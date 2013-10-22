@@ -370,20 +370,19 @@ body, .ionic-body {
 .content {
   position: absolute;
   width: 100%;
-  height: 100%;
   top: 0;
   bottom: 0;
   overflow: auto;
   -webkit-overflow-scrolling: touch; }
 
 .has-header {
-  margin-top: 44px; }
+  top: 44px; }
 
 .has-footer {
-  margin-bottom: 44px; }
+  bottom: 44px; }
 
 .has-tabs {
-  margin-bottom: 84px; }
+  bottom: 84px; }
 
 .page, .full-section {
   position: fixed;
