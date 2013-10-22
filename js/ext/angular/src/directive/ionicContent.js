@@ -9,13 +9,12 @@ angular.module('ionic.ui.content', [])
   return {
     restrict: 'E',
     replace: true,
-    template: '<div class="content-wrapper"><div class="content"></div></div>',
+    template: '<div class="content"></div>',
     transclude: true,
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
-        var c = $element.children().eq(0);
+        var c = $element.eq(0);
 
-        c.addClass('content');
 
         if(attr.hasHeader) {
           c.addClass('has-header');
@@ -26,7 +25,8 @@ angular.module('ionic.ui.content', [])
         if(attr.hasTabs) {
           c.addClass('has-tabs');
         }
-        c.append(transclude($scope));
+        var e = transclude($scope);
+        console.log(e);
       };
     }
   };

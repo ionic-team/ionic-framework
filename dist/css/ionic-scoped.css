@@ -1139,14 +1139,7 @@
   .ionic .content > * {
     -webkit-transform: translateZ(0px);
     transform: translateZ(0px); }
-  .ionic .content-wrapper {
-    position: absolute;
-    top: 0;
-    overflow: auto;
-    width: 100%;
-    height: 100%;
-    -webkit-overflow-scrolling: touch; }
-  .ionic .content-plain {
+  .ionic .content {
     position: absolute;
     width: 100%;
     top: 0;

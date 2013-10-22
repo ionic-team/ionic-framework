@@ -340,13 +340,12 @@ angular.module('ionic.ui.content', [])
   return {
     restrict: 'E',
     replace: true,
-    template: '<div class="content-wrapper"><div class="content"></div></div>',
+    template: '<div class="content"></div>',
     transclude: true,
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
-        var c = $element.children().eq(0);
+        var c = $element.eq(0);
 
-        c.addClass('content');
 
         if(attr.hasHeader) {
           c.addClass('has-header');
@@ -357,7 +356,8 @@ angular.module('ionic.ui.content', [])
         if(attr.hasTabs) {
           c.addClass('has-tabs');
         }
-        c.append(transclude($scope));
+        var e = transclude($scope);
+        console.log(e);
       };
     }
   };
@@ -531,27 +531,31 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
   this.endDrag = function(e) {
   };
 
+  /**
+   * Push a template onto the navigation stack.
+   * @param {string} templateUrl the URL of the template to load.
+   */
   this.pushFromTemplate = function(templateUrl) {
     var childScope = $scope.$new();
     childScope.isVisible = true;
 
+    // Load the given template
     TemplateLoader.load(templateUrl).then(function(templateString) {
+
+      // Compile the template with the new scrope, and append it to the navigation's content area
       var el = $compile(templateString)(childScope, function(cloned, scope) {
-        angular.element($element[0].children[1].firstElementChild).append(cloned);
+        var content = $element[0].querySelector('.content');
+        angular.element(content).append(cloned);
       });
     });
   };
 
+  /**
+   * Push a controller to the stack. This is called by the child
+   * nav-content directive when it is linked to a scope on the page.
+   */
   $scope.pushController = function(scope, element) {
     _this.push(scope);
-
-    /*
-    var old = angular.element($element[0].children[1]);
-    $animate.enter(element, $element, $element[0].firstElementChild, function() {
-    });
-    $animate.leave(old, function() {
-    });
-    */
   };
 
   $scope.navController = this;
