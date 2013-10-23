@@ -1,14 +1,12 @@
-//
+
 // Badges
 // --------------------------------------------------
 
-
-// Base classes
 .badge {
   display: inline-block;
   min-width: 10px;
-  padding: 3px 7px;
-  font-size: $font-size-small;
+  padding: 3px 8px;
+  font-size: $badge-font-size;
   font-weight: $badge-font-weight;
   color: $badge-color;
   line-height: $badge-line-height;
@@ -28,4 +26,44 @@
 .button .badge {
   position: relative;
   top: -1px;
+}
+
+.badge-default {
+  background: $brand-default;
+}
+.badge-secondary {
+  background: $brand-secondary;
+}
+.badge-primary {
+  background: $brand-primary;
+}
+.badge-info {
+  background: $brand-info;
+}
+.badge-success {
+  background: $brand-success;
+}
+.badge-warning {
+  background: $brand-warning;
+}
+.badge-danger {
+  background: $brand-danger;
+}
+.badge-dark {
+  background: $brand-dark;
+}
+.badge-gray-darker {
+  background: $gray-darker;
+}
+.badge-gray-dark {
+  background: $gray-dark;
+}
+.badge-gray {
+  background: $gray;
+}
+.badge-gray-light {
+  background: $gray-light;
+}
+.badge-gray-ligher {
+  background: $gray-lighter;
 }
