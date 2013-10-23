@@ -132,3 +132,16 @@ $bezier-function: cubic-bezier(.1, .7, .1, 1);
     animation: fadeIn 0.3s;
   }
 }
+
+@-moz-keyframes spin { 
+  100% { -moz-transform: rotate(360deg); } 
+}
+@-webkit-keyframes spin { 
+  100% { -webkit-transform: rotate(360deg); } 
+}
+@keyframes spin { 
+  100% { 
+    -webkit-transform: rotate(360deg); 
+    transform:rotate(360deg); 
+  } 
+}
