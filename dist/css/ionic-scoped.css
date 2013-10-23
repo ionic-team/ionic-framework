@@ -1142,8 +1142,7 @@
   .ionic .content {
     position: absolute;
     width: 100%;
-    top: 0;
-    bottom: 0;
+    height: 100%;
     overflow: auto;
     -webkit-overflow-scrolling: touch; }
   .ionic .has-header {
@@ -1316,6 +1315,14 @@
       border-bottom-width: 1px; }
     .ionic .bar.bar-footer {
       border-top-width: 1px; }
+    .ionic .bar.bar-clear {
+      background: none;
+      color: #fff;
+      border: none; }
+      .ionic .bar.bar-clear .button {
+        color: #fff; }
+      .ionic .bar.bar-clear .title {
+        color: #fff; }
     .ionic .bar.bar-default {
       background-color: rgba(255, 255, 255, 0.9);
       border-color: #dddddd;

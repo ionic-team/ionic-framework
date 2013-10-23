@@ -370,8 +370,7 @@ body, .ionic-body {
 .content {
   position: absolute;
   width: 100%;
-  top: 0;
-  bottom: 0;
+  height: 100%;
   overflow: auto;
   -webkit-overflow-scrolling: touch; }
 
@@ -548,6 +547,14 @@ address {
     border-bottom-width: 1px; }
   .bar.bar-footer {
     border-top-width: 1px; }
+  .bar.bar-clear {
+    background: none;
+    color: #fff;
+    border: none; }
+    .bar.bar-clear .button {
+      color: #fff; }
+    .bar.bar-clear .title {
+      color: #fff; }
   .bar.bar-default {
     background-color: rgba(255, 255, 255, 0.9);
     border-color: #dddddd;

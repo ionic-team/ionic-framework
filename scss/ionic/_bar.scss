@@ -25,6 +25,18 @@
     border-top-width: 1px;
   }
 
+  &.bar-clear {
+    background: none;
+    color: #fff;
+    border: none;
+    .button {
+      color: #fff;
+    }
+    .title {
+      color: #fff;
+    }
+  }
+
   &.bar-default {
     @include bar-style($bar-default-bg, $bar-default-border-color, $gray-dark);
   }

@@ -15,6 +15,9 @@ angular.module('ionic.ui.content', [])
       return function($scope, $element, $attr) {
         var c = $element.eq(0);
 
+        if(attr.padded) {
+          c.addClass('padding');
+        }
 
         if(attr.hasHeader) {
           c.addClass('has-header');
