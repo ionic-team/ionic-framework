@@ -6,7 +6,7 @@
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../../dist/ionic.css">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.js"></script>
@@ -40,15 +40,25 @@
   </head>
   <body>
 
+    <header class="bar bar-header bar-success">
+    </header>
     <content has-header="true" ng-controller="AppCtrl" class="reveal-animation">
+      <ul class="list">
+        <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
+      </ul>
     </content>
 
-    <script src="../../../../dist/ionic.js"></script>
-    <script src="../../../../dist/ionic-angular.js"></script>
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
-      angular.module('navTest', ['ionic.ui'])
+      angular.module('navTest', ['ionic.ui.content'])
 
       .controller('AppCtrl', function($scope, $compile, $element) {
+        $scope.items = [];
+        for(var i = 0; i < 200; i++) {
+          $scope.items.push({
+          });
+        }
         $scope.what = {};
       })
     </script>
