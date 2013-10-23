@@ -381,7 +381,11 @@ $list-dark-border:                $brand-dark;
 
 $list-icon-font-size:             28px !default;
 
-$list-thumbnail-width:            80px !default;
+$list-thumbnail-width:           40px !default;
+$list-thumbnail-height:          40px !default;
+
+$list-thumbnail-lrg-width:        80px !default;
+$list-thumbnail-lrg-height:       80px !default;
 
 
 // Icons
@@ -435,8 +439,9 @@ $badge-bg:                    $gray-light !default;
 $badge-active-color:          $link-color !default;
 $badge-active-bg:             #fff !default;
 
+$badge-font-size:             14px !default;
+$badge-line-height:           16px !default;
 $badge-font-weight:           bold !default;
-$badge-line-height:           1 !default;
 $badge-border-radius:         10px !default;
 
 

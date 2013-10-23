@@ -2103,9 +2103,6 @@ address {
   padding-bottom: 1px;
   padding-left: 0; }
 
-/**
- * An individual list item.
- */
 .list-item {
   position: relative;
   z-index: 2;
@@ -2244,20 +2241,35 @@ a.list-item {
   left: 0px;
   opacity: 1; }
 
-/**
- * The content area of a complex list item. This area can
- * Slide left and right and be dragged to support different
- * UI interactions.
- */
 .list-item-content {
+  /**
+   * The content area of a complex list item. This area can
+   * Slide left and right and be dragged to support different
+   * UI interactions.
+   */
   position: relative;
   z-index: 2;
-  padding: 15px 45px 15px 15px;
+  overflow: hidden;
+  padding: 15px 40px 15px 15px;
   border: none;
   background-color: #fff;
   box-shadow: inset 0 0 1px #666666;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 16px;
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
+  .list-item-content h1:last-child,
+  .list-item-content h2:last-child,
+  .list-item-content h3:last-child,
+  .list-item-content h4:last-child,
+  .list-item-content h5:last-child,
+  .list-item-content h6:last-child,
+  .list-item-content p:last-child {
+    margin-bottom: 0; }
+
+.list-item-text-wrap {
+  overflow: auto;
+  white-space: normal; }
 
 .list-item-content i {
   position: absolute;
@@ -2280,6 +2292,7 @@ a.list-item {
 
 a .list-item-content:after,
 button .list-item-content:after {
+  /* By default, both <a> and <button> have right side arrow icons */
   position: absolute;
   top: 0;
   right: 11px;
@@ -2302,29 +2315,53 @@ a.list-icon-right .list-item-content:after,
 button.list-icon-right .list-item-content:after {
   display: none; }
 
-.list-thumbnail h2 {
-  overflow: hidden;
+.list-thumbnail h2,
+.list-thumbnail-lrg h2 {
   margin: 0 0 8px 0;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   font-size: 16px; }
 
-.list-thumbnail p {
-  overflow: hidden;
-  margin-bottom: 0;
-  text-overflow: ellipsis;
-  white-space: nowrap; }
-
 .list-thumbnail .list-item-content {
+  padding-left: 70px;
+  min-height: 70px; }
+  .list-thumbnail .list-item-content img:first-child, .list-thumbnail .list-item-content .list-img {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    max-width: 40px;
+    max-height: 40px;
+    width: 100%;
+    border-radius: 4px; }
+
+.list-thumbnail-lrg .list-item-content {
   padding-left: 95px;
   min-height: 80px; }
-  .list-thumbnail .list-item-content img:first-child, .list-thumbnail .list-item-content .list-img {
+  .list-thumbnail-lrg .list-item-content img:first-child, .list-thumbnail-lrg .list-item-content .list-img {
     position: absolute;
     top: 0;
     left: 0;
     max-width: 80px;
     max-height: 80px;
     width: 100%; }
+
+.list-header {
+  margin-top: 20px;
+  padding: 5px 15px;
+  background-color: transparent;
+  color: #222222;
+  font-weight: bold; }
+
+.list-divider {
+  margin: -1px;
+  padding: 5px 15px;
+  border: none;
+  background-color: whitesmoke;
+  box-shadow: inset 0 0 1px #666666;
+  color: #222222;
+  font-weight: bold; }
+
+.card.list .list-divider {
+  margin-right: 0;
+  margin-left: 0; }
 
 .list-item-sliding {
   -webkit-transition: -webkit-transform 0.1s ease-in-out; }
@@ -2396,43 +2433,19 @@ button.list-icon-right .list-item-content:after {
     border: none;
     border-radius: 0; }
 
-/**
- * A list header.
- */
-.list-header {
-  margin-top: 20px;
-  padding: 5px 15px;
-  background-color: transparent;
-  color: #222222;
-  font-weight: bold; }
-
-/**
- * A list divider.
- */
-.list-divider {
-  margin: -1px;
-  padding: 5px 15px;
-  border: none;
-  background-color: whitesmoke;
-  box-shadow: inset 0 0 1px #666666;
-  color: #222222;
-  font-weight: bold; }
-
-.card.list .list-divider {
-  margin-left: 0;
-  margin-right: 0; }
+.list-refresher {
+  overflow: hidden;
+  height: 0;
+  background-color: red; }
 
 .card.list .list-item {
   padding-right: 1px;
   padding-left: 1px; }
 
-/**
- * List refreser elements
- */
-.list-refresher {
-  overflow: hidden;
-  height: 0;
-  background-color: red; }
+.list-label-right {
+  float: right;
+  color: #aaa;
+  font-size: 14px; }
 
 form {
   margin: 0 0 1.42857; }
@@ -3107,11 +3120,11 @@ a.button {
 .badge {
   display: inline-block;
   min-width: 10px;
-  padding: 3px 7px;
-  font-size: 11px;
+  padding: 3px 8px;
+  font-size: 14px;
   font-weight: bold;
   color: white;
-  line-height: 1;
+  line-height: 16px;
   vertical-align: baseline;
   white-space: nowrap;
   text-align: center;
@@ -3123,6 +3136,45 @@ a.button {
 .button .badge {
   position: relative;
   top: -1px; }
+
+.badge-default {
+  background: white; }
+
+.badge-secondary {
+  background: whitesmoke; }
+
+.badge-primary {
+  background: #4a87ee; }
+
+.badge-info {
+  background: #43cee6; }
+
+.badge-success {
+  background: #66cc33; }
+
+.badge-warning {
+  background: #f0b840; }
+
+.badge-danger {
+  background: #ef4e3a; }
+
+.badge-dark {
+  background: #444444; }
+
+.badge-gray-darker {
+  background: #222222; }
+
+.badge-gray-dark {
+  background: #333333; }
+
+.badge-gray {
+  background: #555555; }
+
+.badge-gray-light {
+  background: #999999; }
+
+.badge-gray-ligher {
+  background: #eeeeee; }
 
 .alert {
   margin: 10px;
@@ -3371,6 +3423,19 @@ a.button {
     -webkit-animation: fadeIn 0.3s;
     animation: fadeIn 0.3s; }
 
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg); } }
+
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg); } }
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+
 .fill-icon {
   color: white !important; }
   .fill-icon:before {
@@ -3404,6 +3469,36 @@ a.button {
     background: #999999; }
   .fill-icon.gray-lighter:before {
     background: #eeeeee; }
+
+.icon-loading {
+  font-family: 'ionicons';
+  speak: none;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-animation: spin 0.75s linear infinite;
+  -moz-animation: spin 0.75s linear infinite;
+  animation: spin 0.75s linear infinite; }
+  .icon-loading:before {
+    content: "\e036"; }
+
+.icon-refreshing {
+  font-family: 'ionicons';
+  speak: none;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-animation: spin 0.75s linear infinite;
+  -moz-animation: spin 0.75s linear infinite;
+  animation: spin 0.75s linear infinite; }
+  .icon-refreshing:before {
+    content: "\e036"; }
 
 .hidden,
 .hide {
