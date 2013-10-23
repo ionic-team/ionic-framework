@@ -1,13 +1,16 @@
 .card {
-  width: 100%;
-  background-color: white;
-  border-radius: 2px;
-  border: 1px solid #ddd;
+  margin: $content-padding;
+  border: none;
+  border-radius: $card-border-radius;
+
+  background-color: $card-body-bg;
+  box-shadow: inset 0 0 $card-border-width #666;
 }
 
 .card-header {
-  padding: 10px;
-  background-color: $brand-default;
+  padding: $card-padding;
+  border-bottom: $card-border-width solid $card-border-color;
+  background-color: $card-header-bg;
 
   &.card-header-secondary { background-color: $brand-secondary; }
   &.card-header-primary { background-color: $brand-primary; }
@@ -19,9 +22,11 @@
 }
 
 .card-body {
-  padding: 10px;
+  padding: $card-padding;
 }
 
 .card-footer {
-  padding: 10px;
+  padding: $card-padding;
+  border-top: $card-border-width solid $card-border-color;
+  background-color: $card-footer-bg;
 }

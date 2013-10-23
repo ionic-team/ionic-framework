@@ -1675,42 +1675,20 @@
     .ionic .modal.active {
       height: 100%; }
   .ionic .list {
-    margin-bottom: 20px;
-    padding-left: 0;
     position: relative;
     overflow: hidden;
-    color: #333333;
-    background-color: white;
-    border-color: #dddddd; }
-    .ionic .list:hover {
-      color: #333333;
-      text-decoration: none; }
-    .ionic .list.active, .ionic .list:active {
-      background-color: #ebebeb;
-      box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
-      border-color: #c4c4c4; }
-    .ionic .list.list-success {
-      color: white;
-      background-color: #66cc33;
-      border-color: #66cc33; }
-      .ionic .list.list-success:hover {
-        color: white;
-        text-decoration: none; }
-      .ionic .list.list-success.active, .ionic .list.list-success:active {
-        background-color: #56ab2b;
-        box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12);
-        border-color: #52a329; }
+    margin-bottom: 20px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 0; }
   .ionic .list-item {
     position: relative;
-    display: block;
-    margin-bottom: -1px;
-    margin-left: -1px;
-    margin-right: -1px;
-    border-top: 1px solid #dddddd;
     z-index: 2;
-    background-color: white; }
-    .ionic .list-item:last-child {
-      margin-bottom: 0; }
+    display: block;
+    margin: -1px;
+    border: none;
+    background-color: white;
+    box-shadow: inset 0 0 1px #666666; }
     .ionic .list-item .badge {
       float: right; }
     .ionic .list-item .badge + .badge {
@@ -1829,18 +1807,18 @@
     .ionic a.list-item:hover, .ionic a.list-item:focus {
       text-decoration: none; }
   .ionic .list-editing .list-item-content {
-    margin-left: 30px;
-    margin-right: 30px; }
+    margin-right: 30px;
+    margin-left: 30px; }
   .ionic .list-editing .list-item-edit {
     left: 0px;
     opacity: 1; }
   .ionic .list-item-content {
     position: relative;
-    background-color: #fff;
-    border: 1px solid #dddddd;
     z-index: 2;
-    margin-top: -1px;
     padding: 15px 45px 15px 15px;
+    border: none;
+    background-color: #fff;
+    box-shadow: inset 0 0 1px #666666;
     font-size: 16px;
     -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
   .ionic .list-item-content i {
@@ -1910,9 +1888,9 @@
     opacity: 0.7; }
   .ionic .list-item-edit {
     position: absolute;
-    z-index: 0;
-    left: -48px;
     top: 0;
+    left: -48px;
+    z-index: 0;
     width: 48px;
     height: 100%;
     line-height: 100%;
@@ -1924,62 +1902,63 @@
       color: #ef4e3a;
       font-size: 24px; }
     .ionic .list-item-edit.ng-enter {
-      -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
+      left: -48px;
+      opacity: 0;
+      -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
+    .ionic .list-item-edit.ng-enter-active {
+      left: 0;
+      opacity: 1; }
+    .ionic .list-item-edit.ng-leave {
+      left: 0px;
+      opacity: 1;
+      -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
+    .ionic .list-item-edit.ng-leave-active {
       left: -48px;
       opacity: 0; }
-    .ionic .list-item-edit.ng-enter-active {
-      opacity: 1;
-      left: 0; }
-    .ionic .list-item-edit.ng-leave {
-      -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
-      left: 0px;
-      opacity: 1; }
-    .ionic .list-item-edit.ng-leave-active {
-      opacity: 0;
-      left: -48px; }
   .ionic .list-item-drag {
     position: absolute;
-    z-index: 0;
-    right: 0;
     top: 0;
+    right: 0;
+    z-index: 0;
     height: 100%; }
     .ionic .list-item-drag .button {
       height: 100%;
-      border-radius: 0;
-      border: none; }
+      border: none;
+      border-radius: 0; }
   .ionic .list-item-buttons {
     position: absolute;
-    z-index: 1;
-    right: 0;
     top: 0;
+    right: 0;
+    z-index: 1;
     height: 100%; }
     .ionic .list-item-buttons .button {
       height: 100%;
-      border-radius: 0;
-      border: none; }
+      border: none;
+      border-radius: 0; }
   .ionic .list-header {
-    padding: 5px 15px;
     margin-top: 20px;
+    padding: 5px 15px;
     background-color: transparent;
     color: #222222;
     font-weight: bold; }
   .ionic .list-divider {
+    margin: -1px;
     padding: 5px 15px;
+    border: none;
     background-color: whitesmoke;
+    box-shadow: inset 0 0 1px #666666;
     color: #222222;
     font-weight: bold; }
-  .ionic .list-divider,
-  .ionic .list-header {
-    margin-left: -1px;
-    margin-right: -1px; }
-  .ionic .padding .list-divider,
-  .ionic .padding .list-heading {
-    border-left: 1px solid #dddddd;
-    border-right: 1px solid #dddddd; }
+  .ionic .card.list .list-divider {
+    margin-left: 0;
+    margin-right: 0; }
+  .ionic .card.list .list-item {
+    padding-right: 1px;
+    padding-left: 1px; }
   .ionic .list-refresher {
-    background-color: red;
+    overflow: hidden;
     height: 0;
-    overflow: hidden; }
+    background-color: red; }
   .ionic form {
     margin: 0 0 1.42857; }
   .ionic legend {
@@ -2135,7 +2114,6 @@
   .ionic input[type="file"] {
     line-height: 34px; }
   .ionic select {
-    width: 220px;
     border: 1px solid #cccccc;
     background-color: white; }
   .ionic select[multiple],
@@ -2650,13 +2628,15 @@
   .ionic .alert-info h4 {
     color: #3a87ad; }
   .ionic .card {
-    width: 100%;
-    background-color: white;
+    margin: 10px;
+    border: none;
     border-radius: 2px;
-    border: 1px solid #dddddd; }
+    background-color: white;
+    box-shadow: inset 0 0 1px #666666; }
   .ionic .card-header {
     padding: 10px;
-    background-color: white; }
+    border-bottom: 1px solid #dddddd;
+    background-color: #eeeeee; }
     .ionic .card-header.card-header-secondary {
       background-color: whitesmoke; }
     .ionic .card-header.card-header-primary {
@@ -2674,7 +2654,9 @@
   .ionic .card-body {
     padding: 10px; }
   .ionic .card-footer {
-    padding: 10px; }
+    padding: 10px;
+    border-top: 1px solid #dddddd;
+    background-color: #eeeeee; }
   .ionic .slide-in-up {
     opacity: 0;
     -webkit-transform: translate3d(0, 100%, 0);

@@ -211,7 +211,6 @@ input[type="file"] {
 
 // Make select elements obey height by applying a border
 select {
-  width: 220px; // default input width + 10px of padding that doesn't get applied
   border: $input-border-width solid $input-border-color;
   background-color: $input-bg; // Chrome on Linux and Mobile Safari need background-color
 }
