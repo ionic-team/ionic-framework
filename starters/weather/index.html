@@ -1,4 +1,4 @@
-<html ng-app="ionic.example">
+<html ng-app="ionic.weather">
   <head>
     <meta charset="utf-8">
     <title>Weather</title>
@@ -12,101 +12,39 @@
     <script src="/vendor/angular/angular-1.2.0rc2.min.js"></script>
     <script src="/vendor/angular/angular-touch.js"></script>
     <script src="/vendor/angular/angular-animate.js"></script>
+    <script src="/vendor/angular/angular-resource.js"></script>
     <script src="/dist/js/ionic.js"></script>
     <script src="/dist/js/ionic-angular.js"></script>
+
+    <script src="services.js"></script>
+    <script src="directives.js"></script>
+    <script src="app.js"></script>
   </head>
   <body ng-controller="WeatherCtrl">
     <header id="header" class="bar bar-header bar-clear">
-      <button class="button button-icon"><i class="icon-navicon-round"></i></button>
       <h1 class="title">
-        <span class="city">{{current.city.name}}</span><br>
-        <current-time></current-time>
+        <span class="city">{{current.display_location.city}}</span><br>
+        <current-time local-time="current.local_epoch" localtz="current.local_tz_short"></current-time>
       </h1>
     </header>
-    <content id="main-content" has-header="true" padded="true">
+    <div id="scroller" class="scroll padding" style="margin-top:44px">
       <small-weather>
-        <h5>{{current.cover}}</h5>
+        <h5>{{current.weather}}</h5>
         <h5>H: {{current.high}} L: {{current.low}}</h5>
-        <h1 class="current-temp">{{current.temp}}&deg;</h1>
+        <h1 class="current-temp">{{current.temp_f | int}}&deg;</h1>
       </small-weather>
       <weather-box title="Forecast" style="height: 400px">
       </weather-box>
       <weather-box title="Details" style="height: 400px">
       </weather-box>
-    </content>
+    </div>
   </body>
 
   <script>
-    angular.module('ionic.example', ['ionic.ui.content'])
-
-    .directive('currentTime', function($timeout, $filter) {
-      return {
-        restrict: 'E',
-        replace: true,
-        template: '<span class="current-time">{{currentTime}}</span>',
-        link: function($scope, $element, $attr) {
-          $timeout(function checkTime() {
-            $scope.currentTime = $filter('date')(new Date, 'H:mm');
-            $timeout(checkTime, 500);
-          });
-        }
-      }
-     })
-
-    .directive('smallWeather', function($timeout) {
-      return {
-        restrict: 'E',
-        replace: true,
-        transclude: true,
-        template: '<div id="small-weather" ng-transclude></div>',
-        link: function($scope, $element, $attr) {
-
-          // Delay so we are in the DOM and can calculate sizes
-          $timeout(function() {
-            var windowHeight = window.innerHeight;
-            var thisHeight = $element[0].offsetHeight;
-            var headerHeight = document.querySelector('#header').offsetHeight;
-            $element[0].style.marginTop = (windowHeight - thisHeight) + 'px';
-            angular.element(document.querySelector('.content')).css('-webkit-overflow-scrolling', 'auto');
-            $timeout(function() {
-              angular.element(document.querySelector('.content')).css('-webkit-overflow-scrolling', 'touch');
-            }, 50);
-          });
-        }
-      }
-    })
-
-    .directive('weatherBox', function($timeout) {
-      return {
-        restrict: 'E',
-        replace: true,
-        transclude: true,
-        scope: {
-          title: '@'
-        },
-        template: '<div class="weather-box"><h4 class="title">{{title}}</h4><div ng-transclude></div></div>',
-        link: function($scope, $element, $attr) {
-        }
-      }
-    })
-    
-
-    .filter('temp', function() {
-      return function(v) {
-        return v + '&deg;';
-      };
-    })
-
-    .controller('WeatherCtrl', function($scope) {
-      $scope.current = {
-        city: {
-          name: 'Madison'
-        },
-        temp: 36,
-        cover: 'Partly cloudy',
-        high: 43,
-        low: 27
-      }
+    var s = document.getElementById('scroller');
+    var scroll = new ionic.views.Scroll({
+      el: s,
+      decelerationRate: 0.87
     });
   </script>
 </html>

@@ -1,5 +1,5 @@
 body {
-  background: url('madison2.jpg') no-repeat transparent;
+  background: url('madison3.jpg') no-repeat transparent;
   background-size: cover;
 }
 h1,h2,h3,h4,h5 {
@@ -10,6 +10,9 @@ h1,h2,h3,h4,h5 {
 #header .title {
   font-size: 12px;
   line-height: 20px;
+}
+#header .title .city {
+  font-size: 16px;
 }
 #main-content {
   color: #fff;

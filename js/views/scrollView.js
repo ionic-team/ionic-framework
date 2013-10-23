@@ -17,17 +17,21 @@
     this.resistance = opts.resistance;
 
     // Listen for drag and release events
-    window.ionic.onGesture('drag', function(e) {
+    ionic.onGesture('drag', function(e) {
       _this._handleDrag(e);
     }, this.el);
-    window.ionic.onGesture('release', function(e) {
+    ionic.onGesture('release', function(e) {
       _this._handleEndDrag(e);
     }, this.el);
+    ionic.on('webkitTransitionEnd', function(e) {
+      _this._endTransition();
+    });
   };
 
   ionic.views.Scroll.prototype = {
     DECEL_RATE_NORMAL: 0.998,
     DECEL_RATE_FAST: 0.99,
+    DECEL_RATE_SLOW: 0.996,
 
     /**
      * Scroll to the given X and Y point, taking 
@@ -47,15 +51,22 @@
       el.style.webkitTransitionTimingFunction = easing;
       el.style.webkitTransitionDuration = time;
       el.style.webkitTransform = 'translate3d(0,' + y + 'px, 0)';
+      console.log('TRANSITION ADDED!');
     },
 
 
     _initDrag: function() {
+      this._endTransition();
+      this._isStopped = false;
+    },
+
+    _endTransition: function() {
       this._isDragging = false;
       this._drag = null;
       this.el.classList.remove('scroll-scrolling');
-      this.el.style.webkitTransitionDuration = '0';
 
+      console.log('REMOVING TRANSITION');
+      this.el.style.webkitTransitionDuration = '0';
     },
 
     /**
@@ -84,6 +95,11 @@
 
       window.requestAnimationFrame(function() {
         var content;
+
+        if(_this._isStopped) {
+          _this._initDrag();
+          return;
+        }
 
         // We really aren't dragging
         if(!_this._drag) {
@@ -116,18 +132,18 @@
     },
 
     _handleEndDrag: function(e) {
-      var _this = this;
-
       // We didn't have a drag, so just init and leave
-      if(!_this._drag) {
-        _this._initDrag();
+      if(!this._drag) {
+        this._initDrag();
         return;
       }
 
+      // Set a flag in case we don't cleanup completely after the
+      // drag animation so we can cleanup the next time a drag starts
+      this._isStopped = true;
+
       // Animate to the finishing point
-        _this._animateToStop(e);
-        // Cleanup
-        _this._initDrag();
+      this._animateToStop(e);
 
     },
 
