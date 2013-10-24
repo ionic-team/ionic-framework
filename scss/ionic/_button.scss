@@ -18,6 +18,8 @@
   font-size: $button-font-size;
   line-height: $line-height-computed;
 
+  text-overflow: ellipsis;
+
   cursor: pointer;
 
   &.button-icon {

@@ -2886,6 +2886,7 @@ input[type="range"] {
   text-align: center;
   font-size: 16px;
   line-height: 20px;
+  text-overflow: ellipsis;
   cursor: pointer; }
   .button.button-icon {
     padding: 4px 5px;
