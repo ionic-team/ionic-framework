@@ -1,7 +1,16 @@
 (function(ionic) {
 'use strict';
 
-  ionic.views.Scroll = function(opts) {
+  /**
+   * The Scroll view is a container that suppoerts complex
+   * and customizable scroll behavior.
+   *
+   * This is a replacement for the buggy and shallow -webkit-overflow-scroll: touch.
+   * which is fine for web apps that want to have overflow scrolling containers,
+   * but HTML5 hybrid apps benefit from the same kind of scroll abstractions
+   * seen on iOS or Android.
+   */
+  ionic.views.ScrollView = function(opts) {
     var _this = this;
 
     // Extend the options with our defaults
@@ -10,15 +19,11 @@
       dragThresholdY: 10,
       resistance: 2,
       scrollEventName: 'momentumScrolled',
-      intertialEventInterval: 50
+      intertialEventInterval: 50,
+      showScrollBar: true
     });
 
-    this.el = opts.el;
-    this.decelerationRate = opts.decelerationRate;
-    this.dragThresholdY = opts.dragThresholdY;
-    this.resistance = opts.resistance;
-    this.scrollEventName = opts.scrollEventName;
-    this.inertialEventInterval = opts.inertialEventInterval;
+    ionic.Utils.extend(this, opts);
 
     // Listen for drag and release events
     ionic.onGesture('drag', function(e) {
