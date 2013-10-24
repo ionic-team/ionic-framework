@@ -1832,6 +1832,21 @@
     white-space: nowrap;
     font-size: 16px;
     -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
+    .ionic .list-item-content h2 {
+      margin: 0 0 4px 0;
+      font-size: 16px; }
+    .ionic .list-item-content h3 {
+      margin: 0 0 4px 0;
+      font-size: 14px; }
+    .ionic .list-item-content h3 {
+      margin: 0 0 4px 0;
+      font-size: 12px; }
+    .ionic .list-item-content h4, .ionic .list-item-content h5, .ionic .list-item-content h6 {
+      margin: 0 0 3px 0;
+      font-size: 10px; }
+    .ionic .list-item-content p {
+      color: #666;
+      font-size: 14px; }
     .ionic .list-item-content h1:last-child,
     .ionic .list-item-content h2:last-child,
     .ionic .list-item-content h3:last-child,
@@ -1844,12 +1859,20 @@
     overflow: auto;
     white-space: normal; }
   .ionic .list-item-content i {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
     position: absolute;
     top: 0;
-    display: flex;
     height: 100%;
-    font-size: 28px;
-    align-items: center; }
+    font-size: 28px; }
   .ionic .list-icon-left .list-item-content {
     padding-left: 45px; }
     .ionic .list-icon-left .list-item-content i {
@@ -1861,10 +1884,19 @@
   .ionic a .list-item-content:after,
   .ionic button .list-item-content:after {
     /* By default, both <a> and <button> have right side arrow icons */
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
     position: absolute;
     top: 0;
     right: 11px;
-    display: flex;
     height: 100%;
     color: #ccc;
     content: "\e0fc";
@@ -1876,15 +1908,10 @@
     font-family: 'ionicons';
     line-height: 1;
     speak: none;
-    -webkit-font-smoothing: antialiased;
-    align-items: center; }
+    -webkit-font-smoothing: antialiased; }
   .ionic a.list-icon-right .list-item-content:after,
   .ionic button.list-icon-right .list-item-content:after {
     display: none; }
-  .ionic .list-thumbnail h2,
-  .ionic .list-thumbnail-lrg h2 {
-    margin: 0 0 8px 0;
-    font-size: 16px; }
   .ionic .list-thumbnail .list-item-content {
     padding-left: 70px;
     min-height: 70px; }

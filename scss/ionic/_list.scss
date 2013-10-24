@@ -114,6 +114,27 @@ a.list-item {
 
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
 
+  h2 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+  }
+  h3 {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+  }
+  h3 {
+    margin: 0 0 4px 0;
+    font-size: 12px;
+  }
+  h4, h5, h6 {
+    margin: 0 0 3px 0;
+    font-size: 10px;
+  }
+  p {
+    color: #666;
+    font-size: 14px;
+  }
+
   h1:last-child,
   h2:last-child,
   h3:last-child,
@@ -135,12 +156,13 @@ a.list-item {
 // -------------------------------
 
 .list-item-content i {
+  @include display-flex();
+  @include align-items(center);
   position: absolute;
   top: 0;
-  display: flex;
   height: 100%;
   font-size: $list-icon-font-size;
-  align-items: center;
+
 }
 
 .list-icon-left .list-item-content {
@@ -162,10 +184,11 @@ a.list-item {
 a .list-item-content:after,
 button .list-item-content:after {
   /* By default, both <a> and <button> have right side arrow icons */
+  @include display-flex();
+  @include align-items(center);
   position: absolute;
   top: 0;
   right: $list-item-padding - 4;
-  display: flex;
   height: 100%;
   color: #ccc;
   content: "\e0fc"; // icon-chevron-right
@@ -178,7 +201,6 @@ button .list-item-content:after {
   line-height: 1;
   speak: none;
   -webkit-font-smoothing: antialiased;
-  align-items: center;
 }
 
 // do not show the default right arrow when they want their own right side icon
@@ -192,12 +214,6 @@ button.list-icon-right {
 
 // List Thumbnails
 // -------------------------------
-
-.list-thumbnail h2,
-.list-thumbnail-lrg h2 {
-  margin: 0 0 8px 0;
-  font-size: 16px;
-}
 
 .list-thumbnail .list-item-content {
   padding-left: $list-thumbnail-width + ($list-item-padding * 2);

@@ -2258,6 +2258,21 @@ a.list-item {
   white-space: nowrap;
   font-size: 16px;
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
+  .list-item-content h2 {
+    margin: 0 0 4px 0;
+    font-size: 16px; }
+  .list-item-content h3 {
+    margin: 0 0 4px 0;
+    font-size: 14px; }
+  .list-item-content h3 {
+    margin: 0 0 4px 0;
+    font-size: 12px; }
+  .list-item-content h4, .list-item-content h5, .list-item-content h6 {
+    margin: 0 0 3px 0;
+    font-size: 10px; }
+  .list-item-content p {
+    color: #666;
+    font-size: 14px; }
   .list-item-content h1:last-child,
   .list-item-content h2:last-child,
   .list-item-content h3:last-child,
@@ -2272,12 +2287,20 @@ a.list-item {
   white-space: normal; }
 
 .list-item-content i {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
   position: absolute;
   top: 0;
-  display: flex;
   height: 100%;
-  font-size: 28px;
-  align-items: center; }
+  font-size: 28px; }
 
 .list-icon-left .list-item-content {
   padding-left: 45px; }
@@ -2293,10 +2316,19 @@ a.list-item {
 a .list-item-content:after,
 button .list-item-content:after {
   /* By default, both <a> and <button> have right side arrow icons */
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
   position: absolute;
   top: 0;
   right: 11px;
-  display: flex;
   height: 100%;
   color: #ccc;
   content: "\e0fc";
@@ -2308,17 +2340,11 @@ button .list-item-content:after {
   font-family: 'ionicons';
   line-height: 1;
   speak: none;
-  -webkit-font-smoothing: antialiased;
-  align-items: center; }
+  -webkit-font-smoothing: antialiased; }
 
 a.list-icon-right .list-item-content:after,
 button.list-icon-right .list-item-content:after {
   display: none; }
-
-.list-thumbnail h2,
-.list-thumbnail-lrg h2 {
-  margin: 0 0 8px 0;
-  font-size: 16px; }
 
 .list-thumbnail .list-item-content {
   padding-left: 70px;
