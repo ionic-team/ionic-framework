@@ -10,8 +10,16 @@ angular.module('ionic.weather', ['ionic.weather.services', 'ionic.weather.direct
   };
 })
 
-.controller('WeatherCtrl', function($scope, Weather, Geo) {
+.controller('WeatherCtrl', function($scope, Weather, Geo, Flickr) {
   var _this = this;
+
+  this.getBackgroundImage = function(lat, lng) {
+    Flickr.search('sunset', lat, lng).then(function(resp) {
+      console.log('FLICKR', resp);
+    }, function(error) {
+      console.error('Unable to get Flickr images', error);
+    });
+  };
 
   this.getForecast = function(lat, lng) {
     Weather.getForecast(lat, lng).then(function(resp) {
@@ -22,6 +30,7 @@ angular.module('ionic.weather', ['ionic.weather.services', 'ionic.weather.direct
       console.error(error);
     });
   };
+
   this.getCurrent = function(lat, lng) {
     Weather.getAtLocation(lat, lng).then(function(resp) {
       $scope.current = resp.current_observation;
@@ -34,8 +43,11 @@ angular.module('ionic.weather', ['ionic.weather.services', 'ionic.weather.direct
 
   Geo.getLocation().then(function(position) {
     console.log('GOT LAT', position);
+    var lat = position.coords.latitude;
+    var lng = position.coords.longitude;
 
-    _this.getCurrent(position.coords.latitude, position.coords.longitude);
+    _this.getBackgroundImage(lat, lng);
+    _this.getCurrent(lat, lng);
   }, function(error) {
     alert('Unable to get current location: ' + error);
   });

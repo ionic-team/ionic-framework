@@ -19,10 +19,12 @@ angular.module('ionic.weather.services', ['ngResource'])
 .factory('Flickr', function($q, $resource, FLICKR_API_KEY) {
   var baseUrl = 'http://api.flickr.com/services/rest/'
 
-  var flickrSearch = $resource(baseUrl + '?method=flickr.photos.search', {
+  var flickrSearch = $resource(baseUrl, {
+    method: 'flickr.photos.search',
     safe_search: 1,
-    callback: 'JSON_CALLBACK',
-    api_key: FLICKR_API_KEY
+    jsoncallback: 'JSON_CALLBACK',
+    api_key: FLICKR_API_KEY,
+    format: 'json'
   }, {
     get: {
       method: 'JSONP'
@@ -30,12 +32,15 @@ angular.module('ionic.weather.services', ['ngResource'])
   });
 
   return {
-    search: function(tags, lat, lng, cb) {
+    search: function(tags, lat, lng) {
       var q = $q.defer();
 
       flickrSearch.get({
+        tags: tags,
+        lat: lat,
+        lng: lng
       }, function(val) {
-        q.resove(val);
+        q.resolve(val);
       }, function(httpResponse) {
         q.reject(httpResponse);
       });
@@ -65,7 +70,7 @@ angular.module('ionic.weather.services', ['ngResource'])
   });
 
   return {
-    getForecast: function(lat, lng, cb) {
+    getForecast: function(lat, lng) {
       var q = $q.defer();
 
       forecastResource.get({
