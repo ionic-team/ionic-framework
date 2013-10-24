@@ -2070,6 +2070,8 @@ a.button {
 
 .card-body {
   padding: 10px; }
+  .card-body h1, .card-body h2, .card-body h3, .card-body h4, .card-body h5, .card-body h6, .card-body p {
+    margin-top: 10px; }
 
 .card-footer {
   padding: 10px;
@@ -2281,6 +2283,9 @@ a.button {
     clear: both;
     height: 0;
     content: "."; }
+
+.full-image {
+  width: 100%; }
 
 .padding {
   padding: 10px; }

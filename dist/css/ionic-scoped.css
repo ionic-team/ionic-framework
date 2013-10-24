@@ -2743,6 +2743,8 @@
       background-color: #444444; }
   .ionic .card-body {
     padding: 10px; }
+    .ionic .card-body h1, .ionic .card-body h2, .ionic .card-body h3, .ionic .card-body h4, .ionic .card-body h5, .ionic .card-body h6, .ionic .card-body p {
+      margin-top: 10px; }
   .ionic .card-footer {
     padding: 10px;
     border-bottom-right-radius: 2px;
@@ -2892,6 +2894,8 @@
       clear: both;
       height: 0;
       content: "."; }
+  .ionic .full-image {
+    width: 100%; }
   .ionic .padding {
     padding: 10px; }
   .ionic .padding-top,
