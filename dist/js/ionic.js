@@ -2520,7 +2520,7 @@ window.ionic = {
     });
   };
 
-  ionic.views.Scroll.prototype = {
+  ionic.views.ScrollView.prototype = {
     DECEL_RATE_NORMAL: 0.998,
     DECEL_RATE_FAST: 0.99,
     DECEL_RATE_SLOW: 0.996,
@@ -2967,7 +2967,7 @@ var utils = (function () {
 ionic.views.Scroll = function (options) {
   var el = options.el;
 
-	this.wrapper = typeof el == 'string' ? document.querySelector(el) : el;
+	this.wrapper = el;//typeof el == 'string' ? document.querySelector(el) : el;
 	this.scroller = this.wrapper.children[0];
 	this.scrollerStyle = this.scroller.style;		// cache style for better performance
 

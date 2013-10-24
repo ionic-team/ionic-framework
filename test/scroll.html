@@ -14,6 +14,20 @@
       .list-item {
         padding: 10px;
       }
+      #wrapper {
+        position:absolute; z-index:1;
+        top:0px; bottom:0px; left:0;
+        width:100%;
+        background:#aaa;
+        overflow:hidden;
+      }
+      #scroller {
+        position:absolute; z-index:1;
+        /*	-webkit-touch-callout:none;*/
+        -webkit-tap-highlight-color:rgba(0,0,0,0);
+        width:100%;
+        padding:0;
+      }
     </style>
   </head>
   <body>
@@ -23,21 +37,22 @@
         <h1 class="title">Scroll Me</h1>
         <a href="#" class="button button-danger button-clear">Delete</a>
       </div>
-      <div id="scroller" class="scroll" style="margin-top:44px">
-        <div id="filler" style="height: 1400px; background: url('tree_bark.png') repeat;"></div>
-        <ul class="list">
-        </ul>
+      <div id="wrapper">
+        <div id="scroller" class="scroll" style="margin-top:44px">
+          <ul class="list">
+          </ul>
+        </div>
       </div>
     </section>
     <script src="../dist/js/ionic.js"></script>
     <script>
-      var s = document.getElementById('scroller');
+      var s = document.getElementById('wrapper');
 
       for(var i = 0; i < 100; i++) {
         var li = document.createElement('li');
         li.className = 'list-item';
         li.innerHTML = 'Item ' + i;
-        s.firstElementChild.appendChild(li);
+        s.firstElementChild.children[0].appendChild(li);
       }
 
       var scroll = new ionic.views.Scroll({

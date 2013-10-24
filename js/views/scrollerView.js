@@ -244,7 +244,7 @@ var utils = (function () {
 ionic.views.Scroll = function (options) {
   var el = options.el;
 
-	this.wrapper = typeof el == 'string' ? document.querySelector(el) : el;
+	this.wrapper = el;//typeof el == 'string' ? document.querySelector(el) : el;
 	this.scroller = this.wrapper.children[0];
 	this.scrollerStyle = this.scroller.style;		// cache style for better performance
 

@@ -37,7 +37,7 @@
     });
   };
 
-  ionic.views.Scroll.prototype = {
+  ionic.views.ScrollView.prototype = {
     DECEL_RATE_NORMAL: 0.998,
     DECEL_RATE_FAST: 0.99,
     DECEL_RATE_SLOW: 0.996,
