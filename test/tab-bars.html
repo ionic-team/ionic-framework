@@ -5,92 +5,47 @@
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="../dist/ionic.css" rel="stylesheet">
-    <style>
-      .content {
-        height: 100%;
-      }
-      .bar-header {
-        position: relative;
-      }
-      .tabs {
-        position: relative;
-        margin-top: 10px;
-      }
-    </style>
+    <link href="../dist/css/ionic.css" rel="stylesheet">
   </head>
   <body>
 
-    <section>
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Tab Bars</h1>
+    </header>
 
-      <header class="bar bar-header bar-dark">
-        <h1 class="title">Tab Bars</h1>
-      </header>
+    <main class="content padding has-header">
+      <h1>Icons On Top Of Text</h1>
 
-      <main class="content padding has-header">
-        content
-      </main>
-      
-      <nav id="tab-bar" class="tabs tabs-default">
-        <a class="tab-item tab-item-danger" href="#">
-          <i class="icon-star"></i>
-          Friends
-        </a>
-        <a class="tab-item tab-item-danger">
-          <i class="icon-star-filled"></i>
-          Enemies
-        </a>
-        <a class="tab-item tab-item-danger">
-          <i class="icon-clock"></i>
-          Settings
-        </a>
-        <a class="tab-item tab-item-danger">
-          <i class="icon-keypad-filled"></i>
-          More
-        </a>
-      </nav>
+      <ul>
+        <li><a href="tab-bars-no-icons.html">No Icons</a></li>
+        <li><a href="tab-bars-only-icons.html">Only Icons</a></li>
+        <li><a href="tab-bars-only-icons.html">Icons Left Of Text</a></li>
+      </ul>
 
-    </section>
+    </main>
+    
+    <nav id="tab-bar" class="tabs tabs-default">
+      <a class="tab-item tab-item-danger" href="#">
+        <i class="icon-game-controller-a"></i>
+        Fun
+      </a>
+      <a class="tab-item tab-item-danger">
+        <i class="icon-locked"></i>
+        Security
+      </a>
+      <a class="tab-item tab-item-danger">
+        <i class="icon-heart"></i>
+        Simple
+      </a>
+      <a class="tab-item tab-item-danger">
+        <i class="icon-leaf"></i>
+        Light
+      </a>
+      <a class="tab-item tab-item-danger">
+        <i class="icon-waterdrop"></i>
+        Clean
+      </a>
+    </nav>
 
-    <script src="../dist/ionic.js"></script>
-    <script>
-      var sec = document.getElementsByTagName('section')[0];
-      var types = ['default', 'secondary', 'primary', 'info', 'success', 'warning', 'danger', 'dark'];
-      for(var i = 0; i < types.length; i++) {
-        var t = types[i];
-        sec.innerHTML += '<nav id="tab-bar" class="tabs tabs-' + t + '">' +
-          '<a class="tab-item" href="#">'+
-            '<i class="icon-star"></i>' +
-            'Friends' +
-          '</a>' +
-          '<a class="tab-item">' +
-            '<i class="icon-star-filled"></i>' +
-            'Enemies' +
-          '</a>' +
-          '<a class="tab-item">' +
-            '<i class="icon-clock"></i>' +
-            'Settings' +
-          '</a>' +
-          '<a class="tab-item">' +
-            '<i class="icon-keypad-filled"></i>' +
-            'More' +
-          '</a>' +
-        '</nav>';
-      }
-      var buttons = document.querySelectorAll('.tab-item');
-      var a;
-      for(var i = 0; i < buttons.length; i++) {
-        a = buttons[i];
-        a.addEventListener('touchstart', function() {
-          this.classList.add('active');
-        });
-        a.addEventListener('touchend', function() {
-          this.classList.remove('active');
-        });
-        a.addEventListener('touchcancel', function() {
-          this.classList.remove('active');
-        });
-      }
-    </script>
   </body>
 </html>

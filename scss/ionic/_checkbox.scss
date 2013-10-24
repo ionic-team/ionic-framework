@@ -1,4 +1,7 @@
 
+// Checkbox
+// -------------------------------
+
 .checkbox {
   position: relative;
   display: inline-block;
@@ -58,16 +61,16 @@
   opacity: 1;
 }
 
-/* make sure list item content have enough padding on left to fit the checkbox */
-.checkbox-item .list-item-content {
-  padding-left: ($list-item-padding * 2) + $checkbox-width;
+/* make sure item content have enough padding on left to fit the checkbox */
+.item-checkbox .item-content {
+  padding-left: ($item-padding * 2) + $checkbox-width;
 }
 
-/* position the checkbox to the left within a list item */
-.checkbox-item .checkbox {
+/* position the checkbox to the left within an item */
+.item-checkbox .checkbox {
   position: absolute;
   top: 0;
-  left: $list-item-padding / 2;
+  left: $item-padding / 2;
   z-index: 3;
   display: flex;
   height: 100%;

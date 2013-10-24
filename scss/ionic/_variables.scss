@@ -347,14 +347,6 @@ $list-header-color:               #222;
 $list-header-padding:             5px 15px;
 $list-header-margin-top:          20px !default;
 
-$list-divider-bg:                 #f5f5f5;
-$list-divider-color:              #222;
-$list-divider-padding:            5px 15px;
-
-$list-item-border-width:          1px !default;
-$list-item-border-color:          #ddd;
-$list-item-padding:               15px !default;
-
 $list-default-background:         $brand-default;
 $list-default-border:             #ddd;
 
@@ -379,13 +371,39 @@ $list-danger-border:              $brand-danger;
 $list-dark-background:            $brand-dark;
 $list-dark-border:                $brand-dark;
 
-$list-icon-font-size:             28px !default;
 
-$list-thumbnail-width:           40px !default;
-$list-thumbnail-height:          40px !default;
+// Cards
+// -------------------------------
 
-$list-thumbnail-lrg-width:        80px !default;
-$list-thumbnail-lrg-height:       80px !default;
+$card-header-bg:            #F5F5F5;
+$card-body-bg:              #fff;
+$card-footer-bg:            #F5F5F5;
+
+$card-padding:              10px !default;
+$card-border-width:         1px !default;
+
+$card-border-color:         #ccc;
+$card-border-radius:        2px !default;
+
+
+// Items
+// -------------------------------
+
+$item-border-width:            1px !default;
+$item-border-color:            #ddd;
+$item-padding:                 15px !default;
+
+$item-divider-bg:              #f5f5f5;
+$item-divider-color:           #222;
+$item-divider-padding:         5px 15px;
+
+$item-icon-font-size:          28px !default;
+
+$item-thumbnail-width:           40px !default;
+$item-thumbnail-height:          40px !default;
+
+$item-thumbnail-lrg-width:        80px !default;
+$item-thumbnail-lrg-height:       80px !default;
 
 
 // Icons
@@ -401,18 +419,6 @@ $menu-bg:                   #eee;
 $menu-inset-border-color:   #bbb;
 $menu-width:               270px;
 $menu-animation-speed:     200ms;
-
-
-// Cards
-// -------------------------------
-
-$card-header-bg:            #F5F5F5;
-$card-body-bg:              #fff;
-$card-footer-bg:            #F5F5F5;
-$card-padding:              10px !default;
-$card-border-width:         1px !default;
-$card-border-color:         #ccc;
-$card-border-radius:        2px !default;
 
 
 // Modals

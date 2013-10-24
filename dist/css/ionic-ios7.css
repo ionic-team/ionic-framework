@@ -952,15 +952,7 @@ address {
   .modal.active {
     height: 100%; }
 
-.list {
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 20px;
-  padding-top: 1px;
-  padding-bottom: 1px;
-  padding-left: 0; }
-
-.list-item {
+.item {
   position: relative;
   z-index: 2;
   display: block;
@@ -968,137 +960,126 @@ address {
   border: none;
   background-color: white;
   box-shadow: inset 0 0 1px #666666; }
-  .list-item .badge {
+  .item .badge {
     float: right; }
-  .list-item .badge + .badge {
+  .item .badge + .badge {
     margin-right: 5px; }
-  .list-item.active, .list-item.active:hover, .list-item.active:focus {
+  .item.active, .item.active:hover, .item.active:focus {
     z-index: 2; }
-    .list-item.active .list-item-heading, .list-item.active:hover .list-item-heading, .list-item.active:focus .list-item-heading {
+    .item.active .item-heading, .item.active:hover .item-heading, .item.active:focus .item-heading {
       color: inherit; }
-  .list-item.list-item-default {
+  .item.item-default {
     /*
     color: $color;
     background-color: $bgColor;
     border-color: $borderColor;
     */ }
-    .list-item.list-item-default.active, .list-item.list-item-default:active {
+    .item.item-default.active, .item.item-default:active {
       color: #333333;
       background-color: white;
       border-color: #333333; }
-      .list-item.list-item-default.active .list-item-content, .list-item.list-item-default:active .list-item-content {
+      .item.item-default.active .list-item-content, .item.item-default:active .list-item-content {
         background-color: white;
         color: #333333; }
-  .list-item.list-item-secondary {
+  .item.item-secondary {
     /*
     color: $color;
     background-color: $bgColor;
     border-color: $borderColor;
     */ }
-    .list-item.list-item-secondary.active, .list-item.list-item-secondary:active {
+    .item.item-secondary.active, .item.item-secondary:active {
       color: #333333;
       background-color: white;
       border-color: #333333; }
-      .list-item.list-item-secondary.active .list-item-content, .list-item.list-item-secondary:active .list-item-content {
+      .item.item-secondary.active .list-item-content, .item.item-secondary:active .list-item-content {
         background-color: white;
         color: #333333; }
-  .list-item.list-item-primary {
+  .item.item-primary {
     /*
     color: $color;
     background-color: $bgColor;
     border-color: $borderColor;
     */ }
-    .list-item.list-item-primary.active, .list-item.list-item-primary:active {
+    .item.item-primary.active, .item.item-primary:active {
       color: white;
       background-color: #4a87ee;
       border-color: #333333; }
-      .list-item.list-item-primary.active .list-item-content, .list-item.list-item-primary:active .list-item-content {
+      .item.item-primary.active .list-item-content, .item.item-primary:active .list-item-content {
         background-color: #4a87ee;
         color: white; }
-  .list-item.list-item-info {
+  .item.item-info {
     /*
     color: $color;
     background-color: $bgColor;
     border-color: $borderColor;
     */ }
-    .list-item.list-item-info.active, .list-item.list-item-info:active {
+    .item.item-info.active, .item.item-info:active {
       color: white;
       background-color: #43cee6;
       border-color: #333333; }
-      .list-item.list-item-info.active .list-item-content, .list-item.list-item-info:active .list-item-content {
+      .item.item-info.active .list-item-content, .item.item-info:active .list-item-content {
         background-color: #43cee6;
         color: white; }
-  .list-item.list-item-success {
+  .item.item-success {
     /*
     color: $color;
     background-color: $bgColor;
     border-color: $borderColor;
     */ }
-    .list-item.list-item-success.active, .list-item.list-item-success:active {
+    .item.item-success.active, .item.item-success:active {
       color: white;
       background-color: #66cc33;
       border-color: #333333; }
-      .list-item.list-item-success.active .list-item-content, .list-item.list-item-success:active .list-item-content {
+      .item.item-success.active .list-item-content, .item.item-success:active .list-item-content {
         background-color: #66cc33;
         color: white; }
-  .list-item.list-item-warning {
+  .item.item-warning {
     /*
     color: $color;
     background-color: $bgColor;
     border-color: $borderColor;
     */ }
-    .list-item.list-item-warning.active, .list-item.list-item-warning:active {
+    .item.item-warning.active, .item.item-warning:active {
       color: white;
       background-color: #f0b840;
       border-color: #333333; }
-      .list-item.list-item-warning.active .list-item-content, .list-item.list-item-warning:active .list-item-content {
+      .item.item-warning.active .list-item-content, .item.item-warning:active .list-item-content {
         background-color: #f0b840;
         color: white; }
-  .list-item.list-item-danger {
+  .item.item-danger {
     /*
     color: $color;
     background-color: $bgColor;
     border-color: $borderColor;
     */ }
-    .list-item.list-item-danger.active, .list-item.list-item-danger:active {
+    .item.item-danger.active, .item.item-danger:active {
       color: white;
       background-color: #ef4e3a;
       border-color: #333333; }
-      .list-item.list-item-danger.active .list-item-content, .list-item.list-item-danger:active .list-item-content {
+      .item.item-danger.active .list-item-content, .item.item-danger:active .list-item-content {
         background-color: #ef4e3a;
         color: white; }
-  .list-item.list-item-dark {
+  .item.item-dark {
     /*
     color: $color;
     background-color: $bgColor;
     border-color: $borderColor;
     */ }
-    .list-item.list-item-dark.active, .list-item.list-item-dark:active {
+    .item.item-dark.active, .item.item-dark:active {
       color: white;
       background-color: #444444;
       border-color: #333333; }
-      .list-item.list-item-dark.active .list-item-content, .list-item.list-item-dark:active .list-item-content {
+      .item.item-dark.active .list-item-content, .item.item-dark:active .list-item-content {
         background-color: #444444;
         color: white; }
 
-a.list-item {
+a.item {
   color: #333333;
   text-decoration: none; }
-  a.list-item:hover, a.list-item:focus {
+  a.item:hover, a.item:focus {
     text-decoration: none; }
 
-/**
- * List editing styles. These trigger when the entire list goes into
- * "edit mode"
- */
-.list-editing .list-item-content {
-  margin-right: 30px;
-  margin-left: 30px; }
-.list-editing .list-item-edit {
-  left: 0px;
-  opacity: 1; }
-
-.list-item-content {
+.item-content {
   /**
    * The content area of a complex list item. This area can
    * Slide left and right and be dragged to support different
@@ -1115,35 +1096,35 @@ a.list-item {
   white-space: nowrap;
   font-size: 16px;
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
-  .list-item-content h2 {
+  .item-content h2 {
     margin: 0 0 4px 0;
     font-size: 16px; }
-  .list-item-content h3 {
+  .item-content h3 {
     margin: 0 0 4px 0;
     font-size: 14px; }
-  .list-item-content h3 {
+  .item-content h3 {
     margin: 0 0 4px 0;
     font-size: 12px; }
-  .list-item-content h4, .list-item-content h5, .list-item-content h6 {
+  .item-content h4, .item-content h5, .item-content h6 {
     margin: 0 0 3px 0;
     font-size: 10px; }
-  .list-item-content p {
+  .item-content p {
     color: #666;
     font-size: 14px; }
-  .list-item-content h1:last-child,
-  .list-item-content h2:last-child,
-  .list-item-content h3:last-child,
-  .list-item-content h4:last-child,
-  .list-item-content h5:last-child,
-  .list-item-content h6:last-child,
-  .list-item-content p:last-child {
+  .item-content h1:last-child,
+  .item-content h2:last-child,
+  .item-content h3:last-child,
+  .item-content h4:last-child,
+  .item-content h5:last-child,
+  .item-content h6:last-child,
+  .item-content p:last-child {
     margin-bottom: 0; }
 
-.list-item-text-wrap {
+.item-text-wrap {
   overflow: auto;
   white-space: normal; }
 
-.list-item-content i {
+.item-content i {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-flex;
@@ -1159,19 +1140,19 @@ a.list-item {
   height: 100%;
   font-size: 28px; }
 
-.list-icon-left .list-item-content {
+.item-icon-left .item-content {
   padding-left: 45px; }
-  .list-icon-left .list-item-content i {
+  .item-icon-left .item-content i {
     left: 7.5px; }
 
-.list-icon-right .list-item-content i {
+.item-icon-right .item-content i {
   right: 7.5px; }
 
-.list-icon-left.list-icon-right .list-item-content i:last-child {
+.item-icon-left.item-icon-right .item-content i:last-child {
   left: auto; }
 
-a .list-item-content:after,
-button .list-item-content:after {
+a .item-content:after,
+button .item-content:after {
   /* By default, both <a> and <button> have right side arrow icons */
   display: -webkit-box;
   display: -webkit-flex;
@@ -1199,14 +1180,14 @@ button .list-item-content:after {
   speak: none;
   -webkit-font-smoothing: antialiased; }
 
-a.list-icon-right .list-item-content:after,
-button.list-icon-right .list-item-content:after {
+a.item-icon-right .item-content:after,
+button.item-icon-right .item-content:after {
   display: none; }
 
-.list-item-thumbnail .list-item-content {
+.item-thumbnail .item-content {
   padding-left: 70px;
   min-height: 70px; }
-  .list-item-thumbnail .list-item-content img:first-child, .list-item-thumbnail .list-item-content .list-img {
+  .item-thumbnail .item-content img:first-child, .item-thumbnail .item-content .item-img {
     position: absolute;
     top: 15px;
     left: 15px;
@@ -1215,10 +1196,10 @@ button.list-icon-right .list-item-content:after {
     width: 100%;
     border-radius: 4px; }
 
-.list-item-thumbnail-lrg .list-item-content {
+.item-thumbnail-lrg .item-content {
   padding-left: 95px;
   min-height: 80px; }
-  .list-item-thumbnail-lrg .list-item-content img:first-child, .list-item-thumbnail-lrg .list-item-content .list-img {
+  .item-thumbnail-lrg .item-content img:first-child, .item-thumbnail-lrg .item-content .item-img {
     position: absolute;
     top: 0;
     left: 0;
@@ -1226,20 +1207,13 @@ button.list-icon-right .list-item-content:after {
     max-height: 80px;
     width: 100%; }
 
-.list-item-image .list-item-content {
+.item-image .item-content {
   text-align: center;
   padding: 0; }
-  .list-item-image .list-item-content img:first-child, .list-item-image .list-item-content .list-img {
+  .item-image .item-content img:first-child, .item-image .item-content .list-img {
     width: 100%; }
 
-.list-header {
-  margin-top: 20px;
-  padding: 5px 15px;
-  background-color: transparent;
-  color: #222222;
-  font-weight: bold; }
-
-.list-divider {
+.item-divider {
   margin: -1px;
   padding: 5px 15px;
   border: none;
@@ -1248,25 +1222,25 @@ button.list-icon-right .list-item-content:after {
   color: #222222;
   font-weight: bold; }
 
-.card.list .list-divider {
+.card.list .item-divider {
   margin-right: 0;
   margin-left: 0; }
 
-.list-item-sliding {
+.item-sliding {
   -webkit-transition: -webkit-transform 0.1s ease-in-out; }
 
-.list-item-reordering {
+.item-reordering {
   position: absolute;
   width: 100%; }
 
-.list-item-placeholder {
+.item-placeholder {
   opacity: 0.7; }
 
 /**
  * The left-side edit area of a complex list item. This area shows
  * whe the list item is in edit mode.
  */
-.list-item-edit {
+.item-edit {
   position: absolute;
   top: 0;
   left: -48px;
@@ -1276,33 +1250,33 @@ button.list-icon-right .list-item-content:after {
   line-height: 100%;
   opacity: 0;
   -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
-  .list-item-edit .button {
+  .item-edit .button {
     height: 100%; }
-  .list-item-edit i {
+  .item-edit i {
     color: #ef4e3a;
     font-size: 24px; }
-  .list-item-edit.ng-enter {
+  .item-edit.ng-enter {
     left: -48px;
     opacity: 0;
     -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
-  .list-item-edit.ng-enter-active {
+  .item-edit.ng-enter-active {
     left: 0;
     opacity: 1; }
-  .list-item-edit.ng-leave {
+  .item-edit.ng-leave {
     left: 0px;
     opacity: 1;
     -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
-  .list-item-edit.ng-leave-active {
+  .item-edit.ng-leave-active {
     left: -48px;
     opacity: 0; }
 
-.list-item-drag {
+.item-drag {
   position: absolute;
   top: 0;
   right: 0;
   z-index: 0;
   height: 100%; }
-  .list-item-drag .button {
+  .item-drag .button {
     height: 100%;
     border: none;
     border-radius: 0; }
@@ -1311,16 +1285,42 @@ button.list-icon-right .list-item-content:after {
  * The hidden right-side buttons that can be exposed under a list item
  * with dragging.
  */
-.list-item-buttons {
+.item-buttons {
   position: absolute;
   top: 0;
   right: 0;
   z-index: 1;
   height: 100%; }
-  .list-item-buttons .button {
+  .item-buttons .button {
     height: 100%;
     border: none;
     border-radius: 0; }
+
+.list {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 0; }
+
+/**
+ * List editing styles. These trigger when the entire list goes into
+ * "edit mode"
+ */
+.list-editing .item-content {
+  margin-right: 30px;
+  margin-left: 30px; }
+.list-editing .item-edit {
+  left: 0px;
+  opacity: 1; }
+
+.list-header {
+  margin-top: 20px;
+  padding: 5px 15px;
+  background-color: transparent;
+  color: #222222;
+  font-weight: bold; }
 
 .list-refresher {
   overflow: hidden;
@@ -1335,6 +1335,45 @@ button.list-icon-right .list-item-content:after {
   float: right;
   color: #aaa;
   font-size: 14px; }
+
+.card {
+  overflow: hidden;
+  margin: 20px 10px;
+  border: none;
+  border-radius: 2px;
+  background-color: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
+
+.card-header {
+  padding: 10px;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  background-color: whitesmoke; }
+  .card-header.card-header-secondary {
+    background-color: whitesmoke; }
+  .card-header.card-header-primary {
+    background-color: #4a87ee; }
+  .card-header.card-header-info {
+    background-color: #43cee6; }
+  .card-header.card-header-success {
+    background-color: #66cc33; }
+  .card-header.card-header-warning {
+    background-color: #f0b840; }
+  .card-header.card-header-danger {
+    background-color: #ef4e3a; }
+  .card-header.card-header-dark {
+    background-color: #444444; }
+
+.card-body {
+  padding: 10px; }
+  .card-body h1, .card-body h2, .card-body h3, .card-body h4, .card-body h5, .card-body h6, .card-body p {
+    margin-top: 10px; }
+
+.card-footer {
+  padding: 10px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  background-color: whitesmoke; }
 
 form {
   margin: 0 0 1.42857; }
@@ -1599,11 +1638,11 @@ input[type="checkbox"][readonly] {
     -webkit-transform: none;
     transition-delay: 0.05s, 0s; }
 
-.radio-buttton-list .list-item-content {
+.item-radio .item-content {
   /* give some room to the right for the checkmark icon */
   padding-right: 60px; }
 
-.radio-buttton-list .radio-button-icon {
+.item-radio .radio-icon {
   /* checkmark icon will be hidden by default */
   position: absolute;
   top: 0;
@@ -1614,13 +1653,13 @@ input[type="checkbox"][readonly] {
   height: 100%;
   font-size: 24px; }
 
-.radio-buttton-list input[type="radio"] {
+.item-radio input[type="radio"] {
   /* hide any radio button inputs elements (the ugly circles) */
   display: none; }
-  .radio-buttton-list input[type="radio"]:checked ~ .list-item-content {
-    /* style the list item content when its checked */
+  .item-radio input[type="radio"]:checked ~ .item-content {
+    /* style the item content when its checked */
     background: #f7f7f7; }
-  .radio-buttton-list input[type="radio"]:checked ~ .radio-button-icon {
+  .item-radio input[type="radio"]:checked ~ .radio-icon {
     /* show the checkmark icon when its checked */
     visibility: visible; }
 
@@ -2041,45 +2080,6 @@ a.button {
 
 .alert-info h4 {
   color: #3a87ad; }
-
-.card {
-  overflow: hidden;
-  margin: 20px 10px;
-  border: none;
-  border-radius: 2px;
-  background-color: white;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
-
-.card-header {
-  padding: 10px;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  background-color: whitesmoke; }
-  .card-header.card-header-secondary {
-    background-color: whitesmoke; }
-  .card-header.card-header-primary {
-    background-color: #4a87ee; }
-  .card-header.card-header-info {
-    background-color: #43cee6; }
-  .card-header.card-header-success {
-    background-color: #66cc33; }
-  .card-header.card-header-warning {
-    background-color: #f0b840; }
-  .card-header.card-header-danger {
-    background-color: #ef4e3a; }
-  .card-header.card-header-dark {
-    background-color: #444444; }
-
-.card-body {
-  padding: 10px; }
-  .card-body h1, .card-body h2, .card-body h3, .card-body h4, .card-body h5, .card-body h6, .card-body p {
-    margin-top: 10px; }
-
-.card-footer {
-  padding: 10px;
-  border-bottom-right-radius: 2px;
-  border-bottom-left-radius: 2px;
-  background-color: whitesmoke; }
 
 .slide-in-up {
   opacity: 0;

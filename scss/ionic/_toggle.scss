@@ -8,7 +8,7 @@
   display: inline-block;
 }
 
-.toggle input {
+.toggle input[type="checkbox"] {
   /* set the actual checkbox input to have a width/height */
   /* but hide its appearance, then use :after to style it */
   width: $toggle-width;
@@ -72,14 +72,14 @@
 }
 
 /* make sure list item content have enough padding on right to fit the toggle */
-.toggle-item .list-item-content {
-  padding-right: ($list-item-padding * 3) + $toggle-width;
+.item-toggle .item-content {
+  padding-right: ($item-padding * 3) + $toggle-width;
 }
 
 /* position the toggle to the right within a list item */
-.toggle-item .toggle {
+.item-toggle .toggle {
   position: absolute;
-  top: $list-item-padding / 2;
-  right: $list-item-padding;
+  top: $item-padding / 2;
+  right: $item-padding;
   z-index: 3;
 }

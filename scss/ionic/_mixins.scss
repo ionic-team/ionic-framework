@@ -51,7 +51,7 @@
   }
 }
 
-@mixin list-style($bgColor, $borderColor, $color) {
+@mixin item-style($bgColor, $borderColor, $color) {
   color: $color;
 	background-color: $bgColor;
 	border-color: $borderColor;
@@ -74,7 +74,7 @@
 }
 
 //$bgColor, $borderColor, $color, 
-@mixin list-item-style-active($activeBgColor, $activeBorderColor, $activeColor) {
+@mixin item-style-active($activeBgColor, $activeBorderColor, $activeColor) {
   /*
   color: $color;
   background-color: $bgColor;

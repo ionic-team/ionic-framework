@@ -2,33 +2,33 @@
 // Radio Buttons
 // -------------------------------
 
-.radio-buttton-list .list-item-content {
+.item-radio .item-content {
   /* give some room to the right for the checkmark icon */
-  padding-right: $list-item-padding * 4;
+  padding-right: $item-padding * 4;
 }
 
-.radio-buttton-list .radio-button-icon {
+.item-radio .radio-icon {
   /* checkmark icon will be hidden by default */
   position: absolute;
   top: 0;
   right: 0;
   z-index: 3;
   visibility: hidden;
-  padding: $list-item-padding - 2;
+  padding: $item-padding - 2;
   height: 100%;
   font-size: 24px;
 }
 
-.radio-buttton-list input[type="radio"] {
+.item-radio input[type="radio"] {
   /* hide any radio button inputs elements (the ugly circles) */
   display: none;
 
-  &:checked ~ .list-item-content {
-    /* style the list item content when its checked */
+  &:checked ~ .item-content {
+    /* style the item content when its checked */
     background: #f7f7f7;
   }
 
-  &:checked ~ .radio-button-icon {
+  &:checked ~ .radio-icon {
     /* show the checkmark icon when its checked */
     visibility: visible;
   }

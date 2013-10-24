@@ -1,0 +1,338 @@
+
+// Item
+// -------------------------------
+
+.item {
+  position: relative;
+
+  z-index: 2; // Make sure the borders and stuff don't get hidden by children
+  display: block;
+  margin: $item-border-width * -1;
+
+  border: none;
+
+  background-color: $list-default-background;
+  box-shadow: inset 0 0 $item-border-width #666;
+
+  // Align badges within list items
+  .badge {
+    float: right;
+  }
+
+  .badge + .badge {
+    margin-right: 5px;
+  }
+
+  // Active class on item itself, not parent
+  &.active,
+  &.active:hover,
+  &.active:focus {
+    z-index: 2; 
+
+    // Force color to inherit for custom content
+    .item-heading {
+      color: inherit;
+    }
+  }
+
+  // Different themes for list items
+  &.item-default { @include item-style-active($brand-default, $gray-dark, $gray-dark); }
+  &.item-secondary { @include item-style-active($brand-default, $gray-dark, $gray-dark); }
+  &.item-primary { @include item-style-active($brand-primary, $gray-dark, $white); }
+  &.item-info { @include item-style-active($brand-info, $gray-dark, $white); }
+  &.item-success { @include item-style-active($brand-success, $gray-dark, $white); }
+  &.item-warning { @include item-style-active($brand-warning, $gray-dark, $white); }
+  &.item-danger { @include item-style-active($brand-danger, $gray-dark, $white); }
+  &.item-dark { @include item-style-active($brand-dark, $gray-dark, $white); }
+}
+
+// Linked list items
+a.item {
+  color: $gray-dark;
+  text-decoration: none;
+
+  // Hover state
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+
+// List Item Content
+// -------------------------------
+
+.item-content {
+  /**
+   * The content area of a complex list item. This area can
+   * Slide left and right and be dragged to support different
+   * UI interactions.
+   */
+  position: relative;
+
+  z-index: 2;
+  overflow: hidden;
+  padding: $item-padding (($item-padding * 3) - 5) $item-padding $item-padding;
+
+  border: none;
+  background-color: #fff;
+  box-shadow: inset 0 0 $item-border-width #666;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: $list-font-size;
+
+  -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
+
+  h2 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+  }
+  h3 {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+  }
+  h3 {
+    margin: 0 0 4px 0;
+    font-size: 12px;
+  }
+  h4, h5, h6 {
+    margin: 0 0 3px 0;
+    font-size: 10px;
+  }
+  p {
+    color: #666;
+    font-size: 14px;
+  }
+
+  h1:last-child,
+  h2:last-child,
+  h3:last-child,
+  h4:last-child,
+  h5:last-child,
+  h6:last-child,
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.item-text-wrap {
+  overflow: auto;
+  white-space: normal;
+}
+
+
+// List Icons
+// -------------------------------
+
+.item-content i {
+  @include display-flex();
+  @include align-items(center);
+  position: absolute;
+  top: 0;
+  height: 100%;
+  font-size: $item-icon-font-size;
+
+}
+
+.item-icon-left .item-content {
+  padding-left: ($item-padding * 3);
+
+  i {
+    left: $item-padding / 2;
+  }
+}
+
+.item-icon-right .item-content i {
+  right: $item-padding / 2;
+}
+
+.item-icon-left.item-icon-right .item-content i:last-child {
+  left: auto;
+}
+
+a .item-content:after,
+button .item-content:after {
+  /* By default, both <a> and <button> have right side arrow icons */
+  @include display-flex();
+  @include align-items(center);
+  position: absolute;
+  top: 0;
+  right: $item-padding - 4;
+  height: 100%;
+  color: #ccc;
+  content: "\e0fc"; // icon-chevron-right
+  text-transform: none;
+  font-weight: normal;
+  font-style: normal;
+  font-variant: normal;
+  font-size: 16px;
+  font-family: 'ionicons';
+  line-height: 1;
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+// do not show the default right arrow when they want their own right side icon
+a.item-icon-right,
+button.item-icon-right {
+  .item-content:after {
+    display: none;
+  }
+}
+
+
+// Item Thumbnails
+// -------------------------------
+
+.item-thumbnail .item-content {
+  padding-left: $item-thumbnail-width + ($item-padding * 2);
+  min-height: $item-thumbnail-width + ($item-padding * 2);
+
+  img:first-child, .item-img {
+    position: absolute;
+    top: $item-padding;
+    left: $item-padding;
+    max-width: $item-thumbnail-width;
+    max-height: $item-thumbnail-height;
+    width: 100%;
+    border-radius: 4px;
+  }
+}
+
+.item-thumbnail-lrg .item-content {
+  padding-left: $item-thumbnail-lrg-width + $item-padding;
+  min-height: $item-thumbnail-lrg-height;
+
+  img:first-child, .item-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: $item-thumbnail-lrg-width;
+    max-height: $item-thumbnail-lrg-height;
+    width: 100%;
+  }
+}
+
+
+// Item Image
+// -------------------------------
+
+.item-image .item-content {
+  text-align: center;
+  padding: 0;
+  
+  img:first-child, .list-img {
+    width: 100%;
+  }
+}
+
+
+// Item Divider
+// -------------------------------
+
+.item-divider {
+  margin: $item-border-width * -1;
+  padding: $item-divider-padding;
+  border: none;
+  background-color: $item-divider-bg;
+  box-shadow: inset 0 0 $item-border-width #666;
+  color: $item-divider-color;
+  font-weight: bold;
+}
+.card.list .item-divider {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+
+// Item Animations
+// -------------------------------
+
+.item-sliding {
+  -webkit-transition: -webkit-transform 0.1s ease-in-out;
+}
+
+.item-reordering {
+  position: absolute;
+  width: 100%;
+}
+
+.item-placeholder {
+  opacity: 0.7;
+}
+
+/**
+ * The left-side edit area of a complex list item. This area shows
+ * whe the list item is in edit mode.
+ */
+.item-edit {
+  position: absolute;
+  top: 0;
+  left: -48px;
+  z-index: 0;
+  width: 48px;
+  height: 100%;
+  line-height: 100%;
+  opacity: 0;
+
+  -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
+
+  .button {
+    height: 100%;
+  }
+
+  i {
+    color: $brand-danger;
+    font-size: 24px;
+  }
+
+  &.ng-enter {
+    left: -48px;
+    opacity: 0;
+    -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  }
+  &.ng-enter-active {
+    left: 0;
+    opacity: 1;
+  }
+  &.ng-leave {
+    left: 0px;
+    opacity: 1;
+    -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  }
+  &.ng-leave-active {
+    left: -48px;
+    opacity: 0;
+  }
+}
+
+.item-drag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 0;
+  height: 100%;
+
+  .button {
+    height: 100%;
+    border: none;
+    border-radius: 0;
+  }
+}
+/**
+ * The hidden right-side buttons that can be exposed under a list item
+ * with dragging.
+ */
+.item-buttons {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  height: 100%;
+
+  .button {
+    height: 100%;
+    border: none;
+    border-radius: 0;
+  }
+}

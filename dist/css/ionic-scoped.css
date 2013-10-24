@@ -150,10 +150,6 @@
    * Modals are independent windows that slide in from off-screen.
    */
   /**
-   * List editing styles. These trigger when the entire list goes into
-   * "edit mode"
-   */
-  /**
    * The left-side edit area of a complex list item. This area shows
    * whe the list item is in edit mode.
    */
@@ -161,11 +157,15 @@
    * The hidden right-side buttons that can be exposed under a list item
    * with dragging.
    */
+  /**
+   * List editing styles. These trigger when the entire list goes into
+   * "edit mode"
+   */
   /* the checkmark within the box */
   /* what the background looks like when its checked */
   /* what the checkmark looks like when its checked */
-  /* make sure list item content have enough padding on left to fit the checkbox */
-  /* position the checkbox to the left within a list item */
+  /* make sure item content have enough padding on left to fit the checkbox */
+  /* position the checkbox to the left within an item */
   /* the overall container of the toggle */
   /* the handle (circle) thats inside the toggle's track area */
   /* also the appearance when the handle is "off" */
@@ -1677,14 +1677,7 @@
     background-color: white; }
     .ionic .modal.active {
       height: 100%; }
-  .ionic .list {
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 20px;
-    padding-top: 1px;
-    padding-bottom: 1px;
-    padding-left: 0; }
-  .ionic .list-item {
+  .ionic .item {
     position: relative;
     z-index: 2;
     display: block;
@@ -1692,130 +1685,124 @@
     border: none;
     background-color: white;
     box-shadow: inset 0 0 1px #666666; }
-    .ionic .list-item .badge {
+    .ionic .item .badge {
       float: right; }
-    .ionic .list-item .badge + .badge {
+    .ionic .item .badge + .badge {
       margin-right: 5px; }
-    .ionic .list-item.active, .ionic .list-item.active:hover, .ionic .list-item.active:focus {
+    .ionic .item.active, .ionic .item.active:hover, .ionic .item.active:focus {
       z-index: 2; }
-      .ionic .list-item.active .list-item-heading, .ionic .list-item.active:hover .list-item-heading, .ionic .list-item.active:focus .list-item-heading {
+      .ionic .item.active .item-heading, .ionic .item.active:hover .item-heading, .ionic .item.active:focus .item-heading {
         color: inherit; }
-    .ionic .list-item.list-item-default {
+    .ionic .item.item-default {
       /*
       color: $color;
       background-color: $bgColor;
       border-color: $borderColor;
       */ }
-      .ionic .list-item.list-item-default.active, .ionic .list-item.list-item-default:active {
+      .ionic .item.item-default.active, .ionic .item.item-default:active {
         color: #333333;
         background-color: white;
         border-color: #333333; }
-        .ionic .list-item.list-item-default.active .list-item-content, .ionic .list-item.list-item-default:active .list-item-content {
+        .ionic .item.item-default.active .list-item-content, .ionic .item.item-default:active .list-item-content {
           background-color: white;
           color: #333333; }
-    .ionic .list-item.list-item-secondary {
+    .ionic .item.item-secondary {
       /*
       color: $color;
       background-color: $bgColor;
       border-color: $borderColor;
       */ }
-      .ionic .list-item.list-item-secondary.active, .ionic .list-item.list-item-secondary:active {
+      .ionic .item.item-secondary.active, .ionic .item.item-secondary:active {
         color: #333333;
         background-color: white;
         border-color: #333333; }
-        .ionic .list-item.list-item-secondary.active .list-item-content, .ionic .list-item.list-item-secondary:active .list-item-content {
+        .ionic .item.item-secondary.active .list-item-content, .ionic .item.item-secondary:active .list-item-content {
           background-color: white;
           color: #333333; }
-    .ionic .list-item.list-item-primary {
+    .ionic .item.item-primary {
       /*
       color: $color;
       background-color: $bgColor;
       border-color: $borderColor;
       */ }
-      .ionic .list-item.list-item-primary.active, .ionic .list-item.list-item-primary:active {
+      .ionic .item.item-primary.active, .ionic .item.item-primary:active {
         color: white;
         background-color: #4a87ee;
         border-color: #333333; }
-        .ionic .list-item.list-item-primary.active .list-item-content, .ionic .list-item.list-item-primary:active .list-item-content {
+        .ionic .item.item-primary.active .list-item-content, .ionic .item.item-primary:active .list-item-content {
           background-color: #4a87ee;
           color: white; }
-    .ionic .list-item.list-item-info {
+    .ionic .item.item-info {
       /*
       color: $color;
       background-color: $bgColor;
       border-color: $borderColor;
       */ }
-      .ionic .list-item.list-item-info.active, .ionic .list-item.list-item-info:active {
+      .ionic .item.item-info.active, .ionic .item.item-info:active {
         color: white;
         background-color: #43cee6;
         border-color: #333333; }
-        .ionic .list-item.list-item-info.active .list-item-content, .ionic .list-item.list-item-info:active .list-item-content {
+        .ionic .item.item-info.active .list-item-content, .ionic .item.item-info:active .list-item-content {
           background-color: #43cee6;
           color: white; }
-    .ionic .list-item.list-item-success {
+    .ionic .item.item-success {
       /*
       color: $color;
       background-color: $bgColor;
       border-color: $borderColor;
       */ }
-      .ionic .list-item.list-item-success.active, .ionic .list-item.list-item-success:active {
+      .ionic .item.item-success.active, .ionic .item.item-success:active {
         color: white;
         background-color: #66cc33;
         border-color: #333333; }
-        .ionic .list-item.list-item-success.active .list-item-content, .ionic .list-item.list-item-success:active .list-item-content {
+        .ionic .item.item-success.active .list-item-content, .ionic .item.item-success:active .list-item-content {
           background-color: #66cc33;
           color: white; }
-    .ionic .list-item.list-item-warning {
+    .ionic .item.item-warning {
       /*
       color: $color;
       background-color: $bgColor;
       border-color: $borderColor;
       */ }
-      .ionic .list-item.list-item-warning.active, .ionic .list-item.list-item-warning:active {
+      .ionic .item.item-warning.active, .ionic .item.item-warning:active {
         color: white;
         background-color: #f0b840;
         border-color: #333333; }
-        .ionic .list-item.list-item-warning.active .list-item-content, .ionic .list-item.list-item-warning:active .list-item-content {
+        .ionic .item.item-warning.active .list-item-content, .ionic .item.item-warning:active .list-item-content {
           background-color: #f0b840;
           color: white; }
-    .ionic .list-item.list-item-danger {
+    .ionic .item.item-danger {
       /*
       color: $color;
       background-color: $bgColor;
       border-color: $borderColor;
       */ }
-      .ionic .list-item.list-item-danger.active, .ionic .list-item.list-item-danger:active {
+      .ionic .item.item-danger.active, .ionic .item.item-danger:active {
         color: white;
         background-color: #ef4e3a;
         border-color: #333333; }
-        .ionic .list-item.list-item-danger.active .list-item-content, .ionic .list-item.list-item-danger:active .list-item-content {
+        .ionic .item.item-danger.active .list-item-content, .ionic .item.item-danger:active .list-item-content {
           background-color: #ef4e3a;
           color: white; }
-    .ionic .list-item.list-item-dark {
+    .ionic .item.item-dark {
       /*
       color: $color;
       background-color: $bgColor;
       border-color: $borderColor;
       */ }
-      .ionic .list-item.list-item-dark.active, .ionic .list-item.list-item-dark:active {
+      .ionic .item.item-dark.active, .ionic .item.item-dark:active {
         color: white;
         background-color: #444444;
         border-color: #333333; }
-        .ionic .list-item.list-item-dark.active .list-item-content, .ionic .list-item.list-item-dark:active .list-item-content {
+        .ionic .item.item-dark.active .list-item-content, .ionic .item.item-dark:active .list-item-content {
           background-color: #444444;
           color: white; }
-  .ionic a.list-item {
+  .ionic a.item {
     color: #333333;
     text-decoration: none; }
-    .ionic a.list-item:hover, .ionic a.list-item:focus {
+    .ionic a.item:hover, .ionic a.item:focus {
       text-decoration: none; }
-  .ionic .list-editing .list-item-content {
-    margin-right: 30px;
-    margin-left: 30px; }
-  .ionic .list-editing .list-item-edit {
-    left: 0px;
-    opacity: 1; }
-  .ionic .list-item-content {
+  .ionic .item-content {
     /**
      * The content area of a complex list item. This area can
      * Slide left and right and be dragged to support different
@@ -1832,33 +1819,33 @@
     white-space: nowrap;
     font-size: 16px;
     -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
-    .ionic .list-item-content h2 {
+    .ionic .item-content h2 {
       margin: 0 0 4px 0;
       font-size: 16px; }
-    .ionic .list-item-content h3 {
+    .ionic .item-content h3 {
       margin: 0 0 4px 0;
       font-size: 14px; }
-    .ionic .list-item-content h3 {
+    .ionic .item-content h3 {
       margin: 0 0 4px 0;
       font-size: 12px; }
-    .ionic .list-item-content h4, .ionic .list-item-content h5, .ionic .list-item-content h6 {
+    .ionic .item-content h4, .ionic .item-content h5, .ionic .item-content h6 {
       margin: 0 0 3px 0;
       font-size: 10px; }
-    .ionic .list-item-content p {
+    .ionic .item-content p {
       color: #666;
       font-size: 14px; }
-    .ionic .list-item-content h1:last-child,
-    .ionic .list-item-content h2:last-child,
-    .ionic .list-item-content h3:last-child,
-    .ionic .list-item-content h4:last-child,
-    .ionic .list-item-content h5:last-child,
-    .ionic .list-item-content h6:last-child,
-    .ionic .list-item-content p:last-child {
+    .ionic .item-content h1:last-child,
+    .ionic .item-content h2:last-child,
+    .ionic .item-content h3:last-child,
+    .ionic .item-content h4:last-child,
+    .ionic .item-content h5:last-child,
+    .ionic .item-content h6:last-child,
+    .ionic .item-content p:last-child {
       margin-bottom: 0; }
-  .ionic .list-item-text-wrap {
+  .ionic .item-text-wrap {
     overflow: auto;
     white-space: normal; }
-  .ionic .list-item-content i {
+  .ionic .item-content i {
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-flex;
@@ -1873,16 +1860,16 @@
     top: 0;
     height: 100%;
     font-size: 28px; }
-  .ionic .list-icon-left .list-item-content {
+  .ionic .item-icon-left .item-content {
     padding-left: 45px; }
-    .ionic .list-icon-left .list-item-content i {
+    .ionic .item-icon-left .item-content i {
       left: 7.5px; }
-  .ionic .list-icon-right .list-item-content i {
+  .ionic .item-icon-right .item-content i {
     right: 7.5px; }
-  .ionic .list-icon-left.list-icon-right .list-item-content i:last-child {
+  .ionic .item-icon-left.item-icon-right .item-content i:last-child {
     left: auto; }
-  .ionic a .list-item-content:after,
-  .ionic button .list-item-content:after {
+  .ionic a .item-content:after,
+  .ionic button .item-content:after {
     /* By default, both <a> and <button> have right side arrow icons */
     display: -webkit-box;
     display: -webkit-flex;
@@ -1909,13 +1896,13 @@
     line-height: 1;
     speak: none;
     -webkit-font-smoothing: antialiased; }
-  .ionic a.list-icon-right .list-item-content:after,
-  .ionic button.list-icon-right .list-item-content:after {
+  .ionic a.item-icon-right .item-content:after,
+  .ionic button.item-icon-right .item-content:after {
     display: none; }
-  .ionic .list-item-thumbnail .list-item-content {
+  .ionic .item-thumbnail .item-content {
     padding-left: 70px;
     min-height: 70px; }
-    .ionic .list-item-thumbnail .list-item-content img:first-child, .ionic .list-item-thumbnail .list-item-content .list-img {
+    .ionic .item-thumbnail .item-content img:first-child, .ionic .item-thumbnail .item-content .item-img {
       position: absolute;
       top: 15px;
       left: 15px;
@@ -1923,28 +1910,22 @@
       max-height: 40px;
       width: 100%;
       border-radius: 4px; }
-  .ionic .list-item-thumbnail-lrg .list-item-content {
+  .ionic .item-thumbnail-lrg .item-content {
     padding-left: 95px;
     min-height: 80px; }
-    .ionic .list-item-thumbnail-lrg .list-item-content img:first-child, .ionic .list-item-thumbnail-lrg .list-item-content .list-img {
+    .ionic .item-thumbnail-lrg .item-content img:first-child, .ionic .item-thumbnail-lrg .item-content .item-img {
       position: absolute;
       top: 0;
       left: 0;
       max-width: 80px;
       max-height: 80px;
       width: 100%; }
-  .ionic .list-item-image .list-item-content {
+  .ionic .item-image .item-content {
     text-align: center;
     padding: 0; }
-    .ionic .list-item-image .list-item-content img:first-child, .ionic .list-item-image .list-item-content .list-img {
+    .ionic .item-image .item-content img:first-child, .ionic .item-image .item-content .list-img {
       width: 100%; }
-  .ionic .list-header {
-    margin-top: 20px;
-    padding: 5px 15px;
-    background-color: transparent;
-    color: #222222;
-    font-weight: bold; }
-  .ionic .list-divider {
+  .ionic .item-divider {
     margin: -1px;
     padding: 5px 15px;
     border: none;
@@ -1952,17 +1933,17 @@
     box-shadow: inset 0 0 1px #666666;
     color: #222222;
     font-weight: bold; }
-  .ionic .card.list .list-divider {
+  .ionic .card.list .item-divider {
     margin-right: 0;
     margin-left: 0; }
-  .ionic .list-item-sliding {
+  .ionic .item-sliding {
     -webkit-transition: -webkit-transform 0.1s ease-in-out; }
-  .ionic .list-item-reordering {
+  .ionic .item-reordering {
     position: absolute;
     width: 100%; }
-  .ionic .list-item-placeholder {
+  .ionic .item-placeholder {
     opacity: 0.7; }
-  .ionic .list-item-edit {
+  .ionic .item-edit {
     position: absolute;
     top: 0;
     left: -48px;
@@ -1972,45 +1953,64 @@
     line-height: 100%;
     opacity: 0;
     -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
-    .ionic .list-item-edit .button {
+    .ionic .item-edit .button {
       height: 100%; }
-    .ionic .list-item-edit i {
+    .ionic .item-edit i {
       color: #ef4e3a;
       font-size: 24px; }
-    .ionic .list-item-edit.ng-enter {
+    .ionic .item-edit.ng-enter {
       left: -48px;
       opacity: 0;
       -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
-    .ionic .list-item-edit.ng-enter-active {
+    .ionic .item-edit.ng-enter-active {
       left: 0;
       opacity: 1; }
-    .ionic .list-item-edit.ng-leave {
+    .ionic .item-edit.ng-leave {
       left: 0px;
       opacity: 1;
       -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
-    .ionic .list-item-edit.ng-leave-active {
+    .ionic .item-edit.ng-leave-active {
       left: -48px;
       opacity: 0; }
-  .ionic .list-item-drag {
+  .ionic .item-drag {
     position: absolute;
     top: 0;
     right: 0;
     z-index: 0;
     height: 100%; }
-    .ionic .list-item-drag .button {
+    .ionic .item-drag .button {
       height: 100%;
       border: none;
       border-radius: 0; }
-  .ionic .list-item-buttons {
+  .ionic .item-buttons {
     position: absolute;
     top: 0;
     right: 0;
     z-index: 1;
     height: 100%; }
-    .ionic .list-item-buttons .button {
+    .ionic .item-buttons .button {
       height: 100%;
       border: none;
       border-radius: 0; }
+  .ionic .list {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 0; }
+  .ionic .list-editing .item-content {
+    margin-right: 30px;
+    margin-left: 30px; }
+  .ionic .list-editing .item-edit {
+    left: 0px;
+    opacity: 1; }
+  .ionic .list-header {
+    margin-top: 20px;
+    padding: 5px 15px;
+    background-color: transparent;
+    color: #222222;
+    font-weight: bold; }
   .ionic .list-refresher {
     overflow: hidden;
     height: 0;
@@ -2022,6 +2022,41 @@
     float: right;
     color: #aaa;
     font-size: 14px; }
+  .ionic .card {
+    overflow: hidden;
+    margin: 20px 10px;
+    border: none;
+    border-radius: 2px;
+    background-color: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
+  .ionic .card-header {
+    padding: 10px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    background-color: whitesmoke; }
+    .ionic .card-header.card-header-secondary {
+      background-color: whitesmoke; }
+    .ionic .card-header.card-header-primary {
+      background-color: #4a87ee; }
+    .ionic .card-header.card-header-info {
+      background-color: #43cee6; }
+    .ionic .card-header.card-header-success {
+      background-color: #66cc33; }
+    .ionic .card-header.card-header-warning {
+      background-color: #f0b840; }
+    .ionic .card-header.card-header-danger {
+      background-color: #ef4e3a; }
+    .ionic .card-header.card-header-dark {
+      background-color: #444444; }
+  .ionic .card-body {
+    padding: 10px; }
+    .ionic .card-body h1, .ionic .card-body h2, .ionic .card-body h3, .ionic .card-body h4, .ionic .card-body h5, .ionic .card-body h6, .ionic .card-body p {
+      margin-top: 10px; }
+  .ionic .card-footer {
+    padding: 10px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    background-color: whitesmoke; }
   .ionic form {
     margin: 0 0 1.42857; }
   .ionic legend {
@@ -2247,9 +2282,9 @@
     background: #4a87ee; }
   .ionic .checkbox input:checked:after {
     opacity: 1; }
-  .ionic .checkbox-item .list-item-content {
+  .ionic .item-checkbox .item-content {
     padding-left: 58px; }
-  .ionic .checkbox-item .checkbox {
+  .ionic .item-checkbox .checkbox {
     position: absolute;
     top: 0;
     left: 7.5px;
@@ -2260,7 +2295,7 @@
   .ionic .toggle {
     position: relative;
     display: inline-block; }
-  .ionic .toggle input {
+  .ionic .toggle input[type="checkbox"] {
     /* set the actual checkbox input to have a width/height */
     /* but hide its appearance, then use :after to style it */
     width: 54px;
@@ -2269,7 +2304,7 @@
     background: transparent;
     -webkit-appearance: none;
     /* the track appearance when the toggle is "off" */ }
-    .ionic .toggle input:after {
+    .ionic .toggle input[type="checkbox"]:after {
       display: inline-block;
       box-sizing: border-box;
       width: 100%;
@@ -2306,17 +2341,17 @@
   .ionic .toggle input:checked + .handle {
     background-color: white;
     -webkit-transform: translate3d(22px, 0, 0); }
-  .ionic .toggle-item .list-item-content {
+  .ionic .item-toggle .item-content {
     padding-right: 99px; }
-  .ionic .toggle-item .toggle {
+  .ionic .item-toggle .toggle {
     position: absolute;
     top: 7.5px;
     right: 15px;
     z-index: 3; }
-  .ionic .radio-buttton-list .list-item-content {
+  .ionic .item-radio .item-content {
     /* give some room to the right for the checkmark icon */
     padding-right: 60px; }
-  .ionic .radio-buttton-list .radio-button-icon {
+  .ionic .item-radio .radio-icon {
     /* checkmark icon will be hidden by default */
     position: absolute;
     top: 0;
@@ -2326,13 +2361,13 @@
     padding: 13px;
     height: 100%;
     font-size: 24px; }
-  .ionic .radio-buttton-list input[type="radio"] {
+  .ionic .item-radio input[type="radio"] {
     /* hide any radio button inputs elements (the ugly circles) */
     display: none; }
-    .ionic .radio-buttton-list input[type="radio"]:checked ~ .list-item-content {
-      /* style the list item content when its checked */
+    .ionic .item-radio input[type="radio"]:checked ~ .item-content {
+      /* style the item content when its checked */
       background: #f7f7f7; }
-    .ionic .radio-buttton-list input[type="radio"]:checked ~ .radio-button-icon {
+    .ionic .item-radio input[type="radio"]:checked ~ .radio-icon {
       /* show the checkmark icon when its checked */
       visibility: visible; }
   .ionic input[type="range"] {
@@ -2717,41 +2752,6 @@
     color: #3a87ad; }
   .ionic .alert-info h4 {
     color: #3a87ad; }
-  .ionic .card {
-    overflow: hidden;
-    margin: 20px 10px;
-    border: none;
-    border-radius: 2px;
-    background-color: white;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
-  .ionic .card-header {
-    padding: 10px;
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
-    background-color: whitesmoke; }
-    .ionic .card-header.card-header-secondary {
-      background-color: whitesmoke; }
-    .ionic .card-header.card-header-primary {
-      background-color: #4a87ee; }
-    .ionic .card-header.card-header-info {
-      background-color: #43cee6; }
-    .ionic .card-header.card-header-success {
-      background-color: #66cc33; }
-    .ionic .card-header.card-header-warning {
-      background-color: #f0b840; }
-    .ionic .card-header.card-header-danger {
-      background-color: #ef4e3a; }
-    .ionic .card-header.card-header-dark {
-      background-color: #444444; }
-  .ionic .card-body {
-    padding: 10px; }
-    .ionic .card-body h1, .ionic .card-body h2, .ionic .card-body h3, .ionic .card-body h4, .ionic .card-body h5, .ionic .card-body h6, .ionic .card-body p {
-      margin-top: 10px; }
-  .ionic .card-footer {
-    padding: 10px;
-    border-bottom-right-radius: 2px;
-    border-bottom-left-radius: 2px;
-    background-color: whitesmoke; }
   .ionic .slide-in-up {
     opacity: 0;
     -webkit-transform: translate3d(0, 100%, 0);
