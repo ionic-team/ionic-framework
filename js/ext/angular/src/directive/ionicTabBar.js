@@ -19,7 +19,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
   };
 
   this.select = function(controllerIndex) {
-    var oldIndex = _this.getSelectedIndex();
+    //var oldIndex = _this.getSelectedIndex();
 
     $scope.activeAnimation = $scope.animation;
     /*
