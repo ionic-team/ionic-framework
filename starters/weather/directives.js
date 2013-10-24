@@ -7,12 +7,11 @@ angular.module('ionic.weather.directives', [])
     template: '<span class="current-time">{{currentTime}}</span>',
     scope: {
       localtz: '=',
-      localTime: '='
     },
     link: function($scope, $element, $attr) {
       $timeout(function checkTime() {
-        if($scope.localTime && $scope.localtz) {
-          $scope.currentTime = $filter('date')(parseInt($scope.localTime), 'h:mm') + $scope.localtz;
+        if($scope.localtz) {
+          $scope.currentTime = $filter('date')(+(new Date), 'h:mm') + $scope.localtz;
         }
         $timeout(checkTime, 500);
       });
