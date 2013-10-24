@@ -1,29 +1,21 @@
 (function(ionic) {
 'use strict';
 
-  /**
-   * The Scroll view is a container that suppoerts complex
-   * and customizable scroll behavior.
-   *
-   * This is a replacement for the buggy and shallow -webkit-overflow-scroll: touch.
-   * which is fine for web apps that want to have overflow scrolling containers,
-   * but HTML5 hybrid apps benefit from the same kind of scroll abstractions
-   * seen on iOS or Android.
-   */
   ionic.views.ScrollView = function(opts) {
     var _this = this;
 
     // Extend the options with our defaults
     ionic.Utils.extend(opts, {
-      decelerationRate: ionic.views.Scroll.prototype.DECEL_RATE_NORMAL,
+      decelerationRate: ionic.views.ScrollView.prototype.DECEL_RATE_NORMAL,
       dragThresholdY: 10,
       resistance: 2,
       scrollEventName: 'momentumScrolled',
-      intertialEventInterval: 50,
-      showScrollBar: true
+      intertialEventInterval: 50
     });
 
     ionic.Utils.extend(this, opts);
+
+    this.el = opts.el;
 
     // Listen for drag and release events
     ionic.onGesture('drag', function(e) {
@@ -110,6 +102,8 @@
       var scrollTop = parseFloat(this.el.style.webkitTransform.replace('translate3d(', '').split(',')[1]) || 0;
 
       this._drag = {
+        y: scrollTop,
+        pointY: e.gesture.touches[0].pageY,
         startY: scrollTop,
         resist: 1,
         startTime: +(new Date)
@@ -139,24 +133,36 @@
         // Stop any default events during the drag
         e.preventDefault();
 
+        var py = e.gesture.touches[0].pageY;
+        var deltaY = py - _this._drag.pointY;
+        console.log("Delta y", deltaY);
+
+        _this._drag.pointY = py;
+
         // Check if we should start dragging. Check if we've dragged past the threshold.
         if(!_this._isDragging && (Math.abs(e.gesture.deltaY) > _this.dragThresholdY)) {
           _this._isDragging = true;
         }
 
         if(_this._isDragging) {
+
+          // We are dragging, grab the current content height
+          // and the height of the parent container
           var totalHeight = _this.el.offsetHeight;
           var parentHeight = _this.el.parentNode.offsetHeight;
 
-          var newY = _this._drag.startY + e.gesture.deltaY;
+          // Calculate the new Y point for the container
+          var newY = _this._drag.y + deltaY;
 
           // Check if the dragging is beyond the bottom or top
           if(newY > 0 || (-newY + parentHeight) > totalHeight) {
             // Rubber band
-            newY = newY + e.gesture.deltaY / (-_this.resistance);
+            newY = _this._drag.y + deltaY / 3;//(-_this.resistance);
           }
           // Update the new translated Y point of the container
           _this.el.style.webkitTransform = 'translate3d(0,' + newY + 'px, 0)';
+
+          _this._drag.y = newY;
 
           ionic.trigger(_this.scrollEventName, {
             target: _this.el,
