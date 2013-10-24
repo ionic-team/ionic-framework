@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /**
 * Adapted from normalize.css and some reset.css. We don't care even one
 * bit about old IE, so we don't need any hacks for that in here.
@@ -182,7 +181,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid silver; }
+  border: 1px solid #c0c0c0; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -1203,10 +1202,10 @@ a.list-icon-right .list-item-content:after,
 button.list-icon-right .list-item-content:after {
   display: none; }
 
-.list-thumbnail .list-item-content {
+.list-item-thumbnail .list-item-content {
   padding-left: 70px;
   min-height: 70px; }
-  .list-thumbnail .list-item-content img:first-child, .list-thumbnail .list-item-content .list-img {
+  .list-item-thumbnail .list-item-content img:first-child, .list-item-thumbnail .list-item-content .list-img {
     position: absolute;
     top: 15px;
     left: 15px;
@@ -1215,15 +1214,21 @@ button.list-icon-right .list-item-content:after {
     width: 100%;
     border-radius: 4px; }
 
-.list-thumbnail-lrg .list-item-content {
+.list-item-thumbnail-lrg .list-item-content {
   padding-left: 95px;
   min-height: 80px; }
-  .list-thumbnail-lrg .list-item-content img:first-child, .list-thumbnail-lrg .list-item-content .list-img {
+  .list-item-thumbnail-lrg .list-item-content img:first-child, .list-item-thumbnail-lrg .list-item-content .list-img {
     position: absolute;
     top: 0;
     left: 0;
     max-width: 80px;
     max-height: 80px;
+    width: 100%; }
+
+.list-item-image .list-item-content {
+  text-align: center;
+  padding: 0; }
+  .list-item-image .list-item-content img:first-child, .list-item-image .list-item-content .list-img {
     width: 100%; }
 
 .list-header {
@@ -1576,7 +1581,7 @@ input[type="checkbox"][readonly] {
   right: 20px;
   transition: 0.2s ease;
   transition-property: left, right;
-  transition-delay: 0s, 0.05s; }
+  transition-delay: 0s, .05s; }
 
 .toggle :checked + .track {
   /* When the toggle is "on" */
@@ -1591,7 +1596,7 @@ input[type="checkbox"][readonly] {
     right: 0;
     left: 20px;
     -webkit-transform: none;
-    transition-delay: 0.05s, 0s; }
+    transition-delay: .05s, 0s; }
 
 .radio-buttton-list .list-item-content {
   /* give some room to the right for the checkmark icon */
@@ -1860,7 +1865,7 @@ input[type="range"] {
     .button.button-icon:active, .button.button-icon.active {
       background: none;
       box-shadow: none;
-      text-shadow: 0px 0px 10px white; }
+      text-shadow: 0px 0px 10px #fff; }
   .button.block, .button.button-full {
     margin-top: 10px;
     margin-bottom: 10px; }
@@ -2236,9 +2241,9 @@ a.button {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin 0.75s linear infinite;
-  -moz-animation: spin 0.75s linear infinite;
-  animation: spin 0.75s linear infinite; }
+  -webkit-animation: spin .75s linear infinite;
+  -moz-animation: spin .75s linear infinite;
+  animation: spin .75s linear infinite; }
   .icon-loading:before {
     content: "\e144"; }
 
@@ -2251,9 +2256,9 @@ a.button {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin 0.75s linear infinite;
-  -moz-animation: spin 0.75s linear infinite;
-  animation: spin 0.75s linear infinite; }
+  -webkit-animation: spin .75s linear infinite;
+  -moz-animation: spin .75s linear infinite;
+  animation: spin .75s linear infinite; }
   .icon-refreshing:before {
     content: "\e144"; }
 

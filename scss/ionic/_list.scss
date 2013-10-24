@@ -215,7 +215,7 @@ button.list-icon-right {
 // List Thumbnails
 // -------------------------------
 
-.list-thumbnail .list-item-content {
+.list-item-thumbnail .list-item-content {
   padding-left: $list-thumbnail-width + ($list-item-padding * 2);
   min-height: $list-thumbnail-width + ($list-item-padding * 2);
 
@@ -230,7 +230,7 @@ button.list-icon-right {
   }
 }
 
-.list-thumbnail-lrg .list-item-content {
+.list-item-thumbnail-lrg .list-item-content {
   padding-left: $list-thumbnail-lrg-width + $list-item-padding;
   min-height: $list-thumbnail-lrg-height;
 
@@ -240,6 +240,19 @@ button.list-icon-right {
     left: 0;
     max-width: $list-thumbnail-lrg-width;
     max-height: $list-thumbnail-lrg-height;
+    width: 100%;
+  }
+}
+
+
+// List Image
+// -------------------------------
+
+.list-item-image .list-item-content {
+  text-align: center;
+  padding: 0;
+  
+  img:first-child, .list-img {
     width: 100%;
   }
 }
