@@ -21,7 +21,7 @@
     <script src="app.js"></script>
   </head>
   <body ng-controller="WeatherCtrl">
-    <div id="bg-image"></div>
+    <div id="bg-image" ng-style="getActiveBackgroundImage()"></div>
 
     <header id="header" class="bar bar-header bar-clear">
       <h1 class="title">
@@ -57,7 +57,7 @@
     s.addEventListener('momentumScrolled', function(e) {
       setTimeout(function() {
         var bgAmount = e.detail.scrollTop;
-        bgImage.style.top = -(bgAmount / 50);
+        bgImage.style.webkitTransform = 'translate3d(0, ' + -(bgAmount / 40) + 'px, 0)';
 
         //var blurAmount = Math.min(3, e.detail.scrollTop / 200);
 

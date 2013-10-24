@@ -10,12 +10,28 @@ angular.module('ionic.weather', ['ionic.weather.services', 'ionic.weather.direct
   };
 })
 
-.controller('WeatherCtrl', function($scope, Weather, Geo, Flickr) {
+.controller('WeatherCtrl', function($scope, $timeout, Weather, Geo, Flickr) {
   var _this = this;
 
+  $scope.activeBgImageIndex = 0;
+
+  $scope.getActiveBackgroundImage = function() {
+    if($scope.activeBgImage) {
+      var item = $scope.activeBgImage;
+      var url = "http://farm"+ item.farm +".static.flickr.com/"+ item.server +"/"+ item.id +"_"+ item.secret +"_m.jpg";
+      return {
+        'background-image': 'url(' + url + ')'
+      };
+    }
+  };
+
   this.getBackgroundImage = function(lat, lng) {
-    Flickr.search('sunset', lat, lng).then(function(resp) {
-      console.log('FLICKR', resp);
+    Flickr.search('Madison, Wisconsin', lat, lng).then(function(resp) {
+      var photos = resp.photos;
+      if(photos.photo.length) {
+        $scope.bgImages = photos.photo;
+        _this.cycleBgImages();
+      }
     }, function(error) {
       console.error('Unable to get Flickr images', error);
     });
@@ -38,6 +54,15 @@ angular.module('ionic.weather', ['ionic.weather.services', 'ionic.weather.direct
     }, function(error) {
       alert('Unable to get current conditions');
       console.error(error);
+    });
+  };
+
+  this.cycleBgImages = function() {
+    $timeout(function cycle() {
+      if($scope.bgImages) {
+        $scope.activeBgImage = $scope.bgImages[$scope.activeBgImageIndex++ % $scope.bgImages.length];
+      }
+      $timeout(cycle, 5000);
     });
   };
 

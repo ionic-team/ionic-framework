@@ -20,7 +20,8 @@ angular.module('ionic.weather.services', ['ngResource'])
   var baseUrl = 'http://api.flickr.com/services/rest/'
 
   var flickrSearch = $resource(baseUrl, {
-    method: 'flickr.photos.search',
+    method: 'flickr.groups.pools.getPhotos',
+    group_id: '1463451@N25',
     safe_search: 1,
     jsoncallback: 'JSON_CALLBACK',
     api_key: FLICKR_API_KEY,
