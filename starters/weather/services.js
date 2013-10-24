@@ -10,7 +10,22 @@ angular.module('ionic.weather.services', ['ngResource'])
       method: 'JSONP'
     }
   });
+
+  var forecastResource = $resource(baseUrl + '/forecast/q/:coords.json', {
+    callback: 'JSON_CALLBACK'
+  }, {
+    get: {
+      method: 'JSONP'
+    }
+  });
+
   return {
+    getForecast: function(lat, lng, cb) {
+      forecastResource.get({
+        coords: lat + ',' + lng
+      }, cb);
+    },
+
     getAtCurrentLocation: function(cb) {
       var _this = this;
 

@@ -16,8 +16,7 @@
 
     // Trigger a new event
     trigger: function(eventType, data) {
-      // TODO: Do we need to use the old-school createEvent stuff?
-      var event = new CustomEvent(eventType, data);
+      var event = new CustomEvent(eventType, { detail: data });
 
       // Make sure to trigger the event on the given target, or dispatch it from
       // the window if we don't have an event target

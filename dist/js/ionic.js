@@ -115,8 +115,7 @@ window.ionic = {
 
     // Trigger a new event
     trigger: function(eventType, data) {
-      // TODO: Do we need to use the old-school createEvent stuff?
-      var event = new CustomEvent(eventType, data);
+      var event = new CustomEvent(eventType, { detail: data });
 
       // Make sure to trigger the event on the given target, or dispatch it from
       // the window if we don't have an event target
@@ -2492,13 +2491,17 @@ window.ionic = {
     ionic.Utils.extend(opts, {
       decelerationRate: ionic.views.Scroll.prototype.DECEL_RATE_NORMAL,
       dragThresholdY: 10,
-      resistance: 2
+      resistance: 2,
+      scrollEventName: 'momentumScrolled',
+      intertialEventInterval: 50
     });
 
     this.el = opts.el;
     this.decelerationRate = opts.decelerationRate;
     this.dragThresholdY = opts.dragThresholdY;
     this.resistance = opts.resistance;
+    this.scrollEventName = opts.scrollEventName;
+    this.inertialEventInterval = opts.inertialEventInterval;
 
     // Listen for drag and release events
     ionic.onGesture('drag', function(e) {
@@ -2528,6 +2531,8 @@ window.ionic = {
      * @param {easing} the animation function to use for easing
      */
     scrollTo: function(x, y, time, easing) {
+      var _this = this;
+
       easing = easing || 'cubic-bezier(0.1, 0.57, 0.1, 1)';
 
       var el = this.el;
@@ -2535,6 +2540,22 @@ window.ionic = {
       el.style.webkitTransitionTimingFunction = easing;
       el.style.webkitTransitionDuration = time;
       el.style.webkitTransform = 'translate3d(0,' + y + 'px, 0)';
+
+      // Start triggering events as the element scrolls from inertia.
+      // This is important because we need to receive scroll events
+      // even after a "flick" and adjust, etc.
+      this._momentumStepTimeout = setTimeout(function eventNotify() {
+        var scrollTop = parseFloat(_this.el.style.webkitTransform.replace('translate3d(', '').split(',')[1]) || 0;
+        ionic.trigger(_this.scrollEventName, {
+          target: _this.el,
+          scrollTop: -scrollTop
+        });
+
+        if(_this._isDragging) {
+          _this._momentumStepTimeout = setTimeout(eventNotify, _this.inertialEventInterval);
+        }
+      }, this.inertialEventInterval)
+
       console.log('TRANSITION ADDED!');
     },
 
@@ -2551,6 +2572,8 @@ window.ionic = {
 
       console.log('REMOVING TRANSITION');
       this.el.style.webkitTransitionDuration = '0';
+
+      clearTimeout(this._momentumStepTimeout)
     },
 
     /**
@@ -2580,6 +2603,7 @@ window.ionic = {
       window.requestAnimationFrame(function() {
         var content;
 
+        // The drag stopped already, don't process this one
         if(_this._isStopped) {
           _this._initDrag();
           return;
@@ -2611,6 +2635,11 @@ window.ionic = {
           }
           // Update the new translated Y point of the container
           _this.el.style.webkitTransform = 'translate3d(0,' + newY + 'px, 0)';
+
+          ionic.trigger(_this.scrollEventName, {
+            target: _this.el,
+            scrollTop: -newY
+          });
         }
       });
     },

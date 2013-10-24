@@ -12,5 +12,9 @@ angular.module('ionic.weather', ['ionic.weather.services', 'ionic.weather.direct
 
   Weather.getAtCurrentLocation(function(resp) {
     $scope.current = resp.current_observation;
+    Weather.getForecast(resp.location.lat, resp.location.lon, function(resp) {
+      console.log('Forecast', resp);
+      $scope.forecast = resp.forecast.simpleforecast;
+    });
   });
 });

@@ -30,7 +30,7 @@
     <div id="scroller" class="scroll padding" style="margin-top:44px">
       <small-weather>
         <h5>{{current.weather}}</h5>
-        <h5>H: {{current.high}} L: {{current.low}}</h5>
+        <h5>H: {{forecast.forecastday[0].high.fahrenheit}} L: {{forecast.forecastday[0].low.fahrenheit}}</h5>
         <h1 class="current-temp">{{current.temp_f | int}}&deg;</h1>
       </small-weather>
       <weather-box title="Forecast" style="height: 400px">
@@ -45,6 +45,12 @@
     var scroll = new ionic.views.Scroll({
       el: s,
       decelerationRate: 0.87
+    });
+
+    var height = window.innerHeight;
+    s.addEventListener('momentumScrolled', function(e) {
+      // here you might add a nice blur or header fade effect
+      // based on how far the scrolling has gone up
     });
   </script>
 </html>
