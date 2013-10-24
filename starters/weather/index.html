@@ -21,6 +21,8 @@
     <script src="app.js"></script>
   </head>
   <body ng-controller="WeatherCtrl">
+    <div id="bg-image"></div>
+
     <header id="header" class="bar bar-header bar-clear">
       <h1 class="title">
         <span class="city">{{current.display_location.city}}</span><br>
@@ -42,15 +44,31 @@
 
   <script>
     var s = document.getElementById('scroller');
+    var bgImage = document.getElementById('bg-image');
+    var header = document.getElementById('header');
+
     var scroll = new ionic.views.Scroll({
       el: s,
-      decelerationRate: 0.87
+      decelerationRate: 0.87,
+      inertialEventInterval: 100
     });
 
     var height = window.innerHeight;
     s.addEventListener('momentumScrolled', function(e) {
-      // here you might add a nice blur or header fade effect
-      // based on how far the scrolling has gone up
+      setTimeout(function() {
+        var bgAmount = e.detail.scrollTop;
+        bgImage.style.top = -(bgAmount / 50);
+
+        //var blurAmount = Math.min(3, e.detail.scrollTop / 200);
+
+        var brightness = 1;
+        if(e.detail.scrollTop > 200) {
+          var diff = Math.min(600, e.detail.scrollTop - 200);
+          var per = 1 - (diff / 600);
+          brightness = Math.max(0.7, per);
+        }
+        bgImage.style.webkitFilter = 'brightness(' + brightness + ')';
+      });
     });
   </script>
 </html>

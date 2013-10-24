@@ -1,4 +1,9 @@
 body {
+}
+#bg-image {
+  position: fixed;
+  width: 120%;
+  height: 120%;
   background: url('madison3.jpg') no-repeat transparent;
   background-size: cover;
 }
