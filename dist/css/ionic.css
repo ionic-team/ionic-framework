@@ -3257,16 +3257,18 @@ a.button {
   color: #3a87ad; }
 
 .card {
-  margin: 10px;
+  overflow: hidden;
+  margin: 20px 10px;
   border: none;
   border-radius: 2px;
   background-color: white;
-  box-shadow: inset 0 0 1px #666666; }
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
 
 .card-header {
   padding: 10px;
-  border-bottom: 1px solid #dddddd;
-  background-color: #eeeeee; }
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  background-color: whitesmoke; }
   .card-header.card-header-secondary {
     background-color: whitesmoke; }
   .card-header.card-header-primary {
@@ -3287,8 +3289,9 @@ a.button {
 
 .card-footer {
   padding: 10px;
-  border-top: 1px solid #dddddd;
-  background-color: #eeeeee; }
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  background-color: whitesmoke; }
 
 .slide-box {
   background-color: #000;
@@ -3509,7 +3512,7 @@ a.button {
   -moz-animation: spin 0.75s linear infinite;
   animation: spin 0.75s linear infinite; }
   .icon-loading:before {
-    content: "\e036"; }
+    content: "\e144"; }
 
 .icon-refreshing {
   font-family: 'ionicons';
@@ -3524,7 +3527,7 @@ a.button {
   -moz-animation: spin 0.75s linear infinite;
   animation: spin 0.75s linear infinite; }
   .icon-refreshing:before {
-    content: "\e036"; }
+    content: "\e144"; }
 
 .hidden,
 .hide {

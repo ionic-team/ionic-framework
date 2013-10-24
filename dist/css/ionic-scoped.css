@@ -2712,15 +2712,17 @@
   .ionic .alert-info h4 {
     color: #3a87ad; }
   .ionic .card {
-    margin: 10px;
+    overflow: hidden;
+    margin: 20px 10px;
     border: none;
     border-radius: 2px;
     background-color: white;
-    box-shadow: inset 0 0 1px #666666; }
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
   .ionic .card-header {
     padding: 10px;
-    border-bottom: 1px solid #dddddd;
-    background-color: #eeeeee; }
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    background-color: whitesmoke; }
     .ionic .card-header.card-header-secondary {
       background-color: whitesmoke; }
     .ionic .card-header.card-header-primary {
@@ -2739,8 +2741,9 @@
     padding: 10px; }
   .ionic .card-footer {
     padding: 10px;
-    border-top: 1px solid #dddddd;
-    background-color: #eeeeee; }
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    background-color: whitesmoke; }
   .ionic .slide-in-up {
     opacity: 0;
     -webkit-transform: translate3d(0, 100%, 0);
@@ -2854,7 +2857,7 @@
     -moz-animation: spin 0.75s linear infinite;
     animation: spin 0.75s linear infinite; }
     .ionic .icon-loading:before {
-      content: "\e036"; }
+      content: "\e144"; }
   .ionic .icon-refreshing {
     font-family: 'ionicons';
     speak: none;
@@ -2868,7 +2871,7 @@
     -moz-animation: spin 0.75s linear infinite;
     animation: spin 0.75s linear infinite; }
     .ionic .icon-refreshing:before {
-      content: "\e036"; }
+      content: "\e144"; }
   .ionic .hidden,
   .ionic .hide {
     display: none !important; }
