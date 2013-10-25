@@ -2604,12 +2604,12 @@ window.ionic = {
 
       window.requestAnimationFrame(function() {
         var totalWidth = _this.el.scrollWidth;
-        var totalHeight = _this.el.offsetHeight;
+        var totalHeight = _this.el.scrollHeight;
         var parentWidth = _this.el.parentNode.offsetWidth;
         var parentHeight = _this.el.parentNode.offsetHeight;
 
-        var maxX = (-totalWidth + parentWidth);
-        var maxY = (-totalHeight + parentHeight);
+        var maxX = Math.min(0, (-totalWidth + parentWidth));
+        var maxY = Math.min(0, (-totalHeight + parentHeight));
 
           //this._execEvent('scrollEnd');
         var x = _this.x, y = _this.y;
@@ -2643,7 +2643,7 @@ window.ionic = {
 
       var totalHeight = this.el.offsetHeight;
       var parentHeight = this.el.parentNode.offsetHeight;
-      var maxY = totalHeight - parentHeight;
+      var maxY = Math.max(0, totalHeight - parentHeight);
       var maxX = 0;
 
       // Execute the scrollEnd event after 400ms the wheel stopped scrolling
@@ -2770,6 +2770,19 @@ window.ionic = {
       var scrollLeft = parseFloat(this.el.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
       var scrollTop = parseFloat(this.el.style.webkitTransform.replace('translate3d(', '').split(',')[1]) || 0;
 
+      var totalWidth = this.el.scrollWidth;
+      var totalHeight = this.el.scrollHeight;
+      var parentWidth = this.el.parentNode.offsetWidth;
+      var parentHeight = this.el.parentNode.offsetHeight;
+
+      var maxX = Math.min(0, (-totalWidth + parentWidth));
+      var maxY = Math.min(0, (-totalHeight + parentHeight));
+
+      // Check if we even have enough content to scroll, if not, don't start the drag
+      if((this.isHorizontalEnabled && maxX == 0) || (this.isVerticalEnabled && maxY == 0)) {
+        return;
+      }
+
       this.x = scrollLeft;
       this.y = scrollTop;
 
@@ -2806,6 +2819,7 @@ window.ionic = {
       // We really aren't dragging
       if(!_this._drag) {
         _this._startDrag(e);
+        if(!_this._drag) { return; }
       }
 
       // Stop any default events during the drag
@@ -2838,9 +2852,11 @@ window.ionic = {
           // We are dragging, grab the current content height
 
           var totalWidth = _this.el.scrollWidth;
-          var totalHeight = _this.el.offsetHeight;
+          var totalHeight = _this.el.scrollHeight;
           var parentWidth = _this.el.parentNode.offsetWidth;
           var parentHeight = _this.el.parentNode.offsetHeight;
+          var maxX = Math.min(0, (-totalWidth + parentWidth));
+          var maxY = Math.min(0, (-totalHeight + parentHeight));
 
           // Grab current timestamp to keep our speend, etc.
           // calculations in a window
