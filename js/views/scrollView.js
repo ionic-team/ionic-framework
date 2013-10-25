@@ -75,7 +75,10 @@
     scrollTo: function(x, y, time, easing) {
       var _this = this;
 
+
       easing = easing || 'cubic-bezier(0.1, 0.57, 0.1, 1)';
+
+      var ox = x, oy = y;
 
       var el = this.el;
 
@@ -119,38 +122,36 @@
     wrapScrollPosition: function(transitionTime) {
       var _this = this;
 
-      window.requestAnimationFrame(function() {
-        var totalWidth = _this.el.scrollWidth;
-        var totalHeight = _this.el.scrollHeight;
-        var parentWidth = _this.el.parentNode.offsetWidth;
-        var parentHeight = _this.el.parentNode.offsetHeight;
+      var totalWidth = _this.el.scrollWidth;
+      var totalHeight = _this.el.scrollHeight;
+      var parentWidth = _this.el.parentNode.offsetWidth;
+      var parentHeight = _this.el.parentNode.offsetHeight;
 
-        var maxX = Math.min(0, (-totalWidth + parentWidth));
-        var maxY = Math.min(0, (-totalHeight + parentHeight));
+      var maxX = Math.min(0, (-totalWidth + parentWidth));
+      var maxY = Math.min(0, (-totalHeight + parentHeight));
 
-          //this._execEvent('scrollEnd');
-        var x = _this.x, y = _this.y;
+        //this._execEvent('scrollEnd');
+      var x = _this.x, y = _this.y;
 
-        if (!_this.isHorizontalEnabled || _this.x > 0) {
-          x = 0;
-        } else if ( _this.x < maxX) {
-          x = maxX;
-        }
+      if (!_this.isHorizontalEnabled || _this.x > 0) {
+        x = 0;
+      } else if ( _this.x < maxX) {
+        x = maxX;
+      }
 
-        if (!_this.isVerticalEnabled || _this.y > 0) {
-          y = 0;
-        } else if (_this.y < maxY) {
-          y = maxY;
-        }
+      if (!_this.isVerticalEnabled || _this.y > 0) {
+        y = 0;
+      } else if (_this.y < maxY) {
+        y = maxY;
+      }
 
-        // No change
-        if (x == _this.x && y == _this.y) {
-          return false;
-        }
-        _this.scrollTo(x, y, transitionTime || 0, _this.bounceEasing);
-      
-        return true;
-      });
+      // No change
+      if (x == _this.x && y == _this.y) {
+        return false;
+      }
+      _this.scrollTo(x, y, transitionTime || 0, _this.bounceEasing);
+    
+      return true;
     },
 
     _wheel: function(e) {
@@ -227,11 +228,14 @@
         destination = wrapperSize ? lowerMargin - ( wrapperSize / 2.5 * ( speed / 8 ) ) : lowerMargin;
         distance = Math.abs(destination - current);
         duration = distance / speed;
+        console.log("MOMENTUM TOO FAR DOWN", destination);
       } else if ( destination > 0 ) {
+
         // We have dragged too far up, snap back to 0
         destination = wrapperSize ? wrapperSize / 2.5 * ( speed / 8 ) : 0;
         distance = Math.abs(current) + destination;
         duration = distance / speed;
+        console.log("MOMENTUM TOO FAR UP", destination);
       }
 
       console.log('Momentum: time:', time, 'speed:',speed, 'dest:',destination, 'dur:',duration);
@@ -459,8 +463,8 @@
         // Calculate the viewport height and the height of the content
         var totalWidth = _this.el.scrollWidth;
         var totalHeight = _this.el.scrollHeight;
-        var parentWidth = _this.el.offsetWidth;
-        var parentHeight = _this.el.offsetHeight;
+        var parentWidth = _this.el.parentNode.offsetWidth;
+        var parentHeight = _this.el.parentNode.offsetHeight;
 
         // Calculate how long we've been dragging for, with a max of 300ms
         var duration = Date.now() - _this._drag.startTime;
@@ -493,6 +497,7 @@
         
         // If we've moved, we will need to scroll
         if(newX != _this.x || newY != _this.y) {
+          console.trace("SCROLL FROM", _this.x, _this.y, "TO", newX, newY);
 
           // If the end position is out of bounds, change the function we use for easing
           // to get a different animation for the rubber banding
