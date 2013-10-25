@@ -46,41 +46,39 @@ textarea {
 // -------------------------------
 
 .item-input {
+  @include display-flex();
+  @include align-items(center);
   position: relative;
-  display: -webkit-flex;
-  display: flex;
   overflow: hidden;
   padding: 6px 8px 5px;
 
   input {
     @include border-radius(0);
+    @include flex(1, 0, 220px);
     margin: 0;
     background-color: transparent;
-    flex: 1 0 220px;
     -webkit-appearance: none;
   }
 
   .input-label {
+    @include flex(1, 0, 100px);
     padding: 7px 10px 7px 3px;
     max-width: 200px;
     color: $input-label-color;
     font-weight: bold;
-    flex: 1 0 100px;
   }
   [class^="icon-"], [class*=" icon-"] {
+    @include flex(0, 0, 24px);
     display: inline-block;
     text-align: center;
     font-size: 16px;
-    flex: 0 0 24px;
-    align-self: center;
   }
   .placeholder-icon {
     color: #999;
   }
 }
 
-.list.stacked-label,
-.list.stacked-label .item-input {
+.item-stacked-label {
   display: block;
   background-color: transparent;
   box-shadow: none;
@@ -92,8 +90,8 @@ textarea {
   }
 }
 
-.list.stacked-label input,
-.list.stacked-label textarea
+.item-stacked-label input,
+.item-stacked-label textarea
 {
   @include border-radius(2px);
   overflow: hidden;
@@ -102,7 +100,7 @@ textarea {
   background-color: $input-bg;
   box-shadow: $item-box-shadow; 
 }
-.list.stacked-label input {
+.item-stacked-label input {
   height: $line-height-computed + $font-size-base + 12px;
 }
 

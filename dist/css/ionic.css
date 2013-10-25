@@ -1261,7 +1261,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid silver; }
+  border: 1px solid #c0c0c0; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -2588,49 +2588,67 @@ textarea {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 .item-input {
-  position: relative;
+  display: -webkit-box;
   display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+  position: relative;
   overflow: hidden;
   padding: 6px 8px 5px; }
   .item-input input {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 220px;
+    -moz-box-flex: 1;
+    -moz-flex: 1 0 220px;
+    -ms-flex: 1 0 220px;
+    flex: 1 0 220px;
     margin: 0;
     background-color: transparent;
-    flex: 1 0 220px;
     -webkit-appearance: none; }
   .item-input .input-label {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 100px;
+    -moz-box-flex: 1;
+    -moz-flex: 1 0 100px;
+    -ms-flex: 1 0 100px;
+    flex: 1 0 100px;
     padding: 7px 10px 7px 3px;
     max-width: 200px;
     color: black;
-    font-weight: bold;
-    flex: 1 0 100px; }
+    font-weight: bold; }
   .item-input [class^="icon-"], .item-input [class*=" icon-"] {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 24px;
+    -moz-box-flex: 0;
+    -moz-flex: 0 0 24px;
+    -ms-flex: 0 0 24px;
+    flex: 0 0 24px;
     display: inline-block;
     text-align: center;
-    font-size: 16px;
-    flex: 0 0 24px;
-    align-self: center; }
+    font-size: 16px; }
   .item-input .placeholder-icon {
     color: #999; }
 
-.list.stacked-label,
-.list.stacked-label .item-input {
+.item-stacked-label {
   display: block;
   background-color: transparent;
   box-shadow: none; }
-  .list.stacked-label .input-label, .list.stacked-label [class^="icon-"], .list.stacked-label [class*=" icon-"],
-  .list.stacked-label .item-input .input-label,
-  .list.stacked-label .item-input [class^="icon-"],
-  .list.stacked-label .item-input [class*=" icon-"] {
+  .item-stacked-label .input-label, .item-stacked-label [class^="icon-"], .item-stacked-label [class*=" icon-"] {
     display: inline-block;
     padding: 4px 0;
     vertical-align: middle; }
 
-.list.stacked-label input,
-.list.stacked-label textarea {
+.item-stacked-label input,
+.item-stacked-label textarea {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
@@ -2640,7 +2658,7 @@ textarea {
   background-color: white;
   box-shadow: inset 0 0 1px #666666; }
 
-.list.stacked-label input {
+.item-stacked-label input {
   height: 46px; }
 
 select,
@@ -2764,7 +2782,7 @@ input[type="checkbox"][readonly] {
     border-radius: 50%;
     background: white;
     content: ' ';
-    transition: background-color 0.1s ease-in-out; }
+    transition: background-color .1s ease-in-out; }
 
 /* the checkmark within the box */
 .checkbox input:after {
@@ -2779,7 +2797,7 @@ input[type="checkbox"][readonly] {
   border-right: 0;
   content: ' ';
   opacity: 0;
-  transition: opacity 0.05s ease-in-out;
+  transition: opacity .05s ease-in-out;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg); }
 
@@ -3144,7 +3162,7 @@ input[type="range"] {
     .button.button-icon:active, .button.button-icon.active {
       background: none;
       box-shadow: none;
-      text-shadow: 0px 0px 10px white; }
+      text-shadow: 0px 0px 10px #fff; }
   .button.block, .button.button-full {
     margin-top: 10px;
     margin-bottom: 10px; }
@@ -3534,9 +3552,9 @@ a.button {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin 0.75s linear infinite;
-  -moz-animation: spin 0.75s linear infinite;
-  animation: spin 0.75s linear infinite; }
+  -webkit-animation: spin .75s linear infinite;
+  -moz-animation: spin .75s linear infinite;
+  animation: spin .75s linear infinite; }
   .icon-loading:before {
     content: "\e144"; }
 
@@ -3549,9 +3567,9 @@ a.button {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin 0.75s linear infinite;
-  -moz-animation: spin 0.75s linear infinite;
-  animation: spin 0.75s linear infinite; }
+  -webkit-animation: spin .75s linear infinite;
+  -moz-animation: spin .75s linear infinite;
+  animation: spin .75s linear infinite; }
   .icon-refreshing:before {
     content: "\e144"; }
 
