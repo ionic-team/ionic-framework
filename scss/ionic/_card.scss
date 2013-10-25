@@ -6,7 +6,7 @@
   overflow: hidden;
   margin: ($content-padding * 2) $content-padding;
   background-color: $card-body-bg;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
   border-radius: $card-border-radius;
 }
 .card .item {
@@ -17,11 +17,21 @@
     margin-top: 0;
     border-top-left-radius: $card-border-radius;
     border-top-right-radius: $card-border-radius;
+
+    .item-content {
+      border-top-left-radius: $card-border-radius;
+      border-top-right-radius: $card-border-radius;
+    }
   }
   &:last-child {
     margin-bottom: 0;
     border-bottom-left-radius: $card-border-radius;
     border-bottom-right-radius: $card-border-radius;
+
+    .item-content {
+      border-bottom-left-radius: $card-border-radius;
+      border-bottom-right-radius: $card-border-radius;
+    }
   }
 }
 .card.list .item:last-child {

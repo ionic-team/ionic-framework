@@ -2037,7 +2037,7 @@
     overflow: hidden;
     margin: 20px 10px;
     background-color: white;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     border-radius: 2px; }
   .ionic .card .item {
     margin-left: 0;
@@ -2046,10 +2046,16 @@
       margin-top: 0;
       border-top-left-radius: 2px;
       border-top-right-radius: 2px; }
+      .ionic .card .item:first-child .item-content {
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px; }
     .ionic .card .item:last-child {
       margin-bottom: 0;
       border-bottom-left-radius: 2px;
       border-bottom-right-radius: 2px; }
+      .ionic .card .item:last-child .item-content {
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px; }
   .ionic .card.list .item:last-child {
     margin-bottom: -1px; }
   .ionic .card.list .item-divider {
