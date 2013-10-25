@@ -1931,14 +1931,18 @@
       max-height: 80px;
       width: 100%; }
   .ionic .item-image .item-content {
-    text-align: center;
-    padding: 0; }
+    padding: 0;
+    text-align: center; }
     .ionic .item-image .item-content img:first-child, .ionic .item-image .item-content .list-img {
       width: 100%; }
   .ionic .item-body .item-content {
-    padding: 15px; }
+    overflow: auto;
+    padding: 15px;
+    text-overflow: inherit;
+    white-space: normal; }
     .ionic .item-body .item-content h1, .ionic .item-body .item-content h2, .ionic .item-body .item-content h3, .ionic .item-body .item-content h4, .ionic .item-body .item-content h5, .ionic .item-body .item-content h6, .ionic .item-body .item-content p {
-      margin: 15px; }
+      margin-top: 15px;
+      margin-bottom: 15px; }
   .ionic .item-divider {
     margin: -1px;
     padding: 5px 15px;

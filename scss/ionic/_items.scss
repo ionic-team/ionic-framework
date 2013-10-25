@@ -221,8 +221,8 @@ button.item-icon-right {
 // -------------------------------
 
 .item-image .item-content {
-  text-align: center;
   padding: 0;
+  text-align: center;
   
   img:first-child, .list-img {
     width: 100%;
@@ -234,10 +234,14 @@ button.item-icon-right {
 // -------------------------------
 
 .item-body .item-content {
+  overflow: auto;
   padding: $item-padding;
+  text-overflow: inherit;
+  white-space: normal;
   
   h1, h2, h3, h4, h5, h6, p {
-    margin: $item-padding;
+    margin-top: $item-padding;
+    margin-bottom: $item-padding;
   }
 }
 

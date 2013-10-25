@@ -2363,15 +2363,19 @@ button.item-icon-right .item-content:after {
     width: 100%; }
 
 .item-image .item-content {
-  text-align: center;
-  padding: 0; }
+  padding: 0;
+  text-align: center; }
   .item-image .item-content img:first-child, .item-image .item-content .list-img {
     width: 100%; }
 
 .item-body .item-content {
-  padding: 15px; }
+  overflow: auto;
+  padding: 15px;
+  text-overflow: inherit;
+  white-space: normal; }
   .item-body .item-content h1, .item-body .item-content h2, .item-body .item-content h3, .item-body .item-content h4, .item-body .item-content h5, .item-body .item-content h6, .item-body .item-content p {
-    margin: 15px; }
+    margin-top: 15px;
+    margin-bottom: 15px; }
 
 .item-divider {
   margin: -1px;
