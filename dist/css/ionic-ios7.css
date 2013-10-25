@@ -182,7 +182,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid silver; }
+  border: 1px solid #c0c0c0; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -523,6 +523,15 @@ address {
   margin-bottom: 20px;
   font-style: normal;
   line-height: 1.42857; }
+
+a.subdued‎ {
+  padding-right: 10px;
+  color: #555555;
+  text-decoration: none; }
+  a.subdued‎:hover {
+    text-decoration: none; }
+  a.subdued‎:last-child {
+    padding-right: 0; }
 
 .bar {
   -webkit-user-select: none;
@@ -1213,6 +1222,11 @@ button.item-icon-right .item-content:after {
   .item-image .item-content img:first-child, .item-image .item-content .list-img {
     width: 100%; }
 
+.item-body .item-content {
+  padding: 15px; }
+  .item-body .item-content h1, .item-body .item-content h2, .item-body .item-content h3, .item-body .item-content h4, .item-body .item-content h5, .item-body .item-content h6, .item-body .item-content p {
+    margin: 15px; }
+
 .item-divider {
   margin: -1px;
   padding: 5px 15px;
@@ -1343,37 +1357,6 @@ button.item-icon-right .item-content:after {
   border-radius: 2px;
   background-color: white;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
-
-.card-header {
-  padding: 10px;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  background-color: whitesmoke; }
-  .card-header.card-header-secondary {
-    background-color: whitesmoke; }
-  .card-header.card-header-primary {
-    background-color: #4a87ee; }
-  .card-header.card-header-info {
-    background-color: #43cee6; }
-  .card-header.card-header-success {
-    background-color: #66cc33; }
-  .card-header.card-header-warning {
-    background-color: #f0b840; }
-  .card-header.card-header-danger {
-    background-color: #ef4e3a; }
-  .card-header.card-header-dark {
-    background-color: #444444; }
-
-.card-body {
-  padding: 10px; }
-  .card-body h1, .card-body h2, .card-body h3, .card-body h4, .card-body h5, .card-body h6, .card-body p {
-    margin-top: 10px; }
-
-.card-footer {
-  padding: 10px;
-  border-bottom-right-radius: 2px;
-  border-bottom-left-radius: 2px;
-  background-color: whitesmoke; }
 
 form {
   margin: 0 0 1.42857; }
@@ -1621,7 +1604,7 @@ input[type="checkbox"][readonly] {
   right: 20px;
   transition: 0.2s ease;
   transition-property: left, right;
-  transition-delay: 0s, 0.05s; }
+  transition-delay: 0s, .05s; }
 
 .toggle :checked + .track {
   /* When the toggle is "on" */
@@ -1636,7 +1619,7 @@ input[type="checkbox"][readonly] {
     right: 0;
     left: 20px;
     -webkit-transform: none;
-    transition-delay: 0.05s, 0s; }
+    transition-delay: .05s, 0s; }
 
 .item-radio .item-content {
   /* give some room to the right for the checkmark icon */
@@ -1906,7 +1889,7 @@ input[type="range"] {
     .button.button-icon:active, .button.button-icon.active {
       background: none;
       box-shadow: none;
-      text-shadow: 0px 0px 10px white; }
+      text-shadow: 0px 0px 10px #fff; }
   .button.block, .button.button-full {
     margin-top: 10px;
     margin-bottom: 10px; }
@@ -2245,9 +2228,9 @@ a.button {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin 0.75s linear infinite;
-  -moz-animation: spin 0.75s linear infinite;
-  animation: spin 0.75s linear infinite; }
+  -webkit-animation: spin .75s linear infinite;
+  -moz-animation: spin .75s linear infinite;
+  animation: spin .75s linear infinite; }
   .icon-loading:before {
     content: "\e144"; }
 
@@ -2260,9 +2243,9 @@ a.button {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin 0.75s linear infinite;
-  -moz-animation: spin 0.75s linear infinite;
-  animation: spin 0.75s linear infinite; }
+  -webkit-animation: spin .75s linear infinite;
+  -moz-animation: spin .75s linear infinite;
+  animation: spin .75s linear infinite; }
   .icon-refreshing:before {
     content: "\e144"; }
 

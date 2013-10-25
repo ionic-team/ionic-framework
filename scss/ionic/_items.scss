@@ -227,6 +227,18 @@ button.item-icon-right {
 }
 
 
+// Item Body
+// -------------------------------
+
+.item-body .item-content {
+  padding: $item-padding;
+  
+  h1, h2, h3, h4, h5, h6, p {
+    margin: $item-padding;
+  }
+}
+
+
 // Item Divider
 // -------------------------------
 

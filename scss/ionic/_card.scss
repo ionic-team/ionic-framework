@@ -6,40 +6,7 @@
   overflow: hidden;
   margin: ($content-padding * 2) $content-padding;
   border: none;
-  //border: $card-border-width solid $card-border-color;
   border-radius: $card-border-radius;
   background-color: $card-body-bg;
   box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
-}
-
-.card-header {
-  padding: $card-padding;
-  //border-bottom: $card-border-width solid $card-border-color;
-  border-top-left-radius: $card-border-radius;
-  border-top-right-radius: $card-border-radius;
-  background-color: $card-header-bg;
-  
-
-  &.card-header-secondary { background-color: $brand-secondary; }
-  &.card-header-primary { background-color: $brand-primary; }
-  &.card-header-info { background-color: $brand-info; }
-  &.card-header-success { background-color: $brand-success; }
-  &.card-header-warning { background-color: $brand-warning; }
-  &.card-header-danger { background-color: $brand-danger; }
-  &.card-header-dark { background-color: $brand-dark; }
-}
-
-.card-body {
-  padding: $card-padding;
-  h1, h2, h3, h4, h5, h6, p {
-    margin-top: $content-padding;
-  }
-}
-
-.card-footer {
-  padding: $card-padding;
-  //border-top: $card-border-width solid $card-border-color;
-  border-bottom-right-radius: $card-border-radius;
-  border-bottom-left-radius: $card-border-radius;
-  background-color: $card-footer-bg;
 }
