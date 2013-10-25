@@ -5,6 +5,8 @@
 		circular: 'cubic-bezier(0.1, 0.57, 0.1, 1)',
     circular2: 'cubic-bezier(0.075, 0.82, 0.165, 1)',
 
+    bounce: 'cubic-bezier(.02,.69,.67,1)',
+
     // It closes like a high-end toilet seat. Fast, then nice and slow.
     // Thanks to our @xtheglobe for that.
     toiletSeat: 'cubic-bezier(0.05, 0.60, 0.05, 0.60)'
@@ -25,7 +27,7 @@
       invertWheel: false,
       isVerticalEnabled: true,
       isHorizontalEnabled: false,
-      bounceEasing: EASING_FUNCTIONS.circular,
+      bounceEasing: EASING_FUNCTIONS.bounce,
       bounceTime: 600 //how long to take when bouncing back in a rubber band
     }, opts);
 
