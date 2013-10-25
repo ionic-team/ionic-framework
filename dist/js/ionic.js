@@ -2908,7 +2908,8 @@ window.ionic = {
 })(ionic);
 ;
 /**
- * Adapted from the great iScroll for Ionic. iScroll is licensed under MIT just like Ionic.
+ * Adapted from the great iScroll 5 for Ionic. iScroll is licensed under MIT just like Ionic.
+ * iScroll v5.0.5 ~ (c) 2008-2013 Matteo Spinelli ~ http://cubiq.org/license
  *
  * Think of ionic.views.Scroll like a Javascript version of UIScrollView or any 
  * scroll container in any UI library. You could just use -webkit-overflow-scrolling: touch,
@@ -2916,7 +2917,6 @@ window.ionic = {
  * like UIScrollView, and you don't get events after the finger stops touching the
  * device (after a flick, for example)
  *
- * iScroll v5.0.5 ~ (c) 2008-2013 Matteo Spinelli ~ http://cubiq.org/license
  */
 (function (window, document, Math, ionic) {
   'use strict';
