@@ -2483,6 +2483,9 @@ window.ionic = {
 ;
 (function(ionic) {
 'use strict';
+  var EASING_FUNCTIONS = {
+    quadratic: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+  };
 
   ionic.views.ScrollView = function(opts) {
     var _this = this;
@@ -2493,6 +2496,7 @@ window.ionic = {
       dragThreshold: 10,
       resistance: 2,
       scrollEventName: 'momentumScrolled',
+      scrollEndEventName: 'momentumScrollEnd',
       intertialEventInterval: 50,
       mouseWheelSpeed: 20,
       invertWheel: false,
@@ -2521,8 +2525,11 @@ window.ionic = {
 		ionic.on('DOMMouseScroll', function(e) {
       _this._wheel(e);
     }, this.el);
+    ionic.on(this.scrollEndEventName, function(e) {
+      _this._onScrollEnd(e);
+    }, this.el);
     ionic.on('webkitTransitionEnd', function(e) {
-      _this._endTransition();
+      _this._onTransitionEnd(e);
     });
   };
 
@@ -2530,6 +2537,95 @@ window.ionic = {
     DECEL_RATE_NORMAL: 0.998,
     DECEL_RATE_FAST: 0.99,
     DECEL_RATE_SLOW: 0.996,
+
+    /**
+     * Scroll to the given X and Y point, taking 
+     * the given amount of time, with the given
+     * easing function defined as a CSS3 timing function.
+     *
+     * @param {float} the x position to scroll to (CURRENTLY NOT SUPPORTED!)
+     * @param {float} the y position to scroll to
+     * @param {float} the time to take scrolling to the new position
+     * @param {easing} the animation function to use for easing
+     */
+    scrollTo: function(x, y, time, easing) {
+      var _this = this;
+
+      easing = easing || 'cubic-bezier(0.1, 0.57, 0.1, 1)';
+
+      var el = this.el;
+
+      if(x !== null) {
+        this.x = x;
+      } else {
+        x = this.x;
+      }
+      if(y !== null) {
+        this.y = y;
+      } else {
+        y = this.y;
+      }
+
+      el.style.webkitTransitionTimingFunction = easing;
+      el.style.webkitTransitionDuration = time;
+      el.style.webkitTransform = 'translate3d(' + x + 'px,' + y + 'px, 0)';
+
+      // Start triggering events as the element scrolls from inertia.
+      // This is important because we need to receive scroll events
+      // even after a "flick" and adjust, etc.
+      this._momentumStepTimeout = setTimeout(function eventNotify() {
+        var scrollTop = parseFloat(_this.el.style.webkitTransform.replace('translate3d(', '').split(',')[1]) || 0;
+        ionic.trigger(_this.scrollEventName, {
+          target: _this.el,
+          scrollTop: -scrollTop
+        });
+
+        if(_this._isDragging) {
+          _this._momentumStepTimeout = setTimeout(eventNotify, _this.inertialEventInterval);
+        }
+      }, this.inertialEventInterval)
+
+      console.log('TRANSITION ADDED!');
+    },
+
+    /**
+     * If the scroll position is outside the current bounds,
+     * animate it back.
+     */
+    wrapScrollPosition: function(transitionTime) {
+      var totalWidth = this.el.scrollWidth;
+      var totalHeight = this.el.offsetHeight;
+      var parentWidth = this.el.parentNode.offsetWidth;
+      var parentHeight = this.el.parentNode.offsetHeight;
+
+      var maxX = (-totalWidth + parentWidth);
+      var maxY = (-totalHeight + parentHeight);
+
+        //this._execEvent('scrollEnd');
+      var x = this.x, y = this.y;
+
+      var time = time || 0;
+
+      if ( !this.isHorizontalEnabled || this.x > 0 ) {
+        x = 0;
+      } else if ( this.x < maxX) {
+        x = maxX;
+      }
+
+      if ( !this.isVerticalEnabled || this.y > 0 ) {
+        y = 0;
+      } else if ( this.y < maxY) {
+        y = maxY;
+      }
+
+      // No change
+      if (x == this.x || y == this.y) {
+        return false;
+      }
+      this.scrollTo(x, y, time, this.bounceTime);
+		
+      return true;
+    },
 
     _wheel: function(e) {
       var wheelDeltaX, wheelDeltaY,
@@ -2599,7 +2695,6 @@ window.ionic = {
       destination = current + ( speed * speed ) / ( 2 * deceleration ) * ( distance < 0 ? -1 : 1 );
       duration = speed / deceleration;
 
-      /*
       // Check if the final destination needs to be rubber banded
       if ( destination < lowerMargin ) {
         // We have dragged too far down, snap back to the maximum
@@ -2608,11 +2703,10 @@ window.ionic = {
         duration = distance / speed;
       } else if ( destination > 0 ) {
         // We have dragged too far up, snap back to 0
-        destination = 0;//wrapperSize ? wrapperSize / 2.5 * ( speed / 8 ) : 0;
+        destination = wrapperSize ? wrapperSize / 2.5 * ( speed / 8 ) : 0;
         distance = Math.abs(current) + destination;
         duration = distance / speed;
       }
-      */
 
       console.log('Momentum: time:', time, 'speed:',speed, 'dest:',destination, 'dur:',duration);
       return {
@@ -2621,59 +2715,23 @@ window.ionic = {
       };
     },
 
-    /**
-     * Scroll to the given X and Y point, taking 
-     * the given amount of time, with the given
-     * easing function defined as a CSS3 timing function.
-     *
-     * @param {float} the x position to scroll to (CURRENTLY NOT SUPPORTED!)
-     * @param {float} the y position to scroll to
-     * @param {float} the time to take scrolling to the new position
-     * @param {easing} the animation function to use for easing
-     */
-    scrollTo: function(x, y, time, easing) {
-      var _this = this;
-
-      easing = easing || 'cubic-bezier(0.1, 0.57, 0.1, 1)';
-
-      var el = this.el;
-
-      if(x !== null) {
-        this.x = x;
-      } else {
-        x = this.x;
-      }
-      if(y !== null) {
-        this.y = y;
-      } else {
-        y = this.y;
+    _onTransitionEnd: function(e) {
+      if (e.target != this.el) {
+        return;
       }
 
-      el.style.webkitTransitionTimingFunction = easing;
-      el.style.webkitTransitionDuration = time;
-      el.style.webkitTransform = 'translate3d(' + x + 'px,' + y + 'px, 0)';
+      this.el.style.webkitTransitionDuration = '0';
 
-      // Start triggering events as the element scrolls from inertia.
-      // This is important because we need to receive scroll events
-      // even after a "flick" and adjust, etc.
-      this._momentumStepTimeout = setTimeout(function eventNotify() {
-        var scrollTop = parseFloat(_this.el.style.webkitTransform.replace('translate3d(', '').split(',')[1]) || 0;
-        ionic.trigger(_this.scrollEventName, {
-          target: _this.el,
-          scrollTop: -scrollTop
+      if(this.wrapScrollPosition(this.bounceTime)) {
+        ionic.trigger(_this.scrollEndEventName, {
+          target: this.el,
+          scrollLeft: this.x,
+          scrollTop: this.y
         });
-
-        if(_this._isDragging) {
-          _this._momentumStepTimeout = setTimeout(eventNotify, _this.inertialEventInterval);
-        }
-      }, this.inertialEventInterval)
-
-      console.log('TRANSITION ADDED!');
+      }
     },
 
-
-
-    _endTransition: function() {
+    _onScrollEnd: function() {
       this._isDragging = false;
       this._drag = null;
       this.el.classList.remove('scroll-scrolling');
@@ -2686,7 +2744,7 @@ window.ionic = {
 
 
     _initDrag: function() {
-      this._endTransition();
+      this._onScrollEnd();
       this._isStopped = false;
     },
 
@@ -2864,20 +2922,20 @@ window.ionic = {
 
         // Calculate how long we've been dragging for, with a max of 300ms
         var duration = Date.now() - _this._drag.startTime;
-
+        var time = 0;
+        var easing = '';
 
         var newX = Math.round(_this.x);
         var newY = Math.round(_this.y);
 
-        this.scrollTo(newX, newY);
+        _this.scrollTo(newX, newY);
 
-        var distanceX = Math.abs(newX - _this.startX);
-        var distanceY = Math.abs(newY - _this.startY);
-        this.endTime = Date.now();
 
-        //distanceX = Math.abs(newX - this.startX),
-        //var distanceY = Math.abs(newY - drag.startY);
-        
+        // Check if we just snap back to bounds
+        if(_this.wrapScrollPosition(_this.bounceTime)) {
+          return;
+        }
+
         // If the duration is within reasonable bounds, enable momentum scrolling
         if(duration < 300) {
           var momentumX = _this._getMomentum(_this.x, drag.startX, duration, parentWidth - totalWidth, parentWidth);
@@ -2886,8 +2944,9 @@ window.ionic = {
           newX = momentumX.destination;
           newY = momentumY.destination;
 
-          var timeX = momentumX.duration;
-          var timeY = momentumY.duration;
+          // Calcualte the longest required time for the momentum animation and
+          // use that.
+          time = Math.max(momentumX.duration, momentumY.duration);
         }
         
 
@@ -2908,11 +2967,17 @@ window.ionic = {
           return;
         }
 
-        var el = _this.el;
-        
-        // Turn on animation
-        _this.scrollTo(newX, null, timeX);
-        _this.scrollTo(null, newY, timeX);
+        // If we've moved, we will need to scroll
+        if(newX != _this.x || newY != _this.y) {
+
+          // If the end position is out of bounds, change the function we use for easing
+          // to get a different animation for the rubber banding
+          if ( newX > 0 || newX < this.maxScrollX || newY > 0 || newY < this.maxScrollY ) {
+            easing = EASING_FUNCTIONS.quadratic;
+          }
+
+          _this.scrollTo(newX, newY, time, easing);
+        }
       });
     }
   };
@@ -3503,6 +3568,7 @@ ionic.views.Scroll.prototype = {
 		}
 
 
+    // If they enabled snapping (for page stuff), scroll to the next snap
 		if ( this.options.snap ) {
 			var snap = this._nearestSnap(newX, newY);
 			this.currentPage = snap;
