@@ -1660,64 +1660,67 @@ a.subdued‎ {
   height: 44px;
   border-width: 0;
   border-style: solid;
-  background-color: white; }
-  .bar.bar-header {
-    border-bottom-width: 1px; }
-  .bar.bar-footer {
-    border-top-width: 1px; }
+  background-color: white;
+  /*  &.bar-header {
+      border-bottom-width: 1px;
+    }
+    &.bar-footer {
+      border-top-width: 1px;
+    }*/
+  box-shadow: inset 0 0 1px #999; }
   .bar.bar-clear {
+    border: none;
     background: none;
-    color: #fff;
-    border: none; }
+    color: #fff; }
     .bar.bar-clear .button {
       color: #fff; }
     .bar.bar-clear .title {
       color: #fff; }
   .bar.bar-default {
     background-color: rgba(255, 255, 255, 0.9);
-    border-color: #dddddd;
+    box-shadow: inset 0 0 1px #9d9d9d;
     color: #333333; }
     .bar.bar-default .title {
       color: #333333; }
   .bar.bar-secondary {
     background-color: rgba(245, 245, 245, 0.9);
-    border-color: #bbbbbb;
+    box-shadow: inset 0 0 1px #7b7b7b;
     color: #333333; }
     .bar.bar-secondary .title {
       color: #333333; }
   .bar.bar-primary {
     background-color: rgba(74, 135, 238, 0.9);
-    border-color: #3b6dc2;
+    box-shadow: inset 0 0 1px #1d3660;
     color: white; }
     .bar.bar-primary .title {
       color: white; }
   .bar.bar-info {
     background-color: rgba(67, 206, 230, 0.9);
-    border-color: #3bb3c8;
+    box-shadow: inset 0 0 1px #1d5c67;
     color: white; }
     .bar.bar-info .title {
       color: white; }
   .bar.bar-success {
     background-color: rgba(102, 204, 51, 0.9);
-    border-color: #5bb22f;
+    box-shadow: inset 0 0 1px #274d14;
     color: white; }
     .bar.bar-success .title {
       color: white; }
   .bar.bar-warning {
     background-color: rgba(240, 184, 64, 0.9);
-    border-color: #d29f31;
+    box-shadow: inset 0 0 1px #6c5118;
     color: white; }
     .bar.bar-warning .title {
       color: white; }
   .bar.bar-danger {
     background-color: rgba(239, 78, 58, 0.9);
-    border-color: #c73927;
+    box-shadow: inset 0 0 1px #5c1a12;
     color: white; }
     .bar.bar-danger .title {
       color: white; }
   .bar.bar-dark {
     background-color: rgba(68, 68, 68, 0.9);
-    border-color: #111111;
+    box-shadow: inset 0 0 1px black;
     color: white; }
     .bar.bar-dark .title {
       color: white; }

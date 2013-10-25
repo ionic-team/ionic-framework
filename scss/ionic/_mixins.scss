@@ -96,7 +96,8 @@
 
 @mixin bar-style($bgColor, $borderColor, $color) {
   background-color: $bgColor;
-  border-color: $borderColor;
+
+  box-shadow: inset 0 0 1px darken($borderColor, 25%);
   color: $color;
 
   .title {
@@ -312,7 +313,6 @@
 }
 
 // Background clipping
-// Heads up: FF 3.6 and under need "padding" instead of "padding-box"
 @mixin background-clip($clip) {
   -webkit-background-clip: $clip;
      -moz-background-clip: $clip;
@@ -343,19 +343,6 @@
       -ms-user-select: $select;
        -o-user-select: $select;
           user-select: $select;
-}
-
-@mixin disable-user-select() {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: -moz-none;
-  user-select: none;
-}
-
-// Resize anything
-@mixin resizable($direction) {
-  resize: $direction; // Options: horizontal, vertical, both
-  overflow: auto; // Safari fix
 }
 
 // CSS3 Content Columns

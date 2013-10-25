@@ -1,5 +1,8 @@
-.bar {
 
+// Bar (Headers and Footers)
+// -------------------------------
+
+.bar {
   @include user-select(none);
   position: absolute;
   right: 0;
@@ -18,17 +21,19 @@
 
   background-color: $bar-bg;
 
-  &.bar-header {
+/*  &.bar-header {
     border-bottom-width: 1px;
   }
   &.bar-footer {
     border-top-width: 1px;
-  }
+  }*/
+
+  box-shadow: inset 0 0 1px #999;
 
   &.bar-clear {
+    border: none;
     background: none;
     color: #fff;
-    border: none;
     .button {
       color: #fff;
     }
