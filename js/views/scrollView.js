@@ -11,7 +11,10 @@
       resistance: 2,
       scrollEventName: 'momentumScrolled',
       intertialEventInterval: 50,
-
+      mouseWheelSpeed: 20,
+      invertWheel: false,
+      isVerticalEnabled: true,
+      isHorizontalEnabled: false,
       bounceTime: 600 //how long to take when bouncing back in a rubber band
     });
 
@@ -19,12 +22,21 @@
 
     this.el = opts.el;
 
+    this.y = 0;
+    this.x = 0;
+
     // Listen for drag and release events
     ionic.onGesture('drag', function(e) {
       _this._handleDrag(e);
     }, this.el);
     ionic.onGesture('release', function(e) {
       _this._handleEndDrag(e);
+    }, this.el);
+    ionic.on('mousewheel', function(e) {
+      _this._wheel(e);
+    }, this.el);
+		ionic.on('DOMMouseScroll', function(e) {
+      _this._wheel(e);
     }, this.el);
     ionic.on('webkitTransitionEnd', function(e) {
       _this._endTransition();
@@ -35,6 +47,63 @@
     DECEL_RATE_NORMAL: 0.998,
     DECEL_RATE_FAST: 0.99,
     DECEL_RATE_SLOW: 0.996,
+
+    _wheel: function(e) {
+      var wheelDeltaX, wheelDeltaY,
+        newX, newY,
+        that = this;
+
+      var totalHeight = this.el.offsetHeight;
+      var parentHeight = this.el.parentNode.offsetHeight;
+      var maxY = totalHeight - parentHeight;
+      var maxX = 0;
+
+      // Execute the scrollEnd event after 400ms the wheel stopped scrolling
+      clearTimeout(this.wheelTimeout);
+      this.wheelTimeout = setTimeout(function () {
+        //that._execEvent('scrollEnd');
+      }, 400);
+
+      e.preventDefault();
+
+      if('wheelDeltaX' in e) {
+        wheelDeltaX = e.wheelDeltaX / 120;
+        wheelDeltaY = e.wheelDeltaY / 120;
+      } else if ('wheelDelta' in e) {
+        wheelDeltaX = wheelDeltaY = e.wheelDelta / 120;
+      } else if ('detail' in e) {
+        wheelDeltaX = wheelDeltaY = -e.detail / 3;
+      } else {
+        return;
+      }
+
+      wheelDeltaX *= this.mouseWheelSpeed;
+      wheelDeltaY *= this.mouseWheelSpeed;
+
+      if(!this.isVerticalEnabled) {
+        wheelDeltaX = wheelDeltaY;
+        wheelDeltaY = 0;
+      }
+
+      newX = this.x + (this.isHorizontalEnabled ? wheelDeltaX * (this.invertWheel ? -1 : 1) : 0);
+      newY = this.y + (this.isVerticalEnabled ? wheelDeltaY * (this.invertWheel ? -1 : 1) : 0);
+
+      /*
+      if(newX > 0) {
+        newX = 0;
+      } else if (newX < this.maxScrollX) {
+        newX = this.maxScrollX;
+      }
+      */
+
+      if(newY > 0) {
+        newY = 0;
+      } else if (newY < -maxY) {
+        newY = maxY;
+      }
+
+      this.scrollTo(0, newY, 0);
+    },
 
     _getMomentum: function (current, start, time, lowerMargin, wrapperSize) {
       var distance = current - start,
@@ -83,6 +152,9 @@
       easing = easing || 'cubic-bezier(0.1, 0.57, 0.1, 1)';
 
       var el = this.el;
+
+      this.x = x;
+      this.y = y;
 
       el.style.webkitTransitionTimingFunction = easing;
       el.style.webkitTransitionDuration = time;
@@ -193,24 +265,24 @@
           var timestamp = Date.now();
 
           // Calculate the new Y point for the container
-          var newY = drag.y + deltaY;
+          var newY = _this.y + deltaY;
 
           // Check if the dragging is beyond the bottom or top
           if(newY > 0 || (-newY + parentHeight) > totalHeight) {
             // Rubber band
-            newY = drag.y + deltaY / 3;//(-_this.resistance);
+            newY = _this.y + deltaY / 3;//(-_this.resistance);
           }
           // Update the new translated Y point of the container
           _this.el.style.webkitTransform = 'translate3d(0,' + newY + 'px, 0)';
 
-          drag.y = newY;
+          _this.y = newY;
 
           // Check if we need to reset the drag initial states if we've
           // been dragging for a bit
           if(timestamp - drag.startTime > 300) {
             console.log('Resetting timer');
             drag.startTime = timestamp;
-            drag.startY = drag.y;
+            drag.startY = _this.y;
           }
 
           ionic.trigger(_this.scrollEventName, {
@@ -270,20 +342,20 @@
 
 
         //var newX = Math.round(this.x),
-        var newY = Math.round(drag.y);
+        var newY = Math.round(_this.y);
         //distanceX = Math.abs(newX - this.startX),
         //var distanceY = Math.abs(newY - drag.startY);
 
 
-        var momentum = _this._getMomentum(drag.y, drag.startY, duration, parentHeight - totalHeight, parentHeight);
+        var momentum = _this._getMomentum(_this.y, drag.startY, duration, parentHeight - totalHeight, parentHeight);
         //var newX = momentumX.destination;
         newY = momentum.destination;
         var time = momentum.duration;
 
-        if(drag.y > 0) {
+        if(_this.y > 0) {
           _this.scrollTo(0, 0, _this.bounceTime);
           return;
-        } else if ((-drag.y + parentHeight) > totalHeight) {
+        } else if ((-_this.y + parentHeight) > totalHeight) {
           _this.scrollTo(0, totalHeight - parentHeight, _this.bounceTime);
           return;
         }
