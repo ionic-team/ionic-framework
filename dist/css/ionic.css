@@ -2495,7 +2495,7 @@ button.item-icon-right .item-content:after {
   padding-right: 1px;
   padding-left: 1px; }
 
-.list-label-right {
+.item-label-right {
   float: right;
   color: #aaa;
   font-size: 14px; }
