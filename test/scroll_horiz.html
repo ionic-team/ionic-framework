@@ -24,22 +24,30 @@
         <a href="#" class="button button-danger button-clear">Delete</a>
       </div>
       <div id="scroller" class="scroll" style="margin-top:44px">
-        <div id="filler" style="width: 1400px; height: 300px; background: url('tree_bark.png') repeat;"></div>
+        <div id="filler" style="width: 4400px; height: 300px; background: url('tree_bark.png') repeat;"></div>
       </div>
     </section>
     <script src="../dist/js/ionic.js"></script>
     <script>
       var s = document.getElementById('scroller');
 
-      for(var i = 0; i < 100; i++) {
-        var li = document.createElement('li');
-        li.className = 'list-item';
-        li.innerHTML = 'Item ' + i;
-        s.firstElementChild.appendChild(li);
+      var w = s.scrollWidth;
+
+      for(var i = 0; i < w; i++) {
+        if((i % 500) === 0) {
+          var l = document.createElement('span');
+          l.innerText = i + 'px'
+          l.style.position = 'absolute';
+          l.style.left = i + 'px';
+          l.style.top = '20px';
+          s.appendChild(l);
+        }
       }
 
       var scroll = new ionic.views.ScrollView({
-        el: s
+        el: s,
+        isHorizontalEnabled: true,
+        isVerticalEnabled: false
       });
     </script>
   </body>

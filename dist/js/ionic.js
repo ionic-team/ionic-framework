@@ -2488,9 +2488,9 @@ window.ionic = {
     var _this = this;
 
     // Extend the options with our defaults
-    ionic.Utils.extend(opts, {
+    opts = ionic.Utils.extend({
       decelerationRate: ionic.views.ScrollView.prototype.DECEL_RATE_NORMAL,
-      dragThresholdY: 10,
+      dragThreshold: 10,
       resistance: 2,
       scrollEventName: 'momentumScrolled',
       intertialEventInterval: 50,
@@ -2499,7 +2499,7 @@ window.ionic = {
       isVerticalEnabled: true,
       isHorizontalEnabled: false,
       bounceTime: 600 //how long to take when bouncing back in a rubber band
-    });
+    }, opts);
 
     ionic.Utils.extend(this, opts);
 
@@ -2599,6 +2599,7 @@ window.ionic = {
       destination = current + ( speed * speed ) / ( 2 * deceleration ) * ( distance < 0 ? -1 : 1 );
       duration = speed / deceleration;
 
+      /*
       // Check if the final destination needs to be rubber banded
       if ( destination < lowerMargin ) {
         // We have dragged too far down, snap back to the maximum
@@ -2611,6 +2612,7 @@ window.ionic = {
         distance = Math.abs(current) + destination;
         duration = distance / speed;
       }
+      */
 
       console.log('Momentum of time', time, speed, destination, duration);
       return {
@@ -2636,12 +2638,20 @@ window.ionic = {
 
       var el = this.el;
 
-      this.x = x;
-      this.y = y;
+      if(x !== null) {
+        this.x = x;
+      } else {
+        x = this.x;
+      }
+      if(y !== null) {
+        this.y = y;
+      } else {
+        y = this.y;
+      }
 
       el.style.webkitTransitionTimingFunction = easing;
       el.style.webkitTransitionDuration = time;
-      el.style.webkitTransform = 'translate3d(0,' + y + 'px, 0)';
+      el.style.webkitTransform = 'translate3d(' + x + 'px,' + y + 'px, 0)';
 
       // Start triggering events as the element scrolls from inertia.
       // This is important because we need to receive scroll events
@@ -2662,12 +2672,6 @@ window.ionic = {
     },
 
 
-    _initDrag: function() {
-      this._endTransition();
-      this._isStopped = false;
-    },
-
-
 
     _endTransition: function() {
       this._isDragging = false;
@@ -2681,6 +2685,11 @@ window.ionic = {
     },
 
 
+    _initDrag: function() {
+      this._endTransition();
+      this._isStopped = false;
+    },
+
 
     /**
      * Initialize a drag by grabbing the content area to drag, and any other
@@ -2691,12 +2700,17 @@ window.ionic = {
 
       this._initDrag();
 
+      var scrollLeft = parseFloat(this.el.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
       var scrollTop = parseFloat(this.el.style.webkitTransform.replace('translate3d(', '').split(',')[1]) || 0;
+
+      this.x = scrollLeft;
+      this.y = scrollTop;
 
       this._drag = {
         direction: 'v',
-        y: scrollTop,
+        pointX: e.gesture.touches[0].pageX,
         pointY: e.gesture.touches[0].pageY,
+        startX: scrollLeft,
         startY: scrollTop,
         resist: 1,
         startTime: Date.now()
@@ -2707,6 +2721,9 @@ window.ionic = {
 
     /**
      * Process the drag event to move the item to the left or right.
+     *
+     * This function needs to be as fast as possible to make sure scrolling
+     * performance is high.
      */
     _handleDrag: function(e) {
       var _this = this;
@@ -2727,37 +2744,69 @@ window.ionic = {
       // Stop any default events during the drag
       e.preventDefault();
 
+      var px = e.gesture.touches[0].pageX;
       var py = e.gesture.touches[0].pageY;
-      var deltaY = py - _this._drag.pointY;
-      console.log("Delta y", deltaY);
 
+      var deltaX = px - _this._drag.pointX;
+      var deltaY = py - _this._drag.pointY;
+
+      //console.log("Delta x", deltaX);
+      //console.log("Delta y", deltaY);
+
+      _this._drag.pointX = px;
       _this._drag.pointY = py;
 
       // Check if we should start dragging. Check if we've dragged past the threshold.
-      if(!_this._isDragging && (Math.abs(e.gesture.deltaY) > _this.dragThresholdY)) {
+      if(!_this._isDragging && 
+          ((Math.abs(e.gesture.deltaY) > _this.dragThreshold) ||
+          (Math.abs(e.gesture.deltaX) > _this.dragThreshold))) {
         _this._isDragging = true;
       }
 
       if(_this._isDragging) {
         var drag = _this._drag;
+
+        // Request an animation frame to batch DOM reads/writes
         window.requestAnimationFrame(function() {
           // We are dragging, grab the current content height
-          // and the height of the parent container
+
+          var totalWidth = _this.el.scrollWidth;
           var totalHeight = _this.el.offsetHeight;
+          var parentWidth = _this.el.parentNode.offsetWidth;
           var parentHeight = _this.el.parentNode.offsetHeight;
+
+          // Grab current timestamp to keep our speend, etc.
+          // calculations in a window
           var timestamp = Date.now();
 
           // Calculate the new Y point for the container
+          // TODO: Only enable certain axes
+          var newX = _this.x + deltaX;
           var newY = _this.y + deltaY;
 
+          if(newX > 0 || (-newX + parentWidth) > totalWidth) {
+            // Rubber band
+            newX = _this.x + deltaX / 3;
+          }
           // Check if the dragging is beyond the bottom or top
           if(newY > 0 || (-newY + parentHeight) > totalHeight) {
             // Rubber band
             newY = _this.y + deltaY / 3;//(-_this.resistance);
           }
-          // Update the new translated Y point of the container
-          _this.el.style.webkitTransform = 'translate3d(0,' + newY + 'px, 0)';
 
+          if(!_this.isHorizontalEnabled) {
+            newX = 0;
+          }
+          if(!_this.isVerticalEnabled) {
+            newY = 0;
+          }
+
+          console.log(newX, newY);
+          // Update the new translated Y point of the container
+          _this.el.style.webkitTransform = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
+
+          // Store the last points
+          _this.x = newX;
           _this.y = newY;
 
           // Check if we need to reset the drag initial states if we've
@@ -2765,11 +2814,14 @@ window.ionic = {
           if(timestamp - drag.startTime > 300) {
             console.log('Resetting timer');
             drag.startTime = timestamp;
+            drag.startX = _this.x;
             drag.startY = _this.y;
           }
 
+          // Trigger a scroll event
           ionic.trigger(_this.scrollEventName, {
             target: _this.el,
+            scrollLeft: -newX,
             scrollTop: -newY
           });
         });
@@ -2799,41 +2851,42 @@ window.ionic = {
     // animate to that position
     _animateToStop: function(e) {
       var _this = this;
-
-      if(this._drag.direction == 'v') {
-        this._animateToStopVertical(e);
-      } else {
-        this._animateToStopHorizontal(e);
-      }
-
-    },
-
-    _animateToStopHorizontal: function(e) {
-    },
-    
-    _animateToStopVertical: function(e) {
-      var _this = this;
       window.requestAnimationFrame(function() {
+
         var drag = _this._drag;
 
         // Calculate the viewport height and the height of the content
-        var totalHeight = _this.el.offsetHeight;
-        var parentHeight = _this.el.parentNode.offsetHeight;
+        var totalWidth = _this.el.scrollWidth;
+        var totalHeight = _this.el.scrollHeight;
+        var parentWidth = _this.el.offsetWidth;
+        var parentHeight = _this.el.offsetHeight;
 
         // Calculate how long we've been dragging for, with a max of 300ms
         var duration = Math.min(300, (Date.now()) - _this._drag.startTime);
 
 
-        //var newX = Math.round(this.x),
+        var newX = Math.round(_this.x);
         var newY = Math.round(_this.y);
         //distanceX = Math.abs(newX - this.startX),
         //var distanceY = Math.abs(newY - drag.startY);
 
 
-        var momentum = _this._getMomentum(_this.y, drag.startY, duration, parentHeight - totalHeight, parentHeight);
+        var momentumX = _this._getMomentum(_this.x, drag.startX, duration, parentWidth - totalWidth, parentWidth);
+        var momentumY = _this._getMomentum(_this.y, drag.startY, duration, parentHeight - totalHeight, parentHeight);
         //var newX = momentumX.destination;
-        newY = momentum.destination;
-        var time = momentum.duration;
+        newX = momentumX.destination;
+        newY = momentumY.destination;
+
+        var timeX = momentumX.duration;
+        var timeY = momentumY.duration;
+        
+
+        // Check if we need to rubber band back
+        if(_this.x > 0) {
+          _this.scrollTo(0, 0, _this.bounceTime);
+        } else if((-_this.x + parentWidth) > totalWidth) {
+          _this.scrollTo(0, totalWidth - parentWidth, _this.bounceTime);
+        }
 
         if(_this.y > 0) {
           _this.scrollTo(0, 0, _this.bounceTime);
@@ -2846,7 +2899,8 @@ window.ionic = {
         var el = _this.el;
         
         // Turn on animation
-        _this.scrollTo(0, newY, time);
+        _this.scrollTo(newX, null, timeX);
+        _this.scrollTo(null, newY, timeX);
       });
     }
   };
