@@ -9,16 +9,50 @@
   display: block;
   margin: $item-border-width * -1;
 
-  border: none;
+  padding: $item-padding (($item-padding * 3) - 5) $item-padding $item-padding;
 
+  border: none;
   background-color: $list-default-background;
   box-shadow: $item-box-shadow;
+  font-size: $list-font-size;
+
+  -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
+
+  h2 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+  }
+  h3 {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+  }
+  h4 {
+    margin: 0 0 4px 0;
+    font-size: 12px;
+  }
+  h5, h6 {
+    margin: 0 0 3px 0;
+    font-size: 10px;
+  }
+  p {
+    color: #666;
+    font-size: 14px;
+  }
+
+  h1:last-child,
+  h2:last-child,
+  h3:last-child,
+  h4:last-child,
+  h5:last-child,
+  h6:last-child,
+  p:last-child {
+    margin-bottom: 0;
+  }
 
   // Align badges within list items
   .badge {
     float: right;
   }
-
   .badge + .badge {
     margin-right: 5px;
   }
@@ -46,6 +80,14 @@
   &.item-dark { @include item-style-active($brand-dark, $gray-dark, $white); }
 }
 
+// Handle text overflow
+.item,
+.item-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 // Linked list items
 a.item {
   color: $gray-dark;
@@ -59,10 +101,12 @@ a.item {
 }
 
 
-// List Item Content
+// Slidable Item Content
 // -------------------------------
-
-.item-content {
+.item-slider {
+  padding: 0;
+}
+.item-slider .item-content {
   /**
    * The content area of a complex list item. This area can
    * Slide left and right and be dragged to support different
@@ -71,60 +115,33 @@ a.item {
   position: relative;
 
   z-index: 2;
-  overflow: hidden;
   padding: $item-padding (($item-padding * 3) - 5) $item-padding $item-padding;
 
   border: none;
-  background-color: #fff;
+  background-color: $list-default-background;
   box-shadow: $item-box-shadow;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: $list-font-size;
 
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
-
-  h2 {
-    margin: 0 0 4px 0;
-    font-size: 16px;
-  }
-  h3 {
-    margin: 0 0 4px 0;
-    font-size: 14px;
-  }
-  h3 {
-    margin: 0 0 4px 0;
-    font-size: 12px;
-  }
-  h4, h5, h6 {
-    margin: 0 0 3px 0;
-    font-size: 10px;
-  }
-  p {
-    color: #666;
-    font-size: 14px;
-  }
-
-  h1:last-child,
-  h2:last-child,
-  h3:last-child,
-  h4:last-child,
-  h5:last-child,
-  h6:last-child,
-  p:last-child {
-    margin-bottom: 0;
-  }
 }
 
 .item-text-wrap {
   overflow: auto;
   white-space: normal;
 }
+.item-slider.item-text-wrap {
+  overflow: hidden;
+  white-space: nowrap;
+  .item-content {
+    overflow: auto;
+    white-space: normal;   
+  }
+}
 
 
 // List Icons
 // -------------------------------
 
-.item-content i {
+.item i {
   @include display-flex();
   @include align-items(center);
   position: absolute;
@@ -133,28 +150,38 @@ a.item {
   font-size: $item-icon-font-size;
 }
 
-.item-content .fill-icon {
+.item .fill-icon {
   font-size: $item-icon-fill-font-size;
 }
 
-.item-icon-left .item-content {
+.item-icon-left {
   padding-left: ($item-padding * 3);
 
   i {
     left: $item-padding / 2;
   }
 }
+.item-slider.item-icon-left {
+  padding-left: 0;
 
-.item-icon-right .item-content i {
+  .item-content {
+    padding-left: ($item-padding * 3);
+  }
+}
+
+.item-icon-right i {
   right: $item-padding / 2;
 }
 
-.item-icon-left.item-icon-right .item-content i:last-child {
+.item-icon-left.item-icon-right i:first-child {
+  right: auto;
+}
+.item-icon-left.item-icon-right i:last-child {
   left: auto;
 }
 
-a .item-content:after,
-button .item-content:after {
+a.item:after,
+button.item:after {
   /* By default, both <a> and <button> have right side arrow icons */
   @include display-flex();
   @include align-items(center);
@@ -176,10 +203,27 @@ button .item-content:after {
 }
 
 // do not show the default right arrow when they want their own right side icon
-a.item-icon-right,
-button.item-icon-right {
-  .item-content:after {
-    display: none;
+a.item-icon-right:after,
+button.item-icon-right:after {
+  display: none;
+}
+
+
+// Item Avitar
+// -------------------------------
+
+.item-avitar {
+  padding-left: $item-avitar-width + ($item-padding * 2);
+  min-height: $item-avitar-width + ($item-padding * 2);
+
+  img:first-child, .item-img {
+    position: absolute;
+    top: $item-padding;
+    left: $item-padding;
+    max-width: $item-avitar-width;
+    max-height: $item-avitar-height;
+    width: 100%;
+    border-radius: 4px;
   }
 }
 
@@ -187,31 +231,30 @@ button.item-icon-right {
 // Item Thumbnails
 // -------------------------------
 
-.item-thumbnail .item-content {
-  padding-left: $item-thumbnail-width + ($item-padding * 2);
-  min-height: $item-thumbnail-width + ($item-padding * 2);
+.item-thumbnail-left {
+  padding-left: $item-thumbnail-width + $item-padding;
+  min-height: $item-thumbnail-height;
 
-  img:first-child, .item-img {
-    position: absolute;
-    top: $item-padding;
-    left: $item-padding;
-    max-width: $item-thumbnail-width;
-    max-height: $item-thumbnail-height;
-    width: 100%;
-    border-radius: 4px;
-  }
-}
-
-.item-thumbnail-lrg .item-content {
-  padding-left: $item-thumbnail-lrg-width + $item-padding;
-  min-height: $item-thumbnail-lrg-height;
-
-  img:first-child, .item-img {
+  img:first-child, .item-image {
     position: absolute;
     top: 0;
     left: 0;
-    max-width: $item-thumbnail-lrg-width;
-    max-height: $item-thumbnail-lrg-height;
+    max-width: $item-thumbnail-width;
+    max-height: $item-thumbnail-height;
+    width: 100%;
+  }
+}
+
+.item-thumbnail-right {
+  padding-right: $item-thumbnail-width + $item-padding;
+  min-height: $item-thumbnail-height;
+
+  img:first-child, .item-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    max-width: $item-thumbnail-width;
+    max-height: $item-thumbnail-height;
     width: 100%;
   }
 }
@@ -220,13 +263,13 @@ button.item-icon-right {
 // Item Image
 // -------------------------------
 
-.item-image .item-content {
+.item-image {
   padding: 0;
   text-align: center;
   
   img:first-child, .list-img {
-    vertical-align: middle;
     width: 100%;
+    vertical-align: middle;
   }
 }
 
@@ -234,7 +277,7 @@ button.item-icon-right {
 // Item Body
 // -------------------------------
 
-.item-body .item-content {
+.item-body {
   overflow: auto;
   padding: $item-padding;
   text-overflow: inherit;
@@ -339,7 +382,7 @@ button.item-icon-right {
  * The hidden right-side buttons that can be exposed under a list item
  * with dragging.
  */
-.item-buttons {
+.item-options {
   position: absolute;
   top: 0;
   right: 0;

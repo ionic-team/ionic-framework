@@ -969,9 +969,35 @@ a.subdued‎ {
   z-index: 2;
   display: block;
   margin: -1px;
+  padding: 15px 40px 15px 15px;
   border: none;
   background-color: white;
-  box-shadow: inset 0 0 1px #666666; }
+  box-shadow: inset 0 0 1px #666666;
+  font-size: 16px;
+  -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
+  .item h2 {
+    margin: 0 0 4px 0;
+    font-size: 16px; }
+  .item h3 {
+    margin: 0 0 4px 0;
+    font-size: 14px; }
+  .item h4 {
+    margin: 0 0 4px 0;
+    font-size: 12px; }
+  .item h5, .item h6 {
+    margin: 0 0 3px 0;
+    font-size: 10px; }
+  .item p {
+    color: #666;
+    font-size: 14px; }
+  .item h1:last-child,
+  .item h2:last-child,
+  .item h3:last-child,
+  .item h4:last-child,
+  .item h5:last-child,
+  .item h6:last-child,
+  .item p:last-child {
+    margin-bottom: 0; }
   .item .badge {
     float: right; }
   .item .badge + .badge {
@@ -1085,13 +1111,22 @@ a.subdued‎ {
         background-color: #444444;
         color: white; }
 
+.item,
+.item-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+
 a.item {
   color: #333333;
   text-decoration: none; }
   a.item:hover, a.item:focus {
     text-decoration: none; }
 
-.item-content {
+.item-slider {
+  padding: 0; }
+
+.item-slider .item-content {
   /**
    * The content area of a complex list item. This area can
    * Slide left and right and be dragged to support different
@@ -1099,44 +1134,24 @@ a.item {
    */
   position: relative;
   z-index: 2;
-  overflow: hidden;
   padding: 15px 40px 15px 15px;
   border: none;
-  background-color: #fff;
+  background-color: white;
   box-shadow: inset 0 0 1px #666666;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 16px;
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
-  .item-content h2 {
-    margin: 0 0 4px 0;
-    font-size: 16px; }
-  .item-content h3 {
-    margin: 0 0 4px 0;
-    font-size: 14px; }
-  .item-content h3 {
-    margin: 0 0 4px 0;
-    font-size: 12px; }
-  .item-content h4, .item-content h5, .item-content h6 {
-    margin: 0 0 3px 0;
-    font-size: 10px; }
-  .item-content p {
-    color: #666;
-    font-size: 14px; }
-  .item-content h1:last-child,
-  .item-content h2:last-child,
-  .item-content h3:last-child,
-  .item-content h4:last-child,
-  .item-content h5:last-child,
-  .item-content h6:last-child,
-  .item-content p:last-child {
-    margin-bottom: 0; }
 
 .item-text-wrap {
   overflow: auto;
   white-space: normal; }
 
-.item-content i {
+.item-slider.item-text-wrap {
+  overflow: hidden;
+  white-space: nowrap; }
+  .item-slider.item-text-wrap .item-content {
+    overflow: auto;
+    white-space: normal; }
+
+.item i {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-flex;
@@ -1152,22 +1167,30 @@ a.item {
   height: 100%;
   font-size: 32px; }
 
-.item-content .fill-icon {
+.item .fill-icon {
   font-size: 28px; }
 
-.item-icon-left .item-content {
+.item-icon-left {
   padding-left: 45px; }
-  .item-icon-left .item-content i {
+  .item-icon-left i {
     left: 7.5px; }
 
-.item-icon-right .item-content i {
+.item-slider.item-icon-left {
+  padding-left: 0; }
+  .item-slider.item-icon-left .item-content {
+    padding-left: 45px; }
+
+.item-icon-right i {
   right: 7.5px; }
 
-.item-icon-left.item-icon-right .item-content i:last-child {
+.item-icon-left.item-icon-right i:first-child {
+  right: auto; }
+
+.item-icon-left.item-icon-right i:last-child {
   left: auto; }
 
-a .item-content:after,
-button .item-content:after {
+a.item:after,
+button.item:after {
   /* By default, both <a> and <button> have right side arrow icons */
   display: -webkit-box;
   display: -webkit-flex;
@@ -1195,14 +1218,14 @@ button .item-content:after {
   speak: none;
   -webkit-font-smoothing: antialiased; }
 
-a.item-icon-right .item-content:after,
-button.item-icon-right .item-content:after {
+a.item-icon-right:after,
+button.item-icon-right:after {
   display: none; }
 
-.item-thumbnail .item-content {
+.item-avitar {
   padding-left: 70px;
   min-height: 70px; }
-  .item-thumbnail .item-content img:first-child, .item-thumbnail .item-content .item-img {
+  .item-avitar img:first-child, .item-avitar .item-img {
     position: absolute;
     top: 15px;
     left: 15px;
@@ -1211,10 +1234,10 @@ button.item-icon-right .item-content:after {
     width: 100%;
     border-radius: 4px; }
 
-.item-thumbnail-lrg .item-content {
+.item-thumbnail-left {
   padding-left: 95px;
   min-height: 80px; }
-  .item-thumbnail-lrg .item-content img:first-child, .item-thumbnail-lrg .item-content .item-img {
+  .item-thumbnail-left img:first-child, .item-thumbnail-left .item-image {
     position: absolute;
     top: 0;
     left: 0;
@@ -1222,19 +1245,30 @@ button.item-icon-right .item-content:after {
     max-height: 80px;
     width: 100%; }
 
-.item-image .item-content {
-  padding: 0;
-  text-align: center; }
-  .item-image .item-content img:first-child, .item-image .item-content .list-img {
-    vertical-align: middle;
+.item-thumbnail-right {
+  padding-right: 95px;
+  min-height: 80px; }
+  .item-thumbnail-right img:first-child, .item-thumbnail-right .item-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    max-width: 80px;
+    max-height: 80px;
     width: 100%; }
 
-.item-body .item-content {
+.item-image {
+  padding: 0;
+  text-align: center; }
+  .item-image img:first-child, .item-image .list-img {
+    width: 100%;
+    vertical-align: middle; }
+
+.item-body {
   overflow: auto;
   padding: 15px;
   text-overflow: inherit;
   white-space: normal; }
-  .item-body .item-content h1, .item-body .item-content h2, .item-body .item-content h3, .item-body .item-content h4, .item-body .item-content h5, .item-body .item-content h6, .item-body .item-content p {
+  .item-body h1, .item-body h2, .item-body h3, .item-body h4, .item-body h5, .item-body h6, .item-body p {
     margin-top: 15px;
     margin-bottom: 15px; }
 
@@ -1306,13 +1340,13 @@ button.item-icon-right .item-content:after {
  * The hidden right-side buttons that can be exposed under a list item
  * with dragging.
  */
-.item-buttons {
+.item-options {
   position: absolute;
   top: 0;
   right: 0;
   z-index: 1;
   height: 100%; }
-  .item-buttons .button {
+  .item-options .button {
     height: 100%;
     border: none;
     border-radius: 0; }
@@ -1368,51 +1402,51 @@ button.item-icon-right .item-content:after {
   border-radius: 2px; }
 
 .card {
+  padding-top: 1px;
+  padding-bottom: 1px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); }
 
-.card .item,
-.list-inset .item,
-.padding > .list .item {
-  margin-left: 0;
-  margin-right: 0; }
-  .card .item:first-child,
-  .list-inset .item:first-child,
-  .padding > .list .item:first-child {
-    margin-top: 0;
+.card .item:first-child,
+.list-inset .item:first-child,
+.padding > .list .item:first-child {
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px; }
+  .card .item:first-child .item-content,
+  .list-inset .item:first-child .item-content,
+  .padding > .list .item:first-child .item-content {
     border-top-left-radius: 2px;
     border-top-right-radius: 2px; }
-    .card .item:first-child .item-content,
-    .list-inset .item:first-child .item-content,
-    .padding > .list .item:first-child .item-content {
-      border-top-left-radius: 2px;
-      border-top-right-radius: 2px; }
-  .card .item:last-child,
-  .list-inset .item:last-child,
-  .padding > .list .item:last-child {
-    margin-bottom: 0;
+.card .item:last-child,
+.list-inset .item:last-child,
+.padding > .list .item:last-child {
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px; }
+  .card .item:last-child .item-content,
+  .list-inset .item:last-child .item-content,
+  .padding > .list .item:last-child .item-content {
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px; }
-    .card .item:last-child .item-content,
-    .list-inset .item:last-child .item-content,
-    .padding > .list .item:last-child .item-content {
-      border-bottom-left-radius: 2px;
-      border-bottom-right-radius: 2px; }
 
-.card.list .item:last-child,
+.card .item:last-child,
 .list-inset .item:last-child {
   margin-bottom: -1px; }
 
-.card.list .item-divider,
+.card .item,
+.card .item-divider,
 .list-inset .item-divider,
 .padding > .list .item,
-.padding-horizontal > .list .item {
-  margin-right: 0;
+.padding-horizontal > .list .item,
+.padding > .list .item-divider,
+.padding-horizontal > .list .item-divider {
+  margin-left: 0;
+  margin-right: 0; }
+
+.padding-left > .list .item,
+.padding-left > .list .item-divider {
   margin-left: 0; }
 
-.padding-left > .list .item {
-  margin-left: 0; }
-
-.padding-right > .list .item {
+.padding-right > .list .item,
+.padding-right > .list .item-divider {
   margin-right: 0; }
 
 form {
