@@ -1,7 +1,9 @@
 (function(ionic) {
 'use strict';
   var EASING_FUNCTIONS = {
-    quadratic: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+    quadratic: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+		circular: 'cubic-bezier(0.1, 0.57, 0.1, 1)',
+    circular2: 'cubic-bezier(0.075, 0.82, 0.165, 1)'
   };
 
   ionic.views.ScrollView = function(opts) {
@@ -19,6 +21,7 @@
       invertWheel: false,
       isVerticalEnabled: true,
       isHorizontalEnabled: false,
+      bounceEasing: EASING_FUNCTIONS.circular,
       bounceTime: 600 //how long to take when bouncing back in a rubber band
     }, opts);
 
@@ -110,38 +113,40 @@
      * animate it back.
      */
     wrapScrollPosition: function(transitionTime) {
-      var totalWidth = this.el.scrollWidth;
-      var totalHeight = this.el.offsetHeight;
-      var parentWidth = this.el.parentNode.offsetWidth;
-      var parentHeight = this.el.parentNode.offsetHeight;
+      var _this = this;
 
-      var maxX = (-totalWidth + parentWidth);
-      var maxY = (-totalHeight + parentHeight);
+      window.requestAnimationFrame(function() {
+        var totalWidth = _this.el.scrollWidth;
+        var totalHeight = _this.el.offsetHeight;
+        var parentWidth = _this.el.parentNode.offsetWidth;
+        var parentHeight = _this.el.parentNode.offsetHeight;
 
-        //this._execEvent('scrollEnd');
-      var x = this.x, y = this.y;
+        var maxX = (-totalWidth + parentWidth);
+        var maxY = (-totalHeight + parentHeight);
 
-      var time = time || 0;
+          //this._execEvent('scrollEnd');
+        var x = _this.x, y = _this.y;
 
-      if ( !this.isHorizontalEnabled || this.x > 0 ) {
-        x = 0;
-      } else if ( this.x < maxX) {
-        x = maxX;
-      }
+        if (!_this.isHorizontalEnabled || _this.x > 0) {
+          x = 0;
+        } else if ( _this.x < maxX) {
+          x = maxX;
+        }
 
-      if ( !this.isVerticalEnabled || this.y > 0 ) {
-        y = 0;
-      } else if ( this.y < maxY) {
-        y = maxY;
-      }
+        if (!_this.isVerticalEnabled || _this.y > 0) {
+          y = 0;
+        } else if (_this.y < maxY) {
+          y = maxY;
+        }
 
-      // No change
-      if (x == this.x || y == this.y) {
-        return false;
-      }
-      this.scrollTo(x, y, time, this.bounceTime);
-		
-      return true;
+        // No change
+        if (x == _this.x && y == _this.y) {
+          return false;
+        }
+        _this.scrollTo(x, y, transitionTime || 0, _this.bounceEasing);
+      
+        return true;
+      });
     },
 
     _wheel: function(e) {
@@ -240,7 +245,7 @@
       this.el.style.webkitTransitionDuration = '0';
 
       if(this.wrapScrollPosition(this.bounceTime)) {
-        ionic.trigger(_this.scrollEndEventName, {
+        ionic.trigger(this.scrollEndEventName, {
           target: this.el,
           scrollLeft: this.x,
           scrollTop: this.y
@@ -466,30 +471,12 @@
           time = Math.max(momentumX.duration, momentumY.duration);
         }
         
-
-        // Check if we need to rubber band back
-        if(_this.x > 0) {
-          _this.scrollTo(0, 0, _this.bounceTime);
-          return;
-        } else if((-_this.x + parentWidth) > totalWidth) {
-          _this.scrollTo(-(totalWidth - parentWidth), 0, _this.bounceTime);
-          return;
-        }
-
-        if(_this.y > 0) {
-          _this.scrollTo(0, 0, _this.bounceTime);
-          return;
-        } else if ((-_this.y + parentHeight) > totalHeight) {
-          _this.scrollTo(0, totalHeight - parentHeight, _this.bounceTime);
-          return;
-        }
-
         // If we've moved, we will need to scroll
         if(newX != _this.x || newY != _this.y) {
 
           // If the end position is out of bounds, change the function we use for easing
           // to get a different animation for the rubber banding
-          if ( newX > 0 || newX < this.maxScrollX || newY > 0 || newY < this.maxScrollY ) {
+          if ( newX > 0 || newX < (-totalWidth + parentWidth) || newY > 0 || newY < (-totalHeight + parentHeight)) {
             easing = EASING_FUNCTIONS.quadratic;
           }
 
