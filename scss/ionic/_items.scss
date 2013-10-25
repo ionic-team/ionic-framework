@@ -199,7 +199,6 @@ button.item-icon-right {
     max-height: $item-thumbnail-height;
     width: 100%;
     border-radius: 4px;
-    vertical-align: middle;
   }
 }
 
@@ -226,6 +225,7 @@ button.item-icon-right {
   text-align: center;
   
   img:first-child, .list-img {
+    vertical-align: middle;
     width: 100%;
   }
 }

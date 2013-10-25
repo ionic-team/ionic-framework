@@ -1919,8 +1919,7 @@
       max-width: 40px;
       max-height: 40px;
       width: 100%;
-      border-radius: 4px;
-      vertical-align: middle; }
+      border-radius: 4px; }
   .ionic .item-thumbnail-lrg .item-content {
     padding-left: 95px;
     min-height: 80px; }
@@ -1935,6 +1934,7 @@
     padding: 0;
     text-align: center; }
     .ionic .item-image .item-content img:first-child, .ionic .item-image .item-content .list-img {
+      vertical-align: middle;
       width: 100%; }
   .ionic .item-body .item-content {
     overflow: auto;

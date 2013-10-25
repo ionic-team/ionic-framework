@@ -1206,8 +1206,7 @@ button.item-icon-right .item-content:after {
     max-width: 40px;
     max-height: 40px;
     width: 100%;
-    border-radius: 4px;
-    vertical-align: middle; }
+    border-radius: 4px; }
 
 .item-thumbnail-lrg .item-content {
   padding-left: 95px;
@@ -1224,6 +1223,7 @@ button.item-icon-right .item-content:after {
   padding: 0;
   text-align: center; }
   .item-image .item-content img:first-child, .item-image .item-content .list-img {
+    vertical-align: middle;
     width: 100%; }
 
 .item-body .item-content {
