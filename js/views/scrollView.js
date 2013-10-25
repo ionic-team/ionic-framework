@@ -3,7 +3,11 @@
   var EASING_FUNCTIONS = {
     quadratic: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
 		circular: 'cubic-bezier(0.1, 0.57, 0.1, 1)',
-    circular2: 'cubic-bezier(0.075, 0.82, 0.165, 1)'
+    circular2: 'cubic-bezier(0.075, 0.82, 0.165, 1)',
+
+    // It closes like a high-end toilet seat. Fast, then nice and slow.
+    // Thanks to our @xtheglobe for that.
+    toiletSeat: 'cubic-bezier(0.05, 0.60, 0.05, 0.60)'
   };
 
   ionic.views.ScrollView = function(opts) {
