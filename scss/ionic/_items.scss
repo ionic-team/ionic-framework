@@ -131,7 +131,10 @@ a.item {
   top: 0;
   height: 100%;
   font-size: $item-icon-font-size;
+}
 
+.item-content .fill-icon {
+  font-size: $item-icon-fill-font-size;
 }
 
 .item-icon-left .item-content {
@@ -250,10 +253,6 @@ button.item-icon-right {
   box-shadow: inset 0 0 $item-border-width #666;
   color: $item-divider-color;
   font-weight: bold;
-}
-.card.list .item-divider {
-  margin-right: 0;
-  margin-left: 0;
 }
 
 

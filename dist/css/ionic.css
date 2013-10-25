@@ -2290,6 +2290,9 @@ a.item {
   position: absolute;
   top: 0;
   height: 100%;
+  font-size: 32px; }
+
+.item-content .fill-icon {
   font-size: 28px; }
 
 .item-icon-left .item-content {
@@ -2378,10 +2381,6 @@ button.item-icon-right .item-content:after {
   box-shadow: inset 0 0 1px #666666;
   color: #222222;
   font-weight: bold; }
-
-.card.list .item-divider {
-  margin-right: 0;
-  margin-left: 0; }
 
 .item-sliding {
   -webkit-transition: -webkit-transform 0.1s ease-in-out; }
@@ -2496,10 +2495,28 @@ button.item-icon-right .item-content:after {
 .card {
   overflow: hidden;
   margin: 20px 10px;
-  border: none;
-  border-radius: 2px;
   background-color: white;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 2px; }
+
+.card .item {
+  margin-left: 0;
+  margin-right: 0; }
+  .card .item:first-child {
+    margin-top: 0;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px; }
+  .card .item:last-child {
+    margin-bottom: 0;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px; }
+
+.card.list .item:last-child {
+  margin-bottom: -1px; }
+
+.card.list .item-divider {
+  margin-right: 0;
+  margin-left: 0; }
 
 form {
   margin: 0 0 1.42857; }

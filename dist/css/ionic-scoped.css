@@ -1867,6 +1867,8 @@
     position: absolute;
     top: 0;
     height: 100%;
+    font-size: 32px; }
+  .ionic .item-content .fill-icon {
     font-size: 28px; }
   .ionic .item-icon-left .item-content {
     padding-left: 45px; }
@@ -1945,9 +1947,6 @@
     box-shadow: inset 0 0 1px #666666;
     color: #222222;
     font-weight: bold; }
-  .ionic .card.list .item-divider {
-    margin-right: 0;
-    margin-left: 0; }
   .ionic .item-sliding {
     -webkit-transition: -webkit-transform 0.1s ease-in-out; }
   .ionic .item-reordering {
@@ -2037,10 +2036,25 @@
   .ionic .card {
     overflow: hidden;
     margin: 20px 10px;
-    border: none;
-    border-radius: 2px;
     background-color: white;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    border-radius: 2px; }
+  .ionic .card .item {
+    margin-left: 0;
+    margin-right: 0; }
+    .ionic .card .item:first-child {
+      margin-top: 0;
+      border-top-left-radius: 2px;
+      border-top-right-radius: 2px; }
+    .ionic .card .item:last-child {
+      margin-bottom: 0;
+      border-bottom-left-radius: 2px;
+      border-bottom-right-radius: 2px; }
+  .ionic .card.list .item:last-child {
+    margin-bottom: -1px; }
+  .ionic .card.list .item-divider {
+    margin-right: 0;
+    margin-left: 0; }
   .ionic form {
     margin: 0 0 1.42857; }
   .ionic legend {
