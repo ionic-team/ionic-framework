@@ -2,7 +2,10 @@
  * Adapted from the great iScroll for Ionic. iScroll is licensed under MIT just like Ionic.
  *
  * Think of ionic.views.Scroll like a Javascript version of UIScrollView or any 
- * scroll container in any UI library.
+ * scroll container in any UI library. You could just use -webkit-overflow-scrolling: touch,
+ * but you lose control over scroll behavior that native developers have with things
+ * like UIScrollView, and you don't get events after the finger stops touching the
+ * device (after a flick, for example)
  *
  * iScroll v5.0.5 ~ (c) 2008-2013 Matteo Spinelli ~ http://cubiq.org/license
  */
@@ -16,6 +19,9 @@ var rAF = window.requestAnimationFrame	||
 	window.msRequestAnimationFrame		||
 	function (callback) { window.setTimeout(callback, 1000 / 60); };
 
+/**
+ * Utilities for calculating momentum, etc.
+ */
 var utils = (function () {
 	var me = {};
 

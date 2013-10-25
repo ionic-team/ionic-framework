@@ -18,7 +18,7 @@ angular.module('ionic.weather', ['ionic.weather.services', 'ionic.weather.direct
   $scope.getActiveBackgroundImage = function() {
     if($scope.activeBgImage) {
       var item = $scope.activeBgImage;
-      var url = "http://farm"+ item.farm +".static.flickr.com/"+ item.server +"/"+ item.id +"_"+ item.secret +"_m.jpg";
+      var url = "http://farm"+ item.farm +".static.flickr.com/"+ item.server +"/"+ item.id +"_"+ item.secret +"_z.jpg";
       return {
         'background-image': 'url(' + url + ')'
       };
@@ -62,7 +62,7 @@ angular.module('ionic.weather', ['ionic.weather.services', 'ionic.weather.direct
       if($scope.bgImages) {
         $scope.activeBgImage = $scope.bgImages[$scope.activeBgImageIndex++ % $scope.bgImages.length];
       }
-      $timeout(cycle, 10000);
+      //$timeout(cycle, 10000);
     });
   };
 
