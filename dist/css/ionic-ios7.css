@@ -1206,7 +1206,8 @@ button.item-icon-right .item-content:after {
     max-width: 40px;
     max-height: 40px;
     width: 100%;
-    border-radius: 4px; }
+    border-radius: 4px;
+    vertical-align: middle; }
 
 .item-thumbnail-lrg .item-content {
   padding-left: 95px;

@@ -1919,7 +1919,8 @@
       max-width: 40px;
       max-height: 40px;
       width: 100%;
-      border-radius: 4px; }
+      border-radius: 4px;
+      vertical-align: middle; }
   .ionic .item-thumbnail-lrg .item-content {
     padding-left: 95px;
     min-height: 80px; }
