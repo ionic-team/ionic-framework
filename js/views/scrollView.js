@@ -93,6 +93,7 @@
         y = this.y;
       }
 
+      el.offsetHeight;
       el.style.webkitTransitionTimingFunction = easing;
       el.style.webkitTransitionDuration = time;
       el.style.webkitTransform = 'translate3d(' + x + 'px,' + y + 'px, 0)';
@@ -246,19 +247,29 @@
     },
 
     _onTransitionEnd: function(e) {
+      var _this = this;
+
       if (e.target != this.el) {
         return;
       }
 
-      this.el.style.webkitTransitionDuration = '0';
-
-      if(this.wrapScrollPosition(this.bounceTime)) {
-        ionic.trigger(this.scrollEndEventName, {
-          target: this.el,
-          scrollLeft: this.x,
-          scrollTop: this.y
+      // Triggered to end scroll, once the final animation has ended
+      if(this._didEndScroll) {
+        this._didEndScroll = false;
+        ionic.trigger(_this.scrollEndEventName, {
+          target: _this.el,
+          scrollLeft: _this.x,
+          scrollTop: _this.y
         });
       }
+
+      this.el.style.webkitTransitionDuration = '0';
+
+      window.requestAnimationFrame(function() {
+        if(_this.wrapScrollPosition(_this.bounceTime)) {
+          _this._didEndScroll = true;
+        }
+      });
     },
 
     _onScrollEnd: function() {
@@ -463,6 +474,8 @@
         // Calculate the viewport height and the height of the content
         var totalWidth = _this.el.scrollWidth;
         var totalHeight = _this.el.scrollHeight;
+
+        // The parent bounding box helps us figure max/min scroll amounts
         var parentWidth = _this.el.parentNode.offsetWidth;
         var parentHeight = _this.el.parentNode.offsetHeight;
 
@@ -482,7 +495,8 @@
           return;
         }
 
-        // If the duration is within reasonable bounds, enable momentum scrolling
+        // If the duration is within reasonable bounds, enable momentum scrolling so we
+        // can "slide" to a finishing point
         if(duration < 300) {
           var momentumX = _this._getMomentum(_this.x, drag.startX, duration, parentWidth - totalWidth, parentWidth);
           var momentumY = _this._getMomentum(_this.y, drag.startY, duration, parentHeight - totalHeight, parentHeight);
