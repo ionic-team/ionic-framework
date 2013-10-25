@@ -99,7 +99,7 @@
       if(newY > 0) {
         newY = 0;
       } else if (newY < -maxY) {
-        newY = maxY;
+        newY = -maxY;
       }
 
       this.scrollTo(0, newY, 0);
