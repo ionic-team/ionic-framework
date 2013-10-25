@@ -416,24 +416,32 @@ ionic.views.Scroll.prototype = {
 	},
 
 	_move: function (e) {
+    // Make sure scrolling is enabled
 		if ( !this.enabled || utils.eventType[e.type] !== this.initiated ) {
 			return;
 		}
 
+    // Prevent default if necessary
 		if ( this.options.preventDefault ) {	// increases performance on Android? TODO: check!
 			e.preventDefault();
 		}
 
+    // Grab the current touch point
 		var point		= e.touches ? e.touches[0] : e,
+      // Check how far we've scrolled in the X direction
 			deltaX		= this.hasHorizontalScroll ? point.pageX - this.pointX : 0,
+      // Check how far we've scrolled in the Y direction
 			deltaY		= this.hasVerticalScroll   ? point.pageY - this.pointY : 0,
+      // Get current timestmap
 			timestamp	= utils.getTime(),
 			newX, newY,
 			absDistX, absDistY;
 
+    // Store the current finger points
 		this.pointX		= point.pageX;
 		this.pointY		= point.pageY;
 
+    // Calculate the total distance travelled
 		this.distX		+= deltaX;
 		this.distY		+= deltaY;
 		absDistX		= Math.abs(this.distX);
@@ -475,10 +483,12 @@ ionic.views.Scroll.prototype = {
 			deltaX = 0;
 		}
 
+    // The new scroll point is the current position plus the delta moved since
+    // last
 		newX = this.x + deltaX;
 		newY = this.y + deltaY;
 
-		// Slow down if outside of the boundaries
+		// Slow down if outside of the boundaries (rubber banding)
 		if ( newX > 0 || newX < this.maxScrollX ) {
 			newX = this.options.bounce ? this.x + deltaX / 3 : newX > 0 ? 0 : this.maxScrollX;
 		}
@@ -486,13 +496,18 @@ ionic.views.Scroll.prototype = {
 			newY = this.options.bounce ? this.y + deltaY / 3 : newY > 0 ? 0 : this.maxScrollY;
 		}
 
+    // Calcualte the directional multiplier
 		this.directionX = deltaX > 0 ? -1 : deltaX < 0 ? 1 : 0;
 		this.directionY = deltaY > 0 ? -1 : deltaY < 0 ? 1 : 0;
 
+    // We moved
 		this.moved = true;
 
+    // Translate to the new position
 		this._translate(newX, newY);
 
+    // Check if the difference between right now and when we started is bigger than 300ms.
+    // We then reset the start positions to reduce the possibility of large errors
 		if ( timestamp - this.startTime > 300 ) {
 			this.startTime = timestamp;
 			this.startX = this.x;
@@ -502,20 +517,26 @@ ionic.views.Scroll.prototype = {
 	},
 
 	_end: function (e) {
+    // Check if scrolling is enabled
 		if ( !this.enabled || utils.eventType[e.type] !== this.initiated ) {
 			return;
 		}
 
+    // Prevent default if enabled
 		if ( this.options.preventDefault && !utils.preventDefaultException(e.target, this.options.preventDefaultException) ) {
 			e.preventDefault();
 		}
 
+    // Get the current point
 		var point = e.changedTouches ? e.changedTouches[0] : e,
 			momentumX,
 			momentumY,
+      // Calculate how long we've been dragging for time wise
 			duration = utils.getTime() - this.startTime,
+      // Store the new position rounded
 			newX = Math.round(this.x),
 			newY = Math.round(this.y),
+      // Calculate the total distance travelled
 			distanceX = Math.abs(newX - this.startX),
 			distanceY = Math.abs(newY - this.startY),
 			time = 0,

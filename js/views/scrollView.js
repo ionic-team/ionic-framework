@@ -131,7 +131,7 @@
       }
       */
 
-      console.log('Momentum of time', time, speed, destination, duration);
+      console.log('Momentum: time:', time, 'speed:',speed, 'dest:',destination, 'dur:',duration);
       return {
         destination: Math.round(destination),
         duration: duration
@@ -318,13 +318,14 @@
             newY = 0;
           }
 
-          console.log(newX, newY);
           // Update the new translated Y point of the container
           _this.el.style.webkitTransform = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
 
           // Store the last points
           _this.x = newX;
           _this.y = newY;
+
+          console.log('Moving to', newX, newY);
 
           // Check if we need to reset the drag initial states if we've
           // been dragging for a bit
@@ -379,30 +380,41 @@
         var parentHeight = _this.el.offsetHeight;
 
         // Calculate how long we've been dragging for, with a max of 300ms
-        var duration = Math.min(300, (Date.now()) - _this._drag.startTime);
+        var duration = Date.now() - _this._drag.startTime;
 
 
         var newX = Math.round(_this.x);
         var newY = Math.round(_this.y);
+
+        this.scrollTo(newX, newY);
+
+        var distanceX = Math.abs(newX - _this.startX);
+        var distanceY = Math.abs(newY - _this.startY);
+        this.endTime = Date.now();
+
         //distanceX = Math.abs(newX - this.startX),
         //var distanceY = Math.abs(newY - drag.startY);
+        
+        // If the duration is within reasonable bounds, enable momentum scrolling
+        if(duration < 300) {
+          var momentumX = _this._getMomentum(_this.x, drag.startX, duration, parentWidth - totalWidth, parentWidth);
+          var momentumY = _this._getMomentum(_this.y, drag.startY, duration, parentHeight - totalHeight, parentHeight);
+          //var newX = momentumX.destination;
+          newX = momentumX.destination;
+          newY = momentumY.destination;
 
-
-        var momentumX = _this._getMomentum(_this.x, drag.startX, duration, parentWidth - totalWidth, parentWidth);
-        var momentumY = _this._getMomentum(_this.y, drag.startY, duration, parentHeight - totalHeight, parentHeight);
-        //var newX = momentumX.destination;
-        newX = momentumX.destination;
-        newY = momentumY.destination;
-
-        var timeX = momentumX.duration;
-        var timeY = momentumY.duration;
+          var timeX = momentumX.duration;
+          var timeY = momentumY.duration;
+        }
         
 
         // Check if we need to rubber band back
         if(_this.x > 0) {
           _this.scrollTo(0, 0, _this.bounceTime);
+          return;
         } else if((-_this.x + parentWidth) > totalWidth) {
-          _this.scrollTo(0, totalWidth - parentWidth, _this.bounceTime);
+          _this.scrollTo(-(totalWidth - parentWidth), 0, _this.bounceTime);
+          return;
         }
 
         if(_this.y > 0) {

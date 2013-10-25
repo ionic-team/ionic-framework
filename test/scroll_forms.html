@@ -17,7 +17,14 @@
       #wrapper {
         position: relative;
         overflow: hidden;
-        height: 100%;
+        	position: absolute;
+          z-index: 1;
+          top: 44px;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          background: #ccc;
+          overflow: hidden;
       }
     </style>
   </head>
@@ -28,7 +35,7 @@
         <h1 class="title">Scroll Me</h1>
         <a href="#" class="button button-danger button-clear">Delete</a>
       </div>
-      <div id="wrapper" style="margin-top: 44px">
+      <div id="wrapper">
         <div id="scroller" class="scroll">
           <div class="list">
             <label class="item item-input">
@@ -63,6 +70,126 @@
               <span class="input-label">Password</span>
               <input type="password">
             </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
           </div>
 
         </div>
@@ -70,7 +197,7 @@
     </section>
     <script src="../dist/js/ionic.js"></script>
     <script>
-      var s = document.getElementById('scroller');
+      var s = document.getElementById('wrapper');
 
       var w = s.scrollWidth;
 
@@ -85,7 +212,7 @@
         }
       }
 
-      var scroll = new ionic.views.Scroll({
+      var scroll = new ionic.views.ScrollView({
         el: s,
       });
     </script>
