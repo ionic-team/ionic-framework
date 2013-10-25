@@ -1354,37 +1354,63 @@ button.item-icon-right .item-content:after {
   color: #aaa;
   font-size: 14px; }
 
-.card {
+/*
+  A card and list-inset are close to the same thing, except a card as a box shadow.
+*/
+.card,
+.list-inset {
   overflow: hidden;
   margin: 20px 10px;
   background-color: white;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   border-radius: 2px; }
 
-.card .item {
+.card {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); }
+
+.card .item,
+.list-inset .item,
+.padding > .list .item {
   margin-left: 0;
   margin-right: 0; }
-  .card .item:first-child {
+  .card .item:first-child,
+  .list-inset .item:first-child,
+  .padding > .list .item:first-child {
     margin-top: 0;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px; }
-    .card .item:first-child .item-content {
+    .card .item:first-child .item-content,
+    .list-inset .item:first-child .item-content,
+    .padding > .list .item:first-child .item-content {
       border-top-left-radius: 2px;
       border-top-right-radius: 2px; }
-  .card .item:last-child {
+  .card .item:last-child,
+  .list-inset .item:last-child,
+  .padding > .list .item:last-child {
     margin-bottom: 0;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px; }
-    .card .item:last-child .item-content {
+    .card .item:last-child .item-content,
+    .list-inset .item:last-child .item-content,
+    .padding > .list .item:last-child .item-content {
       border-bottom-left-radius: 2px;
       border-bottom-right-radius: 2px; }
 
-.card.list .item:last-child {
+.card.list .item:last-child,
+.list-inset .item:last-child {
   margin-bottom: -1px; }
 
-.card.list .item-divider {
+.card.list .item-divider,
+.list-inset .item-divider,
+.padding > .list .item,
+.padding-horizontal > .list .item {
   margin-right: 0;
   margin-left: 0; }
+
+.padding-left > .list .item {
+  margin-left: 0; }
+
+.padding-right > .list .item {
+  margin-right: 0; }
 
 form {
   margin: 0 0 1.42857; }
@@ -1418,34 +1444,13 @@ select,
 textarea {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
-.input-group {
-  display: block;
-  overflow: hidden;
-  border-top: 1px solid #cccccc;
-  border-bottom: 1px solid #cccccc;
-  background-color: white; }
-
-.padded > .input-group,
-.input-group.margin {
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  border-right: 1px solid #cccccc;
-  border-left: 1px solid #cccccc; }
-
-.input-group .input-row + .input-row {
-  border-top: 1px solid #cccccc; }
-
-.input-group + .input-group {
-  margin-top: 10px; }
-
-.input-row {
+.item-input {
   position: relative;
   display: -webkit-flex;
   display: flex;
   overflow: hidden;
   padding: 6px 8px 5px; }
-  .input-row input {
+  .item-input input {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
@@ -1453,45 +1458,46 @@ textarea {
     background-color: transparent;
     flex: 1 0 220px;
     -webkit-appearance: none; }
-  .input-row .input-label {
+  .item-input .input-label {
     padding: 7px 10px 7px 3px;
     max-width: 200px;
     color: black;
     font-weight: bold;
     flex: 1 0 100px; }
-  .input-row [class^="icon-"], .input-row [class*=" icon-"] {
+  .item-input [class^="icon-"], .item-input [class*=" icon-"] {
     display: inline-block;
     text-align: center;
     font-size: 16px;
     flex: 0 0 24px;
     align-self: center; }
-  .input-row .placeholder-icon {
+  .item-input .placeholder-icon {
     color: #999; }
 
-.input-group.stacked-label,
-.input-group.stacked-label .input-row {
+.list.stacked-label,
+.list.stacked-label .item-input {
   display: block;
-  border: 0;
-  background-color: transparent; }
-  .input-group.stacked-label .input-label, .input-group.stacked-label [class^="icon-"], .input-group.stacked-label [class*=" icon-"],
-  .input-group.stacked-label .input-row .input-label,
-  .input-group.stacked-label .input-row [class^="icon-"],
-  .input-group.stacked-label .input-row [class*=" icon-"] {
+  background-color: transparent;
+  box-shadow: none; }
+  .list.stacked-label .input-label, .list.stacked-label [class^="icon-"], .list.stacked-label [class*=" icon-"],
+  .list.stacked-label .item-input .input-label,
+  .list.stacked-label .item-input [class^="icon-"],
+  .list.stacked-label .item-input [class*=" icon-"] {
     display: inline-block;
     padding: 4px 0;
     vertical-align: middle; }
 
-.input-group.stacked-label input,
-.input-group.stacked-label textarea {
+.list.stacked-label input,
+.list.stacked-label textarea {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
   overflow: hidden;
   padding: 4px 8px 3px;
-  border: 1px solid #cccccc;
-  background-color: white; }
+  border: none;
+  background-color: white;
+  box-shadow: inset 0 0 1px #666666; }
 
-.input-group.stacked-label input {
+.list.stacked-label input {
   height: 46px; }
 
 select,
@@ -1560,7 +1566,7 @@ input[type="file"] {
   line-height: 34px; }
 
 select {
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   background-color: white; }
 
 select[multiple],

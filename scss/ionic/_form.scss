@@ -42,32 +42,10 @@ textarea {
 }
 
 
-// Input groups
+// Input List
 // -------------------------------
 
-.input-group {
-  display: block;
-  overflow: hidden;
-  border-top: $input-border-width solid $input-border-color;
-  border-bottom: $input-border-width solid $input-border-color;
-  background-color: $input-bg;
-}
-.padded > .input-group,
-.input-group.margin {
-  @include border-radius($input-border-radius);
-  border-right: $input-border-width solid $input-border-color;
-  border-left: $input-border-width solid $input-border-color;
-}
-
-.input-group .input-row + .input-row {
-  border-top: $input-border-width solid $input-border-color;
-}
-
-.input-group + .input-group {
-  margin-top: $content-padding;
-}
-
-.input-row {
+.item-input {
   position: relative;
   display: -webkit-flex;
   display: flex;
@@ -101,11 +79,11 @@ textarea {
   }
 }
 
-.input-group.stacked-label,
-.input-group.stacked-label .input-row {
+.list.stacked-label,
+.list.stacked-label .item-input {
   display: block;
-  border: 0;
   background-color: transparent;
+  box-shadow: none;
 
   .input-label, [class^="icon-"], [class*=" icon-"] {
     display: inline-block;
@@ -114,16 +92,17 @@ textarea {
   }
 }
 
-.input-group.stacked-label input,
-.input-group.stacked-label textarea
+.list.stacked-label input,
+.list.stacked-label textarea
 {
-  @include border-radius($input-border-radius);
+  @include border-radius(2px);
   overflow: hidden;
   padding: 4px 8px 3px;
-  border: $input-border-width solid $input-border-color;
-  background-color: $input-bg; 
+  border: none;
+  background-color: $input-bg;
+  box-shadow: $item-box-shadow; 
 }
-.input-group.stacked-label input {
+.list.stacked-label input {
   height: $line-height-computed + $font-size-base + 12px;
 }
 
@@ -211,7 +190,7 @@ input[type="file"] {
 
 // Make select elements obey height by applying a border
 select {
-  border: $input-border-width solid $input-border-color;
+  border: 1px solid #ccc;
   background-color: $input-bg; // Chrome on Linux and Mobile Safari need background-color
 }
 

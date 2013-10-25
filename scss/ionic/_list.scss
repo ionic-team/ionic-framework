@@ -5,13 +5,10 @@
 .list {
   position: relative;
   overflow: hidden;
-  // No need to set list-style: none; since .list-item is block level
   margin-bottom: 20px;
   padding-top: $item-border-width;
   padding-bottom: $item-border-width;
   padding-left: 0; // reset padding because ul and ol
-
-  // make room for the list item borders
 }
 
 /**
@@ -64,4 +61,71 @@
   float: right;
   color: #aaa;
   font-size: 14px;
+}
+
+
+// Cards / Inset Lists
+// --------------------------------------------------
+/*
+  A card and list-inset are close to the same thing, except a card as a box shadow.
+*/
+
+.card, 
+.list-inset {
+  overflow: hidden;
+  margin: ($content-padding * 2) $content-padding;
+  background-color: $card-body-bg;
+  border-radius: $card-border-radius;
+}
+
+.card {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+}
+
+.card .item,
+.list-inset .item,
+.padding > .list .item
+{
+  margin-left: 0;
+  margin-right: 0;
+
+  &:first-child {
+    margin-top: 0;
+    border-top-left-radius: $card-border-radius;
+    border-top-right-radius: $card-border-radius;
+
+    .item-content {
+      border-top-left-radius: $card-border-radius;
+      border-top-right-radius: $card-border-radius;
+    }
+  }
+  &:last-child {
+    margin-bottom: 0;
+    border-bottom-left-radius: $card-border-radius;
+    border-bottom-right-radius: $card-border-radius;
+
+    .item-content {
+      border-bottom-left-radius: $card-border-radius;
+      border-bottom-right-radius: $card-border-radius;
+    }
+  }
+}
+
+.card.list .item:last-child, 
+.list-inset .item:last-child {
+  margin-bottom: $item-border-width * -1;
+}
+
+.card.list .item-divider,
+.list-inset .item-divider,
+.padding > .list .item,
+.padding-horizontal > .list .item {
+  margin-right: 0;
+  margin-left: 0;
+}
+.padding-left > .list .item {
+  margin-left: 0;
+}
+.padding-right > .list .item {
+  margin-right: 0;
 }

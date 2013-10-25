@@ -124,18 +124,11 @@ $input-bg-disabled:               $gray-lighter !default;
 
 $input-color:                     $gray !default;
 $input-label-color:               $black !default;
-$input-border-color:              #ccc !default;
-$input-border-width:              1px !default;
-$input-border-radius:             2px !default;
-$input-border-focus:              #66afe9 !default;
 
 $input-color-placeholder:         $gray-light !default;
 
 $legend-color:                    $gray-dark !default;
 $legend-border-color:             #e5e5e5 !default;
-
-$input-group-addon-bg:            $gray-lighter !default;
-$input-group-addon-border-color:  $input-border-color !default;
 
 
 // Toggle
@@ -390,7 +383,8 @@ $card-border-radius:        2px !default;
 // -------------------------------
 
 $item-border-width:            1px !default;
-$item-border-color:            #ddd;
+$item-border-color:            #666;
+$item-box-shadow:              inset 0 0 $item-border-width $item-border-color;
 $item-padding:                 15px !default;
 
 $item-divider-bg:              #f5f5f5;

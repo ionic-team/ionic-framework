@@ -161,6 +161,9 @@
    * List editing styles. These trigger when the entire list goes into
    * "edit mode"
    */
+  /*
+    A card and list-inset are close to the same thing, except a card as a box shadow.
+  */
   /* the checkmark within the box */
   /* what the background looks like when its checked */
   /* what the checkmark looks like when its checked */
@@ -2038,34 +2041,54 @@
     float: right;
     color: #aaa;
     font-size: 14px; }
-  .ionic .card {
+  .ionic .card,
+  .ionic .list-inset {
     overflow: hidden;
     margin: 20px 10px;
     background-color: white;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     border-radius: 2px; }
-  .ionic .card .item {
+  .ionic .card {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); }
+  .ionic .card .item,
+  .ionic .list-inset .item,
+  .ionic .padding > .list .item {
     margin-left: 0;
     margin-right: 0; }
-    .ionic .card .item:first-child {
+    .ionic .card .item:first-child,
+    .ionic .list-inset .item:first-child,
+    .ionic .padding > .list .item:first-child {
       margin-top: 0;
       border-top-left-radius: 2px;
       border-top-right-radius: 2px; }
-      .ionic .card .item:first-child .item-content {
+      .ionic .card .item:first-child .item-content,
+      .ionic .list-inset .item:first-child .item-content,
+      .ionic .padding > .list .item:first-child .item-content {
         border-top-left-radius: 2px;
         border-top-right-radius: 2px; }
-    .ionic .card .item:last-child {
+    .ionic .card .item:last-child,
+    .ionic .list-inset .item:last-child,
+    .ionic .padding > .list .item:last-child {
       margin-bottom: 0;
       border-bottom-left-radius: 2px;
       border-bottom-right-radius: 2px; }
-      .ionic .card .item:last-child .item-content {
+      .ionic .card .item:last-child .item-content,
+      .ionic .list-inset .item:last-child .item-content,
+      .ionic .padding > .list .item:last-child .item-content {
         border-bottom-left-radius: 2px;
         border-bottom-right-radius: 2px; }
-  .ionic .card.list .item:last-child {
+  .ionic .card.list .item:last-child,
+  .ionic .list-inset .item:last-child {
     margin-bottom: -1px; }
-  .ionic .card.list .item-divider {
+  .ionic .card.list .item-divider,
+  .ionic .list-inset .item-divider,
+  .ionic .padding > .list .item,
+  .ionic .padding-horizontal > .list .item {
     margin-right: 0;
     margin-left: 0; }
+  .ionic .padding-left > .list .item {
+    margin-left: 0; }
+  .ionic .padding-right > .list .item {
+    margin-right: 0; }
   .ionic form {
     margin: 0 0 1.42857; }
   .ionic legend {
@@ -2094,30 +2117,13 @@
   .ionic select,
   .ionic textarea {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
-  .ionic .input-group {
-    display: block;
-    overflow: hidden;
-    border-top: 1px solid #cccccc;
-    border-bottom: 1px solid #cccccc;
-    background-color: white; }
-  .ionic .padded > .input-group,
-  .ionic .input-group.margin {
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    border-right: 1px solid #cccccc;
-    border-left: 1px solid #cccccc; }
-  .ionic .input-group .input-row + .input-row {
-    border-top: 1px solid #cccccc; }
-  .ionic .input-group + .input-group {
-    margin-top: 10px; }
-  .ionic .input-row {
+  .ionic .item-input {
     position: relative;
     display: -webkit-flex;
     display: flex;
     overflow: hidden;
     padding: 6px 8px 5px; }
-    .ionic .input-row input {
+    .ionic .item-input input {
       -webkit-border-radius: 0;
       -moz-border-radius: 0;
       border-radius: 0;
@@ -2125,42 +2131,43 @@
       background-color: transparent;
       flex: 1 0 220px;
       -webkit-appearance: none; }
-    .ionic .input-row .input-label {
+    .ionic .item-input .input-label {
       padding: 7px 10px 7px 3px;
       max-width: 200px;
       color: black;
       font-weight: bold;
       flex: 1 0 100px; }
-    .ionic .input-row [class^="icon-"], .ionic .input-row [class*=" icon-"] {
+    .ionic .item-input [class^="icon-"], .ionic .item-input [class*=" icon-"] {
       display: inline-block;
       text-align: center;
       font-size: 16px;
       flex: 0 0 24px;
       align-self: center; }
-    .ionic .input-row .placeholder-icon {
+    .ionic .item-input .placeholder-icon {
       color: #999; }
-  .ionic .input-group.stacked-label,
-  .ionic .input-group.stacked-label .input-row {
+  .ionic .list.stacked-label,
+  .ionic .list.stacked-label .item-input {
     display: block;
-    border: 0;
-    background-color: transparent; }
-    .ionic .input-group.stacked-label .input-label, .ionic .input-group.stacked-label [class^="icon-"], .ionic .input-group.stacked-label [class*=" icon-"],
-    .ionic .input-group.stacked-label .input-row .input-label,
-    .ionic .input-group.stacked-label .input-row [class^="icon-"],
-    .ionic .input-group.stacked-label .input-row [class*=" icon-"] {
+    background-color: transparent;
+    box-shadow: none; }
+    .ionic .list.stacked-label .input-label, .ionic .list.stacked-label [class^="icon-"], .ionic .list.stacked-label [class*=" icon-"],
+    .ionic .list.stacked-label .item-input .input-label,
+    .ionic .list.stacked-label .item-input [class^="icon-"],
+    .ionic .list.stacked-label .item-input [class*=" icon-"] {
       display: inline-block;
       padding: 4px 0;
       vertical-align: middle; }
-  .ionic .input-group.stacked-label input,
-  .ionic .input-group.stacked-label textarea {
+  .ionic .list.stacked-label input,
+  .ionic .list.stacked-label textarea {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
     overflow: hidden;
     padding: 4px 8px 3px;
-    border: 1px solid #cccccc;
-    background-color: white; }
-  .ionic .input-group.stacked-label input {
+    border: none;
+    background-color: white;
+    box-shadow: inset 0 0 1px #666666; }
+  .ionic .list.stacked-label input {
     height: 46px; }
   .ionic select,
   .ionic textarea,
@@ -2221,7 +2228,7 @@
   .ionic input[type="file"] {
     line-height: 34px; }
   .ionic select {
-    border: 1px solid #cccccc;
+    border: 1px solid #ccc;
     background-color: white; }
   .ionic select[multiple],
   .ionic select[size] {
