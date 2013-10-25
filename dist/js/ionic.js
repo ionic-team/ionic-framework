@@ -2481,6 +2481,17 @@ window.ionic = {
 
 })(ionic);
 ;
+/**
+ * ionic.views.Scroll. Portions adapted from the great iScroll 5, which is
+ * also MIT licensed.
+ * iScroll v5.0.5 ~ (c) 2008-2013 Matteo Spinelli ~ http://cubiq.org/license
+ *
+ * Think of ionic.views.Scroll like a Javascript version of UIScrollView or any 
+ * scroll container in any UI library. You could just use -webkit-overflow-scrolling: touch,
+ * but you lose control over scroll behavior that native developers have with things
+ * like UIScrollView, and you don't get events after the finger stops touching the
+ * device (after a flick, for example)
+ */
 (function(ionic) {
 'use strict';
   var EASING_FUNCTIONS = {
@@ -2645,15 +2656,22 @@ window.ionic = {
         newX, newY,
         that = this;
 
-      var totalHeight = this.el.offsetHeight;
+      var totalWidth = this.el.scrollWidth;
+      var totalHeight = this.el.scrollHeight;
+      var parentWidth = this.el.parentNode.offsetWidth;
       var parentHeight = this.el.parentNode.offsetHeight;
-      var maxY = Math.max(0, totalHeight - parentHeight);
-      var maxX = 0;
+
+      var maxX = Math.min(0, (-totalWidth + parentWidth));
+      var maxY = Math.min(0, (-totalHeight + parentHeight));
 
       // Execute the scrollEnd event after 400ms the wheel stopped scrolling
       clearTimeout(this.wheelTimeout);
       this.wheelTimeout = setTimeout(function () {
-        //that._execEvent('scrollEnd');
+        ionic.trigger(this.scrollEndEventName, {
+          target: this.el,
+          scrollLeft: this.x,
+          scrollTop: this.y
+        });
       }, 400);
 
       e.preventDefault();
@@ -2680,21 +2698,19 @@ window.ionic = {
       newX = this.x + (this.isHorizontalEnabled ? wheelDeltaX * (this.invertWheel ? -1 : 1) : 0);
       newY = this.y + (this.isVerticalEnabled ? wheelDeltaY * (this.invertWheel ? -1 : 1) : 0);
 
-      /*
       if(newX > 0) {
         newX = 0;
-      } else if (newX < this.maxScrollX) {
-        newX = this.maxScrollX;
+      } else if (newX < maxX) {
+        newX = maxX;
       }
-      */
 
       if(newY > 0) {
         newY = 0;
-      } else if (newY < -maxY) {
-        newY = -maxY;
+      } else if (newY < maxY) {
+        newY = maxY;
       }
 
-      this.scrollTo(0, newY, 0);
+      this.scrollTo(newX, newY, 0);
     },
 
     _getMomentum: function (current, start, time, lowerMargin, wrapperSize) {
@@ -3001,7 +3017,7 @@ window.ionic = {
           // If the end position is out of bounds, change the function we use for easing
           // to get a different animation for the rubber banding
           if ( newX > 0 || newX < (-totalWidth + parentWidth) || newY > 0 || newY < (-totalHeight + parentHeight)) {
-            easing = EASING_FUNCTIONS.quadratic;
+            easing = EASING_FUNCTIONS.bounce;
           }
 
           _this.scrollTo(newX, newY, time, easing);
