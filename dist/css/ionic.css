@@ -2365,10 +2365,10 @@ a.item-icon-right:after,
 button.item-icon-right:after {
   display: none; }
 
-.item-avitar {
+.item-avatar {
   padding-left: 70px;
   min-height: 70px; }
-  .item-avitar img:first-child, .item-avitar .item-img {
+  .item-avatar img:first-child, .item-avatar .item-img {
     position: absolute;
     top: 15px;
     left: 15px;

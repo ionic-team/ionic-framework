@@ -1933,10 +1933,10 @@
   .ionic a.item-icon-right:after,
   .ionic button.item-icon-right:after {
     display: none; }
-  .ionic .item-avitar {
+  .ionic .item-avatar {
     padding-left: 70px;
     min-height: 70px; }
-    .ionic .item-avitar img:first-child, .ionic .item-avitar .item-img {
+    .ionic .item-avatar img:first-child, .ionic .item-avatar .item-img {
       position: absolute;
       top: 15px;
       left: 15px;
