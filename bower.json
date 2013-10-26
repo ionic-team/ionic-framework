@@ -1,0 +1,31 @@
+{
+  "name": "ionic",
+  "version": "0.0.1",
+  "homepage": "https://github.com/driftyco/ionic",
+  "authors": [
+    "Max Lynch <max@drifty.com>"
+  ],
+  "description": "Advanced HTML5 hybrid mobile app development framework.",
+  "main": "dist/js/ionic.js",
+  "keywords": [
+    "mobile",
+    "html5",
+    "ionic",
+    "phonegap",
+    "trigger",
+    "triggerio",
+    "angularjs",
+    "angular",
+    "ratchet",
+    "bootstrap"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
