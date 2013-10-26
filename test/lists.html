@@ -6,6 +6,13 @@
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="../dist/css/ionic.css" rel="stylesheet">
+    <style>
+      #list {
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+    </style>
   </head>
   <body>
 
@@ -13,10 +20,10 @@
       <h1 class="title">Lists</h1>
     </header>
 
-    <main class="content-wrapper">
-      <div class="content has-header">
+    <div id="list">
+    <main class="scroll">
 
-        <div class="list">
+      <div class="list">
 
           <div class="item-divider">
             Work
@@ -437,12 +444,13 @@
           <a class="button button-secondary" href="index.html">Homepage</a>
         </div>
 
-      </div>
     </main>
+  </div>
 
 
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="../dist/js/ionic.js"></script>
     <script>
       $("#btn-test-left").click(function(){
 
@@ -485,6 +493,10 @@
         }
 
         return false;
+      }); 
+      var list = document.getElementById('list');
+      var lv = new ionic.views.ListView({
+        el: list
       });
     </script>
 
