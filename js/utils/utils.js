@@ -1,22 +1,59 @@
 (function(ionic) {
   
   ionic.Utils = {
-    /**
-     * extend method,
-     * also used for cloning when dest is an empty object
-     * @param   {Object}    dest
-     * @param   {Object}    src
-     * @parm	{Boolean}	merge		do a merge
-     * @returns {Object}    dest
-     */
-    extend: function extend(dest, src, merge) {
-      for (var key in src) {
-        if(dest[key] !== undefined && merge) {
-          continue;
-        }
-        dest[key] = src[key];
+     // Borrowed from Backbone.js's extend
+     // Helper function to correctly set up the prototype chain, for subclasses.
+     // Similar to `goog.inherits`, but uses a hash of prototype properties and
+     // class properties to be extended.
+    inherit: function(protoProps, staticProps) {
+      var parent = this;
+      var child;
+
+      // The constructor function for the new subclass is either defined by you
+      // (the "constructor" property in your `extend` definition), or defaulted
+      // by us to simply call the parent's constructor.
+      if (protoProps && protoProps.hasOwnProperty('constructor')) {
+        child = protoProps.constructor;
+      } else {
+        child = function(){ return parent.apply(this, arguments); };
       }
-      return dest;
+
+      // Add static properties to the constructor function, if supplied.
+      ionic.extend(child, parent, staticProps);
+
+      // Set the prototype chain to inherit from `parent`, without calling
+      // `parent`'s constructor function.
+      var Surrogate = function(){ this.constructor = child; };
+      Surrogate.prototype = parent.prototype;
+      child.prototype = new Surrogate;
+
+      // Add prototype properties (instance properties) to the subclass,
+      // if supplied.
+      if (protoProps) ionic.extend(child.prototype, protoProps);
+
+      // Set a convenience property in case the parent's prototype is needed
+      // later.
+      child.__super__ = parent.prototype;
+
+      return child;
     },
+
+    // Extend adapted from Underscore.js
+    extend: function(obj) {
+       var args = Array.prototype.slice.call(arguments, 1);
+       for(var i = 0; i < args.length; i++) {
+         var source = args[i];
+         if (source) {
+           for (var prop in source) {
+             obj[prop] = source[prop];
+           }
+         }
+       }
+       return obj;
+    }
   };
+
+  ionic.inherit = ionic.Utils.inherit;
+  ionic.extend = ionic.Utils.extend;
+
 })(window.ionic);

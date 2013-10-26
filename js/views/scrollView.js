@@ -23,57 +23,53 @@
     toiletSeat: 'cubic-bezier(0.05, 0.60, 0.05, 0.60)'
   };
 
-  ionic.views.ScrollView = function(opts) {
-    var _this = this;
+  ionic.views.Scroll = ionic.views.View.inherit({
+    initialize: function(opts) {
+      var _this = this;
 
-    // Extend the options with our defaults
-    opts = ionic.Utils.extend({
-      decelerationRate: ionic.views.ScrollView.prototype.DECEL_RATE_NORMAL,
-      dragThreshold: 10,
-      resistance: 2,
-      scrollEventName: 'momentumScrolled',
-      scrollEndEventName: 'momentumScrollEnd',
-      intertialEventInterval: 50,
-      mouseWheelSpeed: 20,
-      invertWheel: false,
-      isVerticalEnabled: true,
-      isHorizontalEnabled: false,
-      bounceEasing: EASING_FUNCTIONS.bounce,
-      bounceTime: 600 //how long to take when bouncing back in a rubber band
-    }, opts);
+      // Extend the options with our defaults
+      opts = ionic.Utils.extend({
+        decelerationRate: ionic.views.Scroll.prototype.DECEL_RATE_NORMAL,
+        dragThreshold: 10,
+        resistance: 2,
+        scrollEventName: 'momentumScrolled',
+        scrollEndEventName: 'momentumScrollEnd',
+        intertialEventInterval: 50,
+        mouseWheelSpeed: 20,
+        invertWheel: false,
+        isVerticalEnabled: true,
+        isHorizontalEnabled: false,
+        bounceEasing: EASING_FUNCTIONS.bounce,
+        bounceTime: 600 //how long to take when bouncing back in a rubber band
+      }, opts);
 
-    ionic.Utils.extend(this, opts);
+      ionic.Utils.extend(this, opts);
 
-    this.el = opts.el;
+      this.el = opts.el;
 
-    this.y = 0;
-    this.x = 0;
+      this.y = 0;
+      this.x = 0;
 
-    // Listen for drag and release events
-    ionic.onGesture('drag', function(e) {
-      _this._handleDrag(e);
-    }, this.el);
-    ionic.onGesture('release', function(e) {
-      _this._handleEndDrag(e);
-    }, this.el);
-    ionic.on('mousewheel', function(e) {
-      _this._wheel(e);
-    }, this.el);
-		ionic.on('DOMMouseScroll', function(e) {
-      _this._wheel(e);
-    }, this.el);
-    ionic.on(this.scrollEndEventName, function(e) {
-      _this._onScrollEnd(e);
-    }, this.el);
-    ionic.on('webkitTransitionEnd', function(e) {
-      _this._onTransitionEnd(e);
-    });
-  };
-
-  ionic.views.ScrollView.prototype = {
-    DECEL_RATE_NORMAL: 0.998,
-    DECEL_RATE_FAST: 0.99,
-    DECEL_RATE_SLOW: 0.996,
+      // Listen for drag and release events
+      ionic.onGesture('drag', function(e) {
+        _this._handleDrag(e);
+      }, this.el);
+      ionic.onGesture('release', function(e) {
+        _this._handleEndDrag(e);
+      }, this.el);
+      ionic.on('mousewheel', function(e) {
+        _this._wheel(e);
+      }, this.el);
+      ionic.on('DOMMouseScroll', function(e) {
+        _this._wheel(e);
+      }, this.el);
+      ionic.on(this.scrollEndEventName, function(e) {
+        _this._onScrollEnd(e);
+      }, this.el);
+      ionic.on('webkitTransitionEnd', function(e) {
+        _this._onTransitionEnd(e);
+      });
+    },
 
     /**
      * Scroll to the given X and Y point, taking 
@@ -541,6 +537,10 @@
         }
       });
     }
-  };
+  }, {
+    DECEL_RATE_NORMAL: 0.998,
+    DECEL_RATE_FAST: 0.99,
+    DECEL_RATE_SLOW: 0.996,
+  });
 
 })(ionic);
