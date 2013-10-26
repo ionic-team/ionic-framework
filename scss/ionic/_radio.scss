@@ -2,6 +2,14 @@
 // Radio Buttons
 // -------------------------------
 
+.item-radio {
+  padding: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .item-radio .item-content {
   /* give some room to the right for the checkmark icon */
   padding-right: $item-padding * 4;

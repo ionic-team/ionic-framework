@@ -1027,7 +1027,7 @@
   .ionic fieldset {
     margin: 0 2px;
     padding: 0.35em 0.625em 0.75em;
-    border: 1px solid silver; }
+    border: 1px solid #c0c0c0; }
   .ionic legend {
     padding: 0;
     /* 2 */
@@ -1324,7 +1324,7 @@
       &.bar-footer {
         border-top-width: 1px;
       }*/
-    box-shadow: inset 0 0 1px #999999; }
+    box-shadow: inset 0 0 1px #999; }
     .ionic .bar.bar-clear {
       border: none;
       background: none;
@@ -1849,7 +1849,8 @@
       text-decoration: none; }
   .ionic .item-slider {
     padding: 0; }
-  .ionic .item-slider .item-content {
+  .ionic .item-slider .item-content,
+  .ionic .item-radio .item-content {
     /**
      * The content area of a complex list item. This area can
      * Slide left and right and be dragged to support different
@@ -2107,6 +2108,7 @@
     margin-bottom: -1px; }
   .ionic .card .item,
   .ionic .card .item-divider,
+  .ionic .list-inset .item,
   .ionic .list-inset .item-divider,
   .ionic .padding > .list .item,
   .ionic .padding-horizontal > .list .item,
@@ -2193,6 +2195,8 @@
       -moz-flex: 0 0 24px;
       -ms-flex: 0 0 24px;
       flex: 0 0 24px;
+      position: static;
+      height: auto;
       display: inline-block;
       text-align: center;
       font-size: 16px; }
@@ -2211,6 +2215,7 @@
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
+    display: block !important;
     overflow: hidden;
     padding: 4px 8px 3px;
     border: none;
@@ -2277,7 +2282,7 @@
   .ionic input[type="file"] {
     line-height: 34px; }
   .ionic select {
-    border: 1px solid #cccccc;
+    border: 1px solid #ccc;
     background-color: white; }
   .ionic select[multiple],
   .ionic select[size] {
@@ -2326,7 +2331,7 @@
       border-radius: 50%;
       background: white;
       content: ' ';
-      transition: background-color 0.1s ease-in-out; }
+      transition: background-color .1s ease-in-out; }
   .ionic .checkbox input:after {
     position: absolute;
     top: 34%;
@@ -2339,7 +2344,7 @@
     border-right: 0;
     content: ' ';
     opacity: 0;
-    transition: opacity 0.05s ease-in-out;
+    transition: opacity .05s ease-in-out;
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg); }
   .ionic .checkbox input:checked:before {
@@ -2413,6 +2418,10 @@
     top: 7.5px;
     right: 15px;
     z-index: 3; }
+  .ionic .item-radio {
+    padding: 0; }
+    .ionic .item-radio:hover {
+      cursor: pointer; }
   .ionic .item-radio .item-content {
     /* give some room to the right for the checkmark icon */
     padding-right: 60px; }
@@ -2677,7 +2686,7 @@
       .ionic .button.button-icon:active, .ionic .button.button-icon.active {
         background: none;
         box-shadow: none;
-        text-shadow: 0px 0px 10px white; }
+        text-shadow: 0px 0px 10px #fff; }
     .ionic .button.block, .ionic .button.button-full {
       margin-top: 10px;
       margin-bottom: 10px; }
@@ -2926,9 +2935,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin 0.75s linear infinite;
-    -moz-animation: spin 0.75s linear infinite;
-    animation: spin 0.75s linear infinite; }
+    -webkit-animation: spin .75s linear infinite;
+    -moz-animation: spin .75s linear infinite;
+    animation: spin .75s linear infinite; }
     .ionic .icon-loading:before {
       content: "\e144"; }
   .ionic .icon-refreshing {
@@ -2940,9 +2949,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin 0.75s linear infinite;
-    -moz-animation: spin 0.75s linear infinite;
-    animation: spin 0.75s linear infinite; }
+    -webkit-animation: spin .75s linear infinite;
+    -moz-animation: spin .75s linear infinite;
+    animation: spin .75s linear infinite; }
     .ionic .icon-refreshing:before {
       content: "\e144"; }
   .ionic .hidden,

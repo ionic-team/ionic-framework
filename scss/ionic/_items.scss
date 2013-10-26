@@ -106,7 +106,8 @@ a.item {
 .item-slider {
   padding: 0;
 }
-.item-slider .item-content {
+.item-slider .item-content,
+.item-radio .item-content {
   /**
    * The content area of a complex list item. This area can
    * Slide left and right and be dragged to support different

@@ -69,6 +69,8 @@ textarea {
   }
   [class^="icon-"], [class*=" icon-"] {
     @include flex(0, 0, 24px);
+    position: static;
+    height: auto;
     display: inline-block;
     text-align: center;
     font-size: 16px;
@@ -94,6 +96,7 @@ textarea {
 .item-stacked-label textarea
 {
   @include border-radius(2px);
+  display: block !important;
   overflow: hidden;
   padding: 4px 8px 3px;
   border: none;
