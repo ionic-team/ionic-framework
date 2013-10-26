@@ -3424,6 +3424,43 @@ a.button {
       -webkit-transition: opacity 0.4s ease-in;
       opacity: 1; }
 
+.split-pane {
+  height: 100%;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  -webkit-align-items: stretch;
+  -moz-align-items: stretch;
+  align-items: stretch; }
+
+.split-pane-menu {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 320px;
+  -moz-box-flex: 0;
+  -moz-flex: 0 0 320px;
+  -ms-flex: 0 0 320px;
+  flex: 0 0 320px;
+  height: 100%;
+  width: 320px;
+  border-right: 1px solid #eeeeee;
+  overflow-y: auto; }
+  @media all and (max-width: 568px) {
+    .split-pane-menu {
+      border-right: none; } }
+
+.split-pane-content {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 0 auto;
+  -moz-box-flex: 1;
+  -moz-flex: 1 0 auto;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto; }
+
 /**
  * Scroll is the scroll view component available for complex and custom
  * scroll view functionality.

@@ -1,0 +1,21 @@
+.split-pane {
+  height: 100%;
+  width: 100%;
+  @include display-flex();
+  @include align-items(stretch);
+}
+.split-pane-menu {
+  @include flex(0, 0, $split-pane-menu-width);
+  height: 100%;
+  width: $split-pane-menu-width;
+  border-right: 1px solid $split-pane-menu-border-color;
+
+  overflow-y: auto;
+
+  @media all and (max-width: 568px) {
+    border-right: none;
+  }
+}
+.split-pane-content {
+  @include flex(1, 0, auto);
+}

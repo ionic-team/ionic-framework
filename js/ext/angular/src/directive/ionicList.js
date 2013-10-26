@@ -18,6 +18,15 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       canSwipe: '@',
       buttons: '=',
     },
+    template: '<a href="#" class="item item-slider">\
+            <div class="item-content slide-left" ng-transclude>\
+            </div>\
+            <div class="item-options" ng-if="canSwipe && !isEditing">\
+             <button ng-click="buttonClicked(button)" class="button" ng-class="button.type" ng-repeat="button in buttons">{{button.text}}</button>\
+           </div>\
+          </a>',
+
+    /*
     template:   '<li class="list-item">\
                    <div class="list-item-edit" ng-if="canDelete && isEditing">\
                      <button class="button button-icon" ng-click="onDelete()"><i ng-class="deleteIcon"></i></button>\
@@ -30,7 +39,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
                    <div class="list-item-buttons" ng-if="canSwipe && !isEditing">\
                      <button ng-click="buttonClicked(button)" class="button" ng-class="button.type" ng-repeat="button in buttons">{{button.text}}</button>\
                    </div>\
-                </li>',
+                </li>',*/
     link: function($scope, $element, $attr, list) {
       $scope.isEditing = false;
       $scope.deleteIcon = list.scope.deleteIcon;
