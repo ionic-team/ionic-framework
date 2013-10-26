@@ -1,4 +1,3 @@
-
 .button-bar {
   @include box-flex(1);
   @include box-orient(horizontal);
@@ -26,8 +25,12 @@
 
   line-height: $button-bar-button-line-height;
 
+  &:first-child {
+    border-radius: 2px 0px 0px 2px;
+  }
   &:last-child {
     border-right-width: 1px;
+    border-radius: 0px 2px 2px 0px;
   }
 }
 

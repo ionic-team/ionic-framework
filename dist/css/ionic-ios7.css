@@ -2037,8 +2037,11 @@ a.button {
   text-overflow: ellipsis;
   white-space: nowrap;
   line-height: 15px; }
+  .button-bar > .button:first-child {
+    border-radius: 2px 0px 0px 2px; }
   .button-bar > .button:last-child {
-    border-right-width: 1px; }
+    border-right-width: 1px;
+    border-radius: 0px 2px 2px 0px; }
 
 .buttons {
   box-flex: 1;

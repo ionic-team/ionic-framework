@@ -2729,8 +2729,11 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     line-height: 15px; }
+    .ionic .button-bar > .button:first-child {
+      border-radius: 2px 0px 0px 2px; }
     .ionic .button-bar > .button:last-child {
-      border-right-width: 1px; }
+      border-right-width: 1px;
+      border-radius: 0px 2px 2px 0px; }
   .ionic .buttons {
     box-flex: 1;
     -webkit-box-flex: 1;
