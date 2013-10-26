@@ -21,7 +21,7 @@
     </header>
 
     <div id="list">
-    <main class="scroll">
+    <main id="content" class="scroll">
 
       <div class="list">
 
@@ -494,7 +494,7 @@
 
         return false;
       }); 
-      var list = document.getElementById('list');
+      var list = document.getElementById('content');
       var lv = new ionic.views.ListView({
         el: list
       });
