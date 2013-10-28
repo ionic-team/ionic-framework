@@ -38,7 +38,7 @@
         resistance: 2,
         scrollEventName: 'momentumScrolled',
         scrollEndEventName: 'momentumScrollEnd',
-        intertialEventInterval: 50,
+        inertialEventInterval: 50,
         mouseWheelSpeed: 20,
         invertWheel: false,
         isVerticalEnabled: true,
@@ -47,7 +47,7 @@
         bounceTime: 600 //how long to take when bouncing back in a rubber band
       }, opts);
 
-      ionic.Utils.extend(this, opts);
+      ionic.extend(this, opts);
 
       this.el = opts.el;
 
@@ -111,6 +111,7 @@
       el.style.webkitTransitionDuration = time;
       el.style.webkitTransform = 'translate3d(' + x + 'px,' + y + 'px, 0)';
 
+      clearTimeout(this._momentumStepTimeout);
       // Start triggering events as the element scrolls from inertia.
       // This is important because we need to receive scroll events
       // even after a "flick" and adjust, etc.
@@ -134,6 +135,28 @@
           _this._momentumStepTimeout = setTimeout(eventNotify, _this.inertialEventInterval);
         }
       }, this.inertialEventInterval)
+    },
+
+    needsWrapping: function() {
+      var _this = this;
+
+      var totalWidth = this.el.scrollWidth;
+      var totalHeight = this.el.scrollHeight;
+      var parentWidth = this.el.parentNode.offsetWidth;
+      var parentHeight = this.el.parentNode.offsetHeight;
+
+      var maxX = Math.min(0, (-totalWidth + parentWidth));
+      var maxY = Math.min(0, (-totalHeight + parentHeight));
+
+      if (this.isHorizontalEnabled && (this.x > 0 || this.x < maxX)) {
+        return true;
+      }
+      
+      if (this.isVerticalEnabled && (this.y > 0 || this.y < maxY)) {
+        return true;
+      }
+
+      return false;
     },
 
     /**
@@ -275,13 +298,22 @@
         return;
       }
 
+      var needsWrapping = this.needsWrapping();
+
       // Triggered to end scroll, once the final animation has ended
-      if(this._didEndScroll) {
+      if(needsWrapping && this._didEndScroll) {
         this._didEndScroll = false;
-        ionic.trigger(_this.scrollEndEventName, {
-          target: _this.el,
-          scrollLeft: _this.x,
-          scrollTop: _this.y
+        ionic.trigger(this.scrollEndEventName, {
+          target: this.el,
+          scrollLeft: this.x,
+          scrollTop: this.y
+        });
+      } else if(!needsWrapping) {
+        this._didEndScroll = false;
+        ionic.trigger(this.scrollEndEventName, {
+          target: this.el,
+          scrollLeft: this.x,
+          scrollTop: this.y
         });
       }
 

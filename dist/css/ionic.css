@@ -1261,7 +1261,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid #c0c0c0; }
+  border: 1px solid silver; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -1667,7 +1667,7 @@ a.subdued‎ {
     &.bar-footer {
       border-top-width: 1px;
     }*/
-  box-shadow: inset 0 0 1px #999; }
+  box-shadow: inset 0 0 1px #999999; }
   .bar.bar-clear {
     border: none;
     background: none;
@@ -2802,7 +2802,7 @@ input[type="file"] {
   line-height: 34px; }
 
 select {
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc;
   background-color: white; }
 
 select[multiple],
@@ -2857,7 +2857,7 @@ input[type="checkbox"][readonly] {
     border-radius: 50%;
     background: white;
     content: ' ';
-    transition: background-color .1s ease-in-out; }
+    transition: background-color 0.1s ease-in-out; }
 
 /* the checkmark within the box */
 .checkbox input:after {
@@ -2872,7 +2872,7 @@ input[type="checkbox"][readonly] {
   border-right: 0;
   content: ' ';
   opacity: 0;
-  transition: opacity .05s ease-in-out;
+  transition: opacity 0.05s ease-in-out;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg); }
 
@@ -3242,7 +3242,7 @@ input[type="range"] {
     .button.button-icon:active, .button.button-icon.active {
       background: none;
       box-shadow: none;
-      text-shadow: 0px 0px 10px #fff; }
+      text-shadow: 0px 0px 10px white; }
   .button.block, .button.button-full {
     margin-top: 10px;
     margin-bottom: 10px; }
@@ -3689,9 +3689,9 @@ a.button {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin .75s linear infinite;
-  -moz-animation: spin .75s linear infinite;
-  animation: spin .75s linear infinite; }
+  -webkit-animation: spin 0.75s linear infinite;
+  -moz-animation: spin 0.75s linear infinite;
+  animation: spin 0.75s linear infinite; }
   .icon-loading:before {
     content: "\e144"; }
 
@@ -3704,9 +3704,9 @@ a.button {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin .75s linear infinite;
-  -moz-animation: spin .75s linear infinite;
-  animation: spin .75s linear infinite; }
+  -webkit-animation: spin 0.75s linear infinite;
+  -moz-animation: spin 0.75s linear infinite;
+  animation: spin 0.75s linear infinite; }
   .icon-refreshing:before {
     content: "\e144"; }
 
