@@ -82,7 +82,21 @@
 
 // Handle text overflow
 .item,
-.item-content {
+.item h1, 
+.item h2, 
+.item h3, 
+.item h4, 
+.item h5, 
+.item h6, 
+.item p,
+.item-content,
+.item-content h1, 
+.item-content h2, 
+.item-content h3, 
+.item-content h4, 
+.item-content h5, 
+.item-content h6, 
+.item-content p {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -125,17 +139,35 @@ a.item {
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
 }
 
-.item-text-wrap {
+.item-text-wrap,
+.item-text-wrap h1,
+.item-text-wrap h2,
+.item-text-wrap h3,
+.item-text-wrap h4,
+.item-text-wrap h5,
+.item-text-wrap h6,
+.item-text-wrap p,
+.item-slider.item-text-wrap .item-content,
+.item-body h1,
+.item-body h2,
+.item-body h3,
+.item-body h4,
+.item-body h5,
+.item-body h6,
+.item-body p {
   overflow: auto;
   white-space: normal;
 }
-.item-slider.item-text-wrap {
+.item-slider.item-text-wrap,
+.item-slider.item-text-wrap h1,
+.item-slider.item-text-wrap h2,
+.item-slider.item-text-wrap h3,
+.item-slider.item-text-wrap h4,
+.item-slider.item-text-wrap h5,
+.item-slider.item-text-wrap h6,
+.item-slider.item-text-wrap p {
   overflow: hidden;
   white-space: nowrap;
-  .item-content {
-    overflow: auto;
-    white-space: normal;   
-  }
 }
 
 
