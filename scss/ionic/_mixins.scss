@@ -401,7 +401,7 @@
   display: flex;
 }
 
-@mixin dislay-inline {
+@mixin dislay-inline-flex {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -moz-inline-flex;

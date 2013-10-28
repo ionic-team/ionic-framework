@@ -1,31 +1,43 @@
 .button {
   position: relative;
   display: inline-block;
-
   margin: 0;
 
-  padding: $button-padding;
+  padding: 9px 12px 7px 12px;
+  min-height: 44px;
 
   border-width: $button-border-width;
   border-style: solid;
   border-radius: $button-border-radius;
 
   color: $button-color;
-
-  vertical-align: middle;
+  vertical-align: top;
 
   text-align: center;
-  font-size: $button-font-size;
-  line-height: $line-height-computed;
 
   text-overflow: ellipsis;
+  font-size: $button-font-size;
+  line-height: 24px;
 
   cursor: pointer;
 
+  [class^="icon-"], 
+  [class*=" icon-"] {
+    display: inline-block;
+    padding: 0;
+    vertical-align: sub;
+    font-size: 24px;
+    line-height: 24px;
+  }
+
   &.button-icon {
     padding: $button-clear-padding;
-    border: none;
     background: none;
+
+    [class^="icon-"], 
+    [class*=" icon-"] {
+      font-size: 32px;
+    }
   }
 
   &.button-clear {
@@ -101,6 +113,7 @@
     margin-top: $button-block-margin;
     margin-bottom: $button-block-margin;
   }
+
 
 }
 

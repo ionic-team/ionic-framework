@@ -1317,17 +1317,17 @@
     height: 44px;
     border-width: 0;
     border-style: solid;
-    background-color: white;
     border-top: 1px solid transparent;
-    border-bottom: 1px solid #dddddd; }
+    border-bottom: 1px solid #dddddd;
+    background-color: white; }
     @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
       .ionic .bar {
         border-top: none;
         border-bottom: none;
         background-image: linear-gradient(0deg, #dddddd, #dddddd, 50%, transparent 50%);
+        background-position: bottom;
         background-size: 100% 1px;
-        background-repeat: no-repeat;
-        background-position: bottom; } }
+        background-repeat: no-repeat; } }
     .ionic .bar.bar-clear {
       border: none;
       background: none;
@@ -1471,19 +1471,20 @@
       line-height: 44px; }
     .ionic .bar .title a {
       color: inherit; }
-    .ionic .bar .button {
+    .ionic .bar > .button {
       box-flex: 1;
       -webkit-box-flex: 0;
       -moz-box-flex: 0;
       z-index: 1;
       margin: 0;
-      padding: 4px 12px;
+      padding: 2px 8px 0 8px;
+      min-height: 34px;
       background-color: transparent;
       font-size: 12px;
-      line-height: 23px; }
-      .ionic .bar .button.button-clear {
-        padding: 0 5px;
-        line-height: 34px; }
+      line-height: 28px; }
+      .ionic .bar > .button [class^="icon-"],
+      .ionic .bar > .button [class*=" icon-"] {
+        margin-top: 1px; }
     .ionic .bar .button-bar {
       line-height: 18px; }
     .ionic .bar .button-bar + .button, .ionic .bar .button + .button-bar {
@@ -1624,12 +1625,6 @@
       background: none;
       box-shadow: none;
       font-size: 17px; }
-  .ionic .bar [class^="icon-"],
-  .ionic .bar [class*=" icon-"] {
-    font-size: 24px; }
-  .ionic .bar .button-icon {
-    border: 1px solid transparent;
-    background-color: transparent; }
   .ionic .bar-header {
     top: 0; }
   .ionic .bar-footer {
@@ -2583,21 +2578,31 @@
     position: relative;
     display: inline-block;
     margin: 0;
-    padding: 8px 12px;
+    padding: 9px 12px 7px 12px;
+    min-height: 44px;
     border-width: 1px;
     border-style: solid;
     border-radius: 2px;
     color: #222222;
-    vertical-align: middle;
+    vertical-align: top;
     text-align: center;
-    font-size: 16px;
-    line-height: 20px;
     text-overflow: ellipsis;
+    font-size: 16px;
+    line-height: 24px;
     cursor: pointer; }
+    .ionic .button [class^="icon-"],
+    .ionic .button [class*=" icon-"] {
+      display: inline-block;
+      padding: 0;
+      vertical-align: sub;
+      font-size: 24px;
+      line-height: 24px; }
     .ionic .button.button-icon {
       padding: 4px 5px;
-      border: none;
       background: none; }
+      .ionic .button.button-icon [class^="icon-"],
+      .ionic .button.button-icon [class*=" icon-"] {
+        font-size: 32px; }
     .ionic .button.button-clear {
       -webkit-transition: opacity 0.1s;
       transition: opacity 0.1s;
