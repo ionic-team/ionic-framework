@@ -2380,6 +2380,13 @@ window.ionic = {
           }
 
           _this.scrollTo(newX, newY, time, easing);
+        } else {
+          // We are done
+          ionic.trigger(_this.scrollEndEventName, {
+            target: _this.el,
+            scrollLeft: _this.x,
+            scrollTop: _this.y
+          });
         }
       });
     }
@@ -3354,7 +3361,6 @@ window.ionic = {
 
     didScroll: function(e) {
       console.log('Scrolling', Date.now());
-      /*
       if(this.isVirtual) {
         var itemHeight = this.itemHeight;
         var totalItems = this.el.children.length;
@@ -3370,7 +3376,6 @@ window.ionic = {
         var nodes = Array.prototype.slice.call(this.el.children, first, itemsPerPage);
         console.log('Showing these nodes:', nodes);
       }
-      */
     },
 
     _initDrag: function() {

@@ -394,7 +394,6 @@
 
     didScroll: function(e) {
       console.log('Scrolling', Date.now());
-      /*
       if(this.isVirtual) {
         var itemHeight = this.itemHeight;
         var totalItems = this.el.children.length;
@@ -410,7 +409,6 @@
         var nodes = Array.prototype.slice.call(this.el.children, first, itemsPerPage);
         console.log('Showing these nodes:', nodes);
       }
-      */
     },
 
     _initDrag: function() {

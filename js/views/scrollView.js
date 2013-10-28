@@ -571,6 +571,13 @@
           }
 
           _this.scrollTo(newX, newY, time, easing);
+        } else {
+          // We are done
+          ionic.trigger(_this.scrollEndEventName, {
+            target: _this.el,
+            scrollLeft: _this.x,
+            scrollTop: _this.y
+          });
         }
       });
     }
