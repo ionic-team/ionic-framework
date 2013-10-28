@@ -1281,7 +1281,10 @@
          el: list,
          listEl: list.children[0],
          isVirtual: true,
-         itemHeight: 50
+         itemHeight: 50,
+         renderViewport: function(high, low, start, end) {
+          console.log('RENDER VIEWPORT', high, low, start, end);
+         }
        });
     </script>
 

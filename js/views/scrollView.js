@@ -214,11 +214,7 @@
       // Execute the scrollEnd event after 400ms the wheel stopped scrolling
       clearTimeout(this.wheelTimeout);
       this.wheelTimeout = setTimeout(function () {
-        ionic.trigger(this.scrollEndEventName, {
-          target: this.el,
-          scrollLeft: this.x,
-          scrollTop: this.y
-        });
+        that._doneScrolling();
       }, 400);
 
       e.preventDefault();
@@ -303,18 +299,10 @@
       // Triggered to end scroll, once the final animation has ended
       if(needsWrapping && this._didEndScroll) {
         this._didEndScroll = false;
-        ionic.trigger(this.scrollEndEventName, {
-          target: this.el,
-          scrollLeft: this.x,
-          scrollTop: this.y
-        });
+        this._doneScrolling();
       } else if(!needsWrapping) {
         this._didEndScroll = false;
-        ionic.trigger(this.scrollEndEventName, {
-          target: this.el,
-          scrollLeft: this.x,
-          scrollTop: this.y
-        });
+        this._doneScrolling();
       }
 
       this.el.style.webkitTransitionDuration = '0';
@@ -557,7 +545,7 @@
           newX = momentumX.destination;
           newY = momentumY.destination;
 
-          // Calcualte the longest required time for the momentum animation and
+          // Calculate the longest required time for the momentum animation and
           // use that.
           time = Math.max(momentumX.duration, momentumY.duration);
         }
@@ -573,12 +561,21 @@
           _this.scrollTo(newX, newY, time, easing);
         } else {
           // We are done
-          ionic.trigger(_this.scrollEndEventName, {
-            target: _this.el,
-            scrollLeft: _this.x,
-            scrollTop: _this.y
-          });
+          _this._doneScrolling();
         }
+      });
+    },
+
+    _doneScrolling: function() {
+      this.didStopScrolling && this.didStopScrolling({
+        target: this.el,
+        scrollLeft: this.x,
+        scrollTop: this.y
+      });
+      ionic.trigger(this.scrollEndEventName, {
+        target: this.el,
+        scrollLeft: this.x,
+        scrollTop: this.y
       });
     }
   }, {

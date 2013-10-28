@@ -364,6 +364,17 @@
     initialize: function(opts) {
       var _this = this;
 
+      opts = ionic.extend({
+        virtualRemoveThreshold: -200,
+        virtualAddThreshold: 200
+      }, opts);
+
+      ionic.extend(this, opts);
+
+      if(!this.itemHeight && this.listEl) {
+        this.itemHeight = this.listEl.children[0] && parseInt(this.listEl.children[0].style.height);
+      }
+
       ionic.views.ListView.__super__.initialize.call(this, opts);
 
       this.onRefresh = opts.onRefresh || function() {};
@@ -393,21 +404,43 @@
     },
 
     didScroll: function(e) {
-      console.log('Scrolling', Date.now());
       if(this.isVirtual) {
         var itemHeight = this.itemHeight;
         var totalItems = this.listEl.children.length;
-        var scrollHeight = e.target.scrollHeight
+
+        var scrollHeight = e.target.scrollHeight;
+        var viewportHeight = this.el.parentNode.offsetHeight;
+
         var scrollTop = e.scrollTop;
-        var height = this.el.parentNode.offsetHeight;
-        console.log('LIST VIEW SCROLLED', e, itemHeight, scrollHeight, height);
 
-        var itemsPerPage = Math.floor(height / itemHeight);
-        var first = parseInt(scrollTop / itemHeight);
-        console.log('FITS', itemsPerPage, 'per page, starting at', first);
+        var highWater = e.scrollTop + this.virtualRemoveThreshold;
+        var lowWater = Math.min(scrollHeight + viewportHeight, e.scrollTop + viewportHeight + this.virtualAddThreshold);
 
-        var nodes = Array.prototype.slice.call(this.listEl.children, first, first + itemsPerPage);
-        console.log('Showing these', nodes.length, 'nodes:', nodes);
+        //console.log('LIST VIEW SCROLLED', e, itemHeight, scrollHeight, viewportHeight);
+        var itemsPerViewport = Math.floor((lowWater - highWater) / itemHeight);
+        var first = parseInt(highWater / itemHeight);
+        var last = parseInt(lowWater / itemHeight);
+
+        //console.log('FITS', itemsPerViewport, 'per page, starting at', first);
+
+        this._virtualItemsToRemove = Array.prototype.slice.call(this.listEl.children, 0, first);
+
+        var nodes = Array.prototype.slice.call(this.listEl.children, first, first + itemsPerViewport);
+
+        this.renderViewport && this.renderViewport(highWater, lowWater, first, last);
+      }
+    },
+
+    didStopScrolling: function(e) {
+      if(this.isVirtual) {
+        //console.log('DONE SCROLLING, Need to remove', this._virtualItemsToRemove);
+        for(var i = 0; i < this._virtualItemsToRemove.length; i++) {
+          var el = this._virtualItemsToRemove[i];
+          //el.parentNode.removeChild(el);
+          this.didHideItem && this.didHideItem(i);
+        }
+        // Once scrolling stops, check if we need to remove old items
+
       }
     },
 
