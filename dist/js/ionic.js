@@ -3363,18 +3363,18 @@ window.ionic = {
       console.log('Scrolling', Date.now());
       if(this.isVirtual) {
         var itemHeight = this.itemHeight;
-        var totalItems = this.el.children.length;
+        var totalItems = this.listEl.children.length;
         var scrollHeight = e.target.scrollHeight
         var scrollTop = e.scrollTop;
         var height = this.el.parentNode.offsetHeight;
         console.log('LIST VIEW SCROLLED', e, itemHeight, scrollHeight, height);
 
-        var itemsPerPage = Math.floor(scrollHeight / itemHeight);
-        var first = parseInt(scrollTop / itemHeight) - totalItems;
+        var itemsPerPage = Math.floor(height / itemHeight);
+        var first = parseInt(scrollTop / itemHeight);
         console.log('FITS', itemsPerPage, 'per page, starting at', first);
 
-        var nodes = Array.prototype.slice.call(this.el.children, first, itemsPerPage);
-        console.log('Showing these nodes:', nodes);
+        var nodes = Array.prototype.slice.call(this.listEl.children, first, first + itemsPerPage);
+        console.log('Showing these', nodes.length, 'nodes:', nodes);
       }
     },
 

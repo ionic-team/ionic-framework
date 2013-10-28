@@ -1279,6 +1279,7 @@
       var list = document.getElementById('content');
        var lv = new ionic.views.ListView({
          el: list,
+         listEl: list.children[0],
          isVirtual: true,
          itemHeight: 50
        });
