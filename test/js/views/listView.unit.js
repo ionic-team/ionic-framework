@@ -15,6 +15,10 @@ describe('List View', function() {
       li.style.height = '50px';
       l.appendChild(li);
     }
+
+    document.body.style.height='1000px';
+
+    document.body.appendChild(h);
   });
 
   it('Should init', function() {
@@ -38,13 +42,31 @@ describe('List View', function() {
       el: h,
       listEl: listEl,
       isVirtual: true,
-      itemHeight: 50
+      itemHeight: 50,
+      virtualRemoveThreshold: -200,
+      virtualAddThreshold: 200
     });
-
-    expect(list.itemHeight).toEqual(50);
-
     list.renderViewport = function(high, low, start, end) {
     };
+
+    var spy = spyOn(list, 'renderViewport');
+
+    var height = h.scrollHeight;
+    var itemHeight = list.itemHeight;
+    var totalItems = height / itemHeight;
+    var viewportHeight = list.el.parentNode.offsetHeight;
+
+    // set up scroll top
+    var scrollTop = 1000;
+    var start = (scrollTop + -list.virtualRemoveThreshold) / itemHeight;
+    var end = (scrollTop + viewportHeight + list.virtualAddThreshold) / itemHeight;
+
+    //console.log(height, itemHeight, totalItems, viewportHeight);
+
+    list.scrollTo(0, scrollTop);
+
+    expect(list.renderViewport).toHaveBeenCalledWith(scrollTop + -list.virtualRemoveThreshold,
+        scrollTop + viewportHeight + list.virtualAddThreshold, start, end);
   });
 
 });

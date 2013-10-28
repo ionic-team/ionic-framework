@@ -115,26 +115,39 @@
       // Start triggering events as the element scrolls from inertia.
       // This is important because we need to receive scroll events
       // even after a "flick" and adjust, etc.
-      this._momentumStepTimeout = setTimeout(function eventNotify() {
-        var trans = _this.el.style.webkitTransform.replace('translate3d(', '').split(',');
-        var scrollLeft = parseFloat(trans[0] || 0);
-        var scrollTop = parseFloat(trans[1] || 0);
+      if(time > 0) {
+        this._momentumStepTimeout = setTimeout(function eventNotify() {
+          var trans = _this.el.style.webkitTransform.replace('translate3d(', '').split(',');
+          var scrollLeft = parseFloat(trans[0] || 0);
+          var scrollTop = parseFloat(trans[1] || 0);
 
-        _this.didScroll && _this.didScroll({
-          target: _this.el,
-          scrollLeft: -scrollLeft,
-          scrollTop: -scrollTop
-        });
-        ionic.trigger(_this.scrollEventName, {
-          target: _this.el,
-          scrollLeft: -scrollLeft,
-          scrollTop: -scrollTop
-        });
+          _this.didScroll && _this.didScroll({
+            target: _this.el,
+            scrollLeft: -scrollLeft,
+            scrollTop: -scrollTop
+          });
+          ionic.trigger(_this.scrollEventName, {
+            target: _this.el,
+            scrollLeft: -scrollLeft,
+            scrollTop: -scrollTop
+          });
 
-        if(_this._isDragging) {
-          _this._momentumStepTimeout = setTimeout(eventNotify, _this.inertialEventInterval);
-        }
-      }, this.inertialEventInterval)
+          if(_this._isDragging) {
+            _this._momentumStepTimeout = setTimeout(eventNotify, _this.inertialEventInterval);
+          }
+        }, this.inertialEventInterval);
+      } else {
+        this.didScroll && this.didScroll({
+          target: this.el,
+          scrollLeft: -this.x,
+          scrollTop: -this.y
+        });
+        ionic.trigger(this.scrollEventName, {
+          target: this.el,
+          scrollLeft: -this.x,
+          scrollTop: -this.y
+        });
+      }
     },
 
     needsWrapping: function() {

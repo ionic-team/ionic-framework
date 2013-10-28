@@ -413,27 +413,24 @@
 
         var scrollTop = e.scrollTop;
 
-        var highWater = e.scrollTop + this.virtualRemoveThreshold;
-        var lowWater = Math.min(scrollHeight + viewportHeight, e.scrollTop + viewportHeight + this.virtualAddThreshold);
+        var highWater = Math.min(0, e.scrollTop + this.virtualRemoveThreshold);
+        var lowWater = Math.min(scrollHeight - viewportHeight, Math.abs(e.scrollTop) + viewportHeight + this.virtualAddThreshold);
 
-        //console.log('LIST VIEW SCROLLED', e, itemHeight, scrollHeight, viewportHeight);
         var itemsPerViewport = Math.floor((lowWater - highWater) / itemHeight);
-        var first = parseInt(highWater / itemHeight);
-        var last = parseInt(lowWater / itemHeight);
+        var first = parseInt(Math.abs(highWater / itemHeight));
+        var last = parseInt(Math.abs(lowWater / itemHeight));
 
-        //console.log('FITS', itemsPerViewport, 'per page, starting at', first);
 
         this._virtualItemsToRemove = Array.prototype.slice.call(this.listEl.children, 0, first);
 
         var nodes = Array.prototype.slice.call(this.listEl.children, first, first + itemsPerViewport);
 
-        this.renderViewport && this.renderViewport(highWater, lowWater, first, last);
+        this.renderViewport && this.renderViewport(-highWater, lowWater, first, last);
       }
     },
 
     didStopScrolling: function(e) {
       if(this.isVirtual) {
-        //console.log('DONE SCROLLING, Need to remove', this._virtualItemsToRemove);
         for(var i = 0; i < this._virtualItemsToRemove.length; i++) {
           var el = this._virtualItemsToRemove[i];
           //el.parentNode.removeChild(el);
