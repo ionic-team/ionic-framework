@@ -20,15 +20,22 @@
   border-style: solid;
 
   background-color: $bar-bg;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid $bar-default-border-color;
+  @media (min--moz-device-pixel-ratio: 1.5),
+         (-webkit-min-device-pixel-ratio: 1.5),
+         (min-device-pixel-ratio: 1.5),
+         (min-resolution: 144dpi),
+         (min-resolution: 1.5dppx) {
 
-/*  &.bar-header {
-    border-bottom-width: 1px;
-  }
-  &.bar-footer {
-    border-top-width: 1px;
-  }*/
+  border-top: none;
+  border-bottom: none;
+  background-image: linear-gradient(0deg, $bar-default-border-color, $bar-default-border-color, 50%, transparent 50%);
+  background-size: 100% 1px;
+  background-repeat: no-repeat;
+  background-position: bottom;
 
-  box-shadow: inset 0 0 1px #999;
+ }
 
   &.bar-clear {
     border: none;
