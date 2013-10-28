@@ -362,14 +362,9 @@
    */
   ionic.views.ListView = ionic.views.Scroll.inherit({
     initialize: function(opts) {
-      ionic.views.ListView.__super__.initialize.call(this, opts);
-      /*
       var _this = this;
 
-      this.el = opts.el;
-
-      // The amount of dragging required to start sliding the element over (in pixels)
-      this.dragThresholdX = opts.dragThresholdX || 10;
+      ionic.views.ListView.__super__.initialize.call(this, opts);
 
       this.onRefresh = opts.onRefresh || function() {};
       this.onRefreshOpening = opts.onRefreshOpening || function() {};
@@ -379,6 +374,7 @@
       this._initDrag();
 
       // Listen for drag and release events
+      /*
       window.ionic.onGesture('drag', function(e) {
         _this._handleDrag(e);
       }, this.el);
@@ -394,6 +390,25 @@
     stopRefreshing: function() {
       var refresher = this.el.querySelector('.list-refresher');
       refresher.style.height = '0px';
+    },
+
+    didScroll: function(e) {
+      console.log('Scrolling', Date.now());
+      if(this.isVirtual) {
+        var itemHeight = this.itemHeight;
+        var totalItems = this.listEl.children.length;
+        var scrollHeight = e.target.scrollHeight
+        var scrollTop = e.scrollTop;
+        var height = this.el.parentNode.offsetHeight;
+        console.log('LIST VIEW SCROLLED', e, itemHeight, scrollHeight, height);
+
+        var itemsPerPage = Math.floor(height / itemHeight);
+        var first = parseInt(scrollTop / itemHeight);
+        console.log('FITS', itemsPerPage, 'per page, starting at', first);
+
+        var nodes = Array.prototype.slice.call(this.listEl.children, first, first + itemsPerPage);
+        console.log('Showing these', nodes.length, 'nodes:', nodes);
+      }
     },
 
     _initDrag: function() {
@@ -418,8 +433,9 @@
     _startDrag: function(e) {
       ionic.views.ListView.__super__._startDrag.call(this, e);
 
+      return;
+
       var _this = this;
-      /*
 
       this._isDragging = false;
 
@@ -432,9 +448,7 @@
           this._dragOp.start(e);
         }
       }
-      */
-      
-      /*
+
       // Check if this is a "pull down" drag for pull to refresh
       else if(e.gesture.direction == 'down') {
         this._dragOp = new PullToRefreshDrag({
@@ -451,23 +465,20 @@
         });
         this._dragOp.start(e);
       } 
-      */
 
       // Or check if this is a swipe to the side drag
-      /*
       else if(e.gesture.direction == 'left' || e.gesture.direction == 'right') {
         this._dragOp = new SlideDrag({ el: this.el });
         this._dragOp.start(e);
       }
-      */
     },
 
 
     _handleEndDrag: function(e) {
       ionic.views.ListView.__super__._handleEndDrag.call(this, e);
-      /*
       var _this = this;
       
+      return;
       if(!this._dragOp) {
         this._initDrag();
         return;
@@ -476,7 +487,6 @@
       this._dragOp.end(e, function() {
         _this._initDrag();
       });
-      */
     },
 
     /**
@@ -484,16 +494,15 @@
      */
     _handleDrag: function(e) {
       ionic.views.ListView.__super__._handleDrag.call(this, e);
-      /*
       var _this = this, content, buttons;
 
+      return;
       if(!this._dragOp) {
         this._startDrag(e);
         if(!this._dragOp) { return; }
       }
 
       this._dragOp.drag(e);
-      */
     }
   });
 

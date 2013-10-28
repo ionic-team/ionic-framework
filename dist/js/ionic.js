@@ -2724,14 +2724,9 @@ window.ionic = {
    */
   ionic.views.ListView = ionic.views.Scroll.inherit({
     initialize: function(opts) {
-      ionic.views.ListView.__super__.initialize.call(this, opts);
-      /*
       var _this = this;
 
-      this.el = opts.el;
-
-      // The amount of dragging required to start sliding the element over (in pixels)
-      this.dragThresholdX = opts.dragThresholdX || 10;
+      ionic.views.ListView.__super__.initialize.call(this, opts);
 
       this.onRefresh = opts.onRefresh || function() {};
       this.onRefreshOpening = opts.onRefreshOpening || function() {};
@@ -2741,6 +2736,7 @@ window.ionic = {
       this._initDrag();
 
       // Listen for drag and release events
+      /*
       window.ionic.onGesture('drag', function(e) {
         _this._handleDrag(e);
       }, this.el);
@@ -2756,6 +2752,25 @@ window.ionic = {
     stopRefreshing: function() {
       var refresher = this.el.querySelector('.list-refresher');
       refresher.style.height = '0px';
+    },
+
+    didScroll: function(e) {
+      console.log('Scrolling', Date.now());
+      if(this.isVirtual) {
+        var itemHeight = this.itemHeight;
+        var totalItems = this.listEl.children.length;
+        var scrollHeight = e.target.scrollHeight
+        var scrollTop = e.scrollTop;
+        var height = this.el.parentNode.offsetHeight;
+        console.log('LIST VIEW SCROLLED', e, itemHeight, scrollHeight, height);
+
+        var itemsPerPage = Math.floor(height / itemHeight);
+        var first = parseInt(scrollTop / itemHeight);
+        console.log('FITS', itemsPerPage, 'per page, starting at', first);
+
+        var nodes = Array.prototype.slice.call(this.listEl.children, first, first + itemsPerPage);
+        console.log('Showing these', nodes.length, 'nodes:', nodes);
+      }
     },
 
     _initDrag: function() {
@@ -2780,8 +2795,9 @@ window.ionic = {
     _startDrag: function(e) {
       ionic.views.ListView.__super__._startDrag.call(this, e);
 
+      return;
+
       var _this = this;
-      /*
 
       this._isDragging = false;
 
@@ -2794,9 +2810,7 @@ window.ionic = {
           this._dragOp.start(e);
         }
       }
-      */
-      
-      /*
+
       // Check if this is a "pull down" drag for pull to refresh
       else if(e.gesture.direction == 'down') {
         this._dragOp = new PullToRefreshDrag({
@@ -2813,23 +2827,20 @@ window.ionic = {
         });
         this._dragOp.start(e);
       } 
-      */
 
       // Or check if this is a swipe to the side drag
-      /*
       else if(e.gesture.direction == 'left' || e.gesture.direction == 'right') {
         this._dragOp = new SlideDrag({ el: this.el });
         this._dragOp.start(e);
       }
-      */
     },
 
 
     _handleEndDrag: function(e) {
       ionic.views.ListView.__super__._handleEndDrag.call(this, e);
-      /*
       var _this = this;
       
+      return;
       if(!this._dragOp) {
         this._initDrag();
         return;
@@ -2838,7 +2849,6 @@ window.ionic = {
       this._dragOp.end(e, function() {
         _this._initDrag();
       });
-      */
     },
 
     /**
@@ -2846,16 +2856,15 @@ window.ionic = {
      */
     _handleDrag: function(e) {
       ionic.views.ListView.__super__._handleDrag.call(this, e);
-      /*
       var _this = this, content, buttons;
 
+      return;
       if(!this._dragOp) {
         this._startDrag(e);
         if(!this._dragOp) { return; }
       }
 
       this._dragOp.drag(e);
-      */
     }
   });
 
@@ -3028,7 +3037,11 @@ window.ionic = {
  * scroll container in any UI library. You could just use -webkit-overflow-scrolling: touch,
  * but you lose control over scroll behavior that native developers have with things
  * like UIScrollView, and you don't get events after the finger stops touching the
- * device (after a flick, for example)
+ * device (after a flick, for example).
+ *
+ * Some people are afraid of using Javascript powered scrolling, but
+ * with today's devices, Javascript is probably the best solution for
+ * scrolling in hybrid apps.
  */
 (function(ionic) {
 'use strict';
@@ -3055,7 +3068,7 @@ window.ionic = {
         resistance: 2,
         scrollEventName: 'momentumScrolled',
         scrollEndEventName: 'momentumScrollEnd',
-        intertialEventInterval: 50,
+        inertialEventInterval: 50,
         mouseWheelSpeed: 20,
         invertWheel: false,
         isVerticalEnabled: true,
@@ -3064,7 +3077,7 @@ window.ionic = {
         bounceTime: 600 //how long to take when bouncing back in a rubber band
       }, opts);
 
-      ionic.Utils.extend(this, opts);
+      ionic.extend(this, opts);
 
       this.el = opts.el;
 
@@ -3128,13 +3141,23 @@ window.ionic = {
       el.style.webkitTransitionDuration = time;
       el.style.webkitTransform = 'translate3d(' + x + 'px,' + y + 'px, 0)';
 
+      clearTimeout(this._momentumStepTimeout);
       // Start triggering events as the element scrolls from inertia.
       // This is important because we need to receive scroll events
       // even after a "flick" and adjust, etc.
       this._momentumStepTimeout = setTimeout(function eventNotify() {
-        var scrollTop = parseFloat(_this.el.style.webkitTransform.replace('translate3d(', '').split(',')[1]) || 0;
+        var trans = _this.el.style.webkitTransform.replace('translate3d(', '').split(',');
+        var scrollLeft = parseFloat(trans[0] || 0);
+        var scrollTop = parseFloat(trans[1] || 0);
+
+        _this.didScroll && _this.didScroll({
+          target: _this.el,
+          scrollLeft: -scrollLeft,
+          scrollTop: -scrollTop
+        });
         ionic.trigger(_this.scrollEventName, {
           target: _this.el,
+          scrollLeft: -scrollLeft,
           scrollTop: -scrollTop
         });
 
@@ -3142,8 +3165,28 @@ window.ionic = {
           _this._momentumStepTimeout = setTimeout(eventNotify, _this.inertialEventInterval);
         }
       }, this.inertialEventInterval)
+    },
 
-      console.log('TRANSITION ADDED!');
+    needsWrapping: function() {
+      var _this = this;
+
+      var totalWidth = this.el.scrollWidth;
+      var totalHeight = this.el.scrollHeight;
+      var parentWidth = this.el.parentNode.offsetWidth;
+      var parentHeight = this.el.parentNode.offsetHeight;
+
+      var maxX = Math.min(0, (-totalWidth + parentWidth));
+      var maxY = Math.min(0, (-totalHeight + parentHeight));
+
+      if (this.isHorizontalEnabled && (this.x > 0 || this.x < maxX)) {
+        return true;
+      }
+      
+      if (this.isVerticalEnabled && (this.y > 0 || this.y < maxY)) {
+        return true;
+      }
+
+      return false;
     },
 
     /**
@@ -3264,17 +3307,14 @@ window.ionic = {
         destination = wrapperSize ? lowerMargin - ( wrapperSize / 2.5 * ( speed / 8 ) ) : lowerMargin;
         distance = Math.abs(destination - current);
         duration = distance / speed;
-        console.log("MOMENTUM TOO FAR DOWN", destination);
       } else if ( destination > 0 ) {
 
         // We have dragged too far up, snap back to 0
         destination = wrapperSize ? wrapperSize / 2.5 * ( speed / 8 ) : 0;
         distance = Math.abs(current) + destination;
         duration = distance / speed;
-        console.log("MOMENTUM TOO FAR UP", destination);
       }
 
-      console.log('Momentum: time:', time, 'speed:',speed, 'dest:',destination, 'dur:',duration);
       return {
         destination: Math.round(destination),
         duration: duration
@@ -3288,13 +3328,22 @@ window.ionic = {
         return;
       }
 
+      var needsWrapping = this.needsWrapping();
+
       // Triggered to end scroll, once the final animation has ended
-      if(this._didEndScroll) {
+      if(needsWrapping && this._didEndScroll) {
         this._didEndScroll = false;
-        ionic.trigger(_this.scrollEndEventName, {
-          target: _this.el,
-          scrollLeft: _this.x,
-          scrollTop: _this.y
+        ionic.trigger(this.scrollEndEventName, {
+          target: this.el,
+          scrollLeft: this.x,
+          scrollTop: this.y
+        });
+      } else if(!needsWrapping) {
+        this._didEndScroll = false;
+        ionic.trigger(this.scrollEndEventName, {
+          target: this.el,
+          scrollLeft: this.x,
+          scrollTop: this.y
         });
       }
 
@@ -3312,7 +3361,6 @@ window.ionic = {
       this._drag = null;
       this.el.classList.remove('scroll-scrolling');
 
-      console.log('REMOVING TRANSITION');
       this.el.style.webkitTransitionDuration = '0';
 
       clearTimeout(this._momentumStepTimeout)
@@ -3398,9 +3446,6 @@ window.ionic = {
       var deltaX = px - _this._drag.pointX;
       var deltaY = py - _this._drag.pointY;
 
-      //console.log("Delta x", deltaX);
-      //console.log("Delta y", deltaY);
-
       _this._drag.pointX = px;
       _this._drag.pointY = py;
 
@@ -3458,16 +3503,19 @@ window.ionic = {
           _this.x = newX;
           _this.y = newY;
 
-          console.log('Moving to', newX, newY);
-
           // Check if we need to reset the drag initial states if we've
           // been dragging for a bit
           if(timestamp - drag.startTime > 300) {
-            console.log('Resetting timer');
             drag.startTime = timestamp;
             drag.startX = _this.x;
             drag.startY = _this.y;
           }
+
+          _this.didScroll && _this.didScroll({
+            target: _this.el,
+            scrollLeft: -newX,
+            scrollTop: -newY
+          });
 
           // Trigger a scroll event
           ionic.trigger(_this.scrollEventName, {
@@ -3546,8 +3594,6 @@ window.ionic = {
         
         // If we've moved, we will need to scroll
         if(newX != _this.x || newY != _this.y) {
-          console.trace("SCROLL FROM", _this.x, _this.y, "TO", newX, newY);
-
           // If the end position is out of bounds, change the function we use for easing
           // to get a different animation for the rubber banding
           if ( newX > 0 || newX < (-totalWidth + parentWidth) || newY > 0 || newY < (-totalHeight + parentHeight)) {
@@ -3555,6 +3601,13 @@ window.ionic = {
           }
 
           _this.scrollTo(newX, newY, time, easing);
+        } else {
+          // We are done
+          ionic.trigger(_this.scrollEndEventName, {
+            target: _this.el,
+            scrollLeft: _this.x,
+            scrollTop: _this.y
+          });
         }
       });
     }
