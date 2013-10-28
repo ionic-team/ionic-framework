@@ -7,7 +7,11 @@
  * scroll container in any UI library. You could just use -webkit-overflow-scrolling: touch,
  * but you lose control over scroll behavior that native developers have with things
  * like UIScrollView, and you don't get events after the finger stops touching the
- * device (after a flick, for example)
+ * device (after a flick, for example).
+ *
+ * Some people are afraid of using Javascript powered scrolling, but
+ * with today's devices, Javascript is probably the best solution for
+ * scrolling in hybrid apps.
  */
 (function(ionic) {
 'use strict';
@@ -111,9 +115,18 @@
       // This is important because we need to receive scroll events
       // even after a "flick" and adjust, etc.
       this._momentumStepTimeout = setTimeout(function eventNotify() {
-        var scrollTop = parseFloat(_this.el.style.webkitTransform.replace('translate3d(', '').split(',')[1]) || 0;
+        var trans = _this.el.style.webkitTransform.replace('translate3d(', '').split(',');
+        var scrollLeft = parseFloat(trans[0] || 0);
+        var scrollTop = parseFloat(trans[1] || 0);
+
+        _this.didScroll && _this.didScroll({
+          target: _this.el,
+          scrollLeft: -scrollLeft,
+          scrollTop: -scrollTop
+        });
         ionic.trigger(_this.scrollEventName, {
           target: _this.el,
+          scrollLeft: -scrollLeft,
           scrollTop: -scrollTop
         });
 
@@ -121,8 +134,6 @@
           _this._momentumStepTimeout = setTimeout(eventNotify, _this.inertialEventInterval);
         }
       }, this.inertialEventInterval)
-
-      console.log('TRANSITION ADDED!');
     },
 
     /**
@@ -243,17 +254,14 @@
         destination = wrapperSize ? lowerMargin - ( wrapperSize / 2.5 * ( speed / 8 ) ) : lowerMargin;
         distance = Math.abs(destination - current);
         duration = distance / speed;
-        console.log("MOMENTUM TOO FAR DOWN", destination);
       } else if ( destination > 0 ) {
 
         // We have dragged too far up, snap back to 0
         destination = wrapperSize ? wrapperSize / 2.5 * ( speed / 8 ) : 0;
         distance = Math.abs(current) + destination;
         duration = distance / speed;
-        console.log("MOMENTUM TOO FAR UP", destination);
       }
 
-      console.log('Momentum: time:', time, 'speed:',speed, 'dest:',destination, 'dur:',duration);
       return {
         destination: Math.round(destination),
         duration: duration
@@ -291,7 +299,6 @@
       this._drag = null;
       this.el.classList.remove('scroll-scrolling');
 
-      console.log('REMOVING TRANSITION');
       this.el.style.webkitTransitionDuration = '0';
 
       clearTimeout(this._momentumStepTimeout)
@@ -377,9 +384,6 @@
       var deltaX = px - _this._drag.pointX;
       var deltaY = py - _this._drag.pointY;
 
-      //console.log("Delta x", deltaX);
-      //console.log("Delta y", deltaY);
-
       _this._drag.pointX = px;
       _this._drag.pointY = py;
 
@@ -437,16 +441,19 @@
           _this.x = newX;
           _this.y = newY;
 
-          console.log('Moving to', newX, newY);
-
           // Check if we need to reset the drag initial states if we've
           // been dragging for a bit
           if(timestamp - drag.startTime > 300) {
-            console.log('Resetting timer');
             drag.startTime = timestamp;
             drag.startX = _this.x;
             drag.startY = _this.y;
           }
+
+          _this.didScroll && _this.didScroll({
+            target: _this.el,
+            scrollLeft: -newX,
+            scrollTop: -newY
+          });
 
           // Trigger a scroll event
           ionic.trigger(_this.scrollEventName, {
@@ -525,8 +532,6 @@
         
         // If we've moved, we will need to scroll
         if(newX != _this.x || newY != _this.y) {
-          console.trace("SCROLL FROM", _this.x, _this.y, "TO", newX, newY);
-
           // If the end position is out of bounds, change the function we use for easing
           // to get a different animation for the rubber banding
           if ( newX > 0 || newX < (-totalWidth + parentWidth) || newY > 0 || newY < (-totalHeight + parentHeight)) {

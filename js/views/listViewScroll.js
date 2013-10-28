@@ -396,6 +396,10 @@
       refresher.style.height = '0px';
     },
 
+    didScroll: function(e) {
+      console.log('LIST VIEW SCROLLED', e);
+    },
+
     _initDrag: function() {
       ionic.views.ListView.__super__._initDrag.call(this);
 
