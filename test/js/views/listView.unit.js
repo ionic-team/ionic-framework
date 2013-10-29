@@ -27,7 +27,7 @@ describe('List View', function() {
     });
   });
 
-  iit('Should init item height from CSS', function() {
+  it('Should init item height from CSS', function() {
     var list = new ionic.views.ListView({
       el: h,
       listEl: listEl,
@@ -37,7 +37,7 @@ describe('List View', function() {
     expect(list.itemHeight).toEqual(50);
   });
 
-  iit('Should support virtual scrolling', function() {
+  it('Should support virtual scrolling', function() {
     var list = new ionic.views.ListView({
       el: h,
       listEl: listEl,

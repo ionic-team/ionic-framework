@@ -15,7 +15,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
 
   this.add = function(controller) {
     this.addController(controller);
-      this.select(0);
+    this.select(0);
   };
 
   this.select = function(controllerIndex) {
@@ -130,13 +130,15 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
       index: '='
     },
     link: function(scope, element, attrs, tabsCtrl) {
+      if(attrs.icon) {
+        scope.iconOn = scope.iconOff = attrs.icon;
+      }
       scope.selectTab = function(index) {
         tabsCtrl.select(scope.index);
       };
     },
     template: 
       '<a href="#" ng-class="{active:active}" ng-click="selectTab()" class="tab-item">' +
-        '<i class="{{icon}}" ng-if="icon"></i>' +
         '<i class="{{iconOn}}" ng-if="active"></i>' +
         '<i class="{{iconOff}}" ng-if="!active"></i> {{title}}' +
       '</a>'

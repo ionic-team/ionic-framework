@@ -92,9 +92,14 @@ ionic.controllers.TabBarController.prototype = {
     return this.controllers;
   },
 
-  // Get the currently selected tab
+  // Get the currently selected controller
   getSelectedController: function() {
     return this.selectedController;
+  },
+
+  // Get the index of the currently selected controller
+  getSelectedControllerIndex: function() {
+    return this.selectedIndex;
   },
 
   // Add a tab

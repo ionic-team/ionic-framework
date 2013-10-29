@@ -1,24 +1,24 @@
 describe('Tab Bar Controller', function() {
   var compile, element, scope, ctrl;
 
-  beforeEach(module('ionic.ui.tabbar'));
+  beforeEach(module('ionic.ui.tabs'));
   
   beforeEach(inject(function($compile, $rootScope, $controller) {
     compile = $compile;
     scope = $rootScope;
-    ctrl = $controller('TabBarCtrl', { $scope: scope, $element: null });
+    ctrl = $controller('TabsCtrl', { $scope: scope, $element: null });
   }));
 
   it('Select item in controller works', function() {
-    ctrl.selectTabAtIndex(1);
-    expect(ctrl.getSelectedTabIndex()).toEqual(1);
+    ctrl.selectController(1);
+    expect(ctrl.getSelectedControllerIndex()).toEqual(1);
   });
 });
 
 describe('Tab Bar directive', function() {
   var compile, element, scope;
 
-  beforeEach(module('ionic.ui.tabbar'));
+  beforeEach(module('ionic.ui.tabs'));
   
   beforeEach(inject(function($compile, $rootScope) {
     compile = $compile;
@@ -34,7 +34,7 @@ describe('Tab Bar directive', function() {
 describe('Tabs directive', function() {
   var compile, element, scope;
   
-  beforeEach(module('ionic.ui.tabbar'));
+  beforeEach(module('ionic.ui.tabs'));
 
   beforeEach(inject(function($compile, $rootScope) {
     compile = $compile;
@@ -42,10 +42,10 @@ describe('Tabs directive', function() {
   }));
   
   it('Has tab class', function() {
-    element = compile('<tab-bar><tabs></tabs></tab-bar>')(scope);
+    element = compile('<tabs></tabs>')(scope);
     scope.$digest();
     console.log(element);
-    expect(element.find('.bar').hasClass('bar-tabs')).toBe(true);
+    expect(element.find('.tabs').hasClass('tabs')).toBe(true);
   });
   
   it('Has tab children', function() {
@@ -54,7 +54,7 @@ describe('Tabs directive', function() {
       { text: 'Fun', icon: 'icon-fun' },
       { text: 'Beer', icon: 'icon-beer' },
     ];
-    element = compile('<tab-bar><tabs></tabs></tab-bar>')(scope);
+    element = compile('<tabs></tabs>')(scope);
     scope.$digest();
     expect(element.find('li').length).toBe(3);
   });
@@ -63,16 +63,15 @@ describe('Tabs directive', function() {
 describe('Tab Item directive', function() {
   var compile, element, scope, ctrl;
   
-  beforeEach(module('ionic.ui.tabbar'));
+  beforeEach(module('ionic.ui.tabs'));
 
   beforeEach(inject(function($compile, $rootScope, $controller) {
     compile = $compile;
     scope = $rootScope;
-    //ctrl = $controller('TabBarCtrl', { $scope: scope, $element: null });
 
-    element = compile('<tab-bar><tabs>' +
-      '<tab-item active="true" text="Item" icon="icon-default"></tab-item>' + 
-      '</tabs></tab-bar>')(scope);
+    element = compile('<tabs>' +
+      '<tab active="true" text="Item" icon="icon-default"></tab>' + 
+      '</tabs>')(scope);
     scope.$digest();
   }));
   
@@ -85,10 +84,11 @@ describe('Tab Item directive', function() {
   });
 
   it('Click sets correct tab index', function() {
-    var a = element.find('a:eq(2)');
+    var a = element.find('a:eq(0)');
+    var itemScope = a.scope();
     //spyOn(a, 'click');
-    spyOn(scope, 'selectTab');
+    spyOn(itemScope, 'selectTab');
     a.click();
-    expect(scope.selectTab).toHaveBeenCalled();
+    expect(itemScope.selectTab).toHaveBeenCalled();
   });
 });

@@ -16,7 +16,7 @@ angular.module('ionic.ui.toggle', [])
       if(!ngModel) { return; }
 
       checkbox = $element.children().eq(0);
-      handle = track.children().eq(0);
+      handle = $element.children().eq(1);
 
       if(!checkbox.length || !handle.length) { return; }
 

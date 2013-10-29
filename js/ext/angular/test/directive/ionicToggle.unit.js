@@ -11,7 +11,6 @@ describe('Ionic Toggle', function() {
     var toggleView = el.scope().toggle;
     expect(toggleView).not.toEqual(null);
     expect(toggleView.checkbox).not.toEqual(null);
-    expect(toggleView.track).not.toEqual(null);
     expect(toggleView.handle).not.toEqual(null);
   });
 
