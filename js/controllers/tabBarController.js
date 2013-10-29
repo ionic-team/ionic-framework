@@ -55,7 +55,6 @@ ionic.controllers.TabBarController = ionic.controllers.ViewController.inherit({
 
     if(shouldChange) {
       this.setSelectedController(index);
-      this.controllerChanged && this.controllerChanged(this.selectedController, this.selectedIndex);
     }
   },
 
@@ -64,11 +63,16 @@ ionic.controllers.TabBarController = ionic.controllers.ViewController.inherit({
     if(index >= this.controllers.length) {
       return;
     }
+    var lastController = this.selectedController;
+    var lastIndex = this.selectedIndex;
+
     this.selectedController = this.controllers[index];
     this.selectedIndex = index;
 
     this._showController(index);
     this.tabBar.setSelectedItem(index);
+
+    this.controllerChanged && this.controllerChanged(lastController, lastIndex, this.selectedController, this.selectedIndex);
   },
 
   _showController: function(index) {

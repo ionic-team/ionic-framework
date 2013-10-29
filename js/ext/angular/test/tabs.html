@@ -47,8 +47,8 @@
       }
     </style>
   </head>
-  <body>
-    <tabs animation="fade-in-out">
+  <body ng-controller="RootCtrl">
+    <tabs animation="fade-in-out" controller-changed="onControllerChanged(oldController, oldIndex, newController, newIndex)">
 
       <tab title="Home" icon-on="icon-ios7-filing" icon-off="icon-ios7-filing-outline" ng-controller="HomeCtrl">
         <header class="bar bar-header bar-secondary">
@@ -110,6 +110,14 @@
     <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
       angular.module('tabsTest', ['ionic.ui', 'ionic.service.modal', 'ionic.service.actionSheet'])
+
+      .controller('RootCtrl', function($scope) {
+        $scope.onControllerChanged = function(oldController, oldIndex, newController, newIndex) {
+          console.log('Controller changed', oldController, oldIndex, newController, newIndex);
+          console.log(arguments);
+        };
+      })
+
 
       .controller('HomeCtrl', function($scope, Modal, ActionSheet) {
         $scope.items = [];

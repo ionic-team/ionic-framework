@@ -36,6 +36,28 @@ describe('Tab Bar Controller', function() {
 
     expect(ctrl.getSelectedControllerIndex()).toEqual(1);
   });
+
+  it('Calls change callback', function() {
+    scope.onControllerChanged = function(oldC, oldI, newC, newI) {
+    };
+
+    // Add a controller
+    ctrl.add({
+      title: 'Cats',
+      icon: 'icon-kitty-kat'
+    });
+    ctrl.add({
+      title: 'Dogs',
+      icon: 'icon-rufus'
+    });
+
+    spyOn(ctrl, 'controllerChanged');
+
+    expect(ctrl.getSelectedControllerIndex()).toEqual(0);
+    ctrl.select(1);
+
+    expect(ctrl.controllerChanged).toHaveBeenCalled();
+  });
 });
 
 describe('Tab Bar directive', function() {

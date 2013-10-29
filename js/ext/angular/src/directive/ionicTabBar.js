@@ -6,6 +6,14 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
   angular.extend(this, ionic.controllers.TabBarController.prototype);
 
   ionic.controllers.TabBarController.call(this, {
+    controllerChanged: function(oldC, oldI, newC, newI) {
+      $scope.controllerChanged && $scope.controllerChanged({
+        oldController: oldC,
+        oldIndex: oldI,
+        newController: newC,
+        newIndex: newI
+      });
+    },
     tabBar: {
       tryTabSelect: function() {},
       setSelectedItem: function(index) {},
@@ -39,7 +47,8 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     restrict: 'E',
     replace: true,
     scope: {
-      animation: '@'
+      animation: '@',
+      controllerChanged: '&'
     },
     transclude: true,
     controller: 'TabsCtrl',
