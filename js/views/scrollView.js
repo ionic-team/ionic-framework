@@ -145,6 +145,11 @@
       } else {
         y = this.y;
       }
+
+      if(ox == x && oy == y) {
+        time = 0;
+      }
+
       var dx = ox - x;
       var dy = oy - y;
 

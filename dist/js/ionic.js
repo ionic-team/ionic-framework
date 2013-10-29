@@ -2847,7 +2847,7 @@ window.ionic = {
         var scrollTop = e.scrollTop;
 
         var highWater = Math.max(0, e.scrollTop + this.virtualRemoveThreshold);
-        var lowWater = Math.min(scrollHeight - viewportHeight, Math.abs(e.scrollTop) + viewportHeight + this.virtualAddThreshold);
+        var lowWater = Math.min(scrollHeight, Math.abs(e.scrollTop) + viewportHeight + this.virtualAddThreshold);
 
         var itemsPerViewport = Math.floor((lowWater - highWater) / itemHeight);
         var first = parseInt(Math.abs(highWater / itemHeight));
@@ -3276,6 +3276,11 @@ window.ionic = {
       } else {
         y = this.y;
       }
+
+      if(ox == x && oy == y) {
+        time = 0;
+      }
+
       var dx = ox - x;
       var dy = oy - y;
 

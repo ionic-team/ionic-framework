@@ -414,7 +414,7 @@
         var scrollTop = e.scrollTop;
 
         var highWater = Math.max(0, e.scrollTop + this.virtualRemoveThreshold);
-        var lowWater = Math.min(scrollHeight - viewportHeight, Math.abs(e.scrollTop) + viewportHeight + this.virtualAddThreshold);
+        var lowWater = Math.min(scrollHeight, Math.abs(e.scrollTop) + viewportHeight + this.virtualAddThreshold);
 
         var itemsPerViewport = Math.floor((lowWater - highWater) / itemHeight);
         var first = parseInt(Math.abs(highWater / itemHeight));
