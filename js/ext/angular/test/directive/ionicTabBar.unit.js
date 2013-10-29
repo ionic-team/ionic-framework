@@ -10,7 +10,30 @@ describe('Tab Bar Controller', function() {
   }));
 
   it('Select item in controller works', function() {
+    // Verify no items selected
+    expect(ctrl.getSelectedControllerIndex()).toEqual(undefined);
+
+    // Try selecting beyond the bounds
     ctrl.selectController(1);
+    expect(ctrl.getSelectedControllerIndex()).toEqual(undefined);
+
+    // Add a controller
+    ctrl.add({
+      title: 'Cats',
+      icon: 'icon-kitty-kat'
+    });
+
+    expect(ctrl.getSelectedControllerIndex()).toEqual(0);
+
+    ctrl.add({
+      title: 'Cats',
+      icon: 'icon-kitty-kat'
+    });
+
+    expect(ctrl.getSelectedControllerIndex()).toEqual(0);
+
+    ctrl.select(1);
+
     expect(ctrl.getSelectedControllerIndex()).toEqual(1);
   });
 });
@@ -27,7 +50,7 @@ describe('Tab Bar directive', function() {
 
   it('Has section wrapper class', function() {
     element = compile('<tab-bar></tab-bar>')(scope);
-    expect(element.hasClass('view-wrapper')).toBe(true);
+    expect(element.hasClass('tabs')).toBe(true);
   });
 });
 
@@ -44,19 +67,28 @@ describe('Tabs directive', function() {
   it('Has tab class', function() {
     element = compile('<tabs></tabs>')(scope);
     scope.$digest();
-    console.log(element);
     expect(element.find('.tabs').hasClass('tabs')).toBe(true);
   });
   
   it('Has tab children', function() {
-    scope.tabs = [
+    element = compile('<tabs></tabs>')(scope);
+    scope = element.scope();
+    scope.controllers = [
       { text: 'Home', icon: 'icon-home' },
       { text: 'Fun', icon: 'icon-fun' },
       { text: 'Beer', icon: 'icon-beer' },
     ];
-    element = compile('<tabs></tabs>')(scope);
     scope.$digest();
-    expect(element.find('li').length).toBe(3);
+    expect(element.find('a').length).toBe(3);
+  });
+
+  it('Has compiled children', function() {
+    element = compile('<tabs>' + 
+      '<tab active="true" title="Item" icon="icon-default"></tab>' + 
+      '<tab active="true" title="Item" icon="icon-default"></tab>' + 
+    '</tabs>')(scope);
+    scope.$digest();
+    expect(element.find('a').length).toBe(2);
   });
 });
 
@@ -70,16 +102,19 @@ describe('Tab Item directive', function() {
     scope = $rootScope;
 
     element = compile('<tabs>' +
-      '<tab active="true" text="Item" icon="icon-default"></tab>' + 
+      '<tab title="Item" icon="icon-default"></tab>' + 
       '</tabs>')(scope);
     scope.$digest();
   }));
   
   it('Default text works', function() {
-    expect(element.find('a').first().text()).toEqual('Item');
+    console.log(element);
+    expect(element.find('a').first().text().trim()).toEqual('Item');
   });
 
   it('Default icon works', function() {
+    console.log(element);
+    scope.$digest();
     expect(element.find('i').hasClass('icon-default')).toEqual(true);
   });
 

@@ -1,27 +1,37 @@
 (function(ionic) {
 'use strict';
 
-ionic.controllers.TabBarController = function(options) {
-  this.tabBar = options.tabBar;
+/**
+ * The TabBarController handles a set of view controllers powered by a tab strip
+ * at the bottom (or possibly top) of a screen.
+ *
+ * The API here is somewhat modelled off of UITabController in the sense that the
+ * controllers actually define what the tab will look like (title, icon, etc.).
+ *
+ * Tabs shouldn't be interacted with through your own code. Instead, use the controller
+ * methods which will power the tab bar.
+ */
+ionic.controllers.TabBarController = ionic.controllers.ViewController.inherit({
+  initialize: function(options) {
+    this.tabBar = options.tabBar;
 
-  this._bindEvents();
+    this._bindEvents();
 
-  this.controllers = [];
+    this.controllers = [];
 
-  var controllers = options.controllers || [];
+    var controllers = options.controllers || [];
 
-  for(var i = 0; i < controllers.length; i++) {
-    this.addController(controllers[i]);
-  }
+    for(var i = 0; i < controllers.length; i++) {
+      this.addController(controllers[i]);
+    }
 
-  // Bind or set our tabWillChange callback
-  this.controllerWillChange = options.controllerWillChange || function(controller) {};
-  this.controllerChanged = options.controllerChanged || function(controller) {};
+    // Bind or set our tabWillChange callback
+    this.controllerWillChange = options.controllerWillChange || function(controller) {};
+    this.controllerChanged = options.controllerChanged || function(controller) {};
 
-  this.setSelectedController(0);
-};
-
-ionic.controllers.TabBarController.prototype = {
+    // Try to select the first controller if we have one
+    this.setSelectedController(0);
+  },
   // Start listening for events on our tab bar
   _bindEvents: function() {
     var _this = this;
@@ -123,6 +133,6 @@ ionic.controllers.TabBarController.prototype = {
     this._clearSelected();
     this.selectController(0);
   },
-};
+});
 
 })(window.ionic);

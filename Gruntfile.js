@@ -37,7 +37,11 @@ module.exports = function(grunt) {
           'js/views/toggleView.js',
 
           // Controllers
-          'js/controllers/**/*.js'
+          'js/controllers/viewController.js',
+
+          'js/controllers/navController.js',
+          'js/controllers/sideMenuController.js',
+          'js/controllers/tabBarController.js'
 
         ],
         dest: 'dist/js/<%= pkg.name %>.js'
