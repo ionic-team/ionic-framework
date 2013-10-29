@@ -25,9 +25,9 @@
   [class*=" icon-"] {
     display: inline-block;
     padding: 0;
-    vertical-align: sub;
+    vertical-align: inherit;
     font-size: $button-icon-font-size;
-    line-height: $button-line-height;
+    line-height: $button-line-height - 1;
   }
 
   &.button-icon {

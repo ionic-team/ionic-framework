@@ -652,7 +652,7 @@ a.subdued‎ {
     z-index: 1;
     margin: 0;
     padding: 2px 8px 0 8px;
-    min-height: 34px;
+    min-height: 33px;
     background-color: transparent;
     font-size: 12px;
     line-height: 28px; }
@@ -1780,7 +1780,7 @@ input[type="range"] {
   position: relative;
   display: inline-block;
   margin: 0;
-  padding: 9px 12px 7px 12px;
+  padding: 10px 12px 7px 12px;
   min-height: 44px;
   border-width: 1px;
   border-style: solid;
@@ -1790,15 +1790,15 @@ input[type="range"] {
   text-align: center;
   text-overflow: ellipsis;
   font-size: 16px;
-  line-height: 24px;
+  line-height: 23px;
   cursor: pointer; }
   .button [class^="icon-"],
   .button [class*=" icon-"] {
     display: inline-block;
     padding: 0;
-    vertical-align: sub;
+    vertical-align: inherit;
     font-size: 24px;
-    line-height: 24px; }
+    line-height: 22px; }
   .button.button-icon {
     padding: 4px 5px;
     background: none; }

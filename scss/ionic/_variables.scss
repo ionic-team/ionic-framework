@@ -210,20 +210,20 @@ $info-border:        darken(adjust-hue($info-bg, -10), 7%);
 // -------------------------------
 
 $button-color:                    #222;
-$button-padding:                  9px 12px 7px 12px;
+$button-padding:                  10px 12px 7px 12px;
 $button-block-margin:             10px !default;
 $button-clear-padding:            4px 5px;
 $button-border-radius:            2px;
 $button-border-width:             1px;
 $button-font-size:                16px;
-$button-line-height:              24px;
+$button-line-height:              23px;
 $button-min-height:               44px;
 
 $button-icon-font-size:           24px;
 $button-icon-large-font-size:     32px;
 
 $button-bar-button-line-height:   15px !default;
-$button-bar-button-min-hieght:    34px !default;
+$button-bar-button-min-hieght:    33px !default;
 
 $button-default-bg:               $brand-default;
 $button-default-border:           #ddd;
