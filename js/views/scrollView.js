@@ -1,5 +1,5 @@
 /**
- * ionic.views.Scroll. Portions adapted from the great iScroll 5, which is
+ * ionic.views.Scroll. Portions lovingly adapted from the great iScroll 5, which is
  * also MIT licensed.
  * iScroll v5.0.5 ~ (c) 2008-2013 Matteo Spinelli ~ http://cubiq.org/license
  *
@@ -11,10 +11,12 @@
  *
  * Some people are afraid of using Javascript powered scrolling, but
  * with today's devices, Javascript is probably the best solution for
- * scrolling in hybrid apps.
+ * scrolling in hybrid apps. Someone's code is running somewhere, even on native, right?
  */
 (function(ionic) {
 'use strict';
+
+  // Some easing functions for animations
   var EASING_FUNCTIONS = {
     quadratic: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
 		circular: 'cubic-bezier(0.1, 0.57, 0.1, 1)',
@@ -28,6 +30,7 @@
   };
 
   ionic.views.Scroll = ionic.views.View.inherit({
+
     initialize: function(opts) {
       var _this = this;
 
@@ -35,16 +38,40 @@
       opts = ionic.Utils.extend({
         decelerationRate: ionic.views.Scroll.prototype.DECEL_RATE_NORMAL,
         dragThreshold: 10,
-        resistance: 2,
+        
+        // Resistance when scrolling too far up or down
+        rubberBandResistance: 3,
+
+        // Scroll event names. These are custom so can be configured
         scrollEventName: 'momentumScrolled',
         scrollEndEventName: 'momentumScrollEnd',
+
+        // How frequently to fire scroll events in the case of 
+        // a flick or momentum scroll where the finger is no longer
+        // touching the screen. If your event handler is a performance
+        // hog, change this millisecond value to cut down on the frequency
+        // of events triggered in those instances.
         inertialEventInterval: 50,
+
+        // How quickly to scroll with a mouse wheel. 20 is a good default
         mouseWheelSpeed: 20,
+
+        // Invert the mouse wheel? This makes sense on new Macbooks, but
+        // nowhere else.
         invertWheel: false,
+
+        // Enable vertical scrolling
         isVerticalEnabled: true,
+
+        // Enable horizontal scrolling
         isHorizontalEnabled: false,
+
+        // The easing function to use for bouncing up or down on the bounds
+        // of the scrolling area
         bounceEasing: EASING_FUNCTIONS.bounce,
-        bounceTime: 600 //how long to take when bouncing back in a rubber band
+
+        //how long to take when bouncing back in a rubber band
+        bounceTime: 600 
       }, opts);
 
       ionic.extend(this, opts);
@@ -80,18 +107,31 @@
      * the given amount of time, with the given
      * easing function defined as a CSS3 timing function.
      *
+     * Note: the x and y values will be converted to negative offsets due to
+     * the way scrolling works internally.
+     *
      * @param {float} the x position to scroll to (CURRENTLY NOT SUPPORTED!)
      * @param {float} the y position to scroll to
      * @param {float} the time to take scrolling to the new position
      * @param {easing} the animation function to use for easing
      */
     scrollTo: function(x, y, time, easing) {
+      this._scrollTo(-x, -y, time, easing);
+    },
+
+    _scrollTo: function(x, y, time, easing) {
       var _this = this;
 
+      var start = Date.now();
 
       easing = easing || 'cubic-bezier(0.1, 0.57, 0.1, 1)';
+      var easingValues = easing.replace('cubic-bezier(', '').replace(')', '').split(',');
+      easingValues = [parseFloat(easingValues[0]), parseFloat(easingValues[1]), parseFloat(easingValues[2]), parseFloat(easingValues[3])];
 
-      var ox = x, oy = y;
+      var cubicBezierFunction = ionic.Animator.getCubicBezier(easingValues[0], easingValues[1], easingValues[2], easingValues[3], time);
+
+      var ox = this.x, oy = this.y;
+
 
       var el = this.el;
 
@@ -105,31 +145,42 @@
       } else {
         y = this.y;
       }
+      var dx = ox - x;
+      var dy = oy - y;
 
       el.offsetHeight;
       el.style.webkitTransitionTimingFunction = easing;
       el.style.webkitTransitionDuration = time;
       el.style.webkitTransform = 'translate3d(' + x + 'px,' + y + 'px, 0)';
 
+      // Stop any other momentum event callbacks
       clearTimeout(this._momentumStepTimeout);
+
       // Start triggering events as the element scrolls from inertia.
       // This is important because we need to receive scroll events
       // even after a "flick" and adjust, etc.
       if(time > 0) {
         this._momentumStepTimeout = setTimeout(function eventNotify() {
-          var trans = _this.el.style.webkitTransform.replace('translate3d(', '').split(',');
-          var scrollLeft = parseFloat(trans[0] || 0);
-          var scrollTop = parseFloat(trans[1] || 0);
+          // Calculate where in the animation process we might be
+          var diff = Math.min(time, Math.abs(Date.now() - start));
+
+          // How far along in time have we moved
+          var timeRatio = diff / time;
+
+          // Interpolate the transition values, using the same
+          // cubic bezier animation function used in the transition.
+          var bx = ox - dx * cubicBezierFunction(timeRatio);
+          var by = oy - dy * cubicBezierFunction(timeRatio);
 
           _this.didScroll && _this.didScroll({
             target: _this.el,
-            scrollLeft: -scrollLeft,
-            scrollTop: -scrollTop
+            scrollLeft: -bx,
+            scrollTop: -by
           });
           ionic.trigger(_this.scrollEventName, {
             target: _this.el,
-            scrollLeft: -scrollLeft,
-            scrollTop: -scrollTop
+            scrollLeft: -bx,
+            scrollTop: -by
           });
 
           if(_this._isDragging) {
@@ -206,7 +257,7 @@
       if (x == _this.x && y == _this.y) {
         return false;
       }
-      _this.scrollTo(x, y, transitionTime || 0, _this.bounceEasing);
+      _this._scrollTo(x, y, transitionTime || 0, _this.bounceEasing);
     
       return true;
     },
@@ -266,7 +317,7 @@
         newY = maxY;
       }
 
-      this.scrollTo(newX, newY, 0);
+      this._scrollTo(newX, newY, 0);
     },
 
     _getMomentum: function (current, start, time, lowerMargin, wrapperSize) {
@@ -452,12 +503,12 @@
 
           if(newX > 0 || (-newX + parentWidth) > totalWidth) {
             // Rubber band
-            newX = _this.x + deltaX / 3;
+            newX = _this.x + deltaX / _this.rubberBandResistance;
           }
           // Check if the dragging is beyond the bottom or top
           if(newY > 0 || (-newY + parentHeight) > totalHeight) {
             // Rubber band
-            newY = _this.y + deltaY / 3;//(-_this.resistance);
+            newY = _this.y + deltaY / _this.rubberBandResistance;
           }
 
           if(!_this.isHorizontalEnabled) {
@@ -541,7 +592,7 @@
         var newX = Math.round(_this.x);
         var newY = Math.round(_this.y);
 
-        _this.scrollTo(newX, newY);
+        _this._scrollTo(newX, newY);
 
 
         // Check if we just snap back to bounds
@@ -571,7 +622,7 @@
             easing = EASING_FUNCTIONS.bounce;
           }
 
-          _this.scrollTo(newX, newY, time, easing);
+          _this._scrollTo(newX, newY, time, easing);
         } else {
           // We are done
           _this._doneScrolling();

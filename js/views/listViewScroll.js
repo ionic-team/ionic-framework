@@ -413,7 +413,7 @@
 
         var scrollTop = e.scrollTop;
 
-        var highWater = Math.min(0, e.scrollTop + this.virtualRemoveThreshold);
+        var highWater = Math.max(0, e.scrollTop + this.virtualRemoveThreshold);
         var lowWater = Math.min(scrollHeight - viewportHeight, Math.abs(e.scrollTop) + viewportHeight + this.virtualAddThreshold);
 
         var itemsPerViewport = Math.floor((lowWater - highWater) / itemHeight);
@@ -425,7 +425,7 @@
 
         var nodes = Array.prototype.slice.call(this.listEl.children, first, first + itemsPerViewport);
 
-        this.renderViewport && this.renderViewport(-highWater, lowWater, first, last);
+        this.renderViewport && this.renderViewport(highWater, lowWater, first, last);
       }
     },
 

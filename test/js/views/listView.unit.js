@@ -55,17 +55,19 @@ describe('List View', function() {
     var itemHeight = list.itemHeight;
     var totalItems = height / itemHeight;
     var viewportHeight = list.el.parentNode.offsetHeight;
+    var itemsPerViewport = (viewportHeight + -list.virtualRemoveThreshold + list.virtualAddThreshold) / itemHeight;
 
     // set up scroll top
     var scrollTop = 1000;
-    var start = (scrollTop + -list.virtualRemoveThreshold) / itemHeight;
+    var start = (scrollTop + list.virtualRemoveThreshold) / itemHeight;
     var end = (scrollTop + viewportHeight + list.virtualAddThreshold) / itemHeight;
-
-    //console.log(height, itemHeight, totalItems, viewportHeight);
 
     list.scrollTo(0, scrollTop);
 
-    expect(list.renderViewport).toHaveBeenCalledWith(scrollTop + -list.virtualRemoveThreshold,
+    // Given a scrollTop of 1000px, an item height of 50px, and the given += 200px
+    // render window, renderViewport should be called with the following
+    // computed values:
+    expect(list.renderViewport).toHaveBeenCalledWith(scrollTop + list.virtualRemoveThreshold,
         scrollTop + viewportHeight + list.virtualAddThreshold, start, end);
   });
 
