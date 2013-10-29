@@ -92,6 +92,7 @@
    * 2. Correct font size not being inherited in all browsers.
    * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
    * 4. Remove any default :focus styles
+   * 5. Make sure webkit font smoothing is being inherited
    */
   /**
    * Address Firefox 4+ setting `line-height` on `input` using `!important` in
@@ -1027,7 +1028,7 @@
   .ionic fieldset {
     margin: 0 2px;
     padding: 0.35em 0.625em 0.75em;
-    border: 1px solid silver; }
+    border: 1px solid #c0c0c0; }
   .ionic legend {
     padding: 0;
     /* 2 */
@@ -1048,7 +1049,9 @@
     outline-style: none;
     /* 4 */
     outline-width: 0;
-    /* 4 */ }
+    /* 4 */
+    -webkit-font-smoothing: inherit;
+    /* 5 */ }
   .ionic button,
   .ionic input {
     line-height: normal; }
@@ -2385,7 +2388,7 @@
   .ionic input[type="file"] {
     line-height: 34px; }
   .ionic select {
-    border: 1px solid #cccccc;
+    border: 1px solid #ccc;
     background-color: white; }
   .ionic select[multiple],
   .ionic select[size] {
@@ -2434,7 +2437,7 @@
       border-radius: 50%;
       background: white;
       content: ' ';
-      transition: background-color 0.1s ease-in-out; }
+      transition: background-color .1s ease-in-out; }
   .ionic .checkbox input:after {
     position: absolute;
     top: 34%;
@@ -2447,7 +2450,7 @@
     border-right: 0;
     content: ' ';
     opacity: 0;
-    transition: opacity 0.05s ease-in-out;
+    transition: opacity .05s ease-in-out;
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg); }
   .ionic .checkbox input:checked:before {
@@ -2799,10 +2802,24 @@
       .ionic .button.button-icon:active, .ionic .button.button-icon.active {
         background: none;
         box-shadow: none;
-        text-shadow: 0px 0px 10px white; }
+        text-shadow: 0px 0px 10px #fff; }
     .ionic .button.block, .ionic .button.button-full {
       margin-top: 10px;
       margin-bottom: 10px; }
+  .ionic .button-small {
+    font-size: 12px;
+    min-height: 32px;
+    padding: 1px 8px 1px 8px; }
+    .ionic .button-small [class^="icon-"],
+    .ionic .button-small [class*=" icon-"] {
+      font-size: 20px; }
+  .ionic .button-large {
+    font-size: 24px;
+    min-height: 52px;
+    padding: 12px 18px 12px 18px; }
+    .ionic .button-large [class^="icon-"],
+    .ionic .button-large [class*=" icon-"] {
+      font-size: 32px; }
   .ionic .padding > .button.block:first-child {
     margin-top: 0; }
   .ionic .button-full,
@@ -3051,9 +3068,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin 0.75s linear infinite;
-    -moz-animation: spin 0.75s linear infinite;
-    animation: spin 0.75s linear infinite; }
+    -webkit-animation: spin .75s linear infinite;
+    -moz-animation: spin .75s linear infinite;
+    animation: spin .75s linear infinite; }
     .ionic .icon-loading:before {
       content: "\e144"; }
   .ionic .icon-refreshing {
@@ -3065,9 +3082,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin 0.75s linear infinite;
-    -moz-animation: spin 0.75s linear infinite;
-    animation: spin 0.75s linear infinite; }
+    -webkit-animation: spin .75s linear infinite;
+    -moz-animation: spin .75s linear infinite;
+    animation: spin .75s linear infinite; }
     .ionic .icon-refreshing:before {
       content: "\e144"; }
   .ionic .hidden,

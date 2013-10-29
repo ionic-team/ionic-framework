@@ -3,8 +3,8 @@
   display: inline-block;
   margin: 0;
 
-  padding: 9px 12px 7px 12px;
-  min-height: 44px;
+  padding: $button-padding;
+  min-height: $button-min-height;
 
   border-width: $button-border-width;
   border-style: solid;
@@ -17,7 +17,7 @@
 
   text-overflow: ellipsis;
   font-size: $button-font-size;
-  line-height: 24px;
+  line-height: $button-line-height;
 
   cursor: pointer;
 
@@ -26,8 +26,8 @@
     display: inline-block;
     padding: 0;
     vertical-align: sub;
-    font-size: 24px;
-    line-height: 24px;
+    font-size: $button-icon-font-size;
+    line-height: $button-line-height;
   }
 
   &.button-icon {
@@ -36,7 +36,7 @@
 
     [class^="icon-"], 
     [class*=" icon-"] {
-      font-size: 32px;
+      font-size: $button-icon-large-font-size;
     }
   }
 
@@ -114,7 +114,28 @@
     margin-bottom: $button-block-margin;
   }
 
+}
 
+.button-small {
+  font-size: $button-font-size - 4;
+  min-height: 32px;
+  padding: 1px 8px 1px 8px;
+
+  [class^="icon-"], 
+  [class*=" icon-"] {
+    font-size: $button-icon-font-size - 4;
+  }
+}
+
+.button-large {
+  font-size: $button-font-size + 8;
+  min-height: $button-min-height + 8;
+  padding: 12px 18px 12px 18px;
+
+  [class^="icon-"], 
+  [class*=" icon-"] {
+    font-size: $button-icon-font-size + 8;
+  }
 }
 
 .padding > .button.block:first-child {
@@ -140,4 +161,3 @@ button.button-full,
 a.button {
   text-decoration: none;
 }
-

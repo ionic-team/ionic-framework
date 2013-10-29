@@ -75,12 +75,6 @@
     @include bar-style($bar-dark-bg, $bar-dark-border-color, $white);
   }
 
-  //
-  //Disabled temporarily because it's annoying for testing.
-  //@media screen and (orientation : landscape) {
-  //padding: $barPaddingLandscape;
-  //}
-
   // Title inside of a bar is centered
   .title {
     position: absolute;
@@ -114,7 +108,7 @@
     z-index: 1;
     margin: 0;
     padding: 2px 8px 0 8px;
-    min-height: 34px;
+    min-height: $button-bar-button-min-hieght;
     background-color: transparent;
     font-size: 12px;
     line-height: 28px;
