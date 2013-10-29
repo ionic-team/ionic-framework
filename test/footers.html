@@ -5,82 +5,59 @@
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="../dist/ionicons.css" rel="stylesheet">
-    <link href="../dist/ionic.css" rel="stylesheet">
+    <link href="../dist/css/ionic.css" rel="stylesheet">
     <style>
       .hide{display:none;}
     </style>
   </head>
   <body>
 
-    <section>
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Footer</h1>
+    </header>
 
-      <header class="bar bar-header bar-dark">
-        <h1 class="title">Footer</h1>
-      </header>
+    <main class="content padding has-header has-footer">
+      <p>Footer should always stay at the bottom of the screen, and on top of the main content.</p>
+      <p>Content element must have "has-footer" as a classname.</p>
+      <p><button id="btnAddMore">Dynamically Add More Content</button></p>
+      <div id="add-more"></div>
+      <p><button id="btnToggle">Toggle Content</button></p>
+      <p id="toggle-content" class="hide">
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+        Toggled content<br>
+      </p>
+      <p><a class="button button-secondary" href="index.html">Homepage</a></p>
+    </main>
 
-      <main class="content padding has-header has-footer">
-        <p>Footer should always stay at the bottom of the screen, and on top of the main content.</p>
-        <p>Content element must have "has-footer" as a classname.</p>
-        <p><button id="btnAddMore">Dynamically Add More Content</button></p>
-        <div id="add-more"></div>
-        <p><button id="btnToggle">Toggle Content</button></p>
-        <p id="toggle-content" class="hide">
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-          Toggled content<br>
-        </p>
-        <p><a class="button button-secondary" href="index.html">Homepage</a></p>
-      </main>
+    <footer class="bar bar-footer bar-default">
+      <h3 class="title">Footer</h3>
+    </footer>
 
-      <footer class="bar bar-footer bar-dark">
-        <h3 class="title">Footer</h3>
-      </footer>
-
-    </section>
-    
-    <script src="../dist/ionic.js"></script>
-    <script src="../dist/ionic-simple.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script>
-      $("#btnAddMore").click(function(){
-        var moreContent = [];
-        moreContent.push("<ul>");
-        for(var x=0; x<20; x++) {
-          moreContent.push("<li>Dynamically added content!");
-        }
-        moreContent.push("</ul>");
-        $("#add-more").append( moreContent.join('') );
-        return false;
-      });
-      $("#btnToggle").click(function(){
-        $("#toggle-content").toggle("hide")
-      });
-    </script>
   </body>
 </html>

@@ -20,6 +20,7 @@
   border-style: solid;
   border-top: 1px solid transparent;
   border-bottom: 1px solid $bar-default-border-color;
+  background-size: 0;
 
   background-color: $bar-bg;
   @media (min--moz-device-pixel-ratio: 1.5),
@@ -27,15 +28,13 @@
          (min-device-pixel-ratio: 1.5),
          (min-resolution: 144dpi),
          (min-resolution: 1.5dppx) {
-
-    border-top: none;
-    border-bottom: none;
+    border-top: none !important;
+    border-bottom: none !important;
     background-image: linear-gradient(0deg, $bar-default-border-color, $bar-default-border-color, 50%, transparent 50%);
     background-position: bottom;
     background-size: 100% 1px;
     background-repeat: no-repeat;
-
-   }
+  }
 
   &.bar-clear {
     border: none;
@@ -85,7 +84,6 @@
     z-index: 0;
 
     margin: 0;
-    //padding: $barPaddingVertical 0px;
 
     min-width: 30px;
 
@@ -202,6 +200,9 @@
 // Footer at bottom
 .bar-footer {
   bottom: 0;
+  border-top-width: 1px;
+  border-bottom-width: 0;
+  background-position: top;
 }
 
 // Don't render padding if the bar is just for tabs

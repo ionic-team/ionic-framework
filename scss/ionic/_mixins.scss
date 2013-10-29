@@ -96,23 +96,9 @@
 
 @mixin bar-style($bgColor, $borderColor, $color) {
   background-color: $bgColor;
-  border-top: 1px solid transparent;
-  border-bottom: 1px solid $borderColor;
-
-  @media (min--moz-device-pixel-ratio: 1.5),
-         (-webkit-min-device-pixel-ratio: 1.5),
-         (min-device-pixel-ratio: 1.5),
-         (min-resolution: 144dpi),
-         (min-resolution: 1.5dppx) {
-
-    border-top: none;
-    border-bottom: none;
-    background-image: linear-gradient(0deg, $borderColor, $borderColor 50%, transparent 50%);
-    background-size: 100% 1px;
-    background-repeat: no-repeat;
-    background-position: bottom;
-
-   }
+  border-top-color: transparent;
+  border-bottom-color: $borderColor;
+  background-image: linear-gradient(0deg, $borderColor, $borderColor 50%, transparent 50%);
 
   color: $color;
 

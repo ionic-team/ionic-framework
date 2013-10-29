@@ -556,11 +556,12 @@ a.subdued‎ {
   border-style: solid;
   border-top: 1px solid transparent;
   border-bottom: 1px solid #dddddd;
+  background-size: 0;
   background-color: white; }
   @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
     .bar {
-      border-top: none;
-      border-bottom: none;
+      border-top: none !important;
+      border-bottom: none !important;
       background-image: linear-gradient(0deg, #dddddd, #dddddd, 50%, transparent 50%);
       background-position: bottom;
       background-size: 100% 1px;
@@ -575,122 +576,66 @@ a.subdued‎ {
       color: #fff; }
   .bar.bar-default {
     background-color: rgba(255, 255, 255, 0.9);
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid #dddddd;
+    border-top-color: transparent;
+    border-bottom-color: #dddddd;
+    background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
     color: #333333; }
-    @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
-      .bar.bar-default {
-        border-top: none;
-        border-bottom: none;
-        background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
-        background-size: 100% 1px;
-        background-repeat: no-repeat;
-        background-position: bottom; } }
     .bar.bar-default .title {
       color: #333333; }
   .bar.bar-secondary {
     background-color: rgba(245, 245, 245, 0.9);
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid #bbbbbb;
+    border-top-color: transparent;
+    border-bottom-color: #bbbbbb;
+    background-image: linear-gradient(0deg, #bbbbbb, #bbbbbb 50%, transparent 50%);
     color: #333333; }
-    @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
-      .bar.bar-secondary {
-        border-top: none;
-        border-bottom: none;
-        background-image: linear-gradient(0deg, #bbbbbb, #bbbbbb 50%, transparent 50%);
-        background-size: 100% 1px;
-        background-repeat: no-repeat;
-        background-position: bottom; } }
     .bar.bar-secondary .title {
       color: #333333; }
   .bar.bar-primary {
     background-color: rgba(74, 135, 238, 0.9);
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid #3b6dc2;
+    border-top-color: transparent;
+    border-bottom-color: #3b6dc2;
+    background-image: linear-gradient(0deg, #3b6dc2, #3b6dc2 50%, transparent 50%);
     color: white; }
-    @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
-      .bar.bar-primary {
-        border-top: none;
-        border-bottom: none;
-        background-image: linear-gradient(0deg, #3b6dc2, #3b6dc2 50%, transparent 50%);
-        background-size: 100% 1px;
-        background-repeat: no-repeat;
-        background-position: bottom; } }
     .bar.bar-primary .title {
       color: white; }
   .bar.bar-info {
     background-color: rgba(67, 206, 230, 0.9);
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid #3bb3c8;
+    border-top-color: transparent;
+    border-bottom-color: #3bb3c8;
+    background-image: linear-gradient(0deg, #3bb3c8, #3bb3c8 50%, transparent 50%);
     color: white; }
-    @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
-      .bar.bar-info {
-        border-top: none;
-        border-bottom: none;
-        background-image: linear-gradient(0deg, #3bb3c8, #3bb3c8 50%, transparent 50%);
-        background-size: 100% 1px;
-        background-repeat: no-repeat;
-        background-position: bottom; } }
     .bar.bar-info .title {
       color: white; }
   .bar.bar-success {
     background-color: rgba(102, 204, 51, 0.9);
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid #5bb22f;
+    border-top-color: transparent;
+    border-bottom-color: #5bb22f;
+    background-image: linear-gradient(0deg, #5bb22f, #5bb22f 50%, transparent 50%);
     color: white; }
-    @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
-      .bar.bar-success {
-        border-top: none;
-        border-bottom: none;
-        background-image: linear-gradient(0deg, #5bb22f, #5bb22f 50%, transparent 50%);
-        background-size: 100% 1px;
-        background-repeat: no-repeat;
-        background-position: bottom; } }
     .bar.bar-success .title {
       color: white; }
   .bar.bar-warning {
     background-color: rgba(240, 184, 64, 0.9);
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid #d29f31;
+    border-top-color: transparent;
+    border-bottom-color: #d29f31;
+    background-image: linear-gradient(0deg, #d29f31, #d29f31 50%, transparent 50%);
     color: white; }
-    @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
-      .bar.bar-warning {
-        border-top: none;
-        border-bottom: none;
-        background-image: linear-gradient(0deg, #d29f31, #d29f31 50%, transparent 50%);
-        background-size: 100% 1px;
-        background-repeat: no-repeat;
-        background-position: bottom; } }
     .bar.bar-warning .title {
       color: white; }
   .bar.bar-danger {
     background-color: rgba(239, 78, 58, 0.9);
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid #c73927;
+    border-top-color: transparent;
+    border-bottom-color: #c73927;
+    background-image: linear-gradient(0deg, #c73927, #c73927 50%, transparent 50%);
     color: white; }
-    @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
-      .bar.bar-danger {
-        border-top: none;
-        border-bottom: none;
-        background-image: linear-gradient(0deg, #c73927, #c73927 50%, transparent 50%);
-        background-size: 100% 1px;
-        background-repeat: no-repeat;
-        background-position: bottom; } }
     .bar.bar-danger .title {
       color: white; }
   .bar.bar-dark {
     background-color: rgba(68, 68, 68, 0.9);
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid #111111;
+    border-top-color: transparent;
+    border-bottom-color: #111111;
+    background-image: linear-gradient(0deg, #111111, #111111 50%, transparent 50%);
     color: white; }
-    @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
-      .bar.bar-dark {
-        border-top: none;
-        border-bottom: none;
-        background-image: linear-gradient(0deg, #111111, #111111 50%, transparent 50%);
-        background-size: 100% 1px;
-        background-repeat: no-repeat;
-        background-position: bottom; } }
     .bar.bar-dark .title {
       color: white; }
   .bar .title {
@@ -875,7 +820,10 @@ a.subdued‎ {
   top: 0; }
 
 .bar-footer {
-  bottom: 0; }
+  bottom: 0;
+  border-top-width: 1px;
+  border-bottom-width: 0;
+  background-position: top; }
 
 .bar-tabs {
   padding: 0; }
