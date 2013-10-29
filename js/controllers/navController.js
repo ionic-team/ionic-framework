@@ -11,22 +11,22 @@
  * if the stack can be poppped to go back to the last view, and
  * it will handle updating the title of the nav bar and processing animations.
  */
-ionic.controllers.NavController = function(opts) {
-  var _this = this;
+ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
+  initialize: function(opts) {
+    var _this = this;
 
-  this.navBar = opts.navBar;
-  this.content = opts.content;
-  this.controllers = opts.controllers || [];
+    this.navBar = opts.navBar;
+    this.content = opts.content;
+    this.controllers = opts.controllers || [];
 
-  this._updateNavBar();
+    this._updateNavBar();
 
-  // TODO: Is this the best way?
-  this.navBar.shouldGoBack = function() {
-    _this.pop();
-  };
-};
+    // TODO: Is this the best way?
+    this.navBar.shouldGoBack = function() {
+      _this.pop();
+    };
+  },
 
-ionic.controllers.NavController.prototype = {
   /**
    * @return {array} the array of controllers on the stack.
    */
@@ -151,5 +151,6 @@ ionic.controllers.NavController.prototype = {
       this.navBar.showBackButton(false);
     }
   }
-};
+});
+
 })(window.ionic);

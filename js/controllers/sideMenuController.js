@@ -7,30 +7,29 @@
    *
    * The right or left menu can be disabled or not used at all, if desired.
    */
-  ionic.controllers.SideMenuController = function(options) {
-    var self = this;
+  ionic.controllers.SideMenuController = ionic.controllers.ViewController.inherit({
+    initialize: function(options) {
+      var self = this;
 
-    this.left = options.left;
-    this.right = options.right;
-    this.content = options.content;
-    this.dragThresholdX = options.dragThresholdX || 10;
-      
-    this._rightShowing = false;
-    this._leftShowing = false;
-    this._isDragging = false;
+      this.left = options.left;
+      this.right = options.right;
+      this.content = options.content;
+      this.dragThresholdX = options.dragThresholdX || 10;
+        
+      this._rightShowing = false;
+      this._leftShowing = false;
+      this._isDragging = false;
 
-    if(this.content) {
-      this.content.onDrag = function(e) {
-        self._handleDrag(e);
-      };
+      if(this.content) {
+        this.content.onDrag = function(e) {
+          self._handleDrag(e);
+        };
 
-      this.content.endDrag = function(e) {
-        self._endDrag(e);
-      };
-    }
-  };
-
-  ionic.controllers.SideMenuController.prototype = {
+        this.content.endDrag = function(e) {
+          self._endDrag(e);
+        };
+      }
+    },
     /**
      * Set the content view controller if not passed in the constructor options.
      * 
@@ -263,6 +262,6 @@
         this.openAmount(this._offsetX + (this._lastX - this._startX));
       }
     }
-  };
+  });
 
 })(ionic);

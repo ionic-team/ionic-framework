@@ -17,21 +17,21 @@
   // Cached regex for removing a trailing slash.
   var trailingSlash = /\/$/;
 
-  ionic.controllers.RouteViewController = function(options) {
-    this.options = options;
+  ionic.controllers.RouteViewController = ionic.controllers.ViewController.inherit({
+    initialize: function(options) {
+      this.options = options;
 
-    this.root = this.options.root || '/';
-    this.root = ('/' + this.root + '/').replace(rootStripper, '/');
+      this.root = this.options.root || '/';
+      this.root = ('/' + this.root + '/').replace(rootStripper, '/');
 
-    this.handlers = [];
+      this.handlers = [];
 
-    this._bindEvents();
+      this._bindEvents();
 
-    this.location = window.location;
-    this.history = window.history;
-  };
+      this.location = window.location;
+      this.history = window.history;
+    },
 
-  ionic.controllers.RouteViewController.prototype = {
     when: function(route, callback) {
       var _this = this;
 
@@ -111,5 +111,5 @@
       }
       return matched;
     },
-  };
+  });
 })(window.ionic);
