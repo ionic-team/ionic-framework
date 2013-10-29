@@ -2009,6 +2009,10 @@
     right: auto; }
   .ionic .item-icon-left.item-icon-right i:last-child {
     left: auto; }
+  .ionic a.item:active,
+  .ionic button.item:active,
+  .ionic .item.active {
+    background-color: #F7F7F7; }
   .ionic a.item:after,
   .ionic button.item:after {
     /* By default, both <a> and <button> have right side arrow icons */

@@ -213,6 +213,12 @@ a.item {
   left: auto;
 }
 
+a.item:active,
+button.item:active,
+.item.active {
+  background-color: #F7F7F7;
+}
+
 a.item:after,
 button.item:after {
   /* By default, both <a> and <button> have right side arrow icons */
