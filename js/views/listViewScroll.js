@@ -403,26 +403,46 @@
       refresher.style.height = '0px';
     },
 
+    /**
+     * If we scrolled and have virtual mode enabled, compute the window
+     * of active elements in order to figure out the viewport to render.
+     */
     didScroll: function(e) {
       if(this.isVirtual) {
         var itemHeight = this.itemHeight;
+
+        // TODO: This would be inaccurate if we are windowed
         var totalItems = this.listEl.children.length;
 
+        // Grab the total height of the list
         var scrollHeight = e.target.scrollHeight;
+
+        // Get the viewport height
         var viewportHeight = this.el.parentNode.offsetHeight;
 
+        // scrollTop is the current scroll position
         var scrollTop = e.scrollTop;
 
+        // High water is the pixel position of the first element to include (everything before
+        // that will be removed)
         var highWater = Math.max(0, e.scrollTop + this.virtualRemoveThreshold);
+
+        // Low water is the pixel position of the last element to include (everything after
+        // that will be removed)
         var lowWater = Math.min(scrollHeight, Math.abs(e.scrollTop) + viewportHeight + this.virtualAddThreshold);
 
+        // Compute how many items per viewport size can show
         var itemsPerViewport = Math.floor((lowWater - highWater) / itemHeight);
+
+        // Get the first and last elements in the list based on how many can fit
+        // between the pixel range of lowWater and highWater
         var first = parseInt(Math.abs(highWater / itemHeight));
         var last = parseInt(Math.abs(lowWater / itemHeight));
 
-
+        // Get the items we need to remove
         this._virtualItemsToRemove = Array.prototype.slice.call(this.listEl.children, 0, first);
 
+        // Grab the nodes we will be showing
         var nodes = Array.prototype.slice.call(this.listEl.children, first, first + itemsPerViewport);
 
         this.renderViewport && this.renderViewport(highWater, lowWater, first, last);
