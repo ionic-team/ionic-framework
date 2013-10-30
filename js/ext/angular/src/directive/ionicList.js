@@ -75,7 +75,6 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       reorderIcon: '@'
     },
 
-    // So we can require being under this
     controller: function($scope) {
       var _this = this;
 
@@ -114,11 +113,22 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       itemHeight: '@'
     },
 
-    // So we can require being under this
-    controller: function($scope) {
+    controller: function($scope, $element) {
       var _this = this;
 
       this.scope = $scope;
+
+      this.element = $element;
+
+      var lv = new ionic.views.ListView({
+        el: $element[0],
+        listEl: $element[0].children[0],
+        isVirtual: true,
+        itemHeight: $scope.itemHeight,
+      });
+
+      this.listView = lv;
+
 
       $scope.$watch('isEditing', function(v) {
         _this.isEditing = true;
@@ -130,22 +140,12 @@ angular.module('ionic.ui.list', ['ngAnimate'])
 
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
-        var lv = new ionic.views.ListView({
-          el: $element[0],
-          listEl: $element[0].children[0],
-          isVirtual: true,
-          itemHeight: $scope.itemHeight,
-          renderViewport: function(high, low, start, end) {
-            console.log('RENDER VIEWPORT', high, low, start, end);
-          }
-        });
-
         if(attr.animation) {
           $element.addClass(attr.animation);
         }
       };
     }
   };
-});
+})
 
 })();

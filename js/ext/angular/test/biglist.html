@@ -67,7 +67,7 @@
         <list-refresher>
           <spinner ratio="refreshratio.ratio"></spinner>
         </list-refresher>
-        <list-item ng-repeat="item in items" 
+        <list-item virt-repeat="item in items" 
             buttons="item.buttons"
             can-delete="true"
             can-reorder="true"
@@ -84,7 +84,7 @@
     <script src="../../../../dist/js/ionic.js"></script>
     <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
-      angular.module('navtest', ['ionic.ui.list', 'ionic.ui.content', 'ngAnimate'])
+      angular.module('navtest', ['ionic.ui.list', 'ionic.ui.content', 'ionic.ui.virtRepeat', 'ngAnimate'])
 
       .directive('spinner', function() {
         return {

@@ -1,0 +1,24 @@
+(function() {
+'use strict';
+
+angular.module('ionic.ui.virtRepeat', [])
+
+.directive('virtRepeat', function() {
+  return {
+    require: ['?ngModel', '^virtualList'],
+    transclude: 'element',
+    priority: 1000,
+    terminal: true,
+    compile: function(element, attr, transclude) {
+      return function($scope, $element, $attr, ctrls) {
+        var virtualList = ctrls[1];
+        var _this = this;
+
+        virtualList.listView.renderViewport = function(high, low, start, end) {
+          console.log('RENDER VIEWPORT', high, low, start, end);
+        }
+      }
+    }
+  }
+});
+})(ionic);
