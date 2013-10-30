@@ -21,8 +21,7 @@
 
   cursor: pointer;
 
-  [class^="icon-"], 
-  [class*=" icon-"] {
+  i, .icon {
     display: inline-block;
     padding: 0;
     vertical-align: inherit;
@@ -34,8 +33,7 @@
     padding: $button-clear-padding;
     background: none;
 
-    [class^="icon-"], 
-    [class*=" icon-"] {
+    i, .icon {
       font-size: $button-icon-large-font-size;
     }
   }
@@ -43,6 +41,7 @@
   &.button-clear {
     @include transition(opacity .1s);
     padding: $button-clear-padding;
+    max-height: 44px;
     border: none;
     background: none;
     box-shadow: none;
@@ -117,23 +116,23 @@
 }
 
 .button-small {
-  font-size: $button-font-size - 4;
-  min-height: 32px;
   padding: 1px 8px 1px 8px;
+  min-height: $button-small-min-height;
+  line-height: $button-small-line-height;
+  font-size: $button-font-size - 4;
 
-  [class^="icon-"], 
-  [class*=" icon-"] {
+  i, .icon {
     font-size: $button-icon-font-size - 4;
+    line-height: $button-small-line-height - 3;
   }
 }
 
 .button-large {
-  font-size: $button-font-size + 8;
-  min-height: $button-min-height + 8;
   padding: 12px 18px 12px 18px;
+  min-height: $button-min-height + 8;
+  font-size: $button-font-size + 8;
 
-  [class^="icon-"], 
-  [class*=" icon-"] {
+  i, .icon {
     font-size: $button-icon-font-size + 8;
   }
 }

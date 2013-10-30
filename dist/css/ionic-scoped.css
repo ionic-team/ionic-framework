@@ -1028,7 +1028,7 @@
   .ionic fieldset {
     margin: 0 2px;
     padding: 0.35em 0.625em 0.75em;
-    border: 1px solid silver; }
+    border: 1px solid #c0c0c0; }
   .ionic legend {
     padding: 0;
     /* 2 */
@@ -2286,7 +2286,7 @@
   .ionic input[type="file"] {
     line-height: 34px; }
   .ionic select {
-    border: 1px solid #cccccc;
+    border: 1px solid #ccc;
     background-color: white; }
   .ionic select[multiple],
   .ionic select[size] {
@@ -2335,7 +2335,7 @@
       border-radius: 50%;
       background: white;
       content: ' ';
-      transition: background-color 0.1s ease-in-out; }
+      transition: background-color .1s ease-in-out; }
   .ionic .checkbox input:after {
     position: absolute;
     top: 34%;
@@ -2348,7 +2348,7 @@
     border-right: 0;
     content: ' ';
     opacity: 0;
-    transition: opacity 0.05s ease-in-out;
+    transition: opacity .05s ease-in-out;
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg); }
   .ionic .checkbox input:checked:before {
@@ -2491,23 +2491,22 @@
     font-size: 16px;
     line-height: 23px;
     cursor: pointer; }
-    .ionic .button [class^="icon-"],
-    .ionic .button [class*=" icon-"] {
+    .ionic .button i, .ionic .button .icon {
       display: inline-block;
       padding: 0;
       vertical-align: inherit;
       font-size: 24px;
       line-height: 22px; }
     .ionic .button.button-icon {
-      padding: 4px 5px;
+      padding: 12px 6px;
       background: none; }
-      .ionic .button.button-icon [class^="icon-"],
-      .ionic .button.button-icon [class*=" icon-"] {
+      .ionic .button.button-icon i, .ionic .button.button-icon .icon {
         font-size: 32px; }
     .ionic .button.button-clear {
       -webkit-transition: opacity 0.1s;
       transition: opacity 0.1s;
-      padding: 4px 5px;
+      padding: 12px 6px;
+      max-height: 44px;
       border: none;
       background: none;
       box-shadow: none; }
@@ -2700,23 +2699,23 @@
       .ionic .button.button-icon:active, .ionic .button.button-icon.active {
         background: none;
         box-shadow: none;
-        text-shadow: 0px 0px 10px white; }
+        text-shadow: 0px 0px 10px #fff; }
     .ionic .button.block, .ionic .button.button-full {
       margin-top: 10px;
       margin-bottom: 10px; }
   .ionic .button-small {
-    font-size: 12px;
+    padding: 1px 8px 1px 8px;
     min-height: 32px;
-    padding: 1px 8px 1px 8px; }
-    .ionic .button-small [class^="icon-"],
-    .ionic .button-small [class*=" icon-"] {
-      font-size: 20px; }
+    line-height: 29px;
+    font-size: 12px; }
+    .ionic .button-small i, .ionic .button-small .icon {
+      font-size: 20px;
+      line-height: 26px; }
   .ionic .button-large {
-    font-size: 24px;
+    padding: 12px 18px 12px 18px;
     min-height: 52px;
-    padding: 12px 18px 12px 18px; }
-    .ionic .button-large [class^="icon-"],
-    .ionic .button-large [class*=" icon-"] {
+    font-size: 24px; }
+    .ionic .button-large i, .ionic .button-large .icon {
       font-size: 32px; }
   .ionic .padding > .button.block:first-child {
     margin-top: 0; }
@@ -2966,9 +2965,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin 0.75s linear infinite;
-    -moz-animation: spin 0.75s linear infinite;
-    animation: spin 0.75s linear infinite; }
+    -webkit-animation: spin .75s linear infinite;
+    -moz-animation: spin .75s linear infinite;
+    animation: spin .75s linear infinite; }
     .ionic .icon-loading:before {
       content: "\e144"; }
   .ionic .icon-refreshing {
@@ -2980,9 +2979,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin 0.75s linear infinite;
-    -moz-animation: spin 0.75s linear infinite;
-    animation: spin 0.75s linear infinite; }
+    -webkit-animation: spin .75s linear infinite;
+    -moz-animation: spin .75s linear infinite;
+    animation: spin .75s linear infinite; }
     .ionic .icon-refreshing:before {
       content: "\e144"; }
   .ionic .hidden,
