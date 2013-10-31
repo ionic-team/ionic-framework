@@ -122,6 +122,8 @@
     _scrollTo: function(x, y, time, easing) {
       var _this = this;
 
+      time = time || 0;
+
       var start = Date.now();
 
       easing = easing || 'cubic-bezier(0.1, 0.57, 0.1, 1)';
@@ -148,6 +150,10 @@
 
       if(ox == x && oy == y) {
         time = 0;
+      }
+
+      if(time == Infinity) {
+        debugger;
       }
 
       var dx = ox - x;
@@ -335,6 +341,13 @@
       // Calculate the final desination
       destination = current + ( speed * speed ) / ( 2 * deceleration ) * ( distance < 0 ? -1 : 1 );
       duration = speed / deceleration;
+
+      if(speed === 0) {
+        return {
+          destination: current,
+          duration: 0
+        };
+      }
 
       // Check if the final destination needs to be rubber banded
       if ( destination < lowerMargin ) {
@@ -635,6 +648,9 @@
       });
     },
 
+    /**
+     * Trigger a done scrolling event.
+     */
     _doneScrolling: function() {
       this.didStopScrolling && this.didStopScrolling({
         target: this.el,

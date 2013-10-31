@@ -1,0 +1,161 @@
+<html ng-app="navtest">
+  <head>
+    <meta charset="utf-8">
+    <title>Big List</title>
+
+    <!-- sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="/vendor/angular/angular-1.2.0rc2.min.js"></script>
+    <script src="/vendor/angular/angular-touch.js"></script>
+    <script src="/vendor/angular/angular-animate.js"></script>
+    <style>
+.my-repeat-animation > .ng-enter, 
+.my-repeat-animation > .ng-leave, 
+.my-repeat-animation > .ng-move {
+  -webkit-transition: 0.2s linear all;
+  transition: 0.2s linear all;
+  position:relative;
+}
+
+.my-repeat-animation > .ng-enter {
+  left:-10px;
+  opacity:0;
+}
+.my-repeat-animation > .ng-enter.ng-enter-active {
+  left:0;
+  opacity:1;
+}
+
+.my-repeat-animation > .ng-leave {
+  left:0;
+  opacity:1;
+}
+.my-repeat-animation > .ng-leave.ng-leave-active {
+  left:-10px;
+  opacity:0;
+}
+
+.my-repeat-animation > .ng-move {
+  opacity:0.5;
+}
+.my-repeat-animation > .ng-move.ng-move-active {
+  opacity:1;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 40px;
+  margin: auto;
+  margin-bottom: 100px;
+}
+.spin-thing {
+  width: 10px;
+  height: 10px;
+  background-color: #4a87ee;
+  border-radius: 10px;
+}
+    </style>
+
+  </head>
+  <body>
+
+    <content ng-controller="testctrl" class="reveal-animation">
+      <virtual-list is-editing="iseditingitems" on-refresh-holding="almostrefreshing()" on-refresh-opening="almostrefreshprojects(ratio)" on-refresh="refreshprojects()" animation="my-repeat-animation" delete-icon="icon-minus-circled" reorder-icon="icon-navicon">
+        <list-refresher>
+          <spinner ratio="refreshratio.ratio"></spinner>
+        </list-refresher>
+        <list-item virt-repeat="item in items" 
+            buttons="item.buttons"
+            can-delete="true"
+            can-reorder="true"
+            can-swipe="true"
+            on-delete="deleteproject(project)"
+            on-select="selectproject(project)">
+          {{item.text}}
+          <i class="{{item.icon}}"></i>
+        </list-item>
+      </virtual-list>
+      <button ng-click="edit()" class="button button-success">edit</button>
+    </content>
+
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
+    <script>
+      angular.module('navtest', ['ionic.ui.list', 'ionic.ui.content', 'ionic.ui.virtRepeat', 'ngAnimate'])
+
+      .directive('spinner', function() {
+        return {
+          restrict: 'e',
+          replace: true,
+          scope: {
+            ratio: '='
+          },
+          template: '<div class="spinner"><div class="spin-thing"></div></div>',
+          link: function($scope, $element, $attr) {
+            $scope.$watch('ratio', function(value) {
+              if(value > 0.97) {
+                value = 1;
+              }
+
+              var a = (value * 360) % 360;
+              var r = (a * math.pi) / 180;
+              var x = (math.sin(r) * 20) + 14;
+              var y = (math.cos(r) * -20) + 14;
+
+              $element[0].firstelementchild.style.webkittransform = 'translate3d(' + x + 'px, ' + y + 'px, 0)';
+              //$element[0].firstelementchild.setattribute('d', anim);
+            });
+          }
+        }
+      })
+
+      .controller('testctrl', function($scope) {
+        $scope.refreshratio = { ratio: 0 };
+        var removeitem = function(item) {
+          // remove ourselves
+          $scope.items.splice($scope.items.indexof(item), 1);
+        };
+
+        $scope.almostrefreshing = function() {
+          console.log('holding for refresh');
+        };
+        $scope.almostrefreshprojects = function(amt) {
+          console.log('almost refreshing', amt);
+          $scope.refreshratio.ratio = amt;
+          $scope.$apply();
+        };
+
+        $scope.refreshprojects = function() {
+          console.log("refreshing");
+        };
+
+        $scope.items = [];
+        for(var i = 0; i < 500; i++) {
+          $scope.items.push({
+            text: 'item ' + i,
+            candelete: true,
+            canswipe: true,
+            canreorder: true,
+            icon: 'icon-chevron-right',
+            hide: false,
+            deleteitem: removeitem,
+            buttons: [{
+              text: 'kill',
+              type: 'button-danger',
+              buttonclicked: removeitem,
+            }]
+          });
+        }
+
+        $scope.edit = function() {
+          $scope.iseditingitems = !$scope.iseditingitems;
+        }
+      });
+
+    </script>
+  </body>
+</html>
+

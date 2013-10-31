@@ -6,7 +6,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
 .directive('listItem', function() {
   return {
     restrict: 'E',
-    require: '^list',
+    require: ['?^list', '?^virtualList'],
     replace: true,
     transclude: true,
     scope: {
@@ -41,6 +41,13 @@ angular.module('ionic.ui.list', ['ngAnimate'])
                    </div>\
                 </li>',*/
     link: function($scope, $element, $attr, list) {
+      // Grab the parent list controller
+      if(list[0]) {
+        list = list[0];
+      } else if(list[1]) {
+        list = list[1];
+      }
+
       $scope.isEditing = false;
       $scope.deleteIcon = list.scope.deleteIcon;
       $scope.reorderIcon = list.scope.reorderIcon;
@@ -68,7 +75,6 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       reorderIcon: '@'
     },
 
-    // So we can require being under this
     controller: function($scope) {
       var _this = this;
 
@@ -92,6 +98,54 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       };
     }
   };
-});
+})
+
+.directive('virtualList', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+
+    scope: {
+      isEditing: '=',
+      deleteIcon: '@',
+      reorderIcon: '@',
+      itemHeight: '@'
+    },
+
+    controller: function($scope, $element) {
+      var _this = this;
+
+      this.scope = $scope;
+
+      this.element = $element;
+
+      var lv = new ionic.views.ListView({
+        el: $element[0],
+        listEl: $element[0].children[0],
+        isVirtual: true,
+        itemHeight: $scope.itemHeight,
+      });
+
+      this.listView = lv;
+
+
+      $scope.$watch('isEditing', function(v) {
+        _this.isEditing = true;
+      });
+    },
+
+    template: '<div class="scroll"><ul class="list" ng-class="{\'list-editing\': isEditing}" ng-transclude>\
+              </ul></div>',
+
+    compile: function(element, attr, transclude) {
+      return function($scope, $element, $attr) {
+        if(attr.animation) {
+          $element.addClass(attr.animation);
+        }
+      };
+    }
+  };
+})
 
 })();
