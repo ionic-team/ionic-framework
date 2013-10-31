@@ -840,6 +840,7 @@ a.subdued‎ {
   -webkit-box-orient: horizontal;
   -moz-box-orient: horizontal;
   background-color: white;
+  background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
   border-color: #dddddd;
   color: #333333;
   position: fixed;
@@ -851,39 +852,56 @@ a.subdued‎ {
   height: 49px;
   border-style: solid;
   border-top-width: 1px;
-  font-size: 16px; }
+  line-height: 49px;
+  background-size: 0; }
   .tabs.tabs-default {
     background-color: white;
+    background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
     border-color: #dddddd;
     color: #333333; }
   .tabs.tabs-secondary {
     background-color: whitesmoke;
+    background-image: linear-gradient(0deg, #bbbbbb, #bbbbbb 50%, transparent 50%);
     border-color: #bbbbbb;
     color: #333333; }
   .tabs.tabs-primary {
     background-color: #4a87ee;
+    background-image: linear-gradient(0deg, #3b6dc2, #3b6dc2 50%, transparent 50%);
     border-color: #3b6dc2;
     color: white; }
   .tabs.tabs-success {
     background-color: #66cc33;
+    background-image: linear-gradient(0deg, #5bb22f, #5bb22f 50%, transparent 50%);
     border-color: #5bb22f;
     color: white; }
   .tabs.tabs-info {
     background-color: #43cee6;
+    background-image: linear-gradient(0deg, #3bb3c8, #3bb3c8 50%, transparent 50%);
     border-color: #3bb3c8;
     color: white; }
   .tabs.tabs-warning {
     background-color: #f0b840;
+    background-image: linear-gradient(0deg, #d29f31, #d29f31 50%, transparent 50%);
     border-color: #d29f31;
     color: white; }
   .tabs.tabs-danger {
     background-color: #ef4e3a;
+    background-image: linear-gradient(0deg, #c73927, #c73927 50%, transparent 50%);
     border-color: #c73927;
     color: white; }
   .tabs.tabs-dark {
     background-color: #ef4e3a;
+    background-image: linear-gradient(0deg, #c73927, #c73927 50%, transparent 50%);
     border-color: #c73927;
     color: white; }
+  @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
+    .tabs {
+      padding-top: 2px;
+      border-top: none !important;
+      border-bottom: none !important;
+      background-position: top;
+      background-size: 100% 1px;
+      background-repeat: no-repeat; } }
 
 .tabs-top {
   top: 44px; }
@@ -895,7 +913,6 @@ a.subdued‎ {
   display: block;
   overflow: hidden;
   box-sizing: border-box;
-  padding-top: 4px;
   width: 0;
   height: 100%;
   color: inherit;
@@ -909,32 +926,28 @@ a.subdued‎ {
   opacity: 0.7; }
 
 .tabs-icon-top .tab-item,
-.tabs-icon-right .tab-item,
-.tabs-icon-bottom .tab-item,
-.tabs-icon-left .tab-item {
-  position: relative;
-  padding-top: 0;
-  font-size: 10px; }
+.tabs-icon-bottom .tab-item {
+  font-size: 10px;
+  line-height: 14px; }
 
-.tabs-icon-left .tab-item i {
-  position: absolute;
-  left: 4px;
-  display: flex;
-  height: 100%;
-  align-items: center; }
-
-.tabs-icon-right .tab-item i {
-  position: absolute;
-  right: 4px;
-  display: flex;
-  height: 100%;
-  align-items: center; }
-
-/* Icon for tab  */
 .tab-item i {
   display: block;
-  margin: 1px auto -3px auto;
+  margin: 0 auto;
+  height: 32px;
   font-size: 32px; }
+
+.tabs-icon-left .tab-item,
+.tabs-icon-right .tab-item {
+  font-size: 10px; }
+  .tabs-icon-left .tab-item i,
+  .tabs-icon-right .tab-item i {
+    font-size: 24px;
+    display: inline-block;
+    vertical-align: top;
+    line-height: 49px; }
+
+.tabs-icon-only i {
+  line-height: inherit; }
 
 /* Navigational tab */
 /* Active state for tab */
@@ -954,13 +967,6 @@ a.subdued‎ {
     color: #f0b840; }
   .tab-item.active.tab-item-dark, .tab-item:active.tab-item-dark {
     color: #444444; }
-
-/* Label for tab */
-.tab-label {
-  margin-top: 1px;
-  color: #fff;
-  font-weight: bold;
-  font-size: 10px; }
 
 .menu {
   position: absolute;

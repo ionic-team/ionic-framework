@@ -136,10 +136,8 @@
    * 
    * A navigation bar with any number of tab items supported.
    */
-  /* Icon for tab  */
   /* Navigational tab */
   /* Active state for tab */
-  /* Label for tab */
   /**
    * Modals are independent windows that slide in from off-screen.
    */
@@ -1756,6 +1754,7 @@
     -webkit-box-orient: horizontal;
     -moz-box-orient: horizontal;
     background-color: white;
+    background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
     border-color: #dddddd;
     color: #333333;
     position: fixed;
@@ -1767,39 +1766,56 @@
     height: 49px;
     border-style: solid;
     border-top-width: 1px;
-    font-size: 16px; }
+    line-height: 49px;
+    background-size: 0; }
     .ionic .tabs.tabs-default {
       background-color: white;
+      background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
       border-color: #dddddd;
       color: #333333; }
     .ionic .tabs.tabs-secondary {
       background-color: whitesmoke;
+      background-image: linear-gradient(0deg, #bbbbbb, #bbbbbb 50%, transparent 50%);
       border-color: #bbbbbb;
       color: #333333; }
     .ionic .tabs.tabs-primary {
       background-color: #4a87ee;
+      background-image: linear-gradient(0deg, #3b6dc2, #3b6dc2 50%, transparent 50%);
       border-color: #3b6dc2;
       color: white; }
     .ionic .tabs.tabs-success {
       background-color: #66cc33;
+      background-image: linear-gradient(0deg, #5bb22f, #5bb22f 50%, transparent 50%);
       border-color: #5bb22f;
       color: white; }
     .ionic .tabs.tabs-info {
       background-color: #43cee6;
+      background-image: linear-gradient(0deg, #3bb3c8, #3bb3c8 50%, transparent 50%);
       border-color: #3bb3c8;
       color: white; }
     .ionic .tabs.tabs-warning {
       background-color: #f0b840;
+      background-image: linear-gradient(0deg, #d29f31, #d29f31 50%, transparent 50%);
       border-color: #d29f31;
       color: white; }
     .ionic .tabs.tabs-danger {
       background-color: #ef4e3a;
+      background-image: linear-gradient(0deg, #c73927, #c73927 50%, transparent 50%);
       border-color: #c73927;
       color: white; }
     .ionic .tabs.tabs-dark {
       background-color: #ef4e3a;
+      background-image: linear-gradient(0deg, #c73927, #c73927 50%, transparent 50%);
       border-color: #c73927;
       color: white; }
+    @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
+      .ionic .tabs {
+        padding-top: 2px;
+        border-top: none !important;
+        border-bottom: none !important;
+        background-position: top;
+        background-size: 100% 1px;
+        background-repeat: no-repeat; } }
   .ionic .tabs-top {
     top: 44px; }
   .ionic .tab-item {
@@ -1809,7 +1825,6 @@
     display: block;
     overflow: hidden;
     box-sizing: border-box;
-    padding-top: 4px;
     width: 0;
     height: 100%;
     color: inherit;
@@ -1822,28 +1837,25 @@
     font-family: "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
     opacity: 0.7; }
   .ionic .tabs-icon-top .tab-item,
-  .ionic .tabs-icon-right .tab-item,
-  .ionic .tabs-icon-bottom .tab-item,
-  .ionic .tabs-icon-left .tab-item {
-    position: relative;
-    padding-top: 0;
-    font-size: 10px; }
-  .ionic .tabs-icon-left .tab-item i {
-    position: absolute;
-    left: 4px;
-    display: flex;
-    height: 100%;
-    align-items: center; }
-  .ionic .tabs-icon-right .tab-item i {
-    position: absolute;
-    right: 4px;
-    display: flex;
-    height: 100%;
-    align-items: center; }
+  .ionic .tabs-icon-bottom .tab-item {
+    font-size: 10px;
+    line-height: 14px; }
   .ionic .tab-item i {
     display: block;
-    margin: 1px auto -3px auto;
+    margin: 0 auto;
+    height: 32px;
     font-size: 32px; }
+  .ionic .tabs-icon-left .tab-item,
+  .ionic .tabs-icon-right .tab-item {
+    font-size: 10px; }
+    .ionic .tabs-icon-left .tab-item i,
+    .ionic .tabs-icon-right .tab-item i {
+      font-size: 24px;
+      display: inline-block;
+      vertical-align: top;
+      line-height: 49px; }
+  .ionic .tabs-icon-only i {
+    line-height: inherit; }
   .ionic .tab-item.active, .ionic .tab-item:active {
     opacity: 1; }
     .ionic .tab-item.active.tab-item-default, .ionic .tab-item:active.tab-item-default {
@@ -1860,11 +1872,6 @@
       color: #f0b840; }
     .ionic .tab-item.active.tab-item-dark, .ionic .tab-item:active.tab-item-dark {
       color: #444444; }
-  .ionic .tab-label {
-    margin-top: 1px;
-    color: #fff;
-    font-weight: bold;
-    font-size: 10px; }
   .ionic .menu {
     position: absolute;
     top: 0;

@@ -19,7 +19,7 @@
   border-style: solid;
 
   border-top-width: 1px;
-  font-size: 16px;
+  line-height: $tabs-height;
 
   &.tabs-default {
     @include tab-style($tabs-default-bg, $tabs-default-border-color, $gray-dark);
@@ -45,6 +45,20 @@
   &.tabs-dark {
     @include tab-style($tabs-danger-bg, $tabs-danger-border-color, $white);
   }
+
+  background-size: 0;
+  @media (min--moz-device-pixel-ratio: 1.5),
+         (-webkit-min-device-pixel-ratio: 1.5),
+         (min-device-pixel-ratio: 1.5),
+         (min-resolution: 144dpi),
+         (min-resolution: 1.5dppx) {
+    padding-top: 2px;
+    border-top: none !important;
+    border-bottom: none !important;
+    background-position: top;
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+  }
 }
 
 .tabs-top {
@@ -56,8 +70,6 @@
   display: block;
   overflow: hidden;
   box-sizing: border-box;
-
-  padding-top: 4px;
 
   // Required to force box elements to be the same size;
   width: 0;
@@ -72,44 +84,39 @@
   white-space: nowrap;
 
   font-weight: 400;
-  font-size: 14px;
+  font-size: $tabs-text-font-size;
   font-family: $light-sans-font-family;
 
   opacity: 0.7;
 }
 
 .tabs-icon-top .tab-item,
-.tabs-icon-right .tab-item,
-.tabs-icon-bottom .tab-item,
-.tabs-icon-left .tab-item {
-  position: relative;
-  padding-top: 0;
-  font-size: 10px;
+.tabs-icon-bottom .tab-item {
+  font-size: $tabs-text-with-icon-font-size;
+  line-height: $tabs-text-font-size;
 }
 
-.tabs-icon-left .tab-item i {
-  position: absolute;
-  left: 4px;
-  display: flex;
-  height: 100%;
-  align-items: center;
-}
-
-.tabs-icon-right .tab-item i {
-  position: absolute;
-  right: 4px;
-  display: flex;
-  height: 100%;
-  align-items: center;
-}
-
-/* Icon for tab  */
 .tab-item i {
   display: block;
-  margin: 1px auto -3px auto;
+  margin: 0 auto;
+  height: $tabs-icon-size;
   font-size: $tabs-icon-size;
 }
 
+.tabs-icon-left .tab-item,
+.tabs-icon-right .tab-item {
+  font-size: $tabs-text-with-icon-font-size;
+  i {
+    font-size: $tabs-icon-size - 8;
+    display: inline-block;
+    vertical-align: top;
+    line-height: $tabs-height;
+  }
+}
+
+.tabs-icon-only i {
+  line-height: inherit;
+}
 
 /* Navigational tab */
 
@@ -138,13 +145,5 @@
   &.tab-item-dark {
     color: $brand-dark;
   }
-}
-
-/* Label for tab */
-.tab-label {
-  margin-top: 1px;
-  color: #fff;
-  font-weight: bold;
-  font-size: 10px;
 }
 

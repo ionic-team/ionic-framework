@@ -91,6 +91,7 @@
 
 @mixin tab-style($bgColor, $borderColor, $color) {
   background-color: $bgColor;
+  background-image: linear-gradient(0deg, $borderColor, $borderColor 50%, transparent 50%);
   border-color: $borderColor;
   color: $color;
 }

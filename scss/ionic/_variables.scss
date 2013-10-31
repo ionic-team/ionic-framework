@@ -312,32 +312,34 @@ $bar-dark-border-color:       $button-dark-border;
 // Tabs
 // -------------------------------
 
-$tabs-height:                  49px !default;
-$tabs-icon-size:               32px !default;
+$tabs-height:                     49px !default;
+$tabs-text-font-size:             14px !default;
+$tabs-text-with-icon-font-size:   10px !default;
+$tabs-icon-size:                  32px !default;
 
-$tabs-default-bg:              $brand-default;
-$tabs-default-border-color:    $button-default-border;
+$tabs-default-bg:                 $brand-default;
+$tabs-default-border-color:       $button-default-border;
 
-$tabs-secondary-bg:            $brand-secondary;
-$tabs-secondary-border-color:  $button-secondary-border;
+$tabs-secondary-bg:               $brand-secondary;
+$tabs-secondary-border-color:     $button-secondary-border;
 
-$tabs-primary-bg:              $brand-primary;
-$tabs-primary-border-color:    $button-primary-border;
+$tabs-primary-bg:                 $brand-primary;
+$tabs-primary-border-color:       $button-primary-border;
 
-$tabs-info-bg:                 $brand-info;
-$tabs-info-border-color:       $button-info-border;
+$tabs-info-bg:                    $brand-info;
+$tabs-info-border-color:          $button-info-border;
 
-$tabs-success-bg:              $brand-success;
-$tabs-success-border-color:    $button-success-border;
+$tabs-success-bg:                 $brand-success;
+$tabs-success-border-color:       $button-success-border;
 
-$tabs-warning-bg:              $brand-warning;
-$tabs-warning-border-color:    $button-warning-border;
+$tabs-warning-bg:                 $brand-warning;
+$tabs-warning-border-color:       $button-warning-border;
 
-$tabs-danger-bg:               $brand-danger;
-$tabs-danger-border-color:     $button-danger-border;
+$tabs-danger-bg:                  $brand-danger;
+$tabs-danger-border-color:        $button-danger-border;
 
-$tabs-dark-bg:                 $brand-dark;
-$tabs-dark-border-color:       $button-dark-border;
+$tabs-dark-bg:                    $brand-dark;
+$tabs-dark-border-color:          $button-dark-border;
 
 
 // Lists
