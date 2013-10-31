@@ -143,9 +143,9 @@
    * 
    * A navigation bar with any number of tab items supported.
    */
+  /* Icon for tab  */
   /* Navigational tab */
   /* Active state for tab */
-  /* Icon for tab  */
   /* Label for tab */
   /**
    * Modals are independent windows that slide in from off-screen.
@@ -1583,22 +1583,22 @@
     bottom: 44px;
     display: block; }
   .ionic .tabs {
-    font-size: 16px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 49px;
-    z-index: 5;
     box-orient: horizontal;
     -webkit-box-orient: horizontal;
     -moz-box-orient: horizontal;
-    display: -webkit-box;
-    display: box;
-    border-top-width: 1px;
-    border-style: solid;
     background-color: white;
     border-color: #dddddd;
-    color: #333333; }
+    color: #333333;
+    position: fixed;
+    bottom: 0;
+    z-index: 5;
+    display: -webkit-box;
+    display: box;
+    width: 100%;
+    height: 49px;
+    border-style: solid;
+    border-top-width: 1px;
+    font-size: 16px; }
     .ionic .tabs.tabs-default {
       background-color: white;
       border-color: #dddddd;
@@ -1634,25 +1634,47 @@
   .ionic .tabs-top {
     top: 44px; }
   .ionic .tab-item {
-    display: block;
-    width: 0;
-    height: 100%;
     box-flex: 1;
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
+    display: block;
+    overflow: hidden;
     box-sizing: border-box;
+    padding-top: 4px;
+    width: 0;
+    height: 100%;
+    color: inherit;
     text-align: center;
     text-decoration: none;
-    font-weight: 400;
-    font-family: "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 10px;
-    color: inherit;
     text-overflow: ellipsis;
     white-space: nowrap;
-    overflow: hidden;
+    font-weight: 400;
+    font-size: 14px;
+    font-family: "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
     opacity: 0.7; }
-    .ionic .tab-item i {
-      font-size: 32px; }
+  .ionic .tabs-icon-top .tab-item,
+  .ionic .tabs-icon-right .tab-item,
+  .ionic .tabs-icon-bottom .tab-item,
+  .ionic .tabs-icon-left .tab-item {
+    position: relative;
+    padding-top: 0;
+    font-size: 10px; }
+  .ionic .tabs-icon-left .tab-item i {
+    position: absolute;
+    left: 4px;
+    display: flex;
+    height: 100%;
+    align-items: center; }
+  .ionic .tabs-icon-right .tab-item i {
+    position: absolute;
+    right: 4px;
+    display: flex;
+    height: 100%;
+    align-items: center; }
+  .ionic .tab-item i {
+    display: block;
+    margin: 1px auto -3px auto;
+    font-size: 32px; }
   .ionic .tab-item.active, .ionic .tab-item:active {
     opacity: 1; }
     .ionic .tab-item.active.tab-item-default, .ionic .tab-item:active.tab-item-default {
@@ -1669,9 +1691,6 @@
       color: #f0b840; }
     .ionic .tab-item.active.tab-item-dark, .ionic .tab-item:active.tab-item-dark {
       color: #444444; }
-  .ionic .tab-item i {
-    display: block;
-    margin: 1px auto -3px auto; }
   .ionic .tab-label {
     margin-top: 1px;
     color: #fff;

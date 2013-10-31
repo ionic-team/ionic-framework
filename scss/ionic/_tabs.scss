@@ -5,21 +5,21 @@
  */
 
 .tabs {
-  font-size: 16px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: $tabs-height;
-  z-index: 5;
 
   @include box-orient(horizontal);
-  display: -webkit-box;
-  display: box;
-
-  border-top-width: 1px;
-  border-style: solid;
 
   @include tab-style($tabs-default-bg, $tabs-default-border-color, $gray-dark);
+  position: fixed;
+  bottom: 0;
+  z-index: 5;
+  display: -webkit-box;
+  display: box;
+  width: 100%;
+  height: $tabs-height;
+  border-style: solid;
+
+  border-top-width: 1px;
+  font-size: 16px;
 
   &.tabs-default {
     @include tab-style($tabs-default-bg, $tabs-default-border-color, $gray-dark);
@@ -46,41 +46,68 @@
     @include tab-style($tabs-danger-bg, $tabs-danger-border-color, $white);
   }
 }
+
 .tabs-top {
   top: $bar-height;
 }
+
 .tab-item {
+  @include box-flex(1);
   display: block;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  padding-top: 4px;
 
   // Required to force box elements to be the same size;
   width: 0;
   height: 100%;
-  
-  @include box-flex(1);
-  box-sizing: border-box;
+
+  color: inherit;
 
   text-align: center;
   text-decoration: none;
 
-  font-weight: 400;
-  font-family: $light-sans-font-family;
-  font-size: 10px;
-
-  color: inherit;
-
   text-overflow: ellipsis;
-	white-space: nowrap;
-	overflow: hidden;
+  white-space: nowrap;
+
+  font-weight: 400;
+  font-size: 14px;
+  font-family: $light-sans-font-family;
 
   opacity: 0.7;
+}
 
-  .active, &:active {
-    //box-shadow: inset 0 0 10px rgba(0, 0, 0, .12);
-  }
+.tabs-icon-top .tab-item,
+.tabs-icon-right .tab-item,
+.tabs-icon-bottom .tab-item,
+.tabs-icon-left .tab-item {
+  position: relative;
+  padding-top: 0;
+  font-size: 10px;
+}
 
-  i {
-    font-size: 32px;
-  }
+.tabs-icon-left .tab-item i {
+  position: absolute;
+  left: 4px;
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.tabs-icon-right .tab-item i {
+  position: absolute;
+  right: 4px;
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+/* Icon for tab  */
+.tab-item i {
+  display: block;
+  margin: 1px auto -3px auto;
+  font-size: $tabs-icon-size;
 }
 
 
@@ -88,8 +115,6 @@
 
 /* Active state for tab */
 .tab-item.active, .tab-item:active {
-  //box-shadow: inset 0 0 1px rgba(0, 0, 0, .12);
-  //background-color: rgba(0,0,0,0.2);
   opacity: 1;
 
   &.tab-item-default {
@@ -113,12 +138,6 @@
   &.tab-item-dark {
     color: $brand-dark;
   }
-}
-
-/* Icon for tab  */
-.tab-item i {
-  display: block;
-  margin: 1px auto -3px auto;
 }
 
 /* Label for tab */
