@@ -111,8 +111,7 @@
     font-size: 12px;
     line-height: 28px;
 
-    [class^="icon-"], 
-    [class*=" icon-"] {
+    i, .icon {
       margin-top: 1px;
     }
   }

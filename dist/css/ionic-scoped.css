@@ -212,7 +212,7 @@
       -webkit-transform: rotate(360deg);
       transform: rotate(360deg); } }
  }
-  .ionic [class*="icon-"] {
+  .ionic i, .ionic .icon {
     font-family: 'ionicons';
     speak: none;
     font-style: normal;
@@ -1589,8 +1589,7 @@
       background-color: transparent;
       font-size: 12px;
       line-height: 28px; }
-      .ionic .bar > .button [class^="icon-"],
-      .ionic .bar > .button [class*=" icon-"] {
+      .ionic .bar > .button i, .ionic .bar > .button .icon {
         margin-top: 1px; }
     .ionic .bar .button-bar {
       line-height: 18px; }
@@ -1840,7 +1839,8 @@
   .ionic .tabs-icon-bottom .tab-item {
     font-size: 10px;
     line-height: 14px; }
-  .ionic .tab-item i {
+  .ionic .tab-item i,
+  .ionic .tab-item .icon {
     display: block;
     margin: 0 auto;
     height: 32px;
@@ -1848,13 +1848,15 @@
   .ionic .tabs-icon-left .tab-item,
   .ionic .tabs-icon-right .tab-item {
     font-size: 10px; }
-    .ionic .tabs-icon-left .tab-item i,
-    .ionic .tabs-icon-right .tab-item i {
+    .ionic .tabs-icon-left .tab-item i, .ionic .tabs-icon-left .tab-item .icon,
+    .ionic .tabs-icon-right .tab-item i,
+    .ionic .tabs-icon-right .tab-item .icon {
       font-size: 24px;
       display: inline-block;
       vertical-align: top;
       line-height: 49px; }
-  .ionic .tabs-icon-only i {
+  .ionic .tabs-icon-only i,
+  .ionic .tabs-icon-only .icon {
     line-height: inherit; }
   .ionic .tab-item.active, .ionic .tab-item:active {
     opacity: 1; }
@@ -2067,7 +2069,8 @@
   .ionic .item-slider.item-text-wrap p {
     overflow: hidden;
     white-space: nowrap; }
-  .ionic .item i {
+  .ionic .item i,
+  .ionic .item .icon {
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-flex;
@@ -2086,17 +2089,20 @@
     font-size: 28px; }
   .ionic .item-icon-left {
     padding-left: 45px; }
-    .ionic .item-icon-left i {
+    .ionic .item-icon-left i, .ionic .item-icon-left .icon {
       left: 7.5px; }
   .ionic .item-slider.item-icon-left {
     padding-left: 0; }
     .ionic .item-slider.item-icon-left .item-content {
       padding-left: 45px; }
-  .ionic .item-icon-right i {
+  .ionic .item-icon-right i,
+  .ionic .item-icon-right .icon {
     right: 7.5px; }
-  .ionic .item-icon-left.item-icon-right i:first-child {
+  .ionic .item-icon-left.item-icon-right i:first-child,
+  .ionic .item-icon-left.item-icon-right .icon:first-child {
     right: auto; }
-  .ionic .item-icon-left.item-icon-right i:last-child {
+  .ionic .item-icon-left.item-icon-right i:last-child,
+  .ionic .item-icon-left.item-icon-right .icon:last-child {
     left: auto; }
   .ionic a.item:active,
   .ionic button.item:active,
@@ -2205,7 +2211,7 @@
     -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
     .ionic .item-edit .button {
       height: 100%; }
-    .ionic .item-edit i {
+    .ionic .item-edit i, .ionic .item-edit .icon {
       color: #ef4e3a;
       font-size: 24px; }
     .ionic .item-edit.ng-enter {
@@ -2387,7 +2393,7 @@
       max-width: 200px;
       color: black;
       font-weight: bold; }
-    .ionic .item-input [class^="icon-"], .ionic .item-input [class*=" icon-"] {
+    .ionic .item-input i, .ionic .item-input .icon {
       -webkit-box-flex: 0;
       -webkit-flex: 0 0 24px;
       -moz-box-flex: 0;

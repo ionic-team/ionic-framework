@@ -656,8 +656,7 @@ a.subdued‎ {
     background-color: transparent;
     font-size: 12px;
     line-height: 28px; }
-    .bar > .button [class^="icon-"],
-    .bar > .button [class*=" icon-"] {
+    .bar > .button i, .bar > .button .icon {
       margin-top: 1px; }
   .bar .button-bar {
     line-height: 18px; }
@@ -930,7 +929,8 @@ a.subdued‎ {
   font-size: 10px;
   line-height: 14px; }
 
-.tab-item i {
+.tab-item i,
+.tab-item .icon {
   display: block;
   margin: 0 auto;
   height: 32px;
@@ -939,14 +939,16 @@ a.subdued‎ {
 .tabs-icon-left .tab-item,
 .tabs-icon-right .tab-item {
   font-size: 10px; }
-  .tabs-icon-left .tab-item i,
-  .tabs-icon-right .tab-item i {
+  .tabs-icon-left .tab-item i, .tabs-icon-left .tab-item .icon,
+  .tabs-icon-right .tab-item i,
+  .tabs-icon-right .tab-item .icon {
     font-size: 24px;
     display: inline-block;
     vertical-align: top;
     line-height: 49px; }
 
-.tabs-icon-only i {
+.tabs-icon-only i,
+.tabs-icon-only .icon {
   line-height: inherit; }
 
 /* Navigational tab */
@@ -1178,7 +1180,8 @@ a.item {
   overflow: hidden;
   white-space: nowrap; }
 
-.item i {
+.item i,
+.item .icon {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-flex;
@@ -1199,7 +1202,7 @@ a.item {
 
 .item-icon-left {
   padding-left: 45px; }
-  .item-icon-left i {
+  .item-icon-left i, .item-icon-left .icon {
     left: 7.5px; }
 
 .item-slider.item-icon-left {
@@ -1207,13 +1210,16 @@ a.item {
   .item-slider.item-icon-left .item-content {
     padding-left: 45px; }
 
-.item-icon-right i {
+.item-icon-right i,
+.item-icon-right .icon {
   right: 7.5px; }
 
-.item-icon-left.item-icon-right i:first-child {
+.item-icon-left.item-icon-right i:first-child,
+.item-icon-left.item-icon-right .icon:first-child {
   right: auto; }
 
-.item-icon-left.item-icon-right i:last-child {
+.item-icon-left.item-icon-right i:last-child,
+.item-icon-left.item-icon-right .icon:last-child {
   left: auto; }
 
 a.item:active,
@@ -1339,7 +1345,7 @@ button.item-icon-right:after {
   -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
   .item-edit .button {
     height: 100%; }
-  .item-edit i {
+  .item-edit i, .item-edit .icon {
     color: #ef4e3a;
     font-size: 24px; }
   .item-edit.ng-enter {
@@ -1552,7 +1558,7 @@ textarea {
     max-width: 200px;
     color: black;
     font-weight: bold; }
-  .item-input [class^="icon-"], .item-input [class*=" icon-"] {
+  .item-input i, .item-input .icon {
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 24px;
     -moz-box-flex: 0;

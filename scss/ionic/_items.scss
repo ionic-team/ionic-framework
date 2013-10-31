@@ -174,7 +174,8 @@ a.item {
 // List Icons
 // -------------------------------
 
-.item i {
+.item i,
+.item .icon {
   @include display-flex();
   @include align-items(center);
   position: absolute;
@@ -190,7 +191,7 @@ a.item {
 .item-icon-left {
   padding-left: ($item-padding * 3);
 
-  i {
+  i, .icon {
     left: $item-padding / 2;
   }
 }
@@ -202,14 +203,17 @@ a.item {
   }
 }
 
-.item-icon-right i {
+.item-icon-right i,
+.item-icon-right .icon {
   right: $item-padding / 2;
 }
 
-.item-icon-left.item-icon-right i:first-child {
+.item-icon-left.item-icon-right i:first-child,
+.item-icon-left.item-icon-right .icon:first-child {
   right: auto;
 }
-.item-icon-left.item-icon-right i:last-child {
+.item-icon-left.item-icon-right i:last-child,
+.item-icon-left.item-icon-right .icon:last-child {
   left: auto;
 }
 
@@ -379,7 +383,7 @@ button.item-icon-right:after {
     height: 100%;
   }
 
-  i {
+  i, .icon {
     color: $brand-danger;
     font-size: 24px;
   }

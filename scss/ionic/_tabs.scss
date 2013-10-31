@@ -96,7 +96,8 @@
   line-height: $tabs-text-font-size;
 }
 
-.tab-item i {
+.tab-item i,
+.tab-item .icon {
   display: block;
   margin: 0 auto;
   height: $tabs-icon-size;
@@ -106,7 +107,7 @@
 .tabs-icon-left .tab-item,
 .tabs-icon-right .tab-item {
   font-size: $tabs-text-with-icon-font-size;
-  i {
+  i, .icon {
     font-size: $tabs-icon-size - 8;
     display: inline-block;
     vertical-align: top;
@@ -114,7 +115,8 @@
   }
 }
 
-.tabs-icon-only i {
+.tabs-icon-only i,
+.tabs-icon-only .icon {
   line-height: inherit;
 }
 

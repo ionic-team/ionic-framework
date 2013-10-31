@@ -67,7 +67,7 @@ textarea {
     color: $input-label-color;
     font-weight: bold;
   }
-  [class^="icon-"], [class*=" icon-"] {
+  i, .icon {
     @include flex(0, 0, 24px);
     position: static;
     height: auto;
