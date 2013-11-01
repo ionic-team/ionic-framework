@@ -74,7 +74,6 @@
       .controller('CatsCtrl', function($scope, $compile, $element) {
         console.log('Cats', $element);
         $scope.goNext = function() {
-          $scope.isVisible = false;
           $scope.navController.pushFromTemplate('page.html');
         };
       });

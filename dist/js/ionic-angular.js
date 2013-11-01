@@ -645,47 +645,56 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
   return {
     restrict: 'ECA',
     require: '^navs',
-    scope: true,
     transclude: 'element',
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, navCtrl) {
         var lastParent, lastIndex, childScope, childElement;
 
-        $scope.title = $attr.title;
-        $scope.slideAnimation = $attr.slideAnimation || '';
-        $scope.slideTitleAnimation = $attr.slideTitleAnimation || '';
-
-        if($attr.navBar === "false") {
-          navCtrl.hideNavBar();
-        } else {
-          navCtrl.showNavBar();
-        }
-
-        $scope.pushController($scope, $element);
-
-        var title = angular.element($element.parent().parent().parent()[0].querySelector('.title'));
-        var newTitle = angular.element(title.clone());
-
-        $compile(newTitle)($scope);
-
-        title.after(newTitle);
-
-        console.log(newTitle);
-
-        $animate.addClass(newTitle, $scope.slideTitleAnimation, function() {
-          $animate.removeClass(newTitle, $scope.slideTitleAnimation, function() {
-            newTitle.scope().$destroy();
-            newTitle.remove();
-          });
-        });
-        
         $scope.$watch('isVisible', function(value) {
+          // Taken from ngIf
+          if(childElement) {
+            $animate.leave(childElement);
+            childElement = undefined;
+          }
+          if(childScope) {
+            childScope.$destroy();
+            childScope = undefined;
+          }
+
           if(value) {
-            childScope = $scope.$new();
+            childScope = $scope;
             transclude(childScope, function(clone) {
               childElement = clone;
+
+              childScope.title = $attr.title;
+              childScope.slideAnimation = $attr.slideAnimation || '';
+              childScope.slideTitleAnimation = $attr.slideTitleAnimation || '';
+
+              if($attr.navBar === "false") {
+                navCtrl.hideNavBar();
+              } else {
+                navCtrl.showNavBar();
+              }
+
+              childScope.pushController(childScope, $element);
+
+              var title = angular.element($element.parent().parent().parent()[0].querySelector('.title'));
+              var newTitle = angular.element(title.clone());
+
+              $compile(newTitle)(childScope);
+
+              title.after(newTitle);
+
+              console.log(newTitle);
         
-              clone.addClass($scope.slideAnimation);
+              clone.addClass(childScope.slideAnimation);
+
+              $animate.addClass(newTitle, childScope.slideTitleAnimation, function() {
+                $animate.removeClass(newTitle, childScope.slideTitleAnimation, function() {
+                  newTitle.scope().$destroy();
+                  newTitle.remove();
+                });
+              });
 
               /*
               Gesture.on('drag', function(e) {
@@ -700,21 +709,12 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
               var title = $element.parent().parent().parent()[0].querySelector('.title');
               $animate.enter(clone, $element.parent(), $element);
-              $animate.addClass(angular.element(title), $scope.slideTitleAnimation, function() {
-                $animate.removeClass(angular.element(title), $scope.slideTitleAnimation, function() {
+              $animate.addClass(angular.element(title), childScope.slideTitleAnimation, function() {
+                $animate.removeClass(angular.element(title), childScope.slideTitleAnimation, function() {
                 });
               });
             });
-          } else {
-            if(childElement) {
-              $animate.leave(childElement);
-              childElement = undefined;
-            }
-            if(childScope) {
-              childScope.$destroy();
-              childScope = undefined;
-            }
-          }
+          } 
         });
       }
     }
