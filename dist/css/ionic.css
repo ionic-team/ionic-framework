@@ -1521,7 +1521,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid silver; }
+  border: 1px solid #c0c0c0; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -2015,9 +2015,12 @@ a.subdued‎ {
   .bar .title a {
     color: inherit; }
   .bar > .button {
-    box-flex: 1;
     -webkit-box-flex: 0;
+    -webkit-flex: 0;
     -moz-box-flex: 0;
+    -moz-flex: 0;
+    -ms-flex: 0;
+    flex: 0;
     z-index: 1;
     margin: 0;
     padding: 2px 8px 0 8px;
@@ -2204,9 +2207,17 @@ a.subdued‎ {
  * A navigation bar with any number of tab items supported.
  */
 .tabs {
-  box-orient: horizontal;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-direction: normal;
   -webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
+  -webkit-flex-direction: horizontal;
+  -moz-flex-direction: horizontal;
+  -ms-flex-direction: horizontal;
+  flex-direction: horizontal;
   background-color: white;
   background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
   border-color: #dddddd;
@@ -2214,8 +2225,6 @@ a.subdued‎ {
   position: fixed;
   bottom: 0;
   z-index: 5;
-  display: -webkit-box;
-  display: box;
   width: 100%;
   height: 49px;
   border-style: solid;
@@ -2275,13 +2284,16 @@ a.subdued‎ {
   top: 44px; }
 
 .tab-item {
-  box-flex: 1;
   -webkit-box-flex: 1;
+  -webkit-flex: 1;
   -moz-box-flex: 1;
-  display: block;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: inline-block;
   overflow: hidden;
   box-sizing: border-box;
-  width: 0;
+  margin: auto;
   height: 100%;
   color: inherit;
   text-align: center;
@@ -2338,6 +2350,16 @@ a.subdued‎ {
     color: #f0b840; }
   .tab-item.active.tab-item-dark, .tab-item:active.tab-item-dark {
     color: #444444; }
+
+.item.tabs {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0; }
+  .item.tabs i, .item.tabs .icon {
+    position: relative; }
 
 .menu {
   position: absolute;
@@ -2676,23 +2698,23 @@ button.item-icon-right:after {
     border-radius: 4px; }
 
 .item-thumbnail-left {
-  padding-left: 95px;
-  min-height: 80px; }
+  padding-left: 105px;
+  min-height: 100px; }
   .item-thumbnail-left img:first-child, .item-thumbnail-left .item-image {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 10px;
+    left: 10px;
     max-width: 80px;
     max-height: 80px;
     width: 100%; }
 
 .item-thumbnail-right {
-  padding-right: 95px;
-  min-height: 80px; }
+  padding-right: 105px;
+  min-height: 100px; }
   .item-thumbnail-right img:first-child, .item-thumbnail-right .item-image {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 10px;
+    right: 10px;
     max-width: 80px;
     max-height: 80px;
     width: 100%; }
@@ -3066,7 +3088,7 @@ input[type="file"] {
   line-height: 34px; }
 
 select {
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   background-color: white; }
 
 select[multiple],
@@ -3121,7 +3143,7 @@ input[type="checkbox"][readonly] {
     border-radius: 50%;
     background: white;
     content: ' ';
-    transition: background-color 0.1s ease-in-out; }
+    transition: background-color .1s ease-in-out; }
 
 /* the checkmark within the box */
 .checkbox input:after {
@@ -3136,7 +3158,7 @@ input[type="checkbox"][readonly] {
   border-right: 0;
   content: ' ';
   opacity: 0;
-  transition: opacity 0.05s ease-in-out;
+  transition: opacity .05s ease-in-out;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg); }
 
@@ -3515,7 +3537,7 @@ input[type="range"] {
     .button.button-icon:active, .button.button-icon.active {
       background: none;
       box-shadow: none;
-      text-shadow: 0px 0px 10px white; }
+      text-shadow: 0px 0px 10px #fff; }
   .button.block, .button.button-full {
     margin-top: 10px;
     margin-bottom: 10px; }
@@ -3557,29 +3579,41 @@ a.button {
   text-decoration: none; }
 
 .button-bar {
-  box-flex: 1;
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  box-orient: horizontal;
-  -webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
   display: -webkit-box;
-  display: box; }
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -moz-box-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  -webkit-flex-direction: horizontal;
+  -moz-flex-direction: horizontal;
+  -ms-flex-direction: horizontal;
+  flex-direction: horizontal; }
 
 .button-bar > .button {
-  box-flex: 1;
   -webkit-box-flex: 1;
+  -webkit-flex: 1;
   -moz-box-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
   display: block;
   overflow: hidden;
-  padding: 8px 16px;
+  padding: 0 16px;
   width: 0;
   border-width: 1px 0px 1px 1px;
   border-radius: 0;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  line-height: 15px; }
+  line-height: 13px; }
   .button-bar > .button:first-child {
     border-radius: 2px 0px 0px 2px; }
   .button-bar > .button:last-child {
@@ -3587,14 +3621,23 @@ a.button {
     border-radius: 0px 2px 2px 0px; }
 
 .buttons {
-  box-flex: 1;
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  box-orient: horizontal;
-  -webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
   display: -webkit-box;
-  display: box; }
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -moz-box-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  -webkit-flex-direction: horizontal;
+  -moz-flex-direction: horizontal;
+  -ms-flex-direction: horizontal;
+  flex-direction: horizontal; }
 
 .badge {
   display: inline-block;
@@ -3978,9 +4021,9 @@ a.button {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin 0.75s linear infinite;
-  -moz-animation: spin 0.75s linear infinite;
-  animation: spin 0.75s linear infinite; }
+  -webkit-animation: spin .75s linear infinite;
+  -moz-animation: spin .75s linear infinite;
+  animation: spin .75s linear infinite; }
   .icon-loading:before {
     content: "\e144"; }
 
@@ -3993,9 +4036,9 @@ a.button {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin 0.75s linear infinite;
-  -moz-animation: spin 0.75s linear infinite;
-  animation: spin 0.75s linear infinite; }
+  -webkit-animation: spin .75s linear infinite;
+  -moz-animation: spin .75s linear infinite;
+  animation: spin .75s linear infinite; }
   .icon-refreshing:before {
     content: "\e144"; }
 
