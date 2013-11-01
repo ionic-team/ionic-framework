@@ -92,7 +92,7 @@ $bezier-function: cubic-bezier(.1, .7, .1, 1);
 }
 .slide-left-fade-add-active {
   //margin-left: -80px;
-  -webkit-transform: translate3d(-120px, 0, 0);
+  -webkit-transform: translate3d(-100%, 0, 0);
   opacity: 0;
 }
 .slide-left-fade-remove {
@@ -102,7 +102,7 @@ $bezier-function: cubic-bezier(.1, .7, .1, 1);
 
 .slide-in-left-fade-add {
   -webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-  -webkit-transform: translate3d(120px, 0, 0);
+  -webkit-transform: translate3d(100%, 0, 0);
   opacity: 0;
 }
 .slide-in-left-fade-add-active {

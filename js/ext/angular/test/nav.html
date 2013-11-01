@@ -7,9 +7,9 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
-    <script src="/vendor/angular/angular-1.2.0rc2.min.js"></script>
-    <script src="/vendor/angular/angular-touch.js"></script>
-    <script src="/vendor/angular/angular-animate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-touch.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-animate.js"></script>
     <style>
 .view {
   position: fixed;
@@ -34,12 +34,12 @@
     <navs>
       <nav-bar></nav-bar>
 
-      <content has-header="true" ng-controller="AppCtrl" class="slide-in-slide-out">
+      <content has-header="true" ng-controller="AppCtrl">
       </content>
     </navs>
 
     <script id="page.html" type="text/ng-template">
-      <div title="Home" ng-controller="CatsCtrl" class="nav-content slide-in-slide-out">
+      <div title="Home" ng-controller="CatsCtrl" class="nav-content" slide-animation="slide-in-slide-out" slide-title-animation="slide-left-fade">
         <h1></h1>
         <a href="#" class="button button-success" ng-click="goNext()">Next</a>
         <list><list-item ng-repeat="item in items" on-select="goNext()">Test</list-item></list>

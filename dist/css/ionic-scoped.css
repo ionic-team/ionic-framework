@@ -3109,11 +3109,11 @@
   .ionic .slide-left-fade-add {
     -webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out; }
   .ionic .slide-left-fade-add-active {
-    -webkit-transform: translate3d(-120px, 0, 0);
+    -webkit-transform: translate3d(-100%, 0, 0);
     opacity: 0; }
   .ionic .slide-in-left-fade-add {
     -webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-    -webkit-transform: translate3d(120px, 0, 0);
+    -webkit-transform: translate3d(100%, 0, 0);
     opacity: 0; }
   .ionic .slide-in-left-fade-add-active {
     -webkit-transform: translate3d(0px, 0, 0);

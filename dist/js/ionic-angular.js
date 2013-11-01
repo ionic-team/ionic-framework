@@ -593,21 +593,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
       // Compile the template with the new scrope, and append it to the navigation's content area
       var el = $compile(templateString)(childScope, function(cloned, scope) {
         var content = $element[0].querySelector('.content');
-        var title = $element.parent().parent().parent()[0].querySelector('.title');
-        var newTitle = angular.element(title.cloneNode());
-
-        $compile(newTitle)(childScope);
-
-        title.parentNode.insertBefore(newTitle[0], title.nextSibling);
-
-        console.log(newTitle);
         $animate.enter(cloned, angular.element(content));
-        $animate.addClass(angular.element(newTitle), 'slide-in-left-fade', function() {
-          $animate.removeClass(angular.element(newTitle), 'slide-in-left-fade', function() {
-            newTitle.scope().$destroy();
-            newTitle.remove();
-          });
-        });
       });
     });
   };
@@ -655,7 +641,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
   };
 })
 
-.directive('navContent', ['Gesture', '$animate', function(Gesture, $animate) {
+.directive('navContent', ['Gesture', '$animate', '$compile', function(Gesture, $animate, $compile) {
   return {
     restrict: 'ECA',
     require: '^navs',
@@ -666,6 +652,8 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
         var lastParent, lastIndex, childScope, childElement;
 
         $scope.title = $attr.title;
+        $scope.slideAnimation = $attr.slideAnimation || '';
+        $scope.slideTitleAnimation = $attr.slideTitleAnimation || '';
 
         if($attr.navBar === "false") {
           navCtrl.hideNavBar();
@@ -675,20 +663,31 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
         $scope.pushController($scope, $element);
 
+        var title = angular.element($element.parent().parent().parent()[0].querySelector('.title'));
+        var newTitle = angular.element(title.clone());
+
+        $compile(newTitle)($scope);
+
+        title.after(newTitle);
+
+        console.log(newTitle);
+
+        $animate.addClass(newTitle, $scope.slideTitleAnimation, function() {
+          $animate.removeClass(newTitle, $scope.slideTitleAnimation, function() {
+            newTitle.scope().$destroy();
+            newTitle.remove();
+          });
+        });
         
         $scope.$watch('isVisible', function(value) {
-          if(childElement) {
-            $animate.leave(childElement);
-            childElement = undefined;
-          }
-          if(childScope) {
-            childScope.$destroy();
-            childScope = undefined;
-          }
           if(value) {
             childScope = $scope.$new();
             transclude(childScope, function(clone) {
               childElement = clone;
+        
+              clone.addClass($scope.slideAnimation);
+
+              /*
               Gesture.on('drag', function(e) {
                 //navCtrl.handleDrag(e);
                 console.log('Content drag', e);
@@ -697,14 +696,24 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
               Gesture.on('release', function(e) {
                 //navCtrl._endDrag(e);
               }, childElement[0]);
+              */
 
               var title = $element.parent().parent().parent()[0].querySelector('.title');
               $animate.enter(clone, $element.parent(), $element);
-              $animate.addClass(angular.element(title), 'slide-left-fade', function() {
-                $animate.removeClass(angular.element(title), 'slide-left-fade', function() {
+              $animate.addClass(angular.element(title), $scope.slideTitleAnimation, function() {
+                $animate.removeClass(angular.element(title), $scope.slideTitleAnimation, function() {
                 });
               });
             });
+          } else {
+            if(childElement) {
+              $animate.leave(childElement);
+              childElement = undefined;
+            }
+            if(childScope) {
+              childScope.$destroy();
+              childScope = undefined;
+            }
           }
         });
       }
