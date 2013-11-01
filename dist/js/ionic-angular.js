@@ -652,8 +652,8 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
     clone.addClass(childScope.slideAnimation);
 
-    $animate.addClass(newTitle, childScope.slideTitleAnimation, function() {
-      $animate.removeClass(newTitle, childScope.slideTitleAnimation, function() {
+    $animate.addClass(newTitle, childScope.slideTitleInAnimation, function() {
+      $animate.removeClass(newTitle, childScope.slideTitleInAnimation, function() {
         newTitle.scope().$destroy();
         newTitle.remove();
       });
@@ -679,6 +679,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
         $scope.title = $attr.title;
         $scope.slideAnimation = $attr.slideAnimation || '';
         $scope.slideTitleAnimation = $attr.slideTitleAnimation || '';
+        $scope.slideTitleInAnimation = $attr.slideTitleInAnimation || '';
 
         if($attr.navBar === "false") {
           navCtrl.hideNavBar();

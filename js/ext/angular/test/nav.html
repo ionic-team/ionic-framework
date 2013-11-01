@@ -39,7 +39,7 @@
     </navs>
 
     <script id="page.html" type="text/ng-template">
-      <div title="Home" ng-controller="CatsCtrl" class="nav-content" slide-animation="slide-in-slide-out" slide-title-animation="slide-left-fade">
+      <div title="Home" ng-controller="CatsCtrl" class="nav-content" slide-animation="slide-in-slide-out" slide-title-animation="slide-left-fade" slide-title-in-animation="slide-in-left-fade">
         <h1></h1>
         <a href="#" class="button button-success" ng-click="goNext()">Next</a>
         <list><list-item ng-repeat="item in items" on-select="goNext()">Test</list-item></list>
