@@ -350,18 +350,6 @@
           hyphens: $mode;
 }
 
-@mixin box-orient($orientation) {
-  box-orient: $orientation;
-  -webkit-box-orient: $orientation;
-  -moz-box-orient: $orientation;
-}
-
-@mixin box-flex($flex) {
-  box-flex: 1;
-  -webkit-box-flex: $flex;
-  -moz-box-flex: $flex;
-}
-
 @mixin display-flex {
   display: -webkit-box;
   display: -webkit-flex;

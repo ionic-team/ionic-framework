@@ -1,17 +1,16 @@
 .button-bar {
-  @include box-flex(1);
-  @include box-orient(horizontal);
-  display: -webkit-box;
-  display: box;
+  @include display-flex();
+  @include flex(1);
+  @include flex-direction(horizontal);
 }
 
 .button-bar > .button {
-  @include box-flex(1);
+  @include flex(1);
   display: block;
   
   overflow: hidden;
 
-  padding: 8px 16px;
+  padding: 0 16px;
 
   // Fix for unequal widths of buttons
   width: 0;
@@ -23,7 +22,7 @@
   white-space: nowrap;
   // Fix for box-flex width issue
 
-  line-height: $button-bar-button-line-height;
+  line-height: $button-bar-button-line-height - 2;
 
   &:first-child {
     border-radius: 2px 0px 0px 2px;
@@ -38,8 +37,7 @@
 // to pull a set of buttons to the right side of a header
 // bar, for example.
 .buttons {
-  @include box-flex(1);
-  @include box-orient(horizontal);
-  display: -webkit-box;
-  display: box; 
+  @include display-flex();
+  @include flex(1);
+  @include flex-direction(horizontal);
 }

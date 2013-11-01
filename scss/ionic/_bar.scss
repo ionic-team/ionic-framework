@@ -102,7 +102,7 @@
   }
 
   > .button {
-    @include box-flex(0);
+    @include flex(0);
     z-index: 1;
     margin: 0;
     padding: 2px 8px 0 8px;
