@@ -80,6 +80,11 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
       return function($scope, $element, $attr, tabsCtrl) {
         var childScope, childElement;
 
+        $scope.title = $attr.title;
+        $scope.icon = $attr.icon;
+        $scope.iconOn = $attr.iconOn;
+        $scope.iconOff = $attr.iconOff;
+        tabsCtrl.add($scope);
         
         $scope.$watch('isVisible', function(value) {
           if(childElement) {
@@ -99,13 +104,6 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
             });
           }
         });
-
-        $scope.title = $attr.title;
-        $scope.icon = $attr.icon;
-        $scope.iconOn = $attr.iconOn;
-        $scope.iconOff = $attr.iconOff;
-        tabsCtrl.add($scope);
-
       }
     }
   };
@@ -119,7 +117,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     transclude: true,
     replace: true,
     scope: true,
-    template: '<div class="tabs tabs-primary">' + 
+    template: '<div class="tabs tabs-icon-top tabs-primary">' + 
       '<tab-controller-item title="{{controller.title}}" icon="{{controller.icon}}" icon-on="{{controller.iconOn}}" icon-off="{{controller.iconOff}}" active="controller.isVisible" index="$index" ng-repeat="controller in controllers"></tab-controller-item>' + 
     '</div>'
   };
