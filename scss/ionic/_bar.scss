@@ -20,9 +20,9 @@
   border-style: solid;
   border-top: 1px solid transparent;
   border-bottom: 1px solid $bar-default-border-color;
-  background-size: 0;
 
   background-color: $bar-bg;
+  background-size: 0;
   @media (min--moz-device-pixel-ratio: 1.5),
          (-webkit-min-device-pixel-ratio: 1.5),
          (min-device-pixel-ratio: 1.5),
@@ -102,22 +102,21 @@
   }
 
   > .button {
-    @include flex(0);
     z-index: 1;
-    margin: 0;
-    padding: 2px 8px 0 8px;
-    min-height: $button-bar-button-min-height;
-    background-color: transparent;
-    font-size: 12px;
-    line-height: 28px;
+    padding: $button-bar-button-padding;
+    min-height: $button-bar-button-height;
+    font-size: $button-bar-button-font-size;
+    line-height: $button-bar-button-height - $button-border-width;
 
     i, .icon {
-      margin-top: 1px;
+      font-size: $button-bar-button-icon-size;
+      line-height: $button-bar-button-height - $button-border-width - 1;
     }
   }
 
-  .button-bar {
-    line-height: $bar-button-bar-line-height;
+  .button-bar > .button {
+    min-height: $button-bar-button-height;
+    line-height: $button-bar-button-height;
   }
 
   .button-bar + .button, .button + .button-bar {

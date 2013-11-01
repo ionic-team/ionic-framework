@@ -1,3 +1,4 @@
+
 .button-bar {
   @include display-flex();
   @include flex(1);
@@ -6,7 +7,6 @@
 
 .button-bar > .button {
   @include flex(1);
-  display: block;
   
   overflow: hidden;
 
@@ -20,9 +20,6 @@
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  // Fix for box-flex width issue
-
-  line-height: $button-bar-button-line-height - 2;
 
   &:first-child {
     border-radius: 2px 0px 0px 2px;
@@ -31,13 +28,4 @@
     border-right-width: 1px;
     border-radius: 0px 2px 2px 0px;
   }
-}
-
-// Buttons are used to group a set of buttons, useful
-// to pull a set of buttons to the right side of a header
-// bar, for example.
-.buttons {
-  @include display-flex();
-  @include flex(1);
-  @include flex-direction(horizontal);
 }

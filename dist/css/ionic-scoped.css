@@ -1489,8 +1489,8 @@
     border-style: solid;
     border-top: 1px solid transparent;
     border-bottom: 1px solid #dddddd;
-    background-size: 0;
-    background-color: white; }
+    background-color: white;
+    background-size: 0; }
     @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
       .ionic .bar {
         border-top: none !important;
@@ -1579,23 +1579,17 @@
     .ionic .bar .title a {
       color: inherit; }
     .ionic .bar > .button {
-      -webkit-box-flex: 0;
-      -webkit-flex: 0;
-      -moz-box-flex: 0;
-      -moz-flex: 0;
-      -ms-flex: 0;
-      flex: 0;
       z-index: 1;
-      margin: 0;
-      padding: 2px 8px 0 8px;
-      min-height: 33px;
-      background-color: transparent;
+      padding: 0 8px;
+      min-height: 31px;
       font-size: 12px;
-      line-height: 28px; }
+      line-height: 30px; }
       .ionic .bar > .button i, .ionic .bar > .button .icon {
-        margin-top: 1px; }
-    .ionic .bar .button-bar {
-      line-height: 18px; }
+        font-size: 24px;
+        line-height: 29px; }
+    .ionic .bar .button-bar > .button {
+      min-height: 31px;
+      line-height: 31px; }
     .ionic .bar .button-bar + .button, .ionic .bar .button + .button-bar {
       margin-left: 5px; }
     .ionic .bar .title + .button:last-child,
@@ -2701,8 +2695,9 @@
     position: relative;
     display: inline-block;
     margin: 0;
-    padding: 10px 12px 7px 12px;
-    min-height: 44px;
+    padding: 0 12px;
+    padding-top: 1px;
+    min-height: 42px;
     border-width: 1px;
     border-style: solid;
     border-radius: 2px;
@@ -2711,24 +2706,24 @@
     text-align: center;
     text-overflow: ellipsis;
     font-size: 16px;
-    line-height: 23px;
+    line-height: 41px;
     cursor: pointer; }
     .ionic .button i, .ionic .button .icon {
       display: inline-block;
-      padding: 0;
+      padding: 0 0 1px 0;
       vertical-align: inherit;
       font-size: 24px;
-      line-height: 22px; }
+      line-height: 40px; }
     .ionic .button.button-icon {
-      padding: 12px 6px;
+      padding: 2px 4px;
       background: none; }
       .ionic .button.button-icon i, .ionic .button.button-icon .icon {
         font-size: 32px; }
     .ionic .button.button-clear {
       -webkit-transition: opacity 0.1s;
       transition: opacity 0.1s;
-      padding: 12px 6px;
-      max-height: 44px;
+      padding: 0 6px;
+      max-height: 42px;
       border: none;
       background: none;
       box-shadow: none; }
@@ -2926,19 +2921,21 @@
       margin-top: 10px;
       margin-bottom: 10px; }
   .ionic .button-small {
-    padding: 1px 8px 1px 8px;
-    min-height: 32px;
-    line-height: 29px;
-    font-size: 12px; }
+    padding: 0 4px;
+    min-height: 28px;
+    font-size: 12px;
+    line-height: 27px; }
     .ionic .button-small i, .ionic .button-small .icon {
-      font-size: 20px;
+      font-size: 16px;
       line-height: 26px; }
   .ionic .button-large {
-    padding: 12px 18px 12px 18px;
-    min-height: 52px;
-    font-size: 24px; }
+    padding: 0 12px;
+    min-height: 54px;
+    font-size: 18px;
+    line-height: 53px; }
     .ionic .button-large i, .ionic .button-large .icon {
-      font-size: 32px; }
+      font-size: 32px;
+      line-height: 52px; }
   .ionic .padding > .button.block:first-child {
     margin-top: 0; }
   .ionic .button-full,
@@ -2980,7 +2977,6 @@
     -moz-flex: 1;
     -ms-flex: 1;
     flex: 1;
-    display: block;
     overflow: hidden;
     padding: 0 16px;
     width: 0;
@@ -2988,31 +2984,12 @@
     border-radius: 0;
     text-align: center;
     text-overflow: ellipsis;
-    white-space: nowrap;
-    line-height: 13px; }
+    white-space: nowrap; }
     .ionic .button-bar > .button:first-child {
       border-radius: 2px 0px 0px 2px; }
     .ionic .button-bar > .button:last-child {
       border-right-width: 1px;
       border-radius: 0px 2px 2px 0px; }
-  .ionic .buttons {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -moz-box-flex: 1;
-    -moz-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    -webkit-box-direction: normal;
-    -webkit-box-orient: horizontal;
-    -webkit-flex-direction: horizontal;
-    -moz-flex-direction: horizontal;
-    -ms-flex-direction: horizontal;
-    flex-direction: horizontal; }
   .ionic .badge {
     display: inline-block;
     min-width: 10px;
