@@ -1,4 +1,57 @@
 
+i.icon-default, .icon.icon-default {
+  color: $brand-default;
+}
+
+i.icon-secondary, .icon.icon-secondary {
+  color: darken($brand-secondary, 10%);
+}
+
+i.icon-primary, .icon.icon-primary {
+  color: $brand-primary;
+}
+
+i.icon-info, .icon.icon-info {
+  color: $brand-info;
+}
+
+i.icon-success, .icon.icon-success {
+  color: $brand-success;
+}
+
+i.icon-warning, .icon.icon-warning {
+  color: $brand-warning;
+}
+
+i.icon-danger, .icon.icon-danger {
+  color: $brand-danger;
+}
+
+i.icon-dark, .icon.icon-dark {
+  color: $brand-dark;
+}
+
+i.icon-gray-darker, .icon.icon-gray-darker {
+  color: $gray-darker;
+}
+
+i.icon-gray-dark, .icon.icon-gray-dark {
+  color: $gray-dark;
+}
+
+i.icon-gray, .icon.icon-gray {
+  color: $gray;
+}
+
+i.icon-gray-light, .icon.icon-gray-light {
+  color: $gray-light;
+}
+
+i.icon-gray-lighter, .icon.icon-gray-lighter {
+  color: $gray-light;
+}
+
+
 .fill-icon {
   color: white !important;
   &:before {
@@ -8,44 +61,44 @@
     padding: 1px;
   }
 
-  &.brand-default:before {
+  &.icon-default:before {
     background: $brand-default;
   }
-  &.brand-secondary:before {
+  &.icon-secondary:before {
     background: $brand-secondary;
   }
-  &.brand-primary:before {
+  &.icon-primary:before {
     background: $brand-primary;
   }
-  &.brand-info:before {
+  &.icon-info:before {
     background: $brand-info;
   }
-  &.brand-success:before {
+  &.icon-success:before {
     background: $brand-success;
   }
-  &.brand-warning:before {
+  &.icon-warning:before {
     background: $brand-warning;
   }
-  &.brand-danger:before {
+  &.icon-danger:before {
     background: $brand-danger;
   }
-  &.brand-dark:before {
+  &.icon-dark:before {
     background: $brand-dark;
   }
 
-  &.gray-darker:before {
+  &.icon-gray-darker:before {
     background: $gray-darker;
   }
-  &.gray-dark:before {
+  &.icon-gray-dark:before {
     background: $gray-dark;
   }
-  &.gray:before {
+  &.icon-gray:before {
     background: $gray;
   }
-  &.gray-light:before {
+  &.icon-gray-light:before {
     background: $gray-light;
   }
-  &.gray-lighter:before {
+  &.icon-gray-lighter:before {
     background: $gray-lighter;
   }
 

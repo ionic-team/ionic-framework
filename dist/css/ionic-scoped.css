@@ -2101,7 +2101,9 @@
     height: 100%;
     font-size: 32px; }
   .ionic .item .fill-icon {
-    font-size: 28px; }
+    font-size: 28px;
+    min-width: 30px;
+    min-height: 30px; }
   .ionic .item-icon-left {
     padding-left: 45px; }
     .ionic .item-icon-left i, .ionic .item-icon-left .icon {
@@ -2202,11 +2204,16 @@
   .ionic .item-divider {
     margin: -1px;
     padding: 5px 15px;
+    min-height: 30px;
     border: none;
     background-color: whitesmoke;
     box-shadow: inset 0 0 1px #666666;
     color: #222222;
     font-weight: bold; }
+  .ionic .item-note {
+    float: right;
+    color: #aaa;
+    font-size: 14px; }
   .ionic .item-sliding {
     -webkit-transition: -webkit-transform 0.1s ease-in-out; }
   .ionic .item-reordering {
@@ -2289,10 +2296,6 @@
   .ionic .card.list .list-item {
     padding-right: 1px;
     padding-left: 1px; }
-  .ionic .item-label-right {
-    float: right;
-    color: #aaa;
-    font-size: 14px; }
   .ionic .card,
   .ionic .list-inset {
     overflow: hidden;
@@ -3143,6 +3146,32 @@
     .ionic .fade-in.active {
       -webkit-animation: fadeIn 0.3s;
       animation: fadeIn 0.3s; }
+  .ionic i.icon-default, .ionic .icon.icon-default {
+    color: white; }
+  .ionic i.icon-secondary, .ionic .icon.icon-secondary {
+    color: gainsboro; }
+  .ionic i.icon-primary, .ionic .icon.icon-primary {
+    color: #4a87ee; }
+  .ionic i.icon-info, .ionic .icon.icon-info {
+    color: #43cee6; }
+  .ionic i.icon-success, .ionic .icon.icon-success {
+    color: #66cc33; }
+  .ionic i.icon-warning, .ionic .icon.icon-warning {
+    color: #f0b840; }
+  .ionic i.icon-danger, .ionic .icon.icon-danger {
+    color: #ef4e3a; }
+  .ionic i.icon-dark, .ionic .icon.icon-dark {
+    color: #444444; }
+  .ionic i.icon-gray-darker, .ionic .icon.icon-gray-darker {
+    color: #222222; }
+  .ionic i.icon-gray-dark, .ionic .icon.icon-gray-dark {
+    color: #333333; }
+  .ionic i.icon-gray, .ionic .icon.icon-gray {
+    color: #555555; }
+  .ionic i.icon-gray-light, .ionic .icon.icon-gray-light {
+    color: #999999; }
+  .ionic i.icon-gray-lighter, .ionic .icon.icon-gray-lighter {
+    color: #999999; }
   .ionic .fill-icon {
     color: white !important; }
     .ionic .fill-icon:before {
@@ -3150,31 +3179,31 @@
       position: relative;
       border-radius: 6px;
       padding: 1px; }
-    .ionic .fill-icon.brand-default:before {
+    .ionic .fill-icon.icon-default:before {
       background: white; }
-    .ionic .fill-icon.brand-secondary:before {
+    .ionic .fill-icon.icon-secondary:before {
       background: whitesmoke; }
-    .ionic .fill-icon.brand-primary:before {
+    .ionic .fill-icon.icon-primary:before {
       background: #4a87ee; }
-    .ionic .fill-icon.brand-info:before {
+    .ionic .fill-icon.icon-info:before {
       background: #43cee6; }
-    .ionic .fill-icon.brand-success:before {
+    .ionic .fill-icon.icon-success:before {
       background: #66cc33; }
-    .ionic .fill-icon.brand-warning:before {
+    .ionic .fill-icon.icon-warning:before {
       background: #f0b840; }
-    .ionic .fill-icon.brand-danger:before {
+    .ionic .fill-icon.icon-danger:before {
       background: #ef4e3a; }
-    .ionic .fill-icon.brand-dark:before {
+    .ionic .fill-icon.icon-dark:before {
       background: #444444; }
-    .ionic .fill-icon.gray-darker:before {
+    .ionic .fill-icon.icon-gray-darker:before {
       background: #222222; }
-    .ionic .fill-icon.gray-dark:before {
+    .ionic .fill-icon.icon-gray-dark:before {
       background: #333333; }
-    .ionic .fill-icon.gray:before {
+    .ionic .fill-icon.icon-gray:before {
       background: #555555; }
-    .ionic .fill-icon.gray-light:before {
+    .ionic .fill-icon.icon-gray-light:before {
       background: #999999; }
-    .ionic .fill-icon.gray-lighter:before {
+    .ionic .fill-icon.icon-gray-lighter:before {
       background: #eeeeee; }
   .ionic .icon-loading {
     font-family: 'ionicons';

@@ -642,7 +642,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
 .directive('navContent', ['Gesture', '$animate', '$compile', function(Gesture, $animate, $compile) {
   return {
-    restrict: 'ECA',
+    restrict: 'CA',
     require: '^navs',
     transclude: 'element',
     compile: function(element, attr, transclude) {

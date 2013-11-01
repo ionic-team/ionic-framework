@@ -186,6 +186,8 @@ a.item {
 
 .item .fill-icon {
   font-size: $item-icon-fill-font-size;
+  min-width: $item-icon-fill-font-size + 2;
+  min-height: $item-icon-fill-font-size + 2;
 }
 
 .item-icon-left {
@@ -339,11 +341,22 @@ button.item-icon-right:after {
 .item-divider {
   margin: $item-border-width * -1;
   padding: $item-divider-padding;
+  min-height: 30px;
   border: none;
   background-color: $item-divider-bg;
   box-shadow: $item-box-shadow;
   color: $item-divider-color;
   font-weight: bold;
+}
+
+
+// Item Note
+// -------------------------------
+
+.item-note {
+  float: right;
+  color: #aaa;
+  font-size: 14px;
 }
 
 
