@@ -7,7 +7,7 @@
   font-style: normal; }
 
 i, .icon {
-  font-family: 'ionicons' !important;
+  font-family: "ionicons" !important;
   speak: none !important;
   font-style: normal !important;
   font-weight: normal !important;
@@ -1521,7 +1521,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid #c0c0c0; }
+  border: 1px solid silver; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -3085,7 +3085,7 @@ input[type="file"] {
   line-height: 34px; }
 
 select {
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc;
   background-color: white; }
 
 select[multiple],
@@ -3140,7 +3140,7 @@ input[type="checkbox"][readonly] {
     border-radius: 50%;
     background: white;
     content: ' ';
-    transition: background-color .1s ease-in-out; }
+    transition: background-color 0.1s ease-in-out; }
 
 /* the checkmark within the box */
 .checkbox input:after {
@@ -3155,7 +3155,7 @@ input[type="checkbox"][readonly] {
   border-right: 0;
   content: ' ';
   opacity: 0;
-  transition: opacity .05s ease-in-out;
+  transition: opacity 0.05s ease-in-out;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg); }
 
@@ -3535,7 +3535,7 @@ input[type="range"] {
     .button.button-icon:active, .button.button-icon.active {
       background: none;
       box-shadow: none;
-      text-shadow: 0px 0px 10px #fff; }
+      text-shadow: 0px 0px 10px white; }
   .button.block, .button.button-full {
     margin-top: 10px;
     margin-bottom: 10px; }
@@ -3851,64 +3851,6 @@ a.button {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0); }
 
-.slide-in-slide-out.ng-enter, .slide-in-slide-out > .ng-enter {
-  -webkit-transition: 0.5s ease-in-out all;
-  -webkit-transform: translate3d(100%, 0, 0);
-  box-shadow: -1px 0px 10px rgba(0, 0, 0, 0.6); }
-.slide-in-slide-out.ng-enter-active, .slide-in-slide-out > .ng-enter-active {
-  -webkit-transform: translate3d(0, 0, 0); }
-.slide-in-slide-out.ng-leave, .slide-in-slide-out > .ng-leave {
-  -webkit-transition: 0.5s ease-in-out all;
-  -webkit-transform: translate3d(0%, 0, 0); }
-.slide-in-slide-out.ng-leave-active, .slide-in-slide-out > .ng-leave-active {
-  -webkit-transform: translate3d(-10%, 0, 0);
-  opacity: 0.8; }
-
-.slide-in-slide-out-reverse.ng-enter, .slide-in-slide-out-reverse > .ng-enter {
-  z-index: 1;
-  -webkit-transition: 0.5s ease-in-out all;
-  -webkit-transform: translate3d(-100%, 0, 0);
-  box-shadow: -1px 0px 10px rgba(0, 0, 0, 0.6); }
-.slide-in-slide-out-reverse.ng-enter-active, .slide-in-slide-out-reverse > .ng-enter-active {
-  -webkit-transform: translate3d(0, 0, 0); }
-.slide-in-slide-out-reverse.ng-leave, .slide-in-slide-out-reverse > .ng-leave {
-  z-index: 0;
-  -webkit-transition: 0.5s ease-in-out all;
-  -webkit-transform: translate3d(0%, 0, 0); }
-.slide-in-slide-out-reverse.ng-leave-active, .slide-in-slide-out-reverse > .ng-leave-active {
-  -webkit-transform: translate3d(10%, 0, 0);
-  opacity: 0.8; }
-
-/**
- * An animation that fades out one content area and fades in another
- */
-.fade-in-out.ng-enter, .fade-in-out > .ng-enter {
-  opacity: 0;
-  -webkit-transition: opacity 0.3s ease-in-out; }
-.fade-in-out.ng-enter-active, .fade-in-out > .ng-enter-active {
-  opacity: 1; }
-.fade-in-out.ng-leave, .fade-in-out > .ng-leave {
-  opacity: 1;
-  -webkit-transition: opacity 0.3s ease-in-out; }
-.fade-in-out.ng-leave-active, .fade-in-out > .ng-leave-active {
-  opacity: 0; }
-
-.slide-left-fade-add {
-  -webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out; }
-
-.slide-left-fade-add-active {
-  -webkit-transform: translate3d(-100%, 0, 0);
-  opacity: 0; }
-
-.slide-in-left-fade-add {
-  -webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-  -webkit-transform: translate3d(100%, 0, 0);
-  opacity: 0; }
-
-.slide-in-left-fade-add-active {
-  -webkit-transform: translate3d(0px, 0, 0);
-  opacity: 1; }
-
 @-webkit-keyframes fadeOut {
   from {
     opacity: 1; }
@@ -3956,6 +3898,79 @@ a.button {
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
+
+/** 
+ * Nav controllers and header bar animations
+ */
+.content-slide-in.ng-enter, .content-slide-in > .ng-enter {
+  -webkit-transition: 0.5s ease-in-out all;
+  -webkit-transform: translate3d(100%, 0, 0);
+  box-shadow: -1px 0px 10px rgba(0, 0, 0, 0.6); }
+.content-slide-in.ng-enter-active, .content-slide-in > .ng-enter-active {
+  -webkit-transform: translate3d(0, 0, 0); }
+.content-slide-in.ng-leave, .content-slide-in > .ng-leave {
+  -webkit-transition: 0.5s ease-in-out all;
+  -webkit-transform: translate3d(0%, 0, 0); }
+.content-slide-in.ng-leave-active, .content-slide-in > .ng-leave-active {
+  -webkit-transform: translate3d(-10%, 0, 0);
+  opacity: 0.8; }
+
+.content-slide-out.ng-enter, .content-slide-out > .ng-enter {
+  z-index: 1;
+  -webkit-transition: 0.5s ease-in-out all;
+  -webkit-transform: translate3d(-100%, 0, 0);
+  box-shadow: -1px 0px 10px rgba(0, 0, 0, 0.6); }
+.content-slide-out.ng-enter-active, .content-slide-out > .ng-enter-active {
+  -webkit-transform: translate3d(0, 0, 0); }
+.content-slide-out.ng-leave, .content-slide-out > .ng-leave {
+  z-index: 0;
+  -webkit-transition: 0.5s ease-in-out all;
+  -webkit-transform: translate3d(0%, 0, 0); }
+.content-slide-out.ng-leave-active, .content-slide-out > .ng-leave-active {
+  -webkit-transform: translate3d(10%, 0, 0);
+  opacity: 0.8; }
+
+.bar-title-in-add {
+  -webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  -webkit-transform: translate3d(100%, 0, 0);
+  opacity: 0; }
+
+.bar-title-in-add-active {
+  -webkit-transform: translate3d(0px, 0, 0);
+  opacity: 1; }
+
+.bar-title-out-add {
+  -webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out; }
+
+.bar-title-out-add-active {
+  -webkit-transform: translate3d(-100%, 0, 0);
+  opacity: 0; }
+
+.bar-button-in {
+  opacity: 0; }
+
+.bar-button-in-add {
+  -webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  -webkit-transform: translate3d(50%, 0, 0);
+  opacity: 0; }
+
+.bar-button-in-active {
+  -webkit-transform: translate3d(0px, 0, 0);
+  opacity: 1; }
+
+/**
+ * Tab controller animations
+ */
+.fade-in-out.ng-enter, .fade-in-out > .ng-enter {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s ease-in-out; }
+.fade-in-out.ng-enter-active, .fade-in-out > .ng-enter-active {
+  opacity: 1; }
+.fade-in-out.ng-leave, .fade-in-out > .ng-leave {
+  opacity: 1;
+  -webkit-transition: opacity 0.3s ease-in-out; }
+.fade-in-out.ng-leave-active, .fade-in-out > .ng-leave-active {
+  opacity: 0; }
 
 i.icon-default, .icon.icon-default {
   color: white; }
@@ -4039,9 +4054,9 @@ i.icon-gray-lighter, .icon.icon-gray-lighter {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin .75s linear infinite;
-  -moz-animation: spin .75s linear infinite;
-  animation: spin .75s linear infinite; }
+  -webkit-animation: spin 0.75s linear infinite;
+  -moz-animation: spin 0.75s linear infinite;
+  animation: spin 0.75s linear infinite; }
   .icon-loading:before {
     content: "\e144"; }
 
@@ -4054,9 +4069,9 @@ i.icon-gray-lighter, .icon.icon-gray-lighter {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin .75s linear infinite;
-  -moz-animation: spin .75s linear infinite;
-  animation: spin .75s linear infinite; }
+  -webkit-animation: spin 0.75s linear infinite;
+  -moz-animation: spin 0.75s linear infinite;
+  animation: spin 0.75s linear infinite; }
   .icon-refreshing:before {
     content: "\e144"; }
 

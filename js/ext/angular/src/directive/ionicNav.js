@@ -98,15 +98,29 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
 .directive('navContent', ['Gesture', '$animate', '$compile', function(Gesture, $animate, $compile) {
 
+  // We need to animate the new controller into view.
   var animatePushedController = function(childScope, clone, $element) {
-    var title = angular.element($element.parent().parent().parent()[0].querySelector('.title'));
+    var parent = angular.element($element.parent().parent().parent());
+    
+    var title = angular.element(parent[0].querySelector('.title'));
+
+    // Clone the old title and insert it so we can animate it back into place for the new controller
     var newTitle = angular.element(title.clone());
 
     $compile(newTitle)(childScope);
     title.after(newTitle);
 
-    clone.addClass(childScope.slideAnimation);
+    // Grab the button so we can slide it in
+    var button = angular.element(parent[0].querySelector('.button'));
 
+    clone.addClass(childScope.slideInAnimation);
+
+    // Slide the button in
+    $animate.addClass(button, childScope.slideButtonInAnimation, function() {
+      $animate.removeClass(button, childScope.slideButtonInAnimation, function() {});
+    })
+
+    // Slide the new title in
     $animate.addClass(newTitle, childScope.slideTitleInAnimation, function() {
       $animate.removeClass(newTitle, childScope.slideTitleInAnimation, function() {
         newTitle.scope().$destroy();
@@ -114,10 +128,11 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
       });
     });
 
+    // Grab the old title and slide it out
     var title = $element.parent().parent().parent()[0].querySelector('.title');
     $animate.enter(clone, $element.parent(), $element);
-    $animate.addClass(angular.element(title), childScope.slideTitleAnimation, function() {
-      $animate.removeClass(angular.element(title), childScope.slideTitleAnimation, function() {
+    $animate.addClass(angular.element(title), childScope.slideTitleOutAnimation, function() {
+      $animate.removeClass(angular.element(title), childScope.slideTitleOutAnimation, function() {
       });
     });
   };
@@ -132,9 +147,11 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
 
         $scope.title = $attr.title;
-        $scope.slideAnimation = $attr.slideAnimation || '';
-        $scope.slideTitleAnimation = $attr.slideTitleAnimation || '';
-        $scope.slideTitleInAnimation = $attr.slideTitleInAnimation || '';
+        $scope.slideInAnimation = $attr.slideAnimation || 'content-slide-in';
+        $scope.slideTitleInAnimation = $attr.slideTitleInAnimation || 'bar-title-in';
+        $scope.slideTitleOutAnimation = $attr.slideTitleOutAnimation || 'bar-title-out';
+        $scope.slideButtonInAnimation = $attr.slideButtonInAnimation || 'bar-button-in';
+        $scope.slideButtonOutAnimation = $attr.slideButtonOutAnimation || 'bar-button-out';
 
         if($attr.navBar === "false") {
           navCtrl.hideNavBar();
