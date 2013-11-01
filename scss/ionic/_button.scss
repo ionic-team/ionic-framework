@@ -4,7 +4,8 @@
   margin: 0;
 
   padding: $button-padding;
-  min-height: $button-min-height;
+  padding-top: 1px;
+  min-height: $button-height;
 
   border-width: $button-border-width;
   border-style: solid;
@@ -17,31 +18,31 @@
 
   text-overflow: ellipsis;
   font-size: $button-font-size;
-  line-height: $button-line-height;
+  line-height: $button-height - $button-border-width;
 
   cursor: pointer;
 
   i, .icon {
     display: inline-block;
-    padding: 0;
+    padding: 0 0 $button-border-width 0;
     vertical-align: inherit;
-    font-size: $button-icon-font-size;
-    line-height: $button-line-height - 1;
+    font-size: $button-icon-size;
+    line-height: $button-height - $button-border-width - 1;
   }
 
   &.button-icon {
-    padding: $button-clear-padding;
+    padding: 2px 4px;
     background: none;
 
     i, .icon {
-      font-size: $button-icon-large-font-size;
+      font-size: $button-large-icon-size;
     }
   }
 
   &.button-clear {
     @include transition(opacity .1s);
     padding: $button-clear-padding;
-    max-height: 44px;
+    max-height: $button-height;
     border: none;
     background: none;
     box-shadow: none;
@@ -116,24 +117,26 @@
 }
 
 .button-small {
-  padding: 1px 8px 1px 8px;
-  min-height: $button-small-min-height;
-  line-height: $button-small-line-height;
-  font-size: $button-font-size - 4;
+  padding: $button-small-padding;
+  min-height: $button-small-height;
+  font-size: $button-small-font-size;
+  line-height: $button-small-height - $button-border-width;
 
   i, .icon {
-    font-size: $button-icon-font-size - 4;
-    line-height: $button-small-line-height - 3;
+    font-size: $button-small-icon-size;
+    line-height: $button-small-height - $button-border-width - 1;
   }
 }
 
 .button-large {
-  padding: 12px 18px 12px 18px;
-  min-height: $button-min-height + 8;
-  font-size: $button-font-size + 8;
+  padding: $button-large-padding;
+  min-height: $button-large-height;
+  font-size: $button-large-font-size;
+  line-height: $button-large-height - $button-border-width;
 
   i, .icon {
-    font-size: $button-icon-font-size + 8;
+    font-size: $button-large-icon-size;
+    line-height: $button-large-height - $button-border-width - 1;
   }
 }
 

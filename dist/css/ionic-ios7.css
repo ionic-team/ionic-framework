@@ -16,7 +16,7 @@ h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
+b, u, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
@@ -182,7 +182,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid silver; }
+  border: 1px solid #c0c0c0; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -556,8 +556,8 @@ a.subdued‎ {
   border-style: solid;
   border-top: 1px solid transparent;
   border-bottom: 1px solid #dddddd;
-  background-size: 0;
-  background-color: white; }
+  background-color: white;
+  background-size: 0; }
   @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
     .bar {
       border-top: none !important;
@@ -646,20 +646,17 @@ a.subdued‎ {
   .bar .title a {
     color: inherit; }
   .bar > .button {
-    box-flex: 1;
-    -webkit-box-flex: 0;
-    -moz-box-flex: 0;
     z-index: 1;
-    margin: 0;
-    padding: 2px 8px 0 8px;
-    min-height: 33px;
-    background-color: transparent;
+    padding: 0 8px;
+    min-height: 31px;
     font-size: 12px;
-    line-height: 28px; }
+    line-height: 30px; }
     .bar > .button i, .bar > .button .icon {
-      margin-top: 1px; }
-  .bar .button-bar {
-    line-height: 18px; }
+      font-size: 24px;
+      line-height: 29px; }
+  .bar .button-bar > .button {
+    min-height: 31px;
+    line-height: 31px; }
   .bar .button-bar + .button, .bar .button + .button-bar {
     margin-left: 5px; }
   .bar .title + .button:last-child,
@@ -835,9 +832,17 @@ a.subdued‎ {
  * A navigation bar with any number of tab items supported.
  */
 .tabs {
-  box-orient: horizontal;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-direction: normal;
   -webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
+  -webkit-flex-direction: horizontal;
+  -moz-flex-direction: horizontal;
+  -ms-flex-direction: horizontal;
+  flex-direction: horizontal;
   background-color: white;
   background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
   border-color: #dddddd;
@@ -845,8 +850,6 @@ a.subdued‎ {
   position: fixed;
   bottom: 0;
   z-index: 5;
-  display: -webkit-box;
-  display: box;
   width: 100%;
   height: 49px;
   border-style: solid;
@@ -906,13 +909,16 @@ a.subdued‎ {
   top: 44px; }
 
 .tab-item {
-  box-flex: 1;
   -webkit-box-flex: 1;
+  -webkit-flex: 1;
   -moz-box-flex: 1;
-  display: block;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: inline-block;
   overflow: hidden;
   box-sizing: border-box;
-  width: 0;
+  margin: auto;
   height: 100%;
   color: inherit;
   text-align: center;
@@ -969,6 +975,16 @@ a.subdued‎ {
     color: #f0b840; }
   .tab-item.active.tab-item-dark, .tab-item:active.tab-item-dark {
     color: #444444; }
+
+.item.tabs {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0; }
+  .item.tabs i, .item.tabs .icon {
+    position: relative; }
 
 .menu {
   position: absolute;
@@ -1198,7 +1214,9 @@ a.item {
   font-size: 32px; }
 
 .item .fill-icon {
-  font-size: 28px; }
+  font-size: 28px;
+  min-width: 30px;
+  min-height: 30px; }
 
 .item-icon-left {
   padding-left: 45px; }
@@ -1273,23 +1291,23 @@ button.item-icon-right:after {
     border-radius: 4px; }
 
 .item-thumbnail-left {
-  padding-left: 95px;
-  min-height: 80px; }
+  padding-left: 105px;
+  min-height: 100px; }
   .item-thumbnail-left img:first-child, .item-thumbnail-left .item-image {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 10px;
+    left: 10px;
     max-width: 80px;
     max-height: 80px;
     width: 100%; }
 
 .item-thumbnail-right {
-  padding-right: 95px;
-  min-height: 80px; }
+  padding-right: 105px;
+  min-height: 100px; }
   .item-thumbnail-right img:first-child, .item-thumbnail-right .item-image {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 10px;
+    right: 10px;
     max-width: 80px;
     max-height: 80px;
     width: 100%; }
@@ -1313,11 +1331,17 @@ button.item-icon-right:after {
 .item-divider {
   margin: -1px;
   padding: 5px 15px;
+  min-height: 30px;
   border: none;
   background-color: whitesmoke;
   box-shadow: inset 0 0 1px #666666;
   color: #222222;
   font-weight: bold; }
+
+.item-note {
+  float: right;
+  color: #aaa;
+  font-size: 14px; }
 
 .item-sliding {
   -webkit-transition: -webkit-transform 0.1s ease-in-out; }
@@ -1423,11 +1447,6 @@ button.item-icon-right:after {
 .card.list .list-item {
   padding-right: 1px;
   padding-left: 1px; }
-
-.item-label-right {
-  float: right;
-  color: #aaa;
-  font-size: 14px; }
 
 /*
   A card and list-inset are close to the same thing, except a card as a box shadow.
@@ -1663,7 +1682,7 @@ input[type="file"] {
   line-height: 34px; }
 
 select {
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   background-color: white; }
 
 select[multiple],
@@ -1735,7 +1754,7 @@ input[type="checkbox"][readonly] {
   right: 20px;
   transition: 0.2s ease;
   transition-property: left, right;
-  transition-delay: 0s, 0.05s; }
+  transition-delay: 0s, .05s; }
 
 .toggle :checked + .track {
   /* When the toggle is "on" */
@@ -1750,7 +1769,7 @@ input[type="checkbox"][readonly] {
     right: 0;
     left: 20px;
     -webkit-transform: none;
-    transition-delay: 0.05s, 0s; }
+    transition-delay: .05s, 0s; }
 
 .item-radio {
   padding: 0; }
@@ -1814,8 +1833,9 @@ input[type="range"] {
   position: relative;
   display: inline-block;
   margin: 0;
-  padding: 10px 12px 7px 12px;
-  min-height: 44px;
+  padding: 0 12px;
+  padding-top: 1px;
+  min-height: 42px;
   border-width: 1px;
   border-style: solid;
   border-radius: 2px;
@@ -1824,24 +1844,24 @@ input[type="range"] {
   text-align: center;
   text-overflow: ellipsis;
   font-size: 16px;
-  line-height: 23px;
+  line-height: 41px;
   cursor: pointer; }
   .button i, .button .icon {
     display: inline-block;
-    padding: 0;
+    padding: 0 0 1px 0;
     vertical-align: inherit;
     font-size: 24px;
-    line-height: 22px; }
+    line-height: 40px; }
   .button.button-icon {
-    padding: 12px 6px;
+    padding: 2px 4px;
     background: none; }
     .button.button-icon i, .button.button-icon .icon {
       font-size: 32px; }
   .button.button-clear {
     -webkit-transition: opacity 0.1s;
     transition: opacity 0.1s;
-    padding: 12px 6px;
-    max-height: 44px;
+    padding: 0 6px;
+    max-height: 42px;
     border: none;
     background: none;
     box-shadow: none; }
@@ -2034,26 +2054,28 @@ input[type="range"] {
     .button.button-icon:active, .button.button-icon.active {
       background: none;
       box-shadow: none;
-      text-shadow: 0px 0px 10px white; }
+      text-shadow: 0px 0px 10px #fff; }
   .button.block, .button.button-full {
     margin-top: 10px;
     margin-bottom: 10px; }
 
 .button-small {
-  padding: 1px 8px 1px 8px;
-  min-height: 32px;
-  line-height: 29px;
-  font-size: 12px; }
+  padding: 0 4px;
+  min-height: 28px;
+  font-size: 12px;
+  line-height: 27px; }
   .button-small i, .button-small .icon {
-    font-size: 20px;
+    font-size: 16px;
     line-height: 26px; }
 
 .button-large {
-  padding: 12px 18px 12px 18px;
-  min-height: 52px;
-  font-size: 24px; }
+  padding: 0 12px;
+  min-height: 54px;
+  font-size: 18px;
+  line-height: 53px; }
   .button-large i, .button-large .icon {
-    font-size: 32px; }
+    font-size: 32px;
+    line-height: 52px; }
 
 .padding > .button.block:first-child {
   margin-top: 0; }
@@ -2076,44 +2098,44 @@ a.button {
   text-decoration: none; }
 
 .button-bar {
-  box-flex: 1;
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  box-orient: horizontal;
-  -webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
   display: -webkit-box;
-  display: box; }
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -moz-box-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  -webkit-flex-direction: horizontal;
+  -moz-flex-direction: horizontal;
+  -ms-flex-direction: horizontal;
+  flex-direction: horizontal; }
 
 .button-bar > .button {
-  box-flex: 1;
   -webkit-box-flex: 1;
+  -webkit-flex: 1;
   -moz-box-flex: 1;
-  display: block;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
   overflow: hidden;
-  padding: 8px 16px;
+  padding: 0 16px;
   width: 0;
   border-width: 1px 0px 1px 1px;
   border-radius: 0;
   text-align: center;
   text-overflow: ellipsis;
-  white-space: nowrap;
-  line-height: 15px; }
+  white-space: nowrap; }
   .button-bar > .button:first-child {
     border-radius: 2px 0px 0px 2px; }
   .button-bar > .button:last-child {
     border-right-width: 1px;
     border-radius: 0px 2px 2px 0px; }
-
-.buttons {
-  box-flex: 1;
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  box-orient: horizontal;
-  -webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
-  display: -webkit-box;
-  display: box; }
 
 .badge {
   display: inline-block;
@@ -2349,6 +2371,45 @@ a.button {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
 
+i.icon-default, .icon.icon-default {
+  color: white; }
+
+i.icon-secondary, .icon.icon-secondary {
+  color: gainsboro; }
+
+i.icon-primary, .icon.icon-primary {
+  color: #4a87ee; }
+
+i.icon-info, .icon.icon-info {
+  color: #43cee6; }
+
+i.icon-success, .icon.icon-success {
+  color: #66cc33; }
+
+i.icon-warning, .icon.icon-warning {
+  color: #f0b840; }
+
+i.icon-danger, .icon.icon-danger {
+  color: #ef4e3a; }
+
+i.icon-dark, .icon.icon-dark {
+  color: #444444; }
+
+i.icon-gray-darker, .icon.icon-gray-darker {
+  color: #222222; }
+
+i.icon-gray-dark, .icon.icon-gray-dark {
+  color: #333333; }
+
+i.icon-gray, .icon.icon-gray {
+  color: #555555; }
+
+i.icon-gray-light, .icon.icon-gray-light {
+  color: #999999; }
+
+i.icon-gray-lighter, .icon.icon-gray-lighter {
+  color: #999999; }
+
 .fill-icon {
   color: white !important; }
   .fill-icon:before {
@@ -2356,31 +2417,31 @@ a.button {
     position: relative;
     border-radius: 6px;
     padding: 1px; }
-  .fill-icon.brand-default:before {
+  .fill-icon.icon-default:before {
     background: white; }
-  .fill-icon.brand-secondary:before {
+  .fill-icon.icon-secondary:before {
     background: whitesmoke; }
-  .fill-icon.brand-primary:before {
+  .fill-icon.icon-primary:before {
     background: #4a87ee; }
-  .fill-icon.brand-info:before {
+  .fill-icon.icon-info:before {
     background: #43cee6; }
-  .fill-icon.brand-success:before {
+  .fill-icon.icon-success:before {
     background: #66cc33; }
-  .fill-icon.brand-warning:before {
+  .fill-icon.icon-warning:before {
     background: #f0b840; }
-  .fill-icon.brand-danger:before {
+  .fill-icon.icon-danger:before {
     background: #ef4e3a; }
-  .fill-icon.brand-dark:before {
+  .fill-icon.icon-dark:before {
     background: #444444; }
-  .fill-icon.gray-darker:before {
+  .fill-icon.icon-gray-darker:before {
     background: #222222; }
-  .fill-icon.gray-dark:before {
+  .fill-icon.icon-gray-dark:before {
     background: #333333; }
-  .fill-icon.gray:before {
+  .fill-icon.icon-gray:before {
     background: #555555; }
-  .fill-icon.gray-light:before {
+  .fill-icon.icon-gray-light:before {
     background: #999999; }
-  .fill-icon.gray-lighter:before {
+  .fill-icon.icon-gray-lighter:before {
     background: #eeeeee; }
 
 .icon-loading {
@@ -2392,9 +2453,9 @@ a.button {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin 0.75s linear infinite;
-  -moz-animation: spin 0.75s linear infinite;
-  animation: spin 0.75s linear infinite; }
+  -webkit-animation: spin .75s linear infinite;
+  -moz-animation: spin .75s linear infinite;
+  animation: spin .75s linear infinite; }
   .icon-loading:before {
     content: "\e144"; }
 
@@ -2407,9 +2468,9 @@ a.button {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin 0.75s linear infinite;
-  -moz-animation: spin 0.75s linear infinite;
-  animation: spin 0.75s linear infinite; }
+  -webkit-animation: spin .75s linear infinite;
+  -moz-animation: spin .75s linear infinite;
+  animation: spin .75s linear infinite; }
   .icon-refreshing:before {
     content: "\e144"; }
 

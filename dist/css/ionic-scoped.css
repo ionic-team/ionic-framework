@@ -213,12 +213,12 @@
       transform: rotate(360deg); } }
  }
   .ionic i, .ionic .icon {
-    font-family: 'ionicons';
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
+    font-family: 'ionicons' !important;
+    speak: none !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
     line-height: 1;
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
@@ -1108,7 +1108,7 @@
   .ionic a, .ionic abbr, .ionic acronym, .ionic address, .ionic big, .ionic cite, .ionic code,
   .ionic del, .ionic dfn, .ionic em, .ionic img, .ionic ins, .ionic kbd, .ionic q, .ionic s, .ionic samp,
   .ionic small, .ionic strike, .ionic strong, .ionic sub, .ionic sup, .ionic tt, .ionic var,
-  .ionic b, .ionic u, .ionic i, .ionic center,
+  .ionic b, .ionic u, .ionic center,
   .ionic dl, .ionic dt, .ionic dd, .ionic ol, .ionic ul, .ionic li,
   .ionic fieldset, .ionic form, .ionic label, .ionic legend,
   .ionic table, .ionic caption, .ionic tbody, .ionic tfoot, .ionic thead, .ionic tr, .ionic th, .ionic td,
@@ -1195,7 +1195,7 @@
   .ionic fieldset {
     margin: 0 2px;
     padding: 0.35em 0.625em 0.75em;
-    border: 1px solid silver; }
+    border: 1px solid #c0c0c0; }
   .ionic legend {
     padding: 0;
     /* 2 */
@@ -1489,8 +1489,8 @@
     border-style: solid;
     border-top: 1px solid transparent;
     border-bottom: 1px solid #dddddd;
-    background-size: 0;
-    background-color: white; }
+    background-color: white;
+    background-size: 0; }
     @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
       .ionic .bar {
         border-top: none !important;
@@ -1579,20 +1579,17 @@
     .ionic .bar .title a {
       color: inherit; }
     .ionic .bar > .button {
-      box-flex: 1;
-      -webkit-box-flex: 0;
-      -moz-box-flex: 0;
       z-index: 1;
-      margin: 0;
-      padding: 2px 8px 0 8px;
-      min-height: 33px;
-      background-color: transparent;
+      padding: 0 8px;
+      min-height: 31px;
       font-size: 12px;
-      line-height: 28px; }
+      line-height: 30px; }
       .ionic .bar > .button i, .ionic .bar > .button .icon {
-        margin-top: 1px; }
-    .ionic .bar .button-bar {
-      line-height: 18px; }
+        font-size: 24px;
+        line-height: 29px; }
+    .ionic .bar .button-bar > .button {
+      min-height: 31px;
+      line-height: 31px; }
     .ionic .bar .button-bar + .button, .ionic .bar .button + .button-bar {
       margin-left: 5px; }
     .ionic .bar .title + .button:last-child,
@@ -1749,9 +1746,17 @@
     bottom: 44px;
     display: block; }
   .ionic .tabs {
-    box-orient: horizontal;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-direction: normal;
     -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
+    -webkit-flex-direction: horizontal;
+    -moz-flex-direction: horizontal;
+    -ms-flex-direction: horizontal;
+    flex-direction: horizontal;
     background-color: white;
     background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
     border-color: #dddddd;
@@ -1759,8 +1764,6 @@
     position: fixed;
     bottom: 0;
     z-index: 5;
-    display: -webkit-box;
-    display: box;
     width: 100%;
     height: 49px;
     border-style: solid;
@@ -1818,13 +1821,16 @@
   .ionic .tabs-top {
     top: 44px; }
   .ionic .tab-item {
-    box-flex: 1;
     -webkit-box-flex: 1;
+    -webkit-flex: 1;
     -moz-box-flex: 1;
-    display: block;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    display: inline-block;
     overflow: hidden;
     box-sizing: border-box;
-    width: 0;
+    margin: auto;
     height: 100%;
     color: inherit;
     text-align: center;
@@ -1874,6 +1880,15 @@
       color: #f0b840; }
     .ionic .tab-item.active.tab-item-dark, .ionic .tab-item:active.tab-item-dark {
       color: #444444; }
+  .ionic .item.tabs {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 0; }
+    .ionic .item.tabs i, .ionic .item.tabs .icon {
+      position: relative; }
   .ionic .menu {
     position: absolute;
     top: 0;
@@ -2086,7 +2101,9 @@
     height: 100%;
     font-size: 32px; }
   .ionic .item .fill-icon {
-    font-size: 28px; }
+    font-size: 28px;
+    min-width: 30px;
+    min-height: 30px; }
   .ionic .item-icon-left {
     padding-left: 45px; }
     .ionic .item-icon-left i, .ionic .item-icon-left .icon {
@@ -2151,22 +2168,22 @@
       width: 100%;
       border-radius: 4px; }
   .ionic .item-thumbnail-left {
-    padding-left: 95px;
-    min-height: 80px; }
+    padding-left: 105px;
+    min-height: 100px; }
     .ionic .item-thumbnail-left img:first-child, .ionic .item-thumbnail-left .item-image {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 10px;
+      left: 10px;
       max-width: 80px;
       max-height: 80px;
       width: 100%; }
   .ionic .item-thumbnail-right {
-    padding-right: 95px;
-    min-height: 80px; }
+    padding-right: 105px;
+    min-height: 100px; }
     .ionic .item-thumbnail-right img:first-child, .ionic .item-thumbnail-right .item-image {
       position: absolute;
-      top: 0;
-      right: 0;
+      top: 10px;
+      right: 10px;
       max-width: 80px;
       max-height: 80px;
       width: 100%; }
@@ -2187,11 +2204,16 @@
   .ionic .item-divider {
     margin: -1px;
     padding: 5px 15px;
+    min-height: 30px;
     border: none;
     background-color: whitesmoke;
     box-shadow: inset 0 0 1px #666666;
     color: #222222;
     font-weight: bold; }
+  .ionic .item-note {
+    float: right;
+    color: #aaa;
+    font-size: 14px; }
   .ionic .item-sliding {
     -webkit-transition: -webkit-transform 0.1s ease-in-out; }
   .ionic .item-reordering {
@@ -2274,10 +2296,6 @@
   .ionic .card.list .list-item {
     padding-right: 1px;
     padding-left: 1px; }
-  .ionic .item-label-right {
-    float: right;
-    color: #aaa;
-    font-size: 14px; }
   .ionic .card,
   .ionic .list-inset {
     overflow: hidden;
@@ -2487,7 +2505,7 @@
   .ionic input[type="file"] {
     line-height: 34px; }
   .ionic select {
-    border: 1px solid #cccccc;
+    border: 1px solid #ccc;
     background-color: white; }
   .ionic select[multiple],
   .ionic select[size] {
@@ -2536,7 +2554,7 @@
       border-radius: 50%;
       background: white;
       content: ' ';
-      transition: background-color 0.1s ease-in-out; }
+      transition: background-color .1s ease-in-out; }
   .ionic .checkbox input:after {
     position: absolute;
     top: 34%;
@@ -2549,7 +2567,7 @@
     border-right: 0;
     content: ' ';
     opacity: 0;
-    transition: opacity 0.05s ease-in-out;
+    transition: opacity .05s ease-in-out;
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg); }
   .ionic .checkbox input:checked:before {
@@ -2680,8 +2698,9 @@
     position: relative;
     display: inline-block;
     margin: 0;
-    padding: 10px 12px 7px 12px;
-    min-height: 44px;
+    padding: 0 12px;
+    padding-top: 1px;
+    min-height: 42px;
     border-width: 1px;
     border-style: solid;
     border-radius: 2px;
@@ -2690,24 +2709,24 @@
     text-align: center;
     text-overflow: ellipsis;
     font-size: 16px;
-    line-height: 23px;
+    line-height: 41px;
     cursor: pointer; }
     .ionic .button i, .ionic .button .icon {
       display: inline-block;
-      padding: 0;
+      padding: 0 0 1px 0;
       vertical-align: inherit;
       font-size: 24px;
-      line-height: 22px; }
+      line-height: 40px; }
     .ionic .button.button-icon {
-      padding: 12px 6px;
+      padding: 2px 4px;
       background: none; }
       .ionic .button.button-icon i, .ionic .button.button-icon .icon {
         font-size: 32px; }
     .ionic .button.button-clear {
       -webkit-transition: opacity 0.1s;
       transition: opacity 0.1s;
-      padding: 12px 6px;
-      max-height: 44px;
+      padding: 0 6px;
+      max-height: 42px;
       border: none;
       background: none;
       box-shadow: none; }
@@ -2900,24 +2919,26 @@
       .ionic .button.button-icon:active, .ionic .button.button-icon.active {
         background: none;
         box-shadow: none;
-        text-shadow: 0px 0px 10px white; }
+        text-shadow: 0px 0px 10px #fff; }
     .ionic .button.block, .ionic .button.button-full {
       margin-top: 10px;
       margin-bottom: 10px; }
   .ionic .button-small {
-    padding: 1px 8px 1px 8px;
-    min-height: 32px;
-    line-height: 29px;
-    font-size: 12px; }
+    padding: 0 4px;
+    min-height: 28px;
+    font-size: 12px;
+    line-height: 27px; }
     .ionic .button-small i, .ionic .button-small .icon {
-      font-size: 20px;
+      font-size: 16px;
       line-height: 26px; }
   .ionic .button-large {
-    padding: 12px 18px 12px 18px;
-    min-height: 52px;
-    font-size: 24px; }
+    padding: 0 12px;
+    min-height: 54px;
+    font-size: 18px;
+    line-height: 53px; }
     .ionic .button-large i, .ionic .button-large .icon {
-      font-size: 32px; }
+      font-size: 32px;
+      line-height: 52px; }
   .ionic .padding > .button.block:first-child {
     margin-top: 0; }
   .ionic .button-full,
@@ -2935,42 +2956,43 @@
   .ionic a.button {
     text-decoration: none; }
   .ionic .button-bar {
-    box-flex: 1;
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    box-orient: horizontal;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
     display: -webkit-box;
-    display: box; }
-  .ionic .button-bar > .button {
-    box-flex: 1;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
     -webkit-box-flex: 1;
+    -webkit-flex: 1;
     -moz-box-flex: 1;
-    display: block;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -webkit-flex-direction: horizontal;
+    -moz-flex-direction: horizontal;
+    -ms-flex-direction: horizontal;
+    flex-direction: horizontal; }
+  .ionic .button-bar > .button {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -moz-box-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
     overflow: hidden;
-    padding: 8px 16px;
+    padding: 0 16px;
     width: 0;
     border-width: 1px 0px 1px 1px;
     border-radius: 0;
     text-align: center;
     text-overflow: ellipsis;
-    white-space: nowrap;
-    line-height: 15px; }
+    white-space: nowrap; }
     .ionic .button-bar > .button:first-child {
       border-radius: 2px 0px 0px 2px; }
     .ionic .button-bar > .button:last-child {
       border-right-width: 1px;
       border-radius: 0px 2px 2px 0px; }
-  .ionic .buttons {
-    box-flex: 1;
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    box-orient: horizontal;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    display: -webkit-box;
-    display: box; }
   .ionic .badge {
     display: inline-block;
     min-width: 10px;
@@ -3124,6 +3146,32 @@
     .ionic .fade-in.active {
       -webkit-animation: fadeIn 0.3s;
       animation: fadeIn 0.3s; }
+  .ionic i.icon-default, .ionic .icon.icon-default {
+    color: white; }
+  .ionic i.icon-secondary, .ionic .icon.icon-secondary {
+    color: gainsboro; }
+  .ionic i.icon-primary, .ionic .icon.icon-primary {
+    color: #4a87ee; }
+  .ionic i.icon-info, .ionic .icon.icon-info {
+    color: #43cee6; }
+  .ionic i.icon-success, .ionic .icon.icon-success {
+    color: #66cc33; }
+  .ionic i.icon-warning, .ionic .icon.icon-warning {
+    color: #f0b840; }
+  .ionic i.icon-danger, .ionic .icon.icon-danger {
+    color: #ef4e3a; }
+  .ionic i.icon-dark, .ionic .icon.icon-dark {
+    color: #444444; }
+  .ionic i.icon-gray-darker, .ionic .icon.icon-gray-darker {
+    color: #222222; }
+  .ionic i.icon-gray-dark, .ionic .icon.icon-gray-dark {
+    color: #333333; }
+  .ionic i.icon-gray, .ionic .icon.icon-gray {
+    color: #555555; }
+  .ionic i.icon-gray-light, .ionic .icon.icon-gray-light {
+    color: #999999; }
+  .ionic i.icon-gray-lighter, .ionic .icon.icon-gray-lighter {
+    color: #999999; }
   .ionic .fill-icon {
     color: white !important; }
     .ionic .fill-icon:before {
@@ -3131,31 +3179,31 @@
       position: relative;
       border-radius: 6px;
       padding: 1px; }
-    .ionic .fill-icon.brand-default:before {
+    .ionic .fill-icon.icon-default:before {
       background: white; }
-    .ionic .fill-icon.brand-secondary:before {
+    .ionic .fill-icon.icon-secondary:before {
       background: whitesmoke; }
-    .ionic .fill-icon.brand-primary:before {
+    .ionic .fill-icon.icon-primary:before {
       background: #4a87ee; }
-    .ionic .fill-icon.brand-info:before {
+    .ionic .fill-icon.icon-info:before {
       background: #43cee6; }
-    .ionic .fill-icon.brand-success:before {
+    .ionic .fill-icon.icon-success:before {
       background: #66cc33; }
-    .ionic .fill-icon.brand-warning:before {
+    .ionic .fill-icon.icon-warning:before {
       background: #f0b840; }
-    .ionic .fill-icon.brand-danger:before {
+    .ionic .fill-icon.icon-danger:before {
       background: #ef4e3a; }
-    .ionic .fill-icon.brand-dark:before {
+    .ionic .fill-icon.icon-dark:before {
       background: #444444; }
-    .ionic .fill-icon.gray-darker:before {
+    .ionic .fill-icon.icon-gray-darker:before {
       background: #222222; }
-    .ionic .fill-icon.gray-dark:before {
+    .ionic .fill-icon.icon-gray-dark:before {
       background: #333333; }
-    .ionic .fill-icon.gray:before {
+    .ionic .fill-icon.icon-gray:before {
       background: #555555; }
-    .ionic .fill-icon.gray-light:before {
+    .ionic .fill-icon.icon-gray-light:before {
       background: #999999; }
-    .ionic .fill-icon.gray-lighter:before {
+    .ionic .fill-icon.icon-gray-lighter:before {
       background: #eeeeee; }
   .ionic .icon-loading {
     font-family: 'ionicons';
@@ -3166,9 +3214,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin 0.75s linear infinite;
-    -moz-animation: spin 0.75s linear infinite;
-    animation: spin 0.75s linear infinite; }
+    -webkit-animation: spin .75s linear infinite;
+    -moz-animation: spin .75s linear infinite;
+    animation: spin .75s linear infinite; }
     .ionic .icon-loading:before {
       content: "\e144"; }
   .ionic .icon-refreshing {
@@ -3180,9 +3228,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin 0.75s linear infinite;
-    -moz-animation: spin 0.75s linear infinite;
-    animation: spin 0.75s linear infinite; }
+    -webkit-animation: spin .75s linear infinite;
+    -moz-animation: spin .75s linear infinite;
+    animation: spin .75s linear infinite; }
     .ionic .icon-refreshing:before {
       content: "\e144"; }
   .ionic .hidden,

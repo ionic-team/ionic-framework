@@ -40,7 +40,6 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
    */
   this.pushFromTemplate = function(templateUrl) {
     var childScope = $scope.$new();
-    childScope.isVisible = true;
 
     // Load the given template
     TemplateLoader.load(templateUrl).then(function(templateString) {
@@ -123,13 +122,14 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
   };
 
   return {
-    restrict: 'ECA',
+    restrict: 'CA',
     require: '^navs',
     transclude: 'element',
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, navCtrl) {
         var lastParent, lastIndex, childScope, childElement;
 
+<<<<<<< HEAD
 
         $scope.title = $attr.title;
         $scope.slideAnimation = $attr.slideAnimation || '';
@@ -143,6 +143,9 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
         // Push this controller onto the stack
         $scope.pushController($scope, $element);
+=======
+        $scope.isVisible = true;
+>>>>>>> e8bd9a5dee77d29b746115546a51b1a4a3d46246
 
         $scope.$watch('isVisible', function(value) {
           // Taken from ngIf
@@ -158,7 +161,10 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
           // Check if this is visible, and if so, create it and show it
           if(value) {
             childScope = $scope.$new();
+<<<<<<< HEAD
 
+=======
+>>>>>>> e8bd9a5dee77d29b746115546a51b1a4a3d46246
             transclude(childScope, function(clone) {
               childElement = clone;
 

@@ -186,6 +186,8 @@ a.item {
 
 .item .fill-icon {
   font-size: $item-icon-fill-font-size;
+  min-width: $item-icon-fill-font-size + 2;
+  min-height: $item-icon-fill-font-size + 2;
 }
 
 .item-icon-left {
@@ -275,13 +277,13 @@ button.item-icon-right:after {
 // -------------------------------
 
 .item-thumbnail-left {
-  padding-left: $item-thumbnail-width + $item-padding;
-  min-height: $item-thumbnail-height;
+  padding-left: $item-thumbnail-width + $item-thumbnail-margin + $item-padding;
+  min-height: $item-thumbnail-height + ($item-thumbnail-margin * 2);
 
   img:first-child, .item-image {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: $item-thumbnail-margin;
+    left: $item-thumbnail-margin;
     max-width: $item-thumbnail-width;
     max-height: $item-thumbnail-height;
     width: 100%;
@@ -289,13 +291,13 @@ button.item-icon-right:after {
 }
 
 .item-thumbnail-right {
-  padding-right: $item-thumbnail-width + $item-padding;
-  min-height: $item-thumbnail-height;
+  padding-right: $item-thumbnail-width + $item-thumbnail-margin + $item-padding;
+  min-height: $item-thumbnail-height + ($item-thumbnail-margin * 2);
 
   img:first-child, .item-image {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: $item-thumbnail-margin;
+    right: $item-thumbnail-margin;
     max-width: $item-thumbnail-width;
     max-height: $item-thumbnail-height;
     width: 100%;
@@ -339,11 +341,22 @@ button.item-icon-right:after {
 .item-divider {
   margin: $item-border-width * -1;
   padding: $item-divider-padding;
+  min-height: 30px;
   border: none;
   background-color: $item-divider-bg;
   box-shadow: $item-box-shadow;
   color: $item-divider-color;
   font-weight: bold;
+}
+
+
+// Item Note
+// -------------------------------
+
+.item-note {
+  float: right;
+  color: #aaa;
+  font-size: 14px;
 }
 
 
