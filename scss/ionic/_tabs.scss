@@ -5,15 +5,13 @@
  */
 
 .tabs {
-
-  @include box-orient(horizontal);
+  @include display-flex();
+  @include flex-direction(horizontal);
 
   @include tab-style($tabs-default-bg, $tabs-default-border-color, $gray-dark);
   position: fixed;
   bottom: 0;
   z-index: 5;
-  display: -webkit-box;
-  display: box;
   width: 100%;
   height: $tabs-height;
   border-style: solid;
@@ -66,13 +64,12 @@
 }
 
 .tab-item {
-  @include box-flex(1);
-  display: block;
+  @include flex(1);
+  display: inline-block;
   overflow: hidden;
   box-sizing: border-box;
+  margin: auto;
 
-  // Required to force box elements to be the same size;
-  width: 0;
   height: 100%;
 
   color: inherit;
@@ -146,6 +143,15 @@
   }
   &.tab-item-dark {
     color: $brand-dark;
+  }
+}
+
+.item.tabs {
+  @include display-flex();
+  padding: 0;
+
+  i, .icon {
+    position: relative;
   }
 }
 
