@@ -97,6 +97,31 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 })
 
 .directive('navContent', ['Gesture', '$animate', '$compile', function(Gesture, $animate, $compile) {
+
+  var animatePushedController = function(childScope, clone, $element) {
+    var title = angular.element($element.parent().parent().parent()[0].querySelector('.title'));
+    var newTitle = angular.element(title.clone());
+
+    $compile(newTitle)(childScope);
+    title.after(newTitle);
+
+    clone.addClass(childScope.slideAnimation);
+
+    $animate.addClass(newTitle, childScope.slideTitleAnimation, function() {
+      $animate.removeClass(newTitle, childScope.slideTitleAnimation, function() {
+        newTitle.scope().$destroy();
+        newTitle.remove();
+      });
+    });
+
+    var title = $element.parent().parent().parent()[0].querySelector('.title');
+    $animate.enter(clone, $element.parent(), $element);
+    $animate.addClass(angular.element(title), childScope.slideTitleAnimation, function() {
+      $animate.removeClass(angular.element(title), childScope.slideTitleAnimation, function() {
+      });
+    });
+  };
+
   return {
     restrict: 'ECA',
     require: '^navs',
@@ -104,6 +129,20 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, navCtrl) {
         var lastParent, lastIndex, childScope, childElement;
+
+
+        $scope.title = $attr.title;
+        $scope.slideAnimation = $attr.slideAnimation || '';
+        $scope.slideTitleAnimation = $attr.slideTitleAnimation || '';
+
+        if($attr.navBar === "false") {
+          navCtrl.hideNavBar();
+        } else {
+          navCtrl.showNavBar();
+        }
+
+        // Push this controller onto the stack
+        $scope.pushController($scope, $element);
 
         $scope.$watch('isVisible', function(value) {
           // Taken from ngIf
@@ -116,58 +155,14 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
             childScope = undefined;
           }
 
+          // Check if this is visible, and if so, create it and show it
           if(value) {
-            childScope = $scope;
+            childScope = $scope.$new();
+
             transclude(childScope, function(clone) {
               childElement = clone;
 
-              childScope.title = $attr.title;
-              childScope.slideAnimation = $attr.slideAnimation || '';
-              childScope.slideTitleAnimation = $attr.slideTitleAnimation || '';
-
-              if($attr.navBar === "false") {
-                navCtrl.hideNavBar();
-              } else {
-                navCtrl.showNavBar();
-              }
-
-              childScope.pushController(childScope, $element);
-
-              var title = angular.element($element.parent().parent().parent()[0].querySelector('.title'));
-              var newTitle = angular.element(title.clone());
-
-              $compile(newTitle)(childScope);
-
-              title.after(newTitle);
-
-              console.log(newTitle);
-        
-              clone.addClass(childScope.slideAnimation);
-
-              $animate.addClass(newTitle, childScope.slideTitleAnimation, function() {
-                $animate.removeClass(newTitle, childScope.slideTitleAnimation, function() {
-                  newTitle.scope().$destroy();
-                  newTitle.remove();
-                });
-              });
-
-              /*
-              Gesture.on('drag', function(e) {
-                //navCtrl.handleDrag(e);
-                console.log('Content drag', e);
-              }, childElement[0]);
-
-              Gesture.on('release', function(e) {
-                //navCtrl._endDrag(e);
-              }, childElement[0]);
-              */
-
-              var title = $element.parent().parent().parent()[0].querySelector('.title');
-              $animate.enter(clone, $element.parent(), $element);
-              $animate.addClass(angular.element(title), childScope.slideTitleAnimation, function() {
-                $animate.removeClass(angular.element(title), childScope.slideTitleAnimation, function() {
-                });
-              });
+              animatePushedController(childScope, clone, $element);
             });
           } 
         });
