@@ -585,7 +585,6 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
    */
   this.pushFromTemplate = function(templateUrl) {
     var childScope = $scope.$new();
-    childScope.isVisible = true;
 
     // Load the given template
     TemplateLoader.load(templateUrl).then(function(templateString) {
@@ -650,6 +649,8 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
       return function($scope, $element, $attr, navCtrl) {
         var lastParent, lastIndex, childScope, childElement;
 
+        $scope.isVisible = true;
+
         $scope.$watch('isVisible', function(value) {
           // Taken from ngIf
           if(childElement) {
@@ -662,7 +663,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
           }
 
           if(value) {
-            childScope = $scope;
+            childScope = $scope.$new();
             transclude(childScope, function(clone) {
               childElement = clone;
 

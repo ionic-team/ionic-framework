@@ -73,6 +73,11 @@
 
       .controller('CatsCtrl', function($scope, $compile, $element) {
         console.log('Cats', $element);
+        var items = [];
+        for(var i = 0; i < 100; i++) {
+          items.push({});
+        }
+        $scope.items = items;
         $scope.goNext = function() {
           $scope.navController.pushFromTemplate('page.html');
         };
