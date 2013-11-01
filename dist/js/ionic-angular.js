@@ -593,7 +593,21 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
       // Compile the template with the new scrope, and append it to the navigation's content area
       var el = $compile(templateString)(childScope, function(cloned, scope) {
         var content = $element[0].querySelector('.content');
-        angular.element(content).append(cloned);
+        var title = $element.parent().parent().parent()[0].querySelector('.title');
+        var newTitle = angular.element(title.cloneNode());
+
+        $compile(newTitle)(childScope);
+
+        title.parentNode.insertBefore(newTitle[0], title.nextSibling);
+
+        console.log(newTitle);
+        $animate.enter(cloned, angular.element(content));
+        $animate.addClass(angular.element(newTitle), 'slide-in-left-fade', function() {
+          $animate.removeClass(angular.element(newTitle), 'slide-in-left-fade', function() {
+            newTitle.scope().$destroy();
+            newTitle.remove();
+          });
+        });
       });
     });
   };

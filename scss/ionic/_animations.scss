@@ -96,14 +96,23 @@ $bezier-function: cubic-bezier(.1, .7, .1, 1);
   opacity: 0;
 }
 .slide-left-fade-remove {
+}
+.slide-left-fade-remove-active {
+}
+
+.slide-in-left-fade-add {
   -webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
   -webkit-transform: translate3d(120px, 0, 0);
   opacity: 0;
 }
-.slide-left-fade-remove-active {
+.slide-in-left-fade-add-active {
   //margin-left: -80px;
-  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0px, 0, 0);
   opacity: 1;
+}
+.slide-in-left-fade-remove {
+}
+.slide-in-left-fade-remove-active {
 }
 
 @-webkit-keyframes fadeOut {

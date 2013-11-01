@@ -1195,7 +1195,7 @@
   .ionic fieldset {
     margin: 0 2px;
     padding: 0.35em 0.625em 0.75em;
-    border: 1px solid #c0c0c0; }
+    border: 1px solid silver; }
   .ionic legend {
     padding: 0;
     /* 2 */
@@ -2487,7 +2487,7 @@
   .ionic input[type="file"] {
     line-height: 34px; }
   .ionic select {
-    border: 1px solid #ccc;
+    border: 1px solid #cccccc;
     background-color: white; }
   .ionic select[multiple],
   .ionic select[size] {
@@ -2536,7 +2536,7 @@
       border-radius: 50%;
       background: white;
       content: ' ';
-      transition: background-color .1s ease-in-out; }
+      transition: background-color 0.1s ease-in-out; }
   .ionic .checkbox input:after {
     position: absolute;
     top: 34%;
@@ -2549,7 +2549,7 @@
     border-right: 0;
     content: ' ';
     opacity: 0;
-    transition: opacity .05s ease-in-out;
+    transition: opacity 0.05s ease-in-out;
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg); }
   .ionic .checkbox input:checked:before {
@@ -2900,7 +2900,7 @@
       .ionic .button.button-icon:active, .ionic .button.button-icon.active {
         background: none;
         box-shadow: none;
-        text-shadow: 0px 0px 10px #fff; }
+        text-shadow: 0px 0px 10px white; }
     .ionic .button.block, .ionic .button.button-full {
       margin-top: 10px;
       margin-bottom: 10px; }
@@ -3111,12 +3111,12 @@
   .ionic .slide-left-fade-add-active {
     -webkit-transform: translate3d(-120px, 0, 0);
     opacity: 0; }
-  .ionic .slide-left-fade-remove {
+  .ionic .slide-in-left-fade-add {
     -webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
     -webkit-transform: translate3d(120px, 0, 0);
     opacity: 0; }
-  .ionic .slide-left-fade-remove-active {
-    -webkit-transform: translate3d(0, 0, 0);
+  .ionic .slide-in-left-fade-add-active {
+    -webkit-transform: translate3d(0px, 0, 0);
     opacity: 1; }
   .ionic .fade-in {
     -webkit-animation: fadeOut 0.3s;
@@ -3166,9 +3166,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin .75s linear infinite;
-    -moz-animation: spin .75s linear infinite;
-    animation: spin .75s linear infinite; }
+    -webkit-animation: spin 0.75s linear infinite;
+    -moz-animation: spin 0.75s linear infinite;
+    animation: spin 0.75s linear infinite; }
     .ionic .icon-loading:before {
       content: "\e144"; }
   .ionic .icon-refreshing {
@@ -3180,9 +3180,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin .75s linear infinite;
-    -moz-animation: spin .75s linear infinite;
-    animation: spin .75s linear infinite; }
+    -webkit-animation: spin 0.75s linear infinite;
+    -moz-animation: spin 0.75s linear infinite;
+    animation: spin 0.75s linear infinite; }
     .ionic .icon-refreshing:before {
       content: "\e144"; }
   .ionic .hidden,
