@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="../../dist/css/ionic.css">
     <link rel="stylesheet" href="css/app.css">
     
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-mocks.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-route.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-mocks.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-touch.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-animate.js"></script>
 
     <script src='https://cdn.firebase.com/v0/firebase.js'></script>
     <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
@@ -32,9 +32,10 @@
   <body>
 
     <!-- The root view controller -->
-    <nav-ctrl ng-controller="TodoCtrl">
+    <navs ng-controller="TodoCtrl">
       <nav-bar></nav-bar>
-    </nav-ctrl>
+      <content has-header="true"></content>
+    </navs>
 
     <!-- Splash -->
     <script id="splash.html" type="text/ng-template">
