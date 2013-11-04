@@ -585,6 +585,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
    */
   this.pushFromTemplate = function(templateUrl) {
     var childScope = $scope.$new();
+    childScope.isVisible = true;
 
     // Load the given template
     TemplateLoader.load(templateUrl).then(function(templateString) {
@@ -641,15 +642,70 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 })
 
 .directive('navContent', ['Gesture', '$animate', '$compile', function(Gesture, $animate, $compile) {
+
+  // We need to animate the new controller into view.
+  var animatePushedController = function(childScope, clone, $element) {
+    var parent = angular.element($element.parent().parent().parent());
+    
+    var title = angular.element(parent[0].querySelector('.title'));
+
+    // Clone the old title and insert it so we can animate it back into place for the new controller
+    var newTitle = angular.element(title.clone());
+
+    $compile(newTitle)(childScope);
+    title.after(newTitle);
+
+    // Grab the button so we can slide it in
+    var button = angular.element(parent[0].querySelector('.button'));
+
+    clone.addClass(childScope.slideInAnimation);
+
+    // Slide the button in
+    $animate.addClass(button, childScope.slideButtonInAnimation, function() {
+      $animate.removeClass(button, childScope.slideButtonInAnimation, function() {});
+    })
+
+    // Slide the new title in
+    $animate.addClass(newTitle, childScope.slideTitleInAnimation, function() {
+      $animate.removeClass(newTitle, childScope.slideTitleInAnimation, function() {
+        newTitle.scope().$destroy();
+        newTitle.remove();
+      });
+    });
+
+    // Grab the old title and slide it out
+    var title = $element.parent().parent().parent()[0].querySelector('.title');
+    $animate.enter(clone, $element.parent(), $element);
+    $animate.addClass(angular.element(title), childScope.slideTitleOutAnimation, function() {
+      $animate.removeClass(angular.element(title), childScope.slideTitleOutAnimation, function() {
+      });
+    });
+  };
+
   return {
-    restrict: 'CA',
+    restrict: 'ECA',
     require: '^navs',
     transclude: 'element',
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, navCtrl) {
         var lastParent, lastIndex, childScope, childElement;
 
-        $scope.isVisible = true;
+
+        $scope.title = $attr.title;
+        $scope.slideInAnimation = $attr.slideAnimation || 'content-slide-in';
+        $scope.slideTitleInAnimation = $attr.slideTitleInAnimation || 'bar-title-in';
+        $scope.slideTitleOutAnimation = $attr.slideTitleOutAnimation || 'bar-title-out';
+        $scope.slideButtonInAnimation = $attr.slideButtonInAnimation || 'bar-button-in';
+        $scope.slideButtonOutAnimation = $attr.slideButtonOutAnimation || 'bar-button-out';
+
+        if($attr.navBar === "false") {
+          navCtrl.hideNavBar();
+        } else {
+          navCtrl.showNavBar();
+        }
+
+        // Push this controller onto the stack
+        $scope.pushController($scope, $element);
 
         $scope.$watch('isVisible', function(value) {
           // Taken from ngIf
@@ -662,58 +718,14 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
             childScope = undefined;
           }
 
+          // Check if this is visible, and if so, create it and show it
           if(value) {
             childScope = $scope.$new();
+
             transclude(childScope, function(clone) {
               childElement = clone;
 
-              childScope.title = $attr.title;
-              childScope.slideAnimation = $attr.slideAnimation || '';
-              childScope.slideTitleAnimation = $attr.slideTitleAnimation || '';
-
-              if($attr.navBar === "false") {
-                navCtrl.hideNavBar();
-              } else {
-                navCtrl.showNavBar();
-              }
-
-              childScope.pushController(childScope, $element);
-
-              var title = angular.element($element.parent().parent().parent()[0].querySelector('.title'));
-              var newTitle = angular.element(title.clone());
-
-              $compile(newTitle)(childScope);
-
-              title.after(newTitle);
-
-              console.log(newTitle);
-        
-              clone.addClass(childScope.slideAnimation);
-
-              $animate.addClass(newTitle, childScope.slideTitleAnimation, function() {
-                $animate.removeClass(newTitle, childScope.slideTitleAnimation, function() {
-                  newTitle.scope().$destroy();
-                  newTitle.remove();
-                });
-              });
-
-              /*
-              Gesture.on('drag', function(e) {
-                //navCtrl.handleDrag(e);
-                console.log('Content drag', e);
-              }, childElement[0]);
-
-              Gesture.on('release', function(e) {
-                //navCtrl._endDrag(e);
-              }, childElement[0]);
-              */
-
-              var title = $element.parent().parent().parent()[0].querySelector('.title');
-              $animate.enter(clone, $element.parent(), $element);
-              $animate.addClass(angular.element(title), childScope.slideTitleAnimation, function() {
-                $animate.removeClass(angular.element(title), childScope.slideTitleAnimation, function() {
-                });
-              });
+              animatePushedController(childScope, clone, $element);
             });
           } 
         });
@@ -1010,6 +1022,11 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
       return function($scope, $element, $attr, tabsCtrl) {
         var childScope, childElement;
 
+        $scope.title = $attr.title;
+        $scope.icon = $attr.icon;
+        $scope.iconOn = $attr.iconOn;
+        $scope.iconOff = $attr.iconOff;
+        tabsCtrl.add($scope);
         
         $scope.$watch('isVisible', function(value) {
           if(childElement) {
@@ -1029,13 +1046,6 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
             });
           }
         });
-
-        $scope.title = $attr.title;
-        $scope.icon = $attr.icon;
-        $scope.iconOn = $attr.iconOn;
-        $scope.iconOff = $attr.iconOff;
-        tabsCtrl.add($scope);
-
       }
     }
   };
@@ -1049,7 +1059,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     transclude: true,
     replace: true,
     scope: true,
-    template: '<div class="tabs tabs-primary">' + 
+    template: '<div class="tabs tabs-icon-top tabs-primary">' + 
       '<tab-controller-item title="{{controller.title}}" icon="{{controller.icon}}" icon-on="{{controller.iconOn}}" icon-off="{{controller.iconOff}}" active="controller.isVisible" index="$index" ng-repeat="controller in controllers"></tab-controller-item>' + 
     '</div>'
   };
