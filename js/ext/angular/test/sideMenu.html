@@ -13,29 +13,30 @@
   </head>
   <body>
 
-    <side-menus ng-controller="MenuCtrl">
-
-      <pane side-menu-content>
-        <header class="bar bar-header bar-dark">
-          <a href="#" class="button" ng-click="openLeft()"><i class="icon-reorder"></i></a>
-          <h1 class="title">Slide me</h1>
-        </header>
-        <div class="content has-header">
-          <h1>Slide me side to side!</h1>
-        </div>
-      </pane>
-      <menu side="left">
-        <h2>Left</h2>
-        <ul class="list">
-          <a href="#" class="list-item" ng-repeat="item in list">
-            {{item.text}}
-          </a>
-        </ul>
-      </menu>
-      <menu side="right">
-        <h2>Items</h2>
-      </menu>
-    </side-menus>
+    <div ng-controller="MenuCtrl">
+      <side-menu>
+        <pane side-menu-content>
+          <header class="bar bar-header bar-dark">
+            <button class="button" ng-click="openLeft()"><i class="icon-reorder"></i></button>
+            <h1 class="title">Slide me</h1>
+          </header>
+          <div class="content has-header">
+            <h1>Slide me side to side!</h1>
+          </div>
+        </pane>
+        <menu side="left">
+          <h2>Left</h2>
+          <ul class="list">
+            <a href="#" class="list-item" ng-repeat="item in list">
+              {{item.text}}
+            </a>
+          </ul>
+        </menu>
+        <menu side="right">
+          <h2>Items</h2>
+        </menu>
+      </side-menu>
+    </div>
     <script src="../../../../dist/js/ionic.js"></script>
     <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
@@ -43,6 +44,7 @@
 
       .controller('MenuCtrl', function($scope) {
         $scope.openLeft = function() {
+          debugger;
           $scope.sideMenuCtrl.toggleLeft();
         };
       });
