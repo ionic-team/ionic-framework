@@ -129,7 +129,7 @@
   /**
    * Remove most spacing between table cells.
    */
-  /* Hack to force all relatively and absolutely positioned elements still render while scrolling
+  /* Force all relatively and absolutely positioned elements still render while scrolling
      Note: This is a bug for "-webkit-overflow-scrolling: touch" (via ratchet) */
   /**
    * Tabs
@@ -210,7 +210,7 @@
       transform: rotate(360deg); } }
  }
   .ionic .ion {
-    font-family: "Ionicons" !important;
+    font-family: 'Ionicons' !important;
     speak: none !important;
     font-style: normal !important;
     font-weight: normal !important;
@@ -1192,7 +1192,7 @@
   .ionic fieldset {
     margin: 0 2px;
     padding: 0.35em 0.625em 0.75em;
-    border: 1px solid silver; }
+    border: 1px solid #c0c0c0; }
   .ionic legend {
     padding: 0;
     /* 2 */
@@ -1289,27 +1289,21 @@
     -webkit-tap-highlight-color: transparent;
     -webkit-user-drag: none;
     -webkit-user-select: none; }
-  .ionic .view-full {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%; }
   .ionic .content:before,
   .ionic .content:after {
-    content: "\00a0";
-    /* No-break space character */
     display: block;
     overflow: hidden;
-    height: 0; }
+    height: 0;
+    content: "\00a0";
+    /* No-break space character */ }
   .ionic .content > * {
     -webkit-transform: translateZ(0px);
     transform: translateZ(0px); }
   .ionic .content {
     position: absolute;
+    overflow: auto;
     width: 100%;
     height: 100%;
-    overflow: auto;
     -webkit-overflow-scrolling: touch; }
   .ionic .has-header {
     top: 44px; }
@@ -1323,22 +1317,10 @@
     right: 0;
     bottom: 0;
     left: 0;
+    z-index: 1;
     width: 100%;
     height: 100%;
-    z-index: 1;
     background-color: #fff; }
-  .ionic .page, .ionic .full-section {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-    overflow: auto;
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
-    -webkit-overflow-scrolling: touch; }
   .ionic p {
     margin: 0 0 10px; }
   .ionic .lead {
@@ -2556,7 +2538,7 @@
   .ionic input[type="file"] {
     line-height: 34px; }
   .ionic select {
-    border: 1px solid #cccccc;
+    border: 1px solid #ccc;
     background-color: white; }
   .ionic select[multiple],
   .ionic select[size] {
@@ -2605,7 +2587,7 @@
       border-radius: 50%;
       background: white;
       content: ' ';
-      transition: background-color 0.1s ease-in-out; }
+      transition: background-color .1s ease-in-out; }
   .ionic .checkbox input:after {
     position: absolute;
     top: 34%;
@@ -2618,7 +2600,7 @@
     border-right: 0;
     content: ' ';
     opacity: 0;
-    transition: opacity 0.05s ease-in-out;
+    transition: opacity .05s ease-in-out;
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg); }
   .ionic .checkbox input:checked:before {
@@ -2970,7 +2952,7 @@
       .ionic .button.button-icon:active, .ionic .button.button-icon.active {
         background: none;
         box-shadow: none;
-        text-shadow: 0px 0px 10px white; }
+        text-shadow: 0px 0px 10px #fff; }
     .ionic .button.block, .ionic .button.button-full {
       margin-top: 10px;
       margin-bottom: 10px; }
@@ -3220,9 +3202,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin 0.75s linear infinite;
-    -moz-animation: spin 0.75s linear infinite;
-    animation: spin 0.75s linear infinite; }
+    -webkit-animation: spin .75s linear infinite;
+    -moz-animation: spin .75s linear infinite;
+    animation: spin .75s linear infinite; }
     .ionic .ion-loading:before {
       content: "\e144"; }
   .ionic .ion-refreshing {
@@ -3234,9 +3216,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin 0.75s linear infinite;
-    -moz-animation: spin 0.75s linear infinite;
-    animation: spin 0.75s linear infinite; }
+    -webkit-animation: spin .75s linear infinite;
+    -moz-animation: spin .75s linear infinite;
+    animation: spin .75s linear infinite; }
     .ionic .ion-refreshing:before {
       content: "\e144"; }
   .ionic .hidden,

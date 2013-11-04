@@ -7,7 +7,7 @@
   font-style: normal; }
 
 .ion {
-  font-family: "Ionicons" !important;
+  font-family: 'Ionicons' !important;
   speak: none !important;
   font-style: normal !important;
   font-weight: normal !important;
@@ -1521,7 +1521,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid silver; }
+  border: 1px solid #c0c0c0; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -1688,22 +1688,15 @@ body, .ionic-body {
   -webkit-user-drag: none;
   -webkit-user-select: none; }
 
-.view-full {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%; }
-
 .content:before,
 .content:after {
-  content: "\00a0";
-  /* No-break space character */
   display: block;
   overflow: hidden;
-  height: 0; }
+  height: 0;
+  content: "\00a0";
+  /* No-break space character */ }
 
-/* Hack to force all relatively and absolutely positioned elements still render while scrolling
+/* Force all relatively and absolutely positioned elements still render while scrolling
    Note: This is a bug for "-webkit-overflow-scrolling: touch" (via ratchet) */
 .content > * {
   -webkit-transform: translateZ(0px);
@@ -1711,9 +1704,9 @@ body, .ionic-body {
 
 .content {
   position: absolute;
+  overflow: auto;
   width: 100%;
   height: 100%;
-  overflow: auto;
   -webkit-overflow-scrolling: touch; }
 
 .has-header {
@@ -1731,23 +1724,10 @@ body, .ionic-body {
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 1;
   width: 100%;
   height: 100%;
-  z-index: 1;
   background-color: #fff; }
-
-.page, .full-section {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-  overflow: auto;
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  -webkit-overflow-scrolling: touch; }
 
 p {
   margin: 0 0 10px; }
@@ -3144,7 +3124,7 @@ input[type="file"] {
   line-height: 34px; }
 
 select {
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   background-color: white; }
 
 select[multiple],
@@ -3199,7 +3179,7 @@ input[type="checkbox"][readonly] {
     border-radius: 50%;
     background: white;
     content: ' ';
-    transition: background-color 0.1s ease-in-out; }
+    transition: background-color .1s ease-in-out; }
 
 /* the checkmark within the box */
 .checkbox input:after {
@@ -3214,7 +3194,7 @@ input[type="checkbox"][readonly] {
   border-right: 0;
   content: ' ';
   opacity: 0;
-  transition: opacity 0.05s ease-in-out;
+  transition: opacity .05s ease-in-out;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg); }
 
@@ -3594,7 +3574,7 @@ input[type="range"] {
     .button.button-icon:active, .button.button-icon.active {
       background: none;
       box-shadow: none;
-      text-shadow: 0px 0px 10px white; }
+      text-shadow: 0px 0px 10px #fff; }
   .button.block, .button.button-full {
     margin-top: 10px;
     margin-bottom: 10px; }
@@ -4116,9 +4096,9 @@ a.button {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin 0.75s linear infinite;
-  -moz-animation: spin 0.75s linear infinite;
-  animation: spin 0.75s linear infinite; }
+  -webkit-animation: spin .75s linear infinite;
+  -moz-animation: spin .75s linear infinite;
+  animation: spin .75s linear infinite; }
   .ion-loading:before {
     content: "\e144"; }
 
@@ -4131,9 +4111,9 @@ a.button {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin 0.75s linear infinite;
-  -moz-animation: spin 0.75s linear infinite;
-  animation: spin 0.75s linear infinite; }
+  -webkit-animation: spin .75s linear infinite;
+  -moz-animation: spin .75s linear infinite;
+  animation: spin .75s linear infinite; }
   .ion-refreshing:before {
     content: "\e144"; }
 
