@@ -1577,7 +1577,8 @@
       color: inherit; }
     .ionic .bar > .button {
       z-index: 1;
-      padding: 8px;
+      padding: 0 8px;
+      min-width: 43px;
       min-height: 31px;
       font-size: 12px;
       line-height: 30px; }
