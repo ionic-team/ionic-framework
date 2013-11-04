@@ -45,17 +45,20 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
   $scope.sideMenuCtrl = this;
 })
 
-.directive('sideMenuCtrl', function() {
+.directive('sideMenus', function() {
   return {
-    restrict: 'CA',
+    restrict: 'ECA',
     controller: 'SideMenuCtrl',
+    replace: true,
+    transclude: true,
+    template: '<div ng-transclude></div>'
   };
 })
 
 .directive('sideMenuContent', ['Gesture', function(Gesture) {
   return {
     restrict: 'CA',
-    require: '^sideMenuCtrl',
+    require: '^sideMenus',
     scope: true,
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, sideMenuCtrl) {
@@ -98,7 +101,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 .directive('menu', function() {
   return {
     restrict: 'E',
-    require: '^sideMenuCtrl',
+    require: '^sideMenus',
     replace: true,
     transclude: true,
     scope: {

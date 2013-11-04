@@ -3,6 +3,15 @@
 
 angular.module('ionic.ui.content', [])
 
+.directive('pane', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<div class="pane" ng-transclude></div>'
+  }
+})
+
 // The content directive is a core scrollable content area
 // that is part of many View hierarchies
 .directive('content', function() {
