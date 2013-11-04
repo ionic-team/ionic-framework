@@ -1,9 +1,9 @@
 @charset "UTF-8";
 .ionic {
   @font-face {
-    font-family: 'ionicons';
-    src: url("fonts/ionicons.eot");
-    src: url("fonts/ionicons.eot?#iefix") format("embedded-opentype"), url("fonts/ionicons.ttf") format("truetype"), url("fonts/ionicons.woff") format("woff"), url("fonts/ionicons.svg#ionicons") format("svg");
+    font-family: 'Ionicons';
+    src: url("fonts/Ionicons.eot");
+    src: url("fonts/Ionicons.eot?#iefix") format("embedded-opentype"), url("fonts/Ionicons.ttf") format("truetype"), url("fonts/Ionicons.woff") format("woff"), url("fonts/Ionicons.svg#Ionicons") format("svg");
     font-weight: normal;
     font-style: normal; }
 
@@ -209,8 +209,8 @@
       -webkit-transform: rotate(360deg);
       transform: rotate(360deg); } }
  }
-  .ionic i, .ionic .icon {
-    font-family: 'ionicons' !important;
+  .ionic .ion {
+    font-family: 'Ionicons' !important;
     speak: none !important;
     font-style: normal !important;
     font-weight: normal !important;
@@ -220,885 +220,885 @@
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale; }
-  .ionic .icon-social-youtube:before {
+  .ionic .ion-social-youtube:before {
     content: "\e600"; }
-  .ionic .icon-social-youtube-outline:before {
+  .ionic .ion-social-youtube-outline:before {
     content: "\e601"; }
-  .ionic .icon-social-yahoo:before {
+  .ionic .ion-social-yahoo:before {
     content: "\e602"; }
-  .ionic .icon-social-yahoo-outline:before {
+  .ionic .ion-social-yahoo-outline:before {
     content: "\e603"; }
-  .ionic .icon-social-wordpress:before {
+  .ionic .ion-social-wordpress:before {
     content: "\e604"; }
-  .ionic .icon-social-wordpress-outline:before {
+  .ionic .ion-social-wordpress-outline:before {
     content: "\e605"; }
-  .ionic .icon-social-windows:before {
+  .ionic .ion-social-windows:before {
     content: "\e606"; }
-  .ionic .icon-social-windows-outline:before {
+  .ionic .ion-social-windows-outline:before {
     content: "\e607"; }
-  .ionic .icon-social-vimeo:before {
+  .ionic .ion-social-vimeo:before {
     content: "\e608"; }
-  .ionic .icon-social-vimeo-outline:before {
+  .ionic .ion-social-vimeo-outline:before {
     content: "\e609"; }
-  .ionic .icon-social-twitter:before {
+  .ionic .ion-social-twitter:before {
     content: "\e60a"; }
-  .ionic .icon-social-twitter-outline:before {
+  .ionic .ion-social-twitter-outline:before {
     content: "\e60b"; }
-  .ionic .icon-social-tumblr:before {
+  .ionic .ion-social-tumblr:before {
     content: "\e60c"; }
-  .ionic .icon-social-tumblr-outline:before {
+  .ionic .ion-social-tumblr-outline:before {
     content: "\e60d"; }
-  .ionic .icon-social-skype:before {
+  .ionic .ion-social-skype:before {
     content: "\e60e"; }
-  .ionic .icon-social-skype-outline:before {
+  .ionic .ion-social-skype-outline:before {
     content: "\e60f"; }
-  .ionic .icon-social-rss:before {
+  .ionic .ion-social-rss:before {
     content: "\e610"; }
-  .ionic .icon-social-rss-outline:before {
+  .ionic .ion-social-rss-outline:before {
     content: "\e611"; }
-  .ionic .icon-social-reddit:before {
+  .ionic .ion-social-reddit:before {
     content: "\e612"; }
-  .ionic .icon-social-reddit-outline:before {
+  .ionic .ion-social-reddit-outline:before {
     content: "\e613"; }
-  .ionic .icon-social-pinterest:before {
+  .ionic .ion-social-pinterest:before {
     content: "\e614"; }
-  .ionic .icon-social-pinterest-outline:before {
+  .ionic .ion-social-pinterest-outline:before {
     content: "\e615"; }
-  .ionic .icon-social-linkedin:before {
+  .ionic .ion-social-linkedin:before {
     content: "\e616"; }
-  .ionic .icon-social-linkedin-outline:before {
+  .ionic .ion-social-linkedin-outline:before {
     content: "\e617"; }
-  .ionic .icon-social-hackernews:before {
+  .ionic .ion-social-hackernews:before {
     content: "\e618"; }
-  .ionic .icon-social-hackernews-outline:before {
+  .ionic .ion-social-hackernews-outline:before {
     content: "\e619"; }
-  .ionic .icon-social-googleplus:before {
+  .ionic .ion-social-googleplus:before {
     content: "\e61a"; }
-  .ionic .icon-social-googleplus-outline:before {
+  .ionic .ion-social-googleplus-outline:before {
     content: "\e61b"; }
-  .ionic .icon-social-github:before {
+  .ionic .ion-social-github:before {
     content: "\e61c"; }
-  .ionic .icon-social-github-outline:before {
+  .ionic .ion-social-github-outline:before {
     content: "\e61d"; }
-  .ionic .icon-social-facebook:before {
+  .ionic .ion-social-facebook:before {
     content: "\e61e"; }
-  .ionic .icon-social-facebook-outline:before {
+  .ionic .ion-social-facebook-outline:before {
     content: "\e61f"; }
-  .ionic .icon-social-dropbox:before {
+  .ionic .ion-social-dropbox:before {
     content: "\e620"; }
-  .ionic .icon-social-dropbox-outline:before {
+  .ionic .ion-social-dropbox-outline:before {
     content: "\e621"; }
-  .ionic .icon-social-dribbble:before {
+  .ionic .ion-social-dribbble:before {
     content: "\e622"; }
-  .ionic .icon-social-dribbble-outline:before {
+  .ionic .ion-social-dribbble-outline:before {
     content: "\e623"; }
-  .ionic .icon-social-designernews:before {
+  .ionic .ion-social-designernews:before {
     content: "\e624"; }
-  .ionic .icon-social-designernews-outline:before {
+  .ionic .ion-social-designernews-outline:before {
     content: "\e625"; }
-  .ionic .icon-social-buffer:before {
+  .ionic .ion-social-buffer:before {
     content: "\e626"; }
-  .ionic .icon-social-buffer-outline:before {
+  .ionic .ion-social-buffer-outline:before {
     content: "\e627"; }
-  .ionic .icon-social-bitcoin:before {
+  .ionic .ion-social-bitcoin:before {
     content: "\e628"; }
-  .ionic .icon-social-bitcoin-outline:before {
+  .ionic .ion-social-bitcoin-outline:before {
     content: "\e629"; }
-  .ionic .icon-social-apple:before {
+  .ionic .ion-social-apple:before {
     content: "\e62a"; }
-  .ionic .icon-social-apple-outline:before {
+  .ionic .ion-social-apple-outline:before {
     content: "\e62b"; }
-  .ionic .icon-social-android:before {
+  .ionic .ion-social-android:before {
     content: "\e62c"; }
-  .ionic .icon-social-android-outline:before {
+  .ionic .ion-social-android-outline:before {
     content: "\e62d"; }
-  .ionic .icon-ios7-world:before {
+  .ionic .ion-ios7-world:before {
     content: "\e62e"; }
-  .ionic .icon-ios7-world-outline:before {
+  .ionic .ion-ios7-world-outline:before {
     content: "\e62f"; }
-  .ionic .icon-ios7-wineglass:before {
+  .ionic .ion-ios7-wineglass:before {
     content: "\e630"; }
-  .ionic .icon-ios7-wineglass-outline:before {
+  .ionic .ion-ios7-wineglass-outline:before {
     content: "\e631"; }
-  .ionic .icon-ios7-volume-low:before {
+  .ionic .ion-ios7-volume-low:before {
     content: "\e632"; }
-  .ionic .icon-ios7-volume-high:before {
+  .ionic .ion-ios7-volume-high:before {
     content: "\e633"; }
-  .ionic .icon-ios7-videocam:before {
+  .ionic .ion-ios7-videocam:before {
     content: "\e634"; }
-  .ionic .icon-ios7-videocam-outline:before {
+  .ionic .ion-ios7-videocam-outline:before {
     content: "\e635"; }
-  .ionic .icon-ios7-upload:before {
+  .ionic .ion-ios7-upload:before {
     content: "\e636"; }
-  .ionic .icon-ios7-upload-outline:before {
+  .ionic .ion-ios7-upload-outline:before {
     content: "\e637"; }
-  .ionic .icon-ios7-unlocked:before {
+  .ionic .ion-ios7-unlocked:before {
     content: "\e638"; }
-  .ionic .icon-ios7-unlocked-outline:before {
+  .ionic .ion-ios7-unlocked-outline:before {
     content: "\e639"; }
-  .ionic .icon-ios7-undo:before {
+  .ionic .ion-ios7-undo:before {
     content: "\e63a"; }
-  .ionic .icon-ios7-undo-outline:before {
+  .ionic .ion-ios7-undo-outline:before {
     content: "\e63b"; }
-  .ionic .icon-ios7-trash:before {
+  .ionic .ion-ios7-trash:before {
     content: "\e63c"; }
-  .ionic .icon-ios7-trash-outline:before {
+  .ionic .ion-ios7-trash-outline:before {
     content: "\e63d"; }
-  .ionic .icon-ios7-timer:before {
+  .ionic .ion-ios7-timer:before {
     content: "\e63e"; }
-  .ionic .icon-ios7-timer-outline:before {
+  .ionic .ion-ios7-timer-outline:before {
     content: "\e63f"; }
-  .ionic .icon-ios7-time:before {
+  .ionic .ion-ios7-time:before {
     content: "\e640"; }
-  .ionic .icon-ios7-time-outline:before {
+  .ionic .ion-ios7-time-outline:before {
     content: "\e641"; }
-  .ionic .icon-ios7-thunderstorm:before {
+  .ionic .ion-ios7-thunderstorm:before {
     content: "\e642"; }
-  .ionic .icon-ios7-thunderstorm-outline:before {
+  .ionic .ion-ios7-thunderstorm-outline:before {
     content: "\e643"; }
-  .ionic .icon-ios7-telephone:before {
+  .ionic .ion-ios7-telephone:before {
     content: "\e644"; }
-  .ionic .icon-ios7-telephone-outline:before {
+  .ionic .ion-ios7-telephone-outline:before {
     content: "\e645"; }
-  .ionic .icon-ios7-sunny:before {
+  .ionic .ion-ios7-sunny:before {
     content: "\e646"; }
-  .ionic .icon-ios7-sunny-outline:before {
+  .ionic .ion-ios7-sunny-outline:before {
     content: "\e647"; }
-  .ionic .icon-ios7-stopwatch:before {
+  .ionic .ion-ios7-stopwatch:before {
     content: "\e648"; }
-  .ionic .icon-ios7-stopwatch-outline:before {
+  .ionic .ion-ios7-stopwatch-outline:before {
     content: "\e649"; }
-  .ionic .icon-ios7-star:before {
+  .ionic .ion-ios7-star:before {
     content: "\e64a"; }
-  .ionic .icon-ios7-star-outline:before {
+  .ionic .ion-ios7-star-outline:before {
     content: "\e64b"; }
-  .ionic .icon-ios7-speedometer:before {
+  .ionic .ion-ios7-speedometer:before {
     content: "\e64c"; }
-  .ionic .icon-ios7-speedometer-outline:before {
+  .ionic .ion-ios7-speedometer-outline:before {
     content: "\e64d"; }
-  .ionic .icon-ios7-skipforward:before {
+  .ionic .ion-ios7-skipforward:before {
     content: "\e64e"; }
-  .ionic .icon-ios7-skipforward-outline:before {
+  .ionic .ion-ios7-skipforward-outline:before {
     content: "\e64f"; }
-  .ionic .icon-ios7-skipbackward:before {
+  .ionic .ion-ios7-skipbackward:before {
     content: "\e650"; }
-  .ionic .icon-ios7-skipbackward-outline:before {
+  .ionic .ion-ios7-skipbackward-outline:before {
     content: "\e651"; }
-  .ionic .icon-ios7-search:before {
+  .ionic .ion-ios7-search:before {
     content: "\e652"; }
-  .ionic .icon-ios7-search-strong:before {
+  .ionic .ion-ios7-search-strong:before {
     content: "\e653"; }
-  .ionic .icon-ios7-rewind:before {
+  .ionic .ion-ios7-rewind:before {
     content: "\e654"; }
-  .ionic .icon-ios7-rewind-outline:before {
+  .ionic .ion-ios7-rewind-outline:before {
     content: "\e655"; }
-  .ionic .icon-ios7-reload:before {
+  .ionic .ion-ios7-reload:before {
     content: "\e656"; }
-  .ionic .icon-ios7-refresh:before {
+  .ionic .ion-ios7-refresh:before {
     content: "\e657"; }
-  .ionic .icon-ios7-refresh-outline:before {
+  .ionic .ion-ios7-refresh-outline:before {
     content: "\e658"; }
-  .ionic .icon-ios7-refresh-empty:before {
+  .ionic .ion-ios7-refresh-empty:before {
     content: "\e659"; }
-  .ionic .icon-ios7-redo:before {
+  .ionic .ion-ios7-redo:before {
     content: "\e65a"; }
-  .ionic .icon-ios7-redo-outline:before {
+  .ionic .ion-ios7-redo-outline:before {
     content: "\e65b"; }
-  .ionic .icon-ios7-recording:before {
+  .ionic .ion-ios7-recording:before {
     content: "\e65c"; }
-  .ionic .icon-ios7-recording-outline:before {
+  .ionic .ion-ios7-recording-outline:before {
     content: "\e65d"; }
-  .ionic .icon-ios7-rainy:before {
+  .ionic .ion-ios7-rainy:before {
     content: "\e65e"; }
-  .ionic .icon-ios7-rainy-outline:before {
+  .ionic .ion-ios7-rainy-outline:before {
     content: "\e65f"; }
-  .ionic .icon-ios7-printer:before {
+  .ionic .ion-ios7-printer:before {
     content: "\e660"; }
-  .ionic .icon-ios7-printer-outline:before {
+  .ionic .ion-ios7-printer-outline:before {
     content: "\e661"; }
-  .ionic .icon-ios7-pricetag:before {
+  .ionic .ion-ios7-pricetag:before {
     content: "\e662"; }
-  .ionic .icon-ios7-pricetag-outline:before {
+  .ionic .ion-ios7-pricetag-outline:before {
     content: "\e663"; }
-  .ionic .icon-ios7-plus:before {
+  .ionic .ion-ios7-plus:before {
     content: "\e664"; }
-  .ionic .icon-ios7-plus-outline:before {
+  .ionic .ion-ios7-plus-outline:before {
     content: "\e665"; }
-  .ionic .icon-ios7-plus-empty:before {
+  .ionic .ion-ios7-plus-empty:before {
     content: "\e666"; }
-  .ionic .icon-ios7-play:before {
+  .ionic .ion-ios7-play:before {
     content: "\e667"; }
-  .ionic .icon-ios7-play-outline:before {
+  .ionic .ion-ios7-play-outline:before {
     content: "\e668"; }
-  .ionic .icon-ios7-pie:before {
+  .ionic .ion-ios7-pie:before {
     content: "\e669"; }
-  .ionic .icon-ios7-pie-outline:before {
+  .ionic .ion-ios7-pie-outline:before {
     content: "\e66a"; }
-  .ionic .icon-ios7-photos:before {
+  .ionic .ion-ios7-photos:before {
     content: "\e66b"; }
-  .ionic .icon-ios7-photos-outline:before {
+  .ionic .ion-ios7-photos-outline:before {
     content: "\e66c"; }
-  .ionic .icon-ios7-personadd:before {
+  .ionic .ion-ios7-personadd:before {
     content: "\e66d"; }
-  .ionic .icon-ios7-personadd-outline:before {
+  .ionic .ion-ios7-personadd-outline:before {
     content: "\e66e"; }
-  .ionic .icon-ios7-person:before {
+  .ionic .ion-ios7-person:before {
     content: "\e66f"; }
-  .ionic .icon-ios7-person-outline:before {
+  .ionic .ion-ios7-person-outline:before {
     content: "\e670"; }
-  .ionic .icon-ios7-people:before {
+  .ionic .ion-ios7-people:before {
     content: "\e671"; }
-  .ionic .icon-ios7-people-outline:before {
+  .ionic .ion-ios7-people-outline:before {
     content: "\e672"; }
-  .ionic .icon-ios7-pause:before {
+  .ionic .ion-ios7-pause:before {
     content: "\e673"; }
-  .ionic .icon-ios7-pause-outline:before {
+  .ionic .ion-ios7-pause-outline:before {
     content: "\e674"; }
-  .ionic .icon-ios7-partlysunny:before {
+  .ionic .ion-ios7-partlysunny:before {
     content: "\e675"; }
-  .ionic .icon-ios7-partlysunny-outline:before {
+  .ionic .ion-ios7-partlysunny-outline:before {
     content: "\e676"; }
-  .ionic .icon-ios7-paperplane:before {
+  .ionic .ion-ios7-paperplane:before {
     content: "\e677"; }
-  .ionic .icon-ios7-paperplane-outline:before {
+  .ionic .ion-ios7-paperplane-outline:before {
     content: "\e678"; }
-  .ionic .icon-ios7-navigate:before {
+  .ionic .ion-ios7-navigate:before {
     content: "\e679"; }
-  .ionic .icon-ios7-navigate-outline:before {
+  .ionic .ion-ios7-navigate-outline:before {
     content: "\e67a"; }
-  .ionic .icon-ios7-musical-notes:before {
+  .ionic .ion-ios7-musical-notes:before {
     content: "\e67b"; }
-  .ionic .icon-ios7-musical-note:before {
+  .ionic .ion-ios7-musical-note:before {
     content: "\e67c"; }
-  .ionic .icon-ios7-more:before {
+  .ionic .ion-ios7-more:before {
     content: "\e67d"; }
-  .ionic .icon-ios7-more-outline:before {
+  .ionic .ion-ios7-more-outline:before {
     content: "\e67e"; }
-  .ionic .icon-ios7-moon:before {
+  .ionic .ion-ios7-moon:before {
     content: "\e67f"; }
-  .ionic .icon-ios7-moon-outline:before {
+  .ionic .ion-ios7-moon-outline:before {
     content: "\e680"; }
-  .ionic .icon-ios7-monitor:before {
+  .ionic .ion-ios7-monitor:before {
     content: "\e681"; }
-  .ionic .icon-ios7-monitor-outline:before {
+  .ionic .ion-ios7-monitor-outline:before {
     content: "\e682"; }
-  .ionic .icon-ios7-minus:before {
+  .ionic .ion-ios7-minus:before {
     content: "\e683"; }
-  .ionic .icon-ios7-minus-outline:before {
+  .ionic .ion-ios7-minus-outline:before {
     content: "\e684"; }
-  .ionic .icon-ios7-minus-empty:before {
+  .ionic .ion-ios7-minus-empty:before {
     content: "\e685"; }
-  .ionic .icon-ios7-mic:before {
+  .ionic .ion-ios7-mic:before {
     content: "\e686"; }
-  .ionic .icon-ios7-mic-outline:before {
+  .ionic .ion-ios7-mic-outline:before {
     content: "\e687"; }
-  .ionic .icon-ios7-mic-off:before {
+  .ionic .ion-ios7-mic-off:before {
     content: "\e688"; }
-  .ionic .icon-ios7-medkit:before {
+  .ionic .ion-ios7-medkit:before {
     content: "\e689"; }
-  .ionic .icon-ios7-medkit-outline:before {
+  .ionic .ion-ios7-medkit-outline:before {
     content: "\e68a"; }
-  .ionic .icon-ios7-locked:before {
+  .ionic .ion-ios7-locked:before {
     content: "\e68b"; }
-  .ionic .icon-ios7-locked-outline:before {
+  .ionic .ion-ios7-locked-outline:before {
     content: "\e68c"; }
-  .ionic .icon-ios7-location:before {
+  .ionic .ion-ios7-location:before {
     content: "\e68d"; }
-  .ionic .icon-ios7-location-outline:before {
+  .ionic .ion-ios7-location-outline:before {
     content: "\e68e"; }
-  .ionic .icon-ios7-lightbulb:before {
+  .ionic .ion-ios7-lightbulb:before {
     content: "\e68f"; }
-  .ionic .icon-ios7-lightbulb-outline:before {
+  .ionic .ion-ios7-lightbulb-outline:before {
     content: "\e690"; }
-  .ionic .icon-ios7-keypad:before {
+  .ionic .ion-ios7-keypad:before {
     content: "\e691"; }
-  .ionic .icon-ios7-keypad-outline:before {
+  .ionic .ion-ios7-keypad-outline:before {
     content: "\e692"; }
-  .ionic .icon-ios7-ionic-outline:before {
+  .ionic .ion-ios7-ionic-outline:before {
     content: "\e693"; }
-  .ionic .icon-ios7-information:before {
+  .ionic .ion-ios7-information:before {
     content: "\e694"; }
-  .ionic .icon-ios7-information-outline:before {
+  .ionic .ion-ios7-information-outline:before {
     content: "\e695"; }
-  .ionic .icon-ios7-information-empty:before {
+  .ionic .ion-ios7-information-empty:before {
     content: "\e696"; }
-  .ionic .icon-ios7-infinite:before {
+  .ionic .ion-ios7-infinite:before {
     content: "\e697"; }
-  .ionic .icon-ios7-infinite-outline:before {
+  .ionic .ion-ios7-infinite-outline:before {
     content: "\e698"; }
-  .ionic .icon-ios7-help:before {
+  .ionic .ion-ios7-help:before {
     content: "\e699"; }
-  .ionic .icon-ios7-help-outline:before {
+  .ionic .ion-ios7-help-outline:before {
     content: "\e69a"; }
-  .ionic .icon-ios7-help-empty:before {
+  .ionic .ion-ios7-help-empty:before {
     content: "\e69b"; }
-  .ionic .icon-ios7-heart:before {
+  .ionic .ion-ios7-heart:before {
     content: "\e69c"; }
-  .ionic .icon-ios7-heart-outline:before {
+  .ionic .ion-ios7-heart-outline:before {
     content: "\e69d"; }
-  .ionic .icon-ios7-glasses:before {
+  .ionic .ion-ios7-glasses:before {
     content: "\e69e"; }
-  .ionic .icon-ios7-glasses-outline:before {
+  .ionic .ion-ios7-glasses-outline:before {
     content: "\e69f"; }
-  .ionic .icon-ios7-gear:before {
+  .ionic .ion-ios7-gear:before {
     content: "\e6a0"; }
-  .ionic .icon-ios7-gear-outline:before {
+  .ionic .ion-ios7-gear-outline:before {
     content: "\e6a1"; }
-  .ionic .icon-ios7-folder:before {
+  .ionic .ion-ios7-folder:before {
     content: "\e6a2"; }
-  .ionic .icon-ios7-folder-outline:before {
+  .ionic .ion-ios7-folder-outline:before {
     content: "\e6a3"; }
-  .ionic .icon-ios7-flag:before {
+  .ionic .ion-ios7-flag:before {
     content: "\e6a4"; }
-  .ionic .icon-ios7-flag-outline:before {
+  .ionic .ion-ios7-flag-outline:before {
     content: "\e6a5"; }
-  .ionic .icon-ios7-film:before {
+  .ionic .ion-ios7-film:before {
     content: "\e6a6"; }
-  .ionic .icon-ios7-film-outline:before {
+  .ionic .ion-ios7-film-outline:before {
     content: "\e6a7"; }
-  .ionic .icon-ios7-filing:before {
+  .ionic .ion-ios7-filing:before {
     content: "\e6a8"; }
-  .ionic .icon-ios7-filing-outline:before {
+  .ionic .ion-ios7-filing-outline:before {
     content: "\e6a9"; }
-  .ionic .icon-ios7-fastforward:before {
+  .ionic .ion-ios7-fastforward:before {
     content: "\e6aa"; }
-  .ionic .icon-ios7-fastforward-outline:before {
+  .ionic .ion-ios7-fastforward-outline:before {
     content: "\e6ab"; }
-  .ionic .icon-ios7-eye:before {
+  .ionic .ion-ios7-eye:before {
     content: "\e6ac"; }
-  .ionic .icon-ios7-eye-outline:before {
+  .ionic .ion-ios7-eye-outline:before {
     content: "\e6ad"; }
-  .ionic .icon-ios7-email:before {
+  .ionic .ion-ios7-email:before {
     content: "\e6ae"; }
-  .ionic .icon-ios7-email-outline:before {
+  .ionic .ion-ios7-email-outline:before {
     content: "\e6af"; }
-  .ionic .icon-ios7-drag:before {
+  .ionic .ion-ios7-drag:before {
     content: "\e6b0"; }
-  .ionic .icon-ios7-download:before {
+  .ionic .ion-ios7-download:before {
     content: "\e6b1"; }
-  .ionic .icon-ios7-download-outline:before {
+  .ionic .ion-ios7-download-outline:before {
     content: "\e6b2"; }
-  .ionic .icon-ios7-copy:before {
+  .ionic .ion-ios7-copy:before {
     content: "\e6b3"; }
-  .ionic .icon-ios7-copy-outline:before {
+  .ionic .ion-ios7-copy-outline:before {
     content: "\e6b4"; }
-  .ionic .icon-ios7-contact:before {
+  .ionic .ion-ios7-contact:before {
     content: "\e6b5"; }
-  .ionic .icon-ios7-contact-outline:before {
+  .ionic .ion-ios7-contact-outline:before {
     content: "\e6b6"; }
-  .ionic .icon-ios7-compose:before {
+  .ionic .ion-ios7-compose:before {
     content: "\e6b7"; }
-  .ionic .icon-ios7-compose-outline:before {
+  .ionic .ion-ios7-compose-outline:before {
     content: "\e6b8"; }
-  .ionic .icon-ios7-cog:before {
+  .ionic .ion-ios7-cog:before {
     content: "\e6b9"; }
-  .ionic .icon-ios7-cog-outline:before {
+  .ionic .ion-ios7-cog-outline:before {
     content: "\e6ba"; }
-  .ionic .icon-ios7-cloudy:before {
+  .ionic .ion-ios7-cloudy:before {
     content: "\e6bb"; }
-  .ionic .icon-ios7-cloudy-outline:before {
+  .ionic .ion-ios7-cloudy-outline:before {
     content: "\e6bc"; }
-  .ionic .icon-ios7-cloud:before {
+  .ionic .ion-ios7-cloud:before {
     content: "\e6bd"; }
-  .ionic .icon-ios7-cloud-upload:before {
+  .ionic .ion-ios7-cloud-upload:before {
     content: "\e6be"; }
-  .ionic .icon-ios7-cloud-upload-outline:before {
+  .ionic .ion-ios7-cloud-upload-outline:before {
     content: "\e6bf"; }
-  .ionic .icon-ios7-cloud-outline:before {
+  .ionic .ion-ios7-cloud-outline:before {
     content: "\e6c0"; }
-  .ionic .icon-ios7-cloud-download:before {
+  .ionic .ion-ios7-cloud-download:before {
     content: "\e6c1"; }
-  .ionic .icon-ios7-cloud-download-outline:before {
+  .ionic .ion-ios7-cloud-download-outline:before {
     content: "\e6c2"; }
-  .ionic .icon-ios7-clock:before {
+  .ionic .ion-ios7-clock:before {
     content: "\e6c3"; }
-  .ionic .icon-ios7-clock-outline:before {
+  .ionic .ion-ios7-clock-outline:before {
     content: "\e6c4"; }
-  .ionic .icon-ios7-circle-outline:before {
+  .ionic .ion-ios7-circle-outline:before {
     content: "\e6c5"; }
-  .ionic .icon-ios7-circle-filled:before {
+  .ionic .ion-ios7-circle-filled:before {
     content: "\e6c6"; }
-  .ionic .icon-ios7-checkmark:before {
+  .ionic .ion-ios7-checkmark:before {
     content: "\e6c7"; }
-  .ionic .icon-ios7-checkmark-outline:before {
+  .ionic .ion-ios7-checkmark-outline:before {
     content: "\e6c8"; }
-  .ionic .icon-ios7-checkmark-empty:before {
+  .ionic .ion-ios7-checkmark-empty:before {
     content: "\e6c9"; }
-  .ionic .icon-ios7-chatbubble:before {
+  .ionic .ion-ios7-chatbubble:before {
     content: "\e6ca"; }
-  .ionic .icon-ios7-chatbubble-outline:before {
+  .ionic .ion-ios7-chatbubble-outline:before {
     content: "\e6cb"; }
-  .ionic .icon-ios7-chatboxes:before {
+  .ionic .ion-ios7-chatboxes:before {
     content: "\e6cc"; }
-  .ionic .icon-ios7-chatboxes-outline:before {
+  .ionic .ion-ios7-chatboxes-outline:before {
     content: "\e6cd"; }
-  .ionic .icon-ios7-cart:before {
+  .ionic .ion-ios7-cart:before {
     content: "\e6ce"; }
-  .ionic .icon-ios7-cart-outline:before {
+  .ionic .ion-ios7-cart-outline:before {
     content: "\e6cf"; }
-  .ionic .icon-ios7-camera:before {
+  .ionic .ion-ios7-camera:before {
     content: "\e6d0"; }
-  .ionic .icon-ios7-camera-outline:before {
+  .ionic .ion-ios7-camera-outline:before {
     content: "\e6d1"; }
-  .ionic .icon-ios7-calendar:before {
+  .ionic .ion-ios7-calendar:before {
     content: "\e6d2"; }
-  .ionic .icon-ios7-calendar-outline:before {
+  .ionic .ion-ios7-calendar-outline:before {
     content: "\e6d3"; }
-  .ionic .icon-ios7-calculator:before {
+  .ionic .ion-ios7-calculator:before {
     content: "\e6d4"; }
-  .ionic .icon-ios7-calculator-outline:before {
+  .ionic .ion-ios7-calculator-outline:before {
     content: "\e6d5"; }
-  .ionic .icon-ios7-browsers:before {
+  .ionic .ion-ios7-browsers:before {
     content: "\e6d6"; }
-  .ionic .icon-ios7-browsers-outline:before {
+  .ionic .ion-ios7-browsers-outline:before {
     content: "\e6d7"; }
-  .ionic .icon-ios7-briefcase:before {
+  .ionic .ion-ios7-briefcase:before {
     content: "\e6d8"; }
-  .ionic .icon-ios7-briefcase-outline:before {
+  .ionic .ion-ios7-briefcase-outline:before {
     content: "\e6d9"; }
-  .ionic .icon-ios7-box:before {
+  .ionic .ion-ios7-box:before {
     content: "\e6da"; }
-  .ionic .icon-ios7-box-outline:before {
+  .ionic .ion-ios7-box-outline:before {
     content: "\e6db"; }
-  .ionic .icon-ios7-bookmarks:before {
+  .ionic .ion-ios7-bookmarks:before {
     content: "\e6dc"; }
-  .ionic .icon-ios7-bookmarks-outline:before {
+  .ionic .ion-ios7-bookmarks-outline:before {
     content: "\e6dd"; }
-  .ionic .icon-ios7-bolt:before {
+  .ionic .ion-ios7-bolt:before {
     content: "\e6de"; }
-  .ionic .icon-ios7-bolt-outline:before {
+  .ionic .ion-ios7-bolt-outline:before {
     content: "\e6df"; }
-  .ionic .icon-ios7-bell:before {
+  .ionic .ion-ios7-bell:before {
     content: "\e6e0"; }
-  .ionic .icon-ios7-bell-outline:before {
+  .ionic .ion-ios7-bell-outline:before {
     content: "\e6e1"; }
-  .ionic .icon-ios7-at:before {
+  .ionic .ion-ios7-at:before {
     content: "\e6e2"; }
-  .ionic .icon-ios7-at-outline:before {
+  .ionic .ion-ios7-at-outline:before {
     content: "\e6e3"; }
-  .ionic .icon-ios7-arrow-up:before {
+  .ionic .ion-ios7-arrow-up:before {
     content: "\e6e4"; }
-  .ionic .icon-ios7-arrow-thin-up:before {
+  .ionic .ion-ios7-arrow-thin-up:before {
     content: "\e6e5"; }
-  .ionic .icon-ios7-arrow-thin-right:before {
+  .ionic .ion-ios7-arrow-thin-right:before {
     content: "\e6e6"; }
-  .ionic .icon-ios7-arrow-thin-left:before {
+  .ionic .ion-ios7-arrow-thin-left:before {
     content: "\e6e7"; }
-  .ionic .icon-ios7-arrow-thin-down:before {
+  .ionic .ion-ios7-arrow-thin-down:before {
     content: "\e6e8"; }
-  .ionic .icon-ios7-arrow-right:before {
+  .ionic .ion-ios7-arrow-right:before {
     content: "\e6e9"; }
-  .ionic .icon-ios7-arrow-left:before {
+  .ionic .ion-ios7-arrow-left:before {
     content: "\e6ea"; }
-  .ionic .icon-ios7-arrow-forward:before {
+  .ionic .ion-ios7-arrow-forward:before {
     content: "\e6eb"; }
-  .ionic .icon-ios7-arrow-down:before {
+  .ionic .ion-ios7-arrow-down:before {
     content: "\e6ec"; }
-  .ionic .icon-ios7-arrow-back:before {
+  .ionic .ion-ios7-arrow-back:before {
     content: "\e6ed"; }
-  .ionic .icon-ios7-albums:before {
+  .ionic .ion-ios7-albums:before {
     content: "\e6ee"; }
-  .ionic .icon-ios7-albums-outline:before {
+  .ionic .ion-ios7-albums-outline:before {
     content: "\e6ef"; }
-  .ionic .icon-ios7-alarm:before {
+  .ionic .ion-ios7-alarm:before {
     content: "\e6f0"; }
-  .ionic .icon-ios7-alarm-outline:before {
+  .ionic .ion-ios7-alarm-outline:before {
     content: "\e6f1"; }
-  .ionic .icon-wrench:before {
+  .ionic .ion-wrench:before {
     content: "\e6f2"; }
-  .ionic .icon-woman:before {
+  .ionic .ion-woman:before {
     content: "\e6f3"; }
-  .ionic .icon-wineglass:before {
+  .ionic .ion-wineglass:before {
     content: "\e6f4"; }
-  .ionic .icon-wifi:before {
+  .ionic .ion-wifi:before {
     content: "\e6f5"; }
-  .ionic .icon-waterdrop:before {
+  .ionic .ion-waterdrop:before {
     content: "\e6f6"; }
-  .ionic .icon-volume-mute:before {
+  .ionic .ion-volume-mute:before {
     content: "\e6f7"; }
-  .ionic .icon-volume-medium:before {
+  .ionic .ion-volume-medium:before {
     content: "\e6f8"; }
-  .ionic .icon-volume-low:before {
+  .ionic .ion-volume-low:before {
     content: "\e6f9"; }
-  .ionic .icon-volume-high:before {
+  .ionic .ion-volume-high:before {
     content: "\e6fa"; }
-  .ionic .icon-videocamera:before {
+  .ionic .ion-videocamera:before {
     content: "\e6fb"; }
-  .ionic .icon-usb:before {
+  .ionic .ion-usb:before {
     content: "\e6fc"; }
-  .ionic .icon-upload:before {
+  .ionic .ion-upload:before {
     content: "\e6fd"; }
-  .ionic .icon-unlocked:before {
+  .ionic .ion-unlocked:before {
     content: "\e6fe"; }
-  .ionic .icon-umbrella:before {
+  .ionic .ion-umbrella:before {
     content: "\e6ff"; }
-  .ionic .icon-trash-b:before {
+  .ionic .ion-trash-b:before {
     content: "\e700"; }
-  .ionic .icon-trash-a:before {
+  .ionic .ion-trash-a:before {
     content: "\e701"; }
-  .ionic .icon-thumbsup:before {
+  .ionic .ion-thumbsup:before {
     content: "\e702"; }
-  .ionic .icon-thumbsdown:before {
+  .ionic .ion-thumbsdown:before {
     content: "\e703"; }
-  .ionic .icon-thermometer:before {
+  .ionic .ion-thermometer:before {
     content: "\e704"; }
-  .ionic .icon-stop:before {
+  .ionic .ion-stop:before {
     content: "\e705"; }
-  .ionic .icon-stats-bars:before {
+  .ionic .ion-stats-bars:before {
     content: "\e706"; }
-  .ionic .icon-star:before {
+  .ionic .ion-star:before {
     content: "\e707"; }
-  .ionic .icon-spoon:before {
+  .ionic .ion-spoon:before {
     content: "\e708"; }
-  .ionic .icon-speedometer:before {
+  .ionic .ion-speedometer:before {
     content: "\e709"; }
-  .ionic .icon-speakerphone:before {
+  .ionic .ion-speakerphone:before {
     content: "\e70a"; }
-  .ionic .icon-skip-forward:before {
+  .ionic .ion-skip-forward:before {
     content: "\e70b"; }
-  .ionic .icon-skip-backward:before {
+  .ionic .ion-skip-backward:before {
     content: "\e70c"; }
-  .ionic .icon-shuffle:before {
+  .ionic .ion-shuffle:before {
     content: "\e70d"; }
-  .ionic .icon-share:before {
+  .ionic .ion-share:before {
     content: "\e70e"; }
-  .ionic .icon-settings:before {
+  .ionic .ion-settings:before {
     content: "\e70f"; }
-  .ionic .icon-search:before {
+  .ionic .ion-search:before {
     content: "\e710"; }
-  .ionic .icon-reply:before {
+  .ionic .ion-reply:before {
     content: "\e711"; }
-  .ionic .icon-reply-all:before {
+  .ionic .ion-reply-all:before {
     content: "\e712"; }
-  .ionic .icon-refresh:before {
+  .ionic .ion-refresh:before {
     content: "\e713"; }
-  .ionic .icon-record:before {
+  .ionic .ion-record:before {
     content: "\e714"; }
-  .ionic .icon-radio-waves:before {
+  .ionic .ion-radio-waves:before {
     content: "\e715"; }
-  .ionic .icon-printer:before {
+  .ionic .ion-printer:before {
     content: "\e716"; }
-  .ionic .icon-pricetags:before {
+  .ionic .ion-pricetags:before {
     content: "\e717"; }
-  .ionic .icon-pricetag:before {
+  .ionic .ion-pricetag:before {
     content: "\e718"; }
-  .ionic .icon-power:before {
+  .ionic .ion-power:before {
     content: "\e719"; }
-  .ionic .icon-pound:before {
+  .ionic .ion-pound:before {
     content: "\e71a"; }
-  .ionic .icon-plus:before {
+  .ionic .ion-plus:before {
     content: "\e71b"; }
-  .ionic .icon-plus-round:before {
+  .ionic .ion-plus-round:before {
     content: "\e71c"; }
-  .ionic .icon-plus-circled:before {
+  .ionic .ion-plus-circled:before {
     content: "\e71d"; }
-  .ionic .icon-play:before {
+  .ionic .ion-play:before {
     content: "\e71e"; }
-  .ionic .icon-plane:before {
+  .ionic .ion-plane:before {
     content: "\e71f"; }
-  .ionic .icon-pizza:before {
+  .ionic .ion-pizza:before {
     content: "\e720"; }
-  .ionic .icon-pinpoint:before {
+  .ionic .ion-pinpoint:before {
     content: "\e721"; }
-  .ionic .icon-pin:before {
+  .ionic .ion-pin:before {
     content: "\e722"; }
-  .ionic .icon-pie-graph:before {
+  .ionic .ion-pie-graph:before {
     content: "\e723"; }
-  .ionic .icon-person:before {
+  .ionic .ion-person:before {
     content: "\e724"; }
-  .ionic .icon-person-stalker:before {
+  .ionic .ion-person-stalker:before {
     content: "\e725"; }
-  .ionic .icon-person-add:before {
+  .ionic .ion-person-add:before {
     content: "\e726"; }
-  .ionic .icon-pause:before {
+  .ionic .ion-pause:before {
     content: "\e727"; }
-  .ionic .icon-paperclip:before {
+  .ionic .ion-paperclip:before {
     content: "\e728"; }
-  .ionic .icon-nuclear:before {
+  .ionic .ion-nuclear:before {
     content: "\e729"; }
-  .ionic .icon-navigate:before {
+  .ionic .ion-navigate:before {
     content: "\e72a"; }
-  .ionic .icon-navicon:before {
+  .ionic .ion-navicon:before {
     content: "\e72b"; }
-  .ionic .icon-navicon-round:before {
+  .ionic .ion-navicon-round:before {
     content: "\e72c"; }
-  .ionic .icon-music-note:before {
+  .ionic .ion-music-note:before {
     content: "\e72d"; }
-  .ionic .icon-more:before {
+  .ionic .ion-more:before {
     content: "\e72e"; }
-  .ionic .icon-monitor:before {
+  .ionic .ion-monitor:before {
     content: "\e72f"; }
-  .ionic .icon-minus:before {
+  .ionic .ion-minus:before {
     content: "\e730"; }
-  .ionic .icon-minus-round:before {
+  .ionic .ion-minus-round:before {
     content: "\e731"; }
-  .ionic .icon-minus-circled:before {
+  .ionic .ion-minus-circled:before {
     content: "\e732"; }
-  .ionic .icon-mic-c:before {
+  .ionic .ion-mic-c:before {
     content: "\e733"; }
-  .ionic .icon-mic-b:before {
+  .ionic .ion-mic-b:before {
     content: "\e734"; }
-  .ionic .icon-mic-a:before {
+  .ionic .ion-mic-a:before {
     content: "\e735"; }
-  .ionic .icon-medkit:before {
+  .ionic .ion-medkit:before {
     content: "\e736"; }
-  .ionic .icon-map:before {
+  .ionic .ion-map:before {
     content: "\e737"; }
-  .ionic .icon-man:before {
+  .ionic .ion-man:before {
     content: "\e738"; }
-  .ionic .icon-male:before {
+  .ionic .ion-male:before {
     content: "\e739"; }
-  .ionic .icon-magnet:before {
+  .ionic .ion-magnet:before {
     content: "\e73a"; }
-  .ionic .icon-loop:before {
+  .ionic .ion-loop:before {
     content: "\e73b"; }
-  .ionic .icon-log-out:before {
+  .ionic .ion-log-out:before {
     content: "\e73c"; }
-  .ionic .icon-log-in:before {
+  .ionic .ion-log-in:before {
     content: "\e73d"; }
-  .ionic .icon-locked:before {
+  .ionic .ion-locked:before {
     content: "\e73e"; }
-  .ionic .icon-location:before {
+  .ionic .ion-location:before {
     content: "\e73f"; }
-  .ionic .icon-load-d:before {
+  .ionic .ion-load-d:before {
     content: "\e740"; }
-  .ionic .icon-load-c:before {
+  .ionic .ion-load-c:before {
     content: "\e741"; }
-  .ionic .icon-load-b:before {
+  .ionic .ion-load-b:before {
     content: "\e742"; }
-  .ionic .icon-load-a:before {
+  .ionic .ion-load-a:before {
     content: "\e743"; }
-  .ionic .icon-link:before {
+  .ionic .ion-link:before {
     content: "\e744"; }
-  .ionic .icon-lightbulb:before {
+  .ionic .ion-lightbulb:before {
     content: "\e745"; }
-  .ionic .icon-levels:before {
+  .ionic .ion-levels:before {
     content: "\e746"; }
-  .ionic .icon-leaf:before {
+  .ionic .ion-leaf:before {
     content: "\e747"; }
-  .ionic .icon-laptop:before {
+  .ionic .ion-laptop:before {
     content: "\e748"; }
-  .ionic .icon-knife:before {
+  .ionic .ion-knife:before {
     content: "\e749"; }
-  .ionic .icon-key:before {
+  .ionic .ion-key:before {
     content: "\e74a"; }
-  .ionic .icon-jet:before {
+  .ionic .ion-jet:before {
     content: "\e74b"; }
-  .ionic .icon-ipod:before {
+  .ionic .ion-ipod:before {
     content: "\e74c"; }
-  .ionic .icon-iphone:before {
+  .ionic .ion-iphone:before {
     content: "\e74d"; }
-  .ionic .icon-ipad:before {
+  .ionic .ion-ipad:before {
     content: "\e74e"; }
-  .ionic .icon-ionic:before {
+  .ionic .ion-ionic:before {
     content: "\e74f"; }
-  .ionic .icon-information:before {
+  .ionic .ion-information:before {
     content: "\e750"; }
-  .ionic .icon-information-circled:before {
+  .ionic .ion-information-circled:before {
     content: "\e751"; }
-  .ionic .icon-images:before {
+  .ionic .ion-images:before {
     content: "\e752"; }
-  .ionic .icon-image:before {
+  .ionic .ion-image:before {
     content: "\e753"; }
-  .ionic .icon-icecream:before {
+  .ionic .ion-icecream:before {
     content: "\e754"; }
-  .ionic .icon-home:before {
+  .ionic .ion-home:before {
     content: "\e755"; }
-  .ionic .icon-help:before {
+  .ionic .ion-help:before {
     content: "\e756"; }
-  .ionic .icon-help-circled:before {
+  .ionic .ion-help-circled:before {
     content: "\e757"; }
-  .ionic .icon-help-buoy:before {
+  .ionic .ion-help-buoy:before {
     content: "\e758"; }
-  .ionic .icon-heart:before {
+  .ionic .ion-heart:before {
     content: "\e759"; }
-  .ionic .icon-headphone:before {
+  .ionic .ion-headphone:before {
     content: "\e75a"; }
-  .ionic .icon-hammer:before {
+  .ionic .ion-hammer:before {
     content: "\e75b"; }
-  .ionic .icon-grid:before {
+  .ionic .ion-grid:before {
     content: "\e75c"; }
-  .ionic .icon-gear-b:before {
+  .ionic .ion-gear-b:before {
     content: "\e75d"; }
-  .ionic .icon-gear-a:before {
+  .ionic .ion-gear-a:before {
     content: "\e75e"; }
-  .ionic .icon-game-controller-b:before {
+  .ionic .ion-game-controller-b:before {
     content: "\e75f"; }
-  .ionic .icon-game-controller-a:before {
+  .ionic .ion-game-controller-a:before {
     content: "\e760"; }
-  .ionic .icon-forward:before {
+  .ionic .ion-forward:before {
     content: "\e761"; }
-  .ionic .icon-fork:before {
+  .ionic .ion-fork:before {
     content: "\e762"; }
-  .ionic .icon-folder:before {
+  .ionic .ion-folder:before {
     content: "\e763"; }
-  .ionic .icon-flask:before {
+  .ionic .ion-flask:before {
     content: "\e764"; }
-  .ionic .icon-flash:before {
+  .ionic .ion-flash:before {
     content: "\e765"; }
-  .ionic .icon-flash-off:before {
+  .ionic .ion-flash-off:before {
     content: "\e766"; }
-  .ionic .icon-flag:before {
+  .ionic .ion-flag:before {
     content: "\e767"; }
-  .ionic .icon-film-marker:before {
+  .ionic .ion-film-marker:before {
     content: "\e768"; }
-  .ionic .icon-filing:before {
+  .ionic .ion-filing:before {
     content: "\e769"; }
-  .ionic .icon-female:before {
+  .ionic .ion-female:before {
     content: "\e76a"; }
-  .ionic .icon-eye:before {
+  .ionic .ion-eye:before {
     content: "\e76b"; }
-  .ionic .icon-email:before {
+  .ionic .ion-email:before {
     content: "\e76c"; }
-  .ionic .icon-eject:before {
+  .ionic .ion-eject:before {
     content: "\e76d"; }
-  .ionic .icon-egg:before {
+  .ionic .ion-egg:before {
     content: "\e76e"; }
-  .ionic .icon-earth:before {
+  .ionic .ion-earth:before {
     content: "\e76f"; }
-  .ionic .icon-drag:before {
+  .ionic .ion-drag:before {
     content: "\e770"; }
-  .ionic .icon-document:before {
+  .ionic .ion-document:before {
     content: "\e771"; }
-  .ionic .icon-document-text:before {
+  .ionic .ion-document-text:before {
     content: "\e772"; }
-  .ionic .icon-disc:before {
+  .ionic .ion-disc:before {
     content: "\e773"; }
-  .ionic .icon-contrast:before {
+  .ionic .ion-contrast:before {
     content: "\e774"; }
-  .ionic .icon-connection-bars:before {
+  .ionic .ion-connection-bars:before {
     content: "\e775"; }
-  .ionic .icon-compose:before {
+  .ionic .ion-compose:before {
     content: "\e776"; }
-  .ionic .icon-compass:before {
+  .ionic .ion-compass:before {
     content: "\e777"; }
-  .ionic .icon-coffee:before {
+  .ionic .ion-coffee:before {
     content: "\e778"; }
-  .ionic .icon-code:before {
+  .ionic .ion-code:before {
     content: "\e779"; }
-  .ionic .icon-code-working:before {
+  .ionic .ion-code-working:before {
     content: "\e77a"; }
-  .ionic .icon-code-download:before {
+  .ionic .ion-code-download:before {
     content: "\e77b"; }
-  .ionic .icon-cloud:before {
+  .ionic .ion-cloud:before {
     content: "\e77c"; }
-  .ionic .icon-close:before {
+  .ionic .ion-close:before {
     content: "\e77d"; }
-  .ionic .icon-close-round:before {
+  .ionic .ion-close-round:before {
     content: "\e77e"; }
-  .ionic .icon-close-circled:before {
+  .ionic .ion-close-circled:before {
     content: "\e77f"; }
-  .ionic .icon-clock:before {
+  .ionic .ion-clock:before {
     content: "\e780"; }
-  .ionic .icon-clipboard:before {
+  .ionic .ion-clipboard:before {
     content: "\e781"; }
-  .ionic .icon-chevron-up:before {
+  .ionic .ion-chevron-up:before {
     content: "\e782"; }
-  .ionic .icon-chevron-right:before {
+  .ionic .ion-chevron-right:before {
     content: "\e0fc"; }
-  .ionic .icon-chevron-left:before {
+  .ionic .ion-chevron-left:before {
     content: "\e784"; }
-  .ionic .icon-chevron-down:before {
+  .ionic .ion-chevron-down:before {
     content: "\e785"; }
-  .ionic .icon-checkmark:before {
+  .ionic .ion-checkmark:before {
     content: "\e786"; }
-  .ionic .icon-checkmark-round:before {
+  .ionic .ion-checkmark-round:before {
     content: "\e787"; }
-  .ionic .icon-checkmark-circled:before {
+  .ionic .ion-checkmark-circled:before {
     content: "\e788"; }
-  .ionic .icon-chatbubbles:before {
+  .ionic .ion-chatbubbles:before {
     content: "\e789"; }
-  .ionic .icon-chatbubble:before {
+  .ionic .ion-chatbubble:before {
     content: "\e78a"; }
-  .ionic .icon-chatbubble-working:before {
+  .ionic .ion-chatbubble-working:before {
     content: "\e78b"; }
-  .ionic .icon-chatboxes:before {
+  .ionic .ion-chatboxes:before {
     content: "\e78c"; }
-  .ionic .icon-chatbox:before {
+  .ionic .ion-chatbox:before {
     content: "\e78d"; }
-  .ionic .icon-chatbox-working:before {
+  .ionic .ion-chatbox-working:before {
     content: "\e78e"; }
-  .ionic .icon-card:before {
+  .ionic .ion-card:before {
     content: "\e78f"; }
-  .ionic .icon-camera:before {
+  .ionic .ion-camera:before {
     content: "\e790"; }
-  .ionic .icon-calendar:before {
+  .ionic .ion-calendar:before {
     content: "\e791"; }
-  .ionic .icon-calculator:before {
+  .ionic .ion-calculator:before {
     content: "\e792"; }
-  .ionic .icon-briefcase:before {
+  .ionic .ion-briefcase:before {
     content: "\e793"; }
-  .ionic .icon-bookmark:before {
+  .ionic .ion-bookmark:before {
     content: "\e794"; }
-  .ionic .icon-bluetooth:before {
+  .ionic .ion-bluetooth:before {
     content: "\e795"; }
-  .ionic .icon-beaker:before {
+  .ionic .ion-beaker:before {
     content: "\e796"; }
-  .ionic .icon-battery-low:before {
+  .ionic .ion-battery-low:before {
     content: "\e797"; }
-  .ionic .icon-battery-half:before {
+  .ionic .ion-battery-half:before {
     content: "\e798"; }
-  .ionic .icon-battery-full:before {
+  .ionic .ion-battery-full:before {
     content: "\e799"; }
-  .ionic .icon-battery-empty:before {
+  .ionic .ion-battery-empty:before {
     content: "\e79a"; }
-  .ionic .icon-battery-charging:before {
+  .ionic .ion-battery-charging:before {
     content: "\e79b"; }
-  .ionic .icon-bag:before {
+  .ionic .ion-bag:before {
     content: "\e79c"; }
-  .ionic .icon-at:before {
+  .ionic .ion-at:before {
     content: "\e79d"; }
-  .ionic .icon-arrow-up-c:before {
+  .ionic .ion-arrow-up-c:before {
     content: "\e79e"; }
-  .ionic .icon-arrow-up-b:before {
+  .ionic .ion-arrow-up-b:before {
     content: "\e79f"; }
-  .ionic .icon-arrow-up-a:before {
+  .ionic .ion-arrow-up-a:before {
     content: "\e7a0"; }
-  .ionic .icon-arrow-swap:before {
+  .ionic .ion-arrow-swap:before {
     content: "\e7a1"; }
-  .ionic .icon-arrow-shrink:before {
+  .ionic .ion-arrow-shrink:before {
     content: "\e7a2"; }
-  .ionic .icon-arrow-right-c:before {
+  .ionic .ion-arrow-right-c:before {
     content: "\e7a3"; }
-  .ionic .icon-arrow-right-b:before {
+  .ionic .ion-arrow-right-b:before {
     content: "\e7a4"; }
-  .ionic .icon-arrow-right-a:before {
+  .ionic .ion-arrow-right-a:before {
     content: "\e7a5"; }
-  .ionic .icon-arrow-return-right:before {
+  .ionic .ion-arrow-return-right:before {
     content: "\e7a6"; }
-  .ionic .icon-arrow-return-left:before {
+  .ionic .ion-arrow-return-left:before {
     content: "\e7a7"; }
-  .ionic .icon-arrow-resize:before {
+  .ionic .ion-arrow-resize:before {
     content: "\e7a8"; }
-  .ionic .icon-arrow-move:before {
+  .ionic .ion-arrow-move:before {
     content: "\e7a9"; }
-  .ionic .icon-arrow-left-c:before {
+  .ionic .ion-arrow-left-c:before {
     content: "\e7aa"; }
-  .ionic .icon-arrow-left-b:before {
+  .ionic .ion-arrow-left-b:before {
     content: "\e7ab"; }
-  .ionic .icon-arrow-left-a:before {
+  .ionic .ion-arrow-left-a:before {
     content: "\e7ac"; }
-  .ionic .icon-arrow-graph-up-right:before {
+  .ionic .ion-arrow-graph-up-right:before {
     content: "\e7ad"; }
-  .ionic .icon-arrow-graph-up-left:before {
+  .ionic .ion-arrow-graph-up-left:before {
     content: "\e7ae"; }
-  .ionic .icon-arrow-graph-down-right:before {
+  .ionic .ion-arrow-graph-down-right:before {
     content: "\e7af"; }
-  .ionic .icon-arrow-graph-down-left:before {
+  .ionic .ion-arrow-graph-down-left:before {
     content: "\e7b0"; }
-  .ionic .icon-arrow-expand:before {
+  .ionic .ion-arrow-expand:before {
     content: "\e7b1"; }
-  .ionic .icon-arrow-down-c:before {
+  .ionic .ion-arrow-down-c:before {
     content: "\e7b2"; }
-  .ionic .icon-arrow-down-b:before {
+  .ionic .ion-arrow-down-b:before {
     content: "\e7b3"; }
-  .ionic .icon-arrow-down-a:before {
+  .ionic .ion-arrow-down-a:before {
     content: "\e7b4"; }
-  .ionic .icon-archive:before {
+  .ionic .ion-archive:before {
     content: "\e7b5"; }
-  .ionic .icon-alert:before {
+  .ionic .ion-alert:before {
     content: "\e7b6"; }
-  .ionic .icon-alert-circled:before {
+  .ionic .ion-alert-circled:before {
     content: "\e7b7"; }
   .ionic html, .ionic body, .ionic div, .ionic span, .ionic applet, .ionic object, .ionic iframe,
   .ionic h1, .ionic h2, .ionic h3, .ionic h4, .ionic h5, .ionic h6, .ionic p, .ionic blockquote, .ionic pre,
@@ -1577,11 +1577,11 @@
       color: inherit; }
     .ionic .bar > .button {
       z-index: 1;
-      padding: 0 8px;
+      padding: 8px;
       min-height: 31px;
       font-size: 12px;
       line-height: 30px; }
-      .ionic .bar > .button i, .ionic .bar > .button .icon {
+      .ionic .bar > .button .ion {
         font-size: 24px;
         line-height: 29px; }
     .ionic .bar .button-bar > .button {
@@ -1842,8 +1842,7 @@
   .ionic .tabs-icon-bottom .tab-item {
     font-size: 10px;
     line-height: 14px; }
-  .ionic .tab-item i,
-  .ionic .tab-item .icon {
+  .ionic .tab-item .ion {
     display: block;
     margin: 0 auto;
     height: 32px;
@@ -1851,15 +1850,13 @@
   .ionic .tabs-icon-left .tab-item,
   .ionic .tabs-icon-right .tab-item {
     font-size: 10px; }
-    .ionic .tabs-icon-left .tab-item i, .ionic .tabs-icon-left .tab-item .icon,
-    .ionic .tabs-icon-right .tab-item i,
-    .ionic .tabs-icon-right .tab-item .icon {
+    .ionic .tabs-icon-left .tab-item .ion,
+    .ionic .tabs-icon-right .tab-item .ion {
       font-size: 24px;
       display: inline-block;
       vertical-align: top;
       line-height: 49px; }
-  .ionic .tabs-icon-only i,
-  .ionic .tabs-icon-only .icon {
+  .ionic .tabs-icon-only .ion {
     line-height: inherit; }
   .ionic .tab-item.active, .ionic .tab-item:active {
     opacity: 1; }
@@ -1884,7 +1881,7 @@
     display: -ms-flexbox;
     display: flex;
     padding: 0; }
-    .ionic .item.tabs i, .ionic .item.tabs .icon {
+    .ionic .item.tabs .ion {
       position: relative; }
   .ionic .menu {
     position: absolute;
@@ -2081,8 +2078,7 @@
   .ionic .item-slider.item-text-wrap p {
     overflow: hidden;
     white-space: nowrap; }
-  .ionic .item i,
-  .ionic .item .icon {
+  .ionic .item .ion {
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-flex;
@@ -2103,20 +2099,17 @@
     min-height: 30px; }
   .ionic .item-icon-left {
     padding-left: 45px; }
-    .ionic .item-icon-left i, .ionic .item-icon-left .icon {
+    .ionic .item-icon-left .ion {
       left: 7.5px; }
   .ionic .item-slider.item-icon-left {
     padding-left: 0; }
     .ionic .item-slider.item-icon-left .item-content {
       padding-left: 45px; }
-  .ionic .item-icon-right i,
-  .ionic .item-icon-right .icon {
+  .ionic .item-icon-right .ion {
     right: 7.5px; }
-  .ionic .item-icon-left.item-icon-right i:first-child,
-  .ionic .item-icon-left.item-icon-right .icon:first-child {
+  .ionic .item-icon-left.item-icon-right .ion:first-child {
     right: auto; }
-  .ionic .item-icon-left.item-icon-right i:last-child,
-  .ionic .item-icon-left.item-icon-right .icon:last-child {
+  .ionic .item-icon-left.item-icon-right .ion:last-child {
     left: auto; }
   .ionic a.item:active,
   .ionic button.item:active,
@@ -2141,8 +2134,8 @@
     left: 7.5px;
     font-size: 32px;
     min-height: 32px; }
-    .ionic .item-button-left > .button i,
-    .ionic .item-button-left .item-content > .button i {
+    .ionic .item-button-left > .button .ion,
+    .ionic .item-button-left .item-content > .button .ion {
       position: relative;
       line-height: 31px;
       left: auto; }
@@ -2165,8 +2158,8 @@
     right: 15px;
     font-size: 32px;
     min-height: 32px; }
-    .ionic .item-button-right > .button i,
-    .ionic .item-button-right .item-content > .button i {
+    .ionic .item-button-right > .button .ion,
+    .ionic .item-button-right .item-content > .button .ion {
       position: relative;
       line-height: 31px;
       left: auto; }
@@ -2280,7 +2273,7 @@
     -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
     .ionic .item-edit .button {
       height: 100%; }
-    .ionic .item-edit i, .ionic .item-edit .icon {
+    .ionic .item-edit .ion {
       color: #ef4e3a;
       font-size: 24px; }
     .ionic .item-edit.ng-enter {
@@ -2458,7 +2451,7 @@
       max-width: 200px;
       color: black;
       font-weight: bold; }
-    .ionic .item-input i, .ionic .item-input .icon {
+    .ionic .item-input .ion {
       -webkit-box-flex: 0;
       -webkit-flex: 0 0 24px;
       -moz-box-flex: 0;
@@ -2476,7 +2469,7 @@
     display: block;
     background-color: transparent;
     box-shadow: none; }
-    .ionic .item-stacked-label .input-label, .ionic .item-stacked-label [class^="icon-"], .ionic .item-stacked-label [class*=" icon-"] {
+    .ionic .item-stacked-label .input-label, .ionic .item-stacked-label .ion {
       display: inline-block;
       padding: 4px 0;
       vertical-align: middle; }
@@ -2745,8 +2738,8 @@
     position: relative;
     display: inline-block;
     margin: 0;
-    padding: 0 12px;
-    padding-top: 1px;
+    padding: 1px 12px 0 12px;
+    min-width: 52px;
     min-height: 42px;
     border-width: 1px;
     border-style: solid;
@@ -2758,7 +2751,7 @@
     font-size: 16px;
     line-height: 41px;
     cursor: pointer; }
-    .ionic .button i, .ionic .button .icon {
+    .ionic .button .ion {
       display: inline-block;
       padding: 0 0 1px 0;
       vertical-align: inherit;
@@ -2767,12 +2760,12 @@
     .ionic .button.button-icon {
       padding: 2px 4px;
       background: none; }
-      .ionic .button.button-icon i, .ionic .button.button-icon .icon {
+      .ionic .button.button-icon .ion {
         font-size: 32px; }
     .ionic .button.button-clear {
       -webkit-transition: opacity 0.1s;
       transition: opacity 0.1s;
-      padding: 0 6px;
+      padding: 6px;
       max-height: 42px;
       border: none;
       background: none;
@@ -2972,20 +2965,23 @@
       margin-bottom: 10px; }
   .ionic .button-small {
     padding: 0 4px;
+    min-width: 28px;
     min-height: 28px;
     font-size: 12px;
     line-height: 27px; }
-    .ionic .button-small i, .ionic .button-small .icon {
+    .ionic .button-small .ion {
       font-size: 16px;
       line-height: 26px; }
   .ionic .button-large {
-    padding: 0 12px;
+    padding: 0 16px;
+    min-width: 66px;
     min-height: 54px;
     font-size: 18px;
     line-height: 53px; }
-    .ionic .button-large i, .ionic .button-large .icon {
+    .ionic .button-large .ion {
       font-size: 32px;
-      line-height: 52px; }
+      line-height: 51px;
+      padding-bottom: 2px; }
   .ionic .padding > .button.block:first-child {
     margin-top: 0; }
   .ionic .button-full,
@@ -3145,31 +3141,31 @@
     .ionic .fade-in.active {
       -webkit-animation: fadeIn 0.3s;
       animation: fadeIn 0.3s; }
-  .ionic i.icon-default, .ionic .icon.icon-default {
+  .ionic .ion-default {
     color: white; }
-  .ionic i.icon-secondary, .ionic .icon.icon-secondary {
+  .ionic .ion-secondary {
     color: gainsboro; }
-  .ionic i.icon-primary, .ionic .icon.icon-primary {
+  .ionic .ion-primary {
     color: #4a87ee; }
-  .ionic i.icon-info, .ionic .icon.icon-info {
+  .ionic .ion-info {
     color: #43cee6; }
-  .ionic i.icon-success, .ionic .icon.icon-success {
+  .ionic .ion-success {
     color: #66cc33; }
-  .ionic i.icon-warning, .ionic .icon.icon-warning {
+  .ionic .ion-warning {
     color: #f0b840; }
-  .ionic i.icon-danger, .ionic .icon.icon-danger {
+  .ionic .ion-danger {
     color: #ef4e3a; }
-  .ionic i.icon-dark, .ionic .icon.icon-dark {
+  .ionic .ion-dark {
     color: #444444; }
-  .ionic i.icon-gray-darker, .ionic .icon.icon-gray-darker {
+  .ionic .ion-gray-darker {
     color: #222222; }
-  .ionic i.icon-gray-dark, .ionic .icon.icon-gray-dark {
+  .ionic .ion-gray-dark {
     color: #333333; }
-  .ionic i.icon-gray, .ionic .icon.icon-gray {
+  .ionic .ion-gray {
     color: #555555; }
-  .ionic i.icon-gray-light, .ionic .icon.icon-gray-light {
+  .ionic .ion-gray-light {
     color: #999999; }
-  .ionic i.icon-gray-lighter, .ionic .icon.icon-gray-lighter {
+  .ionic .ion-gray-lighter {
     color: #999999; }
   .ionic .fill-icon {
     color: white !important; }
@@ -3178,34 +3174,34 @@
       position: relative;
       border-radius: 6px;
       padding: 1px; }
-    .ionic .fill-icon.icon-default:before {
+    .ionic .fill-icon.ion-default:before {
       background: white; }
-    .ionic .fill-icon.icon-secondary:before {
+    .ionic .fill-icon.ion-secondary:before {
       background: whitesmoke; }
-    .ionic .fill-icon.icon-primary:before {
+    .ionic .fill-icon.ion-primary:before {
       background: #4a87ee; }
-    .ionic .fill-icon.icon-info:before {
+    .ionic .fill-icon.ion-info:before {
       background: #43cee6; }
-    .ionic .fill-icon.icon-success:before {
+    .ionic .fill-icon.ion-success:before {
       background: #66cc33; }
-    .ionic .fill-icon.icon-warning:before {
+    .ionic .fill-icon.ion-warning:before {
       background: #f0b840; }
-    .ionic .fill-icon.icon-danger:before {
+    .ionic .fill-icon.ion-danger:before {
       background: #ef4e3a; }
-    .ionic .fill-icon.icon-dark:before {
+    .ionic .fill-icon.ion-dark:before {
       background: #444444; }
-    .ionic .fill-icon.icon-gray-darker:before {
+    .ionic .fill-icon.ion-gray-darker:before {
       background: #222222; }
-    .ionic .fill-icon.icon-gray-dark:before {
+    .ionic .fill-icon.ion-gray-dark:before {
       background: #333333; }
-    .ionic .fill-icon.icon-gray:before {
+    .ionic .fill-icon.ion-gray:before {
       background: #555555; }
-    .ionic .fill-icon.icon-gray-light:before {
+    .ionic .fill-icon.ion-gray-light:before {
       background: #999999; }
-    .ionic .fill-icon.icon-gray-lighter:before {
+    .ionic .fill-icon.ion-gray-lighter:before {
       background: #eeeeee; }
-  .ionic .icon-loading {
-    font-family: 'ionicons';
+  .ionic .ion-loading {
+    font-family: 'Ionicons';
     speak: none;
     font-weight: normal;
     font-variant: normal;
@@ -3216,10 +3212,10 @@
     -webkit-animation: spin .75s linear infinite;
     -moz-animation: spin .75s linear infinite;
     animation: spin .75s linear infinite; }
-    .ionic .icon-loading:before {
+    .ionic .ion-loading:before {
       content: "\e144"; }
-  .ionic .icon-refreshing {
-    font-family: 'ionicons';
+  .ionic .ion-refreshing {
+    font-family: 'Ionicons';
     speak: none;
     font-weight: normal;
     font-variant: normal;
@@ -3230,7 +3226,7 @@
     -webkit-animation: spin .75s linear infinite;
     -moz-animation: spin .75s linear infinite;
     animation: spin .75s linear infinite; }
-    .ionic .icon-refreshing:before {
+    .ionic .ion-refreshing:before {
       content: "\e144"; }
   .ionic .hidden,
   .ionic .hide {

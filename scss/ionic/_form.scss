@@ -67,7 +67,7 @@ textarea {
     color: $input-label-color;
     font-weight: bold;
   }
-  i, .icon {
+  .ion {
     @include flex(0, 0, 24px);
     position: static;
     height: auto;
@@ -85,7 +85,7 @@ textarea {
   background-color: transparent;
   box-shadow: none;
 
-  .input-label, [class^="icon-"], [class*=" icon-"] {
+  .input-label, .ion {
     display: inline-block;
     padding: 4px 0;
     vertical-align: middle;

@@ -1,53 +1,56 @@
 
-i.icon-default, .icon.icon-default {
+// Icons
+// -------------------------------
+
+.ion-default {
   color: $brand-default;
 }
 
-i.icon-secondary, .icon.icon-secondary {
+.ion-secondary {
   color: darken($brand-secondary, 10%);
 }
 
-i.icon-primary, .icon.icon-primary {
+.ion-primary {
   color: $brand-primary;
 }
 
-i.icon-info, .icon.icon-info {
+.ion-info {
   color: $brand-info;
 }
 
-i.icon-success, .icon.icon-success {
+.ion-success {
   color: $brand-success;
 }
 
-i.icon-warning, .icon.icon-warning {
+.ion-warning {
   color: $brand-warning;
 }
 
-i.icon-danger, .icon.icon-danger {
+.ion-danger {
   color: $brand-danger;
 }
 
-i.icon-dark, .icon.icon-dark {
+.ion-dark {
   color: $brand-dark;
 }
 
-i.icon-gray-darker, .icon.icon-gray-darker {
+.ion-gray-darker {
   color: $gray-darker;
 }
 
-i.icon-gray-dark, .icon.icon-gray-dark {
+.ion-gray-dark {
   color: $gray-dark;
 }
 
-i.icon-gray, .icon.icon-gray {
+.ion-gray {
   color: $gray;
 }
 
-i.icon-gray-light, .icon.icon-gray-light {
+.ion-gray-light {
   color: $gray-light;
 }
 
-i.icon-gray-lighter, .icon.icon-gray-lighter {
+.ion-gray-lighter {
   color: $gray-light;
 }
 
@@ -61,51 +64,51 @@ i.icon-gray-lighter, .icon.icon-gray-lighter {
     padding: 1px;
   }
 
-  &.icon-default:before {
+  &.ion-default:before {
     background: $brand-default;
   }
-  &.icon-secondary:before {
+  &.ion-secondary:before {
     background: $brand-secondary;
   }
-  &.icon-primary:before {
+  &.ion-primary:before {
     background: $brand-primary;
   }
-  &.icon-info:before {
+  &.ion-info:before {
     background: $brand-info;
   }
-  &.icon-success:before {
+  &.ion-success:before {
     background: $brand-success;
   }
-  &.icon-warning:before {
+  &.ion-warning:before {
     background: $brand-warning;
   }
-  &.icon-danger:before {
+  &.ion-danger:before {
     background: $brand-danger;
   }
-  &.icon-dark:before {
+  &.ion-dark:before {
     background: $brand-dark;
   }
 
-  &.icon-gray-darker:before {
+  &.ion-gray-darker:before {
     background: $gray-darker;
   }
-  &.icon-gray-dark:before {
+  &.ion-gray-dark:before {
     background: $gray-dark;
   }
-  &.icon-gray:before {
+  &.ion-gray:before {
     background: $gray;
   }
-  &.icon-gray-light:before {
+  &.ion-gray-light:before {
     background: $gray-light;
   }
-  &.icon-gray-lighter:before {
+  &.ion-gray-lighter:before {
     background: $gray-lighter;
   }
 
 }
 
-.icon-loading {
-  font-family: 'ionicons';
+.ion-loading { 
+  font-family: 'Ionicons';
   speak: none;
   font-weight: normal;
   font-variant: normal;
@@ -123,8 +126,8 @@ i.icon-gray-lighter, .icon.icon-gray-lighter {
   }
 }
 
-.icon-refreshing {
-  font-family: 'ionicons';
+.ion-refreshing {
+  font-family: 'Ionicons';
   speak: none;
   font-weight: normal;
   font-variant: normal;

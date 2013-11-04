@@ -211,28 +211,28 @@ $info-border:        darken(adjust-hue($info-bg, -10), 7%);
 
 $button-color:                    #222;
 $button-block-margin:             10px !default;
-$button-clear-padding:            0 6px;
+$button-clear-padding:            6px !default;
 $button-border-radius:            2px;
 $button-border-width:             1px;
 
 $button-font-size:                16px;
 $button-height:                   42px;
-$button-padding:                  0 12px;
+$button-padding:                  12px !default;
 $button-icon-size:                24px;
 
 $button-large-font-size:          18px;
 $button-large-height:             54px;
-$button-large-padding:            0 12px;
+$button-large-padding:            16px !default;
 $button-large-icon-size:          32px;
 
 $button-small-font-size:          12px;
 $button-small-height:             28px;
-$button-small-padding:            0 4px;
+$button-small-padding:            4px !default;
 $button-small-icon-size:          16px;
 
 $button-bar-button-font-size:     12px;
-$button-bar-button-height:        31px !default;
-$button-bar-button-padding:       0 8px;
+$button-bar-button-height:        31px;
+$button-bar-button-padding:       8px !default;
 $button-bar-button-icon-size:     24px;
 
 $button-default-bg:               $brand-default;

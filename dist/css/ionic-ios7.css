@@ -647,11 +647,11 @@ a.subdued‎ {
     color: inherit; }
   .bar > .button {
     z-index: 1;
-    padding: 0 8px;
+    padding: 8px;
     min-height: 31px;
     font-size: 12px;
     line-height: 30px; }
-    .bar > .button i, .bar > .button .icon {
+    .bar > .button .ion {
       font-size: 24px;
       line-height: 29px; }
   .bar .button-bar > .button {
@@ -935,8 +935,7 @@ a.subdued‎ {
   font-size: 10px;
   line-height: 14px; }
 
-.tab-item i,
-.tab-item .icon {
+.tab-item .ion {
   display: block;
   margin: 0 auto;
   height: 32px;
@@ -945,16 +944,14 @@ a.subdued‎ {
 .tabs-icon-left .tab-item,
 .tabs-icon-right .tab-item {
   font-size: 10px; }
-  .tabs-icon-left .tab-item i, .tabs-icon-left .tab-item .icon,
-  .tabs-icon-right .tab-item i,
-  .tabs-icon-right .tab-item .icon {
+  .tabs-icon-left .tab-item .ion,
+  .tabs-icon-right .tab-item .ion {
     font-size: 24px;
     display: inline-block;
     vertical-align: top;
     line-height: 49px; }
 
-.tabs-icon-only i,
-.tabs-icon-only .icon {
+.tabs-icon-only .ion {
   line-height: inherit; }
 
 /* Navigational tab */
@@ -983,7 +980,7 @@ a.subdued‎ {
   display: -ms-flexbox;
   display: flex;
   padding: 0; }
-  .item.tabs i, .item.tabs .icon {
+  .item.tabs .ion {
     position: relative; }
 
 .menu {
@@ -1196,8 +1193,7 @@ a.item {
   overflow: hidden;
   white-space: nowrap; }
 
-.item i,
-.item .icon {
+.item .ion {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-flex;
@@ -1220,7 +1216,7 @@ a.item {
 
 .item-icon-left {
   padding-left: 45px; }
-  .item-icon-left i, .item-icon-left .icon {
+  .item-icon-left .ion {
     left: 7.5px; }
 
 .item-slider.item-icon-left {
@@ -1228,16 +1224,13 @@ a.item {
   .item-slider.item-icon-left .item-content {
     padding-left: 45px; }
 
-.item-icon-right i,
-.item-icon-right .icon {
+.item-icon-right .ion {
   right: 7.5px; }
 
-.item-icon-left.item-icon-right i:first-child,
-.item-icon-left.item-icon-right .icon:first-child {
+.item-icon-left.item-icon-right .ion:first-child {
   right: auto; }
 
-.item-icon-left.item-icon-right i:last-child,
-.item-icon-left.item-icon-right .icon:last-child {
+.item-icon-left.item-icon-right .ion:last-child {
   left: auto; }
 
 a.item:active,
@@ -1265,8 +1258,8 @@ button.item:active,
   left: 7.5px;
   font-size: 32px;
   min-height: 32px; }
-  .item-button-left > .button i,
-  .item-button-left .item-content > .button i {
+  .item-button-left > .button .ion,
+  .item-button-left .item-content > .button .ion {
     position: relative;
     line-height: 31px;
     left: auto; }
@@ -1291,8 +1284,8 @@ button.item:active,
   right: 15px;
   font-size: 32px;
   min-height: 32px; }
-  .item-button-right > .button i,
-  .item-button-right .item-content > .button i {
+  .item-button-right > .button .ion,
+  .item-button-right .item-content > .button .ion {
     position: relative;
     line-height: 31px;
     left: auto; }
@@ -1423,7 +1416,7 @@ button.item-button-right:after {
   -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
   .item-edit .button {
     height: 100%; }
-  .item-edit i, .item-edit .icon {
+  .item-edit .ion {
     color: #ef4e3a;
     font-size: 24px; }
   .item-edit.ng-enter {
@@ -1631,7 +1624,7 @@ textarea {
     max-width: 200px;
     color: black;
     font-weight: bold; }
-  .item-input i, .item-input .icon {
+  .item-input .ion {
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 24px;
     -moz-box-flex: 0;
@@ -1650,7 +1643,7 @@ textarea {
   display: block;
   background-color: transparent;
   box-shadow: none; }
-  .item-stacked-label .input-label, .item-stacked-label [class^="icon-"], .item-stacked-label [class*=" icon-"] {
+  .item-stacked-label .input-label, .item-stacked-label .ion {
     display: inline-block;
     padding: 4px 0;
     vertical-align: middle; }
@@ -1887,8 +1880,8 @@ input[type="range"] {
   position: relative;
   display: inline-block;
   margin: 0;
-  padding: 0 12px;
-  padding-top: 1px;
+  padding: 1px 12px 0 12px;
+  min-width: 52px;
   min-height: 42px;
   border-width: 1px;
   border-style: solid;
@@ -1900,7 +1893,7 @@ input[type="range"] {
   font-size: 16px;
   line-height: 41px;
   cursor: pointer; }
-  .button i, .button .icon {
+  .button .ion {
     display: inline-block;
     padding: 0 0 1px 0;
     vertical-align: inherit;
@@ -1909,12 +1902,12 @@ input[type="range"] {
   .button.button-icon {
     padding: 2px 4px;
     background: none; }
-    .button.button-icon i, .button.button-icon .icon {
+    .button.button-icon .ion {
       font-size: 32px; }
   .button.button-clear {
     -webkit-transition: opacity 0.1s;
     transition: opacity 0.1s;
-    padding: 0 6px;
+    padding: 6px;
     max-height: 42px;
     border: none;
     background: none;
@@ -2115,21 +2108,24 @@ input[type="range"] {
 
 .button-small {
   padding: 0 4px;
+  min-width: 28px;
   min-height: 28px;
   font-size: 12px;
   line-height: 27px; }
-  .button-small i, .button-small .icon {
+  .button-small .ion {
     font-size: 16px;
     line-height: 26px; }
 
 .button-large {
-  padding: 0 12px;
+  padding: 0 16px;
+  min-width: 66px;
   min-height: 54px;
   font-size: 18px;
   line-height: 53px; }
-  .button-large i, .button-large .icon {
+  .button-large .ion {
     font-size: 32px;
-    line-height: 52px; }
+    line-height: 51px;
+    padding-bottom: 2px; }
 
 .padding > .button.block:first-child {
   margin-top: 0; }
@@ -2367,43 +2363,43 @@ a.button {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
 
-i.icon-default, .icon.icon-default {
+.ion-default {
   color: white; }
 
-i.icon-secondary, .icon.icon-secondary {
+.ion-secondary {
   color: gainsboro; }
 
-i.icon-primary, .icon.icon-primary {
+.ion-primary {
   color: #4a87ee; }
 
-i.icon-info, .icon.icon-info {
+.ion-info {
   color: #43cee6; }
 
-i.icon-success, .icon.icon-success {
+.ion-success {
   color: #66cc33; }
 
-i.icon-warning, .icon.icon-warning {
+.ion-warning {
   color: #f0b840; }
 
-i.icon-danger, .icon.icon-danger {
+.ion-danger {
   color: #ef4e3a; }
 
-i.icon-dark, .icon.icon-dark {
+.ion-dark {
   color: #444444; }
 
-i.icon-gray-darker, .icon.icon-gray-darker {
+.ion-gray-darker {
   color: #222222; }
 
-i.icon-gray-dark, .icon.icon-gray-dark {
+.ion-gray-dark {
   color: #333333; }
 
-i.icon-gray, .icon.icon-gray {
+.ion-gray {
   color: #555555; }
 
-i.icon-gray-light, .icon.icon-gray-light {
+.ion-gray-light {
   color: #999999; }
 
-i.icon-gray-lighter, .icon.icon-gray-lighter {
+.ion-gray-lighter {
   color: #999999; }
 
 .fill-icon {
@@ -2413,35 +2409,35 @@ i.icon-gray-lighter, .icon.icon-gray-lighter {
     position: relative;
     border-radius: 6px;
     padding: 1px; }
-  .fill-icon.icon-default:before {
+  .fill-icon.ion-default:before {
     background: white; }
-  .fill-icon.icon-secondary:before {
+  .fill-icon.ion-secondary:before {
     background: whitesmoke; }
-  .fill-icon.icon-primary:before {
+  .fill-icon.ion-primary:before {
     background: #4a87ee; }
-  .fill-icon.icon-info:before {
+  .fill-icon.ion-info:before {
     background: #43cee6; }
-  .fill-icon.icon-success:before {
+  .fill-icon.ion-success:before {
     background: #66cc33; }
-  .fill-icon.icon-warning:before {
+  .fill-icon.ion-warning:before {
     background: #f0b840; }
-  .fill-icon.icon-danger:before {
+  .fill-icon.ion-danger:before {
     background: #ef4e3a; }
-  .fill-icon.icon-dark:before {
+  .fill-icon.ion-dark:before {
     background: #444444; }
-  .fill-icon.icon-gray-darker:before {
+  .fill-icon.ion-gray-darker:before {
     background: #222222; }
-  .fill-icon.icon-gray-dark:before {
+  .fill-icon.ion-gray-dark:before {
     background: #333333; }
-  .fill-icon.icon-gray:before {
+  .fill-icon.ion-gray:before {
     background: #555555; }
-  .fill-icon.icon-gray-light:before {
+  .fill-icon.ion-gray-light:before {
     background: #999999; }
-  .fill-icon.icon-gray-lighter:before {
+  .fill-icon.ion-gray-lighter:before {
     background: #eeeeee; }
 
-.icon-loading {
-  font-family: 'ionicons';
+.ion-loading {
+  font-family: 'Ionicons';
   speak: none;
   font-weight: normal;
   font-variant: normal;
@@ -2452,11 +2448,11 @@ i.icon-gray-lighter, .icon.icon-gray-lighter {
   -webkit-animation: spin .75s linear infinite;
   -moz-animation: spin .75s linear infinite;
   animation: spin .75s linear infinite; }
-  .icon-loading:before {
+  .ion-loading:before {
     content: "\e144"; }
 
-.icon-refreshing {
-  font-family: 'ionicons';
+.ion-refreshing {
+  font-family: 'Ionicons';
   speak: none;
   font-weight: normal;
   font-variant: normal;
@@ -2467,7 +2463,7 @@ i.icon-gray-lighter, .icon.icon-gray-lighter {
   -webkit-animation: spin .75s linear infinite;
   -moz-animation: spin .75s linear infinite;
   animation: spin .75s linear infinite; }
-  .icon-refreshing:before {
+  .ion-refreshing:before {
     content: "\e144"; }
 
 .hidden,

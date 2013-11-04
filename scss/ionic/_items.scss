@@ -174,8 +174,7 @@ a.item {
 // List Icons
 // -------------------------------
 
-.item i,
-.item .icon {
+.item .ion {
   @include display-flex();
   @include align-items(center);
   position: absolute;
@@ -193,7 +192,7 @@ a.item {
 .item-icon-left {
   padding-left: ($item-padding * 3);
 
-  i, .icon {
+  .ion {
     left: $item-padding / 2;
   }
 }
@@ -205,17 +204,14 @@ a.item {
   }
 }
 
-.item-icon-right i,
-.item-icon-right .icon {
+.item-icon-right .ion {
   right: $item-padding / 2;
 }
 
-.item-icon-left.item-icon-right i:first-child,
-.item-icon-left.item-icon-right .icon:first-child {
+.item-icon-left.item-icon-right .ion:first-child {
   right: auto;
 }
-.item-icon-left.item-icon-right i:last-child,
-.item-icon-left.item-icon-right .icon:last-child {
+.item-icon-left.item-icon-right .ion:last-child {
   left: auto;
 }
 
@@ -243,7 +239,7 @@ button.item:active,
   font-size: $item-icon-font-size;
   min-height: $item-icon-font-size;
 
-  i {
+  .ion {
     position: relative;
     line-height: $item-icon-font-size - 1;
     left: auto;
@@ -264,7 +260,7 @@ button.item:active,
   font-size: $item-icon-font-size;
   min-height: $item-icon-font-size;
 
-  i {
+  .ion {
     position: relative;
     line-height: $item-icon-font-size - 1;
     left: auto;
@@ -285,7 +281,7 @@ button.item:after {
   right: $item-padding - 4;
   height: 100%;
   color: #ccc;
-  content: "\e0fc"; // icon-chevron-right
+  content: "\e0fc"; // ion-chevron-right
   text-transform: none;
   font-weight: normal;
   font-style: normal;
@@ -448,7 +444,7 @@ button.item-button-right:after {
     height: 100%;
   }
 
-  i, .icon {
+  .ion {
     color: $brand-danger;
     font-size: 24px;
   }

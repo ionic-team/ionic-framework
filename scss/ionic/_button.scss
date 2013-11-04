@@ -1,10 +1,14 @@
+
+// Buttons
+// -------------------------------
+
 .button {
   position: relative;
   display: inline-block;
   margin: 0;
 
-  padding: $button-padding;
-  padding-top: 1px;
+  padding: 1px $button-padding 0 $button-padding;
+  min-width: ($button-padding * 3) + $button-font-size;
   min-height: $button-height;
 
   border-width: $button-border-width;
@@ -22,7 +26,7 @@
 
   cursor: pointer;
 
-  i, .icon {
+  .ion {
     display: inline-block;
     padding: 0 0 $button-border-width 0;
     vertical-align: inherit;
@@ -34,7 +38,7 @@
     padding: 2px 4px;
     background: none;
 
-    i, .icon {
+    .ion {
       font-size: $button-large-icon-size;
     }
   }
@@ -117,26 +121,29 @@
 }
 
 .button-small {
-  padding: $button-small-padding;
+  padding: 0 $button-small-padding;
+  min-width: $button-small-height;
   min-height: $button-small-height;
   font-size: $button-small-font-size;
   line-height: $button-small-height - $button-border-width;
 
-  i, .icon {
+  .ion {
     font-size: $button-small-icon-size;
     line-height: $button-small-height - $button-border-width - 1;
   }
 }
 
 .button-large {
-  padding: $button-large-padding;
+  padding: 0 $button-large-padding;
+  min-width: ($button-large-padding * 3) + $button-large-font-size;
   min-height: $button-large-height;
   font-size: $button-large-font-size;
   line-height: $button-large-height - $button-border-width;
 
-  i, .icon {
+  .ion {
     font-size: $button-large-icon-size;
-    line-height: $button-large-height - $button-border-width - 1;
+    line-height: $button-large-height - ($button-border-width * 2) - 1;
+    padding-bottom: ($button-border-width * 2);
   }
 }
 
