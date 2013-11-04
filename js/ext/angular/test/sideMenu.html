@@ -44,60 +44,9 @@
 
       .controller('MenuCtrl', function($scope) {
         $scope.openLeft = function() {
-          debugger;
           $scope.sideMenuCtrl.toggleLeft();
         };
       });
-
-      /*
-      var Controller = function(opts) {
-        var _this = this;
-
-        this.el = opts.el;
-        this.animateClass = opts.animateClass;
-
-        // Bind release and drag listeners
-        window.ionic.onGesture('drag', function(e) {
-          _this.onDrag && _this.onDrag(e);
-        }, this.el);
-
-        window.ionic.onGesture('release', function(e) {
-          _this.endDrag && _this._endDrag(e);
-        }, this.el);
-      };
-      Controller.prototype = {
-        onDrag: function(e) {},
-        endDrag: function(e) {},
-        getTranslateX: function() {
-          var r = /translate3d\((-?.+)px/;
-          var d = r.exec(this.el.style.webkitTransform);
-
-          if(d && d.length > 0) {
-            return parseFloat(d[1]);
-          }
-          return 0;
-        },
-        setTranslateX: function(amount) {
-          this.el.style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
-        },
-        enableAnimation: function() {
-          this.el.classList.add(this.animateClass);
-        },
-        disableAnimation: function() {
-          this.el.classList.remove(this.animateClass);
-        }
-      };
-
-      var l = new SideMenu({ el: document.getElementById('my-left-panel'), width: 270 });
-      var r = new SideMenu({ el: document.getElementById('my-right-panel'), width: 270 });
-      var c = new Controller({ el: document.createElement('content') });
-
-      var ctrl = new SideMenuController({
-        left: l,
-        right: r,
-        content: c
-      });
-      */
     </script>
   </body>
 </html>
