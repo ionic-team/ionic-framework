@@ -2125,6 +2125,54 @@
   .ionic button.item:active,
   .ionic .item.active {
     background-color: #F7F7F7; }
+  .ionic .item-button-left {
+    padding-left: 75px; }
+  .ionic .item-button-left > .button,
+  .ionic .item-button-left .item-content > .button {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
+    position: absolute;
+    top: 7.5px;
+    left: 7.5px;
+    font-size: 32px;
+    min-height: 32px; }
+    .ionic .item-button-left > .button i,
+    .ionic .item-button-left .item-content > .button i {
+      position: relative;
+      line-height: 31px;
+      left: auto; }
+  .ionic .item-button-right {
+    padding-right: 75px; }
+  .ionic .item-button-right > .button,
+  .ionic .item-button-right .item-content > .button {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
+    position: absolute;
+    top: 7.5px;
+    right: 15px;
+    font-size: 32px;
+    min-height: 32px; }
+    .ionic .item-button-right > .button i,
+    .ionic .item-button-right .item-content > .button i {
+      position: relative;
+      line-height: 31px;
+      left: auto; }
   .ionic a.item:after,
   .ionic button.item:after {
     /* By default, both <a> and <button> have right side arrow icons */
@@ -2154,7 +2202,9 @@
     speak: none;
     -webkit-font-smoothing: antialiased; }
   .ionic a.item-icon-right:after,
-  .ionic button.item-icon-right:after {
+  .ionic button.item-icon-right:after,
+  .ionic a.item-button-right:after,
+  .ionic button.item-button-right:after {
     display: none; }
   .ionic .item-avatar {
     padding-left: 70px;

@@ -225,6 +225,56 @@ button.item:active,
   background-color: #F7F7F7;
 }
 
+
+// Item Button
+// -------------------------------
+
+.item-button-left {
+  padding-left: $item-padding * 5;
+}
+
+.item-button-left > .button,
+.item-button-left .item-content > .button {
+  @include display-flex();
+  @include align-items(center);
+  position: absolute;
+  top: $item-padding / 2;
+  left: $item-padding / 2;
+  font-size: $item-icon-font-size;
+  min-height: $item-icon-font-size;
+
+  i {
+    position: relative;
+    line-height: $item-icon-font-size - 1;
+    left: auto;
+  }
+}
+
+.item-button-right {
+  padding-right: $item-padding * 5;
+}
+
+.item-button-right > .button,
+.item-button-right .item-content > .button {
+  @include display-flex();
+  @include align-items(center);
+  position: absolute;
+  top: $item-padding / 2;
+  right: $item-padding;
+  font-size: $item-icon-font-size;
+  min-height: $item-icon-font-size;
+
+  i {
+    position: relative;
+    line-height: $item-icon-font-size - 1;
+    left: auto;
+  }
+}
+
+
+// Auto Right Arrow Icon
+// -------------------------------
+
 a.item:after,
 button.item:after {
   /* By default, both <a> and <button> have right side arrow icons */
@@ -249,7 +299,9 @@ button.item:after {
 
 // do not show the default right arrow when they want their own right side icon
 a.item-icon-right:after,
-button.item-icon-right:after {
+button.item-icon-right:after,
+a.item-button-right:after,
+button.item-button-right:after {
   display: none;
 }
 

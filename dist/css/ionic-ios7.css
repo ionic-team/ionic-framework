@@ -1245,6 +1245,58 @@ button.item:active,
 .item.active {
   background-color: #F7F7F7; }
 
+.item-button-left {
+  padding-left: 75px; }
+
+.item-button-left > .button,
+.item-button-left .item-content > .button {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+  position: absolute;
+  top: 7.5px;
+  left: 7.5px;
+  font-size: 32px;
+  min-height: 32px; }
+  .item-button-left > .button i,
+  .item-button-left .item-content > .button i {
+    position: relative;
+    line-height: 31px;
+    left: auto; }
+
+.item-button-right {
+  padding-right: 75px; }
+
+.item-button-right > .button,
+.item-button-right .item-content > .button {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+  position: absolute;
+  top: 7.5px;
+  right: 15px;
+  font-size: 32px;
+  min-height: 32px; }
+  .item-button-right > .button i,
+  .item-button-right .item-content > .button i {
+    position: relative;
+    line-height: 31px;
+    left: auto; }
+
 a.item:after,
 button.item:after {
   /* By default, both <a> and <button> have right side arrow icons */
@@ -1275,7 +1327,9 @@ button.item:after {
   -webkit-font-smoothing: antialiased; }
 
 a.item-icon-right:after,
-button.item-icon-right:after {
+button.item-icon-right:after,
+a.item-button-right:after,
+button.item-button-right:after {
   display: none; }
 
 .item-avatar {
