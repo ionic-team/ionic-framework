@@ -3,6 +3,7 @@
  * modules.
  */
 angular.module('ionic.service', [
+  'ionic.service.platform',
   'ionic.service.actionSheet',
   'ionic.service.gesture',
   'ionic.service.loading',
@@ -22,7 +23,6 @@ angular.module('ionic.ui', [
                            ]);
 
 angular.module('ionic', [
-    'ionic.platform',
     'ionic.service',
     'ionic.ui',
 ]);

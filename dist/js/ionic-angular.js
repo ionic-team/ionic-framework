@@ -3,6 +3,7 @@
  * modules.
  */
 angular.module('ionic.service', [
+  'ionic.service.platform',
   'ionic.service.actionSheet',
   'ionic.service.gesture',
   'ionic.service.loading',
@@ -22,7 +23,6 @@ angular.module('ionic.ui', [
                            ]);
 
 angular.module('ionic', [
-    'ionic.platform',
     'ionic.service',
     'ionic.ui',
 ]);
@@ -195,7 +195,7 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad'])
 (function() {
 'use strict';
 
-angular.module('ionic.platform', [])
+angular.module('ionic.service.platform', [])
 
 /**
  * The platformProvider makes it easy to set and detect which platform
@@ -204,15 +204,13 @@ angular.module('ionic.platform', [])
  * initializing some defaults that depend on the platform, such as the
  * height of header bars on iOS 7.
  */
-.provider('platform', function() {
-  var platform = 'unknown';
+.provider('Platform', function() {
+  var platform = 'web';
   var isPlatformReady = false;
 
   if(window.cordova || window.PhoneGap || window.phonegap) {
     platform = 'cordova';
   }
-
-  console.log('Detected platform', platform);
 
   var isReady = function() {
     if(platform == 'cordova') {
@@ -237,6 +235,32 @@ angular.module('ionic.platform', [])
     },
     $get: ['$q', '$timeout', function($q, $timeout) {
       return {
+        /**
+         * Some platforms have hardware back buttons, so this is one way to bind to it.
+         *
+         * @param {function} cb the callback to trigger when this event occurs
+         */
+        onHardwareBackButton: function(cb) {
+          this.ready(function() {
+            document.addEventListener('backbutton', cb, false);
+          });
+        },
+
+        /**
+         * Remove an event listener for the backbutton.
+         *
+         * @param {function} fn the listener function that was originally bound.
+         */
+        offHardwareBackButton: function(fn) {
+          this.ready(function() {
+            document.removeEventListener('backbutton', fn);
+          });
+        },
+
+        /**
+         * Trigger a callback once the device is ready, or immediately if the device is already
+         * ready.
+         */
         ready: function(cb) {
           var self = this;
           var q = $q.defer();
@@ -641,9 +665,9 @@ angular.module('ionic.ui.loading', [])
 (function() {
 'use strict';
 
-angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.gesture', 'ngAnimate'])
+angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.gesture', 'ionic.service.platform', 'ngAnimate'])
 
-.controller('NavCtrl', ['$scope', '$element', '$animate', '$compile', 'TemplateLoader', function($scope, $element, $animate, $compile, TemplateLoader) {
+.controller('NavCtrl', ['$scope', '$element', '$animate', '$compile', 'TemplateLoader', 'Platform', function($scope, $element, $animate, $compile, TemplateLoader, Platform) {
   var _this = this;
 
   angular.extend(this, ionic.controllers.NavController.prototype);
@@ -667,6 +691,15 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
       },
     }
   });
+
+  // Support Android hardware back button (native only, not mobile web)
+  var onHardwareBackButton = function(e) {
+    $scope.$apply(function() {
+      _this.pop();
+    });
+  }
+  Platform.onHardwareBackButton(onHardwareBackButton);
+
 
   this.handleDrag = function(e) {
   };
@@ -702,6 +735,11 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
   };
 
   $scope.navController = this;
+
+  $scope.$on('$destroy', function() {
+    // Remove back button listener
+    Platform.offHardwareBackButton(onHardwareBackButton);
+  });
 }])
 
 .directive('navs', function() {

@@ -1,9 +1,9 @@
 (function() {
 'use strict';
 
-angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.gesture', 'ngAnimate'])
+angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.gesture', 'ionic.service.platform', 'ngAnimate'])
 
-.controller('NavCtrl', ['$scope', '$element', '$animate', '$compile', 'TemplateLoader', function($scope, $element, $animate, $compile, TemplateLoader) {
+.controller('NavCtrl', ['$scope', '$element', '$animate', '$compile', 'TemplateLoader', 'Platform', function($scope, $element, $animate, $compile, TemplateLoader, Platform) {
   var _this = this;
 
   angular.extend(this, ionic.controllers.NavController.prototype);
@@ -27,6 +27,15 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
       },
     }
   });
+
+  // Support Android hardware back button (native only, not mobile web)
+  var onHardwareBackButton = function(e) {
+    $scope.$apply(function() {
+      _this.pop();
+    });
+  }
+  Platform.onHardwareBackButton(onHardwareBackButton);
+
 
   this.handleDrag = function(e) {
   };
@@ -62,6 +71,11 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
   };
 
   $scope.navController = this;
+
+  $scope.$on('$destroy', function() {
+    // Remove back button listener
+    Platform.offHardwareBackButton(onHardwareBackButton);
+  });
 }])
 
 .directive('navs', function() {
