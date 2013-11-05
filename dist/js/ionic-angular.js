@@ -2,6 +2,14 @@
  * Create a wrapping module to ease having to include too many
  * modules.
  */
+angular.module('ionic.service', [
+  'ionic.service.actionSheet',
+  'ionic.service.gesture',
+  'ionic.service.loading',
+  'ionic.service.modal',
+  'ionic.service.popup',
+  'ionic.service.templateLoad'
+]);
 
 angular.module('ionic.ui', [
                             'ionic.ui.content',
@@ -15,8 +23,9 @@ angular.module('ionic.ui', [
 
 angular.module('ionic', [
     'ionic.platform',
-    'ionic.ui'
-])
+    'ionic.service',
+    'ionic.ui',
+]);
 ;
 angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ionic.ui.actionSheet'])
 
@@ -153,9 +162,9 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad'])
      * A new isolated scope will be created for the 
      * modal and the new element will be appended into the body.
      */
-    fromTemplate: function(templateString) {
+    fromTemplate: function(templateString, $scope) {
       // Create a new isolated scope for the modal
-      var scope = $rootScope.$new(true);
+      var scope = $scope && $scope.$new() || $rootScope.$new(true);
 
       // Compile the template
       var element = $compile(templateString)(scope);
@@ -165,10 +174,10 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad'])
       scope.modal = modal;
       return modal;
     },
-    fromTemplateUrl: function(url, cb) {
+    fromTemplateUrl: function(url, cb, $scope) {
       TemplateLoader.load(url).then(function(templateString) {
         // Create a new isolated scope for the modal
-        var scope = $rootScope.$new(true);
+        var scope = $scope && $scope.$new() || $rootScope.$new(true);
 
         // Compile the template
         var element = $compile(templateString)(scope);

@@ -2,6 +2,14 @@
  * Create a wrapping module to ease having to include too many
  * modules.
  */
+angular.module('ionic.service', [
+  'ionic.service.actionSheet',
+  'ionic.service.gesture',
+  'ionic.service.loading',
+  'ionic.service.modal',
+  'ionic.service.popup',
+  'ionic.service.templateLoad'
+]);
 
 angular.module('ionic.ui', [
                             'ionic.ui.content',
@@ -15,5 +23,6 @@ angular.module('ionic.ui', [
 
 angular.module('ionic', [
     'ionic.platform',
-    'ionic.ui'
-])
+    'ionic.service',
+    'ionic.ui',
+]);
