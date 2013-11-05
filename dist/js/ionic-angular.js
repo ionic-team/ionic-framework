@@ -411,6 +411,9 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       buttons: '=',
     },
     template: '<a href="#" class="item item-slider">\
+            <div class="item-edit" ng-if="canDelete && isEditing">\
+              <button class="button button-icon" ng-click="onDelete()"><i ng-class="deleteIcon"></i></button>\
+            </div>\
             <div class="item-content slide-left" ng-transclude>\
             </div>\
             <div class="item-options" ng-if="canSwipe && !isEditing">\
