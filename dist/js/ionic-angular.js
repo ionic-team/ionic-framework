@@ -39,8 +39,8 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
      *
      * @param {object} opts the options for this ActionSheet (see docs)
      */
-    show: function(opts) {
-      var scope = $rootScope.$new(true);
+    show: function(opts, $scope) {
+      var scope = $scope && $scope.$new() || $rootScope.$new(true);
 
       angular.extend(scope, opts);
 
@@ -209,7 +209,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
   };
 
   return {
-    alert: function(message) {
+    alert: function(message, $scope) {
 
       // If there is an existing popup, just show that one
       var existing = getPopup();
@@ -224,7 +224,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
 
       opts = angular.extend(defaults, opts);
 
-      var scope = $rootScope.$new(true);
+      var scope = $scope && $scope.$new() || $rootScope.$new(true);
       angular.extend(scope, opts);
 
       // Compile the template
