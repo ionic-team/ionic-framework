@@ -1680,7 +1680,7 @@
   .ionic fieldset {
     margin: 0 2px;
     padding: 0.35em 0.625em 0.75em;
-    border: 1px solid silver; }
+    border: 1px solid #c0c0c0; }
   .ionic legend {
     padding: 0;
     /* 2 */
@@ -2435,62 +2435,62 @@
       z-index: 2; }
       .ionic .item.active .item-heading, .ionic .item.active:hover .item-heading, .ionic .item.active:focus .item-heading {
         color: inherit; }
-    .ionic .item.item-default.active, .ionic .item.item-default:active {
-      color: #333333;
+  .ionic .item-default.active, .ionic .item-default:active {
+    color: #333333;
+    background-color: white;
+    border-color: #333333; }
+    .ionic .item-default.active .list-item-content, .ionic .item-default:active .list-item-content {
       background-color: white;
-      border-color: #333333; }
-      .ionic .item.item-default.active .list-item-content, .ionic .item.item-default:active .list-item-content {
-        background-color: white;
-        color: #333333; }
-    .ionic .item.item-secondary.active, .ionic .item.item-secondary:active {
-      color: #333333;
+      color: #333333; }
+  .ionic .item-secondary.active, .ionic .item-secondary:active {
+    color: #333333;
+    background-color: white;
+    border-color: #333333; }
+    .ionic .item-secondary.active .list-item-content, .ionic .item-secondary:active .list-item-content {
       background-color: white;
-      border-color: #333333; }
-      .ionic .item.item-secondary.active .list-item-content, .ionic .item.item-secondary:active .list-item-content {
-        background-color: white;
-        color: #333333; }
-    .ionic .item.item-primary.active, .ionic .item.item-primary:active {
-      color: white;
+      color: #333333; }
+  .ionic .item-primary.active, .ionic .item-primary:active {
+    color: white;
+    background-color: #4a87ee;
+    border-color: #333333; }
+    .ionic .item-primary.active .list-item-content, .ionic .item-primary:active .list-item-content {
       background-color: #4a87ee;
-      border-color: #333333; }
-      .ionic .item.item-primary.active .list-item-content, .ionic .item.item-primary:active .list-item-content {
-        background-color: #4a87ee;
-        color: white; }
-    .ionic .item.item-info.active, .ionic .item.item-info:active {
-      color: white;
+      color: white; }
+  .ionic .item-info.active, .ionic .item-info:active {
+    color: white;
+    background-color: #43cee6;
+    border-color: #333333; }
+    .ionic .item-info.active .list-item-content, .ionic .item-info:active .list-item-content {
       background-color: #43cee6;
-      border-color: #333333; }
-      .ionic .item.item-info.active .list-item-content, .ionic .item.item-info:active .list-item-content {
-        background-color: #43cee6;
-        color: white; }
-    .ionic .item.item-success.active, .ionic .item.item-success:active {
-      color: white;
+      color: white; }
+  .ionic .item-success.active, .ionic .item-success:active {
+    color: white;
+    background-color: #66cc33;
+    border-color: #333333; }
+    .ionic .item-success.active .list-item-content, .ionic .item-success:active .list-item-content {
       background-color: #66cc33;
-      border-color: #333333; }
-      .ionic .item.item-success.active .list-item-content, .ionic .item.item-success:active .list-item-content {
-        background-color: #66cc33;
-        color: white; }
-    .ionic .item.item-warning.active, .ionic .item.item-warning:active {
-      color: white;
+      color: white; }
+  .ionic .item-warning.active, .ionic .item-warning:active {
+    color: white;
+    background-color: #f0b840;
+    border-color: #333333; }
+    .ionic .item-warning.active .list-item-content, .ionic .item-warning:active .list-item-content {
       background-color: #f0b840;
-      border-color: #333333; }
-      .ionic .item.item-warning.active .list-item-content, .ionic .item.item-warning:active .list-item-content {
-        background-color: #f0b840;
-        color: white; }
-    .ionic .item.item-danger.active, .ionic .item.item-danger:active {
-      color: white;
+      color: white; }
+  .ionic .item-danger.active, .ionic .item-danger:active {
+    color: white;
+    background-color: #ef4e3a;
+    border-color: #333333; }
+    .ionic .item-danger.active .list-item-content, .ionic .item-danger:active .list-item-content {
       background-color: #ef4e3a;
-      border-color: #333333; }
-      .ionic .item.item-danger.active .list-item-content, .ionic .item.item-danger:active .list-item-content {
-        background-color: #ef4e3a;
-        color: white; }
-    .ionic .item.item-dark.active, .ionic .item.item-dark:active {
-      color: white;
+      color: white; }
+  .ionic .item-dark.active, .ionic .item-dark:active {
+    color: white;
+    background-color: #444444;
+    border-color: #333333; }
+    .ionic .item-dark.active .list-item-content, .ionic .item-dark:active .list-item-content {
       background-color: #444444;
-      border-color: #333333; }
-      .ionic .item.item-dark.active .list-item-content, .ionic .item.item-dark:active .list-item-content {
-        background-color: #444444;
-        color: white; }
+      color: white; }
   .ionic .item,
   .ionic .item h1,
   .ionic .item h2,
@@ -2575,9 +2575,9 @@
     height: 100%;
     font-size: 32px; }
   .ionic .item .fill-icon {
-    font-size: 28px;
     min-width: 30px;
-    min-height: 30px; }
+    min-height: 30px;
+    font-size: 28px; }
   .ionic .item-icon-left {
     padding-left: 45px; }
     .ionic .item-icon-left .icon {
@@ -2613,13 +2613,13 @@
     position: absolute;
     top: 7.5px;
     left: 7.5px;
-    font-size: 32px;
-    min-height: 32px; }
+    min-height: 32px;
+    font-size: 32px; }
     .ionic .item-button-left > .button .icon,
     .ionic .item-button-left .item-content > .button .icon {
       position: relative;
-      line-height: 31px;
-      left: auto; }
+      left: auto;
+      line-height: 31px; }
   .ionic .item-button-right {
     padding-right: 75px; }
   .ionic .item-button-right > .button,
@@ -2637,13 +2637,13 @@
     position: absolute;
     top: 7.5px;
     right: 15px;
-    font-size: 32px;
-    min-height: 32px; }
+    min-height: 32px;
+    font-size: 32px; }
     .ionic .item-button-right > .button .icon,
     .ionic .item-button-right .item-content > .button .icon {
       position: relative;
-      line-height: 31px;
-      left: auto; }
+      left: auto;
+      line-height: 31px; }
   .ionic a.item:after,
   .ionic button.item:after {
     /* By default, both <a> and <button> have right side arrow icons */
@@ -2662,13 +2662,13 @@
     right: 11px;
     height: 100%;
     color: #ccc;
-    content: "\e0fc";
+    content: "\f125";
     text-transform: none;
     font-weight: normal;
     font-style: normal;
     font-variant: normal;
     font-size: 16px;
-    font-family: 'ionicons';
+    font-family: 'Ionicons';
     line-height: 1;
     speak: none;
     -webkit-font-smoothing: antialiased; }
@@ -3028,7 +3028,7 @@
   .ionic input[type="file"] {
     line-height: 34px; }
   .ionic select {
-    border: 1px solid #cccccc;
+    border: 1px solid #ccc;
     background-color: white; }
   .ionic select[multiple],
   .ionic select[size] {
@@ -3077,7 +3077,7 @@
       border-radius: 50%;
       background: white;
       content: ' ';
-      transition: background-color 0.1s ease-in-out; }
+      transition: background-color .1s ease-in-out; }
   .ionic .checkbox input:after {
     position: absolute;
     top: 34%;
@@ -3090,7 +3090,7 @@
     border-right: 0;
     content: ' ';
     opacity: 0;
-    transition: opacity 0.05s ease-in-out;
+    transition: opacity .05s ease-in-out;
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg); }
   .ionic .checkbox input:checked:before {
@@ -3692,9 +3692,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin 0.75s linear infinite;
-    -moz-animation: spin 0.75s linear infinite;
-    animation: spin 0.75s linear infinite; }
+    -webkit-animation: spin .75s linear infinite;
+    -moz-animation: spin .75s linear infinite;
+    animation: spin .75s linear infinite; }
     .ionic .ion-loading:before {
       content: "\e144"; }
   .ionic .ion-refreshing {
@@ -3706,9 +3706,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin 0.75s linear infinite;
-    -moz-animation: spin 0.75s linear infinite;
-    animation: spin 0.75s linear infinite; }
+    -webkit-animation: spin .75s linear infinite;
+    -moz-animation: spin .75s linear infinite;
+    animation: spin .75s linear infinite; }
     .ionic .ion-refreshing:before {
       content: "\e144"; }
   .ionic .hidden,
