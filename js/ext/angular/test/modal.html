@@ -1,0 +1,55 @@
+<html ng-app="modalTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Modal</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-touch.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-animate.js"></script>
+  </head>
+  <body>
+    <content has-header="true" ng-controller="ModalCtrl">
+      <button class="button button-primary" ng-click="openModal()">Open</button>
+    </content>
+
+    <script id="modal.html" type="text/ng-template">
+      <div class="modal">
+        <header class="bar bar-header bar-secondary">
+          <h1 class="title">Modal</h1>
+          <button class="button button-clear button-primary" ng-click="closeModal()">Cancel</button>
+        </header>
+        <content has-header="true">
+          Realllllyyy long content
+          <div style="height: 2000px; background-color: red;"></div>
+        </content>
+      </div>
+    </script>
+
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
+    <script>
+      angular.module('modalTest', ['ionic', 'ngAnimate'])
+
+      .controller('ModalCtrl', function($scope, Modal) {
+        Modal.fromTemplateUrl('modal.html', function(modal) {
+          $scope.modal = modal;
+        }, {
+          scope: $scope,
+          animation: 'slide-in-up'
+        });
+
+        $scope.openModal = function() {
+          $scope.modal.show();
+        };
+        $scope.closeModal = function() {
+          $scope.modal.hide();
+        };
+      });
+    </script>
+  </body>
+</html>
+

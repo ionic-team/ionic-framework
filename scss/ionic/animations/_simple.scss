@@ -94,3 +94,114 @@
     -webkit-animation-name: slideInRight;
   }
 }
+
+$slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
+@-webkit-keyframes slideInUp {
+  0% {
+    -webkit-transform: translate3d(0, 100%, 0);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes slideOutUp {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translate3d(0, 100%, 0);
+    opacity: 0;
+  }
+}
+
+.slide-in-up {
+  opacity: 1;
+  // Start it down low
+  -webkit-transform: translate3d(0, 0%, 0);
+
+  &.ng-enter, .ng-enter {
+    // Start hidden
+    opacity: 0;
+    // Start it down low
+    -webkit-transform: translate3d(0, 100%, 0);
+
+    -webkit-animation-duration: 400ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: $slide-in-up-function;
+  }
+
+  &.ng-enter-active, .ng-enter-active {
+    -webkit-animation-name: slideInUp;
+  }
+
+  &.ng-leave, .ng-leave {
+    -webkit-animation-duration: 400ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: $slide-in-up-function;
+  }
+
+  &.ng-leave-active, .ng-leave {
+    -webkit-animation-name: slideOutUp;
+  }
+}
+
+.slide-in-up-add {
+  -webkit-animation-duration: 400ms;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation-timing-function: $slide-in-up-function;
+}
+.slide-in-up-add-active {
+  -webkit-animation-name: slideInUp;
+}
+
+.slide-in-up-remove {
+  -webkit-animation-duration: 400ms;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-timing-function: $slide-in-up-function;
+}
+.slide-in-up-remove-active {
+  -webkit-animation-name: slideOutUp;
+}
+
+@-webkit-keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@-webkit-keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  -webkit-animation: fadeOut 0.3s;
+  animation: fadeOut 0.3s;
+  &.active {
+    -webkit-animation: fadeIn 0.3s;
+    animation: fadeIn 0.3s;
+  }
+}
+
+@-moz-keyframes spin { 
+  100% { -moz-transform: rotate(360deg); } 
+}
+@-webkit-keyframes spin { 
+  100% { -webkit-transform: rotate(360deg); } 
+}
+@keyframes spin { 
+  100% { 
+    -webkit-transform: rotate(360deg); 
+    transform:rotate(360deg); 
+  } 
+}

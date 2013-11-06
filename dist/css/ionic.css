@@ -2876,6 +2876,8 @@ a.subdued‎ {
   position: fixed;
   z-index: 10;
   top: 0;
+  opacity: 0;
+  -webkit-transform: translate3d(0, 100%, 0);
   width: 100%;
   min-height: 100%;
   overflow: hidden;
@@ -4426,69 +4428,6 @@ a.button {
   height: 100%;
   background-color: white; }
 
-.slide-in-up {
-  opacity: 0;
-  -webkit-transform: translate3d(0, 100%, 0);
-  transform: translate3d(0, 100%, 0);
-  -webkit-transition: -webkit-transform 0.4s, opacity 0.1s;
-  transition: -webkit-transform 0.4s, opacity 0.1s;
-  -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
-  transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
-  -webkit-animation-fill-mode: forwards; }
-
-.slide-in-up.active {
-  opacity: 1;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0); }
-
-@-webkit-keyframes fadeOut {
-  from {
-    opacity: 1; }
-
-  to {
-    opacity: 0; } }
-
-@keyframes fadeOut {
-  from {
-    opacity: 1; }
-
-  to {
-    opacity: 0; } }
-
-@-webkit-keyframes fadeIn {
-  from {
-    opacity: 0; }
-
-  to {
-    opacity: 1; } }
-
-@keyframes fadeIn {
-  from {
-    opacity: 0; }
-
-  to {
-    opacity: 1; } }
-
-.fade-in {
-  -webkit-animation: fadeOut 0.3s;
-  animation: fadeOut 0.3s; }
-  .fade-in.active {
-    -webkit-animation: fadeIn 0.3s;
-    animation: fadeIn 0.3s; }
-
-@-moz-keyframes spin {
-  100% {
-    -moz-transform: rotate(360deg); } }
-
-@-webkit-keyframes spin {
-  100% {
-    -webkit-transform: rotate(360deg); } }
-
-@keyframes spin {
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg); } }
-
 @-webkit-keyframes slideInLeft {
   0% {
     -webkit-transform: translate3d(100%, 0, 0); }
@@ -4560,6 +4499,106 @@ a.button {
   -webkit-animation-fill-mode: both;
   -webkit-animation-timing-function: ease-in-out;
   -webkit-animation-name: slideInRight; }
+
+@-webkit-keyframes slideInUp {
+  0% {
+    -webkit-transform: translate3d(0, 100%, 0);
+    opacity: 0; }
+
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1; } }
+
+@-webkit-keyframes slideOutUp {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1; }
+
+  100% {
+    -webkit-transform: translate3d(0, 100%, 0);
+    opacity: 0; } }
+
+.slide-in-up {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0%, 0); }
+  .slide-in-up.ng-enter, .slide-in-up .ng-enter {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    -webkit-animation-duration: 400ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
+  .slide-in-up.ng-enter-active, .slide-in-up .ng-enter-active {
+    -webkit-animation-name: slideInUp; }
+  .slide-in-up.ng-leave, .slide-in-up .ng-leave {
+    -webkit-animation-duration: 400ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
+  .slide-in-up.ng-leave-active, .slide-in-up .ng-leave {
+    -webkit-animation-name: slideOutUp; }
+
+.slide-in-up-add {
+  -webkit-animation-duration: 400ms;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
+
+.slide-in-up-add-active {
+  -webkit-animation-name: slideInUp; }
+
+.slide-in-up-remove {
+  -webkit-animation-duration: 400ms;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
+
+.slide-in-up-remove-active {
+  -webkit-animation-name: slideOutUp; }
+
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1; }
+
+  to {
+    opacity: 0; } }
+
+@keyframes fadeOut {
+  from {
+    opacity: 1; }
+
+  to {
+    opacity: 0; } }
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0; }
+
+  to {
+    opacity: 1; } }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+
+  to {
+    opacity: 1; } }
+
+.fade-in {
+  -webkit-animation: fadeOut 0.3s;
+  animation: fadeOut 0.3s; }
+  .fade-in.active {
+    -webkit-animation: fadeIn 0.3s;
+    animation: fadeIn 0.3s; }
+
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg); } }
+
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg); } }
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
 
 /** 
  * Nav controllers and header bar animations
