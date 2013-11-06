@@ -10,8 +10,8 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
      *
      * @param {object} opts the options for this ActionSheet (see docs)
      */
-    show: function(opts) {
-      var scope = $rootScope.$new(true);
+    show: function(opts, $scope) {
+      var scope = $scope && $scope.$new() || $rootScope.$new(true);
 
       angular.extend(scope, opts);
 

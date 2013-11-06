@@ -1680,7 +1680,7 @@
   .ionic fieldset {
     margin: 0 2px;
     padding: 0.35em 0.625em 0.75em;
-    border: 1px solid #c0c0c0; }
+    border: 1px solid silver; }
   .ionic legend {
     padding: 0;
     /* 2 */
@@ -2799,11 +2799,13 @@
     padding-bottom: 1px;
     padding-left: 0; }
   .ionic .list-editing .item-content {
-    margin-right: 30px;
-    margin-left: 30px; }
+    margin-right: 50px;
+    margin-left: 50px; }
   .ionic .list-editing .item-edit {
     left: 0px;
     opacity: 1; }
+    .ionic .list-editing .item-edit i {
+      left: 5px; }
   .ionic .list-header {
     margin-top: 20px;
     padding: 5px 15px;
@@ -3026,7 +3028,7 @@
   .ionic input[type="file"] {
     line-height: 34px; }
   .ionic select {
-    border: 1px solid #ccc;
+    border: 1px solid #cccccc;
     background-color: white; }
   .ionic select[multiple],
   .ionic select[size] {
@@ -3075,7 +3077,7 @@
       border-radius: 50%;
       background: white;
       content: ' ';
-      transition: background-color .1s ease-in-out; }
+      transition: background-color 0.1s ease-in-out; }
   .ionic .checkbox input:after {
     position: absolute;
     top: 34%;
@@ -3088,7 +3090,7 @@
     border-right: 0;
     content: ' ';
     opacity: 0;
-    transition: opacity .05s ease-in-out;
+    transition: opacity 0.05s ease-in-out;
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg); }
   .ionic .checkbox input:checked:before {
@@ -3690,9 +3692,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin .75s linear infinite;
-    -moz-animation: spin .75s linear infinite;
-    animation: spin .75s linear infinite; }
+    -webkit-animation: spin 0.75s linear infinite;
+    -moz-animation: spin 0.75s linear infinite;
+    animation: spin 0.75s linear infinite; }
     .ionic .ion-loading:before {
       content: "\e144"; }
   .ionic .ion-refreshing {
@@ -3704,9 +3706,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin .75s linear infinite;
-    -moz-animation: spin .75s linear infinite;
-    animation: spin .75s linear infinite; }
+    -webkit-animation: spin 0.75s linear infinite;
+    -moz-animation: spin 0.75s linear infinite;
+    animation: spin 0.75s linear infinite; }
     .ionic .ion-refreshing:before {
       content: "\e144"; }
   .ionic .hidden,

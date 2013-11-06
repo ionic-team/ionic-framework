@@ -1465,11 +1465,13 @@ button.item-button-right:after {
  * "edit mode"
  */
 .list-editing .item-content {
-  margin-right: 30px;
-  margin-left: 30px; }
+  margin-right: 50px;
+  margin-left: 50px; }
 .list-editing .item-edit {
   left: 0px;
   opacity: 1; }
+  .list-editing .item-edit i {
+    left: 5px; }
 
 .list-header {
   margin-top: 20px;
@@ -1723,7 +1725,7 @@ input[type="file"] {
   line-height: 34px; }
 
 select {
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc;
   background-color: white; }
 
 select[multiple],
@@ -1795,7 +1797,7 @@ input[type="checkbox"][readonly] {
   right: 20px;
   transition: 0.2s ease;
   transition-property: left, right;
-  transition-delay: 0s, .05s; }
+  transition-delay: 0s, 0.05s; }
 
 .toggle :checked + .track {
   /* When the toggle is "on" */
@@ -1810,7 +1812,7 @@ input[type="checkbox"][readonly] {
     right: 0;
     left: 20px;
     -webkit-transform: none;
-    transition-delay: .05s, 0s; }
+    transition-delay: 0.05s, 0s; }
 
 .item-radio {
   padding: 0; }
@@ -2451,9 +2453,9 @@ a.button {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin .75s linear infinite;
-  -moz-animation: spin .75s linear infinite;
-  animation: spin .75s linear infinite; }
+  -webkit-animation: spin 0.75s linear infinite;
+  -moz-animation: spin 0.75s linear infinite;
+  animation: spin 0.75s linear infinite; }
   .ion-loading:before {
     content: "\e144"; }
 
@@ -2466,9 +2468,9 @@ a.button {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin .75s linear infinite;
-  -moz-animation: spin .75s linear infinite;
-  animation: spin .75s linear infinite; }
+  -webkit-animation: spin 0.75s linear infinite;
+  -moz-animation: spin 0.75s linear infinite;
+  animation: spin 0.75s linear infinite; }
   .ion-refreshing:before {
     content: "\e144"; }
 

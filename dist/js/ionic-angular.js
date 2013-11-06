@@ -2,6 +2,15 @@
  * Create a wrapping module to ease having to include too many
  * modules.
  */
+angular.module('ionic.service', [
+  'ionic.service.platform',
+  'ionic.service.actionSheet',
+  'ionic.service.gesture',
+  'ionic.service.loading',
+  'ionic.service.modal',
+  'ionic.service.popup',
+  'ionic.service.templateLoad'
+]);
 
 angular.module('ionic.ui', [
                             'ionic.ui.content',
@@ -14,9 +23,9 @@ angular.module('ionic.ui', [
                            ]);
 
 angular.module('ionic', [
-    'ionic.platform',
-    'ionic.ui'
-])
+    'ionic.service',
+    'ionic.ui',
+]);
 ;
 angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ionic.ui.actionSheet'])
 
@@ -30,8 +39,8 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
      *
      * @param {object} opts the options for this ActionSheet (see docs)
      */
-    show: function(opts) {
-      var scope = $rootScope.$new(true);
+    show: function(opts, $scope) {
+      var scope = $scope && $scope.$new() || $rootScope.$new(true);
 
       angular.extend(scope, opts);
 
@@ -153,9 +162,9 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad'])
      * A new isolated scope will be created for the 
      * modal and the new element will be appended into the body.
      */
-    fromTemplate: function(templateString) {
+    fromTemplate: function(templateString, $scope) {
       // Create a new isolated scope for the modal
-      var scope = $rootScope.$new(true);
+      var scope = $scope && $scope.$new() || $rootScope.$new(true);
 
       // Compile the template
       var element = $compile(templateString)(scope);
@@ -165,10 +174,10 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad'])
       scope.modal = modal;
       return modal;
     },
-    fromTemplateUrl: function(url, cb) {
+    fromTemplateUrl: function(url, cb, $scope) {
       TemplateLoader.load(url).then(function(templateString) {
         // Create a new isolated scope for the modal
-        var scope = $rootScope.$new(true);
+        var scope = $scope && $scope.$new() || $rootScope.$new(true);
 
         // Compile the template
         var element = $compile(templateString)(scope);
@@ -182,6 +191,98 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad'])
     }
   };
 }]);
+;
+(function() {
+'use strict';
+
+angular.module('ionic.service.platform', [])
+
+/**
+ * The platformProvider makes it easy to set and detect which platform
+ * the app is currently running on. It has some auto detection built in
+ * for PhoneGap and Cordova. This provider also takes care of
+ * initializing some defaults that depend on the platform, such as the
+ * height of header bars on iOS 7.
+ */
+.provider('Platform', function() {
+  var platform = 'web';
+  var isPlatformReady = false;
+
+  if(window.cordova || window.PhoneGap || window.phonegap) {
+    platform = 'cordova';
+  }
+
+  var isReady = function() {
+    if(platform == 'cordova') {
+      return window.device;
+    }
+    return true;
+  };
+
+  // We need to do some stuff as soon as we know the platform,
+  // like adjust header margins for iOS 7, etc.
+  setTimeout(function afterReadyWait() {
+    if(isReady()) {
+      ionic.Platform.detect();
+    } else {
+      setTimeout(afterReadyWait, 50);
+    }
+  }, 10);
+
+  return {
+    setPlatform: function(p) {
+      platform = p;
+    },
+    $get: ['$q', '$timeout', function($q, $timeout) {
+      return {
+        /**
+         * Some platforms have hardware back buttons, so this is one way to bind to it.
+         *
+         * @param {function} cb the callback to trigger when this event occurs
+         */
+        onHardwareBackButton: function(cb) {
+          this.ready(function() {
+            document.addEventListener('backbutton', cb, false);
+          });
+        },
+
+        /**
+         * Remove an event listener for the backbutton.
+         *
+         * @param {function} fn the listener function that was originally bound.
+         */
+        offHardwareBackButton: function(fn) {
+          this.ready(function() {
+            document.removeEventListener('backbutton', fn);
+          });
+        },
+
+        /**
+         * Trigger a callback once the device is ready, or immediately if the device is already
+         * ready.
+         */
+        ready: function(cb) {
+          var self = this;
+          var q = $q.defer();
+
+          $timeout(function readyWait() {
+            if(isReady()) {
+              isPlatformReady = true;
+              q.resolve();
+              cb();
+            } else {
+              $timeout(readyWait, 50);
+            }
+          }, 50);
+
+          return q.promise;
+        }
+      };
+    }]
+  };
+});
+
+})(ionic);
 ;
 angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
 
@@ -200,7 +301,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
   };
 
   return {
-    alert: function(message) {
+    alert: function(message, $scope) {
 
       // If there is an existing popup, just show that one
       var existing = getPopup();
@@ -215,7 +316,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
 
       opts = angular.extend(defaults, opts);
 
-      var scope = $rootScope.$new(true);
+      var scope = $scope && $scope.$new() || $rootScope.$new(true);
       angular.extend(scope, opts);
 
       // Compile the template
@@ -402,6 +503,9 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       buttons: '=',
     },
     template: '<a href="#" class="item item-slider">\
+            <div class="item-edit" ng-if="canDelete && isEditing">\
+              <button class="button button-icon" ng-click="onDelete()"><i ng-class="deleteIcon"></i></button>\
+            </div>\
             <div class="item-content slide-left" ng-transclude>\
             </div>\
             <div class="item-options" ng-if="canSwipe && !isEditing">\
@@ -561,9 +665,9 @@ angular.module('ionic.ui.loading', [])
 (function() {
 'use strict';
 
-angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.gesture', 'ngAnimate'])
+angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.gesture', 'ionic.service.platform', 'ngAnimate'])
 
-.controller('NavCtrl', ['$scope', '$element', '$animate', '$compile', 'TemplateLoader', function($scope, $element, $animate, $compile, TemplateLoader) {
+.controller('NavCtrl', ['$scope', '$element', '$animate', '$compile', 'TemplateLoader', 'Platform', function($scope, $element, $animate, $compile, TemplateLoader, Platform) {
   var _this = this;
 
   angular.extend(this, ionic.controllers.NavController.prototype);
@@ -587,6 +691,15 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
       },
     }
   });
+
+  // Support Android hardware back button (native only, not mobile web)
+  var onHardwareBackButton = function(e) {
+    $scope.$apply(function() {
+      _this.pop();
+    });
+  }
+  Platform.onHardwareBackButton(onHardwareBackButton);
+
 
   this.handleDrag = function(e) {
   };
@@ -622,6 +735,11 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
   };
 
   $scope.navController = this;
+
+  $scope.$on('$destroy', function() {
+    // Remove back button listener
+    Platform.offHardwareBackButton(onHardwareBackButton);
+  });
 }])
 
 .directive('navs', function() {
@@ -750,74 +868,6 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 }]);
 
 })();
-;
-(function() {
-'use strict';
-
-angular.module('ionic.platform', [])
-
-/**
- * The platformProvider makes it easy to set and detect which platform
- * the app is currently running on. It has some auto detection built in
- * for PhoneGap and Cordova. This provider also takes care of
- * initializing some defaults that depend on the platform, such as the
- * height of header bars on iOS 7.
- */
-.provider('platform', function() {
-  var platform = 'unknown';
-  var isPlatformReady = false;
-
-  if(window.cordova || window.PhoneGap || window.phonegap) {
-    platform = 'cordova';
-  }
-
-  console.log('Detected platform', platform);
-
-  var isReady = function() {
-    if(platform == 'cordova') {
-      return window.device;
-    }
-    return true;
-  };
-
-  // We need to do some stuff as soon as we know the platform,
-  // like adjust header margins for iOS 7, etc.
-  setTimeout(function afterReadyWait() {
-    if(isReady()) {
-      ionic.Platform.detect();
-    } else {
-      setTimeout(afterReadyWait, 50);
-    }
-  }, 10);
-
-  return {
-    setPlatform: function(p) {
-      platform = p;
-    },
-    $get: ['$q', '$timeout', function($q, $timeout) {
-      return {
-        ready: function(cb) {
-          var self = this;
-          var q = $q.defer();
-
-          $timeout(function readyWait() {
-            if(isReady()) {
-              isPlatformReady = true;
-              q.resolve();
-              cb();
-            } else {
-              $timeout(readyWait, 50);
-            }
-          }, 50);
-
-          return q.promise;
-        }
-      };
-    }]
-  };
-});
-
-})(ionic);
 ;
 ;
 (function() {

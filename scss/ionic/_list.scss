@@ -17,12 +17,15 @@
  */
 .list-editing {
   .item-content {
-    margin-right: 30px;
-    margin-left: 30px;
+    margin-right: 50px;
+    margin-left: 50px;
   }
   .item-edit {
     left: 0px;
     opacity: 1;
+    i {
+      left: 5px;
+    }
   }
 }
 

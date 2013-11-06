@@ -9,9 +9,9 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad'])
      * A new isolated scope will be created for the 
      * modal and the new element will be appended into the body.
      */
-    fromTemplate: function(templateString) {
+    fromTemplate: function(templateString, $scope) {
       // Create a new isolated scope for the modal
-      var scope = $rootScope.$new(true);
+      var scope = $scope && $scope.$new() || $rootScope.$new(true);
 
       // Compile the template
       var element = $compile(templateString)(scope);
@@ -21,10 +21,10 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad'])
       scope.modal = modal;
       return modal;
     },
-    fromTemplateUrl: function(url, cb) {
+    fromTemplateUrl: function(url, cb, $scope) {
       TemplateLoader.load(url).then(function(templateString) {
         // Create a new isolated scope for the modal
-        var scope = $rootScope.$new(true);
+        var scope = $scope && $scope.$new() || $rootScope.$new(true);
 
         // Compile the template
         var element = $compile(templateString)(scope);

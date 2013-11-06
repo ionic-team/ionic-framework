@@ -63,17 +63,16 @@
   <body>
 
     <content ng-controller="TestCtrl" class="reveal-animation">
-      <list is-editing="isEditingItems" on-refresh-holding="almostRefreshing()" on-refresh-opening="almostRefreshProjects(ratio)" on-refresh="refreshProjects()" animation="my-repeat-animation" delete-icon="icon-minus-circled" reorder-icon="icon-navicon">
+      <list is-editing="isEditingItems" on-refresh-holding="almostRefreshing()" on-refresh-opening="almostRefreshProjects(ratio)" on-refresh="refreshProjects()" animation="my-repeat-animation" delete-icon="ion ion-minus-circled" reorder-icon="icon-navicon">
         <list-refresher>
-          <spinner ratio="refreshRatio.ratio"></spinner>
         </list-refresher>
         <list-item ng-repeat="item in items" 
-        buttons="item.buttons"
-        can-delete="true"
-        can-reorder="true"
-        can-swipe="true"
-                 on-delete="deleteProject(project)"
-                 on-select="selectProject(project)">
+            buttons="item.buttons"
+            can-delete="true"
+            can-reorder="true"
+            can-swipe="true"
+           on-delete="deleteProject(project)"
+           on-select="selectProject(project)">
           {{item.text}}
           <i class="{{item.icon}}"></i>
         </list-item>

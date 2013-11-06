@@ -1,7 +1,7 @@
 (function() {
 'use strict';
 
-angular.module('ionic.platform', [])
+angular.module('ionic.service.platform', [])
 
 /**
  * The platformProvider makes it easy to set and detect which platform
@@ -10,15 +10,13 @@ angular.module('ionic.platform', [])
  * initializing some defaults that depend on the platform, such as the
  * height of header bars on iOS 7.
  */
-.provider('platform', function() {
-  var platform = 'unknown';
+.provider('Platform', function() {
+  var platform = 'web';
   var isPlatformReady = false;
 
   if(window.cordova || window.PhoneGap || window.phonegap) {
     platform = 'cordova';
   }
-
-  console.log('Detected platform', platform);
 
   var isReady = function() {
     if(platform == 'cordova') {
@@ -43,6 +41,32 @@ angular.module('ionic.platform', [])
     },
     $get: ['$q', '$timeout', function($q, $timeout) {
       return {
+        /**
+         * Some platforms have hardware back buttons, so this is one way to bind to it.
+         *
+         * @param {function} cb the callback to trigger when this event occurs
+         */
+        onHardwareBackButton: function(cb) {
+          this.ready(function() {
+            document.addEventListener('backbutton', cb, false);
+          });
+        },
+
+        /**
+         * Remove an event listener for the backbutton.
+         *
+         * @param {function} fn the listener function that was originally bound.
+         */
+        offHardwareBackButton: function(fn) {
+          this.ready(function() {
+            document.removeEventListener('backbutton', fn);
+          });
+        },
+
+        /**
+         * Trigger a callback once the device is ready, or immediately if the device is already
+         * ready.
+         */
         ready: function(cb) {
           var self = this;
           var q = $q.defer();
