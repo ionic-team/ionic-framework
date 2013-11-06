@@ -902,7 +902,6 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
 })();
 ;
-;
 (function() {
 'use strict';
 

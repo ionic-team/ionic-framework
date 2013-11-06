@@ -1680,7 +1680,7 @@
   .ionic fieldset {
     margin: 0 2px;
     padding: 0.35em 0.625em 0.75em;
-    border: 1px solid silver; }
+    border: 1px solid #c0c0c0; }
   .ionic legend {
     padding: 0;
     /* 2 */
@@ -1911,13 +1911,13 @@
     margin-bottom: 20px;
     font-style: normal;
     line-height: 1.42857; }
-  .ionic a.subdued‎ {
+  .ionic a.subduedΓÇÄ {
     padding-right: 10px;
     color: #555555;
     text-decoration: none; }
-    .ionic a.subdued‎:hover {
+    .ionic a.subduedΓÇÄ:hover {
       text-decoration: none; }
-    .ionic a.subdued‎:last-child {
+    .ionic a.subduedΓÇÄ:last-child {
       padding-right: 0; }
   .ionic .action-sheet {
     position: fixed;
@@ -2745,24 +2745,36 @@
   .ionic .item-edit {
     position: absolute;
     top: 0;
-    left: -48px;
+    left: 8px;
     z-index: 0;
     width: 48px;
     height: 100%;
     line-height: 100%;
-    opacity: 0;
     -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
     .ionic .item-edit .button {
       height: 100%; }
-    .ionic .item-edit .icon {
-      color: #ef4e3a;
-      font-size: 24px; }
+      .ionic .item-edit .button .icon, .ionic .item-edit .button i {
+        color: #ef4e3a;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        -moz-align-items: center;
+        align-items: center;
+        font-size: 24px;
+        position: absolute;
+        top: 0;
+        height: 100%; }
     .ionic .item-edit.ng-enter {
       left: -48px;
       opacity: 0;
       -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
     .ionic .item-edit.ng-enter-active {
-      left: 0;
+      left: 8px;
       opacity: 1; }
     .ionic .item-edit.ng-leave {
       left: 0px;
@@ -2801,11 +2813,6 @@
   .ionic .list-editing .item-content {
     margin-right: 50px;
     margin-left: 50px; }
-  .ionic .list-editing .item-edit {
-    left: 0px;
-    opacity: 1; }
-    .ionic .list-editing .item-edit i {
-      left: 5px; }
   .ionic .list-header {
     margin-top: 20px;
     padding: 5px 15px;
@@ -3028,7 +3035,7 @@
   .ionic input[type="file"] {
     line-height: 34px; }
   .ionic select {
-    border: 1px solid #cccccc;
+    border: 1px solid #ccc;
     background-color: white; }
   .ionic select[multiple],
   .ionic select[size] {
@@ -3077,7 +3084,7 @@
       border-radius: 50%;
       background: white;
       content: ' ';
-      transition: background-color 0.1s ease-in-out; }
+      transition: background-color .1s ease-in-out; }
   .ionic .checkbox input:after {
     position: absolute;
     top: 34%;
@@ -3090,7 +3097,7 @@
     border-right: 0;
     content: ' ';
     opacity: 0;
-    transition: opacity 0.05s ease-in-out;
+    transition: opacity .05s ease-in-out;
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg); }
   .ionic .checkbox input:checked:before {
@@ -3464,7 +3471,7 @@
     .ionic .button-icon:active, .ionic .button-icon.active {
       background: none;
       box-shadow: none;
-      text-shadow: 0px 0px 10px white; }
+      text-shadow: 0px 0px 10px #fff; }
   .ionic .padding > .button.block:first-child {
     margin-top: 0; }
   .ionic .button-full,
@@ -3692,9 +3699,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin 0.75s linear infinite;
-    -moz-animation: spin 0.75s linear infinite;
-    animation: spin 0.75s linear infinite; }
+    -webkit-animation: spin .75s linear infinite;
+    -moz-animation: spin .75s linear infinite;
+    animation: spin .75s linear infinite; }
     .ionic .ion-loading:before {
       content: "\e144"; }
   .ionic .ion-refreshing {
@@ -3706,9 +3713,9 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-animation: spin 0.75s linear infinite;
-    -moz-animation: spin 0.75s linear infinite;
-    animation: spin 0.75s linear infinite; }
+    -webkit-animation: spin .75s linear infinite;
+    -moz-animation: spin .75s linear infinite;
+    animation: spin .75s linear infinite; }
     .ionic .ion-refreshing:before {
       content: "\e144"; }
   .ionic .hidden,

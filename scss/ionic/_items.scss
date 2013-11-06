@@ -431,22 +431,25 @@ button.item-button-right:after {
 .item-edit {
   position: absolute;
   top: 0;
-  left: -48px;
+  left: 8px;
   z-index: 0;
   width: 48px;
   height: 100%;
   line-height: 100%;
-  opacity: 0;
 
   -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
 
   .button {
     height: 100%;
-  }
-
-  .icon {
-    color: $brand-danger;
-    font-size: 24px;
+    .icon, i {
+      color: $brand-danger;
+      @include display-flex();
+      @include align-items(center);
+      font-size: 24px;
+      position: absolute;
+      top: 0;
+      height: 100%;
+    }
   }
 
   &.ng-enter {
@@ -455,7 +458,7 @@ button.item-button-right:after {
     -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
   }
   &.ng-enter-active {
-    left: 0;
+    left: 8px;
     opacity: 1;
   }
   &.ng-leave {

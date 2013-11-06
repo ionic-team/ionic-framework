@@ -64,7 +64,7 @@
   <body>
 
     <content ng-controller="TestCtrl" class="reveal-animation">
-      <list is-editing="isEditingItems" on-refresh-holding="almostRefreshing()" on-refresh-opening="almostRefreshProjects(ratio)" on-refresh="refreshProjects()" animation="my-repeat-animation" delete-icon="ion ion-minus-circled" reorder-icon="icon-navicon">
+      <list is-editing="isEditingItems" on-refresh-holding="almostRefreshing()" on-refresh-opening="almostRefreshProjects(ratio)" on-refresh="refreshProjects()" animation="my-repeat-animation" delete-icon="icon ion-minus-circled" reorder-icon="icon ion-navicon">
         <list-refresher>
         </list-refresher>
         <list-item ng-repeat="item in items" 
