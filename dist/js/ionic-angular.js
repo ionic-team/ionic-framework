@@ -919,7 +919,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
 })();
 ;
-(function() {
+(function(ionic) {
 'use strict';
 
 /**
@@ -940,6 +940,7 @@ angular.module('ionic.ui.scroll', [])
     template: '<div class="scroll-content" ng-transclude></div>'
   };
 });
+})(window.ionic);
 ;
 (function() {
 'use strict';
