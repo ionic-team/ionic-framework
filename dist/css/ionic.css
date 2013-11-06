@@ -2253,9 +2253,9 @@ a.subdued‎ {
     border-color: #c73927;
     color: white; }
   .tabs.tabs-dark {
-    background-color: #ef4e3a;
-    background-image: linear-gradient(0deg, #c73927, #c73927 50%, transparent 50%);
-    border-color: #c73927;
+    background-color: #444444;
+    background-image: linear-gradient(0deg, #111111, #111111 50%, transparent 50%);
+    border-color: #111111;
     color: white; }
   @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
     .tabs {
@@ -3943,78 +3943,77 @@ a.button {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
 
-/** 
- * Nav controllers and header bar animations
- */
-.content-slide-in.ng-enter, .content-slide-in > .ng-enter {
-  -webkit-transition: 0.5s ease-in-out all;
-  -webkit-transform: translate3d(100%, 0, 0);
-  box-shadow: -1px 0px 10px rgba(0, 0, 0, 0.6); }
-.content-slide-in.ng-enter-active, .content-slide-in > .ng-enter-active {
-  -webkit-transform: translate3d(0, 0, 0); }
-.content-slide-in.ng-leave, .content-slide-in > .ng-leave {
-  -webkit-transition: 0.5s ease-in-out all;
-  -webkit-transform: translate3d(0%, 0, 0); }
-.content-slide-in.ng-leave-active, .content-slide-in > .ng-leave-active {
-  -webkit-transform: translate3d(-10%, 0, 0);
-  opacity: 0.8; }
+@-webkit-keyframes slideInLeft {
+  0% {
+    -webkit-transform: translate3d(100%, 0, 0); }
 
-.content-slide-out.ng-enter, .content-slide-out > .ng-enter {
-  z-index: 1;
-  -webkit-transition: 0.5s ease-in-out all;
-  -webkit-transform: translate3d(-100%, 0, 0);
-  box-shadow: -1px 0px 10px rgba(0, 0, 0, 0.6); }
-.content-slide-out.ng-enter-active, .content-slide-out > .ng-enter-active {
-  -webkit-transform: translate3d(0, 0, 0); }
-.content-slide-out.ng-leave, .content-slide-out > .ng-leave {
-  z-index: 0;
-  -webkit-transition: 0.5s ease-in-out all;
-  -webkit-transform: translate3d(0%, 0, 0); }
-.content-slide-out.ng-leave-active, .content-slide-out > .ng-leave-active {
-  -webkit-transform: translate3d(10%, 0, 0);
-  opacity: 0.8; }
+  100% {
+    -webkit-transform: translate3d(0, 0, 0); } }
 
-.bar-title-in-add {
-  -webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-  -webkit-transform: translate3d(100%, 0, 0);
-  opacity: 0; }
+@-webkit-keyframes slideOutLeft {
+  0% {
+    -webkit-transform: translate3d(0px, 0, 0); }
 
-.bar-title-in-add-active {
-  -webkit-transform: translate3d(0px, 0, 0);
-  opacity: 1; }
+  100% {
+    -webkit-transform: translate3d(-100%, 0, 0); } }
 
-.bar-title-out-add {
-  -webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out; }
+@-webkit-keyframes slideInRight {
+  0% {
+    -webkit-transform: translate3d(-100%, 0, 0); }
 
-.bar-title-out-add-active {
-  -webkit-transform: translate3d(-100%, 0, 0);
-  opacity: 0; }
+  100% {
+    -webkit-transform: translate3d(0, 0, 0); } }
 
-.bar-button-in {
-  opacity: 0; }
+@-webkit-keyframes slideOutRight {
+  0% {
+    -webkit-transform: translate3d(0%, 0, 0); }
 
-.bar-button-in-add {
-  -webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-  -webkit-transform: translate3d(50%, 0, 0);
-  opacity: 0; }
+  100% {
+    -webkit-transform: translate3d(100%, 0, 0); } }
 
-.bar-button-in-active {
-  -webkit-transform: translate3d(0px, 0, 0);
-  opacity: 1; }
+.slide-in-left.ng-enter, .slide-in-left > .ng-enter {
+  -webkit-animation-duration: 250ms;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-name: slideInLeft; }
+.slide-in-left.ng-leave, .slide-in-left > .ng-leave {
+  -webkit-animation-duration: 250ms;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-name: slideOutLeft; }
 
-/**
- * Tab controller animations
- */
-.fade-in-out.ng-enter, .fade-in-out > .ng-enter {
-  opacity: 0;
-  -webkit-transition: opacity 0.3s ease-in-out; }
-.fade-in-out.ng-enter-active, .fade-in-out > .ng-enter-active {
-  opacity: 1; }
-.fade-in-out.ng-leave, .fade-in-out > .ng-leave {
-  opacity: 1;
-  -webkit-transition: opacity 0.3s ease-in-out; }
-.fade-in-out.ng-leave-active, .fade-in-out > .ng-leave-active {
-  opacity: 0; }
+.slide-out-left.ng-enter, .slide-out-left > .ng-enter {
+  -webkit-animation-duration: 250ms;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-name: slideOutLeft; }
+.slide-out-left.ng-leave, .slide-out-left > .ng-leave {
+  -webkit-animation-duration: 250ms;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-name: slideInLeft; }
+
+.slide-in-right.ng-enter, .slide-in-right > .ng-enter {
+  -webkit-animation-duration: 250ms;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-name: slideInRight; }
+.slide-in-right.ng-leave, .slide-in-right > .ng-leave {
+  -webkit-animation-duration: 250ms;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-name: slideOutRight; }
+
+.slide-out-right.ng-enter, .slide-out-right > .ng-enter {
+  -webkit-animation-duration: 2250ms;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-name: slideOutRight; }
+.slide-out-right.ng-leave, .slide-out-right > .ng-leave {
+  -webkit-animation-duration: 2250ms;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-name: slideInRight; }
 
 .ion-default {
   color: white; }

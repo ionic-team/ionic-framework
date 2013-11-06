@@ -4,6 +4,7 @@
 // A transition like the iOS nav controller where the old controller
 // slides out and the new one slides in. In this transition, the 
 // old controller slides out more slowly than the new one slides in.
+/*
 .content-slide-in {
   &.ng-enter, > .ng-enter {
     -webkit-transition: 0.5s ease-in-out all;
@@ -22,6 +23,7 @@
     opacity: 0.8;
   }
 }
+*/
 
 .content-slide-out {
   &.ng-enter, > .ng-enter {
@@ -86,6 +88,7 @@
   -webkit-transform: translate3d(0px, 0, 0);
   opacity: 1;
 }
+*/
 
 
 /**

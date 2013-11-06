@@ -48,16 +48,16 @@
     </style>
   </head>
   <body ng-controller="RootCtrl">
-    <tabs animation="fade-in-out" controller-changed="onControllerChanged(oldController, oldIndex, newController, newIndex)">
+    <tabs animation="fade-in-out" tabs-type="tabs-icon-only" tabs-style="tabs-primary" controller-changed="onControllerChanged(oldController, oldIndex, newController, newIndex)">
 
-      <tab title="Home" icon-on="icon-ios7-filing" icon-off="icon-ios7-filing-outline" ng-controller="HomeCtrl">
+      <tab title="Home" icon-on="ion ion-ios7-filing" icon-off="ion ion-ios7-filing-outline" ng-controller="HomeCtrl">
         <header class="bar bar-header bar-secondary">
           <button class="button button-clear button-primary" ng-click="newTask()">New</button>
           <h1 class="title">Tasks</h1>
           <button class="button button-clear button-primary" ng-click="isEditingItems = !isEditingItems">Edit</button>
         </header>
         <content has-header="true" has-tabs="true">
-          <list is-editing="isEditingItems" animation="fade-out" delete-icon="icon-minus-circled" reorder-icon="icon-navicon">
+          <list is-editing="isEditingItems" animation="fade-out" delete-icon="ion ion-minus-circled" reorder-icon="ion-navicon">
             <list-item ng-repeat="item in items" 
             item="item"
             buttons="item.buttons"
@@ -74,7 +74,7 @@
         </content>
       </tab>
 
-      <tab title="About" icon-on="icon-ios7-clock" icon-off="icon-ios7-clock-outline">
+      <tab title="About" icon-on="ion ion-ios7-clock" icon-off="ion ion-ios7-clock-outline">
         <header class="bar bar-header bar-secondary">
           <h1 class="title">Deadlines</h1>
         </header>
@@ -83,7 +83,7 @@
         </content>
       </tab>
 
-      <tab title="Settings" icon-on="icon-ios7-gear" icon-off="icon-ios7-gear-outline">
+      <tab title="Settings" icon-on="ion ion-ios7-gear" icon-off="ion ion-ios7-gear-outline">
         <header class="bar bar-header bar-secondary">
           <h1 class="title">Settings</h1>
         </header>

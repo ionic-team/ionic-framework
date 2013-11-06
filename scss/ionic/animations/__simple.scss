@@ -1,0 +1,96 @@
+// The animations in this file are "simple" - not too complex
+// and pretty easy on performance. They can be overidden
+// and enhanced easily.
+
+@-webkit-keyframes slideInLeft {
+  0% {
+    -webkit-transform: translate3d(100%, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(0,0,0);
+  }
+}
+@-webkit-keyframes slideOutLeft {
+  0% {
+    -webkit-transform: translate3d(0px,0,0);
+  }
+  100% {
+    -webkit-transform: translate3d(-100%,0,0);
+  }
+}
+@-webkit-keyframes slideInRight {
+  0% {
+    -webkit-transform: translate3d(-100%,0,0);
+  }
+  100% {
+    -webkit-transform: translate3d(0,0,0);
+  }
+}
+@-webkit-keyframes slideOutRight {
+  0% {
+    -webkit-transform: translate3d(0%,0,0);
+  }
+  100% {
+    -webkit-transform: translate3d(100%,0,0);
+  }
+}
+
+.slide-in-left {
+  &.ng-enter, > .ng-enter {
+    -webkit-animation-duration: 250ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-name: slideInLeft;
+  }
+  &.ng-leave, > .ng-leave {
+    -webkit-animation-duration: 250ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-name: slideOutLeft;
+  }
+}
+
+.slide-out-left {
+  &.ng-enter, > .ng-enter {
+    -webkit-animation-duration: 250ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-name: slideOutLeft;
+  }
+  &.ng-leave, > .ng-leave {
+    -webkit-animation-duration: 250ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-name: slideInLeft;
+  }
+}
+
+.slide-in-right {
+  &.ng-enter, > .ng-enter {
+    -webkit-animation-duration: 250ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-name: slideInRight;
+  }
+  &.ng-leave, > .ng-leave {
+    -webkit-animation-duration: 250ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-name: slideOutRight;
+  }
+}
+
+.slide-out-right {
+  &.ng-enter, > .ng-enter {
+    -webkit-animation-duration: 2250ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-name: slideOutRight;
+  }
+  &.ng-leave, > .ng-leave {
+    -webkit-animation-duration: 2250ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-name: slideInRight;
+  }
+}

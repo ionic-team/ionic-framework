@@ -41,7 +41,7 @@
     @include tab-style($tabs-danger-bg, $tabs-danger-border-color, $white);
   }
   &.tabs-dark {
-    @include tab-style($tabs-danger-bg, $tabs-danger-border-color, $white);
+    @include tab-style($tabs-dark-bg, $tabs-dark-border-color, $white);
   }
 
   background-size: 0;

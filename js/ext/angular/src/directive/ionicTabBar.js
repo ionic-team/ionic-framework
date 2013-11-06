@@ -48,7 +48,9 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     replace: true,
     scope: {
       animation: '@',
-      controllerChanged: '&'
+      controllerChanged: '&',
+      tabsType: '@',
+      tabsStyle: '@',
     },
     transclude: true,
     controller: 'TabsCtrl',
@@ -117,9 +119,13 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     transclude: true,
     replace: true,
     scope: true,
-    template: '<div class="tabs tabs-icon-top tabs-primary">' + 
+    template: '<div class="tabs">' + 
       '<tab-controller-item title="{{controller.title}}" icon="{{controller.icon}}" icon-on="{{controller.iconOn}}" icon-off="{{controller.iconOff}}" active="controller.isVisible" index="$index" ng-repeat="controller in controllers"></tab-controller-item>' + 
-    '</div>'
+    '</div>',
+    link: function($scope, $element, $attr) {
+      $element.addClass($scope.tabsType);
+      $element.addClass($scope.tabsStyle);
+    }
   };
 })
 
@@ -162,27 +168,5 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     template: '<div class="tabs tabs-primary" ng-transclude>' + 
     '</div>'
   }
-})
-
-.directive('tabItem', function() {
-  return {
-    restrict: 'E',
-    replace: true,
-    scope: {
-      title: '@',
-      iconOn: '@',
-      iconOff: '@',
-      active: '=',
-      tabSelected: '@',
-      index: '='
-    },
-    link: function(scope, element, attrs) {
-    },
-    template: 
-      '<a href="#" ng-class="{active:active}" ng-click="tabSelected()" class="tab-item">' +
-        '<i class="{{icon}}" ng-if="icon"></i>' +
-        '<i class="{{iconOn}}" ng-if="active"></i>' +
-        '<i class="{{iconOff}}" ng-if="!active"></i> {{title}}' +
-      '</a>'
-  };
 });
+
