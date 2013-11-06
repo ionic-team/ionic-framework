@@ -24,6 +24,9 @@ angular.module('ionic.ui.list', ['ngAnimate'])
             </div>\
             <div class="item-content slide-left" ng-transclude>\
             </div>\
+             <div class="item-drag" ng-if="canReorder && isEditing">\
+               <button data-ionic-action="reorder" class="button button-icon"><i ng-class="reorderIcon"></i></button>\
+             </div>\
             <div class="item-options" ng-if="canSwipe && !isEditing && showOptions">\
              <button ng-click="buttonClicked(button)" class="button" ng-class="button.type" ng-repeat="button in buttons">{{button.text}}</button>\
            </div>\
@@ -104,7 +107,10 @@ angular.module('ionic.ui.list', ['ngAnimate'])
 
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
-        var lv = new ionic.views.List({el: $element[0]});
+        var lv = new ionic.views.ListView({
+          el: $element[0],
+          listEl: $element[0].children[0]
+        });
 
         if(attr.animation) {
           $element.addClass(attr.animation);

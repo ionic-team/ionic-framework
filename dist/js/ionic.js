@@ -3012,13 +3012,6 @@ window.ionic = {
     // Start the drag states
     this._initDrag();
 
-    // Listen for drag and release events
-    window.ionic.onGesture('drag', function(e) {
-      _this._handleDrag(e);
-    }, this.el);
-    window.ionic.onGesture('release', function(e) {
-      _this._handleEndDrag(e);
-    }, this.el);
   };
 
   ionic.views.List.prototype = {
@@ -3052,6 +3045,8 @@ window.ionic = {
       var _this = this;
 
       this._isDragging = false;
+
+      return false;
 
       // Check if this is a reorder drag
       if(ionic.DomUtil.getParentOrSelfWithClass(e.target, 'list-item-drag') && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
@@ -3090,6 +3085,7 @@ window.ionic = {
 
     _handleEndDrag: function(e) {
       var _this = this;
+      return false;
       
       if(!this._dragOp) {
         this._initDrag();
@@ -3106,6 +3102,7 @@ window.ionic = {
      */
     _handleDrag: function(e) {
       var _this = this, content, buttons;
+      return false;
 
       if(!this._dragOp) {
         this._startDrag(e);

@@ -1793,6 +1793,13 @@
     width: 100%;
     height: 100%;
     -webkit-overflow-scrolling: touch; }
+  .ionic .scroll-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden; }
   .ionic .has-header {
     top: 44px; }
   .ionic .has-footer {
@@ -2793,6 +2800,21 @@
       height: 100%;
       border: none;
       border-radius: 0; }
+      .ionic .item-drag .button .icon, .ionic .item-drag .button i {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        -moz-align-items: center;
+        align-items: center;
+        font-size: 24px;
+        position: absolute;
+        top: 0;
+        height: 100%; }
   .ionic .item-options {
     position: absolute;
     top: 0;

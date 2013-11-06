@@ -483,6 +483,14 @@ button.item-button-right:after {
     height: 100%;
     border: none;
     border-radius: 0;
+    .icon, i {
+      @include display-flex();
+      @include align-items(center);
+      font-size: 24px;
+      position: absolute;
+      top: 0;
+      height: 100%;
+    }
   }
 }
 /**
