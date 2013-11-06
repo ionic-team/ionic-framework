@@ -60,14 +60,7 @@ textarea {
     -webkit-appearance: none;
   }
 
-  .input-label {
-    @include flex(1, 0, 100px);
-    padding: 7px 10px 7px 3px;
-    max-width: 200px;
-    color: $input-label-color;
-    font-weight: bold;
-  }
-  .ion {
+  .icon {
     @include flex(0, 0, 24px);
     position: static;
     height: auto;
@@ -75,9 +68,18 @@ textarea {
     text-align: center;
     font-size: 16px;
   }
-  .placeholder-icon {
-    color: #999;
-  }
+}
+
+.input-label {
+  @include flex(1, 0, 100px);
+  padding: 7px 10px 7px 3px;
+  max-width: 200px;
+  color: $input-label-color;
+  font-weight: bold;
+}
+
+.placeholder-icon {
+  color: #999;
 }
 
 .item-stacked-label {
@@ -85,7 +87,7 @@ textarea {
   background-color: transparent;
   box-shadow: none;
 
-  .input-label, .ion {
+  .input-label, .icon {
     display: inline-block;
     padding: 4px 0;
     vertical-align: middle;

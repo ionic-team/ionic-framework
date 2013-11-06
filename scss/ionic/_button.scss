@@ -26,91 +26,12 @@
 
   cursor: pointer;
 
-  .ion {
+  .icon {
     display: inline-block;
     padding: 0 0 $button-border-width 0;
     vertical-align: inherit;
     font-size: $button-icon-size;
     line-height: $button-height - $button-border-width - 1;
-  }
-
-  &.button-icon {
-    padding: 2px 4px;
-    background: none;
-
-    .ion {
-      font-size: $button-large-icon-size;
-    }
-  }
-
-  &.button-clear {
-    @include transition(opacity .1s);
-    padding: $button-clear-padding;
-    max-height: $button-height;
-    border: none;
-    background: none;
-    box-shadow: none;
-
-    &:active, &.active {
-      opacity: 0.3;
-    }
-  }
-
-  &.button-default {
-    @include button-style($button-default-bg, $button-default-border, $button-default-active-bg, $button-default-active-border, $gray-dark);
-    @include button-clear($button-default-border);
-    @include button-outline($button-default-border, $gray-dark);
-  }
-  &.button-secondary {
-    @include button-style($button-secondary-bg, $button-secondary-border, $button-secondary-active-bg, $button-secondary-active-border, $gray-dark);
-    @include button-clear($button-secondary-border);
-    @include button-outline($button-secondary-border, $gray-dark);
-  }
-  &.button-primary {
-    @include button-style($button-primary-bg, $button-primary-border, $button-primary-active-bg, $button-primary-active-border, $white);
-    @include button-clear($button-primary-bg);
-    @include button-outline($button-primary-bg);
-  }
-  &.button-info {
-    @include button-style($button-info-bg, $button-info-border, $button-info-active-bg, $button-info-active-border, $white);
-    @include button-clear($button-info-bg);
-    @include button-outline($button-info-bg);
-  }
-  &.button-success {
-    @include button-style($button-success-bg, $button-success-border, $button-success-active-bg, $button-success-active-border, $white);
-    @include button-clear($button-success-bg);
-    @include button-outline($button-success-bg);
-  }
-  &.button-warning {
-    @include button-style($button-warning-bg, $button-warning-border, $button-warning-active-bg, $button-warning-active-border, $white);
-    @include button-clear($button-warning-bg);
-    @include button-outline($button-warning-bg);
-  }
-  &.button-danger {
-    @include button-style($button-danger-bg, $button-danger-border, $button-danger-active-bg, $button-danger-active-border, $white);
-    @include button-clear($button-danger-bg);
-    @include button-outline($button-danger-bg);
-  }
-  &.button-dark {
-    @include button-style($button-dark-bg, $button-dark-border, $button-dark-active-bg, $button-dark-active-border, $white);
-    @include button-clear($button-dark-bg);
-    @include button-outline($button-dark-bg);
-  }
-
-  &.button-outline {
-    @include transition(opacity .1s);
-    background: none;
-    box-shadow: none;
-  }
-
-  &.button-icon {
-    border: none;
-    background: none;
-    &:active, &.active {
-      background: none;
-      box-shadow: none;
-      text-shadow: 0px 0px 10px #fff;
-    }
   }
 
   &.block, &.button-full {
@@ -127,7 +48,7 @@
   font-size: $button-small-font-size;
   line-height: $button-small-height - $button-border-width;
 
-  .ion {
+  .icon {
     font-size: $button-small-icon-size;
     line-height: $button-small-height - $button-border-width - 1;
   }
@@ -140,10 +61,97 @@
   font-size: $button-large-font-size;
   line-height: $button-large-height - $button-border-width;
 
-  .ion {
+  .icon {
     font-size: $button-large-icon-size;
     line-height: $button-large-height - ($button-border-width * 2) - 1;
     padding-bottom: ($button-border-width * 2);
+  }
+}
+
+.button-icon {
+  padding: 2px 4px;
+  background: none;
+
+  .icon {
+    font-size: $button-large-icon-size;
+  }
+}
+
+.button-clear {
+  @include transition(opacity .1s);
+  padding: $button-clear-padding;
+  max-height: $button-height;
+  border: none;
+  background: none;
+  box-shadow: none;
+
+  &:active, &.active {
+    opacity: 0.3;
+  }
+}
+
+.button-default {
+  @include button-style($button-default-bg, $button-default-border, $button-default-active-bg, $button-default-active-border, $gray-dark);
+  @include button-clear($button-default-border);
+  @include button-outline($button-default-border, $gray-dark);
+}
+
+.button-secondary {
+  @include button-style($button-secondary-bg, $button-secondary-border, $button-secondary-active-bg, $button-secondary-active-border, $gray-dark);
+  @include button-clear($button-secondary-border);
+  @include button-outline($button-secondary-border, $gray-dark);
+}
+
+.button-primary {
+  @include button-style($button-primary-bg, $button-primary-border, $button-primary-active-bg, $button-primary-active-border, $white);
+  @include button-clear($button-primary-bg);
+  @include button-outline($button-primary-bg);
+}
+
+.button-info {
+  @include button-style($button-info-bg, $button-info-border, $button-info-active-bg, $button-info-active-border, $white);
+  @include button-clear($button-info-bg);
+  @include button-outline($button-info-bg);
+}
+
+.button-success {
+  @include button-style($button-success-bg, $button-success-border, $button-success-active-bg, $button-success-active-border, $white);
+  @include button-clear($button-success-bg);
+  @include button-outline($button-success-bg);
+}
+
+.button-warning {
+  @include button-style($button-warning-bg, $button-warning-border, $button-warning-active-bg, $button-warning-active-border, $white);
+  @include button-clear($button-warning-bg);
+  @include button-outline($button-warning-bg);
+}
+
+.button-danger {
+  @include button-style($button-danger-bg, $button-danger-border, $button-danger-active-bg, $button-danger-active-border, $white);
+  @include button-clear($button-danger-bg);
+  @include button-outline($button-danger-bg);
+}
+
+.button-dark {
+  @include button-style($button-dark-bg, $button-dark-border, $button-dark-active-bg, $button-dark-active-border, $white);
+  @include button-clear($button-dark-bg);
+  @include button-outline($button-dark-bg);
+}
+
+.button-outline {
+  @include transition(opacity .1s);
+  background: none;
+  box-shadow: none;
+}
+
+.button-icon {
+  border: none;
+  background: none;
+
+  &:active, &.active {
+    background: none;
+    box-shadow: none;
+    text-shadow: 0px 0px 10px #fff;
   }
 }
 

@@ -3860,658 +3860,12 @@ input[type="range"] {
   font-size: 16px;
   line-height: 41px;
   cursor: pointer; }
-  .button .ion, .button .ionicons,
-  .button .ion-alert,
-  .button .ion-alert-circled,
-  .button .ion-archive,
-  .button .ion-arrow-down-a,
-  .button .ion-arrow-down-b,
-  .button .ion-arrow-down-c,
-  .button .ion-arrow-expand,
-  .button .ion-arrow-graph-down-left,
-  .button .ion-arrow-graph-down-right,
-  .button .ion-arrow-graph-up-left,
-  .button .ion-arrow-graph-up-right,
-  .button .ion-arrow-left-a,
-  .button .ion-arrow-left-b,
-  .button .ion-arrow-left-c,
-  .button .ion-arrow-move,
-  .button .ion-arrow-resize,
-  .button .ion-arrow-return-left,
-  .button .ion-arrow-return-right,
-  .button .ion-arrow-right-a,
-  .button .ion-arrow-right-b,
-  .button .ion-arrow-right-c,
-  .button .ion-arrow-shrink,
-  .button .ion-arrow-swap,
-  .button .ion-arrow-up-a,
-  .button .ion-arrow-up-b,
-  .button .ion-arrow-up-c,
-  .button .ion-at,
-  .button .ion-bag,
-  .button .ion-battery-charging,
-  .button .ion-battery-empty,
-  .button .ion-battery-full,
-  .button .ion-battery-half,
-  .button .ion-battery-low,
-  .button .ion-beaker,
-  .button .ion-beer,
-  .button .ion-bluetooth,
-  .button .ion-bookmark,
-  .button .ion-briefcase,
-  .button .ion-calculator,
-  .button .ion-calendar,
-  .button .ion-camera,
-  .button .ion-card,
-  .button .ion-chatbox,
-  .button .ion-chatbox-working,
-  .button .ion-chatboxes,
-  .button .ion-chatbubble,
-  .button .ion-chatbubble-working,
-  .button .ion-chatbubbles,
-  .button .ion-checkmark,
-  .button .ion-checkmark-circled,
-  .button .ion-checkmark-round,
-  .button .ion-chevron-down,
-  .button .ion-chevron-left,
-  .button .ion-chevron-right,
-  .button .ion-chevron-up,
-  .button .ion-clipboard,
-  .button .ion-clock,
-  .button .ion-close,
-  .button .ion-close-circled,
-  .button .ion-close-round,
-  .button .ion-cloud,
-  .button .ion-code,
-  .button .ion-code-download,
-  .button .ion-code-working,
-  .button .ion-coffee,
-  .button .ion-compass,
-  .button .ion-compose,
-  .button .ion-connection-bars,
-  .button .ion-contrast,
-  .button .ion-disc,
-  .button .ion-document,
-  .button .ion-document-text,
-  .button .ion-drag,
-  .button .ion-earth,
-  .button .ion-egg,
-  .button .ion-eject,
-  .button .ion-email,
-  .button .ion-eye,
-  .button .ion-female,
-  .button .ion-filing,
-  .button .ion-film-marker,
-  .button .ion-flag,
-  .button .ion-flash,
-  .button .ion-flash-off,
-  .button .ion-flask,
-  .button .ion-folder,
-  .button .ion-fork,
-  .button .ion-forward,
-  .button .ion-game-controller-a,
-  .button .ion-game-controller-b,
-  .button .ion-gear-a,
-  .button .ion-gear-b,
-  .button .ion-grid,
-  .button .ion-hammer,
-  .button .ion-headphone,
-  .button .ion-heart,
-  .button .ion-help,
-  .button .ion-help-buoy,
-  .button .ion-help-circled,
-  .button .ion-home,
-  .button .ion-icecream,
-  .button .ion-icon-social-google-plus,
-  .button .ion-icon-social-google-plus-outline,
-  .button .ion-image,
-  .button .ion-images,
-  .button .ion-information,
-  .button .ion-information-circled,
-  .button .ion-ionic,
-  .button .ion-ios7-alarm,
-  .button .ion-ios7-alarm-outline,
-  .button .ion-ios7-albums,
-  .button .ion-ios7-albums-outline,
-  .button .ion-ios7-arrow-back,
-  .button .ion-ios7-arrow-down,
-  .button .ion-ios7-arrow-forward,
-  .button .ion-ios7-arrow-left,
-  .button .ion-ios7-arrow-right,
-  .button .ion-ios7-arrow-thin-down,
-  .button .ion-ios7-arrow-thin-left,
-  .button .ion-ios7-arrow-thin-right,
-  .button .ion-ios7-arrow-thin-up,
-  .button .ion-ios7-arrow-up,
-  .button .ion-ios7-at,
-  .button .ion-ios7-at-outline,
-  .button .ion-ios7-bell,
-  .button .ion-ios7-bell-outline,
-  .button .ion-ios7-bolt,
-  .button .ion-ios7-bolt-outline,
-  .button .ion-ios7-bookmarks,
-  .button .ion-ios7-bookmarks-outline,
-  .button .ion-ios7-box,
-  .button .ion-ios7-box-outline,
-  .button .ion-ios7-briefcase,
-  .button .ion-ios7-briefcase-outline,
-  .button .ion-ios7-browsers,
-  .button .ion-ios7-browsers-outline,
-  .button .ion-ios7-calculator,
-  .button .ion-ios7-calculator-outline,
-  .button .ion-ios7-calendar,
-  .button .ion-ios7-calendar-outline,
-  .button .ion-ios7-camera,
-  .button .ion-ios7-camera-outline,
-  .button .ion-ios7-cart,
-  .button .ion-ios7-cart-outline,
-  .button .ion-ios7-chatboxes,
-  .button .ion-ios7-chatboxes-outline,
-  .button .ion-ios7-chatbubble,
-  .button .ion-ios7-chatbubble-outline,
-  .button .ion-ios7-checkmark,
-  .button .ion-ios7-checkmark-empty,
-  .button .ion-ios7-checkmark-outline,
-  .button .ion-ios7-circle-filled,
-  .button .ion-ios7-circle-outline,
-  .button .ion-ios7-clock,
-  .button .ion-ios7-clock-outline,
-  .button .ion-ios7-cloud,
-  .button .ion-ios7-cloud-download,
-  .button .ion-ios7-cloud-download-outline,
-  .button .ion-ios7-cloud-outline,
-  .button .ion-ios7-cloud-upload,
-  .button .ion-ios7-cloud-upload-outline,
-  .button .ion-ios7-cloudy,
-  .button .ion-ios7-cloudy-outline,
-  .button .ion-ios7-cog,
-  .button .ion-ios7-cog-outline,
-  .button .ion-ios7-compose,
-  .button .ion-ios7-compose-outline,
-  .button .ion-ios7-contact,
-  .button .ion-ios7-contact-outline,
-  .button .ion-ios7-copy,
-  .button .ion-ios7-copy-outline,
-  .button .ion-ios7-download,
-  .button .ion-ios7-download-outline,
-  .button .ion-ios7-drag,
-  .button .ion-ios7-email,
-  .button .ion-ios7-email-outline,
-  .button .ion-ios7-eye,
-  .button .ion-ios7-eye-outline,
-  .button .ion-ios7-fastforward,
-  .button .ion-ios7-fastforward-outline,
-  .button .ion-ios7-filing,
-  .button .ion-ios7-filing-outline,
-  .button .ion-ios7-film,
-  .button .ion-ios7-film-outline,
-  .button .ion-ios7-flag,
-  .button .ion-ios7-flag-outline,
-  .button .ion-ios7-folder,
-  .button .ion-ios7-folder-outline,
-  .button .ion-ios7-gear,
-  .button .ion-ios7-gear-outline,
-  .button .ion-ios7-glasses,
-  .button .ion-ios7-glasses-outline,
-  .button .ion-ios7-heart,
-  .button .ion-ios7-heart-outline,
-  .button .ion-ios7-help,
-  .button .ion-ios7-help-empty,
-  .button .ion-ios7-help-outline,
-  .button .ion-ios7-infinite,
-  .button .ion-ios7-infinite-outline,
-  .button .ion-ios7-information,
-  .button .ion-ios7-information-empty,
-  .button .ion-ios7-information-outline,
-  .button .ion-ios7-ionic-outline,
-  .button .ion-ios7-keypad,
-  .button .ion-ios7-keypad-outline,
-  .button .ion-ios7-lightbulb,
-  .button .ion-ios7-lightbulb-outline,
-  .button .ion-ios7-location,
-  .button .ion-ios7-location-outline,
-  .button .ion-ios7-locked,
-  .button .ion-ios7-locked-outline,
-  .button .ion-ios7-medkit,
-  .button .ion-ios7-medkit-outline,
-  .button .ion-ios7-mic,
-  .button .ion-ios7-mic-off,
-  .button .ion-ios7-mic-outline,
-  .button .ion-ios7-minus,
-  .button .ion-ios7-minus-empty,
-  .button .ion-ios7-minus-outline,
-  .button .ion-ios7-monitor,
-  .button .ion-ios7-monitor-outline,
-  .button .ion-ios7-moon,
-  .button .ion-ios7-moon-outline,
-  .button .ion-ios7-more,
-  .button .ion-ios7-more-outline,
-  .button .ion-ios7-musical-note,
-  .button .ion-ios7-musical-notes,
-  .button .ion-ios7-navigate,
-  .button .ion-ios7-navigate-outline,
-  .button .ion-ios7-paperplane,
-  .button .ion-ios7-paperplane-outline,
-  .button .ion-ios7-partlysunny,
-  .button .ion-ios7-partlysunny-outline,
-  .button .ion-ios7-pause,
-  .button .ion-ios7-pause-outline,
-  .button .ion-ios7-people,
-  .button .ion-ios7-people-outline,
-  .button .ion-ios7-person,
-  .button .ion-ios7-person-outline,
-  .button .ion-ios7-personadd,
-  .button .ion-ios7-personadd-outline,
-  .button .ion-ios7-photos,
-  .button .ion-ios7-photos-outline,
-  .button .ion-ios7-pie,
-  .button .ion-ios7-pie-outline,
-  .button .ion-ios7-play,
-  .button .ion-ios7-play-outline,
-  .button .ion-ios7-plus,
-  .button .ion-ios7-plus-empty,
-  .button .ion-ios7-plus-outline,
-  .button .ion-ios7-pricetag,
-  .button .ion-ios7-pricetag-outline,
-  .button .ion-ios7-printer,
-  .button .ion-ios7-printer-outline,
-  .button .ion-ios7-rainy,
-  .button .ion-ios7-rainy-outline,
-  .button .ion-ios7-recording,
-  .button .ion-ios7-recording-outline,
-  .button .ion-ios7-redo,
-  .button .ion-ios7-redo-outline,
-  .button .ion-ios7-refresh,
-  .button .ion-ios7-refresh-empty,
-  .button .ion-ios7-refresh-outline,
-  .button .ion-ios7-reload,
-  .button .ion-ios7-rewind,
-  .button .ion-ios7-rewind-outline,
-  .button .ion-ios7-search,
-  .button .ion-ios7-search-strong,
-  .button .ion-ios7-skipbackward,
-  .button .ion-ios7-skipbackward-outline,
-  .button .ion-ios7-skipforward,
-  .button .ion-ios7-skipforward-outline,
-  .button .ion-ios7-speedometer,
-  .button .ion-ios7-speedometer-outline,
-  .button .ion-ios7-star,
-  .button .ion-ios7-star-outline,
-  .button .ion-ios7-stopwatch,
-  .button .ion-ios7-stopwatch-outline,
-  .button .ion-ios7-sunny,
-  .button .ion-ios7-sunny-outline,
-  .button .ion-ios7-telephone,
-  .button .ion-ios7-telephone-outline,
-  .button .ion-ios7-thunderstorm,
-  .button .ion-ios7-thunderstorm-outline,
-  .button .ion-ios7-time,
-  .button .ion-ios7-time-outline,
-  .button .ion-ios7-timer,
-  .button .ion-ios7-timer-outline,
-  .button .ion-ios7-trash,
-  .button .ion-ios7-trash-outline,
-  .button .ion-ios7-undo,
-  .button .ion-ios7-undo-outline,
-  .button .ion-ios7-unlocked,
-  .button .ion-ios7-unlocked-outline,
-  .button .ion-ios7-upload,
-  .button .ion-ios7-upload-outline,
-  .button .ion-ios7-videocam,
-  .button .ion-ios7-videocam-outline,
-  .button .ion-ios7-volume-high,
-  .button .ion-ios7-volume-low,
-  .button .ion-ios7-wineglass,
-  .button .ion-ios7-wineglass-outline,
-  .button .ion-ios7-world,
-  .button .ion-ios7-world-outline,
-  .button .ion-ipad,
-  .button .ion-iphone,
-  .button .ion-ipod,
-  .button .ion-jet,
-  .button .ion-key,
-  .button .ion-knife,
-  .button .ion-laptop,
-  .button .ion-leaf,
-  .button .ion-levels,
-  .button .ion-lightbulb,
-  .button .ion-link,
-  .button .ion-load-a,
-  .button .ion-load-b,
-  .button .ion-load-c,
-  .button .ion-load-d,
-  .button .ion-location,
-  .button .ion-locked,
-  .button .ion-log-in,
-  .button .ion-log-out,
-  .button .ion-loop,
-  .button .ion-magnet,
-  .button .ion-male,
-  .button .ion-man,
-  .button .ion-map,
-  .button .ion-medkit,
-  .button .ion-mic-a,
-  .button .ion-mic-b,
-  .button .ion-mic-c,
-  .button .ion-minus,
-  .button .ion-minus-circled,
-  .button .ion-minus-round,
-  .button .ion-monitor,
-  .button .ion-more,
-  .button .ion-music-note,
-  .button .ion-navicon,
-  .button .ion-navicon-round,
-  .button .ion-navigate,
-  .button .ion-nuclear,
-  .button .ion-paperclip,
-  .button .ion-pause,
-  .button .ion-person,
-  .button .ion-person-add,
-  .button .ion-person-stalker,
-  .button .ion-pie-graph,
-  .button .ion-pin,
-  .button .ion-pinpoint,
-  .button .ion-pizza,
-  .button .ion-plane,
-  .button .ion-play,
-  .button .ion-plus,
-  .button .ion-plus-circled,
-  .button .ion-plus-round,
-  .button .ion-pound,
-  .button .ion-power,
-  .button .ion-pricetag,
-  .button .ion-pricetags,
-  .button .ion-printer,
-  .button .ion-radio-waves,
-  .button .ion-record,
-  .button .ion-refresh,
-  .button .ion-reply,
-  .button .ion-reply-all,
-  .button .ion-search,
-  .button .ion-settings,
-  .button .ion-share,
-  .button .ion-shuffle,
-  .button .ion-skip-backward,
-  .button .ion-skip-forward,
-  .button .ion-social-android,
-  .button .ion-social-android-outline,
-  .button .ion-social-apple,
-  .button .ion-social-apple-outline,
-  .button .ion-social-bitcoin,
-  .button .ion-social-bitcoin-outline,
-  .button .ion-social-buffer,
-  .button .ion-social-buffer-outline,
-  .button .ion-social-designernews,
-  .button .ion-social-designernews-outline,
-  .button .ion-social-dribbble,
-  .button .ion-social-dribbble-outline,
-  .button .ion-social-dropbox,
-  .button .ion-social-dropbox-outline,
-  .button .ion-social-facebook,
-  .button .ion-social-facebook-outline,
-  .button .ion-social-github,
-  .button .ion-social-github-outline,
-  .button .ion-social-googleplus,
-  .button .ion-social-googleplus-outline,
-  .button .ion-social-hackernews,
-  .button .ion-social-hackernews-outline,
-  .button .ion-social-linkedin,
-  .button .ion-social-linkedin-outline,
-  .button .ion-social-pinterest,
-  .button .ion-social-pinterest-outline,
-  .button .ion-social-reddit,
-  .button .ion-social-reddit-outline,
-  .button .ion-social-rss,
-  .button .ion-social-rss-outline,
-  .button .ion-social-skype,
-  .button .ion-social-skype-outline,
-  .button .ion-social-tumblr,
-  .button .ion-social-tumblr-outline,
-  .button .ion-social-twitter,
-  .button .ion-social-twitter-outline,
-  .button .ion-social-vimeo,
-  .button .ion-social-vimeo-outline,
-  .button .ion-social-windows,
-  .button .ion-social-windows-outline,
-  .button .ion-social-wordpress,
-  .button .ion-social-wordpress-outline,
-  .button .ion-social-yahoo,
-  .button .ion-social-yahoo-outline,
-  .button .ion-social-youtube,
-  .button .ion-social-youtube-outline,
-  .button .ion-speakerphone,
-  .button .ion-speedometer,
-  .button .ion-spoon,
-  .button .ion-star,
-  .button .ion-stats-bars,
-  .button .ion-stop,
-  .button .ion-thermometer,
-  .button .ion-thumbsdown,
-  .button .ion-thumbsup,
-  .button .ion-trash-a,
-  .button .ion-trash-b,
-  .button .ion-umbrella,
-  .button .ion-unlocked,
-  .button .ion-upload,
-  .button .ion-usb,
-  .button .ion-videocamera,
-  .button .ion-volume-high,
-  .button .ion-volume-low,
-  .button .ion-volume-medium,
-  .button .ion-volume-mute,
-  .button .ion-waterdrop,
-  .button .ion-wifi,
-  .button .ion-wineglass,
-  .button .ion-woman,
-  .button .ion-wrench {
+  .button .icon {
     display: inline-block;
     padding: 0 0 1px 0;
     vertical-align: inherit;
     font-size: 24px;
     line-height: 40px; }
-  .button.button-icon {
-    padding: 2px 4px;
-    background: none; }
-    .button.button-icon .icon {
-      font-size: 32px; }
-  .button.button-clear {
-    -webkit-transition: opacity 0.1s;
-    transition: opacity 0.1s;
-    padding: 6px;
-    max-height: 42px;
-    border: none;
-    background: none;
-    box-shadow: none; }
-    .button.button-clear:active, .button.button-clear.active {
-      opacity: 0.3; }
-  .button.button-default {
-    color: #333333;
-    background-color: white;
-    border-color: #dddddd; }
-    .button.button-default:hover {
-      color: #333333;
-      text-decoration: none; }
-    .button.button-default.active, .button.button-default:active {
-      background-color: #fafafa;
-      box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-      border-color: #bbbbbb; }
-    .button.button-default.button-clear {
-      color: #dddddd;
-      background: none;
-      box-shadow: none; }
-    .button.button-default.button-outline {
-      border-color: #dddddd;
-      color: #333333; }
-      .button.button-default.button-outline.active, .button.button-default.button-outline:active {
-        background-color: #dddddd;
-        color: #fff;
-        box-shadow: none; }
-  .button.button-secondary {
-    color: #333333;
-    background-color: whitesmoke;
-    border-color: #bbbbbb; }
-    .button.button-secondary:hover {
-      color: #333333;
-      text-decoration: none; }
-    .button.button-secondary.active, .button.button-secondary:active {
-      background-color: #e5e5e5;
-      box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-      border-color: #999999; }
-    .button.button-secondary.button-clear {
-      color: #bbbbbb;
-      background: none;
-      box-shadow: none; }
-    .button.button-secondary.button-outline {
-      border-color: #bbbbbb;
-      color: #333333; }
-      .button.button-secondary.button-outline.active, .button.button-secondary.button-outline:active {
-        background-color: #bbbbbb;
-        color: #fff;
-        box-shadow: none; }
-  .button.button-primary {
-    color: white;
-    background-color: #4a87ee;
-    border-color: #3b6dc2; }
-    .button.button-primary:hover {
-      color: white;
-      text-decoration: none; }
-    .button.button-primary.active, .button.button-primary:active {
-      background-color: #4175ce;
-      box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-      border-color: #32599c; }
-    .button.button-primary.button-clear {
-      color: #4a87ee;
-      background: none;
-      box-shadow: none; }
-    .button.button-primary.button-outline {
-      border-color: #4a87ee;
-      color: #4a87ee; }
-      .button.button-primary.button-outline.active, .button.button-primary.button-outline:active {
-        background-color: #4a87ee;
-        color: #fff;
-        box-shadow: none; }
-  .button.button-info {
-    color: white;
-    background-color: #43cee6;
-    border-color: #3bb3c8; }
-    .button.button-info:hover {
-      color: white;
-      text-decoration: none; }
-    .button.button-info.active, .button.button-info:active {
-      background-color: #3db8cd;
-      box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-      border-color: #3293a4; }
-    .button.button-info.button-clear {
-      color: #43cee6;
-      background: none;
-      box-shadow: none; }
-    .button.button-info.button-outline {
-      border-color: #43cee6;
-      color: #43cee6; }
-      .button.button-info.button-outline.active, .button.button-info.button-outline:active {
-        background-color: #43cee6;
-        color: #fff;
-        box-shadow: none; }
-  .button.button-success {
-    color: white;
-    background-color: #66cc33;
-    border-color: #5bb22f; }
-    .button.button-success:hover {
-      color: white;
-      text-decoration: none; }
-    .button.button-success.active, .button.button-success:active {
-      background-color: #55aa2b;
-      box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-      border-color: #448922; }
-    .button.button-success.button-clear {
-      color: #66cc33;
-      background: none;
-      box-shadow: none; }
-    .button.button-success.button-outline {
-      border-color: #66cc33;
-      color: #66cc33; }
-      .button.button-success.button-outline.active, .button.button-success.button-outline:active {
-        background-color: #66cc33;
-        color: #fff;
-        box-shadow: none; }
-  .button.button-warning {
-    color: white;
-    background-color: #f0b840;
-    border-color: #d29f31; }
-    .button.button-warning:hover {
-      color: white;
-      text-decoration: none; }
-    .button.button-warning.active, .button.button-warning:active {
-      background-color: #e2a114;
-      box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-      border-color: #b88517; }
-    .button.button-warning.button-clear {
-      color: #f0b840;
-      background: none;
-      box-shadow: none; }
-    .button.button-warning.button-outline {
-      border-color: #f0b840;
-      color: #f0b840; }
-      .button.button-warning.button-outline.active, .button.button-warning.button-outline:active {
-        background-color: #f0b840;
-        color: #fff;
-        box-shadow: none; }
-  .button.button-danger {
-    color: white;
-    background-color: #ef4e3a;
-    border-color: #c73927; }
-    .button.button-danger:hover {
-      color: white;
-      text-decoration: none; }
-    .button.button-danger.active, .button.button-danger:active {
-      background-color: #ce4331;
-      box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-      border-color: #9f3527; }
-    .button.button-danger.button-clear {
-      color: #ef4e3a;
-      background: none;
-      box-shadow: none; }
-    .button.button-danger.button-outline {
-      border-color: #ef4e3a;
-      color: #ef4e3a; }
-      .button.button-danger.button-outline.active, .button.button-danger.button-outline:active {
-        background-color: #ef4e3a;
-        color: #fff;
-        box-shadow: none; }
-  .button.button-dark {
-    color: white;
-    background-color: #444444;
-    border-color: #111111; }
-    .button.button-dark:hover {
-      color: white;
-      text-decoration: none; }
-    .button.button-dark.active, .button.button-dark:active {
-      background-color: #222222;
-      box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-      border-color: black; }
-    .button.button-dark.button-clear {
-      color: #444444;
-      background: none;
-      box-shadow: none; }
-    .button.button-dark.button-outline {
-      border-color: #444444;
-      color: #444444; }
-      .button.button-dark.button-outline.active, .button.button-dark.button-outline:active {
-        background-color: #444444;
-        color: #fff;
-        box-shadow: none; }
-  .button.button-outline {
-    -webkit-transition: opacity 0.1s;
-    transition: opacity 0.1s;
-    background: none;
-    box-shadow: none; }
-  .button.button-icon {
-    border: none;
-    background: none; }
-    .button.button-icon:active, .button.button-icon.active {
-      background: none;
-      box-shadow: none;
-      text-shadow: 0px 0px 10px #fff; }
   .button.block, .button.button-full {
     margin-top: 10px;
     margin-bottom: 10px; }
@@ -4522,450 +3876,7 @@ input[type="range"] {
   min-height: 28px;
   font-size: 12px;
   line-height: 27px; }
-  .button-small .ion, .button-small .ionicons,
-  .button-small .ion-alert,
-  .button-small .ion-alert-circled,
-  .button-small .ion-archive,
-  .button-small .ion-arrow-down-a,
-  .button-small .ion-arrow-down-b,
-  .button-small .ion-arrow-down-c,
-  .button-small .ion-arrow-expand,
-  .button-small .ion-arrow-graph-down-left,
-  .button-small .ion-arrow-graph-down-right,
-  .button-small .ion-arrow-graph-up-left,
-  .button-small .ion-arrow-graph-up-right,
-  .button-small .ion-arrow-left-a,
-  .button-small .ion-arrow-left-b,
-  .button-small .ion-arrow-left-c,
-  .button-small .ion-arrow-move,
-  .button-small .ion-arrow-resize,
-  .button-small .ion-arrow-return-left,
-  .button-small .ion-arrow-return-right,
-  .button-small .ion-arrow-right-a,
-  .button-small .ion-arrow-right-b,
-  .button-small .ion-arrow-right-c,
-  .button-small .ion-arrow-shrink,
-  .button-small .ion-arrow-swap,
-  .button-small .ion-arrow-up-a,
-  .button-small .ion-arrow-up-b,
-  .button-small .ion-arrow-up-c,
-  .button-small .ion-at,
-  .button-small .ion-bag,
-  .button-small .ion-battery-charging,
-  .button-small .ion-battery-empty,
-  .button-small .ion-battery-full,
-  .button-small .ion-battery-half,
-  .button-small .ion-battery-low,
-  .button-small .ion-beaker,
-  .button-small .ion-beer,
-  .button-small .ion-bluetooth,
-  .button-small .ion-bookmark,
-  .button-small .ion-briefcase,
-  .button-small .ion-calculator,
-  .button-small .ion-calendar,
-  .button-small .ion-camera,
-  .button-small .ion-card,
-  .button-small .ion-chatbox,
-  .button-small .ion-chatbox-working,
-  .button-small .ion-chatboxes,
-  .button-small .ion-chatbubble,
-  .button-small .ion-chatbubble-working,
-  .button-small .ion-chatbubbles,
-  .button-small .ion-checkmark,
-  .button-small .ion-checkmark-circled,
-  .button-small .ion-checkmark-round,
-  .button-small .ion-chevron-down,
-  .button-small .ion-chevron-left,
-  .button-small .ion-chevron-right,
-  .button-small .ion-chevron-up,
-  .button-small .ion-clipboard,
-  .button-small .ion-clock,
-  .button-small .ion-close,
-  .button-small .ion-close-circled,
-  .button-small .ion-close-round,
-  .button-small .ion-cloud,
-  .button-small .ion-code,
-  .button-small .ion-code-download,
-  .button-small .ion-code-working,
-  .button-small .ion-coffee,
-  .button-small .ion-compass,
-  .button-small .ion-compose,
-  .button-small .ion-connection-bars,
-  .button-small .ion-contrast,
-  .button-small .ion-disc,
-  .button-small .ion-document,
-  .button-small .ion-document-text,
-  .button-small .ion-drag,
-  .button-small .ion-earth,
-  .button-small .ion-egg,
-  .button-small .ion-eject,
-  .button-small .ion-email,
-  .button-small .ion-eye,
-  .button-small .ion-female,
-  .button-small .ion-filing,
-  .button-small .ion-film-marker,
-  .button-small .ion-flag,
-  .button-small .ion-flash,
-  .button-small .ion-flash-off,
-  .button-small .ion-flask,
-  .button-small .ion-folder,
-  .button-small .ion-fork,
-  .button-small .ion-forward,
-  .button-small .ion-game-controller-a,
-  .button-small .ion-game-controller-b,
-  .button-small .ion-gear-a,
-  .button-small .ion-gear-b,
-  .button-small .ion-grid,
-  .button-small .ion-hammer,
-  .button-small .ion-headphone,
-  .button-small .ion-heart,
-  .button-small .ion-help,
-  .button-small .ion-help-buoy,
-  .button-small .ion-help-circled,
-  .button-small .ion-home,
-  .button-small .ion-icecream,
-  .button-small .ion-icon-social-google-plus,
-  .button-small .ion-icon-social-google-plus-outline,
-  .button-small .ion-image,
-  .button-small .ion-images,
-  .button-small .ion-information,
-  .button-small .ion-information-circled,
-  .button-small .ion-ionic,
-  .button-small .ion-ios7-alarm,
-  .button-small .ion-ios7-alarm-outline,
-  .button-small .ion-ios7-albums,
-  .button-small .ion-ios7-albums-outline,
-  .button-small .ion-ios7-arrow-back,
-  .button-small .ion-ios7-arrow-down,
-  .button-small .ion-ios7-arrow-forward,
-  .button-small .ion-ios7-arrow-left,
-  .button-small .ion-ios7-arrow-right,
-  .button-small .ion-ios7-arrow-thin-down,
-  .button-small .ion-ios7-arrow-thin-left,
-  .button-small .ion-ios7-arrow-thin-right,
-  .button-small .ion-ios7-arrow-thin-up,
-  .button-small .ion-ios7-arrow-up,
-  .button-small .ion-ios7-at,
-  .button-small .ion-ios7-at-outline,
-  .button-small .ion-ios7-bell,
-  .button-small .ion-ios7-bell-outline,
-  .button-small .ion-ios7-bolt,
-  .button-small .ion-ios7-bolt-outline,
-  .button-small .ion-ios7-bookmarks,
-  .button-small .ion-ios7-bookmarks-outline,
-  .button-small .ion-ios7-box,
-  .button-small .ion-ios7-box-outline,
-  .button-small .ion-ios7-briefcase,
-  .button-small .ion-ios7-briefcase-outline,
-  .button-small .ion-ios7-browsers,
-  .button-small .ion-ios7-browsers-outline,
-  .button-small .ion-ios7-calculator,
-  .button-small .ion-ios7-calculator-outline,
-  .button-small .ion-ios7-calendar,
-  .button-small .ion-ios7-calendar-outline,
-  .button-small .ion-ios7-camera,
-  .button-small .ion-ios7-camera-outline,
-  .button-small .ion-ios7-cart,
-  .button-small .ion-ios7-cart-outline,
-  .button-small .ion-ios7-chatboxes,
-  .button-small .ion-ios7-chatboxes-outline,
-  .button-small .ion-ios7-chatbubble,
-  .button-small .ion-ios7-chatbubble-outline,
-  .button-small .ion-ios7-checkmark,
-  .button-small .ion-ios7-checkmark-empty,
-  .button-small .ion-ios7-checkmark-outline,
-  .button-small .ion-ios7-circle-filled,
-  .button-small .ion-ios7-circle-outline,
-  .button-small .ion-ios7-clock,
-  .button-small .ion-ios7-clock-outline,
-  .button-small .ion-ios7-cloud,
-  .button-small .ion-ios7-cloud-download,
-  .button-small .ion-ios7-cloud-download-outline,
-  .button-small .ion-ios7-cloud-outline,
-  .button-small .ion-ios7-cloud-upload,
-  .button-small .ion-ios7-cloud-upload-outline,
-  .button-small .ion-ios7-cloudy,
-  .button-small .ion-ios7-cloudy-outline,
-  .button-small .ion-ios7-cog,
-  .button-small .ion-ios7-cog-outline,
-  .button-small .ion-ios7-compose,
-  .button-small .ion-ios7-compose-outline,
-  .button-small .ion-ios7-contact,
-  .button-small .ion-ios7-contact-outline,
-  .button-small .ion-ios7-copy,
-  .button-small .ion-ios7-copy-outline,
-  .button-small .ion-ios7-download,
-  .button-small .ion-ios7-download-outline,
-  .button-small .ion-ios7-drag,
-  .button-small .ion-ios7-email,
-  .button-small .ion-ios7-email-outline,
-  .button-small .ion-ios7-eye,
-  .button-small .ion-ios7-eye-outline,
-  .button-small .ion-ios7-fastforward,
-  .button-small .ion-ios7-fastforward-outline,
-  .button-small .ion-ios7-filing,
-  .button-small .ion-ios7-filing-outline,
-  .button-small .ion-ios7-film,
-  .button-small .ion-ios7-film-outline,
-  .button-small .ion-ios7-flag,
-  .button-small .ion-ios7-flag-outline,
-  .button-small .ion-ios7-folder,
-  .button-small .ion-ios7-folder-outline,
-  .button-small .ion-ios7-gear,
-  .button-small .ion-ios7-gear-outline,
-  .button-small .ion-ios7-glasses,
-  .button-small .ion-ios7-glasses-outline,
-  .button-small .ion-ios7-heart,
-  .button-small .ion-ios7-heart-outline,
-  .button-small .ion-ios7-help,
-  .button-small .ion-ios7-help-empty,
-  .button-small .ion-ios7-help-outline,
-  .button-small .ion-ios7-infinite,
-  .button-small .ion-ios7-infinite-outline,
-  .button-small .ion-ios7-information,
-  .button-small .ion-ios7-information-empty,
-  .button-small .ion-ios7-information-outline,
-  .button-small .ion-ios7-ionic-outline,
-  .button-small .ion-ios7-keypad,
-  .button-small .ion-ios7-keypad-outline,
-  .button-small .ion-ios7-lightbulb,
-  .button-small .ion-ios7-lightbulb-outline,
-  .button-small .ion-ios7-location,
-  .button-small .ion-ios7-location-outline,
-  .button-small .ion-ios7-locked,
-  .button-small .ion-ios7-locked-outline,
-  .button-small .ion-ios7-medkit,
-  .button-small .ion-ios7-medkit-outline,
-  .button-small .ion-ios7-mic,
-  .button-small .ion-ios7-mic-off,
-  .button-small .ion-ios7-mic-outline,
-  .button-small .ion-ios7-minus,
-  .button-small .ion-ios7-minus-empty,
-  .button-small .ion-ios7-minus-outline,
-  .button-small .ion-ios7-monitor,
-  .button-small .ion-ios7-monitor-outline,
-  .button-small .ion-ios7-moon,
-  .button-small .ion-ios7-moon-outline,
-  .button-small .ion-ios7-more,
-  .button-small .ion-ios7-more-outline,
-  .button-small .ion-ios7-musical-note,
-  .button-small .ion-ios7-musical-notes,
-  .button-small .ion-ios7-navigate,
-  .button-small .ion-ios7-navigate-outline,
-  .button-small .ion-ios7-paperplane,
-  .button-small .ion-ios7-paperplane-outline,
-  .button-small .ion-ios7-partlysunny,
-  .button-small .ion-ios7-partlysunny-outline,
-  .button-small .ion-ios7-pause,
-  .button-small .ion-ios7-pause-outline,
-  .button-small .ion-ios7-people,
-  .button-small .ion-ios7-people-outline,
-  .button-small .ion-ios7-person,
-  .button-small .ion-ios7-person-outline,
-  .button-small .ion-ios7-personadd,
-  .button-small .ion-ios7-personadd-outline,
-  .button-small .ion-ios7-photos,
-  .button-small .ion-ios7-photos-outline,
-  .button-small .ion-ios7-pie,
-  .button-small .ion-ios7-pie-outline,
-  .button-small .ion-ios7-play,
-  .button-small .ion-ios7-play-outline,
-  .button-small .ion-ios7-plus,
-  .button-small .ion-ios7-plus-empty,
-  .button-small .ion-ios7-plus-outline,
-  .button-small .ion-ios7-pricetag,
-  .button-small .ion-ios7-pricetag-outline,
-  .button-small .ion-ios7-printer,
-  .button-small .ion-ios7-printer-outline,
-  .button-small .ion-ios7-rainy,
-  .button-small .ion-ios7-rainy-outline,
-  .button-small .ion-ios7-recording,
-  .button-small .ion-ios7-recording-outline,
-  .button-small .ion-ios7-redo,
-  .button-small .ion-ios7-redo-outline,
-  .button-small .ion-ios7-refresh,
-  .button-small .ion-ios7-refresh-empty,
-  .button-small .ion-ios7-refresh-outline,
-  .button-small .ion-ios7-reload,
-  .button-small .ion-ios7-rewind,
-  .button-small .ion-ios7-rewind-outline,
-  .button-small .ion-ios7-search,
-  .button-small .ion-ios7-search-strong,
-  .button-small .ion-ios7-skipbackward,
-  .button-small .ion-ios7-skipbackward-outline,
-  .button-small .ion-ios7-skipforward,
-  .button-small .ion-ios7-skipforward-outline,
-  .button-small .ion-ios7-speedometer,
-  .button-small .ion-ios7-speedometer-outline,
-  .button-small .ion-ios7-star,
-  .button-small .ion-ios7-star-outline,
-  .button-small .ion-ios7-stopwatch,
-  .button-small .ion-ios7-stopwatch-outline,
-  .button-small .ion-ios7-sunny,
-  .button-small .ion-ios7-sunny-outline,
-  .button-small .ion-ios7-telephone,
-  .button-small .ion-ios7-telephone-outline,
-  .button-small .ion-ios7-thunderstorm,
-  .button-small .ion-ios7-thunderstorm-outline,
-  .button-small .ion-ios7-time,
-  .button-small .ion-ios7-time-outline,
-  .button-small .ion-ios7-timer,
-  .button-small .ion-ios7-timer-outline,
-  .button-small .ion-ios7-trash,
-  .button-small .ion-ios7-trash-outline,
-  .button-small .ion-ios7-undo,
-  .button-small .ion-ios7-undo-outline,
-  .button-small .ion-ios7-unlocked,
-  .button-small .ion-ios7-unlocked-outline,
-  .button-small .ion-ios7-upload,
-  .button-small .ion-ios7-upload-outline,
-  .button-small .ion-ios7-videocam,
-  .button-small .ion-ios7-videocam-outline,
-  .button-small .ion-ios7-volume-high,
-  .button-small .ion-ios7-volume-low,
-  .button-small .ion-ios7-wineglass,
-  .button-small .ion-ios7-wineglass-outline,
-  .button-small .ion-ios7-world,
-  .button-small .ion-ios7-world-outline,
-  .button-small .ion-ipad,
-  .button-small .ion-iphone,
-  .button-small .ion-ipod,
-  .button-small .ion-jet,
-  .button-small .ion-key,
-  .button-small .ion-knife,
-  .button-small .ion-laptop,
-  .button-small .ion-leaf,
-  .button-small .ion-levels,
-  .button-small .ion-lightbulb,
-  .button-small .ion-link,
-  .button-small .ion-load-a,
-  .button-small .ion-load-b,
-  .button-small .ion-load-c,
-  .button-small .ion-load-d,
-  .button-small .ion-location,
-  .button-small .ion-locked,
-  .button-small .ion-log-in,
-  .button-small .ion-log-out,
-  .button-small .ion-loop,
-  .button-small .ion-magnet,
-  .button-small .ion-male,
-  .button-small .ion-man,
-  .button-small .ion-map,
-  .button-small .ion-medkit,
-  .button-small .ion-mic-a,
-  .button-small .ion-mic-b,
-  .button-small .ion-mic-c,
-  .button-small .ion-minus,
-  .button-small .ion-minus-circled,
-  .button-small .ion-minus-round,
-  .button-small .ion-monitor,
-  .button-small .ion-more,
-  .button-small .ion-music-note,
-  .button-small .ion-navicon,
-  .button-small .ion-navicon-round,
-  .button-small .ion-navigate,
-  .button-small .ion-nuclear,
-  .button-small .ion-paperclip,
-  .button-small .ion-pause,
-  .button-small .ion-person,
-  .button-small .ion-person-add,
-  .button-small .ion-person-stalker,
-  .button-small .ion-pie-graph,
-  .button-small .ion-pin,
-  .button-small .ion-pinpoint,
-  .button-small .ion-pizza,
-  .button-small .ion-plane,
-  .button-small .ion-play,
-  .button-small .ion-plus,
-  .button-small .ion-plus-circled,
-  .button-small .ion-plus-round,
-  .button-small .ion-pound,
-  .button-small .ion-power,
-  .button-small .ion-pricetag,
-  .button-small .ion-pricetags,
-  .button-small .ion-printer,
-  .button-small .ion-radio-waves,
-  .button-small .ion-record,
-  .button-small .ion-refresh,
-  .button-small .ion-reply,
-  .button-small .ion-reply-all,
-  .button-small .ion-search,
-  .button-small .ion-settings,
-  .button-small .ion-share,
-  .button-small .ion-shuffle,
-  .button-small .ion-skip-backward,
-  .button-small .ion-skip-forward,
-  .button-small .ion-social-android,
-  .button-small .ion-social-android-outline,
-  .button-small .ion-social-apple,
-  .button-small .ion-social-apple-outline,
-  .button-small .ion-social-bitcoin,
-  .button-small .ion-social-bitcoin-outline,
-  .button-small .ion-social-buffer,
-  .button-small .ion-social-buffer-outline,
-  .button-small .ion-social-designernews,
-  .button-small .ion-social-designernews-outline,
-  .button-small .ion-social-dribbble,
-  .button-small .ion-social-dribbble-outline,
-  .button-small .ion-social-dropbox,
-  .button-small .ion-social-dropbox-outline,
-  .button-small .ion-social-facebook,
-  .button-small .ion-social-facebook-outline,
-  .button-small .ion-social-github,
-  .button-small .ion-social-github-outline,
-  .button-small .ion-social-googleplus,
-  .button-small .ion-social-googleplus-outline,
-  .button-small .ion-social-hackernews,
-  .button-small .ion-social-hackernews-outline,
-  .button-small .ion-social-linkedin,
-  .button-small .ion-social-linkedin-outline,
-  .button-small .ion-social-pinterest,
-  .button-small .ion-social-pinterest-outline,
-  .button-small .ion-social-reddit,
-  .button-small .ion-social-reddit-outline,
-  .button-small .ion-social-rss,
-  .button-small .ion-social-rss-outline,
-  .button-small .ion-social-skype,
-  .button-small .ion-social-skype-outline,
-  .button-small .ion-social-tumblr,
-  .button-small .ion-social-tumblr-outline,
-  .button-small .ion-social-twitter,
-  .button-small .ion-social-twitter-outline,
-  .button-small .ion-social-vimeo,
-  .button-small .ion-social-vimeo-outline,
-  .button-small .ion-social-windows,
-  .button-small .ion-social-windows-outline,
-  .button-small .ion-social-wordpress,
-  .button-small .ion-social-wordpress-outline,
-  .button-small .ion-social-yahoo,
-  .button-small .ion-social-yahoo-outline,
-  .button-small .ion-social-youtube,
-  .button-small .ion-social-youtube-outline,
-  .button-small .ion-speakerphone,
-  .button-small .ion-speedometer,
-  .button-small .ion-spoon,
-  .button-small .ion-star,
-  .button-small .ion-stats-bars,
-  .button-small .ion-stop,
-  .button-small .ion-thermometer,
-  .button-small .ion-thumbsdown,
-  .button-small .ion-thumbsup,
-  .button-small .ion-trash-a,
-  .button-small .ion-trash-b,
-  .button-small .ion-umbrella,
-  .button-small .ion-unlocked,
-  .button-small .ion-upload,
-  .button-small .ion-usb,
-  .button-small .ion-videocamera,
-  .button-small .ion-volume-high,
-  .button-small .ion-volume-low,
-  .button-small .ion-volume-medium,
-  .button-small .ion-volume-mute,
-  .button-small .ion-waterdrop,
-  .button-small .ion-wifi,
-  .button-small .ion-wineglass,
-  .button-small .ion-woman,
-  .button-small .ion-wrench {
+  .button-small .icon {
     font-size: 16px;
     line-height: 26px; }
 
@@ -4979,6 +3890,221 @@ input[type="range"] {
     font-size: 32px;
     line-height: 51px;
     padding-bottom: 2px; }
+
+.button-icon {
+  padding: 2px 4px;
+  background: none; }
+  .button-icon .icon {
+    font-size: 32px; }
+
+.button-clear {
+  -webkit-transition: opacity 0.1s;
+  transition: opacity 0.1s;
+  padding: 6px;
+  max-height: 42px;
+  border: none;
+  background: none;
+  box-shadow: none; }
+  .button-clear:active, .button-clear.active {
+    opacity: 0.3; }
+
+.button-default {
+  color: #333333;
+  background-color: white;
+  border-color: #dddddd; }
+  .button-default:hover {
+    color: #333333;
+    text-decoration: none; }
+  .button-default.active, .button-default:active {
+    background-color: #fafafa;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    border-color: #bbbbbb; }
+  .button-default.button-clear {
+    color: #dddddd;
+    background: none;
+    box-shadow: none; }
+  .button-default.button-outline {
+    border-color: #dddddd;
+    color: #333333; }
+    .button-default.button-outline.active, .button-default.button-outline:active {
+      background-color: #dddddd;
+      color: #fff;
+      box-shadow: none; }
+
+.button-secondary {
+  color: #333333;
+  background-color: whitesmoke;
+  border-color: #bbbbbb; }
+  .button-secondary:hover {
+    color: #333333;
+    text-decoration: none; }
+  .button-secondary.active, .button-secondary:active {
+    background-color: #e5e5e5;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    border-color: #999999; }
+  .button-secondary.button-clear {
+    color: #bbbbbb;
+    background: none;
+    box-shadow: none; }
+  .button-secondary.button-outline {
+    border-color: #bbbbbb;
+    color: #333333; }
+    .button-secondary.button-outline.active, .button-secondary.button-outline:active {
+      background-color: #bbbbbb;
+      color: #fff;
+      box-shadow: none; }
+
+.button-primary {
+  color: white;
+  background-color: #4a87ee;
+  border-color: #3b6dc2; }
+  .button-primary:hover {
+    color: white;
+    text-decoration: none; }
+  .button-primary.active, .button-primary:active {
+    background-color: #4175ce;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    border-color: #32599c; }
+  .button-primary.button-clear {
+    color: #4a87ee;
+    background: none;
+    box-shadow: none; }
+  .button-primary.button-outline {
+    border-color: #4a87ee;
+    color: #4a87ee; }
+    .button-primary.button-outline.active, .button-primary.button-outline:active {
+      background-color: #4a87ee;
+      color: #fff;
+      box-shadow: none; }
+
+.button-info {
+  color: white;
+  background-color: #43cee6;
+  border-color: #3bb3c8; }
+  .button-info:hover {
+    color: white;
+    text-decoration: none; }
+  .button-info.active, .button-info:active {
+    background-color: #3db8cd;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    border-color: #3293a4; }
+  .button-info.button-clear {
+    color: #43cee6;
+    background: none;
+    box-shadow: none; }
+  .button-info.button-outline {
+    border-color: #43cee6;
+    color: #43cee6; }
+    .button-info.button-outline.active, .button-info.button-outline:active {
+      background-color: #43cee6;
+      color: #fff;
+      box-shadow: none; }
+
+.button-success {
+  color: white;
+  background-color: #66cc33;
+  border-color: #5bb22f; }
+  .button-success:hover {
+    color: white;
+    text-decoration: none; }
+  .button-success.active, .button-success:active {
+    background-color: #55aa2b;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    border-color: #448922; }
+  .button-success.button-clear {
+    color: #66cc33;
+    background: none;
+    box-shadow: none; }
+  .button-success.button-outline {
+    border-color: #66cc33;
+    color: #66cc33; }
+    .button-success.button-outline.active, .button-success.button-outline:active {
+      background-color: #66cc33;
+      color: #fff;
+      box-shadow: none; }
+
+.button-warning {
+  color: white;
+  background-color: #f0b840;
+  border-color: #d29f31; }
+  .button-warning:hover {
+    color: white;
+    text-decoration: none; }
+  .button-warning.active, .button-warning:active {
+    background-color: #e2a114;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    border-color: #b88517; }
+  .button-warning.button-clear {
+    color: #f0b840;
+    background: none;
+    box-shadow: none; }
+  .button-warning.button-outline {
+    border-color: #f0b840;
+    color: #f0b840; }
+    .button-warning.button-outline.active, .button-warning.button-outline:active {
+      background-color: #f0b840;
+      color: #fff;
+      box-shadow: none; }
+
+.button-danger {
+  color: white;
+  background-color: #ef4e3a;
+  border-color: #c73927; }
+  .button-danger:hover {
+    color: white;
+    text-decoration: none; }
+  .button-danger.active, .button-danger:active {
+    background-color: #ce4331;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    border-color: #9f3527; }
+  .button-danger.button-clear {
+    color: #ef4e3a;
+    background: none;
+    box-shadow: none; }
+  .button-danger.button-outline {
+    border-color: #ef4e3a;
+    color: #ef4e3a; }
+    .button-danger.button-outline.active, .button-danger.button-outline:active {
+      background-color: #ef4e3a;
+      color: #fff;
+      box-shadow: none; }
+
+.button-dark {
+  color: white;
+  background-color: #444444;
+  border-color: #111111; }
+  .button-dark:hover {
+    color: white;
+    text-decoration: none; }
+  .button-dark.active, .button-dark:active {
+    background-color: #222222;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+    border-color: black; }
+  .button-dark.button-clear {
+    color: #444444;
+    background: none;
+    box-shadow: none; }
+  .button-dark.button-outline {
+    border-color: #444444;
+    color: #444444; }
+    .button-dark.button-outline.active, .button-dark.button-outline:active {
+      background-color: #444444;
+      color: #fff;
+      box-shadow: none; }
+
+.button-outline {
+  -webkit-transition: opacity 0.1s;
+  transition: opacity 0.1s;
+  background: none;
+  box-shadow: none; }
+
+.button-icon {
+  border: none;
+  background: none; }
+  .button-icon:active, .button-icon.active {
+    background: none;
+    box-shadow: none;
+    text-shadow: 0px 0px 10px #fff; }
 
 .padding > .button.block:first-child {
   margin-top: 0; }

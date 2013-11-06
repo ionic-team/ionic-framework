@@ -174,7 +174,7 @@ a.item {
 // List Icons
 // -------------------------------
 
-.item .ion {
+.item .icon {
   @include display-flex();
   @include align-items(center);
   position: absolute;
@@ -192,7 +192,7 @@ a.item {
 .item-icon-left {
   padding-left: ($item-padding * 3);
 
-  .ion {
+  .icon {
     left: $item-padding / 2;
   }
 }
@@ -204,14 +204,14 @@ a.item {
   }
 }
 
-.item-icon-right .ion {
+.item-icon-right .icon {
   right: $item-padding / 2;
 }
 
-.item-icon-left.item-icon-right .ion:first-child {
+.item-icon-left.item-icon-right .icon:first-child {
   right: auto;
 }
-.item-icon-left.item-icon-right .ion:last-child {
+.item-icon-left.item-icon-right .icon:last-child {
   left: auto;
 }
 
@@ -239,7 +239,7 @@ button.item:active,
   font-size: $item-icon-font-size;
   min-height: $item-icon-font-size;
 
-  .ion {
+  .icon {
     position: relative;
     line-height: $item-icon-font-size - 1;
     left: auto;
@@ -260,7 +260,7 @@ button.item:active,
   font-size: $item-icon-font-size;
   min-height: $item-icon-font-size;
 
-  .ion {
+  .icon {
     position: relative;
     line-height: $item-icon-font-size - 1;
     left: auto;
@@ -444,7 +444,7 @@ button.item-button-right:after {
     height: 100%;
   }
 
-  .ion {
+  .icon {
     color: $brand-danger;
     font-size: 24px;
   }
