@@ -2196,10 +2196,8 @@ body, .ionic-body {
 
 .content {
   position: absolute;
-  overflow: auto;
   width: 100%;
-  height: 100%;
-  -webkit-overflow-scrolling: touch; }
+  height: 100%; }
 
 .scroll-content {
   position: absolute;
@@ -2208,6 +2206,10 @@ body, .ionic-body {
   right: 0;
   bottom: 0;
   overflow: hidden; }
+
+.overflow-scroll {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch; }
 
 .has-header {
   top: 44px; }

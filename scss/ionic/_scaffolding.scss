@@ -61,10 +61,8 @@ body, .ionic-body {
 
 .content {
   position: absolute;
-  overflow: auto;
   width: 100%;
   height: 100%;
-  -webkit-overflow-scrolling: touch;
 }
 
 .scroll-content {
@@ -77,6 +75,11 @@ body, .ionic-body {
 }
 // Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
 // Note: For these to work, content must come after both bars in the markup
+
+.overflow-scroll {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
 .has-header {
   top: $bar-height;
 }

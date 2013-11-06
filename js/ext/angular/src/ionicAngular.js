@@ -14,6 +14,7 @@ angular.module('ionic.service', [
 
 angular.module('ionic.ui', [
                             'ionic.ui.content',
+                            'ionic.ui.scroll',
                             'ionic.ui.tabs',
                             'ionic.ui.nav',
                             'ionic.ui.sideMenu',

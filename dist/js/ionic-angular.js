@@ -14,6 +14,7 @@ angular.module('ionic.service', [
 
 angular.module('ionic.ui', [
                             'ionic.ui.content',
+                            'ionic.ui.scroll',
                             'ionic.ui.tabs',
                             'ionic.ui.nav',
                             'ionic.ui.sideMenu',
@@ -456,7 +457,7 @@ angular.module('ionic.ui.content', [])
   return {
     restrict: 'E',
     replace: true,
-    template: '<div class="content"></div>',
+    template: '<div class="scroll-content"><div class="scroll"></div></div>',
     transclude: true,
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
@@ -475,7 +476,22 @@ angular.module('ionic.ui.content', [])
         if(attr.hasTabs) {
           c.addClass('has-tabs');
         }
-        $element.append(transclude($scope));
+
+
+        // If they want plain overflows scrolling, add that as a class
+        if(attr.overflowScroll === "true") {
+          c.addClass('overflow-scroll');
+        } else {
+          // Otherwise, supercharge this baby!
+          var sv = new ionic.views.Scroll({
+            el: $element[0].firstElementChild
+          });
+          // Let child scopes access this 
+          $scope.scrollView = sv;
+        }
+
+        var clone = transclude($scope);
+        angular.element($element[0].firstElementChild).append(clone);
       };
     }
   };
@@ -918,29 +934,6 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 }]);
 
 })();
-;
-(function(ionic) {
-'use strict';
-
-/**
- * @description
- * The scroll directive lets you enable a content area for 
- * our custom momentum scrolling area. The benefit to a custom
- * scroll area is configurability, and avoidance of the 
- * buggy -webkit-overflow-scrolling: touch.
- */
-
-angular.module('ionic.ui.scroll', [])
-
-.directive('scroll', function() {
-  return {
-    restrict: 'ECA',
-    replace: true,
-    transclude: true,
-    template: '<div class="scroll-content" ng-transclude></div>'
-  };
-});
-})(window.ionic);
 ;
 (function() {
 'use strict';

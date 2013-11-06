@@ -18,7 +18,7 @@ angular.module('ionic.ui.content', [])
   return {
     restrict: 'E',
     replace: true,
-    template: '<div class="content"></div>',
+    template: '<div class="scroll-content"><div class="scroll"></div></div>',
     transclude: true,
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
@@ -37,7 +37,22 @@ angular.module('ionic.ui.content', [])
         if(attr.hasTabs) {
           c.addClass('has-tabs');
         }
-        $element.append(transclude($scope));
+
+
+        // If they want plain overflows scrolling, add that as a class
+        if(attr.overflowScroll === "true") {
+          c.addClass('overflow-scroll');
+        } else {
+          // Otherwise, supercharge this baby!
+          var sv = new ionic.views.Scroll({
+            el: $element[0].firstElementChild
+          });
+          // Let child scopes access this 
+          $scope.scrollView = sv;
+        }
+
+        var clone = transclude($scope);
+        angular.element($element[0].firstElementChild).append(clone);
       };
     }
   };

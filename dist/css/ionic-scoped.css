@@ -1789,10 +1789,8 @@
     transform: translateZ(0px); }
   .ionic .content {
     position: absolute;
-    overflow: auto;
     width: 100%;
-    height: 100%;
-    -webkit-overflow-scrolling: touch; }
+    height: 100%; }
   .ionic .scroll-content {
     position: absolute;
     top: 0;
@@ -1800,6 +1798,9 @@
     right: 0;
     bottom: 0;
     overflow: hidden; }
+  .ionic .overflow-scroll {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch; }
   .ionic .has-header {
     top: 44px; }
   .ionic .has-footer {
