@@ -93,7 +93,7 @@
   line-height: $tabs-text-font-size;
 }
 
-.tab-item .ion {
+.tab-item .icon {
   display: block;
   margin: 0 auto;
   height: $tabs-icon-size;
@@ -103,7 +103,8 @@
 .tabs-icon-left .tab-item,
 .tabs-icon-right .tab-item {
   font-size: $tabs-text-with-icon-font-size;
-  .ion {
+
+  .icon {
     font-size: $tabs-icon-size - 8;
     display: inline-block;
     vertical-align: top;
@@ -111,7 +112,7 @@
   }
 }
 
-.tabs-icon-only .ion {
+.tabs-icon-only .icon {
   line-height: inherit;
 }
 
@@ -148,7 +149,7 @@
   @include display-flex();
   padding: 0;
 
-  .ion {
+  .icon {
     position: relative;
   }
 }

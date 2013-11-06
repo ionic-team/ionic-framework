@@ -5,7 +5,11 @@
   "mixins",
   "variables",
 
-  "../../ionicons/style",
+  // Ionicons
+  "../../ionicons/scss/ionicons-variables",
+  "../../ionicons/scss/ionicons-font",
+  "../../ionicons/scss/ionicons-animation",
+  "../../ionicons/scss/ionicons-icons",
 
   // Base
   "reset",
@@ -53,6 +57,7 @@
   "animations",
 
   "animations/_simple",
+  "animations/bar_ios7",
 
   // Util
   "icons",
