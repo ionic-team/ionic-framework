@@ -643,7 +643,7 @@ a.subdued‎ {
     min-height: 31px;
     font-size: 12px;
     line-height: 30px; }
-    .bar > .button .ion {
+    .bar > .button .icon {
       font-size: 24px;
       line-height: 29px; }
   .bar .button-bar > .button {
@@ -927,7 +927,7 @@ a.subdued‎ {
   font-size: 10px;
   line-height: 14px; }
 
-.tab-item .ion {
+.tab-item .icon {
   display: block;
   margin: 0 auto;
   height: 32px;
@@ -936,14 +936,14 @@ a.subdued‎ {
 .tabs-icon-left .tab-item,
 .tabs-icon-right .tab-item {
   font-size: 10px; }
-  .tabs-icon-left .tab-item .ion,
-  .tabs-icon-right .tab-item .ion {
+  .tabs-icon-left .tab-item .icon,
+  .tabs-icon-right .tab-item .icon {
     font-size: 24px;
     display: inline-block;
     vertical-align: top;
     line-height: 49px; }
 
-.tabs-icon-only .ion {
+.tabs-icon-only .icon {
   line-height: inherit; }
 
 /* Navigational tab */
@@ -972,7 +972,7 @@ a.subdued‎ {
   display: -ms-flexbox;
   display: flex;
   padding: 0; }
-  .item.tabs .ion {
+  .item.tabs .icon {
     position: relative; }
 
 .menu {
@@ -1185,7 +1185,7 @@ a.item {
   overflow: hidden;
   white-space: nowrap; }
 
-.item .ion {
+.item .icon {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-flex;
@@ -1208,7 +1208,7 @@ a.item {
 
 .item-icon-left {
   padding-left: 45px; }
-  .item-icon-left .ion {
+  .item-icon-left .icon {
     left: 7.5px; }
 
 .item-slider.item-icon-left {
@@ -1216,13 +1216,13 @@ a.item {
   .item-slider.item-icon-left .item-content {
     padding-left: 45px; }
 
-.item-icon-right .ion {
+.item-icon-right .icon {
   right: 7.5px; }
 
-.item-icon-left.item-icon-right .ion:first-child {
+.item-icon-left.item-icon-right .icon:first-child {
   right: auto; }
 
-.item-icon-left.item-icon-right .ion:last-child {
+.item-icon-left.item-icon-right .icon:last-child {
   left: auto; }
 
 a.item:active,
@@ -1250,8 +1250,8 @@ button.item:active,
   left: 7.5px;
   font-size: 32px;
   min-height: 32px; }
-  .item-button-left > .button .ion,
-  .item-button-left .item-content > .button .ion {
+  .item-button-left > .button .icon,
+  .item-button-left .item-content > .button .icon {
     position: relative;
     line-height: 31px;
     left: auto; }
@@ -1276,8 +1276,8 @@ button.item:active,
   right: 15px;
   font-size: 32px;
   min-height: 32px; }
-  .item-button-right > .button .ion,
-  .item-button-right .item-content > .button .ion {
+  .item-button-right > .button .icon,
+  .item-button-right .item-content > .button .icon {
     position: relative;
     line-height: 31px;
     left: auto; }
@@ -1408,7 +1408,7 @@ button.item-button-right:after {
   -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
   .item-edit .button {
     height: 100%; }
-  .item-edit .ion {
+  .item-edit .icon {
     color: #ef4e3a;
     font-size: 24px; }
   .item-edit.ng-enter {
@@ -1605,18 +1605,7 @@ textarea {
     margin: 0;
     background-color: transparent;
     -webkit-appearance: none; }
-  .item-input .input-label {
-    -webkit-box-flex: 1;
-    -webkit-flex: 1 0 100px;
-    -moz-box-flex: 1;
-    -moz-flex: 1 0 100px;
-    -ms-flex: 1 0 100px;
-    flex: 1 0 100px;
-    padding: 7px 10px 7px 3px;
-    max-width: 200px;
-    color: black;
-    font-weight: bold; }
-  .item-input .ion {
+  .item-input .icon {
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 24px;
     -moz-box-flex: 0;
@@ -1628,14 +1617,27 @@ textarea {
     display: inline-block;
     text-align: center;
     font-size: 16px; }
-  .item-input .placeholder-icon {
-    color: #999; }
+
+.input-label {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 0 100px;
+  -moz-box-flex: 1;
+  -moz-flex: 1 0 100px;
+  -ms-flex: 1 0 100px;
+  flex: 1 0 100px;
+  padding: 7px 10px 7px 3px;
+  max-width: 200px;
+  color: black;
+  font-weight: bold; }
+
+.placeholder-icon {
+  color: #999; }
 
 .item-stacked-label {
   display: block;
   background-color: transparent;
   box-shadow: none; }
-  .item-stacked-label .input-label, .item-stacked-label .ion {
+  .item-stacked-label .input-label, .item-stacked-label .icon {
     display: inline-block;
     padding: 4px 0;
     vertical-align: middle; }
@@ -1894,7 +1896,7 @@ input[type="range"] {
   .button.button-icon {
     padding: 2px 4px;
     background: none; }
-    .button.button-icon .ion {
+    .button.button-icon .icon {
       font-size: 32px; }
   .button.button-clear {
     -webkit-transition: opacity 0.1s;
@@ -2114,7 +2116,7 @@ input[type="range"] {
   min-height: 54px;
   font-size: 18px;
   line-height: 53px; }
-  .button-large .ion {
+  .button-large .icon {
     font-size: 32px;
     line-height: 51px;
     padding-bottom: 2px; }
