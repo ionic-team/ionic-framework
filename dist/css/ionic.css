@@ -2510,16 +2510,18 @@ a.subduedΓÇÄ {
   .bar > .button {
     z-index: 1;
     padding: 0 8px;
-    min-width: 43px;
+    height: 32px;
+    min-width: 44px;
     min-height: 31px;
     font-size: 12px;
-    line-height: 30px; }
+    line-height: 29px; }
     .bar > .button .icon {
       font-size: 24px;
       line-height: 29px; }
   .bar .button-bar > .button {
+    height: 32px;
     min-height: 31px;
-    line-height: 31px; }
+    line-height: 30px; }
   .bar .button-bar + .button, .bar .button + .button-bar {
     margin-left: 5px; }
   .bar .title + .button:last-child,
