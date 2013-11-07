@@ -1,0 +1,118 @@
+
+/**
+ * Grid
+ * --------------------------------------------------
+ * Using flexbox for the grid, inspired by Philip Walton:
+ * http://philipwalton.github.io/solved-by-flexbox/demos/grids/
+ */
+
+.grid {
+  @include display-flex();
+}
+
+.grid-cell {
+  @include flex(1);
+}
+
+/* With gutters */
+.grid-gutters {
+  margin-left: $grid-gutter-width * -1;
+}
+.grid-gutters > .grid-cell {
+  padding-left: $grid-gutter-width;
+}
+
+/* Alignment per row */
+.grid-top {
+  @include align-items(flex-start);
+}
+.grid-bottom {
+  @include align-items(flex-end);
+}
+.grid-center {
+  @include align-items(center);
+}
+
+/* Alignment per cell */
+.grid-cell-top {
+  @include align-self(flex-start);
+}
+.grid-cell-bottom {
+  @include align-self(flex-end);
+}
+.grid-cell-center {
+  @include align-self(center);
+}
+
+/* Base classes for all media */
+.grid-fit > .grid-cell {
+  @include flex(1);
+}
+.grid-full > .grid-cell {
+  @include flex(0, 0, 100%);
+}
+.grid-1of2 > .grid-cell {
+  @include flex(0, 0, 50%);
+}
+.grid-1of3 > .grid-cell {
+  @include flex(0, 0, 33.3333%);
+}
+.grid-1of4 > .grid-cell {
+  @include flex(0, 0, 25%);
+}
+.grid-1of5 > .grid-cell {
+  @include flex(0, 0, 20%);
+}
+.grid-1of6 > .grid-cell {
+  @include flex(0, 0, 16.6666%);
+}
+
+/* Small to medium screens */
+@media (min-width: 24em) {
+  .grid-small-fit > .grid-cell {
+    @include flex(1);
+  }
+  .grid-small-full > .grid-cell {
+    @include flex(0, 0, 100%);
+  }
+  .grid-small-1of2 > .grid-cell {
+    @include flex(0, 0, 50%);
+  }
+  .grid-small-1of3 > .grid-cell {
+    @include flex(0, 0, 33.3333%);
+  }
+  .grid-small-1of4 > .grid-cell {
+    @include flex(0, 0, 25%);
+  }
+  .grid-small-1of5 > .grid-cell {
+    @include flex(0, 0, 20%);
+  }
+  .grid-small-1of6 > .grid-cell {
+    @include flex(0, 0, 16.6666%);
+  }
+}
+
+/* Large screens */
+@media (min-width: 48em) {
+  .grid-large-fit > .grid-cell {
+    @include flex(1);
+  }
+  .grid-large-full > .grid-cell {
+    @include flex(0, 0, 100%);
+  }
+  .grid-large-1of2 > .grid-cell {
+    @include flex(0, 0, 50%);
+  }
+  .grid-large-1of3 > .grid-cell {
+    @include flex(0, 0, 33.3333%);
+  }
+  .grid-large-1of4 > .grid-cell {
+    @include flex(0, 0, 25%);
+  }
+  .grid-large-1of5 > .grid-cell {
+    @include flex(0, 0, 20%);
+  }
+  .grid-large-1of6 > .grid-cell {
+    @include flex(0, 0, 16.6666%);
+  }
+}

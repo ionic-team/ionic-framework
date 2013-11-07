@@ -415,10 +415,17 @@ $menu-side-shadow: -1px 0px 3px rgba(0, 0, 0, 0.2), 1px 0px 3px rgba(0,0,0,0.2);
 $split-pane-menu-width:   320px;
 $split-pane-menu-border-color:  #eee;
 
+
 // Modals
 // -------------------------------
 
 $modal-bg-color:              #fff !default;
+
+
+// Grids
+// -------------------------------
+
+$grid-gutter-width:           1em !default;
 
 
 // Action Sheets

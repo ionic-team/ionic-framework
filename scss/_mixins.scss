@@ -360,6 +360,12 @@
           hyphens: $mode;
 }
 
+
+// Flexbox Mixins
+// --------------------------------------------------
+// http://philipwalton.github.io/solved-by-flexbox/
+// https://github.com/philipwalton/solved-by-flexbox
+
 @mixin display-flex {
   display: -webkit-box;
   display: -webkit-flex;
@@ -427,16 +433,42 @@
 
 @mixin align-items($value: stretch) {
   @if $value == flex-start {
-          -webkit-box-align: start;
-          -ms-flex-align: start;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
   } @else if $value == flex-end {
-          -webkit-box-align: end;
-          -ms-flex-align: end;
+    -webkit-box-align: end;
+    -ms-flex-align: end;
   } @else {
-          -webkit-box-align: $value;
-          -ms-flex-align: $value;
+    -webkit-box-align: $value;
+    -ms-flex-align: $value;
   }
   -webkit-align-items: $value;
   -moz-align-items: $value;
   align-items: $value;
+}
+
+@mixin align-self($value: auto) {
+  -webkit-align-self: $value;
+  -moz-align-self: $value;
+  @if $value == flex-start {
+    -ms-flex-item-align: start;
+  } @else if $value == flex-end {
+    -ms-flex-item-align: end;
+  } @else {
+    -ms-flex-item-align: $value;
+  }
+  align-self: $value;
+}
+
+@mixin align-content($value: stretch) {
+  -webkit-align-content: $value;
+  -moz-align-content: $value;
+  @if $value == flex-start {
+    -ms-flex-line-pack: start;
+  } @else if $value == flex-end {
+    -ms-flex-line-pack: end;
+  } @else {
+    -ms-flex-line-pack: $value;
+  }
+  align-content: $value;
 }
