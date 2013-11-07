@@ -1030,12 +1030,25 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 
         $element.addClass('menu-content');
 
+        var defaultPrevented = false;
+
+        ionic.on('mousedown', function(e) {
+          // If the child element prevented the drag, don't drag
+          defaultPrevented = e.defaultPrevented;
+        });
+
         Gesture.on('drag', function(e) {
+          if(defaultPrevented) {
+            return;
+          }
           sideMenuCtrl._handleDrag(e);
         }, $element[0]);
 
         Gesture.on('release', function(e) {
-          sideMenuCtrl._endDrag(e);
+          if(!defaultPrevented) {
+            sideMenuCtrl._endDrag(e);
+          }
+          defaultPrevented = false;
         }, $element[0]);
 
         sideMenuCtrl.setContent({
