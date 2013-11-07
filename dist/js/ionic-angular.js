@@ -1351,7 +1351,7 @@ angular.module('ionic.ui.toggle', [])
     replace: true,
     require: '?ngModel',
     scope: true,
-    template: '<div class="toggle"><input type="checkbox"><div class="handle"></div></div>',
+    template: '<div class="toggle"><input type="checkbox"><div class="track"><div class="handle"></div></div></div>',
 
     link: function($scope, $element, $attr, ngModel) {
       var checkbox, handle;

@@ -3911,31 +3911,27 @@ input[type="checkbox"][readonly] {
   position: relative;
   display: inline-block; }
 
-.toggle input[type="checkbox"] {
-  /* set the actual checkbox input to have a width/height */
-  /* but hide its appearance, then use :after to style it */
+/* hide the actual input checkbox */
+.toggle input {
+  display: none; }
+
+/* the track appearance when the toggle is "off" */
+.toggle .track {
+  display: inline-block;
+  box-sizing: border-box;
   width: 54px;
   height: 32px;
-  border: 0;
-  background: transparent;
-  -webkit-appearance: none;
-  /* the track appearance when the toggle is "off" */ }
-  .toggle input[type="checkbox"]:after {
-    display: inline-block;
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    border: solid 2px #e5e5e5;
-    border-radius: 20px;
-    background-color: #e5e5e5;
-    content: ' ';
-    cursor: pointer;
-    transition-timing-function: ease-in-out;
-    transition-duration: 0.1s;
-    transition-property: background-color, border; }
+  border: solid 2px #e5e5e5;
+  border-radius: 20px;
+  background-color: #e5e5e5;
+  content: ' ';
+  cursor: pointer;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.1s;
+  transition-property: background-color, border; }
 
 /* the handle (circle) thats inside the toggle's track area */
-/* also the appearance when the handle is "off" */
+/* also the handle's appearance when it is "off" */
 .toggle .handle {
   position: absolute;
   top: 2px;
@@ -3945,25 +3941,26 @@ input[type="checkbox"][readonly] {
   height: 28px;
   border-radius: 50%;
   background-color: white;
-  transition: -webkit-transform 0.1s ease-in-out;
+  -webkit-transition: 0.1s ease-in-out;
+  transition: 0.1s ease-in-out;
   /* used to create a larger (but hidden) hit area to slide the handle */ }
   .toggle .handle:before {
     position: absolute;
-    top: -2px;
-    left: -16px;
-    display: table;
-    padding: 17px 30px;
+    top: -4px;
+    left: -22px;
+    padding: 19px 35px;
     content: " "; }
 
-/* The track when the toggle is "on" */
-.toggle input:checked:after {
+/* the track when the toggle is "on" */
+.toggle input:checked + .track {
   border-color: #4a87ee;
   background-color: #4a87ee; }
 
 /* the handle when the toggle is "on" */
-.toggle input:checked + .handle {
-  background-color: white;
-  -webkit-transform: translate3d(22px, 0, 0); }
+.toggle input:checked + .track .handle {
+  -webkit-transform: translate(22px, 0);
+  transform: translate(22px, 0);
+  background-color: white; }
 
 /* make sure list item content have enough padding on right to fit the toggle */
 .item-toggle .item-content {

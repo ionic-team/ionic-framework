@@ -197,6 +197,13 @@
 // CSS3 PROPERTIES
 // --------------------------------------------------
 
+// Appearance
+@mixin appearance($val) {
+  -webkit-appearance: $val;
+  -moz-appearance: $val;
+  appearance: $val;
+}
+
 // Border Radius
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
