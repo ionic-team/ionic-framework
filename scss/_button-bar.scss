@@ -1,4 +1,7 @@
 
+// Button Bar
+// -------------------------------
+
 .button-bar {
   @include display-flex();
   @include flex(1);
