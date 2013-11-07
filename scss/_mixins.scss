@@ -1,6 +1,9 @@
-// _mixins.scss
-//
-// Useful utilities and mixins for SCSS files.
+
+/**
+ * Mixins
+ * --------------------------------------------------
+ * Useful utilities and mixins for SCSS files.
+ */
 
 @mixin button-style($bgColor, $borderColor, $activeBgColor, $activeBorderColor, $color) {
   color: $color;

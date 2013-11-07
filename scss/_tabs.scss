@@ -1,6 +1,7 @@
+
 /**
  * Tabs
- * 
+ * --------------------------------------------------
  * A navigation bar with any number of tab items supported.
  */
 
@@ -17,6 +18,8 @@
   border-style: solid;
 
   border-top-width: 1px;
+
+  background-size: 0;
   line-height: $tabs-height;
 
   &.tabs-default {
@@ -43,8 +46,6 @@
   &.tabs-dark {
     @include tab-style($tabs-dark-bg, $tabs-dark-border-color, $white);
   }
-
-  background-size: 0;
   @media (min--moz-device-pixel-ratio: 1.5),
          (-webkit-min-device-pixel-ratio: 1.5),
          (min-device-pixel-ratio: 1.5),
@@ -105,9 +106,9 @@
   font-size: $tabs-text-with-icon-font-size;
 
   .icon {
-    font-size: $tabs-icon-size - 8;
     display: inline-block;
     vertical-align: top;
+    font-size: $tabs-icon-size - 8;
     line-height: $tabs-height;
   }
 }
@@ -153,4 +154,3 @@
     position: relative;
   }
 }
-

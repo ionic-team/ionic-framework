@@ -1,6 +1,8 @@
 
-// Radio Buttons
-// -------------------------------
+/**
+ * Radio Button Inputs
+ * --------------------------------------------------
+ */
 
 .item-radio {
   padding: 0;
@@ -27,7 +29,7 @@
   font-size: 24px;
 }
 
-.item-radio input[type="radio"] {
+.item-radio input {
   /* hide any radio button inputs elements (the ugly circles) */
   display: none;
 

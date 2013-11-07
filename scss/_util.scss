@@ -1,3 +1,9 @@
+
+/**
+ * Util
+ * --------------------------------------------------
+ */
+
 .hidden, 
 .hide { 
   display: none !important; 
@@ -25,6 +31,7 @@
 .full-image {
   width: 100%;
 }
+
 
 // Content Padding
 // -------------------------------
@@ -60,6 +67,7 @@
 .rounded {
   border-radius: $border-radius-base;
 }
+
 
 // Colors
 // -------------------------------
@@ -110,4 +118,3 @@
 .white {
   color: $white;
 }
-

@@ -1,6 +1,8 @@
 
-// Toggle
-// -------------------------------
+/**
+ * Toggle
+ * --------------------------------------------------
+ */
 
 /* the overall container of the toggle */
 .toggle {
@@ -33,6 +35,7 @@
 /* the handle (circle) thats inside the toggle's track area */
 /* also the handle's appearance when it is "off" */
 .toggle .handle {
+  @include transition($toggle-transition-duration ease-in-out);
   position: absolute;
   top: $toggle-border-width;
   left: $toggle-border-width;
@@ -41,7 +44,6 @@
   height: $toggle-handle-height;
   border-radius: $toggle-handle-radius;
   background-color: $toggle-handle-off-bg-color;
-  @include transition($toggle-transition-duration ease-in-out);
 
   /* used to create a larger (but hidden) hit area to slide the handle */
   &:before {
