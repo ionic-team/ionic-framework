@@ -19,6 +19,10 @@
   -webkit-overflow-scrolling: touch;
 }
 
+.menu-content {
+  box-shadow: $menu-side-shadow;
+}
+
 .menu-left { left: 0; }
 .menu-right { right: 0; }
 

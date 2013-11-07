@@ -1028,6 +1028,8 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, sideMenuCtrl) {
 
+        $element.addClass('menu-content');
+
         Gesture.on('drag', function(e) {
           sideMenuCtrl._handleDrag(e);
         }, $element[0]);
