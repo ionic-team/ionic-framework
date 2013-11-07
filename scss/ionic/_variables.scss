@@ -183,29 +183,6 @@ $range-slider-height:          20px;
 $range-slider-border-radius:   10px;
 
 
-// Alerts
-// -------------------------------
-
-$alert-padding:      8px 35px 8px 14px;
-$alert-margin:       $content-padding;
-
-$warning-text:       #c09853;
-$warning-bg:         #fcf8e3;
-$warning-border:     darken(adjust-hue($warning-bg, -10), 3%);
-
-$error-text:         #b94a48;
-$error-bg:           #f2dede;
-$error-border:       darken(adjust-hue($error-bg, -10), 3%);
-
-$success-text:       #468847;
-$success-bg:         #dff0d8;
-$success-border:     darken(adjust-hue($success-bg, -10), 5%);
-
-$info-text:          #3a87ad;
-$info-bg:            #d9edf7;
-$info-border:        darken(adjust-hue($info-bg, -10), 7%);
-
-
 // Buttons
 // -------------------------------
 

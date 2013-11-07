@@ -4274,60 +4274,6 @@ a.button {
 .badge-gray-ligher {
   background: #eeeeee; }
 
-.alert {
-  margin: 10px;
-  padding: 8px 35px 8px 14px;
-  border: 1px solid #fbeed5;
-  background-color: #fcf8e3;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); }
-
-.alert,
-.alert h4 {
-  color: #c09853; }
-
-.alert .close {
-  position: relative;
-  top: -2px;
-  right: -21px;
-  line-height: 1.42857; }
-
-.alert-block {
-  padding-top: 14px;
-  padding-bottom: 14px; }
-
-.alert-block > p,
-.alert-block > ul {
-  margin-bottom: 0; }
-
-.alert-block p + p {
-  margin-top: 5px; }
-
-.alert-success {
-  border-color: #d6e9c6;
-  background-color: #dff0d8;
-  color: #468847; }
-
-.alert-success h4 {
-  color: #468847; }
-
-.alert-danger,
-.alert-error {
-  border-color: #eed3d7;
-  background-color: #f2dede;
-  color: #b94a48; }
-
-.alert-danger h4,
-.alert-error h4 {
-  color: #b94a48; }
-
-.alert-info {
-  border-color: #bce8f1;
-  background-color: #d9edf7;
-  color: #3a87ad; }
-
-.alert-info h4 {
-  color: #3a87ad; }
-
 .slide-box {
   background-color: #000;
   position: relative;
