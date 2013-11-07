@@ -1906,6 +1906,40 @@ window.ionic = {
     toiletSeat: 'cubic-bezier(0.05, 0.60, 0.05, 0.60)'
   };
 
+  /**
+   * The Pull To Refresh drag operation handles the well-known
+   * "pull to refresh" concept seen on various apps. This lets
+   * the user indicate they want to refresh a given list by dragging
+   * down.
+   *
+   * @param {object} opts the options for the pull to refresh drag.
+   */
+  /*
+  var PullToRefreshDrag = function(opts) {
+    this.dragThresholdY = opts.dragThresholdY || 10;
+    this.onRefreshOpening = opts.onRefreshOpening || function() {};
+    this.onRefresh = opts.onRefresh || function() {};
+    this.onRefreshHolding = opts.onRefreshHolding || function() {};
+    this.el = opts.el;
+  };
+
+  PullToRefreshDrag.prototype.end = function(e, doneCallback) {
+
+    if(currentHeight > firstChildHeight) {
+      //this.refreshing();
+    } else {
+      // Enable animations
+      refresher.classList.add('list-refreshing');
+      refresher.style.height = '0px';
+      this.onRefresh && _this.onRefresh();
+    }
+
+    this._currentDrag = null;
+    doneCallback && doneCallback();
+  };
+  */
+
+
   ionic.views.Scroll = ionic.views.View.inherit({
 
     initialize: function(opts) {
@@ -1922,6 +1956,13 @@ window.ionic = {
         // Scroll event names. These are custom so can be configured
         scrollEventName: 'momentumScrolled',
         scrollEndEventName: 'momentumScrollEnd',
+
+        hasPullToRefresh: true,
+
+        // Called as the refresher is opened, an amount is passed
+        onRefreshOpening: function() {},
+        // Called when let go and is refreshing
+        onRefresh: function() {},
 
         // How frequently to fire scroll events in the case of 
         // a flick or momentum scroll where the finger is no longer
@@ -2315,6 +2356,12 @@ window.ionic = {
         return;
       }
 
+      // Grab the refresher element if using Pull to Refresh
+      if(this.hasPullToRefresh) {
+        this._refresher = document.querySelector('.scroll-refresher');
+        this._refresher.classList.remove('scroll-refreshing');
+      }
+
       this.x = scrollLeft;
       this.y = scrollTop;
 
@@ -2328,8 +2375,6 @@ window.ionic = {
         startTime: Date.now()
       };
     },
-
-
 
     /**
      * Process the drag event to move the item to the left or right.
@@ -2396,12 +2441,10 @@ window.ionic = {
           var newX = _this.x + deltaX;
           var newY = _this.y + deltaY;
 
-          if(newX > 0 || (-newX + parentWidth) > totalWidth) {
-            // Rubber band
-            newX = _this.x + deltaX / _this.rubberBandResistance;
-          }
           // Check if the dragging is beyond the bottom or top
-          if(newY > 0 || (-newY + parentHeight) > totalHeight) {
+          if(newY > 0) {
+            newY = _this.y + deltaY / _this.rubberBandResistance;
+          } else if ((-newY + parentHeight) > totalHeight) {
             // Rubber band
             newY = _this.y + deltaY / _this.rubberBandResistance;
           }
@@ -2413,8 +2456,25 @@ window.ionic = {
             newY = 0;
           }
 
-          // Update the new translated Y point of the container
-          _this.el.style.webkitTransform = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
+          if(_this._refresher && newY > 0) {
+            // We are pulling to refresh, so update the refresher
+            _this._refresher.style.height = newY + 'px';
+
+            var firstChildHeight = parseFloat(_this._refresher.firstElementChild.offsetHeight);
+            if(newY > firstChildHeight && !_this._isHoldingRefresh) {
+              _this._isHoldingRefresh = true;
+              // Trigger refresh holding event here
+            } else {
+              // Trigger refresh open amount
+              var ratio = Math.min(1, newY / firstChildHeight);
+            }
+
+            // Update the new translated Y point of the container
+            _this.el.style.webkitTransform = 'translate3d(' + newX + 'px,0, 0)';
+          } else {
+            // Update the new translated Y point of the container
+            _this.el.style.webkitTransform = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
+          }
 
           // Store the last points
           _this.x = newX;
@@ -2484,11 +2544,27 @@ window.ionic = {
         var time = 0;
         var easing = '';
 
+
+        if(_this._refresher && _this.y > 0) {
+          // Pull to refresh
+          var firstChildHeight = parseFloat(_this._refresher.firstElementChild.offsetHeight);
+          if(Math.ceil(_this.y) >= firstChildHeight) {
+            // REFRESH
+            _this._refresher.classList.add('scroll-refreshing');
+            _this._refresher.style.height = firstChildHeight + 'px';
+            _this.onRefresh && _this.onRefresh();
+          } else {
+            _this._refresher.classList.add('scroll-refreshing');
+            _this._refresher.style.height = 0 + 'px';
+            _this.onRefresh && _this.onRefresh();
+          }
+          return;
+        }
+
         var newX = Math.round(_this.x);
         var newY = Math.round(_this.y);
 
         _this._scrollTo(newX, newY);
-
 
         // Check if we just snap back to bounds
         if(_this.wrapScrollPosition(_this.bounceTime)) {
@@ -2652,121 +2728,6 @@ window.ionic = {
     }
   };
 
-
-  /**
-   * The Pull To Refresh drag operation handles the well-known
-   * "pull to refresh" concept seen on various apps. This lets
-   * the user indicate they want to refresh a given list by dragging
-   * down.
-   *
-   * @param {object} opts the options for the pull to refresh drag.
-   */
-  var PullToRefreshDrag = function(opts) {
-    this.dragThresholdY = opts.dragThresholdY || 10;
-    this.onRefreshOpening = opts.onRefreshOpening || function() {};
-    this.onRefresh = opts.onRefresh || function() {};
-    this.onRefreshHolding = opts.onRefreshHolding || function() {};
-    this.el = opts.el;
-  };
-
-  PullToRefreshDrag.prototype = new DragOp();
-
-  PullToRefreshDrag.prototype.start = function(e) {
-    var content, refresher;
-
-    content = ionic.DomUtil.getParentOrSelfWithClass(e.target, 'list');
-    if(!content) { return; }
-
-    // Grab the refresher element that will show as you drag down
-    refresher = content.querySelector('.list-refresher');
-    if(!refresher) {
-      refresher = this._injectRefresher();
-    }
-
-    // Disable animations while dragging
-    refresher.classList.remove('list-refreshing');
-
-    this._currentDrag = {
-      refresher: refresher,
-      content: content,
-      isHolding: false
-    };
-  };
-
-  PullToRefreshDrag.prototype._injectRefresher = function() {
-    var refresher = document.createElement('div');
-    refresher.className = 'list-refresher';
-    this.el.insertBefore(refresher, this.el.firstChild);
-    return refresher;
-  };
-
-  PullToRefreshDrag.prototype.drag = function(e) {
-    var _this = this;
-
-    window.requestAnimationFrame(function() {
-      // We really aren't dragging
-      if(!_this._currentDrag) {
-        return;
-      }
-
-      // Check if we should start dragging. Check if we've dragged past the threshold,
-      // or we are starting from the open state.
-      if(!_this._isDragging && Math.abs(e.gesture.deltaY) > _this.dragThresholdY) {
-        _this._isDragging = true;
-      }
-
-      if(_this._isDragging) {
-        var refresher = _this._currentDrag.refresher;
-
-        var currentHeight = parseFloat(refresher.style.height);
-        refresher.style.height = e.gesture.deltaY + 'px';
-
-        var newHeight = parseFloat(refresher.style.height);
-        var firstChildHeight = parseFloat(refresher.firstElementChild.offsetHeight);
-
-        if(newHeight > firstChildHeight && !_this._currentDrag.isHolding) {
-          // The user is holding the refresh but hasn't let go of it
-          _this._currentDrag.isHolding = true;
-          _this.onRefreshHolding && _this.onRefreshHolding();
-        } else {
-          // Indicate what ratio of opening the list refresh drag is
-          var ratio = Math.min(1, newHeight / firstChildHeight);
-          _this.onRefreshOpening && _this.onRefreshOpening(ratio);
-        }
-      }
-    });
-  };
-
-  PullToRefreshDrag.prototype.end = function(e, doneCallback) {
-    var _this = this;
-
-    // There is no drag, just end immediately
-    if(!this._currentDrag) {
-      return;
-    }
-
-    var refresher = this._currentDrag.refresher;
-
-    var currentHeight = parseFloat(refresher.style.height);
-    refresher.style.height = e.gesture.deltaY + 'px';
-
-    var firstChildHeight = parseFloat(refresher.firstElementChild.offsetHeight);
-
-    if(currentHeight > firstChildHeight) {
-      //this.refreshing();
-      refresher.classList.add('list-refreshing');
-      refresher.style.height = firstChildHeight + 'px';
-      this.onRefresh && _this.onRefresh();
-    } else {
-      // Enable animations
-      refresher.classList.add('list-refreshing');
-      refresher.style.height = '0px';
-      this.onRefresh && _this.onRefresh();
-    }
-
-    this._currentDrag = null;
-    doneCallback && doneCallback();
-  };
 
 
   var SlideDrag = function(opts) {
@@ -3129,26 +3090,6 @@ window.ionic = {
           return;
         }
       }
-
-
-      // Check if this is a "pull down" drag for pull to refresh
-      /*
-      else if(e.gesture.direction == 'down') {
-        this._dragOp = new PullToRefreshDrag({
-          el: this.el,
-          onRefresh: function() {
-            _this.onRefresh && _this.onRefresh();
-          },
-          onRefreshHolding: function() {
-            _this.onRefreshHolding && _this.onRefreshHolding();
-          },
-          onRefreshOpening: function(ratio) {
-            _this.onRefreshOpening && _this.onRefreshOpening(ratio);
-          }
-        });
-        this._dragOp.start(e);
-      } 
-      */
 
       // Or check if this is a swipe to the side drag
       else if((e.gesture.direction == 'left' || e.gesture.direction == 'right') && Math.abs(e.gesture.deltaX) > 5) {

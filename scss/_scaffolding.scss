@@ -106,13 +106,24 @@ body, .ionic-body {
 	-o-text-size-adjust: none;
 	text-size-adjust: none;
 }
-// Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
-// Note: For these to work, content must come after both bars in the markup
+
+// Scroll refresher (for pull to refresh)
+.scroll-refresher {
+  overflow: hidden;
+  height: 0;
+  background-color: white;
+}
+.scroll-refreshing {
+  -webkit-transition: height 0.1s ease-in-out;
+}
 
 .overflow-scroll {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
+
+// Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
+// Note: For these to work, content must come after both bars in the markup
 .has-header {
   top: $bar-height;
 }

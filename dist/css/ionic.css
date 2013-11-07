@@ -2243,6 +2243,14 @@ body, .ionic-body {
   -o-text-size-adjust: none;
   text-size-adjust: none; }
 
+.scroll-refresher {
+  overflow: hidden;
+  height: 0;
+  background-color: white; }
+
+.scroll-refreshing {
+  -webkit-transition: height 0.1s ease-in-out; }
+
 .overflow-scroll {
   overflow: auto;
   -webkit-overflow-scrolling: touch; }
@@ -3486,11 +3494,6 @@ button.item-button-right:after {
   background-color: transparent;
   color: #222222;
   font-weight: bold; }
-
-.list-refresher {
-  overflow: hidden;
-  height: 0;
-  background-color: red; }
 
 .card.list .list-item {
   padding-right: 1px;

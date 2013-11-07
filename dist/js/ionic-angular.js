@@ -523,7 +523,17 @@ angular.module('ionic.ui.content', [])
       };
     }
   };
-});
+})
+
+.directive('refresher', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<div class="scroll-refresher" ng-transclude></div>'
+  }
+})
+
 })();
 ;
 (function() {

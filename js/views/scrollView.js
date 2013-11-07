@@ -29,6 +29,40 @@
     toiletSeat: 'cubic-bezier(0.05, 0.60, 0.05, 0.60)'
   };
 
+  /**
+   * The Pull To Refresh drag operation handles the well-known
+   * "pull to refresh" concept seen on various apps. This lets
+   * the user indicate they want to refresh a given list by dragging
+   * down.
+   *
+   * @param {object} opts the options for the pull to refresh drag.
+   */
+  /*
+  var PullToRefreshDrag = function(opts) {
+    this.dragThresholdY = opts.dragThresholdY || 10;
+    this.onRefreshOpening = opts.onRefreshOpening || function() {};
+    this.onRefresh = opts.onRefresh || function() {};
+    this.onRefreshHolding = opts.onRefreshHolding || function() {};
+    this.el = opts.el;
+  };
+
+  PullToRefreshDrag.prototype.end = function(e, doneCallback) {
+
+    if(currentHeight > firstChildHeight) {
+      //this.refreshing();
+    } else {
+      // Enable animations
+      refresher.classList.add('list-refreshing');
+      refresher.style.height = '0px';
+      this.onRefresh && _this.onRefresh();
+    }
+
+    this._currentDrag = null;
+    doneCallback && doneCallback();
+  };
+  */
+
+
   ionic.views.Scroll = ionic.views.View.inherit({
 
     initialize: function(opts) {
@@ -45,6 +79,13 @@
         // Scroll event names. These are custom so can be configured
         scrollEventName: 'momentumScrolled',
         scrollEndEventName: 'momentumScrollEnd',
+
+        hasPullToRefresh: true,
+
+        // Called as the refresher is opened, an amount is passed
+        onRefreshOpening: function() {},
+        // Called when let go and is refreshing
+        onRefresh: function() {},
 
         // How frequently to fire scroll events in the case of 
         // a flick or momentum scroll where the finger is no longer
@@ -438,6 +479,12 @@
         return;
       }
 
+      // Grab the refresher element if using Pull to Refresh
+      if(this.hasPullToRefresh) {
+        this._refresher = document.querySelector('.scroll-refresher');
+        this._refresher.classList.remove('scroll-refreshing');
+      }
+
       this.x = scrollLeft;
       this.y = scrollTop;
 
@@ -451,8 +498,6 @@
         startTime: Date.now()
       };
     },
-
-
 
     /**
      * Process the drag event to move the item to the left or right.
@@ -519,12 +564,10 @@
           var newX = _this.x + deltaX;
           var newY = _this.y + deltaY;
 
-          if(newX > 0 || (-newX + parentWidth) > totalWidth) {
-            // Rubber band
-            newX = _this.x + deltaX / _this.rubberBandResistance;
-          }
           // Check if the dragging is beyond the bottom or top
-          if(newY > 0 || (-newY + parentHeight) > totalHeight) {
+          if(newY > 0) {
+            newY = _this.y + deltaY / _this.rubberBandResistance;
+          } else if ((-newY + parentHeight) > totalHeight) {
             // Rubber band
             newY = _this.y + deltaY / _this.rubberBandResistance;
           }
@@ -536,8 +579,25 @@
             newY = 0;
           }
 
-          // Update the new translated Y point of the container
-          _this.el.style.webkitTransform = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
+          if(_this._refresher && newY > 0) {
+            // We are pulling to refresh, so update the refresher
+            _this._refresher.style.height = newY + 'px';
+
+            var firstChildHeight = parseFloat(_this._refresher.firstElementChild.offsetHeight);
+            if(newY > firstChildHeight && !_this._isHoldingRefresh) {
+              _this._isHoldingRefresh = true;
+              // Trigger refresh holding event here
+            } else {
+              // Trigger refresh open amount
+              var ratio = Math.min(1, newY / firstChildHeight);
+            }
+
+            // Update the new translated Y point of the container
+            _this.el.style.webkitTransform = 'translate3d(' + newX + 'px,0, 0)';
+          } else {
+            // Update the new translated Y point of the container
+            _this.el.style.webkitTransform = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
+          }
 
           // Store the last points
           _this.x = newX;
@@ -607,11 +667,27 @@
         var time = 0;
         var easing = '';
 
+
+        if(_this._refresher && _this.y > 0) {
+          // Pull to refresh
+          var firstChildHeight = parseFloat(_this._refresher.firstElementChild.offsetHeight);
+          if(Math.ceil(_this.y) >= firstChildHeight) {
+            // REFRESH
+            _this._refresher.classList.add('scroll-refreshing');
+            _this._refresher.style.height = firstChildHeight + 'px';
+            _this.onRefresh && _this.onRefresh();
+          } else {
+            _this._refresher.classList.add('scroll-refreshing');
+            _this._refresher.style.height = 0 + 'px';
+            _this.onRefresh && _this.onRefresh();
+          }
+          return;
+        }
+
         var newX = Math.round(_this.x);
         var newY = Math.round(_this.y);
 
         _this._scrollTo(newX, newY);
-
 
         // Check if we just snap back to bounds
         if(_this.wrapScrollPosition(_this.bounceTime)) {

@@ -35,6 +35,16 @@
         -webkit-transition: .2s ease-in-out all;
         -webkit-transform:translate3d(-100%,0,0);
       }
+
+      .scroll-refresher {
+        background-color: #222;
+      }
+      #refresh-content {
+        color: #fff;
+        padding: 60px 0px;
+        text-align: center;
+        font-size: 30px;
+      }
     </style>
 
   </head>
@@ -43,6 +53,11 @@
     <header class="bar bar-header bar-success">
     </header>
     <content has-header="true" ng-controller="AppCtrl" class="reveal-animation">
+      <refresher>
+        <div id="refresh-content">
+          Refreshing
+        </div>
+      </refresher>
       <ul class="list">
         <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
       </ul>
