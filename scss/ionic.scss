@@ -6,20 +6,18 @@
   "variables",
 
   // Ionicons
-  "../../ionicons/scss/ionicons-variables",
-  "../../ionicons/scss/ionicons-font",
-  "../../ionicons/scss/ionicons-animation",
-  "../../ionicons/scss/ionicons-icons",
+  "../ionicons/scss/ionicons-variables",
+  "../ionicons/scss/ionicons-font",
+  "../ionicons/scss/ionicons-animation",
+  "../ionicons/scss/ionicons-icons",
 
   // Base
   "reset",
   "scaffolding",
   "type",
 
-  // Action Sheet
+  // Components
   "action-sheet",
-
-  // Nav
   "bar",
   "tabs",
   "menu",
@@ -27,6 +25,10 @@
   "popup",
   "items",
   "list",
+  "nav",
+  "badge",
+  "slide-box",
+  "split-pane",
 
   // Forms
   "form",
@@ -39,23 +41,9 @@
   "button",
   "button-bar",
 
-  // Badges
-  "badge",
-
-  // Components
-  "slide-box",
-
-  "split-pane",
-
-  "scroll",
-
-  "nav",
-
-  // Animations
-  "animations/simple",
-  "animations/bar_ios7",
-
   // Util
+  "scroll",
+  "animations",
   "icons",
   "util",
   "platform";
