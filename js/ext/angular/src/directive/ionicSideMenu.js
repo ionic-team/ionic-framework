@@ -68,6 +68,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
         var defaultPrevented = false;
 
         ionic.on('mousedown', function(e) {
+          // If the child element prevented the drag, don't drag
           defaultPrevented = e.defaultPrevented;
         });
 
