@@ -79,7 +79,7 @@
 
 .button-clear {
   @include transition(opacity .1s);
-  padding: $button-clear-padding;
+  padding: 0 $button-clear-padding;
   max-height: $button-height;
   border: none;
   background: none;
