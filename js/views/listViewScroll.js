@@ -1,6 +1,14 @@
 (function(ionic) {
 'use strict';
 
+  var ITEM_CLASS = 'item';
+  var ITEM_CONTENT_CLASS = 'item-content';
+  var ITEM_SLIDING_CLASS = 'item-sliding';
+  var ITEM_OPTIONS_CLASS = 'item-options';
+  var ITEM_PLACEHOLDER_CLASS = 'item-placeholder';
+  var ITEM_REORDERING_CLASS = 'item-reordering';
+  var ITEM_DRAG_CLASS = 'item-drag';
+
   var DragOp = function() {};
   DragOp.prototype = {
     start: function(e) {
@@ -137,10 +145,10 @@
   SlideDrag.prototype.start = function(e) {
     var content, buttons, offsetX, buttonsWidth;
 
-    if(e.target.classList.contains('list-item-content')) {
+    if(e.target.classList.contains(ITEM_CONTENT_CLASS)) {
       content = e.target;
-    } else if(e.target.classList.contains('list-item')) {
-      content = e.target.querySelector('.list-item-content');
+    } else if(e.target.classList.contains(ITEM_CLASS)) {
+      content = e.target.querySelector('.' + ITEM_CONTENT_CLASS);
     }
 
     // If we don't have a content area as one of our children (or ourselves), skip
@@ -149,13 +157,13 @@
     }
 
     // Make sure we aren't animating as we slide
-    content.classList.remove('list-item-sliding');
+    content.classList.remove(ITEM_SLIDING_CLASS);
 
     // Grab the starting X point for the item (for example, so we can tell whether it is open or closed to start)
     offsetX = parseFloat(content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
 
     // Grab the buttons
-    buttons = content.parentNode.querySelector('.list-item-buttons');
+    buttons = content.parentNode.querySelector('.' + ITEM_OPTIONS_CLASS);
     if(!buttons) {
       return;
     }
@@ -234,7 +242,7 @@
 
     var onRestingAnimationEnd = function(e) {
       if(e.propertyName == '-webkit-transform') {
-        content.classList.remove('list-item-sliding');
+        content.classList.remove(ITEM_SLIDING_CLASS);
       }
       e.target.removeEventListener('webkitTransitionEnd', onRestingAnimationEnd);
     };
@@ -242,7 +250,7 @@
     window.requestAnimationFrame(function() {
       var currentX = parseFloat(_this._currentDrag.content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
       if(currentX !== restingPoint) {
-        _this._currentDrag.content.classList.add('list-item-sliding');
+        _this._currentDrag.content.classList.add(ITEM_SLIDING_CLASS);
         _this._currentDrag.content.addEventListener('webkitTransitionEnd', onRestingAnimationEnd);
       }
       _this._currentDrag.content.style.webkitTransform = 'translate3d(' + restingPoint + 'px, 0, 0)';
@@ -272,11 +280,11 @@
 
     var placeholder = this.el.cloneNode(true);
 
-    placeholder.classList.add('list-item-placeholder');
+    placeholder.classList.add(ITEM_PLACEHOLDER_CLASS);
 
     this.el.parentNode.insertBefore(placeholder, this.el);
 
-    this.el.classList.add('list-item-reordering');
+    this.el.classList.add(ITEM_REORDERING_CLASS);
 
 
     this._currentDrag = {
@@ -343,7 +351,7 @@
     var placeholder = this._currentDrag.placeholder;
 
     // Reposition the element
-    this.el.classList.remove('list-item-reordering');
+    this.el.classList.remove(ITEM_REORDERING_CLASS);
     this.el.style.top = 0;
 
     var finalPosition = ionic.DomUtil.getChildIndex(placeholder);
@@ -385,14 +393,12 @@
       this._initDrag();
 
       // Listen for drag and release events
-      /*
       window.ionic.onGesture('drag', function(e) {
         _this._handleDrag(e);
       }, this.el);
       window.ionic.onGesture('release', function(e) {
         _this._handleEndDrag(e);
       }, this.el);
-      */
     },
     /**
      * Called to tell the list to stop refreshing. This is useful
@@ -471,7 +477,7 @@
     // Return the list item from the given target
     _getItem: function(target) {
       while(target) {
-        if(target.classList.contains('list-item')) {
+        if(target.classList.contains(ITEM_CLASS)) {
           return target;
         }
         target = target.parentNode;
@@ -483,14 +489,13 @@
     _startDrag: function(e) {
       ionic.views.ListView.__super__._startDrag.call(this, e);
 
-      return;
 
       var _this = this;
 
       this._isDragging = false;
 
       // Check if this is a reorder drag
-      if(ionic.DomUtil.getParentOrSelfWithClass(e.target, 'list-item-drag') && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
+      if(ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_DRAG_CLASS) && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
         var item = this._getItem(e.target);
 
         if(item) {
@@ -500,6 +505,7 @@
       }
 
       // Check if this is a "pull down" drag for pull to refresh
+      /*
       else if(e.gesture.direction == 'down') {
         this._dragOp = new PullToRefreshDrag({
           el: this.el,
@@ -515,11 +521,13 @@
         });
         this._dragOp.start(e);
       } 
+      */
 
       // Or check if this is a swipe to the side drag
       else if(e.gesture.direction == 'left' || e.gesture.direction == 'right') {
         this._dragOp = new SlideDrag({ el: this.el });
         this._dragOp.start(e);
+        e.preventDefault();
       }
     },
 
@@ -528,7 +536,6 @@
       ionic.views.ListView.__super__._handleEndDrag.call(this, e);
       var _this = this;
       
-      return;
       if(!this._dragOp) {
         this._initDrag();
         return;
@@ -546,8 +553,8 @@
       ionic.views.ListView.__super__._handleDrag.call(this, e);
       var _this = this, content, buttons;
 
-      return;
       if(!this._dragOp) {
+        e.preventDefault();
         this._startDrag(e);
         if(!this._dragOp) { return; }
       }
