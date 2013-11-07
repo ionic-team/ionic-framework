@@ -1,4 +1,9 @@
 @charset "UTF-8";
+/**
+ * Mixins
+ * --------------------------------------------------
+ * Useful utilities and mixins for SCSS files.
+ */
 @font-face {
   font-family: "Ionicons";
   src: url("../fonts/ionicons.eot?v=1.3.0");
@@ -1831,14 +1836,15 @@
   content: "\f2ba"; }
 
 /**
-* Adapted from normalize.css and some reset.css. We don't care even one
-* bit about old IE, so we don't need any hacks for that in here.
-* 
-* There are probably other things we could remove here, as well.
-*
-* normalize.css v2.1.2 | MIT License | git.io/normalize
-*/
-/**
+ * Resets
+ * --------------------------------------------------
+ * Adapted from normalize.css and some reset.css. We don't care even one
+ * bit about old IE, so we don't need any hacks for that in here.
+ * 
+ * There are probably other things we could remove here, as well.
+ *
+ * normalize.css v2.1.2 | MIT License | git.io/normalize
+ 
  * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
  * http://cssreset.com
  */
@@ -2141,6 +2147,10 @@ table {
   border-spacing: 0;
   border-collapse: collapse; }
 
+/**
+ * Scaffolding
+ * --------------------------------------------------
+ */
 *,
 *:before,
 *:after {
@@ -2202,9 +2212,9 @@ body, .ionic-body {
 .scroll-content {
   position: absolute;
   top: 0;
-  left: 0;
   right: 0;
   bottom: 0;
+  left: 0;
   overflow: hidden; }
 
 .overflow-scroll {
@@ -2234,14 +2244,12 @@ body, .ionic-body {
   height: 100%;
   background-color: #fff; }
 
+/**
+ * Typography
+ * --------------------------------------------------
+ */
 p {
   margin: 0 0 10px; }
-
-.lead {
-  margin-bottom: 20px;
-  font-weight: 200;
-  font-size: 16.1px;
-  line-height: 1.4; }
 
 small {
   font-size: 85%; }
@@ -2371,6 +2379,10 @@ a.subdued‎ {
   a.subdued‎:last-child {
     padding-right: 0; }
 
+/**
+ * Action Sheets
+ * --------------------------------------------------
+ */
 .action-sheet {
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
@@ -2401,6 +2413,10 @@ a.subdued‎ {
   border-radius: 3px;
   background-color: rgba(255, 255, 255, 0.95); }
 
+/**
+ * Bar (Headers and Footers)
+ * --------------------------------------------------
+ */
 .bar {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -2696,7 +2712,7 @@ a.subdued‎ {
 
 /**
  * Tabs
- * 
+ * --------------------------------------------------
  * A navigation bar with any number of tab items supported.
  */
 .tabs {
@@ -2722,8 +2738,8 @@ a.subdued‎ {
   height: 49px;
   border-style: solid;
   border-top-width: 1px;
-  line-height: 49px;
-  background-size: 0; }
+  background-size: 0;
+  line-height: 49px; }
   .tabs.tabs-default {
     background-color: white;
     background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
@@ -2814,9 +2830,9 @@ a.subdued‎ {
   font-size: 10px; }
   .tabs-icon-left .tab-item .icon,
   .tabs-icon-right .tab-item .icon {
-    font-size: 24px;
     display: inline-block;
     vertical-align: top;
+    font-size: 24px;
     line-height: 49px; }
 
 .tabs-icon-only .icon {
@@ -2851,6 +2867,11 @@ a.subdued‎ {
   .item.tabs .icon {
     position: relative; }
 
+/**
+ * Menus
+ * --------------------------------------------------
+ * Side panel structure
+ */
 .menu {
   position: absolute;
   top: 0;
@@ -2878,21 +2899,28 @@ a.subdued‎ {
   transition: transform 200ms ease; }
 
 /**
+ * Modals
+ * --------------------------------------------------
  * Modals are independent windows that slide in from off-screen.
  */
 .modal {
-  position: fixed;
-  z-index: 10;
-  top: 0;
-  opacity: 0;
   -webkit-transform: translate3d(0, 100%, 0);
-  width: 100%;
-  min-height: 100%;
+  transform: translate3d(0, 100%, 0);
+  position: fixed;
+  top: 0;
+  z-index: 10;
   overflow: hidden;
-  background-color: white; }
+  min-height: 100%;
+  width: 100%;
+  background-color: white;
+  opacity: 0; }
   .modal.active {
     height: 100%; }
 
+/**
+ * Popups
+ * --------------------------------------------------
+ */
 .popup {
   position: fixed; }
 
@@ -2901,12 +2929,12 @@ a.subdued‎ {
 
 .loading-backdrop {
   position: fixed;
-  visibility: hidden;
-  -webkit-transition: visibility 0s linear 0.3s;
   top: 0;
   left: 0;
+  visibility: hidden;
   width: 100%;
-  height: 100%; }
+  height: 100%;
+  -webkit-transition: visibility 0s linear 0.3s; }
   .loading-backdrop.enabled {
     background-color: rgba(0, 0, 0, 0.7); }
   .loading-backdrop.active {
@@ -2915,18 +2943,22 @@ a.subdued‎ {
 
 .loading {
   position: fixed;
-  left: 50%;
   top: 50%;
-  text-align: center;
-  text-overflow: ellipsis;
-  border-radius: 5px;
+  left: 50%;
   padding: 20px;
+  border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.7);
   color: #fff;
+  text-align: center;
+  text-overflow: ellipsis;
   font-size: 15px; }
   .loading h1, .loading h2, .loading h3, .loading h4, .loading h5 {
     color: #fff; }
 
+/**
+ * Items
+ * --------------------------------------------------
+ */
 .item {
   position: relative;
   z-index: 2;
@@ -3402,6 +3434,10 @@ button.item-button-right:after {
     border: none;
     border-radius: 0; }
 
+/**
+ * Lists
+ * --------------------------------------------------
+ */
 .list {
   position: relative;
   overflow: hidden;
@@ -3493,12 +3529,20 @@ button.item-button-right:after {
 .padding-right > .list .item-divider {
   margin-right: 0; }
 
+/**
+ * Nav
+ * --------------------------------------------------
+ */
 .nav-content {
   position: absolute;
   width: 100%;
   height: 100%;
   background-color: white; }
 
+/**
+ * Badges
+ * --------------------------------------------------
+ */
 .badge {
   display: inline-block;
   min-width: 10px;
@@ -3558,6 +3602,10 @@ button.item-button-right:after {
 .badge-gray-ligher {
   background: #eeeeee; }
 
+/**
+ * Slide Box
+ * --------------------------------------------------
+ */
 .slide-box {
   background-color: #000;
   position: relative;
@@ -3595,9 +3643,11 @@ button.item-button-right:after {
       -webkit-transition: opacity 0.4s ease-in;
       opacity: 1; }
 
+/**
+ * Split Pane
+ * --------------------------------------------------
+ */
 .split-pane {
-  height: 100%;
-  width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-flex;
@@ -3607,7 +3657,9 @@ button.item-button-right:after {
   -ms-flex-align: stretch;
   -webkit-align-items: stretch;
   -moz-align-items: stretch;
-  align-items: stretch; }
+  align-items: stretch;
+  width: 100%;
+  height: 100%; }
 
 .split-pane-menu {
   -webkit-box-flex: 0;
@@ -3616,10 +3668,10 @@ button.item-button-right:after {
   -moz-flex: 0 0 320px;
   -ms-flex: 0 0 320px;
   flex: 0 0 320px;
-  height: 100%;
+  overflow-y: auto;
   width: 320px;
-  border-right: 1px solid #eeeeee;
-  overflow-y: auto; }
+  height: 100%;
+  border-right: 1px solid #eeeeee; }
   @media all and (max-width: 568px) {
     .split-pane-menu {
       border-right: none; } }
@@ -3632,6 +3684,10 @@ button.item-button-right:after {
   -ms-flex: 1 0 auto;
   flex: 1 0 auto; }
 
+/**
+ * Forms
+ * --------------------------------------------------
+ */
 form {
   margin: 0 0 1.42857; }
 
@@ -3841,6 +3897,10 @@ input[type="radio"][readonly],
 input[type="checkbox"][readonly] {
   background-color: transparent; }
 
+/**
+ * Checkbox
+ * --------------------------------------------------
+ */
 .checkbox {
   position: relative;
   display: inline-block;
@@ -3906,6 +3966,10 @@ input[type="checkbox"][readonly] {
   height: 100%;
   align-items: center; }
 
+/**
+ * Toggle
+ * --------------------------------------------------
+ */
 /* the overall container of the toggle */
 .toggle {
   position: relative;
@@ -3933,6 +3997,8 @@ input[type="checkbox"][readonly] {
 /* the handle (circle) thats inside the toggle's track area */
 /* also the handle's appearance when it is "off" */
 .toggle .handle {
+  -webkit-transition: 0.1s ease-in-out;
+  transition: 0.1s ease-in-out;
   position: absolute;
   top: 2px;
   left: 2px;
@@ -3941,8 +4007,6 @@ input[type="checkbox"][readonly] {
   height: 28px;
   border-radius: 50%;
   background-color: white;
-  -webkit-transition: 0.1s ease-in-out;
-  transition: 0.1s ease-in-out;
   /* used to create a larger (but hidden) hit area to slide the handle */ }
   .toggle .handle:before {
     position: absolute;
@@ -3973,6 +4037,10 @@ input[type="checkbox"][readonly] {
   right: 15px;
   z-index: 3; }
 
+/**
+ * Radio Button Inputs
+ * --------------------------------------------------
+ */
 .item-radio {
   padding: 0; }
   .item-radio:hover {
@@ -3993,16 +4061,20 @@ input[type="checkbox"][readonly] {
   height: 100%;
   font-size: 24px; }
 
-.item-radio input[type="radio"] {
+.item-radio input {
   /* hide any radio button inputs elements (the ugly circles) */
   display: none; }
-  .item-radio input[type="radio"]:checked ~ .item-content {
+  .item-radio input:checked ~ .item-content {
     /* style the item content when its checked */
     background: #f7f7f7; }
-  .item-radio input[type="radio"]:checked ~ .radio-icon {
+  .item-radio input:checked ~ .radio-icon {
     /* show the checkmark icon when its checked */
     visibility: visible; }
 
+/**
+ * Range
+ * --------------------------------------------------
+ */
 input[type="range"] {
   display: inline-block;
   margin-top: 20px;
@@ -4031,6 +4103,10 @@ input[type="range"] {
     padding: 20px;
     content: ' '; }
 
+/**
+ * Buttons
+ * --------------------------------------------------
+ */
 .button {
   position: relative;
   display: inline-block;
@@ -4314,6 +4390,10 @@ button.button-full,
 a.button {
   text-decoration: none; }
 
+/**
+ * Button Bar
+ * --------------------------------------------------
+ */
 .button-bar {
   display: -webkit-box;
   display: -webkit-flex;
@@ -4379,6 +4459,13 @@ a.button {
   -o-text-size-adjust: none;
   text-size-adjust: none; }
 
+/**
+ * Animations
+ * --------------------------------------------------
+ * The animations in this file are "simple" - not too complex
+ * and pretty easy on performance. They can be overidden
+ * and enhanced easily.
+ */
 @-webkit-keyframes slideInLeft {
   0% {
     -webkit-transform: translate3d(100%, 0, 0); }
@@ -4551,6 +4638,10 @@ a.button {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
 
+/**
+ * Icons
+ * --------------------------------------------------
+ */
 .ion-default {
   color: white; }
 
@@ -4654,6 +4745,10 @@ a.button {
   .ion-refreshing:before {
     content: "\e144"; }
 
+/**
+ * Util
+ * --------------------------------------------------
+ */
 .hidden,
 .hide {
   display: none !important; }
@@ -4744,6 +4839,10 @@ a.button {
 .white {
   color: white; }
 
+/**
+ * Platform
+ * --------------------------------------------------
+ */
 .platform-ios7 .bar-header {
   height: 64px; }
   .platform-ios7 .bar-header > * {

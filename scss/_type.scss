@@ -1,6 +1,8 @@
 
-// Typography
-// --------------------------------------------------
+/**
+ * Typography
+ * --------------------------------------------------
+ */
 
 
 // Body text
@@ -8,12 +10,6 @@
 
 p {
   margin: 0 0 ($line-height-computed / 2);
-}
-.lead {
-  margin-bottom: $line-height-computed;
-  font-weight: 200;
-  font-size: ($font-size-base * 1.15);
-  line-height: 1.4;
 }
 
 
@@ -41,6 +37,7 @@ h1, h2, h3, h4, h5, h6,
   font-weight: $headings-font-weight;
   font-family: $headings-font-family;
   line-height: $headings-line-height;
+
   small {
     font-weight: normal;
     line-height: 1;
@@ -173,4 +170,3 @@ a.subdued‎ {
     padding-right: 0;
   }
 }
-

@@ -1,3 +1,9 @@
+
+/**
+ * Scaffolding
+ * --------------------------------------------------
+ */
+
 *,
 *:before,
 *:after {
@@ -68,9 +74,9 @@ body, .ionic-body {
 .scroll-content {
   position: absolute;
   top: 0;
-  left: 0;
   right: 0;
   bottom: 0;
+  left: 0;
   overflow: hidden;
 }
 // Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
