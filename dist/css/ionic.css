@@ -4956,36 +4956,6 @@ a.button {
   .fill-icon.ion-gray-lighter:before {
     background: #eeeeee; }
 
-.ion-loading {
-  font-family: 'Ionicons';
-  speak: none;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin .75s linear infinite;
-  -moz-animation: spin .75s linear infinite;
-  animation: spin .75s linear infinite; }
-  .ion-loading:before {
-    content: "\e144"; }
-
-.ion-refreshing {
-  font-family: 'Ionicons';
-  speak: none;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-animation: spin .75s linear infinite;
-  -moz-animation: spin .75s linear infinite;
-  animation: spin .75s linear infinite; }
-  .ion-refreshing:before {
-    content: "\e144"; }
-
 /**
  * Util
  * --------------------------------------------------
