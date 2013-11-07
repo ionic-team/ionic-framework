@@ -2214,6 +2214,9 @@ body, .ionic-body {
 .has-header {
   top: 44px; }
 
+.has-subheader {
+  top: 88px; }
+
 .has-footer {
   bottom: 44px; }
 

@@ -84,6 +84,10 @@ body, .ionic-body {
   top: $bar-height;
 }
 
+.has-subheader {
+  top: $bar-height * 2;
+}
+
 .has-footer {
   bottom: $bar-height;
 }
