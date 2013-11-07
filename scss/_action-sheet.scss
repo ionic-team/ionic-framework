@@ -1,28 +1,26 @@
+
+// Action Sheets
+// --------------------------------------------------
+
 .action-sheet {
-  position: fixed; 
+  @include translate3d(0, 100%, 0);
 
-  z-index: $zindex-modal;
-
-  width: calc(100% - 30px);
-
+  position: fixed;
   bottom: 0;
-  left: 15px;
-
- -webkit-transform: translate3d(0, 100%, 0);
-  transform: translate3d(0, 100%, 0);
-
+  left: 15px; 
+  z-index: $zindex-modal;
   overflow: hidden;
-
+  width: calc(100% - 30px);
 
   .button {
     display: block;
-    width: 100%;
     padding: 10px;
+    width: 100%;
     border-radius: none;
     background-color: transparent;
-    font-size: 18px;
 
     color: $brand-primary;
+    font-size: 18px;
 
     &.destructive {
       color: $brand-danger;
@@ -31,13 +29,13 @@
 }
 
 .action-sheet-title {
-  font-size: 12px;
   padding: 10px;
   text-align: center;
+  font-size: 12px;
 }
 
 .action-sheet-group {
+  margin-bottom: 10px;
   border-radius: $sheet-border-radius;
   background-color: rgba($sheet-bg-color, $sheet-opacity);
-  margin-bottom: 10px;
 }
