@@ -61,7 +61,7 @@
 
   /* the handle when the toggle is "on" */
 .toggle input:checked + .track .handle {
-  @include translate($toggle-width - $toggle-handle-width - ($toggle-border-width * 2), 0);
+  @include translate3d($toggle-width - $toggle-handle-width - ($toggle-border-width * 2), 0, 0);
   background-color: $toggle-handle-on-bg-color;
 }
 

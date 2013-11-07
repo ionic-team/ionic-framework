@@ -3958,8 +3958,8 @@ input[type="checkbox"][readonly] {
 
 /* the handle when the toggle is "on" */
 .toggle input:checked + .track .handle {
-  -webkit-transform: translate(22px, 0);
-  transform: translate(22px, 0);
+  -webkit-transform: translate3d(22px, 0, 0);
+  transform: translate3d(22px, 0, 0);
   background-color: white; }
 
 /* make sure list item content have enough padding on right to fit the toggle */
