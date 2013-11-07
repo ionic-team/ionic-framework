@@ -90,7 +90,6 @@
     // },
     
     handlePopState: function(event) {
-      console.log("EVENT: popstate", event);
     },
   };
   

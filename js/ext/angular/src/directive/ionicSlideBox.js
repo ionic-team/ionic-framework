@@ -33,9 +33,6 @@ angular.module('ionic.ui.slideBox', [])
             </div>\
           </div>',
 
-    postLink: function() {
-      console.log('POST LINK');
-    },
     link: function($scope, $element, $attr, slideBoxCtrl) {
       // If the pager should show, append it to the slide box
       if($attr.showPager !== "false") {

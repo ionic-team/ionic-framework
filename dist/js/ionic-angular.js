@@ -1124,9 +1124,6 @@ angular.module('ionic.ui.slideBox', [])
             </div>\
           </div>',
 
-    postLink: function() {
-      console.log('POST LINK');
-    },
     link: function($scope, $element, $attr, slideBoxCtrl) {
       // If the pager should show, append it to the slide box
       if($attr.showPager !== "false") {
@@ -1401,7 +1398,6 @@ angular.module('ionic.ui.virtRepeat', [])
         var _this = this;
 
         virtualList.listView.renderViewport = function(high, low, start, end) {
-          console.log('RENDER VIEWPORT', high, low, start, end);
         }
       }
     }

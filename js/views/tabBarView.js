@@ -49,7 +49,6 @@ ionic.views.TabBarItem.prototype = {
     ionic.on('tap', this._tapHandler, this.el);
   },
   onTap: function(e) {
-    console.log('On tap');
   },
 
   // Remove the event listeners from this object

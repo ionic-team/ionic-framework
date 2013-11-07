@@ -76,7 +76,6 @@
       return {
         leave: function() {
           var endFunc = function() {
-            console.log('Animation finished for element', element);
 
             element.classList.remove('leave');
             element.classList.remove('leave-active');
@@ -93,7 +92,6 @@
         },
         enter: function() {
           var endFunc = function() {
-            console.log('Animation finished for element', element);
 
             element.classList.remove('enter');
             element.classList.remove('enter-active');

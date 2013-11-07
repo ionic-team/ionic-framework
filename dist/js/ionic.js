@@ -95,7 +95,6 @@ window.ionic = {
       return {
         leave: function() {
           var endFunc = function() {
-            console.log('Animation finished for element', element);
 
             element.classList.remove('leave');
             element.classList.remove('leave-active');
@@ -112,7 +111,6 @@ window.ionic = {
         },
         enter: function() {
           var endFunc = function() {
-            console.log('Animation finished for element', element);
 
             element.classList.remove('enter');
             element.classList.remove('enter-active');
@@ -260,7 +258,6 @@ window.ionic = {
     // },
     
     handlePopState: function(event) {
-      console.log("EVENT: popstate", event);
     },
   };
   
@@ -4240,7 +4237,6 @@ ionic.views.TabBarItem.prototype = {
     ionic.on('tap', this._tapHandler, this.el);
   },
   onTap: function(e) {
-    console.log('On tap');
   },
 
   // Remove the event listeners from this object
