@@ -256,7 +256,7 @@
       _this._currentDrag.content.style.webkitTransform = 'translate3d(' + restingPoint + 'px, 0, 0)';
 
       // Kill the current drag
-      this._currentDrag = null;
+      _this._currentDrag = null;
 
 
       // We are done, notify caller
@@ -391,14 +391,6 @@
         
       // Start the drag states
       this._initDrag();
-
-      // Listen for drag and release events
-      window.ionic.onGesture('drag', function(e) {
-        _this._handleDrag(e);
-      }, this.el);
-      window.ionic.onGesture('release', function(e) {
-        _this._handleEndDrag(e);
-      }, this.el);
     },
     /**
      * Called to tell the list to stop refreshing. This is useful
@@ -471,7 +463,7 @@
       ionic.views.ListView.__super__._initDrag.call(this);
 
       //this._isDragging = false;
-      //this._dragOp = null;
+      this._dragOp = null;
     },
 
     // Return the list item from the given target
@@ -487,12 +479,11 @@
 
 
     _startDrag: function(e) {
-      ionic.views.ListView.__super__._startDrag.call(this, e);
-
-
       var _this = this;
 
       this._isDragging = false;
+
+      console.log(e.gesture.direction);
 
       // Check if this is a reorder drag
       if(ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_DRAG_CLASS) && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
@@ -501,8 +492,11 @@
         if(item) {
           this._dragOp = new ReorderDrag({ el: item });
           this._dragOp.start(e);
+          e.preventDefault();
+          return;
         }
       }
+
 
       // Check if this is a "pull down" drag for pull to refresh
       /*
@@ -524,20 +518,23 @@
       */
 
       // Or check if this is a swipe to the side drag
-      else if(e.gesture.direction == 'left' || e.gesture.direction == 'right') {
+      else if((e.gesture.direction == 'left' || e.gesture.direction == 'right') && Math.abs(e.gesture.deltaX) > 5) {
         this._dragOp = new SlideDrag({ el: this.el });
         this._dragOp.start(e);
         e.preventDefault();
+        return;
       }
+
+      // We aren't handling it, so pass it up the chain
+      ionic.views.ListView.__super__._startDrag.call(this, e);
     },
 
 
     _handleEndDrag: function(e) {
-      ionic.views.ListView.__super__._handleEndDrag.call(this, e);
       var _this = this;
       
       if(!this._dragOp) {
-        this._initDrag();
+        ionic.views.ListView.__super__._handleEndDrag.call(this, e);
         return;
       }
 
@@ -550,15 +547,21 @@
      * Process the drag event to move the item to the left or right.
      */
     _handleDrag: function(e) {
-      ionic.views.ListView.__super__._handleDrag.call(this, e);
       var _this = this, content, buttons;
-
-      if(!this._dragOp) {
-        e.preventDefault();
+          
+      // If we get a drag event, make sure we aren't in another drag, then check if we should
+      // start one
+      if(!this.isDragging && !this._dragOp) {
         this._startDrag(e);
-        if(!this._dragOp) { return; }
       }
 
+      // No drag still, pass it up
+      if(!this._dragOp) { 
+        ionic.views.ListView.__super__._handleDrag.call(this, e);
+        return;
+      }
+
+      e.preventDefault();
       this._dragOp.drag(e);
     }
   });

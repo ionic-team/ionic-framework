@@ -194,7 +194,7 @@
             scrollTop: -by
           });
 
-          if(_this._isDragging) {
+          if(_this.isDragging) {
             _this._momentumStepTimeout = setTimeout(eventNotify, _this.inertialEventInterval);
           }
         }, this.inertialEventInterval);
@@ -397,7 +397,7 @@
     },
 
     _onScrollEnd: function() {
-      this._isDragging = false;
+      this.isDragging = false;
       this._drag = null;
       this.el.classList.remove('scroll-scrolling');
 
@@ -490,13 +490,13 @@
       _this._drag.pointY = py;
 
       // Check if we should start dragging. Check if we've dragged past the threshold.
-      if(!_this._isDragging && 
+      if(!_this.isDragging && 
           ((Math.abs(e.gesture.deltaY) > _this.dragThreshold) ||
           (Math.abs(e.gesture.deltaX) > _this.dragThreshold))) {
-        _this._isDragging = true;
+        _this.isDragging = true;
       }
 
-      if(_this._isDragging) {
+      if(_this.isDragging) {
         var drag = _this._drag;
 
         // Request an animation frame to batch DOM reads/writes
