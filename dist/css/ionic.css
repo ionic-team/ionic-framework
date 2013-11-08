@@ -49,14 +49,26 @@
 .white {
   color: white; }
 
+/*
+  Ionicons, v1.3.3
+  Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
+  https://twitter.com/helloimben  https://twitter.com/ionicframework
+  MIT License: https://github.com/driftyco/ionicons
+*/
 @font-face {
   font-family: "Ionicons";
-  src: url("../fonts/ionicons.eot?v=1.3.0");
-  src: url("../fonts/ionicons.eot?v=1.3.0#iefix") format("embedded-opentype"), url("../fonts/ionicons.ttf?v=1.3.0") format("truetype"), url("../fonts/ionicons.woff?v=1.3.0") format("woff"), url("../fonts/ionicons.svg?v=1.3.0#Ionicons") format("svg");
+  src: url("../fonts/ionicons.eot?v=1.3.3");
+  src: url("../fonts/ionicons.eot?v=1.3.3#iefix") format("embedded-opentype"), url("../fonts/ionicons.ttf?v=1.3.3") format("truetype"), url("../fonts/ionicons.woff?v=1.3.3") format("woff"), url("../fonts/ionicons.svg?v=1.3.3#Ionicons") format("svg");
   font-weight: normal;
   font-style: normal; }
 
-.ion, .ionicons,
+.ion, .ion-loading-a,
+.ion-loading-b,
+.ion-loading-c,
+.ion-loading-d,
+.ion-looping,
+.ion-refreshing,
+.ion-ios7-reloading, .ionicons,
 .ion-alert,
 .ion-alert-circled,
 .ion-archive,
@@ -212,6 +224,8 @@
 .ion-ios7-circle-outline,
 .ion-ios7-clock,
 .ion-ios7-clock-outline,
+.ion-ios7-close,
+.ion-ios7-close-outline,
 .ion-ios7-cloud,
 .ion-ios7-cloud-download,
 .ion-ios7-cloud-download-outline,
@@ -500,6 +514,7 @@
 .ion-wineglass,
 .ion-woman,
 .ion-wrench {
+  display: inline-block;
   font-family: "Ionicons";
   speak: none;
   font-style: normal;
@@ -510,11 +525,17 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
-.ion-spin {
-  -webkit-animation: spin 2s infinite linear;
-  -moz-animation: spin 2s infinite linear;
-  -o-animation: spin 2s infinite linear;
-  animation: spin 2s infinite linear; }
+.ion-spin, .ion-loading-a,
+.ion-loading-b,
+.ion-loading-c,
+.ion-loading-d,
+.ion-looping,
+.ion-refreshing,
+.ion-ios7-reloading {
+  -webkit-animation: spin 1s infinite linear;
+  -moz-animation: spin 1s infinite linear;
+  -o-animation: spin 1s infinite linear;
+  animation: spin 1s infinite linear; }
 
 @-moz-keyframes spin {
   0% {
@@ -1016,6 +1037,12 @@
 .ion-ios7-clock-outline:before {
   content: "\f171"; }
 
+.ion-ios7-close:before {
+  content: "\f2bc"; }
+
+.ion-ios7-close-outline:before {
+  content: "\f2bb"; }
+
 .ion-ios7-cloud:before {
   content: "\f178"; }
 
@@ -1340,7 +1367,7 @@
 .ion-ios7-refresh-outline:before {
   content: "\f1d5"; }
 
-.ion-ios7-reload:before {
+.ion-ios7-reload:before, .ion-ios7-reloading:before {
   content: "\f28e"; }
 
 .ion-ios7-rewind:before {
@@ -1496,16 +1523,16 @@
 .ion-link:before {
   content: "\f1fe"; }
 
-.ion-load-a:before {
+.ion-load-a:before, .ion-loading-a:before {
   content: "\f29a"; }
 
-.ion-load-b:before {
+.ion-load-b:before, .ion-loading-b:before {
   content: "\f29b"; }
 
-.ion-load-c:before {
+.ion-load-c:before, .ion-loading-c:before {
   content: "\f29c"; }
 
-.ion-load-d:before {
+.ion-load-d:before, .ion-loading-d:before {
   content: "\f29d"; }
 
 .ion-location:before {
@@ -1520,7 +1547,7 @@
 .ion-log-out:before {
   content: "\f29f"; }
 
-.ion-loop:before {
+.ion-loop:before, .ion-looping:before {
   content: "\f201"; }
 
 .ion-magnet:before {
@@ -1640,7 +1667,7 @@
 .ion-record:before {
   content: "\f21b"; }
 
-.ion-refresh:before {
+.ion-refresh:before, .ion-refreshing:before {
   content: "\f21c"; }
 
 .ion-reply:before {
@@ -2296,17 +2323,8 @@ body, .ionic-body {
 
 .scroll-refresher-content {
   height: 100%;
-  text-align: center;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  -moz-align-items: center;
-  align-items: center; }
+  width: 100%;
+  text-align: center; }
 
 .scroll-refreshing {
   -webkit-transition: height 0.1s ease-in-out; }
