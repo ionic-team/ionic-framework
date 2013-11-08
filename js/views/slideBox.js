@@ -8,33 +8,33 @@
 (function(ionic) {
 'use strict';
 
-  ionic.views.SlideBox = function(opts) {
-    var _this = this;
+  ionic.views.SlideBox = ionic.views.View.inherit({
+    initialize: function(opts) {
+      var _this = this;
 
-    this.el = opts.el;
-    this.pager = this.el.querySelector('.slide-box-pager');
+      this.el = opts.el;
+      this.pager = this.el.querySelector('.slide-box-pager');
 
-    // The drag threshold is the pixel delta that will trigger a drag (to 
-    // avoid accidental dragging)
-    this.dragThresholdX = opts.dragThresholdX || 10;
-    // The velocity threshold is a velocity of drag that indicates a "swipe". This
-    // number is taken from hammer.js's calculations
-    this.velocityXThreshold = opts.velocityXThreshold || 0.3;
+      // The drag threshold is the pixel delta that will trigger a drag (to 
+      // avoid accidental dragging)
+      this.dragThresholdX = opts.dragThresholdX || 10;
+      // The velocity threshold is a velocity of drag that indicates a "swipe". This
+      // number is taken from hammer.js's calculations
+      this.velocityXThreshold = opts.velocityXThreshold || 0.3;
 
-    // Initialize the slide index to the first page and update the pager
-    this.slideIndex = 0;
-    this._updatePager();
+      // Initialize the slide index to the first page and update the pager
+      this.slideIndex = 0;
+      this._updatePager();
 
-    // Listen for drag and release events
-    window.ionic.onGesture('drag', function(e) {
-      _this._handleDrag(e);
-    }, this.el);
-    window.ionic.onGesture('release', function(e) {
-      _this._handleEndDrag(e);
-    }, this.el);
-  };
+      // Listen for drag and release events
+      window.ionic.onGesture('drag', function(e) {
+        _this._handleDrag(e);
+      }, this.el);
+      window.ionic.onGesture('release', function(e) {
+        _this._handleEndDrag(e);
+      }, this.el);
+    },
 
-  ionic.views.SlideBox.prototype = {
     /**
      * Tell the pager to update itself if content is added or
      * removed. 
@@ -323,6 +323,6 @@
         }
       });
     }
-  };
+  });
 
 })(window.ionic);

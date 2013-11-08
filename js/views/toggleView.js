@@ -1,14 +1,13 @@
 (function(ionic) {
 'use strict';
 
-  ionic.views.Toggle = function(opts) {
-    this.el = opts.el;
-    this.checkbox = opts.checkbox;
-    this.handle = opts.handle;
-    this.openPercent = -1;
-  };
-
-  ionic.views.Toggle.prototype = {
+  ionic.views.Toggle = ionic.views.View.inherit({
+    initialize: function(opts) {
+      this.el = opts.el;
+      this.checkbox = opts.checkbox;
+      this.handle = opts.handle;
+      this.openPercent = -1;
+    },
 
     tap: function(e) {
       this.val( !this.checkbox.checked );
@@ -59,6 +58,6 @@
       return this.checkbox.checked;
     }
 
-  };
+  });
 
 })(ionic);

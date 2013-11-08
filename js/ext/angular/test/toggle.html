@@ -13,9 +13,11 @@
   <body>
 
     <content has-header="true" ng-controller="TestCtrl" class="reveal-animation">
-      <form ng-submit="doIt()">
+      <form>
         <toggle ng-model="data.isLovely"></toggle>
-        <button type="submit" class="button button-danger">Do it</button>
+        <button ng-click="toggle()" class="button button-danger">Toggle</button>
+        <button ng-click="doIt()" class="button button-warning">Print</button>
+      </form>
     </content>
 
     <script src="../../../../dist/js/ionic.js"></script>
@@ -28,6 +30,9 @@
         $scope.doIt = function() {
           console.log('DOIT', $scope.data);
         }
+        $scope.toggle = function() {
+          $scope.data.isLovely = !$scope.data.isLovely;
+        };
       });
 
     </script>
