@@ -63,7 +63,7 @@ angular.module('ionic.ui.content', [])
     restrict: 'E',
     replace: true,
     transclude: true,
-    template: '<div class="scroll-refresher" ng-transclude></div>'
+    template: '<div class="scroll-refresher"><div class="scroll-refresher-content" ng-transclude></div></div>'
   }
 })
 

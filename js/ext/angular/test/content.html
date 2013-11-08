@@ -41,7 +41,6 @@
       }
       #refresh-content {
         color: #999;
-        padding: 60px 0px;
         text-align: center;
         font-size: 20px;
       }
@@ -54,9 +53,7 @@
     </header>
     <content has-header="true" ng-controller="AppCtrl" class="reveal-animation">
       <refresher>
-        <div id="refresh-content">
-          Refreshing
-        </div>
+        Refreshing
       </refresher>
       <ul class="list">
         <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>

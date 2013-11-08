@@ -2294,6 +2294,20 @@ body, .ionic-body {
   height: 100px;
   margin-top: -100px; }
 
+.scroll-refresher-content {
+  height: 100%;
+  text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center; }
+
 .scroll-refreshing {
   -webkit-transition: height 0.1s ease-in-out; }
 
