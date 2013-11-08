@@ -2406,20 +2406,28 @@ window.ionic = {
         return;
       }
 
+      this.x = scrollLeft;
+      this.y = scrollTop;
+
       // Grab the refresher element if using Pull to Refresh
       if(this.hasPullToRefresh) {
         this._refresher = document.querySelector('.scroll-refresher');
         this._refresherHeight = parseFloat(this._refresher.firstElementChild.offsetHeight) || 100;
         // We always start the refresher hidden
-        this._isRefresherHidden = true;
+        if(this.y < 0) {
+          this._isRefresherHidden = true;
+          this._refresher.style.display = 'none';
+        } else {
+          this._isRefresherHidden = false;
+          this._refresher.style.display = 'block';
+        }
+
+        this._isHoldingRefresh = false;
 
         if(this._refresher) {
           this._refresher.classList.remove('scroll-refreshing');
         }
       }
-
-      this.x = scrollLeft;
-      this.y = scrollTop;
 
       this._drag = {
         direction: 'v',
@@ -2530,6 +2538,14 @@ window.ionic = {
             // Update the new translated Y point of the container
             _this.el.style.webkitTransform = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
           } else {
+
+            _this._isHoldingRefresh = false;
+
+            // Hide the refresher
+            if(_this.refresher && !_this._isRefresherHidden) {
+              _this._refresher.style.display = 'none';
+              _this._isRefresherHidden = true;
+            }
             // Update the new translated Y point of the container
             _this.el.style.webkitTransform = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
           }
