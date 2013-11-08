@@ -51,68 +51,41 @@
 .grid-full > .grid-cell {
   @include flex(0, 0, 100%);
 }
-.grid-1of2 > .grid-cell {
+.grid-1of2 > .grid-cell, 
+.grid-2of4 > .grid-cell,
+.grid-3of6 > .grid-cell {
   @include flex(0, 0, 50%);
 }
-.grid-1of3 > .grid-cell {
+.grid-1of3 > .grid-cell, 
+.grid-2of6 > .grid-cell {
   @include flex(0, 0, 33.3333%);
+}
+.grid-2of3 > .grid-cell,
+.grid-4of6 > .grid-cell {
+  @include flex(0, 0, 66.6666%);
 }
 .grid-1of4 > .grid-cell {
   @include flex(0, 0, 25%);
 }
+.grid-3of4 > .grid-cell {
+  @include flex(0, 0, 75%);
+}
 .grid-1of5 > .grid-cell {
   @include flex(0, 0, 20%);
+}
+.grid-2of5 > .grid-cell {
+  @include flex(0, 0, 40%);
+}
+.grid-3of5 > .grid-cell {
+  @include flex(0, 0, 60%);
+}
+.grid-4of5 > .grid-cell {
+  @include flex(0, 0, 80%);
 }
 .grid-1of6 > .grid-cell {
   @include flex(0, 0, 16.6666%);
 }
-
-/* Small to medium screens */
-@media (min-width: 24em) {
-  .grid-small-fit > .grid-cell {
-    @include flex(1);
-  }
-  .grid-small-full > .grid-cell {
-    @include flex(0, 0, 100%);
-  }
-  .grid-small-1of2 > .grid-cell {
-    @include flex(0, 0, 50%);
-  }
-  .grid-small-1of3 > .grid-cell {
-    @include flex(0, 0, 33.3333%);
-  }
-  .grid-small-1of4 > .grid-cell {
-    @include flex(0, 0, 25%);
-  }
-  .grid-small-1of5 > .grid-cell {
-    @include flex(0, 0, 20%);
-  }
-  .grid-small-1of6 > .grid-cell {
-    @include flex(0, 0, 16.6666%);
-  }
+.grid-5of6 > .grid-cell {
+  @include flex(0, 0, 83.3333%);
 }
 
-/* Large screens */
-@media (min-width: 48em) {
-  .grid-large-fit > .grid-cell {
-    @include flex(1);
-  }
-  .grid-large-full > .grid-cell {
-    @include flex(0, 0, 100%);
-  }
-  .grid-large-1of2 > .grid-cell {
-    @include flex(0, 0, 50%);
-  }
-  .grid-large-1of3 > .grid-cell {
-    @include flex(0, 0, 33.3333%);
-  }
-  .grid-large-1of4 > .grid-cell {
-    @include flex(0, 0, 25%);
-  }
-  .grid-large-1of5 > .grid-cell {
-    @include flex(0, 0, 20%);
-  }
-  .grid-large-1of6 > .grid-cell {
-    @include flex(0, 0, 16.6666%);
-  }
-}
