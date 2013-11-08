@@ -7,9 +7,9 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-touch.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-animate.js"></script>
     <style>
       .reveal-animation {
         /*
@@ -50,12 +50,12 @@
     </style>
 
   </head>
-  <body>
+  <body ng-controller="AppCtrl">
 
     <header class="bar bar-header bar-success">
       <button class="button"><i class="icon ion-home"></i></button>
     </header>
-    <content on-refresh="onRefresh()" on-refresh-opening="onRefreshOpening(amount)" has-header="true" ng-controller="AppCtrl" class="reveal-animation">
+    <content on-refresh="onRefresh()" on-refresh-opening="onRefreshOpening(amount)" has-header="true" class="reveal-animation">
       <refresher>
         <div id="refresh-content">
           <i class="icon ion-ios7-reloading"></i>

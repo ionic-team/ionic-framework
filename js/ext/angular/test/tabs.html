@@ -5,9 +5,9 @@
 
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
-    <script src="/vendor/angular/angular-1.2.0rc2.min.js"></script>
-    <script src="/vendor/angular/angular-touch.js"></script>
-    <script src="/vendor/angular/angular-animate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-touch.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-animate.js"></script>
     <style>
       .fade-out > .ng-enter, 
       .fade-out > .ng-leave, 
@@ -109,7 +109,7 @@
     <script src="../../../../dist/js/ionic.js"></script>
     <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
-      angular.module('tabsTest', ['ionic.ui', 'ionic.service.modal', 'ionic.service.actionSheet'])
+      angular.module('tabsTest', ['ionic'])
 
       .controller('RootCtrl', function($scope) {
         $scope.onControllerChanged = function(oldController, oldIndex, newController, newIndex) {

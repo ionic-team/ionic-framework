@@ -14,13 +14,16 @@ angular.module('ionic.ui.content', [])
 
 // The content directive is a core scrollable content area
 // that is part of many View hierarchies
-.directive('content', function() {
+.directive('content', ['$parse', function($parse) {
   return {
     restrict: 'E',
     replace: true,
     template: '<div class="scroll-content"><div class="scroll"></div></div>',
     transclude: true,
-    scope: true,
+    scope: {
+      onRefresh: '&',
+      onRefreshOpening: '&'
+    },
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
         var c = $element.eq(0);
@@ -39,7 +42,6 @@ angular.module('ionic.ui.content', [])
           c.addClass('has-tabs');
         }
 
-
         // If they want plain overflows scrolling, add that as a class
         if(attr.overflowScroll === "true") {
           c.addClass('overflow-scroll');
@@ -47,23 +49,25 @@ angular.module('ionic.ui.content', [])
           // Otherwise, supercharge this baby!
           var sv = new ionic.views.Scroll({
             el: $element[0].firstElementChild,
+            hasPullToRefresh: (typeof $scope.onRefresh !== 'undefined'),
             onRefresh: function() {
-              $scope.onRefresh && $scope.onRefresh();
+              $scope.onRefresh();
             },
             onRefreshOpening: function(amt) {
-              $scope.onRefreshOpening && $scope.onRefreshOpening({amount: amt});
+              $scope.onRefreshOpening({amount: amt});
             }
           });
           // Let child scopes access this 
           $scope.scrollView = sv;
         }
 
-        var clone = transclude($scope);
+        // Pass the parent scope down to the child
+        var clone = transclude($scope.$parent);
         angular.element($element[0].firstElementChild).append(clone);
       };
     }
   };
-})
+}])
 
 .directive('refresher', function() {
   return {

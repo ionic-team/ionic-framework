@@ -2414,21 +2414,24 @@ window.ionic = {
       // Grab the refresher element if using Pull to Refresh
       if(this.hasPullToRefresh) {
         this._refresher = document.querySelector('.scroll-refresher');
-        this._refresherHeight = parseFloat(this._refresher.firstElementChild.offsetHeight) || 100;
-        // We always start the refresher hidden
-        if(this.y < 0) {
-          this._isRefresherHidden = true;
-          this._refresher.style.display = 'none';
-        } else {
-          this._isRefresherHidden = false;
-          this._didTriggerRefresh = false;
-          this._refresher.style.display = 'block';
-        }
-
-        this._isHoldingRefresh = false;
 
         if(this._refresher) {
-          this._refresher.classList.remove('scroll-refreshing');
+          this._refresherHeight = parseFloat(this._refresher.firstElementChild.offsetHeight) || 100;
+          // We always start the refresher hidden
+          if(this.y < 0) {
+            this._isRefresherHidden = true;
+            this._refresher.style.display = 'none';
+          } else {
+            this._isRefresherHidden = false;
+            this._didTriggerRefresh = false;
+            this._refresher.style.display = 'block';
+          }
+
+          this._isHoldingRefresh = false;
+
+          if(this._refresher) {
+            this._refresher.classList.remove('scroll-refreshing');
+          }
         }
       }
 
