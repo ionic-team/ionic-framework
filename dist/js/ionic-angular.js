@@ -489,7 +489,8 @@ angular.module('ionic.ui.content', [])
     transclude: true,
     scope: {
       onRefresh: '&',
-      onRefreshOpening: '&'
+      onRefreshOpening: '&',
+      scroll: '@'
     },
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
@@ -510,7 +511,9 @@ angular.module('ionic.ui.content', [])
         }
 
         // If they want plain overflows scrolling, add that as a class
-        if(attr.overflowScroll === "true") {
+        if($scope.scroll === "false") {
+          // Do nothing for now
+        } else if(attr.overflowScroll === "true") {
           c.addClass('overflow-scroll');
         } else {
           // Otherwise, supercharge this baby!
@@ -638,7 +641,9 @@ angular.module('ionic.ui.list', ['ngAnimate'])
     scope: {
       isEditing: '=',
       deleteIcon: '@',
-      reorderIcon: '@'
+      reorderIcon: '@',
+      onRefresh: '&',
+      onRefreshOpening: '&'
     },
 
     controller: function($scope) {
@@ -658,7 +663,14 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       return function($scope, $element, $attr) {
         var lv = new ionic.views.ListView({
           el: $element[0],
-          listEl: $element[0].children[0]
+          listEl: $element[0].children[0],
+          hasPullToRefresh: (typeof $scope.onRefresh !== 'undefined'),
+          onRefresh: function() {
+            $scope.onRefresh();
+          },
+          onRefreshOpening: function(amt) {
+            $scope.onRefreshOpening({amount: amt});
+          }
         });
 
         if(attr.animation) {
@@ -667,55 +679,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       };
     }
   };
-})
-
-.directive('virtualList', function() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-
-    scope: {
-      isEditing: '=',
-      deleteIcon: '@',
-      reorderIcon: '@',
-      itemHeight: '@'
-    },
-
-    controller: function($scope, $element) {
-      var _this = this;
-
-      this.scope = $scope;
-
-      this.element = $element;
-
-      var lv = new ionic.views.ListView({
-        el: $element[0],
-        listEl: $element[0].children[0],
-        isVirtual: true,
-        itemHeight: $scope.itemHeight,
-      });
-
-      this.listView = lv;
-
-
-      $scope.$watch('isEditing', function(v) {
-        _this.isEditing = true;
-      });
-    },
-
-    template: '<div class="scroll"><ul class="list" ng-class="{\'list-editing\': isEditing}" ng-transclude>\
-              </ul></div>',
-
-    compile: function(element, attr, transclude) {
-      return function($scope, $element, $attr) {
-        if(attr.animation) {
-          $element.addClass(attr.animation);
-        }
-      };
-    }
-  };
-})
+});
 
 })();
 ;

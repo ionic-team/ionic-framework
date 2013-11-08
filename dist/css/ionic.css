@@ -3553,7 +3553,6 @@ button.item-button-right:after {
  */
 .list {
   position: relative;
-  overflow: hidden;
   margin-bottom: 20px;
   padding-top: 1px;
   padding-bottom: 1px;

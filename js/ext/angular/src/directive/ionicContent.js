@@ -22,7 +22,8 @@ angular.module('ionic.ui.content', [])
     transclude: true,
     scope: {
       onRefresh: '&',
-      onRefreshOpening: '&'
+      onRefreshOpening: '&',
+      scroll: '@'
     },
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
@@ -43,7 +44,9 @@ angular.module('ionic.ui.content', [])
         }
 
         // If they want plain overflows scrolling, add that as a class
-        if(attr.overflowScroll === "true") {
+        if($scope.scroll === "false") {
+          // Do nothing for now
+        } else if(attr.overflowScroll === "true") {
           c.addClass('overflow-scroll');
         } else {
           // Otherwise, supercharge this baby!

@@ -48,7 +48,11 @@
     </style>
   </head>
   <body ng-controller="RootCtrl">
-    <tabs animation="fade-in-out" tabs-type="tabs-icon-only" tabs-style="tabs-primary" controller-changed="onControllerChanged(oldController, oldIndex, newController, newIndex)">
+    <tabs
+          animation="fade-in-out" 
+          tabs-type="tabs-icon-only"
+          tabs-style="tabs-primary"
+          controller-changed="onControllerChanged(oldController, oldIndex, newController, newIndex)">
 
       <tab title="Home" icon-on="icon ion-ios7-filing" icon-off="icon ion-ios7-filing-outline" ng-controller="HomeCtrl">
         <header class="bar bar-header bar-secondary">
@@ -56,8 +60,14 @@
           <h1 class="title">Tasks</h1>
           <button class="button button-clear button-primary" ng-click="isEditingItems = !isEditingItems">Edit</button>
         </header>
-        <content has-header="true" has-tabs="true">
-          <list is-editing="isEditingItems" animation="fade-out" delete-icon="icon ion-minus-circled" reorder-icon="icon ion-navicon">
+        <content has-header="true" has-tabs="true" scroll="false">
+          <list on-refresh="onRefresh()" is-editing="isEditingItems" animation="fade-out" delete-icon="icon ion-minus-circled" reorder-icon="icon ion-navicon">
+            <refresher>
+              <div id="refresh-content">
+                Refreshing
+                <i class="icon ion-ios7-reloading"></i>
+              </div>
+            </refresher>
             <list-item ng-repeat="item in items" 
             item="item"
             buttons="item.buttons"
@@ -145,6 +155,9 @@
           item.isCompleted = true;
         };
 
+        $scope.onRefresh = function() {
+          console.log('ON REFRESH');
+        }
 
         $scope.removeItem = function(item) {
           removeItem(item);
