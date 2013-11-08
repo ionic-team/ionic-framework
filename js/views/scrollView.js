@@ -146,6 +146,21 @@
       });
     },
 
+    // Called by user to tell the scroll view to stop pull to refresh
+    doneRefreshing: function() {
+      var _this = this;
+
+      this._scrollTo(0, 0, this.refreshEasingTime, this.refreshEasing);
+
+      this._isHoldingRefresh = false;
+
+      // Hide the refresher
+      setTimeout(function() {
+        _this._refresher.style.display = 'none';
+        _this._isRefresherHidden = true;
+      }, this.refreshEasingTime);
+    },
+
     /**
      * Scroll to the given X and Y point, taking 
      * the given amount of time, with the given
