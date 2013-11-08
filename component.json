@@ -10,9 +10,6 @@
       "dist/js/ionic-angular.js"
     ],
     "name": "Ionic",
-    "dependencies": {
-      "driftyco/ionicons": "*"
-    },
     "keywords": ["ionic","mobile","html5","hybrid","angularjs"],
     "license": "MIT",
     "description": "An advanced HTML5 mobile development framework"
