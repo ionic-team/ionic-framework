@@ -70,10 +70,11 @@
       color: inherit;
     }
   }
+  @include item-style-active($brand-secondary, $gray-dark, $gray-dark);
 }
 
 // Different themes for list items
-.item-default { @include item-style-active($brand-default, $gray-dark, $gray-dark); }
+.item-default { @include item-style-active($brand-secondary, $gray-dark, $gray-dark); }
 .item-secondary { @include item-style-active($brand-default, $gray-dark, $gray-dark); }
 .item-primary { @include item-style-active($brand-primary, $gray-dark, $white); }
 .item-info { @include item-style-active($brand-info, $gray-dark, $white); }
@@ -217,11 +218,6 @@ a.item {
   left: auto;
 }
 
-a.item:active,
-button.item:active,
-.item.active {
-  background-color: #F7F7F7;
-}
 
 
 // Item Button

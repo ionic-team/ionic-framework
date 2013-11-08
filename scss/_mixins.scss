@@ -68,12 +68,12 @@
 
 //$bgColor, $borderColor, $color, 
 @mixin item-style-active($activeBgColor, $activeBorderColor, $activeColor) {
-  &.active, &:active {
+  &.active {
     color: $activeColor;
     background-color: $activeBgColor;
     border-color: $activeBorderColor;
 
-    .list-item-content {
+    .item-content {
       background-color: $activeBgColor;
       color: $activeColor;
     }

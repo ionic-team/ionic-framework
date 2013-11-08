@@ -3114,68 +3114,75 @@ a.subdued‎ {
     z-index: 2; }
     .item.active .item-heading, .item.active:hover .item-heading, .item.active:focus .item-heading {
       color: inherit; }
+  .item.active {
+    color: #333333;
+    background-color: whitesmoke;
+    border-color: #333333; }
+    .item.active .item-content {
+      background-color: whitesmoke;
+      color: #333333; }
 
-.item-default.active, .item-default:active {
+.item-default.active {
+  color: #333333;
+  background-color: whitesmoke;
+  border-color: #333333; }
+  .item-default.active .item-content {
+    background-color: whitesmoke;
+    color: #333333; }
+
+.item-secondary.active {
   color: #333333;
   background-color: white;
   border-color: #333333; }
-  .item-default.active .list-item-content, .item-default:active .list-item-content {
+  .item-secondary.active .item-content {
     background-color: white;
     color: #333333; }
 
-.item-secondary.active, .item-secondary:active {
-  color: #333333;
-  background-color: white;
-  border-color: #333333; }
-  .item-secondary.active .list-item-content, .item-secondary:active .list-item-content {
-    background-color: white;
-    color: #333333; }
-
-.item-primary.active, .item-primary:active {
+.item-primary.active {
   color: white;
   background-color: #4a87ee;
   border-color: #333333; }
-  .item-primary.active .list-item-content, .item-primary:active .list-item-content {
+  .item-primary.active .item-content {
     background-color: #4a87ee;
     color: white; }
 
-.item-info.active, .item-info:active {
+.item-info.active {
   color: white;
   background-color: #43cee6;
   border-color: #333333; }
-  .item-info.active .list-item-content, .item-info:active .list-item-content {
+  .item-info.active .item-content {
     background-color: #43cee6;
     color: white; }
 
-.item-success.active, .item-success:active {
+.item-success.active {
   color: white;
   background-color: #66cc33;
   border-color: #333333; }
-  .item-success.active .list-item-content, .item-success:active .list-item-content {
+  .item-success.active .item-content {
     background-color: #66cc33;
     color: white; }
 
-.item-warning.active, .item-warning:active {
+.item-warning.active {
   color: white;
   background-color: #f0b840;
   border-color: #333333; }
-  .item-warning.active .list-item-content, .item-warning:active .list-item-content {
+  .item-warning.active .item-content {
     background-color: #f0b840;
     color: white; }
 
-.item-danger.active, .item-danger:active {
+.item-danger.active {
   color: white;
   background-color: #ef4e3a;
   border-color: #333333; }
-  .item-danger.active .list-item-content, .item-danger:active .list-item-content {
+  .item-danger.active .item-content {
     background-color: #ef4e3a;
     color: white; }
 
-.item-dark.active, .item-dark:active {
+.item-dark.active {
   color: white;
   background-color: #444444;
   border-color: #333333; }
-  .item-dark.active .list-item-content, .item-dark:active .list-item-content {
+  .item-dark.active .item-content {
     background-color: #444444;
     color: white; }
 
@@ -3292,11 +3299,6 @@ a.item {
 
 .item-icon-left.item-icon-right .icon:last-child {
   left: auto; }
-
-a.item:active,
-button.item:active,
-.item.active {
-  background-color: #F7F7F7; }
 
 .item-button-left {
   padding-left: 75px; }

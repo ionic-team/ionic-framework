@@ -25,7 +25,6 @@
     this.slideIndex = 0;
     this._updatePager();
 
-
     // Listen for drag and release events
     window.ionic.onGesture('drag', function(e) {
       _this._handleDrag(e);

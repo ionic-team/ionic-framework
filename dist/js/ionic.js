@@ -3066,6 +3066,14 @@ window.ionic = {
       this.onRefresh = opts.onRefresh || function() {};
       this.onRefreshOpening = opts.onRefreshOpening || function() {};
       this.onRefreshHolding = opts.onRefreshHolding || function() {};
+
+      window.ionic.onGesture('touch', function(e) {
+        _this._handleTouch(e);
+      }, this.el);
+
+      window.ionic.onGesture('release', function(e) {
+        _this._handleTouchRelease(e);
+      }, this.el);
         
       // Start the drag states
       this._initDrag();
@@ -3207,6 +3215,13 @@ window.ionic = {
     _handleDrag: function(e) {
       var _this = this, content, buttons;
           
+      // If the user has a touch timeout to highlight an element, clear it if we
+      // get sufficient draggage
+      if(Math.abs(e.gesture.deltaX) > 10 || Math.abs(e.gesture.deltaY) > 10) {
+        clearTimeout(this._touchTimeout);
+      }
+
+      clearTimeout(this._touchTimeout);
       // If we get a drag event, make sure we aren't in another drag, then check if we should
       // start one
       if(!this.isDragging && !this._dragOp) {
@@ -3221,6 +3236,38 @@ window.ionic = {
 
       e.preventDefault();
       this._dragOp.drag(e);
+    },
+
+    /**
+     * Handle the touch event to show the active state on an item if necessary.
+     */
+    _handleTouch: function(e) {
+      var _this = this;
+
+      var item = ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_CLASS);
+      if(!item) { return; }
+
+      this._touchTimeout = setTimeout(function() {
+        var items = _this.el.querySelectorAll('.item');
+        for(var i = 0, l = items.length; i < l; i++) {
+          items[i].classList.remove('active');
+        }
+        item.classList.add('active');
+      }, 250);
+    },
+
+    /**
+     * Handle the release event to remove the active state on an item if necessary.
+     */
+    _handleTouchRelease: function(e) {
+      var _this = this;
+
+      // Cancel touch timeout
+      clearTimeout(this._touchTimeout);
+      var items = _this.el.querySelectorAll('.item');
+      for(var i = 0, l = items.length; i < l; i++) {
+        items[i].classList.remove('active');
+      }
     }
   });
 
@@ -3434,7 +3481,6 @@ window.ionic = {
     // Initialize the slide index to the first page and update the pager
     this.slideIndex = 0;
     this._updatePager();
-
 
     // Listen for drag and release events
     window.ionic.onGesture('drag', function(e) {
