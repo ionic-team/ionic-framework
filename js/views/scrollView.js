@@ -482,7 +482,9 @@
       // Grab the refresher element if using Pull to Refresh
       if(this.hasPullToRefresh) {
         this._refresher = document.querySelector('.scroll-refresher');
-        this._refresher.classList.remove('scroll-refreshing');
+        if(this._refresher) {
+          this._refresher.classList.remove('scroll-refreshing');
+        }
       }
 
       this.x = scrollLeft;
