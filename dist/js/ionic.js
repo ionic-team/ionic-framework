@@ -1744,6 +1744,23 @@ window.ionic = {
   ionic.Platform.detect();
 })(window.ionic);
 ;
+(function(ionic) {
+  'use strict';
+
+  // From the man himself, Mr. Paul Irish.
+  // The requestAnimationFrame polyfill
+  window.rAF = (function(){
+    return  window.requestAnimationFrame       ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame    ||
+            function( callback ){
+              window.setTimeout(callback, 1000 / 60);
+            };
+  })();
+  
+
+})(window.ionic);
+;
 (function(window, document, ionic) {
 
   // polyfill use to simulate native "tap"
@@ -2307,7 +2324,7 @@ window.ionic = {
 
       this.el.style.webkitTransitionDuration = '0';
 
-      window.requestAnimationFrame(function() {
+      window.rAF(function() {
         if(_this.wrapScrollPosition(_this.bounceTime)) {
           _this._didEndScroll = true;
         }
@@ -2422,7 +2439,7 @@ window.ionic = {
         var drag = _this._drag;
 
         // Request an animation frame to batch DOM reads/writes
-        window.requestAnimationFrame(function() {
+        window.rAF(function() {
           // We are dragging, grab the current content height
 
           var totalWidth = _this.el.scrollWidth;
@@ -2527,7 +2544,7 @@ window.ionic = {
     // animate to that position
     _animateToStop: function(e) {
       var _this = this;
-      window.requestAnimationFrame(function() {
+      window.rAF(function() {
 
         var drag = _this._drag;
 
@@ -2774,7 +2791,7 @@ window.ionic = {
   SlideDrag.prototype.drag = function(e) {
     var _this = this, buttonsWidth;
 
-    window.requestAnimationFrame(function() {
+    window.rAF(function() {
       // We really aren't dragging
       if(!_this._currentDrag) {
         return;
@@ -2841,7 +2858,7 @@ window.ionic = {
       e.target.removeEventListener('webkitTransitionEnd', onRestingAnimationEnd);
     };
 
-    window.requestAnimationFrame(function() {
+    window.rAF(function() {
       var currentX = parseFloat(_this._currentDrag.content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
       if(currentX !== restingPoint) {
         _this._currentDrag.content.classList.add(ITEM_SLIDING_CLASS);
@@ -2890,7 +2907,7 @@ window.ionic = {
   ReorderDrag.prototype.drag = function(e) {
     var _this = this;
 
-    window.requestAnimationFrame(function() {
+    window.rAF(function() {
       // We really aren't dragging
       if(!_this._currentDrag) {
         return;
@@ -3165,18 +3182,16 @@ window.ionic = {
       var _this = this;
 
       if(this._loadingBox) {
-        //window.requestAnimationFrame(function() {
-          var lb = _this._loadingBox;
+        var lb = _this._loadingBox;
 
-          var width = Math.min(_this.maxWidth, Math.max(window.outerWidth - 40, lb.offsetWidth));
+        var width = Math.min(_this.maxWidth, Math.max(window.outerWidth - 40, lb.offsetWidth));
 
-          lb.style.width = width;
+        lb.style.width = width;
 
-          lb.style.marginLeft = (-lb.offsetWidth) / 2 + 'px';
-          lb.style.marginTop = (-lb.offsetHeight) / 2 + 'px';
+        lb.style.marginLeft = (-lb.offsetWidth) / 2 + 'px';
+        lb.style.marginTop = (-lb.offsetHeight) / 2 + 'px';
 
-          _this.el.classList.add('active');
-        //});
+        _this.el.classList.add('active');
       }
     },
     hide: function() {
@@ -3285,7 +3300,7 @@ window.ionic = {
     alert: function(message) {
       var _this = this;
 
-      window.requestAnimationFrame(function() {
+      window.rAF(function() {
         _this.setTitle(message);
         _this.el.classList.add('active');
       });
@@ -3520,7 +3535,7 @@ window.ionic = {
       var _this = this,
           finalOffsetX, content, ratio, slideWidth, totalWidth, offsetX;
 
-      window.requestAnimationFrame(function() {
+      window.rAF(function() {
       
         // We didn't have a drag, so just init and leave
         if(!_this._drag) {
@@ -3613,7 +3628,7 @@ window.ionic = {
     _handleDrag: function(e) {
       var _this = this;
 
-      window.requestAnimationFrame(function() {
+      window.rAF(function() {
         var content;
 
         // We really aren't dragging

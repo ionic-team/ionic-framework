@@ -21,18 +21,16 @@
       var _this = this;
 
       if(this._loadingBox) {
-        //window.requestAnimationFrame(function() {
-          var lb = _this._loadingBox;
+        var lb = _this._loadingBox;
 
-          var width = Math.min(_this.maxWidth, Math.max(window.outerWidth - 40, lb.offsetWidth));
+        var width = Math.min(_this.maxWidth, Math.max(window.outerWidth - 40, lb.offsetWidth));
 
-          lb.style.width = width;
+        lb.style.width = width;
 
-          lb.style.marginLeft = (-lb.offsetWidth) / 2 + 'px';
-          lb.style.marginTop = (-lb.offsetHeight) / 2 + 'px';
+        lb.style.marginLeft = (-lb.offsetWidth) / 2 + 'px';
+        lb.style.marginTop = (-lb.offsetHeight) / 2 + 'px';
 
-          _this.el.classList.add('active');
-        //});
+        _this.el.classList.add('active');
       }
     },
     hide: function() {

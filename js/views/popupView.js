@@ -22,7 +22,7 @@
     alert: function(message) {
       var _this = this;
 
-      window.requestAnimationFrame(function() {
+      window.rAF(function() {
         _this.setTitle(message);
         _this.el.classList.add('active');
       });

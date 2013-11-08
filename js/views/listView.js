@@ -65,7 +65,7 @@
   SlideDrag.prototype.drag = function(e) {
     var _this = this, buttonsWidth;
 
-    window.requestAnimationFrame(function() {
+    window.rAF(function() {
       // We really aren't dragging
       if(!_this._currentDrag) {
         return;
@@ -132,7 +132,7 @@
       e.target.removeEventListener('webkitTransitionEnd', onRestingAnimationEnd);
     };
 
-    window.requestAnimationFrame(function() {
+    window.rAF(function() {
       var currentX = parseFloat(_this._currentDrag.content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
       if(currentX !== restingPoint) {
         _this._currentDrag.content.classList.add(ITEM_SLIDING_CLASS);
@@ -181,7 +181,7 @@
   ReorderDrag.prototype.drag = function(e) {
     var _this = this;
 
-    window.requestAnimationFrame(function() {
+    window.rAF(function() {
       // We really aren't dragging
       if(!_this._currentDrag) {
         return;

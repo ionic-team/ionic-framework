@@ -430,7 +430,7 @@
 
       this.el.style.webkitTransitionDuration = '0';
 
-      window.requestAnimationFrame(function() {
+      window.rAF(function() {
         if(_this.wrapScrollPosition(_this.bounceTime)) {
           _this._didEndScroll = true;
         }
@@ -545,7 +545,7 @@
         var drag = _this._drag;
 
         // Request an animation frame to batch DOM reads/writes
-        window.requestAnimationFrame(function() {
+        window.rAF(function() {
           // We are dragging, grab the current content height
 
           var totalWidth = _this.el.scrollWidth;
@@ -650,7 +650,7 @@
     // animate to that position
     _animateToStop: function(e) {
       var _this = this;
-      window.requestAnimationFrame(function() {
+      window.rAF(function() {
 
         var drag = _this._drag;
 

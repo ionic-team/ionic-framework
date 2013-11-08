@@ -192,7 +192,7 @@
       var _this = this,
           finalOffsetX, content, ratio, slideWidth, totalWidth, offsetX;
 
-      window.requestAnimationFrame(function() {
+      window.rAF(function() {
       
         // We didn't have a drag, so just init and leave
         if(!_this._drag) {
@@ -285,7 +285,7 @@
     _handleDrag: function(e) {
       var _this = this;
 
-      window.requestAnimationFrame(function() {
+      window.rAF(function() {
         var content;
 
         // We really aren't dragging
