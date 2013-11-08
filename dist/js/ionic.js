@@ -2419,6 +2419,7 @@ window.ionic = {
           this._refresher.style.display = 'none';
         } else {
           this._isRefresherHidden = false;
+          this._didTriggerRefresh = false;
           this._refresher.style.display = 'block';
         }
 
@@ -2627,12 +2628,14 @@ window.ionic = {
             _this._refresher.classList.add('scroll-refreshing');
             //_this._refresher.style.height = firstChildHeight + 'px';
             _this._scrollTo(0, _this._refresherHeight, 100, _this.refreshEasing);
-            _this.onRefresh && _this.onRefresh();
+            if(!_this._didTriggerRefresh) {
+              _this.onRefresh && _this.onRefresh();
+              _this._didTriggerRefresh = true;
+            }
           } else {
             _this._refresher.classList.add('scroll-refreshing');
             //_this._refresher.style.height = 0 + 'px';
             _this._scrollTo(0, 0, _this.refreshEasingTime, _this.refreshEasing);
-            _this.onRefresh && _this.onRefresh();
           }
           return;
         }

@@ -118,6 +118,7 @@ body, .ionic-body {
   height: 100%;
   width: 100%;
   text-align: center;
+  position: relative;
   //@include display-flex();
   //@include align-items(center);
 }

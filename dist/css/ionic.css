@@ -2324,7 +2324,8 @@ body, .ionic-body {
 .scroll-refresher-content {
   height: 100%;
   width: 100%;
-  text-align: center; }
+  text-align: center;
+  position: relative; }
 
 .scroll-refreshing {
   -webkit-transition: height 0.1s ease-in-out; }
