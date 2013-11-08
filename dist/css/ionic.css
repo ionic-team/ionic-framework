@@ -4,6 +4,51 @@
  * --------------------------------------------------
  * Useful utilities and mixins for SCSS files.
  */
+.brand-default {
+  color: white; }
+
+.brand-secondary {
+  color: whitesmoke; }
+
+.brand-primary {
+  color: #4a87ee; }
+
+.brand-info {
+  color: #43cee6; }
+
+.brand-success {
+  color: #66cc33; }
+
+.brand-warning {
+  color: #f0b840; }
+
+.brand-danger {
+  color: #ef4e3a; }
+
+.brand-dark {
+  color: #444444; }
+
+.black {
+  color: black; }
+
+.gray-darker {
+  color: #222222; }
+
+.gray-dark {
+  color: #333333; }
+
+.gray {
+  color: #555555; }
+
+.gray-light {
+  color: #999999; }
+
+.gray-lighter {
+  color: #eeeeee; }
+
+.white {
+  color: white; }
+
 @font-face {
   font-family: "Ionicons";
   src: url("../fonts/ionicons.eot?v=1.3.0");
@@ -4728,7 +4773,9 @@ a.button {
   -ms-flex: 0 0 100%;
   flex: 0 0 100%; }
 
-.grid-1of2 > .grid-cell {
+.grid-1of2 > .grid-cell,
+.grid-2of4 > .grid-cell,
+.grid-3of6 > .grid-cell {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 50%;
   -moz-box-flex: 0;
@@ -4736,13 +4783,23 @@ a.button {
   -ms-flex: 0 0 50%;
   flex: 0 0 50%; }
 
-.grid-1of3 > .grid-cell {
+.grid-1of3 > .grid-cell,
+.grid-2of6 > .grid-cell {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 33.3333%;
   -moz-box-flex: 0;
   -moz-flex: 0 0 33.3333%;
   -ms-flex: 0 0 33.3333%;
   flex: 0 0 33.3333%; }
+
+.grid-2of3 > .grid-cell,
+.grid-4of6 > .grid-cell {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 66.6666%;
+  -moz-box-flex: 0;
+  -moz-flex: 0 0 66.6666%;
+  -ms-flex: 0 0 66.6666%;
+  flex: 0 0 66.6666%; }
 
 .grid-1of4 > .grid-cell {
   -webkit-box-flex: 0;
@@ -4752,6 +4809,14 @@ a.button {
   -ms-flex: 0 0 25%;
   flex: 0 0 25%; }
 
+.grid-3of4 > .grid-cell {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 75%;
+  -moz-box-flex: 0;
+  -moz-flex: 0 0 75%;
+  -ms-flex: 0 0 75%;
+  flex: 0 0 75%; }
+
 .grid-1of5 > .grid-cell {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 20%;
@@ -4759,6 +4824,30 @@ a.button {
   -moz-flex: 0 0 20%;
   -ms-flex: 0 0 20%;
   flex: 0 0 20%; }
+
+.grid-2of5 > .grid-cell {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 40%;
+  -moz-box-flex: 0;
+  -moz-flex: 0 0 40%;
+  -ms-flex: 0 0 40%;
+  flex: 0 0 40%; }
+
+.grid-3of5 > .grid-cell {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 60%;
+  -moz-box-flex: 0;
+  -moz-flex: 0 0 60%;
+  -ms-flex: 0 0 60%;
+  flex: 0 0 60%; }
+
+.grid-4of5 > .grid-cell {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 80%;
+  -moz-box-flex: 0;
+  -moz-flex: 0 0 80%;
+  -ms-flex: 0 0 80%;
+  flex: 0 0 80%; }
 
 .grid-1of6 > .grid-cell {
   -webkit-box-flex: 0;
@@ -4768,120 +4857,14 @@ a.button {
   -ms-flex: 0 0 16.6666%;
   flex: 0 0 16.6666%; }
 
-/* Small to medium screens */
-@media (min-width: 24em) {
-  .grid-small-fit > .grid-cell {
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -moz-box-flex: 1;
-    -moz-flex: 1;
-    -ms-flex: 1;
-    flex: 1; }
+.grid-5of6 > .grid-cell {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 83.3333%;
+  -moz-box-flex: 0;
+  -moz-flex: 0 0 83.3333%;
+  -ms-flex: 0 0 83.3333%;
+  flex: 0 0 83.3333%; }
 
-  .grid-small-full > .grid-cell {
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 100%;
-    -moz-box-flex: 0;
-    -moz-flex: 0 0 100%;
-    -ms-flex: 0 0 100%;
-    flex: 0 0 100%; }
-
-  .grid-small-1of2 > .grid-cell {
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 50%;
-    -moz-box-flex: 0;
-    -moz-flex: 0 0 50%;
-    -ms-flex: 0 0 50%;
-    flex: 0 0 50%; }
-
-  .grid-small-1of3 > .grid-cell {
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 33.3333%;
-    -moz-box-flex: 0;
-    -moz-flex: 0 0 33.3333%;
-    -ms-flex: 0 0 33.3333%;
-    flex: 0 0 33.3333%; }
-
-  .grid-small-1of4 > .grid-cell {
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 25%;
-    -moz-box-flex: 0;
-    -moz-flex: 0 0 25%;
-    -ms-flex: 0 0 25%;
-    flex: 0 0 25%; }
-
-  .grid-small-1of5 > .grid-cell {
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 20%;
-    -moz-box-flex: 0;
-    -moz-flex: 0 0 20%;
-    -ms-flex: 0 0 20%;
-    flex: 0 0 20%; }
-
-  .grid-small-1of6 > .grid-cell {
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 16.6666%;
-    -moz-box-flex: 0;
-    -moz-flex: 0 0 16.6666%;
-    -ms-flex: 0 0 16.6666%;
-    flex: 0 0 16.6666%; } }
-/* Large screens */
-@media (min-width: 48em) {
-  .grid-large-fit > .grid-cell {
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -moz-box-flex: 1;
-    -moz-flex: 1;
-    -ms-flex: 1;
-    flex: 1; }
-
-  .grid-large-full > .grid-cell {
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 100%;
-    -moz-box-flex: 0;
-    -moz-flex: 0 0 100%;
-    -ms-flex: 0 0 100%;
-    flex: 0 0 100%; }
-
-  .grid-large-1of2 > .grid-cell {
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 50%;
-    -moz-box-flex: 0;
-    -moz-flex: 0 0 50%;
-    -ms-flex: 0 0 50%;
-    flex: 0 0 50%; }
-
-  .grid-large-1of3 > .grid-cell {
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 33.3333%;
-    -moz-box-flex: 0;
-    -moz-flex: 0 0 33.3333%;
-    -ms-flex: 0 0 33.3333%;
-    flex: 0 0 33.3333%; }
-
-  .grid-large-1of4 > .grid-cell {
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 25%;
-    -moz-box-flex: 0;
-    -moz-flex: 0 0 25%;
-    -ms-flex: 0 0 25%;
-    flex: 0 0 25%; }
-
-  .grid-large-1of5 > .grid-cell {
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 20%;
-    -moz-box-flex: 0;
-    -moz-flex: 0 0 20%;
-    -ms-flex: 0 0 20%;
-    flex: 0 0 20%; }
-
-  .grid-large-1of6 > .grid-cell {
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 16.6666%;
-    -moz-box-flex: 0;
-    -moz-flex: 0 0 16.6666%;
-    -ms-flex: 0 0 16.6666%;
-    flex: 0 0 16.6666%; } }
 /**
  * Icons
  * --------------------------------------------------
@@ -5007,51 +4990,6 @@ a.button {
 
 .rounded {
   border-radius: 4px; }
-
-.brand-default {
-  color: white; }
-
-.brand-secondary {
-  color: whitesmoke; }
-
-.brand-primary {
-  color: #4a87ee; }
-
-.brand-info {
-  color: #43cee6; }
-
-.brand-success {
-  color: #66cc33; }
-
-.brand-warning {
-  color: #f0b840; }
-
-.brand-danger {
-  color: #ef4e3a; }
-
-.brand-dark {
-  color: #444444; }
-
-.black {
-  color: black; }
-
-.gray-darker {
-  color: #222222; }
-
-.gray-dark {
-  color: #333333; }
-
-.gray {
-  color: #555555; }
-
-.gray-light {
-  color: #999999; }
-
-.gray-lighter {
-  color: #eeeeee; }
-
-.white {
-  color: white; }
 
 /**
  * Platform
