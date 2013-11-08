@@ -486,6 +486,9 @@
       if(this.hasPullToRefresh) {
         this._refresher = document.querySelector('.scroll-refresher');
         this._refresherHeight = parseFloat(this._refresher.firstElementChild.offsetHeight) || 100;
+        // We always start the refresher hidden
+        this._isRefresherHidden = true;
+
         if(this._refresher) {
           this._refresher.classList.remove('scroll-refreshing');
         }
@@ -585,10 +588,15 @@
           if(_this._refresher && newY > 0) {
             // We are pulling to refresh, so update the refresher
             //_this._refresher.style[ionic.CSS.TRANSFORM] = 'translate3d(0, ' + newY + 'px, 0)';
+            if(_this._isRefresherHidden) {
+              // Show it only in a drag and if we haven't showed it yet
+              _this._refresher.style.display = 'block';
+              _this._isRefresherHidden = false;
+            }
+
             if(newY > _this._refresherHeight && !_this._isHoldingRefresh) {
               _this._isHoldingRefresh = true;
               // Trigger refresh holding event here
-
             } else {
               // Trigger refresh open amount
               var ratio = Math.min(1, newY / _this._refresherHeight);

@@ -2289,6 +2289,7 @@ body, .ionic-body {
   text-size-adjust: none; }
 
 .scroll-refresher {
+  display: none;
   overflow: hidden;
   height: 100px;
   margin-top: -100px; }

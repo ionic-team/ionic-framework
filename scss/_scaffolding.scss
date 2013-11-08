@@ -109,6 +109,7 @@ body, .ionic-body {
 
 // Scroll refresher (for pull to refresh)
 .scroll-refresher {
+  display: none;
   overflow: hidden;
   height: 100px;
   margin-top: -100px;
