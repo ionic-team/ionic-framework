@@ -2290,8 +2290,8 @@ body, .ionic-body {
 
 .scroll-refresher {
   overflow: hidden;
-  height: 0;
-  background-color: white; }
+  height: 100px;
+  margin-top: -100px; }
 
 .scroll-refreshing {
   -webkit-transition: height 0.1s ease-in-out; }

@@ -1757,7 +1757,22 @@ window.ionic = {
               window.setTimeout(callback, 1000 / 60);
             };
   })();
+
+  // Ionic CSS polyfills
+  ionic.CSS = {};
   
+  (function() {
+    var d = document.createElement('div');
+    var keys = ['webkitTransform', 'transform', '-webkit-transform', 'webkit-transform',
+                '-moz-transform', 'moz-transform', 'MozTransform', 'mozTransform'];
+
+    for(var i = 0; i < keys.length; i++) {
+      if(d.style[keys[i]] !== undefined) {
+        ionic.CSS.TRANSFORM = keys[i];
+        break;
+      }
+    }
+  })();
 
 })(window.ionic);
 ;
@@ -1980,6 +1995,9 @@ window.ionic = {
         onRefreshOpening: function() {},
         // Called when let go and is refreshing
         onRefresh: function() {},
+        refreshEasing: EASING_FUNCTIONS.bounce,
+        // ms transition time
+        refreshEasingTime: 400,
 
         // How frequently to fire scroll events in the case of 
         // a flick or momentum scroll where the finger is no longer
@@ -2087,17 +2105,13 @@ window.ionic = {
         time = 0;
       }
 
-      if(time == Infinity) {
-        debugger;
-      }
-
       var dx = ox - x;
       var dy = oy - y;
 
       el.offsetHeight;
       el.style.webkitTransitionTimingFunction = easing;
       el.style.webkitTransitionDuration = time;
-      el.style.webkitTransform = 'translate3d(' + x + 'px,' + y + 'px, 0)';
+      el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + x + 'px,' + y + 'px, 0)';
 
       // Stop any other momentum event callbacks
       clearTimeout(this._momentumStepTimeout);
@@ -2311,6 +2325,10 @@ window.ionic = {
         return;
       }
 
+      if(this._isHoldingRefresh) {
+        return;
+      }
+
       var needsWrapping = this.needsWrapping();
 
       // Triggered to end scroll, once the final animation has ended
@@ -2376,6 +2394,7 @@ window.ionic = {
       // Grab the refresher element if using Pull to Refresh
       if(this.hasPullToRefresh) {
         this._refresher = document.querySelector('.scroll-refresher');
+        this._refresherHeight = parseFloat(this._refresher.firstElementChild.offsetHeight) || 100;
         if(this._refresher) {
           this._refresher.classList.remove('scroll-refreshing');
         }
@@ -2461,10 +2480,7 @@ window.ionic = {
           var newY = _this.y + deltaY;
 
           // Check if the dragging is beyond the bottom or top
-          if(newY > 0) {
-            newY = _this.y + deltaY / _this.rubberBandResistance;
-          } else if ((-newY + parentHeight) > totalHeight) {
-            // Rubber band
+          if(newY > 0 || (-newY + parentHeight) > totalHeight) {
             newY = _this.y + deltaY / _this.rubberBandResistance;
           }
 
@@ -2477,19 +2493,19 @@ window.ionic = {
 
           if(_this._refresher && newY > 0) {
             // We are pulling to refresh, so update the refresher
-            _this._refresher.style.height = newY + 'px';
-
-            var firstChildHeight = parseFloat(_this._refresher.firstElementChild.offsetHeight);
-            if(newY > firstChildHeight && !_this._isHoldingRefresh) {
+            //_this._refresher.style[ionic.CSS.TRANSFORM] = 'translate3d(0, ' + newY + 'px, 0)';
+            if(newY > _this._refresherHeight && !_this._isHoldingRefresh) {
               _this._isHoldingRefresh = true;
               // Trigger refresh holding event here
+
             } else {
               // Trigger refresh open amount
-              var ratio = Math.min(1, newY / firstChildHeight);
+              var ratio = Math.min(1, newY / _this._refresherHeight);
+              _this.onRefreshOpening && _this.onRefreshOpening(ratio);
             }
 
             // Update the new translated Y point of the container
-            _this.el.style.webkitTransform = 'translate3d(' + newX + 'px,0, 0)';
+            _this.el.style.webkitTransform = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
           } else {
             // Update the new translated Y point of the container
             _this.el.style.webkitTransform = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
@@ -2566,15 +2582,17 @@ window.ionic = {
 
         if(_this._refresher && _this.y > 0) {
           // Pull to refresh
-          var firstChildHeight = parseFloat(_this._refresher.firstElementChild.offsetHeight);
-          if(Math.ceil(_this.y) >= firstChildHeight) {
+
+          if(Math.ceil(_this.y) >= _this._refresherHeight) {
             // REFRESH
             _this._refresher.classList.add('scroll-refreshing');
-            _this._refresher.style.height = firstChildHeight + 'px';
+            //_this._refresher.style.height = firstChildHeight + 'px';
+            _this._scrollTo(0, _this._refresherHeight, 100, _this.refreshEasing);
             _this.onRefresh && _this.onRefresh();
           } else {
             _this._refresher.classList.add('scroll-refreshing');
-            _this._refresher.style.height = 0 + 'px';
+            //_this._refresher.style.height = 0 + 'px';
+            _this._scrollTo(0, 0, _this.refreshEasingTime, _this.refreshEasing);
             _this.onRefresh && _this.onRefresh();
           }
           return;
