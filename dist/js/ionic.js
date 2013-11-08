@@ -1836,6 +1836,33 @@ window.ionic = {
 (function(ionic) {
   
   ionic.Utils = {
+    throttle: function(func, wait, options) {
+      var context, args, result;
+      var timeout = null;
+      var previous = 0;
+      options || (options = {});
+      var later = function() {
+        previous = options.leading === false ? 0 : Date.now();
+        timeout = null;
+        result = func.apply(context, args);
+      };
+      return function() {
+        var now = Date.now();
+        if (!previous && options.leading === false) previous = now;
+        var remaining = wait - (now - previous);
+        context = this;
+        args = arguments;
+        if (remaining <= 0) {
+          clearTimeout(timeout);
+          timeout = null;
+          previous = now;
+          result = func.apply(context, args);
+        } else if (!timeout && options.trailing !== false) {
+          timeout = setTimeout(later, remaining);
+        }
+        return result;
+      };
+    },
      // Borrowed from Backbone.js's extend
      // Helper function to correctly set up the prototype chain, for subclasses.
      // Similar to `goog.inherits`, but uses a hash of prototype properties and
@@ -1890,6 +1917,7 @@ window.ionic = {
 
   ionic.inherit = ionic.Utils.inherit;
   ionic.extend = ionic.Utils.extend;
+  ionic.throttle = ionic.Utils.throttle;
 
 })(window.ionic);
 ;
@@ -1938,40 +1966,6 @@ window.ionic = {
     toiletSeat: 'cubic-bezier(0.05, 0.60, 0.05, 0.60)'
   };
 
-  /**
-   * The Pull To Refresh drag operation handles the well-known
-   * "pull to refresh" concept seen on various apps. This lets
-   * the user indicate they want to refresh a given list by dragging
-   * down.
-   *
-   * @param {object} opts the options for the pull to refresh drag.
-   */
-  /*
-  var PullToRefreshDrag = function(opts) {
-    this.dragThresholdY = opts.dragThresholdY || 10;
-    this.onRefreshOpening = opts.onRefreshOpening || function() {};
-    this.onRefresh = opts.onRefresh || function() {};
-    this.onRefreshHolding = opts.onRefreshHolding || function() {};
-    this.el = opts.el;
-  };
-
-  PullToRefreshDrag.prototype.end = function(e, doneCallback) {
-
-    if(currentHeight > firstChildHeight) {
-      //this.refreshing();
-    } else {
-      // Enable animations
-      refresher.classList.add('list-refreshing');
-      refresher.style.height = '0px';
-      this.onRefresh && _this.onRefresh();
-    }
-
-    this._currentDrag = null;
-    doneCallback && doneCallback();
-  };
-  */
-
-
   ionic.views.Scroll = ionic.views.View.inherit({
 
     initialize: function(opts) {
@@ -1998,6 +1992,7 @@ window.ionic = {
         refreshEasing: EASING_FUNCTIONS.bounce,
         // ms transition time
         refreshEasingTime: 400,
+        refreshOpeningInterval: 100,
 
         // How frequently to fire scroll events in the case of 
         // a flick or momentum scroll where the finger is no longer
@@ -2033,6 +2028,13 @@ window.ionic = {
 
       this.y = 0;
       this.x = 0;
+
+      // Create a throttled pull to refresh "opening" function
+      // which will get called as the refresh "opens" from drag
+      var refreshOpening = _this.onRefreshOpening;
+      _this.onRefreshOpening = ionic.throttle(function(ratio) {
+        refreshOpening && refreshOpening(ratio);
+      }, 100);
 
       // Listen for drag and release events
       ionic.onGesture('drag', function(e) {
@@ -2533,7 +2535,7 @@ window.ionic = {
             } else {
               // Trigger refresh open amount
               var ratio = Math.min(1, newY / _this._refresherHeight);
-              _this.onRefreshOpening && _this.onRefreshOpening(ratio);
+              _this.onRefreshOpening(ratio);
             }
 
             // Update the new translated Y point of the container

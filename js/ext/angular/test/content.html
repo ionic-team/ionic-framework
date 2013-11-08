@@ -55,7 +55,7 @@
     <header class="bar bar-header bar-success">
       <button class="button"><i class="icon ion-home"></i></button>
     </header>
-    <content on-refresh="onRefresh()" has-header="true" ng-controller="AppCtrl" class="reveal-animation">
+    <content on-refresh="onRefresh()" on-refresh-opening="onRefreshOpening(amount)" has-header="true" ng-controller="AppCtrl" class="reveal-animation">
       <refresher>
         <div id="refresh-content">
           <i class="icon ion-ios7-reloading"></i>
@@ -80,6 +80,9 @@
         $scope.what = {};
         $scope.onRefresh = function() {
           console.log('On refresh');
+        }
+        $scope.onRefreshOpening = function(amt) {
+          console.log('On refresh opening', amt);
         }
       })
     </script>

@@ -49,6 +49,9 @@ angular.module('ionic.ui.content', [])
             el: $element[0].firstElementChild,
             onRefresh: function() {
               $scope.onRefresh && $scope.onRefresh();
+            },
+            onRefreshOpening: function(amt) {
+              $scope.onRefreshOpening && $scope.onRefreshOpening({amount: amt});
             }
           });
           // Let child scopes access this 
