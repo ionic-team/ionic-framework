@@ -5,15 +5,16 @@
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-touch.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-animate.js"></script>
   </head>
   <body>
-    <content has-header="true" ng-controller="ModalCtrl">
-      <button class="button button-primary" ng-click="openModal()">Open</button>
+    <content has-header="true">
+      <div ng-controller="ModalCtrl">
+        <button class="button button-primary" ng-click="openModal()">Open</button>
+      </div>
     </content>
 
     <script id="modal.html" type="text/ng-template">

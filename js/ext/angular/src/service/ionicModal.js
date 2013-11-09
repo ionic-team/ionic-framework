@@ -5,7 +5,7 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad'])
   var ModalView = ionic.views.Modal.inherit({
     initialize: function(opts) {
       ionic.views.Modal.prototype.initialize.call(this, opts);
-      this.animation = opts.animation;
+      this.animation = opts.animation || 'slide-in-up';
     },
     // Show the modal
     show: function() {
@@ -30,6 +30,25 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad'])
     }
   });
 
+  var createModal = function(templateString, options) {
+    // Create a new scope for the modal
+    var scope = options.scope && options.scope.$new() || $rootScope.$new(true);
+
+    // Compile the template
+    var element = $compile(templateString)(scope);
+
+    options.el = element[0];
+    var modal = new ModalView(options);
+
+    // If this wasn't a defined scope, we can assign 'modal' to the isolated scope
+    // we created
+    if(!options.scope) {
+      scope.modal = modal;
+    }
+
+    return modal;
+  };
+
   return {
     /**
      * Load a modal with the given template string.
@@ -38,30 +57,12 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad'])
      * modal and the new element will be appended into the body.
      */
     fromTemplate: function(templateString, options) {
-      options = options || {};
-      // Create a new scope for the modal
-      var scope = options.scope && options.scope.$new() || $rootScope.$new(true);
-
-      // Compile the template
-      var element = $compile(templateString)(scope);
-
-      options.el = element[0];
-      var modal = new ModalView(options);
+      var modal = createModal(templateString, options || {});
       return modal;
     },
     fromTemplateUrl: function(url, cb, options) {
       TemplateLoader.load(url).then(function(templateString) {
-        options = options || {};
-
-        // Create a new scope for the modal
-        var scope = options.scope && options.scope.$new() || $rootScope.$new(true);
-
-        // Compile the template
-        var element = $compile(templateString)(scope);
-
-        options.el = element[0];
-        var modal = new ModalView(options);
-
+        var modal = createModal(templateString, options || {});
         cb(modal);
       });
     },
