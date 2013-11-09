@@ -2639,7 +2639,7 @@ a.subdued‎ {
     line-height: 44px; }
   .bar .title a {
     color: inherit; }
-  .bar > .button {
+  .bar .button {
     z-index: 1;
     padding: 0 8px;
     height: 32px;
@@ -2647,10 +2647,10 @@ a.subdued‎ {
     min-height: 31px;
     font-size: 12px;
     line-height: 29px; }
-    .bar > .button .icon {
+    .bar .button .icon {
       font-size: 24px;
       line-height: 29px; }
-  .bar .button-bar > .button {
+  .bar .button-bar > .button, .bar .buttons > .button {
     height: 32px;
     min-height: 31px;
     line-height: 30px; }
