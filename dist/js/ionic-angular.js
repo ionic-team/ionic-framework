@@ -1070,12 +1070,11 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
     require: '^sideMenu',
     replace: true,
     transclude: true,
-    scope: {
-      side: '@'
-    },
+    scope: true,
     template: '<div class="menu menu-{{side}}"></div>',
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, sideMenuCtrl) {
+        $scope.side = $attr.side;
 
         if($scope.side == 'left') {
           sideMenuCtrl.left.isEnabled = true;
