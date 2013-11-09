@@ -2091,7 +2091,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid silver; }
+  border: 1px solid #c0c0c0; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -3974,7 +3974,7 @@ input[type="file"] {
   line-height: 34px; }
 
 select {
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   background-color: white; }
 
 select[multiple],
@@ -4033,7 +4033,7 @@ input[type="checkbox"][readonly] {
     border-radius: 50%;
     background: white;
     content: ' ';
-    transition: background-color 0.1s ease-in-out; }
+    transition: background-color .1s ease-in-out; }
 
 /* the checkmark within the box */
 .checkbox input:after {
@@ -4048,7 +4048,7 @@ input[type="checkbox"][readonly] {
   border-right: 0;
   content: ' ';
   opacity: 0;
-  transition: opacity 0.05s ease-in-out;
+  transition: opacity .05s ease-in-out;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg); }
 
@@ -4477,7 +4477,7 @@ input[type="range"] {
   .button-icon:active, .button-icon.active {
     background: none;
     box-shadow: none;
-    text-shadow: 0px 0px 10px white; }
+    text-shadow: 0px 0px 10px #fff; }
 
 .padding > .button.block:first-child {
   margin-top: 0; }
@@ -4727,178 +4727,171 @@ a.button {
  * --------------------------------------------------
  * Using flexbox for the grid, inspired by Philip Walton:
  * http://philipwalton.github.io/solved-by-flexbox/demos/grids/
+ * By default each .col within a .row will evenly take up
+ * available width, and the height of each .col with take
+ * up the height of the tallest .col in the same .row.
  */
-.grid {
+.row {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flexbox;
-  display: flex; }
+  display: flex;
+  padding: 5px; }
 
-.grid-cell {
+.row + .row {
+  margin-top: -5px;
+  padding-top: 0; }
+
+.col {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   -moz-box-flex: 1;
   -moz-flex: 1;
   -ms-flex: 1;
-  flex: 1; }
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 5px; }
 
-/* With gutters */
-.grid-gutters {
-  margin-left: -1em; }
-
-.grid-gutters > .grid-cell {
-  padding-left: 1em; }
-
-/* Alignment per row */
-.grid-top {
+/* Vertically Align Columns */
+/* .row-* vertically aligns every .col in the .row */
+.row-top {
   -webkit-box-align: start;
   -ms-flex-align: start;
   -webkit-align-items: flex-start;
   -moz-align-items: flex-start;
   align-items: flex-start; }
 
-.grid-bottom {
+.row-bottom {
   -webkit-box-align: end;
   -ms-flex-align: end;
   -webkit-align-items: flex-end;
   -moz-align-items: flex-end;
   align-items: flex-end; }
 
-.grid-center {
+.row-middle {
   -webkit-box-align: center;
   -ms-flex-align: center;
   -webkit-align-items: center;
   -moz-align-items: center;
   align-items: center; }
 
-/* Alignment per cell */
-.grid-cell-top {
+/* .col-* vertically aligns an individual .col */
+.col-top {
   -webkit-align-self: flex-start;
   -moz-align-self: flex-start;
   -ms-flex-item-align: start;
   align-self: flex-start; }
 
-.grid-cell-bottom {
+.col-bottom {
   -webkit-align-self: flex-end;
   -moz-align-self: flex-end;
   -ms-flex-item-align: end;
   align-self: flex-end; }
 
-.grid-cell-center {
+.col-middle {
   -webkit-align-self: center;
   -moz-align-self: center;
   -ms-flex-item-align: center;
   align-self: center; }
 
-/* Base classes for all media */
-.grid-fit > .grid-cell {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -moz-box-flex: 1;
-  -moz-flex: 1;
-  -ms-flex: 1;
-  flex: 1; }
+/* Horizontally Align Columns */
+.col-center {
+  margin-left: auto;
+  margin-right: auto; }
 
-.grid-full > .grid-cell {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 100%;
-  -moz-box-flex: 0;
-  -moz-flex: 0 0 100%;
-  -ms-flex: 0 0 100%;
-  flex: 0 0 100%; }
+/* Column Offsets */
+.col-offset-20 {
+  margin-left: 20%; }
 
-.grid-1of2 > .grid-cell,
-.grid-2of4 > .grid-cell,
-.grid-3of6 > .grid-cell {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 50%;
-  -moz-box-flex: 0;
-  -moz-flex: 0 0 50%;
-  -ms-flex: 0 0 50%;
-  flex: 0 0 50%; }
+.col-offset-25 {
+  margin-left: 25%; }
 
-.grid-1of3 > .grid-cell,
-.grid-2of6 > .grid-cell {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 33.3333%;
-  -moz-box-flex: 0;
-  -moz-flex: 0 0 33.3333%;
-  -ms-flex: 0 0 33.3333%;
-  flex: 0 0 33.3333%; }
+.col-offset-33, .col-offset-34 {
+  margin-left: 33.3333%; }
 
-.grid-2of3 > .grid-cell,
-.grid-4of6 > .grid-cell {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 66.6666%;
-  -moz-box-flex: 0;
-  -moz-flex: 0 0 66.6666%;
-  -ms-flex: 0 0 66.6666%;
-  flex: 0 0 66.6666%; }
+.col-offset-50 {
+  margin-left: 50%; }
 
-.grid-1of4 > .grid-cell {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 25%;
-  -moz-box-flex: 0;
-  -moz-flex: 0 0 25%;
-  -ms-flex: 0 0 25%;
-  flex: 0 0 25%; }
+.col-offset-66, .col-offset-67 {
+  margin-left: 66.6666%; }
 
-.grid-3of4 > .grid-cell {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 75%;
-  -moz-box-flex: 0;
-  -moz-flex: 0 0 75%;
-  -ms-flex: 0 0 75%;
-  flex: 0 0 75%; }
+.col-offset-75 {
+  margin-left: 75%; }
 
-.grid-1of5 > .grid-cell {
+.col-offset-80 {
+  margin-left: 80%; }
+
+/* Explicit Column Percent Sizes */
+/* By default each grid column will evenly distribute */
+/* across the grid. However, you can specify individual */
+/* columns to take up a certain size of the available area */
+.col-20 {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 20%;
   -moz-box-flex: 0;
   -moz-flex: 0 0 20%;
   -ms-flex: 0 0 20%;
-  flex: 0 0 20%; }
+  flex: 0 0 20%;
+  max-width: 20%; }
 
-.grid-2of5 > .grid-cell {
+.col-25 {
   -webkit-box-flex: 0;
-  -webkit-flex: 0 0 40%;
+  -webkit-flex: 0 0 25%;
   -moz-box-flex: 0;
-  -moz-flex: 0 0 40%;
-  -ms-flex: 0 0 40%;
-  flex: 0 0 40%; }
+  -moz-flex: 0 0 25%;
+  -ms-flex: 0 0 25%;
+  flex: 0 0 25%;
+  max-width: 25%; }
 
-.grid-3of5 > .grid-cell {
+.col-33, .col-34 {
   -webkit-box-flex: 0;
-  -webkit-flex: 0 0 60%;
+  -webkit-flex: 0 0 33.3333%;
   -moz-box-flex: 0;
-  -moz-flex: 0 0 60%;
-  -ms-flex: 0 0 60%;
-  flex: 0 0 60%; }
+  -moz-flex: 0 0 33.3333%;
+  -ms-flex: 0 0 33.3333%;
+  flex: 0 0 33.3333%;
+  max-width: 33.3333%; }
 
-.grid-4of5 > .grid-cell {
+.col-50 {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 50%;
+  -moz-box-flex: 0;
+  -moz-flex: 0 0 50%;
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  max-width: 50%; }
+
+.col-66, .col-67 {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 66.6666%;
+  -moz-box-flex: 0;
+  -moz-flex: 0 0 66.6666%;
+  -ms-flex: 0 0 66.6666%;
+  flex: 0 0 66.6666%;
+  max-width: 66.6666%; }
+
+.col-75 {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 75%;
+  -moz-box-flex: 0;
+  -moz-flex: 0 0 75%;
+  -ms-flex: 0 0 75%;
+  flex: 0 0 75%;
+  max-width: 75%; }
+
+.col-80 {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 80%;
   -moz-box-flex: 0;
   -moz-flex: 0 0 80%;
   -ms-flex: 0 0 80%;
-  flex: 0 0 80%; }
-
-.grid-1of6 > .grid-cell {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 16.6666%;
-  -moz-box-flex: 0;
-  -moz-flex: 0 0 16.6666%;
-  -ms-flex: 0 0 16.6666%;
-  flex: 0 0 16.6666%; }
-
-.grid-5of6 > .grid-cell {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 83.3333%;
-  -moz-box-flex: 0;
-  -moz-flex: 0 0 83.3333%;
-  -ms-flex: 0 0 83.3333%;
-  flex: 0 0 83.3333%; }
+  flex: 0 0 80%;
+  max-width: 80%; }
 
 /**
  * Icons
