@@ -6,14 +6,14 @@
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../../dist/ionic.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.js"></script>
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-touch.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-animate.js"></script>
   </head>
   <body>
 
-    <side-menus>
+    <side-menu>
       <pane side-menu-content>
         <header class="bar bar-header bar-dark">
           <a href="#" class="button"><i class="icon-reorder"></i></a>
@@ -32,9 +32,8 @@
         </ul>
       </menu>
       <menu side="right">
-        <h2>Items</h2>
-        <tab-controller>
-          <div title="Home" icon="icon-home" class="tab-content">
+        <tabs>
+          <tab title="Home" icon="icon-home" class="tab-content">
             <header class="bar bar-header bar-dark">
               <h1 class="title">Tab Bars</h1>
             </header>
@@ -46,34 +45,32 @@
                 </a>
               </ul>
             </content>
-          </div>
+          </tab>
 
-          <div title="About" icon="icon-info" class="tab-content">
+          <tab title="About" icon="icon-info" class="tab-content">
             <header class="bar bar-header bar-success">
               <h1 class="title">About</h1>
             </header>
             <content has-header="true" has-tabs="true">
               <h1>About Us</h1>
             </content>
-          </div>
+          </tab>
 
-          <div title="Settings" icon="icon-gear" class="tab-content">
+          <tab title="Settings" icon="icon-gear" class="tab-content">
             <header class="bar bar-header bar-dark">
               <h1 class="title">Settings</h1>
             </header>
             <content has-header="true" has-tabs="true">
               <h1>Settings</h1>
             </content>
-          </div>
-        </tab-controller>
+          </tab>
+        </tabs>
       </menu>
-    </side-menus>
-    <script src="../../../../dist/ionic.js"></script>
-    <script src="../src/directive/ionicContent.js"></script>
-    <script src="../src/directive/ionicSideMenu.js"></script>
-    <script src="../src/directive/ionicTabBar.js"></script>
+    </side-menu>
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
-      angular.module('sideMenuTest', ['ionic.ui.content', 'ionic.ui.sideMenu', 'ionic.ui.tabs'])
+      angular.module('sideMenuTest', ['ionic']);
 
       /*
       var Controller = function(opts) {

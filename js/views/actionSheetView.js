@@ -6,11 +6,10 @@
    * You see it all over iOS apps, where it offers a set of options 
    * triggered after an action.
    */
-  ionic.views.ActionSheet = function(opts) {
-    this.el = opts.el;
-  };
-
-  ionic.views.ActionSheet.prototype = {
+  ionic.views.ActionSheet = ionic.views.View.inherit({
+    initialize: function(opts) {
+      this.el = opts.el;
+    },
     show: function() {
       // Force a reflow so the animation will actually run
       this.el.offsetWidth;
@@ -22,6 +21,6 @@
       this.el.offsetWidth;
       this.el.classList.remove('active');
     }
-  };
+  });
 
 })(ionic);

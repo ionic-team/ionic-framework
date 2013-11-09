@@ -10,7 +10,7 @@
   @include flex-direction(horizontal);
 
   @include tab-style($tabs-default-bg, $tabs-default-border-color, $gray-dark);
-  position: fixed;
+  position: absolute;
   bottom: 0;
   z-index: 5;
   width: 100%;

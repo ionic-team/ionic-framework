@@ -1,13 +1,13 @@
 (function(ionic) {
 'use strict';
 
-  ionic.views.SideMenu = function(opts) {
-    this.el = opts.el;
-    this.width = opts.width;
-    this.isEnabled = opts.isEnabled || true;
-  };
+  ionic.views.SideMenu = ionic.views.View.inherit({
+    initialize: function(opts) {
+      this.el = opts.el;
+      this.width = opts.width;
+      this.isEnabled = opts.isEnabled || true;
+    },
 
-  ionic.views.SideMenu.prototype = {
     getFullWidth: function() {
       return this.width;
     },
@@ -20,6 +20,6 @@
     pushDown: function() {
       this.el.style.zIndex = -1;
     }
-  };
+  });
 
 })(ionic);

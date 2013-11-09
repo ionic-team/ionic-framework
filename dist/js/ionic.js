@@ -2716,11 +2716,10 @@ window.ionic = {
    * You see it all over iOS apps, where it offers a set of options 
    * triggered after an action.
    */
-  ionic.views.ActionSheet = function(opts) {
-    this.el = opts.el;
-  };
-
-  ionic.views.ActionSheet.prototype = {
+  ionic.views.ActionSheet = ionic.views.View.inherit({
+    initialize: function(opts) {
+      this.el = opts.el;
+    },
     show: function() {
       // Force a reflow so the animation will actually run
       this.el.offsetWidth;
@@ -2732,20 +2731,19 @@ window.ionic = {
       this.el.offsetWidth;
       this.el.classList.remove('active');
     }
-  };
+  });
 
 })(ionic);
 ;
 (function(ionic) {
 'use strict';
 
-  ionic.views.Checkbox = function(opts) {
-    this.el = opts.el;
-    this.checkbox = opts.checkbox;
-    this.handle = opts.handle;
-  };
-
-  ionic.views.Checkbox.prototype = {
+  ionic.views.Checkbox = ionic.views.View.inherit({
+    initialize: function(opts) {
+      this.el = opts.el;
+      this.checkbox = opts.checkbox;
+      this.handle = opts.handle;
+    },
 
     tap: function(e) {
       this.val( !this.checkbox.checked );
@@ -2757,21 +2755,19 @@ window.ionic = {
       }
       return this.checkbox.checked;
     }
-
-  };
+  });
 
 })(ionic);
 ;
 (function(ionic) {
 'use strict';
 
-  ionic.views.HeaderBar = function(opts) {
-    this.el = opts.el;
+  ionic.views.HeaderBar = ionic.views.View.inherit({
+    initialize: function(opts) {
+      this.el = opts.el;
 
-    this._titleEl = this.el.querySelector('.title');
-  };
-
-  ionic.views.HeaderBar.prototype = {
+      this._titleEl = this.el.querySelector('.title');
+    },
     resizeTitle: function() {
       var e, j, i,
       title,
@@ -2787,7 +2783,7 @@ window.ionic = {
 
       titleWidth = title.offsetWidth;
     }
-  };
+  });
 
 })(ionic);
 ;
@@ -3281,17 +3277,16 @@ window.ionic = {
    * You see it all over iOS apps, where it offers a set of options 
    * triggered after an action.
    */
-  ionic.views.Loading = function(opts) {
-    var _this = this;
+  ionic.views.Loading = ionic.views.View.inherit({
+    initialize: function(opts) {
+      var _this = this;
 
-    this.el = opts.el;
+      this.el = opts.el;
 
-    this.maxWidth = opts.maxWidth || 200;
+      this.maxWidth = opts.maxWidth || 200;
 
-    this._loadingBox = this.el.querySelector('.loading');
-  };
-
-  ionic.views.Loading.prototype = {
+      this._loadingBox = this.el.querySelector('.loading');
+    },
     show: function() {
       var _this = this;
 
@@ -3314,7 +3309,7 @@ window.ionic = {
 
       this.el.classList.remove('active');
     }
-  };
+  });
 
 })(ionic);
 ;
@@ -3338,17 +3333,16 @@ window.ionic = {
 (function(ionic) {
 'use strict';
 
-  ionic.views.NavBar = function(opts) {
-    this.el = opts.el;
+  ionic.views.NavBar = ionic.views.View.inherit({
+    initialize: function(opts) {
+      this.el = opts.el;
 
-    this._titleEl = this.el.querySelector('.title');
+      this._titleEl = this.el.querySelector('.title');
 
-    if(opts.hidden) {
-      this.hide();
-    }
-  };
-
-  ionic.views.NavBar.prototype = {
+      if(opts.hidden) {
+        this.hide();
+      }
+    },
     hide: function() {
       this.el.classList.add('hidden');
     },
@@ -3386,7 +3380,7 @@ window.ionic = {
         this._currentBackButton.parentNode.removeChild(this._currentBackButton);
       }
     }
-  };
+  });
 
 })(ionic);
 ;
@@ -3398,13 +3392,13 @@ window.ionic = {
    * You see it all over iOS apps, where it offers a set of options 
    * triggered after an action.
    */
-  ionic.views.Popup = function(opts) {
-    var _this = this;
+  ionic.views.Popup = ionic.views.View.inherit({
+    initialize: function(opts) {
+      var _this = this;
 
-    this.el = opts.el;
-  };
+      this.el = opts.el;
+    },
 
-  ionic.views.Popup.prototype = {
     setTitle: function(title) {
       var titleEl = el.querySelector('.popup-title');
       if(titleEl) {
@@ -3425,20 +3419,20 @@ window.ionic = {
 
       this.el.classList.remove('active');
     }
-  };
+  });
 
 })(ionic);
 ;
 (function(ionic) {
 'use strict';
 
-  ionic.views.SideMenu = function(opts) {
-    this.el = opts.el;
-    this.width = opts.width;
-    this.isEnabled = opts.isEnabled || true;
-  };
+  ionic.views.SideMenu = ionic.views.View.inherit({
+    initialize: function(opts) {
+      this.el = opts.el;
+      this.width = opts.width;
+      this.isEnabled = opts.isEnabled || true;
+    },
 
-  ionic.views.SideMenu.prototype = {
     getFullWidth: function() {
       return this.width;
     },
@@ -3451,7 +3445,7 @@ window.ionic = {
     pushDown: function() {
       this.el.style.zIndex = -1;
     }
-  };
+  });
 
 })(ionic);
 ;
@@ -3787,12 +3781,12 @@ window.ionic = {
 (function(ionic) {
 'use strict';
 
-ionic.views.TabBarItem = function(el) {
-  this.el = el;
+ionic.views.TabBarItem = ionic.views.View.inherit({
+  initialize: function(el) {
+    this.el = el;
 
-  this._buildItem();
-};
-ionic.views.TabBarItem.prototype = {
+    this._buildItem();
+  },
   // Factory for creating an item from a given javascript object
   create: function(itemData) {
     var item = document.createElement('a');
@@ -3858,17 +3852,16 @@ ionic.views.TabBarItem.prototype = {
       this.el.classList.remove('active');
     }
   }
-};
+});
 
-ionic.views.TabBar = function(opts) {
-  this.el = opts.el;
-   
-  this.items = [];
+ionic.views.TabBar = ionic.views.View.inherit({
+  initialize: function(opts) {
+    this.el = opts.el;
+     
+    this.items = [];
 
-  this._buildItems();
-};
-
-ionic.views.TabBar.prototype = {
+    this._buildItems();
+  },
   // get all the items for the TabBar
   getItems: function() {
     return this.items;
@@ -3982,7 +3975,7 @@ ionic.views.TabBar.prototype = {
     }
     this.items.length = 0;
   }
-};
+});
 
 })(window.ionic);
 ;

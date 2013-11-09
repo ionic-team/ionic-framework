@@ -6,17 +6,16 @@
    * You see it all over iOS apps, where it offers a set of options 
    * triggered after an action.
    */
-  ionic.views.Loading = function(opts) {
-    var _this = this;
+  ionic.views.Loading = ionic.views.View.inherit({
+    initialize: function(opts) {
+      var _this = this;
 
-    this.el = opts.el;
+      this.el = opts.el;
 
-    this.maxWidth = opts.maxWidth || 200;
+      this.maxWidth = opts.maxWidth || 200;
 
-    this._loadingBox = this.el.querySelector('.loading');
-  };
-
-  ionic.views.Loading.prototype = {
+      this._loadingBox = this.el.querySelector('.loading');
+    },
     show: function() {
       var _this = this;
 
@@ -39,6 +38,6 @@
 
       this.el.classList.remove('active');
     }
-  };
+  });
 
 })(ionic);

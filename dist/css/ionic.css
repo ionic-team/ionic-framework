@@ -2844,7 +2844,7 @@ a.subdued‎ {
   background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
   border-color: #dddddd;
   color: #333333;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   z-index: 5;
   width: 100%;

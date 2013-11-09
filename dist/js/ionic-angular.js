@@ -1223,7 +1223,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     transclude: true,
     controller: 'TabsCtrl',
     //templateUrl: 'ext/angular/tmpl/ionicTabBar.tmpl.html',
-    template: '<div class="view"><tab-controller-bar></tab-controller-bar></div>',
+    template: '<div class="content"><tab-controller-bar></tab-controller-bar></div>',
     compile: function(element, attr, transclude, tabsCtrl) {
       return function($scope, $element, $attr) {
         $scope.$watch('activeAnimation', function(value) {

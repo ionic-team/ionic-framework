@@ -1,12 +1,12 @@
 (function(ionic) {
 'use strict';
 
-ionic.views.TabBarItem = function(el) {
-  this.el = el;
+ionic.views.TabBarItem = ionic.views.View.inherit({
+  initialize: function(el) {
+    this.el = el;
 
-  this._buildItem();
-};
-ionic.views.TabBarItem.prototype = {
+    this._buildItem();
+  },
   // Factory for creating an item from a given javascript object
   create: function(itemData) {
     var item = document.createElement('a');
@@ -72,17 +72,16 @@ ionic.views.TabBarItem.prototype = {
       this.el.classList.remove('active');
     }
   }
-};
+});
 
-ionic.views.TabBar = function(opts) {
-  this.el = opts.el;
-   
-  this.items = [];
+ionic.views.TabBar = ionic.views.View.inherit({
+  initialize: function(opts) {
+    this.el = opts.el;
+     
+    this.items = [];
 
-  this._buildItems();
-};
-
-ionic.views.TabBar.prototype = {
+    this._buildItems();
+  },
   // get all the items for the TabBar
   getItems: function() {
     return this.items;
@@ -196,6 +195,6 @@ ionic.views.TabBar.prototype = {
     }
     this.items.length = 0;
   }
-};
+});
 
 })(window.ionic);

@@ -6,13 +6,13 @@
    * You see it all over iOS apps, where it offers a set of options 
    * triggered after an action.
    */
-  ionic.views.Popup = function(opts) {
-    var _this = this;
+  ionic.views.Popup = ionic.views.View.inherit({
+    initialize: function(opts) {
+      var _this = this;
 
-    this.el = opts.el;
-  };
+      this.el = opts.el;
+    },
 
-  ionic.views.Popup.prototype = {
     setTitle: function(title) {
       var titleEl = el.querySelector('.popup-title');
       if(titleEl) {
@@ -33,6 +33,6 @@
 
       this.el.classList.remove('active');
     }
-  };
+  });
 
 })(ionic);

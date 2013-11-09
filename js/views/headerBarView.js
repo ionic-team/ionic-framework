@@ -1,13 +1,12 @@
 (function(ionic) {
 'use strict';
 
-  ionic.views.HeaderBar = function(opts) {
-    this.el = opts.el;
+  ionic.views.HeaderBar = ionic.views.View.inherit({
+    initialize: function(opts) {
+      this.el = opts.el;
 
-    this._titleEl = this.el.querySelector('.title');
-  };
-
-  ionic.views.HeaderBar.prototype = {
+      this._titleEl = this.el.querySelector('.title');
+    },
     resizeTitle: function() {
       var e, j, i,
       title,
@@ -23,6 +22,6 @@
 
       titleWidth = title.offsetWidth;
     }
-  };
+  });
 
 })(ionic);

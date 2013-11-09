@@ -1,13 +1,12 @@
 (function(ionic) {
 'use strict';
 
-  ionic.views.Checkbox = function(opts) {
-    this.el = opts.el;
-    this.checkbox = opts.checkbox;
-    this.handle = opts.handle;
-  };
-
-  ionic.views.Checkbox.prototype = {
+  ionic.views.Checkbox = ionic.views.View.inherit({
+    initialize: function(opts) {
+      this.el = opts.el;
+      this.checkbox = opts.checkbox;
+      this.handle = opts.handle;
+    },
 
     tap: function(e) {
       this.val( !this.checkbox.checked );
@@ -19,7 +18,6 @@
       }
       return this.checkbox.checked;
     }
-
-  };
+  });
 
 })(ionic);

@@ -1,17 +1,16 @@
 (function(ionic) {
 'use strict';
 
-  ionic.views.NavBar = function(opts) {
-    this.el = opts.el;
+  ionic.views.NavBar = ionic.views.View.inherit({
+    initialize: function(opts) {
+      this.el = opts.el;
 
-    this._titleEl = this.el.querySelector('.title');
+      this._titleEl = this.el.querySelector('.title');
 
-    if(opts.hidden) {
-      this.hide();
-    }
-  };
-
-  ionic.views.NavBar.prototype = {
+      if(opts.hidden) {
+        this.hide();
+      }
+    },
     hide: function() {
       this.el.classList.add('hidden');
     },
@@ -49,6 +48,6 @@
         this._currentBackButton.parentNode.removeChild(this._currentBackButton);
       }
     }
-  };
+  });
 
 })(ionic);
