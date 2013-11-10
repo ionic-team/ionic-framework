@@ -49,7 +49,7 @@
 .white {
   color: white; }
 
-/*
+/*!
   Ionicons, v1.3.3
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
   https://twitter.com/helloimben  https://twitter.com/ionicframework
@@ -4773,7 +4773,7 @@ a.button {
   -moz-align-items: flex-end;
   align-items: flex-end; }
 
-.row-middle {
+.row-center {
   -webkit-box-align: center;
   -ms-flex-align: center;
   -webkit-align-items: center;
@@ -4793,18 +4793,16 @@ a.button {
   -ms-flex-item-align: end;
   align-self: flex-end; }
 
-.col-middle {
+.col-center {
   -webkit-align-self: center;
   -moz-align-self: center;
   -ms-flex-item-align: center;
   align-self: center; }
 
-/* Horizontally Align Columns */
-.col-center {
-  margin-left: auto;
-  margin-right: auto; }
-
 /* Column Offsets */
+.col-offset-10 {
+  margin-left: 10%; }
+
 .col-offset-20 {
   margin-left: 20%; }
 
@@ -4826,10 +4824,22 @@ a.button {
 .col-offset-80 {
   margin-left: 80%; }
 
+.col-offset-90 {
+  margin-left: 90%; }
+
 /* Explicit Column Percent Sizes */
 /* By default each grid column will evenly distribute */
 /* across the grid. However, you can specify individual */
 /* columns to take up a certain size of the available area */
+.col-10 {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 10%;
+  -moz-box-flex: 0;
+  -moz-flex: 0 0 10%;
+  -ms-flex: 0 0 10%;
+  flex: 0 0 10%;
+  max-width: 10%; }
+
 .col-20 {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 20%;
@@ -4892,6 +4902,15 @@ a.button {
   -ms-flex: 0 0 80%;
   flex: 0 0 80%;
   max-width: 80%; }
+
+.col-90 {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 90%;
+  -moz-box-flex: 0;
+  -moz-flex: 0 0 90%;
+  -ms-flex: 0 0 90%;
+  flex: 0 0 90%;
+  max-width: 90%; }
 
 /**
  * Icons

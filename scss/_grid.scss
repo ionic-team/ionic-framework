@@ -34,7 +34,7 @@
 .row-bottom {
   @include align-items(flex-end);
 }
-.row-middle {
+.row-center {
   @include align-items(center);
 }
 
@@ -45,18 +45,14 @@
 .col-bottom {
   @include align-self(flex-end);
 }
-.col-middle {
+.col-center {
   @include align-self(center);
 }
 
-
-/* Horizontally Align Columns */
-.col-center {
-  margin-left: auto;
-  margin-right: auto;
-}
-
 /* Column Offsets */
+.col-offset-10 {
+  margin-left: 10%;
+}
 .col-offset-20 {
   margin-left: 20%;
 }
@@ -78,12 +74,19 @@
 .col-offset-80 {
   margin-left: 80%;
 }
+.col-offset-90 {
+  margin-left: 90%;
+}
 
 
 /* Explicit Column Percent Sizes */
 /* By default each grid column will evenly distribute */
 /* across the grid. However, you can specify individual */
 /* columns to take up a certain size of the available area */
+.col-10 {
+  @include flex(0, 0, 10%);
+  max-width: 10%
+}
 .col-20 {
   @include flex(0, 0, 20%);
   max-width: 20%
@@ -111,4 +114,8 @@
 .col-80 {
   @include flex(0, 0, 80%);
   max-width: 80%
+}
+.col-90 {
+  @include flex(0, 0, 90%);
+  max-width: 90%
 }
