@@ -122,6 +122,23 @@ body, .ionic-body {
   //@include display-flex();
   //@include align-items(center);
 }
+.ionic-refresher-content {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+.ionic-refresher {
+  // A custom refresher
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: $brand-primary;
+  position: absolute;
+  left: 50%;
+  margin-left: -5px;
+  bottom: 15px;
+}
 .scroll-refreshing {
   -webkit-transition: height 0.1s ease-in-out;
 }

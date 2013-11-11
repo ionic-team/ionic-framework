@@ -548,10 +548,28 @@ angular.module('ionic.ui.content', [])
   return {
     restrict: 'E',
     replace: true,
-    transclude: true,
-    template: '<div class="scroll-refresher"><div class="scroll-refresher-content" ng-transclude></div></div>'
+    require: ['^?content', '^?list'],
+    template: '<div class="scroll-refresher"><div class="ionic-refresher-content"><div class="ionic-refresher"></div></div></div>',
+    scope: true,
+    link: function($scope, $element, $attr, scrollCtrl) {
+      $scope.$on('onRefresh', function() {
+      });
+      $scope.$on('onRefreshOpening', function(amt) {
+        console.log('On refresh opening', amt);
+      });
+    }
   }
 })
+
+.directive('scroll-refresher', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<div class="scroll-refresher"><div class="scroll-refresher-content"></div></div>'
+  }
+});
+
 
 })();
 ;
@@ -667,9 +685,11 @@ angular.module('ionic.ui.list', ['ngAnimate'])
           hasPullToRefresh: ($scope.hasPullToRefresh !== 'false'),
           onRefresh: function() {
             $scope.onRefresh();
+            $scope.$broadcast('onRefresh');
           },
           onRefreshOpening: function(amt) {
             $scope.onRefreshOpening({amount: amt});
+            $scope.$broadcast('onRefreshOpening', amt);
           }
         });
 

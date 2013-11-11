@@ -2327,6 +2327,22 @@ body, .ionic-body {
   text-align: center;
   position: relative; }
 
+.ionic-refresher-content {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  position: relative; }
+
+.ionic-refresher {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #4a87ee;
+  position: absolute;
+  left: 50%;
+  margin-left: -5px;
+  bottom: 15px; }
+
 .scroll-refreshing {
   -webkit-transition: height 0.1s ease-in-out; }
 
