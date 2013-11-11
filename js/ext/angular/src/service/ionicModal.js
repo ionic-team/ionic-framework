@@ -14,11 +14,15 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad'])
         $animate.enter(element, angular.element($document[0].body));
       } 
       $animate.addClass(element, this.animation);
+
+      ionic.views.Modal.prototype.show.call(this);
     },
     // Hide the modal
     hide: function() {
       var element = angular.element(this.el);
       $animate.removeClass(element, this.animation);
+
+      ionic.views.Modal.prototype.hide.call(this);
     },
 
     // Remove and destroy the modal scope
