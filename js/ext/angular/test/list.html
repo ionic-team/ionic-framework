@@ -64,9 +64,19 @@
   <body>
 
     <div ng-controller="TestCtrl" class="reveal-animation scroll-content">
-      <list is-editing="isEditingItems" on-refresh-holding="almostRefreshing()" on-refresh-opening="almostRefreshProjects(ratio)" on-refresh="refreshProjects()" animation="my-repeat-animation" delete-icon="icon ion-minus-circled" reorder-icon="icon ion-navicon">
-        <list-refresher>
-        </list-refresher>
+      <list is-editing="isEditingItems"
+            on-refresh-holding="almostRefreshing()"
+            on-refresh-opening="almostRefreshProjects(ratio)"
+            on-refresh="refreshProjects()"
+            animation="my-repeat-animation"
+            delete-icon="icon ion-minus-circled"
+            reorder-icon="icon ion-navicon">
+
+        <refresher>
+          <div id="refresh-content">
+            <i class="icon ion-ios7-reloading"></i>
+          </div>
+        </refresher>
         <item 
             ng-repeat="item in items" 
             buttons="item.buttons"
@@ -87,32 +97,6 @@
     <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
       angular.module('navTest', ['ionic.ui.list', 'ionic.ui.content', 'ngAnimate'])
-
-      .directive('spinner', function() {
-        return {
-          restrict: 'E',
-          replace: true,
-          scope: {
-            ratio: '='
-          },
-          template: '<div class="spinner"><div class="spin-thing"></div></div>',
-          link: function($scope, $element, $attr) {
-            $scope.$watch('ratio', function(value) {
-              if(value > 0.97) {
-                value = 1;
-              }
-
-              var a = (value * 360) % 360;
-              var r = (a * Math.PI) / 180;
-              var x = (Math.sin(r) * 20) + 14;
-              var y = (Math.cos(r) * -20) + 14;
-
-              $element[0].firstElementChild.style.webkitTransform = 'translate3d(' + x + 'px, ' + y + 'px, 0)';
-              //$element[0].firstElementChild.setAttribute('d', anim);
-            });
-          }
-        }
-      })
 
       .controller('TestCtrl', function($scope) {
         $scope.refreshRatio = { ratio: 0 };

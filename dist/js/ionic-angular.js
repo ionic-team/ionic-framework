@@ -641,6 +641,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       isEditing: '=',
       deleteIcon: '@',
       reorderIcon: '@',
+      hasPullToRefresh: '@',
       onRefresh: '&',
       onRefreshOpening: '&'
     },
@@ -663,7 +664,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
         var lv = new ionic.views.ListView({
           el: $element[0],
           listEl: $element[0].children[0],
-          hasPullToRefresh: (typeof $scope.onRefresh !== 'undefined'),
+          hasPullToRefresh: (typeof $scope.hasPullToRefresh !== 'false'),
           onRefresh: function() {
             $scope.onRefresh();
           },

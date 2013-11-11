@@ -2411,6 +2411,7 @@ window.ionic = {
       var parentWidth = this.el.parentNode.offsetWidth;
       var parentHeight = this.el.parentNode.offsetHeight;
 
+      /*
       var maxX = Math.min(0, (-totalWidth + parentWidth));
       var maxY = Math.min(0, (-totalHeight + parentHeight));
 
@@ -2418,6 +2419,7 @@ window.ionic = {
       if((this.isHorizontalEnabled && maxX == 0) || (this.isVerticalEnabled && maxY == 0)) {
         return;
       }
+      */
 
       this.x = scrollLeft;
       this.y = scrollTop;
@@ -3175,8 +3177,6 @@ window.ionic = {
       var _this = this;
 
       this._isDragging = false;
-
-      console.log(e.gesture.direction);
 
       // Check if this is a reorder drag
       if(ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_DRAG_CLASS) && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {

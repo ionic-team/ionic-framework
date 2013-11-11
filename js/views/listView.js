@@ -376,8 +376,6 @@
 
       this._isDragging = false;
 
-      console.log(e.gesture.direction);
-
       // Check if this is a reorder drag
       if(ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_DRAG_CLASS) && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
         var item = this._getItem(e.target);
