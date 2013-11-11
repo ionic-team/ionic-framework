@@ -4,77 +4,54 @@
     <title>Side Menus</title>
 
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="../dist/ionicons.css" rel="stylesheet">
-    <link href="../dist/ionic.css" rel="stylesheet">
+    <link href="../dist/css/ionic.css" rel="stylesheet">
   </head>
   <body>
 
-    <section id="page" class="pane menu-animated">
+    <div id="content" class="pane">
       <header class="bar bar-header bar-dark">
-        <div class="buttons">
-          <a id="left-button" class="button button-dark" href="#">
-            <i class="icon ion-reorder"></i>
-          </a>
-        </div>
-        <h1 class="title">Chats</h1>
-        <div class="buttons">
-          <button id="right-button" class="button button-dark">
-            <i class="icon ion-cog"></i>
-          </button>
-        </div>
+        <h1 class="title">Center</h1>
       </header>
+    </div>
 
-      <main class="content padding has-header">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Panel title</h3>
-          </div>
-          <div class="panel-body">
-            Is this
-          </div>
-        </div>
+    <div id="menu-left" class="menu menu-left">
+      <header class="bar bar-header bar-dark">
+        <h1 class="title">Left</h1>
+      </header>
+    </div>
 
-        <div class="panel panel-success">
-          <div class="panel-heading">
-            <h3 class="panel-title">Panel title</h3>
-          </div>
-          <div class="panel-body">
-            Is this
-          </div>
-        </div>
-        <div class="panel panel-danger">
-          <div class="panel-heading">
-            <h3 class="panel-title">Panel title</h3>
-          </div>
-          <div class="panel-body">
-            Is this
-          </div>
-        </div>
-        <div class="panel panel-warning">
-          <div class="panel-heading">
-            <h3 class="panel-title">Panel title</h3>
-          </div>
-          <div class="panel-body">
-            Is this
-          </div>
-        </div>
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3 class="panel-title">Panel title</h3>
-          </div>
-          <div class="panel-body">
-            Is this
-          </div>
-        </div>
-      </main>
-
-      <footer class="bar bar-footer bar-dark">
-        <h3 class="title"></h3>
-      </footer>
-    </section>
+    <div id="menu-right" class="menu menu-right">
+      <header class="bar bar-header bar-dark">
+        <h1 class="title">Right</h1>
+      </header>
+    </div>
     
-    <script src="../dist/ionic.js"></script>
-    <script src="../dist/ionic-simple.js"></script>
+    <script src="../dist/js/ionic.js"></script>
+
+    <script>
+      var contentEl = document.getElementById('content');
+      var content = new ionic.views.SideMenuContent({
+        el: contentEl
+      });
+
+      var leftMenuEl = document.getElementById('menu-left');
+      var leftMenu = new ionic.views.SideMenu({
+        el: leftMenuEl,
+        width: 270
+      });
+
+      var rightMenuEl = document.getElementById('menu-right');
+      var rightMenu = new ionic.views.SideMenu({
+        el: rightMenuEl,
+        width: 270
+      });
+
+      var sm = new ionic.controllers.SideMenuController({
+        content: content,
+        left: leftMenu,
+        right: rightMenu
+      });
+    </script>
     
   </body>
 </html>

@@ -16,24 +16,37 @@
     <div ng-controller="MenuCtrl">
       <side-menu>
         <pane side-menu-content>
-          <header class="bar bar-header bar-dark">
-            <button class="button" ng-click="openLeft()"><i class="icon-reorder"></i></button>
+          <header class="bar bar-header bar-primary">
+            <button class="button button-icon" ng-click="openLeft()"><i class="icon ion-navicon"></i></button>
             <h1 class="title">Slide me</h1>
           </header>
           <div class="content has-header">
-            <h1>Slide me side to side!</h1>
+            <h1>Content</h1>
           </div>
         </pane>
         <menu side="left">
-          <h2>Left</h2>
-          <ul class="list">
-            <a href="#" class="list-item" ng-repeat="item in list">
-              {{item.text}}
-            </a>
-          </ul>
+          <header class="bar bar-header bar-primary">
+            <h1 class="title">Left</h1>
+          </header>
+          <content has-header="true">
+            <ul class="list">
+              <a href="#" class="item" ng-repeat="item in list">
+                {{item.text}}
+              </a>
+            </ul>
+          </content>
         </menu>
         <menu side="right">
-          <h2>Items</h2>
+          <header class="bar bar-header bar-primary">
+            <h1 class="title">Right</h1>
+          </header>
+          <content has-header="true">
+            <ul class="list">
+              <a href="#" class="item" ng-repeat="item in list">
+                {{item.text}}
+              </a>
+            </ul>
+          </content>
         </menu>
       </side-menu>
     </div>
@@ -43,6 +56,12 @@
       angular.module('sideMenuTest', ['ionic'])
 
       .controller('MenuCtrl', function($scope) {
+        $scope.list = [];
+        for(var i = 0; i < 20; i++) {
+          $scope.list.push({
+            text: 'Item ' + i
+          });
+        }
         $scope.openLeft = function() {
           $scope.sideMenuCtrl.toggleLeft();
         };

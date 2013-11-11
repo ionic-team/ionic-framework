@@ -1836,6 +1836,15 @@ window.ionic = {
 (function(ionic) {
   
   ionic.Utils = {
+
+    // Return a function that will be called with the given context
+    proxy: function(func, context) {
+      var args = Array.prototype.slice.call(arguments, 2);
+      return function() {
+        return func.apply(context, args.concat(Array.prototype.slice.call(arguments)));
+      };
+    },
+
     throttle: function(func, wait, options) {
       var context, args, result;
       var timeout = null;
@@ -1915,9 +1924,11 @@ window.ionic = {
     }
   };
 
+  // Bind a few of the most useful functions to the ionic scope
   ionic.inherit = ionic.Utils.inherit;
   ionic.extend = ionic.Utils.extend;
   ionic.throttle = ionic.Utils.throttle;
+  ionic.proxy = ionic.Utils.proxy;
 
 })(window.ionic);
 ;
@@ -3467,6 +3478,39 @@ window.ionic = {
     }
   });
 
+  ionic.views.SideMenuContent = ionic.views.View.inherit({
+    initialize: function(opts) {
+      var _this = this;
+
+      ionic.extend(this, {
+        animationClass: 'menu-animated',
+        onDrag: function(e) {},
+        onEndDrag: function(e) {},
+      }, opts);
+
+      ionic.onGesture('drag', ionic.proxy(this._onDrag, this), this.el);
+      ionic.onGesture('release', ionic.proxy(this._onEndDrag, this), this.el);
+    },
+    _onDrag: function(e) {
+      this.onDrag && this.onDrag(e);
+    },
+    _onEndDrag: function(e) {
+      this.onEndDrag && this.onEndDrag(e);
+    },
+    disableAnimation: function() {
+      this.el.classList.remove(this.animationClass);
+    },
+    enableAnimation: function() {
+      this.el.classList.add(this.animationClass);
+    },
+    getTranslateX: function() {
+      return parseFloat(this.el.style.webkitTransform.replace('translate3d(', '').split(',')[0]);
+    },
+    setTranslateX: function(x) {
+      this.el.style.webkitTransform = 'translate3d(' + x + 'px, 0, 0)';
+    }
+  });
+
 })(ionic);
 ;
 /**
@@ -4264,7 +4308,7 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
           self._handleDrag(e);
         };
 
-        this.content.endDrag = function(e) {
+        this.content.onEndDrag =function(e) {
           self._endDrag(e);
         };
       }
@@ -4354,12 +4398,12 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
      */
     openPercentage: function(percentage) {
       var p = percentage / 100;
-      var maxLeft = this.left.width;
-      var maxRight = this.right.width;
-      if(percentage >= 0) {
-        this.openAmount(maxLeft * p);
-      } else {
-        this.openAmount(maxRight * p);
+
+      if(this.left && percentage >= 0) {
+        this.openAmount(this.left.width * p);
+      } else if(this.right && percentage < 0) {
+        var maxRight = this.right.width;
+        this.openAmount(this.right.width * p);
       }
     },
 
@@ -4369,11 +4413,11 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
      * negative value for right menu (only one menu will be visible at a time).
      */
     openAmount: function(amount) {
-      var maxLeft = this.left.width;
-      var maxRight = this.right.width;
+      var maxLeft = this.left && this.left.width || 0;
+      var maxRight = this.right && this.right.width || 0;
 
       // Check if we can move to that side, depending if the left/right panel is enabled
-      if((!this.left.isEnabled && amount > 0) || (!this.right.isEnabled && amount < 0)) {
+      if((!(this.left && this.left.isEnabled) && amount > 0) || (!(this.right && this.right.isEnabled) && amount < 0)) {
         return;
       }
 
@@ -4388,17 +4432,17 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
         this._rightShowing = false;
 
         // Push the z-index of the right menu down
-        this.right.pushDown();
+        this.right && this.right.pushDown();
         // Bring the z-index of the left menu up
-        this.left.bringUp();
+        this.left && this.left.bringUp();
       } else {
         this._rightShowing = true;
         this._leftShowing = false;
 
         // Bring the z-index of the right menu up
-        this.right.bringUp();
+        this.right && this.right.bringUp();
         // Push the z-index of the left menu down
-        this.left.pushDown();
+        this.left && this.left.pushDown();
       }
     },
 

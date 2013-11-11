@@ -1,6 +1,15 @@
 (function(ionic) {
   
   ionic.Utils = {
+
+    // Return a function that will be called with the given context
+    proxy: function(func, context) {
+      var args = Array.prototype.slice.call(arguments, 2);
+      return function() {
+        return func.apply(context, args.concat(Array.prototype.slice.call(arguments)));
+      };
+    },
+
     throttle: function(func, wait, options) {
       var context, args, result;
       var timeout = null;
@@ -80,8 +89,10 @@
     }
   };
 
+  // Bind a few of the most useful functions to the ionic scope
   ionic.inherit = ionic.Utils.inherit;
   ionic.extend = ionic.Utils.extend;
   ionic.throttle = ionic.Utils.throttle;
+  ionic.proxy = ionic.Utils.proxy;
 
 })(window.ionic);

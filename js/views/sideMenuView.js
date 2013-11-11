@@ -22,4 +22,37 @@
     }
   });
 
+  ionic.views.SideMenuContent = ionic.views.View.inherit({
+    initialize: function(opts) {
+      var _this = this;
+
+      ionic.extend(this, {
+        animationClass: 'menu-animated',
+        onDrag: function(e) {},
+        onEndDrag: function(e) {},
+      }, opts);
+
+      ionic.onGesture('drag', ionic.proxy(this._onDrag, this), this.el);
+      ionic.onGesture('release', ionic.proxy(this._onEndDrag, this), this.el);
+    },
+    _onDrag: function(e) {
+      this.onDrag && this.onDrag(e);
+    },
+    _onEndDrag: function(e) {
+      this.onEndDrag && this.onEndDrag(e);
+    },
+    disableAnimation: function() {
+      this.el.classList.remove(this.animationClass);
+    },
+    enableAnimation: function() {
+      this.el.classList.add(this.animationClass);
+    },
+    getTranslateX: function() {
+      return parseFloat(this.el.style.webkitTransform.replace('translate3d(', '').split(',')[0]);
+    },
+    setTranslateX: function(x) {
+      this.el.style.webkitTransform = 'translate3d(' + x + 'px, 0, 0)';
+    }
+  });
+
 })(ionic);

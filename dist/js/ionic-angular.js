@@ -975,27 +975,18 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
   angular.extend(this, ionic.controllers.SideMenuController.prototype);
 
   ionic.controllers.SideMenuController.call(this, {
+    // Our quick implementation of the left side menu
     left: {
       width: 270,
-      pushDown: function() {
-        $scope.leftZIndex = -1;
-      },
-      bringUp: function() {
-        $scope.leftZIndex = 0;
-      }
     },
+
+    // Our quick implementation of the right side menu
     right: {
       width: 270,
-      pushDown: function() {
-        $scope.rightZIndex = -1;
-      },
-      bringUp: function() {
-        $scope.rightZIndex = 0;
-      }
     }
   });
 
-  $scope.contentTranslateX = 0;
+  $scope.sideMenuContentTranslateX = 0;
 
   $scope.sideMenuCtrl = this;
 })
@@ -1027,28 +1018,32 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           defaultPrevented = e.defaultPrevented;
         });
 
-        Gesture.on('drag', function(e) {
+        var dragFn = function(e) {
           if(defaultPrevented) {
             return;
           }
           sideMenuCtrl._handleDrag(e);
-        }, $element[0]);
+        };
 
-        Gesture.on('release', function(e) {
+        Gesture.on('drag', dragFn, $element[0]);
+
+        var dragReleaseFn = function(e) {
           if(!defaultPrevented) {
             sideMenuCtrl._endDrag(e);
           }
           defaultPrevented = false;
-        }, $element[0]);
+        };
+
+        Gesture.on('release', dragReleaseFn, $element[0]);
 
         sideMenuCtrl.setContent({
           onDrag: function(e) {},
           endDrag: function(e) {},
           getTranslateX: function() {
-            return $scope.contentTranslateX || 0;
+            return $scope.sideMenuContentTranslateX || 0;
           },
           setTranslateX: function(amount) {
-            $scope.contentTranslateX = amount;
+            $scope.sideMenuContentTranslateX = amount;
             $element[0].style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
           },
           enableAnimation: function() {
@@ -1061,6 +1056,12 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
             $scope.animationEnabled = false;
             $element[0].classList.remove('menu-animated');
           }
+        });
+
+        // Cleanup
+        $scope.$on('$destroy', function() {
+          Gesture.off('drag', dragFn);
+          Gesture.off('release', dragReleaseFn);
         });
       };
     }
@@ -1080,10 +1081,23 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
       return function($scope, $element, $attr, sideMenuCtrl) {
         $scope.side = $attr.side;
 
+
         if($scope.side == 'left') {
           sideMenuCtrl.left.isEnabled = true;
+          sideMenuCtrl.left.pushDown = function() {
+            $element[0].style.zIndex = -1;
+          };
+          sideMenuCtrl.left.bringUp = function() {
+            $element[0].style.zIndex = 0;
+          };
         } else if($scope.side == 'right') {
           sideMenuCtrl.right.isEnabled = true;
+          sideMenuCtrl.right.pushDown = function() {
+            $element[0].style.zIndex = -1;
+          };
+          sideMenuCtrl.right.bringUp = function() {
+            $element[0].style.zIndex = 0;
+          };
         }
 
         $element.append(transclude($scope));
