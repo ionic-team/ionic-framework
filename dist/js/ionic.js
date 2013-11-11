@@ -3319,7 +3319,8 @@ window.ionic = {
   ionic.views.Modal = ionic.views.View.inherit({
     initialize: function(opts) {
       opts = ionic.extend({
-        focusFirstInput: true
+        focusFirstInput: true,
+        unfocusOnHide: true
       }, opts);
 
       ionic.extend(this, opts);
@@ -3338,9 +3339,11 @@ window.ionic = {
       this.el.classList.remove('active');
 
       // Unfocus all elements
-      var inputs = this.el.querySelectorAll('input, textarea');
-      for(var i = 0; i < inputs.length; i++) {
-        inputs[i].blur && inputs[i].blur();
+      if(this.unfocusOnHide) {
+        var inputs = this.el.querySelectorAll('input, textarea');
+        for(var i = 0; i < inputs.length; i++) {
+          inputs[i].blur && inputs[i].blur();
+        }
       }
     }
   });
