@@ -67,16 +67,18 @@
       <list is-editing="isEditingItems" on-refresh-holding="almostRefreshing()" on-refresh-opening="almostRefreshProjects(ratio)" on-refresh="refreshProjects()" animation="my-repeat-animation" delete-icon="icon ion-minus-circled" reorder-icon="icon ion-navicon">
         <list-refresher>
         </list-refresher>
-        <list-item ng-repeat="item in items" 
+        <item 
+            ng-repeat="item in items" 
             buttons="item.buttons"
             can-delete="true"
             can-reorder="true"
             can-swipe="true"
            on-delete="deleteProject(project)"
            on-select="selectProject(project)">
+           <i class="icon ion-email ion-primary"></i>
           {{item.text}}
           <i class="{{item.icon}}"></i>
-        </list-item>
+        </item>
       </list>
       <button ng-click="edit()" class="button button-success">Edit</button>
     </div>

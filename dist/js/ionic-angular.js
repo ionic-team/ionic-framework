@@ -560,10 +560,10 @@ angular.module('ionic.ui.content', [])
 
 angular.module('ionic.ui.list', ['ngAnimate'])
 
-.directive('listItem', ['$timeout', function($timeout) {
+.directive('item', ['$timeout', function($timeout) {
   return {
     restrict: 'E',
-    require: ['?^list', '?^virtualList'],
+    require: ['?^list'],
     replace: true,
     transclude: true,
     scope: {
@@ -574,8 +574,9 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       canReorder: '@',
       canSwipe: '@',
       buttons: '=',
+      type: '@'
     },
-    template: '<a href="#" class="item item-slider">\
+    template: '<a href="#" class="item">\
             <div class="item-edit" ng-if="canDelete && isEditing">\
               <button class="button button-icon" ng-click="onDelete()"><i ng-class="deleteIcon"></i></button>\
             </div>\
@@ -589,26 +590,19 @@ angular.module('ionic.ui.list', ['ngAnimate'])
            </div>\
           </a>',
 
-    /*
-    template:   '<li class="list-item">\
-                   <div class="list-item-edit" ng-if="canDelete && isEditing">\
-                     <button class="button button-icon" ng-click="onDelete()"><i ng-class="deleteIcon"></i></button>\
-                   </div>\
-                   <div class="list-item-content" ng-transclude>\
-                   </div>\
-                   <div class="list-item-drag" ng-if="canReorder && isEditing">\
-                     <button data-ionic-action="reorder" class="button button-icon"><i ng-class="reorderIcon"></i></button>\
-                   </div>\
-                   <div class="list-item-buttons" ng-if="canSwipe && !isEditing">\
-                     <button ng-click="buttonClicked(button)" class="button" ng-class="button.type" ng-repeat="button in buttons">{{button.text}}</button>\
-                   </div>\
-                </li>',*/
     link: function($scope, $element, $attr, list) {
       // Grab the parent list controller
       if(list[0]) {
         list = list[0];
       } else if(list[1]) {
         list = list[1];
+      }
+
+      // Add the list item type class
+      $element.addClass($attr.type || 'item-slider');
+
+      if($attr.type !== 'item-slider') {
+        $scope.canSwipe = false;
       }
 
       $scope.isEditing = false;
