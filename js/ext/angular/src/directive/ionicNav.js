@@ -12,7 +12,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
    * Push a template onto the navigation stack.
    * @param {string} templateUrl the URL of the template to load.
    */
-  this.pushFromTemplate = ionic.debounce(function(templateUrl) {
+  this.pushFromTemplate = ionic.throttle(function(templateUrl) {
     var childScope = $scope.$new();
     childScope.isVisible = true;
 
@@ -25,12 +25,16 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
         $animate.enter(cloned, angular.element(content));
       });
     });
-  }, 300, true);
+  }, 300, {
+    trailing: false
+  });
 
-  // Pop function, debounced
-  this.popController = ionic.debounce(function() {
+  // Pop function, throttled
+  this.popController = ionic.throttle(function() {
     _this.pop();
-  }, 300, true);
+  }, 300, {
+    trailing: false
+  });
 
 
   ionic.controllers.NavController.call(this, {
@@ -190,6 +194,12 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
         $scope.visibilityChanged = function(direction) {
           lastDirection = direction;
+
+          if($scope.isVisible) {
+            $scope.$broadcast('navContent.shown');
+          } else {
+            $scope.$broadcast('navContent.hidden');
+          }
 
           if(!childElement) {
             return;

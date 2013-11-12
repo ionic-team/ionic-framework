@@ -74,7 +74,13 @@
       })
 
       .controller('CatsCtrl', function($scope, $compile, $element) {
-        console.log('Cats', $element);
+        $scope.$on('navContent.shown', function() {
+          console.log('SHOWN');
+        });
+        $scope.$on('navContent.hidden', function() {
+          console.log('HIDDEN');
+        });
+
         var items = [];
         for(var i = 0; i < 100; i++) {
           items.push({});
