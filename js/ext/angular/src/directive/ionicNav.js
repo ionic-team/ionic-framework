@@ -57,7 +57,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
       // Compile the template with the new scrope, and append it to the navigation's content area
       var el = $compile(templateString)(childScope, function(cloned, scope) {
-        var content = angular.element($element[0].querySelector('.content'));
+        var content = angular.element($element[0].querySelector('.content, .scroll'));
 
         //content.append(cloned);
         //angular.element(content).append(cloned);

@@ -40,7 +40,7 @@
         dragThreshold: 10,
         
         // Resistance when scrolling too far up or down
-        rubberBandResistance: 3,
+        rubberBandResistance: 2,
 
         // Scroll event names. These are custom so can be configured
         scrollEventName: 'momentumScrolled',
