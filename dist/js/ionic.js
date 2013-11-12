@@ -1837,9 +1837,16 @@ window.ionic = {
 ;
 (function(ionic) {
   
+  /**
+   * Various utilities used throughout Ionic
+   *
+   * Some of these are adopted from underscore.js and backbone.js, both also MIT licensed.
+   */
   ionic.Utils = {
 
-    // Return a function that will be called with the given context
+    /**
+     * Return a function that will be called with the given context
+     */
     proxy: function(func, context) {
       var args = Array.prototype.slice.call(arguments, 2);
       return function() {
@@ -1847,6 +1854,41 @@ window.ionic = {
       };
     },
 
+    /**
+     * Only call a function once in the given interval.
+     * 
+     * @param func {Function} the function to call
+     * @param wait {int} how long to wait before/after to allow function calls
+     * @param immediate {boolean} whether to call immediately or after the wait interval
+     */
+     debounce: function(func, wait, immediate) {
+      var timeout, args, context, timestamp, result;
+      return function() {
+        context = this;
+        args = arguments;
+        timestamp = new Date();
+        var later = function() {
+          var last = (new Date()) - timestamp;
+          if (last < wait) {
+            timeout = setTimeout(later, wait - last);
+          } else {
+            timeout = null;
+            if (!immediate) result = func.apply(context, args);
+          }
+        };
+        var callNow = immediate && !timeout;
+        if (!timeout) {
+          timeout = setTimeout(later, wait);
+        }
+        if (callNow) result = func.apply(context, args);
+        return result;
+      };
+    },
+
+    /**
+     * Throttle the given fun, only allowing it to be
+     * called at most every `wait` ms.
+     */
     throttle: function(func, wait, options) {
       var context, args, result;
       var timeout = null;
@@ -1931,6 +1973,7 @@ window.ionic = {
   ionic.extend = ionic.Utils.extend;
   ionic.throttle = ionic.Utils.throttle;
   ionic.proxy = ionic.Utils.proxy;
+  ionic.debounce = ionic.Utils.debounce;
 
 })(window.ionic);
 ;
@@ -4188,21 +4231,17 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
       return;
 
     // Actually switch the active controllers
-
-    // Remove the old one
-    //last && last.detach();
     if(last) {
       last.isVisible = false;
-      last.visibilityChanged && last.visibilityChanged();
+      last.visibilityChanged && last.visibilityChanged('push');
     }
 
     // Grab the top controller on the stack
     var next = this.controllers[this.controllers.length - 1];
 
-    // TODO: No DOM stuff here
-    //this.content.el.appendChild(next.el);
     next.isVisible = true;
-    next.visibilityChanged && next.visibilityChanged();
+    // Trigger visibility change, but send 'first' if this is the first page
+    next.visibilityChanged && next.visibilityChanged(last ? 'push' : 'first');
 
     this._updateNavBar();
 
@@ -4227,7 +4266,7 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
     last = this.controllers.pop();
     if(last) {
       last.isVisible = false;
-      last.visibilityChanged && last.visibilityChanged();
+      last.visibilityChanged && last.visibilityChanged('pop');
     }
     
     // Remove the old one
@@ -4238,7 +4277,7 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
     // TODO: No DOM stuff here
     //this.content.el.appendChild(next.el);
     next.isVisible = true;
-    next.visibilityChanged && next.visibilityChanged();
+    next.visibilityChanged && next.visibilityChanged('pop');
 
     // Switch to it (TODO: Animate or such things here)
 

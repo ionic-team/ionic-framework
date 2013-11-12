@@ -60,21 +60,17 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
       return;
 
     // Actually switch the active controllers
-
-    // Remove the old one
-    //last && last.detach();
     if(last) {
       last.isVisible = false;
-      last.visibilityChanged && last.visibilityChanged();
+      last.visibilityChanged && last.visibilityChanged('push');
     }
 
     // Grab the top controller on the stack
     var next = this.controllers[this.controllers.length - 1];
 
-    // TODO: No DOM stuff here
-    //this.content.el.appendChild(next.el);
     next.isVisible = true;
-    next.visibilityChanged && next.visibilityChanged();
+    // Trigger visibility change, but send 'first' if this is the first page
+    next.visibilityChanged && next.visibilityChanged(last ? 'push' : 'first');
 
     this._updateNavBar();
 
@@ -99,7 +95,7 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
     last = this.controllers.pop();
     if(last) {
       last.isVisible = false;
-      last.visibilityChanged && last.visibilityChanged();
+      last.visibilityChanged && last.visibilityChanged('pop');
     }
     
     // Remove the old one
@@ -110,7 +106,7 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
     // TODO: No DOM stuff here
     //this.content.el.appendChild(next.el);
     next.isVisible = true;
-    next.visibilityChanged && next.visibilityChanged();
+    next.visibilityChanged && next.visibilityChanged('pop');
 
     // Switch to it (TODO: Animate or such things here)
 

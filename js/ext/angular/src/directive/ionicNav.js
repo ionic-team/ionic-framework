@@ -48,7 +48,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
    * Push a template onto the navigation stack.
    * @param {string} templateUrl the URL of the template to load.
    */
-  this.pushFromTemplate = function(templateUrl) {
+  this.pushFromTemplate = ionic.debounce(function(templateUrl) {
     var childScope = $scope.$new();
     childScope.isVisible = true;
 
@@ -58,13 +58,10 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
       // Compile the template with the new scrope, and append it to the navigation's content area
       var el = $compile(templateString)(childScope, function(cloned, scope) {
         var content = angular.element($element[0].querySelector('.content, .scroll'));
-
-        //content.append(cloned);
-        //angular.element(content).append(cloned);
         $animate.enter(cloned, angular.element(content));
       });
     });
-  };
+  }, 100, true);
 
   /**
    * Push a controller to the stack. This is called by the child
@@ -169,7 +166,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
         // Store that we should go forwards on the animation. This toggles
         // based on the visibility sequence (to support reverse transitions)
-        var wasVisible = null;
+        var lastDirection = null;
 
         $scope.title = $attr.title;
         $scope.pushAnimation = $attr.pushAnimation || 'slide-in-left';
@@ -185,6 +182,24 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
           navCtrl.showNavBar();
         }
 
+        $scope.visibilityChanged = function(direction) {
+          lastDirection = direction;
+
+          if(!childElement) {
+            return;
+          }
+
+          var clone = childElement;
+
+          if(direction == 'push') {
+            clone.addClass(childScope.pushAnimation);
+            clone.removeClass(childScope.popAnimation);
+          } else if(direction == 'pop') {
+            clone.addClass(childScope.popAnimation);
+            clone.removeClass(childScope.pushAnimation);
+          }
+        };
+
         // Push this controller onto the stack
         $scope.pushController($scope, $element);
 
@@ -196,39 +211,33 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
             transclude(childScope, function(clone) {
               childElement = clone;
 
-              // Check if this is visible, and if so, create it and show it
-              if(wasVisible === false) {
-                clone.removeClass(childScope.pushAnimation);
-                clone.addClass(childScope.popAnimation);
-              } else {
+              if(lastDirection == 'push') {
                 clone.addClass(childScope.pushAnimation);
-                clone.removeClass(childScope.popAnimation);
+              } else if(lastDirection == 'pop') {
+                clone.addClass(childScope.popAnimation);
               }
 
-              $animate.enter(clone, $element.parent(), $element);
-              wasVisible = true;
+              $animate.enter(clone, $element.parent(), $element, function() {
+                clone.removeClass(childScope.pushAnimation);
+                clone.removeClass(childScope.popAnimation);
+              });
             });
           } else {
             // Taken from ngIf
             if(childElement) {
-              var clone = childElement;
               // Check if this is visible, and if so, create it and show it
-              if(wasVisible === false) {
-                clone.removeClass(childScope.pushAnimation);
-                clone.addClass(childScope.popAnimation);
-              } else {
-                clone.addClass(childScope.pushAnimation);
-                clone.removeClass(childScope.popAnimation);
-              }
-              $animate.leave(childElement);
+              $animate.leave(childElement, function() {
+                if(childScope) {
+                  childElement.removeClass(childScope.pushAnimation);
+                  childElement.removeClass(childScope.popAnimation);
+                }
+              });
               childElement = undefined;
-              wasVisible = false;
             }
             if(childScope) {
               childScope.$destroy();
               childScope = undefined;
             }
-
           }
         });
       }
