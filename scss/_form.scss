@@ -17,13 +17,13 @@ legend {
   width: 100%;
   border: 0;
   border-bottom: 1px solid #e5e5e5;
-  color: $subdued-dark;
+  color: $dark;
   font-size: $font-size-base * 1.5;
   line-height: $line-height-base * 2;
 
   // Small
   small {
-    color: $subdued-light;
+    color: $stable;
     font-size: $line-height-base * .75;
   }
 }
@@ -134,7 +134,7 @@ input[type="tel"],
 input[type="color"] {
   display: inline-block;
   height: $line-height-computed + $font-size-base;
-  color: $subdued;
+  color: $stable;
   vertical-align: middle;
   font-size: $font-size-base;
   line-height: $line-height-computed;

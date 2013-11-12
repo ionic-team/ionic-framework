@@ -141,44 +141,24 @@
   border-color: $button-royal-border;
 }
 
-.pure {
-  color: $pure;
+.light {
+  color: $light;
 }
-.pure-bg {
-  background-color: $pure;
+.light-bg {
+  background-color: $light;
 }
-.pure-border {
-  border-color: $button-pure-border;
-}
-
-.subdued-light {
-  color: $subdued-light;
-}
-.subdued-light-bg {
-  background-color: $subdued-light;
-}
-.subdued-light-border {
-  border-color: $button-subdued-light-border;
+.light-border {
+  border-color: $button-light-border;
 }
 
-.subdued {
-  color: $subdued;
+.stable {
+  color: $stable;
 }
-.subdued-bg {
-  background-color: $subdued;
+.stable-bg {
+  background-color: $stable;
 }
-.subdued-border {
-  border-color: $button-subdued-border;
-}
-
-.subdued-dark {
-  color: $subdued-dark;
-}
-.subdued-dark-bg {
-  background-color: $subdued-dark;
-}
-.subdued-dark-border {
-  border-color: $button-subdued-dark-border;
+.stable-border {
+  border-color: $button-stable-border;
 }
 
 .dark {

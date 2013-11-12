@@ -49,17 +49,11 @@
   &.tabs-royal {
     @include tab-style($tabs-royal-bg, $tabs-royal-border-color, $tabs-royal-text);
   }
-  &.tabs-pure {
-    @include tab-style($tabs-pure-bg, $tabs-pure-border-color, $tabs-pure-text);
+  &.tabs-light {
+    @include tab-style($tabs-light-bg, $tabs-light-border-color, $tabs-light-text);
   }
-  &.tabs-subdued-light {
-    @include tab-style($tabs-subdued-light-bg, $tabs-subdued-light-border-color, $tabs-subdued-light-text);
-  }
-  &.tabs-subdued {
-    @include tab-style($tabs-subdued-bg, $tabs-subdued-border-color, $tabs-subdued-text);
-  }
-  &.tabs-subdued-dark {
-    @include tab-style($tabs-subdued-dark-bg, $tabs-subdued-dark-border-color, $tabs-subdued-dark-text);
+  &.tabs-stable {
+    @include tab-style($tabs-stable-bg, $tabs-stable-border-color, $tabs-stable-text);
   }
   &.tabs-dark {
     @include tab-style($tabs-dark-bg, $tabs-dark-border-color, $tabs-dark-text);
@@ -168,17 +162,11 @@
   &.tab-item-royal {
     color: $royal;
   }
-  &.tab-item-pure {
-    color: $pure;
+  &.tab-item-light {
+    color: $light;
   }
-  &.tab-item-subdued-light {
-    color: $subdued-light;
-  }
-  &.tab-item-subdued {
-    color: $subdued;
-  }
-  &.tab-item-subdued-dark {
-    color: $subdued-dark;
+  &.tab-item-stable {
+    color: $stable;
   }
   &.tab-item-dark {
     color: $dark;

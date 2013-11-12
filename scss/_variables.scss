@@ -3,7 +3,7 @@
 // -------------------------------
 
 $primary:               #4a87ee !default;
-$secondary:             #fff    !default;
+$secondary:             #ffffff !default;
 $tertiary:              #f5f5f5 !default;
 
 
@@ -17,11 +17,9 @@ $energized:             #f0b840 !default;
 $assertive:             #ef4e3a !default;
 $royal:                 #8a6de9 !default;
 
-$pure:                  #fff !default;
-$subdued-light:         #eee !default;
-$subdued:               #ccc !default;
-$subdued-dark:          #888 !default;
-$dark:                  #444 !default;
+$light:                 #ffffff !default;
+$stable:               #f8f8f8 !default;
+$dark:                  #444444 !default;
 
 
 // Base
@@ -85,12 +83,12 @@ $input-height-base:               ($line-height-computed + ($padding-base-vertic
 $input-height-large:              (floor($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2) !default;
 $input-height-small:              (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
 
-$input-bg:                        $pure;
-$input-bg-disabled:               $subdued-light;
+$input-bg:                        $light;
+$input-bg-disabled:               $stable;
 
-$input-color:                     $subdued-dark;
+$input-color:                     $dark;
 $input-label-color:               $dark;
-$input-color-placeholder:         $subdued;
+$input-color-placeholder:         $stable;
 
 
 // Toggle
@@ -111,7 +109,7 @@ $toggle-off-border-color:         #E5E5E5;
 $toggle-on-bg-color:              #4A87EE;
 $toggle-on-border-color:          $toggle-on-bg-color;
 
-$toggle-handle-off-bg-color:      $pure;
+$toggle-handle-off-bg-color:      $light;
 $toggle-handle-on-bg-color:       $toggle-handle-off-bg-color;
 
 $toggle-transition-duration:      .1s;
@@ -174,11 +172,11 @@ $button-bar-button-height:            32px;
 $button-bar-button-padding:           8px !default;
 $button-bar-button-icon-size:         24px;
 
-$button-default-bg:                   $subdued-light;
+$button-default-bg:                   $stable;
 $button-default-text:                 #444;
-$button-default-border:               darken($subdued-light, 15%);
-$button-default-active-bg:            lighten($subdued-light, 5%);
-$button-default-active-border:        darken($subdued-light, 25%);
+$button-default-border:               darken($stable, 15%);
+$button-default-active-bg:            lighten($stable, 5%);
+$button-default-active-border:        darken($stable, 25%);
 
 $button-primary-bg:                   $primary;
 $button-primary-text:                 #fff;
@@ -234,29 +232,17 @@ $button-royal-border:                 darken($royal, 15%);
 $button-royal-active-bg:              darken($royal, 15%);
 $button-royal-active-border:          darken($royal, 15%);
 
-$button-pure-bg:                      $pure;
-$button-pure-text:                    #444;
-$button-pure-border:                  #ddd;
-$button-pure-active-bg:               #222;
-$button-pure-active-border:           #000;
+$button-light-bg:                      $light;
+$button-light-text:                    #444;
+$button-light-border:                  #ddd;
+$button-light-active-bg:               #222;
+$button-light-active-border:           #000;
 
-$button-subdued-light-bg:             $subdued-light;
-$button-subdued-light-text:           #444;
-$button-subdued-light-border:         #ddd;
-$button-subdued-light-active-bg:      #222;
-$button-subdued-light-active-border:  #000;
-
-$button-subdued-bg:                   $subdued;
-$button-subdued-text:                 #444;
-$button-subdued-border:               #bbb;
-$button-subdued-active-bg:            #222;
-$button-subdued-active-border:        #000;
-
-$button-subdued-dark-bg:              $subdued-dark;
-$button-subdued-dark-text:            #fff;
-$button-subdued-dark-border:          darken($subdued-dark, 10%);
-$button-subdued-dark-active-bg:       #222;
-$button-subdued-dark-active-border:   #000;
+$button-stable-bg:                   $stable;
+$button-stable-text:                 #444;
+$button-stable-border:               #bbb;
+$button-stable-active-bg:            #222;
+$button-stable-active-border:        #000;
 
 $button-dark-bg:                      $dark;
 $button-dark-text:                    #fff;
@@ -334,29 +320,17 @@ $bar-royal-border:                $button-royal-border;
 $bar-royal-active-bg:             $button-royal-active-bg;
 $bar-royal-active-border:         $button-royal-active-border;
 
-$bar-pure-bg:                     rgba($button-pure-bg, $bar-transparency);
-$bar-pure-text:                   $button-pure-text;
-$bar-pure-border:                 $button-pure-border;
-$bar-pure-active-bg:              $button-pure-active-bg;
-$bar-pure-active-border:          $button-pure-active-border;
+$bar-light-bg:                    rgba($button-light-bg, $bar-transparency);
+$bar-light-text:                  $button-light-text;
+$bar-light-border:                $button-light-border;
+$bar-light-active-bg:             $button-light-active-bg;
+$bar-light-active-border:         $button-light-active-border;
 
-$bar-subdued-light-bg:            rgba($button-subdued-light-bg, $bar-transparency);
-$bar-subdued-light-text:          $button-subdued-light-text;
-$bar-subdued-light-border:        $button-subdued-light-border;
-$bar-subdued-light-active-bg:     $button-subdued-light-active-bg;
-$bar-subdued-light-active-border: $button-subdued-light-active-border;
-
-$bar-subdued-bg:                  rgba($button-subdued-bg, $bar-transparency);
-$bar-subdued-text:                $button-subdued-text;
-$bar-subdued-border:              $button-subdued-border;
-$bar-subdued-active-bg:           $button-subdued-active-bg;
-$bar-subdued-active-border:       $button-subdued-active-border;
-
-$bar-subdued-dark-bg:             rgba($button-subdued-dark-bg, $bar-transparency);
-$bar-subdued-dark-text:           $button-subdued-dark-text;
-$bar-subdued-dark-border:         $button-subdued-dark-border;
-$bar-subdued-dark-active-bg:      $button-subdued-dark-active-bg;
-$bar-subdued-dark-active-border:  $button-subdued-dark-active-border;
+$bar-stable-bg:                   rgba($button-stable-bg, $bar-transparency);
+$bar-stable-text:                 $button-stable-text;
+$bar-stable-border:               $button-stable-border;
+$bar-stable-active-bg:            $button-stable-active-bg;
+$bar-stable-active-border:        $button-stable-active-border;
 
 $bar-dark-bg:                     rgba($button-dark-bg, $bar-transparency);
 $bar-dark-text:                   $button-dark-text;
@@ -373,9 +347,9 @@ $tabs-text-font-size:              14px !default;
 $tabs-text-with-icon-font-size:    10px !default;
 $tabs-icon-size:                   32px !default;
 
-$tabs-default-bg:                  $button-subdued-light-bg;
-$tabs-default-border-color:        $button-subdued-light-border;
-$tabs-default-text:                $button-subdued-light-text;
+$tabs-default-bg:                  $button-stable-bg;
+$tabs-default-border-color:        $button-stable-border;
+$tabs-default-text:                $button-stable-text;
 
 $tabs-primary-bg:                  $button-primary-bg;
 $tabs-primary-border-color:        $button-primary-border;
@@ -413,21 +387,13 @@ $tabs-royal-bg:                    $button-royal-bg;
 $tabs-royal-border-color:          $button-royal-border;
 $tabs-royal-text:                  $button-royal-text;
 
-$tabs-pure-bg:                     $button-pure-bg;
-$tabs-pure-border-color:           $button-pure-border;
-$tabs-pure-text:                   $button-pure-text;
+$tabs-light-bg:                    $button-light-bg;
+$tabs-light-border-color:          $button-light-border;
+$tabs-light-text:                  $button-light-text;
 
-$tabs-subdued-light-bg:            $button-subdued-light-bg;
-$tabs-subdued-light-border-color:  $button-subdued-light-border;
-$tabs-subdued-light-text:          $button-subdued-light-text;
-
-$tabs-subdued-bg:                  $button-subdued-bg;
-$tabs-subdued-border-color:        $button-subdued-border;
-$tabs-subdued-text:                $button-subdued-text;
-
-$tabs-subdued-dark-bg:             $button-subdued-dark-bg;
-$tabs-subdued-dark-border-color:   $button-subdued-dark-border;
-$tabs-subdued-dark-text:           $button-subdued-dark-text;
+$tabs-stable-bg:                   $button-stable-bg;
+$tabs-stable-border-color:         $button-stable-border;
+$tabs-stable-text:                 $button-stable-text;
 
 $tabs-dark-bg:                     $button-dark-bg;
 $tabs-dark-border-color:           $button-dark-border;
@@ -444,7 +410,7 @@ $list-header-color:               #222;
 $list-header-padding:             5px 15px;
 $list-header-margin-top:          20px !default;
 
-$list-bg:                         $pure;
+$list-bg:                         $light;
 $list-border-color:               #ddd;
 
 
@@ -528,12 +494,12 @@ $sheet-border-radius:         3px !default;
 // Badges
 // -------------------------
 
-$badge-color:                 $pure !default;
-$badge-link-hover-color:      $pure !default;
-$badge-bg:                    $subdued !default;
+$badge-color:                 $light !default;
+$badge-link-hover-color:      $light !default;
+$badge-bg:                    $stable !default;
 
 $badge-active-color:          $link-color !default;
-$badge-active-bg:             $pure !default;
+$badge-active-bg:             $light !default;
 
 $badge-font-size:             14px !default;
 $badge-line-height:           16px !default;

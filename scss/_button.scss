@@ -42,7 +42,7 @@
     margin-top: $button-block-margin;
     margin-bottom: $button-block-margin;
   }
-  
+
   &.button-primary {
     @include button-style($button-primary-bg, $button-primary-border, $button-primary-active-bg, $button-primary-active-border, $button-primary-text);
     @include button-clear($button-primary-bg);
@@ -52,7 +52,7 @@
   &.button-secondary {
     @include button-style($button-secondary-bg, $button-secondary-border, $button-secondary-active-bg, $button-secondary-active-border, $button-secondary-text);
     @include button-clear($button-secondary-border);
-    @include button-outline($button-secondary-border, $subdued-dark);
+    @include button-outline($button-secondary-border, $dark);
   }
 
   &.button-tertiary {
@@ -97,28 +97,16 @@
     @include button-outline($button-royal-bg);
   }
 
-  &.button-pure {
-    @include button-style($button-pure-bg, $button-pure-border, $button-pure-active-bg, $button-pure-active-border, $button-pure-text);
-    @include button-clear($button-pure-bg);
-    @include button-outline($button-pure-bg);
+  &.button-light {
+    @include button-style($button-light-bg, $button-light-border, $button-light-active-bg, $button-light-active-border, $button-light-text);
+    @include button-clear($button-light-bg);
+    @include button-outline($button-light-bg);
   }
 
-  &.button-subdued-light {
-    @include button-style($button-subdued-light-bg, $button-subdued-light-border, $button-subdued-light-active-bg, $button-subdued-light-active-border, $button-subdued-light-text);
-    @include button-clear($button-subdued-light-bg);
-    @include button-outline($button-subdued-light-bg);
-  }
-
-  &.button-subdued {
-    @include button-style($button-subdued-bg, $button-subdued-border, $button-subdued-active-bg, $button-subdued-active-border, $button-subdued-text);
-    @include button-clear($button-subdued-bg);
-    @include button-outline($button-subdued-bg);
-  }
-
-  &.button-subdued-dark {
-    @include button-style($button-subdued-dark-bg, $button-subdued-dark-border, $button-subdued-dark-active-bg, $button-subdued-dark-active-border, $button-subdued-dark-text);
-    @include button-clear($button-subdued-dark-bg);
-    @include button-outline($button-subdued-dark-bg);
+  &.button-stable {
+    @include button-style($button-stable-bg, $button-stable-border, $button-stable-active-bg, $button-stable-active-border, $button-stable-text);
+    @include button-clear($button-stable-bg);
+    @include button-outline($button-stable-bg);
   }
 
   &.button-dark {

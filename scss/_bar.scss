@@ -77,17 +77,11 @@
   &.bar-royal {
     @include bar-style($bar-royal-bg, $bar-royal-border, $bar-royal-text);
   }
-  &.bar-pure {
-    @include bar-style($bar-pure-bg, $bar-pure-border, $bar-pure-text);
+  &.bar-light {
+    @include bar-style($bar-light-bg, $bar-light-border, $bar-light-text);
   }
-  &.bar-subdued-light {
-    @include bar-style($bar-subdued-light-bg, $bar-subdued-light-border, $bar-subdued-light-text);
-  }
-  &.bar-subdued {
-    @include bar-style($bar-subdued-bg, $bar-subdued-border, $bar-subdued-text);
-  }
-  &.bar-subdued-dark {
-    @include bar-style($bar-subdued-dark-bg, $bar-subdued-dark-border, $bar-subdued-dark-text);
+  &.bar-light {
+    @include bar-style($bar-light-bg, $bar-light-border, $bar-light-text);
   }
   &.bar-dark {
     @include bar-style($bar-dark-bg, $bar-dark-border, $bar-dark-text);
@@ -168,7 +162,7 @@
 .bar-secondary {
   .button {
     @include button-style($bar-secondary-bg, $bar-secondary-border, $bar-secondary-active-bg, $bar-secondary-active-border, $bar-secondary-text);
-    @include button-clear($subdued-dark, $bar-title-font-size);
+    @include button-clear($dark, $bar-title-font-size);
   }
 }
 .bar-tertiary {
@@ -213,27 +207,15 @@
     @include button-clear(#fff, $bar-title-font-size);
   }
 }
-.bar-pure {
+.bar-light {
   .button {
-    @include button-style($bar-pure-bg, $bar-pure-border, $bar-pure-active-bg, $bar-pure-active-border, $bar-pure-text);
+    @include button-style($bar-light-bg, $bar-light-border, $bar-light-active-bg, $bar-light-active-border, $bar-light-text);
     @include button-clear(#fff, $bar-title-font-size);
   }
 }
-.bar-subdued-light {
+.bar-light {
   .button {
-    @include button-style($bar-subdued-light-bg, $bar-subdued-light-border, $bar-subdued-light-active-bg, $bar-subdued-light-active-border, $bar-subdued-light-text);
-    @include button-clear(#fff, $bar-title-font-size);
-  }
-}
-.bar-subdued {
-  .button {
-    @include button-style($bar-subdued-bg, $bar-subdued-border, $bar-subdued-active-bg, $bar-subdued-active-border, $bar-subdued-text);
-    @include button-clear(#fff, $bar-title-font-size);
-  }
-}
-.bar-subdued-dark {
-  .button {
-    @include button-style($bar-subdued-dark-bg, $bar-subdued-dark-border, $bar-subdued-dark-active-bg, $bar-subdued-dark-active-border, $bar-subdued-dark-text);
+    @include button-style($bar-light-bg, $bar-light-border, $bar-light-active-bg, $bar-light-active-border, $bar-light-text);
     @include button-clear(#fff, $bar-title-font-size);
   }
 }
