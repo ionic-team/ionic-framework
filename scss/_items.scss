@@ -123,12 +123,18 @@ a.item {
 }
 
 
-// Slidable Item Content
-// -------------------------------
-.item-slider {
+/**
+ * Complex Items
+ * --------------------------------------------------
+ * Adding .item-complex allows the .item to be slidable and
+ * have options underneath the button, but also requires an
+ * additional .item-content element inside .item
+ */
+
+.item-complex {
   padding: 0;
 }
-.item-slider .item-content,
+.item-complex .item-content,
 .item-radio .item-content {
   /**
    * The content area of a complex list item. This area can
@@ -154,7 +160,7 @@ a.item {
 .item-text-wrap h5,
 .item-text-wrap h6,
 .item-text-wrap p,
-.item-slider.item-text-wrap .item-content,
+.item-complex.item-text-wrap .item-content,
 .item-body h1,
 .item-body h2,
 .item-body h3,
@@ -165,23 +171,26 @@ a.item {
   overflow: auto;
   white-space: normal;
 }
-.item-slider.item-text-wrap,
-.item-slider.item-text-wrap h1,
-.item-slider.item-text-wrap h2,
-.item-slider.item-text-wrap h3,
-.item-slider.item-text-wrap h4,
-.item-slider.item-text-wrap h5,
-.item-slider.item-text-wrap h6,
-.item-slider.item-text-wrap p {
+.item-complex.item-text-wrap,
+.item-complex.item-text-wrap h1,
+.item-complex.item-text-wrap h2,
+.item-complex.item-text-wrap h3,
+.item-complex.item-text-wrap h4,
+.item-complex.item-text-wrap h5,
+.item-complex.item-text-wrap h6,
+.item-complex.item-text-wrap p {
   overflow: hidden;
   white-space: nowrap;
 }
 
 
-// List Icons
-// -------------------------------
+/**
+ * Item Icons
+ * --------------------------------------------------
+ */
 
-.item .icon {
+.item-icon-left .icon,
+.item-icon-right .icon {
   @include display-flex();
   @include align-items(center);
   position: absolute;
@@ -203,7 +212,7 @@ a.item {
     left: $item-padding / 2;
   }
 }
-.item-slider.item-icon-left {
+.item-complex.item-icon-left {
   padding-left: 0;
 
   .item-content {
@@ -223,9 +232,11 @@ a.item {
 }
 
 
-
-// Item Button
-// -------------------------------
+/**
+ * Item Button
+ * --------------------------------------------------
+ * An item button is a child button inside an .item (not the entire .item)
+ */
 
 .item-button-left {
   padding-left: $item-padding * 5;
@@ -248,7 +259,9 @@ a.item {
   }
 }
 
-.item-button-right {
+.item-button-right,
+a.item.item-button-right,
+button.item.item-button-right {
   padding-right: $item-padding * 5;
 }
 
@@ -270,8 +283,12 @@ a.item {
 }
 
 
-// Auto Right Arrow Icon
-// -------------------------------
+/**
+ * Auto Right Arrow Icon
+ * --------------------------------------------------
+ * By default, if an .item is created out of an <a> or <button>
+ * then a arrow will be added to the right side of the item.
+ */
 
 a.item, 
 button.item {

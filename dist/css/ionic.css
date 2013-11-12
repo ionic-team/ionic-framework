@@ -3425,10 +3425,17 @@ a.item {
   a.item:hover, a.item:focus {
     text-decoration: none; }
 
-.item-slider {
+/**
+ * Complex Items
+ * --------------------------------------------------
+ * Adding .item-complex allows the .item to be slidable and
+ * have options underneath the button, but also requires an
+ * additional .item-content element inside .item
+ */
+.item-complex {
   padding: 0; }
 
-.item-slider .item-content,
+.item-complex .item-content,
 .item-radio .item-content {
   /**
    * The content area of a complex list item. This area can
@@ -3450,7 +3457,7 @@ a.item {
 .item-text-wrap h5,
 .item-text-wrap h6,
 .item-text-wrap p,
-.item-slider.item-text-wrap .item-content,
+.item-complex.item-text-wrap .item-content,
 .item-body h1,
 .item-body h2,
 .item-body h3,
@@ -3461,18 +3468,23 @@ a.item {
   overflow: auto;
   white-space: normal; }
 
-.item-slider.item-text-wrap,
-.item-slider.item-text-wrap h1,
-.item-slider.item-text-wrap h2,
-.item-slider.item-text-wrap h3,
-.item-slider.item-text-wrap h4,
-.item-slider.item-text-wrap h5,
-.item-slider.item-text-wrap h6,
-.item-slider.item-text-wrap p {
+.item-complex.item-text-wrap,
+.item-complex.item-text-wrap h1,
+.item-complex.item-text-wrap h2,
+.item-complex.item-text-wrap h3,
+.item-complex.item-text-wrap h4,
+.item-complex.item-text-wrap h5,
+.item-complex.item-text-wrap h6,
+.item-complex.item-text-wrap p {
   overflow: hidden;
   white-space: nowrap; }
 
-.item .icon {
+/**
+ * Item Icons
+ * --------------------------------------------------
+ */
+.item-icon-left .icon,
+.item-icon-right .icon {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-flex;
@@ -3498,9 +3510,9 @@ a.item {
   .item-icon-left .icon {
     left: 7.5px; }
 
-.item-slider.item-icon-left {
+.item-complex.item-icon-left {
   padding-left: 0; }
-  .item-slider.item-icon-left .item-content {
+  .item-complex.item-icon-left .item-content {
     padding-left: 45px; }
 
 .item-icon-right .icon {
@@ -3512,6 +3524,11 @@ a.item {
 .item-icon-left.item-icon-right .icon:last-child {
   left: auto; }
 
+/**
+ * Item Button
+ * --------------------------------------------------
+ * An item button is a child button inside an .item (not the entire .item)
+ */
 .item-button-left {
   padding-left: 75px; }
 
@@ -3538,7 +3555,9 @@ a.item {
     left: auto;
     line-height: 31px; }
 
-.item-button-right {
+.item-button-right,
+a.item.item-button-right,
+button.item.item-button-right {
   padding-right: 75px; }
 
 .item-button-right > .button,
@@ -3564,6 +3583,12 @@ a.item {
     left: auto;
     line-height: 31px; }
 
+/**
+ * Auto Right Arrow Icon
+ * --------------------------------------------------
+ * By default, if an .item is created out of an <a> or <button>
+ * then a arrow will be added to the right side of the item.
+ */
 a.item,
 button.item {
   padding-right: 40px; }
@@ -3782,6 +3807,10 @@ button.item-button-right:after {
   margin-right: 50px;
   margin-left: 50px; }
 
+/**
+ * List Header
+ * --------------------------------------------------
+ */
 .list-header {
   margin-top: 20px;
   padding: 5px 15px;
@@ -3793,15 +3822,17 @@ button.item-button-right:after {
   padding-right: 1px;
   padding-left: 1px; }
 
-/*
-  A card and list-inset are close to the same thing, except a card as a box shadow.
-*/
+/**
+ * Cards and Inset Lists
+ * --------------------------------------------------
+ * A card and list-inset are close to the same thing, except a card as a box shadow.
+ */
 .card,
 .list-inset {
   overflow: hidden;
   margin: 20px 10px;
-  background-color: white;
-  border-radius: 2px; }
+  border-radius: 2px;
+  background-color: white; }
 
 .card {
   padding-top: 1px;
@@ -3821,13 +3852,13 @@ button.item-button-right:after {
 .card .item:last-child,
 .list-inset .item:last-child,
 .padding > .list .item:last-child {
-  border-bottom-left-radius: 2px;
-  border-bottom-right-radius: 2px; }
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px; }
   .card .item:last-child .item-content,
   .list-inset .item:last-child .item-content,
   .padding > .list .item:last-child .item-content {
-    border-bottom-left-radius: 2px;
-    border-bottom-right-radius: 2px; }
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px; }
 
 .card .item:last-child,
 .list-inset .item:last-child {
@@ -3837,8 +3868,8 @@ button.item-button-right:after {
 .list-inset .item,
 .padding > .list .item,
 .padding-horizontal > .list .item {
-  margin-left: 0;
-  margin-right: 0; }
+  margin-right: 0;
+  margin-left: 0; }
 
 .padding-left > .list .item {
   margin-left: 0; }

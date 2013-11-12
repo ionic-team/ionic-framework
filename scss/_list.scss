@@ -24,8 +24,10 @@
 }
 
 
-// List Header
-// -------------------------------
+/**
+ * List Header
+ * --------------------------------------------------
+ */
 
 .list-header {
   margin-top: $list-header-margin-top;
@@ -35,8 +37,6 @@
   font-weight: bold;
 }
 
-
-
 // when its a card make sure it doesn't duplicate top and bottom borders
 .card.list .list-item {
   padding-right: 1px;
@@ -44,18 +44,18 @@
 }
 
 
-// Cards / Inset Lists
-// --------------------------------------------------
-/*
-  A card and list-inset are close to the same thing, except a card as a box shadow.
-*/
+/**
+ * Cards and Inset Lists
+ * --------------------------------------------------
+ * A card and list-inset are close to the same thing, except a card as a box shadow.
+ */
 
 .card, 
 .list-inset {
   overflow: hidden;
   margin: ($content-padding * 2) $content-padding;
-  background-color: $card-body-bg;
   border-radius: $card-border-radius;
+  background-color: $card-body-bg;
 }
 
 .card {
@@ -79,13 +79,13 @@
     }
   }
   &:last-child {
+    border-bottom-right-radius: $card-border-radius;
     //margin-bottom: 0;
     border-bottom-left-radius: $card-border-radius;
-    border-bottom-right-radius: $card-border-radius;
 
     .item-content {
-      border-bottom-left-radius: $card-border-radius;
       border-bottom-right-radius: $card-border-radius;
+      border-bottom-left-radius: $card-border-radius;
     }
   }
 }
@@ -99,8 +99,8 @@
 .list-inset .item,
 .padding > .list .item,
 .padding-horizontal > .list .item {
-  margin-left: 0;
   margin-right: 0;
+  margin-left: 0;
 }
 .padding-left > .list .item {
   margin-left: 0;
