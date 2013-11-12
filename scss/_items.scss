@@ -128,10 +128,14 @@ a.item {
  * --------------------------------------------------
  * Adding .item-complex allows the .item to be slidable and
  * have options underneath the button, but also requires an
- * additional .item-content element inside .item
+ * additional .item-content element inside .item.
+ * Basically .item-complex removes any default settings which
+ * .item added, so that .item-content looks them as just .item.
  */
 
-.item-complex {
+.item-complex,
+a.item.item-complex,
+button.item.item-complex {
   padding: 0;
 }
 .item-complex .item-content,
