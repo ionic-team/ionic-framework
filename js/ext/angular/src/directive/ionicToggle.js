@@ -1,7 +1,10 @@
+(function(ionic) {
+'use strict';
+
 angular.module('ionic.ui.toggle', [])
 
-// The content directive is a core scrollable content area
-// that is part of many View hierarchies
+// The Toggle directive is a toggle switch that can be tapped to change
+// its value
 .directive('toggle', function() {
   return {
     restrict: 'E',
@@ -39,3 +42,5 @@ angular.module('ionic.ui.toggle', [])
     }
   };
 });
+
+})(window.ionic);

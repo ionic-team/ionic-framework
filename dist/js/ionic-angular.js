@@ -20,6 +20,7 @@ angular.module('ionic.ui', [
                             'ionic.ui.list',
                             'ionic.ui.checkbox',
                             'ionic.ui.toggle',
+                            'ionic.ui.radio'
                            ]);
 
 angular.module('ionic', [
@@ -752,7 +753,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
    * Push a template onto the navigation stack.
    * @param {string} templateUrl the URL of the template to load.
    */
-  this.pushFromTemplate = ionic.debounce(function(templateUrl) {
+  this.pushFromTemplate = ionic.throttle(function(templateUrl) {
     var childScope = $scope.$new();
     childScope.isVisible = true;
 
@@ -765,12 +766,16 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
         $animate.enter(cloned, angular.element(content));
       });
     });
-  }, 300, true);
+  }, 300, {
+    trailing: false
+  });
 
-  // Pop function, debounced
-  this.popController = ionic.debounce(function() {
+  // Pop function, throttled
+  this.popController = ionic.throttle(function() {
     _this.pop();
-  }, 300, true);
+  }, 300, {
+    trailing: false
+  });
 
 
   ionic.controllers.NavController.call(this, {
@@ -931,6 +936,12 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
         $scope.visibilityChanged = function(direction) {
           lastDirection = direction;
 
+          if($scope.isVisible) {
+            $scope.$broadcast('navContent.shown');
+          } else {
+            $scope.$broadcast('navContent.hidden');
+          }
+
           if(!childElement) {
             return;
           }
@@ -992,6 +1003,58 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 }]);
 
 })();
+;
+(function(ionic) {
+'use strict';
+
+angular.module('ionic.ui.radio', [])
+
+// The radio button is a radio powered element with only
+// one possible selection in a set of options.
+.directive('radio', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    require: '?ngModel',
+    scope: {
+      value: '@'
+    },
+    transclude: true,
+    template: '<label class="item item-radio">\
+          <input type="radio" name="group">\
+          <div class="item-content" ng-transclude>\
+          </div>\
+          <i class="radio-icon icon ion-checkmark"></i>\
+        </label>',
+
+    link: function($scope, $element, $attr, ngModel) {
+      var radio;
+
+      if(!ngModel) { return; }
+
+      radio = $element.children().eq(0);
+
+      if(!radio.length) { return; }
+
+      radio.bind('click', function(e) {
+        $scope.$apply(function() {
+          ngModel.$setViewValue($scope.$eval($attr.ngValue));
+        });
+      });
+
+      ngModel.$render = function() {
+        var val = $scope.$eval($attr.ngValue);
+        if(val === ngModel.$viewValue) {
+          radio.attr('checked', 'checked');
+        } else {
+          radio.removeAttr('checked');
+        }
+      };
+    }
+  };
+});
+
+})(window.ionic);
 ;
 (function() {
 'use strict';
@@ -1397,10 +1460,13 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
 });
 
 ;
+(function(ionic) {
+'use strict';
+
 angular.module('ionic.ui.toggle', [])
 
-// The content directive is a core scrollable content area
-// that is part of many View hierarchies
+// The Toggle directive is a toggle switch that can be tapped to change
+// its value
 .directive('toggle', function() {
   return {
     restrict: 'E',
@@ -1438,6 +1504,8 @@ angular.module('ionic.ui.toggle', [])
     }
   };
 });
+
+})(window.ionic);
 ;
 (function() {
 'use strict';
