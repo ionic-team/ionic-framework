@@ -4,7 +4,7 @@
  * --------------------------------------------------
  * Useful utilities and mixins for SCSS files.
  */
-/*
+/*!
   Ionicons, v1.3.3
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
   https://twitter.com/helloimben  https://twitter.com/ionicframework
@@ -2046,7 +2046,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid silver; }
+  border: 1px solid #c0c0c0; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -4193,7 +4193,7 @@ input[type="file"] {
   line-height: 34px; }
 
 select {
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   background-color: white; }
 
 select[multiple],
@@ -4252,7 +4252,7 @@ input[type="checkbox"][readonly] {
     border-radius: 50%;
     background: white;
     content: ' ';
-    transition: background-color 0.1s ease-in-out; }
+    transition: background-color .1s ease-in-out; }
 
 /* the checkmark within the box */
 .checkbox input:after {
@@ -4267,7 +4267,7 @@ input[type="checkbox"][readonly] {
   border-right: 0;
   content: ' ';
   opacity: 0;
-  transition: opacity 0.05s ease-in-out;
+  transition: opacity .05s ease-in-out;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg); }
 
@@ -4533,7 +4533,7 @@ input[type="range"] {
   .button-icon:active, .button-icon.active {
     background: none;
     box-shadow: none;
-    text-shadow: 0px 0px 10px white; }
+    text-shadow: 0px 0px 10px #fff; }
 
 .button-primary {
   color: white;
@@ -5386,11 +5386,17 @@ a.button {
 .positive-bg {
   background-color: #4a87ee; }
 
+.positive-border {
+  border-color: #145dd7; }
+
 .calm {
   color: #43cee6; }
 
 .calm-bg {
   background-color: #43cee6; }
+
+.calm-border {
+  border-color: #1aaac3; }
 
 .assertive {
   color: #ef4e3a; }
@@ -5398,11 +5404,17 @@ a.button {
 .assertive-bg {
   background-color: #ef4e3a; }
 
+.assertive-border {
+  border-color: #cc2511; }
+
 .balanced {
   color: #66cc33; }
 
 .balanced-bg {
   background-color: #66cc33; }
+
+.balanced-border {
+  border-color: #478f24; }
 
 .energized {
   color: #f0b840; }
@@ -5410,11 +5422,17 @@ a.button {
 .energized-bg {
   background-color: #f0b840; }
 
+.energized-border {
+  border-color: #d39511; }
+
 .royle {
   color: #8a6de9; }
 
 .royle-bg {
   background-color: #8a6de9; }
+
+.royle-border {
+  border-color: #552bdf; }
 
 .pure {
   color: white; }
@@ -5422,11 +5440,17 @@ a.button {
 .pure-bg {
   background-color: white; }
 
+.pure-border {
+  border-color: #dddddd; }
+
 .subdued-light {
   color: #eeeeee; }
 
 .subdued-light-bg {
   background-color: #eeeeee; }
+
+.subdued-light-border {
+  border-color: #dddddd; }
 
 .subdued {
   color: #cccccc; }
@@ -5434,17 +5458,26 @@ a.button {
 .subdued-bg {
   background-color: #cccccc; }
 
+.subdued-border {
+  border-color: #bbbbbb; }
+
 .subdued-dark {
   color: #888888; }
 
 .subdued-dark-bg {
   background-color: #888888; }
 
+.subdued-dark-border {
+  border-color: #6f6f6f; }
+
 .dark {
   color: #444444; }
 
 .dark-bg {
   background-color: #444444; }
+
+.dark-border {
+  border-color: #444444; }
 
 /**
  * Brand Colors
@@ -5453,23 +5486,32 @@ a.button {
  * your app's theme! Throughout Ionic's CSS we use brand-primary, 
  * brand-secondary and brand-tertiary (ter·tia·ry: of third rank, importance, or value).
  */
-.brand-primary {
+.primary {
   color: #4a87ee; }
 
-.brand-primary-bg {
+.primary-bg {
   background-color: #4a87ee; }
 
-.brand-secondary {
+.primary-border {
+  border-color: #1b68ea; }
+
+.secondary {
   color: white; }
 
-.brand-secondary-bg {
+.secondary-bg {
   background-color: white; }
 
-.brand-tertiary {
+.secondary-border {
+  border-color: #d9d9d9; }
+
+.tertiary {
   color: whitesmoke; }
 
-.brand-tertiary-bg {
+.tertiary-bg {
   background-color: whitesmoke; }
+
+.tertiary-border {
+  border-color: #b5b5b5; }
 
 /**
  * Platform

@@ -87,12 +87,18 @@
 .positive-bg {
   background-color: $positive;
 }
+.positive-border {
+  border-color: $button-positive-border;
+}
 
 .calm {
   color: $calm;
 }
 .calm-bg {
   background-color: $calm;
+}
+.calm-border {
+  border-color: $button-calm-border;
 }
 
 .assertive {
@@ -101,12 +107,18 @@
 .assertive-bg {
   background-color: $assertive;
 }
+.assertive-border {
+  border-color: $button-assertive-border;
+}
 
 .balanced {
   color: $balanced;
 }
 .balanced-bg {
   background-color: $balanced;
+}
+.balanced-border {
+  border-color: $button-balanced-border;
 }
 
 .energized {
@@ -115,12 +127,18 @@
 .energized-bg {
   background-color: $energized;
 }
+.energized-border {
+  border-color: $button-energized-border;
+}
 
 .royle {
   color: $royle;
 }
 .royle-bg {
   background-color: $royle;
+}
+.royle-border {
+  border-color: $button-royle-border;
 }
 
 .pure {
@@ -129,12 +147,18 @@
 .pure-bg {
   background-color: $pure;
 }
+.pure-border {
+  border-color: $button-pure-border;
+}
 
 .subdued-light {
   color: $subdued-light;
 }
 .subdued-light-bg {
   background-color: $subdued-light;
+}
+.subdued-light-border {
+  border-color: $button-subdued-light-border;
 }
 
 .subdued {
@@ -143,6 +167,9 @@
 .subdued-bg {
   background-color: $subdued;
 }
+.subdued-border {
+  border-color: $button-subdued-border;
+}
 
 .subdued-dark {
   color: $subdued-dark;
@@ -150,12 +177,18 @@
 .subdued-dark-bg {
   background-color: $subdued-dark;
 }
+.subdued-dark-border {
+  border-color: $button-subdued-dark-border;
+}
 
 .dark {
   color: $dark;
 }
 .dark-bg {
   background-color: $dark;
+}
+.dark-border {
+  border-color: $button-dark-border;
 }
 
 
@@ -167,23 +200,32 @@
  * brand-secondary and brand-tertiary (ter·tia·ry: of third rank, importance, or value).
  */
 
-.brand-primary {
-  color: $brand-primary;
+.primary {
+  color: $primary;
 }
-.brand-primary-bg {
-  background-color: $brand-primary;
+.primary-bg {
+  background-color: $primary;
 }
-
-.brand-secondary {
-  color: $brand-secondary;
-}
-.brand-secondary-bg {
-  background-color: $brand-secondary;
+.primary-border {
+  border-color: $button-primary-border;
 }
 
-.brand-tertiary {
-  color: $brand-tertiary;
+.secondary {
+  color: $secondary;
 }
-.brand-tertiary-bg {
-  background-color: $brand-tertiary;
+.secondary-bg {
+  background-color: $secondary;
+}
+.secondary-border {
+  border-color: $button-secondary-border;
+}
+
+.tertiary {
+  color: $tertiary;
+}
+.tertiary-bg {
+  background-color: $tertiary;
+}
+.tertiary-border {
+  border-color: $button-tertiary-border;
 }

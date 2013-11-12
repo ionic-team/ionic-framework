@@ -2,9 +2,9 @@
 // Brand Colors
 // -------------------------------
 
-$brand-primary:         #4a87ee !default;
-$brand-secondary:       #fff    !default;
-$brand-tertiary:        #f5f5f5 !default;
+$primary:               #4a87ee !default;
+$secondary:             #fff    !default;
+$tertiary:              #f5f5f5 !default;
 
 
 // Utility Colors
@@ -47,7 +47,7 @@ $headings-line-height:           1.1 !default;
 $base-background-color:          #fff;
 $base-color:                     #000;
 
-$link-color:                     $brand-primary !default;
+$link-color:                     $primary !default;
 $link-hover-color:               darken($link-color, 15%) !default;
 
 $content-padding:                10px !default;
@@ -75,7 +75,7 @@ $border-radius-small:            3px !default;
 $caret-width-base:               4px !default;
 $caret-width-large:              5px !default;
 
-$component-active-bg:            $brand-primary !default;
+$component-active-bg:            $primary !default;
 
 
 // Forms
@@ -180,23 +180,23 @@ $button-default-border:               darken($subdued-light, 15%);
 $button-default-active-bg:            lighten($subdued-light, 5%);
 $button-default-active-border:        darken($subdued-light, 25%);
 
-$button-primary-bg:                   $brand-primary;
+$button-primary-bg:                   $primary;
 $button-primary-text:                 #fff;
-$button-primary-border:               darken($brand-primary, 10%);
-$button-primary-active-bg:            darken($brand-primary, 5%);
-$button-primary-active-border:        darken($brand-primary, 10%);
+$button-primary-border:               darken($primary, 10%);
+$button-primary-active-bg:            darken($primary, 5%);
+$button-primary-active-border:        darken($primary, 10%);
 
-$button-secondary-bg:                 $brand-secondary;
+$button-secondary-bg:                 $secondary;
 $button-secondary-text:               #444;
-$button-secondary-border:             darken($brand-secondary, 15%);
-$button-secondary-active-bg:          lighten($brand-secondary, 10%);
-$button-secondary-active-border:      darken($brand-secondary, 20%);
+$button-secondary-border:             darken($secondary, 15%);
+$button-secondary-active-bg:          lighten($secondary, 10%);
+$button-secondary-active-border:      darken($secondary, 20%);
 
-$button-tertiary-bg:                  $brand-tertiary;
+$button-tertiary-bg:                  $tertiary;
 $button-tertiary-text:                #444;
-$button-tertiary-border:              darken($brand-tertiary, 25%);
-$button-tertiary-active-bg:           lighten($brand-tertiary, 10%);
-$button-tertiary-active-border:       darken($brand-tertiary, 15%);
+$button-tertiary-border:              darken($tertiary, 25%);
+$button-tertiary-active-bg:           lighten($tertiary, 10%);
+$button-tertiary-active-border:       darken($tertiary, 15%);
 
 $button-positive-bg:                  $positive;
 $button-positive-text:                #fff;

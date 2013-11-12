@@ -70,13 +70,13 @@
       color: inherit;
     }
   }
-  @include item-style-active($brand-secondary, $subdued-dark, $subdued-dark);
+  @include item-style-active($secondary, $subdued-dark, $subdued-dark);
 }
 
 // Different themes for list items
-.item-primary { @include item-style-active($brand-primary, $subdued-dark, #fff); }
-.item-secondary { @include item-style-active($brand-secondary, $subdued-dark, $subdued-dark); }
-.item-tertiary { @include item-style-active($brand-tertiary, $subdued-dark, $subdued-dark); }
+.item-primary { @include item-style-active($primary, $subdued-dark, #fff); }
+.item-secondary { @include item-style-active($secondary, $subdued-dark, $subdued-dark); }
+.item-tertiary { @include item-style-active($tertiary, $subdued-dark, $subdued-dark); }
 .item-positive { @include item-style-active($positive, $subdued-dark, #fff); }
 .item-calm { @include item-style-active($calm, $subdued-dark, #fff); }
 .item-balanced { @include item-style-active($balanced, $subdued-dark, #fff); }
