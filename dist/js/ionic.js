@@ -2041,6 +2041,10 @@ window.ionic = {
 
         hasPullToRefresh: true,
 
+        // Whether to disable overflow rubber banding when content is small
+        // enough to fit in the viewport (i.e. doesn't need scrolling)
+        disableNonOverflowRubberBand: false,
+
         // Called as the refresher is opened, an amount is passed
         onRefreshOpening: function() {},
         // Called when let go and is refreshing
@@ -2234,6 +2238,10 @@ window.ionic = {
       }
     },
 
+    /**
+     * Check if the current scroll bounds needs to be brought back to the min/max
+     * allowable given the total scrollable area.
+     */
     needsWrapping: function() {
       var _this = this;
 
@@ -2456,16 +2464,6 @@ window.ionic = {
       var parentWidth = this.el.parentNode.offsetWidth;
       var parentHeight = this.el.parentNode.offsetHeight;
 
-      /*
-      var maxX = Math.min(0, (-totalWidth + parentWidth));
-      var maxY = Math.min(0, (-totalHeight + parentHeight));
-
-      // Check if we even have enough content to scroll, if not, don't start the drag
-      if((this.isHorizontalEnabled && maxX == 0) || (this.isVerticalEnabled && maxY == 0)) {
-        return;
-      }
-      */
-
       this.x = scrollLeft;
       this.y = scrollTop;
 
@@ -2502,6 +2500,16 @@ window.ionic = {
         resist: 1,
         startTime: Date.now()
       };
+
+      if(this.disableNonOverflowRubberBand === true) {
+        var maxX = Math.min(0, (-totalWidth + parentWidth));
+        var maxY = Math.min(0, (-totalHeight + parentHeight));
+
+        // Check if we even have enough content to scroll, if not, don't start the drag
+        if((this.isHorizontalEnabled && maxX == 0) || (this.isVerticalEnabled && maxY == 0)) {
+          this._drag.noRubberBand = true;
+        }
+      }
     },
 
     /**
@@ -2569,9 +2577,22 @@ window.ionic = {
           var newX = _this.x + deltaX;
           var newY = _this.y + deltaY;
 
-          // Check if the dragging is beyond the bottom or top
-          if(newY > 0 || (-newY + parentHeight) > totalHeight) {
-            newY = _this.y + deltaY / _this.rubberBandResistance;
+          if(drag.noRubberBand === true) {
+            if(newY > 0) {
+              newY = 0;
+            } else if(newY < maxY) {
+              newY = maxY;
+            }
+            if(newX > 0) {
+              newX = 0;
+            } else if(newX < maxX) {
+              newX = maxX;
+            }
+          } else {
+            // Check if the dragging is beyond the bottom or top
+            if(newY > 0 || (-newY + parentHeight) > totalHeight) {
+              newY = _this.y + deltaY / _this.rubberBandResistance;
+            }
           }
 
           if(!_this.isHorizontalEnabled) {
@@ -2583,7 +2604,6 @@ window.ionic = {
 
           if(_this._refresher && newY > 0) {
             // We are pulling to refresh, so update the refresher
-            //_this._refresher.style[ionic.CSS.TRANSFORM] = 'translate3d(0, ' + newY + 'px, 0)';
             if(_this._isRefresherHidden) {
               // Show it only in a drag and if we haven't showed it yet
               _this._refresher.style.display = 'block';
@@ -2600,7 +2620,7 @@ window.ionic = {
             }
 
             // Update the new translated Y point of the container
-            _this.el.style.webkitTransform = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
+            _this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
           } else {
 
             _this._isHoldingRefresh = false;
@@ -2611,7 +2631,7 @@ window.ionic = {
               _this._isRefresherHidden = true;
             }
             // Update the new translated Y point of the container
-            _this.el.style.webkitTransform = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
+            _this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
           }
 
           // Store the last points
