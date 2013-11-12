@@ -2622,12 +2622,12 @@ a.subdued‎ {
     color: #444444; }
     .bar.bar-light .title {
       color: #444444; }
-  .bar.bar-light {
-    background-color: white;
-    border-color: #dddddd;
-    background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
+  .bar.bar-stable {
+    background-color: #f8f8f8;
+    border-color: #bbbbbb;
+    background-image: linear-gradient(0deg, #bbbbbb, #bbbbbb 50%, transparent 50%);
     color: #444444; }
-    .bar.bar-light .title {
+    .bar.bar-stable .title {
       color: #444444; }
   .bar.bar-dark {
     background-color: #444444;
@@ -2847,18 +2847,18 @@ a.subdued‎ {
     box-shadow: none;
     font-size: 18px; }
 
-.bar-light .button {
+.bar-stable .button {
   color: #444444;
-  background-color: white;
-  border-color: #dddddd; }
-  .bar-light .button:hover {
+  background-color: #f8f8f8;
+  border-color: #bbbbbb; }
+  .bar-stable .button:hover {
     color: #444444;
     text-decoration: none; }
-  .bar-light .button.active, .bar-light .button:active {
+  .bar-stable .button.active, .bar-stable .button:active {
     background-color: #222222;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
     border-color: black; }
-  .bar-light .button.button-clear {
+  .bar-stable .button.button-clear {
     color: white;
     background: none;
     box-shadow: none;

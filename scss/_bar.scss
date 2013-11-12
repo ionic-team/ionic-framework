@@ -80,8 +80,8 @@
   &.bar-light {
     @include bar-style($bar-light-bg, $bar-light-border, $bar-light-text);
   }
-  &.bar-light {
-    @include bar-style($bar-light-bg, $bar-light-border, $bar-light-text);
+  &.bar-stable {
+    @include bar-style($bar-stable-bg, $bar-stable-border, $bar-stable-text);
   }
   &.bar-dark {
     @include bar-style($bar-dark-bg, $bar-dark-border, $bar-dark-text);
@@ -213,9 +213,9 @@
     @include button-clear(#fff, $bar-title-font-size);
   }
 }
-.bar-light {
+.bar-stable {
   .button {
-    @include button-style($bar-light-bg, $bar-light-border, $bar-light-active-bg, $bar-light-active-border, $bar-light-text);
+    @include button-style($bar-stable-bg, $bar-stable-border, $bar-stable-active-bg, $bar-stable-active-border, $bar-stable-text);
     @include button-clear(#fff, $bar-title-font-size);
   }
 }
