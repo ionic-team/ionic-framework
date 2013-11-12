@@ -16,6 +16,7 @@ angular.module('ionic.ui', [
                             'ionic.ui.content',
                             'ionic.ui.tabs',
                             'ionic.ui.nav',
+                            'ionic.ui.header',
                             'ionic.ui.sideMenu',
                             'ionic.ui.list',
                             'ionic.ui.checkbox',
@@ -584,6 +585,41 @@ angular.module('ionic.ui.content', [])
 
 })();
 ;
+(function(ionic) {
+'use strict';
+
+angular.module('ionic.ui.header', ['ngAnimate'])
+
+
+.directive('headerBar', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<header class="bar bar-header" ng-transclude></header>',
+    scope: {
+      type: '@',
+      alignTitle: '@',
+    },
+    link: function($scope, $element, $attr) {
+      var hb = new ionic.views.HeaderBar({
+        el: $element[0],
+        alignTitle: $scope.alignTitle || 'center'
+      });
+
+      $element.addClass($scope.type);
+
+      $scope.headerBarView = hb;
+
+      $scope.$on('$destroy', function() {
+        //
+      });
+    }
+  };
+});
+
+})(ionic);
+;
 (function() {
 'use strict';
 
@@ -773,6 +809,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
   // Pop function, throttled
   this.popController = ionic.throttle(function() {
     _this.pop();
+    $scope.$broadcast('navs.pop');
   }, 300, {
     trailing: false
   });
@@ -820,6 +857,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
    */
   $scope.pushController = function(scope, element) {
     _this.push(scope);
+    $scope.$broadcast('navs.push', scope);
   };
 
   $scope.navController = this;
@@ -846,22 +884,46 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
     restrict: 'E',
     require: '^navs',
     replace: true,
-    scope: true,
+    scope: {
+      type: '@',
+      backButtonType: '@',
+      alignTitle: '@'
+    },
     template: '<header class="bar bar-header nav-bar" ng-class="{hidden: !navController.navBar.isVisible}">' + 
-        '<a href="#" ng-click="goBack()" class="button" ng-if="navController.controllers.length > 1">Back</a>' +
+        '<button ng-click="goBack()" class="button" ng-if="navController.controllers.length > 1" ng-class="backButtonType">Back</button>' +
         '<h1 class="title">{{navController.getTopController().title}}</h1>' + 
       '</header>',
-    link: function(scope, element, attrs, navCtrl) {
-      scope.navController = navCtrl;
+    link: function($scope, $element, $attr, navCtrl) {
+      var backButton;
 
-      scope.barType = attrs.barType || 'bar-dark';
-      element.addClass(scope.barType);
+      $scope.navController = navCtrl;
 
-      scope.$watch('navController.controllers.length', function(value) {
-      });
-      scope.goBack = function() {
+      $scope.goBack = function() {
         navCtrl.popController();
       };
+
+
+      var hb = new ionic.views.HeaderBar({
+        el: $element[0],
+        alignTitle: $scope.alignTitle || 'center'
+      });
+
+      $element.addClass($scope.type);
+
+      $scope.headerBarView = hb;
+
+      $scope.$parent.$on('navs.push', function() {
+        backButton = angular.element($element[0].querySelector('.button'));
+        backButton.addClass($scope.backButtonType);
+        hb.align();
+      });
+      $scope.$parent.$on('navs.pop', function() {
+        hb.align();
+      });
+
+      $scope.$on('$destroy', function() {
+        //
+      });
     }
   };
 })

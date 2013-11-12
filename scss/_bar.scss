@@ -96,6 +96,7 @@
     left: 0;
     z-index: 0;
 
+
     margin: 0;
 
     min-width: 30px;
@@ -105,9 +106,15 @@
     // Go into ellipsis if too small
     text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: hidden;
+
     font-size: $bar-title-font-size;
 
     line-height: $bar-height;
+
+    &.title-left {
+      text-align: left;
+    }
   }
 
   .title a {
