@@ -8,4 +8,6 @@ http://ionicframework.com/
 By @maxlynch, @helloimben, @adamdbradley <3
 
 Licensed under the MIT license. Please see LICENSE for more information.
+
+Make awesome shit.
 */
