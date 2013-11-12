@@ -36,6 +36,7 @@
 
 @mixin button-outline($color, $textColor:"") {
   &.button-outline {
+    background: transparent;
     border-color: $color;
     @if $textColor == "" {
       $textColor: $color;

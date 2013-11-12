@@ -11,10 +11,10 @@
   display: block;
   margin: $item-border-width * -1;
 
-  padding: $item-padding (($item-padding * 3) - 5) $item-padding $item-padding;
+  padding: $item-padding;
 
   border: none;
-  background-color: $list-default-background;
+  background-color: $list-bg;
   box-shadow: $item-box-shadow;
   font-size: $list-font-size;
 
@@ -70,18 +70,23 @@
       color: inherit;
     }
   }
-  @include item-style-active($brand-secondary, $gray-dark, $gray-dark);
+  @include item-style-active($brand-secondary, $subdued-dark, $subdued-dark);
 }
 
 // Different themes for list items
-.item-default { @include item-style-active($brand-secondary, $gray-dark, $gray-dark); }
-.item-secondary { @include item-style-active($brand-default, $gray-dark, $gray-dark); }
-.item-primary { @include item-style-active($brand-primary, $gray-dark, $white); }
-.item-info { @include item-style-active($brand-info, $gray-dark, $white); }
-.item-success { @include item-style-active($brand-success, $gray-dark, $white); }
-.item-warning { @include item-style-active($brand-warning, $gray-dark, $white); }
-.item-danger { @include item-style-active($brand-danger, $gray-dark, $white); }
-.item-dark { @include item-style-active($brand-dark, $gray-dark, $white); }
+.item-primary { @include item-style-active($brand-primary, $subdued-dark, #fff); }
+.item-secondary { @include item-style-active($brand-secondary, $subdued-dark, $subdued-dark); }
+.item-tertiary { @include item-style-active($brand-tertiary, $subdued-dark, $subdued-dark); }
+.item-positive { @include item-style-active($positive, $subdued-dark, #fff); }
+.item-calm { @include item-style-active($calm, $subdued-dark, #fff); }
+.item-balanced { @include item-style-active($balanced, $subdued-dark, #fff); }
+.item-energized { @include item-style-active($energized, $subdued-dark, #fff); }
+.item-royle { @include item-style-active($royle, $subdued-dark, #fff); }
+.item-pure { @include item-style-active($pure, $subdued-dark, #fff); }
+.item-subdued-light { @include item-style-active($subdued-light, $subdued-dark, #fff); }
+.item-subdued { @include item-style-active($subdued, $subdued-dark, #fff); }
+.item-subdued-dark { @include item-style-active($subdued-dark, $subdued-dark, #fff); }
+.item-dark { @include item-style-active($dark, $subdued-dark, #fff); }
 
 // Handle text overflow
 .item,
@@ -107,10 +112,9 @@
 
 // Linked list items
 a.item {
-  color: $gray-dark;
+  color: inherit;
   text-decoration: none;
 
-  // Hover state
   &:hover,
   &:focus {
     text-decoration: none;
@@ -136,7 +140,7 @@ a.item {
   padding: $item-padding (($item-padding * 3) - 5) $item-padding $item-padding;
 
   border: none;
-  background-color: $list-default-background;
+  background-color: $list-bg;
   box-shadow: $item-box-shadow;
 
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
@@ -268,6 +272,11 @@ a.item {
 
 // Auto Right Arrow Icon
 // -------------------------------
+
+a.item, 
+button.item {
+  padding-right: (($item-padding * 3) - 5)
+}
 
 a.item:after,
 button.item:after {
@@ -440,7 +449,7 @@ button.item-button-right:after {
   .button {
     height: 100%;
     .icon, i {
-      color: $brand-danger;
+      color: $assertive;
       @include display-flex();
       @include align-items(center);
       font-size: 24px;

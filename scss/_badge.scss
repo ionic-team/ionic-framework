@@ -18,7 +18,6 @@
   background-color: $badge-bg;
   border-radius: $badge-border-radius;
 
-  // Empty badges collapse automatically (not available in IE8)
   &:empty {
     display: none;
   }
@@ -30,42 +29,45 @@
   top: -1px;
 }
 
-.badge-default {
-  background: $brand-default;
+.badge-primary {
+  background-color: $brand-primary;
 }
 .badge-secondary {
-  background: $brand-secondary;
+  background-color: $brand-secondary;
 }
-.badge-primary {
-  background: $brand-primary;
+.badge-tertiary {
+  background-color: $brand-tertiary;
 }
-.badge-info {
-  background: $brand-info;
+.badge-positive {
+  background-color: $positive;
 }
-.badge-success {
-  background: $brand-success;
+.badge-calm {
+  background-color: $calm;
 }
-.badge-warning {
-  background: $brand-warning;
+.badge-assertive {
+  background-color: $assertive;
 }
-.badge-danger {
-  background: $brand-danger;
+.badge-balanced {
+  background-color: $balanced;
+}
+.badge-energized {
+  background-color: $energized;
+}
+.badge-royle {
+  background-color: $royle;
+}
+.badge-pure {
+  background-color: $pure;
+}
+.badge-subdued-light {
+  background-color: $subdued-light;
+}
+.badge-subdued {
+  background-color: $subdued;
+}
+.badge-subdued-dark {
+  background-color: $subdued-dark;
 }
 .badge-dark {
-  background: $brand-dark;
-}
-.badge-gray-darker {
-  background: $gray-darker;
-}
-.badge-gray-dark {
-  background: $gray-dark;
-}
-.badge-gray {
-  background: $gray;
-}
-.badge-gray-light {
-  background: $gray-light;
-}
-.badge-gray-ligher {
-  background: $gray-lighter;
+  background-color: $dark;
 }

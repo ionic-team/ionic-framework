@@ -21,9 +21,9 @@
   border-width: 0;
   border-style: solid;
   border-top: 1px solid transparent;
-  border-bottom: 1px solid $bar-default-border-color;
+  border-bottom: 1px solid $bar-default-border;
 
-  background-color: $bar-bg;
+  background-color: $bar-default-bg;
   background-size: 0;
   @media (min--moz-device-pixel-ratio: 1.5),
          (-webkit-min-device-pixel-ratio: 1.5),
@@ -32,7 +32,7 @@
          (min-resolution: 1.5dppx) {
     border-top: none !important;
     border-bottom: none !important;
-    background-image: linear-gradient(0deg, $bar-default-border-color, $bar-default-border-color, 50%, transparent 50%);
+    background-image: linear-gradient(0deg, $bar-default-border, $bar-default-border, 50%, transparent 50%);
     background-position: bottom;
     background-size: 100% 1px;
     background-repeat: no-repeat;
@@ -50,30 +50,47 @@
     }
   }
 
-  &.bar-default {
-    @include bar-style($bar-default-bg, $bar-default-border-color, $gray-dark);
-  }
-
-  &.bar-secondary {
-    @include bar-style($bar-secondary-bg, $bar-secondary-border-color, $gray-dark);
-  }
   &.bar-primary {
-    @include bar-style($bar-primary-bg, $bar-primary-border-color, $white);
+    @include bar-style($bar-primary-bg, $bar-primary-border, $bar-primary-text);
   }
-  &.bar-info {
-    @include bar-style($bar-info-bg, $bar-info-border-color, $white);
+  &.bar-secondary {
+    @include bar-style($bar-secondary-bg, $bar-secondary-border, $bar-secondary-text);
   }
-  &.bar-success {
-    @include bar-style($bar-success-bg, $bar-success-border-color, $white);
+  &.bar-tertiary {
+    @include bar-style($bar-tertiary-bg, $bar-tertiary-border, $bar-tertiary-text);
   }
-  &.bar-warning {
-    @include bar-style($bar-warning-bg, $bar-warning-border-color, $white);
+  &.bar-positive {
+    @include bar-style($bar-positive-bg, $bar-positive-border, $bar-positive-text);
   }
-  &.bar-danger {
-    @include bar-style($bar-danger-bg, $bar-danger-border-color, $white);
+  &.bar-calm {
+    @include bar-style($bar-calm-bg, $bar-calm-border, $bar-calm-text);
+  }
+  &.bar-assertive {
+    @include bar-style($bar-assertive-bg, $bar-assertive-border, $bar-assertive-text);
+  }
+  &.bar-balanced {
+    @include bar-style($bar-balanced-bg, $bar-balanced-border, $bar-balanced-text);
+  }
+  &.bar-energized {
+    @include bar-style($bar-energized-bg, $bar-energized-border, $bar-energized-text);
+  }
+  &.bar-royle {
+    @include bar-style($bar-royle-bg, $bar-royle-border, $bar-royle-text);
+  }
+  &.bar-pure {
+    @include bar-style($bar-pure-bg, $bar-pure-border, $bar-pure-text);
+  }
+  &.bar-subdued-light {
+    @include bar-style($bar-subdued-light-bg, $bar-subdued-light-border, $bar-subdued-light-text);
+  }
+  &.bar-subdued {
+    @include bar-style($bar-subdued-bg, $bar-subdued-border, $bar-subdued-text);
+  }
+  &.bar-subdued-dark {
+    @include bar-style($bar-subdued-dark-bg, $bar-subdued-dark-border, $bar-subdued-dark-text);
   }
   &.bar-dark {
-    @include bar-style($bar-dark-bg, $bar-dark-border-color, $white);
+    @include bar-style($bar-dark-bg, $bar-dark-border, $bar-dark-text);
   }
 
   // Title inside of a bar is centered
@@ -142,56 +159,88 @@
 }
 
 // Default styles for buttons inside of styled bars
-
-.bar-default {
-  .button {
-    @include button-style($button-default-bg, $button-default-border, $button-default-active-bg, $button-default-active-border, $gray-dark);
-    @include button-clear($gray-dark, $bar-title-font-size);
-  }
-}
-
-.bar-secondary {
-  .button {
-    @include button-style($button-secondary-bg, $button-secondary-border, $button-secondary-active-bg, $button-secondary-active-border, $gray-dark);
-    @include button-clear($gray-dark, $bar-title-font-size);
-  }
-}
-
 .bar-primary {
   .button {
-    @include button-style($button-primary-bg, $button-primary-border, $button-primary-active-bg, $button-primary-active-border, $white);
-    @include button-clear($white, $bar-title-font-size);
+    @include button-style($bar-primary-bg, $bar-primary-border, $bar-primary-active-bg, $bar-primary-active-border, $bar-primary-text);
+    @include button-clear(#fff, $bar-title-font-size);
   }
 }
-.bar-info {
+.bar-secondary {
   .button {
-    @include button-style($button-info-bg, $button-info-border, $button-info-active-bg, $button-info-active-border, $white);
-    @include button-clear($white, $bar-title-font-size);
+    @include button-style($bar-secondary-bg, $bar-secondary-border, $bar-secondary-active-bg, $bar-secondary-active-border, $bar-secondary-text);
+    @include button-clear($subdued-dark, $bar-title-font-size);
   }
 }
-.bar-success {
+.bar-tertiary {
   .button {
-    @include button-style($button-success-bg, $button-success-border, $button-success-active-bg, $button-success-active-border, $white);
-    @include button-clear($white, $bar-title-font-size);
+    @include button-style($bar-tertiary-bg, $bar-tertiary-border, $bar-tertiary-active-bg, $bar-tertiary-active-border, $bar-tertiary-text);
+    @include button-clear(#fff, $bar-title-font-size);
   }
 }
-.bar-warning {
+.bar-positive {
   .button {
-    @include button-style($button-warning-bg, $button-warning-border, $button-warning-active-bg, $button-warning-active-border, $white);
-    @include button-clear($white, $bar-title-font-size);
+    @include button-style($bar-positive-bg, $bar-positive-border, $bar-positive-active-bg, $bar-positive-active-border, $bar-positive-text);
+    @include button-clear(#fff, $bar-title-font-size);
   }
 }
-.bar-danger {
+.bar-calm {
   .button {
-    @include button-style($button-danger-bg, $button-danger-border, $button-danger-active-bg, $button-danger-active-border, $white);
-    @include button-clear($white, $bar-title-font-size);
+    @include button-style($bar-calm-bg, $bar-calm-border, $bar-calm-active-bg, $bar-calm-active-border, $bar-calm-text);
+    @include button-clear(#fff, $bar-title-font-size);
+  }
+}
+.bar-assertive {
+  .button {
+    @include button-style($bar-assertive-bg, $bar-assertive-border, $bar-assertive-active-bg, $bar-assertive-active-border, $bar-assertive-text);
+    @include button-clear(#fff, $bar-title-font-size);
+  }
+}
+.bar-balanced {
+  .button {
+    @include button-style($bar-balanced-bg, $bar-balanced-border, $bar-balanced-active-bg, $bar-balanced-active-border, $bar-balanced-text);
+    @include button-clear(#fff, $bar-title-font-size);
+  }
+}
+.bar-energized {
+  .button {
+    @include button-style($bar-energized-bg, $bar-energized-border, $bar-energized-active-bg, $bar-energized-active-border, $bar-energized-text);
+    @include button-clear(#fff, $bar-title-font-size);
+  }
+}
+.bar-royle {
+  .button {
+    @include button-style($bar-royle-bg, $bar-royle-border, $bar-royle-active-bg, $bar-royle-active-border, $bar-royle-text);
+    @include button-clear(#fff, $bar-title-font-size);
+  }
+}
+.bar-pure {
+  .button {
+    @include button-style($bar-pure-bg, $bar-pure-border, $bar-pure-active-bg, $bar-pure-active-border, $bar-pure-text);
+    @include button-clear(#fff, $bar-title-font-size);
+  }
+}
+.bar-subdued-light {
+  .button {
+    @include button-style($bar-subdued-light-bg, $bar-subdued-light-border, $bar-subdued-light-active-bg, $bar-subdued-light-active-border, $bar-subdued-light-text);
+    @include button-clear(#fff, $bar-title-font-size);
+  }
+}
+.bar-subdued {
+  .button {
+    @include button-style($bar-subdued-bg, $bar-subdued-border, $bar-subdued-active-bg, $bar-subdued-active-border, $bar-subdued-text);
+    @include button-clear(#fff, $bar-title-font-size);
+  }
+}
+.bar-subdued-dark {
+  .button {
+    @include button-style($bar-subdued-dark-bg, $bar-subdued-dark-border, $bar-subdued-dark-active-bg, $bar-subdued-dark-active-border, $bar-subdued-dark-text);
+    @include button-clear(#fff, $bar-title-font-size);
   }
 }
 .bar-dark {
-  // A default style for buttons
   .button {
-    @include button-style($button-dark-bg, $button-dark-border, $button-dark-active-bg, $button-dark-active-border, $white);
-    @include button-clear($white, $bar-title-font-size);
+    @include button-style($bar-dark-bg, $bar-dark-border, $bar-dark-active-bg, $bar-dark-active-border, $bar-dark-text);
+    @include button-clear(#fff, $bar-title-font-size);
   }
 }
 

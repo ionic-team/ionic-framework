@@ -2,95 +2,59 @@
 // Brand Colors
 // -------------------------------
 
-$brand-default:         #fff;
-$brand-secondary:       #f5f5f5;
-$brand-primary:         #4a87ee;
-$brand-info:            #43cee6;
-$brand-success:         #66cc33;
-$brand-warning:         #f0b840;
-$brand-danger:          #ef4e3a;
-$brand-dark:            #444;
+$brand-primary:         #4a87ee !default;
+$brand-secondary:       #fff    !default;
+$brand-tertiary:        #f5f5f5 !default;
 
 
-// Scaffolding
+// Utility Colors
 // -------------------------------
 
-$link-color:            $brand-primary !default;
-$link-hover-color:      darken($link-color, 15%) !default;
+$positive:              #4a87ee !default;
+$calm:                  #43cee6 !default;
+$balanced:              #66cc33 !default;
+$energized:             #f0b840 !default;
+$assertive:             #ef4e3a !default;
+$royle:                 #8a6de9 !default;
 
-
-// Global Gray Colors
-// -------------------------------
-
-$black:                 #000 !default;
-$gray-darker:           lighten(#000, 13.5%) !default; // #222
-$gray-dark:             lighten(#000, 20%) !default;   // #333
-$gray:                  lighten(#000, 33.5%) !default; // #555
-$gray-light:            lighten(#000, 60%) !default;   // #999
-$gray-lighter:          lighten(#000, 93.5%) !default; // #eee
-$white:                 #fff !default;
-
-
-// Global Accent Colors
-// -------------------------------
-
-$blue:                 #049cdb !default;
-$blue-dark:            #0064cd !default;
-$green:                #46a546 !default;
-$red:                  #9d261d !default;
-$yellow:               #ffc40d !default;
-$orange:               #f89406 !default;
-$pink:                 #c3325f !default;
-$purple:               #7a43b6 !default;
-
-$component-active-bg:            $brand-primary !default;
-
-
-// Global Fonts
-// -------------------------------
-
-$sans-font-family:         "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$light-sans-font-family:   "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$serif-font-family:        Georgia, "Times New Roman", Times, serif !default;
-$mono-font-family:         Monaco, Menlo, Consolas, "Courier New", monospace !default;
+$pure:                  #fff !default;
+$subdued-light:         #eee !default;
+$subdued:               #ccc !default;
+$subdued-dark:          #888 !default;
+$dark:                  #444 !default;
 
 
 // Base
 // -------------------------------
 
-$base-font-family:          $sans-font-family;
-$base-background-color:     $white;
-$base-color:                #000;
-$content-padding:           10px !default;
-$border-radius-base:        4px !default;
-$border-radius-large:       6px !default;
-$border-radius-small:       3px !default;
+$font-family-sans-serif:         "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-light-sans-serif:   "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-serif:              Georgia, "Times New Roman", Times, serif !default;
+$font-family-monospace:          Monaco, Menlo, Consolas, "Courier New", monospace !default;
 
+$font-family-base:               $font-family-sans-serif !default;
+$font-size-base:                 14px !default;
+$font-size-large:                18px !default;
+$font-size-small:                11px !default;
 
-// Typography
-// -------------------------------
+$line-height-base:               1.428571429 !default; // 20/14
+$line-height-computed:           floor($font-size-base * $line-height-base) !default; // ~20px
 
-$font-family-sans-serif:    "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$font-family-serif:         Georgia, "Times New Roman", Times, serif !default;
-$font-family-monospace:     Monaco, Menlo, Consolas, "Courier New", monospace !default;
-$font-family-base:          $font-family-sans-serif !default;
+$headings-font-family:           $font-family-base !default;
+$headings-font-weight:           500 !default;
+$headings-line-height:           1.1 !default;
 
-$font-size-base:            14px !default;
-$font-size-large:           17px !default; // ~18px
-$font-size-small:           11px !default;
+$base-background-color:          #fff;
+$base-color:                     #000;
 
-$line-height-base:          1.428571429 !default; // 20/14
-$line-height-computed:      floor($font-size-base * $line-height-base) !default; // ~20px
+$link-color:                     $brand-primary !default;
+$link-hover-color:               darken($link-color, 15%) !default;
 
-$headings-font-family:      $font-family-base !default;
-$headings-font-weight:      500 !default;
-$headings-line-height:      1.1 !default;
+$content-padding:                10px !default;
 
 
 // Components
 // -------------------------------
-
-// Based on 14px font-size and 1.428 line-height (~20px to start)
 
 $padding-base-vertical:          6px !default;
 $padding-base-horizontal:        12px !default;
@@ -111,24 +75,22 @@ $border-radius-small:            3px !default;
 $caret-width-base:               4px !default;
 $caret-width-large:              5px !default;
 
+$component-active-bg:            $brand-primary !default;
+
 
 // Forms
 // -------------------------------
 
-$input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
-$input-height-large:             (floor($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2) !default;
-$input-height-small:             (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
+$input-height-base:               ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
+$input-height-large:              (floor($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2) !default;
+$input-height-small:              (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
 
-$input-bg:                        $white  !default;
-$input-bg-disabled:               $gray-lighter !default;
+$input-bg:                        $pure;
+$input-bg-disabled:               $subdued-light;
 
-$input-color:                     $gray !default;
-$input-label-color:               $black !default;
-
-$input-color-placeholder:         $gray-light !default;
-
-$legend-color:                    $gray-dark !default;
-$legend-border-color:             #e5e5e5 !default;
+$input-color:                     $subdued-dark;
+$input-label-color:               $dark;
+$input-color-placeholder:         $subdued;
 
 
 // Toggle
@@ -149,7 +111,7 @@ $toggle-off-border-color:         #E5E5E5;
 $toggle-on-bg-color:              #4A87EE;
 $toggle-on-border-color:          $toggle-on-bg-color;
 
-$toggle-handle-off-bg-color:      $white;
+$toggle-handle-off-bg-color:      $pure;
 $toggle-handle-on-bg-color:       $toggle-handle-off-bg-color;
 
 $toggle-transition-duration:      .1s;
@@ -186,141 +148,290 @@ $range-slider-border-radius:   10px;
 // Buttons
 // -------------------------------
 
-$button-color:                    #222;
-$button-block-margin:             10px !default;
-$button-clear-padding:            6px !default;
-$button-border-radius:            2px;
-$button-border-width:             1px;
+$button-color:                        #222;
+$button-block-margin:                 10px !default;
+$button-clear-padding:                6px !default;
+$button-border-radius:                2px;
+$button-border-width:                 1px;
 
-$button-font-size:                16px;
-$button-height:                   42px;
-$button-padding:                  12px !default;
-$button-icon-size:                24px;
+$button-font-size:                    16px;
+$button-height:                       42px;
+$button-padding:                      12px !default;
+$button-icon-size:                    24px;
 
-$button-large-font-size:          18px;
-$button-large-height:             54px;
-$button-large-padding:            16px !default;
-$button-large-icon-size:          32px;
+$button-large-font-size:              18px;
+$button-large-height:                 54px;
+$button-large-padding:                16px !default;
+$button-large-icon-size:              32px;
 
-$button-small-font-size:          12px;
-$button-small-height:             28px;
-$button-small-padding:            4px !default;
-$button-small-icon-size:          16px;
+$button-small-font-size:              12px;
+$button-small-height:                 28px;
+$button-small-padding:                4px !default;
+$button-small-icon-size:              16px;
 
-$button-bar-button-font-size:     12px;
-$button-bar-button-height:        32px;
-$button-bar-button-padding:       8px !default;
-$button-bar-button-icon-size:     24px;
+$button-bar-button-font-size:         12px;
+$button-bar-button-height:            32px;
+$button-bar-button-padding:           8px !default;
+$button-bar-button-icon-size:         24px;
 
-$button-default-bg:               $brand-default;
-$button-default-border:           #ddd;
-$button-default-active-bg:        #fafafa;
-$button-default-active-border:    #bbb;
+$button-default-bg:                   $subdued-light;
+$button-default-text:                 #444;
+$button-default-border:               darken($subdued-light, 15%);
+$button-default-active-bg:            lighten($subdued-light, 5%);
+$button-default-active-border:        darken($subdued-light, 25%);
 
-$button-secondary-bg:             $brand-secondary;
-$button-secondary-border:         #bbb;
-$button-secondary-active-bg:      #e5e5e5;
-$button-secondary-active-border:  #999;
+$button-primary-bg:                   $brand-primary;
+$button-primary-text:                 #fff;
+$button-primary-border:               darken($brand-primary, 10%);
+$button-primary-active-bg:            darken($brand-primary, 5%);
+$button-primary-active-border:        darken($brand-primary, 10%);
 
-$button-primary-bg:               $brand-primary;
-$button-primary-border:           #3b6dc2;
-$button-primary-active-bg:        #4175ce;
-$button-primary-active-border:    #32599c;
+$button-secondary-bg:                 $brand-secondary;
+$button-secondary-text:               #444;
+$button-secondary-border:             darken($brand-secondary, 15%);
+$button-secondary-active-bg:          lighten($brand-secondary, 10%);
+$button-secondary-active-border:      darken($brand-secondary, 20%);
 
-$button-info-bg:                  $brand-info;
-$button-info-border:              #3bb3c8;
-$button-info-active-bg:           #3db8cd;
-$button-info-active-border:       #3293a4;
+$button-tertiary-bg:                  $brand-tertiary;
+$button-tertiary-text:                #444;
+$button-tertiary-border:              darken($brand-tertiary, 25%);
+$button-tertiary-active-bg:           lighten($brand-tertiary, 10%);
+$button-tertiary-active-border:       darken($brand-tertiary, 15%);
 
-$button-success-bg:               $brand-success;
-$button-success-border:           #5bb22f;
-$button-success-active-bg:        #55aa2b;
-$button-success-active-border:    #448922;
+$button-positive-bg:                  $positive;
+$button-positive-text:                #fff;
+$button-positive-border:              darken($positive, 15%);
+$button-positive-active-bg:           darken($positive, 15%);
+$button-positive-active-border:       darken($positive, 15%);
 
-$button-warning-bg:               $brand-warning;
-$button-warning-border:           #d29f31;
-$button-warning-active-bg:        #e2a114;
-$button-warning-active-border:    #b88517;
+$button-calm-bg:                      $calm;
+$button-calm-text:                    #fff;
+$button-calm-border:                  darken($calm, 15%);
+$button-calm-active-bg:               darken($calm, 15%);
+$button-calm-active-border:           darken($calm, 15%);
 
-$button-danger-bg:                $brand-danger;
-$button-danger-border:            #c73927;
-$button-danger-active-bg:         #ce4331;
-$button-danger-active-border:     #9f3527;
+$button-assertive-bg:                 $assertive;
+$button-assertive-text:               #fff;
+$button-assertive-border:             darken($assertive, 15%);
+$button-assertive-active-bg:          darken($assertive, 15%);
+$button-assertive-active-border:      darken($assertive, 15%);
 
-$button-dark-bg:                  $brand-dark;
-$button-dark-border:              #111;
-$button-dark-active-bg:           #222;
-$button-dark-active-border:       #000;
+$button-balanced-bg:                  $balanced;
+$button-balanced-text:                #fff;
+$button-balanced-border:              darken($balanced, 15%);
+$button-balanced-active-bg:           darken($balanced, 15%);
+$button-balanced-active-border:       darken($balanced, 15%);
+
+$button-energized-bg:                 $energized;
+$button-energized-text:               #fff;
+$button-energized-border:             darken($energized, 15%);
+$button-energized-active-bg:          darken($energized, 15%);
+$button-energized-active-border:      darken($energized, 15%);
+
+$button-royle-bg:                     $royle;
+$button-royle-text:                   #fff;
+$button-royle-border:                 darken($royle, 15%);
+$button-royle-active-bg:              darken($royle, 15%);
+$button-royle-active-border:          darken($royle, 15%);
+
+$button-pure-bg:                      $pure;
+$button-pure-text:                    #444;
+$button-pure-border:                  #ddd;
+$button-pure-active-bg:               #222;
+$button-pure-active-border:           #000;
+
+$button-subdued-light-bg:             $subdued-light;
+$button-subdued-light-text:           #444;
+$button-subdued-light-border:         #ddd;
+$button-subdued-light-active-bg:      #222;
+$button-subdued-light-active-border:  #000;
+
+$button-subdued-bg:                   $subdued;
+$button-subdued-text:                 #444;
+$button-subdued-border:               #bbb;
+$button-subdued-active-bg:            #222;
+$button-subdued-active-border:        #000;
+
+$button-subdued-dark-bg:              $subdued-dark;
+$button-subdued-dark-text:            #fff;
+$button-subdued-dark-border:          darken($subdued-dark, 10%);
+$button-subdued-dark-active-bg:       #222;
+$button-subdued-dark-active-border:   #000;
+
+$button-dark-bg:                      $dark;
+$button-dark-text:                    #fff;
+$button-dark-border:                  #444;
+$button-dark-active-bg:               #222;
+$button-dark-active-border:           #000;
 
 
 // Bars
 // -------------------------------
 
-$bar-height:                     44px !default;
-$bar-title-font-size:            $font-size-large;
-$bar-padding-portrait:           5px;
-$bar-padding-landscape:          5px;
+$bar-height:                      44px !default;
+$bar-title-font-size:             $font-size-large;
+$bar-padding-portrait:            5px;
+$bar-padding-landscape:           5px;
+$bar-transparency:                1;
 
-$bar-bg:                      #fff;
+$bar-default-bg:                  #fff;
+$bar-default-text:                #444;
+$bar-default-border:              #444;
+$bar-default-active-bg:           #fff;
+$bar-default-active-border:       #444;
 
-$bar-transparency: 1;
-// Bar variations
-$bar-default-bg:              rgba($brand-default, $bar-transparency);
-$bar-default-border-color:    #ddd;
+$bar-primary-bg:                  rgba($button-primary-bg, $bar-transparency);
+$bar-primary-text:                $button-primary-text;
+$bar-primary-border:              $button-primary-border;
+$bar-primary-active-bg:           $button-primary-active-bg;
+$bar-primary-active-border:       $button-primary-active-border;
 
-$bar-secondary-bg:            rgba($brand-secondary, $bar-transparency);
-$bar-secondary-border-color:  $button-secondary-border;
+$bar-secondary-bg:                rgba($button-secondary-bg, $bar-transparency);
+$bar-secondary-text:              $button-secondary-text;
+$bar-secondary-border:            $button-secondary-border;
+$bar-secondary-active-bg:         $button-secondary-active-bg;
+$bar-secondary-active-border:     $button-secondary-active-border;
 
-$bar-primary-bg:              rgba($brand-primary, $bar-transparency);
-$bar-primary-border-color:    $button-primary-border;
+$bar-tertiary-bg:                 rgba($button-tertiary-bg, $bar-transparency);
+$bar-tertiary-text:               $button-tertiary-text;
+$bar-tertiary-border:             $button-tertiary-border;
+$bar-tertiary-active-bg:          $button-tertiary-active-bg;
+$bar-tertiary-active-border:      $button-tertiary-active-border;
 
-$bar-info-bg:                 rgba($brand-info, $bar-transparency);
-$bar-info-border-color:       $button-info-border;
+$bar-positive-bg:                 rgba($button-positive-bg, $bar-transparency);
+$bar-positive-text:               $button-positive-text;
+$bar-positive-border:             $button-positive-border;
+$bar-positive-active-bg:          $button-positive-active-bg;
+$bar-positive-active-border:      $button-positive-active-border;
 
-$bar-success-bg:              rgba($brand-success, $bar-transparency);
-$bar-success-border-color:    $button-success-border;
+$bar-calm-bg:                     rgba($button-calm-bg, $bar-transparency);
+$bar-calm-text:                   $button-calm-text;
+$bar-calm-border:                 $button-calm-border;
+$bar-calm-active-bg:              $button-calm-active-bg;
+$bar-calm-active-border:          $button-calm-active-border;
 
-$bar-warning-bg:              rgba($brand-warning, $bar-transparency);
-$bar-warning-border-color:    $button-warning-border;
+$bar-assertive-bg:                rgba($button-assertive-bg, $bar-transparency);
+$bar-assertive-text:              $button-assertive-text;
+$bar-assertive-border:            $button-assertive-border;
+$bar-assertive-active-bg:         $button-assertive-active-bg;
+$bar-assertive-active-border:     $button-assertive-active-border;
 
-$bar-danger-bg:               rgba($brand-danger, $bar-transparency);
-$bar-danger-border-color:     $button-danger-border;
+$bar-balanced-bg:                 rgba($button-balanced-bg, $bar-transparency);
+$bar-balanced-text:               $button-balanced-text;
+$bar-balanced-border:             $button-balanced-border;
+$bar-balanced-active-bg:          $button-balanced-active-bg;
+$bar-balanced-active-border:      $button-balanced-active-border;
 
-$bar-dark-bg:                 rgba($brand-dark, $bar-transparency);
-$bar-dark-border-color:       $button-dark-border;
+$bar-energized-bg:                rgba($button-energized-bg, $bar-transparency);
+$bar-energized-text:              $button-energized-text;
+$bar-energized-border:            $button-energized-border;
+$bar-energized-active-bg:         $button-energized-active-bg;
+$bar-energized-active-border:     $button-energized-active-border;
+
+$bar-royle-bg:                    rgba($button-royle-bg, $bar-transparency);
+$bar-royle-text:                  $button-royle-text;
+$bar-royle-border:                $button-royle-border;
+$bar-royle-active-bg:             $button-royle-active-bg;
+$bar-royle-active-border:         $button-royle-active-border;
+
+$bar-pure-bg:                     rgba($button-pure-bg, $bar-transparency);
+$bar-pure-text:                   $button-pure-text;
+$bar-pure-border:                 $button-pure-border;
+$bar-pure-active-bg:              $button-pure-active-bg;
+$bar-pure-active-border:          $button-pure-active-border;
+
+$bar-subdued-light-bg:            rgba($button-subdued-light-bg, $bar-transparency);
+$bar-subdued-light-text:          $button-subdued-light-text;
+$bar-subdued-light-border:        $button-subdued-light-border;
+$bar-subdued-light-active-bg:     $button-subdued-light-active-bg;
+$bar-subdued-light-active-border: $button-subdued-light-active-border;
+
+$bar-subdued-bg:                  rgba($button-subdued-bg, $bar-transparency);
+$bar-subdued-text:                $button-subdued-text;
+$bar-subdued-border:              $button-subdued-border;
+$bar-subdued-active-bg:           $button-subdued-active-bg;
+$bar-subdued-active-border:       $button-subdued-active-border;
+
+$bar-subdued-dark-bg:             rgba($button-subdued-dark-bg, $bar-transparency);
+$bar-subdued-dark-text:           $button-subdued-dark-text;
+$bar-subdued-dark-border:         $button-subdued-dark-border;
+$bar-subdued-dark-active-bg:      $button-subdued-dark-active-bg;
+$bar-subdued-dark-active-border:  $button-subdued-dark-active-border;
+
+$bar-dark-bg:                     rgba($button-dark-bg, $bar-transparency);
+$bar-dark-text:                   $button-dark-text;
+$bar-dark-border:                 $button-dark-border;
+$bar-dark-active-bg:              $button-dark-active-bg;
+$bar-dark-active-border:          $button-dark-active-border;
 
 
 // Tabs
 // -------------------------------
 
-$tabs-height:                     49px !default;
-$tabs-text-font-size:             14px !default;
-$tabs-text-with-icon-font-size:   10px !default;
-$tabs-icon-size:                  32px !default;
+$tabs-height:                      49px !default;
+$tabs-text-font-size:              14px !default;
+$tabs-text-with-icon-font-size:    10px !default;
+$tabs-icon-size:                   32px !default;
 
-$tabs-default-bg:                 $brand-default;
-$tabs-default-border-color:       $button-default-border;
+$tabs-default-bg:                  $button-subdued-light-bg;
+$tabs-default-border-color:        $button-subdued-light-border;
+$tabs-default-text:                $button-subdued-light-text;
 
-$tabs-secondary-bg:               $brand-secondary;
-$tabs-secondary-border-color:     $button-secondary-border;
+$tabs-primary-bg:                  $button-primary-bg;
+$tabs-primary-border-color:        $button-primary-border;
+$tabs-primary-text:                $button-primary-text;
 
-$tabs-primary-bg:                 $brand-primary;
-$tabs-primary-border-color:       $button-primary-border;
+$tabs-secondary-bg:                $button-secondary-bg;
+$tabs-secondary-border-color:      $button-secondary-border;
+$tabs-secondary-text:              $button-secondary-text;
 
-$tabs-info-bg:                    $brand-info;
-$tabs-info-border-color:          $button-info-border;
+$tabs-tertiary-bg:                 $button-tertiary-bg;
+$tabs-tertiary-border-color:       $button-tertiary-border;
+$tabs-tertiary-text:               $button-tertiary-text;
 
-$tabs-success-bg:                 $brand-success;
-$tabs-success-border-color:       $button-success-border;
+$tabs-positive-bg:                 $button-positive-bg;
+$tabs-positive-border-color:       $button-positive-border;
+$tabs-positive-text:               $button-positive-text;
 
-$tabs-warning-bg:                 $brand-warning;
-$tabs-warning-border-color:       $button-warning-border;
+$tabs-calm-bg:                     $button-calm-bg;
+$tabs-calm-border-color:           $button-calm-border;
+$tabs-calm-text:                   $button-calm-text;
 
-$tabs-danger-bg:                  $brand-danger;
-$tabs-danger-border-color:        $button-danger-border;
+$tabs-assertive-bg:                $button-assertive-bg;
+$tabs-assertive-border-color:      $button-assertive-border;
+$tabs-assertive-text:              $button-assertive-text;
 
-$tabs-dark-bg:                    $brand-dark;
-$tabs-dark-border-color:          $button-dark-border;
+$tabs-balanced-bg:                 $button-balanced-bg;
+$tabs-balanced-border-color:       $button-balanced-border;
+$tabs-balanced-text:               $button-balanced-text;
+
+$tabs-energized-bg:                $button-energized-bg;
+$tabs-energized-border-color:      $button-energized-border;
+$tabs-energized-text:              $button-energized-text;
+
+$tabs-royle-bg:                    $button-royle-bg;
+$tabs-royle-border-color:          $button-royle-border;
+$tabs-royle-text:                  $button-royle-text;
+
+$tabs-pure-bg:                     $button-pure-bg;
+$tabs-pure-border-color:           $button-pure-border;
+$tabs-pure-text:                   $button-pure-text;
+
+$tabs-subdued-light-bg:            $button-subdued-light-bg;
+$tabs-subdued-light-border-color:  $button-subdued-light-border;
+$tabs-subdued-light-text:          $button-subdued-light-text;
+
+$tabs-subdued-bg:                  $button-subdued-bg;
+$tabs-subdued-border-color:        $button-subdued-border;
+$tabs-subdued-text:                $button-subdued-text;
+
+$tabs-subdued-dark-bg:             $button-subdued-dark-bg;
+$tabs-subdued-dark-border-color:   $button-subdued-dark-border;
+$tabs-subdued-dark-text:           $button-subdued-dark-text;
+
+$tabs-dark-bg:                     $button-dark-bg;
+$tabs-dark-border-color:           $button-dark-border;
+$tabs-dark-text:                   $button-dark-text;
 
 
 // Lists
@@ -333,29 +444,8 @@ $list-header-color:               #222;
 $list-header-padding:             5px 15px;
 $list-header-margin-top:          20px !default;
 
-$list-default-background:         $brand-default;
-$list-default-border:             #ddd;
-
-$list-secondary-background:       $brand-secondary;
-$list-secondary-border:           #ddd;
-
-$list-success-background:         $brand-success;
-$list-success-border:             $brand-success;
-
-$list-primary-background:         $brand-primary;
-$list-primary-border:             $brand-primary;
-
-$list-info-background:            $brand-info;
-$list-info-border:                $brand-info;
-
-$list-warning-background:         $brand-warning;
-$list-warning-border:             $brand-warning;
-
-$list-danger-background:          $brand-danger;
-$list-danger-border:              $brand-danger;
-
-$list-dark-background:            $brand-dark;
-$list-dark-border:                $brand-dark;
+$list-bg:                         $pure;
+$list-border-color:               #ddd;
 
 
 // Cards
@@ -439,42 +529,17 @@ $sheet-border-radius:         3px !default;
 // Badges
 // -------------------------
 
-$badge-color:                 #fff !default;
-$badge-link-hover-color:      #fff !default;
-$badge-bg:                    $gray-light !default;
+$badge-color:                 $pure !default;
+$badge-link-hover-color:      $pure !default;
+$badge-bg:                    $subdued !default;
 
 $badge-active-color:          $link-color !default;
-$badge-active-bg:             #fff !default;
+$badge-active-bg:             $pure !default;
 
 $badge-font-size:             14px !default;
 $badge-line-height:           16px !default;
 $badge-font-weight:           bold !default;
 $badge-border-radius:         10px !default;
-
-
-// Media queries breakpoints
-// -------------------------------
-
-// Extra small screen / phone
-$screen-xs:                  480px !default;
-$screen-phone:               $screen-xs !default;
-
-// Small screen / tablet
-$screen-sm:                  768px !default;
-$screen-tablet:              $screen-sm !default;
-
-// Medium screen / desktop
-$screen-md:                  992px !default;
-$screen-desktop:             $screen-md !default;
-
-// Large screen / wide desktop
-$screen-lg:                  1200px !default;
-$screen-lg-desktop:          $screen-lg !default;
-
-// So media queries don't overlap when required, provide a maximum
-$screen-xs-max:              ($screen-sm - 1) !default;
-$screen-sm-max:              ($screen-md - 1) !default;
-$screen-md-max:              ($screen-lg - 1) !default;
 
 
 // Z-Indexes

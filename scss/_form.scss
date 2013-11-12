@@ -17,13 +17,13 @@ legend {
   width: 100%;
   border: 0;
   border-bottom: 1px solid #e5e5e5;
-  color: $gray-dark;
+  color: $subdued-dark;
   font-size: $font-size-base * 1.5;
   line-height: $line-height-base * 2;
 
   // Small
   small {
-    color: $gray-light;
+    color: $subdued-light;
     font-size: $line-height-base * .75;
   }
 }
@@ -40,7 +40,7 @@ input,
 button,
 select,
 textarea {
-  font-family: $base-font-family; // And only set font-family here for those that need it (note the missing label element)
+  font-family: $font-family-base; // And only set font-family here for those that need it (note the missing label element)
 }
 
 
@@ -134,7 +134,7 @@ input[type="tel"],
 input[type="color"] {
   display: inline-block;
   height: $line-height-computed + $font-size-base;
-  color: $gray;
+  color: $subdued;
   vertical-align: middle;
   font-size: $font-size-base;
   line-height: $line-height-computed;
