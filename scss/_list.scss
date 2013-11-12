@@ -96,21 +96,15 @@
 }
 
 .card .item,
-.card .item-divider,
 .list-inset .item,
-.list-inset .item-divider,
 .padding > .list .item,
-.padding-horizontal > .list .item,
-.padding > .list .item-divider,
-.padding-horizontal > .list .item-divider {
+.padding-horizontal > .list .item {
   margin-left: 0;
   margin-right: 0;
 }
-.padding-left > .list .item,
-.padding-left > .list .item-divider {
+.padding-left > .list .item {
   margin-left: 0;
 }
-.padding-right > .list .item,
-.padding-right > .list .item-divider {
+.padding-right > .list .item {
   margin-right: 0;
 }

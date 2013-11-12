@@ -5,6 +5,7 @@
  */
 
 .item {
+  @include item-style-active($secondary, $subdued-dark, $subdued-dark);
   position: relative;
 
   z-index: 2; // Make sure the borders and stuff don't get hidden by children
@@ -13,9 +14,10 @@
 
   padding: $item-padding;
 
-  border: none;
+  border-width: $item-border-width;
+  border-style: $item-border-style;
+  border-color: $item-border-color;
   background-color: $list-bg;
-  box-shadow: $item-box-shadow;
   font-size: $list-font-size;
 
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
@@ -70,7 +72,6 @@
       color: inherit;
     }
   }
-  @include item-style-active($secondary, $subdued-dark, $subdued-dark);
 }
 
 // Different themes for list items
@@ -141,7 +142,6 @@ a.item {
 
   border: none;
   background-color: $list-bg;
-  box-shadow: $item-box-shadow;
 
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
 }
@@ -275,7 +275,7 @@ a.item {
 
 a.item, 
 button.item {
-  padding-right: (($item-padding * 3) - 5)
+  padding-right: (($item-padding * 3) - 5);
 }
 
 a.item:after,
@@ -394,12 +394,10 @@ button.item-button-right:after {
 // -------------------------------
 
 .item-divider {
-  margin: $item-border-width * -1;
-  padding: $item-divider-padding;
+  padding-top: $item-padding / 2;
+  padding-bottom: $item-padding / 2;
   min-height: 30px;
-  border: none;
   background-color: $item-divider-bg;
-  box-shadow: $item-box-shadow;
   color: $item-divider-color;
   font-weight: bold;
 }
@@ -449,13 +447,13 @@ button.item-button-right:after {
   .button {
     height: 100%;
     .icon, i {
-      color: $assertive;
       @include display-flex();
       @include align-items(center);
-      font-size: 24px;
       position: absolute;
       top: 0;
       height: 100%;
+      color: $assertive;
+      font-size: 24px;
     }
   }
 
@@ -493,10 +491,10 @@ button.item-button-right:after {
     .icon, i {
       @include display-flex();
       @include align-items(center);
-      font-size: 24px;
       position: absolute;
       top: 0;
       height: 100%;
+      font-size: 24px;
     }
   }
 }

@@ -3250,11 +3250,19 @@ a.subdued‎ {
   display: block;
   margin: -1px;
   padding: 15px;
-  border: none;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #dddddd;
   background-color: white;
-  box-shadow: inset 0 0 1px #666666;
   font-size: 16px;
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
+  .item.active {
+    color: #888888;
+    background-color: white;
+    border-color: #888888; }
+    .item.active .item-content {
+      background-color: white;
+      color: #888888; }
   .item h2 {
     margin: 0 0 4px 0;
     font-size: 16px; }
@@ -3286,13 +3294,6 @@ a.subdued‎ {
     z-index: 2; }
     .item.active .item-heading, .item.active:hover .item-heading, .item.active:focus .item-heading {
       color: inherit; }
-  .item.active {
-    color: #888888;
-    background-color: white;
-    border-color: #888888; }
-    .item.active .item-content {
-      background-color: white;
-      color: #888888; }
 
 .item-primary.active {
   color: white;
@@ -3439,7 +3440,6 @@ a.item {
   padding: 15px 40px 15px 15px;
   border: none;
   background-color: white;
-  box-shadow: inset 0 0 1px #666666;
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
 
 .item-text-wrap,
@@ -3654,12 +3654,10 @@ button.item-button-right:after {
     margin-bottom: 15px; }
 
 .item-divider {
-  margin: -1px;
-  padding: 5px 15px;
+  padding-top: 7.5px;
+  padding-bottom: 7.5px;
   min-height: 30px;
-  border: none;
   background-color: whitesmoke;
-  box-shadow: inset 0 0 1px #666666;
   color: #222222;
   font-weight: bold; }
 
@@ -3694,7 +3692,6 @@ button.item-button-right:after {
   .item-edit .button {
     height: 100%; }
     .item-edit .button .icon, .item-edit .button i {
-      color: #ef4e3a;
       display: -webkit-box;
       display: -webkit-flex;
       display: -moz-flex;
@@ -3705,10 +3702,11 @@ button.item-button-right:after {
       -webkit-align-items: center;
       -moz-align-items: center;
       align-items: center;
-      font-size: 24px;
       position: absolute;
       top: 0;
-      height: 100%; }
+      height: 100%;
+      color: #ef4e3a;
+      font-size: 24px; }
   .item-edit.ng-enter {
     left: -48px;
     opacity: 0;
@@ -3745,10 +3743,10 @@ button.item-button-right:after {
       -webkit-align-items: center;
       -moz-align-items: center;
       align-items: center;
-      font-size: 24px;
       position: absolute;
       top: 0;
-      height: 100%; }
+      height: 100%;
+      font-size: 24px; }
 
 /**
  * The hidden right-side buttons that can be exposed under a list item
@@ -3836,22 +3834,16 @@ button.item-button-right:after {
   margin-bottom: -1px; }
 
 .card .item,
-.card .item-divider,
 .list-inset .item,
-.list-inset .item-divider,
 .padding > .list .item,
-.padding-horizontal > .list .item,
-.padding > .list .item-divider,
-.padding-horizontal > .list .item-divider {
+.padding-horizontal > .list .item {
   margin-left: 0;
   margin-right: 0; }
 
-.padding-left > .list .item,
-.padding-left > .list .item-divider {
+.padding-left > .list .item {
   margin-left: 0; }
 
-.padding-right > .list .item,
-.padding-right > .list .item-divider {
+.padding-right > .list .item {
   margin-right: 0; }
 
 /**
@@ -4122,7 +4114,7 @@ textarea {
   padding: 4px 8px 3px;
   border: none;
   background-color: white;
-  box-shadow: inset 0 0 1px #666666; }
+  box-shadow: inset 0 0 1px #dddddd; }
 
 .item-stacked-label input {
   height: 46px; }
