@@ -82,7 +82,7 @@
 .item-calm { @include item-style-active($calm, $subdued-dark, #fff); }
 .item-balanced { @include item-style-active($balanced, $subdued-dark, #fff); }
 .item-energized { @include item-style-active($energized, $subdued-dark, #fff); }
-.item-royle { @include item-style-active($royle, $subdued-dark, #fff); }
+.item-royal { @include item-style-active($royal, $subdued-dark, #fff); }
 .item-pure { @include item-style-active($pure, $subdued-dark, #fff); }
 .item-subdued-light { @include item-style-active($subdued-light, $subdued-dark, #fff); }
 .item-subdued { @include item-style-active($subdued, $subdued-dark, #fff); }

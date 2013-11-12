@@ -46,8 +46,8 @@
   &.tabs-energized {
     @include tab-style($tabs-energized-bg, $tabs-energized-border-color, $tabs-energized-text);
   }
-  &.tabs-royle {
-    @include tab-style($tabs-royle-bg, $tabs-royle-border-color, $tabs-royle-text);
+  &.tabs-royal {
+    @include tab-style($tabs-royal-bg, $tabs-royal-border-color, $tabs-royal-text);
   }
   &.tabs-pure {
     @include tab-style($tabs-pure-bg, $tabs-pure-border-color, $tabs-pure-text);
@@ -165,8 +165,8 @@
   &.tab-item-energized {
     color: $energized;
   }
-  &.tab-item-royle {
-    color: $royle;
+  &.tab-item-royal {
+    color: $royal;
   }
   &.tab-item-pure {
     color: $pure;

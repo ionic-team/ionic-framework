@@ -74,8 +74,8 @@
   &.bar-energized {
     @include bar-style($bar-energized-bg, $bar-energized-border, $bar-energized-text);
   }
-  &.bar-royle {
-    @include bar-style($bar-royle-bg, $bar-royle-border, $bar-royle-text);
+  &.bar-royal {
+    @include bar-style($bar-royal-bg, $bar-royal-border, $bar-royal-text);
   }
   &.bar-pure {
     @include bar-style($bar-pure-bg, $bar-pure-border, $bar-pure-text);
@@ -207,9 +207,9 @@
     @include button-clear(#fff, $bar-title-font-size);
   }
 }
-.bar-royle {
+.bar-royal {
   .button {
-    @include button-style($bar-royle-bg, $bar-royle-border, $bar-royle-active-bg, $bar-royle-active-border, $bar-royle-text);
+    @include button-style($bar-royal-bg, $bar-royal-border, $bar-royal-active-bg, $bar-royal-active-border, $bar-royal-text);
     @include button-clear(#fff, $bar-title-font-size);
   }
 }

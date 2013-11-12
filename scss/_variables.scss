@@ -15,7 +15,7 @@ $calm:                  #43cee6 !default;
 $balanced:              #66cc33 !default;
 $energized:             #f0b840 !default;
 $assertive:             #ef4e3a !default;
-$royle:                 #8a6de9 !default;
+$royal:                 #8a6de9 !default;
 
 $pure:                  #fff !default;
 $subdued-light:         #eee !default;
@@ -228,11 +228,11 @@ $button-energized-border:             darken($energized, 15%);
 $button-energized-active-bg:          darken($energized, 15%);
 $button-energized-active-border:      darken($energized, 15%);
 
-$button-royle-bg:                     $royle;
-$button-royle-text:                   #fff;
-$button-royle-border:                 darken($royle, 15%);
-$button-royle-active-bg:              darken($royle, 15%);
-$button-royle-active-border:          darken($royle, 15%);
+$button-royal-bg:                     $royal;
+$button-royal-text:                   #fff;
+$button-royal-border:                 darken($royal, 15%);
+$button-royal-active-bg:              darken($royal, 15%);
+$button-royal-active-border:          darken($royal, 15%);
 
 $button-pure-bg:                      $pure;
 $button-pure-text:                    #444;
@@ -328,11 +328,11 @@ $bar-energized-border:            $button-energized-border;
 $bar-energized-active-bg:         $button-energized-active-bg;
 $bar-energized-active-border:     $button-energized-active-border;
 
-$bar-royle-bg:                    rgba($button-royle-bg, $bar-transparency);
-$bar-royle-text:                  $button-royle-text;
-$bar-royle-border:                $button-royle-border;
-$bar-royle-active-bg:             $button-royle-active-bg;
-$bar-royle-active-border:         $button-royle-active-border;
+$bar-royal-bg:                    rgba($button-royal-bg, $bar-transparency);
+$bar-royal-text:                  $button-royal-text;
+$bar-royal-border:                $button-royal-border;
+$bar-royal-active-bg:             $button-royal-active-bg;
+$bar-royal-active-border:         $button-royal-active-border;
 
 $bar-pure-bg:                     rgba($button-pure-bg, $bar-transparency);
 $bar-pure-text:                   $button-pure-text;
@@ -409,9 +409,9 @@ $tabs-energized-bg:                $button-energized-bg;
 $tabs-energized-border-color:      $button-energized-border;
 $tabs-energized-text:              $button-energized-text;
 
-$tabs-royle-bg:                    $button-royle-bg;
-$tabs-royle-border-color:          $button-royle-border;
-$tabs-royle-text:                  $button-royle-text;
+$tabs-royal-bg:                    $button-royal-bg;
+$tabs-royal-border-color:          $button-royal-border;
+$tabs-royal-text:                  $button-royal-text;
 
 $tabs-pure-bg:                     $button-pure-bg;
 $tabs-pure-border-color:           $button-pure-border;

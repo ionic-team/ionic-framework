@@ -160,10 +160,10 @@
   @include button-outline($button-energized-bg);
 }
 
-.button-royle {
-  @include button-style($button-royle-bg, $button-royle-border, $button-royle-active-bg, $button-royle-active-border, $button-royle-text);
-  @include button-clear($button-royle-bg);
-  @include button-outline($button-royle-bg);
+.button-royal {
+  @include button-style($button-royal-bg, $button-royal-border, $button-royal-active-bg, $button-royal-active-border, $button-royal-text);
+  @include button-clear($button-royal-bg);
+  @include button-outline($button-royal-bg);
 }
 
 .button-pure {
