@@ -1,4 +1,3 @@
-
 // Brand Colors
 // -------------------------------
 
@@ -88,7 +87,7 @@ $input-bg-disabled:               $stable;
 
 $input-color:                     $dark;
 $input-label-color:               $dark;
-$input-color-placeholder:         $stable;
+$input-color-placeholder:         darken($stable, 10%);
 
 
 // Toggle
