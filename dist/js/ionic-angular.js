@@ -552,11 +552,21 @@ angular.module('ionic.ui.content', [])
     template: '<div class="scroll-refresher"><div class="ionic-refresher-content"><div class="ionic-refresher"></div></div></div>',
     scope: true,
     link: function($scope, $element, $attr, scrollCtrl) {
-      $scope.$on('onRefresh', function() {
+      var icon = $element[0].querySelector('.ionic-refresher');
+
+      // Scale up the refreshing icon
+      var onRefreshOpening = ionic.throttle(function(e, amt) {
+        icon.style[ionic.CSS.TRANSFORM] = 'scale(' + Math.min((1 + amt), 2) + ')';
+      }, 100);
+
+      $scope.$on('onRefreshing', function(e) {
+        icon.style[ionic.CSS.TRANSFORM] = 'scale(2)';
       });
-      $scope.$on('onRefreshOpening', function(amt) {
-        console.log('On refresh opening', amt);
+
+      $scope.$on('onRefresh', function(e) {
+        icon.style[ionic.CSS.TRANSFORM] = 'scale(1)';
       });
+      $scope.$on('onRefreshOpening', onRefreshOpening);
     }
   }
 })
@@ -685,11 +695,11 @@ angular.module('ionic.ui.list', ['ngAnimate'])
           hasPullToRefresh: ($scope.hasPullToRefresh !== 'false'),
           onRefresh: function() {
             $scope.onRefresh();
-            $scope.$broadcast('onRefresh');
+            $scope.$parent.$broadcast('onRefresh');
           },
           onRefreshOpening: function(amt) {
             $scope.onRefreshOpening({amount: amt});
-            $scope.$broadcast('onRefreshOpening', amt);
+            $scope.$parent.$broadcast('onRefreshOpening', amt);
           }
         });
 
