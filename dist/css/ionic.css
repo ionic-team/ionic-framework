@@ -4091,7 +4091,7 @@ input[type="tel"],
 input[type="color"] {
   display: inline-block;
   height: 34px;
-  color: #f8f8f8;
+  color: #dfdfdf;
   vertical-align: middle;
   font-size: 14px;
   line-height: 20px; }
@@ -4148,13 +4148,13 @@ select[size] {
 
 input:-moz-placeholder,
 textarea:-moz-placeholder {
-  color: #f8f8f8; }
+  color: #dfdfdf; }
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
-  color: #f8f8f8; }
+  color: #dfdfdf; }
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
-  color: #f8f8f8; }
+  color: #dfdfdf; }
 
 input[disabled],
 select[disabled],
