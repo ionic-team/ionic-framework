@@ -76,9 +76,37 @@ angular.module('ionic.ui.content', [])
   return {
     restrict: 'E',
     replace: true,
-    transclude: true,
-    template: '<div class="scroll-refresher"><div class="scroll-refresher-content" ng-transclude></div></div>'
+    require: ['^?content', '^?list'],
+    template: '<div class="scroll-refresher"><div class="ionic-refresher-content"><div class="ionic-refresher"></div></div></div>',
+    scope: true,
+    link: function($scope, $element, $attr, scrollCtrl) {
+      var icon = $element[0].querySelector('.ionic-refresher');
+
+      // Scale up the refreshing icon
+      var onRefreshOpening = ionic.throttle(function(e, amt) {
+        icon.style[ionic.CSS.TRANSFORM] = 'scale(' + Math.min((1 + amt), 2) + ')';
+      }, 100);
+
+      $scope.$on('onRefreshing', function(e) {
+        icon.style[ionic.CSS.TRANSFORM] = 'scale(2)';
+      });
+
+      $scope.$on('onRefresh', function(e) {
+        icon.style[ionic.CSS.TRANSFORM] = 'scale(1)';
+      });
+      $scope.$on('onRefreshOpening', onRefreshOpening);
+    }
   }
 })
+
+.directive('scroll-refresher', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<div class="scroll-refresher"><div class="scroll-refresher-content"></div></div>'
+  }
+});
+
 
 })();

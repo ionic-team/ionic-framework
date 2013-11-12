@@ -8,6 +8,8 @@ http://ionicframework.com/
 By @maxlynch, @helloimben, @adamdbradley <3
 
 Licensed under the MIT license. Please see LICENSE for more information.
+
+Make awesome shit.
 */
 ;
 
@@ -1835,7 +1837,58 @@ window.ionic = {
 ;
 (function(ionic) {
   
+  /**
+   * Various utilities used throughout Ionic
+   *
+   * Some of these are adopted from underscore.js and backbone.js, both also MIT licensed.
+   */
   ionic.Utils = {
+
+    /**
+     * Return a function that will be called with the given context
+     */
+    proxy: function(func, context) {
+      var args = Array.prototype.slice.call(arguments, 2);
+      return function() {
+        return func.apply(context, args.concat(Array.prototype.slice.call(arguments)));
+      };
+    },
+
+    /**
+     * Only call a function once in the given interval.
+     * 
+     * @param func {Function} the function to call
+     * @param wait {int} how long to wait before/after to allow function calls
+     * @param immediate {boolean} whether to call immediately or after the wait interval
+     */
+     debounce: function(func, wait, immediate) {
+      var timeout, args, context, timestamp, result;
+      return function() {
+        context = this;
+        args = arguments;
+        timestamp = new Date();
+        var later = function() {
+          var last = (new Date()) - timestamp;
+          if (last < wait) {
+            timeout = setTimeout(later, wait - last);
+          } else {
+            timeout = null;
+            if (!immediate) result = func.apply(context, args);
+          }
+        };
+        var callNow = immediate && !timeout;
+        if (!timeout) {
+          timeout = setTimeout(later, wait);
+        }
+        if (callNow) result = func.apply(context, args);
+        return result;
+      };
+    },
+
+    /**
+     * Throttle the given fun, only allowing it to be
+     * called at most every `wait` ms.
+     */
     throttle: function(func, wait, options) {
       var context, args, result;
       var timeout = null;
@@ -1915,9 +1968,12 @@ window.ionic = {
     }
   };
 
+  // Bind a few of the most useful functions to the ionic scope
   ionic.inherit = ionic.Utils.inherit;
   ionic.extend = ionic.Utils.extend;
   ionic.throttle = ionic.Utils.throttle;
+  ionic.proxy = ionic.Utils.proxy;
+  ionic.debounce = ionic.Utils.debounce;
 
 })(window.ionic);
 ;
@@ -1977,13 +2033,17 @@ window.ionic = {
         dragThreshold: 10,
         
         // Resistance when scrolling too far up or down
-        rubberBandResistance: 3,
+        rubberBandResistance: 2,
 
         // Scroll event names. These are custom so can be configured
         scrollEventName: 'momentumScrolled',
         scrollEndEventName: 'momentumScrollEnd',
 
         hasPullToRefresh: true,
+
+        // Whether to disable overflow rubber banding when content is small
+        // enough to fit in the viewport (i.e. doesn't need scrolling)
+        disableNonOverflowRubberBand: false,
 
         // Called as the refresher is opened, an amount is passed
         onRefreshOpening: function() {},
@@ -2178,6 +2238,10 @@ window.ionic = {
       }
     },
 
+    /**
+     * Check if the current scroll bounds needs to be brought back to the min/max
+     * allowable given the total scrollable area.
+     */
     needsWrapping: function() {
       var _this = this;
 
@@ -2400,14 +2464,6 @@ window.ionic = {
       var parentWidth = this.el.parentNode.offsetWidth;
       var parentHeight = this.el.parentNode.offsetHeight;
 
-      var maxX = Math.min(0, (-totalWidth + parentWidth));
-      var maxY = Math.min(0, (-totalHeight + parentHeight));
-
-      // Check if we even have enough content to scroll, if not, don't start the drag
-      if((this.isHorizontalEnabled && maxX == 0) || (this.isVerticalEnabled && maxY == 0)) {
-        return;
-      }
-
       this.x = scrollLeft;
       this.y = scrollTop;
 
@@ -2444,6 +2500,16 @@ window.ionic = {
         resist: 1,
         startTime: Date.now()
       };
+
+      if(this.disableNonOverflowRubberBand === true) {
+        var maxX = Math.min(0, (-totalWidth + parentWidth));
+        var maxY = Math.min(0, (-totalHeight + parentHeight));
+
+        // Check if we even have enough content to scroll, if not, don't start the drag
+        if((this.isHorizontalEnabled && maxX == 0) || (this.isVerticalEnabled && maxY == 0)) {
+          this._drag.noRubberBand = true;
+        }
+      }
     },
 
     /**
@@ -2511,9 +2577,22 @@ window.ionic = {
           var newX = _this.x + deltaX;
           var newY = _this.y + deltaY;
 
-          // Check if the dragging is beyond the bottom or top
-          if(newY > 0 || (-newY + parentHeight) > totalHeight) {
-            newY = _this.y + deltaY / _this.rubberBandResistance;
+          if(drag.noRubberBand === true) {
+            if(newY > 0) {
+              newY = 0;
+            } else if(newY < maxY) {
+              newY = maxY;
+            }
+            if(newX > 0) {
+              newX = 0;
+            } else if(newX < maxX) {
+              newX = maxX;
+            }
+          } else {
+            // Check if the dragging is beyond the bottom or top
+            if(newY > 0 || (-newY + parentHeight) > totalHeight) {
+              newY = _this.y + deltaY / _this.rubberBandResistance;
+            }
           }
 
           if(!_this.isHorizontalEnabled) {
@@ -2525,7 +2604,6 @@ window.ionic = {
 
           if(_this._refresher && newY > 0) {
             // We are pulling to refresh, so update the refresher
-            //_this._refresher.style[ionic.CSS.TRANSFORM] = 'translate3d(0, ' + newY + 'px, 0)';
             if(_this._isRefresherHidden) {
               // Show it only in a drag and if we haven't showed it yet
               _this._refresher.style.display = 'block';
@@ -2542,7 +2620,7 @@ window.ionic = {
             }
 
             // Update the new translated Y point of the container
-            _this.el.style.webkitTransform = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
+            _this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
           } else {
 
             _this._isHoldingRefresh = false;
@@ -2553,7 +2631,7 @@ window.ionic = {
               _this._isRefresherHidden = true;
             }
             // Update the new translated Y point of the container
-            _this.el.style.webkitTransform = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
+            _this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + newX + 'px,' + newY + 'px, 0)';
           }
 
           // Store the last points
@@ -3165,8 +3243,6 @@ window.ionic = {
 
       this._isDragging = false;
 
-      console.log(e.gesture.direction);
-
       // Check if this is a reorder drag
       if(ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_DRAG_CLASS) && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
         var item = this._getItem(e.target);
@@ -3464,6 +3540,39 @@ window.ionic = {
     },
     pushDown: function() {
       this.el.style.zIndex = -1;
+    }
+  });
+
+  ionic.views.SideMenuContent = ionic.views.View.inherit({
+    initialize: function(opts) {
+      var _this = this;
+
+      ionic.extend(this, {
+        animationClass: 'menu-animated',
+        onDrag: function(e) {},
+        onEndDrag: function(e) {},
+      }, opts);
+
+      ionic.onGesture('drag', ionic.proxy(this._onDrag, this), this.el);
+      ionic.onGesture('release', ionic.proxy(this._onEndDrag, this), this.el);
+    },
+    _onDrag: function(e) {
+      this.onDrag && this.onDrag(e);
+    },
+    _onEndDrag: function(e) {
+      this.onEndDrag && this.onEndDrag(e);
+    },
+    disableAnimation: function() {
+      this.el.classList.remove(this.animationClass);
+    },
+    enableAnimation: function() {
+      this.el.classList.add(this.animationClass);
+    },
+    getTranslateX: function() {
+      return parseFloat(this.el.style.webkitTransform.replace('translate3d(', '').split(',')[0]);
+    },
+    setTranslateX: function(x) {
+      this.el.style.webkitTransform = 'translate3d(' + x + 'px, 0, 0)';
     }
   });
 
@@ -4142,21 +4251,17 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
       return;
 
     // Actually switch the active controllers
-
-    // Remove the old one
-    //last && last.detach();
     if(last) {
       last.isVisible = false;
-      last.visibilityChanged && last.visibilityChanged();
+      last.visibilityChanged && last.visibilityChanged('push');
     }
 
     // Grab the top controller on the stack
     var next = this.controllers[this.controllers.length - 1];
 
-    // TODO: No DOM stuff here
-    //this.content.el.appendChild(next.el);
     next.isVisible = true;
-    next.visibilityChanged && next.visibilityChanged();
+    // Trigger visibility change, but send 'first' if this is the first page
+    next.visibilityChanged && next.visibilityChanged(last ? 'push' : 'first');
 
     this._updateNavBar();
 
@@ -4181,7 +4286,7 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
     last = this.controllers.pop();
     if(last) {
       last.isVisible = false;
-      last.visibilityChanged && last.visibilityChanged();
+      last.visibilityChanged && last.visibilityChanged('pop');
     }
     
     // Remove the old one
@@ -4192,7 +4297,7 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
     // TODO: No DOM stuff here
     //this.content.el.appendChild(next.el);
     next.isVisible = true;
-    next.visibilityChanged && next.visibilityChanged();
+    next.visibilityChanged && next.visibilityChanged('pop');
 
     // Switch to it (TODO: Animate or such things here)
 
@@ -4264,7 +4369,7 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
           self._handleDrag(e);
         };
 
-        this.content.endDrag = function(e) {
+        this.content.onEndDrag =function(e) {
           self._endDrag(e);
         };
       }
@@ -4354,12 +4459,12 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
      */
     openPercentage: function(percentage) {
       var p = percentage / 100;
-      var maxLeft = this.left.width;
-      var maxRight = this.right.width;
-      if(percentage >= 0) {
-        this.openAmount(maxLeft * p);
-      } else {
-        this.openAmount(maxRight * p);
+
+      if(this.left && percentage >= 0) {
+        this.openAmount(this.left.width * p);
+      } else if(this.right && percentage < 0) {
+        var maxRight = this.right.width;
+        this.openAmount(this.right.width * p);
       }
     },
 
@@ -4369,11 +4474,11 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
      * negative value for right menu (only one menu will be visible at a time).
      */
     openAmount: function(amount) {
-      var maxLeft = this.left.width;
-      var maxRight = this.right.width;
+      var maxLeft = this.left && this.left.width || 0;
+      var maxRight = this.right && this.right.width || 0;
 
       // Check if we can move to that side, depending if the left/right panel is enabled
-      if((!this.left.isEnabled && amount > 0) || (!this.right.isEnabled && amount < 0)) {
+      if((!(this.left && this.left.isEnabled) && amount > 0) || (!(this.right && this.right.isEnabled) && amount < 0)) {
         return;
       }
 
@@ -4388,17 +4493,17 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
         this._rightShowing = false;
 
         // Push the z-index of the right menu down
-        this.right.pushDown();
+        this.right && this.right.pushDown();
         // Bring the z-index of the left menu up
-        this.left.bringUp();
+        this.left && this.left.bringUp();
       } else {
         this._rightShowing = true;
         this._leftShowing = false;
 
         // Bring the z-index of the right menu up
-        this.right.bringUp();
+        this.right && this.right.bringUp();
         // Push the z-index of the left menu down
-        this.left.pushDown();
+        this.left && this.left.pushDown();
       }
     },
 

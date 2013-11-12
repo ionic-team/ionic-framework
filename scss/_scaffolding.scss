@@ -122,8 +122,36 @@ body, .ionic-body {
   //@include display-flex();
   //@include align-items(center);
 }
+.ionic-refresher-content {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+.ionic-refresher {
+  // A custom refresher
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: $brand-primary;
+  position: absolute;
+  left: 50%;
+  margin-left: -5px;
+  bottom: 25px;
+}
 .scroll-refreshing {
   -webkit-transition: height 0.1s ease-in-out;
+
+  .ionic-refresher {
+    -webkit-animation: refresher-pulsate 1.5s linear;
+    -webkit-animation-iteration-count: infinite; 
+  }
+}
+
+@-webkit-keyframes refresher-pulsate {
+  0% {-webkit-transform: scale(2, 2); }
+  50% {-webkit-transform: scale(1.5, 1.5); }
+  100% {-webkit-transform: scale(2, 2); }
 }
 
 .overflow-scroll {

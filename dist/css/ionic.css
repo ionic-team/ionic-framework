@@ -2282,8 +2282,37 @@ body, .ionic-body {
   text-align: center;
   position: relative; }
 
+.ionic-refresher-content {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  position: relative; }
+
+.ionic-refresher {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #4a87ee;
+  position: absolute;
+  left: 50%;
+  margin-left: -5px;
+  bottom: 25px; }
+
 .scroll-refreshing {
   -webkit-transition: height 0.1s ease-in-out; }
+  .scroll-refreshing .ionic-refresher {
+    -webkit-animation: refresher-pulsate 1.5s linear;
+    -webkit-animation-iteration-count: infinite; }
+
+@-webkit-keyframes refresher-pulsate {
+  0% {
+    -webkit-transform: scale(2, 2); }
+
+  50% {
+    -webkit-transform: scale(1.5, 1.5); }
+
+  100% {
+    -webkit-transform: scale(2, 2); } }
 
 .overflow-scroll {
   overflow: auto;
@@ -4936,7 +4965,7 @@ a.button {
 
 @-webkit-keyframes slideOutRight {
   0% {
-    -webkit-transform: translate3d(0%, 0, 0); }
+    -webkit-transform: translate3d(0, 0, 0); }
 
   100% {
     -webkit-transform: translate3d(100%, 0, 0); } }
@@ -4975,12 +5004,12 @@ a.button {
   -webkit-animation-name: slideOutRight; }
 
 .slide-out-right.ng-enter, .slide-out-right > .ng-enter {
-  -webkit-animation-duration: 2250ms;
+  -webkit-animation-duration: 250ms;
   -webkit-animation-fill-mode: both;
   -webkit-animation-timing-function: ease-in-out;
   -webkit-animation-name: slideOutRight; }
 .slide-out-right.ng-leave, .slide-out-right > .ng-leave {
-  -webkit-animation-duration: 2250ms;
+  -webkit-animation-duration: 250ms;
   -webkit-animation-fill-mode: both;
   -webkit-animation-timing-function: ease-in-out;
   -webkit-animation-name: slideInRight; }

@@ -33,7 +33,7 @@
 }
 @-webkit-keyframes slideOutRight {
   0% {
-    -webkit-transform: translate3d(0%,0,0);
+    -webkit-transform: translate3d(0,0,0);
   }
   100% {
     -webkit-transform: translate3d(100%,0,0);
@@ -87,13 +87,13 @@
 
 .slide-out-right {
   &.ng-enter, > .ng-enter {
-    -webkit-animation-duration: 2250ms;
+    -webkit-animation-duration: 250ms;
     -webkit-animation-fill-mode: both;
     -webkit-animation-timing-function: ease-in-out;
     -webkit-animation-name: slideOutRight;
   }
   &.ng-leave, > .ng-leave {
-    -webkit-animation-duration: 2250ms;
+    -webkit-animation-duration: 250ms;
     -webkit-animation-fill-mode: both;
     -webkit-animation-timing-function: ease-in-out;
     -webkit-animation-name: slideInRight;

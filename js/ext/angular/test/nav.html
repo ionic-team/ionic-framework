@@ -7,9 +7,9 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-touch.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-animate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-touch.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-animate.js"></script>
     <style>
 .view {
   position: fixed;
@@ -34,8 +34,10 @@
     <navs>
       <nav-bar></nav-bar>
 
-      <content has-header="true" ng-controller="AppCtrl">
-      </content>
+        <div ng-controller="AppCtrl">
+          <content has-header="true">
+          </content>
+        </div>
     </navs>
 
     <script id="page.html" type="text/ng-template">
@@ -65,7 +67,7 @@
 
       }
 
-      angular.module('navTest', ['ionic.ui.nav', 'ionic.ui.content', 'ionic.ui.list', 'ngAnimate'])
+      angular.module('navTest', ['ionic', 'ngAnimate'])
 
       .controller('AppCtrl', function($scope, $compile, $element) {
         $scope.navController.pushFromTemplate('page.html');

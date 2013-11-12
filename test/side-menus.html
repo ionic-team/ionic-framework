@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Side Menus</title>
+
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="../dist/css/ionic.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <div id="content" class="pane">
+      <header class="bar bar-header bar-dark">
+        <h1 class="title">Center</h1>
+      </header>
+    </div>
+
+    <div id="menu-left" class="menu menu-left">
+      <header class="bar bar-header bar-dark">
+        <h1 class="title">Left</h1>
+      </header>
+    </div>
+
+    <div id="menu-right" class="menu menu-right">
+      <header class="bar bar-header bar-dark">
+        <h1 class="title">Right</h1>
+      </header>
+    </div>
+    
+    <script src="../dist/js/ionic.js"></script>
+
+    <script>
+      var contentEl = document.getElementById('content');
+      var content = new ionic.views.SideMenuContent({
+        el: contentEl
+      });
+
+      var leftMenuEl = document.getElementById('menu-left');
+      var leftMenu = new ionic.views.SideMenu({
+        el: leftMenuEl,
+        width: 270
+      });
+
+      var rightMenuEl = document.getElementById('menu-right');
+      var rightMenu = new ionic.views.SideMenu({
+        el: rightMenuEl,
+        width: 270
+      });
+
+      var sm = new ionic.controllers.SideMenuController({
+        content: content,
+        left: leftMenu,
+        right: rightMenu
+      });
+    </script>
+    
+  </body>
+</html>

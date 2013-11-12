@@ -548,10 +548,38 @@ angular.module('ionic.ui.content', [])
   return {
     restrict: 'E',
     replace: true,
-    transclude: true,
-    template: '<div class="scroll-refresher"><div class="scroll-refresher-content" ng-transclude></div></div>'
+    require: ['^?content', '^?list'],
+    template: '<div class="scroll-refresher"><div class="ionic-refresher-content"><div class="ionic-refresher"></div></div></div>',
+    scope: true,
+    link: function($scope, $element, $attr, scrollCtrl) {
+      var icon = $element[0].querySelector('.ionic-refresher');
+
+      // Scale up the refreshing icon
+      var onRefreshOpening = ionic.throttle(function(e, amt) {
+        icon.style[ionic.CSS.TRANSFORM] = 'scale(' + Math.min((1 + amt), 2) + ')';
+      }, 100);
+
+      $scope.$on('onRefreshing', function(e) {
+        icon.style[ionic.CSS.TRANSFORM] = 'scale(2)';
+      });
+
+      $scope.$on('onRefresh', function(e) {
+        icon.style[ionic.CSS.TRANSFORM] = 'scale(1)';
+      });
+      $scope.$on('onRefreshOpening', onRefreshOpening);
+    }
   }
 })
+
+.directive('scroll-refresher', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<div class="scroll-refresher"><div class="scroll-refresher-content"></div></div>'
+  }
+});
+
 
 })();
 ;
@@ -560,10 +588,10 @@ angular.module('ionic.ui.content', [])
 
 angular.module('ionic.ui.list', ['ngAnimate'])
 
-.directive('listItem', ['$timeout', function($timeout) {
+.directive('item', ['$timeout', function($timeout) {
   return {
     restrict: 'E',
-    require: ['?^list', '?^virtualList'],
+    require: ['?^list'],
     replace: true,
     transclude: true,
     scope: {
@@ -574,8 +602,9 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       canReorder: '@',
       canSwipe: '@',
       buttons: '=',
+      type: '@'
     },
-    template: '<a href="#" class="item item-slider">\
+    template: '<a href="#" class="item">\
             <div class="item-edit" ng-if="canDelete && isEditing">\
               <button class="button button-icon" ng-click="onDelete()"><i ng-class="deleteIcon"></i></button>\
             </div>\
@@ -589,26 +618,19 @@ angular.module('ionic.ui.list', ['ngAnimate'])
            </div>\
           </a>',
 
-    /*
-    template:   '<li class="list-item">\
-                   <div class="list-item-edit" ng-if="canDelete && isEditing">\
-                     <button class="button button-icon" ng-click="onDelete()"><i ng-class="deleteIcon"></i></button>\
-                   </div>\
-                   <div class="list-item-content" ng-transclude>\
-                   </div>\
-                   <div class="list-item-drag" ng-if="canReorder && isEditing">\
-                     <button data-ionic-action="reorder" class="button button-icon"><i ng-class="reorderIcon"></i></button>\
-                   </div>\
-                   <div class="list-item-buttons" ng-if="canSwipe && !isEditing">\
-                     <button ng-click="buttonClicked(button)" class="button" ng-class="button.type" ng-repeat="button in buttons">{{button.text}}</button>\
-                   </div>\
-                </li>',*/
     link: function($scope, $element, $attr, list) {
       // Grab the parent list controller
       if(list[0]) {
         list = list[0];
       } else if(list[1]) {
         list = list[1];
+      }
+
+      // Add the list item type class
+      $element.addClass($attr.type || 'item-slider');
+
+      if($attr.type !== 'item-slider') {
+        $scope.canSwipe = false;
       }
 
       $scope.isEditing = false;
@@ -647,6 +669,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       isEditing: '=',
       deleteIcon: '@',
       reorderIcon: '@',
+      hasPullToRefresh: '@',
       onRefresh: '&',
       onRefreshOpening: '&'
     },
@@ -669,12 +692,14 @@ angular.module('ionic.ui.list', ['ngAnimate'])
         var lv = new ionic.views.ListView({
           el: $element[0],
           listEl: $element[0].children[0],
-          hasPullToRefresh: (typeof $scope.onRefresh !== 'undefined'),
+          hasPullToRefresh: ($scope.hasPullToRefresh !== 'false'),
           onRefresh: function() {
             $scope.onRefresh();
+            $scope.$parent.$broadcast('onRefresh');
           },
           onRefreshOpening: function(amt) {
             $scope.onRefreshOpening({amount: amt});
+            $scope.$parent.$broadcast('onRefreshOpening', amt);
           }
         });
 
@@ -723,6 +748,31 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
   angular.extend(this, ionic.controllers.NavController.prototype);
 
+  /**
+   * Push a template onto the navigation stack.
+   * @param {string} templateUrl the URL of the template to load.
+   */
+  this.pushFromTemplate = ionic.debounce(function(templateUrl) {
+    var childScope = $scope.$new();
+    childScope.isVisible = true;
+
+    // Load the given template
+    TemplateLoader.load(templateUrl).then(function(templateString) {
+
+      // Compile the template with the new scrope, and append it to the navigation's content area
+      var el = $compile(templateString)(childScope, function(cloned, scope) {
+        var content = angular.element($element[0].querySelector('.content, .scroll'));
+        $animate.enter(cloned, angular.element(content));
+      });
+    });
+  }, 300, true);
+
+  // Pop function, debounced
+  this.popController = ionic.debounce(function() {
+    _this.pop();
+  }, 300, true);
+
+
   ionic.controllers.NavController.call(this, {
     content: {
     },
@@ -746,7 +796,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
   // Support Android hardware back button (native only, not mobile web)
   var onHardwareBackButton = function(e) {
     $scope.$apply(function() {
-      _this.pop();
+      _this.popController();
     });
   }
   Platform.onHardwareBackButton(onHardwareBackButton);
@@ -757,28 +807,6 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
   };
 
   this.endDrag = function(e) {
-  };
-
-  /**
-   * Push a template onto the navigation stack.
-   * @param {string} templateUrl the URL of the template to load.
-   */
-  this.pushFromTemplate = function(templateUrl) {
-    var childScope = $scope.$new();
-    childScope.isVisible = true;
-
-    // Load the given template
-    TemplateLoader.load(templateUrl).then(function(templateString) {
-
-      // Compile the template with the new scrope, and append it to the navigation's content area
-      var el = $compile(templateString)(childScope, function(cloned, scope) {
-        var content = angular.element($element[0].querySelector('.content'));
-
-        //content.append(cloned);
-        //angular.element(content).append(cloned);
-        $animate.enter(cloned, angular.element(content));
-      });
-    });
   };
 
   /**
@@ -827,7 +855,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
       scope.$watch('navController.controllers.length', function(value) {
       });
       scope.goBack = function() {
-        navCtrl.pop();
+        navCtrl.popController();
       };
     }
   };
@@ -884,7 +912,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
         // Store that we should go forwards on the animation. This toggles
         // based on the visibility sequence (to support reverse transitions)
-        var wasVisible = null;
+        var lastDirection = null;
 
         $scope.title = $attr.title;
         $scope.pushAnimation = $attr.pushAnimation || 'slide-in-left';
@@ -900,6 +928,24 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
           navCtrl.showNavBar();
         }
 
+        $scope.visibilityChanged = function(direction) {
+          lastDirection = direction;
+
+          if(!childElement) {
+            return;
+          }
+
+          var clone = childElement;
+
+          if(direction == 'push') {
+            clone.addClass(childScope.pushAnimation);
+            clone.removeClass(childScope.popAnimation);
+          } else if(direction == 'pop') {
+            clone.addClass(childScope.popAnimation);
+            clone.removeClass(childScope.pushAnimation);
+          }
+        };
+
         // Push this controller onto the stack
         $scope.pushController($scope, $element);
 
@@ -911,39 +957,33 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
             transclude(childScope, function(clone) {
               childElement = clone;
 
-              // Check if this is visible, and if so, create it and show it
-              if(wasVisible === false) {
-                clone.removeClass(childScope.pushAnimation);
-                clone.addClass(childScope.popAnimation);
-              } else {
+              if(lastDirection == 'push') {
                 clone.addClass(childScope.pushAnimation);
-                clone.removeClass(childScope.popAnimation);
+              } else if(lastDirection == 'pop') {
+                clone.addClass(childScope.popAnimation);
               }
 
-              $animate.enter(clone, $element.parent(), $element);
-              wasVisible = true;
+              $animate.enter(clone, $element.parent(), $element, function() {
+                clone.removeClass(childScope.pushAnimation);
+                clone.removeClass(childScope.popAnimation);
+              });
             });
           } else {
             // Taken from ngIf
             if(childElement) {
-              var clone = childElement;
               // Check if this is visible, and if so, create it and show it
-              if(wasVisible === false) {
-                clone.removeClass(childScope.pushAnimation);
-                clone.addClass(childScope.popAnimation);
-              } else {
-                clone.addClass(childScope.pushAnimation);
-                clone.removeClass(childScope.popAnimation);
-              }
-              $animate.leave(childElement);
+              $animate.leave(childElement, function() {
+                if(childScope) {
+                  childElement.removeClass(childScope.pushAnimation);
+                  childElement.removeClass(childScope.popAnimation);
+                }
+              });
               childElement = undefined;
-              wasVisible = false;
             }
             if(childScope) {
               childScope.$destroy();
               childScope = undefined;
             }
-
           }
         });
       }
@@ -975,27 +1015,18 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
   angular.extend(this, ionic.controllers.SideMenuController.prototype);
 
   ionic.controllers.SideMenuController.call(this, {
+    // Our quick implementation of the left side menu
     left: {
       width: 270,
-      pushDown: function() {
-        $scope.leftZIndex = -1;
-      },
-      bringUp: function() {
-        $scope.leftZIndex = 0;
-      }
     },
+
+    // Our quick implementation of the right side menu
     right: {
       width: 270,
-      pushDown: function() {
-        $scope.rightZIndex = -1;
-      },
-      bringUp: function() {
-        $scope.rightZIndex = 0;
-      }
     }
   });
 
-  $scope.contentTranslateX = 0;
+  $scope.sideMenuContentTranslateX = 0;
 
   $scope.sideMenuCtrl = this;
 })
@@ -1027,28 +1058,32 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           defaultPrevented = e.defaultPrevented;
         });
 
-        Gesture.on('drag', function(e) {
+        var dragFn = function(e) {
           if(defaultPrevented) {
             return;
           }
           sideMenuCtrl._handleDrag(e);
-        }, $element[0]);
+        };
 
-        Gesture.on('release', function(e) {
+        Gesture.on('drag', dragFn, $element[0]);
+
+        var dragReleaseFn = function(e) {
           if(!defaultPrevented) {
             sideMenuCtrl._endDrag(e);
           }
           defaultPrevented = false;
-        }, $element[0]);
+        };
+
+        Gesture.on('release', dragReleaseFn, $element[0]);
 
         sideMenuCtrl.setContent({
           onDrag: function(e) {},
           endDrag: function(e) {},
           getTranslateX: function() {
-            return $scope.contentTranslateX || 0;
+            return $scope.sideMenuContentTranslateX || 0;
           },
           setTranslateX: function(amount) {
-            $scope.contentTranslateX = amount;
+            $scope.sideMenuContentTranslateX = amount;
             $element[0].style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
           },
           enableAnimation: function() {
@@ -1061,6 +1096,12 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
             $scope.animationEnabled = false;
             $element[0].classList.remove('menu-animated');
           }
+        });
+
+        // Cleanup
+        $scope.$on('$destroy', function() {
+          Gesture.off('drag', dragFn);
+          Gesture.off('release', dragReleaseFn);
         });
       };
     }
@@ -1080,10 +1121,23 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
       return function($scope, $element, $attr, sideMenuCtrl) {
         $scope.side = $attr.side;
 
+
         if($scope.side == 'left') {
           sideMenuCtrl.left.isEnabled = true;
+          sideMenuCtrl.left.pushDown = function() {
+            $element[0].style.zIndex = -1;
+          };
+          sideMenuCtrl.left.bringUp = function() {
+            $element[0].style.zIndex = 0;
+          };
         } else if($scope.side == 'right') {
           sideMenuCtrl.right.isEnabled = true;
+          sideMenuCtrl.right.pushDown = function() {
+            $element[0].style.zIndex = -1;
+          };
+          sideMenuCtrl.right.bringUp = function() {
+            $element[0].style.zIndex = 0;
+          };
         }
 
         $element.append(transclude($scope));

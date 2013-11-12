@@ -25,7 +25,7 @@
           self._handleDrag(e);
         };
 
-        this.content.endDrag = function(e) {
+        this.content.onEndDrag =function(e) {
           self._endDrag(e);
         };
       }
@@ -115,12 +115,12 @@
      */
     openPercentage: function(percentage) {
       var p = percentage / 100;
-      var maxLeft = this.left.width;
-      var maxRight = this.right.width;
-      if(percentage >= 0) {
-        this.openAmount(maxLeft * p);
-      } else {
-        this.openAmount(maxRight * p);
+
+      if(this.left && percentage >= 0) {
+        this.openAmount(this.left.width * p);
+      } else if(this.right && percentage < 0) {
+        var maxRight = this.right.width;
+        this.openAmount(this.right.width * p);
       }
     },
 
@@ -130,11 +130,11 @@
      * negative value for right menu (only one menu will be visible at a time).
      */
     openAmount: function(amount) {
-      var maxLeft = this.left.width;
-      var maxRight = this.right.width;
+      var maxLeft = this.left && this.left.width || 0;
+      var maxRight = this.right && this.right.width || 0;
 
       // Check if we can move to that side, depending if the left/right panel is enabled
-      if((!this.left.isEnabled && amount > 0) || (!this.right.isEnabled && amount < 0)) {
+      if((!(this.left && this.left.isEnabled) && amount > 0) || (!(this.right && this.right.isEnabled) && amount < 0)) {
         return;
       }
 
@@ -149,17 +149,17 @@
         this._rightShowing = false;
 
         // Push the z-index of the right menu down
-        this.right.pushDown();
+        this.right && this.right.pushDown();
         // Bring the z-index of the left menu up
-        this.left.bringUp();
+        this.left && this.left.bringUp();
       } else {
         this._rightShowing = true;
         this._leftShowing = false;
 
         // Bring the z-index of the right menu up
-        this.right.bringUp();
+        this.right && this.right.bringUp();
         // Push the z-index of the left menu down
-        this.left.pushDown();
+        this.left && this.left.pushDown();
       }
     },
 
