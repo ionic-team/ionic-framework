@@ -748,6 +748,31 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
   angular.extend(this, ionic.controllers.NavController.prototype);
 
+  /**
+   * Push a template onto the navigation stack.
+   * @param {string} templateUrl the URL of the template to load.
+   */
+  this.pushFromTemplate = ionic.debounce(function(templateUrl) {
+    var childScope = $scope.$new();
+    childScope.isVisible = true;
+
+    // Load the given template
+    TemplateLoader.load(templateUrl).then(function(templateString) {
+
+      // Compile the template with the new scrope, and append it to the navigation's content area
+      var el = $compile(templateString)(childScope, function(cloned, scope) {
+        var content = angular.element($element[0].querySelector('.content, .scroll'));
+        $animate.enter(cloned, angular.element(content));
+      });
+    });
+  }, 300, true);
+
+  // Pop function, debounced
+  this.popController = ionic.debounce(function() {
+    _this.pop();
+  }, 300, true);
+
+
   ionic.controllers.NavController.call(this, {
     content: {
     },
@@ -771,7 +796,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
   // Support Android hardware back button (native only, not mobile web)
   var onHardwareBackButton = function(e) {
     $scope.$apply(function() {
-      _this.pop();
+      _this.popController();
     });
   }
   Platform.onHardwareBackButton(onHardwareBackButton);
@@ -783,25 +808,6 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
   this.endDrag = function(e) {
   };
-
-  /**
-   * Push a template onto the navigation stack.
-   * @param {string} templateUrl the URL of the template to load.
-   */
-  this.pushFromTemplate = ionic.debounce(function(templateUrl) {
-    var childScope = $scope.$new();
-    childScope.isVisible = true;
-
-    // Load the given template
-    TemplateLoader.load(templateUrl).then(function(templateString) {
-
-      // Compile the template with the new scrope, and append it to the navigation's content area
-      var el = $compile(templateString)(childScope, function(cloned, scope) {
-        var content = angular.element($element[0].querySelector('.content, .scroll'));
-        $animate.enter(cloned, angular.element(content));
-      });
-    });
-  }, 100, true);
 
   /**
    * Push a controller to the stack. This is called by the child
@@ -849,7 +855,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
       scope.$watch('navController.controllers.length', function(value) {
       });
       scope.goBack = function() {
-        navCtrl.pop();
+        navCtrl.popController();
       };
     }
   };
