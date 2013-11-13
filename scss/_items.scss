@@ -5,6 +5,8 @@
  */
 
 .item {
+  @include item-style($item-default-bg, $item-default-border, $item-default-text, $item-default-active-bg, $item-default-active-border);
+
   position: relative;
 
   z-index: 2; // Make sure the borders and stuff don't get hidden by children
@@ -14,12 +16,8 @@
   padding: $item-padding;
 
   border-width: $item-border-width;
-  border-style: $item-border-style;
-  border-color: $item-border-color;
-  background-color: $list-bg;
-  font-size: $list-font-size;
-
-  color: $light-color;
+  border-style: solid;
+  font-size: $item-font-size;
 
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
 
@@ -62,30 +60,41 @@
     margin-right: 5px;
   }
 
-  // Active class on item itself, not parent
   &.active,
-  &.active:hover,
-  &.active:focus {
-    z-index: 2; 
-
-    // Force color to inherit for custom content
-    .item-heading {
-      color: inherit;
-    }
+  &:active {
+    box-shadow: inset 0px 1px 3px rgba(0,0,0,0.12);
   }
 
-  @include item-style-active($light, $dark, $dark);
-}
+  // Different themes for list items
+  &.item-light { 
+    @include item-style($item-light-bg, $item-light-border, $item-light-text, $item-light-active-bg, $item-light-active-border);
+  }
+  &.item-stable { 
+    @include item-style($item-stable-bg, $item-stable-border, $item-stable-text, $item-stable-active-bg, $item-stable-active-border);
+  }
+  &.item-positive { 
+    @include item-style($item-positive-bg, $item-positive-border, $item-positive-text, $item-positive-active-bg, $item-positive-active-border);
+  }
+  &.item-calm { 
+    @include item-style($item-calm-bg, $item-calm-border, $item-calm-text, $item-calm-active-bg, $item-calm-active-border);
+  }
+  &.item-assertive { 
+    @include item-style($item-assertive-bg, $item-assertive-border, $item-assertive-text, $item-assertive-active-bg, $item-assertive-active-border);
+  }
+  &.item-balanced { 
+    @include item-style($item-balanced-bg, $item-balanced-border, $item-balanced-text, $item-balanced-active-bg, $item-balanced-active-border);
+  }
+  &.item-energized { 
+    @include item-style($item-energized-bg, $item-energized-border, $item-energized-text, $item-energized-active-bg, $item-energized-active-border);
+  }
+  &.item-royal { 
+    @include item-style($item-royal-bg, $item-royal-border, $item-royal-text, $item-royal-active-bg, $item-royal-active-border);
+  }
+  &.item-dark { 
+    @include item-style($item-dark-bg, $item-dark-border, $item-dark-text, $item-dark-active-bg, $item-dark-active-border);
+  }
 
-// Different themes for list items
-.item-light { @include item-style-active($light, $dark, #fff); }
-.item-stable { @include item-style-active($stable, $dark, #fff); }
-.item-positive { @include item-style-active($positive, $dark, #fff); }
-.item-calm { @include item-style-active($calm, $dark, #fff); }
-.item-balanced { @include item-style-active($balanced, $dark, #fff); }
-.item-energized { @include item-style-active($energized, $dark, #fff); }
-.item-royal { @include item-style-active($royal, $dark, #fff); }
-.item-dark { @include item-style-active($dark, $dark, #fff); }
+}
 
 // Handle text overflow
 .item,
@@ -111,6 +120,7 @@
 
 // Linked list items
 a.item {
+  color: inherit;
   text-decoration: none;
 
   &:hover,
@@ -148,7 +158,6 @@ button.item.item-complex {
   padding: $item-padding (($item-padding * 3) - 5) $item-padding $item-padding;
 
   border: none;
-  background-color: $list-bg;
 
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
 }

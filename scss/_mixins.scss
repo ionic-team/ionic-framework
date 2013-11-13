@@ -1,25 +1,24 @@
 
 /**
- * Mixins
+ * Button Mixins
  * --------------------------------------------------
- * Useful utilities and mixins for SCSS files.
  */
 
 @mixin button-style($bgColor, $borderColor, $activeBgColor, $activeBorderColor, $color) {
   color: $color;
-	background-color: $bgColor;
-	border-color: $borderColor;
+  background-color: $bgColor;
+  border-color: $borderColor;
 
   // Give desktop users something to play with
-	&:hover {
+  &:hover {
     color: $color;
     text-decoration: none;
   }
-	&.active, &:active {
-		background-color: $activeBgColor;
+  &.active, &:active {
+    background-color: $activeBgColor;
     box-shadow: inset 0px 1px 3px rgba(0,0,0,0.15);
     border-color: $activeBorderColor;
-	}
+  }
 }
 
 @mixin button-clear($color, $fontSize:"") {
@@ -50,36 +49,11 @@
   }
 }
 
-@mixin item-style($bgColor, $borderColor, $color) {
-  color: $color;
-	background-color: $bgColor;
-	border-color: $borderColor;
 
-  // Give desktop users something to play with
-	&:hover {
-    color: $color;
-    text-decoration: none;
-  }
-	&.active, &:active {
-		background-color: darken($bgColor, 8%);
-    box-shadow: inset 0px 1px 3px rgba(0,0,0,0.12);
-    border-color: darken($borderColor, 10%);
-	}
-}
-
-//$bgColor, $borderColor, $color, 
-@mixin item-style-active($activeBgColor, $activeBorderColor, $activeColor) {
-  &.active {
-    color: $activeColor;
-    background-color: $activeBgColor;
-    border-color: $activeBorderColor;
-
-    .item-content {
-      background-color: $activeBgColor;
-      color: $activeColor;
-    }
-  }
-};
+/**
+ * Bar Mixins
+ * --------------------------------------------------
+ */
 
 @mixin bar-style($bgColor, $borderColor, $color) {
   background-color: $bgColor;
@@ -93,6 +67,12 @@
   }
 }
 
+
+/**
+ * Tab Mixins
+ * --------------------------------------------------
+ */
+
 @mixin tab-style($bgColor, $borderColor, $color) {
   background-color: $bgColor;
   background-image: linear-gradient(0deg, $borderColor, $borderColor 50%, transparent 50%);
@@ -101,8 +81,34 @@
 }
 
 
-// UTILITY MIXINS
-// --------------------------------------------------
+/**
+ * Item Mixins
+ * --------------------------------------------------
+ */
+
+@mixin item-style($bgColor, $borderColor, $color, $activeBgColor, $activeBorderColor) {
+  color: $color;
+  background-color: $bgColor;
+  border-color: $borderColor;
+
+  &.active, 
+  &:active {
+    background-color: activeBgColor;
+    border-color: $activeBorderColor;
+
+    .item-content {
+      background-color: $activeBgColor;
+      border-color: $activeBorderColor;
+      box-shadow: inset 0px 1px 3px rgba(0,0,0,0.12);
+    }
+  }
+}
+
+
+/**
+ * Utility Mixins
+ * --------------------------------------------------
+ */
 
 // Clearfix
 // --------

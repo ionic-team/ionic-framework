@@ -1,10 +1,25 @@
 @charset "UTF-8";
 /**
- * Mixins
+ * Button Mixins
  * --------------------------------------------------
- * Useful utilities and mixins for SCSS files.
  */
-/*
+/**
+ * Bar Mixins
+ * --------------------------------------------------
+ */
+/**
+ * Tab Mixins
+ * --------------------------------------------------
+ */
+/**
+ * Item Mixins
+ * --------------------------------------------------
+ */
+/**
+ * Utility Mixins
+ * --------------------------------------------------
+ */
+/*!
   Ionicons, v1.3.3
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
   https://twitter.com/helloimben  https://twitter.com/ionicframework
@@ -2046,7 +2061,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid silver; }
+  border: 1px solid #c0c0c0; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -3180,6 +3195,9 @@ a.subdued‎ {
  * --------------------------------------------------
  */
 .item {
+  color: #444444;
+  background-color: white;
+  border-color: #dddddd;
   position: relative;
   z-index: 2;
   display: block;
@@ -3187,11 +3205,15 @@ a.subdued‎ {
   padding: 15px;
   border-width: 1px;
   border-style: solid;
-  border-color: #dddddd;
-  background-color: white;
   font-size: 16px;
-  color: #666666;
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
+  .item.active, .item:active {
+    background-color: activeBgColor;
+    border-color: #cccccc; }
+    .item.active .item-content, .item:active .item-content {
+      background-color: #fafafa;
+      border-color: #cccccc;
+      box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12); }
   .item h2 {
     margin: 0 0 4px 0;
     font-size: 16px; }
@@ -3219,81 +3241,107 @@ a.subdued‎ {
     float: right; }
   .item .badge + .badge {
     margin-right: 5px; }
-  .item.active, .item.active:hover, .item.active:focus {
-    z-index: 2; }
-    .item.active .item-heading, .item.active:hover .item-heading, .item.active:focus .item-heading {
-      color: inherit; }
-  .item.active {
+  .item.active, .item:active {
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12); }
+  .item.item-light {
     color: #444444;
     background-color: white;
-    border-color: #444444; }
-    .item.active .item-content {
-      background-color: white;
-      color: #444444; }
-
-.item-light.active {
-  color: white;
-  background-color: white;
-  border-color: #444444; }
-  .item-light.active .item-content {
-    background-color: white;
-    color: white; }
-
-.item-stable.active {
-  color: white;
-  background-color: #f8f8f8;
-  border-color: #444444; }
-  .item-stable.active .item-content {
+    border-color: #dddddd; }
+    .item.item-light.active, .item.item-light:active {
+      background-color: activeBgColor;
+      border-color: #cccccc; }
+      .item.item-light.active .item-content, .item.item-light:active .item-content {
+        background-color: #fafafa;
+        border-color: #cccccc;
+        box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12); }
+  .item.item-stable {
+    color: #444444;
     background-color: #f8f8f8;
-    color: white; }
-
-.item-positive.active {
-  color: white;
-  background-color: #4a87ee;
-  border-color: #444444; }
-  .item-positive.active .item-content {
+    border-color: #b2b2b2; }
+    .item.item-stable.active, .item.item-stable:active {
+      background-color: activeBgColor;
+      border-color: #a2a2a2; }
+      .item.item-stable.active .item-content, .item.item-stable:active .item-content {
+        background-color: #e5e5e5;
+        border-color: #a2a2a2;
+        box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12); }
+  .item.item-positive {
+    color: white;
     background-color: #4a87ee;
-    color: white; }
-
-.item-calm.active {
-  color: white;
-  background-color: #43cee6;
-  border-color: #444444; }
-  .item-calm.active .item-content {
+    border-color: #145dd7; }
+    .item.item-positive.active, .item.item-positive:active {
+      background-color: activeBgColor;
+      border-color: #145dd7; }
+      .item.item-positive.active .item-content, .item.item-positive:active .item-content {
+        background-color: #145dd7;
+        border-color: #145dd7;
+        box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12); }
+  .item.item-calm {
+    color: white;
     background-color: #43cee6;
-    color: white; }
-
-.item-balanced.active {
-  color: white;
-  background-color: #66cc33;
-  border-color: #444444; }
-  .item-balanced.active .item-content {
+    border-color: #1aaac3; }
+    .item.item-calm.active, .item.item-calm:active {
+      background-color: activeBgColor;
+      border-color: #1aaac3; }
+      .item.item-calm.active .item-content, .item.item-calm:active .item-content {
+        background-color: #1aaac3;
+        border-color: #1aaac3;
+        box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12); }
+  .item.item-assertive {
+    color: white;
+    background-color: #ef4e3a;
+    border-color: #cc2511; }
+    .item.item-assertive.active, .item.item-assertive:active {
+      background-color: activeBgColor;
+      border-color: #cc2511; }
+      .item.item-assertive.active .item-content, .item.item-assertive:active .item-content {
+        background-color: #cc2511;
+        border-color: #cc2511;
+        box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12); }
+  .item.item-balanced {
+    color: white;
     background-color: #66cc33;
-    color: white; }
-
-.item-energized.active {
-  color: white;
-  background-color: #f0b840;
-  border-color: #444444; }
-  .item-energized.active .item-content {
+    border-color: #478f24; }
+    .item.item-balanced.active, .item.item-balanced:active {
+      background-color: activeBgColor;
+      border-color: #478f24; }
+      .item.item-balanced.active .item-content, .item.item-balanced:active .item-content {
+        background-color: #478f24;
+        border-color: #478f24;
+        box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12); }
+  .item.item-energized {
+    color: white;
     background-color: #f0b840;
-    color: white; }
-
-.item-royal.active {
-  color: white;
-  background-color: #8a6de9;
-  border-color: #444444; }
-  .item-royal.active .item-content {
+    border-color: #d39511; }
+    .item.item-energized.active, .item.item-energized:active {
+      background-color: activeBgColor;
+      border-color: #d39511; }
+      .item.item-energized.active .item-content, .item.item-energized:active .item-content {
+        background-color: #d39511;
+        border-color: #d39511;
+        box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12); }
+  .item.item-royal {
+    color: white;
     background-color: #8a6de9;
-    color: white; }
-
-.item-dark.active {
-  color: white;
-  background-color: #444444;
-  border-color: #444444; }
-  .item-dark.active .item-content {
+    border-color: #552bdf; }
+    .item.item-royal.active, .item.item-royal:active {
+      background-color: activeBgColor;
+      border-color: #552bdf; }
+      .item.item-royal.active .item-content, .item.item-royal:active .item-content {
+        background-color: #552bdf;
+        border-color: #552bdf;
+        box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12); }
+  .item.item-dark {
+    color: white;
     background-color: #444444;
-    color: white; }
+    border-color: #111111; }
+    .item.item-dark.active, .item.item-dark:active {
+      background-color: activeBgColor;
+      border-color: black; }
+      .item.item-dark.active .item-content, .item.item-dark:active .item-content {
+        background-color: #262626;
+        border-color: black;
+        box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12); }
 
 .item,
 .item h1,
@@ -3316,6 +3364,7 @@ a.subdued‎ {
   white-space: nowrap; }
 
 a.item {
+  color: inherit;
   text-decoration: none; }
   a.item:hover, a.item:focus {
     text-decoration: none; }
@@ -3345,7 +3394,6 @@ button.item.item-complex {
   z-index: 2;
   padding: 15px 40px 15px 15px;
   border: none;
-  background-color: white;
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
 
 .item-text-wrap,
@@ -4100,7 +4148,7 @@ input[type="file"] {
   line-height: 34px; }
 
 select {
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   background-color: white; }
 
 select[multiple],
@@ -4159,7 +4207,7 @@ input[type="checkbox"][readonly] {
     border-radius: 50%;
     background: white;
     content: ' ';
-    transition: background-color 0.1s ease-in-out; }
+    transition: background-color .1s ease-in-out; }
 
 /* the checkmark within the box */
 .checkbox input:after {
@@ -4174,7 +4222,7 @@ input[type="checkbox"][readonly] {
   border-right: 0;
   content: ' ';
   opacity: 0;
-  transition: opacity 0.05s ease-in-out;
+  transition: opacity .05s ease-in-out;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg); }
 
@@ -4647,7 +4695,7 @@ input[type="range"] {
   .button-icon:active, .button-icon.active {
     background: none;
     box-shadow: none;
-    text-shadow: 0px 0px 10px white; }
+    text-shadow: 0px 0px 10px #fff; }
 
 .padding > .button.block:first-child {
   margin-top: 0; }
@@ -5158,7 +5206,7 @@ a.button {
  * notice we purposely do not use words like "red" or "blue", but 
  * instead have colors which represent an emotion or generic theme.
  */
-.light {
+.light, a.light {
   color: white; }
 
 .light-bg {
@@ -5167,7 +5215,7 @@ a.button {
 .light-border {
   border-color: #dddddd; }
 
-.stable {
+.stable, a.stable {
   color: #f8f8f8; }
 
 .stable-bg {
@@ -5176,7 +5224,7 @@ a.button {
 .stable-border {
   border-color: #b2b2b2; }
 
-.positive {
+.positive, a.positive {
   color: #4a87ee; }
 
 .positive-bg {
@@ -5185,7 +5233,7 @@ a.button {
 .positive-border {
   border-color: #145dd7; }
 
-.calm {
+.calm, a.calm {
   color: #43cee6; }
 
 .calm-bg {
@@ -5194,7 +5242,7 @@ a.button {
 .calm-border {
   border-color: #1aaac3; }
 
-.assertive {
+.assertive, a.assertive {
   color: #ef4e3a; }
 
 .assertive-bg {
@@ -5203,7 +5251,7 @@ a.button {
 .assertive-border {
   border-color: #cc2511; }
 
-.balanced {
+.balanced, a.balanced {
   color: #66cc33; }
 
 .balanced-bg {
@@ -5212,7 +5260,7 @@ a.button {
 .balanced-border {
   border-color: #478f24; }
 
-.energized {
+.energized, a.energized {
   color: #f0b840; }
 
 .energized-bg {
@@ -5221,7 +5269,7 @@ a.button {
 .energized-border {
   border-color: #d39511; }
 
-.royal {
+.royal, a.royal {
   color: #8a6de9; }
 
 .royal-bg {
@@ -5230,7 +5278,7 @@ a.button {
 .royal-border {
   border-color: #552bdf; }
 
-.dark {
+.dark, a.dark {
   color: #444444; }
 
 .dark-bg {

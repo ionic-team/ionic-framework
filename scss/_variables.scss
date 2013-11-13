@@ -36,7 +36,6 @@ $headings-line-height:           1.1 !default;
 
 $base-background-color:          #fff;
 $base-color:                     #000;
-$light-color:                    #666666;
 
 $link-color:                     $positive !default;
 $link-hover-color:               darken($link-color, 15%) !default;
@@ -343,18 +342,95 @@ $tabs-default-border:              $tabs-stable-border;
 $tabs-default-text:                $tabs-stable-text;
 
 
-// Lists
+// Items
 // -------------------------------
 
-$list-font-size:                  16px;
+$item-font-size:                   16px;
+$item-border-width:                1px !default;
+$item-padding:                     15px !default;
+
+$item-icon-font-size:              32px !default;
+$item-icon-fill-font-size:         28px !default;
+
+$item-avitar-width:                40px !default;
+$item-avitar-height:               40px !default;
+
+$item-thumbnail-width:             80px !default;
+$item-thumbnail-height:            80px !default;
+$item-thumbnail-margin:            10px !default;
+
+$item-divider-bg:                  #f5f5f5;
+$item-divider-color:               #222;
+$item-divider-padding:             5px 15px;
+
+$item-light-bg:                    $button-light-bg;
+$item-light-border:                $button-light-border;
+$item-light-text:                  $button-light-text;
+$item-light-active-bg:             $button-light-active-bg;
+$item-light-active-border:         $button-light-active-border;
+
+$item-stable-bg:                   $button-stable-bg;
+$item-stable-border:               $button-stable-border;
+$item-stable-text:                 $button-stable-text;
+$item-stable-active-bg:            $button-stable-active-bg;
+$item-stable-active-border:        $button-stable-active-border;
+
+$item-positive-bg:                 $button-positive-bg;
+$item-positive-border:             $button-positive-border;
+$item-positive-text:               $button-positive-text;
+$item-positive-active-bg:          $button-positive-active-bg;
+$item-positive-active-border:      $button-positive-active-border;
+
+$item-calm-bg:                     $button-calm-bg;
+$item-calm-border:                 $button-calm-border;
+$item-calm-text:                   $button-calm-text;
+$item-calm-active-bg:              $button-calm-active-bg;
+$item-calm-active-border:          $button-calm-active-border;
+
+$item-assertive-bg:                $button-assertive-bg;
+$item-assertive-border:            $button-assertive-border;
+$item-assertive-text:              $button-assertive-text;
+$item-assertive-active-bg:         $button-assertive-active-bg;
+$item-assertive-active-border:     $button-assertive-active-border;
+
+$item-balanced-bg:                 $button-balanced-bg;
+$item-balanced-border:             $button-balanced-border;
+$item-balanced-text:               $button-balanced-text;
+$item-balanced-active-bg:          $button-balanced-active-bg;
+$item-balanced-active-border:      $button-balanced-active-border;
+
+$item-energized-bg:                $button-energized-bg;
+$item-energized-border:            $button-energized-border;
+$item-energized-text:              $button-energized-text;
+$item-energized-active-bg:         $button-energized-active-bg;
+$item-energized-active-border:     $button-energized-active-border;
+
+$item-royal-bg:                    $button-royal-bg;
+$item-royal-border:                $button-royal-border;
+$item-royal-text:                  $button-royal-text;
+$item-royal-active-bg:             $button-royal-active-bg;
+$item-royal-active-border:         $button-royal-active-border;
+
+$item-dark-bg:                     $button-dark-bg;
+$item-dark-border:                 $button-dark-border;
+$item-dark-text:                   $button-dark-text;
+$item-dark-active-bg:              $button-dark-active-bg;
+$item-dark-active-border:          $button-dark-active-border;
+
+$item-default-bg:                  $item-light-bg;
+$item-default-border:              $item-light-border;
+$item-default-text:                $item-light-text;
+$item-default-active-bg:           $item-light-active-bg;
+$item-default-active-border:       $item-light-active-border;
+
+
+// Lists
+// -------------------------------
 
 $list-header-bg:                  transparent;
 $list-header-color:               #222;
 $list-header-padding:             5px 15px;
 $list-header-margin-top:          20px !default;
-
-$list-bg:                         $light;
-$list-border-color:               #ddd;
 
 
 // Cards
@@ -369,29 +445,6 @@ $card-border-width:         1px !default;
 
 $card-border-color:         #ccc;
 $card-border-radius:        2px !default;
-
-
-// Items
-// -------------------------------
-
-$item-border-width:            1px !default;
-$item-border-color:            #ddd;
-$item-border-style:            solid;
-$item-padding:                 15px !default;
-
-$item-divider-bg:              #f5f5f5;
-$item-divider-color:           #222;
-$item-divider-padding:         5px 15px;
-
-$item-icon-font-size:          32px !default;
-$item-icon-fill-font-size:     28px !default;
-
-$item-avitar-width:            40px !default;
-$item-avitar-height:           40px !default;
-
-$item-thumbnail-width:         80px !default;
-$item-thumbnail-height:        80px !default;
-$item-thumbnail-margin:        10px !default;
 
 
 // Icons

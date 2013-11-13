@@ -81,7 +81,7 @@
  * instead have colors which represent an emotion or generic theme.
  */
 
-.light {
+.light, a.light {
   color: $light;
 }
 .light-bg {
@@ -91,7 +91,7 @@
   border-color: $button-light-border;
 }
 
-.stable {
+.stable, a.stable {
   color: $stable;
 }
 .stable-bg {
@@ -101,7 +101,7 @@
   border-color: $button-stable-border;
 }
 
-.positive {
+.positive, a.positive {
   color: $positive;
 }
 .positive-bg {
@@ -111,7 +111,7 @@
   border-color: $button-positive-border;
 }
 
-.calm {
+.calm, a.calm {
   color: $calm;
 }
 .calm-bg {
@@ -121,7 +121,7 @@
   border-color: $button-calm-border;
 }
 
-.assertive {
+.assertive, a.assertive {
   color: $assertive;
 }
 .assertive-bg {
@@ -131,7 +131,7 @@
   border-color: $button-assertive-border;
 }
 
-.balanced {
+.balanced, a.balanced {
   color: $balanced;
 }
 .balanced-bg {
@@ -141,7 +141,7 @@
   border-color: $button-balanced-border;
 }
 
-.energized {
+.energized, a.energized {
   color: $energized;
 }
 .energized-bg {
@@ -151,7 +151,7 @@
   border-color: $button-energized-border;
 }
 
-.royal {
+.royal, a.royal {
   color: $royal;
 }
 .royal-bg {
@@ -161,7 +161,7 @@
   border-color: $button-royal-border;
 }
 
-.dark {
+.dark, a.dark {
   color: $dark;
 }
 .dark-bg {
