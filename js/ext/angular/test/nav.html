@@ -32,16 +32,17 @@
   <body>
 
     <navs>
-      <nav-bar></nav-bar>
+      <nav-bar type="bar-primary" back-button-type="button-pure" align-title="right">
+      </nav-bar>
 
-        <div ng-controller="AppCtrl">
-          <content has-header="true">
-          </content>
-        </div>
+      <div ng-controller="AppCtrl">
+        <content has-header="true">
+        </content>
+      </div>
     </navs>
 
     <script id="page.html" type="text/ng-template">
-      <div title="Home" ng-controller="CatsCtrl" class="nav-content">
+      <div title="Home home home home home home home home home" ng-controller="CatsCtrl" class="nav-content">
         <h1></h1>
         <a href="#" class="button button-success" ng-click="goNext()">Next</a>
         <list><list-item ng-repeat="item in items" on-select="goNext()">Test</list-item></list>

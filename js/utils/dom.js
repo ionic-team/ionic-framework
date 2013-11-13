@@ -1,5 +1,28 @@
 (function(ionic) {
   ionic.DomUtil = {
+    getTextBounds: function(textNode) {
+      if(document.createRange) {
+        var range = document.createRange();
+        range.selectNodeContents(textNode);
+        if(range.getBoundingClientRect) {
+          var rect = range.getBoundingClientRect();
+
+          var sx = window.scrollX;
+          var sy = window.scrollY;
+
+          return {
+            top: rect.top + sy,
+            left: rect.left + sx,
+            right: rect.left + sx + rect.width,
+            bottom: rect.top + sy + rect.height,
+            width: rect.width,
+            height: rect.height
+          };
+        }
+      }
+      return null
+    },
+
     getChildIndex: function(element) {
       return Array.prototype.slice.call(element.parentNode.children).indexOf(element);
     },

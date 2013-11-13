@@ -1,0 +1,40 @@
+<html ng-app="headerTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Header</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-touch.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-animate.js"></script>
+  </head>
+  <body>
+    <header-bar type="bar-primary" align-title="left">
+      <button class="button">Tap</button>
+      <h1 class="title">A really really long title here here here here her</h1>
+    </header-bar>
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
+    <script>
+      angular.module('headerTest', ['ionic']);
+      var midPoint = window.clientWidth / 2;
+      var box = document.createElement('div');
+      box.style.backgroundColor = 'red';
+      box.style.opacity = '0.6';
+      box.style.width = '2px';
+      box.style.height = '44px';
+      box.style.left = '50%';
+      box.style.position = 'fixed';
+      box.style.zIndex = 100;
+      box.style.top = '0px';
+      box.style.marginLeft = '-1px';
+      document.body.appendChild(box);
+      window.onresize = function() {
+        var s = angular.element(document.getElementsByTagName('header')[0]).isolateScope();
+        s.headerBarView.align();
+      };
+    </script>
+  </body>
+</html>

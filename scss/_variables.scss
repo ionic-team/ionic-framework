@@ -78,7 +78,7 @@ $input-bg-disabled:               $stable;
 
 $input-color:                     $dark;
 $input-label-color:               $dark;
-$input-color-placeholder:         $stable;
+$input-color-placeholder:         darken($stable, 10%);
 
 
 // Toggle
@@ -430,7 +430,11 @@ $grid-padding-width:           10px !default;
 
 $sheet-bg-color:              rgba(255, 255, 255, 0.6) !default;
 $sheet-opacity:               0.95 !default;
-$sheet-border-radius:         3px !default;
+
+// Border radii for the action sheet button groups
+$sheet-border-radius:         3px 3px 3px 3px !default;
+$sheet-border-radius-top:         3px 3px 0px 0px !default;
+$sheet-border-radius-bottom:         0px 0px 3px 3px !default;
 
 
 // Badges
