@@ -162,12 +162,6 @@ $button-bar-button-height:            32px;
 $button-bar-button-padding:           8px !default;
 $button-bar-button-icon-size:         24px;
 
-$button-default-bg:                   $stable;
-$button-default-text:                 #444;
-$button-default-border:               darken($stable, 15%);
-$button-default-active-bg:            lighten($stable, 5%);
-$button-default-active-border:        darken($stable, 25%);
-
 $button-light-bg:                     $light;
 $button-light-text:                   #444;
 $button-light-border:                 #B2B2B2;
@@ -222,6 +216,12 @@ $button-dark-border:                  #444;
 $button-dark-active-bg:               #222;
 $button-dark-active-border:           #000;
 
+$button-default-bg:                   $button-stable-bg;
+$button-default-text:                 $button-stable-text;
+$button-default-border:               $button-stable-border;
+$button-default-active-bg:            $button-stable-active-bg;
+$button-default-active-border:        $button-stable-active-border;
+
 
 // Bars
 // -------------------------------
@@ -231,12 +231,6 @@ $bar-title-font-size:             $font-size-large;
 $bar-padding-portrait:            5px;
 $bar-padding-landscape:           5px;
 $bar-transparency:                1;
-
-$bar-default-bg:                  #fff;
-$bar-default-text:                #444;
-$bar-default-border:              #444;
-$bar-default-active-bg:           #fff;
-$bar-default-active-border:       #444;
 
 $bar-light-bg:                    rgba($button-light-bg, $bar-transparency);
 $bar-light-text:                  $button-light-text;
@@ -292,6 +286,12 @@ $bar-dark-border:                 $button-dark-border;
 $bar-dark-active-bg:              $button-dark-active-bg;
 $bar-dark-active-border:          $button-dark-active-border;
 
+$bar-default-bg:                  $bar-light-bg;
+$bar-default-text:                $bar-light-text;
+$bar-default-border:              $bar-light-border;
+$bar-default-active-bg:           $bar-light-active-bg;
+$bar-default-active-border:       $bar-light-active-border;
+
 
 // Tabs
 // -------------------------------
@@ -301,45 +301,45 @@ $tabs-text-font-size:              14px !default;
 $tabs-text-with-icon-font-size:    10px !default;
 $tabs-icon-size:                   32px !default;
 
-$tabs-default-bg:                  $button-stable-bg;
-$tabs-default-border-color:        $button-stable-border;
-$tabs-default-text:                $button-stable-text;
-
 $tabs-light-bg:                    $button-light-bg;
-$tabs-light-border-color:          $button-light-border;
+$tabs-light-border:                $button-light-border;
 $tabs-light-text:                  $button-light-text;
 
 $tabs-stable-bg:                   $button-stable-bg;
-$tabs-stable-border-color:         $button-stable-border;
+$tabs-stable-border:               $button-stable-border;
 $tabs-stable-text:                 $button-stable-text;
 
 $tabs-positive-bg:                 $button-positive-bg;
-$tabs-positive-border-color:       $button-positive-border;
+$tabs-positive-border:             $button-positive-border;
 $tabs-positive-text:               $button-positive-text;
 
 $tabs-calm-bg:                     $button-calm-bg;
-$tabs-calm-border-color:           $button-calm-border;
+$tabs-calm-border:                 $button-calm-border;
 $tabs-calm-text:                   $button-calm-text;
 
 $tabs-assertive-bg:                $button-assertive-bg;
-$tabs-assertive-border-color:      $button-assertive-border;
+$tabs-assertive-border:            $button-assertive-border;
 $tabs-assertive-text:              $button-assertive-text;
 
 $tabs-balanced-bg:                 $button-balanced-bg;
-$tabs-balanced-border-color:       $button-balanced-border;
+$tabs-balanced-border:             $button-balanced-border;
 $tabs-balanced-text:               $button-balanced-text;
 
 $tabs-energized-bg:                $button-energized-bg;
-$tabs-energized-border-color:      $button-energized-border;
+$tabs-energized-border:            $button-energized-border;
 $tabs-energized-text:              $button-energized-text;
 
 $tabs-royal-bg:                    $button-royal-bg;
-$tabs-royal-border-color:          $button-royal-border;
+$tabs-royal-border:                $button-royal-border;
 $tabs-royal-text:                  $button-royal-text;
 
 $tabs-dark-bg:                     $button-dark-bg;
-$tabs-dark-border-color:           $button-dark-border;
+$tabs-dark-border:                 $button-dark-border;
 $tabs-dark-text:                   $button-dark-text;
+
+$tabs-default-bg:                  $tabs-stable-bg;
+$tabs-default-border:              $tabs-stable-border;
+$tabs-default-text:                $tabs-stable-text;
 
 
 // Lists

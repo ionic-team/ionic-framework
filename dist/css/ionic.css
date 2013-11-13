@@ -2620,14 +2620,14 @@ a.subdued‎ {
   border-width: 0;
   border-style: solid;
   border-top: 1px solid transparent;
-  border-bottom: 1px solid #444444;
+  border-bottom: 1px solid #b2b2b2;
   background-color: white;
   background-size: 0; }
   @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
     .bar {
       border-top: none !important;
       border-bottom: none !important;
-      background-image: linear-gradient(0deg, #444444, #444444 50%, transparent 50%);
+      background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
       background-position: bottom;
       background-size: 100% 1px;
       background-repeat: no-repeat; } }
@@ -4354,7 +4354,7 @@ input[type="range"] {
   border-radius: 2px;
   color: #444444;
   background-color: #f8f8f8;
-  border-color: #d2d2d2;
+  border-color: #bbbbbb;
   vertical-align: top;
   text-align: center;
   text-overflow: ellipsis;
@@ -4365,9 +4365,9 @@ input[type="range"] {
     color: #444444;
     text-decoration: none; }
   .button.active, .button:active {
-    background-color: white;
+    background-color: #222222;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-    border-color: #b8b8b8; }
+    border-color: black; }
   .button .icon {
     display: inline-block;
     padding: 0 0 1px 0;

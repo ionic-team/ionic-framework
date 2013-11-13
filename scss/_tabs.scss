@@ -9,7 +9,7 @@
   @include display-flex();
   @include flex-direction(horizontal);
 
-  @include tab-style($tabs-default-bg, $tabs-default-border-color, $tabs-default-text);
+  @include tab-style($tabs-default-bg, $tabs-default-border, $tabs-default-text);
   position: absolute;
   bottom: 0;
   z-index: 5;
@@ -23,31 +23,31 @@
   line-height: $tabs-height;
 
   &.tabs-light {
-    @include tab-style($tabs-light-bg, $tabs-light-border-color, $tabs-light-text);
+    @include tab-style($tabs-light-bg, $tabs-light-border, $tabs-light-text);
   }
   &.tabs-stable {
-    @include tab-style($tabs-stable-bg, $tabs-stable-border-color, $tabs-stable-text);
+    @include tab-style($tabs-stable-bg, $tabs-stable-border, $tabs-stable-text);
   }
   &.tabs-positive {
-    @include tab-style($tabs-positive-bg, $tabs-positive-border-color, $tabs-positive-text);
+    @include tab-style($tabs-positive-bg, $tabs-positive-border, $tabs-positive-text);
   }
   &.tabs-calm {
-    @include tab-style($tabs-calm-bg, $tabs-calm-border-color, $tabs-calm-text);
+    @include tab-style($tabs-calm-bg, $tabs-calm-border, $tabs-calm-text);
   }
   &.tabs-assertive {
-    @include tab-style($tabs-assertive-bg, $tabs-assertive-border-color, $tabs-assertive-text);
+    @include tab-style($tabs-assertive-bg, $tabs-assertive-border, $tabs-assertive-text);
   }
   &.tabs-balanced {
-    @include tab-style($tabs-balanced-bg, $tabs-balanced-border-color, $tabs-balanced-text);
+    @include tab-style($tabs-balanced-bg, $tabs-balanced-border, $tabs-balanced-text);
   }
   &.tabs-energized {
-    @include tab-style($tabs-energized-bg, $tabs-energized-border-color, $tabs-energized-text);
+    @include tab-style($tabs-energized-bg, $tabs-energized-border, $tabs-energized-text);
   }
   &.tabs-royal {
-    @include tab-style($tabs-royal-bg, $tabs-royal-border-color, $tabs-royal-text);
+    @include tab-style($tabs-royal-bg, $tabs-royal-border, $tabs-royal-text);
   }
   &.tabs-dark {
-    @include tab-style($tabs-dark-bg, $tabs-dark-border-color, $tabs-dark-text);
+    @include tab-style($tabs-dark-bg, $tabs-dark-border, $tabs-dark-text);
   }
   @media (min--moz-device-pixel-ratio: 1.5),
          (-webkit-min-device-pixel-ratio: 1.5),
