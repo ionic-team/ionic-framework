@@ -75,16 +75,13 @@
 }
 
 // Different themes for list items
-.item-primary { @include item-style-active($primary, $dark, #fff); }
-.item-secondary { @include item-style-active($secondary, $dark, $dark); }
-.item-tertiary { @include item-style-active($tertiary, $dark, $dark); }
+.item-light { @include item-style-active($light, $dark, #fff); }
+.item-stable { @include item-style-active($stable, $dark, #fff); }
 .item-positive { @include item-style-active($positive, $dark, #fff); }
 .item-calm { @include item-style-active($calm, $dark, #fff); }
 .item-balanced { @include item-style-active($balanced, $dark, #fff); }
 .item-energized { @include item-style-active($energized, $dark, #fff); }
 .item-royal { @include item-style-active($royal, $dark, #fff); }
-.item-light { @include item-style-active($light, $dark, #fff); }
-.item-stable { @include item-style-active($stable, $dark, #fff); }
 .item-dark { @include item-style-active($dark, $dark, #fff); }
 
 // Handle text overflow

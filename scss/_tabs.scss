@@ -22,14 +22,11 @@
   background-size: 0;
   line-height: $tabs-height;
 
-  &.tabs-primary {
-    @include tab-style($tabs-primary-bg, $tabs-primary-border-color, $tabs-primary-text);
+  &.tabs-light {
+    @include tab-style($tabs-light-bg, $tabs-light-border-color, $tabs-light-text);
   }
-  &.tabs-secondary {
-    @include tab-style($tabs-secondary-bg, $tabs-secondary-border-color, $tabs-secondary-text);
-  }
-  &.tabs-tertiary {
-    @include tab-style($tabs-tertiary-bg, $tabs-tertiary-border-color, $tabs-tertiary-text);
+  &.tabs-stable {
+    @include tab-style($tabs-stable-bg, $tabs-stable-border-color, $tabs-stable-text);
   }
   &.tabs-positive {
     @include tab-style($tabs-positive-bg, $tabs-positive-border-color, $tabs-positive-text);
@@ -48,12 +45,6 @@
   }
   &.tabs-royal {
     @include tab-style($tabs-royal-bg, $tabs-royal-border-color, $tabs-royal-text);
-  }
-  &.tabs-light {
-    @include tab-style($tabs-light-bg, $tabs-light-border-color, $tabs-light-text);
-  }
-  &.tabs-stable {
-    @include tab-style($tabs-stable-bg, $tabs-stable-border-color, $tabs-stable-text);
   }
   &.tabs-dark {
     @include tab-style($tabs-dark-bg, $tabs-dark-border-color, $tabs-dark-text);
@@ -135,14 +126,11 @@
 .tab-item.active, .tab-item:active {
   opacity: 1;
 
-  &.tab-item-primary {
-    color: $primary;
+  &.tab-item-light {
+    color: $light;
   }
-  &.tab-item-secondary {
-    color: $secondary;
-  }
-  &.tab-item-tertiary {
-    color: $tertiary;
+  &.tab-item-stable {
+    color: $stable;
   }
   &.tab-item-positive {
     color: $positive;
@@ -161,12 +149,6 @@
   }
   &.tab-item-royal {
     color: $royal;
-  }
-  &.tab-item-light {
-    color: $light;
-  }
-  &.tab-item-stable {
-    color: $stable;
   }
   &.tab-item-dark {
     color: $dark;

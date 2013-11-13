@@ -81,6 +81,26 @@
  * instead have colors which represent an emotion or generic theme.
  */
 
+.light {
+  color: $light;
+}
+.light-bg {
+  background-color: $light;
+}
+.light-border {
+  border-color: $button-light-border;
+}
+
+.stable {
+  color: $stable;
+}
+.stable-bg {
+  background-color: $stable;
+}
+.stable-border {
+  border-color: $button-stable-border;
+}
+
 .positive {
   color: $positive;
 }
@@ -141,26 +161,6 @@
   border-color: $button-royal-border;
 }
 
-.light {
-  color: $light;
-}
-.light-bg {
-  background-color: $light;
-}
-.light-border {
-  border-color: $button-light-border;
-}
-
-.stable {
-  color: $stable;
-}
-.stable-bg {
-  background-color: $stable;
-}
-.stable-border {
-  border-color: $button-stable-border;
-}
-
 .dark {
   color: $dark;
 }
@@ -169,43 +169,4 @@
 }
 .dark-border {
   border-color: $button-dark-border;
-}
-
-
-/**
- * Brand Colors
- * --------------------------------------------------
- * Brand colors are your brand's colors...override the defaults to 
- * your app's theme! Throughout Ionic's CSS we use brand-primary, 
- * brand-secondary and brand-tertiary (ter·tia·ry: of third rank, importance, or value).
- */
-
-.primary {
-  color: $primary;
-}
-.primary-bg {
-  background-color: $primary;
-}
-.primary-border {
-  border-color: $button-primary-border;
-}
-
-.secondary {
-  color: $secondary;
-}
-.secondary-bg {
-  background-color: $secondary;
-}
-.secondary-border {
-  border-color: $button-secondary-border;
-}
-
-.tertiary {
-  color: $tertiary;
-}
-.tertiary-bg {
-  background-color: $tertiary;
-}
-.tertiary-border {
-  border-color: $button-tertiary-border;
 }

@@ -50,14 +50,11 @@
     }
   }
 
-  &.bar-primary {
-    @include bar-style($bar-primary-bg, $bar-primary-border, $bar-primary-text);
+  &.bar-light {
+    @include bar-style($bar-light-bg, $bar-light-border, $bar-light-text);
   }
-  &.bar-secondary {
-    @include bar-style($bar-secondary-bg, $bar-secondary-border, $bar-secondary-text);
-  }
-  &.bar-tertiary {
-    @include bar-style($bar-tertiary-bg, $bar-tertiary-border, $bar-tertiary-text);
+  &.bar-stable {
+    @include bar-style($bar-stable-bg, $bar-stable-border, $bar-stable-text);
   }
   &.bar-positive {
     @include bar-style($bar-positive-bg, $bar-positive-border, $bar-positive-text);
@@ -76,12 +73,6 @@
   }
   &.bar-royal {
     @include bar-style($bar-royal-bg, $bar-royal-border, $bar-royal-text);
-  }
-  &.bar-light {
-    @include bar-style($bar-light-bg, $bar-light-border, $bar-light-text);
-  }
-  &.bar-stable {
-    @include bar-style($bar-stable-bg, $bar-stable-border, $bar-stable-text);
   }
   &.bar-dark {
     @include bar-style($bar-dark-bg, $bar-dark-border, $bar-dark-text);
@@ -153,21 +144,15 @@
 }
 
 // Default styles for buttons inside of styled bars
-.bar-primary {
+.bar-light {
   .button {
-    @include button-style($bar-primary-bg, $bar-primary-border, $bar-primary-active-bg, $bar-primary-active-border, $bar-primary-text);
+    @include button-style($bar-light-bg, $bar-light-border, $bar-light-active-bg, $bar-light-active-border, $bar-light-text);
     @include button-clear(#fff, $bar-title-font-size);
   }
 }
-.bar-secondary {
+.bar-stable {
   .button {
-    @include button-style($bar-secondary-bg, $bar-secondary-border, $bar-secondary-active-bg, $bar-secondary-active-border, $bar-secondary-text);
-    @include button-clear($dark, $bar-title-font-size);
-  }
-}
-.bar-tertiary {
-  .button {
-    @include button-style($bar-tertiary-bg, $bar-tertiary-border, $bar-tertiary-active-bg, $bar-tertiary-active-border, $bar-tertiary-text);
+    @include button-style($bar-stable-bg, $bar-stable-border, $bar-stable-active-bg, $bar-stable-active-border, $bar-stable-text);
     @include button-clear(#fff, $bar-title-font-size);
   }
 }
@@ -204,18 +189,6 @@
 .bar-royal {
   .button {
     @include button-style($bar-royal-bg, $bar-royal-border, $bar-royal-active-bg, $bar-royal-active-border, $bar-royal-text);
-    @include button-clear(#fff, $bar-title-font-size);
-  }
-}
-.bar-light {
-  .button {
-    @include button-style($bar-light-bg, $bar-light-border, $bar-light-active-bg, $bar-light-active-border, $bar-light-text);
-    @include button-clear(#fff, $bar-title-font-size);
-  }
-}
-.bar-stable {
-  .button {
-    @include button-style($bar-stable-bg, $bar-stable-border, $bar-stable-active-bg, $bar-stable-active-border, $bar-stable-text);
     @include button-clear(#fff, $bar-title-font-size);
   }
 }

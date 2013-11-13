@@ -29,14 +29,11 @@
   top: -1px;
 }
 
-.badge-primary {
-  background-color: $primary;
+.badge-light {
+  background-color: $light;
 }
-.badge-secondary {
-  background-color: $secondary;
-}
-.badge-tertiary {
-  background-color: $tertiary;
+.badge-stable {
+  background-color: $stable;
 }
 .badge-positive {
   background-color: $positive;
@@ -55,12 +52,6 @@
 }
 .badge-royal {
   background-color: $royal;
-}
-.badge-light {
-  background-color: $light;
-}
-.badge-stable {
-  background-color: $stable;
 }
 .badge-dark {
   background-color: $dark;

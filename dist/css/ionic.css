@@ -2552,26 +2552,19 @@ a.subdued‎ {
       color: #fff; }
     .bar.bar-clear .title {
       color: #fff; }
-  .bar.bar-primary {
-    background-color: #4a87ee;
-    border-color: #1b68ea;
-    background-image: linear-gradient(0deg, #1b68ea, #1b68ea 50%, transparent 50%);
-    color: white; }
-    .bar.bar-primary .title {
-      color: white; }
-  .bar.bar-secondary {
+  .bar.bar-light {
     background-color: white;
-    border-color: #d9d9d9;
-    background-image: linear-gradient(0deg, #d9d9d9, #d9d9d9 50%, transparent 50%);
+    border-color: #b2b2b2;
+    background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
     color: #444444; }
-    .bar.bar-secondary .title {
+    .bar.bar-light .title {
       color: #444444; }
-  .bar.bar-tertiary {
-    background-color: whitesmoke;
-    border-color: #b5b5b5;
-    background-image: linear-gradient(0deg, #b5b5b5, #b5b5b5 50%, transparent 50%);
+  .bar.bar-stable {
+    background-color: #f8f8f8;
+    border-color: #bbbbbb;
+    background-image: linear-gradient(0deg, #bbbbbb, #bbbbbb 50%, transparent 50%);
     color: #444444; }
-    .bar.bar-tertiary .title {
+    .bar.bar-stable .title {
       color: #444444; }
   .bar.bar-positive {
     background-color: #4a87ee;
@@ -2615,20 +2608,6 @@ a.subdued‎ {
     color: white; }
     .bar.bar-royal .title {
       color: white; }
-  .bar.bar-light {
-    background-color: white;
-    border-color: #dddddd;
-    background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
-    color: #444444; }
-    .bar.bar-light .title {
-      color: #444444; }
-  .bar.bar-stable {
-    background-color: #f8f8f8;
-    border-color: #bbbbbb;
-    background-image: linear-gradient(0deg, #bbbbbb, #bbbbbb 50%, transparent 50%);
-    color: #444444; }
-    .bar.bar-stable .title {
-      color: #444444; }
   .bar.bar-dark {
     background-color: #444444;
     border-color: #444444;
@@ -2677,52 +2656,35 @@ a.subdued‎ {
     right: 5px;
     bottom: 5px; }
 
-.bar-primary .button {
-  color: white;
-  background-color: #4a87ee;
-  border-color: #1b68ea; }
-  .bar-primary .button:hover {
-    color: white;
-    text-decoration: none; }
-  .bar-primary .button.active, .bar-primary .button:active {
-    background-color: #3378ec;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-    border-color: #1b68ea; }
-  .bar-primary .button.button-clear {
-    color: white;
-    background: none;
-    box-shadow: none;
-    font-size: 18px; }
-
-.bar-secondary .button {
+.bar-light .button {
   color: #444444;
   background-color: white;
-  border-color: #d9d9d9; }
-  .bar-secondary .button:hover {
+  border-color: #b2b2b2; }
+  .bar-light .button:hover {
     color: #444444;
     text-decoration: none; }
-  .bar-secondary .button.active, .bar-secondary .button:active {
-    background-color: white;
+  .bar-light .button.active, .bar-light .button:active {
+    background-color: #222222;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-    border-color: #cccccc; }
-  .bar-secondary .button.button-clear {
-    color: #444444;
+    border-color: black; }
+  .bar-light .button.button-clear {
+    color: white;
     background: none;
     box-shadow: none;
     font-size: 18px; }
 
-.bar-tertiary .button {
+.bar-stable .button {
   color: #444444;
-  background-color: whitesmoke;
-  border-color: #b5b5b5; }
-  .bar-tertiary .button:hover {
+  background-color: #f8f8f8;
+  border-color: #bbbbbb; }
+  .bar-stable .button:hover {
     color: #444444;
     text-decoration: none; }
-  .bar-tertiary .button.active, .bar-tertiary .button:active {
-    background-color: white;
+  .bar-stable .button.active, .bar-stable .button:active {
+    background-color: #222222;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-    border-color: #cfcfcf; }
-  .bar-tertiary .button.button-clear {
+    border-color: black; }
+  .bar-stable .button.button-clear {
     color: white;
     background: none;
     box-shadow: none;
@@ -2830,40 +2792,6 @@ a.subdued‎ {
     box-shadow: none;
     font-size: 18px; }
 
-.bar-light .button {
-  color: #444444;
-  background-color: white;
-  border-color: #dddddd; }
-  .bar-light .button:hover {
-    color: #444444;
-    text-decoration: none; }
-  .bar-light .button.active, .bar-light .button:active {
-    background-color: #222222;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-    border-color: black; }
-  .bar-light .button.button-clear {
-    color: white;
-    background: none;
-    box-shadow: none;
-    font-size: 18px; }
-
-.bar-stable .button {
-  color: #444444;
-  background-color: #f8f8f8;
-  border-color: #bbbbbb; }
-  .bar-stable .button:hover {
-    color: #444444;
-    text-decoration: none; }
-  .bar-stable .button.active, .bar-stable .button:active {
-    background-color: #222222;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-    border-color: black; }
-  .bar-stable .button.button-clear {
-    color: white;
-    background: none;
-    box-shadow: none;
-    font-size: 18px; }
-
 .bar-dark .button {
   color: white;
   background-color: #444444;
@@ -2933,20 +2861,15 @@ a.subdued‎ {
   border-top-width: 1px;
   background-size: 0;
   line-height: 49px; }
-  .tabs.tabs-primary {
-    background-color: #4a87ee;
-    background-image: linear-gradient(0deg, #1b68ea, #1b68ea 50%, transparent 50%);
-    border-color: #1b68ea;
-    color: white; }
-  .tabs.tabs-secondary {
+  .tabs.tabs-light {
     background-color: white;
-    background-image: linear-gradient(0deg, #d9d9d9, #d9d9d9 50%, transparent 50%);
-    border-color: #d9d9d9;
+    background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
+    border-color: #b2b2b2;
     color: #444444; }
-  .tabs.tabs-tertiary {
-    background-color: whitesmoke;
-    background-image: linear-gradient(0deg, #b5b5b5, #b5b5b5 50%, transparent 50%);
-    border-color: #b5b5b5;
+  .tabs.tabs-stable {
+    background-color: #f8f8f8;
+    background-image: linear-gradient(0deg, #bbbbbb, #bbbbbb 50%, transparent 50%);
+    border-color: #bbbbbb;
     color: #444444; }
   .tabs.tabs-positive {
     background-color: #4a87ee;
@@ -2978,16 +2901,6 @@ a.subdued‎ {
     background-image: linear-gradient(0deg, #552bdf, #552bdf 50%, transparent 50%);
     border-color: #552bdf;
     color: white; }
-  .tabs.tabs-light {
-    background-color: white;
-    background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
-    border-color: #dddddd;
-    color: #444444; }
-  .tabs.tabs-stable {
-    background-color: #f8f8f8;
-    background-image: linear-gradient(0deg, #bbbbbb, #bbbbbb 50%, transparent 50%);
-    border-color: #bbbbbb;
-    color: #444444; }
   .tabs.tabs-dark {
     background-color: #444444;
     background-image: linear-gradient(0deg, #444444, #444444 50%, transparent 50%);
@@ -3055,12 +2968,10 @@ a.subdued‎ {
 /* Active state for tab */
 .tab-item.active, .tab-item:active {
   opacity: 1; }
-  .tab-item.active.tab-item-primary, .tab-item:active.tab-item-primary {
-    color: #4a87ee; }
-  .tab-item.active.tab-item-secondary, .tab-item:active.tab-item-secondary {
+  .tab-item.active.tab-item-light, .tab-item:active.tab-item-light {
     color: white; }
-  .tab-item.active.tab-item-tertiary, .tab-item:active.tab-item-tertiary {
-    color: whitesmoke; }
+  .tab-item.active.tab-item-stable, .tab-item:active.tab-item-stable {
+    color: #f8f8f8; }
   .tab-item.active.tab-item-positive, .tab-item:active.tab-item-positive {
     color: #4a87ee; }
   .tab-item.active.tab-item-calm, .tab-item:active.tab-item-calm {
@@ -3073,10 +2984,6 @@ a.subdued‎ {
     color: #f0b840; }
   .tab-item.active.tab-item-royal, .tab-item:active.tab-item-royal {
     color: #8a6de9; }
-  .tab-item.active.tab-item-light, .tab-item:active.tab-item-light {
-    color: white; }
-  .tab-item.active.tab-item-stable, .tab-item:active.tab-item-stable {
-    color: #f8f8f8; }
   .tab-item.active.tab-item-dark, .tab-item:active.tab-item-dark {
     color: #444444; }
 
@@ -3233,29 +3140,21 @@ a.subdued‎ {
     .item.active .item-heading, .item.active:hover .item-heading, .item.active:focus .item-heading {
       color: inherit; }
 
-.item-primary.active {
+.item-light.active {
   color: white;
-  background-color: #4a87ee;
-  border-color: #444444; }
-  .item-primary.active .item-content {
-    background-color: #4a87ee;
-    color: white; }
-
-.item-secondary.active {
-  color: #444444;
   background-color: white;
   border-color: #444444; }
-  .item-secondary.active .item-content {
+  .item-light.active .item-content {
     background-color: white;
-    color: #444444; }
+    color: white; }
 
-.item-tertiary.active {
-  color: #444444;
-  background-color: whitesmoke;
+.item-stable.active {
+  color: white;
+  background-color: #f8f8f8;
   border-color: #444444; }
-  .item-tertiary.active .item-content {
-    background-color: whitesmoke;
-    color: #444444; }
+  .item-stable.active .item-content {
+    background-color: #f8f8f8;
+    color: white; }
 
 .item-positive.active {
   color: white;
@@ -3295,22 +3194,6 @@ a.subdued‎ {
   border-color: #444444; }
   .item-royal.active .item-content {
     background-color: #8a6de9;
-    color: white; }
-
-.item-light.active {
-  color: white;
-  background-color: white;
-  border-color: #444444; }
-  .item-light.active .item-content {
-    background-color: white;
-    color: white; }
-
-.item-stable.active {
-  color: white;
-  background-color: #f8f8f8;
-  border-color: #444444; }
-  .item-stable.active .item-content {
-    background-color: #f8f8f8;
     color: white; }
 
 .item-dark.active {
@@ -3837,14 +3720,11 @@ button.item-button-right:after {
   position: relative;
   top: -1px; }
 
-.badge-primary {
-  background-color: #4a87ee; }
-
-.badge-secondary {
+.badge-light {
   background-color: white; }
 
-.badge-tertiary {
-  background-color: whitesmoke; }
+.badge-stable {
+  background-color: #f8f8f8; }
 
 .badge-positive {
   background-color: #4a87ee; }
@@ -3863,12 +3743,6 @@ button.item-button-right:after {
 
 .badge-royal {
   background-color: #8a6de9; }
-
-.badge-light {
-  background-color: white; }
-
-.badge-stable {
-  background-color: #f8f8f8; }
 
 .badge-dark {
   background-color: #444444; }
@@ -4413,73 +4287,50 @@ input[type="range"] {
   .button.block, .button.button-full {
     margin-top: 10px;
     margin-bottom: 10px; }
-  .button.button-primary {
-    color: white;
-    background-color: #4a87ee;
-    border-color: #1b68ea; }
-    .button.button-primary:hover {
-      color: white;
-      text-decoration: none; }
-    .button.button-primary.active, .button.button-primary:active {
-      background-color: #3378ec;
-      box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-      border-color: #1b68ea; }
-    .button.button-primary.button-clear {
-      color: #4a87ee;
-      background: none;
-      box-shadow: none; }
-    .button.button-primary.button-outline {
-      background: transparent;
-      border-color: #4a87ee;
-      color: #4a87ee; }
-      .button.button-primary.button-outline.active, .button.button-primary.button-outline:active {
-        background-color: #4a87ee;
-        color: #fff;
-        box-shadow: none; }
-  .button.button-secondary {
+  .button.button-light {
     color: #444444;
     background-color: white;
-    border-color: #d9d9d9; }
-    .button.button-secondary:hover {
+    border-color: #b2b2b2; }
+    .button.button-light:hover {
       color: #444444;
       text-decoration: none; }
-    .button.button-secondary.active, .button.button-secondary:active {
-      background-color: white;
+    .button.button-light.active, .button.button-light:active {
+      background-color: #222222;
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-      border-color: #cccccc; }
-    .button.button-secondary.button-clear {
-      color: #d9d9d9;
+      border-color: black; }
+    .button.button-light.button-clear {
+      color: white;
       background: none;
       box-shadow: none; }
-    .button.button-secondary.button-outline {
+    .button.button-light.button-outline {
       background: transparent;
-      border-color: #d9d9d9;
-      color: #444444; }
-      .button.button-secondary.button-outline.active, .button.button-secondary.button-outline:active {
-        background-color: #d9d9d9;
+      border-color: white;
+      color: white; }
+      .button.button-light.button-outline.active, .button.button-light.button-outline:active {
+        background-color: white;
         color: #fff;
         box-shadow: none; }
-  .button.button-tertiary {
+  .button.button-stable {
     color: #444444;
-    background-color: whitesmoke;
-    border-color: #b5b5b5; }
-    .button.button-tertiary:hover {
+    background-color: #f8f8f8;
+    border-color: #bbbbbb; }
+    .button.button-stable:hover {
       color: #444444;
       text-decoration: none; }
-    .button.button-tertiary.active, .button.button-tertiary:active {
-      background-color: white;
+    .button.button-stable.active, .button.button-stable:active {
+      background-color: #222222;
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-      border-color: #cfcfcf; }
-    .button.button-tertiary.button-clear {
-      color: whitesmoke;
+      border-color: black; }
+    .button.button-stable.button-clear {
+      color: #f8f8f8;
       background: none;
       box-shadow: none; }
-    .button.button-tertiary.button-outline {
+    .button.button-stable.button-outline {
       background: transparent;
-      border-color: whitesmoke;
-      color: whitesmoke; }
-      .button.button-tertiary.button-outline.active, .button.button-tertiary.button-outline:active {
-        background-color: whitesmoke;
+      border-color: #f8f8f8;
+      color: #f8f8f8; }
+      .button.button-stable.button-outline.active, .button.button-stable.button-outline:active {
+        background-color: #f8f8f8;
         color: #fff;
         box-shadow: none; }
   .button.button-positive {
@@ -4618,52 +4469,6 @@ input[type="range"] {
       color: #8a6de9; }
       .button.button-royal.button-outline.active, .button.button-royal.button-outline:active {
         background-color: #8a6de9;
-        color: #fff;
-        box-shadow: none; }
-  .button.button-light {
-    color: #444444;
-    background-color: white;
-    border-color: #dddddd; }
-    .button.button-light:hover {
-      color: #444444;
-      text-decoration: none; }
-    .button.button-light.active, .button.button-light:active {
-      background-color: #222222;
-      box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-      border-color: black; }
-    .button.button-light.button-clear {
-      color: white;
-      background: none;
-      box-shadow: none; }
-    .button.button-light.button-outline {
-      background: transparent;
-      border-color: white;
-      color: white; }
-      .button.button-light.button-outline.active, .button.button-light.button-outline:active {
-        background-color: white;
-        color: #fff;
-        box-shadow: none; }
-  .button.button-stable {
-    color: #444444;
-    background-color: #f8f8f8;
-    border-color: #bbbbbb; }
-    .button.button-stable:hover {
-      color: #444444;
-      text-decoration: none; }
-    .button.button-stable.active, .button.button-stable:active {
-      background-color: #222222;
-      box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-      border-color: black; }
-    .button.button-stable.button-clear {
-      color: #f8f8f8;
-      background: none;
-      box-shadow: none; }
-    .button.button-stable.button-outline {
-      background: transparent;
-      border-color: #f8f8f8;
-      color: #f8f8f8; }
-      .button.button-stable.button-outline.active, .button.button-stable.button-outline:active {
-        background-color: #f8f8f8;
         color: #fff;
         box-shadow: none; }
   .button.button-dark {
@@ -5263,6 +5068,24 @@ a.button {
  * notice we purposely do not use words like "red" or "blue", but 
  * instead have colors which represent an emotion or generic theme.
  */
+.light {
+  color: white; }
+
+.light-bg {
+  background-color: white; }
+
+.light-border {
+  border-color: #b2b2b2; }
+
+.stable {
+  color: #f8f8f8; }
+
+.stable-bg {
+  background-color: #f8f8f8; }
+
+.stable-border {
+  border-color: #bbbbbb; }
+
 .positive {
   color: #4a87ee; }
 
@@ -5317,24 +5140,6 @@ a.button {
 .royal-border {
   border-color: #552bdf; }
 
-.light {
-  color: white; }
-
-.light-bg {
-  background-color: white; }
-
-.light-border {
-  border-color: #dddddd; }
-
-.stable {
-  color: #f8f8f8; }
-
-.stable-bg {
-  background-color: #f8f8f8; }
-
-.stable-border {
-  border-color: #bbbbbb; }
-
 .dark {
   color: #444444; }
 
@@ -5343,40 +5148,6 @@ a.button {
 
 .dark-border {
   border-color: #444444; }
-
-/**
- * Brand Colors
- * --------------------------------------------------
- * Brand colors are your brand's colors...override the defaults to 
- * your app's theme! Throughout Ionic's CSS we use brand-primary, 
- * brand-secondary and brand-tertiary (ter·tia·ry: of third rank, importance, or value).
- */
-.primary {
-  color: #4a87ee; }
-
-.primary-bg {
-  background-color: #4a87ee; }
-
-.primary-border {
-  border-color: #1b68ea; }
-
-.secondary {
-  color: white; }
-
-.secondary-bg {
-  background-color: white; }
-
-.secondary-border {
-  border-color: #d9d9d9; }
-
-.tertiary {
-  color: whitesmoke; }
-
-.tertiary-bg {
-  background-color: whitesmoke; }
-
-.tertiary-border {
-  border-color: #b5b5b5; }
 
 /**
  * Platform

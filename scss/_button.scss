@@ -43,22 +43,16 @@
     margin-bottom: $button-block-margin;
   }
 
-  &.button-primary {
-    @include button-style($button-primary-bg, $button-primary-border, $button-primary-active-bg, $button-primary-active-border, $button-primary-text);
-    @include button-clear($button-primary-bg);
-    @include button-outline($button-primary-bg);
+  &.button-light {
+    @include button-style($button-light-bg, $button-light-border, $button-light-active-bg, $button-light-active-border, $button-light-text);
+    @include button-clear($button-light-bg);
+    @include button-outline($button-light-bg);
   }
 
-  &.button-secondary {
-    @include button-style($button-secondary-bg, $button-secondary-border, $button-secondary-active-bg, $button-secondary-active-border, $button-secondary-text);
-    @include button-clear($button-secondary-border);
-    @include button-outline($button-secondary-border, $dark);
-  }
-
-  &.button-tertiary {
-    @include button-style($button-tertiary-bg, $button-tertiary-border, $button-tertiary-active-bg, $button-tertiary-active-border, $button-tertiary-text);
-    @include button-clear($button-tertiary-bg);
-    @include button-outline($button-tertiary-bg);
+  &.button-stable {
+    @include button-style($button-stable-bg, $button-stable-border, $button-stable-active-bg, $button-stable-active-border, $button-stable-text);
+    @include button-clear($button-stable-bg);
+    @include button-outline($button-stable-bg);
   }
 
   &.button-positive {
@@ -95,18 +89,6 @@
     @include button-style($button-royal-bg, $button-royal-border, $button-royal-active-bg, $button-royal-active-border, $button-royal-text);
     @include button-clear($button-royal-bg);
     @include button-outline($button-royal-bg);
-  }
-
-  &.button-light {
-    @include button-style($button-light-bg, $button-light-border, $button-light-active-bg, $button-light-active-border, $button-light-text);
-    @include button-clear($button-light-bg);
-    @include button-outline($button-light-bg);
-  }
-
-  &.button-stable {
-    @include button-style($button-stable-bg, $button-stable-border, $button-stable-active-bg, $button-stable-active-border, $button-stable-text);
-    @include button-clear($button-stable-bg);
-    @include button-outline($button-stable-bg);
   }
 
   &.button-dark {

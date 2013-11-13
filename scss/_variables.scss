@@ -1,25 +1,17 @@
 
-// Brand Colors
+// Colors
 // -------------------------------
 
-$primary:               #4a87ee !default;
-$secondary:             #ffffff !default;
-$tertiary:              #f5f5f5 !default;
-
-
-// Utility Colors
-// -------------------------------
-
+$light:                 #ffffff !default;
+$stable:                #f8f8f8 !default;
 $positive:              #4a87ee !default;
 $calm:                  #43cee6 !default;
 $balanced:              #66cc33 !default;
 $energized:             #f0b840 !default;
 $assertive:             #ef4e3a !default;
 $royal:                 #8a6de9 !default;
-
-$light:                 #ffffff !default;
-$stable:               #f8f8f8 !default;
 $dark:                  #444444 !default;
+
 
 
 // Base
@@ -45,7 +37,7 @@ $headings-line-height:           1.1 !default;
 $base-background-color:          #fff;
 $base-color:                     #000;
 
-$link-color:                     $primary !default;
+$link-color:                     $positive !default;
 $link-hover-color:               darken($link-color, 15%) !default;
 
 $content-padding:                10px !default;
@@ -72,8 +64,6 @@ $border-radius-small:            3px !default;
 
 $caret-width-base:               4px !default;
 $caret-width-large:              5px !default;
-
-$component-active-bg:            $primary !default;
 
 
 // Forms
@@ -178,23 +168,17 @@ $button-default-border:               darken($stable, 15%);
 $button-default-active-bg:            lighten($stable, 5%);
 $button-default-active-border:        darken($stable, 25%);
 
-$button-primary-bg:                   $primary;
-$button-primary-text:                 #fff;
-$button-primary-border:               darken($primary, 10%);
-$button-primary-active-bg:            darken($primary, 5%);
-$button-primary-active-border:        darken($primary, 10%);
+$button-light-bg:                     $light;
+$button-light-text:                   #444;
+$button-light-border:                 #B2B2B2;
+$button-light-active-bg:              #222;
+$button-light-active-border:          #000;
 
-$button-secondary-bg:                 $secondary;
-$button-secondary-text:               #444;
-$button-secondary-border:             darken($secondary, 15%);
-$button-secondary-active-bg:          lighten($secondary, 10%);
-$button-secondary-active-border:      darken($secondary, 20%);
-
-$button-tertiary-bg:                  $tertiary;
-$button-tertiary-text:                #444;
-$button-tertiary-border:              darken($tertiary, 25%);
-$button-tertiary-active-bg:           lighten($tertiary, 10%);
-$button-tertiary-active-border:       darken($tertiary, 15%);
+$button-stable-bg:                    $stable;
+$button-stable-text:                  #444;
+$button-stable-border:                #bbb;
+$button-stable-active-bg:             #222;
+$button-stable-active-border:         #000;
 
 $button-positive-bg:                  $positive;
 $button-positive-text:                #fff;
@@ -232,18 +216,6 @@ $button-royal-border:                 darken($royal, 15%);
 $button-royal-active-bg:              darken($royal, 15%);
 $button-royal-active-border:          darken($royal, 15%);
 
-$button-light-bg:                      $light;
-$button-light-text:                    #444;
-$button-light-border:                  #ddd;
-$button-light-active-bg:               #222;
-$button-light-active-border:           #000;
-
-$button-stable-bg:                   $stable;
-$button-stable-text:                 #444;
-$button-stable-border:               #bbb;
-$button-stable-active-bg:            #222;
-$button-stable-active-border:        #000;
-
 $button-dark-bg:                      $dark;
 $button-dark-text:                    #fff;
 $button-dark-border:                  #444;
@@ -266,23 +238,17 @@ $bar-default-border:              #444;
 $bar-default-active-bg:           #fff;
 $bar-default-active-border:       #444;
 
-$bar-primary-bg:                  rgba($button-primary-bg, $bar-transparency);
-$bar-primary-text:                $button-primary-text;
-$bar-primary-border:              $button-primary-border;
-$bar-primary-active-bg:           $button-primary-active-bg;
-$bar-primary-active-border:       $button-primary-active-border;
+$bar-light-bg:                    rgba($button-light-bg, $bar-transparency);
+$bar-light-text:                  $button-light-text;
+$bar-light-border:                $button-light-border;
+$bar-light-active-bg:             $button-light-active-bg;
+$bar-light-active-border:         $button-light-active-border;
 
-$bar-secondary-bg:                rgba($button-secondary-bg, $bar-transparency);
-$bar-secondary-text:              $button-secondary-text;
-$bar-secondary-border:            $button-secondary-border;
-$bar-secondary-active-bg:         $button-secondary-active-bg;
-$bar-secondary-active-border:     $button-secondary-active-border;
-
-$bar-tertiary-bg:                 rgba($button-tertiary-bg, $bar-transparency);
-$bar-tertiary-text:               $button-tertiary-text;
-$bar-tertiary-border:             $button-tertiary-border;
-$bar-tertiary-active-bg:          $button-tertiary-active-bg;
-$bar-tertiary-active-border:      $button-tertiary-active-border;
+$bar-stable-bg:                   rgba($button-stable-bg, $bar-transparency);
+$bar-stable-text:                 $button-stable-text;
+$bar-stable-border:               $button-stable-border;
+$bar-stable-active-bg:            $button-stable-active-bg;
+$bar-stable-active-border:        $button-stable-active-border;
 
 $bar-positive-bg:                 rgba($button-positive-bg, $bar-transparency);
 $bar-positive-text:               $button-positive-text;
@@ -320,18 +286,6 @@ $bar-royal-border:                $button-royal-border;
 $bar-royal-active-bg:             $button-royal-active-bg;
 $bar-royal-active-border:         $button-royal-active-border;
 
-$bar-light-bg:                    rgba($button-light-bg, $bar-transparency);
-$bar-light-text:                  $button-light-text;
-$bar-light-border:                $button-light-border;
-$bar-light-active-bg:             $button-light-active-bg;
-$bar-light-active-border:         $button-light-active-border;
-
-$bar-stable-bg:                   rgba($button-stable-bg, $bar-transparency);
-$bar-stable-text:                 $button-stable-text;
-$bar-stable-border:               $button-stable-border;
-$bar-stable-active-bg:            $button-stable-active-bg;
-$bar-stable-active-border:        $button-stable-active-border;
-
 $bar-dark-bg:                     rgba($button-dark-bg, $bar-transparency);
 $bar-dark-text:                   $button-dark-text;
 $bar-dark-border:                 $button-dark-border;
@@ -351,17 +305,13 @@ $tabs-default-bg:                  $button-stable-bg;
 $tabs-default-border-color:        $button-stable-border;
 $tabs-default-text:                $button-stable-text;
 
-$tabs-primary-bg:                  $button-primary-bg;
-$tabs-primary-border-color:        $button-primary-border;
-$tabs-primary-text:                $button-primary-text;
+$tabs-light-bg:                    $button-light-bg;
+$tabs-light-border-color:          $button-light-border;
+$tabs-light-text:                  $button-light-text;
 
-$tabs-secondary-bg:                $button-secondary-bg;
-$tabs-secondary-border-color:      $button-secondary-border;
-$tabs-secondary-text:              $button-secondary-text;
-
-$tabs-tertiary-bg:                 $button-tertiary-bg;
-$tabs-tertiary-border-color:       $button-tertiary-border;
-$tabs-tertiary-text:               $button-tertiary-text;
+$tabs-stable-bg:                   $button-stable-bg;
+$tabs-stable-border-color:         $button-stable-border;
+$tabs-stable-text:                 $button-stable-text;
 
 $tabs-positive-bg:                 $button-positive-bg;
 $tabs-positive-border-color:       $button-positive-border;
@@ -386,14 +336,6 @@ $tabs-energized-text:              $button-energized-text;
 $tabs-royal-bg:                    $button-royal-bg;
 $tabs-royal-border-color:          $button-royal-border;
 $tabs-royal-text:                  $button-royal-text;
-
-$tabs-light-bg:                    $button-light-bg;
-$tabs-light-border-color:          $button-light-border;
-$tabs-light-text:                  $button-light-text;
-
-$tabs-stable-bg:                   $button-stable-bg;
-$tabs-stable-border-color:         $button-stable-border;
-$tabs-stable-text:                 $button-stable-text;
 
 $tabs-dark-bg:                     $button-dark-bg;
 $tabs-dark-border-color:           $button-dark-border;
