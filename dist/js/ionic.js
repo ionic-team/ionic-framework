@@ -2066,7 +2066,7 @@ window.ionic = {
 
         // Whether to disable overflow rubber banding when content is small
         // enough to fit in the viewport (i.e. doesn't need scrolling)
-        disableNonOverflowRubberBand: false,
+        disableNonOverflowRubberBand: true,
 
         // Called as the refresher is opened, an amount is passed
         onRefreshOpening: function() {},
@@ -2524,7 +2524,9 @@ window.ionic = {
         startTime: Date.now()
       };
 
-      if(this.disableNonOverflowRubberBand === true) {
+      // If the viewport is too small and we aren't using pull to refresh,
+      // don't rubber band the drag
+      if(this.disableNonOverflowRubberBand === true && !this._refresher) {
         var maxX = Math.min(0, (-totalWidth + parentWidth));
         var maxY = Math.min(0, (-totalHeight + parentHeight));
 
