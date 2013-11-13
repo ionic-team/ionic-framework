@@ -84,17 +84,17 @@ angular.module('ionic.ui.content', [])
 
       // Scale up the refreshing icon
       var onRefreshOpening = ionic.throttle(function(e, amt) {
-        icon.style[ionic.CSS.TRANSFORM] = 'scale(' + Math.min((1 + amt), 2) + ')';
+        icon.style[ionic.CSS.TRANSFORM] = 'scale(' + Math.min((0.2 + amt), 1) + ')';
       }, 100);
 
-      $scope.$on('onRefreshing', function(e) {
+      $scope.$on('scroll.onRefreshing', function(e) {
         icon.style[ionic.CSS.TRANSFORM] = 'scale(2)';
       });
 
-      $scope.$on('onRefresh', function(e) {
+      $scope.$on('scroll.onRefresh', function(e) {
         icon.style[ionic.CSS.TRANSFORM] = 'scale(1)';
       });
-      $scope.$on('onRefreshOpening', onRefreshOpening);
+      $scope.$on('scroll.onRefreshOpening', onRefreshOpening);
     }
   }
 })

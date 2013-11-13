@@ -130,14 +130,15 @@ body, .ionic-body {
 }
 .ionic-refresher {
   // A custom refresher
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background-color: $primary;
   position: absolute;
   left: 50%;
   margin-left: -5px;
   bottom: 25px;
+  -webkit-transform: scale(0.2);
 }
 .scroll-refreshing {
   -webkit-transition: height 0.1s ease-in-out;
@@ -149,9 +150,9 @@ body, .ionic-body {
 }
 
 @-webkit-keyframes refresher-pulsate {
-  0% {-webkit-transform: scale(2, 2); }
-  50% {-webkit-transform: scale(1.5, 1.5); }
-  100% {-webkit-transform: scale(2, 2); }
+  0% {-webkit-transform: scale(1, 1); }
+  50% {-webkit-transform: scale(0.7, 0.7); }
+  100% {-webkit-transform: scale(1, 1); }
 }
 
 .overflow-scroll {

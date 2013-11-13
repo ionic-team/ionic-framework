@@ -110,11 +110,11 @@ angular.module('ionic.ui.list', ['ngAnimate'])
           hasPullToRefresh: ($scope.hasPullToRefresh !== 'false'),
           onRefresh: function() {
             $scope.onRefresh();
-            $scope.$parent.$broadcast('onRefresh');
+            $scope.$parent.$broadcast('scroll.onRefresh');
           },
           onRefreshOpening: function(amt) {
             $scope.onRefreshOpening({amount: amt});
-            $scope.$parent.$broadcast('onRefreshOpening', amt);
+            $scope.$parent.$broadcast('scroll.onRefreshOpening', amt);
           }
         });
 
