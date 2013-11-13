@@ -170,7 +170,7 @@ angular.module('ionic.service.loading', ['ionic.ui.loading'])
   };
 }]);
 ;
-angular.module('ionic.service.modal', ['ionic.service.templateLoad'])
+angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'])
 
 
 .factory('Modal', ['$rootScope', '$document', '$compile', '$animate', 'TemplateLoader', function($rootScope, $document, $compile, $animate, TemplateLoader) {
