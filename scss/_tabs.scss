@@ -93,7 +93,7 @@
 
 .tabs-icon-top .tab-item,
 .tabs-icon-bottom .tab-item {
-  font-size: $tabs-text-with-icon-font-size;
+  font-size: $tabs-text-font-size-side-icon;
   line-height: $tabs-text-font-size;
 }
 
@@ -106,7 +106,7 @@
 
 .tabs-icon-left .tab-item,
 .tabs-icon-right .tab-item {
-  font-size: $tabs-text-with-icon-font-size;
+  font-size: $tabs-text-font-size-side-icon;
 
   .icon {
     display: inline-block;

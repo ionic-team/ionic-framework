@@ -3047,7 +3047,7 @@ a.subdued‎ {
 
 .tabs-icon-top .tab-item,
 .tabs-icon-bottom .tab-item {
-  font-size: 10px;
+  font-size: 12px;
   line-height: 14px; }
 
 .tab-item .icon {
@@ -3058,7 +3058,7 @@ a.subdued‎ {
 
 .tabs-icon-left .tab-item,
 .tabs-icon-right .tab-item {
-  font-size: 10px; }
+  font-size: 12px; }
   .tabs-icon-left .tab-item .icon,
   .tabs-icon-right .tab-item .icon {
     display: inline-block;
