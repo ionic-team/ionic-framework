@@ -5,7 +5,6 @@
  */
 
 .item {
-  @include item-style-active($light, $dark, $dark);
   position: relative;
 
   z-index: 2; // Make sure the borders and stuff don't get hidden by children
@@ -19,6 +18,8 @@
   border-color: $item-border-color;
   background-color: $list-bg;
   font-size: $list-font-size;
+
+  color: $light-color;
 
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
 
@@ -72,6 +73,8 @@
       color: inherit;
     }
   }
+
+  @include item-style-active($light, $dark, $dark);
 }
 
 // Different themes for list items

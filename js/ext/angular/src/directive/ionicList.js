@@ -42,9 +42,9 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       }
 
       // Add the list item type class
-      $element.addClass($attr.type || 'item-slider');
+      $element.addClass($attr.type || 'item-complex');
 
-      if($attr.type !== 'item-slider') {
+      if($attr.type !== 'item-complex') {
         $scope.canSwipe = false;
       }
 

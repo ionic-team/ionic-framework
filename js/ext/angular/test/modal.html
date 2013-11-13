@@ -11,22 +11,44 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-animate.js"></script>
   </head>
   <body>
-    <content has-header="true">
-      <div ng-controller="ModalCtrl">
-        <button class="button button-primary" ng-click="openModal()">Open</button>
-      </div>
-    </content>
+    <pane ng-controller="ModalCtrl">
+        <header-bar type="bar-positive">
+          <h1 class="title">Contacts</h1>
+          <button class="button button-icon" ng-click="openModal()"><i class="icon ion-compose"></i></button>
+        </header-bar>
+        <content has-header="true">
+          <list>
+            <item ng-repeat="contact in contacts">
+              {{contact.name}}
+            </item>
+          </list>
+        </content>
+    </pane>
 
     <script id="modal.html" type="text/ng-template">
       <div class="modal">
-        <header class="bar bar-header bar-secondary">
-          <h1 class="title">Modal</h1>
+        <header class="bar bar-header bar-positive">
+          <h1 class="title">New Contact</h1>
           <button class="button button-clear button-primary" ng-click="closeModal()">Cancel</button>
         </header>
-        <content>
-          Realllllyyy long content
-          <input type="text">
-          <div style="height: 2000px; background-color: red;"></div>
+        <content has-header="true">
+          <div class="padding">
+            <div class="list">
+              <label class="item item-input">
+                <span class="input-label">First Name</span>
+                <input type="text" placeholder="">
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Last Name</span>
+                <input type="text" placeholder="">
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Email</span>
+                <input type="text" placeholder="">
+              </label>
+              <button class="button button-full button-positive" ng-click="closeModal()">Create</button>
+            </div>
+          </div>
         </content>
       </div>
     </script>
@@ -37,6 +59,17 @@
       angular.module('modalTest', ['ionic', 'ngAnimate'])
 
       .controller('ModalCtrl', function($scope, Modal) {
+        $scope.contacts = [
+          { name: 'Gordon Freeman' },
+          { name: 'Barney Calhoun' },
+          { name: 'Lamar the Headcrab' },
+        ];
+        $scope.openModal = function() {
+          $scope.modal.show();
+        };
+        $scope.closeModal = function() {
+          $scope.modal.hide();
+        };
         Modal.fromTemplateUrl('modal.html', function(modal) {
           $scope.modal = modal;
         }, {
@@ -44,12 +77,6 @@
           animation: 'slide-in-up'
         });
 
-        $scope.openModal = function() {
-          $scope.modal.show();
-        };
-        $scope.closeModal = function() {
-          $scope.modal.hide();
-        };
       });
     </script>
   </body>

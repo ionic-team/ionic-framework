@@ -3,12 +3,16 @@
 
 angular.module('ionic.ui.content', [])
 
+/**
+ * Panel is a simple 100% width and height, fixed panel. It's meant for content to be
+ * added to it, or animated around.
+ */
 .directive('pane', function() {
   return {
     restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<div class="pane" ng-transclude></div>'
+    compile: function(element, attr) {
+      element.addClass('pane');
+    }
   }
 })
 

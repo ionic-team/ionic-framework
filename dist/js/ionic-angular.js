@@ -514,12 +514,16 @@ angular.module('ionic.ui.checkbox', [])
 
 angular.module('ionic.ui.content', [])
 
+/**
+ * Panel is a simple 100% width and height, fixed panel. It's meant for content to be
+ * added to it, or animated around.
+ */
 .directive('pane', function() {
   return {
     restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<div class="pane" ng-transclude></div>'
+    compile: function(element, attr) {
+      element.addClass('pane');
+    }
   }
 })
 
@@ -701,9 +705,9 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       }
 
       // Add the list item type class
-      $element.addClass($attr.type || 'item-slider');
+      $element.addClass($attr.type || 'item-complex');
 
-      if($attr.type !== 'item-slider') {
+      if($attr.type !== 'item-complex') {
         $scope.canSwipe = false;
       }
 

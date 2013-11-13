@@ -3190,14 +3190,8 @@ a.subdued‎ {
   border-color: #dddddd;
   background-color: white;
   font-size: 16px;
+  color: #666666;
   -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
-  .item.active {
-    color: #444444;
-    background-color: white;
-    border-color: #444444; }
-    .item.active .item-content {
-      background-color: white;
-      color: #444444; }
   .item h2 {
     margin: 0 0 4px 0;
     font-size: 16px; }
@@ -3229,6 +3223,13 @@ a.subdued‎ {
     z-index: 2; }
     .item.active .item-heading, .item.active:hover .item-heading, .item.active:focus .item-heading {
       color: inherit; }
+  .item.active {
+    color: #444444;
+    background-color: white;
+    border-color: #444444; }
+    .item.active .item-content {
+      background-color: white;
+      color: #444444; }
 
 .item-light.active {
   color: white;
