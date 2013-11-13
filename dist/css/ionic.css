@@ -2484,6 +2484,50 @@ a.subdued‎ {
  * Action Sheets
  * --------------------------------------------------
  */
+@-webkit-keyframes fadeInHalf {
+  from {
+    background-color: rgba(0, 0, 0, 0); }
+
+  to {
+    background-color: rgba(0, 0, 0, 0.5); } }
+
+@keyframes fadeInHalf {
+  from {
+    background-color: rgba(0, 0, 0, 0); }
+
+  to {
+    background-color: rgba(0, 0, 0, 0.5); } }
+
+@-webkit-keyframes fadeOutHalf {
+  from {
+    background-color: rgba(0, 0, 0, 0.5); }
+
+  to {
+    background-color: rgba(0, 0, 0, 0); } }
+
+@keyframes fadeOutHalf {
+  from {
+    background-color: rgba(0, 0, 0, 0.5); }
+
+  to {
+    background-color: rgba(0, 0, 0, 0); } }
+
+.action-sheet-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0); }
+  .action-sheet-backdrop.active {
+    -webkit-animation: fadeInHalf 0.2s;
+    animation: fadeInHalf 0.2s;
+    -webkit-animation-fill-mode: forwards; }
+  .action-sheet-backdrop.active-remove {
+    -webkit-animation: fadeOutHalf 0.2s;
+    animation: fadeOutHalf 0.2s;
+    -webkit-animation-fill-mode: forwards; }
+
 .action-sheet {
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
@@ -2495,7 +2539,7 @@ a.subdued‎ {
   width: calc(100% - 30px); }
   .action-sheet .button {
     display: block;
-    padding: 10px;
+    padding: 6px;
     width: 100%;
     border-radius: none;
     background-color: transparent;
@@ -2507,12 +2551,18 @@ a.subdued‎ {
 .action-sheet-title {
   padding: 10px;
   text-align: center;
-  font-size: 12px; }
+  font-size: 12px;
+  color: #666666; }
 
 .action-sheet-group {
+  background-color: #fff;
   margin-bottom: 10px;
-  border-radius: 3px;
-  background-color: rgba(255, 255, 255, 0.95); }
+  border-radius: 3px 3px 3px 3px; }
+  .action-sheet-group .button {
+    border-radius: 0;
+    border-width: 1px 0px 0px 0px; }
+  .action-sheet-group .button:first-child:last-child {
+    border-width: 0; }
 
 /**
  * Bar (Headers and Footers)

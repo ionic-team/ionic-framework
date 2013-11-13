@@ -29,9 +29,11 @@ angular.module('ionic', [
     'ionic.ui',
 ]);
 ;
-angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ionic.ui.actionSheet'])
+angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ionic.ui.actionSheet', 'ngAnimate'])
 
-.factory('ActionSheet', ['$rootScope', '$document', '$compile', 'TemplateLoader', function($rootScope, $document, $compile, TemplateLoader) {
+.factory('ActionSheet', ['$rootScope', '$document', '$compile', '$animate', 'TemplateLoader',
+    function($rootScope, $document, $compile, $animate, TemplateLoader) {
+
   return {
     /**
      * Load an action sheet with the given template string.
@@ -41,23 +43,38 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
      *
      * @param {object} opts the options for this ActionSheet (see docs)
      */
-    show: function(opts, $scope) {
-      var scope = $scope && $scope.$new() || $rootScope.$new(true);
+    show: function(opts) {
+      var scope = $rootScope.$new(true);
 
       angular.extend(scope, opts);
 
+
+      // Compile the template
+      var element = $compile('<action-sheet buttons="buttons"></action-sheet>')(scope);
+
+      // Grab the sheet element for animation
+      var sheetEl = angular.element(element[0].querySelector('.action-sheet'));
+
+      var hideSheet = function(didCancel) {
+        $animate.leave(sheetEl, function() {
+          if(didCancel) {
+            opts.cancel();
+          }
+        });
+        $animate.removeClass(element, 'active', function() {
+          scope.$destroy();
+        });
+      };
+
       scope.cancel = function() {
-        scope.sheet.hide();
-        //scope.$destroy();
-        opts.cancel();
+        hideSheet(true);
       };
 
       scope.buttonClicked = function(index) {
         // Check if the button click event returned true, which means
         // we can close the action sheet
         if((opts.buttonClicked && opts.buttonClicked(index)) === true) {
-          scope.sheet.hide();
-          //scope.$destroy();
+          hideSheet(false);
         }
       };
 
@@ -65,26 +82,23 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
         // Check if the destructive button click event returned true, which means
         // we can close the action sheet
         if((opts.destructiveButtonClicked && opts.destructiveButtonClicked()) === true) {
-          scope.sheet.hide();
-          //scope.$destroy();
+          hideSheet(false);
         }
       };
-
-      // Compile the template
-      var element = $compile('<action-sheet buttons="buttons"></action-sheet>')(scope);
-
-      var s = element.scope();
 
       $document[0].body.appendChild(element[0]);
 
       var sheet = new ionic.views.ActionSheet({el: element[0] });
-      s.sheet = sheet;
+      scope.sheet = sheet;
 
-      sheet.show();
+      $animate.addClass(element, 'active');
+      $animate.enter(sheetEl, element, function() {
+      });
 
       return sheet;
     }
   };
+
 }]);
 ;
 angular.module('ionic.service.gesture', [])
@@ -399,7 +413,7 @@ angular.module('ionic.service.templateLoad', [])
 
 angular.module('ionic.ui.actionSheet', [])
 
-.directive('actionSheet', function() {
+.directive('actionSheet', function($document) {
   return {
     restrict: 'E',
     scope: true,
@@ -408,17 +422,26 @@ angular.module('ionic.ui.actionSheet', [])
       $scope.$on('$destroy', function() {
         $element.remove();
       });
+
+      $document.bind('keyup', function(e) {
+        if(e.which == 27) {
+          $scope.cancel();
+          $scope.$apply();
+        }
+      });
     },
-    template: '<div class="action-sheet slide-in-up">' +
-                '<div class="action-sheet-group">' +
-                  '<div class="action-sheet-title" ng-if="titleText">{{titleText}}</div>' +
-                  '<button class="button" ng-click="buttonClicked($index)" ng-repeat="button in buttons">{{button.text}}</button>' +
-                '</div>' +
-                '<div class="action-sheet-group" ng-if="destructiveText">' +
-                  '<button class="button destructive" ng-click="destructiveButtonClicked()">{{destructiveText}}</button>' +
-                '</div>' +
-                '<div class="action-sheet-group" ng-if="cancelText">' +
-                  '<button class="button" ng-click="cancel()">{{cancelText}}</button>' +
+    template: '<div class="action-sheet-backdrop">' +
+                '<div class="action-sheet slide-in-up">' +
+                  '<div class="action-sheet-group">' +
+                    '<div class="action-sheet-title" ng-if="titleText">{{titleText}}</div>' +
+                    '<button class="button" ng-click="buttonClicked($index)" ng-repeat="button in buttons">{{button.text}}</button>' +
+                  '</div>' +
+                  '<div class="action-sheet-group" ng-if="destructiveText">' +
+                    '<button class="button destructive" ng-click="destructiveButtonClicked()">{{destructiveText}}</button>' +
+                  '</div>' +
+                  '<div class="action-sheet-group" ng-if="cancelText">' +
+                    '<button class="button" ng-click="cancel()">{{cancelText}}</button>' +
+                  '</div>' +
                 '</div>' +
               '</div>'
   };

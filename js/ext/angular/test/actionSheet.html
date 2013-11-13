@@ -1,0 +1,47 @@
+<html ng-app="actionTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Action Sheet</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-touch.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-animate.js"></script>
+  </head>
+  <body ng-controller="ActionCtrl">
+    <button ng-click="show()" class="button">Show</button>
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
+    <script>
+      angular.module('actionTest', ['ionic'])
+
+      .controller('ActionCtrl', function($scope, ActionSheet) {
+        $scope.show = function() {
+          ActionSheet.show({
+            buttons: [
+              { text: 'Option 1' },
+              { text: 'Option 2' },
+              { text: 'Option 3' },
+            ],
+            destructiveText: 'Delete life',
+            titleText: 'Are you sure about life?',
+            cancelText: 'Cancel',
+            cancel: function() {
+              console.log('CANCELLED');
+            },
+            buttonClicked: function(index) {
+              console.log('BUTTON CLICKED', index);
+              return true;
+            },
+            destructiveButtonClicked: function() {
+              console.log('DESTRUCT');
+              return true;
+            }
+          });
+        };
+       });
+    </script>
+  </body>
+</html>
