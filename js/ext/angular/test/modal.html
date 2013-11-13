@@ -56,13 +56,13 @@
     <script src="../../../../dist/js/ionic.js"></script>
     <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
-      angular.module('modalTest', ['ionic', 'ngAnimate'])
+      angular.module('modalTest', ['ionic'])
 
       .controller('ModalCtrl', function($scope, Modal) {
         $scope.contacts = [
           { name: 'Gordon Freeman' },
           { name: 'Barney Calhoun' },
-          { name: 'Lamar the Headcrab' },
+          { name: 'Lamarr the Headcrab' },
         ];
         $scope.openModal = function() {
           $scope.modal.show();
