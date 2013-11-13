@@ -4,7 +4,7 @@
  * --------------------------------------------------
  * Useful utilities and mixins for SCSS files.
  */
-/*!
+/*
   Ionicons, v1.3.3
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
   https://twitter.com/helloimben  https://twitter.com/ionicframework
@@ -2046,7 +2046,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid #c0c0c0; }
+  border: 1px solid silver; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -2480,9 +2480,87 @@ a.subdued‎ {
  * Action Sheets
  * --------------------------------------------------
  */
+@-webkit-keyframes fadeInHalf {
+  from {
+    background-color: rgba(0, 0, 0, 0); }
+
+  to {
+    background-color: rgba(0, 0, 0, 0.5); } }
+
+@keyframes fadeInHalf {
+  from {
+    background-color: rgba(0, 0, 0, 0); }
+
+  to {
+    background-color: rgba(0, 0, 0, 0.5); } }
+
+@-webkit-keyframes fadeOutHalf {
+  from {
+    background-color: rgba(0, 0, 0, 0.5); }
+
+  to {
+    background-color: rgba(0, 0, 0, 0); } }
+
+@keyframes fadeOutHalf {
+  from {
+    background-color: rgba(0, 0, 0, 0.5); }
+
+  to {
+    background-color: rgba(0, 0, 0, 0); } }
+
+.action-sheet-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0); }
+  .action-sheet-backdrop.active {
+    -webkit-animation: fadeInHalf 0.3s;
+    animation: fadeInHalf 0.3s;
+    -webkit-animation-fill-mode: forwards; }
+  .action-sheet-backdrop.active-remove {
+    -webkit-animation: fadeOutHalf 0.3s;
+    animation: fadeOutHalf 0.3s;
+    -webkit-animation-fill-mode: forwards; }
+
+@-webkit-keyframes actionSheetUp {
+  0% {
+    -webkit-transform: translate3d(0, 100%, 0);
+    opacity: 0; }
+
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1; } }
+
+@-webkit-keyframes actionSheetOut {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1; }
+
+  100% {
+    -webkit-transform: translate3d(0, 100%, 0);
+    opacity: 0; } }
+
+.action-sheet-up {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0%, 0); }
+  .action-sheet-up.ng-enter, .action-sheet-up .ng-enter {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    -webkit-animation-duration: 400ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
+  .action-sheet-up.ng-enter-active, .action-sheet-up .ng-enter-active {
+    -webkit-animation-name: actionSheetUp; }
+  .action-sheet-up.ng-leave, .action-sheet-up .ng-leave {
+    -webkit-animation-duration: 400ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
+  .action-sheet-up.ng-leave-active, .action-sheet-up .ng-leave {
+    -webkit-animation-name: actionSheetOut; }
+
 .action-sheet {
-  -webkit-transform: translate3d(0, 100%, 0);
-  transform: translate3d(0, 100%, 0);
   position: fixed;
   bottom: 0;
   left: 15px;
@@ -2491,9 +2569,9 @@ a.subdued‎ {
   width: calc(100% - 30px); }
   .action-sheet .button {
     display: block;
-    padding: 10px;
+    padding: 1px;
     width: 100%;
-    border-radius: none;
+    border-radius: 0;
     background-color: transparent;
     color: #4a87ee;
     font-size: 18px; }
@@ -2503,12 +2581,21 @@ a.subdued‎ {
 .action-sheet-title {
   padding: 10px;
   text-align: center;
-  font-size: 12px; }
+  font-size: 12px;
+  color: #666666; }
 
 .action-sheet-group {
-  margin-bottom: 10px;
-  border-radius: 3px;
-  background-color: rgba(255, 255, 255, 0.95); }
+  background-color: #fff;
+  margin-bottom: 5px;
+  border-radius: 3px 3px 3px 3px; }
+  .action-sheet-group .button {
+    border-radius: 0;
+    border-width: 1px 0px 0px 0px; }
+    .action-sheet-group .button.active, .action-sheet-group .button:active {
+      background-color: transparent;
+      color: inherit; }
+  .action-sheet-group .button:first-child:last-child {
+    border-width: 0; }
 
 /**
  * Bar (Headers and Footers)
@@ -2626,8 +2713,11 @@ a.subdued‎ {
     text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: hidden;
     font-size: 18px;
     line-height: 44px; }
+    .bar .title.title-left {
+      text-align: left; }
   .bar .title a {
     color: inherit; }
   .bar .button {
@@ -3962,7 +4052,7 @@ input[type="tel"],
 input[type="color"] {
   display: inline-block;
   height: 34px;
-  color: #f8f8f8;
+  color: #dfdfdf;
   vertical-align: middle;
   font-size: 14px;
   line-height: 20px; }
@@ -4010,7 +4100,7 @@ input[type="file"] {
   line-height: 34px; }
 
 select {
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc;
   background-color: white; }
 
 select[multiple],
@@ -4019,13 +4109,13 @@ select[size] {
 
 input:-moz-placeholder,
 textarea:-moz-placeholder {
-  color: #f8f8f8; }
+  color: #dfdfdf; }
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
-  color: #f8f8f8; }
+  color: #dfdfdf; }
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
-  color: #f8f8f8; }
+  color: #dfdfdf; }
 
 input[disabled],
 select[disabled],
@@ -4069,7 +4159,7 @@ input[type="checkbox"][readonly] {
     border-radius: 50%;
     background: white;
     content: ' ';
-    transition: background-color .1s ease-in-out; }
+    transition: background-color 0.1s ease-in-out; }
 
 /* the checkmark within the box */
 .checkbox input:after {
@@ -4084,7 +4174,7 @@ input[type="checkbox"][readonly] {
   border-right: 0;
   content: ' ';
   opacity: 0;
-  transition: opacity .05s ease-in-out;
+  transition: opacity 0.05s ease-in-out;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg); }
 
@@ -4557,7 +4647,7 @@ input[type="range"] {
   .button-icon:active, .button-icon.active {
     background: none;
     box-shadow: none;
-    text-shadow: 0px 0px 10px #fff; }
+    text-shadow: 0px 0px 10px white; }
 
 .padding > .button.block:first-child {
   margin-top: 0; }

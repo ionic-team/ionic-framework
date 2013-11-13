@@ -16,6 +16,7 @@ angular.module('ionic.ui', [
                             'ionic.ui.content',
                             'ionic.ui.tabs',
                             'ionic.ui.nav',
+                            'ionic.ui.header',
                             'ionic.ui.sideMenu',
                             'ionic.ui.list',
                             'ionic.ui.checkbox',
@@ -28,9 +29,11 @@ angular.module('ionic', [
     'ionic.ui',
 ]);
 ;
-angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ionic.ui.actionSheet'])
+angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ionic.ui.actionSheet', 'ngAnimate'])
 
-.factory('ActionSheet', ['$rootScope', '$document', '$compile', 'TemplateLoader', function($rootScope, $document, $compile, TemplateLoader) {
+.factory('ActionSheet', ['$rootScope', '$document', '$compile', '$animate', '$timeout', 'TemplateLoader',
+    function($rootScope, $document, $compile, $animate, $timeout, TemplateLoader) {
+
   return {
     /**
      * Load an action sheet with the given template string.
@@ -40,23 +43,41 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
      *
      * @param {object} opts the options for this ActionSheet (see docs)
      */
-    show: function(opts, $scope) {
-      var scope = $scope && $scope.$new() || $rootScope.$new(true);
+    show: function(opts) {
+      var scope = $rootScope.$new(true);
 
       angular.extend(scope, opts);
 
+
+      // Compile the template
+      var element = $compile('<action-sheet buttons="buttons"></action-sheet>')(scope);
+
+      // Grab the sheet element for animation
+      var sheetEl = angular.element(element[0].querySelector('.action-sheet'));
+
+      var hideSheet = function(didCancel) {
+        $animate.leave(sheetEl, function() {
+          if(didCancel) {
+            opts.cancel();
+          }
+        });
+        
+        $timeout(function() {
+          $animate.removeClass(element, 'active', function() {
+            scope.$destroy();
+          });
+        });
+      };
+
       scope.cancel = function() {
-        scope.sheet.hide();
-        //scope.$destroy();
-        opts.cancel();
+        hideSheet(true);
       };
 
       scope.buttonClicked = function(index) {
         // Check if the button click event returned true, which means
         // we can close the action sheet
         if((opts.buttonClicked && opts.buttonClicked(index)) === true) {
-          scope.sheet.hide();
-          //scope.$destroy();
+          hideSheet(false);
         }
       };
 
@@ -64,34 +85,31 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
         // Check if the destructive button click event returned true, which means
         // we can close the action sheet
         if((opts.destructiveButtonClicked && opts.destructiveButtonClicked()) === true) {
-          scope.sheet.hide();
-          //scope.$destroy();
+          hideSheet(false);
         }
       };
-
-      // Compile the template
-      var element = $compile('<action-sheet buttons="buttons"></action-sheet>')(scope);
-
-      var s = element.scope();
 
       $document[0].body.appendChild(element[0]);
 
       var sheet = new ionic.views.ActionSheet({el: element[0] });
-      s.sheet = sheet;
+      scope.sheet = sheet;
 
-      sheet.show();
+      $animate.addClass(element, 'active');
+      $animate.enter(sheetEl, element, function() {
+      });
 
       return sheet;
     }
   };
+
 }]);
 ;
 angular.module('ionic.service.gesture', [])
 
 .factory('Gesture', [function() {
   return {
-    on: function(eventType, cb, element) {
-      return window.ionic.onGesture(eventType, cb, element);
+    on: function(eventType, cb, $element) {
+      return window.ionic.onGesture(eventType, cb, $element[0]);
     }
   };
 }]);
@@ -584,6 +602,41 @@ angular.module('ionic.ui.content', [])
 
 })();
 ;
+(function(ionic) {
+'use strict';
+
+angular.module('ionic.ui.header', ['ngAnimate'])
+
+
+.directive('headerBar', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<header class="bar bar-header" ng-transclude></header>',
+    scope: {
+      type: '@',
+      alignTitle: '@',
+    },
+    link: function($scope, $element, $attr) {
+      var hb = new ionic.views.HeaderBar({
+        el: $element[0],
+        alignTitle: $scope.alignTitle || 'center'
+      });
+
+      $element.addClass($scope.type);
+
+      $scope.headerBarView = hb;
+
+      $scope.$on('$destroy', function() {
+        //
+      });
+    }
+  };
+});
+
+})(ionic);
+;
 (function() {
 'use strict';
 
@@ -696,11 +749,11 @@ angular.module('ionic.ui.list', ['ngAnimate'])
           hasPullToRefresh: ($scope.hasPullToRefresh !== 'false'),
           onRefresh: function() {
             $scope.onRefresh();
-            $scope.$parent.$broadcast('onRefresh');
+            $scope.$parent.$broadcast('scroll.onRefresh');
           },
           onRefreshOpening: function(amt) {
             $scope.onRefreshOpening({amount: amt});
-            $scope.$parent.$broadcast('onRefreshOpening', amt);
+            $scope.$parent.$broadcast('scroll.onRefreshOpening', amt);
           }
         });
 
@@ -773,6 +826,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
   // Pop function, throttled
   this.popController = ionic.throttle(function() {
     _this.pop();
+    $scope.$broadcast('navs.pop');
   }, 300, {
     trailing: false
   });
@@ -820,6 +874,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
    */
   $scope.pushController = function(scope, element) {
     _this.push(scope);
+    $scope.$broadcast('navs.push', scope);
   };
 
   $scope.navController = this;
@@ -846,22 +901,46 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
     restrict: 'E',
     require: '^navs',
     replace: true,
-    scope: true,
+    scope: {
+      type: '@',
+      backButtonType: '@',
+      alignTitle: '@'
+    },
     template: '<header class="bar bar-header nav-bar" ng-class="{hidden: !navController.navBar.isVisible}">' + 
-        '<a href="#" ng-click="goBack()" class="button" ng-if="navController.controllers.length > 1">Back</a>' +
+        '<button ng-click="goBack()" class="button" ng-if="navController.controllers.length > 1" ng-class="backButtonType">Back</button>' +
         '<h1 class="title">{{navController.getTopController().title}}</h1>' + 
       '</header>',
-    link: function(scope, element, attrs, navCtrl) {
-      scope.navController = navCtrl;
+    link: function($scope, $element, $attr, navCtrl) {
+      var backButton;
 
-      scope.barType = attrs.barType || 'bar-dark';
-      element.addClass(scope.barType);
+      $scope.navController = navCtrl;
 
-      scope.$watch('navController.controllers.length', function(value) {
-      });
-      scope.goBack = function() {
+      $scope.goBack = function() {
         navCtrl.popController();
       };
+
+
+      var hb = new ionic.views.HeaderBar({
+        el: $element[0],
+        alignTitle: $scope.alignTitle || 'center'
+      });
+
+      $element.addClass($scope.type);
+
+      $scope.headerBarView = hb;
+
+      $scope.$parent.$on('navs.push', function() {
+        backButton = angular.element($element[0].querySelector('.button'));
+        backButton.addClass($scope.backButtonType);
+        hb.align();
+      });
+      $scope.$parent.$on('navs.pop', function() {
+        hb.align();
+      });
+
+      $scope.$on('$destroy', function() {
+        //
+      });
     }
   };
 })
@@ -1128,7 +1207,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           sideMenuCtrl._handleDrag(e);
         };
 
-        Gesture.on('drag', dragFn, $element[0]);
+        Gesture.on('drag', dragFn, $element);
 
         var dragReleaseFn = function(e) {
           if(!defaultPrevented) {
@@ -1137,7 +1216,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           defaultPrevented = false;
         };
 
-        Gesture.on('release', dragReleaseFn, $element[0]);
+        Gesture.on('release', dragReleaseFn, $element);
 
         sideMenuCtrl.setContent({
           onDrag: function(e) {},

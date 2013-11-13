@@ -70,7 +70,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           sideMenuCtrl._handleDrag(e);
         };
 
-        Gesture.on('drag', dragFn, $element[0]);
+        Gesture.on('drag', dragFn, $element);
 
         var dragReleaseFn = function(e) {
           if(!defaultPrevented) {
@@ -79,7 +79,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           defaultPrevented = false;
         };
 
-        Gesture.on('release', dragReleaseFn, $element[0]);
+        Gesture.on('release', dragReleaseFn, $element);
 
         sideMenuCtrl.setContent({
           onDrag: function(e) {},
