@@ -2520,12 +2520,12 @@ a.subdued‎ {
   height: 100%;
   background-color: rgba(0, 0, 0, 0); }
   .action-sheet-backdrop.active {
-    -webkit-animation: fadeInHalf 0.2s;
-    animation: fadeInHalf 0.2s;
+    -webkit-animation: fadeInHalf 0.3s;
+    animation: fadeInHalf 0.3s;
     -webkit-animation-fill-mode: forwards; }
   .action-sheet-backdrop.active-remove {
-    -webkit-animation: fadeOutHalf 0.2s;
-    animation: fadeOutHalf 0.2s;
+    -webkit-animation: fadeOutHalf 0.3s;
+    animation: fadeOutHalf 0.3s;
     -webkit-animation-fill-mode: forwards; }
 
 @-webkit-keyframes actionSheetUp {
@@ -2552,13 +2552,13 @@ a.subdued‎ {
   .action-sheet-up.ng-enter, .action-sheet-up .ng-enter {
     opacity: 0;
     -webkit-transform: translate3d(0, 100%, 0);
-    -webkit-animation-duration: 200ms;
+    -webkit-animation-duration: 400ms;
     -webkit-animation-fill-mode: both;
     -webkit-animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
   .action-sheet-up.ng-enter-active, .action-sheet-up .ng-enter-active {
     -webkit-animation-name: actionSheetUp; }
   .action-sheet-up.ng-leave, .action-sheet-up .ng-leave {
-    -webkit-animation-duration: 200ms;
+    -webkit-animation-duration: 400ms;
     -webkit-animation-fill-mode: both;
     -webkit-animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
   .action-sheet-up.ng-leave-active, .action-sheet-up .ng-leave {

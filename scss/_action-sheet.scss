@@ -30,15 +30,15 @@
   background-color: rgba(0,0,0,0);
 
   &.active {
-    -webkit-animation: fadeInHalf 0.2s;
-    animation: fadeInHalf 0.2s;
+    -webkit-animation: fadeInHalf 0.3s;
+    animation: fadeInHalf 0.3s;
 
     -webkit-animation-fill-mode: forwards;
   }
 
   &.active-remove {
-    -webkit-animation: fadeOutHalf 0.2s;
-    animation: fadeOutHalf 0.2s;
+    -webkit-animation: fadeOutHalf 0.3s;
+    animation: fadeOutHalf 0.3s;
 
     -webkit-animation-fill-mode: forwards;
   }
@@ -77,7 +77,7 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
     // Start it down low
     -webkit-transform: translate3d(0, 100%, 0);
 
-    -webkit-animation-duration: 200ms;
+    -webkit-animation-duration: 400ms;
     -webkit-animation-fill-mode: both;
     -webkit-animation-timing-function: $slide-in-up-function;
   }
@@ -87,7 +87,7 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
   }
 
   &.ng-leave, .ng-leave {
-    -webkit-animation-duration: 200ms;
+    -webkit-animation-duration: 400ms;
     -webkit-animation-fill-mode: both;
     -webkit-animation-timing-function: $slide-in-up-function;
   }
