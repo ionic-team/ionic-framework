@@ -557,15 +557,23 @@ angular.module('ionic.ui.content', [])
       var icon = $element[0].querySelector('.ionic-refresher');
 
       // Scale up the refreshing icon
+      var didHold = false;
       var onRefreshOpening = ionic.throttle(function(e, amt) {
-        icon.style[ionic.CSS.TRANSFORM] = 'scale(' + Math.min((0.2 + amt), 1) + ')';
+        if(!didHold) {
+          icon.style[ionic.CSS.TRANSFORM] = 'scale(' + Math.min((0.2 + amt), 1) + ')';
+        }
+        if(amt >= 1) {
+          didHold = true;
+        }
       }, 100);
 
       $scope.$on('scroll.onRefreshing', function(e) {
+        console.log('ON REFReSHING');
         icon.style[ionic.CSS.TRANSFORM] = 'scale(2)';
       });
 
       $scope.$on('scroll.onRefresh', function(e) {
+        console.log('ON REFReSH');
         icon.style[ionic.CSS.TRANSFORM] = 'scale(1)';
       });
       $scope.$on('scroll.onRefreshOpening', onRefreshOpening);

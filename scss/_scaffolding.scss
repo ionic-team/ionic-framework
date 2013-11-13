@@ -139,13 +139,17 @@ body, .ionic-body {
   margin-left: -5px;
   bottom: 25px;
   -webkit-transform: scale(0.2);
+  -webkit-transition: -webkit-transform 0.1s linear;
+  -webkit-animation-play-state: paused;
+
+  -webkit-animation: refresher-pulsate 1.5s linear;
+  -webkit-animation-iteration-count: infinite; 
 }
 .scroll-refreshing {
   -webkit-transition: height 0.1s ease-in-out;
 
   .ionic-refresher {
-    -webkit-animation: refresher-pulsate 1.5s linear;
-    -webkit-animation-iteration-count: infinite; 
+    -webkit-animation-play-state: running;
   }
 }
 
