@@ -2,7 +2,7 @@
 // Colors
 // -------------------------------
 
-$light:                 #ffffff !default;
+$light:                 #fff !default;
 $stable:                #f8f8f8 !default;
 $positive:              #4a87ee !default;
 $calm:                  #43cee6 !default;
@@ -10,7 +10,7 @@ $balanced:              #66cc33 !default;
 $energized:             #f0b840 !default;
 $assertive:             #ef4e3a !default;
 $royal:                 #8a6de9 !default;
-$dark:                  #444444 !default;
+$dark:                  #444 !default;
 
 
 
@@ -164,15 +164,15 @@ $button-bar-button-icon-size:         24px;
 
 $button-light-bg:                     $light;
 $button-light-text:                   #444;
-$button-light-border:                 #B2B2B2;
-$button-light-active-bg:              #222;
-$button-light-active-border:          #000;
+$button-light-border:                 #ddd;
+$button-light-active-bg:              #fafafa;
+$button-light-active-border:          #ccc;
 
 $button-stable-bg:                    $stable;
 $button-stable-text:                  #444;
-$button-stable-border:                #bbb;
-$button-stable-active-bg:             #222;
-$button-stable-active-border:         #000;
+$button-stable-border:                #b2b2b2;
+$button-stable-active-bg:             #e5e5e5;
+$button-stable-active-border:         #a2a2a2;
 
 $button-positive-bg:                  $positive;
 $button-positive-text:                #fff;
@@ -212,8 +212,8 @@ $button-royal-active-border:          darken($royal, 15%);
 
 $button-dark-bg:                      $dark;
 $button-dark-text:                    #fff;
-$button-dark-border:                  #444;
-$button-dark-active-bg:               #222;
+$button-dark-border:                  #111;
+$button-dark-active-bg:               #262626;
 $button-dark-active-border:           #000;
 
 $button-default-bg:                   $button-stable-bg;

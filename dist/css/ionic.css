@@ -2620,14 +2620,14 @@ a.subdued‎ {
   border-width: 0;
   border-style: solid;
   border-top: 1px solid transparent;
-  border-bottom: 1px solid #b2b2b2;
+  border-bottom: 1px solid #dddddd;
   background-color: white;
   background-size: 0; }
   @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
     .bar {
       border-top: none !important;
       border-bottom: none !important;
-      background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
+      background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
       background-position: bottom;
       background-size: 100% 1px;
       background-repeat: no-repeat; } }
@@ -2641,15 +2641,15 @@ a.subdued‎ {
       color: #fff; }
   .bar.bar-light {
     background-color: white;
-    border-color: #b2b2b2;
-    background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
+    border-color: #dddddd;
+    background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
     color: #444444; }
     .bar.bar-light .title {
       color: #444444; }
   .bar.bar-stable {
     background-color: #f8f8f8;
-    border-color: #bbbbbb;
-    background-image: linear-gradient(0deg, #bbbbbb, #bbbbbb 50%, transparent 50%);
+    border-color: #b2b2b2;
+    background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
     color: #444444; }
     .bar.bar-stable .title {
       color: #444444; }
@@ -2697,8 +2697,8 @@ a.subdued‎ {
       color: white; }
   .bar.bar-dark {
     background-color: #444444;
-    border-color: #444444;
-    background-image: linear-gradient(0deg, #444444, #444444 50%, transparent 50%);
+    border-color: #111111;
+    background-image: linear-gradient(0deg, #111111, #111111 50%, transparent 50%);
     color: white; }
     .bar.bar-dark .title {
       color: white; }
@@ -2749,14 +2749,14 @@ a.subdued‎ {
 .bar-light .button {
   color: #444444;
   background-color: white;
-  border-color: #b2b2b2; }
+  border-color: #dddddd; }
   .bar-light .button:hover {
     color: #444444;
     text-decoration: none; }
   .bar-light .button.active, .bar-light .button:active {
-    background-color: #222222;
+    background-color: #fafafa;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-    border-color: black; }
+    border-color: #cccccc; }
   .bar-light .button.button-clear {
     color: white;
     background: none;
@@ -2766,14 +2766,14 @@ a.subdued‎ {
 .bar-stable .button {
   color: #444444;
   background-color: #f8f8f8;
-  border-color: #bbbbbb; }
+  border-color: #b2b2b2; }
   .bar-stable .button:hover {
     color: #444444;
     text-decoration: none; }
   .bar-stable .button.active, .bar-stable .button:active {
-    background-color: #222222;
+    background-color: #e5e5e5;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-    border-color: black; }
+    border-color: #a2a2a2; }
   .bar-stable .button.button-clear {
     color: white;
     background: none;
@@ -2885,12 +2885,12 @@ a.subdued‎ {
 .bar-dark .button {
   color: white;
   background-color: #444444;
-  border-color: #444444; }
+  border-color: #111111; }
   .bar-dark .button:hover {
     color: white;
     text-decoration: none; }
   .bar-dark .button.active, .bar-dark .button:active {
-    background-color: #222222;
+    background-color: #262626;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
     border-color: black; }
   .bar-dark .button.button-clear {
@@ -2939,8 +2939,8 @@ a.subdued‎ {
   -ms-flex-direction: horizontal;
   flex-direction: horizontal;
   background-color: #f8f8f8;
-  background-image: linear-gradient(0deg, #bbbbbb, #bbbbbb 50%, transparent 50%);
-  border-color: #bbbbbb;
+  background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
+  border-color: #b2b2b2;
   color: #444444;
   position: absolute;
   bottom: 0;
@@ -2953,13 +2953,13 @@ a.subdued‎ {
   line-height: 49px; }
   .tabs.tabs-light {
     background-color: white;
-    background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
-    border-color: #b2b2b2;
+    background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
+    border-color: #dddddd;
     color: #444444; }
   .tabs.tabs-stable {
     background-color: #f8f8f8;
-    background-image: linear-gradient(0deg, #bbbbbb, #bbbbbb 50%, transparent 50%);
-    border-color: #bbbbbb;
+    background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
+    border-color: #b2b2b2;
     color: #444444; }
   .tabs.tabs-positive {
     background-color: #4a87ee;
@@ -2993,8 +2993,8 @@ a.subdued‎ {
     color: white; }
   .tabs.tabs-dark {
     background-color: #444444;
-    background-image: linear-gradient(0deg, #444444, #444444 50%, transparent 50%);
-    border-color: #444444;
+    background-image: linear-gradient(0deg, #111111, #111111 50%, transparent 50%);
+    border-color: #111111;
     color: white; }
   @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
     .tabs {
@@ -3315,7 +3315,6 @@ a.subdued‎ {
   white-space: nowrap; }
 
 a.item {
-  color: inherit;
   text-decoration: none; }
   a.item:hover, a.item:focus {
     text-decoration: none; }
@@ -4354,7 +4353,7 @@ input[type="range"] {
   border-radius: 2px;
   color: #444444;
   background-color: #f8f8f8;
-  border-color: #bbbbbb;
+  border-color: #b2b2b2;
   vertical-align: top;
   text-align: center;
   text-overflow: ellipsis;
@@ -4365,9 +4364,9 @@ input[type="range"] {
     color: #444444;
     text-decoration: none; }
   .button.active, .button:active {
-    background-color: #222222;
+    background-color: #e5e5e5;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-    border-color: black; }
+    border-color: #a2a2a2; }
   .button .icon {
     display: inline-block;
     padding: 0 0 1px 0;
@@ -4380,14 +4379,14 @@ input[type="range"] {
   .button.button-light {
     color: #444444;
     background-color: white;
-    border-color: #b2b2b2; }
+    border-color: #dddddd; }
     .button.button-light:hover {
       color: #444444;
       text-decoration: none; }
     .button.button-light.active, .button.button-light:active {
-      background-color: #222222;
+      background-color: #fafafa;
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-      border-color: black; }
+      border-color: #cccccc; }
     .button.button-light.button-clear {
       color: white;
       background: none;
@@ -4403,14 +4402,14 @@ input[type="range"] {
   .button.button-stable {
     color: #444444;
     background-color: #f8f8f8;
-    border-color: #bbbbbb; }
+    border-color: #b2b2b2; }
     .button.button-stable:hover {
       color: #444444;
       text-decoration: none; }
     .button.button-stable.active, .button.button-stable:active {
-      background-color: #222222;
+      background-color: #e5e5e5;
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
-      border-color: black; }
+      border-color: #a2a2a2; }
     .button.button-stable.button-clear {
       color: #f8f8f8;
       background: none;
@@ -4564,12 +4563,12 @@ input[type="range"] {
   .button.button-dark {
     color: white;
     background-color: #444444;
-    border-color: #444444; }
+    border-color: #111111; }
     .button.button-dark:hover {
       color: white;
       text-decoration: none; }
     .button.button-dark.active, .button.button-dark:active {
-      background-color: #222222;
+      background-color: #262626;
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
       border-color: black; }
     .button.button-dark.button-clear {
@@ -5165,7 +5164,7 @@ a.button {
   background-color: white; }
 
 .light-border {
-  border-color: #b2b2b2; }
+  border-color: #dddddd; }
 
 .stable {
   color: #f8f8f8; }
@@ -5174,7 +5173,7 @@ a.button {
   background-color: #f8f8f8; }
 
 .stable-border {
-  border-color: #bbbbbb; }
+  border-color: #b2b2b2; }
 
 .positive {
   color: #4a87ee; }
@@ -5237,7 +5236,7 @@ a.button {
   background-color: #444444; }
 
 .dark-border {
-  border-color: #444444; }
+  border-color: #111111; }
 
 /**
  * Platform
