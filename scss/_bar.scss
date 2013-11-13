@@ -32,7 +32,7 @@
          (min-resolution: 1.5dppx) {
     border-top: none !important;
     border-bottom: none !important;
-    background-image: linear-gradient(0deg, $bar-default-border, $bar-default-border, 50%, transparent 50%);
+    background-image: linear-gradient(0deg, $bar-default-border, $bar-default-border 50%, transparent 50%);
     background-position: bottom;
     background-size: 100% 1px;
     background-repeat: no-repeat;
@@ -86,7 +86,7 @@
     right: 0;
     left: 0;
     z-index: 0;
-
+    overflow: hidden;
 
     margin: 0;
 
@@ -97,7 +97,6 @@
     // Go into ellipsis if too small
     text-overflow: ellipsis;
     white-space: nowrap;
-    overflow: hidden;
 
     font-size: $bar-title-font-size;
 
@@ -115,11 +114,11 @@
   .button {
     z-index: 1;
     padding: 0 $button-bar-button-padding;
-    height: $button-bar-button-height;
     min-width: $button-bar-button-height + $button-bar-button-font-size;
     min-height: $button-bar-button-height - 1;
+    height: $button-bar-button-height;
     font-size: $button-bar-button-font-size;
-    line-height: $button-bar-button-height - $button-border-width - 2;
+    line-height: $button-bar-button-height - $button-border-width - 1;
 
     .icon {
       font-size: $button-bar-button-icon-size;
@@ -128,8 +127,8 @@
   }
 
   .button-bar > .button, .buttons > .button {
-    height: $button-bar-button-height;
     min-height: $button-bar-button-height - 1;
+    height: $button-bar-button-height;
     line-height: $button-bar-button-height - 2;
   }
 
