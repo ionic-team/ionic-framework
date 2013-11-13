@@ -31,8 +31,8 @@ angular.module('ionic', [
 ;
 angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ionic.ui.actionSheet', 'ngAnimate'])
 
-.factory('ActionSheet', ['$rootScope', '$document', '$compile', '$animate', 'TemplateLoader',
-    function($rootScope, $document, $compile, $animate, TemplateLoader) {
+.factory('ActionSheet', ['$rootScope', '$document', '$compile', '$animate', '$timeout', 'TemplateLoader',
+    function($rootScope, $document, $compile, $animate, $timeout, TemplateLoader) {
 
   return {
     /**
@@ -61,8 +61,11 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
             opts.cancel();
           }
         });
-        $animate.removeClass(element, 'active', function() {
-          scope.$destroy();
+        
+        $timeout(function() {
+          $animate.removeClass(element, 'active', function() {
+            scope.$destroy();
+          });
         });
       };
 
@@ -431,7 +434,7 @@ angular.module('ionic.ui.actionSheet', [])
       });
     },
     template: '<div class="action-sheet-backdrop">' +
-                '<div class="action-sheet slide-in-up">' +
+                '<div class="action-sheet action-sheet-up">' +
                   '<div class="action-sheet-group">' +
                     '<div class="action-sheet-title" ng-if="titleText">{{titleText}}</div>' +
                     '<button class="button" ng-click="buttonClicked($index)" ng-repeat="button in buttons">{{button.text}}</button>' +

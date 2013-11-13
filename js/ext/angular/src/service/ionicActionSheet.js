@@ -1,7 +1,7 @@
 angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ionic.ui.actionSheet', 'ngAnimate'])
 
-.factory('ActionSheet', ['$rootScope', '$document', '$compile', '$animate', 'TemplateLoader',
-    function($rootScope, $document, $compile, $animate, TemplateLoader) {
+.factory('ActionSheet', ['$rootScope', '$document', '$compile', '$animate', '$timeout', 'TemplateLoader',
+    function($rootScope, $document, $compile, $animate, $timeout, TemplateLoader) {
 
   return {
     /**
@@ -30,8 +30,11 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
             opts.cancel();
           }
         });
-        $animate.removeClass(element, 'active', function() {
-          scope.$destroy();
+        
+        $timeout(function() {
+          $animate.removeClass(element, 'active', function() {
+            scope.$destroy();
+          });
         });
       };
 

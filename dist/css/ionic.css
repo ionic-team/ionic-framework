@@ -2528,9 +2528,43 @@ a.subdued‎ {
     animation: fadeOutHalf 0.2s;
     -webkit-animation-fill-mode: forwards; }
 
+@-webkit-keyframes actionSheetUp {
+  0% {
+    -webkit-transform: translate3d(0, 100%, 0);
+    opacity: 0; }
+
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1; } }
+
+@-webkit-keyframes actionSheetOut {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1; }
+
+  100% {
+    -webkit-transform: translate3d(0, 100%, 0);
+    opacity: 0; } }
+
+.action-sheet-up {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0%, 0); }
+  .action-sheet-up.ng-enter, .action-sheet-up .ng-enter {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    -webkit-animation-duration: 200ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
+  .action-sheet-up.ng-enter-active, .action-sheet-up .ng-enter-active {
+    -webkit-animation-name: actionSheetUp; }
+  .action-sheet-up.ng-leave, .action-sheet-up .ng-leave {
+    -webkit-animation-duration: 200ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
+  .action-sheet-up.ng-leave-active, .action-sheet-up .ng-leave {
+    -webkit-animation-name: actionSheetOut; }
+
 .action-sheet {
-  -webkit-transform: translate3d(0, 100%, 0);
-  transform: translate3d(0, 100%, 0);
   position: fixed;
   bottom: 0;
   left: 15px;
@@ -2539,9 +2573,9 @@ a.subdued‎ {
   width: calc(100% - 30px); }
   .action-sheet .button {
     display: block;
-    padding: 6px;
+    padding: 1px;
     width: 100%;
-    border-radius: none;
+    border-radius: 0;
     background-color: transparent;
     color: #4a87ee;
     font-size: 18px; }
@@ -2556,11 +2590,14 @@ a.subdued‎ {
 
 .action-sheet-group {
   background-color: #fff;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   border-radius: 3px 3px 3px 3px; }
   .action-sheet-group .button {
     border-radius: 0;
     border-width: 1px 0px 0px 0px; }
+    .action-sheet-group .button.active, .action-sheet-group .button:active {
+      background-color: transparent;
+      color: inherit; }
   .action-sheet-group .button:first-child:last-child {
     border-width: 0; }
 

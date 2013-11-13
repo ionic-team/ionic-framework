@@ -44,8 +44,60 @@
   }
 }
 
+@-webkit-keyframes actionSheetUp {
+  0% {
+    -webkit-transform: translate3d(0, 100%, 0);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes actionSheetOut {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translate3d(0, 100%, 0);
+    opacity: 0;
+  }
+}
+$slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
+
+.action-sheet-up {
+  opacity: 1;
+  // Start it down low
+  -webkit-transform: translate3d(0, 0%, 0);
+
+  &.ng-enter, .ng-enter {
+    // Start hidden
+    opacity: 0;
+    // Start it down low
+    -webkit-transform: translate3d(0, 100%, 0);
+
+    -webkit-animation-duration: 200ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: $slide-in-up-function;
+  }
+
+  &.ng-enter-active, .ng-enter-active {
+    -webkit-animation-name: actionSheetUp;
+  }
+
+  &.ng-leave, .ng-leave {
+    -webkit-animation-duration: 200ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: $slide-in-up-function;
+  }
+
+  &.ng-leave-active, .ng-leave {
+    -webkit-animation-name: actionSheetOut;
+  }
+}
+
 .action-sheet {
-  @include translate3d(0, 100%, 0);
 
   position: fixed;
   bottom: 0;
@@ -56,9 +108,9 @@
 
   .button {
     display: block;
-    padding: 6px;
+    padding: 1px;
     width: 100%;
-    border-radius: none;
+    border-radius: 0;
 
     background-color: transparent;
 
@@ -80,11 +132,16 @@
 
 .action-sheet-group {
   background-color: #fff;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   border-radius: $sheet-border-radius;
   .button {
     border-radius: 0;
     border-width: 1px 0px 0px 0px;
+
+    &.active, &:active {
+      background-color: transparent;
+      color: inherit;
+    }
   }
   .button:first-child:last-child {
     border-width: 0;
