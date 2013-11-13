@@ -1,0 +1,85 @@
+<html ng-app="gestureTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Nav Bars</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-touch.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-animate.js"></script>
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
+    <style>
+      #box {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 100, 100, 0.5);
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body ng-controller="AppCtrl">
+
+    <div id="box" class="box">
+      <span id="output"></span>
+    </div>
+
+    <script>
+      angular.module('gestureTest', ['ionic', 'ngAnimate'])
+
+      .controller('AppCtrl', function($scope, $compile, $element) {
+      })
+
+      .directive('box', function(Gesture) {
+        return {
+          restrict: 'C',
+          link: function($scope, $element, $attr) {
+            var output = angular.element(document.getElementById('output'));
+
+            // Debug output function
+            var o = function(type, d) {
+              var p = ['<div>' + type + ' event: '];
+              for(var i = 0; i < d.length; i++) {
+                p.push(d[i]);
+              }
+              p.push('</div>');
+              output.append(p.join(', '));
+              $element[0].scrollTop = $element[0].scrollHeight;
+            };
+
+            Gesture.on('tap', function(e) {
+              o('tap', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY]);
+            }, $element);
+
+            Gesture.on('release', function(e) {
+              o('release', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY]);
+            }, $element);
+
+            Gesture.on('hold', function(e) {
+              o('hold', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY]);
+            }, $element);
+
+            Gesture.on('drag', function(e) {
+              o('drag', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY, e.gesture.deltaX, e.gesture.deltaY]);
+            }, $element);
+
+            Gesture.on('swipe', function(e) {
+              o('swipe', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY, e.gesture.direction]);
+            }, $element);
+
+            Gesture.on('transform', function(e) {
+              o('transform', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY, e.gesture.direction]);
+            }, $element);
+          }
+        };
+      });
+    </script>
+  </body>
+</html>
+
