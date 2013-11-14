@@ -54,9 +54,9 @@ textarea {
   input {
     @include border-radius(0);
     @include flex(1, 0, 220px);
+    @include appearance(none);
     margin: 0;
     background-color: transparent;
-    -webkit-appearance: none;
   }
 
   .icon {
@@ -129,7 +129,7 @@ input[type="url"],
 input[type="search"],
 input[type="tel"],
 input[type="color"] {
-  display: inline-block;
+  display: block;
   height: $line-height-computed + $font-size-base;
   color: $input-color;
   vertical-align: middle;
