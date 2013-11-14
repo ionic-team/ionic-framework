@@ -25,7 +25,11 @@ angular.module('ionic.weather.directives', [])
     replace: true,
     transclude: true,
     template: '<div id="small-weather" ng-transclude></div>',
-    link: function($scope, $element, $attr) {
+
+    compile: function(element, attr) {
+      console.log('SMALL COMPILED');
+      return function($scope, $element, $attr) {
+      console.log('SMALL LINKED');
 
       // Delay so we are in the DOM and can calculate sizes
       $timeout(function() {
@@ -38,6 +42,7 @@ angular.module('ionic.weather.directives', [])
           angular.element(document.querySelector('.content')).css('-webkit-overflow-scrolling', 'touch');
         }, 50);
       });
+      }
     }
   }
 })

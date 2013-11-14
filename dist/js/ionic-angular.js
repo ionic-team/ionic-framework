@@ -1194,7 +1194,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 
   $scope.sideMenuContentTranslateX = 0;
 
-  $scope.sideMenuCtrl = this;
+  $scope.sideMenuController = this;
 })
 
 .directive('sideMenu', function() {
@@ -1544,7 +1544,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
       };
     },
     template: 
-      '<a href="#" ng-class="{active:active}" ng-click="selectTab()" class="tab-item">' +
+      '<a ng-class="{active:active}" ng-click="selectTab()" class="tab-item">' +
         '<i ng-class="{{icon}}" ng-if="icon"></i>' +
         '<i class="{{iconOn}}" ng-if="active"></i>' +
         '<i class="{{iconOff}}" ng-if="!active"></i> {{title}}' +

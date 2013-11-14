@@ -33,7 +33,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 
   $scope.sideMenuContentTranslateX = 0;
 
-  $scope.sideMenuCtrl = this;
+  $scope.sideMenuController = this;
 })
 
 .directive('sideMenu', function() {
