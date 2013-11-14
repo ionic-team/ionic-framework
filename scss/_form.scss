@@ -14,13 +14,11 @@ legend {
   margin-bottom: $line-height-base;
   padding: 0;
   width: 100%;
-  border: 0;
-  border-bottom: 1px solid #e5e5e5;
+  border: $input-border-width solid $input-border;
   color: $dark;
   font-size: $font-size-base * 1.5;
   line-height: $line-height-base * 2;
 
-  // Small
   small {
     color: $stable;
     font-size: $line-height-base * .75;
@@ -104,7 +102,7 @@ textarea {
   padding: 4px 8px 3px;
   border: none;
   background-color: $input-bg;
-  box-shadow: inset 0 0 $item-border-width $item-default-border;
+  box-shadow: inset 0 0 $input-border-width $input-border;
 }
 .item-stacked-label input {
   height: $line-height-computed + $font-size-base + 12px;
@@ -133,7 +131,7 @@ input[type="tel"],
 input[type="color"] {
   display: inline-block;
   height: $line-height-computed + $font-size-base;
-  color: darken($stable, 10%);
+  color: $input-color;
   vertical-align: middle;
   font-size: $font-size-base;
   line-height: $line-height-computed;
@@ -194,7 +192,7 @@ input[type="file"] {
 
 // Make select elements obey height by applying a border
 select {
-  border: 1px solid #ccc;
+  border: $input-border-width solid $input-border;
   background-color: $input-bg; // Chrome on Linux and Mobile Safari need background-color
 }
 
@@ -233,4 +231,3 @@ input[type="radio"][readonly],
 input[type="checkbox"][readonly] {
   background-color: transparent;
 }
-

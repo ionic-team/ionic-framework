@@ -29,6 +29,8 @@ $font-size-small:                11px !default;
 
 $line-height-base:               1.428571429 !default; // 20/14
 $line-height-computed:           floor($font-size-base * $line-height-base) !default; // ~20px
+$line-height-large:              1.33 !default;
+$line-height-small:              1.5 !default;
 
 $headings-font-family:           $font-family-base !default;
 $headings-font-weight:           500 !default;
@@ -42,10 +44,6 @@ $link-hover-color:               darken($link-color, 15%) !default;
 
 $content-padding:                10px !default;
 
-
-// Components
-// -------------------------------
-
 $padding-base-vertical:          6px !default;
 $padding-base-horizontal:        12px !default;
 
@@ -55,82 +53,9 @@ $padding-large-horizontal:       16px !default;
 $padding-small-vertical:         5px !default;
 $padding-small-horizontal:       10px !default;
 
-$line-height-large:              1.33 !default;
-$line-height-small:              1.5 !default;
-
 $border-radius-base:             4px !default;
 $border-radius-large:            6px !default;
 $border-radius-small:            3px !default;
-
-$caret-width-base:               4px !default;
-$caret-width-large:              5px !default;
-
-
-// Forms
-// -------------------------------
-
-$input-height-base:               ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
-$input-height-large:              (floor($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2) !default;
-$input-height-small:              (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
-
-$input-bg:                        $light;
-$input-bg-disabled:               $stable;
-
-$input-color:                     $dark;
-$input-label-color:               $dark;
-$input-color-placeholder:         darken($stable, 10%);
-
-
-// Toggle
-// -------------------------------
-
-$toggle-width:                    54px;
-$toggle-height:                   32px;
-$toggle-border-width:             2px;
-$toggle-border-radius:            20px;
-
-$toggle-handle-width:             $toggle-height - ($toggle-border-width * 2);
-$toggle-handle-height:            $toggle-handle-width;
-$toggle-handle-radius:            50%;
-
-$toggle-off-bg-color:             #E5E5E5;
-$toggle-off-border-color:         #E5E5E5;
-
-$toggle-on-bg-color:              #4A87EE;
-$toggle-on-border-color:          $toggle-on-bg-color;
-
-$toggle-handle-off-bg-color:      $light;
-$toggle-handle-on-bg-color:       $toggle-handle-off-bg-color;
-
-$toggle-transition-duration:      .1s;
-
-
-// Checkbox
-// -------------------------------
-
-$checkbox-width:                  28px;
-$checkbox-height:                 28px;
-$checkbox-border-radius:          50%;
-$checkbox-border-width:           1px;
-
-$checkbox-off-bg-color:           #fff;
-$checkbox-off-border-color:       #4A87EE;
-
-$checkbox-on-bg-color:            #4A87EE;
-$checkbox-on-border-color:        #4A87EE;
-
-$checkbox-check-width:            3px;
-$checkbox-check-color:            #fff;
-
-
-// Range
-// -------------------------------
-
-$range-track-height:           4px;
-$range-track-color:            #ccc;
-$range-slider-width:           20px;
-$range-slider-height:          20px;
-$range-slider-border-radius:   10px;
 
 
 // Buttons
@@ -451,6 +376,75 @@ $card-border-radius:        2px !default;
 // -------------------------------
 
 $icon-fill-border-radius:     6px !default;
+
+
+// Forms
+// -------------------------------
+
+$input-height-base:               ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
+$input-height-large:              (floor($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2) !default;
+$input-height-small:              (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
+
+$input-bg:                        $light;
+$input-bg-disabled:               $stable;
+
+$input-color:                     $dark;
+$input-border:                    $item-default-border;
+$input-border-width:              $item-border-width;
+$input-label-color:               $dark;
+$input-color-placeholder:         lighten($dark, 40%);
+
+
+// Toggle
+// -------------------------------
+
+$toggle-width:                    54px;
+$toggle-height:                   32px;
+$toggle-border-width:             2px;
+$toggle-border-radius:            20px;
+
+$toggle-handle-width:             $toggle-height - ($toggle-border-width * 2);
+$toggle-handle-height:            $toggle-handle-width;
+$toggle-handle-radius:            50%;
+
+$toggle-off-bg-color:             #E5E5E5;
+$toggle-off-border-color:         #E5E5E5;
+
+$toggle-on-bg-color:              #4A87EE;
+$toggle-on-border-color:          $toggle-on-bg-color;
+
+$toggle-handle-off-bg-color:      $light;
+$toggle-handle-on-bg-color:       $toggle-handle-off-bg-color;
+
+$toggle-transition-duration:      .1s;
+
+
+// Checkbox
+// -------------------------------
+
+$checkbox-width:                  28px;
+$checkbox-height:                 28px;
+$checkbox-border-radius:          50%;
+$checkbox-border-width:           1px;
+
+$checkbox-off-bg-color:           #fff;
+$checkbox-off-border-color:       #4A87EE;
+
+$checkbox-on-bg-color:            #4A87EE;
+$checkbox-on-border-color:        #4A87EE;
+
+$checkbox-check-width:            3px;
+$checkbox-check-color:            #fff;
+
+
+// Range
+// -------------------------------
+
+$range-track-height:           4px;
+$range-track-color:            #ccc;
+$range-slider-width:           20px;
+$range-slider-height:          20px;
+$range-slider-border-radius:   10px;
 
 
 // Menus

@@ -3979,8 +3979,7 @@ legend {
   margin-bottom: 1.42857;
   padding: 0;
   width: 100%;
-  border: 0;
-  border-bottom: 1px solid #e5e5e5;
+  border: 1px solid #dddddd;
   color: #444444;
   font-size: 21px;
   line-height: 2.85714; }
@@ -4100,7 +4099,7 @@ input[type="tel"],
 input[type="color"] {
   display: inline-block;
   height: 34px;
-  color: #dfdfdf;
+  color: #444444;
   vertical-align: middle;
   font-size: 14px;
   line-height: 20px; }
@@ -4148,7 +4147,7 @@ input[type="file"] {
   line-height: 34px; }
 
 select {
-  border: 1px solid #ccc;
+  border: 1px solid #dddddd;
   background-color: white; }
 
 select[multiple],
@@ -4157,13 +4156,13 @@ select[size] {
 
 input:-moz-placeholder,
 textarea:-moz-placeholder {
-  color: #dfdfdf; }
+  color: #aaaaaa; }
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
-  color: #dfdfdf; }
+  color: #aaaaaa; }
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
-  color: #dfdfdf; }
+  color: #aaaaaa; }
 
 input[disabled],
 select[disabled],
