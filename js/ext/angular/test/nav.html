@@ -41,7 +41,8 @@
     <script id="page.html" type="text/ng-template">
       <div title="Home home home home home home home home home" ng-controller="CatsCtrl" class="nav-content">
         <h1></h1>
-        <a href="#" class="button button-success" ng-click="goNext()">Next</a>
+        <a href="#" class="button button-royal" ng-click="goNext()">Next</a>
+        <button class="button button-assertive" ng-click="thisThing()">Doit</button>
         <list><list-item ng-repeat="item in items" on-select="goNext()">Test</list-item></list>
       </div>
     </script>
@@ -78,6 +79,10 @@
         $scope.$on('navContent.hidden', function() {
           console.log('HIDDEN');
         });
+
+        $scope.thisThing = function() {
+          console.log("THIS THING");
+        };
 
         var items = [];
         for(var i = 0; i < 100; i++) {
