@@ -1,8 +1,6 @@
 
-/**
- * Button Mixins
- * --------------------------------------------------
- */
+// Button Mixins
+// --------------------------------------------------
 
 @mixin button-style($bgColor, $borderColor, $activeBgColor, $activeBorderColor, $color) {
   color: $color;
@@ -50,10 +48,8 @@
 }
 
 
-/**
- * Bar Mixins
- * --------------------------------------------------
- */
+// Bar Mixins
+// --------------------------------------------------
 
 @mixin bar-style($bgColor, $borderColor, $color) {
   background-color: $bgColor;
@@ -68,10 +64,8 @@
 }
 
 
-/**
- * Tab Mixins
- * --------------------------------------------------
- */
+// Tab Mixins
+// --------------------------------------------------
 
 @mixin tab-style($bgColor, $borderColor, $color) {
   background-color: $bgColor;
@@ -81,10 +75,8 @@
 }
 
 
-/**
- * Item Mixins
- * --------------------------------------------------
- */
+// Item Mixins
+// --------------------------------------------------
 
 @mixin item-style($bgColor, $borderColor, $color, $activeBgColor, $activeBorderColor) {
   color: $color;
@@ -105,10 +97,8 @@
 }
 
 
-/**
- * Utility Mixins
- * --------------------------------------------------
- */
+// Utility Mixins
+// --------------------------------------------------
 
 // Clearfix
 // --------
