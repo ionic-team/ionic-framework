@@ -488,17 +488,40 @@ $sheet-border-radius-bottom:         0px 0px 3px 3px !default;
 // Badges
 // -------------------------
 
-$badge-color:                 $light !default;
-$badge-link-hover-color:      $light !default;
-$badge-bg:                    $stable !default;
+$badge-font-size:                  14px !default;
+$badge-line-height:                16px !default;
+$badge-font-weight:                bold !default;
+$badge-border-radius:              10px !default;
 
-$badge-active-color:          $link-color !default;
-$badge-active-bg:             $light !default;
+$badge-light-bg:                   $button-light-bg;
+$badge-light-text:                 $button-light-text;
 
-$badge-font-size:             14px !default;
-$badge-line-height:           16px !default;
-$badge-font-weight:           bold !default;
-$badge-border-radius:         10px !default;
+$badge-stable-bg:                  $button-stable-bg;
+$badge-stable-text:                $button-stable-text;
+
+$badge-positive-bg:                $button-positive-bg;
+$badge-positive-text:              $button-positive-text;
+
+$badge-calm-bg:                    $button-calm-bg;
+$badge-calm-text:                  $button-calm-text;
+
+$badge-balanced-bg:                $button-balanced-bg;
+$badge-balanced-text:              $button-balanced-text;
+
+$badge-assertive-bg:               $button-assertive-bg;
+$badge-assertive-text:             $button-assertive-text;
+
+$badge-energized-bg:               $button-energized-bg;
+$badge-energized-text:             $button-energized-text;
+
+$badge-royal-bg:                   $button-royal-bg;
+$badge-royal-text:                 $button-royal-text;
+
+$badge-dark-bg:                    $button-dark-bg;
+$badge-dark-text:                  $button-dark-text;
+
+$badge-default-bg:                 transparent !default;
+$badge-default-text:               #AAAAAA !default;
 
 
 // Z-Indexes

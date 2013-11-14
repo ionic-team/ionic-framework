@@ -3779,51 +3779,51 @@ button.item-button-right:after {
  * --------------------------------------------------
  */
 .badge {
+  background-color: transparent;
+  color: #aaaaaa;
   display: inline-block;
-  min-width: 10px;
   padding: 3px 8px;
-  font-size: 14px;
-  font-weight: bold;
-  color: white;
-  line-height: 16px;
+  min-width: 10px;
+  border-radius: 10px;
   vertical-align: baseline;
-  white-space: nowrap;
   text-align: center;
-  background-color: #f8f8f8;
-  border-radius: 10px; }
+  white-space: nowrap;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px; }
   .badge:empty {
     display: none; }
+  .badge.badge-light {
+    background-color: white;
+    color: #444444; }
+  .badge.badge-stable {
+    background-color: #f8f8f8;
+    color: #444444; }
+  .badge.badge-positive {
+    background-color: #4a87ee;
+    color: white; }
+  .badge.badge-calm {
+    background-color: #43cee6;
+    color: white; }
+  .badge.badge-assertive {
+    background-color: #ef4e3a;
+    color: white; }
+  .badge.badge-balanced {
+    background-color: #66cc33;
+    color: white; }
+  .badge.badge-energized {
+    background-color: #f0b840;
+    color: white; }
+  .badge.badge-royal {
+    background-color: #8a6de9;
+    color: white; }
+  .badge.badge-dark {
+    background-color: #444444;
+    color: white; }
 
 .button .badge {
   position: relative;
   top: -1px; }
-
-.badge-light {
-  background-color: white; }
-
-.badge-stable {
-  background-color: #f8f8f8; }
-
-.badge-positive {
-  background-color: #4a87ee; }
-
-.badge-calm {
-  background-color: #43cee6; }
-
-.badge-assertive {
-  background-color: #ef4e3a; }
-
-.badge-balanced {
-  background-color: #66cc33; }
-
-.badge-energized {
-  background-color: #f0b840; }
-
-.badge-royal {
-  background-color: #8a6de9; }
-
-.badge-dark {
-  background-color: #444444; }
 
 /**
  * Slide Box
