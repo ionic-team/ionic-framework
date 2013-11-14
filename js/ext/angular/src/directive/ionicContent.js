@@ -27,6 +27,7 @@ angular.module('ionic.ui.content', [])
     scope: {
       onRefresh: '&',
       onRefreshOpening: '&',
+      refreshComplete: '=',
       scroll: '@'
     },
     compile: function(element, attr, transclude) {
@@ -47,9 +48,17 @@ angular.module('ionic.ui.content', [])
           c.addClass('has-tabs');
         }
 
-        // If they want plain overflows scrolling, add that as a class
+        if(attr.refreshComplete) {
+          $scope.refreshComplete = function() {
+            if($scope.scrollView) {
+              $scope.scrollView.doneRefreshing();
+              $scope.$parent.$broadcast('scroll.onRefreshComplete');
+            }
+          };
+        }
+
+        // If they want plain overflow scrolling, add that as a class
         if($scope.scroll === "false") {
-          // Do nothing for now
         } else if(attr.overflowScroll === "true") {
           c.addClass('overflow-scroll');
         } else {
@@ -59,9 +68,11 @@ angular.module('ionic.ui.content', [])
             hasPullToRefresh: (typeof $scope.onRefresh !== 'undefined'),
             onRefresh: function() {
               $scope.onRefresh();
+              $scope.$parent.$broadcast('scroll.onRefresh');
             },
             onRefreshOpening: function(amt) {
               $scope.onRefreshOpening({amount: amt});
+              $scope.$parent.$broadcast('scroll.onRefreshOpening', amt);
             }
           });
           // Let child scopes access this 
@@ -91,14 +102,11 @@ angular.module('ionic.ui.content', [])
         icon.style[ionic.CSS.TRANSFORM] = 'scale(' + Math.min((1 + amt), 2) + ')';
       }, 100);
 
-      $scope.$on('onRefreshing', function(e) {
+      $scope.$on('scroll.onRefresh', function(e) {
         icon.style[ionic.CSS.TRANSFORM] = 'scale(2)';
       });
 
-      $scope.$on('onRefresh', function(e) {
-        icon.style[ionic.CSS.TRANSFORM] = 'scale(1)';
-      });
-      $scope.$on('onRefreshOpening', onRefreshOpening);
+      $scope.$on('scroll.onRefreshOpening', onRefreshOpening);
     }
   }
 })

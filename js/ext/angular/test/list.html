@@ -6,9 +6,6 @@
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-touch.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-animate.js"></script>
     <style>
 .my-repeat-animation > .ng-enter, 
 .my-repeat-animation > .ng-leave, 
@@ -68,23 +65,21 @@
             on-refresh-holding="almostRefreshing()"
             on-refresh-opening="almostRefreshProjects(ratio)"
             on-refresh="refreshProjects()"
+            refresh-complete="refreshComplete"
             animation="my-repeat-animation"
             delete-icon="icon ion-minus-circled"
             reorder-icon="icon ion-navicon">
 
-        <refresher>
-          <div id="refresh-content">
-            <i class="icon ion-ios7-reloading"></i>
-          </div>
-        </refresher>
+        <refresher></refresher>
+
         <item 
             ng-repeat="item in items" 
             buttons="item.buttons"
             can-delete="true"
             can-reorder="true"
             can-swipe="true"
-           on-delete="deleteProject(project)"
-           on-select="selectProject(project)">
+            on-delete="deleteProject(project)"
+            on-select="selectProject(project)">
            <i class="icon ion-email ion-primary"></i>
           {{item.text}}
           <i class="{{item.icon}}"></i>
@@ -98,7 +93,7 @@
     <script>
       angular.module('navTest', ['ionic.ui.list', 'ionic.ui.content', 'ngAnimate'])
 
-      .controller('TestCtrl', function($scope) {
+      .controller('TestCtrl', function($scope, $timeout) {
         $scope.refreshRatio = { ratio: 0 };
         var removeItem = function(item) {
           // Remove ourselves
@@ -116,6 +111,9 @@
 
         $scope.refreshProjects = function() {
           console.log("REFRESHING");
+          $timeout(function() {
+            $scope.refreshComplete();
+          }, 2000);
         };
 
         $scope.items = [];

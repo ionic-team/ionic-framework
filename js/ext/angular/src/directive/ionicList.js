@@ -86,7 +86,8 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       reorderIcon: '@',
       hasPullToRefresh: '@',
       onRefresh: '&',
-      onRefreshOpening: '&'
+      onRefreshOpening: '&',
+      refreshComplete: '='
     },
 
     controller: function($scope) {
@@ -102,26 +103,31 @@ angular.module('ionic.ui.list', ['ngAnimate'])
     template: '<ul class="list" ng-class="{\'list-editing\': isEditing}" ng-transclude>\
               </ul>',
 
-    compile: function(element, attr, transclude) {
-      return function($scope, $element, $attr) {
-        var lv = new ionic.views.ListView({
-          el: $element[0],
-          listEl: $element[0].children[0],
-          hasPullToRefresh: ($scope.hasPullToRefresh !== 'false'),
-          onRefresh: function() {
-            $scope.onRefresh();
-            $scope.$parent.$broadcast('scroll.onRefresh');
-          },
-          onRefreshOpening: function(amt) {
-            $scope.onRefreshOpening({amount: amt});
-            $scope.$parent.$broadcast('scroll.onRefreshOpening', amt);
-          }
-        });
-
-        if(attr.animation) {
-          $element.addClass(attr.animation);
+    link: function($scope, $element, $attr) {
+      var lv = new ionic.views.ListView({
+        el: $element[0],
+        listEl: $element[0].children[0],
+        hasPullToRefresh: ($scope.hasPullToRefresh !== 'false'),
+        onRefresh: function() {
+          $scope.onRefresh();
+          $scope.$parent.$broadcast('scroll.onRefresh');
+        },
+        onRefreshOpening: function(amt) {
+          $scope.onRefreshOpening({amount: amt});
+          $scope.$parent.$broadcast('scroll.onRefreshOpening', amt);
         }
-      };
+      });
+
+      if($attr.refreshComplete) {
+        $scope.refreshComplete = function() {
+          lv.doneRefreshing();
+          $scope.$parent.$broadcast('scroll.onRefreshComplete');
+        };
+      }
+
+      if($attr.animation) {
+        $element.addClass($attr.animation);
+      }
     }
   };
 });

@@ -14,7 +14,7 @@ angular.module('ionic.ui.header', ['ngAnimate'])
                   <button ng-repeat="button in leftButtons" class="button" ng-class="button.type" ng-click="button.click($event, $index)" ng-bind-html="button.content">\
                   </button>\
                 </div>\
-                <h1 class="title" ng-bind="title"></h1>\
+                <h1 class="title" ng-bind-html="title"></h1>\
                 <div class="buttons">\
                   <button ng-repeat="button in rightButtons" class="button" ng-class="button.type" ng-click="button.click($event, $index)" ng-bind-html="button.content">\
                   </button>\
@@ -58,6 +58,24 @@ angular.module('ionic.ui.header', ['ngAnimate'])
       $scope.$on('$destroy', function() {
         //
       });
+    }
+  };
+})
+
+.directive('footerBar', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<footer class="bar bar-footer" ng-transclude>\
+              </footer>',
+
+    scope: {
+      type: '@',
+    },
+
+    link: function($scope, $element, $attr) {
+      $element.addClass($scope.type);
     }
   };
 });

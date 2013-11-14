@@ -5,11 +5,10 @@
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-touch.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-animate.js"></script>
+
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
     <style>
       .reveal-animation {
         /*
@@ -51,27 +50,31 @@
 
   </head>
   <body ng-controller="AppCtrl">
+    <header-bar
+      title="'Title'"
+      type="bar-primary"></header-bar>
 
-    <header class="bar bar-header bar-success">
-      <button class="button"><i class="icon ion-home"></i></button>
-    </header>
-    <content on-refresh="onRefresh()" on-refresh-opening="onRefreshOpening(amount)" has-header="true" class="reveal-animation">
-      <refresher>
-        <div id="refresh-content">
-          <i class="icon ion-ios7-reloading"></i>
-        </div>
-      </refresher>
+    <content
+      on-refresh="onRefresh()"
+      on-refresh-opening="onRefreshOpening(amount)"
+      refresh-complete="refreshComplete"
+      has-header="true"
+      has-footer="true"
+      >
+      <refresher></refresher>
       <ul class="list">
         <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
       </ul>
     </content>
 
-    <script src="../../../../dist/js/ionic.js"></script>
-    <script src="../../../../dist/js/ionic-angular.js"></script>
-    <script>
-      angular.module('navTest', ['ionic.ui.content'])
+    <footer-bar type="bar-assertive">
+      <h1 class="title">Footer</h1>
+    </footer-bar>
 
-      .controller('AppCtrl', function($scope, $compile, $element) {
+    <script>
+      angular.module('navTest', ['ionic'])
+
+      .controller('AppCtrl', function($scope, $compile, $timeout, $element) {
         $scope.items = [];
         for(var i = 0; i < 200; i++) {
           $scope.items.push({
@@ -80,10 +83,14 @@
         $scope.what = {};
         $scope.onRefresh = function() {
           console.log('On refresh');
+          $timeout(function() {
+            $scope.refreshComplete();
+          }, 2000);
         }
         $scope.onRefreshOpening = function(amt) {
           console.log('On refresh opening', amt);
         }
+
       })
     </script>
   </body>
