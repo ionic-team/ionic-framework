@@ -3221,7 +3221,7 @@ a.subdued‎ {
     float: right; }
   .item .badge + .badge {
     margin-right: 5px; }
-  .item.active, .item:active {
+  .item.active, .ionic-pseudo .item:active {
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.12); }
   .item.item-light {
     color: #444444;
