@@ -51,11 +51,11 @@
     <tabs
           animation="fade-in-out" 
           tabs-type="tabs-icon-only"
-          tabs-style="tabs-primary"
+          tabs-style="tabs-positive"
           controller-changed="onControllerChanged(oldController, oldIndex, newController, newIndex)">
 
       <tab title="Home" icon-on="icon ion-ios7-filing" icon-off="icon ion-ios7-filing-outline" ng-controller="HomeCtrl">
-        <header class="bar bar-header bar-secondary">
+        <header class="bar bar-header bar-positive">
           <button class="button button-clear button-primary" ng-click="newTask()">New</button>
           <h1 class="title">Tasks</h1>
           <button class="button button-clear button-primary" ng-click="isEditingItems = !isEditingItems">Edit</button>
@@ -85,7 +85,7 @@
       </tab>
 
       <tab title="About" icon-on="icon ion-ios7-clock" icon-off="icon ion-ios7-clock-outline">
-        <header class="bar bar-header bar-secondary">
+        <header class="bar bar-header bar-positive">
           <h1 class="title">Deadlines</h1>
         </header>
         <content has-header="true" has-tabs="true">
@@ -94,7 +94,7 @@
       </tab>
 
       <tab title="Settings" icon-on="icon ion-ios7-gear" icon-off="icon ion-ios7-gear-outline">
-        <header class="bar bar-header bar-secondary">
+        <header class="bar bar-header bar-positive">
           <h1 class="title">Settings</h1>
         </header>
         <content has-header="true" has-tabs="true">

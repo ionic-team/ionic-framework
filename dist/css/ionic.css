@@ -19,7 +19,7 @@
  * Utility Mixins
  * --------------------------------------------------
  */
-/*!
+/*
   Ionicons, v1.3.3
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
   https://twitter.com/helloimben  https://twitter.com/ionicframework
@@ -2061,7 +2061,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid #c0c0c0; }
+  border: 1px solid silver; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -4206,7 +4206,7 @@ input[type="checkbox"][readonly] {
     border-radius: 50%;
     background: white;
     content: ' ';
-    transition: background-color .1s ease-in-out; }
+    transition: background-color 0.1s ease-in-out; }
 
 /* the checkmark within the box */
 .checkbox input:after {
@@ -4221,7 +4221,7 @@ input[type="checkbox"][readonly] {
   border-right: 0;
   content: ' ';
   opacity: 0;
-  transition: opacity .05s ease-in-out;
+  transition: opacity 0.05s ease-in-out;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg); }
 
@@ -4694,7 +4694,7 @@ input[type="range"] {
   .button-icon:active, .button-icon.active {
     background: none;
     box-shadow: none;
-    text-shadow: 0px 0px 10px #fff; }
+    text-shadow: 0px 0px 10px white; }
 
 .padding > .button.block:first-child {
   margin-top: 0; }

@@ -13,6 +13,6 @@ describe('Ionic Angular Side Menu', function() {
 
   it('Should init', function() {
     var scope = el.scope();
-    expect(scope.sideMenuCtrl).not.toBe(undefined);
+    expect(scope.sideMenuController).not.toBe(undefined);
   });
 });

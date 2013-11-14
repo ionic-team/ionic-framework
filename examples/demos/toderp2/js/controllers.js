@@ -26,7 +26,7 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
 
   $scope.loginForm = {
     email: 'ihasmax@gmail.com',
-    password: 'traintown'
+    password: ''
   };
 
   $scope.close = function() {
@@ -134,7 +134,7 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
 
   $scope.selectProject = function(project) {
     $scope.setActiveProject(project);
-    $scope.sideMenuCtrl.close();
+    $scope.sideMenuController.close();
   };
 
   /**
@@ -162,7 +162,7 @@ angular.module('ionic.todo.controllers', ['ionic.todo'])
     $scope.activeProject.title = newProject.title;
     $scope.activeProject.user_id = newProject.user_id;
 
-    $scope.sideMenuCtrl.close();
+    $scope.sideMenuController.close();
   };
 
   $scope.deleteProject = function(project) {

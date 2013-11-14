@@ -79,7 +79,6 @@
           title.style.left = margin + 'px';
           title.style.right = margin + 'px';
 
-          console.log(title.offsetWidth, title.scrollWidth);
           if(title.offsetWidth < title.scrollWidth) {
             title.style.textAlign = 'left';
             title.style.right = (rightWidth + 5) + 'px';

@@ -27,4 +27,9 @@ angular.module('ionic.ui', [
 angular.module('ionic', [
     'ionic.service',
     'ionic.ui',
+    
+    // Angular deps
+    'ngAnimate',
+    'ngTouch',
+    'ngSanitize'
 ]);
