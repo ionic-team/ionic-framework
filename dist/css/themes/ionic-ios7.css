@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /** 
  * Nav controllers and header bar animations
  */
@@ -118,7 +119,7 @@
   right: 20px;
   transition: 0.2s ease;
   transition-property: left, right;
-  transition-delay: 0s, .05s; }
+  transition-delay: 0s, 0.05s; }
 
 .toggle :checked + .track {
   /* When the toggle is "on" */
@@ -133,4 +134,4 @@
     right: 0;
     left: 20px;
     -webkit-transform: none;
-    transition-delay: .05s, 0s; }
+    transition-delay: 0.05s, 0s; }
