@@ -64,17 +64,22 @@
 }
 
 /* make sure item content have enough padding on left to fit the checkbox */
-.item-checkbox .item-content {
+.item-checkbox {
   padding-left: ($item-padding * 2) + $checkbox-width;
+
+  &.active,
+  &:active {
+    box-shadow: none;
+  }
 }
 
 /* position the checkbox to the left within an item */
 .item-checkbox .checkbox {
+  @include display-flex();
+  @include align-items(center);
   position: absolute;
   top: 0;
   left: $item-padding / 2;
   z-index: 3;
-  display: flex;
   height: 100%;
-  align-items: center;
 }

@@ -4215,18 +4215,28 @@ input[type="checkbox"][readonly] {
   opacity: 1; }
 
 /* make sure item content have enough padding on left to fit the checkbox */
-.item-checkbox .item-content {
+.item-checkbox {
   padding-left: 58px; }
+  .item-checkbox.active, .item-checkbox:active {
+    box-shadow: none; }
 
 /* position the checkbox to the left within an item */
 .item-checkbox .checkbox {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
   position: absolute;
   top: 0;
   left: 7.5px;
   z-index: 3;
-  display: flex;
-  height: 100%;
-  align-items: center; }
+  height: 100%; }
 
 /**
  * Toggle
