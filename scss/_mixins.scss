@@ -2,10 +2,10 @@
 // Button Mixins
 // --------------------------------------------------
 
-@mixin button-style($bgColor, $borderColor, $activeBgColor, $activeBorderColor, $color) {
+@mixin button-style($bg-color, $border-color, $active-bg-color, $active-border-color, $color) {
   color: $color;
-  background-color: $bgColor;
-  border-color: $borderColor;
+  background-color: $bg-color;
+  border-color: $border-color;
 
   // Give desktop users something to play with
   &:hover {
@@ -13,32 +13,32 @@
     text-decoration: none;
   }
   &.active, &:active {
-    background-color: $activeBgColor;
+    background-color: $active-bg-color;
     box-shadow: inset 0px 1px 3px rgba(0,0,0,0.15);
-    border-color: $activeBorderColor;
+    border-color: $active-border-color;
   }
 }
 
-@mixin button-clear($color, $fontSize:"") {
+@mixin button-clear($color, $font-size:"") {
   &.button-clear {
     color: $color;
     background: none;
     box-shadow: none;
 
-    @if $fontSize != "" {
-      font-size: $fontSize;
+    @if $font-size != "" {
+      font-size: $font-size;
     }
   }
 }
 
-@mixin button-outline($color, $textColor:"") {
+@mixin button-outline($color, $text-color:"") {
   &.button-outline {
     background: transparent;
     border-color: $color;
-    @if $textColor == "" {
-      $textColor: $color;
+    @if $text-color == "" {
+      $text-color: $color;
     } 
-    color: $textColor;
+    color: $text-color;
     &.active, &:active {
       background-color: $color;
       color: #fff;
@@ -51,10 +51,10 @@
 // Bar Mixins
 // --------------------------------------------------
 
-@mixin bar-style($bgColor, $borderColor, $color) {
-  background-color: $bgColor;
-  border-color: $borderColor;
-  background-image: linear-gradient(0deg, $borderColor, $borderColor 50%, transparent 50%);
+@mixin bar-style($bg-color, $border-color, $color) {
+  background-color: $bg-color;
+  border-color: $border-color;
+  background-image: linear-gradient(0deg, $border-color, $border-color 50%, transparent 50%);
 
   color: $color;
 
@@ -67,10 +67,10 @@
 // Tab Mixins
 // --------------------------------------------------
 
-@mixin tab-style($bgColor, $borderColor, $color) {
-  background-color: $bgColor;
-  background-image: linear-gradient(0deg, $borderColor, $borderColor 50%, transparent 50%);
-  border-color: $borderColor;
+@mixin tab-style($bg-color, $border-color, $color) {
+  background-color: $bg-color;
+  background-image: linear-gradient(0deg, $border-color, $border-color 50%, transparent 50%);
+  border-color: $border-color;
   color: $color;
 }
 
@@ -78,15 +78,15 @@
 // Item Mixins
 // --------------------------------------------------
 
-@mixin item-style($bgColor, $borderColor, $color, $activeBgColor, $activeBorderColor) {
+@mixin item-style($bg-color, $border-color, $color, $active-bg-color, $active-border-color) {
   color: $color;
-  background-color: $bgColor;
-  border-color: $borderColor;
+  background-color: $bg-color;
+  border-color: $border-color;
 
   &.active, 
   &:active {
     background-color: activeBgColor;
-    border-color: $activeBorderColor;
+    border-color: $active-border-color;
   }
 }
 
@@ -166,22 +166,22 @@
 @mixin font-family-monospace() {
   font-family: $mono-font-family;
 }
-@mixin font-shorthand($size: $baseFontSize, $weight: normal, $lineHeight: $baseLineHeight) {
+@mixin font-shorthand($size: $base-font-size, $weight: normal, $line-height: $base-line-height) {
   font-size: $size;
   font-weight: $weight;
-  line-height: $lineHeight;
+  line-height: $line-height;
 }
-@mixin font-serif($size: $baseFontSize, $weight: normal, $lineHeight: $baseLineHeight) {
+@mixin font-serif($size: $base-font-size, $weight: normal, $line-height: $base-line-height) {
   @include font-family-serif();
-  @include font-shorthand($size, $weight, $lineHeight);
+  @include font-shorthand($size, $weight, $line-height);
 }
-@mixin font-sans-serif($size: $baseFontSize, $weight: normal, $lineHeight: $baseLineHeight) {
+@mixin font-sans-serif($size: $base-font-size, $weight: normal, $line-height: $base-line-height) {
   @include font-family-sans-serif();
-  @include font-shorthand($size, $weight, $lineHeight);
+  @include font-shorthand($size, $weight, $line-height);
 }
-@mixin font-monospace($size: $baseFontSize, $weight: normal, $lineHeight: $baseLineHeight) {
+@mixin font-monospace($size: $base-font-size, $weight: normal, $line-height: $base-line-height) {
   @include font-family-monospace();
-  @include font-shorthand($size, $weight, $lineHeight);
+  @include font-shorthand($size, $weight, $line-height);
 }
 
 
@@ -332,7 +332,7 @@
 }
 
 // CSS3 Content Columns
-@mixin content-columns($columnCount, $columnGap: $gridGutterWidth) {
+@mixin content-columns($columnCount, $columnGap: $grid-gutter-width) {
   -webkit-column-count: $columnCount;
      -moz-column-count: $columnCount;
           column-count: $columnCount;
