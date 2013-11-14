@@ -6,15 +6,16 @@
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-touch.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-animate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-touch.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-animate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-sanitize.js"></script>
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
   </head>
   <body>
     <pane ng-controller="ModalCtrl">
-        <header-bar type="bar-positive">
-          <h1 class="title">Contacts</h1>
-          <button class="button button-icon" ng-click="openModal()"><i class="icon ion-compose"></i></button>
+        <header-bar type="bar-positive" title="'Contacts'" right-buttons="contactsRightButtons">
         </header-bar>
         <content has-header="true">
           <list>
@@ -53,8 +54,6 @@
       </div>
     </script>
 
-    <script src="../../../../dist/js/ionic.js"></script>
-    <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
       angular.module('modalTest', ['ionic'])
 
@@ -63,6 +62,15 @@
           { name: 'Gordon Freeman' },
           { name: 'Barney Calhoun' },
           { name: 'Lamarr the Headcrab' },
+        ];
+        $scope.contactsRightButtons = [
+          {
+            type: 'button-icon',
+            content: '<i class="icon ion-compose"></i>',
+            click: function(e) {
+              $scope.openModal();
+            }
+          }
         ];
         $scope.openModal = function() {
           $scope.modal.show();

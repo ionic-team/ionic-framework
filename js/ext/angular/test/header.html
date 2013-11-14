@@ -9,16 +9,34 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-touch.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-animate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-sanitize.js"></script>
   </head>
-  <body>
-    <header-bar type="bar-primary" align-title="left">
-      <button class="button">Tap</button>
-      <h1 class="title">A really really long title here here here here her</h1>
-    </header-bar>
+  <body ng-controller="TestCtrl">
+    <header-bar
+      title="headerTitle"
+      left-buttons="leftButtons"
+      right-buttons="rightButtons"
+      type="bar-primary"></header-bar>
+
+    <content has-header="true">
+      <input type="text" ng-model="headerTitle">
+    </content>
     <script src="../../../../dist/js/ionic.js"></script>
     <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
-      angular.module('headerTest', ['ionic']);
+      angular.module('headerTest', ['ionic'])
+
+      .controller('TestCtrl', function($scope) {
+        $scope.headerTitle = 'A really long title here';
+        $scope.leftButtons = [
+          { 
+            text: 'Hello',
+            click: function(e) {
+              console.log('Click button');
+            }
+          }
+        ]
+      });
       var midPoint = window.clientWidth / 2;
       var box = document.createElement('div');
       box.style.backgroundColor = 'red';
