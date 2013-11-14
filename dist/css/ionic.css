@@ -4289,8 +4289,10 @@ input[type="checkbox"][readonly] {
   background-color: white; }
 
 /* make sure list item content have enough padding on right to fit the toggle */
-.item-toggle .item-content {
+.item-toggle {
   padding-right: 99px; }
+  .item-toggle.active, .item-toggle:active {
+    box-shadow: none; }
 
 /* position the toggle to the right within a list item */
 .item-toggle .toggle {
