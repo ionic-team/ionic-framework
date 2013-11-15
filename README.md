@@ -1,4 +1,7 @@
-# Ionic Framework
+
+For the best info on Ionic, check out our great [documentation page](http://ionicframework.com/docs/)!
+
+# What is Ionic?
 
 Ionic the open source HTML5 Mobile Framework for building amazing, cross-platform native apps with HTML, Javascript, and CSS.
 
@@ -25,11 +28,8 @@ Ionic is also not a good solution if you need to support older generation device
 To start using ionic, you have two options: copy over the built JS and CSS files, or 
 use the `ionic` tool.
 
-The source files are in the `dist/` folder. You can just grab the `dist/ionic.js` and `dist/ionic.css` files and
+The source files are in the `dist/` folder. You can just grab the `dist/js/ionic.js`, `dist/js/ionic-angular.js`, and `dist/ionic.css` files and
 you'll be good to go.
-
-But we recommend using the `ionic` tool because it's faster and gives you a good starting structure for your app.
-
 
 ## Running examples
 
