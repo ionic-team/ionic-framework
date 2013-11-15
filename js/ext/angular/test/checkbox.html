@@ -9,12 +9,14 @@
   </head>
   <body>
 
-    <content has-header="true" ng-controller="TestCtrl" class="reveal-animation">
-      <p><checkbox ng-model="data.isLovely"></checkbox></p>
-      <button type="submit" class="button button-danger" ng-click="setToTrue()">Set to true</button>
-      <button type="submit" class="button button-danger" ng-click="setToFalse()">Set to false</button>
-      <button type="submit" class="button button-danger" ng-click="getValue()">Get Value</button>
-    </content>
+    <div ng-controller="TestCtrl">
+      <content has-header="true" class="reveal-animation">
+        <p><checkbox ng-model="data.isLovely"></checkbox></p>
+        <button type="submit" class="button button-danger" ng-click="setToTrue()">Set to true</button>
+        <button type="submit" class="button button-danger" ng-click="setToFalse()">Set to false</button>
+        <button type="submit" class="button button-danger" ng-click="getValue()">Get Value</button>
+      </content>
+    </div>
 
     <script src="../../../../dist/js/ionic.js"></script>
     <script src="../../../../dist/js/ionic-angular.js"></script>

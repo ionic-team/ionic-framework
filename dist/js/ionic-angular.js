@@ -23165,13 +23165,15 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'
     },
     // Show the modal
     show: function() {
+      var _this = this;
       var element = angular.element(this.el);
       if(!element.parent().length) {
-        $animate.enter(element, angular.element($document[0].body));
+        $animate.enter(element, angular.element($document[0].body), null, function() {
+          ionic.views.Modal.prototype.show.call(_this);
+        });
       } 
-      $animate.addClass(element, this.animation);
-
-      ionic.views.Modal.prototype.show.call(this);
+      $animate.addClass(element, this.animation, function() {
+      });
     },
     // Hide the modal
     hide: function() {
@@ -23542,35 +23544,48 @@ angular.module('ionic.ui.checkbox', [])
     restrict: 'E',
     replace: true,
     require: '?ngModel',
-    scope: true,
-    template: '<div class="checkbox"><input type="checkbox"><div class="handle"></div></div>',
+    scope: {},
+    template: '<label class="checkbox"><input type="checkbox"></label>',
+  
 
     link: function($scope, $element, $attr, ngModel) {
-      var checkbox, handle;
+      var checkbox;
 
       if(!ngModel) { return; }
 
       checkbox = $element.children().eq(0);
-      handle = $element.children().eq(1);
 
-      if(!checkbox.length || !handle.length) { return; }
+      if(!checkbox.length) { return; }
 
-      $scope.checkbox = new ionic.views.Checkbox({ 
-        el: $element[0],
-        checkbox: checkbox[0],
-        handle: handle[0]
-      });
-
-      $element.bind('click', function(e) {
-        $scope.checkbox.tap(e);
+      var tapHandler = function(e) {
+        checkbox[0].checked = !checkbox[0].checked;
         $scope.$apply(function() {
           ngModel.$setViewValue(checkbox[0].checked);
         });
+        e.preventDefault();
+      };
+
+      var clickHandler = function(e) {
+        checkbox[0].checked = !checkbox[0].checked;
+        $scope.$apply(function() {
+          ngModel.$setViewValue(checkbox[0].checked);
+        });
+      };
+
+      $scope.$on('$destroy', function() {
+        $element.unbind('tap', tapHandler);
+        $element.unbind('click', clickHandler);
       });
 
-      ngModel.$render = function() {
-        $scope.checkbox.val(ngModel.$viewValue);
-      };
+      if(ngModel) {
+        $element.bind('tap', tapHandler);
+        $element.bind('click', clickHandler);
+
+        ngModel.$render = function() {
+          console.log('checkbox redern', ngModel.$viewValue);
+          checkbox[0].checked = ngModel.$viewValue;
+        };
+      }
     }
   };
 });
@@ -24171,11 +24186,11 @@ angular.module('ionic.ui.radio', [])
     },
     transclude: true,
     template: '<label class="item item-radio">\
-          <input type="radio" name="group">\
-          <div class="item-content" ng-transclude>\
-          </div>\
-          <i class="radio-icon icon ion-checkmark"></i>\
-        </label>',
+                <input type="radio" name="group">\
+                <div class="item-content" ng-transclude>\
+                </div>\
+                <i class="radio-icon icon ion-checkmark"></i>\
+              </label>',
 
     link: function($scope, $element, $attr, ngModel) {
       var radio;
@@ -24186,20 +24201,34 @@ angular.module('ionic.ui.radio', [])
 
       if(!radio.length) { return; }
 
-      radio.bind('click', function(e) {
-        $scope.$apply(function() {
-          ngModel.$setViewValue($scope.$eval($attr.ngValue));
-        });
+      var tapHandler = function(e) {
+        radio[0].checked = true;
+        ngModel.$setViewValue($scope.$eval($attr.ngValue));
+        e.preventDefault();
+      };
+
+      var clickHandler = function(e) {
+        ngModel.$setViewValue($scope.$eval($attr.ngValue));
+      };
+
+      $scope.$on('$destroy', function() {
+        $element.unbind('tap', tapHandler);
+        $element.unbind('click', clickHandler);
       });
 
-      ngModel.$render = function() {
-        var val = $scope.$eval($attr.ngValue);
-        if(val === ngModel.$viewValue) {
-          radio.attr('checked', 'checked');
-        } else {
-          radio.removeAttr('checked');
-        }
-      };
+      if(ngModel) {
+        $element.bind('tap', tapHandler);
+        $element.bind('click', clickHandler);
+
+        ngModel.$render = function() {
+          var val = $scope.$eval($attr.ngValue);
+          if(val === ngModel.$viewValue) {
+            radio.attr('checked', 'checked');
+          } else {
+            radio.removeAttr('checked');
+          }
+        };
+      }
     }
   };
 });

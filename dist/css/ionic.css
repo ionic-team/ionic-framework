@@ -4884,6 +4884,13 @@ a.button {
     -webkit-animation: fadeIn 0.3s;
     animation: fadeIn 0.3s; }
 
+.fade-in-not-out.ng-enter, .fade-in-not-out .ng-enter {
+  position: relative;
+  -webkit-animation: fadeIn 0.3s;
+  animation: fadeIn 0.3s; }
+.fade-in-not-out.ng-leave, .fade-in-not-out .ng-leave {
+  display: none; }
+
 @-moz-keyframes spin {
   100% {
     -moz-transform: rotate(360deg); } }

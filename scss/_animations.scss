@@ -198,6 +198,17 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
   }
 }
 
+.fade-in-not-out {
+  &.ng-enter, .ng-enter {
+    position: relative;
+    -webkit-animation: fadeIn 0.3s;
+    animation: fadeIn 0.3s;
+  }
+  &.ng-leave, .ng-leave {
+    display: none;
+  }
+}
+
 @-moz-keyframes spin { 
   100% { -moz-transform: rotate(360deg); } 
 }
@@ -210,3 +221,4 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
     transform:rotate(360deg); 
   } 
 }
+
