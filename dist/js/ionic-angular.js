@@ -23545,7 +23545,8 @@ angular.module('ionic.ui.checkbox', [])
     replace: true,
     require: '?ngModel',
     scope: {},
-    template: '<label class="checkbox"><input type="checkbox"></label>',
+    transclude: true,
+    template: '<label ng-click="tapHandler($event)" class="checkbox"><input type="checkbox"><div ng-transclude></div></label>',
   
 
     link: function($scope, $element, $attr, ngModel) {
@@ -23557,12 +23558,12 @@ angular.module('ionic.ui.checkbox', [])
 
       if(!checkbox.length) { return; }
 
-      var tapHandler = function(e) {
-        checkbox[0].checked = !checkbox[0].checked;
-        $scope.$apply(function() {
-          ngModel.$setViewValue(checkbox[0].checked);
-        });
-        e.preventDefault();
+      $scope.tapHandler = function(e) {
+        if(e.type != 'click') {
+          checkbox[0].checked = !checkbox[0].checked;
+        }
+        ngModel.$setViewValue(checkbox[0].checked);
+        e.alreadyHandled = true;
       };
 
       var clickHandler = function(e) {
@@ -23572,17 +23573,8 @@ angular.module('ionic.ui.checkbox', [])
         });
       };
 
-      $scope.$on('$destroy', function() {
-        $element.unbind('tap', tapHandler);
-        $element.unbind('click', clickHandler);
-      });
-
       if(ngModel) {
-        $element.bind('tap', tapHandler);
-        $element.bind('click', clickHandler);
-
         ngModel.$render = function() {
-          console.log('checkbox redern', ngModel.$viewValue);
           checkbox[0].checked = ngModel.$viewValue;
         };
       }
@@ -24185,7 +24177,7 @@ angular.module('ionic.ui.radio', [])
       value: '@'
     },
     transclude: true,
-    template: '<label class="item item-radio">\
+    template: '<label ng-click="tapHandler($event)" class="item item-radio">\
                 <input type="radio" name="group">\
                 <div class="item-content" ng-transclude>\
                 </div>\
@@ -24201,10 +24193,10 @@ angular.module('ionic.ui.radio', [])
 
       if(!radio.length) { return; }
 
-      var tapHandler = function(e) {
+      $scope.tapHandler = function(e) {
         radio[0].checked = true;
         ngModel.$setViewValue($scope.$eval($attr.ngValue));
-        e.preventDefault();
+        e.alreadyHandled = true;
       };
 
       var clickHandler = function(e) {
@@ -24217,7 +24209,7 @@ angular.module('ionic.ui.radio', [])
       });
 
       if(ngModel) {
-        $element.bind('tap', tapHandler);
+        //$element.bind('tap', tapHandler);
         $element.bind('click', clickHandler);
 
         ngModel.$render = function() {

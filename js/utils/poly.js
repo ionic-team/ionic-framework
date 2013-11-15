@@ -32,8 +32,7 @@
   // polyfill use to simulate native "tap"
   function inputTapPolyfill(ele, e) {
     if(ele.type === "radio" || ele.type === "checkbox") {
-      console.log('RADIOPOLY');
-      ele.checked = !ele.checked;
+      //ele.checked = !ele.checked;
     } else if(ele.type === "submit" || ele.type === "button") {
       ele.click();
     } else {
@@ -48,10 +47,13 @@
     // if the source event wasn't from a touch event then don't use this polyfill
     if(!e.gesture || e.gesture.pointerType !== "touch" || !e.gesture.srcEvent) return;
 
-    if(e.defaultPrevented) {
-      e.stopPropagation();
-      e.preventDefault();
-      return false;
+    // An internal Ionic indicator for angular directives that contain
+    // elements that normally need poly behavior, but are already processed
+    // (like the radio directive that has a radio button in it, but handles
+    // the tap stuff itself). This is in contrast to preventDefault which will
+    // mess up other operations like change events and such
+    if(e.alreadyHandled) {
+      return;
     }
 
     e = e.gesture.srcEvent; // evaluate the actual source event, not the created event by gestures.js
