@@ -3099,12 +3099,11 @@ a.subduedΓÇÄ {
   top: 0;
   bottom: 0;
   z-index: 0;
-  overflow-y: scroll;
+  overflow: hidden;
   min-height: 100%;
   max-height: 100%;
   width: 270px;
-  background-color: #fff;
-  -webkit-overflow-scrolling: touch; }
+  background-color: #fff; }
 
 .menu-content {
   box-shadow: -1px 0px 3px rgba(0, 0, 0, 0.2), 1px 0px 3px rgba(0, 0, 0, 0.2); }

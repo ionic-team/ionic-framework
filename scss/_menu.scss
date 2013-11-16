@@ -11,15 +11,13 @@
   bottom: 0;
   z-index: 0;
 
-  // has to be scroll, not auto
-  overflow-y: scroll;
+  overflow: hidden;
   min-height: 100%;
   max-height: 100%;
   width: $menu-width;
 
   background-color: #fff;
 
-  -webkit-overflow-scrolling: touch;
 }
 
 .menu-content {
