@@ -444,7 +444,7 @@
 
       this.el.style.webkitTransitionDuration = '0';
 
-      clearTimeout(this._momentumStepTimeout)
+      clearTimeout(this._momentumStepTimeout);
     },
 
 
@@ -515,7 +515,7 @@
         var maxY = Math.min(0, (-totalHeight + parentHeight));
 
         // Check if we even have enough content to scroll, if not, don't start the drag
-        if((this.isHorizontalEnabled && maxX == 0) || (this.isVerticalEnabled && maxY == 0)) {
+        if((this.isHorizontalEnabled && maxX === 0) || (this.isVerticalEnabled && maxY === 0)) {
           this._drag.noRubberBand = true;
         }
       }
