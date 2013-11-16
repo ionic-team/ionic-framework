@@ -5,8 +5,9 @@
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
     <style>
       .box {
         width: 100%;
@@ -38,6 +39,7 @@
   </head>
   <body>
 
+    <div ng-controller="SlideCtrl">
     <slide-box>
       <slide>
         <div class="box blue"><h1>BLUE</h1></div>
@@ -49,10 +51,15 @@
         <div class="box pink"><h1>PINK</h1></div>
       </slide>
     </slide-box>
-    <script src="../../../../dist/js/ionic.js"></script>
-    <script src="../../../../dist/js/ionic-angular.js"></script>
+  </div>
     <script>
-      angular.module('slideBoxTest', ['ionic.ui.slideBox'])
+      angular.module('slideBoxTest', ['ionic'])
+
+      .controller('SlideCtrl', function($scope) {
+        $scope.$on('slideBox.slideChanged', function(e, index) {
+          console.log('Slide changed', index);
+        });
+      });
     </script>
   </body>
 </html>

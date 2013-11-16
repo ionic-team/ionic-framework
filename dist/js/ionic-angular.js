@@ -22997,6 +22997,7 @@ angular.module('ionic.ui', [
                             'ionic.ui.nav',
                             'ionic.ui.header',
                             'ionic.ui.sideMenu',
+                            'ionic.ui.slideBox',
                             'ionic.ui.list',
                             'ionic.ui.checkbox',
                             'ionic.ui.toggle',
@@ -24426,7 +24427,10 @@ angular.module('ionic.ui.slideBox', [])
         $element.append(pager);
 
         $scope.slideBox = new ionic.views.SlideBox({
-          el: $element[0]
+          el: $element[0],
+          slideChanged: function(slideIndex) {
+            $scope.$parent.$broadcast('slideBox.slideChanged', slideIndex);
+          }
         });
       }
     }

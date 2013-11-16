@@ -18,6 +18,7 @@ angular.module('ionic.ui', [
                             'ionic.ui.nav',
                             'ionic.ui.header',
                             'ionic.ui.sideMenu',
+                            'ionic.ui.slideBox',
                             'ionic.ui.list',
                             'ionic.ui.checkbox',
                             'ionic.ui.toggle',

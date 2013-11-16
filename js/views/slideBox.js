@@ -12,6 +12,7 @@
     initialize: function(opts) {
       var _this = this;
 
+      this.slideChanged = opts.slideChanged || function() {};
       this.el = opts.el;
       this.pager = this.el.querySelector('.slide-box-pager');
 
@@ -120,8 +121,14 @@
       content.classList.add('slide-box-animating');
       content.style.webkitTransform = 'translate3d(' + -offsetX + 'px, 0, 0)';
 
+      var lastSlide = this.slideIndex;
+
       // Update the slide index
       this.slideIndex = Math.ceil(offsetX / slideWidth);
+
+      if(lastSlide !== this.slideIndex) {
+        this.slideChanged && this.slideChanged(this.slideIndex);
+      }
 
       this._updatePager();
     },
