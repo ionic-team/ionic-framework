@@ -8,6 +8,7 @@
 .tabs {
   @include display-flex();
   @include flex-direction(horizontal);
+  @include justify-content(center);
 
   @include tab-style($tabs-default-bg, $tabs-default-border, $tabs-default-text);
   position: absolute;
@@ -72,7 +73,9 @@
   display: inline-block;
   overflow: hidden;
   box-sizing: border-box;
-  margin: auto;
+  //margin: auto;
+
+  max-width: $tab-item-max-width;
 
   height: 100%;
 

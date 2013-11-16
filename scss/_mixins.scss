@@ -472,3 +472,9 @@
   }
   align-content: $value;
 }
+
+@mixin justify-content($value: stretch) {
+  -webkit-justify-content: $value;
+  -moz-justify-content: $value;
+  justify-content: $value;
+}
