@@ -203,12 +203,16 @@ button.item.item-complex {
 .item-icon-right .icon {
   @include display-flex();
   @include align-items(center);
-  @include justify-content(center);
   position: absolute;
   top: 0;
-  width: $item-icon-font-size;
   height: 100%;
   font-size: $item-icon-font-size;
+
+  &:before {
+    display: block;
+    width: $item-icon-font-size - 4;
+    text-align: center;
+  }
 }
 
 .item .fill-icon {

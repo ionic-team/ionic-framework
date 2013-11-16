@@ -3416,16 +3416,15 @@ button.item.item-complex {
   -webkit-align-items: center;
   -moz-align-items: center;
   align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  -moz-justify-content: center;
-  justify-content: center;
   position: absolute;
   top: 0;
-  width: 32px;
   height: 100%;
   font-size: 32px; }
+  .item-icon-left .icon:before,
+  .item-icon-right .icon:before {
+    display: block;
+    width: 28px;
+    text-align: center; }
 
 .item .fill-icon {
   min-width: 30px;
