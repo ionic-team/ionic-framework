@@ -28,10 +28,10 @@ angular.module('ionic.ui.slideBox', [])
     transclude: true,
     controller: 'SlideBoxCtrl',
     scope: {},
-    template: '<div class="slide-box">\
-            <div class="slide-box-slides" ng-transclude>\
-            </div>\
-          </div>',
+    template: '<div class="slide-box"> ' +
+            '<div class="slide-box-slides" ng-transclude>' +
+            '</div>' +
+          '</div>',
 
     link: function($scope, $element, $attr, slideBoxCtrl) {
       // If the pager should show, append it to the slide box
@@ -45,7 +45,7 @@ angular.module('ionic.ui.slideBox', [])
         });
       }
     }
-  }
+  };
 }])
 
 .directive('slide', function() {
@@ -58,9 +58,9 @@ angular.module('ionic.ui.slideBox', [])
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, slideBoxCtrl) {
         slideBoxCtrl.slideAdded();
-      }
+      };
     }
-  }
+  };
 })
 
 .directive('pager', function() {
@@ -69,7 +69,7 @@ angular.module('ionic.ui.slideBox', [])
     replace: true,
     require: '^slideBox',
     template: '<div class="slide-box-pager"><span ng-repeat="slide in slides"><i class="icon-record"></i></span></div>'
-  }
+  };
 
 });
 

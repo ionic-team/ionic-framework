@@ -63,7 +63,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
     $scope.$apply(function() {
       _this.popController();
     });
-  }
+  };
   Platform.onHardwareBackButton(onHardwareBackButton);
 
 
@@ -112,9 +112,9 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
       backButtonType: '@',
       alignTitle: '@'
     },
-    template: '<header class="bar bar-header nav-bar" ng-class="{hidden: !navController.navBar.isVisible}">' + 
+    template: '<header class="bar bar-header nav-bar" ng-class="{hidden: !navController.navBar.isVisible}">' +
         '<button ng-click="goBack()" class="button" ng-if="navController.controllers.length > 1" ng-class="backButtonType">Back</button>' +
-        '<h1 class="title">{{navController.getTopController().title}}</h1>' + 
+        '<h1 class="title">{{navController.getTopController().title}}</h1>' +
       '</header>',
     link: function($scope, $element, $attr, navCtrl) {
       var backButton;
@@ -171,7 +171,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
       // Slide the button in
       $animate.addClass(button, childScope.slideButtonInAnimation, function() {
         $animate.removeClass(button, childScope.slideButtonInAnimation, function() {});
-      })
+      });
 
       // Slide the new title in
       $animate.addClass(newTitle, childScope.slideTitleInAnimation, function() {
@@ -182,7 +182,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
       });
 
       // Grab the old title and slide it out
-      var title = $element.parent().parent().parent()[0].querySelector('.title');
+      title = $element.parent().parent().parent()[0].querySelector('.title');
       $animate.addClass(angular.element(title), childScope.slideTitleOutAnimation, function() {
         $animate.removeClass(angular.element(title), childScope.slideTitleOutAnimation, function() {
         });
@@ -282,7 +282,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
             }
           }
         });
-      }
+      };
     }
   };
 }]);

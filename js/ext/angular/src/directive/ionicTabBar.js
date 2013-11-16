@@ -7,12 +7,14 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
 
   ionic.controllers.TabBarController.call(this, {
     controllerChanged: function(oldC, oldI, newC, newI) {
-      $scope.controllerChanged && $scope.controllerChanged({
-        oldController: oldC,
-        oldIndex: oldI,
-        newController: newC,
-        newIndex: newI
-      });
+      if($scope.controllerChanged) {
+        $scope.controllerChanged({
+          oldController: oldC,
+          oldIndex: oldI,
+          newController: newC,
+          newIndex: newI
+        });
+      }
     },
     tabBar: {
       tryTabSelect: function() {},
@@ -106,7 +108,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
             });
           }
         });
-      }
+      };
     }
   };
 }])
@@ -119,8 +121,8 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     transclude: true,
     replace: true,
     scope: true,
-    template: '<div class="tabs">' + 
-      '<tab-controller-item title="{{controller.title}}" icon="{{controller.icon}}" icon-on="{{controller.iconOn}}" icon-off="{{controller.iconOff}}" active="controller.isVisible" index="$index" ng-repeat="controller in controllers"></tab-controller-item>' + 
+    template: '<div class="tabs">' +
+      '<tab-controller-item title="{{controller.title}}" icon="{{controller.icon}}" icon-on="{{controller.iconOn}}" icon-off="{{controller.iconOff}}" active="controller.isVisible" index="$index" ng-repeat="controller in controllers"></tab-controller-item>' +
     '</div>',
     link: function($scope, $element, $attr) {
       $element.addClass($scope.tabsType);
@@ -151,7 +153,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
         tabsCtrl.select(scope.index);
       };
     },
-    template: 
+    template:
       '<a ng-class="{active:active}" ng-click="selectTab()" class="tab-item">' +
         '<i ng-class="{{icon}}" ng-if="icon"></i>' +
         '<i class="{{iconOn}}" ng-if="active"></i>' +
@@ -165,8 +167,8 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     restrict: 'E',
     replace: true,
     transclude: true,
-    template: '<div class="tabs tabs-primary" ng-transclude>' + 
+    template: '<div class="tabs tabs-primary" ng-transclude>' +
     '</div>'
-  }
+  };
 });
 

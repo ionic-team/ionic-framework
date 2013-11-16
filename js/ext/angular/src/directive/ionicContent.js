@@ -13,7 +13,7 @@ angular.module('ionic.ui.content', [])
     compile: function(element, attr) {
       element.addClass('pane');
     }
-  }
+  };
 })
 
 // The content directive is a core scrollable content area
@@ -108,7 +108,7 @@ angular.module('ionic.ui.content', [])
 
       $scope.$on('scroll.onRefreshOpening', onRefreshOpening);
     }
-  }
+  };
 })
 
 .directive('scroll-refresher', function() {
@@ -117,7 +117,7 @@ angular.module('ionic.ui.content', [])
     replace: true,
     transclude: true,
     template: '<div class="scroll-refresher"><div class="scroll-refresher-content"></div></div>'
-  }
+  };
 });
 
 

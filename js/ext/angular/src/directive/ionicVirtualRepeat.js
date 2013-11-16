@@ -52,7 +52,7 @@ function findViewportAndContent(startElement){
         break;
       }
     }
-    if( n == null ){
+    if( n === null ){
       // That element should work as a viewport.
       return {
         viewport: angular.element(e),
@@ -316,7 +316,7 @@ angular.module('ionic.ui.virtualRepeat', [])
           // The watch on the collection is just a watch on the length of the
           // collection. We don't care if the content changes.
           scope.$watch(sfVirtualRepeatWatchExpression, sfVirtualRepeatListener, true);
-        }
+        };
       }
     };
   }]);
