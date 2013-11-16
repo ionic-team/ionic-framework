@@ -38,7 +38,7 @@
     line-height: $button-height - $button-border-width - 1;
   }
 
-  &.block, &.button-full {
+  &.button-block, &.button-full {
     margin-top: $button-block-margin;
     margin-bottom: $button-block-margin;
   }
@@ -166,8 +166,20 @@
   }
 }
 
-.padding > .button.block:first-child {
+.padding > .button.button-block:first-child {
   margin-top: 0;
+}
+
+.button-block {
+  display: block;
+  clear: both;
+  &:after { 
+    display: block; 
+    visibility: hidden; 
+    clear: both; 
+    height: 0;
+    content: ".";
+  }
 }
 
 .button-full,
@@ -180,7 +192,7 @@
   border-radius: 0;
 }
 
-button.block,
+button.button-block,
 button.button-full,
 .button-full > button.button  {
   width: 100%;
