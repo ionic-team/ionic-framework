@@ -126,8 +126,17 @@
 }
 
 .button-icon {
-  padding: 2px 4px;
+  padding: 0 6px;
+  min-width: initial;
   background: none;
+  border: none;
+  background: none;
+
+  &:active, &.active {
+    background: none;
+    box-shadow: none;
+    text-shadow: 0px 0px 10px #fff;
+  }
 
   .icon {
     font-size: $button-large-icon-size;
@@ -153,17 +162,6 @@
   @include transition(opacity .1s);
   background: none;
   box-shadow: none;
-}
-
-.button-icon {
-  border: none;
-  background: none;
-
-  &:active, &.active {
-    background: none;
-    box-shadow: none;
-    text-shadow: 0px 0px 10px #fff;
-  }
 }
 
 .padding > .button.button-block:first-child {

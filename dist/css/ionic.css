@@ -4614,8 +4614,15 @@ input[type="range"] {
     padding-bottom: 2px; }
 
 .button-icon {
-  padding: 2px 4px;
+  padding: 0 6px;
+  min-width: initial;
+  background: none;
+  border: none;
   background: none; }
+  .button-icon:active, .button-icon.active {
+    background: none;
+    box-shadow: none;
+    text-shadow: 0px 0px 10px white; }
   .button-icon .icon {
     font-size: 32px; }
 
@@ -4647,14 +4654,6 @@ input[type="range"] {
       background-color: #f8f8f8;
       color: #fff;
       box-shadow: none; }
-
-.button-icon {
-  border: none;
-  background: none; }
-  .button-icon:active, .button-icon.active {
-    background: none;
-    box-shadow: none;
-    text-shadow: 0px 0px 10px white; }
 
 .padding > .button.button-block:first-child {
   margin-top: 0; }
