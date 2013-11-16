@@ -44,7 +44,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
 
 .directive('tabs', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     scope: {
       animation: '@',
@@ -73,7 +73,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
 // Generic controller directive
 .directive('tab', ['$animate', function($animate) {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     require: '^tabs',
     scope: true,
@@ -114,7 +114,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
 
 .directive('tabControllerBar', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     require: '^tabs',
     transclude: true,
     replace: true,
@@ -131,7 +131,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
 
 .directive('tabControllerItem', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     require: '^tabs',
     scope: {
@@ -162,7 +162,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
 
 .directive('tabBar', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
     template: '<div class="tabs tabs-primary" ng-transclude>' + 

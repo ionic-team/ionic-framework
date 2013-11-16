@@ -93,7 +93,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
 .directive('navs', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
     controller: 'NavCtrl',
@@ -104,7 +104,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
 .directive('navBar', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     require: '^navs',
     replace: true,
     scope: {

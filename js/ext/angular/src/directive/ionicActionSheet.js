@@ -5,7 +5,7 @@ angular.module('ionic.ui.actionSheet', [])
 
 .directive('actionSheet', function($document) {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     scope: true,
     replace: true,
     link: function($scope, $element){

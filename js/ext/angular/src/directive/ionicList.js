@@ -5,7 +5,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
 
 .directive('item', ['$timeout', function($timeout) {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     require: ['?^list'],
     replace: true,
     transclude: true,
@@ -76,7 +76,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
 
 .directive('list', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
 

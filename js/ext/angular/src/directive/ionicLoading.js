@@ -5,7 +5,7 @@ angular.module('ionic.ui.loading', [])
 
 .directive('loading', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
     link: function($scope, $element){

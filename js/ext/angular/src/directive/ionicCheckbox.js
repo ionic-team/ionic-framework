@@ -6,7 +6,7 @@ angular.module('ionic.ui.checkbox', [])
 
 .directive('checkbox', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     require: '?ngModel',
     scope: {},
