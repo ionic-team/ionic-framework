@@ -70,19 +70,7 @@ module.exports = function(grunt) {
     jshint: {
       files: ['Gruntfile.js', 'js/**/*.js', 'test/**/*.js'],
       options: {
-        // Disable short circuit check, I will not bend to its will.
-        expr: true,
-        browser: true,
-        multistr: true,
-        // options here to override JSHint defaults
-        globals: {
-          jQuery: true,
-          ionic: true,
-          angular: true,
-          console: true,
-          module: true,
-          document: true
-        }
+        jshintrc: '.jshintrc'
       }
     },
     sass: {
