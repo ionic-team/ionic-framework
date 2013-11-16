@@ -23627,6 +23627,9 @@ angular.module('ionic.ui.content', [])
         if(attr.hasHeader) {
           c.addClass('has-header');
         }
+        if(attr.hasSubheader) {
+          c.addClass('has-subheader');
+        }
         if(attr.hasFooter) {
           c.addClass('has-footer');
         }

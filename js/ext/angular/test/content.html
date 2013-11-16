@@ -54,11 +54,20 @@
       title="'Title'"
       type="bar-primary"></header-bar>
 
+    <div class="bar bar-subheader">
+      <div class="button-bar">
+        <a class="button">Success</a>
+        <a class="button">Warning</a>
+        <a class="button">Danger</a>
+      </div>
+    </div>
+
     <content
       on-refresh="onRefresh()"
       on-refresh-opening="onRefreshOpening(amount)"
       refresh-complete="refreshComplete"
       has-header="true"
+      has-subheader="true"
       has-footer="true"
       >
       <refresher></refresher>
