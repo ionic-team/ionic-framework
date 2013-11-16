@@ -27,8 +27,8 @@
         var styles = window.getComputedStyle(this.el, null);
 
         // Get the padding of the header for calculations
-        var paddingLeft = parseFloat(styles['paddingLeft']);
-        var paddingRight = parseFloat(styles['paddingRight']);
+        var paddingLeft = parseFloat(styles.paddingLeft);
+        var paddingRight = parseFloat(styles.paddingRight);
 
         // Get the full width of the header
         var headerWidth = this.el.offsetWidth;
