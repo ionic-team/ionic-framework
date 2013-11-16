@@ -203,8 +203,10 @@ button.item.item-complex {
 .item-icon-right .icon {
   @include display-flex();
   @include align-items(center);
+  @include justify-content(center);
   position: absolute;
   top: 0;
+  width: $item-icon-font-size;
   height: 100%;
   font-size: $item-icon-font-size;
 }
@@ -249,7 +251,7 @@ button.item.item-complex {
  */
 
 .item-button-left {
-  padding-left: $item-padding * 5;
+  padding-left: $item-padding * 4.5;
 }
 
 .item-button-left > .button,
@@ -259,12 +261,14 @@ button.item.item-complex {
   position: absolute;
   top: $item-padding / 2;
   left: $item-padding / 2;
+  min-width: initial;
   min-height: $item-icon-font-size;
   font-size: $item-icon-font-size;
 
   .icon {
     position: relative;
     left: auto;
+    width: auto;
     line-height: $item-icon-font-size - 1;
   }
 }
@@ -282,12 +286,14 @@ button.item.item-button-right {
   position: absolute;
   top: $item-padding / 2;
   right: $item-padding;
+  min-width: initial;
   min-height: $item-icon-font-size;
   font-size: $item-icon-font-size;
 
   .icon {
     position: relative;
     left: auto;
+    width: auto;
     line-height: $item-icon-font-size - 1;
   }
 }

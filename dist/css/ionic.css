@@ -2937,6 +2937,8 @@ a.subdued‎ {
   -moz-flex-direction: horizontal;
   -ms-flex-direction: horizontal;
   flex-direction: horizontal;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   -webkit-justify-content: center;
   -moz-justify-content: center;
   justify-content: center;
@@ -3388,8 +3390,14 @@ button.item.item-complex {
   -webkit-align-items: center;
   -moz-align-items: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  justify-content: center;
   position: absolute;
   top: 0;
+  width: 32px;
   height: 100%;
   font-size: 32px; }
 
@@ -3423,7 +3431,7 @@ button.item.item-complex {
  * An item button is a child button inside an .item (not the entire .item)
  */
 .item-button-left {
-  padding-left: 75px; }
+  padding-left: 67.5px; }
 
 .item-button-left > .button,
 .item-button-left .item-content > .button {
@@ -3440,12 +3448,14 @@ button.item.item-complex {
   position: absolute;
   top: 7.5px;
   left: 7.5px;
+  min-width: initial;
   min-height: 32px;
   font-size: 32px; }
   .item-button-left > .button .icon,
   .item-button-left .item-content > .button .icon {
     position: relative;
     left: auto;
+    width: auto;
     line-height: 31px; }
 
 .item-button-right,
@@ -3468,12 +3478,14 @@ button.item.item-button-right {
   position: absolute;
   top: 7.5px;
   right: 15px;
+  min-width: initial;
   min-height: 32px;
   font-size: 32px; }
   .item-button-right > .button .icon,
   .item-button-right .item-content > .button .icon {
     position: relative;
     left: auto;
+    width: auto;
     line-height: 31px; }
 
 /**
