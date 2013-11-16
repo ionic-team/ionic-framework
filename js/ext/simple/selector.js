@@ -16,9 +16,8 @@
     jq = window.jQuery;
 
     var fnExtended = function() {
-      var 
-      x,
-      ret; // if incase this isn't an ionic component
+      var x,
+          ret; // if incase this isn't an ionic component
 
       for(x = 0; x < this.length; x++) {
         ionic.component( this[x] );
@@ -28,7 +27,7 @@
       }
 
       // if this isn't an ionic component, run the usual jQuery fn
-      return jQueryFn.apply(this, arguments); 
+      return jQueryFn.apply(this, arguments);
     };
 
     // extend the methods which are in ionic.fn and in jQuery.fn
@@ -43,9 +42,8 @@
 
       init: function(selector, context) {
         context = context || document;
-        var 
-        x,
-        dom = context.querySelectorAll(selector) || [];
+        var x,
+            dom = context.querySelectorAll(selector) || [];
         for(x = 0; x < dom.length; x++) {
           ionic.component( dom[x] );
         }
