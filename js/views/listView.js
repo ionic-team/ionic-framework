@@ -102,7 +102,9 @@
 
     // There is no drag, just end immediately
     if(!this._currentDrag) {
-      doneCallback && doneCallback();
+      if(doneCallback) {
+        doneCallback();
+      }
       return;
     }
 
@@ -145,7 +147,9 @@
 
 
       // We are done, notify caller
-      doneCallback && doneCallback();
+      if(doneCallback) {
+        doneCallback();
+      }
     });
   };
 
@@ -229,7 +233,9 @@
 
   ReorderDrag.prototype.end = function(e, doneCallback) {
     if(!this._currentDrag) {
-      doneCallback && doneCallback();
+      if(doneCallback) {
+        doneCallback();
+      }
       return;
     }
 
@@ -244,7 +250,9 @@
     placeholder.parentNode.removeChild(placeholder);
 
     this._currentDrag = null;
-    doneCallback && doneCallback();
+    if(doneCallback) {
+      doneCallback();
+    }
   };
 
 
@@ -265,7 +273,9 @@
       ionic.extend(this, opts);
 
       if(!this.itemHeight && this.listEl) {
-        this.itemHeight = this.listEl.children[0] && parseInt(this.listEl.children[0].style.height);
+        if(this.listEl.children[0]) {
+          this.itemHeight = parseInt(this.listEl.children[0].style.height, 10);
+        }
       }
 
       ionic.views.ListView.__super__.initialize.call(this, opts);
@@ -327,8 +337,8 @@
 
         // Get the first and last elements in the list based on how many can fit
         // between the pixel range of lowWater and highWater
-        var first = parseInt(Math.abs(highWater / itemHeight));
-        var last = parseInt(Math.abs(lowWater / itemHeight));
+        var first = parseInt(Math.abs(highWater / itemHeight), 10);
+        var last = parseInt(Math.abs(lowWater / itemHeight), 10);
 
         // Get the items we need to remove
         this._virtualItemsToRemove = Array.prototype.slice.call(this.listEl.children, 0, first);
@@ -336,7 +346,9 @@
         // Grab the nodes we will be showing
         var nodes = Array.prototype.slice.call(this.listEl.children, first, first + itemsPerViewport);
 
-        this.renderViewport && this.renderViewport(highWater, lowWater, first, last);
+        if(this.renderViewport) {
+          this.renderViewport(highWater, lowWater, first, last);
+        }
       }
     },
 
@@ -345,7 +357,9 @@
         for(var i = 0; i < this._virtualItemsToRemove.length; i++) {
           var el = this._virtualItemsToRemove[i];
           //el.parentNode.removeChild(el);
-          this.didHideItem && this.didHideItem(i);
+          if(this.didHideItem) {
+            this.didHideItem(i);
+          }
         }
         // Once scrolling stops, check if we need to remove old items
 
@@ -434,7 +448,7 @@
       }
 
       // No drag still, pass it up
-      if(!this._dragOp) { 
+      if(!this._dragOp) {
         ionic.views.ListView.__super__._handleDrag.call(this, e);
         return;
       }
