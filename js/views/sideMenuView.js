@@ -1,6 +1,11 @@
 (function(ionic) {
 'use strict';
 
+  /**
+   * The side menu view handles one of the side menu's in a Side Menu Controller
+   * configuration.
+   * It takes a DOM reference to that side menu element.
+   */
   ionic.views.SideMenu = ionic.views.View.inherit({
     initialize: function(opts) {
       this.el = opts.el;
