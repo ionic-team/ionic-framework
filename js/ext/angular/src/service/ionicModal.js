@@ -1,7 +1,7 @@
 angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'])
 
 
-.factory('Modal', ['$rootScope', '$document', '$compile', '$animate', 'TemplateLoader', function($rootScope, $document, $compile, $animate, TemplateLoader) {
+.factory('Modal', ['$rootScope', '$document', '$compile', '$animate', '$q', 'TemplateLoader', function($rootScope, $document, $compile, $animate, $q, TemplateLoader) {
   var ModalView = ionic.views.Modal.inherit({
     initialize: function(opts) {
       ionic.views.Modal.prototype.initialize.call(this, opts);
@@ -68,6 +68,7 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'
     },
     fromTemplateUrl: function(url, cb, options) {
       TemplateLoader.load(url).then(function(templateString) {
+        console.log('TEMPLATE LOADER FORM URL', templateString)
         var modal = createModal(templateString, options || {});
         cb(modal);
       });

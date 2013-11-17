@@ -96,11 +96,12 @@ describe('Tabs directive', function() {
     element = compile('<tabs></tabs>')(scope);
     scope = element.scope();
     scope.controllers = [
-      { text: 'Home', icon: 'icon-home' },
-      { text: 'Fun', icon: 'icon-fun' },
-      { text: 'Beer', icon: 'icon-beer' },
+      { title: 'Home', icon: 'icon-home' },
+      { title: 'Fun', icon: 'icon-fun' },
+      { title: 'Beer', icon: 'icon-beer' },
     ];
     scope.$digest();
+    console.log(element);
     expect(element.find('a').length).toBe(3);
   });
 
@@ -119,7 +120,7 @@ describe('Tab Item directive', function() {
   
   beforeEach(module('ionic.ui.tabs'));
 
-  beforeEach(inject(function($compile, $rootScope, $controller) {
+  beforeEach(inject(function($compile, $rootScope, $document, $controller) {
     compile = $compile;
     scope = $rootScope;
 
@@ -127,6 +128,7 @@ describe('Tab Item directive', function() {
       '<tab title="Item" icon="icon-default"></tab>' + 
       '</tabs>')(scope);
     scope.$digest();
+    $document.body.append(element);
   }));
   
   it('Default text works', function() {
@@ -137,7 +139,8 @@ describe('Tab Item directive', function() {
   it('Default icon works', function() {
     console.log(element);
     scope.$digest();
-    expect(element.find('i').hasClass('icon-default')).toEqual(true);
+    var i = element[0].querySelector('i');
+    expect(angular.element(i).hasClass('icon-default')).toEqual(true);
   });
 
   it('Click sets correct tab index', function() {

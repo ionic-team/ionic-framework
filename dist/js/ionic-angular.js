@@ -23161,7 +23161,7 @@ angular.module('ionic.service.loading', ['ionic.ui.loading'])
 angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'])
 
 
-.factory('Modal', ['$rootScope', '$document', '$compile', '$animate', 'TemplateLoader', function($rootScope, $document, $compile, $animate, TemplateLoader) {
+.factory('Modal', ['$rootScope', '$document', '$compile', '$animate', '$q', 'TemplateLoader', function($rootScope, $document, $compile, $animate, $q, TemplateLoader) {
   var ModalView = ionic.views.Modal.inherit({
     initialize: function(opts) {
       ionic.views.Modal.prototype.initialize.call(this, opts);
@@ -23228,6 +23228,7 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'
     },
     fromTemplateUrl: function(url, cb, options) {
       TemplateLoader.load(url).then(function(templateString) {
+        console.log('TEMPLATE LOADER FORM URL', templateString)
         var modal = createModal(templateString, options || {});
         cb(modal);
       });
@@ -23392,8 +23393,14 @@ angular.module('ionic.service.templateLoad', [])
     load: function(url) {
       var deferred = $q.defer();
 
-      $http.get(url, { cache: $templateCache }).success(function(html) {
+      $http({
+        method: 'GET',
+        url: url,
+        cache: $templateCache
+      }).success(function(html) {
         deferred.resolve(html && html.trim());
+      }).error(function(err) {
+        deferred.reject(err);
       });
 
       return deferred.promise;
@@ -24520,6 +24527,13 @@ angular.module('ionic.ui.slideBox', [])
 ;
 angular.module('ionic.ui.tabs', ['ngAnimate'])
 
+/**
+ * @description
+ *
+ * The Tab Controller renders a set of pages that switch based on taps
+ * on a tab bar. Modelled off of UITabBarController.
+ */
+
 .controller('TabsCtrl', ['$scope', '$element', '$animate', function($scope, $element, $animate) {
   var _this = this;
 
@@ -24547,15 +24561,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
   };
 
   this.select = function(controllerIndex) {
-    //var oldIndex = _this.getSelectedIndex();
-
     $scope.activeAnimation = $scope.animation;
-    /*
-    if(controllerIndex > oldIndex) {
-    } else if(controllerIndex < oldIndex) {
-      $scope.activeAnimation = $scope.animation + '-reverse';
-    }
-    */
     _this.selectController(controllerIndex);
   };
 
@@ -24673,7 +24679,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     },
     template: 
       '<a ng-class="{active:active}" ng-click="selectTab()" class="tab-item">' +
-        '<i ng-class="{{icon}}" ng-if="icon"></i>' +
+        '<i class="{{icon}}" ng-if="icon"></i>' +
         '<i class="{{iconOn}}" ng-if="active"></i>' +
         '<i class="{{iconOff}}" ng-if="!active"></i> {{title}}' +
       '</a>'

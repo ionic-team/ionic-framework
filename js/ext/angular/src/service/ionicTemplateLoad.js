@@ -5,8 +5,14 @@ angular.module('ionic.service.templateLoad', [])
     load: function(url) {
       var deferred = $q.defer();
 
-      $http.get(url, { cache: $templateCache }).success(function(html) {
+      $http({
+        method: 'GET',
+        url: url,
+        cache: $templateCache
+      }).success(function(html) {
         deferred.resolve(html && html.trim());
+      }).error(function(err) {
+        deferred.reject(err);
       });
 
       return deferred.promise;

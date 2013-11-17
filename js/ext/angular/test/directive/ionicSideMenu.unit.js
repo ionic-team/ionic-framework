@@ -8,7 +8,7 @@ describe('Ionic Angular Side Menu', function() {
   beforeEach(module('ionic.ui.sideMenu'));
 
   beforeEach(inject(function($compile, $rootScope) {
-    el = $compile('<div side-menu-ctrl></div>')($rootScope);
+    el = $compile('<side-menus></side-menus>')($rootScope);
   }));
 
   it('Should init', function() {

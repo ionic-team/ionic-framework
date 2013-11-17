@@ -1,5 +1,12 @@
 angular.module('ionic.ui.tabs', ['ngAnimate'])
 
+/**
+ * @description
+ *
+ * The Tab Controller renders a set of pages that switch based on taps
+ * on a tab bar. Modelled off of UITabBarController.
+ */
+
 .controller('TabsCtrl', ['$scope', '$element', '$animate', function($scope, $element, $animate) {
   var _this = this;
 
@@ -27,15 +34,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
   };
 
   this.select = function(controllerIndex) {
-    //var oldIndex = _this.getSelectedIndex();
-
     $scope.activeAnimation = $scope.animation;
-    /*
-    if(controllerIndex > oldIndex) {
-    } else if(controllerIndex < oldIndex) {
-      $scope.activeAnimation = $scope.animation + '-reverse';
-    }
-    */
     _this.selectController(controllerIndex);
   };
 
@@ -153,7 +152,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     },
     template: 
       '<a ng-class="{active:active}" ng-click="selectTab()" class="tab-item">' +
-        '<i ng-class="{{icon}}" ng-if="icon"></i>' +
+        '<i class="{{icon}}" ng-if="icon"></i>' +
         '<i class="{{iconOn}}" ng-if="active"></i>' +
         '<i class="{{iconOff}}" ng-if="!active"></i> {{title}}' +
       '</a>'
