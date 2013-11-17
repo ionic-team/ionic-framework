@@ -23228,7 +23228,6 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'
     },
     fromTemplateUrl: function(url, cb, options) {
       TemplateLoader.load(url).then(function(templateString) {
-        console.log('TEMPLATE LOADER FORM URL', templateString)
         var modal = createModal(templateString, options || {});
         cb(modal);
       });
