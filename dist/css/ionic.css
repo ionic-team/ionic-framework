@@ -4433,15 +4433,15 @@ input[type="range"] {
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
       border-color: #cccccc; }
     .button.button-light.button-clear {
-      color: white;
+      color: #dddddd;
       background: none;
       box-shadow: none; }
     .button.button-light.button-outline {
       background: transparent;
-      border-color: white;
-      color: white; }
+      border-color: #dddddd;
+      color: #dddddd; }
       .button.button-light.button-outline.active, .button.button-light.button-outline:active {
-        background-color: white;
+        background-color: #dddddd;
         color: #fff;
         box-shadow: none; }
   .button.button-stable {
@@ -4456,15 +4456,15 @@ input[type="range"] {
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
       border-color: #a2a2a2; }
     .button.button-stable.button-clear {
-      color: #f8f8f8;
+      color: #b2b2b2;
       background: none;
       box-shadow: none; }
     .button.button-stable.button-outline {
       background: transparent;
-      border-color: #f8f8f8;
-      color: #f8f8f8; }
+      border-color: #b2b2b2;
+      color: #b2b2b2; }
       .button.button-stable.button-outline.active, .button.button-stable.button-outline:active {
-        background-color: #f8f8f8;
+        background-color: #b2b2b2;
         color: #fff;
         box-shadow: none; }
   .button.button-positive {
@@ -4479,15 +4479,15 @@ input[type="range"] {
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
       border-color: #145dd7; }
     .button.button-positive.button-clear {
-      color: #4a87ee;
+      color: #145dd7;
       background: none;
       box-shadow: none; }
     .button.button-positive.button-outline {
       background: transparent;
-      border-color: #4a87ee;
-      color: #4a87ee; }
+      border-color: #145dd7;
+      color: #145dd7; }
       .button.button-positive.button-outline.active, .button.button-positive.button-outline:active {
-        background-color: #4a87ee;
+        background-color: #145dd7;
         color: #fff;
         box-shadow: none; }
   .button.button-calm {
@@ -4502,15 +4502,15 @@ input[type="range"] {
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
       border-color: #1aaac3; }
     .button.button-calm.button-clear {
-      color: #43cee6;
+      color: #1aaac3;
       background: none;
       box-shadow: none; }
     .button.button-calm.button-outline {
       background: transparent;
-      border-color: #43cee6;
-      color: #43cee6; }
+      border-color: #1aaac3;
+      color: #1aaac3; }
       .button.button-calm.button-outline.active, .button.button-calm.button-outline:active {
-        background-color: #43cee6;
+        background-color: #1aaac3;
         color: #fff;
         box-shadow: none; }
   .button.button-assertive {
@@ -4525,15 +4525,15 @@ input[type="range"] {
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
       border-color: #cc2511; }
     .button.button-assertive.button-clear {
-      color: #ef4e3a;
+      color: #cc2511;
       background: none;
       box-shadow: none; }
     .button.button-assertive.button-outline {
       background: transparent;
-      border-color: #ef4e3a;
-      color: #ef4e3a; }
+      border-color: #cc2511;
+      color: #cc2511; }
       .button.button-assertive.button-outline.active, .button.button-assertive.button-outline:active {
-        background-color: #ef4e3a;
+        background-color: #cc2511;
         color: #fff;
         box-shadow: none; }
   .button.button-balanced {
@@ -4548,15 +4548,15 @@ input[type="range"] {
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
       border-color: #478f24; }
     .button.button-balanced.button-clear {
-      color: #66cc33;
+      color: #478f24;
       background: none;
       box-shadow: none; }
     .button.button-balanced.button-outline {
       background: transparent;
-      border-color: #66cc33;
-      color: #66cc33; }
+      border-color: #478f24;
+      color: #478f24; }
       .button.button-balanced.button-outline.active, .button.button-balanced.button-outline:active {
-        background-color: #66cc33;
+        background-color: #478f24;
         color: #fff;
         box-shadow: none; }
   .button.button-energized {
@@ -4571,15 +4571,15 @@ input[type="range"] {
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
       border-color: #d39511; }
     .button.button-energized.button-clear {
-      color: #f0b840;
+      color: #d39511;
       background: none;
       box-shadow: none; }
     .button.button-energized.button-outline {
       background: transparent;
-      border-color: #f0b840;
-      color: #f0b840; }
+      border-color: #d39511;
+      color: #d39511; }
       .button.button-energized.button-outline.active, .button.button-energized.button-outline:active {
-        background-color: #f0b840;
+        background-color: #d39511;
         color: #fff;
         box-shadow: none; }
   .button.button-royal {
@@ -4594,15 +4594,15 @@ input[type="range"] {
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
       border-color: #552bdf; }
     .button.button-royal.button-clear {
-      color: #8a6de9;
+      color: #552bdf;
       background: none;
       box-shadow: none; }
     .button.button-royal.button-outline {
       background: transparent;
-      border-color: #8a6de9;
-      color: #8a6de9; }
+      border-color: #552bdf;
+      color: #552bdf; }
       .button.button-royal.button-outline.active, .button.button-royal.button-outline:active {
-        background-color: #8a6de9;
+        background-color: #552bdf;
         color: #fff;
         box-shadow: none; }
   .button.button-dark {
@@ -4617,15 +4617,15 @@ input[type="range"] {
       box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
       border-color: black; }
     .button.button-dark.button-clear {
-      color: #444444;
+      color: #111111;
       background: none;
       box-shadow: none; }
     .button.button-dark.button-outline {
       background: transparent;
-      border-color: #444444;
-      color: #444444; }
+      border-color: #111111;
+      color: #111111; }
       .button.button-dark.button-outline.active, .button.button-dark.button-outline:active {
-        background-color: #444444;
+        background-color: #111111;
         color: #fff;
         box-shadow: none; }
 
@@ -4672,7 +4672,7 @@ input[type="range"] {
   background: none;
   box-shadow: none; }
   .button-clear.button-clear {
-    color: #f8f8f8;
+    color: #b2b2b2;
     background: none;
     box-shadow: none; }
   .button-clear:active, .button-clear.active {
@@ -4685,10 +4685,10 @@ input[type="range"] {
   box-shadow: none; }
   .button-outline.button-outline {
     background: transparent;
-    border-color: #f8f8f8;
-    color: #f8f8f8; }
+    border-color: #b2b2b2;
+    color: #b2b2b2; }
     .button-outline.button-outline.active, .button-outline.button-outline:active {
-      background-color: #f8f8f8;
+      background-color: #b2b2b2;
       color: #fff;
       box-shadow: none; }
 
