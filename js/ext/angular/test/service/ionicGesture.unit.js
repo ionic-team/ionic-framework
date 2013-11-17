@@ -7,7 +7,7 @@ describe('Ionic Gesture Service', function() {
     gesture = Gesture;
   }));
 
-  iit('Should bind', function() {
+  it('Should bind', function() {
     var el = document.createElement('div');
 
     var handlers = {
@@ -22,7 +22,7 @@ describe('Ionic Gesture Service', function() {
 
     expect(handlers.dragHandle).toHaveBeenCalled();
   });
-  iit('Should unbind', function() {
+  it('Should unbind', function() {
     var el = document.createElement('div');
 
     var handlers = {
