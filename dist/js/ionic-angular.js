@@ -24320,7 +24320,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
   $scope.sideMenuController = this;
 })
 
-.directive('sideMenu', function() {
+.directive('sideMenus', function() {
   return {
     restrict: 'ECA',
     controller: 'SideMenuCtrl',
@@ -24333,7 +24333,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 .directive('sideMenuContent', ['Gesture', function(Gesture) {
   return {
     restrict: 'AC',
-    require: '^sideMenu',
+    require: '^sideMenus',
     scope: true,
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, sideMenuCtrl) {
@@ -24398,10 +24398,10 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 }])
 
 
-.directive('side', function() {
+.directive('sideMenu', function() {
   return {
     restrict: 'E',
-    require: '^sideMenu',
+    require: '^sideMenus',
     replace: true,
     transclude: true,
     scope: true,

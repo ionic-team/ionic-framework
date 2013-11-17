@@ -13,7 +13,7 @@
   <body>
 
     <div ng-controller="MenuCtrl">
-      <side-menu>
+      <side-menus>
         <pane side-menu-content>
           <header class="bar bar-header bar-assertive">
             <button class="button button-icon" ng-click="openLeft()"><i class="icon ion-navicon"></i></button>
@@ -23,7 +23,7 @@
             <h1>Content</h1>
           </div>
         </pane>
-        <side side="left">
+        <side-menu side="left">
           <header class="bar bar-header bar-assertive">
             <h1 class="title">Left</h1>
           </header>
@@ -34,8 +34,8 @@
               </a>
             </ul>
           </content>
-        </side>
-        <side side="right">
+        </side-menu>
+        <side-menu side="right">
           <header class="bar bar-header bar-assertive">
             <h1 class="title">Right</h1>
           </header>
@@ -46,8 +46,8 @@
               </a>
             </ul>
           </content>
-        </side>
-      </side-menu>
+        </side-menu>
+      </side-menus>
     </div>
     <script>
       angular.module('sideMenuTest', ['ionic'])
