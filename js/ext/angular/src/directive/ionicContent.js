@@ -10,7 +10,7 @@ angular.module('ionic.ui.content', [])
 .directive('pane', function() {
   return {
     restrict: 'E',
-    compile: function(element, attr) {
+    link: function(scope, element, attr) {
       element.addClass('pane');
     }
   }

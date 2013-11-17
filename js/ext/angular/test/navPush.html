@@ -12,6 +12,7 @@
   position: fixed;
   width: 100%;
   height: 100%;
+  background-color: black;
 }
       .slide-in-slide-out {
         /*
@@ -24,11 +25,13 @@
       }
     </style>
 
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
   </head>
   <body>
 
     <navigation first="page.html">
-      <nav-bar type="bar-primary" back-button-type="button-pure button-icon" back-button-icon="ion-arrow-left-c">
+      <nav-bar type="bar-primary" back-button-type="button-pure" align-title="left">
       </nav-bar>
     </navigation>
 
@@ -36,36 +39,16 @@
       <div title="title" class="nav-page">
         <div ng-controller="CatsCtrl">
           <content has-header="true">
-            <h1></h1>
-            <a href="#" class="button button-royal" nav-push="page.html">Next</a>
-            <button class="button button-assertive" ng-click="thisThing()">Doit</button>
-            <list><list-item ng-repeat="item in items" on-select="goNext()">Test</list-item></list>
+            {{secretNumber}}
+            <list><item ng-repeat="item in items" nav-push="page.html">{{item.t}}</item></list>
+            <button nav-push="page.html" class="button button-assertive">Do it</button>
           </content>
         </div>
       </div>
     </script>
 
-    <script src="../../../../dist/js/ionic.js"></script>
-    <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
-      var pageNumber = 0;
-
-      var pushIt = function($scope, $compile, $element, cb) {
-        var childScope = $scope.$new();
-        childScope.isVisible = true;
-
-        var items = [];
-        for(var i = 0; i < 100; i++) {
-          items.push({});
-        }
-        childScope.items = items;
-
-        pageNumber++;
-
-      }
-
       angular.module('navTest', ['ionic', 'ngAnimate'])
-
 
       .controller('CatsCtrl', function($scope, $compile, $element) {
         $scope.$on('navContent.shown', function() {
@@ -75,14 +58,20 @@
           console.log('HIDDEN');
         });
 
-        $scope.thisThing = function() {
-          console.log("THIS THING");
-        };
+        $scope.secretNumber = Math.floor(Math.random() * 100);
 
-        var items = [];
-        for(var i = 0; i < 100; i++) {
-          items.push({});
-        }
+        $scope.doit = function() { alert('waht'); };
+
+        var items = [
+          {t: 'This one'},
+          {t: 'Hmm, maybe this one'},
+          {t: 'Not that one, this one'},
+          {t: 'Um, this one?'},
+          {t: 'No, this one'}
+        ];
+        items = items.sort(function() {
+          return .5 - Math.random();
+        });
         $scope.items = items;
         $scope.goNext = function() {
           $scope.navController.pushFromTemplate('page.html');
