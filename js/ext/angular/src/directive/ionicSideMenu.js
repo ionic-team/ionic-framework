@@ -116,7 +116,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 
 .directive('menu', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     require: '^sideMenu',
     replace: true,
     transclude: true,

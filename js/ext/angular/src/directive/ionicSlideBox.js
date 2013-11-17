@@ -23,7 +23,7 @@ angular.module('ionic.ui.slideBox', [])
 
 .directive('slideBox', ['$compile', function($compile) {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
     controller: 'SlideBoxCtrl',
@@ -53,7 +53,7 @@ angular.module('ionic.ui.slideBox', [])
 
 .directive('slide', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     require: '^slideBox',
     transclude: true,
@@ -68,7 +68,7 @@ angular.module('ionic.ui.slideBox', [])
 
 .directive('pager', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     require: '^slideBox',
     template: '<div class="slide-box-pager"><span ng-repeat="slide in slides"><i class="icon-record"></i></span></div>'

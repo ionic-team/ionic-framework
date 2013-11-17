@@ -6,7 +6,7 @@ angular.module('ionic.ui.header', ['ngAnimate'])
 
 .directive('headerBar', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
     template: '<header class="bar bar-header">\
@@ -64,7 +64,7 @@ angular.module('ionic.ui.header', ['ngAnimate'])
 
 .directive('footerBar', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
     template: '<footer class="bar bar-footer" ng-transclude>\

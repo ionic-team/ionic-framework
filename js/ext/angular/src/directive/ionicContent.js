@@ -9,7 +9,7 @@ angular.module('ionic.ui.content', [])
  */
 .directive('pane', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     compile: function(element, attr) {
       element.addClass('pane');
     }
@@ -20,7 +20,7 @@ angular.module('ionic.ui.content', [])
 // that is part of many View hierarchies
 .directive('content', ['$parse', function($parse) {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     template: '<div class="scroll-content"><div class="scroll"></div></div>',
     transclude: true,
@@ -92,7 +92,7 @@ angular.module('ionic.ui.content', [])
 
 .directive('refresher', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     require: ['^?content', '^?list'],
     template: '<div class="scroll-refresher"><div class="ionic-refresher-content"><div class="ionic-refresher"></div></div></div>',
@@ -116,7 +116,7 @@ angular.module('ionic.ui.content', [])
 
 .directive('scroll-refresher', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
     template: '<div class="scroll-refresher"><div class="scroll-refresher-content"></div></div>'

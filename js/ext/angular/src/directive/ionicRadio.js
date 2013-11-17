@@ -7,7 +7,7 @@ angular.module('ionic.ui.radio', [])
 // one possible selection in a set of options.
 .directive('radio', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     require: '?ngModel',
     scope: {

@@ -7,7 +7,7 @@ angular.module('ionic.ui.toggle', [])
 // its value
 .directive('toggle', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     require: '?ngModel',
     scope: true,

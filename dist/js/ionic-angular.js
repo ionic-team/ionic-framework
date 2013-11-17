@@ -23405,7 +23405,7 @@ angular.module('ionic.ui.actionSheet', [])
 
 .directive('actionSheet', function($document) {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     scope: true,
     replace: true,
     link: function($scope, $element){
@@ -23458,7 +23458,7 @@ angular.module('ionic.ui.header', ['ngAnimate'])
 
 .directive('headerBar', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
     template: '<header class="bar bar-header">\
@@ -23516,7 +23516,7 @@ angular.module('ionic.ui.header', ['ngAnimate'])
 
 .directive('footerBar', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
     template: '<footer class="bar bar-footer" ng-transclude>\
@@ -23542,7 +23542,7 @@ angular.module('ionic.ui.checkbox', [])
 
 .directive('checkbox', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     require: '?ngModel',
     scope: {},
@@ -23596,7 +23596,7 @@ angular.module('ionic.ui.content', [])
  */
 .directive('pane', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     compile: function(element, attr) {
       element.addClass('pane');
     }
@@ -23607,7 +23607,7 @@ angular.module('ionic.ui.content', [])
 // that is part of many View hierarchies
 .directive('content', ['$parse', function($parse) {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     template: '<div class="scroll-content"><div class="scroll"></div></div>',
     transclude: true,
@@ -23679,7 +23679,7 @@ angular.module('ionic.ui.content', [])
 
 .directive('refresher', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     require: ['^?content', '^?list'],
     template: '<div class="scroll-refresher"><div class="ionic-refresher-content"><div class="ionic-refresher"></div></div></div>',
@@ -23703,7 +23703,7 @@ angular.module('ionic.ui.content', [])
 
 .directive('scroll-refresher', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
     template: '<div class="scroll-refresher"><div class="scroll-refresher-content"></div></div>'
@@ -23720,7 +23720,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
 
 .directive('item', ['$timeout', function($timeout) {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     require: ['?^list'],
     replace: true,
     transclude: true,
@@ -23791,7 +23791,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
 
 .directive('list', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
 
@@ -23856,7 +23856,7 @@ angular.module('ionic.ui.loading', [])
 
 .directive('loading', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
     link: function($scope, $element){
@@ -23969,7 +23969,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
 .directive('navs', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
     controller: 'NavCtrl',
@@ -23980,7 +23980,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
 .directive('navBar', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     require: '^navs',
     replace: true,
     scope: {
@@ -24174,7 +24174,7 @@ angular.module('ionic.ui.radio', [])
 // one possible selection in a set of options.
 .directive('radio', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     require: '?ngModel',
     scope: {
@@ -24349,7 +24349,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 
 .directive('menu', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     require: '^sideMenu',
     replace: true,
     transclude: true,
@@ -24409,7 +24409,7 @@ angular.module('ionic.ui.slideBox', [])
 
 .directive('slideBox', ['$compile', function($compile) {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
     controller: 'SlideBoxCtrl',
@@ -24439,7 +24439,7 @@ angular.module('ionic.ui.slideBox', [])
 
 .directive('slide', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     require: '^slideBox',
     transclude: true,
@@ -24454,7 +24454,7 @@ angular.module('ionic.ui.slideBox', [])
 
 .directive('pager', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     require: '^slideBox',
     template: '<div class="slide-box-pager"><span ng-repeat="slide in slides"><i class="icon-record"></i></span></div>'
@@ -24510,7 +24510,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
 
 .directive('tabs', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     scope: {
       animation: '@',
@@ -24539,7 +24539,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
 // Generic controller directive
 .directive('tab', ['$animate', function($animate) {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     require: '^tabs',
     scope: true,
@@ -24580,7 +24580,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
 
 .directive('tabControllerBar', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     require: '^tabs',
     transclude: true,
     replace: true,
@@ -24597,7 +24597,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
 
 .directive('tabControllerItem', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     require: '^tabs',
     scope: {
@@ -24628,7 +24628,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
 
 .directive('tabBar', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
     template: '<div class="tabs tabs-primary" ng-transclude>' + 
@@ -24646,7 +24646,7 @@ angular.module('ionic.ui.toggle', [])
 // its value
 .directive('toggle', function() {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     require: '?ngModel',
     scope: true,
