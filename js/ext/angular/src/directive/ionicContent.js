@@ -38,16 +38,16 @@ angular.module('ionic.ui.content', [])
           c.addClass('padding');
         }
 
-        if(attr.hasHeader) {
+        if(attr.hasHeader == "true") {
           c.addClass('has-header');
         }
-        if(attr.hasSubheader) {
+        if(attr.hasSubheader == "true") {
           c.addClass('has-subheader');
         }
-        if(attr.hasFooter) {
+        if(attr.hasFooter == "true") {
           c.addClass('has-footer');
         }
-        if(attr.hasTabs) {
+        if(attr.hasTabs == "true") {
           c.addClass('has-tabs');
         }
 
