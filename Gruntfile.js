@@ -48,12 +48,12 @@ module.exports = function(grunt) {
       },
       distAngular: {
         src: [
-          'vendor/angular/1.2.0/angular.js',
-          'vendor/angular/1.2.0/angular-animate.js',
-          'vendor/angular/1.2.0/angular-resource.js',
-          'vendor/angular/1.2.0/angular-sanitize.js',
-          'vendor/angular/1.2.0/angular-touch.js',
-          'vendor/angular/1.2.0/angular-route.js',
+          'vendor/angular/1.2.1/angular.js',
+          'vendor/angular/1.2.1/angular-animate.js',
+          'vendor/angular/1.2.1/angular-resource.js',
+          'vendor/angular/1.2.1/angular-sanitize.js',
+          'vendor/angular/1.2.1/angular-touch.js',
+          'vendor/angular/1.2.1/angular-route.js',
           'js/ext/angular/src/ionicAngular.js',
           'js/ext/angular/src/service/**/*.js',
           'js/ext/angular/src/directive/**/*.js'
