@@ -60,11 +60,6 @@
     margin-right: 5px;
   }
 
-  &.active,
-  .ionic-pseudo &:active {
-    box-shadow: inset 0px 1px 3px rgba(0,0,0,0.12);
-  }
-
   // Different themes for list items
   &.item-light { 
     @include item-style($item-light-bg, $item-light-border, $item-light-text, $item-light-active-bg, $item-light-active-border);

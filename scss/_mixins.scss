@@ -84,8 +84,8 @@
   border-color: $border-color;
 
   &.active, 
-  &:active {
-    background-color: activeBgColor;
+  .ionic-pseudo &:active {
+    background-color: $active-bg-color;
     border-color: $active-border-color;
   }
 }
@@ -139,6 +139,7 @@
   @include size($size, $size);
 }
 
+
 // Placeholder text
 // -------------------------
 @mixin placeholder($color: $input-color-placeholder) {
@@ -152,6 +153,7 @@
     color: $color;
   }
 }
+
 
 // Text overflow
 // -------------------------
