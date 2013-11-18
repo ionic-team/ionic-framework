@@ -114,7 +114,7 @@
   .button {
     z-index: 1;
     padding: 0 $button-bar-button-padding;
-    min-width: $button-bar-button-height + $button-bar-button-font-size;
+    min-width: initial;
     min-height: $button-bar-button-height - 1;
     height: $button-bar-button-height;
     font-size: $button-bar-button-font-size;

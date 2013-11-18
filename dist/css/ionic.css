@@ -2748,7 +2748,7 @@ a.subdued‎ {
   .bar .button {
     z-index: 1;
     padding: 0 8px;
-    min-width: 44px;
+    min-width: initial;
     min-height: 31px;
     height: 32px;
     font-size: 12px;
