@@ -40,7 +40,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
    * Push a template onto the navigation stack.
    * @param {string} templateUrl the URL of the template to load.
    */
-  this.pushFromTemplate = ionic.throttle(function(templateUrl) {
+  this.pushFromTemplate = function(templateUrl) {
     var childScope = $scope.$new();
     var last = _this.getTopController();
 
@@ -75,12 +75,10 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
       });
     });
-  }, 300, {
-    trailing: false
-  });
+  };
 
-  // Pop function, throttled
-  this.popController = ionic.throttle(function() {
+  // Pop function
+  this.popController = function() {
     var last = _this.pop();
 
     var next = _this.getTopController();
@@ -102,9 +100,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
     }
 
     $scope.$parent.$broadcast('navigation.pop');
-  }, 300, {
-    trailing: false
-  });
+  };
 
 
   // Extend the low-level navigation controller
@@ -296,18 +292,24 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
   }
 }])
 
+/**
+ * Tell the nav controller in the current scope to push a new
+ * controller onto the stack, with the given template URL.
+ */
 .directive('navPush', function() {
   return {
     restrict: 'A',
     link: function($scope, $element, $attr) {
       var templateUrl = $attr.navPush;
 
-      var pushTemplate = function(e) {
+      var pushTemplate = ionic.throttle(function(e) {
         $scope.$apply(function() {
           $scope.navController && $scope.navController.pushFromTemplate(templateUrl);
         });
         return false;
-      };
+      }, 300, {
+        trailing: false
+      });
 
       $element.bind('tap', pushTemplate);
 
@@ -318,16 +320,22 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
   }
 })
 
+/**
+ * Tell the nav controller in the current scope to pop the top controller
+ * and go back in the stack.
+ */
 .directive('navPop', function() {
   return {
     restrict: 'A',
     link: function($scope, $element, $attr, navCtrl) {
-      var popTemplate = function(e) {
+      var popTemplate = ionic.throttle(function(e) {
         $scope.$apply(function() {
           $scope.navController && navController.pop();
         });
         return false;
-      };
+      }, 300, {
+        trailing: false
+      });
 
       $element.bind('tap', popTemplate);
 
