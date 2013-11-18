@@ -90,6 +90,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
         $scope.$watch('isVisible', function(value) {
           if(childElement) {
             $animate.leave(childElement);
+            $scope.$broadcast('tab.hidden');
             childElement = undefined;
           }
           if(childScope) {
@@ -102,6 +103,8 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
               childElement = clone;
               childElement.addClass('view-full');
               $animate.enter(clone, $element.parent(), $element);
+
+              $scope.$broadcast('tab.shown');
             });
           }
         });
