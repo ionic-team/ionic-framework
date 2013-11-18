@@ -121,8 +121,10 @@
     line-height: $button-bar-button-height - $button-border-width - 1;
 
     .icon {
+      padding-left: 2px;
+      padding-right: 2px;
       font-size: $button-bar-button-icon-size;
-      line-height: $button-bar-button-height - $button-border-width - 2;
+      line-height: $button-bar-button-height - $button-border-width - 1;
     }
   }
 

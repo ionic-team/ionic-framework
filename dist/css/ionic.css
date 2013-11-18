@@ -2754,8 +2754,10 @@ a.subdued‎ {
     font-size: 12px;
     line-height: 30px; }
     .bar .button .icon {
+      padding-left: 2px;
+      padding-right: 2px;
       font-size: 24px;
-      line-height: 29px; }
+      line-height: 30px; }
   .bar .button-bar > .button, .bar .buttons > .button {
     min-height: 31px;
     height: 32px;
