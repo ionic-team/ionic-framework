@@ -63,7 +63,7 @@ module.exports = function(grunt) {
     copy: {
       ionicons: {
         files: [
-          { expand: true, src: ['ionicons/fonts/*'], dest: 'dist/fonts/', flatten: true}
+          { expand: true, src: ['vendor/ionicons/fonts/*'], dest: 'dist/fonts/', flatten: true}
         ]
       }
     },

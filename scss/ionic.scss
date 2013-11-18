@@ -5,9 +5,6 @@
   "mixins",
   "variables",
 
-  // Ionicons
-  "../ionicons/ionicons.scss",
-
   // Base
   "reset",
   "scaffolding",
@@ -43,4 +40,7 @@
   "grid",
   "icons",
   "util",
-  "platform";
+  "platform",
+
+  // Ionicons
+  "vendor/ionicons/scss/ionicons.scss"; 
