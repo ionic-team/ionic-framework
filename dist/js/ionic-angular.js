@@ -24573,24 +24573,26 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
   };
 
   $scope.controllers = this.controllers;
+
+  $scope.tabsController = this;
 }])
 
 .directive('tabs', function() {
   return {
     restrict: 'E',
     replace: true,
-    scope: {
-      animation: '@',
-      controllerChanged: '&',
-      tabsType: '@',
-      tabsStyle: '@',
-    },
+    scope: true,
     transclude: true,
     controller: 'TabsCtrl',
     //templateUrl: 'ext/angular/tmpl/ionicTabBar.tmpl.html',
     template: '<div class="content"><tab-controller-bar></tab-controller-bar></div>',
     compile: function(element, attr, transclude, tabsCtrl) {
       return function($scope, $element, $attr) {
+
+        $scope.tabsType = $attr.tabsType || 'tabs-positive';
+        $scope.tabsStyle = $attr.tabsStyle;
+        $scope.animation = $attr.animation;
+
         $scope.$watch('activeAnimation', function(value) {
           //$element.removeClass($scope.animation + ' ' + $scope.animation + '-reverse');
           $element.addClass($scope.activeAnimation);
