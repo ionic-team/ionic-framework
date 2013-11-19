@@ -4044,7 +4044,7 @@ ionic.views.TabBarItem = ionic.views.View.inherit({
     }
 
     // Set the title to the text content of the tab.
-    this.title = this.el.innerText.trim();
+    this.title = this.el.textContent.trim();
 
     this._tapHandler = function(e) {
       _this.onTap && _this.onTap(e);
