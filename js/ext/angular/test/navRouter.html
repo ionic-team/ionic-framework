@@ -12,37 +12,37 @@
   </head>
   <body>
     <pane nav-router animation="slide-left-right">
-      <nav-bar back-button-type="button-icon" back-button-icon="icon ion-arrow-left-c"></nav-bar>
+      <nav-bar class="nav-title-slide-ios7" type="bar-positive" back-button-type="button-icon" back-button-icon="icon ion-arrow-left-c"></nav-bar>
       <ng-view></ng-view>
     </pane>
 
     <script id="page1.html" type="text/ng-template">
-      <pane>
+      <nav-page title="'Bears'">
         <h1>Page 1</h1>
         <span>{{num}}</span>
         <a class="button button-pure" nav-back>Back</a>
         <a class="button button-assertive" href="#/page2">Next</a>
-      </pane>
+      </nav-page>
     </script>
     <script id="page2.html" type="text/ng-template">
-      <pane>
+      <nav-page title="'Beets'">
         <h1>Page 2</h1>
         <a class="button button-pure" nav-back>Back</a>
         <a class="button button-assertive" href="#/page3">Next</a>
-      </pane>
+      </nav-page>
     </script>
     <script id="page3.html" type="text/ng-template">
-      <pane>
+      <nav-page title="'Battlestar Galactica'">
         <h1>Page 3</h1>
         <a class="button button-pure" nav-back>Back</a>
-      </pane>
+      </nav-page>
     </script>
     <script>
       angular.module('navTest', ['ionic'])
 
 
       .config(function($routeProvider, $locationProvider) {
-        $routeProvider.when('/page1', {
+        $routeProvider.when('/', {
           templateUrl: 'page1.html',
           controller: 'Page1Ctrl'
         });
@@ -53,9 +53,6 @@
 
         $routeProvider.when('/page3', {
           templateUrl: 'page3.html',
-        });
-        $routeProvider.otherwise({
-          redirectTo: '/page1'
         });
 
         // configure html5 to get links working on jsfiddle

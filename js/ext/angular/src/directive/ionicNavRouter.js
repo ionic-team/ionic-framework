@@ -34,8 +34,13 @@ angular.module('ionic.ui.navRouter', [])
         isVisible: true
       };
 
+      this.setTitle = function(value) {
+        $scope.$broadcast('navRouter.titleChanged', value);
+      };
+
       $scope.navController = this;
     }],
+
     link: function($scope, $element, $attr) {
       $scope.animation = $attr.animation;
 
@@ -50,27 +55,27 @@ angular.module('ionic.ui.navRouter', [])
       var reverseTransition = function() {
         console.log('REVERSE');
         $element.removeClass('noop-animation');
-        $element.removeClass($scope.animation);
-        $element.addClass($scope.animation + '-reverse');
+        $element.addClass($scope.animation);
+        $element.addClass('reverse');
       };
 
       var forwardTransition = function() {
         console.log('FORWARD');
         $element.removeClass('noop-animation');
-        $element.removeClass($scope.animation + '-reverse');
+        $element.removeClass('reverse');
         $element.addClass($scope.animation);
       };
 
       $scope.$on('$routeChangeSuccess', function(e, a) {
         console.log('ROUTE CHANGED', a, e);
       });
-      $scope.$on('$routeChangeStart', function(e, a) {
-        console.log('ROUTE START', a, e);
+      $scope.$on('$routeChangeStart', function(e, next, current) {
+        console.log('ROUTE START', e, next, current);
         var back, historyState = $window.history.state;
 
         back = !!(historyState && historyState.position <= $rootScope.stackCursorPosition);
 
-        if(isFirst) {
+        if(isFirst || (next && next.$$route.originalPath === "")) {
           // Don't animate
           return;
         }
@@ -82,9 +87,9 @@ angular.module('ionic.ui.navRouter', [])
         }
       });
 
-      $scope.$on('$locationChangeSuccess', function() {
+      $scope.$on('$locationChangeSuccess', function(a, b, c) {
         // Store the new location
-        console.log('LOCATION CHANGE SUCCESS');
+        console.log('LOCATION CHANGE SUCCESS', a, b, c);
         $rootScope.actualLocation = $location.path();
         if(isFirst) {
           isFirst = false;
@@ -130,7 +135,30 @@ angular.module('ionic.ui.navRouter', [])
 /**
  * Our Nav Bar directive which updates as the controller state changes.
  */
-.directive('navBar', ['$rootScope', function($rootScope) {
+.directive('navBar', ['$rootScope', '$animate', function($rootScope, $animate) {
+  var animate = function($element, oldTitle, newTitle, cb) {
+    if(!oldTitle || oldTitle === newTitle) {
+      cb();
+      return;
+    }
+
+    var title, nTitle, titles = $element[0].querySelectorAll('.title');
+    if(titles.length > 1) {
+      nTitle = titles[0];
+      title = titles[1];
+    } else if(titles.length) {
+      title = titles[0];
+      nTitle = document.createElement('h1');
+      nTitle.className = 'title';
+      nTitle.appendChild(document.createTextNode(newTitle));
+
+      $animate.enter(angular.element(nTitle), $element, angular.element($element[0].firstElementChild));
+      $animate.leave(angular.element(title), function() {
+        cb();
+      });
+    }
+  };
+
   return {
     restrict: 'E',
     require: '^navRouter',
@@ -143,12 +171,11 @@ angular.module('ionic.ui.navRouter', [])
       alignTitle: '@',
     },
     template: '<header class="bar bar-header nav-bar" ng-class="{hidden: !navController.navBar.isVisible}">' + 
-        '<button ng-click="goBack()" class="button" ng-if="enableBackButton && showBackButton" ng-class="backButtonType" ng-bind-html="backButtonContent"></button>' +
-        '<h1 class="title">{{navController.getTopController().scope.title}}</h1>' + 
+        '<button nav-back class="button" ng-if="enableBackButton && showBackButton" ng-class="backButtonType" ng-bind-html="backButtonContent"></button>' +
+        '<h1 class="title" ng-bind="currentTitle"></h1>' + 
       '</header>',
     link: function($scope, $element, $attr, navCtrl) {
       var backButton;
-
       $scope.enableBackButton = true;
 
       $scope.backButtonContent = '';
@@ -185,6 +212,18 @@ angular.module('ionic.ui.navRouter', [])
 
       $scope.headerBarView = hb;
 
+      $scope.$parent.$on('navRouter.titleChanged', function(e, value) {
+        console.log(value);
+        console.log('Title changing from', $scope.currentTitle, 'to', value);
+        var oldTitle = $scope.currentTitle;
+        animate($element, oldTitle, value, function() {
+          $scope.currentTitle = value;
+          hb.align();
+        });
+      });
+
+
+      /*
       $scope.$parent.$on('navigation.push', function() {
         backButton = angular.element($element[0].querySelector('.button'));
         backButton.addClass($scope.backButtonType);
@@ -193,12 +232,33 @@ angular.module('ionic.ui.navRouter', [])
       $scope.$parent.$on('navigation.pop', function() {
         hb.align();
       });
+      */
 
       $scope.$on('$destroy', function() {
         //
       });
     }
   };
+}])
+
+.directive('navPage', ['$parse', function($parse) {
+  return {
+    restrict: 'E',
+    scope: true,
+    require: '^navRouter',
+    link: function($scope, $element, $attr, navCtrl) {
+      $element.addClass('pane');
+
+      var titleGet = $parse($attr.title);
+
+      $scope.$watch(titleGet, function(value) {
+        console.log('Title changed');
+        $scope.title = value;
+        navCtrl.setTitle(value);
+      });
+
+    }
+  }
 }])
 
 .directive('navBack', ['$window', '$rootScope', function($window, $rootScope) {
