@@ -28,7 +28,6 @@
     }
   })();
 
-
   // polyfill use to simulate native "tap"
   function inputTapPolyfill(ele, e) {
     if(ele.type === "radio" || ele.type === "checkbox") {
