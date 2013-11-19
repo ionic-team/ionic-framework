@@ -113,6 +113,17 @@ describe('Tabs directive', function() {
     scope.$digest();
     expect(element.find('a').length).toBe(2);
   });
+
+  it('Sets style on child tabs', function() {
+    element = compile('<tabs tabs-style="tabs-positive" tabs-type="tabs-icon-bottom">' + 
+      '<tab active="true" title="Item" icon="icon-default"></tab>' + 
+      '<tab active="true" title="Item" icon="icon-default"></tab>' + 
+    '</tabs>')(scope);
+    scope.$digest();
+    var tabs = element[0].querySelector('.tabs');
+    expect(angular.element(tabs).hasClass('tabs-positive')).toEqual(true);
+    expect(angular.element(tabs).hasClass('tabs-icon-bottom')).toEqual(true);
+  });
 });
 
 describe('Tab Item directive', function() {

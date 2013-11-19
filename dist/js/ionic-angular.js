@@ -25611,10 +25611,23 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     template: '<div class="content"><tab-controller-bar></tab-controller-bar></div>',
     compile: function(element, attr, transclude, tabsCtrl) {
       return function($scope, $element, $attr) {
+        var tabs = $element[0].querySelector('.tabs');
 
         $scope.tabsType = $attr.tabsType || 'tabs-positive';
         $scope.tabsStyle = $attr.tabsStyle;
         $scope.animation = $attr.animation;
+
+        $attr.$observe('tabsStyle', function(val) {
+          if(tabs) {
+            angular.element(tabs).addClass($attr.tabsStyle);
+          }
+        });
+
+        $attr.$observe('tabsType', function(val) {
+          if(tabs) {
+            angular.element(tabs).addClass($attr.tabsType);
+          }
+        });
 
         $scope.$watch('activeAnimation', function(value) {
           //$element.removeClass($scope.animation + ' ' + $scope.animation + '-reverse');
@@ -25683,7 +25696,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     template: '<div class="tabs">' + 
       '<tab-controller-item title="{{controller.title}}" icon="{{controller.icon}}" icon-on="{{controller.iconOn}}" icon-off="{{controller.iconOff}}" active="controller.isVisible" index="$index" ng-repeat="controller in controllers"></tab-controller-item>' + 
     '</div>',
-    link: function($scope, $element, $attr) {
+    link: function($scope, $element, $attr, tabsCtrl) {
       $element.addClass($scope.tabsType);
       $element.addClass($scope.tabsStyle);
     }
