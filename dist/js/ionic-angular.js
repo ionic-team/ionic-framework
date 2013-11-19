@@ -25285,30 +25285,25 @@ angular.module('ionic.ui.navRouter', [])
   $rootScope.stackCursorPosition = 0;
 }])
 
-.directive('navRouter', ['$rootScope', '$location', '$window', '$route', function($rootScope, $location, $window, $route) {
+.directive('navRouter', ['$rootScope', '$timeout', '$location', '$window', '$route', function($rootScope, $timeout, $location, $window, $route) {
   return {
     restrict: 'AC',
     link: function($scope, $element, $attr) {
       $scope.animation = $attr.animation;
 
-      $element.addClass($scope.animation);
+      var isFirst = true;
 
-      $scope.isReverse = false;
-
-
-      var reverseTransition = ionic.throttle(function() {
+      var reverseTransition = function() {
         console.log('REVERSE');
         $element.removeClass($scope.animation);
         $element.addClass($scope.animation + '-reverse');
-      }, 1000, {
-      })
+      };
 
-      var forwardTransition = ionic.throttle(function() {
+      var forwardTransition = function() {
         console.log('FORWARD');
         $element.removeClass($scope.animation + '-reverse');
         $element.addClass($scope.animation);
-      }, 1000, {
-      });
+      };
 
       $scope.$on('$routeChangeSuccess', function(e, a) {
         console.log('ROUTE CHANGED', a, e);
@@ -25318,6 +25313,12 @@ angular.module('ionic.ui.navRouter', [])
         var back, historyState = $window.history.state;
 
         back = !!(historyState && historyState.position <= $rootScope.stackCursorPosition);
+
+        if(isFirst) {
+          // Don't animate
+          //return;
+        }
+
         if(back) {
           reverseTransition();
         } else {
@@ -25329,6 +25330,12 @@ angular.module('ionic.ui.navRouter', [])
         // Store the new location
         console.log('LOCATION CHANGE SUCCESS');
         $rootScope.actualLocation = $location.path();
+        if(isFirst) {
+          isFirst = false;
+          $timeout(function() {
+            //reverseTransition();
+          }, 200);
+        }
       });  
 
 

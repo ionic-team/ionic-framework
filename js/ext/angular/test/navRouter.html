@@ -9,62 +9,9 @@
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <script src="../../../../dist/js/ionic.js"></script>
     <script src="../../../../dist/js/ionic-angular.js"></script>
-    <style>
-.view-animate > .ng-enter, .view-animate > .ng-leave {
-  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
-  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
- 
-  display:block;
-  width:100%;
-  border-left:1px solid black;
- 
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  padding:10px;
-}
- 
-.view-animate > .ng-enter {
-      -webkit-transform: translate3d(100%, 0, 0);
-    }
-    .view-animate > .ng-enter.ng-enter-active {
-      -webkit-transform: translate3d(0, 0, 0);
-    }
-    .view-animate > .ng-leave.ng-leave-active {
-      -webkit-transform: translate3d(-100%, 0, 0);
-    }
-    .view-animate-reverse > .ng-enter, .view-animate-reverse > .ng-leave {
-      -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
-      transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
-     
-      display:block;
-      width:100%;
-      border-left:1px solid black;
-     
-      position:absolute;
-      top:0;
-      left:0;
-      right:0;
-      bottom:0;
-      padding:10px;
-    }
-     
-    .view-animate-reverse > .ng-enter {
-      -webkit-transform: translate3d(-100%, 0, 0);
-    }
-    .view-animate-reverse > .ng-enter.ng-enter-active {
-      -webkit-transform: translate3d(0%, 0, 0);
-    }
-    .view-animate-reverse > .ng-leave.ng-leave-active {
-      -webkit-transform: translate3d(100%, 0, 0);
-    }
-
-    </style>
   </head>
   <body>
-    <pane nav-router animation="view-animate">
+    <pane nav-router animation="slide-left-right">
       <ng-view></ng-view>
     </pane>
 

@@ -2911,6 +2911,36 @@ a.button {
  * and pretty easy on performance. They can be overidden
  * and enhanced easily.
  */
+.slide-left-right > .ng-enter, .slide-left-right.ng-enter, .slide-left-right > .ng-leave, .slide-left-right.ng-leave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 250ms;
+  transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 250ms; }
+.slide-left-right > .ng-enter, .slide-left-right.ng-enter {
+  -webkit-transform: translate3d(100%, 0, 0); }
+.slide-left-right > .ng-enter.ng-enter-active, .slide-left-right.ng-enter.ng-enter-active {
+  -webkit-transform: translate3d(0, 0, 0); }
+.slide-left-right > .ng-leave.ng-leave-active, .slide-left-right.ng-leave.ng-leave-active {
+  -webkit-transform: translate3d(-100%, 0, 0); }
+
+.slide-left-right-reverse > .ng-enter, .slide-left-right-reverse.ng-enter, .slide-left-right-reverse > .ng-leave, .slide-left-right-reverse.ng-leave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 250ms;
+  transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 250ms; }
+.slide-left-right-reverse > .ng-enter, .slide-left-right-reverse.ng-enter {
+  -webkit-transform: translate3d(-100%, 0, 0); }
+.slide-left-right-reverse > .ng-enter.ng-enter-active, .slide-left-right-reverse.ng-enter.ng-enter-active {
+  -webkit-transform: translate3d(0, 0, 0); }
+.slide-left-right-reverse > .ng-leave.ng-leave-active, .slide-left-right-reverse.ng-leave.ng-leave-active {
+  -webkit-transform: translate3d(100%, 0, 0); }
+
 @-webkit-keyframes slideInLeft {
   0% {
     -webkit-transform: translate3d(100%, 0, 0); }
