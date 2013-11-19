@@ -1,3 +1,4 @@
+<img src="https://travis-ci.org/driftyco/ionic.png" data-bindattr-164="164" title="Build Status Images">
 
 For the best info on Ionic, check out our great [documentation page](http://ionicframework.com/docs/)!
 
