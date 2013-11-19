@@ -209,7 +209,8 @@ window.ionic = {
 
     // Trigger a new event
     trigger: function(eventType, data) {
-      var event = document.createEvent();
+      var event = document.createEvent('Event');
+      event.initEvent(eventType, true, true);
       event.detail = data;
 
       // Make sure to trigger the event on the given target, or dispatch it from
