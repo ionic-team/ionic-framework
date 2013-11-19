@@ -18,6 +18,7 @@
     <script id="page1.html" type="text/ng-template">
       <pane>
         <h1>Page 1</h1>
+        <span>{{num}}</span>
         <a class="button button-pure" nav-back>Back</a>
         <a class="button button-assertive" href="#/page2">Next</a>
       </pane>
@@ -42,6 +43,7 @@
       .config(function($routeProvider, $locationProvider) {
         $routeProvider.when('/page1', {
           templateUrl: 'page1.html',
+          controller: 'Page1Ctrl'
         });
 
         $routeProvider.when('/page2', {
@@ -58,6 +60,10 @@
         // configure html5 to get links working on jsfiddle
         //$locationProvider.html5Mode(true);
 
+      })
+
+      .controller('Page1Ctrl', function($scope) {
+        $scope.num = Math.floor(Math.random() * 100);
       });
 
       

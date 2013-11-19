@@ -7,6 +7,18 @@
  * and enhanced easily.
  */
 
+.noop-animation {
+  > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
+  }
+}
+
 .slide-left-right {
   > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
     position:absolute;

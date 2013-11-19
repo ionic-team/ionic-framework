@@ -31,16 +31,24 @@ angular.module('ionic.ui.navRouter', [])
     link: function($scope, $element, $attr) {
       $scope.animation = $attr.animation;
 
+      $element.addClass('noop-animation');
+
       var isFirst = true;
+
+      var initTransition = function() {
+        //$element.addClass($scope.animation);
+      };
 
       var reverseTransition = function() {
         console.log('REVERSE');
+        $element.removeClass('noop-animation');
         $element.removeClass($scope.animation);
         $element.addClass($scope.animation + '-reverse');
       };
 
       var forwardTransition = function() {
         console.log('FORWARD');
+        $element.removeClass('noop-animation');
         $element.removeClass($scope.animation + '-reverse');
         $element.addClass($scope.animation);
       };
@@ -56,7 +64,7 @@ angular.module('ionic.ui.navRouter', [])
 
         if(isFirst) {
           // Don't animate
-          //return;
+          return;
         }
 
         if(back) {
@@ -72,9 +80,7 @@ angular.module('ionic.ui.navRouter', [])
         $rootScope.actualLocation = $location.path();
         if(isFirst) {
           isFirst = false;
-          $timeout(function() {
-            //reverseTransition();
-          }, 200);
+          initTransition();
         }
       });  
 
