@@ -140,7 +140,6 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
             childScope = $scope.$new();
             transclude(childScope, function(clone) {
               childElement = clone;
-              childElement.addClass('view-full');
               $animate.enter(clone, $element.parent(), $element);
 
               if($scope.title) {
