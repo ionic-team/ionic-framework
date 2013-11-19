@@ -21,9 +21,9 @@ describe('TabBar view', function() {
   });
 
   it('Should trim title', function() {
-    expect(items[0].el.innerText.trim()).toEqual(items[0].getTitle());
-    expect(items[1].el.innerText.trim()).toEqual(items[1].getTitle());
-    expect(items[2].el.innerText.trim()).toEqual(items[2].getTitle());
+    expect(items[0].el.textContent.trim()).toEqual(items[0].getTitle());
+    expect(items[1].el.textContent.trim()).toEqual(items[1].getTitle());
+    expect(items[2].el.textContent.trim()).toEqual(items[2].getTitle());
   });
 
   it('Should select', function() {
