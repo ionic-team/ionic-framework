@@ -2198,8 +2198,7 @@ textarea {
   overflow: hidden;
   padding: 4px 8px 3px;
   border: none;
-  background-color: white;
-  box-shadow: inset 0 0 1px #dddddd; }
+  background-color: white; }
 
 .item-stacked-label input {
   height: 46px; }
