@@ -2796,7 +2796,7 @@ input[type="range"] {
   background: none;
   border: none;
   background: none; }
-  .button-icon:active, .button-icon.active {
+  .button-icon.button:active, .button-icon.button.active {
     background: none;
     box-shadow: none;
     text-shadow: 0px 0px 10px white; }
