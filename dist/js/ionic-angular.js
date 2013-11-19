@@ -25394,28 +25394,27 @@ angular.module('ionic.ui.navRouter', [])
 /**
  * Our Nav Bar directive which updates as the controller state changes.
  */
-.directive('navBar', ['$rootScope', '$animate', function($rootScope, $animate) {
-  var animate = function($element, oldTitle, newTitle, cb) {
+.directive('navBar', ['$rootScope', '$animate', '$compile', function($rootScope, $animate, $compile) {
+  var animate = function($scope, $element, oldTitle, newTitle, cb) {
+    var title, nTitle, oTitle, titles = $element[0].querySelectorAll('.title');
+
     if(!oldTitle || oldTitle === newTitle) {
       cb();
       return;
     }
 
-    var title, nTitle, titles = $element[0].querySelectorAll('.title');
-    if(titles.length > 1) {
-      nTitle = titles[0];
-      title = titles[1];
-    } else if(titles.length) {
-      title = titles[0];
-      nTitle = document.createElement('h1');
-      nTitle.className = 'title';
-      nTitle.appendChild(document.createTextNode(newTitle));
+    title = angular.element(titles[0]);
+    oTitle = $compile('<h1 class="title" ng-bind="oldTitle"></h1>')($scope);
+    title.replaceWith(oTitle);
+    nTitle = $compile('<h1 class="title" ng-bind="currentTitle"></h1>')($scope);
 
-      $animate.enter(angular.element(nTitle), $element, angular.element($element[0].firstElementChild));
-      $animate.leave(angular.element(title), function() {
-        cb();
-      });
-    }
+    var insert = $element[0].firstElementChild || null;
+
+    $animate.enter(nTitle, $element, insert || angular.element(insert), function() {
+      cb();
+    });
+    $animate.leave(angular.element(oTitle), function() {
+    });
   };
 
   return {
@@ -25475,8 +25474,9 @@ angular.module('ionic.ui.navRouter', [])
         console.log(value);
         console.log('Title changing from', $scope.currentTitle, 'to', value);
         var oldTitle = $scope.currentTitle;
-        animate($element, oldTitle, value, function() {
-          $scope.currentTitle = value;
+        $scope.oldTitle = oldTitle;
+        $scope.currentTitle = value;
+        animate($scope, $element, oldTitle, value, function() {
           hb.align();
         });
       });
