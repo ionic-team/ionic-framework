@@ -10,7 +10,7 @@ describe('Ionic Content directive', function() {
   
   it('Has content class', function() {
     element = compile('<content></content>')(scope);
-    expect(element.hasClass('content')).toBe(true);
+    expect(element.hasClass('scroll-content')).toBe(true);
   });
 
   it('Has header', function() {

@@ -139,7 +139,7 @@ describe('Tab Item directive', function() {
       '<tab title="Item" icon="icon-default"></tab>' + 
       '</tabs>')(scope);
     scope.$digest();
-    $document.body.append(element);
+    $document[0].body.appendChild(element[0]);
   }));
   
   it('Default text works', function() {
@@ -156,7 +156,7 @@ describe('Tab Item directive', function() {
 
   it('Click sets correct tab index', function() {
     var a = element.find('a:eq(0)');
-    var itemScope = a.scope();
+    var itemScope = a.isolateScope();
     //spyOn(a, 'click');
     spyOn(itemScope, 'selectTab');
     a.click();

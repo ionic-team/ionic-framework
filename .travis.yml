@@ -4,3 +4,5 @@ node_js:
 
 before_script:
   - npm install -g grunt-cli
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start

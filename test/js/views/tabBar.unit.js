@@ -54,9 +54,11 @@ describe('TabBar view', function() {
     var item = items[0];
     spyOn(tabBar, 'trySelectItem');
 
-    var event = new CustomEvent('tap', {
+    var event = document.createEvent('Event');
+    event.initEvent('tap', true, true);
+    event.detail = {
       target: item.el
-    });
+    };
     item.el.dispatchEvent(event);
 
     //expect(item.onTap).toHaveBeenCalled();
@@ -68,9 +70,11 @@ describe('TabBar view', function() {
     var item = items[0];
     spyOn(item, 'onTap');
 
-    var event = new CustomEvent('tap', {
+    var event = document.createEvent('Event');
+    event.initEvent('tap', true, true);
+    event.detail = {
       target: item.el
-    });
+    };
     item.el.dispatchEvent(event);
 
     expect(item.onTap).toHaveBeenCalled();
@@ -80,9 +84,11 @@ describe('TabBar view', function() {
 
     tabBar.destroy();
 
-    event = new CustomEvent('tap', {
+    event = document.createEvent('Event');
+    event.initEvent('tap', true, true);
+    event.detail = {
       target: item.el
-    });
+    };
     item.el.dispatchEvent(event);
 
     expect(item.onTap).not.toHaveBeenCalled();
@@ -117,9 +123,11 @@ describe('TabBarItem view', function() {
     var item = items[0];
     spyOn(item, 'onTap');
 
-    var event = new CustomEvent('tap', {
+    var event = document.createEvent('Event');
+    event.initEvent('tap', true, true);
+    event.detail = {
       target: item.el
-    });
+    };
     item.el.dispatchEvent(event);
 
     expect(item.onTap).toHaveBeenCalled();
@@ -129,9 +137,11 @@ describe('TabBarItem view', function() {
 
     item.destroy();
 
-    event = new CustomEvent('tap', {
+    event = document.createEvent('Event');
+    event.initEvent('tap', true, true);
+    event.detail = {
       target: item.el
-    });
+    };
     item.el.dispatchEvent(event);
 
     expect(item.onTap).not.toHaveBeenCalled();
