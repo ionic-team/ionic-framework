@@ -9,7 +9,7 @@ describe('Angular Ionic Nav Router', function() {
     scope = $rootScope;
   }));
 
-  iit('Should init', function() {
+  it('Should init', function() {
     element = compile('<pane nav-router>' +
       '<nav-bar></nav-bar>' +
       '<ng-view></ng-view>' +

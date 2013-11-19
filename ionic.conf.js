@@ -20,6 +20,8 @@ module.exports = function(config) {
       'dist/js/ionic.js',
       'dist/js/ionic-angular.js',
 
+      'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-mocks.js',
+
       'test/**/*.js',
 
       'js/ext/angular/test/**/*.js'
