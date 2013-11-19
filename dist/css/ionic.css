@@ -2164,6 +2164,9 @@ textarea {
     display: inline-block;
     text-align: center;
     font-size: 16px; }
+  .item-input.item.active, .ionic-pseudo .item-input.item:active {
+    background-color: transparent;
+    border-color: #dddddd; }
 
 .input-label {
   -webkit-box-flex: 1;

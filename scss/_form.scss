@@ -67,6 +67,12 @@ textarea {
     text-align: center;
     font-size: 16px;
   }
+
+  &.item.active, 
+  .ionic-pseudo &.item:active {
+    background-color: transparent;
+    border-color: $item-default-border;
+  }
 }
 
 .input-label {
