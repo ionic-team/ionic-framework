@@ -231,12 +231,9 @@ angular.module('ionic.ui.navRouter', [])
           $scope.currentTitle = data.title;
         }
 
-        if(typeof data.leftButtons !== 'undefined') {
-          $scope.leftButtons = data.leftButtons;
-        }
-        if(typeof data.rightButtons !== 'undefined') {
-          $scope.rightButtons = data.rightButtons;
-        }
+        $scope.leftButtons = data.leftButtons;
+        $scope.rightButtons = data.rightButtons;
+
         if(typeof data.hideBackButton !== 'undefined') {
           $scope.enableBackButton = data.hideBackButton !== true;
         }
@@ -257,6 +254,19 @@ angular.module('ionic.ui.navRouter', [])
 
       $scope.$parent.$on('navRouter.pageShown', function(e, data) {
         updateHeaderData(data);
+      });
+
+      $scope.$parent.$on('navRouter.titleChanged', function(e, data) {
+        var oldTitle = $scope.currentTitle;
+        $scope.oldTitle = oldTitle;
+
+        if(data.animate !== false && typeof data.title !== 'undefined') {
+          animate($scope, $element, oldTitle, data, function() {
+            hb.align();
+          });
+        } else {
+          hb.align();
+        }
       });
 
 
@@ -319,7 +329,7 @@ angular.module('ionic.ui.navRouter', [])
       var titleGet = $parse($attr.title);
       $scope.$watch(titleGet, function(value) {
         $scope.title = value;
-        $scope.$emit('navRouter.pageChanged', {
+        $scope.$emit('navRouter.titleChanged', {
           title: value,
           animate: $scope.animate
         });

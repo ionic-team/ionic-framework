@@ -110,7 +110,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
         $scope.hideBackButton = $scope.$eval($attr.hideBackButton);
 
         if($scope.hideBackButton !== true) {
-          $scope.hideBackButton = true;
+          $scope.hideBackButton = false;
         }
 
         // Whether we should animate on tab change, also impacts whether we
