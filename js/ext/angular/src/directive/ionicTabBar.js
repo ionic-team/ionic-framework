@@ -72,7 +72,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
 })
 
 // Generic controller directive
-.directive('tab', ['$animate', function($animate) {
+.directive('tab', ['$animate', '$parse', function($animate, $parse) {
   return {
     restrict: 'E',
     replace: true,
@@ -87,6 +87,30 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
         $scope.icon = $attr.icon;
         $scope.iconOn = $attr.iconOn;
         $scope.iconOff = $attr.iconOff;
+
+        // Should we hide a back button when this tab is shown
+        $scope.hideBackButton = $scope.$eval($attr.hideBackButton);
+
+        // Whether we should animate on tab change, also impacts whether we
+        // tell any parent nav controller to animate
+        $scope.animate = $scope.$eval($attr.animate);
+
+        // Grab whether we should update any parent nav router on tab changes
+        $scope.doesUpdateNavRouter = $scope.$eval($attr.doesUpdateNavRouter) || true;
+
+        var leftButtonsGet = $parse($attr.leftButtons);
+        $scope.$watch(leftButtonsGet, function(value) {
+          $scope.leftButtons = value;
+          if($scope.doesUpdateNavRouter) {
+            $scope.$emit('navRouter.leftButtonsChanged', $scope.rightButtons);
+          }
+        });
+
+        var rightButtonsGet = $parse($attr.rightButtons);
+        $scope.$watch(rightButtonsGet, function(value) {
+          $scope.rightButtons = value;
+        });
+
         tabsCtrl.add($scope);
         
         $scope.$watch('isVisible', function(value) {
@@ -106,6 +130,19 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
               childElement.addClass('view-full');
               $animate.enter(clone, $element.parent(), $element);
 
+              if($scope.title) {
+                // Send the title up in case we are inside of a nav controller
+                if($scope.doesUpdateNavRouter) {
+                  $scope.$emit('navRouter.pageShown', {
+                    title: $scope.title,
+                    rightButtons: $scope.rightButtons,
+                    leftButtons: $scope.leftButtons,
+                    hideBackButton: $scope.hideBackButton || false,
+                    animate: $scope.animate || false
+                  });
+                }
+                //$scope.$emit('navRouter.titleChanged', $scope.title);
+              }
               $scope.$broadcast('tab.shown');
             });
           }

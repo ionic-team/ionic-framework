@@ -33,11 +33,6 @@ angular.module('ionic.ui.navRouter', [])
       this.navBar = {
         isVisible: true
       };
-
-      this.setTitle = function(value) {
-        $scope.$broadcast('navRouter.titleChanged', value);
-      };
-
       $scope.navController = this;
     }],
 
@@ -53,24 +48,20 @@ angular.module('ionic.ui.navRouter', [])
       };
 
       var reverseTransition = function() {
-        console.log('REVERSE');
         $element.removeClass('noop-animation');
         $element.addClass($scope.animation);
         $element.addClass('reverse');
       };
 
       var forwardTransition = function() {
-        console.log('FORWARD');
         $element.removeClass('noop-animation');
         $element.removeClass('reverse');
         $element.addClass($scope.animation);
       };
 
       $scope.$on('$routeChangeSuccess', function(e, a) {
-        console.log('ROUTE CHANGED', a, e);
       });
       $scope.$on('$routeChangeStart', function(e, next, current) {
-        console.log('ROUTE START', e, next, current);
         var back, historyState = $window.history.state;
 
         back = !!(historyState && historyState.position <= $rootScope.stackCursorPosition);
@@ -89,7 +80,6 @@ angular.module('ionic.ui.navRouter', [])
 
       $scope.$on('$locationChangeSuccess', function(a, b, c) {
         // Store the new location
-        console.log('LOCATION CHANGE SUCCESS', a, b, c);
         $rootScope.actualLocation = $location.path();
         if(isFirst) {
           isFirst = false;
@@ -136,9 +126,10 @@ angular.module('ionic.ui.navRouter', [])
  * Our Nav Bar directive which updates as the controller state changes.
  */
 .directive('navBar', ['$rootScope', '$animate', '$compile', function($rootScope, $animate, $compile) {
-  var animate = function($scope, $element, oldTitle, newTitle, cb) {
+  var animate = function($scope, $element, oldTitle, data, cb) {
     var title, nTitle, oTitle, titles = $element[0].querySelectorAll('.title');
 
+    var newTitle = data.title;
     if(!oldTitle || oldTitle === newTitle) {
       cb();
       return;
@@ -151,10 +142,14 @@ angular.module('ionic.ui.navRouter', [])
 
     var insert = $element[0].firstElementChild || null;
 
-    $animate.enter(nTitle, $element, insert || angular.element(insert), function() {
+    $animate.enter(nTitle, $element, insert && angular.element(insert), function() {
       cb();
     });
     $animate.leave(angular.element(oTitle), function() {
+    });
+
+    $scope.$on('navRouter.rightButtonsChanged', function(e, buttons) {
+      console.log('Buttons changing for nav bar', buttons);
     });
   };
 
@@ -170,15 +165,21 @@ angular.module('ionic.ui.navRouter', [])
       alignTitle: '@',
     },
     template: '<header class="bar bar-header nav-bar" ng-class="{hidden: !navController.navBar.isVisible}">' + 
-        '<button nav-back class="button" ng-if="enableBackButton && showBackButton" ng-class="backButtonType" ng-bind-html="backButtonContent"></button>' +
+        '<div class="buttons"> ' +
+          '<button nav-back class="button" ng-if="enableBackButton && showBackButton" ng-class="backButtonType" ng-bind-html="backButtonContent"></button>' +
+          '<button ng-repeat="button in leftButtons" class="button" ng-bind="button.text"></button>' + 
+        '</div>' +
         '<h1 class="title" ng-bind="currentTitle"></h1>' + 
+        '<div class="buttons"> ' +
+          '<button ng-repeat="button in rightButtons" class="button" ng-bind="button.text"></button>' + 
+        '</div>' +
       '</header>',
     link: function($scope, $element, $attr, navCtrl) {
       var backButton;
+
+      // Create the back button content and show/hide it based on scope settings
       $scope.enableBackButton = true;
-
       $scope.backButtonContent = '';
-
       if($scope.backButtonIcon) {
         $scope.backButtonContent += '<i class="icon ' + $scope.backButtonIcon + '"></i>';
       }
@@ -186,40 +187,62 @@ angular.module('ionic.ui.navRouter', [])
         $scope.backButtonContent += ' ' + $scope.backButtonLabel
       }
 
+      // Listen for changes in the stack cursor position to indicate whether a back
+      // button should be shown (this can still be disabled by the $scope.enableBackButton
       $rootScope.$watch('stackCursorPosition', function(value) {
         if(value > 0) {
           $scope.showBackButton = true;
         } else {
           $scope.showBackButton = false;
         }
-        console.log('Stack cursor change', value);
       });
 
+      // Store a reference to our nav controller
       $scope.navController = navCtrl;
 
-      $scope.goBack = function() {
-        navCtrl.popController();
-      };
-
-
+      // Initialize our header bar view which will handle resizing and aligning our title labels
       var hb = new ionic.views.HeaderBar({
         el: $element[0],
         alignTitle: $scope.alignTitle || 'center'
       });
-
-      $element.addClass($scope.type);
-
       $scope.headerBarView = hb;
 
-      $scope.$parent.$on('navRouter.titleChanged', function(e, value) {
-        console.log(value);
-        console.log('Title changing from', $scope.currentTitle, 'to', value);
+      // Add the type of header bar class to this element
+      $element.addClass($scope.type);
+
+      var updateHeaderData = function(data) {
+        console.log('Header data changed', data);
+
         var oldTitle = $scope.currentTitle;
         $scope.oldTitle = oldTitle;
-        $scope.currentTitle = value;
-        animate($scope, $element, oldTitle, value, function() {
+        $scope.currentTitle = data.title;
+
+        if(typeof data.leftButtons !== 'undefined') {
+          $scope.leftButtons = data.leftButtons;
+        }
+        if(typeof data.rightButtons !== 'undefined') {
+          $scope.rightButtons = data.rightButtons;
+        }
+        if(typeof data.hideBackButton !== 'undefined') {
+          $scope.enableBackButton = data.hideBackButton !== true;
+        }
+
+        if(data.animate !== false) {
+          animate($scope, $element, oldTitle, data, function() {
+            hb.align();
+          });
+        } else {
           hb.align();
-        });
+        }
+      };
+
+      // Listen for changes on title change, and update the title
+      $scope.$parent.$on('navRouter.pageChanged', function(e, data) {
+        updateHeaderData(data);
+      });
+
+      $scope.$parent.$on('navRouter.pageShown', function(e, data) {
+        updateHeaderData(data);
       });
 
 
@@ -249,12 +272,43 @@ angular.module('ionic.ui.navRouter', [])
     link: function($scope, $element, $attr, navCtrl) {
       $element.addClass('pane');
 
-      var titleGet = $parse($attr.title);
+      $scope.icon = $attr.icon;
+      $scope.iconOn = $attr.iconOn;
+      $scope.iconOff = $attr.iconOff;
 
+      // Should we hide a back button when this tab is shown
+      $scope.hideBackButton = $scope.$eval($attr.hideBackButton);
+
+      // Whether we should animate on tab change, also impacts whether we
+      // tell any parent nav controller to animate
+      $scope.animate = $scope.$eval($attr.animate);
+
+      // Grab whether we should update any parent nav router on tab changes
+      $scope.doesUpdateNavRouter = $scope.$eval($attr.doesUpdateNavRouter) || true;
+
+      // watch for changes in the left buttons
+      var leftButtonsGet = $parse($attr.leftButtons);
+      $scope.$watch(leftButtonsGet, function(value) {
+        $scope.leftButtons = value;
+        if($scope.doesUpdateNavRouter) {
+          $scope.$emit('navRouter.leftButtonsChanged', $scope.rightButtons);
+        }
+      });
+
+      // watch for changes in the right buttons
+      var rightButtonsGet = $parse($attr.rightButtons);
+      $scope.$watch(rightButtonsGet, function(value) {
+        $scope.rightButtons = value;
+      });
+
+      // watch for changes in the title
+      var titleGet = $parse($attr.title);
       $scope.$watch(titleGet, function(value) {
-        console.log('Title changed');
         $scope.title = value;
-        navCtrl.setTitle(value);
+        $scope.$emit('navRouter.pageChanged', {
+          title: value,
+          animate: $scope.animate
+        });
       });
 
     }

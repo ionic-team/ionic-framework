@@ -384,7 +384,6 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
   > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
     -webkit-transition:all 250ms;
     -webkit-transition-timing-function: $ios7-timing-function;
-    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
     transition:all 250ms;
     transition-timing-function: $ios7-timing-function;
     opacity: 1;
@@ -408,7 +407,6 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
     > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
       -webkit-transition:all 250ms;
       -webkit-transition-timing-function: $ios7-timing-function;
-      transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
       transition:all 250ms;
       transition-timing-function: $ios7-timing-function;
       opacity: 1;

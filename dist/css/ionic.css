@@ -3213,7 +3213,6 @@ a.button {
 .nav-title-slide-ios7 > .ng-enter, .nav-title-slide-ios7.ng-enter, .nav-title-slide-ios7 > .ng-leave, .nav-title-slide-ios7.ng-leave {
   -webkit-transition: all 250ms;
   -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
-  transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 250ms;
   transition: all 250ms;
   transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
   opacity: 1; }
@@ -3230,7 +3229,6 @@ a.button {
 .reverse .nav-title-slide-ios7 > .ng-enter, .reverse .nav-title-slide-ios7.ng-enter, .reverse .nav-title-slide-ios7 > .ng-leave, .reverse .nav-title-slide-ios7.ng-leave {
   -webkit-transition: all 250ms;
   -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
-  transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 250ms;
   transition: all 250ms;
   transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
   opacity: 1; }
