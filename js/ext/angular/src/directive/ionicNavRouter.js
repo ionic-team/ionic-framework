@@ -167,11 +167,11 @@ angular.module('ionic.ui.navRouter', [])
     template: '<header class="bar bar-header nav-bar" ng-class="{hidden: !navController.navBar.isVisible}">' + 
         '<div class="buttons"> ' +
           '<button nav-back class="button" ng-if="enableBackButton && showBackButton" ng-class="backButtonType" ng-bind-html="backButtonContent"></button>' +
-          '<button ng-repeat="button in leftButtons" class="button" ng-bind="button.text"></button>' + 
+          '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" class="button {{button.type}}" ng-bind="button.text"></button>' + 
         '</div>' +
         '<h1 class="title" ng-bind="currentTitle"></h1>' + 
         '<div class="buttons"> ' +
-          '<button ng-repeat="button in rightButtons" class="button" ng-bind="button.text"></button>' + 
+          '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" class="button {{button.type}}" ng-bind="button.text"></button>' + 
         '</div>' +
       '</header>',
     link: function($scope, $element, $attr, navCtrl) {
@@ -215,7 +215,10 @@ angular.module('ionic.ui.navRouter', [])
 
         var oldTitle = $scope.currentTitle;
         $scope.oldTitle = oldTitle;
-        $scope.currentTitle = data.title;
+
+        if(typeof data.title !== 'undefined') {
+          $scope.currentTitle = data.title;
+        }
 
         if(typeof data.leftButtons !== 'undefined') {
           $scope.leftButtons = data.leftButtons;
@@ -227,7 +230,7 @@ angular.module('ionic.ui.navRouter', [])
           $scope.enableBackButton = data.hideBackButton !== true;
         }
 
-        if(data.animate !== false) {
+        if(data.animate !== false && typeof data.title !== 'undefined') {
           animate($scope, $element, oldTitle, data, function() {
             hb.align();
           });

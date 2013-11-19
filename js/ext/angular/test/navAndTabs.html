@@ -17,7 +17,7 @@
     </pane>
 
     <script id="page1.html" type="text/ng-template">
-      <nav-page title="'Pets'" hide-back-button="true">
+      <nav-page hide-back-button="true">
         <tabs tabs-style="tabs-icon-top" tabs-type="tabs-positive">
 
           <!-- Pets tab -->
@@ -133,7 +133,13 @@
 
       .controller('AdoptCtrl', function($scope) {
         $scope.buttons = [
-          { text: 'Adopt' }
+        { 
+          text: 'Adopt',
+          tap: function(e) {
+            console.log('ADOPT TAPPED');
+          },
+          type: 'button-clear'
+        }
         ];
       });
 

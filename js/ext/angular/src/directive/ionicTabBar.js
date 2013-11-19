@@ -138,7 +138,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
                     rightButtons: $scope.rightButtons,
                     leftButtons: $scope.leftButtons,
                     hideBackButton: $scope.hideBackButton || false,
-                    animate: $scope.animate || false
+                    animate: $scope.animate || true
                   });
                 }
                 //$scope.$emit('navRouter.titleChanged', $scope.title);
