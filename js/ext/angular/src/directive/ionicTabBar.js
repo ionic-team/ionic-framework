@@ -60,6 +60,11 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
         $scope.tabsStyle = $attr.tabsStyle;
         $scope.animation = $attr.animation;
 
+        $scope.animateNav = $scope.$eval($attr.animateNav);
+        if($scope.animateNav !== false) {
+          $scope.animateNav = true;
+        }
+
         $attr.$observe('tabsStyle', function(val) {
           if(tabs) {
             angular.element(tabs).addClass($attr.tabsStyle);
@@ -104,12 +109,19 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
         // Should we hide a back button when this tab is shown
         $scope.hideBackButton = $scope.$eval($attr.hideBackButton);
 
+        if($scope.hideBackButton !== true) {
+          $scope.hideBackButton = true;
+        }
+
         // Whether we should animate on tab change, also impacts whether we
         // tell any parent nav controller to animate
         $scope.animate = $scope.$eval($attr.animate);
 
         // Grab whether we should update any parent nav router on tab changes
-        $scope.doesUpdateNavRouter = $scope.$eval($attr.doesUpdateNavRouter) || true;
+        $scope.doesUpdateNavRouter = $scope.$eval($attr.doesUpdateNavRouter);
+        if($scope.doesUpdateNavRouter !== false) {
+          $scope.doesUpdateNavRouter = true;
+        }
 
         var leftButtonsGet = $parse($attr.leftButtons);
         $scope.$watch(leftButtonsGet, function(value) {
@@ -149,8 +161,8 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
                     title: $scope.title,
                     rightButtons: $scope.rightButtons,
                     leftButtons: $scope.leftButtons,
-                    hideBackButton: $scope.hideBackButton || false,
-                    animate: $scope.animate || true
+                    hideBackButton: $scope.hideBackButton,
+                    animate: $scope.animateNav
                   });
                 }
                 //$scope.$emit('navRouter.titleChanged', $scope.title);

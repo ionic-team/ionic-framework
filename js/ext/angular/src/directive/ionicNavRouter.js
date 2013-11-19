@@ -81,9 +81,8 @@ angular.module('ionic.ui.navRouter', [])
       $scope.$on('$locationChangeSuccess', function(a, b, c) {
         // Store the new location
         $rootScope.actualLocation = $location.path();
-        if(isFirst) {
+        if(isFirst && $location.path() !== '/') {
           isFirst = false;
-          initTransition();
         }
       });  
 
@@ -92,6 +91,11 @@ angular.module('ionic.ui.navRouter', [])
       // going forwards or back
       $scope.$watch(function () { return $location.path() }, function (newLocation, oldLocation) {
         if($rootScope.actualLocation === newLocation) {
+
+          if(oldLocation == '' && newLocation == '/') {
+            // initial route, skip this
+            return;
+          }
 
           var back, historyState = $window.history.state;
 
@@ -126,6 +130,11 @@ angular.module('ionic.ui.navRouter', [])
  * Our Nav Bar directive which updates as the controller state changes.
  */
 .directive('navBar', ['$rootScope', '$animate', '$compile', function($rootScope, $animate, $compile) {
+
+  /**
+   * Perform an animation between one tab bar state and the next.
+   * Right now this just animates the titles.
+   */
   var animate = function($scope, $element, oldTitle, data, cb) {
     var title, nTitle, oTitle, titles = $element[0].querySelectorAll('.title');
 
@@ -135,6 +144,7 @@ angular.module('ionic.ui.navRouter', [])
       return;
     }
 
+    // Clone the old title and add a new one so we can show two animating in and out
     title = angular.element(titles[0]);
     oTitle = $compile('<h1 class="title" ng-bind="oldTitle"></h1>')($scope);
     title.replaceWith(oTitle);
@@ -142,14 +152,13 @@ angular.module('ionic.ui.navRouter', [])
 
     var insert = $element[0].firstElementChild || null;
 
+    // Insert the new title
     $animate.enter(nTitle, $element, insert && angular.element(insert), function() {
       cb();
     });
-    $animate.leave(angular.element(oTitle), function() {
-    });
 
-    $scope.$on('navRouter.rightButtonsChanged', function(e, buttons) {
-      console.log('Buttons changing for nav bar', buttons);
+    // Remove the old title
+    $animate.leave(angular.element(oTitle), function() {
     });
   };
 
@@ -176,6 +185,8 @@ angular.module('ionic.ui.navRouter', [])
       '</header>',
     link: function($scope, $element, $attr, navCtrl) {
       var backButton;
+
+      $element.addClass($attr.animation);
 
       // Create the back button content and show/hide it based on scope settings
       $scope.enableBackButton = true;

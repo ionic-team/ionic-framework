@@ -3249,9 +3249,9 @@ a.button {
  * Some component specific animations
  */
 .nav-title-slide-ios7 > .ng-enter, .nav-title-slide-ios7.ng-enter, .nav-title-slide-ios7 > .ng-leave, .nav-title-slide-ios7.ng-leave {
-  -webkit-transition: all 250ms;
+  -webkit-transition: all 350ms;
   -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
-  transition: all 250ms;
+  transition: all 350ms;
   transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
   opacity: 1; }
 .nav-title-slide-ios7 > .ng-enter, .nav-title-slide-ios7.ng-enter {
@@ -3265,9 +3265,9 @@ a.button {
   -webkit-transform: translate3d(-30%, 0, 0); }
 
 .reverse .nav-title-slide-ios7 > .ng-enter, .reverse .nav-title-slide-ios7.ng-enter, .reverse .nav-title-slide-ios7 > .ng-leave, .reverse .nav-title-slide-ios7.ng-leave {
-  -webkit-transition: all 250ms;
+  -webkit-transition: all 350ms;
   -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
-  transition: all 250ms;
+  transition: all 350ms;
   transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
   opacity: 1; }
 .reverse .nav-title-slide-ios7 > .ng-enter, .reverse .nav-title-slide-ios7.ng-enter {

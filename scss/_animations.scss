@@ -382,9 +382,9 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
 
 .nav-title-slide-ios7 {
   > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
-    -webkit-transition:all 250ms;
+    -webkit-transition:all 350ms;
     -webkit-transition-timing-function: $ios7-timing-function;
-    transition:all 250ms;
+    transition:all 350ms;
     transition-timing-function: $ios7-timing-function;
     opacity: 1;
   }
@@ -405,9 +405,9 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
 .reverse {
   .nav-title-slide-ios7 {
     > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
-      -webkit-transition:all 250ms;
+      -webkit-transition:all 350ms;
       -webkit-transition-timing-function: $ios7-timing-function;
-      transition:all 250ms;
+      transition:all 350ms;
       transition-timing-function: $ios7-timing-function;
       opacity: 1;
     }

@@ -12,13 +12,14 @@
   </head>
   <body>
     <pane nav-router animation="slide-left-right">
-      <nav-bar class="nav-title-slide-ios7" type="bar-positive" back-button-type="button-icon" back-button-icon="icon ion-arrow-left-c"></nav-bar>
+      <nav-bar animation="nav-title-slide-ios7" type="bar-positive" back-button-type="button-icon" back-button-icon="icon ion-arrow-left-c"></nav-bar>
       <ng-view></ng-view>
     </pane>
 
     <script id="page1.html" type="text/ng-template">
       <nav-page hide-back-button="true">
-        <tabs tabs-style="tabs-icon-top" tabs-type="tabs-positive">
+
+        <tabs tabs-style="tabs-icon-top" tabs-type="tabs-positive" animate-nav="false">
 
           <!-- Pets tab -->
           <tab title="Pets" icon="icon ion-home" ng-controller="PetsCtrl">
