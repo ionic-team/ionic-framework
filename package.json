@@ -1,8 +1,9 @@
 {
   "name": "ionic",
-  "private": true,
-  "version": "0.0.01",
+  "private": false,
+  "version": "0.9.04",
   "devDependencies": {
+    "karma": "~0.10",
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1.9",
     "grunt-contrib-watch": "~0.5.3",
@@ -11,6 +12,9 @@
     "grunt-contrib-uglify": "~0.2.4",
     "grunt-contrib-jshint": "~0.6.4",
     "grunt-contrib-sass": "~0.5.0"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
   },
   "licenses": [
     {
