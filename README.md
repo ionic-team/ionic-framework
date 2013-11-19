@@ -1,4 +1,4 @@
-<img src="https://travis-ci.org/driftyco/ionic.png" data-bindattr-164="164" title="Build Status Images">
+<a href="https://travis-ci.org/driftyco/ionic"><img src="https://travis-ci.org/driftyco/ionic.png" data-bindattr-164="164" title="Build Status Images"></a>
 
 For the best info on Ionic, check out our great [documentation page](http://ionicframework.com/docs/)!
 
