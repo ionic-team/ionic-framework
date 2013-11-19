@@ -2503,7 +2503,8 @@ input[type="range"] {
   outline: none;
   border-radius: 4px;
   background-color: #cccccc;
-  -webkit-appearance: none !important; }
+  -webkit-appearance: none !important;
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(0, blue), color-stop(0, #cccccc)); }
   input[type="range"]::-webkit-slider-thumb {
     position: relative;
     width: 20px;
@@ -2516,11 +2517,47 @@ input[type="range"] {
   input[type="range"]::-webkit-slider-thumb:after {
     /* create a larger (but hidden) hit area */
     position: absolute;
-    top: -10px;
-    left: -10px;
-    display: table;
-    padding: 20px;
+    top: -15px;
+    left: -15px;
+    padding: 25px;
     content: ' '; }
+
+.range {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+  padding: 4px;
+  max-width: 320px; }
+
+.range .icon {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 1 24px;
+  -moz-box-flex: 0;
+  -moz-flex: 0 1 24px;
+  -ms-flex: 0 1 24px;
+  flex: 0 1 24px;
+  font-size: 24px;
+  min-width: 24px;
+  text-align: center; }
+
+.range input {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 1 272px;
+  -moz-box-flex: 0;
+  -moz-flex: 0 1 272px;
+  -ms-flex: 0 1 272px;
+  flex: 0 1 272px;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 100%;
+  max-width: 320px; }
 
 /**
  * Buttons

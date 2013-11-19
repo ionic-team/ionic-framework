@@ -15,6 +15,14 @@ input[type="range"] {
   background-color: $range-track-color;
   -webkit-appearance: none !important;
 
+  background-image: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      color-stop(0.0, blue),
+      color-stop(0.0, $range-track-color)
+  );
+
   &::-webkit-slider-thumb {
     position: relative;
     width: $range-slider-width;
@@ -29,11 +37,32 @@ input[type="range"] {
   &::-webkit-slider-thumb:after {
     /* create a larger (but hidden) hit area */
     position: absolute;
-    top: -10px;
-    left: -10px;
-    display: table;
-    padding: 20px;
+    top: -15px;
+    left: -15px;
+    padding: 25px;
     content: ' ';
   }
   
+}
+
+.range {
+  @include display-flex();
+  @include align-items(center);
+  padding: 4px;
+  max-width: $range-max-width;
+}
+
+.range .icon {
+  @include flex(0, 1, $range-icon-size);
+  font-size: $range-icon-size;
+  min-width: $range-icon-size;
+  text-align: center;
+}
+
+.range input {
+  @include flex(0, 1, $range-max-width - ($range-icon-size * 2));
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 100%;
+  max-width: $range-max-width;
 }
