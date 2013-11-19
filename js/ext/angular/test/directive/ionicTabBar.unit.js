@@ -115,7 +115,7 @@ describe('Tabs directive', function() {
   });
 
   it('Sets style on child tabs', function() {
-    element = compile('<tabs tabs-style="tabs-positive" tabs-type="tabs-icon-bottom">' + 
+    element = compile('<tabs tabs-type="tabs-positive" tabs-style="tabs-icon-bottom">' + 
       '<tab active="true" title="Item" icon="icon-default"></tab>' + 
       '<tab active="true" title="Item" icon="icon-default"></tab>' + 
     '</tabs>')(scope);
