@@ -183,7 +183,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid #c0c0c0; }
+  border: 1px solid silver; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -630,13 +630,13 @@ address {
   font-style: normal;
   line-height: 1.42857; }
 
-a.subduedΓÇÄ {
+a.subdued‎ {
   padding-right: 10px;
   color: #f8f8f8;
   text-decoration: none; }
-  a.subduedΓÇÄ:hover {
+  a.subdued‎:hover {
     text-decoration: none; }
-  a.subduedΓÇÄ:last-child {
+  a.subdued‎:last-child {
     padding-right: 0; }
 
 /**
@@ -2329,7 +2329,7 @@ input[type="checkbox"][readonly] {
     border-radius: 50%;
     background: white;
     content: ' ';
-    transition: background-color .1s ease-in-out; }
+    transition: background-color 0.1s ease-in-out; }
 
 /* the checkmark within the box */
 .checkbox input:after {
@@ -2344,7 +2344,7 @@ input[type="checkbox"][readonly] {
   border-right: 0;
   content: ' ';
   opacity: 0;
-  transition: opacity .05s ease-in-out;
+  transition: opacity 0.05s ease-in-out;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg); }
 
@@ -2797,7 +2797,7 @@ input[type="range"] {
   .button-icon:active, .button-icon.active {
     background: none;
     box-shadow: none;
-    text-shadow: 0px 0px 10px #fff; }
+    text-shadow: 0px 0px 10px white; }
   .button-icon .icon {
     font-size: 32px; }
 
@@ -2948,6 +2948,42 @@ a.button {
 .slide-left-right-reverse > .ng-enter.ng-enter-active, .slide-left-right-reverse.ng-enter.ng-enter-active {
   -webkit-transform: translate3d(0, 0, 0); }
 .slide-left-right-reverse > .ng-leave.ng-leave-active, .slide-left-right-reverse.ng-leave.ng-leave-active {
+  -webkit-transform: translate3d(100%, 0, 0); }
+
+.slide-left-right-ios7 > .ng-enter, .slide-left-right-ios7.ng-enter, .slide-left-right-ios7 > .ng-leave, .slide-left-right-ios7.ng-leave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-transition: all 250ms;
+  -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
+  transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 250ms;
+  transition: all 250ms;
+  transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
+  box-shadow: -1px 0px 3px rgba(0, 0, 0, 0.2), 1px 0px 3px rgba(0, 0, 0, 0.2); }
+.slide-left-right-ios7 > .ng-enter, .slide-left-right-ios7.ng-enter {
+  -webkit-transform: translate3d(100%, 0, 0); }
+.slide-left-right-ios7 > .ng-enter.ng-enter-active, .slide-left-right-ios7.ng-enter.ng-enter-active {
+  -webkit-transform: translate3d(0, 0, 0); }
+.slide-left-right-ios7 > .ng-leave.ng-leave-active, .slide-left-right-ios7.ng-leave.ng-leave-active {
+  -webkit-transform: translate3d(-20%, 0, 0); }
+
+.slide-left-right-ios7-reverse > .ng-enter, .slide-left-right-ios7-reverse.ng-enter, .slide-left-right-ios7-reverse > .ng-leave, .slide-left-right-ios7-reverse.ng-leave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-transition: all 250ms;
+  -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
+  transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 250ms;
+  transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
+.slide-left-right-ios7-reverse > .ng-enter, .slide-left-right-ios7-reverse.ng-enter {
+  -webkit-transform: translate3d(-20%, 0, 0); }
+.slide-left-right-ios7-reverse > .ng-enter.ng-enter-active, .slide-left-right-ios7-reverse.ng-enter.ng-enter-active {
+  -webkit-transform: translate3d(0, 0, 0); }
+.slide-left-right-ios7-reverse > .ng-leave.ng-leave-active, .slide-left-right-ios7-reverse.ng-leave.ng-leave-active {
   -webkit-transform: translate3d(100%, 0, 0); }
 
 @-webkit-keyframes slideInLeft {
@@ -3531,7 +3567,7 @@ a.button {
 .platform-ios7 .has-header {
   margin-top: 64px; }
 
-/*!
+/*
   Ionicons, v1.3.5
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
   https://twitter.com/helloimben  https://twitter.com/ionicframework

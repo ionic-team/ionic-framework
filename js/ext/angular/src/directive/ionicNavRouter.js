@@ -28,6 +28,14 @@ angular.module('ionic.ui.navRouter', [])
 .directive('navRouter', ['$rootScope', '$timeout', '$location', '$window', '$route', function($rootScope, $timeout, $location, $window, $route) {
   return {
     restrict: 'AC',
+    // So you can require being under this
+    controller: ['$scope', '$element', function($scope, $element) {
+      this.navBar = {
+        isVisible: true
+      };
+
+      $scope.navController = this;
+    }],
     link: function($scope, $element, $attr) {
       $scope.animation = $attr.animation;
 
@@ -119,13 +127,90 @@ angular.module('ionic.ui.navRouter', [])
   }
 }])
 
-.directive('navBack', ['$window', function($window) {
+/**
+ * Our Nav Bar directive which updates as the controller state changes.
+ */
+.directive('navBar', ['$rootScope', function($rootScope) {
+  return {
+    restrict: 'E',
+    require: '^navRouter',
+    replace: true,
+    scope: {
+      type: '@',
+      backButtonType: '@',
+      backButtonLabel: '@',
+      backButtonIcon: '@',
+      alignTitle: '@',
+    },
+    template: '<header class="bar bar-header nav-bar" ng-class="{hidden: !navController.navBar.isVisible}">' + 
+        '<button ng-click="goBack()" class="button" ng-if="enableBackButton && showBackButton" ng-class="backButtonType" ng-bind-html="backButtonContent"></button>' +
+        '<h1 class="title">{{navController.getTopController().scope.title}}</h1>' + 
+      '</header>',
+    link: function($scope, $element, $attr, navCtrl) {
+      var backButton;
+
+      $scope.enableBackButton = true;
+
+      $scope.backButtonContent = '';
+
+      if($scope.backButtonIcon) {
+        $scope.backButtonContent += '<i class="icon ' + $scope.backButtonIcon + '"></i>';
+      }
+      if($scope.backButtonLabel) {
+        $scope.backButtonContent += ' ' + $scope.backButtonLabel
+      }
+
+      $rootScope.$watch('stackCursorPosition', function(value) {
+        if(value > 0) {
+          $scope.showBackButton = true;
+        } else {
+          $scope.showBackButton = false;
+        }
+        console.log('Stack cursor change', value);
+      });
+
+      $scope.navController = navCtrl;
+
+      $scope.goBack = function() {
+        navCtrl.popController();
+      };
+
+
+      var hb = new ionic.views.HeaderBar({
+        el: $element[0],
+        alignTitle: $scope.alignTitle || 'center'
+      });
+
+      $element.addClass($scope.type);
+
+      $scope.headerBarView = hb;
+
+      $scope.$parent.$on('navigation.push', function() {
+        backButton = angular.element($element[0].querySelector('.button'));
+        backButton.addClass($scope.backButtonType);
+        hb.align();
+      });
+      $scope.$parent.$on('navigation.pop', function() {
+        hb.align();
+      });
+
+      $scope.$on('$destroy', function() {
+        //
+      });
+    }
+  };
+}])
+
+.directive('navBack', ['$window', '$rootScope', function($window, $rootScope) {
   return {
     restrict: 'AC',
     require: '^?navRouter',
     link: function($scope, $element, $attr, navCtrl) {
       var goBack = function() {
-        $window.history.back();
+        // Only trigger back if the stack is greater than zero
+        if($rootScope.stackCursorPosition > 0) {
+          $window.history.back();
+        }
       };
       $element.bind('tap', goBack);
       $element.bind('click', goBack);
