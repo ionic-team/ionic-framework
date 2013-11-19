@@ -17,11 +17,6 @@ module.exports = function(config) {
       // Include jQuery only for testing convience (lots of DOM checking for unit tests on directives)
       'https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js',
 
-      'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js',
-      'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-mocks.js',
-      'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.js',
-      'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-animate.js',
-
       'dist/js/ionic.js',
       'dist/js/ionic-angular.js',
 

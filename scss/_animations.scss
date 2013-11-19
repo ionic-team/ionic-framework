@@ -1,3 +1,4 @@
+$ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
 
 /**
  * Animations
@@ -6,6 +7,107 @@
  * and pretty easy on performance. They can be overidden
  * and enhanced easily.
  */
+
+.noop-animation {
+  > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
+  }
+}
+
+.slide-left-right {
+  > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
+  }
+  > .ng-enter, &.ng-enter {
+    -webkit-transform: translate3d(100%, 0, 0);
+  }
+  > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+  > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
+    -webkit-transform: translate3d(-100%, 0, 0);
+  }
+
+  &.reverse {
+    > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
+      transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
+    }
+    > .ng-enter, &.ng-enter {
+      -webkit-transform: translate3d(-100%, 0, 0);
+    }
+    > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+      -webkit-transform: translate3d(0, 0, 0);
+    }
+    > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
+      -webkit-transform: translate3d(100%, 0, 0);
+    }
+  }
+}
+.slide-left-right-ios7 {
+  > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    -webkit-transition:all 250ms;
+    -webkit-transition-timing-function: $ios7-timing-function;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
+    transition:all 250ms;
+    transition-timing-function: $ios7-timing-function;
+    box-shadow: $menu-side-shadow;
+  }
+  > .ng-enter, &.ng-enter {
+    -webkit-transform: translate3d(100%, 0, 0);
+  }
+  > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+  > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
+    -webkit-transform: translate3d(-20%, 0, 0);
+  }
+  
+  &.reverse {
+    > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      -webkit-transition:all 250ms;
+      -webkit-transition-timing-function: $ios7-timing-function;
+      transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
+      transition-timing-function: $ios7-timing-function;
+    }
+    > .ng-enter, &.ng-enter {
+      -webkit-transform: translate3d(-20%, 0, 0);
+    }
+    > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+      -webkit-transform: translate3d(0, 0, 0);
+    }
+    > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
+      -webkit-transform: translate3d(100%, 0, 0);
+    }
+  }
+}
 
 @-webkit-keyframes slideInLeft {
   0% {
@@ -272,3 +374,55 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
   } 
 }
 
+
+
+/**
+ * Some component specific animations
+ */
+
+.nav-title-slide-ios7 {
+  > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
+    -webkit-transition:all 250ms;
+    -webkit-transition-timing-function: $ios7-timing-function;
+    transition:all 250ms;
+    transition-timing-function: $ios7-timing-function;
+    opacity: 1;
+  }
+  > .ng-enter, &.ng-enter {
+    opacity: 0;
+    -webkit-transform: translate3d(30%, 0, 0);
+  }
+  > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+  > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
+    opacity: 0;
+    -webkit-transform: translate3d(-30%, 0, 0);
+  }
+
+}
+.reverse {
+  .nav-title-slide-ios7 {
+    > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
+      -webkit-transition:all 250ms;
+      -webkit-transition-timing-function: $ios7-timing-function;
+      transition:all 250ms;
+      transition-timing-function: $ios7-timing-function;
+      opacity: 1;
+    }
+    > .ng-enter, &.ng-enter {
+      opacity: 0;
+      -webkit-transform: translate3d(-30%, 0, 0);
+    }
+    > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+      opacity: 1;
+      -webkit-transform: translate3d(0, 0, 0);
+    }
+    > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
+      opacity: 0;
+      -webkit-transform: translate3d(30%, 0, 0);
+    }
+
+  }
+}

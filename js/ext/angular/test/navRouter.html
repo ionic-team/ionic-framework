@@ -1,0 +1,70 @@
+<html ng-app="navTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Nav Bars</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
+  </head>
+  <body>
+    <pane nav-router animation="slide-left-right">
+      <nav-bar class="nav-title-slide-ios7" type="bar-positive" back-button-type="button-icon" back-button-icon="icon ion-arrow-left-c"></nav-bar>
+      <ng-view></ng-view>
+    </pane>
+
+    <script id="page1.html" type="text/ng-template">
+      <nav-page title="'Bears'">
+        <h1>Page 1</h1>
+        <span>{{num}}</span>
+        <a class="button button-pure" nav-back>Back</a>
+        <a class="button button-assertive" href="#/page2">Next</a>
+      </nav-page>
+    </script>
+    <script id="page2.html" type="text/ng-template">
+      <nav-page title="'Beets'">
+        <h1>Page 2</h1>
+        <a class="button button-pure" nav-back>Back</a>
+        <a class="button button-assertive" href="#/page3">Next</a>
+      </nav-page>
+    </script>
+    <script id="page3.html" type="text/ng-template">
+      <nav-page title="'Battlestar Galactica'">
+        <h1>Page 3</h1>
+        <a class="button button-pure" nav-back>Back</a>
+      </nav-page>
+    </script>
+    <script>
+      angular.module('navTest', ['ionic'])
+
+
+      .config(function($routeProvider, $locationProvider) {
+        $routeProvider.when('/', {
+          templateUrl: 'page1.html',
+          controller: 'Page1Ctrl'
+        });
+
+        $routeProvider.when('/page2', {
+          templateUrl: 'page2.html',
+        });
+
+        $routeProvider.when('/page3', {
+          templateUrl: 'page3.html',
+        });
+
+        // configure html5 to get links working on jsfiddle
+        //$locationProvider.html5Mode(true);
+
+      })
+
+      .controller('Page1Ctrl', function($scope) {
+        $scope.num = Math.floor(Math.random() * 100);
+      });
+
+      
+    </script>
+  </body>
+</html>

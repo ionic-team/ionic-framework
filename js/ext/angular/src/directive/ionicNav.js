@@ -2,6 +2,10 @@
 'use strict';
 
 /**
+ * Note: currently unused
+ */
+
+/**
  * @description
  * The NavController is a navigation stack View Controller modelled off of 
  * UINavigationController from Cocoa Touch. With the Nav Controller, you can
