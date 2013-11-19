@@ -2533,8 +2533,7 @@ input[type="range"] {
   -webkit-align-items: center;
   -moz-align-items: center;
   align-items: center;
-  padding: 4px;
-  max-width: 320px; }
+  padding: 2px 4px; }
 
 .range .icon {
   -webkit-box-flex: 0;

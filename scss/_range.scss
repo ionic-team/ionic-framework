@@ -48,8 +48,7 @@ input[type="range"] {
 .range {
   @include display-flex();
   @include align-items(center);
-  padding: 4px;
-  max-width: $range-max-width;
+  padding: 2px 4px;
 }
 
 .range .icon {
