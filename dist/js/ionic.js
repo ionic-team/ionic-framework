@@ -249,39 +249,6 @@ window.ionic = {
       gesture.off(type, callback);
     },
 
-    // // With a click event, we need to check the target
-    // // and if it's an internal target that doesn't want
-    // // a click, cancel it
-    // handleClick: function(e) {
-    //   var target = e.target;
-
-    //   if(ionic.Gestures.HAS_TOUCHEVENTS) {
-    //     // We don't allow any clicks on mobile
-    //     e.preventDefault();
-    //     return false;
-    //   }
-
-    //   if (
-    //     !  target
-    //     || e.which > 1
-    //     || e.metaKey
-    //     || e.ctrlKey
-    //     //|| isScrolling
-    //     // || location.protocol !== target.protocol
-    //     // || location.host     !== target.host
-    //     // // Not sure abotu this one
-    //     // //|| !target.hash && /#/.test(target.href)
-    //     // || target.hash && target.href.replace(target.hash, '') === location.href.replace(location.hash, '')
-    //     //|| target.getAttribute('data-ignore') == 'push'
-    //   ) {
-    //     // Allow it
-    //     return;
-    //   }
-    //   // We need to cancel this one
-    //   e.preventDefault();
-
-    // },
-    
     handlePopState: function(event) {
     },
   };
@@ -293,10 +260,6 @@ window.ionic = {
   ionic.trigger = function() { ionic.EventController.trigger.apply(ionic.EventController.trigger, arguments); };
   ionic.onGesture = function() { return ionic.EventController.onGesture.apply(ionic.EventController.onGesture, arguments); };
   ionic.offGesture = function() { return ionic.EventController.offGesture.apply(ionic.EventController.offGesture, arguments); };
-
-  // DISABLING FOR NOW. THE TAP CODE AT THE EXT LEVEL SHOULD BE DOING THIS
-  // Set up various listeners
-  //window.addEventListener('click', ionic.EventController.handleClick);
 
 })(window.ionic);
 ;
