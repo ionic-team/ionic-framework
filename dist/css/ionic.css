@@ -2571,6 +2571,7 @@ input[type="range"] {
   -moz-flex: 0 1 24px;
   -ms-flex: 0 1 24px;
   flex: 0 1 24px;
+  display: block;
   font-size: 24px;
   min-width: 24px;
   text-align: center; }
@@ -2582,6 +2583,7 @@ input[type="range"] {
   -moz-flex: 0 1 272px;
   -ms-flex: 0 1 272px;
   flex: 0 1 272px;
+  display: block;
   margin-left: 10px;
   margin-right: 10px;
   width: 100%;
