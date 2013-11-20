@@ -1198,9 +1198,8 @@ a.subdued‎ {
   -moz-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  display: inline-block;
+  display: block;
   overflow: hidden;
-  box-sizing: border-box;
   max-width: 150px;
   height: 100%;
   color: inherit;
@@ -2515,9 +2514,9 @@ input[type="range"] {
   height: 4px;
   outline: none;
   border-radius: 4px;
-  background-color: #cccccc;
-  -webkit-appearance: none !important;
-  background-image: -webkit-gradient(linear, left top, right top, color-stop(0, blue), color-stop(0, #cccccc)); }
+  -webkit-appearance: none !important; }
+  input[type="range"] input {
+    background-color: #cccccc; }
   input[type="range"]::-webkit-slider-thumb {
     position: relative;
     width: 20px;
@@ -2547,6 +2546,8 @@ input[type="range"] {
   -moz-align-items: center;
   align-items: center;
   padding: 2px 4px; }
+  .range.range-light input {
+    background-color: #dddddd; }
 
 .range .icon {
   -webkit-box-flex: 0;

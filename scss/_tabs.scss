@@ -70,13 +70,10 @@
 
 .tab-item {
   @include flex(1);
-  display: inline-block;
+  display: block;
   overflow: hidden;
-  box-sizing: border-box;
-  //margin: auto;
-
+  
   max-width: $tab-item-max-width;
-
   height: 100%;
 
   color: inherit;
