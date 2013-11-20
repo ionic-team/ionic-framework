@@ -3649,7 +3649,7 @@ a.button {
   .platform-ios7 .bar-header > * {
     margin-top: 20px; }
 .platform-ios7 .has-header {
-  margin-top: 64px; }
+  top: 64px; }
 
 /*
   Ionicons, v1.3.5
