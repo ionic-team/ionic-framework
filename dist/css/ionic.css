@@ -3342,7 +3342,8 @@ a.button {
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
-  padding: 5px; }
+  padding: 5px;
+  width: 100%; }
 
 /* Vertically Align Columns */
 /* .row-* vertically aligns every .col in the .row */

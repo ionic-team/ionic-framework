@@ -23,6 +23,7 @@
   @include flex(1);
   @include display-flex();
   padding: ($grid-padding-width / 2);
+  width: 100%;
 }
 
 
