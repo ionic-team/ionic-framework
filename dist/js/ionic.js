@@ -1800,15 +1800,15 @@ window.ionic = {
         if(ele.control) {
           return inputTapPolyfill(ele.control, e);
         }
+      } else if( ele.tagName === "A" ) {
+        var href = ele.getAttribute('href');
+        if(href) {
+          ele.click();
+          e.stopPropagation();
+          e.preventDefault();
+          return false;
+        }
       }
-      /* Let ng-click handle this
-      else if( ele.tagName === "A" || ele.tagName === "BUTTON" ) {
-        ele.click();
-        e.stopPropagation();
-        e.preventDefault();
-        return false;
-      }
-      */
       ele = ele.parentElement;
     }
 

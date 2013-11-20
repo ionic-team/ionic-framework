@@ -25296,7 +25296,7 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
 
 var actualLocation = null;
 
-angular.module('ionic.ui.navRouter', [])
+angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
 
 .run(['$rootScope', function($rootScope) {
   $rootScope.stackCursorPosition = 0;
@@ -25620,22 +25620,22 @@ angular.module('ionic.ui.navRouter', [])
   }
 }])
 
-.directive('navBack', ['$window', '$rootScope', function($window, $rootScope) {
+.directive('navBack', ['$window', '$rootScope', 'Gesture', function($window, $rootScope, Gesture) {
   return {
     restrict: 'AC',
     require: '^?navRouter',
     link: function($scope, $element, $attr, navCtrl) {
-      var goBack = function() {
+      var goBack = function(e) {
         // Only trigger back if the stack is greater than zero
         if($rootScope.stackCursorPosition > 0) {
           $window.history.back();
         }
       };
-      $element.bind('tap', goBack);
+      var tapGesture = Gesture.on('tap', goBack, $element);
       $element.bind('click', goBack);
 
       $scope.$on('$destroy', function() {
-        $element.unbind('tap', goBack);
+        Gesture.off(tapGesture, 'tap', goBack);
         $element.unbind('click', goBack);
       });
     }
@@ -25782,7 +25782,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           sideMenuCtrl._handleDrag(e);
         };
 
-        Gesture.on('drag', dragFn, $element);
+        var dragGesture = Gesture.on('drag', dragFn, $element);
 
         var dragReleaseFn = function(e) {
           if(!defaultPrevented) {
@@ -25791,7 +25791,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           defaultPrevented = false;
         };
 
-        Gesture.on('release', dragReleaseFn, $element);
+        var releaseGesture = Gesture.on('release', dragReleaseFn, $element);
 
         sideMenuCtrl.setContent({
           onDrag: function(e) {},
@@ -25817,8 +25817,8 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 
         // Cleanup
         $scope.$on('$destroy', function() {
-          Gesture.off('drag', dragFn);
-          Gesture.off('release', dragReleaseFn);
+          Gesture.off(dragGesture, 'drag', dragFn);
+          Gesture.off(releaseGesture, 'release', dragReleaseFn);
         });
       };
     }

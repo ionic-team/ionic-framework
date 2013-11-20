@@ -70,7 +70,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           sideMenuCtrl._handleDrag(e);
         };
 
-        Gesture.on('drag', dragFn, $element);
+        var dragGesture = Gesture.on('drag', dragFn, $element);
 
         var dragReleaseFn = function(e) {
           if(!defaultPrevented) {
@@ -79,7 +79,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           defaultPrevented = false;
         };
 
-        Gesture.on('release', dragReleaseFn, $element);
+        var releaseGesture = Gesture.on('release', dragReleaseFn, $element);
 
         sideMenuCtrl.setContent({
           onDrag: function(e) {},
@@ -105,8 +105,8 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 
         // Cleanup
         $scope.$on('$destroy', function() {
-          Gesture.off('drag', dragFn);
-          Gesture.off('release', dragReleaseFn);
+          Gesture.off(dragGesture, 'drag', dragFn);
+          Gesture.off(releaseGesture, 'release', dragReleaseFn);
         });
       };
     }
