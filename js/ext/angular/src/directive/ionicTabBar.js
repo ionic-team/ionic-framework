@@ -8,11 +8,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
  */
 
 .controller('TabsCtrl', ['$scope', '$element', '$animate', function($scope, $element, $animate) {
-  var _this = this;
-
-  angular.extend(this, ionic.controllers.TabBarController.prototype);
-
-  ionic.controllers.TabBarController.call(this, {
+  var tabsCtrl = new ionic.controllers.TabBarController({
     controllerChanged: function(oldC, oldI, newC, newI) {
       $scope.controllerChanged && $scope.controllerChanged({
         oldController: oldC,
@@ -28,19 +24,18 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     }
   });
 
-  this.add = function(controller) {
-    this.addController(controller);
-    this.select(0);
+  tabsCtrl.add = function(controller) {
+    tabsCtrl.addController(controller);
+    tabsCtrl.select(0);
   };
 
-  this.select = function(controllerIndex) {
+  tabsCtrl.select = function(controllerIndex) {
     $scope.activeAnimation = $scope.animation;
-    _this.selectController(controllerIndex);
+    tabsCtrl.selectController(controllerIndex);
   };
 
-  $scope.controllers = this.controllers;
-
-  $scope.tabsController = this;
+  $scope.controllers = tabsCtrl.controllers;
+  return $scope.tabsController = tabsCtrl;
 }])
 
 .directive('tabs', function() {
@@ -137,7 +132,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
         });
 
         tabsCtrl.add($scope);
-        
+
         $scope.$watch('isVisible', function(value) {
           if(childElement) {
             $animate.leave(childElement);
@@ -184,9 +179,9 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     transclude: true,
     replace: true,
     scope: true,
-    template: '<div class="tabs">' + 
-      '<tab-controller-item title="{{controller.title}}" icon="{{controller.icon}}" icon-on="{{controller.iconOn}}" icon-off="{{controller.iconOff}}" active="controller.isVisible" index="$index" ng-repeat="controller in controllers"></tab-controller-item>' + 
-    '</div>',
+    template: '<div class="tabs">' +
+      '<tab-controller-item title="{{controller.title}}" icon="{{controller.icon}}" icon-on="{{controller.iconOn}}" icon-off="{{controller.iconOff}}" active="controller.isVisible" index="$index" ng-repeat="controller in controllers"></tab-controller-item>' +
+      '</div>',
     link: function($scope, $element, $attr, tabsCtrl) {
       $element.addClass($scope.tabsType);
       $element.addClass($scope.tabsStyle);
@@ -216,12 +211,12 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
         tabsCtrl.select(scope.index);
       };
     },
-    template: 
+    template:
       '<a ng-class="{active:active}" ng-click="selectTab()" class="tab-item">' +
         '<i class="{{icon}}" ng-if="icon"></i>' +
         '<i class="{{iconOn}}" ng-if="active"></i>' +
         '<i class="{{iconOff}}" ng-if="!active"></i> {{title}}' +
-      '</a>'
+        '</a>'
   };
 })
 
@@ -230,8 +225,8 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     restrict: 'E',
     replace: true,
     transclude: true,
-    template: '<div class="tabs tabs-primary" ng-transclude>' + 
-    '</div>'
+    template: '<div class="tabs tabs-primary" ng-transclude>' +
+      '</div>'
   }
 });
 
