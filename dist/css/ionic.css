@@ -3337,11 +3337,7 @@ a.button {
   -moz-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flexbox;
-  display: flex;
+  display: block;
   padding: 5px;
   width: 100%; }
 
