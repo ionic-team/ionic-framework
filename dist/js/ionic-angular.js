@@ -24219,7 +24219,7 @@ angular.module('ionic.service.platform', [])
 
   var isReady = function() {
     if(platform == 'cordova') {
-      return window.device;
+      return window.device || window.Cordova;
     }
     return true;
   };
@@ -25536,6 +25536,10 @@ angular.module('ionic.ui.navRouter', [])
       $scope.$parent.$on('navRouter.titleChanged', function(e, data) {
         var oldTitle = $scope.currentTitle;
         $scope.oldTitle = oldTitle;
+
+         if(typeof data.title !== 'undefined') {
+          $scope.currentTitle = data.title;
+        }
 
         if(data.animate !== false && typeof data.title !== 'undefined') {
           animate($scope, $element, oldTitle, data, function() {

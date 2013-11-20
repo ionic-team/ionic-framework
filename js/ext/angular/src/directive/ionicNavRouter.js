@@ -260,6 +260,10 @@ angular.module('ionic.ui.navRouter', [])
         var oldTitle = $scope.currentTitle;
         $scope.oldTitle = oldTitle;
 
+         if(typeof data.title !== 'undefined') {
+          $scope.currentTitle = data.title;
+        }
+
         if(data.animate !== false && typeof data.title !== 'undefined') {
           animate($scope, $element, oldTitle, data, function() {
             hb.align();

@@ -20,7 +20,7 @@ angular.module('ionic.service.platform', [])
 
   var isReady = function() {
     if(platform == 'cordova') {
-      return window.device;
+      return window.device || window.Cordova;
     }
     return true;
   };
