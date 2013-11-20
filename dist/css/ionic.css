@@ -643,13 +643,13 @@ address {
   font-style: normal;
   line-height: 1.42857; }
 
-a.subdued‎ {
+a.subdued {
   padding-right: 10px;
   color: #f8f8f8;
   text-decoration: none; }
-  a.subdued‎:hover {
+  a.subdued:hover {
     text-decoration: none; }
-  a.subdued‎:last-child {
+  a.subdued:last-child {
     padding-right: 0; }
 
 /**
