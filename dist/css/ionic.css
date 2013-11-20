@@ -2507,6 +2507,7 @@ input[type="checkbox"][readonly] {
  * --------------------------------------------------
  */
 input[type="range"] {
+  background-color: #cccccc;
   display: inline-block;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -2515,8 +2516,6 @@ input[type="range"] {
   outline: none;
   border-radius: 4px;
   -webkit-appearance: none !important; }
-  input[type="range"] input {
-    background-color: #cccccc; }
   input[type="range"]::-webkit-slider-thumb {
     position: relative;
     width: 20px;
@@ -2548,6 +2547,22 @@ input[type="range"] {
   padding: 2px 4px; }
   .range.range-light input {
     background-color: #dddddd; }
+  .range.range-stable input {
+    background-color: #b2b2b2; }
+  .range.range-positive input {
+    background-color: #4a87ee; }
+  .range.range-calm input {
+    background-color: #43cee6; }
+  .range.range-balanced input {
+    background-color: #66cc33; }
+  .range.range-assertive input {
+    background-color: #ef4e3a; }
+  .range.range-energized input {
+    background-color: #f0b840; }
+  .range.range-royal input {
+    background-color: #8a6de9; }
+  .range.range-dark input {
+    background-color: #444444; }
 
 .range .icon {
   -webkit-box-flex: 0;

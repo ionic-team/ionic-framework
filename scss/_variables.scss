@@ -442,13 +442,23 @@ $checkbox-check-color:            #fff;
 // Range
 // -------------------------------
 
-$range-track-height:           4px;
-$range-track-color:            #ccc;
-$range-slider-width:           20px;
-$range-slider-height:          20px;
-$range-slider-border-radius:   10px;
-$range-icon-size:              24px;
-$range-max-width:              320px;
+$range-track-height:           4px !default;
+$range-slider-width:           20px !default;
+$range-slider-height:          20px !default;
+$range-slider-border-radius:   10px !default;
+$range-icon-size:              24px !default;
+$range-max-width:              320px !default;
+
+$range-light-track-bg:         $button-light-border !default;
+$range-stable-track-bg:        $button-stable-border !default;
+$range-positive-track-bg:      $button-positive-bg !default;
+$range-calm-track-bg:          $button-calm-bg !default;
+$range-balanced-track-bg:      $button-balanced-bg !default;
+$range-assertive-track-bg:     $button-assertive-bg !default;
+$range-energized-track-bg:     $button-energized-bg !default;
+$range-royal-track-bg:         $button-royal-bg !default;
+$range-dark-track-bg:          $button-dark-bg !default;
+$range-default-track-bg:       #ccc !default;
 
 
 // Menus

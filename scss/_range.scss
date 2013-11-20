@@ -5,6 +5,7 @@
  */
 
 input[type="range"] {
+  @include range-style($range-default-track-bg);
   display: inline-block;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -12,16 +13,7 @@ input[type="range"] {
   height: $range-track-height;
   outline: none;
   border-radius: $range-track-height;
-  background-color: $range-track-color;
   -webkit-appearance: none !important;
-
-  background-image: -webkit-gradient(
-      linear,
-      left top,
-      right top,
-      color-stop(0.0, blue),
-      color-stop(0.0, $range-track-color)
-  );
 
   &::-webkit-slider-thumb {
     position: relative;
@@ -42,13 +34,41 @@ input[type="range"] {
     padding: 25px;
     content: ' ';
   }
-  
+
 }
 
 .range {
   @include display-flex();
   @include align-items(center);
   padding: 2px 4px;
+
+  &.range-light {
+    input { @include range-style($range-light-track-bg); }
+  }
+  &.range-stable {
+    input { @include range-style($range-stable-track-bg); }
+  }
+  &.range-positive {
+    input { @include range-style($range-positive-track-bg); }
+  }
+  &.range-calm {
+    input { @include range-style($range-calm-track-bg); }
+  }
+  &.range-balanced {
+    input { @include range-style($range-balanced-track-bg); }
+  }
+  &.range-assertive {
+    input { @include range-style($range-assertive-track-bg); }
+  }
+  &.range-energized {
+    input { @include range-style($range-energized-track-bg); }
+  }
+  &.range-royal {
+    input { @include range-style($range-royal-track-bg); }
+  }
+  &.range-dark {
+    input { @include range-style($range-dark-track-bg); }
+  }
 }
 
 .range .icon {
