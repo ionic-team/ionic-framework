@@ -934,8 +934,12 @@ a.subdued {
   .bar-light .button.button-clear {
     color: white;
     background: none;
+    border-color: transparent;
     box-shadow: none;
     font-size: 18px; }
+  .bar-light .button.button-icon {
+    background: none;
+    border-color: transparent; }
 
 .bar-stable .button {
   color: #444444;
@@ -951,8 +955,12 @@ a.subdued {
   .bar-stable .button.button-clear {
     color: white;
     background: none;
+    border-color: transparent;
     box-shadow: none;
     font-size: 18px; }
+  .bar-stable .button.button-icon {
+    background: none;
+    border-color: transparent; }
 
 .bar-positive .button {
   color: white;
@@ -968,8 +976,12 @@ a.subdued {
   .bar-positive .button.button-clear {
     color: white;
     background: none;
+    border-color: transparent;
     box-shadow: none;
     font-size: 18px; }
+  .bar-positive .button.button-icon {
+    background: none;
+    border-color: transparent; }
 
 .bar-calm .button {
   color: white;
@@ -985,8 +997,12 @@ a.subdued {
   .bar-calm .button.button-clear {
     color: white;
     background: none;
+    border-color: transparent;
     box-shadow: none;
     font-size: 18px; }
+  .bar-calm .button.button-icon {
+    background: none;
+    border-color: transparent; }
 
 .bar-assertive .button {
   color: white;
@@ -1002,8 +1018,12 @@ a.subdued {
   .bar-assertive .button.button-clear {
     color: white;
     background: none;
+    border-color: transparent;
     box-shadow: none;
     font-size: 18px; }
+  .bar-assertive .button.button-icon {
+    background: none;
+    border-color: transparent; }
 
 .bar-balanced .button {
   color: white;
@@ -1019,8 +1039,12 @@ a.subdued {
   .bar-balanced .button.button-clear {
     color: white;
     background: none;
+    border-color: transparent;
     box-shadow: none;
     font-size: 18px; }
+  .bar-balanced .button.button-icon {
+    background: none;
+    border-color: transparent; }
 
 .bar-energized .button {
   color: white;
@@ -1036,8 +1060,12 @@ a.subdued {
   .bar-energized .button.button-clear {
     color: white;
     background: none;
+    border-color: transparent;
     box-shadow: none;
     font-size: 18px; }
+  .bar-energized .button.button-icon {
+    background: none;
+    border-color: transparent; }
 
 .bar-royal .button {
   color: white;
@@ -1053,8 +1081,12 @@ a.subdued {
   .bar-royal .button.button-clear {
     color: white;
     background: none;
+    border-color: transparent;
     box-shadow: none;
     font-size: 18px; }
+  .bar-royal .button.button-icon {
+    background: none;
+    border-color: transparent; }
 
 .bar-dark .button {
   color: white;
@@ -1070,8 +1102,12 @@ a.subdued {
   .bar-dark .button.button-clear {
     color: white;
     background: none;
+    border-color: transparent;
     box-shadow: none;
     font-size: 18px; }
+  .bar-dark .button.button-icon {
+    background: none;
+    border-color: transparent; }
 
 .bar-header {
   top: 0;
@@ -2503,14 +2539,20 @@ input[type="checkbox"][readonly] {
  * --------------------------------------------------
  */
 input[type="range"] {
-  background-color: #cccccc;
   display: inline-block;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  overflow: hidden;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-right: 2px;
+  padding-left: 1px;
   width: auto;
   height: 4px;
+  height: 35px;
   outline: none;
-  border-radius: 4px;
+  background: linear-gradient(to right, #cccccc 0%, #cccccc 100%);
+  background-position: center;
+  background-size: 96% 4px;
+  background-repeat: no-repeat;
   -webkit-appearance: none !important; }
   input[type="range"]::-webkit-slider-thumb {
     position: relative;
@@ -2518,9 +2560,18 @@ input[type="range"] {
     height: 20px;
     border-radius: 10px;
     background-color: white;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 0 5px 6px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 1px 3px 5px rgba(0, 0, 0, 0.25);
     cursor: pointer;
     -webkit-appearance: none !important; }
+  input[type="range"]::-webkit-slider-thumb:before {
+    /* what creates the colorful line on the left side of the slider */
+    position: absolute;
+    top: 8px;
+    left: -320px;
+    width: 320px;
+    height: 4px;
+    background: #444444;
+    content: ' '; }
   input[type="range"]::-webkit-slider-thumb:after {
     /* create a larger (but hidden) hit area */
     position: absolute;
@@ -2541,24 +2592,24 @@ input[type="range"] {
   -moz-align-items: center;
   align-items: center;
   padding: 2px 4px; }
-  .range.range-light input {
-    background-color: #dddddd; }
-  .range.range-stable input {
-    background-color: #b2b2b2; }
-  .range.range-positive input {
-    background-color: #4a87ee; }
-  .range.range-calm input {
-    background-color: #43cee6; }
-  .range.range-balanced input {
-    background-color: #66cc33; }
-  .range.range-assertive input {
-    background-color: #ef4e3a; }
-  .range.range-energized input {
-    background-color: #f0b840; }
-  .range.range-royal input {
-    background-color: #8a6de9; }
-  .range.range-dark input {
-    background-color: #444444; }
+  .range.range-light input::-webkit-slider-thumb:before {
+    background: #dddddd; }
+  .range.range-stable input::-webkit-slider-thumb:before {
+    background: #b2b2b2; }
+  .range.range-positive input::-webkit-slider-thumb:before {
+    background: #4a87ee; }
+  .range.range-calm input::-webkit-slider-thumb:before {
+    background: #43cee6; }
+  .range.range-balanced input::-webkit-slider-thumb:before {
+    background: #66cc33; }
+  .range.range-assertive input::-webkit-slider-thumb:before {
+    background: #ef4e3a; }
+  .range.range-energized input::-webkit-slider-thumb:before {
+    background: #f0b840; }
+  .range.range-royal input::-webkit-slider-thumb:before {
+    background: #8a6de9; }
+  .range.range-dark input::-webkit-slider-thumb:before {
+    background: #444444; }
 
 .range .icon {
   -webkit-box-flex: 0;
@@ -2568,9 +2619,9 @@ input[type="range"] {
   -ms-flex: 0 1 24px;
   flex: 0 1 24px;
   display: block;
-  font-size: 24px;
   min-width: 24px;
-  text-align: center; }
+  text-align: center;
+  font-size: 24px; }
 
 .range input {
   -webkit-box-flex: 0;
@@ -2580,10 +2631,10 @@ input[type="range"] {
   -ms-flex: 0 1 272px;
   flex: 0 1 272px;
   display: block;
-  margin-left: 10px;
   margin-right: 10px;
-  width: 100%;
-  max-width: 320px; }
+  margin-left: 10px;
+  max-width: 320px;
+  width: 100%; }
 
 /**
  * Buttons
@@ -2638,7 +2689,11 @@ input[type="range"] {
     .button.button-light.button-clear {
       color: #dddddd;
       background: none;
+      border-color: transparent;
       box-shadow: none; }
+    .button.button-light.button-icon {
+      background: none;
+      border-color: transparent; }
     .button.button-light.button-outline {
       background: transparent;
       border-color: #dddddd;
@@ -2661,7 +2716,11 @@ input[type="range"] {
     .button.button-stable.button-clear {
       color: #b2b2b2;
       background: none;
+      border-color: transparent;
       box-shadow: none; }
+    .button.button-stable.button-icon {
+      background: none;
+      border-color: transparent; }
     .button.button-stable.button-outline {
       background: transparent;
       border-color: #b2b2b2;
@@ -2684,7 +2743,11 @@ input[type="range"] {
     .button.button-positive.button-clear {
       color: #4a87ee;
       background: none;
+      border-color: transparent;
       box-shadow: none; }
+    .button.button-positive.button-icon {
+      background: none;
+      border-color: transparent; }
     .button.button-positive.button-outline {
       background: transparent;
       border-color: #4a87ee;
@@ -2707,7 +2770,11 @@ input[type="range"] {
     .button.button-calm.button-clear {
       color: #43cee6;
       background: none;
+      border-color: transparent;
       box-shadow: none; }
+    .button.button-calm.button-icon {
+      background: none;
+      border-color: transparent; }
     .button.button-calm.button-outline {
       background: transparent;
       border-color: #43cee6;
@@ -2730,7 +2797,11 @@ input[type="range"] {
     .button.button-assertive.button-clear {
       color: #ef4e3a;
       background: none;
+      border-color: transparent;
       box-shadow: none; }
+    .button.button-assertive.button-icon {
+      background: none;
+      border-color: transparent; }
     .button.button-assertive.button-outline {
       background: transparent;
       border-color: #ef4e3a;
@@ -2753,7 +2824,11 @@ input[type="range"] {
     .button.button-balanced.button-clear {
       color: #66cc33;
       background: none;
+      border-color: transparent;
       box-shadow: none; }
+    .button.button-balanced.button-icon {
+      background: none;
+      border-color: transparent; }
     .button.button-balanced.button-outline {
       background: transparent;
       border-color: #66cc33;
@@ -2776,7 +2851,11 @@ input[type="range"] {
     .button.button-energized.button-clear {
       color: #f0b840;
       background: none;
+      border-color: transparent;
       box-shadow: none; }
+    .button.button-energized.button-icon {
+      background: none;
+      border-color: transparent; }
     .button.button-energized.button-outline {
       background: transparent;
       border-color: #f0b840;
@@ -2799,7 +2878,11 @@ input[type="range"] {
     .button.button-royal.button-clear {
       color: #8a6de9;
       background: none;
+      border-color: transparent;
       box-shadow: none; }
+    .button.button-royal.button-icon {
+      background: none;
+      border-color: transparent; }
     .button.button-royal.button-outline {
       background: transparent;
       border-color: #8a6de9;
@@ -2822,7 +2905,11 @@ input[type="range"] {
     .button.button-dark.button-clear {
       color: #444444;
       background: none;
+      border-color: transparent;
       box-shadow: none; }
+    .button.button-dark.button-icon {
+      background: none;
+      border-color: transparent; }
     .button.button-dark.button-outline {
       background: transparent;
       border-color: #444444;
@@ -2857,7 +2944,7 @@ input[type="range"] {
   padding: 0 6px;
   min-width: initial;
   background: none;
-  border: none;
+  border-color: transparent;
   background: none; }
   .button-icon.button:active, .button-icon.button.active {
     background: none;
@@ -2871,13 +2958,17 @@ input[type="range"] {
   transition: opacity 0.1s;
   padding: 0 6px;
   max-height: 42px;
-  border: none;
+  border-color: transparent;
   background: none;
   box-shadow: none; }
   .button-clear.button-clear {
     color: #b2b2b2;
     background: none;
+    border-color: transparent;
     box-shadow: none; }
+  .button-clear.button-icon {
+    background: none;
+    border-color: transparent; }
   .button-clear:active, .button-clear.active {
     opacity: 0.3; }
 

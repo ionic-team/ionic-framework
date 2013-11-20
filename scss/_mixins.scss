@@ -109,7 +109,9 @@
 // --------------------------------------------------
 
 @mixin range-style($track-bg-color) {
-  background-color: $track-bg-color;
+  &::-webkit-slider-thumb:before {
+    background: $track-bg-color;
+  }
 }
 
 
