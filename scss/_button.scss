@@ -129,7 +129,7 @@
   padding: 0 6px;
   min-width: initial;
   background: none;
-  border: none;
+  border-color: transparent;
   background: none;
 
   &.button:active, &.button.active {
@@ -148,7 +148,7 @@
   @include transition(opacity .1s);
   padding: 0 $button-clear-padding;
   max-height: $button-height;
-  border: none;
+  border-color: transparent;
   background: none;
   box-shadow: none;
 

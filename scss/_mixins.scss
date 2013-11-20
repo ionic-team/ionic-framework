@@ -23,11 +23,16 @@
   &.button-clear {
     color: $color;
     background: none;
+    border-color: transparent;
     box-shadow: none;
 
     @if $font-size != "" {
       font-size: $font-size;
     }
+  }
+  &.button-icon {
+    background: none;
+    border-color: transparent;
   }
 }
 
