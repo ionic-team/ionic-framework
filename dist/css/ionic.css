@@ -30,7 +30,7 @@ h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
-b, u, center,
+b, i, u, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
@@ -196,7 +196,7 @@ sub {
 fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
-  border: 1px solid silver; }
+  border: 1px solid #c0c0c0; }
 
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
@@ -600,9 +600,6 @@ dd {
 dt {
   font-weight: bold; }
 
-dd {
-  margin-left: 0; }
-
 blockquote {
   margin: 0 0 20px;
   padding: 10px 20px;
@@ -645,7 +642,7 @@ address {
 
 a.subdued‎ {
   padding-right: 10px;
-  color: #f8f8f8;
+  color: #888;
   text-decoration: none; }
   a.subdued‎:hover {
     text-decoration: none; }
@@ -2343,7 +2340,7 @@ input[type="checkbox"][readonly] {
     border-radius: 50%;
     background: white;
     content: ' ';
-    transition: background-color 0.1s ease-in-out; }
+    transition: background-color .1s ease-in-out; }
 
 /* the checkmark within the box */
 .checkbox input:after {
@@ -2358,7 +2355,7 @@ input[type="checkbox"][readonly] {
   border-right: 0;
   content: ' ';
   opacity: 0;
-  transition: opacity 0.05s ease-in-out;
+  transition: opacity .05s ease-in-out;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg); }
 
@@ -2866,7 +2863,7 @@ input[type="range"] {
   .button-icon.button:active, .button-icon.button.active {
     background: none;
     box-shadow: none;
-    text-shadow: 0px 0px 10px white; }
+    text-shadow: 0px 0px 10px #fff; }
   .button-icon .icon {
     font-size: 32px; }
 
@@ -3666,7 +3663,7 @@ a.button {
 .platform-ios7 .has-header {
   top: 64px; }
 
-/*
+/*!
   Ionicons, v1.3.5
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
   https://twitter.com/helloimben  https://twitter.com/ionicframework

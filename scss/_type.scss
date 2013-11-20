@@ -93,9 +93,6 @@ dd {
 dt {
   font-weight: bold;
 }
-dd {
-  margin-left: 0; // Undo browser default;
-}
 
 
 // Blockquotes
@@ -169,8 +166,8 @@ address {
 // -------------------------
 
 a.subdued‎ {
-  padding-right:10px;
-  color: $stable;
+  padding-right: 10px;
+  color: #888;
   text-decoration: none;
 
   &:hover {
