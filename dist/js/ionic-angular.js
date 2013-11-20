@@ -24592,8 +24592,10 @@ angular.module('ionic.ui.content', [])
       return function($scope, $element, $attr) {
         var c = $element.eq(0);
 
-        if(attr.padding) {
-          c.addClass('padding');
+        var scroll = $element[0].querySelector('.scroll');
+
+        if(scroll && attr.padding) {
+          scroll.classList.add('padding');
         }
 
         if(attr.hasHeader == "true") {
