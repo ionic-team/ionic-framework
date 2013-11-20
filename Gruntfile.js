@@ -48,6 +48,7 @@ module.exports = function(grunt) {
       },
       distAngular: {
         src: [
+          'js/_license.js',
           'vendor/angular/1.2.1/angular.js',
           'vendor/angular/1.2.1/angular-animate.js',
           'vendor/angular/1.2.1/angular-resource.js',

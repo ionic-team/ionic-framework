@@ -1,4 +1,18 @@
 /**
+ * Copyright 2013 Drifty Co.
+ * http://drifty.com/
+
+ * Ionic - a powerful HTML5 mobile app framework.
+ * http://ionicframework.com/
+ *
+ *
+ * By @maxlynch, @helloimben, @adamdbradley <3
+ *
+ * Licensed under the MIT license. Please see LICENSE for more information.
+ * 
+ */
+;
+/**
  * @license AngularJS v1.2.1
  * (c) 2010-2012 Google, Inc. http://angularjs.org
  * License: MIT
