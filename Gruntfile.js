@@ -62,13 +62,6 @@ module.exports = function(grunt) {
         dest: 'dist/js/<%= pkg.name %>-angular.js'
       }
     },
-    copy: {
-      ionicons: {
-        files: [
-          { expand: true, src: ['vendor/ionicons/fonts/*'], dest: 'dist/fonts/', flatten: true}
-        ]
-      }
-    },
     jshint: {
       files: ['Gruntfile.js', 'js/**/*.js', 'test/**/*.js'],
       options: {
