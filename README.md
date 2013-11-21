@@ -21,8 +21,6 @@ of great solutions that work well for websites, like [jQuery Mobile](http://jque
 
 Ionic is also not a good solution if you need to support older generation devices. Our compatibility *starts* at iOS 6 and Android 4.2. We will never support devices older than this.
 
-===============
-
 
 ## Quick Start
 
@@ -45,10 +43,33 @@ way is to use Python:
     http://localhost:8000/example/
 
     http://localhost:8000/test/
+
+
+## Community
+
+* Follow [@ionicframework on Twitter](https://twitter.com/ionicframework).
+* Have a question that's not a feature request or bug report? [Discuss on the Ionic Forum](http://forum.ionicframework.com/).
+* Read our [Blog](http://ionicframework.com/blog/).
+* Have a feature request for find a bug? [Submit an issue](https://github.com/driftyco/ionic/issues).
+
+
+## Authors
+
+**Max Lynch**
+
++ <https://twitter.com/maxlynch>
++ <https://github.com/mlynch>
+
+**Ben Sperry**
+
++ <https://twitter.com/helloimben>
++ <https://github.com/bensperry>
+
+**Adam Bradley**
+
++ <https://twitter.com/adamdbradley>
++ <https://github.com/adamdbradley>
    
-
-
-===============
 
 ## LICENSE
 
