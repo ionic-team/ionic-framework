@@ -48,6 +48,7 @@ way is to use Python:
 ## Community
 
 * Follow [@ionicframework on Twitter](https://twitter.com/ionicframework).
+* Subscribe to the [Ionic Newsletter](http://ionicframework.com/subscribe/).
 * Have a question that's not a feature request or bug report? [Discuss on the Ionic Forum](http://forum.ionicframework.com/).
 * Read our [Blog](http://ionicframework.com/blog/).
 * Have a feature request for find a bug? [Submit an issue](https://github.com/driftyco/ionic/issues).
