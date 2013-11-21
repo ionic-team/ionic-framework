@@ -5,14 +5,20 @@
  */
 
 input[type="range"] {
-  @include range-style($range-default-track-bg);
   display: inline-block;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  overflow: hidden;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-right: 2px;
+  padding-left: 1px;
   width: auto;
   height: $range-track-height;
+  height: $range-slider-height + 15;
   outline: none;
-  border-radius: $range-track-height;
+  background: linear-gradient(to right, $range-default-track-bg 0%, $range-default-track-bg 100%);
+  background-position: center;
+  background-size: 96% $range-track-height;
+  background-repeat: no-repeat;
   -webkit-appearance: none !important;
 
   &::-webkit-slider-thumb {
@@ -21,9 +27,20 @@ input[type="range"] {
     height: $range-slider-height;
     border-radius: $range-slider-border-radius;
     background-color: $toggle-handle-off-bg-color;
-    box-shadow: 0 0 2px rgba(0,0,0,.5), 0 5px 6px rgba(0,0,0,0.25);
+    box-shadow: 0 0 2px rgba(0,0,0,.5), 1px 3px 5px rgba(0,0,0,0.25);
     cursor: pointer;
     -webkit-appearance: none !important;
+  }
+
+  &::-webkit-slider-thumb:before {
+    /* what creates the colorful line on the left side of the slider */
+    position: absolute;
+    top: ($range-slider-height / 2) - ($range-track-height / 2);
+    left: $range-max-width * -1;
+    width: $range-max-width;
+    height: $range-track-height;
+    background: $dark;
+    content: ' ';
   }
 
   &::-webkit-slider-thumb:after {
@@ -74,16 +91,16 @@ input[type="range"] {
 .range .icon {
   @include flex(0, 1, $range-icon-size);
   display: block;
-  font-size: $range-icon-size;
   min-width: $range-icon-size;
   text-align: center;
+  font-size: $range-icon-size;
 }
 
 .range input {
   @include flex(0, 1, $range-max-width - ($range-icon-size * 2));
   display: block;
-  margin-left: 10px;
   margin-right: 10px;
-  width: 100%;
+  margin-left: 10px;
   max-width: $range-max-width;
+  width: 100%;
 }

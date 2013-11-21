@@ -23,11 +23,16 @@
   &.button-clear {
     color: $color;
     background: none;
+    border-color: transparent;
     box-shadow: none;
 
     @if $font-size != "" {
       font-size: $font-size;
     }
+  }
+  &.button-icon {
+    background: none;
+    border-color: transparent;
   }
 }
 
@@ -78,11 +83,13 @@
 // Item Mixins
 // --------------------------------------------------
 
-@mixin item-style($bg-color, $border-color, $color, $active-bg-color, $active-border-color) {
+@mixin item-style($bg-color, $border-color, $color) {
   color: $color;
   background-color: $bg-color;
   border-color: $border-color;
+}
 
+@mixin item-active-style($active-bg-color, $active-border-color) {
   &.active, 
   .ionic-pseudo &:active {
     background-color: $active-bg-color;
@@ -104,7 +111,9 @@
 // --------------------------------------------------
 
 @mixin range-style($track-bg-color) {
-  background-color: $track-bg-color;
+  &::-webkit-slider-thumb:before {
+    background: $track-bg-color;
+  }
 }
 
 
