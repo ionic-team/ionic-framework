@@ -149,6 +149,8 @@ button.item.item-complex {
    */
   position: relative;
 
+  background-color: white;
+
   z-index: 2;
   padding: $item-padding (($item-padding * 3) - 5) $item-padding $item-padding;
 
