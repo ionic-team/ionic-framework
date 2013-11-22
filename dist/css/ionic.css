@@ -1139,6 +1139,7 @@ a.subdued {
 .tabs {
   display: -webkit-box;
   display: -webkit-flex;
+  display: -moz-box;
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
@@ -1294,6 +1295,7 @@ a.subdued {
 .item.tabs {
   display: -webkit-box;
   display: -webkit-flex;
+  display: -moz-box;
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
@@ -1592,6 +1594,7 @@ button.item.item-complex {
 .item-icon-right .icon {
   display: -webkit-box;
   display: -webkit-flex;
+  display: -moz-box;
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
@@ -1646,6 +1649,7 @@ button.item.item-complex {
 .item-button-left .item-content > .button {
   display: -webkit-box;
   display: -webkit-flex;
+  display: -moz-box;
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
@@ -1676,6 +1680,7 @@ button.item.item-button-right {
 .item-button-right .item-content > .button {
   display: -webkit-box;
   display: -webkit-flex;
+  display: -moz-box;
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
@@ -1712,6 +1717,7 @@ button.item:after {
   /* By default, both <a> and <button> have right side arrow icons */
   display: -webkit-box;
   display: -webkit-flex;
+  display: -moz-box;
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
@@ -1833,6 +1839,7 @@ button.item-button-right:after {
     .item-edit .button .icon, .item-edit .button i {
       display: -webkit-box;
       display: -webkit-flex;
+      display: -moz-box;
       display: -moz-flex;
       display: -ms-flexbox;
       display: flex;
@@ -1874,6 +1881,7 @@ button.item-button-right:after {
     .item-drag .button .icon, .item-drag .button i {
       display: -webkit-box;
       display: -webkit-flex;
+      display: -moz-box;
       display: -moz-flex;
       display: -ms-flexbox;
       display: flex;
@@ -2100,6 +2108,7 @@ button.item-button-right:after {
 .split-pane {
   display: -webkit-box;
   display: -webkit-flex;
+  display: -moz-box;
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
@@ -2172,6 +2181,7 @@ textarea {
 .item-input {
   display: -webkit-box;
   display: -webkit-flex;
+  display: -moz-box;
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
@@ -2415,6 +2425,7 @@ input[type="checkbox"][readonly] {
 .item-checkbox .checkbox {
   display: -webkit-box;
   display: -webkit-flex;
+  display: -moz-box;
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
@@ -2585,6 +2596,7 @@ input[type="range"] {
 .range {
   display: -webkit-box;
   display: -webkit-flex;
+  display: -moz-box;
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
@@ -3025,21 +3037,11 @@ a.button {
 .button-bar {
   display: -webkit-box;
   display: -webkit-flex;
+  display: -moz-box;
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -moz-box-flex: 1;
-  -moz-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  -webkit-box-direction: normal;
-  -webkit-box-orient: horizontal;
-  -webkit-flex-direction: horizontal;
-  -moz-flex-direction: horizontal;
-  -ms-flex-direction: horizontal;
-  flex-direction: horizontal; }
+  width: 100%; }
 
 .button-bar > .button {
   -webkit-box-flex: 1;
@@ -3048,9 +3050,9 @@ a.button {
   -moz-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  display: block;
   overflow: hidden;
   padding: 0 16px;
-  width: 0;
   border-width: 1px 0px 1px 1px;
   border-radius: 0;
   text-align: center;
@@ -3412,10 +3414,12 @@ a.button {
 .row {
   display: -webkit-box;
   display: -webkit-flex;
+  display: -moz-box;
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
-  padding: 5px; }
+  padding: 5px;
+  width: 100%; }
 
 .row + .row {
   margin-top: -5px;

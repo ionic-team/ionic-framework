@@ -6,19 +6,16 @@
 
 .button-bar {
   @include display-flex();
-  @include flex(1);
-  @include flex-direction(horizontal);
+  width: 100%;
 }
 
 .button-bar > .button {
   @include flex(1);
+  display: block;
   
   overflow: hidden;
 
   padding: 0 16px;
-
-  // Fix for unequal widths of buttons
-  width: 0;
 
   border-width: 1px 0px 1px 1px;
   border-radius: 0;
