@@ -19,7 +19,7 @@ worrying about supporting marginal, slow devices.
 It's important to realize that Ionic is not a replacement for frameworks used for building mobile web apps. There are a lot
 of great solutions that work well for websites, like [jQuery Mobile](http://jquerymobile.com/).
 
-Ionic is also not a good solution if you need to support older generation devices. Our compatibility *starts* at iOS 6 and Android 4.2. We will never support devices older than this.
+Ionic is also not a good solution if you need to support older generation devices. Our compatibility *starts* at iOS 6 and Android 4.1. We will never support devices older than this.
 
 
 ## Quick Start
