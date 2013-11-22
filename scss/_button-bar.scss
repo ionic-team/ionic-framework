@@ -6,6 +6,7 @@
 
 .button-bar {
   @include display-flex();
+  @include flex(1);
   width: 100%;
 }
 
@@ -16,6 +17,8 @@
   overflow: hidden;
 
   padding: 0 16px;
+
+  width: 0;
 
   border-width: 1px 0px 1px 1px;
   border-radius: 0;

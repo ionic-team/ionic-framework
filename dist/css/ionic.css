@@ -3041,6 +3041,12 @@ a.button {
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -moz-box-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
   width: 100%; }
 
 .button-bar > .button {
@@ -3053,6 +3059,7 @@ a.button {
   display: block;
   overflow: hidden;
   padding: 0 16px;
+  width: 0;
   border-width: 1px 0px 1px 1px;
   border-radius: 0;
   text-align: center;
