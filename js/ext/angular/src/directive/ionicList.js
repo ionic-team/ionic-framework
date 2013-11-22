@@ -201,6 +201,8 @@ angular.module('ionic.ui.list', ['ngAnimate'])
         }
       });
 
+      $scope.listView = lv;
+
       if($attr.refreshComplete) {
         $scope.refreshComplete = function() {
           lv.doneRefreshing();
