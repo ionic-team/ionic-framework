@@ -126,6 +126,7 @@
 }
 
 .button-icon {
+  @include transition(opacity .1s);
   padding: 0 6px;
   min-width: initial;
   background: none;
@@ -134,8 +135,9 @@
 
   &.button:active, &.button.active {
     background: none;
+    border-color: transparent;
+    opacity: 0.3;
     box-shadow: none;
-    text-shadow: 0px 0px 10px #fff;
   }
 
   .icon {

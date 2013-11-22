@@ -2955,6 +2955,8 @@ input[type="range"] {
     padding-bottom: 2px; }
 
 .button-icon {
+  -webkit-transition: opacity 0.1s;
+  transition: opacity 0.1s;
   padding: 0 6px;
   min-width: initial;
   background: none;
@@ -2962,8 +2964,9 @@ input[type="range"] {
   background: none; }
   .button-icon.button:active, .button-icon.button.active {
     background: none;
-    box-shadow: none;
-    text-shadow: 0px 0px 10px #fff; }
+    border-color: transparent;
+    opacity: 0.3;
+    box-shadow: none; }
   .button-icon .icon {
     font-size: 32px; }
 
