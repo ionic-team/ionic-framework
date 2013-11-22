@@ -23,7 +23,20 @@
       return null
     },
 
-    getChildIndex: function(element) {
+    getChildIndex: function(element, type) {
+      if(type) {
+        var ch = element.parentNode.children;
+        var c;
+        for(var i = 0, k = 0, j = ch.length; i < j; i++) {
+          c = ch[i];
+          if(c.nodeName && c.nodeName.toLowerCase() == type) {
+            if(c == element) {
+              return k;
+            }
+            k++;
+          }
+        }
+      }
       return Array.prototype.slice.call(element.parentNode.children).indexOf(element);
     },
     swapNodes: function(src, dest) {

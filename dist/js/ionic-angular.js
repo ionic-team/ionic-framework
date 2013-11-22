@@ -24851,6 +24851,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       hasPullToRefresh: '@',
       onRefresh: '&',
       onRefreshOpening: '&',
+      onReorder: '&',
       refreshComplete: '='
     },
 
@@ -24879,6 +24880,12 @@ angular.module('ionic.ui.list', ['ngAnimate'])
         onRefreshOpening: function(amt) {
           $scope.onRefreshOpening({amount: amt});
           $scope.$parent.$broadcast('scroll.onRefreshOpening', amt);
+        },
+        onReorder: function(el, oldIndex, newIndex) {
+          console.log('Moved', el,oldIndex,newIndex);
+          $scope.$apply(function() {
+            $scope.onReorder({el: el, start: oldIndex, end: newIndex});
+          });
         }
       });
 

@@ -151,6 +151,7 @@
 
   var ReorderDrag = function(opts) {
     this.dragThresholdY = opts.dragThresholdY || 0;
+    this.onReorder = opts.onReorder;
     this.el = opts.el;
   };
 
@@ -163,6 +164,8 @@
     // Grab the starting Y point for the item
     var offsetY = this.el.offsetTop;//parseFloat(this.el.style.webkitTransform.replace('translate3d(', '').split(',')[1]) || 0;
 
+    var startIndex = ionic.DomUtil.getChildIndex(this.el, this.el.nodeName.toLowerCase());
+
     var placeholder = this.el.cloneNode(true);
 
     placeholder.classList.add(ITEM_PLACEHOLDER_CLASS);
@@ -171,9 +174,9 @@
 
     this.el.classList.add(ITEM_REORDERING_CLASS);
 
-
     this._currentDrag = {
       startOffsetTop: offsetY,
+      startIndex: startIndex,
       placeholder: placeholder
     };
   };
@@ -239,9 +242,11 @@
     this.el.classList.remove(ITEM_REORDERING_CLASS);
     this.el.style.top = 0;
 
-    var finalPosition = ionic.DomUtil.getChildIndex(placeholder);
+    var finalPosition = ionic.DomUtil.getChildIndex(placeholder, placeholder.nodeName.toLowerCase());
     placeholder.parentNode.insertBefore(this.el, placeholder);
     placeholder.parentNode.removeChild(placeholder);
+
+    this.onReorder && this.onReorder(this.el, this._currentDrag.startIndex, finalPosition);
 
     this._currentDrag = null;
     doneCallback && doneCallback();
@@ -258,6 +263,7 @@
       var _this = this;
 
       opts = ionic.extend({
+        onReorder: function(el, oldIndex, newIndex) {},
         virtualRemoveThreshold: -200,
         virtualAddThreshold: 200
       }, opts);
@@ -381,7 +387,12 @@
         var item = this._getItem(e.target);
 
         if(item) {
-          this._dragOp = new ReorderDrag({ el: item });
+          this._dragOp = new ReorderDrag({
+            el: item,
+            onReorder: function(el, start, end) {
+              _this.onReorder && _this.onReorder(el, start, end);
+            }
+          });
           this._dragOp.start(e);
           e.preventDefault();
           return;
