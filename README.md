@@ -30,6 +30,14 @@ use the `ionic` tool.
 The source files are in the `dist/` folder. You can just grab the `dist/js/ionic.js`, `dist/js/ionic-angular.js`, and `dist/ionic.css` files and
 you'll be good to go.
 
+**You can also use OSSCDN (with HTTPS support)**:
+
+`//oss.maxcdn.com/libs/ionic/0.9.09/js/ionic.js`
+
+`//oss.maxcdn.com/libs/ionic/0.9.09/js/ionic-angular.js`
+
+`//oss.maxcdn.com/libs/ionic/0.9.09/css/ionic.css`
+
 ## Running examples
 
 Ionic comes with many interesting examples showing the power of the framework. To
