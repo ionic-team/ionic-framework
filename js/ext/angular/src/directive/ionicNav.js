@@ -23,9 +23,6 @@
 angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.gesture', 'ionic.service.platform', 'ngAnimate'])
 
 .controller('NavCtrl', ['$scope', '$element', '$animate', '$compile', '$timeout', 'TemplateLoader', 'Platform', function($scope, $element, $animate, $compile, $timeout, TemplateLoader, Platform) {
-  var _this = this;
-
-  angular.extend(this, ionic.controllers.NavController.prototype);
 
   var pushInAnimation = $scope.pushInAnimation || 'slide-in-left';
   var pushOutAnimation = $scope.pushOutAnimation || 'slide-out-left';
@@ -38,15 +35,35 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
     el.removeClass(pushOutAnimation);
     el.removeClass(popInAnimation);
     el.removeClass(popOutAnimation);
-  }
+  };
+
+  var navController = new ionic.controllers.NavController({
+    content: {
+    },
+    navBar: {
+      shouldGoBack: function() {
+      },
+      show: function() {
+        this.isVisible = true;
+      },
+      hide: function() {
+        this.isVisible = false;
+      },
+      setTitle: function(title) {
+        $scope.navController.title = title;
+      },
+      showBackButton: function(show) {
+      },
+    }
+  });
 
   /**
    * Push a template onto the navigation stack.
    * @param {string} templateUrl the URL of the template to load.
    */
-  this.pushFromTemplate = function(templateUrl) {
+  navController.pushFromTemplate = function(templateUrl) {
     var childScope = $scope.$new();
-    var last = _this.getTopController();
+    var last = navController.getTopController();
 
     // Load the given template
     TemplateLoader.load(templateUrl).then(function(templateString) {
@@ -82,10 +99,10 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
   };
 
   // Pop function
-  this.popController = function() {
-    var last = _this.pop();
+  navController.popController = function() {
+    var last = navController.pop();
 
-    var next = _this.getTopController();
+    var next = navController.getTopController();
 
     if(last) {
 
@@ -106,43 +123,20 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
     $scope.$parent.$broadcast('navigation.pop');
   };
 
-
-  // Extend the low-level navigation controller
-  // for this angular controller
-  ionic.controllers.NavController.call(this, {
-    content: {
-    },
-    navBar: {
-      shouldGoBack: function() {
-      },
-      show: function() {
-        this.isVisible = true;
-      },
-      hide: function() {
-        this.isVisible = false;
-      },
-      setTitle: function(title) {
-        $scope.navController.title = title;
-      },
-      showBackButton: function(show) {
-      },
-    }
-  });
-
   // Support Android hardware back button (native only, not mobile web)
   var onHardwareBackButton = function(e) {
     $scope.$apply(function() {
-      _this.popController();
+      navController.popController();
     });
-  }
+  };
   Platform.onHardwareBackButton(onHardwareBackButton);
 
 
-  this.handleDrag = function(e) {
+  navController.handleDrag = function(e) {
     // TODO: Support dragging between pages
   };
 
-  this.endDrag = function(e) {
+  navController.endDrag = function(e) {
   };
 
   /**
@@ -150,27 +144,19 @@ angular.module('ionic.ui.nav', ['ionic.service.templateLoad', 'ionic.service.ges
    * nav-content directive when it is linked to a scope on the page.
    */
   $scope.pushController = function(scope, element) {
-    _this.push({
+    navController.push({
       scope: scope,
       element: element
     });
     $scope.$parent.$broadcast('navigation.push', scope);
   };
-
-  this.pushController = function(scope, element) {
-    _this.push({
-      scope: scope,
-      element: element
-    });
-    $scope.$parent.$broadcast('navigation.push', scope);
-  };
-
-  $scope.navController = this;
 
   $scope.$on('$destroy', function() {
     // Remove back button listener
     Platform.offHardwareBackButton(onHardwareBackButton);
   });
+
+  return $scope.navController = navController;
 }])
 
 /**

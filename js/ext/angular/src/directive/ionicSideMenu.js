@@ -15,11 +15,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
  * some side menu stuff on the current scope.
  */
 .controller('SideMenuCtrl', function($scope) {
-  var _this = this;
-
-  angular.extend(this, ionic.controllers.SideMenuController.prototype);
-
-  ionic.controllers.SideMenuController.call(this, {
+  var sideMenuCtrl = new ionic.controllers.SideMenuController(this, {
     // Our quick implementation of the left side menu
     left: {
       width: 270,
@@ -32,8 +28,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
   });
 
   $scope.sideMenuContentTranslateX = 0;
-
-  $scope.sideMenuController = this;
+  return $scope.sideMenuController = sideMenuCtrl;
 })
 
 .directive('sideMenus', function() {
