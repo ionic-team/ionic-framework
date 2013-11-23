@@ -26578,6 +26578,10 @@ angular.module('ionic.ui.virtualRepeat', [])
           // When the user scrolls, we move the `state.firstActive`
           dom.bind('momentumScrolled', sfVirtualRepeatOnScroll);
 
+          scope.$on('$destroy', function () {
+            dom.unbind('momentumScrolled', sfVirtualRepeatOnScroll);
+          });
+
           // The watch on the collection is just a watch on the length of the
           // collection. We don't care if the content changes.
           scope.$watch(sfVirtualRepeatWatchExpression, sfVirtualRepeatListener, true);
