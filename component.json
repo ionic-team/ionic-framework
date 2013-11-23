@@ -1,13 +1,19 @@
 {
     "repo": "driftyco/ionic",
     "development": {},
-    "version": "0.9.0",
+    "version": "0.9.09",
     "styles": [
       "dist/css/ionic.css"
     ],
     "scripts": [
       "dist/js/ionic.js",
       "dist/js/ionic-angular.js"
+    ],
+    "fonts": [
+      "dist/fonts/ionicons.eot",
+      "dist/fonts/ionicons.svg",
+      "dist/fonts/ionicons.ttf",
+      "dist/fonts/ionicons.woff"
     ],
     "name": "Ionic",
     "keywords": ["ionic","mobile","html5","hybrid","angularjs"],
