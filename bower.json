@@ -3,8 +3,8 @@
   "version": "0.9.09",
   "homepage": "https://github.com/driftyco/ionic",
   "authors": [
-    "Max Lynch <max@drifty.com>"
-    "Adam Bradley <adam@drifty.com>"
+    "Max Lynch <max@drifty.com>",
+    "Adam Bradley <adam@drifty.com>",
     "Ben Sperry <ben@drifty.com>"
   ],
   "description": "Advanced HTML5 hybrid mobile app development framework.",
