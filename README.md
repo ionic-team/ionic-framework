@@ -6,20 +6,12 @@ For the best info on Ionic, check out our great [documentation page](http://ioni
 
 Ionic is the open source HTML5 Mobile Framework for building amazing, cross-platform native apps with HTML, JavaScript, and CSS.
 
-We built Ionic because the options for using HTML5 in native apps weren't good enough. They weren't built to focus on
-native apps targeting the newest of devices. They had too many hacks to support old devices that didn't have
-meaningful market share, or they were too focused on building mobile websites.
-
-Many were slow, had excessive DOM operations, and relied on bulky libraries like jQuery. They weren't built with
-performance and great design as the top concerns.
-
-With Ionic, we've built a framework meant for native. We don't tie you to the URL bar, and we aren't dwelling on the past or
-worrying about supporting marginal, slow devices.
+We built Ionic because we wanted a framework that focused on building hybrid native apps, rather than mobile websites. We wanted this framework to be obsessive about great design and performance. A framework that left the past behind and focused on the future where mobile devices could make HTML5 feel native.
 
 It's important to realize that Ionic is not a replacement for frameworks used for building mobile web apps. There are a lot
 of great solutions that work well for websites, like [jQuery Mobile](http://jquerymobile.com/).
 
-Ionic is also not a good solution if you need to support older generation devices. Our compatibility *starts* at iOS 6 and Android 4.1. We will never support versions earlier than those.
+Ionic is also not a good solution if you need to support older generation devices. Our compatibility *starts* at iOS 6 and Android 4.1. We will never support versions earlier than those. This is a framework for the future.
 
 
 ## Quick Start
