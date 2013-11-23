@@ -24750,7 +24750,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
         button.onButtonClicked && button.onButtonClicked($scope.item, button);
       };
 
-      list.scope.$watch('isEditing', function(v) {
+      var deregisterListWatch = list.scope.$watch('isEditing', function(v) {
         $scope.isEditing = v;
 
         // Add a delay before we allow the options layer to show, to avoid any odd
@@ -24762,6 +24762,10 @@ angular.module('ionic.ui.list', ['ngAnimate'])
         } else {
           $scope.showOptions = false;
         }
+      });
+
+      $scope.$on('$destroy', function () {
+        deregisterListWatch();
       });
     }
   };
@@ -24821,7 +24825,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
         button.onButtonClicked && button.onButtonClicked($scope.item, button);
       };
 
-      list.scope.$watch('isEditing', function(v) {
+      var deregisterListWatch = list.scope.$watch('isEditing', function(v) {
         $scope.isEditing = v;
 
         // Add a delay before we allow the options layer to show, to avoid any odd
@@ -24833,6 +24837,10 @@ angular.module('ionic.ui.list', ['ngAnimate'])
         } else {
           $scope.showOptions = false;
         }
+      });
+
+      $scope.$on('$destroy', function () {
+        deregisterListWatch();
       });
     }
   };
