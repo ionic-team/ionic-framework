@@ -24394,9 +24394,7 @@ angular.module('ionic.ui.actionSheet', [])
         }
       };
       $scope.$on('$destroy', function() {
-        $element.remove();
         $document.unbind('keyup', keyUp);
-        $element.unbind('click', backdropClick);
       });
 
       $document.bind('keyup', keyUp);
