@@ -1,12 +1,19 @@
 {
   "name": "ionic",
-  "version": "0.9.0",
+  "version": "0.9.09",
   "homepage": "https://github.com/driftyco/ionic",
   "authors": [
     "Max Lynch <max@drifty.com>"
+    "Adam Bradley <adam@drifty.com>"
+    "Ben Sperry <ben@drifty.com>"
   ],
   "description": "Advanced HTML5 hybrid mobile app development framework.",
-  "main": "dist/js/ionic.js",
+  "main": [
+    "dist/js/ionic.js",
+    "dist/js/ionic-angular.js",
+    "dist/css/ionic.css",
+    "dist/fonts/*"
+  ],
   "keywords": [
     "mobile",
     "html5",
@@ -20,7 +27,7 @@
     "bootstrap"
   ],
   "license": "MIT",
-  "private": true,
+  "private": false,
   "ignore": [
     "**/.*",
     "node_modules",
