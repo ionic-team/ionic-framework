@@ -12,7 +12,6 @@ angular.module('ionic.ui.virtRepeat', [])
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, ctrls) {
         var virtualList = ctrls[1];
-        var _this = this;
 
         virtualList.listView.renderViewport = function(high, low, start, end) {
         }
