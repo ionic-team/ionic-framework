@@ -49,29 +49,44 @@
               $element[0].scrollTop = $element[0].scrollHeight;
             };
 
-            Gesture.on('tap', function(e) {
+            var tapFn = function(e) {
               o('tap', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY]);
-            }, $element);
+            };
+            var tapGesture = Gesture.on('tap', tapFn, $element);
 
-            Gesture.on('release', function(e) {
+            var releaseFn = function(e) {
               o('release', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY]);
-            }, $element);
+            };
+            var releaseGesture = Gesture.on('release', releaseFn, $element);
 
-            Gesture.on('hold', function(e) {
+            var holdFn = function(e) {
               o('hold', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY]);
-            }, $element);
+            };
+            var holdGesture = Gesture.on('hold', holdFn, $element);
 
-            Gesture.on('drag', function(e) {
+            var dragFn = function(e) {
               o('drag', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY, e.gesture.deltaX, e.gesture.deltaY]);
-            }, $element);
+            };
+            var dragGesture = Gesture.on('drag', dragFn, $element);
 
-            Gesture.on('swipe', function(e) {
+            var swipeFn = function(e) {
               o('swipe', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY, e.gesture.direction]);
-            }, $element);
+            };
+            var swipeGesture = Gesture.on('swipe', swipeFn, $element);
 
-            Gesture.on('transform', function(e) {
+            var transformFn = function(e) {
               o('transform', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY, e.gesture.direction]);
-            }, $element);
+            };
+            var transformGesture = Gesture.on('transform', transformFn, $element);
+
+            $scope.$on('$destroy', function () {
+              Gesture.off(dragGesture, 'drag', dragFn);
+              Gesture.off(holdGesture, 'hold', holdFn);
+              Gesture.off(releaseGesture, 'release', releaseFn);
+              Gesture.off(swipeGesture, 'swipe', swipeFn);
+              Gesture.off(tapGesture, 'tap', tapFn);
+              Gesture.off(transformGesture, 'transform', transformFn);
+            });
           }
         };
       });
