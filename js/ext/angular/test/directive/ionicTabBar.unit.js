@@ -101,7 +101,6 @@ describe('Tabs directive', function() {
       { title: 'Beer', icon: 'icon-beer' },
     ];
     scope.$digest();
-    console.log(element);
     expect(element.find('a').length).toBe(3);
   });
 
@@ -143,12 +142,10 @@ describe('Tab Item directive', function() {
   }));
   
   it('Default text works', function() {
-    console.log(element);
     expect(element.find('a').first().text().trim()).toEqual('Item');
   });
 
   it('Default icon works', function() {
-    console.log(element);
     scope.$digest();
     var i = element[0].querySelector('i');
     expect(angular.element(i).hasClass('icon-default')).toEqual(true);
