@@ -54,10 +54,6 @@ angular.module('ionic.ui.header', ['ngAnimate'])
         console.log('Title changed');
         hb.align();
       });
-
-      $scope.$on('$destroy', function() {
-        //
-      });
     }
   };
 })
