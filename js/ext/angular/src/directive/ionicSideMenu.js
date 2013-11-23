@@ -58,10 +58,11 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 
         var defaultPrevented = false;
 
-        ionic.on('mousedown', function(e) {
+        var readDefaultPrevented = function(e) {
           // If the child element prevented the drag, don't drag
           defaultPrevented = e.defaultPrevented;
-        });
+        }
+        ionic.on('mousedown', readDefaultPrevented);
 
         var dragFn = function(e) {
           if(defaultPrevented) {
@@ -107,6 +108,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
         $scope.$on('$destroy', function() {
           Gesture.off(dragGesture, 'drag', dragFn);
           Gesture.off(releaseGesture, 'release', dragReleaseFn);
+          ionic.off('mousedown', readDefaultPrevented);
         });
       };
     }
@@ -145,6 +147,14 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
         }
 
         $element.append(transclude($scope));
+
+        $scope.$on('$destroy', function () {
+          if (['left', 'right'].indexOf($scope.side) > -1) {
+            delete sideMenuCtrl[$scope.side].isEnabled;
+            delete sideMenuCtrl[$scope.side].pushDown;
+            delete sideMenuCtrl[$scope.side].bringUp;
+          }
+        });
       };
     }
   };
