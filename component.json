@@ -3,7 +3,7 @@
     "development": {},
     "version": "0.9.09",
     "styles": [
-      "dist/css/ionic.css",
+      "dist/css/ionic.css"
     ],
     "paths": [
       "scss"
