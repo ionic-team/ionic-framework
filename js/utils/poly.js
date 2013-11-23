@@ -33,7 +33,9 @@
     if(ele.type === "radio" || ele.type === "checkbox") {
       //ele.checked = !ele.checked;
     } else if(ele.type === "submit" || ele.type === "button") {
-      ele.click();
+      ionic.trigger('click', {
+        target: ele
+      });
     } else {
       ele.focus();
     }
@@ -69,7 +71,9 @@
       } else if( ele.tagName === "A" ) {
         var href = ele.getAttribute('href');
         if(href) {
-          ele.click();
+          ionic.trigger('click', {
+            target: ele
+          });
           e.stopPropagation();
           e.preventDefault();
           return false;
