@@ -1,4 +1,3 @@
-
 /**
  * Items
  * --------------------------------------------------
@@ -403,7 +402,7 @@ button.item-button-right:after {
   padding-left: $item-thumbnail-width + $item-thumbnail-margin + $item-padding;
   min-height: $item-thumbnail-height + ($item-thumbnail-margin * 2);
 
-  img:first-child, .item-image {
+  > img:first-child, > .item-image {
     position: absolute;
     top: $item-thumbnail-margin;
     left: $item-thumbnail-margin;
@@ -417,7 +416,7 @@ button.item-button-right:after {
   padding-right: $item-thumbnail-width + $item-thumbnail-margin + $item-padding;
   min-height: $item-thumbnail-height + ($item-thumbnail-margin * 2);
 
-  img:first-child, .item-image {
+  > img:first-child, > .item-image {
     position: absolute;
     top: $item-thumbnail-margin;
     right: $item-thumbnail-margin;
