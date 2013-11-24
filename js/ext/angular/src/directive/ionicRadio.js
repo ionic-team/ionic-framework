@@ -40,11 +40,6 @@ angular.module('ionic.ui.radio', [])
         ngModel.$setViewValue($scope.$eval($attr.ngValue));
       };
 
-      $scope.$on('$destroy', function() {
-        $element.unbind('tap', tapHandler);
-        $element.unbind('click', clickHandler);
-      });
-
       if(ngModel) {
         //$element.bind('tap', tapHandler);
         $element.bind('click', clickHandler);
