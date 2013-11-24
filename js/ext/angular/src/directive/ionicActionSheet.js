@@ -3,7 +3,7 @@
 
 angular.module('ionic.ui.actionSheet', [])
 
-.directive('actionSheet', function($document) {
+.directive('actionSheet', ['$document', function($document) {
   return {
     restrict: 'E',
     scope: true,
@@ -46,6 +46,6 @@ angular.module('ionic.ui.actionSheet', [])
                 '</div>' +
               '</div>'
   };
-});
+}]);
 
 })();

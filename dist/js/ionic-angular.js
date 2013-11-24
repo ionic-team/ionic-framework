@@ -1,4 +1,4 @@
-/**
+/*!
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
 
@@ -9,7 +9,7 @@
  * By @maxlynch, @helloimben, @adamdbradley <3
  *
  * Licensed under the MIT license. Please see LICENSE for more information.
- * 
+ *
  */
 ;
 /**
@@ -24374,7 +24374,7 @@ angular.module('ionic.service.templateLoad', [])
 
 angular.module('ionic.ui.actionSheet', [])
 
-.directive('actionSheet', function($document) {
+.directive('actionSheet', ['$document', function($document) {
   return {
     restrict: 'E',
     scope: true,
@@ -24417,7 +24417,7 @@ angular.module('ionic.ui.actionSheet', [])
                 '</div>' +
               '</div>'
   };
-});
+}]);
 
 })();
 ;
@@ -25737,7 +25737,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
  * extends our core Ionic side menu controller and exposes
  * some side menu stuff on the current scope.
  */
-.controller('SideMenuCtrl', function($scope) {
+.controller('SideMenuCtrl', ['$scope', function($scope) {
   var _this = this;
 
   angular.extend(this, ionic.controllers.SideMenuController.prototype);
@@ -25757,7 +25757,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
   $scope.sideMenuContentTranslateX = 0;
 
   $scope.sideMenuController = this;
-})
+}])
 
 .directive('sideMenus', function() {
   return {
