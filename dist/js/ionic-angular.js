@@ -24914,9 +24914,6 @@ angular.module('ionic.ui.loading', [])
     replace: true,
     transclude: true,
     link: function($scope, $element){
-      $scope.$on('$destroy', function() {
-        $element.remove();
-      });
       $element.addClass($scope.animation || '');
     },
     template: '<div class="loading-backdrop" ng-class="{enabled: showBackdrop}">' + 
