@@ -149,9 +149,9 @@
         this._rightShowing = false;
 
         // Push the z-index of the right menu down
-        this.right && this.right.pushDown();
+        this.right && this.right.pushDown && this.right.pushDown();
         // Bring the z-index of the left menu up
-        this.left && this.left.bringUp();
+        this.left && this.left.bringUp && this.left.bringUp();
       } else {
         this._rightShowing = true;
         this._leftShowing = false;
