@@ -353,14 +353,10 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
         if($rootScope.stackCursorPosition > 0) {
           $window.history.back();
         }
+        e.alreadyHandled = true;
+        return false;
       };
-      var tapGesture = Gesture.on('tap', goBack, $element);
       $element.bind('click', goBack);
-
-      $scope.$on('$destroy', function() {
-        Gesture.off(tapGesture, 'tap', goBack);
-        $element.unbind('click', goBack);
-      });
     }
   }
 }]);

@@ -64,7 +64,7 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
       scope.sheet = sheet;
 
       $animate.addClass(element, 'active');
-      $animate.enter(sheetEl, element, function() {
+      $animate.enter(sheetEl, element, null, function() {
       });
 
       return sheet;

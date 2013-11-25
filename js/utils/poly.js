@@ -68,16 +68,14 @@
         if(ele.control) {
           return inputTapPolyfill(ele.control, e);
         }
-      } else if( ele.tagName === "A" ) {
+      } else if( ele.tagName === "A" || ele.tagName === "BUTTON" ) {
         var href = ele.getAttribute('href');
-        if(href) {
-          ionic.trigger('click', {
-            target: ele
-          });
-          e.stopPropagation();
-          e.preventDefault();
-          return false;
-        }
+        ionic.trigger('click', {
+          target: ele
+        });
+        e.stopPropagation();
+        e.preventDefault();
+        return false;
       }
       ele = ele.parentElement;
     }

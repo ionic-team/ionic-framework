@@ -12,11 +12,16 @@
   <body ng-controller="LoadingCtrl">
     <button class="button button-dark" ng-click="startLoading()">Load</button>
     <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/angular/angular.js"></script>
+    <script src="../../../../dist/js/angular/angular-animate.js"></script>
+    <script src="../../../../dist/js/angular/angular-route.js"></script>
+    <script src="../../../../dist/js/angular/angular-touch.js"></script>
+    <script src="../../../../dist/js/angular/angular-sanitize.js"></script>
     <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
       angular.module('ionic.example', ['ionic.service.loading'])
 
-      .controller('LoadingCtrl', function($scope, Loading) {
+      .controller('LoadingCtrl', function($scope, $timeout, Loading) {
         $scope.startLoading = function() {
           var loading = Loading.show({
             width: 200,
@@ -24,6 +29,10 @@
             animation: 'fade-in',
             content: 'Getting current location...'
           });
+
+          $timeout(function() {
+            loading.hide();
+          }, 2000);
         };
       });
     </script>

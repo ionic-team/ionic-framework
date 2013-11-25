@@ -8,14 +8,14 @@ describe('Ionic Toggle', function() {
   }));
 
   it('Should load', function() {
-    var toggleView = el.scope().toggle;
+    var toggleView = el.isolateScope().toggle;
     expect(toggleView).not.toEqual(null);
     expect(toggleView.checkbox).not.toEqual(null);
     expect(toggleView.handle).not.toEqual(null);
   });
 
   it('Should toggle', function() {
-    var toggle = el.scope().toggle;
+    var toggle = el.isolateScope().toggle;
     expect(toggle.val()).toBe(false);
     el.click();
     expect(toggle.val()).toBe(true);

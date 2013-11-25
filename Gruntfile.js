@@ -49,12 +49,6 @@ module.exports = function(grunt) {
       distAngular: {
         src: [
           'js/_license.js',
-          'vendor/angular/1.2.1/angular.js',
-          'vendor/angular/1.2.1/angular-animate.js',
-          'vendor/angular/1.2.1/angular-resource.js',
-          'vendor/angular/1.2.1/angular-sanitize.js',
-          'vendor/angular/1.2.1/angular-touch.js',
-          'vendor/angular/1.2.1/angular-route.js',
           'js/ext/angular/src/ionicAngular.js',
           'js/ext/angular/src/service/**/*.js',
           'js/ext/angular/src/directive/**/*.js'

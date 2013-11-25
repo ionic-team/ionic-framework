@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.2.1
+ * @license AngularJS v1.2.2
  * (c) 2010-2012 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -14,6 +14,9 @@
  *
  * The `ngRoute` module provides routing and deeplinking services and directives for angular apps.
  *
+ * ## Example
+ * See {@link ngRoute.$route#example $route} for an example of configuring and using `ngRoute`.
+ * 
  * {@installModule route}
  *
  * <div doc-module-components="ngRoute"></div>
@@ -29,8 +32,12 @@ var ngRouteModule = angular.module('ngRoute', ['ng']).
  *
  * @description
  *
- * Used for configuring routes. See {@link ngRoute.$route $route} for an example.
+ * Used for configuring routes.
+ * 
+ * ## Example
+ * See {@link ngRoute.$route#example $route} for an example of configuring and using `ngRoute`.
  *
+ * ## Dependencies
  * Requires the {@link ngRoute `ngRoute`} module to be installed.
  */
 function $RouteProvider(){
@@ -835,37 +842,43 @@ function ngViewFactory(   $route,   $anchorScroll,   $compile,   $controller,   
 
           if (template) {
             var newScope = scope.$new();
-            $transclude(newScope, function(clone) {
-              clone.html(template);
-              $animate.enter(clone, null, currentElement || $element, function onNgViewEnter () {
-                if (angular.isDefined(autoScrollExp)
-                  && (!autoScrollExp || scope.$eval(autoScrollExp))) {
-                  $anchorScroll();
-                }
-              });
 
-              cleanupLastView();
-
-              var link = $compile(clone.contents()),
-                  current = $route.current;
-
-              currentScope = current.scope = newScope;
-              currentElement = clone;
-
-              if (current.controller) {
-                locals.$scope = currentScope;
-                var controller = $controller(current.controller, locals);
-                if (current.controllerAs) {
-                  currentScope[current.controllerAs] = controller;
-                }
-                clone.data('$ngControllerController', controller);
-                clone.children().data('$ngControllerController', controller);
+            // Note: This will also link all children of ng-view that were contained in the original
+            // html. If that content contains controllers, ... they could pollute/change the scope.
+            // However, using ng-view on an element with additional content does not make sense...
+            // Note: We can't remove them in the cloneAttchFn of $transclude as that
+            // function is called before linking the content, which would apply child
+            // directives to non existing elements.
+            var clone = $transclude(newScope, angular.noop);
+            clone.html(template);
+            $animate.enter(clone, null, currentElement || $element, function onNgViewEnter () {
+              if (angular.isDefined(autoScrollExp)
+                && (!autoScrollExp || scope.$eval(autoScrollExp))) {
+                $anchorScroll();
               }
-
-              link(currentScope);
-              currentScope.$emit('$viewContentLoaded');
-              currentScope.$eval(onloadExp);
             });
+
+            cleanupLastView();
+
+            var link = $compile(clone.contents()),
+                current = $route.current;
+
+            currentScope = current.scope = newScope;
+            currentElement = clone;
+
+            if (current.controller) {
+              locals.$scope = currentScope;
+              var controller = $controller(current.controller, locals);
+              if (current.controllerAs) {
+                currentScope[current.controllerAs] = controller;
+              }
+              clone.data('$ngControllerController', controller);
+              clone.children().data('$ngControllerController', controller);
+            }
+
+            link(currentScope);
+            currentScope.$emit('$viewContentLoaded');
+            currentScope.$eval(onloadExp);
           } else {
             cleanupLastView();
           }

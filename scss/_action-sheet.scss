@@ -33,14 +33,14 @@
     -webkit-animation: fadeInHalf 0.3s;
     animation: fadeInHalf 0.3s;
 
-    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: both;
   }
 
   &.active-remove {
     -webkit-animation: fadeOutHalf 0.3s;
     animation: fadeOutHalf 0.3s;
 
-    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: both;
   }
 }
 

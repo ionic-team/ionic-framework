@@ -12,10 +12,9 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'
       var _this = this;
       var element = angular.element(this.el);
       if(!element.parent().length) {
-        $animate.enter(element, angular.element($document[0].body), null, function() {
-          ionic.views.Modal.prototype.show.call(_this);
-        });
-      } 
+        angular.element($document[0].body).append(element);
+        ionic.views.Modal.prototype.show.call(_this);
+      }
       $animate.addClass(element, this.animation, function() {
       });
     },

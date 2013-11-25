@@ -10,8 +10,8 @@ angular.module('ionic.ui.toggle', [])
     restrict: 'E',
     replace: true,
     require: '?ngModel',
-    scope: true,
-    template: '<div class="toggle"><input type="checkbox"><div class="track"><div class="handle"></div></div></div>',
+    scope: {},
+    template: '<div ng-click="toggleIt($event)" class="toggle"><input type="checkbox"><div class="track"><div class="handle"></div></div></div>',
 
     link: function($scope, $element, $attr, ngModel) {
       var checkbox, handle;
@@ -29,12 +29,10 @@ angular.module('ionic.ui.toggle', [])
         handle: handle[0]
       });
 
-      $element.bind('click', function(e) {
+      $scope.toggleIt = function(e) {
         $scope.toggle.tap(e);
-        $scope.$apply(function() {
-          ngModel.$setViewValue(checkbox[0].checked);
-        });
-      });
+        ngModel.$setViewValue(checkbox[0].checked);
+      };
 
       ngModel.$render = function() {
         $scope.toggle.val(ngModel.$viewValue);

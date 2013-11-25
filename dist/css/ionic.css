@@ -2557,11 +2557,11 @@ a.subdued {
   .action-sheet-backdrop.active {
     -webkit-animation: fadeInHalf 0.3s;
     animation: fadeInHalf 0.3s;
-    -webkit-animation-fill-mode: forwards; }
+    -webkit-animation-fill-mode: both; }
   .action-sheet-backdrop.active-remove {
     -webkit-animation: fadeOutHalf 0.3s;
     animation: fadeOutHalf 0.3s;
-    -webkit-animation-fill-mode: forwards; }
+    -webkit-animation-fill-mode: both; }
 
 @-webkit-keyframes actionSheetUp {
   0% {
