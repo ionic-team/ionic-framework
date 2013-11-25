@@ -71,10 +71,12 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
           return;
         }
 
-        if(back) {
-          reverseTransition();
-        } else {
-          forwardTransition();
+        if($rootScope.stackCursorPosition > 0) {
+          if(back) {
+            reverseTransition();
+          } else {
+            forwardTransition();
+          }
         }
       });
 
@@ -92,7 +94,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
       $scope.$watch(function () { return $location.path() }, function (newLocation, oldLocation) {
         if($rootScope.actualLocation === newLocation) {
 
-          if(oldLocation == '' && newLocation == '/') {
+          if(oldLocation == '' || newLocation == '/') {
             // initial route, skip this
             return;
           }
@@ -222,8 +224,6 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
       $element.addClass($scope.type);
 
       var updateHeaderData = function(data) {
-        console.log('Header data changed', data);
-
         var oldTitle = $scope.currentTitle;
         $scope.oldTitle = oldTitle;
 

@@ -46,7 +46,7 @@
 
 
       .config(function($routeProvider, $locationProvider) {
-        $routeProvider.when('/', {
+        $routeProvider.when('/cats', {
           templateUrl: 'page1.html',
           controller: 'Page1Ctrl'
         });
@@ -57,6 +57,10 @@
 
         $routeProvider.when('/page3', {
           templateUrl: 'page3.html',
+        });
+
+        $routeProvider.otherwise({
+          redirectTo: '/cats'
         });
 
         // configure html5 to get links working on jsfiddle
