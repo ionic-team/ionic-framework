@@ -155,13 +155,13 @@
 .bar-light {
   .button {
     @include button-style($bar-light-bg, $bar-light-border, $bar-light-active-bg, $bar-light-active-border, $bar-light-text);
-    @include button-clear(#fff, $bar-title-font-size);
+    @include button-clear($bar-light-text, $bar-title-font-size);
   }
 }
 .bar-stable {
   .button {
     @include button-style($bar-stable-bg, $bar-stable-border, $bar-stable-active-bg, $bar-stable-active-border, $bar-stable-text);
-    @include button-clear(#fff, $bar-title-font-size);
+    @include button-clear($bar-stable-text, $bar-title-font-size);
   }
 }
 .bar-positive {

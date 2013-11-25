@@ -2799,7 +2799,7 @@ a.subdued {
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
     border-color: #cccccc; }
   .bar-light .button.button-clear {
-    color: white;
+    color: #444444;
     background: none;
     border-color: transparent;
     box-shadow: none;
@@ -2820,7 +2820,7 @@ a.subdued {
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
     border-color: #a2a2a2; }
   .bar-stable .button.button-clear {
-    color: white;
+    color: #444444;
     background: none;
     border-color: transparent;
     box-shadow: none;
