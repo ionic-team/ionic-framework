@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /**
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
@@ -2667,11 +2666,12 @@ a.subdued {
   border-top: 1px solid transparent;
   border-bottom: 1px solid #dddddd;
   background-color: white;
+  /* border-width: 1px will actually create 2 device pixels on retina */
+  /* this nifty trick sets an actual 1px border on hi-res displays */
   background-size: 0; }
   @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
     .bar {
-      border-top: none !important;
-      border-bottom: none !important;
+      border: none;
       background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
       background-position: bottom;
       background-size: 100% 1px;
@@ -2805,7 +2805,7 @@ a.subdued {
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
     border-color: #cccccc; }
   .bar-light .button.button-clear {
-    color: white;
+    color: #444444;
     background: none;
     border-color: transparent;
     box-shadow: none;
@@ -2826,7 +2826,7 @@ a.subdued {
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
     border-color: #a2a2a2; }
   .bar-stable .button.button-clear {
-    color: white;
+    color: #444444;
     background: none;
     border-color: transparent;
     box-shadow: none;
@@ -4126,7 +4126,6 @@ textarea {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
-  display: block !important;
   overflow: hidden;
   padding: 4px 8px 3px;
   border: none;
@@ -4439,7 +4438,7 @@ input[type="range"] {
   background-position: center;
   background-size: 96% 4px;
   background-repeat: no-repeat;
-  -webkit-appearance: none !important; }
+  -webkit-appearance: none; }
   input[type="range"]::-webkit-slider-thumb {
     position: relative;
     width: 20px;
@@ -4448,7 +4447,7 @@ input[type="range"] {
     background-color: white;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 1px 3px 5px rgba(0, 0, 0, 0.25);
     cursor: pointer;
-    -webkit-appearance: none !important; }
+    -webkit-appearance: none; }
   input[type="range"]::-webkit-slider-thumb:before {
     /* what creates the colorful line on the left side of the slider */
     position: absolute;
@@ -5480,10 +5479,10 @@ a.button {
  */
 .hidden,
 .hide {
-  display: none !important; }
+  display: none; }
 
 .show {
-  display: block !important; }
+  display: block; }
 
 .inline {
   display: inline-block; }

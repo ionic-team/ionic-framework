@@ -24,14 +24,16 @@
   border-bottom: 1px solid $bar-default-border;
 
   background-color: $bar-default-bg;
+
+  /* border-width: 1px will actually create 2 device pixels on retina */
+  /* this nifty trick sets an actual 1px border on hi-res displays */
   background-size: 0;
   @media (min--moz-device-pixel-ratio: 1.5),
          (-webkit-min-device-pixel-ratio: 1.5),
          (min-device-pixel-ratio: 1.5),
          (min-resolution: 144dpi),
          (min-resolution: 1.5dppx) {
-    border-top: none !important;
-    border-bottom: none !important;
+    border: none;
     background-image: linear-gradient(0deg, $bar-default-border, $bar-default-border 50%, transparent 50%);
     background-position: bottom;
     background-size: 100% 1px;
@@ -155,13 +157,13 @@
 .bar-light {
   .button {
     @include button-style($bar-light-bg, $bar-light-border, $bar-light-active-bg, $bar-light-active-border, $bar-light-text);
-    @include button-clear(#fff, $bar-title-font-size);
+    @include button-clear($bar-light-text, $bar-title-font-size);
   }
 }
 .bar-stable {
   .button {
     @include button-style($bar-stable-bg, $bar-stable-border, $bar-stable-active-bg, $bar-stable-active-border, $bar-stable-text);
-    @include button-clear(#fff, $bar-title-font-size);
+    @include button-clear($bar-stable-text, $bar-title-font-size);
   }
 }
 .bar-positive {

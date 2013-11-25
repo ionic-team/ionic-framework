@@ -103,7 +103,6 @@ textarea {
 .item-stacked-label textarea
 {
   @include border-radius(2px);
-  display: block !important;
   overflow: hidden;
   padding: 4px 8px 3px;
   border: none;
