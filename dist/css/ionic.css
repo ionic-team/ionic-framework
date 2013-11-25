@@ -5467,18 +5467,6 @@ a.button {
   max-width: 90%; }
 
 /**
- * Icons
- * --------------------------------------------------
- */
-.fill-icon {
-  color: white !important; }
-  .fill-icon:before {
-    background: black;
-    position: relative;
-    border-radius: 6px;
-    padding: 1px; }
-
-/**
  * Utility Classes
  * --------------------------------------------------
  */
