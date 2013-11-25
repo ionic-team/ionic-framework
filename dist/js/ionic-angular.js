@@ -637,7 +637,7 @@ angular.module('ionic.ui.content', [])
     link: function(scope, element, attr) {
       element.addClass('pane');
     }
-  }
+  };
 })
 
 // The content directive is a core scrollable content area
@@ -656,11 +656,14 @@ angular.module('ionic.ui.content', [])
     },
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
-        var c = $element.eq(0);
+        var 
+        c = $element.eq(0),
+        scroll = $element[0].querySelector('.scroll'),
+        clone,
+        sc, 
+        sv;
 
-        var scroll = $element[0].querySelector('.scroll');
-
-        if(scroll && attr.padding) {
+        if(scroll && attr.padding == "true") {
           scroll.classList.add('padding');
         }
 
@@ -688,18 +691,18 @@ angular.module('ionic.ui.content', [])
 
         // If they want plain overflow scrolling, add that as a class
         if($scope.scroll === "false") {
-          var clone = transclude($scope.$parent);
+          clone = transclude($scope.$parent);
           $element.append(clone);
         } else if(attr.overflowScroll === "true") {
           c.addClass('overflow-scroll');
-          var clone = transclude($scope.$parent);
+          clone = transclude($scope.$parent);
           $element.append(clone);
         } else {
-          var sc = document.createElement('div');
+          sc = document.createElement('div');
           sc.className = 'scroll';
           $element.append(sc);
           // Otherwise, supercharge this baby!
-          var sv = new ionic.views.Scroll({
+          sv = new ionic.views.Scroll({
             el: $element[0].firstElementChild,
             hasPullToRefresh: (typeof $scope.onRefresh !== 'undefined'),
             onRefresh: function() {
@@ -715,7 +718,7 @@ angular.module('ionic.ui.content', [])
           $scope.scrollView = sv;
 
           // Pass the parent scope down to the child
-          var clone = transclude($scope.$parent);
+          clone = transclude($scope.$parent);
           angular.element($element[0].firstElementChild).append(clone);
         }
       };
@@ -744,7 +747,7 @@ angular.module('ionic.ui.content', [])
 
       $scope.$on('scroll.onRefreshOpening', onRefreshOpening);
     }
-  }
+  };
 })
 
 .directive('scroll-refresher', function() {
@@ -753,7 +756,7 @@ angular.module('ionic.ui.content', [])
     replace: true,
     transclude: true,
     template: '<div class="scroll-refresher"><div class="scroll-refresher-content"></div></div>'
-  }
+  };
 });
 
 
