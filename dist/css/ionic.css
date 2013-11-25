@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /**
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
@@ -2326,8 +2327,12 @@ body, .ionic-body {
     -webkit-transform: scale(2, 2); } }
 
 .overflow-scroll {
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
   -webkit-overflow-scrolling: touch; }
+  .overflow-scroll .scroll {
+    position: static;
+    height: 100%; }
 
 .has-header {
   top: 44px; }

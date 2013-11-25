@@ -155,8 +155,15 @@ body, .ionic-body {
 }
 
 .overflow-scroll {
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+
+  .scroll {
+    position: static;
+    height: 100%;
+
+  }
 }
 
 // Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.

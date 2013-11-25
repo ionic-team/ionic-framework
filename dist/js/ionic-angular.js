@@ -24576,7 +24576,7 @@ angular.module('ionic.ui.content', [])
   return {
     restrict: 'E',
     replace: true,
-    template: '<div class="scroll-content"><div class="scroll"></div></div>',
+    template: '<div class="scroll-content"></div>',
     transclude: true,
     scope: {
       onRefresh: '&',
@@ -24618,9 +24618,16 @@ angular.module('ionic.ui.content', [])
 
         // If they want plain overflow scrolling, add that as a class
         if($scope.scroll === "false") {
+          var clone = transclude($scope.$parent);
+          $element.append(clone);
         } else if(attr.overflowScroll === "true") {
           c.addClass('overflow-scroll');
+          var clone = transclude($scope.$parent);
+          $element.append(clone);
         } else {
+          var sc = document.createElement('div');
+          sc.className = 'scroll';
+          $element.append(sc);
           // Otherwise, supercharge this baby!
           var sv = new ionic.views.Scroll({
             el: $element[0].firstElementChild,
@@ -24636,11 +24643,11 @@ angular.module('ionic.ui.content', [])
           });
           // Let child scopes access this 
           $scope.scrollView = sv;
-        }
 
-        // Pass the parent scope down to the child
-        var clone = transclude($scope.$parent);
-        angular.element($element[0].firstElementChild).append(clone);
+          // Pass the parent scope down to the child
+          var clone = transclude($scope.$parent);
+          angular.element($element[0].firstElementChild).append(clone);
+        }
       };
     }
   };
@@ -25779,6 +25786,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
             return;
           }
           sideMenuCtrl._handleDrag(e);
+          e.gesture.srcEvent.preventDefault();
         };
 
         var dragGesture = Gesture.on('drag', dragFn, $element);

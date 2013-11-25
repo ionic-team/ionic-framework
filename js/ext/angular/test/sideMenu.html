@@ -18,15 +18,15 @@
             <button class="button button-icon" ng-click="openLeft()"><i class="icon ion-navicon"></i></button>
             <h1 class="title">Slide me</h1>
           </header>
-          <div class="content has-header">
+          <content has-header="true">
             <h1>Content</h1>
-          </div>
+          </content>
         </pane>
         <side-menu side="left">
           <header class="bar bar-header bar-assertive">
             <h1 class="title">Left</h1>
           </header>
-          <content has-header="true">
+          <content has-header="true" overflow-scroll="true">
             <ul class="list">
               <a href="#" class="item" ng-repeat="item in list">
                 {{item.text}}

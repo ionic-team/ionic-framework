@@ -743,7 +743,7 @@ window.ionic = {
                       }
 
                       if(this.srcEvent.preventDefault) {
-                        this.srcEvent.preventDefault();
+                        //this.srcEvent.preventDefault();
                       }
                     },
 
@@ -2145,6 +2145,7 @@ window.ionic = {
       // Listen for drag and release events
       ionic.onGesture('drag', function(e) {
         _this._handleDrag(e);
+        e.gesture.srcEvent.preventDefault();
       }, this.el);
       ionic.onGesture('release', function(e) {
         _this._handleEndDrag(e);
@@ -3722,6 +3723,7 @@ window.ionic = {
       // Listen for drag and release events
       window.ionic.onGesture('drag', function(e) {
         _this._handleDrag(e);
+        e.gesture.srcEvent.preventDefault();
       }, this.el);
       window.ionic.onGesture('release', function(e) {
         _this._handleEndDrag(e);
@@ -4612,9 +4614,9 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
         this._rightShowing = false;
 
         // Push the z-index of the right menu down
-        this.right && this.right.pushDown();
+        this.right && this.right.pushDown && this.right.pushDown();
         // Bring the z-index of the left menu up
-        this.left && this.left.bringUp();
+        this.left && this.left.bringUp && this.left.bringUp();
       } else {
         this._rightShowing = true;
         this._leftShowing = false;

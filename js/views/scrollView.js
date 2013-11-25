@@ -106,6 +106,7 @@
       // Listen for drag and release events
       ionic.onGesture('drag', function(e) {
         _this._handleDrag(e);
+        e.gesture.srcEvent.preventDefault();
       }, this.el);
       ionic.onGesture('release', function(e) {
         _this._handleEndDrag(e);

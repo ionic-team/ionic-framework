@@ -68,6 +68,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
             return;
           }
           sideMenuCtrl._handleDrag(e);
+          e.gesture.srcEvent.preventDefault();
         };
 
         var dragGesture = Gesture.on('drag', dragFn, $element);
