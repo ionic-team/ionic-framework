@@ -10,6 +10,11 @@
     ],
     "scripts": [
       "dist/js/ionic.js",
+      "dist/js/angular/angular.js",
+      "dist/js/angular/angular-animate.js",
+      "dist/js/angular/angular-route.js",
+      "dist/js/angular/angular-touch.js",
+      "dist/js/angular/angular-sanitize.js",
       "dist/js/ionic-angular.js"
     ],
     "fonts": [
