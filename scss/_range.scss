@@ -19,7 +19,7 @@ input[type="range"] {
   background-position: center;
   background-size: 96% $range-track-height;
   background-repeat: no-repeat;
-  -webkit-appearance: none !important;
+  -webkit-appearance: none;
 
   &::-webkit-slider-thumb {
     position: relative;
@@ -29,7 +29,7 @@ input[type="range"] {
     background-color: $toggle-handle-off-bg-color;
     box-shadow: 0 0 2px rgba(0,0,0,.5), 1px 3px 5px rgba(0,0,0,0.25);
     cursor: pointer;
-    -webkit-appearance: none !important;
+    -webkit-appearance: none;
   }
 
   &::-webkit-slider-thumb:before {

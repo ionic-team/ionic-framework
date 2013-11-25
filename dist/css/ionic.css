@@ -4432,7 +4432,7 @@ input[type="range"] {
   background-position: center;
   background-size: 96% 4px;
   background-repeat: no-repeat;
-  -webkit-appearance: none !important; }
+  -webkit-appearance: none; }
   input[type="range"]::-webkit-slider-thumb {
     position: relative;
     width: 20px;
@@ -4441,7 +4441,7 @@ input[type="range"] {
     background-color: white;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 1px 3px 5px rgba(0, 0, 0, 0.25);
     cursor: pointer;
-    -webkit-appearance: none !important; }
+    -webkit-appearance: none; }
   input[type="range"]::-webkit-slider-thumb:before {
     /* what creates the colorful line on the left side of the slider */
     position: absolute;
