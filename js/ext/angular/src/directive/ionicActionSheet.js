@@ -23,7 +23,6 @@ angular.module('ionic.ui.actionSheet', [])
         }
       };
       $scope.$on('$destroy', function() {
-        $element.remove();
         $document.unbind('keyup', keyUp);
       });
 
