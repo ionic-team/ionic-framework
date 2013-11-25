@@ -37,6 +37,7 @@
   }
 
   &.active-remove {
+    background-color: rgba(0,0,0,0.5);
     -webkit-animation: fadeOutHalf 0.3s;
     animation: fadeOutHalf 0.3s;
 

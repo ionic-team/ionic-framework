@@ -31,10 +31,8 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
           }
         });
         
-        $timeout(function() {
-          $animate.removeClass(element, 'active', function() {
-            scope.$destroy();
-          });
+        $animate.removeClass(element, 'active', function() {
+          scope.$destroy();
         });
       };
 
