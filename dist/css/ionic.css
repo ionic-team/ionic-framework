@@ -2660,11 +2660,12 @@ a.subdued {
   border-top: 1px solid transparent;
   border-bottom: 1px solid #dddddd;
   background-color: white;
+  /* border-width: 1px will actually create 2 device pixels on retina */
+  /* this nifty trick sets an actual 1px border on hi-res displays */
   background-size: 0; }
   @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
     .bar {
-      border-top: none !important;
-      border-bottom: none !important;
+      border: none;
       background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
       background-position: bottom;
       background-size: 100% 1px;
