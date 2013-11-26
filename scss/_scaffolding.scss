@@ -18,12 +18,6 @@ img {
   -webkit-user-drag: none;
 }
 
-a, button {
-  &:focus {
-    outline: 0;
-  }
-}
-
 body, .ionic-body {
   position: fixed;
   top: 0;
