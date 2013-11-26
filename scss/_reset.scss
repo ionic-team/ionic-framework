@@ -306,9 +306,7 @@ html input[disabled] {
  */
 
 input[type="search"] {
-    -webkit-box-sizing: content-box; /* 2 */
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
+    @include box-sizing(content-box); /* 2 */
     -webkit-appearance: textfield; /* 1 */
 }
 

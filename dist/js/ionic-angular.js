@@ -305,6 +305,46 @@ angular.module('ionic.service.platform', [])
     }
   }, 10);
 
+  // This has been cribbed from angular's sniffer service.
+  var vendorRegex = /^(Moz|webkit|O|ms)(?=[A-Z])/,
+      document = window.document,
+      bodyStyle = document.body && document.body.style,
+      android =
+          parseInt((/android (\d+)/.exec(((window.navigator || {}).userAgent).toLowerCase()) || [])[1]),
+      vendorPrefix,
+      has_transition = false,
+      has_animation = false,
+      has_transform = false,
+      transition = '',
+      animation = '',
+      transform = '',
+      match;
+  if (bodyStyle) {
+    for(var prop in bodyStyle) {
+      if(match = vendorRegex.exec(prop)) {
+        vendorPrefix = match[0];
+        vendorPrefix = vendorPrefix.substr(0, 1).toUpperCase() + vendorPrefix.substr(1);
+        break;
+      }
+    }
+
+    if(!vendorPrefix) {
+      vendorPrefix = ('WebkitOpacity' in bodyStyle) && 'webkit';
+    }
+
+    has_transition = !!(('transition' in bodyStyle) || (vendorPrefix + 'Transition' in bodyStyle));
+    has_transform = !!(('transform' in bodyStyle) || (vendorPrefix + 'Transform' in bodyStyle));
+    has_animation  = !!(('animation' in bodyStyle) || (vendorPrefix + 'Animation' in bodyStyle));
+    transition = ('transition' in bodyStyle) ? 'transition' : (vendorPrefix + 'Transition');
+    transform = ('transform' in bodyStyle) ? 'transform' : (vendorPrefix + 'Transform');
+    animation = ('animation' in bodyStyle) ? 'animation' : (vendorPrefix + 'Animation');
+
+    if (android && (!transitions||!animations)) {
+      transitions = isString(document.body.style.webkitTransition);
+      animations = isString(document.body.style.webkitAnimation);
+    }
+  }
+
   return {
     setPlatform: function(p) {
       platform = p;
@@ -352,7 +392,17 @@ angular.module('ionic.service.platform', [])
           }, 50);
 
           return q.promise;
-        }
+        },
+        /**
+         * vendor prefix to manipulate browser styles
+         */
+        vendorPrefix: vendorPrefix,
+        has_transition : has_transition,
+        has_transform  : has_transform,
+        has_animation  : has_animation,
+        transition     : transition,
+        transform      : transform,
+        animation      : animation
       };
     }]
   };
@@ -1847,7 +1897,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
   };
 })
 
-.directive('sideMenuContent', ['Gesture', function(Gesture) {
+.directive('sideMenuContent', ['Gesture', 'Platform', function(Gesture, Platform) {
   return {
     restrict: 'AC',
     require: '^sideMenus',
@@ -1893,7 +1943,9 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           },
           setTranslateX: function(amount) {
             $scope.sideMenuContentTranslateX = amount;
-            $element[0].style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
+            if (Platform.has_transform) {
+              $element[0].style[Platform.transform] = 'translate3d(' + amount + 'px, 0, 0)';
+            }
           },
           enableAnimation: function() {
             //this.el.classList.add(this.animateClass);

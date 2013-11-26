@@ -19,7 +19,7 @@
   font-size: 0;
 }
 .slide-box-animating {
-  -webkit-transition-duration: 0.2s;
+  @include transition-duration(0.2s);
 }
 .slide-box-slide {
   display: inline-block;
@@ -47,7 +47,7 @@
     opacity: 0.3;
 
     &.active {
-      -webkit-transition: opacity 0.4s ease-in;
+      @include transition(opacity 0.4s ease-in);
       opacity: 1;
     }
   }

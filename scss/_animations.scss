@@ -1,3 +1,5 @@
+@import "_mixins";
+
 $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
 
 /**
@@ -15,8 +17,7 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
     left:0;
     right:0;
     bottom:0;
-    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
-    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
+    @include transition ("all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms");
   }
 }
 
@@ -27,17 +28,16 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
     left:0;
     right:0;
     bottom:0;
-    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
-    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
+    @include transition("all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms");
   }
   > .ng-enter, &.ng-enter {
-    -webkit-transform: translate3d(100%, 0, 0);
+    @include translate3d(100%, 0, 0);
   }
   > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
-    -webkit-transform: translate3d(0, 0, 0);
+    @include translate3d(0, 0, 0);
   }
   > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
-    -webkit-transform: translate3d(-100%, 0, 0);
+    @include translate3d(-100%, 0, 0);
   }
 
   &.reverse {
@@ -47,17 +47,16 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
       left:0;
       right:0;
       bottom:0;
-      -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
-      transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
+      @include transition(all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms);
     }
     > .ng-enter, &.ng-enter {
-      -webkit-transform: translate3d(-100%, 0, 0);
+      @include translate3d(-100%, 0, 0);
     }
     > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
-      -webkit-transform: translate3d(0, 0, 0);
+      @include translate3d(0, 0, 0);
     }
     > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
-      -webkit-transform: translate3d(100%, 0, 0);
+      @include translate3d(100%, 0, 0);
     }
   }
 }
@@ -68,21 +67,19 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
     left:0;
     right:0;
     bottom:0;
-    -webkit-transition:all 250ms;
-    -webkit-transition-timing-function: $ios7-timing-function;
-    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
-    transition:all 250ms;
-    transition-timing-function: $ios7-timing-function;
+    @include transition(all 250ms);
+    @include transition-timing-function($ios7-timing-function);
+    @include transition(all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms);
     box-shadow: $menu-side-shadow;
   }
   > .ng-enter, &.ng-enter {
-    -webkit-transform: translate3d(100%, 0, 0);
+    @include translate3d(100%, 0, 0);
   }
   > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
-    -webkit-transform: translate3d(0, 0, 0);
+    @include translate3d(0, 0, 0);
   }
   > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
-    -webkit-transform: translate3d(-20%, 0, 0);
+    @include translate3d(-20%, 0, 0);
   }
   
   &.reverse {
@@ -92,96 +89,95 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
       left:0;
       right:0;
       bottom:0;
-      -webkit-transition:all 250ms;
-      -webkit-transition-timing-function: $ios7-timing-function;
-      transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms;
-      transition-timing-function: $ios7-timing-function;
+      @include transition(all 250ms);
+      @include transition-timing-function($ios7-timing-function);
+      @include transition(all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms);
     }
     > .ng-enter, &.ng-enter {
-      -webkit-transform: translate3d(-20%, 0, 0);
+      @include translate3d(-20%, 0, 0);
     }
     > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
-      -webkit-transform: translate3d(0, 0, 0);
+      @include translate3d(0, 0, 0);
     }
     > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
-      -webkit-transform: translate3d(100%, 0, 0);
+      @include translate3d(100%, 0, 0);
     }
   }
 }
 
-@-webkit-keyframes slideInLeft {
+@include keyframes(slideInLeft) {
   0% {
-    -webkit-transform: translate3d(100%, 0, 0);
+    @include translate3d(100%, 0, 0);
   }
   100% {
-    -webkit-transform: translate3d(0,0,0);
+    @include translate3d(0,0,0);
   }
 }
-@-webkit-keyframes slideOutLeft {
+@include keyframes(slideOutLeft) {
   0% {
-    -webkit-transform: translate3d(0px,0,0);
+    @include translate3d(0px,0,0);
   }
   100% {
-    -webkit-transform: translate3d(-100%,0,0);
+    @include translate3d(-100%,0,0);
   }
 }
-@-webkit-keyframes slideInRight {
+@include keyframes(slideInRight) {
   0% {
-    -webkit-transform: translate3d(-100%,0,0);
+    @include translate3d(-100%,0,0);
   }
   100% {
-    -webkit-transform: translate3d(0,0,0);
+    @include translate3d(0,0,0);
   }
 }
-@-webkit-keyframes slideOutRight {
+@include keyframes(slideOutRight) {
   0% {
-    -webkit-transform: translate3d(0,0,0);
+    @include translate3d(0,0,0);
   }
   100% {
-    -webkit-transform: translate3d(100%,0,0);
+    @include translate3d(100%,0,0);
   }
 }
 
 .slide-in-left {
-  -webkit-transform: translate3d(0%,0,0);
+  @include translate3d(0%,0,0);
   &.ng-enter, > .ng-enter {
-    -webkit-animation-duration: 250ms;
-    -webkit-animation-fill-mode: both;
-    -webkit-animation-timing-function: ease-in-out;
-    -webkit-animation-name: slideInLeft;
+    @include animation-duration(250ms);
+    @include animation-fill-mode(both);
+    @include animation-timing-function(ease-in-out);
+    @include animation-name(slideInLeft);
   }
   &.ng-leave, > .ng-leave {
-    -webkit-animation-duration: 250ms;
-    -webkit-animation-fill-mode: both;
-    -webkit-animation-timing-function: ease-in-out;
-    -webkit-animation-name: slideOutLeft;
+    @include animation-duration(250ms);
+    @include animation-fill-mode(both);
+    @include animation-timing-function(ease-in-out);
+    @include animation-name(slideOutLeft);
   }
 }
 
 
 .slide-in-left-add {
-  -webkit-transform: translate3d(100%,0,0);
-  -webkit-animation-duration: 250ms;
-  -webkit-animation-fill-mode: both;
-  -webkit-animation-timing-function: ease-in-out;
+  @include translate3d(100%,0,0);
+  @include animation-duration(250ms);
+  @include animation-fill-mode(both);
+  @include animation-timing-function(ease-in-out);
 }
 .slide-in-left-add-active {
-  -webkit-animation-name: slideInLeft;
+  @include animation-name(slideInLeft);
 }
 
 .slide-out-left {
-  -webkit-transform: translate3d(-100%,0,0);
+  @include translate3d(-100%,0,0);
   &.ng-enter, > .ng-enter {
-    -webkit-animation-duration: 250ms;
-    -webkit-animation-fill-mode: both;
-    -webkit-animation-timing-function: ease-in-out;
-    -webkit-animation-name: slideOutLeft;
+    @include animation-duration(250ms);
+    @include animation-fill-mode(both);
+    @include animation-timing-function(ease-in-out);
+    @include animation-name(slideOutLeft);
   }
   &.ng-leave, > .ng-leave {
-    -webkit-animation-duration: 250ms;
-    -webkit-animation-fill-mode: both;
-    -webkit-animation-timing-function: ease-in-out;
-    -webkit-animation-name: slideOutLeft;
+    @include animation-duration(250ms);
+    @include animation-fill-mode(both);
+    @include animation-timing-function(ease-in-out);
+    @include animation-name(slideOutLeft);
   }
 }
 
@@ -189,87 +185,87 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
 }
 
 .slide-out-left-add {
-  -webkit-transform: translate3d(0,0,0);
-  -webkit-animation-duration: 250ms;
-  -webkit-animation-fill-mode: both;
-  -webkit-animation-timing-function: ease-in-out;
+  @include translate3d(0,0,0);
+  @include animation-duration(250ms);
+  @include animation-fill-mode(both);
+  @include animation-timing-function(ease-in-out);
 }
 .slide-out-left-add-active {
-  -webkit-animation-name: slideOutLeft;
+  @include animation-name(slideOutLeft);
 }
 
 .slide-in-right {
-  -webkit-transform: translate3d(0%,0,0);
+  @include translate3d(0%,0,0);
   &.ng-enter, > .ng-enter {
-    -webkit-animation-duration: 250ms;
-    -webkit-animation-fill-mode: both;
-    -webkit-animation-timing-function: ease-in-out;
-    -webkit-animation-name: slideInRight;
+    @include animation-duration(250ms);
+    @include animation-fill-mode(both);
+    @include animation-timing-function(ease-in-out);
+    @include animation-name(slideInRight);
   }
   &.ng-leave, > .ng-leave {
-    -webkit-animation-duration: 250ms;
-    -webkit-animation-fill-mode: both;
-    -webkit-animation-timing-function: ease-in-out;
-    -webkit-animation-name: slideInRight;
+    @include animation-duration(250ms);
+    @include animation-fill-mode(both);
+    @include animation-timing-function(ease-in-out);
+    @include animation-name(slideInRight);
   }
 }
 
 .slide-in-right-add {
-  -webkit-transform: translate3d(-100%,0,0);
-  -webkit-animation-duration: 250ms;
-  -webkit-animation-fill-mode: both;
-  -webkit-animation-timing-function: ease-in-out;
+  @include translate3d(-100%,0,0);
+  @include animation-duration(250ms);
+  @include animation-fill-mode(both);
+  @include animation-timing-function(ease-in-out);
 }
 .slide-in-right-add-active {
-  -webkit-animation-name: slideInRight;
+  @include animation-name(slideInRight);
 }
 
 .slide-out-right {
-  -webkit-transform: translate3d(100%,0,0);
+  @include translate3d(100%,0,0);
   &.ng-enter, > .ng-enter {
-    -webkit-animation-duration: 250ms;
-    -webkit-animation-fill-mode: both;
-    -webkit-animation-timing-function: ease-in-out;
-    -webkit-animation-name: slideOutRight;
+    @include animation-duration(250ms);
+    @include animation-fill-mode(both);
+    @include animation-timing-function(ease-in-out);
+    @include animation-name(slideOutRight);
   }
   &.ng-leave, > .ng-leave {
-    -webkit-animation-duration: 250ms;
-    -webkit-animation-fill-mode: both;
-    -webkit-animation-timing-function: ease-in-out;
-    -webkit-animation-name: slideOutRight;
+    @include animation-duration(250ms);
+    @include animation-fill-mode(both);
+    @include animation-timing-function(ease-in-out);
+    @include animation-name(slideOutRight);
   }
 }
 
 .slide-out-right {
 }
 .slide-out-right-add {
-  -webkit-transform: translate3d(0,0,0);
-  -webkit-animation-duration: 250ms;
-  -webkit-animation-fill-mode: both;
-  -webkit-animation-timing-function: ease-in-out;
+  @include translate3d(0,0,0);
+  @include animation-duration(250ms);
+  @include animation-fill-mode(both);
+  @include animation-timing-function(ease-in-out);
 }
 .slide-out-right-add-active {
-  -webkit-animation-name: slideOutRight;
+  @include animation-name(slideOutRight);
 }
 
 $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
-@-webkit-keyframes slideInUp {
+@include keyframes (slideInUp) {
   0% {
-    -webkit-transform: translate3d(0, 100%, 0);
+    @include translate3d(0, 100%, 0);
     opacity: 0;
   }
   100% {
-    -webkit-transform: translate3d(0, 0, 0);
+    @include translate3d(0, 0, 0);
     opacity: 1;
   }
 }
-@-webkit-keyframes slideOutUp {
+@include keyframes (slideOutUp) {
   0% {
-    -webkit-transform: translate3d(0, 0, 0);
+    @include translate3d(0, 0, 0);
     opacity: 1;
   }
   100% {
-    -webkit-transform: translate3d(0, 100%, 0);
+    @include translate3d(0, 100%, 0);
     opacity: 0;
   }
 }
@@ -277,101 +273,81 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
 .slide-in-up {
   opacity: 1;
   // Start it down low
-  -webkit-transform: translate3d(0, 0%, 0);
+  @include translate3d(0, 0%, 0);
 
   &.ng-enter, .ng-enter {
     // Start hidden
     opacity: 0;
     // Start it down low
-    -webkit-transform: translate3d(0, 100%, 0);
+    @include translate3d(0, 100%, 0);
 
-    -webkit-animation-duration: 400ms;
-    -webkit-animation-fill-mode: both;
-    -webkit-animation-timing-function: $slide-in-up-function;
+    @include animation-duration(400ms);
+    @include animation-fill-mode(both);
+    @include animation-timing-function($slide-in-up-function);
   }
 
   &.ng-enter-active, .ng-enter-active {
-    -webkit-animation-name: slideInUp;
+    @include animation-name(slideInUp);
   }
 
   &.ng-leave, .ng-leave {
-    -webkit-animation-duration: 400ms;
-    -webkit-animation-fill-mode: both;
-    -webkit-animation-timing-function: $slide-in-up-function;
+    @include animation-duration(400ms);
+    @include animation-fill-mode(both);
+    @include animation-timing-function($slide-in-up-function);
   }
 
   &.ng-leave-active, .ng-leave {
-    -webkit-animation-name: slideOutUp;
+    @include animation-name(slideOutUp);
   }
 }
 
 .slide-in-up-add {
-  -webkit-animation-duration: 400ms;
-  -webkit-animation-fill-mode: both;
-  -webkit-animation-timing-function: $slide-in-up-function;
+  @include animation-duration(400ms);
+  @include animation-fill-mode(both);
+  @include animation-timing-function($slide-in-up-function);
 }
 .slide-in-up-add-active {
-  -webkit-animation-name: slideInUp;
+  @include animation-name(slideInUp);
 }
 
 .slide-in-up-remove {
-  -webkit-animation-duration: 400ms;
-  -webkit-animation-fill-mode: forwards;
-  -webkit-animation-timing-function: $slide-in-up-function;
+  @include animation-duration(400ms);
+  @include animation-fill-mode(forwards);
+  @include animation-timing-function($slide-in-up-function);
 }
 .slide-in-up-remove-active {
-  -webkit-animation-name: slideOutUp;
+  @include animation-name(slideOutUp);
 }
 
-@-webkit-keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-@keyframes fadeOut {
+@include keyframes (fadeOut) {
   from { opacity: 1; }
   to { opacity: 0; }
 }
 
-@-webkit-keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@keyframes fadeIn {
+@include keyframes (fadeIn) {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
 .fade-in {
-  -webkit-animation: fadeOut 0.3s;
-  animation: fadeOut 0.3s;
+  @include animation(fadeOut 0.3s);
   &.active {
-    -webkit-animation: fadeIn 0.3s;
-    animation: fadeIn 0.3s;
+    @include animation(fadeIn 0.3s);
   }
 }
 
 .fade-in-not-out {
   &.ng-enter, .ng-enter {
     position: relative;
-    -webkit-animation: fadeIn 0.3s;
-    animation: fadeIn 0.3s;
+    @include animation(fadeIn 0.3s);
   }
   &.ng-leave, .ng-leave {
     display: none;
   }
 }
 
-@-moz-keyframes spin { 
-  100% { -moz-transform: rotate(360deg); } 
-}
-@-webkit-keyframes spin { 
-  100% { -webkit-transform: rotate(360deg); } 
-}
-@keyframes spin { 
-  100% { 
-    -webkit-transform: rotate(360deg); 
-    transform:rotate(360deg); 
-  } 
+@include keyframes (spin) {
+  100% { @include rotate(360deg); }
 }
 
 
@@ -382,46 +358,42 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
 
 .nav-title-slide-ios7 {
   > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
-    -webkit-transition:all 350ms;
-    -webkit-transition-timing-function: $ios7-timing-function;
-    transition:all 350ms;
-    transition-timing-function: $ios7-timing-function;
+    @include transition(all 350ms);
+    @include transition-timing-function($ios7-timing-function);
     opacity: 1;
   }
   > .ng-enter, &.ng-enter {
     opacity: 0;
-    -webkit-transform: translate3d(30%, 0, 0);
+    @include translate3d(30%, 0, 0);
   }
   > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
     opacity: 1;
-    -webkit-transform: translate3d(0, 0, 0);
+    @include translate3d(0, 0, 0);
   }
   > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
     opacity: 0;
-    -webkit-transform: translate3d(-30%, 0, 0);
+    @include translate3d(-30%, 0, 0);
   }
 
 }
 .reverse {
   .nav-title-slide-ios7 {
     > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
-      -webkit-transition:all 350ms;
-      -webkit-transition-timing-function: $ios7-timing-function;
-      transition:all 350ms;
-      transition-timing-function: $ios7-timing-function;
+      @include transition(all 350ms);
+      @include transition-timing-function($ios7-timing-function);
       opacity: 1;
     }
     > .ng-enter, &.ng-enter {
       opacity: 0;
-      -webkit-transform: translate3d(-30%, 0, 0);
+      @include translate3d(-30%, 0, 0);
     }
     > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
       opacity: 1;
-      -webkit-transform: translate3d(0, 0, 0);
+      @include translate3d(0, 0, 0);
     }
     > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
       opacity: 0;
-      -webkit-transform: translate3d(30%, 0, 0);
+      @include translate3d(30%, 0, 0);
     }
 
   }

@@ -46,7 +46,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
   };
 })
 
-.directive('sideMenuContent', ['Gesture', function(Gesture) {
+.directive('sideMenuContent', ['Gesture', 'Platform', function(Gesture, Platform) {
   return {
     restrict: 'AC',
     require: '^sideMenus',
@@ -92,7 +92,9 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           },
           setTranslateX: function(amount) {
             $scope.sideMenuContentTranslateX = amount;
-            $element[0].style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
+            if (Platform.has_transform) {
+              $element[0].style[Platform.transform] = 'translate3d(' + amount + 'px, 0, 0)';
+            }
           },
           enableAnimation: function() {
             //this.el.classList.add(this.animateClass);

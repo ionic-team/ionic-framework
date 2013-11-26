@@ -4,19 +4,11 @@
  * --------------------------------------------------
  */
 
-@-webkit-keyframes fadeInHalf {
+@include keyframes(fadeInHalf) {
   from { background-color: rgba(0,0,0,0); }
   to { background-color: rgba(0,0,0,0.5); }
 }
-@keyframes fadeInHalf {
-  from { background-color: rgba(0,0,0,0); }
-  to { background-color: rgba(0,0,0,0.5); }
-}
-@-webkit-keyframes fadeOutHalf {
-  from { background-color: rgba(0,0,0,0.5); }
-  to { background-color: rgba(0,0,0,0); }
-}
-@keyframes fadeOutHalf {
+@include keyframes(fadeOutHalf) {
   from { background-color: rgba(0,0,0,0.5); }
   to { background-color: rgba(0,0,0,0); }
 }
@@ -30,38 +22,34 @@
   background-color: rgba(0,0,0,0);
 
   &.active {
-    -webkit-animation: fadeInHalf 0.3s;
-    animation: fadeInHalf 0.3s;
-
-    -webkit-animation-fill-mode: both;
+    @include animation(fadeInHalf 0.3s);
+    @include animation-fill-mode(both);
   }
 
   &.active-remove {
     background-color: rgba(0,0,0,0.5);
-    -webkit-animation: fadeOutHalf 0.3s;
-    animation: fadeOutHalf 0.3s;
-
-    -webkit-animation-fill-mode: both;
+    @include animation(fadeOutHalf 0.3s);
+    @include animation-fill-mode(both);
   }
 }
 
-@-webkit-keyframes actionSheetUp {
+@include keyframes(actionSheetUp) {
   0% {
-    -webkit-transform: translate3d(0, 100%, 0);
+    @include translate3d(0, 100%, 0);
     opacity: 0;
   }
   100% {
-    -webkit-transform: translate3d(0, 0, 0);
+    @include translate3d(0, 0, 0);
     opacity: 1;
   }
 }
-@-webkit-keyframes actionSheetOut {
+@include keyframes(actionSheetOut) {
   0% {
-    -webkit-transform: translate3d(0, 0, 0);
+    @include translate3d(0, 0, 0);
     opacity: 1;
   }
   100% {
-    -webkit-transform: translate3d(0, 100%, 0);
+    @include translate3d(0, 100%, 0);
     opacity: 0;
   }
 }
@@ -70,36 +58,34 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
 .action-sheet-up {
   opacity: 1;
   // Start it down low
-  -webkit-transform: translate3d(0, 0%, 0);
+  @include translate3d(0, 0%, 0);
 
   &.ng-enter, .ng-enter {
     // Start hidden
     opacity: 0;
     // Start it down low
-    -webkit-transform: translate3d(0, 100%, 0);
-
-    -webkit-animation-duration: 400ms;
-    -webkit-animation-fill-mode: both;
-    -webkit-animation-timing-function: $slide-in-up-function;
+    @include translate3d(0, 100%, 0);
+    @include animation-duration(400ms);
+    @include animation-fill-mode(both);
+    @include animation-timing-function($slide-in-up-function);
   }
 
   &.ng-enter-active, .ng-enter-active {
-    -webkit-animation-name: actionSheetUp;
+    @include animation-name(actionSheetUp);
   }
 
   &.ng-leave, .ng-leave {
-    -webkit-animation-duration: 400ms;
-    -webkit-animation-fill-mode: both;
-    -webkit-animation-timing-function: $slide-in-up-function;
+    @include animation-duration(400ms);
+    @include animation-fill-mode(both);
+    @include animation-timing-function($slide-in-up-function);
   }
 
   &.ng-leave-active, .ng-leave {
-    -webkit-animation-name: actionSheetOut;
+    @include animation-name(actionSheetOut);
   }
 }
 
 .action-sheet {
-
   position: fixed;
   bottom: 0;
   left: 15px; 

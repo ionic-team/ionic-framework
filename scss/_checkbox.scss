@@ -46,10 +46,9 @@
   border-right: 0;
   content: ' ';
   opacity: 0;
-  transition: opacity .05s ease-in-out;
+  @include transition(opacity .05s ease-in-out);
 
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg);
+  @include rotate(-45deg);
 }
 
 /* what the background looks like when its checked */
