@@ -312,8 +312,12 @@ angular.module('ionic.service.platform', [])
       android =
           parseInt((/android (\d+)/.exec(((window.navigator || {}).userAgent).toLowerCase()) || [])[1]),
       vendorPrefix,
-      transitions = false,
-      animations = false,
+      has_transition = false,
+      has_animation = false,
+      has_transform = false,
+      transition = '',
+      animation = '',
+      transform = '',
       match;
   if (bodyStyle) {
     for(var prop in bodyStyle) {
@@ -328,8 +332,12 @@ angular.module('ionic.service.platform', [])
       vendorPrefix = ('WebkitOpacity' in bodyStyle) && 'webkit';
     }
 
-    transitions = !!(('transition' in bodyStyle) || (vendorPrefix + 'Transition' in bodyStyle));
-    animations  = !!(('animation' in bodyStyle) || (vendorPrefix + 'Animation' in bodyStyle));
+    has_transition = !!(('transition' in bodyStyle) || (vendorPrefix + 'Transition' in bodyStyle));
+    has_transform = !!(('transform' in bodyStyle) || (vendorPrefix + 'Transform' in bodyStyle));
+    has_animation  = !!(('animation' in bodyStyle) || (vendorPrefix + 'Animation' in bodyStyle));
+    transition = ('transition' in bodyStyle) ? 'transition' : (vendorPrefix + 'Transition');
+    transform = ('transform' in bodyStyle) ? 'transform' : (vendorPrefix + 'Transform');
+    animation = ('animation' in bodyStyle) ? 'animation' : (vendorPrefix + 'Animation');
 
     if (android && (!transitions||!animations)) {
       transitions = isString(document.body.style.webkitTransition);
@@ -389,8 +397,12 @@ angular.module('ionic.service.platform', [])
          * vendor prefix to manipulate browser styles
          */
         vendorPrefix: vendorPrefix,
-        transitions : transitions,
-        animations : animations
+        has_transition : has_transition,
+        has_transform  : has_transform,
+        has_animation  : has_animation,
+        transition     : transition,
+        transform      : transform,
+        animation      : animation
       };
     }]
   };
@@ -1931,7 +1943,9 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           },
           setTranslateX: function(amount) {
             $scope.sideMenuContentTranslateX = amount;
-            $element[0].style[Platform.vendorPrefix + 'Transform'] = 'translate3d(' + amount + 'px, 0, 0)';
+            if (Platform.has_transform) {
+              $element[0].style[Platform.transform] = 'translate3d(' + amount + 'px, 0, 0)';
+            }
           },
           enableAnimation: function() {
             //this.el.classList.add(this.animateClass);
