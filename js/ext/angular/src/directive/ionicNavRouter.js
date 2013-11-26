@@ -73,7 +73,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
 
         back = $scope.direction == 'back' || (!!(historyState && historyState.position <= $rootScope.stackCursorPosition));
 
-        if(isFirst || (next && next.$$route.originalPath === "")) {
+        if(isFirst || (next && next.$$route && next.$$route.originalPath === "")) {
           // Don't animate
           return;
         }
