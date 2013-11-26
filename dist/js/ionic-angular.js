@@ -1872,7 +1872,9 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           e.gesture.srcEvent.preventDefault();
         };
 
-        var dragGesture = Gesture.on('drag', dragFn, $element);
+        //var dragGesture = Gesture.on('drag', dragFn, $element);
+        var dragRightGesture = Gesture.on('dragright', dragFn, $element);
+        var dragLeftGesture = Gesture.on('dragleft', dragFn, $element);
 
         var dragReleaseFn = function(e) {
           if(!defaultPrevented) {
@@ -1907,7 +1909,8 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 
         // Cleanup
         $scope.$on('$destroy', function() {
-          Gesture.off(dragGesture, 'drag', dragFn);
+          Gesture.off(dragLeftGesture, 'drag', dragFn);
+          Gesture.off(dragRightGesture, 'drag', dragFn);
           Gesture.off(releaseGesture, 'release', dragReleaseFn);
         });
       };
