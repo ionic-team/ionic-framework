@@ -80,9 +80,17 @@ module.exports = function(grunt) {
       },
       sass: {
         files: ['scss/**/*.scss'],
-        tasks: ['sass', 'concat'],
+        tasks: ['sass'],
         options: {
           spawn: false
+        }
+      }
+    },
+    connect: {
+      server: {
+        options: {
+          port: process.env.PORT || 9001,
+          base: 'dist'
         }
       }
     }
@@ -94,6 +102,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-connect');
 
-  grunt.registerTask('default', ['jshint', 'sass', 'concat']);
+  grunt.registerTask('dist', ['jshint', 'sass', 'concat']);
+  grunt.registerTask('server', ['connect', 'watch']);
+  grunt.registerTask('default', ['server']);
 };
