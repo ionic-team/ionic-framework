@@ -665,6 +665,8 @@ angular.module('ionic.ui.content', [])
 
         if(scroll && attr.padding == "true") {
           scroll.classList.add('padding');
+        } else if(attr.padding == "true") {
+          c.addClass('padding');
         }
 
         if(attr.hasHeader == "true") {
