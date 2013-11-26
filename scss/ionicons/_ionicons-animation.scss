@@ -43,8 +43,9 @@
 
 .#{$ionicons-prefix}loading-a {
   -webkit-animation-timing-function: steps(8, start);
-  -moz-animation-timing-function: steps(8, start);
-  animation-timing-function: steps(8, start);
+     -moz-animation-timing-function: steps(8, start);
+       -o-animation-timing-function: steps(8, start);
+          animation-timing-function: steps(8, start);
 }
 
 .#{$ionicons-prefix}loading-a:before { 

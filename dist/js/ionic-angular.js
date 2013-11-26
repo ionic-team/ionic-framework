@@ -305,6 +305,38 @@ angular.module('ionic.service.platform', [])
     }
   }, 10);
 
+  // This has been cribbed from angular's sniffer service.
+  var vendorRegex = /^(Moz|webkit|O|ms)(?=[A-Z])/,
+      document = window.document,
+      bodyStyle = document.body && document.body.style,
+      android =
+          parseInt((/android (\d+)/.exec(((window.navigator || {}).userAgent).toLowerCase()) || [])[1]),
+      vendorPrefix,
+      transitions = false,
+      animations = false,
+      match;
+  if (bodyStyle) {
+    for(var prop in bodyStyle) {
+      if(match = vendorRegex.exec(prop)) {
+        vendorPrefix = match[0];
+        vendorPrefix = vendorPrefix.substr(0, 1).toUpperCase() + vendorPrefix.substr(1);
+        break;
+      }
+    }
+
+    if(!vendorPrefix) {
+      vendorPrefix = ('WebkitOpacity' in bodyStyle) && 'webkit';
+    }
+
+    transitions = !!(('transition' in bodyStyle) || (vendorPrefix + 'Transition' in bodyStyle));
+    animations  = !!(('animation' in bodyStyle) || (vendorPrefix + 'Animation' in bodyStyle));
+
+    if (android && (!transitions||!animations)) {
+      transitions = isString(document.body.style.webkitTransition);
+      animations = isString(document.body.style.webkitAnimation);
+    }
+  }
+
   return {
     setPlatform: function(p) {
       platform = p;
@@ -352,7 +384,13 @@ angular.module('ionic.service.platform', [])
           }, 50);
 
           return q.promise;
-        }
+        },
+        /**
+         * vendor prefix to manipulate browser styles
+         */
+        vendorPrefix: vendorPrefix,
+        transitions : transitions,
+        animations : animations
       };
     }]
   };
@@ -1847,7 +1885,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
   };
 })
 
-.directive('sideMenuContent', ['Gesture', function(Gesture) {
+.directive('sideMenuContent', ['Gesture', 'Platform', function(Gesture, Platform) {
   return {
     restrict: 'AC',
     require: '^sideMenus',
@@ -1893,7 +1931,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           },
           setTranslateX: function(amount) {
             $scope.sideMenuContentTranslateX = amount;
-            $element[0].style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
+            $element[0].style[Platform.vendorPrefix + 'Transform'] = 'translate3d(' + amount + 'px, 0, 0)';
           },
           enableAnimation: function() {
             //this.el.classList.add(this.animateClass);

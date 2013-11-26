@@ -62,6 +62,9 @@ body, .ionic-body {
    Note: This is a bug for "-webkit-overflow-scrolling: touch" (via ratchet) */
 .content > * {
   -webkit-transform: translateZ(0px);
+	   -moz-transform: translateZ(0px);
+	    -ms-transform: translateZ(0px);
+	     -o-transform: translateZ(0px);
           transform: translateZ(0px);
 }
 
@@ -91,20 +94,20 @@ body, .ionic-body {
 	width: 100%;
   height: 100%;
 	-webkit-transform: translateZ(0);
-	-moz-transform: translateZ(0);
-	-ms-transform: translateZ(0);
-	-o-transform: translateZ(0);
-	transform: translateZ(0);
+	   -moz-transform: translateZ(0);
+	    -ms-transform: translateZ(0);
+	     -o-transform: translateZ(0);
+	        transform: translateZ(0);
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+	   -moz-user-select: none;
+	    -ms-user-select: none;
+         	user-select: none;
 	-webkit-text-size-adjust: none;
-	-moz-text-size-adjust: none;
-	-ms-text-size-adjust: none;
-	-o-text-size-adjust: none;
-	text-size-adjust: none;
+	   -moz-text-size-adjust: none;
+	    -ms-text-size-adjust: none;
+	     -o-text-size-adjust: none;
+        	text-size-adjust: none;
 }
 
 // Scroll refresher (for pull to refresh)
@@ -140,18 +143,18 @@ body, .ionic-body {
   bottom: 25px;
 }
 .scroll-refreshing {
-  -webkit-transition: height 0.1s ease-in-out;
+  @include transition(height 0.1s ease-in-out);
 
   .ionic-refresher {
-    -webkit-animation: refresher-pulsate 1.5s linear;
-    -webkit-animation-iteration-count: infinite; 
+    @include animation(refresher-pulsate 1.5s linear);
+    @include animation-iteration-count(infinite);
   }
 }
 
-@-webkit-keyframes refresher-pulsate {
-  0% {-webkit-transform: scale(2, 2); }
-  50% {-webkit-transform: scale(1.5, 1.5); }
-  100% {-webkit-transform: scale(2, 2); }
+@include keyframes(refresher-pulsate) {
+  0%   {@include scale(2, 2); }
+  50%  {@include scale(1.5, 1.5); }
+  100% {@include scale(2, 2); }
 }
 
 .overflow-scroll {

@@ -28,7 +28,7 @@
   width: 100%;
   height: 100%;
 
-  -webkit-transition: visibility 0s linear 0.3s;
+  @include transition(visibility 0s linear 0.3s);
 
   &.enabled {
     background-color: rgba(0,0,0,0.7);
@@ -36,7 +36,7 @@
 
   &.active {
     visibility: visible;
-    -webkit-transition-delay: 0s;
+    @include transition-delay(0s);
   }
 }
 
