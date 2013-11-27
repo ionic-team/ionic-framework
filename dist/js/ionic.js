@@ -3232,7 +3232,7 @@ window.ionic = {
       ionic.extend(this, opts);
 
       if(!this.itemHeight && this.listEl) {
-        this.itemHeight = this.listEl.children[0] && parseInt(this.listEl.children[0].style.height);
+        this.itemHeight = this.listEl.children[0] && parseInt(this.listEl.children[0].style.height, 10);
       }
 
       ionic.views.ListView.__super__.initialize.call(this, opts);
@@ -3294,8 +3294,8 @@ window.ionic = {
 
         // Get the first and last elements in the list based on how many can fit
         // between the pixel range of lowWater and highWater
-        var first = parseInt(Math.abs(highWater / itemHeight));
-        var last = parseInt(Math.abs(lowWater / itemHeight));
+        var first = parseInt(Math.abs(highWater / itemHeight), 10);
+        var last = parseInt(Math.abs(lowWater / itemHeight), 10);
 
         // Get the items we need to remove
         this._virtualItemsToRemove = Array.prototype.slice.call(this.listEl.children, 0, first);

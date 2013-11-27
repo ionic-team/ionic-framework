@@ -34,16 +34,10 @@ angular.module('ionic.ui.content', [])
       return function($scope, $element, $attr) {
         var 
         c = $element.eq(0),
-        scroll = $element[0].querySelector('.scroll'),
         clone,
         sc, 
-        sv;
-
-        if(scroll && attr.padding == "true") {
-          scroll.classList.add('padding');
-        } else if(attr.padding == "true") {
-          c.addClass('padding');
-        }
+        sv,
+        addedPadding = false;
 
         if(attr.hasHeader == "true") {
           c.addClass('has-header');
@@ -78,6 +72,10 @@ angular.module('ionic.ui.content', [])
         } else {
           sc = document.createElement('div');
           sc.className = 'scroll';
+          if(attr.padding == "true") {
+            sc.className += ' padding';
+            addedPadding = true;
+          }
           $element.append(sc);
           // Otherwise, supercharge this baby!
           sv = new ionic.views.Scroll({
@@ -99,6 +97,12 @@ angular.module('ionic.ui.content', [])
           clone = transclude($scope.$parent);
           angular.element($element[0].firstElementChild).append(clone);
         }
+
+        // if padding attribute is true, then add padding if it wasn't added to the .scroll
+        if(attr.padding == "true" && !addedPadding) {
+          c.addClass('padding');
+        }
+
       };
     }
   };
