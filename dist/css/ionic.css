@@ -1953,7 +1953,6 @@ html {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  -o-user-select: none;
   user-select: none;
   font-family: sans-serif;
   /* 1 */
@@ -2633,7 +2632,6 @@ a.subdued {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  -o-user-select: none;
   user-select: none;
   position: absolute;
   right: 0;
@@ -3197,6 +3195,7 @@ a.subdued {
  */
 .modal {
   -webkit-transform: translate3d(0, 100%, 0);
+  -moz-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
   position: fixed;
   top: 0;
@@ -4328,6 +4327,7 @@ input[type="checkbox"][readonly] {
 /* also the handle's appearance when it is "off" */
 .toggle .handle {
   -webkit-transition: 0.1s ease-in-out;
+  -moz-transition: 0.1s ease-in-out;
   transition: 0.1s ease-in-out;
   position: absolute;
   top: 2px;
@@ -4353,6 +4353,7 @@ input[type="checkbox"][readonly] {
 /* the handle when the toggle is "on" */
 .toggle input:checked + .track .handle {
   -webkit-transform: translate3d(22px, 0, 0);
+  -moz-transform: translate3d(22px, 0, 0);
   transform: translate3d(22px, 0, 0);
   background-color: white; }
 
@@ -4812,6 +4813,7 @@ input[type="range"] {
 
 .button-icon {
   -webkit-transition: opacity 0.1s;
+  -moz-transition: opacity 0.1s;
   transition: opacity 0.1s;
   padding: 0 6px;
   min-width: initial;
@@ -4828,6 +4830,7 @@ input[type="range"] {
 
 .button-clear {
   -webkit-transition: opacity 0.1s;
+  -moz-transition: opacity 0.1s;
   transition: opacity 0.1s;
   padding: 0 6px;
   max-height: 42px;
@@ -4847,6 +4850,7 @@ input[type="range"] {
 
 .button-outline {
   -webkit-transition: opacity 0.1s;
+  -moz-transition: opacity 0.1s;
   transition: opacity 0.1s;
   background: none;
   box-shadow: none; }
