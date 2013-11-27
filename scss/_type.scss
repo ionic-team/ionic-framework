@@ -60,6 +60,7 @@ h3, .h3 {
     margin-top: ($line-height-computed / 2);
   }
 }
+
 h4, .h4,
 h5, .h5,
 h6, .h6 {
@@ -102,39 +103,22 @@ blockquote {
   margin: 0 0 $line-height-computed;
   padding: ($line-height-computed / 2) $line-height-computed;
   border-left: 5px solid gray;
+  
   p {
     font-weight: 300;
     font-size: ($font-size-base * 1.25);
     line-height: 1.25;
   }
+  
   p:last-child {
     margin-bottom: 0;
   }
+
   small {
     display: block;
     line-height: $line-height-base;
     &:before {
       content: '\2014 \00A0';// EM DASH, NBSP;
-    }
-  }
-
-  // Float right with text-align: right
-  &.pull-right {
-    padding-right: 15px;
-    padding-left: 0;
-    border-right: 5px solid gray;
-    border-left: 0;
-    p,
-    small {
-      text-align: right;
-    }
-    small {
-      &:before {
-        content: '';
-      }
-      &:after {
-        content: '\00A0 \2014';// NBSP, EM DASH;
-      }
     }
   }
 }

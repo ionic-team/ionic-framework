@@ -69,7 +69,6 @@
 .padding > .list .item
 {
   &:first-child {
-    //margin-top: 0;
     border-top-left-radius: $card-border-radius;
     border-top-right-radius: $card-border-radius;
 
@@ -80,7 +79,6 @@
   }
   &:last-child {
     border-bottom-right-radius: $card-border-radius;
-    //margin-bottom: 0;
     border-bottom-left-radius: $card-border-radius;
 
     .item-content {

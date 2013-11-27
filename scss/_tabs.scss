@@ -14,10 +14,11 @@
   position: absolute;
   bottom: 0;
   z-index: 5;
+
   width: 100%;
   height: $tabs-height;
-  border-style: solid;
 
+  border-style: solid;
   border-top-width: 1px;
 
   background-size: 0;
@@ -77,10 +78,8 @@
   height: 100%;
 
   color: inherit;
-
   text-align: center;
   text-decoration: none;
-
   text-overflow: ellipsis;
   white-space: nowrap;
 
