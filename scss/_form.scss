@@ -1,3 +1,4 @@
+
 /**
  * Forms
  * --------------------------------------------------
@@ -62,16 +63,16 @@ textarea {
   .icon {
     @include flex(0, 0, 24px);
     position: static;
-    height: auto;
     display: inline-block;
+    height: auto;
     text-align: center;
     font-size: 16px;
   }
 
   &.item.active, 
   .ionic-pseudo &.item:active {
-    background-color: transparent;
     border-color: $item-default-border;
+    background-color: transparent;
   }
 }
 
@@ -188,6 +189,12 @@ input[type="checkbox"] {
   width: auto; // Override of generic input selector
 }
 
+// Make multiple select elements height not fixed
+select[multiple],
+select[size] {
+  height: auto;
+}
+
 // Set the height of select and file controls to match text inputs
 select,
 input[type="file"] {
@@ -198,12 +205,6 @@ input[type="file"] {
 select {
   border: $input-border-width solid $input-border;
   background-color: $input-bg; // Chrome on Linux and Mobile Safari need background-color
-}
-
-// Make multiple select elements height not fixed
-select[multiple],
-select[size] {
-  height: auto;
 }
 
 

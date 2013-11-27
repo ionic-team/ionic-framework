@@ -4110,13 +4110,13 @@ textarea {
     -ms-flex: 0 0 24px;
     flex: 0 0 24px;
     position: static;
-    height: auto;
     display: inline-block;
+    height: auto;
     text-align: center;
     font-size: 16px; }
   .item-input.item.active, .ionic-pseudo .item-input.item:active {
-    background-color: transparent;
-    border-color: #dddddd; }
+    border-color: #dddddd;
+    background-color: transparent; }
 
 .input-label {
   -webkit-box-flex: 1;
@@ -4216,6 +4216,10 @@ input[type="radio"],
 input[type="checkbox"] {
   width: auto; }
 
+select[multiple],
+select[size] {
+  height: auto; }
+
 select,
 input[type="file"] {
   line-height: 34px; }
@@ -4223,10 +4227,6 @@ input[type="file"] {
 select {
   border: 1px solid #dddddd;
   background-color: white; }
-
-select[multiple],
-select[size] {
-  height: auto; }
 
 input:-moz-placeholder,
 textarea:-moz-placeholder {
