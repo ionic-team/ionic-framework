@@ -2543,49 +2543,83 @@ a.subdued {
   background-color: rgba(0, 0, 0, 0); }
   .action-sheet-backdrop.active {
     -webkit-animation: fadeInHalf 0.3s;
+    -moz-animation: fadeInHalf 0.3s;
     animation: fadeInHalf 0.3s;
-    -webkit-animation-fill-mode: both; }
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both; }
   .action-sheet-backdrop.active-remove {
-    background-color: rgba(0, 0, 0, 0.5);
     -webkit-animation: fadeOutHalf 0.3s;
+    -moz-animation: fadeOutHalf 0.3s;
     animation: fadeOutHalf 0.3s;
-    -webkit-animation-fill-mode: both; }
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both;
+    background-color: rgba(0, 0, 0, 0.5); }
 
 @-webkit-keyframes actionSheetUp {
   0% {
     -webkit-transform: translate3d(0, 100%, 0);
+    -moz-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
     opacity: 0; }
 
   100% {
     -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
     opacity: 1; } }
 
 @-webkit-keyframes actionSheetOut {
   0% {
     -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
     opacity: 1; }
 
   100% {
     -webkit-transform: translate3d(0, 100%, 0);
+    -moz-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
     opacity: 0; } }
 
 .action-sheet-up {
-  opacity: 1;
-  -webkit-transform: translate3d(0, 0%, 0); }
+  -webkit-transform: translate3d(0, 0%, 0);
+  -moz-transform: translate3d(0, 0%, 0);
+  transform: translate3d(0, 0%, 0);
+  opacity: 1; }
   .action-sheet-up.ng-enter, .action-sheet-up .ng-enter {
-    opacity: 0;
     -webkit-transform: translate3d(0, 100%, 0);
+    -moz-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
     -webkit-animation-duration: 400ms;
+    -moz-animation-duration: 400ms;
+    animation-duration: 400ms;
     -webkit-animation-fill-mode: both;
-    -webkit-animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
+    -moz-animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
+    animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
+    opacity: 0; }
   .action-sheet-up.ng-enter-active, .action-sheet-up .ng-enter-active {
-    -webkit-animation-name: actionSheetUp; }
+    -webkit-animation-name: actionSheetUp;
+    -moz-animation-name: actionSheetUp;
+    animation-name: actionSheetUp; }
   .action-sheet-up.ng-leave, .action-sheet-up .ng-leave {
     -webkit-animation-duration: 400ms;
+    -moz-animation-duration: 400ms;
+    animation-duration: 400ms;
     -webkit-animation-fill-mode: both;
-    -webkit-animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
+    -moz-animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
+    animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1); }
   .action-sheet-up.ng-leave-active, .action-sheet-up .ng-leave {
-    -webkit-animation-name: actionSheetOut; }
+    -webkit-animation-name: actionSheetOut;
+    -moz-animation-name: actionSheetOut;
+    animation-name: actionSheetOut; }
 
 .action-sheet {
   position: fixed;
@@ -2607,17 +2641,17 @@ a.subdued {
 
 .action-sheet-title {
   padding: 10px;
+  color: #666666;
   text-align: center;
-  font-size: 12px;
-  color: #666666; }
+  font-size: 12px; }
 
 .action-sheet-group {
-  background-color: #fff;
   margin-bottom: 5px;
-  border-radius: 3px 3px 3px 3px; }
+  border-radius: 3px 3px 3px 3px;
+  background-color: #fff; }
   .action-sheet-group .button {
-    border-radius: 0;
-    border-width: 1px 0px 0px 0px; }
+    border-width: 1px 0px 0px 0px;
+    border-radius: 0; }
     .action-sheet-group .button.active, .action-sheet-group .button:active {
       background-color: transparent;
       color: inherit; }
