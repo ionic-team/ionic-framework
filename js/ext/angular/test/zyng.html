@@ -1,0 +1,141 @@
+<html ng-app="zyngTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Content</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/angular/angular.js"></script>
+    <script src="../../../../dist/js/angular/angular-animate.js"></script>
+    <script src="../../../../dist/js/angular/angular-route.js"></script>
+    <script src="../../../../dist/js/angular/angular-touch.js"></script>
+    <script src="../../../../dist/js/angular/angular-sanitize.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
+    <style>
+	#c{
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		overflow: hidden;
+		font-family: sans-serif;
+		cursor: default;
+	
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		-o-user-select: none;
+		user-select: none;
+	}
+	
+	#content{
+		background: white;
+    width: 100%;
+		
+		-webkit-transform-origin: left top;
+		-webkit-transform: translateZ(0);
+		-moz-transform-origin: left top;
+		-moz-transform: translateZ(0);
+		-ms-transform-origin: left top;
+		-ms-transform: translateZ(0);
+		-o-transform-origin: left top;
+		-o-transform: translateZ(0);
+		transform-origin: left top;
+		transform: translateZ(0);
+	}
+    </style>
+  </head>
+  <body ng-controller="AppCtrl">
+    <div id="c">
+      <div id="content">
+       <div style="height: 3000px; width: 100%; background: url('tree_bark.png') repeat"></div>
+     </div>
+    </div>
+
+    <script>
+      angular.module('zyngTest', ['ionic'])
+      .controller('AppCtrl', function($scope) {
+      });
+
+      var render = function(left, top, zoom) {
+        content.style.webkitTransform = 'translate3d(' + (-left) + 'px,' + (-top) + 'px,0) scale(' + zoom + ')';
+      };	
+
+      var container = document.getElementById('c');
+      // Initialize Scroller
+      var scroller = new ionic.views.Scroller(render, {
+        scrollingX: false
+      });
+
+      // Update Scroller dimensions for changed content
+      scroller.setDimensions(container.clientWidth, container.clientHeight, content.offsetWidth, content.offsetHeight-50);
+      // Event Handler
+      
+      if ('ontouchstart' in window) {
+        
+        container.addEventListener("touchstart", function(e) {
+          // Don't react if initial down happens on a form element
+          if (e.target.tagName.match(/input|textarea|select/i)) {
+            return;
+          }
+          
+          scroller.doTouchStart(e.touches, e.timeStamp);
+          e.preventDefault();
+        }, false);
+
+        document.addEventListener("touchmove", function(e) {
+          scroller.doTouchMove(e.touches, e.timeStamp);
+        }, false);
+
+        document.addEventListener("touchend", function(e) {
+          scroller.doTouchEnd(e.timeStamp);
+        }, false);
+        
+      } else {
+        
+        var mousedown = false;
+
+        container.addEventListener("mousedown", function(e) {
+          // Don't react if initial down happens on a form element
+          if (e.target.tagName.match(/input|textarea|select/i)) {
+            return;
+          }
+          
+          scroller.doTouchStart([{
+            pageX: e.pageX,
+            pageY: e.pageY
+          }], e.timeStamp);
+
+          mousedown = true;
+        }, false);
+
+        document.addEventListener("mousemove", function(e) {
+          if (!mousedown) {
+            return;
+          }
+
+          scroller.doTouchMove([{
+            pageX: e.pageX,
+            pageY: e.pageY
+          }], e.timeStamp);
+
+          mousedown = true;
+        }, false);
+
+        document.addEventListener("mouseup", function(e) {
+          if (!mousedown) {
+            return;
+          }
+
+          scroller.doTouchEnd(e.timeStamp);
+
+          mousedown = false;
+        }, false);
+        
+      }
+    </script>
+  </body>
+</html>
+
