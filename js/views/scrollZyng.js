@@ -284,9 +284,9 @@ var Scroller;
 	ionic.views.Scroller = ionic.views.View.inherit({
     initialize: function(options) {
 
-    this.__content = options.content;
+    this.__container = options.content;
+    this.__content = options.content.firstElementChild;
 
-		this.__callback = this.getRenderFn();
 
 		this.options = {
 
@@ -343,6 +343,11 @@ var Scroller;
 			this.options[key] = options[key];
 		}
 
+    // Get the render update function, initialize event handlers,
+    // and calculate the size of the scroll container
+		this.__callback = this.getRenderFn();
+    this.__initEventHandlers();
+    this.resize();
 	},
 
 
@@ -504,7 +509,78 @@ var Scroller;
   __decelerationVelocityY: null,
 
 
+  __initEventHandlers: function() {
+    // Event Handler
+    
+    if ('ontouchstart' in window) {
+      
+      container.addEventListener("touchstart", function(e) {
+        // Don't react if initial down happens on a form element
+        if (e.target.tagName.match(/input|textarea|select/i)) {
+          return;
+        }
+        
+        scroller.doTouchStart(e.touches, e.timeStamp);
+        e.preventDefault();
+      }, false);
 
+      document.addEventListener("touchmove", function(e) {
+        scroller.doTouchMove(e.touches, e.timeStamp);
+      }, false);
+
+      document.addEventListener("touchend", function(e) {
+        scroller.doTouchEnd(e.timeStamp);
+      }, false);
+      
+    } else {
+      
+      var mousedown = false;
+
+      container.addEventListener("mousedown", function(e) {
+        // Don't react if initial down happens on a form element
+        if (e.target.tagName.match(/input|textarea|select/i)) {
+          return;
+        }
+        
+        scroller.doTouchStart([{
+          pageX: e.pageX,
+          pageY: e.pageY
+        }], e.timeStamp);
+
+        mousedown = true;
+      }, false);
+
+      document.addEventListener("mousemove", function(e) {
+        if (!mousedown) {
+          return;
+        }
+
+        scroller.doTouchMove([{
+          pageX: e.pageX,
+          pageY: e.pageY
+        }], e.timeStamp);
+
+        mousedown = true;
+      }, false);
+
+      document.addEventListener("mouseup", function(e) {
+        if (!mousedown) {
+          return;
+        }
+
+        scroller.doTouchEnd(e.timeStamp);
+
+        mousedown = false;
+      }, false);
+      
+    }
+  },
+
+
+  resize: function() {
+    // Update Scroller dimensions for changed content
+    this.setDimensions(this.__container.clientWidth, this.__container.clientHeight, this.__content.offsetWidth, this.__content.offsetHeight-50);
+  },
   /*
   ---------------------------------------------------------------------------
     PUBLIC API
