@@ -1397,6 +1397,10 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
         isVisible: true
       };
       $scope.navController = this;
+
+      this.goBack = function() {
+        $scope.direction = 'back';
+      }
     }],
 
     link: function($scope, $element, $attr) {
@@ -1405,6 +1409,9 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
       $element.addClass('noop-animation');
 
       var isFirst = true;
+      // Store whether we did an animation yet, to know if
+      // we should let the first state animate
+      var didAnimate = false;
 
       var initTransition = function() {
         //$element.addClass($scope.animation);
@@ -1427,14 +1434,15 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
       $scope.$on('$routeChangeStart', function(e, next, current) {
         var back, historyState = $window.history.state;
 
-        back = !!(historyState && historyState.position <= $rootScope.stackCursorPosition);
+        back = $scope.direction == 'back' || (!!(historyState && historyState.position <= $rootScope.stackCursorPosition));
 
         if(isFirst || (next && next.$$route.originalPath === "")) {
           // Don't animate
           return;
         }
 
-        if($rootScope.stackCursorPosition > 0) {
+        if(didAnimate || $rootScope.stackCursorPosition > 0) {
+          didAnimate = true;
           if(back) {
             reverseTransition();
           } else {
@@ -1456,7 +1464,6 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
       // going forwards or back
       $scope.$watch(function () { return $location.path() }, function (newLocation, oldLocation) {
         if($rootScope.actualLocation === newLocation) {
-
           if(oldLocation == '' || newLocation == '/') {
             // initial route, skip this
             return;
@@ -1464,7 +1471,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
 
           var back, historyState = $window.history.state;
 
-          back = !!(historyState && historyState.position <= $rootScope.stackCursorPosition);
+          back = $scope.direction == 'back' || (!!(historyState && historyState.position <= $rootScope.stackCursorPosition));
 
           if (back) {
             //back button
@@ -1473,6 +1480,8 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
             //forward button
             $rootScope.stackCursorPosition++;
           }
+           
+          $scope.direction = 'forwards';
 
         } else {
           var currentRouteBeforeChange = $route.current;
@@ -1715,6 +1724,9 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
         // Only trigger back if the stack is greater than zero
         if($rootScope.stackCursorPosition > 0) {
           $window.history.back();
+
+          // Fallback for bad history supporting devices
+          navCtrl.goBack();
         }
         e.alreadyHandled = true;
         return false;
@@ -1860,7 +1872,9 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           e.gesture.srcEvent.preventDefault();
         };
 
-        var dragGesture = Gesture.on('drag', dragFn, $element);
+        //var dragGesture = Gesture.on('drag', dragFn, $element);
+        var dragRightGesture = Gesture.on('dragright', dragFn, $element);
+        var dragLeftGesture = Gesture.on('dragleft', dragFn, $element);
 
         var dragReleaseFn = function(e) {
           if(!defaultPrevented) {
@@ -1895,7 +1909,8 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 
         // Cleanup
         $scope.$on('$destroy', function() {
-          Gesture.off(dragGesture, 'drag', dragFn);
+          Gesture.off(dragLeftGesture, 'drag', dragFn);
+          Gesture.off(dragRightGesture, 'drag', dragFn);
           Gesture.off(releaseGesture, 'release', dragReleaseFn);
         });
       };

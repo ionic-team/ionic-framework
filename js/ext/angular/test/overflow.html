@@ -55,26 +55,59 @@
 
   </head>
   <body ng-controller="AppCtrl">
-    <header-bar
-      title="'Title'"
-      type="bar-primary"></header-bar>
+      <side-menus>
+        <pane side-menu-content>
+          <header-bar
+            title="'Title'"
+            type="bar-primary"></header-bar>
 
-    <content
-      on-refresh="onRefresh()"
-      on-refresh-opening="onRefreshOpening(amount)"
-      refresh-complete="refreshComplete"
-      has-header="true"
-      has-footer="true"
-      >
-      <refresher></refresher>
-      <ul class="list">
-        <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
-      </ul>
-    </content>
+          <div class="bar bar-subheader">
+            <div class="button-bar">
+              <a class="button">Success</a>
+              <a class="button">Warning</a>
+              <a class="button">Danger</a>
+            </div>
+          </div>
 
-    <footer-bar type="bar-assertive">
-      <h1 class="title">Footer</h1>
-    </footer-bar>
+          <content
+            has-header="false"
+            has-subheader="true"
+            has-footer="true"
+            overflow-scroll="true"
+            >
+
+            <div style="height: 3000px; width: 100%; background: url('tree_bark.png') repeat"></div>
+          </content>
+
+          <footer-bar type="bar-assertive">
+            <h1 class="title">Footer</h1>
+          </footer-bar>
+        </pane>
+        <side-menu side="left">
+          <header class="bar bar-header bar-assertive">
+            <h1 class="title">Left</h1>
+          </header>
+          <content has-header="true" overflow-scroll="true">
+            <ul class="list">
+              <a href="#" class="item" ng-repeat="item in list">
+                {{item.text}}
+              </a>
+            </ul>
+          </content>
+        </side-menu>
+        <side-menu side="right">
+          <header class="bar bar-header bar-assertive">
+            <h1 class="title">Right</h1>
+          </header>
+          <content has-header="true">
+            <ul class="list">
+              <a href="#" class="item" ng-repeat="item in list">
+                {{item.text}}
+              </a>
+            </ul>
+          </content>
+        </side-menu>
+      </side-menus>
 
     <script>
       angular.module('navTest', ['ionic'])

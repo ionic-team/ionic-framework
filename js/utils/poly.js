@@ -69,7 +69,6 @@
           return inputTapPolyfill(ele.control, e);
         }
       } else if( ele.tagName === "A" || ele.tagName === "BUTTON" ) {
-        var href = ele.getAttribute('href');
         ionic.trigger('click', {
           target: ele
         });
