@@ -5,20 +5,18 @@
 
 .item {
   @include item-style($item-default-bg, $item-default-border, $item-default-text);
+  @include transition(margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out);
 
   position: relative;
-
   z-index: 2; // Make sure the borders and stuff don't get hidden by children
   display: block;
-  margin: $item-border-width * -1;
 
+  margin: $item-border-width * -1;
   padding: $item-padding;
 
   border-width: $item-border-width;
   border-style: solid;
   font-size: $item-font-size;
-
-  -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
 
   h2 {
     margin: 0 0 4px 0;
@@ -175,21 +173,20 @@ button.item.item-complex {
 }
 .item-complex .item-content,
 .item-radio .item-content {
+
+  @include transition(margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out);
   /**
    * The content area of a complex list item. This area can
    * Slide left and right and be dragged to support different
    * UI interactions.
    */
   position: relative;
-
-  background-color: white;
-
   z-index: 2;
-  padding: $item-padding (($item-padding * 3) - 5) $item-padding $item-padding;
 
+  padding: $item-padding (($item-padding * 3) - 5) $item-padding $item-padding;
   border: none;
 
-  -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
+  background-color: white;
 }
 
 .item-text-wrap,
@@ -350,6 +347,7 @@ button.item:after {
   /* By default, both <a> and <button> have right side arrow icons */
   @include display-flex();
   @include align-items(center);
+  @include font-smoothing(antialiased);
   position: absolute;
   top: 0;
   right: $item-padding - 4;
@@ -364,7 +362,6 @@ button.item:after {
   font-family: 'Ionicons';
   line-height: 1;
   speak: none;
-  -webkit-font-smoothing: antialiased;
 }
 
 // do not show the default right arrow when they want their own right side icon
@@ -484,7 +481,7 @@ button.item-button-right:after {
 // -------------------------------
 
 .item-sliding {
-  -webkit-transition: -webkit-transform 0.1s ease-in-out;
+  @include transition(transform 0.1s ease-in-out);
 }
 
 .item-reordering {
@@ -501,6 +498,8 @@ button.item-button-right:after {
  * whe the list item is in edit mode.
  */
 .item-edit {
+
+  @include transition(left 0.2s ease-in-out, opacity 0.2s ease-in-out);
   position: absolute;
   top: 0;
   left: 8px;
@@ -508,8 +507,6 @@ button.item-button-right:after {
   width: 48px;
   height: 100%;
   line-height: 100%;
-
-  -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
 
   .button {
     height: 100%;
@@ -525,18 +522,18 @@ button.item-button-right:after {
   }
 
   &.ng-enter {
+    @include transition(left 0.2s ease-in-out, opacity 0.2s ease-in-out);
     left: -48px;
     opacity: 0;
-    -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
   }
   &.ng-enter-active {
     left: 8px;
     opacity: 1;
   }
   &.ng-leave {
+    @include transition(left 0.2s ease-in-out, opacity 0.2s ease-in-out);
     left: 0px;
     opacity: 1;
-    -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
   }
   &.ng-leave-active {
     left: -48px;
