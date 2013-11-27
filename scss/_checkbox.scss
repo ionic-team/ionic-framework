@@ -35,6 +35,9 @@
 
 /* the checkmark within the box */
 .checkbox input:after {
+
+  @include transition(opacity .05s ease-in-out);
+  @include rotate(-45deg);
   position: absolute;
   top: 34%;
   left: 26%;
@@ -46,10 +49,6 @@
   border-right: 0;
   content: ' ';
   opacity: 0;
-  transition: opacity .05s ease-in-out;
-
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg);
 }
 
 /* what the background looks like when its checked */

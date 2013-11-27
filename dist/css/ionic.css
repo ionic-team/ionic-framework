@@ -4284,6 +4284,12 @@ input[type="checkbox"][readonly] {
 
 /* the checkmark within the box */
 .checkbox input:after {
+  -webkit-transition: opacity 0.05s ease-in-out;
+  -moz-transition: opacity 0.05s ease-in-out;
+  transition: opacity 0.05s ease-in-out;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  transform: rotate(-45deg);
   position: absolute;
   top: 34%;
   left: 26%;
@@ -4294,10 +4300,7 @@ input[type="checkbox"][readonly] {
   border-top: 0;
   border-right: 0;
   content: ' ';
-  opacity: 0;
-  transition: opacity .05s ease-in-out;
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg); }
+  opacity: 0; }
 
 /* what the background looks like when its checked */
 .checkbox input:checked:before {
