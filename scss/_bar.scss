@@ -90,7 +90,7 @@
     z-index: 0;
     overflow: hidden;
 
-    margin: 0;
+    margin: 0 10px;
 
     min-width: 30px;
 
@@ -106,6 +106,9 @@
 
     &.title-left {
       text-align: left;
+    }
+    &.title-right {
+      text-align: right;
     }
   }
 

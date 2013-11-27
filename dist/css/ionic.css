@@ -2766,7 +2766,7 @@ a.subdued {
     left: 0;
     z-index: 0;
     overflow: hidden;
-    margin: 0;
+    margin: 0 10px;
     min-width: 30px;
     text-align: center;
     text-overflow: ellipsis;
@@ -2775,6 +2775,8 @@ a.subdued {
     line-height: 44px; }
     .bar .title.title-left {
       text-align: left; }
+    .bar .title.title-right {
+      text-align: right; }
   .bar .title a {
     color: inherit; }
   .bar .button {

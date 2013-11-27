@@ -21,17 +21,8 @@
       var _this = this;
 
       window.rAF(ionic.proxy(function() {
-        var i, c, childSize, childStyle;
-        var children = this.el.children;
+        var i, c, childSize;
         var childNodes = this.el.childNodes;
-        var styles = window.getComputedStyle(this.el, null);
-
-        // Get the padding of the header for calculations
-        var paddingLeft = parseFloat(styles['paddingLeft']);
-        var paddingRight = parseFloat(styles['paddingRight']);
-
-        // Get the full width of the header
-        var headerWidth = this.el.offsetWidth;
 
         // Find the title element
         var title = this.el.querySelector('.title');
@@ -41,7 +32,7 @@
       
         var leftWidth = 0;
         var rightWidth = 0;
-        var titlePos = Array.prototype.indexOf.call(this.el.childNodes, title);
+        var titlePos = Array.prototype.indexOf.call(childNodes, title);
 
         // Compute how wide the left children are
         for(i = 0; i < titlePos; i++) {
@@ -76,21 +67,26 @@
         // Size and align the header title based on the sizes of the left and
         // right children, and the desired alignment mode
         if(this.alignTitle == 'center') {
-          title.style.left = margin + 'px';
-          title.style.right = margin + 'px';
-
+          if(margin > 10) {
+            title.style.left = margin + 'px';
+            title.style.right = margin + 'px';
+          }
           if(title.offsetWidth < title.scrollWidth) {
-            title.style.textAlign = 'left';
-            title.style.right = (rightWidth + 5) + 'px';
-          } else {
-            title.style.textAlign = 'center';
+            title.classList.add('title-left');
+            if(rightWidth > 0) {
+              title.style.right = (rightWidth + 5) + 'px';
+            }
           }
         } else if(this.alignTitle == 'left') {
-          title.style.textAlign = 'left';
-          title.style.left = (leftWidth + 15) + 'px';
+          title.classList.add('title-left');
+          if(leftWidth > 0) {
+            title.style.left = (leftWidth + 15) + 'px';
+          }
         } else if(this.alignTitle == 'right') {
-          title.style.textAlign = 'right';
-          title.style.right = (rightWidth + 15) + 'px';
+          title.classList.add('title-right');
+          if(rightWidth > 0) {
+            title.style.right = (rightWidth + 15) + 'px';
+          }
         }
       }, this));
     }
