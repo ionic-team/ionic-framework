@@ -1,8 +1,6 @@
 module.exports = function(grunt) {
 
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
-
     concat: {
       options: {
         separator: ';\n'
@@ -44,7 +42,7 @@ module.exports = function(grunt) {
           'js/controllers/tabBarController.js'
 
         ],
-        dest: 'dist/js/<%= pkg.name %>.js'
+        dest: 'dist/js/ionic.js'
       },
       distAngular: {
         src: [
@@ -53,7 +51,7 @@ module.exports = function(grunt) {
           'js/ext/angular/src/service/**/*.js',
           'js/ext/angular/src/directive/**/*.js'
         ],
-        dest: 'dist/js/<%= pkg.name %>-angular.js'
+        dest: 'dist/js/ionic-angular.js'
       }
     },
     jshint: {
@@ -62,11 +60,30 @@ module.exports = function(grunt) {
         jshintrc: '.jshintrc'
       }
     },
+    uglify: {
+      dist: {
+        files: {
+          'dist/js/ionic.min.js': 'dist/js/ionic.js',
+          'dist/js/ionic-angular.min.js': 'dist/js/ionic-angular.js'
+        }
+      },
+      options: {
+        preserveComments: 'some'
+      }
+    },
     sass: {
       dist: {
         files: {
           'dist/css/ionic.css': 'scss/ionic.scss',
           'dist/css/themes/ionic-ios7.css': 'scss/themes/ios7/ionic-ios7.scss'
+        }
+      }
+    },
+    cssmin: {
+      dist: {
+        files: {
+          'dist/css/ionic.min.css': 'dist/css/ionic.css',
+          'dist/css/themes/ionic-ios7.min.css': 'dist/css/themes/ionic-ios7.css'
         }
       }
     },
@@ -94,6 +111,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-  grunt.registerTask('default', ['jshint', 'sass', 'concat']);
+  grunt.registerTask('default', [
+    'jshint',
+    'sass',
+    'cssmin',
+    'concat',
+    'uglify'
+  ]);
 };

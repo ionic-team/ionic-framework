@@ -1,0 +1,13 @@
+/*!
+ * Copyright 2013 Drifty Co.
+ * http://drifty.com/
+
+ * Ionic - a powerful HTML5 mobile app framework.
+ * http://ionicframework.com/
+ *
+ *
+ * By @maxlynch, @helloimben, @adamdbradley <3
+ *
+ * Licensed under the MIT license. Please see LICENSE for more information.
+ *
+ */.content-slide-out.ng-enter,.content-slide-out>.ng-enter{z-index:1;-webkit-transition:.5s ease-in-out all;-webkit-transform:translate3d(-100%,0,0);box-shadow:-1px 0 10px rgba(0,0,0,.6)}.content-slide-out.ng-enter-active,.content-slide-out>.ng-enter-active{-webkit-transform:translate3d(0,0,0)}.content-slide-out.ng-leave,.content-slide-out>.ng-leave{z-index:0;-webkit-transition:.5s ease-in-out all;-webkit-transform:translate3d(0%,0,0)}.content-slide-out.ng-leave-active,.content-slide-out>.ng-leave-active{-webkit-transform:translate3d(10%,0,0);opacity:.8}.bar-title-in-add{-webkit-transition:-webkit-transform .5s ease-in-out,opacity .5s ease-in-out;-webkit-transform:translate3d(100%,0,0);opacity:0}.bar-title-in-add-active{-webkit-transform:translate3d(0px,0,0);opacity:1}.bar-title-out-add{-webkit-transition:-webkit-transform .5s ease-in-out,opacity .5s ease-in-out}.bar-title-out-add-active{-webkit-transform:translate3d(-100%,0,0);opacity:0}.bar-button-in{opacity:0}.bar-button-in-add{-webkit-transition:-webkit-transform .5s ease-in-out,opacity .5s ease-in-out;-webkit-transform:translate3d(50%,0,0);opacity:0}.bar-button-in-active{-webkit-transform:translate3d(0px,0,0);opacity:1}.fade-in-out.ng-enter,.fade-in-out>.ng-enter{opacity:0;-webkit-transition:opacity .3s ease-in-out}.fade-in-out.ng-enter-active,.fade-in-out>.ng-enter-active{opacity:1}.fade-in-out.ng-leave,.fade-in-out>.ng-leave{opacity:1;-webkit-transition:opacity .3s ease-in-out}.fade-in-out.ng-leave-active,.fade-in-out>.ng-leave-active{opacity:0}.toggle{display:inline-block}.toggle input{display:none}.toggle .track{position:relative;display:inline-block;box-sizing:border-box;width:54px;height:32px;border:solid 2px #ddd;border-radius:20px;background-color:#fff;cursor:pointer;transition:.4s ease}.toggle .handle{position:absolute;display:block;width:auto;height:auto;box-shadow:0 0 2px rgba(0,0,0,.5),0 4px 5px rgba(0,0,0,.25);border-radius:20px;background-color:#fff;left:0;top:0;bottom:0;right:20px;transition:.2s ease;transition-property:left,right;transition-delay:0s,.05s}.toggle :checked+.track{border-color:#4bd863;background-color:#ccc;box-shadow:inset 0 0 0 20px #4bd863;transition:.2s ease}.toggle :checked+.track .handle{background-color:#fff;right:0;left:20px;-webkit-transform:none;transition-delay:.05s,0s}

@@ -14,7 +14,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
  * extends our core Ionic side menu controller and exposes
  * some side menu stuff on the current scope.
  */
-.controller('SideMenuCtrl', function($scope) {
+.controller('SideMenuCtrl', ['$scope', function($scope) {
   var _this = this;
 
   angular.extend(this, ionic.controllers.SideMenuController.prototype);
@@ -34,7 +34,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
   $scope.sideMenuContentTranslateX = 0;
 
   $scope.sideMenuController = this;
-})
+}])
 
 .directive('sideMenus', function() {
   return {
