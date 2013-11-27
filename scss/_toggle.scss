@@ -17,6 +17,10 @@
 
 /* the track appearance when the toggle is "off" */
 .toggle .track {
+  @include transition-timing-function(ease-in-out);
+  @include transition-duration($toggle-transition-duration);
+  @include transition-property((background-color, border));
+
   display: inline-block;
   box-sizing: border-box;
   width: $toggle-width;
@@ -26,10 +30,6 @@
   background-color: $toggle-off-bg-color;
   content: ' ';
   cursor: pointer;
-
-  transition-timing-function: ease-in-out;
-  transition-duration: $toggle-transition-duration;
-  transition-property: background-color, border;
 }
 
 /* the handle (circle) thats inside the toggle's track area */

@@ -1,4 +1,4 @@
-/**
+/*!
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
 
@@ -2206,6 +2206,15 @@ img {
   -webkit-user-drag: none; }
 
 body, .ionic-body {
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  @incude text-size-adjust(none);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   position: fixed;
   top: 0;
   right: 0;
@@ -2220,20 +2229,14 @@ body, .ionic-body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 20px;
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -webkit-text-size-adjust: none;
-  text-size-adjust: none;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-user-drag: none;
-  -webkit-user-select: none; }
+  -webkit-user-drag: none; }
 
 .content:before,
 .content:after {
   display: block;
   overflow: hidden;
   height: 0;
-  content: "\00a0";
-  /* No-break space character */ }
+  content: "\00a0"; }
 
 .content {
   position: absolute;
@@ -2253,54 +2256,55 @@ body, .ionic-body {
  * scroll view functionality.
  */
 .scroll {
-  position: absolute;
-  z-index: 1;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  width: 100%;
-  height: 100%;
-  -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  -webkit-touch-callout: none;
   -webkit-text-size-adjust: none;
   -moz-text-size-adjust: none;
-  -ms-text-size-adjust: none;
-  -o-text-size-adjust: none;
-  text-size-adjust: none; }
+  text-size-adjust: none;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%; }
 
 .scroll-refresher {
   display: none;
   overflow: hidden;
-  height: 100px;
-  margin-top: -100px; }
+  margin-top: -100px;
+  height: 100px; }
 
 .scroll-refresher-content {
-  height: 100%;
+  position: relative;
   width: 100%;
-  text-align: center;
-  position: relative; }
+  height: 100%;
+  text-align: center; }
 
 .ionic-refresher-content {
-  height: 100%;
+  position: relative;
   width: 100%;
-  text-align: center;
-  position: relative; }
+  height: 100%;
+  text-align: center; }
 
 .ionic-refresher {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  margin-left: -5px;
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #4a87ee;
-  position: absolute;
-  left: 50%;
-  margin-left: -5px;
-  bottom: 25px; }
+  background-color: #4a87ee; }
 
 .scroll-refreshing {
-  -webkit-transition: height 0.1s ease-in-out; }
+  -webkit-transition: height 0.1s ease-in-out;
+  -moz-transition: height 0.1s ease-in-out;
+  transition: height 0.1s ease-in-out; }
   .scroll-refreshing .ionic-refresher {
     -webkit-animation: refresher-pulsate 1.5s linear;
+    -moz-animation: refresher-pulsate 1.5s linear;
+    animation: refresher-pulsate 1.5s linear;
     -webkit-animation-iteration-count: infinite; }
 
 @-webkit-keyframes refresher-pulsate {
@@ -2468,18 +2472,6 @@ blockquote {
     line-height: 1.42857; }
     blockquote small:before {
       content: '\2014 \00A0'; }
-  blockquote.pull-right {
-    padding-right: 15px;
-    padding-left: 0;
-    border-right: 5px solid gray;
-    border-left: 0; }
-    blockquote.pull-right p,
-    blockquote.pull-right small {
-      text-align: right; }
-    blockquote.pull-right small:before {
-      content: ''; }
-    blockquote.pull-right small:after {
-      content: '\00A0 \2014'; }
 
 q:before,
 q:after,
@@ -3222,8 +3214,8 @@ a.subdued {
   right: 0; }
 
 .menu-animated {
-  -webkit-transition: -webkit-transform 200ms ease;
-  -moz-transition: -moz-transform 200ms ease;
+  -webkit-transition: transform 200ms ease;
+  -moz-transition: transform 200ms ease;
   transition: transform 200ms ease; }
 
 /**
@@ -3257,18 +3249,22 @@ a.subdued {
   padding: 10px; }
 
 .loading-backdrop {
+  -webkit-transition: visibility 0s linear 0.3s;
+  -moz-transition: visibility 0s linear 0.3s;
+  transition: visibility 0s linear 0.3s;
   position: fixed;
   top: 0;
   left: 0;
   visibility: hidden;
   width: 100%;
-  height: 100%;
-  -webkit-transition: visibility 0s linear 0.3s; }
+  height: 100%; }
   .loading-backdrop.enabled {
     background-color: rgba(0, 0, 0, 0.7); }
   .loading-backdrop.active {
-    visibility: visible;
-    -webkit-transition-delay: 0s; }
+    -webkit-transition-delay: 0s;
+    -moz-transition-delay: 0s;
+    transition-delay: 0s;
+    visibility: visible; }
 
 .loading {
   position: fixed;
@@ -3281,7 +3277,7 @@ a.subdued {
   text-align: center;
   text-overflow: ellipsis;
   font-size: 15px; }
-  .loading h1, .loading h2, .loading h3, .loading h4, .loading h5 {
+  .loading h1, .loading h2, .loading h3, .loading h4, .loading h5, .loading h6 {
     color: #fff; }
 
 /**
@@ -3292,6 +3288,9 @@ a.subdued {
   color: #444444;
   background-color: white;
   border-color: #dddddd;
+  -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
+  -moz-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
+  transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
   position: relative;
   z-index: 2;
   display: block;
@@ -3299,8 +3298,7 @@ a.subdued {
   padding: 15px;
   border-width: 1px;
   border-style: solid;
-  font-size: 16px;
-  -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
+  font-size: 16px; }
   .item h2 {
     margin: 0 0 4px 0;
     font-size: 16px; }
@@ -3438,17 +3436,19 @@ button.item.item-complex {
 
 .item-complex .item-content,
 .item-radio .item-content {
+  -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
+  -moz-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
+  transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
   /**
    * The content area of a complex list item. This area can
    * Slide left and right and be dragged to support different
    * UI interactions.
    */
   position: relative;
-  background-color: white;
   z-index: 2;
   padding: 15px 40px 15px 15px;
   border: none;
-  -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out; }
+  background-color: white; }
 
 .item-text-wrap,
 .item-text-wrap h1,
@@ -3620,6 +3620,8 @@ button.item:after {
   -webkit-align-items: center;
   -moz-align-items: center;
   align-items: center;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
   position: absolute;
   top: 0;
   right: 11px;
@@ -3633,8 +3635,7 @@ button.item:after {
   font-size: 16px;
   font-family: 'Ionicons';
   line-height: 1;
-  speak: none;
-  -webkit-font-smoothing: antialiased; }
+  speak: none; }
 
 a.item-icon-right:after,
 button.item-icon-right:after,
@@ -3706,7 +3707,9 @@ button.item-button-right:after {
   font-size: 14px; }
 
 .item-sliding {
-  -webkit-transition: -webkit-transform 0.1s ease-in-out; }
+  -webkit-transition: transform 0.1s ease-in-out;
+  -moz-transition: transform 0.1s ease-in-out;
+  transition: transform 0.1s ease-in-out; }
 
 .item-reordering {
   position: absolute;
@@ -3720,14 +3723,16 @@ button.item-button-right:after {
  * whe the list item is in edit mode.
  */
 .item-edit {
+  -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  -moz-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
   position: absolute;
   top: 0;
   left: 8px;
   z-index: 0;
   width: 48px;
   height: 100%;
-  line-height: 100%;
-  -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
+  line-height: 100%; }
   .item-edit .button {
     height: 100%; }
     .item-edit .button .icon, .item-edit .button i {
@@ -3748,16 +3753,20 @@ button.item-button-right:after {
       color: #ef4e3a;
       font-size: 24px; }
   .item-edit.ng-enter {
+    -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    -moz-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
     left: -48px;
-    opacity: 0;
-    -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
+    opacity: 0; }
   .item-edit.ng-enter-active {
     left: 8px;
     opacity: 1; }
   .item-edit.ng-leave {
+    -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    -moz-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
     left: 0px;
-    opacity: 1;
-    -webkit-transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out; }
+    opacity: 1; }
   .item-edit.ng-leave-active {
     left: -48px;
     opacity: 0; }
@@ -3959,24 +3968,26 @@ button.item-button-right:after {
  * --------------------------------------------------
  */
 .slide-box {
-  background-color: #000;
   position: relative;
-  overflow: hidden; }
+  overflow: hidden;
+  background-color: #000; }
 
 .slide-box-slides {
   position: relative;
   white-space: nowrap;
-  -webkit-transition: -webkit-transform 0 ease-in-out;
-  font-size: 0; }
+  font-size: 0;
+  -webkit-transition: -webkit-transform 0 ease-in-out; }
 
 .slide-box-animating {
-  -webkit-transition-duration: 0.2s; }
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  transition-duration: 0.2s; }
 
 .slide-box-slide {
   display: inline-block;
-  vertical-align: top;
   width: 100%;
-  height: 100%; }
+  height: 100%;
+  vertical-align: top; }
   .slide-box-slide img {
     width: 100%; }
 
@@ -3987,13 +3998,15 @@ button.item-button-right:after {
   text-align: center; }
   .slide-box-pager > * {
     display: inline-block;
-    text-decoration: none;
     margin: 0px 5px;
     color: #fff;
+    text-decoration: none;
     opacity: 0.3; }
     .slide-box-pager > *.active {
+      opacity: 1;
       -webkit-transition: opacity 0.4s ease-in;
-      opacity: 1; }
+      -moz-transition: opacity 0.4s ease-in;
+      transition: opacity 0.4s ease-in; }
 
 /**
  * Split Pane
@@ -4351,6 +4364,15 @@ input[type="checkbox"][readonly] {
 
 /* the track appearance when the toggle is "off" */
 .toggle .track {
+  -webkit-transition-timing-function: ease-in-out;
+  -moz-transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in-out;
+  -webkit-transition-duration: 0.1s;
+  -moz-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+  -webkit-transition-property: background-color, border;
+  -moz-transition-property: background-color, border;
+  transition-property: background-color, border;
   display: inline-block;
   box-sizing: border-box;
   width: 54px;
@@ -4359,10 +4381,7 @@ input[type="checkbox"][readonly] {
   border-radius: 20px;
   background-color: #e5e5e5;
   content: ' ';
-  cursor: pointer;
-  transition-timing-function: ease-in-out;
-  transition-duration: 0.1s;
-  transition-property: background-color, border; }
+  cursor: pointer; }
 
 /* the handle (circle) thats inside the toggle's track area */
 /* also the handle's appearance when it is "off" */

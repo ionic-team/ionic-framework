@@ -8,35 +8,27 @@
   position: fixed;
 }
 
-.popup-title {
-}
-
 .popup-content {
   padding: 10px;
 }
 
-.popup-buttons {
-
-}
-
 .loading-backdrop {
+  @include transition(visibility 0s linear 0.3s);
   position: fixed;
-
   top: 0;
   left: 0;
+
   visibility: hidden;
   width: 100%;
   height: 100%;
-
-  -webkit-transition: visibility 0s linear 0.3s;
 
   &.enabled {
     background-color: rgba(0,0,0,0.7);
   }
 
   &.active {
+    @include transition-delay(0s);
     visibility: visible;
-    -webkit-transition-delay: 0s;
   }
 }
 
@@ -55,7 +47,7 @@
   text-overflow: ellipsis;
   font-size: 15px;
 
-  h1,h2,h3,h4,h5 {
+  h1, h2, h3, h4, h5, h6 {
     color: #fff;
   }
 }

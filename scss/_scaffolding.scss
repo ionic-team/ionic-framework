@@ -19,38 +19,37 @@ img {
 }
 
 body, .ionic-body {
+  @include font-smoothing(antialiased);
+  @incude text-size-adjust(none);
+  @include tap-highlight-transparent();
+  @include user-select(none);
+
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   overflow: hidden;
+
   margin: 0;
   padding: 0;
+  
   color: $base-color;
   word-wrap: break-word;
   font-size: $font-size-base;
   font-family: $font-family-base;
   line-height: $line-height-computed;
   text-rendering: optimizeLegibility;
-
-  -webkit-font-smoothing: antialiased;
-
-  -webkit-text-size-adjust: none;
-          text-size-adjust: none;
-
-  -webkit-tap-highlight-color: transparent;
   -webkit-user-drag: none;
-  -webkit-user-select: none;
 }
 
 .content:before,
 .content:after {
+  // Uncollapse content margin if child elements DO have an margin
   display: block;
   overflow: hidden;
   height: 0;
-  // Uncollapse content margin if child elements DO have an margin
-  content: "\00a0"; /* No-break space character */
+  content: "\00a0"; // No-break space character
 }
 
 .content {
@@ -73,60 +72,54 @@ body, .ionic-body {
  * scroll view functionality.
  */
 .scroll {
+  @include user-select(none);
+  @include touch-callout(none);
+  @include text-size-adjust(none);
   position: absolute;
-	z-index: 1;
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	width: 100%;
+  z-index: 1;
+  width: 100%;
   height: 100%;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	-webkit-text-size-adjust: none;
-	-moz-text-size-adjust: none;
-	-ms-text-size-adjust: none;
-	-o-text-size-adjust: none;
-	text-size-adjust: none;
 }
 
 // Scroll refresher (for pull to refresh)
 .scroll-refresher {
   display: none;
   overflow: hidden;
-  height: 100px;
   margin-top: -100px;
+  height: 100px;
 }
+
 .scroll-refresher-content {
-  height: 100%;
-  width: 100%;
-  text-align: center;
   position: relative;
-  //@include display-flex();
-  //@include align-items(center);
+  width: 100%;
+  height: 100%;
+  text-align: center;
 }
+
 .ionic-refresher-content {
-  height: 100%;
-  width: 100%;
-  text-align: center;
   position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
 }
+
 .ionic-refresher {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  margin-left: -5px;
   // A custom refresher
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background-color: $positive;
-  position: absolute;
-  left: 50%;
-  margin-left: -5px;
-  bottom: 25px;
 }
+
 .scroll-refreshing {
-  -webkit-transition: height 0.1s ease-in-out;
+  @include transition(height 0.1s ease-in-out);
 
   .ionic-refresher {
-    -webkit-animation: refresher-pulsate 1.5s linear;
+    @include animation(refresher-pulsate 1.5s linear);
     -webkit-animation-iteration-count: infinite; 
   }
 }
@@ -145,7 +138,6 @@ body, .ionic-body {
   .scroll {
     position: static;
     height: 100%;
-
   }
 }
 
@@ -180,4 +172,3 @@ body, .ionic-body {
   height: 100%;
   background-color: #fff;
 }
-

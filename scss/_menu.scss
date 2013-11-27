@@ -10,26 +10,27 @@
   top: 0;
   bottom: 0;
   z-index: 0;
-
   overflow: hidden;
+
   min-height: 100%;
   max-height: 100%;
   width: $menu-width;
 
   background-color: #fff;
-
 }
 
 .menu-content {
   box-shadow: $menu-side-shadow;
 }
 
-.menu-left { left: 0; }
-.menu-right { right: 0; }
-
-.menu-animated {
-  -webkit-transition: -webkit-transform $menu-animation-speed ease;
-  -moz-transition: -moz-transform $menu-animation-speed ease;
-  transition: transform $menu-animation-speed ease;
+.menu-left { 
+  left: 0; 
 }
 
+.menu-right { 
+  right: 0; 
+}
+
+.menu-animated {
+  @include transition(transform $menu-animation-speed ease);
+}
