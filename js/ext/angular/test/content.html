@@ -54,7 +54,7 @@
     </style>
 
   </head>
-  <body ng-controller="AppCtrl">
+  <body>
     <header-bar
       title="'Title'"
       type="bar-primary"></header-bar>
@@ -67,7 +67,7 @@
       has-footer="true"
       >
       <refresher></refresher>
-      <ul class="list">
+      <ul class="list" ng-controller="AppCtrl">
         <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
       </ul>
     </content>
@@ -85,17 +85,9 @@
           $scope.items.push({
           });
         }
-        $scope.what = {};
-        $scope.onRefresh = function() {
-          console.log('On refresh');
-          $timeout(function() {
-            $scope.refreshComplete();
-          }, 2000);
-        }
-        $scope.onRefreshOpening = function(amt) {
-          console.log('On refresh opening', amt);
-        }
-
+        $timeout(function() {
+          $scope.scrollView.resize();
+        }, 1000);
       })
     </script>
   </body>

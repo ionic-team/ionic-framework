@@ -705,8 +705,20 @@ angular.module('ionic.ui.content', [])
           sv = new ionic.views.Scroller({
             el: $element[0]
           });
+          /*
+            hasPullToRefresh: (typeof $scope.onRefresh !== 'undefined'),
+            onRefresh: function() {
+              $scope.onRefresh();
+              $scope.$parent.$broadcast('scroll.onRefresh');
+            },
+            onRefreshOpening: function(amt) {
+              $scope.onRefreshOpening({amount: amt});
+              $scope.$parent.$broadcast('scroll.onRefreshOpening', amt);
+            }
+          });
+          */
           // Let child scopes access this 
-          $scope.scrollView = sv;
+          $scope.$parent.scrollView = sv;
 
           // Pass the parent scope down to the child
           clone = transclude($scope.$parent);

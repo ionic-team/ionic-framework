@@ -59,10 +59,10 @@ body, .ionic-body {
 }
 
 .scroll-content {
-  position: absolute;
+  position: relative;
+  width: 100%;
+  height: 100%;
   top: 0;
-  right: 0;
-  bottom: 0;
   left: 0;
   overflow: hidden;
 }
@@ -75,10 +75,10 @@ body, .ionic-body {
   @include user-select(none);
   @include touch-callout(none);
   @include text-size-adjust(none);
-  position: absolute;
-  z-index: 1;
+  @include translateZ(0);
+  @include transform-origin(left, top);
+
   width: 100%;
-  height: 100%;
 }
 
 // Scroll refresher (for pull to refresh)

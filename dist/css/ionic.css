@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*!
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
@@ -2244,10 +2245,10 @@ body, .ionic-body {
   height: 100%; }
 
 .scroll-content {
-  position: absolute;
+  position: relative;
+  width: 100%;
+  height: 100%;
   top: 0;
-  right: 0;
-  bottom: 0;
   left: 0;
   overflow: hidden; }
 
@@ -2264,10 +2265,13 @@ body, .ionic-body {
   -webkit-text-size-adjust: none;
   -moz-text-size-adjust: none;
   text-size-adjust: none;
-  position: absolute;
-  z-index: 1;
-  width: 100%;
-  height: 100%; }
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-transform-origin: left top;
+  -moz-transform-origin: left top;
+  transform-origin: left top;
+  width: 100%; }
 
 .scroll-refresher {
   display: none;
