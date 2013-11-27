@@ -5,14 +5,13 @@
  */
 
 .bar {
+  @include display-flex();
   @include user-select(none);
   position: absolute;
   right: 0;
   left: 0;
   z-index: 10;
 
-  display: -webkit-box;
-  display: box;
   box-sizing: border-box;
   padding: $bar-padding-portrait;
 
@@ -44,6 +43,7 @@
     border: none;
     background: none;
     color: #fff;
+
     .button {
       color: #fff;
     }
@@ -123,8 +123,8 @@
     line-height: $button-bar-button-height - $button-border-width - 1;
 
     .icon {
-      padding-left: 2px;
       padding-right: 2px;
+      padding-left: 2px;
       font-size: $button-bar-button-icon-size;
       line-height: $button-bar-button-height - $button-border-width - 1;
     }

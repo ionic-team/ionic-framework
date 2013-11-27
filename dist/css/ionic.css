@@ -2663,6 +2663,12 @@ a.subdued {
  * --------------------------------------------------
  */
 .bar {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -2671,8 +2677,6 @@ a.subdued {
   right: 0;
   left: 0;
   z-index: 10;
-  display: -webkit-box;
-  display: box;
   box-sizing: border-box;
   padding: 5px;
   width: 100%;
@@ -2790,8 +2794,8 @@ a.subdued {
     font-size: 12px;
     line-height: 30px; }
     .bar .button .icon {
-      padding-left: 2px;
       padding-right: 2px;
+      padding-left: 2px;
       font-size: 24px;
       line-height: 30px; }
   .bar .button-bar > .button, .bar .buttons > .button {
