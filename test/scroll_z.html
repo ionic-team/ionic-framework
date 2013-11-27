@@ -1,4 +1,4 @@
-<html ng-app="zyngTest">
+<html>
   <head>
     <meta charset="utf-8">
     <title>Content</title>
@@ -8,12 +8,6 @@
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
 
     <script src="../../../../dist/js/ionic.js"></script>
-    <script src="../../../../dist/js/angular/angular.js"></script>
-    <script src="../../../../dist/js/angular/angular-animate.js"></script>
-    <script src="../../../../dist/js/angular/angular-route.js"></script>
-    <script src="../../../../dist/js/angular/angular-touch.js"></script>
-    <script src="../../../../dist/js/angular/angular-sanitize.js"></script>
-    <script src="../../../../dist/js/ionic-angular.js"></script>
     <style>
 	#c{
 		width: 100%;
@@ -47,7 +41,7 @@
 	}
     </style>
   </head>
-  <body ng-controller="AppCtrl">
+  <body>
     <div id="c">
       <div id="content">
        <div style="height: 3000px; width: 100%; background: url('tree_bark.png') repeat"></div>
@@ -55,17 +49,16 @@
     </div>
 
     <script>
-      angular.module('zyngTest', ['ionic'])
-      .controller('AppCtrl', function($scope) {
-      });
-
       var render = function(left, top, zoom) {
         content.style.webkitTransform = 'translate3d(' + (-left) + 'px,' + (-top) + 'px,0) scale(' + zoom + ')';
       };	
 
       var container = document.getElementById('c');
+      var content = document.getElementById('content');
+
       // Initialize Scroller
       var scroller = new ionic.views.Scroller({
+        content: content,
         scrollingX: false
       });
 
