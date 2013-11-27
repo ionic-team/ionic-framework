@@ -101,7 +101,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
       // going forwards or back
       $scope.$watch(function () { return $location.path() }, function (newLocation, oldLocation) {
         if($rootScope.actualLocation === newLocation) {
-          if(oldLocation == '' || newLocation == '/') {
+          if(oldLocation == '') {// || newLocation == '/') {
             // initial route, skip this
             return;
           }
