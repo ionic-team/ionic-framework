@@ -162,7 +162,7 @@
 }
 
 
-// Fonts
+// Font Mixins
 // --------------------------------------------------
 
 @mixin font-family-serif() {
@@ -204,7 +204,7 @@
 }
 
 
-// Border Radius
+// Border Radius Mixins
 // --------------------------------------------------
 
 @mixin border-radius($radius) {
@@ -264,7 +264,7 @@
 }
 
 
-// Transitions
+// Transition Mixins
 // --------------------------------------------------
 
 @mixin transition($transition...) {
@@ -287,6 +287,11 @@
       -moz-transition-timing-function: $transition-timing;
            transition-timing-function: $transition-timing;
  }
+
+
+// Animation Mixins
+// --------------------------------------------------
+
 @mixin animation($animation) {
  -webkit-animation: $animation;
     -moz-animation: $animation;
@@ -319,7 +324,7 @@
  }
 
 
-// Transformations
+// Transformation Mixins
 // --------------------------------------------------
 
 @mixin rotate($degrees) {
