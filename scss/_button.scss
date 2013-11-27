@@ -5,11 +5,14 @@
  */
 
 .button {
+  // set the color defaults
+  @include button-style($button-default-bg, $button-default-border, $button-default-active-bg, $button-default-active-border, $button-default-text);
+
   position: relative;
   display: inline-block;
   margin: 0;
-
   padding: 1px $button-padding 0 $button-padding;
+
   min-width: ($button-padding * 3) + $button-font-size;
   min-height: $button-height;
 
@@ -17,11 +20,7 @@
   border-style: solid;
   border-radius: $button-border-radius;
 
-  // set the color defaults
-  @include button-style($button-default-bg, $button-default-border, $button-default-active-bg, $button-default-active-border, $button-default-text);
-
   vertical-align: top;
-
   text-align: center;
 
   text-overflow: ellipsis;
@@ -119,9 +118,9 @@
   line-height: $button-large-height - $button-border-width;
 
   .icon {
+    padding-bottom: ($button-border-width * 2);
     font-size: $button-large-icon-size;
     line-height: $button-large-height - ($button-border-width * 2) - 1;
-    padding-bottom: ($button-border-width * 2);
   }
 }
 
@@ -129,15 +128,15 @@
   @include transition(opacity .1s);
   padding: 0 6px;
   min-width: initial;
-  background: none;
   border-color: transparent;
+  background: none;
   background: none;
 
   &.button:active, &.button.active {
-    background: none;
     border-color: transparent;
-    opacity: 0.3;
+    background: none;
     box-shadow: none;
+    opacity: 0.3;
   }
 
   .icon {
@@ -173,6 +172,7 @@
 .button-block {
   display: block;
   clear: both;
+  
   &:after { 
     display: block; 
     visibility: hidden; 

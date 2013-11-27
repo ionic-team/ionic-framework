@@ -4550,6 +4550,9 @@ input[type="range"] {
  * --------------------------------------------------
  */
 .button {
+  color: #444444;
+  background-color: #f8f8f8;
+  border-color: #b2b2b2;
   position: relative;
   display: inline-block;
   margin: 0;
@@ -4559,9 +4562,6 @@ input[type="range"] {
   border-width: 1px;
   border-style: solid;
   border-radius: 2px;
-  color: #444444;
-  background-color: #f8f8f8;
-  border-color: #b2b2b2;
   vertical-align: top;
   text-align: center;
   text-overflow: ellipsis;
@@ -4845,9 +4845,9 @@ input[type="range"] {
   font-size: 18px;
   line-height: 53px; }
   .button-large .icon {
+    padding-bottom: 2px;
     font-size: 32px;
-    line-height: 51px;
-    padding-bottom: 2px; }
+    line-height: 51px; }
 
 .button-icon {
   -webkit-transition: opacity 0.1s;
@@ -4855,14 +4855,14 @@ input[type="range"] {
   transition: opacity 0.1s;
   padding: 0 6px;
   min-width: initial;
-  background: none;
   border-color: transparent;
+  background: none;
   background: none; }
   .button-icon.button:active, .button-icon.button.active {
-    background: none;
     border-color: transparent;
-    opacity: 0.3;
-    box-shadow: none; }
+    background: none;
+    box-shadow: none;
+    opacity: 0.3; }
   .button-icon .icon {
     font-size: 32px; }
 
