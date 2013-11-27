@@ -679,7 +679,7 @@ angular.module('ionic.ui.content', [])
         if(attr.refreshComplete) {
           $scope.refreshComplete = function() {
             if($scope.scrollView) {
-              $scope.scrollView.doneRefreshing();
+              //$scope.scrollView.doneRefreshing();
               $scope.$parent.$broadcast('scroll.onRefreshComplete');
             }
           };
@@ -702,17 +702,8 @@ angular.module('ionic.ui.content', [])
           }
           $element.append(sc);
           // Otherwise, supercharge this baby!
-          sv = new ionic.views.Scroll({
-            el: $element[0].firstElementChild,
-            hasPullToRefresh: (typeof $scope.onRefresh !== 'undefined'),
-            onRefresh: function() {
-              $scope.onRefresh();
-              $scope.$parent.$broadcast('scroll.onRefresh');
-            },
-            onRefreshOpening: function(amt) {
-              $scope.onRefreshOpening({amount: amt});
-              $scope.$parent.$broadcast('scroll.onRefreshOpening', amt);
-            }
+          sv = new ionic.views.Scroller({
+            el: $element[0]
           });
           // Let child scopes access this 
           $scope.scrollView = sv;

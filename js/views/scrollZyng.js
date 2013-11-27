@@ -284,14 +284,14 @@ var Scroller;
 	ionic.views.Scroller = ionic.views.View.inherit({
     initialize: function(options) {
 
-    this.__container = options.content;
-    this.__content = options.content.firstElementChild;
+    this.__container = options.el;
+    this.__content = options.el.firstElementChild;
 
 
 		this.options = {
 
-			/** Enable scrolling on x-axis */
-			scrollingX: true,
+			/** Disable scrolling on x-axis by default */
+			scrollingX: false,
 
 			/** Enable scrolling on y-axis */
 			scrollingY: true,
@@ -510,7 +510,10 @@ var Scroller;
 
 
   __initEventHandlers: function() {
+    var self = this;
+
     // Event Handler
+    var container = this.__container;
     
     if ('ontouchstart' in window) {
       
@@ -520,16 +523,16 @@ var Scroller;
           return;
         }
         
-        scroller.doTouchStart(e.touches, e.timeStamp);
+        self.doTouchStart(e.touches, e.timeStamp);
         e.preventDefault();
       }, false);
 
       document.addEventListener("touchmove", function(e) {
-        scroller.doTouchMove(e.touches, e.timeStamp);
+        self.doTouchMove(e.touches, e.timeStamp);
       }, false);
 
       document.addEventListener("touchend", function(e) {
-        scroller.doTouchEnd(e.timeStamp);
+        self.doTouchEnd(e.timeStamp);
       }, false);
       
     } else {
@@ -542,7 +545,7 @@ var Scroller;
           return;
         }
         
-        scroller.doTouchStart([{
+        self.doTouchStart([{
           pageX: e.pageX,
           pageY: e.pageY
         }], e.timeStamp);
@@ -555,7 +558,7 @@ var Scroller;
           return;
         }
 
-        scroller.doTouchMove([{
+        self.doTouchMove([{
           pageX: e.pageX,
           pageY: e.pageY
         }], e.timeStamp);
@@ -568,7 +571,7 @@ var Scroller;
           return;
         }
 
-        scroller.doTouchEnd(e.timeStamp);
+        self.doTouchEnd(e.timeStamp);
 
         mousedown = false;
       }, false);
