@@ -152,13 +152,20 @@
 }
 
 
-// Text overflow
+// Text Mixins
 // --------------------------------------------------
 
-@mixin text-overflow() {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+@mixin text-size-adjust($value: none) {
+  -webkit-text-size-adjust: $value; 
+     -moz-text-size-adjust: $value;
+          text-size-adjust: $value; 
+}
+@mixin tap-highlight-transparent() {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent; // For some Androids
+}
+@mixin touch-callout($value: none) {
+  -webkit-touch-callout: $value;
 }
 
 
@@ -195,7 +202,6 @@
   -webkit-font-smoothing: $font-smoothing;
           font-smoothing: $font-smoothing;
 }
-
 
 
 // Appearance
@@ -291,6 +297,11 @@
       -moz-transition-timing-function: $transition-timing;
            transition-timing-function: $transition-timing;
  }
+ @mixin transition-property($property) {
+  -webkit-transition-property: $property;
+     -moz-transition-property: $property;
+          transition-property: $property;
+}
 
 
 // Animation Mixins
