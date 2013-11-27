@@ -191,6 +191,10 @@
   @include font-family-monospace();
   @include font-shorthand($size, $weight, $line-height);
 }
+@mixin font-smoothing($font-smoothing) { 
+  -webkit-font-smoothing: $font-smoothing;
+          font-smoothing: $font-smoothing;
+}
 
 
 
