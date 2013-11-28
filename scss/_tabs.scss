@@ -11,8 +11,6 @@
   @include justify-content(center);
 
   @include tab-style($tabs-default-bg, $tabs-default-border, $tabs-default-text);
-  position: absolute;
-  bottom: 0;
   z-index: 5;
 
   width: 100%;
@@ -63,10 +61,6 @@
     background-size: 100% 1px;
     background-repeat: no-repeat;
   }
-}
-
-.tabs-top {
-  top: $bar-height;
 }
 
 .tab-item {

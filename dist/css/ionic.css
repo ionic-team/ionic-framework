@@ -3051,8 +3051,6 @@ a.subdued {
   background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
   border-color: #b2b2b2;
   color: #444444;
-  position: absolute;
-  bottom: 0;
   z-index: 5;
   width: 100%;
   height: 49px;
@@ -3113,9 +3111,6 @@ a.subdued {
       background-position: top;
       background-size: 100% 1px;
       background-repeat: no-repeat; } }
-
-.tabs-top {
-  top: 44px; }
 
 .tab-item {
   -webkit-box-flex: 1;

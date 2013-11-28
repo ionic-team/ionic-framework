@@ -32,25 +32,10 @@ angular.module('ionic.ui.content', [])
     },
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
-        var 
-        c = $element.eq(0),
-        clone,
-        sc, 
-        sv,
-        addedPadding = false;
+        var clone, sc, sv;
 
-        if(attr.hasHeader == "true") {
-          c.addClass('has-header');
-        }
-        if(attr.hasSubheader == "true") {
-          c.addClass('has-subheader');
-        }
-        if(attr.hasFooter == "true") {
-          c.addClass('has-footer');
-        }
-        if(attr.hasTabs == "true") {
-          c.addClass('has-tabs');
-        }
+        var addedPadding = false;
+        var c = $element.eq(0);
 
         if(attr.refreshComplete) {
           $scope.refreshComplete = function() {
