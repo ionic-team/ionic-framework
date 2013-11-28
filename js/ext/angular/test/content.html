@@ -55,33 +55,35 @@
 
   </head>
   <body>
-    <header-bar
-      title="'Title'"
-      type="bar-primary"></header-bar>
+    <pane>
+      <header-bar
+        title="'Title'"
+        type="bar-primary"></header-bar>
 
-    <content
-      on-refresh="onRefresh()"
-      on-refresh-opening="onRefreshOpening(amount)"
-      refresh-complete="refreshComplete"
-      has-header="true"
-      has-footer="true"
-      >
-      <refresher></refresher>
-      <ul class="list" ng-controller="AppCtrl">
-        <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
-      </ul>
-    </content>
+      <content
+        on-refresh="onRefresh()"
+        on-refresh-opening="onRefreshOpening(amount)"
+        refresh-complete="refreshComplete"
+        has-header="true"
+        has-footer="true"
+        >
+        <refresher></refresher>
+        <ul class="list" ng-controller="AppCtrl">
+          <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
+        </ul>
+      </content>
 
-    <footer-bar type="bar-assertive">
-      <h1 class="title">Footer</h1>
-    </footer-bar>
+      <footer-bar type="bar-assertive">
+        <h1 class="title">Footer</h1>
+      </footer-bar>
+    </pane>
 
     <script>
       angular.module('navTest', ['ionic'])
 
       .controller('AppCtrl', function($scope, $compile, $timeout, $element) {
         $scope.items = [];
-        for(var i = 0; i < 200; i++) {
+        for(var i = 0; i < 70; i++) {
           $scope.items.push({
           });
         }

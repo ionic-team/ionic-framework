@@ -60,11 +60,10 @@ body, .ionic-body {
 
 .scroll-content {
   position: relative;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
   overflow: hidden;
+
+  width: auto;
+  @include flex(1);
 }
 
 /**
@@ -78,7 +77,6 @@ body, .ionic-body {
   @include translateZ(0);
   @include transform-origin(left, top);
 
-  width: 100%;
 }
 
 // Scroll refresher (for pull to refresh)
@@ -144,25 +142,30 @@ body, .ionic-body {
 // Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
 // Note: For these to work, content must come after both bars in the markup
 .has-header {
-  top: $bar-height;
+  //top: $bar-height;
 }
 
 .has-subheader {
-  top: $bar-height * 2;
+  //top: $bar-height * 2;
 }
 
 .has-footer {
-  bottom: $bar-height;
+  //bottom: $bar-height;
 }
 
 // Specify that a content area will have tabs
 .has-tabs {
-  bottom: 44px;
+  //bottom: 44px;
 }
 
 // A full screen section with a solid background
 .pane {
-  position: fixed;
+  @include flex-direction(column);
+  @include display-flex();
+  @include align-items(stretch);
+  @include align-content(stretch);
+
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
@@ -171,4 +174,6 @@ body, .ionic-body {
   width: 100%;
   height: 100%;
   background-color: #fff;
+  vertical-align: top;
+
 }

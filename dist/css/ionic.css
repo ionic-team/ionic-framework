@@ -2246,11 +2246,14 @@ body, .ionic-body {
 
 .scroll-content {
   position: relative;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  overflow: hidden; }
+  overflow: hidden;
+  width: auto;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -moz-box-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1; }
 
 /**
  * Scroll is the scroll view component available for complex and custom
@@ -2270,8 +2273,7 @@ body, .ionic-body {
   transform: translateZ(0);
   -webkit-transform-origin: left top;
   -moz-transform-origin: left top;
-  transform-origin: left top;
-  width: 100%; }
+  transform-origin: left top; }
 
 .scroll-refresher {
   display: none;
@@ -2329,20 +2331,29 @@ body, .ionic-body {
     position: static;
     height: 100%; }
 
-.has-header {
-  top: 44px; }
-
-.has-subheader {
-  top: 88px; }
-
-.has-footer {
-  bottom: 44px; }
-
-.has-tabs {
-  bottom: 44px; }
-
 .pane {
-  position: fixed;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  -webkit-align-items: stretch;
+  -moz-align-items: stretch;
+  align-items: stretch;
+  -webkit-align-content: stretch;
+  -moz-align-content: stretch;
+  -ms-flex-line-pack: stretch;
+  align-content: stretch;
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
@@ -2350,7 +2361,8 @@ body, .ionic-body {
   z-index: 1;
   width: 100%;
   height: 100%;
-  background-color: #fff; }
+  background-color: #fff;
+  vertical-align: top; }
 
 /**
  * Typography
@@ -2669,7 +2681,7 @@ a.subdued {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  position: absolute;
+  position: relative;
   right: 0;
   left: 0;
   z-index: 10;

@@ -7,7 +7,7 @@
 .bar {
   @include display-flex();
   @include user-select(none);
-  position: absolute;
+  position: relative;
   right: 0;
   left: 0;
   z-index: 10;
