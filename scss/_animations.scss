@@ -1,4 +1,5 @@
 $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
+$transition-time: 250ms;
 
 /**
  * Animations
@@ -10,7 +11,7 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
 
 .noop-animation {
   > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
-    @include transition(all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms);
+    @include transition(all cubic-bezier(0.250, 0.460, 0.450, 0.940) $transition-time);
     position:absolute;
     top:0;
     right:0;
@@ -21,7 +22,7 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
 
 .slide-left-right {
   > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
-    @include transition(all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms);
+    @include transition(all cubic-bezier(0.250, 0.460, 0.450, 0.940) $transition-time);
     position:absolute;
     top:0;
     right:0;
@@ -40,7 +41,7 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
 
   &.reverse {
     > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
-      @include transition(all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms);
+      @include transition(all cubic-bezier(0.250, 0.460, 0.450, 0.940) $transition-time);
       position:absolute;
       top:0;
       right:0;
@@ -58,9 +59,16 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
     }
   }
 }
+
+
+/**
+ * iOS7 style slide left to right 
+ * --------------------------------------------------
+ */
+
 .slide-left-right-ios7 {
   > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
-    @include transition(all 250ms);
+    @include transition(all $transition-time);
     @include transition-timing-function($ios7-timing-function);
     position:absolute;
     top:0;
@@ -71,17 +79,22 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
   }
   > .ng-enter, &.ng-enter {
     @include translate3d(100%, 0, 0);
+    //.scroll { background: yellow; } //for debugging
   }
   > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+    /* the NEW content actively sliding IN from RIGHT to LEFT */
     @include translate3d(0, 0, 0);
+    //.scroll { background: red; } //for debugging
   }
   > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
+    /* the OLD content actively sliding OUT from RIGHT to LEFT */
     @include translate3d(-20%, 0, 0);
+    //.scroll { background: blue; } //for debugging
   }
   
   &.reverse {
     > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
-      @include transition(all cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms);
+      @include transition(all cubic-bezier(0.250, 0.460, 0.450, 0.940) $transition-time);
       @include transition-timing-function($ios7-timing-function);
       position:absolute;
       top:0;
@@ -90,16 +103,22 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
       left:0;
     }
     > .ng-enter, &.ng-enter {
-      @include translate3d(-20%, 0, 0);
+      @include translate3d(-100%, 0, 0);
+      //.scroll { background: green; } //for debugging
     }
     > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+      /* the NEW content actively sliding IN from LEFT to RIGHT */
       @include translate3d(0, 0, 0);
+      //.scroll { background: orange; } //for debugging
     }
     > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
-      @include translate3d(100%, 0, 0);
+      /* the OLD content actively sliding OUT from LEFT to RIGHT */
+      @include translate3d(20%, 0, 0);
+      //.scroll { background: maroon; } //for debugging
     }
   }
 }
+
 
 @-webkit-keyframes slideInLeft {
   0% {
@@ -138,13 +157,13 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
   @include translate3d(0%,0,0);
   &.ng-enter, > .ng-enter {
     @include animation-name(slideInLeft);
-    @include animation-duration(250ms);
+    @include animation-duration($transition-time);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
   }
   &.ng-leave, > .ng-leave {
     @include animation-name(slideOutLeft);
-    @include animation-duration(250ms);
+    @include animation-duration($transition-time);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
   }
@@ -153,7 +172,7 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
 
 .slide-in-left-add {
   @include translate3d(100%,0,0);
-  @include animation-duration(250ms);
+  @include animation-duration($transition-time);
   @include animation-timing-function(ease-in-out);
   @include animation-fill-mode(both);
 }
@@ -165,13 +184,13 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
   @include translate3d(-100%,0,0);
   &.ng-enter, > .ng-enter {
     @include animation-name(slideOutLeft);
-    @include animation-duration(250ms);
+    @include animation-duration($transition-time);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
   }
   &.ng-leave, > .ng-leave {
     @include animation-name(slideOutLeft);
-    @include animation-duration(250ms);
+    @include animation-duration($transition-time);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
   }
@@ -182,7 +201,7 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
 
 .slide-out-left-add {
   @include translate3d(0,0,0);
-  @include animation-duration(250ms);
+  @include animation-duration($transition-time);
   @include animation-timing-function(ease-in-out);
   @include animation-fill-mode(both);
 }
@@ -194,13 +213,13 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
   @include translate3d(0%,0,0);
   &.ng-enter, > .ng-enter {
     @include animation-name(slideInRight);
-    @include animation-duration(250ms);
+    @include animation-duration($transition-time);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
   }
   &.ng-leave, > .ng-leave {
     @include animation-name(slideInRight);
-    @include animation-duration(250ms);
+    @include animation-duration($transition-time);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
   }
@@ -208,7 +227,7 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
 
 .slide-in-right-add {
   @include translate3d(-100%,0,0);
-  @include animation-duration(250ms);
+  @include animation-duration($transition-time);
   @include animation-timing-function(ease-in-out);
   @include animation-fill-mode(both);
 }
@@ -220,13 +239,13 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
   @include translate3d(100%,0,0);
   &.ng-enter, > .ng-enter {
     @include animation-name(slideOutRight);
-    @include animation-duration(250ms);
+    @include animation-duration($transition-time);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
   }
   &.ng-leave, > .ng-leave {
     @include animation-name(slideOutRight);
-    @include animation-duration(250ms);
+    @include animation-duration($transition-time);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
   }
@@ -236,7 +255,7 @@ $ios7-timing-function: cubic-bezier(.1, .7, .1, 1);
 }
 .slide-out-right-add {
   @include translate3d(0,0,0);
-  @include animation-duration(250ms);
+  @include animation-duration($transition-time);
   @include animation-timing-function(ease-in-out);
   @include animation-fill-mode(both);
 }
@@ -359,7 +378,6 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
 @keyframes spin { 
   100% { transform: rotate(360deg); } 
 }
-
 
 
 /**
