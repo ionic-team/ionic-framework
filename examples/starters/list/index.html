@@ -23,17 +23,18 @@
     <script src="js/controllers.js"></script>
   </head>
 
-  <!-- 'listExample' is the name of this angular module (app.js)-->
-  <body ng-app="listExample">
+  <!-- 
+    'listExample' is the name of this angular module (app.js)
+    'nav-router' attribute updates the nav-bar title and animations as you navigate
+    'animation' attribute sets which type of animations to use
+  -->
+  <body ng-app="listExample" nav-router animation="slide-left-right-ios7">
 
-    <!-- Our navigation router with some animations set -->
-    <pane nav-router animation="slide-left-right-ios7">
-      <!-- The nav bar that will be updated as we navigate -->
-      <nav-bar class="nav-title-slide-ios7" type="bar-positive" back-button-type="button-icon" back-button-icon="icon ion-arrow-left-c"></nav-bar>
+    <!-- The nav bar that will be updated as we navigate -->
+    <nav-bar class="nav-title-slide-ios7" type="bar-positive" back-button-type="button-icon" back-button-icon="icon ion-arrow-left-c"></nav-bar>
 
-      <!-- where the content of each page will be rendered -->
-      <ng-view></ng-view>
-    </pane>
+    <!-- where the content of each page will be rendered -->
+    <ng-view></ng-view>
 
 
     <!-- 
