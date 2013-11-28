@@ -119,50 +119,16 @@ $transition-time: 250ms;
   }
 }
 
-
-@-webkit-keyframes slideInLeft {
-  0% {
-    @include translate3d(100%, 0, 0);
-  }
-  100% {
-    @include translate3d(0,0,0);
-  }
-}
-@-webkit-keyframes slideOutLeft {
-  0% {
-    @include translate3d(0px,0,0);
-  }
-  100% {
-    @include translate3d(-100%,0,0);
-  }
-}
-@-webkit-keyframes slideInRight {
-  0% {
-    @include translate3d(-100%,0,0);
-  }
-  100% {
-    @include translate3d(0,0,0);
-  }
-}
-@-webkit-keyframes slideOutRight {
-  0% {
-    @include translate3d(0,0,0);
-  }
-  100% {
-    @include translate3d(100%,0,0);
-  }
-}
-
 .slide-in-left {
   @include translate3d(0%,0,0);
   &.ng-enter, > .ng-enter {
-    @include animation-name(slideInLeft);
+    @include animation-name(slideInFromLeft);
     @include animation-duration($transition-time);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
   }
   &.ng-leave, > .ng-leave {
-    @include animation-name(slideOutLeft);
+    @include animation-name(slideOutToLeft);
     @include animation-duration($transition-time);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
@@ -177,19 +143,19 @@ $transition-time: 250ms;
   @include animation-fill-mode(both);
 }
 .slide-in-left-add-active {
-  @include animation-name(slideInLeft);
+  @include animation-name(slideInFromLeft);
 }
 
 .slide-out-left {
   @include translate3d(-100%,0,0);
   &.ng-enter, > .ng-enter {
-    @include animation-name(slideOutLeft);
+    @include animation-name(slideOutToLeft);
     @include animation-duration($transition-time);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
   }
   &.ng-leave, > .ng-leave {
-    @include animation-name(slideOutLeft);
+    @include animation-name(slideOutToLeft);
     @include animation-duration($transition-time);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
@@ -206,19 +172,19 @@ $transition-time: 250ms;
   @include animation-fill-mode(both);
 }
 .slide-out-left-add-active {
-  @include animation-name(slideOutLeft);
+  @include animation-name(slideOutToLeft);
 }
 
 .slide-in-right {
   @include translate3d(0%,0,0);
   &.ng-enter, > .ng-enter {
-    @include animation-name(slideInRight);
+    @include animation-name(slideInFromRight);
     @include animation-duration($transition-time);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
   }
   &.ng-leave, > .ng-leave {
-    @include animation-name(slideInRight);
+    @include animation-name(slideInFromRight);
     @include animation-duration($transition-time);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
@@ -232,19 +198,19 @@ $transition-time: 250ms;
   @include animation-fill-mode(both);
 }
 .slide-in-right-add-active {
-  @include animation-name(slideInRight);
+  @include animation-name(slideInFromRight);
 }
 
 .slide-out-right {
   @include translate3d(100%,0,0);
   &.ng-enter, > .ng-enter {
-    @include animation-name(slideOutRight);
+    @include animation-name(slideOutToRight);
     @include animation-duration($transition-time);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
   }
   &.ng-leave, > .ng-leave {
-    @include animation-name(slideOutRight);
+    @include animation-name(slideOutToRight);
     @include animation-duration($transition-time);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
@@ -260,29 +226,7 @@ $transition-time: 250ms;
   @include animation-fill-mode(both);
 }
 .slide-out-right-add-active {
-  @include animation-name(slideOutRight);
-}
-
-$slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
-@-webkit-keyframes slideInUp {
-  0% {
-    @include translate3d(0, 100%, 0);
-    opacity: 0;
-  }
-  100% {
-    @include translate3d(0, 0, 0);
-    opacity: 1;
-  }
-}
-@-webkit-keyframes slideOutUp {
-  0% {
-    @include translate3d(0, 0, 0);
-    opacity: 1;
-  }
-  100% {
-    @include translate3d(0, 100%, 0);
-    opacity: 0;
-  }
+  @include animation-name(slideOutToRight);
 }
 
 .slide-in-up {
@@ -334,24 +278,6 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
   @include animation-name(slideOutUp);
 }
 
-@-webkit-keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-@-webkit-keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
 .fade-in {
   @include animation(fadeOut 0.3s);
   &.active {
@@ -367,16 +293,6 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
   &.ng-leave, .ng-leave {
     display: none;
   }
-}
-
-@-webkit-keyframes spin { 
-  100% { -webkit-transform: rotate(360deg); } 
-}
-@-moz-keyframes spin { 
-  100% { -moz-transform: rotate(360deg); } 
-}
-@keyframes spin { 
-  100% { transform: rotate(360deg); } 
 }
 
 

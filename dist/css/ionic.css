@@ -4997,6 +4997,148 @@ a.button {
     border-radius: 0px 2px 2px 0px; }
 
 /**
+ * Keyframes
+ * --------------------------------------------------
+ */
+@-webkit-keyframes slideInFromLeft {
+  from {
+    -webkit-transform: translate3d(-100%, 0, 0); }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0); } }
+
+@-moz-keyframes slideInFromLeft {
+  from {
+    -moz-transform: translateX(-100%); }
+
+  to {
+    -moz-transform: translateX(0); } }
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%); }
+
+  to {
+    transform: translateX(0); } }
+
+@-webkit-keyframes slideInFromRight {
+  from {
+    -webkit-transform: translate3d(100%, 0, 0); }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0); } }
+
+@-moz-keyframes slideInFromRight {
+  from {
+    -moz-transform: translateX(100%); }
+
+  to {
+    -moz-transform: translateX(0); } }
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%); }
+
+  to {
+    transform: translateX(0); } }
+
+@-webkit-keyframes slideOutToleft {
+  from {
+    -webkit-transform: translate3d(0, 0, 0); }
+
+  to {
+    -webkit-transform: translate3d(-100%, 0, 0); } }
+
+@-moz-keyframes slideOutToleft {
+  from {
+    -moz-transform: translateX(0); }
+
+  to {
+    -moz-transform: translateX(-100%); } }
+
+@keyframes slideOutToLeft {
+  from {
+    transform: translateX(0); }
+
+  to {
+    transform: translateX(-100%); } }
+
+@-webkit-keyframes slideOutToRight {
+  from {
+    -webkit-transform: translate3d(0, 0, 0); }
+
+  to {
+    -webkit-transform: translate3d(100%, 0, 0); } }
+
+@-moz-keyframes slideOutToRight {
+  from {
+    -moz-transform: translateX(0); }
+
+  to {
+    -moz-transform: translateX(100%); } }
+
+@keyframes slideOutToRight {
+  from {
+    transform: translateX(0); }
+
+  to {
+    transform: translateX(100%); } }
+
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1; }
+
+  to {
+    opacity: 0; } }
+
+@-moz-keyframes fadeOut {
+  from {
+    opacity: 1; }
+
+  to {
+    opacity: 0; } }
+
+@keyframes fadeOut {
+  from {
+    opacity: 1; }
+
+  to {
+    opacity: 0; } }
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0; }
+
+  to {
+    opacity: 1; } }
+
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0; }
+
+  to {
+    opacity: 1; } }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+
+  to {
+    opacity: 1; } }
+
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg); } }
+
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg); } }
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg); } }
+
+/**
  * Animations
  * --------------------------------------------------
  * The animations in this file are "simple" - not too complex
@@ -5114,58 +5256,14 @@ a.button {
   -moz-transform: translate3d(20%, 0, 0);
   transform: translate3d(20%, 0, 0); }
 
-@-webkit-keyframes slideInLeft {
-  0% {
-    -webkit-transform: translate3d(100%, 0, 0);
-    -moz-transform: translate3d(100%, 0, 0);
-    transform: translate3d(100%, 0, 0); }
-
-  100% {
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0); } }
-
-@-webkit-keyframes slideOutLeft {
-  0% {
-    -webkit-transform: translate3d(0px, 0, 0);
-    -moz-transform: translate3d(0px, 0, 0);
-    transform: translate3d(0px, 0, 0); }
-
-  100% {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    -moz-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0); } }
-
-@-webkit-keyframes slideInRight {
-  0% {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    -moz-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0); }
-
-  100% {
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0); } }
-
-@-webkit-keyframes slideOutRight {
-  0% {
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0); }
-
-  100% {
-    -webkit-transform: translate3d(100%, 0, 0);
-    -moz-transform: translate3d(100%, 0, 0);
-    transform: translate3d(100%, 0, 0); } }
-
 .slide-in-left {
   -webkit-transform: translate3d(0%, 0, 0);
   -moz-transform: translate3d(0%, 0, 0);
   transform: translate3d(0%, 0, 0); }
   .slide-in-left.ng-enter, .slide-in-left > .ng-enter {
-    -webkit-animation-name: slideInLeft;
-    -moz-animation-name: slideInLeft;
-    animation-name: slideInLeft;
+    -webkit-animation-name: slideInFromLeft;
+    -moz-animation-name: slideInFromLeft;
+    animation-name: slideInFromLeft;
     -webkit-animation-duration: 250ms;
     -moz-animation-duration: 250ms;
     animation-duration: 250ms;
@@ -5176,9 +5274,9 @@ a.button {
     -moz-animation-fill-mode: both;
     animation-fill-mode: both; }
   .slide-in-left.ng-leave, .slide-in-left > .ng-leave {
-    -webkit-animation-name: slideOutLeft;
-    -moz-animation-name: slideOutLeft;
-    animation-name: slideOutLeft;
+    -webkit-animation-name: slideOutToLeft;
+    -moz-animation-name: slideOutToLeft;
+    animation-name: slideOutToLeft;
     -webkit-animation-duration: 250ms;
     -moz-animation-duration: 250ms;
     animation-duration: 250ms;
@@ -5204,18 +5302,18 @@ a.button {
   animation-fill-mode: both; }
 
 .slide-in-left-add-active {
-  -webkit-animation-name: slideInLeft;
-  -moz-animation-name: slideInLeft;
-  animation-name: slideInLeft; }
+  -webkit-animation-name: slideInFromLeft;
+  -moz-animation-name: slideInFromLeft;
+  animation-name: slideInFromLeft; }
 
 .slide-out-left {
   -webkit-transform: translate3d(-100%, 0, 0);
   -moz-transform: translate3d(-100%, 0, 0);
   transform: translate3d(-100%, 0, 0); }
   .slide-out-left.ng-enter, .slide-out-left > .ng-enter {
-    -webkit-animation-name: slideOutLeft;
-    -moz-animation-name: slideOutLeft;
-    animation-name: slideOutLeft;
+    -webkit-animation-name: slideOutToLeft;
+    -moz-animation-name: slideOutToLeft;
+    animation-name: slideOutToLeft;
     -webkit-animation-duration: 250ms;
     -moz-animation-duration: 250ms;
     animation-duration: 250ms;
@@ -5226,9 +5324,9 @@ a.button {
     -moz-animation-fill-mode: both;
     animation-fill-mode: both; }
   .slide-out-left.ng-leave, .slide-out-left > .ng-leave {
-    -webkit-animation-name: slideOutLeft;
-    -moz-animation-name: slideOutLeft;
-    animation-name: slideOutLeft;
+    -webkit-animation-name: slideOutToLeft;
+    -moz-animation-name: slideOutToLeft;
+    animation-name: slideOutToLeft;
     -webkit-animation-duration: 250ms;
     -moz-animation-duration: 250ms;
     animation-duration: 250ms;
@@ -5254,18 +5352,18 @@ a.button {
   animation-fill-mode: both; }
 
 .slide-out-left-add-active {
-  -webkit-animation-name: slideOutLeft;
-  -moz-animation-name: slideOutLeft;
-  animation-name: slideOutLeft; }
+  -webkit-animation-name: slideOutToLeft;
+  -moz-animation-name: slideOutToLeft;
+  animation-name: slideOutToLeft; }
 
 .slide-in-right {
   -webkit-transform: translate3d(0%, 0, 0);
   -moz-transform: translate3d(0%, 0, 0);
   transform: translate3d(0%, 0, 0); }
   .slide-in-right.ng-enter, .slide-in-right > .ng-enter {
-    -webkit-animation-name: slideInRight;
-    -moz-animation-name: slideInRight;
-    animation-name: slideInRight;
+    -webkit-animation-name: slideInFromRight;
+    -moz-animation-name: slideInFromRight;
+    animation-name: slideInFromRight;
     -webkit-animation-duration: 250ms;
     -moz-animation-duration: 250ms;
     animation-duration: 250ms;
@@ -5276,9 +5374,9 @@ a.button {
     -moz-animation-fill-mode: both;
     animation-fill-mode: both; }
   .slide-in-right.ng-leave, .slide-in-right > .ng-leave {
-    -webkit-animation-name: slideInRight;
-    -moz-animation-name: slideInRight;
-    animation-name: slideInRight;
+    -webkit-animation-name: slideInFromRight;
+    -moz-animation-name: slideInFromRight;
+    animation-name: slideInFromRight;
     -webkit-animation-duration: 250ms;
     -moz-animation-duration: 250ms;
     animation-duration: 250ms;
@@ -5304,18 +5402,18 @@ a.button {
   animation-fill-mode: both; }
 
 .slide-in-right-add-active {
-  -webkit-animation-name: slideInRight;
-  -moz-animation-name: slideInRight;
-  animation-name: slideInRight; }
+  -webkit-animation-name: slideInFromRight;
+  -moz-animation-name: slideInFromRight;
+  animation-name: slideInFromRight; }
 
 .slide-out-right {
   -webkit-transform: translate3d(100%, 0, 0);
   -moz-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0); }
   .slide-out-right.ng-enter, .slide-out-right > .ng-enter {
-    -webkit-animation-name: slideOutRight;
-    -moz-animation-name: slideOutRight;
-    animation-name: slideOutRight;
+    -webkit-animation-name: slideOutToRight;
+    -moz-animation-name: slideOutToRight;
+    animation-name: slideOutToRight;
     -webkit-animation-duration: 250ms;
     -moz-animation-duration: 250ms;
     animation-duration: 250ms;
@@ -5326,9 +5424,9 @@ a.button {
     -moz-animation-fill-mode: both;
     animation-fill-mode: both; }
   .slide-out-right.ng-leave, .slide-out-right > .ng-leave {
-    -webkit-animation-name: slideOutRight;
-    -moz-animation-name: slideOutRight;
-    animation-name: slideOutRight;
+    -webkit-animation-name: slideOutToRight;
+    -moz-animation-name: slideOutToRight;
+    animation-name: slideOutToRight;
     -webkit-animation-duration: 250ms;
     -moz-animation-duration: 250ms;
     animation-duration: 250ms;
@@ -5354,35 +5452,9 @@ a.button {
   animation-fill-mode: both; }
 
 .slide-out-right-add-active {
-  -webkit-animation-name: slideOutRight;
-  -moz-animation-name: slideOutRight;
-  animation-name: slideOutRight; }
-
-@-webkit-keyframes slideInUp {
-  0% {
-    -webkit-transform: translate3d(0, 100%, 0);
-    -moz-transform: translate3d(0, 100%, 0);
-    transform: translate3d(0, 100%, 0);
-    opacity: 0; }
-
-  100% {
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    opacity: 1; } }
-
-@-webkit-keyframes slideOutUp {
-  0% {
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    opacity: 1; }
-
-  100% {
-    -webkit-transform: translate3d(0, 100%, 0);
-    -moz-transform: translate3d(0, 100%, 0);
-    transform: translate3d(0, 100%, 0);
-    opacity: 0; } }
+  -webkit-animation-name: slideOutToRight;
+  -moz-animation-name: slideOutToRight;
+  animation-name: slideOutToRight; }
 
 .slide-in-up {
   -webkit-transform: translate3d(0, 0%, 0);
@@ -5454,34 +5526,6 @@ a.button {
   -moz-animation-name: slideOutUp;
   animation-name: slideOutUp; }
 
-@-webkit-keyframes fadeOut {
-  from {
-    opacity: 1; }
-
-  to {
-    opacity: 0; } }
-
-@keyframes fadeOut {
-  from {
-    opacity: 1; }
-
-  to {
-    opacity: 0; } }
-
-@-webkit-keyframes fadeIn {
-  from {
-    opacity: 0; }
-
-  to {
-    opacity: 1; } }
-
-@keyframes fadeIn {
-  from {
-    opacity: 0; }
-
-  to {
-    opacity: 1; } }
-
 .fade-in {
   -webkit-animation: fadeOut 0.3s;
   -moz-animation: fadeOut 0.3s;
@@ -5498,18 +5542,6 @@ a.button {
   position: relative; }
 .fade-in-not-out.ng-leave, .fade-in-not-out .ng-leave {
   display: none; }
-
-@-webkit-keyframes spin {
-  100% {
-    -webkit-transform: rotate(360deg); } }
-
-@-moz-keyframes spin {
-  100% {
-    -moz-transform: rotate(360deg); } }
-
-@keyframes spin {
-  100% {
-    transform: rotate(360deg); } }
 
 /**
  * Some component specific animations
