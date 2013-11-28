@@ -3024,14 +3024,6 @@ a.subdued {
 .bar-tabs {
   padding: 0; }
 
-.bar-subheader {
-  top: 44px;
-  display: block; }
-
-.bar-subfooter {
-  bottom: 44px;
-  display: block; }
-
 /**
  * Tabs
  * --------------------------------------------------

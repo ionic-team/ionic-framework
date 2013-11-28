@@ -139,24 +139,6 @@ body, .ionic-body {
   }
 }
 
-// Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
-// Note: For these to work, content must come after both bars in the markup
-.has-header {
-  //top: $bar-height;
-}
-
-.has-subheader {
-  //top: $bar-height * 2;
-}
-
-.has-footer {
-  //bottom: $bar-height;
-}
-
-// Specify that a content area will have tabs
-.has-tabs {
-  //bottom: 44px;
-}
 
 // A full screen section with a solid background
 .pane {
