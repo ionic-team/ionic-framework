@@ -2933,7 +2933,6 @@ window.ionic = {
             title.style.right = margin + 'px';
           }
           if(title.offsetWidth < title.scrollWidth) {
-            title.classList.add('title-left');
             if(rightWidth > 0) {
               title.style.right = (rightWidth + 5) + 'px';
             }
