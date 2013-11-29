@@ -3224,6 +3224,9 @@ a.subdued {
 .menu-animated {
   -webkit-transition: transform 200ms ease;
   -moz-transition: transform 200ms ease;
+  transition: transform 200ms ease;
+  -webkit-transition: -webkit-transform 200ms ease;
+  -moz-transition: -moz-transform 200ms ease;
   transition: transform 200ms ease; }
 
 /**

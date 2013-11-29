@@ -15,31 +15,32 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
  * some side menu stuff on the current scope.
  */
 .controller('SideMenuCtrl', ['$scope', function($scope) {
-  var _this = this;
-
-  angular.extend(this, ionic.controllers.SideMenuController.prototype);
-
-  ionic.controllers.SideMenuController.call(this, {
-    // Our quick implementation of the left side menu
-    left: {
-      width: 270,
-    },
-
-    // Our quick implementation of the right side menu
-    right: {
-      width: 270,
-    }
-  });
-
-  $scope.sideMenuContentTranslateX = 0;
-
-  $scope.sideMenuController = this;
 }])
 
 .directive('sideMenus', function() {
   return {
     restrict: 'ECA',
-    controller: 'SideMenuCtrl',
+    controller: ['$scope', function($scope) {
+      var _this = this;
+
+      angular.extend(this, ionic.controllers.SideMenuController.prototype);
+
+      ionic.controllers.SideMenuController.call(this, {
+        // Our quick implementation of the left side menu
+        left: {
+          width: 270,
+        },
+
+        // Our quick implementation of the right side menu
+        right: {
+          width: 270,
+        }
+      });
+
+      $scope.sideMenuContentTranslateX = 0;
+
+      $scope.sideMenuController = this;
+    }],
     replace: true,
     transclude: true,
     template: '<div class="pane" ng-transclude></div>'
