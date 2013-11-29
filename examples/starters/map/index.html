@@ -5,7 +5,11 @@
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="/dist/css/ionic.css">
+    
+    <!-- ionic css -->
+    <link href="/dist/css/ionic.css" rel="stylesheet">
+
+    <!-- example's custom css -->
     <style>
       #map {
         width: 100%;
@@ -13,6 +17,7 @@
       }
     </style>
 
+    <!-- ionic/angularjs scripts -->
     <script src="/dist/js/ionic.js"></script>
     <script src="/dist/js/angular/angular.js"></script>
     <script src="/dist/js/angular/angular-animate.js"></script>
@@ -21,11 +26,9 @@
     <script src="/dist/js/angular/angular-sanitize.js"></script>
     <script src="/dist/js/ionic-angular.js"></script>
 
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es&sensor=true"></script>
+    <!-- google maps javascript -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es&sensor=true"></script>
 
-    <script type="text/javascript">
-    </script>
   </head>
   <body ng-controller="MapCtrl">
     <div class="bar bar-header bar-dark">
@@ -39,6 +42,7 @@
     </div>
   </body>
 
+  <!-- example's custom javascript -->
   <script>
     angular.module('ionic.example', ['ionic.ui.content', 'ionic.ui.list', 'ionic.service.loading'])
 
