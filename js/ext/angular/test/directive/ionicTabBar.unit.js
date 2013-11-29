@@ -6,7 +6,8 @@ describe('Tab Bar Controller', function() {
   beforeEach(inject(function($compile, $rootScope, $controller) {
     compile = $compile;
     scope = $rootScope;
-    ctrl = $controller('TabsCtrl', { $scope: scope, $element: null });
+    var e = compile('<tabs></tabs>')(scope);
+    ctrl = e.scope().tabsController;
   }));
 
   it('Select item in controller works', function() {
