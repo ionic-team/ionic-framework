@@ -59,6 +59,8 @@ body, .ionic-body {
 }
 
 .scroll-content {
+  display: block;
+
   position: relative;
   overflow: hidden;
 
@@ -158,4 +160,14 @@ body, .ionic-body {
   background-color: #fff;
   vertical-align: top;
 
+}
+
+.page {
+  display: block;
+
+  position: relative;
+  overflow: hidden;
+
+  width: auto;
+  @include flex(1);
 }

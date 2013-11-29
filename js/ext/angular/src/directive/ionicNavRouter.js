@@ -307,7 +307,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
     scope: true,
     require: '^navRouter',
     link: function($scope, $element, $attr, navCtrl) {
-      $element.addClass('pane');
+      $element.addClass('page');
 
       $scope.icon = $attr.icon;
       $scope.iconOn = $attr.iconOn;
