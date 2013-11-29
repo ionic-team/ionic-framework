@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*!
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
@@ -3222,9 +3223,6 @@ a.subdued {
   right: 0; }
 
 .menu-animated {
-  -webkit-transition: transform 200ms ease;
-  -moz-transition: transform 200ms ease;
-  transition: transform 200ms ease;
   -webkit-transition: -webkit-transform 200ms ease;
   -moz-transition: -moz-transform 200ms ease;
   transition: transform 200ms ease; }

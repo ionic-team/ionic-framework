@@ -2066,49 +2066,47 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
  * on a tab bar. Modelled off of UITabBarController.
  */
 
-.controller('TabsCtrl', ['$scope', '$element', '$animate', function($scope, $element, $animate) {
-  var _this = this;
-
-  angular.extend(this, ionic.controllers.TabBarController.prototype);
-
-  ionic.controllers.TabBarController.call(this, {
-    controllerChanged: function(oldC, oldI, newC, newI) {
-      $scope.controllerChanged && $scope.controllerChanged({
-        oldController: oldC,
-        oldIndex: oldI,
-        newController: newC,
-        newIndex: newI
-      });
-    },
-    tabBar: {
-      tryTabSelect: function() {},
-      setSelectedItem: function(index) {},
-      addItem: function(item) {}
-    }
-  });
-
-  this.add = function(controller) {
-    this.addController(controller);
-    this.select(0);
-  };
-
-  this.select = function(controllerIndex) {
-    $scope.activeAnimation = $scope.animation;
-    _this.selectController(controllerIndex);
-  };
-
-  $scope.controllers = this.controllers;
-
-  $scope.tabsController = this;
-}])
-
 .directive('tabs', function() {
   return {
     restrict: 'E',
     replace: true,
     scope: true,
     transclude: true,
-    controller: 'TabsCtrl',
+    controller: ['$scope', '$element', '$animate', function($scope, $element, $animate) {
+      var _this = this;
+
+      angular.extend(this, ionic.controllers.TabBarController.prototype);
+
+      ionic.controllers.TabBarController.call(this, {
+        controllerChanged: function(oldC, oldI, newC, newI) {
+          $scope.controllerChanged && $scope.controllerChanged({
+            oldController: oldC,
+            oldIndex: oldI,
+            newController: newC,
+            newIndex: newI
+          });
+        },
+        tabBar: {
+          tryTabSelect: function() {},
+          setSelectedItem: function(index) {},
+          addItem: function(item) {}
+        }
+      });
+
+      this.add = function(controller) {
+        this.addController(controller);
+        this.select(0);
+      };
+
+      this.select = function(controllerIndex) {
+        $scope.activeAnimation = $scope.animation;
+        _this.selectController(controllerIndex);
+      };
+
+      $scope.controllers = this.controllers;
+
+      $scope.tabsController = this;
+    }],
     //templateUrl: 'ext/angular/tmpl/ionicTabBar.tmpl.html',
     template: '<div class="content"><tab-controller-bar></tab-controller-bar></div>',
     compile: function(element, attr, transclude, tabsCtrl) {
