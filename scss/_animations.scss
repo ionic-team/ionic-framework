@@ -89,8 +89,8 @@
  * iOS7 style slide left to right 
  * --------------------------------------------------
  */
-$ios7-timing-function: cubic-bezier(.10, .75, .30, .95);
-$ios7-transition-duration: 750ms;
+$ios7-timing-function: ease-in-out;
+$ios7-transition-duration: 250ms;
 
 .slide-left-right-ios7 {
   > .ng-enter, &.ng-enter, 
@@ -98,10 +98,11 @@ $ios7-transition-duration: 750ms;
     @include transition(all $ios7-timing-function $ios7-transition-duration);
     position: absolute;
     top: 0;
-    right: 0;
+    right: -1px;
     bottom: 0;
-    left: 0;
-    box-shadow: $menu-side-shadow;
+    left: -1px;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
   }
   > .ng-enter, &.ng-enter {
     /* NEW content placed far RIGHT BEFORE it slides IN from the RIGHT */
@@ -123,9 +124,11 @@ $ios7-transition-duration: 750ms;
       @include transition(all $ios7-timing-function $ios7-transition-duration);
       position: absolute;
       top: 0;
-      right: 0;
+      right: -1px;
       bottom: 0;
-      left: 0;
+      left: -1px;
+      border-left: 1px solid #ddd;
+      border-right: 1px solid #ddd;
     }
     > .ng-enter, &.ng-enter {
       /* NEW content placed far LEFT BEFORE it slides IN from the LEFT */
