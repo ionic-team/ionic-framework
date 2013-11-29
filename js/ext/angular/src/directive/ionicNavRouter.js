@@ -193,7 +193,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
           '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" class="button {{button.type}}" ng-bind="button.text"></button>' + 
         '</div>' +
         '<h1 class="title" ng-bind="currentTitle"></h1>' + 
-        '<div class="buttons"> ' +
+        '<div class="buttons" ng-if="rightButtons.length"> ' +
           '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" class="button {{button.type}}" ng-bind="button.text"></button>' + 
         '</div>' +
       '</header>',
