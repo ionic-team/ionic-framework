@@ -41,9 +41,11 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
     }],
 
     link: function($scope, $element, $attr) {
+      if(!$element.length) return;
+      
       $scope.animation = $attr.animation;
 
-      $element.addClass('noop-animation');
+      $element[0].classList.add('noop-animation');
 
       var isFirst = true;
       // Store whether we did an animation yet, to know if
@@ -55,15 +57,15 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
       };
 
       var reverseTransition = function() {
-        $element.removeClass('noop-animation');
-        $element.addClass($scope.animation);
-        $element.addClass('reverse');
+        $element[0].classList.remove('noop-animation');
+        $element[0].classList.add($scope.animation);
+        $element[0].classList.add('reverse');
       };
 
       var forwardTransition = function() {
-        $element.removeClass('noop-animation');
-        $element.removeClass('reverse');
-        $element.addClass($scope.animation);
+        $element[0].classList.remove('noop-animation');
+        $element[0].classList.remove('reverse');
+        $element[0].classList.add($scope.animation);
       };
 
       $scope.$on('$routeChangeSuccess', function(e, a) {
