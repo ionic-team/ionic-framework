@@ -71,7 +71,7 @@ angular.module('ionic.ui.slideBox', [])
     restrict: 'E',
     replace: true,
     require: '^slideBox',
-    template: '<div class="slide-box-pager"><span ng-repeat="slide in slides"><i class="icon-record"></i></span></div>'
+    template: '<div class="slide-box-pager"><span ng-repeat="slide in slides"><i class="icon ion-record"></i></span></div>'
   }
 
 });
