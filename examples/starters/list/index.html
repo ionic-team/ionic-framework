@@ -5,13 +5,7 @@
     <title>Ionic List Example</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <link id="css" rel="stylesheet">
-    <script>
-      document.getElementById("css").href = "/dist/css/ionic.css?r=" + Math.random();
-    </script>
-
-    <!-- ionic css 
-    <link href="/dist/css/ionic.css" rel="stylesheet">-->
+    <link href="/dist/css/ionic.css" rel="stylesheet">
 
     <!-- ionic/angularjs scripts -->
     <script src="/dist/js/ionic.js"></script>
@@ -33,7 +27,7 @@
     'nav-router' attribute updates the nav-bar title and animations as you navigate
     'animation' attribute sets which type of animations to use
   -->
-  <body ng-app="listExample" nav-router animation="slide-left-right">
+  <body ng-app="listExample" nav-router animation="slide-left-right-ios7">
 
     <!-- The nav bar that will be updated as we navigate -->
     <nav-bar class="nav-title-slide-ios7" type="bar-positive" back-button-type="button-icon" back-button-icon="icon ion-arrow-left-c"></nav-bar>

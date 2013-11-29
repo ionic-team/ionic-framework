@@ -5224,13 +5224,11 @@ a.button {
  * iOS7 style slide left to right 
  * --------------------------------------------------
  */
-.slide-left-right-ios7 > .ng-enter, .slide-left-right-ios7.ng-enter, .slide-left-right-ios7 > .ng-leave, .slide-left-right-ios7.ng-leave {
-  -webkit-transition: all 250ms;
-  -moz-transition: all 250ms;
-  transition: all 250ms;
-  -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
-  -moz-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
-  transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
+.slide-left-right-ios7 > .ng-enter, .slide-left-right-ios7.ng-enter,
+.slide-left-right-ios7 > .ng-leave, .slide-left-right-ios7.ng-leave {
+  -webkit-transition: all cubic-bezier(0.1, 0.75, 0.3, 0.95) 750ms;
+  -moz-transition: all cubic-bezier(0.1, 0.75, 0.3, 0.95) 750ms;
+  transition: all cubic-bezier(0.1, 0.75, 0.3, 0.95) 750ms;
   position: absolute;
   top: 0;
   right: 0;
@@ -5238,45 +5236,44 @@ a.button {
   left: 0;
   box-shadow: -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0, 0, 0, 0.2); }
 .slide-left-right-ios7 > .ng-enter, .slide-left-right-ios7.ng-enter {
+  /* NEW content placed far RIGHT BEFORE it slides IN from the RIGHT */
   -webkit-transform: translate3d(100%, 0, 0);
   -moz-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0); }
 .slide-left-right-ios7 > .ng-enter.ng-enter-active, .slide-left-right-ios7.ng-enter.ng-enter-active {
-  /* the NEW content actively sliding IN from RIGHT to LEFT */
+  /* NEW content ACTIVELY sliding IN from the RIGHT */
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0); }
 .slide-left-right-ios7 > .ng-leave.ng-leave-active, .slide-left-right-ios7.ng-leave.ng-leave-active {
-  /* the OLD content actively sliding OUT from RIGHT to LEFT */
-  -webkit-transform: translate3d(-20%, 0, 0);
-  -moz-transform: translate3d(-20%, 0, 0);
-  transform: translate3d(-20%, 0, 0); }
+  /* OLD content ACTIVELY sliding OUT to the LEFT */
+  -webkit-transform: translate3d(-15%, 0, 0);
+  -moz-transform: translate3d(-15%, 0, 0);
+  transform: translate3d(-15%, 0, 0); }
 .slide-left-right-ios7.reverse > .ng-enter, .slide-left-right-ios7.reverse.ng-enter, .slide-left-right-ios7.reverse > .ng-leave, .slide-left-right-ios7.reverse.ng-leave {
-  -webkit-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 250ms;
-  -moz-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 250ms;
-  transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 250ms;
-  -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
-  -moz-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
-  transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
+  -webkit-transition: all cubic-bezier(0.1, 0.75, 0.3, 0.95) 750ms;
+  -moz-transition: all cubic-bezier(0.1, 0.75, 0.3, 0.95) 750ms;
+  transition: all cubic-bezier(0.1, 0.75, 0.3, 0.95) 750ms;
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0; }
 .slide-left-right-ios7.reverse > .ng-enter, .slide-left-right-ios7.reverse.ng-enter {
+  /* NEW content placed far LEFT BEFORE it slides IN from the LEFT */
   -webkit-transform: translate3d(-100%, 0, 0);
   -moz-transform: translate3d(-100%, 0, 0);
   transform: translate3d(-100%, 0, 0); }
 .slide-left-right-ios7.reverse > .ng-enter.ng-enter-active, .slide-left-right-ios7.reverse.ng-enter.ng-enter-active {
-  /* the NEW content actively sliding IN from LEFT to RIGHT */
+  /* NEW content ACTIVELY sliding IN from the LEFT */
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0); }
 .slide-left-right-ios7.reverse > .ng-leave.ng-leave-active, .slide-left-right-ios7.reverse.ng-leave.ng-leave-active {
-  /* the OLD content actively sliding OUT from LEFT to RIGHT */
-  -webkit-transform: translate3d(20%, 0, 0);
-  -moz-transform: translate3d(20%, 0, 0);
-  transform: translate3d(20%, 0, 0); }
+  /* OLD content ACTIVELY sliding OUT to the RIGHT */
+  -webkit-transform: translate3d(15%, 0, 0);
+  -moz-transform: translate3d(15%, 0, 0);
+  transform: translate3d(15%, 0, 0); }
 
 .slide-in-left {
   -webkit-transform: translate3d(0%, 0, 0);
@@ -5573,9 +5570,9 @@ a.button {
   -webkit-transition: all 350ms;
   -moz-transition: all 350ms;
   transition: all 350ms;
-  -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
-  -moz-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
-  transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.1, 0.75, 0.3, 0.95);
+  -moz-transition-timing-function: cubic-bezier(0.1, 0.75, 0.3, 0.95);
+  transition-timing-function: cubic-bezier(0.1, 0.75, 0.3, 0.95);
   opacity: 1; }
 .nav-title-slide-ios7 > .ng-enter, .nav-title-slide-ios7.ng-enter {
   -webkit-transform: translate3d(30%, 0, 0);
@@ -5598,9 +5595,9 @@ a.button {
   -webkit-transition: all 350ms;
   -moz-transition: all 350ms;
   transition: all 350ms;
-  -webkit-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
-  -moz-transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
-  transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
+  -webkit-transition-timing-function: cubic-bezier(0.1, 0.75, 0.3, 0.95);
+  -moz-transition-timing-function: cubic-bezier(0.1, 0.75, 0.3, 0.95);
+  transition-timing-function: cubic-bezier(0.1, 0.75, 0.3, 0.95);
   opacity: 1; }
 .reverse .nav-title-slide-ios7 > .ng-enter, .reverse .nav-title-slide-ios7.ng-enter {
   -webkit-transform: translate3d(-30%, 0, 0);
