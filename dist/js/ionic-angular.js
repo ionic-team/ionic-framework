@@ -1534,10 +1534,11 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
     }
 
     // Clone the old title and add a new one so we can show two animating in and out
+    // add ng-leave and ng-enter during creation to prevent flickering when they are swapped during animation
     title = angular.element(titles[0]);
-    oTitle = $compile('<h1 class="title" ng-bind="oldTitle"></h1>')($scope);
+    oTitle = $compile('<h1 class="title ng-leave" ng-bind="oldTitle"></h1>')($scope);
     title.replaceWith(oTitle);
-    nTitle = $compile('<h1 class="title" ng-bind="currentTitle"></h1>')($scope);
+    nTitle = $compile('<h1 class="title ng-enter" ng-bind="currentTitle"></h1>')($scope);
 
     var insert = $element[0].firstElementChild || null;
 
