@@ -325,11 +325,11 @@ $transition-time: 250ms;
 /**
  * Some component specific animations
  */
-
+$nav-title-slide-ios7-delay: 350ms;
 .nav-title-slide-ios7 {
   > .ng-enter, &.ng-enter, 
   > .ng-leave, &.ng-leave {
-    @include transition(all 350ms);
+    @include transition(all $nav-title-slide-ios7-delay);
     @include transition-timing-function($ios7-timing-function);
     opacity: 1;
   }
@@ -349,8 +349,9 @@ $transition-time: 250ms;
 }
 .reverse {
   .nav-title-slide-ios7 {
-    > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
-      @include transition(all 350ms);
+    > .ng-enter, &.ng-enter, 
+    > .ng-leave, &.ng-leave {
+      @include transition(all $nav-title-slide-ios7-delay);
       @include transition-timing-function($ios7-timing-function);
       opacity: 1;
     }

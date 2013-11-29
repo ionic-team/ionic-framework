@@ -5593,7 +5593,8 @@ a.button {
   transform: translate3d(-30%, 0, 0);
   opacity: 0; }
 
-.reverse .nav-title-slide-ios7 > .ng-enter, .reverse .nav-title-slide-ios7.ng-enter, .reverse .nav-title-slide-ios7 > .ng-leave, .reverse .nav-title-slide-ios7.ng-leave {
+.reverse .nav-title-slide-ios7 > .ng-enter, .reverse .nav-title-slide-ios7.ng-enter,
+.reverse .nav-title-slide-ios7 > .ng-leave, .reverse .nav-title-slide-ios7.ng-leave {
   -webkit-transition: all 350ms;
   -moz-transition: all 350ms;
   transition: all 350ms;
