@@ -1562,7 +1562,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
       backButtonIcon: '@',
       alignTitle: '@'
     },
-    template: '<header class="bar bar-header nav-bar" ng-class="{hidden: !navController.navBar.isVisible}">' + 
+    template: '<header class="bar bar-header nav-bar" ng-class="{invisible: !navController.navBar.isVisible}">' + 
         '<div class="buttons"> ' +
           '<button nav-back class="button" ng-if="enableBackButton && showBackButton" ng-class="backButtonType" ng-bind-html="backButtonContent"></button>' +
           '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" class="button {{button.type}}" ng-bind="button.text"></button>' + 
@@ -1693,6 +1693,10 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
 
       // Should we hide a back button when this tab is shown
       $scope.hideBackButton = $scope.$eval($attr.hideBackButton);
+
+      $scope.hideNavBar = $scope.$eval($attr.hideNavBar);
+
+      navCtrl.navBar.isVisible = !$scope.hideNavBar;
 
       // Whether we should animate on tab change, also impacts whether we
       // tell any parent nav controller to animate

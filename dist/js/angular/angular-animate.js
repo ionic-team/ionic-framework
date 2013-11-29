@@ -1,6 +1,6 @@
 /**
- * @license AngularJS v1.2.2
- * (c) 2010-2012 Google, Inc. http://angularjs.org
+ * @license AngularJS v1.2.3
+ * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function(window, angular, undefined) {'use strict';
@@ -269,9 +269,16 @@ angular.module('ngAnimate', ['ng'])
 
       $rootElement.data(NG_ANIMATE_STATE, rootAnimateState);
 
-      // disable animations during bootstrap, but once we bootstrapped, enable animations
+      // disable animations during bootstrap, but once we bootstrapped, wait again
+      // for another digest until enabling animations. The reason why we digest twice
+      // is because all structural animations (enter, leave and move) all perform a
+      // post digest operation before animating. If we only wait for a single digest
+      // to pass then the structural animation would render its animation on page load.
+      // (which is what we're trying to avoid when the application first boots up.)
       $rootScope.$$postDigest(function() {
-        rootAnimateState.running = false;
+        $rootScope.$$postDigest(function() {
+          rootAnimateState.running = false;
+        });
       });
 
       function lookup(name) {
@@ -1038,7 +1045,10 @@ angular.module('ngAnimate', ['ng'])
       }
 
       function unblockKeyframeAnimations(element) {
-        element[0].style[ANIMATION_PROP] = '';
+        var node = element[0], prop = ANIMATION_PROP;
+        if(node.style[prop] && node.style[prop].length > 0) {
+          element[0].style[prop] = '';
+        }
       }
 
       function animateRun(element, className, activeAnimationComplete) {
@@ -1069,8 +1079,6 @@ angular.module('ngAnimate', ['ng'])
             appliedStyles.push(CSS_PREFIX + 'transition-property');
             appliedStyles.push(CSS_PREFIX + 'transition-duration');
           }
-        } else {
-          unblockKeyframeAnimations(element);
         }
 
         if(ii > 0) {
@@ -1173,6 +1181,7 @@ angular.module('ngAnimate', ['ng'])
         var cancel = preReflowCancellation;
         afterReflow(function() {
           unblockTransitions(element);
+          unblockKeyframeAnimations(element);
           //once the reflow is complete then we point cancel to
           //the new cancellation function which will remove all of the
           //animation properties from the active animation
@@ -1238,6 +1247,7 @@ angular.module('ngAnimate', ['ng'])
           if(cancellationMethod) {
             afterReflow(function() {
               unblockTransitions(element);
+              unblockKeyframeAnimations(element);
               animationCompleted();
             });
             return cancellationMethod;
@@ -1254,6 +1264,7 @@ angular.module('ngAnimate', ['ng'])
           if(cancellationMethod) {
             afterReflow(function() {
               unblockTransitions(element);
+              unblockKeyframeAnimations(element);
               animationCompleted();
             });
             return cancellationMethod;

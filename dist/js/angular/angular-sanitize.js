@@ -1,6 +1,6 @@
 /**
- * @license AngularJS v1.2.2
- * (c) 2010-2012 Google, Inc. http://angularjs.org
+ * @license AngularJS v1.2.3
+ * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function(window, angular, undefined) {'use strict';
@@ -51,6 +51,8 @@ var $sanitizeMinErr = angular.$$minErr('$sanitize');
  *   it into the returned string, however, since our parser is more strict than a typical browser
  *   parser, it's possible that some obscure input, which would be recognized as valid HTML by a
  *   browser, won't make it through the sanitizer.
+ *   The whitelist is configured using the functions `aHrefSanitizationWhitelist` and
+ *   `imgSrcSanitizationWhitelist` of {@link ng.$compileProvider `$compileProvider`}.
  *
  * @param {string} html Html input.
  * @returns {string} Sanitized html.
@@ -133,11 +135,24 @@ var $sanitizeMinErr = angular.$$minErr('$sanitize');
    </doc:scenario>
    </doc:example>
  */
-var $sanitize = function(html) {
+function $SanitizeProvider() {
+  this.$get = ['$$sanitizeUri', function($$sanitizeUri) {
+    return function(html) {
+      var buf = [];
+      htmlParser(html, htmlSanitizeWriter(buf, function(uri, isImage) {
+        return !/^unsafe/.test($$sanitizeUri(uri, isImage));
+      }));
+      return buf.join('');
+    };
+  }];
+}
+
+function sanitizeText(chars) {
   var buf = [];
-    htmlParser(html, htmlSanitizeWriter(buf));
-    return buf.join('');
-};
+  var writer = htmlSanitizeWriter(buf, angular.noop);
+  writer.chars(chars);
+  return buf.join('');
+}
 
 
 // Regular Expressions for parsing tags and attributes
@@ -150,7 +165,6 @@ var START_TAG_REGEXP =
   COMMENT_REGEXP = /<!--(.*?)-->/g,
   DOCTYPE_REGEXP = /<!DOCTYPE([^>]*?)>/i,
   CDATA_REGEXP = /<!\[CDATA\[(.*?)]]>/g,
-  URI_REGEXP = /^((ftp|https?):\/\/|mailto:|tel:|#)/i,
   // Match everything outside of normal chars and " (quote character)
   NON_ALPHANUMERIC_REGEXP = /([^\#-~| |!])/g;
 
@@ -358,8 +372,18 @@ function htmlParser( html, handler ) {
  */
 var hiddenPre=document.createElement("pre");
 function decodeEntities(value) {
-  hiddenPre.innerHTML=value.replace(/</g,"&lt;");
-  return hiddenPre.innerText || hiddenPre.textContent || '';
+  if (!value) {
+    return '';
+  }
+  // Note: IE8 does not preserve spaces at the start/end of innerHTML
+  var spaceRe = /^(\s*)([\s\S]*?)(\s*)$/;
+  var parts = spaceRe.exec(value);
+  parts[0] = '';
+  if (parts[2]) {
+    hiddenPre.innerHTML=parts[2].replace(/</g,"&lt;");
+    parts[2] = hiddenPre.innerText || hiddenPre.textContent;
+  }
+  return parts.join('');
 }
 
 /**
@@ -389,7 +413,7 @@ function encodeEntities(value) {
  *     comment: function(text) {}
  * }
  */
-function htmlSanitizeWriter(buf){
+function htmlSanitizeWriter(buf, uriValidator){
   var ignore = false;
   var out = angular.bind(buf, buf.push);
   return {
@@ -403,7 +427,9 @@ function htmlSanitizeWriter(buf){
         out(tag);
         angular.forEach(attrs, function(value, key){
           var lkey=angular.lowercase(key);
-          if (validAttrs[lkey]===true && (uriAttrs[lkey]!==true || value.match(URI_REGEXP))) {
+          var isImage = (tag === 'img' && lkey === 'src') || (lkey === 'background');
+          if (validAttrs[lkey] === true &&
+            (uriAttrs[lkey] !== true || uriValidator(value, isImage))) {
             out(' ');
             out(key);
             out('="');
@@ -435,9 +461,9 @@ function htmlSanitizeWriter(buf){
 
 
 // define ngSanitize module and register $sanitize service
-angular.module('ngSanitize', []).value('$sanitize', $sanitize);
+angular.module('ngSanitize', []).provider('$sanitize', $SanitizeProvider);
 
-/* global htmlSanitizeWriter: false */
+/* global sanitizeText: false */
 
 /**
  * @ngdoc filter
@@ -537,7 +563,7 @@ angular.module('ngSanitize', []).value('$sanitize', $sanitize);
      </doc:scenario>
    </doc:example>
  */
-angular.module('ngSanitize').filter('linky', function() {
+angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
   var LINKY_URL_REGEXP =
         /((ftp|https?):\/\/|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s.;,(){}<>]/,
       MAILTO_REGEXP = /^mailto:/;
@@ -547,31 +573,43 @@ angular.module('ngSanitize').filter('linky', function() {
     var match;
     var raw = text;
     var html = [];
-    // TODO(vojta): use $sanitize instead
-    var writer = htmlSanitizeWriter(html);
     var url;
     var i;
-    var properties = {};
-    if (angular.isDefined(target)) {
-      properties.target = target;
-    }
     while ((match = raw.match(LINKY_URL_REGEXP))) {
       // We can not end in these as they are sometimes found at the end of the sentence
       url = match[0];
       // if we did not match ftp/http/mailto then assume mailto
       if (match[2] == match[3]) url = 'mailto:' + url;
       i = match.index;
-      writer.chars(raw.substr(0, i));
-      properties.href = url;
-      writer.start('a', properties);
-      writer.chars(match[0].replace(MAILTO_REGEXP, ''));
-      writer.end('a');
+      addText(raw.substr(0, i));
+      addLink(url, match[0].replace(MAILTO_REGEXP, ''));
       raw = raw.substring(i + match[0].length);
     }
-    writer.chars(raw);
-    return html.join('');
+    addText(raw);
+    return $sanitize(html.join(''));
+
+    function addText(text) {
+      if (!text) {
+        return;
+      }
+      html.push(sanitizeText(text));
+    }
+
+    function addLink(url, text) {
+      html.push('<a ');
+      if (angular.isDefined(target)) {
+        html.push('target="');
+        html.push(target);
+        html.push('" ');
+      }
+      html.push('href="');
+      html.push(url);
+      html.push('">');
+      addText(text);
+      html.push('</a>');
+    }
   };
-});
+}]);
 
 
 })(window, window.angular);
