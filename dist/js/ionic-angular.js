@@ -1691,14 +1691,15 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
       $scope.iconOn = $attr.iconOn;
       $scope.iconOff = $attr.iconOff;
 
-      // Should we hide a back button when this tab is shown
+      // Should we hide a back button when this page is shown
       $scope.hideBackButton = $scope.$eval($attr.hideBackButton);
-
-      // Whether we should animate on tab change, also impacts whether we
+      // Should we hide  the navBar when this page is shown
+      navCtrl.navBar.isVisible = !$scope.$eval($attr.hidenavbar);
+      // Whether we should animate on page change, also impacts whether we
       // tell any parent nav controller to animate
       $scope.animate = $scope.$eval($attr.animate);
 
-      // Grab whether we should update any parent nav router on tab changes
+      // Grab whether we should update any parent nav router on page changes
       $scope.doesUpdateNavRouter = $scope.$eval($attr.doesUpdateNavRouter) || true;
 
       // watch for changes in the left buttons
