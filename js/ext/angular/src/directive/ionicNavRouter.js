@@ -37,12 +37,12 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
 
       this.goBack = function() {
         $scope.direction = 'back';
-      }
+      };
     }],
 
     link: function($scope, $element, $attr) {
       if(!$element.length) return;
-      
+
       $scope.animation = $attr.animation;
 
       $element[0].classList.add('noop-animation');
@@ -77,6 +77,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
 
         if(isFirst || (next && next.$$route && next.$$route.originalPath === "")) {
           // Don't animate
+          isFirst = false;
           return;
         }
 
@@ -101,9 +102,9 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
 
       // Keep track of location changes and update a stack pointer that tracks whether we are
       // going forwards or back
-      $scope.$watch(function () { return $location.path() }, function (newLocation, oldLocation) {
+      $scope.$watch(function () { return $location.path(); }, function (newLocation, oldLocation) {
         if($rootScope.actualLocation === newLocation) {
-          if(oldLocation == '') {// || newLocation == '/') {
+          if(oldLocation === '') {// || newLocation == '/') {
             // initial route, skip this
             return;
           }
@@ -136,7 +137,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
         }
       });
     }
-  }
+  };
 }])
 
 /**
@@ -184,7 +185,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
       backButtonType: '@',
       backButtonLabel: '@',
       backButtonIcon: '@',
-      alignTitle: '@',
+      alignTitle: '@'
     },
     template: '<header class="bar bar-header nav-bar" ng-class="{hidden: !navController.navBar.isVisible}">' + 
         '<div class="buttons"> ' +
@@ -208,7 +209,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
         $scope.backButtonContent += '<i class="icon ' + $scope.backButtonIcon + '"></i>';
       }
       if($scope.backButtonLabel) {
-        $scope.backButtonContent += ' ' + $scope.backButtonLabel
+        $scope.backButtonContent += ' ' + $scope.backButtonLabel;
       }
 
       // Listen for changes in the stack cursor position to indicate whether a back
@@ -351,7 +352,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
       });
 
     }
-  }
+  };
 }])
 
 .directive('navBack', ['$window', '$rootScope', 'Gesture', function($window, $rootScope, Gesture) {
@@ -372,7 +373,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
       };
       $element.bind('click', goBack);
     }
-  }
+  };
 }]);
 
 })();
