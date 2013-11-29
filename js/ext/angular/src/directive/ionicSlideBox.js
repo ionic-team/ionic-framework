@@ -14,19 +14,18 @@ angular.module('ionic.ui.slideBox', [])
  * extends our core Ionic side menu controller and exposes
  * some side menu stuff on the current scope.
  */
-.controller('SlideBoxCtrl', ['$scope', '$element', function($scope, $element) {
-  $scope.slides = [];
-  this.slideAdded = function() {
-    $scope.slides.push({});
-  };
-}])
 
 .directive('slideBox', ['$compile', function($compile) {
   return {
     restrict: 'E',
     replace: true,
     transclude: true,
-    controller: 'SlideBoxCtrl',
+    controller: ['$scope', '$element', function($scope, $element) {
+      $scope.slides = [];
+      this.slideAdded = function() {
+        $scope.slides.push({});
+      };
+    }],
     scope: {},
     template: '<div class="slide-box">\
             <div class="slide-box-slides" ng-transclude>\
