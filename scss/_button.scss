@@ -29,12 +29,24 @@
 
   cursor: pointer;
 
-  .icon {
+  .icon,
+  &.icon:before,
+  &.icon-left:before,
+  &.icon-right:before {
     display: inline-block;
     padding: 0 0 $button-border-width 0;
     vertical-align: inherit;
     font-size: $button-icon-size;
     line-height: $button-height - $button-border-width - 1;
+  }
+  &.icon-left:before {
+    padding-right: .2em;
+    padding-left: 0;
+  }
+  &.icon-right:before {
+    float: right;
+    padding-right: 0;
+    padding-left: .2em;
   }
 
   &.button-block, &.button-full {
@@ -104,7 +116,10 @@
   font-size: $button-small-font-size;
   line-height: $button-small-height - $button-border-width;
 
-  .icon {
+  .icon,
+  &.icon:before,
+  &.icon-left:before,
+  &.icon-right:before {
     font-size: $button-small-icon-size;
     line-height: $button-small-height - $button-border-width - 1;
   }
@@ -117,7 +132,10 @@
   font-size: $button-large-font-size;
   line-height: $button-large-height - $button-border-width;
 
-  .icon {
+  .icon,
+  &.icon:before,
+  &.icon-left:before,
+  &.icon-right:before {
     padding-bottom: ($button-border-width * 2);
     font-size: $button-large-icon-size;
     line-height: $button-large-height - ($button-border-width * 2) - 1;
@@ -139,7 +157,8 @@
     opacity: 0.3;
   }
 
-  .icon {
+  .icon,
+  &.icon:before {
     font-size: $button-large-icon-size;
   }
 }

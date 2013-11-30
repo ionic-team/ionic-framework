@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /*!
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
@@ -4606,12 +4605,19 @@ input[type="range"] {
     background-color: #e5e5e5;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
     border-color: #a2a2a2; }
-  .button .icon {
+  .button .icon, .button.icon:before, .button.icon-left:before, .button.icon-right:before {
     display: inline-block;
     padding: 0 0 1px 0;
     vertical-align: inherit;
     font-size: 24px;
     line-height: 40px; }
+  .button.icon-left:before {
+    padding-right: .2em;
+    padding-left: 0; }
+  .button.icon-right:before {
+    float: right;
+    padding-right: 0;
+    padding-left: .2em; }
   .button.button-block, .button.button-full {
     margin-top: 10px;
     margin-bottom: 10px; }
@@ -4865,7 +4871,7 @@ input[type="range"] {
   min-height: 28px;
   font-size: 12px;
   line-height: 27px; }
-  .button-small .icon {
+  .button-small .icon, .button-small.icon:before, .button-small.icon-left:before, .button-small.icon-right:before {
     font-size: 16px;
     line-height: 26px; }
 
@@ -4875,7 +4881,7 @@ input[type="range"] {
   min-height: 54px;
   font-size: 18px;
   line-height: 53px; }
-  .button-large .icon {
+  .button-large .icon, .button-large.icon:before, .button-large.icon-left:before, .button-large.icon-right:before {
     padding-bottom: 2px;
     font-size: 32px;
     line-height: 51px; }
@@ -4894,7 +4900,7 @@ input[type="range"] {
     background: none;
     box-shadow: none;
     opacity: 0.3; }
-  .button-icon .icon {
+  .button-icon .icon, .button-icon.icon:before {
     font-size: 32px; }
 
 .button-clear {
