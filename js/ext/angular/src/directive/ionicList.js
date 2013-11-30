@@ -22,12 +22,12 @@ angular.module('ionic.ui.list', ['ngAnimate'])
     },
     template: '<a href="{{href}}" class="item">\
             <div class="item-edit" ng-if="canDelete && isEditing">\
-              <button class="button button-icon" ng-click="onDelete()"><i ng-class="deleteIcon"></i></button>\
+              <button class="button button-icon icon" ng-class="deleteIcon" ng-click="onDelete()"></button>\
             </div>\
             <div class="item-content slide-left" ng-transclude>\
             </div>\
              <div class="item-drag" ng-if="canReorder && isEditing">\
-               <button data-ionic-action="reorder" class="button button-icon"><i ng-class="reorderIcon"></i></button>\
+               <button data-ionic-action="reorder" class="button button-icon icon" ng-class="reorderIcon"></button>\
              </div>\
             <div class="item-options" ng-if="canSwipe && !isEditing && showOptions">\
              <button ng-click="buttonClicked(button)" class="button" ng-class="button.type" ng-repeat="button in buttons">{{button.text}}</button>\
@@ -101,7 +101,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
     },
     template: '<li class="item">\
             <div class="item-edit" ng-if="canDelete && isEditing">\
-              <button class="button button-icon" ng-click="onDelete()"><i ng-class="deleteIcon"></i></button>\
+              <button class="button button-icon icon" ng-class="deleteIcon" ng-click="onDelete()"></button>\
             </div>\
             <div class="item-content slide-left" ng-transclude>\
             </div>\
