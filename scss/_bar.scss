@@ -102,7 +102,7 @@
 
     font-size: $bar-title-font-size;
 
-    line-height: $bar-height;
+    line-height: $bar-height - 2;
 
     &.title-left {
       text-align: left;
