@@ -190,7 +190,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
     },
     template: '<header class="bar bar-header nav-bar" ng-class="{invisible: !navController.navBar.isVisible}">' + 
         '<div class="buttons"> ' +
-          '<button nav-back class="button" ng-if="enableBackButton && showBackButton" ng-class="backButtonType" ng-bind-html="backButtonContent"></button>' +
+          '<button nav-back class="button" ng-if="enableBackButton && showBackButton" ng-class="backButtonClass" ng-bind-html="backButtonLabel"></button>' +
           '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" class="button {{button.type}}" ng-bind="button.text"></button>' + 
         '</div>' +
         '<h1 class="title" ng-bind="currentTitle"></h1>' + 
@@ -205,12 +205,9 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
 
       // Create the back button content and show/hide it based on scope settings
       $scope.enableBackButton = true;
-      $scope.backButtonContent = '';
-      if($scope.backButtonIcon) {
-        $scope.backButtonContent += '<i class="icon ' + $scope.backButtonIcon + '"></i>';
-      }
-      if($scope.backButtonLabel) {
-        $scope.backButtonContent += ' ' + $scope.backButtonLabel;
+      $scope.backButtonClass = $attr.backButtonType;
+      if($attr.backButtonIcon) {
+        $scope.backButtonClass += ' icon ' + $attr.backButtonIcon;
       }
 
       // Listen for changes in the stack cursor position to indicate whether a back
