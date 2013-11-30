@@ -125,11 +125,23 @@
     font-size: $button-bar-button-font-size;
     line-height: $button-bar-button-height - $button-border-width - 1;
 
-    .icon {
+    .icon,
+    &.icon:before,
+    &.icon-left:before,
+    &.icon-right:before {
       padding-right: 2px;
       padding-left: 2px;
       font-size: $button-bar-button-icon-size;
       line-height: $button-bar-button-height - $button-border-width - 1;
+    }
+
+    &.button-icon {
+      .icon,
+      &.icon:before,
+      &.icon-left:before,
+      &.icon-right:before {
+        line-height: $button-bar-button-height;
+      }
     }
   }
 

@@ -2793,11 +2793,13 @@ a.subdued {
     height: 32px;
     font-size: 12px;
     line-height: 30px; }
-    .bar .button .icon {
+    .bar .button .icon, .bar .button.icon:before, .bar .button.icon-left:before, .bar .button.icon-right:before {
       padding-right: 2px;
       padding-left: 2px;
       font-size: 24px;
       line-height: 30px; }
+    .bar .button.button-icon .icon, .bar .button.button-icon.icon:before, .bar .button.button-icon.icon-left:before, .bar .button.button-icon.icon-right:before {
+      line-height: 32px; }
   .bar .button-bar > .button, .bar .buttons > .button {
     min-height: 31px;
     height: 32px;
