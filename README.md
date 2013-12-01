@@ -26,6 +26,12 @@ you'll be good to go.
 
 ## Running examples
 
+You will first have to install dependencies by running:
+
+    npm install
+
+Make sure that you have [npm](https://github.com/isaacs/npm) already installed.
+
 Ionic comes with many interesting examples showing the power of the framework. To
 check them out, navigate into the source folder, and start a web server. The easiest
 way is to use Python:
@@ -34,7 +40,7 @@ way is to use Python:
 
     node_modules/grunt-cli/bin/grunt watch
 
-    http://localhost:8000/example/
+    http://localhost:8000/examples/starters/
 
     http://localhost:8000/test/
 
