@@ -72,17 +72,17 @@ angular.module('ionic.ui.content', [])
           $timeout(function() { 
 
             // Add watch to the container element's height to fire Scroller.resize event
-            $scope.$watch
-            (
-                function () {
-                    return typeof($element) !== "undefined" && $element.length > 0  && $element[0].clientHeight > 0 ? $element[0].clientHeight : 0;
-                },
-                function (newValue, oldValue) {
-                    if (newValue != oldValue && $scope.$parent && $scope.$parent.scrollView && $scope.$parent.scrollView.resize) {
-                        $scope.$parent.scrollView.resize();
-                    }
-                }
-            );
+            // $scope.$watch
+            // (
+            //     function () {
+            //         return typeof($element) !== "undefined" && $element.length > 0  && $element[0].clientHeight > 0 ? $element[0].clientHeight : 0;
+            //     },
+            //     function (newValue, oldValue) {
+            //         if (newValue != oldValue && $scope.$parent && $scope.$parent.scrollView && $scope.$parent.scrollView.resize) {
+            //             $scope.$parent.scrollView.resize();
+            //         }
+            //     }
+            // );
 
             sv = new ionic.views.Scroller({
               el: $element[0]
