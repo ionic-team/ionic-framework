@@ -76,6 +76,15 @@ textarea {
   }
 }
 
+.item-input-inset {
+  @include display-flex();
+  @include flex(1, 0, 220px);
+  @include align-items(center);
+  @include border-radius(4px);
+  padding-left: 4px;
+  background: #eee;
+}
+
 .input-label {
   @include flex(1, 0, 100px);
   padding: 7px 10px 7px 3px;

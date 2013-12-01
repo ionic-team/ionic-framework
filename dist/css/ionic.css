@@ -4141,6 +4141,30 @@ textarea {
     border-color: #dddddd;
     background-color: transparent; }
 
+.item-input-inset {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 0 220px;
+  -moz-box-flex: 1;
+  -moz-flex: 1 0 220px;
+  -ms-flex: 1 0 220px;
+  flex: 1 0 220px;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  padding-left: 4px;
+  background: #eee; }
+
 .input-label {
   -webkit-box-flex: 1;
   -webkit-flex: 1 0 100px;
