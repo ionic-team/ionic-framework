@@ -2702,6 +2702,10 @@ a.subdued {
       color: #fff; }
     .bar.bar-clear .title {
       color: #fff; }
+  .bar.item-input .item-input-inset {
+    margin-top: -1px; }
+  .bar.item-input input {
+    height: 28px; }
   .bar.bar-light {
     background-color: white;
     border-color: #dddddd;

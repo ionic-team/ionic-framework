@@ -52,6 +52,16 @@
     }
   }
 
+  &.item-input {
+    .item-input-inset {
+      margin-top: -1px;
+    }
+
+    input {
+      height: 28px;
+    }
+  }
+
   &.bar-light {
     @include bar-style($bar-light-bg, $bar-light-border, $bar-light-text);
   }
