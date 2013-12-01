@@ -4,7 +4,7 @@
   ionic.views.Modal = ionic.views.View.inherit({
     initialize: function(opts) {
       opts = ionic.extend({
-        focusFirstInput: true,
+        focusFirstInput: false,
         unfocusOnHide: true
       }, opts);
 
