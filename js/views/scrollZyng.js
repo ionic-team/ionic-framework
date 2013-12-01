@@ -583,7 +583,11 @@ var Scroller;
   resize: function() {
     // Update Scroller dimensions for changed content
     // Add padding to bottom of content
-    this.setDimensions(this.__container.clientWidth, this.__container.clientHeight, this.__content.offsetWidth, this.__content.offsetHeight+50);
+    this.setDimensions(
+    	Math.min(this.__container.clientWidth, this.__container.parentElement.clientWidth), 
+    	Math.min(this.__container.clientHeight, this.__container.parentElement.clientHeight), 
+    	this.__content.offsetWidth, 
+    	this.__content.offsetHeight+50);
   },
   /*
   ---------------------------------------------------------------------------

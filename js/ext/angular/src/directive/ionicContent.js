@@ -62,7 +62,11 @@ angular.module('ionic.ui.content', [])
             addedPadding = true;
           }
           $element.append(sc);
-          
+
+          // Pass the parent scope down to the child
+          clone = transclude($scope.$parent);
+          angular.element($element[0].firstElementChild).append(clone);
+
           // Otherwise, supercharge this baby!
           // Add timeout to let content render so Scroller.resize grabs the right content height
           $timeout(function() { 
@@ -85,9 +89,6 @@ angular.module('ionic.ui.content', [])
             $scope.$parent.scrollView = sv;
           }, 100);
 
-          // Pass the parent scope down to the child
-          clone = transclude($scope.$parent);
-          angular.element($element[0].firstElementChild).append(clone);
         }
 
         // if padding attribute is true, then add padding if it wasn't added to the .scroll
