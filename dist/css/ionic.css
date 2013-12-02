@@ -2805,6 +2805,8 @@ a.subdued {
       line-height: 30px; }
     .bar .button.button-icon .icon, .bar .button.button-icon.icon:before, .bar .button.button-icon.icon-left:before, .bar .button.button-icon.icon-right:before {
       line-height: 32px; }
+    .bar .button.button-clear {
+      font-size: 18px; }
   .bar .button-bar > .button, .bar .buttons > .button {
     min-height: 31px;
     height: 32px;
