@@ -714,21 +714,15 @@ angular.module('ionic.ui.content', [])
                 refresher.classList.remove('active');
               }, function() {
                 refresher.classList.add('refreshing');
-              });
-            }
-            
-            /*
-              hasPullToRefresh: (typeof $scope.onRefresh !== 'undefined'),
-              onRefresh: function() {
                 $scope.onRefresh();
                 $scope.$parent.$broadcast('scroll.onRefresh');
-              },
-              onRefreshOpening: function(amt) {
-                $scope.onRefreshOpening({amount: amt});
-                $scope.$parent.$broadcast('scroll.onRefreshOpening', amt);
-              }
+              });
+            }
+
+            $scope.$parent.$on('scroll.refreshComplete', function(e) {
+              sv && sv.finishPullToRefresh();
             });
-            */
+            
             // Let child scopes access this 
             $scope.$parent.scrollView = sv;
           }, 500);
@@ -753,21 +747,7 @@ angular.module('ionic.ui.content', [])
     replace: true,
     require: ['^?content', '^?list'],
     template: '<div class="scroll-refresher"><div class="ionic-refresher-content"><i class="icon ion-arrow-down-c icon-pulling"></i><i class="icon ion-loading-d icon-refreshing"></i></div></div>',
-    scope: true,
-    link: function($scope, $element, $attr, scrollCtrl) {
-      var icon = $element[0].querySelector('.ionic-refresher');
-
-      // Scale up the refreshing icon
-      var onRefreshOpening = ionic.throttle(function(e, amt) {
-        icon.style[ionic.CSS.TRANSFORM] = 'scale(' + Math.min((1 + amt), 2) + ')';
-      }, 100);
-
-      $scope.$on('scroll.onRefresh', function(e) {
-        icon.style[ionic.CSS.TRANSFORM] = 'scale(2)';
-      });
-
-      $scope.$on('scroll.onRefreshOpening', onRefreshOpening);
-    }
+    scope: true
   };
 })
 

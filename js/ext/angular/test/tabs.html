@@ -64,7 +64,9 @@
           <h1 class="title">Tasks</h1>
           <button class="button button-clear button-primary" ng-click="isEditingItems = !isEditingItems">Edit</button>
         </header>
-        <content>
+        <content
+          on-refresh="onRefresh()">
+
           <refresher></refresher>
           <list scroll="false" on-refresh="onRefresh()" on-reorder="onReorder(el, start, end)" is-editing="isEditingItems" animation="fade-out" delete-icon="icon ion-minus-circled" reorder-icon="icon ion-navicon">
             <item ng-repeat="item in items" 
@@ -142,7 +144,7 @@
       })
 
 
-      .controller('HomeCtrl', function($scope, Modal, ActionSheet) {
+      .controller('HomeCtrl', function($scope, $timeout, Modal, ActionSheet) {
         $scope.items = [];
 
         Modal.fromTemplateUrl('newTask.html', function(modal) {
@@ -174,7 +176,12 @@
 
         $scope.onRefresh = function() {
           console.log('ON REFRESH');
+
+          $timeout(function() {
+			      $scope.$broadcast('scroll.refreshComplete');
+          }, 1000);
         }
+
 
         $scope.removeItem = function(item) {
           removeItem(item);
