@@ -18,7 +18,7 @@ angular.module('ionic.ui.content', [])
 
 // The content directive is a core scrollable content area
 // that is part of many View hierarchies
-.directive('content', ['$parse', function($parse) {
+.directive('content', ['$parse', '$timeout', function($parse, $timeout) {
   return {
     restrict: 'E',
     replace: true,
@@ -62,28 +62,49 @@ angular.module('ionic.ui.content', [])
             addedPadding = true;
           }
           $element.append(sc);
-          // Otherwise, supercharge this baby!
-          sv = new ionic.views.Scroller({
-            el: $element[0]
-          });
-          /*
-            hasPullToRefresh: (typeof $scope.onRefresh !== 'undefined'),
-            onRefresh: function() {
-              $scope.onRefresh();
-              $scope.$parent.$broadcast('scroll.onRefresh');
-            },
-            onRefreshOpening: function(amt) {
-              $scope.onRefreshOpening({amount: amt});
-              $scope.$parent.$broadcast('scroll.onRefreshOpening', amt);
-            }
-          });
-          */
-          // Let child scopes access this 
-          $scope.$parent.scrollView = sv;
 
           // Pass the parent scope down to the child
           clone = transclude($scope.$parent);
           angular.element($element[0].firstElementChild).append(clone);
+
+          // Otherwise, supercharge this baby!
+          // Add timeout to let content render so Scroller.resize grabs the right content height
+          $timeout(function() { 
+
+            // Add watch to the container element's height to fire Scroller.resize event
+            // $scope.$watch
+            // (
+            //     function () {
+            //         return typeof($element) !== "undefined" && $element.length > 0  && $element[0].clientHeight > 0 ? $element[0].clientHeight : 0;
+            //     },
+            //     function (newValue, oldValue) {
+            //         if (newValue != oldValue && $scope.$parent && $scope.$parent.scrollView && $scope.$parent.scrollView.resize) {
+            //             $scope.$parent.scrollView.resize();
+            //         }
+            //     }
+            // );
+
+            sv = new ionic.views.Scroller({
+              el: $element[0]
+            });
+            /*
+              hasPullToRefresh: (typeof $scope.onRefresh !== 'undefined'),
+              onRefresh: function() {
+                $scope.onRefresh();
+                $scope.$parent.$broadcast('scroll.onRefresh');
+              },
+              onRefreshOpening: function(amt) {
+                $scope.onRefreshOpening({amount: amt});
+                $scope.$parent.$broadcast('scroll.onRefreshOpening', amt);
+              }
+            });
+            */
+            // Let child scopes access this 
+            $scope.$parent.scrollView = sv;
+          }, 500);
+
+
+
         }
 
         // if padding attribute is true, then add padding if it wasn't added to the .scroll
