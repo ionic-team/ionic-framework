@@ -52,12 +52,13 @@
     }
   }
 
-  &.item-input {
-    .item-input-inset {
+  &.item-input-inset {
+    .item-input-wrapper {
       margin-top: -1px;
     }
 
     input {
+      padding-left: 4px;
       height: 28px;
     }
   }
