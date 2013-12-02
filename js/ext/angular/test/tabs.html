@@ -65,12 +65,7 @@
           <button class="button button-clear button-primary" ng-click="isEditingItems = !isEditingItems">Edit</button>
         </header>
         <content>
-          <refresher>
-            <div id="refresh-content">
-              Refreshing
-              <i class="icon ion-ios7-reloading"></i>
-            </div>
-          </refresher>
+          <refresher></refresher>
           <list scroll="false" on-refresh="onRefresh()" on-reorder="onReorder(el, start, end)" is-editing="isEditingItems" animation="fade-out" delete-icon="icon ion-minus-circled" reorder-icon="icon ion-navicon">
             <item ng-repeat="item in items" 
             item="item"
@@ -190,7 +185,7 @@
         };
 
         // Create the items
-        for(var i = 0; i < 5; i++) {
+        for(var i = 0; i < 25; i++) {
           $scope.items.push({
             title: 'Task ' + (i + 1),
             buttons: [{

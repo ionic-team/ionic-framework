@@ -2248,6 +2248,7 @@ body, .ionic-body {
   display: block;
   position: relative;
   overflow: hidden;
+  margin-top: -1px;
   width: auto;
   -webkit-box-flex: 1;
   -webkit-flex: 1;
@@ -2278,8 +2279,14 @@ body, .ionic-body {
 
 .scroll-refresher {
   overflow: hidden;
-  margin-top: -100px;
-  height: 100px; }
+  margin-top: -60px;
+  height: 60px;
+  position: relative; }
+  .scroll-refresher .icon-refreshing {
+    display: none;
+    -webkit-animation-duration: 1.5s;
+    -moz-animation-duration: 1.5s;
+    animation-duration: 1.5s; }
 
 .scroll-refresher-content {
   position: relative;
@@ -2288,30 +2295,42 @@ body, .ionic-body {
   text-align: center; }
 
 .ionic-refresher-content {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center; }
-
-.ionic-refresher {
   position: absolute;
-  bottom: 25px;
-  left: 50%;
-  margin-left: -5px;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #4a87ee; }
+  left: 0;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  color: #666666; }
 
-@-webkit-keyframes refresher-pulsate {
+@-webkit-keyframes refresh-spin {
   0% {
-    -webkit-transform: scale(2, 2); }
-
-  50% {
-    -webkit-transform: scale(1.5, 1.5); }
+    -webkit-transform: rotate(0); }
 
   100% {
-    -webkit-transform: scale(2, 2); } }
+    -webkit-transform: rotate(-180deg); } }
+
+.scroll-refresher.active .icon-pulling {
+  display: block; }
+.scroll-refresher.active .icon-refreshing {
+  display: none; }
+.scroll-refresher.active.refreshing .icon-pulling {
+  display: none; }
+.scroll-refresher.active.refreshing .icon-refreshing {
+  display: block; }
+.scroll-refresher.active .ionic-refresher-content {
+  -webkit-animation-duration: 200ms;
+  -moz-animation-duration: 200ms;
+  animation-duration: 200ms;
+  -webkit-animation-timing-function: linear;
+  -moz-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-name: refresh-spin;
+  -moz-animation-name: refresh-spin;
+  animation-name: refresh-spin; }
 
 .overflow-scroll {
   overflow-x: hidden;

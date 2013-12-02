@@ -752,7 +752,7 @@ angular.module('ionic.ui.content', [])
     restrict: 'E',
     replace: true,
     require: ['^?content', '^?list'],
-    template: '<div class="scroll-refresher"><div class="ionic-refresher-content"><div class="ionic-refresher"></div></div></div>',
+    template: '<div class="scroll-refresher"><div class="ionic-refresher-content"><i class="icon ion-arrow-down-c icon-pulling"></i><i class="icon ion-loading-d icon-refreshing"></i></div></div>',
     scope: true,
     link: function($scope, $element, $attr, scrollCtrl) {
       var icon = $element[0].querySelector('.ionic-refresher');
