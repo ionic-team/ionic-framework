@@ -7,7 +7,7 @@ Simple way to view the examples with python:
 
     python -m SimpleHTTPServer
 
-With the local server run navigate to:
+With the localhost server running from the root of this project, navigate to:
 
     http://localhost:8000/examples/starters/
 
