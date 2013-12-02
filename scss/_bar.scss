@@ -55,11 +55,11 @@
   &.item-input-inset {
     .item-input-wrapper {
       margin-top: -1px;
-    }
 
-    input {
-      padding-left: 4px;
-      height: 28px;
+      input {
+        padding-left: 8px;
+        height: 28px;
+      }
     }
   }
 
@@ -156,6 +156,8 @@
     }
     &.button-clear {
       font-size: 18px;
+      padding-right: 2px;
+      padding-left: 2px;
     }
   }
 

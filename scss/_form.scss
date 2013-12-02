@@ -86,7 +86,7 @@ textarea {
 
 .item-input-wrapper {
   @include display-flex();
-  @include flex(1, 0, 220px);
+  @include flex(1, 0);
   @include align-items(center);
   @include border-radius(4px);
   padding-right: 8px;

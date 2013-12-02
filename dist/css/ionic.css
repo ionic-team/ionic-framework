@@ -2704,9 +2704,9 @@ a.subdued {
       color: #fff; }
   .bar.item-input-inset .item-input-wrapper {
     margin-top: -1px; }
-  .bar.item-input-inset input {
-    padding-left: 4px;
-    height: 28px; }
+    .bar.item-input-inset .item-input-wrapper input {
+      padding-left: 8px;
+      height: 28px; }
   .bar.bar-light {
     background-color: white;
     border-color: #dddddd;
@@ -2806,7 +2806,9 @@ a.subdued {
     .bar .button.button-icon .icon, .bar .button.button-icon.icon:before, .bar .button.button-icon.icon-left:before, .bar .button.button-icon.icon-right:before {
       line-height: 32px; }
     .bar .button.button-clear {
-      font-size: 18px; }
+      font-size: 18px;
+      padding-right: 2px;
+      padding-left: 2px; }
   .bar .button-bar > .button, .bar .buttons > .button {
     min-height: 31px;
     height: 32px;
@@ -4172,11 +4174,11 @@ textarea {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-flex: 1;
-  -webkit-flex: 1 0 220px;
+  -webkit-flex: 1 0;
   -moz-box-flex: 1;
-  -moz-flex: 1 0 220px;
-  -ms-flex: 1 0 220px;
-  flex: 1 0 220px;
+  -moz-flex: 1 0;
+  -ms-flex: 1 0;
+  flex: 1 0;
   -webkit-box-align: center;
   -ms-flex-align: center;
   -webkit-align-items: center;
