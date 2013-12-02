@@ -83,7 +83,6 @@ body, .ionic-body {
 
 // Scroll refresher (for pull to refresh)
 .scroll-refresher {
-  display: none;
   overflow: hidden;
   margin-top: -100px;
   height: 100px;
@@ -115,14 +114,6 @@ body, .ionic-body {
   background-color: $positive;
 }
 
-.scroll-refreshing {
-  @include transition(height 0.1s ease-in-out);
-
-  .ionic-refresher {
-    @include animation(refresher-pulsate 1.5s linear);
-    -webkit-animation-iteration-count: infinite; 
-  }
-}
 
 @-webkit-keyframes refresher-pulsate {
   0% {-webkit-transform: scale(2, 2); }
@@ -160,6 +151,20 @@ body, .ionic-body {
   background-color: #fff;
   vertical-align: top;
 
+}
+
+//
+//  A sub container that uses flexbox but fills the remaining size of any pane.
+//
+.sub-pane {
+  @include flex-direction(column);
+  @include display-flex();
+  @include align-items(stretch);
+  @include align-content(stretch);
+  @include flex(1);
+
+  position: relative;
+  overflow: hidden;
 }
 
 .page {

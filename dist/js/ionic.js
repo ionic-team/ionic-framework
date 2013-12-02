@@ -3416,7 +3416,12 @@ var Scroller;
 
   resize: function() {
     // Update Scroller dimensions for changed content
-    this.setDimensions(this.__container.clientWidth, this.__container.clientHeight, this.__content.offsetWidth, this.__content.offsetHeight-50);
+    // Add padding to bottom of content
+    this.setDimensions(
+    	Math.min(this.__container.clientWidth, this.__container.parentElement.clientWidth), 
+    	Math.min(this.__container.clientHeight, this.__container.parentElement.clientHeight), 
+    	this.__content.offsetWidth, 
+    	this.__content.offsetHeight);
   },
   /*
   ---------------------------------------------------------------------------
@@ -4922,7 +4927,7 @@ var Scroller;
    * The ListView handles a list of items. It will process drag animations, edit mode,
    * and other operations that are common on mobile lists or table views.
    */
-  ionic.views.ListView = ionic.views.Scroll.inherit({
+  ionic.views.ListView = ionic.views.View.inherit({
     initialize: function(opts) {
       var _this = this;
 
@@ -4938,7 +4943,7 @@ var Scroller;
         this.itemHeight = this.listEl.children[0] && parseInt(this.listEl.children[0].style.height, 10);
       }
 
-      ionic.views.ListView.__super__.initialize.call(this, opts);
+      //ionic.views.ListView.__super__.initialize.call(this, opts);
 
       this.onRefresh = opts.onRefresh || function() {};
       this.onRefreshOpening = opts.onRefreshOpening || function() {};
@@ -5023,7 +5028,7 @@ var Scroller;
     },
 
     _initDrag: function() {
-      ionic.views.ListView.__super__._initDrag.call(this);
+      //ionic.views.ListView.__super__._initDrag.call(this);
 
       //this._isDragging = false;
       this._dragOp = null;
@@ -5072,7 +5077,7 @@ var Scroller;
       }
 
       // We aren't handling it, so pass it up the chain
-      ionic.views.ListView.__super__._startDrag.call(this, e);
+      //ionic.views.ListView.__super__._startDrag.call(this, e);
     },
 
 
@@ -5080,7 +5085,7 @@ var Scroller;
       var _this = this;
       
       if(!this._dragOp) {
-        ionic.views.ListView.__super__._handleEndDrag.call(this, e);
+        //ionic.views.ListView.__super__._handleEndDrag.call(this, e);
         return;
       }
 
@@ -5110,7 +5115,7 @@ var Scroller;
 
       // No drag still, pass it up
       if(!this._dragOp) { 
-        ionic.views.ListView.__super__._handleDrag.call(this, e);
+        //ionic.views.ListView.__super__._handleDrag.call(this, e);
         return;
       }
 

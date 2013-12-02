@@ -64,14 +64,14 @@
           <h1 class="title">Tasks</h1>
           <button class="button button-clear button-primary" ng-click="isEditingItems = !isEditingItems">Edit</button>
         </header>
-        <content has-header="true" has-footer="true" scroll="false">
-          <list on-refresh="onRefresh()" on-reorder="onReorder(el, start, end)" is-editing="isEditingItems" animation="fade-out" delete-icon="icon ion-minus-circled" reorder-icon="icon ion-navicon">
-            <refresher>
-              <div id="refresh-content">
-                Refreshing
-                <i class="icon ion-ios7-reloading"></i>
-              </div>
-            </refresher>
+        <content>
+          <refresher>
+            <div id="refresh-content">
+              Refreshing
+              <i class="icon ion-ios7-reloading"></i>
+            </div>
+          </refresher>
+          <list scroll="false" on-refresh="onRefresh()" on-reorder="onReorder(el, start, end)" is-editing="isEditingItems" animation="fade-out" delete-icon="icon ion-minus-circled" reorder-icon="icon ion-navicon">
             <item ng-repeat="item in items" 
             item="item"
             buttons="item.buttons"
@@ -92,7 +92,7 @@
         <header class="bar bar-header bar-positive">
           <h1 class="title">Deadlines</h1>
         </header>
-        <content has-header="true" has-tabs="true">
+        <content>
           <h1>Deadlines</h1>
         </content>
       </tab>
@@ -101,7 +101,7 @@
         <header class="bar bar-header bar-positive">
           <h1 class="title">Settings</h1>
         </header>
-        <content has-header="true" has-tabs="true">
+        <content>
           <h1>Settings</h1>
         </content>
       </tab>
@@ -109,7 +109,7 @@
         <header class="bar bar-header bar-positive">
           <h1 class="title">Settings</h1>
         </header>
-        <content has-header="true" has-tabs="true">
+        <content>
           <h1>Settings</h1>
         </content>
       </tab>
@@ -117,7 +117,7 @@
         <header class="bar bar-header bar-positive">
           <h1 class="title">Settings</h1>
         </header>
-        <content has-header="true" has-tabs="true">
+        <content>
           <h1>Settings</h1>
         </content>
       </tab>

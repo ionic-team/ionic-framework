@@ -28,7 +28,9 @@ angular.module('ionic.ui.content', [])
       onRefresh: '&',
       onRefreshOpening: '&',
       refreshComplete: '=',
-      scroll: '@'
+      scroll: '@',
+      hasScrollX: '@',
+      hasScrollY: '@'
     },
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
@@ -36,15 +38,6 @@ angular.module('ionic.ui.content', [])
 
         var addedPadding = false;
         var c = $element.eq(0);
-
-        if(attr.refreshComplete) {
-          $scope.refreshComplete = function() {
-            if($scope.scrollView) {
-              //$scope.scrollView.doneRefreshing();
-              $scope.$parent.$broadcast('scroll.onRefreshComplete');
-            }
-          };
-        }
 
         // If they want plain overflow scrolling, add that as a class
         if($scope.scroll === "false") {
@@ -67,26 +60,39 @@ angular.module('ionic.ui.content', [])
           clone = transclude($scope.$parent);
           angular.element($element[0].firstElementChild).append(clone);
 
+          var refresher = $element[0].querySelector('.scroll-refresher');
+          var refresherHeight = refresher && refresher.clientHeight || 0;
+
+          if(attr.refreshComplete) {
+            $scope.refreshComplete = function() {
+              if($scope.scrollView) {
+                refresher && refresher.classList.remove('active');
+                $scope.scrollView.finishPullToRefresh();
+                $scope.$parent.$broadcast('scroll.onRefreshComplete');
+              }
+            };
+          }
+
+
           // Otherwise, supercharge this baby!
           // Add timeout to let content render so Scroller.resize grabs the right content height
           $timeout(function() { 
-
-            // Add watch to the container element's height to fire Scroller.resize event
-            // $scope.$watch
-            // (
-            //     function () {
-            //         return typeof($element) !== "undefined" && $element.length > 0  && $element[0].clientHeight > 0 ? $element[0].clientHeight : 0;
-            //     },
-            //     function (newValue, oldValue) {
-            //         if (newValue != oldValue && $scope.$parent && $scope.$parent.scrollView && $scope.$parent.scrollView.resize) {
-            //             $scope.$parent.scrollView.resize();
-            //         }
-            //     }
-            // );
-
             sv = new ionic.views.Scroller({
               el: $element[0]
             });
+
+            // Activate pull-to-refresh
+            if(refresher) {
+              sv.activatePullToRefresh(refresherHeight, function() {
+                refresher.classList.add('active');
+              }, function() {
+                refresher.classList.remove('refreshing');
+                refresher.classList.remove('active');
+              }, function() {
+                refresher.classList.add('refreshing');
+              });
+            }
+            
             /*
               hasPullToRefresh: (typeof $scope.onRefresh !== 'undefined'),
               onRefresh: function() {

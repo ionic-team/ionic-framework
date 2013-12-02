@@ -2277,7 +2277,6 @@ body, .ionic-body {
   transform-origin: left top; }
 
 .scroll-refresher {
-  display: none;
   overflow: hidden;
   margin-top: -100px;
   height: 100px; }
@@ -2303,16 +2302,6 @@ body, .ionic-body {
   height: 10px;
   border-radius: 50%;
   background-color: #4a87ee; }
-
-.scroll-refreshing {
-  -webkit-transition: height 0.1s ease-in-out;
-  -moz-transition: height 0.1s ease-in-out;
-  transition: height 0.1s ease-in-out; }
-  .scroll-refreshing .ionic-refresher {
-    -webkit-animation: refresher-pulsate 1.5s linear;
-    -moz-animation: refresher-pulsate 1.5s linear;
-    animation: refresher-pulsate 1.5s linear;
-    -webkit-animation-iteration-count: infinite; }
 
 @-webkit-keyframes refresher-pulsate {
   0% {
@@ -2364,6 +2353,37 @@ body, .ionic-body {
   height: 100%;
   background-color: #fff;
   vertical-align: top; }
+
+.sub-pane {
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  -webkit-align-items: stretch;
+  -moz-align-items: stretch;
+  align-items: stretch;
+  -webkit-align-content: stretch;
+  -moz-align-content: stretch;
+  -ms-flex-line-pack: stretch;
+  align-content: stretch;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -moz-box-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+  overflow: hidden; }
 
 .page {
   display: block;

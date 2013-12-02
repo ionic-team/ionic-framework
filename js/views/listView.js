@@ -258,7 +258,7 @@
    * The ListView handles a list of items. It will process drag animations, edit mode,
    * and other operations that are common on mobile lists or table views.
    */
-  ionic.views.ListView = ionic.views.Scroll.inherit({
+  ionic.views.ListView = ionic.views.View.inherit({
     initialize: function(opts) {
       var _this = this;
 
@@ -274,7 +274,7 @@
         this.itemHeight = this.listEl.children[0] && parseInt(this.listEl.children[0].style.height, 10);
       }
 
-      ionic.views.ListView.__super__.initialize.call(this, opts);
+      //ionic.views.ListView.__super__.initialize.call(this, opts);
 
       this.onRefresh = opts.onRefresh || function() {};
       this.onRefreshOpening = opts.onRefreshOpening || function() {};
@@ -359,7 +359,7 @@
     },
 
     _initDrag: function() {
-      ionic.views.ListView.__super__._initDrag.call(this);
+      //ionic.views.ListView.__super__._initDrag.call(this);
 
       //this._isDragging = false;
       this._dragOp = null;
@@ -408,7 +408,7 @@
       }
 
       // We aren't handling it, so pass it up the chain
-      ionic.views.ListView.__super__._startDrag.call(this, e);
+      //ionic.views.ListView.__super__._startDrag.call(this, e);
     },
 
 
@@ -416,7 +416,7 @@
       var _this = this;
       
       if(!this._dragOp) {
-        ionic.views.ListView.__super__._handleEndDrag.call(this, e);
+        //ionic.views.ListView.__super__._handleEndDrag.call(this, e);
         return;
       }
 
@@ -446,7 +446,7 @@
 
       // No drag still, pass it up
       if(!this._dragOp) { 
-        ionic.views.ListView.__super__._handleDrag.call(this, e);
+        //ionic.views.ListView.__super__._handleDrag.call(this, e);
         return;
       }
 
