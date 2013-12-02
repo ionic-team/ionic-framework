@@ -19,10 +19,22 @@ Ionic is also not a good solution if you need to support older generation device
 ## Quick Start
 
 To start using ionic, you have two options: copy over the built JS and CSS files, or
-use the `ionic` tool ([ionic-cli](https://github.com/driftyco/ionic-cli)).
+use the `ionic` tool ([ionic-cli](https://github.com/driftyco/ionic-cli)) which can be installed through npm:
+
+```bash
+$ sudo npm install -g ionic
+```
+
+Then, you can start a new ionic project by running:
+
+```bash
+$ ionic start myproject
+```
+
+### Manual Start
 
 The source files are in the `dist/` folder. You can just grab the `dist/js/ionic.js`, `dist/js/ionic-angular.js`, and `dist/ionic.css` files and
-you'll be good to go.
+you'll be good to go. For most cases, you'll need AngularJS as well, which we bundle a current 1.2.x version in `dist/js/angular`.
 
 ## Running examples
 
