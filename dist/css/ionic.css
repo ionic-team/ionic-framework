@@ -2340,29 +2340,28 @@ body, .ionic-body {
     position: static;
     height: 100%; }
 
+.overflow-scroll {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch; }
+  .overflow-scroll .scroll {
+    position: static;
+    height: 100%; }
+
+.has-header {
+  top: 44px; }
+
+.has-subheader {
+  top: 88px; }
+
+.has-footer {
+  bottom: 44px; }
+
+.has-tabs {
+  bottom: 44px; }
+
 .pane {
-  -webkit-box-direction: normal;
-  -webkit-box-orient: vertical;
-  -webkit-flex-direction: column;
-  -moz-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -moz-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  -webkit-align-items: stretch;
-  -moz-align-items: stretch;
-  align-items: stretch;
-  -webkit-align-content: stretch;
-  -moz-align-content: stretch;
-  -ms-flex-line-pack: stretch;
-  align-content: stretch;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
@@ -2370,51 +2369,7 @@ body, .ionic-body {
   z-index: 1;
   width: 100%;
   height: 100%;
-  background-color: #fff;
-  vertical-align: top; }
-
-.sub-pane {
-  -webkit-box-direction: normal;
-  -webkit-box-orient: vertical;
-  -webkit-flex-direction: column;
-  -moz-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -moz-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  -webkit-align-items: stretch;
-  -moz-align-items: stretch;
-  align-items: stretch;
-  -webkit-align-content: stretch;
-  -moz-align-content: stretch;
-  -ms-flex-line-pack: stretch;
-  align-content: stretch;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -moz-box-flex: 1;
-  -moz-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  position: relative;
-  overflow: hidden; }
-
-.page {
-  display: block;
-  position: relative;
-  overflow: hidden;
-  width: auto;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -moz-box-flex: 1;
-  -moz-flex: 1;
-  -ms-flex: 1;
-  flex: 1; }
+  background-color: #fff; }
 
 /**
  * Typography

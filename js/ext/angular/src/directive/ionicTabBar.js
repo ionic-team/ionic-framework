@@ -152,8 +152,6 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
             transclude(childScope, function(clone) {
               childElement = clone;
 
-              clone.addClass('sub-pane');
-
               $animate.enter(clone, $element.parent(), $element);
 
               if($scope.title) {
