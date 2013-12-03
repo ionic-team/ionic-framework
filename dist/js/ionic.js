@@ -3362,6 +3362,9 @@ var Scroller;
       }, false);
 
       document.addEventListener("touchmove", function(e) {
+        if(e.defaultPrevented) {
+          return;
+        }
         self.doTouchMove(e.touches, e.timeStamp);
       }, false);
 
@@ -3388,7 +3391,7 @@ var Scroller;
       }, false);
 
       document.addEventListener("mousemove", function(e) {
-        if (!mousedown) {
+        if (!mousedown || e.defaultPrevented) {
           return;
         }
 
