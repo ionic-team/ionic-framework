@@ -7,7 +7,7 @@
 .bar {
   @include display-flex();
   @include user-select(none);
-  position: relative;
+  position: absolute;
   right: 0;
   left: 0;
   z-index: 10;
@@ -227,4 +227,13 @@
 // Don't render padding if the bar is just for tabs
 .bar-tabs {
   padding: 0;
+}
+
+.bar-subheader {
+  top: $bar-height;
+  display: block;
+}
+.bar-subfooter {
+  bottom: $bar-height;
+  display: block;
 }

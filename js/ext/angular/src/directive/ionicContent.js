@@ -39,6 +39,19 @@ angular.module('ionic.ui.content', [])
         var addedPadding = false;
         var c = $element.eq(0);
 
+        if(attr.hasHeader == "true") {
+          c.addClass('has-header');
+        }
+        if(attr.hasSubheader == "true") {
+          c.addClass('has-subheader');
+        }
+        if(attr.hasFooter == "true") {
+          c.addClass('has-footer');
+        }
+        if(attr.hasTabs == "true") {
+          c.addClass('has-tabs');
+        }
+
         // If they want plain overflow scrolling, add that as a class
         if($scope.scroll === "false") {
           clone = transclude($scope.$parent);

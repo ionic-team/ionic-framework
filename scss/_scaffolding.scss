@@ -59,7 +59,9 @@ body, .ionic-body {
 }
 
 .scroll-content {
-  display: block;
+  width: 100%;
+  top: 0;
+  left: 0;
 
   position: relative;
   overflow: hidden;
@@ -68,7 +70,6 @@ body, .ionic-body {
   margin-top: -1px;
 
   width: auto;
-  @include flex(1);
 }
 
 /**
