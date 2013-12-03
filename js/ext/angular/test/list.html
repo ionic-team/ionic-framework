@@ -60,33 +60,34 @@
   </head>
   <body>
 
-    <div ng-controller="TestCtrl" class="reveal-animation scroll-content">
-      <list is-editing="isEditingItems"
-            on-refresh-holding="almostRefreshing()"
-            on-refresh-opening="almostRefreshProjects(ratio)"
-            on-refresh="refreshProjects()"
-            refresh-complete="refreshComplete"
-            animation="my-repeat-animation"
-            delete-icon="icon ion-minus-circled"
-            reorder-icon="icon ion-navicon">
+    <pane>
+      <div ng-controller="TestCtrl">
+        <content on-refresh="refreshProjects()"
+                refresh-complete="refreshComplete">
+          <list is-editing="isEditingItems"
+                animation="my-repeat-animation"
+                delete-icon="icon ion-minus-circled"
+                reorder-icon="icon ion-navicon">
 
-        <refresher></refresher>
+            <refresher></refresher>
 
-        <item 
-            ng-repeat="item in items" 
-            buttons="item.buttons"
-            can-delete="true"
-            can-reorder="true"
-            can-swipe="true"
-            on-delete="deleteProject(project)"
-            on-select="selectProject(project)">
-           <i class="icon ion-email ion-primary"></i>
-          {{item.text}}
-          <i class="{{item.icon}}"></i>
-        </item>
-      </list>
-      <button ng-click="edit()" class="button button-success">Edit</button>
-    </div>
+            <item 
+                ng-repeat="item in items" 
+                buttons="item.buttons"
+                can-delete="true"
+                can-reorder="true"
+                can-swipe="true"
+                on-delete="deleteProject(project)"
+                on-select="selectProject(project)">
+               <i class="icon ion-email ion-primary"></i>
+              {{item.text}}
+              <i class="{{item.icon}}"></i>
+            </item>
+          </list>
+          <button ng-click="edit()" class="button button-success">Edit</button>
+        </content>
+      </div>
+    </pane>
 
     <script src="../../../../dist/js/ionic.js"></script>
     <script src="../../../../dist/js/angular/angular.js"></script>
@@ -117,7 +118,7 @@
         $scope.refreshProjects = function() {
           console.log("REFRESHING");
           $timeout(function() {
-            $scope.refreshComplete();
+            $scope.$broadcast('scroll.refreshComplete');
           }, 2000);
         };
 
