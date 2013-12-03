@@ -69,7 +69,7 @@
         on-refresh="onRefresh()"
         on-refresh-opening="onRefreshOpening(amount)"
         refresh-complete="refreshComplete"
-        has-footer="true"
+        has-tabs="true"
         has-header="true"
         has-subheader="true"
         >
@@ -78,10 +78,6 @@
           <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
         </ul>
       </content>
-
-      <footer-bar type="bar-assertive">
-        <h1 class="title">Footer</h1>
-      </footer-bar>
       <nav id="tab-bar" class="tabs tabs-icon-top">
         <a class="tab-item" href="#">
           <i class="icon ion-game-controller-a"></i>
