@@ -2298,7 +2298,23 @@ body, .ionic-body {
   width: 100%;
   text-align: center;
   font-size: 30px;
-  color: #666666; }
+  color: #666666;
+  -webkit-animation-duration: 200ms;
+  -moz-animation-duration: 200ms;
+  animation-duration: 200ms;
+  -webkit-animation-timing-function: linear;
+  -moz-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both;
+  animation-fill-mode: both; }
+
+@keyframes refresh-spin {
+  0% {
+    transform: rotate(0); }
+
+  100% {
+    transform: rotate(-180deg); } }
 
 @-webkit-keyframes refresh-spin {
   0% {
@@ -2316,15 +2332,6 @@ body, .ionic-body {
 .scroll-refresher.active.refreshing .icon-refreshing {
   display: block; }
 .scroll-refresher.active .ionic-refresher-content {
-  -webkit-animation-duration: 200ms;
-  -moz-animation-duration: 200ms;
-  animation-duration: 200ms;
-  -webkit-animation-timing-function: linear;
-  -moz-animation-timing-function: linear;
-  animation-timing-function: linear;
-  -webkit-animation-fill-mode: both;
-  -moz-animation-fill-mode: both;
-  animation-fill-mode: both;
   -webkit-animation-name: refresh-spin;
   -moz-animation-name: refresh-spin;
   animation-name: refresh-spin; }

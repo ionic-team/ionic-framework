@@ -116,6 +116,15 @@ body, .ionic-body {
 
   font-size: 30px;
   color: $scroll-refresh-icon-color;
+
+  @include animation-duration(200ms);
+  @include animation-timing-function(linear);
+  @include animation-fill-mode(both);
+}
+
+@keyframes refresh-spin {
+  0% { transform: rotate(0); }
+  100% { transform: rotate(-180deg); }
 }
 
 @-webkit-keyframes refresh-spin {
@@ -142,9 +151,6 @@ body, .ionic-body {
   }
 
   .ionic-refresher-content {
-    @include animation-duration(200ms);
-    @include animation-timing-function(linear);
-    @include animation-fill-mode(both);
     @include animation-name(refresh-spin);
   }
 }
