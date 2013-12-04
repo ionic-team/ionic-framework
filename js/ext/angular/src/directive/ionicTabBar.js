@@ -51,7 +51,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     transclude: true,
     controller: 'TabsCtrl',
     //templateUrl: 'ext/angular/tmpl/ionicTabBar.tmpl.html',
-    template: '<div class="pane"><tab-controller-bar></tab-controller-bar></div>',
+    template: '<div class="view"><tab-controller-bar></tab-controller-bar></div>',
     compile: function(element, attr, transclude, tabsCtrl) {
       return function($scope, $element, $attr) {
         var tabs = $element[0].querySelector('.tabs');

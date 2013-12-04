@@ -61,9 +61,11 @@ body, .ionic-body {
 .scroll-content {
   width: 100%;
   top: 0;
+  right: 0;
+  bottom: 0;
   left: 0;
 
-  position: relative;
+  position: absolute;
   overflow: hidden;
 
   // Hide the top border if any
@@ -192,6 +194,11 @@ body, .ionic-body {
 // A full screen section with a solid background
 .pane {
   position: fixed;
+}
+.view {
+  position: absolute;
+}
+.pane, .view {
   top: 0;
   right: 0;
   bottom: 0;

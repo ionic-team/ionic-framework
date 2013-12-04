@@ -138,7 +138,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
     replace: true,
     transclude: true,
     scope: true,
-    template: '<div class="sub-pane menu menu-{{side}}"></div>',
+    template: '<div class="menu menu-{{side}}"></div>',
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, sideMenuCtrl) {
         $scope.side = $attr.side;
