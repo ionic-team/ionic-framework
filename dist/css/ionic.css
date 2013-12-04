@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*!
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
@@ -5102,6 +5103,13 @@ a.button {
     border-radius: 0px 2px 2px 0px; }
 
 /**
+ * Animations
+ * --------------------------------------------------
+ * The animations in this file are "simple" - not too complex
+ * and pretty easy on performance. They can be overidden
+ * and enhanced easily.
+ */
+/**
  * Keyframes
  * --------------------------------------------------
  */
@@ -5243,13 +5251,6 @@ a.button {
   100% {
     transform: rotate(360deg); } }
 
-/**
- * Animations
- * --------------------------------------------------
- * The animations in this file are "simple" - not too complex
- * and pretty easy on performance. They can be overidden
- * and enhanced easily.
- */
 .noop-animation > .ng-enter, .noop-animation.ng-enter, .noop-animation > .ng-leave, .noop-animation.ng-leave {
   -webkit-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 250ms;
   -moz-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 250ms;
