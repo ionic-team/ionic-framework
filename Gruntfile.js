@@ -19,7 +19,6 @@ module.exports = function(grunt) {
           'js/views/view.js',
 
           'js/views/scrollView.js',
-          'js/views/scrollZyng.js',
 
           'js/views/actionSheetView.js',
           'js/views/checkboxView.js',

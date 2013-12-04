@@ -61,7 +61,6 @@ body, .ionic-body {
 }
 
 .scroll-content {
-  width: 100%;
   top: 0;
   right: 0;
   bottom: 0;
@@ -69,16 +68,13 @@ body, .ionic-body {
 
   position: absolute;
   overflow: hidden;
-<<<<<<< HEAD
   -webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
-=======
 
   // Hide the top border if any
   margin-top: -1px;
 
   width: auto;
->>>>>>> origin/228-scroll
 }
 
 /**
@@ -89,14 +85,10 @@ body, .ionic-body {
   @include user-select(none);
   @include touch-callout(none);
   @include text-size-adjust(none);
-  position: absolute;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  -webkit-perspective: 1000;
-  -webkit-backface-visibility: hidden;
   @include translateZ(0);
   @include transform-origin(left, top);
+  -webkit-perspective: 1000;
+  -webkit-backface-visibility: hidden;
 }
 
 // Scroll refresher (for pull to refresh)

@@ -90,7 +90,7 @@ angular.module('ionic.ui.content', [])
           // Otherwise, supercharge this baby!
           // Add timeout to let content render so Scroller.resize grabs the right content height
           $timeout(function() { 
-            sv = new ionic.views.Scroller({
+            sv = new ionic.views.Scroll({
               el: $element[0]
             });
 

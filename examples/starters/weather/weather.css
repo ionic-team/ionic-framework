@@ -26,7 +26,8 @@ h1,h2,h3,h4,h5 {
 }
 
 #small-weather {
-  height: 200px;
+  height: 180px;
+  box-sizing: content-box;
 }
 #small-weather > * {
   color: #fff;
