@@ -3103,6 +3103,8 @@ a.subdued {
   border-top-width: 1px;
   background-size: 0;
   line-height: 49px; }
+  .tabs.tabs-secondary {
+    background-image: linear-gradient(0deg, white, white 50%, transparent 50%); }
   .tabs.tabs-light {
     background-color: white;
     background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
