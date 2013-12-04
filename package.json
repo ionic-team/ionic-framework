@@ -5,7 +5,6 @@
   "devDependencies": {
     "karma": "~0.10",
     "grunt": "~0.4.1",
-    "grunt-cli": "~0.1.9",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-contrib-cssmin": "~0.7.0",
     "grunt-contrib-copy": "~0.4.1",
