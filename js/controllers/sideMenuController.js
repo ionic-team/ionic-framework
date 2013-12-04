@@ -100,6 +100,10 @@
       return amount / this.right.width;
     },
 
+    isOpen: function() {
+      return this.getOpenRatio() == 1;
+    },
+
     /**
      * @return {float} The percentage of open amount over menu width. For example, a
      * menu of width 100 open 50 pixels would be open 50%. Value is negative
