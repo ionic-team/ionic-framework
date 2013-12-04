@@ -21,7 +21,7 @@
     </pane>
 
     <script id="page1.html" type="text/ng-template">
-      <nav-page title="'Bears'" hide-back-button="true">
+      <nav-page title="'Bears'" hide-back-button="true" right-buttons="rightButtons">
         <content has-header="true">
           <h1>Page 1</h1>
           <span>{{num}}</span>
@@ -76,6 +76,15 @@
 
       .controller('Page1Ctrl', function($scope) {
         $scope.num = Math.floor(Math.random() * 100);
+
+        $scope.rightButtons = [
+          { 
+            text: 'Hello',
+            click: function(e) {
+              console.log('Click button');
+            }
+          }
+        ]
       });
 
       

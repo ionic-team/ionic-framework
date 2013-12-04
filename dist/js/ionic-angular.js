@@ -1311,6 +1311,13 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
         }
       });
 
+      // If a nav page changes the left or right buttons, update our scope vars
+      $scope.$parent.$on('navRouter.leftButtonsChanged', function(e, data) {
+        $scope.leftButtons = data;
+      });
+      $scope.$parent.$on('navRouter.rightButtonsChanged', function(e, data) {
+        $scope.rightButtons = data;
+      });
 
       /*
       $scope.$parent.$on('navigation.push', function() {
@@ -1361,7 +1368,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
       $scope.$watch(leftButtonsGet, function(value) {
         $scope.leftButtons = value;
         if($scope.doesUpdateNavRouter) {
-          $scope.$emit('navRouter.leftButtonsChanged', $scope.rightButtons);
+          $scope.$emit('navRouter.leftButtonsChanged', $scope.leftButtons);
         }
       });
 
@@ -1369,6 +1376,9 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
       var rightButtonsGet = $parse($attr.rightButtons);
       $scope.$watch(rightButtonsGet, function(value) {
         $scope.rightButtons = value;
+        if($scope.doesUpdateNavRouter) {
+          $scope.$emit('navRouter.rightButtonsChanged', $scope.rightButtons);
+        }
       });
 
       // watch for changes in the title

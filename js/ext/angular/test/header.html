@@ -31,7 +31,15 @@
         $scope.headerTitle = 'A really really really really really long title here';
         $scope.leftButtons = [
           { 
-            text: 'Hello',
+            content: 'Hello',
+            click: function(e) {
+              console.log('Click button');
+            }
+          }
+        ]
+        $scope.rightButtons = [
+          { 
+            content: 'Hello',
             click: function(e) {
               console.log('Click button');
             }
