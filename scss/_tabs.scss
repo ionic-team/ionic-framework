@@ -27,7 +27,7 @@
   line-height: $tabs-height;
 
   &.tabs-secondary {
-    @include tab-style($light, $light, $tabs-default-text);
+    background-image: linear-gradient(0deg, $light, $light 50%, transparent 50%);
   }
   &.tabs-light {
     @include tab-style($tabs-light-bg, $tabs-light-border, $tabs-light-text);

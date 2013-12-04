@@ -3103,10 +3103,7 @@ a.subdued {
   background-size: 0;
   line-height: 49px; }
   .tabs.tabs-secondary {
-    background-color: white;
-    background-image: linear-gradient(0deg, white, white 50%, transparent 50%);
-    border-color: white;
-    color: #444444; }
+    background-image: linear-gradient(0deg, white, white 50%, transparent 50%); }
   .tabs.tabs-light {
     background-color: white;
     background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
