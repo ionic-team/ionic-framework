@@ -14,8 +14,6 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
  * extends our core Ionic side menu controller and exposes
  * some side menu stuff on the current scope.
  */
-.controller('SideMenuCtrl', ['$scope', function($scope) {
-}])
 
 .directive('sideMenus', function() {
   return {
@@ -64,6 +62,11 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           // If the child element prevented the drag, don't drag
           defaultPrevented = e.defaultPrevented;
         });
+
+        // Listen for taps on the content to close the menu
+        ionic.on('tap', function(e) {
+          sideMenuCtrl.close();
+        }, $element[0]);
 
         var dragFn = function(e) {
           if(defaultPrevented) {
