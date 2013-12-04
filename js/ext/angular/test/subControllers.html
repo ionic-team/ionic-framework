@@ -16,7 +16,7 @@
   </head>
   <body>
 
-    <side-menu>
+    <side-menus>
       <pane side-menu-content>
         <header class="bar bar-header bar-dark">
           <a href="#" class="button"><i class="icon-reorder"></i></a>
@@ -26,17 +26,17 @@
           <h1>Slide me side to side!</h1>
         </div>
       </pane>
-      <menu side="left">
+      <side-menu side="left">
         <h2>Left</h2>
         <ul class="list">
           <a href="#" class="list-item" ng-repeat="item in list">
             {{item.text}}
           </a>
         </ul>
-      </menu>
-      <menu side="right">
+      </side-menu>
+      <side-menu side="right">
         <tabs>
-          <tab title="Home" icon="icon-home" class="tab-content">
+          <tab title="Home" icon="ion-home" class="tab-content">
             <header class="bar bar-header bar-dark">
               <h1 class="title">Tab Bars</h1>
             </header>
@@ -50,7 +50,7 @@
             </content>
           </tab>
 
-          <tab title="About" icon="icon-info" class="tab-content">
+          <tab title="About" icon="ion-info" class="tab-content">
             <header class="bar bar-header bar-success">
               <h1 class="title">About</h1>
             </header>
@@ -68,8 +68,8 @@
             </content>
           </tab>
         </tabs>
-      </menu>
-    </side-menu>
+      </side-menu>
+    </side-menus>
     <script>
       angular.module('sideMenuTest', ['ionic']);
 

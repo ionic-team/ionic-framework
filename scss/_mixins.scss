@@ -368,6 +368,17 @@
      -moz-transform: translate3d($x, $y, $z);
           transform: translate3d($x, $y, $z);
 }
+@mixin translateZ($z) {
+  -webkit-transform: translateZ($z);
+     -moz-transform: translateZ($z);
+          transform: translateZ($z);
+}
+
+@mixin transform-origin($left, $top) {
+  -webkit-transform-origin: $left $top;
+     -moz-transform-origin: $left $top;
+          transform-origin: $left $top;
+}
 
 
 // Backface visibility

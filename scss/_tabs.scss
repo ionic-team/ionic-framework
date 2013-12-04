@@ -11,8 +11,10 @@
   @include justify-content(center);
 
   @include tab-style($tabs-default-bg, $tabs-default-border, $tabs-default-text);
+
   position: absolute;
   bottom: 0;
+
   z-index: 5;
 
   width: 100%;

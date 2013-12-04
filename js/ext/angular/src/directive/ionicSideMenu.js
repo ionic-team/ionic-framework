@@ -58,6 +58,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
         $element.addClass('menu-content');
 
         var defaultPrevented = false;
+        var isDragging = false;
 
         ionic.on('mousedown', function(e) {
           // If the child element prevented the drag, don't drag
@@ -68,15 +69,25 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           if(defaultPrevented) {
             return;
           }
+          isDragging = true;
           sideMenuCtrl._handleDrag(e);
           e.gesture.srcEvent.preventDefault();
+        };
+
+        var dragVertFn = function(e) {
+          if(isDragging) {
+            e.gesture.srcEvent.preventDefault();
+          }
         };
 
         //var dragGesture = Gesture.on('drag', dragFn, $element);
         var dragRightGesture = Gesture.on('dragright', dragFn, $element);
         var dragLeftGesture = Gesture.on('dragleft', dragFn, $element);
+        var dragUpGesture = Gesture.on('dragup', dragVertFn, $element);
+        var dragDownGesture = Gesture.on('dragdown', dragVertFn, $element);
 
         var dragReleaseFn = function(e) {
+          isDragging = false;
           if(!defaultPrevented) {
             sideMenuCtrl._endDrag(e);
           }
@@ -109,8 +120,10 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 
         // Cleanup
         $scope.$on('$destroy', function() {
-          Gesture.off(dragLeftGesture, 'drag', dragFn);
-          Gesture.off(dragRightGesture, 'drag', dragFn);
+          Gesture.off(dragLeftGesture, 'dragleft', dragFn);
+          Gesture.off(dragRightGesture, 'dragright', dragFn);
+          Gesture.off(dragUpGesture, 'dragup', dragFn);
+          Gesture.off(dragDownGesture, 'dragdown', dragFn);
           Gesture.off(releaseGesture, 'release', dragReleaseFn);
         });
       };

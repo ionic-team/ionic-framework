@@ -61,14 +61,24 @@ body, .ionic-body {
 }
 
 .scroll-content {
-  position: absolute;
+  width: 100%;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+
+  position: absolute;
   overflow: hidden;
+<<<<<<< HEAD
   -webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
+=======
+
+  // Hide the top border if any
+  margin-top: -1px;
+
+  width: auto;
+>>>>>>> origin/228-scroll
 }
 
 /**
@@ -85,14 +95,21 @@ body, .ionic-body {
   height: 100%;
   -webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
+  @include translateZ(0);
+  @include transform-origin(left, top);
 }
 
 // Scroll refresher (for pull to refresh)
 .scroll-refresher {
-  display: none;
   overflow: hidden;
-  margin-top: -100px;
-  height: 100px;
+  margin-top: -60px;
+  height: 60px;
+  position: relative;
+
+  .icon-refreshing {
+    display: none;
+    @include animation-duration(1.5s);
+  }
 }
 
 .scroll-refresher-content {
@@ -103,38 +120,64 @@ body, .ionic-body {
 }
 
 .ionic-refresher-content {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-}
-
-.ionic-refresher {
   position: absolute;
-  bottom: 25px;
-  left: 50%;
-  margin-left: -5px;
-  // A custom refresher
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: $positive;
+  left: 0;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
+
+  font-size: 30px;
+  color: $scroll-refresh-icon-color;
+
+  @include animation-duration(200ms);
+  @include animation-timing-function(linear);
+  @include animation-fill-mode(both);
 }
 
-.scroll-refreshing {
-  @include transition(height 0.1s ease-in-out);
+@keyframes refresh-spin {
+  0% { transform: rotate(0); }
+  100% { transform: rotate(-180deg); }
+}
 
-  .ionic-refresher {
-    @include animation(refresher-pulsate 1.5s linear);
-    -webkit-animation-iteration-count: infinite; 
+@-webkit-keyframes refresh-spin {
+  0% {-webkit-transform: rotate(0); }
+  100% {-webkit-transform: rotate(-180deg); }
+}
+
+.scroll-refresher.active {
+
+  .icon-pulling {
+    display: block;
+  }
+  .icon-refreshing {
+    display: none;
+  }
+
+  &.refreshing {
+    .icon-pulling {
+      display: none;
+    }
+    .icon-refreshing {
+      display: block;
+    }
+  }
+
+  .ionic-refresher-content {
+    @include animation-name(refresh-spin);
   }
 }
 
-@-webkit-keyframes refresher-pulsate {
-  0% {-webkit-transform: scale(2, 2); }
-  50% {-webkit-transform: scale(1.5, 1.5); }
-  100% {-webkit-transform: scale(2, 2); }
+.overflow-scroll {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+
+  .scroll {
+    position: static;
+    height: 100%;
+  }
 }
+
 
 .overflow-scroll {
   overflow-x: hidden;
@@ -163,12 +206,17 @@ body, .ionic-body {
 
 // Specify that a content area will have tabs
 .has-tabs {
-  bottom: 44px;
+  bottom: 49px;
 }
 
 // A full screen section with a solid background
 .pane {
   position: fixed;
+}
+.view {
+  position: absolute;
+}
+.pane, .view {
   top: 0;
   right: 0;
   bottom: 0;

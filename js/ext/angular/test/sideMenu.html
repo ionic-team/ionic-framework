@@ -23,7 +23,7 @@
             <button class="button button-icon" ng-click="openLeft()"><i class="icon ion-navicon"></i></button>
             <h1 class="title">Slide me</h1>
           </header>
-          <content has-header="true">
+          <content>
             <h1>Content</h1>
           </content>
         </pane>
@@ -31,7 +31,7 @@
           <header class="bar bar-header bar-assertive">
             <h1 class="title">Left</h1>
           </header>
-          <content has-header="true" overflow-scroll="true">
+          <content>
             <ul class="list">
               <a href="#" class="item" ng-repeat="item in list">
                 {{item.text}}
@@ -43,7 +43,7 @@
           <header class="bar bar-header bar-assertive">
             <h1 class="title">Right</h1>
           </header>
-          <content has-header="true">
+          <content>
             <ul class="list">
               <a href="#" class="item" ng-repeat="item in list">
                 {{item.text}}

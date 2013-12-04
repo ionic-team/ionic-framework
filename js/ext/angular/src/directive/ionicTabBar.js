@@ -49,7 +49,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
       $scope.tabsController = this;
     }],
     //templateUrl: 'ext/angular/tmpl/ionicTabBar.tmpl.html',
-    template: '<div class="content"><tab-controller-bar></tab-controller-bar></div>',
+    template: '<div class="view"><tab-controller-bar></tab-controller-bar></div>',
     compile: function(element, attr, transclude, tabsCtrl) {
       return function($scope, $element, $attr) {
         var tabs = $element[0].querySelector('.tabs');
@@ -91,7 +91,6 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
 .directive('tab', ['$animate', '$parse', function($animate, $parse) {
   return {
     restrict: 'E',
-    replace: true,
     require: '^tabs',
     scope: true,
     transclude: 'element',
@@ -150,6 +149,9 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
             childScope = $scope.$new();
             transclude(childScope, function(clone) {
               childElement = clone;
+
+              clone.addClass('pane');
+
               $animate.enter(clone, $element.parent(), $element);
 
               if($scope.title) {

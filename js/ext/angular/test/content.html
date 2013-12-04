@@ -54,48 +54,67 @@
     </style>
 
   </head>
-  <body ng-controller="AppCtrl">
-    <header-bar
-      title="'Title'"
-      type="bar-primary"></header-bar>
+  <body>
+    <pane>
+      <header-bar
+        title="'Title'"
+        type="bar-primary"></header-bar>
 
-    <content
-      on-refresh="onRefresh()"
-      on-refresh-opening="onRefreshOpening(amount)"
-      refresh-complete="refreshComplete"
-      has-header="true"
-      has-footer="true"
-      >
-      <refresher></refresher>
-      <ul class="list">
-        <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
-      </ul>
-    </content>
-
-    <footer-bar type="bar-assertive">
-      <h1 class="title">Footer</h1>
-    </footer-bar>
+      <div class="bar bar-positive bar-subheader">
+        <a href="#" class="button button-danger button-clear">Edit</a>
+        <h1 class="title">Scroll Me</h1>
+        <a href="#" class="button button-danger button-clear">Delete</a>
+      </div>
+      <content
+        on-refresh="onRefresh()"
+        on-refresh-opening="onRefreshOpening(amount)"
+        refresh-complete="refreshComplete"
+        has-tabs="true"
+        has-header="true"
+        has-subheader="true"
+        >
+        <refresher></refresher>
+        <ul class="list" ng-controller="AppCtrl">
+          <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
+        </ul>
+      </content>
+      <nav id="tab-bar" class="tabs tabs-icon-top">
+        <a class="tab-item" href="#">
+          <i class="icon ion-game-controller-a"></i>
+          Fun
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-locked"></i>
+          Security
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-heart"></i>
+          Simple
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-leaf"></i>
+          Light
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-waterdrop"></i>
+          Clean
+        </a>
+      </nav>
+      
+    </pane>
 
     <script>
       angular.module('navTest', ['ionic'])
 
       .controller('AppCtrl', function($scope, $compile, $timeout, $element) {
         $scope.items = [];
-        for(var i = 0; i < 200; i++) {
+        for(var i = 0; i < 70; i++) {
           $scope.items.push({
           });
         }
-        $scope.what = {};
-        $scope.onRefresh = function() {
-          console.log('On refresh');
-          $timeout(function() {
-            $scope.refreshComplete();
-          }, 2000);
-        }
-        $scope.onRefreshOpening = function(amt) {
-          console.log('On refresh opening', amt);
-        }
-
+        $timeout(function() {
+          $scope.scrollView.resize();
+        }, 1000);
       })
     </script>
   </body>

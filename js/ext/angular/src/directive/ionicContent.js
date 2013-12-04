@@ -18,7 +18,7 @@ angular.module('ionic.ui.content', [])
 
 // The content directive is a core scrollable content area
 // that is part of many View hierarchies
-.directive('content', ['$parse', function($parse) {
+.directive('content', ['$parse', '$timeout', function($parse, $timeout) {
   return {
     restrict: 'E',
     replace: true,
@@ -28,16 +28,16 @@ angular.module('ionic.ui.content', [])
       onRefresh: '&',
       onRefreshOpening: '&',
       refreshComplete: '=',
-      scroll: '@'
+      scroll: '@',
+      hasScrollX: '@',
+      hasScrollY: '@'
     },
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
-        var 
-        c = $element.eq(0),
-        clone,
-        sc, 
-        sv,
-        addedPadding = false;
+        var clone, sc, sv;
+
+        var addedPadding = false;
+        var c = $element.eq(0);
 
         if(attr.hasHeader == "true") {
           c.addClass('has-header');
@@ -50,15 +50,6 @@ angular.module('ionic.ui.content', [])
         }
         if(attr.hasTabs == "true") {
           c.addClass('has-tabs');
-        }
-
-        if(attr.refreshComplete) {
-          $scope.refreshComplete = function() {
-            if($scope.scrollView) {
-              $scope.scrollView.doneRefreshing();
-              $scope.$parent.$broadcast('scroll.onRefreshComplete');
-            }
-          };
         }
 
         // If they want plain overflow scrolling, add that as a class
@@ -77,25 +68,56 @@ angular.module('ionic.ui.content', [])
             addedPadding = true;
           }
           $element.append(sc);
-          // Otherwise, supercharge this baby!
-          sv = new ionic.views.Scroll({
-            el: $element[0].firstElementChild,
-            hasPullToRefresh: (typeof $scope.onRefresh !== 'undefined'),
-            onRefresh: function() {
-              $scope.onRefresh();
-              $scope.$parent.$broadcast('scroll.onRefresh');
-            },
-            onRefreshOpening: function(amt) {
-              $scope.onRefreshOpening({amount: amt});
-              $scope.$parent.$broadcast('scroll.onRefreshOpening', amt);
-            }
-          });
-          // Let child scopes access this 
-          $scope.scrollView = sv;
 
           // Pass the parent scope down to the child
           clone = transclude($scope.$parent);
           angular.element($element[0].firstElementChild).append(clone);
+
+          var refresher = $element[0].querySelector('.scroll-refresher');
+          var refresherHeight = refresher && refresher.clientHeight || 0;
+
+          if(attr.refreshComplete) {
+            $scope.refreshComplete = function() {
+              if($scope.scrollView) {
+                refresher && refresher.classList.remove('active');
+                $scope.scrollView.finishPullToRefresh();
+                $scope.$parent.$broadcast('scroll.onRefreshComplete');
+              }
+            };
+          }
+
+
+          // Otherwise, supercharge this baby!
+          // Add timeout to let content render so Scroller.resize grabs the right content height
+          $timeout(function() { 
+            sv = new ionic.views.Scroller({
+              el: $element[0]
+            });
+
+            // Activate pull-to-refresh
+            if(refresher) {
+              sv.activatePullToRefresh(refresherHeight, function() {
+                refresher.classList.add('active');
+              }, function() {
+                refresher.classList.remove('refreshing');
+                refresher.classList.remove('active');
+              }, function() {
+                refresher.classList.add('refreshing');
+                $scope.onRefresh();
+                $scope.$parent.$broadcast('scroll.onRefresh');
+              });
+            }
+
+            $scope.$parent.$on('scroll.refreshComplete', function(e) {
+              sv && sv.finishPullToRefresh();
+            });
+            
+            // Let child scopes access this 
+            $scope.$parent.scrollView = sv;
+          }, 500);
+
+
+
         }
 
         // if padding attribute is true, then add padding if it wasn't added to the .scroll
@@ -113,22 +135,8 @@ angular.module('ionic.ui.content', [])
     restrict: 'E',
     replace: true,
     require: ['^?content', '^?list'],
-    template: '<div class="scroll-refresher"><div class="ionic-refresher-content"><div class="ionic-refresher"></div></div></div>',
-    scope: true,
-    link: function($scope, $element, $attr, scrollCtrl) {
-      var icon = $element[0].querySelector('.ionic-refresher');
-
-      // Scale up the refreshing icon
-      var onRefreshOpening = ionic.throttle(function(e, amt) {
-        icon.style[ionic.CSS.TRANSFORM] = 'scale(' + Math.min((1 + amt), 2) + ')';
-      }, 100);
-
-      $scope.$on('scroll.onRefresh', function(e) {
-        icon.style[ionic.CSS.TRANSFORM] = 'scale(2)';
-      });
-
-      $scope.$on('scroll.onRefreshOpening', onRefreshOpening);
-    }
+    template: '<div class="scroll-refresher"><div class="ionic-refresher-content"><i class="icon ion-arrow-down-c icon-pulling"></i><i class="icon ion-loading-d icon-refreshing"></i></div></div>',
+    scope: true
   };
 })
 
