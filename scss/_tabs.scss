@@ -26,6 +26,9 @@
   background-size: 0;
   line-height: $tabs-height;
 
+  &.tabs-secondary {
+    @include tab-style($light, $light, $tabs-default-text);
+  }
   &.tabs-light {
     @include tab-style($tabs-light-bg, $tabs-light-border, $tabs-light-text);
   }
