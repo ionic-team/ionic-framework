@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /*!
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
@@ -5079,6 +5078,20 @@ a.button {
   -ms-flex: 1;
   flex: 1;
   width: 100%; }
+  .button-bar.button-bar-inline {
+    display: block;
+    width: auto;
+    *zoom: 1; }
+    .button-bar.button-bar-inline:before, .button-bar.button-bar-inline:after {
+      display: table;
+      content: "";
+      line-height: 0; }
+    .button-bar.button-bar-inline:after {
+      clear: both; }
+    .button-bar.button-bar-inline > .button {
+      width: auto;
+      display: inline-block;
+      float: left; }
 
 .button-bar > .button {
   -webkit-box-flex: 1;
