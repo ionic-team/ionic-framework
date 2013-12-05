@@ -102,6 +102,11 @@ module.exports = function(grunt) {
           spawn: false
         }
       }
+    },
+    changelog: {
+      options: {
+        dest: 'CHANGELOG.md'
+      }
     }
   });
 
