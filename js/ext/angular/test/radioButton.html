@@ -21,13 +21,15 @@
     </header>
     <content has-header="true"class="reveal-animation">
       <div ng-controller="TestCtrl">
+
         <radio-buttons ng-model="data.isLovely">
-          <button class="button button-assertive" ng-value="'magical'">Magical</button>
-          <button class="button button-assertive" ng-value="'black'">Black</button>
-          <button class="button button-assertive" ng-value="'pinto'">Pinto</button>
+          <button class="button button-assertive button-radio" ng-value="'magical'">Magical</button>
+          <button class="button button-assertive button-radio" ng-value="'black'">Black</button>
+          <button class="button button-assertive button-radio" ng-value="'pinto'">Pinto</button>
         </radio-buttons>
 
         <form>
+          <button ng-click="cycle()" class="button button-warning">Cycle</button>
           <button ng-click="doIt()" class="button button-warning">Print</button>
         </form>
       </div>

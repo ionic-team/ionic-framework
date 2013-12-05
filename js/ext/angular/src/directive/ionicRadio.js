@@ -70,44 +70,52 @@ angular.module('ionic.ui.radio', [])
     transclude: true,
     template: '<div class="button-bar button-bar-inline" ng-transclude></div>',
 
+    controller: ['$scope', '$element', function($scope, $element) {
+
+      this.select = function(element) {
+        var c, children = $element.children();
+        for(var i = 0; i < children.length; i++) {
+          c = children[i];
+          if(c != element[0]) {
+            c.classList.remove('active');
+          }
+        }
+      };
+
+    }],
+
     link: function($scope, $element, $attr, ngModel) {
       var radio;
-
 
       if(ngModel) {
         //$element.bind('tap', tapHandler);
 
         ngModel.$render = function() {
-          var val = $scope.$eval($attr.ngValue);
-          if(val === ngModel.$viewValue) {
-          } else {
-          }
-        };
-        $scope.$parent.$on('button.toggled', function(e, element) {
-          var c, children = $element.children();
+          var children = $element.children();
           for(var i = 0; i < children.length; i++) {
-            c = children[i];
-            if(c != element[0]) {
-              c.classList.remove('active');
-            }
+            children[i].classList.remove('active');
           }
-        });
+          $scope.$parent.$broadcast('radioButton.select', ngModel.$viewValue);
+        };
       }
     }
   };
 })
 
-.directive('button', function() {
+.directive('buttonRadio', function() {
   return {
-    restrict: 'E',
-    require: '?^ngModel',
-    link: function($scope, $element, $attr, ngModel) {
-      if(!ngModel) { return; }
+    restrict: 'CA',
+    require: ['?^ngModel', '?^radioButtons'],
+    link: function($scope, $element, $attr, ctrls) {
+      var ngModel = ctrls[0];
+      var radioButtons = ctrls[1];
+      if(!ngModel || !radioButtons) { return; }
 
       var setIt = function() {
         $element.addClass('active');
         ngModel.$setViewValue($scope.$eval($attr.ngValue));
-        $scope.$emit('button.toggled', $element);
+
+        radioButtons.select($element);
       };
 
       $scope.tapHandler = function(e) {
@@ -118,6 +126,12 @@ angular.module('ionic.ui.radio', [])
       var clickHandler = function(e) {
         setIt();
       };
+
+      $scope.$on('radioButton.select', function(e, val) {
+        if(val == $scope.$eval($attr.ngValue)) {
+          $element.addClass('active');
+        };
+      });
         
       $element.bind('click', clickHandler);
     }
