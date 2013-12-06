@@ -248,7 +248,7 @@
           }
         } else {
           // Did not reach escape velocity to change slides--animate back to current slide
-	  _this.slideToSlide(_this.slideIndex);
+          _this.slideToSlide(_this.slideIndex);
         }
 
         _this._initDrag();
