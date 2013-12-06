@@ -2209,7 +2209,6 @@ img {
 body, .ionic-body {
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
-  -webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
   @incude text-size-adjust(none);
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -2253,7 +2252,6 @@ body, .ionic-body {
   left: 0;
   position: absolute;
   overflow: hidden;
-  -webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
   margin-top: -1px;
   width: auto; }
@@ -2277,7 +2275,6 @@ body, .ionic-body {
   -webkit-transform-origin: left top;
   -moz-transform-origin: left top;
   transform-origin: left top;
-  -webkit-perspective: 1000;
   -webkit-backface-visibility: hidden; }
 
 .scroll-refresher {
