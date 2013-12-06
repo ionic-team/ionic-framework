@@ -6,10 +6,19 @@
 
       this._checkPlatforms(platforms);
 
-      for(var i = 0; i < platforms.length; i++) {
-        document.body.classList.add('platform-' + platforms[i]);
-      }
+      var classify = function() {
+        if(!document.body) { return; }
 
+        for(var i = 0; i < platforms.length; i++) {
+          document.body.classList.add('platform-' + platforms[i]);
+        }
+      };
+
+      document.addEventListener( "DOMContentLoaded", function(){
+        classify();
+      });
+
+      classify();
     },
     _checkPlatforms: function(platforms) {
       if(this.isCordova()) {
@@ -17,6 +26,12 @@
       }
       if(this.isIOS7()) {
         platforms.push('ios7');
+      }
+      if(this.isIPad()) {
+        platforms.push('ipad');
+      }
+      if(this.isAndroid()) {
+        platforms.push('android');
       }
     },
 
@@ -27,11 +42,20 @@
       //&& /^file:\/{3}[^\/]/i.test(window.location.href) 
       //&& /ios|iphone|ipod|ipad|android/i.test(navigator.userAgent);
     },
+    isIPad: function() {
+      return navigator.userAgent.toLowerCase().indexOf('ipad') >= 0;
+    },
     isIOS7: function() {
       if(!window.device) {
         return false;
       }
       return parseFloat(window.device.version) >= 7.0;
+    },
+    isAndroid: function() {
+      if(!window.device) {
+        return navigator.userAgent.toLowerCase().indexOf('android') >= 0;
+      }
+      return device.platform === "Android";
     }
   };
 

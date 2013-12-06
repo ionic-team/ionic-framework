@@ -2823,7 +2823,6 @@ a.subdued {
     padding: 0 8px;
     min-width: initial;
     min-height: 31px;
-    height: 32px;
     font-size: 12px;
     line-height: 30px; }
     .bar .button .icon, .bar .button.icon:before, .bar .button.icon-left:before, .bar .button.icon-right:before {
@@ -2839,7 +2838,6 @@ a.subdued {
       padding-left: 2px; }
   .bar .button-bar > .button, .bar .buttons > .button {
     min-height: 31px;
-    height: 32px;
     line-height: 30px; }
   .bar .button-bar + .button, .bar .button + .button-bar {
     margin-left: 5px; }
@@ -6120,3 +6118,14 @@ a.button {
   top: 64px; }
 .platform-ios7 .has-subheader {
   top: 108px; }
+
+.platform-android .bar-header {
+  height: 48px; }
+.platform-android .has-header {
+  top: 56px; }
+.platform-android .bar-subheader {
+  top: 48px; }
+.platform-android .has-subheader {
+  top: 96px; }
+.platform-android .title {
+  line-height: 48px; }

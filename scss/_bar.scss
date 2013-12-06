@@ -132,7 +132,7 @@
     padding: 0 $button-bar-button-padding;
     min-width: initial;
     min-height: $button-bar-button-height - 1;
-    height: $button-bar-button-height;
+    //height: $button-bar-button-height;
     font-size: $button-bar-button-font-size;
     line-height: $button-bar-button-height - $button-border-width - 1;
 
@@ -163,7 +163,7 @@
 
   .button-bar > .button, .buttons > .button {
     min-height: $button-bar-button-height - 1;
-    height: $button-bar-button-height;
+    //height: $button-bar-button-height;
     line-height: $button-bar-button-height - 2;
   }
 
