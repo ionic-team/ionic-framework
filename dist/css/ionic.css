@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*!
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
@@ -4175,6 +4176,19 @@ textarea {
   .item-input.item.active, .ionic-pseudo .item-input.item:active {
     border-color: #dddddd;
     background-color: transparent; }
+  .item-input .button-bar {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 220px;
+    -moz-box-flex: 1;
+    -moz-flex: 1 0 220px;
+    -ms-flex: 1 0 220px;
+    flex: 1 0 220px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; }
 
 .item-input-inset {
   display: -webkit-box;

@@ -74,6 +74,12 @@ textarea {
     border-color: $item-default-border;
     background-color: transparent;
   }
+
+  .button-bar {
+    @include border-radius(0);
+    @include flex(1, 0, 220px);
+    @include appearance(none);
+  }
 }
 
 .item-input-inset {
