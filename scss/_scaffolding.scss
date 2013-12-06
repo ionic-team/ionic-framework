@@ -20,7 +20,7 @@ img {
 
 body, .ionic-body {
   @include font-smoothing(antialiased);
-  -webkit-perspective: 1000;
+  //-webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
   @incude text-size-adjust(none);
   @include tap-highlight-transparent();
@@ -68,7 +68,7 @@ body, .ionic-body {
 
   position: absolute;
   overflow: hidden;
-  -webkit-perspective: 1000;
+  //-webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
 
   // Hide the top border if any
@@ -87,7 +87,7 @@ body, .ionic-body {
   @include text-size-adjust(none);
   @include translateZ(0);
   @include transform-origin(left, top);
-  -webkit-perspective: 1000;
+  //-webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
 }
 

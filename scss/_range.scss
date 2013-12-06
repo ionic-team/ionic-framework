@@ -12,12 +12,11 @@ input[type="range"] {
   padding-right: 2px;
   padding-left: 1px;
   width: auto;
-  height: $range-track-height;
   height: $range-slider-height + 15;
   outline: none;
   background: linear-gradient(to right, $range-default-track-bg 0%, $range-default-track-bg 100%);
   background-position: center;
-  background-size: 96% $range-track-height;
+  background-size: 99% $range-track-height;
   background-repeat: no-repeat;
   -webkit-appearance: none;
 
@@ -36,8 +35,8 @@ input[type="range"] {
     /* what creates the colorful line on the left side of the slider */
     position: absolute;
     top: ($range-slider-height / 2) - ($range-track-height / 2);
-    left: $range-max-width * -1;
-    width: $range-max-width;
+    left: -2001px;
+    width: 2000px;
     height: $range-track-height;
     background: $dark;
     content: ' ';
@@ -46,10 +45,12 @@ input[type="range"] {
   &::-webkit-slider-thumb:after {
     /* create a larger (but hidden) hit area */
     position: absolute;
-    top: -15px;
-    left: -15px;
-    padding: 25px;
+    top: -20px;
+    left: -20px;
+    padding: 30px;
     content: ' ';
+    //background: red;
+    //opacity: .5;
   }
 
 }
@@ -89,7 +90,7 @@ input[type="range"] {
 }
 
 .range .icon {
-  @include flex(0, 1, $range-icon-size);
+  @include flex(0);
   display: block;
   min-width: $range-icon-size;
   text-align: center;
@@ -97,10 +98,24 @@ input[type="range"] {
 }
 
 .range input {
-  @include flex(0, 1, $range-max-width - ($range-icon-size * 2));
+  @include flex(1);
   display: block;
   margin-right: 10px;
   margin-left: 10px;
-  max-width: $range-max-width;
   width: 100%;
 }
+
+.range-label {
+  @include flex(0, 0, auto);
+  display: block;
+  white-space: nowrap;
+}
+
+.range-label:first-child {
+  padding-left: 5px;
+}
+.range input + .range-label {
+  padding-right: 5px;
+  padding-left: 0;
+}
+
