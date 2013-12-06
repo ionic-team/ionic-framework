@@ -54,24 +54,17 @@
     </style>
 
   </head>
-  <body>
+  <body ng-controller="ThisCtrl">
     <pane>
-      <header-bar
-        title="'Title'"
-        type="bar-primary"></header-bar>
+      <header-bar id="header" title="'Title'" type="bar-primary" hides-header></header-bar>
 
-      <div class="bar bar-positive bar-subheader">
-        <a href="#" class="button button-danger button-clear">Edit</a>
-        <h1 class="title">Scroll Me</h1>
-        <a href="#" class="button button-danger button-clear">Delete</a>
-      </div>
-      <content
+      <content id="container"
+        on-scroll="onScroll(event, scrollTop, scrollLeft)"
         on-refresh="onRefresh()"
         on-refresh-opening="onRefreshOpening(amount)"
         refresh-complete="refreshComplete"
         has-tabs="true"
         has-header="true"
-        has-subheader="true"
         >
         <refresher></refresher>
         <ul class="list" ng-controller="AppCtrl">
@@ -105,6 +98,30 @@
 
     <script>
       angular.module('navTest', ['ionic'])
+
+      .directive('hidesHeader', function() {
+        return {
+          link: function($scope, $element, $attr) {
+            var startTop = $element[0].offsetTop;
+            console.log("Starting", startTop);
+          }
+        }
+      })
+
+      .controller('ThisCtrl', function($scope) {
+        var header = document.getElementById('header');
+        var content = document.getElementById('container');
+        var startTop = header.offsetTop;
+        $scope.onScroll = function(event, scrollTop, scrollLeft) {
+          if(scrollTop > startTop) {
+            var diff = scrollTop - startTop;
+            console.log(diff);
+            header.style.webkitTransform = 'translate3d(0px, -' + diff + 'px, 0)';
+            content.style.marginTop = -diff + 'px';
+          }
+          console.log('Scroll', scrollTop, scrollLeft);
+        };
+      })
 
       .controller('AppCtrl', function($scope, $compile, $timeout, $element) {
         $scope.items = [];

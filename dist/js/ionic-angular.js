@@ -650,6 +650,7 @@ angular.module('ionic.ui.content', [])
     scope: {
       onRefresh: '&',
       onRefreshOpening: '&',
+      onScroll: '&',
       refreshComplete: '=',
       scroll: '@',
       hasScrollX: '@',
@@ -730,6 +731,14 @@ angular.module('ionic.ui.content', [])
                 $scope.$parent.$broadcast('scroll.onRefresh');
               });
             }
+
+            $element.bind('scroll', function(e) {
+              $scope.onScroll({
+                event: e,
+                scrollTop: e.detail.scrollTop,
+                scrollLeft: e.detail.scrollLeft
+              });
+            });
 
             $scope.$parent.$on('scroll.refreshComplete', function(e) {
               sv && sv.finishPullToRefresh();
