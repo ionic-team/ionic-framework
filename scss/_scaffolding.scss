@@ -77,6 +77,17 @@ body, .ionic-body {
   width: auto;
 }
 
+.scroll-view {
+  overflow: hidden;
+  //-webkit-perspective: 1000;
+  -webkit-backface-visibility: hidden;
+
+  // Hide the top border if any
+  margin-top: -1px;
+
+  width: auto;
+}
+
 /**
  * Scroll is the scroll view component available for complex and custom
  * scroll view functionality.
@@ -87,6 +98,7 @@ body, .ionic-body {
   @include text-size-adjust(none);
   @include translateZ(0);
   @include transform-origin(left, top);
+  white-space: nowrap;
   //-webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
 }

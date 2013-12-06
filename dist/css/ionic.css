@@ -2256,6 +2256,12 @@ body, .ionic-body {
   margin-top: -1px;
   width: auto; }
 
+.scroll-view {
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  margin-top: -1px;
+  width: auto; }
+
 /**
  * Scroll is the scroll view component available for complex and custom
  * scroll view functionality.
@@ -2275,6 +2281,7 @@ body, .ionic-body {
   -webkit-transform-origin: left top;
   -moz-transform-origin: left top;
   transform-origin: left top;
+  white-space: nowrap;
   -webkit-backface-visibility: hidden; }
 
 .scroll-refresher {
