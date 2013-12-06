@@ -4868,11 +4868,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
             _this.slideToSlide(_this.slideIndex - 1);
           }
         } else {
-          // Calculate the new slide index (or "page")
-          _this.slideIndex = Math.ceil(finalOffsetX / slideWidth);
-
-          // Negative offsetX to slide correctly
-          content.style.webkitTransform = 'translate3d(' + -finalOffsetX + 'px, 0, 0)';
+          // Did not reach escape velocity to change slides--animate back to current slide
+	  _this.slideToSlide(_this.slideIndex);
         }
 
         _this._initDrag();
