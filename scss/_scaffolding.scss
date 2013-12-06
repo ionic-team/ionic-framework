@@ -22,7 +22,7 @@ body, .ionic-body {
   @include font-smoothing(antialiased);
   //-webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
-  @incude text-size-adjust(none);
+  @include text-size-adjust(none);
   @include tap-highlight-transparent();
   @include user-select(none);
 

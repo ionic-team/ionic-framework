@@ -31,7 +31,8 @@ angular.module('ionic.ui.content', [])
       refreshComplete: '=',
       scroll: '@',
       hasScrollX: '@',
-      hasScrollY: '@'
+      hasScrollY: '@',
+      scrollEventInterval: '@'
     },
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
@@ -92,7 +93,8 @@ angular.module('ionic.ui.content', [])
           // Add timeout to let content render so Scroller.resize grabs the right content height
           $timeout(function() { 
             sv = new ionic.views.Scroll({
-              el: $element[0]
+              el: $element[0],
+              scrollEventInterval: parseInt($scope.scrollEventInterval) || 40
             });
 
             // Activate pull-to-refresh
