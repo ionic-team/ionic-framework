@@ -253,7 +253,7 @@
           // Calculate the new slide index (or "page")
           _this.slideIndex = Math.ceil(finalOffsetX / slideWidth);
  
-           // Negative offsetX to slide correctly
+          // Negative offsetX to slide correctly
           content.style.webkitTransform = 'translate3d(' + -finalOffsetX + 'px, 0, 0)';
         }
 
