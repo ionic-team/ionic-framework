@@ -3892,8 +3892,15 @@ button.item.item-complex {
   .item-complex.item-icon-left .item-content {
     padding-left: 45px; }
 
-.item-icon-right .icon {
-  right: 7.5px; }
+.item-icon-right {
+  padding-right: 45px; }
+  .item-icon-right .icon {
+    right: 7.5px; }
+
+.item-complex.item-icon-right {
+  padding-right: 0; }
+  .item-complex.item-icon-right .item-content {
+    padding-right: 45px; }
 
 .item-icon-left.item-icon-right .icon:first-child {
   right: auto; }

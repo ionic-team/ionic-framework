@@ -270,6 +270,13 @@ button.item.item-complex {
     right: $item-padding / 2;
   }
 }
+.item-complex.item-icon-right {
+  padding-right: 0;
+
+  .item-content {
+    padding-right: ($item-padding * 3);
+  }
+}
 
 .item-icon-left.item-icon-right .icon:first-child {
   right: auto;
