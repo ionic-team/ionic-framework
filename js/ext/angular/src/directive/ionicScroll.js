@@ -87,9 +87,9 @@ angular.module('ionic.ui.scroll', [])
           // Let child scopes access this 
           $scope.$parent.scrollView = sv;
         }, 500);
-      }
+      };
     }
-  }
+  };
 }]);
 
 })();

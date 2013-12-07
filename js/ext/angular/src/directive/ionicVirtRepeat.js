@@ -14,9 +14,9 @@ angular.module('ionic.ui.virtRepeat', [])
         var virtualList = ctrls[1];
 
         virtualList.listView.renderViewport = function(high, low, start, end) {
-        }
-      }
+        };
+      };
     }
-  }
+  };
 });
 })(ionic);

@@ -1,15 +1,15 @@
 (function(ionic) {
 
   var bezierCoord = function (x,y) {
-    if(!x) var x=0;
-    if(!y) var y=0;
+    if(!x) x=0;
+    if(!y) y=0;
     return {x: x, y: y};
-  }
+  };
 
-  function B1(t) { return t*t*t }
-  function B2(t) { return 3*t*t*(1-t) }
-  function B3(t) { return 3*t*(1-t)*(1-t) }
-  function B4(t) { return (1-t)*(1-t)*(1-t) }
+  function B1(t) { return t*t*t; }
+  function B2(t) { return 3*t*t*(1-t); }
+  function B3(t) { return 3*t*(1-t)*(1-t); }
+  function B4(t) { return (1-t)*(1-t)*(1-t); }
 
   ionic.Animator = {
     // Quadratic bezier solver
@@ -64,7 +64,7 @@
           if (Math.abs(x2 - x) < epsilon) return curveY(t2);
           if (x > x2) t0 = t2;
           else t1 = t2;
-          t2 = (t1 - t0) * .5 + t0;
+          t2 = (t1 - t0) * 0.5 + t0;
         }
 
         // Failure

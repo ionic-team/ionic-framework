@@ -40,9 +40,9 @@ describe('Ionic Gesture Service', function() {
 
     gesture.off(g, 'drag', handlers.dragHandle);
 
-    var event = new CustomEvent('drag', { target: el });
+    event = new CustomEvent('drag', { target: el });
     el.dispatchEvent(event);
 
     expect(handlers.dragHandle).toHaveBeenCalled();
   });
-})
+});

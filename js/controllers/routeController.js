@@ -84,7 +84,7 @@
       this.loadUrl() || this.loadUrl(this.getHash());
     },
     getFragment: function(fragment, forcePushState) {
-      if (fragment == null) {
+      if (fragment === null) {
         fragment = this.location.pathname;
         var root = this.root.replace(this.trailingSlash, '');
         if (!fragment.indexOf(root)) fragment = fragment.substr(root.length);

@@ -171,7 +171,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
             });
           }
         });
-      }
+      };
     }
   };
 }])
@@ -232,6 +232,6 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     transclude: true,
     template: '<div class="tabs tabs-primary" ng-transclude>' + 
     '</div>'
-  }
+  };
 });
 

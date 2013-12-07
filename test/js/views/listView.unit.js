@@ -3,7 +3,7 @@ describe('List View', function() {
   beforeEach(function() {
     h = document.createElement('div');
     h.id = 'content';
-    h.className = 'scroll'
+    h.className = 'scroll';
     var l = document.createElement('ul');
     l.className = 'list scroll';
     h.appendChild(l);

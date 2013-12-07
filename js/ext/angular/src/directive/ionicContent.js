@@ -94,7 +94,7 @@ angular.module('ionic.ui.content', [])
           $timeout(function() { 
             sv = new ionic.views.Scroll({
               el: $element[0],
-              scrollEventInterval: parseInt($scope.scrollEventInterval) || 40
+              scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 40
             });
 
             // Activate pull-to-refresh

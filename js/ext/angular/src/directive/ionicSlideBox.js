@@ -47,7 +47,7 @@ angular.module('ionic.ui.slideBox', [])
         });
       }
     }
-  }
+  };
 }])
 
 .directive('slide', function() {
@@ -60,9 +60,9 @@ angular.module('ionic.ui.slideBox', [])
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, slideBoxCtrl) {
         slideBoxCtrl.slideAdded();
-      }
+      };
     }
-  }
+  };
 })
 
 .directive('pager', function() {
@@ -71,7 +71,7 @@ angular.module('ionic.ui.slideBox', [])
     replace: true,
     require: '^slideBox',
     template: '<div class="slide-box-pager"><span ng-repeat="slide in slides"><i class="icon ion-record"></i></span></div>'
-  }
+  };
 
 });
 

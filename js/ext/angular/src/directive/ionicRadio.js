@@ -130,12 +130,12 @@ angular.module('ionic.ui.radio', [])
       $scope.$on('radioButton.select', function(e, val) {
         if(val == $scope.$eval($attr.ngValue)) {
           $element.addClass('active');
-        };
+        }
       });
         
       $element.bind('click', clickHandler);
     }
-  }
+  };
 });
 
 })(window.ionic);
