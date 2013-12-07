@@ -11,7 +11,9 @@
 
     <div ng-controller="TestCtrl">
       <content has-header="true" class="reveal-animation">
-        <p><checkbox ng-model="data.isLovely"></checkbox></p>
+        <div class="list">
+          <checkbox ng-model="data.isLovely">Thing</checkbox>
+        </div>
         <button type="submit" class="button button-danger" ng-click="setToTrue()">Set to true</button>
         <button type="submit" class="button button-danger" ng-click="setToFalse()">Set to false</button>
         <button type="submit" class="button button-danger" ng-click="getValue()">Get Value</button>

@@ -35,6 +35,9 @@ angular.module('ionic.service.platform', [])
     }
   }, 10);
 
+
+
+
   return {
     setPlatform: function(p) {
       platform = p;
