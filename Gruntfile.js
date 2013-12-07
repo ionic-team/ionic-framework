@@ -87,6 +87,24 @@ module.exports = function(grunt) {
         }
       }
     },
+    'string-replace': {
+      version: {
+        files: {
+          'dist/css/ionic.css': 'dist/css/ionic.css',
+          'dist/css/ionic.min.css': 'dist/css/ionic.min.css',
+          'dist/js/ionic.js': 'dist/js/ionic.js',
+          'dist/js/ionic.min.js': 'dist/js/ionic.min.js',
+          'dist/js/ionic-angular.js': 'dist/js/ionic-angular.js',
+          'dist/js/ionic-angular.min.js': 'dist/js/ionic-angular.min.js'
+        },
+        options: {
+          replacements: [{
+            pattern: /{{ VERSION }}/g,
+            replacement: '<%= pkg.version %>'
+          }]
+        }
+      }
+    },
     watch: {
       scripts: {
         files: ['js/**/*.js', 'ext/**/*.js'],
@@ -102,7 +120,8 @@ module.exports = function(grunt) {
           spawn: false
         }
       }
-    }
+    },
+    pkg: grunt.file.readJSON('package.json')
   });
 
   require('load-grunt-tasks')(grunt);
@@ -112,6 +131,7 @@ module.exports = function(grunt) {
     'sass',
     'cssmin',
     'concat',
-    'uglify'
+    'uglify',
+    'string-replace'
   ]);
 };

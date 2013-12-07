@@ -1,16 +1,16 @@
 /*!
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
-
- * Ionic - a powerful HTML5 mobile app framework.
+ *
+ * Ionic, v0.9.14
+ * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
  * By @maxlynch, @helloimben, @adamdbradley <3
  *
  * Licensed under the MIT license. Please see LICENSE for more information.
  *
- */
-;
+ */;
 /**
  * Create a wrapping module to ease having to include too many
  * modules.

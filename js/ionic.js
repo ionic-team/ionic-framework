@@ -2,5 +2,6 @@
 // Create namespaces 
 window.ionic = {
   controllers: {},
-  views: {}
+  views: {},
+  version: '{{ VERSION }}'
 };
