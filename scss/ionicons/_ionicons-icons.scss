@@ -4,6 +4,70 @@
 .ionicons,
 .#{$ionicons-prefix}alert,
 .#{$ionicons-prefix}alert-circled,
+.#{$ionicons-prefix}android-add,
+.#{$ionicons-prefix}android-add-contact,
+.#{$ionicons-prefix}android-alarm,
+.#{$ionicons-prefix}android-archive,
+.#{$ionicons-prefix}android-arrow-back,
+.#{$ionicons-prefix}android-arrow-down-left,
+.#{$ionicons-prefix}android-arrow-down-right,
+.#{$ionicons-prefix}android-arrow-up-left,
+.#{$ionicons-prefix}android-arrow-up-right,
+.#{$ionicons-prefix}android-battery,
+.#{$ionicons-prefix}android-book,
+.#{$ionicons-prefix}android-calendar,
+.#{$ionicons-prefix}android-call,
+.#{$ionicons-prefix}android-camera,
+.#{$ionicons-prefix}android-chat,
+.#{$ionicons-prefix}android-checkmark,
+.#{$ionicons-prefix}android-clock,
+.#{$ionicons-prefix}android-close,
+.#{$ionicons-prefix}android-contact,
+.#{$ionicons-prefix}android-contacts,
+.#{$ionicons-prefix}android-data,
+.#{$ionicons-prefix}android-developer,
+.#{$ionicons-prefix}android-display,
+.#{$ionicons-prefix}android-download,
+.#{$ionicons-prefix}android-dropdown,
+.#{$ionicons-prefix}android-earth,
+.#{$ionicons-prefix}android-folder,
+.#{$ionicons-prefix}android-forums,
+.#{$ionicons-prefix}android-friends,
+.#{$ionicons-prefix}android-hand,
+.#{$ionicons-prefix}android-image,
+.#{$ionicons-prefix}android-inbox,
+.#{$ionicons-prefix}android-information,
+.#{$ionicons-prefix}android-keypad,
+.#{$ionicons-prefix}android-lightbulb,
+.#{$ionicons-prefix}android-locate,
+.#{$ionicons-prefix}android-location,
+.#{$ionicons-prefix}android-mail,
+.#{$ionicons-prefix}android-microphone,
+.#{$ionicons-prefix}android-mixer,
+.#{$ionicons-prefix}android-more,
+.#{$ionicons-prefix}android-note,
+.#{$ionicons-prefix}android-playstore,
+.#{$ionicons-prefix}android-printer,
+.#{$ionicons-prefix}android-promotion,
+.#{$ionicons-prefix}android-reminder,
+.#{$ionicons-prefix}android-remove,
+.#{$ionicons-prefix}android-search,
+.#{$ionicons-prefix}android-send,
+.#{$ionicons-prefix}android-settings,
+.#{$ionicons-prefix}android-share,
+.#{$ionicons-prefix}android-social,
+.#{$ionicons-prefix}android-social-user,
+.#{$ionicons-prefix}android-sort,
+.#{$ionicons-prefix}android-star,
+.#{$ionicons-prefix}android-stopwatch,
+.#{$ionicons-prefix}android-storage,
+.#{$ionicons-prefix}android-system-back,
+.#{$ionicons-prefix}android-system-home,
+.#{$ionicons-prefix}android-system-windows,
+.#{$ionicons-prefix}android-timer,
+.#{$ionicons-prefix}android-trash,
+.#{$ionicons-prefix}android-volume,
+.#{$ionicons-prefix}android-wifi,
 .#{$ionicons-prefix}archive,
 .#{$ionicons-prefix}arrow-down-a,
 .#{$ionicons-prefix}arrow-down-b,
@@ -40,6 +104,7 @@
 .#{$ionicons-prefix}bluetooth,
 .#{$ionicons-prefix}bookmark,
 .#{$ionicons-prefix}briefcase,
+.#{$ionicons-prefix}bug,
 .#{$ionicons-prefix}calculator,
 .#{$ionicons-prefix}calendar,
 .#{$ionicons-prefix}camera,
@@ -76,10 +141,12 @@
 .#{$ionicons-prefix}document-text,
 .#{$ionicons-prefix}drag,
 .#{$ionicons-prefix}earth,
+.#{$ionicons-prefix}edit,
 .#{$ionicons-prefix}egg,
 .#{$ionicons-prefix}eject,
 .#{$ionicons-prefix}email,
 .#{$ionicons-prefix}eye,
+.#{$ionicons-prefix}eye-disabled,
 .#{$ionicons-prefix}female,
 .#{$ionicons-prefix}filing,
 .#{$ionicons-prefix}film-marker,
@@ -89,6 +156,7 @@
 .#{$ionicons-prefix}flask,
 .#{$ionicons-prefix}folder,
 .#{$ionicons-prefix}fork,
+.#{$ionicons-prefix}fork-repo,
 .#{$ionicons-prefix}forward,
 .#{$ionicons-prefix}game-controller-a,
 .#{$ionicons-prefix}game-controller-b,
@@ -167,6 +235,8 @@
 .#{$ionicons-prefix}ios7-cloud-upload,
 .#{$ionicons-prefix}ios7-cloud-upload-outline,
 .#{$ionicons-prefix}ios7-cloudy,
+.#{$ionicons-prefix}ios7-cloudy-night,
+.#{$ionicons-prefix}ios7-cloudy-night-outline,
 .#{$ionicons-prefix}ios7-cloudy-outline,
 .#{$ionicons-prefix}ios7-cog,
 .#{$ionicons-prefix}ios7-cog-outline,
@@ -277,6 +347,7 @@
 .#{$ionicons-prefix}ios7-skipbackward-outline,
 .#{$ionicons-prefix}ios7-skipforward,
 .#{$ionicons-prefix}ios7-skipforward-outline,
+.#{$ionicons-prefix}ios7-snowy,
 .#{$ionicons-prefix}ios7-speedometer,
 .#{$ionicons-prefix}ios7-speedometer-outline,
 .#{$ionicons-prefix}ios7-star,
@@ -340,13 +411,16 @@
 .#{$ionicons-prefix}minus,
 .#{$ionicons-prefix}minus-circled,
 .#{$ionicons-prefix}minus-round,
+.#{$ionicons-prefix}model-s,
 .#{$ionicons-prefix}monitor,
 .#{$ionicons-prefix}more,
 .#{$ionicons-prefix}music-note,
 .#{$ionicons-prefix}navicon,
 .#{$ionicons-prefix}navicon-round,
 .#{$ionicons-prefix}navigate,
+.#{$ionicons-prefix}no-smoking,
 .#{$ionicons-prefix}nuclear,
+.#{$ionicons-prefix}paper-airplane,
 .#{$ionicons-prefix}paperclip,
 .#{$ionicons-prefix}pause,
 .#{$ionicons-prefix}person,
@@ -358,6 +432,7 @@
 .#{$ionicons-prefix}pizza,
 .#{$ionicons-prefix}plane,
 .#{$ionicons-prefix}play,
+.#{$ionicons-prefix}playstation,
 .#{$ionicons-prefix}plus,
 .#{$ionicons-prefix}plus-circled,
 .#{$ionicons-prefix}plus-round,
@@ -393,6 +468,7 @@
 .#{$ionicons-prefix}social-dropbox-outline,
 .#{$ionicons-prefix}social-facebook,
 .#{$ionicons-prefix}social-facebook-outline,
+.#{$ionicons-prefix}social-freebsd-devil,
 .#{$ionicons-prefix}social-github,
 .#{$ionicons-prefix}social-github-outline,
 .#{$ionicons-prefix}social-googleplus,
@@ -411,6 +487,7 @@
 .#{$ionicons-prefix}social-skype-outline,
 .#{$ionicons-prefix}social-tumblr,
 .#{$ionicons-prefix}social-tumblr-outline,
+.#{$ionicons-prefix}social-tux,
 .#{$ionicons-prefix}social-twitter,
 .#{$ionicons-prefix}social-twitter-outline,
 .#{$ionicons-prefix}social-vimeo,
@@ -428,6 +505,7 @@
 .#{$ionicons-prefix}spoon,
 .#{$ionicons-prefix}star,
 .#{$ionicons-prefix}stats-bars,
+.#{$ionicons-prefix}steam,
 .#{$ionicons-prefix}stop,
 .#{$ionicons-prefix}thermometer,
 .#{$ionicons-prefix}thumbsdown,
@@ -447,12 +525,77 @@
 .#{$ionicons-prefix}wifi,
 .#{$ionicons-prefix}wineglass,
 .#{$ionicons-prefix}woman,
-.#{$ionicons-prefix}wrench
+.#{$ionicons-prefix}wrench,
+.#{$ionicons-prefix}xbox
 {
   @extend .ion;
 }
 .#{$ionicons-prefix}alert:before { content: $ionicon-var-alert; }
 .#{$ionicons-prefix}alert-circled:before { content: $ionicon-var-alert-circled; }
+.#{$ionicons-prefix}android-add:before { content: $ionicon-var-android-add; }
+.#{$ionicons-prefix}android-add-contact:before { content: $ionicon-var-android-add-contact; }
+.#{$ionicons-prefix}android-alarm:before { content: $ionicon-var-android-alarm; }
+.#{$ionicons-prefix}android-archive:before { content: $ionicon-var-android-archive; }
+.#{$ionicons-prefix}android-arrow-back:before { content: $ionicon-var-android-arrow-back; }
+.#{$ionicons-prefix}android-arrow-down-left:before { content: $ionicon-var-android-arrow-down-left; }
+.#{$ionicons-prefix}android-arrow-down-right:before { content: $ionicon-var-android-arrow-down-right; }
+.#{$ionicons-prefix}android-arrow-up-left:before { content: $ionicon-var-android-arrow-up-left; }
+.#{$ionicons-prefix}android-arrow-up-right:before { content: $ionicon-var-android-arrow-up-right; }
+.#{$ionicons-prefix}android-battery:before { content: $ionicon-var-android-battery; }
+.#{$ionicons-prefix}android-book:before { content: $ionicon-var-android-book; }
+.#{$ionicons-prefix}android-calendar:before { content: $ionicon-var-android-calendar; }
+.#{$ionicons-prefix}android-call:before { content: $ionicon-var-android-call; }
+.#{$ionicons-prefix}android-camera:before { content: $ionicon-var-android-camera; }
+.#{$ionicons-prefix}android-chat:before { content: $ionicon-var-android-chat; }
+.#{$ionicons-prefix}android-checkmark:before { content: $ionicon-var-android-checkmark; }
+.#{$ionicons-prefix}android-clock:before { content: $ionicon-var-android-clock; }
+.#{$ionicons-prefix}android-close:before { content: $ionicon-var-android-close; }
+.#{$ionicons-prefix}android-contact:before { content: $ionicon-var-android-contact; }
+.#{$ionicons-prefix}android-contacts:before { content: $ionicon-var-android-contacts; }
+.#{$ionicons-prefix}android-data:before { content: $ionicon-var-android-data; }
+.#{$ionicons-prefix}android-developer:before { content: $ionicon-var-android-developer; }
+.#{$ionicons-prefix}android-display:before { content: $ionicon-var-android-display; }
+.#{$ionicons-prefix}android-download:before { content: $ionicon-var-android-download; }
+.#{$ionicons-prefix}android-dropdown:before { content: $ionicon-var-android-dropdown; }
+.#{$ionicons-prefix}android-earth:before { content: $ionicon-var-android-earth; }
+.#{$ionicons-prefix}android-folder:before { content: $ionicon-var-android-folder; }
+.#{$ionicons-prefix}android-forums:before { content: $ionicon-var-android-forums; }
+.#{$ionicons-prefix}android-friends:before { content: $ionicon-var-android-friends; }
+.#{$ionicons-prefix}android-hand:before { content: $ionicon-var-android-hand; }
+.#{$ionicons-prefix}android-image:before { content: $ionicon-var-android-image; }
+.#{$ionicons-prefix}android-inbox:before { content: $ionicon-var-android-inbox; }
+.#{$ionicons-prefix}android-information:before { content: $ionicon-var-android-information; }
+.#{$ionicons-prefix}android-keypad:before { content: $ionicon-var-android-keypad; }
+.#{$ionicons-prefix}android-lightbulb:before { content: $ionicon-var-android-lightbulb; }
+.#{$ionicons-prefix}android-locate:before { content: $ionicon-var-android-locate; }
+.#{$ionicons-prefix}android-location:before { content: $ionicon-var-android-location; }
+.#{$ionicons-prefix}android-mail:before { content: $ionicon-var-android-mail; }
+.#{$ionicons-prefix}android-microphone:before { content: $ionicon-var-android-microphone; }
+.#{$ionicons-prefix}android-mixer:before { content: $ionicon-var-android-mixer; }
+.#{$ionicons-prefix}android-more:before { content: $ionicon-var-android-more; }
+.#{$ionicons-prefix}android-note:before { content: $ionicon-var-android-note; }
+.#{$ionicons-prefix}android-playstore:before { content: $ionicon-var-android-playstore; }
+.#{$ionicons-prefix}android-printer:before { content: $ionicon-var-android-printer; }
+.#{$ionicons-prefix}android-promotion:before { content: $ionicon-var-android-promotion; }
+.#{$ionicons-prefix}android-reminder:before { content: $ionicon-var-android-reminder; }
+.#{$ionicons-prefix}android-remove:before { content: $ionicon-var-android-remove; }
+.#{$ionicons-prefix}android-search:before { content: $ionicon-var-android-search; }
+.#{$ionicons-prefix}android-send:before { content: $ionicon-var-android-send; }
+.#{$ionicons-prefix}android-settings:before { content: $ionicon-var-android-settings; }
+.#{$ionicons-prefix}android-share:before { content: $ionicon-var-android-share; }
+.#{$ionicons-prefix}android-social:before { content: $ionicon-var-android-social; }
+.#{$ionicons-prefix}android-social-user:before { content: $ionicon-var-android-social-user; }
+.#{$ionicons-prefix}android-sort:before { content: $ionicon-var-android-sort; }
+.#{$ionicons-prefix}android-star:before { content: $ionicon-var-android-star; }
+.#{$ionicons-prefix}android-stopwatch:before { content: $ionicon-var-android-stopwatch; }
+.#{$ionicons-prefix}android-storage:before { content: $ionicon-var-android-storage; }
+.#{$ionicons-prefix}android-system-back:before { content: $ionicon-var-android-system-back; }
+.#{$ionicons-prefix}android-system-home:before { content: $ionicon-var-android-system-home; }
+.#{$ionicons-prefix}android-system-windows:before { content: $ionicon-var-android-system-windows; }
+.#{$ionicons-prefix}android-timer:before { content: $ionicon-var-android-timer; }
+.#{$ionicons-prefix}android-trash:before { content: $ionicon-var-android-trash; }
+.#{$ionicons-prefix}android-volume:before { content: $ionicon-var-android-volume; }
+.#{$ionicons-prefix}android-wifi:before { content: $ionicon-var-android-wifi; }
 .#{$ionicons-prefix}archive:before { content: $ionicon-var-archive; }
 .#{$ionicons-prefix}arrow-down-a:before { content: $ionicon-var-arrow-down-a; }
 .#{$ionicons-prefix}arrow-down-b:before { content: $ionicon-var-arrow-down-b; }
@@ -489,6 +632,7 @@
 .#{$ionicons-prefix}bluetooth:before { content: $ionicon-var-bluetooth; }
 .#{$ionicons-prefix}bookmark:before { content: $ionicon-var-bookmark; }
 .#{$ionicons-prefix}briefcase:before { content: $ionicon-var-briefcase; }
+.#{$ionicons-prefix}bug:before { content: $ionicon-var-bug; }
 .#{$ionicons-prefix}calculator:before { content: $ionicon-var-calculator; }
 .#{$ionicons-prefix}calendar:before { content: $ionicon-var-calendar; }
 .#{$ionicons-prefix}camera:before { content: $ionicon-var-camera; }
@@ -525,10 +669,12 @@
 .#{$ionicons-prefix}document-text:before { content: $ionicon-var-document-text; }
 .#{$ionicons-prefix}drag:before { content: $ionicon-var-drag; }
 .#{$ionicons-prefix}earth:before { content: $ionicon-var-earth; }
+.#{$ionicons-prefix}edit:before { content: $ionicon-var-edit; }
 .#{$ionicons-prefix}egg:before { content: $ionicon-var-egg; }
 .#{$ionicons-prefix}eject:before { content: $ionicon-var-eject; }
 .#{$ionicons-prefix}email:before { content: $ionicon-var-email; }
 .#{$ionicons-prefix}eye:before { content: $ionicon-var-eye; }
+.#{$ionicons-prefix}eye-disabled:before { content: $ionicon-var-eye-disabled; }
 .#{$ionicons-prefix}female:before { content: $ionicon-var-female; }
 .#{$ionicons-prefix}filing:before { content: $ionicon-var-filing; }
 .#{$ionicons-prefix}film-marker:before { content: $ionicon-var-film-marker; }
@@ -538,6 +684,7 @@
 .#{$ionicons-prefix}flask:before { content: $ionicon-var-flask; }
 .#{$ionicons-prefix}folder:before { content: $ionicon-var-folder; }
 .#{$ionicons-prefix}fork:before { content: $ionicon-var-fork; }
+.#{$ionicons-prefix}fork-repo:before { content: $ionicon-var-fork-repo; }
 .#{$ionicons-prefix}forward:before { content: $ionicon-var-forward; }
 .#{$ionicons-prefix}game-controller-a:before { content: $ionicon-var-game-controller-a; }
 .#{$ionicons-prefix}game-controller-b:before { content: $ionicon-var-game-controller-b; }
@@ -616,6 +763,8 @@
 .#{$ionicons-prefix}ios7-cloud-upload:before { content: $ionicon-var-ios7-cloud-upload; }
 .#{$ionicons-prefix}ios7-cloud-upload-outline:before { content: $ionicon-var-ios7-cloud-upload-outline; }
 .#{$ionicons-prefix}ios7-cloudy:before { content: $ionicon-var-ios7-cloudy; }
+.#{$ionicons-prefix}ios7-cloudy-night:before { content: $ionicon-var-ios7-cloudy-night; }
+.#{$ionicons-prefix}ios7-cloudy-night-outline:before { content: $ionicon-var-ios7-cloudy-night-outline; }
 .#{$ionicons-prefix}ios7-cloudy-outline:before { content: $ionicon-var-ios7-cloudy-outline; }
 .#{$ionicons-prefix}ios7-cog:before { content: $ionicon-var-ios7-cog; }
 .#{$ionicons-prefix}ios7-cog-outline:before { content: $ionicon-var-ios7-cog-outline; }
@@ -726,6 +875,7 @@
 .#{$ionicons-prefix}ios7-skipbackward-outline:before { content: $ionicon-var-ios7-skipbackward-outline; }
 .#{$ionicons-prefix}ios7-skipforward:before { content: $ionicon-var-ios7-skipforward; }
 .#{$ionicons-prefix}ios7-skipforward-outline:before { content: $ionicon-var-ios7-skipforward-outline; }
+.#{$ionicons-prefix}ios7-snowy:before { content: $ionicon-var-ios7-snowy; }
 .#{$ionicons-prefix}ios7-speedometer:before { content: $ionicon-var-ios7-speedometer; }
 .#{$ionicons-prefix}ios7-speedometer-outline:before { content: $ionicon-var-ios7-speedometer-outline; }
 .#{$ionicons-prefix}ios7-star:before { content: $ionicon-var-ios7-star; }
@@ -789,13 +939,16 @@
 .#{$ionicons-prefix}minus:before { content: $ionicon-var-minus; }
 .#{$ionicons-prefix}minus-circled:before { content: $ionicon-var-minus-circled; }
 .#{$ionicons-prefix}minus-round:before { content: $ionicon-var-minus-round; }
+.#{$ionicons-prefix}model-s:before { content: $ionicon-var-model-s; }
 .#{$ionicons-prefix}monitor:before { content: $ionicon-var-monitor; }
 .#{$ionicons-prefix}more:before { content: $ionicon-var-more; }
 .#{$ionicons-prefix}music-note:before { content: $ionicon-var-music-note; }
 .#{$ionicons-prefix}navicon:before { content: $ionicon-var-navicon; }
 .#{$ionicons-prefix}navicon-round:before { content: $ionicon-var-navicon-round; }
 .#{$ionicons-prefix}navigate:before { content: $ionicon-var-navigate; }
+.#{$ionicons-prefix}no-smoking:before { content: $ionicon-var-no-smoking; }
 .#{$ionicons-prefix}nuclear:before { content: $ionicon-var-nuclear; }
+.#{$ionicons-prefix}paper-airplane:before { content: $ionicon-var-paper-airplane; }
 .#{$ionicons-prefix}paperclip:before { content: $ionicon-var-paperclip; }
 .#{$ionicons-prefix}pause:before { content: $ionicon-var-pause; }
 .#{$ionicons-prefix}person:before { content: $ionicon-var-person; }
@@ -807,6 +960,7 @@
 .#{$ionicons-prefix}pizza:before { content: $ionicon-var-pizza; }
 .#{$ionicons-prefix}plane:before { content: $ionicon-var-plane; }
 .#{$ionicons-prefix}play:before { content: $ionicon-var-play; }
+.#{$ionicons-prefix}playstation:before { content: $ionicon-var-playstation; }
 .#{$ionicons-prefix}plus:before { content: $ionicon-var-plus; }
 .#{$ionicons-prefix}plus-circled:before { content: $ionicon-var-plus-circled; }
 .#{$ionicons-prefix}plus-round:before { content: $ionicon-var-plus-round; }
@@ -842,6 +996,7 @@
 .#{$ionicons-prefix}social-dropbox-outline:before { content: $ionicon-var-social-dropbox-outline; }
 .#{$ionicons-prefix}social-facebook:before { content: $ionicon-var-social-facebook; }
 .#{$ionicons-prefix}social-facebook-outline:before { content: $ionicon-var-social-facebook-outline; }
+.#{$ionicons-prefix}social-freebsd-devil:before { content: $ionicon-var-social-freebsd-devil; }
 .#{$ionicons-prefix}social-github:before { content: $ionicon-var-social-github; }
 .#{$ionicons-prefix}social-github-outline:before { content: $ionicon-var-social-github-outline; }
 .#{$ionicons-prefix}social-googleplus:before { content: $ionicon-var-social-googleplus; }
@@ -860,6 +1015,7 @@
 .#{$ionicons-prefix}social-skype-outline:before { content: $ionicon-var-social-skype-outline; }
 .#{$ionicons-prefix}social-tumblr:before { content: $ionicon-var-social-tumblr; }
 .#{$ionicons-prefix}social-tumblr-outline:before { content: $ionicon-var-social-tumblr-outline; }
+.#{$ionicons-prefix}social-tux:before { content: $ionicon-var-social-tux; }
 .#{$ionicons-prefix}social-twitter:before { content: $ionicon-var-social-twitter; }
 .#{$ionicons-prefix}social-twitter-outline:before { content: $ionicon-var-social-twitter-outline; }
 .#{$ionicons-prefix}social-vimeo:before { content: $ionicon-var-social-vimeo; }
@@ -877,6 +1033,7 @@
 .#{$ionicons-prefix}spoon:before { content: $ionicon-var-spoon; }
 .#{$ionicons-prefix}star:before { content: $ionicon-var-star; }
 .#{$ionicons-prefix}stats-bars:before { content: $ionicon-var-stats-bars; }
+.#{$ionicons-prefix}steam:before { content: $ionicon-var-steam; }
 .#{$ionicons-prefix}stop:before { content: $ionicon-var-stop; }
 .#{$ionicons-prefix}thermometer:before { content: $ionicon-var-thermometer; }
 .#{$ionicons-prefix}thumbsdown:before { content: $ionicon-var-thumbsdown; }
@@ -897,3 +1054,4 @@
 .#{$ionicons-prefix}wineglass:before { content: $ionicon-var-wineglass; }
 .#{$ionicons-prefix}woman:before { content: $ionicon-var-woman; }
 .#{$ionicons-prefix}wrench:before { content: $ionicon-var-wrench; }
+.#{$ionicons-prefix}xbox:before { content: $ionicon-var-xbox; }

@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /*!
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
@@ -13,15 +12,15 @@
  *
  */
 /*!
-  Ionicons, v1.3.6
+  Ionicons, v1.4.0
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
   https://twitter.com/helloimben  https://twitter.com/ionicframework
   MIT License: https://github.com/driftyco/ionicons
 */
 @font-face {
   font-family: "Ionicons";
-  src: url("../fonts/ionicons.eot?v=1.3.6");
-  src: url("../fonts/ionicons.eot?v=1.3.6#iefix") format("embedded-opentype"), url("../fonts/ionicons.ttf?v=1.3.6") format("truetype"), url("../fonts/ionicons.woff?v=1.3.6") format("woff"), url("../fonts/ionicons.svg?v=1.3.6#Ionicons") format("svg");
+  src: url("../fonts/ionicons.eot?v=1.4.0");
+  src: url("../fonts/ionicons.eot?v=1.4.0#iefix") format("embedded-opentype"), url("../fonts/ionicons.ttf?v=1.4.0") format("truetype"), url("../fonts/ionicons.woff?v=1.4.0") format("woff"), url("../fonts/ionicons.svg?v=1.4.0#Ionicons") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -34,6 +33,70 @@
 .ion-ios7-reloading, .ionicons,
 .ion-alert,
 .ion-alert-circled,
+.ion-android-add,
+.ion-android-add-contact,
+.ion-android-alarm,
+.ion-android-archive,
+.ion-android-arrow-back,
+.ion-android-arrow-down-left,
+.ion-android-arrow-down-right,
+.ion-android-arrow-up-left,
+.ion-android-arrow-up-right,
+.ion-android-battery,
+.ion-android-book,
+.ion-android-calendar,
+.ion-android-call,
+.ion-android-camera,
+.ion-android-chat,
+.ion-android-checkmark,
+.ion-android-clock,
+.ion-android-close,
+.ion-android-contact,
+.ion-android-contacts,
+.ion-android-data,
+.ion-android-developer,
+.ion-android-display,
+.ion-android-download,
+.ion-android-dropdown,
+.ion-android-earth,
+.ion-android-folder,
+.ion-android-forums,
+.ion-android-friends,
+.ion-android-hand,
+.ion-android-image,
+.ion-android-inbox,
+.ion-android-information,
+.ion-android-keypad,
+.ion-android-lightbulb,
+.ion-android-locate,
+.ion-android-location,
+.ion-android-mail,
+.ion-android-microphone,
+.ion-android-mixer,
+.ion-android-more,
+.ion-android-note,
+.ion-android-playstore,
+.ion-android-printer,
+.ion-android-promotion,
+.ion-android-reminder,
+.ion-android-remove,
+.ion-android-search,
+.ion-android-send,
+.ion-android-settings,
+.ion-android-share,
+.ion-android-social,
+.ion-android-social-user,
+.ion-android-sort,
+.ion-android-star,
+.ion-android-stopwatch,
+.ion-android-storage,
+.ion-android-system-back,
+.ion-android-system-home,
+.ion-android-system-windows,
+.ion-android-timer,
+.ion-android-trash,
+.ion-android-volume,
+.ion-android-wifi,
 .ion-archive,
 .ion-arrow-down-a,
 .ion-arrow-down-b,
@@ -70,6 +133,7 @@
 .ion-bluetooth,
 .ion-bookmark,
 .ion-briefcase,
+.ion-bug,
 .ion-calculator,
 .ion-calendar,
 .ion-camera,
@@ -106,10 +170,12 @@
 .ion-document-text,
 .ion-drag,
 .ion-earth,
+.ion-edit,
 .ion-egg,
 .ion-eject,
 .ion-email,
 .ion-eye,
+.ion-eye-disabled,
 .ion-female,
 .ion-filing,
 .ion-film-marker,
@@ -119,6 +185,7 @@
 .ion-flask,
 .ion-folder,
 .ion-fork,
+.ion-fork-repo,
 .ion-forward,
 .ion-game-controller-a,
 .ion-game-controller-b,
@@ -197,6 +264,8 @@
 .ion-ios7-cloud-upload,
 .ion-ios7-cloud-upload-outline,
 .ion-ios7-cloudy,
+.ion-ios7-cloudy-night,
+.ion-ios7-cloudy-night-outline,
 .ion-ios7-cloudy-outline,
 .ion-ios7-cog,
 .ion-ios7-cog-outline,
@@ -307,6 +376,7 @@
 .ion-ios7-skipbackward-outline,
 .ion-ios7-skipforward,
 .ion-ios7-skipforward-outline,
+.ion-ios7-snowy,
 .ion-ios7-speedometer,
 .ion-ios7-speedometer-outline,
 .ion-ios7-star,
@@ -370,13 +440,16 @@
 .ion-minus,
 .ion-minus-circled,
 .ion-minus-round,
+.ion-model-s,
 .ion-monitor,
 .ion-more,
 .ion-music-note,
 .ion-navicon,
 .ion-navicon-round,
 .ion-navigate,
+.ion-no-smoking,
 .ion-nuclear,
+.ion-paper-airplane,
 .ion-paperclip,
 .ion-pause,
 .ion-person,
@@ -388,6 +461,7 @@
 .ion-pizza,
 .ion-plane,
 .ion-play,
+.ion-playstation,
 .ion-plus,
 .ion-plus-circled,
 .ion-plus-round,
@@ -423,6 +497,7 @@
 .ion-social-dropbox-outline,
 .ion-social-facebook,
 .ion-social-facebook-outline,
+.ion-social-freebsd-devil,
 .ion-social-github,
 .ion-social-github-outline,
 .ion-social-googleplus,
@@ -441,6 +516,7 @@
 .ion-social-skype-outline,
 .ion-social-tumblr,
 .ion-social-tumblr-outline,
+.ion-social-tux,
 .ion-social-twitter,
 .ion-social-twitter-outline,
 .ion-social-vimeo,
@@ -458,6 +534,7 @@
 .ion-spoon,
 .ion-star,
 .ion-stats-bars,
+.ion-steam,
 .ion-stop,
 .ion-thermometer,
 .ion-thumbsdown,
@@ -477,7 +554,8 @@
 .ion-wifi,
 .ion-wineglass,
 .ion-woman,
-.ion-wrench {
+.ion-wrench,
+.ion-xbox {
   display: inline-block;
   font-family: "Ionicons";
   speak: none;
@@ -547,6 +625,198 @@
 
 .ion-alert-circled:before {
   content: "\f100"; }
+
+.ion-android-add:before {
+  content: "\f2c7"; }
+
+.ion-android-add-contact:before {
+  content: "\f2c6"; }
+
+.ion-android-alarm:before {
+  content: "\f2c8"; }
+
+.ion-android-archive:before {
+  content: "\f2c9"; }
+
+.ion-android-arrow-back:before {
+  content: "\f2ca"; }
+
+.ion-android-arrow-down-left:before {
+  content: "\f2cb"; }
+
+.ion-android-arrow-down-right:before {
+  content: "\f2cc"; }
+
+.ion-android-arrow-up-left:before {
+  content: "\f2cd"; }
+
+.ion-android-arrow-up-right:before {
+  content: "\f2ce"; }
+
+.ion-android-battery:before {
+  content: "\f2cf"; }
+
+.ion-android-book:before {
+  content: "\f2d0"; }
+
+.ion-android-calendar:before {
+  content: "\f2d1"; }
+
+.ion-android-call:before {
+  content: "\f2d2"; }
+
+.ion-android-camera:before {
+  content: "\f2d3"; }
+
+.ion-android-chat:before {
+  content: "\f2d4"; }
+
+.ion-android-checkmark:before {
+  content: "\f2d5"; }
+
+.ion-android-clock:before {
+  content: "\f2d6"; }
+
+.ion-android-close:before {
+  content: "\f2d7"; }
+
+.ion-android-contact:before {
+  content: "\f2d8"; }
+
+.ion-android-contacts:before {
+  content: "\f2d9"; }
+
+.ion-android-data:before {
+  content: "\f2da"; }
+
+.ion-android-developer:before {
+  content: "\f2db"; }
+
+.ion-android-display:before {
+  content: "\f2dc"; }
+
+.ion-android-download:before {
+  content: "\f2dd"; }
+
+.ion-android-dropdown:before {
+  content: "\f2de"; }
+
+.ion-android-earth:before {
+  content: "\f2df"; }
+
+.ion-android-folder:before {
+  content: "\f2e0"; }
+
+.ion-android-forums:before {
+  content: "\f2e1"; }
+
+.ion-android-friends:before {
+  content: "\f2e2"; }
+
+.ion-android-hand:before {
+  content: "\f2e3"; }
+
+.ion-android-image:before {
+  content: "\f2e4"; }
+
+.ion-android-inbox:before {
+  content: "\f2e5"; }
+
+.ion-android-information:before {
+  content: "\f2e6"; }
+
+.ion-android-keypad:before {
+  content: "\f2e7"; }
+
+.ion-android-lightbulb:before {
+  content: "\f2e8"; }
+
+.ion-android-locate:before {
+  content: "\f2e9"; }
+
+.ion-android-location:before {
+  content: "\f2ea"; }
+
+.ion-android-mail:before {
+  content: "\f2eb"; }
+
+.ion-android-microphone:before {
+  content: "\f2ec"; }
+
+.ion-android-mixer:before {
+  content: "\f2ed"; }
+
+.ion-android-more:before {
+  content: "\f2ee"; }
+
+.ion-android-note:before {
+  content: "\f2ef"; }
+
+.ion-android-playstore:before {
+  content: "\f2f0"; }
+
+.ion-android-printer:before {
+  content: "\f2f1"; }
+
+.ion-android-promotion:before {
+  content: "\f2f2"; }
+
+.ion-android-reminder:before {
+  content: "\f2f3"; }
+
+.ion-android-remove:before {
+  content: "\f2f4"; }
+
+.ion-android-search:before {
+  content: "\f2f5"; }
+
+.ion-android-send:before {
+  content: "\f2f6"; }
+
+.ion-android-settings:before {
+  content: "\f2f7"; }
+
+.ion-android-share:before {
+  content: "\f2f8"; }
+
+.ion-android-social:before {
+  content: "\f2fa"; }
+
+.ion-android-social-user:before {
+  content: "\f2f9"; }
+
+.ion-android-sort:before {
+  content: "\f2fb"; }
+
+.ion-android-star:before {
+  content: "\f2fc"; }
+
+.ion-android-stopwatch:before {
+  content: "\f2fd"; }
+
+.ion-android-storage:before {
+  content: "\f2fe"; }
+
+.ion-android-system-back:before {
+  content: "\f2ff"; }
+
+.ion-android-system-home:before {
+  content: "\f300"; }
+
+.ion-android-system-windows:before {
+  content: "\f301"; }
+
+.ion-android-timer:before {
+  content: "\f302"; }
+
+.ion-android-trash:before {
+  content: "\f303"; }
+
+.ion-android-volume:before {
+  content: "\f304"; }
+
+.ion-android-wifi:before {
+  content: "\f305"; }
 
 .ion-archive:before {
   content: "\f102"; }
@@ -656,6 +926,9 @@
 .ion-briefcase:before {
   content: "\f26c"; }
 
+.ion-bug:before {
+  content: "\f2be"; }
+
 .ion-calculator:before {
   content: "\f26d"; }
 
@@ -764,6 +1037,9 @@
 .ion-earth:before {
   content: "\f276"; }
 
+.ion-edit:before {
+  content: "\f2bf"; }
+
 .ion-egg:before {
   content: "\f277"; }
 
@@ -775,6 +1051,9 @@
 
 .ion-eye:before {
   content: "\f133"; }
+
+.ion-eye-disabled:before {
+  content: "\f306"; }
 
 .ion-female:before {
   content: "\f278"; }
@@ -802,6 +1081,9 @@
 
 .ion-fork:before {
   content: "\f27a"; }
+
+.ion-fork-repo:before {
+  content: "\f2c0"; }
 
 .ion-forward:before {
   content: "\f13a"; }
@@ -1036,6 +1318,12 @@
 
 .ion-ios7-cloudy:before {
   content: "\f17a"; }
+
+.ion-ios7-cloudy-night:before {
+  content: "\f308"; }
+
+.ion-ios7-cloudy-night-outline:before {
+  content: "\f307"; }
 
 .ion-ios7-cloudy-outline:before {
   content: "\f179"; }
@@ -1367,6 +1655,9 @@
 .ion-ios7-skipforward-outline:before {
   content: "\f1dd"; }
 
+.ion-ios7-snowy:before {
+  content: "\f309"; }
+
 .ion-ios7-speedometer:before {
   content: "\f290"; }
 
@@ -1556,6 +1847,9 @@
 .ion-minus-round:before {
   content: "\f208"; }
 
+.ion-model-s:before {
+  content: "\f2c1"; }
+
 .ion-monitor:before {
   content: "\f20a"; }
 
@@ -1574,8 +1868,14 @@
 .ion-navigate:before {
   content: "\f2a3"; }
 
+.ion-no-smoking:before {
+  content: "\f2c2"; }
+
 .ion-nuclear:before {
   content: "\f2a4"; }
+
+.ion-paper-airplane:before {
+  content: "\f2c3"; }
 
 .ion-paperclip:before {
   content: "\f20f"; }
@@ -1609,6 +1909,9 @@
 
 .ion-play:before {
   content: "\f215"; }
+
+.ion-playstation:before {
+  content: "\f30a"; }
 
 .ion-plus:before {
   content: "\f218"; }
@@ -1715,6 +2018,9 @@
 .ion-social-facebook-outline:before {
   content: "\f230"; }
 
+.ion-social-freebsd-devil:before {
+  content: "\f2c4"; }
+
 .ion-social-github:before {
   content: "\f233"; }
 
@@ -1769,6 +2075,9 @@
 .ion-social-tumblr-outline:before {
   content: "\f240"; }
 
+.ion-social-tux:before {
+  content: "\f2c5"; }
+
 .ion-social-twitter:before {
   content: "\f243"; }
 
@@ -1819,6 +2128,9 @@
 
 .ion-stats-bars:before {
   content: "\f2b5"; }
+
+.ion-steam:before {
+  content: "\f30b"; }
 
 .ion-stop:before {
   content: "\f24f"; }
@@ -1879,6 +2191,9 @@
 
 .ion-wrench:before {
   content: "\f2ba"; }
+
+.ion-xbox:before {
+  content: "\f30c"; }
 
 /**
  * Resets
