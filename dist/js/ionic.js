@@ -2,7 +2,7 @@
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v{{ VERSION }}
+ * Ionic, v0.9.14
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -16,7 +16,7 @@
 window.ionic = {
   controllers: {},
   views: {},
-  version: '{{ VERSION }}'
+  version: '0.9.14'
 };;
 (function(ionic) {
 
