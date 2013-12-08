@@ -59,7 +59,7 @@
 
 			if (isNative) {
 				return function(callback, root) {
-					requestFrame(callback, root);
+					requestFrame(callback, root)
 				};
 			}
 
@@ -119,7 +119,7 @@
 		 * @return {Boolean} Whether the animation was stopped (aka, was running before)
 		 */
 		stop: function(id) {
-			var cleared = running[id] !== null;
+			var cleared = running[id] != null;
 			if (cleared) {
 				running[id] = null;
 			}
@@ -135,7 +135,7 @@
 		 * @return {Boolean} Whether the animation is still running
 		 */
 		isRunning: function(id) {
-			return running[id] !== null;
+			return running[id] != null;
 		},
 
 
@@ -218,7 +218,7 @@
 				var value = easingMethod ? easingMethod(percent) : percent;
 				if ((stepCallback(value, now, render) === false || percent === 1) && render) {
 					running[id] = null;
-					completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), id, percent === 1 || duration === null);
+					completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), id, percent === 1 || duration == null);
 				} else if (render) {
 					lastFrame = now;
 					core.effect.Animate.requestAnimationFrame(step, root);
@@ -606,10 +606,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
     // Update Scroller dimensions for changed content
     // Add padding to bottom of content
     this.setDimensions(
-      Math.min(this.__container.clientWidth, this.__container.parentElement.clientWidth), 
-      Math.min(this.__container.clientHeight, this.__container.parentElement.clientHeight), 
-      this.__content.offsetWidth, 
-      this.__content.offsetHeight+20);
+    	Math.min(this.__container.clientWidth, this.__container.parentElement.clientWidth), 
+    	Math.min(this.__container.clientHeight, this.__container.parentElement.clientHeight), 
+    	this.__content.offsetWidth, 
+    	this.__content.offsetHeight+20);
   },
   /*
   ---------------------------------------------------------------------------
@@ -622,7 +622,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     var content = this.__content;
 
-    var docStyle = document.documentElement.style;
+	  var docStyle = document.documentElement.style;
 
     var engine;
     if ('MozAppearance' in docStyle) {
@@ -859,11 +859,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
     var oldLevel = self.__zoomLevel;
 
     // Normalize input origin to center of viewport if not defined
-    if (originLeft === null) {
+    if (originLeft == null) {
       originLeft = self.__clientWidth / 2;
     }
 
-    if (originTop === null) {
+    if (originTop == null) {
       originTop = self.__clientHeight / 2;
     }
 
@@ -933,7 +933,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     }
 
     // Correct coordinates based on new zoom level
-    if (zoom !== null && zoom !== self.__zoomLevel) {
+    if (zoom != null && zoom !== self.__zoomLevel) {
 
       if (!self.options.zooming) {
         throw new Error("Zooming is not enabled!");
@@ -1041,7 +1041,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
   doTouchStart: function(touches, timeStamp) {
 
     // Array-like check is enough here
-    if (touches.length === null) {
+    if (touches.length == null) {
       throw new Error("Invalid touch list: " + touches);
     }
 
@@ -1127,7 +1127,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
   doTouchMove: function(touches, timeStamp, scale) {
 
     // Array-like check is enough here
-    if (touches.length === null) {
+    if (touches.length == null) {
       throw new Error("Invalid touch list: " + touches);
     }
 
@@ -1172,7 +1172,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       var level = self.__zoomLevel;
 
       // Work with scaling
-      if (scale !== null && self.options.zooming) {
+      if (scale != null && self.options.zooming) {
 
         var oldLevel = level;
 
@@ -1237,7 +1237,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
             scrollTop += (moveY / 2 * this.options.speedMultiplier);
 
             // Support pull-to-refresh (only when only y is scrollable)
-            if (!self.__enableScrollX && self.__refreshHeight !== null) {
+            if (!self.__enableScrollX && self.__refreshHeight != null) {
 
               if (!self.__refreshActive && scrollTop <= -self.__refreshHeight) {
 
@@ -1529,7 +1529,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     var self = this;
 
-    if (zoomLevel === null) {
+    if (zoomLevel == null) {
       zoomLevel = self.__zoomLevel;
     }
 
