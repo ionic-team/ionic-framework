@@ -26,12 +26,12 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
       ionic.controllers.SideMenuController.call(this, {
         // Our quick implementation of the left side menu
         left: {
-          width: 270,
+          width: 275,
         },
 
         // Our quick implementation of the right side menu
         right: {
-          width: 270,
+          width: 275,
         }
       });
 
