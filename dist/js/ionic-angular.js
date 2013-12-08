@@ -1623,6 +1623,8 @@ angular.module('ionic.ui.scroll', [])
 
           sv = new ionic.views.Scroll({
             el: $element[0],
+            scrollingX: hasScrollingX,
+            scrollingY: hasScrollingY
           });
 
           // Activate pull-to-refresh
