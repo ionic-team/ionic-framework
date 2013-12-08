@@ -20,13 +20,25 @@ angular.module('ionic.ui.slideBox', [])
     restrict: 'E',
     replace: true,
     transclude: true,
+    scope: {},
     controller: ['$scope', '$element', function($scope, $element) {
       $scope.slides = [];
       this.slideAdded = function() {
         $scope.slides.push({});
       };
+
+      angular.extend(this, ionic.views.SlideBox.prototype);
+
+      ionic.views.SlideBox.call(this, {
+        el: $element[0],
+        slideChanged: function(slideIndex) {
+          $scope.$parent.$broadcast('slideBox.slideChanged', slideIndex);
+          $scope.$apply();
+        }
+      });
+
+      $scope.$parent.slideBox = this;
     }],
-    scope: {},
     template: '<div class="slide-box">\
             <div class="slide-box-slides" ng-transclude>\
             </div>\
@@ -38,13 +50,6 @@ angular.module('ionic.ui.slideBox', [])
         var childScope = $scope.$new();
         var pager = $compile('<pager></pager>')(childScope);
         $element.append(pager);
-
-        $scope.slideBox = new ionic.views.SlideBox({
-          el: $element[0],
-          slideChanged: function(slideIndex) {
-            $scope.$parent.$broadcast('slideBox.slideChanged', slideIndex);
-          }
-        });
       }
     }
   };

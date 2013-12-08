@@ -47,13 +47,17 @@
     <div ng-controller="SlideCtrl">
     <slide-box>
       <slide>
-        <div class="box blue"><h1>BLUE</h1></div>
+        <div class="box blue">
+          <h1>BLUE {{slideBox.slideIndex}}</h1>
+        </div>
       </slide>
       <slide>
-        <div class="box yellow"><h1>YELLOW</h1></div>
+        <div class="box yellow">
+          <h1>YELLOW {{slideBox.slideIndex}}</h1>
+        </div>
       </slide>
       <slide>
-        <div class="box pink"><h1>PINK</h1></div>
+      <div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>
       </slide>
     </slide-box>
   </div>
