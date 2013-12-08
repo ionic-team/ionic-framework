@@ -43,6 +43,7 @@
         text-decoration: line-through;
       }
     </style>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="../../../../dist/js/ionic.js"></script>
     <script src="../../../../dist/js/angular/angular.js"></script>
     <script src="../../../../dist/js/angular/angular-animate.js"></script>
@@ -64,7 +65,7 @@
           <h1 class="title">Tasks</h1>
           <button class="button button-clear button-primary" ng-click="isEditingItems = !isEditingItems">Edit</button>
         </header>
-        <content has-header="true" has-tabs="true" on-refresh="onRefresh()">
+        <content has-header="true" has-tabs="true" on-refresh="onRefresh()" on-scroll="scroll(scrollTop, scrollLeft)">
 
           <refresher></refresher>
           <list scroll="false" on-refresh="onRefresh()" on-reorder="onReorder(el, start, end)" is-editing="isEditingItems" animation="fade-out" delete-icon="icon ion-minus-circled" reorder-icon="icon ion-navicon">
@@ -139,6 +140,10 @@
         $scope.onControllerChanged = function(oldController, oldIndex, newController, newIndex) {
           console.log('Controller changed', oldController, oldIndex, newController, newIndex);
           console.log(arguments);
+        };
+
+        $scope.scroll = function(scrollTop, scrollLeft) {
+          console.log('Scroll', scrollTop, scrollLeft);
         };
       })
 

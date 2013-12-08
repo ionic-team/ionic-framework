@@ -75,8 +75,8 @@ angular.module('ionic.ui.scroll', [])
           $element.bind('scroll', function(e) {
             $scope.onScroll({
               event: e,
-              scrollTop: e.detail.scrollTop,
-              scrollLeft: e.detail.scrollLeft
+              scrollTop: e.detail ? e.detail.scrollTop : e.originalEvent ? e.originalEvent.detail.scrollTop : 0,
+              scrollLeft: e.detail ? e.detail.scrollLeft: e.originalEvent ? e.originalEvent.detail.scrollLeft : 0
             });
           });
 
