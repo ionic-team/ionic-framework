@@ -2,7 +2,7 @@
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v0.9.14
+ * Ionic, v{{ VERSION }}
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -165,7 +165,7 @@ angular.module('ionic.service.loading', ['ionic.ui.loading'])
       // Make sure there is only one loading element on the page at one point in time
       var existing = angular.element($document[0].querySelector('.loading-backdrop'));
       if(existing.length) {
-        var scope = existing.scope();
+        scope = existing.scope();
         if(scope.loading) {
           scope.loading.show();
           return scope.loading;
@@ -718,7 +718,7 @@ angular.module('ionic.ui.content', [])
           $timeout(function() { 
             sv = new ionic.views.Scroll({
               el: $element[0],
-              scrollEventInterval: parseInt($scope.scrollEventInterval) || 40
+              scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 40
             });
 
             // Activate pull-to-refresh
@@ -1557,12 +1557,12 @@ angular.module('ionic.ui.radio', [])
       $scope.$on('radioButton.select', function(e, val) {
         if(val == $scope.$eval($attr.ngValue)) {
           $element.addClass('active');
-        };
+        }
       });
         
       $element.bind('click', clickHandler);
     }
-  }
+  };
 });
 
 })(window.ionic);
@@ -1656,9 +1656,9 @@ angular.module('ionic.ui.scroll', [])
           // Let child scopes access this 
           $scope.$parent.scrollView = sv;
         }, 500);
-      }
+      };
     }
-  }
+  };
 }]);
 
 })();
@@ -1888,7 +1888,7 @@ angular.module('ionic.ui.slideBox', [])
         });
       }
     }
-  }
+  };
 }])
 
 .directive('slide', function() {
@@ -1901,9 +1901,9 @@ angular.module('ionic.ui.slideBox', [])
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, slideBoxCtrl) {
         slideBoxCtrl.slideAdded();
-      }
+      };
     }
-  }
+  };
 })
 
 .directive('pager', function() {
@@ -1912,7 +1912,7 @@ angular.module('ionic.ui.slideBox', [])
     replace: true,
     require: '^slideBox',
     template: '<div class="slide-box-pager"><span ng-repeat="slide in slides"><i class="icon ion-record"></i></span></div>'
-  }
+  };
 
 });
 
@@ -2091,7 +2091,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
             });
           }
         });
-      }
+      };
     }
   };
 }])
@@ -2152,7 +2152,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     transclude: true,
     template: '<div class="tabs tabs-primary" ng-transclude>' + 
     '</div>'
-  }
+  };
 });
 
 ;
@@ -2217,10 +2217,10 @@ angular.module('ionic.ui.virtRepeat', [])
         var virtualList = ctrls[1];
 
         virtualList.listView.renderViewport = function(high, low, start, end) {
-        }
-      }
+        };
+      };
     }
-  }
+  };
 });
 })(ionic);
 ;
@@ -2278,7 +2278,7 @@ function findViewportAndContent(startElement){
         break;
       }
     }
-    if( n == null ){
+    if( n === null ){
       // That element should work as a viewport.
       return {
         viewport: angular.element(e),
@@ -2546,7 +2546,7 @@ angular.module('ionic.ui.virtualRepeat', [])
           // The watch on the collection is just a watch on the length of the
           // collection. We don't care if the content changes.
           scope.$watch(sfVirtualRepeatWatchExpression, sfVirtualRepeatListener, true);
-        }
+        };
       }
     };
   }]);

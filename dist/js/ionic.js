@@ -2,7 +2,7 @@
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v0.9.14
+ * Ionic, v{{ VERSION }}
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -16,20 +16,20 @@
 window.ionic = {
   controllers: {},
   views: {},
-  version: '0.9.14'
+  version: '{{ VERSION }}'
 };;
 (function(ionic) {
 
   var bezierCoord = function (x,y) {
-    if(!x) var x=0;
-    if(!y) var y=0;
+    if(!x) x=0;
+    if(!y) y=0;
     return {x: x, y: y};
-  }
+  };
 
-  function B1(t) { return t*t*t }
-  function B2(t) { return 3*t*t*(1-t) }
-  function B3(t) { return 3*t*(1-t)*(1-t) }
-  function B4(t) { return (1-t)*(1-t)*(1-t) }
+  function B1(t) { return t*t*t; }
+  function B2(t) { return 3*t*t*(1-t); }
+  function B3(t) { return 3*t*(1-t)*(1-t); }
+  function B4(t) { return (1-t)*(1-t)*(1-t); }
 
   ionic.Animator = {
     // Quadratic bezier solver
@@ -84,7 +84,7 @@ window.ionic = {
           if (Math.abs(x2 - x) < epsilon) return curveY(t2);
           if (x > x2) t0 = t2;
           else t1 = t2;
-          t2 = (t1 - t0) * .5 + t0;
+          t2 = (t1 - t0) * 0.5 + t0;
         }
 
         // Failure
@@ -154,7 +154,7 @@ window.ionic = {
           };
         }
       }
-      return null
+      return null;
     },
 
     getChildIndex: function(element, type) {
@@ -2126,7 +2126,7 @@ window.ionic = {
 
 			if (isNative) {
 				return function(callback, root) {
-					requestFrame(callback, root)
+					requestFrame(callback, root);
 				};
 			}
 
@@ -2186,7 +2186,7 @@ window.ionic = {
 		 * @return {Boolean} Whether the animation was stopped (aka, was running before)
 		 */
 		stop: function(id) {
-			var cleared = running[id] != null;
+			var cleared = running[id] !== null;
 			if (cleared) {
 				running[id] = null;
 			}
@@ -2202,7 +2202,7 @@ window.ionic = {
 		 * @return {Boolean} Whether the animation is still running
 		 */
 		isRunning: function(id) {
-			return running[id] != null;
+			return running[id] !== null;
 		},
 
 
@@ -2285,7 +2285,7 @@ window.ionic = {
 				var value = easingMethod ? easingMethod(percent) : percent;
 				if ((stepCallback(value, now, render) === false || percent === 1) && render) {
 					running[id] = null;
-					completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), id, percent === 1 || duration == null);
+					completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), id, percent === 1 || duration === null);
 				} else if (render) {
 					lastFrame = now;
 					core.effect.Animate.requestAnimationFrame(step, root);
@@ -2673,10 +2673,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
     // Update Scroller dimensions for changed content
     // Add padding to bottom of content
     this.setDimensions(
-    	Math.min(this.__container.clientWidth, this.__container.parentElement.clientWidth), 
-    	Math.min(this.__container.clientHeight, this.__container.parentElement.clientHeight), 
-    	this.__content.offsetWidth, 
-    	this.__content.offsetHeight+20);
+      Math.min(this.__container.clientWidth, this.__container.parentElement.clientWidth), 
+      Math.min(this.__container.clientHeight, this.__container.parentElement.clientHeight), 
+      this.__content.offsetWidth, 
+      this.__content.offsetHeight+20);
   },
   /*
   ---------------------------------------------------------------------------
@@ -2689,7 +2689,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     var content = this.__content;
 
-	  var docStyle = document.documentElement.style;
+    var docStyle = document.documentElement.style;
 
     var engine;
     if ('MozAppearance' in docStyle) {
@@ -2926,11 +2926,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
     var oldLevel = self.__zoomLevel;
 
     // Normalize input origin to center of viewport if not defined
-    if (originLeft == null) {
+    if (originLeft === null) {
       originLeft = self.__clientWidth / 2;
     }
 
-    if (originTop == null) {
+    if (originTop === null) {
       originTop = self.__clientHeight / 2;
     }
 
@@ -3000,7 +3000,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     }
 
     // Correct coordinates based on new zoom level
-    if (zoom != null && zoom !== self.__zoomLevel) {
+    if (zoom !== null && zoom !== self.__zoomLevel) {
 
       if (!self.options.zooming) {
         throw new Error("Zooming is not enabled!");
@@ -3108,7 +3108,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
   doTouchStart: function(touches, timeStamp) {
 
     // Array-like check is enough here
-    if (touches.length == null) {
+    if (touches.length === null) {
       throw new Error("Invalid touch list: " + touches);
     }
 
@@ -3194,7 +3194,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
   doTouchMove: function(touches, timeStamp, scale) {
 
     // Array-like check is enough here
-    if (touches.length == null) {
+    if (touches.length === null) {
       throw new Error("Invalid touch list: " + touches);
     }
 
@@ -3239,7 +3239,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       var level = self.__zoomLevel;
 
       // Work with scaling
-      if (scale != null && self.options.zooming) {
+      if (scale !== null && self.options.zooming) {
 
         var oldLevel = level;
 
@@ -3304,7 +3304,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
             scrollTop += (moveY / 2 * this.options.speedMultiplier);
 
             // Support pull-to-refresh (only when only y is scrollable)
-            if (!self.__enableScrollX && self.__refreshHeight != null) {
+            if (!self.__enableScrollX && self.__refreshHeight !== null) {
 
               if (!self.__refreshActive && scrollTop <= -self.__refreshHeight) {
 
@@ -3596,7 +3596,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     var self = this;
 
-    if (zoomLevel == null) {
+    if (zoomLevel === null) {
       zoomLevel = self.__zoomLevel;
     }
 
