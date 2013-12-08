@@ -30,8 +30,16 @@
 
   // polyfill use to simulate native "tap"
   function inputTapPolyfill(ele, e) {
-    if(ele.type === "radio" || ele.type === "checkbox") {
-      //ele.checked = !ele.checked;
+    if(ele.type === "radio") {
+      ele.checked = !ele.checked;
+      ionic.trigger('click', {
+        target: ele
+      });
+    } else if(ele.type === "checkbox") {
+      ele.checked = !ele.checked;
+      ionic.trigger('change', {
+        target: ele
+      });
     } else if(ele.type === "submit" || ele.type === "button") {
       ionic.trigger('click', {
         target: ele

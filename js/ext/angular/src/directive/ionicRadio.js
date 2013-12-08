@@ -14,8 +14,8 @@ angular.module('ionic.ui.radio', [])
       value: '@'
     },
     transclude: true,
-    template: '<label ng-click="tapHandler($event)" class="item item-radio">\
-                <input type="radio" name="group">\
+    template: '<label class="item item-radio">\
+                <input type="radio" name="radio-group">\
                 <div class="item-content" ng-transclude>\
                 </div>\
                 <i class="radio-icon icon ion-checkmark"></i>\
@@ -30,19 +30,14 @@ angular.module('ionic.ui.radio', [])
 
       if(!radio.length) { return; }
 
-      $scope.tapHandler = function(e) {
-        radio[0].checked = true;
-        ngModel.$setViewValue($scope.$eval($attr.ngValue));
-        e.alreadyHandled = true;
-      };
-
-      var clickHandler = function(e) {
-        ngModel.$setViewValue($scope.$eval($attr.ngValue));
-      };
-
       if(ngModel) {
-        //$element.bind('tap', tapHandler);
-        $element.bind('click', clickHandler);
+        radio.bind('click', function(e) {
+          console.log('RADIO CLICK');
+          $scope.$apply(function() {
+            ngModel.$setViewValue($scope.$eval($attr.ngValue));
+          });
+          e.alreadyHandled = true;
+        });
 
         ngModel.$render = function() {
           var val = $scope.$eval($attr.ngValue);
@@ -112,18 +107,15 @@ angular.module('ionic.ui.radio', [])
       if(!ngModel || !radioButtons) { return; }
 
       var setIt = function() {
+        console.log('SET');
         $element.addClass('active');
         ngModel.$setViewValue($scope.$eval($attr.ngValue));
 
         radioButtons.select($element);
       };
 
-      $scope.tapHandler = function(e) {
-        setIt();
-        e.alreadyHandled = true;
-      };
-
       var clickHandler = function(e) {
+        console.log('CLICK');
         setIt();
       };
 

@@ -11,32 +11,29 @@ angular.module('ionic.ui.checkbox', [])
     require: '?ngModel',
     scope: {},
     transclude: true,
-    template: '<label ng-click="tapHandler($event)" class="checkbox"><input type="checkbox"><div ng-transclude></div></label>',
-  
+    template: '<li class="item item-checkbox">\
+                <label class="checkbox">\
+                  <input type="checkbox">\
+                </label>\
+                <div class="item-content" ng-transclude>\
+                </div>\
+              </li>',
 
     link: function($scope, $element, $attr, ngModel) {
       var checkbox;
 
       if(!ngModel) { return; }
 
-      checkbox = $element.children().eq(0);
+      checkbox = angular.element($element[0].querySelector('input[type="checkbox"]'));
 
       if(!checkbox.length) { return; }
 
-      $scope.tapHandler = function(e) {
-        if(e.type != 'click') {
-          checkbox[0].checked = !checkbox[0].checked;
-        }
+      checkbox.bind('change', function(e) {
         ngModel.$setViewValue(checkbox[0].checked);
-        e.alreadyHandled = true;
-      };
-
-      var clickHandler = function(e) {
-        checkbox[0].checked = !checkbox[0].checked;
         $scope.$apply(function() {
-          ngModel.$setViewValue(checkbox[0].checked);
+          e.alreadyHandled = true;
         });
-      };
+      });
 
       if(ngModel) {
         ngModel.$render = function() {

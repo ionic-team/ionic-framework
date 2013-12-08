@@ -40,7 +40,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
       };
     }],
 
-    link: function($scope, $element, $attr) {
+    link: function($scope, $element, $attr, ctrl) {
       if(!$element.length) return;
 
       $scope.animation = $attr.animation;
@@ -98,6 +98,10 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
           isFirst = false;
         }
       });  
+
+      $scope.$on('navRouter.goBack', function(e) {
+        ctrl.goBack();
+      });
 
 
       // Keep track of location changes and update a stack pointer that tracks whether we are
@@ -370,7 +374,6 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
 .directive('navBack', ['$window', '$rootScope', 'Gesture', function($window, $rootScope, Gesture) {
   return {
     restrict: 'AC',
-    require: '^?navRouter',
     link: function($scope, $element, $attr, navCtrl) {
       var goBack = function(e) {
         // Only trigger back if the stack is greater than zero
@@ -378,7 +381,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
           $window.history.back();
 
           // Fallback for bad history supporting devices
-          navCtrl.goBack();
+          $scope.$emit('navRouter.goBack');
         }
         e.alreadyHandled = true;
         return false;
