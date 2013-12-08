@@ -22,7 +22,7 @@ describe('Ionic Angular Slide Box', function() {
       <slide>\
       <div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>\
       </slide>\
-    </slide-box>');
+    </slide-box>')($rootScope);
   }));
 
   it('Should init', function() {
