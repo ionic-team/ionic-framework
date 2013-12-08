@@ -66,7 +66,9 @@
         has-tabs="true"
         has-header="true"
         >
-        <refresher></refresher>
+        <scroll-refresher>
+          <i class="icon ion-loading-c"></i>
+        </scroll-refresher>
         <ul class="list" ng-controller="AppCtrl">
           <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
         </ul>

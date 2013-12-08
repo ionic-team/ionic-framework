@@ -117,10 +117,14 @@ body, .ionic-body {
 }
 
 .scroll-refresher-content {
-  position: relative;
+  position: absolute;
+  left: 0;
+  bottom: 15px;
   width: 100%;
-  height: 100%;
   text-align: center;
+
+  font-size: 30px;
+  color: $scroll-refresh-icon-color;
 }
 
 .ionic-refresher-content {

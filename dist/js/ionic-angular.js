@@ -775,12 +775,12 @@ angular.module('ionic.ui.content', [])
   };
 })
 
-.directive('scroll-refresher', function() {
+.directive('scrollRefresher', function() {
   return {
     restrict: 'E',
     replace: true,
     transclude: true,
-    template: '<div class="scroll-refresher"><div class="scroll-refresher-content"></div></div>'
+    template: '<div class="scroll-refresher"><div class="scroll-refresher-content" ng-transclude></div></div>'
   };
 });
 

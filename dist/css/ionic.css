@@ -2,7 +2,7 @@
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v0.9.14
+ * Ionic, v{{ VERSION }}
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -2613,10 +2613,13 @@ body, .ionic-body {
     animation-duration: 1.5s; }
 
 .scroll-refresher-content {
-  position: relative;
+  position: absolute;
+  left: 0;
+  bottom: 15px;
   width: 100%;
-  height: 100%;
-  text-align: center; }
+  text-align: center;
+  font-size: 30px;
+  color: #666666; }
 
 .ionic-refresher-content {
   position: absolute;
