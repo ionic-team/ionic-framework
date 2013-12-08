@@ -587,32 +587,29 @@ angular.module('ionic.ui.checkbox', [])
     require: '?ngModel',
     scope: {},
     transclude: true,
-    template: '<label ng-click="tapHandler($event)" class="checkbox"><input type="checkbox"><div ng-transclude></div></label>',
-  
+    template: '<li class="item item-checkbox">\
+                <label class="checkbox">\
+                  <input type="checkbox">\
+                </label>\
+                <div class="item-content" ng-transclude>\
+                </div>\
+              </li>',
 
     link: function($scope, $element, $attr, ngModel) {
       var checkbox;
 
       if(!ngModel) { return; }
 
-      checkbox = $element.children().eq(0);
+      checkbox = angular.element($element[0].querySelector('input[type="checkbox"]'));
 
       if(!checkbox.length) { return; }
 
-      $scope.tapHandler = function(e) {
-        if(e.type != 'click') {
-          checkbox[0].checked = !checkbox[0].checked;
-        }
+      checkbox.bind('change', function(e) {
         ngModel.$setViewValue(checkbox[0].checked);
-        e.alreadyHandled = true;
-      };
-
-      var clickHandler = function(e) {
-        checkbox[0].checked = !checkbox[0].checked;
         $scope.$apply(function() {
-          ngModel.$setViewValue(checkbox[0].checked);
+          e.alreadyHandled = true;
         });
-      };
+      });
 
       if(ngModel) {
         ngModel.$render = function() {
@@ -1083,7 +1080,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
       };
     }],
 
-    link: function($scope, $element, $attr) {
+    link: function($scope, $element, $attr, ctrl) {
       if(!$element.length) return;
 
       $scope.animation = $attr.animation;
@@ -1141,6 +1138,10 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
           isFirst = false;
         }
       });  
+
+      $scope.$on('navRouter.goBack', function(e) {
+        ctrl.goBack();
+      });
 
 
       // Keep track of location changes and update a stack pointer that tracks whether we are
@@ -1413,7 +1414,6 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
 .directive('navBack', ['$window', '$rootScope', 'Gesture', function($window, $rootScope, Gesture) {
   return {
     restrict: 'AC',
-    require: '^?navRouter',
     link: function($scope, $element, $attr, navCtrl) {
       var goBack = function(e) {
         // Only trigger back if the stack is greater than zero
@@ -1421,7 +1421,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
           $window.history.back();
 
           // Fallback for bad history supporting devices
-          navCtrl.goBack();
+          $scope.$emit('navRouter.goBack');
         }
         e.alreadyHandled = true;
         return false;
@@ -1449,8 +1449,8 @@ angular.module('ionic.ui.radio', [])
       value: '@'
     },
     transclude: true,
-    template: '<label skip-tap-poly ng-click="tapHandler($event)" class="item item-radio">\
-                <input type="radio" name="group">\
+    template: '<label class="item item-radio">\
+                <input type="radio" name="radio-group">\
                 <div class="item-content" ng-transclude>\
                 </div>\
                 <i class="radio-icon icon ion-checkmark"></i>\
@@ -1465,21 +1465,14 @@ angular.module('ionic.ui.radio', [])
 
       if(!radio.length) { return; }
 
-      $scope.tapHandler = function(e) {
-        console.log("RADIOTAP");
-        radio[0].checked = true;
-        ngModel.$setViewValue($scope.$eval($attr.ngValue));
-        e.alreadyHandled = true;
-      };
-
-      var clickHandler = function(e) {
-        console.log("RADIOCLICK");
-        ngModel.$setViewValue($scope.$eval($attr.ngValue));
-      };
-
       if(ngModel) {
-        //$element.bind('tap', tapHandler);
-        $element.bind('click', clickHandler);
+        radio.bind('click', function(e) {
+          console.log('RADIO CLICK');
+          $scope.$apply(function() {
+            ngModel.$setViewValue($scope.$eval($attr.ngValue));
+          });
+          e.alreadyHandled = true;
+        });
 
         ngModel.$render = function() {
           var val = $scope.$eval($attr.ngValue);
@@ -1549,7 +1542,7 @@ angular.module('ionic.ui.radio', [])
       if(!ngModel || !radioButtons) { return; }
 
       var setIt = function() {
-        console.trace('SET');
+        console.log('SET');
         $element.addClass('active');
         ngModel.$setViewValue($scope.$eval($attr.ngValue));
 
@@ -1567,7 +1560,7 @@ angular.module('ionic.ui.radio', [])
         };
       });
         
-      $element.bind('tap', clickHandler);
+      $element.bind('click', clickHandler);
     }
   }
 });

@@ -30,8 +30,16 @@
 
   // polyfill use to simulate native "tap"
   function inputTapPolyfill(ele, e) {
-    if(ele.type === "radio" || ele.type === "checkbox") {
+    if(ele.type === "radio") {
       ele.checked = !ele.checked;
+      ionic.trigger('click', {
+        target: ele
+      });
+    } else if(ele.type === "checkbox") {
+      ele.checked = !ele.checked;
+      ionic.trigger('change', {
+        target: ele
+      });
     } else if(ele.type === "submit" || ele.type === "button") {
       ionic.trigger('click', {
         target: ele
@@ -45,7 +53,6 @@
   }
 
   function tapPolyfill(e) {
-    console.log('TAP POLY');
     // if the source event wasn't from a touch event then don't use this polyfill
     if(!e.gesture || e.gesture.pointerType !== "touch" || !e.gesture.srcEvent) return;
 
@@ -55,7 +62,6 @@
     // the tap stuff itself). This is in contrast to preventDefault which will
     // mess up other operations like change events and such
     if(e.alreadyHandled) {
-      console.log('POLY HANDLED');
       return;
     }
 
@@ -63,35 +69,17 @@
 
     var ele = e.target;
 
-    console.log('TARGET', ele);
-
     while(ele) {
-      // Skip ones that have the poly skip
-      if(ele.getAttribute('skip-tap-poly')) { 
-        ele = ele.parentElement;
-        continue;
-      }
-
       if( ele.tagName === "INPUT" || ele.tagName === "TEXTAREA" || ele.tagName === "SELECT" ) {
-        console.log('INPUT POLY');
         return inputTapPolyfill(ele, e);
       } else if( ele.tagName === "LABEL" ) {
-        console.log('LABEL POLY');
         if(ele.control) {
           return inputTapPolyfill(ele.control, e);
         }
       } else if( ele.tagName === "A" || ele.tagName === "BUTTON" ) {
-        if(ele.getAttribute('href')) {
-          console.log('HREF POLY', ele);
-          ionic.trigger('click', {
-            target: ele
-          });
-        } else {
-          console.log('BUTTON POLY', ele);
-          ionic.trigger('tap', {
-            target: ele
-          });
-        }
+        ionic.trigger('click', {
+          target: ele
+        });
         e.stopPropagation();
         e.preventDefault();
         return false;
@@ -99,7 +87,6 @@
       ele = ele.parentElement;
     }
 
-    console.log('NEITHER POLY');
     // they didn't tap one of the above elements
     // if the currently active element is an input, and they tapped outside
     // of the current input, then unset its focus (blur) so the keyboard goes away
