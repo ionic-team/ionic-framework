@@ -161,9 +161,9 @@
         this._leftShowing = false;
 
         // Bring the z-index of the right menu up
-        this.right && this.right.bringUp();
+        this.right && this.right.bringUp && this.right.bringUp();
         // Push the z-index of the left menu down
-        this.left && this.left.pushDown();
+        this.left && this.left.pushDown && this.left.pushDown();
       }
     },
 
