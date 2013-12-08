@@ -88,22 +88,12 @@ module.exports = function(grunt) {
       }
     },
     'string-replace': {
-      versionJS: {
+      version: {
         files: {
           'dist/js/ionic.js': 'dist/js/ionic.js',
           'dist/js/ionic.min.js': 'dist/js/ionic.min.js',
           'dist/js/ionic-angular.js': 'dist/js/ionic-angular.js',
-          'dist/js/ionic-angular.min.js': 'dist/js/ionic-angular.min.js'
-        },
-        options: {
-          replacements: [{
-            pattern: /{{ VERSION }}/g,
-            replacement: '<%= pkg.version %>'
-          }]
-        }
-      },
-      versionCSS: {
-        files: {
+          'dist/js/ionic-angular.min.js': 'dist/js/ionic-angular.min.js',
           'dist/css/ionic.css': 'dist/css/ionic.css',
           'dist/css/ionic.min.css': 'dist/css/ionic.min.css'
         },
@@ -118,14 +108,14 @@ module.exports = function(grunt) {
     watch: {
       scripts: {
         files: ['js/**/*.js', 'ext/**/*.js'],
-        tasks: ['concat', 'string-replace:versionJS'],
+        tasks: ['concat', 'string-replace'],
         options: {
           spawn: false
         }
       },
       sass: {
         files: ['scss/**/*.scss'],
-        tasks: ['sass', 'concat', 'string-replace:versionCSS'],
+        tasks: ['sass', 'concat', 'string-replace'],
         options: {
           spawn: false
         }
