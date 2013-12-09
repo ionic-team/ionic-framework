@@ -1,0 +1,18 @@
+#search-input {
+  text-align: center;
+}
+
+#photos {
+-webkit-flex-wrap: wrap; 
+-webkit-flex-direction: row;
+}
+
+.photo {
+  width: 25%;
+  min-width: 150px;
+  max-width: 200px;
+  max-height: 200px;
+  margin: 10px;
+  float: left;
+}
+.photo img { width: 100%; }
