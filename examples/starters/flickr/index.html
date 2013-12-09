@@ -28,17 +28,16 @@
 <body>
 
   <div ng-controller="FlickrCtrl">
-    <header-bar title="'Flickr Search'" type="bar-dark">
-    </header-bar>
-    <content has-header="true">
-      <div class="list">
-        <div class="item item-input-inset">
-          <label class="item-input-wrapper" id="search-input">
-            <i class="icon ion-search placeholder-icon"></i>
-            <input type="text" placeholder="Search" ng-model="query" ng-change="search()">
-          </label>
-        </div>
+    <header-bar title="'Flickr Search'" type="bar-dark"></header-bar>
+    <div id="search-bar">
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper" id="search-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="text" placeholder="Search" ng-model="query" ng-change="search()">
+        </label>
       </div>
+    </div>
+    <content id="content" push-search>
       <div id="photos" class="clearfix">
         <div class="photo" ng-repeat="photo in photos.items">
           <img ng-src="{{ photo.media.m }}">

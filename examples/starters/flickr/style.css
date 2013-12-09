@@ -8,11 +8,30 @@
 }
 
 .photo {
-  width: 25%;
-  min-width: 150px;
-  max-width: 200px;
-  max-height: 200px;
-  margin: 10px;
+  width: 100px;
+  height: 100px;
+  margin: 1px;
   float: left;
+  overflow: hidden;
 }
-.photo img { width: 100%; }
+.photo img {
+  min-width: 100%;
+  min-height: 100%;
+}
+
+#search-bar {
+  background: none;
+  position: absolute;
+  width: 100%;
+  top: 44px;
+  height: 40px;
+  z-index: 3;
+}
+#search-bar .item {
+  background: none;
+  border: none;
+}
+#content {
+  top: 44px;
+  padding-top: 45px;
+}
