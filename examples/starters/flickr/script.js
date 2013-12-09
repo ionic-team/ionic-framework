@@ -20,7 +20,9 @@ angular.module('myApp', ['ionic', 'ngResource'])
     }
   }
 })
+
 .controller('FlickrCtrl', function($scope, Flickr) {
+
   var doSearch = ionic.debounce(function(query) {
     Flickr.search(query).then(function(resp) {
       $scope.photos = resp;
@@ -54,3 +56,12 @@ angular.module('myApp', ['ionic', 'ngResource'])
   }
 })
 
+.directive('photo', function($window) {
+  return {
+    restrict: 'C',
+    link: function($scope, $element, $attr) {
+      var size = ($window.outerWidth / 3) - 2;
+      $element.css('width', size + 'px');
+    }
+  }
+});
