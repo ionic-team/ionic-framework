@@ -25,7 +25,7 @@ angular.module('myApp', ['ionic', 'ngResource'])
     Flickr.search(query).then(function(resp) {
       $scope.photos = resp;
     });
-  }, 300);
+  }, 500);
   
   $scope.search = function() {
     doSearch($scope.query);

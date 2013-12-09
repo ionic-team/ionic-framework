@@ -3,8 +3,7 @@
 }
 
 #photos {
--webkit-flex-wrap: wrap; 
--webkit-flex-direction: row;
+  margin: auto;
 }
 
 .photo {
@@ -17,6 +16,8 @@
 .photo img {
   min-width: 100%;
   min-height: 100%;
+  max-width: 150%;
+  max-height: 150%;
 }
 
 #search-bar {
@@ -34,4 +35,5 @@
 #content {
   top: 44px;
   padding-top: 45px;
+  padding-bottom: 20px;
 }

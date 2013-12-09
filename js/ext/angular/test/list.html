@@ -77,8 +77,8 @@
                 can-delete="true"
                 can-reorder="true"
                 can-swipe="true"
-                on-delete="deleteProject(project)"
-                on-select="selectProject(project)">
+                on-delete="deleteProject(item)"
+                on-select="selectProject(item)">
                <i class="icon ion-email ion-primary"></i>
               {{item.text}}
               <i class="{{item.icon}}"></i>
@@ -104,6 +104,10 @@
         var removeItem = function(item) {
           // Remove ourselves
           $scope.items.splice($scope.items.indexOf(item), 1);
+        };
+
+        $scope.selectProject = function(project) {
+          console.log('Selected project', project);
         };
 
         $scope.almostRefreshing = function() {

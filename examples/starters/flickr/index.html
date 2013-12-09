@@ -39,7 +39,7 @@
     </div>
     <content id="content" push-search>
       <div id="photos" class="clearfix">
-        <div class="photo" ng-repeat="photo in photos.items">
+        <div class="photo" ng-repeat="photo in photos.items" ng-style="photoStyle">
           <img ng-src="{{ photo.media.m }}">
         </div>
       </div>

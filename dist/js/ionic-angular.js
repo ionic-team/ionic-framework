@@ -719,7 +719,7 @@ angular.module('ionic.ui.content', [])
           $timeout(function() { 
             sv = new ionic.views.Scroll({
               el: $element[0],
-              scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 40,
+              scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 20,
               scrollingComplete: function() {
                 $scope.onScrollComplete({
                   scrollTop: this.__scrollTop,
@@ -816,7 +816,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       type: '@',
       href: '@'
     },
-    template: '<a href="{{href}}" class="item">\
+    template: '<a href="{{href}}" ng-click="onSelect()" class="item">\
             <div class="item-edit" ng-if="canDelete && isEditing">\
               <button class="button button-icon icon" ng-class="deleteIcon" ng-click="onDelete()"></button>\
             </div>\
@@ -895,7 +895,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       buttons: '=',
       type: '@',
     },
-    template: '<li class="item">\
+    template: '<li ng-click="onSelect()" class="item">\
             <div class="item-edit" ng-if="canDelete && isEditing">\
               <button class="button button-icon icon" ng-class="deleteIcon" ng-click="onDelete()"></button>\
             </div>\
