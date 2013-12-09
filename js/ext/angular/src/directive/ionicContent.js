@@ -28,6 +28,7 @@ angular.module('ionic.ui.content', [])
       onRefresh: '&',
       onRefreshOpening: '&',
       onScroll: '&',
+      onScrollComplete: '&',
       refreshComplete: '=',
       scroll: '@',
       hasScrollX: '@',
@@ -94,7 +95,13 @@ angular.module('ionic.ui.content', [])
           $timeout(function() { 
             sv = new ionic.views.Scroll({
               el: $element[0],
-              scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 40
+              scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 40,
+              scrollingComplete: function() {
+                $scope.onScrollComplete({
+                  scrollTop: this.__scrollTop,
+                  scrollLeft: this.__scrollLeft
+                });
+              }
             });
 
             // Activate pull-to-refresh

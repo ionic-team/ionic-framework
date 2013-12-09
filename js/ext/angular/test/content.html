@@ -60,6 +60,7 @@
 
       <content id="container"
         on-scroll="onScroll(event, scrollTop, scrollLeft)"
+        on-scroll-complete="onScrollComplete(scrollTop, scrollLeft)"
         on-refresh="onRefresh()"
         on-refresh-opening="onRefreshOpening(amount)"
         refresh-complete="refreshComplete"
@@ -114,6 +115,9 @@
         var header = document.getElementById('header');
         var content = document.getElementById('container');
         var startTop = header.offsetTop;
+        $scope.onScrollComplete = function(event, scrollTop, scrollLeft) {
+          console.log('Scroll complete', scrollTop, scrollLeft);
+        }
         $scope.onScroll = function(event, scrollTop, scrollLeft) {
           if(scrollTop > startTop) {
             var diff = scrollTop - startTop;
