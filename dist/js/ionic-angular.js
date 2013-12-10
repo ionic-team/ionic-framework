@@ -730,7 +730,7 @@ angular.module('ionic.ui.content', [])
 
             // Activate pull-to-refresh
             if(refresher) {
-              sv.activatePullToRefresh(refresherHeight, function() {
+              sv.activatePullToRefresh(50, function() {
                 refresher.classList.add('active');
               }, function() {
                 refresher.classList.remove('refreshing');
