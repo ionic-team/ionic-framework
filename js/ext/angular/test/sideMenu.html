@@ -18,12 +18,12 @@
 
     <div ng-controller="MenuCtrl">
       <side-menus>
-        <pane side-menu-content>
+        <pane side-menu-content drag-content="false">
           <header class="bar bar-header bar-assertive">
             <button class="button button-icon" ng-click="openLeft()"><i class="icon ion-navicon"></i></button>
             <h1 class="title">Slide me</h1>
           </header>
-          <content>
+          <content has-header="true">
             <h1>Content</h1>
           </content>
         </pane>
@@ -31,7 +31,7 @@
           <header class="bar bar-header bar-assertive">
             <h1 class="title">Left</h1>
           </header>
-          <content>
+          <content has-header="true">
             <ul class="list">
               <a href="#" class="item" ng-repeat="item in list">
                 {{item.text}}

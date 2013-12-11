@@ -137,9 +137,11 @@ body, .ionic-body {
   font-size: 30px;
   color: $scroll-refresh-icon-color;
 
-  @include animation-duration(200ms);
-  @include animation-timing-function(linear);
-  @include animation-fill-mode(both);
+  .icon-pulling {
+    @include animation-duration(200ms);
+    @include animation-timing-function(linear);
+    @include animation-fill-mode(both);
+  }
 }
 
 @keyframes refresh-spin {
@@ -171,7 +173,9 @@ body, .ionic-body {
   }
 
   .ionic-refresher-content {
-    @include animation-name(refresh-spin);
+    .icon-pulling {
+      @include animation-name(refresh-spin);
+    }
   }
 }
 

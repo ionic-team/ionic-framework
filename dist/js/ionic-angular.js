@@ -1727,6 +1727,8 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 
         $element.addClass('menu-content');
 
+        $scope.dragContent = $scope.$eval($attr.dragContent) === false ? false : true;
+
         var defaultPrevented = false;
         var isDragging = false;
 
@@ -1743,12 +1745,14 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
         */
 
         var dragFn = function(e) {
-          if(defaultPrevented) {
-            return;
+          if($scope.dragContent) {
+            if(defaultPrevented) {
+              return;
+            }
+            isDragging = true;
+            sideMenuCtrl._handleDrag(e);
+            e.gesture.srcEvent.preventDefault();
           }
-          isDragging = true;
-          sideMenuCtrl._handleDrag(e);
-          e.gesture.srcEvent.preventDefault();
         };
 
         var dragVertFn = function(e) {
