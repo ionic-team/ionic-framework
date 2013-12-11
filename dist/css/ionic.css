@@ -3953,7 +3953,9 @@ button.item.item-button-right {
   padding-right: 75px; }
 
 .item-button-right > .button,
-.item-button-right .item-content > .button {
+.item-button-right .item-content > .button,
+.item-button-right > .buttons,
+.item-button-right .item-content > .buttons {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -3972,11 +3974,20 @@ button.item.item-button-right {
   min-height: 32px;
   font-size: 32px; }
   .item-button-right > .button .icon,
-  .item-button-right .item-content > .button .icon {
+  .item-button-right .item-content > .button .icon,
+  .item-button-right > .buttons .icon,
+  .item-button-right .item-content > .buttons .icon {
     position: relative;
     left: auto;
     width: auto;
     line-height: 31px; }
+  .item-button-right > .button > .button,
+  .item-button-right .item-content > .button > .button,
+  .item-button-right > .buttons > .button,
+  .item-button-right .item-content > .buttons > .button {
+    min-height: 32px;
+    font-size: 32px;
+    margin: 0px 2px; }
 
 /**
  * Auto Right Arrow Icon
