@@ -14,45 +14,6 @@
     <script src="../../../../dist/js/angular/angular-touch.js"></script>
     <script src="../../../../dist/js/angular/angular-sanitize.js"></script>
     <script src="../../../../dist/js/ionic-angular.js"></script>
-    <style>
-      .reveal-animation {
-        /*
-        -webkit-transform: translate3d(0%, 0, 0);
-                transform: translate3d(0%, 0, 0);
-
-       -webkit-transition: -webkit-transform 1s ease-in-out;
-               transition:         transform 1s ease-in-out;
-        */
-      }
-      .reveal-animation.ng-enter {
-        -webkit-transition: .2s ease-in-out all;
-        -webkit-transform:translate3d(100%,0,0) ;
-      }
-      .reveal-animation.ng-enter-active {
-        -webkit-transform:translate3d(0,0,0) ;
-      }
-      .reveal-animation.ng-leave {
-        -webkit-transition: .2s ease-in-out all;
-        -webkit-transform:translate3d(0%,0,0);
-      }
-      .reveal-animation.ng-leave-active {
-        -webkit-transition: .2s ease-in-out all;
-        -webkit-transform:translate3d(-100%,0,0);
-      }
-
-      .scroll-refresher {
-        border-bottom: 1px solid #eee;
-      }
-      #refresh-content {
-        color: #999;
-        text-align: center;
-        font-size: 48px;
-        position: absolute;
-        bottom: 10px;
-        width: 100%;
-      }
-    </style>
-
   </head>
   <body ng-controller="ThisCtrl">
     <pane>
@@ -67,10 +28,7 @@
         has-tabs="true"
         has-header="true"
         >
-        <ul class="list" ng-controller="AppCtrl">
-          <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
-        </ul>
-        <input type="text" placeholder="INPUT TEXT">
+        <div ng-repeat="items in items">{{$index}}</div>
       </content>
       <nav id="tab-bar" class="tabs tabs-icon-top">
         <a class="tab-item" href="#">
@@ -109,13 +67,26 @@
         }
       })
 
-      .controller('ThisCtrl', function($scope) {
+      .controller('ThisCtrl', function($scope, $timeout) {
         var header = document.getElementById('header');
         var content = document.getElementById('container');
         var startTop = header.offsetTop;
         $scope.onScrollComplete = function(event, scrollTop, scrollLeft) {
-          console.log('Scroll complete', scrollTop, scrollLeft);
         }
+        $timeout(function() {
+          $scope.items = [];
+          for(var i = 0; i < 70; i++) {
+            $scope.items.push({
+            });
+          }
+        }, 2000);
+        $timeout(function() {
+          for(var i = 0; i < 70; i++) {
+            $scope.items.push({
+            });
+          }
+          $scope.$broadcast('scroll.resize');
+        }, 4000);
         var last = 0;
         $scope.onScroll = function(event, scrollTop, scrollLeft) {
         /*
@@ -131,14 +102,8 @@
       })
 
       .controller('AppCtrl', function($scope, $compile, $timeout, $element) {
-        $scope.items = [];
-        for(var i = 0; i < 70; i++) {
-          $scope.items.push({
-          });
-        }
-        $timeout(function() {
-          $scope.scrollView.resize();
-        }, 1000);
+          /*
+          */
       })
     </script>
   </body>

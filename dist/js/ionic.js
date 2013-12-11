@@ -2614,6 +2614,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
   __indicatorX: null,
   __indicatorY: null,
 
+  /** {Boolean} whether we've tried to wait for size already */
+  __didWaitForSize: null,
+  __sizerTimeout: null,
 
   __initEventHandlers: function() {
     var self = this;
@@ -3787,9 +3790,29 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.__maxScrollLeft = Math.max((self.__contentWidth * zoomLevel) - self.__clientWidth, 0);
     self.__maxScrollTop = Math.max((self.__contentHeight * zoomLevel) - self.__clientHeight, 0);
 
+    if(!self.__didWaitForSize && self.__maxScrollLeft == 0 && self.__maxScrollTop == 0) {
+      self.__didWaitForSize = true;
+      self.__waitForSize();
+    }
   },
 
 
+  /**
+   * If the scroll view isn't sized correctly on start, wait until we have at least some size
+   */
+  __waitForSize: function() {
+
+    var self = this;
+
+    clearTimeout(self.__sizerTimeout);
+    self.__sizerTimeout = setTimeout(function sizer() {
+      self.resize();
+      if(self.__maxScrollLeft == 0 && self.__maxScrollTop == 0) {
+        self.__sizerTimeout = setTimeout(sizer, 1000);
+      }
+    }, 1000);
+
+  },
 
   /*
   ---------------------------------------------------------------------------

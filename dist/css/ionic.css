@@ -2611,7 +2611,7 @@ body, .ionic-body {
   height: 3px;
   left: 2px;
   right: 2px;
-  bottom: 0; }
+  bottom: 3px; }
   .scroll-bar-h .scroll-bar-indicator {
     height: 100%; }
 
@@ -2619,14 +2619,14 @@ body, .ionic-body {
   width: 3px;
   bottom: 2px;
   top: 2px;
-  right: 1px; }
+  right: 3px; }
   .scroll-bar-v .scroll-bar-indicator {
     width: 100%; }
 
 .scroll-bar-indicator {
   position: absolute;
   background: rgba(0, 0, 0, 0.3);
-  border-radius: 2px; }
+  border-radius: 4px; }
 
 .scroll-refresher {
   overflow: hidden;

@@ -747,6 +747,13 @@ angular.module('ionic.ui.content', [])
               });
             });
 
+            $scope.$parent.$on('scroll.resize', function(e) {
+              // Run the resize after this digest
+              $timeout(function() {
+                sv && sv.resize();
+              })
+            });
+
             $scope.$parent.$on('scroll.refreshComplete', function(e) {
               sv && sv.finishPullToRefresh();
             });
@@ -1655,6 +1662,13 @@ angular.module('ionic.ui.scroll', [])
               scrollTop: e.detail ? e.detail.scrollTop : e.originalEvent ? e.originalEvent.detail.scrollTop : 0,
               scrollLeft: e.detail ? e.detail.scrollLeft: e.originalEvent ? e.originalEvent.detail.scrollLeft : 0
             });
+          });
+
+          $scope.$parent.$on('scroll.resize', function(e) {
+            // Run the resize after this digest
+            $timeout(function() {
+              sv && sv.resize();
+            })
           });
 
           $scope.$parent.$on('scroll.refreshComplete', function(e) {

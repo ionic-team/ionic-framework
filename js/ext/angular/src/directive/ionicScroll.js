@@ -84,6 +84,13 @@ angular.module('ionic.ui.scroll', [])
             });
           });
 
+          $scope.$parent.$on('scroll.resize', function(e) {
+            // Run the resize after this digest
+            $timeout(function() {
+              sv && sv.resize();
+            })
+          });
+
           $scope.$parent.$on('scroll.refreshComplete', function(e) {
             sv && sv.finishPullToRefresh();
           });
