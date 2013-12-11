@@ -15,6 +15,8 @@ angular.module('ionic.ui.scroll', [])
       onScroll: '&',
       refreshComplete: '=',
       scroll: '@',
+      scrollbarX: '@',
+      scrollbarY: '@',
     },
 
     compile: function(element, attr, transclude) {
@@ -54,6 +56,8 @@ angular.module('ionic.ui.scroll', [])
 
           sv = new ionic.views.Scroll({
             el: $element[0],
+            scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
+            scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
             scrollingX: hasScrollingX,
             scrollingY: hasScrollingY
           });

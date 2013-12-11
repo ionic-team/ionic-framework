@@ -59,18 +59,11 @@
       <header-bar id="header" title="'Title'" type="bar-primary" hides-header></header-bar>
 
       <content id="container"
-        on-scroll="onScroll(event, scrollTop, scrollLeft)"
-        on-scroll-complete="onScrollComplete(scrollTop, scrollLeft)"
-        on-refresh="onRefresh()"
-        on-refresh-opening="onRefreshOpening(amount)"
-        refresh-complete="refreshComplete"
+        has-scroll-x="true"
         has-tabs="true"
         has-header="true"
         >
-        <ul class="list" ng-controller="AppCtrl">
-          <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
-        </ul>
-        <input type="text" placeholder="INPUT TEXT">
+        <div style="height: 4000px; width: 4000px; background: url('tree_bark.png') repeat"></div>
       </content>
       <nav id="tab-bar" class="tabs tabs-icon-top">
         <a class="tab-item" href="#">

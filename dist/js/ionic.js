@@ -2360,9 +2360,15 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
 			/** Disable scrolling on x-axis by default */
 			scrollingX: false,
+      scrollbarX: true,
 
 			/** Enable scrolling on y-axis */
 			scrollingY: true,
+      scrollbarY: true,
+
+      /** The minimum size the scrollbars scale to while scrolling */
+      minScrollbarSizeX: 5,
+      minScrollbarSizeY: 5,
 
 			/** Enable animations for deceleration, snap back, zooming and scrolling */
 			animating: true,
@@ -2437,6 +2443,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     // and calculate the size of the scroll container
 		this.__callback = this.getRenderFn();
     this.__initEventHandlers();
+    this.__createScrollbars();
     this.resize();
 	},
 
@@ -2599,6 +2606,15 @@ ionic.views.Scroll = ionic.views.View.inherit({
   __decelerationVelocityY: null,
 
 
+  /** {String} the browser-specific property to use for transforms */
+  __transformProperty: null,
+  __perspectiveProperty: null,
+
+  /** {Object} scrollbar indicators */
+  __indicatorX: null,
+  __indicatorY: null,
+
+
   __initEventHandlers: function() {
     var self = this;
 
@@ -2672,6 +2688,160 @@ ionic.views.Scroll = ionic.views.View.inherit({
     }
   },
 
+  /** Create a scroll bar div with the given direction **/
+  __createScrollbar: function(direction) {
+    var bar = document.createElement('div'),
+      indicator = document.createElement('div');
+
+    indicator.className = 'scroll-bar-indicator';
+
+    if(direction == 'h') {
+      bar.className = 'scroll-bar scroll-bar-h';
+    } else {
+      bar.className = 'scroll-bar scroll-bar-v';
+    }
+
+    bar.appendChild(indicator);
+    return bar;
+  },
+
+  __createScrollbars: function() {
+    var indicatorX, indicatorY;
+
+    if(this.options.scrollingX) {
+      indicatorX = {
+        el: this.__createScrollbar('h'),
+        sizeRatio: 1
+      };
+      indicatorX.indicator = indicatorX.el.children[0];
+
+      if(this.options.scrollbarX) {
+        this.__container.appendChild(indicatorX.el);
+      }
+      this.__indicatorX = indicatorX;
+    }
+
+    if(this.options.scrollingY) {
+      indicatorY = {
+        el: this.__createScrollbar('v'),
+        sizeRatio: 1
+      };
+      indicatorY.indicator = indicatorY.el.children[0];
+
+      if(this.options.scrollbarY) {
+        this.__container.appendChild(indicatorY.el);
+      }
+      this.__indicatorY = indicatorY;
+    }
+  },
+
+  __resizeScrollbars: function() {
+    var self = this;
+
+    // Update horiz bar
+    if(self.__indicatorX) {
+      var width = Math.max(Math.round(self.__clientWidth * self.__clientWidth / (self.__contentWidth)), 20);
+      self.__indicatorX.size = width;
+      self.__indicatorX.minScale = this.options.minScrollbarSizeX / width;
+      self.__indicatorX.indicator.style.width = width + 'px';
+      self.__indicatorX.maxPos = self.__clientWidth - width;
+      self.__indicatorX.sizeRatio = self.__maxScrollLeft ? self.__indicatorX.maxPos / self.__maxScrollLeft : 1;
+    }
+
+    // Update vert bar
+    if(self.__indicatorY) {
+      var height = Math.max(Math.round(self.__clientHeight * self.__clientHeight / (self.__contentHeight)), 20);
+      self.__indicatorY.size = height;
+      self.__indicatorY.minScale = this.options.minScrollbarSizeY / height;
+      self.__indicatorY.maxPos = self.__clientHeight - height;
+      self.__indicatorY.indicator.style.height = height + 'px';
+      self.__indicatorY.sizeRatio = self.__maxScrollTop ? self.__indicatorY.maxPos / self.__maxScrollTop : 1;
+    }
+  },
+
+  /**
+   * Move and scale the scrollbars as the page scrolls.
+   */
+  __repositionScrollbars: function() {
+    var self = this, width, heightScale, widthDiff, heightDiff, x, y;
+
+    if(self.__indicatorX) {
+      // Handle the X scrollbar
+
+      x = Math.round(self.__indicatorX.sizeRatio * self.__scrollLeft) || 0,
+
+      // The the difference between the last content X position, and our overscrolled one
+      widthDiff = self.__scrollLeft - self.__maxScrollLeft;
+
+      if(self.__scrollLeft < 0) {
+
+        widthScale = Math.max(self.__indicatorX.minScale,
+            (self.__indicatorX.size - Math.abs(self.__scrollLeft)) / self.__indicatorX.size);
+
+        // Stay at left
+        x = 0;
+
+        // Make sure scale is transformed from the left/center origin point
+        self.__indicatorX.indicator.style[self.__transformOriginProperty] = 'left center';
+      } else if(widthDiff > 0) {
+
+        widthScale = Math.max(self.__indicatorX.minScale,
+            (self.__indicatorX.size - widthDiff) / self.__indicatorX.size);
+
+        // Stay at the furthest x for the scrollable viewport
+        x = self.__indicatorX.maxPos;
+
+        // Make sure scale is transformed from the right/center origin point
+        self.__indicatorX.indicator.style[self.__transformOriginProperty] = 'right center';
+
+      } else {
+
+        // Normal motion
+        x = Math.min(self.__maxScrollLeft, Math.max(0, x));
+        widthScale = 1;
+
+      }
+
+      self.__indicatorX.indicator.style[self.__transformProperty] = 'translate3d(' + x + 'px, 0, 0) scaleX(' + widthScale + ')';
+    }
+
+    if(self.__indicatorY) {
+
+      y = Math.round(self.__indicatorY.sizeRatio * self.__scrollTop) || 0;
+
+      heightDiff = self.__scrollTop - self.__maxScrollTop;
+
+      if(self.__scrollTop < 0) {
+
+        heightScale = Math.max(self.__indicatorY.minScale, (self.__indicatorY.size - Math.abs(self.__scrollTop)) / self.__indicatorY.size);
+
+        // Stay at top
+        y = 0;
+
+        // Make sure scale is transformed from the center/top origin point
+        self.__indicatorY.indicator.style[self.__transformOriginProperty] = 'center top';
+
+      } else if(heightDiff > 0) {
+
+        heightScale = Math.max(self.__indicatorY.minScale, (self.__indicatorY.size - heightDiff) / self.__indicatorY.size);
+
+        // Stay at bottom of scrollable viewport
+        y = self.__indicatorY.maxPos;
+
+        // Make sure scale is transformed from the center/bottom origin point
+        self.__indicatorY.indicator.style[self.__transformOriginProperty] = 'center bottom';
+
+      } else {
+
+        // Normal motion
+        y = Math.min(self.__maxScrollTop, Math.max(0, y));
+        heightScale = 1;
+
+      }
+
+      self.__indicatorY.indicator.style[self.__transformProperty] = 'translate3d(0,' + y + 'px, 0) scaleY(' + heightScale + ')';
+    }
+  },
 
   resize: function() {
     // Update Scroller dimensions for changed content
@@ -2679,8 +2849,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
     this.setDimensions(
     	this.__container.clientWidth,
     	this.__container.clientHeight,
-    	this.__content.offsetWidth, 
-    	this.__content.offsetHeight+20);
+    	Math.max(this.__content.scrollWidth, this.__content.offsetWidth),
+    	Math.max(this.__content.scrollHeight, this.__content.offsetHeight+20));
   },
   /*
   ---------------------------------------------------------------------------
@@ -2716,19 +2886,26 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     var perspectiveProperty = vendorPrefix + "Perspective";
     var transformProperty = vendorPrefix + "Transform";
+    var transformOriginProperty = vendorPrefix + 'TransformOrigin';
+
+    self.__perspectiveProperty = transformProperty;
+    self.__transformProperty = transformProperty;
+    self.__transformOriginProperty = transformOriginProperty;
     
     if (helperElem.style[perspectiveProperty] !== undef) {
       
       return function(left, top, zoom) {
         content.style[transformProperty] = 'translate3d(' + (-left) + 'px,' + (-top) + 'px,0)';
-         self.triggerScrollEvent();
+        self.__repositionScrollbars();
+        self.triggerScrollEvent();
       };	
       
     } else if (helperElem.style[transformProperty] !== undef) {
       
       return function(left, top, zoom) {
         content.style[transformProperty] = 'translate(' + (-left) + 'px,' + (-top) + 'px)';
-         self.triggerScrollEvent();
+        self.__repositionScrollbars();
+        self.triggerScrollEvent();
       };
       
     } else {
@@ -2737,6 +2914,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         content.style.marginLeft = left ? (-left/zoom) + 'px' : '';
         content.style.marginTop = top ? (-top/zoom) + 'px' : '';
         content.style.zoom = zoom || '';
+        self.__repositionScrollbars();
         self.triggerScrollEvent();
       };
       
@@ -2777,6 +2955,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     // Refresh maximums
     self.__computeScrollMax();
+    self.__resizeScrollbars();
 
     // Refresh scroll position
     self.scrollTo(self.__scrollLeft, self.__scrollTop, true);

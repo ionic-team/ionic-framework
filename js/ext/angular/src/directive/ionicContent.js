@@ -33,27 +33,20 @@ angular.module('ionic.ui.content', [])
       scroll: '@',
       hasScrollX: '@',
       hasScrollY: '@',
+      scrollbarX: '@',
+      scrollbarY: '@',
       scrollEventInterval: '@'
     },
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
-        var clone, sc, sv;
+        var clone, sc, sv,
+          addedPadding = false,
+          c = $element.eq(0);
 
-        var addedPadding = false;
-        var c = $element.eq(0);
-
-        if(attr.hasHeader == "true") {
-          c.addClass('has-header');
-        }
-        if(attr.hasSubheader == "true") {
-          c.addClass('has-subheader');
-        }
-        if(attr.hasFooter == "true") {
-          c.addClass('has-footer');
-        }
-        if(attr.hasTabs == "true") {
-          c.addClass('has-tabs');
-        }
+        if(attr.hasHeader == "true") { c.addClass('has-header'); }
+        if(attr.hasSubheader == "true") { c.addClass('has-subheader'); }
+        if(attr.hasFooter == "true") { c.addClass('has-footer'); }
+        if(attr.hasTabs == "true") { c.addClass('has-tabs'); }
 
         // If they want plain overflow scrolling, add that as a class
         if($scope.scroll === "false") {
@@ -95,6 +88,10 @@ angular.module('ionic.ui.content', [])
           $timeout(function() { 
             sv = new ionic.views.Scroll({
               el: $element[0],
+              scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
+              scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
+              scrollingX: $scope.$eval($scope.hasScrollX) == true,
+              scrollingY: $scope.$eval($scope.hasScrollY) !== false,
               scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 20,
               scrollingComplete: function() {
                 $scope.onScrollComplete({
