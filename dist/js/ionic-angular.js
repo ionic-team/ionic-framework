@@ -1005,6 +1005,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       refreshComplete: '=',
       onSelect: '&',
       onDelete: '&',
+      onReorder: '&',
       optionButtons: '&',
       deleteIcon: '@',
       reorderIcon: '@'
