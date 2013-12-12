@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /*!
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
@@ -4161,7 +4160,7 @@ button.item-button-right:after {
   line-height: 100%; }
   .item-edit .button {
     height: 100%; }
-    .item-edit .button .icon, .item-edit .button i {
+    .item-edit .button.icon {
       display: -webkit-box;
       display: -webkit-flex;
       display: -moz-box;
@@ -4175,6 +4174,7 @@ button.item-button-right:after {
       align-items: center;
       position: absolute;
       top: 0;
+      left: 0;
       height: 100%;
       color: #ef4e3a;
       font-size: 24px; }
@@ -4202,12 +4202,13 @@ button.item-button-right:after {
   top: 0;
   right: 0;
   z-index: 0;
-  height: 100%; }
+  width: 50px;
+  height: 100%;
+  background: inherit; }
   .item-drag .button {
     height: 100%;
-    border: none;
-    border-radius: 0; }
-    .item-drag .button .icon, .item-drag .button i {
+    min-width: 42px; }
+    .item-drag .button.icon:before {
       display: -webkit-box;
       display: -webkit-flex;
       display: -moz-box;
@@ -4222,7 +4223,7 @@ button.item-button-right:after {
       position: absolute;
       top: 0;
       height: 100%;
-      font-size: 24px; }
+      font-size: 32px; }
 
 /**
  * The hidden right-side buttons that can be exposed under a list item
@@ -4239,6 +4240,9 @@ button.item-button-right:after {
     border: none;
     border-radius: 0; }
 
+.item-options-hide .item-options {
+  display: none; }
+
 /**
  * Lists
  * --------------------------------------------------
@@ -4252,11 +4256,15 @@ button.item-button-right:after {
 
 /**
  * List editing styles. These trigger when the entire list goes into
- * "edit mode"
+ * "edit mode" or reordering list items
  */
 .list-editing .item-content {
-  margin-right: 50px;
   margin-left: 50px; }
+
+.list-reordering .item-content {
+  margin-right: 50px; }
+.list-reordering .item-drag {
+  z-index: 1; }
 
 /**
  * List Header
@@ -5389,7 +5397,6 @@ input[type="range"] {
   padding: 0 6px;
   min-width: initial;
   border-color: transparent;
-  background: none;
   background: none; }
   .button-icon.button:active, .button-icon.button.active {
     border-color: transparent;

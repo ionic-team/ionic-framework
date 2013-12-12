@@ -14,12 +14,19 @@
 
 /**
  * List editing styles. These trigger when the entire list goes into
- * "edit mode"
+ * "edit mode" or reordering list items
  */
 .list-editing {
   .item-content {
-    margin-right: 50px;
     margin-left: 50px;
+  }
+}
+.list-reordering {
+  .item-content {
+    margin-right: 50px;
+  }
+  .item-drag {
+    z-index: 1;
   }
 }
 
