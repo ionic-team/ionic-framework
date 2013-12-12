@@ -285,9 +285,12 @@
       }, this.el);
 
       window.ionic.onGesture('release', function(e) {
-        _this._handleTouchRelease(e);
+        _this._handleEndDrag(e);
       }, this.el);
         
+      window.ionic.onGesture('drag', function(e) {
+        _this._handleDrag(e);
+      }, this.el);
       // Start the drag states
       this._initDrag();
     },
@@ -420,6 +423,13 @@
         return;
       }
 
+      // Cancel touch timeout
+      clearTimeout(this._touchTimeout);
+      var items = _this.el.querySelectorAll('.item');
+      for(var i = 0, l = items.length; i < l; i++) {
+        items[i].classList.remove('active');
+      }
+
       this._dragOp.end(e, function() {
         _this._initDrag();
       });
@@ -450,7 +460,7 @@
         return;
       }
 
-      e.preventDefault();
+      e.gesture.srcEvent.preventDefault();
       this._dragOp.drag(e);
     },
 
@@ -472,19 +482,6 @@
       }, 250);
     },
 
-    /**
-     * Handle the release event to remove the active state on an item if necessary.
-     */
-    _handleTouchRelease: function(e) {
-      var _this = this;
-
-      // Cancel touch timeout
-      clearTimeout(this._touchTimeout);
-      var items = _this.el.querySelectorAll('.item');
-      for(var i = 0, l = items.length; i < l; i++) {
-        items[i].classList.remove('active');
-      }
-    }
   });
 
 })(ionic);
