@@ -1,7 +1,7 @@
 'use strict';
 
 describe('Ionic List', function() {
-  var compile, scope;
+  var compile, scope, listElement, listCtrl;
 
   beforeEach(module('ionic.ui.list'));
 
@@ -10,116 +10,390 @@ describe('Ionic List', function() {
     scope = $rootScope;
   }));
 
+  beforeEach(inject(function (_$compile_, _$rootScope_) {
+    scope.showDelete = false;
+    scope.showReorder = false;
+
+    listElement = angular.element('<list show-delete="showDelete" show-reorder="showReorder">');
+    listElement = _$compile_(listElement)(scope);
+
+    listCtrl = listElement.controller('list');
+
+    scope.$digest();
+  }));
+
   it('Should init', function() {
     var element = compile('<list>' +
-      '<list-item></list-item>' + 
-      '<list-item></list-item>' + 
+      '<item></item>' + 
+      '<item></item>' + 
       '</list>')(scope);
 
     expect(element.children().length).toBe(2);
   });
-});
 
-describe('Ionic Link Item Directive', function () {
-  var $rootScope, element, listCtrl, options, scope;
+  it('Should add animation class', function() {
+    var element = compile('<list animation="my-animation">')(scope);
+    expect(element.hasClass('my-animation')).toBe(true);
+  });
 
-  beforeEach(module('ionic.ui.list'));
+  it('Should add list-editing class', function() {
+    expect(listElement.hasClass('list-editing')).toBe(false);
+    scope.showDelete = true;
+    scope.$digest();
+    expect(listElement.hasClass('list-editing')).toBe(true);
+  });
 
-  beforeEach(inject(function (_$compile_, _$rootScope_) {
-    $rootScope = _$rootScope_;
-    $rootScope.isEditing = false;
+  it('Should add list-reordering class', function() {
+    expect(listElement.hasClass('list-reordering')).toBe(false);
+    scope.showReorder = true;
+    scope.$digest();
+    expect(listElement.hasClass('list-reordering')).toBe(true);
+  });
 
-    var list = angular.element('<list is-editing="isEditing">');
-    list = _$compile_(list)($rootScope);
-
-    listCtrl = list.controller('list');
-
-    $rootScope.buttons = [];
-
-    element = angular.element('<link-item>').appendTo(list);
-    element = _$compile_(element)($rootScope);
-
-    $rootScope.$digest();
-    scope = element.isolateScope();
-  }));
-
-  it('Should show options when the list is not in edit mode', inject(function ($timeout) {
-    scope.canSwipe = true;
-    $rootScope.$digest();
-    $timeout.flush();
-
-    expect(scope.isEditing).toBe(false);
-    expect(element.find('.item-options').length).toBe(1);
-  }));
-
-  it('Should hide options when the list is in edit mode', inject(function ($timeout) {
-    scope.canSwipe = true;
-    $rootScope.isEditing = true;
-    $rootScope.$digest();
-    $timeout.flush();
-
-    expect(scope.isEditing).toBe(true);
-    expect(element.find('.item-options').length).toBe(0);
-  }));
-
-  it('Should deregister watcher when scope destroyed', inject(function ($timeout) {
-    $rootScope.isEditing = true;
-    scope.$destroy();
-    $rootScope.$digest();
-    $timeout.flush();
-
-    expect(scope.isEditing).toBe(false);
-  }));
+  it('Should add item-options-hide class', function() {
+    expect(listElement.hasClass('item-options-hide')).toBe(false);
+    scope.showReorder = true;
+    scope.$digest();
+    expect(listElement.hasClass('item-options-hide')).toBe(true);
+  });
 });
 
 describe('Ionic Item Directive', function () {
-  var $rootScope, element, listCtrl, options, scope;
+  var $rootScope, $compile, listCtrl, options, listScope, itemScope, listElement, itemElement;
 
   beforeEach(module('ionic.ui.list'));
 
   beforeEach(inject(function (_$compile_, _$rootScope_) {
     $rootScope = _$rootScope_;
-    $rootScope.isEditing = false;
+    $compile = _$compile_;
+    $rootScope.showDelete = false;
 
-    var list = angular.element('<list is-editing="isEditing">');
-    list = _$compile_(list)($rootScope);
+    listElement = angular.element('<list show-delete="showDelete">');
+    listElement = _$compile_(listElement)($rootScope);
+    listScope = listElement.isolateScope();
 
-    listCtrl = list.controller('list');
+    listCtrl = listElement.controller('list');
 
-    $rootScope.buttons = [];
-
-    element = angular.element('<item>').appendTo(list);
-    element = _$compile_(element)($rootScope);
+    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = _$compile_(itemElement)($rootScope);
 
     $rootScope.$digest();
-    scope = element.isolateScope();
+    itemScope = itemElement.isolateScope();
   }));
 
-  it('Should show options when the list is not in edit mode', inject(function ($timeout) {
-    scope.canSwipe = true;
+  it('Should set item type from item attribute', inject(function ($timeout) {
+    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
-    $timeout.flush();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.itemClass).toBe(undefined);
 
-    expect(scope.isEditing).toBe(false);
-    expect(element.find('.item-options').length).toBe(1);
-  }));
-
-  it('Should hide options when the list is in edit mode', inject(function ($timeout) {
-    scope.canSwipe = true;
-    $rootScope.isEditing = true;
+    itemElement = angular.element('<item item-type="item-type-test">').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
-    $timeout.flush();
-
-    expect(scope.isEditing).toBe(true);
-    expect(element.find('.item-options').length).toBe(0);
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.itemClass).toBe("item-type-test");
+    expect(itemElement.hasClass('item-type-test')).toBe(true);
   }));
 
-  it('Should deregister watcher when scope destroyed', inject(function ($timeout) {
-    $rootScope.isEditing = true;
-    scope.$destroy();
+  it('Should set item type from list attribute', inject(function ($timeout) {
+    listElement = angular.element('<list item-type="list-item-type-test">');
+    listElement = $compile(listElement)($rootScope);
+    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
-    $timeout.flush();
-
-    expect(scope.isEditing).toBe(false);
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.itemClass).toBe('list-item-type-test');
+    expect(itemElement.hasClass('list-item-type-test')).toBe(true);
   }));
+
+  it('Should item option buttons from item attribute', inject(function ($timeout) {
+    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.optionButtons()).toBe(undefined);
+    expect(itemScope.itemOptionButtons).toBe(undefined);
+    expect(itemElement.find('.item-options').length).toBe(0);
+
+    $rootScope.buttons = [
+      { text: 'Edit' }, { text: 'Cancel' }
+    ];
+    itemElement = angular.element('<item option-buttons="buttons">').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.optionButtons().length).toBe(2);
+    expect(itemScope.itemOptionButtons.length).toBe(2);
+    expect(itemElement.find('.item-options').find('button').length).toBe(2);
+  }));
+
+  it('Should item option buttons from list attribute', inject(function ($timeout) {
+    $rootScope.buttons = [
+      { text: 'Edit' }, { text: 'Cancel' }
+    ];
+
+    listElement = angular.element('<list option-buttons="buttons">');
+    listElement = $compile(listElement)($rootScope);
+    listScope = listElement.isolateScope();
+    expect(listScope.optionButtons().length ).toBe(2);
+
+    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+
+    expect(itemScope.optionButtons()).toBe(undefined);
+    expect(itemScope.itemOptionButtons.length).toBe(2);
+    expect(itemElement.find('.item-options').find('button').length).toBe(2);
+  }));
+
+  it('Should have no option buttons by disabling item canSwipe', inject(function ($timeout) {
+    $rootScope.buttons = [
+      { text: 'Edit' }, { text: 'Cancel' }
+    ];
+
+    itemElement = angular.element('<item can-swipe="false" option-buttons="buttons">').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+
+    expect(itemScope.itemOptionButtons).toBe(undefined);
+  }));
+
+  it('Should have no option buttons by disabling list canSwipe', inject(function ($timeout) {
+    $rootScope.buttons = [
+      { text: 'Edit' }, { text: 'Cancel' }
+    ];
+
+    listElement = angular.element('<list can-swipe="false" option-buttons="buttons">');
+    listElement = $compile(listElement)($rootScope);
+    listScope = listElement.isolateScope();
+    expect(listScope.optionButtons().length ).toBe(2);
+
+    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+
+    expect(itemScope.itemOptionButtons).toBe(undefined);
+  }));
+
+  it('Should hide delete w/ item can-delete attribute true but no list or item onDelete', inject(function ($timeout) {
+    itemElement = angular.element('<item can-delete="true">').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.deleteClick).toBe(undefined);
+    expect(itemElement.find('.item-edit').length).toBe(0);
+  }));
+
+  it('Should hide delete w/ item can-delete attribute false but with item onDelete', inject(function ($timeout) {
+    $rootScope.onDelete = function() {};
+    itemElement = angular.element('<item can-delete="false" on-delete="onDelete">').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.deleteClick).toBe(undefined);
+    expect(itemElement.find('.item-edit').length).toBe(0);
+  }));
+
+  it('Should show delete w/ no item can-delete attribute but with item onDelete', inject(function ($timeout) {
+    $rootScope.onDelete = function() {};
+    itemElement = angular.element('<item on-delete="onDelete" delete-icon="test-icon">').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.deleteClick).not.toBe(undefined);
+    expect(itemElement.find('.item-edit').length).toBe(1);
+    expect(itemScope.deleteIconClass).toBe("test-icon");
+  }));
+
+  it('Should hide delete w/ list can-delete attribute true but no list or item onDelete', inject(function ($timeout) {
+    $rootScope.onDelete = function() {};
+    listElement = angular.element('<list can-delete="true">');
+    listElement = $compile(listElement)($rootScope);
+    listScope = listElement.isolateScope();
+
+    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.deleteClick).toBe(undefined);
+    expect(itemElement.find('.item-edit').length).toBe(0);
+  }));
+
+  it('Should hide delete w/ list can-delete attribute false but with list onDelete', inject(function ($timeout) {
+    $rootScope.onDelete = function() {};
+    listElement = angular.element('<list can-delete="false" on-delete="onDelete">');
+    listElement = $compile(listElement)($rootScope);
+    listScope = listElement.isolateScope();
+
+    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.deleteClick).toBe(undefined);
+    expect(itemElement.find('.item-edit').length).toBe(0);
+  }));
+
+  it('Should hide delete w/ list can-delete attribute false but with item onDelete', inject(function ($timeout) {
+    $rootScope.onDelete = function() {};
+    listElement = angular.element('<list can-delete="false">');
+    listElement = $compile(listElement)($rootScope);
+    listScope = listElement.isolateScope();
+
+    itemElement = angular.element('<item on-delete="onDelete">').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.deleteClick).toBe(undefined);
+    expect(itemElement.find('.item-edit').length).toBe(0);
+  }));
+
+  it('Should show delete w/ no can-delete attribute but with list onDelete', inject(function ($timeout) {
+    $rootScope.onDelete = function() {};
+    listElement = angular.element('<list on-delete="onDelete" delete-icon="test-icon">');
+    listElement = $compile(listElement)($rootScope);
+    listScope = listElement.isolateScope();
+    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.deleteClick).not.toBe(undefined);
+    expect(itemElement.find('.item-edit').length).toBe(1);
+
+    expect(itemScope.deleteIconClass).toBe("test-icon");
+  }));
+
+  it('Should not be able to reorder cuz no item or list can-reorder attribute true', inject(function ($timeout) {
+    itemElement = angular.element('<item reorder-icon="test-icon">').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.reorderIconClass).toBe(undefined);
+    expect(itemElement.find('.item-drag').length).toBe(0);
+  }));
+
+  it('Should be able to reorder cuz item can-reorder attribute true', inject(function ($timeout) {
+    itemElement = angular.element('<item can-reorder="true" reorder-icon="test-icon">').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.reorderIconClass).toBe('test-icon');
+    expect(itemElement.find('.item-drag').length).toBe(1);
+  }));
+
+  it('Should be able to reorder cuz list can-reorder attribute true', inject(function ($timeout) {
+    listElement = angular.element('<list can-reorder="true" reorder-icon="test-icon">');
+    listElement = $compile(listElement)($rootScope);
+    listScope = listElement.isolateScope();
+    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.reorderIconClass).toBe('test-icon');
+    expect(itemElement.find('.item-drag').length).toBe(1);
+  }));
+
+  it('Should not have options cuz no optionButtons', inject(function ($timeout) {
+    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.itemOptionButtons).toBe(undefined);
+    expect(itemElement.find('.item-options').length).toBe(0);
+  }));
+
+  it('Should be able to reorder cuz list can-reorder attribute false and item can-reorder true', inject(function ($timeout) {
+    listElement = angular.element('<list can-reorder="false">');
+    listElement = $compile(listElement)($rootScope);
+    listScope = listElement.isolateScope();
+    itemElement = angular.element('<item can-reorder="true">').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.reorderIconClass).toBe('ion-navicon');
+    expect(itemElement.find('.item-drag').length).toBe(1);
+  }));
+
+  it('Should not have options cuz item can-swipe false', inject(function ($timeout) {
+    $rootScope.optionButtons = [{text:'BUTTON'}];
+    itemElement = angular.element('<item option-buttons="optionButtons" can-swipe="false">').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.itemOptionButtons).toBe(undefined);
+    expect(itemElement.find('.item-options').length).toBe(0);
+  }));
+
+  it('Should not have options cuz list can-swipe false', inject(function ($timeout) {
+    $rootScope.optionButtons = [{text:'BUTTON'}];
+    listElement = angular.element('<list option-buttons="optionButtons" can-swipe="false">');
+    listElement = $compile(listElement)($rootScope);
+    listScope = listElement.isolateScope();
+    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.itemOptionButtons).toBe(undefined);
+    expect(itemElement.find('.item-options').length).toBe(0);
+  }));
+
+  it('Should have options cuz item option-buttons and no can-swipe false', inject(function ($timeout) {
+    $rootScope.optionButtons = [{text:'BUTTON'}];
+    itemElement = angular.element('<item option-buttons="optionButtons">').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.itemOptionButtons.length).toBe(1);
+    expect(itemElement.find('.item-options').find('button').length).toBe(1);
+  }));
+
+  it('Should have options cuz list option-buttons and no can-swipe false', inject(function ($timeout) {
+    $rootScope.optionButtons = [{text:'BUTTON'}];
+    listElement = angular.element('<list option-buttons="optionButtons">');
+    listElement = $compile(listElement)($rootScope);
+    listScope = listElement.isolateScope();
+    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.itemOptionButtons.length).toBe(1);
+    expect(itemElement.find('.item-options').find('button').length).toBe(1);
+  }));
+
+});
+
+describe('Ionic Link Item Directive', function () {
+  var $rootScope, $compile, listCtrl, options, listScope, itemScope, listElement, itemElement;
+
+  beforeEach(module('ionic.ui.list'));
+
+  beforeEach(inject(function (_$compile_, _$rootScope_) {
+    $rootScope = _$rootScope_;
+    $compile = _$compile_;
+
+    listElement = angular.element('<list>');
+    listElement = _$compile_(listElement)($rootScope);
+    listScope = listElement.isolateScope();
+
+    listCtrl = listElement.controller('list');
+
+    itemElement = angular.element('<link-item>').appendTo(listElement);
+    itemElement = _$compile_(itemElement)($rootScope);
+
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+  }));
+
+  it('Should set link-item href', inject(function ($timeout) {
+    itemElement = angular.element('<link-item href="http://drifty.com/">').appendTo(listElement);
+    itemElement = $compile(itemElement)($rootScope);
+    $rootScope.$digest();
+    itemScope = itemElement.isolateScope();
+    expect(itemScope.href).toBe("http://drifty.com/");
+    expect(itemElement.attr('href')).toBe("http://drifty.com/");
+  }));
+  
 });

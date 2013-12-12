@@ -7,86 +7,128 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <style>
-.my-repeat-animation > .ng-enter, 
-.my-repeat-animation > .ng-leave, 
-.my-repeat-animation > .ng-move {
-  -webkit-transition: 0.2s linear all;
-  transition: 0.2s linear all;
-  position:relative;
-}
+      .my-repeat-animation > .ng-enter, 
+      .my-repeat-animation > .ng-leave, 
+      .my-repeat-animation > .ng-move {
+        -webkit-transition: 0.2s linear all;
+        transition: 0.2s linear all;
+        position:relative;
+      }
 
-.my-repeat-animation > .ng-enter {
-  left:-10px;
-  opacity:0;
-  z-index: 10;
-}
-.my-repeat-animation > .ng-enter.ng-enter-active {
-  left:0;
-  opacity:1;
-}
+      .my-repeat-animation > .ng-enter {
+        left:-10px;
+        opacity:0;
+        z-index: 10;
+      }
+      .my-repeat-animation > .ng-enter.ng-enter-active {
+        left:0;
+        opacity:1;
+      }
 
-.my-repeat-animation > .ng-leave {
-  left:0;
-  opacity:1;
-}
-.my-repeat-animation > .ng-leave.ng-leave-active {
-  left:-10px;
-  opacity:0;
-}
+      .my-repeat-animation > .ng-leave {
+        left:0;
+        opacity:1;
+      }
+      .my-repeat-animation > .ng-leave.ng-leave-active {
+        left:-10px;
+        opacity:0;
+      }
 
-.my-repeat-animation > .ng-move {
-  opacity:0.5;
-}
-.my-repeat-animation > .ng-move.ng-move-active {
-  opacity:1;
-}
-
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 2px solid rgba(255,255,255,0.4);
-  border-radius: 40px;
-  margin: auto;
-  margin-bottom: 100px;
-}
-.spin-thing {
-  width: 10px;
-  height: 10px;
-  background-color: #4a87ee;
-  border-radius: 10px;
-}
+      .my-repeat-animation > .ng-move {
+        opacity:0.5;
+      }
+      .my-repeat-animation > .ng-move.ng-move-active {
+        opacity:1;
+      }
     </style>
 
   </head>
-  <body>
+  <body ng-controller="TestCtrl">
 
     <pane>
-      <div ng-controller="TestCtrl">
-        <content on-refresh="refreshProjects()"
-                refresh-complete="refreshComplete">
-          <list is-editing="isEditingItems"
-                animation="my-repeat-animation"
-                delete-icon="icon ion-minus-circled"
-                reorder-icon="icon ion-navicon">
 
-            <refresher></refresher>
+      <header class="bar bar-header bar-positive">
+        <div class="buttons">
+          <button ng-click="toggleDelete()" class="button button-clear">{{ editBtnText }}</button>
+        </div>
+        <h1 class="title">List Tests</h1>
+        <div class="buttons">
+          <button ng-click="toggleReorder()" class="button button-clear">{{ reorderBtnText }}</button>
+        </div>
+      </header>
 
-            <item 
-                ng-repeat="item in items" 
-                buttons="item.buttons"
+      <content has-header="true">
+
+        <list show-delete="isDeletingItems"
+              show-reorder="isReorderingItems"
+              on-refresh-holding="refreshHolding()"
+              on-refresh-opening="refreshOpening(ratio)"
+              on-refresh="refreshItems()"
+              refresh-complete="refreshComplete"
+              on-delete="deleteListItem()"
+              delete-icon="ion-minus-circled"
+              reorder-icon="ion-navicon"
+              animation="my-repeat-animation"
+              can-delete="true"
+              can-reorder="true"
+              can-swipe="true"
+              option-buttons="optionButtons1"
+              item-type="item-icon-left">
+
+          <!-- shows that the item directive does not need attributes and can get values from the list attributes -->
+          <item ng-repeat="item in items" 
+                item="item">
+            <i class="icon ion-chatbox"></i>
+            Repeat Item: {{ item.text }}
+          </item>
+
+          <!-- shows how a divider could be included-->
+          <div class="item item-divider">
+            Me Divider, just plain ol' HTML nested in the list directive.
+          </div>
+
+          <!-- shows it can override the attributes set by the list -->
+          <item can-delete="false"
+                can-reorder="false"
+                can-swipe="false"
+                item-type="item-icon-left item-icon-right">
+            <i class="icon ion-stats-bars"></i>
+            Individual item directive, but can't do much. Overrides list attributes with its own left and right icons.
+            <i class="icon ion-arrow-graph-up-right"></i>
+          </item>
+
+          <!-- shows that the item directive can receive many attributes and overrides the list attributes -->
+          <item on-delete="deleteItem()"
+                delete-icon="ion-trash-a"
+                reorder-icon="ion-navicon-round"
                 can-delete="true"
                 can-reorder="true"
-                can-swipe="true"
-                on-delete="deleteProject(item)"
-                on-select="selectProject(item)">
-               <i class="icon ion-email ion-primary"></i>
-              {{item.text}}
-              <i class="{{item.icon}}"></i>
-            </item>
-          </list>
-          <button ng-click="edit()" class="button button-success">Edit</button>
-        </content>
-      </div>
+                option-buttons="optionButtons2">
+            <i class="icon ion-person-stalker"></i>
+            Individual item directive and overrides list attrs with item attributes
+          </item>
+
+          <!-- shows how a divider could be included-->
+          <div class="item item-divider">
+            Below is NOT using the item directive, but just nested HTML
+          </div>
+
+          <!-- shows how very simple lists don't need the item directive at all -->
+          <div class="item item-thumbnail-left">
+            <img src="http://pbs.twimg.com/profile_images/2913427048/ed94193baa04ace85aa8a8bf4bf6c5a9.jpeg">
+            <h2>Nic Cage</h2>
+            <p>I am not a demon. I am a lizard, a shark, a heat-seeking panther. I want to be Bob Denver on acid playing the accordion.</p>
+          </div>
+
+          <a class="item item-icon-left" href="{{ item.url }}" ng-repeat="item in urlItems">
+            <i class="icon {{ item.icon }}"></i>
+            {{ item.text }}
+          </a>
+
+        </list>
+
+      </content>
+
     </pane>
 
     <script src="../../../../dist/js/ionic.js"></script>
@@ -97,58 +139,70 @@
     <script src="../../../../dist/js/angular/angular-sanitize.js"></script>
     <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
-      angular.module('navTest', ['ionic.ui.list', 'ionic.ui.content', 'ngAnimate'])
+      angular.module('navTest', ['ionic.ui.list', 'ionic.ui.content'])
 
       .controller('TestCtrl', function($scope, $timeout) {
-        $scope.refreshRatio = { ratio: 0 };
-        var removeItem = function(item) {
-          // Remove ourselves
-          $scope.items.splice($scope.items.indexOf(item), 1);
-        };
 
-        $scope.selectProject = function(project) {
-          console.log('Selected project', project);
-        };
-
-        $scope.almostRefreshing = function() {
-          console.log('HOLDING FOR REFRESH');
-        };
-        $scope.almostRefreshProjects = function(amt) {
-          console.log('ALMOST REFRESHING', amt);
-          $scope.refreshRatio.ratio = amt;
-          $scope.$apply();
-        };
-
-        $scope.refreshProjects = function() {
-          console.log("REFRESHING");
-          $timeout(function() {
-            $scope.$broadcast('scroll.refreshComplete');
-          }, 2000);
-        };
-
+        // Build Mock Data
         $scope.items = [];
-        for(var i = 0; i < 20; i++) {
+        for(var i = 0; i < 3; i++) {
           $scope.items.push({
-            text: 'Item ' + i,
-            canDelete: true,
-            canSwipe: true,
-            canReorder: true,
-            icon: 'icon-chevron-right',
-            hide: false,
-            deleteItem: removeItem,
-            buttons: [{
-              text: 'Kill',
-              type: 'button-danger',
-              buttonClicked: removeItem,
-            }]
+            text: i
           });
         }
 
-        $scope.edit = function() {
-          $scope.isEditingItems = !$scope.isEditingItems;
-        }
-      });
+        // List Toggles
+        $scope.editBtnText = 'Edit';
+        $scope.toggleDelete = function() {
+          $scope.isDeletingItems = !$scope.isDeletingItems;
+          $scope.isReorderingItems = false;
+          $scope.editBtnText = ($scope.isDeletingItems ? 'Done' : 'Edit');
+        };
+        $scope.reorderBtnText = 'Reorder';
+        $scope.toggleReorder = function() {
+          $scope.isReorderingItems = !$scope.isReorderingItems;
+          $scope.isDeletingItems = false;
+          $scope.reorderBtnText = ($scope.isReorderingItems ? 'Done' : 'Reorder');
+        };
 
+
+        // Item Methods/Properties
+        $scope.deleteItem = function(item) {
+          alert('onDelete from the "item" directive on-delete attribute. Lets not delete this item today ok!');
+        };
+        $scope.deleteListItem = function(item) {
+          alert('onDelete from the "list" on-delete attribute');
+          $scope.items.splice($scope.items.indexOf(item), 1);
+        };
+
+        $scope.optionButtons1 = [
+          {
+            text: 'Edit',
+            onClick: function(item, button) { alert(button.text + ' Button: ' + item.text) }
+          },
+          {
+            text: 'Share',
+            onClick: function(item, button) { alert(button.text + ' Button: ' + item.text) }
+          }
+        ];
+
+        $scope.optionButtons2 = [
+          {
+            text: 'Cancel',
+            onClick: function() { alert('CANCEL!') }
+          },
+          {
+            text: 'Submit',
+            onClick: function() { alert('SUBMIT!') }
+          }
+        ];
+
+        $scope.urlItems = [
+          { text: 'Biography', icon: 'ion-person', url: 'http://en.wikipedia.org/wiki/Nicolas_Cage' },
+          { text: 'Fan Club', icon: 'ion-star', url: 'http://cagealot.com/' }
+        ];
+
+      });
     </script>
   </body>
 </html>

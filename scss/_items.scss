@@ -496,7 +496,7 @@ button.item-button-right:after {
 }
 
 
-// Item Animations
+// Item Editing
 // -------------------------------
 
 .item-sliding {
@@ -512,12 +512,12 @@ button.item-button-right:after {
   opacity: 0.7;
 }
 
+
 /**
  * The left-side edit area of a complex list item. This area shows
  * whe the list item is in edit mode.
  */
 .item-edit {
-
   @include transition(left 0.2s ease-in-out, opacity 0.2s ease-in-out);
   position: absolute;
   top: 0;
@@ -529,11 +529,13 @@ button.item-button-right:after {
 
   .button {
     height: 100%;
-    .icon, i {
+
+    &.icon {
       @include display-flex();
       @include align-items(center);
       position: absolute;
       top: 0;
+      left: 0;
       height: 100%;
       color: $assertive;
       font-size: 24px;
@@ -565,19 +567,21 @@ button.item-button-right:after {
   top: 0;
   right: 0;
   z-index: 0;
+  width: 50px;
   height: 100%;
+  background: inherit;
 
   .button {
     height: 100%;
-    border: none;
-    border-radius: 0;
-    .icon, i {
+    min-width: 42px;
+
+    &.icon:before {
       @include display-flex();
       @include align-items(center);
       position: absolute;
       top: 0;
       height: 100%;
-      font-size: 24px;
+      font-size: 32px;
     }
   }
 }
@@ -589,7 +593,7 @@ button.item-button-right:after {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 1;
+  z-index: 0;
   height: 100%;
 
   .button {
@@ -597,4 +601,8 @@ button.item-button-right:after {
     border: none;
     border-radius: 0;
   }
+}
+
+.item-options-hide .item-options {
+  display: none;
 }
