@@ -2599,6 +2599,7 @@ body, .ionic-body {
   -webkit-transform-origin: left top;
   -moz-transform-origin: left top;
   transform-origin: left top;
+  white-space: nowrap;
   -webkit-backface-visibility: hidden; }
 
 .scroll-bar {
@@ -2624,7 +2625,13 @@ body, .ionic-body {
 .scroll-bar-indicator {
   position: absolute;
   background: rgba(0, 0, 0, 0.3);
-  border-radius: 4px; }
+  border-radius: 4px;
+  opacity: 1; }
+  .scroll-bar-indicator.scroll-bar-fade-out {
+    -webkit-transition: opacity 0.3s linear;
+    -moz-transition: opacity 0.3s linear;
+    transition: opacity 0.3s linear;
+    opacity: 0; }
 
 .scroll-refresher {
   overflow: hidden;

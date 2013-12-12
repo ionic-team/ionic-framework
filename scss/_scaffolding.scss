@@ -98,6 +98,7 @@ body, .ionic-body {
   @include text-size-adjust(none);
   @include translateZ(0);
   @include transform-origin(left, top);
+  white-space: nowrap;
   //-webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
 }
@@ -132,6 +133,13 @@ body, .ionic-body {
   position: absolute;
   background:rgba(0,0,0,0.3);
   border-radius: 4px;
+  opacity: 1;
+
+
+  &.scroll-bar-fade-out {
+    @include transition(opacity 0.3s linear);
+    opacity: 0;
+  }
 }
 
 

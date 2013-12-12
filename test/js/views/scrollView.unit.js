@@ -34,4 +34,15 @@ describe('Scroll View', function() {
     expect(sc.children[1].classList.contains('scroll-bar')).toBe(true);
     expect(sc.children[2].classList.contains('scroll-bar')).toBe(true);
   });
+
+  it('Should fade out scrollbars', function() {
+    var sv = new ionic.views.Scroll({
+      el: sc,
+      scrollbarsX: true,
+      scrollingX: true,
+      scrollbarsY: true,
+      scrollingY: true,
+    });
+
+  });
 });
