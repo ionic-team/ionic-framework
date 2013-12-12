@@ -24,7 +24,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: $zindex-modal;
+  z-index: $z-index-action-sheet;
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0);
@@ -98,7 +98,7 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
   position: fixed;
   bottom: 0;
   left: 15px; 
-  z-index: $zindex-modal;
+  z-index: $z-index-action-sheet;
   overflow: hidden;
   width: calc(100% - 30px);
 

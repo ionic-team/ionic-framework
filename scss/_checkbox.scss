@@ -79,6 +79,6 @@
   position: absolute;
   top: 0;
   left: $item-padding / 2;
-  z-index: 3;
+  z-index: $z-index-item-checkbox;
   height: 100%;
 }

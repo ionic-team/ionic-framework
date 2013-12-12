@@ -10,7 +10,7 @@
   position: absolute;
   right: 0;
   left: 0;
-  z-index: 10;
+  z-index: $z-index-bar;
 
   box-sizing: border-box;
   padding: $bar-padding-portrait;
@@ -98,7 +98,7 @@
     top: 0;
     right: 0;
     left: 0;
-    z-index: 0;
+    z-index: $z-index-bar-title;
     overflow: hidden;
 
     margin: 0 10px;
@@ -128,7 +128,7 @@
   }
 
   .button {
-    z-index: 1;
+    z-index: $z-index-bar-button;
     padding: 0 $button-bar-button-padding;
     min-width: initial;
     min-height: $button-bar-button-height - 1;

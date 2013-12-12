@@ -82,5 +82,5 @@
   position: absolute;
   top: $item-padding / 2;
   right: $item-padding;
-  z-index: 3;
+  z-index: $z-index-item-toggle;
 }

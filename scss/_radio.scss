@@ -22,7 +22,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 3;
+  z-index: $z-index-item-radio;
   visibility: hidden;
   padding: $item-padding - 2;
   height: 100%;

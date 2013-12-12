@@ -15,7 +15,7 @@
   position: absolute;
   bottom: 0;
 
-  z-index: 5;
+  z-index: $z-index-tabs;
 
   width: 100%;
   height: $tabs-height;

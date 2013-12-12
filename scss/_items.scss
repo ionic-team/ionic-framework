@@ -8,7 +8,7 @@
   @include transition(margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out);
 
   position: relative;
-  z-index: 2; // Make sure the borders and stuff don't get hidden by children
+  z-index: $z-index-item; // Make sure the borders and stuff don't get hidden by children
   display: block;
 
   margin: $item-border-width * -1;
@@ -181,7 +181,7 @@ button.item.item-complex {
    * UI interactions.
    */
   position: relative;
-  z-index: 2;
+  z-index: $z-index-item;
 
   padding: $item-padding (($item-padding * 3) - 5) $item-padding $item-padding;
   border: none;
@@ -522,7 +522,7 @@ button.item-button-right:after {
   position: absolute;
   top: 0;
   left: 8px;
-  z-index: 0;
+  z-index: $z-index-item-edit;
   width: 48px;
   height: 100%;
   line-height: 100%;
@@ -564,7 +564,7 @@ button.item-button-right:after {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 0;
+  z-index: $z-index-item-drag;
   height: 100%;
 
   .button {
@@ -589,7 +589,7 @@ button.item-button-right:after {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 1;
+  z-index: $z-index-item-options;
   height: 100%;
 
   .button {

@@ -9,7 +9,7 @@
   @include translate3d(0, 100%, 0);
   position: fixed;
   top: 0; 
-  z-index: $zindex-modal;
+  z-index: $z-index-modal;
   overflow: hidden;
 
   min-height: 100%;

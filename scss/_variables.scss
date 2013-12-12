@@ -544,4 +544,21 @@ $badge-default-text:               #AAAAAA !default;
 // Z-Indexes
 // -------------------------------
 
-$zindex-modal: 10;
+$z-index-action-sheet:       10;
+$z-index-bar:                10;
+$z-index-bar-title:          0;
+$z-index-bar-button:         1;
+$z-index-item:               2;
+$z-index-item-checkbox:      3;
+$z-index-item-drag:          0;
+$z-index-item-edit:          0;
+$z-index-item-options:       1;
+$z-index-item-radio:         3;
+$z-index-item-toggle:        3;
+$z-index-menu:               0;
+$z-index-modal:              10;
+$z-index-pane:               1;
+$z-index-scroll-bar:         9999;
+$z-index-tabs:               5;
+$z-index-view:               1;
+

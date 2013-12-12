@@ -2727,17 +2727,18 @@ body, .ionic-body {
   bottom: 49px; }
 
 .pane {
-  position: fixed; }
+  position: fixed;
+  z-index: 1; }
 
 .view {
-  position: absolute; }
+  position: absolute;
+  z-index: 1; }
 
 .pane, .view {
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1;
   width: 100%;
   height: 100%;
   background-color: #fff; }
@@ -2924,6 +2925,7 @@ a.subdued {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 10;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0); }
