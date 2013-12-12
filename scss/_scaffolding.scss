@@ -98,7 +98,6 @@ body, .ionic-body {
   @include text-size-adjust(none);
   @include translateZ(0);
   @include transform-origin(left, top);
-  white-space: nowrap;
   //-webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
 }
