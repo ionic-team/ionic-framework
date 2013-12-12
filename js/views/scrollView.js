@@ -572,7 +572,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
     if ('ontouchstart' in window) {
       
       container.addEventListener("touchstart", function(e) {
-        console.log('TOUCHSTART');
         // Don't react if initial down happens on a form element
         if (e.target.tagName.match(/input|textarea|select/i)) {
           return;
