@@ -2599,7 +2599,6 @@ body, .ionic-body {
   -webkit-transform-origin: left top;
   -moz-transform-origin: left top;
   transform-origin: left top;
-  white-space: nowrap;
   -webkit-backface-visibility: hidden; }
 
 .scroll-bar {
