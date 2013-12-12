@@ -62,7 +62,6 @@
         return {
           link: function($scope, $element, $attr) {
             var startTop = $element[0].offsetTop;
-            console.log("Starting", startTop);
           }
         }
       })
@@ -79,6 +78,7 @@
             $scope.items.push({
             });
           }
+          $scope.$broadcast('scroll.resize');
         }, 2000);
         $timeout(function() {
           for(var i = 0; i < 70; i++) {

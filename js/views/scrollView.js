@@ -572,10 +572,12 @@ ionic.views.Scroll = ionic.views.View.inherit({
     if ('ontouchstart' in window) {
       
       container.addEventListener("touchstart", function(e) {
+        console.log('TOUCHSTART');
         // Don't react if initial down happens on a form element
         if (e.target.tagName.match(/input|textarea|select/i)) {
           return;
         }
+
         
         self.doTouchStart(e.touches, e.timeStamp);
         e.preventDefault();
@@ -692,6 +694,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
     // Update horiz bar
     if(self.__indicatorX) {
       var width = Math.max(Math.round(self.__clientWidth * self.__clientWidth / (self.__contentWidth)), 20);
+      if(width > self.__contentWidth) {
+        width = 0;
+      }
       self.__indicatorX.size = width;
       self.__indicatorX.minScale = this.options.minScrollbarSizeX / width;
       self.__indicatorX.indicator.style.width = width + 'px';
@@ -702,6 +707,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
     // Update vert bar
     if(self.__indicatorY) {
       var height = Math.max(Math.round(self.__clientHeight * self.__clientHeight / (self.__contentHeight)), 20);
+      if(height > self.__contentHeight) {
+        height = 0;
+      }
       self.__indicatorY.size = height;
       self.__indicatorY.minScale = this.options.minScrollbarSizeY / height;
       self.__indicatorY.maxPos = self.__clientHeight - height;
@@ -1797,8 +1805,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
     clearTimeout(self.__sizerTimeout);
     self.__sizerTimeout = setTimeout(function sizer() {
       self.resize();
-      if(self.__maxScrollLeft == 0 && self.__maxScrollTop == 0) {
-        self.__sizerTimeout = setTimeout(sizer, 1000);
+        
+      if((self.options.scrollingX && self.__maxScrollLeft == 0) || (self.options.scrollingY && self.__maxScrollTop == 0)) {
+        //self.__sizerTimeout = setTimeout(sizer, 1000);
       }
     }, 1000);
 

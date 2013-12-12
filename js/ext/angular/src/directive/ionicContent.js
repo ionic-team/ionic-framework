@@ -84,59 +84,56 @@ angular.module('ionic.ui.content', [])
 
 
           // Otherwise, supercharge this baby!
-          // Add timeout to let content render so Scroller.resize grabs the right content height
-          $timeout(function() { 
-            sv = new ionic.views.Scroll({
-              el: $element[0],
-              scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
-              scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
-              scrollingX: $scope.$eval($scope.hasScrollX) == true,
-              scrollingY: $scope.$eval($scope.hasScrollY) !== false,
-              scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 20,
-              scrollingComplete: function() {
-                $scope.onScrollComplete({
-                  scrollTop: this.__scrollTop,
-                  scrollLeft: this.__scrollLeft
-                });
-              }
-            });
-
-            // Activate pull-to-refresh
-            if(refresher) {
-              sv.activatePullToRefresh(50, function() {
-                refresher.classList.add('active');
-              }, function() {
-                refresher.classList.remove('refreshing');
-                refresher.classList.remove('active');
-              }, function() {
-                refresher.classList.add('refreshing');
-                $scope.onRefresh();
-                $scope.$parent.$broadcast('scroll.onRefresh');
+          sv = new ionic.views.Scroll({
+            el: $element[0],
+            scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
+            scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
+            scrollingX: $scope.$eval($scope.hasScrollX) == true,
+            scrollingY: $scope.$eval($scope.hasScrollY) !== false,
+            scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 20,
+            scrollingComplete: function() {
+              $scope.onScrollComplete({
+                scrollTop: this.__scrollTop,
+                scrollLeft: this.__scrollLeft
               });
             }
+          });
 
-            $element.bind('scroll', function(e) {
-              $scope.onScroll({
-                event: e,
-                scrollTop: e.detail ? e.detail.scrollTop : e.originalEvent ? e.originalEvent.detail.scrollTop : 0,
-                scrollLeft: e.detail ? e.detail.scrollLeft: e.originalEvent ? e.originalEvent.detail.scrollLeft : 0
-              });
+          // Activate pull-to-refresh
+          if(refresher) {
+            sv.activatePullToRefresh(50, function() {
+              refresher.classList.add('active');
+            }, function() {
+              refresher.classList.remove('refreshing');
+              refresher.classList.remove('active');
+            }, function() {
+              refresher.classList.add('refreshing');
+              $scope.onRefresh();
+              $scope.$parent.$broadcast('scroll.onRefresh');
             });
+          }
 
-            $scope.$parent.$on('scroll.resize', function(e) {
-              // Run the resize after this digest
-              $timeout(function() {
-                sv && sv.resize();
-              })
+          $element.bind('scroll', function(e) {
+            $scope.onScroll({
+              event: e,
+              scrollTop: e.detail ? e.detail.scrollTop : e.originalEvent ? e.originalEvent.detail.scrollTop : 0,
+              scrollLeft: e.detail ? e.detail.scrollLeft: e.originalEvent ? e.originalEvent.detail.scrollLeft : 0
             });
+          });
 
-            $scope.$parent.$on('scroll.refreshComplete', function(e) {
-              sv && sv.finishPullToRefresh();
-            });
-            
-            // Let child scopes access this 
-            $scope.$parent.scrollView = sv;
-          }, 500);
+          $scope.$parent.$on('scroll.resize', function(e) {
+            // Run the resize after this digest
+            $timeout(function() {
+              sv && sv.resize();
+            })
+          });
+
+          $scope.$parent.$on('scroll.refreshComplete', function(e) {
+            sv && sv.finishPullToRefresh();
+          });
+          
+          // Let child scopes access this 
+          $scope.$parent.scrollView = sv;
 
 
 

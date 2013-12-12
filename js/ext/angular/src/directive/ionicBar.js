@@ -51,7 +51,6 @@ angular.module('ionic.ui.header', ['ngAnimate'])
 
       $scope.$watch('title', function(val) {
         // Resize the title since the title has changed
-        console.log('Title changed');
         hb.align();
       });
     }
