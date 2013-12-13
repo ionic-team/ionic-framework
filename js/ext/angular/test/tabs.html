@@ -61,25 +61,29 @@
 
       <tab title="Home" icon-on="icon ion-ios7-filing" icon-off="icon ion-ios7-filing-outline" ng-controller="HomeCtrl">
         <header class="bar bar-header bar-positive">
-          <button class="button button-icon" ng-click="newTask()"><i class="icon ion-navicon-round"></i></button>
+          <button class="button button-icon" ng-click="newTask()"><i class="icon ion-plus"></i></button>
           <h1 class="title">Tasks</h1>
-          <button class="button button-clear button-primary" ng-click="isEditingItems = !isEditingItems">Edit</button>
+          <button class="button button-clear" ng-click="isDeletingItems = !isDeletingItems">Edit</button>
         </header>
         <content has-header="true" has-tabs="true" on-refresh="onRefresh()" on-scroll="scroll(scrollTop, scrollLeft)">
 
           <refresher></refresher>
-          <list scroll="false" on-refresh="onRefresh()" on-reorder="onReorder(el, start, end)" is-editing="isEditingItems" animation="fade-out" delete-icon="icon ion-minus-circled" reorder-icon="icon ion-navicon">
+
+          <list scroll="false" 
+               on-reorder="onReorder(el, start, end)" 
+               can-delete="true"
+               can-reorder="true"
+               can-swipe="true"
+               on-delete="deleteItem(item)"
+               show-delete="isDeletingItems" 
+               animation="fade-out" 
+               delete-icon="ion-minus-circled" 
+               reorder-icon="ion-navicon">
+
             <item ng-repeat="item in items" 
-            item="item"
-            buttons="item.buttons"
-            can-delete="true"
-            can-reorder="true"
-            can-swipe="true"
-            on-delete="deleteItem(item)"
-            ng-class="{completed: item.isCompleted}"
-            >
+                  item="item"
+                  ng-class="{completed: item.isCompleted}">
               {{item.title}}
-              <i class="{{item.icon}}"></i>
             </list-item>
           </list>
         </content>
@@ -102,14 +106,7 @@
           <h1>Settings</h1>
         </content>
       </tab>
-      <tab title="Settings" icon-on="icon ion-ios7-gear" icon-off="icon ion-ios7-gear-outline">
-        <header class="bar bar-header bar-positive">
-          <h1 class="title">Settings</h1>
-        </header>
-        <content has-header="true">
-          <h1>Settings</h1>
-        </content>
-      </tab>
+
       <tab title="Settings" icon-on="icon ion-ios7-gear" icon-off="icon ion-ios7-gear-outline">
         <header class="bar bar-header bar-positive">
           <h1 class="title">Settings</h1>
@@ -149,7 +146,6 @@
 
 
       .controller('HomeCtrl', function($scope, $timeout, Modal, ActionSheet) {
-        $scope.items = [];
 
         Modal.fromTemplateUrl('newTask.html', function(modal) {
           $scope.settingsModal = modal;
@@ -182,6 +178,7 @@
           console.log('ON REFRESH');
 
           $timeout(function() {
+            buildMockData();
 			      $scope.$broadcast('scroll.refreshComplete');
           }, 1000);
         }
@@ -195,21 +192,16 @@
           $scope.settingsModal.show();
         };
 
-        // Create the items
-        for(var i = 0; i < 25; i++) {
-          $scope.items.push({
-            title: 'Task ' + (i + 1),
-            buttons: [{
-              text: 'Done',
-              type: 'button-success',
-              onButtonClicked: completeItem,
-            }, {
-              text: 'Delete',
-              type: 'button-danger',
-              onButtonClicked: removeItem,
-            }]
-          });
+        function buildMockData() {
+          // Create the items
+          $scope.items = [];
+          for(var i = 0; i < 25; i++) {
+            $scope.items.push({
+              title: 'Task ' + (i + 1)
+            });
+          }
         }
+        buildMockData();
 
       })
 

@@ -365,35 +365,3 @@ describe('Ionic Item Directive', function () {
 
 });
 
-describe('Ionic Link Item Directive', function () {
-  var $rootScope, $compile, listCtrl, options, listScope, itemScope, listElement, itemElement;
-
-  beforeEach(module('ionic.ui.list'));
-
-  beforeEach(inject(function (_$compile_, _$rootScope_) {
-    $rootScope = _$rootScope_;
-    $compile = _$compile_;
-
-    listElement = angular.element('<list>');
-    listElement = _$compile_(listElement)($rootScope);
-    listScope = listElement.isolateScope();
-
-    listCtrl = listElement.controller('list');
-
-    itemElement = angular.element('<link-item>').appendTo(listElement);
-    itemElement = _$compile_(itemElement)($rootScope);
-
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-  }));
-
-  it('Should set link-item href', inject(function ($timeout) {
-    itemElement = angular.element('<link-item href="http://drifty.com/">').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.href).toBe("http://drifty.com/");
-    expect(itemElement.attr('href')).toBe("http://drifty.com/");
-  }));
-  
-});

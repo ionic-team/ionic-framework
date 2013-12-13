@@ -58,16 +58,16 @@
       <content has-header="true"
                on-refresh-holding="refreshHolding()"
                on-refresh-opening="refreshOpening(ratio)"
-               on-refresh="refreshItems()"
-               refresh-complete="refreshComplete">
+               on-refresh="refreshItems()">
 
-        <list show-delete="isDeletingItems" animation="my-repeat-animation">
+        <list show-delete="isDeletingItems" 
+              animation="my-repeat-animation"
+              on-delete="deleteListItem(item)">
 
           <refresher></refresher>
 
           <item ng-repeat="item in items" 
-                item="item"
-                on-delete="deleteListItem(item)">
+                item="item">
             Item: {{ item.text }}
           </item>
 
