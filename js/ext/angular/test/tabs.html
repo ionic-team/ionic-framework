@@ -61,7 +61,7 @@
 
       <tab title="Home" icon-on="icon ion-ios7-filing" icon-off="icon ion-ios7-filing-outline" ng-controller="HomeCtrl">
         <header class="bar bar-header bar-positive">
-          <button class="button button-icon" ng-click="newTask()"><i class="icon ion-plus"></i></button>
+          <button class="button button-icon icon ion-plus" ng-click="newTask()"></button>
           <h1 class="title">Tasks</h1>
           <button class="button button-clear" ng-click="isDeletingItems = !isDeletingItems">Edit</button>
         </header>
@@ -81,8 +81,7 @@
                reorder-icon="ion-navicon">
 
             <item ng-repeat="item in items" 
-                  item="item"
-                  ng-class="{completed: item.isCompleted}">
+                  item="item">
               {{item.title}}
             </list-item>
           </list>
@@ -184,7 +183,7 @@
         }
 
 
-        $scope.removeItem = function(item) {
+        $scope.deleteItem = function(item) {
           removeItem(item);
         };
 
