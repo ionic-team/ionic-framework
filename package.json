@@ -18,7 +18,7 @@
     "load-grunt-tasks": "~0.2.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/karma start ionic.conf.js --single-run --browsers Firefox"
+    "test": "./node_modules/.bin/karma start ionic.conf.js --single-run --browsers PhantomJS"
   },
   "licenses": [
     {
