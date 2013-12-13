@@ -16,18 +16,17 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       canDelete: '@',
       canReorder: '@',
       canSwipe: '@',
-      onSelect: '&',
       onDelete: '&',
       optionButtons: '&',
       deleteIcon: '@',
       reorderIcon: '@'
     },
 
-    template: '<div class="item item-complex" ng-class="itemClass" ng-click="selectClick()">\
+    template: '<div class="item item-complex" ng-class="itemClass">\
             <div class="item-edit" ng-if="deleteClick !== undefined">\
               <button class="button button-icon icon" ng-class="deleteIconClass" ng-click="deleteClick()"></button>\
             </div>\
-            <div class="item-content" ng-transclude></div>\
+            <a class="item-content" ng-href="{{ href }}" ng-transclude></a>\
             <div class="item-drag" ng-if="reorderIconClass !== undefined">\
               <button data-ionic-action="reorder" class="button button-icon icon" ng-class="reorderIconClass"></button>\
             </div>\
@@ -39,104 +38,6 @@ angular.module('ionic.ui.list', ['ngAnimate'])
     link: function($scope, $element, $attr, list) {
       if(!list) return;
       
-      var $parentScope = list.scope;
-      var $parentAttrs = list.attrs;
-
-      // Set this item's class, first from the item directive attr, and then the list attr if item not set
-      $scope.itemClass = $scope.itemType || $parentScope.itemType;
-
-      // Decide if this item can do stuff, and follow a certain priority 
-      // depending on where the value comes from
-      if(($attr.canDelete ? $scope.canDelete : $parentScope.canDelete) !== "false") {
-        if($attr.onDelete || $parentAttrs.onDelete) {
-
-          // only assign this method when we need to
-          // and use its existence to decide if the delete should show or not
-          $scope.deleteClick = function() {
-            if($attr.onDelete) {
-              // this item has an on-delete attribute
-              $scope.onDelete($scope.item);
-            } else if($parentAttrs.onDelete) {
-              // run the parent list's onDelete method
-              // if it doesn't exist nothing will happen
-              $parentScope.onDelete($scope.item);
-            }
-          };
-
-          // Set which icons to use for deleting
-          $scope.deleteIconClass = $scope.deleteIcon || $parentScope.deleteIcon || 'ion-minus-circled';
-        }
-      }
-
-      if($attr.onSelect || $parentAttrs.onSelect) {
-        // only assign this method when we need to
-        $scope.selectClick = function() {
-          if($attr.onSelect) {
-            // this item has an on-delete attribute
-            $scope.onSelect($scope.item);
-          } else if($parentAttrs.onSelect) {
-            // run the parent list's onDelete method
-            // if it doesn't exist nothing will happen
-            $parentScope.onSelect($scope.item);
-          }
-        };
-      }
-
-      // set the reorder Icon Class only if the item or list set can-reorder="true"
-      if(($attr.canReorder ? $scope.canReorder : $parentScope.canReorder) === "true") {
-        $scope.reorderIconClass = $scope.reorderIcon || $parentScope.reorderIcon || 'ion-navicon';
-      }
-
-      // Set the option buttons which can be revealed by swiping to the left
-      // if canSwipe was set to false don't even bother
-      if(($attr.canSwipe ? $scope.canSwipe : $parentScope.canSwipe) !== "false") {
-        $scope.itemOptionButtons = $scope.optionButtons();
-        if(typeof $scope.itemOptionButtons === "undefined") {
-          $scope.itemOptionButtons = $parentScope.optionButtons();
-        }
-      }
-
-    }
-  };
-}])
-
-.directive('linkItem', [function() {
-  return {
-    restrict: 'E',
-    require: '?^list',
-    replace: true,
-    transclude: true,
-
-    scope: {
-      item: '=',
-      itemType: '@',
-      canDelete: '@',
-      canReorder: '@',
-      canSwipe: '@',
-      onSelect: '&',
-      onDelete: '&',
-      optionButtons: '&',
-      deleteIcon: '@',
-      reorderIcon: '@',
-      href: '@'
-    },
-
-    template: '<a class="item item-complex" ng-class="itemClass" ng-href="{{ href }}" ng-click="onSelect()">\
-            <div class="item-edit" ng-if="deleteClick !== undefined">\
-              <button class="button button-icon icon" ng-class="deleteIconClass" ng-click="deleteClick()"></button>\
-            </div>\
-            <div class="item-content" ng-transclude></div>\
-            <div class="item-drag" ng-if="reorderIconClass !== undefined">\
-              <button data-ionic-action="reorder" class="button button-icon icon" ng-class="reorderIconClass"></button>\
-            </div>\
-            <div class="item-options" ng-if="itemOptionButtons">\
-             <button ng-click="b.onClick(item, b)" class="button" ng-class="b.type" ng-repeat="b in itemOptionButtons" ng-bind="b.text"></button>\
-           </div>\
-          </a>',
-
-    link: function($scope, $element, $attr, list) {
-      if(!list) return;
-
       var $parentScope = list.scope;
       var $parentAttrs = list.attrs;
 
@@ -157,11 +58,11 @@ angular.module('ionic.ui.list', ['ngAnimate'])
           $scope.deleteClick = function() {
             if($attr.onDelete) {
               // this item has an on-delete attribute
-              $scope.onDelete($scope.item);
+              $scope.onDelete({ item: $scope.item });
             } else if($parentAttrs.onDelete) {
               // run the parent list's onDelete method
               // if it doesn't exist nothing will happen
-              $parentScope.onDelete($scope.item);
+              $parentScope.onDelete({ item: $scope.item });
             }
           };
 
@@ -205,7 +106,6 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       onRefresh: '&',
       onRefreshOpening: '&',
       refreshComplete: '=',
-      onSelect: '&',
       onDelete: '&',
       onReorder: '&',
       optionButtons: '&',

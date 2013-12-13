@@ -65,7 +65,7 @@
               on-refresh-opening="refreshOpening(ratio)"
               on-refresh="refreshItems()"
               refresh-complete="refreshComplete"
-              on-delete="deleteListItem()"
+              on-delete="deleteListItem(item)"
               delete-icon="ion-minus-circled"
               reorder-icon="ion-navicon"
               animation="my-repeat-animation"
@@ -98,7 +98,7 @@
           </item>
 
           <!-- shows that the item directive can receive many attributes and overrides the list attributes -->
-          <item on-delete="deleteItem()"
+          <item on-delete="deleteItem(item)"
                 delete-icon="ion-trash-a"
                 reorder-icon="ion-navicon-round"
                 can-delete="true"

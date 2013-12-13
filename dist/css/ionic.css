@@ -3857,6 +3857,11 @@ button.item.item-complex {
   border: none;
   background-color: white; }
 
+a.item-content {
+  display: block;
+  text-decoration: none;
+  color: inherit; }
+
 .item-text-wrap,
 .item-text-wrap h1,
 .item-text-wrap h2,
