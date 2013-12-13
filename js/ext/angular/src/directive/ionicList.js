@@ -102,10 +102,6 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       canSwipe: '@',
       showDelete: '=',
       showReorder: '=',
-      hasPullToRefresh: '@',
-      onRefresh: '&',
-      onRefreshOpening: '&',
-      refreshComplete: '=',
       onDelete: '&',
       onReorder: '&',
       optionButtons: '&',
@@ -121,33 +117,10 @@ angular.module('ionic.ui.list', ['ngAnimate'])
     },
 
     link: function($scope, $element, $attr) {
-      var lv = new ionic.views.ListView({
+      $scope.listView = new ionic.views.ListView({
         el: $element[0],
-        listEl: $element[0].children[0],
-        hasPullToRefresh: ($scope.hasPullToRefresh !== 'false'),
-        onRefresh: function() {
-          $scope.onRefresh();
-          $scope.$parent.$broadcast('scroll.onRefresh');
-        },
-        onRefreshOpening: function(amt) {
-          $scope.onRefreshOpening({amount: amt});
-          $scope.$parent.$broadcast('scroll.onRefreshOpening', amt);
-        },
-        onReorder: function(el, oldIndex, newIndex) {
-          $scope.$apply(function() {
-            $scope.onReorder({el: el, start: oldIndex, end: newIndex});
-          });
-        }
+        listEl: $element[0].children[0]
       });
-
-      $scope.listView = lv;
-
-      if($attr.refreshComplete) {
-        $scope.refreshComplete = function() {
-          lv.doneRefreshing();
-          $scope.$parent.$broadcast('scroll.onRefreshComplete');
-        };
-      }
 
       if($attr.animation) {
         $element[0].classList.add($attr.animation);
