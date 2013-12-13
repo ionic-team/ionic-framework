@@ -2643,7 +2643,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
         if (e.target.tagName.match(/input|textarea|select/i)) {
           return;
         }
-
         
         self.doTouchStart(e.touches, e.timeStamp);
         e.preventDefault();
@@ -3869,14 +3868,17 @@ ionic.views.Scroll = ionic.views.View.inherit({
     var self = this;
 
     clearTimeout(self.__sizerTimeout);
-    self.__sizerTimeout = setTimeout(function sizer() {
+
+    var sizer = function() {
       self.resize();
         
       if((self.options.scrollingX && self.__maxScrollLeft == 0) || (self.options.scrollingY && self.__maxScrollTop == 0)) {
         //self.__sizerTimeout = setTimeout(sizer, 1000);
       }
-    }, 1000);
+    };
 
+    sizer();
+    self.__sizerTimeout = setTimeout(sizer, 1000);
   },
 
   /*
@@ -3941,7 +3943,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       }
 
       // Animate to grid when snapping is active, otherwise just fix out-of-boundary positions
-      self.scrollTo(self.__scrollLeft, self.__scrollTop, self.options.snapping);
+      //self.scrollTo(self.__scrollLeft, self.__scrollTop, self.options.snapping);
     };
 
     // Start animation and switch on flag

@@ -104,7 +104,6 @@
         return {
           link: function($scope, $element, $attr) {
             var startTop = $element[0].offsetTop;
-            console.log("Starting", startTop);
           }
         }
       })
@@ -114,7 +113,6 @@
         var content = document.getElementById('container');
         var startTop = header.offsetTop;
         $scope.onScrollComplete = function(event, scrollTop, scrollLeft) {
-          console.log('Scroll complete', scrollTop, scrollLeft);
         }
         var last = 0;
         $scope.onScroll = function(event, scrollTop, scrollLeft) {
@@ -136,9 +134,6 @@
           $scope.items.push({
           });
         }
-        $timeout(function() {
-          $scope.scrollView.resize();
-        }, 1000);
       })
     </script>
   </body>
