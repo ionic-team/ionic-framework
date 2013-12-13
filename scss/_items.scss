@@ -173,13 +173,13 @@ button.item.item-complex {
 }
 .item-complex .item-content,
 .item-radio .item-content {
-
-  @include transition(margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out);
   /**
    * The content area of a complex list item. This area can
    * Slide left and right and be dragged to support different
    * UI interactions.
    */
+
+  @include transition(margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out);
   position: relative;
   z-index: $z-index-item;
 
@@ -505,8 +505,8 @@ button.item-button-right:after {
 // Item Editing
 // -------------------------------
 
-.item-sliding {
-  @include transition(transform 0.1s ease-in-out);
+.item-complex .item-content.item-sliding {
+  @include transform(0.1s ease-in-out);
 }
 
 .item-reordering {

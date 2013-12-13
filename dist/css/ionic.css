@@ -3844,14 +3844,14 @@ button.item.item-complex {
 
 .item-complex .item-content,
 .item-radio .item-content {
-  -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
-  -moz-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
-  transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
   /**
    * The content area of a complex list item. This area can
    * Slide left and right and be dragged to support different
    * UI interactions.
    */
+  -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
+  -moz-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
+  transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
   position: relative;
   z-index: 2;
   padding: 15px 40px 15px 15px;
@@ -4137,9 +4137,9 @@ button.item-button-right:after {
   color: #aaa;
   font-size: 14px; }
 
-.item-sliding {
-  -webkit-transition: transform 0.1s ease-in-out;
-  -moz-transition: transform 0.1s ease-in-out;
+.item-complex .item-content.item-sliding {
+  -webkit-transition: -webkit-transform 0.1s ease-in-out;
+  -moz-transition: -moz-transform 0.1s ease-in-out;
   transition: transform 0.1s ease-in-out; }
 
 .item-reordering {
@@ -4416,7 +4416,9 @@ button.item-button-right:after {
   position: relative;
   white-space: nowrap;
   font-size: 0;
-  -webkit-transition: -webkit-transform 0 ease-in-out; }
+  -webkit-transition: -webkit-transform 0 ease-in-out;
+  -moz-transition: -moz-transform 0 ease-in-out;
+  transition: transform 0 ease-in-out; }
 
 .slide-box-animating {
   -webkit-transition-duration: 0.2s;

@@ -14,7 +14,7 @@
   position: relative;
   white-space: nowrap;
   font-size: 0; // Remove the gaps between slide content items
-  -webkit-transition: -webkit-transform 0 ease-in-out;
+  @include transform(0 ease-in-out);
 }
 
 .slide-box-animating {

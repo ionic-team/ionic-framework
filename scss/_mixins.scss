@@ -277,6 +277,12 @@
 // Transition Mixins
 // --------------------------------------------------
 
+@mixin transform($properties...) {
+  -webkit-transition: -webkit-transform $properties;
+     -moz-transition: -moz-transform $properties;
+          transition: transform $properties;
+}
+
 @mixin transition($transition...) {
   -webkit-transition: $transition;
      -moz-transition: $transition;

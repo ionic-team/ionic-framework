@@ -32,7 +32,5 @@
 }
 
 .menu-animated {
-  -webkit-transition: -webkit-transform $menu-animation-speed ease;
-     -moz-transition: -moz-transform $menu-animation-speed ease;
-          transition: transform $menu-animation-speed ease;
+  @include transform($menu-animation-speed ease);
 }
