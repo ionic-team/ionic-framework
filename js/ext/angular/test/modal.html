@@ -15,7 +15,7 @@
     <script src="../../../../dist/js/ionic-angular.js"></script>
   </head>
   <body>
-    <pane ng-controller="ModalCtrl">
+    <pane ng-controller="AppCtrl">
         <header-bar type="bar-positive" title="'Contacts'" right-buttons="contactsRightButtons">
         </header-bar>
         <content has-header="true">
@@ -28,10 +28,10 @@
     </pane>
 
     <script id="modal.html" type="text/ng-template">
-      <div class="modal">
+      <div class="modal" ng-controller="ModalCtrl">
         <header class="bar bar-header bar-positive">
           <h1 class="title">New Contact</h1>
-          <button class="button button-clear button-primary" ng-click="closeModal()">Cancel</button>
+          <button class="button button-clear button-primary" ng-click="close()">Cancel</button>
         </header>
         <content has-header="true">
           <div class="padding">
@@ -58,7 +58,7 @@
     <script>
       angular.module('modalTest', ['ionic'])
 
-      .controller('ModalCtrl', function($scope, Modal) {
+      .controller('AppCtrl', function($scope, Modal) {
         $scope.contacts = [
           { name: 'Gordon Freeman' },
           { name: 'Barney Calhoun' },
@@ -68,7 +68,7 @@
           {
             type: 'button-icon',
             content: '<i class="icon ion-compose"></i>',
-            click: function(e) {
+            tap: function(e) {
               $scope.openModal();
             }
           }
@@ -82,10 +82,15 @@
         Modal.fromTemplateUrl('modal.html', function(modal) {
           $scope.modal = modal;
         }, {
-          scope: $scope,
           animation: 'slide-in-up'
         });
 
+      })
+
+      .controller('ModalCtrl', function($scope) {
+        $scope.close = function() {
+          $scope.modal.hide();
+        }
       });
     </script>
   </body>
