@@ -3859,8 +3859,8 @@ button.item.item-complex {
 
 a.item-content {
   display: block;
-  text-decoration: none;
-  color: inherit; }
+  color: inherit;
+  text-decoration: none; }
 
 .item-text-wrap,
 .item-text-wrap h1,
@@ -4022,9 +4022,9 @@ button.item.item-button-right {
   .item-button-right .item-content > .button > .button,
   .item-button-right > .buttons > .button,
   .item-button-right .item-content > .buttons > .button {
+    margin: 0px 2px;
     min-height: 32px;
-    font-size: 32px;
-    margin: 0px 2px; }
+    font-size: 32px; }
 
 /**
  * Auto Right Arrow Icon
@@ -4138,6 +4138,7 @@ button.item-button-right:after {
 
 .item-reordering {
   position: absolute;
+  z-index: 20;
   width: 100%; }
 
 .item-placeholder {
@@ -4206,8 +4207,8 @@ button.item-button-right:after {
   height: 100%;
   background: inherit; }
   .item-drag .button {
-    height: 100%;
-    min-width: 42px; }
+    min-width: 42px;
+    height: 100%; }
     .item-drag .button.icon:before {
       display: -webkit-box;
       display: -webkit-flex;

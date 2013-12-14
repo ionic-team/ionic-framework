@@ -190,8 +190,8 @@ button.item.item-complex {
 
 a.item-content {
   display: block;
-  text-decoration: none;
   color: inherit;
+  text-decoration: none;
 }
 
 .item-text-wrap,
@@ -347,9 +347,9 @@ button.item.item-button-right {
   }
 
   > .button {
+    margin: 0px 2px;
     min-height: $item-icon-font-size;
     font-size: $item-icon-font-size;
-    margin: 0px 2px;
   }
 }
 
@@ -506,6 +506,7 @@ button.item-button-right:after {
 
 .item-reordering {
   position: absolute;
+  z-index: $z-index-item-reordering;
   width: 100%;
 }
 
@@ -573,8 +574,8 @@ button.item-button-right:after {
   background: inherit;
 
   .button {
-    height: 100%;
     min-width: 42px;
+    height: 100%;
 
     &.icon:before {
       @include display-flex();
