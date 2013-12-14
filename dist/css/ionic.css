@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /*!
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
@@ -3849,9 +3848,9 @@ button.item.item-complex {
    * Slide left and right and be dragged to support different
    * UI interactions.
    */
-  -webkit-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
-  -moz-transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
-  transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
   position: relative;
   z-index: 2;
   padding: 15px 40px 15px 15px;
@@ -4137,11 +4136,6 @@ button.item-button-right:after {
   color: #aaa;
   font-size: 14px; }
 
-.item-complex .item-content.item-sliding {
-  -webkit-transition: -webkit-transform 0.1s ease-in-out;
-  -moz-transition: -moz-transform 0.1s ease-in-out;
-  transition: transform 0.1s ease-in-out; }
-
 .item-reordering {
   position: absolute;
   width: 100%; }
@@ -4265,7 +4259,9 @@ button.item-button-right:after {
  * "edit mode" or reordering list items
  */
 .list-editing .item-content {
-  margin-left: 50px; }
+  -webkit-transform: translate3d(50px, 0, 0);
+  -moz-transform: translate3d(50px, 0, 0);
+  transform: translate3d(50px, 0, 0); }
 
 .list-reordering .item-content {
   margin-right: 50px; }

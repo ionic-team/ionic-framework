@@ -32,5 +32,5 @@
 }
 
 .menu-animated {
-  @include transform($menu-animation-speed ease);
+  @include transition-transform($menu-animation-speed ease);
 }

@@ -178,8 +178,7 @@ button.item.item-complex {
    * Slide left and right and be dragged to support different
    * UI interactions.
    */
-
-  @include transition(margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out);
+  @include transition(all 0.1s ease-in-out);
   position: relative;
   z-index: $z-index-item;
 
@@ -504,10 +503,6 @@ button.item-button-right:after {
 
 // Item Editing
 // -------------------------------
-
-.item-complex .item-content.item-sliding {
-  @include transform(0.1s ease-in-out);
-}
 
 .item-reordering {
   position: absolute;

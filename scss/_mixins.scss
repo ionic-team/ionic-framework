@@ -277,12 +277,6 @@
 // Transition Mixins
 // --------------------------------------------------
 
-@mixin transform($properties...) {
-  -webkit-transition: -webkit-transform $properties;
-     -moz-transition: -moz-transform $properties;
-          transition: transform $properties;
-}
-
 @mixin transition($transition...) {
   -webkit-transition: $transition;
      -moz-transition: $transition;
@@ -307,6 +301,12 @@
   -webkit-transition-property: $property;
      -moz-transition-property: $property;
           transition-property: $property;
+}
+@mixin transition-transform($properties...) {
+  // special case cuz of transform vendor prefixes
+  -webkit-transition: -webkit-transform $properties;
+     -moz-transition: -moz-transform $properties;
+          transition: transform $properties;
 }
 
 

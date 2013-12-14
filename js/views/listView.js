@@ -93,6 +93,7 @@
         }
 
         _this._currentDrag.content.style.webkitTransform = 'translate3d(' + newX + 'px, 0, 0)';
+        _this._currentDrag.content.style.webkitTransition = 'none';
       }
     });
   };
@@ -123,22 +124,28 @@
 
     }
 
-    var content = this._currentDrag.content;
+    // var content = this._currentDrag.content;
 
-    var onRestingAnimationEnd = function(e) {
-      if(e.propertyName == '-webkit-transform') {
-        content.classList.remove(ITEM_SLIDING_CLASS);
-      }
-      e.target.removeEventListener('webkitTransitionEnd', onRestingAnimationEnd);
-    };
+    // var onRestingAnimationEnd = function(e) {
+    //   if(e.propertyName == '-webkit-transform') {
+    //     if(content) content.classList.remove(ITEM_SLIDING_CLASS);
+    //   }
+    //   e.target.removeEventListener('webkitTransitionEnd', onRestingAnimationEnd);
+    // };
 
     window.rAF(function() {
-      var currentX = parseFloat(_this._currentDrag.content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
-      if(currentX !== restingPoint) {
-        _this._currentDrag.content.classList.add(ITEM_SLIDING_CLASS);
-        _this._currentDrag.content.addEventListener('webkitTransitionEnd', onRestingAnimationEnd);
+      // var currentX = parseFloat(_this._currentDrag.content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
+      // if(currentX !== restingPoint) {
+      //   _this._currentDrag.content.classList.add(ITEM_SLIDING_CLASS);
+      //   _this._currentDrag.content.addEventListener('webkitTransitionEnd', onRestingAnimationEnd);
+      // }
+      if(restingPoint === 0) {
+        _this._currentDrag.content.style.webkitTransform = '';
+      } else {
+        _this._currentDrag.content.style.webkitTransform = 'translate3d(' + restingPoint + 'px, 0, 0)';
       }
-      _this._currentDrag.content.style.webkitTransform = 'translate3d(' + restingPoint + 'px, 0, 0)';
+      _this._currentDrag.content.style.webkitTransition = '';
+      
 
       // Kill the current drag
       _this._currentDrag = null;

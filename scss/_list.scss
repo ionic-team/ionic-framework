@@ -18,7 +18,7 @@
  */
 .list-editing {
   .item-content {
-    margin-left: 50px;
+    @include translate3d(50px, 0, 0);
   }
 }
 .list-reordering {
