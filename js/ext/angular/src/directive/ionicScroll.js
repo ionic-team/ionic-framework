@@ -86,7 +86,7 @@ angular.module('ionic.ui.scroll', [])
             // Run the resize after this digest
             $timeout(function() {
               sv && sv.resize();
-            })
+            });
           });
 
           $scope.$parent.$on('scroll.refreshComplete', function(e) {
