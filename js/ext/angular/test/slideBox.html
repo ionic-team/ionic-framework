@@ -45,22 +45,22 @@
   <body>
 
     <div ng-controller="SlideCtrl">
-    <slide-box>
-      <slide>
-        <div class="box blue">
-          <h1>BLUE {{slideBox.slideIndex}}</h1>
+      <scroll direction="x" paging="true">
+        <div class="slide">
+          <div class="box blue">
+            <h1>BLUE {{slideBox.slideIndex}}</h1>
+          </div>
         </div>
-      </slide>
-      <slide>
-        <div class="box yellow">
-          <h1>YELLOW {{slideBox.slideIndex}}</h1>
+        <div class="slide">
+          <div class="box yellow">
+            <h1>YELLOW {{slideBox.slideIndex}}</h1>
+          </div>
         </div>
-      </slide>
-      <slide>
-      <div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>
-      </slide>
-    </slide-box>
-  </div>
+        <div class="slide">
+          <div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>
+        </div>
+      </scroll>
+    </div>
     <script>
       angular.module('slideBoxTest', ['ionic'])
 

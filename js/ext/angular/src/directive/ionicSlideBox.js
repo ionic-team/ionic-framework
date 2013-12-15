@@ -59,7 +59,7 @@ angular.module('ionic.ui.slideBox', [])
   return {
     restrict: 'E',
     replace: true,
-    require: '^slideBox',
+    require: '^scroll',
     transclude: true,
     template: '<div class="slide-box-slide" ng-transclude></div>',
     compile: function(element, attr, transclude) {
