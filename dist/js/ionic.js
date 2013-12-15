@@ -2,7 +2,7 @@
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v0.9.17
+ * Ionic, v0.9.14
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -16,7 +16,7 @@
 window.ionic = {
   controllers: {},
   views: {},
-  version: '0.9.17'
+  version: '0.9.14'
 };;
 (function(ionic) {
 
@@ -5839,8 +5839,6 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
      * negative value for right menu (only one menu will be visible at a time).
      */
     openAmount: function(amount) {
-      console.log('OPEN AMOUNT', amount);
-
       var maxLeft = this.left && this.left.width || 0;
       var maxRight = this.right && this.right.width || 0;
 
@@ -5882,7 +5880,6 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
      * @param {Event} e the gesture event to use for snapping
      */
     snapToRest: function(e) {
-      console.log('SNAP TO REST');
       // We want to animate at the end of this
       this.content.enableAnimation();
       this._isDragging = false;
