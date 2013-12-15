@@ -1490,7 +1490,11 @@ angular.module('ionic.ui.radio', [])
         }
       });
         
-      $element.bind('click', clickHandler);
+      ionic.on('tap', clickHandler, $element[0]);
+
+      $scope.$on('$destroy', function() {
+        ionic.off('tap', clickHandler);
+      });
     }
   };
 });

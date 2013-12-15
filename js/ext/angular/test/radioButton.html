@@ -26,11 +26,12 @@
           <label class="item item-input">
             <span class="input-label">Units</span>
             
-            <radio-buttons ng-model="data.isLovely">
-              <button class="button button-assertive button-radio" ng-value="'magical'">Magical</button>
+            <!--<radio-buttons ng-model="data.isLovely">-->
+            <div class="button-bar">
+              <button class="button button-assertive button-radio" ng-value="'magical'" ng-click="magical()">Magical</button>
               <button class="button button-assertive button-radio" ng-value="'black'">Black</button>
               <button class="button button-assertive button-radio" ng-value="'pinto'">Pinto</button>
-            </radio-buttons>
+            </div>
           </label>
         </div>
 
@@ -45,6 +46,9 @@
       angular.module('radioButtonTest', ['ionic'])
 
       .controller('TestCtrl', function($scope) {
+          $scope.magical = function() {
+            console.log('Mgical');
+          };
         $scope.data = {};
         var items = ['magical', 'black', 'pinto'];
         var i = 0;
