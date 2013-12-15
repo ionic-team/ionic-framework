@@ -5155,11 +5155,13 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
         // Calculate how far in this slide we've dragged
         ratio = (offsetX % slideWidth) / slideWidth;
-
-        if(ratio >= 0) {
+        if(ratio > 0) {
           // Anything greater than zero is too far left, this is an extreme case
           // TODO: Do we need this anymore?
           finalOffsetX = 0;
+        } else if (ratio == 0) {
+          // Drag up or down but not sideways--stay at current slide
+          finalOffsetX = _this.slideIndex * slideWidth;
         } else if(ratio >= -0.5) {
           // We are less than half-way through a drag
           // Sliiide to the left
@@ -5178,9 +5180,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
             _this.slideToSlide(_this.slideIndex - 1);
           }
         } else {
+          // Not fast enough to trigger gesture, but may have moved far enough to change slide
           // Calculate the new slide index (or "page")
           _this.slideIndex = Math.ceil(finalOffsetX / slideWidth);
-
+ 
           // Negative offsetX to slide correctly
           content.style.webkitTransform = 'translate3d(' + -finalOffsetX + 'px, 0, 0)';
         }
