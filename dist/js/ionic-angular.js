@@ -2,7 +2,7 @@
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v0.9.14
+ * Ionic, v0.9.17
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -712,7 +712,7 @@ angular.module('ionic.ui.content', [])
               el: $element[0],
               scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
               scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
-              scrollingX: $scope.$eval($scope.hasScrollX) == true,
+              scrollingX: $scope.$eval($scope.hasScrollX) === true,
               scrollingY: $scope.$eval($scope.hasScrollY) !== false,
               scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 20,
               scrollingComplete: function() {
@@ -749,7 +749,7 @@ angular.module('ionic.ui.content', [])
               // Run the resize after this digest
               $timeout(function() {
                 sv && sv.resize();
-              })
+              });
             });
 
             $scope.$parent.$on('scroll.refreshComplete', function(e) {
@@ -1589,7 +1589,7 @@ angular.module('ionic.ui.scroll', [])
             // Run the resize after this digest
             $timeout(function() {
               sv && sv.resize();
-            })
+            });
           });
 
           $scope.$parent.$on('scroll.refreshComplete', function(e) {
