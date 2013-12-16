@@ -6,7 +6,7 @@ If you think you might have found a bug, please start by making sure it hasn't a
 
 If not, then [create a plunkr](http://plnkr.co/edit/vD0O9M?p=preview) that demonstrates the problem (try to use as little code as possible: the more minimalist, the faster we can debug it).
 
-Next, create a new issue that briefly explains the problem, and provides a bit of background as to the circumstances that triggered it. Don't forget to include the link to that plunkr you created!
+Next, [create a new issue](https://github.com/driftyco/ionic/issues/new) that briefly explains the problem, and provides a bit of background as to the circumstances that triggered it. Don't forget to include the link to that plunkr you created!
 
 ### Pull Request Guidelines
 
