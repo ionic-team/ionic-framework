@@ -5701,6 +5701,11 @@ a.button {
   100% {
     transform: rotate(360deg); } }
 
+.no-animation > .ng-enter, .no-animation.ng-enter, .no-animation > .ng-leave, .no-animation.ng-leave {
+  -webkit-transition: none;
+  -moz-transition: none;
+  transition: none; }
+
 .noop-animation > .ng-enter, .noop-animation.ng-enter, .noop-animation > .ng-leave, .noop-animation.ng-leave {
   -webkit-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 250ms;
   -moz-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 250ms;

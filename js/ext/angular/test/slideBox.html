@@ -70,6 +70,17 @@
       angular.module('slideBoxTest', ['ionic'])
 
       .controller('SlideCtrl', function($scope) {
+        $scope.next = function() {
+        };
+        $scope.rightButtons = [
+          {
+            content: 'Next',
+            type: 'button-positive button-clear',
+            onTap: function(e) {
+              $scope.next();
+            }
+          }
+        ];
         $scope.leftButtons = [
           {
             content: 'Skip',

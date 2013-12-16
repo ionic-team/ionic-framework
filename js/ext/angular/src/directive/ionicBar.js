@@ -16,7 +16,7 @@ angular.module('ionic.ui.header', ['ngAnimate'])
                 </div>\
                 <h1 class="title" ng-bind-html="title"></h1>\
                 <div class="buttons">\
-                  <button ng-repeat="button in rightButtons" class="button" ng-class="button.type" ng-click="button.tap($event, $index)" ng-bind-html="button.content">\
+                  <button ng-repeat="button in rightButtons" class="button no-animation" ng-class="button.type" ng-click="button.tap($event, $index)" ng-bind-html="button.content">\
                   </button>\
                 </div>\
               </header>',
