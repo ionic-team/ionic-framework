@@ -1,7 +1,7 @@
 <html ng-app="slideBoxTest">
   <head>
     <meta charset="utf-8">
-    <title>Sldie Box</title>
+    <title>Slide Box</title>
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -45,21 +45,21 @@
   <body>
 
     <div ng-controller="SlideCtrl">
-      <scroll direction="x" paging="true" on-scroll="onScroll(scrollTop, scrollLeft)">
-        <div class="slide">
+      <slide-box>
+        <slide>
           <div class="box blue">
             <h1>BLUE {{slideBox.slideIndex}}</h1>
           </div>
-        </div>
-        <div class="slide">
+        </slide>
+        <slide>
           <div class="box yellow">
             <h1>YELLOW {{slideBox.slideIndex}}</h1>
           </div>
-        </div>
-        <div class="slide">
+        </slide>
+        <slide>
           <div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>
-        </div>
-      </scroll>
+        </slide>
+      </slide-box>
     </div>
     <script>
       angular.module('slideBoxTest', ['ionic'])

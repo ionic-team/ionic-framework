@@ -3,7 +3,7 @@
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v0.9.14
+ * Ionic, v0.9.17
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -4408,44 +4408,40 @@ button.item-button-right:after {
  * Slide Box
  * --------------------------------------------------
  */
-.slide-box {
+.slider {
   position: relative;
   overflow: hidden;
+  visibility: hidden;
   background-color: #000; }
 
-.slide-box-slides {
+.slider-slides {
   position: relative;
   white-space: nowrap;
-  font-size: 0;
-  -webkit-transition: -webkit-transform 0 ease-in-out;
-  -moz-transition: -moz-transform 0 ease-in-out;
-  transition: transform 0 ease-in-out; }
+  font-size: 0; }
 
-.slide-box-animating {
-  -webkit-transition-duration: 0.2s;
-  -moz-transition-duration: 0.2s;
-  transition-duration: 0.2s; }
-
-.slide {
-  display: inline-block;
+.slider-slide {
+  display: block;
+  position: relative;
   width: 100%;
-  height: 100%;
+  float: left;
   vertical-align: top; }
-  .slide img {
+  .slider-slide img {
     width: 100%; }
 
-.slide-box-pager {
+.slider-pager {
   position: absolute;
   bottom: 20px;
   width: 100%;
-  text-align: center; }
-  .slide-box-pager > * {
+  text-align: center;
+  z-index: 1; }
+  .slider-pager .slider-pager-page {
     display: inline-block;
-    margin: 0px 5px;
+    margin: 0px 3px;
+    width: 15px;
     color: #fff;
     text-decoration: none;
     opacity: 0.3; }
-    .slide-box-pager > *.active {
+    .slider-pager .slider-pager-page.active {
       opacity: 1;
       -webkit-transition: opacity 0.4s ease-in;
       -moz-transition: opacity 0.4s ease-in;
