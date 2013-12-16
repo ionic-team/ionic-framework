@@ -1833,12 +1833,11 @@ angular.module('ionic.ui.slideBox', [])
         }
       });
 
-      slider.load();
 
       $scope.slider = slider;
 
       $timeout(function() {
-        $scope.slider.setup();
+        slider.load();
       });
     }],
     template: '<div class="slider">\
