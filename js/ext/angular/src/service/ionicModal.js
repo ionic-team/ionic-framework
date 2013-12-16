@@ -45,6 +45,8 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'
     options.el = element[0];
     var modal = new ModalView(options);
 
+    modal.scope = scope;
+
     // If this wasn't a defined scope, we can assign 'modal' to the isolated scope
     // we created
     if(!options.scope) {

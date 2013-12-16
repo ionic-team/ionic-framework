@@ -2,7 +2,7 @@
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v0.9.14
+ * Ionic, v0.9.17
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -238,6 +238,8 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'
 
     options.el = element[0];
     var modal = new ModalView(options);
+
+    modal.scope = scope;
 
     // If this wasn't a defined scope, we can assign 'modal' to the isolated scope
     // we created
