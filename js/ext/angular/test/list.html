@@ -178,22 +178,22 @@
         $scope.optionButtons1 = [
           {
             text: 'Edit',
-            onClick: function(item, button) { alert(button.text + ' Button: ' + item.text) }
+            onTap: function(item, button) { alert(button.text + ' Button: ' + item.text) }
           },
           {
             text: 'Share',
-            onClick: function(item, button) { alert(button.text + ' Button: ' + item.text) }
+            onTap: function(item, button) { alert(button.text + ' Button: ' + item.text) }
           }
         ];
 
         $scope.optionButtons2 = [
           {
             text: 'Cancel',
-            onClick: function() { alert('CANCEL!') }
+            onTap: function() { alert('CANCEL!') }
           },
           {
             text: 'Submit',
-            onClick: function() { alert('SUBMIT!') }
+            onTap: function() { alert('SUBMIT!') }
           }
         ];
 
