@@ -291,12 +291,12 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
 		this.options = {
 
-			/** Disable scrolling on x-axis by default */
-			scrollingX: false,
+      /** Disable scrolling on x-axis by default */
+      scrollingX: false,
       scrollbarX: true,
 
-			/** Enable scrolling on y-axis */
-			scrollingY: true,
+      /** Enable scrolling on y-axis */
+      scrollingY: true,
       scrollbarY: true,
 
       /** The minimum size the scrollbars scale to while scrolling */
@@ -309,42 +309,42 @@ ionic.views.Scroll = ionic.views.View.inherit({
       /** The initial fade delay when the pane is resized or initialized */
       scrollbarResizeFadeDelay: 1000,
 
-			/** Enable animations for deceleration, snap back, zooming and scrolling */
-			animating: true,
+      /** Enable animations for deceleration, snap back, zooming and scrolling */
+      animating: true,
 
-			/** duration for animations triggered by scrollTo/zoomTo */
-			animationDuration: 250,
+      /** duration for animations triggered by scrollTo/zoomTo */
+      animationDuration: 250,
 
-			/** Enable bouncing (content can be slowly moved outside and jumps back after releasing) */
-			bouncing: true,
+      /** Enable bouncing (content can be slowly moved outside and jumps back after releasing) */
+      bouncing: true,
 
-			/** Enable locking to the main axis if user moves only slightly on one of them at start */
-			locking: true,
+      /** Enable locking to the main axis if user moves only slightly on one of them at start */
+      locking: true,
 
-			/** Enable pagination mode (switching between full page content panes) */
-			paging: false,
+      /** Enable pagination mode (switching between full page content panes) */
+      paging: false,
 
-			/** Enable snapping of content to a configured pixel grid */
-			snapping: false,
+      /** Enable snapping of content to a configured pixel grid */
+      snapping: false,
 
-			/** Enable zooming of content via API, fingers and mouse wheel */
-			zooming: false,
+      /** Enable zooming of content via API, fingers and mouse wheel */
+      zooming: false,
 
-			/** Minimum zoom level */
-			minZoom: 0.5,
+      /** Minimum zoom level */
+      minZoom: 0.5,
 
-			/** Maximum zoom level */
-			maxZoom: 3,
+      /** Maximum zoom level */
+      maxZoom: 3,
 
-			/** Multiply or decrease scrolling speed **/
-			speedMultiplier: 1,
+      /** Multiply or decrease scrolling speed **/
+      speedMultiplier: 1,
 
-			/** Callback that is fired on the later of touch end or deceleration end,
-				provided that another scrolling action has not begun. Used to know
-				when to fade out a scrollbar. */
-			scrollingComplete: NOOP,
-			
-			/** This configures the amount of change applied to deceleration when reaching boundaries  **/
+      /** Callback that is fired on the later of touch end or deceleration end,
+        provided that another scrolling action has not begun. Used to know
+        when to fade out a scrollbar. */
+      scrollingComplete: NOOP,
+
+      /** This configures the amount of change applied to deceleration when reaching boundaries  **/
       penetrationDeceleration : 0.03,
 
       /** This configures the amount of change applied to acceleration when reaching boundaries  **/
@@ -1876,7 +1876,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
       }
 
       // Animate to grid when snapping is active, otherwise just fix out-of-boundary positions
-      //self.scrollTo(self.__scrollLeft, self.__scrollTop, self.options.snapping);
+      if(self.options.paging) {
+        self.scrollTo(self.__scrollLeft, self.__scrollTop, self.options.snapping);
+      }
     };
 
     // Start animation and switch on flag

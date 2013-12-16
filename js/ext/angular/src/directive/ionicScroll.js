@@ -33,7 +33,7 @@ angular.module('ionic.ui.scroll', [])
           addedPadding = true;
         }
         if($scope.$eval($scope.paging) === true) {
-          sc.classList.add('paging');
+          sc.classList.add('scroll-paging');
         }
         $element.append(sc);
 
@@ -50,14 +50,21 @@ angular.module('ionic.ui.scroll', [])
         var hasScrollingY = $scope.direction.indexOf('y') >= 0;
 
         $timeout(function() {
-          sv = new ionic.views.Scroll({
+          var options = {
             el: $element[0],
             paging: $scope.$eval($scope.paging) === true,
             scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
             scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
             scrollingX: hasScrollingX,
             scrollingY: hasScrollingY
-          });
+          };
+
+          if(options.paging) {
+            options.speedMultiplier = 0.8;
+            options.bouncing = false;
+          }
+
+          sv = new ionic.views.Scroll(options);
 
           // Activate pull-to-refresh
           if(refresher) {

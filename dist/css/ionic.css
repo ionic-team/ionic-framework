@@ -2601,8 +2601,9 @@ body, .ionic-body {
   -moz-transform-origin: left top;
   transform-origin: left top;
   -webkit-backface-visibility: hidden; }
-  .scroll.paging {
-    white-space: nowrap; }
+  .scroll.scroll-paging {
+    white-space: nowrap;
+    font-size: 0; }
 
 .scroll-bar {
   position: absolute;
