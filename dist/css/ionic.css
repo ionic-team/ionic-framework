@@ -2601,9 +2601,6 @@ body, .ionic-body {
   -moz-transform-origin: left top;
   transform-origin: left top;
   -webkit-backface-visibility: hidden; }
-  .scroll.scroll-paging {
-    white-space: nowrap;
-    font-size: 0; }
 
 .scroll-bar {
   position: absolute;
@@ -4415,9 +4412,7 @@ button.item-button-right:after {
   background-color: #000; }
 
 .slider-slides {
-  position: relative;
-  white-space: nowrap;
-  font-size: 0; }
+  position: relative; }
 
 .slider-slide {
   display: block;

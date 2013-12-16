@@ -45,6 +45,7 @@ angular.module('ionic.ui.header', ['ngAnimate'])
       });
 
       $scope.$watch('rightButtons', function(val) {
+        console.log('Right buttons changed');
         // Resize the title since the buttons have changed
         hb.align();
       });

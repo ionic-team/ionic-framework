@@ -100,11 +100,6 @@ body, .ionic-body {
   @include transform-origin(left, top);
   //-webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
-
-  &.scroll-paging {
-    white-space: nowrap;
-    font-size: 0;
-  }
 }
 
 // Scroll bar styles

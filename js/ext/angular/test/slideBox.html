@@ -17,19 +17,14 @@
       .box {
         width: 100%;
         height: 100%;
-        color: #fff;
-      }
-      .box h1 {
-        position: absolute;
-        top: 50%;
-        width: 100%;
-        margin-top: -50px;
-
-        color: #fff;
-
-        font-size: 60px;
+        padding-top: 80px;
+        color: #000;
+        background-color: #fff;
         text-align: center;
-        font-weight: bold;
+      }
+      .box > * {
+        font-weight: 100;
+        font-family: 'Helvetica Neue';
       }
       .blue {
         background-color: rgb(71, 138, 238);
@@ -40,24 +35,34 @@
       .pink {
         background-color: rgb(233, 109, 233);
       }
+      .slider-pager .slider-pager-page {
+        color: #000;
+      }
     </style>
   </head>
   <body>
 
     <div ng-controller="SlideCtrl">
-      <slide-box>
+      <header-bar left-buttons="leftButtons" right-buttons="rightButtons" title=""></header-bar>
+      <slide-box on-slide-changed="slideChanged(index)">
         <slide>
-          <div class="box blue">
-            <h1>BLUE {{slideBox.slideIndex}}</h1>
+          <div class="box">
+            <h3>Thank you for choosing my app!</h3>
+            <p>
+              We've worked super hard to make you happy.
+            </p>
+            <p>
+              But if you are angry, please contact us at support@example.com
+            </p>
           </div>
         </slide>
         <slide>
-          <div class="box yellow">
-            <h1>YELLOW {{slideBox.slideIndex}}</h1>
+          <div class="box">
           </div>
         </slide>
         <slide>
-          <div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>
+          <div class="box">
+          </div>
         </slide>
       </slide-box>
     </div>
@@ -65,12 +70,37 @@
       angular.module('slideBoxTest', ['ionic'])
 
       .controller('SlideCtrl', function($scope) {
-        $scope.onScroll = function(top, left) {
-          console.log('On scroll', top, left, $scope.scrollView.__maxScrollLeft);
-        };
-        $scope.$on('slideBox.slideChanged', function(e, index) {
+        $scope.leftButtons = [
+          {
+            content: 'Skip',
+            type: 'button-positive button-clear',
+            onTap: function(e) {
+            }
+          }
+        ];
+        $scope.slideChanged = function(index) {
           console.log('Slide changed', index);
-        });
+          if(index == 2) {
+            $scope.rightButtons = [
+              {
+                content: 'Start using MyApp',
+                type: 'button-positive button-clear',
+                onTap: function(e) {
+                }
+              }
+            ];
+          } else {
+            $scope.rightButtons = [
+              {
+                content: 'Next',
+                type: 'button-positive button-clear',
+                onTap: function(e) {
+                }
+              }
+            ];
+          }
+          $scope.$apply();
+        };
       });
     </script>
   </body>

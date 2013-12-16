@@ -541,6 +541,7 @@ angular.module('ionic.ui.header', ['ngAnimate'])
       });
 
       $scope.$watch('rightButtons', function(val) {
+        console.log('Right buttons changed');
         // Resize the title since the buttons have changed
         hb.align();
       });
@@ -1816,7 +1817,10 @@ angular.module('ionic.ui.slideBox', [])
     restrict: 'E',
     replace: true,
     transclude: true,
-    scope: {},
+    scope: {
+      showPager: '@',
+      onSlideChanged: '&'
+    },
     controller: ['$scope', '$element', function($scope, $element) {
       var _this = this;
 
@@ -1824,10 +1828,13 @@ angular.module('ionic.ui.slideBox', [])
         el: $element[0],
         slidesChanged: function() {
           $scope.currentSlide = slider.getPos();
+
+          // Occasionally we need to trigger a digest
           $timeout(function() {});
         },
         callback: function(slideIndex) {
           $scope.currentSlide = slideIndex;
+          $scope.onSlideChanged({index:$scope.currentSlide});
           $scope.$parent.$broadcast('slideBox.slideChanged', slideIndex);
           $scope.$apply();
         }
@@ -1847,7 +1854,7 @@ angular.module('ionic.ui.slideBox', [])
 
     link: function($scope, $element, $attr, slideBoxCtrl) {
       // If the pager should show, append it to the slide box
-      if($attr.showPager !== "false") {
+      if($scope.$eval($scope.showPager) !== false) {
         var childScope = $scope.$new();
         var pager = angular.element('<pager></pager>');
         $element.append(pager);
