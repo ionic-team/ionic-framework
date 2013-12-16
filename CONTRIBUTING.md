@@ -8,7 +8,7 @@ If not, then [create a plunkr](http://plnkr.co/edit/vD0O9M?p=preview) that demon
 
 Next, create a new issue that briefly explains the problem, and provides a bit of background as to the circumstances that triggered it. Don't forget to include the link to that plunkr you created!
 
-### Guidelines
+### Pull Request Guidelines
 
 When in doubt, keep your pull requests small. To give a PR the best chance of getting accepted, do not bundle more than one "feature" or bug fix per PR. Doing so makes it very hard to accept it if one of the fixes has issues.
 
