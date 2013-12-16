@@ -14,29 +14,37 @@
     <script src="../../../../dist/js/angular/angular-sanitize.js"></script>
     <script src="../../../../dist/js/ionic-angular.js"></script>
     <style>
-      .box {
+      .slider-slide {
         width: 100%;
         height: 100%;
         padding-top: 80px;
         color: #000;
         background-color: #fff;
         text-align: center;
-      }
-      .box > * {
-        font-weight: 100;
-        font-family: 'Helvetica Neue';
-      }
-      .blue {
-        background-color: rgb(71, 138, 238);
-      }
-      .yellow {
-        background-color: rgb(233, 233, 109);
-      }
-      .pink {
-        background-color: rgb(233, 109, 233);
+
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+        font-weight: 300;
       }
       .slider-pager .slider-pager-page {
         color: #000;
+      }
+
+      #logo {
+        margin: 30px 0px;
+      }
+
+      #list {
+        width: 170px;
+        margin: 30px auto;
+        font-size: 20px;
+      }
+      #list ol {
+        margin-top: 30px;
+      }
+      #list ol li {
+        text-align: left;
+        list-style: decimal;
+        margin: 10px 0px;
       }
     </style>
   </head>
@@ -46,23 +54,34 @@
       <header-bar left-buttons="leftButtons" right-buttons="rightButtons" title=""></header-bar>
       <slide-box on-slide-changed="slideChanged(index)">
         <slide>
-          <div class="box">
-            <h3>Thank you for choosing my app!</h3>
-            <p>
-              We've worked super hard to make you happy.
-            </p>
-            <p>
-              But if you are angry, please contact us at support@example.com
-            </p>
+          <h3>Thank you for choosing the Awesome App!</h3>
+          <div id="logo">
+            <img src="app_icon.png">
+          </div>
+          <p>
+            We've worked super hard to make you happy.
+          </p>
+          <p>
+            But if you are angry, too bad.
+          </p>
+        </slide>
+        <slide>
+          <h3>Using Awesome</h3>
+          
+          <div id="list">
+            <h5>Just three steps:</h5>
+            <ol>
+              <li>Be awesome</li>
+              <li>Stay awesome</li>
+              <li>There is no step 3</li>
+            </ol>
           </div>
         </slide>
         <slide>
-          <div class="box">
-          </div>
-        </slide>
-        <slide>
-          <div class="box">
-          </div>
+          <h3>Any questions?</h3>
+          <p>
+            Too bad!
+          </p>
         </slide>
       </slide-box>
     </div>
@@ -71,46 +90,64 @@
 
       .controller('SlideCtrl', function($scope) {
         $scope.next = function() {
+          console.log('NEXT');
+          $scope.$broadcast('slideBox.nextSlide');
         };
-        $scope.rightButtons = [
+
+        var rightButtons = [
           {
             content: 'Next',
             type: 'button-positive button-clear',
-            onTap: function(e) {
+            tap: function(e) {
+              console.log('NEXT');
               $scope.next();
             }
           }
         ];
-        $scope.leftButtons = [
+        var leftButtons = [
           {
             content: 'Skip',
             type: 'button-positive button-clear',
-            onTap: function(e) {
+            tap: function(e) {
+              alert('Skipping');
             }
           }
         ];
+
+        $scope.leftButtons = leftButtons;
+        $scope.rightButtons = rightButtons;
+
+
         $scope.slideChanged = function(index) {
           console.log('Slide changed', index);
+          
+          if(index > 0) {
+            $scope.leftButtons = [
+              {
+                content: 'Back',
+                type: 'button-positive button-clear',
+                tap: function(e) {
+                  $scope.$broadcast('slideBox.prevSlide');
+                }
+              }
+            ];
+          } else {
+            $scope.leftButtons = leftButtons;
+          }
+          
           if(index == 2) {
             $scope.rightButtons = [
               {
                 content: 'Start using MyApp',
                 type: 'button-positive button-clear',
-                onTap: function(e) {
+                tap: function(e) {
+                  alert('Done!');
                 }
               }
             ];
           } else {
-            $scope.rightButtons = [
-              {
-                content: 'Next',
-                type: 'button-positive button-clear',
-                onTap: function(e) {
-                }
-              }
-            ];
+            $scope.rightButtons = rightButtons;
           }
-          $scope.$apply();
         };
       });
     </script>

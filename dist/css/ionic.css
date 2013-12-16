@@ -4408,8 +4408,7 @@ button.item-button-right:after {
 .slider {
   position: relative;
   overflow: hidden;
-  visibility: hidden;
-  background-color: #000; }
+  visibility: hidden; }
 
 .slider-slides {
   position: relative; }
@@ -4420,8 +4419,9 @@ button.item-button-right:after {
   width: 100%;
   float: left;
   vertical-align: top; }
-  .slider-slide img {
-    width: 100%; }
+
+.slider-slide-image > img {
+  width: 100%; }
 
 .slider-pager {
   position: absolute;

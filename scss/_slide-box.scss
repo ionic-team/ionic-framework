@@ -9,7 +9,6 @@
   // Make sure items don't scroll over ever
   overflow: hidden;
   visibility: hidden;
-  background-color: #000;
 }
 .slider-slides {
   position: relative;
@@ -22,7 +21,10 @@
   float: left;
   vertical-align: top;
 
-  img {
+}
+
+.slider-slide-image {
+  > img {
     width: 100%;
   }
 }

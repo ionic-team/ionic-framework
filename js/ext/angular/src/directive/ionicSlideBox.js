@@ -21,6 +21,7 @@ angular.module('ionic.ui.slideBox', [])
     replace: true,
     transclude: true,
     scope: {
+      doesContinue: '@',
       showPager: '@',
       onSlideChanged: '&'
     },
@@ -29,20 +30,34 @@ angular.module('ionic.ui.slideBox', [])
 
       var slider = new ionic.views.Slider({
         el: $element[0],
+        continuous: $scope.$eval($scope.doesContinue) === true,
         slidesChanged: function() {
           $scope.currentSlide = slider.getPos();
 
-          // Occasionally we need to trigger a digest
+          // Try to trigger a digest
           $timeout(function() {});
         },
         callback: function(slideIndex) {
           $scope.currentSlide = slideIndex;
           $scope.onSlideChanged({index:$scope.currentSlide});
           $scope.$parent.$broadcast('slideBox.slideChanged', slideIndex);
-          $scope.$apply();
+
+          // Try to trigger a digest
+          $timeout(function() {});
         }
       });
 
+      $scope.$on('slideBox.nextSlide', function() {
+        slider.next();
+      });
+
+      $scope.$on('slideBox.prevSlide', function() {
+        slider.prev();
+      });
+
+      $scope.$on('slideBox.setSlide', function(e, index) {
+        slider.slide(index);
+      });
 
       $scope.slider = slider;
 
