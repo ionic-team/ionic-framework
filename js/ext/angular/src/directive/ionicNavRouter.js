@@ -195,11 +195,11 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
     template: '<header class="bar bar-header nav-bar" ng-class="{invisible: !navController.navBar.isVisible}">' + 
         '<div class="buttons"> ' +
           '<button nav-back class="button" ng-if="enableBackButton && showBackButton" ng-class="backButtonClass" ng-bind-html="backButtonLabel"></button>' +
-          '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" class="button {{button.type}}" ng-bind-html="button.content"></button>' + 
+          '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" class="button no-animation {{button.type}}" ng-bind-html="button.content"></button>' + 
         '</div>' +
         '<h1 class="title" ng-bind="currentTitle"></h1>' + 
         '<div class="buttons" ng-if="rightButtons.length"> ' +
-          '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" class="button {{button.type}}" ng-bind-html="button.content"></button>' + 
+          '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" class="button no-animation {{button.type}}" ng-bind-html="button.content"></button>' + 
         '</div>' +
       '</header>',
     link: function($scope, $element, $attr, navCtrl) {
@@ -261,6 +261,14 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
         }
       };
 
+      $scope.$parent.$on('navRouter.showBackButton', function(e, data) {
+        $scope.enableBackButton = true;
+      });
+
+      $scope.$parent.$on('navRouter.hideBackButton', function(e, data) {
+        $scope.enableBackButton = false;
+      });
+
       // Listen for changes on title change, and update the title
       $scope.$parent.$on('navRouter.pageChanged', function(e, data) {
         updateHeaderData(data);
@@ -316,57 +324,67 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
 .directive('navPage', ['$parse', function($parse) {
   return {
     restrict: 'E',
-    scope: true,
     require: '^navRouter',
+    scope: {
+      leftButtons: '=',
+      rightButtons: '=',
+      title: '=',
+      icon: '@',
+      iconOn: '@',
+      iconOff: '@',
+      type: '@',
+      alignTitle: '@',
+      hideBackButton: '@',
+      hideNavBar: '@',
+      animate: '@',
+    },
     link: function($scope, $element, $attr, navCtrl) {
       $element.addClass('pane');
 
-      $scope.icon = $attr.icon;
-      $scope.iconOn = $attr.iconOn;
-      $scope.iconOff = $attr.iconOff;
-
       // Should we hide a back button when this tab is shown
-      $scope.hideBackButton = $scope.$eval($attr.hideBackButton);
+      $scope.hideBackButton = $scope.$eval($scope.hideBackButton);
 
-      $scope.hideNavBar = $scope.$eval($attr.hideNavBar);
+      $scope.hideNavBar = $scope.$eval($scope.hideNavBar);
 
       navCtrl.navBar.isVisible = !$scope.hideNavBar;
 
+      if($scope.hideBackButton === true) {
+        $scope.$emit('navRouter.hideBackButton');
+      } else {
+        $scope.$emit('navRouter.showBackButton');
+      }
+
       // Whether we should animate on tab change, also impacts whether we
       // tell any parent nav controller to animate
-      $scope.animate = $scope.$eval($attr.animate);
-
-      // Grab whether we should update any parent nav router on tab changes
-      $scope.doesUpdateNavRouter = $scope.$eval($attr.doesUpdateNavRouter) || true;
+      $scope.animate = $scope.$eval($scope.animate);
+        
 
       // watch for changes in the left buttons
-      var leftButtonsGet = $parse($attr.leftButtons);
-      $scope.$watch(leftButtonsGet, function(value) {
-        $scope.leftButtons = value;
-        if($scope.doesUpdateNavRouter) {
-          $scope.$emit('navRouter.leftButtonsChanged', $scope.leftButtons);
-        }
+      $scope.$watch('leftButtons', function(value) {
+        $scope.$emit('navRouter.leftButtonsChanged', $scope.leftButtons);
       });
 
-      // watch for changes in the right buttons
-      var rightButtonsGet = $parse($attr.rightButtons);
-      $scope.$watch(rightButtonsGet, function(value) {
-        $scope.rightButtons = value;
-        if($scope.doesUpdateNavRouter) {
-          $scope.$emit('navRouter.rightButtonsChanged', $scope.rightButtons);
+      $scope.$watch('rightButtons', function(val) {
+        $scope.$emit('navRouter.rightButtonsChanged', $scope.rightButtons);
+      });
+
+      /*
+      $scope.$watch('hideBackButton', function(value) {
+        if(value === true) {
+          navCtrl.hideBackButton();
+        } else {
+          navCtrl.showBackButton();
         }
       });
+      */
 
       // watch for changes in the title
-      var titleGet = $parse($attr.title);
-      $scope.$watch(titleGet, function(value) {
-        $scope.title = value;
+      $scope.$watch('title', function(value) {
         $scope.$emit('navRouter.titleChanged', {
           title: value,
           animate: $scope.animate
         });
       });
-
     }
   };
 }])
