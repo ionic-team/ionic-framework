@@ -1777,9 +1777,13 @@ window.ionic = {
     },
     isIOS7: function() {
       if(!window.device) {
+        var parts = navigator.userAgent.match(/(iPad|iPhone|iPod touch);.*CPU.*OS 7_\d/i);
+        if(parts && parts.length > 0) {
+          return true;
+        }
         return false;
       }
-      return parseFloat(window.device.version) >= 7.0;
+      return window.device.platform == 'iOS' && parseFloat(window.device.version) >= 7.0;
     },
     isAndroid: function() {
       if(!window.device) {

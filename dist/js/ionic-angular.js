@@ -1937,7 +1937,6 @@ angular.module('ionic.ui.slideBox', [])
       };
 
       $scope.$watch('currentSlide', function(v) {
-        console.log('Current slide', v);
         selectPage(v);
       });
     }
