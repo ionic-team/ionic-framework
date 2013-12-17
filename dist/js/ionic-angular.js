@@ -1856,7 +1856,7 @@ angular.module('ionic.ui.slideBox', [])
         slider.slide(index);
       });
 
-      $scope.slider = slider;
+      $scope.slideBox = slider;
 
       $timeout(function() {
         slider.load();
@@ -1913,7 +1913,7 @@ angular.module('ionic.ui.slideBox', [])
       };
 
       $scope.numSlides = function() {
-        return new Array($scope.slider.getNumSlides());
+        return new Array($scope.slideBox.getNumSlides());
       };
 
       $scope.$watch('currentSlide', function(v) {
