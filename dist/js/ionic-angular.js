@@ -912,10 +912,10 @@ angular.module('ionic.ui.list', ['ngAnimate'])
 
     template: '<div class="list" ng-class="{\'list-editing\': showDelete, \'list-reordering\': showReorder}" ng-transclude></div>',
 
-    controller: function($scope, $attrs) {
+    controller: ['$scope', '$attrs', function($scope, $attrs) {
       this.scope = $scope;
       this.attrs = $attrs;
-    },
+    }],
 
     link: function($scope, $element, $attr) {
       $scope.listView = new ionic.views.ListView({
