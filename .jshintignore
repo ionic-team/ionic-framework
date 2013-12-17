@@ -1,3 +1,4 @@
 js/ext/angular/test/**/*.js
 js/views/scrollView.js
+js/views/sliderView.js
 js/utils/utils.js
