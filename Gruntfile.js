@@ -30,7 +30,7 @@ module.exports = function(grunt) {
           'js/views/navBarView.js',
           'js/views/popupView.js',
           'js/views/sideMenuView.js',
-          'js/views/slideBoxView.js',
+          'js/views/sliderView.js',
           'js/views/tabBarView.js',
           'js/views/toggleView.js',
 

@@ -1,7 +1,7 @@
 <html ng-app="slideBoxTest">
   <head>
     <meta charset="utf-8">
-    <title>Sldie Box</title>
+    <title>Slide Box</title>
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -14,60 +14,141 @@
     <script src="../../../../dist/js/angular/angular-sanitize.js"></script>
     <script src="../../../../dist/js/ionic-angular.js"></script>
     <style>
-      .box {
+      .slider-slide {
         width: 100%;
         height: 100%;
-        color: #fff;
-      }
-      .box h1 {
-        position: absolute;
-        top: 50%;
-        width: 100%;
-        margin-top: -50px;
-
-        color: #fff;
-
-        font-size: 60px;
+        padding-top: 80px;
+        color: #000;
+        background-color: #fff;
         text-align: center;
-        font-weight: bold;
+
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+        font-weight: 300;
       }
-      .blue {
-        background-color: rgb(71, 138, 238);
+      .slider-pager .slider-pager-page {
+        color: #000;
       }
-      .yellow {
-        background-color: rgb(233, 233, 109);
+
+      #logo {
+        margin: 30px 0px;
       }
-      .pink {
-        background-color: rgb(233, 109, 233);
+
+      #list {
+        width: 170px;
+        margin: 30px auto;
+        font-size: 20px;
+      }
+      #list ol {
+        margin-top: 30px;
+      }
+      #list ol li {
+        text-align: left;
+        list-style: decimal;
+        margin: 10px 0px;
       }
     </style>
   </head>
   <body>
 
     <div ng-controller="SlideCtrl">
-    <slide-box>
-      <slide>
-        <div class="box blue">
-          <h1>BLUE {{slideBox.slideIndex}}</h1>
-        </div>
-      </slide>
-      <slide>
-        <div class="box yellow">
-          <h1>YELLOW {{slideBox.slideIndex}}</h1>
-        </div>
-      </slide>
-      <slide>
-      <div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>
-      </slide>
-    </slide-box>
-  </div>
+      <header-bar left-buttons="leftButtons" right-buttons="rightButtons" title=""></header-bar>
+      <slide-box on-slide-changed="slideChanged(index)">
+        <slide>
+          <h3>Thank you for choosing the Awesome App!</h3>
+          <div id="logo">
+            <img src="app_icon.png">
+          </div>
+          <p>
+            We've worked super hard to make you happy.
+          </p>
+          <p>
+            But if you are angry, too bad.
+          </p>
+        </slide>
+        <slide>
+          <h3>Using Awesome</h3>
+          
+          <div id="list">
+            <h5>Just three steps:</h5>
+            <ol>
+              <li>Be awesome</li>
+              <li>Stay awesome</li>
+              <li>There is no step 3</li>
+            </ol>
+          </div>
+        </slide>
+        <slide>
+          <h3>Any questions?</h3>
+          <p>
+            Too bad!
+          </p>
+        </slide>
+      </slide-box>
+    </div>
     <script>
       angular.module('slideBoxTest', ['ionic'])
 
       .controller('SlideCtrl', function($scope) {
-        $scope.$on('slideBox.slideChanged', function(e, index) {
+        $scope.next = function() {
+          console.log('NEXT');
+          $scope.$broadcast('slideBox.nextSlide');
+        };
+
+        var rightButtons = [
+          {
+            content: 'Next',
+            type: 'button-positive button-clear',
+            tap: function(e) {
+              console.log('NEXT');
+              $scope.next();
+            }
+          }
+        ];
+        var leftButtons = [
+          {
+            content: 'Skip',
+            type: 'button-positive button-clear',
+            tap: function(e) {
+              alert('Skipping');
+            }
+          }
+        ];
+
+        $scope.leftButtons = leftButtons;
+        $scope.rightButtons = rightButtons;
+
+
+        $scope.slideChanged = function(index) {
           console.log('Slide changed', index);
-        });
+          
+          if(index > 0) {
+            $scope.leftButtons = [
+              {
+                content: 'Back',
+                type: 'button-positive button-clear',
+                tap: function(e) {
+                  $scope.$broadcast('slideBox.prevSlide');
+                }
+              }
+            ];
+          } else {
+            $scope.leftButtons = leftButtons;
+          }
+          
+          if(index == 2) {
+            $scope.rightButtons = [
+              {
+                content: 'Start using MyApp',
+                type: 'button-positive button-clear',
+                tap: function(e) {
+                  alert('Done!');
+                }
+              }
+            ];
+          } else {
+            $scope.rightButtons = rightButtons;
+          }
+        };
       });
     </script>
   </body>

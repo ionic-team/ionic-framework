@@ -11,6 +11,7 @@ angular.module('ionic.ui.scroll', [])
     transclude: true,
     scope: {
       direction: '@',
+      paging: '@',
       onRefresh: '&',
       onScroll: '&',
       refreshComplete: '=',
@@ -19,14 +20,20 @@ angular.module('ionic.ui.scroll', [])
       scrollbarY: '@',
     },
 
+    controller: function() {},
+
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
         var clone, sv, sc = document.createElement('div');
 
+        // Create the internal scroll div
         sc.className = 'scroll';
         if(attr.padding == "true") {
-          sc.className += ' padding';
+          sc.classList.add('padding');
           addedPadding = true;
+        }
+        if($scope.$eval($scope.paging) === true) {
+          sc.classList.add('scroll-paging');
         }
         $element.append(sc);
 
@@ -34,31 +41,30 @@ angular.module('ionic.ui.scroll', [])
         clone = transclude($scope.$parent);
         angular.element($element[0].firstElementChild).append(clone);
 
+        // Get refresher size
         var refresher = $element[0].querySelector('.scroll-refresher');
         var refresherHeight = refresher && refresher.clientHeight || 0;
 
-        if(attr.refreshComplete) {
-          $scope.refreshComplete = function() {
-            if($scope.scrollView) {
-              refresher && refresher.classList.remove('active');
-              $scope.scrollView.finishPullToRefresh();
-              $scope.$parent.$broadcast('scroll.onRefreshComplete');
-            }
-          };
-        }
-
-
+        if(!$scope.direction) { $scope.direction = 'y'; }
         var hasScrollingX = $scope.direction.indexOf('x') >= 0;
         var hasScrollingY = $scope.direction.indexOf('y') >= 0;
 
         $timeout(function() {
-          sv = new ionic.views.Scroll({
+          var options = {
             el: $element[0],
+            paging: $scope.$eval($scope.paging) === true,
             scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
             scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
             scrollingX: hasScrollingX,
             scrollingY: hasScrollingY
-          });
+          };
+
+          if(options.paging) {
+            options.speedMultiplier = 0.8;
+            options.bouncing = false;
+          }
+
+          sv = new ionic.views.Scroll(options);
 
           // Activate pull-to-refresh
           if(refresher) {

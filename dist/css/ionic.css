@@ -4404,44 +4404,38 @@ button.item-button-right:after {
  * Slide Box
  * --------------------------------------------------
  */
-.slide-box {
+.slider {
   position: relative;
   overflow: hidden;
-  background-color: #000; }
+  visibility: hidden; }
 
-.slide-box-slides {
+.slider-slides {
+  position: relative; }
+
+.slider-slide {
+  display: block;
   position: relative;
-  white-space: nowrap;
-  font-size: 0;
-  -webkit-transition: -webkit-transform 0 ease-in-out;
-  -moz-transition: -moz-transform 0 ease-in-out;
-  transition: transform 0 ease-in-out; }
-
-.slide-box-animating {
-  -webkit-transition-duration: 0.2s;
-  -moz-transition-duration: 0.2s;
-  transition-duration: 0.2s; }
-
-.slide-box-slide {
-  display: inline-block;
   width: 100%;
-  height: 100%;
+  float: left;
   vertical-align: top; }
-  .slide-box-slide img {
-    width: 100%; }
 
-.slide-box-pager {
+.slider-slide-image > img {
+  width: 100%; }
+
+.slider-pager {
   position: absolute;
   bottom: 20px;
   width: 100%;
-  text-align: center; }
-  .slide-box-pager > * {
+  text-align: center;
+  z-index: 1; }
+  .slider-pager .slider-pager-page {
     display: inline-block;
-    margin: 0px 5px;
+    margin: 0px 3px;
+    width: 15px;
     color: #fff;
     text-decoration: none;
     opacity: 0.3; }
-    .slide-box-pager > *.active {
+    .slider-pager .slider-pager-page.active {
       opacity: 1;
       -webkit-transition: opacity 0.4s ease-in;
       -moz-transition: opacity 0.4s ease-in;
@@ -5705,6 +5699,11 @@ a.button {
 @keyframes spin {
   100% {
     transform: rotate(360deg); } }
+
+.no-animation > .ng-enter, .no-animation.ng-enter, .no-animation > .ng-leave, .no-animation.ng-leave {
+  -webkit-transition: none;
+  -moz-transition: none;
+  transition: none; }
 
 .noop-animation > .ng-enter, .noop-animation.ng-enter, .noop-animation > .ng-leave, .noop-animation.ng-leave {
   -webkit-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 250ms;

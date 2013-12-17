@@ -151,6 +151,11 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
   100% { transform: rotate(360deg); } 
 }
 
+.no-animation {
+  > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
+    @include transition(none);
+  }
+}
 .noop-animation {
   > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
     @include transition(all cubic-bezier(0.250, 0.460, 0.450, 0.940) $transition-duration);

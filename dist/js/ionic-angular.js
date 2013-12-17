@@ -509,12 +509,12 @@ angular.module('ionic.ui.header', ['ngAnimate'])
     transclude: true,
     template: '<header class="bar bar-header">\
                 <div class="buttons">\
-                  <button ng-repeat="button in leftButtons" class="button" ng-class="button.type" ng-click="button.tap($event, $index)" ng-bind-html="button.content">\
+                  <button ng-repeat="button in leftButtons" class="button no-animation" ng-class="button.type" ng-click="button.tap($event, $index)" ng-bind-html="button.content">\
                   </button>\
                 </div>\
                 <h1 class="title" ng-bind-html="title"></h1>\
                 <div class="buttons">\
-                  <button ng-repeat="button in rightButtons" class="button" ng-class="button.type" ng-click="button.tap($event, $index)" ng-bind-html="button.content">\
+                  <button ng-repeat="button in rightButtons" class="button no-animation" ng-class="button.type" ng-click="button.tap($event, $index)" ng-bind-html="button.content">\
                   </button>\
                 </div>\
               </header>',
@@ -543,6 +543,7 @@ angular.module('ionic.ui.header', ['ngAnimate'])
       });
 
       $scope.$watch('rightButtons', function(val) {
+        console.log('Right buttons changed');
         // Resize the title since the buttons have changed
         hb.align();
       });
@@ -1516,6 +1517,7 @@ angular.module('ionic.ui.scroll', [])
     transclude: true,
     scope: {
       direction: '@',
+      paging: '@',
       onRefresh: '&',
       onScroll: '&',
       refreshComplete: '=',
@@ -1524,14 +1526,20 @@ angular.module('ionic.ui.scroll', [])
       scrollbarY: '@',
     },
 
+    controller: function() {},
+
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr) {
         var clone, sv, sc = document.createElement('div');
 
+        // Create the internal scroll div
         sc.className = 'scroll';
         if(attr.padding == "true") {
-          sc.className += ' padding';
+          sc.classList.add('padding');
           addedPadding = true;
+        }
+        if($scope.$eval($scope.paging) === true) {
+          sc.classList.add('scroll-paging');
         }
         $element.append(sc);
 
@@ -1539,31 +1547,30 @@ angular.module('ionic.ui.scroll', [])
         clone = transclude($scope.$parent);
         angular.element($element[0].firstElementChild).append(clone);
 
+        // Get refresher size
         var refresher = $element[0].querySelector('.scroll-refresher');
         var refresherHeight = refresher && refresher.clientHeight || 0;
 
-        if(attr.refreshComplete) {
-          $scope.refreshComplete = function() {
-            if($scope.scrollView) {
-              refresher && refresher.classList.remove('active');
-              $scope.scrollView.finishPullToRefresh();
-              $scope.$parent.$broadcast('scroll.onRefreshComplete');
-            }
-          };
-        }
-
-
+        if(!$scope.direction) { $scope.direction = 'y'; }
         var hasScrollingX = $scope.direction.indexOf('x') >= 0;
         var hasScrollingY = $scope.direction.indexOf('y') >= 0;
 
         $timeout(function() {
-          sv = new ionic.views.Scroll({
+          var options = {
             el: $element[0],
+            paging: $scope.$eval($scope.paging) === true,
             scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
             scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
             scrollingX: hasScrollingX,
             scrollingY: hasScrollingY
-          });
+          };
+
+          if(options.paging) {
+            options.speedMultiplier = 0.8;
+            options.bouncing = false;
+          }
+
+          sv = new ionic.views.Scroll(options);
 
           // Activate pull-to-refresh
           if(refresher) {
@@ -1807,41 +1814,68 @@ angular.module('ionic.ui.slideBox', [])
  * some side menu stuff on the current scope.
  */
 
-.directive('slideBox', ['$compile', function($compile) {
+.directive('slideBox', ['$timeout', '$compile', function($timeout, $compile) {
   return {
     restrict: 'E',
     replace: true,
     transclude: true,
-    scope: {},
+    scope: {
+      doesContinue: '@',
+      showPager: '@',
+      onSlideChanged: '&'
+    },
     controller: ['$scope', '$element', function($scope, $element) {
-      $scope.slides = [];
-      this.slideAdded = function() {
-        $scope.slides.push({});
-      };
+      var _this = this;
 
-      angular.extend(this, ionic.views.SlideBox.prototype);
-
-      ionic.views.SlideBox.call(this, {
+      var slider = new ionic.views.Slider({
         el: $element[0],
-        slideChanged: function(slideIndex) {
+        continuous: $scope.$eval($scope.doesContinue) === true,
+        slidesChanged: function() {
+          $scope.currentSlide = slider.getPos();
+
+          // Try to trigger a digest
+          $timeout(function() {});
+        },
+        callback: function(slideIndex) {
+          $scope.currentSlide = slideIndex;
+          $scope.onSlideChanged({index:$scope.currentSlide});
           $scope.$parent.$broadcast('slideBox.slideChanged', slideIndex);
-          $scope.$apply();
+
+          // Try to trigger a digest
+          $timeout(function() {});
         }
       });
 
-      $scope.$parent.slideBox = this;
+      $scope.$on('slideBox.nextSlide', function() {
+        slider.next();
+      });
+
+      $scope.$on('slideBox.prevSlide', function() {
+        slider.prev();
+      });
+
+      $scope.$on('slideBox.setSlide', function(e, index) {
+        slider.slide(index);
+      });
+
+      $scope.slideBox = slider;
+
+      $timeout(function() {
+        slider.load();
+      });
     }],
-    template: '<div class="slide-box">\
-            <div class="slide-box-slides" ng-transclude>\
+    template: '<div class="slider">\
+            <div class="slider-slides" ng-transclude>\
             </div>\
           </div>',
 
     link: function($scope, $element, $attr, slideBoxCtrl) {
       // If the pager should show, append it to the slide box
-      if($attr.showPager !== "false") {
+      if($scope.$eval($scope.showPager) !== false) {
         var childScope = $scope.$new();
-        var pager = $compile('<pager></pager>')(childScope);
+        var pager = angular.element('<pager></pager>');
         $element.append(pager);
+        $compile(pager)(childScope);
       }
     }
   };
@@ -1853,10 +1887,9 @@ angular.module('ionic.ui.slideBox', [])
     replace: true,
     require: '^slideBox',
     transclude: true,
-    template: '<div class="slide-box-slide" ng-transclude></div>',
+    template: '<div class="slider-slide" ng-transclude></div>',
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, slideBoxCtrl) {
-        slideBoxCtrl.slideAdded();
       };
     }
   };
@@ -1867,7 +1900,29 @@ angular.module('ionic.ui.slideBox', [])
     restrict: 'E',
     replace: true,
     require: '^slideBox',
-    template: '<div class="slide-box-pager"><span ng-repeat="slide in slides"><i class="icon ion-record"></i></span></div>'
+    template: '<div class="slider-pager"><span class="slider-pager-page" ng-repeat="slide in numSlides() track by $index" ng-class="{active: $index == currentSlide}"><i class="icon ion-record"></i></span></div>',
+    link: function($scope, $element, $attr, slideBox) {
+      var selectPage = function(index) {
+        var children = $element[0].children;
+        var length = children.length;
+        for(var i = 0; i < length; i++) {
+          if(i == index) {
+            children[i].classList.add('active');
+          } else {
+            children[i].classList.remove('active');
+          }
+        }
+      };
+
+      $scope.numSlides = function() {
+        return new Array($scope.slideBox.getNumSlides());
+      };
+
+      $scope.$watch('currentSlide', function(v) {
+        console.log('Current slide', v);
+        selectPage(v);
+      });
+    }
   };
 
 });

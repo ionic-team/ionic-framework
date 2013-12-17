@@ -3,7 +3,7 @@
  * or iOS "dot" pager gallery, or maybe a carousel.
  *
  * Each screen fills the full width and height of the viewport, and screens can
- * be swiped between, or set to automatically transition.
+ * be swiped between.
  */
 (function(ionic) {
 'use strict';

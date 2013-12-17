@@ -26,7 +26,7 @@ describe('Ionic Angular Slide Box', function() {
   }));
 
   it('Should init', function() {
-    var scope = el.scope();
+    var scope = el.isolateScope();
     expect(scope.slideBox).not.toBe(undefined);
   });
 });
