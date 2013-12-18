@@ -74,7 +74,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 
         var dragFn = function(e) {
           if($scope.dragContent) {
-            if(defaultPrevented) {
+            if(defaultPrevented || e.gesture.srcEvent.defaultPrevented) {
               return;
             }
             isDragging = true;

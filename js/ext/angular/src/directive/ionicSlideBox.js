@@ -22,15 +22,22 @@ angular.module('ionic.ui.slideBox', [])
     transclude: true,
     scope: {
       doesContinue: '@',
+      slideInterval: '@',
       showPager: '@',
+      disableScroll: '@',
       onSlideChanged: '&'
     },
     controller: ['$scope', '$element', function($scope, $element) {
       var _this = this;
 
+      var continuous = $scope.$eval($scope.doesContinue) === true;
+      var slideInterval = continuous ? $scope.$eval($scope.slideInterval) || 4000 : 0;
+
       var slider = new ionic.views.Slider({
         el: $element[0],
-        continuous: $scope.$eval($scope.doesContinue) === true,
+        auto: slideInterval,
+        disableScroll: ($scope.$eval($scope.disableScroll) === true) || false,
+        continuous: continuous,
         slidesChanged: function() {
           $scope.currentSlide = slider.getPos();
 
@@ -59,7 +66,11 @@ angular.module('ionic.ui.slideBox', [])
         slider.slide(index);
       });
 
-      $scope.slideBox = slider;
+      $scope.$parent.slideBox = slider;
+
+      this.getNumSlides = function() {
+        return slider.getNumSlides();
+      };
 
       $timeout(function() {
         slider.load();
@@ -85,14 +96,11 @@ angular.module('ionic.ui.slideBox', [])
 .directive('slide', function() {
   return {
     restrict: 'E',
-    replace: true,
     require: '^slideBox',
-    transclude: true,
-    template: '<div class="slider-slide" ng-transclude></div>',
-    compile: function(element, attr, transclude) {
-      return function($scope, $element, $attr, slideBoxCtrl) {
-      };
-    }
+    compile: function(element, attr) {
+      element.addClass('slider-slide');
+      return function($scope, $element, $attr) {};
+    },
   };
 })
 
@@ -116,7 +124,7 @@ angular.module('ionic.ui.slideBox', [])
       };
 
       $scope.numSlides = function() {
-        return new Array($scope.slideBox.getNumSlides());
+        return new Array(slideBox.getNumSlides());
       };
 
       $scope.$watch('currentSlide', function(v) {

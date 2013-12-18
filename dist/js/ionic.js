@@ -1769,18 +1769,12 @@ window.ionic = {
     // window.device available.
     isCordova: function() {
       return (window.cordova || window.PhoneGap || window.phonegap);
-      //&& /^file:\/{3}[^\/]/i.test(window.location.href) 
-      //&& /ios|iphone|ipod|ipad|android/i.test(navigator.userAgent);
     },
     isIPad: function() {
       return navigator.userAgent.toLowerCase().indexOf('ipad') >= 0;
     },
     isIOS7: function() {
       if(!window.device) {
-        var parts = navigator.userAgent.match(/(iPad|iPhone|iPod touch);.*CPU.*OS 7_\d/i);
-        if(parts && parts.length > 0) {
-          return true;
-        }
         return false;
       }
       return window.device.platform == 'iOS' && parseFloat(window.device.version) >= 7.0;
@@ -5235,6 +5229,7 @@ ionic.views.Slider = ionic.views.View.inherit({
         } else {
           element.addEventListener('mousemove', this, false);
           element.addEventListener('mouseup', this, false);
+          document.addEventListener('mouseup', this, false);
         }
       },
       move: function(event) {
@@ -5378,6 +5373,7 @@ ionic.views.Slider = ionic.views.View.inherit({
         } else {
           element.removeEventListener('mousemove', events, false)
           element.removeEventListener('mouseup', events, false)
+          document.removeEventListener('mouseup', events, false);
         }
 
       },

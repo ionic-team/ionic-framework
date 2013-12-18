@@ -298,6 +298,7 @@ ionic.views.Slider = ionic.views.View.inherit({
         } else {
           element.addEventListener('mousemove', this, false);
           element.addEventListener('mouseup', this, false);
+          document.addEventListener('mouseup', this, false);
         }
       },
       move: function(event) {
@@ -441,6 +442,7 @@ ionic.views.Slider = ionic.views.View.inherit({
         } else {
           element.removeEventListener('mousemove', events, false)
           element.removeEventListener('mouseup', events, false)
+          document.removeEventListener('mouseup', events, false);
         }
 
       },

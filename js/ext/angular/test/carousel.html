@@ -49,58 +49,43 @@
   <body>
 
     <div ng-controller="SlideCtrl">
-      <side-menus>
-        <pane side-menu-content>
-          <header-bar left-buttons="leftButtons" right-buttons="rightButtons" title=""></header-bar>
-          <slide-box on-slide-changed="slideChanged(index)">
-            <slide ng-controller="FirstSlideCtrl">
-              <h3>Thank you for choosing the Awesome App!</h3>
-              <div id="logo">
-                <img src="app_icon.png">
-              </div>
-              <p>
-                We've worked super hard to make you happy.
-              </p>
-              <p>
-                But if you are angry, too bad.
-              </p>
-              <p>
-                <button class="button button-dark" ng-click="toLast()">Skip to last</button>
-              </p>
-            </slide>
-            <slide>
-              <h3>Using Awesome</h3>
-              
-              <div id="list">
-                <h5>Just three steps:</h5>
-                <ol>
-                  <li>Be awesome</li>
-                  <li>Stay awesome</li>
-                  <li>There is no step 3</li>
-                </ol>
-              </div>
-            </slide>
-            <slide>
-              <content has-header="true">
-                <div style="width: 300px; height: 2000px; background: url('tree_bark.png') repeat"></div>
-              </content>
-            </slide>
-          </slide-box>
-        </pane>
-        <side-menu side="left">
-          <header class="bar bar-header bar-assertive">
-            <h1 class="title">Right</h1>
-          </header>
-          <content>
-          </content>
-        </side-menu>
-      </side-menus>
+      <slide-box on-slide-changed="slideChanged(index)" does-continue="true">
+        <slide>
+          <h3>Thank you for choosing the Awesome App!</h3>
+          <div id="logo">
+            <img src="app_icon.png">
+          </div>
+          <p>
+            We've worked super hard to make you happy.
+          </p>
+          <p>
+            But if you are angry, too bad.
+          </p>
+        </slide>
+        <slide>
+          <h3>Using Awesome</h3>
+          
+          <div id="list">
+            <h5>Just three steps:</h5>
+            <ol>
+              <li>Be awesome</li>
+              <li>Stay awesome</li>
+              <li>There is no step 3</li>
+            </ol>
+          </div>
+        </slide>
+        <slide>
+          <h3>Any questions?</h3>
+          <p>
+            Too bad!
+          </p>
+        </slide>
+      </slide-box>
     </div>
     <script>
       angular.module('slideBoxTest', ['ionic'])
 
-      .controller('SlideCtrl', function($scope, $timeout) {
-
+      .controller('SlideCtrl', function($scope) {
         $scope.next = function() {
           console.log('NEXT');
           $scope.$broadcast('slideBox.nextSlide');
@@ -161,16 +146,7 @@
             $scope.rightButtons = rightButtons;
           }
         };
-      })
-
-      .controller('FirstSlideCtrl', function($scope) {
-        $scope.derp = function() {
-        }
-        $scope.toLast = function() {
-          $scope.slideBox.slide(2);
-        }
       });
-
     </script>
   </body>
 </html>
