@@ -85,7 +85,7 @@ angular.module('ionic.ui.service.scrollDelegate', [])
     /**
      * Register a scope for scroll event handling.
      * $scope {Scope} the scope to register and listen for events
-e    */
+     */
     register: function($scope, $element) {
       $element.bind('scroll', function(e) {
         $scope.onScroll({
