@@ -19,6 +19,7 @@ img {
 }
 
 body, .ionic-body {
+  @include touch-callout(none);
   @include font-smoothing(antialiased);
   //-webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
