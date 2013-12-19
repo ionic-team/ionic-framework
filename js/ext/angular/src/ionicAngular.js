@@ -12,6 +12,11 @@ angular.module('ionic.service', [
   'ionic.service.templateLoad'
 ]);
 
+// UI specific services and delegates
+angular.module('ionic.ui.service', [
+  'ionic.ui.service.scrollDelegate',
+]);
+
 angular.module('ionic.ui', [
                             'ionic.ui.content',
                             'ionic.ui.scroll',
@@ -26,8 +31,10 @@ angular.module('ionic.ui', [
                             'ionic.ui.radio'
                            ]);
 
+
 angular.module('ionic', [
     'ionic.service',
+    'ionic.ui.service',
     'ionic.ui',
     
     // Angular deps

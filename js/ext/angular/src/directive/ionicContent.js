@@ -1,7 +1,7 @@
 (function() {
 'use strict';
 
-angular.module('ionic.ui.content', [])
+angular.module('ionic.ui.content', ['ionic.ui.service'])
 
 /**
  * Panel is a simple 100% width and height, fixed panel. It's meant for content to be
@@ -18,7 +18,7 @@ angular.module('ionic.ui.content', [])
 
 // The content directive is a core scrollable content area
 // that is part of many View hierarchies
-.directive('content', ['$parse', '$timeout', function($parse, $timeout) {
+.directive('content', ['$parse', '$timeout', 'ScrollDelegate', function($parse, $timeout, ScrollDelegate) {
   return {
     restrict: 'E',
     replace: true,
@@ -114,29 +114,13 @@ angular.module('ionic.ui.content', [])
               });
             }
 
-            $element.bind('scroll', function(e) {
-              $scope.onScroll({
-                event: e,
-                scrollTop: e.detail ? e.detail.scrollTop : e.originalEvent ? e.originalEvent.detail.scrollTop : 0,
-                scrollLeft: e.detail ? e.detail.scrollLeft: e.originalEvent ? e.originalEvent.detail.scrollLeft : 0
-              });
-            });
+            // Register for scroll delegate event handling
+            ScrollDelegate.register($scope, $element);
 
-            $scope.$parent.$on('scroll.resize', function(e) {
-              // Run the resize after this digest
-              $timeout(function() {
-                sv && sv.resize();
-              });
-            });
-
-            $scope.$parent.$on('scroll.refreshComplete', function(e) {
-              sv && sv.finishPullToRefresh();
-            });
             
             // Let child scopes access this 
             $scope.$parent.scrollView = sv;
           });
-
 
 
         }

@@ -85,6 +85,7 @@
               {{item.title}}
             </list-item>
           </list>
+          <button ng-click="goTop()">Go Top</button>
         </content>
       </tab>
 
@@ -202,6 +203,9 @@
         }
         buildMockData();
 
+        $scope.goTop = function() {
+			    $scope.$broadcast('scroll.scrollTop', false);
+        };
       })
 
       .controller('TaskCtrl', function($scope) {

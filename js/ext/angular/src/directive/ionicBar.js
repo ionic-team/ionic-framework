@@ -3,8 +3,17 @@
 
 angular.module('ionic.ui.header', ['ngAnimate'])
 
+.directive('barHeader', ['ScrollDelegate', function(ScrollDelegate) {
+  return {
+    restrict: 'C',
+    link: function($scope, $element, $attr) {
+      // We want to scroll to top when the top of this element is clicked
+      ScrollDelegate.tapScrollToTop($element);
+    }
+  };
+}])
 
-.directive('headerBar', function() {
+.directive('headerBar', [function(ScrollDelegate) {
   return {
     restrict: 'E',
     replace: true,
@@ -56,7 +65,7 @@ angular.module('ionic.ui.header', ['ngAnimate'])
       });
     }
   };
-})
+}])
 
 .directive('footerBar', function() {
   return {
