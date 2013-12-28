@@ -30,6 +30,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
       onScroll: '&',
       onScrollComplete: '&',
       refreshComplete: '=',
+      onInfiniteScroll: '=',
       scroll: '@',
       hasScrollX: '@',
       hasScrollY: '@',
