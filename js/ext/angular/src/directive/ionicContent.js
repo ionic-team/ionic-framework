@@ -31,6 +31,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
       onScrollComplete: '&',
       refreshComplete: '=',
       onInfiniteScroll: '=',
+      infiniteScrollDistance: '@',
       scroll: '@',
       hasScrollX: '@',
       hasScrollY: '@',
@@ -127,8 +128,22 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
           var infiniteScroll = $element.find('infinite-scroll');
           var infiniteStarted = false;
           if(infiniteScroll) {
+            // Parse infinite scroll distance
+            var distance = attr.infiniteScrollDistance || '1%';
+            var maxScroll;
+            if(distance.indexOf('%')) {
+              // It's a multiplier
+              maxScroll = function() {
+                return sv.getScrollMax().top * ( 1 - parseInt(distance, 10) / 100 );
+              };
+            } else {
+              // It's a pixel value
+              maxScroll = function() {
+                return sv.getScrollMax().top - parseInt(distance, 10);
+              };
+            }
             $element.bind('scroll', function(e) {
-              if( sv && !infiniteStarted && (sv.getValues().top > (sv.getScrollMax().top * 0.99) ) ) {
+              if( sv && !infiniteStarted && (sv.getValues().top > maxScroll() ) ) {
                 infiniteStarted = true;
                 infiniteScroll.addClass('active');
                 var cb = function() {
