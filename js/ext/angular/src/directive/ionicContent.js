@@ -122,7 +122,22 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
             $scope.$parent.scrollView = sv;
           });
 
-
+          // Infinite scroll
+          var infiniteScroll = $element.find('infinite-scroll');
+          var infiniteStarted = false;
+          if(infiniteScroll) {
+            $element.bind('scroll', function(e) {
+              if( sv && !infiniteStarted && (sv.getValues().top > (sv.getScrollMax().top * 0.99) ) ) {
+                infiniteStarted = true;
+                infiniteScroll.addClass('active');
+                var cb = function() {
+                  infiniteStarted = false;
+                  infiniteScroll.removeClass('active');
+                }
+                $scope.$apply(angular.bind($scope, $scope.onInfiniteScroll, cb));
+              }
+            });
+          }
         }
 
         // if padding attribute is true, then add padding if it wasn't added to the .scroll
@@ -152,7 +167,14 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
     transclude: true,
     template: '<div class="scroll-refresher"><div class="scroll-refresher-content" ng-transclude></div></div>'
   };
-});
+}))
 
+.directive('infiniteScroll', function() {
+  return {
+    restrict: 'E',
+    replace: false,
+    template: '<div class="scroll-infinite"><div class="scroll-infinite-content"><i class="icon ion-loading-d icon-refreshing"></i></div></div>'
+  };
+});
 
 })();
