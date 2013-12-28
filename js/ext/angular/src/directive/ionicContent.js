@@ -134,7 +134,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
                 var cb = function() {
                   infiniteStarted = false;
                   infiniteScroll.removeClass('active');
-                }
+                };
                 $scope.$apply(angular.bind($scope, $scope.onInfiniteScroll, cb));
               }
             });
@@ -168,7 +168,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
     transclude: true,
     template: '<div class="scroll-refresher"><div class="scroll-refresher-content" ng-transclude></div></div>'
   };
-}))
+})
 
 .directive('infiniteScroll', function() {
   return {
