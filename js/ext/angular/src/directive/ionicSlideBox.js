@@ -3,16 +3,14 @@
 
 /**
  * @description
- * The sideMenuCtrl lets you quickly have a draggable side
- * left and/or right menu, which a center content area.
+ * The slideBoxCtrol lets you quickly create a multi-page c
+ * ontainer where each page can be swiped or dragged between
  */
 
 angular.module('ionic.ui.slideBox', [])
 
 /**
- * The internal controller for the side menu controller. This
- * extends our core Ionic side menu controller and exposes
- * some side menu stuff on the current scope.
+ * The internal controller for the slide box controller.
  */
 .controller('SlideBoxCtrl', ['$scope', '$element', function($scope, $element) {
   $scope.slides = [];
