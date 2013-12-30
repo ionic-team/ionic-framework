@@ -3,8 +3,8 @@
 
 /**
  * @description
- * The slideBoxCtrol lets you quickly create a multi-page c
- * ontainer where each page can be swiped or dragged between
+ * The slideBoxCtrol lets you quickly create a multi-page 
+ * container where each page can be swiped or dragged between
  */
 
 angular.module('ionic.ui.slideBox', [])
