@@ -32,7 +32,7 @@ ionic.views.Slider = ionic.views.View.inherit({
     // quit if no root element
     if (!container) return;
     var element = container.children[0];
-    var slides, slidePos, width, length;
+    var slides, slidePos, width, numSlides, reportedNumSlides;
     options = options || {};
     var index = parseInt(options.startSlide, 10) || 0;
     var speed = options.speed || 300;
@@ -42,31 +42,40 @@ ionic.views.Slider = ionic.views.View.inherit({
 
       // cache slides
       slides = element.children;
-      length = slides.length;
+      numSlides = slides.length;
 
-      // If no maxViewableSlide is defined, set it to the last slide
-      if (options.maxViewableSlide === false ) options.maxViewableSlide = length;
+      // Will be used to report number of slides to pager
+      reportedNumSlides = numSlides;
+
+
+      // If no maxViewableSlide is defined, set it to the number of actual slides
+      if (options.maxViewableSlide === false ) {
+        options.maxViewableSlide = numSlides;
+      } else {
+        // The maxViewableSlide is an index. Need to report one more than this
+        reportedNumSlides = options.maxViewableSlide + 1;
+      }
 
       // set continuous to false if only one slide
-      if (slides.length < 2) options.continuous = false;
+      if (numSlides < 2) options.continuous = false;
 
       //special case if two slides
-      if (browser.transitions && options.continuous && slides.length < 3) {
+      if (browser.transitions && options.continuous && numSlides < 3) {
         element.appendChild(slides[0].cloneNode(true));
         element.appendChild(element.children[1].cloneNode(true));
         slides = element.children;
       }
 
       // create an array to store current positions of each slide
-      slidePos = new Array(slides.length);
+      slidePos = new Array(numSlides);
 
       // determine width of each slide
       width = container.getBoundingClientRect().width || container.offsetWidth;
 
-      element.style.width = (slides.length * width) + 'px';
+      element.style.width = (numSlides * width) + 'px';
 
       // stack elements
-      var pos = slides.length;
+      var pos = numSlides;
       while(pos--) {
 
         var slide = slides[pos];
@@ -104,14 +113,14 @@ ionic.views.Slider = ionic.views.View.inherit({
     function next() {
 
       if (options.continuous) slide(index+1);
-      else if (index < slides.length - 1 && index < options.maxViewableSlide) slide(index+1);
+      else if (index < numSlides - 1 && index < options.maxViewableSlide) slide(index+1);
 
     }
 
     function circle(index) {
 
-      // a simple positive modulo using slides.length
-      return (slides.length + (index % slides.length)) % slides.length;
+      // a simple positive modulo using numSlides
+      return (numSlides + (index % numSlides)) % numSlides;
 
     }
 
@@ -129,9 +138,9 @@ ionic.views.Slider = ionic.views.View.inherit({
           var natural_direction = direction;
           direction = -slidePos[circle(to)] / width;
 
-          // if going forward but to < index, use to = slides.length + to
-          // if going backward but to > index, use to = -slides.length + to
-          if (direction !== natural_direction) to =  -direction * slides.length + to;
+          // if going forward but to < index, use to = numSlides + to
+          // if going backward but to > index, use to = -numSlides + to
+          if (direction !== natural_direction) to =  -direction * numSlides + to;
 
         }
 
@@ -345,7 +354,7 @@ ionic.views.Slider = ionic.views.View.inherit({
             delta.x =
               delta.x /
                 ( (!index && delta.x > 0               // if first slide and sliding left
-                  || index == slides.length - 1        // or if last slide and sliding right
+                  || index == numSlides - 1        // or if last slide and sliding right
                   && delta.x < 0                       // and if sliding at all
                 ) ?
                 ( Math.abs(delta.x) / width + 1 )      // determine resistance level
@@ -375,7 +384,7 @@ ionic.views.Slider = ionic.views.View.inherit({
         var isPastBounds =
               !index && delta.x > 0                            // if first slide and slide amt is greater than 0
               || index == options.maxViewableSlide && delta.x < 0 // Prevent viewing slides greater than allowed
-              || index == slides.length - 1 && delta.x < 0;    // or if last slide and slide amt is less than 0
+              || index == numSlides - 1 && delta.x < 0;    // or if last slide and slide amt is less than 0
 
         if (options.continuous) isPastBounds = false;
 
@@ -479,6 +488,7 @@ ionic.views.Slider = ionic.views.View.inherit({
     this.setMaxViewableSlide = function(max) {
       // Set the max slide that is allowed to be viewed
       options.maxViewableSlide = max;
+      reportedNumSlides = max + 1;
     };
 
     this.prev = function() {
@@ -507,7 +517,7 @@ ionic.views.Slider = ionic.views.View.inherit({
 
     this.getNumSlides = function() {
       // return the maxViewableSlide
-      return options.maxViewableSlide + 1;
+      return reportedNumSlides;
     };
 
     this.kill = function() {
@@ -519,7 +529,7 @@ ionic.views.Slider = ionic.views.View.inherit({
       element.style.left = '';
 
       // reset slides
-      var pos = slides.length;
+      var pos = numSlides;
       while(pos--) {
 
         var slide = slides[pos];
