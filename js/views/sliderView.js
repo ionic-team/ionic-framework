@@ -44,6 +44,9 @@ ionic.views.Slider = ionic.views.View.inherit({
       slides = element.children;
       length = slides.length;
 
+      // If no maxViewableSlide is defined, set it to the last slide
+      if (options.maxViewableSlide === false ) options.maxViewableSlide = length;
+
       // set continuous to false if only one slide
       if (slides.length < 2) options.continuous = false;
 
@@ -101,7 +104,7 @@ ionic.views.Slider = ionic.views.View.inherit({
     function next() {
 
       if (options.continuous) slide(index+1);
-      else if (index < slides.length - 1) slide(index+1);
+      else if (index < slides.length - 1 && index < options.maxViewableSlide) slide(index+1);
 
     }
 
@@ -371,6 +374,7 @@ ionic.views.Slider = ionic.views.View.inherit({
         // determine if slide attempt is past start and end
         var isPastBounds =
               !index && delta.x > 0                            // if first slide and slide amt is greater than 0
+              || index == options.maxViewableSlide && delta.x < 0 // Prevent viewing slides greater than allowed
               || index == slides.length - 1 && delta.x < 0;    // or if last slide and slide amt is less than 0
 
         if (options.continuous) isPastBounds = false;
@@ -472,6 +476,11 @@ ionic.views.Slider = ionic.views.View.inherit({
       slide(to, speed);
     };
 
+    this.setMaxViewableSlide = function(max) {
+      // Set the max slide that is allowed to be viewed
+      options.maxViewableSlide = max;
+    };
+
     this.prev = function() {
       // cancel slideshow
       stop();
@@ -497,8 +506,8 @@ ionic.views.Slider = ionic.views.View.inherit({
     };
 
     this.getNumSlides = function() {
-      // return total number of slides
-      return length;
+      // return the maxViewableSlide
+      return options.maxViewableSlide + 1;
     };
 
     this.kill = function() {

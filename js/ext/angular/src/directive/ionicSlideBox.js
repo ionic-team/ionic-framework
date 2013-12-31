@@ -3,16 +3,14 @@
 
 /**
  * @description
- * The sideMenuCtrl lets you quickly have a draggable side
- * left and/or right menu, which a center content area.
+ * The slideBox directive allows you to build a swipable, interactive
+ * section of the app.
  */
 
 angular.module('ionic.ui.slideBox', [])
 
 /**
- * The internal controller for the side menu controller. This
- * extends our core Ionic side menu controller and exposes
- * some side menu stuff on the current scope.
+ * The directive for building a slidebox accepts several attributes
  */
 
 .directive('slideBox', ['$timeout', '$compile', function($timeout, $compile) {
@@ -25,6 +23,7 @@ angular.module('ionic.ui.slideBox', [])
       slideInterval: '@',
       showPager: '@',
       disableScroll: '@',
+      maxViewableSlide : '@',
       onSlideChanged: '&'
     },
     controller: ['$scope', '$element', function($scope, $element) {
@@ -37,6 +36,7 @@ angular.module('ionic.ui.slideBox', [])
         el: $element[0],
         auto: slideInterval,
         disableScroll: ($scope.$eval($scope.disableScroll) === true) || false,
+        maxViewableSlide: parseInt($scope.maxViewableSlide, 10) || false,
         continuous: continuous,
         slidesChanged: function() {
           $scope.currentSlide = slider.getPos();
@@ -64,6 +64,11 @@ angular.module('ionic.ui.slideBox', [])
 
       $scope.$on('slideBox.setSlide', function(e, index) {
         slider.slide(index);
+      });
+
+      $scope.$on('slideBox.setMaxViewableSlide', function(e, max) {
+        $scope.maxViewableSlide = max;
+        slider.setMaxViewableSlide(max);
       });
 
       $scope.$parent.slideBox = slider;
