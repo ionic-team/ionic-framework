@@ -3,7 +3,7 @@
 
 angular.module('ionic.ui.list', ['ngAnimate'])
 
-.directive('item', ['$timeout', function($timeout) {
+.directive('item', ['$timeout', '$parse', function($timeout, $parse) {
   return {
     restrict: 'E',
     require: '?^list',
@@ -22,7 +22,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       reorderIcon: '@'
     },
 
-    template: '<div class="item item-complex" ng-class="itemClass">\
+    template: '<div class="item item-complex" ng-class="parsedClass(item)">\
             <div class="item-edit" ng-if="deleteClick !== undefined">\
               <button class="button button-icon icon" ng-class="deleteIconClass" ng-click="deleteClick()"></button>\
             </div>\
@@ -47,7 +47,10 @@ angular.module('ionic.ui.list', ['ngAnimate'])
 
       // Set this item's class, first from the item directive attr, and then the list attr if item not set
       $scope.itemClass = $scope.itemType || $parentScope.itemType;
-
+      var getter = $parse( $scope.itemClass );
+      $scope.parsedClass = function(a) {
+        return getter($scope.$parent);
+      };
       // Decide if this item can do stuff, and follow a certain priority 
       // depending on where the value comes from
       if(($attr.canDelete ? $scope.canDelete : $parentScope.canDelete) !== "false") {
