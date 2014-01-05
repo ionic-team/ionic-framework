@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.2.4
+ * @license AngularJS v1.2.7
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -1094,7 +1094,8 @@ function createHttpBackendMock($rootScope, $delegate, $browser) {
   var definitions = [],
       expectations = [],
       responses = [],
-      responsesPush = angular.bind(responses, responses.push);
+      responsesPush = angular.bind(responses, responses.push),
+      copy = angular.copy;
 
   function createResponse(status, data, headers) {
     if (angular.isFunction(status)) return status;
@@ -1126,7 +1127,7 @@ function createHttpBackendMock($rootScope, $delegate, $browser) {
       function handleResponse() {
         var response = wrapped.response(method, url, data, headers);
         xhr.$$respHeaders = response[2];
-        callback(response[0], response[1], xhr.getAllResponseHeaders());
+        callback(copy(response[0]), copy(response[1]), xhr.getAllResponseHeaders());
       }
 
       function handleTimeout() {
@@ -1576,6 +1577,10 @@ function MockHttpExpectation(method, url, data, headers) {
   this.toString = function() {
     return method + ' ' + url;
   };
+}
+
+function createMockXhr() {
+  return new MockXhr();
 }
 
 function MockXhr() {

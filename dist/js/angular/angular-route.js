@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.2.4
+ * @license AngularJS v1.2.7
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -57,13 +57,13 @@ function $RouteProvider(){
    *    `$location.path` will be updated to add or drop the trailing slash to exactly match the
    *    route definition.
    *
-   *      * `path` can contain named groups starting with a colon (`:name`). All characters up
+   *      * `path` can contain named groups starting with a colon: e.g. `:name`. All characters up
    *        to the next slash are matched and stored in `$routeParams` under the given `name`
    *        when the route matches.
-   *      * `path` can contain named groups starting with a colon and ending with a star (`:name*`).
-   *        All characters are eagerly stored in `$routeParams` under the given `name`
+   *      * `path` can contain named groups starting with a colon and ending with a star:
+   *        e.g.`:name*`. All characters are eagerly stored in `$routeParams` under the given `name`
    *        when the route matches.
-   *      * `path` can contain optional named groups with a question mark (`:name?`).
+   *      * `path` can contain optional named groups with a question mark: e.g.`:name?`.
    *
    *    For example, routes like `/color/:color/largecode/:largecode*\/edit` will match
    *    `/color/brown/largecode/code/with/slashs/edit` and extract:
@@ -644,6 +644,8 @@ function $RouteParamsProvider() {
 }
 
 ngRouteModule.directive('ngView', ngViewFactory);
+ngRouteModule.directive('ngView', ngViewFillContentFactory);
+
 
 /**
  * @ngdoc directive
@@ -809,8 +811,8 @@ ngRouteModule.directive('ngView', ngViewFactory);
  * @description
  * Emitted every time the ngView content is reloaded.
  */
-ngViewFactory.$inject = ['$route', '$anchorScroll', '$compile', '$controller', '$animate'];
-function ngViewFactory(   $route,   $anchorScroll,   $compile,   $controller,   $animate) {
+ngViewFactory.$inject = ['$route', '$anchorScroll', '$animate'];
+function ngViewFactory(   $route,   $anchorScroll,   $animate) {
   return {
     restrict: 'ECA',
     terminal: true,
@@ -840,8 +842,9 @@ function ngViewFactory(   $route,   $anchorScroll,   $compile,   $controller,   
           var locals = $route.current && $route.current.locals,
               template = locals && locals.$template;
 
-          if (template) {
+          if (angular.isDefined(template)) {
             var newScope = scope.$new();
+            var current = $route.current;
 
             // Note: This will also link all children of ng-view that were contained in the original
             // html. If that content contains controllers, ... they could pollute/change the scope.
@@ -849,40 +852,57 @@ function ngViewFactory(   $route,   $anchorScroll,   $compile,   $controller,   
             // Note: We can't remove them in the cloneAttchFn of $transclude as that
             // function is called before linking the content, which would apply child
             // directives to non existing elements.
-            var clone = $transclude(newScope, angular.noop);
-            clone.html(template);
-            $animate.enter(clone, null, currentElement || $element, function onNgViewEnter () {
-              if (angular.isDefined(autoScrollExp)
-                && (!autoScrollExp || scope.$eval(autoScrollExp))) {
-                $anchorScroll();
-              }
+            var clone = $transclude(newScope, function(clone) {
+              $animate.enter(clone, null, currentElement || $element, function onNgViewEnter () {
+                if (angular.isDefined(autoScrollExp)
+                  && (!autoScrollExp || scope.$eval(autoScrollExp))) {
+                  $anchorScroll();
+                }
+              });
+              cleanupLastView();
             });
 
-            cleanupLastView();
-
-            var link = $compile(clone.contents()),
-                current = $route.current;
-
-            currentScope = current.scope = newScope;
             currentElement = clone;
-
-            if (current.controller) {
-              locals.$scope = currentScope;
-              var controller = $controller(current.controller, locals);
-              if (current.controllerAs) {
-                currentScope[current.controllerAs] = controller;
-              }
-              clone.data('$ngControllerController', controller);
-              clone.children().data('$ngControllerController', controller);
-            }
-
-            link(currentScope);
+            currentScope = current.scope = newScope;
             currentScope.$emit('$viewContentLoaded');
             currentScope.$eval(onloadExp);
           } else {
             cleanupLastView();
           }
         }
+    }
+  };
+}
+
+// This directive is called during the $transclude call of the first `ngView` directive.
+// It will replace and compile the content of the element with the loaded template.
+// We need this directive so that the element content is already filled when
+// the link function of another directive on the same element as ngView
+// is called.
+ngViewFillContentFactory.$inject = ['$compile', '$controller', '$route'];
+function ngViewFillContentFactory($compile, $controller, $route) {
+  return {
+    restrict: 'ECA',
+    priority: -400,
+    link: function(scope, $element) {
+      var current = $route.current,
+          locals = current.locals;
+
+      $element.html(locals.$template);
+
+      var link = $compile($element.contents());
+
+      if (current.controller) {
+        locals.$scope = scope;
+        var controller = $controller(current.controller, locals);
+        if (current.controllerAs) {
+          scope[current.controllerAs] = controller;
+        }
+        $element.data('$ngControllerController', controller);
+        $element.children().data('$ngControllerController', controller);
+      }
+
+      link(scope);
     }
   };
 }

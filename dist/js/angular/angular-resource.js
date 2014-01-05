@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.2.4
+ * @license AngularJS v1.2.7
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -27,6 +27,25 @@ function lookupDottedPath(obj, path) {
     obj = (obj !== null) ? obj[key] : undefined;
   }
   return obj;
+}
+
+/**
+ * Create a shallow copy of an object and clear other fields from the destination
+ */
+function shallowClearAndCopy(src, dst) {
+  dst = dst || {};
+
+  angular.forEach(dst, function(value, key){
+    delete dst[key];
+  });
+
+  for (var key in src) {
+    if (src.hasOwnProperty(key) && key.charAt(0) !== '$' && key.charAt(1) !== '$') {
+      dst[key] = src[key];
+    }
+  }
+
+  return dst;
 }
 
 /**
@@ -76,7 +95,7 @@ function lookupDottedPath(obj, path) {
  *   when a param value needs to be obtained for a request (unless the param was overridden).
  *
  *   Each key value in the parameter object is first bound to url template if present and then any
- *   excess keys are appended to the url search query after the `?`.
+ *   excess keys are appended to the url seapph query after the `?`.
  *
  *   Given a template `/path/:verb` and parameter `{verb:'greet', salutation:'Hello'}` results in
  *   URL `/path/greet?salutation=Hello`.
@@ -223,7 +242,7 @@ function lookupDottedPath(obj, path) {
      newCard.name = "Mike Smith";
      newCard.$save();
      // POST: /user/123/card {number:'0123', name:'Mike Smith'}
-     // server returns: {id:789, number:'01234', name: 'Mike Smith'};
+     // server returns: {id:789, number:'0123', name: 'Mike Smith'};
      expect(newCard.id).toEqual(789);
  * </pre>
  *
@@ -258,6 +277,35 @@ function lookupDottedPath(obj, path) {
        });
      });
    </pre>
+
+ * # Creating a custom 'PUT' request
+ * In this example we create a custom method on our resource to make a PUT request
+ * <pre>
+ *		var app = angular.module('app', ['ngResource', 'ngRoute']);
+ *
+ *		// Some APIs expect a PUT request in the format URL/object/ID
+ *		// Here we are creating an 'update' method 
+ *		app.factory('Notes', ['$resource', function($resource) {
+ *    return $resource('/notes/:id', null,
+ *        {
+ *            'update': { method:'PUT' }
+ *        });
+ *		}]);
+ *
+ *		// In our controller we get the ID from the URL using ngRoute and $routeParams
+ *		// We pass in $routeParams and our Notes factory along with $scope
+ *		app.controller('NotesCtrl', ['$scope', '$routeParams', 'Notes',
+                                      function($scope, $routeParams, Notes) {
+ *    // First get a note object from the factory
+ *    var note = Notes.get({ id:$routeParams.id });
+ *    $id = note.id;
+ *
+ *    // Now call update passing in the ID first then the object you are updating
+ *    Notes.update({ id:$id }, note);
+ *
+ *    // This will PUT /notes/ID with the note object in the request payload
+ *		}]);
+ * </pre>
  */
 angular.module('ngResource', ['ng']).
   factory('$resource', ['$http', '$q', function($http, $q) {
@@ -358,7 +406,7 @@ angular.module('ngResource', ['ng']).
         });
 
         // strip trailing slashes and set the url
-        url = url.replace(/\/+$/, '');
+        url = url.replace(/\/+$/, '') || '/';
         // then replace collapse `/.` if found in the last URL path segment before the query
         // E.g. `http://url.com/id./format?q=x` becomes `http://url.com/id.format?q=x`
         url = url.replace(/\/\.(?=\w+($|\?))/, '.');
@@ -398,7 +446,7 @@ angular.module('ngResource', ['ng']).
       }
 
       function Resource(value){
-        copy(value || {}, this);
+        shallowClearAndCopy(value || {}, this);
       }
 
       forEach(actions, function(action, name) {
@@ -470,7 +518,7 @@ angular.module('ngResource', ['ng']).
             if (data) {
               // Need to convert action.isArray to boolean in case it is undefined
               // jshint -W018
-              if ( angular.isArray(data) !== (!!action.isArray) ) {
+              if (angular.isArray(data) !== (!!action.isArray)) {
                 throw $resourceMinErr('badcfg', 'Error in resource configuration. Expected ' +
                   'response to contain an {0} but got an {1}',
                   action.isArray?'array':'object', angular.isArray(data)?'array':'object');
@@ -482,7 +530,7 @@ angular.module('ngResource', ['ng']).
                   value.push(new Resource(item));
                 });
               } else {
-                copy(data, value);
+                shallowClearAndCopy(data, value);
                 value.$promise = promise;
               }
             }
