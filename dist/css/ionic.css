@@ -3209,7 +3209,7 @@ a.subdued {
   .bar > .button.pull-right,
   .bar .title + .buttons {
     position: absolute;
-    top: 5px;
+    top: 6px;
     right: 5px;
     bottom: 5px; }
 
