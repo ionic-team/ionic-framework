@@ -124,7 +124,8 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
             $scope.$parent.scrollView = sv;
           });
 
-          // Infinite scroll
+          // Check if this supports infinite scrolling and listen for scroll events
+          // to trigger the infinite scrolling
           var infiniteScroll = $element.find('infinite-scroll');
           var infiniteStarted = false;
           if(infiniteScroll) {
@@ -147,6 +148,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
                 infiniteStarted = true;
                 infiniteScroll.addClass('active');
                 var cb = function() {
+                  sv.resize();
                   infiniteStarted = false;
                   infiniteScroll.removeClass('active');
                 };
