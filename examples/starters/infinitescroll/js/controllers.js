@@ -23,22 +23,6 @@ angular.module('listExample.controllers', [])
         director: 'Bryan Singer',
         rating: 8.3
       });
-      $scope.movies.push({
-        id: 'tt0357413',
-        title: 'Anchorman: The Legend of Ron Burgundy',
-        released: '2004',
-        description: "Ron Burgundy is San Diego's top rated newsman in the male-dominated broadcasting of the 70's, but that's all about to change for Ron and his cronies when an ambitious woman is hired as a new anchor.",
-        director: 'Adam McKay',
-        rating: 7.2
-      });
-      $scope.movies.push({
-        id: 'tt0058331',
-        title: 'Mary Poppins',
-        released: '1964',
-        description: "A magic nanny comes to work for a cold banker's unhappy family.",
-        director: 'Robert Stevenson',
-        rating: 7.7
-      });
       done();
     }, 1000);
   }

@@ -736,6 +736,8 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
       onScroll: '&',
       onScrollComplete: '&',
       refreshComplete: '=',
+      onInfiniteScroll: '=',
+      infiniteScrollDistance: '@',
       scroll: '@',
       hasScrollX: '@',
       hasScrollY: '@',
@@ -828,7 +830,38 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
             $scope.$parent.scrollView = sv;
           });
 
-
+          // Check if this supports infinite scrolling and listen for scroll events
+          // to trigger the infinite scrolling
+          var infiniteScroll = $element.find('infinite-scroll');
+          var infiniteStarted = false;
+          if(infiniteScroll) {
+            // Parse infinite scroll distance
+            var distance = attr.infiniteScrollDistance || '1%';
+            var maxScroll;
+            if(distance.indexOf('%')) {
+              // It's a multiplier
+              maxScroll = function() {
+                return sv.getScrollMax().top * ( 1 - parseInt(distance, 10) / 100 );
+              };
+            } else {
+              // It's a pixel value
+              maxScroll = function() {
+                return sv.getScrollMax().top - parseInt(distance, 10);
+              };
+            }
+            $element.bind('scroll', function(e) {
+              if( sv && !infiniteStarted && (sv.getValues().top > maxScroll() ) ) {
+                infiniteStarted = true;
+                infiniteScroll.addClass('active');
+                var cb = function() {
+                  sv.resize();
+                  infiniteStarted = false;
+                  infiniteScroll.removeClass('active');
+                };
+                $scope.$apply(angular.bind($scope, $scope.onInfiniteScroll, cb));
+              }
+            });
+          }
         }
 
         // if padding attribute is true, then add padding if it wasn't added to the .scroll
@@ -858,8 +891,15 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
     transclude: true,
     template: '<div class="scroll-refresher"><div class="scroll-refresher-content" ng-transclude></div></div>'
   };
-});
+})
 
+.directive('infiniteScroll', function() {
+  return {
+    restrict: 'E',
+    replace: false,
+    template: '<div class="scroll-infinite"><div class="scroll-infinite-content"><i class="icon ion-loading-d icon-refreshing"></i></div></div>'
+  };
+});
 
 })();
 ;
@@ -868,7 +908,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
 
 angular.module('ionic.ui.list', ['ngAnimate'])
 
-.directive('item', ['$timeout', function($timeout) {
+.directive('item', ['$timeout', '$parse', function($timeout, $parse) {
   return {
     restrict: 'E',
     require: '?^list',
@@ -912,7 +952,6 @@ angular.module('ionic.ui.list', ['ngAnimate'])
 
       // Set this item's class, first from the item directive attr, and then the list attr if item not set
       $scope.itemClass = $scope.itemType || $parentScope.itemType;
-
       // Decide if this item can do stuff, and follow a certain priority 
       // depending on where the value comes from
       if(($attr.canDelete ? $scope.canDelete : $parentScope.canDelete) !== "false") {

@@ -2700,6 +2700,24 @@ body, .ionic-body {
   -moz-animation-name: refresh-spin;
   animation-name: refresh-spin; }
 
+infinite-scroll .scroll-infinite {
+  overflow: hidden;
+  margin-top: -70px;
+  height: 60px;
+  position: relative; }
+
+.scroll-infinite-content {
+  position: absolute;
+  left: 0;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  color: #666666; }
+
+infinite-scroll.active .scroll-infinite {
+  margin-top: -30px; }
+
 .overflow-scroll {
   overflow-x: hidden;
   overflow-y: scroll;
