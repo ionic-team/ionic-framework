@@ -18,6 +18,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
 
       angular.extend(this, ionic.controllers.TabBarController.prototype);
 
+
       ionic.controllers.TabBarController.call(this, {
         controllerChanged: function(oldC, oldI, newC, newI) {
           $scope.controllerChanged && $scope.controllerChanged({
