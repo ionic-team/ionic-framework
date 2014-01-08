@@ -9,7 +9,8 @@ angular.module('ionic.service', [
   'ionic.service.loading',
   'ionic.service.modal',
   'ionic.service.popup',
-  'ionic.service.templateLoad'
+  'ionic.service.templateLoad',
+  'ionic.service.view'
 ]);
 
 // UI specific services and delegates
@@ -21,7 +22,7 @@ angular.module('ionic.ui', [
                             'ionic.ui.content',
                             'ionic.ui.scroll',
                             'ionic.ui.tabs',
-                            'ionic.ui.navRouter',
+                            'ionic.ui.viewState',
                             'ionic.ui.header',
                             'ionic.ui.sideMenu',
                             'ionic.ui.slideBox',
@@ -41,5 +42,6 @@ angular.module('ionic', [
     'ngAnimate',
     'ngRoute',
     'ngTouch',
-    'ngSanitize'
+    'ngSanitize',
+    'ui.router'
 ]);
