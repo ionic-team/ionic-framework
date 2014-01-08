@@ -79,11 +79,4 @@ describe('Ionic Side Menu Directive', function () {
     expect(sideMenuCtrl.left.pushDown).not.toBe(undefined);
     expect(sideMenuCtrl.left.bringUp).not.toBe(undefined);
   });
-
-  it('Should remove the attributes it sets on the controller', function () {
-    scope.$destroy();
-    expect(sideMenuCtrl.left.isEnabled).toBe(undefined);
-    expect(sideMenuCtrl.left.pushDown).toBe(undefined);
-    expect(sideMenuCtrl.left.bringUp).toBe(undefined);
-  });
 });

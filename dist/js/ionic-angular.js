@@ -25870,14 +25870,6 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
         }
 
         $element.append(transclude($scope));
-
-        $scope.$on('$destroy', function () {
-          if (['left', 'right'].indexOf($scope.side) > -1) {
-            delete sideMenuCtrl[$scope.side].isEnabled;
-            delete sideMenuCtrl[$scope.side].pushDown;
-            delete sideMenuCtrl[$scope.side].bringUp;
-          }
-        });
       };
     }
   };
