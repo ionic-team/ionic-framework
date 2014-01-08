@@ -1107,7 +1107,7 @@ angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
     // So you can require being under this
     controller: ['$scope', '$element', function($scope, $element) {
       this.navBar = {
-        isVisible: true
+        isVisible: false
       };
       $scope.navController = this;
 
