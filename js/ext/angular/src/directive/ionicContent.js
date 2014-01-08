@@ -30,6 +30,8 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
       onScroll: '&',
       onScrollComplete: '&',
       refreshComplete: '=',
+      onInfiniteScroll: '=',
+      infiniteScrollDistance: '@',
       scroll: '@',
       hasScrollX: '@',
       hasScrollY: '@',
@@ -122,7 +124,36 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
             $scope.$parent.scrollView = sv;
           });
 
-
+          // Infinite scroll
+          var infiniteScroll = $element.find('infinite-scroll');
+          var infiniteStarted = false;
+          if(infiniteScroll) {
+            // Parse infinite scroll distance
+            var distance = attr.infiniteScrollDistance || '1%';
+            var maxScroll;
+            if(distance.indexOf('%')) {
+              // It's a multiplier
+              maxScroll = function() {
+                return sv.getScrollMax().top * ( 1 - parseInt(distance, 10) / 100 );
+              };
+            } else {
+              // It's a pixel value
+              maxScroll = function() {
+                return sv.getScrollMax().top - parseInt(distance, 10);
+              };
+            }
+            $element.bind('scroll', function(e) {
+              if( sv && !infiniteStarted && (sv.getValues().top > maxScroll() ) ) {
+                infiniteStarted = true;
+                infiniteScroll.addClass('active');
+                var cb = function() {
+                  infiniteStarted = false;
+                  infiniteScroll.removeClass('active');
+                };
+                $scope.$apply(angular.bind($scope, $scope.onInfiniteScroll, cb));
+              }
+            });
+          }
         }
 
         // if padding attribute is true, then add padding if it wasn't added to the .scroll
@@ -152,7 +183,14 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
     transclude: true,
     template: '<div class="scroll-refresher"><div class="scroll-refresher-content" ng-transclude></div></div>'
   };
-});
+})
 
+.directive('infiniteScroll', function() {
+  return {
+    restrict: 'E',
+    replace: false,
+    template: '<div class="scroll-infinite"><div class="scroll-infinite-content"><i class="icon ion-loading-d icon-refreshing"></i></div></div>'
+  };
+});
 
 })();
