@@ -36,22 +36,6 @@ describe('Ionic Side Menu Content Directive', function () {
     $compile(element)(scope);
     scope.$digest();
   }));
-
-  it('Should handle drag', function () {
-    ionic.trigger('drag', {target: element[0]});
-
-    expect(sideMenuCtrl._handleDrag).toHaveBeenCalled();
-  });
-
-  it('Should not handle drag when prevented', function () {
-    var event = new CustomEvent('mousedown', {bubbles: true, cancelable: true});
-    event.preventDefault();
-    element[0].dispatchEvent(event);
-
-    ionic.trigger('drag', {target: element[0]});
-
-    expect(sideMenuCtrl._handleDrag).not.toHaveBeenCalled();
-  });
 });
 
 describe('Ionic Side Menu Directive', function () {

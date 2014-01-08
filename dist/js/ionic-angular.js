@@ -1759,10 +1759,6 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
         var defaultPrevented = false;
         var isDragging = false;
 
-        var readDefaultPrevented = function(e) {
-          // If the child element prevented the drag, don't drag
-          defaultPrevented = e.defaultPrevented;
-        }
         ionic.on('mousedown', readDefaultPrevented);
 
         // Listen for taps on the content to close the menu
@@ -2037,6 +2033,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
       var _this = this;
 
       angular.extend(this, ionic.controllers.TabBarController.prototype);
+
 
       ionic.controllers.TabBarController.call(this, {
         controllerChanged: function(oldC, oldI, newC, newI) {
