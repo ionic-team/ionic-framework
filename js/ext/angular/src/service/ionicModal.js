@@ -68,9 +68,10 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'
       return modal;
     },
     fromTemplateUrl: function(url, cb, options) {
-      TemplateLoader.load(url).then(function(templateString) {
+      return TemplateLoader.load(url).then(function(templateString) {
         var modal = createModal(templateString, options || {});
-        cb(modal);
+        cb ? cb(modal) : null;
+        return modal;
       });
     },
   };
