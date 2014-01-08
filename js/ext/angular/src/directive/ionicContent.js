@@ -37,16 +37,17 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
       scrollbarY: '@',
       scrollEventInterval: '@'
     },
+
     compile: function(element, attr, transclude) {
-      return function($scope, $element, $attr) {
+      if(attr.hasHeader == "true") { element.addClass('has-header'); }
+      if(attr.hasSubheader == "true") { element.addClass('has-subheader'); }
+      if(attr.hasFooter == "true") { element.addClass('has-footer'); }
+      if(attr.hasTabs == "true") { element.addClass('has-tabs'); }
+
+      return function link($scope, $element, $attr) {
         var clone, sc, sv,
           addedPadding = false,
           c = $element.eq(0);
-
-        if(attr.hasHeader == "true") { c.addClass('has-header'); }
-        if(attr.hasSubheader == "true") { c.addClass('has-subheader'); }
-        if(attr.hasFooter == "true") { c.addClass('has-footer'); }
-        if(attr.hasTabs == "true") { c.addClass('has-tabs'); }
 
         // If they want plain overflow scrolling, add that as a class
         if($scope.scroll === "false") {
@@ -54,7 +55,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
           $element.append(clone);
         } else if(attr.overflowScroll === "true") {
           c.addClass('overflow-scroll');
-          clone = transclude($scope.$parent);
+          clone = transclude($scope.$parent); 
           $element.append(clone);
         } else {
           sc = document.createElement('div');
@@ -81,7 +82,6 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
               }
             };
           }
-
 
           // Otherwise, supercharge this baby!
           $timeout(function() {
@@ -117,11 +117,9 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
             // Register for scroll delegate event handling
             ScrollDelegate.register($scope, $element);
 
-            
             // Let child scopes access this 
             $scope.$parent.scrollView = sv;
           });
-
 
         }
 
