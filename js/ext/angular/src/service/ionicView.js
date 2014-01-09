@@ -327,9 +327,7 @@ angular.module('ionic.service.view', ['ui.router'])
 
         // start the animations
         if(opts.leavingElement) {
-          $animate.leave(opts.leavingElement, function() {
-            console.log('leave complete')
-          });
+          $animate.leave(opts.leavingElement);
         }
         $animate.enter(opts.enteringElement, opts.parentElement);
 

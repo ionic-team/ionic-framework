@@ -3974,9 +3974,7 @@ var $AnimateProvider = ['$provide', function($provide) {
        *   removed from the DOM
        */
       leave : function(element, done) {
-        //element.remove();
-        var domElement = element[0];
-        domElement.parentElement.removeChild(domElement);
+        element.remove();
         done && $timeout(done, 0, false);
       },
 

@@ -207,7 +207,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           $scope.$emit('viewState.rightButtonsChanged', $scope.rightButtons);
         });
 
-      }
+      };
     }
   };
 }])

@@ -2,7 +2,7 @@
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v0.9.18
+ * Ionic, v0.9.19
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -847,9 +847,7 @@ angular.module('ionic.service.view', ['ui.router'])
 
         // start the animations
         if(opts.leavingElement) {
-          $animate.leave(opts.leavingElement, function() {
-            console.log('leave complete')
-          });
+          $animate.leave(opts.leavingElement);
         }
         $animate.enter(opts.enteringElement, opts.parentElement);
 
@@ -2520,7 +2518,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           $scope.$emit('viewState.rightButtonsChanged', $scope.rightButtons);
         });
 
-      }
+      };
     }
   };
 }])
