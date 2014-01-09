@@ -2,7 +2,7 @@
  * Copyright 2013 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v0.9.17
+ * Ionic, v0.9.18
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -22,7 +22,8 @@ angular.module('ionic.service', [
   'ionic.service.loading',
   'ionic.service.modal',
   'ionic.service.popup',
-  'ionic.service.templateLoad'
+  'ionic.service.templateLoad',
+  'ionic.service.view'
 ]);
 
 // UI specific services and delegates
@@ -34,7 +35,7 @@ angular.module('ionic.ui', [
                             'ionic.ui.content',
                             'ionic.ui.scroll',
                             'ionic.ui.tabs',
-                            'ionic.ui.navRouter',
+                            'ionic.ui.viewState',
                             'ionic.ui.header',
                             'ionic.ui.sideMenu',
                             'ionic.ui.slideBox',
@@ -54,7 +55,8 @@ angular.module('ionic', [
     'ngAnimate',
     'ngRoute',
     'ngTouch',
-    'ngSanitize'
+    'ngSanitize',
+    'ui.router'
 ]);
 ;
 (function() {
@@ -516,6 +518,384 @@ angular.module('ionic.service.templateLoad', [])
   };
 }]);
 ;
+angular.module('ionic.service.view', ['ui.router'])
+
+
+.run(     ['$rootScope', '$state', '$location', '$document', 
+  function( $rootScope,   $state,   $location,   $document) {
+
+  // init the variables that keep track of the view history
+  $rootScope.$viewHistory = {
+    histories: { root: { historyId: 'root', parentHistoryId: null, stack: [], cursor: -1 } },
+    backView: null,
+    forwardView: null,
+    currentView: null
+  };
+
+  $rootScope.$on('viewState.changeHistory', function(e, data) {
+    if(!data) return;
+
+    var hist = (data.historyId ? $rootScope.$viewHistory.histories[ data.historyId ] : null );
+    if(hist && hist.cursor > -1 && hist.cursor < hist.stack.length) {
+      // the history they're going to already exists
+      // go to it's last view in its stack
+      var view = hist.stack[ hist.cursor ];
+      return view.go(data);
+    }
+
+    // this history does not have a URL, but it does have a uiSref
+    // figure out its URL from the uiSref
+    if(!data.url && data.uiSref) {
+      data.url = $state.href(data.uiSref);
+    }
+    
+    if(data.url) {
+      // don't let it start with a #, messes with $location.url()
+      if(data.url.indexOf('#') === 0) {
+        data.url = data.url.replace('#', '');
+      }
+      if(data.url !== $location.url()) {
+        // we've got a good URL, ready GO!
+        $location.url(data.url);
+      }
+    }
+  });
+
+  // Set the document title when a new view is shown
+  $rootScope.$on('viewState.viewEnter', function(e, data) {
+    if(data && data.title) {
+      $document[0].title = data.title;
+    }
+  });
+
+}])
+
+.factory('ViewService', ['$rootScope', '$state', '$location', '$window', '$injector', 
+                function( $rootScope,   $state,   $location,   $window,   $injector) {
+  var $animate = $injector.has('$animate') ? $injector.get('$animate') : false;
+
+  var View = function(){};
+  View.prototype.initialize = function(data) {
+    if(data) {
+      for(var name in data) this[name] = data[name];
+      return this;
+    }
+    return null;
+  };
+  View.prototype.go = function(opts) {
+    if(this.url && this.url !== $location.url() && (!opts || opts.enableUrlChange !== false)) {
+
+      if($rootScope.$viewHistory.backView === this) {
+        return $window.history.go(-1);
+      } else if($rootScope.$viewHistory.forwardView === this) {
+        return $window.history.go(1);
+      }
+
+      return $location.url(this.url);
+    }
+
+    if(this.stateName) {
+      return $state.go(this.stateName, this.stateParams);
+    }
+
+    return null;
+  };
+  View.prototype.destory = function() {
+    if(this.scope) {
+      this.scope.destory && this.scope.destory();
+      this.scope = null;
+    }
+  };
+
+  function createViewId(stateId) {
+    return ('_' + stateId + '_' + Math.round(Math.random() * 99999999)).replace(/\./g, '_');
+  }
+
+  return {
+
+    register: function(containerScope) {
+      var viewHistory = $rootScope.$viewHistory,
+          currentStateId = this.getCurrentStateId(),
+          hist = this._getHistory(containerScope),
+          currentView = viewHistory.currentView,
+          backView = viewHistory.backView,
+          forwardView = viewHistory.forwardView,
+          rsp = {
+            viewId: null,
+            navAction: null,
+            navDirection: null,
+            historyId: hist.historyId
+          };
+
+      if(currentView && 
+         currentView.stateId === currentStateId &&
+         currentView.historyId === hist.historyId) {
+        // do nothing if its the same stateId in the same history
+        rsp.navAction = 'noChange';
+        return rsp;
+      }
+
+      if(backView && backView.stateId === currentStateId) {
+        // they went back one, set the old current view as a forward view
+        rsp.viewId = backView.viewId;
+        rsp.navAction = 'moveBack';
+        if(backView.historyId === currentView.historyId) {
+          // went back in the same history
+          rsp.navDirection = 'back';
+        }
+
+      } else if(forwardView && forwardView.stateId === currentStateId) {
+        // they went to the forward one, set the forward view to no longer a forward view
+        rsp.viewId = forwardView.viewId;
+        rsp.navAction = 'moveForward';
+        if(forwardView.historyId === currentView.historyId) {
+          rsp.navDirection = 'forward';
+        }
+
+        var parentHistory = this._getParentHistoryObj(containerScope);
+        if(forwardView.historyId && parentHistory.scope) {
+          // if a history has already been created by the forward view then make sure it stays the same
+          parentHistory.scope.$historyId = forwardView.historyId;
+          rsp.historyId = forwardView.historyId;
+        }
+
+      } else {
+
+        // set a new unique viewId
+        rsp.viewId = createViewId(currentStateId);
+
+        if(currentView) {
+          // set the forward view if there is a current view (ie: if its not the first view)
+          currentView.forwardViewId = rsp.viewId;
+
+          // its only moving forward if its in the same history
+          if(hist.historyId === currentView.historyId) {
+            rsp.navDirection = 'forward';
+          }
+          rsp.navAction = 'newView';
+
+          // check if there is a new forward view
+          if(forwardView && currentView.stateId !== forwardView.stateId) {
+            // they navigated to a new view but the stack already has a forward view
+            // since its a new view remove any forwards that existed
+            var forwardsHistory = this._getView(forwardView.historyId);
+            if(forwardsHistory) {
+              // the forward has a history
+              for(var x=forwardsHistory.stack.length - 1; x >= forwardView.index; x--) {
+                // starting from the end destory all forwards in this history from this point
+                forwardsHistory.stack[x].destory();
+                forwardsHistory.stack.splice(x);
+              }
+            }
+          }
+
+        } else {
+          // there's no current view, so this must be the initial view
+          rsp.navAction = 'initialView';
+        }
+
+        // add the new view to the stack
+        viewHistory.histories[rsp.viewId] = this.createView({ 
+          viewId: rsp.viewId,
+          index: hist.stack.length,
+          historyId: hist.historyId,
+          backViewId: (currentView && currentView.viewId ? currentView.viewId : null),
+          forwardViewId: null,
+          stateId: currentStateId,
+          stateName: this.getCurrentStateName(),
+          stateParams: this.getCurrentStateParams(),
+          url: $location.url()
+        });
+
+        // add the new view to this history's stack
+        hist.stack.push(viewHistory.histories[rsp.viewId]);
+      }
+
+      viewHistory.currentView = this._getView(rsp.viewId);
+      viewHistory.backView = this._getBackView(viewHistory.currentView);
+      viewHistory.forwardView = this._getForwardView(viewHistory.currentView);
+
+      hist.cursor = viewHistory.currentView.index;
+
+      return rsp;
+    },
+
+    registerHistory: function(scope) {
+      scope.$historyId = 'h' + Math.round(Math.random() * 99999999999);
+    },
+
+    createView: function(data) {
+      var newView = new View();
+      return newView.initialize(data);
+    },
+
+    getCurrentView: function() {
+      return $rootScope.$viewHistory.currentView;
+    },
+
+    getBackView: function() {
+      return $rootScope.$viewHistory.backView;
+    },
+
+    getForwardView: function() {
+      return $rootScope.$viewHistory.forwardView;
+    },
+
+    getNavDirection: function() {
+      return $rootScope.$viewHistory.navDirection;
+    },
+
+    getCurrentStateName: function() {
+      return ($state && $state.current ? $state.current.name : null);
+    },
+
+    isCurrentStateUiView: function(uiView) {
+      return ($state && 
+              $state.current && 
+              $state.current.views && 
+              $state.current.views[uiView] ? true : false);
+    },
+
+    getCurrentStateParams: function() {
+      var rtn;
+      if ($state && $state.params) {
+        for(var key in $state.params) {
+          if($state.params.hasOwnProperty(key)) {
+            rtn = rtn || {};
+            rtn[key] = $state.params[key];
+          }
+        }
+      }
+      return rtn;
+    },
+
+    getCurrentStateId: function() {
+      var id;
+      if($state && $state.current && $state.current.name) {
+        id = $state.current.name;
+        if($state.params) {
+          for(var key in $state.params) {
+            if($state.params.hasOwnProperty(key) && $state.params[key]) {
+              id += "_" + key + "=" + $state.params[key];
+            }
+          }
+        }
+        return id;
+      }
+      // if something goes wrong make sure its got a unique stateId
+      return 'r' + Math.round(Math.random() * 9999999);
+    },
+
+    _getView: function(viewId) {
+      return (viewId ? $rootScope.$viewHistory.histories[ viewId ] : null );
+    },
+
+    _getBackView: function(view) {
+      return (view ? this._getView(view.backViewId) : null );
+    },
+
+    _getForwardView: function(view) {
+      return (view ? this._getView(view.forwardViewId) : null );
+    },
+
+    _getHistory: function(scope) {
+      var histObj = this._getParentHistoryObj(scope);
+
+      if( !$rootScope.$viewHistory.histories[ histObj.historyId ] ) {
+        // this history object exists in parent scope, but doesn't
+        // exist in the history data yet
+        $rootScope.$viewHistory.histories[ histObj.historyId ] = { 
+          historyId: histObj.historyId, 
+          parentHistoryId: this._getParentHistoryObj(histObj.scope.$parent).historyId,
+          stack: [],
+          cursor: -1
+        };
+      }
+
+      return $rootScope.$viewHistory.histories[ histObj.historyId ];
+    },
+
+    _getParentHistoryObj: function(scope) {
+      var parentScope = scope;
+      while(parentScope) {
+        if(parentScope.hasOwnProperty('$historyId')) {
+          // this parent scope has a historyId
+          return { historyId: parentScope.$historyId, scope: parentScope };
+        }
+        // nothing found keep climbing up
+        parentScope = parentScope.$parent;
+      }
+      // no history for for the parent, use the root
+      return { historyId: 'root', scope: $rootScope };
+    },
+
+    transition: function(opts) {
+      if(!opts || !opts.enteringElement) return;
+
+      if (opts.leavingScope) {
+        opts.leavingScope.$destroy();
+        opts.leavingScope = null;
+      }
+
+      // use the directive's animation attribute first
+      // if it doesn't exist, then use the given animation
+      var animationClass = opts.animation || getAnimationClass();
+
+      if($animate && animationClass && opts.doAnimation !== false && opts.navDirection) {
+        // set the animation we're gonna use
+        this.setAnimationClass(opts.parentElement, animationClass, opts.navDirection);
+
+        // start the animations
+        if(opts.leavingElement) {
+          $animate.leave(opts.leavingElement, function() {
+            console.log('leave complete')
+          });
+        }
+        $animate.enter(opts.enteringElement, opts.parentElement);
+
+      } else {
+        // no animation, just plain ol' add/remove DOM elements
+        if(opts.leavingElement) {
+          opts.leavingElement.remove();
+        }
+        opts.parentElement.append(opts.enteringElement);
+      }
+  
+      $rootScope.$broadcast('viewState.viewEnter', {
+        title: (opts.enteringScope ? opts.enteringScope.title : null),
+        navDirection: (opts.navDirection ? opts.navDirection : null)
+      });
+
+      function getAnimationClass(){
+        // go up the ancestors looking for an animation value
+        var climbScope = opts.enteringScope;
+        while(climbScope) {
+          if(climbScope.animation) {
+            return climbScope.animation;
+          }
+          climbScope = climbScope.$parent;
+        }
+      }
+    },
+
+    setAnimationClass: function(element, animationClass, navDirection) {
+      // add the animation we're gonna use
+      element[0].classList.add(animationClass);
+
+      if(navDirection === 'back') {
+        // animate backward
+        element[0].classList.add('reverse');
+      } else {
+        // defaults to animate forward
+        // make sure the reverse class isn't already added
+        element[0].classList.remove('reverse');
+      }
+    }
+
+  };
+
+}]);
+;
 (function() {
 'use strict';
 
@@ -743,16 +1123,17 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
       scrollbarY: '@',
       scrollEventInterval: '@'
     },
+
     compile: function(element, attr, transclude) {
-      return function($scope, $element, $attr) {
+      if(attr.hasHeader == "true") { element.addClass('has-header'); }
+      if(attr.hasSubheader == "true") { element.addClass('has-subheader'); }
+      if(attr.hasFooter == "true") { element.addClass('has-footer'); }
+      if(attr.hasTabs == "true") { element.addClass('has-tabs'); }
+
+      return function link($scope, $element, $attr) {
         var clone, sc, sv,
           addedPadding = false,
           c = $element.eq(0);
-
-        if(attr.hasHeader == "true") { c.addClass('has-header'); }
-        if(attr.hasSubheader == "true") { c.addClass('has-subheader'); }
-        if(attr.hasFooter == "true") { c.addClass('has-footer'); }
-        if(attr.hasTabs == "true") { c.addClass('has-tabs'); }
 
         // If they want plain overflow scrolling, add that as a class
         if($scope.scroll === "false") {
@@ -760,7 +1141,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
           $element.append(clone);
         } else if(attr.overflowScroll === "true") {
           c.addClass('overflow-scroll');
-          clone = transclude($scope.$parent);
+          clone = transclude($scope.$parent); 
           $element.append(clone);
         } else {
           sc = document.createElement('div');
@@ -787,7 +1168,6 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
               }
             };
           }
-
 
           // Otherwise, supercharge this baby!
           $timeout(function() {
@@ -823,11 +1203,9 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
             // Register for scroll delegate event handling
             ScrollDelegate.register($scope, $element);
 
-            
             // Let child scopes access this 
             $scope.$parent.scrollView = sv;
           });
-
 
         }
 
@@ -1032,419 +1410,6 @@ angular.module('ionic.ui.loading', [])
               '</div>'
   };
 });
-
-})();
-;
-(function() {
-'use strict';
-
-/**
- * @description
- * The NavController is a navigation stack View Controller modelled off of 
- * UINavigationController from Cocoa Touch. With the Nav Controller, you can
- * "push" new "pages" on to the navigation stack, and then pop them off to go
- * back. The NavController controls a navigation bar with a back button and title
- * which updates as the pages switch.
- *
- * The NavController makes sure to not recycle scopes of old pages
- * so that a pop will still show the same state that the user left.
- *
- * However, once a page is popped, its scope is destroyed and will have to be
- * recreated then next time it is pushed.
- *
- */
-
-var actualLocation = null;
-
-angular.module('ionic.ui.navRouter', ['ionic.service.gesture'])
-
-.run(['$rootScope', function($rootScope) {
-  $rootScope.stackCursorPosition = 0;
-}])
-
-.directive('navRouter', ['$rootScope', '$timeout', '$location', '$window', '$route', function($rootScope, $timeout, $location, $window, $route) {
-  return {
-    restrict: 'AC',
-    // So you can require being under this
-    controller: ['$scope', '$element', function($scope, $element) {
-      this.navBar = {
-        isVisible: true
-      };
-      $scope.navController = this;
-
-      this.goBack = function() {
-        $scope.direction = 'back';
-      };
-    }],
-
-    link: function($scope, $element, $attr, ctrl) {
-      if(!$element.length) return;
-
-      $scope.animation = $attr.animation;
-
-      $element[0].classList.add('noop-animation');
-
-      var isFirst = true;
-      // Store whether we did an animation yet, to know if
-      // we should let the first state animate
-      var didAnimate = false;
-
-      var initTransition = function() {
-        //$element.addClass($scope.animation);
-      };
-
-      var reverseTransition = function() {
-        $element[0].classList.remove('noop-animation');
-        $element[0].classList.add($scope.animation);
-        $element[0].classList.add('reverse');
-      };
-
-      var forwardTransition = function() {
-        $element[0].classList.remove('noop-animation');
-        $element[0].classList.remove('reverse');
-        $element[0].classList.add($scope.animation);
-      };
-
-      $scope.$on('$routeChangeSuccess', function(e, a) {
-      });
-      $scope.$on('$routeChangeStart', function(e, next, current) {
-        var back, historyState = $window.history.state;
-
-        back = $scope.direction == 'back' || (!!(historyState && historyState.position <= $rootScope.stackCursorPosition));
-
-        if(isFirst || (next && next.$$route && next.$$route.originalPath === "")) {
-          // Don't animate
-          isFirst = false;
-          return;
-        }
-
-        if(didAnimate || $rootScope.stackCursorPosition > 0) {
-          didAnimate = true;
-          if(back) {
-            reverseTransition();
-          } else {
-            forwardTransition();
-          }
-        }
-      });
-
-      $scope.$on('$locationChangeSuccess', function(a, b, c) {
-        // Store the new location
-        $rootScope.actualLocation = $location.path();
-        if(isFirst && $location.path() !== '/') {
-          isFirst = false;
-        }
-      });  
-
-      $scope.$on('navRouter.goBack', function(e) {
-        ctrl.goBack();
-      });
-
-
-      // Keep track of location changes and update a stack pointer that tracks whether we are
-      // going forwards or back
-      $scope.$watch(function () { return $location.path(); }, function (newLocation, oldLocation) {
-        if($rootScope.actualLocation === newLocation) {
-          if(oldLocation === '') {// || newLocation == '/') {
-            // initial route, skip this
-            return;
-          }
-
-          var back, historyState = $window.history.state;
-
-          back = $scope.direction == 'back' || (!!(historyState && historyState.position <= $rootScope.stackCursorPosition));
-
-          if (back) {
-            //back button
-            $rootScope.stackCursorPosition--;
-          } else {
-            //forward button
-            $rootScope.stackCursorPosition++;
-          }
-           
-          $scope.direction = 'forwards';
-
-        } else {
-          var currentRouteBeforeChange = $route.current;
-
-          if (currentRouteBeforeChange) {
-
-            $window.history.replaceState({
-              position: $rootScope.stackCursorPosition
-            });
-
-            $rootScope.stackCursorPosition++;
-          }
-        }
-      });
-    }
-  };
-}])
-
-/**
- * Our Nav Bar directive which updates as the controller state changes.
- */
-.directive('navBar', ['$rootScope', '$animate', '$compile', function($rootScope, $animate, $compile) {
-
-  /**
-   * Perform an animation between one tab bar state and the next.
-   * Right now this just animates the titles.
-   */
-  var animate = function($scope, $element, oldTitle, data, cb) {
-    var title, nTitle, oTitle, titles = $element[0].querySelectorAll('.title');
-
-    var newTitle = data.title;
-    if(!oldTitle || oldTitle === newTitle) {
-      cb();
-      return;
-    }
-
-    // Clone the old title and add a new one so we can show two animating in and out
-    // add ng-leave and ng-enter during creation to prevent flickering when they are swapped during animation
-    title = angular.element(titles[0]);
-    oTitle = $compile('<h1 class="title ng-leave" ng-bind="oldTitle"></h1>')($scope);
-    title.replaceWith(oTitle);
-    nTitle = $compile('<h1 class="title ng-enter" ng-bind="currentTitle"></h1>')($scope);
-
-    var insert = $element[0].firstElementChild || null;
-
-    // Insert the new title
-    $animate.enter(nTitle, $element, insert && angular.element(insert), function() {
-      cb();
-    });
-
-    // Remove the old title
-    $animate.leave(angular.element(oTitle), function() {
-    });
-  };
-
-  return {
-    restrict: 'E',
-    require: '^navRouter',
-    replace: true,
-    scope: {
-      type: '@',
-      backButtonType: '@',
-      backButtonLabel: '@',
-      backButtonIcon: '@',
-      alignTitle: '@'
-    },
-    template: '<header class="bar bar-header nav-bar" ng-class="{invisible: !navController.navBar.isVisible}">' + 
-        '<div class="buttons"> ' +
-          '<button nav-back class="button" ng-if="enableBackButton && showBackButton" ng-class="backButtonClass" ng-bind-html="backButtonLabel"></button>' +
-          '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" class="button no-animation {{button.type}}" ng-bind-html="button.content"></button>' + 
-        '</div>' +
-        '<h1 class="title" ng-bind="currentTitle"></h1>' + 
-        '<div class="buttons" ng-if="rightButtons.length"> ' +
-          '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" class="button no-animation {{button.type}}" ng-bind-html="button.content"></button>' + 
-        '</div>' +
-      '</header>',
-    link: function($scope, $element, $attr, navCtrl) {
-      var backButton;
-
-      $element.addClass($attr.animation);
-
-      // Create the back button content and show/hide it based on scope settings
-      $scope.enableBackButton = true;
-      $scope.backButtonClass = $attr.backButtonType;
-      if($attr.backButtonIcon) {
-        $scope.backButtonClass += ' icon ' + $attr.backButtonIcon;
-      }
-
-      // Listen for changes in the stack cursor position to indicate whether a back
-      // button should be shown (this can still be disabled by the $scope.enableBackButton
-      $rootScope.$watch('stackCursorPosition', function(value) {
-        if(value > 0) {
-          $scope.showBackButton = true;
-        } else {
-          $scope.showBackButton = false;
-        }
-      });
-
-      // Store a reference to our nav controller
-      $scope.navController = navCtrl;
-
-      // Initialize our header bar view which will handle resizing and aligning our title labels
-      var hb = new ionic.views.HeaderBar({
-        el: $element[0],
-        alignTitle: $scope.alignTitle || 'center'
-      });
-      $scope.headerBarView = hb;
-
-      // Add the type of header bar class to this element
-      $element.addClass($scope.type);
-
-      var updateHeaderData = function(data) {
-        var oldTitle = $scope.currentTitle;
-        $scope.oldTitle = oldTitle;
-
-        if(typeof data.title !== 'undefined') {
-          $scope.currentTitle = data.title;
-        }
-
-        $scope.leftButtons = data.leftButtons;
-        $scope.rightButtons = data.rightButtons;
-
-        if(typeof data.hideBackButton !== 'undefined') {
-          $scope.enableBackButton = data.hideBackButton !== true;
-        }
-
-        if(data.animate !== false && typeof data.title !== 'undefined') {
-          animate($scope, $element, oldTitle, data, function() {
-            hb.align();
-          });
-        } else {
-          hb.align();
-        }
-      };
-
-      $scope.$parent.$on('navRouter.showBackButton', function(e, data) {
-        $scope.enableBackButton = true;
-      });
-
-      $scope.$parent.$on('navRouter.hideBackButton', function(e, data) {
-        $scope.enableBackButton = false;
-      });
-
-      // Listen for changes on title change, and update the title
-      $scope.$parent.$on('navRouter.pageChanged', function(e, data) {
-        updateHeaderData(data);
-      });
-
-      $scope.$parent.$on('navRouter.pageShown', function(e, data) {
-        updateHeaderData(data);
-      });
-
-      $scope.$parent.$on('navRouter.titleChanged', function(e, data) {
-        var oldTitle = $scope.currentTitle;
-        $scope.oldTitle = oldTitle;
-
-         if(typeof data.title !== 'undefined') {
-          $scope.currentTitle = data.title;
-        }
-
-        if(data.animate !== false && typeof data.title !== 'undefined') {
-          animate($scope, $element, oldTitle, data, function() {
-            hb.align();
-          });
-        } else {
-          hb.align();
-        }
-      });
-
-      // If a nav page changes the left or right buttons, update our scope vars
-      $scope.$parent.$on('navRouter.leftButtonsChanged', function(e, data) {
-        $scope.leftButtons = data;
-      });
-      $scope.$parent.$on('navRouter.rightButtonsChanged', function(e, data) {
-        $scope.rightButtons = data;
-      });
-
-      /*
-      $scope.$parent.$on('navigation.push', function() {
-        backButton = angular.element($element[0].querySelector('.button'));
-        backButton.addClass($scope.backButtonType);
-        hb.align();
-      });
-      $scope.$parent.$on('navigation.pop', function() {
-        hb.align();
-      });
-      */
-
-      $scope.$on('$destroy', function() {
-        //
-      });
-    }
-  };
-}])
-
-.directive('navPage', ['$parse', function($parse) {
-  return {
-    restrict: 'E',
-    require: '^navRouter',
-    scope: {
-      leftButtons: '=',
-      rightButtons: '=',
-      title: '=',
-      icon: '@',
-      iconOn: '@',
-      iconOff: '@',
-      type: '@',
-      alignTitle: '@',
-      hideBackButton: '@',
-      hideNavBar: '@',
-      animate: '@',
-    },
-    link: function($scope, $element, $attr, navCtrl) {
-      $element.addClass('pane');
-
-      // Should we hide a back button when this tab is shown
-      $scope.hideBackButton = $scope.$eval($scope.hideBackButton);
-
-      $scope.hideNavBar = $scope.$eval($scope.hideNavBar);
-
-      navCtrl.navBar.isVisible = !$scope.hideNavBar;
-
-      if($scope.hideBackButton === true) {
-        $scope.$emit('navRouter.hideBackButton');
-      } else {
-        $scope.$emit('navRouter.showBackButton');
-      }
-
-      // Whether we should animate on tab change, also impacts whether we
-      // tell any parent nav controller to animate
-      $scope.animate = $scope.$eval($scope.animate);
-        
-
-      // watch for changes in the left buttons
-      $scope.$watch('leftButtons', function(value) {
-        $scope.$emit('navRouter.leftButtonsChanged', $scope.leftButtons);
-      });
-
-      $scope.$watch('rightButtons', function(val) {
-        $scope.$emit('navRouter.rightButtonsChanged', $scope.rightButtons);
-      });
-
-      /*
-      $scope.$watch('hideBackButton', function(value) {
-        if(value === true) {
-          navCtrl.hideBackButton();
-        } else {
-          navCtrl.showBackButton();
-        }
-      });
-      */
-
-      // watch for changes in the title
-      $scope.$watch('title', function(value) {
-        $scope.$emit('navRouter.titleChanged', {
-          title: value,
-          animate: $scope.animate
-        });
-      });
-    }
-  };
-}])
-
-.directive('navBack', ['$window', '$rootScope', 'Gesture', function($window, $rootScope, Gesture) {
-  return {
-    restrict: 'AC',
-    link: function($scope, $element, $attr, navCtrl) {
-      var goBack = function(e) {
-        // Only trigger back if the stack is greater than zero
-        if($rootScope.stackCursorPosition > 0) {
-          $window.history.back();
-
-          // Fallback for bad history supporting devices
-          $scope.$emit('navRouter.goBack');
-        }
-        e.alreadyHandled = true;
-        return false;
-      };
-      $element.bind('click', goBack);
-    }
-  };
-}]);
 
 })();
 ;
@@ -2016,7 +1981,7 @@ angular.module('ionic.ui.slideBox', [])
 
 })();
 ;
-angular.module('ionic.ui.tabs', ['ngAnimate'])
+angular.module('ionic.ui.tabs', ['ionic.service.view'])
 
 /**
  * @description
@@ -2025,14 +1990,18 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
  * on a tab bar. Modelled off of UITabBarController.
  */
 
-.directive('tabs', function() {
+.directive('tabs', [function() {
   return {
     restrict: 'E',
     replace: true,
     scope: true,
     transclude: true,
-    controller: ['$scope', '$element', '$animate', function($scope, $element, $animate) {
+    controller: ['$scope', '$element', function($scope, $element) {
       var _this = this;
+
+      $scope.tabCount = 0;
+      $scope.selectedIndex = -1;
+      $scope.$enableViewRegister = false;
 
       angular.extend(this, ionic.controllers.TabBarController.prototype);
 
@@ -2052,24 +2021,55 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
         }
       });
 
-      this.add = function(controller) {
-        this.addController(controller);
-        this.select(0);
+      this.add = function(tabScope) {
+        tabScope.tabIndex = $scope.tabCount;
+        this.addController(tabScope);
+        if(tabScope.tabIndex === 0) {
+          this.select(0);
+        }
+        $scope.tabCount++;
       };
 
-      this.select = function(controllerIndex) {
-        $scope.activeAnimation = $scope.animation;
-        _this.selectController(controllerIndex);
+      this.select = function(tabIndex, emitChange) {
+        if(tabIndex !== $scope.selectedIndex) {
+
+          $scope.selectedIndex = tabIndex;
+          $scope.activeAnimation = $scope.animation;
+          _this.selectController(tabIndex);
+
+          var viewData = {
+            type: 'tab',
+            typeIndex: tabIndex
+          };
+
+          for(var x=0; x<this.controllers.length; x++) {
+            if(tabIndex === this.controllers[x].tabIndex) {
+              viewData.title = this.controllers[x].title;
+              viewData.historyId = this.controllers[x].$historyId;
+              viewData.url = this.controllers[x].url;
+              viewData.uiSref = this.controllers[x].viewSref;
+              viewData.uiViewName = this.controllers[x].uiViewName;
+              viewData.hasUiView = this.controllers[x].hasUiView;
+              break;
+            }
+          }
+          if(emitChange) {
+            $scope.$emit('viewState.changeHistory', viewData);
+          }
+        }
       };
 
       $scope.controllers = this.controllers;
 
       $scope.tabsController = this;
+
     }],
-    //templateUrl: 'ext/angular/tmpl/ionicTabBar.tmpl.html',
+    
     template: '<div class="view"><tab-controller-bar></tab-controller-bar></div>',
+
     compile: function(element, attr, transclude, tabsCtrl) {
-      return function($scope, $element, $attr) {
+      return function link($scope, $element, $attr) {
+
         var tabs = $element[0].querySelector('.tabs');
 
         $scope.tabsType = $attr.tabsType || 'tabs-positive';
@@ -2100,26 +2100,35 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
         transclude($scope, function(cloned) {
           $element.prepend(cloned);
         });
+
       };
     }
   };
-})
+}])
 
 // Generic controller directive
-.directive('tab', ['$animate', '$parse', function($animate, $parse) {
+.directive('tab', ['ViewService', '$rootScope', '$animate', '$parse', function(ViewService, $rootScope, $animate, $parse) {
   return {
     restrict: 'E',
     require: '^tabs',
     scope: true,
     transclude: 'element',
     compile: function(element, attr, transclude) {
-      return function($scope, $element, $attr, tabsCtrl) {
+
+      return function link($scope, $element, $attr, tabsCtrl) {
         var childScope, childElement;
+
+        ViewService.registerHistory($scope);
 
         $scope.title = $attr.title;
         $scope.icon = $attr.icon;
         $scope.iconOn = $attr.iconOn;
         $scope.iconOff = $attr.iconOff;
+        $scope.viewSref = $attr.uiSref;
+        $scope.url = $attr.href;
+        if($scope.url && $scope.url.indexOf('#') === 0) {
+          $scope.url = $scope.url.replace('#', '');
+        }
 
         // Should we hide a back button when this tab is shown
         $scope.hideBackButton = $scope.$eval($attr.hideBackButton);
@@ -2132,17 +2141,11 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
         // tell any parent nav controller to animate
         $scope.animate = $scope.$eval($attr.animate);
 
-        // Grab whether we should update any parent nav router on tab changes
-        $scope.doesUpdateNavRouter = $scope.$eval($attr.doesUpdateNavRouter);
-        if($scope.doesUpdateNavRouter !== false) {
-          $scope.doesUpdateNavRouter = true;
-        }
-
         var leftButtonsGet = $parse($attr.leftButtons);
         $scope.$watch(leftButtonsGet, function(value) {
           $scope.leftButtons = value;
           if($scope.doesUpdateNavRouter) {
-            $scope.$emit('navRouter.leftButtonsChanged', $scope.rightButtons);
+            $scope.$emit('viewState.leftButtonsChanged', $scope.rightButtons);
           }
         });
 
@@ -2152,7 +2155,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
         });
 
         tabsCtrl.add($scope);
-        
+
         $scope.$watch('isVisible', function(value) {
           if(childElement) {
             $animate.leave(childElement);
@@ -2172,23 +2175,32 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
 
               $animate.enter(clone, $element.parent(), $element);
 
-              if($scope.title) {
-                // Send the title up in case we are inside of a nav controller
-                if($scope.doesUpdateNavRouter) {
-                  $scope.$emit('navRouter.pageShown', {
-                    title: $scope.title,
-                    rightButtons: $scope.rightButtons,
-                    leftButtons: $scope.leftButtons,
-                    hideBackButton: $scope.hideBackButton,
-                    animate: $scope.animateNav
-                  });
-                }
-                //$scope.$emit('navRouter.titleChanged', $scope.title);
-              }
               $scope.$broadcast('tab.shown');
             });
           }
         });
+
+        // check if it has a ui-view in it
+        transclude($scope.$new(), function(clone) {
+          var uiViewEle = clone[0].querySelector('[ui-view]');
+          $scope.hasUiView = (uiViewEle !== null);
+          if($scope.hasUiView) {
+            // this tab has a ui-view
+            $scope.uiViewName = uiViewEle.getAttribute('ui-view');
+            if( ViewService.isCurrentStateUiView( $scope.uiViewName ) ) {
+              // this tab's ui-view is the current one, go to it!
+              tabsCtrl.select($scope.tabIndex);
+            }
+          }
+        });
+
+        $rootScope.$on('$stateChangeSuccess', function(value){
+          if( ViewService.isCurrentStateUiView($scope.uiViewName) &&
+              $scope.tabIndex !== tabsCtrl.selectedIndex) {
+            tabsCtrl.select($scope.tabIndex);
+          }
+        });
+
       };
     }
   };
@@ -2203,7 +2215,7 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
     replace: true,
     scope: true,
     template: '<div class="tabs">' + 
-      '<tab-controller-item title="{{controller.title}}" icon="{{controller.icon}}" icon-on="{{controller.iconOn}}" icon-off="{{controller.iconOff}}" active="controller.isVisible" index="$index" ng-repeat="controller in controllers"></tab-controller-item>' + 
+      '<tab-controller-item icon-title="{{c.title}}" icon="{{c.icon}}" icon-on="{{c.iconOn}}" icon-off="{{c.iconOff}}" active="c.isVisible" index="$index" ng-repeat="c in controllers"></tab-controller-item>' + 
     '</div>',
     link: function($scope, $element, $attr, tabsCtrl) {
       $element.addClass($scope.tabsType);
@@ -2212,13 +2224,13 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
   };
 })
 
-.directive('tabControllerItem', function() {
+.directive('tabControllerItem', ['$window', function($window) {
   return {
     restrict: 'E',
     replace: true,
     require: '^tabs',
     scope: {
-      title: '@',
+      iconTitle: '@',
       icon: '@',
       iconOn: '@',
       iconOff: '@',
@@ -2230,26 +2242,26 @@ angular.module('ionic.ui.tabs', ['ngAnimate'])
       if(attrs.icon) {
         scope.iconOn = scope.iconOff = attrs.icon;
       }
-      scope.selectTab = function(index) {
-        tabsCtrl.select(scope.index);
+      
+      scope.selectTab = function() {
+        tabsCtrl.select(scope.index, true);
       };
     },
     template: 
       '<a ng-class="{active:active}" ng-click="selectTab()" class="tab-item">' +
-        '<i class="{{icon}}" ng-if="icon"></i>' +
+        '<i class="icon {{icon}}" ng-if="icon"></i>' +
         '<i class="{{iconOn}}" ng-if="active"></i>' +
-        '<i class="{{iconOff}}" ng-if="!active"></i> {{title}}' +
+        '<i class="{{iconOff}}" ng-if="!active"></i> {{iconTitle}}' +
       '</a>'
   };
-})
+}])
 
 .directive('tabBar', function() {
   return {
     restrict: 'E',
     replace: true,
     transclude: true,
-    template: '<div class="tabs tabs-primary" ng-transclude>' + 
-    '</div>'
+    template: '<div class="tabs tabs-primary" ng-transclude></div>'
   };
 });
 
@@ -2299,6 +2311,344 @@ angular.module('ionic.ui.toggle', [])
 
 })(window.ionic);
 ;
+(function() {
+'use strict';
+
+/**
+ * @description
+ * The NavController is a navigation stack View Controller modelled off of 
+ * UINavigationController from Cocoa Touch. With the Nav Controller, you can
+ * "push" new "pages" on to the navigation stack, and then pop them off to go
+ * back. The NavController controls a navigation bar with a back button and title
+ * which updates as the pages switch.
+ *
+ * The NavController makes sure to not recycle scopes of old pages
+ * so that a pop will still show the same state that the user left.
+ *
+ * However, once a page is popped, its scope is destroyed and will have to be
+ * recreated then next time it is pushed.
+ *
+ */
+
+angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gesture']) 
+
+/**
+ * Our Nav Bar directive which updates as the controller state changes.
+ */
+.directive('navBar', ['ViewService', '$rootScope', '$animate', '$compile', 
+             function( ViewService,   $rootScope,   $animate,   $compile) {
+
+  /**
+   * Perform an animation between one tab bar state and the next.
+   * Right now this just animates the titles.
+   */
+  var animate = function($scope, $element, oldTitle, data, cb) {
+    var title, nTitle, oTitle, titles = $element[0].querySelectorAll('.title');
+
+    var newTitle = data.title;
+    if(!oldTitle || oldTitle === newTitle) {
+      cb();
+      return;
+    }
+
+    // Clone the old title and add a new one so we can show two animating in and out
+    // add ng-leave and ng-enter during creation to prevent flickering when they are swapped during animation
+    title = angular.element(titles[0]);
+    oTitle = $compile('<h1 class="title" ng-bind="oldTitle"></h1>')($scope);
+    title.replaceWith(oTitle);
+    nTitle = $compile('<h1 class="title" ng-bind="currentTitle"></h1>')($scope);
+
+    var insert = $element[0].firstElementChild || null;
+
+    // Insert the new title
+    $animate.enter(nTitle, $element, insert && angular.element(insert), function() {
+      cb();
+    });
+
+    // Remove the old title
+    $animate.leave(angular.element(oTitle), function() {
+    });
+  };
+
+  return {
+    restrict: 'E',
+    replace: true,
+    scope: {
+      type: '@',
+      backButtonType: '@',
+      backButtonLabel: '@',
+      backButtonIcon: '@',
+      alignTitle: '@'
+    },
+    template: '<header class="bar bar-header nav-bar">'+//' ng-class="{invisible: !navController.navBar.isVisible}">' + 
+        '<div class="buttons"> ' +
+          '<button view-back class="button" ng-show="enableBackButton && showBackButton" ng-class="backButtonClass" ng-bind-html="backButtonLabel"></button>' +
+          '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" class="button no-animation {{button.type}}" ng-bind-html="button.content"></button>' + 
+        '</div>' +
+        '<h1 class="title" ng-bind="currentTitle"></h1>' + 
+        '<div class="buttons" ng-if="rightButtons.length"> ' +
+          '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" class="button no-animation {{button.type}}" ng-bind-html="button.content"></button>' + 
+        '</div>' +
+      '</header>',
+    link: function($scope, $element, $attr, navCtrl) {
+
+      // Create the back button content and show/hide it based on scope settings
+      $scope.enableBackButton = true;
+      $scope.backButtonClass = $attr.backButtonType;
+      if($attr.backButtonIcon) {
+        $scope.backButtonClass += ' icon ' + $attr.backButtonIcon;
+      }
+
+      // Listen for changes in the stack cursor position to indicate whether a back
+      // button should be shown (this can still be disabled by the $scope.enableBackButton
+      $rootScope.$watch('$viewHistory.backView', function(backView) {
+        if(backView) {
+          var currentView = ViewService.getCurrentView();
+          if(currentView) {
+            if(backView.historyId === currentView.historyId) {
+              $scope.showBackButton = true;
+              return;
+            }
+          }
+        }
+        $scope.showBackButton = false;
+      });
+
+      // Store a reference to our nav controller
+      $scope.navController = navCtrl;
+
+      // Initialize our header bar view which will handle resizing and aligning our title labels
+      var hb = new ionic.views.HeaderBar({
+        el: $element[0],
+        alignTitle: $scope.alignTitle || 'center'
+      });
+      $scope.headerBarView = hb;
+
+      // Add the type of header bar class to this element
+      $element.addClass($scope.type);
+
+      var updateHeaderData = function(data) {
+        var oldTitle = $scope.currentTitle;
+        $scope.oldTitle = oldTitle;
+
+        if(typeof data.title !== 'undefined') {
+          $scope.currentTitle = data.title;
+        }
+
+        $scope.leftButtons = data.leftButtons;
+        $scope.rightButtons = data.rightButtons;
+
+        if(typeof data.hideBackButton !== 'undefined') {
+          $scope.enableBackButton = data.hideBackButton !== true;
+        }
+
+        if(data.animate !== false && $attr.animation && data.title && data.navDirection) {
+
+          $element[0].classList.add($attr.animation);
+          if(data.navDirection === 'back') {
+            $element[0].classList.add('reverse');
+          } else {
+            $element[0].classList.remove('reverse');
+          }
+
+          animate($scope, $element, oldTitle, data, function() {
+            hb.align();
+          });
+        } else {
+          hb.align();
+        }
+      };
+
+      $rootScope.$on('viewState.viewEnter', function(e, data) {
+        updateHeaderData(data);
+      });
+
+      // If a nav page changes the left or right buttons, update our scope vars
+      $scope.$parent.$on('viewState.leftButtonsChanged', function(e, data) {
+        $scope.leftButtons = data;
+      });
+      $scope.$parent.$on('viewState.rightButtonsChanged', function(e, data) {
+        $scope.rightButtons = data;
+      });
+
+    }
+  };
+}])
+
+
+.directive('view', ['ViewService', '$rootScope', '$animate', 
+           function( ViewService,   $rootScope,   $animate) {
+  return {
+    restrict: 'EA',
+    priority: 1000,
+    scope: {
+      leftButtons: '=',
+      rightButtons: '=',
+      title: '=',
+      icon: '@',
+      iconOn: '@',
+      iconOff: '@',
+      type: '@',
+      alignTitle: '@',
+      hideBackButton: '@',
+      hideNavBar: '@',
+      animation: '@'
+    },
+
+    compile: function(tElement, tAttrs, transclude) {
+      tElement.addClass('pane');
+      tElement[0].removeAttribute('title');
+
+      return function link($scope, $element, $attr) {
+        // Should we hide a back button when this tab is shown
+        $scope.hideBackButton = $scope.$eval($scope.hideBackButton);
+
+        $scope.hideNavBar = $scope.$eval($scope.hideNavBar);
+
+        if($scope.hideBackButton === true) {
+          $scope.$emit('viewState.hideBackButton');
+        } else {
+          $scope.$emit('viewState.showBackButton');
+        }
+
+        // watch for changes in the left buttons
+        $scope.$watch('leftButtons', function(value) {
+          $scope.$emit('viewState.leftButtonsChanged', $scope.leftButtons);
+        });
+
+        $scope.$watch('rightButtons', function(val) {
+          $scope.$emit('viewState.rightButtonsChanged', $scope.rightButtons);
+        });
+
+      }
+    }
+  };
+}])
+
+
+.directive('viewBack', ['ViewService', function(ViewService) {
+  var goBack = function(e) {
+    var backView = ViewService.getBackView();
+    backView && backView.go();
+    e.alreadyHandled = true;
+    return false;
+  };
+
+  return {
+    restrict: 'AC',
+    link: function($scope, $element) {
+      $element.bind('click', goBack);
+    }
+  };
+}])
+
+
+.directive('uiView', ['ViewService', '$state', '$anchorScroll', '$compile', '$controller', '$animate', 
+             function( ViewService,   $state,   $anchorScroll,   $compile,   $controller,   $animate) {
+
+  var viewIsUpdating = false;
+  var animation;
+
+  var directive = {
+    restrict: 'ECA',
+    terminal: true,
+    priority: 2000,
+    transclude: true,
+
+    link: function(scope, $element, attr, ctrl, $transclude) {
+      var currentElement,
+          autoScrollExp = attr.autoscroll,
+          onloadExp = attr.onload || '',
+          viewLocals,
+          viewScope,
+          name = attr[directive.name] || attr.name || '',
+          parent = $element.parent().inheritedData('$uiView');
+
+      if (name.indexOf('@') < 0) name = name + '@' + (parent ? parent.state.name : '');
+      var view = { name: name, state: null, animation: null };
+      $element.data('$uiView', view);
+
+      var climbElement = $element[0];
+      while(!animation && climbElement) {
+        animation = climbElement.getAttribute('animation');
+        climbElement = climbElement.parentElement;
+      }
+
+      var eventHook = function() {
+        if (viewIsUpdating) return;
+        viewIsUpdating = true;
+
+        try { update(true); } catch (e) {
+          viewIsUpdating = false;
+          throw e;
+        }
+        viewIsUpdating = false;
+      };
+
+      scope.$on('$stateChangeSuccess', eventHook);
+      scope.$on('$viewContentLoading', eventHook);
+      update(false);
+
+      function update(doAnimation) {
+        var locals = $state.$current && $state.$current.locals[name],
+            template = (locals && locals.$template ? locals.$template.trim() : null);
+
+        if (locals === viewLocals) return; // nothing to do here, go about your business
+
+        var transitionOptions = {
+          parentElement: $element,
+          doAnimation: doAnimation,
+          leavingScope: viewScope,
+          leavingElement: currentElement,
+          navDirection: null
+        };
+
+        if (template) {
+          currentElement = angular.element(template);
+
+          var registerData = {};
+          if(currentElement[0].tagName !== 'TABS') {
+            registerData = ViewService.register(scope);
+            transitionOptions.navDirection = registerData.navDirection;
+          }
+
+          viewLocals = locals;
+          view.state = locals.$$state;
+
+          var link = $compile(currentElement),
+              current = $state.current;
+
+          viewScope = current.scope = scope.$new();
+
+          if (locals.$$controller) {
+            locals.$scope = viewScope;
+            var controller = $controller(locals.$$controller, locals);
+            if (current.controllerAs) {
+              viewScope[current.controllerAs] = controller;
+            }
+            currentElement.data('$ngControllerController', controller);
+            currentElement.children().data('$ngControllerController', controller);
+          }
+
+          link(viewScope);
+
+          viewScope.$emit('$viewContentLoaded');
+          viewScope.$eval(onloadExp);
+          viewScope.animation = animation;
+
+          transitionOptions.enteringScope = viewScope.$$childHead;
+          transitionOptions.enteringElement = currentElement;
+        }
+
+        ViewService.transition(transitionOptions);
+      }
+    }
+  };
+  return directive;
+}]);
+
+
+})();;
 (function() {
 'use strict';
 
