@@ -28,9 +28,10 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'
 
     // Remove and destroy the modal scope
     remove: function() {
-      var element = angular.element(this.el);
+      var self  = this,
+        element = angular.element(this.el);
       $animate.leave(angular.element(this.el), function() {
-        scope.$destroy();
+        self.scope.$destroy();
       });
     }
   });
@@ -60,7 +61,7 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'
     /**
      * Load a modal with the given template string.
      *
-     * A new isolated scope will be created for the 
+     * A new isolated scope will be created for the
      * modal and the new element will be appended into the body.
      */
     fromTemplate: function(templateString, options) {
