@@ -14,6 +14,7 @@
     <script src="/dist/js/angular/angular-route.js"></script>
     <script src="/dist/js/angular/angular-touch.js"></script>
     <script src="/dist/js/angular/angular-sanitize.js"></script>
+    <script src="/dist/js/angular-ui/angular-ui-router.js"></script>
     <script src="/dist/js/ionic-angular.js"></script>
 
     <!-- your app's script -->
@@ -24,20 +25,19 @@
 
   <!-- 
     'listExample' is the name of this angular module (app.js)
-    'nav-router' attribute updates the nav-bar title and animations as you navigate
     'animation' attribute sets which type of animations to use
   -->
-  <body ng-app="listExample" nav-router animation="slide-left-right-ios7">
+  <body ng-app="listExample" animation="slide-left-right-ios7">
 
     <!-- The nav bar that will be updated as we navigate -->
     <nav-bar 
-      class="nav-title-slide-ios7" 
+      animation="nav-title-slide-ios7" 
       type="bar-positive" 
       back-button-type="button-icon" 
       back-button-icon="ion-arrow-left-c"></nav-bar>
 
     <!-- where the content of each page will be rendered -->
-    <ng-view></ng-view>
+    <nav-view animation="slide-left-right"></ui-view>
 
 
     <!-- 
@@ -51,7 +51,7 @@
       The MovieIndexCtrl gets data from the MovieService (service.js)
     -->
     <script type="text/ng-template" id="/index.html">
-      <nav-page title="title">
+      <view title="title">
         <content has-header="true">
           
           <list>
@@ -61,7 +61,7 @@
           </list>
           
         </content>
-      </nav-page>
+      </view>
     </script>
     
     <!--
@@ -70,7 +70,7 @@
       The MovieDetailCtrl gets data from the MovieService (service.js)
     -->
     <script type="text/ng-template" id="/movie.html">
-      <nav-page title="title">
+      <view title="title">
         <content has-header="true" padding="true">
           <h1>{{ movie.title }}</h1>
           <dl>
@@ -90,7 +90,7 @@
             <dd>{{ movie.rating }}</dd>
           </dl>
         </content>
-      </nav-page>
+      </view>
     </script>
 
 

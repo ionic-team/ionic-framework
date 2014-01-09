@@ -197,12 +197,10 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
   > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
     /* NEW content ACTIVELY sliding IN from the RIGHT */
     @include translate3d(0, 0, 0);
-    //.scroll { background: purple; } //for debugging
   }
   > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
     /* OLD content ACTIVELY sliding OUT to the LEFT */
     @include translate3d(-100%, 0, 0);
-    //.scroll { background: green; } //for debugging
   }
 
   &.reverse {
@@ -221,12 +219,10 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
     > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
       /* NEW content ACTIVELY sliding IN from the LEFT */
       @include translate3d(0, 0, 0);
-      //.scroll { background: blue; } //for debugging
     }
     > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
       /* OLD content ACTIVELY sliding OUT to the RIGHT */
       @include translate3d(100%, 0, 0);
-      //.scroll { background: yellow; } //for debugging
     }
   }
 }
@@ -258,12 +254,10 @@ $ios7-transition-duration: 250ms;
   > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
     /* NEW content ACTIVELY sliding IN from the RIGHT */
     @include translate3d(0, 0, 0);
-    //.scroll { background: red; } //for debugging
   }
   > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
     /* OLD content ACTIVELY sliding OUT to the LEFT */
     @include translate3d(-15%, 0, 0);
-    //.scroll { background: blue; } //for debugging
   }
   
   &.reverse {
@@ -284,12 +278,10 @@ $ios7-transition-duration: 250ms;
     > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
       /* NEW content ACTIVELY sliding IN from the LEFT */
       @include translate3d(0, 0, 0);
-      //.scroll { background: orange; } //for debugging
     }
     > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
       /* OLD content ACTIVELY sliding OUT to the RIGHT */
       @include translate3d(15%, 0, 0);
-      //.scroll { background: maroon; } //for debugging
     }
   }
 }
@@ -476,7 +468,7 @@ $ios7-transition-duration: 250ms;
 /**
  * Some component specific animations
  */
-$nav-title-slide-ios7-delay: 350ms;
+$nav-title-slide-ios7-delay: 250ms;
 .nav-title-slide-ios7 {
   > .ng-enter, &.ng-enter, 
   > .ng-leave, &.ng-leave {
@@ -497,13 +489,10 @@ $nav-title-slide-ios7-delay: 350ms;
     opacity: 0;
   }
 
-}
-.reverse {
-  .nav-title-slide-ios7 {
+  &.reverse {
     > .ng-enter, &.ng-enter, 
     > .ng-leave, &.ng-leave {
-      @include transition(all $nav-title-slide-ios7-delay);
-      @include transition-timing-function($ios7-timing-function);
+      @include transition(all ease-in-out $transition-duration);
       opacity: 1;
     }
     > .ng-enter, &.ng-enter {
