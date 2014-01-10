@@ -30,7 +30,6 @@ angular.module('ionic.ui.scroll', [])
         sc.className = 'scroll';
         if(attr.padding == "true") {
           sc.classList.add('padding');
-          addedPadding = true;
         }
         if($scope.$eval($scope.paging) === true) {
           sc.classList.add('scroll-paging');
