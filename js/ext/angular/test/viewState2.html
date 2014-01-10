@@ -2,8 +2,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    
-    <title>navViews and tabs w/ nested navViews</title>
+
+    <title>Tabs at the root w/ navView in each tab</title>
 
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <script src="../../../../dist/js/ionic.js"></script>
@@ -17,127 +17,33 @@
   </head>
   <body>
 
-    <div ng-controller="AppCtrl">
-      <nav-bar animation="nav-title-slide-ios7" 
-               type="bar-positive" 
-               back-button-type="button-icon" 
-               back-button-icon="ion-arrow-left-c"></nav-bar>
-      <nav-view animation="slide-left-right"></nav-view>
-    </div>
+    <nav-bar animation="nav-title-slide-ios7" 
+             type="bar-positive" 
+             back-button-type="button-icon" 
+             back-button-icon="ion-arrow-left-c"></nav-bar>
 
-    <script id="sign-in.html" type="text/ng-template">
-      <view title="'Sign-In'">
-        <content has-header="true">
-          <div class="list">
-            <label class="item item-input">
-              <span class="input-label">Username</span>
-              <input type="text" ng-model="user.username">
-            </label>
-            <label class="item item-input">
-              <span class="input-label">Password</span>
-              <input type="password" ng-model="user.password">
-            </label>
-          </div>
-          <div class="padding">
-            <button class="button button-block button-positive" ng-click="signIn(user)">
-              Sign-In
-            </button>
-            <p class="text-center">
-              <a href="#/sign-in">Sign-In</a> - 
-              <a href="#/forgot-password">Forgot password</a> -
-              <a ui-sref="contact">Contact</a>
-            </p>
-            <p>
-              Current View: {{ $viewHistory.currentView }}<br>
-              Back View: {{ $viewHistory.backView }}<br>
-              Forward View: {{ $viewHistory.forwardView }}
-            </p>
-          </div>
-        </content>
-      </view>
-    </script>
+    <tabs tabs-style="tabs-icon-top" tabs-type="tabs-positive">
 
-    <script id="forgot-password.html" type="text/ng-template">
-      <view title="'Forgot Password'">
-        <content has-header="true" padding="true">
-          <p>Seriously!? Again?!</p>
-          <p>How about I just give you a password, hows this: <br><code>{{password}}</code></p>
-          <p class="text-center">
-            <a href="#/sign-in">Sign-In</a> - 
-            <a href="#/forgot-password">Forgot password</a> -
-            <a href="#/contact">Contact</a>
-          </p>
-          <p>
-            Current View: {{ $viewHistory.currentView }}<br>
-            Back View: {{ $viewHistory.backView }}<br>
-            Forward View: {{ $viewHistory.forwardView }}
-          </p>
-        </content>
-      </view>
-    </script>
+      <tab title="Automobiles" icon="ion-model-s" href="#/autos">
+        <nav-view name="auto-ui-view"></nav-view>
+      </tab>
 
-    <script id="contact.html" type="text/ng-template">
-      <view title="'Contact'">
-        <content has-header="true" padding="true">
-          <p>@drifty</p>
-          <p class="text-center">
-            <a href="#/sign-in">Sign-In</a> - 
-            <a href="#/forgot-password">Forgot password</a> -
-            <a href="#/contact">Contact</a>
-          </p>
-          <p>
-            Current View: {{ $viewHistory.currentView }}<br>
-            Back View: {{ $viewHistory.backView }}<br>
-            Forward View: {{ $viewHistory.forwardView }}
-          </p>
-        </content>
-      </view>
-    </script>
+      <tab title="Add" icon="ion-plus-circled" href="#/add-auto">
+        <nav-view name="add-autos-ui-view"></nav-view>
+      </tab>
 
-    <script id="tabs.html" type="text/ng-template">
+      <tab title="About" icon="ion-ios7-world" ui-sref="about">
+        <nav-view name="about-ui-view"></nav-view>
+      </tab>
 
-      <tabs tabs-style="tabs-icon-top" tabs-type="tabs-positive">
+    </tabs>
 
-        <tab title="Automobiles" icon="ion-model-s" href="#/tabs/autos">
-          <nav-view name="auto-ui-view"></nav-view>
-        </tab>
-
-        <tab title="Add" icon="ion-plus-circled" href="#/tabs/add-auto">
-          <nav-view name="add-autos-ui-view"></nav-view>
-        </tab>
-
-        <tab title="About" icon="ion-ios7-world" ui-sref="tabs.about">
-          <nav-view name="about-ui-view"></nav-view>
-        </tab>
-
-        <tab title="Info" icon="ion-information-circled">
-          <view title="'Information'">
-            <content has-header="true" has-tabs="true" padding="true">
-              <h3>Information</h3>
-              <p>
-                This is a sample seed project for the Ionic Framework. Please change it to match your needs.
-              </p>
-              <p>
-                Current View: {{ $viewHistory.currentView }}<br>
-                Back View: {{ $viewHistory.backView }}<br>
-                Forward View: {{ $viewHistory.forwardView }}
-              </p>
-            </content>
-          </view>
-        </tab>
-
-        <tab title="Sign-Out" icon="ion-log-out" href="#/sign-in">
-        </tab>
-
-      </tabs>
-
-    </script>
 
     <script id="auto-list.html" type="text/ng-template">
       <view title="'Auto List'">
         <content has-header="true" has-tabs="true">
           <list>
-            <item ng-repeat="auto in autos" ng-href="#/tabs/autos/{{ $index }}">
+            <item ng-repeat="auto in autos" ng-href="#/autos/{{ $index }}">
               {{ auto.year }} {{ auto.make }} {{ auto.model }}
             </item>
           </list>
@@ -161,19 +67,19 @@
           <p><a class="button" ng-href="{{ auto.url }}">Read More</a></p>
           <ul>
             <li>
-              <a ng-href="#/tabs/autos/0" class="ng-binding" href="#/tabs/autos/0">1936 Cord 810</a>
+              <a ng-href="#/autos/0" class="ng-binding" href="#/autos/0">1936 Cord 810</a>
             </li><li>
-              <a ng-href="#/tabs/autos/1" class="ng-binding" href="#/tabs/autos/1">1981 DeLorean DMC-12</a>
+              <a ng-href="#/autos/1" class="ng-binding" href="#/autos/1">1981 DeLorean DMC-12</a>
             </li><li>
-              <a ng-href="#/tabs/autos/2" class="ng-binding" href="#/tabs/autos/2">1933 Duesenberg Model SJ</a>
+              <a ng-href="#/autos/2" class="ng-binding" href="#/autos/2">1933 Duesenberg Model SJ</a>
             </li><li>
-              <a ng-href="#/tabs/autos/3" class="ng-binding" href="#/tabs/autos/3">1951 Hudson Hornet</a>
+              <a ng-href="#/autos/3" class="ng-binding" href="#/autos/3">1951 Hudson Hornet</a>
             </li><li>
-              <a ng-href="#/tabs/autos/4" class="ng-binding" href="#/tabs/autos/4">1965 Shelby Cobra</a>
+              <a ng-href="#/autos/4" class="ng-binding" href="#/autos/4">1965 Shelby Cobra</a>
             </li><li>
-              <a ng-href="#/tabs/autos/5" class="ng-binding" href="#/tabs/autos/5">2008 Tesla Roadster</a>
+              <a ng-href="#/autos/5" class="ng-binding" href="#/autos/5">2008 Tesla Roadster</a>
             </li><li>
-              <a ng-href="#/tabs/autos/6" class="ng-binding" href="#/tabs/autos/6">1948 Tucker 48</a>
+              <a ng-href="#/autos/6" class="ng-binding" href="#/autos/6">1948 Tucker 48</a>
             </li>
           </ul>
           <p>
@@ -235,26 +141,7 @@
       .config(function($stateProvider, $urlRouterProvider) {
       
         $stateProvider
-          .state('signin', {
-            url: "/sign-in",
-            templateUrl: "sign-in.html",
-            controller: 'SignInCtrl'
-          })
-          .state('forgotpassword', {
-            url: "/forgot-password",
-            templateUrl: "forgot-password.html",
-            controller: 'ForgotPasswordCtrl'
-          })
-          .state('contact', {
-            url: "/contact",
-            templateUrl: "contact.html"
-          })
-          .state('tabs', {
-            url: "/tabs",
-            abstract: true,
-            templateUrl: "tabs.html"
-          })
-          .state('tabs.autolist', {
+          .state('autolist', {
             url: "/autos",
             views: {
               'auto-ui-view': {
@@ -263,7 +150,7 @@
               }
             }
           })
-          .state('tabs.addauto', {
+          .state('addauto', {
             url: "/add-auto",
             views: {
               'add-autos-ui-view': {
@@ -272,7 +159,7 @@
               }
             }
           })
-          .state('tabs.autodetail', {
+          .state('autodetail', {
             url: "/autos/:id",
             views: {
               'auto-ui-view': {
@@ -281,7 +168,7 @@
               }
             }
           })
-          .state('tabs.about', {
+          .state('about', {
             url: "/about",
             views: {
               'about-ui-view': {
@@ -290,8 +177,7 @@
             }
           });
 
-
-         $urlRouterProvider.otherwise("/sign-in");
+         $urlRouterProvider.otherwise("/autos");
 
       })
 
@@ -299,7 +185,7 @@
         //console.log('SignInCtrl');
 
         $scope.signIn = function(user) {
-          $state.go('tabs.autolist');
+          $state.go('autolist');
         };
       })
 
@@ -313,7 +199,7 @@
 
         $scope.testStateGo = function() {
           var toParams = { id: 4 };
-          $state.go('tabs.autodetail', toParams);
+          $state.go('autodetail', toParams);
         };
       })
 
@@ -327,9 +213,10 @@
         $scope.newAutoData = "AutoAddCtrl Data";
       })
 
-      .controller('AppCtrl', function($scope, $state) {
 
-        $scope.autos = [
+      .run(function($rootScope) {
+      
+        $rootScope.autos = [
           { make: 'Cord', model: '810', year: '1936', desc: 'Styled by Gordon M. Buehrig, it featured front-wheel drive and independent front suspension;[ the front drive enabled the 810 to be so low, runningboards were unnecessary. Powered by a 4,739 cc (289 cu in) Lycoming V8 of the same 125 hp (93 kW) as the L-29, The 810 had a four-speed electrically-selected semi-automatic transmission, among other innovative features.', url: 'http://en.wikipedia.org/wiki/Cord_810/812' },
           { make: 'DeLorean', model: 'DMC-12', year: '1981', desc: 'The DeLorean DMC-12 is a sports car manufactured by John DeLorean\'s DeLorean Motor Company for the American market in 1981–82. Featuring gull-wing doors with a fiberglass "underbody", to which non-structural brushed stainless steel panels are affixed, the car became iconic for its appearance as a modified time machine in the Back to the Future film trilogy.', url: 'http://en.wikipedia.org/wiki/DeLorean_DMC-12' },
           { make: 'Duesenberg', model: 'Model SJ', year: '1933', desc: 'The rare supercharged Model J version, with 320 hp (239 kW) was also created by Fred Duesenberg and introduced in May 1932, only 36 units were built. Special-bodied models, such as the later "Mormon Meteor" chassis, achieved an average speed of over 135 mph (217 km/h)[17] and a one-hour average of over 152 mph (245 km/h) at Bonneville Salt Flats, Utah.', url: 'http://en.wikipedia.org/wiki/Duesenberg_Model_J' },
@@ -338,8 +225,7 @@
           { make: 'Tesla', model: 'Roadster', year: '2008', desc: 'Tesla Motors\' first production vehicle, the Tesla Roadster, was an all-electric sports car. The Roadster was the first highway-capable all-electric vehicle in serial production for sale in the United States in the modern era. The Roadster was also the first production automobile to use lithium-ion battery cells and the first production BEV (all-electric) to travel more than 200 miles (320 km) per charge.', url: 'http://en.wikipedia.org/wiki/Tesla_Roadster' },
           { make: 'Tucker', model: '48', year: '1948', desc: 'The Tucker 48 (named after its model year) was an advanced automobile conceived by Preston Tucker and briefly produced in Chicago in 1948. Only 51 cars were made before the company folded on March 3, 1949, due to negative publicity initiated by the news media, a Securities and Exchange Commission investigation and a heavily publicized stock fraud trial (in which allegations were proven baseless in court with a full acquittal). Speculation exists that the Big Three automakers and Michigan senator Homer S. Ferguson also had a role in the Tucker Corporation\'s demise.', url: 'http://en.wikipedia.org/wiki/Tucker_Torpedo' },
         ];
-
-      });
+      })
 
     </script>
   </body>
