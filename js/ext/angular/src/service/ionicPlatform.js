@@ -66,6 +66,10 @@ angular.module('ionic.service.platform', [])
           });
         },
 
+        is: function(type) {
+          return ionic.Platform.is(type);
+        },
+
         /**
          * Trigger a callback once the device is ready, or immediately if the device is already
          * ready.

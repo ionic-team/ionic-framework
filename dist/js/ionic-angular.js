@@ -333,9 +333,10 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'
       return modal;
     },
     fromTemplateUrl: function(url, cb, options) {
-      TemplateLoader.load(url).then(function(templateString) {
+      return TemplateLoader.load(url).then(function(templateString) {
         var modal = createModal(templateString, options || {});
-        cb(modal);
+        cb ? cb(modal) : null;
+        return modal;
       });
     },
   };
@@ -407,6 +408,10 @@ angular.module('ionic.service.platform', [])
           this.ready(function() {
             document.removeEventListener('backbutton', fn);
           });
+        },
+
+        is: function(type) {
+          return ionic.Platform.is(type);
         },
 
         /**
@@ -724,7 +729,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
 
 // The content directive is a core scrollable content area
 // that is part of many View hierarchies
-.directive('content', ['$parse', '$timeout', 'ScrollDelegate', function($parse, $timeout, ScrollDelegate) {
+.directive('content', ['$parse', '$timeout', 'Platform', 'ScrollDelegate', function($parse, $timeout, Platform, ScrollDelegate) {
   return {
     restrict: 'E',
     replace: true,
@@ -738,6 +743,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
       refreshComplete: '=',
       onInfiniteScroll: '=',
       infiniteScrollDistance: '@',
+      hasBouncing: '@',
       scroll: '@',
       hasScrollX: '@',
       hasScrollY: '@',
@@ -793,8 +799,13 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
 
           // Otherwise, supercharge this baby!
           $timeout(function() {
+            var hasBouncing = $scope.$eval($scope.hasBouncing);
+            var enableBouncing = !Platform.is('Android') && hasBouncing !== false;
+            // No bouncing by default for Android users, lest they take up pitchforks
+            // to our bouncing goodness
             sv = new ionic.views.Scroll({
               el: $element[0],
+              bouncing: enableBouncing,
               scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
               scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
               scrollingX: $scope.$eval($scope.hasScrollX) === true,

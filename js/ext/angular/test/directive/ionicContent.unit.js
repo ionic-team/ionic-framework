@@ -1,11 +1,13 @@
 describe('Ionic Content directive', function() {
   var compile, element, scope;
   
-  beforeEach(module('ionic.ui.content'));
+  beforeEach(module('ionic'));
 
-  beforeEach(inject(function($compile, $rootScope) {
+  beforeEach(inject(function($compile, $rootScope, $timeout, $window) {
     compile = $compile;
     scope = $rootScope;
+    timeout = $timeout;
+    window = $window;
   }));
   
   it('Has content class', function() {
@@ -16,5 +18,17 @@ describe('Ionic Content directive', function() {
   it('Has header', function() {
     element = compile('<content has-header="true"></content>')(scope);
     expect(element.hasClass('has-header')).toEqual(true);
+  });
+
+  /**
+   * Not currently possible to mock this AFAIK
+   */
+  xit('Disables bouncing by default on Android', function() {
+    window.navigator.userAgent = 'Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build/IML74K) AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30';
+    element = compile('<content has-header="true"></content>')(scope);
+    timeout.flush();
+    var newScope = element.isolateScope();
+    var scrollView = scope.scrollView;
+    expect(scrollView.options.bouncing).toBe(false);
   });
 });
