@@ -3,11 +3,13 @@
  * see the core Ionic sideMenu controller tests.
  */
 describe('Ionic Angular Slide Box', function() {
-  var el;
+  var el, delegate, timeout;
 
-  beforeEach(module('ionic.ui.slideBox'));
+  beforeEach(module('ionic'));
 
-  beforeEach(inject(function($compile, $rootScope) {
+  beforeEach(inject(function($compile, $rootScope, $timeout, SlideBoxDelegate) {
+    delegate = SlideBoxDelegate;
+    timeout = $timeout;
     el = $compile('<slide-box>\
       <slide>\
         <div class="box blue">\
@@ -28,5 +30,14 @@ describe('Ionic Angular Slide Box', function() {
   it('Should init', function() {
     var scope = el.scope();
     expect(scope.slideBox).not.toBe(undefined);
+  });
+
+  it('Should update with delegate', function() {
+    var scope = el.scope();
+    var slideBox = scope.slideBox;
+    spyOn(slideBox, 'setup');
+    delegate.update();
+    timeout.flush();
+    expect(slideBox.setup).toHaveBeenCalled();
   });
 });

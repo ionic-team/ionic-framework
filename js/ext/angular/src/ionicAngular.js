@@ -16,6 +16,7 @@ angular.module('ionic.service', [
 // UI specific services and delegates
 angular.module('ionic.ui.service', [
   'ionic.ui.service.scrollDelegate',
+  'ionic.ui.service.slideBoxDelegate',
 ]);
 
 angular.module('ionic.ui', [

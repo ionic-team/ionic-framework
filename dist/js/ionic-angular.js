@@ -29,6 +29,7 @@ angular.module('ionic.service', [
 // UI specific services and delegates
 angular.module('ionic.ui.service', [
   'ionic.ui.service.scrollDelegate',
+  'ionic.ui.service.slideBoxDelegate',
 ]);
 
 angular.module('ionic.ui', [
@@ -116,6 +117,36 @@ angular.module('ionic.ui.service.scrollDelegate', [])
        */
       $scope.$parent.$on('scroll.scrollTop', function(e, animate) {
         $scope.$parent.scrollView && $scope.$parent.scrollView.scrollTo(0, 0, animate === false ? false : true);
+      });
+    }
+  };
+}]);
+
+})(ionic);
+;
+(function() {
+'use strict';
+
+angular.module('ionic.ui.service.slideBoxDelegate', [])
+
+.factory('SlideBoxDelegate', ['$rootScope', '$timeout', function($rootScope, $timeout) {
+  return {
+    /**
+     * Trigger a slidebox to update and resize itself
+     */
+    update: function(animate) {
+      $rootScope.$broadcast('slideBox.update');
+    },
+
+    register: function($scope, $element) {
+      $scope.$parent.$on('slideBox.update', function(e) {
+        if(e.defaultPrevented) {
+          return;
+        }
+        $timeout(function() {
+          $scope.$parent.slideBox.setup();
+        });
+        e.preventDefault();
       });
     }
   };
@@ -2317,7 +2348,7 @@ angular.module('ionic.ui.slideBox', [])
  * The internal controller for the slide box controller.
  */
 
-.directive('slideBox', ['$timeout', '$compile', function($timeout, $compile) {
+.directive('slideBox', ['$timeout', '$compile', 'SlideBoxDelegate', function($timeout, $compile, SlideBoxDelegate) {
   return {
     restrict: 'E',
     replace: true,
@@ -2376,6 +2407,8 @@ angular.module('ionic.ui.slideBox', [])
       });
 
       $scope.$parent.slideBox = slider;
+
+      SlideBoxDelegate.register($scope, $element);
 
       this.getNumSlides = function() {
         return slider.getNumSlides();

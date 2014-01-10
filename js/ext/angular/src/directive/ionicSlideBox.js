@@ -13,7 +13,7 @@ angular.module('ionic.ui.slideBox', [])
  * The internal controller for the slide box controller.
  */
 
-.directive('slideBox', ['$timeout', '$compile', function($timeout, $compile) {
+.directive('slideBox', ['$timeout', '$compile', 'SlideBoxDelegate', function($timeout, $compile, SlideBoxDelegate) {
   return {
     restrict: 'E',
     replace: true,
@@ -72,6 +72,8 @@ angular.module('ionic.ui.slideBox', [])
       });
 
       $scope.$parent.slideBox = slider;
+
+      SlideBoxDelegate.register($scope, $element);
 
       this.getNumSlides = function() {
         return slider.getNumSlides();
