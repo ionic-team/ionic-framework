@@ -2626,7 +2626,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 
       function update(doAnimation) {
         var locals = $state.$current && $state.$current.locals[name],
-            template = (locals && locals.$template ? locals.$template.trim() : null);
+            template = (locals && locals.$template ? locals.$template : null);
 
         if (locals === viewLocals) return; // nothing to do here, go about your business
 
@@ -2639,7 +2639,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
         };
 
         if (template) {
-          currentElement = angular.element(template);
+          currentElement = angular.element(template.trim());
 
           var registerData = {};
           if(currentElement[0].tagName !== 'TABS') {
