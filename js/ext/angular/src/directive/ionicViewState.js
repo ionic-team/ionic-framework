@@ -69,7 +69,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     },
     template: '<header class="bar bar-header nav-bar">'+//' ng-class="{invisible: !navController.navBar.isVisible}">' + 
         '<div class="buttons"> ' +
-          '<button view-back class="button" ng-show="enableBackButton && showBackButton" ng-class="backButtonClass" ng-bind-html="backButtonLabel"></button>' +
+          '<button view-back class="button" ng-if="enableBackButton" ng-class="backButtonClass" ng-bind-html="backButtonLabel"></button>' +
           '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" class="button no-animation {{button.type}}" ng-bind-html="button.content"></button>' + 
         '</div>' +
         '<h1 class="title" ng-bind="currentTitle"></h1>' + 
@@ -85,21 +85,6 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
       if($attr.backButtonIcon) {
         $scope.backButtonClass += ' icon ' + $attr.backButtonIcon;
       }
-
-      // Listen for changes in the stack cursor position to indicate whether a back
-      // button should be shown (this can still be disabled by the $scope.enableBackButton
-      $rootScope.$watch('$viewHistory.backView', function(backView) {
-        if(backView) {
-          var currentView = ViewService.getCurrentView();
-          if(currentView) {
-            if(backView.historyId === currentView.historyId) {
-              $scope.showBackButton = true;
-              return;
-            }
-          }
-        }
-        $scope.showBackButton = false;
-      });
 
       // Store a reference to our nav controller
       $scope.navController = navCtrl;
@@ -213,7 +198,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 }])
 
 
-.directive('viewBack', ['ViewService', function(ViewService) {
+.directive('viewBack', ['ViewService', '$rootScope', function(ViewService, $rootScope) {
   var goBack = function(e) {
     var backView = ViewService.getBackView();
     backView && backView.go();
@@ -223,9 +208,23 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 
   return {
     restrict: 'AC',
-    link: function($scope, $element) {
-      $element.bind('click', goBack);
+    compile: function(tElement) {
+      tElement.addClass('hide');
+
+      return function link($scope, $element) {
+        $element.bind('click', goBack);
+
+        $rootScope.$on('$viewHistory.historyChange', function(e, data) {
+          if(data.showBack) {
+            $element[0].classList.remove('hide');
+          } else {
+            $element[0].classList.add('hide');
+          }
+        });
+
+      } 
     }
+
   };
 }])
 

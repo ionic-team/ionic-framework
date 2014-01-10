@@ -63,7 +63,12 @@ angular.module('ionic.service.view', ['ui.router'])
     return null;
   };
   View.prototype.go = function(opts) {
-    if(this.url && this.url !== $location.url() && (!opts || opts.enableUrlChange !== false)) {
+
+    if(this.stateName) {
+      return $state.go(this.stateName, this.stateParams);
+    }
+
+    if(this.url && this.url !== $location.url()) {
 
       if($rootScope.$viewHistory.backView === this) {
         return $window.history.go(-1);
@@ -71,11 +76,8 @@ angular.module('ionic.service.view', ['ui.router'])
         return $window.history.go(1);
       }
 
-      return $location.url(this.url);
-    }
-
-    if(this.stateName) {
-      return $state.go(this.stateName, this.stateParams);
+      $location.url(this.url);
+      return;
     }
 
     return null;
@@ -139,6 +141,13 @@ angular.module('ionic.service.view', ['ui.router'])
           rsp.historyId = forwardView.historyId;
         }
 
+      } else if(currentView && currentView.historyId !== hist.historyId && 
+                hist.cursor > -1 && hist.stack.length > 0 && hist.cursor < hist.stack.length &&
+                hist.stack[hist.cursor].stateId === currentStateId) {
+        // they just changed to a different history and the history already has views in it
+        rsp.viewId = hist.stack[hist.cursor].viewId;
+        rsp.navAction = 'moveBack';
+
       } else {
 
         // set a new unique viewId
@@ -196,6 +205,10 @@ angular.module('ionic.service.view', ['ui.router'])
       viewHistory.forwardView = this._getForwardView(viewHistory.currentView);
 
       hist.cursor = viewHistory.currentView.index;
+
+      $rootScope.$broadcast('$viewHistory.historyChange', {
+        showBack: (viewHistory.backView && viewHistory.backView.historyId === viewHistory.currentView.historyId)
+      });
 
       return rsp;
     },

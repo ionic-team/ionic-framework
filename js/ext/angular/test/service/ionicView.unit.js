@@ -190,6 +190,7 @@ describe('Ionic View Service', function() {
     $state.go('home');
     rootScope.$apply();
     var homeReg = viewService.register(homeViewScope);
+    expect(homeReg.navAction).toEqual('initialView');
     expect(viewService.getCurrentStateName()).toEqual('home');
     expect(viewService.getCurrentView().stateName).toEqual('home');
     expect(viewService.getBackView()).toEqual(null);
@@ -204,6 +205,7 @@ describe('Ionic View Service', function() {
     var currentView = viewService.getCurrentView();
     var backView = viewService.getBackView();
     var forwardView = viewService.getForwardView();
+    expect(aboutReg.navAction).toEqual('newView');
     expect(currentView.viewId).toEqual(aboutReg.viewId);
     expect(currentView.backViewId).toEqual(homeReg.viewId);
     expect(currentView.forwardViewId).toEqual(null);
@@ -219,6 +221,7 @@ describe('Ionic View Service', function() {
     $state.go('tabs.tab1view1');
     rootScope.$apply();
     var tab1view1Reg = viewService.register(tab1view1Scope);
+    expect(tab1view1Reg.navAction).toEqual('newView');
 
     expect(rootScope.$viewHistory.histories[tab1Scope.$historyId].historyId).toEqual(tab1Scope.$historyId);
     expect(rootScope.$viewHistory.histories[tab1Scope.$historyId].stack[0].viewId).toEqual(tab1view1Reg.viewId);
@@ -241,6 +244,7 @@ describe('Ionic View Service', function() {
     $state.go('home');
     rootScope.$apply();
     var home2reg = viewService.register({});
+    expect(home2reg.navAction).toEqual('newView');
     currentView = viewService.getCurrentView();
     backView = viewService.getBackView();
     forwardView = viewService.getForwardView();
@@ -631,6 +635,46 @@ describe('Ionic View Service', function() {
     rootScope.$apply();
     expect(viewService.getCurrentStateName()).toEqual('tabs.tab1view2');
     expect(rootScope.$viewHistory.histories[tab1Scope.$historyId].cursor).toEqual(1);
+  }));
+
+  it('should go one level in tab1, vist tab2 and tab3, come back to tab1 and still be at spot', inject(function($location, $state) {
+    var tab1Container = {};
+    var tab2Container = {};
+    var tab3Container = {};
+    viewService.registerHistory(tab1Container);
+    viewService.registerHistory(tab2Container);
+    viewService.registerHistory(tab3Container);
+
+    // register tab1, view1
+    $state.go('tabs.tab1view1');
+    rootScope.$apply();
+    var tab1view1Reg = viewService.register(tab1Container);
+    expect(rootScope.$viewHistory.histories[tab1Container.$historyId].cursor).toEqual(0);
+
+    // register tab1, view2
+    $state.go('tabs.tab1view2');
+    rootScope.$apply();
+    var tab1view2Reg = viewService.register(tab1Container);
+    expect(rootScope.$viewHistory.histories[tab1Container.$historyId].cursor).toEqual(1);
+    currentView = viewService.getCurrentView();
+    expect(currentView.backViewId).toEqual(tab1view1Reg.viewId);
+
+    // register tab2, view1
+    $state.go('tabs.tab2view1');
+    rootScope.$apply();
+    var tab2view1Reg = viewService.register(tab2Container);
+
+    // register tab3, view1
+    $state.go('tabs.tab3view1');
+    rootScope.$apply();
+    var tab3view1Reg = viewService.register(tab3Container);
+
+    // register tab 1, view 2 again
+    $state.go('tabs.tab1view2');
+    rootScope.$apply();
+    var tab1view2Reg2 = viewService.register(tab1Container);
+    expect(tab1view2Reg2.navAction).toEqual('moveBack');
+    expect(tab1view2Reg2.viewId).toEqual(tab1view2Reg.viewId);
   }));
 
   it('should init root viewHistory data', inject(function() {
