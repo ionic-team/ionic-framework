@@ -45,8 +45,8 @@ angular.module('listExample.controllers', [])
 })
 
 // Controller that shows more detailed info about a movie
-.controller('MovieDetailCtrl', function($scope, $routeParams, MovieService) {
+.controller('MovieDetailCtrl', function($scope, $stateParams, MovieService) {
   // "MovieService" is a service returning mock data (services.js)
-  $scope.movie = MovieService.get($routeParams.movieId);
+  $scope.movie = MovieService.get($stateParams.movieId);
   $scope.title = "Movie Info";
 });

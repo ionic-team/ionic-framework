@@ -1,7 +1,7 @@
 {
   "name": "ionic",
   "private": false,
-  "version": "0.9.18",
+  "version": "0.9.19",
   "devDependencies": {
     "karma": "~0.10",
     "grunt": "~0.4.1",

@@ -1,5 +1,5 @@
 /*!
- * Copyright 2013 Drifty Co.
+ * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
  * Ionic, v{{ VERSION }}

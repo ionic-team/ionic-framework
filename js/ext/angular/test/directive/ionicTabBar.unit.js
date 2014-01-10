@@ -124,6 +124,23 @@ describe('Tabs directive', function() {
     expect(angular.element(tabs).hasClass('tabs-positive')).toEqual(true);
     expect(angular.element(tabs).hasClass('tabs-icon-bottom')).toEqual(true);
   });
+
+  it('Has nav-view', function() {
+    element = compile('<tabs>' + 
+      '<tab active="true" title="Item 1" href="#/page1"><nav-view name="name1"></nav-view></tab>' + 
+      '<tab active="true" title="Item 2" href="/page2">content2</tab>' + 
+    '</tabs>')(scope);
+    scope = element.scope();
+    scope.$digest();
+    expect(scope.tabCount).toEqual(2);
+    expect(scope.selectedIndex).toEqual(0);
+    expect(scope.controllers.length).toEqual(2);
+    expect(scope.controllers[0].hasNavView).toEqual(true);
+    expect(scope.controllers[0].navViewName).toEqual('name1');
+    expect(scope.controllers[0].url).toEqual('/page1');
+    expect(scope.controllers[1].hasNavView).toEqual(false);
+    expect(scope.controllers[1].url).toEqual('/page2');
+  });
 });
 
 describe('Tab Item directive', function() {
