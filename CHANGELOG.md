@@ -1,5 +1,5 @@
 
-## 0.9.19 "Alpha Koala" (2014-01-09)
+## 0.9.19 "Alpha Koala" (2014-01-10)
  - Created ViewState Service to track navigation history
  - Created navView directive
  - Removed navPage and navRouter directives
