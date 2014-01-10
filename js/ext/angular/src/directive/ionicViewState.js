@@ -222,7 +222,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           }
         });
 
-      } 
+      };
     }
 
   };
