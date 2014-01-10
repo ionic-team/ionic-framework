@@ -2370,6 +2370,7 @@ angular.module('ionic.ui.slideBox', [])
       slideInterval: '@',
       showPager: '@',
       disableScroll: '@',
+      disableTouch: '@',
       onSlideChanged: '&',
       activeSlide: '='
     },
@@ -2383,6 +2384,7 @@ angular.module('ionic.ui.slideBox', [])
         el: $element[0],
         auto: slideInterval,
         disableScroll: ($scope.$eval($scope.disableScroll) === true) || false,
+        disableTouch: ($scope.$eval($scope.disableTouch) === true) || false,
         continuous: continuous,
         slidesChanged: function() {
           $scope.currentSlide = slider.getPos();
