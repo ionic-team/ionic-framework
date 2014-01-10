@@ -23,7 +23,8 @@ angular.module('ionic.ui.slideBox', [])
       slideInterval: '@',
       showPager: '@',
       disableScroll: '@',
-      onSlideChanged: '&'
+      onSlideChanged: '&',
+      activeSlide: '='
     },
     controller: ['$scope', '$element', function($scope, $element) {
       var _this = this;
@@ -46,9 +47,15 @@ angular.module('ionic.ui.slideBox', [])
           $scope.currentSlide = slideIndex;
           $scope.onSlideChanged({index:$scope.currentSlide});
           $scope.$parent.$broadcast('slideBox.slideChanged', slideIndex);
-
+          $scope.activeSlide = slideIndex;
           // Try to trigger a digest
           $timeout(function() {});
+        }
+      });
+
+      $scope.$watch('activeSlide', function(nv) {
+        if(angular.isDefined(nv)){
+          slider.slide(nv);
         }
       });
 
