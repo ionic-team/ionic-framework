@@ -8,6 +8,10 @@
   .bar-header {
     height: 64px;
 
+    &.item-input-inset .item-input-wrapper {
+      margin-top: 19px !important;
+    }
+
     > * {
       margin-top: 20px;
     }
