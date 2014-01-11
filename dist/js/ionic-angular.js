@@ -2584,6 +2584,15 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
         $scope.rightButtons = data;
       });
 
+      // if a nav page changes the back button state, update our scope var
+      $scope.$parent.$on('viewState.hideBackButton', function(e, data) {
+        $scope.enableBackButton = false;
+      });
+
+      $scope.$parent.$on('viewState.showBackButton', function(e, data) {
+        $scope.enableBackButton = true;
+      });
+
     }
   };
 }])
