@@ -756,17 +756,23 @@ angular.module('ionic.service.view', ['ui.router'])
         hist.stack.push(viewHistory.histories[rsp.viewId]);
       }
 
-      viewHistory.currentView = this._getView(rsp.viewId);
-      viewHistory.backView = this._getBackView(viewHistory.currentView);
-      viewHistory.forwardView = this._getForwardView(viewHistory.currentView);
+      this.setNavViews(rsp.viewId);
 
       hist.cursor = viewHistory.currentView.index;
+
+      return rsp;
+    },
+
+    setNavViews: function(viewId) {
+      var viewHistory = $rootScope.$viewHistory;
+
+      viewHistory.currentView = this._getView(viewId);
+      viewHistory.backView = this._getBackView(viewHistory.currentView);
+      viewHistory.forwardView = this._getForwardView(viewHistory.currentView);
 
       $rootScope.$broadcast('$viewHistory.historyChange', {
         showBack: (viewHistory.backView && viewHistory.backView.historyId === viewHistory.currentView.historyId)
       });
-
-      return rsp;
     },
 
     registerHistory: function(scope) {
@@ -937,6 +943,31 @@ angular.module('ionic.service.view', ['ui.router'])
         // make sure the reverse class isn't already added
         element[0].classList.remove('reverse');
       }
+    },
+
+    clearHistory: function() {
+      var historyId, x, view,
+      histories = $rootScope.$viewHistory.histories,
+      currentView = $rootScope.$viewHistory.currentView;
+
+      for(historyId in histories) {
+
+        if(histories[historyId].stack) {
+          histories[historyId].stack = [];
+          histories[historyId].cursor = -1;
+        }
+
+        if(currentView.historyId === historyId) {
+          currentView.backViewId = null;
+          currentView.forwardViewId = null;
+          histories[historyId].stack.push(currentView);
+        } else if(histories[historyId].destroy) {
+          histories[historyId].destroy();
+        }
+
+      }
+
+      this.setNavViews(currentView.viewId);
     }
 
   };
