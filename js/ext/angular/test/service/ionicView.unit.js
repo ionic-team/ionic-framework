@@ -675,6 +675,18 @@ describe('Ionic View Service', function() {
     var tab1view2Reg2 = viewService.register(tab1Container);
     expect(tab1view2Reg2.navAction).toEqual('moveBack');
     expect(tab1view2Reg2.viewId).toEqual(tab1view2Reg.viewId);
+
+
+    var currentViewId = tab1view2Reg.viewId;
+    expect(rootScope.$viewHistory.histories[tab1view2Reg.historyId].stack.length).toEqual(2);
+    backView = viewService.getBackView();
+    expect(backView).toBeDefined();
+    viewService.clearHistory();
+    expect(rootScope.$viewHistory.histories[tab1view2Reg.historyId].stack.length).toEqual(1);
+    backView = viewService.getBackView();
+    expect(backView).toEqual(null);
+    currentView = viewService.getCurrentView();
+    expect(currentView.viewId).toEqual(currentViewId);
   }));
 
   it('should init root viewHistory data', inject(function() {

@@ -62,6 +62,9 @@
         <content has-header="true" padding="true">
           <p>Seriously!? Again?!</p>
           <p>How about I just give you a password, hows this: <br><code>{{password}}</code></p>
+          <p>
+            <button ng-click="clearViewHistory()">Clear View History</button>
+          </p>
           <p class="text-center">
             <a href="#/sign-in">Sign-In</a> - 
             <a href="#/forgot-password">Forgot password</a> -
@@ -303,9 +306,12 @@
         };
       })
 
-      .controller('ForgotPasswordCtrl', function($scope, $state) {
-        //console.log('ForgotPasswordCtrl');
+      .controller('ForgotPasswordCtrl', function(ViewService, $scope, $state) {
         $scope.password = Math.round(Math.random() * 10000);
+        
+        $scope.clearViewHistory = function() {
+          ViewService.clearHistory();
+        };
       })
 
       .controller('AutoListCtrl', function($scope, $state) {
