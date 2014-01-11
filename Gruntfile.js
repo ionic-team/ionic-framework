@@ -75,7 +75,6 @@ module.exports = function(grunt) {
       dist: {
         files: {
           'dist/css/ionic.css': 'scss/ionic.scss',
-          'dist/css/themes/ionic-ios7.css': 'scss/themes/ios7/ionic-ios7.scss'
         }
       }
     },
@@ -83,7 +82,6 @@ module.exports = function(grunt) {
       dist: {
         files: {
           'dist/css/ionic.min.css': 'dist/css/ionic.css',
-          'dist/css/themes/ionic-ios7.min.css': 'dist/css/themes/ionic-ios7.css'
         }
       }
     },
