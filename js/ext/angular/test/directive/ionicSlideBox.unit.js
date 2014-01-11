@@ -10,7 +10,7 @@ describe('Ionic Angular Slide Box', function() {
   beforeEach(inject(function($compile, $rootScope, $timeout, SlideBoxDelegate) {
     delegate = SlideBoxDelegate;
     timeout = $timeout;
-    el = $compile('<slide-box>\
+    el = $compile('<slide-box active-slide="2">\
       <slide>\
         <div class="box blue">\
           <h1>BLUE {{slideBox.slideIndex}}</h1>\
