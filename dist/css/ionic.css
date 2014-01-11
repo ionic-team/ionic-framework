@@ -5486,7 +5486,8 @@ input[type="range"] {
 
 button.button-block,
 button.button-full,
-.button-full > button.button {
+.button-full > button.button,
+input.button.button-block {
   width: 100%; }
 
 a.button {
