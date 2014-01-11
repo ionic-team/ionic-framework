@@ -37,6 +37,9 @@
       this.el.offsetWidth;
 
       this.el.classList.remove('active');
+    },
+    setContent: function(content) {
+      this._loadingBox.innerText = content;
     }
   });
 
