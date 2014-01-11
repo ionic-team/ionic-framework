@@ -5492,6 +5492,12 @@ button.button-full,
 a.button {
   text-decoration: none; }
 
+.button.disabled,
+.button[disabled] {
+  opacity: .4;
+  cursor: default !important;
+  pointer-events: none; }
+
 /**
  * Button Bar
  * --------------------------------------------------
