@@ -42,7 +42,30 @@ describe('Ionic View', function() {
     expect(element.hasClass('hide')).toEqual(false);
     scope.$broadcast('$viewHistory.historyChange', { showBack: false });
     expect(element.hasClass('hide')).toEqual(true);
-  });  
+  });
+
+  it('should show/hide navBar', function() {
+    var element = compile('<nav-bar></nav-bar>')(scope);
+    expect(element.hasClass('invisible')).toEqual(false);
+    scope.$broadcast('viewState.showNavBar', false);
+    scope.$digest();
+    expect(element.hasClass('invisible')).toEqual(true);
+    scope.$broadcast('viewState.showNavBar', true);
+    scope.$digest();
+    expect(element.hasClass('invisible')).toEqual(false);
+  });
+
+  it('should hide navBar when using view attr', function() {
+    var element = compile('<div><nav-bar></nav-bar><view hide-nav-bar="true"></view></div>')(scope);
+    scope.$digest();
+    var navBar = element.find('header')
+    expect(navBar.hasClass('invisible')).toEqual(true);
+
+    element = compile('<div><nav-bar></nav-bar><view></view></div>')(scope);
+    scope.$digest();
+    navBar = element.find('header')
+    expect(navBar.hasClass('invisible')).toEqual(false);
+  });
 
 });
 
