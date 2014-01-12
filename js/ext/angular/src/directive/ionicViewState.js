@@ -174,14 +174,11 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
       return function link($scope, $element, $attr) {
         // Should we hide a back button when this tab is shown
         $scope.hideBackButton = $scope.$eval($scope.hideBackButton);
+        if($scope.hideBackButton) {
+          $rootScope.$broadcast('viewState.showBackButton', false);
+        }
 
         $scope.hideNavBar = $scope.$eval($scope.hideNavBar);
-
-        if($scope.hideBackButton === true) {
-          $scope.$emit('viewState.hideBackButton');
-        } else {
-          $scope.$emit('viewState.showBackButton');
-        }
 
         // watch for changes in the left buttons
         $scope.$watch('leftButtons', function(value) {
@@ -212,14 +209,22 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
       tElement.addClass('hide');
 
       return function link($scope, $element) {
-        $element.bind('click', goBack);
+        $element.bind('tap', goBack);
 
-        $rootScope.$on('$viewHistory.historyChange', function(e, data) {
-          if(data.showBack) {
+        $scope.showButton = function(val) {
+          if(val) {
             $element[0].classList.remove('hide');
           } else {
             $element[0].classList.add('hide');
           }
+        };
+
+        $rootScope.$on('$viewHistory.historyChange', function(e, data) {
+          $scope.showButton(data.showBack);
+        });
+
+        $rootScope.$on('viewState.showBackButton', function(e, data) {
+          $scope.showButton(data);
         });
 
       };
