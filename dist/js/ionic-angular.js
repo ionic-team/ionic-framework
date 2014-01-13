@@ -2786,7 +2786,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           viewScope.$eval(onloadExp);
           viewScope.animation = animation;
 
-          transitionOptions.enteringScope = viewScope.$$childHead;
+          transitionOptions.enteringScope = viewScope;
           transitionOptions.enteringElement = currentElement;
         }
 
