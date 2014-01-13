@@ -92,7 +92,7 @@ describe('Ionic Item Directive', function () {
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
-    expect(itemScope.itemClass).toBe("item-type-test");
+    expect(itemScope.itemType).toBe("item-type-test");
     expect(itemElement.hasClass('item-type-test')).toBe(true);
   }));
 
@@ -103,7 +103,6 @@ describe('Ionic Item Directive', function () {
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
-    expect(itemScope.itemClass).toBe('list-item-type-test');
     expect(itemElement.hasClass('list-item-type-test')).toBe(true);
   }));
 
