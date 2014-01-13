@@ -45,7 +45,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
   };
 })
 
-.directive('sideMenuContent', ['$timeout', 'Gesture', function($timeout, Gesture) {
+.directive('sideMenuContent', ['$timeout', '$ionicGesture', function($timeout, $ionicGesture) {
   return {
     restrict: 'AC',
     require: '^sideMenus',
@@ -85,10 +85,10 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
         };
 
         //var dragGesture = Gesture.on('drag', dragFn, $element);
-        var dragRightGesture = Gesture.on('dragright', dragFn, $element);
-        var dragLeftGesture = Gesture.on('dragleft', dragFn, $element);
-        var dragUpGesture = Gesture.on('dragup', dragVertFn, $element);
-        var dragDownGesture = Gesture.on('dragdown', dragVertFn, $element);
+        var dragRightGesture = $ionicGesture.on('dragright', dragFn, $element);
+        var dragLeftGesture = $ionicGesture.on('dragleft', dragFn, $element);
+        var dragUpGesture = $ionicGesture.on('dragup', dragVertFn, $element);
+        var dragDownGesture = $ionicGesture.on('dragdown', dragVertFn, $element);
 
         var dragReleaseFn = function(e) {
           isDragging = false;
@@ -98,7 +98,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           defaultPrevented = false;
         };
 
-        var releaseGesture = Gesture.on('release', dragReleaseFn, $element);
+        var releaseGesture = $ionicGesture.on('release', dragReleaseFn, $element);
 
         sideMenuCtrl.setContent({
           onDrag: function(e) {},
@@ -126,11 +126,11 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 
         // Cleanup
         $scope.$on('$destroy', function() {
-          Gesture.off(dragLeftGesture, 'dragleft', dragFn);
-          Gesture.off(dragRightGesture, 'dragright', dragFn);
-          Gesture.off(dragUpGesture, 'dragup', dragFn);
-          Gesture.off(dragDownGesture, 'dragdown', dragFn);
-          Gesture.off(releaseGesture, 'release', dragReleaseFn);
+          $ionicGesture.off(dragLeftGesture, 'dragleft', dragFn);
+          $ionicGesture.off(dragRightGesture, 'dragright', dragFn);
+          $ionicGesture.off(dragUpGesture, 'dragup', dragFn);
+          $ionicGesture.off(dragDownGesture, 'dragdown', dragFn);
+          $ionicGesture.off(releaseGesture, 'release', dragReleaseFn);
         });
       };
     }

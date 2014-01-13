@@ -124,7 +124,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
 }])
 
 // Generic controller directive
-.directive('tab', ['ViewService', '$rootScope', '$parse', function(ViewService, $rootScope, $parse) {
+.directive('tab', ['$ionicViewService', '$rootScope', '$parse', function($ionicViewService, $rootScope, $parse) {
   return {
     restrict: 'E',
     require: '^tabs',
@@ -135,7 +135,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
       return function link($scope, $element, $attr, tabsCtrl) {
         var childScope, childElement;
 
-        ViewService.registerHistory($scope);
+        $ionicViewService.registerHistory($scope);
 
         $scope.title = $attr.title;
         $scope.icon = $attr.icon;
@@ -202,7 +202,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
           if($scope.hasNavView) {
             // this tab has a ui-view
             $scope.navViewName = navViewEle[0].getAttribute('name');
-            if( ViewService.isCurrentStateNavView( $scope.navViewName ) ) {
+            if( $ionicViewService.isCurrentStateNavView( $scope.navViewName ) ) {
               // this tab's ui-view is the current one, go to it!
               tabsCtrl.select($scope.tabIndex);
             }
@@ -210,7 +210,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
         });
 
         $rootScope.$on('$stateChangeSuccess', function(value){
-          if( ViewService.isCurrentStateNavView($scope.navViewName) &&
+          if( $ionicViewService.isCurrentStateNavView($scope.navViewName) &&
               $scope.tabIndex !== tabsCtrl.selectedIndex) {
             tabsCtrl.select($scope.tabIndex);
           }

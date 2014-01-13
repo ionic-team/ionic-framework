@@ -146,14 +146,14 @@
       })
 
 
-      .controller('HomeCtrl', function($scope, $timeout, Modal, ActionSheet) {
+      .controller('HomeCtrl', function($scope, $timeout, $ionicModal, $ionicActionSheet) {
 
-        Modal.fromTemplateUrl('newTask.html', function(modal) {
+        $ionicModal.fromTemplateUrl('newTask.html', function(modal) {
           $scope.settingsModal = modal;
         });
 
         var removeItem = function(item, button) {
-          ActionSheet.show({
+          $ionicActionSheet.show({
             buttons: [],
             destructiveText: 'Delete Task',
             cancelText: 'Cancel',

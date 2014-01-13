@@ -10,7 +10,7 @@ angular.module('ionic.service.platform', [])
  * initializing some defaults that depend on the platform, such as the
  * height of header bars on iOS 7.
  */
-.provider('Platform', function() {
+.provider('$ionicPlatform', function() {
   var platform = 'web';
   var isPlatformReady = false;
 

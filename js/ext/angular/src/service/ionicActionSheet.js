@@ -1,7 +1,7 @@
 angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ionic.ui.actionSheet', 'ngAnimate'])
 
-.factory('ActionSheet', ['$rootScope', '$document', '$compile', '$animate', '$timeout', 'TemplateLoader',
-    function($rootScope, $document, $compile, $animate, $timeout, TemplateLoader) {
+.factory('$ionicActionSheet', ['$rootScope', '$document', '$compile', '$animate', '$timeout', '$ionicTemplateLoader',
+    function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoader) {
 
   return {
     /**

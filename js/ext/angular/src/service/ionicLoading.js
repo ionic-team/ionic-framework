@@ -1,6 +1,6 @@
 angular.module('ionic.service.loading', ['ionic.ui.loading'])
 
-.factory('Loading', ['$rootScope', '$document', '$compile', function($rootScope, $document, $compile) {
+.factory('$ionicLoading', ['$rootScope', '$document', '$compile', function($rootScope, $document, $compile) {
   return {
     /**
      * Load an action sheet with the given template string.

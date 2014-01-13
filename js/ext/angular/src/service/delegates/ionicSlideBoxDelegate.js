@@ -3,7 +3,7 @@
 
 angular.module('ionic.ui.service.slideBoxDelegate', [])
 
-.factory('SlideBoxDelegate', ['$rootScope', '$timeout', function($rootScope, $timeout) {
+.factory('$ionicSlideBoxDelegate', ['$rootScope', '$timeout', function($rootScope, $timeout) {
   return {
     /**
      * Trigger a slidebox to update and resize itself

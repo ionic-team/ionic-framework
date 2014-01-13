@@ -59,7 +59,7 @@
     <script>
       angular.module('modalTest', ['ionic'])
 
-      .controller('AppCtrl', function($scope, Modal) {
+      .controller('AppCtrl', function($scope, $ionicModal) {
         $scope.contacts = [
           { name: 'Gordon Freeman' },
           { name: 'Barney Calhoun' },
@@ -80,7 +80,7 @@
         $scope.closeModal = function() {
           $scope.modal.hide();
         };
-        Modal.fromTemplateUrl('modal.html', function(modal) {
+        $ionicModal.fromTemplateUrl('modal.html', function(modal) {
           $scope.modal = modal;
         }, {
           animation: 'slide-in-up'

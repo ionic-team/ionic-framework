@@ -22,9 +22,9 @@
     <script>
       angular.module('ionic.example', ['ionic.service.loading'])
 
-      .controller('LoadingCtrl', function($scope, $timeout, Loading) {
+      .controller('LoadingCtrl', function($scope, $timeout, $ionicLoading) {
         $scope.startLoading = function() {
-          var loading = Loading.show({
+          var loading = $ionicLoading.show({
             width: 200,
             height: 100,
             animation: 'fade-in',

@@ -3,7 +3,7 @@
 
 angular.module('ionic.ui.service.scrollDelegate', [])
 
-.factory('ScrollDelegate', ['$rootScope', '$timeout', function($rootScope, $timeout) {
+.factory('$ionicScrollDelegate', ['$rootScope', '$timeout', function($rootScope, $timeout) {
   return {
     /**
      * Trigger a scroll-to-top event on child scrollers.

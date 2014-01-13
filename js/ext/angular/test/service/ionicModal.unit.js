@@ -3,9 +3,9 @@ describe('Ionic Modal', function() {
 
   beforeEach(module('ionic.service.modal'));
 
-  beforeEach(inject(function(Modal, $q, $templateCache) {
+  beforeEach(inject(function($ionicModal, $q, $templateCache) {
     q = $q;
-    modal = Modal;
+    modal = $ionicModal;
 
     $templateCache.put('modal.html', '<div class="modal"></div>');
   }));

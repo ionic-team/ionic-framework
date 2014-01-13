@@ -139,9 +139,9 @@
     <script>
       angular.module('actionTest', ['ionic', 'ngAnimate'])
 
-      .controller('ActionCtrl', function($scope, ActionSheet) {
+      .controller('ActionCtrl', function($scope, $ionicActionSheet) {
         $scope.show = function() {
-          ActionSheet.show({
+          $ionicActionSheet.show({
             buttons: [
               { text: 'Share' },
               { text: 'Move' },

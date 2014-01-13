@@ -18,7 +18,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
 
 // The content directive is a core scrollable content area
 // that is part of many View hierarchies
-.directive('content', ['$parse', '$timeout', 'Platform', 'ScrollDelegate', function($parse, $timeout, Platform, ScrollDelegate) {
+.directive('content', ['$parse', '$timeout', '$ionicPlatform', '$ionicScrollDelegate', function($parse, $timeout, $ionicPlatform, $ionicScrollDelegate) {
   return {
     restrict: 'E',
     replace: true,
@@ -82,7 +82,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
           // Otherwise, supercharge this baby!
           $timeout(function() {
             var hasBouncing = $scope.$eval($scope.hasBouncing);
-            var enableBouncing = !Platform.is('Android') && hasBouncing !== false;
+            var enableBouncing = !$ionicPlatform.is('Android') && hasBouncing !== false;
             // No bouncing by default for Android users, lest they take up pitchforks
             // to our bouncing goodness
             sv = new ionic.views.Scroll({
@@ -116,7 +116,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
             }
 
             // Register for scroll delegate event handling
-            ScrollDelegate.register($scope, $element);
+            $ionicScrollDelegate.register($scope, $element);
 
             // Let child scopes access this 
             $scope.$parent.scrollView = sv;

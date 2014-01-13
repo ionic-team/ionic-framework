@@ -3,17 +3,17 @@
 
 angular.module('ionic.ui.header', ['ngAnimate'])
 
-.directive('barHeader', ['ScrollDelegate', function(ScrollDelegate) {
+.directive('barHeader', ['$ionicScrollDelegate', function($ionicScrollDelegate) {
   return {
     restrict: 'C',
     link: function($scope, $element, $attr) {
       // We want to scroll to top when the top of this element is clicked
-      ScrollDelegate.tapScrollToTop($element);
+      $ionicScrollDelegate.tapScrollToTop($element);
     }
   };
 }])
 
-.directive('headerBar', [function(ScrollDelegate) {
+.directive('headerBar', ['$ionicScrollDelegate', function($ionicScrollDelegate) {
   return {
     restrict: 'E',
     replace: true,

@@ -313,9 +313,9 @@
         };
       })
 
-      .controller('ForgotPasswordCtrl', function(ViewService, $rootScope, $scope, $state) {
+      .controller('ForgotPasswordCtrl', function($ionicViewService, $rootScope, $scope, $state) {
         $scope.clearViewHistory = function() {
-          ViewService.clearHistory();
+          $ionicViewService.clearHistory();
         };
 
         $scope.hideNavBar = function() {

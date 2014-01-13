@@ -1,6 +1,6 @@
 angular.module('ionic.service.gesture', [])
 
-.factory('Gesture', [function() {
+.factory('$ionicGesture', [function() {
   return {
     on: function(eventType, cb, $element) {
       return window.ionic.onGesture(eventType, cb, $element[0]);

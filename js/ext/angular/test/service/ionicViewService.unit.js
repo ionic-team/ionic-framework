@@ -37,8 +37,8 @@ describe('Ionic View Service', function() {
 
   }));
 
-  beforeEach(inject(function(ViewService, $rootScope, $window, $location) {
-    viewService = ViewService;
+  beforeEach(inject(function($ionicViewService, $rootScope, $window, $location) {
+    viewService = $ionicViewService;
     rootScope = $rootScope;
     window = $window;
     window.history.go = function(val) { return val };

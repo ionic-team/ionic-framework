@@ -3,8 +3,8 @@ describe('Ionic Gesture Service', function() {
 
   beforeEach(module('ionic.service.gesture'));
 
-  beforeEach(inject(function(Gesture) {
-    gesture = Gesture;
+  beforeEach(inject(function($ionicGesture) {
+    gesture = $ionicGesture;
   }));
 
   it('Should bind', function() {

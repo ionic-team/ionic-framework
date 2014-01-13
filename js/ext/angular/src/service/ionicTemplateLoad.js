@@ -1,6 +1,6 @@
 angular.module('ionic.service.templateLoad', [])
 
-.factory('TemplateLoader', ['$q', '$http', '$templateCache', function($q, $http, $templateCache) {
+.factory('$ionicTemplateLoader', ['$q', '$http', '$templateCache', function($q, $http, $templateCache) {
   return {
     load: function(url) {
       var deferred = $q.defer();

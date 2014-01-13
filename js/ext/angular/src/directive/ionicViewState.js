@@ -22,8 +22,8 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 /**
  * Our Nav Bar directive which updates as the controller state changes.
  */
-.directive('navBar', ['ViewService', '$rootScope', '$animate', '$compile', 
-             function( ViewService,   $rootScope,   $animate,   $compile) {
+.directive('navBar', ['$ionicViewService', '$rootScope', '$animate', '$compile', 
+             function( $ionicViewService,   $rootScope,   $animate,   $compile) {
 
   /**
    * Perform an animation between one tab bar state and the next.
@@ -150,8 +150,8 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 }])
 
 
-.directive('view', ['ViewService', '$rootScope', '$animate', 
-           function( ViewService,   $rootScope,   $animate) {
+.directive('view', ['$ionicViewService', '$rootScope', '$animate', 
+           function( $ionicViewService,   $rootScope,   $animate) {
   return {
     restrict: 'EA',
     priority: 1000,
@@ -210,9 +210,9 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 }])
 
 
-.directive('viewBack', ['ViewService', '$rootScope', function(ViewService, $rootScope) {
+.directive('viewBack', ['$ionicViewService', '$rootScope', function($ionicViewService, $rootScope) {
   var goBack = function(e) {
-    var backView = ViewService.getBackView();
+    var backView = $ionicViewService.getBackView();
     backView && backView.go();
     e.alreadyHandled = true;
     return false;
@@ -249,8 +249,8 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 }])
 
 
-.directive('navView', ['ViewService', '$state', '$anchorScroll', '$compile', '$controller', '$animate', 
-              function( ViewService,   $state,   $anchorScroll,   $compile,   $controller,   $animate) {
+.directive('navView', ['$ionicViewService', '$state', '$anchorScroll', '$compile', '$controller', '$animate', 
+              function( $ionicViewService,   $state,   $anchorScroll,   $compile,   $controller,   $animate) {
 
   var viewIsUpdating = false;
   var animation;
@@ -315,7 +315,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           var registerData = {};
           if(currentElement[0].tagName !== 'TABS') {
             // the tabs directive shouldn't register in the view history (its tab will)
-            registerData = ViewService.register(scope);
+            registerData = $ionicViewService.register(scope);
             transitionOptions.navDirection = registerData.navDirection;
           }
 
@@ -348,7 +348,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           transitionOptions.enteringElement = currentElement;
         }
 
-        ViewService.transition(transitionOptions);
+        $ionicViewService.transition(transitionOptions);
       }
     }
   };

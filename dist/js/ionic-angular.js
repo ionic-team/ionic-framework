@@ -64,7 +64,7 @@ angular.module('ionic', [
 
 angular.module('ionic.ui.service.scrollDelegate', [])
 
-.factory('ScrollDelegate', ['$rootScope', '$timeout', function($rootScope, $timeout) {
+.factory('$ionicScrollDelegate', ['$rootScope', '$timeout', function($rootScope, $timeout) {
   return {
     /**
      * Trigger a scroll-to-top event on child scrollers.
@@ -128,7 +128,7 @@ angular.module('ionic.ui.service.scrollDelegate', [])
 
 angular.module('ionic.ui.service.slideBoxDelegate', [])
 
-.factory('SlideBoxDelegate', ['$rootScope', '$timeout', function($rootScope, $timeout) {
+.factory('$ionicSlideBoxDelegate', ['$rootScope', '$timeout', function($rootScope, $timeout) {
   return {
     /**
      * Trigger a slidebox to update and resize itself
@@ -155,8 +155,8 @@ angular.module('ionic.ui.service.slideBoxDelegate', [])
 ;
 angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ionic.ui.actionSheet', 'ngAnimate'])
 
-.factory('ActionSheet', ['$rootScope', '$document', '$compile', '$animate', '$timeout', 'TemplateLoader',
-    function($rootScope, $document, $compile, $animate, $timeout, TemplateLoader) {
+.factory('$ionicActionSheet', ['$rootScope', '$document', '$compile', '$animate', '$timeout', '$ionicTemplateLoader',
+    function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoader) {
 
   return {
     /**
@@ -228,7 +228,7 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
 ;
 angular.module('ionic.service.gesture', [])
 
-.factory('Gesture', [function() {
+.factory('$ionicGesture', [function() {
   return {
     on: function(eventType, cb, $element) {
       return window.ionic.onGesture(eventType, cb, $element[0]);
@@ -241,7 +241,7 @@ angular.module('ionic.service.gesture', [])
 ;
 angular.module('ionic.service.loading', ['ionic.ui.loading'])
 
-.factory('Loading', ['$rootScope', '$document', '$compile', function($rootScope, $document, $compile) {
+.factory('$ionicLoading', ['$rootScope', '$document', '$compile', function($rootScope, $document, $compile) {
   return {
     /**
      * Load an action sheet with the given template string.
@@ -298,7 +298,7 @@ angular.module('ionic.service.loading', ['ionic.ui.loading'])
 angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'])
 
 
-.factory('Modal', ['$rootScope', '$document', '$compile', '$animate', '$q', 'TemplateLoader', function($rootScope, $document, $compile, $animate, $q, TemplateLoader) {
+.factory('$ionicModal', ['$rootScope', '$document', '$compile', '$animate', '$q', '$ionicTemplateLoader', function($rootScope, $document, $compile, $animate, $q, $ionicTemplateLoader) {
   var ModalView = ionic.views.Modal.inherit({
     initialize: function(opts) {
       ionic.views.Modal.prototype.initialize.call(this, opts);
@@ -366,7 +366,7 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'
       return modal;
     },
     fromTemplateUrl: function(url, cb, options) {
-      return TemplateLoader.load(url).then(function(templateString) {
+      return $ionicTemplateLoader.load(url).then(function(templateString) {
         var modal = createModal(templateString, options || {});
         cb ? cb(modal) : null;
         return modal;
@@ -387,7 +387,7 @@ angular.module('ionic.service.platform', [])
  * initializing some defaults that depend on the platform, such as the
  * height of header bars on iOS 7.
  */
-.provider('Platform', function() {
+.provider('$ionicPlatform', function() {
   var platform = 'web';
   var isPlatformReady = false;
 
@@ -477,7 +477,7 @@ angular.module('ionic.service.platform', [])
 angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
 
 
-.factory('Popup', ['$rootScope', '$document', '$compile', 'TemplateLoader', function($rootScope, $document, $compile, TemplateLoader) {
+.factory('$ionicPopup', ['$rootScope', '$document', '$compile', 'TemplateLoader', function($rootScope, $document, $compile, TemplateLoader) {
 
   var getPopup = function() {
     // Make sure there is only one loading element on the page at one point in time
@@ -534,7 +534,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
 ;
 angular.module('ionic.service.templateLoad', [])
 
-.factory('TemplateLoader', ['$q', '$http', '$templateCache', function($q, $http, $templateCache) {
+.factory('$ionicTemplateLoader', ['$q', '$http', '$templateCache', function($q, $http, $templateCache) {
   return {
     load: function(url) {
       var deferred = $q.defer();
@@ -606,7 +606,7 @@ angular.module('ionic.service.view', ['ui.router'])
 
 }])
 
-.factory('ViewService', ['$rootScope', '$state', '$location', '$window', '$injector', 
+.factory('$ionicViewService', ['$rootScope', '$state', '$location', '$window', '$injector', 
                 function( $rootScope,   $state,   $location,   $window,   $injector) {
   var $animate = $injector.has('$animate') ? $injector.get('$animate') : false;
 
@@ -1025,17 +1025,17 @@ angular.module('ionic.ui.actionSheet', [])
 
 angular.module('ionic.ui.header', ['ngAnimate'])
 
-.directive('barHeader', ['ScrollDelegate', function(ScrollDelegate) {
+.directive('barHeader', ['$ionicScrollDelegate', function($ionicScrollDelegate) {
   return {
     restrict: 'C',
     link: function($scope, $element, $attr) {
       // We want to scroll to top when the top of this element is clicked
-      ScrollDelegate.tapScrollToTop($element);
+      $ionicScrollDelegate.tapScrollToTop($element);
     }
   };
 }])
 
-.directive('headerBar', [function(ScrollDelegate) {
+.directive('headerBar', ['$ionicScrollDelegate', function($ionicScrollDelegate) {
   return {
     restrict: 'E',
     replace: true,
@@ -1177,7 +1177,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
 
 // The content directive is a core scrollable content area
 // that is part of many View hierarchies
-.directive('content', ['$parse', '$timeout', 'Platform', 'ScrollDelegate', function($parse, $timeout, Platform, ScrollDelegate) {
+.directive('content', ['$parse', '$timeout', '$ionicPlatform', '$ionicScrollDelegate', function($parse, $timeout, $ionicPlatform, $ionicScrollDelegate) {
   return {
     restrict: 'E',
     replace: true,
@@ -1241,7 +1241,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
           // Otherwise, supercharge this baby!
           $timeout(function() {
             var hasBouncing = $scope.$eval($scope.hasBouncing);
-            var enableBouncing = !Platform.is('Android') && hasBouncing !== false;
+            var enableBouncing = !$ionicPlatform.is('Android') && hasBouncing !== false;
             // No bouncing by default for Android users, lest they take up pitchforks
             // to our bouncing goodness
             sv = new ionic.views.Scroll({
@@ -1275,7 +1275,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
             }
 
             // Register for scroll delegate event handling
-            ScrollDelegate.register($scope, $element);
+            $ionicScrollDelegate.register($scope, $element);
 
             // Let child scopes access this 
             $scope.$parent.scrollView = sv;
@@ -1822,7 +1822,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
   };
 })
 
-.directive('sideMenuContent', ['$timeout', 'Gesture', function($timeout, Gesture) {
+.directive('sideMenuContent', ['$timeout', '$ionicGesture', function($timeout, $ionicGesture) {
   return {
     restrict: 'AC',
     require: '^sideMenus',
@@ -1862,10 +1862,10 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
         };
 
         //var dragGesture = Gesture.on('drag', dragFn, $element);
-        var dragRightGesture = Gesture.on('dragright', dragFn, $element);
-        var dragLeftGesture = Gesture.on('dragleft', dragFn, $element);
-        var dragUpGesture = Gesture.on('dragup', dragVertFn, $element);
-        var dragDownGesture = Gesture.on('dragdown', dragVertFn, $element);
+        var dragRightGesture = $ionicGesture.on('dragright', dragFn, $element);
+        var dragLeftGesture = $ionicGesture.on('dragleft', dragFn, $element);
+        var dragUpGesture = $ionicGesture.on('dragup', dragVertFn, $element);
+        var dragDownGesture = $ionicGesture.on('dragdown', dragVertFn, $element);
 
         var dragReleaseFn = function(e) {
           isDragging = false;
@@ -1875,7 +1875,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
           defaultPrevented = false;
         };
 
-        var releaseGesture = Gesture.on('release', dragReleaseFn, $element);
+        var releaseGesture = $ionicGesture.on('release', dragReleaseFn, $element);
 
         sideMenuCtrl.setContent({
           onDrag: function(e) {},
@@ -1903,11 +1903,11 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
 
         // Cleanup
         $scope.$on('$destroy', function() {
-          Gesture.off(dragLeftGesture, 'dragleft', dragFn);
-          Gesture.off(dragRightGesture, 'dragright', dragFn);
-          Gesture.off(dragUpGesture, 'dragup', dragFn);
-          Gesture.off(dragDownGesture, 'dragdown', dragFn);
-          Gesture.off(releaseGesture, 'release', dragReleaseFn);
+          $ionicGesture.off(dragLeftGesture, 'dragleft', dragFn);
+          $ionicGesture.off(dragRightGesture, 'dragright', dragFn);
+          $ionicGesture.off(dragUpGesture, 'dragup', dragFn);
+          $ionicGesture.off(dragDownGesture, 'dragdown', dragFn);
+          $ionicGesture.off(releaseGesture, 'release', dragReleaseFn);
         });
       };
     }
@@ -1967,7 +1967,7 @@ angular.module('ionic.ui.slideBox', [])
  * The internal controller for the slide box controller.
  */
 
-.directive('slideBox', ['$timeout', '$compile', 'SlideBoxDelegate', function($timeout, $compile, SlideBoxDelegate) {
+.directive('slideBox', ['$timeout', '$compile', '$ionicSlideBoxDelegate', function($timeout, $compile, $ionicSlideBoxDelegate) {
   return {
     restrict: 'E',
     replace: true,
@@ -2027,7 +2027,7 @@ angular.module('ionic.ui.slideBox', [])
 
       $scope.$parent.slideBox = slider;
 
-      SlideBoxDelegate.register($scope, $element);
+      $ionicSlideBoxDelegate.register($scope, $element);
 
       this.getNumSlides = function() {
         return slider.getNumSlides();
@@ -2224,7 +2224,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
 }])
 
 // Generic controller directive
-.directive('tab', ['ViewService', '$rootScope', '$parse', function(ViewService, $rootScope, $parse) {
+.directive('tab', ['$ionicViewService', '$rootScope', '$parse', function($ionicViewService, $rootScope, $parse) {
   return {
     restrict: 'E',
     require: '^tabs',
@@ -2235,7 +2235,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
       return function link($scope, $element, $attr, tabsCtrl) {
         var childScope, childElement;
 
-        ViewService.registerHistory($scope);
+        $ionicViewService.registerHistory($scope);
 
         $scope.title = $attr.title;
         $scope.icon = $attr.icon;
@@ -2302,7 +2302,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
           if($scope.hasNavView) {
             // this tab has a ui-view
             $scope.navViewName = navViewEle[0].getAttribute('name');
-            if( ViewService.isCurrentStateNavView( $scope.navViewName ) ) {
+            if( $ionicViewService.isCurrentStateNavView( $scope.navViewName ) ) {
               // this tab's ui-view is the current one, go to it!
               tabsCtrl.select($scope.tabIndex);
             }
@@ -2310,7 +2310,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
         });
 
         $rootScope.$on('$stateChangeSuccess', function(value){
-          if( ViewService.isCurrentStateNavView($scope.navViewName) &&
+          if( $ionicViewService.isCurrentStateNavView($scope.navViewName) &&
               $scope.tabIndex !== tabsCtrl.selectedIndex) {
             tabsCtrl.select($scope.tabIndex);
           }
@@ -2450,8 +2450,8 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 /**
  * Our Nav Bar directive which updates as the controller state changes.
  */
-.directive('navBar', ['ViewService', '$rootScope', '$animate', '$compile', 
-             function( ViewService,   $rootScope,   $animate,   $compile) {
+.directive('navBar', ['$ionicViewService', '$rootScope', '$animate', '$compile', 
+             function( $ionicViewService,   $rootScope,   $animate,   $compile) {
 
   /**
    * Perform an animation between one tab bar state and the next.
@@ -2578,8 +2578,8 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 }])
 
 
-.directive('view', ['ViewService', '$rootScope', '$animate', 
-           function( ViewService,   $rootScope,   $animate) {
+.directive('view', ['$ionicViewService', '$rootScope', '$animate', 
+           function( $ionicViewService,   $rootScope,   $animate) {
   return {
     restrict: 'EA',
     priority: 1000,
@@ -2638,9 +2638,9 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 }])
 
 
-.directive('viewBack', ['ViewService', '$rootScope', function(ViewService, $rootScope) {
+.directive('viewBack', ['$ionicViewService', '$rootScope', function($ionicViewService, $rootScope) {
   var goBack = function(e) {
-    var backView = ViewService.getBackView();
+    var backView = $ionicViewService.getBackView();
     backView && backView.go();
     e.alreadyHandled = true;
     return false;
@@ -2677,8 +2677,8 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 }])
 
 
-.directive('navView', ['ViewService', '$state', '$anchorScroll', '$compile', '$controller', '$animate', 
-              function( ViewService,   $state,   $anchorScroll,   $compile,   $controller,   $animate) {
+.directive('navView', ['$ionicViewService', '$state', '$anchorScroll', '$compile', '$controller', '$animate', 
+              function( $ionicViewService,   $state,   $anchorScroll,   $compile,   $controller,   $animate) {
 
   var viewIsUpdating = false;
   var animation;
@@ -2743,7 +2743,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           var registerData = {};
           if(currentElement[0].tagName !== 'TABS') {
             // the tabs directive shouldn't register in the view history (its tab will)
-            registerData = ViewService.register(scope);
+            registerData = $ionicViewService.register(scope);
             transitionOptions.navDirection = registerData.navDirection;
           }
 
@@ -2776,7 +2776,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           transitionOptions.enteringElement = currentElement;
         }
 
-        ViewService.transition(transitionOptions);
+        $ionicViewService.transition(transitionOptions);
       }
     }
   };
@@ -2784,7 +2784,8 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 }]);
 
 
-})();;
+})();
+;
 (function() {
 'use strict';
 

@@ -64,7 +64,7 @@
     <script>
       angular.module('slideBoxTest', ['ionic'])
 
-      .controller('SlideCtrl', function($scope, $timeout, SlideBoxDelegate) {
+      .controller('SlideCtrl', function($scope, $timeout, $ionicSlideBoxDelegate) {
 
         $timeout(function() {
           $scope.pages = [ {
@@ -79,7 +79,7 @@
             }
           ];
 
-          SlideBoxDelegate.update();
+          $ionicSlideBoxDelegate.update();
         }, 100);
       })
 

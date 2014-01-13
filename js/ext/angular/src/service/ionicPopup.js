@@ -1,7 +1,7 @@
 angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
 
 
-.factory('Popup', ['$rootScope', '$document', '$compile', 'TemplateLoader', function($rootScope, $document, $compile, TemplateLoader) {
+.factory('$ionicPopup', ['$rootScope', '$document', '$compile', 'TemplateLoader', function($rootScope, $document, $compile, TemplateLoader) {
 
   var getPopup = function() {
     // Make sure there is only one loading element on the page at one point in time

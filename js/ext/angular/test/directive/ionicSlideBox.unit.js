@@ -7,8 +7,8 @@ describe('Ionic Angular Slide Box', function() {
 
   beforeEach(module('ionic'));
 
-  beforeEach(inject(function($compile, $rootScope, $timeout, SlideBoxDelegate) {
-    delegate = SlideBoxDelegate;
+  beforeEach(inject(function($compile, $rootScope, $timeout, $ionicSlideBoxDelegate) {
+    delegate = $ionicSlideBoxDelegate;
     timeout = $timeout;
     el = $compile('<slide-box>\
       <slide>\

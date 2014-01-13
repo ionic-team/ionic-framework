@@ -50,7 +50,7 @@ angular.module('ionic.service.view', ['ui.router'])
 
 }])
 
-.factory('ViewService', ['$rootScope', '$state', '$location', '$window', '$injector', 
+.factory('$ionicViewService', ['$rootScope', '$state', '$location', '$window', '$injector', 
                 function( $rootScope,   $state,   $location,   $window,   $injector) {
   var $animate = $injector.has('$animate') ? $injector.get('$animate') : false;
 
