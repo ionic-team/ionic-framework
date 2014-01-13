@@ -1,7 +1,8 @@
-angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ionic.ui.actionSheet', 'ngAnimate'])
+angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ionic.service.platform', 'ionic.ui.actionSheet', 'ngAnimate'])
 
-.factory('$ionicActionSheet', ['$rootScope', '$document', '$compile', '$animate', '$timeout', '$ionicTemplateLoader',
-    function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoader) {
+.factory('$ionicActionSheet', ['$rootScope', '$document', '$compile', '$animate', '$timeout',
+    '$ionicTemplateLoader', '$ionicPlatform',
+    function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicPlatform) {
 
   return {
     /**
@@ -35,6 +36,17 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
           scope.$destroy();
         });
       };
+
+      var onHardwareBackButton = function() {
+        hideSheet();
+      };
+
+      scope.$on('$destroy', function() {
+        $ionicPlatform.offHardwareBackButton(onHardwareBackButton);
+      });
+
+      // Support Android back button to close
+      $ionicPlatform.onHardwareBackButton(onHardwareBackButton);
 
       scope.cancel = function() {
         hideSheet(true);

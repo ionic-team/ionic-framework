@@ -153,10 +153,11 @@ angular.module('ionic.ui.service.slideBoxDelegate', [])
 
 })(ionic);
 ;
-angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ionic.ui.actionSheet', 'ngAnimate'])
+angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ionic.service.platform', 'ionic.ui.actionSheet', 'ngAnimate'])
 
-.factory('$ionicActionSheet', ['$rootScope', '$document', '$compile', '$animate', '$timeout', '$ionicTemplateLoader',
-    function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoader) {
+.factory('$ionicActionSheet', ['$rootScope', '$document', '$compile', '$animate', '$timeout',
+    '$ionicTemplateLoader', '$ionicPlatform',
+    function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicPlatform) {
 
   return {
     /**
@@ -190,6 +191,17 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
           scope.$destroy();
         });
       };
+
+      var onHardwareBackButton = function() {
+        hideSheet();
+      };
+
+      scope.$on('$destroy', function() {
+        $ionicPlatform.offHardwareBackButton(onHardwareBackButton);
+      });
+
+      // Support Android back button to close
+      $ionicPlatform.onHardwareBackButton(onHardwareBackButton);
 
       scope.cancel = function() {
         hideSheet(true);
@@ -295,10 +307,10 @@ angular.module('ionic.service.loading', ['ionic.ui.loading'])
   };
 }]);
 ;
-angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'])
+angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.service.platform', 'ngAnimate'])
 
 
-.factory('$ionicModal', ['$rootScope', '$document', '$compile', '$animate', '$q', '$ionicTemplateLoader', function($rootScope, $document, $compile, $animate, $q, $ionicTemplateLoader) {
+.factory('$ionicModal', ['$rootScope', '$document', '$compile', '$animate', '$q', '$ionicPlatform', '$ionicTemplateLoader', function($rootScope, $document, $compile, $animate, $q, $ionicPlatform, $ionicTemplateLoader) {
   var ModalView = ionic.views.Modal.inherit({
     initialize: function(opts) {
       ionic.views.Modal.prototype.initialize.call(this, opts);
@@ -317,6 +329,18 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'
         $animate.addClass(element, this.animation, function() {
         });
       }
+
+      var onHardwareBackButton = function() {
+        _this.hide();
+      };
+
+      _this.scope.$on('$destroy', function() {
+        $ionicPlatform.offHardwareBackButton(onHardwareBackButton);
+      });
+
+      // Support Android back button to close
+      $ionicPlatform.onHardwareBackButton(onHardwareBackButton);
+
     },
     // Hide the modal
     hide: function() {
