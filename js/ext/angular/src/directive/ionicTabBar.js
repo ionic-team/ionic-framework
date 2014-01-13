@@ -112,7 +112,6 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
         });
 
         $scope.$watch('activeAnimation', function(value) {
-          //$element.removeClass($scope.animation + ' ' + $scope.animation + '-reverse');
           $element.addClass($scope.activeAnimation);
         });
         transclude($scope, function(cloned) {
@@ -125,7 +124,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
 }])
 
 // Generic controller directive
-.directive('tab', ['ViewService', '$rootScope', '$animate', '$parse', function(ViewService, $rootScope, $animate, $parse) {
+.directive('tab', ['ViewService', '$rootScope', '$parse', function(ViewService, $rootScope, $parse) {
   return {
     restrict: 'E',
     require: '^tabs',
@@ -176,29 +175,27 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
 
         $scope.$watch('isVisible', function(value) {
           if(childElement) {
-            $animate.leave(childElement);
+            childElement.remove();
+            childElement = null;
             $scope.$broadcast('tab.hidden');
-            childElement = undefined;
           }
           if(childScope) {
             childScope.$destroy();
-            childScope = undefined;
+            childScope = null;
           }
           if(value) {
             childScope = $scope.$new();
             transclude(childScope, function(clone) {
-              childElement = clone;
-
               clone.addClass('pane');
-
-              $animate.enter(clone, $element.parent(), $element);
-
+              clone.removeAttr('title');
+              childElement = clone;
+              $element.parent().append(childElement);
               $scope.$broadcast('tab.shown');
             });
           }
         });
 
-        // check if it has a ui-view in it
+        // on link, check if it has a nav-view in it
         transclude($scope.$new(), function(clone) {
           var navViewEle = clone[0].getElementsByTagName("nav-view");
           $scope.hasNavView = (navViewEle.length > 0);
