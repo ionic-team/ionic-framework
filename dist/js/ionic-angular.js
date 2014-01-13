@@ -405,8 +405,8 @@ angular.module('ionic.service.platform', [])
   // We need to do some stuff as soon as we know the platform,
   // like adjust header margins for iOS 7, etc.
   setTimeout(function afterReadyWait() {
-    if(isReady()) {
-      ionic.Platform.detect();
+    if(isReady() && ionic.Platform.detect()) {
+      return;
     } else {
       setTimeout(afterReadyWait, 50);
     }
