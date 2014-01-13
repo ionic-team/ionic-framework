@@ -12,11 +12,14 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ngAnimate'
       var _this = this;
       var element = angular.element(this.el);
       if(!element.parent().length) {
-        angular.element($document[0].body).append(element);
+        element.addClass(this.animation);
+        $animate.enter(element, angular.element($document[0].body), null, function() {
+        });
         ionic.views.Modal.prototype.show.call(_this);
+      } else {
+        $animate.addClass(element, this.animation, function() {
+        });
       }
-      $animate.addClass(element, this.animation, function() {
-      });
     },
     // Hide the modal
     hide: function() {
