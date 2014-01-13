@@ -47,12 +47,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
       if(attr.hasSubheader == "true") { element.addClass('has-subheader'); }
       if(attr.hasFooter == "true") { element.addClass('has-footer'); }
       if(attr.hasTabs == "true") { element.addClass('has-tabs'); }
-      if(attr.padding == "true") { 
-        var scroll = element.find('.scroll');
-        if(scroll.length) {
-          scroll.addClass('padding');
-        }
-      }
+      if(attr.padding == "true") { element.find('.scroll').addClass('padding'); }
 
       return function link($scope, $element, $attr) {
         var clone, sc, sv,
