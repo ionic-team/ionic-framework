@@ -400,7 +400,7 @@ $ios7-transition-duration: 250ms;
 
 .slide-in-up {
   // Start it down low
-  @include translate3d(0, 0%, 0);
+  @include translate3d(0, 0, 0);
   opacity: 1;
 
   &.ng-enter, .ng-enter {
@@ -432,7 +432,7 @@ $ios7-transition-duration: 250ms;
 .slide-in-up-add {
   @include animation-duration(400ms);
   @include animation-timing-function($slide-in-up-function);
-  @include animation-fill-mode(both);
+  @include animation-fill-mode(forwards);
 }
 .slide-in-up-add-active {
   @include animation-name(slideInUp);
