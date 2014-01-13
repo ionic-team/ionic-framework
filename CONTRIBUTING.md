@@ -2,11 +2,15 @@ Please read the contributing guide on the ionic website: http://ionicframework.c
 
 ### Creating an Issue
 
-If you think you might have found a bug, please start by making sure it hasn't already been [reported](https://github.com/driftyco/ionic/issues?state=open). You can search through existing issues to see if someone's reported one similar to yours.
+If you have a question on how something works you might want to visit the [Ionic Forum](http://forum.ionicframework.com/) first.
+
+If you think you have found a bug, or have a new feature idea, please start by making sure it hasn't already been [reported](https://github.com/driftyco/ionic/issues?state=open). You can search through existing issues to see if someone's reported one similar to yours.
 
 If not, then [create a plunkr](http://plnkr.co/edit/vD0O9M?p=preview) that demonstrates the problem (try to use as little code as possible: the more minimalist, the faster we can debug it).
 
 Next, [create a new issue](https://github.com/driftyco/ionic/issues/new) that briefly explains the problem, and provides a bit of background as to the circumstances that triggered it. Don't forget to include the link to that plunkr you created!
+
+
 
 ### Pull Request Guidelines
 
