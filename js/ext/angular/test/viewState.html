@@ -58,10 +58,18 @@
     </script>
 
     <script id="forgot-password.html" type="text/ng-template">
-      <view title="'Forgot Password'">
+      <view title="'Forgot Password'" hide-nav-bar="true">
         <content has-header="true" padding="true">
+<<<<<<< HEAD
           <p>Seriously!? Again?!</p>
           <p>How about I just give you a password, hows this: <br><code>{{password}}</code></p>
+=======
+          <p>This view hides the nav bar using the hideNavBar attribute.</p>
+          <p>
+            <button ng-click="hideNavBar()">Hide Nav Bar</button>
+            <button ng-click="showNavBar()">Show Nav Bar</button>
+          </p>
+>>>>>>> upstream/master
           <p>
             <button ng-click="clearViewHistory()">Clear View History</button>
           </p>
@@ -183,7 +191,11 @@
           <p>
             <button ng-click="hideBackButton()">Hide Back Button</button>
             <button ng-click="showBackButton()">Show Back Button</button>
+<<<<<<< HEAD
             </p>
+=======
+          </p>
+>>>>>>> upstream/master
           <p>
             Current View: {{ $viewHistory.currentView }}<br>
             Back View: {{ $viewHistory.backView }}<br>
@@ -304,19 +316,32 @@
       })
 
       .controller('SignInCtrl', function($scope, $state) {
-        //console.log('SignInCtrl');
-
         $scope.signIn = function(user) {
           $state.go('tabs.autolist');
         };
       })
 
+<<<<<<< HEAD
       .controller('ForgotPasswordCtrl', function(ViewService, $scope, $state) {
         $scope.password = Math.round(Math.random() * 10000);
         
         $scope.clearViewHistory = function() {
           ViewService.clearHistory();
         };
+=======
+      .controller('ForgotPasswordCtrl', function(ViewService, $rootScope, $scope, $state) {
+        $scope.clearViewHistory = function() {
+          ViewService.clearHistory();
+        };
+
+        $scope.hideNavBar = function() {
+          $rootScope.$broadcast('viewState.showNavBar', false);
+        };
+
+        $scope.showNavBar = function() {
+          $rootScope.$broadcast('viewState.showNavBar', true);
+        };
+>>>>>>> upstream/master
       })
 
       .controller('AutoListCtrl', function($scope, $state) {

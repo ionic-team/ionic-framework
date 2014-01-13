@@ -67,7 +67,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
       backButtonIcon: '@',
       alignTitle: '@'
     },
-    template: '<header class="bar bar-header nav-bar">'+//' ng-class="{invisible: !navController.navBar.isVisible}">' + 
+    template: '<header class="bar bar-header nav-bar" ng-class="{invisible: !showNavBar}">' + 
         '<div class="buttons"> ' +
           '<button view-back class="button" ng-if="enableBackButton" ng-class="backButtonClass" ng-bind-html="backButtonLabel"></button>' +
           '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" class="button no-animation {{button.type}}" ng-bind-html="button.content"></button>' + 
@@ -77,7 +77,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" class="button no-animation {{button.type}}" ng-bind-html="button.content"></button>' + 
         '</div>' +
       '</header>',
-    link: function($scope, $element, $attr, navCtrl) {
+    link: function($scope, $element, $attr) {
 
       // Create the back button content and show/hide it based on scope settings
       $scope.enableBackButton = true;
@@ -86,8 +86,10 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
         $scope.backButtonClass += ' icon ' + $attr.backButtonIcon;
       }
 
-      // Store a reference to our nav controller
-      $scope.navController = navCtrl;
+      $scope.showNavBar = true;
+      $rootScope.$on('viewState.showNavBar', function(e, data) {
+        $scope.showNavBar = data;
+      });
 
       // Initialize our header bar view which will handle resizing and aligning our title labels
       var hb = new ionic.views.HeaderBar({
@@ -178,15 +180,26 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           $rootScope.$broadcast('viewState.showBackButton', false);
         }
 
+        // Should the nav bar be hidden for this view or not?
         $scope.hideNavBar = $scope.$eval($scope.hideNavBar);
+<<<<<<< HEAD
+=======
+        $rootScope.$broadcast('viewState.showNavBar', !$scope.hideNavBar);
+>>>>>>> upstream/master
 
         // watch for changes in the left buttons
-        $scope.$watch('leftButtons', function(value) {
+        var deregLeftButtons = $scope.$watch('leftButtons', function(value) {
           $scope.$emit('viewState.leftButtonsChanged', $scope.leftButtons);
         });
 
-        $scope.$watch('rightButtons', function(val) {
+        var deregRightButtons = $scope.$watch('rightButtons', function(val) {
           $scope.$emit('viewState.rightButtonsChanged', $scope.rightButtons);
+        });
+
+        $scope.$on('$destroy', function(){
+          // deregister on destroy
+          deregLeftButtons();
+          deregRightButtons();
         });
 
       };
