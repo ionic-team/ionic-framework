@@ -2626,12 +2626,18 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
         $rootScope.$broadcast('viewState.showNavBar', !$scope.hideNavBar);
 
         // watch for changes in the left buttons
-        $scope.$watch('leftButtons', function(value) {
+        var deregLeftButtons = $scope.$watch('leftButtons', function(value) {
           $scope.$emit('viewState.leftButtonsChanged', $scope.leftButtons);
         });
 
-        $scope.$watch('rightButtons', function(val) {
+        var deregRightButtons = $scope.$watch('rightButtons', function(val) {
           $scope.$emit('viewState.rightButtonsChanged', $scope.rightButtons);
+        });
+
+        $scope.$on('$destroy', function(){
+          // deregister on destroy
+          deregLeftButtons();
+          deregRightButtons();
         });
 
       };
