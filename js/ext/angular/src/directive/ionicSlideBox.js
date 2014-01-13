@@ -24,7 +24,7 @@ angular.module('ionic.ui.slideBox', [])
       showPager: '@',
       disableScroll: '@',
       onSlideChanged: '&',
-      activeSlide: '='
+      activeSlide: '=?'
     },
     controller: ['$scope', '$element', function($scope, $element) {
       var _this = this;
