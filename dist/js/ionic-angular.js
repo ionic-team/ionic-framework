@@ -2019,6 +2019,7 @@ angular.module('ionic.ui.slideBox', [])
         auto: slideInterval,
         disableScroll: ($scope.$eval($scope.disableScroll) === true) || false,
         continuous: continuous,
+        startSlide: $scope.activeSlide,
         slidesChanged: function() {
           $scope.currentSlide = slider.getPos();
 
