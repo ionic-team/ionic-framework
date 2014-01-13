@@ -1802,7 +1802,7 @@ window.ionic = {
 
     // Check if the platform is the one detected by cordova
     is: function(type) {
-      if(window.device) {
+      if(window.device && window.device.platform) {
         return window.device.platform === type || window.device.platform.toLowerCase() === type;
       }
 
