@@ -56,13 +56,13 @@ describe('Ionic View', function() {
 
   it('should show/hide navBar', function() {
     var element = compile('<nav-bar></nav-bar>')(scope);
-    expect(element.hasClass('invisible')).toEqual(false);
-    scope.$broadcast('viewState.showNavBar', false);
-    scope.$digest();
     expect(element.hasClass('invisible')).toEqual(true);
     scope.$broadcast('viewState.showNavBar', true);
     scope.$digest();
     expect(element.hasClass('invisible')).toEqual(false);
+    scope.$broadcast('viewState.showNavBar', false);
+    scope.$digest();
+    expect(element.hasClass('invisible')).toEqual(true);
   });
 
   it('should hide navBar when using view attr', function() {
