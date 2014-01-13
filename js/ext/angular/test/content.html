@@ -68,6 +68,7 @@
         has-tabs="true"
         has-header="true"
         >
+        <button ng-click="add()">Click</button>
         <ul class="list" ng-controller="AppCtrl">
           <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
         </ul>
@@ -115,6 +116,9 @@
         var startTop = header.offsetTop;
         $scope.onScrollComplete = function(event, scrollTop, scrollLeft) {
         }
+        $scope.add = function() {
+          console.log('Adding!');
+        };
         var last = 0;
         $scope.onScroll = function(event, scrollTop, scrollLeft) {
         /*

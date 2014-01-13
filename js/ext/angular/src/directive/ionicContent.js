@@ -22,7 +22,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
   return {
     restrict: 'E',
     replace: true,
-    template: '<div class="scroll-content"></div>',
+    template: '<div class="scroll-content"><div class="scroll" ng-transclude></div></div>',
     transclude: true,
     scope: {
       onRefresh: '&',
@@ -34,6 +34,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
       infiniteScrollDistance: '@',
       hasBouncing: '@',
       scroll: '@',
+      padding: '@',
       hasScrollX: '@',
       hasScrollY: '@',
       scrollbarX: '@',
@@ -49,30 +50,22 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
 
       return function link($scope, $element, $attr) {
         var clone, sc, sv,
-          addedPadding = false,
-          c = $element.eq(0);
+          c = angular.element($element.children()[0]);
 
-        // If they want plain overflow scrolling, add that as a class
+        // if padding attribute is true, then add padding if it wasn't added to the .scroll
+        if($scope.$eval($scope.padding) === true) {
+          c.addClass('padding');
+        }
+
         if($scope.scroll === "false") {
-          clone = transclude($scope.$parent);
-          $element.append(clone);
-        } else if(attr.overflowScroll === "true") {
-          c.addClass('overflow-scroll');
-          clone = transclude($scope.$parent); 
-          $element.append(clone);
+          // No scrolling
+          return;
+        } 
+        
+        // If they want plain overflow scrolling, add that as a class
+        if(attr.overflowScroll === "true") {
+          $element.addClass('overflow-scroll');
         } else {
-          sc = document.createElement('div');
-          sc.className = 'scroll';
-          if(attr.padding == "true") {
-            sc.className += ' padding';
-            addedPadding = true;
-          }
-          $element.append(sc);
-
-          // Pass the parent scope down to the child
-          clone = transclude($scope.$parent);
-          angular.element($element[0].firstElementChild).append(clone);
-
           var refresher = $element[0].querySelector('.scroll-refresher');
           var refresherHeight = refresher && refresher.clientHeight || 0;
 
@@ -161,11 +154,6 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
               }
             });
           }
-        }
-
-        // if padding attribute is true, then add padding if it wasn't added to the .scroll
-        if(attr.padding == "true" && !addedPadding) {
-          c.addClass('padding');
         }
 
       };
