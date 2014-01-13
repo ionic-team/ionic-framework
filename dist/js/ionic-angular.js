@@ -2510,7 +2510,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
       backButtonIcon: '@',
       alignTitle: '@'
     },
-    template: '<header class="bar bar-header nav-bar" ng-class="{invisible: !showNavBar}">' + 
+    template: '<header class="bar bar-header nav-bar invisible">' + 
         '<div class="buttons"> ' +
           '<button view-back class="button" ng-if="enableBackButton" ng-class="backButtonClass" ng-bind-html="backButtonLabel"></button>' +
           '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" class="button no-animation {{button.type}}" ng-bind-html="button.content"></button>' + 
@@ -2529,9 +2529,12 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
         $scope.backButtonClass += ' icon ' + $attr.backButtonIcon;
       }
 
-      $scope.showNavBar = true;
-      $rootScope.$on('viewState.showNavBar', function(e, data) {
-        $scope.showNavBar = data;
+      $rootScope.$on('viewState.showNavBar', function(e, showNavBar) {
+        if(showNavBar === false) {
+          $element[0].classList.add('invisible');
+        } else {
+          $element[0].classList.remove('invisible');
+        }
       });
 
       // Initialize our header bar view which will handle resizing and aligning our title labels
@@ -2627,8 +2630,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
         }
 
         // Should the nav bar be hidden for this view or not?
-        $scope.hideNavBar = $scope.$eval($scope.hideNavBar);
-        $rootScope.$broadcast('viewState.showNavBar', !$scope.hideNavBar);
+        $rootScope.$broadcast('viewState.showNavBar', ($scope.hideNavBar !== 'true') );
 
         // watch for changes in the left buttons
         var deregLeftButtons = $scope.$watch('leftButtons', function(value) {
