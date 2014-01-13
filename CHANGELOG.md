@@ -1,4 +1,11 @@
 
+## 0.9.20-alpha (active pre-release)
+ - Improved transitions between views
+ - Fixed hide-nav-bar/hide-back-button view attributes
+ - Removed title attributes from DOM
+ - Remove nav title if the entering view doesn't have one
+
+
 ## 0.9.19 "Alpha Koala" (2014-01-10)
  - Created ViewState Service to track navigation history
  - Created navView directive
