@@ -357,11 +357,6 @@ angular.module('ionic.service.view', ['ui.router'])
         }
         opts.parentElement.append(opts.enteringElement);
       }
-  
-      $rootScope.$broadcast('viewState.viewEnter', {
-        title: (opts.enteringScope ? opts.enteringScope.title : null),
-        navDirection: (opts.navDirection ? opts.navDirection : null)
-      });
 
       function getAnimationClass(){
         // go up the ancestors looking for an animation value

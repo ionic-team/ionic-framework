@@ -21,6 +21,16 @@ describe('Ionic View', function() {
     expect(element.hasClass('pane')).toEqual(true);
   });
 
+  it('should broacast view enter on link', function() {
+    spyOn(scope, '$broadcast');
+    var element = compile('<view title="\'Me Title\'"></view>')(scope);
+    expect(scope.$broadcast).toHaveBeenCalledWith('viewState.viewEnter', { title: 'Me Title', navDirection: undefined });
+
+    scope.$navDirection = 'forward';
+    element = compile('<view title="\'Me Title\'"></view>')(scope);
+    expect(scope.$broadcast).toHaveBeenCalledWith('viewState.viewEnter', { title: 'Me Title', navDirection: 'forward' });
+  });
+
   it('should set hide back button', function() {
     spyOn(scope, '$broadcast');
 

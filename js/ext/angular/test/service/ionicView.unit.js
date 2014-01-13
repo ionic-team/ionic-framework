@@ -779,12 +779,9 @@ describe('Ionic View Service', function() {
     opts.leavingElement = opts.parentElement.find('leaving');
     opts.enteringElement = $compile("<entering>entering</entering>")(rootScope);
 
-    spyOn(rootScope, '$broadcast');
     expect(opts.parentElement.html()).toContain("leaving");
     viewService.transition(opts);
     expect(opts.parentElement.html()).toContain("entering");
-
-    expect(rootScope.$broadcast).toHaveBeenCalledWith('viewState.viewEnter', { title: null, navDirection: null });
   }));
 
   it('should add the animation classname', inject(function($compile) {

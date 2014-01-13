@@ -102,12 +102,9 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
       $element.addClass($scope.type);
 
       var updateHeaderData = function(data) {
-        var oldTitle = $scope.currentTitle;
-        $scope.oldTitle = oldTitle;
+        $scope.oldTitle = $scope.currentTitle;
 
-        if(typeof data.title !== 'undefined') {
-          $scope.currentTitle = data.title;
-        }
+        $scope.currentTitle = (data && data.title ? data.title : '');
 
         $scope.leftButtons = data.leftButtons;
         $scope.rightButtons = data.rightButtons;
@@ -125,7 +122,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
             $element[0].classList.remove('reverse');
           }
 
-          animate($scope, $element, oldTitle, data, function() {
+          animate($scope, $element, $scope.oldTitle, data, function() {
             hb.align();
           });
         } else {
@@ -174,6 +171,12 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
       tElement[0].removeAttribute('title');
 
       return function link($scope, $element, $attr) {
+
+        $rootScope.$broadcast('viewState.viewEnter', {
+          title: $scope.title,
+          navDirection: $scope.$navDirection || $scope.$parent.$navDirection
+        });
+
         // Should we hide a back button when this tab is shown
         $scope.hideBackButton = $scope.$eval($scope.hideBackButton);
         if($scope.hideBackButton) {
@@ -321,6 +324,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
               current = $state.current;
 
           viewScope = current.scope = scope.$new();
+          viewScope.$navDirection = transitionOptions.navDirection;
 
           if (locals.$$controller) {
             locals.$scope = viewScope;
