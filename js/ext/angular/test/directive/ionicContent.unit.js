@@ -20,6 +20,14 @@ describe('Ionic Content directive', function() {
     expect(element.hasClass('has-header')).toEqual(true);
   });
 
+  it('should add padding classname', function() {
+    element = compile('<content padding="true"></content>')(scope);
+    expect(element.hasClass('scroll-content')).toEqual(true);
+    expect(element.hasClass('padding')).toEqual(false);
+    var scrollElement = element.find('.scroll');
+    expect(scrollElement.hasClass('padding')).toEqual(true);
+  });
+
   /**
    * Not currently possible to mock this AFAIK
    */
