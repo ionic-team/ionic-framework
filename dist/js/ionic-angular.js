@@ -310,7 +310,7 @@ angular.module('ionic.service.loading', ['ionic.ui.loading'])
 angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.service.platform', 'ngAnimate'])
 
 
-.factory('$ionicModal', ['$rootScope', '$document', '$compile', '$animate', '$q', '$ionicPlatform', '$ionicTemplateLoader', function($rootScope, $document, $compile, $animate, $q, $ionicPlatform, $ionicTemplateLoader) {
+.factory('$ionicModal', ['$rootScope', '$document', '$compile', '$animate', '$q', '$timeout', '$ionicPlatform', '$ionicTemplateLoader', function($rootScope, $document, $compile, $animate, $q, $timeout, $ionicPlatform, $ionicTemplateLoader) {
   var ModalView = ionic.views.Modal.inherit({
     initialize: function(opts) {
       ionic.views.Modal.prototype.initialize.call(this, opts);
@@ -330,16 +330,20 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
         });
       }
 
-      var onHardwareBackButton = function() {
-        _this.hide();
-      };
+      if(!this.didInitEvents) {
+        var onHardwareBackButton = function() {
+          _this.hide();
+        };
 
-      _this.scope.$on('$destroy', function() {
-        $ionicPlatform.offHardwareBackButton(onHardwareBackButton);
-      });
+        _this.scope.$on('$destroy', function() {
+          $ionicPlatform.offHardwareBackButton(onHardwareBackButton);
+        });
 
-      // Support Android back button to close
-      $ionicPlatform.onHardwareBackButton(onHardwareBackButton);
+        // Support Android back button to close
+        $ionicPlatform.onHardwareBackButton(onHardwareBackButton);
+
+        this.didInitEvents = true;
+      }
 
     },
     // Hide the modal
@@ -1233,12 +1237,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
       if(attr.hasSubheader == "true") { element.addClass('has-subheader'); }
       if(attr.hasFooter == "true") { element.addClass('has-footer'); }
       if(attr.hasTabs == "true") { element.addClass('has-tabs'); }
-      if(attr.padding == "true") { 
-        var scroll = element.find('.scroll');
-        if(scroll.length) {
-          scroll.addClass('padding');
-        }
-      }
+      if(attr.padding == "true") { element.find('.scroll').addClass('padding'); }
 
       return function link($scope, $element, $attr) {
         var clone, sc, sv,

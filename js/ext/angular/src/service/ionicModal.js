@@ -1,7 +1,7 @@
 angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.service.platform', 'ngAnimate'])
 
 
-.factory('$ionicModal', ['$rootScope', '$document', '$compile', '$animate', '$q', '$ionicPlatform', '$ionicTemplateLoader', function($rootScope, $document, $compile, $animate, $q, $ionicPlatform, $ionicTemplateLoader) {
+.factory('$ionicModal', ['$rootScope', '$document', '$compile', '$animate', '$q', '$timeout', '$ionicPlatform', '$ionicTemplateLoader', function($rootScope, $document, $compile, $animate, $q, $timeout, $ionicPlatform, $ionicTemplateLoader) {
   var ModalView = ionic.views.Modal.inherit({
     initialize: function(opts) {
       ionic.views.Modal.prototype.initialize.call(this, opts);
@@ -21,16 +21,20 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
         });
       }
 
-      var onHardwareBackButton = function() {
-        _this.hide();
-      };
+      if(!this.didInitEvents) {
+        var onHardwareBackButton = function() {
+          _this.hide();
+        };
 
-      _this.scope.$on('$destroy', function() {
-        $ionicPlatform.offHardwareBackButton(onHardwareBackButton);
-      });
+        _this.scope.$on('$destroy', function() {
+          $ionicPlatform.offHardwareBackButton(onHardwareBackButton);
+        });
 
-      // Support Android back button to close
-      $ionicPlatform.onHardwareBackButton(onHardwareBackButton);
+        // Support Android back button to close
+        $ionicPlatform.onHardwareBackButton(onHardwareBackButton);
+
+        this.didInitEvents = true;
+      }
 
     },
     // Hide the modal
