@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v0.9.19
+ * Ionic, v{{ VERSION }}
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -1994,6 +1994,7 @@ angular.module('ionic.ui.slideBox', [])
       slideInterval: '@',
       showPager: '@',
       disableScroll: '@',
+      disableTouch: '@',
       onSlideChanged: '&',
       activeSlide: '='
     },
@@ -2007,6 +2008,7 @@ angular.module('ionic.ui.slideBox', [])
         el: $element[0],
         auto: slideInterval,
         disableScroll: ($scope.$eval($scope.disableScroll) === true) || false,
+        disableTouch: ($scope.$eval($scope.disableTouch) === true) || false,
         continuous: continuous,
         slidesChanged: function() {
           $scope.currentSlide = slider.getPos();
@@ -2630,7 +2632,10 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 
         // Should the nav bar be hidden for this view or not?
         $scope.hideNavBar = $scope.$eval($scope.hideNavBar);
+<<<<<<< HEAD
+=======
         $rootScope.$broadcast('viewState.showNavBar', !$scope.hideNavBar);
+>>>>>>> upstream/master
 
         // watch for changes in the left buttons
         var deregLeftButtons = $scope.$watch('leftButtons', function(value) {

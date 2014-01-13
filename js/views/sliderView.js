@@ -292,13 +292,15 @@ ionic.views.Slider = ionic.views.View.inherit({
         delta = {};
 
         // attach touchmove and touchend listeners
-        if(browser.touch) {
-          element.addEventListener('touchmove', this, false);
-          element.addEventListener('touchend', this, false);
-        } else {
-          element.addEventListener('mousemove', this, false);
-          element.addEventListener('mouseup', this, false);
-          document.addEventListener('mouseup', this, false);
+        if( options.disableTouch === false ) {
+          if(browser.touch) {
+            element.addEventListener('touchmove', this, false);
+            element.addEventListener('touchend', this, false);
+          } else {
+            element.addEventListener('mousemove', this, false);
+            element.addEventListener('mouseup', this, false);
+            document.addEventListener('mouseup', this, false);
+          }
         }
       },
       move: function(event) {
@@ -436,13 +438,15 @@ ionic.views.Slider = ionic.views.View.inherit({
         }
 
         // kill touchmove and touchend event listeners until touchstart called again
-        if(browser.touch) {
-          element.removeEventListener('touchmove', events, false)
-          element.removeEventListener('touchend', events, false)
-        } else {
-          element.removeEventListener('mousemove', events, false)
-          element.removeEventListener('mouseup', events, false)
-          document.removeEventListener('mouseup', events, false);
+        if( options.disableTouch === false ) {
+          if(browser.touch) {
+            element.removeEventListener('touchmove', events, false)
+            element.removeEventListener('touchend', events, false)
+          } else {
+            element.removeEventListener('mousemove', events, false)
+            element.removeEventListener('mouseup', events, false)
+            document.removeEventListener('mouseup', events, false);
+          }
         }
 
       },

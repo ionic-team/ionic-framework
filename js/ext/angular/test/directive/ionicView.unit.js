@@ -42,6 +42,9 @@ describe('Ionic View', function() {
     expect(element.hasClass('hide')).toEqual(false);
     scope.$broadcast('$viewHistory.historyChange', { showBack: false });
     expect(element.hasClass('hide')).toEqual(true);
+<<<<<<< HEAD
+  });  
+=======
   });
 
   it('should show/hide navBar', function() {
@@ -66,6 +69,7 @@ describe('Ionic View', function() {
     navBar = element.find('header')
     expect(navBar.hasClass('invisible')).toEqual(false);
   });
+>>>>>>> upstream/master
 
 });
 

@@ -182,7 +182,10 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 
         // Should the nav bar be hidden for this view or not?
         $scope.hideNavBar = $scope.$eval($scope.hideNavBar);
+<<<<<<< HEAD
+=======
         $rootScope.$broadcast('viewState.showNavBar', !$scope.hideNavBar);
+>>>>>>> upstream/master
 
         // watch for changes in the left buttons
         var deregLeftButtons = $scope.$watch('leftButtons', function(value) {
