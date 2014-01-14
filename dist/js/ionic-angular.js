@@ -2302,7 +2302,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
           if(childElement) {
             childElement.remove();
             childElement = null;
-            $scope.$broadcast('tab.hidden');
+            $rootScope.$broadcast('tab.hidden');
           }
           if(childScope) {
             childScope.$destroy();
@@ -2315,8 +2315,8 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
               clone.removeAttr('title');
               childElement = clone;
               $element.parent().append(childElement);
-              $scope.$broadcast('tab.shown');
             });
+            $rootScope.$broadcast('tab.shown');
           }
         });
 
