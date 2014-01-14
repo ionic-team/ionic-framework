@@ -39,4 +39,14 @@ describe('Ionic Content directive', function() {
     var scrollView = scope.scrollView;
     expect(scrollView.options.bouncing).toBe(false);
   });
+
+  it('Should set start x and y', function() {
+    element = compile('<content start-x="100" start-y="300" has-header="true"></content>')(scope);
+    timeout.flush();
+    var newScope = element.isolateScope();
+    var scrollView = scope.scrollView;
+    var vals = scrollView.getValues();
+    expect(vals.left).toBe(100);
+    expect(vals.top).toBe(300);
+  });
 });

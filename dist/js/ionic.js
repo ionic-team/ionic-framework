@@ -2388,6 +2388,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
       scrollingY: true,
       scrollbarY: true,
 
+      startX: 0,
+      startY: 0,
+
       /** The minimum size the scrollbars scale to while scrolling */
       minScrollbarSizeX: 5,
       minScrollbarSizeY: 5,
@@ -2466,6 +2469,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
         target: self.__container
       });
     };
+
+    this.__scrollLeft = this.options.startX;
+    this.__scrollTop = this.options.startY;
 
     // Get the render update function, initialize event handlers,
     // and calculate the size of the scroll container

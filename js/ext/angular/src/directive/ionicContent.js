@@ -39,6 +39,8 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
       hasScrollY: '@',
       scrollbarX: '@',
       scrollbarY: '@',
+      startX: '@',
+      startY: '@',
       scrollEventInterval: '@'
     },
 
@@ -84,6 +86,8 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
             sv = new ionic.views.Scroll({
               el: $element[0],
               bouncing: enableBouncing,
+              startX: $scope.$eval($scope.startX) || 0,
+              startY: $scope.$eval($scope.startY) || 0,
               scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
               scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
               scrollingX: $scope.$eval($scope.hasScrollX) === true,

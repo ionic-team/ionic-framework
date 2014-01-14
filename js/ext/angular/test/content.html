@@ -52,6 +52,11 @@
         bottom: 10px;
         width: 100%;
       }
+      #search-box {
+        margin-bottom: 20px;
+      }
+      .scroll {
+      }
     </style>
 
   </head>
@@ -60,6 +65,7 @@
       <header-bar id="header" title="'Title'" type="bar-primary" hides-header></header-bar>
 
       <content id="container"
+        start-y="55"
         on-scroll="onScroll(event, scrollTop, scrollLeft)"
         on-scroll-complete="onScrollComplete(scrollTop, scrollLeft)"
         on-refresh="onRefresh()"
@@ -69,6 +75,15 @@
         has-tabs="true"
         has-header="true"
         >
+        <div id="search-box" class="bar bar-header item-input-inset">
+          <label class="item-input-wrapper">
+            <i class="icon ion-ios7-search placeholder-icon"></i>
+            <input type="search" placeholder="Search">
+          </label>
+          <button class="button button-clear">
+            Cancel
+          </button>
+        </div>
         <button ng-click="add()">Click</button>
         <ul class="list" ng-controller="AppCtrl">
           <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
