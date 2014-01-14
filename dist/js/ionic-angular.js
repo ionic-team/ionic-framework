@@ -2677,7 +2677,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
       tElement.addClass('hide');
 
       return function link($scope, $element) {
-        $element.bind('tap', goBack);
+        $element.bind('click', goBack);
 
         $scope.showButton = function(val) {
           if(val) {
