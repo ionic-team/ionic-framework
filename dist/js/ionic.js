@@ -1737,27 +1737,34 @@ window.ionic = {
 (function(ionic) {
 
   ionic.Platform = {
+
     detect: function() {
-      var platforms = [];
+      
+      var domReady = function() {
+        // run when the DOM is ready
+        document.addEventListener("deviceready", deviceReady, false);
+        document.removeEventListener("DOMContentLoaded", domReady, false);
+      };
+      document.addEventListener("DOMContentLoaded", domReady, false);
 
-      var didDetect = this._checkPlatforms(platforms);
+      var deviceReady = function() {
+        // run when cordova is fully loaded
+        var platforms = [];
+        ionic.Platform._checkPlatforms(platforms);
 
-      var classify = function() {
-        if(!document.body) { return; }
-
-        for(var i = 0; i < platforms.length; i++) {
-          document.body.classList.add('platform-' + platforms[i]);
+        if(platforms.length) {
+          // only change the body class if we got platform info
+          var bodyClass = document.body.className;
+          for(var i = 0; i < platforms.length; i++) {
+            bodyClass += ' platform-' + platforms[i];
+          }
+          document.body.className = bodyClass;
         }
+        document.removeEventListener("deviceready", deviceReady, false);
       };
 
-      document.addEventListener( "DOMContentLoaded", function(){
-        classify();
-      });
-
-      classify();
-
-      return didDetect;
     },
+
     _checkPlatforms: function(platforms) {
       if(this.isCordova()) {
         platforms.push('cordova');
@@ -1773,10 +1780,7 @@ window.ionic = {
       }
 
       // Return whether we detected anything
-      if(platforms.length === 0) {
-        return false;
-      }
-      return true;
+      return (platforms.length > 0);
     },
 
     // Check if we are running in Cordova, which will have
