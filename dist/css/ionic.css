@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /*!
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
@@ -2594,6 +2593,9 @@ body, .ionic-body {
 .scroll-bar {
   position: absolute;
   z-index: 9999; }
+
+.ng-animate .scroll-bar {
+  visibility: hidden; }
 
 .scroll-bar-h {
   height: 3px;

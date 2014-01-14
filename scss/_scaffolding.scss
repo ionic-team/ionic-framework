@@ -93,6 +93,10 @@ body, .ionic-body {
   position: absolute;
   z-index: $z-index-scroll-bar;
 }
+// hide the scroll-bar during animations
+.ng-animate .scroll-bar {
+  visibility: hidden;
+}
 .scroll-bar-h {
   height: 3px;
   left: 2px;

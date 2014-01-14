@@ -51,7 +51,7 @@ angular.module('ionic.service.view', ['ui.router'])
 }])
 
 .factory('$ionicViewService', ['$rootScope', '$state', '$location', '$window', '$injector', 
-                function( $rootScope,   $state,   $location,   $window,   $injector) {
+                      function( $rootScope,   $state,   $location,   $window,   $injector) {
   var $animate = $injector.has('$animate') ? $injector.get('$animate') : false;
 
   var View = function(){};
@@ -343,6 +343,7 @@ angular.module('ionic.service.view', ['ui.router'])
       if($animate && animationClass && opts.doAnimation !== false && opts.navDirection) {
         // set the animation we're gonna use
         this.setAnimationClass(opts.parentElement, animationClass, opts.navDirection);
+        opts.enteringElement.addClass('ng-enter');
 
         // start the animations
         if(opts.leavingElement) {

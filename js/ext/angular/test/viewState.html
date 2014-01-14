@@ -85,7 +85,7 @@
     <script id="contact.html" type="text/ng-template">
       <view hide-back-button="true">
         <content has-header="true" padding="true">
-          <p>The view's title is blank on purpose.</p>
+          <p>The views title is blank on purpose.</p>
           <p>The hideBackButton attribute is "true" for this view.</p>
           <p>@drifty</p>
           <p class="text-center">
@@ -188,6 +188,7 @@
             <button ng-click="hideBackButton()">Hide Back Button</button>
             <button ng-click="showBackButton()">Show Back Button</button>
           </p>
+          <p><a class="button" href="#/tabs/autos">Auto List</a></p>
           <p>
             Current View: {{ $viewHistory.currentView }}<br>
             Back View: {{ $viewHistory.backView }}<br>
