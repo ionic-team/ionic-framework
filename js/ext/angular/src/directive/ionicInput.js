@@ -29,6 +29,7 @@ angular.module('ionic.ui.input', [])
         ngModel.$setViewValue(''); // doesn't trigger a digest
         scope.$digest();
         ngModel.$render();
+        element[0].focus();
       });
     }
   };
