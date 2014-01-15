@@ -99,6 +99,15 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
           $scope.animateNav = true;
         }
 
+        // Show and hide tab bar
+        $scope.$on('viewState.showTabBar', function(e, showTabBar) {
+          if(showTabBar === false) {
+            $element[0].classList.add('invisible');
+          } else {
+            $element[0].classList.remove('invisible');
+          }
+        });
+
         $attr.$observe('tabsStyle', function(val) {
           if(tabs) {
             angular.element(tabs).addClass($attr.tabsStyle);

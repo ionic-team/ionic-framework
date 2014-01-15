@@ -166,6 +166,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
       alignTitle: '@',
       hideBackButton: '@',
       hideNavBar: '@',
+      hideTabBar: '@',
       animation: '@'
     },
 
@@ -188,6 +189,9 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 
         // Should the nav bar be hidden for this view or not?
         $rootScope.$broadcast('viewState.showNavBar', ($scope.hideNavBar !== 'true') );
+
+        // Should the tab bar be hidden for this view or not?
+        $rootScope.$broadcast('viewState.showTabBar', ($scope.hideTabBar !== 'true') );
 
         // watch for changes in the left buttons
         var deregLeftButtons = $scope.$watch('leftButtons', function(value) {
