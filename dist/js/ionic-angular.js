@@ -551,21 +551,32 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
   };
 
   return {
-    alert: function(message, title, $scope) {
-
+    showPopup: function(data) {
       // If there is an existing popup, just show that one
       var existing = getPopup();
       if(existing) {
-        return existing.popup.alert(message, title);
+        return existing.popup.show({
+          message: data.message,
+          title: data.title
+        });
       }
 
-      var popup = createPopup($scope, {
-        title: title,
-        message: message
+      var popup = createPopup(data.scope, {
+        title: data.title,
+        message: data.message
       });
 
-      popup.alert(message, title);
-
+      popup.show({
+        message: data.message,
+        title: data.title
+      });
+    },
+    alert: function(message, title, $scope) {
+      this.showPopup({
+        message: message,
+        title: title,
+        scope: $scope
+      });
     },
     confirm: function(cb) {
     },
@@ -575,7 +586,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
       // data.title
       // data.template
       // data.buttons
-
+      this.showPopup(data);
     },
     showFromTemplate: function(url, data) {
 

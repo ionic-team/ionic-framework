@@ -4902,12 +4902,12 @@ ionic.views.Scroll = ionic.views.View.inherit({
         bodyEl.innerHTML = message;
       }
     },
-    alert: function(message, title) {
+    show: function(opts) {
       var _this = this;
 
       window.rAF(function() {
-        _this.setMessage(message);
-        _this.setTitle(title);
+        _this.setMessage(opts.message);
+        _this.setTitle(opts.title);
         _this._position();
         _this.el.classList.add('active');
       });
