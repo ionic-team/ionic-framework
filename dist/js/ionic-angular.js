@@ -72,6 +72,12 @@ angular.module('ionic.ui.service.scrollDelegate', [])
     scrollTop: function(animate) {
       $rootScope.$broadcast('scroll.scrollTop', animate);
     },
+    scrollBottom: function(animate) {
+      $rootScope.$broadcast('scroll.scrollBottom', animate);
+    },
+    resize: function() {
+      $rootScope.$broadcast('scroll.resize');
+    },
     tapScrollToTop: function(element) {
       var _this = this;
 
@@ -116,6 +122,13 @@ angular.module('ionic.ui.service.scrollDelegate', [])
        */
       $scope.$parent.$on('scroll.scrollTop', function(e, animate) {
         $scope.$parent.scrollView && $scope.$parent.scrollView.scrollTo(0, 0, animate === false ? false : true);
+      });
+      $scope.$parent.$on('scroll.scrollBottom', function(e, animate) {
+        var sv = $scope.$parent.scrollView;
+        var max;
+        if(!sv) { return; }
+        max = sv.getScrollMax();
+        sv.scrollTo(0, max.top, animate === false ? false : true);
       });
     }
   };

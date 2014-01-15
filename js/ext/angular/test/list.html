@@ -74,6 +74,12 @@
       .my-repeat-animation > .ng-move.ng-move-active {
         opacity:1;
       }
+      .item-message img {
+        float: left;
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+      }
     </style>
 
   </head>
@@ -106,14 +112,13 @@
               can-delete="true"
               can-reorder="true"
               can-swipe="true"
-              option-buttons="optionButtons1"
-              item-type="item-icon-left">
+              option-buttons="optionButtons1">
 
           <!-- shows that the item directive does not need attributes and can get values from the list attributes -->
-          <item ng-repeat="item in items" 
-                item="item">
-            <i class="icon ion-chatbox"></i>
-            Repeat Item: {{ item.text }}
+          <item item="item" class="item-message" ng-repeat="item in items">
+            <img ng-src="{{item.face}}">
+            <h2>{{item.from}}</h2>
+            <p>{{item.text}}</p>
           </item>
 
           <!-- shows how a divider could be included-->
@@ -188,12 +193,12 @@
       .controller('TestCtrl', function($scope, $timeout) {
 
         // Build Mock Data
-        $scope.items = [];
-        for(var i = 0; i < 3; i++) {
-          $scope.items.push({
-            text: i
-          });
-        }
+        $scope.items = [
+          { from: 'Ben', face: 'https://pbs.twimg.com/profile_images/378800000571933189/278e8e1b7871a115b95fc550cd07af40.png', text: 'Did you prepare?' },
+          { from: 'Adam', face: 'https://pbs.twimg.com/profile_images/2927292174/25b170ee2e3044fd936ad1319bc4b82d_bigger.jpeg', text: 'Don\'t forget to smile!' },
+          { from: 'Tim', face: 'https://pbs.twimg.com/profile_images/378800000290028838/ee3303b02223f25cb0f9b082b55b2eeb.jpeg', text: 'Bring some shirts!' }
+        ];
+              
 
         // List Toggles
         $scope.editBtnText = 'Edit';
@@ -226,6 +231,7 @@
           },
           {
             text: 'Share',
+            type: 'button-balanced',
             onTap: function(item, button) { alert(button.text + ' Button: ' + item.text) }
           }
         ];
