@@ -30,6 +30,8 @@ angular.module('ionic.ui', [
                             'ionic.ui.list',
                             'ionic.ui.checkbox',
                             'ionic.ui.toggle',
+                            'ionic.ui.loading',
+                            'ionic.ui.popup',
                             'ionic.ui.radio'
                            ]);
 

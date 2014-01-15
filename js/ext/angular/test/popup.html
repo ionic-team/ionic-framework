@@ -1,0 +1,32 @@
+<html ng-app="ionic.example">
+  <head>
+    <meta charset="utf-8">
+    <title>Loading</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+
+  </head>
+  <body ng-controller="PopupCtrl">
+    <button class="button button-dark" ng-click="startLoading()">Load</button>
+
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/angular/angular.js"></script>
+    <script src="../../../../dist/js/angular/angular-animate.js"></script>
+    <script src="../../../../dist/js/angular/angular-route.js"></script>
+    <script src="../../../../dist/js/angular/angular-touch.js"></script>
+    <script src="../../../../dist/js/angular/angular-sanitize.js"></script>
+    <script src="../../../../dist/js/angular-ui/angular-ui-router.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
+    <script>
+      angular.module('ionic.example', ['ionic'])
+
+      .controller('PopupCtrl', function($scope, $timeout, $ionicPopup) {
+        $ionicPopup.alert('Hello', 'Warning!');
+      });
+    </script>
+  </body>
+</html>
+

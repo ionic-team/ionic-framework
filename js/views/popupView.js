@@ -11,19 +11,42 @@
       var _this = this;
 
       this.el = opts.el;
+
+      this.maxWidth = opts.maxWidth || 250;
     },
 
+    _position: function() {
+      var lb = this.el.querySelector('.popup');
+
+      if(!lb) { return; }
+
+      var width = Math.min(this.maxWidth, Math.max(window.outerWidth - 40, lb.offsetWidth));
+
+      lb.style.width = width + 'px';
+
+      lb.style.marginLeft = (-lb.offsetWidth) / 2 + 'px';
+      lb.style.marginTop = (-lb.offsetHeight) / 2 + 'px';
+
+    },
     setTitle: function(title) {
-      var titleEl = el.querySelector('.popup-title');
+      var titleEl = this.el.querySelector('.popup-title');
       if(titleEl) {
         titleEl.innerHTML = title;
       }
     },
-    alert: function(message) {
+    setMessage: function(message) {
+      var bodyEl = this.el.querySelector('.popup-body');
+      if(bodyEl) {
+        bodyEl.innerHTML = message;
+      }
+    },
+    alert: function(message, title) {
       var _this = this;
 
       window.rAF(function() {
-        _this.setTitle(message);
+        _this.setMessage(message);
+        _this.setTitle(title);
+        _this._position();
         _this.el.classList.add('active');
       });
     },
