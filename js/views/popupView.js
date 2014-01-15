@@ -40,12 +40,30 @@
         bodyEl.innerHTML = message;
       }
     },
+    setButtons: function(buttons) {
+      var buttonsEl = this.el.querySelector('.popup-buttons');
+      if(!buttonsEl || !buttons) { return; }
+
+      var buttonEl, i, button;
+
+      for(i = 0; i < buttons.length; i++) {
+        button = buttons[i];
+        buttonEl = document.createElement('button');
+        buttonEl.classList.add('button');
+        buttonEl.classList.add('button-clear');
+        buttonEl.classList.add('col');
+        buttonEl.innerHTML = button.text;
+        buttonEl.classList.add(button.type || 'button-positive');
+        buttonsEl.appendChild(buttonEl);
+      }
+    },
     show: function(opts) {
       var _this = this;
 
       window.rAF(function() {
         _this.setMessage(opts.message);
         _this.setTitle(opts.title);
+        _this.setButtons(opts.buttons);
         _this._position();
         _this.el.classList.add('active');
       });

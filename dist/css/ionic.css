@@ -3680,6 +3680,16 @@ a.subdued {
 .popup-body {
   padding: 10px; }
 
+.popup-buttons.row {
+  padding: 0; }
+.popup-buttons .button {
+  line-height: 30px;
+  border: none;
+  border-right: 1px solid #eee;
+  border-radius: 0px 0px 8px 8px; }
+  .popup-buttons .button:last-child {
+    border-right: none; }
+
 .popup-backdrop.enabled {
   background-color: rgba(0, 0, 0, 0.4); }
 

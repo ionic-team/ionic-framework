@@ -14,7 +14,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     }
   };
 
-  var createPopup = function($scope, opts) {
+  var createPopup = function(opts) {
     var defaults = {
       title: '',
       animation: 'fade-in',
@@ -22,7 +22,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
 
     opts = angular.extend(defaults, opts);
 
-    var scope = $scope && $scope.$new() || $rootScope.$new(true);
+    var scope = opts.scope && opts.scope.$new() || $rootScope.$new(true);
     angular.extend(scope, opts);
 
     // Compile the template
@@ -41,21 +41,12 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
       // If there is an existing popup, just show that one
       var existing = getPopup();
       if(existing) {
-        return existing.popup.show({
-          message: data.message,
-          title: data.title
-        });
+        return existing.popup.show(data);
       }
 
-      var popup = createPopup(data.scope, {
-        title: data.title,
-        message: data.message
-      });
+      var popup = createPopup(data);
 
-      popup.show({
-        message: data.message,
-        title: data.title
-      });
+      popup.show(data);
     },
     alert: function(message, title, $scope) {
       this.showPopup({

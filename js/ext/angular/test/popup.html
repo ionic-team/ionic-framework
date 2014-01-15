@@ -24,7 +24,13 @@
       angular.module('ionic.example', ['ionic'])
 
       .controller('PopupCtrl', function($scope, $timeout, $ionicPopup) {
-        $ionicPopup.alert('Hello', 'Warning!');
+          $ionicPopup.show({
+            title: 'You must do this',
+            buttons: [
+              { text: 'Cancel' },
+              { text: 'Details' },
+            ]
+          });
       });
     </script>
   </body>

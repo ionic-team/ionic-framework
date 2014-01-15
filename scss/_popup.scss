@@ -27,6 +27,19 @@
 }
 
 .popup-buttons {
+  &.row {
+    padding: 0;
+  }
+
+  .button {
+    line-height: 30px;
+    border: none;
+    border-right: 1px solid #eee;
+    border-radius: 0px 0px 8px 8px;
+    &:last-child {
+      border-right: none;
+    }
+  }
 }
 
 .popup-backdrop {
