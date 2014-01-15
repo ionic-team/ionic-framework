@@ -1,5 +1,5 @@
 
-## 0.9.20-alpha (active pre-release)
+## 0.9.20 "Alpha Lynx" (2014-01-14)
  - Improved transitions between views
  - Fixed hide-nav-bar/hide-back-button view attributes
  - Removed title attributes from DOM
