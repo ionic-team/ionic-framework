@@ -1,4 +1,9 @@
 
+## 0.9.21 (pre-release)
+ - Refactor platform ready event listeners
+ - Create ionic.Platform.fullscreen()
+
+
 ## 0.9.20 "Alpha Lynx" (2014-01-14)
  - Improved transitions between views
  - Fixed hide-nav-bar/hide-back-button view attributes
