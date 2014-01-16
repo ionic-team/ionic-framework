@@ -2,6 +2,7 @@
 ## 0.9.21 (pre-release)
  - Refactor platform ready event listeners
  - Created ionic.Platform.fullscreen() and .showStatusBar()
+ - Update AngularUI Router to v0.2.8
 
 
 ## 0.9.20 "Alpha Lynx" (2014-01-14)
