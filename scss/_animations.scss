@@ -244,8 +244,9 @@ $ios7-transition-duration: 250ms;
     right: -1px;
     bottom: 0;
     left: -1px;
-    border-left: 1px solid #ddd;
+    width: auto;
     border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
   }
   > .ng-enter, &.ng-enter {
     /* NEW content placed far RIGHT BEFORE it slides IN from the RIGHT */
@@ -268,8 +269,9 @@ $ios7-transition-duration: 250ms;
       right: -1px;
       bottom: 0;
       left: -1px;
-      border-left: 1px solid #ddd;
+      width: auto;
       border-right: 1px solid #ddd;
+      border-left: 1px solid #ddd;
     }
     > .ng-enter, &.ng-enter {
       /* NEW content placed far LEFT BEFORE it slides IN from the LEFT */

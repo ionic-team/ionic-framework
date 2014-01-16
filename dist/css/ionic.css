@@ -3,7 +3,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v0.9.20-alpha
+ * Ionic, v0.9.21
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -5809,8 +5809,9 @@ a.button {
   right: -1px;
   bottom: 0;
   left: -1px;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd; }
+  width: auto;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd; }
 .slide-left-right-ios7 > .ng-enter, .slide-left-right-ios7.ng-enter {
   /* NEW content placed far RIGHT BEFORE it slides IN from the RIGHT */
   -webkit-transform: translate3d(100%, 0, 0);
@@ -5835,8 +5836,9 @@ a.button {
   right: -1px;
   bottom: 0;
   left: -1px;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd; }
+  width: auto;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd; }
 .slide-left-right-ios7.reverse > .ng-enter, .slide-left-right-ios7.reverse.ng-enter {
   /* NEW content placed far LEFT BEFORE it slides IN from the LEFT */
   -webkit-transform: translate3d(-100%, 0, 0);

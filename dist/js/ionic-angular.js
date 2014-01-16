@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v0.9.20-alpha
+ * Ionic, v0.9.21
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -432,24 +432,6 @@ angular.module('ionic.service.platform', [])
  * height of header bars on iOS 7.
  */
 .provider('$ionicPlatform', function() {
-  var platform = 'web';
-  var isPlatformReady = false;
-
-  if(window.cordova || window.PhoneGap || window.phonegap) {
-    platform = 'cordova';
-  }
-
-  var isReady = function() {
-    if(platform == 'cordova') {
-      return window.device || window.Cordova;
-    }
-    return true;
-  };
-
-  // We need to do some stuff as soon as we know the platform,
-  // like adjust header margins for iOS 7, etc.
-  ionic.Platform.detect();
-
 
   return {
     setPlatform: function(p) {
@@ -492,8 +474,7 @@ angular.module('ionic.service.platform', [])
           var q = $q.defer();
 
           $timeout(function readyWait() {
-            if(isReady()) {
-              isPlatformReady = true;
+            if(ionic.Platform.isReady) {
               q.resolve();
               cb();
             } else {
@@ -506,6 +487,7 @@ angular.module('ionic.service.platform', [])
       };
     }]
   };
+  
 });
 
 })(ionic);
