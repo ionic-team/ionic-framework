@@ -1,7 +1,7 @@
 
 ## 0.9.21 (pre-release)
  - Refactor platform ready event listeners
- - Create ionic.Platform.fullscreen()
+ - Created ionic.Platform.fullscreen() and .showStatusBar()
 
 
 ## 0.9.20 "Alpha Lynx" (2014-01-14)
