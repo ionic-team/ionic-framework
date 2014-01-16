@@ -4874,6 +4874,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       this.el = opts.el;
 
+      this._events = [];
+
       this.maxWidth = opts.maxWidth || 250;
     },
 
@@ -4888,7 +4890,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       lb.style.marginLeft = (-lb.offsetWidth) / 2 + 'px';
       lb.style.marginTop = (-lb.offsetHeight) / 2 + 'px';
-
     },
     setTitle: function(title) {
       var titleEl = this.el.querySelector('.popup-title');
@@ -4903,6 +4904,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
       }
     },
     setButtons: function(buttons) {
+      this.cleanupButtons();
+
       var buttonsEl = this.el.querySelector('.popup-buttons');
       if(!buttonsEl || !buttons) { return; }
 
@@ -4916,7 +4919,21 @@ ionic.views.Scroll = ionic.views.View.inherit({
         buttonEl.classList.add('col');
         buttonEl.innerHTML = button.text;
         buttonEl.classList.add(button.type || 'button-positive');
+
+        this._bindTap(button, buttonEl);
+
         buttonsEl.appendChild(buttonEl);
+      }
+    },
+    _bindTap: function(button, buttonEl) {
+      ionic.on('tap', button.onTap, buttonEl);
+      this._events.push([buttonEl, button.onTap]);
+    },
+    cleanupButtons: function() {
+      var buttons = this._events;
+      var button;
+      while((button = this._events.pop())) {
+        ionic.off('tap', button[1], button[0]);
       }
     },
     show: function(opts) {

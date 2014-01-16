@@ -27,8 +27,8 @@
           $ionicPopup.show({
             title: 'You must do this',
             buttons: [
-              { text: 'Cancel' },
-              { text: 'Details' },
+              { text: 'Cancel', onTap: function(e) { console.log('CANCEL', e); } },
+              { text: '<b>Details</b>', onTap: function(e) { console.log('Details', e); } },
             ]
           });
       });
