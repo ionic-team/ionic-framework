@@ -15,14 +15,62 @@
     <script src="../../../../dist/js/angular/angular-sanitize.js"></script>
     <script src="../../../../dist/js/angular-ui/angular-ui-router.js"></script>
     <script src="../../../../dist/js/ionic-angular.js"></script>
+    <style>
+      .pane {
+        background-color: #333;
+        color: #eee;
+      }
+      h3 {
+        margin: 20px 10px !important;
+        color: #eee;
+      }
+      .hours {
+        width: 1540px;
+      }
+      .hours > * {
+        float: left;
+        margin: 5px 10px;
+      }
+      .hours .icons {
+        position: relative;
+        width: 32px;
+        height: 32px;
+      }
+      .hours .icon {
+        font-size: 24px;
+        color: #1e1e1e;
+        position: absolute;
+      }
+      .hours .ion-ios7-sunny-outline {
+        color: yellow;
+        left: 2px;;
+        top: 2px;
+        font-size: 32px;
+      }
+      .hours .ion-cloud {
+        left: 10px;
+        top: 10px;
+        color: #fff;
+      }
+    </style>
   </head>
   <body ng-controller="ThisCtrl">
     <pane>
-      <header-bar id="header" title="'Title'" type="bar-primary" hides-header></header-bar>
 
       <content has-header="true" scroll="false">
+        <h3>Hourly Forecast</h3>
         <scroll direction="x" style="width: 100%">
-          <div style="height: 100px; width: 4000px; background: url('tree_bark.png') repeat"></div>
+          <div class="hours">
+            <div ng-repeat="hour in hours">
+              <div class="icons">
+                <i class="icon ion-ios7-sunny-outline"></i>
+                <i class="icon ion-cloud"></i>
+              </div>
+              <div>
+                {{hour.temp}} &deg;F
+              </div>
+            </div>
+          </div>
         </scroll>
         <scroll direction="y" style="height: 400px; width: 300px">
           <div style="width: 100px; height: 4000px; background: url('tree_bark.png') repeat"></div>
@@ -45,7 +93,14 @@
       .controller('ThisCtrl', function($scope) {
         var header = document.getElementById('header');
         var content = document.getElementById('container');
-        var startTop = header.offsetTop;
+
+        $scope.hours = [];
+        for(var i = 0; i < 24; i++) {
+          $scope.hours.push({
+            icon: 'ion-ios7-partlysunny-outline',
+            temp: 40 + Math.floor(Math.random() * 10)
+          })
+        }
         $scope.onScrollComplete = function(event, scrollTop, scrollLeft) {
           console.log('Scroll complete', scrollTop, scrollLeft);
         }
