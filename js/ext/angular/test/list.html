@@ -104,6 +104,7 @@
               on-refresh-holding="refreshHolding()"
               on-refresh-opening="refreshOpening(ratio)"
               on-refresh="refreshItems()"
+              on-reorder="onReorder(el, start, end)"
               refresh-complete="refreshComplete"
               on-delete="deleteListItem(item)"
               delete-icon="ion-minus-circled"
@@ -222,6 +223,9 @@
         $scope.deleteListItem = function(item) {
           alert('onDelete from the "list" on-delete attribute');
           $scope.items.splice($scope.items.indexOf(item), 1);
+        };
+        $scope.onReorder = function(el, start, end) {
+          console.log('On reorder', el, start, end);
         };
 
         $scope.optionButtons1 = [

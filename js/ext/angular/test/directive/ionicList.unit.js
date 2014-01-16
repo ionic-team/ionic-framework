@@ -11,6 +11,7 @@ describe('Ionic List', function() {
   }));
 
   beforeEach(inject(function (_$compile_, _$rootScope_) {
+    compile = _$compile_;
     scope.showDelete = false;
     scope.showReorder = false;
 
@@ -55,6 +56,22 @@ describe('Ionic List', function() {
     scope.showReorder = true;
     scope.$digest();
     expect(listElement.hasClass('item-options-hide')).toBe(true);
+  });
+
+  it('Should reorder', function() {
+    scope.onReorder = function(el, start, end) {
+    };
+
+    listElement = angular.element('<list on-reorder="onReorder(el, start, end)"></list>');
+    listElement = compile(listElement)(scope);
+
+    var lv = listElement.isolateScope().listView;
+
+    spyOn(scope, 'onReorder');
+
+    lv.onReorder({}, 0, 1);
+
+    expect(scope.onReorder).toHaveBeenCalledWith({}, 0, 1);
   });
 });
 
