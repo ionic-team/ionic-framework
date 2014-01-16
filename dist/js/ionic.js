@@ -4926,8 +4926,16 @@ ionic.views.Scroll = ionic.views.View.inherit({
       }
     },
     _bindTap: function(button, buttonEl) {
-      ionic.on('tap', button.onTap, buttonEl);
-      this._events.push([buttonEl, button.onTap]);
+      var self = this;
+
+      var handler = function(e) {
+        var close = button.onTap && button.onTap(e);
+        if(close === true) {
+          self.hide();
+        }
+      };
+      ionic.on('tap', handler, buttonEl);
+      this._events.push([buttonEl, handler]);
     },
     cleanupButtons: function() {
       var buttons = this._events;

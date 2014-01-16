@@ -3694,9 +3694,6 @@ a.subdued {
   background-color: rgba(0, 0, 0, 0.4); }
 
 .loading-backdrop, .popup-backdrop {
-  -webkit-transition: visibility 0s linear 0.3s;
-  -moz-transition: visibility 0s linear 0.3s;
-  transition: visibility 0s linear 0.3s;
   position: fixed;
   top: 0;
   left: 0;
@@ -3710,8 +3707,12 @@ a.subdued {
     transition-delay: 0s;
     visibility: visible; }
 
-.loading-backdrop.enabled {
-  background-color: rgba(0, 0, 0, 0.7); }
+.loading-backdrop {
+  -webkit-transition: visibility 0s linear 0.3s;
+  -moz-transition: visibility 0s linear 0.3s;
+  transition: visibility 0s linear 0.3s; }
+  .loading-backdrop.enabled {
+    background-color: rgba(0, 0, 0, 0.7); }
 
 .loading {
   position: fixed;
