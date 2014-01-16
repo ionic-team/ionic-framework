@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /*!
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
@@ -6540,24 +6539,25 @@ a.button {
 /**
  * Platform
  * --------------------------------------------------
+ * Platform specific tweaks when in Cordova.
  */
-.platform-ios7 .bar-header {
+.platform-ios7:not(.fullscreen) .bar-header {
   height: 64px; }
-  .platform-ios7 .bar-header.item-input-inset .item-input-wrapper {
+  .platform-ios7:not(.fullscreen) .bar-header.item-input-inset .item-input-wrapper {
     margin-top: 19px !important; }
-  .platform-ios7 .bar-header > * {
+  .platform-ios7:not(.fullscreen) .bar-header > * {
     margin-top: 20px; }
-.platform-ios7 .has-header {
+.platform-ios7:not(.fullscreen) .has-header,
+.platform-ios7:not(.fullscreen) .bar-subheader {
   top: 64px; }
-.platform-ios7 .bar-subheader {
-  top: 64px; }
-.platform-ios7 .has-subheader {
+.platform-ios7:not(.fullscreen) .has-subheader {
   top: 108px; }
 
-.platform-android .bar-header {
-  height: 48px; }
-.platform-android .has-header {
-  top: 48px; }
+.platform-ios7.status-bar-hide {
+  margin-bottom: 20px; }
+
+.platform-android .bar-header,
+.platform-android .has-header,
 .platform-android .bar-subheader {
   top: 48px; }
 .platform-android .has-subheader {

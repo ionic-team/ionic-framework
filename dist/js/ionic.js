@@ -1774,6 +1774,12 @@ window.ionic = {
       }
     },
 
+    device: function() {
+      if(window.device) return window.device;
+      console.error('device plugin required');
+      return {};
+    },
+
     _checkPlatforms: function(platforms) {
       this.platforms = [];
 
@@ -1791,8 +1797,7 @@ window.ionic = {
       }
     },
 
-    // Check if we are running in Cordova, which will have
-    // window.device available.
+    // Check if we are running in Cordova
     isCordova: function() {
       return (window.cordova || window.PhoneGap || window.phonegap);
     },
@@ -1800,38 +1805,46 @@ window.ionic = {
       return navigator.userAgent.toLowerCase().indexOf('ipad') >= 0;
     },
     isIOS7: function() {
-      if(!window.device) {
-        return false;
-      }
-      return window.device.platform == 'iOS' && parseFloat(window.device.version) >= 7.0;
+      return this.device().platform == 'iOS' && parseFloat(window.device.version) >= 7.0;
     },
     isAndroid: function() {
-      if(!window.device) {
-        return navigator.userAgent.toLowerCase().indexOf('android') >= 0;
-      }
-      return window.device.platform === "Android";
+      return this.device().platform === "Android";
     },
 
     // Check if the platform is the one detected by cordova
     is: function(type) {
-      if(window.device && window.device.platform) {
-        return window.device.platform === type || window.device.platform.toLowerCase() === type;
+      if(this.device.platform) {
+        return window.device.platform.toLowerCase() === type.toLowerCase();
       }
-
       // A quick hack for 
       return navigator.userAgent.toLowerCase().indexOf(type.toLowerCase()) >= 0;
     },
 
+    showStatusBar: function(val) {
+      // Only useful when run within cordova
+      this.showStatusBar = val;
+      this.ready(function(){
+        // run this only when or if the platform (cordova) is ready
+        if(ionic.Platform.showStatusBar) {
+          // they do not want it to be full screen
+          StatusBar.show();
+          document.body.classList.remove('status-bar-hide');
+        } else {
+          // it should be full screen
+          StatusBar.hide();
+          document.body.classList.add('status-bar-hide');
+        }
+      });
+    },
+
     fullScreen: function(showFullScreen, showStatusBar) {
       // fullScreen( [showFullScreen[, showStatusBar] ] )
-      // showFullScreen: default is true
-      // showStatusBar: default is false
+      // showFullScreen: default is true if no param provided
       this.isFullScreen = (showFullScreen !== false);
-      this.showStatusBar = (showStatusBar === true);
 
       // add/remove the fullscreen classname to the body
       ionic.DomUtil.ready(function(){
-        // run this when the DOM is ready
+        // run this only when or if the DOM is ready
         if(ionic.Platform.isFullScreen) {
           document.body.classList.add('fullscreen');
         } else {
@@ -1839,19 +1852,8 @@ window.ionic = {
         }
       });
 
-      // run this when the platform (cordova) is ready
-      this.ready(function(){
-      
-        // do this only when runny in cordova
-        if(ionic.Platform.showStatusBar) {
-          // they do not want it to be full screen
-          StatusBar.show();
-        } else {
-          // it should be full screen
-          StatusBar.hide();
-        }
-      });
-
+      // showStatusBar: default is false if no param provided
+      this.showStatusBar( (showStatusBar === true) );
     }
 
   };
@@ -1869,7 +1871,7 @@ window.ionic = {
     // the device is all set to go, init our own stuff then fire off our event
     ionic.Platform.isReady = true;
     ionic.Platform.detect();
-    ionic.trigger('platformready', document);
+    ionic.trigger('platformready', { target: document });
     document.removeEventListener("deviceready", onCordovaReady, false);
   }
 
