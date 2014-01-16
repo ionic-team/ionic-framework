@@ -55,7 +55,7 @@
     },
     isIOS7: function() {
       if(!window.device) {
-        return false;
+        return navigator.userAgent.match(/(iPad|iPhone|iPod touch);.*CPU.*OS 7_\d/i);
       }
       return window.device.platform == 'iOS' && parseFloat(window.device.version) >= 7.0;
     },
