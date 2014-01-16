@@ -1,5 +1,15 @@
 (function(ionic) {
+
   ionic.DomUtil = {
+
+    ready: function(cb) {
+      if(document.readyState === "complete") {
+        setTimeout(cb, 1);
+      } else {
+        document.addEventListener('DOMContentLoaded', cb);
+      }
+    },
+
     getTextBounds: function(textNode) {
       if(document.createRange) {
         var range = document.createRange();

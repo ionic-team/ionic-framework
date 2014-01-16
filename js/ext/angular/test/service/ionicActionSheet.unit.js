@@ -16,6 +16,7 @@ describe('Ionic ActionSheet Service', function() {
   it('Should handle hardware back button', function() {
     // Fake cordova
     window.device = {};
+    ionic.Platform.isReady = true;
     var s = sheet.show();
 
     timeout.flush();
