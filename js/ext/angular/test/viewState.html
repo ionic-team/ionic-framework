@@ -21,12 +21,13 @@
       <nav-bar animation="nav-title-slide-ios7" 
                type="bar-positive" 
                back-button-type="button-icon" 
+               back-button-label=" Back"
                back-button-icon="ion-arrow-left-c"></nav-bar>
       <nav-view animation="slide-left-right"></nav-view>
     </div>
 
     <script id="sign-in.html" type="text/ng-template">
-      <view title="'Sign-In'">
+      <view title="'Sign-In'" left-buttons="leftButtons" right-buttons="rightButtons">
         <content has-header="true">
           <div class="list">
             <label class="item item-input">
@@ -312,6 +313,18 @@
         $scope.signIn = function(user) {
           $state.go('tabs.autolist');
         };
+
+        $scope.leftButtons = [{ 
+          type: 'button-icon icon ion-home',
+          content: 'Home',
+          tap: function(e) { }
+        }];
+
+        $scope.rightButtons = [{ 
+          type: 'button-icon icon ion-navicon',
+          tap: function(e) { }
+        }];
+
       })
 
       .controller('ForgotPasswordCtrl', function($ionicViewService, $rootScope, $scope, $state) {
