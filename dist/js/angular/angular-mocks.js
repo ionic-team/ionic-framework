@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.2.9
+ * @license AngularJS v1.2.8
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -762,36 +762,6 @@ angular.mock.TzDate = function (offset, timestamp) {
 //make "tzDateInstance instanceof Date" return true
 angular.mock.TzDate.prototype = Date.prototype;
 /* jshint +W101 */
-
-// TODO(matias): remove this IMMEDIATELY once we can properly detect the
-// presence of a registered module
-var animateLoaded;
-try {
-  angular.module('ngAnimate');
-  animateLoaded = true;
-} catch(e) {}
-
-if(animateLoaded) {
-  angular.module('ngAnimate').config(['$provide', function($provide) {
-    var reflowQueue = [];
-    $provide.value('$$animateReflow', function(fn) {
-      reflowQueue.push(fn);
-      return angular.noop;
-    });
-    $provide.decorator('$animate', function($delegate) {
-      $delegate.triggerReflow = function() {
-        if(reflowQueue.length === 0) {
-          throw new Error('No animation reflows present');
-        }
-        angular.forEach(reflowQueue, function(fn) {
-          fn();
-        });
-        reflowQueue = [];
-      };
-      return $delegate;
-    });
-  }]);
-}
 
 angular.mock.animate = angular.module('mock.animate', ['ng'])
 
@@ -1948,6 +1918,7 @@ angular.mock.clearDataCache = function() {
     }
   }
 };
+
 
 
 if(window.jasmine || window.mocha) {
