@@ -39,7 +39,7 @@
       <div id="map"></div>
     </content>
     <div class="bar bar-footer bar-dark">
-      <button ng-click="centerOnMe()" class="button button-icon"><i class="icon-ios7-navigate"></i></button>
+      <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate">Find Me</a>
     </div>
   </body>
 
@@ -47,7 +47,7 @@
   <script>
     angular.module('ionic.example', ['ionic.ui.content', 'ionic.ui.list', 'ionic.service.loading'])
 
-    .controller('MapCtrl', function($scope, Loading) {
+    .controller('MapCtrl', function($scope, $ionicLoading) {
       function initialize() {
         var mapOptions = {
           center: new google.maps.LatLng(43.07493,-89.381388),
@@ -71,7 +71,7 @@
           return;
         }
 
-        $scope.loading = Loading.show({
+        $scope.loading = $ionicLoading.show({
           content: 'Getting current location...',
           showBackdrop: false
         });
