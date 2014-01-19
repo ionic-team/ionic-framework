@@ -6546,7 +6546,8 @@ a.button {
 .platform-ios7.status-bar-hide {
   margin-bottom: 20px; }
 
-.platform-android .bar-header,
+.platform-android .bar-header {
+  height: 48px; }
 .platform-android .has-header,
 .platform-android .bar-subheader {
   top: 48px; }
