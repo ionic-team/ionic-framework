@@ -4,6 +4,7 @@
  - Created ionic.Platform.fullscreen() and .showStatusBar()
  - Update to Angular v1.2.8
  - Update AngularUI Router to v0.2.8
+ - Disable pointer-events during transitions
 
 
 ## 0.9.20 "Alpha Lynx" (2014-01-14)

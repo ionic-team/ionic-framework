@@ -19,6 +19,10 @@
   display: inline-block;
 }
 
+.disable-pointer-events {
+  pointer-events: none;
+}
+
 .block {
   display: block;
   clear: both;
