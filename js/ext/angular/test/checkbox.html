@@ -29,7 +29,7 @@
     <script src="../../../../dist/js/angular-ui/angular-ui-router.js"></script>
     <script src="../../../../dist/js/ionic-angular.js"></script>
     <script>
-      angular.module('navTest', ['ionic.ui.checkbox', 'ionic.ui.content', 'ngAnimate', 'ngTouch'])
+      angular.module('navTest', ['ionic'])
 
       .controller('TestCtrl', function($scope) {
         $scope.data = {};
@@ -37,6 +37,7 @@
           console.log('Get Value', $scope.data);
         }
         $scope.setToTrue = function() {
+          console.log('Set to true');
           $scope.data.isLovely = true;
           return false;
         }

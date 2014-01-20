@@ -17,11 +17,12 @@
   </head>
   <body>
 
-    <content has-header="true" ng-controller="TestCtrl" class="reveal-animation">
-      <form>
-        <toggle ng-model="data.isLovely"></toggle>
+    <content has-header="true" class="reveal-animation">
+      <form ng-controller="TestCtrl" >
+        <toggle ng-model="data.isLovely" ng-disabled="isDisabled"></toggle>
         <button ng-click="toggle()" class="button button-danger">Toggle</button>
         <button ng-click="doIt()" class="button button-warning">Print</button>
+        <button ng-click="disableIt()" class="button button-warning">Disable</button>
       </form>
     </content>
 
@@ -30,10 +31,19 @@
 
       .controller('TestCtrl', function($scope) {
         $scope.data = {};
+        $scope.isDisabled = false;
+
+        console.log('HERE');
+
+        $scope.disableIt = function() {
+          console.log('isDisabled:', $scope.isDisabled);
+          $scope.isDisabled = !$scope.isDisabled;
+        };
         $scope.doIt = function() {
           console.log('DOIT', $scope.data);
         }
         $scope.toggle = function() {
+          console.log('TOGGLE');
           $scope.data.isLovely = !$scope.data.isLovely;
         };
       });

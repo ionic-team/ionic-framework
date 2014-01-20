@@ -10,7 +10,8 @@
     },
 
     tap: function(e) {
-      this.val( !this.checkbox.checked );
+      if(!this.el.disabled)
+        this.val( !this.checkbox.checked );
     },
 
     drag: function(e) {
