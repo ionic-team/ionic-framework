@@ -919,9 +919,15 @@ angular.module('ionic.service.view', ['ui.router'])
         this.setAnimationClass(opts.parentElement, animationClass, opts.navDirection);
         opts.enteringElement.addClass('ng-enter');
 
+        // disable any pointer-events from being able to fire
+        document.body.classList.add('disable-pointer-events');
+
         // start the animations
         if(opts.leavingElement) {
-          $animate.leave(opts.leavingElement);
+          $animate.leave(opts.leavingElement, function() {
+            // re-enable pointer-events
+            document.body.classList.remove('disable-pointer-events');
+          });
         }
         $animate.enter(opts.enteringElement, opts.parentElement);
 
