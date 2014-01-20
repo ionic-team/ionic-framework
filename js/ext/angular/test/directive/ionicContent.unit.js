@@ -1,7 +1,15 @@
 describe('Ionic Content directive', function() {
-  var compile, element, scope;
+  var compile, element, scope, platform = 'Android';
   
-  beforeEach(module('ionic'));
+  //beforeEach(module('ionic'));
+
+  beforeEach(module('ionic', function ($provide) {
+      $provide.value('$ionicPlatform', {
+        is: function(type) {
+          return type === platform;
+        }
+      });
+    }));
 
   beforeEach(inject(function($compile, $rootScope, $timeout, $window) {
     compile = $compile;
@@ -28,17 +36,42 @@ describe('Ionic Content directive', function() {
     expect(scrollElement.hasClass('padding')).toEqual(true);
   });
 
-  /**
-   * Not currently possible to mock this AFAIK
-   */
-  xit('Disables bouncing by default on Android', function() {
-    window.navigator.userAgent = 'Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build/IML74K) AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30';
+  it('Enables bouncing by default', function() {
+    platform = 'iPhone';
+    element = compile('<content has-header="true"></content>')(scope);
+    timeout.flush();
+    var newScope = element.isolateScope();
+    var scrollView = scope.scrollView;
+    expect(scrollView.options.bouncing).toBe(true);
+  });
+
+  it('Disables bouncing when has-bouncing = false', function() {
+    platform = 'iPhone';
+    element = compile('<content has-header="true" has-bouncing="false"></content>')(scope);
+    timeout.flush();
+    var newScope = element.isolateScope();
+    var scrollView = scope.scrollView;
+    expect(scrollView.options.bouncing).toBe(false);
+  });
+
+  it('Disables bouncing by default on Android', function() {
+    platform = 'Android';
     element = compile('<content has-header="true"></content>')(scope);
     timeout.flush();
     var newScope = element.isolateScope();
     var scrollView = scope.scrollView;
     expect(scrollView.options.bouncing).toBe(false);
   });
+
+  it('Disables bouncing by default on Android unless has-bouncing = true', function() {
+    platform = 'Android';
+    element = compile('<content has-header="true" has-bouncing="true"></content>')(scope);
+    timeout.flush();
+    var newScope = element.isolateScope();
+    var scrollView = scope.scrollView;
+    expect(scrollView.options.bouncing).toBe(true);
+  });
+
 
   it('Should set start x and y', function() {
     element = compile('<content start-x="100" start-y="300" has-header="true"></content>')(scope);
