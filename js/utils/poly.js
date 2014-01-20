@@ -52,34 +52,34 @@
     return false;
   }
 
-  function tapPolyfill(e) {
+  function tapPolyfill(orgEvent) {
     // if the source event wasn't from a touch event then don't use this polyfill
-    if(!e.gesture || e.gesture.pointerType !== "touch" || !e.gesture.srcEvent) return;
+    if(!orgEvent.gesture || orgEvent.gesture.pointerType !== "touch" || !orgEvent.gesture.srcEvent) return;
 
     // An internal Ionic indicator for angular directives that contain
     // elements that normally need poly behavior, but are already processed
     // (like the radio directive that has a radio button in it, but handles
     // the tap stuff itself). This is in contrast to preventDefault which will
     // mess up other operations like change events and such
-    if(e.alreadyHandled) {
-      return;
-    }
+    if(orgEvent.alreadyHandled) return;
 
-    e = e.gesture.srcEvent; // evaluate the actual source event, not the created event by gestures.js
-
+    var e = orgEvent.gesture.srcEvent; // evaluate the actual source event, not the created event by gestures.js
     var ele = e.target;
 
     while(ele) {
       if( ele.tagName === "INPUT" || ele.tagName === "TEXTAREA" || ele.tagName === "SELECT" ) {
+        orgEvent.alreadyHandled = true;
         return inputTapPolyfill(ele, e);
       } else if( ele.tagName === "LABEL" ) {
         if(ele.control) {
+          orgEvent.alreadyHandled = true;
           return inputTapPolyfill(ele.control, e);
         }
       } else if( ele.tagName === "A" || ele.tagName === "BUTTON" ) {
         ionic.trigger('click', {
           target: ele
         });
+        orgEvent.alreadyHandled = true;
         e.stopPropagation();
         e.preventDefault();
         return false;
@@ -100,6 +100,6 @@
   }
 
   // global tap event listener polyfill for HTML elements that were "tapped" by the user
-  ionic.on("tap", tapPolyfill, window);
+  ionic.on("tap", tapPolyfill, document);
 
 })(this, document, ionic);
