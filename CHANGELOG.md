@@ -12,6 +12,7 @@
  - Removed title attributes from DOM
  - Remove nav title if the entering view doesn't have one
  - Fix padding being added to content directive
+ - Rename ionic services to use $ionic prefix
 
 
 ## 0.9.19 "Alpha Koala" (2014-01-10)
