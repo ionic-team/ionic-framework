@@ -132,42 +132,53 @@
     padding: 0 $button-bar-button-padding;
     min-width: initial;
     min-height: $button-bar-button-height - 1;
-    //height: $button-bar-button-height;
     font-size: $button-bar-button-font-size;
-    line-height: $button-bar-button-height - $button-border-width - 1;
+    font-weight: 400;
+    line-height: $button-bar-button-height;
 
-    .icon,
+    .icon:before,
     &.icon:before,
     &.icon-left:before,
     &.icon-right:before {
       padding-right: 2px;
       padding-left: 2px;
       font-size: $button-bar-button-icon-size;
-      line-height: $button-bar-button-height - $button-border-width - 1;
+      line-height: $button-bar-button-height;
     }
 
     &.button-icon {
-      .icon,
+      .icon:before,
       &.icon:before,
       &.icon-left:before,
       &.icon-right:before {
+        font-size: $button-large-icon-size;
         line-height: $button-bar-button-height;
       }
     }
     &.button-clear {
-      font-size: 18px;
+      font-size: $bar-title-font-size;
+      font-weight: 300;
       padding-right: 2px;
       padding-left: 2px;
+
+      .icon:before,
+      &.icon:before,
+      &.icon-left:before,
+      &.icon-right:before {
+        font-size: $button-large-icon-size;
+        line-height: $button-bar-button-height;
+      }
     }
   }
 
-  .button-bar > .button, .buttons > .button {
+  .button-bar > .button, 
+  .buttons > .button {
     min-height: $button-bar-button-height - 1;
-    //height: $button-bar-button-height;
-    line-height: $button-bar-button-height - 2;
+    line-height: $button-bar-button-height;
   }
 
-  .button-bar + .button, .button + .button-bar {
+  .button-bar + .button, 
+  .button + .button-bar {
     margin-left: 5px;
   }
 

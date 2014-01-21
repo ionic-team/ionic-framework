@@ -17,8 +17,8 @@ $dark:                  #444 !default;
 // Base
 // -------------------------------
 
-$font-family-sans-serif:         "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$font-family-light-sans-serif:   "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-sans-serif:         "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !default;
+$font-family-light-sans-serif:   "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !default;
 $font-family-serif:              Georgia, "Times New Roman", Times, serif !default;
 $font-family-monospace:          Monaco, Menlo, Consolas, "Courier New", monospace !default;
 
@@ -57,10 +57,12 @@ $border-radius-base:             4px !default;
 $border-radius-large:            6px !default;
 $border-radius-small:            3px !default;
 
+
 // Content
 // -------------------------------
 
 $scroll-refresh-icon-color: #666666;
+
 
 // Buttons
 // -------------------------------
@@ -72,11 +74,11 @@ $button-border-radius:                2px;
 $button-border-width:                 1px;
 
 $button-font-size:                    16px;
-$button-height:                       42px;
+$button-height:                       47px;
 $button-padding:                      12px !default;
 $button-icon-size:                    24px;
 
-$button-large-font-size:              18px;
+$button-large-font-size:              20px;
 $button-large-height:                 54px;
 $button-large-padding:                16px !default;
 $button-large-icon-size:              32px;
@@ -86,10 +88,10 @@ $button-small-height:                 28px;
 $button-small-padding:                4px !default;
 $button-small-icon-size:              16px;
 
-$button-bar-button-font-size:         12px;
+$button-bar-button-font-size:         13px;
 $button-bar-button-height:            32px;
 $button-bar-button-padding:           8px !default;
-$button-bar-button-icon-size:         24px;
+$button-bar-button-icon-size:         20px;
 
 $button-light-bg:                     $light;
 $button-light-text:                   #444;
@@ -156,7 +158,7 @@ $button-default-active-border:        $button-stable-active-border;
 // -------------------------------
 
 $bar-height:                      44px !default;
-$bar-title-font-size:             $font-size-large;
+$bar-title-font-size:             17px;
 $bar-padding-portrait:            5px;
 $bar-padding-landscape:           5px;
 $bar-transparency:                1;

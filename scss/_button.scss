@@ -14,7 +14,7 @@
   padding: 1px $button-padding 0 $button-padding;
 
   min-width: ($button-padding * 3) + $button-font-size;
-  min-height: $button-height;
+  min-height: $button-height + 5px;
 
   border-width: $button-border-width;
   border-style: solid;
@@ -29,7 +29,7 @@
 
   cursor: pointer;
 
-  .icon,
+  .icon:before,
   &.icon:before,
   &.icon-left:before,
   &.icon-right:before {
@@ -37,7 +37,7 @@
     padding: 0 0 $button-border-width 0;
     vertical-align: inherit;
     font-size: $button-icon-size;
-    line-height: $button-height - $button-border-width - 1;
+    line-height: $button-height - $button-border-width;
   }
   &.icon-left:before {
     padding-right: .2em;
@@ -112,11 +112,11 @@
 .button-small {
   padding: 0 $button-small-padding;
   min-width: $button-small-height;
-  min-height: $button-small-height;
+  min-height: $button-small-height + 3;
   font-size: $button-small-font-size;
-  line-height: $button-small-height - $button-border-width;
+  line-height: $button-small-height - $button-border-width + 1;
 
-  .icon,
+  .icon:before,
   &.icon:before,
   &.icon-left:before,
   &.icon-right:before {
@@ -128,11 +128,11 @@
 .button-large {
   padding: 0 $button-large-padding;
   min-width: ($button-large-padding * 3) + $button-large-font-size;
-  min-height: $button-large-height;
+  min-height: $button-large-height + 5;
   font-size: $button-large-font-size;
   line-height: $button-large-height - $button-border-width;
 
-  .icon,
+  .icon:before,
   &.icon:before,
   &.icon-left:before,
   &.icon-right:before {
@@ -149,14 +149,15 @@
   border-color: transparent;
   background: none;
 
-  &.button:active, &.button.active {
+  &.button:active, 
+  &.button.active {
     border-color: transparent;
     background: none;
     box-shadow: none;
     opacity: 0.3;
   }
 
-  .icon,
+  .icon:before,
   &.icon:before {
     font-size: $button-large-icon-size;
   }
