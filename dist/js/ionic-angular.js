@@ -1144,38 +1144,29 @@ angular.module('ionic.ui.checkbox', [])
     restrict: 'E',
     replace: true,
     require: '?ngModel',
-    scope: {},
+    scope: {
+      ngModel: '=',
+      ngValue: '=',
+      ngChecked: '=',
+      ngChange: '&'
+    },
     transclude: true,
-    template: '<li class="item item-checkbox">\
-                <label class="checkbox">\
-                  <input type="checkbox">\
-                </label>\
-                <div class="item-content" ng-transclude>\
-                </div>\
-              </li>',
 
-    link: function($scope, $element, $attr, ngModel) {
-      var checkbox;
+    template: '<div class="item item-checkbox">' +
+                '<label class="checkbox">' +
+                  '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
+                '</label>' +
+                '<div class="item-content" ng-transclude></div>' +
+              '</div>',
 
-      if(!ngModel) { return; }
-
-      checkbox = angular.element($element[0].querySelector('input[type="checkbox"]'));
-
-      if(!checkbox.length) { return; }
-
-      checkbox.bind('change', function(e) {
-        ngModel.$setViewValue(checkbox[0].checked);
-        $scope.$apply(function() {
-          e.alreadyHandled = true;
-        });
-      });
-
-      if(ngModel) {
-        ngModel.$render = function() {
-          checkbox[0].checked = ngModel.$viewValue;
-        };
-      }
+    compile: function(element, attr) {
+      var input = element.find('input');
+      if(attr.name) input.attr('name', attr.name);
+      if(attr.ngChecked) input.attr('ng-checked', 'ngChecked');
+      if(attr.ngTrueValue) input.attr('ng-true-value', attr.ngTrueValue);
+      if(attr.ngFalseValue) input.attr('ng-false-value', attr.ngFalseValue);
     }
+
   };
 });
 
@@ -1569,43 +1560,22 @@ angular.module('ionic.ui.radio', [])
     replace: true,
     require: '?ngModel',
     scope: {
-      value: '@'
+      ngModel: '=',
+      ngValue: '=',
+      ngChange: '&',
+      icon: '@'
     },
     transclude: true,
-    template: '<label class="item item-radio">\
-                <input type="radio" name="radio-group">\
-                <div class="item-content" ng-transclude>\
-                </div>\
-                <i class="radio-icon icon ion-checkmark"></i>\
-              </label>',
+    template: '<label class="item item-radio">' +
+                '<input type="radio" name="radio-group"' +
+                ' ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
+                '<div class="item-content" ng-transclude></div>' +
+                '<i class="radio-icon icon ion-checkmark"></i>' +
+              '</label>',
 
-    link: function($scope, $element, $attr, ngModel) {
-      var radio;
-
-      if(!ngModel) { return; }
-
-      radio = $element.children().eq(0);
-
-      if(!radio.length) { return; }
-
-      if(ngModel) {
-        radio.bind('click', function(e) {
-          console.log('RADIO CLICK');
-          $scope.$apply(function() {
-            ngModel.$setViewValue($scope.$eval($attr.ngValue));
-          });
-          e.alreadyHandled = true;
-        });
-
-        ngModel.$render = function() {
-          var val = $scope.$eval($attr.ngValue);
-          if(val === ngModel.$viewValue) {
-            radio.attr('checked', 'checked');
-          } else {
-            radio.removeAttr('checked');
-          }
-        };
-      }
+    compile: function(element, attr) {
+      if(attr.name) element.find('input').attr('name', attr.name);
+      if(attr.icon) element.find('i').removeClass('ion-checkmark').addClass(attr.icon);
     }
   };
 })
@@ -2419,38 +2389,58 @@ angular.module('ionic.ui.toggle', [])
 // The Toggle directive is a toggle switch that can be tapped to change
 // its value
 .directive('toggle', function() {
+
   return {
     restrict: 'E',
     replace: true,
     require: '?ngModel',
-    scope: {},
-    template: '<div ng-click="toggleIt($event)" class="toggle" skip-tap-poly><input type="checkbox"><div class="track"><div class="handle"></div></div></div>',
+    scope: {
+      ngModel: '=',
+      ngValue: '=',
+      ngChecked: '=',
+      ngChange: '&'
+    },
+    transclude: true,
+    template: '<div class="item item-toggle">' +
+                '<div ng-transclude></div>' +
+                '<label class="toggle">' +
+                  '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
+                  '<div class="track">' +
+                    '<div class="handle"></div>' +
+                  '</div>' +
+                '</label>' +
+              '</div>',
 
-    link: function($scope, $element, $attr, ngModel) {
-      var checkbox, handle;
+    compile: function(element, attr) {
+      var input = element.find('input');
+      if(attr.name) input.attr('name', attr.name);
+      if(attr.ngChecked) input.attr('ng-checked', 'ngChecked');
+      if(attr.ngTrueValue) input.attr('ng-true-value', attr.ngTrueValue);
+      if(attr.ngFalseValue) input.attr('ng-false-value', attr.ngFalseValue);
 
-      if(!ngModel) { return; }
+      // return function link($scope, $element, $attr, ngModel) {
+      //   var el, checkbox, track, handle;
 
-      checkbox = $element.children().eq(0);
-      handle = $element.children().eq(1);
+      //   el = $element[0].getElementsByTagName('label')[0];
+      //   checkbox = el.children[0];
+      //   track = el.children[1];
+      //   handle = track.children[0];
 
-      if(!checkbox.length || !handle.length) { return; }
+      //   $scope.toggle = new ionic.views.Toggle({ 
+      //     el: el,
+      //     track: track,
+      //     checkbox: checkbox,
+      //     handle: handle
+      //   });
 
-      $scope.toggle = new ionic.views.Toggle({ 
-        el: $element[0],
-        checkbox: checkbox[0],
-        handle: handle[0]
-      });
+      //   ionic.on('drag', function(e) {
+      //     console.log('drag');
+      //     $scope.toggle.drag(e);
+      //   }, handle);
 
-      $scope.toggleIt = function(e) {
-        $scope.toggle.tap(e);
-        ngModel.$setViewValue(checkbox[0].checked);
-      };
-
-      ngModel.$render = function() {
-        $scope.toggle.val(ngModel.$viewValue);
-      };
+      // }
     }
+
   };
 });
 

@@ -37,7 +37,7 @@
       });
     } else if(ele.type === "checkbox") {
       ele.checked = !ele.checked;
-      ionic.trigger('change', {
+      ionic.trigger('click', {
         target: ele
       });
     } else if(ele.type === "submit" || ele.type === "button") {
