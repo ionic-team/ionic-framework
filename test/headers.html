@@ -1,4 +1,4 @@
-<html>
+<html ng-app="ionicApp">
   <head>
     <meta charset="utf-8">
     <title>Header</title>
@@ -12,11 +12,20 @@
         top: 0;
       }
     </style>
-
+    <script src="../dist/js/ionic.js"></script>
+    <script src="../dist/js/angular/angular.js"></script>
+    <script src="../dist/js/angular/angular-sanitize.js"></script>
+    <script src="../dist/js/angular/angular-animate.js"></script>
+    <script src="../dist/js/angular/angular-touch.js"></script>
+    <script src="../dist/js/angular-ui/angular-ui-router.js"></script>
+    <script src="../dist/js/ionic-angular.js"></script>
+    <script>
+      angular.module('ionicApp', ['ionic'])
+    </script>
   </head>
   <body>
 
-    <section class="content overflow-scroll">
+    <content>
 
       <header class="bar bar-header">
         <a class="button" href="index.html">Back</a>
@@ -48,8 +57,20 @@
         </a>
       </header>
 
+      <header class="bar bar-header bar-royal">
+        <a class="button button-clear icon ion-ios7-alarm"> Back</a>
+        <div class="button-bar">
+          <a class="button button-calm">First</a>
+          <a class="button">Second</a>
+          <a class="button">Third</a>
+        </div>
+        <a class="button">
+          <i class="icon ion-star"></i> Favorites
+        </a>
+      </header>
+
       <header class="bar bar-header bar-positive">
-        <a class="button button-clear icon ion-ios7-arrow-left"> Back</a>
+        <a class="button button-clear icon ion-ios7-arrow-back"> Back</a>
         <div class="button-bar">
           <a class="button button-calm">First</a>
           <a class="button">Second</a>
@@ -204,7 +225,7 @@
         </a>
       </header>
 
-    </section>
+    </content>
 
   </body>
 </html>

@@ -1,4 +1,4 @@
-<html>
+<html ng-app="ionicApp">
   <head>
     <meta charset="utf-8">
     <title>Lists</title>
@@ -13,6 +13,16 @@
         overflow: hidden;
       }
     </style>
+    <script src="../dist/js/ionic.js"></script>
+    <script src="../dist/js/angular/angular.js"></script>
+    <script src="../dist/js/angular/angular-sanitize.js"></script>
+    <script src="../dist/js/angular/angular-animate.js"></script>
+    <script src="../dist/js/angular/angular-touch.js"></script>
+    <script src="../dist/js/angular-ui/angular-ui-router.js"></script>
+    <script src="../dist/js/ionic-angular.js"></script>
+    <script>
+      angular.module('ionicApp', ['ionic'])
+    </script>
   </head>
   <body class="ionic-pseudo">
 
@@ -21,7 +31,7 @@
     </header>
 
     <div id="list">
-    <main id="content" class="content has-header overflow-scroll">
+    <content id="content" class="has-header">
 
       <div class="list">
 
@@ -518,7 +528,7 @@
           <a class="item item-dark" href="#">item-dark</a>
         </div>
 
-    </main>
+    </content>
   </div>
 
 
