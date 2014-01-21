@@ -10,8 +10,9 @@
     },
 
     tap: function(e) {
-      if(!this.el.disabled)
+      if(this.el.getAttribute('disabled') !== 'disabled') {
         this.val( !this.checkbox.checked );
+      }
     },
 
     drag: function(e) {

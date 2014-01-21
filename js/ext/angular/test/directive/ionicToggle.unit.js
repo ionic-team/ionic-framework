@@ -27,18 +27,22 @@ describe('Ionic Toggle', function() {
 
   it('Should disable and enable', function() {
 
-    el = compile('<toggle ng-model="data.name" ng-disabled="isDisabled"></toggle>')(rootScope);
+    rootScope.data = { isDisabled: false };
+    el = compile('<toggle ng-model="data.name" ng-disabled="data.isDisabled"></toggle>')(rootScope);
     var toggle = el.isolateScope().toggle;
     expect(toggle.val()).toBe(false);
     el.click();
     expect(toggle.val()).toBe(true);
 
-    $rootScope.isDisabled = true;
+    rootScope.data.isDisabled = true;
+    rootScope.$apply();
+    expect(toggle.el.getAttribute('disabled')).toBe('disabled');
     el.click();
     expect(toggle.val()).toBe(true);
 
-    $rootScope.isDisabled = false;
+    rootScope.data.isDisabled = false;
+    rootScope.$apply();
     el.click();
-    expect(toggle.val()).toBe(false);
+    expect(toggle.el.getAttribute('disabled')).not.toBe('disabled');
   });
 });
