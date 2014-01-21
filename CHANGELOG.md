@@ -1,5 +1,7 @@
 
 ## 0.9.21 (pre-release)
+ - Ionicons v1.4.2, icons now using :before
+ - Button and header size updates
  - Refactor platform ready event listeners
  - Created ionic.Platform.fullscreen() and .showStatusBar()
  - Update to Angular v1.2.8
