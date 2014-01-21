@@ -7,6 +7,7 @@
  - Update to Angular v1.2.8
  - Update AngularUI Router to v0.2.8
  - Disable pointer-events during transitions
+ - Remove ngTouch from angular.modules
 
 
 ## 0.9.20 "Alpha Lynx" (2014-01-14)
