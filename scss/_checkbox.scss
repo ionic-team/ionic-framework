@@ -35,11 +35,10 @@
 
 /* the checkmark within the box */
 .checkbox input:after {
-
   @include transition(opacity .05s ease-in-out);
   @include rotate(-45deg);
   position: absolute;
-  top: 34%;
+  top: 30%;
   left: 26%;
   display: table;
   width: $checkbox-width / 2;

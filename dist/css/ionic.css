@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /*!
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
@@ -4835,7 +4834,7 @@ input[type="checkbox"][readonly] {
   -moz-transform: rotate(-45deg);
   transform: rotate(-45deg);
   position: absolute;
-  top: 34%;
+  top: 30%;
   left: 26%;
   display: table;
   width: 14px;
