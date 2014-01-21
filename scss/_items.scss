@@ -312,7 +312,7 @@ a.item-content {
   min-height: $item-icon-font-size;
   font-size: $item-icon-font-size;
 
-  .icon {
+  .icon:before {
     position: relative;
     left: auto;
     width: auto;
@@ -339,7 +339,7 @@ button.item.item-button-right {
   min-height: $item-icon-font-size;
   font-size: $item-icon-font-size;
 
-  .icon {
+  .icon:before {
     position: relative;
     left: auto;
     width: auto;

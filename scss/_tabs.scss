@@ -98,7 +98,7 @@
   line-height: $tabs-text-font-size;
 }
 
-.tab-item .icon {
+.tab-item .icon:before {
   display: block;
   margin: 0 auto;
   height: $tabs-icon-size;
@@ -109,7 +109,7 @@
 .tabs-icon-right .tab-item {
   font-size: $tabs-text-font-size-side-icon;
 
-  .icon {
+  .icon:before {
     display: inline-block;
     vertical-align: top;
     font-size: $tabs-icon-size - 8;
@@ -117,14 +117,23 @@
   }
 }
 
-.tabs-icon-only .icon {
+.tabs-icon-left .tab-item .icon:before {
+  padding-right: 3px;
+}
+
+.tabs-icon-right .tab-item .icon:before {
+  padding-left: 3px;
+}
+
+.tabs-icon-only .icon:before {
   line-height: inherit;
 }
 
 /* Navigational tab */
 
 /* Active state for tab */
-.tab-item.active, .tab-item:active {
+.tab-item.active, 
+.tab-item:active {
   opacity: 1;
 
   &.tab-item-light {
@@ -160,7 +169,7 @@
   @include display-flex();
   padding: 0;
 
-  .icon {
+  .icon:before {
     position: relative;
   }
 }
