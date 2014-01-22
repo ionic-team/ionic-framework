@@ -80,7 +80,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
           // Otherwise, supercharge this baby!
           $timeout(function() {
             var hasBouncing = $scope.$eval($scope.hasBouncing);
-            var enableBouncing = !$ionicPlatform.is('Android') && hasBouncing !== false;
+            var enableBouncing = (!$ionicPlatform.is('Android') && hasBouncing !== false) || hasBouncing === true;
             // No bouncing by default for Android users, lest they take up pitchforks
             // to our bouncing goodness
             sv = new ionic.views.Scroll({
