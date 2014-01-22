@@ -27,11 +27,7 @@ angular.module('ionic.service.loading', ['ionic.ui.loading'])
       // Make sure there is only one loading element on the page at one point in time
       var existing = angular.element($document[0].querySelector('.loading-backdrop'));
       if(existing.length) {
-        scope = existing.scope();
-        if(scope.loading) {
-          scope.loading.show();
-          return scope.loading;
-        }
+        existing.remove();
       }
 
       // Compile the template
