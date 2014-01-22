@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*!
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
@@ -3027,12 +3028,11 @@ a.subdued {
     animation-name: actionSheetOut; }
 
 .action-sheet {
-  position: fixed;
-  bottom: 0;
-  left: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+  width: auto;
   z-index: 10;
-  overflow: hidden;
-  width: calc(100% - 30px); }
+  overflow: hidden; }
   .action-sheet .button {
     display: block;
     padding: 1px;
@@ -3043,6 +3043,11 @@ a.subdued {
     font-size: 18px; }
     .action-sheet .button.destructive {
       color: #ef4e3a; }
+
+.action-sheet-wrapper {
+  width: 100%;
+  position: fixed;
+  bottom: 0; }
 
 .action-sheet-title {
   padding: 10px;

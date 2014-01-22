@@ -95,12 +95,11 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
 }
 
 .action-sheet {
-  position: fixed;
-  bottom: 0;
-  left: 15px; 
+  margin-left: 15px; 
+  margin-right: 15px; 
+  width: auto;
   z-index: $z-index-action-sheet;
   overflow: hidden;
-  width: calc(100% - 30px);
 
   .button {
     display: block;
@@ -117,6 +116,12 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
       color: $assertive;
     }
   }
+}
+
+.action-sheet-wrapper {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
 }
 
 .action-sheet-title {

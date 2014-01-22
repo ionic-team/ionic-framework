@@ -23,7 +23,7 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
       var element = $compile('<action-sheet buttons="buttons"></action-sheet>')(scope);
 
       // Grab the sheet element for animation
-      var sheetEl = angular.element(element[0].querySelector('.action-sheet'));
+      var sheetEl = angular.element(element[0].querySelector('.action-sheet-wrapper'));
 
       var hideSheet = function(didCancel) {
         $animate.leave(sheetEl, function() {
