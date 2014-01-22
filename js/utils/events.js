@@ -38,13 +38,37 @@
   ionic.EventController = {
     VIRTUALIZED_EVENTS: ['tap', 'swipe', 'swiperight', 'swipeleft', 'drag', 'hold', 'release'],
 
+    isAndroidBrowser: (navigator.userAgent.indexOf('Android') > 0 && navigator.userAgent.indexOf('Chrome') < 0),
+
     // Trigger a new event
     trigger: function(eventType, data) {
       var event = new CustomEvent(eventType, { detail: data });
 
       // Make sure to trigger the event on the given target, or dispatch it from
       // the window if we don't have an event target
-      data && data.target && data.target.dispatchEvent(event) || window.dispatchEvent(event);
+      if(data && data.target) {
+
+        // fire the event
+        data.target.dispatchEvent(event) || window.dispatchEvent(event);
+
+        // fix for "click" firing twice on our Android friends
+        if(ionic.EventController.isAndroidBrowser && eventType === 'click') {
+          // Due to a bug, old Android browser fires both touchstart/touchend
+          // and mousedown/mouseup. Because both are fired it results in
+          // the "click" running twice on an element. Since this was a 
+          // triggered "click", which probably came from our "tap", then 
+          // set this element to be disabled for X milliseconds. While this 
+          // element is disabled, a second "click" by the browser would not 
+          // execute, hence the "click" only fires once from the initial "tap".
+          var orgVal = data.target.disabled;
+          data.target.disabled = true;
+
+          // After X milliseconds set the disabled value back to what it was
+          setTimeout(function(){
+            data.target.disabled = orgVal;
+          }, 200);
+        }
+      }
     },
   
     // Bind an event
