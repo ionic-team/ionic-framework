@@ -1,5 +1,8 @@
 
 ## 0.9.21 (pre-release)
+ - Android "click" event firing twice fixes
+ - Toggle directive now includes .item.item-toggle wrapper
+ - Toggle/Checkbox/Radio implements ng-model/ng-value/ng-change
  - Ionicons v1.4.2, icons now using :before
  - Button and header size updates
  - Refactor platform ready event listeners
