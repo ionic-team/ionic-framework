@@ -1496,7 +1496,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         if (scrollTop > maxScrollTop || scrollTop < 0) {
 
           // Slow down on the edges
-          if (self.options.bouncing) {
+          if (self.options.bouncing || (self.__refreshHeight && scrollTop < 0)) {
 
             scrollTop += (moveY / 2 * this.options.speedMultiplier);
 

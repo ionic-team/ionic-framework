@@ -70,11 +70,11 @@
         on-scroll-complete="onScrollComplete(scrollTop, scrollLeft)"
         on-refresh="onRefresh()"
         on-refresh-opening="onRefreshOpening(amount)"
-        refresh-complete="refreshComplete"
         padding="true"
         has-tabs="true"
         has-header="true"
         >
+        <refresher></refresher>
         <div id="search-box" class="bar bar-header item-input-inset">
           <label class="item-input-wrapper">
             <i class="icon ion-ios7-search placeholder-icon"></i>
@@ -136,7 +136,7 @@
         });
       })
 
-      .controller('ThisCtrl', function($scope) {
+      .controller('ThisCtrl', function($scope, $timeout, $ionicScrollDelegate) {
         var header = document.getElementById('header');
         var content = document.getElementById('container');
         var startTop = header.offsetTop;
@@ -146,6 +146,11 @@
           console.log('Adding!');
         };
         var last = 0;
+        $scope.onRefresh = function() {
+          $timeout(function() {
+            $ionicScrollDelegate.finishRefreshing($scope);
+          }, 1000);
+        };
         $scope.onScroll = function(event, scrollTop, scrollLeft) {
         /*
           if(scrollTop > startTop) {

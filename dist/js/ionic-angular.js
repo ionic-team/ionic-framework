@@ -90,6 +90,10 @@ angular.module('ionic.ui.service.scrollDelegate', [])
       }, element[0]);
     },
 
+    finishRefreshing: function($scope) {
+      $scope.$broadcast('scroll.refreshComplete');
+    },
+
     /**
      * Attempt to get the current scroll view in scope (if any)
      *
