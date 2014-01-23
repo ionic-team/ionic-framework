@@ -110,6 +110,7 @@
    * @param   {HTMLElement}       element
    * @param   {Object}            [options={}]
    * @returns {ionic.Gestures.Instance}
+   * @name Gesture.Instance
    * @constructor
    */
   ionic.Gestures.Instance = function(element, options) {

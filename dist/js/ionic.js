@@ -451,6 +451,7 @@ window.ionic = {
    * @param   {HTMLElement}       element
    * @param   {Object}            [options={}]
    * @returns {ionic.Gestures.Instance}
+   * @name Gesture.Instance
    * @constructor
    */
   ionic.Gestures.Instance = function(element, options) {
@@ -2321,7 +2322,7 @@ window.ionic = {
 		 * @param duration {Integer} Milliseconds to run the animation
 		 * @param easingMethod {Function} Pointer to easing function
 		 *   Signature of the method should be `function(percent) { return modifiedValue; }`
-		 * @param root {Element ? document.body} Render root, when available. Used for internal
+		 * @param root {Element} Render root, when available. Used for internal
 		 *   usage of requestAnimationFrame.
 		 * @return {Integer} Identifier of animation. Can be used to stop it any time.
 		 */
@@ -2448,9 +2449,13 @@ var Scroller;
 	};
 
 
-	/**
-	 * A pure logic 'component' for 'virtual' scrolling/zooming.
-	 */
+/**
+ * ionic.views.Scroll
+ * A powerful scroll view with support for bouncing, pull to refresh, and paging.
+ * @param   {Object}        options options for the scroll view
+ * @class A scroll view system
+ * @memberof ionic.views
+ */
 ionic.views.Scroll = ionic.views.View.inherit({
   initialize: function(options) {
     var self = this;
@@ -2559,6 +2564,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
 		this.__callback = this.getRenderFn();
     this.__initEventHandlers();
     this.__createScrollbars();
+
+  },
+
+  run: function() {
     this.resize();
 
     // Fade them out
@@ -2573,36 +2582,36 @@ ionic.views.Scroll = ionic.views.View.inherit({
   ---------------------------------------------------------------------------
   */
 
-  /** {Boolean} Whether only a single finger is used in touch handling */
+  /** Whether only a single finger is used in touch handling */
   __isSingleTouch: false,
 
-  /** {Boolean} Whether a touch event sequence is in progress */
+  /** Whether a touch event sequence is in progress */
   __isTracking: false,
 
-  /** {Boolean} Whether a deceleration animation went to completion. */
+  /** Whether a deceleration animation went to completion. */
   __didDecelerationComplete: false,
 
   /**
-   * {Boolean} Whether a gesture zoom/rotate event is in progress. Activates when
+   * Whether a gesture zoom/rotate event is in progress. Activates when
    * a gesturestart event happens. This has higher priority than dragging.
    */
   __isGesturing: false,
 
   /**
-   * {Boolean} Whether the user has moved by such a distance that we have enabled
+   * Whether the user has moved by such a distance that we have enabled
    * dragging mode. Hint: It's only enabled after some pixels of movement to
    * not interrupt with clicks etc.
    */
   __isDragging: false,
 
   /**
-   * {Boolean} Not touching and dragging anymore, and smoothly animating the
+   * Not touching and dragging anymore, and smoothly animating the
    * touch sequence using deceleration.
    */
   __isDecelerating: false,
 
   /**
-   * {Boolean} Smoothly animating the currently configured change
+   * Smoothly animating the currently configured change
    */
   __isAnimating: false,
 
@@ -2614,67 +2623,67 @@ ionic.views.Scroll = ionic.views.View.inherit({
   ---------------------------------------------------------------------------
   */
 
-  /** {Integer} Available outer left position (from document perspective) */
+  /** Available outer left position (from document perspective) */
   __clientLeft: 0,
 
-  /** {Integer} Available outer top position (from document perspective) */
+  /** Available outer top position (from document perspective) */
   __clientTop: 0,
 
-  /** {Integer} Available outer width */
+  /** Available outer width */
   __clientWidth: 0,
 
-  /** {Integer} Available outer height */
+  /** Available outer height */
   __clientHeight: 0,
 
-  /** {Integer} Outer width of content */
+  /** Outer width of content */
   __contentWidth: 0,
 
-  /** {Integer} Outer height of content */
+  /** Outer height of content */
   __contentHeight: 0,
 
-  /** {Integer} Snapping width for content */
+  /** Snapping width for content */
   __snapWidth: 100,
 
-  /** {Integer} Snapping height for content */
+  /** Snapping height for content */
   __snapHeight: 100,
 
-  /** {Integer} Height to assign to refresh area */
+  /** Height to assign to refresh area */
   __refreshHeight: null,
 
-  /** {Boolean} Whether the refresh process is enabled when the event is released now */
+  /** Whether the refresh process is enabled when the event is released now */
   __refreshActive: false,
 
-  /** {Function} Callback to execute on activation. This is for signalling the user about a refresh is about to happen when he release */
+  /** Callback to execute on activation. This is for signalling the user about a refresh is about to happen when he release */
   __refreshActivate: null,
 
-  /** {Function} Callback to execute on deactivation. This is for signalling the user about the refresh being cancelled */
+  /** Callback to execute on deactivation. This is for signalling the user about the refresh being cancelled */
   __refreshDeactivate: null,
 
-  /** {Function} Callback to execute to start the actual refresh. Call {@link #refreshFinish} when done */
+  /** Callback to execute to start the actual refresh. Call {@link #refreshFinish} when done */
   __refreshStart: null,
 
-  /** {Number} Zoom level */
+  /** Zoom level */
   __zoomLevel: 1,
 
-  /** {Number} Scroll position on x-axis */
+  /** Scroll position on x-axis */
   __scrollLeft: 0,
 
-  /** {Number} Scroll position on y-axis */
+  /** Scroll position on y-axis */
   __scrollTop: 0,
 
-  /** {Integer} Maximum allowed scroll position on x-axis */
+  /** Maximum allowed scroll position on x-axis */
   __maxScrollLeft: 0,
 
-  /** {Integer} Maximum allowed scroll position on y-axis */
+  /** Maximum allowed scroll position on y-axis */
   __maxScrollTop: 0,
 
-  /* {Number} Scheduled left position (final position when animating) */
+  /* Scheduled left position (final position when animating) */
   __scheduledLeft: 0,
 
-  /* {Number} Scheduled top position (final position when animating) */
+  /* Scheduled top position (final position when animating) */
   __scheduledTop: 0,
 
-  /* {Number} Scheduled zoom level (final scale when animating) */
+  /* Scheduled zoom level (final scale when animating) */
   __scheduledZoom: 0,
 
 
@@ -2685,16 +2694,16 @@ ionic.views.Scroll = ionic.views.View.inherit({
   ---------------------------------------------------------------------------
   */
 
-  /** {Number} Left position of finger at start */
+  /** Left position of finger at start */
   __lastTouchLeft: null,
 
-  /** {Number} Top position of finger at start */
+  /** Top position of finger at start */
   __lastTouchTop: null,
 
-  /** {Date} Timestamp of last move of finger. Used to limit tracking range for deceleration speed. */
+  /** Timestamp of last move of finger. Used to limit tracking range for deceleration speed. */
   __lastTouchMove: null,
 
-  /** {Array} List of positions, uses three indexes for each state: left, top, timestamp */
+  /** List of positions, uses three indexes for each state: left, top, timestamp */
   __positions: null,
 
 
@@ -2705,37 +2714,37 @@ ionic.views.Scroll = ionic.views.View.inherit({
   ---------------------------------------------------------------------------
   */
 
-  /** {Integer} Minimum left scroll position during deceleration */
+  /** Minimum left scroll position during deceleration */
   __minDecelerationScrollLeft: null,
 
-  /** {Integer} Minimum top scroll position during deceleration */
+  /** Minimum top scroll position during deceleration */
   __minDecelerationScrollTop: null,
 
-  /** {Integer} Maximum left scroll position during deceleration */
+  /** Maximum left scroll position during deceleration */
   __maxDecelerationScrollLeft: null,
 
-  /** {Integer} Maximum top scroll position during deceleration */
+  /** Maximum top scroll position during deceleration */
   __maxDecelerationScrollTop: null,
 
-  /** {Number} Current factor to modify horizontal scroll position with on every step */
+  /** Current factor to modify horizontal scroll position with on every step */
   __decelerationVelocityX: null,
 
-  /** {Number} Current factor to modify vertical scroll position with on every step */
+  /** Current factor to modify vertical scroll position with on every step */
   __decelerationVelocityY: null,
 
 
-  /** {String} the browser-specific property to use for transforms */
+  /** the browser-specific property to use for transforms */
   __transformProperty: null,
   __perspectiveProperty: null,
 
-  /** {Object} scrollbar indicators */
+  /** scrollbar indicators */
   __indicatorX: null,
   __indicatorY: null,
 
   /** Timeout for scrollbar fading */
   __scrollbarFadeTimeout: null,
 
-  /** {Boolean} whether we've tried to wait for size already */
+  /** whether we've tried to wait for size already */
   __didWaitForSize: null,
   __sizerTimeout: null,
 
@@ -3100,10 +3109,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * Requires the available space for the outer element and the outer size of the inner element.
    * All values which are falsy (null or zero etc.) are ignored and the old value is kept.
    *
-   * @param clientWidth {Integer ? null} Inner width of outer element
-   * @param clientHeight {Integer ? null} Inner height of outer element
-   * @param contentWidth {Integer ? null} Outer width of inner element
-   * @param contentHeight {Integer ? null} Outer height of inner element
+   * @param clientWidth {Integer} Inner width of outer element
+   * @param clientHeight {Integer} Inner height of outer element
+   * @param contentWidth {Integer} Outer width of inner element
+   * @param contentHeight {Integer} Outer height of inner element
    */
   setDimensions: function(clientWidth, clientHeight, contentWidth, contentHeight) {
 
@@ -3139,8 +3148,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
   /**
    * Sets the client coordinates in relation to the document.
    *
-   * @param left {Integer ? 0} Left position of outer element
-   * @param top {Integer ? 0} Top position of outer element
+   * @param left {Integer} Left position of outer element
+   * @param top {Integer} Top position of outer element
    */
   setPosition: function(left, top) {
 
@@ -3261,9 +3270,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * the center when no coordinates are given.
    *
    * @param level {Number} Level to zoom to
-   * @param animate {Boolean ? false} Whether to use animation
-   * @param originLeft {Number ? null} Zoom in at given left coordinate
-   * @param originTop {Number ? null} Zoom in at given top coordinate
+   * @param animate {Boolean} Whether to use animation
+   * @param originLeft {Number} Zoom in at given left coordinate
+   * @param originTop {Number} Zoom in at given top coordinate
    */
   zoomTo: function(level, animate, originLeft, originTop) {
 
@@ -3324,9 +3333,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * Zooms the content by the given factor.
    *
    * @param factor {Number} Zoom by given factor
-   * @param animate {Boolean ? false} Whether to use animation
-   * @param originLeft {Number ? 0} Zoom in at given left coordinate
-   * @param originTop {Number ? 0} Zoom in at given top coordinate
+   * @param animate {Boolean} Whether to use animation
+   * @param originLeft {Number} Zoom in at given left coordinate
+   * @param originTop {Number} Zoom in at given top coordinate
    */
   zoomBy: function(factor, animate, originLeft, originTop) {
 
@@ -3340,10 +3349,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
   /**
    * Scrolls to the given position. Respect limitations and snapping automatically.
    *
-   * @param left {Number?null} Horizontal scroll position, keeps current if value is <code>null</code>
-   * @param top {Number?null} Vertical scroll position, keeps current if value is <code>null</code>
-   * @param animate {Boolean?false} Whether the scrolling should happen using an animation
-   * @param zoom {Number?null} Zoom level to go to
+   * @param left {Number} Horizontal scroll position, keeps current if value is <code>null</code>
+   * @param top {Number} Vertical scroll position, keeps current if value is <code>null</code>
+   * @param animate {Boolean} Whether the scrolling should happen using an animation
+   * @param zoom {Number} Zoom level to go to
    */
   scrollTo: function(left, top, animate, zoom) {
 
@@ -3422,9 +3431,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
   /**
    * Scroll by the given offset
    *
-   * @param left {Number ? 0} Scroll x-axis by given offset
-   * @param top {Number ? 0} Scroll x-axis by given offset
-   * @param animate {Boolean ? false} Whether to animate the given change
+   * @param left {Number} Scroll x-axis by given offset
+   * @param top {Number} Scroll x-axis by given offset
+   * @param animate {Boolean} Whether to animate the given change
    */
   scrollBy: function(left, top, animate) {
 
@@ -3865,7 +3874,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
    *
    * @param left {Number} Left scroll position
    * @param top {Number} Top scroll position
-   * @param animate {Boolean?false} Whether animation should be used to move to the new coordinates
+   * @param animate {Boolean} Whether animation should be used to move to the new coordinates
    */
   __publish: function(left, top, zoom, animate) {
 
@@ -4066,7 +4075,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
   /**
    * Called on every step of the animation
    *
-   * @param inMemory {Boolean?false} Whether to not render the current step, but keep it in memory only. Used internally only!
+   * @param inMemory {Boolean} Whether to not render the current step, but keep it in memory only. Used internally only!
    */
   __stepThroughDeceleration: function(render) {
 

@@ -3,7 +3,7 @@
 
 angular.module('ionic.ui.service.scrollDelegate', [])
 
-.factory('$ionicScrollDelegate', ['$rootScope', '$timeout', function($rootScope, $timeout) {
+.factory('$ionicScrollDelegate', ['$rootScope', '$timeout', '$q', function($rootScope, $timeout, $q) {
   return {
     /**
      * Trigger a scroll-to-top event on child scrollers.
@@ -28,6 +28,15 @@ angular.module('ionic.ui.service.scrollDelegate', [])
           _this.scrollTop();
         } 
       }, element[0]);
+    },
+
+    /**
+     * Attempt to get the current scroll view in scope (if any)
+     *
+     * Note: will not work in an isolated scope context.
+     */
+    getScrollView: function($scope) {
+      return $scope.scrollView;
     },
     /**
      * Register a scope for scroll event handling.

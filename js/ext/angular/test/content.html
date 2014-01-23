@@ -84,6 +84,7 @@
             Cancel
           </button>
         </div>
+        <div ng-controller="TestCtrl"></div>
         <button ng-click="add()">Click</button>
         <ul class="list" ng-controller="AppCtrl">
           <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
@@ -124,6 +125,15 @@
             var startTop = $element[0].offsetTop;
           }
         }
+      })
+
+      .controller('TestCtrl', function($scope, $timeout, $ionicScrollDelegate) {
+        console.log('CONSTRUCT');
+
+        $timeout(function() {
+          var view = $ionicScrollDelegate.getScrollView($scope);
+          console.log(view);
+        });
       })
 
       .controller('ThisCtrl', function($scope) {
