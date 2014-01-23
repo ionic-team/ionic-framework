@@ -21,7 +21,7 @@
       left-buttons="leftButtons"
       right-buttons="rightButtons"
       type="bar-primary"></header-bar>
-    <header-bar type="bar-positive" title="'Location'" left-buttons="leftButtons" right-buttons="rightButtons"></header-bar>
+    <header-bar type="bar-positive" title="headerTitle" left-buttons="leftButtons" right-buttons="rightButtons"></header-bar>
 
     <content>
       <input type="text" ng-model="headerTitle">
@@ -30,10 +30,10 @@
       angular.module('headerTest', ['ionic'])
 
       .controller('TestCtrl', function($scope) {
-        $scope.headerTitle = 'A really really really really really long title here';
+          $scope.headerTitle = 'A really really <u>really</u> really really long title here';
         $scope.leftButtons = [
           { 
-            content: 'Hello',
+content: 'Hello <b>Hello</b>',
             tap: function(e) {
               console.log('Click button');
             }

@@ -2547,9 +2547,9 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     // Clone the old title and add a new one so we can show two animating in and out
     // add ng-leave and ng-enter during creation to prevent flickering when they are swapped during animation
     title = angular.element(titles[0]);
-    oTitle = $compile('<h1 class="title" ng-bind="oldTitle"></h1>')($scope);
+    oTitle = $compile('<h1 class="title" ng-bind-html="oldTitle"></h1>')($scope);
     title.replaceWith(oTitle);
-    nTitle = $compile('<h1 class="title" ng-bind="currentTitle"></h1>')($scope);
+    nTitle = $compile('<h1 class="title" ng-bind-html="currentTitle"></h1>')($scope);
 
     var insert = $element[0].firstElementChild || null;
 
@@ -2578,7 +2578,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           '<button view-back class="button" ng-if="enableBackButton" ng-class="backButtonClass" ng-bind-html="backButtonLabel"></button>' +
           '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" class="button no-animation {{button.type}}" ng-bind-html="button.content"></button>' + 
         '</div>' +
-        '<h1 class="title" ng-bind="currentTitle"></h1>' + 
+        '<h1 class="title" ng-bind-html="currentTitle"></h1>' + 
         '<div class="buttons" ng-if="rightButtons.length"> ' +
           '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" class="button no-animation {{button.type}}" ng-bind-html="button.content"></button>' + 
         '</div>' +
