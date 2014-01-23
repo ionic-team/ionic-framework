@@ -12,9 +12,9 @@ angular.module('ionic.ui.toggle', [])
     replace: true,
     require: '?ngModel',
     scope: {
-      ngModel: '=',
-      ngValue: '=',
-      ngChecked: '=',
+      ngModel: '=?',
+      ngValue: '=?',
+      ngChecked: '=?',
       ngChange: '&'
     },
     transclude: true,

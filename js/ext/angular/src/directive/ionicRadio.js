@@ -11,8 +11,8 @@ angular.module('ionic.ui.radio', [])
     replace: true,
     require: '?ngModel',
     scope: {
-      ngModel: '=',
-      ngValue: '=',
+      ngModel: '=?',
+      ngValue: '=?',
       ngChange: '&',
       icon: '@'
     },

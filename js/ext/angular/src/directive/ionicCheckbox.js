@@ -10,9 +10,9 @@ angular.module('ionic.ui.checkbox', [])
     replace: true,
     require: '?ngModel',
     scope: {
-      ngModel: '=',
-      ngValue: '=',
-      ngChecked: '=',
+      ngModel: '=?',
+      ngValue: '=?',
+      ngChecked: '=?',
       ngChange: '&'
     },
     transclude: true,

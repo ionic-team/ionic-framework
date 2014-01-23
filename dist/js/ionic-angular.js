@@ -1196,9 +1196,9 @@ angular.module('ionic.ui.checkbox', [])
     replace: true,
     require: '?ngModel',
     scope: {
-      ngModel: '=',
-      ngValue: '=',
-      ngChecked: '=',
+      ngModel: '=?',
+      ngValue: '=?',
+      ngChecked: '=?',
       ngChange: '&'
     },
     transclude: true,
@@ -1616,8 +1616,8 @@ angular.module('ionic.ui.radio', [])
     replace: true,
     require: '?ngModel',
     scope: {
-      ngModel: '=',
-      ngValue: '=',
+      ngModel: '=?',
+      ngValue: '=?',
       ngChange: '&',
       icon: '@'
     },
@@ -2453,9 +2453,9 @@ angular.module('ionic.ui.toggle', [])
     replace: true,
     require: '?ngModel',
     scope: {
-      ngModel: '=',
-      ngValue: '=',
-      ngChecked: '=',
+      ngModel: '=?',
+      ngValue: '=?',
+      ngChecked: '=?',
       ngChange: '&'
     },
     transclude: true,
