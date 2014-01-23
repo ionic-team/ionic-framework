@@ -6159,7 +6159,7 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
      * @return {float} The amount the side menu is open, either positive or negative for left (positive), or right (negative)
      */
     getOpenAmount: function() {
-      return this.content.getTranslateX() || 0;
+      return this.content && this.content.getTranslateX() || 0;
     },
 
     /**

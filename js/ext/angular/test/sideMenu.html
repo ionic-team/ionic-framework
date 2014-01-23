@@ -57,7 +57,7 @@
     <script>
       angular.module('sideMenuTest', ['ionic'])
 
-      .controller('MenuCtrl', function($scope) {
+      .controller('MenuCtrl', function($scope, $ionicSideMenuDelegate) {
         $scope.list = [];
         for(var i = 0; i < 20; i++) {
           $scope.list.push({
@@ -65,7 +65,7 @@
           });
         }
         $scope.openLeft = function() {
-          $scope.sideMenuController.toggleLeft();
+          $ionicSideMenuDelegate.toggleLeft($scope);
         };
       });
     </script>

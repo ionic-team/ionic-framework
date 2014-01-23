@@ -17,6 +17,7 @@ angular.module('ionic.service', [
 angular.module('ionic.ui.service', [
   'ionic.ui.service.scrollDelegate',
   'ionic.ui.service.slideBoxDelegate',
+  'ionic.ui.service.sideMenuDelegate',
 ]);
 
 angular.module('ionic.ui', [
