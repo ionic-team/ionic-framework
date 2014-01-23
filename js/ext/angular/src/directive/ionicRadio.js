@@ -14,14 +14,14 @@ angular.module('ionic.ui.radio', [])
       ngModel: '=',
       ngValue: '=',
       ngChange: '&',
-      icon: '@'
+      icon: '@',
+      name: '@'
     },
     transclude: true,
     template: '<label class="item item-radio">' +
-                '<input type="radio" name="radio-group"' +
+                '<input type="radio" name="{{name}}"' +
                 ' ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
-                '<div class="item-content" ng-transclude></div>' +
-                '<i class="radio-icon icon ion-checkmark"></i>' +
+                '<div class="item-content"><span ng-transclude></span><i class="radio-icon icon ion-checkmark"></i></div>' +
               '</label>',
 
     compile: function(element, attr) {
