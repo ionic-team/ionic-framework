@@ -9,8 +9,6 @@
     <script src="../../../../dist/js/ionic.js"></script>
     <script src="../../../../dist/js/angular/angular.js"></script>
     <script src="../../../../dist/js/angular/angular-animate.js"></script>
-    <script src="../../../../dist/js/angular/angular-route.js"></script>
-    <script src="../../../../dist/js/angular/angular-touch.js"></script>
     <script src="../../../../dist/js/angular/angular-sanitize.js"></script>
     <script src="../../../../dist/js/angular-ui/angular-ui-router.js"></script>
     <script src="../../../../dist/js/ionic-angular.js"></script>
@@ -27,7 +25,7 @@
     </div>
 
     <script id="sign-in.html" type="text/ng-template">
-<view title="'<u>Sign-In</u>'" left-buttons="leftButtons" right-buttons="rightButtons">
+      <view title="'Sign-In'" left-buttons="leftButtons" right-buttons="rightButtons">
         <content has-header="true">
           <div class="list">
             <label class="item item-input">
@@ -108,15 +106,15 @@
       <tabs tabs-style="tabs-icon-top" tabs-type="tabs-positive">
 
         <tab title="Automobiles" icon="ion-model-s" href="#/tabs/autos">
-          <nav-view name="auto-ui-view"></nav-view>
+          <nav-view name="auto-nav-view"></nav-view>
         </tab>
 
         <tab title="Add" icon="ion-plus-circled" href="#/tabs/add-auto">
-          <nav-view name="add-autos-ui-view"></nav-view>
+          <nav-view name="add-autos-nav-view"></nav-view>
         </tab>
 
         <tab title="About" icon="ion-ios7-world" ui-sref="tabs.about">
-          <nav-view name="about-ui-view"></nav-view>
+          <nav-view name="about-nav-view"></nav-view>
         </tab>
 
         <tab title="Info" icon="ion-information-circled">
@@ -271,7 +269,7 @@
           .state('tabs.autolist', {
             url: "/autos",
             views: {
-              'auto-ui-view': {
+              'auto-nav-view': {
                 templateUrl: "auto-list.html",
                 controller: 'AutoListCtrl'
               }
@@ -280,7 +278,7 @@
           .state('tabs.addauto', {
             url: "/add-auto",
             views: {
-              'add-autos-ui-view': {
+              'add-autos-nav-view': {
                 templateUrl: "add-auto.html",
                 controller: 'AutoAddCtrl'
               }
@@ -289,7 +287,7 @@
           .state('tabs.autodetail', {
             url: "/autos/:id",
             views: {
-              'auto-ui-view': {
+              'auto-nav-view': {
                 templateUrl: "auto-detail.html",
                 controller: 'AutoDetailCtrl'
               }
@@ -298,7 +296,7 @@
           .state('tabs.about', {
             url: "/about",
             views: {
-              'about-ui-view': {
+              'about-nav-view': {
                 templateUrl: "about.html"
               }
             }
