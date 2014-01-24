@@ -18,7 +18,7 @@ angular.module('ionic.ui.toggle', [])
       ngChange: '&'
     },
     transclude: true,
-    template: '<div class="item item-toggle">' +
+    template: '<div class="item item-toggle" ng-click="tap($event)">' +
                 '<div ng-transclude></div>' +
                 '<label class="toggle">' +
                   '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
@@ -35,29 +35,39 @@ angular.module('ionic.ui.toggle', [])
       if(attr.ngTrueValue) input.attr('ng-true-value', attr.ngTrueValue);
       if(attr.ngFalseValue) input.attr('ng-false-value', attr.ngFalseValue);
 
-      // return function link($scope, $element, $attr, ngModel) {
-      //   var el, checkbox, track, handle;
+      return function link($scope, $element, $attr, ngModel) {
+        var el, checkbox, track, handle;
 
-      //   el = $element[0].getElementsByTagName('label')[0];
-      //   checkbox = el.children[0];
-      //   track = el.children[1];
-      //   handle = track.children[0];
+        el = $element[0].getElementsByTagName('label')[0];
+        checkbox = el.children[0];
+        track = el.children[1];
+        handle = track.children[0];
 
-      //   $scope.toggle = new ionic.views.Toggle({ 
-      //     el: el,
-      //     track: track,
-      //     checkbox: checkbox,
-      //     handle: handle
-      //   });
+        $scope.tap = function(e) {
+        };
 
-      //   ionic.on('drag', function(e) {
-      //     console.log('drag');
-      //     $scope.toggle.drag(e);
-      //   }, handle);
+        $scope.toggle = new ionic.views.Toggle({ 
+          el: el,
+          track: track,
+          checkbox: checkbox,
+          handle: handle
+        });
 
-      // }
+        ionic.on('drag', function(e) {
+          console.log('drag');
+          $scope.toggle.drag(e);
+        }, handle);
+
+        $element.on('click', function(e) {
+          console.log('TOGGLE CLICK');
+          $scope.toggle.tap(e);
+          if(ngModel) {
+            ngModel.$setViewValue(checkbox.checked);
+          }
+        });
+
+      }
     }
-
   };
 });
 

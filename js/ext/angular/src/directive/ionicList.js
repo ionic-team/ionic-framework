@@ -22,7 +22,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       reorderIcon: '@'
     },
 
-    template: '<div class="item item-complex">\
+    template: '<div class="item item-complex" ng-click="selected($event)">\
             <div class="item-edit" ng-if="deleteClick !== undefined">\
               <button class="button button-icon icon" ng-class="deleteIconClass" ng-click="deleteClick()"></button>\
             </div>\
@@ -48,6 +48,8 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       if(!$scope.itemType) {
         $scope.itemType = $parentScope.itemType;
       }
+
+      $scope.selected = function(e) {};
 
       // Set this item's class, first from the item directive attr, and then the list attr if item not set
       $element.addClass($scope.itemType || $parentScope.itemType);

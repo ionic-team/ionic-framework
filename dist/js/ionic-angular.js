@@ -54,6 +54,7 @@ angular.module('ionic', [
     'ionic.ui',
     
     // Angular deps
+    'ngTouch',
     'ngAnimate',
     'ngSanitize',
     'ui.router'
@@ -1444,7 +1445,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       reorderIcon: '@'
     },
 
-    template: '<div class="item item-complex">\
+    template: '<div class="item item-complex" ng-click="selected($event)">\
             <div class="item-edit" ng-if="deleteClick !== undefined">\
               <button class="button button-icon icon" ng-class="deleteIconClass" ng-click="deleteClick()"></button>\
             </div>\
@@ -1470,6 +1471,8 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       if(!$scope.itemType) {
         $scope.itemType = $parentScope.itemType;
       }
+
+      $scope.selected = function(e) {};
 
       // Set this item's class, first from the item directive attr, and then the list attr if item not set
       $element.addClass($scope.itemType || $parentScope.itemType);
@@ -1619,10 +1622,11 @@ angular.module('ionic.ui.radio', [])
       ngModel: '=?',
       ngValue: '=?',
       ngChange: '&',
-      icon: '@'
+      icon: '@',
+      name: '@'
     },
     transclude: true,
-    template: '<label class="item item-radio">' +
+    template: '<label ng-click="toggle($event)" class="item item-radio">' +
                 '<input type="radio" name="radio-group"' +
                 ' ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
                 '<div class="item-content" ng-transclude></div>' +
@@ -1632,6 +1636,37 @@ angular.module('ionic.ui.radio', [])
     compile: function(element, attr) {
       if(attr.name) element.find('input').attr('name', attr.name);
       if(attr.icon) element.find('i').removeClass('ion-checkmark').addClass(attr.icon);
+
+      return function($scope, $element, $attr, ngModel) {
+        var radio;
+
+        radio = $element.children().eq(0);
+
+        if(!radio.length) { return; }
+
+        $scope.toggle = function(e) {
+        };
+
+        $element.on('click', function() {
+          console.log('Radio click');
+          if(ngModel) {
+            $scope.$apply(function() {
+              ngModel.$setViewValue($scope.$eval($attr.ngValue));
+            });
+          }
+        });
+        ngModel.$render = function() {
+          var val = $scope.$eval($attr.ngValue);
+
+          if(ngModel) {
+            if(val === ngModel.$viewValue) {
+              radio.attr('checked', 'checked');
+            } else {
+              radio.removeAttr('checked');
+            }
+          }
+        };
+      }
     }
   };
 })
@@ -2459,7 +2494,7 @@ angular.module('ionic.ui.toggle', [])
       ngChange: '&'
     },
     transclude: true,
-    template: '<div class="item item-toggle">' +
+    template: '<div class="item item-toggle" ng-click="tap($event)">' +
                 '<div ng-transclude></div>' +
                 '<label class="toggle">' +
                   '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
@@ -2476,29 +2511,39 @@ angular.module('ionic.ui.toggle', [])
       if(attr.ngTrueValue) input.attr('ng-true-value', attr.ngTrueValue);
       if(attr.ngFalseValue) input.attr('ng-false-value', attr.ngFalseValue);
 
-      // return function link($scope, $element, $attr, ngModel) {
-      //   var el, checkbox, track, handle;
+      return function link($scope, $element, $attr, ngModel) {
+        var el, checkbox, track, handle;
 
-      //   el = $element[0].getElementsByTagName('label')[0];
-      //   checkbox = el.children[0];
-      //   track = el.children[1];
-      //   handle = track.children[0];
+        el = $element[0].getElementsByTagName('label')[0];
+        checkbox = el.children[0];
+        track = el.children[1];
+        handle = track.children[0];
 
-      //   $scope.toggle = new ionic.views.Toggle({ 
-      //     el: el,
-      //     track: track,
-      //     checkbox: checkbox,
-      //     handle: handle
-      //   });
+        $scope.tap = function(e) {
+        };
 
-      //   ionic.on('drag', function(e) {
-      //     console.log('drag');
-      //     $scope.toggle.drag(e);
-      //   }, handle);
+        $scope.toggle = new ionic.views.Toggle({ 
+          el: el,
+          track: track,
+          checkbox: checkbox,
+          handle: handle
+        });
 
-      // }
+        ionic.on('drag', function(e) {
+          console.log('drag');
+          $scope.toggle.drag(e);
+        }, handle);
+
+        $element.on('click', function(e) {
+          console.log('TOGGLE CLICK');
+          $scope.toggle.tap(e);
+          if(ngModel) {
+            ngModel.$setViewValue(checkbox.checked);
+          }
+        });
+
+      }
     }
-
   };
 });
 
@@ -2718,6 +2763,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 
 .directive('viewBack', ['$ionicViewService', '$rootScope', function($ionicViewService, $rootScope) {
   var goBack = function(e) {
+    console.log('BACK');
     var backView = $ionicViewService.getBackView();
     backView && backView.go();
     e.alreadyHandled = true;

@@ -14,10 +14,11 @@ angular.module('ionic.ui.radio', [])
       ngModel: '=?',
       ngValue: '=?',
       ngChange: '&',
-      icon: '@'
+      icon: '@',
+      name: '@'
     },
     transclude: true,
-    template: '<label class="item item-radio">' +
+    template: '<label ng-click="toggle($event)" class="item item-radio">' +
                 '<input type="radio" name="radio-group"' +
                 ' ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
                 '<div class="item-content" ng-transclude></div>' +
@@ -27,6 +28,37 @@ angular.module('ionic.ui.radio', [])
     compile: function(element, attr) {
       if(attr.name) element.find('input').attr('name', attr.name);
       if(attr.icon) element.find('i').removeClass('ion-checkmark').addClass(attr.icon);
+
+      return function($scope, $element, $attr, ngModel) {
+        var radio;
+
+        radio = $element.children().eq(0);
+
+        if(!radio.length) { return; }
+
+        $scope.toggle = function(e) {
+        };
+
+        $element.on('click', function() {
+          console.log('Radio click');
+          if(ngModel) {
+            $scope.$apply(function() {
+              ngModel.$setViewValue($scope.$eval($attr.ngValue));
+            });
+          }
+        });
+        ngModel.$render = function() {
+          var val = $scope.$eval($attr.ngValue);
+
+          if(ngModel) {
+            if(val === ngModel.$viewValue) {
+              radio.attr('checked', 'checked');
+            } else {
+              radio.removeAttr('checked');
+            }
+          }
+        };
+      }
     }
   };
 })

@@ -41,6 +41,7 @@ angular.module('ionic', [
     'ionic.ui',
     
     // Angular deps
+    'ngTouch',
     'ngAnimate',
     'ngSanitize',
     'ui.router'
