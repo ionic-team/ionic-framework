@@ -2745,7 +2745,7 @@ infinite-scroll.active .scroll-infinite {
   bottom: 49px; }
 
 .pane {
-  position: fixed;
+  position: absolute;
   z-index: 1; }
 
 .view {
