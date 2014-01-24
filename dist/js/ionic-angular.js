@@ -379,7 +379,9 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
     // Compile the template
     var element = $compile(templateString)(scope);
 
-    options.el = getFirstElement(element);
+    options.el = Array.prototype.filter.call(element, function (elem) {
+      return elem.nodeType === 1;
+    })[0];
     var modal = new ModalView(options);
 
     modal.scope = scope;
@@ -391,20 +393,6 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
     }
 
     return modal;
-  };
-
-  // Return the first Element-node of the passed collection
-  var getFirstElement = function ($collection) {
-    var i = 0;
-    while ( true ) {
-      if ( !$collection[i] ) {
-        return null;
-      }
-      if ( $collection[i].nodeType === 1 ) {
-        return $collection[i];
-      }
-      i += 1;
-    }
   };
 
   return {
