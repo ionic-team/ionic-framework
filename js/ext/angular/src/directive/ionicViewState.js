@@ -249,107 +249,95 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 }])
 
 
-.directive('navView', ['$ionicViewService', '$state', '$anchorScroll', '$compile', '$controller', '$animate', 
-              function( $ionicViewService,   $state,   $anchorScroll,   $compile,   $controller,   $animate) {
-
+.directive('navView', ['$ionicViewService', '$state', '$compile', '$controller', 
+              function( $ionicViewService,   $state,   $compile,   $controller) {
+  // IONIC's fork of Angular UI Router, v0.2.7
+  // the navView handles registering views in the history, which animation to use, and which 
   var viewIsUpdating = false;
-  var animation;
 
   var directive = {
     restrict: 'E',
     terminal: true,
     priority: 2000,
     transclude: true,
+    compile: function (element, attr, transclude) {
+      return function(scope, element, attr) {
+        var viewScope, viewLocals,
+            name = attr[directive.name] || attr.name || '',
+            onloadExp = attr.onload || '',
+            initialView = transclude(scope);
 
-    link: function(scope, $element, attr, ctrl, $transclude) {
-      var currentElement,
-          autoScrollExp = attr.autoscroll,
-          onloadExp = attr.onload || '',
-          viewLocals,
-          viewScope,
-          name = attr[directive.name] || attr.name || '',
-          parent = $element.parent().inheritedData('$uiView');
+        // Put back the compiled initial view
+        element.append(initialView);
 
-      if (name.indexOf('@') < 0) name = name + '@' + (parent ? parent.state.name : '');
-      var view = { name: name, state: null, animation: null };
-      $element.data('$uiView', view);
+        // Find the details of the parent view directive (if any) and use it
+        // to derive our own qualified view name, then hang our own details
+        // off the DOM so child directives can find it.
+        var parent = element.parent().inheritedData('$uiView');
+        if (name.indexOf('@') < 0) name  = name + '@' + (parent ? parent.state.name : '');
+        var view = { name: name, state: null };
+        element.data('$uiView', view);
 
-      var climbElement = $element[0];
-      while(!animation && climbElement) {
-        animation = climbElement.getAttribute('animation');
-        climbElement = climbElement.parentElement;
-      }
+        var eventHook = function() {
+          if (viewIsUpdating) return;
+          viewIsUpdating = true;
 
-      var eventHook = function() {
-        if (viewIsUpdating) return;
-        viewIsUpdating = true;
-
-        try { update(true); } catch (e) {
+          try { updateView(true); } catch (e) {
+            viewIsUpdating = false;
+            throw e;
+          }
           viewIsUpdating = false;
-          throw e;
-        }
-        viewIsUpdating = false;
-      };
-
-      scope.$on('$stateChangeSuccess', eventHook);
-      scope.$on('$viewContentLoading', eventHook);
-      update(false);
-
-      function update(doAnimation) {
-        var locals = $state.$current && $state.$current.locals[name],
-            template = (locals && locals.$template ? locals.$template : null);
-
-        if (locals === viewLocals) return; // nothing to do here, go about your business
-
-        var transitionOptions = {
-          parentElement: $element,
-          doAnimation: doAnimation,
-          leavingScope: viewScope,
-          leavingElement: currentElement,
-          navDirection: null
         };
 
-        if (template) {
-          currentElement = angular.element(template.trim());
+        scope.$on('$stateChangeSuccess', eventHook);
+        scope.$on('$viewContentLoading', eventHook);
+        updateView(false);
 
-          var registerData = {};
-          if(currentElement[0].tagName !== 'TABS') {
-            // the tabs directive shouldn't register in the view history (its tab will)
-            registerData = $ionicViewService.register(scope);
-            transitionOptions.navDirection = registerData.navDirection;
+        function updateView(doAnimate) {
+          var locals = $state.$current && $state.$current.locals[name];
+          if (locals === viewLocals) return; // nothing to do
+          var renderer = $ionicViewService.getRenderer(element, attr, scope);
+
+          // Destroy previous view scope
+          if (viewScope) {
+            viewScope.$destroy();
+            viewScope = null;
           }
+
+          if (!locals) {
+            viewLocals = null;
+            view.state = null;
+
+            // Restore the initial view
+            return element.append(initialView);
+          }
+
+          var newElement = angular.element('<div></div>').html(locals.$template).contents();
+          renderer().register(newElement);
+
+          // Remove existing content
+          renderer(doAnimate).leave();
 
           viewLocals = locals;
           view.state = locals.$$state;
 
-          var link = $compile(currentElement),
-              current = $state.current;
+          renderer(doAnimate).enter(newElement);
 
-          viewScope = current.scope = scope.$new();
-          viewScope.$navDirection = transitionOptions.navDirection;
+          var link = $compile(newElement);
+          viewScope = scope.$new();
 
           if (locals.$$controller) {
             locals.$scope = viewScope;
             var controller = $controller(locals.$$controller, locals);
-            if (current.controllerAs) {
-              viewScope[current.controllerAs] = controller;
-            }
-            currentElement.data('$ngControllerController', controller);
-            currentElement.children().data('$ngControllerController', controller);
+            element.children().data('$ngControllerController', controller);
           }
-
           link(viewScope);
-
           viewScope.$emit('$viewContentLoaded');
-          viewScope.$eval(onloadExp);
-          viewScope.animation = animation;
+          if (onloadExp) viewScope.$eval(onloadExp);
 
-          transitionOptions.enteringScope = viewScope;
-          transitionOptions.enteringElement = currentElement;
+          newElement = null;
         }
-
-        $ionicViewService.transition(transitionOptions);
-      }
+      };
     }
   };
   return directive;
