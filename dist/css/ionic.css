@@ -3544,7 +3544,10 @@ a.subdued {
       background-repeat: no-repeat; } }
 
 .tabs-top {
-  top: 44px; }
+  top: 44px;
+  padding-top: 0;
+  padding-bottom: 2px;
+  background-position: bottom; }
 
 .tab-item {
   -webkit-box-flex: 1;

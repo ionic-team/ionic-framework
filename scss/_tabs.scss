@@ -69,6 +69,9 @@
 
 .tabs-top {
   top: $bar-height;
+  padding-top: 0;
+  padding-bottom: 2px;
+  background-position: bottom;
 }
 
 .tab-item {
