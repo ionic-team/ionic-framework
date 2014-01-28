@@ -33,12 +33,12 @@
   /* hide any radio button inputs elements (the ugly circles) */
   display: none;
 
-  &:checked ~ .item-content {
+  &:checked + .item-content {
     /* style the item content when its checked */
     background: #f7f7f7;
   }
 
-  &:checked ~ .radio-icon {
+  &:checked + .item-content .radio-icon {
     /* show the checkmark icon when its checked */
     visibility: visible;
   }
