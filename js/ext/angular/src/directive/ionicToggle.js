@@ -19,7 +19,7 @@ angular.module('ionic.ui.toggle', [])
     },
     transclude: true,
     template: '<div class="item item-toggle">' +
-                '<div ng-transclude></div>' +
+                '<div class="disable-pointer-events" ng-transclude></div>' +
                 '<label class="toggle">' +
                   '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
                   '<div class="track">' +

@@ -20,13 +20,13 @@ angular.module('ionic.ui.radio', [])
     template: '<label class="item item-radio">' +
                 '<input type="radio" name="radio-group"' +
                 ' ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
-                '<div class="item-content" ng-transclude></div>' +
-                '<i class="radio-icon icon ion-checkmark"></i>' +
+                '<div class="item-content disable-pointer-events" ng-transclude></div>' +
+                '<i class="radio-icon disable-pointer-events icon ion-checkmark"></i>' +
               '</label>',
 
     compile: function(element, attr) {
-      if(attr.name) element.find('input').attr('name', attr.name);
-      if(attr.icon) element.find('i').removeClass('ion-checkmark').addClass(attr.icon);
+      if(attr.name) element.children().eq(0).attr('name', attr.name);
+      if(attr.icon) element.children().eq(2).removeClass('ion-checkmark').addClass(attr.icon);
     }
   };
 })

@@ -21,7 +21,7 @@ angular.module('ionic.ui.checkbox', [])
                 '<label class="checkbox">' +
                   '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
                 '</label>' +
-                '<div class="item-content" ng-transclude></div>' +
+                '<div class="item-content disable-pointer-events" ng-transclude></div>' +
               '</div>',
 
     compile: function(element, attr) {

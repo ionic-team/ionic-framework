@@ -30,17 +30,27 @@
 
   // polyfill use to simulate native "tap"
   function inputTapPolyfill(ele, e) {
-    if(ele.type === "radio") {
-      if(!ele.checked) ele.checked = true;
-      ionic.trigger('click', { target: ele });
-    } else if(ele.type === "checkbox") {
-      ele.checked = !ele.checked;
-      ionic.trigger('click', { target: ele });
-    } else if(ele.type === "submit" || ele.type === "button") {
-      ionic.trigger('click', { target: ele });
+    if(ele.tagName === 'A' ||
+       ele.tagName === 'BUTTON' ||
+       ele.type === 'checkbox' ||
+       ele.type === 'radio' ||
+       ele.type === 'button' ||
+       ele.type === 'submit' ||
+       ele.type === 'file') {
+      // fire off this elements click method
+      ele.click();
     } else {
+      // if its not one of the elements above, just focus on this element
       ele.focus();
     }
+
+    // remember the coordinates of this tap so if it happens again we can ignore it
+    recordTapCoordinates(e);
+
+    // set the last tap time so if a click event quickly happens it knows to ignore it
+    ele.lastTap = Date.now();
+
+    // Stop! HOWEVER!! with touch devices there are still ghostclicks, hence the above logic
     e.stopPropagation();
     e.preventDefault();
     return false;
@@ -50,33 +60,34 @@
     // if the source event wasn't from a touch event then don't use this polyfill
     if(!orgEvent.gesture || orgEvent.gesture.pointerType !== "touch" || !orgEvent.gesture.srcEvent) return;
 
-    // An internal Ionic indicator for angular directives that contain
-    // elements that normally need poly behavior, but are already processed
-    // (like the radio directive that has a radio button in it, but handles
-    // the tap stuff itself). This is in contrast to preventDefault which will
-    // mess up other operations like change events and such
-    if(orgEvent.alreadyHandled) return;
-
     var e = orgEvent.gesture.srcEvent; // evaluate the actual source event, not the created event by gestures.js
     var ele = e.target;
 
+    if( isRecentTap(e) ) {
+      // if a tap in the same area just happened, don't continue
+      return;
+    }
+
+    if(e.target.lastClick && e.target.lastClick + CLICK_PREVENT_DURATION > Date.now()) {
+      // if a click recently happend on this element, don't continue
+      return;
+    }
+
     while(ele) {
-      if( ele.tagName === "INPUT" || ele.tagName === "TEXTAREA" || ele.tagName === "SELECT" ) {
-        orgEvent.alreadyHandled = true;
+      // climb up the DOM looking to see the tapped is, or has a parent, of one of these
+      if( ele.tagName === "INPUT" ||
+          ele.tagName === "A" || 
+          ele.tagName === "BUTTON" || 
+          ele.tagName === "TEXTAREA" || 
+          ele.tagName === "SELECT" ) {
+
         return inputTapPolyfill(ele, e);
+
       } else if( ele.tagName === "LABEL" ) {
+        // check if the tapped label has an input associated to it
         if(ele.control) {
-          orgEvent.alreadyHandled = true;
           return inputTapPolyfill(ele.control, e);
         }
-      } else if( ele.tagName === "A" || ele.tagName === "BUTTON" ) {
-        ionic.trigger('click', {
-          target: ele
-        });
-        orgEvent.alreadyHandled = true;
-        e.stopPropagation();
-        e.preventDefault();
-        return false;
       }
       ele = ele.parentElement;
     }
@@ -84,14 +95,97 @@
     // they didn't tap one of the above elements
     // if the currently active element is an input, and they tapped outside
     // of the current input, then unset its focus (blur) so the keyboard goes away
-    var activeElement = document.activeElement;
-    if(activeElement && (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA" || activeElement.tagName === "SELECT")) {
-      activeElement.blur();
+    ele = document.activeElement;
+    if(ele && (ele.tagName === "INPUT" || 
+               ele.tagName === "TEXTAREA" || 
+               ele.tagName === "SELECT")) {
+      ele.blur();
+    }
+  }
+
+  function preventGhostClick(e) {
+    if(e.target.tagName === "LABEL" && e.target.control) {
+      // if this is a label and it has an associated input, then the input's click event will 
+      // propagate so don't bother letting this label's click propagate cuz it causes double clicks
+      // However, do NOT preventDefault, because the label still needs to click the input
+      e.stopPropagation();
+      return;
+    }
+
+    if( isRecentTap(e) ) {
+      // a tap has already happened at these coordinates recently, ignore this event
       e.stopPropagation();
       e.preventDefault();
       return false;
     }
+
+    if(e.target.lastTap && e.target.lastTap + CLICK_PREVENT_DURATION > Date.now()) {
+      // this element has already had the tap poly fill run on it recently, ignore this event
+      e.stopPropagation();
+      e.preventDefault();
+      return false;
+    }
+
+    // remember the last time this element was clicked
+    e.target.lastClick = Date.now();
+
+    // remember the coordinates of this click so if a tap or click in the 
+    // same area quickly happened again we can ignore it
+    recordTapCoordinates(e);
   }
+
+  function isRecentTap(event) {
+    // loop through the tap coordinates and see if the same area has been tapped recently
+    var tapId, existingCoordinates, currentCoordinates,
+    hitRadius = 15;
+
+    for(tapId in tapCoordinates) {
+      existingCoordinates = tapCoordinates[tapId];
+      if(!currentCoordinates) currentCoordinates = getCoordinates(event); // lazy load it when needed
+
+      if(currentCoordinates.x > existingCoordinates.x - hitRadius &&
+         currentCoordinates.x < existingCoordinates.x + hitRadius &&
+         currentCoordinates.y > existingCoordinates.y - hitRadius &&
+         currentCoordinates.y < existingCoordinates.y + hitRadius) {
+        // the current tap coordinates are in the same area as a recent tap
+        return true;
+      }
+    }
+  }
+
+  function recordTapCoordinates(event) {
+    var c = getCoordinates(event);
+    if(c.x && c.y) {
+      var tapId = 'ts' + Date.now();
+
+      // only record tap coordinates if we have valid ones
+      tapCoordinates[tapId] = { x: c.x, y:c.y };
+
+      setTimeout(function() {
+        // delete the tap coordinates after X milliseconds, basically allowing
+        // it so a tap can happen again in the same area in the future
+        delete tapCoordinates[tapId];
+      }, CLICK_PREVENT_DURATION);
+    }
+  }
+
+  function getCoordinates(event) {
+    // This method can get coordinates for both a mouse click
+    // or a touch depending on the given event
+    var touches = event.touches && event.touches.length ? event.touches : [event];
+    var e = (event.changedTouches && event.changedTouches[0]) ||
+        (event.originalEvent && event.originalEvent.changedTouches &&
+            event.originalEvent.changedTouches[0]) ||
+        touches[0].originalEvent || touches[0];
+
+    return { x: e.clientX, y: e.clientY }; // return the click or touch coordinates
+  }
+
+  var tapCoordinates = {}; // used to remember coordinates to ignore if they happen again quickly
+  var CLICK_PREVENT_DURATION = 400; // amount of milliseconds to check for ghostclicks
+
+  // set global click handler and check if the event should stop or not
+  document.addEventListener('click', preventGhostClick, true);
 
   // global tap event listener polyfill for HTML elements that were "tapped" by the user
   ionic.on("tap", tapPolyfill, document);

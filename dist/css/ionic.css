@@ -4993,13 +4993,24 @@ input[type="checkbox"][readonly] {
 
 .item-radio input {
   /* hide any radio button inputs elements (the ugly circles) */
-  display: none; }
+  position: absolute;
+  left: -9999px; }
   .item-radio input:checked ~ .item-content {
     /* style the item content when its checked */
     background: #f7f7f7; }
   .item-radio input:checked ~ .radio-icon {
     /* show the checkmark icon when its checked */
     visibility: visible; }
+
+.item-radio {
+  -webkit-animation: androidCheckedbugfix infinite 1s; }
+
+@-webkit-keyframes androidCheckedbugfix {
+  from {
+    padding: 0; }
+
+  to {
+    padding: 0; } }
 
 /**
  * Range

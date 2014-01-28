@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Click Tests</title>
+
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+
+  <script src="../../../../dist/js/ionic.js"></script>
+  <script src="../../../../dist/js/angular/angular.min.js"></script>
+  <script src="../../../../dist/js/angular/angular-animate.min.js"></script>
+  <script src="../../../../dist/js/angular/angular-sanitize.min.js"></script>
+  <script src="../../../../dist/js/angular-ui/angular-ui-router.min.js"></script>
+  <script src="../../../../dist/js/ionic-angular.js"></script>
+  <style>
+    td { padding: 2px 4px }
+    input { margin: 10px !important; }
+  </style>
+</head>
+
+<body ng-controller="MyCtrl">
+ <form id="form">
+  <button class="button" ng-click="buttonClick()">Button</button>
+  {{ buttonValue }} - 
+  {{ radioModel.data }}
+
+  <div class="list">
+
+    <radio ng-change="radioChange()" 
+           ng-click="radioClick(radioModel.data)" 
+           ng-model="radioModel.data" 
+           ng-value="'Radio A'">Radio A</radio>
+
+    <radio ng-change="radioChange()" 
+           ng-click="radioClick(radioModel.data)" 
+           ng-model="radioModel.data" 
+           ng-value="'Radio B'">Radio B</radio>
+
+  </div>
+
+  <label class="label1">
+    <input type="radio" name="radio" id="radio1" class="radio1">
+  </label>
+  <label class="label2">
+    <input type="radio" name="radio" id="radio2" class="radio2">
+  </label>
+
+  <button id="clear">Clear</button>
+  <button id="stop">Stop</button>
+
+  <div id="logs"></div>
+
+
+  <script>
+  angular.module('ionicApp', ['ionic'])
+
+  .controller('MyCtrl', function($scope) {
+
+    $scope.buttonClick = function() {
+      console.log('button ng-click', 'click')
+      $scope.buttonValue = Math.floor(Math.random() * 9999);
+    };
+    $scope.radioModel = {}
+    $scope.radioChange = function() {
+      console.log('radio ng-change', 'change', $scope.radioModel.data)
+    };
+
+    $scope.radioClick = function(val) {
+      console.log('radio ng-click', 'click', val)
+    };
+
+  });
+
+  function getTime() {
+    var d = new Date();
+    return d.getSeconds() + '.' + d.getMilliseconds();
+  }
+
+  document.getElementById('radio1').addEventListener('change', function(){
+    console.log('radio 1', 'change');
+  });
+  document.getElementById('radio1').addEventListener('click', function(){
+    console.log('radio 1', 'click');
+  });
+  document.getElementById('radio2').addEventListener('change', function(){
+    console.log('radio 2', 'change');
+  });
+  document.getElementById('radio2').addEventListener('click', function(){
+    console.log('radio 2', 'click');
+  });
+
+  document.addEventListener('touchstart', function(e){
+    console.log('touchstart');
+  });
+  document.addEventListener('touchend', function(){
+    console.log('touchend');
+  });
+  document.addEventListener('mousedown', function(){
+    console.log('mousedown');
+  });
+  document.addEventListener('mouseup', function(){
+    console.log('mouseup');
+  });
+  document.addEventListener('click', function(event){
+    console.log('click', 'x: ' + event.clientX, 'y: ' + event.clientY);
+  });
+  document.getElementById('clear').addEventListener('click', function(){
+    setTimeout(clearMsgs, 200);
+  });
+  document.getElementById('stop').addEventListener('click', function(){
+    if(stopped) {
+      this.innerText = 'Stop';
+      window.stopped = false;  
+    } else {
+      this.innerText = 'Start';
+      window.stopped = true;
+    }
+  });
+
+  var msgs = [];
+  var index = 0;
+  window.stopped = false;
+  console.log = function() {
+    //return;
+    if(stopped) return;
+
+    index++;
+    var msg = [];
+    msg.push(index);
+    for (var i = 0, j = arguments.length; i < j; i++){
+      msg.push(arguments[i]);
+    }
+    msg.push(getTime());
+
+    msg = msg.join(', ');
+
+    if(arguments[0] === 'touchstart') msg = '<span style="color:blue">' + msg + '</span>';
+    if(arguments[0] === 'touchend') msg = '<span style="color:darkblue">' + msg + '</span>';
+
+    if(arguments[0] === 'mousedown') msg = '<span style="color:red">' + msg + '</span>';
+    if(arguments[0] === 'mouseup') msg = '<span style="color:maroon">' + msg + '</span>';
+
+    if(arguments[0] === 'click') msg = '<span style="color:purple">' + msg + '</span>';
+
+    if(arguments[1] === 'click') msg = '<span style="color:green;font-weight:bold">' + msg + '</span>';
+    if(arguments[1] === 'change') msg = '<span style="color:orange;font-weight:bold">' + msg + '</span>';
+
+    msgs.unshift( msg );
+
+    // do this so we try not to interfere with the device performance
+    clearTimeout(timeId);
+    timeId = setTimeout(function(){
+      document.getElementById('logs').innerHTML = msgs.join('<br>');
+    }, 150);
+    
+  }
+
+  var timeId;
+
+  function clearMsgs() {
+    msgs = [];
+    index = 0;
+    document.getElementById('logs').innerHTML = '';
+    document.getElementById('form').reset();
+  }
+
+  </script>
+
+ </form>
+</body>
+
+</html>
