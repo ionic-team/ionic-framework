@@ -7,6 +7,12 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
  * on a tab bar. Modelled off of UITabBarController.
  */
 
+.run(['$ionicViewService', function($ionicViewService) {
+  // set that the tabs directive should not animate when transitioning
+  // to it. Instead, the children <tab> directives would animate
+  $ionicViewService.disableRegisterByTagName('tabs');
+}])
+
 .directive('tabs', [function() {
   return {
     restrict: 'E',

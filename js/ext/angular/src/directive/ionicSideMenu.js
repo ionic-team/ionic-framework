@@ -7,13 +7,18 @@
  * left and/or right menu, which a center content area.
  */
 
-angular.module('ionic.ui.sideMenu', ['ionic.service.gesture'])
+angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.view']) 
 
 /**
  * The internal controller for the side menu controller. This
  * extends our core Ionic side menu controller and exposes
  * some side menu stuff on the current scope.
  */
+
+.run(['$ionicViewService', function($ionicViewService) {
+  // set that the side-menus directive should not animate when transitioning to it
+  $ionicViewService.disableRegisterByTagName('side-menus');
+}])
 
 .directive('sideMenus', function() {
   return {

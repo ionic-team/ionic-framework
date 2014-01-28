@@ -1,16 +1,20 @@
 
-## 0.9.21 (pre-release)
- - Android "click" event firing twice fixes
+## 0.9.22-alpha (pre-release)
+
+
+## 0.9.21 "Alpha Maine Coon" (2014-01-24)
  - Toggle directive now includes .item.item-toggle wrapper
  - Toggle/Checkbox/Radio implements ng-model/ng-value/ng-change
- - Ionicons v1.4.2, icons now using :before
+ - Ionicons v1.4.2, icons now using :before pseudo
  - Button and header size updates
+ - Android "click" event firing twice fixes
  - Refactor platform ready event listeners
+ - Refactor navView directive
  - Created ionic.Platform.fullscreen() and .showStatusBar()
  - Update to Angular v1.2.8
- - Update AngularUI Router to v0.2.8
  - Disable pointer-events during transitions
  - Remove ngTouch from angular.modules
+ - Remove angular-touch.js and angular-route.js references
 
 
 ## 0.9.20 "Alpha Lynx" (2014-01-14)

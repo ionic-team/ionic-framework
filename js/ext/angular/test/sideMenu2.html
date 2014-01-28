@@ -1,0 +1,209 @@
+<html ng-app="ionicApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Side Menus</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/angular/angular.js"></script>
+    <script src="../../../../dist/js/angular/angular-animate.js"></script>
+    <script src="../../../../dist/js/angular/angular-sanitize.js"></script>
+    <script src="../../../../dist/js/angular-ui/angular-ui-router.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
+  </head>
+  <body>
+
+    <div ng-controller="MainCtrl">       
+      <nav-view></nav-view>
+    </div>
+    
+    <script id="event-menu.html" type="text/ng-template">
+      <side-menus>
+        
+        <pane side-menu-content>
+          <nav-bar type="bar-positive"
+                   back-button-type="button-icon"
+                   back-button-icon="ion-ios7-arrow-back"></nav-bar>
+          <nav-view name="menuContent"></nav-view>
+        </pane> 
+        
+        <side-menu side="left">
+          <header class="bar bar-header bar-assertive">
+            <div class="title">Left Menu</div>
+          </header>
+          <content has-header="true">
+            <ul class="list">
+              <a href="#/event/check-in" class="item">Check-in</a>
+              <a href="#/event/attendees" class="item">Attendees</a>
+            </ul>
+          </content>
+        </side-menu>
+        
+      </side-menus>
+    </script>
+    
+    <script id="home.html" type="text/ng-template">
+      <view title="'Welcome'">
+        <content has-header="true" padding="true">
+          <p>Swipe to the right to reveal the left menu.</p>
+          <p>(On desktop click and drag from left to right)</p>
+        </content>
+      </view>
+    </script>
+    
+    <script id="check-in.html" type="text/ng-template">
+      <view title="'Event Check-in'">
+        <content has-header="true">
+          <form class="list" ng-show="showForm">
+            <div class="item item-divider">
+              Attendee Info
+            </div>
+            <label class="item item-input">
+              <input type="text" placeholder="First Name" ng-model="attendee.firstname">
+            </label>
+            <label class="item item-input">
+              <input type="text" placeholder="Last Name" ng-model="attendee.lastname">
+            </label>
+            <div class="item item-divider">
+              Shirt Size
+            </div>
+            <radio ng-repeat="shirtSize in shirtSizes"
+                   ng-value="shirtSize.value"
+                   ng-model="attendee.shirtSize">
+              {{ shirtSize.text }}
+            </radio>
+            <div class="item item-divider">
+              Lunch
+            </div>
+            <toggle ng-model="attendee.vegetarian">
+              Vegetarian
+            </toggle>
+            <div class="padding">
+              <button class="button button-block" ng-click="submit()">Checkin</button>
+            </div>
+          </form>
+
+          <div ng-hide="showForm">
+            <pre ng-bind="attendee | json"></pre> 
+            <a href="#/event/attendees">View attendees</a>
+          </div>
+        </content>
+      </view>
+    </script>
+    
+    <script id="attendees.html" type="text/ng-template">
+      <view title="'Event Attendees'">
+        <content has-header="true">
+          <div class="list">
+            <toggle ng-repeat="attendee in attendees | orderBy:'firstname' | orderBy:'lastname'"
+                    ng-model="attendee.arrived"
+                    ng-change="arrivedChange(attendee)">
+              {{ attendee.firstname }}
+              {{ attendee.lastname }}
+            </toggle>
+            <div class="item item-divider">
+              Activity
+            </div>
+            <div class="item" ng-repeat="msg in activity">
+              {{ msg }}
+            </div>
+          </div>
+        </content>
+      </view>
+    </script>
+
+    <script>
+      angular.module('ionicApp', ['ionic'])
+
+      .config(function($stateProvider, $urlRouterProvider) {
+
+        $stateProvider
+          .state('eventmenu', {
+            url: "/event",
+            abstract: true,
+            templateUrl: "event-menu.html"
+          })
+          .state('eventmenu.home', {
+            url: "/home",
+            views: {
+              'menuContent' :{
+                templateUrl: "home.html"
+              }
+            }
+          })
+          .state('eventmenu.checkin', {
+            url: "/check-in",
+            views: {
+              'menuContent' :{
+                templateUrl: "check-in.html",
+                controller: "CheckinCtrl"
+              }
+            }
+          })
+          .state('eventmenu.attendees', {
+            url: "/attendees",
+            views: {
+              'menuContent' :{
+                templateUrl: "attendees.html",
+                controller: "AttendeesCtrl"
+              }
+            }
+          })
+        
+        $urlRouterProvider.otherwise("/event/home");
+      })
+
+      .controller('MainCtrl', function($scope) {
+        console.log('MainCtrl');
+        
+        $scope.attendees = [
+          { firstname: 'Nicolas', lastname: 'Cage' },
+          { firstname: 'Jean-Claude', lastname: 'Van Damme' },
+          { firstname: 'Keanu', lastname: 'Reeves' },
+          { firstname: 'Steven', lastname: 'Seagal' },
+          { firstname: 'Jeff', lastname: 'Goldblum' },
+          { firstname: 'Brendan', lastname: 'Fraser' }
+        ];
+      })
+
+      .controller('CheckinCtrl', function($scope) {
+        $scope.showForm = true;
+        
+        $scope.shirtSizes = [
+          { text: 'Large', value: 'L' },
+          { text: 'Medium', value: 'M' },
+          { text: 'Small', value: 'S' }
+        ];
+        
+        $scope.attendee = {};
+        $scope.submit = function() {
+          if(!$scope.attendee.firstname) {
+            alert('Info required');
+            return;
+          }
+          $scope.showForm = false;
+          $scope.attendees.push($scope.attendee);
+        };
+        
+      })
+
+      .controller('AttendeesCtrl', function($scope) {
+        
+        $scope.activity = [];
+        $scope.arrivedChange = function(attendee) {
+          var msg = attendee.firstname + ' ' + attendee.lastname;
+          msg += (!attendee.arrived ? ' has arrived, ' : ' just left, '); 
+          msg += new Date().getMilliseconds();
+          $scope.activity.push(msg);
+          if($scope.activity.length > 3) {
+            $scope.activity.splice(0, 1);
+          }
+        };
+        
+      });
+    </script>
+  </body>
+</html>
+

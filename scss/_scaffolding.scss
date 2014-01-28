@@ -273,7 +273,7 @@ infinite-scroll.active .scroll-infinite {
 
 // A full screen section with a solid background
 .pane {
-  position: fixed;
+  position: absolute;
   z-index: $z-index-pane;
 }
 .view {

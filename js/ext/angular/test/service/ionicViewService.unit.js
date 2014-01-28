@@ -772,36 +772,4 @@ describe('Ionic View Service', function() {
     expect($document[0].title).toEqual('New Title');
   }));
 
-  it('should transition w/out animation', inject(function($compile) {
-    var opts = {};
-    opts.parentElement = $compile("<div><leaving>leaving</leaving></div>")(rootScope);
-    rootScope.$digest();
-    opts.leavingElement = opts.parentElement.find('leaving');
-    opts.enteringElement = $compile("<entering>entering</entering>")(rootScope);
-
-    expect(opts.parentElement.html()).toContain("leaving");
-    viewService.transition(opts);
-    expect(opts.parentElement.html()).toContain("entering");
-  }));
-
-  it('should add the animation classname', inject(function($compile) {
-    var element = $compile("<div></div>")(rootScope);
-    viewService.setAnimationClass(element, 'animation-class', null);
-    expect(element.hasClass('animation-class')).toEqual(true);
-  }));
-
-  it('should add the reverse classname', inject(function($compile) {
-    var element = $compile("<div></div>")(rootScope);
-    viewService.setAnimationClass(element, 'animation-class', 'back');
-    expect(element.hasClass('reverse')).toEqual(true);
-  }));
-
-  it('should remove the reverse classname', inject(function($compile) {
-    var element = $compile("<div class='whatever animation-class reverse'></div>")(rootScope);
-    viewService.setAnimationClass(element, 'animation-class', 'forward');
-    expect(element.hasClass('animation-class')).toEqual(true);
-    expect(element.hasClass('whatever')).toEqual(true);
-    expect(element.hasClass('reverse')).toEqual(false);
-  }));
-
 });

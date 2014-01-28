@@ -1,15 +1,16 @@
 angular.module('ionic.service.view', ['ui.router'])
 
 
-.run(     ['$rootScope', '$state', '$location', '$document', 
-  function( $rootScope,   $state,   $location,   $document) {
+.run(     ['$rootScope', '$state', '$location', '$document', '$animate', 
+  function( $rootScope,   $state,   $location,   $document,   $animate) {
 
   // init the variables that keep track of the view history
   $rootScope.$viewHistory = {
     histories: { root: { historyId: 'root', parentHistoryId: null, stack: [], cursor: -1 } },
     backView: null,
     forwardView: null,
-    currentView: null
+    currentView: null,
+    disabledRegistrableTagNames: []
   };
 
   $rootScope.$on('viewState.changeHistory', function(e, data) {
@@ -95,7 +96,8 @@ angular.module('ionic.service.view', ['ui.router'])
 
   return {
 
-    register: function(containerScope) {
+    register: function(containerScope, element) {
+
       var viewHistory = $rootScope.$viewHistory,
           currentStateId = this.getCurrentStateId(),
           hist = this._getHistory(containerScope),
@@ -108,6 +110,15 @@ angular.module('ionic.service.view', ['ui.router'])
             navDirection: null,
             historyId: hist.historyId
           };
+
+      if(element && !this.isTagNameRegistrable(element)) {
+        // first check to see if this element can even be registered as a view.
+        // Certain tags are only containers for views, but are not views themselves.
+        // For example, the <tabs> directive contains a <tab> and the <tab> is the
+        // view, but the <tabs> directive itself should not be registered as a view.
+        rsp.navAction = 'disabledByTagName';
+        return rsp;
+      }
 
       if(currentView && 
          currentView.stateId === currentStateId &&
@@ -328,67 +339,105 @@ angular.module('ionic.service.view', ['ui.router'])
       return { historyId: 'root', scope: $rootScope };
     },
 
-    transition: function(opts) {
-      if(!opts || !opts.enteringElement) return;
+    getRenderer: function(navViewElement, navViewAttrs, navViewScope) {
+      var service = this;
+      var registerData;
+      var doAnimation;
 
-      if (opts.leavingScope) {
-        opts.leavingScope.$destroy();
-        opts.leavingScope = null;
+      // climb up the DOM and see which animation classname to use, if any
+      var animationClass = null;
+      var el = navViewElement[0];
+      while(!animationClass && el) {
+        animationClass = el.getAttribute('animation');
+        el = el.parentElement;
+      }
+      el = null;
+
+      function setAnimationClass() {
+        // add the animation CSS class we're gonna use to transition between views
+        navViewElement[0].classList.add(animationClass);
+
+        if(registerData.navDirection === 'back') {
+          // animate like we're moving backward
+          navViewElement[0].classList.add('reverse');
+        } else {
+          // defaults to animate forward
+          // make sure the reverse class isn't already added
+          navViewElement[0].classList.remove('reverse');
+        }
       }
 
-      // use the directive's animation attribute first
-      // if it doesn't exist, then use the given animation
-      var animationClass = opts.animation || getAnimationClass();
+      return function(shouldAnimate) {
 
-      if($animate && animationClass && opts.doAnimation !== false && opts.navDirection) {
-        // set the animation we're gonna use
-        this.setAnimationClass(opts.parentElement, animationClass, opts.navDirection);
-        opts.enteringElement.addClass('ng-enter');
+        return {
+          
+          enter: function(element) {
 
-        // disable any pointer-events from being able to fire
-        document.body.classList.add('disable-pointer-events');
+            if(doAnimation && shouldAnimate) {
+              // enter with an animation
+              setAnimationClass();
 
-        // start the animations
-        if(opts.leavingElement) {
-          $animate.leave(opts.leavingElement, function() {
-            // re-enable pointer-events
-            document.body.classList.remove('disable-pointer-events');
-          });
-        }
-        $animate.enter(opts.enteringElement, opts.parentElement);
+              element.addClass('ng-enter');
+              document.body.classList.add('disable-pointer-events');
 
-      } else {
-        // no animation, just plain ol' add/remove DOM elements
-        if(opts.leavingElement) {
-          opts.leavingElement.remove();
-        }
-        opts.parentElement.append(opts.enteringElement);
-      }
+              $animate.enter(element, navViewElement, null, function() {
+                document.body.classList.remove('disable-pointer-events');
+              }); 
+              return;
+            }
 
-      function getAnimationClass(){
-        // go up the ancestors looking for an animation value
-        var climbScope = opts.enteringScope;
-        while(climbScope) {
-          if(climbScope.animation) {
-            return climbScope.animation;
+            // no animation
+            navViewElement.append(element);
+          },
+
+          leave: function() {
+            var element = navViewElement.contents();
+
+            if(doAnimation && shouldAnimate) {
+              // leave with an animation
+              setAnimationClass();
+
+              $animate.leave(element, function() { 
+                element.remove(); 
+              });
+              return;
+            }
+
+            // no animation
+            element.remove();
+          },
+
+          register: function(element) {
+            // register a new view
+            registerData = service.register(navViewScope, element);
+            doAnimation = (animationClass !== null && registerData.navDirection !== null);
           }
-          climbScope = climbScope.$parent;
-        }
-      }
+
+        };
+      };
     },
 
-    setAnimationClass: function(element, animationClass, navDirection) {
-      // add the animation we're gonna use
-      element[0].classList.add(animationClass);
+    disableRegisterByTagName: function(tagName) {
+      // not every element should animate betwee transitions
+      // For example, the <tabs> directive should not animate when it enters,
+      // but instead the <tabs> directve would just show, and its children
+      // <tab> directives would do the animating, but <tabs> itself is not a view
+      $rootScope.$viewHistory.disabledRegistrableTagNames.push(tagName.toUpperCase());
+    },
 
-      if(navDirection === 'back') {
-        // animate backward
-        element[0].classList.add('reverse');
-      } else {
-        // defaults to animate forward
-        // make sure the reverse class isn't already added
-        element[0].classList.remove('reverse');
+    isTagNameRegistrable: function(element) {
+      // check if this element has a tagName (at its root, not recursively)
+      // that shouldn't be animated, like <tabs> or <side-menu>
+      var x, y, disabledTags = $rootScope.$viewHistory.disabledRegistrableTagNames;
+      for(x=0; x<element.length; x++) {
+        if(element[x].nodeType !== 1) continue;
+        for(y=0; y<disabledTags.length; y++) {
+          if(element[x].tagName === disabledTags[y]) {
+            return false;
+          }
+        }
       }
+      return true;
     },
 
     clearHistory: function() {
