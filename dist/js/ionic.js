@@ -1910,19 +1910,9 @@ window.ionic = {
 
   // polyfill use to simulate native "tap"
   function inputTapPolyfill(ele, e) {
-    if(ele.tagName === 'A' ||
-       ele.tagName === 'BUTTON' ||
-       ele.type === 'checkbox' ||
-       ele.type === 'radio' ||
-       ele.type === 'button' ||
-       ele.type === 'submit' ||
-       ele.type === 'file') {
-      // fire off this elements click method
-      ele.click();
-    } else {
-      // if its not one of the elements above, just focus on this element
-      ele.focus();
-    }
+    // simulate a normal click by running the element's click method then focus on it
+    ele.click();
+    ele.focus();
 
     // remember the coordinates of this tap so if it happens again we can ignore it
     recordTapCoordinates(e);
