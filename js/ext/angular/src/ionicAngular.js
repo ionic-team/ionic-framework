@@ -31,7 +31,8 @@ angular.module('ionic.ui', [
                             'ionic.ui.list',
                             'ionic.ui.checkbox',
                             'ionic.ui.toggle',
-                            'ionic.ui.radio'
+                            'ionic.ui.radio',
+                            'ionic.ui.touch'
                            ]);
 
 

@@ -9,27 +9,46 @@
   <link rel="stylesheet" href="../../../../dist/css/ionic.css">
 
   <script src="../../../../dist/js/ionic.js"></script>
-  <script src="../../../../dist/js/angular/angular.js"></script>
+  <script src="../../../../dist/js/angular/angular.min.js"></script>
   <script src="../../../../dist/js/angular/angular-animate.min.js"></script>
   <script src="../../../../dist/js/angular/angular-sanitize.min.js"></script>
   <script src="../../../../dist/js/angular-ui/angular-ui-router.min.js"></script>
   <script src="../../../../dist/js/ionic-angular.js"></script>
   <style>
-    td { padding: 2px 4px }
-    input { margin: 10px !important; }
+    .item-content {
+      padding: 2px !important;
+    }
+    .list {
+      margin: 5px !important;
+    }
+    .button {
+      line-height: 18px !important;
+      min-height: 30px !important;
+    }
+    .dot {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background-color: red;
+      z-index: 1000;
+    }
   </style>
 </head>
 
 <body ng-controller="MyCtrl">
  <form id="form">
-  <button class="button" ng-click="buttonClick()">button ng-click</button>
-  <div class="div button" ng-click="buttonClick()">div ng-click</div>
+  <button class="button" ng-click="buttonClick()">button</button>
+  <div class="div button" ng-click="buttonClick()">div</div>
   {{ buttonValue }} - 
   {{ radioModel.data }}
 
   <div class="list">
 
-    <item ng-repeat="item in menuItems" item="item" ng-click="item.actionItem()">{{item.label}}</item>
+    <item ng-repeat="item in menuItems" item="item" ng-click="item.actionItem()">ng-click="item.actionItem()"</item>
+
+    <item ng-click="itemClick()">ng-click="itemClick()"</item>
+
+    <item ng-click="{{ stringClick }}">ng-click="{{ stringClick }]"</item>
 
     <radio ng-change="radioChange()" 
            ng-click="radioClick(radioModel.data)" 
@@ -46,9 +65,7 @@
   <label class="label1">
     <input type="radio" name="radio" id="radio1" class="radio1">
   </label>
-  <label class="label2">
-    <input type="radio" name="radio" id="radio2" class="radio2">
-  </label>
+  <input type="radio" name="radio" id="radio2" class="radio2">
 
   <button id="clear">Clear</button>
   <button id="stop">Stop</button>
@@ -61,15 +78,20 @@
 
   .controller('MyCtrl', function($scope) {
 
+    $scope.stringClick = 'stringMethod()';
+    $scope.stringMethod = function() {
+      console.log('{{ stringClick }]', 'click')
+    };
+
     $scope.itemClick = function() {
-      console.log('itemClick')
+      console.log('itemClick()', 'click')
     };
 
     $scope.menuItems = [
       { 
-        label: 'Label',
+        label: 'Item 1',
         actionItem: function() {
-          console.log('actionItem')
+          console.log('item.actionItem()', 'click')
         }
       }
     ];
@@ -110,8 +132,20 @@
   document.addEventListener('touchstart', function(e){
     console.log('touchstart');
   });
-  document.addEventListener('touchend', function(){
+  document.addEventListener('touchend', function(e){
     console.log('touchend');
+    if(!e.changedTouches || !e.changedTouches.length) return;
+
+    var dot = document.createElement('div');
+    dot.style.left = (e.changedTouches[0].clientX - 1) + 'px';
+    dot.style.top = (e.changedTouches[0].clientY - 1) + 'px';
+    dot.className = 'dot';
+    dot.id = 'dot' + Date.now();
+    document.body.appendChild(dot);
+    setTimeout(function(){
+      var oldDot = document.getElementById(dot.id);
+      oldDot.parentElement.removeChild(oldDot)
+    }, 3000);
   });
   document.addEventListener('mousedown', function(){
     console.log('mousedown');
@@ -164,6 +198,10 @@
     if(arguments[1] === 'change') msg = '<span style="color:orange;font-weight:bold">' + msg + '</span>';
 
     msgs.unshift( msg );
+
+    if(msgs.length > 30) {
+      msgs.splice(30);
+    }
 
     // do this so we try not to interfere with the device performance
     clearTimeout(timeId);

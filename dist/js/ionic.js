@@ -1909,22 +1909,31 @@ window.ionic = {
   })();
 
   // polyfill use to simulate native "tap"
-  function inputTapPolyfill(ele, e) {
+  ionic.clickElement = function(ele, e) {
     // simulate a normal click by running the element's click method then focus on it
-    ele.click();
-    ele.focus();
+    if(ele.disabled) return;
+    
+    var c = getCoordinates(e.gesture);
+    var clickEvent = new MouseEvent('click', {
+      clientX: c.x,
+      clientY: c.y,
+      bubbles: true,
+      cancelable: true
+    });
+    ele.dispatchEvent(clickEvent);
+
+    if(ele.tagName === 'INPUT' || ele.tagName === 'TEXTAREA' || ele.tagName === 'SELECT') {
+      ele.focus(); 
+    } else {
+      ele.blur();
+    }
 
     // remember the coordinates of this tap so if it happens again we can ignore it
-    recordTapCoordinates(e);
+    recordCoordinates(e);
 
     // set the last tap time so if a click event quickly happens it knows to ignore it
     ele.lastTap = Date.now();
-
-    // Stop! HOWEVER!! with touch devices there are still ghostclicks, hence the above logic
-    e.stopPropagation();
-    e.preventDefault();
-    return false;
-  }
+  };
 
   function tapPolyfill(orgEvent) {
     // if the source event wasn't from a touch event then don't use this polyfill
@@ -1951,12 +1960,12 @@ window.ionic = {
           ele.tagName === "TEXTAREA" || 
           ele.tagName === "SELECT" ) {
 
-        return inputTapPolyfill(ele, e);
+        return ionic.clickElement(ele, e);
 
       } else if( ele.tagName === "LABEL" ) {
         // check if the tapped label has an input associated to it
         if(ele.control) {
-          return inputTapPolyfill(ele.control, e);
+          return ionic.clickElement(ele.control, e);
         }
       }
       ele = ele.parentElement;
@@ -2001,7 +2010,7 @@ window.ionic = {
 
     // remember the coordinates of this click so if a tap or click in the 
     // same area quickly happened again we can ignore it
-    recordTapCoordinates(e);
+    recordCoordinates(e);
   }
 
   function isRecentTap(event) {
@@ -2023,7 +2032,7 @@ window.ionic = {
     }
   }
 
-  function recordTapCoordinates(event) {
+  function recordCoordinates(event) {
     var c = getCoordinates(event);
     if(c.x && c.y) {
       var tapId = 'ts' + Date.now();
@@ -2042,13 +2051,16 @@ window.ionic = {
   function getCoordinates(event) {
     // This method can get coordinates for both a mouse click
     // or a touch depending on the given event
-    var touches = event.touches && event.touches.length ? event.touches : [event];
-    var e = (event.changedTouches && event.changedTouches[0]) ||
-        (event.originalEvent && event.originalEvent.changedTouches &&
-            event.originalEvent.changedTouches[0]) ||
-        touches[0].originalEvent || touches[0];
+    if(event) {
+      var touches = event.touches && event.touches.length ? event.touches : [event];
+      var e = (event.changedTouches && event.changedTouches[0]) ||
+          (event.originalEvent && event.originalEvent.changedTouches &&
+              event.originalEvent.changedTouches[0]) ||
+          touches[0].originalEvent || touches[0];
 
-    return { x: e.clientX, y: e.clientY }; // return the click or touch coordinates
+      if(e) return { x: e.clientX, y: e.clientY };
+    }
+    return { x:0, y:0 };
   }
 
   var tapCoordinates = {}; // used to remember coordinates to ignore if they happen again quickly
