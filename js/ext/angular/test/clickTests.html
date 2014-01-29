@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../../../../dist/css/ionic.css">
 
   <script src="../../../../dist/js/ionic.js"></script>
-  <script src="../../../../dist/js/angular/angular.min.js"></script>
+  <script src="../../../../dist/js/angular/angular.js"></script>
   <script src="../../../../dist/js/angular/angular-animate.min.js"></script>
   <script src="../../../../dist/js/angular/angular-sanitize.min.js"></script>
   <script src="../../../../dist/js/angular-ui/angular-ui-router.min.js"></script>
@@ -22,11 +22,14 @@
 
 <body ng-controller="MyCtrl">
  <form id="form">
-  <button class="button" ng-click="buttonClick()">Button</button>
+  <button class="button" ng-click="buttonClick()">button ng-click</button>
+  <div class="div button" ng-click="buttonClick()">div ng-click</div>
   {{ buttonValue }} - 
   {{ radioModel.data }}
 
   <div class="list">
+
+    <item ng-repeat="item in menuItems" item="item" ng-click="item.actionItem()">{{item.label}}</item>
 
     <radio ng-change="radioChange()" 
            ng-click="radioClick(radioModel.data)" 
@@ -57,6 +60,19 @@
   angular.module('ionicApp', ['ionic'])
 
   .controller('MyCtrl', function($scope) {
+
+    $scope.itemClick = function() {
+      console.log('itemClick')
+    };
+
+    $scope.menuItems = [
+      { 
+        label: 'Label',
+        actionItem: function() {
+          console.log('actionItem')
+        }
+      }
+    ];
 
     $scope.buttonClick = function() {
       console.log('button ng-click', 'click')
