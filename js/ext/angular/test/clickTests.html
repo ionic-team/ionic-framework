@@ -16,7 +16,7 @@
   <script src="../../../../dist/js/ionic-angular.js"></script>
   <style>
     .item-content {
-      padding: 2px !important;
+      padding: 8px !important;
     }
     .list {
       margin: 5px !important;
@@ -38,7 +38,7 @@
 <body ng-controller="MyCtrl">
  <form id="form">
   <button class="button" ng-click="buttonClick()">button</button>
-  <div class="div button" ng-click="buttonClick()">div</div>
+  <div class="div button" ng-click="divClick()">div</div>
   {{ buttonValue }} - 
   {{ radioModel.data }}
 
@@ -100,6 +100,11 @@
       console.log('button ng-click', 'click')
       $scope.buttonValue = Math.floor(Math.random() * 9999);
     };
+
+    $scope.divClick = function() {
+      console.log('div ng-click', 'click')
+      $scope.buttonValue = Math.floor(Math.random() * 9999);
+    };
     $scope.radioModel = {}
     $scope.radioChange = function() {
       console.log('radio ng-change', 'change', $scope.radioModel.data)
@@ -154,7 +159,7 @@
     console.log('mouseup');
   });
   document.addEventListener('click', function(event){
-    console.log('click', 'x: ' + event.clientX, 'y: ' + event.clientY);
+    console.log('click', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY);
   });
   document.getElementById('clear').addEventListener('click', function(){
     setTimeout(clearMsgs, 200);
@@ -172,6 +177,17 @@
   var msgs = [];
   var index = 0;
   window.stopped = false;
+  var winConsoleError = console.error;
+
+  console.error = function() {
+    winConsoleError.apply(this, arguments);
+    var args = ['ERROR!'];
+    for (var i = 0, j = arguments.length; i < j; i++){
+      args.push(arguments[i]);
+    }
+    console.log.apply(this, args);
+  };
+
   console.log = function() {
     //return;
     if(stopped) return;
@@ -185,6 +201,8 @@
     msg.push(getTime());
 
     msg = msg.join(', ');
+
+    if(arguments[0] === 'ERROR!') msg = '<span style="color:red;font-weight:bold">' + msg + '</span>';
 
     if(arguments[0] === 'touchstart') msg = '<span style="color:blue">' + msg + '</span>';
     if(arguments[0] === 'touchend') msg = '<span style="color:darkblue">' + msg + '</span>';
