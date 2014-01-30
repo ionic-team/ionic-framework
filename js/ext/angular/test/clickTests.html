@@ -31,6 +31,7 @@
       height: 3px;
       background-color: red;
       z-index: 1000;
+      pointer-events: none;
     }
   </style>
 </head>
@@ -46,9 +47,9 @@
 
     <item ng-repeat="item in menuItems" item="item" ng-click="item.actionItem()">ng-click="item.actionItem()"</item>
 
-    <item ng-click="itemClick()">ng-click="itemClick()"</item>
+    <toggle>Toggle with no ng-click</toggle>
 
-    <item ng-click="{{ stringClick }}">ng-click="{{ stringClick }]"</item>
+    <toggle ng-click="{{ stringClick }}">Toggle with ng-click="{{ stringClick }]"</toggle>
 
     <radio ng-change="radioChange()" 
            ng-click="radioClick(radioModel.data)" 
