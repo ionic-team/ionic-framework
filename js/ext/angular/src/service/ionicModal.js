@@ -62,7 +62,9 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
     // Compile the template
     var element = $compile(templateString)(scope);
 
-    options.el = element[0];
+    options.el = Array.prototype.filter.call(element, function (elem) {
+      return elem.nodeType === 1;
+    })[0];
     var modal = new ModalView(options);
 
     modal.scope = scope;

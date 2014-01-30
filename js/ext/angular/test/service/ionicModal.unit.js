@@ -19,6 +19,12 @@ describe('Ionic Modal', function() {
     expect(modalInstance.el.classList.contains('slide-in-up')).toBe(true);
   });
 
+  it('Should ignore comments', function () {
+    var template = '<!-- some comment --><div class="modal"></div>';
+    var modalInstance = modal.fromTemplate(template);
+    expect(modalInstance.el.classList.contains('modal')).toBe(true);
+  });
+
   it('Should show for dynamic template', function() {
     var template = '<div class="modal"></div>';
 
