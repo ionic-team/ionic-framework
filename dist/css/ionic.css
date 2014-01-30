@@ -5143,7 +5143,7 @@ input[type="range"] {
   margin: 0;
   padding: 1px 12px 0 12px;
   min-width: 52px;
-  min-height: 52px;
+  min-height: 47px;
   border-width: 1px;
   border-style: solid;
   border-radius: 2px;
@@ -5151,7 +5151,7 @@ input[type="range"] {
   text-align: center;
   text-overflow: ellipsis;
   font-size: 16px;
-  line-height: 46px;
+  line-height: 42px;
   cursor: pointer; }
   .button:hover {
     color: #444444;
@@ -5165,7 +5165,7 @@ input[type="range"] {
     padding: 0 0 1px 0;
     vertical-align: inherit;
     font-size: 24px;
-    line-height: 46px; }
+    line-height: 41px; }
   .button.icon-left:before {
     padding-right: .2em;
     padding-left: 0; }
@@ -5462,7 +5462,7 @@ input[type="range"] {
   -moz-transition: opacity 0.1s;
   transition: opacity 0.1s;
   padding: 0 6px;
-  max-height: 47px;
+  max-height: 42px;
   border-color: transparent;
   background: none;
   box-shadow: none; }

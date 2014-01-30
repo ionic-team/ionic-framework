@@ -2,7 +2,9 @@
 ## 0.9.22-alpha (pre-release)
  - Tap polyfill overhaul to remove 300ms delay when firing a click
  - Android click firing twice fixes
+ - Fixes with the tap polyfill for directives using ng-click
  - Upgrade to Angular v1.2.10
+ - Reduce default button height
 
 
 ## 0.9.21 "Alpha Maine Coon" (2014-01-24)
