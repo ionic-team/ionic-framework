@@ -81,7 +81,8 @@
         $ionicModal.fromTemplateUrl('modal.html', function(modal) {
           $scope.modal = modal;
         }, {
-          animation: 'slide-in-up'
+          animation: 'slide-in-up',
+          focusFirstInput: true
         });
 
       })
