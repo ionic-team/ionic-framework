@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v0.9.22-alpha
+ * Ionic, v0.9.22
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -2524,8 +2524,8 @@ angular.module('ionic.ui.toggle', [])
                 '<div class="disable-pointer-events" ng-transclude></div>' +
                 '<label class="toggle">' +
                   '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
-                  '<div class="track">' +
-                    '<div class="handle"></div>' +
+                  '<div class="track disable-pointer-events">' +
+                    '<div class="handle disable-pointer-events"></div>' +
                   '</div>' +
                 '</label>' +
               '</div>',

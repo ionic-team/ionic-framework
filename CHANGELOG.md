@@ -1,5 +1,5 @@
 
-## 0.9.22-alpha (pre-release)
+## 0.9.22 "Alpha Narwhal" (2014-01-30)
  - Tap polyfill overhaul to remove 300ms delay when firing a click
  - Android click firing twice fixes
  - Fixes with the tap polyfill for directives using ng-click
