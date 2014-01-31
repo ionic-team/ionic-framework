@@ -101,7 +101,7 @@
   line-height: $tabs-text-font-size;
 }
 
-.tab-item .icon:before {
+.tab-item .icon {
   display: block;
   margin: 0 auto;
   height: $tabs-icon-size;
@@ -112,23 +112,26 @@
 .tabs-icon-right .tab-item {
   font-size: $tabs-text-font-size-side-icon;
 
-  .icon:before {
+  .icon {
     display: inline-block;
     vertical-align: top;
+
+    &:before {
     font-size: $tabs-icon-size - 8;
     line-height: $tabs-height;
+    }
   }
 }
 
-.tabs-icon-left .tab-item .icon:before {
+.tabs-icon-left .tab-item .icon {
   padding-right: 3px;
 }
 
-.tabs-icon-right .tab-item .icon:before {
+.tabs-icon-right .tab-item .icon {
   padding-left: 3px;
 }
 
-.tabs-icon-only .icon:before {
+.tabs-icon-only .icon {
   line-height: inherit;
 }
 

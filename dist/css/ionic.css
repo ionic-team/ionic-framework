@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /*!
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
@@ -3575,7 +3574,7 @@ a.subdued {
   font-size: 12px;
   line-height: 14px; }
 
-.tab-item .icon:before {
+.tab-item .icon {
   display: block;
   margin: 0 auto;
   height: 32px;
@@ -3584,20 +3583,22 @@ a.subdued {
 .tabs-icon-left .tab-item,
 .tabs-icon-right .tab-item {
   font-size: 12px; }
-  .tabs-icon-left .tab-item .icon:before,
-  .tabs-icon-right .tab-item .icon:before {
+  .tabs-icon-left .tab-item .icon,
+  .tabs-icon-right .tab-item .icon {
     display: inline-block;
-    vertical-align: top;
-    font-size: 24px;
-    line-height: 49px; }
+    vertical-align: top; }
+    .tabs-icon-left .tab-item .icon:before,
+    .tabs-icon-right .tab-item .icon:before {
+      font-size: 24px;
+      line-height: 49px; }
 
-.tabs-icon-left .tab-item .icon:before {
+.tabs-icon-left .tab-item .icon {
   padding-right: 3px; }
 
-.tabs-icon-right .tab-item .icon:before {
+.tabs-icon-right .tab-item .icon {
   padding-left: 3px; }
 
-.tabs-icon-only .icon:before {
+.tabs-icon-only .icon {
   line-height: inherit; }
 
 /* Navigational tab */
