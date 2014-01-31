@@ -1817,21 +1817,30 @@ window.ionic = {
       return navigator.userAgent.toLowerCase().indexOf('ipad') >= 0;
     },
     isIOS7: function() {
-      return this.platformName == 'iOS' && parseFloat(window.device.version) >= 7.0;
+      return this.platform() == 'ios' && this.version() >= 7.0;
     },
     isAndroid: function() {
-      return this.platformName === "Android";
+      return this.platform() === "android";
     },
 
     platform: function() {
-      if(!platformName) {
-        this.setPlatform(this.device().platform);
-      }
+      // singleton to get the platform name
+      if(!platformName) this.setPlatform(this.device().platform);
       return platformName;
     },
 
     setPlatform: function(name) {
       if(name) platformName = name.toLowerCase();
+    },
+
+    version: function() {
+      // singleton to get the platform version
+      if(!platformVersion) this.setVersion(this.device().version);
+      return platformVersion;
+    },
+
+    setVersion: function(v) {
+      if( !isNaN(v) ) version = parseFloat(v);
     },
 
     // Check if the platform is the one detected by cordova
@@ -1884,6 +1893,7 @@ window.ionic = {
 
   var readyCallbacks = [];
   var platformName;
+  var platformVersion;
 
   // setup listeners to know when the device is ready to go
   function onWindowLoad() {
