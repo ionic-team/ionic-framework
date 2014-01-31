@@ -2360,6 +2360,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
         $scope.icon = $attr.icon;
         $scope.iconOn = $attr.iconOn;
         $scope.iconOff = $attr.iconOff;
+        $scope.badge = $attr.badge;
         $scope.viewSref = $attr.uiSref;
         $scope.url = $attr.href;
         if($scope.url && $scope.url.indexOf('#') === 0) {
@@ -2449,7 +2450,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
     replace: true,
     scope: true,
     template: '<div class="tabs">' + 
-      '<tab-controller-item icon-title="{{c.title}}" icon="{{c.icon}}" icon-on="{{c.iconOn}}" icon-off="{{c.iconOff}}" active="c.isVisible" index="$index" ng-repeat="c in controllers"></tab-controller-item>' + 
+      '<tab-controller-item icon-title="{{c.title}}" icon="{{c.icon}}" icon-on="{{c.iconOn}}" icon-off="{{c.iconOff}}" badge="{{c.badge}}" active="c.isVisible" index="$index" ng-repeat="c in controllers"></tab-controller-item>' + 
     '</div>',
     link: function($scope, $element, $attr, tabsCtrl) {
       $element.addClass($scope.tabsType);
@@ -2468,6 +2469,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
       icon: '@',
       iconOn: '@',
       iconOff: '@',
+      badge: '@',
       active: '=',
       tabSelected: '@',
       index: '='
@@ -2482,7 +2484,8 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
       };
     },
     template: 
-      '<a ng-class="{active:active}" ng-click="selectTab()" class="tab-item">' +
+      '<a ng-class="{active:active, \'has-badge\':badge}" ng-click="selectTab()" class="tab-item">' +
+        '<i class="icon badge" ng-if="badge">{{badge}}</i>' +
         '<i class="icon {{icon}}" ng-if="icon"></i>' +
         '<i class="{{iconOn}}" ng-if="active"></i>' +
         '<i class="{{iconOff}}" ng-if="!active"></i> {{iconTitle}}' +
@@ -2756,6 +2759,10 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
         updateHeaderData(data);
       });
 
+      $rootScope.$on('viewState.titleUpdated', function(e, data) {
+        $scope.currentTitle = (data && data.title ? data.title : '');
+      });
+
       // If a nav page changes the left or right buttons, update our scope vars
       $scope.$parent.$on('viewState.leftButtonsChanged', function(e, data) {
         $scope.leftButtons = data;
@@ -2817,10 +2824,16 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           $scope.$emit('viewState.rightButtonsChanged', $scope.rightButtons);
         });
 
+        // watch for changes in the title
+        var deregTitle = $scope.$watch('title', function(val) {
+          $scope.$emit('viewState.titleUpdated', $scope);
+        });
+
         $scope.$on('$destroy', function(){
           // deregister on destroy
           deregLeftButtons();
           deregRightButtons();
+          deregTitle();
         });
 
       };
