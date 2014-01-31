@@ -1,4 +1,9 @@
 
+## 0.9.23-alpha (pre-release)
+ - Android back button correctly goes back a view or closes the app
+ - CustomEvent polyfill improvements for Android
+
+
 ## 0.9.22 "Alpha Narwhal" (2014-01-30)
  - Tap polyfill overhaul to remove 300ms delay when firing a click
  - Android click firing twice fixes

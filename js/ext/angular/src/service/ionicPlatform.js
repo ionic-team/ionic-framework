@@ -1,5 +1,4 @@
-(function() {
-'use strict';
+(function(ionic) {'use strict';
 
 angular.module('ionic.service.platform', [])
 
@@ -24,7 +23,7 @@ angular.module('ionic.service.platform', [])
          * @param {function} cb the callback to trigger when this event occurs
          */
         onHardwareBackButton: function(cb) {
-          this.ready(function() {
+          ionic.Platform.ready(function() {
             document.addEventListener('backbutton', cb, false);
           });
         },
@@ -35,7 +34,7 @@ angular.module('ionic.service.platform', [])
          * @param {function} fn the listener function that was originally bound.
          */
         offHardwareBackButton: function(fn) {
-          this.ready(function() {
+          ionic.Platform.ready(function() {
             document.removeEventListener('backbutton', fn);
           });
         },

@@ -1,8 +1,8 @@
 angular.module('ionic.service.view', ['ui.router'])
 
 
-.run(     ['$rootScope', '$state', '$location', '$document', '$animate', 
-  function( $rootScope,   $state,   $location,   $document,   $animate) {
+.run(     ['$rootScope', '$state', '$location', '$document', '$animate', '$ionicPlatform', 
+  function( $rootScope,   $state,   $location,   $document,   $animate,   $ionicPlatform) {
 
   // init the variables that keep track of the view history
   $rootScope.$viewHistory = {
@@ -48,6 +48,21 @@ angular.module('ionic.service.view', ['ui.router'])
       $document[0].title = data.title;
     }
   });
+
+  // Triggered when devices with a hardware back button (Android) is clicked by the user
+  // This is a Cordova/Phonegap platform specifc method
+  function onHardwareBackButton(e) {
+    if($rootScope.$viewHistory.backView) {
+      // there is a back view, go to it
+      $rootScope.$viewHistory.backView.go();
+    } else {
+      // there is no back view, so close the app instead
+      navigator.app.exitApp();
+    }
+    e.preventDefault();
+    return false;
+  }
+  $ionicPlatform.onHardwareBackButton(onHardwareBackButton);
 
 }])
 

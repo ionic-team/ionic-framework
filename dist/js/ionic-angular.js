@@ -469,8 +469,7 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
   };
 }]);
 ;
-(function() {
-'use strict';
+(function(ionic) {'use strict';
 
 angular.module('ionic.service.platform', [])
 
@@ -495,7 +494,7 @@ angular.module('ionic.service.platform', [])
          * @param {function} cb the callback to trigger when this event occurs
          */
         onHardwareBackButton: function(cb) {
-          this.ready(function() {
+          ionic.Platform.ready(function() {
             document.addEventListener('backbutton', cb, false);
           });
         },
@@ -506,7 +505,7 @@ angular.module('ionic.service.platform', [])
          * @param {function} fn the listener function that was originally bound.
          */
         offHardwareBackButton: function(fn) {
-          this.ready(function() {
+          ionic.Platform.ready(function() {
             document.removeEventListener('backbutton', fn);
           });
         },
@@ -625,8 +624,8 @@ angular.module('ionic.service.templateLoad', [])
 angular.module('ionic.service.view', ['ui.router'])
 
 
-.run(     ['$rootScope', '$state', '$location', '$document', '$animate', 
-  function( $rootScope,   $state,   $location,   $document,   $animate) {
+.run(     ['$rootScope', '$state', '$location', '$document', '$animate', '$ionicPlatform', 
+  function( $rootScope,   $state,   $location,   $document,   $animate,   $ionicPlatform) {
 
   // init the variables that keep track of the view history
   $rootScope.$viewHistory = {
@@ -672,6 +671,21 @@ angular.module('ionic.service.view', ['ui.router'])
       $document[0].title = data.title;
     }
   });
+
+  // Triggered when devices with a hardware back button (Android) is clicked by the user
+  // This is a Cordova/Phonegap platform specifc method
+  function onHardwareBackButton(e) {
+    if($rootScope.$viewHistory.backView) {
+      // there is a back view, go to it
+      $rootScope.$viewHistory.backView.go();
+    } else {
+      // there is no back view, so close the app instead
+      navigator.app.exitApp();
+    }
+    e.preventDefault();
+    return false;
+  }
+  $ionicPlatform.onHardwareBackButton(onHardwareBackButton);
 
 }])
 
