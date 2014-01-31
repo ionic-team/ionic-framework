@@ -1788,7 +1788,7 @@ window.ionic = {
 
     device: function() {
       if(window.device) return window.device;
-      console.error('device plugin required');
+      if(this.isCordova()) console.error('device plugin required');
       return {};
     },
 
@@ -1853,6 +1853,10 @@ window.ionic = {
       return navigator.userAgent.toLowerCase().indexOf(type.toLowerCase()) >= 0;
     },
 
+    exitApp: function() {
+      navigator.app && navigator.app.exitApp && navigator.app.exitApp();
+    },
+
     showStatusBar: function(val) {
       // Only useful when run within cordova
       this.showStatusBar = val;
@@ -1891,19 +1895,26 @@ window.ionic = {
 
   };
 
-  var readyCallbacks = [];
-  var platformName;
-  var platformVersion;
+  var platformName, 
+  platformVersion,
+  readyCallbacks = [];
 
   // setup listeners to know when the device is ready to go
   function onWindowLoad() {
-    // window is loaded, now lets listen for when the device is ready
-    document.addEventListener("deviceready", onCordovaReady, false);
+    if(ionic.Platform.isCordova()) {
+      // the window and scripts are fully loaded, and a cordova/phonegap 
+      // object exists then let's listen for the deviceready
+      document.addEventListener("deviceready", onPlatformReady, false);
+    } else {
+      // the window and scripts are fully loaded, but the window object doesn't have the
+      // cordova/phonegap object, so its just a browser, not a webview wrapped w/ cordova
+      onPlatformReady();
+    }
     window.removeEventListener("load", onWindowLoad, false);
   }
   window.addEventListener("load", onWindowLoad, false);
 
-  function onCordovaReady() {
+  function onPlatformReady() {
     // the device is all set to go, init our own stuff then fire off our event
     ionic.Platform.isReady = true;
     ionic.Platform.detect();
@@ -1913,7 +1924,7 @@ window.ionic = {
     }
     readyCallbacks = [];
     ionic.trigger('platformready', { target: document });
-    document.removeEventListener("deviceready", onCordovaReady, false);
+    document.removeEventListener("deviceready", onPlatformReady, false);
   }
 
 })(window.ionic);

@@ -57,7 +57,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
       $rootScope.$viewHistory.backView.go();
     } else {
       // there is no back view, so close the app instead
-      navigator.app.exitApp();
+      ionic.Platform.exitApp();
     }
     e.preventDefault();
     return false;

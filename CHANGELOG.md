@@ -4,6 +4,8 @@
  - CustomEvent polyfill improvements for Android
  - Fix tab icon alignments
  - Fix $ionicPlatform.ready()
+ - Fire off ionic.Platform.ready() callbacks for both Cordova and non-cordova
+ - Created ionic.Platform.exitApp();
 
 
 ## 0.9.22 "Alpha Narwhal" (2014-01-30)
