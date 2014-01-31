@@ -245,8 +245,17 @@ window.ionic = {
           cancelable: false,
           detail: undefined
         };
-        evt = document.createEvent("CustomEvent");
-        evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+        try {
+          evt = document.createEvent("CustomEvent");
+          evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+        } catch (error) {
+          // fallback for browsers that don't support createEvent('CustomEvent')
+          evt = document.createEvent("Event");
+          for (var param in params) {
+            evt[param] = params[param];
+          }
+          evt.initEvent(event, params.bubbles, params.cancelable);
+        }
         return evt;
       };
 
