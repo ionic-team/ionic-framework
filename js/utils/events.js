@@ -15,7 +15,9 @@
   // Custom event polyfill
   if(!window.CustomEvent) {
     (function() {
-      var CustomEvent;
+      var CustomEvent,
+      ua = navigator.userAgent,
+      androidVersion = ua.indexOf('Android') >= 0? parseFloat(ua.slice(ua.indexOf("Android")+8)) : 0;
 
       CustomEvent = function(event, params) {
         var evt;
@@ -24,8 +26,16 @@
           cancelable: false,
           detail: undefined
         };
-        evt = document.createEvent("CustomEvent");
-        evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+        if (androidVersion < 4.0) {
+          evt = document.createEvent("Event");
+          for (var param in params) {
+            evt[param] = params[param];
+          }
+          evt.initEvent(event, params.bubbles, params.cancelable);
+        } else {
+          evt = document.createEvent("CustomEvent");
+          evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+        }
         return evt;
       };
 
