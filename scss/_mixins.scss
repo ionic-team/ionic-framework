@@ -79,6 +79,12 @@
   color: $color;
 }
 
+@mixin tab-badge-style($bg-color, $color) {
+  .tab-item .badge {
+    background-color: $bg-color;
+    color: $color;
+  }
+}
 
 // Item Mixins
 // --------------------------------------------------

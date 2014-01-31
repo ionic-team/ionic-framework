@@ -14,14 +14,17 @@ describe('TabBarController', function() {
     ctrl.addController({
       title: 'Item 1',
       icon: 'icon-home',
+      badge: 'Badge 1'
     });
 
     expect(ctrl.getController(0).title).toEqual('Item 1');
+    expect(ctrl.getController(0).badge).toEqual('Badge 1');
 
     var items = ctrl.tabBar.getItems();
     expect(items.length).toEqual(1);
 
     expect(items[0].getTitle()).toEqual('Item 1');
+    expect(items[0].getBadge()).toEqual('Badge 1');
     expect(items[0].getIcon()).toEqual('icon-home');
 
   });

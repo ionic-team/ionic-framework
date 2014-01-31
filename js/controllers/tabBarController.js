@@ -122,7 +122,8 @@ ionic.controllers.TabBarController = ionic.controllers.ViewController.inherit({
 
     this.tabBar.addItem({
       title: controller.title,
-      icon: controller.icon
+      icon: controller.icon,
+      badge: controller.badge
     });
 
     // If we don't have a selected controller yet, select the first one.

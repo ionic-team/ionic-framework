@@ -4,7 +4,7 @@ describe('TabBar view', function() {
   beforeEach(function() {
     element = $('<div class="tabs">' + 
       '<a href="#" class="tab-item"><i class="icon-home"></i> Tab 1</a>' +
-      '<a href="#" class="tab-item">Tab 2</a>' +
+      '<a href="#" class="tab-item has-badge"><i class="badge">Badge 1</i> Tab 2</a>' +
       '<a href="#" class="tab-item">Tab 3</a>');
 
     tabBar = new ionic.views.TabBar({
@@ -20,10 +20,8 @@ describe('TabBar view', function() {
     expect(items[2].getTitle()).toEqual('Tab 3');
   });
 
-  it('Should trim title', function() {
-    expect(items[0].el.textContent.trim()).toEqual(items[0].getTitle());
-    expect(items[1].el.textContent.trim()).toEqual(items[1].getTitle());
-    expect(items[2].el.textContent.trim()).toEqual(items[2].getTitle());
+  it('Should read badge', function() {
+    expect(items[1].getBadge()).toEqual('Badge 1');
   });
 
   it('Should select', function() {

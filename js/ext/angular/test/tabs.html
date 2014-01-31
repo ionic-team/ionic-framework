@@ -58,7 +58,7 @@
           tabs-style="tabs-top tabs-positive"
           controller-changed="onControllerChanged(oldController, oldIndex, newController, newIndex)">
 
-      <tab title="Home" icon-on="icon ion-ios7-filing" icon-off="icon ion-ios7-filing-outline" ng-controller="HomeCtrl">
+      <tab title="Tasks" icon-on="icon ion-ios7-filing" icon-off="icon ion-ios7-filing-outline" ng-controller="HomeCtrl">
         <header class="bar bar-header bar-positive">
           <button class="button button-icon icon ion-plus" ng-click="newTask()"></button>
           <h1 class="title">Tasks</h1>
@@ -88,7 +88,7 @@
         </content>
       </tab>
 
-      <tab title="About" icon-on="icon ion-ios7-clock" icon-off="icon ion-ios7-clock-outline">
+      <tab title="Deadlines" icon-on="icon ion-ios7-clock" icon-off="icon ion-ios7-clock-outline" badge="unreadDeadlines">
         <header class="bar bar-header bar-positive">
           <h1 class="title">Deadlines</h1>
         </header>
@@ -132,15 +132,35 @@
     <script>
       angular.module('tabsTest', ['ionic'])
 
-      .controller('RootCtrl', function($scope) {
-        $scope.onControllerChanged = function(oldController, oldIndex, newController, newIndex) {
-          console.log('Controller changed', oldController, oldIndex, newController, newIndex);
-          console.log(arguments);
+      .controller('RootCtrl', function($scope, $timeout) {
+        $scope.controllerChanged = function(event) {
+          console.log('Controller changed', event);
+
+          // Tab badge demo
+          if (event.newIndex == 1) {
+            $scope.unreadDeadlines = false;
+          } else {
+            if (!$scope.unreadDeadlines)
+              $scope.unreadDeadlines = 1;
+            updateRandomDeadlines();
+          }
         };
 
         $scope.scroll = function(scrollTop, scrollLeft) {
           console.log('Scroll', scrollTop, scrollLeft);
         };
+
+        // Tab badge demo
+        $scope.unreadDeadlines = false;
+        function updateRandomDeadlines() {
+          $timeout(function() {
+            if (!$scope.unreadDeadlines)
+              return;
+            $scope.unreadDeadlines += 1;
+            updateRandomDeadlines();
+          }, Math.random() * 10000);
+        }
+        updateRandomDeadlines();
       })
 
 
