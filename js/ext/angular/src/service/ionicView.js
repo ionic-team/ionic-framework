@@ -1,4 +1,4 @@
-angular.module('ionic.service.view', ['ui.router'])
+angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
 
 
 .run(     ['$rootScope', '$state', '$location', '$document', '$animate', '$ionicPlatform', 

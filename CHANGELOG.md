@@ -2,6 +2,8 @@
 ## 0.9.23-alpha (pre-release)
  - Android back button correctly goes back a view or closes the app
  - CustomEvent polyfill improvements for Android
+ - Fix tab icon alignments
+ - Fix $ionicPlatform.ready()
 
 
 ## 0.9.22 "Alpha Narwhal" (2014-01-30)

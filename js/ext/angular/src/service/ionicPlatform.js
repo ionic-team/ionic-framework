@@ -12,10 +12,7 @@ angular.module('ionic.service.platform', [])
 .provider('$ionicPlatform', function() {
 
   return {
-    setPlatform: function(p) {
-      platform = p;
-    },
-    $get: ['$q', '$timeout', function($q, $timeout) {
+    $get: ['$q', function($q) {
       return {
         /**
          * Some platforms have hardware back buttons, so this is one way to bind to it.
@@ -48,17 +45,12 @@ angular.module('ionic.service.platform', [])
          * ready.
          */
         ready: function(cb) {
-          var self = this;
           var q = $q.defer();
 
-          $timeout(function readyWait() {
-            if(ionic.Platform.isReady) {
-              q.resolve();
-              cb();
-            } else {
-              $timeout(readyWait, 50);
-            }
-          }, 50);
+          ionic.Platform.ready(function(){
+            q.resolve();
+            cb();
+          });
 
           return q.promise;
         }

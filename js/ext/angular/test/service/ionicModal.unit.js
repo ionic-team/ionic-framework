@@ -44,7 +44,7 @@ describe('Ionic Modal', function() {
     var modalInstance = modal.fromTemplate(template);
     modalInstance.show();
 
-    timeout.flush();
+    //timeout.flush();
 
     expect(modalInstance.el.classList.contains('active')).toBe(true);
 

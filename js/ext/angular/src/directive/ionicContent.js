@@ -1,7 +1,7 @@
 (function() {
 'use strict';
 
-angular.module('ionic.ui.content', ['ionic.ui.service'])
+angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.service.platform'])
 
 /**
  * Panel is a simple 100% width and height, fixed panel. It's meant for content to be

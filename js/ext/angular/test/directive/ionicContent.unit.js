@@ -1,21 +1,14 @@
 describe('Ionic Content directive', function() {
-  var compile, element, scope, platform = 'Android';
+  var compile, element, scope;
   
-  //beforeEach(module('ionic'));
-
-  beforeEach(module('ionic', function ($provide) {
-      $provide.value('$ionicPlatform', {
-        is: function(type) {
-          return type === platform;
-        }
-      });
-    }));
+  beforeEach(module('ionic.ui.content'));
 
   beforeEach(inject(function($compile, $rootScope, $timeout, $window) {
     compile = $compile;
     scope = $rootScope;
     timeout = $timeout;
     window = $window;
+    ionic.Platform.setPlatform('Android');
   }));
   
   it('Has content class', function() {
@@ -37,7 +30,7 @@ describe('Ionic Content directive', function() {
   });
 
   it('Enables bouncing by default', function() {
-    platform = 'iPhone';
+    ionic.Platform.setPlatform('iPhone');
     element = compile('<content has-header="true"></content>')(scope);
     timeout.flush();
     var newScope = element.isolateScope();
@@ -46,7 +39,7 @@ describe('Ionic Content directive', function() {
   });
 
   it('Disables bouncing when has-bouncing = false', function() {
-    platform = 'iPhone';
+    ionic.Platform.setPlatform('iPhone');
     element = compile('<content has-header="true" has-bouncing="false"></content>')(scope);
     timeout.flush();
     var newScope = element.isolateScope();
@@ -55,7 +48,7 @@ describe('Ionic Content directive', function() {
   });
 
   it('Disables bouncing by default on Android', function() {
-    platform = 'Android';
+    ionic.Platform.setPlatform('Android');
     element = compile('<content has-header="true"></content>')(scope);
     timeout.flush();
     var newScope = element.isolateScope();
@@ -64,7 +57,7 @@ describe('Ionic Content directive', function() {
   });
 
   it('Disables bouncing by default on Android unless has-bouncing = true', function() {
-    platform = 'Android';
+    ionic.Platform.setPlatform('Android');
     element = compile('<content has-header="true" has-bouncing="true"></content>')(scope);
     timeout.flush();
     var newScope = element.isolateScope();

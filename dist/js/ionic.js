@@ -1767,7 +1767,9 @@ window.ionic = {
       if(this.isReady) {
         cb();
       } else {
-        ionic.on('platformready', cb, document);
+        // the platform isn't ready yet, add it to this array
+        // which will be called once the platform is ready
+        readyCallbacks.push(cb);
       }
     },
 
@@ -1815,16 +1817,28 @@ window.ionic = {
       return navigator.userAgent.toLowerCase().indexOf('ipad') >= 0;
     },
     isIOS7: function() {
-      return this.device().platform == 'iOS' && parseFloat(window.device.version) >= 7.0;
+      return this.platformName == 'iOS' && parseFloat(window.device.version) >= 7.0;
     },
     isAndroid: function() {
-      return this.device().platform === "Android";
+      return this.platformName === "Android";
+    },
+
+    platform: function() {
+      if(!platformName) {
+        this.setPlatform(this.device().platform);
+      }
+      return platformName;
+    },
+
+    setPlatform: function(name) {
+      if(name) platformName = name.toLowerCase();
     },
 
     // Check if the platform is the one detected by cordova
     is: function(type) {
-      if(this.device.platform) {
-        return window.device.platform.toLowerCase() === type.toLowerCase();
+      var pName = this.platform();
+      if(pName) {
+        return pName === type.toLowerCase();
       }
       // A quick hack for 
       return navigator.userAgent.toLowerCase().indexOf(type.toLowerCase()) >= 0;
@@ -1868,6 +1882,8 @@ window.ionic = {
 
   };
 
+  var readyCallbacks = [];
+  var platformName;
 
   // setup listeners to know when the device is ready to go
   function onWindowLoad() {
@@ -1881,6 +1897,11 @@ window.ionic = {
     // the device is all set to go, init our own stuff then fire off our event
     ionic.Platform.isReady = true;
     ionic.Platform.detect();
+    for(var x=0; x<readyCallbacks.length; x++) {
+      // fire off all the callbacks that were added before the platform was ready
+      readyCallbacks[x]();
+    }
+    readyCallbacks = [];
     ionic.trigger('platformready', { target: document });
     document.removeEventListener("deviceready", onCordovaReady, false);
   }
