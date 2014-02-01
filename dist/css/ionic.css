@@ -6440,6 +6440,9 @@ a.button {
 .disable-pointer-events {
   pointer-events: none; }
 
+.enable-pointer-events {
+  pointer-events: auto; }
+
 .block {
   display: block;
   clear: both; }

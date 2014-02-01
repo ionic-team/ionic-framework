@@ -15,7 +15,7 @@
   <script src="../../../../dist/js/angular-ui/angular-ui-router.min.js"></script>
   <script src="../../../../dist/js/ionic-angular.js"></script>
   <style>
-    .item-content {
+    .item-content, .item {
       padding: 8px !important;
     }
     .list {
@@ -33,6 +33,12 @@
       z-index: 1000;
       pointer-events: none;
     }
+    .touch-pointer {
+      background: #CCFFFF;
+    }
+    .mouse-pointer {
+      background: #FFFFCC;
+    }
   </style>
 </head>
 
@@ -47,7 +53,7 @@
 
     <item ng-repeat="item in menuItems" item="item" ng-click="item.actionItem()">ng-click="item.actionItem()"</item>
 
-    <toggle>Toggle with no ng-click</toggle>
+    <checkbox>checkbox with no ng-click</checkbox>
 
     <toggle ng-click="{{ stringClick }}">Toggle with ng-click="{{ stringClick }]"</toggle>
 

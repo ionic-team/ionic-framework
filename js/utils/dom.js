@@ -1,12 +1,22 @@
 (function(ionic) {
 
+  var readyCallbacks = [],
+  domReady = function() {
+    for(var x=0; x<readyCallbacks.length; x++) {
+      window.rAF(readyCallbacks[x]);
+    }
+    readyCallbacks = [];
+    document.removeEventListener('DOMContentLoaded', domReady);
+  };
+  document.addEventListener('DOMContentLoaded', domReady);
+
   ionic.DomUtil = {
 
     ready: function(cb) {
       if(document.readyState === "complete") {
-        setTimeout(cb, 1);
+        window.rAF(cb);
       } else {
-        document.addEventListener('DOMContentLoaded', cb);
+        readyCallbacks.push(cb);
       }
     },
 

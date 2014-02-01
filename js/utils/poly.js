@@ -8,7 +8,7 @@
             window.webkitRequestAnimationFrame ||
             window.mozRequestAnimationFrame    ||
             function( callback ){
-              window.setTimeout(callback, 1000 / 60);
+              window.setTimeout(callback, 16);
             };
   })();
 
@@ -29,7 +29,7 @@
   })();
 
   // polyfill use to simulate native "tap"
-  ionic.clickElement = function(ele, e) {
+  ionic.tapElement = function(ele, e) {
     // simulate a normal click by running the element's click method then focus on it
     if(ele.disabled) return;
 
@@ -82,12 +82,12 @@
           ele.tagName === "TEXTAREA" || 
           ele.tagName === "SELECT" ) {
 
-        return ionic.clickElement(ele, e);
+        return ionic.tapElement(ele, e);
 
       } else if( ele.tagName === "LABEL" ) {
         // check if the tapped label has an input associated to it
         if(ele.control) {
-          return ionic.clickElement(ele.control, e);
+          return ionic.tapElement(ele.control, e);
         }
       }
       ele = ele.parentElement;
@@ -201,7 +201,7 @@
   }
 
   var tapCoordinates = {}; // used to remember coordinates to ignore if they happen again quickly
-  var CLICK_PREVENT_DURATION = 400; // amount of milliseconds to check for ghostclicks
+  var CLICK_PREVENT_DURATION = 450; // amount of milliseconds to check for ghostclicks
 
   // set global click handler and check if the event should stop or not
   document.addEventListener('click', preventGhostClick, true);

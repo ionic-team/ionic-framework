@@ -1259,11 +1259,11 @@ angular.module('ionic.ui.checkbox', [])
     },
     transclude: true,
 
-    template: '<div class="item item-checkbox">' +
-                '<label class="checkbox">' +
+    template: '<div class="item item-checkbox disable-pointer-events">' +
+                '<label class="checkbox enable-pointer-events">' +
                   '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
                 '</label>' +
-                '<div class="item-content disable-pointer-events" ng-transclude></div>' +
+                '<div class="item-content" ng-transclude></div>' +
               '</div>',
 
     compile: function(element, attr) {
@@ -2526,12 +2526,12 @@ angular.module('ionic.ui.toggle', [])
       ngChange: '&'
     },
     transclude: true,
-    template: '<div class="item item-toggle">' +
-                '<div class="disable-pointer-events" ng-transclude></div>' +
-                '<label class="toggle">' +
+    template: '<div class="item item-toggle disable-pointer-events">' +
+                '<div ng-transclude></div>' +
+                '<label class="toggle enable-pointer-events">' +
                   '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
                   '<div class="track disable-pointer-events">' +
-                    '<div class="handle disable-pointer-events"></div>' +
+                    '<div class="handle"></div>' +
                   '</div>' +
                 '</label>' +
               '</div>',
@@ -2590,22 +2590,16 @@ angular.module('ionic.ui.touch', [])
 
   .directive('ngClick', ['$parse', function($parse) {
     
-    function onTap(e) {
-      // wire this up to Ionic's tap/click simulation
-      ionic.clickElement(e.target, e);
-    }
-
     // Actual linking function.
     return function(scope, element, attr) {
 
       var clickHandler = $parse(attr.ngClick);
 
-      element.on('click', function(event) {
+      function onTap(e) {
         scope.$apply(function() {
-          clickHandler(scope, {$event: (event)});
-        });
-      });
-
+          clickHandler(scope, {$event: (e)});
+        });        
+      }
       ionic.on('tap', onTap, element[0]);
 
       // Hack for iOS Safari's benefit. It goes searching for onclick handlers and is liable to click
