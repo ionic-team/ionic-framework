@@ -1798,29 +1798,31 @@ window.ionic = {
       if(this.isCordova()) {
         this.platforms.push('cordova');
       }
-      if(this.isIOS7()) {
-        this.platforms.push('ios7');
+      if(this.isIOS()) {
+        this.platforms.push('ios');
+        this.platforms.push('ios' + parseInt(this.version(), 10));
       }
       if(this.isIPad()) {
         this.platforms.push('ipad');
       }
       if(this.isAndroid()) {
         this.platforms.push('android');
+        this.platforms.push('android' + parseInt(this.version(), 10));
       }
     },
 
     // Check if we are running in Cordova
     isCordova: function() {
-      return (window.cordova || window.PhoneGap || window.phonegap);
+      return !(!window.cordova && !window.PhoneGap && !window.phonegap);
     },
     isIPad: function() {
       return navigator.userAgent.toLowerCase().indexOf('ipad') >= 0;
     },
-    isIOS7: function() {
-      return this.platform() == 'ios' && this.version() >= 7.0;
+    isIOS: function() {
+      return this.is('ios');
     },
     isAndroid: function() {
-      return this.platform() === "android";
+      return this.is('android');
     },
 
     platform: function() {
@@ -1829,8 +1831,8 @@ window.ionic = {
       return platformName;
     },
 
-    setPlatform: function(name) {
-      if(name) platformName = name.toLowerCase();
+    setPlatform: function(n) {
+      platformName = n;
     },
 
     version: function() {
@@ -1840,14 +1842,19 @@ window.ionic = {
     },
 
     setVersion: function(v) {
-      if( !isNaN(v) ) version = parseFloat(v);
+      if(v) {
+        v = v.split('.');
+        platformVersion = parseFloat(v[0] + '.' + (v.length > 1 ? v[1] : 0));
+      } else {
+        platformVersion = 0;
+      }
     },
 
     // Check if the platform is the one detected by cordova
     is: function(type) {
       var pName = this.platform();
       if(pName) {
-        return pName === type.toLowerCase();
+        return pName.toLowerCase() === type.toLowerCase();
       }
       // A quick hack for 
       return navigator.userAgent.toLowerCase().indexOf(type.toLowerCase()) >= 0;
@@ -1895,8 +1902,8 @@ window.ionic = {
 
   };
 
-  var platformName, 
-  platformVersion,
+  var platformName, // just the name, like iOS or Android
+  platformVersion, // a float of the major and minor, like 7.1
   readyCallbacks = [];
 
   // setup listeners to know when the device is ready to go

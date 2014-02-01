@@ -1282,7 +1282,7 @@ angular.module('ionic.ui.checkbox', [])
 (function() {
 'use strict';
 
-angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.service.platform'])
+angular.module('ionic.ui.content', ['ionic.ui.service'])
 
 /**
  * Panel is a simple 100% width and height, fixed panel. It's meant for content to be
@@ -1299,7 +1299,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.service.platform'
 
 // The content directive is a core scrollable content area
 // that is part of many View hierarchies
-.directive('content', ['$parse', '$timeout', '$ionicPlatform', '$ionicScrollDelegate', function($parse, $timeout, $ionicPlatform, $ionicScrollDelegate) {
+.directive('content', ['$parse', '$timeout', '$ionicScrollDelegate', function($parse, $timeout, $ionicScrollDelegate) {
   return {
     restrict: 'E',
     replace: true,
@@ -1364,7 +1364,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.service.platform'
 
         // Otherwise, supercharge this baby!
         var hasBouncing = $scope.$eval($scope.hasBouncing);
-        var enableBouncing = (!$ionicPlatform.is('Android') && hasBouncing !== false) || hasBouncing === true;
+        var enableBouncing = (!ionic.Platform.isAndroid() && hasBouncing !== false) || hasBouncing === true;
         // No bouncing by default for Android users, lest they take up pitchforks
         // to our bouncing goodness
         sv = new ionic.views.Scroll({
