@@ -1794,20 +1794,23 @@ window.ionic = {
 
     _checkPlatforms: function(platforms) {
       this.platforms = [];
+      var v = this.version().toString().replace('.', '_');
 
       if(this.isCordova()) {
         this.platforms.push('cordova');
       }
       if(this.isIOS()) {
         this.platforms.push('ios');
-        this.platforms.push('ios' + parseInt(this.version(), 10));
+        this.platforms.push('ios' + v.split('_')[0]);
+        this.platforms.push('ios' + v);
       }
       if(this.isIPad()) {
         this.platforms.push('ipad');
       }
       if(this.isAndroid()) {
         this.platforms.push('android');
-        this.platforms.push('android' + parseInt(this.version(), 10));
+        this.platforms.push('android' + v.split('_')[0]);
+        this.platforms.push('android' + v);
       }
     },
 

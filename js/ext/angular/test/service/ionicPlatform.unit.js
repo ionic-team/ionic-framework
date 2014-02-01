@@ -35,6 +35,9 @@ describe('Ionic Platform Service', function() {
     ionic.Platform.setVersion(' ');
     expect(ionic.Platform.version()).toEqual(0);
 
+    ionic.Platform.setVersion('me-not-number');
+    expect(ionic.Platform.version()).toEqual(0);
+
     ionic.Platform.setVersion('');
     expect(ionic.Platform.version()).toEqual(0);
 
@@ -89,18 +92,20 @@ describe('Ionic Platform Service', function() {
     expect(ionic.Platform.platforms[0]).toEqual('cordova');
     expect(ionic.Platform.platforms[1]).toEqual('ios');
     expect(ionic.Platform.platforms[2]).toEqual('ios7');
+    expect(ionic.Platform.platforms[3]).toEqual('ios7_9');
   });
 
   it('sets android platforms', function() {
     window.cordova = {};
     ionic.Platform.setPlatform('android');
-    ionic.Platform.setVersion('4.4.4');
+    ionic.Platform.setVersion('4.2.3');
     
     ionic.Platform._checkPlatforms()
 
     expect(ionic.Platform.platforms[0]).toEqual('cordova');
     expect(ionic.Platform.platforms[1]).toEqual('android');
     expect(ionic.Platform.platforms[2]).toEqual('android4');
+    expect(ionic.Platform.platforms[3]).toEqual('android4_2');
   });
 
   it('is android', function() {
