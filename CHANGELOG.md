@@ -6,6 +6,7 @@
  - Fix $ionicPlatform.ready()
  - Fire off ionic.Platform.ready() callbacks for both Cordova and non-cordova
  - Created ionic.Platform.exitApp();
+ - Add major and minor platform version numbers in body css
 
 
 ## 0.9.22 "Alpha Narwhal" (2014-01-30)
