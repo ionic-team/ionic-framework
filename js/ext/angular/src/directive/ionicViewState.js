@@ -137,6 +137,10 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
         updateHeaderData(data);
       });
 
+      $rootScope.$on('viewState.titleUpdated', function(e, data) {
+        $scope.currentTitle = (data && data.title ? data.title : '');
+      });
+
       // If a nav page changes the left or right buttons, update our scope vars
       $scope.$parent.$on('viewState.leftButtonsChanged', function(e, data) {
         $scope.leftButtons = data;
@@ -198,10 +202,16 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           $scope.$emit('viewState.rightButtonsChanged', $scope.rightButtons);
         });
 
+        // watch for changes in the title
+        var deregTitle = $scope.$watch('title', function(val) {
+          $scope.$emit('viewState.titleUpdated', $scope);
+        });
+
         $scope.$on('$destroy', function(){
           // deregister on destroy
           deregLeftButtons();
           deregRightButtons();
+          deregTitle();
         });
 
       };
