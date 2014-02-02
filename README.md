@@ -83,6 +83,25 @@ way is to use Python:
 + <https://twitter.com/adamdbradley>
 + <https://github.com/adamdbradley>
 
+## Development
+
+* `npm install` to setup
+* `grunt` to jshint & build
+* `grunt karma:single` to test one-time
+* `grunt karma:watch` to test and re-run on source change
+* Additionally, a commit message validator is installed for this repository when running `grunt`.  Read about it [here](https://github.com/ajoslin/conventional-changelog/blob/master/CONVENTIONS.md).
+
+### Pushing Releases
+
+(uses AngularJS's bash utils)
+
+* Run `./scripts/release/finalize-version.sh --action=prepare` to:
+  - Remove version suffix
+  - Write new version to package/bower/component.json
+  - Commit & tag the release
+* Run `./scripts/release/finalize-version.sh --action=publish` to:
+  - Push out new version
+* Once new version is pushed out, run `./scripts/release/initialize-new-version.sh` (usage is shown in file), to bump to next version with bump type / version suffix / version name specified.
 
 ## LICENSE
 
