@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 *.sw[mnpcod]
+*.log
 example/cordova/iOS/www/js/framework
 
 example/cordova/iOS/www/js/framework
@@ -16,3 +17,4 @@ UserInterfaceState.xcuserstate
 
 bower_components/
 components/
+tmp

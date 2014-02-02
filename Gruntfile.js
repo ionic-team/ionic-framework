@@ -1,65 +1,50 @@
+var cp = require('child_process');
+var buildConfig = require('./config/build');
+
 module.exports = function(grunt) {
 
   grunt.initConfig({
+
     concat: {
       options: {
         separator: ';\n'
       },
       dist: {
-        src: [
-          'js/_license.js',
-
-          // Base
-          'js/ionic.js',
-
-          // Utils
-          'js/utils/**/*.js',
-
-          // Views
-          'js/views/view.js',
-
-          'js/views/scrollView.js',
-
-          'js/views/actionSheetView.js',
-          'js/views/checkboxView.js',
-          'js/views/headerBarView.js',
-          'js/views/listView.js',
-          'js/views/ListViewScroll.js',
-          'js/views/loadingView.js',
-          'js/views/modalView.js',
-          'js/views/navBarView.js',
-          'js/views/popupView.js',
-          'js/views/sideMenuView.js',
-          'js/views/sliderView.js',
-          'js/views/tabBarView.js',
-          'js/views/toggleView.js',
-
-          // Controllers
-          'js/controllers/viewController.js',
-
-          'js/controllers/navController.js',
-          'js/controllers/sideMenuController.js',
-          'js/controllers/tabBarController.js'
-
-        ],
+        src: buildConfig.files,
         dest: 'dist/js/ionic.js'
       },
       distAngular: {
-        src: [
-          'js/_license.js',
-          'js/ext/angular/src/ionicAngular.js',
-          'js/ext/angular/src/service/**/*.js',
-          'js/ext/angular/src/directive/**/*.js'
-        ],
+        src: buildConfig.angularFiles,
         dest: 'dist/js/ionic-angular.js'
       }
     },
+
     jshint: {
       files: ['Gruntfile.js', 'js/**/*.js', 'test/**/*.js'],
       options: {
         jshintrc: '.jshintrc'
       }
     },
+
+    karma: {
+      options: {
+        configFile: 'config/karma.conf.js'
+      },
+      single: {
+        options: {
+          singleRun: true
+        }
+      },
+      sauce: {
+        options: {
+          singleRun: true,
+          configFile: 'config/karma-sauce.conf.js'
+        }
+      },
+      watch: {
+      }
+    },
+
     uglify: {
       dist: {
         files: {
@@ -71,6 +56,7 @@ module.exports = function(grunt) {
         preserveComments: 'some'
       }
     },
+
     sass: {
       dist: {
         files: {
@@ -78,6 +64,7 @@ module.exports = function(grunt) {
         }
       }
     },
+
     cssmin: {
       dist: {
         files: {
@@ -85,6 +72,7 @@ module.exports = function(grunt) {
         }
       }
     },
+
     'string-replace': {
       version: {
         files: {
@@ -103,6 +91,16 @@ module.exports = function(grunt) {
         }
       }
     },
+
+    bump: {
+     options: {
+        files: ['package.json'],
+        commit: false,
+        createTag: false,
+        push: false
+      }
+    },
+
     watch: {
       scripts: {
         files: ['js/**/*.js', 'ext/**/*.js'],
@@ -119,12 +117,14 @@ module.exports = function(grunt) {
         }
       }
     },
+
     pkg: grunt.file.readJSON('package.json')
   });
 
   require('load-grunt-tasks')(grunt);
 
   grunt.registerTask('default', [
+    'enforce',
     'jshint',
     'sass',
     'cssmin',
@@ -132,4 +132,30 @@ module.exports = function(grunt) {
     'uglify',
     'string-replace'
   ]);
+
+  grunt.registerMultiTask('karma', 'Run karma', function() {
+    var done = this.async();
+    var options = this.options();
+    var config = options.configFile;
+    var browsers = grunt.option('browsers');
+    var singleRun = grunt.option('singleRun') || options.singleRun;
+    var reporters = grunt.option('reporters');
+
+    cp.spawn('node', ['node_modules/karma/bin/karma', 'start', config,
+             browsers ? '--browsers=' + browsers : '',
+             singleRun ? '--single-run=' + singleRun : '',
+             reporters ? '--reporters=' + reporters : ''
+    ], { stdio: 'inherit' })
+    .on('exit', function(code) {
+      if (code) return grunt.fail.warn('Karma test(s) failed. Exit code: ' + code);
+      done();
+    });
+  });
+
+  grunt.registerTask('enforce', 'Install commit message enforce script if it doesn\'t exist', function() {
+    if (!grunt.file.exists('.git/hooks/commit-msg')) {
+      grunt.file.copy('scripts/validate-commit-msg.js', '.git/hooks/commit-msg');
+      require('fs').chmodSync('.git/hooks/commit-msg', '0755');
+    }
+  });
 };
