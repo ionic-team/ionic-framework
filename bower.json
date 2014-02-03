@@ -1,6 +1,6 @@
 {
   "name": "ionic",
-  "version": "0.9.22",
+  "version": "0.9.23",
   "homepage": "https://github.com/driftyco/ionic",
   "authors": [
     "Max Lynch <max@drifty.com>",
@@ -9,14 +9,10 @@
   ],
   "description": "Advanced HTML5 hybrid mobile app development framework.",
   "main": [
-    "dist/js/ionic.js",
-    "dist/js/angular/angular.js",
-    "dist/js/angular/angular-animate.js",
-    "dist/js/angular/angular-sanitize.js",
-    "dist/js/angular-ui/angular-ui-router.js",
-    "dist/js/ionic-angular.js",
     "dist/css/ionic.css",
-    "dist/fonts/*"
+    "dist/fonts/*",
+    "dist/js/ionic.js",
+    "dist/js/ionic-angular.js",
   ],
   "keywords": [
     "mobile",
@@ -35,10 +31,21 @@
   "private": false,
   "ignore": [
     "**/.*",
-    "node_modules",
-    "bower_components",
-    "components",
-    "test",
-    "tests"
-  ]
+    "CONTRIBUTING.md",
+    "dist/js/angular",
+    "dist/js/angular-ui",
+    "examples/",
+    "Gruntfile.js",
+    "ionic.conf.js",
+    "js/",
+    "package.json",
+    "scss/",
+    "test/"
+  ],
+  "dependencies": {
+    "angular": "1.2.10",
+    "angular-animate": "1.2.10",
+    "angular-sanitize": "1.2.10",
+    "angular-ui-router": "0.2.7"
+  }
 }
