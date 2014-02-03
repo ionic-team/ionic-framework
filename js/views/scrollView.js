@@ -2003,7 +2003,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       // Slow down until slow enough, then flip back to snap position
       if (scrollOutsideX !== 0) {
-        if (scrollOutsideX * self.__decelerationVelocityX <= 0) {
+        if (scrollOutsideX * self.__decelerationVelocityX <= self.__minDecelerationScrollLeft) {
           self.__decelerationVelocityX += scrollOutsideX * penetrationDeceleration;
         } else {
           self.__decelerationVelocityX = scrollOutsideX * penetrationAcceleration;
@@ -2011,7 +2011,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       }
 
       if (scrollOutsideY !== 0) {
-        if (scrollOutsideY * self.__decelerationVelocityY <= 0) {
+        if (scrollOutsideY * self.__decelerationVelocityY <= self.__minDecelerationScrollTop) {
           self.__decelerationVelocityY += scrollOutsideY * penetrationDeceleration;
         } else {
           self.__decelerationVelocityY = scrollOutsideY * penetrationAcceleration;
