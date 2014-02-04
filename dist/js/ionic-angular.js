@@ -2616,7 +2616,7 @@ angular.module('ionic.ui.touch', [])
     
     function onTap(e) {
       // wire this up to Ionic's tap/click simulation
-      ionic.clickElement(e.target, e);
+      ionic.tapElement(e.target, e);
     }
 
     // Actual linking function.
