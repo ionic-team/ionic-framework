@@ -270,6 +270,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     terminal: true,
     priority: 2000,
     transclude: true,
+    controller: function() {}, //noop controller so this can be required
     compile: function (element, attr, transclude) {
       return function(scope, element, attr) {
         var viewScope, viewLocals,
@@ -323,7 +324,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           }
 
           var newElement = angular.element('<div></div>').html(locals.$template).contents();
-          renderer().register(newElement);
+          var viewRegisterData = renderer().register(newElement);
 
           // Remove existing content
           renderer(doAnimate).leave();
@@ -342,7 +343,10 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
             element.children().data('$ngControllerController', controller);
           }
           link(viewScope);
-          viewScope.$emit('$viewContentLoaded');
+
+          var viewHistoryData = $ionicViewService._getView(viewRegisterData.viewId) || {};
+          viewScope.$broadcast('$viewContentLoaded', viewHistoryData);
+
           if (onloadExp) viewScope.$eval(onloadExp);
 
           newElement = null;

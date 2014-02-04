@@ -616,7 +616,7 @@ angular.module('ionic.service.templateLoad', [])
 angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
 
 
-.run(     ['$rootScope', '$state', '$location', '$document', '$animate', '$ionicPlatform', 
+.run(     ['$rootScope', '$state', '$location', '$document', '$animate', '$ionicPlatform',
   function( $rootScope,   $state,   $location,   $document,   $animate,   $ionicPlatform) {
 
   // init the variables that keep track of the view history
@@ -644,7 +644,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
     if(!data.url && data.uiSref) {
       data.url = $state.href(data.uiSref);
     }
-    
+
     if(data.url) {
       // don't let it start with a #, messes with $location.url()
       if(data.url.indexOf('#') === 0) {
@@ -681,7 +681,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
 
 }])
 
-.factory('$ionicViewService', ['$rootScope', '$state', '$location', '$window', '$injector', 
+.factory('$ionicViewService', ['$rootScope', '$state', '$location', '$window', '$injector',
                       function( $rootScope,   $state,   $location,   $window,   $injector) {
   var $animate = $injector.has('$animate') ? $injector.get('$animate') : false;
 
@@ -721,7 +721,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
   };
 
   function createViewId(stateId) {
-    return ('_' + stateId + '_' + Math.round(Math.random() * 99999999)).replace(/\./g, '_');
+    return ionic.Utils.nextUid();
   }
 
   return {
@@ -750,7 +750,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
         return rsp;
       }
 
-      if(currentView && 
+      if(currentView &&
          currentView.stateId === currentStateId &&
          currentView.historyId === hist.historyId) {
         // do nothing if its the same stateId in the same history
@@ -782,7 +782,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
           rsp.historyId = forwardView.historyId;
         }
 
-      } else if(currentView && currentView.historyId !== hist.historyId && 
+      } else if(currentView && currentView.historyId !== hist.historyId &&
                 hist.cursor > -1 && hist.stack.length > 0 && hist.cursor < hist.stack.length &&
                 hist.stack[hist.cursor].stateId === currentStateId) {
         // they just changed to a different history and the history already has views in it
@@ -825,7 +825,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
         }
 
         // add the new view to the stack
-        viewHistory.histories[rsp.viewId] = this.createView({ 
+        viewHistory.histories[rsp.viewId] = this.createView({
           viewId: rsp.viewId,
           index: hist.stack.length,
           historyId: hist.historyId,
@@ -834,7 +834,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
           stateId: currentStateId,
           stateName: this.getCurrentStateName(),
           stateParams: this.getCurrentStateParams(),
-          url: $location.url()
+          url: $location.url(),
         });
 
         // add the new view to this history's stack
@@ -861,7 +861,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
     },
 
     registerHistory: function(scope) {
-      scope.$historyId = 'h' + Math.round(Math.random() * 99999999999);
+      scope.$historyId = ionic.Utils.nextUid();
     },
 
     createView: function(data) {
@@ -890,9 +890,9 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
     },
 
     isCurrentStateNavView: function(navView) {
-      return ($state && 
-              $state.current && 
-              $state.current.views && 
+      return ($state &&
+              $state.current &&
+              $state.current.views &&
               $state.current.views[navView] ? true : false);
     },
 
@@ -923,7 +923,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
         return id;
       }
       // if something goes wrong make sure its got a unique stateId
-      return 'r' + Math.round(Math.random() * 9999999);
+      return ionic.Utils.nextUid();
     },
 
     _getView: function(viewId) {
@@ -944,8 +944,8 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
       if( !$rootScope.$viewHistory.histories[ histObj.historyId ] ) {
         // this history object exists in parent scope, but doesn't
         // exist in the history data yet
-        $rootScope.$viewHistory.histories[ histObj.historyId ] = { 
-          historyId: histObj.historyId, 
+        $rootScope.$viewHistory.histories[ histObj.historyId ] = {
+          historyId: histObj.historyId,
           parentHistoryId: this._getParentHistoryObj(histObj.scope.$parent).historyId,
           stack: [],
           cursor: -1
@@ -1000,7 +1000,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
       return function(shouldAnimate) {
 
         return {
-          
+
           enter: function(element) {
 
             if(doAnimation && shouldAnimate) {
@@ -1012,7 +1012,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
 
               $animate.enter(element, navViewElement, null, function() {
                 document.body.classList.remove('disable-pointer-events');
-              }); 
+              });
               return;
             }
 
@@ -1027,8 +1027,8 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
               // leave with an animation
               setAnimationClass();
 
-              $animate.leave(element, function() { 
-                element.remove(); 
+              $animate.leave(element, function() {
+                element.remove();
               });
               return;
             }
@@ -1041,6 +1041,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
             // register a new view
             registerData = service.register(navViewScope, element);
             doAnimation = (animationClass !== null && registerData.navDirection !== null);
+            return registerData;
           }
 
         };
@@ -1305,6 +1306,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
     replace: true,
     template: '<div class="scroll-content"><div class="scroll" ng-transclude></div></div>',
     transclude: true,
+    require: '^?navView',
     scope: {
       onRefresh: '&',
       onRefreshOpening: '&',
@@ -1332,7 +1334,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
       if(attr.hasTabs == "true") { element.addClass('has-tabs'); }
       if(attr.padding == "true") { element.find('div').addClass('padding'); }
 
-      return function link($scope, $element, $attr) {
+      return function link($scope, $element, $attr, navViewCtrl) {
         var clone, sc, sv,
           c = angular.element($element.children()[0]);
 
@@ -1340,78 +1342,100 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
           // No scrolling
           return;
         } 
-        
-        // If they want plain overflow scrolling, add that as a class
-        if(attr.overflowScroll === "true") {
-          $element.addClass('overflow-scroll');
-          return;
+
+        if (navViewCtrl) {
+          // If we do have a parent navView, wait for them to give us $viewContentLoaded event
+          // before we fully initialize
+          $scope.$on('$viewContentLoaded', function(e, viewHistoryData) {
+            initScroll(viewHistoryData);
+          });
+        } else {
+          // If we are standalone view, just initialize immediately.
+          initScroll();
         }
 
-        // Otherwise, use our scroll system
+        function initScroll(viewHistoryData) {
+          viewHistoryData || (viewHistoryData = {});
+          var savedScroll = viewHistoryData.scrollValues || {};
 
-        var refresher = $element[0].querySelector('.scroll-refresher');
-        var refresherHeight = refresher && refresher.clientHeight || 0;
+          // If they want plain overflow scrolling, add that as a class
+          if(attr.overflowScroll === "true") {
+            $element.addClass('overflow-scroll');
+            return;
+          }
 
-        if(attr.refreshComplete) {
-          $scope.refreshComplete = function() {
-            if($scope.scrollView) {
-              refresher && refresher.classList.remove('active');
-              $scope.scrollView.finishPullToRefresh();
-              $scope.$parent.$broadcast('scroll.onRefreshComplete');
+          // Otherwise, use our scroll system
+          var hasBouncing = $scope.$eval($scope.hasBouncing);
+          var enableBouncing = (!ionic.Platform.isAndroid() && hasBouncing !== false) || hasBouncing === true;
+          // No bouncing by default for Android users, lest they take up pitchforks
+          // to our bouncing goodness
+          sv = new ionic.views.Scroll({
+            el: $element[0],
+            bouncing: enableBouncing,
+            startX: $scope.$eval($scope.startX) || savedScroll.left || 0,
+            startY: $scope.$eval($scope.startY) || savedScroll.top || 0,
+            scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
+            scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
+            scrollingX: $scope.$eval($scope.hasScrollX) === true,
+            scrollingY: $scope.$eval($scope.hasScrollY) !== false,
+            scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 20,
+            scrollingComplete: function() {
+              $scope.onScrollComplete({
+                scrollTop: this.__scrollTop,
+                scrollLeft: this.__scrollLeft
+              });
             }
-          };
-        }
+          });
 
-        // Otherwise, supercharge this baby!
-        var hasBouncing = $scope.$eval($scope.hasBouncing);
-        var enableBouncing = (!ionic.Platform.isAndroid() && hasBouncing !== false) || hasBouncing === true;
-        // No bouncing by default for Android users, lest they take up pitchforks
-        // to our bouncing goodness
-        sv = new ionic.views.Scroll({
-          el: $element[0],
-          bouncing: enableBouncing,
-          startX: $scope.$eval($scope.startX) || 0,
-          startY: $scope.$eval($scope.startY) || 0,
-          scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
-          scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
-          scrollingX: $scope.$eval($scope.hasScrollX) === true,
-          scrollingY: $scope.$eval($scope.hasScrollY) !== false,
-          scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 20,
-          scrollingComplete: function() {
-            $scope.onScrollComplete({
-              scrollTop: this.__scrollTop,
-              scrollLeft: this.__scrollLeft
+          //Save scroll onto viewHistoryData when scope is destroyed
+          $scope.$on('$destroy', function() {
+            viewHistoryData.scrollValues = sv.getValues();
+          });
+
+          var refresher = $element[0].querySelector('.scroll-refresher');
+          var refresherHeight = refresher && refresher.clientHeight || 0;
+
+          if(attr.refreshComplete) {
+            $scope.refreshComplete = function() {
+              if($scope.scrollView) {
+                refresher && refresher.classList.remove('active');
+                $scope.scrollView.finishPullToRefresh();
+                $scope.$parent.$broadcast('scroll.onRefreshComplete');
+              }
+            };
+          }
+
+          // Activate pull-to-refresh
+          if(refresher) {
+            sv.activatePullToRefresh(50, function() {
+              refresher.classList.add('active');
+            }, function() {
+              refresher.classList.remove('refreshing');
+              refresher.classList.remove('active');
+            }, function() {
+              refresher.classList.add('refreshing');
+              $scope.onRefresh();
+              $scope.$parent.$broadcast('scroll.onRefresh');
             });
           }
-        });
 
-        // Activate pull-to-refresh
-        if(refresher) {
-          sv.activatePullToRefresh(50, function() {
-            refresher.classList.add('active');
-          }, function() {
-            refresher.classList.remove('refreshing');
-            refresher.classList.remove('active');
-          }, function() {
-            refresher.classList.add('refreshing');
-            $scope.onRefresh();
-            $scope.$parent.$broadcast('scroll.onRefresh');
+          // Register for scroll delegate event handling
+          $ionicScrollDelegate.register($scope, $element);
+
+          // Let child scopes access this 
+          $scope.$parent.scrollView = sv;
+
+          $timeout(function() {
+            // Give child containers a chance to build and size themselves
+            sv.run();
           });
+
+          return sv;
         }
-
-        // Register for scroll delegate event handling
-        $ionicScrollDelegate.register($scope, $element);
-
-        // Let child scopes access this 
-        $scope.$parent.scrollView = sv;
-
-        $timeout(function() {
-          // Give child containers a chance to build and size themselves
-          sv.run();
-        });
 
         // Check if this supports infinite scrolling and listen for scroll events
         // to trigger the infinite scrolling
+        // TODO(ajoslin): move functionality out of this function and make testable
         var infiniteScroll = $element.find('infinite-scroll');
         var infiniteStarted = false;
         if(infiniteScroll) {
@@ -2895,6 +2919,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     terminal: true,
     priority: 2000,
     transclude: true,
+    controller: function() {}, //noop controller so this can be required
     compile: function (element, attr, transclude) {
       return function(scope, element, attr) {
         var viewScope, viewLocals,
@@ -2948,7 +2973,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           }
 
           var newElement = angular.element('<div></div>').html(locals.$template).contents();
-          renderer().register(newElement);
+          var viewRegisterData = renderer().register(newElement);
 
           // Remove existing content
           renderer(doAnimate).leave();
@@ -2967,7 +2992,10 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
             element.children().data('$ngControllerController', controller);
           }
           link(viewScope);
-          viewScope.$emit('$viewContentLoaded');
+
+          var viewHistoryData = $ionicViewService._getView(viewRegisterData.viewId) || {};
+          viewScope.$broadcast('$viewContentLoaded', viewHistoryData);
+
           if (onloadExp) viewScope.$eval(onloadExp);
 
           newElement = null;
@@ -2977,7 +3005,6 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
   };
   return directive;
 }]);
-
 
 })();
 ;

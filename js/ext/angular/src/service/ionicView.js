@@ -426,6 +426,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
             // register a new view
             registerData = service.register(navViewScope, element);
             doAnimation = (animationClass !== null && registerData.navDirection !== null);
+            return registerData;
           }
 
         };

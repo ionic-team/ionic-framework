@@ -24,6 +24,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
     replace: true,
     template: '<div class="scroll-content"><div class="scroll" ng-transclude></div></div>',
     transclude: true,
+    require: '^?navView',
     scope: {
       onRefresh: '&',
       onRefreshOpening: '&',
@@ -51,7 +52,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
       if(attr.hasTabs == "true") { element.addClass('has-tabs'); }
       if(attr.padding == "true") { element.find('div').addClass('padding'); }
 
-      return function link($scope, $element, $attr) {
+      return function link($scope, $element, $attr, navViewCtrl) {
         var clone, sc, sv,
           c = angular.element($element.children()[0]);
 
@@ -59,78 +60,100 @@ angular.module('ionic.ui.content', ['ionic.ui.service'])
           // No scrolling
           return;
         } 
-        
-        // If they want plain overflow scrolling, add that as a class
-        if(attr.overflowScroll === "true") {
-          $element.addClass('overflow-scroll');
-          return;
+
+        if (navViewCtrl) {
+          // If we do have a parent navView, wait for them to give us $viewContentLoaded event
+          // before we fully initialize
+          $scope.$on('$viewContentLoaded', function(e, viewHistoryData) {
+            initScroll(viewHistoryData);
+          });
+        } else {
+          // If we are standalone view, just initialize immediately.
+          initScroll();
         }
 
-        // Otherwise, use our scroll system
+        function initScroll(viewHistoryData) {
+          viewHistoryData || (viewHistoryData = {});
+          var savedScroll = viewHistoryData.scrollValues || {};
 
-        var refresher = $element[0].querySelector('.scroll-refresher');
-        var refresherHeight = refresher && refresher.clientHeight || 0;
+          // If they want plain overflow scrolling, add that as a class
+          if(attr.overflowScroll === "true") {
+            $element.addClass('overflow-scroll');
+            return;
+          }
 
-        if(attr.refreshComplete) {
-          $scope.refreshComplete = function() {
-            if($scope.scrollView) {
-              refresher && refresher.classList.remove('active');
-              $scope.scrollView.finishPullToRefresh();
-              $scope.$parent.$broadcast('scroll.onRefreshComplete');
+          // Otherwise, use our scroll system
+          var hasBouncing = $scope.$eval($scope.hasBouncing);
+          var enableBouncing = (!ionic.Platform.isAndroid() && hasBouncing !== false) || hasBouncing === true;
+          // No bouncing by default for Android users, lest they take up pitchforks
+          // to our bouncing goodness
+          sv = new ionic.views.Scroll({
+            el: $element[0],
+            bouncing: enableBouncing,
+            startX: $scope.$eval($scope.startX) || savedScroll.left || 0,
+            startY: $scope.$eval($scope.startY) || savedScroll.top || 0,
+            scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
+            scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
+            scrollingX: $scope.$eval($scope.hasScrollX) === true,
+            scrollingY: $scope.$eval($scope.hasScrollY) !== false,
+            scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 20,
+            scrollingComplete: function() {
+              $scope.onScrollComplete({
+                scrollTop: this.__scrollTop,
+                scrollLeft: this.__scrollLeft
+              });
             }
-          };
-        }
+          });
 
-        // Otherwise, supercharge this baby!
-        var hasBouncing = $scope.$eval($scope.hasBouncing);
-        var enableBouncing = (!ionic.Platform.isAndroid() && hasBouncing !== false) || hasBouncing === true;
-        // No bouncing by default for Android users, lest they take up pitchforks
-        // to our bouncing goodness
-        sv = new ionic.views.Scroll({
-          el: $element[0],
-          bouncing: enableBouncing,
-          startX: $scope.$eval($scope.startX) || 0,
-          startY: $scope.$eval($scope.startY) || 0,
-          scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
-          scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
-          scrollingX: $scope.$eval($scope.hasScrollX) === true,
-          scrollingY: $scope.$eval($scope.hasScrollY) !== false,
-          scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 20,
-          scrollingComplete: function() {
-            $scope.onScrollComplete({
-              scrollTop: this.__scrollTop,
-              scrollLeft: this.__scrollLeft
+          //Save scroll onto viewHistoryData when scope is destroyed
+          $scope.$on('$destroy', function() {
+            viewHistoryData.scrollValues = sv.getValues();
+          });
+
+          var refresher = $element[0].querySelector('.scroll-refresher');
+          var refresherHeight = refresher && refresher.clientHeight || 0;
+
+          if(attr.refreshComplete) {
+            $scope.refreshComplete = function() {
+              if($scope.scrollView) {
+                refresher && refresher.classList.remove('active');
+                $scope.scrollView.finishPullToRefresh();
+                $scope.$parent.$broadcast('scroll.onRefreshComplete');
+              }
+            };
+          }
+
+          // Activate pull-to-refresh
+          if(refresher) {
+            sv.activatePullToRefresh(50, function() {
+              refresher.classList.add('active');
+            }, function() {
+              refresher.classList.remove('refreshing');
+              refresher.classList.remove('active');
+            }, function() {
+              refresher.classList.add('refreshing');
+              $scope.onRefresh();
+              $scope.$parent.$broadcast('scroll.onRefresh');
             });
           }
-        });
 
-        // Activate pull-to-refresh
-        if(refresher) {
-          sv.activatePullToRefresh(50, function() {
-            refresher.classList.add('active');
-          }, function() {
-            refresher.classList.remove('refreshing');
-            refresher.classList.remove('active');
-          }, function() {
-            refresher.classList.add('refreshing');
-            $scope.onRefresh();
-            $scope.$parent.$broadcast('scroll.onRefresh');
+          // Register for scroll delegate event handling
+          $ionicScrollDelegate.register($scope, $element);
+
+          // Let child scopes access this 
+          $scope.$parent.scrollView = sv;
+
+          $timeout(function() {
+            // Give child containers a chance to build and size themselves
+            sv.run();
           });
+
+          return sv;
         }
-
-        // Register for scroll delegate event handling
-        $ionicScrollDelegate.register($scope, $element);
-
-        // Let child scopes access this 
-        $scope.$parent.scrollView = sv;
-
-        $timeout(function() {
-          // Give child containers a chance to build and size themselves
-          sv.run();
-        });
 
         // Check if this supports infinite scrolling and listen for scroll events
         // to trigger the infinite scrolling
+        // TODO(ajoslin): move functionality out of this function and make testable
         var infiniteScroll = $element.find('infinite-scroll');
         var infiniteStarted = false;
         if(infiniteScroll) {
