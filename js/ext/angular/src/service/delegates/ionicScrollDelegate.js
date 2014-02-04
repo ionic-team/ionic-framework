@@ -11,8 +11,8 @@ angular.module('ionic.ui.service.scrollDelegate', [])
     scrollTop: function(animate) {
       $rootScope.$broadcast('scroll.scrollTop', animate);
     },
-    scrollBottom: function(animate) {
-      $rootScope.$broadcast('scroll.scrollBottom', animate);
+    scrollBottom: function(animate, forceRefresh) {
+      $rootScope.$broadcast('scroll.scrollBottom', animate, forceRefresh);
     },
     resize: function() {
       $rootScope.$broadcast('scroll.resize');
@@ -75,11 +75,12 @@ angular.module('ionic.ui.service.scrollDelegate', [])
       $scope.$parent.$on('scroll.scrollTop', function(e, animate) {
         $scope.$parent.scrollView && $scope.$parent.scrollView.scrollTo(0, 0, animate === false ? false : true);
       });
-      $scope.$parent.$on('scroll.scrollBottom', function(e, animate) {
+      $scope.$parent.$on('scroll.scrollBottom', function(e, animate, forceRefresh) {
         var sv = $scope.$parent.scrollView;
         var max;
         if(!sv) { return; }
-        sv.hintResize();
+        if (forceRefresh)
+          sv.hintResize();
         max = sv.getScrollMax();
         sv.scrollTo(0, max.top, animate === false ? false : true);
       });
