@@ -79,6 +79,7 @@ angular.module('ionic.ui.service.scrollDelegate', [])
         var sv = $scope.$parent.scrollView;
         var max;
         if(!sv) { return; }
+        sv.hintResize();
         max = sv.getScrollMax();
         sv.scrollTo(0, max.top, animate === false ? false : true);
       });
