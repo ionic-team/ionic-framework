@@ -1,7 +1,7 @@
 angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
 
 
-.run(     ['$rootScope', '$state', '$location', '$document', '$animate', '$ionicPlatform', 
+.run(     ['$rootScope', '$state', '$location', '$document', '$animate', '$ionicPlatform',
   function( $rootScope,   $state,   $location,   $document,   $animate,   $ionicPlatform) {
 
   // init the variables that keep track of the view history
@@ -29,7 +29,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
     if(!data.url && data.uiSref) {
       data.url = $state.href(data.uiSref);
     }
-    
+
     if(data.url) {
       // don't let it start with a #, messes with $location.url()
       if(data.url.indexOf('#') === 0) {
@@ -66,7 +66,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
 
 }])
 
-.factory('$ionicViewService', ['$rootScope', '$state', '$location', '$window', '$injector', 
+.factory('$ionicViewService', ['$rootScope', '$state', '$location', '$window', '$injector',
                       function( $rootScope,   $state,   $location,   $window,   $injector) {
   var $animate = $injector.has('$animate') ? $injector.get('$animate') : false;
 
@@ -106,7 +106,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
   };
 
   function createViewId(stateId) {
-    return ('_' + stateId + '_' + Math.round(Math.random() * 99999999)).replace(/\./g, '_');
+    return ionic.Utils.nextUid();
   }
 
   return {
@@ -135,7 +135,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
         return rsp;
       }
 
-      if(currentView && 
+      if(currentView &&
          currentView.stateId === currentStateId &&
          currentView.historyId === hist.historyId) {
         // do nothing if its the same stateId in the same history
@@ -167,7 +167,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
           rsp.historyId = forwardView.historyId;
         }
 
-      } else if(currentView && currentView.historyId !== hist.historyId && 
+      } else if(currentView && currentView.historyId !== hist.historyId &&
                 hist.cursor > -1 && hist.stack.length > 0 && hist.cursor < hist.stack.length &&
                 hist.stack[hist.cursor].stateId === currentStateId) {
         // they just changed to a different history and the history already has views in it
@@ -210,7 +210,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
         }
 
         // add the new view to the stack
-        viewHistory.histories[rsp.viewId] = this.createView({ 
+        viewHistory.histories[rsp.viewId] = this.createView({
           viewId: rsp.viewId,
           index: hist.stack.length,
           historyId: hist.historyId,
@@ -219,7 +219,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
           stateId: currentStateId,
           stateName: this.getCurrentStateName(),
           stateParams: this.getCurrentStateParams(),
-          url: $location.url()
+          url: $location.url(),
         });
 
         // add the new view to this history's stack
@@ -246,7 +246,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
     },
 
     registerHistory: function(scope) {
-      scope.$historyId = 'h' + Math.round(Math.random() * 99999999999);
+      scope.$historyId = ionic.Utils.nextUid();
     },
 
     createView: function(data) {
@@ -275,9 +275,9 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
     },
 
     isCurrentStateNavView: function(navView) {
-      return ($state && 
-              $state.current && 
-              $state.current.views && 
+      return ($state &&
+              $state.current &&
+              $state.current.views &&
               $state.current.views[navView] ? true : false);
     },
 
@@ -308,7 +308,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
         return id;
       }
       // if something goes wrong make sure its got a unique stateId
-      return 'r' + Math.round(Math.random() * 9999999);
+      return ionic.Utils.nextUid();
     },
 
     _getView: function(viewId) {
@@ -329,8 +329,8 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
       if( !$rootScope.$viewHistory.histories[ histObj.historyId ] ) {
         // this history object exists in parent scope, but doesn't
         // exist in the history data yet
-        $rootScope.$viewHistory.histories[ histObj.historyId ] = { 
-          historyId: histObj.historyId, 
+        $rootScope.$viewHistory.histories[ histObj.historyId ] = {
+          historyId: histObj.historyId,
           parentHistoryId: this._getParentHistoryObj(histObj.scope.$parent).historyId,
           stack: [],
           cursor: -1
@@ -385,7 +385,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
       return function(shouldAnimate) {
 
         return {
-          
+
           enter: function(element) {
 
             if(doAnimation && shouldAnimate) {
@@ -397,7 +397,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
 
               $animate.enter(element, navViewElement, null, function() {
                 document.body.classList.remove('disable-pointer-events');
-              }); 
+              });
               return;
             }
 
@@ -412,8 +412,8 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
               // leave with an animation
               setAnimationClass();
 
-              $animate.leave(element, function() { 
-                element.remove(); 
+              $animate.leave(element, function() {
+                element.remove();
               });
               return;
             }
