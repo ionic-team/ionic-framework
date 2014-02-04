@@ -124,7 +124,6 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
 
   grunt.registerTask('default', [
-    'enforce',
     'jshint',
     'sass',
     'cssmin',
@@ -150,12 +149,5 @@ module.exports = function(grunt) {
       if (code) return grunt.fail.warn('Karma test(s) failed. Exit code: ' + code);
       done();
     });
-  });
-
-  grunt.registerTask('enforce', 'Install commit message enforce script if it doesn\'t exist', function() {
-    if (!grunt.file.exists('.git/hooks/commit-msg')) {
-      grunt.file.copy('scripts/validate-commit-msg.js', '.git/hooks/commit-msg');
-      require('fs').chmodSync('.git/hooks/commit-msg', '0755');
-    }
   });
 };
