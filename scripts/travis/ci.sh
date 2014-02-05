@@ -26,13 +26,13 @@ function run {
   echo "GH_ORG=$GH_ORG"
   echo "TRAVIS_BRANCH=$TRAVIS_BRANCH"
   echo "TRAVIS_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER"
-
+  echo "TRAVIS_PULL_REQUEST=$TRAVIS_BUILD_NUMBER"
 
   # Jshint & check for stupid mistakes
-  # grunt jshint ddescribe-iit merge-conflict
+  grunt jshint ddescribe-iit merge-conflict
 
   # Run simple quick tests on Phantom to be sure any tests pass
-  # grunt karma:single --browsers=PhantomJS --reporters=dots
+  grunt karma:single --browsers=PhantomJS --reporters=dots
 
   # Do sauce test with all browsers (takes longer)
   # TODO Saucelabs settings need more tweaking before it becomes stable (sometimes it fails to connect)
@@ -42,7 +42,7 @@ function run {
     echo "-- Building on branch $TRAVIS_BRANCH (not master); will not push build out."
     exit 0
   fi
-  if [[ "$TRAVIS_PULL_REQUEST" == "true" ]]; then
+  if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
     echo "-- This is a pull request build; will not push build out."
     exit 0
   fi
