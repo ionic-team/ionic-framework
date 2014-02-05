@@ -15,14 +15,15 @@ module.exports = function(config) {
     files: [
       // Include jQuery only for testing convience (lots of DOM checking for unit tests on directives)
       'http://codeorigin.jquery.com/jquery-1.10.2.min.js',
-      'dist/js/angular/angular.js',
-      'dist/js/angular/angular-animate.js',
-      'dist/js/angular/angular-resource.js',
-      'dist/js/angular/angular-mocks.js',
-      'dist/js/angular/angular-sanitize.js',
-      'dist/js/angular-ui/angular-ui-router.js',
+      'config/lib/js/angular/angular.js',
+      'config/lib/js/angular/angular-animate.js',
+      'config/lib/js/angular/angular-mocks.js',
+      'config/lib/js/angular/angular-sanitize.js',
+      'config/lib/js/angular-ui/angular-ui-router.js',
     ]
-    .concat(buildConfig.files, buildConfig.angularFiles, [
+    .concat(buildConfig.ionicFiles)
+    .concat(buildConfig.angularIonicFiles)
+    .concat([
       'test/**/*.js',
       'js/ext/angular/test/**/*.js'
     ]),

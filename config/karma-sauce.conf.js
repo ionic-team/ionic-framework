@@ -2,8 +2,6 @@
 module.exports = function(config) {
   require('./karma.conf.js')(config);
 
-  //username: angular-bootstrap
-  //password: password
   config.set({
     sauceLabs: {
       testName: 'ionic',

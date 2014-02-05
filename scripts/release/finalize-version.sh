@@ -2,7 +2,9 @@
 
 # Inspired by AngularJS's finalize-version script
 
+# force user to deifne git-push-dryrun so he has to think!
 ARG_DEFS=(
+  "--git-push-dryrun=(true|false)"
   "--action=(prepare|publish)"
 )
 
@@ -10,15 +12,22 @@ function prepare {
   cd ../..
 
   # Remove suffix
-  replaceJsonProp "package.json" "version" "(.*)?-[a-zA-Z]+" "\2"
+  OLD_VERSION=$(readJsonProp "package.json" "version")
+  VERSION=$(echo $OLD_VERSION | sed 's/-.*//')
 
-  VERSION=$(readJsonProp "package.json" "version")
+  replaceJsonProp "package.json" "version" "$VERSION"
+
   CODENAME=$(readJsonProp "package.json" "codename")
 
-  replaceJsonProp "bower.json" "version" ".*" "$VERSION"
-  replaceJsonProp "component.json" "version" ".*" "$VERSION"
+  replaceJsonProp "bower.json" "version" "$VERSION"
+  replaceJsonProp "component.json" "version" "$VERSION"
 
-  git add package.json bower.json component.json
+  echo "-- Building and putting files in release folder"
+  grunt build
+  mkdir -p release
+  cp -Rf dist/* release
+
+  git add package.json bower.json component.json release
   git commit -m "chore(release): v$VERSION"
   git tag -m "v$VERSION" v$VERSION
 
@@ -33,10 +42,11 @@ function publish {
   cd ../..
 
   VERSION=$(readJsonProp "package.json" "version")
-  BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-  git push origin $BRANCH
-  git push origin v$VERSION
+  git push -q origin master
+  git push -q origin v$VERSION
+
+  echo "-- Version published as v$VERSION successfully!"
 
   cd $SCRIPT_DIR
 }

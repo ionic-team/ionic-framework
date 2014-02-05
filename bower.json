@@ -9,10 +9,10 @@
   ],
   "description": "Advanced HTML5 hybrid mobile app development framework.",
   "main": [
-    "dist/css/ionic.css",
-    "dist/fonts/*",
-    "dist/js/ionic.js",
-    "dist/js/ionic-angular.js"
+    "release/css/ionic.css",
+    "release/fonts/*",
+    "release/js/ionic.js",
+    "release/js/ionic-angular.js"
   ],
   "keywords": [
     "mobile",
@@ -32,15 +32,17 @@
   "ignore": [
     "**/.*",
     "CONTRIBUTING.md",
-    "dist/js/angular",
-    "dist/js/angular-ui",
-    "examples/",
     "Gruntfile.js",
-    "ionic.conf.js",
-    "js/",
+    "component.json",
+    "config",
+    "examples",
+    "js",
     "package.json",
-    "scss/",
-    "test/"
+    "release/js/angular",
+    "release/js/angular-ui",
+    "scripts",
+    "scss",
+    "test"
   ],
   "dependencies": {
     "angular": "1.2.10",

@@ -44,7 +44,8 @@ describe('Ionic ScrollDelegate Service', function() {
     expect(v.top).toBe(100);
   });
 
-  xit('Should scroll bottom', function() {
+  /*
+  it('Should scroll bottom', function() {
     spyOn(del, 'register');
 
     var scope = rootScope.$new();
@@ -65,5 +66,6 @@ describe('Ionic ScrollDelegate Service', function() {
 
     expect(v.top).toBe(100);
   });
+  */
 });
-    
+

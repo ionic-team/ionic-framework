@@ -10,14 +10,30 @@ module.exports = function(grunt) {
         separator: ';\n'
       },
       dist: {
-        src: buildConfig.files,
+        src: buildConfig.ionicFiles,
         dest: 'dist/js/ionic.js'
       },
       distAngular: {
-        src: buildConfig.angularFiles,
+        src: buildConfig.angularIonicFiles,
         dest: 'dist/js/ionic-angular.js'
       }
     },
+
+    copy: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: './config/lib/',
+          src: buildConfig.vendorFiles,
+          dest: './dist/'
+        }]
+      }
+    },
+
+    //Used by CI to check for temporary test code
+    //xit, iit, ddescribe, xdescribe
+    'ddescribe-iit': ['js/**/*.js'],
+    'merge-conflict': ['js/**/*.js'],
 
     jshint: {
       files: ['Gruntfile.js', 'js/**/*.js', 'test/**/*.js'],
@@ -125,9 +141,14 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [
     'jshint',
+    'build'
+  ]);
+
+  grunt.registerTask('build', [
     'sass',
     'cssmin',
     'concat',
+    'copy',
     'uglify',
     'string-replace'
   ]);
