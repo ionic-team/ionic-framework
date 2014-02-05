@@ -28,7 +28,7 @@ function run {
   git add package.json
   git commit -m "chore(post-release): start v$VERSION"
 
-  git push -q origin master
+  git push origin master
 
   echo "Version initialized & published as v$VERSION successfully!"
 }

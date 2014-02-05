@@ -16,6 +16,7 @@ function init {
     export TRAVIS_BRANCH=master
     export TRAVIS_BUILD_NUMBER=$RANDOM
     export TRAVIS_PULL_REQUEST=false
+    export TRAVIS_COMMIT=$(git rev-parse HEAD)
     # use your github username as GH_ORG to push to, and it will push to ORG/ionic-code, etc
     export GH_ORG=ajoslin
   fi
@@ -28,6 +29,7 @@ function run {
   echo "TRAVIS_BRANCH=$TRAVIS_BRANCH"
   echo "TRAVIS_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER"
   echo "TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
+  echo "TRAVIS_COMMIT=$TRAVIS_COMMIT"
 
   # Jshint & check for stupid mistakes
   grunt jshint ddescribe-iit merge-conflict
@@ -44,14 +46,18 @@ function run {
     exit 0
   fi
 
-  # If latest commit message starts with chore(release): it's a release
-  COMMIT_MESSAGE=$(git log --format=%B | head -c 15)
-  
+  # If latest commit message starts with 'chore(release):' it's a release
+  COMMIT_MESSAGE=$(git log --format=%B -n 1 $TRAVIS_COMMIT | head -c 15)
+
   if [[ "$COMMIT_MESSAGE" == "chore(release):" ]]; then
     IS_RELEASE=true
-    echo "-- Pushing out a new full release."
+    echo "##################################"
+    echo "# Pushing out a new full release #"
+    echo "##################################"
   else
-    echo "-- Pushing out a new nightly build."
+    echo "#####################################"
+    echo "# Pushing out a new nightly release #"
+    echo "#####################################"
     ./scripts/travis/bump-nightly-version.sh
   fi
 

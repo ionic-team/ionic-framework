@@ -43,8 +43,8 @@ function publish {
 
   VERSION=$(readJsonProp "package.json" "version")
 
-  git push -q origin master
-  git push -q origin v$VERSION
+  git push origin master
+  git push origin v$VERSION
 
   echo "-- Version published as v$VERSION successfully!"
 

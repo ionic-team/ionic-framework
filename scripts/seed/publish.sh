@@ -1,4 +1,8 @@
 
+echo "#####################################"
+echo "# Update ionic-angular-cordova-seed #"
+echo "#####################################"
+
 ARG_DEFS=(
 )
 

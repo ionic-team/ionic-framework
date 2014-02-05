@@ -36,10 +36,6 @@ function run {
   # Create a version.txt file with the version and codename
   echo "$VERSION $CODENAME" > version.txt
 
-  echo "-- Zipping build files..."
-  cd $IONIC_CODE_DIR
-  zip -r -q $VERSION_DIR/ionic-$VERSION_LABEL.zip $VERSION_DIR
-
   echo "-- Generating versions.json..."
   cd $IONIC_CODE_DIR/builder
   python ./generate.py > /dev/null
