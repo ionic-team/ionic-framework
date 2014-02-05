@@ -140,6 +140,8 @@ describe('Ionic View Service', function() {
     rootScope.$apply();
     registerData = viewService.register({});
     currentView = viewService.getCurrentView();
+    //Set test value for remembered scroll
+    currentView.scrollValues = 'foo';
     backView = viewService.getBackView();
     forwardView = viewService.getForwardView();
     expect(backView.stateName).toEqual('about');
@@ -157,6 +159,7 @@ describe('Ionic View Service', function() {
     currentView = viewService.getCurrentView();
     backView = viewService.getBackView();
     forwardView = viewService.getForwardView();
+    expect(forwardView.scrollValues).toEqual({});
     expect(currentView.stateName).toEqual('about');
     expect(currentView.backViewId).toEqual(backView.viewId);
     expect(currentView.forwardViewId).toEqual(forwardView.viewId);
@@ -337,7 +340,7 @@ describe('Ionic View Service', function() {
     expect(currentView.historyId).toEqual('root');
     expect(rootScope.$viewHistory.histories.root.cursor).toEqual(0);
     expect(homeReg.navAction).toEqual('initialView');
-    
+
     // each tab gets its own history in the tabs directive
     // create a new tab and its history
     var tabs1Container = { $parent: rootViewContainer };
@@ -566,7 +569,7 @@ describe('Ionic View Service', function() {
     expect(rootScope.$viewHistory.histories[tab1Scope.$historyId].stack.length).toEqual(2);
     expect(registerData.navAction).toEqual('moveBack');
     expect(registerData.navDirection).toEqual('back');
-    
+
     // render first view in tab2
     var tab2view1Scope = { $parent: tab2Scope };
     $state.go('tabs.tab2view1');
