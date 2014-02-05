@@ -31,10 +31,10 @@ function run {
   echo "TRAVIS_COMMIT=$TRAVIS_COMMIT"
 
   # Jshint & check for stupid mistakes
-  # grunt jshint ddescribe-iit merge-conflict
+  grunt jshint ddescribe-iit merge-conflict
 
   # Run simple quick tests on Phantom to be sure any tests pass
-  # grunt karma:single --browsers=PhantomJS --reporters=dots
+  grunt karma:single --browsers=PhantomJS --reporters=dots
 
   # Do sauce test with all browsers (takes longer)
   # TODO Saucelabs settings need more tweaking before it becomes stable (sometimes it fails to connect)
