@@ -8,23 +8,19 @@ ARG_DEFS=(
 function init {
   # If we are on travis, set our git credentials to make the travis commits look better
   if [[ "$TRAVIS" == "true" ]]; then
-    git config --global user.name 'Ionitron'
+    git config --global user.name 'Ionotron'
     git config --global user.email hi@ionicframework.com
+  else
+    # For testing if we aren't on travis
+    export TRAVIS_BRANCH=master
   fi
 }
 
 function run {
   cd ../..
 
-
   # for testing, use your fork as GH_ORG to push to
   export GH_ORG=driftyco
-
-  if [[ "$TRAVIS" != "true" ]]; then
-    export TRAVIS_BRANCH=master
-  fi
-
-  echo "-- Building on branch $TRAVIS_BRANCH for organization $GH_ORG"
 
   # Jshint & check for stupid mistakes
   grunt jshint ddescribe-iit merge-conflict
