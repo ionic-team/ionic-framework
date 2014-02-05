@@ -152,21 +152,45 @@ describe('Tab Item directive', function() {
     compile = $compile;
     scope = $rootScope;
 
+    scope.badgeValue = 3;
     element = compile('<tabs>' +
-      '<tab title="Item" icon="icon-default"></tab>' + 
+      '<tab title="Item" icon="icon-default" badge="badgeValue"></tab>' + 
       '</tabs>')(scope);
     scope.$digest();
     $document[0].body.appendChild(element[0]);
   }));
   
   it('Default text works', function() {
-    expect(element.find('a').first().text().trim()).toEqual('Item');
+    var title = '';
+    var a = element.find('a')[0];
+    for(i = 0, j = a.childNodes.length; i < j; i++) {
+      child = a.childNodes[i];
+
+      if (child.nodeName === "#text") {
+        title += child.nodeValue.trim();
+      }
+    }
+    expect(title).toEqual('Item');
   });
 
   it('Default icon works', function() {
     scope.$digest();
-    var i = element[0].querySelector('i');
+    var i = element[0].querySelectorAll('i')[1];
     expect(angular.element(i).hasClass('icon-default')).toEqual(true);
+  });
+
+  it('Badge works', function() {
+    scope.$digest();
+    var i = element[0].querySelectorAll('i')[0];
+    expect(angular.element(i).hasClass('badge')).toEqual(true);
+    expect(i.innerHTML).toEqual('3');
+  });
+
+  it('Badge updates', function() {
+    scope.badgeValue = 10;
+    scope.$digest();
+    var i = element[0].querySelectorAll('i')[0];
+    expect(i.innerHTML).toEqual('10');
   });
 
   it('Click sets correct tab index', function() {
@@ -177,4 +201,63 @@ describe('Tab Item directive', function() {
     a.click();
     expect(itemScope.selectTab).toHaveBeenCalled();
   });
+});
+
+describe('Tab Controller Item directive', function() {
+  var compile, element, scope, ctrl;
+  
+  beforeEach(module('ionic.ui.tabs'));
+
+  beforeEach(inject(function($compile, $rootScope, $document, $controller) {
+    compile = $compile;
+    scope = $rootScope;
+
+    scope.badgeValue = 3;
+    scope.isActive = false;
+    element = compile('<tabs class="tabs">' + 
+      '<tab-controller-item icon-title="Icon title" icon="icon-class" icon-on="icon-on-class" icon-off="icon-off-class" badge="badgeValue" active="isActive" index="0"></tab-controller-item>' + 
+    '</tabs>')(scope);
+    scope.$digest();
+    $document[0].body.appendChild(element[0]);
+  }));
+  
+  it('Icon title works', function() {
+    var title = '';
+    var a = element.find('a')[0];
+    for(var i = 0, j = a.childNodes.length; i < j; i++) {
+      child = a.childNodes[i];
+
+      if (child.nodeName === "#text") {
+        title += child.nodeValue.trim();
+      }
+    }
+    expect(title).toEqual('Icon title');
+  });
+
+  it('Icon classes works', function() {
+    var title = '';
+    var elements = element[0].querySelectorAll('.icon-class');
+    expect(elements.length).toEqual(1);
+    var elements = element[0].querySelectorAll('.icon-off-class');
+    expect(elements.length).toEqual(1);
+  });
+
+  it('Active switch works', function() {
+    var elements = element[0].querySelectorAll('.icon-on-class');
+    expect(elements.length).toEqual(0);
+
+    scope.isActive = true;
+    scope.$digest();
+
+    var elements = element[0].querySelectorAll('.icon-on-class');
+    expect(elements.length).toEqual(1);
+  });
+
+  it('Badge updates', function() {
+    scope.badgeValue = 10;
+    scope.$digest();
+    var i = element[0].querySelectorAll('i')[0];
+    expect(i.innerHTML).toEqual('10');
+  });
+
 });
