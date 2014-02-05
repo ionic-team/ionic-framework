@@ -77,5 +77,43 @@ describe('Ionic View', function() {
     expect(navBar.hasClass('invisible')).toEqual(false);
   });
 
+  it('should set the navBar type', function() {
+    var element = compile('<nav-bar type="bar-positive"></nav-bar>')(scope);
+    scope.$digest();
+    expect(element.hasClass('bar-positive')).toEqual(true);
+  });
+
+  it('should set just a back button icon, no text', function() {
+    var element = compile('<nav-bar back-button-icon="ion-back" back-button-type="button-icon"></nav-bar>')(scope);
+    scope.$digest();
+    var backButton = element.find('div').find('button');
+    expect(backButton.hasClass('button')).toEqual(true);
+    expect(backButton.hasClass('button-icon')).toEqual(true);
+    expect(backButton.hasClass('icon')).toEqual(true);
+    expect(backButton.hasClass('ion-back')).toEqual(true);
+    expect(backButton.html()).toEqual('');
+  });
+
+  it('should set just a back button with only text, button-clear', function() {
+    var element = compile('<nav-bar back-button-label="Back" back-button-type="button-clear"></nav-bar>')(scope);
+    scope.$digest();
+    var backButton = element.find('div').find('button');
+    expect(backButton.hasClass('button')).toEqual(true);
+    expect(backButton.hasClass('button-clear')).toEqual(true);
+    expect(backButton.hasClass('icon')).toEqual(false);
+    expect(backButton.html()).toEqual('Back');
+  });
+
+  it('should set a back button with an icon and text, button-clear', function() {
+    var element = compile('<nav-bar back-button-icon="ion-back" back-button-label="Back" back-button-type="button-icon"></nav-bar>')(scope);
+    scope.$digest();
+    var backButton = element.find('div').find('button');
+    expect(backButton.hasClass('button')).toEqual(true);
+    expect(backButton.hasClass('button-icon')).toEqual(true);
+    var icon = backButton.find('i');
+    expect(icon.hasClass('icon')).toEqual(true);
+    expect(backButton.html()).toEqual('<i class="icon ion-back"></i> Back');
+  });
+
 });
 

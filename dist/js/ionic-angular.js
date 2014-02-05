@@ -2718,7 +2718,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     },
     template: '<header class="bar bar-header nav-bar invisible">' + 
         '<div class="buttons"> ' +
-          '<button view-back class="button" ng-if="enableBackButton" ng-class="backButtonClass" ng-bind-html="backButtonLabel"></button>' +
+          '<button view-back class="button" ng-if="enableBackButton"></button>' +
           '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" class="button no-animation {{button.type}}" ng-bind-html="button.content"></button>' + 
         '</div>' +
         '<h1 class="title" ng-bind-html="currentTitle"></h1>' + 
@@ -2726,78 +2726,86 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" class="button no-animation {{button.type}}" ng-bind-html="button.content"></button>' + 
         '</div>' +
       '</header>',
-    link: function($scope, $element, $attr) {
 
-      // Create the back button content and show/hide it based on scope settings
-      $scope.enableBackButton = true;
-      $scope.backButtonClass = $attr.backButtonType;
-      if($attr.backButtonIcon) {
-        $scope.backButtonClass += ' icon ' + $attr.backButtonIcon;
+    compile: function(tElement, tAttrs) {
+      var backBtnEle = tElement.find('div').find('button');
+      if(tAttrs.backButtonType) backBtnEle.addClass(tAttrs.backButtonType);
+
+      if(tAttrs.backButtonIcon && tAttrs.backButtonLabel) {
+        backBtnEle.html('<i class="icon ' + tAttrs.backButtonIcon + '"></i> ' + tAttrs.backButtonLabel);
+      } else if(tAttrs.backButtonLabel) {
+        backBtnEle.html(tAttrs.backButtonLabel);
+      } else if(tAttrs.backButtonIcon) {
+        backBtnEle.addClass('icon');
+        backBtnEle.addClass(tAttrs.backButtonIcon);
       }
 
-      $rootScope.$on('viewState.showNavBar', function(e, showNavBar) {
-        if(showNavBar === false) {
-          $element[0].classList.add('invisible');
-        } else {
-          $element[0].classList.remove('invisible');
-        }
-      });
+      if(tAttrs.type) tElement.addClass(tAttrs.type);
 
-      // Initialize our header bar view which will handle resizing and aligning our title labels
-      var hb = new ionic.views.HeaderBar({
-        el: $element[0],
-        alignTitle: $scope.alignTitle || 'center'
-      });
-      $scope.headerBarView = hb;
+      return function link($scope, $element, $attr) {
+        $scope.enableBackButton = true;
 
-      // Add the type of header bar class to this element
-      $element.addClass($scope.type);
-
-      var updateHeaderData = function(data) {
-        $scope.oldTitle = $scope.currentTitle;
-
-        $scope.currentTitle = (data && data.title ? data.title : '');
-
-        $scope.leftButtons = data.leftButtons;
-        $scope.rightButtons = data.rightButtons;
-
-        if(typeof data.hideBackButton !== 'undefined') {
-          $scope.enableBackButton = data.hideBackButton !== true;
-        }
-
-        if(data.animate !== false && $attr.animation && data.title && data.navDirection) {
-
-          $element[0].classList.add($attr.animation);
-          if(data.navDirection === 'back') {
-            $element[0].classList.add('reverse');
+        $rootScope.$on('viewState.showNavBar', function(e, showNavBar) {
+          if(showNavBar === false) {
+            $element[0].classList.add('invisible');
           } else {
-            $element[0].classList.remove('reverse');
+            $element[0].classList.remove('invisible');
+          }
+        });
+
+        // Initialize our header bar view which will handle resizing and aligning our title labels
+        var hb = new ionic.views.HeaderBar({
+          el: $element[0],
+          alignTitle: $scope.alignTitle || 'center'
+        });
+        $scope.headerBarView = hb;
+
+        var updateHeaderData = function(data) {
+          $scope.oldTitle = $scope.currentTitle;
+
+          $scope.currentTitle = (data && data.title ? data.title : '');
+
+          $scope.leftButtons = data.leftButtons;
+          $scope.rightButtons = data.rightButtons;
+
+          if(typeof data.hideBackButton !== 'undefined') {
+            $scope.enableBackButton = data.hideBackButton !== true;
           }
 
-          animate($scope, $element, $scope.oldTitle, data, function() {
+          if(data.animate !== false && $attr.animation && data.title && data.navDirection) {
+
+            $element[0].classList.add($attr.animation);
+            if(data.navDirection === 'back') {
+              $element[0].classList.add('reverse');
+            } else {
+              $element[0].classList.remove('reverse');
+            }
+
+            animate($scope, $element, $scope.oldTitle, data, function() {
+              hb.align();
+            });
+          } else {
             hb.align();
-          });
-        } else {
-          hb.align();
-        }
+          }
+        };
+
+        $rootScope.$on('viewState.viewEnter', function(e, data) {
+          updateHeaderData(data);
+        });
+
+        $rootScope.$on('viewState.titleUpdated', function(e, data) {
+          $scope.currentTitle = (data && data.title ? data.title : '');
+        });
+
+        // If a nav page changes the left or right buttons, update our scope vars
+        $scope.$parent.$on('viewState.leftButtonsChanged', function(e, data) {
+          $scope.leftButtons = data;
+        });
+        $scope.$parent.$on('viewState.rightButtonsChanged', function(e, data) {
+          $scope.rightButtons = data;
+        });
+
       };
-
-      $rootScope.$on('viewState.viewEnter', function(e, data) {
-        updateHeaderData(data);
-      });
-
-      $rootScope.$on('viewState.titleUpdated', function(e, data) {
-        $scope.currentTitle = (data && data.title ? data.title : '');
-      });
-
-      // If a nav page changes the left or right buttons, update our scope vars
-      $scope.$parent.$on('viewState.leftButtonsChanged', function(e, data) {
-        $scope.leftButtons = data;
-      });
-      $scope.$parent.$on('viewState.rightButtonsChanged', function(e, data) {
-        $scope.rightButtons = data;
-      });
-
     }
   };
 }])
