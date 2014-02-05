@@ -1,7 +1,7 @@
 {
     "repo": "driftyco/ionic",
     "development": {},
-    "version": "0.9.22",
+    "version": "0.9.23",
     "styles": [
       "dist/css/ionic.css"
     ],

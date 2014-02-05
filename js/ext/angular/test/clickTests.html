@@ -19,11 +19,11 @@
       padding: 8px !important;
     }
     .list {
-      margin: 5px !important;
+      margin: 2px !important;
     }
     .button {
-      line-height: 18px !important;
-      min-height: 30px !important;
+      line-height: 16px !important;
+      min-height: 28px !important;
     }
     .dot {
       position: absolute;
@@ -76,6 +76,9 @@
 
   <button id="clear">Clear</button>
   <button id="stop">Stop</button>
+  <a href="tapInputs.html">Tap Inputs</a> -
+  <a href="/test/">CSS Tests</a> -
+  <a href="./">All Tests</a>
 
   <div id="logs"></div>
 
@@ -164,6 +167,9 @@
   });
   document.addEventListener('mouseup', function(){
     console.log('mouseup');
+  });
+  document.addEventListener('mousemove', function(event){
+    console.log('mousemove', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY);
   });
   document.addEventListener('click', function(event){
     console.log('click', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY);

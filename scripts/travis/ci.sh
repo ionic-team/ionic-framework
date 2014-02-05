@@ -15,6 +15,7 @@ function init {
     # For testing if we aren't on travis
     export TRAVIS_BRANCH=master
     export TRAVIS_BUILD_NUMBER=$RANDOM
+    export TRAVIS_PULL_REQUEST=false
     # use your github username as GH_ORG to push to, and it will push to ORG/ionic-code, etc
     export GH_ORG=ajoslin
   fi
@@ -26,7 +27,7 @@ function run {
   echo "GH_ORG=$GH_ORG"
   echo "TRAVIS_BRANCH=$TRAVIS_BRANCH"
   echo "TRAVIS_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER"
-  echo "TRAVIS_PULL_REQUEST=$TRAVIS_BUILD_NUMBER"
+  echo "TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
 
   # Jshint & check for stupid mistakes
   grunt jshint ddescribe-iit merge-conflict
@@ -38,20 +39,15 @@ function run {
   # TODO Saucelabs settings need more tweaking before it becomes stable (sometimes it fails to connect)
   # grunt karma:sauce --reporters=dots
 
-  if [[ "$TRAVIS_BRANCH" != "master" ]]; then
-    echo "-- Building on branch $TRAVIS_BRANCH (not master); will not push build out."
-    exit 0
-  fi
   if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
     echo "-- This is a pull request build; will not push build out."
     exit 0
   fi
 
-  # if the latest tag points to this commit, then treat
-  # this as a release
-  LATEST_TAG_COMMIT=$(git rev-list --tags --max-count=1)
-  HEAD_COMMIT=$(git rev-parse HEAD)
-  if [ "$LATEST_TAG_COMMIT" == "$HEAD_COMMIT" ]; then
+  # If latest commit message starts with chore(release): it's a release
+  COMMIT_MESSAGE=$(git log --format=%B | head -c 15)
+  
+  if [[ "$COMMIT_MESSAGE" == "chore(release):" ]]; then
     IS_RELEASE=true
     echo "-- Pushing out a new full release."
   else

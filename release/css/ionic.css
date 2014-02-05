@@ -3481,51 +3481,81 @@ a.subdued {
   border-top-width: 1px;
   background-size: 0;
   line-height: 49px; }
+  .tabs .tab-item .badge {
+    background-color: #444444;
+    color: #f8f8f8; }
   .tabs.tabs-light {
     background-color: white;
     background-image: linear-gradient(0deg, #dddddd, #dddddd 50%, transparent 50%);
     border-color: #dddddd;
     color: #444444; }
+    .tabs.tabs-light .tab-item .badge {
+      background-color: #444444;
+      color: white; }
   .tabs.tabs-stable {
     background-color: #f8f8f8;
     background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
     border-color: #b2b2b2;
     color: #444444; }
+    .tabs.tabs-stable .tab-item .badge {
+      background-color: #444444;
+      color: #f8f8f8; }
   .tabs.tabs-positive {
     background-color: #4a87ee;
     background-image: linear-gradient(0deg, #145dd7, #145dd7 50%, transparent 50%);
     border-color: #145dd7;
     color: white; }
+    .tabs.tabs-positive .tab-item .badge {
+      background-color: white;
+      color: #4a87ee; }
   .tabs.tabs-calm {
     background-color: #43cee6;
     background-image: linear-gradient(0deg, #1aaac3, #1aaac3 50%, transparent 50%);
     border-color: #1aaac3;
     color: white; }
+    .tabs.tabs-calm .tab-item .badge {
+      background-color: white;
+      color: #43cee6; }
   .tabs.tabs-assertive {
     background-color: #ef4e3a;
     background-image: linear-gradient(0deg, #cc2511, #cc2511 50%, transparent 50%);
     border-color: #cc2511;
     color: white; }
+    .tabs.tabs-assertive .tab-item .badge {
+      background-color: white;
+      color: #ef4e3a; }
   .tabs.tabs-balanced {
     background-color: #66cc33;
     background-image: linear-gradient(0deg, #478f24, #478f24 50%, transparent 50%);
     border-color: #478f24;
     color: white; }
+    .tabs.tabs-balanced .tab-item .badge {
+      background-color: white;
+      color: #66cc33; }
   .tabs.tabs-energized {
     background-color: #f0b840;
     background-image: linear-gradient(0deg, #d39511, #d39511 50%, transparent 50%);
     border-color: #d39511;
     color: white; }
+    .tabs.tabs-energized .tab-item .badge {
+      background-color: white;
+      color: #f0b840; }
   .tabs.tabs-royal {
     background-color: #8a6de9;
     background-image: linear-gradient(0deg, #552bdf, #552bdf 50%, transparent 50%);
     border-color: #552bdf;
     color: white; }
+    .tabs.tabs-royal .tab-item .badge {
+      background-color: white;
+      color: #8a6de9; }
   .tabs.tabs-dark {
     background-color: #444444;
     background-image: linear-gradient(0deg, #111111, #111111 50%, transparent 50%);
     border-color: #111111;
     color: white; }
+    .tabs.tabs-dark .tab-item .badge {
+      background-color: white;
+      color: #444444; }
   @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
     .tabs {
       padding-top: 2px;
@@ -3593,6 +3623,18 @@ a.subdued {
 
 .tabs-icon-only .icon {
   line-height: inherit; }
+
+.tab-item.has-badge {
+  position: relative; }
+
+.tab-item .badge {
+  position: absolute;
+  padding: 2px 6px;
+  top: 2%;
+  right: 10%;
+  font-size: 12px;
+  height: auto;
+  line-height: 16px; }
 
 /* Navigational tab */
 /* Active state for tab */

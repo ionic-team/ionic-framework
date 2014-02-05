@@ -693,7 +693,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
     }
     return null;
   };
-  View.prototype.go = function(opts) {
+  View.prototype.go = function() {
 
     if(this.stateName) {
       return $state.go(this.stateName, this.stateParams);
@@ -758,10 +758,16 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
         return rsp;
       }
 
-      if(backView && backView.stateId === currentStateId) {
+      if(viewHistory.forcedNav) {
+        // we've previously set exactly what to do
+        ionic.Utils.extend(rsp, viewHistory.forcedNav);
+        $rootScope.$viewHistory.forcedNav = null;
+
+      } else if(backView && backView.stateId === currentStateId) {
         // they went back one, set the old current view as a forward view
         rsp.viewId = backView.viewId;
         rsp.navAction = 'moveBack';
+        currentView.scrollValues = {}; //when going back, erase scrollValues
         if(backView.historyId === currentView.historyId) {
           // went back in the same history
           rsp.navDirection = 'back';
@@ -835,6 +841,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
           stateName: this.getCurrentStateName(),
           stateParams: this.getCurrentStateParams(),
           url: $location.url(),
+          scrollValues: null
         });
 
         // add the new view to this history's stack
@@ -924,6 +931,20 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
       }
       // if something goes wrong make sure its got a unique stateId
       return ionic.Utils.nextUid();
+    },
+
+    goToHistoryRoot: function(historyId) {
+      if(historyId) {
+        var hist = $rootScope.$viewHistory.histories[ historyId ];
+        if(hist && hist.stack.length) {
+          $rootScope.$viewHistory.forcedNav = {
+            viewId: hist.stack[0].viewId,
+            navAction: 'moveBack',
+            navDirection: 'back'
+          };
+          hist.stack[0].go();
+        }
+      }
     },
 
     _getView: function(viewId) {
@@ -2256,7 +2277,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
   $ionicViewService.disableRegisterByTagName('tabs');
 }])
 
-.directive('tabs', [function() {
+.directive('tabs', ['$ionicViewService', function($ionicViewService) {
   return {
     restrict: 'E',
     replace: true,
@@ -2322,6 +2343,11 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
           }
           if(emitChange) {
             $scope.$emit('viewState.changeHistory', viewData);
+          }
+        } else if(emitChange) {
+          var currentView = $ionicViewService.getCurrentView();
+          if(currentView) {
+            $ionicViewService.goToHistoryRoot(currentView.historyId);
           }
         }
       };
@@ -2407,6 +2433,11 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
         // tell any parent nav controller to animate
         $scope.animate = $scope.$eval($attr.animate);
 
+        var badge = $parse($attr.badge);
+        $scope.$watch(badge, function(value) {
+          $scope.badge = value;
+        });
+
         var leftButtonsGet = $parse($attr.leftButtons);
         $scope.$watch(leftButtonsGet, function(value) {
           $scope.leftButtons = value;
@@ -2479,7 +2510,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
     replace: true,
     scope: true,
     template: '<div class="tabs">' + 
-      '<tab-controller-item icon-title="{{c.title}}" icon="{{c.icon}}" icon-on="{{c.iconOn}}" icon-off="{{c.iconOff}}" active="c.isVisible" index="$index" ng-repeat="c in controllers"></tab-controller-item>' + 
+      '<tab-controller-item icon-title="{{c.title}}" icon="{{c.icon}}" icon-on="{{c.iconOn}}" icon-off="{{c.iconOff}}" badge="c.badge" active="c.isVisible" index="$index" ng-repeat="c in controllers"></tab-controller-item>' + 
     '</div>',
     link: function($scope, $element, $attr, tabsCtrl) {
       $element.addClass($scope.tabsType);
@@ -2498,6 +2529,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
       icon: '@',
       iconOn: '@',
       iconOff: '@',
+      badge: '=',
       active: '=',
       tabSelected: '@',
       index: '='
@@ -2512,7 +2544,8 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
       };
     },
     template: 
-      '<a ng-class="{active:active}" ng-click="selectTab()" class="tab-item">' +
+      '<a ng-class="{active:active, \'has-badge\':badge}" ng-click="selectTab()" class="tab-item">' +
+        '<i class="badge" ng-if="badge">{{badge}}</i>' +
         '<i class="icon {{icon}}" ng-if="icon"></i>' +
         '<i class="{{iconOn}}" ng-if="active"></i>' +
         '<i class="{{iconOff}}" ng-if="!active"></i> {{iconTitle}}' +
@@ -2718,7 +2751,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     },
     template: '<header class="bar bar-header nav-bar invisible">' + 
         '<div class="buttons"> ' +
-          '<button view-back class="button" ng-if="enableBackButton" ng-class="backButtonClass" ng-bind-html="backButtonLabel"></button>' +
+          '<button view-back class="button" ng-if="enableBackButton"></button>' +
           '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" class="button no-animation {{button.type}}" ng-bind-html="button.content"></button>' + 
         '</div>' +
         '<h1 class="title" ng-bind-html="currentTitle"></h1>' + 
@@ -2726,78 +2759,86 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" class="button no-animation {{button.type}}" ng-bind-html="button.content"></button>' + 
         '</div>' +
       '</header>',
-    link: function($scope, $element, $attr) {
 
-      // Create the back button content and show/hide it based on scope settings
-      $scope.enableBackButton = true;
-      $scope.backButtonClass = $attr.backButtonType;
-      if($attr.backButtonIcon) {
-        $scope.backButtonClass += ' icon ' + $attr.backButtonIcon;
+    compile: function(tElement, tAttrs) {
+      var backBtnEle = tElement.find('div').find('button');
+      if(tAttrs.backButtonType) backBtnEle.addClass(tAttrs.backButtonType);
+
+      if(tAttrs.backButtonIcon && tAttrs.backButtonLabel) {
+        backBtnEle.html('<i class="icon ' + tAttrs.backButtonIcon + '"></i> ' + tAttrs.backButtonLabel);
+      } else if(tAttrs.backButtonLabel) {
+        backBtnEle.html(tAttrs.backButtonLabel);
+      } else if(tAttrs.backButtonIcon) {
+        backBtnEle.addClass('icon');
+        backBtnEle.addClass(tAttrs.backButtonIcon);
       }
 
-      $rootScope.$on('viewState.showNavBar', function(e, showNavBar) {
-        if(showNavBar === false) {
-          $element[0].classList.add('invisible');
-        } else {
-          $element[0].classList.remove('invisible');
-        }
-      });
+      if(tAttrs.type) tElement.addClass(tAttrs.type);
 
-      // Initialize our header bar view which will handle resizing and aligning our title labels
-      var hb = new ionic.views.HeaderBar({
-        el: $element[0],
-        alignTitle: $scope.alignTitle || 'center'
-      });
-      $scope.headerBarView = hb;
+      return function link($scope, $element, $attr) {
+        $scope.enableBackButton = true;
 
-      // Add the type of header bar class to this element
-      $element.addClass($scope.type);
-
-      var updateHeaderData = function(data) {
-        $scope.oldTitle = $scope.currentTitle;
-
-        $scope.currentTitle = (data && data.title ? data.title : '');
-
-        $scope.leftButtons = data.leftButtons;
-        $scope.rightButtons = data.rightButtons;
-
-        if(typeof data.hideBackButton !== 'undefined') {
-          $scope.enableBackButton = data.hideBackButton !== true;
-        }
-
-        if(data.animate !== false && $attr.animation && data.title && data.navDirection) {
-
-          $element[0].classList.add($attr.animation);
-          if(data.navDirection === 'back') {
-            $element[0].classList.add('reverse');
+        $rootScope.$on('viewState.showNavBar', function(e, showNavBar) {
+          if(showNavBar === false) {
+            $element[0].classList.add('invisible');
           } else {
-            $element[0].classList.remove('reverse');
+            $element[0].classList.remove('invisible');
+          }
+        });
+
+        // Initialize our header bar view which will handle resizing and aligning our title labels
+        var hb = new ionic.views.HeaderBar({
+          el: $element[0],
+          alignTitle: $scope.alignTitle || 'center'
+        });
+        $scope.headerBarView = hb;
+
+        var updateHeaderData = function(data) {
+          $scope.oldTitle = $scope.currentTitle;
+
+          $scope.currentTitle = (data && data.title ? data.title : '');
+
+          $scope.leftButtons = data.leftButtons;
+          $scope.rightButtons = data.rightButtons;
+
+          if(typeof data.hideBackButton !== 'undefined') {
+            $scope.enableBackButton = data.hideBackButton !== true;
           }
 
-          animate($scope, $element, $scope.oldTitle, data, function() {
+          if(data.animate !== false && $attr.animation && data.title && data.navDirection) {
+
+            $element[0].classList.add($attr.animation);
+            if(data.navDirection === 'back') {
+              $element[0].classList.add('reverse');
+            } else {
+              $element[0].classList.remove('reverse');
+            }
+
+            animate($scope, $element, $scope.oldTitle, data, function() {
+              hb.align();
+            });
+          } else {
             hb.align();
-          });
-        } else {
-          hb.align();
-        }
+          }
+        };
+
+        $rootScope.$on('viewState.viewEnter', function(e, data) {
+          updateHeaderData(data);
+        });
+
+        $rootScope.$on('viewState.titleUpdated', function(e, data) {
+          $scope.currentTitle = (data && data.title ? data.title : '');
+        });
+
+        // If a nav page changes the left or right buttons, update our scope vars
+        $scope.$parent.$on('viewState.leftButtonsChanged', function(e, data) {
+          $scope.leftButtons = data;
+        });
+        $scope.$parent.$on('viewState.rightButtonsChanged', function(e, data) {
+          $scope.rightButtons = data;
+        });
+
       };
-
-      $rootScope.$on('viewState.viewEnter', function(e, data) {
-        updateHeaderData(data);
-      });
-
-      $rootScope.$on('viewState.titleUpdated', function(e, data) {
-        $scope.currentTitle = (data && data.title ? data.title : '');
-      });
-
-      // If a nav page changes the left or right buttons, update our scope vars
-      $scope.$parent.$on('viewState.leftButtonsChanged', function(e, data) {
-        $scope.leftButtons = data;
-      });
-      $scope.$parent.$on('viewState.rightButtonsChanged', function(e, data) {
-        $scope.rightButtons = data;
-      });
-
     }
   };
 }])
