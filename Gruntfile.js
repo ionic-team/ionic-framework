@@ -19,6 +19,12 @@ module.exports = function(grunt) {
       }
     },
 
+    version: {
+      dist: {
+        dest: 'dist/version.json'
+      }
+    },
+
     copy: {
       dist: {
         files: [{
@@ -150,7 +156,8 @@ module.exports = function(grunt) {
     'concat',
     'copy',
     'uglify',
-    'string-replace'
+    'string-replace',
+    'version'
   ]);
 
   grunt.registerMultiTask('karma', 'Run karma', function() {
@@ -169,6 +176,21 @@ module.exports = function(grunt) {
     .on('exit', function(code) {
       if (code) return grunt.fail.warn('Karma test(s) failed. Exit code: ' + code);
       done();
+    });
+  });
+
+  grunt.registerMultiTask('version', 'Generate version JSON', function() {
+    var pkg = grunt.config('pkg');
+    this.files.forEach(function(file) {
+      var dest = file.dest;
+      var d = new Date();
+      var version = {
+        version: pkg.version,
+        codename: pkg.codename,
+        date: grunt.template.today('yyyy-mm-dd'),
+        time: d.getUTCHours() + ':' + d.getUTCMinutes() + ':' + d.getUTCSeconds()
+      };
+      grunt.file.write(dest, JSON.stringify(version, null, 2));
     });
   });
 };

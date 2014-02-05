@@ -33,9 +33,6 @@ function run {
   cd $VERSION_DIR
   cp -R $BUILD_DIR/* $VERSION_DIR
 
-  # Create a version.txt file with the version and codename
-  echo "$VERSION $CODENAME" > version.txt
-
   echo "-- Generating versions.json..."
   cd $IONIC_CODE_DIR/builder
   python ./generate.py > /dev/null
