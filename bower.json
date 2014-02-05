@@ -36,7 +36,6 @@
     "component.json",
     "config",
     "examples",
-    "js",
     "package.json",
     "release/js/angular",
     "release/js/angular-ui",
