@@ -14,6 +14,7 @@ input[type="range"] {
   width: auto;
   height: $range-slider-height + 15;
   outline: none;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $range-default-track-bg), color-stop(100%, $range-default-track-bg));
   background: linear-gradient(to right, $range-default-track-bg 0%, $range-default-track-bg 100%);
   background-position: center;
   background-size: 99% $range-track-height;
@@ -102,7 +103,6 @@ input[type="range"] {
   display: block;
   margin-right: 10px;
   margin-left: 10px;
-  width: 100%;
 }
 
 .range-label {
