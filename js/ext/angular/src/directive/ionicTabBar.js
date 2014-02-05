@@ -147,7 +147,6 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
         $scope.icon = $attr.icon;
         $scope.iconOn = $attr.iconOn;
         $scope.iconOff = $attr.iconOff;
-        $scope.badge = $attr.badge;
         $scope.viewSref = $attr.uiSref;
         $scope.url = $attr.href;
         if($scope.url && $scope.url.indexOf('#') === 0) {
@@ -168,7 +167,6 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
         var badge = $parse($attr.badge);
         $scope.$watch(badge, function(value) {
           $scope.badge = value;
-          console.log('Badge updated');
         });
 
         var leftButtonsGet = $parse($attr.leftButtons);
