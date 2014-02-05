@@ -41,7 +41,13 @@
     "release/js/angular-ui",
     "scripts",
     "scss",
-    "test"
+    "test",
+    "js/controllers",
+    "js/ext",
+    "js/utils",
+    "js/views",
+    "js/_license.js",
+    "js/ionic.js"
   ],
   "dependencies": {
     "angular": "1.2.10",
