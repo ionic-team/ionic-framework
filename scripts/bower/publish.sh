@@ -53,8 +53,7 @@ function run {
   echo "-- Pushing bower-ionic"
   cd $BOWER_DIR
 
-  git push -q origin master
-  git push -q origin v$VERSION
+  git push -q --tags origin master
 
   echo "-- Published bower-ionic to v$VERSION successfully!"
 

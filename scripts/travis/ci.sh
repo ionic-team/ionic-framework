@@ -40,17 +40,14 @@ function run {
   # TODO Saucelabs settings need more tweaking before it becomes stable (sometimes it fails to connect)
   # grunt karma:sauce --reporters=dots
 
-  GIT_IS_MASTER=$(git symbolic-ref HEAD | grep master || echo false)
-  if [[ "$GIT_IS_MASTER" == "false" ]]; then
-    echo "-- We are not on branch master. Will not push build out."
+  if [[ "$TRAVIS_BRANCH" != "master" ]]; then
+    echo "-- We are not on branch master, instead we are on branch $TRAVIS_BRANCH. Will not push build out."
     exit 0
   fi
   if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
     echo "-- This is a pull request build; will not push build out."
     exit 0
   fi
-  echo 'done'
-  exit 0
 
   # If latest commit message starts with 'chore(release):' it's a release
   COMMIT_MESSAGE=$(git log --format=%B -n 1 $TRAVIS_COMMIT | head -c 15)
