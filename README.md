@@ -35,7 +35,7 @@ $ ionic start myproject
 
 - Download the latest **stable** release from:
   * The release folder of this repository
-  * The Ionic CDN: http://code.ionicframework.com
+  * The Ionic CDN: [http://code.ionicframework.com/](http://code.ionicframework.com/)
   * `bower install ionic` 
 - Download the **bleeding edge just-from-master release** from:
   * The Ionic CDN: http://code.ionicframework.com. Select nightly.
@@ -46,25 +46,9 @@ Once you have a release, use `js/ionic.js`, `js/ionic-angular.js`, and `css/ioni
 For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/` and `js/angular-ui-router/`.
 
 
-## Running examples
+## Demos
 
-You will first have to install dependencies by running:
-
-    npm install
-
-Make sure that you have [npm](https://github.com/isaacs/npm) already installed.
-
-Ionic comes with many interesting examples showing the power of the framework. To
-check them out, navigate into the source folder, and start a web server. The easiest
-way is to use Python:
-
-    python -m SimpleHTTPServer 8000
-
-    node_modules/grunt-cli/bin/grunt watch
-
-    http://localhost:8000/examples/starters/
-
-    http://localhost:8000/test/
+ - [Ionic Codepen.io Demos](http://codepen.io/ionic/public-list)
 
 
 ## Community
