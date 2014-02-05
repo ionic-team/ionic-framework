@@ -13,6 +13,10 @@
  - Add tab badges with `badge` attribute 
  - Remember the previous scroll of a page when going back to it
 
+ **Breaking Changes**
+ 
+ - `bower install ionic`: release files are now located in the `release` folder, not `dist`.
+
 
 ## 0.9.22 "Alpha Narwhal" (2014-01-30)
  - Tap polyfill overhaul to remove 300ms delay when firing a click
