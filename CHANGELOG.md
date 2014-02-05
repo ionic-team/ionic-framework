@@ -1,5 +1,5 @@
 
-## 0.9.23-alpha (pre-release)
+## 0.9.23 "Alpha Oxen" (2014-02-05)
  - Android back button correctly goes back a view or closes the app
  - CustomEvent polyfill improvements for Android
  - Fix tab icon alignments
@@ -7,6 +7,10 @@
  - Fire off ionic.Platform.ready() callbacks for both Cordova and non-cordova
  - Created ionic.Platform.exitApp();
  - Add major and minor platform version numbers in body css
+ - Removed dist folder from git
+ - Created release folder to hold the latest release
+ - Automate bulding the nightly folder in the CDN
+ - Clicking tab item takes user to root/home of the tab
 
 
 ## 0.9.22 "Alpha Narwhal" (2014-01-30)
