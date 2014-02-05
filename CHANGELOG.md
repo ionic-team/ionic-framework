@@ -1,4 +1,3 @@
-
 ## 0.9.23 "Alpha Oxen" (2014-02-05)
  - Android back button correctly goes back a view or closes the app
  - CustomEvent polyfill improvements for Android
@@ -11,6 +10,8 @@
  - Created release folder to hold the latest release
  - Automate bulding the nightly folder in the CDN
  - Clicking tab item takes user to root/home of the tab
+ - Add tab badges with `badge` attribute 
+ - Remember the previous scroll of a page when going back to it
 
 
 ## 0.9.22 "Alpha Narwhal" (2014-01-30)
