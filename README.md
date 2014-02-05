@@ -102,6 +102,10 @@ way is to use Python:
 * `grunt karma:watch` to test and re-run on source change
 * Additionally, a commit message validator is installed for this repository when running `grunt`.  Read about it [here](https://github.com/ajoslin/conventional-changelog/blob/master/CONVENTIONS.md).
 
+### Commit Conventions
+
+* Uses http://github.com/ajoslin/conventional-changelog conventions
+
 ### Pushing Releases
 
 (uses AngularJS's bash utils - when you run any script, run it with `--git-push-dryrun=true` to do 'mock' git pushes)
