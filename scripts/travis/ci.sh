@@ -10,13 +10,12 @@ function init {
   if [[ "$TRAVIS" == "true" ]]; then
     git config --global user.name 'Ionotron'
     git config --global user.email hi@ionicframework.com
-    # for testing, use your github username as GH_ORG to push to
     export GH_ORG=driftyco
   else
     # For testing if we aren't on travis
     export TRAVIS_BRANCH=master
     export TRAVIS_BUILD_NUMBER=$RANDOM
-    # for testing, use your github username as GH_ORG to push to
+    # use your github username as GH_ORG to push to, and it will push to ORG/ionic-code, etc
     export GH_ORG=ajoslin
   fi
 }
@@ -24,12 +23,16 @@ function init {
 function run {
   cd ../..
 
+  echo "GH_ORG=$GH_ORG"
+  echo "TRAVIS_BRANCH=$TRAVIS_BRANCH"
+  echo "TRAVIS_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER"
+
 
   # Jshint & check for stupid mistakes
-  grunt jshint ddescribe-iit merge-conflict
+  # grunt jshint ddescribe-iit merge-conflict
 
   # Run simple quick tests on Phantom to be sure any tests pass
-  grunt karma:single --browsers=PhantomJS --reporters=dots
+  # grunt karma:single --browsers=PhantomJS --reporters=dots
 
   # Do sauce test with all browsers (takes longer)
   # TODO Saucelabs settings need more tweaking before it becomes stable (sometimes it fails to connect)
