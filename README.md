@@ -33,8 +33,18 @@ $ ionic start myproject
 
 ### Manual Start
 
-The source files are in the `dist/` folder. You can just grab the `dist/js/ionic.js`, `dist/js/ionic-angular.js`, and `dist/ionic.css` files and
-you'll be good to go. For most cases, you'll need AngularJS as well, which we bundle a current 1.2.x version in `dist/js/angular`.
+- Download the latest **stable** release from:
+  * The release folder of this repository
+  * The Ionic CDN: http://code.ionicframework.com
+  * `bower install ionic` 
+- Download the **bleeding edge just-from-master release** from:
+  * The Ionic CDN: http://code.ionicframework.com. Select nightly.
+  * Look in the [bower-ionic Repository][3] for the latest version, and do for example `bower install driftyco/bower-ionic#0.9.23-alpha-652` (`bower install ionic` will have the latest available soon)
+  
+Once you have a release, use `js/ionic.js`, `js/ionic-angular.js`, and `css/ionic.css`.
+
+For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/` and `js/angular-ui-router/`.
+
 
 ## Running examples
 
