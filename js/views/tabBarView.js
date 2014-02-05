@@ -7,6 +7,7 @@ ionic.views.TabBarItem = ionic.views.View.inherit({
 
     this._buildItem();
   },
+
   // Factory for creating an item from a given javascript object
   create: function(itemData) {
     var item = document.createElement('a');
@@ -18,11 +19,20 @@ ionic.views.TabBarItem = ionic.views.View.inherit({
       icon.className = itemData.icon;
       item.appendChild(icon);
     }
+
+    // If there is a badge, add the badge element
+    if(itemData.badge) {
+      var badge = document.createElement('i');
+      badge.className = 'badge';
+      badge.innerHTML = itemData.badge;
+      item.appendChild(badge);
+      item.className = 'tab-item has-badge';
+    }
+
     item.appendChild(document.createTextNode(itemData.title));
 
     return new ionic.views.TabBarItem(item);
   },
-
 
   _buildItem: function() {
     var _this = this, child, children = Array.prototype.slice.call(this.el.children);
@@ -34,13 +44,23 @@ ionic.views.TabBarItem = ionic.views.View.inherit({
       // TODO: This heuristic might not be sufficient
       if(child.tagName.toLowerCase() == 'i' && /icon/.test(child.className)) {
         this.icon = child.className;
-        break;
       }
 
+      // Test if this is a "i" tag with badge in the class name
+      // TODO: This heuristic might not be sufficient
+      if(child.tagName.toLowerCase() == 'i' && /badge/.test(child.className)) {
+        this.badge = child.textContent.trim();
+      }
     }
 
-    // Set the title to the text content of the tab.
-    this.title = this.el.textContent.trim();
+    this.title = '';
+    for(i = 0, j = this.el.childNodes.length; i < j; i++) {
+      child = this.el.childNodes[i];
+
+      if (child.nodeName === "#text") {
+        this.title += child.nodeValue.trim();
+      }
+    }
 
     this._tapHandler = function(e) {
       _this.onTap && _this.onTap(e);
@@ -62,6 +82,10 @@ ionic.views.TabBarItem = ionic.views.View.inherit({
 
   getTitle: function() {
     return this.title;
+  },
+
+  getBadge: function() {
+    return this.badge;
   },
 
   setSelected: function(isSelected) {
