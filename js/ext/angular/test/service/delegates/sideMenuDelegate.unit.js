@@ -19,7 +19,8 @@ describe('Ionic SideMenuDelegate Service', function() {
     expect(sc).not.toBe(undefined);
   });
 
-  xit('Should open and close', function() {
+  /*
+  it('Should open and close', function() {
     var scope = rootScope.$new();
     var el = compile('<side-menus><div side-menu-content></div><side-menu side="left"></side-menu><side-menu side="right"></side-menu></side-menus>')(scope);
     var sc = del.getSideMenuController(scope);
@@ -45,4 +46,5 @@ describe('Ionic SideMenuDelegate Service', function() {
     expect(sc.isOpen()).toBe(false);
     expect(sc.getOpenAmount()).toBe(0);
   });
+  */
 });

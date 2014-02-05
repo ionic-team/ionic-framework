@@ -87,17 +87,19 @@ way is to use Python:
 
 * `npm install` to setup
 * `grunt` to jshint & build
+* `grunt watch` to watch and rebuild on change
 * `grunt karma:single` to test one-time
 * `grunt karma:watch` to test and re-run on source change
 * Additionally, a commit message validator is installed for this repository when running `grunt`.  Read about it [here](https://github.com/ajoslin/conventional-changelog/blob/master/CONVENTIONS.md).
 
 ### Pushing Releases
 
-(uses AngularJS's bash utils)
+(uses AngularJS's bash utils - when you run any script, run it with `--git-push-dryrun=true` to do 'mock' git pushes)
 
 * Run `./scripts/release/finalize-version.sh --action=prepare` to:
   - Remove version suffix
   - Write new version to package/bower/component.json
+  - Move build files to `release/`
   - Commit & tag the release
 * Run `./scripts/release/finalize-version.sh --action=publish` to:
   - Push out new version

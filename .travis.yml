@@ -1,11 +1,20 @@
 language: node_js
 node_js:
-  - 0.10
+- 0.10
+
+env:
+  global:
+    secure: AUBsmFvq1BBys1d/pU4+oI2BfOg55eDrdEHoZ/QvQ66utAqKHelO0ZvTIu+9x4LMkJxcnGlJ2USvSwF+hNFVjxCBVWyMkpk5vFJ0B7samiAMFTChxREbEZV6SBu3PApLMKnuSy6ZVAG6zzscnDsjLBRSAmRToltVvSPld2CR11Q=
+
+before_install:
+- gem update --system
+- gem install sass
+- npm install -g grunt-cli
 
 before_script:
-  - npm install -g grunt-cli
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+- export REMOTE=ajoslin
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
 
 script:
-  - ./scripts/travis/ci.sh
+- ./scripts/travis/ci.sh

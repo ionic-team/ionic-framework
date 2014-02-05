@@ -1,5 +1,5 @@
 module.exports = {
-  files: [
+  ionicFiles: [
     'js/_license.js',
 
     // Base
@@ -33,10 +33,26 @@ module.exports = {
     'js/controllers/tabBarController.js'
 
   ],
-  angularFiles: [
+  angularIonicFiles: [
     'js/_license.js',
     'js/ext/angular/src/ionicAngular.js',
     'js/ext/angular/src/service/**/*.js',
     'js/ext/angular/src/directive/**/*.js'
+  ],
+  //Which vendor files to include in dist, used by build
+  //Matched relative to config/lib/
+  vendorFiles: [
+    'js/angular/angular-animate.js',
+    'js/angular/angular-animate.min.js',
+    'js/angular/angular-sanitize.js',
+    'js/angular/angular-sanitize.min.js',
+    'js/angular/angular.js',
+    'js/angular/angular.min.js',
+    'js/angular-ui/angular-ui-router.js',
+    'js/angular-ui/angular-ui-router.min.js',
+    'fonts/ionicons.eot',
+    'fonts/ionicons.svg',
+    'fonts/ionicons.ttf',
+    'fonts/ionicons.woff'
   ]
 };
