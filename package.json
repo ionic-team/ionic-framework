@@ -1,8 +1,8 @@
 {
   "name": "ionic",
   "private": false,
-  "version": "0.9.23",
-  "codename": "oxen-trajectory",
+  "version": "0.9.24-alpha",
+  "codename": "peleguin",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-bump": "0.0.13",
