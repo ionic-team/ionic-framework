@@ -36,6 +36,7 @@ function run {
 
   # Angular dependencies are managed by bower, don't include them
   rm -rf $BOWER_DIR/js/angular*
+  rm -rf $BOWER_DIR/version.json # unneeded
 
   # update bower.json
   # tag each repo
