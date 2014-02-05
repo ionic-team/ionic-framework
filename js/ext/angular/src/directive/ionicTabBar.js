@@ -13,7 +13,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
   $ionicViewService.disableRegisterByTagName('tabs');
 }])
 
-.directive('tabs', [function() {
+.directive('tabs', ['$ionicViewService', function($ionicViewService) {
   return {
     restrict: 'E',
     replace: true,
@@ -79,6 +79,11 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
           }
           if(emitChange) {
             $scope.$emit('viewState.changeHistory', viewData);
+          }
+        } else if(emitChange) {
+          var currentView = $ionicViewService.getCurrentView();
+          if(currentView) {
+            $ionicViewService.goToHistoryRoot(currentView.historyId);
           }
         }
       };

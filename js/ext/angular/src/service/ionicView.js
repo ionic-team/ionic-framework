@@ -78,7 +78,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
     }
     return null;
   };
-  View.prototype.go = function(opts) {
+  View.prototype.go = function() {
 
     if(this.stateName) {
       return $state.go(this.stateName, this.stateParams);
@@ -143,7 +143,12 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
         return rsp;
       }
 
-      if(backView && backView.stateId === currentStateId) {
+      if(viewHistory.forcedNav) {
+        // we've previously set exactly what to do
+        ionic.Utils.extend(rsp, viewHistory.forcedNav);
+        $rootScope.$viewHistory.forcedNav = null;
+
+      } else if(backView && backView.stateId === currentStateId) {
         // they went back one, set the old current view as a forward view
         rsp.viewId = backView.viewId;
         rsp.navAction = 'moveBack';
@@ -309,6 +314,20 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
       }
       // if something goes wrong make sure its got a unique stateId
       return ionic.Utils.nextUid();
+    },
+
+    goToHistoryRoot: function(historyId) {
+      if(historyId) {
+        var hist = $rootScope.$viewHistory.histories[ historyId ];
+        if(hist && hist.stack.length) {
+          $rootScope.$viewHistory.forcedNav = {
+            viewId: hist.stack[0].viewId,
+            navAction: 'moveBack',
+            navDirection: 'back'
+          };
+          hist.stack[0].go();
+        }
+      }
     },
 
     _getView: function(viewId) {
