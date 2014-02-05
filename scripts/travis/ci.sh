@@ -40,12 +40,7 @@ function run {
   # TODO Saucelabs settings need more tweaking before it becomes stable (sometimes it fails to connect)
   # grunt karma:sauce --reporters=dots
 
-  # NOTE(ajoslin): this is the only way I have found to reliably detect if we are on master.
-  # `git rev-parse HEAD` changes to the name of a tag if we are pushing with a tag, as does TRAVIS_BRANCH.
-  # `git branch` gives us back line-seperated list of all the branches, with a * beside
-  # the active branch.  So we grep the * then take out the spaces/asterisks and we have
-  # branch name.
-  GIT_BRANCH=$(git branch | grep '* ' | sed 's/ //g' | sed 's/\*//g')
+  GIT_BRANCH=$(git symbolic-ref HEAD --short)
   if [[ "$GIT_BRANCH" != "master" ]]; then
     echo "-- We are not on branch master, we are on branch $GIT_BRANCH. Will not push build out."
     exit 0
