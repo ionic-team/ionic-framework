@@ -149,12 +149,14 @@
   position: relative;
 }
 
-.tab-item .icon.badge {
+.tab-item .badge {
   position: absolute;
   padding: $tabs-badge-padding;
   top: 2%;
   right: 10%;
   font-size: $tabs-badge-font-size;
+  height: auto;
+  line-height: $tabs-badge-font-size + 4;
 }
 
 /* Navigational tab */
