@@ -36,7 +36,7 @@ body, .ionic-body {
 
   margin: 0;
   padding: 0;
-  
+
   color: $base-color;
   word-wrap: break-word;
   font-size: $font-size-base;
@@ -65,6 +65,7 @@ body, .ionic-body {
 }
 
 .scroll-view {
+  height: 100%;
   overflow: hidden;
   position: relative;
   //-webkit-perspective: 1000;
@@ -213,7 +214,7 @@ infinite-scroll .scroll-infinite {
   overflow: hidden;
   margin-top: -70px;
   height: 60px;
-  position: relative; 
+  position: relative;
 }
 
 .scroll-infinite-content {
