@@ -10,26 +10,26 @@ function init {
   if [[ "$TRAVIS" == "true" ]]; then
     git config --global user.name 'Ionotron'
     git config --global user.email hi@ionicframework.com
+    # for testing, use your github username as GH_ORG to push to
+    export GH_ORG=driftyco
   else
     # For testing if we aren't on travis
     export TRAVIS_BRANCH=master
+    export TRAVIS_BUILD_NUMBER=$RANDOM
+    # for testing, use your github username as GH_ORG to push to
+    export GH_ORG=ajoslin
   fi
 }
 
 function run {
   cd ../..
 
-  # for testing, use your fork as GH_ORG to push to
-  export GH_ORG=driftyco
 
   # Jshint & check for stupid mistakes
   grunt jshint ddescribe-iit merge-conflict
 
   # Run simple quick tests on Phantom to be sure any tests pass
   grunt karma:single --browsers=PhantomJS --reporters=dots
-
-  # Build
-  grunt build
 
   # Do sauce test with all browsers (takes longer)
   # TODO Saucelabs settings need more tweaking before it becomes stable (sometimes it fails to connect)
@@ -55,6 +55,9 @@ function run {
     echo "-- Pushing out a new nightly build."
     ./scripts/travis/bump-nightly-version.sh
   fi
+
+  # Build (make sure to build after version is bumped)
+  grunt build
 
   # Version label used on the CDN: nightly or the version name
   if [[ $IS_RELEASE == "true" ]]; then

@@ -23,7 +23,7 @@ function run {
   CODENAME=$(readJsonProp "$PROJECT_DIR/package.json" "codename")
 
   echo "-- Cloning ionic-code..."
-  git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic-code.git $IONIC_CODE_DIR
+  # git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic-code.git $IONIC_CODE_DIR
 
   VERSION_DIR=$IONIC_CODE_DIR/$VERSION_LABEL
   rm -rf $VERSION_DIR
