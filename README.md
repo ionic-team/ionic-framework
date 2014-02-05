@@ -35,10 +35,10 @@ $ ionic start myproject
 
 - Download the latest **stable** release from:
   * The release folder of this repository
-  * The Ionic CDN: [http://code.ionicframework.com/](http://code.ionicframework.com/)
+  * The Ionic CDN: [Latest Release](http://code.ionicframework.com/)
   * `bower install ionic` 
 - Download the **bleeding edge just-from-master release** from:
-  * The Ionic CDN: http://code.ionicframework.com. Select nightly.
+  * The Ionic CDN: [Nightly Build](http://code.ionicframework.com/#nightly)
   * Look in the [bower-ionic Repository][3] for the latest version, and do for example `bower install driftyco/bower-ionic#0.9.23-alpha-652` (`bower install ionic` will have the latest available soon)
   
 Once you have a release, use `js/ionic.js`, `js/ionic-angular.js`, and `css/ionic.css`.
