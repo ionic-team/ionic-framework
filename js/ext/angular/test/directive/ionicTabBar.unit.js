@@ -61,22 +61,6 @@ describe('Tab Bar Controller', function() {
   });
 });
 
-describe('Tab Bar directive', function() {
-  var compile, element, scope;
-
-  beforeEach(module('ionic.ui.tabs'));
-  
-  beforeEach(inject(function($compile, $rootScope) {
-    compile = $compile;
-    scope = $rootScope;
-  }));
-
-  it('Has section wrapper class', function() {
-    element = compile('<tab-bar></tab-bar>')(scope);
-    expect(element.hasClass('tabs')).toBe(true);
-  });
-});
-
 describe('Tabs directive', function() {
   var compile, element, scope;
   
