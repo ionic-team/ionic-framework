@@ -11,7 +11,7 @@ notifications:
     rooms:
       secure: mkHfRTsuxidtOOORbJJ0Jspb/DSa8jAiQwWWUljqLwefy1p4HGC9P/rLdXXg3vsjiulCzyjEkfvDWAHXvu34GhGWfQuD8U140Fon1Os3AO5Hbme+yRmjXmTcgH8XetSLQufyBBMqXHMd6o1tkxXql1p54G1IShhgAdPNe76d5ZE=
     template:
-      - '<a href="%{build_url}">%{repository}: build#%{build_number} (%{duration%})</a> #{message} (%{branch} - %{commit} : %{author})'
+      - '<a href="%{build_url}">%{repository}: build#%{build_number}</a> #{message} (%{branch} - %{commit} : %{author})'
     format: html
 
 before_install:

@@ -37,7 +37,8 @@ module.exports = {
     'js/_license.js',
     'js/ext/angular/src/ionicAngular.js',
     'js/ext/angular/src/service/**/*.js',
-    'js/ext/angular/src/directive/**/*.js'
+    'js/ext/angular/src/directive/**/*.js',
+    'js/ext/angular/src/controller/**/*.js'
   ],
   //Which vendor files to include in dist, used by build
   //Matched relative to config/lib/

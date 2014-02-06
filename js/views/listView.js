@@ -52,7 +52,7 @@
     if(!buttons) {
       return;
     }
-      
+
     buttonsWidth = buttons.offsetWidth;
 
     this._currentDrag = {
@@ -111,7 +111,7 @@
     // The final resting point X will be the width of the exposed buttons
     var restingPoint = -this._currentDrag.buttonsWidth;
 
-    // Check if the drag didn't clear the buttons mid-point 
+    // Check if the drag didn't clear the buttons mid-point
     // and we aren't moving fast enough to swipe open
     if(e.gesture.deltaX > -(this._currentDrag.buttonsWidth/2)) {
 
@@ -145,7 +145,7 @@
         _this._currentDrag.content.style.webkitTransform = 'translate3d(' + restingPoint + 'px, 0, 0)';
       }
       _this._currentDrag.content.style.webkitTransition = '';
-      
+
 
       // Kill the current drag
       _this._currentDrag = null;
@@ -160,9 +160,16 @@
     this.dragThresholdY = opts.dragThresholdY || 0;
     this.onReorder = opts.onReorder;
     this.el = opts.el;
+    this.scrollEl = opts.scrollEl;
+    this.scrollView = opts.scrollView;
   };
 
   ReorderDrag.prototype = new DragOp();
+
+  ReorderDrag.prototype._moveElement = function(e) {
+    var y = (e.gesture.center.pageY - this._currentDrag.elementHeight/2);
+    this.el.style.webkitTransform = 'translate3d(0, '+y+'px, 0)';
+  };
 
   ReorderDrag.prototype.start = function(e) {
     var content;
@@ -172,20 +179,31 @@
     var offsetY = this.el.offsetTop;//parseFloat(this.el.style.webkitTransform.replace('translate3d(', '').split(',')[1]) || 0;
 
     var startIndex = ionic.DomUtil.getChildIndex(this.el, this.el.nodeName.toLowerCase());
-
+    var elementHeight = this.el.offsetHeight;
     var placeholder = this.el.cloneNode(true);
+
+    // If we have a scroll pane, move our draggable element outside of it
+    // We do this because when we drag our element down below the edge of the page
+    // and scroll the scroll-pane, if the element is *part* of the scroll-pane,
+    // it will scroll 'with' the scroll-pane's contents and change position.
+    var appendToElement = (this.scrollEl || this.el).parentNode;
 
     placeholder.classList.add(ITEM_PLACEHOLDER_CLASS);
 
     this.el.parentNode.insertBefore(placeholder, this.el);
-
     this.el.classList.add(ITEM_REORDERING_CLASS);
 
+    appendToElement.parentNode.appendChild(this.el);
+
     this._currentDrag = {
-      startOffsetTop: offsetY,
+      elementHeight: elementHeight,
       startIndex: startIndex,
-      placeholder: placeholder
+      placeholder: placeholder,
+      scrollHeight: scroll,
+      list: placeholder.parentNode
     };
+
+    this._moveElement(e);
   };
 
   ReorderDrag.prototype.drag = function(e) {
@@ -197,6 +215,29 @@
         return;
       }
 
+      var scrollY = 0;
+      var pageY = e.gesture.center.pageY;
+
+      //If we have a scrollView, check scroll boundaries for dragged element and scroll if necessary
+      if (_this.scrollView) {
+        var container = _this.scrollEl;
+
+        scrollY = _this.scrollView.getValues().top;
+
+        var containerTop = container.offsetTop;
+        var pixelsPastTop = containerTop - pageY + _this._currentDrag.elementHeight/2;
+        var pixelsPastBottom = pageY + _this._currentDrag.elementHeight/2 - containerTop - container.offsetHeight;
+
+        if (e.gesture.deltaY < 0 && pixelsPastTop > 0 && scrollY > 0) {
+          _this.scrollView.scrollBy(null, -pixelsPastTop);
+        }
+        if (e.gesture.deltaY > 0 && pixelsPastBottom > 0) {
+          if (scrollY < _this.scrollView.getScrollMax().top) {
+            _this.scrollView.scrollBy(null, pixelsPastBottom);
+          }
+        }
+      }
+
       // Check if we should start dragging. Check if we've dragged past the threshold,
       // or we are starting from the open state.
       if(!_this._isDragging && Math.abs(e.gesture.deltaY) > _this.dragThresholdY) {
@@ -204,11 +245,9 @@
       }
 
       if(_this._isDragging) {
-        var newY = _this._currentDrag.startOffsetTop + e.gesture.deltaY;
-        
-        _this.el.style.top = newY + 'px';
+        _this._moveElement(e);
 
-        _this._currentDrag.currentY = newY;
+        _this._currentDrag.currentY = scrollY + pageY - _this._currentDrag.placeholder.parentNode.offsetTop;
 
         _this._reorderItems();
       }
@@ -219,9 +258,6 @@
   ReorderDrag.prototype._reorderItems = function() {
     var placeholder = this._currentDrag.placeholder;
     var siblings = Array.prototype.slice.call(this._currentDrag.placeholder.parentNode.children);
-    
-    // Remove the floating element from the child search list
-    siblings.splice(siblings.indexOf(this.el), 1);
 
     var index = siblings.indexOf(this._currentDrag.placeholder);
     var topSibling = siblings[Math.max(0, index - 1)];
@@ -244,12 +280,12 @@
     }
 
     var placeholder = this._currentDrag.placeholder;
+    var finalPosition = ionic.DomUtil.getChildIndex(placeholder, placeholder.nodeName.toLowerCase());
 
     // Reposition the element
     this.el.classList.remove(ITEM_REORDERING_CLASS);
-    this.el.style.top = 0;
+    this.el.style.webkitTransform = '';
 
-    var finalPosition = ionic.DomUtil.getChildIndex(placeholder, placeholder.nodeName.toLowerCase());
     placeholder.parentNode.insertBefore(this.el, placeholder);
     placeholder.parentNode.removeChild(placeholder);
 
@@ -294,7 +330,7 @@
       window.ionic.onGesture('release', function(e) {
         _this._handleEndDrag(e);
       }, this.el);
-        
+
       window.ionic.onGesture('drag', function(e) {
         _this._handleDrag(e);
       }, this.el);
@@ -399,6 +435,8 @@
         if(item) {
           this._dragOp = new ReorderDrag({
             el: item,
+            scrollEl: this.scrollEl,
+            scrollView: this.scrollView,
             onReorder: function(el, start, end) {
               _this.onReorder && _this.onReorder(el, start, end);
             }
@@ -424,7 +462,7 @@
 
     _handleEndDrag: function(e) {
       var _this = this;
-      
+
       if(!this._dragOp) {
         //ionic.views.ListView.__super__._handleEndDrag.call(this, e);
         return;
@@ -447,7 +485,7 @@
      */
     _handleDrag: function(e) {
       var _this = this, content, buttons;
-          
+
       // If the user has a touch timeout to highlight an element, clear it if we
       // get sufficient draggage
       if(Math.abs(e.gesture.deltaX) > 10 || Math.abs(e.gesture.deltaY) > 10) {
@@ -462,7 +500,7 @@
       }
 
       // No drag still, pass it up
-      if(!this._dragOp) { 
+      if(!this._dragOp) {
         //ionic.views.ListView.__super__._handleDrag.call(this, e);
         return;
       }

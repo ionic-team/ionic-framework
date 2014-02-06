@@ -37,7 +37,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
 
     link: function($scope, $element, $attr, list) {
       if(!list) return;
-      
+
       var $parentScope = list.scope;
       var $parentAttrs = list.attrs;
 
@@ -54,7 +54,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
 
       $scope.itemClass = $scope.itemType;
 
-      // Decide if this item can do stuff, and follow a certain priority 
+      // Decide if this item can do stuff, and follow a certain priority
       // depending on where the value comes from
       if(($attr.canDelete ? $scope.canDelete : $parentScope.canDelete) !== "false") {
         if($attr.onDelete || $parentAttrs.onDelete) {
@@ -100,7 +100,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
     restrict: 'E',
     replace: true,
     transclude: true,
-
+    require: '^?$ionicScroll',
     scope: {
       itemType: '@',
       canDelete: '@',
@@ -122,10 +122,12 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       this.attrs = $attrs;
     }],
 
-    link: function($scope, $element, $attr) {
+    link: function($scope, $element, $attr, ionicScrollCtrl) {
       $scope.listView = new ionic.views.ListView({
         el: $element[0],
         listEl: $element[0].children[0],
+        scrollEl: ionicScrollCtrl && ionicScrollCtrl.element,
+        scrollView: ionicScrollCtrl && ionicScrollCtrl.scrollView,
         onReorder: function(el, oldIndex, newIndex) {
           $scope.$apply(function() {
             $scope.onReorder({el: el, start: oldIndex, end: newIndex});

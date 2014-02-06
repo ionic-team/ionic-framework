@@ -87,23 +87,14 @@ describe('Ionic Content directive', function() {
       scope.$apply();
     }
 
-    it('should not initialize scroll until $viewContentLoaded if there is a parent view', function() {
+    it('should set x and y with historyData.scrollValues passed in through $viewContentLoaded', function() {
       compileWithParent();
-      expect(scope.scrollView).toBeUndefined();
-      scope.$broadcast('$viewContentLoaded', {});
-      expect(scope.scrollView instanceof ionic.views.Scroll).toBe(true);
-    });
-
-    it('should set start x and y with historyData.scroll passed in through $viewContentLoaded', function() {
-      compileWithParent();
+      spyOn(scope.scrollView, 'scrollTo');
+      var scrollValues = { top: 40, left: -20, zoom: 3 };
       scope.$broadcast('$viewContentLoaded', { 
-        scrollValues: { top: 40, left: -20 }
+        scrollValues: scrollValues
       });
-      timeout.flush();
-      var scrollView = scope.scrollView;
-      var vals = scrollView.getValues();
-      expect(vals.top).toBe(40);
-      expect(vals.left).toBe(-20);
+      expect(scope.scrollView.scrollTo).toHaveBeenCalledWith(scrollValues);
     });
 
     it('should save scroll on the historyData passed in on $destroy', function() {
