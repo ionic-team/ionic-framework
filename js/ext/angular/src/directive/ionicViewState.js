@@ -69,7 +69,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     },
     template: '<header class="bar bar-header nav-bar invisible">' +
         '<div class="buttons"> ' +
-          '<button view-back class="button" ng-if="enableBackButton"></button>' +
+          '<button view-back class="back-button button" ng-if="enableBackButton"></button>' +
           '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" class="button no-animation {{button.type}}" bind-html-unsafe="button.content"></button>' +
         '</div>' +
         '<h1 class="title" bind-html-unsafe="currentTitle"></h1>' +
@@ -79,16 +79,18 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
       '</header>',
 
     compile: function(tElement, tAttrs) {
-      var backBtnEle = tElement.find('div').find('button');
-      if(tAttrs.backButtonType) backBtnEle.addClass(tAttrs.backButtonType);
+      var backBtnEle = tElement[0].querySelector('.back-button');
+      if(backBtnEle) {
+        if(tAttrs.backButtonType) backBtnEle.classList.add(tAttrs.backButtonType);
 
-      if(tAttrs.backButtonIcon && tAttrs.backButtonLabel) {
-        backBtnEle.html('<i class="icon ' + tAttrs.backButtonIcon + '"></i> ' + tAttrs.backButtonLabel);
-      } else if(tAttrs.backButtonLabel) {
-        backBtnEle.html(tAttrs.backButtonLabel);
-      } else if(tAttrs.backButtonIcon) {
-        backBtnEle.addClass('icon');
-        backBtnEle.addClass(tAttrs.backButtonIcon);
+        if(tAttrs.backButtonIcon && tAttrs.backButtonLabel) {
+          backBtnEle.innerHTML = '<i class="icon ' + tAttrs.backButtonIcon + '"></i> ' + tAttrs.backButtonLabel;
+        } else if(tAttrs.backButtonLabel) {
+          backBtnEle.innerHTML = tAttrs.backButtonLabel;
+        } else if(tAttrs.backButtonIcon) {
+          backBtnEle.classList.add('icon');
+          backBtnEle.classList.add(tAttrs.backButtonIcon);
+        }
       }
 
       if(tAttrs.type) tElement.addClass(tAttrs.type);
