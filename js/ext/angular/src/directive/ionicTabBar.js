@@ -287,14 +287,5 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
         '<i class="{{iconOff}}" ng-if="!active"></i> {{iconTitle}}' +
       '</a>'
   };
-}])
-
-.directive('tabBar', function() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<div class="tabs tabs-primary" ng-transclude></div>'
-  };
-});
+}]);
 
