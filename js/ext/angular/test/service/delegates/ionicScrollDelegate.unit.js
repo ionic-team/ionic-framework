@@ -27,45 +27,59 @@ describe('Ionic ScrollDelegate Service', function() {
     expect(sv).not.toBe(undefined);
   });
 
-  it('Should scroll top', function() {
-    spyOn(del, 'register');
+  it('should resize', function() {
+    var scope = rootScope.$new();
+    var el = compile('<content></content>')(scope);
 
+    var sv = del.getScrollView(scope);
+    spyOn(sv, 'resize');
+
+    del.resize();
+    timeout.flush();
+    expect(sv.resize).toHaveBeenCalled();
+  });
+
+  it('Should resize & scroll top', function() {
     var scope = rootScope.$new();
     var el = compile('<content start-y="100"></content>')(scope);
 
     var sv = del.getScrollView(scope);
+    spyOn(sv, 'resize');
 
-    var v = sv.getValues();
+    expect(sv.getValues().top).toBe(100);
 
-    expect(v.top).toBe(100);
+    del.scrollTop(false);
+    timeout.flush();
+    expect(sv.resize).toHaveBeenCalled();
 
-    del.scrollTop();
-
-    expect(v.top).toBe(100);
+    expect(sv.getValues().top).toBe(0);
   });
 
-  /*
-  it('Should scroll bottom', function() {
-    spyOn(del, 'register');
-
+  it('Should resize & scroll top', function() {
     var scope = rootScope.$new();
-    var el = compile('<content start-y="100"><div style="height:1000px; width:100px;"></div></content>')(scope);
+    var el = compile('<content start-y="100"></content>')(scope);
 
     var sv = del.getScrollView(scope);
+    spyOn(sv, 'resize');
+
+    expect(sv.getValues().top).toBe(100);
+
+    del.scrollBottom(false);
     timeout.flush();
-    sv.resize();
+    expect(sv.resize).toHaveBeenCalled();
 
-    var v = sv.getValues();
-
-
-    expect(v.top).toBe(100);
-
-
-    console.log(sv.getScrollMax());
-    del.scrollBottom();
-
-    expect(v.top).toBe(100);
+    expect(sv.getValues().top).toBe(sv.getScrollMax().top);
   });
-  */
+
+  it('should finish refreshing', function() {
+    var scope = rootScope.$new();
+    var el = compile('<content start-y="100"></content>')(scope);
+
+    var sv = del.getScrollView(scope);
+    spyOn(sv, 'finishPullToRefresh');
+
+    del.finishRefreshing(scope);
+    expect(sv.finishPullToRefresh).toHaveBeenCalled();
+ });
 });
 

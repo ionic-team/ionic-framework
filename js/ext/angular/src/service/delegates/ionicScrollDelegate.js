@@ -26,7 +26,7 @@ angular.module('ionic.ui.service.scrollDelegate', [])
 
         if(ionic.DomUtil.rectContains(e.gesture.touches[0].pageX, e.gesture.touches[0].pageY, bounds.left, bounds.top, bounds.left + bounds.width, bounds.top + 20)) {
           _this.scrollTop();
-        } 
+        }
       }, element[0]);
     },
 
@@ -47,6 +47,14 @@ angular.module('ionic.ui.service.scrollDelegate', [])
      * $scope {Scope} the scope to register and listen for events
      */
     register: function($scope, $element) {
+
+      function scrollViewResize() {
+        // Run the resize after this digest
+        return $timeout(function() {
+          $scope.$parent.scrollView && $scope.$parent.scrollView.resize();
+        });
+      }
+
       $element.bind('scroll', function(e) {
         $scope.onScroll({
           event: e,
@@ -56,10 +64,7 @@ angular.module('ionic.ui.service.scrollDelegate', [])
       });
 
       $scope.$parent.$on('scroll.resize', function(e) {
-        // Run the resize after this digest
-        $timeout(function() {
-          $scope.$parent.scrollView && $scope.$parent.scrollView.resize();
-        });
+        scrollViewResize();
       });
 
       // Called to stop refreshing on the scroll view
@@ -73,14 +78,18 @@ angular.module('ionic.ui.service.scrollDelegate', [])
        * @param animate {boolean} whether to animate or just snap
        */
       $scope.$parent.$on('scroll.scrollTop', function(e, animate) {
-        $scope.$parent.scrollView && $scope.$parent.scrollView.scrollTo(0, 0, animate === false ? false : true);
+        scrollViewResize().then(function() {
+          $scope.$parent.scrollView && $scope.$parent.scrollView.scrollTo(0, 0, animate === false ? false : true);
+        });
       });
       $scope.$parent.$on('scroll.scrollBottom', function(e, animate) {
-        var sv = $scope.$parent.scrollView;
-        var max;
-        if(!sv) { return; }
-        max = sv.getScrollMax();
-        sv.scrollTo(0, max.top, animate === false ? false : true);
+        scrollViewResize().then(function() {
+          var sv = $scope.$parent.scrollView;
+          if (sv) {
+            var max = sv.getScrollMax();
+            sv.scrollTo(0, max.top, animate === false ? false : true);
+          }
+        });
       });
     }
   };
