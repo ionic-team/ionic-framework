@@ -82,7 +82,7 @@ angular.module('ionic.ui.scroll', [])
         $scope.$parent.$on('scroll.refreshComplete', function(e) {
           scrollView && scrollView.finishPullToRefresh();
         });
-      };
+      }
     }
   };
 }]);

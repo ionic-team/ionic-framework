@@ -153,7 +153,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
             }
           });
         }
-      };
+      }
     }
   };
 }])
