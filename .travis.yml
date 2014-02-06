@@ -6,6 +6,14 @@ env:
   global:
     secure: C49JZxX08FSiXEZYpIFDs4YRdZGB0Hyygkk8zFknALLxPCREwk/MLhs64FOftgcVYjyo1CpmEZfmlKdHDnuko8mUjERrn/3iFHO2Fi0Z/zbj1pDkHlkoeIWGu3JS9y5mDAC1N0AO+pbMQp1jy+qTbHZsBsRCM4tVeEoLVdLmwOU=
 
+notifications:
+  hipchat:
+    rooms:
+      secure: mkHfRTsuxidtOOORbJJ0Jspb/DSa8jAiQwWWUljqLwefy1p4HGC9P/rLdXXg3vsjiulCzyjEkfvDWAHXvu34GhGWfQuD8U140Fon1Os3AO5Hbme+yRmjXmTcgH8XetSLQufyBBMqXHMd6o1tkxXql1p54G1IShhgAdPNe76d5ZE=
+    template:
+      - '<a href="%{build_url}">%{repository}#%{build_number} (%{duration%}</a> (%{branch} - %{commit} : %{author}): %{message}'
+    format: html
+
 before_install:
 - gem update --system
 - gem install sass
