@@ -16,10 +16,10 @@
   <script src="../../../../dist/js/ionic-angular.js"></script>
   <style>
     .item-content, .item {
-      padding: 8px !important;
+      padding: 6px !important;
     }
     .list {
-      margin: 2px !important;
+      margin: 1px !important;
     }
     .button {
       line-height: 16px !important;
@@ -49,36 +49,83 @@
   {{ buttonValue }} - 
   {{ radioModel.data }}
 
-  <div class="list">
+  <div ng-show="testBtnText == 'HTML'">
 
-    <item ng-repeat="item in menuItems" item="item" ng-click="item.actionItem()">ng-click="item.actionItem()"</item>
+    <div class="list">
 
-    <checkbox>checkbox with no ng-click</checkbox>
+      <item ng-repeat="item in menuItems" item="item" ng-click="item.actionItem()">ng-click="item.actionItem()"</item>
 
-    <toggle ng-click="{{ stringClick }}">Toggle with ng-click="{{ stringClick }]"</toggle>
+      <checkbox>checkbox with no ng-click</checkbox>
 
-    <radio ng-change="radioChange()" 
-           ng-click="radioClick(radioModel.data)" 
-           ng-model="radioModel.data" 
-           ng-value="'Radio A'">Radio A</radio>
+      <toggle ng-click="{{ stringClick }}">Toggle with ng-click="{{ stringClick }]"</toggle>
 
-    <radio ng-change="radioChange()" 
-           ng-click="radioClick(radioModel.data)" 
-           ng-model="radioModel.data" 
-           ng-value="'Radio B'">Radio B</radio>
+      <radio ng-change="radioChange()" 
+             ng-click="radioClick(radioModel.data)" 
+             ng-model="radioModel.data" 
+             ng-value="'Radio A'">Radio A</radio>
+
+      <radio ng-change="radioChange()" 
+             ng-click="radioClick(radioModel.data)" 
+             ng-model="radioModel.data" 
+             ng-value="'Radio B'">Radio B</radio>
+
+    </div>
+
+    <label class="label1">
+      <input type="radio" name="radio" id="radio1" class="radio1">
+    </label>
+    <input type="radio" name="radio" id="radio2" class="radio2">
 
   </div>
 
-  <label class="label1">
-    <input type="radio" name="radio" id="radio1" class="radio1">
-  </label>
-  <input type="radio" name="radio" id="radio2" class="radio2">
+  <div ng-show="testBtnText == 'AngJS'">
+    <div class="list">
+
+      <div class="item item-toggle">
+         HTML5
+         <label class="toggle">
+           <input type="checkbox">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </div>
+
+      <div class="item item-toggle">
+         JavaScript
+         <label class="toggle">
+           <input type="checkbox" ng-click="htmlToggleClick()">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </div>
+
+      <label class="item item-radio">
+        <input type="radio" name="group">
+        <div class="item-content">
+          Go
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+
+      <label class="item item-radio">
+        <input type="radio" name="group">
+        <div class="item-content">
+          Python
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+
+    </div>
+  </div>
 
   <button id="clear">Clear</button>
   <button id="stop">Stop</button>
-  <a href="tapInputs.html">Tap Inputs</a> -
-  <a href="/test/">CSS Tests</a> -
-  <a href="./">All Tests</a>
+  <button ng-click="otherTests()">{{ testBtnText }}</button>
+  <a href="tapInputs.html">TapInputs</a> -
+  <a href="/test/">CSSTests</a> -
+  <a href="./">All</a>
 
   <div id="logs"></div>
 
@@ -88,13 +135,29 @@
 
   .controller('MyCtrl', function($scope) {
 
+    $scope.otherTests = function() {
+      if($scope.testBtnText == 'HTML') {
+        $scope.testBtnText = 'AngJS';
+      } else {
+        $scope.testBtnText = 'HTML';
+      }
+    };
+    $scope.otherTests();
+
+    $scope.htmlToggleClick = function() {
+      console.log('htmlToggleClick', 'click');
+      $scope.buttonValue = 'html' + Math.floor(Math.random() * 999);
+    };
+
     $scope.stringClick = 'stringMethod()';
     $scope.stringMethod = function() {
-      console.log('{{ stringClick }]', 'click')
+      console.log('toggle {{ stringClick }]', 'click');
+      $scope.buttonValue = 'tg' + Math.floor(Math.random() * 999);
     };
 
     $scope.itemClick = function() {
-      console.log('itemClick()', 'click')
+      console.log('itemClick()', 'click');
+      $scope.buttonValue = 'itm' + Math.floor(Math.random() * 999);
     };
 
     $scope.menuItems = [
@@ -102,26 +165,28 @@
         label: 'Item 1',
         actionItem: function() {
           console.log('item.actionItem()', 'click')
+          $scope.buttonValue = 'itm' + Math.floor(Math.random() * 999);
         }
       }
     ];
 
     $scope.buttonClick = function() {
       console.log('button ng-click', 'click')
-      $scope.buttonValue = Math.floor(Math.random() * 9999);
+      $scope.buttonValue = 'btn' + Math.floor(Math.random() * 999);
     };
 
     $scope.divClick = function() {
       console.log('div ng-click', 'click')
-      $scope.buttonValue = Math.floor(Math.random() * 9999);
+      $scope.buttonValue = 'div' + Math.floor(Math.random() * 999);
     };
     $scope.radioModel = {}
     $scope.radioChange = function() {
-      console.log('radio ng-change', 'change', $scope.radioModel.data)
+      console.log('radio ng-change', 'change', $scope.radioModel.data);
     };
 
     $scope.radioClick = function(val) {
-      console.log('radio ng-click', 'click', val)
+      console.log('radio ng-click', 'click', val);
+      $scope.buttonValue = 'rd' + Math.floor(Math.random() * 999);
     };
 
   });
@@ -168,9 +233,9 @@
   document.addEventListener('mouseup', function(){
     console.log('mouseup');
   });
-  document.addEventListener('mousemove', function(event){
-    console.log('mousemove', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY);
-  });
+  // document.addEventListener('mousemove', function(event){
+  //   console.log('mousemove', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY);
+  // });
   document.addEventListener('click', function(event){
     console.log('click', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY);
   });
