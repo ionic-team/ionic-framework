@@ -35,7 +35,6 @@ angular.module('ionic.ui.toggle', [])
       if(attr.ngChecked) input.attr('ng-checked', 'ngChecked');
       if(attr.ngTrueValue) input.attr('ng-true-value', attr.ngTrueValue);
       if(attr.ngFalseValue) input.attr('ng-false-value', attr.ngFalseValue);
-      if(attr.ngDisabled) input.attr('ng-false-value', attr.ngFalseValue);
 
       // return function link($scope, $element, $attr, ngModel) {
       //   var el, checkbox, track, handle;

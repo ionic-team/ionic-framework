@@ -84,3 +84,7 @@
   right: $item-padding;
   z-index: $z-index-item-toggle;
 }
+
+.toggle input:disabled + .track {
+  opacity: .6;
+}
