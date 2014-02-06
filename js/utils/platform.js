@@ -108,7 +108,9 @@
     },
 
     exitApp: function() {
-      navigator.app && navigator.app.exitApp && navigator.app.exitApp();
+      this.ready(function(){
+        navigator.app && navigator.app.exitApp && navigator.app.exitApp();
+      });
     },
 
     showStatusBar: function(val) {
