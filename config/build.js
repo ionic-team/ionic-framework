@@ -45,6 +45,8 @@ module.exports = {
   vendorFiles: [
     'js/angular/angular-animate.js',
     'js/angular/angular-animate.min.js',
+    'js/angular/angular-resource.js',
+    'js/angular/angular-resource.min.js',
     'js/angular/angular-sanitize.js',
     'js/angular/angular-sanitize.min.js',
     'js/angular/angular.js',
