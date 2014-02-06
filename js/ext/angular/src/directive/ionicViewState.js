@@ -81,15 +81,14 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     compile: function(tElement, tAttrs) {
       var backBtnEle = tElement[0].querySelector('.back-button');
       if(backBtnEle) {
-        if(tAttrs.backButtonType) backBtnEle.classList.add(tAttrs.backButtonType);
+        if(tAttrs.backButtonType) backBtnEle.className += ' ' + tAttrs.backButtonType;
 
         if(tAttrs.backButtonIcon && tAttrs.backButtonLabel) {
           backBtnEle.innerHTML = '<i class="icon ' + tAttrs.backButtonIcon + '"></i> ' + tAttrs.backButtonLabel;
         } else if(tAttrs.backButtonLabel) {
           backBtnEle.innerHTML = tAttrs.backButtonLabel;
         } else if(tAttrs.backButtonIcon) {
-          backBtnEle.classList.add('icon');
-          backBtnEle.classList.add(tAttrs.backButtonIcon);
+          backBtnEle.className += ' icon ' + tAttrs.backButtonIcon;
         }
       }
 
