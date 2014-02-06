@@ -15,13 +15,14 @@ angular.module('ionic.ui.toggle', [])
       ngModel: '=?',
       ngValue: '=?',
       ngChecked: '=?',
-      ngChange: '&'
+      ngChange: '&',
+      ngDisabled: '=?'
     },
     transclude: true,
     template: '<div class="item item-toggle disable-pointer-events">' +
                 '<div ng-transclude></div>' +
                 '<label class="toggle enable-pointer-events">' +
-                  '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
+                  '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()" ng-disabled="ngDisabled">' +
                   '<div class="track disable-pointer-events">' +
                     '<div class="handle"></div>' +
                   '</div>' +
@@ -34,6 +35,7 @@ angular.module('ionic.ui.toggle', [])
       if(attr.ngChecked) input.attr('ng-checked', 'ngChecked');
       if(attr.ngTrueValue) input.attr('ng-true-value', attr.ngTrueValue);
       if(attr.ngFalseValue) input.attr('ng-false-value', attr.ngFalseValue);
+      if(attr.ngDisabled) input.attr('ng-false-value', attr.ngFalseValue);
 
       // return function link($scope, $element, $attr, ngModel) {
       //   var el, checkbox, track, handle;
@@ -43,7 +45,7 @@ angular.module('ionic.ui.toggle', [])
       //   track = el.children[1];
       //   handle = track.children[0];
 
-      //   $scope.toggle = new ionic.views.Toggle({ 
+      //   $scope.toggle = new ionic.views.Toggle({
       //     el: el,
       //     track: track,
       //     checkbox: checkbox,

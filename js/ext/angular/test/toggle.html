@@ -1,0 +1,37 @@
+<html ng-app="toggleTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Radio</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.js"></script>
+    <script src="../../../../dist/js/angular/angular.js"></script>
+    <script src="../../../../dist/js/angular/angular-animate.js"></script>
+    <script src="../../../../dist/js/angular/angular-sanitize.js"></script>
+    <script src="../../../../dist/js/angular-ui/angular-ui-router.js"></script>
+    <script src="../../../../dist/js/ionic-angular.js"></script>
+  </head>
+  <body>
+
+    <header class="bar bar-header bar-danger">
+      <h1 class="title">Toggle</h1>
+    </header>
+    <content has-header="true" class="reveal-animation">
+      <div ng-controller="TestCtrl">
+
+        <div class="list">
+          <toggle ng-model="myModel" ng-disabled="isDisabled">myModel ({{!!myModel}})</toggle>
+          <toggle ng-model="isDisabled">Disable myModel ({{!!isDisabled}})</toggle>
+        </div>
+      </div>
+    </content>
+
+    <script>
+      angular.module('toggleTest', ['ionic'])
+      .controller('TestCtrl', function($scope) {});
+    </script>
+  </body>
+</html>
+
