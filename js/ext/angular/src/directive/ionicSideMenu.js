@@ -7,7 +7,7 @@
  * left and/or right menu, which a center content area.
  */
 
-angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.view']) 
+angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.view'])
 
 /**
  * The internal controller for the side menu controller. This
@@ -60,7 +60,9 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
 
         $element.addClass('menu-content');
 
-        $scope.dragContent = $scope.$eval($attr.dragContent) === false ? false : true;
+        $scope.$watch(attr.dragContent, function(value) {
+          $scope.dragContent = value;
+        });
 
         var defaultPrevented = false;
         var isDragging = false;

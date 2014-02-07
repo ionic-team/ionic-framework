@@ -17,12 +17,13 @@
 
     <div ng-controller="MenuCtrl">
       <side-menus>
-        <pane side-menu-content>
+        <pane side-menu-content drag-content="$root.$draggy">
           <header class="bar bar-header bar-assertive">
             <button class="button button-icon" ng-click="openLeft()"><i class="icon ion-navicon"></i></button>
             <h1 class="title">Slide me</h1>
           </header>
           <content has-header="true">
+            <toggle ng-model="$root.$draggy">Hello</toggle>
             <h1>Content</h1>
           </content>
         </pane>
