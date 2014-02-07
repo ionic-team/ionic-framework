@@ -83,6 +83,13 @@ describe('Ionic View', function() {
     expect(element.hasClass('bar-positive')).toEqual(true);
   });
 
+  it('should not show the back button if no back button attributes set', function() {
+    var element = compile('<nav-bar></nav-bar>')(scope);
+    scope.$digest();
+    var backButton = element.find('div').find('button');
+    expect(backButton.length).toEqual(0);
+  });
+
   it('should set just a back button icon, no text', function() {
     var element = compile('<nav-bar back-button-icon="ion-back" back-button-type="button-icon"></nav-bar>')(scope);
     scope.$digest();
