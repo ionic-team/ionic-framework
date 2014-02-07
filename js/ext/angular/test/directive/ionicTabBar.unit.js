@@ -137,8 +137,9 @@ describe('Tab Item directive', function() {
     scope = $rootScope;
 
     scope.badgeValue = 3;
+    scope.badgeStyle = 'badge-assertive';
     element = compile('<tabs>' +
-      '<tab title="Item" icon="icon-default" badge="badgeValue"></tab>' +
+      '<tab title="Item" icon="icon-default" badge="badgeValue" badge-style="{{badgeStyle}}"></tab>' +
       '</tabs>')(scope);
     scope.$digest();
     $document[0].body.appendChild(element[0]);
@@ -158,9 +159,9 @@ describe('Tab Item directive', function() {
 
   it('Badge works', function() {
     scope.$digest();
-    var i = element[0].querySelectorAll('i')[0];
-    expect(angular.element(i).hasClass('badge')).toEqual(true);
+    var i = element[0].querySelector('.badge');
     expect(i.innerHTML).toEqual('3');
+    expect(i.className).toMatch('badge-assertive');
   });
 
   it('Badge updates', function() {
@@ -192,7 +193,7 @@ describe('Tab Controller Item directive', function() {
     scope.badgeValue = 3;
     scope.isActive = false;
     element = compile('<tabs class="tabs">' +
-      '<tab-controller-item icon-title="Icon <b>title</b>" icon="icon-class" icon-on="icon-on-class" icon-off="icon-off-class" badge="badgeValue" active="isActive" index="0"></tab-controller-item>' +
+      '<tab-controller-item icon-title="Icon <b>title</b>" icon="icon-class" icon-on="icon-on-class" icon-off="icon-off-class" badge="badgeValue" badge-style="badgeStyle" active="isActive" index="0"></tab-controller-item>' +
     '</tabs>')(scope);
     scope.$digest();
     $document[0].body.appendChild(element[0]);
@@ -223,9 +224,13 @@ describe('Tab Controller Item directive', function() {
 
   it('Badge updates', function() {
     scope.badgeValue = 10;
+    scope.badgeStyle = 'badge-assertive';
     scope.$digest();
-    var i = element[0].querySelectorAll('i')[0];
+    var i = element[0].querySelector('.badge');
     expect(i.innerHTML).toEqual('10');
+    expect(i.className).toMatch('badge-assertive');
+    scope.$apply('badgeStyle = "badge-super"');
+    expect(i.className).toMatch('badge-super');
   });
 
 });

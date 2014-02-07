@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <style>
-      .fade-out > .ng-enter, 
-      .fade-out > .ng-leave, 
+      .fade-out > .ng-enter,
+      .fade-out > .ng-leave,
       .fade-out > .ng-move {
         -webkit-transition: 0.2s linear all;
         transition: 0.4s ease-out all;
@@ -53,7 +53,7 @@
   </head>
   <body ng-controller="RootCtrl">
     <tabs
-          animation="fade-in-out" 
+          animation="fade-in-out"
           tabs-type="tabs-icon-only"
           tabs-style="tabs-top tabs-positive"
           controller-changed="onControllerChanged(oldController, oldIndex, newController, newIndex)">
@@ -68,18 +68,18 @@
 
           <refresher></refresher>
 
-          <list scroll="false" 
-               on-reorder="onReorder(el, start, end)" 
+          <list scroll="false"
+               on-reorder="onReorder(el, start, end)"
                can-delete="true"
                can-reorder="true"
                can-swipe="true"
                on-delete="deleteItem(item)"
-               show-delete="isDeletingItems" 
-               animation="fade-out" 
-               delete-icon="ion-minus-circled" 
+               show-delete="isDeletingItems"
+               animation="fade-out"
+               delete-icon="ion-minus-circled"
                reorder-icon="ion-navicon">
 
-            <item ng-repeat="item in items" 
+            <item ng-repeat="item in items"
                   item="item">
               {{item.title}}
             </list-item>
@@ -88,7 +88,7 @@
         </content>
       </tab>
 
-      <tab title="Deadlines" icon-on="icon ion-ios7-clock" icon-off="icon ion-ios7-clock-outline" badge="unreadDeadlines">
+      <tab title="Deadlines" icon-on="icon ion-ios7-clock" icon-off="icon ion-ios7-clock-outline" badge-style="badge-light" badge="unreadDeadlines">
         <header class="bar bar-header bar-positive">
           <h1 class="title">Deadlines</h1>
         </header>
@@ -114,7 +114,7 @@
           <h1>Settings</h1>
         </content>
       </tab>
-      
+
     </tabs>
 
     <script id="newTask.html" type="text/ng-template">

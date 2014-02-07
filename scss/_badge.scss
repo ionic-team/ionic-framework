@@ -20,7 +20,11 @@
   &:empty {
     display: none;
   }
+}
 
+//Be sure to override specificity of rule that 'badge color matches tab color by default'
+.tabs .tab-item .badge,
+.badge {
   &.badge-light {
     @include badge-style($badge-light-bg, $badge-light-text);
   }
