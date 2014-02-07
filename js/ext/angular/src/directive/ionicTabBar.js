@@ -1,4 +1,4 @@
-angular.module('ionic.ui.tabs', ['ionic.service.view'])
+angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
 
 /**
  * @description
@@ -93,7 +93,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
       $scope.tabsController = this;
 
     }],
-    
+
     template: '<div class="view"><tab-controller-bar></tab-controller-bar></div>',
 
     compile: function(element, attr, transclude, tabsCtrl) {
@@ -245,8 +245,8 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
     transclude: true,
     replace: true,
     scope: true,
-    template: '<div class="tabs">' + 
-      '<tab-controller-item icon-title="{{c.title}}" icon="{{c.icon}}" icon-on="{{c.iconOn}}" icon-off="{{c.iconOff}}" badge="c.badge" active="c.isVisible" index="$index" ng-repeat="c in controllers"></tab-controller-item>' + 
+    template: '<div class="tabs">' +
+      '<tab-controller-item icon-title="{{c.title}}" icon="{{c.icon}}" icon-on="{{c.iconOn}}" icon-off="{{c.iconOff}}" badge="c.badge" active="c.isVisible" index="$index" ng-repeat="c in controllers"></tab-controller-item>' +
     '</div>',
     link: function($scope, $element, $attr, tabsCtrl) {
       $element.addClass($scope.tabsType);
@@ -274,17 +274,18 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
       if(attrs.icon) {
         scope.iconOn = scope.iconOff = attrs.icon;
       }
-      
+
       scope.selectTab = function() {
         tabsCtrl.select(scope.index, true);
       };
     },
-    template: 
+    template:
       '<a ng-class="{active:active, \'has-badge\':badge}" ng-click="selectTab()" class="tab-item">' +
         '<i class="badge" ng-if="badge">{{badge}}</i>' +
         '<i class="icon {{icon}}" ng-if="icon"></i>' +
         '<i class="{{iconOn}}" ng-if="active"></i>' +
-        '<i class="{{iconOff}}" ng-if="!active"></i> {{iconTitle}}' +
+        '<i class="{{iconOff}}" ng-if="!active"></i>' +
+        '<span bind-html-unsafe="iconTitle"></span>' +
       '</a>'
   };
 }]);

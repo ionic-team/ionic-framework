@@ -2,7 +2,7 @@ describe('Tab Bar Controller', function() {
   var compile, element, scope, ctrl;
 
   beforeEach(module('ionic.ui.tabs'));
-  
+
   beforeEach(inject(function($compile, $rootScope, $controller) {
     compile = $compile;
     scope = $rootScope;
@@ -63,20 +63,20 @@ describe('Tab Bar Controller', function() {
 
 describe('Tabs directive', function() {
   var compile, element, scope;
-  
+
   beforeEach(module('ionic.ui.tabs'));
 
   beforeEach(inject(function($compile, $rootScope) {
     compile = $compile;
     scope = $rootScope;
   }));
-  
+
   it('Has tab class', function() {
     element = compile('<tabs></tabs>')(scope);
     scope.$digest();
     expect(element.find('.tabs').hasClass('tabs')).toBe(true);
   });
-  
+
   it('Has tab children', function() {
     element = compile('<tabs></tabs>')(scope);
     scope = element.scope();
@@ -90,18 +90,18 @@ describe('Tabs directive', function() {
   });
 
   it('Has compiled children', function() {
-    element = compile('<tabs>' + 
-      '<tab active="true" title="Item" icon="icon-default"></tab>' + 
-      '<tab active="true" title="Item" icon="icon-default"></tab>' + 
+    element = compile('<tabs>' +
+      '<tab active="true" title="Item" icon="icon-default"></tab>' +
+      '<tab active="true" title="Item" icon="icon-default"></tab>' +
     '</tabs>')(scope);
     scope.$digest();
     expect(element.find('a').length).toBe(2);
   });
 
   it('Sets style on child tabs', function() {
-    element = compile('<tabs tabs-type="tabs-positive" tabs-style="tabs-icon-bottom">' + 
-      '<tab active="true" title="Item" icon="icon-default"></tab>' + 
-      '<tab active="true" title="Item" icon="icon-default"></tab>' + 
+    element = compile('<tabs tabs-type="tabs-positive" tabs-style="tabs-icon-bottom">' +
+      '<tab active="true" title="Item" icon="icon-default"></tab>' +
+      '<tab active="true" title="Item" icon="icon-default"></tab>' +
     '</tabs>')(scope);
     scope.$digest();
     var tabs = element[0].querySelector('.tabs');
@@ -110,9 +110,9 @@ describe('Tabs directive', function() {
   });
 
   it('Has nav-view', function() {
-    element = compile('<tabs>' + 
-      '<tab active="true" title="Item 1" href="#/page1"><nav-view name="name1"></nav-view></tab>' + 
-      '<tab active="true" title="Item 2" href="/page2">content2</tab>' + 
+    element = compile('<tabs>' +
+      '<tab active="true" title="Item 1" href="#/page1"><nav-view name="name1"></nav-view></tab>' +
+      '<tab active="true" title="Item 2" href="/page2">content2</tab>' +
     '</tabs>')(scope);
     scope = element.scope();
     scope.$digest();
@@ -129,7 +129,7 @@ describe('Tabs directive', function() {
 
 describe('Tab Item directive', function() {
   var compile, element, scope, ctrl;
-  
+
   beforeEach(module('ionic.ui.tabs'));
 
   beforeEach(inject(function($compile, $rootScope, $document, $controller) {
@@ -138,23 +138,16 @@ describe('Tab Item directive', function() {
 
     scope.badgeValue = 3;
     element = compile('<tabs>' +
-      '<tab title="Item" icon="icon-default" badge="badgeValue"></tab>' + 
+      '<tab title="Item" icon="icon-default" badge="badgeValue"></tab>' +
       '</tabs>')(scope);
     scope.$digest();
     $document[0].body.appendChild(element[0]);
   }));
-  
-  it('Default text works', function() {
-    var title = '';
-    var a = element.find('a')[0];
-    for(i = 0, j = a.childNodes.length; i < j; i++) {
-      child = a.childNodes[i];
 
-      if (child.nodeName === "#text") {
-        title += child.nodeValue.trim();
-      }
-    }
-    expect(title).toEqual('Item');
+  it('Title works', function() {
+    //The badge's text gets in the way of just doing .text() on the element itself, so exclude it
+    var notBadge = angular.element(element[0].querySelectorAll('a >:not(.badge)'));
+    expect(notBadge.text().trim()).toEqual('Item');
   });
 
   it('Default icon works', function() {
@@ -189,7 +182,7 @@ describe('Tab Item directive', function() {
 
 describe('Tab Controller Item directive', function() {
   var compile, element, scope, ctrl;
-  
+
   beforeEach(module('ionic.ui.tabs'));
 
   beforeEach(inject(function($compile, $rootScope, $document, $controller) {
@@ -198,24 +191,15 @@ describe('Tab Controller Item directive', function() {
 
     scope.badgeValue = 3;
     scope.isActive = false;
-    element = compile('<tabs class="tabs">' + 
-      '<tab-controller-item icon-title="Icon title" icon="icon-class" icon-on="icon-on-class" icon-off="icon-off-class" badge="badgeValue" active="isActive" index="0"></tab-controller-item>' + 
+    element = compile('<tabs class="tabs">' +
+      '<tab-controller-item icon-title="Icon <b>title</b>" icon="icon-class" icon-on="icon-on-class" icon-off="icon-off-class" badge="badgeValue" active="isActive" index="0"></tab-controller-item>' +
     '</tabs>')(scope);
     scope.$digest();
     $document[0].body.appendChild(element[0]);
   }));
-  
-  it('Icon title works', function() {
-    var title = '';
-    var a = element.find('a')[0];
-    for(var i = 0, j = a.childNodes.length; i < j; i++) {
-      child = a.childNodes[i];
 
-      if (child.nodeName === "#text") {
-        title += child.nodeValue.trim();
-      }
-    }
-    expect(title).toEqual('Icon title');
+  it('Icon title works as html', function() {
+    expect(element.find('a').find('span').html()).toEqual('Icon <b>title</b>');
   });
 
   it('Icon classes works', function() {
