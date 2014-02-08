@@ -97,8 +97,11 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
 
         $scope.$on('$viewContentLoaded', function(e, viewHistoryData) {
           viewHistoryData || (viewHistoryData = {});
-          if (viewHistoryData.scrollValues) {
-            scrollView.scrollTo(viewHistoryData.scrollValues);
+          var scroll = viewHistoryData.scrollValues;
+          if (scroll) {
+            $timeout(function() {
+              scrollView.scrollTo(+scroll.left || null, +scroll.top || null);
+            }, 0);
           }
 
           //Save scroll onto viewHistoryData when scope is destroyed

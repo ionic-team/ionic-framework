@@ -1,6 +1,6 @@
 describe('Ionic Content directive', function() {
   var compile, element, scope;
-  
+
   beforeEach(module('ionic.ui.content'));
 
   beforeEach(inject(function($compile, $rootScope, $timeout, $window) {
@@ -10,7 +10,7 @@ describe('Ionic Content directive', function() {
     window = $window;
     ionic.Platform.setPlatform('Android');
   }));
-  
+
   it('Has content class', function() {
     element = compile('<content></content>')(scope);
     expect(element.hasClass('scroll-content')).toBe(true);
@@ -91,10 +91,20 @@ describe('Ionic Content directive', function() {
       compileWithParent();
       spyOn(scope.scrollView, 'scrollTo');
       var scrollValues = { top: 40, left: -20, zoom: 3 };
-      scope.$broadcast('$viewContentLoaded', { 
+      scope.$broadcast('$viewContentLoaded', {
         scrollValues: scrollValues
       });
-      expect(scope.scrollView.scrollTo).toHaveBeenCalledWith(scrollValues);
+      timeout.flush();
+      expect(scope.scrollView.scrollTo.mostRecentCall.args).toEqual([-20, 40]);
+    });
+
+    it('should set null with historyData.scrollValues not valid', function() {
+      compileWithParent();
+      spyOn(scope.scrollView, 'scrollTo');
+      var scrollValues = { left: 'bar', top: 'foo' };
+      scope.$broadcast('$viewContentLoaded', { scrollValues: scrollValues });
+      timeout.flush();
+      expect(scope.scrollView.scrollTo.mostRecentCall.args).toEqual([null, null]);
     });
 
     it('should save scroll on the historyData passed in on $destroy', function() {
