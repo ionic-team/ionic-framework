@@ -1,24 +1,24 @@
 
 angular.element.prototype.addClass = function(cssClasses) {
-  var x, el, existingClasses;
+  var x, y, cssClass, el, splitClasses, existingClasses;
   if (cssClasses) {
     for(x=0; x<this.length; x++) {
       el = this[x];
       if(el.setAttribute) {
 
         if(cssClasses.indexOf(' ') < 0) {
-          el.classList.add(cssClasses)
+          el.classList.add(cssClasses);
         } else {
           existingClasses = (' ' + (el.getAttribute('class') || '') + ' ')
-                                  .replace(/[\n\t]/g, " ");
+            .replace(/[\n\t]/g, " ");
+          splitClasses = cssClasses.split(' ');
 
-          angular.forEach(cssClasses.split(' '), function(cssClass) {
-            cssClass = cssClass.trim();
+          for (y=0; y<splitClasses.length; y++) {
+            cssClass = splitClasses[y].trim();
             if (existingClasses.indexOf(' ' + cssClass + ' ') === -1) {
               existingClasses += cssClass + ' ';
             }
-          });
-
+          }
           el.setAttribute('class', existingClasses.trim());
         }
       }
@@ -28,7 +28,7 @@ angular.element.prototype.addClass = function(cssClasses) {
 };
 
 angular.element.prototype.removeClass = function(cssClasses) {
-  var x, el;
+  var x, y, splitClasses, cssClass, el;
   if (cssClasses) {
     for(x=0; x<this.length; x++) {
       el = this[x];
@@ -36,13 +36,16 @@ angular.element.prototype.removeClass = function(cssClasses) {
         if(cssClasses.indexOf(' ') < 0) {
           el.classList.remove(cssClasses);
         } else {
-          angular.forEach(cssClasses.split(' '), function(cssClass) {
+          splitClasses = cssClasses.split(' ');
+
+          for (y=0; y<splitClasses.length; y++) {
+            cssClass = splitClasses[y];
             el.setAttribute('class', (
                 (" " + (el.getAttribute('class') || '') + " ")
                 .replace(/[\n\t]/g, " ")
                 .replace(" " + cssClass.trim() + " ", " ")).trim()
             );
-          });
+          }
         }
       }
     }
