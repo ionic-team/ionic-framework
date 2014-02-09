@@ -41,6 +41,18 @@ module.exports = function(grunt) {
     'ddescribe-iit': ['js/**/*.js'],
     'merge-conflict': ['js/**/*.js'],
 
+    'removelogging': {
+      dist: {
+        files: {
+          'dist/js/ionic.js': 'dist/js/ionic.js',
+          'dist/js/ionic-angular.js': 'dist/js/ionic-angular.js'
+        },
+        options: {
+          methods: 'log assert count clear group groupEnd groupCollapsed trace debug dir dirxml profile profileEnd time timeEnd timeStamp table exception'.split(' ')
+        }
+      }
+    },
+
     jshint: {
       files: ['Gruntfile.js', 'js/**/*.js', 'test/**/*.js'],
       options: {
@@ -157,7 +169,8 @@ module.exports = function(grunt) {
     'copy',
     'uglify',
     'string-replace',
-    'version'
+    'version',
+    'removelogging'
   ]);
 
   grunt.registerMultiTask('karma', 'Run karma', function() {
