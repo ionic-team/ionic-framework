@@ -132,18 +132,18 @@
 /* Adjust the max-width value to fit your own needs */
 /* Defaults to 767px (iPad portrait width)*/
 
- @media (max-width: 650px) {
-    .responsive .col {
-        width: 100%;
-        margin-bottom:15px;
+ @media (max-width: 767px) {
+.responsive .col {
+  width: 100%;
+  margin-bottom:15px;
     }
-    .responsive {
-        -webkit-box-direction: normal;
-        -moz-box-direction: normal;
-        -webkit-box-orient: vertical;
-        -moz-box-orient: vertical;
-        -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-        flex-direction: column;
+.responsive {
+  -webkit-box-direction: normal;
+  -moz-box-direction: normal;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
     }
 }
