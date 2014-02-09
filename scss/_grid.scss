@@ -132,7 +132,7 @@
 /* Adjust the max-width value to fit your own needs */
 /* Defaults to 767px (iPad portrait width)*/
 
- @media (max-width: 767px) {
+ @media (max-width: $grid-responsive-break) {
 .responsive .col {
   width: 100%;
   margin-bottom:15px;
