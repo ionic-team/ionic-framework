@@ -3,7 +3,7 @@
 
 angular.module('ionic.ui.service.scrollDelegate', [])
 
-.factory('$ionicScrollDelegate', ['$rootScope', '$timeout', '$q', function($rootScope, $timeout, $q) {
+.factory('$ionicScrollDelegate', ['$rootScope', '$timeout', '$q', '$anchorScroll', '$location', '$document', function($rootScope, $timeout, $q, $anchorScroll, $location, $document) {
   return {
     /**
      * Trigger a scroll-to-top event on child scrollers.
@@ -16,6 +16,9 @@ angular.module('ionic.ui.service.scrollDelegate', [])
     },
     resize: function() {
       $rootScope.$broadcast('scroll.resize');
+    },
+    anchorScroll: function() {
+      $rootScope.$broadcast('scroll.anchorScroll');
     },
     tapScrollToTop: function(element) {
       var _this = this;
@@ -47,29 +50,46 @@ angular.module('ionic.ui.service.scrollDelegate', [])
      * $scope {Scope} the scope to register and listen for events
      */
     register: function($scope, $element) {
+      //Get scroll controller from parent
+      var scrollCtrl = $element.controller('$ionicScroll');
+      if (!scrollCtrl) {
+        return;
+      }
+      var scrollView = scrollCtrl.scrollView;
+      var scrollEl = scrollCtrl.element;
 
       function scrollViewResize() {
         // Run the resize after this digest
         return $timeout(function() {
-          $scope.$parent.scrollView && $scope.$parent.scrollView.resize();
+          scrollView.resize();
         });
       }
 
       $element.bind('scroll', function(e) {
-        $scope.onScroll({
+        $scope.onScroll && $scope.onScroll({
           event: e,
           scrollTop: e.detail ? e.detail.scrollTop : e.originalEvent ? e.originalEvent.detail.scrollTop : 0,
           scrollLeft: e.detail ? e.detail.scrollLeft: e.originalEvent ? e.originalEvent.detail.scrollLeft : 0
         });
       });
 
-      $scope.$parent.$on('scroll.resize', function(e) {
-        scrollViewResize();
-      });
+      $scope.$parent.$on('scroll.resize', scrollViewResize);
 
       // Called to stop refreshing on the scroll view
       $scope.$parent.$on('scroll.refreshComplete', function(e) {
-        $scope.$parent.scrollView && $scope.$parent.scrollView.finishPullToRefresh();
+        scrollView.finishPullToRefresh();
+      });
+
+      $scope.$parent.$on('scroll.anchorScroll', function() {
+        var hash = $location.hash();
+        var elm;
+        //If there are multiple with this id, go to first one
+        if (hash && (elm = $document.body.querySelectorAll('#' + hash)[0])) {
+          var scroll = ionic.DomUtil.getPositionInParent(elm, scrollEl);
+          scrollView.scrollTo(scroll.left, scroll.top);
+        } else {
+          scrollView.scrollTo(0,0);
+        }
       });
 
       /**
@@ -79,12 +99,12 @@ angular.module('ionic.ui.service.scrollDelegate', [])
        */
       $scope.$parent.$on('scroll.scrollTop', function(e, animate) {
         scrollViewResize().then(function() {
-          $scope.$parent.scrollView && $scope.$parent.scrollView.scrollTo(0, 0, animate === false ? false : true);
+          scrollView.scrollTo(0, 0, animate === false ? false : true);
         });
       });
       $scope.$parent.$on('scroll.scrollBottom', function(e, animate) {
         scrollViewResize().then(function() {
-          var sv = $scope.$parent.scrollView;
+          var sv = scrollView;
           if (sv) {
             var max = sv.getScrollMax();
             sv.scrollTo(0, max.top, animate === false ? false : true);
