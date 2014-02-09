@@ -121,3 +121,26 @@
   @include flex(0, 0, 90%);
   max-width: 90%;
 }
+
+
+/* Responsive Grid Attribute */
+/* Adding a class of responsive to a row */
+/* will trigger the flex-direction to */
+/* change to column and add some margin */
+/* to any columns in the row for clearity */
+
+@media (max-width: 650px) {
+    .responsive .col {
+        width: 100%;
+        margin-bottom:15px;
+    }
+    .responsive {
+        -webkit-box-direction: normal;
+        -moz-box-direction: normal;
+        -webkit-box-orient: vertical;
+        -moz-box-orient: vertical;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
+}
