@@ -129,7 +129,10 @@
 /* change to column and add some margin */
 /* to any columns in the row for clearity */
 
-@media (max-width: 650px) {
+/* Adjust the max-width value to fit your own needs */
+/* Defaults to 767px (iPad portrait width)*/
+
+ @media (max-width: 650px) {
     .responsive .col {
         width: 100%;
         margin-bottom:15px;
