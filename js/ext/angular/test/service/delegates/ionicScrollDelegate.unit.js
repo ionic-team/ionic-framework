@@ -98,8 +98,7 @@ describe('anchorScroll', function() {
     contentEl = $compile('<content></content>')(scope);
 
     mockBody = angular.element('<div>').append(contentEl);
-    $document.body = mockBody[0];
-    del = $ionicScrollDelegate
+    del = $ionicScrollDelegate;
   }));
 
   it('should anchorScroll to an element with id', function() {
