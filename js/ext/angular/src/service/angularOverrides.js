@@ -26,3 +26,26 @@ angular.element.prototype.addClass = function(cssClasses) {
   }
   return this;
 };
+
+angular.element.prototype.removeClass = function(cssClasses) {
+  var x, el;
+  if (cssClasses) {
+    for(x=0; x<this.length; x++) {
+      el = this[x];
+      if(el.getAttribute) {
+        if(cssClasses.indexOf(' ') < 0) {
+          el.classList.remove(cssClasses);
+        } else {
+          angular.forEach(cssClasses.split(' '), function(cssClass) {
+            el.setAttribute('class', (
+                (" " + (el.getAttribute('class') || '') + " ")
+                .replace(/[\n\t]/g, " ")
+                .replace(" " + cssClass.trim() + " ", " ")).trim()
+            );
+          });
+        }
+      }
+    }
+  }
+  return this;
+};
