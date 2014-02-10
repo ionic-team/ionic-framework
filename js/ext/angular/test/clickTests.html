@@ -112,6 +112,13 @@
         <i class="radio-icon ion-checkmark"></i>
       </label>
 
+      <div class="item item-checkbox" style="padding-left: 58px !important">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="htmlCheckboxData.checkedValue">
+        </label>
+        Checkbox {{ htmlCheckboxData.checkedValue }}</a>
+      </div>
+
     </div>
   </div>
 
@@ -130,6 +137,8 @@
 
   .controller('MyCtrl', function($scope) {
 
+    $scope.htmlCheckboxData = {};
+
     $scope.otherTests = function() {
       if($scope.testBtnText == 'HTML') {
         $scope.testBtnText = 'AngJS';
@@ -140,18 +149,18 @@
     $scope.otherTests();
 
     $scope.htmlToggleClick = function() {
-      console.log('htmlToggleClick', 'click');
+      console.debug('htmlToggleClick', 'click');
       $scope.buttonValue = 'html' + Math.floor(Math.random() * 999);
     };
 
     $scope.stringClick = 'stringMethod()';
     $scope.stringMethod = function() {
-      console.log('toggle {{ stringClick }]', 'click');
+      console.debug('toggle {{ stringClick }]', 'click');
       $scope.buttonValue = 'tg' + Math.floor(Math.random() * 999);
     };
 
     $scope.itemClick = function() {
-      console.log('itemClick()', 'click');
+      console.debug('itemClick()', 'click');
       $scope.buttonValue = 'itm' + Math.floor(Math.random() * 999);
     };
 
@@ -159,28 +168,28 @@
       {
         label: 'Item 1',
         actionItem: function() {
-          console.log('item.actionItem()', 'click')
+          console.debug('item.actionItem()', 'click')
           $scope.buttonValue = 'itm' + Math.floor(Math.random() * 999);
         }
       }
     ];
 
     $scope.buttonClick = function() {
-      console.log('button ng-click', 'click')
+      console.debug('button ng-click', 'click')
       $scope.buttonValue = 'btn' + Math.floor(Math.random() * 999);
     };
 
     $scope.divClick = function() {
-      console.log('div ng-click', 'click')
+      console.debug('div ng-click', 'click')
       $scope.buttonValue = 'div' + Math.floor(Math.random() * 999);
     };
     $scope.radioModel = {}
     $scope.radioChange = function() {
-      console.log('radio ng-change', 'change', $scope.radioModel.data);
+      console.debug('radio ng-change', 'change', $scope.radioModel.data);
     };
 
     $scope.radioClick = function(val) {
-      console.log('radio ng-click', 'click', val);
+      console.debug('radio ng-click', 'click', val);
       $scope.buttonValue = 'rd' + Math.floor(Math.random() * 999);
     };
 
@@ -192,23 +201,23 @@
   }
 
   document.getElementById('radio1').addEventListener('change', function(){
-    console.log('radio 1', 'change');
+    console.debug('radio 1', 'change');
   });
   document.getElementById('radio1').addEventListener('click', function(){
-    console.log('radio 1', 'click');
+    console.debug('radio 1', 'click');
   });
   document.getElementById('radio2').addEventListener('change', function(){
-    console.log('radio 2', 'change');
+    console.debug('radio 2', 'change');
   });
   document.getElementById('radio2').addEventListener('click', function(){
-    console.log('radio 2', 'click');
+    console.debug('radio 2', 'click');
   });
 
   document.addEventListener('touchstart', function(e){
-    console.log('touchstart');
+    console.debug('touchstart');
   });
   document.addEventListener('touchend', function(e){
-    console.log('touchend');
+    console.debug('touchend');
     if(!e.changedTouches || !e.changedTouches.length) return;
 
     var dot = document.createElement('div');
@@ -223,16 +232,16 @@
     }, 3000);
   });
   document.addEventListener('mousedown', function(){
-    console.log('mousedown');
+    console.debug('mousedown');
   });
   document.addEventListener('mouseup', function(){
-    console.log('mouseup');
+    console.debug('mouseup');
   });
   // document.addEventListener('mousemove', function(event){
-  //   console.log('mousemove', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY);
+  //   console.debug('mousemove', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY);
   // });
   document.addEventListener('click', function(event){
-    console.log('click', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY);
+    console.debug('click', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY);
   });
   document.getElementById('clear').addEventListener('click', function(){
     setTimeout(clearMsgs, 200);
@@ -258,10 +267,10 @@
     for (var i = 0, j = arguments.length; i < j; i++){
       args.push(arguments[i]);
     }
-    console.log.apply(this, args);
+    console.debug.apply(this, args);
   };
 
-  console.log = function() {
+  console.debug = function() {
     //return;
     if(stopped) return;
 

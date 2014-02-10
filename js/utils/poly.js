@@ -33,6 +33,8 @@
     // simulate a normal click by running the element's click method then focus on it
     if(ele.disabled) return;
 
+    console.debug('tapElement', ele.tagName, ele.className);
+
     var c = getCoordinates(e);
 
     // using initMouseEvent instead of MouseEvent for our Android friends
@@ -50,7 +52,10 @@
     }
 
     // remember the coordinates of this tap so if it happens again we can ignore it
-    recordCoordinates(e);
+    // but only if the coordinates are not already being actively disabled
+    if( !isRecentTap(e) ) {
+      recordCoordinates(e);
+    }
 
     // set the last tap time so if a click event quickly happens it knows to ignore it
     ele.lastTap = Date.now();
@@ -65,12 +70,14 @@
 
     if( isRecentTap(e) ) {
       // if a tap in the same area just happened, don't continue
+      console.debug('tapPolyfill', 'isRecentTap', ele.tagName);
       return;
     }
 
-    if(e.target.lastClick && e.target.lastClick + CLICK_PREVENT_DURATION > Date.now()) {
+    if(ele.lastClick && ele.lastClick + CLICK_PREVENT_DURATION > Date.now()) {
       // if a click recently happend on this element, don't continue
       // (yes on some devices it's possible for a click to happen before a touchend)
+      console.debug('tapPolyfill', 'recent lastClick', ele.tagName);
       return;
     }
 
@@ -111,6 +118,7 @@
       if(e.target.control.labelLastTap && e.target.control.labelLastTap + CLICK_PREVENT_DURATION > Date.now()) {
         // Android will fire a click for the label, and a click for the input which it is associated to
         // this stops the second ghost click from the label from continuing
+        console.debug('preventGhostClick', 'labelLastTap');
         e.stopPropagation();
         e.preventDefault();
         return false;
@@ -122,12 +130,14 @@
       // The input's click event will propagate so don't bother letting this label's click 
       // propagate cuz it causes double clicks. However, do NOT e.preventDefault(), because 
       // the label still needs to click the input
+      console.debug('preventGhostClick', 'label stopPropagation');
       e.stopPropagation();
       return;
     }
 
     if( isRecentTap(e) ) {
       // a tap has already happened at these coordinates recently, ignore this event
+      console.debug('preventGhostClick', 'isRecentTap', e.target.tagName);
       e.stopPropagation();
       e.preventDefault();
       return false;
@@ -135,6 +145,7 @@
 
     if(e.target.lastTap && e.target.lastTap + CLICK_PREVENT_DURATION > Date.now()) {
       // this element has already had the tap poly fill run on it recently, ignore this event
+      console.debug('preventGhostClick', 'e.target.lastTap', e.target.tagName);
       e.stopPropagation();
       e.preventDefault();
       return false;
@@ -201,7 +212,7 @@
   }
 
   var tapCoordinates = {}; // used to remember coordinates to ignore if they happen again quickly
-  var CLICK_PREVENT_DURATION = 350; // amount of milliseconds to check for ghostclicks
+  var CLICK_PREVENT_DURATION = 450; // amount of milliseconds to check for ghostclicks
 
   // set global click handler and check if the event should stop or not
   document.addEventListener('click', preventGhostClick, true);
