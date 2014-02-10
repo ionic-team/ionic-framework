@@ -83,11 +83,39 @@ describe('Ionic View', function() {
     expect(element.hasClass('bar-positive')).toEqual(true);
   });
 
-  it('should not show the back button if no back button attributes set', function() {
+  it('should not have the back button if no back button attributes set', function() {
     var element = compile('<nav-bar></nav-bar>')(scope);
     scope.$digest();
     var backButton = element.find('div').find('button');
     expect(backButton.length).toEqual(0);
+  });
+
+  it('should have the back button if back-button-type attributes set', function() {
+    var element = compile('<nav-bar back-button-type="button-icon"></nav-bar>')(scope);
+    scope.$digest();
+    var backButton = element.find('div').find('button');
+    expect(backButton.length).toEqual(1);
+  });
+
+  it('should have the back button if back-button-icon attributes set', function() {
+    var element = compile('<nav-bar back-button-icon="ion-back"></nav-bar>')(scope);
+    scope.$digest();
+    var backButton = element.find('div').find('button');
+    expect(backButton.length).toEqual(1);
+  });
+
+  it('should have the back button if back-button-label attributes set', function() {
+    var element = compile('<nav-bar back-button-label="Button"></nav-bar>')(scope);
+    scope.$digest();
+    var backButton = element.find('div').find('button');
+    expect(backButton.length).toEqual(1);
+  });
+
+  it('should have the back button if all back button attributes set', function() {
+    var element = compile('<nav-bar back-button-type="button-icon" back-button-icon="ion-back" back-button-label="Button"></nav-bar>')(scope);
+    scope.$digest();
+    var backButton = element.find('div').find('button');
+    expect(backButton.length).toEqual(1);
   });
 
   it('should set just a back button icon, no text', function() {
@@ -111,7 +139,7 @@ describe('Ionic View', function() {
     expect(backButton.html()).toEqual('Back');
   });
 
-  it('should set a back button with an icon and text, button-clear', function() {
+  it('should set a back button with an icon and text, button-icon', function() {
     var element = compile('<nav-bar back-button-icon="ion-back" back-button-label="Back" back-button-type="button-icon"></nav-bar>')(scope);
     scope.$digest();
     var backButton = element.find('div').find('button');
