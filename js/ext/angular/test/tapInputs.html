@@ -8,12 +8,7 @@
 
   <link rel="stylesheet" href="../../../../dist/css/ionic.css">
 
-  <script src="../../../../dist/js/ionic.js"></script>
-  <script src="../../../../dist/js/angular/angular.js"></script>
-  <script src="../../../../dist/js/angular/angular-animate.js"></script>
-  <script src="../../../../dist/js/angular/angular-sanitize.js"></script>
-  <script src="../../../../dist/js/angular-ui/angular-ui-router.js"></script>
-  <script src="../../../../dist/js/ionic-angular.js"></script>
+  <script src="../../../../dist/js/ionic.bundle.js"></script>
 </head>
 
 <body>
@@ -78,15 +73,15 @@
             Radio
           </div>
           <radio
-            ng-repeat="radioItem in radioItems" 
+            ng-repeat="radioItem in radioItems"
             ng-value="radioItem.value"
-            ng-model="selectedValues.radio" 
+            ng-model="selectedValues.radio"
             ng-change="radioChanged()">
               {{ radioItem.text }}
           </radio>
           <div class="item">
-            Selected Radio Value: {{ selectedValues.radio }}, 
-            Changed: {{ radioChangeCount }}, 
+            Selected Radio Value: {{ selectedValues.radio }},
+            Changed: {{ radioChangeCount }},
             Watch Count: {{ radioWatchCount }}
           </div>
 
@@ -119,7 +114,7 @@
   .controller('MyCtrl', function($scope) {
     $scope.value1 = true;
     $scope.value2 = 'NO';
-    
+
     $scope.checkboxChange = function() {
       $scope.value4ChangeValue = 'Random number: ' + Math.floor(Math.random() * 1000);
     };
@@ -128,7 +123,7 @@
       $scope.toggle4ChangeValue = 'Random number: ' + Math.floor(Math.random() * 1000);
     };
 
-    $scope.radioItems = [ 
+    $scope.radioItems = [
       { text: 'Green Back Packers', value: 'packers' },
       { text: 'Minnesota Vikings', value: 'vikings' },
       { text: 'Chicago Bears', value: 'bears' },
@@ -139,7 +134,7 @@
     $scope.radioChanged = function() {
       $scope.radioChangeCount++;
     };
-    
+
     $scope.radioWatchCount = 0;
     $scope.$watch('selectedValues.radio', function(val) {
       $scope.radioWatchCount++;

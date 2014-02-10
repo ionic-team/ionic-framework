@@ -8,12 +8,7 @@
 
   <link rel="stylesheet" href="../../../../dist/css/ionic.css">
 
-  <script src="../../../../dist/js/ionic.js"></script>
-  <script src="../../../../dist/js/angular/angular.min.js"></script>
-  <script src="../../../../dist/js/angular/angular-animate.min.js"></script>
-  <script src="../../../../dist/js/angular/angular-sanitize.min.js"></script>
-  <script src="../../../../dist/js/angular-ui/angular-ui-router.min.js"></script>
-  <script src="../../../../dist/js/ionic-angular.js"></script>
+  <script src="../../../../dist/js/ionic.bundle.js"></script>
   <style>
     .item-content, .item {
       padding: 6px !important;
@@ -46,7 +41,7 @@
  <form id="form">
   <button class="button" ng-click="buttonClick()">button</button>
   <div class="div button" ng-click="divClick()">div</div>
-  {{ buttonValue }} - 
+  {{ buttonValue }} -
   {{ radioModel.data }}
 
   <div ng-show="testBtnText == 'HTML'">
@@ -59,14 +54,14 @@
 
       <toggle ng-click="{{ stringClick }}">Toggle with ng-click="{{ stringClick }]"</toggle>
 
-      <radio ng-change="radioChange()" 
-             ng-click="radioClick(radioModel.data)" 
-             ng-model="radioModel.data" 
+      <radio ng-change="radioChange()"
+             ng-click="radioClick(radioModel.data)"
+             ng-model="radioModel.data"
              ng-value="'Radio A'">Radio A</radio>
 
-      <radio ng-change="radioChange()" 
-             ng-click="radioClick(radioModel.data)" 
-             ng-model="radioModel.data" 
+      <radio ng-change="radioChange()"
+             ng-click="radioClick(radioModel.data)"
+             ng-model="radioModel.data"
              ng-value="'Radio B'">Radio B</radio>
 
     </div>
@@ -161,7 +156,7 @@
     };
 
     $scope.menuItems = [
-      { 
+      {
         label: 'Item 1',
         actionItem: function() {
           console.log('item.actionItem()', 'click')
@@ -245,7 +240,7 @@
   document.getElementById('stop').addEventListener('click', function(){
     if(stopped) {
       this.innerText = 'Stop';
-      window.stopped = false;  
+      window.stopped = false;
     } else {
       this.innerText = 'Start';
       window.stopped = true;
@@ -304,7 +299,7 @@
     timeId = setTimeout(function(){
       document.getElementById('logs').innerHTML = msgs.join('<br>');
     }, 150);
-    
+
   }
 
   var timeId;

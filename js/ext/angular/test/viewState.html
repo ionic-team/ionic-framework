@@ -2,24 +2,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    
+
     <title>navViews and tabs w/ nested navViews</title>
 
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
-    <script src="../../../../dist/js/ionic.js"></script>
-    <script src="../../../../dist/js/angular/angular.js"></script>
-    <script src="../../../../dist/js/angular/angular-animate.js"></script>
-    <script src="../../../../dist/js/angular/angular-sanitize.js"></script>
-    <script src="../../../../dist/js/angular-ui/angular-ui-router.js"></script>
-    <script src="../../../../dist/js/ionic-angular.js"></script>
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
     <script src="dom-trace.js"></script>
   </head>
   <body>
 
     <div ng-controller="AppCtrl">
-      <nav-bar animation="nav-title-slide-ios7" 
-               type="bar-positive" 
-               back-button-type="button-icon" 
+      <nav-bar animation="nav-title-slide-ios7"
+               type="bar-positive"
+               back-button-type="button-icon"
                back-button-label=" Back"
                back-button-icon="ion-arrow-left-c"></nav-bar>
       <nav-view animation="slide-left-right"></nav-view>
@@ -43,7 +38,7 @@
               Sign-In
             </button>
             <p class="text-center">
-              <a href="#/sign-in">Sign-In</a> - 
+              <a href="#/sign-in">Sign-In</a> -
               <a href="#/forgot-password">Forgot password</a> -
               <a ui-sref="contact">Contact</a>
             </p>
@@ -69,7 +64,7 @@
             <button ng-click="clearViewHistory()">Clear View History</button>
           </p>
           <p class="text-center">
-            <a href="#/sign-in">Sign-In</a> - 
+            <a href="#/sign-in">Sign-In</a> -
             <a href="#/forgot-password">Forgot password</a> -
             <a href="#/contact">Contact</a>
           </p>
@@ -89,7 +84,7 @@
           <p>The hideBackButton attribute is "true" for this view.</p>
           <p>@drifty</p>
           <p class="text-center">
-            <a href="#/sign-in">Sign-In</a> - 
+            <a href="#/sign-in">Sign-In</a> -
             <a href="#/forgot-password">Forgot password</a> -
             <a href="#/contact">Contact</a>
           </p>
@@ -201,7 +196,7 @@
     <script id="add-auto.html" type="text/ng-template">
       <view title="'Add Auto'">
         <content has-header="true" has-tabs="true">
-          
+
           <div class="list">
             <label class="item item-input">
               <input type="text" placeholder="Make">
@@ -246,7 +241,7 @@
 
 
       .config(function($stateProvider, $urlRouterProvider) {
-      
+
         $stateProvider
           .state('signin', {
             url: "/sign-in",
@@ -313,13 +308,13 @@
           $state.go('tabs.autolist');
         };
 
-        $scope.leftButtons = [{ 
+        $scope.leftButtons = [{
           type: 'button-icon icon ion-home',
           content: 'Home',
           tap: function(e) { }
         }];
 
-        $scope.rightButtons = [{ 
+        $scope.rightButtons = [{
           type: 'button-icon icon ion-navicon',
           tap: function(e) { }
         }];
