@@ -1,11 +1,13 @@
-<html>
+<html ng-app="ionicApp">
   <head>
     <meta charset="utf-8">
     <title>Cards</title>
-
-    <!-- Sets initial viewport load and disables zooming  -->
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <link href="../dist/css/ionic.css" rel="stylesheet">
+    <script src="../dist/js/ionic.bundle.js"></script>
+    <script>
+      angular.module('ionicApp', ['ionic'])
+    </script>
   </head>
   <body>
 
@@ -13,7 +15,7 @@
       <h1 class="title">Cards</h1>
     </header>
 
-    <main class="content has-header overflow-scroll ionic-pseudo" style="position:fixed">
+    <content has-header="true" class="ionic-pseudo">
       
       <div class="card">
         <div class="item item-text-wrap">
@@ -136,9 +138,9 @@
 
       </div>
 
-      <p><a class="button button-secondary" href="../">Homepage</a></p>
+      <p><a class="button button-secondary" href="../">All CSS Tests</a></p>
 
-    </main>
+    </content>
 
   </body>
 </html>
