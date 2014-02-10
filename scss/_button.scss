@@ -29,6 +29,10 @@
 
   cursor: pointer;
 
+  .icon {
+    vertical-align: top;
+  }
+
   .icon:before,
   &.icon:before,
   &.icon-left:before,
