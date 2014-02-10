@@ -16,6 +16,7 @@ function init {
     export TRAVIS_BUILD_NUMBER=$RANDOM
     export TRAVIS_PULL_REQUEST=false
     export TRAVIS_COMMIT=$(git rev-parse HEAD)
+    export TRAVIS_BRANCH=master
     # use your github username as GH_ORG to push to, and it will push to ORG/ionic-code, etc
     export GH_ORG=somethingnew2-0
   fi
@@ -81,6 +82,7 @@ function run {
 
   if [[ $IS_RELEASE == "true" ]]; then
     ./scripts/seed/publish.sh
+    ./scripts/site/publish.sh --version-label="$VERSION_LABEL"
   fi
 
   echo "--- Build Complete! ----"
