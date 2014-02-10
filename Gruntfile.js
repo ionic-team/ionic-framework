@@ -10,8 +10,12 @@ module.exports = function(grunt) {
         separator: ';\n'
       },
       dist: {
-        src: buildConfig.ionicFiles.concat(buildConfig.angularIonicFiles),
+        src: buildConfig.ionicFiles,
         dest: 'dist/js/ionic.js'
+      },
+      distangular: {
+        src: buildConfig.angularIonicFiles,
+        dest: 'dist/js/ionic-angular.js'
       },
       bundle: {
         options: {
@@ -21,14 +25,16 @@ module.exports = function(grunt) {
             ' * angular.js,\n'+
             ' * angular-animate.js,\n'+
             ' * angular-ui-router.js,\n'+
-            ' * ionic.js\n'+
+            ' * ionic.js,\n'+
+            ' * ionic-angular.js\n'+
             ' */\n\n'
         },
         src: [
           'config/lib/js/angular/angular.js',
           'config/lib/js/angular/angular-animate.js',
           'config/lib/js/angular-ui/angular-ui-router.js',
-          'dist/js/ionic.js'
+          'dist/js/ionic.js',
+          'dist/js/ionic-angular.js'
         ],
         dest: 'dist/js/ionic.bundle.js'
       },
@@ -37,10 +43,11 @@ module.exports = function(grunt) {
           banner: '<%= concat.bundle.options.banner %>'
         },
         src: [
-          'config/lib/js/angular/angular.js',
+          'config/lib/js/angular/angular.min.js',
           'config/lib/js/angular/angular-animate.min.js',
           'config/lib/js/angular-ui/angular-ui-router.min.js',
-          'dist/js/ionic.min.js'
+          'dist/js/ionic.min.js',
+          'dist/js/ionic-angular.min.js'
         ],
         dest: 'dist/js/ionic.bundle.min.js'
       }
@@ -71,7 +78,8 @@ module.exports = function(grunt) {
     'removelogging': {
       dist: {
         files: {
-          'dist/js/ionic.js': 'dist/js/ionic.js'
+          'dist/js/ionic.js': 'dist/js/ionic.js',
+          'dist/js/ionic-angular.js': 'dist/js/ionic-angular.js'
         },
         options: {
           methods: 'log assert count clear group groupEnd groupCollapsed trace debug dir dirxml profile profileEnd time timeEnd timeStamp table exception'.split(' ')
@@ -108,7 +116,8 @@ module.exports = function(grunt) {
     uglify: {
       dist: {
         files: {
-          'dist/js/ionic.min.js': 'dist/js/ionic.js'
+          'dist/js/ionic.min.js': 'dist/js/ionic.js',
+          'dist/js/ionic-angular.min.js': 'dist/js/ionic-angular.js'
         }
       },
       options: {
@@ -136,6 +145,7 @@ module.exports = function(grunt) {
       version: {
         files: {
           'dist/js/ionic.js': 'dist/js/ionic.js',
+          'dist/js/ionic-angular.js': 'dist/js/ionic-angular.js',
           'dist/css/ionic.css': 'dist/css/ionic.css',
         },
         options: {
@@ -187,6 +197,7 @@ module.exports = function(grunt) {
     'sass',
     'cssmin',
     'concat:dist',
+    'concat:distangular',
     'copy',
     'string-replace',
     'uglify',
