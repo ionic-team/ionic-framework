@@ -17,7 +17,7 @@ function init {
     export TRAVIS_PULL_REQUEST=false
     export TRAVIS_COMMIT=$(git rev-parse HEAD)
     # use your github username as GH_ORG to push to, and it will push to ORG/ionic-code, etc
-    export GH_ORG=ajoslin
+    export GH_ORG=somethingnew2-0
   fi
 }
 
