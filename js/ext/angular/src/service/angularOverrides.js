@@ -1,7 +1,7 @@
 
 angular.element.prototype.addClass = function(cssClasses) {
   var x, y, cssClass, el, splitClasses, existingClasses;
-  if (cssClasses) {
+  if (cssClasses && cssClasses != 'ng-scope' && cssClasses != 'ng-isolate-scope') {
     for(x=0; x<this.length; x++) {
       el = this[x];
       if(el.setAttribute) {

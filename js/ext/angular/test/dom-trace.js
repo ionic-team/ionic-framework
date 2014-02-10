@@ -6,8 +6,6 @@
       attributeMutation(m);
     } else if(m.type == 'childList') {
       childListMutation(m);
-    } else if(m.type == 'characterData') {
-      characterDataMutation(m);
     } else if(m.type == 'subtree') {
       attributeMutation(m);
     } else {
@@ -110,11 +108,6 @@
     }
   }
 
-  function characterDataMutation(m) {
-    // target's data are to be observed
-    
-  }
-
   function createElementId(el) {
     var id;
     if(!el) {
@@ -194,10 +187,10 @@
       observer.observe(el, {
         attributes: true, 
         childList: false, 
-        characterData: true,
         subtree: true,
         attributeOldValue: true,
-        characterDataOldValue: true,
+        //characterData: true,
+        //characterDataOldValue: true,
         attributeFilter: true
       });
     }
@@ -206,21 +199,7 @@
 
   var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
 
-  var logColors = {
-    attributesClass: 'purple', 
-    attributesStyle: 'magenta', 
-    childListAdd: 'orange', 
-    childListRemove: 'orangered', 
-    characterData: 'blue',
-    subtree: 'green',
-    attributeOldValue: 'maroon',
-    characterDataOldValue: 'brown',
-    attributeFilter: 'darkblue'
-  };
-
   var ignoreClassNames = [
-    'ng-isolate-scope', 
-    'ng-scope',
     'ng-binding',
     'ng-bind-html'
   ];
