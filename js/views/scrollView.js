@@ -596,6 +596,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
     if ('ontouchstart' in window) {
       
       container.addEventListener("touchstart", function(e) {
+        if (e.__scroller) {
+          return;
+        }
         // Don't react if initial down happens on a form element
         if (e.target.tagName.match(/input|textarea|select/i)) {
           return;
@@ -603,6 +606,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
         
         self.doTouchStart(e.touches, e.timeStamp);
         e.preventDefault();
+        //We don't want to stop propagation, other things might want to know about the touchstart
+        e.__scroller = true;
       }, false);
 
       document.addEventListener("touchmove", function(e) {
@@ -621,6 +626,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
       var mousedown = false;
 
       container.addEventListener("mousedown", function(e) {
+        if (e.__scroller) {
+          return;
+        }
         // Don't react if initial down happens on a form element
         if (e.target.tagName.match(/input|textarea|select/i)) {
           return;
@@ -631,6 +639,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
           pageY: e.pageY
         }], e.timeStamp);
 
+        //We don't want to stop propagation, other things might want to know about the touchstart
+        e.__scroller = true;
         mousedown = true;
       }, false);
 
