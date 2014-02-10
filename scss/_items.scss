@@ -308,15 +308,23 @@ a.item-content {
   position: absolute;
   top: $item-padding / 2;
   left: $item-padding / 2;
-  min-width: initial;
-  min-height: $item-icon-font-size;
-  font-size: $item-icon-font-size;
+  min-width: $item-icon-font-size + ($button-border-width * 2);
+  min-height: $item-icon-font-size + ($button-border-width * 2);
+  font-size: $item-button-font-size;
+  line-height: $item-button-line-height;
 
   .icon:before {
     position: relative;
     left: auto;
     width: auto;
     line-height: $item-icon-font-size - 1;
+  }
+
+  > .button {
+    margin: 0px 2px;
+    min-height: $item-icon-font-size + ($button-border-width * 2);
+    font-size: $item-button-font-size;
+    line-height: $item-button-line-height;
   }
 }
 
@@ -335,9 +343,10 @@ button.item.item-button-right {
   position: absolute;
   top: $item-padding / 2;
   right: $item-padding;
-  min-width: initial;
-  min-height: $item-icon-font-size;
-  font-size: $item-icon-font-size;
+  min-width: $item-icon-font-size + ($button-border-width * 2);
+  min-height: $item-icon-font-size + ($button-border-width * 2);
+  font-size: $item-button-font-size;
+  line-height: $item-button-line-height;
 
   .icon:before {
     position: relative;
@@ -348,8 +357,10 @@ button.item.item-button-right {
 
   > .button {
     margin: 0px 2px;
-    min-height: $item-icon-font-size;
-    font-size: $item-icon-font-size;
+    min-width: $item-icon-font-size + ($button-border-width * 2);
+    min-height: $item-icon-font-size + ($button-border-width * 2);
+    font-size: $item-button-font-size;
+    line-height: $item-button-line-height;
   }
 }
 
