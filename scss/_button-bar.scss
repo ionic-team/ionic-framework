@@ -39,6 +39,11 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 
+  &:before,
+  .icon:before {
+    line-height: 44px;
+  }
+
   &:first-child {
     border-radius: 2px 0px 0px 2px;
   }
