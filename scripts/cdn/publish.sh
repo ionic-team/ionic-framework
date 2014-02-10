@@ -33,13 +33,6 @@ function run {
   cd $VERSION_DIR
   cp -R $BUILD_DIR/* $VERSION_DIR
 
-  cd $VERSION_DIR/js
-  cat angular/angular.js \
-    angular/angular-animate.js \
-    angular-ui/angular-ui-router.js \
-    ionic.js \
-    ionic-angular.js > ionic.cdnbundle.js
-
   echo "-- Generating versions.json..."
   cd $IONIC_CODE_DIR/builder
   python ./generate.py > /dev/null
