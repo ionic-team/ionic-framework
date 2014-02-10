@@ -170,7 +170,6 @@ module.exports = function(grunt) {
     'uglify',
     'string-replace',
     'version',
-    'removelogging'
   ]);
 
   grunt.registerMultiTask('karma', 'Run karma', function() {

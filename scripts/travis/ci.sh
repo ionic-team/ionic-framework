@@ -66,6 +66,7 @@ function run {
 
   # Build (make sure to build after version is bumped)
   grunt build
+  grunt removelogging
 
   # Version label used on the CDN: nightly or the version name
   if [[ $IS_RELEASE == "true" ]]; then

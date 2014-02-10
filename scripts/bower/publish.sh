@@ -14,7 +14,7 @@ function init {
   BUILD_DIR=$SCRIPT_DIR/../../dist
   PROJECT_DIR=$SCRIPT_DIR/../..
 
-  BOWER_DIR=$TMP_DIR/bower-ionic
+  BOWER_DIR=$TMP_DIR/ionic-bower
 }
 
 function run {
@@ -25,14 +25,15 @@ function run {
   rm -rf $BOWER_DIR
   mkdir -p $BOWER_DIR
 
-  echo "-- Cloning bower-ionic..."
-  git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/bower-ionic.git $BOWER_DIR
+  echo "-- Cloning ionic-bower..."
+  git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic-bower.git $BOWER_DIR
 
   # move the files from the build
-  echo "-- Putting build files in bower-ionic..."
+  echo "-- Putting build files in ionic-bower..."
 
   cd $BOWER_DIR
   cp -Rf $BUILD_DIR/* $BOWER_DIR
+  cp -Rf $PROJECT_DIR/scss $BOWER_DIR
 
   # Angular dependencies are managed by bower, don't include them
   rm -rf $BOWER_DIR/js/angular*
@@ -40,23 +41,23 @@ function run {
 
   # update bower.json
   # tag each repo
-  echo "-- Updating version in bower-ionic to $VERSION"
+  echo "-- Updating version in ionic-bower to $VERSION"
   replaceJsonProp "bower.json" "version" "$VERSION"
 
-  echo "-- Updating codename in bower-ionic to $CODENAME"
+  echo "-- Updating codename in ionic-bower to $CODENAME"
   replaceJsonProp "bower.json" "codename" "$CODENAME"
 
-  echo "-- Committing and tagging bower-ionic"
+  echo "-- Committing and tagging ionic-bower"
   git add -A
   git commit -m "release: v$VERSION"
   git tag v$VERSION
 
-  echo "-- Pushing bower-ionic"
+  echo "-- Pushing ionic-bower"
   cd $BOWER_DIR
 
   git push -q --tags origin master
 
-  echo "-- Published bower-ionic to v$VERSION successfully!"
+  echo "-- Published ionic-bower to v$VERSION successfully!"
 
   # Go back to the script to make things 'safe'
   cd $SCRIPT_DIR
