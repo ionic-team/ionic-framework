@@ -83,8 +83,7 @@ angular.module('ionic.ui.service.scrollDelegate', [])
       $scope.$parent.$on('scroll.anchorScroll', function() {
         var hash = $location.hash();
         var elm;
-        //If there are multiple with this id, go to first one
-        if (hash && (elm = scrollEl.querySelectorAll('#' + hash)[0])) {
+        if (hash && (elm = document.getElementById(hash)) ) {
           var scroll = ionic.DomUtil.getPositionInParent(elm, scrollEl);
           scrollView.scrollTo(scroll.left, scroll.top);
         } else {

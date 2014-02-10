@@ -97,7 +97,7 @@ describe('anchorScroll', function() {
     scope = $rootScope.$new();
     contentEl = $compile('<content></content>')(scope);
 
-    mockBody = angular.element('<div>').append(contentEl);
+    document.body.appendChild(contentEl[0]);
     del = $ionicScrollDelegate;
   }));
 
