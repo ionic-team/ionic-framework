@@ -1,7 +1,7 @@
 {
   "name": "ionic",
   "private": false,
-  "version": "0.9.24-alpha-7322-13809-13288",
+  "version": "0.9.24-alpha-7322-13809-13288-6754-12323",
   "codename": "peleguin",
   "devDependencies": {
     "grunt": "~0.4.1",

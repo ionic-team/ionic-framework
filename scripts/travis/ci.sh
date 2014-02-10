@@ -53,7 +53,7 @@ function run {
   # If latest commit message starts with 'chore(release):' it's a release
   COMMIT_MESSAGE=$(git log --format=%B -n 1 $TRAVIS_COMMIT | head -c 15)
 
-  if [[ "$COMMIT_MESSAGE" == "chore(release):" ]]; then
+  if [[ "$COMMIT_MESSAGE" == "chore(release)" ]]; then
     IS_RELEASE=true
     echo "##################################"
     echo "# Pushing out a new full release #"
@@ -82,7 +82,7 @@ function run {
 
   if [[ $IS_RELEASE == "true" ]]; then
     ./scripts/seed/publish.sh
-    ./scripts/site/publish.sh --version-label="$VERSION_LABEL"
+    ./scripts/site/publish.sh
   fi
 
   echo "--- Build Complete! ----"

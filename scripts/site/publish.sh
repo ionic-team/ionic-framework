@@ -3,10 +3,7 @@ echo "#################################"
 echo "#### Update Site #################"
 echo "#################################"
 
-# Version label is "nightly" or a version number
-ARG_DEFS=(
-  "--version-label=(.*)"
-)
+ARG_DEFS=( )
 
 function init {
   PROJECT_DIR=$SCRIPT_DIR/../..
@@ -29,7 +26,7 @@ function run {
   cd $IONIC_SITE_DIR
 
   $(replaceInFile "_config.yml" "latest_download:.*" "latest_download: http://code.ionicframework.com/$VERSION/ionic-v$VERSION.zip")
-  $(replaceInFile "_config.yml" "latest_version:.*" "latest_version: $VERSION \"$VERSION_LABEL\"")
+  $(replaceInFile "_config.yml" "latest_version:.*" "latest_version: $VERSION \"$CODENAME\"")
   $(replaceInFile "_config.yml" "latest_release_date:.*" "latest_release_date: $DATE")
 
   git add -A
