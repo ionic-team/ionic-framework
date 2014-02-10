@@ -6,7 +6,10 @@ describe('$ionicScroll Controller', function() {
   function setup(options) {
     options = options || {};
 
-    options.el = options.el || document.createElement('div');
+    options.el = options.el ||
+      //scrollView requires an outer container element and a child
+      //content element
+      angular.element('<div><div></div></div>')[0];
 
     inject(function($controller, $rootScope, $timeout) {
       scope = $rootScope.$new();
@@ -39,6 +42,25 @@ describe('$ionicScroll Controller', function() {
     setup();
     timeout.flush();
     expect(ctrl.scrollView.run).toHaveBeenCalled();
+  });
+
+  it('should resize the scrollview on window resize', function() {
+    setup();
+    timeout.flush();
+    spyOn(ctrl.scrollView, 'resize');
+    ionic.trigger('resize', { target: window });
+    expect(ctrl.scrollView.resize).toHaveBeenCalled();
+  });
+
+  it('should unbind window event listener on scope destroy', function() {
+    spyOn(window, 'removeEventListener');
+    spyOn(window, 'addEventListener');
+    setup();
+    expect(window.addEventListener).toHaveBeenCalled();
+    expect(window.addEventListener.mostRecentCall.args[0]).toBe('resize');
+    scope.$destroy();
+    expect(window.removeEventListener).toHaveBeenCalled();
+    expect(window.removeEventListener.mostRecentCall.args[0]).toBe('resize');
   });
 
   it('should register with $ionicScrollDelegate', inject(function($ionicScrollDelegate) {

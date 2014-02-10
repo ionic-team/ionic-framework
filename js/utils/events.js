@@ -3,7 +3,7 @@
  *
  * Author: Max Lynch <max@drifty.com>
  *
- * Framework events handles various mobile browser events, and 
+ * Framework events handles various mobile browser events, and
  * detects special events like tap/swipe/etc. and emits them
  * as custom events that can be used in an app.
  *
@@ -48,14 +48,18 @@
     VIRTUALIZED_EVENTS: ['tap', 'swipe', 'swiperight', 'swipeleft', 'drag', 'hold', 'release'],
 
     // Trigger a new event
-    trigger: function(eventType, data) {
-      var event = new CustomEvent(eventType, { detail: data });
+    trigger: function(eventType, data, bubbles, cancelable) {
+      var event = new CustomEvent(eventType, {
+        detail: data,
+        bubbles: !!bubbles,
+        cancelable: !!cancelable
+      });
 
       // Make sure to trigger the event on the given target, or dispatch it from
       // the window if we don't have an event target
       data && data.target && data.target.dispatchEvent(event) || window.dispatchEvent(event);
     },
-  
+
     // Bind an event
     on: function(type, callback, element) {
       var e = element || window;
@@ -92,8 +96,8 @@
     handlePopState: function(event) {
     },
   };
-  
-  
+
+
   // Map some convenient top-level functions for event handling
   ionic.on = function() { ionic.EventController.on.apply(ionic.EventController, arguments); };
   ionic.off = function() { ionic.EventController.off.apply(ionic.EventController, arguments); };
