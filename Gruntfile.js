@@ -19,21 +19,18 @@ module.exports = function(grunt) {
       },
       bundle: {
         options: {
-          banner: grunt.file.read('js/_license.js') + '\n' +
+          banner:
             '/*!\n' +
             ' * ionic.bundle.js is a concatenation of:\n' +
-            ' * angular.js,\n'+
-            ' * angular-animate.js,\n'+
-            ' * angular-ui-router.js,\n'+
-            ' * ionic.js,\n'+
-            ' * ionic-angular.js\n'+
+            ' * ionic.js, angular.js, angular-animate.js,\n'+
+            ' * angular-ui-router.js, and ionic-angular.js\n'+
             ' */\n\n'
         },
         src: [
+          'dist/js/ionic.js',
           'config/lib/js/angular/angular.js',
           'config/lib/js/angular/angular-animate.js',
           'config/lib/js/angular-ui/angular-ui-router.js',
-          'dist/js/ionic.js',
           'dist/js/ionic-angular.js'
         ],
         dest: 'dist/js/ionic.bundle.js'
@@ -43,10 +40,10 @@ module.exports = function(grunt) {
           banner: '<%= concat.bundle.options.banner %>'
         },
         src: [
+          'dist/js/ionic.min.js',
           'config/lib/js/angular/angular.min.js',
           'config/lib/js/angular/angular-animate.min.js',
           'config/lib/js/angular-ui/angular-ui-router.min.js',
-          'dist/js/ionic.min.js',
           'dist/js/ionic-angular.min.js'
         ],
         dest: 'dist/js/ionic.bundle.min.js'
@@ -79,6 +76,7 @@ module.exports = function(grunt) {
       dist: {
         files: {
           'dist/js/ionic.js': 'dist/js/ionic.js',
+          'dist/js/ionic.bundle.js': 'dist/js/ionic.bundle.js',
           'dist/js/ionic-angular.js': 'dist/js/ionic-angular.js'
         },
         options: {

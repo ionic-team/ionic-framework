@@ -46,6 +46,11 @@ body, .ionic-body {
   -webkit-user-drag: none;
 }
 
+.content { 
+  // used for content areas not using the content directive
+  position: relative 
+}
+
 .scroll-content {
   top: 0;
   right: 0;
