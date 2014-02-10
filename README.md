@@ -6,7 +6,9 @@ Note: __Ionic is Alpha software__ and currently best supports iOS 6+ and Android
 
 # What is Ionic?
 
-Ionic is the open source HTML5 Mobile Framework for building amazing, cross-platform hybrid native apps with HTML, JavaScript, and CSS.
+Ionic is the open source HTML5 Mobile Framework for building amazing, cross-platform hybrid native apps with HTML, JavaScript, and CSS. Just like this one:
+
+<img src="http://ionicframework.com/examples/showcase/weather/ss2.png" style="width: 320px;">
 
 We built Ionic because we wanted a framework that focused on building hybrid native apps, rather than mobile websites. We wanted this framework to be obsessive about great design and performance. A framework that left the past behind and focused on the future where mobile devices could make HTML5 feel native.
 
