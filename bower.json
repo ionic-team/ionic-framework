@@ -40,7 +40,6 @@
     "release/js/angular",
     "release/js/angular-ui",
     "scripts",
-    "scss",
     "test",
     "js/controllers",
     "js/ext",
