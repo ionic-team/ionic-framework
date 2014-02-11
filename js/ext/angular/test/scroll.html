@@ -52,20 +52,24 @@
 
       <content has-header="true" scroll="false">
         <h3>Hourly Forecast</h3>
-        <scroll direction="x" style="width: 100%">
+        <scroll direction="x" style="width: 100%; height: 20%;">
           <div class="hours">
             <div ng-repeat="hour in hours">
               <div class="icons">
                 <i class="icon ion-ios7-sunny-outline"></i>
                 <i class="icon ion-cloud"></i>
               </div>
+              </a>
               <div>
                 {{hour.temp}} &deg;F
               </div>
             </div>
           </div>
         </scroll>
-        <scroll direction="y" style="height: 400px; width: 300px">
+        <a class="button" ng-click="scrollTo()">
+          Scroll to 100
+        </a>
+        <scroll direction="y" style="height: 400px; width: 300px; background: red;">
           <div style="width: 100px; height: 4000px; background: url('tree_bark.png') repeat"></div>
         </scroll>
       </content>
@@ -83,7 +87,7 @@
         }
       })
 
-      .controller('ThisCtrl', function($scope) {
+      .controller('ThisCtrl', function($scope, $ionicScrollDelegate) {
         var header = document.getElementById('header');
         var content = document.getElementById('container');
 
@@ -97,6 +101,10 @@
         $scope.onScrollComplete = function(event, scrollTop, scrollLeft) {
           console.log('Scroll complete', scrollTop, scrollLeft);
         }
+        $scope.scrollTo = function() {
+          console.log('scrollTo');
+          $ionicScrollDelegate.scrollTo(0, 100, true);
+        };
         $scope.onScroll = function(event, scrollTop, scrollLeft) {
         /*
           if(scrollTop > startTop) {

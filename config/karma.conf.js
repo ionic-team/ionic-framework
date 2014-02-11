@@ -18,7 +18,7 @@ module.exports = function(config) {
       'config/lib/js/angular/angular.js',
       'config/lib/js/angular/angular-animate.js',
       'config/lib/js/angular/angular-mocks.js',
-      'config/lib/js/angular-ui/angular-ui-router.js',
+      'config/lib/js/angular-ui/angular-ui-router.js'
     ]
     .concat(buildConfig.ionicFiles)
     .concat(buildConfig.angularIonicFiles)
