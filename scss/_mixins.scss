@@ -589,3 +589,22 @@
   -moz-justify-content: $value;
   justify-content: $value;
 }
+
+@mixin responsive-grid-break($selector, $max-width) {
+  @media (max-width: $max-width) {
+    #{$selector} {
+      -webkit-box-direction: normal;
+      -moz-box-direction: normal;
+      -webkit-box-orient: vertical;
+      -moz-box-orient: vertical;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+
+      .col {
+        width: 100%;
+        margin-bottom: ($grid-padding-width * 3) / 2;
+      }
+    }
+  }
+}

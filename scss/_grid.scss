@@ -123,27 +123,12 @@
 }
 
 
-/* Responsive Grid Attribute */
-/* Adding a class of responsive to a row */
+/* Responsive Grid Classes */
+/* Adding a class of responsive-X to a row */
 /* will trigger the flex-direction to */
 /* change to column and add some margin */
 /* to any columns in the row for clearity */
 
-/* Adjust the max-width value to fit your own needs */
-/* Defaults to 767px (iPad portrait width)*/
-
- @media (max-width: $grid-responsive-break) {
-.responsive .col {
-  width: 100%;
-  margin-bottom:15px;
-    }
-.responsive {
-  -webkit-box-direction: normal;
-  -moz-box-direction: normal;
-  -webkit-box-orient: vertical;
-  -moz-box-orient: vertical;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-    }
-}
+@include responsive-grid-break('.responsive-sm', $grid-responsive-sm-break);
+@include responsive-grid-break('.responsive-md', $grid-responsive-md-break);
+@include responsive-grid-break('.responsive-lg', $grid-responsive-lg-break);
