@@ -81,14 +81,16 @@ angular.module('ionic.ui.service.scrollDelegate', [])
       });
 
       $scope.$parent.$on('scroll.anchorScroll', function(e, animate) {
-        var hash = $location.hash();
-        var elm;
-        if (hash && (elm = document.getElementById(hash)) ) {
-          var scroll = ionic.DomUtil.getPositionInParent(elm, scrollEl);
-          scrollView.scrollTo(scroll.left, scroll.top, !!animate);
-        } else {
-          scrollView.scrollTo(0,0, !!animate);
-        }
+        scrollViewResize().then(function() {
+          var hash = $location.hash();
+          var elm;
+          if (hash && (elm = document.getElementById(hash)) ) {
+            var scroll = ionic.DomUtil.getPositionInParent(elm, scrollEl);
+            scrollView.scrollTo(scroll.left, scroll.top, !!animate);
+          } else {
+            scrollView.scrollTo(0,0, !!animate);
+          }
+        });
       });
 
       /**

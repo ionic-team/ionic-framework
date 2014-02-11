@@ -58,8 +58,7 @@
 function MyCtrl($scope, $location, $ionicScrollDelegate) {
   $scope.scrollTo = function(id) {
     $location.hash(id);
-    console.log($location.hash());
-    $ionicScrollDelegate.anchorScroll();
+    $ionicScrollDelegate.anchorScroll(true);
   }
 }
     </script>

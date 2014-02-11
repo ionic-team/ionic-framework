@@ -10,7 +10,8 @@ angular.module('ionic.service', [
   'ionic.service.modal',
   'ionic.service.popup',
   'ionic.service.templateLoad',
-  'ionic.service.view'
+  'ionic.service.view',
+  'ionic.decorator.location'
 ]);
 
 // UI specific services and delegates

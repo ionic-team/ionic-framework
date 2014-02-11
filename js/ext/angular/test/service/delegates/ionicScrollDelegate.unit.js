@@ -97,13 +97,14 @@ describe('anchorScroll', function() {
 
   function testWithAnimate(animate) {
     describe('with animate=' + animate, function() {
-      var contentEl, scope, del;
+      var contentEl, scope, del, timeout;
       beforeEach(inject(function($rootScope, $compile, $timeout, $document, $ionicScrollDelegate) {
         scope = $rootScope.$new();
         contentEl = $compile('<content></content>')(scope);
 
         document.body.appendChild(contentEl[0]);
         del = $ionicScrollDelegate;
+        timeout = $timeout;
       }));
 
       it('should anchorScroll to an element with id', function() {
@@ -118,6 +119,7 @@ describe('anchorScroll', function() {
         contentEl.append(anchorMe);
 
         del.anchorScroll(animate);
+        timeout.flush();
         expect(sv.scrollTo).toHaveBeenCalledWith(2, 1, animate);
       });
 
@@ -126,6 +128,8 @@ describe('anchorScroll', function() {
         spyOn(sv, 'scrollTo');
         spyOn(ionic.DomUtil, 'getPositionInParent');
         del.anchorScroll(animate);
+        timeout.flush();
+
         expect(sv.scrollTo).toHaveBeenCalledWith(0, 0, animate);
         expect(ionic.DomUtil.getPositionInParent).not.toHaveBeenCalled();
       });
@@ -137,6 +141,7 @@ describe('anchorScroll', function() {
 
         setLocationHash('doesnotexist');
         del.anchorScroll(animate);
+        timeout.flush();
 
         expect(sv.scrollTo).toHaveBeenCalledWith(0, 0, animate);
         expect(ionic.DomUtil.getPositionInParent).not.toHaveBeenCalled();
