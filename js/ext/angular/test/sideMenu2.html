@@ -43,6 +43,10 @@
       <view title="'Welcome'">
         <content has-header="true" padding="true">
           <p>Swipe to the right to reveal the left menu.</p>
+          <div class="button" ng-click="sideMenuController.toggleLeft()" style="position: absolute; left: 100px; top: 200px;">
+            Left Menu
+          </div>
+          <p ng-repeat="p in range">{{$index}}....</p>
           <p>(On desktop click and drag from left to right)</p>
         </content>
       </view>
@@ -152,6 +156,9 @@
 
       .controller('MainCtrl', function($scope) {
         console.log('MainCtrl');
+
+        $scope.range = [];
+        for (var i=0; i<150; i++) $scope.range.push(i);
 
         $scope.attendees = [
           { firstname: 'Nicolas', lastname: 'Cage' },
