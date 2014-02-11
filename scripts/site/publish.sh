@@ -24,7 +24,6 @@ function run {
     --branch gh-pages
 
   cd $IONIC_SITE_DIR
-  git reset --hard origin/gh-pages
 
   $(replaceInFile "_config.yml" "latest_download:.*$" "latest_download: http:\/\/code.ionicframework.com\/$VERSION\/ionic-v$VERSION.zip")
   $(replaceInFile "_config.yml" "latest_version:.*$" "latest_version: $VERSION \"$CODENAME\"")
