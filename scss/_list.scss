@@ -6,10 +6,14 @@
 
 .list {
   position: relative;
-  margin-bottom: 20px;
   padding-top: $item-border-width;
   padding-bottom: $item-border-width;
   padding-left: 0; // reset padding because ul and ol
+  margin-bottom: 20px;
+}
+/* If a list is the last item in a container, don't add margin-bottom */
+.list:last-child {
+  margin-bottom: 0px;
 }
 
 /**
@@ -57,7 +61,7 @@
  * A card and list-inset are close to the same thing, except a card as a box shadow.
  */
 
-.card, 
+.card,
 .list-inset {
   overflow: hidden;
   margin: ($content-padding * 2) $content-padding;
@@ -95,7 +99,7 @@
   }
 }
 
-.card .item:last-child, 
+.card .item:last-child,
 .list-inset .item:last-child {
   margin-bottom: $item-border-width * -1;
 }
