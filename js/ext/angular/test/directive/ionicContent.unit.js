@@ -82,14 +82,26 @@ describe('Ionic Content directive', function() {
       var parent = angular.element('<div>');
       //Make a phony element that tells the world it's a navView when in reality it's just a div
       parent.data('$navViewController', true);
-      parent.append('<content></content>');
+      parent.append('<content><br/><div>hello</div><br/></content>');
       compile(parent)(scope);
       scope.$apply();
+
+      /* Mock setting and getting scroll because we don't have time for the dom to load */
+      var scrollValues = {};
+      spyOn(scope.scrollView, 'scrollTo').andCallFake(function(left, top, a, zoom) {
+        scrollValues = {
+          left: left || 0,
+          top: top || 0,
+          zoom: zoom || 1
+        };
+      });
+      spyOn(scope.scrollView, 'getValues').andCallFake(function() {
+        return scrollValues;
+      });
     }
 
     it('should set x and y with historyData.scrollValues passed in through $viewContentLoaded', function() {
       compileWithParent();
-      spyOn(scope.scrollView, 'scrollTo');
       var scrollValues = { top: 40, left: -20, zoom: 3 };
       scope.$broadcast('$viewContentLoaded', {
         scrollValues: scrollValues
@@ -100,7 +112,6 @@ describe('Ionic Content directive', function() {
 
     it('should set null with historyData.scrollValues not valid', function() {
       compileWithParent();
-      spyOn(scope.scrollView, 'scrollTo');
       var scrollValues = { left: 'bar', top: 'foo' };
       scope.$broadcast('$viewContentLoaded', { scrollValues: scrollValues });
       timeout.flush();
