@@ -92,66 +92,57 @@ describe('anchorScroll', function() {
 
   beforeEach(module('ionic'));
 
-  var contentEl, scope, del;
-  beforeEach(inject(function($rootScope, $compile, $timeout, $document, $ionicScrollDelegate) {
-    scope = $rootScope.$new();
-    contentEl = $compile('<content></content>')(scope);
+  testWithAnimate(true);
+  testWithAnimate(false);
 
-    document.body.appendChild(contentEl[0]);
-    del = $ionicScrollDelegate;
-  }));
+  function testWithAnimate(animate) {
+    describe('with animate=' + animate, function() {
+      var contentEl, scope, del;
+      beforeEach(inject(function($rootScope, $compile, $timeout, $document, $ionicScrollDelegate) {
+        scope = $rootScope.$new();
+        contentEl = $compile('<content></content>')(scope);
 
-  it('should anchorScroll to an element with id', function() {
-    var anchorMe = angular.element('<div id="anchorMe">');
-    var sv = del.getScrollView(scope);
-    spyOn(sv, 'scrollTo');
+        document.body.appendChild(contentEl[0]);
+        del = $ionicScrollDelegate;
+      }));
 
-    setLocationHash('anchorMe');
-    contentEl.append(anchorMe);
+      it('should anchorScroll to an element with id', function() {
+        var anchorMe = angular.element('<div id="anchorMe">');
+        var sv = del.getScrollView(scope);
+        spyOn(sv, 'scrollTo');
+        spyOn(ionic.DomUtil, 'getPositionInParent').andCallFake(function() {
+          return { left: 2, top: 1 };
+        });
 
-    var pos = ionic.DomUtil.getPositionInParent(anchorMe[0], contentEl[0]);
-    del.anchorScroll();
-    expect(sv.scrollTo).toHaveBeenCalledWith(pos.left, pos.top);
-  });
+        setLocationHash('anchorMe');
+        contentEl.append(anchorMe);
 
-  it('should anchorScroll to top if !$location.hash()', function() {
-    var sv = del.getScrollView(scope);
-    spyOn(sv, 'scrollTo');
-    del.anchorScroll();
-    expect(sv.scrollTo).toHaveBeenCalledWith(0, 0);
-  });
+        del.anchorScroll(animate);
+        expect(sv.scrollTo).toHaveBeenCalledWith(2, 1, animate);
+      });
 
-  it('should anchorScroll to top if element with hash id doesnt exist', function() {
-    var sv = del.getScrollView(scope);
-    spyOn(sv, 'scrollTo');
+      it('should anchorScroll to top if !$location.hash()', function() {
+        var sv = del.getScrollView(scope);
+        spyOn(sv, 'scrollTo');
+        spyOn(ionic.DomUtil, 'getPositionInParent');
+        del.anchorScroll(animate);
+        expect(sv.scrollTo).toHaveBeenCalledWith(0, 0, animate);
+        expect(ionic.DomUtil.getPositionInParent).not.toHaveBeenCalled();
+      });
 
-    setLocationHash('doesnotexist');
-    del.anchorScroll();
+      it('should anchorScroll to top if element with hash id doesnt exist', function() {
+        var sv = del.getScrollView(scope);
+        spyOn(sv, 'scrollTo');
+        spyOn(ionic.DomUtil, 'getPositionInParent');
 
-    expect(sv.scrollTo).toHaveBeenCalledWith(0, 0);
-  });
+        setLocationHash('doesnotexist');
+        del.anchorScroll(animate);
 
-  it('should anchorScroll to first element with id if multiple exist', function() {
-    var foo1 = angular.element('<div id="foo">hello</div>');
-    var foo2 = angular.element('<div id="foo">hola</div>');
-    var sv = del.getScrollView(scope);
-
-    contentEl.append(foo1).append(foo2);
-
-    //Fake the top/left because dom doesn't have time to load in a test
-    spyOn(ionic.DomUtil, 'getPositionInParent').andCallFake(function(el) {
-      return el === foo1[0] ? {left: 20, top: 40} : {left: 30, top: 50};
+        expect(sv.scrollTo).toHaveBeenCalledWith(0, 0, animate);
+        expect(ionic.DomUtil.getPositionInParent).not.toHaveBeenCalled();
+      });
     });
-    var pos1 = ionic.DomUtil.getPositionInParent(foo1[0], contentEl[0]);
-    var pos2 = ionic.DomUtil.getPositionInParent(foo2[0], contentEl[0]);
-
-    spyOn(sv, 'scrollTo');
-    setLocationHash('foo');
-    del.anchorScroll();
-    expect(sv.scrollTo.callCount).toBe(1);
-    expect(sv.scrollTo).toHaveBeenCalledWith(pos1.left, pos1.top);
-    expect(sv.scrollTo).not.toHaveBeenCalledWith(pos2.left, pos2.top);
-  });
+  }
 
 });
 

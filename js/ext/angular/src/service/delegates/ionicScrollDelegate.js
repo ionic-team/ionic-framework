@@ -17,8 +17,8 @@ angular.module('ionic.ui.service.scrollDelegate', [])
     resize: function() {
       $rootScope.$broadcast('scroll.resize');
     },
-    anchorScroll: function() {
-      $rootScope.$broadcast('scroll.anchorScroll');
+    anchorScroll: function(animate) {
+      $rootScope.$broadcast('scroll.anchorScroll', animate);
     },
     tapScrollToTop: function(element) {
       var _this = this;
@@ -80,14 +80,14 @@ angular.module('ionic.ui.service.scrollDelegate', [])
         scrollView.finishPullToRefresh();
       });
 
-      $scope.$parent.$on('scroll.anchorScroll', function() {
+      $scope.$parent.$on('scroll.anchorScroll', function(e, animate) {
         var hash = $location.hash();
         var elm;
         if (hash && (elm = document.getElementById(hash)) ) {
           var scroll = ionic.DomUtil.getPositionInParent(elm, scrollEl);
-          scrollView.scrollTo(scroll.left, scroll.top);
+          scrollView.scrollTo(scroll.left, scroll.top, !!animate);
         } else {
-          scrollView.scrollTo(0,0);
+          scrollView.scrollTo(0,0, !!animate);
         }
       });
 
