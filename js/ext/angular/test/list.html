@@ -109,7 +109,7 @@
               option-buttons="optionButtons1">
 
           <!-- shows that the item directive does not need attributes and can get values from the list attributes -->
-          <item item="item" class="item-message" ng-repeat="item in items">
+          <item item="item" class="item-message" ng-repeat="item in items" ng-class="{ active: item.isActive}">
             <img ng-src="{{item.face}}">
             <h2>{{item.from}}</h2>
             <p>{{item.text}}</p>
@@ -153,7 +153,7 @@
             <p>I am not a demon. I am a lizard, a shark, a heat-seeking panther. I want to be Bob Denver on acid playing the accordion.</p>
           </div>
 
-          <a class="item item-icon-left" href="{{ item.url }}" ng-repeat="item in urlItems">
+          <a class="item item-icon-left" href="{{ item.url }}" ng-repeat="item in urlItems" ng-class="{ active: item.isActive}">
             <i class="icon {{ item.icon }}"></i>
             {{ item.text }}
           </a>
@@ -190,7 +190,7 @@
         $scope.items = [
           { from: 'Ben', face: 'https://pbs.twimg.com/profile_images/378800000571933189/278e8e1b7871a115b95fc550cd07af40.png', text: 'Did you prepare?' },
           { from: 'Adam', face: 'https://pbs.twimg.com/profile_images/2927292174/25b170ee2e3044fd936ad1319bc4b82d_bigger.jpeg', text: 'Don\'t forget to smile!' },
-          { from: 'Tim', face: 'https://pbs.twimg.com/profile_images/378800000290028838/ee3303b02223f25cb0f9b082b55b2eeb.jpeg', text: 'Bring some shirts!' }
+          { from: 'Tim', face: 'https://pbs.twimg.com/profile_images/378800000290028838/ee3303b02223f25cb0f9b082b55b2eeb.jpeg', text: 'Bring some shirts!', isActive: true }
         ];
 
 
@@ -246,7 +246,7 @@
 
         $scope.urlItems = [
           { text: 'Biography', icon: 'ion-person', url: 'http://en.wikipedia.org/wiki/Nicolas_Cage' },
-          { text: 'Fan Club', icon: 'ion-star', url: 'http://cagealot.com/' }
+          { text: 'Fan Club', icon: 'ion-star', url: 'http://cagealot.com/', isActive: true }
         ];
 
       });

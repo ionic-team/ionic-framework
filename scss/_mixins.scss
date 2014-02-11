@@ -86,6 +86,7 @@
   }
 }
 
+
 // Item Mixins
 // --------------------------------------------------
 
@@ -96,11 +97,8 @@
 }
 
 @mixin item-active-style($active-bg-color, $active-border-color) {
-  &.active, 
-  .ionic-pseudo &:active {
-    background-color: $active-bg-color;
-    border-color: $active-border-color;
-  }
+  background-color: $active-bg-color;
+  border-color: $active-border-color;
 }
 
 
