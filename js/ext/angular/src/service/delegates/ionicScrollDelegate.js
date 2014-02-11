@@ -14,6 +14,9 @@ angular.module('ionic.ui.service.scrollDelegate', [])
     scrollBottom: function(animate) {
       $rootScope.$broadcast('scroll.scrollBottom', animate);
     },
+    scrollTo: function(left, top, animate) {
+      $rootScope.$broadcast('scroll.scrollTo', left, top, animate);
+    },
     resize: function() {
       $rootScope.$broadcast('scroll.resize');
     },
@@ -45,18 +48,14 @@ angular.module('ionic.ui.service.scrollDelegate', [])
     getScrollView: function($scope) {
       return $scope.scrollView;
     },
+
     /**
-     * Register a scope for scroll event handling.
+     * Register a scope and scroll view for scroll event handling.
      * $scope {Scope} the scope to register and listen for events
      */
-    register: function($scope, $element) {
-      //Get scroll controller from parent
-      var scrollCtrl = $element.controller('$ionicScroll');
-      if (!scrollCtrl) {
-        return;
-      }
-      var scrollView = scrollCtrl.scrollView;
-      var scrollEl = scrollCtrl.element;
+    register: function($scope, $element, scrollView) {
+
+      var scrollEl = $element[0];
 
       function scrollViewResize() {
         // Run the resize after this digest
@@ -93,14 +92,14 @@ angular.module('ionic.ui.service.scrollDelegate', [])
         });
       });
 
-      /**
-       * Called to scroll to the top of the content
-       *
-       * @param animate {boolean} whether to animate or just snap
-       */
+      $scope.$parent.$on('scroll.scrollTo', function(e, left, top, animate) {
+        scrollViewResize().then(function() {
+          scrollView.scrollTo(left, top, !!animate);
+        });
+      });
       $scope.$parent.$on('scroll.scrollTop', function(e, animate) {
         scrollViewResize().then(function() {
-          scrollView.scrollTo(0, 0, animate === false ? false : true);
+          scrollView.scrollTo(0, 0, !!animate);
         });
       });
       $scope.$parent.$on('scroll.scrollBottom', function(e, animate) {
@@ -108,7 +107,7 @@ angular.module('ionic.ui.service.scrollDelegate', [])
           var sv = scrollView;
           if (sv) {
             var max = sv.getScrollMax();
-            sv.scrollTo(0, max.top, animate === false ? false : true);
+            sv.scrollTo(max.left, max.top, !!animate);
           }
         });
       });

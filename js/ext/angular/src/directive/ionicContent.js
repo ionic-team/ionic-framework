@@ -120,9 +120,6 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
           };
         }
 
-        // Register for scroll delegate event handling
-        $ionicScrollDelegate.register($scope, $element);
-
         // Check if this supports infinite scrolling and listen for scroll events
         // to trigger the infinite scrolling
         // TODO(ajoslin): move functionality out of this function and make testable

@@ -11,15 +11,6 @@ describe('Ionic ScrollDelegate Service', function() {
     compile = $compile;
   }));
 
-  it('Should register', function() {
-    spyOn(del, 'register');
-
-    var scope = rootScope.$new();
-    var el = compile('<content></content>')(scope);
-
-    expect(del.register).toHaveBeenCalled();
-  });
-
   it('Should get scroll view', function() {
     var scope = rootScope.$new();
     var el = compile('<content></content>')(scope);
@@ -33,43 +24,64 @@ describe('Ionic ScrollDelegate Service', function() {
 
     var sv = del.getScrollView(scope);
     spyOn(sv, 'resize');
+    spyOn(sv, 'scrollTo');
 
     del.resize();
     timeout.flush();
     expect(sv.resize).toHaveBeenCalled();
   });
 
-  it('Should resize & scroll top', function() {
-    var scope = rootScope.$new();
-    var el = compile('<content start-y="100"></content>')(scope);
+  testWithAnimate(true);
+  testWithAnimate(false);
+  function testWithAnimate(animate) {
+    describe('with animate='+animate, function() {
+      it('should resize & scroll top', function() {
+        var scope = rootScope.$new();
+        var el = compile('<content start-y="100"></content>')(scope);
 
-    var sv = del.getScrollView(scope);
-    spyOn(sv, 'resize');
+        var sv = del.getScrollView(scope);
+        spyOn(sv, 'resize');
+        spyOn(sv, 'scrollTo');
+        del.scrollTop(animate);
 
-    expect(sv.getValues().top).toBe(100);
+        timeout.flush();
+        expect(sv.resize).toHaveBeenCalled();
+        expect(sv.scrollTo.mostRecentCall.args).toEqual([0, 0, animate]);
+      });
 
-    del.scrollTop(false);
-    timeout.flush();
-    expect(sv.resize).toHaveBeenCalled();
+      it('should resize & scroll bottom', function() {
+        var scope = rootScope.$new();
+        var el = compile('<content start-y="100"><br/><br/></content>')(scope);
 
-    expect(sv.getValues().top).toBe(0);
-  });
+        var sv = del.getScrollView(scope);
+        spyOn(sv, 'getScrollMax').andCallFake(function() {
+          return { left: 10, top: 11 };
+        });
+        spyOn(sv, 'resize');
+        spyOn(sv, 'scrollTo');
+        var max = sv.getScrollMax();
+        del.scrollBottom(animate);
 
-  it('Should resize & scroll bottom', function() {
-    var scope = rootScope.$new();
-    var el = compile('<content start-y="100"></content>')(scope);
+        timeout.flush();
+        expect(sv.resize).toHaveBeenCalled();
+        expect(sv.scrollTo.mostRecentCall.args).toEqual([max.left, max.top, animate]);
+      });
 
-    var sv = del.getScrollView(scope);
-    spyOn(sv, 'resize');
+      it('should resize & scrollTo', function() {
+        var scope = rootScope.$new();
+        var el = compile('<content start-y="100"><br/><br/></content>')(scope);
 
-    expect(sv.getValues().top).toBe(100);
+        var sv = del.getScrollView(scope);
+        spyOn(sv, 'scrollTo');
+        spyOn(sv, 'resize');
+        del.scrollTo(2, 3, animate);
 
-    del.scrollBottom(false);
-    timeout.flush();
-    expect(sv.resize).toHaveBeenCalled();
-
-    expect(sv.getValues().top).toBe(sv.getScrollMax().top);
-  });
+        timeout.flush();
+        expect(sv.resize).toHaveBeenCalled();
+        expect(sv.scrollTo.mostRecentCall.args).toEqual([2, 3, animate]);
+      });
+    });
+  }
 
   it('should finish refreshing', function() {
     var scope = rootScope.$new();

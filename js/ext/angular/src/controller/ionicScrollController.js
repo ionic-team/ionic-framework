@@ -3,8 +3,8 @@
 
 angular.module('ionic.ui.scroll')
 
-.controller('$ionicScroll', ['$scope', 'scrollViewOptions', '$timeout',
-                     function($scope,   scrollViewOptions,   $timeout) {
+.controller('$ionicScroll', ['$scope', 'scrollViewOptions', '$timeout', '$ionicScrollDelegate',
+                     function($scope,   scrollViewOptions,   $timeout,   $ionicScrollDelegate) {
 
   scrollViewOptions.bouncing = angular.isDefined(scrollViewOptions.bouncing) ?
     scrollViewOptions.bouncing :
@@ -15,11 +15,14 @@ angular.module('ionic.ui.scroll')
   var element = this.element = scrollViewOptions.el;
   var scrollView = this.scrollView = new ionic.views.Scroll(scrollViewOptions);
 
-  this.$element = angular.element(element);
+  var $element = this.$element = angular.element(element);
 
   //Attach self to element as a controller so other directives can require this controller
   //through `require: '$ionicScroll'
-  this.$element.data('$$ionicScrollController', this);
+  $element.data('$$ionicScrollController', this);
+
+  //Register delegate for event handling
+  $ionicScrollDelegate.register($scope, $element, scrollView);
 
   $timeout(function() {
     scrollView.run();

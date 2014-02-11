@@ -1,7 +1,7 @@
 describe('Ionic Content directive', function() {
   var compile, element, scope;
 
-  beforeEach(module('ionic.ui.content'));
+  beforeEach(module('ionic'));
 
   beforeEach(inject(function($compile, $rootScope, $timeout, $window) {
     compile = $compile;
@@ -10,6 +10,11 @@ describe('Ionic Content directive', function() {
     window = $window;
     ionic.Platform.setPlatform('Android');
   }));
+
+  it('Has $ionicScroll controller', function() {
+    element = compile('<content></content>')(scope);
+    expect(element.controller('$ionicScroll').element).toBe(element[0]);
+  });
 
   it('Has content class', function() {
     element = compile('<content></content>')(scope);

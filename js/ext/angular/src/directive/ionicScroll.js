@@ -33,8 +33,6 @@ angular.module('ionic.ui.scroll', [])
       function prelink($scope, $element, $attr) {
         var scrollView, scrollCtrl, sc = $element[0].children[0];
 
-        // Create the internal scroll div
-        sc.className = 'scroll';
         if(attr.padding == "true") {
           sc.classList.add('padding');
         }
@@ -63,25 +61,6 @@ angular.module('ionic.ui.scroll', [])
           scrollViewOptions: scrollViewOptions
         });
         scrollView = $scope.$parent.scrollView = scrollCtrl.scrollView;
-
-        $element.bind('scroll', function(e) {
-          $scope.onScroll({
-            event: e,
-            scrollTop: e.detail ? e.detail.scrollTop : e.originalEvent ? e.originalEvent.detail.scrollTop : 0,
-            scrollLeft: e.detail ? e.detail.scrollLeft: e.originalEvent ? e.originalEvent.detail.scrollLeft : 0
-          });
-        });
-
-        $scope.$parent.$on('scroll.resize', function(e) {
-          // Run the resize after this digest
-          $timeout(function() {
-            scrollView && scrollView.resize();
-          });
-        });
-
-        $scope.$parent.$on('scroll.refreshComplete', function(e) {
-          scrollView && scrollView.finishPullToRefresh();
-        });
       }
     }
   };
