@@ -24,13 +24,14 @@ function run {
     --branch gh-pages
 
   cd $IONIC_SITE_DIR
+  git reset --hard origin/gh-pages
 
-  $(replaceInFile "_config.yml" "latest_download:.*" "latest_download: http://code.ionicframework.com/$VERSION/ionic-v$VERSION.zip")
-  $(replaceInFile "_config.yml" "latest_version:.*" "latest_version: $VERSION \"$CODENAME\"")
-  $(replaceInFile "_config.yml" "latest_release_date:.*" "latest_release_date: $DATE")
+  $(replaceInFile "_config.yml" "latest_download:.*$" "latest_download: http:\/\/code.ionicframework.com\/$VERSION\/ionic-v$VERSION.zip")
+  $(replaceInFile "_config.yml" "latest_version:.*$" "latest_version: $VERSION \"$CODENAME\"")
+  $(replaceInFile "_config.yml" "latest_release_date:.*$" "latest_release_date: $DATE")
 
   git add -A
-  git commit -am "release: $VERSION ($VERSION_LABEL)"
+  git commit -am "release: $VERSION"
 
   git push -q origin gh-pages
 
