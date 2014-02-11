@@ -13,6 +13,10 @@
 a {
   -webkit-user-drag: none;
   -webkit-tap-highlight-color: transparent;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 img {
   -webkit-user-drag: none;
