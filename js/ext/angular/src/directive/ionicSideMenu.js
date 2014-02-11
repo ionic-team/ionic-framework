@@ -85,7 +85,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
             }
             isDragging = true;
             sideMenuCtrl._handleDrag(e);
-            //e.gesture.srcEvent.preventDefault();
+            e.gesture.srcEvent.preventDefault();
           }
         };
 
