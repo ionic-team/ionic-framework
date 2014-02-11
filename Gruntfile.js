@@ -167,14 +167,14 @@ module.exports = function(grunt) {
     watch: {
       scripts: {
         files: ['js/**/*.js', 'ext/**/*.js'],
-        tasks: ['concat:dist', 'concat:distangular', 'string-replace', 'concat:bundle'],
+        tasks: ['concat:dist', 'concat:distangular', 'concat:bundle'],
         options: {
           spawn: false
         }
       },
       sass: {
         files: ['scss/**/*.scss'],
-        tasks: ['sass', 'concat', 'string-replace'],
+        tasks: ['sass'],
         options: {
           spawn: false
         }
