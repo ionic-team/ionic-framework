@@ -31,7 +31,8 @@ angular.module('ionic.ui.scroll', [])
       };
 
       function prelink($scope, $element, $attr) {
-        var scrollView, scrollCtrl, sc = $element[0].children[0];
+        var scrollView, scrollCtrl,
+          sc = $element[0].children[0];
 
         if(attr.padding == "true") {
           sc.classList.add('padding');
