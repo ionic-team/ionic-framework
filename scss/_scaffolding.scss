@@ -46,9 +46,9 @@ body, .ionic-body {
   -webkit-user-drag: none;
 }
 
-.content { 
+.content {
   // used for content areas not using the content directive
-  position: relative 
+  position: relative
 }
 
 .scroll-content {
@@ -141,9 +141,12 @@ body, .ionic-body {
 // Scroll refresher (for pull to refresh)
 .scroll-refresher {
   overflow: hidden;
-  margin-top: -60px;
+  top: -60px;
   height: 60px;
-  position: relative;
+  left: 0;
+  right: 0;
+  position: absolute;
+  margin: auto;
 
   .icon-refreshing {
     display: none;
