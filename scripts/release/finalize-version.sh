@@ -27,13 +27,16 @@ function prepare {
   mkdir -p release
   cp -Rf dist/* release
 
-  git add package.json bower.json component.json release
+  grunt changelog
+
+  git add package.json bower.json component.json release CHANGELOG.md
   git commit -m "chore(release): v$VERSION"
   git tag -m "v$VERSION" v$VERSION
 
   echo "--"
   echo "-- Version is now $VERSION, codename $CODENAME."
-  echo "-- Release commit & tag created."
+  echo "-- Release commit & tag created. Changelog created."
+  echo "-- Suggestion: read over the changelog and fix any mistakes, then run git commit -a --amend."
   echo "-- When ready to push, run ./scripts/finalize-version.sh --action=publish"
   echo "--"
 }
