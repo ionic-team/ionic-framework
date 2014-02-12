@@ -2,50 +2,50 @@
 ### 0.9.24 "Peleguin" (2014-02-12)
 
 
+
 #### Bug Fixes
 
-* **android:** when keyboard comes up, ensure input is in view ((9327ac71), closes (#314))
+* **android:** when keyboard comes up, ensure input is in view ([9327ac71](https://github.com/driftyco/ionic/commit/9327ac71c778fa7ad48eb5570687e9380f5ff0db), closes [#314](https://github.com/driftyco/ionic/issues/314))
 * **backButton:**
-  * able to hide back button if any back button attr set in navBar, closes #564 ((74a05a03))
-  * Do not show back button if no attributes set, closes #549 ((2d39418d))
-* **browser:** on first hash-set, dont set scrollTop ((1c4d4a8b))
+  * able to hide back button if any back button attr set in navBar, closes #564 ([74a05a03](https://github.com/driftyco/ionic/commit/74a05a03388f1a9a77141f078623b018bf2829eb))
+  * Do not show back button if no attributes set, closes #549 ([2d39418d](https://github.com/driftyco/ionic/commit/2d39418d0b322e6e2ab2b054035e4c3abeabfaff))
+* **browser:** on first hash-set, dont set scrollTop ([1c4d4a8b](https://github.com/driftyco/ionic/commit/1c4d4a8b90e24a277187c7505538dbf461b95d11))
 * **buttonIcon:**
-  * fix vertical-align in safari, closes #554 ((6acba8da))
-  * float left icon-left, closes #515 ((38420c81))
-* **click:** Clicks firing twice, closes #573 ((2132d292))
-* **header:** Header icon button css fix for Safari, closes #576 ((801d2d7b))
-* **ionicScrollDelegate:** trigger resize before scrolling to top/bottom ((ea289b81), closes (#522))
-* **list:** css: don't make last .list on page have margin-bottom ((fb5a0d4c))
-* **listButtons:** Update list button sizes, closes #478 ((91652112))
-* **navBar:** Remove duplicate back button arrows, closes #547 ((4808e80d))
-* **navView:** if !$animate.enabled(), do not animate ((990d14e8), closes (#426))
-* **range:** Update range for android 4.0-4.3 ((e7eefeef))
-* **refresher:** make refresher css not create gap at end of list ((79387a4e))
-* **scroll:** `<scroll>` is now registered with $ionicScrollDelegate ((2c7ce763))
-* **scroll-view:** make it take up only 100% height ((d2f9e94b))
+  * fix vertical-align in safari, closes #554 ([6acba8da](https://github.com/driftyco/ionic/commit/6acba8da3e02dc29c115748196bee93faa9a43b3))
+  * float left icon-left, closes #515 ([38420c81](https://github.com/driftyco/ionic/commit/38420c81278f915562a0d0c941c83daf949ed2e0))
+* **click:** Clicks firing twice, closes #573 ([2132d292](https://github.com/driftyco/ionic/commit/2132d292e7bbf368e1c21be10b3ddf67a1b4e496))
+* **header:** Header icon button css fix for Safari, closes #576 ([801d2d7b](https://github.com/driftyco/ionic/commit/801d2d7b77d75c0288d7a039b2dfc0f5dbc99955))
+* **ionicScrollDelegate:** trigger resize before scrolling to top/bottom ([ea289b81](https://github.com/driftyco/ionic/commit/ea289b81c6a54d5adb3515b692d2dbec569d0498), closes [#522](https://github.com/driftyco/ionic/issues/522))
+* **list:** css: don't make last .list on page have margin-bottom ([fb5a0d4c](https://github.com/driftyco/ionic/commit/fb5a0d4c81461ef3c770f73a043284c71d4ac87d))
+* **listButtons:** Update list button sizes, closes #478 ([91652112](https://github.com/driftyco/ionic/commit/91652112a0eadf89fabdff852153e2ea88c340c5))
+* **navBar:** Remove duplicate back button arrows, closes #547 ([4808e80d](https://github.com/driftyco/ionic/commit/4808e80ddf7ce03947cee606376af6453bb52e2b))
+* **refresher:** make refresher css not create gap at end of list ([79387a4e](https://github.com/driftyco/ionic/commit/79387a4e4aa621e7d0e49b4062c94d63a503dfdb))
+* **scroll:** `<scroll>` is now registered with $ionicScrollDelegate ([2c7ce763](https://github.com/driftyco/ionic/commit/2c7ce7638563f97a0931a2cd3aa13632cbaf88f7))
+* **scroll-view:** css: make it take up only 100% height ([d2f9e94b](https://github.com/driftyco/ionic/commit/d2f9e94bcd7aec7292f2167c6bb20fca221b394a))
 * **scrollView:**
-  * start scroll again if it stops beyond boundaries ((eed6b19b))
-  * nested scrollViews now work independently ((4cc4a18c), closes (#278))
-* **sideMenuContent:** make dragContent default to true ((61a280bd))
+  * start scroll again if it stops beyond boundaries ([eed6b19b](https://github.com/driftyco/ionic/commit/eed6b19b519864b7b6a4cc4ef194be5423dde710))
+  * nested scrollViews now work independently ([4cc4a18c](https://github.com/driftyco/ionic/commit/4cc4a18c66e3fb636a2b253b1a6b13b02ebee696), closes [#278](https://github.com/driftyco/ionic/issues/278))
+* **sideMenuContent:** make dragContent default to true ([61a280bd](https://github.com/driftyco/ionic/commit/61a280bda8b7604a5eda11e99a45f4b991a8e269))
 
 
 #### Features
 
 * **$ionicScrollDelegate:**
-  * add scrollTo(left,top,animate) to delegate ((c119498d))
-  * allow anchorScroll to animate with param ((36691bba))
-  * add .anchorScroll() function ((c2bbd9e9))
-* **domUtil:** add getPositionInParent function ((a970f0bd))
-* **grid:** Added classes, variables and mixins for responsive grid options ((1cdb999e))
-* **ionic:** remove angular-sanitize (ngSanitize) as dependency ((e7556233))
-* **list:** reordering scrolls page, reordering performance better ((7f4b28d9), closes (#521))
-* **sideMenuContent:** watch `drag-content` attribute ((7f9bfb5a))
+  * add scrollTo(left,top,animate) to delegate ([c119498d](https://github.com/driftyco/ionic/commit/c119498d1bdfe9c5ec0d7453fce8f9a18227977c))
+  * allow anchorScroll to animate with param ([36691bba](https://github.com/driftyco/ionic/commit/36691bbaebf51ae5252e5673d3392e3e6c724eb9))
+  * add .anchorScroll() function ([c2bbd9e9](https://github.com/driftyco/ionic/commit/c2bbd9e96e2a14200e86fac3fdaa2408e19ab7ed))
+* **domUtil:** add getPositionInParent function ([a970f0bd](https://github.com/driftyco/ionic/commit/a970f0bdc3bf87cf26e984482e00d8e763fc326f))
+* **grid:** Added classes, variables and mixins for responsive grid options ([1cdb999e](https://github.com/driftyco/ionic/commit/1cdb999e5672391fbe02719eef060e28ea72871d))
+* **ionic:** remove angular-sanitize (ngSanitize) as dependency ([e7556233](https://github.com/driftyco/ionic/commit/e755623331c1ad2099b61cd07c93cb91ae992640))
+* **list:** reordering scrolls page, reordering performance better ([7f4b28d9](https://github.com/driftyco/ionic/commit/7f4b28d9da9e77a055f840d3b44384138af48ca2), closes [#521](https://github.com/driftyco/ionic/issues/521))
+* **sideMenuContent:** watch `drag-content` attribute ([7f9bfb5a](https://github.com/driftyco/ionic/commit/7f9bfb5a9499537f5aa18291b7c2043da2aced49))
 * **tabs:** 
-  * allow html in tab `title` attribute ((0facb120), closes (#528))
-  * allow tab `badge-style` attribute to set badge class ((b11e0f51))
+  * allow html in tab `title` attribute ([0facb120](https://github.com/driftyco/ionic/commit/0facb120c74f010a0a60e9e70c388b5b8264b890), closes [#528](https://github.com/driftyco/ionic/issues/528))
+  * allow tab `badge-style` attribute to set badge class ([b11e0f51](https://github.com/driftyco/ionic/commit/b11e0f512bc332ed92aee1ce3fa4b8d331b6193e))
 * **toggle:** 
-  * Disable toggle w/ ng-disabled, closes #541 ((2eab747d))
-  * allow ngDisabled binding ((0fe44867))
+  * Disable toggle w/ ng-disabled, closes #541 ([2eab747d](https://github.com/driftyco/ionic/commit/2eab747d47dbe3b299d7f3ed69fd790cad936e4e))
+  * allow ngDisabled binding ([0fe44867](https://github.com/driftyco/ionic/commit/0fe4486737c9780b3c2d7c86d84eab57c961834c))
+
 
 
 ### 0.9.23 "Alpha Oxen" (2014-02-05)
