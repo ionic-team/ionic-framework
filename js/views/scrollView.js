@@ -610,7 +610,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         self.scrollTo(0, elementScrollTop + elementHeight - (deviceHeight * 0.5), true);
       }
 
-      //Only the first scrollView parent of the element that broadcasted this event 
+      //Only the first scrollView parent of the element that broadcasted this event
       //(the active element that needs to be shown) should receive this event
       e.stopPropagation();
     });
@@ -618,7 +618,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     if ('ontouchstart' in window) {
 
       container.addEventListener("touchstart", function(e) {
-        if (e.__scroller) {
+        if (e.defaultPrevented) {
           return;
         }
         // Don't react if initial down happens on a form element
@@ -628,8 +628,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
         self.doTouchStart(e.touches, e.timeStamp);
         e.preventDefault();
-        //We don't want to stop propagation, other things might want to know about the touchstart
-        e.__scroller = true;
       }, false);
 
       document.addEventListener("touchmove", function(e) {
@@ -648,7 +646,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       var mousedown = false;
 
       container.addEventListener("mousedown", function(e) {
-        if (e.__scroller) {
+        if (e.defaultPrevented) {
           return;
         }
         // Don't react if initial down happens on a form element
@@ -661,8 +659,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
           pageY: e.pageY
         }], e.timeStamp);
 
-        //We don't want to stop propagation, other things might want to know about the touchstart
-        e.__scroller = true;
+        e.preventDefault();
         mousedown = true;
       }, false);
 
