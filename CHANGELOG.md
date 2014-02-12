@@ -1,3 +1,51 @@
+<a name="0.9.24"></a>
+### 0.9.24 (2014-02-12)
+
+
+#### Bug Fixes
+
+* **android:** when keyboard comes up, ensure input is in view ((9327ac71), closes (#314))
+* **backButton:**
+  * able to hide back button if any back button attr set in navBar, closes #564 ((74a05a03))
+  * Do not show back button if no attributes set, closes #549 ((2d39418d))
+* **browser:** on first hash-set, dont set scrollTop ((1c4d4a8b))
+* **buttonIcon:**
+  * fix vertical-align in safari, closes #554 ((6acba8da))
+  * float left icon-left, closes #515 ((38420c81))
+* **click:** Clicks firing twice, closes #573 ((2132d292))
+* **header:** Header icon button css fix for Safari, closes #576 ((801d2d7b))
+* **ionicScrollDelegate:** trigger resize before scrolling to top/bottom ((ea289b81), closes (#522))
+* **list:** css: don't make last .list on page have margin-bottom ((fb5a0d4c))
+* **listButtons:** Update list button sizes, closes #478 ((91652112))
+* **navBar:** Remove duplicate back button arrows, closes #547 ((4808e80d))
+* **navView:** if !$animate.enabled(), do not animate ((990d14e8), closes (#426))
+* **range:** Update range for android 4.0-4.3 ((e7eefeef))
+* **refresher:** make refresher css not create gap at end of list ((79387a4e))
+* **scroll:** `<scroll>` is now registered with $ionicScrollDelegate ((2c7ce763))
+* **scroll-view:** make it take up only 100% height ((d2f9e94b))
+* **scrollView:**
+  * start scroll again if it stops beyond boundaries ((eed6b19b))
+  * nested scrollViews now work independently ((4cc4a18c), closes (#278))
+* **sideMenuContent:** make dragContent default to true ((61a280bd))
+
+
+#### Features
+
+* **$ionicScrollDelegate:**
+  * add scrollTo(left,top,animate) to delegate ((c119498d))
+  * allow anchorScroll to animate with param ((36691bba))
+  * add .anchorScroll() function ((c2bbd9e9))
+* **domUtil:** add getPositionInParent function ((a970f0bd))
+* **grid:** Added classes, variables and mixins for responsive grid options ((1cdb999e))
+* **ionic:** remove angular-sanitize (ngSanitize) as dependency ((e7556233))
+* **ionicToggle:** allow ngDisabled binding ((0fe44867))
+* **list:** reordering scrolls page, reordering performance better ((7f4b28d9), closes (#521))
+* **sideMenuContent:** watch `drag-content` attribute ((7f9bfb5a))
+* **tab:** allow html in tab `title` attribute ((0facb120), closes (#528))
+* **tabs:** allow tab `badge-style` attribute to set badge class ((b11e0f51))
+* **toggle:** Disable toggle w/ ng-disabled, closes #541 ((2eab747d))
+
+
 ## 0.9.23 "Alpha Oxen" (2014-02-05)
  - Android back button correctly goes back a view or closes the app
  - CustomEvent polyfill improvements for Android
