@@ -46,7 +46,8 @@ function publish {
 
   VERSION=$(readJsonProp "package.json" "version")
 
-  git push --tags origin master
+  git push origin master
+  git push origin v$VERSION
 
   echo "-- Version published as v$VERSION successfully!"
 

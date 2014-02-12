@@ -41,29 +41,28 @@ function run {
   # TODO Saucelabs settings need more tweaking before it becomes stable (sometimes it fails to connect)
   # grunt karma:sauce --reporters=dots
 
-  if [[ "$TRAVIS_BRANCH" != "master" ]]; then
-    echo "-- We are not on branch master, instead we are on branch $TRAVIS_BRANCH. Will not push build out."
-    exit 0
-  fi
   if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
     echo "-- This is a pull request build; will not push build out."
     exit 0
   fi
+  
+  LATEST_TAG_COMMIT=$(git rev-list $(git describe --tags --abbrev=0) | head -n 1)
 
-  # If latest commit message starts with 'chore(release):' it's a release
-  # COMMIT_MESSAGE=$(git log --format=%B -n 1 $TRAVIS_COMMIT | head -c 15)
-
-  # if [[ "$COMMIT_MESSAGE" == "chore(release:" ]]; then
-  IS_RELEASE=true
-  echo "##################################"
-  echo "# Pushing out a new full release #"
-  echo "##################################"
-  # else
-    # echo "#####################################"
-    # echo "# Pushing out a new nightly release #"
-    # echo "#####################################"
-    # ./scripts/travis/bump-nightly-version.sh
-  # fi
+  if [[ "$TRAVIS_COMMIT" == "$LATEST_TAG_COMMIT" ]]; then
+    IS_RELEASE=true
+    echo "##################################"
+    echo "# Pushing out a new full release #"
+    echo "##################################"
+  else
+    if [[ "$TRAVIS_BRANCH" != "master" ]]; then
+      echo "-- We are not on branch master, instead we are on branch $TRAVIS_BRANCH. Will not push build out."
+      exit 0
+    fi
+    echo "#####################################"
+    echo "# Pushing out a new nightly release #"
+    echo "#####################################"
+    ./scripts/travis/bump-nightly-version.sh
+  fi
 
   # Build (make sure to build after version is bumped)
   grunt build
