@@ -2028,8 +2028,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
         if (isHeadingOutwardsX) {
           self.__decelerationVelocityX += scrollOutsideX * penetrationDeceleration;
         }
+        var isStoppedX = Math.abs(self.__decelerationVelocityX) <= self.__minDecelerationScrollLeft;
         //If we're not heading outwards, or if the above statement got us below minDeceleration, go back towards bounds
-        if (!isHeadingOutwardsX || self.__decelerationVelocityX <= self.__minDecelerationScrollLeft) {
+        if (!isHeadingOutwardsX || isStoppedX) {
           self.__decelerationVelocityX = scrollOutsideX * penetrationAcceleration;
         }
       }
@@ -2039,8 +2040,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
         if (isHeadingOutwardsY) {
           self.__decelerationVelocityY += scrollOutsideY * penetrationDeceleration;
         }
+        var isStoppedY = Math.abs(self.__decelerationVelocityY) <= self.__minDecelerationScrollTop;
         //If we're not heading outwards, or if the above statement got us below minDeceleration, go back towards bounds
-        if (!isHeadingOutwardsY || self.__decelerationVelocityY <= self.__minDecelerationScrollTop) {
+        if (!isHeadingOutwardsY || isStoppedY) {
           self.__decelerationVelocityY = scrollOutsideY * penetrationAcceleration;
         }
       }
