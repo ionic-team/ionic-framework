@@ -1,5 +1,5 @@
 <a name="0.9.24"></a>
-### 0.9.24 (2014-02-12)
+### 0.9.24 "Peleguin" (2014-02-12)
 
 
 #### Bug Fixes
@@ -38,15 +38,17 @@
 * **domUtil:** add getPositionInParent function ((a970f0bd))
 * **grid:** Added classes, variables and mixins for responsive grid options ((1cdb999e))
 * **ionic:** remove angular-sanitize (ngSanitize) as dependency ((e7556233))
-* **ionicToggle:** allow ngDisabled binding ((0fe44867))
 * **list:** reordering scrolls page, reordering performance better ((7f4b28d9), closes (#521))
 * **sideMenuContent:** watch `drag-content` attribute ((7f9bfb5a))
-* **tab:** allow html in tab `title` attribute ((0facb120), closes (#528))
-* **tabs:** allow tab `badge-style` attribute to set badge class ((b11e0f51))
-* **toggle:** Disable toggle w/ ng-disabled, closes #541 ((2eab747d))
+* **tabs:** 
+  * allow html in tab `title` attribute ((0facb120), closes (#528))
+  * allow tab `badge-style` attribute to set badge class ((b11e0f51))
+* **toggle:** 
+  * Disable toggle w/ ng-disabled, closes #541 ((2eab747d))
+  * allow ngDisabled binding ((0fe44867))
 
 
-## 0.9.23 "Alpha Oxen" (2014-02-05)
+### 0.9.23 "Alpha Oxen" (2014-02-05)
  - Android back button correctly goes back a view or closes the app
  - CustomEvent polyfill improvements for Android
  - Fix tab icon alignments
@@ -66,7 +68,7 @@
  - `bower install ionic`: release files are now located in the `release` folder, not `dist`.
 
 
-## 0.9.22 "Alpha Narwhal" (2014-01-30)
+### 0.9.22 "Alpha Narwhal" (2014-01-30)
  - Tap polyfill overhaul to remove 300ms delay when firing a click
  - Android click firing twice fixes
  - Fixes with the tap polyfill for directives using ng-click
@@ -74,7 +76,7 @@
  - Reduce default button height
 
 
-## 0.9.21 "Alpha Maine Coon" (2014-01-24)
+### 0.9.21 "Alpha Maine Coon" (2014-01-24)
  - Toggle directive now includes .item.item-toggle wrapper
  - Toggle/Checkbox/Radio implements ng-model/ng-value/ng-change
  - Ionicons v1.4.2, icons now using :before pseudo
@@ -89,7 +91,7 @@
  - Remove angular-touch.js and angular-route.js references
 
 
-## 0.9.20 "Alpha Lynx" (2014-01-14)
+### 0.9.20 "Alpha Lynx" (2014-01-14)
  - Improved transitions between views
  - Fixed hide-nav-bar/hide-back-button view attributes
  - Removed title attributes from DOM
@@ -98,7 +100,7 @@
  - Rename ionic services to use $ionic prefix
 
 
-## 0.9.19 "Alpha Koala" (2014-01-10)
+### 0.9.19 "Alpha Koala" (2014-01-10)
  - Created ViewState Service to track navigation history
  - Created navView directive
  - Removed navPage and navRouter directives
@@ -106,49 +108,49 @@
  - Update examples to use $stateProvider instead $routeProvider
 
 
-## 0.9.18 "Alpha Jaguar" (2013-12-18)
+### 0.9.18 "Alpha Jaguar" (2013-12-18)
  - Slide box bug fixes
  - Fixed issues with minification
  - Small tweaks
 
 
-## 0.9.17 "Alpha Iguana" (2013-12-16)
+### 0.9.17 "Alpha Iguana" (2013-12-16)
  - Nav bar button fixes
  - New slide box overhaul
  - New list overhaul
  - Radio button and checkbox fixes
 
 
-## 0.9.16 "Alpha Hippo" (2013-12-12)
+### 0.9.16 "Alpha Hippo" (2013-12-12)
  - Scrollbars
  - Scroll bug fixes
 
 
-## 0.9.15 "Alpha Giraffe" (2013-12-08)
+### 0.9.15 "Alpha Giraffe" (2013-12-08)
  - Scroll view fixes
  - Radio button and checkbox fixes
  - Slide box fixes
 
 
-## 0.9.14 "Alpha Fox" (2013-12-04)
+### 0.9.14 "Alpha Fox" (2013-12-04)
  - Massive scroll performance improvements
  - Android fixes and perf improvements
  - Header and nav bar button fixes
  - Animation performance improvements
 
 
-## 0.9.13 "Alpha Elephant" (2013-11-26)
+### 0.9.13 "Alpha Elephant" (2013-11-26)
  - nav router back button fixes
  - Remove back button on first route
  - Fix forward/back transition on iOS devices which lack history.state
 
 
-## 0.9.12 "Alpha Dog" (2013-11-24)
+### 0.9.12 "Alpha Dog" (2013-11-24)
  - Fixed some overflow scrolling issues.
 
 
-## 0.9.11 "Alpha Cat Dog" (2013-11-23)
+### 0.9.11 "Alpha Cat Dog" (2013-11-23)
  
 
-## 0.9.10 "Alpha Cat" (2013-11-23)
+### 0.9.10 "Alpha Cat" (2013-11-23)
 
