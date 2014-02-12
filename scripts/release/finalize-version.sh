@@ -30,7 +30,7 @@ function prepare {
   grunt changelog
 
   git add package.json bower.json component.json release CHANGELOG.md
-  git commit -m "chore(release): v$VERSION"
+  git commit -m "chore(release): v$VERSION \"$CODENAME\""
   git tag -m "v$VERSION" v$VERSION
 
   echo "--"

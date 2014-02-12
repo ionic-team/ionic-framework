@@ -51,19 +51,19 @@ function run {
   fi
 
   # If latest commit message starts with 'chore(release):' it's a release
-  COMMIT_MESSAGE=$(git log --format=%B -n 1 $TRAVIS_COMMIT | head -c 15)
+  # COMMIT_MESSAGE=$(git log --format=%B -n 1 $TRAVIS_COMMIT | head -c 15)
 
-  if [[ "$COMMIT_MESSAGE" == "chore(release:" ]]; then
-    IS_RELEASE=true
-    echo "##################################"
-    echo "# Pushing out a new full release #"
-    echo "##################################"
-  else
-    echo "#####################################"
-    echo "# Pushing out a new nightly release #"
-    echo "#####################################"
-    ./scripts/travis/bump-nightly-version.sh
-  fi
+  # if [[ "$COMMIT_MESSAGE" == "chore(release:" ]]; then
+  IS_RELEASE=true
+  echo "##################################"
+  echo "# Pushing out a new full release #"
+  echo "##################################"
+  # else
+    # echo "#####################################"
+    # echo "# Pushing out a new nightly release #"
+    # echo "#####################################"
+    # ./scripts/travis/bump-nightly-version.sh
+  # fi
 
   # Build (make sure to build after version is bumped)
   grunt build
