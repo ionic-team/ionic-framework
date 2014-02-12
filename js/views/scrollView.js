@@ -593,6 +593,28 @@ ionic.views.Scroll = ionic.views.View.inherit({
     // Event Handler
     var container = this.__container;
 
+    //Broadcasted when keyboard is shown on some platforms.
+    //See js/utils/keyboard.js
+    container.addEventListener('scrollChildIntoView', function(e) {
+      var deviceHeight = window.innerHeight;
+      var element = e.target;
+      var elementHeight = e.target.offsetHeight;
+
+      //getBoundingClientRect() will actually give us position relative to the viewport
+      var elementDeviceTop = element.getBoundingClientRect().top;
+      var elementScrollTop = ionic.DomUtil.getPositionInParent(element, container).top;
+
+      //If the element is positioned under the keyboard...
+      if (elementDeviceTop + elementHeight > deviceHeight) {
+        //Put element in middle of visible screen
+        self.scrollTo(0, elementScrollTop + elementHeight - (deviceHeight * 0.5), true);
+      }
+
+      //Only the first scrollView parent of the element that broadcasted this event 
+      //(the active element that needs to be shown) should receive this event
+      e.stopPropagation();
+    });
+
     if ('ontouchstart' in window) {
 
       container.addEventListener("touchstart", function(e) {

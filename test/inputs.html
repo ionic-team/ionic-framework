@@ -1,0 +1,84 @@
+<html ng-app="navTest">
+  <head>
+    <meta charset="utf-8">
+    <title>List</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="lib/css/ionic.css">
+    <script src="lib/js/ionic.bundle.js"></script>
+  </head>
+  <body>
+
+    <pane>
+
+      <header class="bar bar-header bar-positive">
+        <div class="buttons">
+          <button ng-click="toggleDelete()" class="button button-clear">{{ editBtnText }}</button>
+        </div>
+        <h1 class="title">List Tests</h1>
+        <div class="buttons">
+          <button ng-click="toggleReorder()" class="button button-clear">{{ reorderBtnText }}</button>
+        </div>
+      </header>
+
+      <footer class="bar bar-footer bar-positive">
+        <h1 class="title">Footer time!</h1>
+      </footer>
+
+      <content has-header="true" has-footer="true">
+        <input type="text" placeholder="text me!">
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <input type="text" placeholder="text me!">
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <input type="text" placeholder="text me!">
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <input type="text" placeholder="text me!">
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <input type="text" placeholder="text me!">
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <input type="text" placeholder="text me!">
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <input type="text" placeholder="text me!">
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <input type="text" placeholder="text me!">
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <p style="margin: 10px;">...</p>
+        <input type="text" placeholder="text me!">
+      </content>
+
+    </pane>
+  </body>
+</html>
+

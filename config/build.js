@@ -6,7 +6,14 @@ module.exports = {
     'js/ionic.js',
 
     // Utils
-    'js/utils/**/*.js',
+    'js/utils/animate.js',
+    'js/utils/dom.js',
+    'js/utils/events.js',
+    'js/utils/gestures.js',
+    'js/utils/platform.js',
+    'js/utils/poly.js',
+    'js/utils/utils.js',
+    'js/utils/keyboard.js',
 
     // Views
     'js/views/view.js',
