@@ -50,12 +50,6 @@ module.exports = function(grunt) {
       }
     },
 
-    changelog: {
-      options: {
-        repository: 'https://github.com/driftyco/ionic'
-      }
-    },
-
     version: {
       dist: {
         dest: 'dist/version.json'

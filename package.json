@@ -3,6 +3,9 @@
   "private": false,
   "version": "0.9.25-alpha",
   "codename": "quitzal",
+  "repository": {
+    "url": "git://github.com/driftyco/ionic.git"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-bump": "0.0.13",
