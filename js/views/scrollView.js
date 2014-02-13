@@ -1911,12 +1911,13 @@ ionic.views.Scroll = ionic.views.View.inherit({
     };
 
     // How much velocity is required to keep the deceleration running
-    var minVelocityToKeepDecelerating = self.options.snapping ? 4 : 0.1;
+    self.__minVelocityToKeepDecelerating = self.options.snapping ? 4 : 0.1;
 
     // Detect whether it's still worth to continue animating steps
     // If we are already slow enough to not being user perceivable anymore, we stop the whole process here.
     var verify = function() {
-      var shouldContinue = Math.abs(self.__decelerationVelocityX) >= minVelocityToKeepDecelerating || Math.abs(self.__decelerationVelocityY) >= minVelocityToKeepDecelerating;
+      var shouldContinue = Math.abs(self.__decelerationVelocityX) >= self.__minVelocityToKeepDecelerating ||
+        Math.abs(self.__decelerationVelocityY) >= self.__minVelocityToKeepDecelerating;
       if (!shouldContinue) {
         self.__didDecelerationComplete = true;
       }
@@ -2047,7 +2048,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         if (isHeadingOutwardsX) {
           self.__decelerationVelocityX += scrollOutsideX * penetrationDeceleration;
         }
-        var isStoppedX = Math.abs(self.__decelerationVelocityX) <= self.__minDecelerationScrollLeft;
+        var isStoppedX = Math.abs(self.__decelerationVelocityX) <= self.__minVelocityToKeepDecelerating;
         //If we're not heading outwards, or if the above statement got us below minDeceleration, go back towards bounds
         if (!isHeadingOutwardsX || isStoppedX) {
           self.__decelerationVelocityX = scrollOutsideX * penetrationAcceleration;
@@ -2059,7 +2060,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         if (isHeadingOutwardsY) {
           self.__decelerationVelocityY += scrollOutsideY * penetrationDeceleration;
         }
-        var isStoppedY = Math.abs(self.__decelerationVelocityY) <= self.__minDecelerationScrollTop;
+        var isStoppedY = Math.abs(self.__decelerationVelocityY) <= self.__minVelocityToKeepDecelerating;
         //If we're not heading outwards, or if the above statement got us below minDeceleration, go back towards bounds
         if (!isHeadingOutwardsY || isStoppedY) {
           self.__decelerationVelocityY = scrollOutsideY * penetrationAcceleration;
