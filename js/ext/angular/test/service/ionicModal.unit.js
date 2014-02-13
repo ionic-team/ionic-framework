@@ -54,4 +54,35 @@ describe('Ionic Modal', function() {
 
     expect(modalInstance.el.classList.contains('active')).toBe(false);
   });
+
+  it('should broadcast "modal.shown" on show', function() {
+    var template = '<div class="modal"></div>';
+    var m = modal.fromTemplate(template, {});
+    spyOn(m.scope.$parent, '$broadcast');
+    m.show();
+    expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.shown', m);
+  });
+  it('should broadcast "modal.hidden" on hide', function() {
+    var template = '<div class="modal"></div>';
+    var m = modal.fromTemplate(template, {});
+    spyOn(m.scope.$parent, '$broadcast');
+    m.hide();
+    expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.hidden', m);
+  });
+  it('should broadcast "modal.removed" on remove', inject(function($animate) {
+    var template = '<div class="modal"></div>';
+    var m = modal.fromTemplate(template, {});
+    var broadcastedModal;
+    var done = false;
+
+    //By the time m.remove() is done, our scope will be destroyed. so we have to save the modal
+    //it gives us
+    spyOn(m.scope.$parent, '$broadcast').andCallFake(function(e, modal) {
+      broadcastedModal = modal;
+    });
+    spyOn($animate, 'leave').andCallFake(function(el, cb) { cb(); });
+
+    m.remove();
+    expect(broadcastedModal).toBe(m);
+  }));
 });

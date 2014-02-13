@@ -26,7 +26,7 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
           _this.hide();
         };
 
-        _this.scope.$on('$destroy', function() {
+        self.scope.$on('$destroy', function() {
           $ionicPlatform.offHardwareBackButton(onHardwareBackButton);
         });
 
@@ -36,6 +36,8 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
         this.didInitEvents = true;
       }
 
+      this.scope.$parent.$broadcast('modal.shown', this);
+
     },
     // Hide the modal
     hide: function() {
@@ -43,6 +45,8 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
       $animate.removeClass(element, this.animation);
 
       ionic.views.Modal.prototype.hide.call(this);
+
+      this.scope.$parent.$broadcast('modal.hidden', this);
     },
 
     // Remove and destroy the modal scope
@@ -50,6 +54,7 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
       var self  = this,
           element = angular.element(this.el);
       $animate.leave(angular.element(this.el), function() {
+        self.scope.$parent.$broadcast('modal.removed', self);
         self.scope.$destroy();
       });
     }
@@ -80,7 +85,7 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
     /**
      * Load a modal with the given template string.
      *
-     * A new isolated scope will be created for the 
+     * A new isolated scope will be created for the
      * modal and the new element will be appended into the body.
      */
     fromTemplate: function(templateString, options) {
