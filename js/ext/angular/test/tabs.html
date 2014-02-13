@@ -128,6 +128,10 @@
       angular.module('tabsTest', ['ionic'])
 
       .controller('RootCtrl', function($scope, $timeout) {
+
+        $scope.$on('tab.shown', function() { console.error('tab.shown Root this should not happen'); });
+        $scope.$on('tab.hidden', function() { console.error('tab.hidden Root this should not happen'); });
+
         $scope.controllerChanged = function(event) {
           console.log('Controller changed', event);
 
@@ -164,6 +168,9 @@
         $ionicModal.fromTemplateUrl('newTask.html', function(modal) {
           $scope.settingsModal = modal;
         });
+
+        $scope.$on('tab.shown', function() { console.log('tab.shown Home'); });
+        $scope.$on('tab.hidden', function() { console.log('tab.hidden Home'); });
 
         var removeItem = function(item, button) {
           $ionicActionSheet.show({
