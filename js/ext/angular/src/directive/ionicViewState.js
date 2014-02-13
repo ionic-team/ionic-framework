@@ -68,7 +68,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
       alignTitle: '@',
       barType: '@type'
     },
-    template: '<header class="bar bar-header nav-bar invisible {{barType}}">' +
+    template: '<header class="bar bar-header nav-bar invisible" ng-class="barType">' +
         '<div class="buttons"> ' +
           '<button view-back class="back-button button hide" ng-if="enableBackButton"></button>' +
           '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" class="button no-animation {{button.type}}" bind-html-unsafe="button.content"></button>' +
