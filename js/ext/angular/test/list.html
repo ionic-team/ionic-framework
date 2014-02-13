@@ -109,7 +109,7 @@
               option-buttons="optionButtons1">
 
           <!-- shows that the item directive does not need attributes and can get values from the list attributes -->
-          <item item="item" class="item-message" ng-repeat="item in items" ng-class="{ active: item.isActive}">
+          <item item="item" ng-click="itemClick()" class="item-message" ng-repeat="item in items" ng-class="{ active: item.isActive}">
             <img ng-src="{{item.face}}">
             <h2>{{item.from}}</h2>
             <p>{{item.text}}</p>
@@ -209,6 +209,10 @@
           $scope.reorderBtnText = ($scope.isReorderingItems ? 'Done' : 'Reorder');
         };
 
+
+        $scope.itemClick = function() {
+          console.debug('itemClick');
+        };
 
         // Item Methods/Properties
         $scope.deleteItem = function(item) {

@@ -45,7 +45,19 @@ angular.module('ionic.ui.touch', [])
 
     };
 
-  }]);
+  }])
+
+  .directive('stopEvent', function () {
+    function stopEvent(e) {
+      e.stopPropagation();
+    }
+    return {
+      restrict: 'A',
+      link: function (scope, element, attr) {
+        element.bind(attr.stopEvent, stopEvent);
+      }
+    };
+  });
 
 
 })(window.angular, window.ionic);
