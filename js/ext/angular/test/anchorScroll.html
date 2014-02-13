@@ -13,54 +13,39 @@
   <body>
 
     <div ng-controller="MyCtrl">
-      <header-bar title="title" type="bar-positive">
-      </header-bar>
-      <content has-header="true">
-        <a ng-click="scrollTo('foo')">Click me!</a>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
+      <header class="bar bar-header bar-positive">
+        <div class="buttons">
+          <button class="button button-icon icon ion-clock" ng-click="doScroll()"></button>
+        </div>
+        <h1 class="title">Click the Clock to Get Stuck</h1>
+      </header>
 
-        <div id="foo">Here you are.</div>
+      <content class="has-header">
 
+      <list>
+        <item ng-repeat="item in items" 
+              item="item"
+              id="foo-{{item.id}}"
+              href="#/item/{{item.id}}">
+          Item {{ item.id }}
+        </item>
+      </list>
 
       </content>
     </div>
 
     <script>
 function MyCtrl($scope, $location, $ionicScrollDelegate) {
-  $scope.scrollTo = function(id) {
-    $location.hash(id);
+  $scope.items = [];
+  for (var i=0; i < 100; i++) {
+    $scope.items.push({id:i});
+  }
+  
+  $scope.doScroll = function() {
+    $location.hash('foo-50');
     $ionicScrollDelegate.anchorScroll(true);
   }
 }
     </script>
-  </body>
-</html>
+    </body>
+    </html>
