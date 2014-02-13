@@ -56,6 +56,7 @@ describe('Ionic View', function() {
 
   it('should show/hide navBar', function() {
     var element = compile('<nav-bar></nav-bar>')(scope);
+    scope.$digest();
     expect(element.hasClass('invisible')).toEqual(true);
     scope.$broadcast('viewState.showNavBar', true);
     scope.$digest();
@@ -70,10 +71,12 @@ describe('Ionic View', function() {
     scope.$digest();
     var navBar = element.find('header')
     expect(navBar.hasClass('invisible')).toEqual(true);
+  });
 
-    element = compile('<div><nav-bar></nav-bar><view></view></div>')(scope);
+  it('should show navbar when not using view attr', function() {
+    var element = compile('<div><nav-bar></nav-bar><view></view></div>')(scope);
     scope.$digest();
-    navBar = element.find('header')
+    var navBar = element.find('header')
     expect(navBar.hasClass('invisible')).toEqual(false);
   });
 
