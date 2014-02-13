@@ -32,12 +32,35 @@ describe('Ionic Modal', function() {
     });
 
     timeout.flush();
-
-    waitsFor(function() {
-      return done;
-    }, "Modal should be loaded", 100);
-
+    expect(done).toBe(true);
   });
+
+  it('should set isShown on show/hide', function() {
+    var m = modal.fromTemplate('<div class="modal">hello</div>');
+    expect(m.isShown()).toBe(false);
+    m.show();
+    expect(m.isShown()).toBe(true);
+    m.hide();
+    expect(m.isShown()).toBe(false);
+  });
+
+  it('should set isShown on remove', function() {
+    var m = modal.fromTemplate('<div class="modal">hello</div>');
+    expect(m.isShown()).toBe(false);
+    m.show();
+    expect(m.isShown()).toBe(true);
+    m.remove();
+    expect(m.isShown()).toBe(false);
+  });
+
+  it('should animate leave and destroy scope on remove', inject(function($animate) {
+    var m = modal.fromTemplate('<div class="modal"></div>');
+    spyOn($animate, 'leave').andCallFake(function(el, cb) { cb(); });
+    spyOn(m.scope, '$destroy');
+    m.remove();
+    expect($animate.leave).toHaveBeenCalled();
+    expect(m.scope.$destroy).toHaveBeenCalled();
+  }));
 
   it('Should close on hardware back button', function() {
     var template = '<div class="modal"></div>';

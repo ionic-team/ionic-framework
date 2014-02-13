@@ -9,13 +9,16 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
     },
     // Show the modal
     show: function() {
-      var _this = this;
+      var self = this;
       var element = angular.element(this.el);
+
+      self._isShown = true;
+
       if(!element.parent().length) {
         element.addClass(this.animation);
         $animate.enter(element, angular.element($document[0].body), null, function() {
         });
-        ionic.views.Modal.prototype.show.call(_this);
+        ionic.views.Modal.prototype.show.call(self);
       } else {
         $animate.addClass(element, this.animation, function() {
         });
@@ -23,7 +26,7 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
 
       if(!this.didInitEvents) {
         var onHardwareBackButton = function() {
-          _this.hide();
+          self.hide();
         };
 
         self.scope.$on('$destroy', function() {
@@ -41,6 +44,7 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
     },
     // Hide the modal
     hide: function() {
+      this._isShown = false;
       var element = angular.element(this.el);
       $animate.removeClass(element, this.animation);
 
@@ -53,10 +57,15 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
     remove: function() {
       var self  = this,
           element = angular.element(this.el);
+      this._isShown = false;
       $animate.leave(angular.element(this.el), function() {
         self.scope.$parent.$broadcast('modal.removed', self);
         self.scope.$destroy();
       });
+    },
+
+    isShown: function() {
+      return !!this._isShown;
     }
   });
 
