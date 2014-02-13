@@ -15,47 +15,86 @@
       }
     </style>
   </head>
-  <body>
+  <body ng-controller="AppCtrl">
 
     <view id="view">
+      <header>
+        <label class="item item-input">
+          <span class="input-label">Header</span>
+          <input type="text" value="header input">
+        </label>
+      </header>
       <content has-header="true" padding="true" overflow-scroll="false">
         <div class="list">
           <label class="item item-input">
-            <span class="input-label" ng-required>Your Name</span>
-            <input type="text" value="name">
+            <span class="input-label">Your Name</span>
+            <input type="text" value="name input">
           </label>
-          <a class="item item-checkbox no-arrow">
+          <div class="item item-checkbox">
             <span class="input-label">Remember me</span>
             <label class="checkbox">
                 <input type="checkbox">
             </label>
-          </a>
+          </div>
         </div>
 
         <label class="item item-input">
           <span class="input-label">From</span>
-          <input type="text" class="text-right" value="from">
+          <input type="text" value="from input">
         </label>
 
         <label class="item item-input">
           <span class="input-label">To</span>
-          <input type="text" class="text-right" value="to">
+          <input type="text" value="to input">
         </label>
 
-        <label class="item item-input  item-stacked-label">
+        <label class="item item-input item-stacked-label">
           <span class="input-label">Comment</span>
-          <textarea id="textarea">textarea</textarea>
+          <textarea id="textarea">comment textarea</textarea>
         </label>
 
-        <button class="button button-block button-energized">
-          Submit
+        <button class="button button-block button-energized" ng-click="openModal()">
+          Open Modal
         </button>
+
+        <p>
+          <a href="clickTests.html">Click Tests</a> -
+          <a href="tapInputs.html">Tap Inputs</a> -
+          <a href="/test/">CSS Tests</a>
+        </p>
       </content>
     </view>
 
+    <script id="modal.html" type="text/ng-template">
+      <div class="modal" ng-controller="ModalCtrl">
+        <header class="bar bar-header bar-positive">
+          <h1 class="title">New Contact</h1>
+          <button class="button button-clear button-primary" ng-click="closeModal()" stop-event="click">Cancel</button>
+        </header>
+        <content has-header="true">
+          <div class="padding">
+            <div class="list">
+              <label class="item item-input">
+                <span class="input-label">First Name</span>
+                <input type="text" placeholder="">
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Last Name</span>
+                <input type="text" placeholder="">
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Email</span>
+                <input type="text" placeholder="">
+              </label>
+              <button class="button button-full button-positive" ng-click="closeModal()">Create</button>
+            </div>
+          </div>
+        </content>
+      </div>
+    </script>
+
     <script src="../../../../dist/js/ionic.bundle.js"></script>
     <script>
-      angular.module('navTest', ['ionic']);
 
       var msgs = [];
       var timerId;
@@ -90,6 +129,29 @@
         var d = new Date();
         return d.getSeconds() + '.' + d.getMilliseconds();
       }
+
+
+      angular.module('navTest', ['ionic'])
+
+      .controller('AppCtrl', function($scope, $ionicModal) {
+
+        $scope.openModal = function() {
+          $scope.modal.show();
+        };
+        $ionicModal.fromTemplateUrl('modal.html', function(modal) {
+          $scope.modal = modal;
+        }, {
+          animation: 'slide-in-up',
+          focusFirstInput: true
+        });
+
+      })
+
+      .controller('ModalCtrl', function($scope) {
+        $scope.closeModal = function() {
+          $scope.modal.hide();
+        }
+      });
 
     </script>
   </body>
