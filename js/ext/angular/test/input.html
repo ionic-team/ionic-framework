@@ -2,31 +2,94 @@
   <head>
     <meta charset="utf-8">
     <title>Checkbox</title>
-
-    <!-- Sets initial viewport load and disables zooming  -->
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <style>
+      .dot {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        background-color: red;
+        z-index: 1000;
+        pointer-events: none;
+      }
+    </style>
   </head>
   <body>
 
-    <div>
-      <content has-header="true" class="reveal-animation">
+    <view id="view">
+      <content has-header="true" padding="true" overflow-scroll="false">
         <div class="list">
           <label class="item item-input">
-            <span class="input-label">First Name</span>
-            <input type="text" placeholder="John">
+            <span class="input-label" ng-required>Your Name</span>
+            <input type="text" value="name">
           </label>
-          <label class="item item-input">
-            <span class="input-label">Last Name</span>
-            <input type="text" placeholder="Suhr">
-          </label>
+          <a class="item item-checkbox no-arrow">
+            <span class="input-label">Remember me</span>
+            <label class="checkbox">
+                <input type="checkbox">
+            </label>
+          </a>
         </div>
+
+        <label class="item item-input">
+          <span class="input-label">From</span>
+          <input type="text" class="text-right" value="from">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">To</span>
+          <input type="text" class="text-right" value="to">
+        </label>
+
+        <label class="item item-input  item-stacked-label">
+          <span class="input-label">Comment</span>
+          <textarea id="textarea">textarea</textarea>
+        </label>
+
+        <button class="button button-block button-energized">
+          Submit
+        </button>
       </content>
-    </div>
+    </view>
 
     <script src="../../../../dist/js/ionic.bundle.js"></script>
     <script>
       angular.module('navTest', ['ionic']);
+
+      var msgs = [];
+      var timerId;
+      console.debug = function() {
+        var msg = [];
+        for (var i = 0, j = arguments.length; i < j; i++){
+          msg.push(arguments[i]);
+        }
+        msg.push(getTime());
+
+        msgs.push(msg.join(', '));
+
+        clearTimeout(timerId);
+        timerId = setTimeout(function(){
+          document.getElementById('view').style.display = 'none';
+          document.writeln(msgs.join('<br>'));
+          console.debug = function(){};
+        }, 2000);
+      };
+
+      document.addEventListener('touchstart', function(e){
+        console.debug('touchstart');
+      });
+      document.addEventListener('touchstart', function(e){
+        console.debug('touchend');
+      });
+      document.addEventListener('click', function(event){
+        console.debug('click', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY);
+      });
+
+      function getTime() {
+        var d = new Date();
+        return d.getSeconds() + '.' + d.getMilliseconds();
+      }
 
     </script>
   </body>

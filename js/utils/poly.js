@@ -46,7 +46,8 @@
     ele.dispatchEvent(clickEvent);
 
     if(ele.tagName === 'INPUT' || ele.tagName === 'TEXTAREA' || ele.tagName === 'SELECT') {
-      ele.focus(); 
+      ele.focus();
+      e.preventDefault();
     } else {
       ele.blur();
     }
