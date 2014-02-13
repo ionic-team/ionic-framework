@@ -74,13 +74,14 @@ module.exports = function(grunt) {
 
     'removelogging': {
       dist: {
-        files: {
-          'dist/js/ionic.js': 'dist/js/ionic.js',
-          'dist/js/ionic.bundle.js': 'dist/js/ionic.bundle.js',
-          'dist/js/ionic-angular.js': 'dist/js/ionic-angular.js'
-        },
+        files: [{
+          expand: true,
+          cwd: 'dist/js/',
+          src: ['*.js'],
+          dest: '.'
+        }],
         options: {
-          methods: 'log assert count clear group groupEnd groupCollapsed trace debug dir dirxml profile profileEnd time timeEnd timeStamp table exception'.split(' ')
+          methods: 'log info assert count clear group groupEnd groupCollapsed trace debug dir dirxml profile profileEnd time timeEnd timeStamp table exception'.split(' ')
         }
       }
     },
