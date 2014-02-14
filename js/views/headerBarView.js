@@ -17,74 +17,71 @@
      * so that the header text size is maximized and aligned
      * correctly as long as possible.
      */
-    align: function() {
+    align: function(titleSelector) {
       var _this = this;
 
       window.rAF(ionic.proxy(function() {
-        var i, c, childSize;
-        var childNodes = this.el.childNodes;
 
-        // Find the title element
-        var title = this.el.querySelector('.title');
-        if(!title) {
+        // Find the titleEl element
+        var titleEl = this.el.querySelector(titleSelector || '.title');
+        if(!titleEl) {
           return;
         }
-      
+
+        var i, c, childSize;
+        var childNodes = this.el.childNodes;
         var leftWidth = 0;
         var rightWidth = 0;
-        var titlePos = Array.prototype.indexOf.call(childNodes, title);
+        var isCountingRightWidth = true;
 
         // Compute how wide the left children are
-        for(i = 0; i < titlePos; i++) {
-          childSize = null;
+        // Skip all titles (there may still be two titles, one leaving the dom)
+        // Once we encounter a titleEl, realize we are now counting the right-buttons, not left
+        for(i = 0; i < childNodes.length; i++) {
           c = childNodes[i];
-          if(c.nodeType == 3) {
-            childSize = ionic.DomUtil.getTextBounds(c);
-          } else if(c.nodeType == 1) {
-            childSize = c.getBoundingClientRect();
+          if (c.tagName && c.tagName.toLowerCase() == 'h1') {
+            isCountingRightWidth = false;
+            continue;
           }
-          if(childSize) {
-            leftWidth += childSize.width;
-          }
-        }
 
-        // Compute how wide the right children are
-        for(i = titlePos + 1; i < childNodes.length; i++) {
           childSize = null;
-          c = childNodes[i];
           if(c.nodeType == 3) {
             childSize = ionic.DomUtil.getTextBounds(c);
           } else if(c.nodeType == 1) {
             childSize = c.getBoundingClientRect();
           }
           if(childSize) {
-            rightWidth += childSize.width;
+            if (isCountingRightWidth) {
+              rightWidth += childSize.width;
+            } else {
+              leftWidth += childSize.width;
+            }
           }
         }
 
         var margin = Math.max(leftWidth, rightWidth) + 10;
 
-        // Size and align the header title based on the sizes of the left and
+        // Size and align the header titleEl based on the sizes of the left and
         // right children, and the desired alignment mode
         if(this.alignTitle == 'center') {
           if(margin > 10) {
-            title.style.left = margin + 'px';
-            title.style.right = margin + 'px';
+            titleEl.style.left = margin + 'px';
+            titleEl.style.right = margin + 'px';
           }
-          if(title.offsetWidth < title.scrollWidth) {
+          if(titleEl.offsetWidth < titleEl.scrollWidth) {
             if(rightWidth > 0) {
-              title.style.right = (rightWidth + 5) + 'px';
+              titleEl.style.right = (rightWidth + 5) + 'px';
             }
           }
         } else if(this.alignTitle == 'left') {
-          title.classList.add('title-left');
+          titleEl.classList.add('titleEl-left');
           if(leftWidth > 0) {
-            title.style.left = (leftWidth + 15) + 'px';
+            titleEl.style.left = (leftWidth + 15) + 'px';
           }
         } else if(this.alignTitle == 'right') {
-          title.classList.add('title-right');
+          titleEl.classList.add('titleEl-right');
           if(rightWidth > 0) {
-            title.style.right = (rightWidth + 15) + 'px';
+            titleEl.style.right = (rightWidth + 15) + 'px';
           }
         }
       }, this));

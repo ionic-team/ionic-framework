@@ -45,13 +45,29 @@ describe('Ionic View', function() {
     expect(scope.$broadcast).toHaveBeenCalledWith('viewState.showBackButton', false);
   });
 
-  it('should show/hide viewBack', function() {
-    var element = compile('<button view-back>BUTTON</button>')(scope);
-    expect(element.hasClass('hide')).toEqual(true);
+  it('should add/remove back button based on events', function() {
+    var element = compile('<nav-bar back-button-label="Back"></nav-bar>')(scope);
+    scope.$apply();
+    function backButton() {
+      return angular.element(element[0].querySelector('.back-button'));
+    };
+    expect(backButton().length).toEqual(1);
+
+    scope.$broadcast('viewState.showBackButton', false);
+    scope.$apply();
+    expect(backButton().length).toEqual(0);
+
     scope.$broadcast('viewState.showBackButton', true);
-    expect(element.hasClass('hide')).toEqual(false);
+    scope.$apply();
+    expect(backButton().length).toEqual(1);
+
     scope.$broadcast('$viewHistory.historyChange', { showBack: false });
-    expect(element.hasClass('hide')).toEqual(true);
+    scope.$apply();
+    expect(backButton().length).toEqual(0);
+
+    scope.$broadcast('$viewHistory.historyChange', { showBack: true });
+    scope.$apply();
+    expect(backButton().length).toEqual(1);
   });
 
   it('should show/hide navBar', function() {
@@ -89,68 +105,71 @@ describe('Ionic View', function() {
   it('should not have the back button if no back button attributes set', function() {
     var element = compile('<nav-bar></nav-bar>')(scope);
     scope.$digest();
-    var backButton = element.find('div').find('button');
+    var backButton = angular.element(element[0].querySelector('.back-button'));
     expect(backButton.length).toEqual(0);
   });
 
   it('should have the back button if back-button-type attributes set', function() {
     var element = compile('<nav-bar back-button-type="button-icon"></nav-bar>')(scope);
     scope.$digest();
-    var backButton = element.find('div').find('button');
+    var backButton = angular.element(element[0].querySelector('.back-button'));
     expect(backButton.length).toEqual(1);
   });
 
   it('should have the back button if back-button-icon attributes set', function() {
     var element = compile('<nav-bar back-button-icon="ion-back"></nav-bar>')(scope);
     scope.$digest();
-    var backButton = element.find('div').find('button');
+    var backButton = angular.element(element[0].querySelector('.back-button'));
     expect(backButton.length).toEqual(1);
   });
 
   it('should have the back button if back-button-label attributes set', function() {
     var element = compile('<nav-bar back-button-label="Button"></nav-bar>')(scope);
     scope.$digest();
-    var backButton = element.find('div').find('button');
+    var backButton = angular.element(element[0].querySelector('.back-button'));
     expect(backButton.length).toEqual(1);
   });
 
   it('should have the back button if all back button attributes set', function() {
     var element = compile('<nav-bar back-button-type="button-icon" back-button-icon="ion-back" back-button-label="Button"></nav-bar>')(scope);
     scope.$digest();
-    var backButton = element.find('div').find('button');
+    var backButton = angular.element(element[0].querySelector('.back-button'));
     expect(backButton.length).toEqual(1);
   });
 
   it('should set just a back button icon, no text', function() {
     var element = compile('<nav-bar back-button-icon="ion-back" back-button-type="button-icon"></nav-bar>')(scope);
     scope.$digest();
-    var backButton = element.find('div').find('button');
+    var backButton = angular.element(element[0].querySelector('.back-button'));
     expect(backButton.hasClass('button')).toEqual(true);
     expect(backButton.hasClass('button-icon')).toEqual(true);
     expect(backButton.hasClass('icon')).toEqual(true);
     expect(backButton.hasClass('ion-back')).toEqual(true);
-    expect(backButton.html()).toEqual('');
+    expect(backButton.children().length).toEqual(0);
+    expect(backButton.text().trim()).toEqual('');
   });
 
   it('should set just a back button with only text, button-clear', function() {
     var element = compile('<nav-bar back-button-label="Back" back-button-type="button-clear"></nav-bar>')(scope);
-    scope.$digest();
-    var backButton = element.find('div').find('button');
+    scope.$apply();
+    var backButton = angular.element(element[0].querySelector('.back-button'));
     expect(backButton.hasClass('button')).toEqual(true);
     expect(backButton.hasClass('button-clear')).toEqual(true);
     expect(backButton.hasClass('icon')).toEqual(false);
-    expect(backButton.html()).toEqual('Back');
+    expect(backButton.text().trim()).toEqual('Back');
   });
 
   it('should set a back button with an icon and text, button-icon', function() {
     var element = compile('<nav-bar back-button-icon="ion-back" back-button-label="Back" back-button-type="button-icon"></nav-bar>')(scope);
     scope.$digest();
-    var backButton = element.find('div').find('button');
+    var backButton = angular.element(element[0].querySelector('.back-button'));
     expect(backButton.hasClass('button')).toEqual(true);
     expect(backButton.hasClass('button-icon')).toEqual(true);
     var icon = backButton.find('i');
     expect(icon.hasClass('icon')).toEqual(true);
-    expect(backButton.html()).toEqual('<i class="icon ion-back"></i> Back');
+    expect(backButton.children()[0].tagName.toLowerCase()).toBe('i');
+    expect(backButton.children()[0].className).toBe('icon ion-back');
+    expect(backButton.text().trim()).toBe('Back');
   });
 
 });
