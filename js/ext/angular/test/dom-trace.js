@@ -214,4 +214,9 @@
     }
   }, false);
 
+  //Shortcuts for tests
+  angular.element(document).ready(function() {
+    window.$s = angular.element(document).scope().$root;
+    window.$i = angular.element(document).injector();
+  });
 })(window);

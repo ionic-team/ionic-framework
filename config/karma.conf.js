@@ -29,6 +29,7 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
+      'js/ext/angular/test/dom-trace.js'
     ],
 
     // test results reporter to use
