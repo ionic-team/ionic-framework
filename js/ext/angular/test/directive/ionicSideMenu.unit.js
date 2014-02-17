@@ -38,7 +38,7 @@ describe('Ionic Side Menu Content Directive', function () {
   }));
 });
 
-ddescribe('Ionic Side Menu Directive', function () {
+describe('Ionic Side Menu Directive', function () {
   var element, scope, sideMenuCtrl;
 
   beforeEach(module('ionic.ui.sideMenu'));
