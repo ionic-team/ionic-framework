@@ -17,16 +17,10 @@
      * until we are at the direct child of parentEl
      * use-case: find scroll offset of any element within a scroll container
      */
-    getPositionInParent: function(el, parentEl) {
-      var left = 0, top = 0;
-      while (el && el !== parentEl) {
-        left += el.offsetLeft;
-        top += el.offsetTop;
-        el = el.parentNode;
-      }
+    getPositionInParent: function(el) {
       return {
-        left: left,
-        top: top
+        left: el.offsetLeft,
+        top: el.offsetTop
       };
     },
 
