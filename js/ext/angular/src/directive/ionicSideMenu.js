@@ -23,21 +23,14 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
 .directive('sideMenus', function() {
   return {
     restrict: 'ECA',
-    controller: ['$scope', function($scope) {
+    controller: ['$scope', '$attrs', function($scope, $attrs) {
       var _this = this;
 
       angular.extend(this, ionic.controllers.SideMenuController.prototype);
 
       ionic.controllers.SideMenuController.call(this, {
-        // Our quick implementation of the left side menu
-        left: {
-          width: 275,
-        },
-
-        // Our quick implementation of the right side menu
-        right: {
-          width: 275,
-        }
+        left: { width: 275 },
+        right: { width: 275 }
       });
 
       $scope.sideMenuContentTranslateX = 0;
@@ -158,30 +151,29 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
     replace: true,
     transclude: true,
     scope: true,
-    template: '<div class="menu menu-{{side}}"></div>',
+    template: '<div class="menu menu-{{side}}" ng-transclude></div>',
     compile: function(element, attr, transclude) {
+      angular.isUndefined(attr.isEnabled) && attr.$set('isEnabled', 'true');
+      angular.isUndefined(attr.width) && attr.$set('width', '275');
+
       return function($scope, $element, $attr, sideMenuCtrl) {
         $scope.side = $attr.side;
 
-        if($scope.side == 'left') {
-          sideMenuCtrl.left.isEnabled = true;
-          sideMenuCtrl.left.pushDown = function() {
-            $element[0].style.zIndex = -1;
-          };
-          sideMenuCtrl.left.bringUp = function() {
-            $element[0].style.zIndex = 0;
-          };
-        } else if($scope.side == 'right') {
-          sideMenuCtrl.right.isEnabled = true;
-          sideMenuCtrl.right.pushDown = function() {
-            $element[0].style.zIndex = -1;
-          };
-          sideMenuCtrl.right.bringUp = function() {
-            $element[0].style.zIndex = 0;
-          };
-        }
+        var sideMenu = sideMenuCtrl[$scope.side] = new ionic.views.SideMenu({
+          width: 275,
+          el: $element[0],
+          isEnabled: true
+        });
 
-        $element.append(transclude($scope));
+        $scope.$watch($attr.width, function(val) {
+          var numberVal = +val;
+          if (numberVal && numberVal == val) {
+            sideMenu.setWidth(+val);
+          }
+        });
+        $scope.$watch($attr.isEnabled, function(val) {
+          sideMenu.setIsEnabled(!!val);
+        });
       };
     }
   };

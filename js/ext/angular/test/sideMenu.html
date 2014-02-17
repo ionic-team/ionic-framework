@@ -19,10 +19,11 @@
           </header>
           <content has-header="true">
             <toggle ng-model="$root.$draggy">Hello</toggle>
+            <input type="range" ng-model="$root.menuWidth" min="0" max="300">
             <h1>Content</h1>
           </content>
         </pane>
-        <side-menu side="left">
+        <side-menu side="left" width="$root.menuWidth || 200">
           <header class="bar bar-header bar-assertive">
             <h1 class="title">Left</h1>
           </header>

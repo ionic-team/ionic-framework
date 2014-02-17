@@ -38,20 +38,23 @@ describe('Ionic Side Menu Content Directive', function () {
   }));
 });
 
-describe('Ionic Side Menu Directive', function () {
+ddescribe('Ionic Side Menu Directive', function () {
   var element, scope, sideMenuCtrl;
 
   beforeEach(module('ionic.ui.sideMenu'));
 
   beforeEach(inject(function (_$compile_, _$rootScope_) {
     var $compile = _$compile_;
-    var $rootScope = _$rootScope_;
+    var $rootScope = _$rootScope_.$new();
+
+    $rootScope.widthVal = 250;
+    $rootScope.enabledVal = true;
 
     var sideMenus = $compile('<side-menus>')($rootScope);
 
     sideMenuCtrl = sideMenus.controller('sideMenus');
 
-    element = angular.element('<side-menu side="left">').appendTo(sideMenus);
+    element = angular.element('<side-menu side="left" is-enabled="enabledVal" width="widthVal">').appendTo(sideMenus);
     $compile(element)($rootScope);
 
     scope = element.scope();
@@ -62,5 +65,19 @@ describe('Ionic Side Menu Directive', function () {
     expect(sideMenuCtrl.left.isEnabled).not.toBe(undefined);
     expect(sideMenuCtrl.left.pushDown).not.toBe(undefined);
     expect(sideMenuCtrl.left.bringUp).not.toBe(undefined);
+  });
+
+  it('should watch isEnabled', function() {
+    expect(sideMenuCtrl.left.isEnabled).toBe(true);
+    scope.$apply('enabledVal = false');
+    expect(sideMenuCtrl.left.isEnabled).toBe(false);
+  });
+
+  it('should watch width', function() {
+    expect(sideMenuCtrl.left.width).toBe(250);
+    expect(sideMenuCtrl.left.el.style.width).toBe('250px');
+    scope.$apply('widthVal = 222');
+    expect(sideMenuCtrl.left.width).toBe(222);
+    expect(sideMenuCtrl.left.el.style.width).toBe('222px');
   });
 });
