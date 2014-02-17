@@ -89,6 +89,55 @@ describe('Ionic View', function() {
     expect(navBar.hasClass('invisible')).toEqual(true);
   });
 
+  it('should show and update navBar title when using view attr', function() {
+    scope.viewTitle = 'Title';
+    var element = compile('<div><nav-bar></nav-bar><view title="viewTitle"></view></div>')(scope);
+    scope.$digest();
+    var navBar = element.find('header');
+    var title = navBar.find('h1');
+    expect(title.text().trim()).toEqual('Title');
+
+    scope.viewTitle = 'New Title';
+    scope.$digest();
+    navBar = element.find('header');
+    title = navBar.find('h1');
+    expect(title.text().trim()).toEqual('New Title');
+  });
+
+  it('should show / update navBar left and right buttons when using view attr', function() {
+    scope.leftButtons = [{
+      type: 'button',
+      content: 'Left Button'
+    }];
+    scope.rightButtons = [{
+      type: 'button',
+      content: 'Right Button'
+    }];
+    var element = compile('<div><nav-bar></nav-bar><view left-buttons="leftButtons" right-buttons="rightButtons"></view></div>')(scope);
+    scope.$digest();
+
+    var leftButton = angular.element(element[0].querySelector('.left-buttons')).find('button');
+    expect(leftButton.text().trim()).toBe('Left Button');
+    var rightButton = angular.element(element[0].querySelector('.right-buttons')).find('button');
+    expect(rightButton.text().trim()).toBe('Right Button');
+
+    scope.leftButtons = [{
+      type: 'button',
+      content: 'New Left Button'
+    }];
+    scope.rightButtons = [{
+      type: 'button',
+      content: 'New Right Button'
+    }];
+
+    scope.$digest();
+
+    leftButton = angular.element(element[0].querySelector('.left-buttons')).find('button');
+    expect(leftButton.text().trim()).toBe('New Left Button');
+    rightButton = angular.element(element[0].querySelector('.right-buttons')).find('button');
+    expect(rightButton.text().trim()).toBe('New Right Button');
+  });
+
   it('should show navbar when not using view attr', function() {
     var element = compile('<div><nav-bar></nav-bar><view></view></div>')(scope);
     scope.$digest();
