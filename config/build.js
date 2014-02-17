@@ -54,8 +54,6 @@ module.exports = {
     'js/angular/angular-animate.min.js',
     'js/angular/angular-resource.js',
     'js/angular/angular-resource.min.js',
-    'js/angular/angular-sanitize.js',
-    'js/angular/angular-sanitize.min.js',
     'js/angular/angular.js',
     'js/angular/angular.min.js',
     'js/angular-ui/angular-ui-router.js',

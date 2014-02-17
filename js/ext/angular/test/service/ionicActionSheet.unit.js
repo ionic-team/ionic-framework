@@ -19,8 +19,6 @@ describe('Ionic ActionSheet Service', function() {
     ionic.Platform.isReady = true;
     var s = sheet.show();
 
-    timeout.flush();
-
     ionic.trigger('backbutton', {
       target: document
     });
