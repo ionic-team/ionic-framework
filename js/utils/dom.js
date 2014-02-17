@@ -38,18 +38,19 @@
         range.selectNodeContents(textNode);
         if(range.getBoundingClientRect) {
           var rect = range.getBoundingClientRect();
+          if(rect) {
+            var sx = window.scrollX;
+            var sy = window.scrollY;
 
-          var sx = window.scrollX;
-          var sy = window.scrollY;
-
-          return {
-            top: rect.top + sy,
-            left: rect.left + sx,
-            right: rect.left + sx + rect.width,
-            bottom: rect.top + sy + rect.height,
-            width: rect.width,
-            height: rect.height
-          };
+            return {
+              top: rect.top + sy,
+              left: rect.left + sx,
+              right: rect.left + sx + rect.width,
+              bottom: rect.top + sy + rect.height,
+              width: rect.width,
+              height: rect.height
+            };
+          }
         }
       }
       return null;
