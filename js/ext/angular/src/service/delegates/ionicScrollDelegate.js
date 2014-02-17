@@ -23,15 +23,24 @@ angular.module('ionic.ui.service.scrollDelegate', [])
     anchorScroll: function(animate) {
       $rootScope.$broadcast('scroll.anchorScroll', animate);
     },
-    tapScrollToTop: function(element) {
+    tapScrollToTop: function(element, animate) {
       var _this = this;
+      if (!angular.isDefined(animate)) {
+        animate = true;
+      }
 
       ionic.on('tap', function(e) {
+        var target = e.target;
+        //Don't scroll to top for a button click
+        if (ionic.DomUtil.getParentOrSelfWithClass(target, 'button')) {
+          return;
+        }
+
         var el = element[0];
         var bounds = el.getBoundingClientRect();
 
         if(ionic.DomUtil.rectContains(e.gesture.touches[0].pageX, e.gesture.touches[0].pageY, bounds.left, bounds.top, bounds.left + bounds.width, bounds.top + 20)) {
-          _this.scrollTop();
+          _this.scrollTop(animate);
         }
       }, element[0]);
     },

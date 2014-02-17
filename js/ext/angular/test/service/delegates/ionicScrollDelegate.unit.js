@@ -35,6 +35,38 @@ describe('Ionic ScrollDelegate Service', function() {
   testWithAnimate(false);
   function testWithAnimate(animate) {
     describe('with animate='+animate, function() {
+
+      it('should tapScrollToTop', function() {
+        var scope = rootScope.$new();
+        var el = angular.element('<div>' +
+                                 '<div class="not-button"></div>' +
+                                 '<div class="button"></div>' +
+                                 '</div>');
+        //ionic.trigger() REALLY doesnt want to work with tap,
+        //so we just mock on to catch the callback and use that...
+        var callback;
+        spyOn(ionic, 'on').andCallFake(function(eventName, cb) {
+          callback = cb;
+        });
+        del.tapScrollToTop(el, animate);
+
+        spyOn(del, 'scrollTop');
+        //Don't test the rectContains part, too much to mock
+        spyOn(ionic.DomUtil, 'rectContains').andCallFake(function() {
+          return true;
+        });
+        callback({
+          target: el[0].querySelector('.not-button'),
+          gesture:{ touches:[{}] }
+        });
+        expect(del.scrollTop).toHaveBeenCalledWith(animate);
+
+        del.scrollTop.reset();
+        callback({
+          target: el[0].querySelector('.button')
+        });
+        expect(del.scrollTop).not.toHaveBeenCalled();
+      });
       it('should resize & scroll top', function() {
         var scope = rootScope.$new();
         var el = compile('<content start-y="100"></content>')(scope);
