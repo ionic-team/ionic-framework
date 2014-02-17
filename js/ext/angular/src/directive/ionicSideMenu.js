@@ -110,14 +110,12 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
           getTranslateX: function() {
             return $scope.sideMenuContentTranslateX || 0;
           },
-          setTranslateX: function(amount) {
-            window.rAF(function() {
-              $element[0].style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
-              $timeout(function() {
-                $scope.sideMenuContentTranslateX = amount;
-              });
+          setTranslateX: ionic.animationFrameThrottle(function(amount) {
+            $element[0].style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
+            $timeout(function() {
+              $scope.sideMenuContentTranslateX = amount;
             });
-          },
+          }),
           enableAnimation: function() {
             //this.el.classList.add(this.animateClass);
             $scope.animationEnabled = true;

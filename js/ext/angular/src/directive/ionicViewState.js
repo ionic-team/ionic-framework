@@ -158,7 +158,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  */
 .directive('asyncVisible', function() {
   return function($scope, $element) {
-    window.rAF(function() {
+    ionic.requestAnimationFrame(function() {
       $element[0].classList.remove('invisible');
     });
   };

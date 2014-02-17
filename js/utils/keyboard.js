@@ -26,7 +26,7 @@ function androidKeyboardFix() {
                window.innerHeight < rememberedDeviceHeight) {
       document.body.classList.add('hide-footer');
       //Wait for next frame so document.activeElement is set
-      window.rAF(handleKeyboardChange);
+      ionic.requestAnimationFrame(handleKeyboardChange);
     } else {
       //Otherwise we have a keyboard close or a *really* weird resize
       document.body.classList.remove('hide-footer');

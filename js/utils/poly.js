@@ -1,20 +1,9 @@
 (function(window, document, ionic) {
   'use strict';
 
-  // From the man himself, Mr. Paul Irish.
-  // The requestAnimationFrame polyfill
-  window.rAF = (function(){
-    return  window.requestAnimationFrame       ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame    ||
-            function( callback ){
-              window.setTimeout(callback, 16);
-            };
-  })();
-
   // Ionic CSS polyfills
   ionic.CSS = {};
-  
+
   (function() {
     var d = document.createElement('div');
     var keys = ['webkitTransform', 'transform', '-webkit-transform', 'webkit-transform',
@@ -42,7 +31,7 @@
     clickEvent.initMouseEvent('click', true, true, window,
                               1, 0, 0, c.x, c.y,
                               false, false, false, false, 0, null);
-    
+
     ele.dispatchEvent(clickEvent);
 
     if(ele.tagName === 'INPUT' || ele.tagName === 'TEXTAREA' || ele.tagName === 'SELECT') {
@@ -85,9 +74,9 @@
     while(ele) {
       // climb up the DOM looking to see if the tapped element is, or has a parent, of one of these
       if( ele.tagName === "INPUT" ||
-          ele.tagName === "A" || 
-          ele.tagName === "BUTTON" || 
-          ele.tagName === "TEXTAREA" || 
+          ele.tagName === "A" ||
+          ele.tagName === "BUTTON" ||
+          ele.tagName === "TEXTAREA" ||
           ele.tagName === "SELECT" ) {
 
         return ionic.tapElement(ele, e);
@@ -121,8 +110,8 @@
       // remember the last time this label was clicked to it can prevent a second label ghostclick
       e.target.control.labelLastTap = Date.now();
 
-      // The input's click event will propagate so don't bother letting this label's click 
-      // propagate cuz it causes double clicks. However, do NOT e.preventDefault(), because 
+      // The input's click event will propagate so don't bother letting this label's click
+      // propagate cuz it causes double clicks. However, do NOT e.preventDefault(), because
       // the native layer still needs to click the input which the label controls
       console.debug('preventGhostClick', 'label stopPropagation');
       e.stopPropagation();
@@ -144,7 +133,7 @@
     // remember the last time this element was clicked
     e.target.lastClick = Date.now();
 
-    // remember the coordinates of this click so if a tap or click in the 
+    // remember the coordinates of this click so if a tap or click in the
     // same area quickly happened again we can ignore it
     recordCoordinates(e);
   }
@@ -157,8 +146,8 @@
 
   function blurActive() {
     var ele = document.activeElement;
-    if(ele && (ele.tagName === "INPUT" || 
-               ele.tagName === "TEXTAREA" || 
+    if(ele && (ele.tagName === "INPUT" ||
+               ele.tagName === "TEXTAREA" ||
                ele.tagName === "SELECT")) {
       // using a timeout to prevent funky scrolling while a keyboard hides
       setTimeout(function(){

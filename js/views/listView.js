@@ -62,41 +62,39 @@
     };
   };
 
-  SlideDrag.prototype.drag = function(e) {
-    var _this = this, buttonsWidth;
+  SlideDrag.prototype.drag = ionic.animationFrameThrottle(function(e) {
+    var buttonsWidth;
 
-    window.rAF(function() {
-      // We really aren't dragging
-      if(!_this._currentDrag) {
-        return;
+    // We really aren't dragging
+    if(!this._currentDrag) {
+      return;
+    }
+
+    // Check if we should start dragging. Check if we've dragged past the threshold,
+    // or we are starting from the open state.
+    if(!this._isDragging &&
+        ((Math.abs(e.gesture.deltaX) > this.dragThresholdX) ||
+        (Math.abs(this._currentDrag.startOffsetX) > 0)))
+    {
+      this._isDragging = true;
+    }
+
+    if(this._isDragging) {
+      buttonsWidth = this._currentDrag.buttonsWidth;
+
+      // Grab the new X point, capping it at zero
+      var newX = Math.min(0, this._currentDrag.startOffsetX + e.gesture.deltaX);
+
+      // If the new X position is past the buttons, we need to slow down the drag (rubber band style)
+      if(newX < -buttonsWidth) {
+        // Calculate the new X position, capped at the top of the buttons
+        newX = Math.min(-buttonsWidth, -buttonsWidth + (((e.gesture.deltaX + buttonsWidth) * 0.4)));
       }
 
-      // Check if we should start dragging. Check if we've dragged past the threshold,
-      // or we are starting from the open state.
-      if(!_this._isDragging &&
-          ((Math.abs(e.gesture.deltaX) > _this.dragThresholdX) ||
-          (Math.abs(_this._currentDrag.startOffsetX) > 0)))
-      {
-        _this._isDragging = true;
-      }
-
-      if(_this._isDragging) {
-        buttonsWidth = _this._currentDrag.buttonsWidth;
-
-        // Grab the new X point, capping it at zero
-        var newX = Math.min(0, _this._currentDrag.startOffsetX + e.gesture.deltaX);
-
-        // If the new X position is past the buttons, we need to slow down the drag (rubber band style)
-        if(newX < -buttonsWidth) {
-          // Calculate the new X position, capped at the top of the buttons
-          newX = Math.min(-buttonsWidth, -buttonsWidth + (((e.gesture.deltaX + buttonsWidth) * 0.4)));
-        }
-
-        _this._currentDrag.content.style.webkitTransform = 'translate3d(' + newX + 'px, 0, 0)';
-        _this._currentDrag.content.style.webkitTransition = 'none';
-      }
-    });
-  };
+      this._currentDrag.content.style.webkitTransform = 'translate3d(' + newX + 'px, 0, 0)';
+      this._currentDrag.content.style.webkitTransition = 'none';
+    }
+  });
 
   SlideDrag.prototype.end = function(e, doneCallback) {
     var _this = this;
@@ -133,7 +131,7 @@
     //   e.target.removeEventListener('webkitTransitionEnd', onRestingAnimationEnd);
     // };
 
-    window.rAF(function() {
+    ionic.requestAnimationFrame(function() {
       // var currentX = parseFloat(_this._currentDrag.content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
       // if(currentX !== restingPoint) {
       //   _this._currentDrag.content.classList.add(ITEM_SLIDING_CLASS);
@@ -206,53 +204,49 @@
     this._moveElement(e);
   };
 
-  ReorderDrag.prototype.drag = function(e) {
-    var _this = this;
+  ReorderDrag.prototype.drag = ionic.animationFrameThrottle(function(e) {
+    // We really aren't dragging
+    if(!this._currentDrag) {
+      return;
+    }
 
-    window.rAF(function() {
-      // We really aren't dragging
-      if(!_this._currentDrag) {
-        return;
+    var scrollY = 0;
+    var pageY = e.gesture.center.pageY;
+
+    //If we have a scrollView, check scroll boundaries for dragged element and scroll if necessary
+    if (this.scrollView) {
+      var container = this.scrollEl;
+
+      scrollY = this.scrollView.getValues().top;
+
+      var containerTop = container.offsetTop;
+      var pixelsPastTop = containerTop - pageY + this._currentDrag.elementHeight/2;
+      var pixelsPastBottom = pageY + this._currentDrag.elementHeight/2 - containerTop - container.offsetHeight;
+
+      if (e.gesture.deltaY < 0 && pixelsPastTop > 0 && scrollY > 0) {
+        this.scrollView.scrollBy(null, -pixelsPastTop);
       }
-
-      var scrollY = 0;
-      var pageY = e.gesture.center.pageY;
-
-      //If we have a scrollView, check scroll boundaries for dragged element and scroll if necessary
-      if (_this.scrollView) {
-        var container = _this.scrollEl;
-
-        scrollY = _this.scrollView.getValues().top;
-
-        var containerTop = container.offsetTop;
-        var pixelsPastTop = containerTop - pageY + _this._currentDrag.elementHeight/2;
-        var pixelsPastBottom = pageY + _this._currentDrag.elementHeight/2 - containerTop - container.offsetHeight;
-
-        if (e.gesture.deltaY < 0 && pixelsPastTop > 0 && scrollY > 0) {
-          _this.scrollView.scrollBy(null, -pixelsPastTop);
-        }
-        if (e.gesture.deltaY > 0 && pixelsPastBottom > 0) {
-          if (scrollY < _this.scrollView.getScrollMax().top) {
-            _this.scrollView.scrollBy(null, pixelsPastBottom);
-          }
+      if (e.gesture.deltaY > 0 && pixelsPastBottom > 0) {
+        if (scrollY < this.scrollView.getScrollMax().top) {
+          this.scrollView.scrollBy(null, pixelsPastBottom);
         }
       }
+    }
 
-      // Check if we should start dragging. Check if we've dragged past the threshold,
-      // or we are starting from the open state.
-      if(!_this._isDragging && Math.abs(e.gesture.deltaY) > _this.dragThresholdY) {
-        _this._isDragging = true;
-      }
+    // Check if we should start dragging. Check if we've dragged past the threshold,
+    // or we are starting from the open state.
+    if(!this._isDragging && Math.abs(e.gesture.deltaY) > this.dragThresholdY) {
+      this._isDragging = true;
+    }
 
-      if(_this._isDragging) {
-        _this._moveElement(e);
+    if(this._isDragging) {
+      this._moveElement(e);
 
-        _this._currentDrag.currentY = scrollY + pageY - _this._currentDrag.placeholder.parentNode.offsetTop;
+      this._currentDrag.currentY = scrollY + pageY - this._currentDrag.placeholder.parentNode.offsetTop;
 
-        _this._reorderItems();
-      }
-    });
-  };
+      this._reorderItems();
+    }
+  });
 
   // When an item is dragged, we need to reorder any items for sorting purposes
   ReorderDrag.prototype._reorderItems = function() {

@@ -22,7 +22,7 @@
     alert: function(message) {
       var _this = this;
 
-      window.rAF(function() {
+      ionic.requestAnimationFrame(function() {
         _this.setTitle(message);
         _this.el.classList.add('active');
       });
