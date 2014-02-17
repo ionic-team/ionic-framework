@@ -89,7 +89,7 @@ describe('Ionic View', function() {
     expect(navBar.hasClass('invisible')).toEqual(true);
   });
 
-  it('should show and update navBar title when using view attr', function() {
+  it('should show and update navBar title when using view attr or events', function() {
     scope.viewTitle = 'Title';
     var element = compile('<div><nav-bar></nav-bar><view title="viewTitle"></view></div>')(scope);
     scope.$digest();
@@ -102,9 +102,15 @@ describe('Ionic View', function() {
     navBar = element.find('header');
     title = navBar.find('h1');
     expect(title.text().trim()).toEqual('New Title');
+
+    scope.$broadcast('viewState.titleUpdated', { title: 'Event Title' });
+    scope.$digest();
+    navBar = element.find('header');
+    title = navBar.find('h1');
+    expect(title.text().trim()).toEqual('Event Title');
   });
 
-  it('should show / update navBar left and right buttons when using view attr', function() {
+  it('should show / update navBar left and right buttons when using view attr or events', function() {
     scope.leftButtons = [{
       type: 'button',
       content: 'Left Button'
@@ -136,6 +142,22 @@ describe('Ionic View', function() {
     expect(leftButton.text().trim()).toBe('New Left Button');
     rightButton = angular.element(element[0].querySelector('.right-buttons')).find('button');
     expect(rightButton.text().trim()).toBe('New Right Button');
+
+    scope.$broadcast('viewState.leftButtonsChanged', [{
+      type: 'button',
+      content: 'Event Left Button'
+    }]);
+    scope.$broadcast('viewState.rightButtonsChanged', [{
+      type: 'button',
+      content: 'Event Right Button'
+    }]);
+
+    scope.$digest();
+    
+    leftButton = angular.element(element[0].querySelector('.left-buttons')).find('button');
+    expect(leftButton.text().trim()).toBe('Event Left Button');
+    rightButton = angular.element(element[0].querySelector('.right-buttons')).find('button');
+    expect(rightButton.text().trim()).toBe('Event Right Button');
   });
 
   it('should show navbar when not using view attr', function() {
