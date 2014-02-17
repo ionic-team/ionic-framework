@@ -50,7 +50,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
       '</div>' +
 
       //ng-repeat makes it easy to add new / remove old and have proper enter/leave anims
-      '<h1 ng-repeat="title in titles" bind-html-unsafe="title" class="title invisible" async-visible nav-bar-title>' +
+      '<h1 ng-repeat="title in titles" bind-html-unsafe="title" class="title invisible" async-visible nav-bar-title></h1>' +
 
       '<div class="buttons" ng-if="rightButtons.length"> ' +
       '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" '+
@@ -109,7 +109,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
             $scope.backButtonEnabled = !!data;
           }),
           $scope.$parent.$on('viewState.titleUpdated', function(e, data) {
-            $scope.currentTitle = (data && data.title ? data.title : '');
+            $scope.titles[$scope.titles.length - 1] = data && data.title || '';
           })
         ];
         $scope.$on('$destroy', function() {
