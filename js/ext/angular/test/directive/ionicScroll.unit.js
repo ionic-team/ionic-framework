@@ -9,6 +9,9 @@ describe('Ionic Scroll Directive', function() {
     timeout = $timeout;
     window = $window;
     ionic.Platform.setPlatform('Android');
+    spyOn(ionic.Platform, 'ready').andCallFake(function(cb) {
+      cb();
+    });
   }));
 
   it('Has $ionicScroll controller', function() {

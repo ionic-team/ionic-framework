@@ -5,14 +5,16 @@ angular.module('ionic.ui.scroll')
 
 .controller('$ionicScroll', ['$scope', 'scrollViewOptions', '$timeout', '$ionicScrollDelegate', '$window', function($scope, scrollViewOptions, $timeout, $ionicScrollDelegate, $window) {
 
-  scrollViewOptions.bouncing = angular.isDefined(scrollViewOptions.bouncing) ?
-    scrollViewOptions.bouncing :
-    !ionic.Platform.isAndroid();
-
   var self = this;
 
   var element = this.element = scrollViewOptions.el;
   var scrollView = this.scrollView = new ionic.views.Scroll(scrollViewOptions);
+
+  if (!angular.isDefined(scrollViewOptions.bouncing)) {
+    ionic.Platform.ready(function() {
+      scrollView.options.bouncing = !ionic.Platform.isAndroid();
+    });
+  }
 
   var $element = this.$element = angular.element(element);
 
