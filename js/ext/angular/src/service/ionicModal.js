@@ -12,6 +12,9 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
       var self = this;
       var element = angular.element(this.el);
 
+      document.body.classList.add('disable-pointer-events');
+      this.el.classList.add('enable-pointer-events');
+
       self._isShown = true;
 
       if(!element.parent().length) {
@@ -46,7 +49,9 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
     hide: function() {
       this._isShown = false;
       var element = angular.element(this.el);
-      $animate.removeClass(element, this.animation);
+      $animate.removeClass(element, this.animation, function() {
+        onHideModal(element[0]);
+      });
 
       ionic.views.Modal.prototype.hide.call(this);
 
@@ -59,6 +64,7 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
           element = angular.element(this.el);
       this._isShown = false;
       $animate.leave(angular.element(this.el), function() {
+        onHideModal(element[0]);
         self.scope.$parent.$broadcast('modal.removed', self);
         self.scope.$destroy();
       });
@@ -68,6 +74,11 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
       return !!this._isShown;
     }
   });
+
+  function onHideModal(element) {
+    document.body.classList.remove('disable-pointer-events');
+    element.classList.remove('enable-pointer-events');
+  }
 
   var createModal = function(templateString, options) {
     // Create a new scope for the modal
