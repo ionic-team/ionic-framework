@@ -46,9 +46,6 @@
     if( !isRecentTap(e) ) {
       recordCoordinates(e);
     }
-
-    // set the last tap time so if a click event quickly happens it knows to ignore it
-    ele.lastTap = Date.now();
   };
 
   function tapPolyfill(orgEvent) {
@@ -61,13 +58,6 @@
     if( isRecentTap(e) ) {
       // if a tap in the same area just happened, don't continue
       console.debug('tapPolyfill', 'isRecentTap', ele.tagName);
-      return stopEvent(e);
-    }
-
-    if(ele.lastClick && ele.lastClick + CLICK_PREVENT_DURATION > Date.now()) {
-      // if a click recently happend on this element, don't continue
-      // (yes on some devices it's possible for a click to happen before a touchend)
-      console.debug('tapPolyfill', 'recent lastClick', ele.tagName);
       return stopEvent(e);
     }
 
@@ -97,25 +87,11 @@
   }
 
   function preventGhostClick(e) {
-    if(e.target.tagName === "LABEL" && e.target.control) {
+    if(e.target.control) {
       // this is a label that has an associated input
-
-      if(e.target.control.labelLastTap && e.target.control.labelLastTap + CLICK_PREVENT_DURATION > Date.now()) {
-        // Android will fire a click for the label, and a click for the input which it is associated to
-        // this stops the second ghost click from the label from continuing
-        console.debug('preventGhostClick', 'labelLastTap');
-        return stopEvent(e);
-      }
-
-      // remember the last time this label was clicked to it can prevent a second label ghostclick
-      e.target.control.labelLastTap = Date.now();
-
-      // The input's click event will propagate so don't bother letting this label's click
-      // propagate cuz it causes double clicks. However, do NOT e.preventDefault(), because
-      // the native layer still needs to click the input which the label controls
-      console.debug('preventGhostClick', 'label stopPropagation');
-      e.stopPropagation();
-      return;
+      // the native layer will send the actual event, so stop this one
+      console.debug('preventGhostClick', 'label');
+      return stopEvent(e);
     }
 
     if( isRecentTap(e) ) {
@@ -124,53 +100,25 @@
       return stopEvent(e);
     }
 
-    if(e.target.lastTap && e.target.lastTap + CLICK_PREVENT_DURATION > Date.now()) {
-      // this element has already had the tap poly fill run on it recently, ignore this event
-      console.debug('preventGhostClick', 'e.target.lastTap', e.target.tagName);
-      return stopEvent(e);
-    }
-
-    // remember the last time this element was clicked
-    e.target.lastClick = Date.now();
-
     // remember the coordinates of this click so if a tap or click in the
     // same area quickly happened again we can ignore it
     recordCoordinates(e);
   }
 
-  function stopEvent(e){
-    e.stopPropagation();
-    e.preventDefault();
-    return false;
-  }
-
-  function blurActive() {
-    var ele = document.activeElement;
-    if(ele && (ele.tagName === "INPUT" ||
-               ele.tagName === "TEXTAREA" ||
-               ele.tagName === "SELECT")) {
-      // using a timeout to prevent funky scrolling while a keyboard hides
-      setTimeout(function(){
-        ele.blur();
-      }, 400);
-    }
-  }
-
   function isRecentTap(event) {
     // loop through the tap coordinates and see if the same area has been tapped recently
-    var tapId, existingCoordinates, currentCoordinates,
-    hitRadius = 15;
+    var tapId, existingCoordinates, currentCoordinates;
 
     for(tapId in tapCoordinates) {
       existingCoordinates = tapCoordinates[tapId];
       if(!currentCoordinates) currentCoordinates = getCoordinates(event); // lazy load it when needed
 
-      if(currentCoordinates.x > existingCoordinates.x - hitRadius &&
-         currentCoordinates.x < existingCoordinates.x + hitRadius &&
-         currentCoordinates.y > existingCoordinates.y - hitRadius &&
-         currentCoordinates.y < existingCoordinates.y + hitRadius) {
+      if(currentCoordinates.x > existingCoordinates.x - HIT_RADIUS &&
+         currentCoordinates.x < existingCoordinates.x + HIT_RADIUS &&
+         currentCoordinates.y > existingCoordinates.y - HIT_RADIUS &&
+         currentCoordinates.y < existingCoordinates.y + HIT_RADIUS) {
         // the current tap coordinates are in the same area as a recent tap
-        return true;
+        return existingCoordinates;
       }
     }
   }
@@ -178,10 +126,10 @@
   function recordCoordinates(event) {
     var c = getCoordinates(event);
     if(c.x && c.y) {
-      var tapId = 't' + Date.now();
+      var tapId = Date.now();
 
       // only record tap coordinates if we have valid ones
-      tapCoordinates[tapId] = { x: c.x, y:c.y };
+      tapCoordinates[tapId] = { x: c.x, y: c.y, id: tapId };
 
       setTimeout(function() {
         // delete the tap coordinates after X milliseconds, basically allowing
@@ -208,13 +156,48 @@
     return { x:0, y:0 };
   }
 
+  function removeClickPrevent(e) {
+    setTimeout(function(){
+      if(e.target && e.target.control && e.target.control.labelLastTap) {
+        e.target.control.labelLastTap = null;
+      }
+      var c = isRecentTap(e);
+      if(c) delete tapCoordinates[c.id];
+    }, REMOVE_PREVENT_DELAY);
+    return stopEvent(e);
+  }
+
+  function stopEvent(e){
+    e.stopPropagation();
+    e.preventDefault();
+    return false;
+  }
+
+  function blurActive() {
+    var ele = document.activeElement;
+    if(ele && (ele.tagName === "INPUT" ||
+               ele.tagName === "TEXTAREA" ||
+               ele.tagName === "SELECT")) {
+      // using a timeout to prevent funky scrolling while a keyboard hides
+      setTimeout(function(){
+        ele.blur();
+      }, 400);
+    }
+  }
+
   var tapCoordinates = {}; // used to remember coordinates to ignore if they happen again quickly
-  var CLICK_PREVENT_DURATION = 450; // amount of milliseconds to check for ghostclicks
+  var CLICK_PREVENT_DURATION = 1500; // max milliseconds ghostclicks in the same area should be prevented
+  var REMOVE_PREVENT_DELAY = 325; // delay after a touchend/mouseup before removing the ghostclick prevent
+  var HIT_RADIUS = 15;
 
   // set global click handler and check if the event should stop or not
   document.addEventListener('click', preventGhostClick, true);
 
   // global tap event listener polyfill for HTML elements that were "tapped" by the user
   ionic.on("tap", tapPolyfill, document);
+
+  // listeners used to remove ghostclick prevention
+  document.addEventListener('touchend', removeClickPrevent, false);
+  document.addEventListener('mouseup', removeClickPrevent, false);
 
 })(this, document, ionic);
