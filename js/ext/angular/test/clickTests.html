@@ -68,8 +68,13 @@
 
     <label class="label1">
       <input type="radio" name="radio" id="radio1" class="radio1">
-    </label>
-    <input type="radio" name="radio" id="radio2" class="radio2">
+    </label> &nbsp;
+    <input type="radio" name="radio" id="radio2" class="radio2"> &nbsp;
+
+    <label class="label2">
+      <input type="checkbox" name="checkbox1" id="checkbox1" class="checkbox1">
+    </label> &nbsp;
+    <input type="checkbox" name="checkbox2" id="checkbox2" class="checkbox2">
 
   </div>
 
@@ -241,7 +246,7 @@
   //   console.debug('mousemove', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY);
   // });
   document.addEventListener('click', function(event){
-    console.debug('click', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY);
+    console.debug('click', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY, event.target.tagName);
   });
   document.getElementById('clear').addEventListener('click', function(){
     setTimeout(clearMsgs, 200);

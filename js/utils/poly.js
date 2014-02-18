@@ -18,8 +18,11 @@
   })();
 
   // polyfill use to simulate native "tap"
-  ionic.tapElement = function(ele, e) {
+  ionic.tapElement = function(target, e) {
     // simulate a normal click by running the element's click method then focus on it
+    
+    var ele = target.control || target;
+
     if(ele.disabled) return;
 
     console.debug('tapElement', ele.tagName, ele.className);
@@ -46,6 +49,11 @@
     if( !isRecentTap(e) ) {
       recordCoordinates(e);
     }
+
+    if(target.control) {
+      console.debug('tapElement, target.control, stop');
+      return stopEvent(e);
+    }
   };
 
   function tapPolyfill(orgEvent) {
@@ -66,16 +74,11 @@
       if( ele.tagName === "INPUT" ||
           ele.tagName === "A" ||
           ele.tagName === "BUTTON" ||
+          ele.tagName === "LABEL" ||
           ele.tagName === "TEXTAREA" ||
           ele.tagName === "SELECT" ) {
 
         return ionic.tapElement(ele, e);
-
-      } else if( ele.tagName === "LABEL" ) {
-        // check if the tapped label has an input associated to it
-        if(ele.control) {
-          return ionic.tapElement(ele.control, e);
-        }
       }
       ele = ele.parentElement;
     }
@@ -158,13 +161,9 @@
 
   function removeClickPrevent(e) {
     setTimeout(function(){
-      if(e.target && e.target.control && e.target.control.labelLastTap) {
-        e.target.control.labelLastTap = null;
-      }
-      var c = isRecentTap(e);
-      if(c) delete tapCoordinates[c.id];
+      var tap = isRecentTap(e);
+      if(tap) delete tapCoordinates[tap.id];
     }, REMOVE_PREVENT_DELAY);
-    return stopEvent(e);
   }
 
   function stopEvent(e){
