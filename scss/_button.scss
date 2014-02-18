@@ -29,6 +29,16 @@
 
   cursor: pointer;
 
+  &:after {
+    // used to create a larger button "hit" area
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    bottom: -6px;
+    left: -8px;
+    content: ' ';
+  }
+
   .icon {
     vertical-align: top;
   }
@@ -198,11 +208,7 @@
   clear: both;
   
   &:after { 
-    display: block; 
-    visibility: hidden; 
-    clear: both; 
-    height: 0;
-    content: ".";
+    clear: both;
   }
 }
 
