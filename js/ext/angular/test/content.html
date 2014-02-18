@@ -54,10 +54,10 @@
 
   </head>
   <body ng-controller="ThisCtrl">
-    <pane>
-      <header-bar id="header" title="'Title'" type="bar-primary" hides-header></header-bar>
+    <ion-pane>
+      <ion-header-bar id="header" title="'Title'" type="bar-primary" hides-header></ion-header-bar>
 
-      <content id="container"
+      <ion-content id="container"
         start-y="55"
         on-scroll="onScroll(event, scrollTop, scrollLeft)"
         on-scroll-complete="onScrollComplete(scrollTop, scrollLeft)"
@@ -67,7 +67,7 @@
         has-tabs="true"
         has-header="true"
         >
-        <refresher></refresher>
+        <ion-refresher></ion-refresher>
         <div id="search-box" class="bar bar-header item-input-inset">
           <label class="item-input-wrapper">
             <i class="icon ion-ios7-search placeholder-icon"></i>
@@ -83,7 +83,7 @@
           <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
         </ul>
         <input type="text" placeholder="INPUT TEXT">
-      </content>
+      </ion-content>
       <nav id="tab-bar" class="tabs tabs-icon-top">
         <a class="tab-item" href="#">
           <i class="icon ion-game-controller-a"></i>
@@ -107,7 +107,7 @@
         </a>
       </nav>
 
-    </pane>
+    </ion-pane>
 
     <script>
       angular.module('navTest', ['ionic'])

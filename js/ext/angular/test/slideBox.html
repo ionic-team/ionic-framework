@@ -43,11 +43,11 @@
   <body>
 
     <div ng-controller="SlideCtrl">
-      <side-menus>
-        <pane side-menu-content>
-          <header-bar left-buttons="leftButtons" right-buttons="rightButtons" title=""></header-bar>
-          <slide-box on-slide-changed="slideChanged(index)">
-            <slide ng-controller="FirstSlideCtrl">
+      <ion-side-menus>
+        <ion-pane ion-side-menu-content>
+          <ion-header-bar left-buttons="leftButtons" right-buttons="rightButtons" title=""></ion-header-bar>
+          <ion-slide-box on-slide-changed="slideChanged(index)">
+            <ion-slide ng-controller="FirstSlideCtrl">
               <h3>Thank you for choosing the Awesome App!</h3>
               <div id="logo">
                 <img src="app_icon.png">
@@ -61,8 +61,8 @@
               <p>
                 <button class="button button-dark" ng-click="toLast()">Skip to last</button>
               </p>
-            </slide>
-            <slide>
+            </ion-slide>
+            <ion-slide>
               <h3>Using Awesome</h3>
 
               <div id="list">
@@ -73,22 +73,22 @@
                   <li>There is no step 3</li>
                 </ol>
               </div>
-            </slide>
-            <slide>
-              <content has-header="true">
+            </ion-slide>
+            <ion-slide>
+              <ion-content has-header="true">
                 <div style="width: 300px; height: 2000px; background: url('tree_bark.png') repeat"></div>
-              </content>
-            </slide>
-          </slide-box>
-        </pane>
-        <side-menu side="left">
+              </ion-content>
+            </ion-slide>
+          </ion-slide-box>
+        </ion-pane>
+        <ion-side-menu side="left">
           <header class="bar bar-header bar-assertive">
             <h1 class="title">Right</h1>
           </header>
-          <content>
-          </content>
-        </side-menu>
-      </side-menus>
+          <ion-content>
+          </ion-content>
+        </ion-side-menu>
+      </ion-side-menus>
     </div>
     <script>
       angular.module('slideBoxTest', ['ionic'])

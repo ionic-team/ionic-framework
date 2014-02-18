@@ -78,7 +78,7 @@
   </head>
   <body ng-controller="TestCtrl">
 
-    <pane>
+    <ion-pane>
 
       <header class="bar bar-header bar-positive">
         <div class="buttons">
@@ -90,7 +90,7 @@
         </div>
       </header>
 
-      <content has-header="true">
+      <ion-content has-header="true">
 
         <div contenteditable="true">
           Hello!
@@ -98,7 +98,7 @@
           Hello!
         </div>
 
-        <list show-delete="isDeletingItems"
+        <ion-list show-delete="isDeletingItems"
               show-reorder="isReorderingItems"
               on-refresh-holding="refreshHolding()"
               on-refresh-opening="refreshOpening(ratio)"
@@ -115,11 +115,11 @@
               option-buttons="optionButtons1">
 
           <!-- shows that the item directive does not need attributes and can get values from the list attributes -->
-          <item item="item" ng-click="itemClick()" class="item-message" ng-repeat="item in items" ng-class="{ active: item.isActive}">
+          <ion-item ion-item="item" ng-click="itemClick()" class="item-message" ng-repeat="item in items" ng-class="{ active: item.isActive}">
             <img ng-src="{{item.face}}">
             <h2>{{item.from}}</h2>
             <p>{{item.text}}</p>
-          </item>
+          </ion-item>
 
           <!-- shows how a divider could be included-->
           <div class="item item-divider">
@@ -127,17 +127,17 @@
           </div>
 
           <!-- shows it can override the attributes set by the list -->
-          <item can-delete="false"
+          <ion-item can-delete="false"
                 can-reorder="false"
                 can-swipe="false"
                 item-type="item-icon-left item-icon-right">
             <i class="icon ion-stats-bars"></i>
             Individual item directive, but can't do much. Overrides list attributes with its own left and right icons.
             <i class="icon ion-arrow-graph-up-right"></i>
-          </item>
+          </ion-item>
 
           <!-- shows that the item directive can receive many attributes and overrides the list attributes -->
-          <item on-delete="deleteItem(item)"
+          <ion-item on-delete="deleteItem(item)"
                 delete-icon="ion-trash-a"
                 reorder-icon="ion-navicon-round"
                 can-delete="true"
@@ -145,7 +145,7 @@
                 option-buttons="optionButtons2">
             <i class="icon ion-person-stalker"></i>
             Individual item directive and overrides list attrs with item attributes
-          </item>
+          </ion-item>
 
           <!-- shows how a divider could be included-->
           <div class="item item-divider">
@@ -165,28 +165,28 @@
           </a>
           <input type="text" placeholder="text input">
           <div class="item">
-            <slide-box show-pager="false">
-              <slide>
+            <ion-slide-box show-pager="false">
+              <ion-slide>
                 <div class="box blue">
                   <h1>BLUE {{slideBox.slideIndex}}</h1>
                 </div>
-              </slide>
-              <slide>
+              </ion-slide>
+              <ion-slide>
                 <div class="box yellow">
                   <h1>YELLOW {{slideBox.slideIndex}}</h1>
                 </div>
-              </slide>
-              <slide>
+              </ion-slide>
+              <ion-slide>
                 <div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>
-              </slide>
-            </slide-box>
+              </ion-slide>
+            </ion-slide-box>
           </div>
 
-        </list>
+        </ion-list>
 
-      </content>
+      </ion-content>
 
-    </pane>
+    </ion-pane>
 
     <script>
       angular.module('navTest', ['ionic'])

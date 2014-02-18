@@ -20,18 +20,18 @@
         <h1 class="title">Click the Clock to Get Stuck</h1>
       </header>
 
-      <content class="has-header">
+      <ion-content class="has-header">
 
-      <list>
-        <item ng-repeat="item in items" 
+      <ion-list>
+        <ion-item ng-repeat="item in items" 
               item="item"
               id="foo-{{item.id}}"
               href="#/item/{{item.id}}">
           Item {{ item.id }}
-        </item>
-      </list>
+        </ion-item>
+      </ion-list>
 
-      </content>
+      </ion-content>
     </div>
 
     <script>

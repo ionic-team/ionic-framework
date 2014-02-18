@@ -13,14 +13,14 @@
     <header class="bar bar-header bar-danger">
       <h1 class="title">Beans</h1>
     </header>
-    <content has-header="true"class="reveal-animation">
+    <ion-content has-header="true"class="reveal-animation">
       <div ng-controller="TestCtrl">
 
         <div class="list">
           <label class="item item-input">
             <span class="input-label">Units</span>
 
-            <!--<radio-buttons ng-model="data.isLovely">-->
+            <!--<ion-radio-buttons ng-model="data.isLovely">-->
             <div class="button-bar">
               <button class="button button-assertive button-radio" ng-value="'magical'" ng-click="magical()">Magical</button>
               <button class="button button-assertive button-radio" ng-value="'black'">Black</button>
@@ -34,7 +34,7 @@
           <button ng-click="doIt()" class="button button-warning">Print</button>
         </form>
       </div>
-    </content>
+    </ion-content>
 
     <script>
       angular.module('radioButtonTest', ['ionic'])

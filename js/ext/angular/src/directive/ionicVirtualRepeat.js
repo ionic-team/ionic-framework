@@ -130,7 +130,7 @@ angular.module('ionic.ui.virtualRepeat', [])
  * scrolling to only render items that are showing or will be showing
  * if a scroll is made.
  */
-.directive('virtualRepeat', ['$log', function($log) {
+.directive('ionVirtualRepeat', ['$log', function($log) {
     return {
       require: ['?ngModel, ^virtualList'],
       transclude: 'element',

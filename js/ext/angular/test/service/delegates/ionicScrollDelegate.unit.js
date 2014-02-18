@@ -13,14 +13,14 @@ describe('Ionic ScrollDelegate Service', function() {
 
   it('Should get scroll view', function() {
     var scope = rootScope.$new();
-    var el = compile('<content></content>')(scope);
+    var el = compile('<ion-content></ion-content>')(scope);
     var sv = del.getScrollView(scope);
     expect(sv).not.toBe(undefined);
   });
 
   it('should resize', function() {
     var scope = rootScope.$new();
-    var el = compile('<content></content>')(scope);
+    var el = compile('<ion-content></ion-content>')(scope);
 
     var sv = del.getScrollView(scope);
     spyOn(sv, 'resize');
@@ -69,7 +69,7 @@ describe('Ionic ScrollDelegate Service', function() {
       });
       it('should resize & scroll top', function() {
         var scope = rootScope.$new();
-        var el = compile('<content start-y="100"></content>')(scope);
+        var el = compile('<ion-content start-y="100"></ion-content>')(scope);
 
         var sv = del.getScrollView(scope);
         spyOn(sv, 'resize');
@@ -83,7 +83,7 @@ describe('Ionic ScrollDelegate Service', function() {
 
       it('should resize & scroll bottom', function() {
         var scope = rootScope.$new();
-        var el = compile('<content start-y="100"><br/><br/></content>')(scope);
+        var el = compile('<ion-content start-y="100"><br/><br/></ion-content>')(scope);
 
         var sv = del.getScrollView(scope);
         spyOn(sv, 'getScrollMax').andCallFake(function() {
@@ -101,7 +101,7 @@ describe('Ionic ScrollDelegate Service', function() {
 
       it('should resize & scrollTo', function() {
         var scope = rootScope.$new();
-        var el = compile('<content start-y="100"><br/><br/></content>')(scope);
+        var el = compile('<ion-content start-y="100"><br/><br/></ion-content>')(scope);
 
         var sv = del.getScrollView(scope);
         spyOn(sv, 'scrollTo');
@@ -117,7 +117,7 @@ describe('Ionic ScrollDelegate Service', function() {
 
   it('should finish refreshing', function() {
     var scope = rootScope.$new();
-    var el = compile('<content start-y="100"></content>')(scope);
+    var el = compile('<ion-content start-y="100"></ion-content>')(scope);
 
     var sv = del.getScrollView(scope);
     spyOn(sv, 'finishPullToRefresh');
@@ -144,7 +144,7 @@ describe('anchorScroll', function() {
       var contentEl, scope, del, timeout;
       beforeEach(inject(function($rootScope, $compile, $timeout, $document, $ionicScrollDelegate) {
         scope = $rootScope.$new();
-        contentEl = $compile('<content></content>')(scope);
+        contentEl = $compile('<ion-content></ion-content>')(scope);
 
         document.body.appendChild(contentEl[0]);
         del = $ionicScrollDelegate;

@@ -129,8 +129,8 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
       if(element && !this.isTagNameRegistrable(element)) {
         // first check to see if this element can even be registered as a view.
         // Certain tags are only containers for views, but are not views themselves.
-        // For example, the <tabs> directive contains a <tab> and the <tab> is the
-        // view, but the <tabs> directive itself should not be registered as a view.
+        // For example, the <ion-tabs> directive contains a <ion-tab> and the <ion-tab> is the
+        // view, but the <ion-tabs> directive itself should not be registered as a view.
         rsp.navAction = 'disabledByTagName';
         return rsp;
       }
@@ -456,15 +456,15 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
 
     disableRegisterByTagName: function(tagName) {
       // not every element should animate betwee transitions
-      // For example, the <tabs> directive should not animate when it enters,
-      // but instead the <tabs> directve would just show, and its children
-      // <tab> directives would do the animating, but <tabs> itself is not a view
+      // For example, the <ion-tabs> directive should not animate when it enters,
+      // but instead the <ion-tabs> directve would just show, and its children
+      // <ion-tab> directives would do the animating, but <ion-tabs> itself is not a view
       $rootScope.$viewHistory.disabledRegistrableTagNames.push(tagName.toUpperCase());
     },
 
     isTagNameRegistrable: function(element) {
       // check if this element has a tagName (at its root, not recursively)
-      // that shouldn't be animated, like <tabs> or <side-menu>
+      // that shouldn't be animated, like <ion-tabs> or <ion-side-menu>
       var x, y, disabledTags = $rootScope.$viewHistory.disabledRegistrableTagNames;
       for(x=0; x<element.length; x++) {
         if(element[x].nodeType !== 1) continue;

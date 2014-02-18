@@ -7,7 +7,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
  * Panel is a simple 100% width and height, fixed panel. It's meant for content to be
  * added to it, or animated around.
  */
-.directive('pane', function() {
+.directive('ionPane', function() {
   return {
     restrict: 'E',
     link: function(scope, element, attr) {
@@ -18,13 +18,13 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
 
 // The content directive is a core scrollable content area
 // that is part of many View hierarchies
-.directive('content', ['$parse', '$timeout', '$ionicScrollDelegate', '$controller', function($parse, $timeout, $ionicScrollDelegate, $controller) {
+.directive('ionContent', ['$parse', '$timeout', '$ionicScrollDelegate', '$controller', function($parse, $timeout, $ionicScrollDelegate, $controller) {
   return {
     restrict: 'E',
     replace: true,
     template: '<div class="scroll-content"><div class="scroll" ng-transclude></div></div>',
     transclude: true,
-    require: '^?navView',
+    require: '^?ionNavView',
     scope: {
       onRefresh: '&',
       onRefreshOpening: '&',
@@ -53,7 +53,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
       if(attr.padding == "true") { element.find('div').addClass('padding'); }
 
       return {
-        //Prelink <content> so it can compile before other directives compile.
+        //Prelink <ion-content> so it can compile before other directives compile.
         //Then other directives can require ionicScrollCtrl
         pre: prelink
       };
@@ -158,17 +158,17 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
   };
 }])
 
-.directive('refresher', function() {
+.directive('ionRefresher', function() {
   return {
     restrict: 'E',
     replace: true,
-    require: ['^?content', '^?list'],
+    require: ['^?ionContent', '^?ionList'],
     template: '<div class="scroll-refresher"><div class="ionic-refresher-content"><i class="icon ion-arrow-down-c icon-pulling"></i><i class="icon ion-loading-d icon-refreshing"></i></div></div>',
     scope: true
   };
 })
 
-.directive('scrollRefresher', function() {
+.directive('ionScrollRefresher', function() {
   return {
     restrict: 'E',
     replace: true,
@@ -177,7 +177,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
   };
 })
 
-.directive('infiniteScroll', function() {
+.directive('ionInfiniteScroll', function() {
   return {
     restrict: 'E',
     replace: false,

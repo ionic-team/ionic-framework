@@ -11,43 +11,43 @@
   <body>
 
     <div ng-controller="MenuCtrl">
-      <side-menus>
-        <pane side-menu-content drag-content="$root.$draggy">
+      <ion-side-menus>
+        <ion-pane ion-side-menu-content drag-content="$root.$draggy">
           <header class="bar bar-header bar-assertive">
             <button class="button button-icon" ng-click="openLeft()"><i class="icon ion-navicon"></i></button>
             <h1 class="title">Slide me</h1>
           </header>
-          <content has-header="true">
-            <toggle ng-model="$root.$draggy">Hello</toggle>
+          <ion-content has-header="true">
+            <ion-toggle ng-model="$root.$draggy">Hello</ion-toggle>
             <input type="range" ng-model="$root.menuWidth" min="0" max="300">
             <h1>Content</h1>
-          </content>
-        </pane>
-        <side-menu side="left" width="$root.menuWidth || 200">
+          </ion-content>
+        </ion-pane>
+        <ion-side-menu side="left" width="$root.menuWidth || 200">
           <header class="bar bar-header bar-assertive">
             <h1 class="title">Left</h1>
           </header>
-          <content has-header="true">
+          <ion-content has-header="true">
             <ul class="list">
               <a href="#" class="item" ng-repeat="item in list">
                 {{item.text}}
               </a>
             </ul>
-          </content>
-        </side-menu>
-        <side-menu side="right">
+          </ion-content>
+        </ion-side-menu>
+        <ion-side-menu side="right">
           <header class="bar bar-header bar-assertive">
             <h1 class="title">Right</h1>
           </header>
-          <content>
+          <ion-content>
             <ul class="list">
               <a href="#" class="item" ng-repeat="item in list">
                 {{item.text}}
               </a>
             </ul>
-          </content>
-        </side-menu>
-      </side-menus>
+          </ion-content>
+        </ion-side-menu>
+      </ion-side-menus>
     </div>
     <script>
       angular.module('sideMenuTest', ['ionic'])

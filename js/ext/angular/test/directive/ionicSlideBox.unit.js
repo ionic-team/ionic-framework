@@ -13,21 +13,21 @@ describe('Ionic Angular Slide Box', function() {
     rootScope = $rootScope;
     compile = $compile;
 
-    el = $compile('<slide-box>\
-      <slide>\
+    el = $compile('<ion-slide-box>\
+      <ion-slide>\
         <div class="box blue">\
           <h1>BLUE {{slideBox.slideIndex}}</h1>\
         </div>\
-      </slide>\
-      <slide>\
+      </ion-slide>\
+      <ion-slide>\
         <div class="box yellow">\
           <h1>YELLOW {{slideBox.slideIndex}}</h1>\
         </div>\
-      </slide>\
-      <slide>\
+      </ion-slide>\
+      <ion-slide>\
       <div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>\
-      </slide>\
-    </slide-box>')($rootScope);
+      </ion-slide>\
+    </ion-slide-box>')($rootScope);
   }));
 
   it('Should init', function() {
@@ -45,21 +45,21 @@ describe('Ionic Angular Slide Box', function() {
   });
 
   it('Should set initial active slide', function() {
-    el = compile('<slide-box active-slide="2">\
-      <slide>\
+    el = compile('<ion-slide-box active-slide="2">\
+      <ion-slide>\
         <div class="box blue">\
           <h1>BLUE {{slideBox.slideIndex}}</h1>\
         </div>\
-      </slide>\
-      <slide>\
+      </ion-slide>\
+      <ion-slide>\
         <div class="box yellow">\
           <h1>YELLOW {{slideBox.slideIndex}}</h1>\
         </div>\
-      </slide>\
-      <slide>\
+      </ion-slide>\
+      <ion-slide>\
       <div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>\
-      </slide>\
-    </slide-box>')(rootScope);
+      </ion-slide>\
+    </ion-slide-box>')(rootScope);
 
    var scope = el.scope();
    expect(scope.slideBox.getPos()).toBe(2);

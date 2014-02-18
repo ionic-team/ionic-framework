@@ -9,17 +9,17 @@
     <script src="../../../../dist/js/ionic.bundle.js"></script>
   </head>
   <body>
-    <pane ng-controller="AppCtrl">
-        <header-bar type="bar-positive" title="'Contacts'" right-buttons="contactsRightButtons">
-        </header-bar>
-        <content has-header="true">
-          <list>
-            <item ng-repeat="contact in contacts">
+    <ion-pane ng-controller="AppCtrl">
+        <ion-header-bar type="bar-positive" title="'Contacts'" right-buttons="contactsRightButtons">
+        </ion-header-bar>
+        <ion-content has-header="true">
+          <ion-list>
+            <ion-item ng-repeat="contact in contacts">
               {{contact.name}}
-            </item>
-          </list>
-        </content>
-    </pane>
+            </ion-item>
+          </ion-list>
+        </ion-content>
+    </ion-pane>
 
     <script id="modal.html" type="text/ng-template">
       <div class="modal" ng-controller="ModalCtrl">
@@ -27,7 +27,7 @@
           <h1 class="title">New Contact</h1>
           <button class="button button-clear button-primary" ng-click="close()">Cancel</button>
         </header>
-        <content has-header="true">
+        <ion-content has-header="true">
           <div class="padding">
             <div class="list">
               <label class="item item-input">
@@ -45,7 +45,7 @@
               <button class="button button-full button-positive" ng-click="closeModal()">Create</button>
             </div>
           </div>
-        </content>
+        </ion-content>
       </div>
     </script>
 

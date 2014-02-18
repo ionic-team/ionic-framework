@@ -17,14 +17,14 @@
   </head>
   <body ng-controller="AppCtrl">
 
-    <view id="view">
+    <ion-view id="view">
       <header>
         <label class="item item-input">
           <span class="input-label">Header</span>
           <input type="text" value="header input">
         </label>
       </header>
-      <content has-header="true" padding="true" overflow-scroll="false">
+      <ion-content has-header="true" padding="true" overflow-scroll="false">
         <div class="list">
           <label class="item item-input">
             <span class="input-label">Your Name</span>
@@ -62,16 +62,16 @@
           <a href="tapInputs.html">Tap Inputs</a> -
           <a href="/test/">CSS Tests</a>
         </p>
-      </content>
-    </view>
+      </ion-content>
+    </ion-view>
 
     <script id="modal.html" type="text/ng-template">
       <div class="modal" ng-controller="ModalCtrl">
         <header class="bar bar-header bar-positive">
           <h1 class="title">New Contact</h1>
-          <button class="button button-clear button-primary" ng-click="closeModal()" stop-event="click">Cancel</button>
+          <button class="button button-clear button-primary" ng-click="closeModal()" ion-stop-event="click">Cancel</button>
         </header>
-        <content has-header="true">
+        <ion-content has-header="true">
           <div class="padding">
             <div class="list">
               <label class="item item-input">
@@ -89,7 +89,7 @@
               <button class="button button-full button-positive" ng-click="closeModal()">Create</button>
             </div>
           </div>
-        </content>
+        </ion-content>
       </div>
     </script>
 

@@ -6,13 +6,13 @@ describe('Ionic nav-view', function() {
     compile = $compile;
     scope = $rootScope.$new();
   }));
-  
+
   it('should publish a controller', function() {
-    var view = angular.element('<nav-view></nav-view>');
+    var view = angular.element('<ion-nav-view></ion-nav-view>');
     compile(view)(scope);
     scope.$apply();
 
-    expect(view.controller('navView')).toBeTruthy();
+    expect(view.controller('ionNavView')).toBeTruthy();
   });
 
   /*

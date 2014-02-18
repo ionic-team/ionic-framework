@@ -12,14 +12,14 @@
 
   <body>
 
-    <header-bar title="'Sample UL'" type="bar-positive"></header-bar>
+    <ion-header-bar title="'Sample UL'" type="bar-positive"></ion-header-bar>
 
-    <content has-header="true" scroll="true" ng-controller="ContentCtrl" on-refresh="onRefresh()" has-footer="true" padding="false">
+    <ion-content has-header="true" scroll="true" ng-controller="ContentCtrl" on-refresh="onRefresh()" has-footer="true" padding="false">
 
-      <refresher></refresher>
+      <ion-refresher></ion-refresher>
 
       <ul class="list">
-        <li class="item">This list should *exactly* fit</li>
+        <li class="item">This ion-list should *exactly* fit</li>
         <li class="item">between header and footer (no gap),</li>
         <li class="item">even with pull-to-refresh.</li>
         <li class="item">4</li>
@@ -46,11 +46,11 @@
         <li class="item">25</li>
         <li class="item">26</li>
        </ul>
-    </content>
+    </ion-content>
 
-    <footer-bar type="bar-assertive">
+    <ion-footer-bar type="bar-assertive">
       <h1 class="title">Footer!</h1>
-    </footer-bar>
+    </ion-footer-bar>
 
   <script>
 function ContentCtrl($scope, $timeout) {

@@ -20,7 +20,7 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
 
 
       // Compile the template
-      var element = $compile('<action-sheet buttons="buttons"></action-sheet>')(scope);
+      var element = $compile('<ion-action-sheet buttons="buttons"></ion-action-sheet>')(scope);
 
       // Grab the sheet element for animation
       var sheetEl = angular.element(element[0].querySelector('.action-sheet-wrapper'));

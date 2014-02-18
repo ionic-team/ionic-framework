@@ -13,7 +13,7 @@ angular.module('ionic.ui.slideBox', [])
  * The internal controller for the slide box controller.
  */
 
-.directive('slideBox', ['$timeout', '$compile', '$ionicSlideBoxDelegate', function($timeout, $compile, $ionicSlideBoxDelegate) {
+.directive('ionSlideBox', ['$timeout', '$compile', '$ionicSlideBoxDelegate', function($timeout, $compile, $ionicSlideBoxDelegate) {
   return {
     restrict: 'E',
     replace: true,
@@ -93,7 +93,7 @@ angular.module('ionic.ui.slideBox', [])
       // If the pager should show, append it to the slide box
       if($scope.$eval($scope.showPager) !== false) {
         var childScope = $scope.$new();
-        var pager = angular.element('<pager></pager>');
+        var pager = angular.element('<ion-pager></ion-pager>');
         $element.append(pager);
         $compile(pager)(childScope);
       }
@@ -101,10 +101,10 @@ angular.module('ionic.ui.slideBox', [])
   };
 }])
 
-.directive('slide', function() {
+.directive('ionSlide', function() {
   return {
     restrict: 'E',
-    require: '^slideBox',
+    require: '^ionSlideBox',
     compile: function(element, attr) {
       element.addClass('slider-slide');
       return function($scope, $element, $attr) {};
@@ -112,11 +112,11 @@ angular.module('ionic.ui.slideBox', [])
   };
 })
 
-.directive('pager', function() {
+.directive('ionPager', function() {
   return {
     restrict: 'E',
     replace: true,
-    require: '^slideBox',
+    require: '^ionSlideBox',
     template: '<div class="slider-pager"><span class="slider-pager-page" ng-repeat="slide in numSlides() track by $index" ng-class="{active: $index == currentSlide}"><i class="icon ion-record"></i></span></div>',
     link: function($scope, $element, $attr, slideBox) {
       var selectPage = function(index) {

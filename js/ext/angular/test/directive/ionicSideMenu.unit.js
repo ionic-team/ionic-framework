@@ -8,7 +8,7 @@ describe('Ionic Angular Side Menu', function() {
   beforeEach(module('ionic.ui.sideMenu'));
 
   beforeEach(inject(function($compile, $rootScope) {
-    el = $compile('<side-menus></side-menus>')($rootScope);
+    el = $compile('<ion-side-menus></ion-side-menus>')($rootScope);
   }));
 
   it('Should init', function() {
@@ -26,12 +26,12 @@ describe('Ionic Side Menu Content Directive', function () {
     $compile = _$compile_;
     scope = _$rootScope_;
 
-    var sideMenus = $compile('<side-menus>')(scope).appendTo('body');
+    var sideMenus = $compile('<ion-side-menus>')(scope).appendTo('body');
 
     sideMenuCtrl = sideMenus.controller('sideMenus');
     spyOn(sideMenuCtrl, '_handleDrag');
 
-    element = angular.element('<div side-menu-content>').appendTo(sideMenus);
+    element = angular.element('<div ion-side-menu-content>').appendTo(sideMenus);
 
     $compile(element)(scope);
     scope.$digest();
@@ -50,11 +50,11 @@ describe('Ionic Side Menu Directive', function () {
     $rootScope.widthVal = 250;
     $rootScope.enabledVal = true;
 
-    var sideMenus = $compile('<side-menus>')($rootScope);
+    var sideMenus = $compile('<ion-side-menus>')($rootScope);
 
-    sideMenuCtrl = sideMenus.controller('sideMenus');
+    sideMenuCtrl = sideMenus.controller('ionSideMenus');
 
-    element = angular.element('<side-menu side="left" is-enabled="enabledVal" width="widthVal">').appendTo(sideMenus);
+    element = angular.element('<ion-side-menu side="left" is-enabled="enabledVal" width="widthVal">').appendTo(sideMenus);
     $compile(element)($rootScope);
 
     scope = element.scope();

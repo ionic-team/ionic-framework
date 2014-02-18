@@ -31,7 +31,7 @@ angular.module('ionic.service.loading', ['ionic.ui.loading'])
       }
 
       // Compile the template
-      var element = $compile('<loading>' + opts.content + '</loading>')(scope);
+      var element = $compile('<ion-loading>' + opts.content + '</ion-loading>')(scope);
 
       $document[0].body.appendChild(element[0]);
 

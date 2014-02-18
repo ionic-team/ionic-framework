@@ -20,7 +20,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
   $ionicViewService.disableRegisterByTagName('side-menus');
 }])
 
-.directive('sideMenus', function() {
+.directive('ionSideMenus', function() {
   return {
     restrict: 'ECA',
     controller: ['$scope', '$attrs', function($scope, $attrs) {
@@ -43,10 +43,10 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
   };
 })
 
-.directive('sideMenuContent', ['$timeout', '$ionicGesture', function($timeout, $ionicGesture) {
+.directive('ionSideMenuContent', ['$timeout', '$ionicGesture', function($timeout, $ionicGesture) {
   return {
     restrict: 'AC',
-    require: '^sideMenus',
+    require: '^ionSideMenus',
     scope: true,
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, sideMenuCtrl) {
@@ -142,10 +142,10 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
 }])
 
 
-.directive('sideMenu', function() {
+.directive('ionSideMenu', function() {
   return {
     restrict: 'E',
-    require: '^sideMenus',
+    require: '^ionSideMenus',
     replace: true,
     transclude: true,
     scope: true,

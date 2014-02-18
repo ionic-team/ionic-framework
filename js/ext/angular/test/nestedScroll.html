@@ -13,16 +13,16 @@
   <body>
 
     <div ng-controller="Ctrl">
-      <header-bar title="title" type="bar-positive">
-      </header-bar>
-      <content has-header="true" style="background: lightblue;">
+      <ion-header-bar title="title" type="bar-positive">
+      </ion-header-bar>
+      <ion-content has-header="true" style="background: lightblue;">
         <h1>outer</h1>
-        <scroll style="background: lightgreen; height: 200px;">
+        <ion-scroll style="background: lightgreen; height: 200px;">
           <h1>inner</h1>
           <p ng-repeat="i in range">{{i}}</p>
-        </scroll>
+        </ion-scroll>
         <p ng-repeat="i in range">{{i}}</p>
-      </content>
+      </ion-content>
     </div>
 <script>
 function Ctrl($scope) {

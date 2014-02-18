@@ -3,7 +3,7 @@
 
 angular.module('ionic.ui.loading', [])
 
-.directive('loading', function() {
+.directive('ionLoading', function() {
   return {
     restrict: 'E',
     replace: true,

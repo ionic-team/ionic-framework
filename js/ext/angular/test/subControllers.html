@@ -10,8 +10,8 @@
   </head>
   <body>
 
-    <side-menus>
-      <pane side-menu-content>
+    <ion-side-menus>
+      <ion-pane ion-side-menu-content>
         <header class="bar bar-header bar-dark">
           <a href="#" class="button"><i class="icon-reorder"></i></a>
           <h1 class="title">Slide me</h1>
@@ -19,51 +19,51 @@
         <div class="content has-header">
           <h1>Slide me side to side!</h1>
         </div>
-      </pane>
-      <side-menu side="left">
+      </ion-pane>
+      <ion-side-menu side="left">
         <h2>Left</h2>
         <ul class="list">
           <a href="#" class="list-item" ng-repeat="item in list">
             {{item.text}}
           </a>
         </ul>
-      </side-menu>
-      <side-menu side="right">
-        <tabs>
-          <tab title="Home" icon="ion-home" class="tab-content">
+      </ion-side-menu>
+      <ion-side-menu side="right">
+        <ion-tabs>
+          <ion-tab title="Home" icon="ion-home" class="tab-content">
             <header class="bar bar-header bar-dark">
               <h1 class="title">Tab Bars</h1>
             </header>
-            <content has-header="true" has-tabs="true">
+            <ion-content has-header="true" has-tabs="true">
               <h1>Home</h1>
               <ul class="list">
                 <a href="#" class="list-item" ng-repeat="item in items">
                   {{item.title}}
                 </a>
               </ul>
-            </content>
-          </tab>
+            </ion-content>
+          </ion-tab>
 
-          <tab title="About" icon="ion-info" class="tab-content">
+          <ion-tab title="About" icon="ion-info" class="tab-content">
             <header class="bar bar-header bar-success">
               <h1 class="title">About</h1>
             </header>
-            <content has-header="true" has-tabs="true">
+            <ion-content has-header="true" has-tabs="true">
               <h1>About Us</h1>
-            </content>
-          </tab>
+            </ion-content>
+          </ion-tab>
 
-          <tab title="Settings" icon="icon-gear" class="tab-content">
+          <ion-tab title="Settings" icon="icon-gear" class="tab-content">
             <header class="bar bar-header bar-dark">
               <h1 class="title">Settings</h1>
             </header>
-            <content has-header="true" has-tabs="true">
+            <ion-content has-header="true" has-tabs="true">
               <h1>Settings</h1>
-            </content>
-          </tab>
-        </tabs>
-      </side-menu>
-    </side-menus>
+            </ion-content>
+          </ion-tab>
+        </ion-tabs>
+      </ion-side-menu>
+    </ion-side-menus>
     <script>
       angular.module('sideMenuTest', ['ionic']);
 

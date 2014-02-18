@@ -9,13 +9,13 @@ describe('Ionic Checkbox', function() {
   }));
 
   it('should set the checkbox name', function() {
-    el = compile('<checkbox name="myname"></checkbox>')(scope);
+    el = compile('<ion-checkbox name="myname"></ion-checkbox>')(scope);
     var input = el.find('input');
     expect(input.attr('name')).toEqual('myname');
   });
 
   it('should setup checkbox markup', function() {
-    el = compile('<checkbox>INNER TEXT</checkbox>')(scope);
+    el = compile('<ion-checkbox>INNER TEXT</ion-checkbox>')(scope);
     expect(el.hasClass('item')).toEqual(true);
     expect(el.hasClass('item-checkbox')).toEqual(true);
     var label = el.find('label');

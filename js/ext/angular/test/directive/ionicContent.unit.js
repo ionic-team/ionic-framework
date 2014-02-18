@@ -12,22 +12,22 @@ describe('Ionic Content directive', function() {
   }));
 
   it('Has $ionicScroll controller', function() {
-    element = compile('<content></content>')(scope);
+    element = compile('<ion-content></ion-content>')(scope);
     expect(element.controller('$ionicScroll').element).toBe(element[0]);
   });
 
   it('Has content class', function() {
-    element = compile('<content></content>')(scope);
+    element = compile('<ion-content></ion-content>')(scope);
     expect(element.hasClass('scroll-content')).toBe(true);
   });
 
   it('Has header', function() {
-    element = compile('<content has-header="true"></content>')(scope);
+    element = compile('<ion-content has-header="true"></ion-content>')(scope);
     expect(element.hasClass('has-header')).toEqual(true);
   });
 
   it('should add padding classname', function() {
-    element = compile('<content padding="true"></content>')(scope);
+    element = compile('<ion-content padding="true"></ion-content>')(scope);
     expect(element.hasClass('scroll-content')).toEqual(true);
     expect(element.hasClass('padding')).toEqual(false);
     var scrollElement = element.find('.scroll');
@@ -36,7 +36,7 @@ describe('Ionic Content directive', function() {
 
   it('Enables bouncing by default', function() {
     ionic.Platform.setPlatform('iPhone');
-    element = compile('<content has-header="true"></content>')(scope);
+    element = compile('<ion-content has-header="true"></ion-content>')(scope);
     scope.$apply();
     var newScope = element.isolateScope();
     var scrollView = scope.scrollView;
@@ -45,7 +45,7 @@ describe('Ionic Content directive', function() {
 
   it('Disables bouncing when has-bouncing = false', function() {
     ionic.Platform.setPlatform('iPhone');
-    element = compile('<content has-header="true" has-bouncing="false"></content>')(scope);
+    element = compile('<ion-content has-header="true" has-bouncing="false"></ion-content>')(scope);
     scope.$apply();
     var newScope = element.isolateScope();
     var scrollView = scope.scrollView;
@@ -54,7 +54,7 @@ describe('Ionic Content directive', function() {
 
   it('Disables bouncing by default on Android', function() {
     ionic.Platform.setPlatform('Android');
-    element = compile('<content has-header="true"></content>')(scope);
+    element = compile('<ion-content has-header="true"></ion-content>')(scope);
     scope.$apply();
     var newScope = element.isolateScope();
     var scrollView = scope.scrollView;
@@ -63,7 +63,7 @@ describe('Ionic Content directive', function() {
 
   it('Disables bouncing by default on Android unless has-bouncing = true', function() {
     ionic.Platform.setPlatform('Android');
-    element = compile('<content has-header="true" has-bouncing="true"></content>')(scope);
+    element = compile('<ion-content has-header="true" has-bouncing="true"></ion-content>')(scope);
     scope.$apply();
     var newScope = element.isolateScope();
     var scrollView = scope.scrollView;
@@ -72,7 +72,7 @@ describe('Ionic Content directive', function() {
 
 
   it('Should set start x and y', function() {
-    element = compile('<content start-x="100" start-y="300" has-header="true"></content>')(scope);
+    element = compile('<ion-content start-x="100" start-y="300" has-header="true"></ion-content>')(scope);
     scope.$apply();
     var newScope = element.isolateScope();
     var scrollView = scope.scrollView;
@@ -87,7 +87,7 @@ describe('Ionic Content directive', function() {
       var parent = angular.element('<div>');
       //Make a phony element that tells the world it's a navView when in reality it's just a div
       parent.data('$navViewController', true);
-      parent.append('<content><br/><div>hello</div><br/></content>');
+      parent.append('<ion-content><br/><div>hello</div><br/></ion-content>');
       compile(parent)(scope);
       scope.$apply();
 

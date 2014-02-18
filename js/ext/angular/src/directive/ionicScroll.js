@@ -3,7 +3,7 @@
 
 angular.module('ionic.ui.scroll', [])
 
-.directive('scroll', ['$parse', '$timeout', '$controller', function($parse, $timeout, $controller) {
+.directive('ionScroll', ['$parse', '$timeout', '$controller', function($parse, $timeout, $controller) {
   return {
     restrict: 'E',
     replace: true,
@@ -25,7 +25,7 @@ angular.module('ionic.ui.scroll', [])
     compile: function(element, attr, transclude) {
 
       return {
-        //Prelink <scroll> so it can compile before other directives compile.
+        //Prelink <ion-scroll> so it can compile before other directives compile.
         //Then other directives can require ionicScrollCtrl
         pre: prelink
       };

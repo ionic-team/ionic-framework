@@ -47,23 +47,23 @@
     <script src="../../../../dist/js/ionic.bundle.js"></script>
   </head>
   <body ng-controller="RootCtrl">
-    <tabs
+    <ion-tabs
           animation="fade-in-out"
           tabs-type="tabs-icon-only"
           tabs-style="tabs-top tabs-positive"
           controller-changed="onControllerChanged(oldController, oldIndex, newController, newIndex)">
 
-          <tab title="<img src='http://placekitten.com/40/40'>" ng-controller="HomeCtrl">
+          <ion-tab title="<img src='http://placekitten.com/40/40'>" ng-controller="HomeCtrl">
         <header class="bar bar-header bar-positive">
           <button class="button button-icon icon ion-plus" ng-click="newTask()"></button>
           <h1 class="title">Tasks</h1>
           <button class="button button-clear" ng-click="isDeletingItems = !isDeletingItems">Edit</button>
         </header>
-        <content has-header="true" has-subheader="true" on-refresh="onRefresh()" on-scroll="scroll(scrollTop, scrollLeft)">
+        <ion-content has-header="true" has-subheader="true" on-refresh="onRefresh()" on-scroll="scroll(scrollTop, scrollLeft)">
 
-          <refresher></refresher>
+          <ion-refresher></ion-refresher>
 
-          <list scroll="false"
+          <ion-list ion-scroll="false"
                on-reorder="onReorder(el, start, end)"
                can-delete="true"
                can-reorder="true"
@@ -74,43 +74,43 @@
                delete-icon="ion-minus-circled"
                reorder-icon="ion-navicon">
 
-            <item ng-repeat="item in items"
+            <ion-item ng-repeat="item in items"
                   item="item">
               {{item.title}}
             </list-item>
-          </list>
+          </ion-list>
           <button ng-click="goTop()">Go Top</button>
-        </content>
-      </tab>
+        </ion-content>
+      </ion-tab>
 
-      <tab title="Deadlines" icon-on="icon ion-ios7-clock" icon-off="icon ion-ios7-clock-outline" badge-style="badge-light" badge="unreadDeadlines">
+      <ion-tab title="Deadlines" icon-on="icon ion-ios7-clock" icon-off="icon ion-ios7-clock-outline" badge-style="badge-light" badge="unreadDeadlines">
         <header class="bar bar-header bar-positive">
           <h1 class="title">Deadlines</h1>
         </header>
-        <content has-header="true" padding="true">
+        <ion-content has-header="true" padding="true">
           <h1>Deadlines</h1>
-        </content>
-      </tab>
+        </ion-content>
+      </ion-tab>
 
-      <tab title="Settings" icon-on="icon ion-ios7-gear" icon-off="icon ion-ios7-gear-outline">
+      <ion-tab title="Settings" icon-on="icon ion-ios7-gear" icon-off="icon ion-ios7-gear-outline">
         <header class="bar bar-header bar-positive">
           <h1 class="title">Settings</h1>
         </header>
-        <content has-header="true" padding="true">
+        <ion-content has-header="true" padding="true">
           <h1>Settings</h1>
-        </content>
-      </tab>
+        </ion-content>
+      </ion-tab>
 
-      <tab title="Settings" icon-on="icon ion-ios7-gear" icon-off="icon ion-ios7-gear-outline">
+      <ion-tab title="Settings" icon-on="icon ion-ios7-gear" icon-off="icon ion-ios7-gear-outline">
         <header class="bar bar-header bar-positive">
           <h1 class="title">Settings</h1>
         </header>
-        <content has-header="true" padding="true">
+        <ion-content has-header="true" padding="true">
           <h1>Settings</h1>
-        </content>
-      </tab>
+        </ion-content>
+      </ion-tab>
 
-    </tabs>
+    </ion-tabs>
 
     <script id="newTask.html" type="text/ng-template">
       <div id="task-view" class="modal slide-in-up" ng-controller="TaskCtrl">

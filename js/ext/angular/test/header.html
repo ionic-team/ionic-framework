@@ -9,16 +9,16 @@
     <script src="../../../../dist/js/ionic.bundle.js"></script>
   </head>
   <body ng-controller="TestCtrl">
-    <header-bar
+    <ion-header-bar
       title="headerTitle"
       left-buttons="leftButtons"
       right-buttons="rightButtons"
-      type="bar-primary"></header-bar>
-    <header-bar type="bar-positive" title="headerTitle" left-buttons="leftButtons" right-buttons="rightButtons"></header-bar>
+      type="bar-primary"></ion-header-bar>
+    <ion-header-bar type="bar-positive" title="headerTitle" left-buttons="leftButtons" right-buttons="rightButtons"></ion-header-bar>
 
-    <content>
+    <ion-content>
       <input type="text" ng-model="headerTitle">
-    </content>
+    </ion-content>
     <script>
       angular.module('headerTest', ['ionic'])
 

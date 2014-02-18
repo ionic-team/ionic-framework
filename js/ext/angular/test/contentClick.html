@@ -49,14 +49,14 @@
 
   </head>
   <body>
-    <tabs>
-      <tab ng-controller="MyCtrl">
-        <content>
+    <ion-tabs>
+      <ion-tab ng-controller="MyCtrl">
+        <ion-content>
           <button ng-click="add()">add</button>
           {{count}}
-        </content>
-      </tab>
-    </tabs>
+        </ion-content>
+      </ion-tab>
+    </ion-tabs>
 
     <script>
       angular.module('navTest', ['ionic'])

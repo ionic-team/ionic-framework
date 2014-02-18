@@ -49,16 +49,16 @@
 
   </head>
   <body ng-controller="ThisCtrl">
-    <pane>
-      <header-bar id="header" title="'Title'" type="bar-primary" hides-header></header-bar>
+    <ion-pane>
+      <ion-header-bar id="header" title="'Title'" type="bar-primary" hides-header></ion-header-bar>
 
-      <content id="container"
+      <ion-content id="container"
         has-scroll-x="true"
         has-tabs="true"
         has-header="true"
         >
         <div style="height: 4000px; width: 4000px; background: url('tree_bark.png') repeat"></div>
-      </content>
+      </ion-content>
       <nav id="tab-bar" class="tabs tabs-icon-top">
         <a class="tab-item" href="#">
           <i class="icon ion-game-controller-a"></i>
@@ -82,7 +82,7 @@
         </a>
       </nav>
 
-    </pane>
+    </ion-pane>
 
     <script>
       angular.module('navTest', ['ionic'])

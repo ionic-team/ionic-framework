@@ -6,7 +6,7 @@ describe('Ionic Toggle', function() {
   beforeEach(inject(function($compile, $rootScope) {
     compile = $compile;
     rootScope = $rootScope;
-    el = $compile('<toggle ng-model="data.name"></toggle>')($rootScope);
+    el = $compile('<ion-toggle ng-model="data.name"></ion-toggle>')($rootScope);
   }));
 
   /*
@@ -29,7 +29,7 @@ describe('Ionic Toggle', function() {
   it('Should disable and enable', function() {
 
     rootScope.data = { isDisabled: false };
-    el = compile('<toggle ng-model="data.name" ng-disabled="data.isDisabled"></toggle>')(rootScope);
+    el = compile('<ion-toggle ng-model="data.name" ng-disabled="data.isDisabled"></ion-toggle>')(rootScope);
     var toggle = el.isolateScope().toggle;
     expect(toggle.val()).toBe(false);
     el.click();

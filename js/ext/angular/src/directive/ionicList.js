@@ -3,10 +3,10 @@
 
 angular.module('ionic.ui.list', ['ngAnimate'])
 
-.directive('item', ['$timeout', '$parse', function($timeout, $parse) {
+.directive('ionItem', ['$timeout', '$parse', function($timeout, $parse) {
   return {
     restrict: 'E',
-    require: '?^list',
+    require: '?^ionList',
     replace: true,
     transclude: true,
 
@@ -24,14 +24,14 @@ angular.module('ionic.ui.list', ['ngAnimate'])
 
     template: '<div class="item item-complex">\
             <div class="item-edit" ng-if="deleteClick !== undefined">\
-              <button class="button button-icon icon" ng-class="deleteIconClass" ng-click="deleteClick()" stop-event="click"></button>\
+              <button class="button button-icon icon" ng-class="deleteIconClass" ng-click="deleteClick()" ion-stop-event="click"></button>\
             </div>\
             <a class="item-content" ng-href="{{ href }}" ng-transclude></a>\
             <div class="item-drag" ng-if="reorderIconClass !== undefined">\
               <button data-ionic-action="reorder" class="button button-icon icon" ng-class="reorderIconClass"></button>\
             </div>\
             <div class="item-options" ng-if="itemOptionButtons">\
-             <button ng-click="b.onTap(item, b)" stop-event="click" class="button" ng-class="b.type" ng-repeat="b in itemOptionButtons" ng-bind="b.text"></button>\
+             <button ng-click="b.onTap(item, b)" ion-stop-event="click" class="button" ng-class="b.type" ng-repeat="b in itemOptionButtons" ng-bind="b.text"></button>\
            </div>\
           </div>',
 
@@ -95,7 +95,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
   };
 }])
 
-.directive('list', ['$timeout', function($timeout) {
+.directive('ionList', ['$timeout', function($timeout) {
   return {
     restrict: 'E',
     replace: true,

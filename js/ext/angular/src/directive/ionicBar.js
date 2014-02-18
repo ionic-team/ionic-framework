@@ -13,19 +13,19 @@ angular.module('ionic.ui.header', ['ngAnimate'])
   };
 }])
 
-.directive('headerBar', ['$ionicScrollDelegate', function($ionicScrollDelegate) {
+.directive('ionHeaderBar', ['$ionicScrollDelegate', function($ionicScrollDelegate) {
   return {
     restrict: 'E',
     replace: true,
     transclude: true,
     template: '<header class="bar bar-header">\
                 <div class="buttons">\
-                  <button ng-repeat="button in leftButtons" class="button no-animation" ng-class="button.type" ng-click="button.tap($event, $index)" bind-html-unsafe="button.content">\
+                  <button ng-repeat="button in leftButtons" class="button no-animation" ng-class="button.type" ng-click="button.tap($event, $index)" ion-bind-html-unsafe="button.content">\
                   </button>\
                 </div>\
-                <h1 class="title" bind-html-unsafe="title"></h1>\
+                <h1 class="title" ion-bind-html-unsafe="title"></h1>\
                 <div class="buttons">\
-                  <button ng-repeat="button in rightButtons" class="button no-animation" ng-class="button.type" ng-click="button.tap($event, $index)" bind-html-unsafe="button.content">\
+                  <button ng-repeat="button in rightButtons" class="button no-animation" ng-class="button.type" ng-click="button.tap($event, $index)" ion-bind-html-unsafe="button.content">\
                   </button>\
                 </div>\
               </header>',
@@ -66,7 +66,7 @@ angular.module('ionic.ui.header', ['ngAnimate'])
   };
 }])
 
-.directive('footerBar', function() {
+.directive('ionFooterBar', function() {
   return {
     restrict: 'E',
     replace: true,

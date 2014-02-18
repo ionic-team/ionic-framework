@@ -22,7 +22,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 /**
  * Our Nav Bar directive which updates as the controller state changes.
  */
-.directive('navBar', ['$ionicViewService', '$rootScope', '$animate', '$compile',
+.directive('ionNavBar', ['$ionicViewService', '$rootScope', '$animate', '$compile',
              function( $ionicViewService,   $rootScope,   $animate,   $compile) {
 
   return {
@@ -40,23 +40,21 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     template:
     '<header class="bar bar-header nav-bar {{type}} {{isReverse ? \'reverse\' : \'\'}} ' +
     '{{isInvisible ? \'invisible\' : \'\'}} {{animateEnabled ? animation : \'\'}}">' +
-      '<nav-back-button ng-if="backButtonEnabled && (backType || backLabel || backIcon)" ' +
-        'type="backType" label="backLabel" icon="backIcon" class="invisible" async-visible>' +
-      '</nav-back-button>' +
+      '<ion-nav-back-button ng-if="backButtonEnabled && (backType || backLabel || backIcon)" ' +
+        'type="backType" label="backLabel" icon="backIcon" class="invisible" ion-async-visible>' +
+      '</ion-nav-back-button>' +
       '<div class="buttons left-buttons"> ' +
         '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" ' +
-          'class="button no-animation {{button.type}}" ' +
-          'bind-html-unsafe="button.content">' +
+          'class="button no-animation {{button.type}}" ion-bind-html-unsafe="button.content">' +
         '</button>' +
       '</div>' +
 
       //ng-repeat makes it easy to add new / remove old and have proper enter/leave anims
-      '<h1 ng-repeat="title in titles" bind-html-unsafe="title" class="title invisible" async-visible nav-bar-title></h1>' +
+      '<h1 ng-repeat="title in titles" ion-bind-html-unsafe="title" class="title invisible" ion-async-visible ion-nav-bar-title></h1>' +
 
       '<div class="buttons right-buttons" ng-if="rightButtons.length"> ' +
       '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" '+
-        'class="button no-animation {{button.type}}" ' +
-        'bind-html-unsafe="button.content">' +
+        'class="button no-animation {{button.type}}" ion-bind-html-unsafe="button.content">' +
         '</button>' +
       '</div>' +
     '</header>',
@@ -130,10 +128,10 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
   };
 }])
 
-.directive('navBarTitle', function() {
+.directive('ionNavBarTitle', function() {
   return {
     restrict: 'A',
-    require: '^navBar',
+    require: '^ionNavBar',
     link: function($scope, $element, $attr, navBarCtrl) {
       $scope.headerBarView && $scope.headerBarView.align();
       $element.on('$animate:close', function() {
@@ -149,7 +147,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  * Fixes flickering in iOS7 and old android.
  * Used in title and back button
  */
-.directive('asyncVisible', function() {
+.directive('ionAsyncVisible', function() {
   return function($scope, $element) {
     ionic.requestAnimationFrame(function() {
       $element[0].classList.remove('invisible');
@@ -157,7 +155,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
   };
 })
 
-.directive('view', ['$ionicViewService', '$rootScope', '$animate',
+.directive('ionView', ['$ionicViewService', '$rootScope', '$animate',
            function( $ionicViewService,   $rootScope,   $animate) {
   return {
     restrict: 'EA',
@@ -215,7 +213,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 }])
 
 
-.directive('navBackButton', ['$ionicViewService', '$rootScope',
+.directive('ionNavBackButton', ['$ionicViewService', '$rootScope',
                      function($ionicViewService,   $rootScope) {
 
   function goBack(e) {
@@ -246,7 +244,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 }])
 
 
-.directive('navView', ['$ionicViewService', '$state', '$compile', '$controller', '$animate',
+.directive('ionNavView', ['$ionicViewService', '$state', '$compile', '$controller', '$animate',
               function( $ionicViewService,   $state,   $compile,   $controller,   $animate) {
   // IONIC's fork of Angular UI Router, v0.2.7
   // the navView handles registering views in the history, which animation to use, and which

@@ -14,9 +14,9 @@
 <body>
 
   <div ng-controller="MyCtrl">
-    <header-bar title="'Tap Inputs'" type="bar-positive"></header-bar>
+    <ion-header-bar title="'Tap Inputs'" type="bar-positive"></ion-header-bar>
 
-    <content has-header="true">
+    <ion-content has-header="true">
       <form name="myForm">
 
         <div class="list">
@@ -24,44 +24,44 @@
           <div class="item item-divider">
             Checkbox
           </div>
-          <checkbox ng-model="value1">
+          <ion-checkbox ng-model="value1">
             Checkbox Value 1
-          </checkbox>
+          </ion-checkbox>
           <div class="item">
             Value 1:
             <input type="checkbox" ng-model="value1">
             {{value1}}
           </div>
-          <checkbox ng-model="value2" ng-true-value="YES" ng-false-value="NO">
+          <ion-checkbox ng-model="value2" ng-true-value="YES" ng-false-value="NO">
             Checkbox Value 2
-          </checkbox>
+          </ion-checkbox>
           <div class="item">
             Value 2:
             <input type="checkbox" ng-model="value2" ng-true-value="YES" ng-false-value="NO">
             {{value2}}
           </div>
-          <checkbox ng-model="value3" ng-checked="true" ng-true-value="yup" ng-false-value="nope">
+          <ion-checkbox ng-model="value3" ng-checked="true" ng-true-value="yup" ng-false-value="nope">
             Checkbox Initially checked with ng-checked=true, value: {{ value3 }}
-          </checkbox>
-          <checkbox ng-model="value4" ng-change="checkboxChange()" ng-true-value="yup" ng-false-value="nope">
+          </ion-checkbox>
+          <ion-checkbox ng-model="value4" ng-change="checkboxChange()" ng-true-value="yup" ng-false-value="nope">
             Checkbox Change: {{ value4ChangeValue }}
-          </checkbox>
+          </ion-checkbox>
 
           <div class="item item-divider">
             Toggle
           </div>
-          <toggle ng-model="toggle1">
+          <ion-toggle ng-model="toggle1">
             Toggle 1: {{ toggle1 }}
-          </toggle>
-          <toggle ng-model="toggle2" ng-true-value="yup" ng-false-value="nope">
+          </ion-toggle>
+          <ion-toggle ng-model="toggle2" ng-true-value="yup" ng-false-value="nope">
             Toggle 2: {{ toggle2 }}
-          </toggle>
-          <toggle ng-model="toggle3" ng-checked="true">
+          </ion-toggle>
+          <ion-toggle ng-model="toggle3" ng-checked="true">
             Toggle 3, ng-checked initially set to true, {{ toggle3 }}
-          </toggle>
-          <toggle ng-model="toggle4" ng-change="toggleChange()" ng-true-value="yup" ng-false-value="nope">
+          </ion-toggle>
+          <ion-toggle ng-model="toggle4" ng-change="toggleChange()" ng-true-value="yup" ng-false-value="nope">
             Toggle Change: {{ toggle4ChangeValue }}
-          </toggle>
+          </ion-toggle>
           <div class="item">
             Toggle 1:
             <input type="checkbox" ng-model="toggle1">,
@@ -72,13 +72,13 @@
           <div class="item item-divider">
             Radio
           </div>
-          <radio
+          <ion-radio
             ng-repeat="radioItem in radioItems"
             ng-value="radioItem.value"
             ng-model="selectedValues.radio"
             ng-change="radioChanged()">
               {{ radioItem.text }}
-          </radio>
+          </ion-radio>
           <div class="item">
             Selected Radio Value: {{ selectedValues.radio }},
             Changed: {{ radioChangeCount }},
@@ -105,7 +105,7 @@
 
       </form>
 
-    </content>
+    </ion-content>
   </div>
 
   <script>

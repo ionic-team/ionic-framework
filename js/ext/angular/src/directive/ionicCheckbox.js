@@ -4,7 +4,7 @@
 angular.module('ionic.ui.checkbox', [])
 
 
-.directive('checkbox', function() {
+.directive('ionCheckbox', function() {
   return {
     restrict: 'E',
     replace: true,

@@ -48,21 +48,21 @@
 
     <div class="list">
 
-      <item ng-repeat="item in menuItems" item="item" ng-click="item.actionItem()">ng-click="item.actionItem()"</item>
+      <ion-item ng-repeat="item in menuItems" ion-item="item" ng-click="item.actionItem()">ng-click="item.actionItem()"</ion-item>
 
-      <checkbox>checkbox with no ng-click</checkbox>
+      <ion-checkbox>checkbox with no ng-click</ion-checkbox>
 
-      <toggle ng-click="{{ stringClick }}">Toggle with ng-click="{{ stringClick }]"</toggle>
+      <ion-toggle ng-click="{{ stringClick }}">Toggle with ng-click="{{ stringClick }]"</ion-toggle>
 
-      <radio ng-change="radioChange()"
+      <ion-radio ng-change="radioChange()"
              ng-click="radioClick(radioModel.data)"
              ng-model="radioModel.data"
-             ng-value="'Radio A'">Radio A</radio>
+             ng-value="'Radio A'">Radio A</ion-radio>
 
-      <radio ng-change="radioChange()"
+      <ion-radio ng-change="radioChange()"
              ng-click="radioClick(radioModel.data)"
              ng-model="radioModel.data"
-             ng-value="'Radio B'">Radio B</radio>
+             ng-value="'Radio B'">Radio B</ion-radio>
 
     </div>
 

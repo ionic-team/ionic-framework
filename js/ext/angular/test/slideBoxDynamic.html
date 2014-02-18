@@ -43,16 +43,16 @@
   <body>
 
     <div ng-controller="SlideCtrl">
-      <pane>
-        <header-bar left-buttons="leftButtons" right-buttons="rightButtons" title=""></header-bar>
-        <content has-header="true">
-          <slide-box>
-            <slide ng-repeat="page in pages">
+      <ion-pane>
+        <ion-header-bar left-buttons="leftButtons" right-buttons="rightButtons" title=""></ion-header-bar>
+        <ion-content has-header="true">
+          <ion-slide-box>
+            <ion-slide ng-repeat="page in pages">
               {{page.text}}
-            </slide>
-          </slide-box>
-        </content>
-      </pane>
+            </ion-slide>
+          </ion-slide-box>
+        </ion-content>
+      </ion-pane>
     </div>
     <script>
       angular.module('slideBoxTest', ['ionic'])

@@ -49,11 +49,11 @@
 
   </head>
   <body ng-controller="AppCtrl">
-      <side-menus>
-        <pane side-menu-content>
-          <header-bar
+      <ion-side-menus>
+        <ion-pane ion-side-menu-content>
+          <ion-header-bar
             title="'Title'"
-            type="bar-primary"></header-bar>
+            type="bar-primary"></ion-header-bar>
 
           <div class="bar bar-subheader">
             <div class="button-bar">
@@ -63,7 +63,7 @@
             </div>
           </div>
 
-          <content
+          <ion-content
             has-header="false"
             has-subheader="true"
             has-footer="true"
@@ -71,37 +71,37 @@
             >
 
             <div style="height: 3000px; width: 100%; background: url('tree_bark.png') repeat"></div>
-          </content>
+          </ion-content>
 
-          <footer-bar type="bar-assertive">
+          <ion-footer-bar type="bar-assertive">
             <h1 class="title">Footer</h1>
-          </footer-bar>
-        </pane>
-        <side-menu side="left">
+          </ion-footer-bar>
+        </ion-pane>
+        <ion-side-menu side="left">
           <header class="bar bar-header bar-assertive">
             <h1 class="title">Left</h1>
           </header>
-          <content has-header="true" overflow-scroll="true">
+          <ion-content has-header="true" overflow-scroll="true">
             <ul class="list">
               <a href="#" class="item" ng-repeat="item in list">
                 {{item.text}}
               </a>
             </ul>
-          </content>
-        </side-menu>
-        <side-menu side="right">
+          </ion-content>
+        </ion-side-menu>
+        <ion-side-menu side="right">
           <header class="bar bar-header bar-assertive">
             <h1 class="title">Right</h1>
           </header>
-          <content has-header="true">
+          <ion-content has-header="true">
             <ul class="list">
               <a href="#" class="item" ng-repeat="item in list">
                 {{item.text}}
               </a>
             </ul>
-          </content>
-        </side-menu>
-      </side-menus>
+          </ion-content>
+        </ion-side-menu>
+      </ion-side-menus>
 
     <script>
       angular.module('navTest', ['ionic'])

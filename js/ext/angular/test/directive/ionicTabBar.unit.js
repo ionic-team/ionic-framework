@@ -119,13 +119,13 @@ describe('tabs', function() {
     }));
 
     it('Has tab class', function() {
-      var element = compile('<tabs></tabs>')(scope);
+      var element = compile('<ion-tabs></ion-tabs>')(scope);
       scope.$digest();
       expect(element.find('.tabs').hasClass('tabs')).toBe(true);
     });
 
     it('Has tab children', function() {
-      element = compile('<tabs></tabs>')(scope);
+      element = compile('<ion-tabs></ion-tabs>')(scope);
       scope = element.scope();
       scope.controllers = [
         { title: 'Home', icon: 'icon-home' },
@@ -137,19 +137,19 @@ describe('tabs', function() {
     });
 
     it('Has compiled children', function() {
-      element = compile('<tabs>' +
-        '<tab active="true" title="Item" icon="icon-default"></tab>' +
-        '<tab active="true" title="Item" icon="icon-default"></tab>' +
-      '</tabs>')(scope);
+      element = compile('<ion-tabs>' +
+        '<ion-tab active="true" title="Item" icon="icon-default"></ion-tab>' +
+        '<ion-tab active="true" title="Item" icon="icon-default"></ion-tab>' +
+      '</ion-tabs>')(scope);
       scope.$digest();
       expect(element.find('a').length).toBe(2);
     });
 
     it('Sets style on child tabs', function() {
-      element = compile('<tabs tabs-type="tabs-positive" tabs-style="tabs-icon-bottom">' +
-        '<tab active="true" title="Item" icon="icon-default"></tab>' +
-        '<tab active="true" title="Item" icon="icon-default"></tab>' +
-      '</tabs>')(scope);
+      element = compile('<ion-tabs tabs-type="tabs-positive" tabs-style="tabs-icon-bottom">' +
+        '<ion-tab active="true" title="Item" icon="icon-default"></ion-tab>' +
+        '<ion-tab active="true" title="Item" icon="icon-default"></ion-tab>' +
+      '</ion-tabs>')(scope);
       scope.$digest();
       var tabs = element[0].querySelector('.tabs');
       expect(angular.element(tabs).hasClass('tabs-positive')).toEqual(true);
@@ -157,10 +157,10 @@ describe('tabs', function() {
     });
 
     it('Has nav-view', function() {
-      element = compile('<tabs>' +
-        '<tab active="true" title="Item 1" href="#/page1"><nav-view name="name1"></nav-view></tab>' +
-        '<tab active="true" title="Item 2" href="/page2">content2</tab>' +
-      '</tabs>')(scope);
+      element = compile('<ion-tabs>' +
+        '<ion-tab active="true" title="Item 1" href="#/page1"><ion-nav-view name="name1"></ion-nav-view></ion-tab>' +
+        '<ion-tab active="true" title="Item 2" href="/page2">content2</ion-tab>' +
+      '</ion-tabs>')(scope);
       scope = element.scope();
       scope.$digest();
       expect(scope.tabCount).toEqual(2);
@@ -184,9 +184,9 @@ describe('tabs', function() {
 
       scope.badgeValue = 3;
       scope.badgeStyleValue = 'badge-assertive';
-      element = compile('<tabs>' +
-        '<tab title="Item" icon="icon-default" badge="badgeValue" badge-style="{{badgeStyleValue}}"></tab>' +
-        '</tabs>')(scope);
+      element = compile('<ion-tabs>' +
+        '<ion-tab title="Item" icon="icon-default" badge="badgeValue" badge-style="{{badgeStyleValue}}"></ion-tab>' +
+        '</ion-tabs>')(scope);
       scope.$digest();
       $document[0].body.appendChild(element[0]);
     }));
@@ -238,8 +238,8 @@ describe('tabs', function() {
         $scope: tabsScope
       });
 
-      //Create an outer div that has a tabsController on it so tab thinks it's in a <tabs>
-      var element = angular.element('<div><tab><div class="my-content"></div></tab></div>');
+      //Create an outer div that has a tabsController on it so ion-tab thinks it's in a <ion-tabs>
+      var element = angular.element('<div><ion-tab><div class="my-content"></div></ion-tab></div>');
       element.data('$tabsController', ctrl);
       $compile(element)(tabsScope)
       tabsScope.$apply();
@@ -258,9 +258,9 @@ describe('tabs', function() {
 
       scope.badgeValue = 3;
       scope.isActive = false;
-      element = compile('<tabs class="tabs">' +
-        '<tab-controller-item icon-title="Icon <b>title</b>" icon="icon-class" icon-on="icon-on-class" icon-off="icon-off-class" badge="badgeValue" badge-style="badgeStyle" active="isActive" index="0"></tab-controller-item>' +
-      '</tabs>')(scope);
+      element = compile('<ion-tabs class="tabs">' +
+        '<ion-tab-controller-item icon-title="Icon <b>title</b>" icon="icon-class" icon-on="icon-on-class" icon-off="icon-off-class" badge="badgeValue" badge-style="badgeStyle" active="isActive" index="0"></ion-tab-controller-item>' +
+      '</ion-tabs>')(scope);
       scope.$digest();
       $document[0].body.appendChild(element[0]);
     }));

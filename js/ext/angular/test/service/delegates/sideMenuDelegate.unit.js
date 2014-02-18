@@ -13,7 +13,7 @@ describe('Ionic SideMenuDelegate Service', function() {
 
   it('Should get from scope', function() {
     var scope = rootScope.$new();
-    var el = compile('<side-menus></side-menus>')(scope);
+    var el = compile('<ion-side-menus></ion-side-menus>')(scope);
     var sc = del.getSideMenuController(scope);
 
     expect(sc).not.toBe(undefined);

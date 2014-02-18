@@ -3,7 +3,7 @@
 
 angular.module('ionic.ui.actionSheet', [])
 
-.directive('actionSheet', ['$document', function($document) {
+.directive('ionActionSheet', ['$document', function($document) {
   return {
     restrict: 'E',
     scope: true,

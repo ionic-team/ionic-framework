@@ -15,7 +15,7 @@ describe('Ionic List', function() {
     scope.showDelete = false;
     scope.showReorder = false;
 
-    listElement = angular.element('<list show-delete="showDelete" show-reorder="showReorder">');
+    listElement = angular.element('<ion-list show-delete="showDelete" show-reorder="showReorder">');
     listElement = _$compile_(listElement)(scope);
 
     listCtrl = listElement.controller('list');
@@ -24,16 +24,16 @@ describe('Ionic List', function() {
   }));
 
   it('Should init', function() {
-    var element = compile('<list>' +
-      '<item></item>' + 
-      '<item></item>' + 
-      '</list>')(scope);
+    var element = compile('<ion-list>' +
+      '<ion-item></ion-item>' + 
+      '<ion-item></ion-item>' + 
+      '</ion-list>')(scope);
 
     expect(element.children().length).toBe(2);
   });
 
   it('Should add animation class', function() {
-    var element = compile('<list animation="my-animation">')(scope);
+    var element = compile('<ion-list animation="my-animation">')(scope);
     expect(element.hasClass('my-animation')).toBe(true);
   });
 
@@ -62,7 +62,7 @@ describe('Ionic List', function() {
     scope.onReorder = function(el, start, end) {
     };
 
-    listElement = angular.element('<list on-reorder="onReorder(el, start, end)"></list>');
+    listElement = angular.element('<ion-list on-reorder="onReorder(el, start, end)"></ion-list>');
     listElement = compile(listElement)(scope);
 
     var lv = listElement.isolateScope().listView;
@@ -85,13 +85,13 @@ describe('Ionic Item Directive', function () {
     $compile = _$compile_;
     $rootScope.showDelete = false;
 
-    listElement = angular.element('<list show-delete="showDelete">');
+    listElement = angular.element('<ion-list show-delete="showDelete">');
     listElement = _$compile_(listElement)($rootScope);
     listScope = listElement.isolateScope();
 
     listCtrl = listElement.controller('list');
 
-    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = angular.element('<ion-item>').appendTo(listElement);
     itemElement = _$compile_(itemElement)($rootScope);
 
     $rootScope.$digest();
@@ -99,13 +99,13 @@ describe('Ionic Item Directive', function () {
   }));
 
   it('Should set item type from item attribute', inject(function ($timeout) {
-    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = angular.element('<ion-item>').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
     expect(itemScope.itemClass).toBe(undefined);
 
-    itemElement = angular.element('<item item-type="item-type-test">').appendTo(listElement);
+    itemElement = angular.element('<ion-item item-type="item-type-test">').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -114,9 +114,9 @@ describe('Ionic Item Directive', function () {
   }));
 
   it('Should set item type from list attribute', inject(function ($timeout) {
-    listElement = angular.element('<list item-type="list-item-type-test">');
+    listElement = angular.element('<ion-list item-type="list-item-type-test">');
     listElement = $compile(listElement)($rootScope);
-    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = angular.element('<ion-item>').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -124,7 +124,7 @@ describe('Ionic Item Directive', function () {
   }));
 
   it('Should item option buttons from item attribute', inject(function ($timeout) {
-    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = angular.element('<ion-item>').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -135,7 +135,7 @@ describe('Ionic Item Directive', function () {
     $rootScope.buttons = [
       { text: 'Edit' }, { text: 'Cancel' }
     ];
-    itemElement = angular.element('<item option-buttons="buttons">').appendTo(listElement);
+    itemElement = angular.element('<ion-item option-buttons="buttons">').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -149,12 +149,12 @@ describe('Ionic Item Directive', function () {
       { text: 'Edit' }, { text: 'Cancel' }
     ];
 
-    listElement = angular.element('<list option-buttons="buttons">');
+    listElement = angular.element('<ion-list option-buttons="buttons">');
     listElement = $compile(listElement)($rootScope);
     listScope = listElement.isolateScope();
     expect(listScope.optionButtons().length ).toBe(2);
 
-    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = angular.element('<ion-item>').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -169,7 +169,7 @@ describe('Ionic Item Directive', function () {
       { text: 'Edit' }, { text: 'Cancel' }
     ];
 
-    itemElement = angular.element('<item can-swipe="false" option-buttons="buttons">').appendTo(listElement);
+    itemElement = angular.element('<ion-item can-swipe="false" option-buttons="buttons">').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -182,12 +182,12 @@ describe('Ionic Item Directive', function () {
       { text: 'Edit' }, { text: 'Cancel' }
     ];
 
-    listElement = angular.element('<list can-swipe="false" option-buttons="buttons">');
+    listElement = angular.element('<ion-list can-swipe="false" option-buttons="buttons">');
     listElement = $compile(listElement)($rootScope);
     listScope = listElement.isolateScope();
     expect(listScope.optionButtons().length ).toBe(2);
 
-    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = angular.element('<ion-item>').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -196,7 +196,7 @@ describe('Ionic Item Directive', function () {
   }));
 
   it('Should hide delete w/ item can-delete attribute true but no list or item onDelete', inject(function ($timeout) {
-    itemElement = angular.element('<item can-delete="true">').appendTo(listElement);
+    itemElement = angular.element('<ion-item can-delete="true">').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -206,7 +206,7 @@ describe('Ionic Item Directive', function () {
 
   it('Should hide delete w/ item can-delete attribute false but with item onDelete', inject(function ($timeout) {
     $rootScope.onDelete = function() {};
-    itemElement = angular.element('<item can-delete="false" on-delete="onDelete">').appendTo(listElement);
+    itemElement = angular.element('<ion-item can-delete="false" on-delete="onDelete">').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -216,7 +216,7 @@ describe('Ionic Item Directive', function () {
 
   it('Should show delete w/ no item can-delete attribute but with item onDelete', inject(function ($timeout) {
     $rootScope.onDelete = function() {};
-    itemElement = angular.element('<item on-delete="onDelete" delete-icon="test-icon">').appendTo(listElement);
+    itemElement = angular.element('<ion-item on-delete="onDelete" delete-icon="test-icon">').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -227,11 +227,11 @@ describe('Ionic Item Directive', function () {
 
   it('Should hide delete w/ list can-delete attribute true but no list or item onDelete', inject(function ($timeout) {
     $rootScope.onDelete = function() {};
-    listElement = angular.element('<list can-delete="true">');
+    listElement = angular.element('<ion-list can-delete="true">');
     listElement = $compile(listElement)($rootScope);
     listScope = listElement.isolateScope();
 
-    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = angular.element('<ion-item>').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -241,11 +241,11 @@ describe('Ionic Item Directive', function () {
 
   it('Should hide delete w/ list can-delete attribute false but with list onDelete', inject(function ($timeout) {
     $rootScope.onDelete = function() {};
-    listElement = angular.element('<list can-delete="false" on-delete="onDelete">');
+    listElement = angular.element('<ion-list can-delete="false" on-delete="onDelete">');
     listElement = $compile(listElement)($rootScope);
     listScope = listElement.isolateScope();
 
-    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = angular.element('<ion-item>').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -255,11 +255,11 @@ describe('Ionic Item Directive', function () {
 
   it('Should hide delete w/ list can-delete attribute false but with item onDelete', inject(function ($timeout) {
     $rootScope.onDelete = function() {};
-    listElement = angular.element('<list can-delete="false">');
+    listElement = angular.element('<ion-list can-delete="false">');
     listElement = $compile(listElement)($rootScope);
     listScope = listElement.isolateScope();
 
-    itemElement = angular.element('<item on-delete="onDelete">').appendTo(listElement);
+    itemElement = angular.element('<ion-item on-delete="onDelete">').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -269,10 +269,10 @@ describe('Ionic Item Directive', function () {
 
   it('Should show delete w/ no can-delete attribute but with list onDelete', inject(function ($timeout) {
     $rootScope.onDelete = function() {};
-    listElement = angular.element('<list on-delete="onDelete" delete-icon="test-icon">');
+    listElement = angular.element('<ion-list on-delete="onDelete" delete-icon="test-icon">');
     listElement = $compile(listElement)($rootScope);
     listScope = listElement.isolateScope();
-    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = angular.element('<ion-item>').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -283,7 +283,7 @@ describe('Ionic Item Directive', function () {
   }));
 
   it('Should not be able to reorder cuz no item or list can-reorder attribute true', inject(function ($timeout) {
-    itemElement = angular.element('<item reorder-icon="test-icon">').appendTo(listElement);
+    itemElement = angular.element('<ion-item reorder-icon="test-icon">').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -292,7 +292,7 @@ describe('Ionic Item Directive', function () {
   }));
 
   it('Should be able to reorder cuz item can-reorder attribute true', inject(function ($timeout) {
-    itemElement = angular.element('<item can-reorder="true" reorder-icon="test-icon">').appendTo(listElement);
+    itemElement = angular.element('<ion-item can-reorder="true" reorder-icon="test-icon">').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -301,10 +301,10 @@ describe('Ionic Item Directive', function () {
   }));
 
   it('Should be able to reorder cuz list can-reorder attribute true', inject(function ($timeout) {
-    listElement = angular.element('<list can-reorder="true" reorder-icon="test-icon">');
+    listElement = angular.element('<ion-list can-reorder="true" reorder-icon="test-icon">');
     listElement = $compile(listElement)($rootScope);
     listScope = listElement.isolateScope();
-    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = angular.element('<ion-item>').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -313,7 +313,7 @@ describe('Ionic Item Directive', function () {
   }));
 
   it('Should not have options cuz no optionButtons', inject(function ($timeout) {
-    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = angular.element('<ion-item>').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -322,10 +322,10 @@ describe('Ionic Item Directive', function () {
   }));
 
   it('Should be able to reorder cuz list can-reorder attribute false and item can-reorder true', inject(function ($timeout) {
-    listElement = angular.element('<list can-reorder="false">');
+    listElement = angular.element('<ion-list can-reorder="false">');
     listElement = $compile(listElement)($rootScope);
     listScope = listElement.isolateScope();
-    itemElement = angular.element('<item can-reorder="true">').appendTo(listElement);
+    itemElement = angular.element('<ion-item can-reorder="true">').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -335,7 +335,7 @@ describe('Ionic Item Directive', function () {
 
   it('Should not have options cuz item can-swipe false', inject(function ($timeout) {
     $rootScope.optionButtons = [{text:'BUTTON'}];
-    itemElement = angular.element('<item option-buttons="optionButtons" can-swipe="false">').appendTo(listElement);
+    itemElement = angular.element('<ion-item option-buttons="optionButtons" can-swipe="false">').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -345,10 +345,10 @@ describe('Ionic Item Directive', function () {
 
   it('Should not have options cuz list can-swipe false', inject(function ($timeout) {
     $rootScope.optionButtons = [{text:'BUTTON'}];
-    listElement = angular.element('<list option-buttons="optionButtons" can-swipe="false">');
+    listElement = angular.element('<ion-list option-buttons="optionButtons" can-swipe="false">');
     listElement = $compile(listElement)($rootScope);
     listScope = listElement.isolateScope();
-    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = angular.element('<ion-item>').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -358,7 +358,7 @@ describe('Ionic Item Directive', function () {
 
   it('Should have options cuz item option-buttons and no can-swipe false', inject(function ($timeout) {
     $rootScope.optionButtons = [{text:'BUTTON'}];
-    itemElement = angular.element('<item option-buttons="optionButtons">').appendTo(listElement);
+    itemElement = angular.element('<ion-item option-buttons="optionButtons">').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
@@ -368,10 +368,10 @@ describe('Ionic Item Directive', function () {
 
   it('Should have options cuz list option-buttons and no can-swipe false', inject(function ($timeout) {
     $rootScope.optionButtons = [{text:'BUTTON'}];
-    listElement = angular.element('<list option-buttons="optionButtons">');
+    listElement = angular.element('<ion-list option-buttons="optionButtons">');
     listElement = $compile(listElement)($rootScope);
     listScope = listElement.isolateScope();
-    itemElement = angular.element('<item>').appendTo(listElement);
+    itemElement = angular.element('<ion-item>').appendTo(listElement);
     itemElement = $compile(itemElement)($rootScope);
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();

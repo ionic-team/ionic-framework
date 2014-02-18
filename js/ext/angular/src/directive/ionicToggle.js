@@ -5,7 +5,7 @@ angular.module('ionic.ui.toggle', [])
 
 // The Toggle directive is a toggle switch that can be tapped to change
 // its value
-.directive('toggle', function() {
+.directive('ionToggle', function() {
 
   return {
     restrict: 'E',

@@ -9,7 +9,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
 
 .run(['$ionicViewService', function($ionicViewService) {
   // set that the tabs directive should not animate when transitioning
-  // to it. Instead, the children <tab> directives would animate
+  // to it. Instead, the children <ion-tab> directives would animate
   $ionicViewService.disableRegisterByTagName('tabs');
 }])
 
@@ -94,14 +94,14 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
 
 }])
 
-.directive('tabs', ['$ionicViewService', function($ionicViewService) {
+.directive('ionTabs', ['$ionicViewService', function($ionicViewService) {
   return {
     restrict: 'E',
     replace: true,
     scope: true,
     transclude: true,
     controller: '$ionicTabs',
-    template: '<div class="view"><tab-controller-bar></tab-controller-bar></div>',
+    template: '<div class="view"><ion-tab-controller-bar></ion-tab-controller-bar></div>',
     compile: function(element, attr, transclude, tabsCtrl) {
       return function link($scope, $element, $attr) {
 
@@ -141,10 +141,10 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
 }])
 
 // Generic controller directive
-.directive('tab', ['$ionicViewService', '$rootScope', '$parse', '$interpolate', function($ionicViewService, $rootScope, $parse, $interpolate) {
+.directive('ionTab', ['$ionicViewService', '$rootScope', '$parse', '$interpolate', function($ionicViewService, $rootScope, $parse, $interpolate) {
   return {
     restrict: 'E',
-    require: '^tabs',
+    require: '^ionTabs',
     scope: true,
     transclude: 'element',
     compile: function(element, attr, transclude) {
@@ -229,7 +229,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
 
         // on link, check if it has a nav-view in it
         transclude($scope.$new(), function(clone) {
-          var navViewEle = clone[0].getElementsByTagName("nav-view");
+          var navViewEle = clone[0].getElementsByTagName("ion-nav-view");
           $scope.hasNavView = (navViewEle.length > 0);
           if($scope.hasNavView) {
             // this tab has a ui-view
@@ -256,15 +256,15 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
 }])
 
 
-.directive('tabControllerBar', function() {
+.directive('ionTabControllerBar', function() {
   return {
     restrict: 'E',
-    require: '^tabs',
+    require: '^ionTabs',
     transclude: true,
     replace: true,
     scope: true,
     template: '<div class="tabs">' +
-      '<tab-controller-item icon-title="{{c.title}}" icon="{{c.icon}}" icon-on="{{c.iconOn}}" icon-off="{{c.iconOff}}" badge="c.badge" badge-style="c.badgeStyle" active="c.isVisible" index="$index" ng-repeat="c in controllers"></tab-controller-item>' +
+      '<ion-tab-controller-item icon-title="{{c.title}}" icon="{{c.icon}}" icon-on="{{c.iconOn}}" icon-off="{{c.iconOff}}" badge="c.badge" badge-style="c.badgeStyle" active="c.isVisible" index="$index" ng-repeat="c in controllers"></ion-tab-controller-item>' +
     '</div>',
     link: function($scope, $element, $attr, tabsCtrl) {
       $element.addClass($scope.tabsType);
@@ -273,11 +273,11 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
   };
 })
 
-.directive('tabControllerItem', ['$window', function($window) {
+.directive('ionTabControllerItem', ['$window', function($window) {
   return {
     restrict: 'E',
     replace: true,
-    require: '^tabs',
+    require: '^ionTabs',
     scope: {
       iconTitle: '@',
       icon: '@',
@@ -304,7 +304,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
         '<i class="icon {{icon}}" ng-if="icon"></i>' +
         '<i class="{{iconOn}}" ng-if="active"></i>' +
         '<i class="{{iconOff}}" ng-if="!active"></i>' +
-        '<span bind-html-unsafe="iconTitle"></span>' +
+        '<span ion-bind-html-unsafe="iconTitle"></span>' +
       '</a>'
   };
 }]);

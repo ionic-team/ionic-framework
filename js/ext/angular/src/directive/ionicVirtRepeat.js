@@ -3,7 +3,7 @@
 
 angular.module('ionic.ui.virtRepeat', [])
 
-.directive('virtRepeat', function() {
+.directive('ionVirtRepeat', function() {
   return {
     require: ['?ngModel', '^virtualList'],
     transclude: 'element',

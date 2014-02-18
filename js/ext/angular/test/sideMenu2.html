@@ -11,24 +11,24 @@
   <body>
 
     <div ng-controller="MainCtrl">
-      <nav-view></nav-view>
+      <ion-nav-view></ion-nav-view>
     </div>
 
     <script id="event-menu.html" type="text/ng-template">
-      <side-menus>
+      <ion-side-menus>
 
-        <pane side-menu-content>
-          <nav-bar type="bar-positive"
+        <ion-pane ion-side-menu-content>
+          <ion-nav-bar type="bar-positive"
                    back-button-type="button-icon"
-                   back-button-icon="ion-ios7-arrow-back"></nav-bar>
-          <nav-view name="menuContent"></nav-view>
-        </pane>
+                   back-button-icon="ion-ios7-arrow-back"></ion-nav-bar>
+          <ion-nav-view name="menuContent"></ion-nav-view>
+        </ion-pane>
 
-        <side-menu side="left">
+        <ion-side-menu side="left">
           <header class="bar bar-header bar-assertive">
             <div class="title">Left Menu</div>
           </header>
-          <content has-header="true">
+          <ion-content has-header="true">
             <div class="list">
               <a href="#/event/check-in" class="item">Check-in</a>
               <a href="#/event/attendees" class="item">Attendees</a>
@@ -41,28 +41,28 @@
                 <i class="icon ion-volume-high"></i>
               </div>
             </div>
-          </content>
-        </side-menu>
+          </ion-content>
+        </ion-side-menu>
 
-      </side-menus>
+      </ion-side-menus>
     </script>
 
     <script id="home.html" type="text/ng-template">
-      <view title="'Welcome'">
-        <content has-header="true" padding="true">
+      <ion-view title="'Welcome'">
+        <ion-content has-header="true" padding="true">
           <p>Swipe to the right to reveal the left menu.</p>
           <div class="button" ng-click="sideMenuController.toggleLeft()" style="position: absolute; left: 100px; top: 200px;">
             Left Menu
           </div>
           <p ng-repeat="p in range">{{$index}}....</p>
           <p>(On desktop click and drag from left to right)</p>
-        </content>
-      </view>
+        </ion-content>
+      </ion-view>
     </script>
 
     <script id="check-in.html" type="text/ng-template">
-      <view title="'Event Check-in'">
-        <content has-header="true">
+      <ion-view title="'Event Check-in'">
+        <ion-content has-header="true">
           <form class="list" ng-show="showForm">
             <div class="item item-divider">
               Attendee Info
@@ -76,17 +76,17 @@
             <div class="item item-divider">
               Shirt Size
             </div>
-            <radio ng-repeat="shirtSize in shirtSizes"
+            <ion-radio ng-repeat="shirtSize in shirtSizes"
                    ng-value="shirtSize.value"
                    ng-model="attendee.shirtSize">
               {{ shirtSize.text }}
-            </radio>
+            </ion-radio>
             <div class="item item-divider">
               Lunch
             </div>
-            <toggle ng-model="attendee.vegetarian">
+            <ion-toggle ng-model="attendee.vegetarian">
               Vegetarian
-            </toggle>
+            </ion-toggle>
             <div class="padding">
               <button class="button button-block" ng-click="submit()">Checkin</button>
             </div>
@@ -96,20 +96,20 @@
             <pre ng-bind="attendee | json"></pre>
             <a href="#/event/attendees">View attendees</a>
           </div>
-        </content>
-      </view>
+        </ion-content>
+      </ion-view>
     </script>
 
     <script id="attendees.html" type="text/ng-template">
-      <view title="'Event Attendees'">
-        <content has-header="true">
+      <ion-view title="'Event Attendees'">
+        <ion-content has-header="true">
           <div class="list">
-            <toggle ng-repeat="attendee in attendees | orderBy:'firstname' | orderBy:'lastname'"
+            <ion-toggle ng-repeat="attendee in attendees | orderBy:'firstname' | orderBy:'lastname'"
                     ng-model="attendee.arrived"
                     ng-change="arrivedChange(attendee)">
               {{ attendee.firstname }}
               {{ attendee.lastname }}
-            </toggle>
+            </ion-toggle>
             <div class="item item-divider">
               Activity
             </div>
@@ -117,8 +117,8 @@
               {{ msg }}
             </div>
           </div>
-        </content>
-      </view>
+        </ion-content>
+      </ion-view>
     </script>
 
     <script>

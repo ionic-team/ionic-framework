@@ -5,7 +5,7 @@ angular.module('ionic.ui.radio', [])
 
 // The radio button is a radio powered element with only
 // one possible selection in a set of options.
-.directive('radio', function() {
+.directive('ionRadio', function() {
   return {
     restrict: 'E',
     replace: true,
@@ -33,7 +33,7 @@ angular.module('ionic.ui.radio', [])
 
 // The radio button is a radio powered element with only
 // one possible selection in a set of options.
-.directive('radioButtons', function() {
+.directive('ionRadioButtons', function() {
   return {
     restrict: 'E',
     replace: true,
@@ -76,10 +76,10 @@ angular.module('ionic.ui.radio', [])
   };
 })
 
-.directive('buttonRadio', function() {
+.directive('ionButtonRadio', function() {
   return {
     restrict: 'CA',
-    require: ['?^ngModel', '?^radioButtons'],
+    require: ['?^ngModel', '?^ionRadioButtons'],
     link: function($scope, $element, $attr, ctrls) {
       var ngModel = ctrls[0];
       var radioButtons = ctrls[1];
