@@ -82,6 +82,24 @@ describe('Ionic View', function() {
     expect(element.hasClass('invisible')).toEqual(true);
   });
 
+  it('should have have animateEnabled=true if there is a navDirection and animate isnt false', function() {
+    var element = compile('<nav-bar></nav-bar>')(scope);
+    scope.$digest();
+    scope = element.isolateScope();
+
+    scope.$broadcast('viewState.viewEnter', {});
+    expect(scope.animateEnabled).toBe(false);
+
+    scope.$broadcast('viewState.viewEnter', { navDirection: 'forward' });
+    expect(scope.animateEnabled).toBe(true);
+
+    scope.$broadcast('viewState.viewEnter', { navDirection: 'forward', animate: false });
+    expect(scope.animateEnabled).toBe(false);
+
+    scope.$broadcast('viewState.viewEnter', { navDirection: 'back', animate: true });
+    expect(scope.animateEnabled).toBe(true);
+  });
+
   it('should hide navBar when using view attr', function() {
     var element = compile('<div><nav-bar></nav-bar><view hide-nav-bar="true"></view></div>')(scope);
     scope.$digest();
@@ -99,13 +117,11 @@ describe('Ionic View', function() {
 
     scope.viewTitle = 'New Title';
     scope.$digest();
-    navBar = element.find('header');
     title = navBar.find('h1');
     expect(title.text().trim()).toEqual('New Title');
 
     scope.$broadcast('viewState.titleUpdated', { title: 'Event Title' });
     scope.$digest();
-    navBar = element.find('header');
     title = navBar.find('h1');
     expect(title.text().trim()).toEqual('Event Title');
   });
@@ -153,7 +169,7 @@ describe('Ionic View', function() {
     }]);
 
     scope.$digest();
-    
+
     leftButton = angular.element(element[0].querySelector('.left-buttons')).find('button');
     expect(leftButton.text().trim()).toBe('Event Left Button');
     rightButton = angular.element(element[0].querySelector('.right-buttons')).find('button');
