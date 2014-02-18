@@ -19,7 +19,7 @@
       var msgs = [];
 
       msgs.push( 'Class, ' + createElementId(m.target) );
-    
+
       if(m.oldValue !== m.target.className) {
         var exisitingClasses = (m.oldValue ? m.oldValue.split(' ') : []);
         var currentClasses = m.target.className.split(' ');
@@ -71,7 +71,7 @@
 
     } else if(m.attributeName == 'style') {
       var msgs = [];
-      
+
       msgs.push( 'Style, ' + createElementId(m.target) );
       if(m.oldValue) msgs.push( 'from ' + m.oldValue );
 
@@ -121,13 +121,13 @@
         }
       }
       if(el.id.length) id += '#' + el.id;
-      
+
       var href = el.getAttribute('href');
       if(href) {
         href = href.split('/');
         id += '[href=' + href[href.length -1] + ']';
       }
-      
+
       var ngClick = el.getAttribute('ng-click');
       if(ngClick) {
         id += '[ng-click=' + ngClick + ']';
@@ -159,12 +159,12 @@
     msgs.unshift( d.getSeconds() + '.' + d.getMilliseconds() );
 
     var msg = msgs.join(', ');
-    console.log("%c" + msg, 
+    console.debug("%c" + msg,
                 "color:" + color);
 
     clearTimeout(timeId)
     timeId = setTimeout(function(){
-      console.log('Manipulations:', totalManipulations)
+      console.debug('Manipulations:', totalManipulations)
       totalManipulations = 0;
     }, 1200);
   }
@@ -180,13 +180,13 @@
 
       console.debug('Dom Trace, observe:', selector);
 
-      var observer = new MutationObserver(function(mutations) {  
+      var observer = new MutationObserver(function(mutations) {
         mutations.forEach(logMutation);
       });
-       
+
       observer.observe(el, {
-        attributes: true, 
-        childList: false, 
+        attributes: true,
+        childList: false,
         subtree: true,
         attributeOldValue: true,
         //characterData: true,
