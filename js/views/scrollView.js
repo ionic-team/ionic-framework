@@ -624,12 +624,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
     if ('ontouchstart' in window) {
 
       container.addEventListener("touchstart", function(e) {
-        console.log('touchstart scrollview');
         if (e.defaultPrevented || shouldIgnorePress(e)) {
           return;
         }
         self.doTouchStart(e.touches, e.timeStamp);
-        // e.preventDefault();
+        e.preventDefault();
       }, false);
 
       document.addEventListener("touchmove", function(e) {
