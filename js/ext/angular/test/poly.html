@@ -34,19 +34,13 @@
       Should be green by using ng-class
     </p>
 
-    <script>
-      console.error = function(){
-        alert(arguments)
-      }
-    </script>
-
     <script src="../../../../dist/js/ionic.bundle.js"></script>
     <script>
 
       document.getElementById('supportsClassList').classList.add('supported');
       document.getElementById('supportsClassList').classList.remove('not-supported');
 
-      document.getElementById('supportsClassListArgs').classList.add('support1', 'support2');
+      document.getElementById('supportsClassListArgs').classList.add('support1', 'support2', 'support2');
       document.getElementById('supportsClassListArgs').classList.remove('not-supported1', 'not-supported2');
 
       angular.module('ionicTest', ['ionic'])
@@ -54,6 +48,9 @@
       .controller('AppCtrl', function($scope) {
 
         $scope.ngClassTest = 'supported';
+
+        var body = angular.element( document.body );
+        body.addClass('class1 class2 class2');
 
       });
 
