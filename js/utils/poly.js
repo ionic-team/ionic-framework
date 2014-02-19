@@ -32,7 +32,7 @@
             }
             
             self.className = classes.join(" ");
-          }
+          };
         }
 
         return {                    
