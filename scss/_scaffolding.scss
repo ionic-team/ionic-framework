@@ -288,6 +288,7 @@ infinite-scroll.active .scroll-infinite {
 .pane {
   position: absolute;
   z-index: $z-index-pane;
+  @include translate3d(0,0,0);
 }
 .view {
   position: absolute;
@@ -300,5 +301,5 @@ infinite-scroll.active .scroll-infinite {
   left: 0;
   width: 100%;
   height: 100%;
-  @include translate3d(0,0,0);
+  background-color: #fff;
 }

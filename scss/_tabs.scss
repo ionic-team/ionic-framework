@@ -9,6 +9,7 @@
   @include display-flex();
   @include flex-direction(horizontal);
   @include justify-content(center);
+  @include translate3d(0,0,0);
 
   @include tab-style($tabs-default-bg, $tabs-default-border, $tabs-default-text);
   @include tab-badge-style($tabs-default-text, $tabs-default-bg);

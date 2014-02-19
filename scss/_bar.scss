@@ -6,6 +6,7 @@
 
 .bar {
   @include display-flex();
+  @include translate3d(0,0,0);
   @include user-select(none);
   position: absolute;
   right: 0;
