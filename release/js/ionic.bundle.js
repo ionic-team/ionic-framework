@@ -8,7 +8,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v0.9.24
+ * Ionic, v0.9.25
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -23,8 +23,9 @@
 window.ionic = {
   controllers: {},
   views: {},
-  version: '0.9.24'
-};;
+  version: '0.9.25'
+};
+;
 (function(ionic) {
 
   var bezierCoord = function (x,y) {
@@ -144,36 +145,74 @@ window.ionic = {
   var readyCallbacks = [],
   domReady = function() {
     for(var x=0; x<readyCallbacks.length; x++) {
-      window.rAF(readyCallbacks[x]);
+      ionic.requestAnimationFrame(readyCallbacks[x]);
     }
     readyCallbacks = [];
     document.removeEventListener('DOMContentLoaded', domReady);
   };
   document.addEventListener('DOMContentLoaded', domReady);
 
+  // From the man himself, Mr. Paul Irish.
+  // The requestAnimationFrame polyfill
+  // Put it on window just to preserve its context
+  // without having to use .call
+  window._rAF = (function(){
+    return  window.requestAnimationFrame       ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame    ||
+            function( callback ){
+              window.setTimeout(callback, 16);
+            };
+  })();
+
   ionic.DomUtil = {
+    //Call with proper context
+    requestAnimationFrame: function(cb) {
+      window._rAF(cb);
+    },
+
+    /*
+     * When given a callback, if that callback is called 100 times between
+     * animation frames, Throttle will make it only call the last of 100tha call
+     *
+     * It returns a function, which will then call the passed in callback.  The
+     * passed in callback will receive the context the returned function is called with.
+     *
+     * @example
+     *   this.setTranslateX = ionic.animationFrameThrottle(function(x) {
+     *     this.el.style.webkitTransform = 'translate3d(' + x + 'px, 0, 0)';
+     *   })
+     */
+    animationFrameThrottle: function(cb) {
+      var args, isQueued, context;
+      return function() {
+        args = arguments;
+        context = this;
+        if (!isQueued) {
+          isQueued = true;
+          ionic.requestAnimationFrame(function() {
+            cb.apply(context, args);
+            isQueued = false;
+          });
+        }
+      };
+    },
 
     /*
      * Find an element's offset, then add it to the offset of the parent
      * until we are at the direct child of parentEl
      * use-case: find scroll offset of any element within a scroll container
      */
-    getPositionInParent: function(el, parentEl) {
-      var left = 0, top = 0;
-      while (el && el !== parentEl) {
-        left += el.offsetLeft;
-        top += el.offsetTop;
-        el = el.parentNode;
-      }
+    getPositionInParent: function(el) {
       return {
-        left: left,
-        top: top
+        left: el.offsetLeft,
+        top: el.offsetTop
       };
     },
 
     ready: function(cb) {
       if(document.readyState === "complete") {
-        window.rAF(cb);
+        ionic.requestAnimationFrame(cb);
       } else {
         readyCallbacks.push(cb);
       }
@@ -185,18 +224,19 @@ window.ionic = {
         range.selectNodeContents(textNode);
         if(range.getBoundingClientRect) {
           var rect = range.getBoundingClientRect();
+          if(rect) {
+            var sx = window.scrollX;
+            var sy = window.scrollY;
 
-          var sx = window.scrollX;
-          var sy = window.scrollY;
-
-          return {
-            top: rect.top + sy,
-            left: rect.left + sx,
-            right: rect.left + sx + rect.width,
-            bottom: rect.top + sy + rect.height,
-            width: rect.width,
-            height: rect.height
-          };
+            return {
+              top: rect.top + sy,
+              left: rect.left + sx,
+              right: rect.left + sx + rect.width,
+              bottom: rect.top + sy + rect.height,
+              width: rect.width,
+              height: rect.height
+            };
+          }
         }
       }
       return null;
@@ -252,6 +292,10 @@ window.ionic = {
       return true;
     }
   };
+
+  //Shortcuts
+  ionic.requestAnimationFrame = ionic.DomUtil.requestAnimationFrame;
+  ionic.animationFrameThrottle = ionic.DomUtil.animationFrameThrottle;
 })(window.ionic);
 ;
 /**
@@ -1983,20 +2027,9 @@ window.ionic = {
 (function(window, document, ionic) {
   'use strict';
 
-  // From the man himself, Mr. Paul Irish.
-  // The requestAnimationFrame polyfill
-  window.rAF = (function(){
-    return  window.requestAnimationFrame       ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame    ||
-            function( callback ){
-              window.setTimeout(callback, 16);
-            };
-  })();
-
   // Ionic CSS polyfills
   ionic.CSS = {};
-  
+
   (function() {
     var d = document.createElement('div');
     var keys = ['webkitTransform', 'transform', '-webkit-transform', 'webkit-transform',
@@ -2010,9 +2043,56 @@ window.ionic = {
     }
   })();
 
+  // classList polyfill for them older Androids
+  // https://gist.github.com/devongovett/1381839
+  if (!("classList" in document.documentElement) && Object.defineProperty && typeof HTMLElement !== 'undefined') {
+    Object.defineProperty(HTMLElement.prototype, 'classList', {
+      get: function() {
+        var self = this;
+        function update(fn) {
+          return function() {
+            var x, classes = self.className.split(/\s+/);
+
+            for(x=0; x<arguments.length; x++) {
+              fn(classes, classes.indexOf(arguments[x]), arguments[x]);
+            }
+            
+            self.className = classes.join(" ");
+          };
+        }
+
+        return {                    
+          add: update(function(classes, index, value) {
+            ~index || classes.push(value);
+          }),
+
+          remove: update(function(classes, index) {
+            ~index && classes.splice(index, 1);
+          }),
+
+          toggle: update(function(classes, index, value) {
+            ~index ? classes.splice(index, 1) : classes.push(value);
+          }),
+
+          contains: function(value) {
+            return !!~self.className.split(/\s+/).indexOf(value);
+          },
+
+          item: function(i) {
+            return self.className.split(/\s+/)[i] || null;
+          }
+        };
+
+      }
+    });
+  }
+
   // polyfill use to simulate native "tap"
-  ionic.tapElement = function(ele, e) {
+  ionic.tapElement = function(target, e) {
     // simulate a normal click by running the element's click method then focus on it
+    
+    var ele = target.control || target;
+
     if(ele.disabled) return;
 
     console.debug('tapElement', ele.tagName, ele.className);
@@ -2024,13 +2104,14 @@ window.ionic = {
     clickEvent.initMouseEvent('click', true, true, window,
                               1, 0, 0, c.x, c.y,
                               false, false, false, false, 0, null);
-    
+
     ele.dispatchEvent(clickEvent);
 
     if(ele.tagName === 'INPUT' || ele.tagName === 'TEXTAREA' || ele.tagName === 'SELECT') {
-      ele.focus(); 
+      ele.focus();
+      e.preventDefault();
     } else {
-      ele.blur();
+      blurActive();
     }
 
     // remember the coordinates of this tap so if it happens again we can ignore it
@@ -2039,8 +2120,10 @@ window.ionic = {
       recordCoordinates(e);
     }
 
-    // set the last tap time so if a click event quickly happens it knows to ignore it
-    ele.lastTap = Date.now();
+    if(target.control) {
+      console.debug('tapElement, target.control, stop');
+      return stopEvent(e);
+    }
   };
 
   function tapPolyfill(orgEvent) {
@@ -2053,31 +2136,19 @@ window.ionic = {
     if( isRecentTap(e) ) {
       // if a tap in the same area just happened, don't continue
       console.debug('tapPolyfill', 'isRecentTap', ele.tagName);
-      return;
-    }
-
-    if(ele.lastClick && ele.lastClick + CLICK_PREVENT_DURATION > Date.now()) {
-      // if a click recently happend on this element, don't continue
-      // (yes on some devices it's possible for a click to happen before a touchend)
-      console.debug('tapPolyfill', 'recent lastClick', ele.tagName);
-      return;
+      return stopEvent(e);
     }
 
     while(ele) {
       // climb up the DOM looking to see if the tapped element is, or has a parent, of one of these
       if( ele.tagName === "INPUT" ||
-          ele.tagName === "A" || 
-          ele.tagName === "BUTTON" || 
-          ele.tagName === "TEXTAREA" || 
+          ele.tagName === "A" ||
+          ele.tagName === "BUTTON" ||
+          ele.tagName === "LABEL" ||
+          ele.tagName === "TEXTAREA" ||
           ele.tagName === "SELECT" ) {
 
         return ionic.tapElement(ele, e);
-
-      } else if( ele.tagName === "LABEL" ) {
-        // check if the tapped label has an input associated to it
-        if(ele.control) {
-          return ionic.tapElement(ele.control, e);
-        }
       }
       ele = ele.parentElement;
     }
@@ -2085,77 +2156,42 @@ window.ionic = {
     // they didn't tap one of the above elements
     // if the currently active element is an input, and they tapped outside
     // of the current input, then unset its focus (blur) so the keyboard goes away
-    ele = document.activeElement;
-    if(ele && (ele.tagName === "INPUT" || 
-               ele.tagName === "TEXTAREA" || 
-               ele.tagName === "SELECT")) {
-      ele.blur();
-    }
+    blurActive();
   }
 
   function preventGhostClick(e) {
-    if(e.target.tagName === "LABEL" && e.target.control) {
+    if(e.target.control) {
       // this is a label that has an associated input
-
-      if(e.target.control.labelLastTap && e.target.control.labelLastTap + CLICK_PREVENT_DURATION > Date.now()) {
-        // Android will fire a click for the label, and a click for the input which it is associated to
-        // this stops the second ghost click from the label from continuing
-        console.debug('preventGhostClick', 'labelLastTap');
-        e.stopPropagation();
-        e.preventDefault();
-        return false;
-      }
-
-      // remember the last time this label was clicked to it can prevent a second label ghostclick
-      e.target.control.labelLastTap = Date.now();
-
-      // The input's click event will propagate so don't bother letting this label's click 
-      // propagate cuz it causes double clicks. However, do NOT e.preventDefault(), because 
-      // the label still needs to click the input
-      console.debug('preventGhostClick', 'label stopPropagation');
-      e.stopPropagation();
-      return;
+      // the native layer will send the actual event, so stop this one
+      console.debug('preventGhostClick', 'label');
+      return stopEvent(e);
     }
 
     if( isRecentTap(e) ) {
       // a tap has already happened at these coordinates recently, ignore this event
       console.debug('preventGhostClick', 'isRecentTap', e.target.tagName);
-      e.stopPropagation();
-      e.preventDefault();
-      return false;
+      return stopEvent(e);
     }
 
-    if(e.target.lastTap && e.target.lastTap + CLICK_PREVENT_DURATION > Date.now()) {
-      // this element has already had the tap poly fill run on it recently, ignore this event
-      console.debug('preventGhostClick', 'e.target.lastTap', e.target.tagName);
-      e.stopPropagation();
-      e.preventDefault();
-      return false;
-    }
-
-    // remember the last time this element was clicked
-    e.target.lastClick = Date.now();
-
-    // remember the coordinates of this click so if a tap or click in the 
+    // remember the coordinates of this click so if a tap or click in the
     // same area quickly happened again we can ignore it
     recordCoordinates(e);
   }
 
   function isRecentTap(event) {
     // loop through the tap coordinates and see if the same area has been tapped recently
-    var tapId, existingCoordinates, currentCoordinates,
-    hitRadius = 15;
+    var tapId, existingCoordinates, currentCoordinates;
 
     for(tapId in tapCoordinates) {
       existingCoordinates = tapCoordinates[tapId];
       if(!currentCoordinates) currentCoordinates = getCoordinates(event); // lazy load it when needed
 
-      if(currentCoordinates.x > existingCoordinates.x - hitRadius &&
-         currentCoordinates.x < existingCoordinates.x + hitRadius &&
-         currentCoordinates.y > existingCoordinates.y - hitRadius &&
-         currentCoordinates.y < existingCoordinates.y + hitRadius) {
+      if(currentCoordinates.x > existingCoordinates.x - HIT_RADIUS &&
+         currentCoordinates.x < existingCoordinates.x + HIT_RADIUS &&
+         currentCoordinates.y > existingCoordinates.y - HIT_RADIUS &&
+         currentCoordinates.y < existingCoordinates.y + HIT_RADIUS) {
         // the current tap coordinates are in the same area as a recent tap
-        return true;
+        return existingCoordinates;
       }
     }
   }
@@ -2163,10 +2199,10 @@ window.ionic = {
   function recordCoordinates(event) {
     var c = getCoordinates(event);
     if(c.x && c.y) {
-      var tapId = 't' + Date.now();
+      var tapId = Date.now();
 
       // only record tap coordinates if we have valid ones
-      tapCoordinates[tapId] = { x: c.x, y:c.y };
+      tapCoordinates[tapId] = { x: c.x, y: c.y, id: tapId };
 
       setTimeout(function() {
         // delete the tap coordinates after X milliseconds, basically allowing
@@ -2193,14 +2229,45 @@ window.ionic = {
     return { x:0, y:0 };
   }
 
+  function removeClickPrevent(e) {
+    setTimeout(function(){
+      var tap = isRecentTap(e);
+      if(tap) delete tapCoordinates[tap.id];
+    }, REMOVE_PREVENT_DELAY);
+  }
+
+  function stopEvent(e){
+    e.stopPropagation();
+    e.preventDefault();
+    return false;
+  }
+
+  function blurActive() {
+    var ele = document.activeElement;
+    if(ele && (ele.tagName === "INPUT" ||
+               ele.tagName === "TEXTAREA" ||
+               ele.tagName === "SELECT")) {
+      // using a timeout to prevent funky scrolling while a keyboard hides
+      setTimeout(function(){
+        ele.blur();
+      }, 400);
+    }
+  }
+
   var tapCoordinates = {}; // used to remember coordinates to ignore if they happen again quickly
-  var CLICK_PREVENT_DURATION = 450; // amount of milliseconds to check for ghostclicks
+  var CLICK_PREVENT_DURATION = 1500; // max milliseconds ghostclicks in the same area should be prevented
+  var REMOVE_PREVENT_DELAY = 325; // delay after a touchend/mouseup before removing the ghostclick prevent
+  var HIT_RADIUS = 15;
 
   // set global click handler and check if the event should stop or not
   document.addEventListener('click', preventGhostClick, true);
 
   // global tap event listener polyfill for HTML elements that were "tapped" by the user
   ionic.on("tap", tapPolyfill, document);
+
+  // listeners used to remove ghostclick prevention
+  document.addEventListener('touchend', removeClickPrevent, false);
+  document.addEventListener('mouseup', removeClickPrevent, false);
 
 })(this, document, ionic);
 ;
@@ -2411,15 +2478,14 @@ function androidKeyboardFix() {
     if (rememberedDeviceWidth !== window.innerWidth) {
       rememberedDeviceWidth = window.innerWidth;
       rememberedDeviceHeight = window.innerHeight;
-      console.info('orientation change. deviceWidth =', rememberedDeviceWidth,
-                  ', deviceHeight =', rememberedDeviceHeight);
+      console.info('orientation change. deviceWidth =', rememberedDeviceWidth, ', deviceHeight =', rememberedDeviceHeight);
 
     //If the height changes, and it's less than before, we have a keyboard open
     } else if (rememberedDeviceHeight !== window.innerHeight &&
                window.innerHeight < rememberedDeviceHeight) {
       document.body.classList.add('hide-footer');
       //Wait for next frame so document.activeElement is set
-      window.rAF(handleKeyboardChange);
+      ionic.requestAnimationFrame(handleKeyboardChange);
     } else {
       //Otherwise we have a keyboard close or a *really* weird resize
       document.body.classList.remove('hide-footer');
@@ -2457,6 +2523,7 @@ function androidKeyboardFix() {
 
 })(window.ionic);
 ;
+var IS_INPUT_LIKE_REGEX = /input|textarea|select/i;
 /*
  * Scroller
  * http://github.com/zynga/scroller
@@ -2750,8 +2817,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     this.__container = options.el;
     this.__content = options.el.firstElementChild;
-
-    var self = this;
 
     //Remove any scrollTop attached to these elements; they are virtual scroll now
     //This also stops on-load-scroll-to-window.location.hash that the browser does
@@ -3069,26 +3134,26 @@ ionic.views.Scroll = ionic.views.View.inherit({
         self.scrollTo(0, elementScrollTop + elementHeight - (deviceHeight * 0.5), true);
       }
 
-      //Only the first scrollView parent of the element that broadcasted this event 
+      //Only the first scrollView parent of the element that broadcasted this event
       //(the active element that needs to be shown) should receive this event
       e.stopPropagation();
     });
 
+    function shouldIgnorePress(e) {
+      // Don't react if initial down happens on a form element
+      return e.target.tagName.match(IS_INPUT_LIKE_REGEX) ||
+        e.target.isContentEditable;
+    }
+
+
     if ('ontouchstart' in window) {
 
       container.addEventListener("touchstart", function(e) {
-        if (e.__scroller) {
+        if (e.defaultPrevented || shouldIgnorePress(e)) {
           return;
         }
-        // Don't react if initial down happens on a form element
-        if (e.target.tagName.match(/input|textarea|select/i)) {
-          return;
-        }
-
         self.doTouchStart(e.touches, e.timeStamp);
         e.preventDefault();
-        //We don't want to stop propagation, other things might want to know about the touchstart
-        e.__scroller = true;
       }, false);
 
       document.addEventListener("touchmove", function(e) {
@@ -3107,21 +3172,15 @@ ionic.views.Scroll = ionic.views.View.inherit({
       var mousedown = false;
 
       container.addEventListener("mousedown", function(e) {
-        if (e.__scroller) {
+        if (e.defaultPrevented || shouldIgnorePress(e)) {
           return;
         }
-        // Don't react if initial down happens on a form element
-        if (e.target.tagName.match(/input|textarea|select/i)) {
-          return;
-        }
-
         self.doTouchStart([{
           pageX: e.pageX,
           pageY: e.pageY
         }], e.timeStamp);
 
-        //We don't want to stop propagation, other things might want to know about the touchstart
-        e.__scroller = true;
+        e.preventDefault();
         mousedown = true;
       }, false);
 
@@ -4373,12 +4432,13 @@ ionic.views.Scroll = ionic.views.View.inherit({
     };
 
     // How much velocity is required to keep the deceleration running
-    var minVelocityToKeepDecelerating = self.options.snapping ? 4 : 0.1;
+    self.__minVelocityToKeepDecelerating = self.options.snapping ? 4 : 0.1;
 
     // Detect whether it's still worth to continue animating steps
     // If we are already slow enough to not being user perceivable anymore, we stop the whole process here.
     var verify = function() {
-      var shouldContinue = Math.abs(self.__decelerationVelocityX) >= minVelocityToKeepDecelerating || Math.abs(self.__decelerationVelocityY) >= minVelocityToKeepDecelerating;
+      var shouldContinue = Math.abs(self.__decelerationVelocityX) >= self.__minVelocityToKeepDecelerating ||
+        Math.abs(self.__decelerationVelocityY) >= self.__minVelocityToKeepDecelerating;
       if (!shouldContinue) {
         self.__didDecelerationComplete = true;
       }
@@ -4509,7 +4569,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         if (isHeadingOutwardsX) {
           self.__decelerationVelocityX += scrollOutsideX * penetrationDeceleration;
         }
-        var isStoppedX = Math.abs(self.__decelerationVelocityX) <= self.__minDecelerationScrollLeft;
+        var isStoppedX = Math.abs(self.__decelerationVelocityX) <= self.__minVelocityToKeepDecelerating;
         //If we're not heading outwards, or if the above statement got us below minDeceleration, go back towards bounds
         if (!isHeadingOutwardsX || isStoppedX) {
           self.__decelerationVelocityX = scrollOutsideX * penetrationAcceleration;
@@ -4521,7 +4581,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         if (isHeadingOutwardsY) {
           self.__decelerationVelocityY += scrollOutsideY * penetrationDeceleration;
         }
-        var isStoppedY = Math.abs(self.__decelerationVelocityY) <= self.__minDecelerationScrollTop;
+        var isStoppedY = Math.abs(self.__decelerationVelocityY) <= self.__minVelocityToKeepDecelerating;
         //If we're not heading outwards, or if the above statement got us below minDeceleration, go back towards bounds
         if (!isHeadingOutwardsY || isStoppedY) {
           self.__decelerationVelocityY = scrollOutsideY * penetrationAcceleration;
@@ -4579,78 +4639,71 @@ ionic.views.Scroll = ionic.views.View.inherit({
      * so that the header text size is maximized and aligned
      * correctly as long as possible.
      */
-    align: function() {
-      var _this = this;
+    align: ionic.animationFrameThrottle(function(titleSelector) {
 
-      window.rAF(ionic.proxy(function() {
-        var i, c, childSize;
-        var childNodes = this.el.childNodes;
+      // Find the titleEl element
+      var titleEl = this.el.querySelector(titleSelector || '.title');
+      if(!titleEl) {
+        return;
+      }
 
-        // Find the title element
-        var title = this.el.querySelector('.title');
-        if(!title) {
-          return;
+      var i, c, childSize;
+      var childNodes = this.el.childNodes;
+      var leftWidth = 0;
+      var rightWidth = 0;
+      var isCountingRightWidth = true;
+
+      // Compute how wide the left children are
+      // Skip all titles (there may still be two titles, one leaving the dom)
+      // Once we encounter a titleEl, realize we are now counting the right-buttons, not left
+      for(i = 0; i < childNodes.length; i++) {
+        c = childNodes[i];
+        if (c.tagName && c.tagName.toLowerCase() == 'h1') {
+          isCountingRightWidth = false;
+          continue;
         }
-      
-        var leftWidth = 0;
-        var rightWidth = 0;
-        var titlePos = Array.prototype.indexOf.call(childNodes, title);
 
-        // Compute how wide the left children are
-        for(i = 0; i < titlePos; i++) {
-          childSize = null;
-          c = childNodes[i];
-          if(c.nodeType == 3) {
-            childSize = ionic.DomUtil.getTextBounds(c);
-          } else if(c.nodeType == 1) {
-            childSize = c.getBoundingClientRect();
-          }
-          if(childSize) {
+        childSize = null;
+        if(c.nodeType == 3) {
+          childSize = ionic.DomUtil.getTextBounds(c);
+        } else if(c.nodeType == 1) {
+          childSize = c.getBoundingClientRect();
+        }
+        if(childSize) {
+          if (isCountingRightWidth) {
+            rightWidth += childSize.width;
+          } else {
             leftWidth += childSize.width;
           }
         }
+      }
 
-        // Compute how wide the right children are
-        for(i = titlePos + 1; i < childNodes.length; i++) {
-          childSize = null;
-          c = childNodes[i];
-          if(c.nodeType == 3) {
-            childSize = ionic.DomUtil.getTextBounds(c);
-          } else if(c.nodeType == 1) {
-            childSize = c.getBoundingClientRect();
-          }
-          if(childSize) {
-            rightWidth += childSize.width;
-          }
+      var margin = Math.max(leftWidth, rightWidth) + 10;
+
+      // Size and align the header titleEl based on the sizes of the left and
+      // right children, and the desired alignment mode
+      if(this.alignTitle == 'center') {
+        if(margin > 10) {
+          titleEl.style.left = margin + 'px';
+          titleEl.style.right = margin + 'px';
         }
-
-        var margin = Math.max(leftWidth, rightWidth) + 10;
-
-        // Size and align the header title based on the sizes of the left and
-        // right children, and the desired alignment mode
-        if(this.alignTitle == 'center') {
-          if(margin > 10) {
-            title.style.left = margin + 'px';
-            title.style.right = margin + 'px';
-          }
-          if(title.offsetWidth < title.scrollWidth) {
-            if(rightWidth > 0) {
-              title.style.right = (rightWidth + 5) + 'px';
-            }
-          }
-        } else if(this.alignTitle == 'left') {
-          title.classList.add('title-left');
-          if(leftWidth > 0) {
-            title.style.left = (leftWidth + 15) + 'px';
-          }
-        } else if(this.alignTitle == 'right') {
-          title.classList.add('title-right');
+        if(titleEl.offsetWidth < titleEl.scrollWidth) {
           if(rightWidth > 0) {
-            title.style.right = (rightWidth + 15) + 'px';
+            titleEl.style.right = (rightWidth + 5) + 'px';
           }
         }
-      }, this));
-    }
+      } else if(this.alignTitle == 'left') {
+        titleEl.classList.add('titleEl-left');
+        if(leftWidth > 0) {
+          titleEl.style.left = (leftWidth + 15) + 'px';
+        }
+      } else if(this.alignTitle == 'right') {
+        titleEl.classList.add('titleEl-right');
+        if(rightWidth > 0) {
+          titleEl.style.right = (rightWidth + 15) + 'px';
+        }
+      }
+    })
   });
 
 })(ionic);
@@ -4719,41 +4772,39 @@ ionic.views.Scroll = ionic.views.View.inherit({
     };
   };
 
-  SlideDrag.prototype.drag = function(e) {
-    var _this = this, buttonsWidth;
+  SlideDrag.prototype.drag = ionic.animationFrameThrottle(function(e) {
+    var buttonsWidth;
 
-    window.rAF(function() {
-      // We really aren't dragging
-      if(!_this._currentDrag) {
-        return;
+    // We really aren't dragging
+    if(!this._currentDrag) {
+      return;
+    }
+
+    // Check if we should start dragging. Check if we've dragged past the threshold,
+    // or we are starting from the open state.
+    if(!this._isDragging &&
+        ((Math.abs(e.gesture.deltaX) > this.dragThresholdX) ||
+        (Math.abs(this._currentDrag.startOffsetX) > 0)))
+    {
+      this._isDragging = true;
+    }
+
+    if(this._isDragging) {
+      buttonsWidth = this._currentDrag.buttonsWidth;
+
+      // Grab the new X point, capping it at zero
+      var newX = Math.min(0, this._currentDrag.startOffsetX + e.gesture.deltaX);
+
+      // If the new X position is past the buttons, we need to slow down the drag (rubber band style)
+      if(newX < -buttonsWidth) {
+        // Calculate the new X position, capped at the top of the buttons
+        newX = Math.min(-buttonsWidth, -buttonsWidth + (((e.gesture.deltaX + buttonsWidth) * 0.4)));
       }
 
-      // Check if we should start dragging. Check if we've dragged past the threshold,
-      // or we are starting from the open state.
-      if(!_this._isDragging &&
-          ((Math.abs(e.gesture.deltaX) > _this.dragThresholdX) ||
-          (Math.abs(_this._currentDrag.startOffsetX) > 0)))
-      {
-        _this._isDragging = true;
-      }
-
-      if(_this._isDragging) {
-        buttonsWidth = _this._currentDrag.buttonsWidth;
-
-        // Grab the new X point, capping it at zero
-        var newX = Math.min(0, _this._currentDrag.startOffsetX + e.gesture.deltaX);
-
-        // If the new X position is past the buttons, we need to slow down the drag (rubber band style)
-        if(newX < -buttonsWidth) {
-          // Calculate the new X position, capped at the top of the buttons
-          newX = Math.min(-buttonsWidth, -buttonsWidth + (((e.gesture.deltaX + buttonsWidth) * 0.4)));
-        }
-
-        _this._currentDrag.content.style.webkitTransform = 'translate3d(' + newX + 'px, 0, 0)';
-        _this._currentDrag.content.style.webkitTransition = 'none';
-      }
-    });
-  };
+      this._currentDrag.content.style.webkitTransform = 'translate3d(' + newX + 'px, 0, 0)';
+      this._currentDrag.content.style.webkitTransition = 'none';
+    }
+  });
 
   SlideDrag.prototype.end = function(e, doneCallback) {
     var _this = this;
@@ -4790,7 +4841,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     //   e.target.removeEventListener('webkitTransitionEnd', onRestingAnimationEnd);
     // };
 
-    window.rAF(function() {
+    ionic.requestAnimationFrame(function() {
       // var currentX = parseFloat(_this._currentDrag.content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
       // if(currentX !== restingPoint) {
       //   _this._currentDrag.content.classList.add(ITEM_SLIDING_CLASS);
@@ -4863,53 +4914,49 @@ ionic.views.Scroll = ionic.views.View.inherit({
     this._moveElement(e);
   };
 
-  ReorderDrag.prototype.drag = function(e) {
-    var _this = this;
+  ReorderDrag.prototype.drag = ionic.animationFrameThrottle(function(e) {
+    // We really aren't dragging
+    if(!this._currentDrag) {
+      return;
+    }
 
-    window.rAF(function() {
-      // We really aren't dragging
-      if(!_this._currentDrag) {
-        return;
+    var scrollY = 0;
+    var pageY = e.gesture.center.pageY;
+
+    //If we have a scrollView, check scroll boundaries for dragged element and scroll if necessary
+    if (this.scrollView) {
+      var container = this.scrollEl;
+
+      scrollY = this.scrollView.getValues().top;
+
+      var containerTop = container.offsetTop;
+      var pixelsPastTop = containerTop - pageY + this._currentDrag.elementHeight/2;
+      var pixelsPastBottom = pageY + this._currentDrag.elementHeight/2 - containerTop - container.offsetHeight;
+
+      if (e.gesture.deltaY < 0 && pixelsPastTop > 0 && scrollY > 0) {
+        this.scrollView.scrollBy(null, -pixelsPastTop);
       }
-
-      var scrollY = 0;
-      var pageY = e.gesture.center.pageY;
-
-      //If we have a scrollView, check scroll boundaries for dragged element and scroll if necessary
-      if (_this.scrollView) {
-        var container = _this.scrollEl;
-
-        scrollY = _this.scrollView.getValues().top;
-
-        var containerTop = container.offsetTop;
-        var pixelsPastTop = containerTop - pageY + _this._currentDrag.elementHeight/2;
-        var pixelsPastBottom = pageY + _this._currentDrag.elementHeight/2 - containerTop - container.offsetHeight;
-
-        if (e.gesture.deltaY < 0 && pixelsPastTop > 0 && scrollY > 0) {
-          _this.scrollView.scrollBy(null, -pixelsPastTop);
-        }
-        if (e.gesture.deltaY > 0 && pixelsPastBottom > 0) {
-          if (scrollY < _this.scrollView.getScrollMax().top) {
-            _this.scrollView.scrollBy(null, pixelsPastBottom);
-          }
+      if (e.gesture.deltaY > 0 && pixelsPastBottom > 0) {
+        if (scrollY < this.scrollView.getScrollMax().top) {
+          this.scrollView.scrollBy(null, pixelsPastBottom);
         }
       }
+    }
 
-      // Check if we should start dragging. Check if we've dragged past the threshold,
-      // or we are starting from the open state.
-      if(!_this._isDragging && Math.abs(e.gesture.deltaY) > _this.dragThresholdY) {
-        _this._isDragging = true;
-      }
+    // Check if we should start dragging. Check if we've dragged past the threshold,
+    // or we are starting from the open state.
+    if(!this._isDragging && Math.abs(e.gesture.deltaY) > this.dragThresholdY) {
+      this._isDragging = true;
+    }
 
-      if(_this._isDragging) {
-        _this._moveElement(e);
+    if(this._isDragging) {
+      this._moveElement(e);
 
-        _this._currentDrag.currentY = scrollY + pageY - _this._currentDrag.placeholder.parentNode.offsetTop;
+      this._currentDrag.currentY = scrollY + pageY - this._currentDrag.placeholder.parentNode.offsetTop;
 
-        _this._reorderItems();
-      }
-    });
-  };
+      this._reorderItems();
+    }
+  });
 
   // When an item is dragged, we need to reorder any items for sorting purposes
   ReorderDrag.prototype._reorderItems = function() {
@@ -5191,10 +5238,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
 (function(ionic) {
 'use strict';
   /**
-   * An ActionSheet is the slide up menu popularized on iOS.
+   * Loading
    *
-   * You see it all over iOS apps, where it offers a set of options 
-   * triggered after an action.
+   * The Loading is an overlay that can be used to indicate
+   * activity while blocking user interaction.
    */
   ionic.views.Loading = ionic.views.View.inherit({
     initialize: function(opts) {
@@ -5203,6 +5250,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
       this.el = opts.el;
 
       this.maxWidth = opts.maxWidth || 200;
+
+      this.showDelay = opts.showDelay || 0;
 
       this._loadingBox = this.el.querySelector('.loading');
     },
@@ -5219,12 +5268,18 @@ ionic.views.Scroll = ionic.views.View.inherit({
         lb.style.marginLeft = (-lb.offsetWidth) / 2 + 'px';
         lb.style.marginTop = (-lb.offsetHeight) / 2 + 'px';
 
-        _this.el.classList.add('active');
+        // Wait 'showDelay' ms before showing the loading screen
+        this._showDelayTimeout = window.setTimeout(function() {
+          _this.el.classList.add('active');
+        }, _this.showDelay);
       }
     },
     hide: function() {
       // Force a reflow so the animation will actually run
       this.el.offsetWidth;
+
+      // Prevent unnecessary 'show' after 'hide' has already been called
+      window.clearTimeout(this._showDelayTimeout);
 
       this.el.classList.remove('active');
     }
@@ -5356,7 +5411,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     alert: function(message) {
       var _this = this;
 
-      window.rAF(function() {
+      ionic.requestAnimationFrame(function() {
         _this.setTitle(message);
         _this.el.classList.add('active');
       });
@@ -5382,12 +5437,16 @@ ionic.views.Scroll = ionic.views.View.inherit({
   ionic.views.SideMenu = ionic.views.View.inherit({
     initialize: function(opts) {
       this.el = opts.el;
-      this.width = opts.width;
       this.isEnabled = opts.isEnabled || true;
+      this.setWidth(opts.width);
     },
 
     getFullWidth: function() {
       return this.width;
+    },
+    setWidth: function(width) {
+      this.width = width;
+      this.el.style.width = width + 'px';
     },
     setIsEnabled: function(isEnabled) {
       this.isEnabled = isEnabled;
@@ -5428,9 +5487,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
     getTranslateX: function() {
       return parseFloat(this.el.style.webkitTransform.replace('translate3d(', '').split(',')[0]);
     },
-    setTranslateX: function(x) {
+    setTranslateX: ionic.animationFrameThrottle(function(x) {
       this.el.style.webkitTransform = 'translate3d(' + x + 'px, 0, 0)';
-    }
+    })
   });
 
 })(ionic);
@@ -6902,7 +6961,7 @@ ionic.controllers.TabBarController = ionic.controllers.ViewController.inherit({
 })(window.ionic);
 ;
 /**
- * @license AngularJS v1.2.10
+ * @license AngularJS v1.2.12
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -6971,7 +7030,7 @@ function minErr(module) {
       return match;
     });
 
-    message = message + '\nhttp://errors.angularjs.org/1.2.10/' +
+    message = message + '\nhttp://errors.angularjs.org/1.2.12/' +
       (module ? module + '/' : '') + code;
     for (i = 2; i < arguments.length; i++) {
       message = message + (i == 2 ? '?' : '&') + 'p' + (i-2) + '=' +
@@ -7174,7 +7233,7 @@ function isArrayLike(obj) {
  * is the value of an object property or an array element and `key` is the object property key or
  * array element index. Specifying a `context` for the function is optional.
  *
- * It is worth nothing that `.forEach` does not iterate over inherited properties because it filters
+ * It is worth noting that `.forEach` does not iterate over inherited properties because it filters
  * using the `hasOwnProperty` method.
  *
    <pre>
@@ -7183,7 +7242,7 @@ function isArrayLike(obj) {
      angular.forEach(values, function(value, key){
        this.push(key + ': ' + value);
      }, log);
-     expect(log).toEqual(['name: misko', 'gender:male']);
+     expect(log).toEqual(['name: misko', 'gender: male']);
    </pre>
  *
  * @param {Object|Array} obj Object to iterate over.
@@ -7754,7 +7813,7 @@ function shallowCopy(src, dst) {
   for(var key in src) {
     // shallowCopy is only ever called by $compile nodeLinkFn, which has control over src
     // so we don't need to worry about using our custom hasOwnProperty here
-    if (src.hasOwnProperty(key) && key.charAt(0) !== '$' && key.charAt(1) !== '$') {
+    if (src.hasOwnProperty(key) && !(key.charAt(0) === '$' && key.charAt(1) === '$')) {
       dst[key] = src[key];
     }
   }
@@ -8737,11 +8796,11 @@ function setupModuleLoader(window) {
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */
 var version = {
-  full: '1.2.10',    // all of these placeholder strings will be replaced by grunt's
+  full: '1.2.12',    // all of these placeholder strings will be replaced by grunt's
   major: 1,    // package task
   minor: 2,
-  dot: 10,
-  codeName: 'augmented-serendipity'
+  dot: 12,
+  codeName: 'cauliflower-eradication'
 };
 
 
@@ -9037,6 +9096,9 @@ function jqLitePatchJQueryRemove(name, dispatchThis, filterElems, getterIfNoArgu
 function JQLite(element) {
   if (element instanceof JQLite) {
     return element;
+  }
+  if (isString(element)) {
+    element = trim(element);
   }
   if (!(this instanceof JQLite)) {
     if (isString(element) && element.charAt(0) != '<') {
@@ -10311,17 +10373,16 @@ function annotate(fn) {
  * Here is an example of registering a service using
  * {@link AUTO.$provide#methods_service $provide.service(class)}.
  * <pre>
- *   $provide.service('ping', ['$http', function($http) {
- *     var Ping = function() {
- *       this.$http = $http;
- *     };
+ *   var Ping = function($http) {
+ *     this.$http = $http;
+ *   };
+ * 
+ *   Ping.$inject = ['$http'];
  *   
- *     Ping.prototype.send = function() {
- *       return this.$http.get('/ping');
- *     }; 
- *   
- *     return Ping;
- *   }]);
+ *   Ping.prototype.send = function() {
+ *     return this.$http.get('/ping');
+ *   };
+ *   $provide.service('ping', Ping);
  * </pre>
  * You would then inject and use this service like this:
  * <pre>
@@ -10419,7 +10480,7 @@ function annotate(fn) {
  * Here we decorate the {@link ng.$log $log} service to convert warnings to errors by intercepting
  * calls to {@link ng.$log#error $log.warn()}.
  * <pre>
- *   $provider.decorator('$log', ['$delegate', function($delegate) {
+ *   $provide.decorator('$log', ['$delegate', function($delegate) {
  *     $delegate.warn = $delegate.error;
  *     return $delegate;
  *   }]);
@@ -12022,13 +12083,17 @@ function $TemplateCacheProvider() {
       <div compile="html"></div>
     </div>
    </doc:source>
-   <doc:scenario>
+   <doc:protractor>
      it('should auto compile', function() {
-       expect(element('div[compile]').text()).toBe('Hello Angular');
-       input('html').enter('{{name}}!');
-       expect(element('div[compile]').text()).toBe('Angular!');
+       var textarea = $('textarea');
+       var output = $('div[compile]');
+       // The initial state reads 'Hello Angular'.
+       expect(output.getText()).toBe('Hello Angular');
+       textarea.clear();
+       textarea.sendKeys('{{name}}!');
+       expect(output.getText()).toBe('Angular!');
      });
-   </doc:scenario>
+   </doc:protractor>
  </doc:example>
 
  *
@@ -12790,7 +12855,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           hasTranscludeDirective = true;
 
           // Special case ngIf and ngRepeat so that we don't complain about duplicate transclusion.
-          // This option should only be used by directives that know how to how to safely handle element transclusion,
+          // This option should only be used by directives that know how to safely handle element transclusion,
           // where the transcluded nodes are added or replaced after linking.
           if (!directive.$$tlb) {
             assertNoDuplicate('transclusion', nonTlbTranscludeDirective, directive, $compileNode);
@@ -13305,9 +13370,13 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
                 linkNode = $compileNode[0];
 
             if (beforeTemplateLinkNode !== beforeTemplateCompileNode) {
+              var oldClasses = beforeTemplateLinkNode.className;
               // it was cloned therefore we have to clone as well.
               linkNode = jqLiteClone(compileNode);
               replaceWith(linkRootElement, jqLite(beforeTemplateLinkNode), linkNode);
+
+              // Copy in CSS classes from original node
+              safeAddClass(jqLite(linkNode), oldClasses);
             }
             if (afterTemplateNodeLinkFn.transclude) {
               childBoundTranscludeFn = createBoundTranscludeFn(scope, afterTemplateNodeLinkFn.transclude);
@@ -14328,14 +14397,14 @@ function $HttpProvider() {
       <option>JSONP</option>
     </select>
     <input type="text" ng-model="url" size="80"/>
-    <button ng-click="fetch()">fetch</button><br>
-    <button ng-click="updateModel('GET', 'http-hello.html')">Sample GET</button>
-    <button
+    <button id="fetchbtn" ng-click="fetch()">fetch</button><br>
+    <button id="samplegetbtn" ng-click="updateModel('GET', 'http-hello.html')">Sample GET</button>
+    <button id="samplejsonpbtn"
       ng-click="updateModel('JSONP',
                     'http://angularjs.org/greet.php?callback=JSON_CALLBACK&name=Super%20Hero')">
       Sample JSONP
     </button>
-    <button
+    <button id="invalidjsonpbtn"
       ng-click="updateModel('JSONP', 'http://angularjs.org/doesntexist&callback=JSON_CALLBACK')">
         Invalid JSONP
       </button>
@@ -14372,27 +14441,34 @@ function $HttpProvider() {
 <file name="http-hello.html">
   Hello, $http!
 </file>
-<file name="scenario.js">
+<file name="protractorTest.js">
+  var status = element(by.binding('status'));
+  var data = element(by.binding('data'));
+  var fetchBtn = element(by.id('fetchbtn'));
+  var sampleGetBtn = element(by.id('samplegetbtn'));
+  var sampleJsonpBtn = element(by.id('samplejsonpbtn'));
+  var invalidJsonpBtn = element(by.id('invalidjsonpbtn'));
+
   it('should make an xhr GET request', function() {
-    element(':button:contains("Sample GET")').click();
-    element(':button:contains("fetch")').click();
-    expect(binding('status')).toBe('200');
-    expect(binding('data')).toMatch(/Hello, \$http!/);
+    sampleGetBtn.click();
+    fetchBtn.click();
+    expect(status.getText()).toMatch('200');
+    expect(data.getText()).toMatch(/Hello, \$http!/)
   });
 
   it('should make a JSONP request to angularjs.org', function() {
-    element(':button:contains("Sample JSONP")').click();
-    element(':button:contains("fetch")').click();
-    expect(binding('status')).toBe('200');
-    expect(binding('data')).toMatch(/Super Hero!/);
+    sampleJsonpBtn.click();
+    fetchBtn.click();
+    expect(status.getText()).toMatch('200');
+    expect(data.getText()).toMatch(/Super Hero!/);
   });
 
   it('should make JSONP request to invalid URL and invoke the error handler',
       function() {
-    element(':button:contains("Invalid JSONP")').click();
-    element(':button:contains("fetch")').click();
-    expect(binding('status')).toBe('0');
-    expect(binding('data')).toBe('Request failed');
+    invalidJsonpBtn.click();
+    fetchBtn.click();
+    expect(status.getText()).toMatch('0');
+    expect(data.getText()).toMatch('Request failed');
   });
 </file>
 </example>
@@ -14774,13 +14850,18 @@ function $HttpProvider() {
 }
 
 function createXhr(method) {
-  // IE8 doesn't support PATCH method, but the ActiveX object does
-  /* global ActiveXObject */
-  return (msie <= 8 && lowercase(method) === 'patch')
-      ? new ActiveXObject('Microsoft.XMLHTTP')
-      : new window.XMLHttpRequest();
-}
+    //if IE and the method is not RFC2616 compliant, or if XMLHttpRequest
+    //is not available, try getting an ActiveXObject. Otherwise, use XMLHttpRequest
+    //if it is available
+    if (msie <= 8 && (!method.match(/^(get|post|head|put|delete|options)$/i) ||
+      !window.XMLHttpRequest)) {
+      return new window.ActiveXObject("Microsoft.XMLHTTP");
+    } else if (window.XMLHttpRequest) {
+      return new window.XMLHttpRequest();
+    }
 
+    throw minErr('$httpBackend')('noxhr', "This browser does not support XMLHttpRequest.");
+}
 
 /**
  * @ngdoc object
@@ -14875,7 +14956,20 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
       }
 
       if (responseType) {
-        xhr.responseType = responseType;
+        try {
+          xhr.responseType = responseType;
+        } catch (e) {
+          // WebKit added support for the json responseType value on 09/03/2013
+          // https://bugs.webkit.org/show_bug.cgi?id=73648. Versions of Safari prior to 7 are
+          // known to throw when setting the value "json" as the response type. Other older
+          // browsers implementing the responseType 
+          //
+          // The json response type can be ignored if not supported, because JSON payloads are
+          // parsed on the client-side regardless.
+          if (responseType !== 'json') {
+            throw e;
+          }
+        }
       }
 
       xhr.send(post || null);
@@ -14974,11 +15068,11 @@ var $interpolateMinErr = minErr('$interpolate');
     //demo.label//
 </div>
 </doc:source>
-<doc:scenario>
- it('should interpolate binding with custom symbols', function() {
-  expect(binding('demo.label')).toBe('This binding is brought you by // interpolation symbols.');
- });
-</doc:scenario>
+<doc:protractor>
+  it('should interpolate binding with custom symbols', function() {
+    expect(element(by.binding('demo.label')).getText()).toBe('This binding is brought you by // interpolation symbols.');
+  });
+</doc:protractor>
 </doc:example>
  */
 function $InterpolateProvider() {
@@ -16197,7 +16291,7 @@ function $LogProvider(){
    * @name ng.$logProvider#debugEnabled
    * @methodOf ng.$logProvider
    * @description
-   * @param {string=} flag enable or disable debug level messages
+   * @param {boolean=} flag enable or disable debug level messages
    * @returns {*} current value if used as getter or itself (chaining) if used as setter
    */
   this.debugEnabled = function(flag) {
@@ -17653,7 +17747,7 @@ function $ParseProvider() {
  *   constructed via `$q.reject`, the promise will be rejected instead.
  * - `reject(reason)` – rejects the derived promise with the `reason`. This is equivalent to
  *   resolving it with a rejection constructed via `$q.reject`.
- * - `notify(value)` - provides updates on the status of the promises execution. This may be called
+ * - `notify(value)` - provides updates on the status of the promise's execution. This may be called
  *   multiple times before the promise is either resolved or rejected.
  *
  * **Properties**
@@ -17803,7 +17897,7 @@ function qFactory(nextTick, exceptionHandler) {
 
 
       reject: function(reason) {
-        deferred.resolve(reject(reason));
+        deferred.resolve(createInternalRejectedPromise(reason));
       },
 
 
@@ -17960,6 +18054,12 @@ function qFactory(nextTick, exceptionHandler) {
    * @returns {Promise} Returns a promise that was already resolved as rejected with the `reason`.
    */
   var reject = function(reason) {
+    var result = defer();
+    result.reject(reason);
+    return result.promise;
+  };
+
+  var createInternalRejectedPromise = function(reason) {
     return {
       then: function(callback, errback) {
         var result = defer();
@@ -19020,7 +19120,7 @@ function $RootScopeProvider(){
        * onto the {@link ng.$exceptionHandler $exceptionHandler} service.
        *
        * @param {string} name Event name to emit.
-       * @param {...*} args Optional set of arguments which will be passed onto the event listeners.
+       * @param {...*} args Optional one or more arguments which will be passed onto the event listeners.
        * @return {Object} Event object (see {@link ng.$rootScope.Scope#methods_$on}).
        */
       $emit: function(name, args) {
@@ -19088,7 +19188,7 @@ function $RootScopeProvider(){
        * onto the {@link ng.$exceptionHandler $exceptionHandler} service.
        *
        * @param {string} name Event name to broadcast.
-       * @param {...*} args Optional set of arguments which will be passed onto the event listeners.
+       * @param {...*} args Optional one or more arguments which will be passed onto the event listeners.
        * @return {Object} Event object, see {@link ng.$rootScope.Scope#methods_$on}
        */
       $broadcast: function(name, args) {
@@ -19880,13 +19980,15 @@ function $SceDelegateProvider() {
 ]
 </file>
 
-<file name="scenario.js">
+<file name="protractorTest.js">
   describe('SCE doc demo', function() {
     it('should sanitize untrusted values', function() {
-      expect(element('.htmlComment').html()).toBe('<span>Is <i>anyone</i> reading this?</span>');
+      expect(element(by.css('.htmlComment')).getInnerHtml())
+          .toBe('<span>Is <i>anyone</i> reading this?</span>');
     });
+
     it('should NOT sanitize explicitly trusted values', function() {
-      expect(element('#explicitlyTrustedHtml').html()).toBe(
+      expect(element(by.id('explicitlyTrustedHtml')).getInnerHtml()).toBe(
           '<span onmouseover="this.textContent=&quot;Explicitly trusted HTML bypasses ' +
           'sanitization.&quot;">Hover over this text.</span>');
     });
@@ -20645,13 +20747,13 @@ function urlIsSameOrigin(requestUrl) {
          <button ng-click="doGreeting(greeting)">ALERT</button>
        </div>
      </doc:source>
-     <doc:scenario>
+     <doc:protractor>
       it('should display the greeting in the input box', function() {
-       input('greeting').enter('Hello, E2E Tests');
+       element(by.model('greeting')).sendKeys('Hello, E2E Tests');
        // If we click the button it will block the test runner
        // element(':button').click();
       });
-     </doc:scenario>
+     </doc:protractor>
    </doc:example>
  */
 function $WindowProvider(){
@@ -20860,35 +20962,47 @@ function $FilterProvider($provide) {
        Equality <input type="checkbox" ng-model="strict"><br>
        <table id="searchObjResults">
          <tr><th>Name</th><th>Phone</th></tr>
-         <tr ng-repeat="friend in friends | filter:search:strict">
-           <td>{{friend.name}}</td>
-           <td>{{friend.phone}}</td>
+         <tr ng-repeat="friendObj in friends | filter:search:strict">
+           <td>{{friendObj.name}}</td>
+           <td>{{friendObj.phone}}</td>
          </tr>
        </table>
      </doc:source>
-     <doc:scenario>
-       it('should search across all fields when filtering with a string', function() {
-         input('searchText').enter('m');
-         expect(repeater('#searchTextResults tr', 'friend in friends').column('friend.name')).
-           toEqual(['Mary', 'Mike', 'Adam']);
+     <doc:protractor>
+       var expectFriendNames = function(expectedNames, key) {
+         element.all(by.repeater(key + ' in friends').column(key + '.name')).then(function(arr) {
+           arr.forEach(function(wd, i) {
+             expect(wd.getText()).toMatch(expectedNames[i]);
+           });
+         });
+       };
 
-         input('searchText').enter('76');
-         expect(repeater('#searchTextResults tr', 'friend in friends').column('friend.name')).
-           toEqual(['John', 'Julie']);
+       it('should search across all fields when filtering with a string', function() {
+         var searchText = element(by.model('searchText'));
+         searchText.clear();
+         searchText.sendKeys('m');
+         expectFriendNames(['Mary', 'Mike', 'Adam'], 'friend');
+
+         searchText.clear();
+         searchText.sendKeys('76');
+         expectFriendNames(['John', 'Julie'], 'friend');
        });
 
        it('should search in specific fields when filtering with a predicate object', function() {
-         input('search.$').enter('i');
-         expect(repeater('#searchObjResults tr', 'friend in friends').column('friend.name')).
-           toEqual(['Mary', 'Mike', 'Julie', 'Juliette']);
+         var searchAny = element(by.model('search.$'));
+         searchAny.clear();
+         searchAny.sendKeys('i');
+         expectFriendNames(['Mary', 'Mike', 'Julie', 'Juliette'], 'friendObj');
        });
        it('should use a equal comparison when comparator is true', function() {
-         input('search.name').enter('Julie');
-         input('strict').check();
-         expect(repeater('#searchObjResults tr', 'friend in friends').column('friend.name')).
-           toEqual(['Julie']);
+         var searchName = element(by.model('search.name'));
+         var strict = element(by.model('strict'));
+         searchName.clear();
+         searchName.sendKeys('Julie');
+         strict.click();
+         expectFriendNames(['Julie'], 'friendObj');
        });
-     </doc:scenario>
+     </doc:protractor>
    </doc:example>
  */
 function filterFilter() {
@@ -20966,7 +21080,7 @@ function filterFilter() {
           (function(path) {
             if (typeof expression[path] == 'undefined') return;
             predicates.push(function(value) {
-              return search(path == '$' ? value : getter(value, path), expression[path]);
+              return search(path == '$' ? value : (value && value[path]), expression[path]);
             });
           })(key);
         }
@@ -21012,21 +21126,26 @@ function filterFilter() {
        </script>
        <div ng-controller="Ctrl">
          <input type="number" ng-model="amount"> <br>
-         default currency symbol ($): {{amount | currency}}<br>
-         custom currency identifier (USD$): {{amount | currency:"USD$"}}
+         default currency symbol ($): <span id="currency-default">{{amount | currency}}</span><br>
+         custom currency identifier (USD$): <span>{{amount | currency:"USD$"}}</span>
        </div>
      </doc:source>
-     <doc:scenario>
+     <doc:protractor>
        it('should init with 1234.56', function() {
-         expect(binding('amount | currency')).toBe('$1,234.56');
-         expect(binding('amount | currency:"USD$"')).toBe('USD$1,234.56');
+         expect(element(by.id('currency-default')).getText()).toBe('$1,234.56');
+         expect(element(by.binding('amount | currency:"USD$"')).getText()).toBe('USD$1,234.56');
        });
        it('should update', function() {
-         input('amount').enter('-1234');
-         expect(binding('amount | currency')).toBe('($1,234.00)');
-         expect(binding('amount | currency:"USD$"')).toBe('(USD$1,234.00)');
+         if (browser.params.browser == 'safari') {
+           // Safari does not understand the minus key. See
+           // https://github.com/angular/protractor/issues/481
+           return;
+         }
+         element(by.model('amount')).clear();
+         element(by.model('amount')).sendKeys('-1234');         expect(element(by.id('currency-default')).getText()).toBe('($1,234.00)');
+         expect(element(by.binding('amount | currency:"USD$"')).getText()).toBe('(USD$1,234.00)');
        });
-     </doc:scenario>
+     </doc:protractor>
    </doc:example>
  */
 currencyFilter.$inject = ['$locale'];
@@ -21065,25 +21184,26 @@ function currencyFilter($locale) {
        </script>
        <div ng-controller="Ctrl">
          Enter number: <input ng-model='val'><br>
-         Default formatting: {{val | number}}<br>
-         No fractions: {{val | number:0}}<br>
-         Negative number: {{-val | number:4}}
+         Default formatting: <span id='number-default'>{{val | number}}</span><br>
+         No fractions: <span>{{val | number:0}}</span><br>
+         Negative number: <span>{{-val | number:4}}</span>
        </div>
      </doc:source>
-     <doc:scenario>
+     <doc:protractor>
        it('should format numbers', function() {
-         expect(binding('val | number')).toBe('1,234.568');
-         expect(binding('val | number:0')).toBe('1,235');
-         expect(binding('-val | number:4')).toBe('-1,234.5679');
+         expect(element(by.id('number-default')).getText()).toBe('1,234.568');
+         expect(element(by.binding('val | number:0')).getText()).toBe('1,235');
+         expect(element(by.binding('-val | number:4')).getText()).toBe('-1,234.5679');
        });
 
        it('should update', function() {
-         input('val').enter('3374.333');
-         expect(binding('val | number')).toBe('3,374.333');
-         expect(binding('val | number:0')).toBe('3,374');
-         expect(binding('-val | number:4')).toBe('-3,374.3330');
-       });
-     </doc:scenario>
+         element(by.model('val')).clear();
+         element(by.model('val')).sendKeys('3374.333');
+         expect(element(by.id('number-default')).getText()).toBe('3,374.333');
+         expect(element(by.binding('val | number:0')).getText()).toBe('3,374');
+         expect(element(by.binding('-val | number:4')).getText()).toBe('-3,374.3330');
+      });
+     </doc:protractor>
    </doc:example>
  */
 
@@ -21313,22 +21433,22 @@ var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZE']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d+
    <doc:example>
      <doc:source>
        <span ng-non-bindable>{{1288323623006 | date:'medium'}}</span>:
-           {{1288323623006 | date:'medium'}}<br>
+           <span>{{1288323623006 | date:'medium'}}</span><br>
        <span ng-non-bindable>{{1288323623006 | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>:
-          {{1288323623006 | date:'yyyy-MM-dd HH:mm:ss Z'}}<br>
+          <span>{{1288323623006 | date:'yyyy-MM-dd HH:mm:ss Z'}}</span><br>
        <span ng-non-bindable>{{1288323623006 | date:'MM/dd/yyyy @ h:mma'}}</span>:
-          {{'1288323623006' | date:'MM/dd/yyyy @ h:mma'}}<br>
+          <span>{{'1288323623006' | date:'MM/dd/yyyy @ h:mma'}}</span><br>
      </doc:source>
-     <doc:scenario>
+     <doc:protractor>
        it('should format date', function() {
-         expect(binding("1288323623006 | date:'medium'")).
+         expect(element(by.binding("1288323623006 | date:'medium'")).getText()).
             toMatch(/Oct 2\d, 2010 \d{1,2}:\d{2}:\d{2} (AM|PM)/);
-         expect(binding("1288323623006 | date:'yyyy-MM-dd HH:mm:ss Z'")).
+         expect(element(by.binding("1288323623006 | date:'yyyy-MM-dd HH:mm:ss Z'")).getText()).
             toMatch(/2010\-10\-2\d \d{2}:\d{2}:\d{2} (\-|\+)?\d{4}/);
-         expect(binding("'1288323623006' | date:'MM/dd/yyyy @ h:mma'")).
+         expect(element(by.binding("'1288323623006' | date:'MM/dd/yyyy @ h:mma'")).getText()).
             toMatch(/10\/2\d\/2010 @ \d{1,2}:\d{2}(AM|PM)/);
        });
-     </doc:scenario>
+     </doc:protractor>
    </doc:example>
  */
 dateFilter.$inject = ['$locale'];
@@ -21427,11 +21547,11 @@ function dateFilter($locale) {
      <doc:source>
        <pre>{{ {'name':'value'} | json }}</pre>
      </doc:source>
-     <doc:scenario>
+     <doc:protractor>
        it('should jsonify filtered objects', function() {
-         expect(binding("{'name':'value'}")).toMatch(/\{\n  "name": ?"value"\n}/);
+         expect(element(by.binding("{'name':'value'}")).getText()).toMatch(/\{\n  "name": ?"value"\n}/);
        });
-     </doc:scenario>
+     </doc:protractor>
    </doc:example>
  *
  */
@@ -21499,28 +21619,37 @@ var uppercaseFilter = valueFn(uppercase);
          <p>Output letters: {{ letters | limitTo:letterLimit }}</p>
        </div>
      </doc:source>
-     <doc:scenario>
+     <doc:protractor>
+       var numLimitInput = element(by.model('numLimit'));
+       var letterLimitInput = element(by.model('letterLimit'));
+       var limitedNumbers = element(by.binding('numbers | limitTo:numLimit'));
+       var limitedLetters = element(by.binding('letters | limitTo:letterLimit'));
+
        it('should limit the number array to first three items', function() {
-         expect(element('.doc-example-live input[ng-model=numLimit]').val()).toBe('3');
-         expect(element('.doc-example-live input[ng-model=letterLimit]').val()).toBe('3');
-         expect(binding('numbers | limitTo:numLimit')).toEqual('[1,2,3]');
-         expect(binding('letters | limitTo:letterLimit')).toEqual('abc');
+         expect(numLimitInput.getAttribute('value')).toBe('3');
+         expect(letterLimitInput.getAttribute('value')).toBe('3');
+         expect(limitedNumbers.getText()).toEqual('Output numbers: [1,2,3]');
+         expect(limitedLetters.getText()).toEqual('Output letters: abc');
        });
 
        it('should update the output when -3 is entered', function() {
-         input('numLimit').enter(-3);
-         input('letterLimit').enter(-3);
-         expect(binding('numbers | limitTo:numLimit')).toEqual('[7,8,9]');
-         expect(binding('letters | limitTo:letterLimit')).toEqual('ghi');
+         numLimitInput.clear();
+         numLimitInput.sendKeys('-3');
+         letterLimitInput.clear();
+         letterLimitInput.sendKeys('-3');
+         expect(limitedNumbers.getText()).toEqual('Output numbers: [7,8,9]');
+         expect(limitedLetters.getText()).toEqual('Output letters: ghi');
        });
 
        it('should not exceed the maximum size of input array', function() {
-         input('numLimit').enter(100);
-         input('letterLimit').enter(100);
-         expect(binding('numbers | limitTo:numLimit')).toEqual('[1,2,3,4,5,6,7,8,9]');
-         expect(binding('letters | limitTo:letterLimit')).toEqual('abcdefghi');
+         numLimitInput.clear();
+         numLimitInput.sendKeys('100');
+         letterLimitInput.clear();
+         letterLimitInput.sendKeys('100');
+         expect(limitedNumbers.getText()).toEqual('Output numbers: [1,2,3,4,5,6,7,8,9]');
+         expect(limitedLetters.getText()).toEqual('Output letters: abcdefghi');
        });
-     </doc:scenario>
+     </doc:protractor>
    </doc:example>
  */
 function limitToFilter(){
@@ -21621,29 +21750,6 @@ function limitToFilter(){
          </table>
        </div>
      </doc:source>
-     <doc:scenario>
-       it('should be reverse ordered by aged', function() {
-         expect(binding('predicate')).toBe('-age');
-         expect(repeater('table.friend', 'friend in friends').column('friend.age')).
-           toEqual(['35', '29', '21', '19', '10']);
-         expect(repeater('table.friend', 'friend in friends').column('friend.name')).
-           toEqual(['Adam', 'Julie', 'Mike', 'Mary', 'John']);
-       });
-
-       it('should reorder the table when user selects different predicate', function() {
-         element('.doc-example-live a:contains("Name")').click();
-         expect(repeater('table.friend', 'friend in friends').column('friend.name')).
-           toEqual(['Adam', 'John', 'Julie', 'Mary', 'Mike']);
-         expect(repeater('table.friend', 'friend in friends').column('friend.age')).
-           toEqual(['35', '10', '29', '19', '21']);
-
-         element('.doc-example-live a:contains("Phone")').click();
-         expect(repeater('table.friend', 'friend in friends').column('friend.phone')).
-           toEqual(['555-9876', '555-8765', '555-5678', '555-4321', '555-1212']);
-         expect(repeater('table.friend', 'friend in friends').column('friend.name')).
-           toEqual(['Mary', 'Julie', 'Adam', 'Mike', 'John']);
-       });
-     </doc:scenario>
    </doc:example>
  */
 orderByFilter.$inject = ['$parse'];
@@ -21797,46 +21903,55 @@ var htmlAnchorDirective = valueFn({
         <a id="link-5" name="xxx" ng-click="value = 5">anchor</a> (no link)<br />
         <a id="link-6" ng-href="{{value}}">link</a> (link, change location)
       </doc:source>
-      <doc:scenario>
+      <doc:protractor>
         it('should execute ng-click but not reload when href without value', function() {
-          element('#link-1').click();
-          expect(input('value').val()).toEqual('1');
-          expect(element('#link-1').attr('href')).toBe("");
+          element(by.id('link-1')).click();
+          expect(element(by.model('value')).getAttribute('value')).toEqual('1');
+          expect(element(by.id('link-1')).getAttribute('href')).toBe('');
         });
 
         it('should execute ng-click but not reload when href empty string', function() {
-          element('#link-2').click();
-          expect(input('value').val()).toEqual('2');
-          expect(element('#link-2').attr('href')).toBe("");
+          element(by.id('link-2')).click();
+          expect(element(by.model('value')).getAttribute('value')).toEqual('2');
+          expect(element(by.id('link-2')).getAttribute('href')).toBe('');
         });
 
         it('should execute ng-click and change url when ng-href specified', function() {
-          expect(element('#link-3').attr('href')).toBe("/123");
+          expect(element(by.id('link-3')).getAttribute('href')).toMatch(/\/123$/);
 
-          element('#link-3').click();
-          expect(browser().window().path()).toEqual('/123');
+          element(by.id('link-3')).click();
+
+          // At this point, we navigate away from an Angular page, so we need
+          // to use browser.driver to get the base webdriver.
+
+          browser.wait(function() {
+            return browser.driver.getCurrentUrl().then(function(url) {
+              return url.match(/\/123$/);
+            });
+          }, 1000, 'page should navigate to /123');
         });
 
         it('should execute ng-click but not reload when href empty string and name specified', function() {
-          element('#link-4').click();
-          expect(input('value').val()).toEqual('4');
-          expect(element('#link-4').attr('href')).toBe('');
+          element(by.id('link-4')).click();
+          expect(element(by.model('value')).getAttribute('value')).toEqual('4');
+          expect(element(by.id('link-4')).getAttribute('href')).toBe('');
         });
 
         it('should execute ng-click but not reload when no href but name specified', function() {
-          element('#link-5').click();
-          expect(input('value').val()).toEqual('5');
-          expect(element('#link-5').attr('href')).toBe(undefined);
+          element(by.id('link-5')).click();
+          expect(element(by.model('value')).getAttribute('value')).toEqual('5');
+          expect(element(by.id('link-5')).getAttribute('href')).toBe(null);
         });
 
         it('should only change url when only ng-href', function() {
-          input('value').enter('6');
-          expect(element('#link-6').attr('href')).toBe('6');
+          element(by.model('value')).clear();
+          element(by.model('value')).sendKeys('6');
+          expect(element(by.id('link-6')).getAttribute('href')).toMatch(/\/6$/);
 
-          element('#link-6').click();
-          expect(browser().location().url()).toEqual('/6');
+          element(by.id('link-6')).click();
+          expect(browser.getCurrentUrl()).toMatch(/\/6$/);
         });
-      </doc:scenario>
+      </doc:protractor>
     </doc:example>
  */
 
@@ -21921,13 +22036,13 @@ var htmlAnchorDirective = valueFn({
         Click me to toggle: <input type="checkbox" ng-model="checked"><br/>
         <button ng-model="button" ng-disabled="checked">Button</button>
       </doc:source>
-      <doc:scenario>
+      <doc:protractor>
         it('should toggle button', function() {
-          expect(element('.doc-example-live :button').prop('disabled')).toBeFalsy();
-          input('checked').check();
-          expect(element('.doc-example-live :button').prop('disabled')).toBeTruthy();
+          expect(element(by.css('.doc-example-live button')).getAttribute('disabled')).toBeFalsy();
+          element(by.model('checked')).click();
+          expect(element(by.css('.doc-example-live button')).getAttribute('disabled')).toBeTruthy();
         });
-      </doc:scenario>
+      </doc:protractor>
     </doc:example>
  *
  * @element INPUT
@@ -21956,13 +22071,13 @@ var htmlAnchorDirective = valueFn({
         Check me to check both: <input type="checkbox" ng-model="master"><br/>
         <input id="checkSlave" type="checkbox" ng-checked="master">
       </doc:source>
-      <doc:scenario>
+      <doc:protractor>
         it('should check both checkBoxes', function() {
-          expect(element('.doc-example-live #checkSlave').prop('checked')).toBeFalsy();
-          input('master').check();
-          expect(element('.doc-example-live #checkSlave').prop('checked')).toBeTruthy();
+          expect(element(by.id('checkSlave')).getAttribute('checked')).toBeFalsy();
+          element(by.model('master')).click();
+          expect(element(by.id('checkSlave')).getAttribute('checked')).toBeTruthy();
         });
-      </doc:scenario>
+      </doc:protractor>
     </doc:example>
  *
  * @element INPUT
@@ -21991,13 +22106,13 @@ var htmlAnchorDirective = valueFn({
         Check me to make text readonly: <input type="checkbox" ng-model="checked"><br/>
         <input type="text" ng-readonly="checked" value="I'm Angular"/>
       </doc:source>
-      <doc:scenario>
+      <doc:protractor>
         it('should toggle readonly attr', function() {
-          expect(element('.doc-example-live :text').prop('readonly')).toBeFalsy();
-          input('checked').check();
-          expect(element('.doc-example-live :text').prop('readonly')).toBeTruthy();
+          expect(element(by.css('.doc-example-live [type="text"]')).getAttribute('readonly')).toBeFalsy();
+          element(by.model('checked')).click();
+          expect(element(by.css('.doc-example-live [type="text"]')).getAttribute('readonly')).toBeTruthy();
         });
-      </doc:scenario>
+      </doc:protractor>
     </doc:example>
  *
  * @element INPUT
@@ -22030,13 +22145,13 @@ var htmlAnchorDirective = valueFn({
           <option id="greet" ng-selected="selected">Greetings!</option>
         </select>
       </doc:source>
-      <doc:scenario>
+      <doc:protractor>
         it('should select Greetings!', function() {
-          expect(element('.doc-example-live #greet').prop('selected')).toBeFalsy();
-          input('selected').check();
-          expect(element('.doc-example-live #greet').prop('selected')).toBeTruthy();
+          expect(element(by.id('greet')).getAttribute('selected')).toBeFalsy();
+          element(by.model('selected')).click();
+          expect(element(by.id('greet')).getAttribute('selected')).toBeTruthy();
         });
-      </doc:scenario>
+      </doc:protractor>
     </doc:example>
  *
  * @element OPTION
@@ -22066,13 +22181,13 @@ var htmlAnchorDirective = valueFn({
             <summary>Show/Hide me</summary>
          </details>
        </doc:source>
-       <doc:scenario>
+       <doc:protractor>
          it('should toggle open', function() {
-           expect(element('#details').prop('open')).toBeFalsy();
-           input('open').check();
-           expect(element('#details').prop('open')).toBeTruthy();
+           expect(element(by.id('details')).getAttribute('open')).toBeFalsy();
+           element(by.model('open')).click();
+           expect(element(by.id('details')).getAttribute('open')).toBeTruthy();
          });
-       </doc:scenario>
+       </doc:protractor>
      </doc:example>
  *
  * @element DETAILS
@@ -22431,18 +22546,27 @@ function FormController(element, attrs) {
          <tt>myForm.$error.required = {{!!myForm.$error.required}}</tt><br>
         </form>
       </doc:source>
-      <doc:scenario>
+      <doc:protractor>
         it('should initialize to model', function() {
-         expect(binding('userType')).toEqual('guest');
-         expect(binding('myForm.input.$valid')).toEqual('true');
+          var userType = element(by.binding('userType'));
+          var valid = element(by.binding('myForm.input.$valid'));
+
+          expect(userType.getText()).toContain('guest');
+          expect(valid.getText()).toContain('true');
         });
 
         it('should be invalid if empty', function() {
-         input('userType').enter('');
-         expect(binding('userType')).toEqual('');
-         expect(binding('myForm.input.$valid')).toEqual('false');
+          var userType = element(by.binding('userType'));
+          var valid = element(by.binding('myForm.input.$valid'));
+          var userInput = element(by.model('userType'));
+
+          userInput.clear();
+          userInput.sendKeys('');
+
+          expect(userType.getText()).toEqual('userType =');
+          expect(valid.getText()).toContain('false');
         });
-      </doc:scenario>
+      </doc:protractor>
     </doc:example>
  */
 var formDirectiveFactory = function(isNgForm) {
@@ -22567,29 +22691,31 @@ var inputType = {
            <tt>myForm.$error.required = {{!!myForm.$error.required}}</tt><br/>
           </form>
         </doc:source>
-        <doc:scenario>
+        <doc:protractor>
+          var text = element(by.binding('text'));
+          var valid = element(by.binding('myForm.input.$valid'));
+          var input = element(by.model('text'));
+
           it('should initialize to model', function() {
-            expect(binding('text')).toEqual('guest');
-            expect(binding('myForm.input.$valid')).toEqual('true');
+            expect(text.getText()).toContain('guest');
+            expect(valid.getText()).toContain('true');
           });
 
           it('should be invalid if empty', function() {
-            input('text').enter('');
-            expect(binding('text')).toEqual('');
-            expect(binding('myForm.input.$valid')).toEqual('false');
+            input.clear();
+            input.sendKeys('');
+
+            expect(text.getText()).toEqual('text =');
+            expect(valid.getText()).toContain('false');
           });
 
           it('should be invalid if multi word', function() {
-            input('text').enter('hello world');
-            expect(binding('myForm.input.$valid')).toEqual('false');
-          });
+            input.clear();
+            input.sendKeys('hello world');
 
-          it('should not be trimmed', function() {
-            input('text').enter('untrimmed ');
-            expect(binding('text')).toEqual('untrimmed ');
-            expect(binding('myForm.input.$valid')).toEqual('true');
+            expect(valid.getText()).toContain('false');
           });
-        </doc:scenario>
+        </doc:protractor>
       </doc:example>
    */
   'text': textInputType,
@@ -22643,24 +22769,30 @@ var inputType = {
            <tt>myForm.$error.required = {{!!myForm.$error.required}}</tt><br/>
           </form>
         </doc:source>
-        <doc:scenario>
+        <doc:protractor>
+          var value = element(by.binding('value'));
+          var valid = element(by.binding('myForm.input.$valid'));
+          var input = element(by.model('value'));
+
           it('should initialize to model', function() {
-           expect(binding('value')).toEqual('12');
-           expect(binding('myForm.input.$valid')).toEqual('true');
+            expect(value.getText()).toContain('12');
+            expect(valid.getText()).toContain('true');
           });
 
           it('should be invalid if empty', function() {
-           input('value').enter('');
-           expect(binding('value')).toEqual('');
-           expect(binding('myForm.input.$valid')).toEqual('false');
+            input.clear();
+            input.sendKeys('');
+            expect(value.getText()).toEqual('value =');
+            expect(valid.getText()).toContain('false');
           });
 
           it('should be invalid if over max', function() {
-           input('value').enter('123');
-           expect(binding('value')).toEqual('');
-           expect(binding('myForm.input.$valid')).toEqual('false');
+            input.clear();
+            input.sendKeys('123');
+            expect(value.getText()).toEqual('value =');
+            expect(valid.getText()).toContain('false');
           });
-        </doc:scenario>
+        </doc:protractor>
       </doc:example>
    */
   'number': numberInputType,
@@ -22712,23 +22844,31 @@ var inputType = {
            <tt>myForm.$error.url = {{!!myForm.$error.url}}</tt><br/>
           </form>
         </doc:source>
-        <doc:scenario>
+        <doc:protractor>
+          var text = element(by.binding('text'));
+          var valid = element(by.binding('myForm.input.$valid'));
+          var input = element(by.model('text'));
+
           it('should initialize to model', function() {
-            expect(binding('text')).toEqual('http://google.com');
-            expect(binding('myForm.input.$valid')).toEqual('true');
+            expect(text.getText()).toContain('http://google.com');
+            expect(valid.getText()).toContain('true');
           });
 
           it('should be invalid if empty', function() {
-            input('text').enter('');
-            expect(binding('text')).toEqual('');
-            expect(binding('myForm.input.$valid')).toEqual('false');
+            input.clear();
+            input.sendKeys('');
+
+            expect(text.getText()).toEqual('text =');
+            expect(valid.getText()).toContain('false');
           });
 
           it('should be invalid if not url', function() {
-            input('text').enter('xxx');
-            expect(binding('myForm.input.$valid')).toEqual('false');
+            input.clear();
+            input.sendKeys('box');
+
+            expect(valid.getText()).toContain('false');
           });
-        </doc:scenario>
+        </doc:protractor>
       </doc:example>
    */
   'url': urlInputType,
@@ -22780,23 +22920,30 @@ var inputType = {
              <tt>myForm.$error.email = {{!!myForm.$error.email}}</tt><br/>
            </form>
         </doc:source>
-        <doc:scenario>
+        <doc:protractor>
+          var text = element(by.binding('text'));
+          var valid = element(by.binding('myForm.input.$valid'));
+          var input = element(by.model('text'));
+          
           it('should initialize to model', function() {
-            expect(binding('text')).toEqual('me@example.com');
-            expect(binding('myForm.input.$valid')).toEqual('true');
+            expect(text.getText()).toContain('me@example.com');
+            expect(valid.getText()).toContain('true');
           });
 
           it('should be invalid if empty', function() {
-            input('text').enter('');
-            expect(binding('text')).toEqual('');
-            expect(binding('myForm.input.$valid')).toEqual('false');
+            input.clear();
+            input.sendKeys('');
+            expect(text.getText()).toEqual('text =');
+            expect(valid.getText()).toContain('false');
           });
 
           it('should be invalid if not email', function() {
-            input('text').enter('xxx');
-            expect(binding('myForm.input.$valid')).toEqual('false');
+            input.clear();
+            input.sendKeys('xxx');
+
+            expect(valid.getText()).toContain('false');
           });
-        </doc:scenario>
+        </doc:protractor>
       </doc:example>
    */
   'email': emailInputType,
@@ -22837,14 +22984,17 @@ var inputType = {
           </form>
           Note that `ng-value="specialValue"` sets radio item's value to be the value of `$scope.specialValue`.
         </doc:source>
-        <doc:scenario>
+        <doc:protractor>
           it('should change state', function() {
-            expect(binding('color')).toEqual('"blue"');
+            var color = element(by.binding('color'));
 
-            input('color').select('red');
-            expect(binding('color')).toEqual('"red"');
+            expect(color.getText()).toContain('blue');
+
+            element.all(by.model('color')).get(0).click();
+
+            expect(color.getText()).toContain('red');
           });
-        </doc:scenario>
+        </doc:protractor>
       </doc:example>
    */
   'radio': radioInputType,
@@ -22881,17 +23031,21 @@ var inputType = {
            <tt>value2 = {{value2}}</tt><br/>
           </form>
         </doc:source>
-        <doc:scenario>
+        <doc:protractor>
           it('should change state', function() {
-            expect(binding('value1')).toEqual('true');
-            expect(binding('value2')).toEqual('YES');
+            var value1 = element(by.binding('value1'));
+            var value2 = element(by.binding('value2'));
 
-            input('value1').check();
-            input('value2').check();
-            expect(binding('value1')).toEqual('false');
-            expect(binding('value2')).toEqual('NO');
+            expect(value1.getText()).toContain('true');
+            expect(value2.getText()).toContain('YES');
+            
+            element(by.model('value1')).click();
+            element(by.model('value2')).click();
+
+            expect(value1.getText()).toContain('false');
+            expect(value2.getText()).toContain('NO');
           });
-        </doc:scenario>
+        </doc:protractor>
       </doc:example>
    */
   'checkbox': checkboxInputType,
@@ -23244,44 +23398,59 @@ function checkboxInputType(scope, element, attr, ctrl) {
          <tt>myForm.$error.maxlength = {{!!myForm.$error.maxlength}}</tt><br>
        </div>
       </doc:source>
-      <doc:scenario>
+      <doc:protractor>
+        var user = element(by.binding('{{user}}'));
+        var userNameValid = element(by.binding('myForm.userName.$valid'));
+        var lastNameValid = element(by.binding('myForm.lastName.$valid'));
+        var lastNameError = element(by.binding('myForm.lastName.$error'));
+        var formValid = element(by.binding('myForm.$valid'));
+        var userNameInput = element(by.model('user.name'));
+        var userLastInput = element(by.model('user.last'));
+
         it('should initialize to model', function() {
-          expect(binding('user')).toEqual('{"name":"guest","last":"visitor"}');
-          expect(binding('myForm.userName.$valid')).toEqual('true');
-          expect(binding('myForm.$valid')).toEqual('true');
+          expect(user.getText()).toContain('{"name":"guest","last":"visitor"}');
+          expect(userNameValid.getText()).toContain('true');
+          expect(formValid.getText()).toContain('true');
         });
 
         it('should be invalid if empty when required', function() {
-          input('user.name').enter('');
-          expect(binding('user')).toEqual('{"last":"visitor"}');
-          expect(binding('myForm.userName.$valid')).toEqual('false');
-          expect(binding('myForm.$valid')).toEqual('false');
+          userNameInput.clear();
+          userNameInput.sendKeys('');
+
+          expect(user.getText()).toContain('{"last":"visitor"}');
+          expect(userNameValid.getText()).toContain('false');
+          expect(formValid.getText()).toContain('false');
         });
 
         it('should be valid if empty when min length is set', function() {
-          input('user.last').enter('');
-          expect(binding('user')).toEqual('{"name":"guest","last":""}');
-          expect(binding('myForm.lastName.$valid')).toEqual('true');
-          expect(binding('myForm.$valid')).toEqual('true');
+          userLastInput.clear();
+          userLastInput.sendKeys('');
+
+          expect(user.getText()).toContain('{"name":"guest","last":""}');
+          expect(lastNameValid.getText()).toContain('true');
+          expect(formValid.getText()).toContain('true');
         });
 
         it('should be invalid if less than required min length', function() {
-          input('user.last').enter('xx');
-          expect(binding('user')).toEqual('{"name":"guest"}');
-          expect(binding('myForm.lastName.$valid')).toEqual('false');
-          expect(binding('myForm.lastName.$error')).toMatch(/minlength/);
-          expect(binding('myForm.$valid')).toEqual('false');
+          userLastInput.clear();
+          userLastInput.sendKeys('xx');
+
+          expect(user.getText()).toContain('{"name":"guest"}');
+          expect(lastNameValid.getText()).toContain('false');
+          expect(lastNameError.getText()).toContain('minlength');
+          expect(formValid.getText()).toContain('false');
         });
 
         it('should be invalid if longer than max length', function() {
-          input('user.last').enter('some ridiculously long name');
-          expect(binding('user'))
-            .toEqual('{"name":"guest"}');
-          expect(binding('myForm.lastName.$valid')).toEqual('false');
-          expect(binding('myForm.lastName.$error')).toMatch(/maxlength/);
-          expect(binding('myForm.$valid')).toEqual('false');
+          userLastInput.clear();
+          userLastInput.sendKeys('some ridiculously long name');
+
+          expect(user.getText()).toContain('{"name":"guest"}');
+          expect(lastNameValid.getText()).toContain('false');
+          expect(lastNameError.getText()).toContain('maxlength');
+          expect(formValid.getText()).toContain('false');
         });
-      </doc:scenario>
+      </doc:protractor>
     </doc:example>
  */
 var inputDirective = ['$browser', '$sniffer', function($browser, $sniffer) {
@@ -23413,14 +23582,23 @@ var VALID_CLASS = 'ng-valid',
        <textarea ng-model="userContent"></textarea>
       </form>
     </file>
-    <file name="scenario.js">
+    <file name="protractorTest.js">
       it('should data-bind and become invalid', function() {
-        var contentEditable = element('[contenteditable]');
+        if (browser.params.browser = 'safari') {
+          // SafariDriver can't handle contenteditable.
+          return;
+        };
+        var contentEditable = element(by.css('.doc-example-live [contenteditable]'));
 
-        expect(contentEditable.text()).toEqual('Change me!');
-        input('userContent').enter('');
-        expect(contentEditable.text()).toEqual('');
-        expect(contentEditable.prop('className')).toMatch(/ng-invalid-required/);
+        expect(contentEditable.getText()).toEqual('Change me!');
+
+        // Firefox driver doesn't trigger the proper events on 'clear', so do this hack
+        contentEditable.click();
+        contentEditable.sendKeys(protractor.Key.chord(protractor.Key.COMMAND, "a"));
+        contentEditable.sendKeys(protractor.Key.BACK_SPACE);
+
+        expect(contentEditable.getText()).toEqual('');
+        expect(contentEditable.getAttribute('class')).toMatch(/ng-invalid-required/);
       });
     </file>
  * </example>
@@ -23727,24 +23905,30 @@ var ngModelDirective = function() {
  *       <input type="checkbox" ng-model="confirmed" ng-change="change()" id="ng-change-example1" />
  *       <input type="checkbox" ng-model="confirmed" id="ng-change-example2" />
  *       <label for="ng-change-example2">Confirmed</label><br />
- *       debug = {{confirmed}}<br />
- *       counter = {{counter}}
+ *       <tt>debug = {{confirmed}}</tt><br/>
+ *       <tt>counter = {{counter}}</tt><br/>
  *     </div>
  *   </doc:source>
- *   <doc:scenario>
+ *   <doc:protractor>
+ *     var counter = element(by.binding('counter'));
+ *     var debug = element(by.binding('confirmed'));
+ *
  *     it('should evaluate the expression if changing from view', function() {
- *       expect(binding('counter')).toEqual('0');
- *       element('#ng-change-example1').click();
- *       expect(binding('counter')).toEqual('1');
- *       expect(binding('confirmed')).toEqual('true');
+ *       expect(counter.getText()).toContain('0');
+ *
+ *       element(by.id('ng-change-example1')).click();
+ *
+ *       expect(counter.getText()).toContain('1');
+ *       expect(debug.getText()).toContain('true');
  *     });
  *
  *     it('should not evaluate the expression if changing from model', function() {
- *       element('#ng-change-example2').click();
- *       expect(binding('counter')).toEqual('0');
- *       expect(binding('confirmed')).toEqual('true');
+ *       element(by.id('ng-change-example2')).click();
+
+ *       expect(counter.getText()).toContain('0');
+ *       expect(debug.getText()).toContain('true');
  *     });
- *   </doc:scenario>
+ *   </doc:protractor>
  * </doc:example>
  */
 var ngChangeDirective = valueFn({
@@ -23817,20 +24001,26 @@ var requiredDirective = function() {
          <tt>myForm.$error.required = {{!!myForm.$error.required}}</tt><br/>
         </form>
       </doc:source>
-      <doc:scenario>
+      <doc:protractor>
+        var listInput = element(by.model('names'));
+        var names = element(by.binding('{{names}}'));
+        var valid = element(by.binding('myForm.namesInput.$valid'));
+        var error = element(by.css('span.error'));
+
         it('should initialize to model', function() {
-          expect(binding('names')).toEqual('["igor","misko","vojta"]');
-          expect(binding('myForm.namesInput.$valid')).toEqual('true');
-          expect(element('span.error').css('display')).toBe('none');
+          expect(names.getText()).toContain('["igor","misko","vojta"]');
+          expect(valid.getText()).toContain('true');
+          expect(error.getCssValue('display')).toBe('none');
         });
 
         it('should be invalid if empty', function() {
-          input('names').enter('');
-          expect(binding('names')).toEqual('');
-          expect(binding('myForm.namesInput.$valid')).toEqual('false');
-          expect(element('span.error').css('display')).not().toBe('none');
-        });
-      </doc:scenario>
+          listInput.clear();
+          listInput.sendKeys('');
+
+          expect(names.getText()).toContain('');
+          expect(valid.getText()).toContain('false');
+          expect(error.getCssValue('display')).not.toBe('none');        });
+      </doc:protractor>
     </doc:example>
  */
 var ngListDirective = function() {
@@ -23912,15 +24102,17 @@ var CONSTANT_VALUE_REGEXP = /^(true|false|\d+)$/;
           <div>You chose {{my.favorite}}</div>
         </form>
       </doc:source>
-      <doc:scenario>
+      <doc:protractor>
+        var favorite = element(by.binding('my.favorite'));
+
         it('should initialize to model', function() {
-          expect(binding('my.favorite')).toEqual('unicorns');
+          expect(favorite.getText()).toContain('unicorns');
         });
         it('should bind the values to the inputs', function() {
-          input('my.favorite').select('pizza');
-          expect(binding('my.favorite')).toEqual('pizza');
+          element.all(by.model('my.favorite')).get(0).click();
+          expect(favorite.getText()).toContain('pizza');
         });
-      </doc:scenario>
+      </doc:protractor>
     </doc:example>
  */
 var ngValueDirective = function() {
@@ -23980,13 +24172,17 @@ var ngValueDirective = function() {
          Hello <span ng-bind="name"></span>!
        </div>
      </doc:source>
-     <doc:scenario>
+     <doc:protractor>
        it('should check ng-bind', function() {
-         expect(using('.doc-example-live').binding('name')).toBe('Whirled');
-         using('.doc-example-live').input('name').enter('world');
-         expect(using('.doc-example-live').binding('name')).toBe('world');
+         var exampleContainer = $('.doc-example-live');
+         var nameInput = element(by.model('name'));
+
+         expect(exampleContainer.findElement(by.binding('name')).getText()).toBe('Whirled');
+         nameInput.clear();
+         nameInput.sendKeys('world');
+         expect(exampleContainer.findElement(by.binding('name')).getText()).toBe('world');
        });
-     </doc:scenario>
+     </doc:protractor>
    </doc:example>
  */
 var ngBindDirective = ngDirective(function(scope, element, attr) {
@@ -24032,20 +24228,22 @@ var ngBindDirective = ngDirective(function(scope, element, attr) {
         <pre ng-bind-template="{{salutation}} {{name}}!"></pre>
        </div>
      </doc:source>
-     <doc:scenario>
+     <doc:protractor>
        it('should check ng-bind', function() {
-         expect(using('.doc-example-live').binding('salutation')).
-           toBe('Hello');
-         expect(using('.doc-example-live').binding('name')).
-           toBe('World');
-         using('.doc-example-live').input('salutation').enter('Greetings');
-         using('.doc-example-live').input('name').enter('user');
-         expect(using('.doc-example-live').binding('salutation')).
-           toBe('Greetings');
-         expect(using('.doc-example-live').binding('name')).
-           toBe('user');
+         var salutationElem = element(by.binding('salutation'));
+         var salutationInput = element(by.model('salutation'));
+         var nameInput = element(by.model('name'));
+
+         expect(salutationElem.getText()).toBe('Hello World!');
+
+         salutationInput.clear();
+         salutationInput.sendKeys('Greetings');
+         nameInput.clear();
+         nameInput.sendKeys('user');
+
+         expect(salutationElem.getText()).toBe('Greetings user!');
        });
-     </doc:scenario>
+     </doc:protractor>
    </doc:example>
  */
 var ngBindTemplateDirective = ['$interpolate', function($interpolate) {
@@ -24098,12 +24296,10 @@ var ngBindTemplateDirective = ['$interpolate', function($interpolate) {
        }]);
      </file>
 
-     <file name="scenario.js">
+     <file name="protractorTest.js">
        it('should check ng-bind-html', function() {
-         expect(using('.doc-example-live').binding('myHTML')).
-           toBe(
-           'I am an <code>HTML</code>string with <a href="#">links!</a> and other <em>stuff</em>'
-           );
+         expect(element(by.binding('myHTML')).getText()).toBe(
+             'I am an HTMLstring with links! and other stuff');
        });
      </file>
    </example>
@@ -24235,31 +24431,34 @@ function classDirective(name, selector) {
            color: red;
        }
      </file>
-     <file name="scenario.js">
+     <file name="protractorTest.js">
+       var ps = element.all(by.css('.doc-example-live p'));
+
        it('should let you toggle the class', function() {
 
-         expect(element('.doc-example-live p:first').prop('className')).not().toMatch(/bold/);
-         expect(element('.doc-example-live p:first').prop('className')).not().toMatch(/red/);
+         expect(ps.first().getAttribute('class')).not.toMatch(/bold/);
+         expect(ps.first().getAttribute('class')).not.toMatch(/red/);
 
-         input('important').check();
-         expect(element('.doc-example-live p:first').prop('className')).toMatch(/bold/);
+         element(by.model('important')).click();
+         expect(ps.first().getAttribute('class')).toMatch(/bold/);
 
-         input('error').check();
-         expect(element('.doc-example-live p:first').prop('className')).toMatch(/red/);
+         element(by.model('error')).click();
+         expect(ps.first().getAttribute('class')).toMatch(/red/);
        });
 
        it('should let you toggle string example', function() {
-         expect(element('.doc-example-live p:nth-of-type(2)').prop('className')).toBe('');
-         input('style').enter('red');
-         expect(element('.doc-example-live p:nth-of-type(2)').prop('className')).toBe('red');
+         expect(ps.get(1).getAttribute('class')).toBe('');
+         element(by.model('style')).clear();
+         element(by.model('style')).sendKeys('red');
+         expect(ps.get(1).getAttribute('class')).toBe('red');
        });
 
        it('array example should have 3 classes', function() {
-         expect(element('.doc-example-live p:last').prop('className')).toBe('');
-         input('style1').enter('bold');
-         input('style2').enter('strike');
-         input('style3').enter('red');
-         expect(element('.doc-example-live p:last').prop('className')).toBe('bold strike red');
+         expect(ps.last().getAttribute('class')).toBe('');
+         element(by.model('style1')).sendKeys('bold');
+         element(by.model('style2')).sendKeys('strike');
+         element(by.model('style3')).sendKeys('red');
+         expect(ps.last().getAttribute('class')).toBe('bold strike red');
        });
      </file>
    </example>
@@ -24270,8 +24469,8 @@ function classDirective(name, selector) {
 
    <example animations="true">
      <file name="index.html">
-      <input type="button" value="set" ng-click="myVar='my-class'">
-      <input type="button" value="clear" ng-click="myVar=''">
+      <input id="setbtn" type="button" value="set" ng-click="myVar='my-class'">
+      <input id="clearbtn" type="button" value="clear" ng-click="myVar=''">
       <br>
       <span class="base-class" ng-class="myVar">Sample Text</span>
      </file>
@@ -24286,19 +24485,19 @@ function classDirective(name, selector) {
          font-size:3em;
        }
      </file>
-     <file name="scenario.js">
+     <file name="protractorTest.js">
        it('should check ng-class', function() {
-         expect(element('.doc-example-live span').prop('className')).not().
+         expect(element(by.css('.base-class')).getAttribute('class')).not.
            toMatch(/my-class/);
 
-         using('.doc-example-live').element(':button:first').click();
+         element(by.id('setbtn')).click();
 
-         expect(element('.doc-example-live span').prop('className')).
+         expect(element(by.css('.base-class')).getAttribute('class')).
            toMatch(/my-class/);
 
-         using('.doc-example-live').element(':button:last').click();
+         element(by.id('clearbtn')).click();
 
-         expect(element('.doc-example-live span').prop('className')).not().
+         expect(element(by.css('.base-class')).getAttribute('class')).not.
            toMatch(/my-class/);
        });
      </file>
@@ -24350,11 +24549,11 @@ var ngClassDirective = classDirective('', true);
          color: blue;
        }
      </file>
-     <file name="scenario.js">
+     <file name="protractorTest.js">
        it('should check ng-class-odd and ng-class-even', function() {
-         expect(element('.doc-example-live li:first span').prop('className')).
+         expect(element(by.repeater('name in names').row(0).column('name')).getAttribute('class')).
            toMatch(/odd/);
-         expect(element('.doc-example-live li:last span').prop('className')).
+         expect(element(by.repeater('name in names').row(1).column('name')).getAttribute('class')).
            toMatch(/even/);
        });
      </file>
@@ -24398,11 +24597,11 @@ var ngClassOddDirective = classDirective('Odd', 0);
          color: blue;
        }
      </file>
-     <file name="scenario.js">
+     <file name="protractorTest.js">
        it('should check ng-class-odd and ng-class-even', function() {
-         expect(element('.doc-example-live li:first span').prop('className')).
+         expect(element(by.repeater('name in names').row(0).column('name')).getAttribute('class')).
            toMatch(/odd/);
-         expect(element('.doc-example-live li:last span').prop('className')).
+         expect(element(by.repeater('name in names').row(1).column('name')).getAttribute('class')).
            toMatch(/even/);
        });
      </file>
@@ -24455,14 +24654,14 @@ var ngClassEvenDirective = classDirective('Even', 1);
         <div id="template1" ng-cloak>{{ 'hello' }}</div>
         <div id="template2" ng-cloak class="ng-cloak">{{ 'hello IE7' }}</div>
      </doc:source>
-     <doc:scenario>
+     <doc:protractor>
        it('should remove the template directive and css class', function() {
-         expect(element('.doc-example-live #template1').attr('ng-cloak')).
-           not().toBeDefined();
-         expect(element('.doc-example-live #template2').attr('ng-cloak')).
-           not().toBeDefined();
+         expect($('.doc-example-live #template1').getAttribute('ng-cloak')).
+           toBeNull();
+         expect($('.doc-example-live #template2').getAttribute('ng-cloak')).
+           toBeNull();
        });
-     </doc:scenario>
+     </doc:protractor>
    </doc:example>
  *
  */
@@ -24555,22 +24754,36 @@ var ngCloakDirective = ngDirective({
        </ul>
       </div>
      </doc:source>
-     <doc:scenario>
+     <doc:protractor>
        it('should check controller as', function() {
-         expect(element('#ctrl-as-exmpl>:input').val()).toBe('John Smith');
-         expect(element('#ctrl-as-exmpl li:nth-child(1) input').val())
-           .toBe('408 555 1212');
-         expect(element('#ctrl-as-exmpl li:nth-child(2) input').val())
-           .toBe('john.smith@example.org');
+         var container = element(by.id('ctrl-as-exmpl'));
 
-         element('#ctrl-as-exmpl li:first a:contains("clear")').click();
-         expect(element('#ctrl-as-exmpl li:first input').val()).toBe('');
+         expect(container.findElement(by.model('settings.name'))
+             .getAttribute('value')).toBe('John Smith');
 
-         element('#ctrl-as-exmpl li:last a:contains("add")').click();
-         expect(element('#ctrl-as-exmpl li:nth-child(3) input').val())
-           .toBe('yourname@example.org');
+         var firstRepeat =
+             container.findElement(by.repeater('contact in settings.contacts').row(0));
+         var secondRepeat =
+             container.findElement(by.repeater('contact in settings.contacts').row(1));
+
+         expect(firstRepeat.findElement(by.model('contact.value')).getAttribute('value'))
+             .toBe('408 555 1212');
+         expect(secondRepeat.findElement(by.model('contact.value')).getAttribute('value'))
+             .toBe('john.smith@example.org');
+
+         firstRepeat.findElement(by.linkText('clear')).click()
+
+         expect(firstRepeat.findElement(by.model('contact.value')).getAttribute('value'))
+             .toBe('');
+
+         container.findElement(by.linkText('add')).click();
+
+         expect(container.findElement(by.repeater('contact in settings.contacts').row(2))
+             .findElement(by.model('contact.value'))
+             .getAttribute('value'))
+             .toBe('yourname@example.org');
        });
-     </doc:scenario>
+     </doc:protractor>
    </doc:example>
     <doc:example>
      <doc:source>
@@ -24618,22 +24831,36 @@ var ngCloakDirective = ngDirective({
        </ul>
       </div>
      </doc:source>
-     <doc:scenario>
+     <doc:protractor>
        it('should check controller', function() {
-         expect(element('#ctrl-exmpl>:input').val()).toBe('John Smith');
-         expect(element('#ctrl-exmpl li:nth-child(1) input').val())
-           .toBe('408 555 1212');
-         expect(element('#ctrl-exmpl li:nth-child(2) input').val())
-           .toBe('john.smith@example.org');
+         var container = element(by.id('ctrl-exmpl'));
 
-         element('#ctrl-exmpl li:first a:contains("clear")').click();
-         expect(element('#ctrl-exmpl li:first input').val()).toBe('');
+         expect(container.findElement(by.model('name'))
+             .getAttribute('value')).toBe('John Smith');
 
-         element('#ctrl-exmpl li:last a:contains("add")').click();
-         expect(element('#ctrl-exmpl li:nth-child(3) input').val())
-           .toBe('yourname@example.org');
+         var firstRepeat =
+             container.findElement(by.repeater('contact in contacts').row(0));
+         var secondRepeat =
+             container.findElement(by.repeater('contact in contacts').row(1));
+
+         expect(firstRepeat.findElement(by.model('contact.value')).getAttribute('value'))
+             .toBe('408 555 1212');
+         expect(secondRepeat.findElement(by.model('contact.value')).getAttribute('value'))
+             .toBe('john.smith@example.org');
+
+         firstRepeat.findElement(by.linkText('clear')).click()
+
+         expect(firstRepeat.findElement(by.model('contact.value')).getAttribute('value'))
+             .toBe('');
+
+         container.findElement(by.linkText('add')).click();
+
+         expect(container.findElement(by.repeater('contact in contacts').row(2))
+             .findElement(by.model('contact.value'))
+             .getAttribute('value'))
+             .toBe('yourname@example.org');
        });
-     </doc:scenario>
+     </doc:protractor>
    </doc:example>
 
  */
@@ -25014,20 +25241,20 @@ forEach(
         <pre>list={{list}}</pre>
       </form>
      </doc:source>
-     <doc:scenario>
+     <doc:protractor>
        it('should check ng-submit', function() {
-         expect(binding('list')).toBe('[]');
-         element('.doc-example-live #submit').click();
-         expect(binding('list')).toBe('["hello"]');
-         expect(input('text').val()).toBe('');
+         expect(element(by.binding('list')).getText()).toBe('list=[]');
+         element(by.css('.doc-example-live #submit')).click();
+         expect(element(by.binding('list')).getText()).toContain('hello');
+         expect(element(by.input('text')).getAttribute('value')).toBe('');
        });
        it('should ignore empty strings', function() {
-         expect(binding('list')).toBe('[]');
-         element('.doc-example-live #submit').click();
-         element('.doc-example-live #submit').click();
-         expect(binding('list')).toBe('["hello"]');
-       });
-     </doc:scenario>
+         expect(element(by.binding('list')).getText()).toBe('list=[]');
+         element(by.css('.doc-example-live #submit')).click();
+         element(by.css('.doc-example-live #submit')).click();
+         expect(element(by.binding('list')).getText()).toContain('hello');
+        });
+     </doc:protractor>
    </doc:example>
  */
 
@@ -25354,19 +25581,33 @@ var ngIfDirective = ['$animate', function($animate) {
         top:50px;
       }
     </file>
-    <file name="scenario.js">
+    <file name="protractorTest.js">
+      var templateSelect = element(by.model('template'));
+      var includeElem = element(by.css('.doc-example-live [ng-include]'));
+
       it('should load template1.html', function() {
-       expect(element('.doc-example-live [ng-include]').text()).
-         toMatch(/Content of template1.html/);
+        expect(includeElem.getText()).toMatch(/Content of template1.html/);
       });
+
       it('should load template2.html', function() {
-       select('template').option('1');
-       expect(element('.doc-example-live [ng-include]').text()).
-         toMatch(/Content of template2.html/);
+        if (browser.params.browser == 'firefox') {
+          // Firefox can't handle using selects
+          // See https://github.com/angular/protractor/issues/480
+          return;
+        }
+        templateSelect.click();
+        templateSelect.element.all(by.css('option')).get(2).click();
+        expect(includeElem.getText()).toMatch(/Content of template2.html/);
       });
+
       it('should change to blank', function() {
-       select('template').option('');
-       expect(element('.doc-example-live [ng-include]')).toBe(undefined);
+        if (browser.params.browser == 'firefox') {
+          // Firefox can't handle using selects
+          return;
+        }
+        templateSelect.click();
+        templateSelect.element.all(by.css('option')).get(0).click();
+        expect(includeElem.isPresent()).toBe(false);
       });
     </file>
   </example>
@@ -25526,15 +25767,15 @@ var ngIncludeFillContentDirective = ['$compile',
      </div>
    </div>
      </doc:source>
-     <doc:scenario>
+     <doc:protractor>
        it('should alias index positions', function() {
-         expect(element('.example-init').text())
-           .toBe('list[ 0 ][ 0 ] = a;' +
-                 'list[ 0 ][ 1 ] = b;' +
-                 'list[ 1 ][ 0 ] = c;' +
-                 'list[ 1 ][ 1 ] = d;');
+         var elements = element.all(by.css('.example-init'));
+         expect(elements.get(0).getText()).toBe('list[ 0 ][ 0 ] = a;');
+         expect(elements.get(1).getText()).toBe('list[ 0 ][ 1 ] = b;');
+         expect(elements.get(2).getText()).toBe('list[ 1 ][ 0 ] = c;');
+         expect(elements.get(3).getText()).toBe('list[ 1 ][ 1 ] = d;');
        });
-     </doc:scenario>
+     </doc:protractor>
    </doc:example>
  */
 var ngInitDirective = ngDirective({
@@ -25572,13 +25813,12 @@ var ngInitDirective = ngDirective({
         <div>Normal: {{1 + 2}}</div>
         <div ng-non-bindable>Ignored: {{1 + 2}}</div>
       </doc:source>
-      <doc:scenario>
+      <doc:protractor>
        it('should check ng-non-bindable', function() {
-         expect(using('.doc-example-live').binding('1 + 2')).toBe('3');
-         expect(using('.doc-example-live').element('div:last').text()).
-           toMatch(/1 \+ 2/);
+         expect(element(by.binding('1 + 2')).getText()).toContain('3');
+         expect(element.all(by.css('.doc-example-live div')).last().getText()).toMatch(/1 \+ 2/);
        });
-      </doc:scenario>
+      </doc:protractor>
     </doc:example>
  */
 var ngNonBindableDirective = ngDirective({ terminal: true, priority: 1000 });
@@ -25706,49 +25946,53 @@ var ngNonBindableDirective = ngDirective({ terminal: true, priority: 1000 });
           </ng-pluralize>
         </div>
       </doc:source>
-      <doc:scenario>
+      <doc:protractor>
         it('should show correct pluralized string', function() {
-          expect(element('.doc-example-live ng-pluralize:first').text()).
-                                             toBe('1 person is viewing.');
-          expect(element('.doc-example-live ng-pluralize:last').text()).
-                                                toBe('Igor is viewing.');
+          var withoutOffset = element.all(by.css('ng-pluralize')).get(0);
+          var withOffset = element.all(by.css('ng-pluralize')).get(1);
+          var countInput = element(by.model('personCount'));
 
-          using('.doc-example-live').input('personCount').enter('0');
-          expect(element('.doc-example-live ng-pluralize:first').text()).
-                                               toBe('Nobody is viewing.');
-          expect(element('.doc-example-live ng-pluralize:last').text()).
-                                              toBe('Nobody is viewing.');
+          expect(withoutOffset.getText()).toEqual('1 person is viewing.');
+          expect(withOffset.getText()).toEqual('Igor is viewing.');
 
-          using('.doc-example-live').input('personCount').enter('2');
-          expect(element('.doc-example-live ng-pluralize:first').text()).
-                                            toBe('2 people are viewing.');
-          expect(element('.doc-example-live ng-pluralize:last').text()).
-                              toBe('Igor and Misko are viewing.');
+          countInput.clear();
+          countInput.sendKeys('0');
 
-          using('.doc-example-live').input('personCount').enter('3');
-          expect(element('.doc-example-live ng-pluralize:first').text()).
-                                            toBe('3 people are viewing.');
-          expect(element('.doc-example-live ng-pluralize:last').text()).
-                              toBe('Igor, Misko and one other person are viewing.');
+          expect(withoutOffset.getText()).toEqual('Nobody is viewing.');
+          expect(withOffset.getText()).toEqual('Nobody is viewing.');
 
-          using('.doc-example-live').input('personCount').enter('4');
-          expect(element('.doc-example-live ng-pluralize:first').text()).
-                                            toBe('4 people are viewing.');
-          expect(element('.doc-example-live ng-pluralize:last').text()).
-                              toBe('Igor, Misko and 2 other people are viewing.');
+          countInput.clear();
+          countInput.sendKeys('2');
+
+          expect(withoutOffset.getText()).toEqual('2 people are viewing.');
+          expect(withOffset.getText()).toEqual('Igor and Misko are viewing.');
+
+          countInput.clear();
+          countInput.sendKeys('3');
+
+          expect(withoutOffset.getText()).toEqual('3 people are viewing.');
+          expect(withOffset.getText()).toEqual('Igor, Misko and one other person are viewing.');
+
+          countInput.clear();
+          countInput.sendKeys('4');
+
+          expect(withoutOffset.getText()).toEqual('4 people are viewing.');
+          expect(withOffset.getText()).toEqual('Igor, Misko and 2 other people are viewing.');
         });
-
-        it('should show data-binded names', function() {
-          using('.doc-example-live').input('personCount').enter('4');
-          expect(element('.doc-example-live ng-pluralize:last').text()).
-              toBe('Igor, Misko and 2 other people are viewing.');
-
-          using('.doc-example-live').input('person1').enter('Di');
-          using('.doc-example-live').input('person2').enter('Vojta');
-          expect(element('.doc-example-live ng-pluralize:last').text()).
-              toBe('Di, Vojta and 2 other people are viewing.');
+        it('should show data-bound names', function() {
+          var withOffset = element.all(by.css('ng-pluralize')).get(1);
+          var personCount = element(by.model('personCount'));
+          var person1 = element(by.model('person1'));
+          var person2 = element(by.model('person2'));
+          personCount.clear();
+          personCount.sendKeys('4');
+          person1.clear();
+          person1.sendKeys('Di');
+          person2.clear();
+          person2.sendKeys('Vojta');
+          expect(withOffset.getText()).toEqual('Di, Vojta and 2 other people are viewing.');
         });
-      </doc:scenario>
+      </doc:protractor>
     </doc:example>
  */
 var ngPluralizeDirective = ['$locale', '$interpolate', function($locale, $interpolate) {
@@ -25967,25 +26211,27 @@ var ngPluralizeDirective = ['$locale', '$interpolate', function($locale, $interp
         max-height:40px;
       }
     </file>
-    <file name="scenario.js">
-       it('should render initial data set', function() {
-         var r = using('.doc-example-live').repeater('ul li');
-         expect(r.count()).toBe(10);
-         expect(r.row(0)).toEqual(["1","John","25"]);
-         expect(r.row(1)).toEqual(["2","Jessie","30"]);
-         expect(r.row(9)).toEqual(["10","Samantha","60"]);
-         expect(binding('friends.length')).toBe("10");
-       });
+    <file name="protractorTest.js">
+      var friends = element(by.css('.doc-example-live'))
+          .element.all(by.repeater('friend in friends'));
+
+      it('should render initial data set', function() {
+        expect(friends.count()).toBe(10);
+        expect(friends.get(0).getText()).toEqual('[1] John who is 25 years old.');
+        expect(friends.get(1).getText()).toEqual('[2] Jessie who is 30 years old.');
+        expect(friends.last().getText()).toEqual('[10] Samantha who is 60 years old.');
+        expect(element(by.binding('friends.length')).getText())
+            .toMatch("I have 10 friends. They are:");
+      });
 
        it('should update repeater when filter predicate changes', function() {
-         var r = using('.doc-example-live').repeater('ul li');
-         expect(r.count()).toBe(10);
+         expect(friends.count()).toBe(10);
 
-         input('q').enter('ma');
+         element(by.css('.doc-example-live')).element(by.model('q')).sendKeys('ma');
 
-         expect(r.count()).toBe(2);
-         expect(r.row(0)).toEqual(["1","Mary","28"]);
-         expect(r.row(1)).toEqual(["2","Samantha","60"]);
+         expect(friends.count()).toBe(2);
+         expect(friends.get(0).getText()).toEqual('[1] Mary who is 28 years old.');
+         expect(friends.last().getText()).toEqual('[2] Samantha who is 60 years old.');
        });
       </file>
     </example>
@@ -26319,16 +26565,19 @@ var ngRepeatDirective = ['$parse', '$animate', function($parse, $animate) {
         background:white;
       }
     </file>
-    <file name="scenario.js">
-       it('should check ng-show / ng-hide', function() {
-         expect(element('.doc-example-live span:first:hidden').count()).toEqual(1);
-         expect(element('.doc-example-live span:last:visible').count()).toEqual(1);
+    <file name="protractorTest.js">
+      var thumbsUp = element(by.css('.doc-example-live span.icon-thumbs-up'));
+      var thumbsDown = element(by.css('.doc-example-live span.icon-thumbs-down'));
 
-         input('checked').check();
+      it('should check ng-show / ng-hide', function() {
+        expect(thumbsUp.isDisplayed()).toBeFalsy();
+        expect(thumbsDown.isDisplayed()).toBeTruthy();
 
-         expect(element('.doc-example-live span:first:visible').count()).toEqual(1);
-         expect(element('.doc-example-live span:last:hidden').count()).toEqual(1);
-       });
+        element(by.model('checked')).click();
+
+        expect(thumbsUp.isDisplayed()).toBeTruthy();
+        expect(thumbsDown.isDisplayed()).toBeFalsy();
+      });
     </file>
   </example>
  */
@@ -26473,16 +26722,19 @@ var ngShowDirective = ['$animate', function($animate) {
         background:white;
       }
     </file>
-    <file name="scenario.js">
-       it('should check ng-show / ng-hide', function() {
-         expect(element('.doc-example-live .check-element:first:hidden').count()).toEqual(1);
-         expect(element('.doc-example-live .check-element:last:visible').count()).toEqual(1);
+    <file name="protractorTest.js">
+      var thumbsUp = element(by.css('.doc-example-live span.icon-thumbs-up'));
+      var thumbsDown = element(by.css('.doc-example-live span.icon-thumbs-down'));
 
-         input('checked').check();
+      it('should check ng-show / ng-hide', function() {
+        expect(thumbsUp.isDisplayed()).toBeFalsy();
+        expect(thumbsDown.isDisplayed()).toBeTruthy();
 
-         expect(element('.doc-example-live .check-element:first:visible').count()).toEqual(1);
-         expect(element('.doc-example-live .check-element:last:hidden').count()).toEqual(1);
-       });
+        element(by.model('checked')).click();
+
+        expect(thumbsUp.isDisplayed()).toBeTruthy();
+        expect(thumbsDown.isDisplayed()).toBeFalsy();
+      });
     </file>
   </example>
  */
@@ -26521,13 +26773,15 @@ var ngHideDirective = ['$animate', function($animate) {
          color: black;
        }
      </file>
-     <file name="scenario.js">
+     <file name="protractorTest.js">
+       var colorSpan = element(by.css('.doc-example-live span'));
+
        it('should check ng-style', function() {
-         expect(element('.doc-example-live span').css('color')).toBe('rgb(0, 0, 0)');
-         element('.doc-example-live :button[value=set]').click();
-         expect(element('.doc-example-live span').css('color')).toBe('rgb(255, 0, 0)');
-         element('.doc-example-live :button[value=clear]').click();
-         expect(element('.doc-example-live span').css('color')).toBe('rgb(0, 0, 0)');
+         expect(colorSpan.getCssValue('color')).toBe('rgba(0, 0, 0, 1)');
+         element(by.css('.doc-example-live input[value=set]')).click();
+         expect(colorSpan.getCssValue('color')).toBe('rgba(255, 0, 0, 1)');
+         element(by.css('.doc-example-live input[value=clear]')).click();
+         expect(colorSpan.getCssValue('color')).toBe('rgba(0, 0, 0, 1)');
        });
      </file>
    </example>
@@ -26552,7 +26806,7 @@ var ngStyleDirective = ngDirective(function(scope, element, attr) {
  * as specified in the template.
  *
  * The directive itself works similar to ngInclude, however, instead of downloading template code (or loading it
- * from the template cache), `ngSwitch` simply choses one of the nested elements and makes it visible based on which element
+ * from the template cache), `ngSwitch` simply chooses one of the nested elements and makes it visible based on which element
  * matches the value obtained from the evaluated expression. In other words, you define a container element
  * (where you place the directive), place an expression on the **`on="..."` attribute**
  * (or the **`ng-switch="..."` attribute**), define any inner elements inside of the directive and place
@@ -26648,17 +26902,20 @@ var ngStyleDirective = ngDirective(function(scope, element, attr) {
         top:0;
       }
     </file>
-    <file name="scenario.js">
+    <file name="protractorTest.js">
+      var switchElem = element(by.css('.doc-example-live [ng-switch]'));
+      var select = element(by.model('selection'));
+
       it('should start in settings', function() {
-        expect(element('.doc-example-live [ng-switch]').text()).toMatch(/Settings Div/);
+        expect(switchElem.getText()).toMatch(/Settings Div/);
       });
       it('should change to home', function() {
-        select('selection').option('home');
-        expect(element('.doc-example-live [ng-switch]').text()).toMatch(/Home Span/);
+        select.element.all(by.css('option')).get(1).click();
+        expect(switchElem.getText()).toMatch(/Home Span/);
       });
       it('should select default', function() {
-        select('selection').option('other');
-        expect(element('.doc-example-live [ng-switch]').text()).toMatch(/default/);
+        select.element.all(by.css('option')).get(2).click();
+        expect(switchElem.getText()).toMatch(/default/);
       });
     </file>
   </example>
@@ -26765,14 +27022,18 @@ var ngSwitchDefaultDirective = ngDirective({
          <pane title="{{title}}">{{text}}</pane>
        </div>
      </doc:source>
-     <doc:scenario>
+     <doc:protractor>
         it('should have transcluded', function() {
-          input('title').enter('TITLE');
-          input('text').enter('TEXT');
-          expect(binding('title')).toEqual('TITLE');
-          expect(binding('text')).toEqual('TEXT');
+          var titleElement = element(by.model('title'));
+          titleElement.clear();
+          titleElement.sendKeys('TITLE');
+          var textElement = element(by.model('text'));
+          textElement.clear();
+          textElement.sendKeys('TEXT');
+          expect(element(by.binding('title')).getText()).toEqual('TITLE');
+          expect(element(by.binding('text')).getText()).toEqual('TEXT');
         });
-     </doc:scenario>
+     </doc:protractor>
    </doc:example>
  *
  */
@@ -26825,12 +27086,12 @@ var ngTranscludeDirective = ngDirective({
       <a ng-click="currentTpl='/tpl.html'" id="tpl-link">Load inlined template</a>
       <div id="tpl-content" ng-include src="currentTpl"></div>
     </doc:source>
-    <doc:scenario>
+    <doc:protractor>
       it('should load template defined inside script tag', function() {
-        element('#tpl-link').click();
-        expect(element('#tpl-content').text()).toMatch(/Content of the template/);
+        element(by.css('#tpl-link')).click();
+        expect(element(by.css('#tpl-content')).getText()).toMatch(/Content of the template/);
       });
-    </doc:scenario>
+    </doc:protractor>
   </doc:example>
  */
 var scriptDirective = ['$templateCache', function($templateCache) {
@@ -26878,7 +27139,7 @@ var ngOptionsMinErr = minErr('ngOptions');
  * option. See example below for demonstration.
  *
  * <div class="alert alert-warning">
- * **Note:** `ngOptions` provides iterator facility for `<option>` element which should be used instead
+ * **Note:** `ngOptions` provides an iterator facility for the `<option>` element which should be used instead
  * of {@link ng.directive:ngRepeat ngRepeat} when you want the
  * `select` model to be bound to a non-string value. This is because an option element can only
  * be bound to string values at present.
@@ -26969,15 +27230,17 @@ var ngOptionsMinErr = minErr('ngOptions');
           </div>
         </div>
       </doc:source>
-      <doc:scenario>
+      <doc:protractor>
          it('should check ng-options', function() {
-           expect(binding('{selected_color:color}')).toMatch('red');
-           select('color').option('0');
-           expect(binding('{selected_color:color}')).toMatch('black');
-           using('.nullable').select('color').option('');
-           expect(binding('{selected_color:color}')).toMatch('null');
+           expect(element(by.binding('{selected_color:color}')).getText()).toMatch('red');
+           element.all(by.select('color')).first().click();
+           element.all(by.css('select[ng-model="color"] option')).first().click();
+           expect(element(by.binding('{selected_color:color}')).getText()).toMatch('black');
+           element(by.css('.nullable select[ng-model="color"]')).click();
+           element.all(by.css('.nullable select[ng-model="color"] option')).first().click();
+           expect(element(by.binding('{selected_color:color}')).getText()).toMatch('null');
          });
-      </doc:scenario>
+      </doc:protractor>
     </doc:example>
  */
 
@@ -27494,10 +27757,9 @@ var styleDirective = valueFn({
 
 })(window, document);
 
-!angular.$$csp() && angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\\:form{display:block;}</style>');
-;
+!angular.$$csp() && angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\\:form{display:block;}</style>');;
 /**
- * @license AngularJS v1.2.10
+ * @license AngularJS v1.2.12
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -30757,7 +31019,7 @@ angular.module('ui.router.compat')
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v0.9.24
+ * Ionic, v0.9.25
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -30870,8 +31132,7 @@ angular.element.prototype.removeClass = function(cssClasses) {
     }
   }
   return this;
-};
-;
+};;
 angular.module('ionic.decorator.location', [])
 
 .config(['$provide', function($provide) {
@@ -30880,19 +31141,17 @@ angular.module('ionic.decorator.location', [])
 
 function $LocationDecorator($location, $timeout) {
 
-  var firstHashSet = false;
   $location.__hash = $location.hash;
   //Fix: first time window.location.hash is set, the scrollable area
   //found nearest to body's scrollTop is set to scroll to an element
   //with that ID.
   $location.hash = function(value) {
-    if (!firstHashSet && angular.isDefined(value)) {
+    if (angular.isDefined(value)) {
       $timeout(function() {
         var scroll = document.querySelector('.scroll-content');
         if (scroll)
           scroll.scrollTop = 0;
       }, 0, false);
-      firstHashSet = true;
     }
     return $location.__hash(value);
   };
@@ -30925,15 +31184,24 @@ angular.module('ionic.ui.service.scrollDelegate', [])
     anchorScroll: function(animate) {
       $rootScope.$broadcast('scroll.anchorScroll', animate);
     },
-    tapScrollToTop: function(element) {
+    tapScrollToTop: function(element, animate) {
       var _this = this;
+      if (!angular.isDefined(animate)) {
+        animate = true;
+      }
 
       ionic.on('tap', function(e) {
+        var target = e.target;
+        //Don't scroll to top for a button click
+        if (ionic.DomUtil.getParentOrSelfWithClass(target, 'button')) {
+          return;
+        }
+
         var el = element[0];
         var bounds = el.getBoundingClientRect();
 
         if(ionic.DomUtil.rectContains(e.gesture.touches[0].pageX, e.gesture.touches[0].pageY, bounds.left, bounds.top, bounds.left + bounds.width, bounds.top + 20)) {
-          _this.scrollTop();
+          _this.scrollTop(animate);
         }
       }, element[0]);
     },
@@ -31111,7 +31379,7 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
 
 
       // Compile the template
-      var element = $compile('<action-sheet buttons="buttons"></action-sheet>')(scope);
+      var element = $compile('<ion-action-sheet buttons="buttons"></ion-action-sheet>')(scope);
 
       // Grab the sheet element for animation
       var sheetEl = angular.element(element[0].querySelector('.action-sheet-wrapper'));
@@ -31194,7 +31462,7 @@ angular.module('ionic.service.loading', ['ionic.ui.loading'])
     /**
      * Load an action sheet with the given template string.
      *
-     * A new isolated scope will be created for the 
+     * A new isolated scope will be created for the
      * action sheet and the new element will be appended into the body.
      *
      * @param {object} opts the options for this ActionSheet (see docs)
@@ -31205,7 +31473,7 @@ angular.module('ionic.service.loading', ['ionic.ui.loading'])
         animation: 'fade-in',
         showBackdrop: true,
         maxWidth: 200,
-        showDelay: 2000
+        showDelay: 0
       };
 
       opts = angular.extend(defaults, opts);
@@ -31220,7 +31488,7 @@ angular.module('ionic.service.loading', ['ionic.ui.loading'])
       }
 
       // Compile the template
-      var element = $compile('<loading>' + opts.content + '</loading>')(scope);
+      var element = $compile('<ion-loading>' + opts.content + '</ion-loading>')(scope);
 
       $document[0].body.appendChild(element[0]);
 
@@ -31250,13 +31518,19 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
     },
     // Show the modal
     show: function() {
-      var _this = this;
+      var self = this;
       var element = angular.element(this.el);
+
+      document.body.classList.add('disable-pointer-events');
+      this.el.classList.add('enable-pointer-events');
+
+      self._isShown = true;
+
       if(!element.parent().length) {
         element.addClass(this.animation);
         $animate.enter(element, angular.element($document[0].body), null, function() {
         });
-        ionic.views.Modal.prototype.show.call(_this);
+        ionic.views.Modal.prototype.show.call(self);
       } else {
         $animate.addClass(element, this.animation, function() {
         });
@@ -31264,10 +31538,10 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
 
       if(!this.didInitEvents) {
         var onHardwareBackButton = function() {
-          _this.hide();
+          self.hide();
         };
 
-        _this.scope.$on('$destroy', function() {
+        self.scope.$on('$destroy', function() {
           $ionicPlatform.offHardwareBackButton(onHardwareBackButton);
         });
 
@@ -31277,24 +31551,43 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
         this.didInitEvents = true;
       }
 
+      this.scope.$parent.$broadcast('modal.shown', this);
+
     },
     // Hide the modal
     hide: function() {
+      this._isShown = false;
       var element = angular.element(this.el);
-      $animate.removeClass(element, this.animation);
+      $animate.removeClass(element, this.animation, function() {
+        onHideModal(element[0]);
+      });
 
       ionic.views.Modal.prototype.hide.call(this);
+
+      this.scope.$parent.$broadcast('modal.hidden', this);
     },
 
     // Remove and destroy the modal scope
     remove: function() {
       var self  = this,
           element = angular.element(this.el);
+      this._isShown = false;
       $animate.leave(angular.element(this.el), function() {
+        onHideModal(element[0]);
+        self.scope.$parent.$broadcast('modal.removed', self);
         self.scope.$destroy();
       });
+    },
+
+    isShown: function() {
+      return !!this._isShown;
     }
   });
+
+  function onHideModal(element) {
+    document.body.classList.remove('disable-pointer-events');
+    element.classList.remove('enable-pointer-events');
+  }
 
   var createModal = function(templateString, options) {
     // Create a new scope for the modal
@@ -31321,7 +31614,7 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
     /**
      * Load a modal with the given template string.
      *
-     * A new isolated scope will be created for the 
+     * A new isolated scope will be created for the
      * modal and the new element will be appended into the body.
      */
     fromTemplate: function(templateString, options) {
@@ -31613,8 +31906,8 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
       if(element && !this.isTagNameRegistrable(element)) {
         // first check to see if this element can even be registered as a view.
         // Certain tags are only containers for views, but are not views themselves.
-        // For example, the <tabs> directive contains a <tab> and the <tab> is the
-        // view, but the <tabs> directive itself should not be registered as a view.
+        // For example, the <ion-tabs> directive contains a <ion-tab> and the <ion-tab> is the
+        // view, but the <ion-tabs> directive itself should not be registered as a view.
         rsp.navAction = 'disabledByTagName';
         return rsp;
       }
@@ -31940,15 +32233,15 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
 
     disableRegisterByTagName: function(tagName) {
       // not every element should animate betwee transitions
-      // For example, the <tabs> directive should not animate when it enters,
-      // but instead the <tabs> directve would just show, and its children
-      // <tab> directives would do the animating, but <tabs> itself is not a view
+      // For example, the <ion-tabs> directive should not animate when it enters,
+      // but instead the <ion-tabs> directve would just show, and its children
+      // <ion-tab> directives would do the animating, but <ion-tabs> itself is not a view
       $rootScope.$viewHistory.disabledRegistrableTagNames.push(tagName.toUpperCase());
     },
 
     isTagNameRegistrable: function(element) {
       // check if this element has a tagName (at its root, not recursively)
-      // that shouldn't be animated, like <tabs> or <side-menu>
+      // that shouldn't be animated, like <ion-tabs> or <ion-side-menu>
       var x, y, disabledTags = $rootScope.$viewHistory.disabledRegistrableTagNames;
       for(x=0; x<element.length; x++) {
         if(element[x].nodeType !== 1) continue;
@@ -31995,7 +32288,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
 
 angular.module('ionic.ui.actionSheet', [])
 
-.directive('actionSheet', ['$document', function($document) {
+.directive('ionActionSheet', ['$document', function($document) {
   return {
     restrict: 'E',
     scope: true,
@@ -32058,19 +32351,19 @@ angular.module('ionic.ui.header', ['ngAnimate'])
   };
 }])
 
-.directive('headerBar', ['$ionicScrollDelegate', function($ionicScrollDelegate) {
+.directive('ionHeaderBar', ['$ionicScrollDelegate', function($ionicScrollDelegate) {
   return {
     restrict: 'E',
     replace: true,
     transclude: true,
     template: '<header class="bar bar-header">\
                 <div class="buttons">\
-                  <button ng-repeat="button in leftButtons" class="button no-animation" ng-class="button.type" ng-click="button.tap($event, $index)" bind-html-unsafe="button.content">\
+                  <button ng-repeat="button in leftButtons" class="button no-animation" ng-class="button.type" ng-click="button.tap($event, $index)" ion-bind-html-unsafe="button.content">\
                   </button>\
                 </div>\
-                <h1 class="title" bind-html-unsafe="title"></h1>\
+                <h1 class="title" ion-bind-html-unsafe="title"></h1>\
                 <div class="buttons">\
-                  <button ng-repeat="button in rightButtons" class="button no-animation" ng-class="button.type" ng-click="button.tap($event, $index)" bind-html-unsafe="button.content">\
+                  <button ng-repeat="button in rightButtons" class="button no-animation" ng-class="button.type" ng-click="button.tap($event, $index)" ion-bind-html-unsafe="button.content">\
                   </button>\
                 </div>\
               </header>',
@@ -32111,7 +32404,7 @@ angular.module('ionic.ui.header', ['ngAnimate'])
   };
 }])
 
-.directive('footerBar', function() {
+.directive('ionFooterBar', function() {
   return {
     restrict: 'E',
     replace: true,
@@ -32132,10 +32425,10 @@ angular.module('ionic.ui.header', ['ngAnimate'])
 })(ionic);
 ;
 angular.module('ionic.ui.bindHtml', [])
-.directive('bindHtmlUnsafe', function () {
+.directive('ionBindHtmlUnsafe', function () {
   return function (scope, element, attr) {
-    element.addClass('ng-binding').data('$binding', attr.bindHtmlUnsafe);
-    scope.$watch(attr.bindHtmlUnsafe, function(value) {
+    element.addClass('ng-binding').data('$binding', attr.ionBindHtmlUnsafe);
+    scope.$watch(attr.ionBindHtmlUnsafe, function(value) {
       element.html(value || '');
     });
   };
@@ -32147,7 +32440,7 @@ angular.module('ionic.ui.bindHtml', [])
 angular.module('ionic.ui.checkbox', [])
 
 
-.directive('checkbox', function() {
+.directive('ionCheckbox', function() {
   return {
     restrict: 'E',
     replace: true,
@@ -32189,7 +32482,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
  * Panel is a simple 100% width and height, fixed panel. It's meant for content to be
  * added to it, or animated around.
  */
-.directive('pane', function() {
+.directive('ionPane', function() {
   return {
     restrict: 'E',
     link: function(scope, element, attr) {
@@ -32200,13 +32493,13 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
 
 // The content directive is a core scrollable content area
 // that is part of many View hierarchies
-.directive('content', ['$parse', '$timeout', '$ionicScrollDelegate', '$controller', function($parse, $timeout, $ionicScrollDelegate, $controller) {
+.directive('ionContent', ['$parse', '$timeout', '$ionicScrollDelegate', '$controller', function($parse, $timeout, $ionicScrollDelegate, $controller) {
   return {
     restrict: 'E',
     replace: true,
     template: '<div class="scroll-content"><div class="scroll" ng-transclude></div></div>',
     transclude: true,
-    require: '^?navView',
+    require: '^?ionNavView',
     scope: {
       onRefresh: '&',
       onRefreshOpening: '&',
@@ -32235,7 +32528,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
       if(attr.padding == "true") { element.find('div').addClass('padding'); }
 
       return {
-        //Prelink <content> so it can compile before other directives compile.
+        //Prelink <ion-content> so it can compile before other directives compile.
         //Then other directives can require ionicScrollCtrl
         pre: prelink
       };
@@ -32340,17 +32633,17 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
   };
 }])
 
-.directive('refresher', function() {
+.directive('ionRefresher', function() {
   return {
     restrict: 'E',
     replace: true,
-    require: ['^?content', '^?list'],
+    require: ['^?ionContent', '^?ionList'],
     template: '<div class="scroll-refresher"><div class="ionic-refresher-content"><i class="icon ion-arrow-down-c icon-pulling"></i><i class="icon ion-loading-d icon-refreshing"></i></div></div>',
     scope: true
   };
 })
 
-.directive('scrollRefresher', function() {
+.directive('ionScrollRefresher', function() {
   return {
     restrict: 'E',
     replace: true,
@@ -32359,7 +32652,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
   };
 })
 
-.directive('infiniteScroll', function() {
+.directive('ionInfiniteScroll', function() {
   return {
     restrict: 'E',
     replace: false,
@@ -32374,10 +32667,10 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
 
 angular.module('ionic.ui.list', ['ngAnimate'])
 
-.directive('item', ['$timeout', '$parse', function($timeout, $parse) {
+.directive('ionItem', ['$timeout', '$parse', function($timeout, $parse) {
   return {
     restrict: 'E',
-    require: '?^list',
+    require: '?^ionList',
     replace: true,
     transclude: true,
 
@@ -32395,14 +32688,14 @@ angular.module('ionic.ui.list', ['ngAnimate'])
 
     template: '<div class="item item-complex">\
             <div class="item-edit" ng-if="deleteClick !== undefined">\
-              <button class="button button-icon icon" ng-class="deleteIconClass" ng-click="deleteClick()"></button>\
+              <button class="button button-icon icon" ng-class="deleteIconClass" ng-click="deleteClick()" ion-stop-event="click"></button>\
             </div>\
             <a class="item-content" ng-href="{{ href }}" ng-transclude></a>\
             <div class="item-drag" ng-if="reorderIconClass !== undefined">\
               <button data-ionic-action="reorder" class="button button-icon icon" ng-class="reorderIconClass"></button>\
             </div>\
             <div class="item-options" ng-if="itemOptionButtons">\
-             <button ng-click="b.onTap(item, b)" class="button" ng-class="b.type" ng-repeat="b in itemOptionButtons" ng-bind="b.text"></button>\
+             <button ng-click="b.onTap(item, b)" ion-stop-event="click" class="button" ng-class="b.type" ng-repeat="b in itemOptionButtons" ng-bind="b.text"></button>\
            </div>\
           </div>',
 
@@ -32466,7 +32759,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
   };
 }])
 
-.directive('list', ['$timeout', function($timeout) {
+.directive('ionList', ['$timeout', function($timeout) {
   return {
     restrict: 'E',
     replace: true,
@@ -32537,7 +32830,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
 
 angular.module('ionic.ui.loading', [])
 
-.directive('loading', function() {
+.directive('ionLoading', function() {
   return {
     restrict: 'E',
     replace: true,
@@ -32561,7 +32854,7 @@ angular.module('ionic.ui.radio', [])
 
 // The radio button is a radio powered element with only
 // one possible selection in a set of options.
-.directive('radio', function() {
+.directive('ionRadio', function() {
   return {
     restrict: 'E',
     replace: true,
@@ -32589,7 +32882,7 @@ angular.module('ionic.ui.radio', [])
 
 // The radio button is a radio powered element with only
 // one possible selection in a set of options.
-.directive('radioButtons', function() {
+.directive('ionRadioButtons', function() {
   return {
     restrict: 'E',
     replace: true,
@@ -32632,10 +32925,10 @@ angular.module('ionic.ui.radio', [])
   };
 })
 
-.directive('buttonRadio', function() {
+.directive('ionButtonRadio', function() {
   return {
     restrict: 'CA',
-    require: ['?^ngModel', '?^radioButtons'],
+    require: ['?^ngModel', '?^ionRadioButtons'],
     link: function($scope, $element, $attr, ctrls) {
       var ngModel = ctrls[0];
       var radioButtons = ctrls[1];
@@ -32676,7 +32969,7 @@ angular.module('ionic.ui.radio', [])
 
 angular.module('ionic.ui.scroll', [])
 
-.directive('scroll', ['$parse', '$timeout', '$controller', function($parse, $timeout, $controller) {
+.directive('ionScroll', ['$parse', '$timeout', '$controller', function($parse, $timeout, $controller) {
   return {
     restrict: 'E',
     replace: true,
@@ -32698,7 +32991,7 @@ angular.module('ionic.ui.scroll', [])
     compile: function(element, attr, transclude) {
 
       return {
-        //Prelink <scroll> so it can compile before other directives compile.
+        //Prelink <ion-scroll> so it can compile before other directives compile.
         //Then other directives can require ionicScrollCtrl
         pre: prelink
       };
@@ -32764,24 +33057,17 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
   $ionicViewService.disableRegisterByTagName('side-menus');
 }])
 
-.directive('sideMenus', function() {
+.directive('ionSideMenus', function() {
   return {
     restrict: 'ECA',
-    controller: ['$scope', function($scope) {
+    controller: ['$scope', '$attrs', function($scope, $attrs) {
       var _this = this;
 
       angular.extend(this, ionic.controllers.SideMenuController.prototype);
 
       ionic.controllers.SideMenuController.call(this, {
-        // Our quick implementation of the left side menu
-        left: {
-          width: 275,
-        },
-
-        // Our quick implementation of the right side menu
-        right: {
-          width: 275,
-        }
+        left: { width: 275 },
+        right: { width: 275 }
       });
 
       $scope.sideMenuContentTranslateX = 0;
@@ -32794,10 +33080,10 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
   };
 })
 
-.directive('sideMenuContent', ['$timeout', '$ionicGesture', function($timeout, $ionicGesture) {
+.directive('ionSideMenuContent', ['$timeout', '$ionicGesture', function($timeout, $ionicGesture) {
   return {
     restrict: 'AC',
-    require: '^sideMenus',
+    require: '^ionSideMenus',
     scope: true,
     compile: function(element, attr, transclude) {
       return function($scope, $element, $attr, sideMenuCtrl) {
@@ -32861,14 +33147,12 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
           getTranslateX: function() {
             return $scope.sideMenuContentTranslateX || 0;
           },
-          setTranslateX: function(amount) {
-            window.rAF(function() {
-              $element[0].style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
-              $timeout(function() {
-                $scope.sideMenuContentTranslateX = amount;
-              });
+          setTranslateX: ionic.animationFrameThrottle(function(amount) {
+            $element[0].style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
+            $timeout(function() {
+              $scope.sideMenuContentTranslateX = amount;
             });
-          },
+          }),
           enableAnimation: function() {
             //this.el.classList.add(this.animateClass);
             $scope.animationEnabled = true;
@@ -32895,37 +33179,36 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
 }])
 
 
-.directive('sideMenu', function() {
+.directive('ionSideMenu', function() {
   return {
     restrict: 'E',
-    require: '^sideMenus',
+    require: '^ionSideMenus',
     replace: true,
     transclude: true,
     scope: true,
-    template: '<div class="menu menu-{{side}}"></div>',
+    template: '<div class="menu menu-{{side}}" ng-transclude></div>',
     compile: function(element, attr, transclude) {
+      angular.isUndefined(attr.isEnabled) && attr.$set('isEnabled', 'true');
+      angular.isUndefined(attr.width) && attr.$set('width', '275');
+
       return function($scope, $element, $attr, sideMenuCtrl) {
         $scope.side = $attr.side;
 
-        if($scope.side == 'left') {
-          sideMenuCtrl.left.isEnabled = true;
-          sideMenuCtrl.left.pushDown = function() {
-            $element[0].style.zIndex = -1;
-          };
-          sideMenuCtrl.left.bringUp = function() {
-            $element[0].style.zIndex = 0;
-          };
-        } else if($scope.side == 'right') {
-          sideMenuCtrl.right.isEnabled = true;
-          sideMenuCtrl.right.pushDown = function() {
-            $element[0].style.zIndex = -1;
-          };
-          sideMenuCtrl.right.bringUp = function() {
-            $element[0].style.zIndex = 0;
-          };
-        }
+        var sideMenu = sideMenuCtrl[$scope.side] = new ionic.views.SideMenu({
+          width: 275,
+          el: $element[0],
+          isEnabled: true
+        });
 
-        $element.append(transclude($scope));
+        $scope.$watch($attr.width, function(val) {
+          var numberVal = +val;
+          if (numberVal && numberVal == val) {
+            sideMenu.setWidth(+val);
+          }
+        });
+        $scope.$watch($attr.isEnabled, function(val) {
+          sideMenu.setIsEnabled(!!val);
+        });
       };
     }
   };
@@ -32947,7 +33230,7 @@ angular.module('ionic.ui.slideBox', [])
  * The internal controller for the slide box controller.
  */
 
-.directive('slideBox', ['$timeout', '$compile', '$ionicSlideBoxDelegate', function($timeout, $compile, $ionicSlideBoxDelegate) {
+.directive('ionSlideBox', ['$timeout', '$compile', '$ionicSlideBoxDelegate', function($timeout, $compile, $ionicSlideBoxDelegate) {
   return {
     restrict: 'E',
     replace: true,
@@ -33027,7 +33310,7 @@ angular.module('ionic.ui.slideBox', [])
       // If the pager should show, append it to the slide box
       if($scope.$eval($scope.showPager) !== false) {
         var childScope = $scope.$new();
-        var pager = angular.element('<pager></pager>');
+        var pager = angular.element('<ion-pager></ion-pager>');
         $element.append(pager);
         $compile(pager)(childScope);
       }
@@ -33035,10 +33318,10 @@ angular.module('ionic.ui.slideBox', [])
   };
 }])
 
-.directive('slide', function() {
+.directive('ionSlide', function() {
   return {
     restrict: 'E',
-    require: '^slideBox',
+    require: '^ionSlideBox',
     compile: function(element, attr) {
       element.addClass('slider-slide');
       return function($scope, $element, $attr) {};
@@ -33046,11 +33329,11 @@ angular.module('ionic.ui.slideBox', [])
   };
 })
 
-.directive('pager', function() {
+.directive('ionPager', function() {
   return {
     restrict: 'E',
     replace: true,
-    require: '^slideBox',
+    require: '^ionSlideBox',
     template: '<div class="slider-pager"><span class="slider-pager-page" ng-repeat="slide in numSlides() track by $index" ng-class="{active: $index == currentSlide}"><i class="icon ion-record"></i></span></div>',
     link: function($scope, $element, $attr, slideBox) {
       var selectPage = function(index) {
@@ -33090,93 +33373,99 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
 
 .run(['$ionicViewService', function($ionicViewService) {
   // set that the tabs directive should not animate when transitioning
-  // to it. Instead, the children <tab> directives would animate
+  // to it. Instead, the children <ion-tab> directives would animate
   $ionicViewService.disableRegisterByTagName('tabs');
 }])
 
-.directive('tabs', ['$ionicViewService', function($ionicViewService) {
+.controller('$ionicTabs', ['$scope', '$ionicViewService', function($scope, $ionicViewService) {
+  var _this = this;
+
+  $scope.tabCount = 0;
+  $scope.selectedIndex = -1;
+  $scope.$enableViewRegister = false;
+
+  angular.extend(this, ionic.controllers.TabBarController.prototype);
+
+  ionic.controllers.TabBarController.call(this, {
+    controllerChanged: function(oldC, oldI, newC, newI) {
+      $scope.controllerChanged && $scope.controllerChanged({
+        oldController: oldC,
+        oldIndex: oldI,
+        newController: newC,
+        newIndex: newI
+      });
+    },
+    tabBar: {
+      tryTabSelect: function() {},
+      setSelectedItem: function(index) {},
+      addItem: function(item) {}
+    }
+  });
+
+  this.add = function(tabScope) {
+    tabScope.tabIndex = $scope.tabCount;
+    this.addController(tabScope);
+    if(tabScope.tabIndex === 0) {
+      this.select(0);
+    }
+    $scope.tabCount++;
+  };
+
+  function controllerByTabIndex(tabIndex) {
+    for (var x=0; x<_this.controllers.length; x++) {
+      if (_this.controllers[x].tabIndex === tabIndex) {
+        return _this.controllers[x];
+      }
+    }
+  }
+
+  this.select = function(tabIndex, emitChange) {
+    if(tabIndex !== $scope.selectedIndex) {
+
+      $scope.selectedIndex = tabIndex;
+      $scope.activeAnimation = $scope.animation;
+      _this.selectController(tabIndex);
+
+      var viewData = {
+        type: 'tab',
+        typeIndex: tabIndex
+      };
+
+      var tabController = controllerByTabIndex(tabIndex);
+      if (tabController) {
+        viewData.title = tabController.title;
+        viewData.historyId = tabController.$historyId;
+        viewData.url = tabController.url;
+        viewData.uiSref = tabController.viewSref;
+        viewData.navViewName = tabController.navViewName;
+        viewData.hasNavView = tabController.hasNavView;
+      }
+
+      if(emitChange) {
+        $scope.$emit('viewState.changeHistory', viewData);
+      }
+    } else if(emitChange) {
+      var currentView = $ionicViewService.getCurrentView();
+      if (currentView) {
+        $ionicViewService.goToHistoryRoot(currentView.historyId);
+      }
+    }
+  };
+
+  $scope.controllers = this.controllers;
+
+  $scope.tabsController = this;
+
+}])
+
+.directive('ionTabs', ['$ionicViewService', function($ionicViewService) {
   return {
     restrict: 'E',
     replace: true,
     scope: true,
     transclude: true,
-    controller: ['$scope', '$element', function($scope, $element) {
-      var _this = this;
-
-      $scope.tabCount = 0;
-      $scope.selectedIndex = -1;
-      $scope.$enableViewRegister = false;
-
-      angular.extend(this, ionic.controllers.TabBarController.prototype);
-
-
-      ionic.controllers.TabBarController.call(this, {
-        controllerChanged: function(oldC, oldI, newC, newI) {
-          $scope.controllerChanged && $scope.controllerChanged({
-            oldController: oldC,
-            oldIndex: oldI,
-            newController: newC,
-            newIndex: newI
-          });
-        },
-        tabBar: {
-          tryTabSelect: function() {},
-          setSelectedItem: function(index) {},
-          addItem: function(item) {}
-        }
-      });
-
-      this.add = function(tabScope) {
-        tabScope.tabIndex = $scope.tabCount;
-        this.addController(tabScope);
-        if(tabScope.tabIndex === 0) {
-          this.select(0);
-        }
-        $scope.tabCount++;
-      };
-
-      this.select = function(tabIndex, emitChange) {
-        if(tabIndex !== $scope.selectedIndex) {
-
-          $scope.selectedIndex = tabIndex;
-          $scope.activeAnimation = $scope.animation;
-          _this.selectController(tabIndex);
-
-          var viewData = {
-            type: 'tab',
-            typeIndex: tabIndex
-          };
-
-          for(var x=0; x<this.controllers.length; x++) {
-            if(tabIndex === this.controllers[x].tabIndex) {
-              viewData.title = this.controllers[x].title;
-              viewData.historyId = this.controllers[x].$historyId;
-              viewData.url = this.controllers[x].url;
-              viewData.uiSref = this.controllers[x].viewSref;
-              viewData.navViewName = this.controllers[x].navViewName;
-              viewData.hasNavView = this.controllers[x].hasNavView;
-              break;
-            }
-          }
-          if(emitChange) {
-            $scope.$emit('viewState.changeHistory', viewData);
-          }
-        } else if(emitChange) {
-          var currentView = $ionicViewService.getCurrentView();
-          if(currentView) {
-            $ionicViewService.goToHistoryRoot(currentView.historyId);
-          }
-        }
-      };
-
-      $scope.controllers = this.controllers;
-
-      $scope.tabsController = this;
-
-    }],
-
-    template: '<div class="view"><tab-controller-bar></tab-controller-bar></div>',
-
+    controller: '$ionicTabs',
+    template: '<div class="view"><ion-tab-controller-bar></ion-tab-controller-bar></div>',
     compile: function(element, attr, transclude, tabsCtrl) {
       return function link($scope, $element, $attr) {
 
@@ -33216,10 +33505,10 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
 }])
 
 // Generic controller directive
-.directive('tab', ['$ionicViewService', '$rootScope', '$parse', '$interpolate', function($ionicViewService, $rootScope, $parse, $interpolate) {
+.directive('ionTab', ['$ionicViewService', '$rootScope', '$parse', '$interpolate', function($ionicViewService, $rootScope, $parse, $interpolate) {
   return {
     restrict: 'E',
-    require: '^tabs',
+    require: '^ionTabs',
     scope: true,
     transclude: 'element',
     compile: function(element, attr, transclude) {
@@ -33254,9 +33543,9 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
         $scope.$watch(badgeGet, function(value) {
           $scope.badge = value;
         });
-        var badgeStyleGet = $interpolate(attr.badgeStyle || '');
-        $scope.$watch(badgeStyleGet, function(val) {
-          $scope.badgeStyle = val;
+
+        $attr.$observe('badgeStyle', function(value) {
+          $scope.badgeStyle = value;
         });
 
         var leftButtonsGet = $parse($attr.leftButtons);
@@ -33274,17 +33563,20 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
 
         tabsCtrl.add($scope);
 
-        $scope.$watch('isVisible', function(value) {
+        function cleanupChild() {
           if(childElement) {
             childElement.remove();
             childElement = null;
-            $rootScope.$broadcast('tab.hidden');
           }
           if(childScope) {
             childScope.$destroy();
             childScope = null;
           }
-          if(value) {
+        }
+
+        $scope.$watch('isVisible', function(value) {
+          if (value) {
+            cleanupChild();
             childScope = $scope.$new();
             transclude(childScope, function(clone) {
               clone.addClass('pane');
@@ -33292,13 +33584,16 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
               childElement = clone;
               $element.parent().append(childElement);
             });
-            $rootScope.$broadcast('tab.shown');
+            $scope.$broadcast('tab.shown');
+          } else if (childScope) {
+            $scope.$broadcast('tab.hidden');
+            cleanupChild();
           }
         });
 
         // on link, check if it has a nav-view in it
         transclude($scope.$new(), function(clone) {
-          var navViewEle = clone[0].getElementsByTagName("nav-view");
+          var navViewEle = clone[0].getElementsByTagName("ion-nav-view");
           $scope.hasNavView = (navViewEle.length > 0);
           if($scope.hasNavView) {
             // this tab has a ui-view
@@ -33310,12 +33605,14 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
           }
         });
 
-        $rootScope.$on('$stateChangeSuccess', function(value){
+        var unregister = $rootScope.$on('$stateChangeSuccess', function(value){
           if( $ionicViewService.isCurrentStateNavView($scope.navViewName) &&
               $scope.tabIndex !== tabsCtrl.selectedIndex) {
             tabsCtrl.select($scope.tabIndex);
           }
         });
+
+        $scope.$on('$destroy', unregister);
 
       };
     }
@@ -33323,15 +33620,15 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
 }])
 
 
-.directive('tabControllerBar', function() {
+.directive('ionTabControllerBar', function() {
   return {
     restrict: 'E',
-    require: '^tabs',
+    require: '^ionTabs',
     transclude: true,
     replace: true,
     scope: true,
     template: '<div class="tabs">' +
-      '<tab-controller-item icon-title="{{c.title}}" icon="{{c.icon}}" icon-on="{{c.iconOn}}" icon-off="{{c.iconOff}}" badge="c.badge" badge-style="c.badgeStyle" active="c.isVisible" index="$index" ng-repeat="c in controllers"></tab-controller-item>' +
+      '<ion-tab-controller-item icon-title="{{c.title}}" icon="{{c.icon}}" icon-on="{{c.iconOn}}" icon-off="{{c.iconOff}}" badge="c.badge" badge-style="c.badgeStyle" active="c.isVisible" index="$index" ng-repeat="c in controllers"></ion-tab-controller-item>' +
     '</div>',
     link: function($scope, $element, $attr, tabsCtrl) {
       $element.addClass($scope.tabsType);
@@ -33340,11 +33637,11 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
   };
 })
 
-.directive('tabControllerItem', ['$window', function($window) {
+.directive('ionTabControllerItem', ['$window', function($window) {
   return {
     restrict: 'E',
     replace: true,
-    require: '^tabs',
+    require: '^ionTabs',
     scope: {
       iconTitle: '@',
       icon: '@',
@@ -33371,7 +33668,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
         '<i class="icon {{icon}}" ng-if="icon"></i>' +
         '<i class="{{iconOn}}" ng-if="active"></i>' +
         '<i class="{{iconOff}}" ng-if="!active"></i>' +
-        '<span bind-html-unsafe="iconTitle"></span>' +
+        '<span ion-bind-html-unsafe="iconTitle"></span>' +
       '</a>'
   };
 }]);
@@ -33384,7 +33681,7 @@ angular.module('ionic.ui.toggle', [])
 
 // The Toggle directive is a toggle switch that can be tapped to change
 // its value
-.directive('toggle', function() {
+.directive('ionToggle', function() {
 
   return {
     restrict: 'E',
@@ -33490,7 +33787,19 @@ angular.module('ionic.ui.touch', [])
 
     };
 
-  }]);
+  }])
+
+  .directive('ionStopEvent', function () {
+    function stopEvent(e) {
+      e.stopPropagation();
+    }
+    return {
+      restrict: 'A',
+      link: function (scope, element, attr) {
+        element.bind(attr.ionStopEvent, stopEvent);
+      }
+    };
+  });
 
 
 })(window.angular, window.ionic);
@@ -33514,154 +33823,145 @@ angular.module('ionic.ui.touch', [])
  *
  */
 
-angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gesture'])
+angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gesture', 'ionic.ui.bindHtml'])
 
 /**
  * Our Nav Bar directive which updates as the controller state changes.
  */
-.directive('navBar', ['$ionicViewService', '$rootScope', '$animate', '$compile',
+.directive('ionNavBar', ['$ionicViewService', '$rootScope', '$animate', '$compile',
              function( $ionicViewService,   $rootScope,   $animate,   $compile) {
-
-  /**
-   * Perform an animation between one tab bar state and the next.
-   * Right now this just animates the titles.
-   */
-  var animate = function($scope, $element, oldTitle, data, cb) {
-    var title, nTitle, oTitle, titles = $element[0].querySelectorAll('.title');
-
-    var newTitle = data.title;
-    if(!oldTitle || oldTitle === newTitle) {
-      cb();
-      return;
-    }
-
-    // Clone the old title and add a new one so we can show two animating in and out
-    // add ng-leave and ng-enter during creation to prevent flickering when they are swapped during animation
-    title = angular.element(titles[0]);
-    oTitle = $compile('<h1 class="title" bind-html-unsafe="oldTitle"></h1>')($scope);
-    title.replaceWith(oTitle);
-    nTitle = $compile('<h1 class="title" bind-html-unsafe="currentTitle"></h1>')($scope);
-
-    var insert = $element[0].firstElementChild || null;
-
-    // Insert the new title
-    $animate.enter(nTitle, $element, insert && angular.element(insert), function() {
-      cb();
-    });
-
-    // Remove the old title
-    $animate.leave(angular.element(oTitle), function() {
-    });
-  };
 
   return {
     restrict: 'E',
     replace: true,
     scope: {
+      animation: '@',
       type: '@',
-      backButtonType: '@',
-      backButtonLabel: '@',
-      backButtonIcon: '@',
+      backType: '@backButtonType',
+      backLabel: '@backButtonLabel',
+      backIcon: '@backButtonIcon',
       alignTitle: '@'
     },
-    template: '<header class="bar bar-header nav-bar invisible">' +
-        '<div class="buttons"> ' +
-          '<button view-back class="back-button button hide" ng-if="enableBackButton"></button>' +
-          '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" class="button no-animation {{button.type}}" bind-html-unsafe="button.content"></button>' +
-        '</div>' +
-        '<h1 class="title" bind-html-unsafe="currentTitle"></h1>' +
-        '<div class="buttons" ng-if="rightButtons.length"> ' +
-          '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" class="button no-animation {{button.type}}" bind-html-unsafe="button.content"></button>' +
-        '</div>' +
-      '</header>',
+    controller: function() {},
+    template:
+    '<header class="bar bar-header nav-bar {{type}} {{isReverse ? \'reverse\' : \'\'}} ' +
+    '{{isInvisible ? \'invisible\' : \'\'}} {{animateEnabled ? animation : \'\'}}">' +
+      '<ion-nav-back-button ng-if="backButtonEnabled && (backType || backLabel || backIcon)" ' +
+        'type="backType" label="backLabel" icon="backIcon" class="invisible" ion-async-visible>' +
+      '</ion-nav-back-button>' +
+      '<div class="buttons left-buttons"> ' +
+        '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" ' +
+          'class="button no-animation {{button.type}}" ion-bind-html-unsafe="button.content">' +
+        '</button>' +
+      '</div>' +
 
+      //ng-repeat makes it easy to add new / remove old and have proper enter/leave anims
+      '<h1 ng-repeat="title in titles" ion-bind-html-unsafe="title" class="title invisible" ion-async-visible ion-nav-bar-title></h1>' +
+
+      '<div class="buttons right-buttons" ng-if="rightButtons.length"> ' +
+      '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" '+
+        'class="button no-animation {{button.type}}" ion-bind-html-unsafe="button.content">' +
+        '</button>' +
+      '</div>' +
+    '</header>',
     compile: function(tElement, tAttrs) {
-      var backBtnEle = tElement[0].querySelector('.back-button');
-      if(backBtnEle) {
-        if(tAttrs.backButtonType) backBtnEle.className += ' ' + tAttrs.backButtonType;
-
-        if(tAttrs.backButtonIcon && tAttrs.backButtonLabel) {
-          backBtnEle.innerHTML = '<i class="icon ' + tAttrs.backButtonIcon + '"></i> ' + tAttrs.backButtonLabel;
-        } else if(tAttrs.backButtonLabel) {
-          backBtnEle.innerHTML = tAttrs.backButtonLabel;
-        } else if(tAttrs.backButtonIcon) {
-          backBtnEle.className += ' icon ' + tAttrs.backButtonIcon;
-        }
-      }
-
-      if(tAttrs.type) tElement.addClass(tAttrs.type);
 
       return function link($scope, $element, $attr) {
-        var canHaveBackButton = !(!tAttrs.backButtonType && !tAttrs.backButtonLabel && !tAttrs.backButtonIcon);
-        $scope.enableBackButton = canHaveBackButton;
+        $scope.titles = [];
+        //defaults
+        $scope.backButtonEnabled = true;
+        $scope.animateEnabled = true;
+        $scope.isReverse = false;
+        $scope.isInvisible = true;
 
-        $rootScope.$on('viewState.showNavBar', function(e, showNavBar) {
-          if(showNavBar === false) {
-            $element[0].classList.add('invisible');
-          } else {
-            $element[0].classList.remove('invisible');
-          }
-        });
-
-        // Initialize our header bar view which will handle resizing and aligning our title labels
+        // Initialize our header bar view which will handle
+        // resizing and aligning our title labels
         var hb = new ionic.views.HeaderBar({
           el: $element[0],
           alignTitle: $scope.alignTitle || 'center'
         });
         $scope.headerBarView = hb;
 
-        var updateHeaderData = function(data) {
-          $scope.oldTitle = $scope.currentTitle;
-
-          $scope.currentTitle = (data && data.title ? data.title : '');
-
-          $scope.leftButtons = data.leftButtons;
-          $scope.rightButtons = data.rightButtons;
-
-          if(typeof data.hideBackButton !== 'undefined') {
-            $scope.enableBackButton = data.hideBackButton !== true && canHaveBackButton;
-          }
-
-          if(data.animate !== false && $attr.animation && data.title && data.navDirection) {
-
-            $element[0].classList.add($attr.animation);
-            if(data.navDirection === 'back') {
-              $element[0].classList.add('reverse');
-            } else {
-              $element[0].classList.remove('reverse');
-            }
-
-            animate($scope, $element, $scope.oldTitle, data, function() {
-              hb.align();
-            });
-          } else {
-            hb.align();
-          }
-        };
-
-        $rootScope.$on('viewState.viewEnter', function(e, data) {
+        //Navbar events
+        $scope.$on('viewState.viewEnter', function(e, data) {
           updateHeaderData(data);
         });
-
-        $rootScope.$on('viewState.titleUpdated', function(e, data) {
-          $scope.currentTitle = (data && data.title ? data.title : '');
+        $scope.$on('viewState.showNavBar', function(e, showNavBar) {
+          $scope.isInvisible = !showNavBar;
         });
 
-        // If a nav page changes the left or right buttons, update our scope vars
-        $scope.$parent.$on('viewState.leftButtonsChanged', function(e, data) {
-          $scope.leftButtons = data;
-        });
-        $scope.$parent.$on('viewState.rightButtonsChanged', function(e, data) {
-          $scope.rightButtons = data;
+        // All of these these are emitted from children of a sibling scope,
+        // so we listen on parent so we can catch them as they bubble up
+        var unregisterEventListeners = [
+          $scope.$parent.$on('$viewHistory.historyChange', function(e, data) {
+            $scope.backButtonEnabled = !!data.showBack;
+          }),
+          $scope.$parent.$on('viewState.leftButtonsChanged', function(e, data) {
+            $scope.leftButtons = data;
+          }),
+          $scope.$parent.$on('viewState.rightButtonsChanged', function(e, data) {
+            $scope.rightButtons = data;
+          }),
+          $scope.$parent.$on('viewState.showBackButton', function(e, data) {
+            $scope.backButtonEnabled = !!data;
+          }),
+          $scope.$parent.$on('viewState.titleUpdated', function(e, data) {
+            $scope.titles[$scope.titles.length - 1] = data && data.title || '';
+          })
+        ];
+        $scope.$on('$destroy', function() {
+          for (var i=0; i<unregisterEventListeners.length; i++)
+            unregisterEventListeners[i]();
         });
 
+        function updateHeaderData(data) {
+          var newTitle = data && data.title || '';
+
+          $scope.isReverse = data.navDirection == 'back';
+
+          if (data.hideBackButton) {
+            $scope.backButtonEnabled = false;
+          }
+
+          $scope.animateEnabled = !!(data.navDirection && data.animate !== false);
+          $scope.titles.length = 0;
+          $scope.titles.push(newTitle);
+          $scope.leftButtons = data.leftButtons;
+          $scope.rightButtons = data.rightButtons;
+        }
       };
     }
   };
 }])
 
+.directive('ionNavBarTitle', function() {
+  return {
+    restrict: 'A',
+    require: '^ionNavBar',
+    link: function($scope, $element, $attr, navBarCtrl) {
+      $scope.headerBarView && $scope.headerBarView.align();
+      $element.on('$animate:close', function() {
+        $scope.headerBarView && $scope.headerBarView.align();
+      });
+    }
+  };
+})
 
-.directive('view', ['$ionicViewService', '$rootScope', '$animate',
+/*
+ * Directive to put on an element that has 'invisible' class when rendered.
+ * This removes the visible class one frame later.
+ * Fixes flickering in iOS7 and old android.
+ * Used in title and back button
+ */
+.directive('ionAsyncVisible', function() {
+  return function($scope, $element) {
+    ionic.requestAnimationFrame(function() {
+      $element[0].classList.remove('invisible');
+    });
+  };
+})
+
+.directive('ionView', ['$ionicViewService', '$rootScope', '$animate',
            function( $ionicViewService,   $rootScope,   $animate) {
   return {
     restrict: 'EA',
@@ -33701,72 +34001,56 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
         $rootScope.$broadcast('viewState.showNavBar', ($scope.hideNavBar !== 'true') );
 
         // watch for changes in the left buttons
-        var deregLeftButtons = $scope.$watch('leftButtons', function(value) {
+        $scope.$watch('leftButtons', function(value) {
           $scope.$emit('viewState.leftButtonsChanged', $scope.leftButtons);
         });
 
-        var deregRightButtons = $scope.$watch('rightButtons', function(val) {
+        $scope.$watch('rightButtons', function(val) {
           $scope.$emit('viewState.rightButtonsChanged', $scope.rightButtons);
         });
 
         // watch for changes in the title
-        var deregTitle = $scope.$watch('title', function(val) {
+        $scope.$watch('title', function(val) {
           $scope.$emit('viewState.titleUpdated', $scope);
         });
-
-        $scope.$on('$destroy', function(){
-          // deregister on destroy
-          deregLeftButtons();
-          deregRightButtons();
-          deregTitle();
-        });
-
       };
     }
   };
 }])
 
 
-.directive('viewBack', ['$ionicViewService', '$rootScope', function($ionicViewService, $rootScope) {
-  var goBack = function(e) {
+.directive('ionNavBackButton', ['$ionicViewService', '$rootScope',
+                     function($ionicViewService,   $rootScope) {
+
+  function goBack(e) {
     var backView = $ionicViewService.getBackView();
     backView && backView.go();
     e.alreadyHandled = true;
     return false;
-  };
+  }
 
   return {
-    restrict: 'AC',
-    compile: function(tElement) {
-      tElement.addClass('hide');
-
-      return function link($scope, $element) {
-        $element.bind('click', goBack);
-
-        $scope.showButton = function(val) {
-          if(val) {
-            $element[0].classList.remove('hide');
-          } else {
-            $element[0].classList.add('hide');
-          }
-        };
-
-        $rootScope.$on('$viewHistory.historyChange', function(e, data) {
-          $scope.showButton(data.showBack);
-        });
-
-        $rootScope.$on('viewState.showBackButton', function(e, data) {
-          $scope.showButton(data);
-        });
-
-      };
+    restrict: 'E',
+    scope: {
+      type: '=',
+      label: '=',
+      icon: '='
+    },
+    replace: true,
+    template:
+    '<button ng-click="goBack($event)" class="button back-button {{type}} ' +
+      '{{(icon && !label) ? \'icon \' + icon : \'\'}}">' +
+      '<i ng-if="icon && label" class="icon {{icon}}"></i> ' +
+      '{{label}}' +
+    '</button>',
+    link: function($scope) {
+      $scope.goBack = goBack;
     }
-
   };
 }])
 
 
-.directive('navView', ['$ionicViewService', '$state', '$compile', '$controller', '$animate',
+.directive('ionNavView', ['$ionicViewService', '$state', '$compile', '$controller', '$animate',
               function( $ionicViewService,   $state,   $compile,   $controller,   $animate) {
   // IONIC's fork of Angular UI Router, v0.2.7
   // the navView handles registering views in the history, which animation to use, and which
@@ -33821,6 +34105,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           if (locals === viewLocals) return; // nothing to do
           var renderer = $ionicViewService.getRenderer(element, attr, scope);
 
+
           // Destroy previous view scope
           if (viewScope) {
             viewScope.$destroy();
@@ -33849,6 +34134,8 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           var link = $compile(newElement);
           viewScope = scope.$new();
 
+          viewScope.$navDirection = viewRegisterData.navDirection;
+
           if (locals.$$controller) {
             locals.$scope = viewScope;
             var controller = $controller(locals.$$controller, locals);
@@ -33876,7 +34163,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 
 angular.module('ionic.ui.virtRepeat', [])
 
-.directive('virtRepeat', function() {
+.directive('ionVirtRepeat', function() {
   return {
     require: ['?ngModel', '^virtualList'],
     transclude: 'element',
@@ -34026,7 +34313,7 @@ angular.module('ionic.ui.virtualRepeat', [])
  * scrolling to only render items that are showing or will be showing
  * if a scroll is made.
  */
-.directive('virtualRepeat', ['$log', function($log) {
+.directive('ionVirtualRepeat', ['$log', function($log) {
     return {
       require: ['?ngModel, ^virtualList'],
       transclude: 'element',
@@ -34230,14 +34517,16 @@ angular.module('ionic.ui.scroll')
 
 .controller('$ionicScroll', ['$scope', 'scrollViewOptions', '$timeout', '$ionicScrollDelegate', '$window', function($scope, scrollViewOptions, $timeout, $ionicScrollDelegate, $window) {
 
-  scrollViewOptions.bouncing = angular.isDefined(scrollViewOptions.bouncing) ?
-    scrollViewOptions.bouncing :
-    !ionic.Platform.isAndroid();
-
   var self = this;
 
   var element = this.element = scrollViewOptions.el;
   var scrollView = this.scrollView = new ionic.views.Scroll(scrollViewOptions);
+
+  if (!angular.isDefined(scrollViewOptions.bouncing)) {
+    ionic.Platform.ready(function() {
+      scrollView.options.bouncing = !ionic.Platform.isAndroid();
+    });
+  }
 
   var $element = this.$element = angular.element(element);
 
