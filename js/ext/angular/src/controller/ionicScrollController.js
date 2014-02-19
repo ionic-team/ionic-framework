@@ -44,8 +44,7 @@ angular.module('ionic.ui.scroll')
       scrollView.activatePullToRefresh(refresherHeight, function() {
         self.refresher.classList.add('active');
       }, function() {
-        self.refresher.classList.remove('refreshing');
-        self.refresher.classList.remove('active');
+        self.refresher.classList.remove('refreshing', 'active');
       }, function() {
         self.refresher.classList.add('refreshing');
         $scope.onRefresh && $scope.onRefresh();
