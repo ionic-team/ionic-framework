@@ -23,7 +23,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  * Our Nav Bar directive which updates as the controller state changes.
  */
 .directive('ionNavBar', ['$ionicViewService', '$rootScope', '$animate', '$compile',
-             function( $ionicViewService,   $rootScope,   $animate,   $compile) {
+                function( $ionicViewService,   $rootScope,   $animate,   $compile) {
 
   return {
     restrict: 'E',
@@ -40,9 +40,12 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     template:
     '<header class="bar bar-header nav-bar {{type}} {{isReverse ? \'reverse\' : \'\'}} ' +
     '{{isInvisible ? \'invisible\' : \'\'}} {{animateEnabled ? animation : \'\'}}">' +
+
       '<ion-nav-back-button ng-if="backButtonEnabled && (backType || backLabel || backIcon)" ' +
-        'type="backType" label="backLabel" icon="backIcon" class="invisible" ion-async-visible>' +
+        'type="backType" label="backLabelIsPreviousTitle ? previousTitle : backLabel" ' +
+        'icon="backIcon" class="invisible" ion-async-visible>' +
       '</ion-nav-back-button>' +
+
       '<div class="buttons left-buttons"> ' +
         '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" ' +
           'class="button no-animation {{button.type}}" ion-bind-html-unsafe="button.content">' +
@@ -58,9 +61,22 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
         '</button>' +
       '</div>' +
     '</header>',
-    compile: function(tElement, tAttrs) {
+    compile: function(tElement, attrs) {
 
       return function link($scope, $element, $attr) {
+        ionic.Platform.ready(function() {
+          if (angular.isUndefined($attr.backButtonType)) {
+            $scope.backType = 'button-icon';
+            $scope.backIcon = ionic.Platform.isAndroid() ?
+              'ion-chevron-left' :
+              'ion-ios7-arrow-back';
+            $scope.backLabelIsPreviousTitle = true;
+          }
+          if (angular.isUndefined($attr.animation)) {
+            $scope.animation = 'nav-title-slide-ios7';
+          }
+        });
+
         $scope.titles = [];
         //defaults
         $scope.backButtonEnabled = true;
@@ -99,8 +115,8 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           $scope.$parent.$on('viewState.showBackButton', function(e, data) {
             $scope.backButtonEnabled = !!data;
           }),
-          $scope.$parent.$on('viewState.titleUpdated', function(e, data) {
-            $scope.titles[$scope.titles.length - 1] = data && data.title || '';
+          $scope.$parent.$on('viewState.titleUpdated', function(e, title) {
+            setTitle(title);
           })
         ];
         $scope.$on('$destroy', function() {
@@ -108,9 +124,12 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
             unregisterEventListeners[i]();
         });
 
-        function updateHeaderData(data) {
-          var newTitle = data && data.title || '';
+        function setTitle(title) {
+          $scope.previousTitle = $scope.titles.pop() || '';
+          $scope.titles = [title || ''];
+        }
 
+        function updateHeaderData(data) {
           $scope.isReverse = data.navDirection == 'back';
 
           if (data.hideBackButton) {
@@ -118,10 +137,9 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           }
 
           $scope.animateEnabled = !!(data.navDirection && data.animate !== false);
-          $scope.titles.length = 0;
-          $scope.titles.push(newTitle);
           $scope.leftButtons = data.leftButtons;
           $scope.rightButtons = data.rightButtons;
+          setTitle(data.title);
         }
       };
     }
@@ -179,9 +197,10 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
       tElement[0].removeAttribute('title');
 
       return function link($scope, $element, $attr) {
+        var initialTitle = $scope.title;
 
         $rootScope.$broadcast('viewState.viewEnter', {
-          title: $scope.title,
+          title: initialTitle,
           navDirection: $scope.$navDirection || $scope.$parent.$navDirection
         });
 
@@ -203,9 +222,13 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           $scope.$emit('viewState.rightButtonsChanged', $scope.rightButtons);
         });
 
-        // watch for changes in the title
+        // watch for changes in the title.
+        // Don't emit unless the title is different from the initial value
+        // This stops double emit of title from viewState.viewEnter and then this watch
         $scope.$watch('title', function(val) {
-          $scope.$emit('viewState.titleUpdated', $scope);
+          if (val != initialTitle) {
+            $scope.$emit('viewState.titleUpdated', $scope.title);
+          }
         });
       };
     }
@@ -258,6 +281,14 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     controller: function() {}, //noop controller so this can be required
     compile: function (element, attr, transclude) {
       return function(scope, element, attr) {
+        ionic.Platform.ready(function() {
+          if (angular.isUndefined(attr.animation)) {
+            attr.$set('animation', true ?
+                      'slide-left-right' :
+                      'slide-left-right-ios7', true);
+          }
+        });
+
         var viewScope, viewLocals,
             name = attr[directive.name] || attr.name || '',
             onloadExp = attr.onload || '',

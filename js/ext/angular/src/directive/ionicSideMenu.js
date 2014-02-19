@@ -155,7 +155,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
       angular.isUndefined(attr.width) && attr.$set('width', '275');
 
       return function($scope, $element, $attr, sideMenuCtrl) {
-        $scope.side = $attr.side;
+        $scope.side = $attr.side || 'left';
 
         var sideMenu = sideMenuCtrl[$scope.side] = new ionic.views.SideMenu({
           width: 275,

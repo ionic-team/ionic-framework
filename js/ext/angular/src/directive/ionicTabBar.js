@@ -108,7 +108,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
         var tabs = $element[0].querySelector('.tabs');
 
         $scope.tabsType = $attr.tabsType || 'tabs-positive';
-        $scope.tabsStyle = $attr.tabsStyle;
+        $scope.tabsStyle = $attr.tabsStyle || 'tabs-icon-only';
         $scope.animation = $attr.animation;
 
         $scope.animateNav = $scope.$eval($attr.animateNav);

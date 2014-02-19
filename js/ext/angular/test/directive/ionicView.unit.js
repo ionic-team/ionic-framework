@@ -120,7 +120,7 @@ describe('Ionic View', function() {
     title = navBar.find('h1');
     expect(title.text().trim()).toEqual('New Title');
 
-    scope.$broadcast('viewState.titleUpdated', { title: 'Event Title' });
+    scope.$broadcast('viewState.titleUpdated', 'Event Title');
     scope.$digest();
     title = navBar.find('h1');
     expect(title.text().trim()).toEqual('Event Title');
