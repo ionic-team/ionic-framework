@@ -20,6 +20,7 @@
 }
 
 .menu-content {
+  @include transform(none);
   box-shadow: $menu-side-shadow;
 }
 
