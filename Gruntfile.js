@@ -194,14 +194,15 @@ module.exports = function(grunt) {
     'build'
   ]);
 
+  //NOTE(ajoslin): the order of these tasks is very important.
   grunt.registerTask('build', [
     'sass',
-    'cssmin',
     'concat:dist',
     'concat:distangular',
     'copy',
     'string-replace',
     'version',
+    'cssmin',
     'concat:bundle',
     'removelogging',
     'uglify',
