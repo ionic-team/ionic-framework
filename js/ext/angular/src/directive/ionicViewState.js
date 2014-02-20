@@ -40,9 +40,11 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     template:
     '<header class="bar bar-header nav-bar {{type}} {{isReverse ? \'reverse\' : \'\'}} ' +
     '{{isInvisible ? \'invisible\' : \'\'}} {{animateEnabled ? animation : \'\'}}">' +
-      '<ion-nav-back-button ng-if="backButtonEnabled && (backType || backLabel || backIcon)" ' +
-        'type="backType" label="backLabel" icon="backIcon" class="invisible" ion-async-visible>' +
+
+      '<ion-nav-back-button ng-show="backButtonEnabled && (backType || backLabel || backIcon)" ' +
+        'type="backType" label="backLabel" icon="backIcon" class="ng-hide">' +
       '</ion-nav-back-button>' +
+
       '<div class="buttons left-buttons"> ' +
         '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" ' +
           'class="button no-animation {{button.type}}" ion-bind-html-unsafe="button.content">' +
@@ -50,7 +52,9 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
       '</div>' +
 
       //ng-repeat makes it easy to add new / remove old and have proper enter/leave anims
-      '<h1 ng-repeat="title in titles" ion-bind-html-unsafe="title" class="title invisible" ion-async-visible ion-nav-bar-title></h1>' +
+      '<h1 ng-repeat="title in titles" class="title title-animate-no-flicker" ' +
+        'ion-bind-html-unsafe="title" ion-nav-bar-title>' +
+      '</h1>' +
 
       '<div class="buttons right-buttons" ng-if="rightButtons.length"> ' +
       '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" '+
@@ -63,7 +67,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
       return function link($scope, $element, $attr) {
         $scope.titles = [];
         //defaults
-        $scope.backButtonEnabled = true;
+        $scope.backButtonEnabled = false;
         $scope.animateEnabled = true;
         $scope.isReverse = false;
         $scope.isInvisible = true;
@@ -88,7 +92,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
         // so we listen on parent so we can catch them as they bubble up
         var unregisterEventListeners = [
           $scope.$parent.$on('$viewHistory.historyChange', function(e, data) {
-            $scope.backButtonEnabled = !!data.showBack;
+            setBackButton(!!data.showBack);
           }),
           $scope.$parent.$on('viewState.leftButtonsChanged', function(e, data) {
             $scope.leftButtons = data;
@@ -97,7 +101,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
             $scope.rightButtons = data;
           }),
           $scope.$parent.$on('viewState.showBackButton', function(e, data) {
-            $scope.backButtonEnabled = !!data;
+            setBackButton(!!data);
           }),
           $scope.$parent.$on('viewState.titleUpdated', function(e, data) {
             $scope.titles[$scope.titles.length - 1] = data && data.title || '';
@@ -108,13 +112,17 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
             unregisterEventListeners[i]();
         });
 
+        function setBackButton(isShown) {
+          $scope.backButtonEnabled = isShown;
+        }
+
         function updateHeaderData(data) {
           var newTitle = data && data.title || '';
 
           $scope.isReverse = data.navDirection == 'back';
 
-          if (data.hideBackButton) {
-            $scope.backButtonEnabled = false;
+          if (angular.isDefined(data.hideBackButton)) {
+            setBackButton(!data.hideBackButton);
           }
 
           $scope.animateEnabled = !!(data.navDirection && data.animate !== false);
@@ -133,25 +141,14 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     restrict: 'A',
     require: '^ionNavBar',
     link: function($scope, $element, $attr, navBarCtrl) {
-      $scope.headerBarView && $scope.headerBarView.align();
+      ionic.requestAnimationFrame(function() {
+        $element.removeClass('title-animate-no-flicker');
+        $scope.headerBarView && $scope.headerBarView.align();
+      });
       $element.on('$animate:close', function() {
         $scope.headerBarView && $scope.headerBarView.align();
       });
     }
-  };
-})
-
-/*
- * Directive to put on an element that has 'invisible' class when rendered.
- * This removes the visible class one frame later.
- * Fixes flickering in iOS7 and old android.
- * Used in title and back button
- */
-.directive('ionAsyncVisible', function() {
-  return function($scope, $element) {
-    ionic.requestAnimationFrame(function() {
-      $element[0].classList.remove('invisible');
-    });
   };
 })
 
@@ -216,13 +213,6 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 .directive('ionNavBackButton', ['$ionicViewService', '$rootScope',
                      function($ionicViewService,   $rootScope) {
 
-  function goBack(e) {
-    var backView = $ionicViewService.getBackView();
-    backView && backView.go();
-    e.alreadyHandled = true;
-    return false;
-  }
-
   return {
     restrict: 'E',
     scope: {
@@ -237,8 +227,19 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
       '<i ng-if="icon && label" class="icon {{icon}}"></i> ' +
       '{{label}}' +
     '</button>',
-    link: function($scope) {
-      $scope.goBack = goBack;
+    link: function($scope, $element) {
+      $scope.goBack = function(e) {
+        var backView = $ionicViewService.getBackView();
+        backView && backView.go();
+        e.alreadyHandled = true;
+
+        $element.addClass('active');
+        return false;
+      };
+
+      $element.on('$animate:close', function() {
+        $element.removeClass('active');
+      });
     }
   };
 }])

@@ -159,17 +159,20 @@
 
 .button-icon {
   @include transition(opacity .1s);
+  // Opacity transition 'bounce/bump' fix in Chrome
+  // http://stackoverflow.com/questions/12980153/
+  @include backface-visibility(hidden);
   padding: 0 6px;
   min-width: initial;
   border-color: transparent;
   background: none;
 
-  &.button:active, 
+  &.button:active,
   &.button.active {
     border-color: transparent;
     background: none;
     box-shadow: none;
-    opacity: 0.3;
+    opacity: $button-icon-active-opacity;
   }
 
   .icon:before,
@@ -181,6 +184,9 @@
 .button-clear {
   @include button-clear($button-default-border);
   @include transition(opacity .1s);
+  // Opacity transition 'bounce/bump' fix in Chrome
+  // http://stackoverflow.com/questions/12980153/
+  @include backface-visibility(hidden);
   padding: 0 $button-clear-padding;
   max-height: $button-height;
   border-color: transparent;
@@ -188,7 +194,7 @@
   box-shadow: none;
 
   &:active, &.active {
-    opacity: 0.3;
+    opacity: $button-icon-active-opacity;
   }
 }
 
@@ -206,8 +212,8 @@
 .button-block {
   display: block;
   clear: both;
-  
-  &:after { 
+
+  &:after {
     clear: both;
   }
 }

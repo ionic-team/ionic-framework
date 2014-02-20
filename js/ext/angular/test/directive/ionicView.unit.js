@@ -51,23 +51,25 @@ describe('Ionic View', function() {
     function backButton() {
       return angular.element(element[0].querySelector('.back-button'));
     };
-    expect(backButton().length).toEqual(1);
+    //hidden by default
+    expect(backButton().hasClass('ng-hide')).toBe(true);
 
     scope.$broadcast('viewState.showBackButton', false);
     scope.$apply();
-    expect(backButton().length).toEqual(0);
+    expect(backButton().hasClass('ng-hide')).toBe(true);
 
     scope.$broadcast('viewState.showBackButton', true);
     scope.$apply();
     expect(backButton().length).toEqual(1);
+    expect(backButton().hasClass('ng-hide')).toBe(false);
 
     scope.$broadcast('$viewHistory.historyChange', { showBack: false });
     scope.$apply();
-    expect(backButton().length).toEqual(0);
+    expect(backButton().hasClass('ng-hide')).toBe(true);
 
     scope.$broadcast('$viewHistory.historyChange', { showBack: true });
     scope.$apply();
-    expect(backButton().length).toEqual(1);
+    expect(backButton().hasClass('ng-hide')).toBe(false);
   });
 
   it('should show/hide navBar', function() {
@@ -193,7 +195,7 @@ describe('Ionic View', function() {
     var element = compile('<ion-nav-bar></ion-nav-bar>')(scope);
     scope.$digest();
     var backButton = angular.element(element[0].querySelector('.back-button'));
-    expect(backButton.length).toEqual(0);
+    expect(backButton.hasClass('ng-hide')).toBe(true);
   });
 
   it('should have the back button if back-button-type attributes set', function() {

@@ -140,14 +140,14 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
 // Spin
 // -------------------------------
 
-@-webkit-keyframes spin { 
-  100% { -webkit-transform: rotate(360deg); } 
+@-webkit-keyframes spin {
+  100% { -webkit-transform: rotate(360deg); }
 }
-@-moz-keyframes spin { 
-  100% { -moz-transform: rotate(360deg); } 
+@-moz-keyframes spin {
+  100% { -moz-transform: rotate(360deg); }
 }
-@keyframes spin { 
-  100% { transform: rotate(360deg); } 
+@keyframes spin {
+  100% { transform: rotate(360deg); }
 }
 
 .no-animation {
@@ -181,7 +181,7 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
  */
 
 .slide-left-right {
-  > .ng-enter, &.ng-enter, 
+  > .ng-enter, &.ng-enter,
   > .ng-leave, &.ng-leave {
     @include transition(all ease-in-out $transition-duration);
     position: absolute;
@@ -229,14 +229,14 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
 
 
 /**
- * iOS7 style slide left to right 
+ * iOS7 style slide left to right
  * --------------------------------------------------
  */
 $ios7-timing-function: ease-in-out;
 $ios7-transition-duration: 250ms;
 
 .slide-left-right-ios7 {
-  > .ng-enter, &.ng-enter, 
+  > .ng-enter, &.ng-enter,
   > .ng-leave, &.ng-leave {
     @include transition(all $ios7-timing-function $ios7-transition-duration);
     position: absolute;
@@ -260,7 +260,7 @@ $ios7-transition-duration: 250ms;
     /* OLD content ACTIVELY sliding OUT to the LEFT */
     @include translate3d(-15%, 0, 0);
   }
-  
+
   &.reverse {
     > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
       @include transition(all $ios7-timing-function $ios7-transition-duration);
@@ -472,42 +472,102 @@ $ios7-transition-duration: 250ms;
  */
 $nav-title-slide-ios7-delay: 250ms;
 .nav-title-slide-ios7 {
-  > .ng-enter, &.ng-enter, 
-  > .ng-leave, &.ng-leave {
-    @include transition(all $nav-title-slide-ios7-delay);
-    @include transition-timing-function($ios7-timing-function);
+  // Initial class used on animated titles to keep them invisible initially so they don't 
+  // flicker on top of existing titles on iOS
+  // When title is not animated, the class does nothing
+  > .title.title-animate-no-flicker {
+    visibility: hidden;
+  }
+
+  > .ng-enter, &.ng-enter,
+  > .ng-leave, &.ng-leave,
+  > .ng-hide-add,
+  > .ng-hide-remove {
+    @include transition-duration($nav-title-slide-ios7-delay);
+    @include transition-property(opacity);
+    // Only title transitions translate3d
+    &.title {
+      @include transition-property(all);
+    }
+    // ng-hide has display: none !important; on it by default
+    display: block !important;
+  }
+
+  > .ng-leave, &.ng-leave,
+  > .ng-hide-add {
     opacity: 1;
+    // An active button shouldn't start at 1 opacity; it's already at 0.3
+    // in navBackButton directive, when back button is clicked it gets active class
+    // added to it and keeps it for the duration of the animation
+    &.button-icon.active {
+      opacity: $button-icon-active-opacity;
+    }
+    &.title {
+      @include translate3d(0, 0, 0);
+    }
   }
-  > .ng-enter, &.ng-enter {
-    @include translate3d(30%, 0, 0);
+
+  > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active,
+  > .ng-hide-add.ng-hide-add-active {
     opacity: 0;
+    &.title {
+      @include translate3d(-30%, 0, 0);
+    }
   }
-  > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
-    @include translate3d(0, 0, 0);
+
+  > .ng-enter, &.ng-enter,
+  > .ng-hide-remove {
+    opacity: 0;
+    &.title {
+      @include translate3d(30%, 0, 0);
+    }
+  }
+  > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active,
+  > .ng-hide-remove.ng-hide-remove-active {
     opacity: 1;
-  }
-  > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
-    @include translate3d(-30%, 0, 0);
-    opacity: 0;
+    &.title {
+      @include translate3d(0, 0, 0);
+    }
   }
 
   &.reverse {
-    > .ng-enter, &.ng-enter, 
-    > .ng-leave, &.ng-leave {
-      @include transition(all ease-in-out $transition-duration);
-      opacity: 1;
+    > .ng-enter, &.ng-enter,
+    > .ng-leave, &.ng-leave,
+    > .ng-hide-add,
+    > .ng-hide-remove {
+      &.title {
+        @include transition(all ease-in-out $transition-duration);
+      }
     }
-    > .ng-enter, &.ng-enter {
-      @include translate3d(-30%, 0, 0);
+
+    > .ng-enter, &.ng-enter,
+    > .ng-hide-remove {
       opacity: 0;
+      &.title {
+        @include translate3d(-30%, 0, 0);
+      }
     }
-    > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
-      @include translate3d(0, 0, 0);
+    > .ng-leave, &.ng-leave,
+    > .ng-hide-add {
       opacity: 1;
+      &.title {
+        @include translate3d(0, 0, 0);
+      }
     }
-    > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
-      @include translate3d(30%, 0, 0);
+
+    > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active,
+    > .ng-hide-remove.ng-hide-remove-active {
+      opacity: 1;
+      &.title {
+        @include translate3d(0, 0, 0);
+      }
+    }
+    > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active,
+    > .ng-hide-add.ng-hide-add-active {
       opacity: 0;
+      &.title {
+        @include translate3d(30%, 0, 0);
+      }
     }
   }
 }
