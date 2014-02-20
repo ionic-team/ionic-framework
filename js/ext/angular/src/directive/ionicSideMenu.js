@@ -111,7 +111,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
             return $scope.sideMenuContentTranslateX || 0;
           },
           setTranslateX: ionic.animationFrameThrottle(function(amount) {
-            $element[0].style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
+            $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + amount + 'px, 0, 0)';
             $timeout(function() {
               $scope.sideMenuContentTranslateX = amount;
             });
