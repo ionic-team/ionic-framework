@@ -76,9 +76,9 @@ module.exports = function(grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: 'dist/js/',
-          src: ['*.js'],
-          dest: '.'
+          cwd: '.',
+          src: ['dist/js/*.js', '!dist/js/*.min.js'],
+          dest: './dist/js'
         }],
         options: {
           methods: 'log info assert count clear group groupEnd groupCollapsed trace debug dir dirxml profile profileEnd time timeEnd timeStamp table exception'.split(' ')
@@ -199,9 +199,10 @@ module.exports = function(grunt) {
     'concat:distangular',
     'copy',
     'string-replace',
-    'uglify',
     'version',
     'concat:bundle',
+    'removelogging',
+    'uglify',
     'concat:bundlemin'
   ]);
 
