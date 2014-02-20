@@ -51,23 +51,23 @@ describe('Ionic View', function() {
     function backButton() {
       return angular.element(element[0].querySelector('.back-button'));
     };
-    expect(backButton().length).toEqual(1);
+    expect(backButton().hasClass('hide')).toEqual(true);
 
     scope.$broadcast('viewState.showBackButton', false);
     scope.$apply();
-    expect(backButton().length).toEqual(0);
+    expect(backButton().hasClass('hide')).toEqual(true);
 
     scope.$broadcast('viewState.showBackButton', true);
     scope.$apply();
-    expect(backButton().length).toEqual(1);
+    expect(backButton().hasClass('hide')).toEqual(false);
 
     scope.$broadcast('$viewHistory.historyChange', { showBack: false });
     scope.$apply();
-    expect(backButton().length).toEqual(0);
+    expect(backButton().hasClass('hide')).toEqual(true);
 
     scope.$broadcast('$viewHistory.historyChange', { showBack: true });
     scope.$apply();
-    expect(backButton().length).toEqual(1);
+    expect(backButton().hasClass('hide')).toEqual(false);
   });
 
   it('should show/hide navBar', function() {
@@ -113,7 +113,7 @@ describe('Ionic View', function() {
     scope.$digest();
     var navBar = element.find('header');
     var title = navBar.find('h1');
-    expect(title.text().trim()).toEqual('Title');
+    expect(element.find('header').find('h1').text().trim()).toEqual('Title');
 
     scope.viewTitle = 'New Title';
     scope.$digest();
