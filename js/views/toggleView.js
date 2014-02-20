@@ -41,7 +41,7 @@
         } else {
           var openPixel = Math.round( (openPercent / 100) * this.track.offsetWidth - (this.handle.offsetWidth) );
           openPixel = (openPixel < 1 ? 0 : openPixel);
-          this.handle.style.webkitTransform = 'translate3d(' + openPixel + 'px,0,0)';
+          this.handle.style[ionic.CSS.TRANSFORM] = 'translate3d(' + openPixel + 'px,0,0)';
         }
       }
     },
@@ -52,8 +52,8 @@
 
     val: function(value) {
       if(value === true || value === false) {
-        if(this.handle.style.webkitTransform !== "") {
-          this.handle.style.webkitTransform = "";
+        if(this.handle.style[ionic.CSS.TRANSFORM] !== "") {
+          this.handle.style[ionic.CSS.TRANSFORM] = "";
         }
         this.checkbox.checked = value;
         this.openPercent = (value ? 100 : 0);

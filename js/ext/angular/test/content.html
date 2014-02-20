@@ -149,7 +149,7 @@
           if(scrollTop > startTop) {
             var diff = scrollTop - startTop;
             console.log(diff);
-            header.style.webkitTransform = 'translate3d(0px, -' + diff + 'px, 0)';
+            header.style[ionic.CSS.TRANSFORM] = 'translate3d(0px, -' + diff + 'px, 0)';
             content.style.marginTop = -diff + 'px';
           }
           console.log('Scroll', scrollTop, scrollLeft);

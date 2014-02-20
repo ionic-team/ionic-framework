@@ -45,7 +45,7 @@
     content.classList.remove(ITEM_SLIDING_CLASS);
 
     // Grab the starting X point for the item (for example, so we can tell whether it is open or closed to start)
-    offsetX = parseFloat(content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
+    offsetX = parseFloat(content.style[ionic.CSS.TRANSFORM].replace('translate3d(', '').split(',')[0]) || 0;
 
     // Grab the buttons
     buttons = content.parentNode.querySelector('.' + ITEM_OPTIONS_CLASS);
@@ -91,7 +91,7 @@
         newX = Math.min(-buttonsWidth, -buttonsWidth + (((e.gesture.deltaX + buttonsWidth) * 0.4)));
       }
 
-      this._currentDrag.content.style.webkitTransform = 'translate3d(' + newX + 'px, 0, 0)';
+      this._currentDrag.content.style[ionic.CSS.TRANSFORM] = 'translate3d(' + newX + 'px, 0, 0)';
       this._currentDrag.content.style.webkitTransition = 'none';
     }
   });
@@ -132,17 +132,17 @@
     // };
 
     ionic.requestAnimationFrame(function() {
-      // var currentX = parseFloat(_this._currentDrag.content.style.webkitTransform.replace('translate3d(', '').split(',')[0]) || 0;
+      // var currentX = parseFloat(_this._currentDrag.content.style[ionic.CSS.TRANSFORM].replace('translate3d(', '').split(',')[0]) || 0;
       // if(currentX !== restingPoint) {
       //   _this._currentDrag.content.classList.add(ITEM_SLIDING_CLASS);
       //   _this._currentDrag.content.addEventListener('webkitTransitionEnd', onRestingAnimationEnd);
       // }
       if(restingPoint === 0) {
-        _this._currentDrag.content.style.webkitTransform = '';
+        _this._currentDrag.content.style[ionic.CSS.TRANSFORM] = '';
       } else {
-        _this._currentDrag.content.style.webkitTransform = 'translate3d(' + restingPoint + 'px, 0, 0)';
+        _this._currentDrag.content.style[ionic.CSS.TRANSFORM] = 'translate3d(' + restingPoint + 'px, 0, 0)';
       }
-      _this._currentDrag.content.style.webkitTransition = '';
+      _this._currentDrag.content.style[ionic.CSS.TRANSFORM] = '';
 
 
       // Kill the current drag
@@ -166,7 +166,7 @@
 
   ReorderDrag.prototype._moveElement = function(e) {
     var y = (e.gesture.center.pageY - this._currentDrag.elementHeight/2);
-    this.el.style.webkitTransform = 'translate3d(0, '+y+'px, 0)';
+    this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(0, '+y+'px, 0)';
   };
 
   ReorderDrag.prototype.start = function(e) {
@@ -174,7 +174,7 @@
 
 
     // Grab the starting Y point for the item
-    var offsetY = this.el.offsetTop;//parseFloat(this.el.style.webkitTransform.replace('translate3d(', '').split(',')[1]) || 0;
+    var offsetY = this.el.offsetTop;//parseFloat(this.el.style[ionic.CSS.TRANSFORM].replace('translate3d(', '').split(',')[1]) || 0;
 
     var startIndex = ionic.DomUtil.getChildIndex(this.el, this.el.nodeName.toLowerCase());
     var elementHeight = this.el.offsetHeight;
@@ -278,7 +278,7 @@
 
     // Reposition the element
     this.el.classList.remove(ITEM_REORDERING_CLASS);
-    this.el.style.webkitTransform = '';
+    this.el.style[ionic.CSS.TRANSFORM] = '';
 
     placeholder.parentNode.insertBefore(this.el, placeholder);
     placeholder.parentNode.removeChild(placeholder);

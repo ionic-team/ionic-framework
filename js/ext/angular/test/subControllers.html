@@ -88,7 +88,7 @@
         endDrag: function(e) {},
         getTranslateX: function() {
           var r = /translate3d\((-?.+)px/;
-          var d = r.exec(this.el.style.webkitTransform);
+          var d = r.exec(this.el.style[ionic.CSS.TRANSFORM]);
 
           if(d && d.length > 0) {
             return parseFloat(d[1]);
@@ -96,7 +96,7 @@
           return 0;
         },
         setTranslateX: function(amount) {
-          this.el.style.webkitTransform = 'translate3d(' + amount + 'px, 0, 0)';
+          this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + amount + 'px, 0, 0)';
         },
         enableAnimation: function() {
           this.el.classList.add(this.animateClass);

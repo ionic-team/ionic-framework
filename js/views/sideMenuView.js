@@ -57,10 +57,10 @@
       this.el.classList.add(this.animationClass);
     },
     getTranslateX: function() {
-      return parseFloat(this.el.style.webkitTransform.replace('translate3d(', '').split(',')[0]);
+      return parseFloat(this.el.style[ionic.CSS.TRANSFORM].replace('translate3d(', '').split(',')[0]);
     },
     setTranslateX: ionic.animationFrameThrottle(function(x) {
-      this.el.style.webkitTransform = 'translate3d(' + x + 'px, 0, 0)';
+      this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + x + 'px, 0, 0)';
     })
   });
 
