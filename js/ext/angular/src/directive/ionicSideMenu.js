@@ -39,7 +39,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
     }],
     replace: true,
     transclude: true,
-    template: '<div class="pane" ng-transclude></div>'
+    template: '<div class="view" ng-transclude></div>'
   };
 })
 
