@@ -5,12 +5,11 @@
   ionic.CSS = {};
 
   (function() {
-    var d = document.createElement('div');
     var keys = ['webkitTransform', 'transform', '-webkit-transform', 'webkit-transform',
                 '-moz-transform', 'moz-transform', 'MozTransform', 'mozTransform'];
 
     for(var i = 0; i < keys.length; i++) {
-      if(d.style[keys[i]] !== undefined) {
+      if(document.documentElement.style[keys[i]] !== undefined) {
         ionic.CSS.TRANSFORM = keys[i];
         break;
       }
