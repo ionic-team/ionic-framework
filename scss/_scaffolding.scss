@@ -14,7 +14,7 @@ a {
   -webkit-user-drag: none;
   -webkit-tap-highlight-color: transparent;
 
-  &:hover {
+  &[href]:hover {
     cursor: pointer;
   }
 }

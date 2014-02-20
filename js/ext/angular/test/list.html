@@ -115,7 +115,7 @@
               option-buttons="optionButtons1">
 
           <!-- shows that the item directive does not need attributes and can get values from the list attributes -->
-          <ion-item ion-item="item" ng-click="itemClick()" class="item-message" ng-repeat="item in items" ng-class="{ active: item.isActive}">
+          <ion-item ion-item="item" ng-href="#" ng-click="itemClick()" class="item-message" ng-repeat="item in items" ng-class="{ active: item.isActive}">
             <img ng-src="{{item.face}}">
             <h2>{{item.from}}</h2>
             <p>{{item.text}}</p>
