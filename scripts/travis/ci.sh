@@ -45,7 +45,7 @@ function run {
     echo "-- This is a pull request build; will not push build out."
     exit 0
   fi
-  
+
   LATEST_TAG_COMMIT=$(git rev-list $(git describe --tags --abbrev=0) | head -n 1)
 
   if [[ "$TRAVIS_COMMIT" == "$LATEST_TAG_COMMIT" ]]; then
@@ -64,9 +64,8 @@ function run {
     ./scripts/travis/bump-nightly-version.sh
   fi
 
-  # Build (make sure to build after version is bumped)
+  # Build (we are sure to build after version is bumped)
   grunt build
-  grunt removelogging
 
   # Version label used on the CDN: nightly or the version name
   if [[ $IS_RELEASE == "true" ]]; then
