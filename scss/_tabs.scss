@@ -104,6 +104,10 @@
   font-family: $font-family-light-sans-serif;
 
   opacity: 0.7;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .tabs-icon-top .tab-item,
