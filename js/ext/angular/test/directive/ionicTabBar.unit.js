@@ -199,8 +199,8 @@ describe('tabs', function() {
 
     it('Default icon works', function() {
       scope.$digest();
-      var i = element[0].querySelectorAll('i')[1];
-      expect(angular.element(i).hasClass('icon-default')).toEqual(true);
+      var span = element[0].querySelectorAll('span')[1];
+      expect(angular.element(span).hasClass('icon-default')).toEqual(true);
     });
 
     it('Badge works', function() {
@@ -215,8 +215,8 @@ describe('tabs', function() {
     it('Badge updates', function() {
       scope.badgeValue = 10;
       scope.$digest();
-      var i = element[0].querySelectorAll('i')[0];
-      expect(i.innerHTML).toEqual('10');
+      var span = element[0].querySelectorAll('span')[0];
+      expect(span.innerHTML).toEqual('10');
     });
 
     it('Click sets correct tab index', function() {
@@ -266,7 +266,10 @@ describe('tabs', function() {
     }));
 
     it('Icon title works as html', function() {
-      expect(element.find('a').find('span').html()).toEqual('Icon <b>title</b>');
+      var a = element.find('a');
+      var spans = a.find('span');
+      var lastSpan = spans.eq(spans.length - 1);
+      expect(lastSpan.html()).toEqual('Icon <b>title</b>');
     });
 
     it('Icon classes works', function() {
