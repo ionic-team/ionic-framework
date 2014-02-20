@@ -30,6 +30,7 @@ module.exports = function(grunt) {
           'dist/js/ionic.js',
           'config/lib/js/angular/angular.js',
           'config/lib/js/angular/angular-animate.js',
+          'config/lib/js/angular/angular-sanitize.js',
           'config/lib/js/angular-ui/angular-ui-router.js',
           'dist/js/ionic-angular.js'
         ],
@@ -43,6 +44,7 @@ module.exports = function(grunt) {
           'dist/js/ionic.min.js',
           'config/lib/js/angular/angular.min.js',
           'config/lib/js/angular/angular-animate.min.js',
+          'config/lib/js/angular/angular-sanitize.min.js',
           'config/lib/js/angular-ui/angular-ui-router.min.js',
           'dist/js/ionic-angular.min.js'
         ],

@@ -22,7 +22,6 @@ angular.module('ionic.ui.service', [
 ]);
 
 angular.module('ionic.ui', [
-                            'ionic.ui.bindHtml',
                             'ionic.ui.content',
                             'ionic.ui.scroll',
                             'ionic.ui.tabs',
@@ -45,5 +44,6 @@ angular.module('ionic', [
 
     // Angular deps
     'ngAnimate',
+    'ngSanitize',
     'ui.router'
 ]);

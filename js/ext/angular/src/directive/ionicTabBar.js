@@ -1,4 +1,4 @@
-angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
+angular.module('ionic.ui.tabs', ['ionic.service.view', 'ngSanitize'])
 
 /**
  * @description
@@ -304,7 +304,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ionic.ui.bindHtml'])
         '<i class="icon {{icon}}" ng-if="icon"></i>' +
         '<i class="{{iconOn}}" ng-if="active"></i>' +
         '<i class="{{iconOff}}" ng-if="!active"></i>' +
-        '<span ion-bind-html-unsafe="iconTitle"></span>' +
+        '<span ng-bind-html="iconTitle"></span>' +
       '</a>'
   };
 }]);

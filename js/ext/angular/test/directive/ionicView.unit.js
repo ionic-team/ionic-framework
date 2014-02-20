@@ -3,6 +3,7 @@
 describe('Ionic View', function() {
   var compile, scope, listElement, listCtrl;
 
+  beforeEach(module('ngSanitize'));
   beforeEach(module('ionic.ui.viewState'));
 
   beforeEach(inject(function($compile, $rootScope, $controller) {

@@ -17,6 +17,7 @@ module.exports = function(config) {
       'http://codeorigin.jquery.com/jquery-1.10.2.min.js',
       'config/lib/js/angular/angular.js',
       'config/lib/js/angular/angular-animate.js',
+      'config/lib/js/angular/angular-sanitize.js',
       'config/lib/js/angular/angular-mocks.js',
       'config/lib/js/angular-ui/angular-ui-router.js'
     ]

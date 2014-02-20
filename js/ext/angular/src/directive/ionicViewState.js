@@ -17,7 +17,7 @@
  *
  */
 
-angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gesture', 'ionic.ui.bindHtml'])
+angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gesture', 'ngSanitize'])
 
 /**
  * Our Nav Bar directive which updates as the controller state changes.
@@ -45,16 +45,16 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
       '</ion-nav-back-button>' +
       '<div class="buttons left-buttons"> ' +
         '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" ' +
-          'class="button no-animation {{button.type}}" ion-bind-html-unsafe="button.content">' +
+          'class="button no-animation {{button.type}}" ng-bind-html="button.content">' +
         '</button>' +
       '</div>' +
 
       //ng-repeat makes it easy to add new / remove old and have proper enter/leave anims
-      '<h1 ng-repeat="title in titles" ion-bind-html-unsafe="title" class="title invisible" ion-async-visible ion-nav-bar-title></h1>' +
+      '<h1 ng-repeat="title in titles" ng-bind-html="title" class="title invisible" ion-async-visible ion-nav-bar-title></h1>' +
 
       '<div class="buttons right-buttons" ng-if="rightButtons.length"> ' +
       '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" '+
-        'class="button no-animation {{button.type}}" ion-bind-html-unsafe="button.content">' +
+        'class="button no-animation {{button.type}}" ng-bind-html="button.content">' +
         '</button>' +
       '</div>' +
     '</header>',

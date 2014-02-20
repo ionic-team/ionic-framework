@@ -1,7 +1,7 @@
 (function(ionic) {
 'use strict';
 
-angular.module('ionic.ui.header', ['ngAnimate'])
+angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
 
 .directive('barHeader', ['$ionicScrollDelegate', function($ionicScrollDelegate) {
   return {
@@ -20,12 +20,12 @@ angular.module('ionic.ui.header', ['ngAnimate'])
     transclude: true,
     template: '<header class="bar bar-header">\
                 <div class="buttons">\
-                  <button ng-repeat="button in leftButtons" class="button no-animation" ng-class="button.type" ng-click="button.tap($event, $index)" ion-bind-html-unsafe="button.content">\
+                  <button ng-repeat="button in leftButtons" class="button no-animation" ng-class="button.type" ng-click="button.tap($event, $index)" ng-bind-html="button.content">\
                   </button>\
                 </div>\
-                <h1 class="title" ion-bind-html-unsafe="title"></h1>\
+                <h1 class="title" ng-bind-html="title"></h1>\
                 <div class="buttons">\
-                  <button ng-repeat="button in rightButtons" class="button no-animation" ng-class="button.type" ng-click="button.tap($event, $index)" ion-bind-html-unsafe="button.content">\
+                  <button ng-repeat="button in rightButtons" class="button no-animation" ng-class="button.type" ng-click="button.tap($event, $index)" ng-bind-html="button.content">\
                   </button>\
                 </div>\
               </header>',
