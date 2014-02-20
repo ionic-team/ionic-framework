@@ -376,12 +376,16 @@ button.item.item-button-right {
  */
 
 a.item, 
-button.item {
+button.item,
+.item a[href].item-content,
+.item[ng-click] a.item-content {
   padding-right: (($item-padding * 3) - 5);
 }
 
 a.item:after,
-button.item:after {
+button.item:after,
+.item a[href].item-content:after,
+.item[ng-click] a.item-content:after {
   /* By default, both <a> and <button> have right side arrow icons */
   @include display-flex();
   @include align-items(center);
@@ -406,7 +410,8 @@ button.item:after {
 a.item-icon-right:after,
 button.item-icon-right:after,
 a.item-button-right:after,
-button.item-button-right:after {
+button.item-button-right:after,
+.item a.item-content:after {
   display: none;
 }
 
