@@ -18,7 +18,7 @@ function init {
     export TRAVIS_COMMIT=$(git rev-parse HEAD)
     export TRAVIS_BRANCH=master
     # use your github username as GH_ORG to push to, and it will push to ORG/ionic-code, etc
-    export GH_ORG=somethingnew2-0
+    export GH_ORG=ajoslin
   fi
 }
 
@@ -35,18 +35,16 @@ function run {
   grunt jshint ddescribe-iit merge-conflict
 
   # Run simple quick tests on Phantom to be sure any tests pass
+  # Tests are run on cloud browsers after build
   grunt karma:single --browsers=PhantomJS --reporters=dots
-
-  # Do sauce test with all browsers (takes longer)
-  # TODO Saucelabs settings need more tweaking before it becomes stable (sometimes it fails to connect)
-  # grunt karma:sauce --reporters=dots
 
   if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
     echo "-- This is a pull request build; will not push build out."
     exit 0
   fi
 
-  LATEST_TAG_COMMIT=$(git rev-list $(git describe --tags --abbrev=0) | head -n 1)
+  LATEST_TAG=$(git describe --tags --abbrev=0)
+  LATEST_TAG_COMMIT=$(git rev-list $LATEST_TAG | head -n 1)
 
   if [[ "$TRAVIS_COMMIT" == "$LATEST_TAG_COMMIT" ]]; then
     IS_RELEASE=true
@@ -83,7 +81,17 @@ function run {
     ./scripts/site/publish.sh
   fi
 
-  echo "--- Build Complete! ----"
+  echo ""
+  echo "--- Build Complete! Running tests in the cloud. ----"
+  echo ""
+
+  # Do sauce unit tests and e2e tests with all browsers (takes longer)
+  grunt sauce-connect karma:sauce --reporters=dots exec:e2e-sauce sauce-disconnect
+
+  echo ""
+  echo "--- Build and tests complete! ---"
+  echo ""
+
 }
 
 source $(dirname $0)/../utils.inc

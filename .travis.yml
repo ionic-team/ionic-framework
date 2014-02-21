@@ -1,10 +1,12 @@
 language: node_js
 node_js:
-- 0.10
+- 0.1
 
 env:
   global:
-    secure: C49JZxX08FSiXEZYpIFDs4YRdZGB0Hyygkk8zFknALLxPCREwk/MLhs64FOftgcVYjyo1CpmEZfmlKdHDnuko8mUjERrn/3iFHO2Fi0Z/zbj1pDkHlkoeIWGu3JS9y5mDAC1N0AO+pbMQp1jy+qTbHZsBsRCM4tVeEoLVdLmwOU=
+  - secure: C49JZxX08FSiXEZYpIFDs4YRdZGB0Hyygkk8zFknALLxPCREwk/MLhs64FOftgcVYjyo1CpmEZfmlKdHDnuko8mUjERrn/3iFHO2Fi0Z/zbj1pDkHlkoeIWGu3JS9y5mDAC1N0AO+pbMQp1jy+qTbHZsBsRCM4tVeEoLVdLmwOU=
+  - secure: EXFisiY1QVmeXLOQRcZHcY3kJNfUUhBgVfe8492Ion/+djwi/e6bRbuZvU8Axvz26CpdRwS9IWSsZm7J3Eu+g3ORsBqILbJ0hTO4m7UJyt8hZxeRJZEOmQI2S0NcOFkIdSgNbrvxZoF8ZNFrp96kQWR3/5wMYRGcxtu/1JTqVy0=
+  - secure: QGukWuP7Li6RDnvxszY/qX/nySshmwiOYQJOKyG0YqAGjV4aFxfdA1pOffqPXEYn2KK6eB5DDx3YjDgtVnBClxV26CUdDhwy0reNKj8UrzgN/NSYeFy6EnOZMDz+DtPJXpUSXnGa3HtaOxbxG8mrpPFSPEeCY6Ci4M119hyslFY=
 
 notifications:
   hipchat:

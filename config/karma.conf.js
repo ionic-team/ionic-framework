@@ -24,7 +24,7 @@ module.exports = function(config) {
     .concat(buildConfig.ionicFiles)
     .concat(buildConfig.angularIonicFiles)
     .concat([
-      'test/**/*.js',
+      'test/unit/**/*.js',
       'js/ext/angular/test/**/*.js'
     ]),
 

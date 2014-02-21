@@ -4,25 +4,23 @@ module.exports = function(config) {
 
   config.set({
     sauceLabs: {
-      testName: 'ionic',
-      username: 'ionic-test',
-      accessKey: '59373b3d-1ee5-43b9-8df4-31107bd21e57',
-      startConnect: true,
+      testName: 'Ionic unit tests',
+      username: process.env.SAUCE_USER,
+      accessKey: process.env.SAUCE_KEY,
       tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
     },
     //Saucelabs mobile emulation (esp android emulator)
     //can be really slow sometimes, we need to give it time to connectk
-    captureTimeout: 60 * 1000,
-    browserDisconnectTimeout: 60 * 1000,
-    browserNoActivityTimeout: 60 * 1000,
+    captureTimeout: 40 * 1000,
+    browserDisconnectTimeout: 40 * 1000,
+    browserNoActivityTimeout: 40 * 1000,
     browserDisconnectTolerance: 2,
-    transports: ['xhr-polling'],
     browsers: [
-      // 'sauce_ios',
-      'sauce_safari',
-      // 'sauce_android',
+      'sauce_ios',
+      // 'sauce_safari',
+      'sauce_android',
       'sauce_chrome',
-      'sauce_firefox',
+      // 'sauce_firefox',
       // 'sauce_ie9',
       // 'sauce_ie10',
       // 'sauce_ie11'

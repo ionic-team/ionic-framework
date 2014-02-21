@@ -114,6 +114,25 @@ module.exports = function(grunt) {
       }
     },
 
+    connect: {
+      e2e: {
+        options: {
+          port: 8080,
+          base: '.',
+          debug: true
+        }
+      }
+    },
+
+    exec: {
+      'e2e': {
+        command: 'protractor config/protractor.conf.js'
+      },
+      'e2e-sauce': {
+        command: 'protractor config/protractor-sauce.conf.js'
+      },
+    },
+
     uglify: {
       dist: {
         files: {
@@ -241,5 +260,30 @@ module.exports = function(grunt) {
       };
       grunt.file.write(dest, JSON.stringify(version, null, 2));
     });
+  });
+
+  var sauceInstance;
+  grunt.registerTask('sauce-connect', 'Open tunnel into saucelabs', function() {
+    var done = this.async();
+    require('sauce-connect-launcher')({
+      username: process.env.SAUCE_USER,
+      accessKey: process.env.SAUCE_KEY,
+      verbose: true,
+      tunnelIdentifier: process.env.TRAVIS_BUILD_NUMBER,
+    }, function(err, instance) {
+      if (err) {
+        grunt.fail.fatal('Failed to launch sauce connect!', err);
+      } else {
+        sauceInstance = instance;
+      }
+      done();
+    });
+  });
+
+  grunt.registerTask('sauce-disconnect', 'Close saucelabs tunnel', function() {
+    if (sauceInstance) {
+      var done = this.async();
+      sauceInstance.close(done);
+    }
   });
 };
