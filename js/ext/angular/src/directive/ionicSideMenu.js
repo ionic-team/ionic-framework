@@ -17,7 +17,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
 
 .run(['$ionicViewService', function($ionicViewService) {
   // set that the side-menus directive should not animate when transitioning to it
-  $ionicViewService.disableRegisterByTagName('side-menus');
+  $ionicViewService.disableRegisterByTagName('ion-side-menus');
 }])
 
 .directive('ionSideMenus', function() {

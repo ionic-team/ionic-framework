@@ -10,7 +10,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ngSanitize'])
 .run(['$ionicViewService', function($ionicViewService) {
   // set that the tabs directive should not animate when transitioning
   // to it. Instead, the children <ion-tab> directives would animate
-  $ionicViewService.disableRegisterByTagName('tabs');
+  $ionicViewService.disableRegisterByTagName('ion-tabs');
 }])
 
 .controller('$ionicTabs', ['$scope', '$ionicViewService', function($scope, $ionicViewService) {
