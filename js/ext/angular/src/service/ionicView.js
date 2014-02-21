@@ -322,6 +322,9 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
       if(historyId) {
         var hist = $rootScope.$viewHistory.histories[ historyId ];
         if(hist && hist.stack.length) {
+          if($rootScope.$viewHistory.currentView && $rootScope.$viewHistory.currentView.viewId === hist.stack[0].viewId) {
+            return;
+          }
           $rootScope.$viewHistory.forcedNav = {
             viewId: hist.stack[0].viewId,
             navAction: 'moveBack',
