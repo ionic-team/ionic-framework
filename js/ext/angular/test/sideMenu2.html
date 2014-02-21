@@ -59,7 +59,27 @@
             <option>grade-b</option>
             <option>grade-c</option>
           </select>
-          <p ng-repeat="p in range">{{$index}}....</p>
+
+          <div class="list">
+            <ion-item ion-item="item" ng-href="#" ng-click="itemClick()" ng-repeat="item in range">
+              <strong>{{$index}}</strong>
+              <b>:</b>
+              <span>Item</span>
+              <span>.</span>
+              <span>.</span>
+              <span>.</span>
+              <span>.</span>
+              <span>.</span>
+              <span>.</span>
+              <span>.</span>
+              <span>.</span>
+              <span>.</span>
+              <span>.</span>
+              <span>.</span>
+              <span>.</span>
+            </ion-item>
+          </div>
+
           <p>(On desktop click and drag from left to right)</p>
         </ion-content>
       </ion-view>
