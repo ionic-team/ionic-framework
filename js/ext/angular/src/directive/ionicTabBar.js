@@ -215,7 +215,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ngSanitize'])
             cleanupChild();
             childScope = $scope.$new();
             transclude(childScope, function(clone) {
-              clone.addClass('pane');
+              clone.addClass('view');
               clone.removeAttr('title');
               childElement = clone;
               $element.parent().append(childElement);
