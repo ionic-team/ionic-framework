@@ -301,9 +301,9 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ngSanitize'])
     template:
       '<a ng-class="{active:active, \'has-badge\':badge}" ng-click="selectTab()" class="tab-item">' +
         '<span class="badge {{badgeStyle}}" ng-if="badge">{{badge}}</span>' +
-        '<span class="icon {{icon}}" ng-if="icon"></span>' +
-        '<span class="{{iconOn}}" ng-if="active"></span>' +
-        '<span class="{{iconOff}}" ng-if="!active"></span>' +
+        '<i class="icon {{icon}}" ng-if="icon"></i>' +
+        '<i class="icon {{iconOn}}" ng-if="active"></i>' +
+        '<i class="icon {{iconOff}}" ng-if="!active"></i>' +
         '<span ng-bind-html="iconTitle"></span>' +
       '</a>'
   };
