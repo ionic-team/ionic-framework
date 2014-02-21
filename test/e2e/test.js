@@ -1,7 +1,7 @@
 describe('tabs test page', function() {
   var P;
   beforeEach(function() {
-    browser.get('/test/e2e/tabs-test.html');
+    browser.get('http://localhost:8080/test/e2e/tabs-test.html');
     P = protractor.getInstance();
   });
 
@@ -15,12 +15,14 @@ describe('tabs test page', function() {
   }
 
   it('navbar with multiple histories', function() {
+    browser.sleep(1000);
     expect(navTitle().getText()).toBe('Sign-In');
     expect(navButtons('back').getAttribute('class')).toContain('hide');
     expect(navButtons('left').getText()).toEqual('Home');
     expect(navButtons('left').getAttribute('class')).toContain('ion-home');
     expect(navButtons('right').getText()).toEqual('');
     expect(navButtons('right').getAttribute('class')).toContain('ion-navicon');
+
 
     element(by.id('sign-in-button')).click();
 
