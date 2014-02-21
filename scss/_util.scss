@@ -42,25 +42,14 @@
   // used to prevent the browser from doing its native behavior. this doesnt 
   // prevent the scrolling, but cancels the contextmenu, tap highlighting, etc
 
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-
-  -ms-touch-action: none;
-  touch-action: none;
-
-  -webkit-touch-callout: none;
-  touch-callout: none;
-
-  -ms-content-zooming: none;
-  content-zooming: none;
+  @include user-select(none);
+  @include touch-callout(none);
+  @include tap-highlight-transparent();
 
   -webkit-user-drag: none;
-  user-drag: none;
-
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  tap-highlight-color: rgba(0,0,0,0);
+  
+  -ms-touch-action: none;
+  -ms-content-zooming: none;
 }
 
 .block {
