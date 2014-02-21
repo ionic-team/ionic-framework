@@ -74,11 +74,32 @@ angular.module('ionic.ui.service.scrollDelegate', [])
       }
 
       $element.bind('scroll', function(e) {
+
+        var elem;
+
+        if ( !$scope.onScroll ) {
+          return;
+        }
+
+        elem = {
+          scrollTop: 0,
+          scrollLeft: 0
+        };
+
+        if ( e.detail && e.detail.scrollTop && e.detail.scrollLeft ) {
+          elem = e.detail;
+        } else {
+          if ( e.originalEvent && e.originalEvent.detail && e.originalEvent.detail.scrollTop && e.originalEvent.detail.scrollLeft ) {
+            elem = e.originalEvent.detail;
+          }
+        }
+
         $scope.onScroll && $scope.onScroll({
           event: e,
-          scrollTop: e.detail ? e.detail.scrollTop : e.originalEvent ? e.originalEvent.detail.scrollTop : 0,
-          scrollLeft: e.detail ? e.detail.scrollLeft: e.originalEvent ? e.originalEvent.detail.scrollLeft : 0
+          scrollTop: elem.scrollTop,
+          scrollLeft: elem.scrollLeft
         });
+
       });
 
       $scope.$parent.$on('scroll.resize', scrollViewResize);
