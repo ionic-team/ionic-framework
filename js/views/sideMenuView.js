@@ -60,8 +60,7 @@
       return parseFloat(this.el.style.webkitTransform.replace('translate3d(', '').split(',')[0]);
     },
     setTranslateX: ionic.animationFrameThrottle(function(x) {
-      this.el.style.webkitTransform = 'translate3d(' + x + 'px, 0, 0)';
-      this.el.style.transform = 'translate(' + amount + 'px)';
+      this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + amount + 'px, 0, 0)';      
     })
   });
 
