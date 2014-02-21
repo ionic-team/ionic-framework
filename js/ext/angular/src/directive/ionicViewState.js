@@ -23,7 +23,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  * Our Nav Bar directive which updates as the controller state changes.
  */
 .directive('ionNavBar', ['$ionicViewService', '$rootScope', '$animate', '$compile',
-             function( $ionicViewService,   $rootScope,   $animate,   $compile) {
+                function( $ionicViewService,   $rootScope,   $animate,   $compile) {
 
   return {
     restrict: 'E',
@@ -40,8 +40,10 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     template:
     '<header class="bar bar-header nav-bar {{type}} {{isReverse ? \'reverse\' : \'\'}} ' +
     '{{isInvisible ? \'invisible\' : \'\'}} {{animateEnabled ? animation : \'\'}}">' +
-      '<ion-nav-back-button ng-if="backButtonEnabled && (backType || backLabel || backIcon)" ' +
-        'type="backType" label="backLabel" icon="backIcon" class="invisible" ion-async-visible>' +
+
+      '<ion-nav-back-button ng-if="(backType || backLabel || backIcon)" ' +
+        'type="backType" label="backLabel" icon="backIcon" class="hide" ' +
+        'ng-class="{hide: !backButtonEnabled}">' +
       '</ion-nav-back-button>' +
       '<div class="buttons left-buttons"> ' +
         '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" ' +
@@ -49,21 +51,19 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
         '</button>' +
       '</div>' +
 
-      //ng-repeat makes it easy to add new / remove old and have proper enter/leave anims
-      '<h1 ng-repeat="title in titles" ng-bind-html="title" class="title invisible" ion-async-visible ion-nav-bar-title></h1>' +
+      '<h1 ng-bind-html="title" class="title"></h1>' +
 
-      '<div class="buttons right-buttons" ng-if="rightButtons.length"> ' +
-      '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" '+
-        'class="button no-animation {{button.type}}" ng-bind-html="button.content">' +
+      '<div class="buttons right-buttons"> ' +
+        '<button ng-click="button.tap($event)" ng-repeat="button in rightButtons" '+
+          'class="button no-animation {{button.type}}" ng-bind-html="button.content">' +
         '</button>' +
       '</div>' +
     '</header>',
     compile: function(tElement, tAttrs) {
 
       return function link($scope, $element, $attr) {
-        $scope.titles = [];
         //defaults
-        $scope.backButtonEnabled = true;
+        $scope.backButtonEnabled = false;
         $scope.animateEnabled = true;
         $scope.isReverse = false;
         $scope.isInvisible = true;
@@ -100,7 +100,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
             $scope.backButtonEnabled = !!data;
           }),
           $scope.$parent.$on('viewState.titleUpdated', function(e, data) {
-            $scope.titles[$scope.titles.length - 1] = data && data.title || '';
+            $scope.title = data && data.title || '';
           })
         ];
         $scope.$on('$destroy', function() {
@@ -109,19 +109,66 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
         });
 
         function updateHeaderData(data) {
-          var newTitle = data && data.title || '';
 
-          $scope.isReverse = data.navDirection == 'back';
-
-          if (data.hideBackButton) {
-            $scope.backButtonEnabled = false;
+          if (angular.isDefined(data.hideBackButton)) {
+            $scope.backButtonEnabled = !!data.hideBackButton;
           }
-
+          $scope.isReverse = data.navDirection == 'back';
           $scope.animateEnabled = !!(data.navDirection && data.animate !== false);
-          $scope.titles.length = 0;
-          $scope.titles.push(newTitle);
+
           $scope.leftButtons = data.leftButtons;
           $scope.rightButtons = data.rightButtons;
+          $scope.oldTitle = $scope.title;
+          $scope.title = data && data.title || '';
+
+          //If no animation, we're done!
+          if (!$scope.animateEnabled) {
+            hb.align();
+            return;
+          } else {
+            animateTitles();
+          }
+        }
+
+        function animateTitles() {
+          var oldTitleEl, newTitleEl, currentTitles;
+
+          //If we have any title right now (or more than one, they could be transitioning on switch), 
+          //replace the first one with an oldTitle element
+          currentTitles = $element[0].querySelectorAll('.title');
+          if (currentTitles.length) {
+            oldTitleEl = $compile('<h1 ng-bind-html="oldTitle" class="title"></h1>')($scope);
+            angular.element(currentTitles[0]).replaceWith(oldTitleEl);
+          }
+          //Compile new title
+          newTitleEl = $compile('<h1 class="title invisible" ng-bind-html="title"></h1>')($scope);
+
+          //Animate in one frame
+          ionic.requestAnimationFrame(function() {
+
+            oldTitleEl && $animate.leave(angular.element(oldTitleEl));
+
+            var insert = oldTitleEl && angular.element(oldTitleEl) || null;
+            $animate.enter(newTitleEl, $element, insert, function() {
+              hb.align();
+            });
+
+            //Cleanup any old titles leftover (besides the one we already did replaceWith on)
+            angular.forEach(currentTitles, function(el) {
+              if (el && el.parentNode) {
+                //Use .remove() to cleanup things like .data()
+                angular.element(el).remove();
+              }
+            });
+
+            //$apply so bindings fire
+            $scope.$digest();
+
+            //Stop flicker of new title on ios7
+            ionic.requestAnimationFrame(function() {
+              newTitleEl[0].classList.remove('invisible');
+            });
+          });
         }
       };
     }
