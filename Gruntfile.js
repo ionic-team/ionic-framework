@@ -228,6 +228,14 @@ module.exports = function(grunt) {
     'concat:bundlemin'
   ]);
 
+  grunt.registerTask('cloudtest', [
+    'sauce-connect',
+    'karma:sauce',
+    'connect', 
+    'exec:e2e-sauce',
+    'sauce-disconnect'
+  ]);
+
   grunt.registerMultiTask('karma', 'Run karma', function() {
     var done = this.async();
     var options = this.options();
@@ -269,7 +277,7 @@ module.exports = function(grunt) {
       username: process.env.SAUCE_USER,
       accessKey: process.env.SAUCE_KEY,
       verbose: true,
-      tunnelIdentifier: process.env.TRAVIS_BUILD_NUMBER,
+      tunnelIdentifier: process.env.TRAVIS_BUILD_NUMBER
     }, function(err, instance) {
       if (err) {
         grunt.fail.fatal('Failed to launch sauce connect!', err);

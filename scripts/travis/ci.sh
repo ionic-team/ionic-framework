@@ -85,7 +85,7 @@ function run {
   echo ""
 
   # Do sauce unit tests and e2e tests with all browsers (takes longer)
-  grunt sauce-connect karma:sauce --reporters=dots exec:e2e-sauce sauce-disconnect
+  grunt cloudtest
 
   echo ""
   echo "--- Build and tests complete! ---"
