@@ -1,14 +1,19 @@
 #!/bin/bash
 
-VER=$1
+ARG_DEFS=(
+  "--version=(.*)"
+)
+function run {
 
-if [[ $VER == "" ]]; then
-  echo '-- Usage: ./scripts/update-angular.sh <version>'
-  echo '   example: ./scripts/update-angular.sh 1.2.10'
-  exit 1
-fi
+  cd $SCRIPT_DIR/..//config/lib/js/angular/
+  rm -rf *.js
+  wget http://code.angularjs.org/$VERSION/angular{,-animate,-mocks,-resource,-scenario,-animate.min,-resource.min,.min,-sanitize,-sanitize.min}.js
 
-cd $(dirname $0)/../config/lib/js/angular/
+  cd $SCRIPT_DIR/../
 
-rm -rf *.js
-wget http://code.angularjs.org/$VER/angular{,-animate,-mocks,-resource,-scenario,-animate.min,-resource.min,.min}.js
+  replaceJsonProp "bower.json" "angular" $VERSION
+  replaceJsonProp "bower.json" "angular-animate" $VERSION
+  replaceJsonProp "bower.json" "angular-sanitize" $VERSION
+}
+
+source $(dirname $0)/utils.inc
