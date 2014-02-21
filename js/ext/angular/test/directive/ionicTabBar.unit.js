@@ -199,8 +199,8 @@ describe('tabs', function() {
 
     it('Default icon works', function() {
       scope.$digest();
-      var span = element[0].querySelectorAll('span')[1];
-      expect(angular.element(span).hasClass('icon-default')).toEqual(true);
+      var i = element[0].querySelectorAll('i')[0];
+      expect(angular.element(i).hasClass('icon-default')).toEqual(true);
     });
 
     it('Badge works', function() {
