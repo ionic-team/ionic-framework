@@ -24,6 +24,15 @@
   box-shadow: $menu-side-shadow;
 }
 
+.grade-b .menu-content,
+.grade-c .menu-content {
+  right: -1px;
+  left: -1px;
+  border-right: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  box-shadow: none;
+}
+
 .menu-left { 
   left: 0; 
 }

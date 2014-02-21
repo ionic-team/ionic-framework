@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <script src="../../../../dist/js/ionic.bundle.js"></script>
   </head>
-  <body>
+  <body class="grade-a">
 
     <div ng-controller="MainCtrl">
       <ion-nav-view></ion-nav-view>
@@ -54,6 +54,11 @@
           <div class="button" ng-click="sideMenuController.toggleLeft()" style="position: absolute; left: 100px; top: 200px;">
             Left Menu
           </div>
+          <select ng-model="data.grade" ng-change="gradeChange(data.grade)">
+            <option>grade-a</option>
+            <option>grade-b</option>
+            <option>grade-c</option>
+          </select>
           <p ng-repeat="p in range">{{$index}}....</p>
           <p>(On desktop click and drag from left to right)</p>
         </ion-content>
@@ -164,6 +169,14 @@
 
       .controller('MainCtrl', function($scope) {
         console.log('MainCtrl');
+
+        $scope.data = {
+          grade: 'grade-a'
+        };
+
+        $scope.gradeChange = function(grade) {
+          document.body.className = grade;
+        };
 
         $scope.range = [];
         for (var i=0; i<150; i++) $scope.range.push(i);
