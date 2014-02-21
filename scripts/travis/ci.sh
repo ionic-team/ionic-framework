@@ -43,8 +43,7 @@ function run {
     exit 0
   fi
 
-  LATEST_TAG=$(git describe --tags --abbrev=0)
-  LATEST_TAG_COMMIT=$(git rev-list $LATEST_TAG | head -n 1)
+  LATEST_TAG_COMMIT=$(git rev-list $(git describe --tags --abbrev=0) | head -n 1)
 
   if [[ "$TRAVIS_COMMIT" == "$LATEST_TAG_COMMIT" ]]; then
     IS_RELEASE=true
