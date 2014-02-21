@@ -31,6 +31,26 @@ describe('Ionic ScrollDelegate Service', function() {
     expect(sv.resize).toHaveBeenCalled();
   });
 
+  it('scroll event', function() {
+    var scope = rootScope.$new();
+    var el = compile('<ion-content></ion-content>')(scope);
+    scope = el.isolateScope();
+    scope.$apply();
+    var top, left;
+    scope.onScroll = jasmine.createSpy('scroll').andCallFake(function(data) {
+      top = data.scrollTop;
+      left = data.scrollLeft;
+    });
+    ionic.trigger('scroll', {target: el[0]});
+    expect(scope.onScroll).toHaveBeenCalled();
+    expect(top).toBe(0);
+    expect(left).toBe(0);
+
+    ionic.trigger('scroll', {target: el[0], scrollTop: 3, scrollLeft: 4});
+    expect(top).toBe(3);
+    expect(left).toBe(4);
+  });
+
   testWithAnimate(true);
   testWithAnimate(false);
   function testWithAnimate(animate) {
