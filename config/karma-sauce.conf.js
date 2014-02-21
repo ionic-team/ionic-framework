@@ -3,6 +3,7 @@ module.exports = function(config) {
   require('./karma.conf.js')(config);
 
   config.set({
+    reporters: ['dots'],
     sauceLabs: {
       testName: 'Ionic unit tests',
       username: process.env.SAUCE_USER,
@@ -11,12 +12,12 @@ module.exports = function(config) {
     },
     //Saucelabs mobile emulation (esp android emulator)
     //can be really slow sometimes, we need to give it time to connectk
-    captureTimeout: 40 * 1000,
-    browserDisconnectTimeout: 40 * 1000,
-    browserNoActivityTimeout: 40 * 1000,
+    captureTimeout: 60 * 1000,
+    browserDisconnectTimeout: 60 * 1000,
+    browserNoActivityTimeout: 60 * 1000,
     browserDisconnectTolerance: 2,
     browsers: [
-      'sauce_ios',
+      // 'sauce_ios',
       // 'sauce_safari',
       'sauce_android',
       'sauce_chrome',
