@@ -108,6 +108,78 @@ describe('Ionic Platform Service', function() {
     expect(ionic.Platform.platforms[3]).toEqual('android4_2');
   });
 
+  it('sets grade a from iOS7', function() {
+    window.cordova = {};
+    ionic.Platform.setPlatform('iOS');
+    ionic.Platform.setVersion('7.1.1');
+    ionic.Platform._checkPlatforms()
+    expect(ionic.Platform.grade).toEqual('a');
+  });
+
+  it('sets grade a from iOS6', function() {
+    window.cordova = {};
+    ionic.Platform.setPlatform('iOS');
+    ionic.Platform.setVersion('6.1.1');
+    ionic.Platform._checkPlatforms()
+    expect(ionic.Platform.grade).toEqual('a');
+  });
+
+  it('sets grade a from Android 4.4', function() {
+    window.cordova = {};
+    ionic.Platform.setPlatform('android');
+    ionic.Platform.setVersion('4.4.1');
+    ionic.Platform._checkPlatforms()
+    expect(ionic.Platform.grade).toEqual('a');
+  });
+
+  it('sets grade b from Android 4.3', function() {
+    window.cordova = {};
+    ionic.Platform.setPlatform('android');
+    ionic.Platform.setVersion('4.3.1');
+    ionic.Platform._checkPlatforms()
+    expect(ionic.Platform.grade).toEqual('b');
+  });
+
+  it('sets grade b from Android 4.0', function() {
+    window.cordova = {};
+    ionic.Platform.setPlatform('android');
+    ionic.Platform.setVersion('4.0.0');
+    ionic.Platform._checkPlatforms()
+    expect(ionic.Platform.grade).toEqual('b');
+  });
+
+  it('sets grade c from Android 3.0', function() {
+    window.cordova = {};
+    ionic.Platform.setPlatform('android');
+    ionic.Platform.setVersion('3.0.0');
+    ionic.Platform._checkPlatforms()
+    expect(ionic.Platform.grade).toEqual('c');
+  });
+
+  it('sets grade c from Android 2.3.4', function() {
+    window.cordova = {};
+    ionic.Platform.setPlatform('android');
+    ionic.Platform.setVersion('2.3.4');
+    ionic.Platform._checkPlatforms()
+    expect(ionic.Platform.grade).toEqual('c');
+  });
+
+  it('sets grade a from unknown android version', function() {
+    window.cordova = {};
+    ionic.Platform.setPlatform('android');
+    ionic.Platform.setVersion('0');
+    ionic.Platform._checkPlatforms()
+    expect(ionic.Platform.grade).toEqual('a');
+  });
+
+  it('sets grade a from unknown platform', function() {
+    window.cordova = {};
+    ionic.Platform.setPlatform('whatever');
+    ionic.Platform.setVersion('20.3.4');
+    ionic.Platform._checkPlatforms()
+    expect(ionic.Platform.grade).toEqual('a');
+  });
+
   it('is android', function() {
     ionic.Platform.setPlatform('AnDrOiD');
     expect(ionic.Platform.is('android')).toEqual(true);
