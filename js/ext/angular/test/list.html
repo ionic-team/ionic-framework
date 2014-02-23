@@ -67,12 +67,6 @@
       .my-repeat-animation > .ng-move.ng-move-active {
         opacity:1;
       }
-      .item-message img {
-        float: left;
-        width: 50px;
-        height: 50px;
-        margin-right: 10px;
-      }
     </style>
 
   </head>
@@ -115,7 +109,7 @@
               option-buttons="optionButtons1">
 
           <!-- shows that the item directive does not need attributes and can get values from the list attributes -->
-          <ion-item ion-item="item" ng-href="#" ng-click="itemClick()" class="item-message" ng-repeat="item in items" ng-class="{ active: item.isActive}">
+          <ion-item ion-item="item" ng-href="#" ng-click="itemClick()" class="item-thumbnail-left" ng-repeat="item in items" ng-class="{ active: item.isActive}">
             <img ng-src="{{item.face}}">
             <h2>{{item.from}}</h2>
             <p>{{item.text}}</p>
