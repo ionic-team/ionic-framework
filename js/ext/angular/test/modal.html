@@ -43,6 +43,7 @@
                 <input type="text" placeholder="">
               </label>
               <button class="button button-full button-positive" ng-click="closeModal()">Create</button>
+              <button class="button button-full button-positive" ng-click="openActionSheet()">ActionSheet</button>
             </div>
           </div>
         </ion-content>
@@ -82,10 +83,49 @@
 
       })
 
-      .controller('ModalCtrl', function($scope) {
+      .controller('ModalCtrl', function($scope, $ionicActionSheet) {
         $scope.close = function() {
           $scope.modal.hide();
         }
+
+        $scope.openActionSheet = function() {
+          $ionicActionSheet.show({
+
+            // The various non-destructive button choices
+            buttons: [
+              { text: 'Share' },
+              { text: 'Move' },
+            ],
+
+            // The text of the red destructive button
+            destructiveText: 'Delete',
+
+            // The title text at the top
+            titleText: 'Modify your album',
+
+            // The text of the cancel button
+            cancelText: 'Cancel',
+
+            // Called when the sheet is cancelled, either from triggering the
+            // cancel button, or tapping the backdrop, or using escape on the keyboard
+            cancel: function() {
+            },
+
+            // Called when one of the non-destructive buttons is clicked, with
+            // the index of the button that was clicked. Return
+            // "true" to tell the action sheet to close. Return false to not close.
+            buttonClicked: function(index) {
+              return true;
+            },
+
+            // Called when the destructive button is clicked. Return true to close the
+            // action sheet. False to keep it open
+            destructiveButtonClicked: function() {
+              return true;
+            }
+          });
+        };
+
       });
     </script>
   </body>

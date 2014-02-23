@@ -23,3 +23,11 @@
     height: 100%;
   }
 }
+
+.modal-open {
+  pointer-events: none;
+
+  .modal {
+    pointer-events: auto;
+  }
+}

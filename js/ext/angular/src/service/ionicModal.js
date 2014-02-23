@@ -12,8 +12,7 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
       var self = this;
       var element = angular.element(this.el);
 
-      document.body.classList.add('disable-pointer-events');
-      this.el.classList.add('enable-pointer-events');
+      document.body.classList.add('modal-open');
 
       self._isShown = true;
 
@@ -76,8 +75,7 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
   });
 
   function onHideModal(element) {
-    document.body.classList.remove('disable-pointer-events');
-    element.classList.remove('enable-pointer-events');
+    document.body.classList.remove('modal-open');
   }
 
   var createModal = function(templateString, options) {

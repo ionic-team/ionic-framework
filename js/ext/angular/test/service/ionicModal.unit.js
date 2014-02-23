@@ -53,30 +53,26 @@ describe('Ionic Modal', function() {
     expect(m.isShown()).toBe(false);
   });
 
-  it('show & remove should add {disable,enable}-pointer-events to body/modal', inject(function($animate) {
+  it('show & remove should add .model-open to body', inject(function($animate) {
     var m = modal.fromTemplate('<div class="modal">hi</div>');
     m.show();
-    expect(angular.element(m.el).hasClass('enable-pointer-events')).toBe(true);
-    expect(angular.element(document.body).hasClass('disable-pointer-events')).toBe(true);
+    expect(angular.element(document.body).hasClass('modal-open')).toBe(true);
     spyOn($animate, 'leave').andCallFake(function(el, cb) {
       cb();
     });
     m.remove();
-    expect(angular.element(m.el).hasClass('enable-pointer-events')).toBe(false);
-    expect(angular.element(document.body).hasClass('disable-pointer-events')).toBe(false);
+    expect(angular.element(document.body).hasClass('modal-open')).toBe(false);
   }));
 
-  it('show & hide should add {disable,enable}-pointer-events to body/modal', inject(function($animate) {
+  it('show & hide should add .model-open body', inject(function($animate) {
     var m = modal.fromTemplate('<div class="modal">hi</div>');
     m.show();
-    expect(angular.element(m.el).hasClass('enable-pointer-events')).toBe(true);
-    expect(angular.element(document.body).hasClass('disable-pointer-events')).toBe(true);
+    expect(angular.element(document.body).hasClass('modal-open')).toBe(true);
     spyOn($animate, 'removeClass').andCallFake(function(el, cls, cb) {
       cb();
     });
     m.hide();
-    expect(angular.element(m.el).hasClass('enable-pointer-events')).toBe(false);
-    expect(angular.element(document.body).hasClass('disable-pointer-events')).toBe(false);
+    expect(angular.element(document.body).hasClass('modal-open')).toBe(false);
   }));
 
   it('should animate leave and destroy scope on remove', inject(function($animate) {

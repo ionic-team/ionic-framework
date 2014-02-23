@@ -148,3 +148,15 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
     border-width: 0;
   }
 }
+
+.action-sheet-open {
+  pointer-events: none;
+
+  &.modal-open .modal {
+    pointer-events: none;
+  }
+
+  .action-sheet {
+    pointer-events: auto;
+  }
+}

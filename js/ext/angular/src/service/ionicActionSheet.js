@@ -18,7 +18,6 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
 
       angular.extend(scope, opts);
 
-
       // Compile the template
       var element = $compile('<ion-action-sheet buttons="buttons"></ion-action-sheet>')(scope);
 
@@ -35,6 +34,8 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
         $animate.removeClass(element, 'active', function() {
           scope.$destroy();
         });
+
+        $document[0].body.classList.remove('action-sheet-open');
       };
 
       var onHardwareBackButton = function() {
@@ -69,6 +70,8 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
       };
 
       $document[0].body.appendChild(element[0]);
+
+      $document[0].body.classList.add('action-sheet-open');
 
       var sheet = new ionic.views.ActionSheet({el: element[0] });
       scope.sheet = sheet;

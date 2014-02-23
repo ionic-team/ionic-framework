@@ -25,4 +25,16 @@ describe('Ionic ActionSheet Service', function() {
 
     expect(s.el.classList.contains('active')).toBe(false);
   });
+
+  it('show & hide should add action-sheet-open to body', inject(function($animate) {
+    var s = sheet.show();
+
+    expect(angular.element(document.body).hasClass('action-sheet-open')).toBe(true);
+    
+    ionic.trigger('backbutton', {
+      target: document
+    });
+
+    expect(angular.element(document.body).hasClass('action-sheet-open')).toBe(false);
+  }));
 });
