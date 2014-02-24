@@ -34,14 +34,14 @@ describe('Ionic Content directive', function() {
     expect(scrollElement.hasClass('padding')).toEqual(true);
   });
 
-  xit('Enables bouncing by default', function() {
-    ionic.Platform.setPlatform('iPhone');
-    element = compile('<ion-content has-header="true"></ion-content>')(scope);
-    scope.$apply();
-    var newScope = element.isolateScope();
-    var scrollView = scope.scrollView;
-    expect(scrollView.options.bouncing).toBe(true);
-  });
+  // it('Enables bouncing by default', function() {
+  //   ionic.Platform.setPlatform('iPhone');
+  //   element = compile('<ion-content has-header="true"></ion-content>')(scope);
+  //   scope.$apply();
+  //   var newScope = element.isolateScope();
+  //   var scrollView = scope.scrollView;
+  //   expect(scrollView.options.bouncing).toBe(true);
+  // });
 
   it('Disables bouncing when has-bouncing = false', function() {
     ionic.Platform.setPlatform('iPhone');
