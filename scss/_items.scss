@@ -406,6 +406,19 @@ button.item:after,
   speak: none;
 }
 
+.grade-b,
+.grade-c {
+  a.item:after,
+  button.item:after,
+  .item a[href].item-content:after,
+  .item[ng-click] a.item-content:after {
+    // override Ionicon arrow with boring character for low end devices
+    @include font-smoothing(none);
+    content: '>';
+    font-family: 'monospace';
+  }
+}
+
 // do not show the default right arrow when they want their own right side icon
 a.item-icon-right:after,
 button.item-icon-right:after,
