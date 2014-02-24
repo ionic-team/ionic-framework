@@ -130,7 +130,7 @@ body, .ionic-body {
 }
 .scroll-bar-indicator {
   position: absolute;
-  background:rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.3);
   border-radius: 4px;
   opacity: 1;
 
@@ -139,6 +139,10 @@ body, .ionic-body {
     @include transition(opacity 0.3s linear);
     opacity: 0;
   }
+}
+.grade-b .scroll-bar-indicator,
+.grade-c .scroll-bar-indicator {
+  background: #aaa;
 }
 
 
