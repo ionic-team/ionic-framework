@@ -54,7 +54,11 @@ describe('Ionic Side Menu Directive', function () {
 
     sideMenuCtrl = sideMenus.controller('ionSideMenus');
 
-    element = angular.element('<ion-side-menu side="left" is-enabled="enabledVal" width="widthVal">').appendTo(sideMenus);
+    element = angular.element(
+      '<ion-side-menu side="left" is-enabled="enabledVal" width="widthVal">' +
+        '<div class="content"></div>' +
+      '</div>'
+    ).appendTo(sideMenus);
     $compile(element)($rootScope);
 
     scope = element.scope();
@@ -65,6 +69,12 @@ describe('Ionic Side Menu Directive', function () {
     expect(sideMenuCtrl.left.isEnabled).not.toBe(undefined);
     expect(sideMenuCtrl.left.pushDown).not.toBe(undefined);
     expect(sideMenuCtrl.left.bringUp).not.toBe(undefined);
+  });
+
+  it('should transclude content with same scope', function() {
+    var content = angular.element(element[0].querySelector('.content'));
+    expect(content.length).toBe(1);
+    expect(content.scope()).toBe(scope);
   });
 
   it('should watch isEnabled', function() {
