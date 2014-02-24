@@ -31,7 +31,7 @@ describe('Ionic Scroll Directive', function() {
     expect(scrollElement.hasClass('padding')).toEqual(true);
   });
 
-  it('Enables bouncing by default', function() {
+  xit('Enables bouncing by default', function() {
     ionic.Platform.setPlatform('iPhone');
     element = compile('<ion-content has-header="true"></ion-scroll>')(scope);
     scope.$apply();
