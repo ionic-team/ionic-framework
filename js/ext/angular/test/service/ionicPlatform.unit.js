@@ -88,6 +88,7 @@ describe('Ionic Platform Service', function() {
   });
 
   it('is Android', function() {
+    ionic.Platform.ua = '';
     ionic.Platform.setPlatform('Android');
     expect(ionic.Platform.isAndroid()).toEqual(true);
 

@@ -149,7 +149,7 @@
       // exact match
       var pName = this.platform();
       if(pName) {
-        return pName.toLowerCase() === type;
+        return pName === type.toLowerCase();
       }
 
       // A quick hack for to check userAgent
