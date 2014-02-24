@@ -1,5 +1,5 @@
 describe('Ionic Content directive', function() {
-  var compile, element, scope;
+  var compile, scope;
 
   beforeEach(module('ionic'));
 
@@ -12,22 +12,22 @@ describe('Ionic Content directive', function() {
   }));
 
   it('Has $ionicScroll controller', function() {
-    element = compile('<ion-content></ion-content>')(scope);
+    var element = compile('<ion-content></ion-content>')(scope);
     expect(element.controller('$ionicScroll').element).toBe(element[0]);
   });
 
   it('Has content class', function() {
-    element = compile('<ion-content></ion-content>')(scope);
+    var element = compile('<ion-content></ion-content>')(scope);
     expect(element.hasClass('scroll-content')).toBe(true);
   });
 
   it('Has header', function() {
-    element = compile('<ion-content has-header="true"></ion-content>')(scope);
+    var element = compile('<ion-content has-header="true"></ion-content>')(scope);
     expect(element.hasClass('has-header')).toEqual(true);
   });
 
   it('should add padding classname', function() {
-    element = compile('<ion-content padding="true"></ion-content>')(scope);
+    var element = compile('<ion-content padding="true"></ion-content>')(scope);
     expect(element.hasClass('scroll-content')).toEqual(true);
     expect(element.hasClass('padding')).toEqual(false);
     var scrollElement = element.find('.scroll');
@@ -36,7 +36,7 @@ describe('Ionic Content directive', function() {
 
   // it('Enables bouncing by default', function() {
   //   ionic.Platform.setPlatform('iPhone');
-  //   element = compile('<ion-content has-header="true"></ion-content>')(scope);
+  //   var element = compile('<ion-content has-header="true"></ion-content>')(scope);
   //   scope.$apply();
   //   var newScope = element.isolateScope();
   //   var scrollView = scope.scrollView;
@@ -45,7 +45,7 @@ describe('Ionic Content directive', function() {
 
   it('Disables bouncing when has-bouncing = false', function() {
     ionic.Platform.setPlatform('iPhone');
-    element = compile('<ion-content has-header="true" has-bouncing="false"></ion-content>')(scope);
+    var element = compile('<ion-content has-header="true" has-bouncing="false"></ion-content>')(scope);
     scope.$apply();
     var newScope = element.isolateScope();
     var scrollView = scope.scrollView;
@@ -54,7 +54,7 @@ describe('Ionic Content directive', function() {
 
   it('Disables bouncing by default on Android', function() {
     ionic.Platform.setPlatform('Android');
-    element = compile('<ion-content has-header="true"></ion-content>')(scope);
+    var element = compile('<ion-content has-header="true"></ion-content>')(scope);
     scope.$apply();
     var newScope = element.isolateScope();
     var scrollView = scope.scrollView;
@@ -63,7 +63,7 @@ describe('Ionic Content directive', function() {
 
   it('Disables bouncing by default on Android unless has-bouncing = true', function() {
     ionic.Platform.setPlatform('Android');
-    element = compile('<ion-content has-header="true" has-bouncing="true"></ion-content>')(scope);
+    var element = compile('<ion-content has-header="true" has-bouncing="true"></ion-content>')(scope);
     scope.$apply();
     var newScope = element.isolateScope();
     var scrollView = scope.scrollView;
@@ -72,7 +72,7 @@ describe('Ionic Content directive', function() {
 
 
   it('Should set start x and y', function() {
-    element = compile('<ion-content start-x="100" start-y="300" has-header="true"></ion-content>')(scope);
+    var element = compile('<ion-content start-x="100" start-y="300" has-header="true"></ion-content>')(scope);
     scope.$apply();
     var newScope = element.isolateScope();
     var scrollView = scope.scrollView;
@@ -138,4 +138,21 @@ describe('Ionic Content directive', function() {
       });
     });
   });
+});
+/* Tests #555 */
+describe('Ionic Content Directive scoping', function() {
+  beforeEach(module('ionic', function($controllerProvider) {
+    $controllerProvider.register('ContentTestCtrl', function($scope){
+      this.$scope = $scope;
+    });
+  }));
+  it('should have same scope as content', inject(function($compile, $rootScope) {
+    var element = $compile('<ion-content ng-controller="ContentTestCtrl">' +
+                           '<form name="myForm"></form>' +
+                           '</ion-content>')($rootScope.$new());
+    var contentScope = element.scope();
+    var ctrl = element.data('$ngControllerController');
+    expect(contentScope.myForm).toBeTruthy();
+    expect(ctrl.$scope.myForm).toBeTruthy();
+  }));
 });

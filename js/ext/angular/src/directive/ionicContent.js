@@ -18,33 +18,23 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
 
 // The content directive is a core scrollable content area
 // that is part of many View hierarchies
-.directive('ionContent', ['$parse', '$timeout', '$ionicScrollDelegate', '$controller', function($parse, $timeout, $ionicScrollDelegate, $controller) {
+.directive('ionContent', [
+  '$parse',
+  '$timeout',
+  '$ionicScrollDelegate',
+  '$controller',
+  '$ionicBind',
+function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
   return {
     restrict: 'E',
     replace: true,
-    template: '<div class="scroll-content"><div class="scroll" ng-transclude></div></div>',
     transclude: true,
     require: '^?ionNavView',
-    scope: {
-      onRefresh: '&',
-      onRefreshOpening: '&',
-      onScroll: '&',
-      onScrollComplete: '&',
-      refreshComplete: '=',
-      onInfiniteScroll: '=',
-      infiniteScrollDistance: '@',
-      hasBouncing: '@',
-      scroll: '@',
-      padding: '@',
-      hasScrollX: '@',
-      hasScrollY: '@',
-      scrollbarX: '@',
-      scrollbarY: '@',
-      startX: '@',
-      startY: '@',
-      scrollEventInterval: '@'
-    },
-
+    scope: true,
+    template:
+    '<div class="scroll-content">' +
+      '<div class="scroll"></div>' +
+    '</div>',
     compile: function(element, attr, transclude) {
       if(attr.hasHeader == "true") { element.addClass('has-header'); }
       if(attr.hasSubheader == "true") { element.addClass('has-subheader'); }
@@ -60,7 +50,31 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
 
       function prelink($scope, $element, $attr, navViewCtrl) {
         var clone, sc, scrollView, scrollCtrl,
-          c = angular.element($element.children()[0]);
+          scrollContent = angular.element($element[0].querySelector('.scroll'));
+
+        transclude($scope, function(clone) {
+          scrollContent.append(clone);
+        });
+
+        $ionicBind($scope, $attr, {
+          onRefresh: '&',
+          onRefreshOpening: '&',
+          onScroll: '&',
+          onScrollComplete: '&',
+          refreshComplete: '=',
+          onInfiniteScroll: '&',
+          infiniteScrollDistance: '@',
+          hasBouncing: '@',
+          scroll: '@',
+          padding: '@',
+          hasScrollX: '@',
+          hasScrollY: '@',
+          scrollbarX: '@',
+          scrollbarY: '@',
+          startX: '@',
+          startY: '@',
+          scrollEventInterval: '@'
+        });
 
         if($scope.scroll === "false") {
           // No scrolling
@@ -92,6 +106,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
             }
           }
         });
+
         //Publish scrollView to parent so children can access it
         scrollView = $scope.$parent.scrollView = scrollCtrl.scrollView;
 
