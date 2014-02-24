@@ -23,11 +23,12 @@
             <h1>Content</h1>
           </ion-content>
         </ion-pane>
-        <ion-side-menu side="left" width="$root.menuWidth || 200">
+        <ion-side-menu side="left" width="$root.menuWidth || 200" ng-controller="LeftCtrl">
           <header class="bar bar-header bar-assertive">
             <h1 class="title">Left</h1>
           </header>
           <ion-content has-header="true">
+            <h3>value = {{value}}</h3>
             <ul class="list">
               <a href="#" class="item" ng-repeat="item in list">
                 {{item.text}}
@@ -62,6 +63,10 @@
         $scope.openLeft = function() {
           $ionicSideMenuDelegate.toggleLeft($scope);
         };
+      })
+      .controller('LeftCtrl', function($scope) {
+        $scope.value = true;
+        $scope.list = [{text:1},{text:2},{text:3}];
       });
     </script>
   </body>

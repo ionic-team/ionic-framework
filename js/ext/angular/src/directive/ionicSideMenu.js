@@ -153,7 +153,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
     replace: true,
     transclude: true,
     scope: true,
-    template: '<div class="menu menu-{{side}}" ng-transclude></div>',
+    template: '<div class="menu menu-{{side}}"></div>',
     compile: function(element, attr, transclude) {
       angular.isUndefined(attr.isEnabled) && attr.$set('isEnabled', 'true');
       angular.isUndefined(attr.width) && attr.$set('width', '275');
@@ -175,6 +175,10 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
         });
         $scope.$watch($attr.isEnabled, function(val) {
           sideMenu.setIsEnabled(!!val);
+        });
+
+        transclude($scope, function(clone) {
+          $element.append(clone);
         });
       };
     }
