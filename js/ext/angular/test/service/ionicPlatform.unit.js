@@ -3,26 +3,27 @@ describe('Ionic Platform Service', function() {
 
   beforeEach(inject(function($window) {
     window = $window;
+    ionic.Platform.ua = '';
   }));
 
   it('should set platform name', function() {
     ionic.Platform.setPlatform('Android');
-    expect(ionic.Platform.platform()).toEqual('Android');
+    expect(ionic.Platform.platform()).toEqual('android');
 
     ionic.Platform.setPlatform('iOS');
-    expect(ionic.Platform.platform()).toEqual('iOS');
-
-    ionic.Platform.setPlatform('wInDoWs');
-    expect(ionic.Platform.platform()).toEqual('wInDoWs');
+    expect(ionic.Platform.platform()).toEqual('ios');
 
     ionic.Platform.setPlatform('');
-    expect(ionic.Platform.platform()).toEqual(undefined);
+    expect(ionic.Platform.platform()).toEqual('unknown');
+
+    ionic.Platform.setPlatform(null);
+    expect(ionic.Platform.platform()).toEqual('unknown');
 
     ionic.Platform.setPlatform();
-    expect(ionic.Platform.platform()).toEqual(undefined);
+    expect(ionic.Platform.platform()).toEqual('unknown');
   });
 
-  it('set version', function() {
+  it('set version with device', function() {
     ionic.Platform.setVersion('1.2.3');
     expect(ionic.Platform.version()).toEqual(1.2);
 
@@ -44,8 +45,35 @@ describe('Ionic Platform Service', function() {
     ionic.Platform.setVersion(null);
     expect(ionic.Platform.version()).toEqual(0);
 
+    ionic.Platform.setVersion('0');
+    expect(ionic.Platform.version()).toEqual(0);
+
     ionic.Platform.setVersion();
     expect(ionic.Platform.version()).toEqual(0);
+  });
+
+  it('set android with user agent', function() {
+    ionic.Platform.ua = 'Mozilla/5.0 (Linux; U; Android 2.2.1; fr-ch; A43 Build/FROYO) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1';
+    ionic.Platform.setPlatform(undefined);
+    ionic.Platform.setVersion(undefined);
+    expect(ionic.Platform.platform()).toEqual('android');
+    expect(ionic.Platform.version()).toEqual(2.2);
+  });
+
+  it('set ios with iPhone user agent', function() {
+    ionic.Platform.ua = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25';
+    ionic.Platform.setPlatform(undefined);
+    ionic.Platform.setVersion(undefined);
+    expect(ionic.Platform.platform()).toEqual('ios');
+    expect(ionic.Platform.version()).toEqual(6.1);
+  });
+
+  it('set ios with iPad user agent', function() {
+    ionic.Platform.ua = 'Mozilla/5.0 (iPad; CPU OS 7_0_4 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11B554a Safari/9537.53';
+    ionic.Platform.setPlatform(undefined);
+    ionic.Platform.setVersion(undefined);
+    expect(ionic.Platform.platform()).toEqual('ios');
+    expect(ionic.Platform.version()).toEqual(7.0);
   });
 
   it('is iOS', function() {
@@ -66,8 +94,8 @@ describe('Ionic Platform Service', function() {
     ionic.Platform.setPlatform('android');
     expect(ionic.Platform.isAndroid()).toEqual(true);
 
-    // ionic.Platform.setPlatform('ios');
-    // expect(ionic.Platform.isAndroid()).toEqual(false);
+    ionic.Platform.setPlatform('ios');
+    expect(ionic.Platform.isAndroid()).toEqual(false);
   });
 
   it('is Cordova', function() {
