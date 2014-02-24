@@ -296,8 +296,6 @@ describe('tabs', function() {
 
     it('should set navViewName and select when necessary if a child nav-view', inject(function($ionicViewService, $rootScope) {
       var isCurrent = false;
-      var deregister = function(){};
-      var listener;
       spyOn($ionicViewService, 'isCurrentStateNavView').andCallFake(function(name) {
         return isCurrent;
       });

@@ -33,7 +33,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
       return;
     }
     //Use a field like '$tabSelected' so developers won't accidentally set it in controllers etc
-    if (tab.$tabSelected) { 
+    if (tab.$tabSelected) {
       self.deselect(tab);
       //Try to select a new tab if we're removing a tab
       if (self.tabs.length === 1) {
@@ -59,10 +59,10 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
     }
   };
 
-  $scope.select = self.select = function(tab, shouldEmitEvent) {
+  self.select = function(tab, shouldEmitEvent) {
     var tabIndex;
     if (angular.isNumber(tab)) {
-      tabIndex = tab; 
+      tabIndex = tab;
       tab = self.tabs[tabIndex];
     } else {
       tabIndex = self.tabs.indexOf(tab);
