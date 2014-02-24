@@ -256,7 +256,8 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
         });
 
         // watch for changes in the title
-        $scope.$watch('title', function(val) {
+        // Don't emit the first title, that was emitted in viewEnter event
+        $scope.$watch('title', function(val, oldVal) {
           $scope.$emit('viewState.titleUpdated', $scope);
         });
       };
