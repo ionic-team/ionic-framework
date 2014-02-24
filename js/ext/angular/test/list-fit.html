@@ -14,7 +14,7 @@
 
     <ion-header-bar title="'Sample UL'" type="bar-positive"></ion-header-bar>
 
-    <ion-content has-header="true" scroll="true" ng-controller="ContentCtrl" on-refresh="onRefresh()" has-footer="true" padding="false">
+    <ion-content on-infinite-scroll="addMore()" has-header="true" scroll="true" ng-controller="ContentCtrl" on-refresh="onRefresh()" has-footer="true" padding="false">
 
       <ion-refresher></ion-refresher>
 
@@ -45,7 +45,11 @@
         <li class="item">24</li>
         <li class="item">25</li>
         <li class="item">26</li>
+        <li ng-repeat="i in more">more {{$index}}</li>
        </ul>
+
+       <ion-infinite-scroll></ion-infinite-scroll>
+
     </ion-content>
 
     <ion-footer-bar type="bar-assertive">
@@ -58,6 +62,12 @@ function ContentCtrl($scope, $timeout) {
     $timeout(function() {
 		  $scope.$broadcast('scroll.refreshComplete');
     }, 1000);
+  };
+  $scope.more = [];
+  $scope.addMore = function() {
+    for (var i=0; i<15; i++) {
+      $scope.more.push(i);
+    }
   };
 }
   </script>

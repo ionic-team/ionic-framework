@@ -3,6 +3,7 @@
  * modules.
  */
 angular.module('ionic.service', [
+  'ionic.service.bind',
   'ionic.service.platform',
   'ionic.service.actionSheet',
   'ionic.service.gesture',
