@@ -34,7 +34,7 @@ describe('Ionic ScrollDelegate Service', function() {
   it('scroll event', function() {
     var scope = rootScope.$new();
     var el = compile('<ion-content></ion-content>')(scope);
-    scope = el.isolateScope();
+    scope = el.scope();
     scope.$apply();
     var top, left;
     scope.onScroll = jasmine.createSpy('scroll').andCallFake(function(data) {

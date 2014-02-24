@@ -18,33 +18,20 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
 
 // The content directive is a core scrollable content area
 // that is part of many View hierarchies
-.directive('ionContent', ['$parse', '$timeout', '$ionicScrollDelegate', '$controller', function($parse, $timeout, $ionicScrollDelegate, $controller) {
+.directive('ionContent', [
+  '$parse',
+  '$timeout',
+  '$ionicScrollDelegate',
+  '$controller',
+  '$ionicBindFromParent',
+function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBindFromParent) {
   return {
     restrict: 'E',
     replace: true,
-    template: '<div class="scroll-content"><div class="scroll" ng-transclude></div></div>',
+    template: '<div class="scroll-content"><div class="scroll"></div></div>',
     transclude: true,
     require: '^?ionNavView',
-    scope: {
-      onRefresh: '&',
-      onRefreshOpening: '&',
-      onScroll: '&',
-      onScrollComplete: '&',
-      refreshComplete: '=',
-      onInfiniteScroll: '=',
-      infiniteScrollDistance: '@',
-      hasBouncing: '@',
-      scroll: '@',
-      padding: '@',
-      hasScrollX: '@',
-      hasScrollY: '@',
-      scrollbarX: '@',
-      scrollbarY: '@',
-      startX: '@',
-      startY: '@',
-      scrollEventInterval: '@'
-    },
-
+    scope: true,
     compile: function(element, attr, transclude) {
       if(attr.hasHeader == "true") { element.addClass('has-header'); }
       if(attr.hasSubheader == "true") { element.addClass('has-subheader'); }
@@ -60,7 +47,31 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
 
       function prelink($scope, $element, $attr, navViewCtrl) {
         var clone, sc, scrollView, scrollCtrl,
-          c = angular.element($element.children()[0]);
+          scrollContent = angular.element($element[0].querySelector('.scroll'));
+
+        $ionicBindFromParent($scope, $attr, {
+          onRefresh: '&',
+          onRefreshOpening: '&',
+          onScroll: '&',
+          onScrollComplete: '&',
+          refreshComplete: '=',
+          onInfiniteScroll: '=',
+          infiniteScrollDistance: '@',
+          hasBouncing: '@',
+          scroll: '@',
+          padding: '@',
+          hasScrollX: '@',
+          hasScrollY: '@',
+          scrollbarX: '@',
+          scrollbarY: '@',
+          startX: '@',
+          startY: '@',
+          scrollEventInterval: '@'
+        });
+
+        transclude($scope, function(clone) {
+          scrollContent.append(clone);
+        });
 
         if($scope.scroll === "false") {
           // No scrolling
