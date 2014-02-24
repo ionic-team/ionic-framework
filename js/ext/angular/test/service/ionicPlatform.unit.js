@@ -85,14 +85,14 @@ describe('Ionic Platform Service', function() {
   it('sets ios platforms', function() {
     window.cordova = {};
     ionic.Platform.setPlatform('iOS');
-    ionic.Platform.setVersion('7.9.3');
+    ionic.Platform.setVersion('7.0.3');
     
     ionic.Platform._checkPlatforms()
 
     expect(ionic.Platform.platforms[0]).toEqual('cordova');
     expect(ionic.Platform.platforms[1]).toEqual('ios');
     expect(ionic.Platform.platforms[2]).toEqual('ios7');
-    expect(ionic.Platform.platforms[3]).toEqual('ios7_9');
+    expect(ionic.Platform.platforms[3]).toEqual('ios7_0');
   });
 
   it('sets android platforms', function() {
@@ -191,7 +191,7 @@ describe('Ionic Platform Service', function() {
     expect(ionic.Platform.is('android')).toEqual(false);
   });
 
-  it('is android', function() {
+  it('is iOS', function() {
     ionic.Platform.setPlatform('iOs');
     expect(ionic.Platform.is('ios')).toEqual(true);
     ionic.Platform.setPlatform('iOs');
@@ -199,6 +199,19 @@ describe('Ionic Platform Service', function() {
     ionic.Platform.setPlatform('IOS');
     expect(ionic.Platform.is('ios')).toEqual(true);
     ionic.Platform.setPlatform('IOS');
+    expect(ionic.Platform.is('android')).toEqual(false);
+  });
+
+  it('should be all platforms for ios', function() {
+    window.cordova = {};
+    ionic.Platform.setPlatform('iOS');
+    ionic.Platform.setVersion('7.1.4');
+    ionic.Platform._checkPlatforms();
+
+    expect(ionic.Platform.is('ios')).toEqual(true);
+    expect(ionic.Platform.is('ios7')).toEqual(true);
+    expect(ionic.Platform.is('ios7_1')).toEqual(true);
+    expect(ionic.Platform.is('cordova')).toEqual(true);
     expect(ionic.Platform.is('android')).toEqual(false);
   });
 
