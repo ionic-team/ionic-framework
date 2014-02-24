@@ -44,9 +44,15 @@ body, .ionic-body {
   font-size: $font-size-base;
   font-family: $font-family-base;
   line-height: $line-height-computed;
-  -webkit-backface-visibility: hidden;
   text-rendering: optimizeLegibility;
+  -webkit-backface-visibility: hidden;
   -webkit-user-drag: none;
+}
+
+body.grade-b,
+body.grade-c {
+  // disable optimizeLegibility for low end devices
+  text-rendering: auto;
 }
 
 .content {
@@ -55,7 +61,6 @@ body, .ionic-body {
 }
 
 .scroll-content {
-
   position: absolute;
   top: 0;
   right: 0;
@@ -68,7 +73,6 @@ body, .ionic-body {
 
   width: auto;
   height: auto;
-  //-webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
 }
 
@@ -79,7 +83,6 @@ body, .ionic-body {
   // Hide the top border if any
   margin-top: -1px;
   height: 100%;
-  //-webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
 }
 
@@ -93,7 +96,6 @@ body, .ionic-body {
   @include text-size-adjust(none);
   @include translateZ(0);
   @include transform-origin(left, top);
-  //-webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
 }
 
@@ -141,6 +143,7 @@ body, .ionic-body {
 }
 .grade-b .scroll-bar-indicator,
 .grade-c .scroll-bar-indicator {
+  // disable rgba background and border radius for low end devices
   border-radius: 0;
   background: #aaa;
 }

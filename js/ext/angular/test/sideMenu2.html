@@ -2,9 +2,7 @@
   <head>
     <meta charset="utf-8">
     <title>Side Menus</title>
-
-    <!-- Sets initial viewport load and disables zooming  -->
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <script src="../../../../dist/js/ionic.bundle.js"></script>
   </head>
@@ -70,19 +68,13 @@
             <ion-item ion-item="item" ng-href="#" ng-click="itemClick()" ng-repeat="item in range">
               <strong>{{$index}}</strong>
               <b>:</b>
-              <span>Item</span>
-              <span>.</span>
-              <span>.</span>
-              <span>.</span>
-              <span>.</span>
-              <span>.</span>
-              <span>.</span>
-              <span>.</span>
-              <span>.</span>
-              <span>.</span>
-              <span>.</span>
-              <span>.</span>
-              <span>.</span>
+              <em>
+                <span># <span>$ <span>W <span>Q</span></span></span></span>
+                <span>% <span>A <span>H <span>?</span></span></span></span>
+                <span>&amp; <span>@ <span>* <span>X</span></span></span></span>
+                <span>j <span>p <span>q <span>y</span></span></span></span>
+                <span>{ <span>} <span>( <span>)</span></span></span></span>
+              </em>
             </ion-item>
           </div>
 
@@ -205,7 +197,7 @@
         };
 
         $scope.range = [];
-        for (var i=0; i<150; i++) $scope.range.push(i);
+        for (var i=0; i<15; i++) $scope.range.push(i);
 
         $scope.attendees = [
           { firstname: 'Nicolas', lastname: 'Cage' },
