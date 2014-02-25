@@ -33,6 +33,9 @@ describe('Ionic Platform Service', function() {
     ionic.Platform.setVersion('1');
     expect(ionic.Platform.version()).toEqual(1.0);
 
+    ionic.Platform.setVersion('0.1');
+    expect(ionic.Platform.version()).toEqual(0.1);
+
     ionic.Platform.setVersion(' ');
     expect(ionic.Platform.version()).toEqual(0);
 
