@@ -1,4 +1,3 @@
-
 /**
  * Forms
  * --------------------------------------------------
@@ -121,6 +120,12 @@ textarea {
 
 .placeholder-icon {
   color: #aaa;
+  &:first-child {
+    padding-right: 6px;
+  }
+  &:last-child {
+    padding-left: 6px;
+  }
 }
 
 .item-stacked-label {
