@@ -175,7 +175,7 @@ function($scope, $ionicViewService, $rootScope, $element) {
         });
 
         tabNavElement = angular.element(
-          '<ion-tab-nav ' +
+          '<ion-tab-nav' +
           attrStr('title', attr.title) +
           attrStr('icon', attr.icon) +
           attrStr('icon-on', attr.iconOn) +
