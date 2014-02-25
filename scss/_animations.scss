@@ -24,7 +24,27 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
     opacity: 1;
   }
 }
+@-moz-keyframes slideInUp {
+  0% {
+    @include translate3d(0, 100%, 0);
+    opacity: 0;
+  }
+  100% {
+    @include translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
 @-webkit-keyframes slideOutUp {
+  0% {
+    @include translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  100% {
+    @include translate3d(0, 100%, 0);
+    opacity: 0;
+  }
+}
+@-moz-keyframes slideOutUp {
   0% {
     @include translate3d(0, 0, 0);
     opacity: 1;
