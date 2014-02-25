@@ -1,4 +1,4 @@
-angular.module('ionic.ui.tabs', ['ionic.service.view', 'ngSanitize'])
+angular.module('ionic.ui.tabs', ['ionic.service.view'])
 
 /**
  * @description
@@ -9,303 +9,274 @@ angular.module('ionic.ui.tabs', ['ionic.service.view', 'ngSanitize'])
 
 .run(['$ionicViewService', function($ionicViewService) {
   // set that the tabs directive should not animate when transitioning
-  // to it. Instead, the children <ion-tab> directives would animate
+  // to it. Instead, the children <tab> directives would animate
   $ionicViewService.disableRegisterByTagName('ion-tabs');
 }])
 
-.controller('$ionicTabs', ['$scope', '$ionicViewService', function($scope, $ionicViewService) {
-  var _this = this;
+.controller('$ionicTabs', ['$scope', '$ionicViewService', '$element', function($scope, $ionicViewService, $element) {
+  var self = $scope.tabsController = this;
+  self.tabs = [];
 
-  $scope.tabCount = 0;
-  $scope.selectedIndex = -1;
-  $scope.$enableViewRegister = false;
+  self.selectedTab = null;
 
-  angular.extend(this, ionic.controllers.TabBarController.prototype);
-
-  ionic.controllers.TabBarController.call(this, {
-    controllerChanged: function(oldC, oldI, newC, newI) {
-      $scope.controllerChanged && $scope.controllerChanged({
-        oldController: oldC,
-        oldIndex: oldI,
-        newController: newC,
-        newIndex: newI
-      });
-    },
-    tabBar: {
-      tryTabSelect: function() {},
-      setSelectedItem: function(index) {},
-      addItem: function(item) {}
+  self.add = function(tab) {
+    $ionicViewService.registerHistory(tab);
+    self.tabs.push(tab);
+    if(self.tabs.length === 1) {
+      self.select(tab);
     }
-  });
-
-  this.add = function(tabScope) {
-    tabScope.tabIndex = $scope.tabCount;
-    this.addController(tabScope);
-    if(tabScope.tabIndex === 0) {
-      this.select(0);
-    }
-    $scope.tabCount++;
   };
 
-  function controllerByTabIndex(tabIndex) {
-    for (var x=0; x<_this.controllers.length; x++) {
-      if (_this.controllers[x].tabIndex === tabIndex) {
-        return _this.controllers[x];
+  self.remove = function(tab) {
+    var tabIndex = self.tabs.indexOf(tab);
+    if (tabIndex === -1) {
+      return;
+    }
+    //Use a field like '$tabSelected' so developers won't accidentally set it in controllers etc
+    if (tab.$tabSelected) {
+      self.deselect(tab);
+      //Try to select a new tab if we're removing a tab
+      if (self.tabs.length === 1) {
+        //do nothing if there are no other tabs to select
+      } else {
+        //Select previous tab if it's the last tab, else select next tab
+        var newTabIndex = tabIndex === self.tabs.length - 1 ? tabIndex - 1 : tabIndex + 1;
+        self.select(self.tabs[newTabIndex]);
       }
     }
-  }
+    self.tabs.splice(tabIndex, 1);
+  };
 
-  this.select = function(tabIndex, emitChange) {
-    if(tabIndex !== $scope.selectedIndex) {
+  self.getTabIndex = function(tab) {
+    return self.tabs.indexOf(tab);
+  };
 
-      $scope.selectedIndex = tabIndex;
-      $scope.activeAnimation = $scope.animation;
-      _this.selectController(tabIndex);
+  self.deselect = function(tab) {
+    if (tab.$tabSelected) {
+      self.selectedTab = null;
+      tab.$tabSelected = false;
+      (tab.onDeselect || angular.noop)();
+    }
+  };
 
-      var viewData = {
-        type: 'tab',
-        typeIndex: tabIndex
-      };
+  self.select = function(tab, shouldEmitEvent) {
+    var tabIndex;
+    if (angular.isNumber(tab)) {
+      tabIndex = tab;
+      tab = self.tabs[tabIndex];
+    } else {
+      tabIndex = self.tabs.indexOf(tab);
+    }
+    if (!tab || tabIndex == -1) {
+      throw new Error('Cannot select tab "' + tabIndex + '"!');
+    }
 
-      var tabController = controllerByTabIndex(tabIndex);
-      if (tabController) {
-        viewData.title = tabController.title;
-        viewData.historyId = tabController.$historyId;
-        viewData.url = tabController.url;
-        viewData.uiSref = tabController.viewSref;
-        viewData.navViewName = tabController.navViewName;
-        viewData.hasNavView = tabController.hasNavView;
+    if (self.selectedTab && self.selectedTab.$historyId == tab.$historyId) {
+      if (shouldEmitEvent) {
+        $ionicViewService.goToHistoryRoot(tab.$historyId);
       }
+    } else {
+      angular.forEach(self.tabs, function(tab) {
+        self.deselect(tab);
+      });
 
-      if(emitChange) {
+      self.selectedTab = tab;
+      //Use a funny name like $tabSelected so the developer doesn't overwrite the var in a child scope
+      tab.$tabSelected = true;
+      (tab.onSelect || angular.noop)();
+
+      if (shouldEmitEvent) {
+        var viewData = {
+          type: 'tab',
+          tabIndex: tabIndex,
+          historyId: tab.$historyId,
+          navViewName: tab.navViewName,
+          hasNavView: !!tab.navViewName,
+          title: tab.title,
+          //Skip the first character of href if it's #
+          url: tab.href,
+          uiSref: tab.uiSref
+        };
         $scope.$emit('viewState.changeHistory', viewData);
       }
-    } else if(emitChange) {
-      var currentView = $ionicViewService.getCurrentView();
-      if (currentView) {
-        $ionicViewService.goToHistoryRoot(currentView.historyId);
-      }
     }
   };
-
-  $scope.controllers = this.controllers;
-
-  $scope.tabsController = this;
-
 }])
 
-.directive('ionTabs', ['$ionicViewService', function($ionicViewService) {
+.directive('ionTabs', ['$ionicViewService', '$ionicBind', function($ionicViewService, $ionicBind) {
   return {
     restrict: 'E',
     replace: true,
     scope: true,
     transclude: true,
     controller: '$ionicTabs',
-    template: '<div class="view"><ion-tab-controller-bar></ion-tab-controller-bar></div>',
-    compile: function(element, attr, transclude, tabsCtrl) {
-      return function link($scope, $element, $attr) {
+    template:
+    '<div class="view {{$animation}}">' +
+      '<div class="tabs {{$tabsStyle}} {{$tabsType}}">' +
+      '</div>' +
+    '</div>',
+    compile: function(element, attr, transclude) {
+      if(angular.isUndefined(attr.tabsType)) attr.$set('tabsType', 'tabs-positive');
 
-        var tabs = $element[0].querySelector('.tabs');
+      return function link($scope, $element, $attr, tabsCtrl) {
 
-        $scope.tabsType = $attr.tabsType || 'tabs-positive';
-        $scope.tabsStyle = $attr.tabsStyle;
-        $scope.animation = $attr.animation;
-
-        $scope.animateNav = $scope.$eval($attr.animateNav);
-        if($scope.animateNav !== false) {
-          $scope.animateNav = true;
-        }
-
-        $attr.$observe('tabsStyle', function(val) {
-          if(tabs) {
-            angular.element(tabs).addClass($attr.tabsStyle);
-          }
+        $ionicBind($scope, $attr, {
+          $animation: '@animation',
+          $tabsStyle: '@tabsStyle',
+          $tabsType: '@tabsType'
         });
 
-        $attr.$observe('tabsType', function(val) {
-          if(tabs) {
-            angular.element(tabs).addClass($attr.tabsType);
-          }
-        });
+        tabsCtrl.$scope = $scope;
+        tabsCtrl.$element = $element;
+        tabsCtrl.$tabsElement = angular.element($element[0].querySelector('.tabs'));
 
-        $scope.$watch('activeAnimation', function(value) {
-          $element.addClass($scope.activeAnimation);
+        transclude($scope, function(clone) {
+          $element.append(clone);
         });
-        transclude($scope, function(cloned) {
-          $element.prepend(cloned);
-        });
-
       };
     }
   };
+}])
+
+.controller('$ionicTab', ['$scope', '$ionicViewService', '$rootScope', '$element',
+function($scope, $ionicViewService, $rootScope, $element) {
+  this.$scope = $scope;
 }])
 
 // Generic controller directive
-.directive('ionTab', ['$ionicViewService', '$rootScope', '$parse', '$interpolate', function($ionicViewService, $rootScope, $parse, $interpolate) {
+.directive('ionTab', ['$rootScope', '$animate', '$ionicBind', '$compile', '$ionicViewService', function($rootScope, $animate, $ionicBind, $compile, $ionicViewService) {
+
+  //Returns ' key="value"' if value exists
+  function attrStr(k,v) {
+    return angular.isDefined(v) ? ' ' + k + '="' + v + '"' : '';
+  }
   return {
     restrict: 'E',
-    require: '^ionTabs',
-    scope: true,
+    require: ['^ionTabs', 'ionTab'],
+    replace: true,
     transclude: 'element',
+    controller: '$ionicTab',
+    scope: true,
     compile: function(element, attr, transclude) {
+      return function link($scope, $element, $attr, ctrls) {
+        var childScope, childElement, tabNavElement;
+          tabsCtrl = ctrls[0],
+          tabCtrl = ctrls[1];
 
-      return function link($scope, $element, $attr, tabsCtrl) {
-        var childScope, childElement;
-
-        $ionicViewService.registerHistory($scope);
-
-        $scope.title = $attr.title;
-        $scope.icon = $attr.icon;
-        $scope.iconOn = $attr.iconOn;
-        $scope.iconOff = $attr.iconOff;
-        $scope.viewSref = $attr.uiSref;
-        $scope.url = $attr.href;
-        if($scope.url && $scope.url.indexOf('#') === 0) {
-          $scope.url = $scope.url.replace('#', '');
-        }
-
-        // Should we hide a back button when this tab is shown
-        $scope.hideBackButton = $scope.$eval($attr.hideBackButton);
-
-        if($scope.hideBackButton !== true) {
-          $scope.hideBackButton = false;
-        }
-
-        // Whether we should animate on tab change, also impacts whether we
-        // tell any parent nav controller to animate
-        $scope.animate = $scope.$eval($attr.animate);
-
-        var badgeGet = $parse($attr.badge);
-        $scope.$watch(badgeGet, function(value) {
-          $scope.badge = value;
+        $ionicBind($scope, $attr, {
+          animate: '=',
+          leftButtons: '=',
+          rightButtons: '=',
+          onSelect: '&',
+          onDeselect: '&',
+          title: '@',
+          uiSref: '@',
+          href: '@',
         });
 
-        $attr.$observe('badgeStyle', function(value) {
-          $scope.badgeStyle = value;
-        });
-
-        var leftButtonsGet = $parse($attr.leftButtons);
-        $scope.$watch(leftButtonsGet, function(value) {
-          $scope.leftButtons = value;
-          if($scope.doesUpdateNavRouter) {
-            $scope.$emit('viewState.leftButtonsChanged', $scope.rightButtons);
-          }
-        });
-
-        var rightButtonsGet = $parse($attr.rightButtons);
-        $scope.$watch(rightButtonsGet, function(value) {
-          $scope.rightButtons = value;
-        });
+        tabNavElement = angular.element(
+          '<ion-tab-nav ' +
+          attrStr('title', attr.title) +
+          attrStr('icon', attr.icon) +
+          attrStr('icon-on', attr.iconOn) +
+          attrStr('icon-off', attr.iconOff) +
+          attrStr('ui-sref', attr.uiSref) +
+          attrStr('href', attr.href) +
+          attrStr('badge', attr.badge) +
+          attrStr('badge-style', attr.badgeStyle) +
+          '></ion-tab-nav>'
+        );
+        tabNavElement.data('$ionTabsController', tabsCtrl);
+        tabNavElement.data('$ionTabController', tabCtrl);
+        tabsCtrl.$tabsElement.append($compile(tabNavElement)($scope));
 
         tabsCtrl.add($scope);
+        $scope.$on('$destroy', function() {
+          tabsCtrl.remove($scope);
+          tabNavElement.isolateScope().$destroy();
+          tabNavElement.remove();
+        });
 
-        function cleanupChild() {
-          if(childElement) {
-            childElement.remove();
-            childElement = null;
+        $scope.$watch('$tabSelected', function(value) {
+          if (!value) {
+            $scope.$broadcast('tab.hidden', $scope);
           }
-          if(childScope) {
-            childScope.$destroy();
-            childScope = null;
-          }
-        }
-
-        $scope.$watch('isVisible', function(value) {
+          childScope && childScope.$destroy();
+          childScope = null;
+          childElement && $animate.leave(childElement);
+          childElement = null;
           if (value) {
-            cleanupChild();
             childScope = $scope.$new();
             transclude(childScope, function(clone) {
-              clone.addClass('view');
-              clone.removeAttr('title');
+              //remove title attr to stop hover annoyance!
+              clone[0].removeAttribute('title');
+              $animate.enter(clone, tabsCtrl.$element);
+              clone.addClass('pane');
               childElement = clone;
-              $element.parent().append(childElement);
             });
-            $scope.$broadcast('tab.shown');
-          } else if (childScope) {
-            $scope.$broadcast('tab.hidden');
-            cleanupChild();
+            $scope.$broadcast('tab.shown', $scope);
           }
         });
 
-        // on link, check if it has a nav-view in it
-        transclude($scope.$new(), function(clone) {
-          var navViewEle = clone[0].getElementsByTagName("ion-nav-view");
-          $scope.hasNavView = (navViewEle.length > 0);
-          if($scope.hasNavView) {
-            // this tab has a ui-view
-            $scope.navViewName = navViewEle[0].getAttribute('name');
-            if( $ionicViewService.isCurrentStateNavView( $scope.navViewName ) ) {
-              // this tab's ui-view is the current one, go to it!
-              tabsCtrl.select($scope.tabIndex);
-            }
+        transclude($scope, function(clone) {
+          var navView = clone[0].querySelector('ion-nav-view');
+          if (navView) {
+            $scope.navViewName = navView.getAttribute('name');
+            selectTabIfMatchesState();
+            $scope.$on('$stateChangeSuccess', selectTabIfMatchesState);
           }
         });
 
-        var unregister = $rootScope.$on('$stateChangeSuccess', function(value){
-          if( $ionicViewService.isCurrentStateNavView($scope.navViewName) &&
-              $scope.tabIndex !== tabsCtrl.selectedIndex) {
-            tabsCtrl.select($scope.tabIndex);
+        function selectTabIfMatchesState() {
+          // this tab's ui-view is the current one, go to it!
+          if ($ionicViewService.isCurrentStateNavView($scope.navViewName)) {
+            tabsCtrl.select($scope);
           }
-        });
-
-        $scope.$on('$destroy', unregister);
-
+        }
       };
     }
   };
 }])
 
-
-.directive('ionTabControllerBar', function() {
+.directive('ionTabNav', function() {
   return {
     restrict: 'E',
-    require: '^ionTabs',
-    transclude: true,
     replace: true,
-    scope: true,
-    template: '<div class="tabs">' +
-      '<ion-tab-controller-item icon-title="{{c.title}}" icon="{{c.icon}}" icon-on="{{c.iconOn}}" icon-off="{{c.iconOff}}" badge="c.badge" badge-style="c.badgeStyle" active="c.isVisible" index="$index" ng-repeat="c in controllers"></ion-tab-controller-item>' +
+    require: ['^ionTabs', '^ionTab'],
+    template:
+    '<div ng-class="{active: isTabActive(), \'has-badge\':badge}" ' +
+      'ng-click="selectTab()" class="tab-item">' +
+      '<span class="badge {{badgeStyle}}" ng-show="badge">{{badge}}</span>' +
+      '<i class="icon {{iconOn}}" ng-show="isTabActive()"></i>' +
+      '<i class="icon {{iconOff}}" ng-hide="isTabActive()"></i>' +
+      '<span class="tab-title" ng-bind-html="title"></span>' +
     '</div>',
-    link: function($scope, $element, $attr, tabsCtrl) {
-      $element.addClass($scope.tabsType);
-      $element.addClass($scope.tabsStyle);
-    }
-  };
-})
-
-.directive('ionTabControllerItem', ['$window', function($window) {
-  return {
-    restrict: 'E',
-    replace: true,
-    require: '^ionTabs',
     scope: {
-      iconTitle: '@',
+      title: '@',
       icon: '@',
       iconOn: '@',
       iconOff: '@',
+      uiSref: '@',
+      href: '@',
       badge: '=',
-      badgeStyle: '=',
-      active: '=',
-      tabSelected: '@',
-      index: '='
+      badgeStyle: '@'
     },
-    link: function(scope, element, attrs, tabsCtrl) {
-      if(attrs.icon) {
-        scope.iconOn = scope.iconOff = attrs.icon;
+    compile: function(element, attr, transclude) {
+      if (attr.icon) {
+        attr.$set('iconOn', attr.icon);
+        attr.$set('iconOff', attr.icon);
       }
+      return function link($scope, $element, $attrs, ctrls) {
+        var tabsCtrl = ctrls[0],
+          tabCtrl = ctrls[1];
 
-      scope.selectTab = function() {
-        tabsCtrl.select(scope.index, true);
+        $scope.isTabActive = function() {
+          return tabsCtrl.selectedTab === tabCtrl.$scope;
+        };
+        $scope.selectTab = function() {
+          tabsCtrl.select(tabCtrl.$scope, true);
+        };
       };
-    },
-    template:
-      '<a ng-class="{active:active, \'has-badge\':badge}" ng-click="selectTab()" class="tab-item">' +
-        '<span class="badge {{badgeStyle}}" ng-if="badge">{{badge}}</span>' +
-        '<i class="icon {{icon}}" ng-if="icon"></i>' +
-        '<i class="icon {{iconOn}}" ng-if="active && iconOn"></i>' +
-        '<i class="icon {{iconOff}}" ng-if="!active && iconOff"></i>' +
-        '<span ng-bind-html="iconTitle"></span>' +
-      '</a>'
+    }
   };
-}]);
-
+});
