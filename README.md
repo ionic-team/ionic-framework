@@ -86,7 +86,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 * `grunt watch` to watch and rebuild on change
 * `grunt karma:single` to test one-time
 * `grunt karma:watch` to test and re-run on source change
-* `grunt protractor:local` to test e2e tests locally
+* `grunt protractor:local` to test e2e tests locally (requires static server on port 8080)
 * `grunt e2e-watch` to run end to end tests on change of files in `test/e2e/**/*`
 * `grunt cloudtest` to run unit & e2e tests in the cloud
 
