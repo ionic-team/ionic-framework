@@ -97,7 +97,8 @@ describe('$ionicScroll Controller', function() {
       doneCb = done;
     });
 
-    scope.onRefresh = jasmine.createSpy('onRefresh');
+    scope.$onRefresh = jasmine.createSpy('onRefresh');
+    scope.$onRefreshOpening = jasmine.createSpy('onRefreshOpening');
 
     timeout.flush();
     var refresher = ctrl.refresher;
@@ -108,17 +109,18 @@ describe('$ionicScroll Controller', function() {
     startCb();
     expect(refresher.classList.contains('active')).toBe(true);
     expect(refresher.classList.contains('refreshing')).toBe(false);
+    expect(scope.$onRefreshOpening).toHaveBeenCalled();
 
     refreshingCb();
     expect(refresher.classList.contains('active')).toBe(false);
     expect(refresher.classList.contains('refreshing')).toBe(false);
 
-    expect(scope.onRefresh).not.toHaveBeenCalled();
+    expect(scope.$onRefresh).not.toHaveBeenCalled();
 
     doneCb();
     expect(refresher.classList.contains('active')).toBe(false);
     expect(refresher.classList.contains('refreshing')).toBe(true);
-    expect(scope.onRefresh).toHaveBeenCalled();
+    expect(scope.$onRefresh).toHaveBeenCalled();
   });
 
 });

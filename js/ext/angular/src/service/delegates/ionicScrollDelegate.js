@@ -74,12 +74,9 @@ angular.module('ionic.ui.service.scrollDelegate', [])
       }
 
       $element.on('scroll', function(e) {
-        if ( !$scope.onScroll ) {
-          return;
-        }
         var detail = (e.originalEvent || e).detail || {};
 
-        $scope.onScroll && $scope.onScroll({
+        $scope.$onScroll && $scope.$onScroll({
           event: e,
           scrollTop: detail.scrollTop || 0,
           scrollLeft: detail.scrollLeft || 0

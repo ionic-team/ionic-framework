@@ -57,10 +57,11 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
         });
 
         $ionicBind($scope, $attr, {
-          onRefresh: '&',
-          onRefreshOpening: '&',
-          onScroll: '&',
-          onScrollComplete: '&',
+          //Use $ to stop onRefresh from recursively calling itself
+          $onRefresh: '&onRefresh',
+          $onRefreshOpening: '&onRefreshOpening',
+          $onScroll: '&onScroll',
+          $onScrollComplete: '&onScrollComplete',
           refreshComplete: '=',
           onInfiniteScroll: '&',
           infiniteScrollDistance: '@',
@@ -99,7 +100,7 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
             scrollingY: $scope.$eval($scope.hasScrollY) !== false,
             scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 20,
             scrollingComplete: function() {
-              $scope.onScrollComplete({
+              $scope.$onScrollComplete({
                 scrollTop: this.__scrollTop,
                 scrollLeft: this.__scrollLeft
               });

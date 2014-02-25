@@ -37,12 +37,12 @@ describe('Ionic ScrollDelegate Service', function() {
     scope = el.scope();
     scope.$apply();
     var top, left;
-    scope.onScroll = jasmine.createSpy('scroll').andCallFake(function(data) {
+    scope.$onScroll = jasmine.createSpy('scroll').andCallFake(function(data) {
       top = data.scrollTop;
       left = data.scrollLeft;
     });
     ionic.trigger('scroll', {target: el[0]});
-    expect(scope.onScroll).toHaveBeenCalled();
+    expect(scope.$onScroll).toHaveBeenCalled();
     expect(top).toBe(0);
     expect(left).toBe(0);
 
