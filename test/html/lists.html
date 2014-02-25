@@ -2,10 +2,8 @@
   <head>
     <meta charset="utf-8">
     <title>Lists</title>
-
-    <!-- Sets initial viewport load and disables zooming  -->
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="../dist/css/ionic.css" rel="stylesheet">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link href="../../dist/css/ionic.css" rel="stylesheet">
     <style>
       #list {
         height: 100%;
@@ -13,7 +11,7 @@
         overflow: hidden;
       }
     </style>
-    <script src="../dist/js/ionic.bundle.js"></script>
+    <script src="../../dist/js/ionic.bundle.js"></script>
     <script>
       angular.module('ionicApp', ['ionic'])
     </script>
@@ -25,7 +23,7 @@
     </header>
 
     <div id="list">
-    <content id="content" class="has-header">
+    <ion-content id="content" class="has-header">
 
       <div class="list">
 
@@ -519,7 +517,7 @@
         </div>
 
         <div class="padding">
-          <a class="button button-secondary" href="index.html">Homepage</a>
+          <a class="button button-secondary" href="./">All CSS Tests</a>
         </div>
 
         <h3>Colors</h3>
@@ -536,7 +534,7 @@
           <a class="item item-dark" href="#">item-dark</a>
         </div>
 
-    </content>
+    </ion-content>
   </div>
 
 

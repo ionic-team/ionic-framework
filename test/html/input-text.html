@@ -2,18 +2,20 @@
   <head>
     <meta charset="utf-8">
     <title>Text Inputs</title>
-
-    <!-- Sets initial viewport load and disables zooming  -->
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="../dist/css/ionic.css" rel="stylesheet">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link href="../../dist/css/ionic.css" rel="stylesheet">
+    <script src="../../dist/js/ionic.bundle.js"></script>
+    <script>
+      angular.module('ionicApp', ['ionic'])
+    </script>
   </head>
-  <body class="ionic-pseudo">
+  <body class="ionic-pseudo" ng-app="ionicApp">
 
     <header class="bar bar-header bar-dark">
       <h1 class="title">Text Inputs</h1>
     </header>
 
-    <div class="content overflow-scroll has-header">
+    <ion-content has-header="true">
 
       <h3>Default Text Input, Not Inset, No Content Padding</h3>
       <div class="list">
@@ -265,9 +267,9 @@
 
       </div>
 
-      <p><a class="button button-secondary" href="index.html">Homepage</a></p>
+      <p><a class="button button-secondary" href="./">All CSS Tests</a></p>
 
-    </div>
+    </ion-content>
 
   </body>
 </html>
