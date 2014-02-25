@@ -231,7 +231,7 @@ body.grade-c {
 }
 
 // Infinite scroll
-infinite-scroll .scroll-infinite {
+ion-infinite-scroll .scroll-infinite {
   position: relative;
   overflow: hidden;
   margin-top: -70px;
@@ -247,7 +247,7 @@ infinite-scroll .scroll-infinite {
   text-align: center;
   font-size: 30px; }
 
-infinite-scroll.active .scroll-infinite {
+ion-infinite-scroll.active .scroll-infinite {
   margin-top: -30px;
 }
 
