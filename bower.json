@@ -24,8 +24,6 @@
     "triggerio",
     "angularjs",
     "angular",
-    "ratchet",
-    "bootstrap"
   ],
   "license": "MIT",
   "private": false,
