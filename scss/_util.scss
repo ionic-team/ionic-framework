@@ -4,12 +4,22 @@
  * --------------------------------------------------
  */
 
-.hidden,
 .hide {
+  display: none;
+}
+.opacity-hide {
+  opacity: 0;
+}
+.grade-b .opacity-hide,
+.grade-c .opacity-hide {
+  opacity: 1;
   display: none;
 }
 .show {
   display: block;
+}
+.opacity-show {
+  opacity: 1;
 }
 .invisible {
   visibility: hidden;
