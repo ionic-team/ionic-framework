@@ -369,8 +369,8 @@ describe('tabs', function() {
       return element;
     }
 
-    // These next two are REALLY specific unit tests, 
-    // but also are really really vital pieces of code 
+    // These next two are REALLY specific unit tests,
+    // but also are really really vital pieces of code
     it('.isTabActive should be correct', function() {
       var el = setup();
       expect(el.isolateScope().isTabActive()).toBe(false);
@@ -397,9 +397,12 @@ describe('tabs', function() {
       expect(tabsCtrl.select).toHaveBeenCalledWith(tabCtrl.$scope, true);
     });
 
-    it('should have title', function() {
+    it('should have title and only title', function() {
       var el = setup('title="<b>hi, {{name}}!</b>"');
       expect(el.find('.tab-title').html()).toBe('<b>hi, !</b>');
+      expect(el.find('.icon.on').length).toBe(0);
+      expect(el.find('.icon.off').length).toBe(0);
+
       el.scope().$apply('name = "joe"');
       expect(el.find('.tab-title').html()).toBe('<b>hi, joe!</b>');
     });
@@ -409,17 +412,19 @@ describe('tabs', function() {
       el.isolateScope().isTabActive = function() { return true; };
       el.isolateScope().$apply();
       expect(el.hasClass('active')).toBe(true);
-      expect(el.find('.icon.on').hasClass('ng-hide')).toBe(false);
-      expect(el.find('.icon.off').hasClass('ng-hide')).toBe(true);
+      expect(el.find('.icon.on').length).toBe(1);
+      expect(el.find('.icon.off').length).toBe(0);
 
       el.isolateScope().isTabActive = function() { return false; };
       el.isolateScope().$apply();
       expect(el.hasClass('active')).toBe(false);
-      expect(el.find('.icon.on').hasClass('ng-hide')).toBe(true);
-      expect(el.find('.icon.off').hasClass('ng-hide')).toBe(false);
+      expect(el.find('.icon.on').length).toBe(0);
+      expect(el.find('.icon.off').length).toBe(1);
     });
     it('shouldnt has-badge without badge', function() {
-      expect(setup().hasClass('has-badge')).toBe(false);
+      var el = setup();
+      expect(el.hasClass('has-badge')).toBe(false);
+      expect(el.find('.badge').length).toBe(0);
     });
     it('should have badge', function() {
       var el = setup('badge="\'badger\'" badge-style="super-style"');
