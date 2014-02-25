@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <script src="../../../../dist/js/ionic.bundle.js"></script>
   </head>
-  <body class="grade-a">
+  <body>
 
     <div ng-controller="MainCtrl">
       <ion-nav-view></ion-nav-view>
@@ -65,6 +65,9 @@
           </select>
 
           <div class="list">
+            <div class="item">
+              <b>Body Class:</b> <span id="bodyClass"></span>
+            </div>
             <ion-item ion-item="item" ng-href="#" ng-click="itemClick()" ng-repeat="item in range">
               <strong>{{$index}}</strong>
               <b>:</b>
@@ -190,15 +193,19 @@
         console.log('MainCtrl');
 
         $scope.data = {
-          grade: 'grade-a'
+          grade: ''
         };
+
+        setTimeout(function(){
+          document.getElementById('bodyClass').innerHTML = document.body.className;
+        }, 1500);
 
         $scope.gradeChange = function(grade) {
           document.body.className = grade;
         };
 
         $scope.range = [];
-        for (var i=0; i<15; i++) $scope.range.push(i);
+        for (var i=0; i<100; i++) $scope.range.push(i);
 
         $scope.attendees = [
           { firstname: 'Nicolas', lastname: 'Cage' },
