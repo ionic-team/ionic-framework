@@ -37,45 +37,59 @@ describe('tabs test page', function() {
     expect(navButtons('back').getAttribute('class')).not.toContain('hide');
     expect(navButtons('back').getText()).toEqual('Back');
     expect(element(by.css('.back-button i')).getAttribute('class')).toContain('ion-arrow-left-c');
-    // expect(P.isElementPresent(navButtons('left'))).toBe(false);
-    // expect(P.isElementPresent(navButtons('right'))).toBe(false);
+    expect(navButtons('left').isPresent()).toBe(false);
+    expect(navButtons('right').isPresent()).toBe(false);
 
     element(by.css('.tabs a.tab-item:nth-child(2)')).click();
 
     expect(navTitle().getText()).toBe('Add Auto');
     expect(navButtons('back').getAttribute('class')).toContain('hide');
-    // expect(P.isElementPresent(navButtons('left'))).toBe(false);
-    // expect(P.isElementPresent(navButtons('right'))).toBe(false);
+    expect(navButtons('left').isPresent()).toBe(false);
+    expect(navButtons('right').isPresent()).toBe(false);
 
     element(by.css('.tabs a:nth-child(1)')).click();
 
     expect(navTitle().getText()).toBe('Auto Details');
     expect(navButtons('back').getAttribute('class')).not.toContain('hide');
+    expect(navButtons('left').isPresent()).toBe(false);
+    expect(navButtons('right').isPresent()).toBe(false);
 
     navButtons('back').click();
 
     expect(navTitle().getText()).toBe('Auto List');
     expect(navButtons('back').getAttribute('class')).toContain('hide');
+    expect(navButtons('left').isPresent()).toBe(false);
+    expect(navButtons('right').isPresent()).toBe(false);
 
     element(by.css('[href="#/tabs/autos/3"]')).click();
 
     expect(navTitle().getText()).toBe('Auto Details');
     expect(navButtons('back').getAttribute('class')).not.toContain('hide');
+    expect(navButtons('left').isPresent()).toBe(false);
+    expect(navButtons('right').isPresent()).toBe(false);
 
     element(by.css('.tabs a:nth-child(1)')).click();
 
     expect(navTitle().getText()).toBe('Auto List');
     expect(navButtons('back').getAttribute('class')).toContain('hide');
+    expect(navButtons('left').isPresent()).toBe(false);
+    expect(navButtons('right').isPresent()).toBe(false);
 
     element(by.css('[href="#/tabs/autos/3"]')).click();
 
     expect(navTitle().getText()).toBe('Auto Details');
     expect(navButtons('back').getAttribute('class')).not.toContain('hide');
+    expect(navButtons('left').isPresent()).toBe(false);
+    expect(navButtons('right').isPresent()).toBe(false);
 
     element(by.css('.tabs a:nth-child(4)')).click();
 
     expect(navTitle().getText()).toBe('Sign-In');
     expect(navButtons('back').getAttribute('class')).toContain('hide');
+    expect(navButtons('left').getText()).toEqual('Home');
+    expect(navButtons('left').getAttribute('class')).toContain('ion-home');
+    expect(navButtons('right').getText()).toEqual('');
+    expect(navButtons('right').getAttribute('class')).toContain('ion-navicon');
 
     element(by.id('sign-in-button')).click();
 
