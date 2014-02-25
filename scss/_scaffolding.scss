@@ -73,7 +73,6 @@ body.grade-c {
 
   width: auto;
   height: auto;
-  -webkit-backface-visibility: hidden;
 }
 
 .scroll-view {
@@ -83,7 +82,6 @@ body.grade-c {
   // Hide the top border if any
   margin-top: -1px;
   height: 100%;
-  -webkit-backface-visibility: hidden;
 }
 
 /**
@@ -146,6 +144,10 @@ body.grade-c {
   // disable rgba background and border radius for low end devices
   border-radius: 0;
   background: #aaa;
+
+  &.scroll-bar-fade-out {
+    @include transition(none);
+  }
 }
 
 

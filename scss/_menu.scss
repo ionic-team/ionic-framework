@@ -28,6 +28,7 @@
 .grade-c .menu-content {
   right: -1px;
   left: -1px;
+  @include box-sizing(content-box);
   border-right: 1px solid #ccc;
   border-left: 1px solid #ccc;
   box-shadow: none;
