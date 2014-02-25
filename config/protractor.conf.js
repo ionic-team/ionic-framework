@@ -8,7 +8,7 @@ exports.config = {
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {
     showColors: true, // Use colors in the command line report.
-    defaultTimeoutInterval: 60000
+    defaultTimeoutInterval: 120000
   },
 
   baseUrl: 'http://localhost:8080',
