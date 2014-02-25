@@ -71,7 +71,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 
 **Ben Sperry**
 
-+ <https://twitter.com/helloimben>
++ <https://twitter.com/benjsperry>
 + <https://github.com/bensperry>
 
 **Adam Bradley**
