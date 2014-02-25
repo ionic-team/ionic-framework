@@ -86,7 +86,9 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 * `grunt watch` to watch and rebuild on change
 * `grunt karma:single` to test one-time
 * `grunt karma:watch` to test and re-run on source change
-* Additionally, a commit message validator is installed for this repository when running `grunt`.  Read about it [here](https://github.com/ajoslin/conventional-changelog/blob/master/CONVENTIONS.md).
+* `grunt protractor:local` to test e2e tests locally
+* `grunt e2e-watch` to run end to end tests on change of files in `test/e2e/**/*`
+* `grunt cloudtest` to run unit & e2e tests in the cloud
 
 ### Commit Conventions
 

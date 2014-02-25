@@ -1,7 +1,7 @@
 describe('tabs test page', function() {
   var P;
   beforeEach(function() {
-    browser.get('http://localhost:8080/test/e2e/tabs-test.html');
+    browser.get('http://localhost:8080/test/e2e/viewState/test.html');
     P = protractor.getInstance();
   });
 
@@ -28,8 +28,8 @@ describe('tabs test page', function() {
 
     expect(navTitle().getText()).toBe('Auto List');
     expect(navButtons('back').getAttribute('class')).toContain('hide');
-    // expect(P.isElementPresent(navButtons('left'))).toBe(false);
-    // expect(P.isElementPresent(navButtons('right'))).toBe(false);
+    expect(navButtons('left').isPresent()).toBe(false);
+    expect(navButtons('right').isPresent()).toBe(false);
 
     element(by.css('[href="#/tabs/autos/3"]')).click();
 

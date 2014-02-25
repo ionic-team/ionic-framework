@@ -124,13 +124,17 @@ module.exports = function(grunt) {
       }
     },
 
-    exec: {
-      'e2e': {
-        command: 'protractor config/protractor.conf.js'
+    protractor: {
+      local: {
+        options: {
+          configFile: 'config/protractor.conf.js'
+        }
       },
-      'e2e-sauce': {
-        command: 'protractor config/protractor-sauce.conf.js'
-      },
+      sauce: {
+        options: {
+          configFile: 'config/protractor-sauce.conf.js'
+        }
+      }
     },
 
     uglify: {
@@ -200,6 +204,10 @@ module.exports = function(grunt) {
         options: {
           spawn: false
         }
+      },
+      e2e: {
+        files: ['test/e2e/**/*.{html,js}'],
+        tasks: ['protractor:local']
       }
     },
 
@@ -211,6 +219,11 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [
     'jshint',
     'build'
+  ]);
+
+  grunt.registerTask('e2e-watch', [
+    'connect',
+    'watch'
   ]);
 
   //NOTE(ajoslin): the order of these tasks is very important.
@@ -231,8 +244,8 @@ module.exports = function(grunt) {
   grunt.registerTask('cloudtest', [
     'sauce-connect',
     'karma:sauce',
-    'connect', 
-    'exec:e2e-sauce',
+    'connect',
+    'protractor:sauce',
     'sauce-disconnect'
   ]);
 
@@ -251,6 +264,16 @@ module.exports = function(grunt) {
     ], { stdio: 'inherit' })
     .on('exit', function(code) {
       if (code) return grunt.fail.warn('Karma test(s) failed. Exit code: ' + code);
+      done();
+    });
+  });
+
+  grunt.registerMultiTask('protractor', 'Run protractor', function() {
+    var done = this.async();
+    var options = this.options();
+    cp.spawn('protractor', [options.configFile], { stdio: 'inherit' })
+    .on('exit', function(code) {
+      if (code) return grunt.fail.warn('Protractor test(s) failed. Exit code: ' + code);
       done();
     });
   });
