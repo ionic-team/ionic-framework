@@ -180,8 +180,6 @@ function($scope, $ionicViewService, $rootScope, $element) {
           attrStr('icon', attr.icon) +
           attrStr('icon-on', attr.iconOn) +
           attrStr('icon-off', attr.iconOff) +
-          attrStr('ui-sref', attr.uiSref) +
-          attrStr('href', attr.href) +
           attrStr('badge', attr.badge) +
           attrStr('badge-style', attr.badgeStyle) +
           '></ion-tab-nav>'
@@ -256,8 +254,6 @@ function($scope, $ionicViewService, $rootScope, $element) {
       icon: '@',
       iconOn: '@',
       iconOff: '@',
-      uiSref: '@',
-      href: '@',
       badge: '=',
       badgeStyle: '@'
     },

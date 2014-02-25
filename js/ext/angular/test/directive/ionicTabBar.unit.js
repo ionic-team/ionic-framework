@@ -265,15 +265,13 @@ describe('tabs', function() {
     });
 
     it('should compile a <ion-tab-nav> with all of the relevant attrs', function() {
-      setup('title=1 icon-on=3 icon-off=4 ui-sref=5 href=6 badge=7 badge-style=8');
+      setup('title=1 icon-on=2 icon-off=3 badge=4 badge-style=5');
       var navItem = angular.element(tabsEl[0].querySelector('.tab-item'));
       expect(navItem.attr('title')).toEqual('1');
-      expect(navItem.attr('icon-on')).toEqual('3');
-      expect(navItem.attr('icon-off')).toEqual('4');
-      expect(navItem.attr('ui-sref')).toEqual('5');
-      expect(navItem.attr('href')).toEqual('6');
-      expect(navItem.attr('badge')).toEqual('7');
-      expect(navItem.attr('badge-style')).toEqual('8');
+      expect(navItem.attr('icon-on')).toEqual('2');
+      expect(navItem.attr('icon-off')).toEqual('3');
+      expect(navItem.attr('badge')).toEqual('4');
+      expect(navItem.attr('badge-style')).toEqual('5');
 
       expect(navItem.parent()[0]).toBe(tabsCtrl.$tabsElement[0]);
     });
@@ -379,9 +377,13 @@ describe('tabs', function() {
       tabsCtrl.selectedTab = null;
       expect(el.isolateScope().isTabActive()).toBe(false);
     });
-    it('.selectTab should be correct', function() {
+    it('.selectTab should be correct and preventDefault', function() {
       var el = setup();
-      el.isolateScope().selectTab();
+      var preventSpy = jasmine.createSpy('preventDefault');
+      el.isolateScope().selectTab({
+        preventDefault: preventSpy
+      });
+      expect(preventSpy).toHaveBeenCalled();
       expect(tabsCtrl.select).toHaveBeenCalledWith(tabCtrl.$scope, true);
     });
 
