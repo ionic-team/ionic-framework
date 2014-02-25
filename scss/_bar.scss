@@ -172,6 +172,11 @@
         line-height: $button-bar-button-height;
       }
     }
+
+    &.back-button:active,
+    &.back-button.active {
+      opacity: 1;
+    }
   }
 
   .button-bar > .button, 
