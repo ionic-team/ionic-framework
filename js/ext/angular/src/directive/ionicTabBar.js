@@ -245,7 +245,7 @@ function($scope, $ionicViewService, $rootScope, $element) {
     require: ['^ionTabs', '^ionTab'],
     template:
     '<a ng-class="{active: isTabActive(), \'has-badge\':badge}" ' +
-      'ng-click="selectTab()" class="tab-item">' +
+      'ng-click="selectTab($event)" class="tab-item">' +
       '<span class="badge {{badgeStyle}}" ng-if="badge">{{badge}}</span>' +
       '<i class="icon {{iconOn}}" ng-if="iconOn && isTabActive()"></i>' +
       '<i class="icon {{iconOff}}" ng-if="iconOff && !isTabActive()"></i>' +
@@ -273,7 +273,8 @@ function($scope, $ionicViewService, $rootScope, $element) {
         $scope.isTabActive = function() {
           return tabsCtrl.selectedTab === tabCtrl.$scope;
         };
-        $scope.selectTab = function() {
+        $scope.selectTab = function(e) {
+          e.preventDefault();
           tabsCtrl.select(tabCtrl.$scope, true);
         };
       };

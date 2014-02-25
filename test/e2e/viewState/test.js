@@ -1,8 +1,6 @@
-describe('tabs test page', function() {
-  var P;
+describe('viewState', function() {
   beforeEach(function() {
     browser.get('http://localhost:8080/test/e2e/viewState/test.html');
-    P = protractor.getInstance();
   });
 
   function navTitle() {
@@ -15,7 +13,6 @@ describe('tabs test page', function() {
   }
 
   it('navbar with multiple histories', function() {
-    browser.sleep(1000);
     expect(navTitle().getText()).toBe('Sign-In');
     expect(navButtons('back').getAttribute('class')).toContain('hide');
     expect(navButtons('left').getText()).toEqual('Home');
@@ -40,7 +37,7 @@ describe('tabs test page', function() {
     expect(navButtons('left').isPresent()).toBe(false);
     expect(navButtons('right').isPresent()).toBe(false);
 
-    element(by.css('.tabs a.tab-item:nth-child(2)')).click();
+    element(by.css('.tabs a:nth-child(2)')).click();
 
     expect(navTitle().getText()).toBe('Add Auto');
     expect(navButtons('back').getAttribute('class')).toContain('hide');
