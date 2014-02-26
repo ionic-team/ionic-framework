@@ -295,7 +295,6 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
   };
 }])
 
-
 .directive('ionNavView', ['$ionicViewService', '$state', '$compile', '$controller', '$animate',
               function( $ionicViewService,   $state,   $compile,   $controller,   $animate) {
   // IONIC's fork of Angular UI Router, v0.2.7
@@ -307,9 +306,13 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     terminal: true,
     priority: 2000,
     transclude: true,
-    controller: function() {}, //noop controller so this can be required
+    controller: ['$scope', function($scope) {
+      this.setNextAnimation = function(anim) {
+        $scope.$nextAnimation = anim;
+      };
+    }],
     compile: function (element, attr, transclude) {
-      return function(scope, element, attr) {
+      return function(scope, element, attr, navViewCtrl) {
         var viewScope, viewLocals,
             name = attr[directive.name] || attr.name || '',
             onloadExp = attr.onload || '',
@@ -350,7 +353,6 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           var locals = $state.$current && $state.$current.locals[name];
           if (locals === viewLocals) return; // nothing to do
           var renderer = $ionicViewService.getRenderer(element, attr, scope);
-
 
           // Destroy previous view scope
           if (viewScope) {
