@@ -207,7 +207,7 @@ function readJsonProp {
 #   capturing group! -> all other groups start at index 2!
 function replaceJsonProp {
   local VALUE=$(readJsonProp $1 $2)
-  replaceInFile $1 $VALUE $3
+  replaceInFile $1 "\"$1\": \"$VALUE\"" "\"$1\": \"$VALUE\"" $3
 }
 
 # replaceInFile(file, findPattern, replacePattern)
