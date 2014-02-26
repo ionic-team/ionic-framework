@@ -243,7 +243,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('cloudtest', [
     'sauce-connect',
-    'karma:sauce',
+    // 'karma:sauce',
     'connect',
     'protractor:sauce',
     'sauce-disconnect'
