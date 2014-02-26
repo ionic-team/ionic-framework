@@ -51,23 +51,23 @@ describe('Ionic View', function() {
     function backButton() {
       return angular.element(element[0].querySelector('.back-button'));
     };
-    expect(backButton().hasClass('opacity-hide')).toEqual(true);
+    expect(backButton().hasClass('hide')).toEqual(true);
 
     scope.$broadcast('viewState.showBackButton', false);
     scope.$apply();
-    expect(backButton().hasClass('opacity-hide')).toEqual(true);
+    expect(backButton().hasClass('hide')).toEqual(true);
 
     scope.$broadcast('viewState.showBackButton', true);
     scope.$apply();
-    expect(backButton().hasClass('opacity-hide')).toEqual(false);
+    expect(backButton().hasClass('hide')).toEqual(false);
 
     scope.$broadcast('$viewHistory.historyChange', { showBack: false });
     scope.$apply();
-    expect(backButton().hasClass('opacity-hide')).toEqual(true);
+    expect(backButton().hasClass('hide')).toEqual(true);
 
     scope.$broadcast('$viewHistory.historyChange', { showBack: true });
     scope.$apply();
-    expect(backButton().hasClass('opacity-hide')).toEqual(false);
+    expect(backButton().hasClass('hide')).toEqual(false);
   });
 
   it('should show/hide navBar', function() {
