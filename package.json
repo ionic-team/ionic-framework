@@ -1,8 +1,8 @@
 {
   "name": "ionic",
   "private": false,
-  "version": "0.9.26",
-  "codename": "rabbit",
+  "version": "0.10.0-alpha",
+  "codename": "salamander",
   "repository": {
     "url": "git://github.com/driftyco/ionic.git"
   },
