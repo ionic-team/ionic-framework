@@ -384,17 +384,26 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
       var doAnimation;
 
       // climb up the DOM and see which animation classname to use, if any
-      var animationClass = null;
-      var el = navViewElement[0];
-      while(!animationClass && el) {
-        animationClass = el.getAttribute('animation');
-        el = el.parentElement;
+      var animationClass = angular.isDefined(navViewScope.$nextAnimation) ?
+        navViewScope.$nextAnimation :
+        getParentAnimationClass(navViewElement[0]);
+
+      navViewScope.$nextAnimation = undefined;
+
+      function getParentAnimationClass(el) {
+        var className = '';
+        while(!className && el) {
+          className = el.getAttribute('animation');
+          el = el.parentElement;
+        }
+        return className;
       }
-      el = null;
 
       function setAnimationClass() {
         // add the animation CSS class we're gonna use to transition between views
-        navViewElement[0].classList.add(animationClass);
+        if (animationClass) {
+          navViewElement[0].classList.add(animationClass);
+        }
 
         if(registerData.navDirection === 'back') {
           // animate like we're moving backward
@@ -421,6 +430,9 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
 
               $animate.enter(element, navViewElement, null, function() {
                 document.body.classList.remove('disable-pointer-events');
+                if (animationClass) {
+                  navViewElement[0].classList.remove(animationClass);
+                }
               });
               return;
             }
