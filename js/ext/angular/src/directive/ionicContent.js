@@ -16,8 +16,33 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
   };
 })
 
-// The content directive is a core scrollable content area
-// that is part of many View hierarchies
+/*
+ * @ngdoc directive
+ * @name ionContent
+ *
+ * @description
+ * The ionContent directive provides an easy to use content area that can be configured to use
+ * Ionic's custom Scroll View, or the built in overflow scorlling of the browser.
+ *
+ * While we recommend using the custom Scroll features in Ionic in most cases, sometimes (for performance reasons) only the browser's native overflow scrolling will suffice, and so we've made it easy to toggle between the Ionic scroll implementation and overflow scrolling.
+ *
+ * When using the Ionic scroll features, you'll get pull-to-refresh, customizable scroll mechanics (like bounce easing, momentum acceleration, etc.) which aligns Ionic with native SDKs that give you access to scroll behavior. You'll also get events while in a momentum scroll, which -webkit-overflow-scrolling: touch will not, making it of limited use in real applications.
+ *
+ * Also, we are working on virtual list rendering which will only work when using Ionic's scroll view. That is on the upcoming roadmap.
+ *
+ * @restrict E
+ * @param {boolean=} scroll Whether to allow scrolling of content.  Defaults to true.
+ * @param {boolean=} overflow-scroll Whether to use overflow-scrolling instead of Ionic scroll.
+ * @param {boolean=} padding Whether to add padding to the content.
+ * @param {boolean=} has-header Whether to offset the content for a header bar.
+ * @param {boolean=} has-subheader Whether to offset the content for a subheader bar.
+ * @param {boolean=} has-footer Whether to offset the content for a footer bar.
+ * @param {boolean=} has-bouncing Whether to allow scrolling to bounce past the edges of the content.  Defaults to true on iOS, false on Android.
+ * @param {expression=} on-refresh Expression to evaluate on refresh completion.
+ * @param {expression=} on-refresh-opening Expression to evaluate on refresh opening.
+ * @param {expression=} on-scroll Expression to evaluate when the content is scrolled.
+ * @param {expression=} on-scroll-complete Expression to evaluate when a scroll action completes.
+ */
 .directive('ionContent', [
   '$parse',
   '$timeout',
