@@ -65,9 +65,13 @@ function ContentCtrl($scope, $timeout) {
   };
   $scope.more = [];
   $scope.addMore = function() {
-    for (var i=0; i<15; i++) {
-      $scope.more.push(i);
-    }
+    $timeout(function() {
+      var l = $scope.more.length;
+      for (var i=l; i<l+15; i++) {
+        $scope.more.push(i);
+      }
+      $scope.$broadcast('scroll.infiniteScrollComplete');
+    }, 1500);
   };
 }
   </script>

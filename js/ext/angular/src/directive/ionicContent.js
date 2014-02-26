@@ -87,8 +87,8 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
           $onRefreshOpening: '&onRefreshOpening',
           $onScroll: '&onScroll',
           $onScrollComplete: '&onScrollComplete',
+          $onInfiniteScroll: '&onInfiniteScroll',
           refreshComplete: '=',
-          onInfiniteScroll: '&',
           infiniteScrollDistance: '@',
           hasBouncing: '@',
           scroll: '@',
@@ -160,40 +160,6 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
             }
           };
         }
-
-        // Check if this supports infinite scrolling and listen for scroll events
-        // to trigger the infinite scrolling
-        // TODO(ajoslin): move functionality out of this function and make testable
-        var infiniteScroll = $element.find('ion-infinite-scroll');
-        var infiniteStarted = false;
-        if(infiniteScroll) {
-          // Parse infinite scroll distance
-          var distance = attr.infiniteScrollDistance || '1%';
-          var maxScroll;
-          if(distance.indexOf('%')) {
-            // It's a multiplier
-            maxScroll = function() {
-              return scrollView.getScrollMax().top * ( 1 - parseInt(distance, 10) / 100 );
-            };
-          } else {
-            // It's a pixel value
-            maxScroll = function() {
-              return scrollView.getScrollMax().top - parseInt(distance, 10);
-            };
-          }
-          $element.bind('scroll', function(e) {
-            if( scrollView && !infiniteStarted && (scrollView.getValues().top > maxScroll() ) ) {
-              infiniteStarted = true;
-              infiniteScroll.addClass('active');
-              var cb = function() {
-                scrollView.resize();
-                infiniteStarted = false;
-                infiniteScroll.removeClass('active');
-              };
-              $scope.$apply(angular.bind($scope, $scope.onInfiniteScroll, cb));
-            }
-          });
-        }
       }
     }
   };
@@ -218,12 +184,50 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
   };
 })
 
-.directive('ionInfiniteScroll', function() {
+.directive('ionInfiniteScroll', ['$ionicBind', function($ionicBind) {
   return {
     restrict: 'E',
-    replace: false,
-    template: '<div class="scroll-infinite"><div class="scroll-infinite-content"><i class="icon ion-loading-d icon-refreshing"></i></div></div>'
+    require: '^?$ionicScroll',
+    template:
+    '<div class="scroll-infinite">' +
+      '<div class="scroll-infinite-content">' +
+        '<i class="icon ion-loading-d icon-refreshing"></i>' +
+      '</div>' +
+    '</div>',
+    link: function($scope, $element, $attrs, scrollCtrl) {
+      setTimeout(function() {
+        var scrollCtrl = $element.controller('$ionicScroll');
+        var scrollView = scrollCtrl.scrollView;
+
+        $ionicBind($scope, $attrs, {
+          distance: '@infiniteScrollDistance'
+        });
+        function maxScroll() {
+          var dist = $scope.distance || '1%';
+          return dist.indexOf('%') > -1 ?
+            scrollView.getScrollMax().top * (1 - parseInt(dist,10) / 100) :
+            scrollView.getScrollMax().top - parseInt(dist, 10);
+        }
+
+        var infiniteScrolling = false;
+        $scope.$on('scroll.infiniteScrollComplete', function() {
+          $element[0].classList.remove('active');
+          setTimeout(function() {
+            scrollView.resize();
+          });
+          infiniteScrolling = false;
+        });
+
+        scrollCtrl.$element.on('scroll', ionic.animationFrameThrottle(function() {
+          if (!infiniteScrolling && scrollView.getValues().top >= maxScroll()) {
+            $element[0].classList.add('active');
+            infiniteScrolling = true;
+            $scope.$apply(angular.bind($scope, $scope.$onInfiniteScroll));
+          }
+        }));
+      });
+    }
   };
-});
+}]);
 
 })();
