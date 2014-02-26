@@ -1,3 +1,84 @@
+<a name="0.9.26"></a>
+### 0.9.26 "Rabbit" (2014-02-26)
+
+
+#### Bug Fixes
+
+* **actionsheet:** Actionsheet in modal has pointer-events enabled, closes #660 ([1503cc72](http://github.com/driftyco/ionic/commit/1503cc7213c13e87804c210dea7465931e972f4a))
+* **click:** event.preventDefault() when setting focus() on an input, closes 583 ([fc8ab4b8](http://github.com/driftyco/ionic/commit/fc8ab4b8ea9b89bd3446b835476950bb70bba879))
+* **ionContent:**
+  * Update scss for ion-infinite-scroll element ([788df524](http://github.com/driftyco/ionic/commit/788df5243dc5300204171bcd40bf1e20fe610dbe))
+  * Use new name to find ion-infinite-scroll element ([1702f5c9](http://github.com/driftyco/ionic/commit/1702f5c916dda20957761fd1e7b30d5f9bc1b6b4))
+* **ionPrefix:** disableRegisterByTagName updated w/ `ion-` prefix for correct view history ([2494b5f9](http://github.com/driftyco/ionic/commit/2494b5f988991b97c278102f0da385e9cde00aee))
+* **ionSideMenu:** use manual transclude instead of ngTransclude ([991d3cfd](http://github.com/driftyco/ionic/commit/991d3cfda1831467e38c176c69f0ecd084c86e50), closes [#666](http://github.com/driftyco/ionic/issues/666))
+* **ionTabs:** cleanup and fix many issues ([0f1b6f47](http://github.com/driftyco/ionic/commit/0f1b6f47b8ee4c72facc269da2b648bb9cc397e0), closes [#597](http://github.com/driftyco/ionic/issues/597))
+* **ionicScrollDelegate:**
+  * do not error if no scrollTop/Left values ([9e942f89](http://github.com/driftyco/ionic/commit/9e942f894b037284a2e36ff14d3615f076b84447), closes [#659](http://github.com/driftyco/ionic/issues/659)
+* **item:** degrade .item right arrows by grade for low end devices ([3a69bb34](http://github.com/driftyco/ionic/commit/3a69bb3452944bc4d1764c7605aad0824cbb758c))
+* **loading:** make showDelay option work correctly ([7281e2ab](http://github.com/driftyco/ionic/commit/7281e2abf0f6f624f296191b3f322227089e3658), closes [#562](http://github.com/driftyco/ionic/issues/562))
+* **modal:**
+  * Fix modal animation for firefox, closes #671 ([0033c880](http://github.com/driftyco/ionic/commit/0033c8809a810c8b518ca68a9ada5704a7f6e9c9))
+* **navBar:**
+  * animations, hide back button, no flicker ([465ea769](http://github.com/driftyco/ionic/commit/465ea76969b348b3074747dcd4cebf0861a38e6d), closes [#653](http://github.com/driftyco/ionic/issues/653))
+* **platform:** Update ionic.Platform.is() to check all platforms, closes #604 ([fcd0fa73](http://github.com/driftyco/ionic/commit/fcd0fa73c4125593e6efce6b6410586f5a27fc02))
+* **sideMenu:** remove translate3d when not needed, close #636 ([07092f00](http://github.com/driftyco/ionic/commit/07092f009cfa2b52b2dc2fdb915b237bd8c37dfa))
+* **slideBox:** make `does-continue` attribute work continuously ([f6ec6a3c](http://github.com/driftyco/ionic/commit/f6ec6a3c89116174541c2fb08194a04ada92065b), closes [#575](http://github.com/driftyco/ionic/issues/575))
+* **tabs:**
+  * Double tapping a tab would set the wrong view history, closes #656 ([f0faae16](http://github.com/driftyco/ionic/commit/f0faae16574b1247b6f5b1fa0180cfb9248804a1))
+* **text-rendering:** Disable text-rendering:optimizeLegibility for low end devices ([10289466](http://github.com/driftyco/ionic/commit/10289466162f4efa36dc902052b78e42d0df0b2d))
+* **thumbnail:** Correctly apply thumbnail style to item directive, closes #509 ([977c1cc6](http://github.com/driftyco/ionic/commit/977c1cc6e511d752e083081adbed9f8fda1d0312))
+* **transform:** Polyfill `style.transform` to work w/ non-webkit ([52671c18](http://github.com/driftyco/ionic/commit/52671c18f97d057aca581a566cc7ea27cc055314))
+
+
+#### Features
+
+* **grade:** Set grade in body class depending on platform performance ([b69b40c8](http://github.com/driftyco/ionic/commit/b69b40c82684acf3003f19277a44caf4614c75e4))
+* **ionContent:** use child scope instead of isolate scope ([49e0dac9](http://github.com/driftyco/ionic/commit/49e0dac9992d60ca098eb1dbd1acecbc74eae85c), closes [#555](http://github.com/driftyco/ionic/issues/555))
+* **ionInfiniteScroll:** use event system ([7b0716c2](http://github.com/driftyco/ionic/commit/7b0716c23c44fe5530526c86d590111382f991d7), closes [#661](http://github.com/driftyco/ionic/issues/661))
+* **ionNavAnimation:** `<a href="#/page" ion-nav-animation="slide-in-up">` ([8354d42b](http://github.com/driftyco/ionic/commit/8354d42b4b049e97bd93ce8ebacf047284a8fad1))
+* **item:** Auto right-arrow for complex list items w/ ng-click/href, closes #472 ([327a6866](http://github.com/driftyco/ionic/commit/327a686626c81072df8e055c8be220144fade26a))
+ ([110ff9f4](http://github.com/driftyco/ionic/commit/110ff9f47583c7f04bcf5b1eebea6d7bd0b25e99), closes [#243](http://github.com/driftyco/ionic/issues/243))
+* **sass:** All variables now have !default assigned, closes #631 ([53af2c7a](http://github.com/driftyco/ionic/commit/53af2c7a0177f9bcd2b43d9179832a319ecb8f7f))
+* **scrollbar:** Do not use rgba background for scrollbar on grade-b and c devices ([805c35c1](http://github.com/driftyco/ionic/commit/805c35c1f119530777498177016bb0c448e92b90))
+* **sideMenu:**
+  * Degrade .menu-content box-shadow w/ platform grade for animation performance ([d2a0780b](http://github.com/driftyco/ionic/commit/d2a0780bbac5b17525def8b75c5c58c168675631))
+
+
+#### Breaking Changes
+
+* The binding for ionInfiniteScroll has changed, as well
+as how you finish it.
+
+If you had this code before:
+
+```html
+<ion-content on-infinite-scroll="doSomething"></ion-content>
+```
+```js
+function MyCtrl($scope) {
+  $scope.doSomething = function(scrollDoneCallback) {
+    doSomething();
+    scrollDoneCallback();
+  };
+}
+```
+
+Now, your code should look like this:
+
+```html
+<ion-content on-infinite-scroll="doSomething()"></ion-content>
+```
+```js
+function MyCtrl($scope) {
+  $scope.doSomething = function() {
+    doSomething();
+    $scope.$broadcast('scroll.infiniteScrollComplete');
+  };
+}
+```
+
+
+
 <a name="0.9.25"></a>
 ### 0.9.25 "Quokka" (2014-02-19)
 

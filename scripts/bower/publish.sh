@@ -52,7 +52,7 @@ function run {
   echo "-- Committing and tagging ionic-bower"
   git add -A
   git commit -m "release: v$VERSION"
-  git tag v$VERSION
+  git tag -f v$VERSION
 
   echo "-- Pushing ionic-bower"
   cd $BOWER_DIR
