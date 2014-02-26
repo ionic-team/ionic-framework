@@ -229,7 +229,7 @@ ionic.views.Slider = ionic.views.View.inherit({
 
     function stop() {
 
-      delay = 0;
+      delay = options.auto || 0;
       clearTimeout(interval);
 
     }
