@@ -3,19 +3,10 @@ angular.module('ionic.service.templateLoad', [])
 .factory('$ionicTemplateLoader', ['$q', '$http', '$templateCache', function($q, $http, $templateCache) {
   return {
     load: function(url) {
-      var deferred = $q.defer();
-
-      $http({
-        method: 'GET',
-        url: url,
-        cache: $templateCache
-      }).success(function(html) {
-        deferred.resolve(html && html.trim());
-      }).error(function(err) {
-        deferred.reject(err);
+      return $http.get(url, {cache: $templateCache})
+      .then(function(response) {
+        return response.data && response.data.trim();
       });
-
-      return deferred.promise;
     }
   };
 }]);
