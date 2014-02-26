@@ -40,8 +40,8 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     template:
     '<header class="bar bar-header nav-bar{{navBarClass()}}">' +
       '<ion-nav-back-button ng-if="(backType || backLabel || backIcon)" ' +
-        'type="backType" label="backLabel" icon="backIcon" class="opacity-hide" ' +
-        'ng-class="{\'opacity-hide\': !backButtonEnabled}">' +
+        'type="backType" label="backLabel" icon="backIcon" class="hide" ' +
+        'ng-class="{\'hide\': !backButtonEnabled}">' +
       '</ion-nav-back-button>' +
       '<div class="buttons left-buttons"> ' +
         '<button ng-click="button.tap($event)" ng-repeat="button in leftButtons" ' +
