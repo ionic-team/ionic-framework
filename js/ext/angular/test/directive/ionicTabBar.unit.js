@@ -1,4 +1,4 @@
-describe('tabs', function() {
+ddescribe('tabs', function() {
 
   describe('miscellaneous', function() {
     beforeEach(module('ionic', function($provide) {
@@ -387,10 +387,21 @@ describe('tabs', function() {
       expect(tabsCtrl.select).toHaveBeenCalledWith(tabCtrl.$scope, true);
     });
 
-    it('should set iconOn and iconOff to icon if icon is given', function() {
+    it('should fallback to icon for icon-on and icon-off', function() {
       var el = setup('icon=1');
-      expect(el.attr('icon-on')).toBe('1');
-      expect(el.attr('icon-off')).toBe('1');
+
+      expect(el.isolateScope().getIconOn()).toBe('1');
+      el.isolateScope().iconOn = 2;
+      expect(el.isolateScope().getIconOn()).toBe(2);
+      el.isolateScope().iconOn = null;
+      expect(el.isolateScope().getIconOn()).toBe('1');
+
+      expect(el.isolateScope().getIconOff()).toBe('1');
+      el.isolateScope().iconOff = 3;
+      expect(el.isolateScope().getIconOff()).toBe(3);
+      el.isolateScope().iconOff = null;
+      expect(el.isolateScope().getIconOff()).toBe('1');
+
     });
 
     it('should select tab on click', function() {
@@ -408,20 +419,36 @@ describe('tabs', function() {
       el.scope().$apply('name = "joe"');
       expect(el.find('.tab-title').html()).toBe('<b>hi, joe!</b>');
     });
+
+    it('should change icon class with just icon', function() {
+      //In this case, icon-on and icon-off should be same
+      var el = setup('icon={{icon}}');
+      el.scope().icon="superIcon";
+      el.scope().$apply();
+
+      el.isolateScope().isTabActive = function() { return true; };
+      el.isolateScope().$apply();
+
+      expect(el.find('.icon.superIcon').length).toBe(1);
+      el.isolateScope().isTabActive = function() { return false; };
+      el.isolateScope().$apply();
+
+      expect(el.find('.icon.superIcon').length).toBe(1);
+    });
     it('should change classes based on active', function() {
-      var el = setup('icon-on=on icon-off=off');
+      var el = setup('icon-on="{{true}}" icon-off="{{false}}"');
 
       el.isolateScope().isTabActive = function() { return true; };
       el.isolateScope().$apply();
       expect(el.hasClass('active')).toBe(true);
-      expect(el.find('.icon.on').length).toBe(1);
-      expect(el.find('.icon.off').length).toBe(0);
+      expect(el.find('.icon.true').length).toBe(1);
+      expect(el.find('.icon.false').length).toBe(0);
 
       el.isolateScope().isTabActive = function() { return false; };
       el.isolateScope().$apply();
       expect(el.hasClass('active')).toBe(false);
-      expect(el.find('.icon.on').length).toBe(0);
-      expect(el.find('.icon.off').length).toBe(1);
+      expect(el.find('.icon.true').length).toBe(0);
+      expect(el.find('.icon.false').length).toBe(1);
     });
     it('shouldnt has-badge without badge', function() {
       var el = setup();
