@@ -1,8 +1,8 @@
 {
   "name": "ionic",
   "private": false,
-  "version": "0.9.26-alpha",
-  "codename": "rabbit",
+  "version": "0.10.0-alpha",
+  "codename": "salamander",
   "repository": {
     "url": "git://github.com/driftyco/ionic.git"
   },
@@ -17,7 +17,7 @@
     "grunt-contrib-watch": "~0.5.3",
     "grunt-ddescribe-iit": "0.0.4",
     "grunt-merge-conflict": "0.0.2",
-    "grunt-sass": "~0.10.0",
+    "grunt-sass": "~0.10.0-alpha",
     "grunt-string-replace": "~0.2.7",
     "karma": "~0.11.13",
     "karma-chrome-launcher": "~0.1.2",
@@ -29,9 +29,7 @@
     "grunt-remove-logging": "~0.2.0",
     "grunt-conventional-changelog": "~1.1.0",
     "grunt-contrib-connect": "^0.6.0",
-    "sauce-connect-launcher": "^0.2.2",
-    "dgeni": "^0.1.1",
-    "dgeni-packages": "^0.2.4"
+    "sauce-connect-launcher": "^0.2.2"
   },
   "licenses": [
     {

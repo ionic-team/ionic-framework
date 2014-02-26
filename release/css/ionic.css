@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v0.9.25
+ * Ionic, v0.9.26
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -14,7 +14,7 @@
 /*!
   Ionicons, v#{$ionicons-version}
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
-  https://twitter.com/helloimben  https://twitter.com/ionicframework
+  https://twitter.com/benjsperry  https://twitter.com/ionicframework
   MIT License: https://github.com/driftyco/ionicons
 */
 @font-face {
@@ -1953,7 +1953,7 @@ table {
 a {
   -webkit-user-drag: none;
   -webkit-tap-highlight-color: transparent; }
-  a:hover {
+  a[href]:hover {
     cursor: pointer; }
 
 img {
@@ -1963,7 +1963,6 @@ body, .ionic-body {
   -webkit-touch-callout: none;
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
-  -webkit-backface-visibility: hidden;
   -webkit-text-size-adjust: none;
   -moz-text-size-adjust: none;
   text-size-adjust: none;
@@ -1987,29 +1986,31 @@ body, .ionic-body {
   font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   line-height: 20px;
   text-rendering: optimizeLegibility;
+  -webkit-backface-visibility: hidden;
   -webkit-user-drag: none; }
+
+body.grade-b, body.grade-c {
+  text-rendering: auto; }
 
 .content {
   position: relative; }
 
 .scroll-content {
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  position: absolute;
   overflow: hidden;
-  -webkit-backface-visibility: hidden;
   margin-top: -1px;
   width: auto;
   height: auto; }
 
 .scroll-view {
-  height: 100%;
-  overflow: hidden;
   position: relative;
-  -webkit-backface-visibility: hidden;
-  margin-top: -1px; }
+  overflow: hidden;
+  margin-top: -1px;
+  height: 100%; }
 
 /**
  * Scroll is the scroll view component available for complex and custom
@@ -2040,25 +2041,25 @@ body, .ionic-body {
   visibility: hidden; }
 
 .scroll-bar-h {
-  height: 3px;
-  left: 2px;
   right: 2px;
-  bottom: 3px; }
+  bottom: 3px;
+  left: 2px;
+  height: 3px; }
   .scroll-bar-h .scroll-bar-indicator {
     height: 100%; }
 
 .scroll-bar-v {
-  width: 3px;
-  bottom: 2px;
   top: 2px;
-  right: 3px; }
+  right: 3px;
+  bottom: 2px;
+  width: 3px; }
   .scroll-bar-v .scroll-bar-indicator {
     width: 100%; }
 
 .scroll-bar-indicator {
   position: absolute;
-  background: rgba(0, 0, 0, 0.3);
   border-radius: 4px;
+  background: rgba(0, 0, 0, 0.3);
   opacity: 1; }
   .scroll-bar-indicator.scroll-bar-fade-out {
     -webkit-transition: opacity 0.3s linear;
@@ -2066,37 +2067,45 @@ body, .ionic-body {
     transition: opacity 0.3s linear;
     opacity: 0; }
 
+.grade-b .scroll-bar-indicator, .grade-c .scroll-bar-indicator {
+  border-radius: 0;
+  background: #aaa; }
+  .grade-b .scroll-bar-indicator.scroll-bar-fade-out, .grade-c .scroll-bar-indicator.scroll-bar-fade-out {
+    -webkit-transition: none;
+    -moz-transition: none;
+    transition: none; }
+
 .scroll-refresher {
-  overflow: hidden;
-  top: -60px;
-  height: 60px;
-  left: 0;
-  right: 0;
   position: absolute;
-  margin: auto; }
+  top: -60px;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+  margin: auto;
+  height: 60px; }
   .scroll-refresher .icon-refreshing {
-    display: none;
     -webkit-animation-duration: 1.5s;
     -moz-animation-duration: 1.5s;
-    animation-duration: 1.5s; }
+    animation-duration: 1.5s;
+    display: none; }
 
 .scroll-refresher-content {
   position: absolute;
-  left: 0;
   bottom: 15px;
+  left: 0;
   width: 100%;
+  color: #666666;
   text-align: center;
-  font-size: 30px;
-  color: #666666; }
+  font-size: 30px; }
 
 .ionic-refresher-content {
   position: absolute;
-  left: 0;
   bottom: 15px;
+  left: 0;
   width: 100%;
+  color: #666666;
   text-align: center;
-  font-size: 30px;
-  color: #666666; }
+  font-size: 30px; }
   .ionic-refresher-content .icon-pulling {
     -webkit-animation-duration: 200ms;
     -moz-animation-duration: 200ms;
@@ -2135,22 +2144,22 @@ body, .ionic-body {
   -moz-animation-name: refresh-spin;
   animation-name: refresh-spin; }
 
-infinite-scroll .scroll-infinite {
+ion-infinite-scroll .scroll-infinite {
+  position: relative;
   overflow: hidden;
   margin-top: -70px;
-  height: 60px;
-  position: relative; }
+  height: 60px; }
 
 .scroll-infinite-content {
   position: absolute;
-  left: 0;
   bottom: 15px;
+  left: 0;
   width: 100%;
+  color: #666666;
   text-align: center;
-  font-size: 30px;
-  color: #666666; }
+  font-size: 30px; }
 
-infinite-scroll.active .scroll-infinite {
+ion-infinite-scroll.active .scroll-infinite {
   margin-top: -30px; }
 
 .overflow-scroll {
@@ -2182,17 +2191,16 @@ infinite-scroll.active .scroll-infinite {
   bottom: 49px; }
 
 .pane {
-  position: absolute;
-  z-index: 1;
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0); }
+  transform: translate3d(0, 0, 0);
+  z-index: 1; }
 
 .view {
-  position: absolute;
   z-index: 1; }
 
 .pane, .view {
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
@@ -2350,7 +2358,7 @@ a.subdued {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10;
+  z-index: 11;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0); }
@@ -2438,7 +2446,7 @@ a.subdued {
   margin-left: 15px;
   margin-right: 15px;
   width: auto;
-  z-index: 10;
+  z-index: 11;
   overflow: hidden; }
   .action-sheet .button {
     display: block;
@@ -2474,6 +2482,13 @@ a.subdued {
       color: inherit; }
   .action-sheet-group .button:first-child:last-child {
     border-width: 0; }
+
+.action-sheet-open {
+  pointer-events: none; }
+  .action-sheet-open.modal-open .modal {
+    pointer-events: none; }
+  .action-sheet-open .action-sheet {
+    pointer-events: auto; }
 
 /**
  * Bar (Headers and Footers)
@@ -2637,6 +2652,8 @@ a.subdued {
       .bar .button.button-clear .icon:before, .bar .button.button-clear.icon:before, .bar .button.button-clear.icon-left:before, .bar .button.button-clear.icon-right:before {
         font-size: 32px;
         line-height: 32px; }
+    .bar .button.back-button:active, .bar .button.back-button.active {
+      opacity: 1; }
   .bar .button-bar > .button, .bar .buttons > .button {
     min-height: 31px;
     line-height: 32px; }
@@ -3008,6 +3025,8 @@ a.subdued {
   font-size: 14px;
   font-family: "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   opacity: 0.7; }
+  .tab-item:hover {
+    cursor: pointer; }
 
 .tabs-icon-top .tab-item, .tabs-icon-bottom .tab-item {
   font-size: 12px;
@@ -3100,7 +3119,20 @@ a.subdued {
   background-color: #fff; }
 
 .menu-content {
+  -webkit-transform: none;
+  -moz-transform: none;
+  transform: none;
   box-shadow: -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0, 0, 0, 0.2); }
+
+.grade-b .menu-content, .grade-c .menu-content {
+  right: -1px;
+  left: -1px;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border-right: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  box-shadow: none; }
 
 .menu-left {
   left: 0; }
@@ -3132,6 +3164,11 @@ a.subdued {
   opacity: 0; }
   .modal.active {
     height: 100%; }
+
+.modal-open {
+  pointer-events: none; }
+  .modal-open .modal {
+    pointer-events: auto; }
 
 /**
  * Popups
@@ -3469,10 +3506,10 @@ a.item-content {
  * By default, if an .item is created out of an <a> or <button>
  * then a arrow will be added to the right side of the item.
  */
-a.item, button.item {
+a.item, button.item, .item a[href].item-content, .item[ng-click] a.item-content {
   padding-right: 40px; }
 
-a.item:after, button.item:after {
+a.item:after, button.item:after, .item a[href].item-content:after, .item[ng-click] a.item-content:after {
   /* By default, both <a> and <button> have right side arrow icons */
   display: -webkit-box;
   display: -webkit-flex;
@@ -3502,7 +3539,13 @@ a.item:after, button.item:after {
   line-height: 1;
   speak: none; }
 
-a.item-icon-right:after, button.item-icon-right:after, a.item-button-right:after, button.item-button-right:after {
+.grade-b a.item:after, .grade-b button.item:after, .grade-b .item a[href].item-content:after, .grade-b .item[ng-click] a.item-content:after, .grade-c a.item:after, .grade-c button.item:after, .grade-c .item a[href].item-content:after, .grade-c .item[ng-click] a.item-content:after {
+  -webkit-font-smoothing: none;
+  font-smoothing: none;
+  content: '>';
+  font-family: 'monospace'; }
+
+a.item-icon-right:after, button.item-icon-right:after, a.item-button-right:after, button.item-button-right:after, .item a.item-content:after {
   display: none; }
 
 .item-avatar {
@@ -3517,10 +3560,10 @@ a.item-icon-right:after, button.item-icon-right:after, a.item-button-right:after
     width: 100%;
     border-radius: 4px; }
 
-.item-thumbnail-left {
+.item-thumbnail-left, .item-thumbnail-left .item-content {
   padding-left: 105px;
   min-height: 100px; }
-  .item-thumbnail-left > img:first-child, .item-thumbnail-left > .item-image {
+  .item-thumbnail-left > img:first-child, .item-thumbnail-left > .item-image, .item-thumbnail-left .item-content > img:first-child, .item-thumbnail-left .item-content > .item-image {
     position: absolute;
     top: 10px;
     left: 10px;
@@ -3528,16 +3571,22 @@ a.item-icon-right:after, button.item-icon-right:after, a.item-button-right:after
     max-height: 80px;
     width: 100%; }
 
-.item-thumbnail-right {
+.item-thumbnail-left.item-complex {
+  padding-left: 0; }
+
+.item-thumbnail-right, .item-thumbnail-right .item-content {
   padding-right: 105px;
   min-height: 100px; }
-  .item-thumbnail-right > img:first-child, .item-thumbnail-right > .item-image {
+  .item-thumbnail-right > img:first-child, .item-thumbnail-right > .item-image, .item-thumbnail-right .item-content > img:first-child, .item-thumbnail-right .item-content > .item-image {
     position: absolute;
     top: 10px;
     right: 10px;
     max-width: 80px;
     max-height: 80px;
     width: 100%; }
+
+.item-thumbnail-left.item-complex {
+  padding-right: 0; }
 
 .item-image {
   padding: 0;
@@ -4050,6 +4099,10 @@ input, button, select, textarea {
 
 .placeholder-icon {
   color: #aaa; }
+  .placeholder-icon:first-child {
+    padding-right: 6px; }
+  .placeholder-icon:last-child {
+    padding-left: 6px; }
 
 .item-stacked-label {
   display: block;
@@ -4931,7 +4984,33 @@ a.button {
     transform: translate3d(0, 0, 0);
     opacity: 1; } }
 
+@-moz-keyframes slideInUp {
+  0% {
+    -webkit-transform: translate3d(0, 100%, 0);
+    -moz-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+    opacity: 0; }
+
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1; } }
+
 @-webkit-keyframes slideOutUp {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1; }
+
+  100% {
+    -webkit-transform: translate3d(0, 100%, 0);
+    -moz-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+    opacity: 0; } }
+
+@-moz-keyframes slideOutUp {
   0% {
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
@@ -5787,11 +5866,21 @@ a.button {
  * Utility Classes
  * --------------------------------------------------
  */
-.hidden, .hide {
+.hide {
+  display: none; }
+
+.opacity-hide {
+  opacity: 0; }
+
+.grade-b .opacity-hide, .grade-c .opacity-hide {
+  opacity: 1;
   display: none; }
 
 .show {
   display: block; }
+
+.opacity-show {
+  opacity: 1; }
 
 .invisible {
   visibility: hidden; }
@@ -5809,6 +5898,18 @@ a.button {
 
 .enable-pointer-events {
   pointer-events: auto; }
+
+.disable-user-behavior {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-drag: none;
+  -ms-touch-action: none;
+  -ms-content-zooming: none; }
 
 .block {
   display: block;
@@ -5951,25 +6052,25 @@ a.button {
  * --------------------------------------------------
  * Platform specific tweaks when in Cordova.
  */
-.platform-ios7:not(.fullscreen) .bar-header {
+.platform-ios7.platform-cordova:not(.fullscreen) .bar-header {
   height: 64px; }
-  .platform-ios7:not(.fullscreen) .bar-header.item-input-inset .item-input-wrapper {
+  .platform-ios7.platform-cordova:not(.fullscreen) .bar-header.item-input-inset .item-input-wrapper {
     margin-top: 19px !important; }
-  .platform-ios7:not(.fullscreen) .bar-header > * {
+  .platform-ios7.platform-cordova:not(.fullscreen) .bar-header > * {
     margin-top: 20px; }
-.platform-ios7:not(.fullscreen) .has-header, .platform-ios7:not(.fullscreen) .bar-subheader {
+.platform-ios7.platform-cordova:not(.fullscreen) .has-header, .platform-ios7.platform-cordova:not(.fullscreen) .bar-subheader {
   top: 64px; }
-.platform-ios7:not(.fullscreen) .has-subheader {
+.platform-ios7.platform-cordova:not(.fullscreen) .has-subheader {
   top: 108px; }
 
 .platform-ios7.status-bar-hide {
   margin-bottom: 20px; }
 
-.platform-android .bar-header {
+.platform-android.platform-cordova .bar-header {
   height: 48px; }
-.platform-android .has-header, .platform-android .bar-subheader {
+.platform-android.platform-cordova .has-header, .platform-android.platform-cordova .bar-subheader {
   top: 48px; }
-.platform-android .has-subheader {
+.platform-android.platform-cordova .has-subheader {
   top: 96px; }
-.platform-android .title {
+.platform-android.platform-cordova .title {
   line-height: 48px; }
