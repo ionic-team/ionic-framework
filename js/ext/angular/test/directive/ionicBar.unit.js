@@ -14,7 +14,7 @@ describe('Ionic Header Bar', function() {
     });
 
     //wait for headerBar View to align() the title
-    waits(10);
+    waits(500);
 
     runs(function(){
       var headerView = el.isolateScope().headerBarView;
@@ -30,7 +30,7 @@ describe('Ionic Header Bar', function() {
     });
 
     //wait for headerBar View to align() the title
-    waits(10);
+    waits(500);
 
     runs(function(){
       var headerView = el.isolateScope().headerBarView;
@@ -45,7 +45,7 @@ describe('Ionic Header Bar', function() {
     });
 
     //wait for headerBar View to align() the title
-    waits(10);
+    waits(500);
 
     runs(function(){
       var headerView = el.isolateScope().headerBarView;
