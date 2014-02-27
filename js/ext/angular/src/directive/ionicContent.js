@@ -77,16 +77,14 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
         var clone, sc, scrollView, scrollCtrl,
           scrollContent = angular.element($element[0].querySelector('.scroll'));
 
-        transclude($scope, function(clone) {
-          scrollContent.append(clone);
-        });
-
         $ionicBind($scope, $attr, {
           //Use $ to stop onRefresh from recursively calling itself
+          //DEPRECATED, use <ion-infinite-scroll on-infinite-scroll="">
           $onRefresh: '&onRefresh',
           $onRefreshOpening: '&onRefreshOpening',
           $onScroll: '&onScroll',
           $onScrollComplete: '&onScrollComplete',
+          //DEPRECATED, use <ion-infinite-scroll on-infinite-scroll="">
           $onInfiniteScroll: '&onInfiniteScroll',
           refreshComplete: '=',
           infiniteScrollDistance: '@',
@@ -102,64 +100,69 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
           scrollEventInterval: '@'
         });
 
-        if($scope.scroll === "false") {
-          // No scrolling
-          return;
-        }
-
-        if(attr.overflowScroll === "true") {
+        if ($scope.scroll === "false") {
+          //do nothing
+        } else if(attr.overflowScroll === "true") {
           $element.addClass('overflow-scroll');
-          return;
-        }
+        } else {
 
-        scrollCtrl = $controller('$ionicScroll', {
-          $scope: $scope,
-          scrollViewOptions: {
-            el: $element[0],
-            bouncing: $scope.$eval($scope.hasBouncing),
-            startX: $scope.$eval($scope.startX) || 0,
-            startY: $scope.$eval($scope.startY) || 0,
-            scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
-            scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
-            scrollingX: $scope.$eval($scope.hasScrollX) === true,
-            scrollingY: $scope.$eval($scope.hasScrollY) !== false,
-            scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 20,
-            scrollingComplete: function() {
-              $scope.$onScrollComplete({
-                scrollTop: this.__scrollTop,
-                scrollLeft: this.__scrollLeft
-              });
+          scrollCtrl = $controller('$ionicScroll', {
+            $scope: $scope,
+            scrollViewOptions: {
+              el: $element[0],
+              bouncing: $scope.$eval($scope.hasBouncing),
+              startX: $scope.$eval($scope.startX) || 0,
+              startY: $scope.$eval($scope.startY) || 0,
+              scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
+              scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
+              scrollingX: $scope.$eval($scope.hasScrollX) === true,
+              scrollingY: $scope.$eval($scope.hasScrollY) !== false,
+              scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 20,
+              scrollingComplete: function() {
+                $scope.$onScrollComplete({
+                  scrollTop: this.__scrollTop,
+                  scrollLeft: this.__scrollLeft
+                });
+              }
             }
-          }
-        });
-
-        //Publish scrollView to parent so children can access it
-        scrollView = $scope.$parent.scrollView = scrollCtrl.scrollView;
-
-        $scope.$on('$viewContentLoaded', function(e, viewHistoryData) {
-          viewHistoryData || (viewHistoryData = {});
-          var scroll = viewHistoryData.scrollValues;
-          if (scroll) {
-            $timeout(function() {
-              scrollView.scrollTo(+scroll.left || null, +scroll.top || null);
-            }, 0);
-          }
-
-          //Save scroll onto viewHistoryData when scope is destroyed
-          $scope.$on('$destroy', function() {
-            viewHistoryData.scrollValues = scrollView.getValues();
           });
+          //Publish scrollView to parent so children can access it
+          scrollView = $scope.$parent.scrollView = scrollCtrl.scrollView;
+
+          $scope.$on('$viewContentLoaded', function(e, viewHistoryData) {
+            viewHistoryData || (viewHistoryData = {});
+            var scroll = viewHistoryData.scrollValues;
+            if (scroll) {
+              $timeout(function() {
+                scrollView.scrollTo(+scroll.left || null, +scroll.top || null);
+              }, 0);
+            }
+
+            //Save scroll onto viewHistoryData when scope is destroyed
+            $scope.$on('$destroy', function() {
+              viewHistoryData.scrollValues = scrollView.getValues();
+            });
+          });
+
+          if(attr.refreshComplete) {
+            $scope.refreshComplete = function() {
+              if($scope.scrollView) {
+                scrollCtrl.refresher && scrollCtrl.refresher.classList.remove('active');
+                scrollView.finishPullToRefresh();
+                $scope.$parent.$broadcast('scroll.onRefreshComplete');
+              }
+            };
+          }
+
+        }
+
+        transclude($scope, function(clone) {
+          if (scrollCtrl) {
+            clone.data('$$ionicScrollController', scrollCtrl);
+          }
+          scrollContent.append(clone);
         });
 
-        if(attr.refreshComplete) {
-          $scope.refreshComplete = function() {
-            if($scope.scrollView) {
-              scrollCtrl.refresher && scrollCtrl.refresher.classList.remove('active');
-              scrollView.finishPullToRefresh();
-              $scope.$parent.$broadcast('scroll.onRefreshComplete');
-            }
-          };
-        }
       }
     }
   };
@@ -184,48 +187,65 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
   };
 })
 
-.directive('ionInfiniteScroll', ['$ionicBind', function($ionicBind) {
+/**
+ * @ngdoc directive
+ * @name ionInfiniteScroll
+ * @module ionic
+ * @restrict E
+ *
+ * @description
+ * TODO make complete. Mention 'scroll.infiniteScrollComplete' event
+ * Mention using ng-if if you wish to stop loading more.
+ *
+ * @param {expression} on-scroll What to call when the scroller reaches the bottom.
+ * @param {string=} distance The distance from the bottom that the scroll must reach to trigger the on-scroll expression. Default 1%.
+ */
+.directive('ionInfiniteScroll', ['$timeout', function($timeout) {
   return {
     restrict: 'E',
-    require: '^?$ionicScroll',
+    require: ['^$ionicScroll', 'ionInfiniteScroll'],
     template:
-    '<div class="scroll-infinite">' +
-      '<div class="scroll-infinite-content">' +
-        '<i class="icon ion-loading-d icon-refreshing"></i>' +
-      '</div>' +
-    '</div>',
-    link: function($scope, $element, $attrs, scrollCtrl) {
-      setTimeout(function() {
-        var scrollCtrl = $element.controller('$ionicScroll');
-        var scrollView = scrollCtrl.scrollView;
+      '<div class="scroll-infinite">' +
+        '<div class="scroll-infinite-content">' +
+          '<i class="icon ion-loading-d icon-refreshing"></i>' +
+        '</div>' +
+      '</div>',
+    controller: ['$scope', '$attrs', function($scope, $attrs) {
+      this.isLoading = false;
+      this.scrollView = null; //given by link function
+      this.getMaxScroll = function() {
+        var dist = $attrs.distance ||
+          //deprecated: allow infiniteScrollDistance from ionContent
+          $scope.infiniteScrollDistance ||
+          '1%';
+        return dist.indexOf('%') > -1 ?
+          this.scrollView.getScrollMax().top * (1 - parseInt(dist,10) / 100) :
+          this.scrollView.getScrollMax().top - parseInt(dist, 10);
+      };
+    }],
+    link: function($scope, $element, $attrs, ctrls) {
+      var scrollCtrl = ctrls[0];
+      var infiniteScrollCtrl = ctrls[1];
+      var scrollView = infiniteScrollCtrl.scrollView = scrollCtrl.scrollView;
 
-        $ionicBind($scope, $attrs, {
-          distance: '@infiniteScrollDistance'
-        });
-        function maxScroll() {
-          var dist = $scope.distance || '1%';
-          return dist.indexOf('%') > -1 ?
-            scrollView.getScrollMax().top * (1 - parseInt(dist,10) / 100) :
-            scrollView.getScrollMax().top - parseInt(dist, 10);
-        }
-
-        var infiniteScrolling = false;
-        $scope.$on('scroll.infiniteScrollComplete', function() {
-          $element[0].classList.remove('active');
-          setTimeout(function() {
-            scrollView.resize();
-          });
-          infiniteScrolling = false;
-        });
-
-        scrollCtrl.$element.on('scroll', ionic.animationFrameThrottle(function() {
-          if (!infiniteScrolling && scrollView.getValues().top >= maxScroll()) {
-            $element[0].classList.add('active');
-            infiniteScrolling = true;
-            $scope.$apply(angular.bind($scope, $scope.$onInfiniteScroll));
-          }
-        }));
+      $scope.$on('scroll.infiniteScrollComplete', function() {
+        $element[0].classList.remove('active');
+        $timeout(function() {
+          scrollView.resize();
+        }, 0, false);
+        infiniteScrollCtrl.isLoading = false;
       });
+
+      scrollCtrl.$element.on('scroll', ionic.animationFrameThrottle(function() {
+        if (!infiniteScrollCtrl.isLoading &&
+            scrollView.getValues().top >= infiniteScrollCtrl.getMaxScroll()) {
+          $element[0].classList.add('active');
+          infiniteScrollCtrl.isLoading = true;
+
+          //deprecated: allow $onInfiniteScroll from parent
+          $scope.$apply($attrs.onInfinite || $scope.$onInfiniteScroll);
+        }
+      }));
     }
   };
 }]);
