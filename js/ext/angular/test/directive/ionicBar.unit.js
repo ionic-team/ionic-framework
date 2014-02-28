@@ -54,4 +54,40 @@ describe('Ionic Header Bar', function() {
     });
   });
 
+  it('Should re-align the title when leftButtons change', function() {
+    rootScope.leftButtons = [];
+    el = compile('<ion-header-bar left-buttons="leftButtons" align-title="right"></ion-header-bar>')(rootScope); 
+    var headerView = el.isolateScope().headerBarView;
+
+    //trigger initial align()
+    rootScope.$apply();
+
+    spyOn(headerView, 'align');
+
+    var button = { content: '<i class="icon ion-gear-a"></i>' };
+    rootScope.leftButtons.push(button);
+    rootScope.$apply();
+
+    expect(headerView.align).toHaveBeenCalled();
+  });
+
+    it('Should re-align the title when rightButtons change', function() {
+    rootScope.rightButtons = [];
+    el = compile('<ion-header-bar right-buttons="rightButtons" align-title="right"></ion-header-bar>')(rootScope); 
+    var headerView = el.isolateScope().headerBarView;
+
+    //trigger initial align()
+    rootScope.$apply();
+
+    spyOn(headerView, 'align');
+
+    var button = { content: '<i class="icon ion-gear-a"></i>' };
+    rootScope.rightButtons.push(button);
+    rootScope.$apply();
+
+    expect(headerView.align).toHaveBeenCalled();
+  });
+
+    
+
 });
