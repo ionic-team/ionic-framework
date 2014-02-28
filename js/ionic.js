@@ -1,5 +1,6 @@
 
-// Create namespaces 
+// Create namespaces
+//
 window.ionic = {
   controllers: {},
   views: {},

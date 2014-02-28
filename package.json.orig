@@ -1,7 +1,11 @@
 {
   "name": "ionic",
   "private": false,
+<<<<<<< HEAD
+  "version": "0.10.0",
+=======
   "version": "0.10.0-alpha",
+>>>>>>> FETCH_HEAD
   "codename": "salamander",
   "repository": {
     "url": "git://github.com/driftyco/ionic.git"
@@ -10,15 +14,21 @@
     "grunt": "~0.4.1",
     "grunt-bump": "0.0.13",
     "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-connect": "^0.6.0",
     "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-cssmin": "~0.7.0",
     "grunt-contrib-jshint": "~0.8.0",
     "grunt-contrib-uglify": "~0.3.2",
     "grunt-contrib-watch": "~0.5.3",
+    "grunt-conventional-changelog": "~1.1.0",
     "grunt-ddescribe-iit": "0.0.4",
     "grunt-merge-conflict": "0.0.2",
     "grunt-remove-logging": "~0.2.0",
+<<<<<<< HEAD
+    "grunt-sass": "^0.11.0"
+=======
     "grunt-sass": "^0.11.0",
+>>>>>>> FETCH_HEAD
     "grunt-string-replace": "~0.2.7",
     "karma": "~0.11.13",
     "karma-chrome-launcher": "~0.1.2",
@@ -27,11 +37,12 @@
     "karma-sauce-launcher": "~0.2.0",
     "karma-script-launcher": "~0.1.0",
     "load-grunt-tasks": "~0.3.0",
+<<<<<<< HEAD
+=======
     "grunt-conventional-changelog": "~1.1.0",
     "grunt-contrib-connect": "^0.6.0",
+>>>>>>> FETCH_HEAD
     "sauce-connect-launcher": "^0.2.2",
-    "dgeni": "^0.1.1",
-    "dgeni-packages": "^0.2.4"
   },
   "licenses": [
     {

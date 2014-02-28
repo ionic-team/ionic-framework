@@ -2,5 +2,9 @@
   "version": "0.9.26",
   "codename": "rabbit",
   "date": "2014-02-26",
+<<<<<<< HEAD
+  "time": "19:38:1"
+=======
   "time": "21:16:43"
+>>>>>>> FETCH_HEAD
 }

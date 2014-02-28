@@ -2,6 +2,7 @@
  * Create a wrapping module to ease having to include too many
  * modules.
  */
+
 angular.module('ionic.service', [
   'ionic.service.bind',
   'ionic.service.platform',
