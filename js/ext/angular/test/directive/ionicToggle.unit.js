@@ -9,14 +9,14 @@ describe('Ionic Toggle', function() {
     el = $compile('<ion-toggle ng-model="data.name"></ion-toggle>')($rootScope);
   }));
 
-  iit('Should load', function() {
+  it('Should load', function() {
     var toggleView = el.isolateScope().toggle;
     expect(toggleView).not.toEqual(null);
     expect(toggleView.checkbox).not.toEqual(null);
     expect(toggleView.handle).not.toEqual(null);
   });
 
-  iit('Should destroy', function() {
+  it('Should destroy', function() {
     var toggleView = el.isolateScope().toggle;
     spyOn(toggleView, 'destroy');
     el.isolateScope().$destroy();
