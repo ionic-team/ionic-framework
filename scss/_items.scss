@@ -58,31 +58,31 @@
   }
 
   // Different themes for items
-  &.item-light { 
+  &.item-light {
     @include item-style($item-light-bg, $item-light-border, $item-light-text);
   }
-  &.item-stable { 
+  &.item-stable {
     @include item-style($item-stable-bg, $item-stable-border, $item-stable-text);
   }
-  &.item-positive { 
+  &.item-positive {
     @include item-style($item-positive-bg, $item-positive-border, $item-positive-text);
   }
-  &.item-calm { 
+  &.item-calm {
     @include item-style($item-calm-bg, $item-calm-border, $item-calm-text);
   }
-  &.item-assertive { 
+  &.item-assertive {
     @include item-style($item-assertive-bg, $item-assertive-border, $item-assertive-text);
   }
-  &.item-balanced { 
+  &.item-balanced {
     @include item-style($item-balanced-bg, $item-balanced-border, $item-balanced-text);
   }
-  &.item-energized { 
+  &.item-energized {
     @include item-style($item-energized-bg, $item-energized-border, $item-energized-text);
   }
-  &.item-royal { 
+  &.item-royal {
     @include item-style($item-royal-bg, $item-royal-border, $item-royal-text);
   }
-  &.item-dark { 
+  &.item-dark {
     @include item-style($item-dark-bg, $item-dark-border, $item-dark-text);
   }
 
@@ -95,51 +95,51 @@
   @include item-active-style($item-default-active-bg, $item-default-active-border);
 
   // Different active themes for <a> and <button> items
-  &.item-light { 
+  &.item-light {
     @include item-active-style($item-light-active-bg, $item-light-active-border);
   }
-  &.item-stable { 
+  &.item-stable {
     @include item-active-style($item-stable-active-bg, $item-stable-active-border);
   }
-  &.item-positive { 
+  &.item-positive {
     @include item-active-style($item-positive-active-bg, $item-positive-active-border);
   }
-  &.item-calm { 
+  &.item-calm {
     @include item-active-style($item-calm-active-bg, $item-calm-active-border);
   }
-  &.item-assertive { 
+  &.item-assertive {
     @include item-active-style($item-assertive-active-bg, $item-assertive-active-border);
   }
-  &.item-balanced { 
+  &.item-balanced {
     @include item-active-style($item-balanced-active-bg, $item-balanced-active-border);
   }
-  &.item-energized { 
+  &.item-energized {
     @include item-active-style($item-energized-active-bg, $item-energized-active-border);
   }
-  &.item-royal { 
+  &.item-royal {
     @include item-active-style($item-royal-active-bg, $item-royal-active-border);
   }
-  &.item-dark { 
+  &.item-dark {
     @include item-active-style($item-dark-active-bg, $item-dark-active-border);
   }
 }
 
 // Handle text overflow
 .item,
-.item h1, 
-.item h2, 
-.item h3, 
-.item h4, 
-.item h5, 
-.item h6, 
+.item h1,
+.item h2,
+.item h3,
+.item h4,
+.item h5,
+.item h6,
 .item p,
 .item-content,
-.item-content h1, 
-.item-content h2, 
-.item-content h3, 
-.item-content h4, 
-.item-content h5, 
-.item-content h6, 
+.item-content h1,
+.item-content h2,
+.item-content h3,
+.item-content h4,
+.item-content h5,
+.item-content h6,
 .item-content p {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -245,7 +245,7 @@ a.item-content {
 
   &:before {
     display: block;
-    width: $item-icon-font-size - 4;
+    width: $item-icon-font-size;
     text-align: center;
   }
 }
@@ -375,7 +375,7 @@ button.item.item-button-right {
  * then a arrow will be added to the right side of the item.
  */
 
-a.item, 
+a.item,
 button.item,
 .item a[href].item-content,
 .item[ng-click] a.item-content {
@@ -494,7 +494,7 @@ button.item-button-right:after,
 .item-image {
   padding: 0;
   text-align: center;
-  
+
   img:first-child, .list-img {
     width: 100%;
     vertical-align: middle;
@@ -510,7 +510,7 @@ button.item-button-right:after,
   padding: $item-padding;
   text-overflow: inherit;
   white-space: normal;
-  
+
   h1, h2, h3, h4, h5, h6, p {
     margin-top: $item-padding;
     margin-bottom: $item-padding;
