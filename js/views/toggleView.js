@@ -93,8 +93,10 @@
     },
 
     hold: function(e) {
+      this.el.classList.add('dragging');
     },
     release: function(e) {
+      this.el.classList.remove('dragging');
     },
 
 

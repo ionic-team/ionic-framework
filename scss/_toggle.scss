@@ -8,6 +8,12 @@
 .toggle {
   position: relative;
   display: inline-block;
+
+  &.dragging {
+    .handle {
+      background-color: $toggle-handle-dragging-bg-color !important;
+    }
+  }
 }
 
 /* hide the actual input checkbox */
