@@ -55,12 +55,18 @@
         initialState: this.checkbox.checked
       };
 
+      // Stop any parent dragging
+      e.gesture.srcEvent.preventDefault();
+
       // Trigger hold styles
       this.hold(e);
     },
 
     drag: function(e) {
       if(!this._dragInfo) { return; }
+
+      // Stop any parent dragging
+      e.gesture.srcEvent.preventDefault();
 
       var slidePageLeft = this.track.offsetLeft + (this.handle.offsetWidth / 2);
       var slidePageRight = this.track.offsetLeft + this.track.offsetWidth - (this.handle.offsetWidth / 2);
