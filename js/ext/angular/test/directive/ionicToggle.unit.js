@@ -1,7 +1,7 @@
 describe('Ionic Toggle', function() {
   var el, rootScope, compile;
 
-  beforeEach(module('ionic.ui.toggle'));
+  beforeEach(module('ionic'));
 
   beforeEach(inject(function($compile, $rootScope) {
     compile = $compile;
@@ -9,14 +9,21 @@ describe('Ionic Toggle', function() {
     el = $compile('<ion-toggle ng-model="data.name"></ion-toggle>')($rootScope);
   }));
 
-  /*
-  it('Should load', function() {
+  iit('Should load', function() {
     var toggleView = el.isolateScope().toggle;
     expect(toggleView).not.toEqual(null);
     expect(toggleView.checkbox).not.toEqual(null);
     expect(toggleView.handle).not.toEqual(null);
   });
 
+  iit('Should destroy', function() {
+    var toggleView = el.isolateScope().toggle;
+    spyOn(toggleView, 'destroy');
+    el.isolateScope().$destroy();
+    expect(toggleView.destroy).toHaveBeenCalled();
+  });
+
+  /*
   it('Should toggle', function() {
     var toggle = el.isolateScope().toggle;
     expect(toggle.val()).toBe(false);
