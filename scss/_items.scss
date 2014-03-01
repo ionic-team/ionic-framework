@@ -51,7 +51,10 @@
 
   // Align badges within items
   .badge {
-    float: right;
+    @include display-flex();
+    position: absolute;
+    top: $item-padding;
+    right: ($item-padding * 2) + 5;
   }
   .badge + .badge {
     margin-right: 5px;
