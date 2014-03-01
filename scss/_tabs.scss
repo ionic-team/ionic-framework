@@ -89,7 +89,7 @@
   @include flex(1);
   display: block;
   overflow: hidden;
-  
+
   max-width: $tab-item-max-width;
   height: 100%;
 
@@ -157,8 +157,9 @@
 .tab-item .badge {
   position: absolute;
   padding: $tabs-badge-padding;
-  top: 2%;
-  right: 10%;
+  top: 4%;
+  right: 33%; // fallback
+  right: calc(50% - 26px);
   font-size: $tabs-badge-font-size;
   height: auto;
   line-height: $tabs-badge-font-size + 4;
@@ -167,7 +168,7 @@
 /* Navigational tab */
 
 /* Active state for tab */
-.tab-item.active, 
+.tab-item.active,
 .tab-item:active {
   opacity: 1;
 
