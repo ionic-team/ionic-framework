@@ -12,10 +12,11 @@
 
     <div ng-controller="MenuCtrl">
       <ion-side-menus>
-        <ion-pane ion-side-menu-content drag-content="$root.$draggy">
+        <ion-pane ion-side-menu-content>
           <header class="bar bar-header bar-assertive">
-            <button class="button button-icon" ng-click="openLeft()"><i class="icon ion-navicon"></i></button>
+            <button class="button button-icon ion-navicon" ng-click="openLeft()"></button>
             <h1 class="title">Slide me</h1>
+            <button class="button button-icon ion-navicon" ng-click="openRight()"></button>
           </header>
           <ion-content has-header="true">
             <ion-toggle ng-model="$root.$draggy">Hello</ion-toggle>
@@ -62,6 +63,9 @@
         }
         $scope.openLeft = function() {
           $ionicSideMenuDelegate.toggleLeft($scope);
+        };
+        $scope.openRight = function() {
+          $ionicSideMenuDelegate.toggleRight($scope);
         };
       })
       .controller('LeftCtrl', function($scope) {

@@ -15,7 +15,7 @@
       this.right = options.right;
       this.content = options.content;
       this.dragThresholdX = options.dragThresholdX || 10;
-        
+
       this._rightShowing = false;
       this._leftShowing = false;
       this._isDragging = false;
@@ -32,7 +32,7 @@
     },
     /**
      * Set the content view controller if not passed in the constructor options.
-     * 
+     *
      * @param {object} content
      */
     setContent: function(content) {
@@ -147,17 +147,19 @@
       if((this._leftShowing && amount > maxLeft) || (this._rightShowing && amount < -maxRight)) {
         return;
       }
-      
+
       this.content.setTranslateX(amount);
 
       if(amount >= 0) {
         this._leftShowing = true;
         this._rightShowing = false;
 
-        // Push the z-index of the right menu down
-        this.right && this.right.pushDown && this.right.pushDown();
-        // Bring the z-index of the left menu up
-        this.left && this.left.bringUp && this.left.bringUp();
+        if(amount > 0) {
+          // Push the z-index of the right menu down
+          this.right && this.right.pushDown && this.right.pushDown();
+          // Bring the z-index of the left menu up
+          this.left && this.left.bringUp && this.left.bringUp();
+        }
       } else {
         this._rightShowing = true;
         this._leftShowing = false;
@@ -171,7 +173,7 @@
 
     /**
      * Given an event object, find the final resting position of this side
-     * menu. For example, if the user "throws" the content to the right and 
+     * menu. For example, if the user "throws" the content to the right and
      * releases the touch, the left menu should snap open (animated, of course).
      *
      * @param {Event} e the gesture event to use for snapping
@@ -192,7 +194,7 @@
       var velocityX = e.gesture.velocityX;
       var direction = e.gesture.direction;
 
-      // Less than half, going left 
+      // Less than half, going left
       //if(ratio > 0 && ratio < 0.5 && direction == 'left' && velocityX < velocityThreshold) {
       //this.openPercentage(0);
       //}
@@ -216,17 +218,17 @@
       else if(ratio < 0.5 && direction == 'right' && velocityX < velocityThreshold) {
         this.openPercentage(-100);
       }
-      
+
       // Going right, more than half, or quickly (snap open)
       else if(direction == 'right' && ratio >= 0 && (ratio >= 0.5 || velocityX > velocityThreshold)) {
         this.openPercentage(100);
       }
-      
+
       // Going left, more than half, or quickly (span open)
       else if(direction == 'left' && ratio <= 0 && (ratio <= -0.5 || velocityX > velocityThreshold)) {
         this.openPercentage(-100);
       }
-      
+
       // Snap back for safety
       else {
         this.openPercentage(0);
