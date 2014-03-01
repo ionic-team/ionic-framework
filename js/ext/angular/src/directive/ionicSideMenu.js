@@ -65,11 +65,13 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
         var isDragging = false;
 
         // Listen for taps on the content to close the menu
-        /*
-        ionic.on('tap', function(e) {
-          sideMenuCtrl.close();
-        }, $element[0]);
-        */
+        function contentTap(e) {
+          if(sideMenuCtrl.getOpenAmount() !== 0) {
+            sideMenuCtrl.close();
+            e.gesture.srcEvent.preventDefault();
+          }
+        }
+        ionic.on('tap', contentTap, $element[0]);
 
         var dragFn = function(e) {
           if($scope.dragContent) {
@@ -139,6 +141,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
           $ionicGesture.off(dragUpGesture, 'dragup', dragFn);
           $ionicGesture.off(dragDownGesture, 'dragdown', dragFn);
           $ionicGesture.off(releaseGesture, 'release', dragReleaseFn);
+          ionic.off('tap', contentTap, $element[0]);
         });
       };
     }
