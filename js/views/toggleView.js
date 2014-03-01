@@ -53,7 +53,7 @@
         right: this.el.offsetLeft + this.el.offsetWidth,
         triggerX: this.el.offsetWidth / 2,
         initialState: this.checkbox.checked
-      }
+      };
 
       // Trigger hold styles
       this.hold(e);
