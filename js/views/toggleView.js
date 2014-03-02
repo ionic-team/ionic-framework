@@ -63,33 +63,36 @@
     },
 
     drag: function(e) {
+      var self = this;
       if(!this._dragInfo) { return; }
 
-      // Stop any parent dragging
-      e.gesture.srcEvent.preventDefault();
+      ionic.requestAnimationFrame(function(amount) {
+        // Stop any parent dragging
+        e.gesture.srcEvent.preventDefault();
 
-      var slidePageLeft = this.track.offsetLeft + (this.handle.offsetWidth / 2);
-      var slidePageRight = this.track.offsetLeft + this.track.offsetWidth - (this.handle.offsetWidth / 2);
-      var dx = e.gesture.deltaX;
+        var slidePageLeft = self.track.offsetLeft + (self.handle.offsetWidth / 2);
+        var slidePageRight = self.track.offsetLeft + self.track.offsetWidth - (self.handle.offsetWidth / 2);
+        var dx = e.gesture.deltaX;
 
-      var px = e.gesture.touches[0].pageX - this._dragInfo.left;
-      var mx = this._dragInfo.width - this.triggerThreshold;
+        var px = e.gesture.touches[0].pageX - self._dragInfo.left;
+        var mx = self._dragInfo.width - self.triggerThreshold;
 
-      // The initial state was on, so "tend towards" on
-      if(this._dragInfo.initialState) {
-        if(px < this.triggerThreshold) {
-          this.setOpenPercent(0);
-        } else if(px > this._dragInfo.triggerX) {
-          this.setOpenPercent(100);
+        // The initial state was on, so "tend towards" on
+        if(self._dragInfo.initialState) {
+          if(px < self.triggerThreshold) {
+            self.setOpenPercent(0);
+          } else if(px > self._dragInfo.triggerX) {
+            self.setOpenPercent(100);
+          }
+        } else {
+          // The initial state was off, so "tend towards" off
+          if(px < self._dragInfo.triggerX) {
+            self.setOpenPercent(0);
+          } else if(px > mx) {
+            self.setOpenPercent(100);
+          }
         }
-      } else {
-        // The initial state was off, so "tend towards" off
-        if(px < this._dragInfo.triggerX) {
-          this.setOpenPercent(0);
-        } else if(px > mx) {
-          this.setOpenPercent(100);
-        }
-      }
+      });
     },
 
     hold: function(e) {
