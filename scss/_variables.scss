@@ -441,7 +441,7 @@ $toggle-hit-area-expansion:   5px;
 
 $checkbox-width:                  28px !default;
 $checkbox-height:                 28px !default;
-$checkbox-border-radius:          50% !default;
+$checkbox-border-radius:          $checkbox-width !default;
 $checkbox-border-width:           1px !default;
 
 $checkbox-off-bg-color:           #fff !default;

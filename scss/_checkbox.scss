@@ -41,7 +41,7 @@
   top: 30%;
   left: 26%;
   display: table;
-  width: $checkbox-width / 2;
+  width: ($checkbox-width / 2) + 1;
   height: ($checkbox-width / 3) + 1;
   border: $checkbox-check-width solid $checkbox-check-color;
   border-top: 0;
@@ -50,9 +50,19 @@
   opacity: 0;
 }
 
+.grade-c .checkbox input:after {
+  @include rotate(0);
+  top: 3px;
+  left: 4px;
+  border: none;
+  color: $checkbox-check-color;
+  font-weight: bold;
+  font-size: 20px;
+  content: '\2713';
+}
+
 /* what the background looks like when its checked */
 .checkbox input:checked:before {
-  border: 0;
   background: $checkbox-on-bg-color;
 }
 
