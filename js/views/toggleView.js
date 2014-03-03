@@ -47,6 +47,8 @@
     },
 
     dragStart: function(e) {
+      if(this.checkbox.disabled) return;
+
       this._dragInfo = {
         width: this.el.offsetWidth,
         left: this.el.offsetLeft,
@@ -96,11 +98,16 @@
       });
     },
 
+    endDrag: function(e) {
+      this._dragInfo = null;
+    },
+
     hold: function(e) {
       this.el.classList.add('dragging');
     },
     release: function(e) {
       this.el.classList.remove('dragging');
+      this.endDrag(e);
     },
 
 
