@@ -92,7 +92,6 @@ body.grade-c {
   @include user-select(none);
   @include touch-callout(none);
   @include text-size-adjust(none);
-  @include translateZ(0);
   @include transform-origin(left, top);
   -webkit-backface-visibility: hidden;
 }
