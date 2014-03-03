@@ -66,6 +66,7 @@ describe('Ionic Toggle', function() {
     expect(toggle.val()).toBe(true);
     ionic.trigger('click', {target: label})
     expect(toggle.val()).toBe(false);
+
   });
 
 });
