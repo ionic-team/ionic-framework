@@ -23,36 +23,49 @@ describe('Ionic Toggle', function() {
     expect(toggleView.destroy).toHaveBeenCalled();
   });
 
-  /*
-  it('Should toggle', function() {
-    var toggle = el.isolateScope().toggle;
-    expect(toggle.val()).toBe(false);
-    el.click();
-    expect(toggle.val()).toBe(true);
-    el.click();
-    expect(toggle.val()).toBe(false);
-  });
-
   it('Should disable and enable', function() {
 
+    // Init with not disabled
     rootScope.data = { isDisabled: false };
     el = compile('<ion-toggle ng-model="data.name" ng-disabled="data.isDisabled"></ion-toggle>')(rootScope);
+
+    // Grab fields
+    var label = el[0].querySelector('label');
     var toggle = el.isolateScope().toggle;
+    var input = el[0].querySelector('input');
+
+    // Not disabled, we can toggle
     expect(toggle.val()).toBe(false);
-    el.click();
+    label.click();
     expect(toggle.val()).toBe(true);
 
+    // Disable it
     rootScope.data.isDisabled = true;
     rootScope.$apply();
-    expect(toggle.el.getAttribute('disabled')).toBe('disabled');
-    el.click();
+    expect(input.getAttribute('disabled')).toBe('disabled');
+
+    // We shouldn't be able to toggle it now
+    label.click();
     expect(toggle.val()).toBe(true);
 
+    // Re-enable it
     rootScope.data.isDisabled = false;
     rootScope.$apply();
-    el.click();
-    expect(toggle.el.getAttribute('disabled')).not.toBe('disabled');
+
+    // Should be able to toggle it now
+    label.click();
+    expect(toggle.val()).toBe(false);
+    expect(input.getAttribute('disabled')).not.toBe('disabled');
   });
-  */
+
+  it('Should toggle', function() {
+    var toggle = el.isolateScope().toggle;
+    var label = el[0].querySelector('label');
+    expect(toggle.val()).toBe(false);
+    label.click();
+    expect(toggle.val()).toBe(true);
+    label.click();
+    expect(toggle.val()).toBe(false);
+  });
 
 });
