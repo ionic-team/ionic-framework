@@ -12,7 +12,7 @@
       this.openPercent = -1;
       this.onChange = opts.onChange || function() {};
 
-      this.triggerThreshold = opts.triggerThreshold || 10;
+      this.triggerThreshold = opts.triggerThreshold || 20;
 
       this.dragStartHandler = function(e) {
         self.dragStart(e);
@@ -66,9 +66,10 @@
       var self = this;
       if(!this._dragInfo) { return; }
 
+      // Stop any parent dragging
+      e.gesture.srcEvent.preventDefault();
+
       ionic.requestAnimationFrame(function(amount) {
-        // Stop any parent dragging
-        e.gesture.srcEvent.preventDefault();
 
         var slidePageLeft = self.track.offsetLeft + (self.handle.offsetWidth / 2);
         var slidePageRight = self.track.offsetLeft + self.track.offsetWidth - (self.handle.offsetWidth / 2);
