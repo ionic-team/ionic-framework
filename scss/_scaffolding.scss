@@ -10,18 +10,6 @@
   @include box-sizing(border-box);
 }
 
-a {
-  -webkit-user-drag: none;
-  -webkit-tap-highlight-color: transparent;
-
-  &[href]:hover {
-    cursor: pointer;
-  }
-}
-img {
-  -webkit-user-drag: none;
-}
-
 body, .ionic-body {
   @include touch-callout(none);
   @include font-smoothing(antialiased);

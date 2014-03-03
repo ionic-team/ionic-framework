@@ -111,11 +111,17 @@ a:hover {
 }
 
 /* *
- * Remove tap highlight color on Safari
+ * Remove tap highlight color
  */
 
 a {
+  -webkit-user-drag: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+
+  &[href]:hover {
+    cursor: pointer;
+  }
 }
 
 /* ==========================================================================
@@ -336,6 +342,11 @@ input::-moz-focus-inner {
 textarea {
   overflow: auto; /* 1 */
   vertical-align: top; /* 2 */
+}
+
+
+img {
+  -webkit-user-drag: none;
 }
 
 /* ==========================================================================
