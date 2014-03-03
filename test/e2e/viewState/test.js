@@ -1,6 +1,6 @@
 describe('viewState', function() {
   beforeEach(function() {
-    browser.get('http://localhost:8080/test/e2e/viewState/test.html');
+    browser.get('http://localhost:8765/test/e2e/viewState/test.html');
   });
 
   function navTitle() {

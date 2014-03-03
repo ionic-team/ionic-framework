@@ -1,7 +1,31 @@
+var fs = require('fs');
 module.exports = {
-  ionicFiles: [
-    'js/_license.js',
+  dist: 'dist',
+  distJs: 'dist/js',
+  distCss: 'dist/css',
 
+  banner:
+    '/*!\n' +
+    ' * Copyright 2014 Drifty Co.\n' +
+    ' * http://drifty.com/\n' +
+    ' *\n' +
+    ' * Ionic, v<%= pkg.version %>\n' +
+    ' * A powerful HTML5 mobile app framework.\n' +
+    ' * http://ionicframework.com/\n' +
+    ' *\n' +
+    ' * By @maxlynch, @benjsperry, @adamdbradley <3\n' +
+    ' *\n' +
+    ' * Licensed under the MIT license. Please see LICENSE for more information.\n'+
+    ' *\n' +
+    ' */\n\n',
+  bundleBanner:
+    '/*!\n' +
+    ' * ionic.bundle.js is a concatenation of:\n' +
+    ' * ionic.js, angular.js, angular-animate.js,\n'+
+    ' * angular-ui-router.js, and ionic-angular.js\n'+
+    ' */\n\n',
+
+  ionicFiles: [
     // Base
     'js/ionic.js',
 
@@ -40,13 +64,14 @@ module.exports = {
     'js/controllers/tabBarController.js'
 
   ],
+
   angularIonicFiles: [
-    'js/_license.js',
     'js/ext/angular/src/ionicAngular.js',
     'js/ext/angular/src/service/**/*.js',
     'js/ext/angular/src/directive/**/*.js',
     'js/ext/angular/src/controller/**/*.js'
   ],
+
   //Which vendor files to include in dist, used by build
   //Matched relative to config/lib/
   vendorFiles: [
@@ -64,5 +89,14 @@ module.exports = {
     'fonts/ionicons.svg',
     'fonts/ionicons.ttf',
     'fonts/ionicons.woff'
+  ],
+
+  ionicBundleFiles: [
+    'dist/js/ionic.js',
+    'dist/js/angular/angular.js',
+    'dist/js/angular/angular-animate.js',
+    'dist/js/angular/angular-sanitize.js',
+    'dist/js/angular-ui/angular-ui-router.js',
+    'dist/js/ionic-angular.js'
   ]
 };

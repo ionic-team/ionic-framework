@@ -1,0 +1,29 @@
+<@ macro typeList(types) -@>
+<@ for typeName in types @><a href="" class="<$ typeName | typeClass $>"><$ typeName | escape $></a><@ endfor @>
+<@- endmacro -@>
+
+<@- macro directiveParam(name, type, join, sep) @>
+  <@- if type.optional @>[<@ endif -@>
+  <$ name | dashCase $><$ join $><$ type.description $><$ sep $>
+  <@- if type.optional @>]<@ endif -@>
+<@ endmacro -@>
+
+<@- macro functionSyntax(fn) @>
+  <@- set sep = joiner(', ') -@>
+  <@ marked -@>
+    `<$ fn.name $>(<@- for param in fn.params @><$ sep() $>
+    <@- if param.type.optional @>[<@ endif -@>
+    <$ param.name $>
+    <@- if param.type.optional @>]<@ endif -@>
+    <@ endfor @>);`
+  <@- endmarked @>
+<@ endmacro -@>
+
+<@- macro typeInfo(fn) -@>
+<table class="variables-matrix return-arguments">
+  <tr>
+    <td><$ typeList(fn.typeList) $></td>
+    <td><$ fn.description | marked $></td>
+  </tr>
+</table>
+<@- endmacro -@>

@@ -3,25 +3,33 @@ echo "#################################"
 echo "#### Update Site #################"
 echo "#################################"
 
-ARG_DEFS=( )
+ARG_DEFS=(
+  "[--version-name=(.*)]"
+  "--action=(clone|updateConfig|docs)"
+)
 
 function init {
   PROJECT_DIR=$SCRIPT_DIR/../..
   BUILD_DIR=$SCRIPT_DIR/../../dist
 
   IONIC_SITE_DIR=$SCRIPT_DIR/../../tmp/ionic-site
-  rm -rf $IONIC_SITE_DIR
-  mkdir -p $IONIC_SITE_DIR
 }
 
-function run {
+function clone {
+  rm -rf $IONIC_SITE_DIR
+  mkdir -p $IONIC_SITE_DIR
+
+  echo "-- Cloning ionic-site..."
+  git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic-site.git \
+    $IONIC_SITE_DIR \
+    --depth=10 \
+    --branch=gh-pages
+}
+
+function updateConfig {
   VERSION=$(readJsonProp "$BUILD_DIR/version.json" "version")
   CODENAME=$(readJsonProp "$BUILD_DIR/version.json" "codename")
   DATE=$(readJsonProp "$BUILD_DIR/version.json" "date")
-
-  echo "-- Cloning ionic-site..."
-  git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic-site.git $IONIC_SITE_DIR \
-    --branch gh-pages
 
   cd $IONIC_SITE_DIR
 
@@ -34,7 +42,26 @@ function run {
 
   git push -q origin gh-pages
 
-  echo "-- Published ionic-site to v$VERSION successfully!"
+  echo "-- Published ionic-site config to v$VERSION successfully!"
+}
+
+# Example: ./scripts/site/publish.sh --action=docs --version-name=nightly
+function docs {
+  cd $IONIC_SITE_DIR
+  gulp docs
+
+  CHANGES=$(git status --porcelain)
+
+  # if no changes, don't commit
+  if [[ "$CHANGES" != "" ]]; then
+    git add -A
+    git commit -am "docs: update for $VERSION_NAME"
+    git push -q -f git@github.com:ajoslin/ionic-site.git gh-pages
+
+    echo "-- Updated docs for $VERSION_NAME succesfully!"
+  else
+    echo "-- No changes detected in docs for $VERSION_NAME; docs not updated."
+  fi
 }
 
 source $(dirname $0)/../utils.inc

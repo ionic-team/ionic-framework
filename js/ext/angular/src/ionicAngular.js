@@ -3,6 +3,13 @@
  * modules.
  */
 
+/**
+ * @ngdoc module
+ * @name ionic
+ * @description
+ * Ionic main module.
+ */
+
 angular.module('ionic.service', [
   'ionic.service.bind',
   'ionic.service.platform',

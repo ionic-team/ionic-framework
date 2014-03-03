@@ -14,7 +14,7 @@ notifications:
       secure: mkHfRTsuxidtOOORbJJ0Jspb/DSa8jAiQwWWUljqLwefy1p4HGC9P/rLdXXg3vsjiulCzyjEkfvDWAHXvu34GhGWfQuD8U140Fon1Os3AO5Hbme+yRmjXmTcgH8XetSLQufyBBMqXHMd6o1tkxXql1p54G1IShhgAdPNe76d5ZE=
 
 before_install:
-- npm install -g grunt-cli protractor
+- npm install -g gulp protractor
 
 before_script:
 - export DISPLAY=:99.0

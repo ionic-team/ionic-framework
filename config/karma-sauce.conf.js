@@ -8,6 +8,7 @@ module.exports = function(config) {
       testName: 'Ionic unit tests',
       username: process.env.SAUCE_USER,
       accessKey: process.env.SAUCE_KEY,
+      startConnect: false,
       tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
     },
     //Saucelabs mobile emulation (esp android emulator)

@@ -7,6 +7,8 @@ echo "#### Update bower ###############"
 echo "#################################"
 
 ARG_DEFS=(
+  "--version=(.*)"
+  "--codename=(.*)"
 )
 
 function init {
@@ -19,14 +21,13 @@ function init {
 
 function run {
 
-  VERSION=$(readJsonProp "$PROJECT_DIR/package.json" "version")
-  CODENAME=$(readJsonProp "$PROJECT_DIR/package.json" "codename")
-
   rm -rf $BOWER_DIR
   mkdir -p $BOWER_DIR
 
   echo "-- Cloning ionic-bower..."
-  git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic-bower.git $BOWER_DIR
+  git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic-bower.git \
+    $BOWER_DIR \
+    --depth=10
 
   # move the files from the build
   echo "-- Putting build files in ionic-bower..."

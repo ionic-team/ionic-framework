@@ -31,66 +31,97 @@ function run {
   echo "TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
   echo "TRAVIS_COMMIT=$TRAVIS_COMMIT"
 
-  # Jshint & check for stupid mistakes
-  grunt jshint ddescribe-iit merge-conflict
+  # check for stupid mistakes
+  # gulp ddescribe-iit
 
   # Run simple quick tests on Phantom to be sure any tests pass
   # Tests are run on cloud browsers after build
-  grunt karma:single --browsers=PhantomJS --reporters=dots
+  # gulp karma --browsers=PhantomJS --reporters=dots
 
   if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
     echo "-- This is a pull request build; will not push build out."
     exit 0
   fi
 
-  LATEST_TAG_COMMIT=$(git rev-list $(git describe --tags --abbrev=0) | head -n 1)
+  mkdir -p tmp
+  git show $TRAVIS_COMMIT~1:package.json > tmp/package.old.json
+  OLD_VERSION=$(readJsonProp "tmp/package.old.json" "version")
+  OLD_CODENAME=$(readJsonProp "tmp/package.old.json" "codename")
+  VERSION=$(readJsonProp "package.json" "version")
+  CODENAME=$(readJsonProp "package.json" "codename")
 
-  if [[ "$TRAVIS_COMMIT" == "$LATEST_TAG_COMMIT" ]]; then
+  if [[ "$OLD_VERSION" != "$VERSION" ]]; then
     IS_RELEASE=true
-    echo "##################################"
-    echo "# Pushing out a new full release #"
-    echo "##################################"
+    echo "#######################################"
+    echo "# Releasing v$VERSION \"$CODENAME\"! #"
+    echo "#######################################"
   else
     if [[ "$TRAVIS_BRANCH" != "master" ]]; then
-      echo "-- We are not on branch master, instead we are on branch $TRAVIS_BRANCH. Will not push build out."
+      echo "-- We are not on branch master, instead we are on branch $TRAVIS_BRANCH. Aborting build."
       exit 0
     fi
     echo "#####################################"
     echo "# Pushing out a new nightly release #"
     echo "#####################################"
+
     ./scripts/travis/bump-nightly-version.sh
+    VERSION=$(readJsonProp "package.json" "version")
+    CODENAME=$(readJsonProp "package.json" "codename")
   fi
 
-  # Build (we are sure to build after version is bumped)
-  grunt build
+  # Build files after we are sure our version is correct
+  gulp build --release=true
 
-  # Version label used on the CDN: nightly or the version name
   if [[ $IS_RELEASE == "true" ]]; then
-    VERSION_LABEL=$(readJsonProp "package.json" "version")
+
+    ./scripts/travis/release-new-version.sh \
+      --codename=$CODENAME \
+      --version=$VERSION
+
+    ./scripts/seed/publish.sh \
+      --version="$VERSION"
+
+    # Version name used on the CDN/docs: nightly or the version
+    VERSION_NAME=$VERSION
+
+    ./scripts/site/publish.sh --action="clone"
+    ./scripts/site/publish.sh --action="updateConfig"
+    ./scripts/seed/publish.sh --version="$VERSION"
   else
-    VERSION_LABEL="nightly"
+    ./scripts/site/publish.sh --action="clone"
+
+    VERSION_NAME="nightly"
   fi
 
-  ./scripts/cdn/publish.sh --version-label="$VERSION_LABEL"
+  ./scripts/site/publish.sh \
+    --action="docs" \
+    --version-name="$VERSION_NAME"
 
-  ./scripts/bower/publish.sh
+  ./scripts/cdn/publish.sh \
+    --version=$VERSION \
+    --version-name="$VERSION_NAME"
 
-  if [[ $IS_RELEASE == "true" ]]; then
-    ./scripts/seed/publish.sh
-    ./scripts/site/publish.sh
+  ./scripts/bower/publish.sh \
+    --version="$VERSION" \
+    --codename="$CODENAME"
+
+
+  if [[ "$IS_RELEASE" == "true" ]]; then
+    echo "################################################"
+    echo "# Complete! v$VERSION \"$CODENAME\" published! #"
+    echo "################################################"
+  else
+    echo "##########################"
+    echo "# Running cloud tests... #"
+    echo "##########################"
+
+    # Do sauce unit tests and e2e tests with all browsers (takes longer)
+    gulp cloudtest
+
+    echo "##########################################"
+    echo "# Complete! v$VERSION nightly published! #"
+    echo "##########################################"
   fi
-
-  echo ""
-  echo "--- Build Complete! Running tests in the cloud. ----"
-  echo ""
-
-  # Do sauce unit tests and e2e tests with all browsers (takes longer)
-  grunt cloudtest
-
-  echo ""
-  echo "--- Build and tests complete! ---"
-  echo ""
-
 }
 
 source $(dirname $0)/../utils.inc

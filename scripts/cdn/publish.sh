@@ -3,9 +3,10 @@ echo "#################################"
 echo "#### Update CDN #################"
 echo "#################################"
 
-# Version label is "nightly" or a version number
+# Version name is "nightly" or a version number
 ARG_DEFS=(
-  "--version-label=(.*)"
+  "--version=(.*)"
+  "--version-name=(.*)"
 )
 
 function init {
@@ -19,14 +20,13 @@ function init {
 
 function run {
 
-  VERSION=$(readJsonProp "$PROJECT_DIR/package.json" "version")
-  CODENAME=$(readJsonProp "$PROJECT_DIR/package.json" "codename")
-
   echo "-- Cloning ionic-code..."
-  git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic-code.git $IONIC_CODE_DIR \
+  git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic-code.git \
+    $IONIC_CODE_DIR \
+    --depth=10 \
     --branch gh-pages
 
-  VERSION_DIR=$IONIC_CODE_DIR/$VERSION_LABEL
+  VERSION_DIR=$IONIC_CODE_DIR/$VERSION_NAME
   rm -rf $VERSION_DIR
   mkdir -p $VERSION_DIR
 
@@ -39,7 +39,7 @@ function run {
 
   cd $IONIC_CODE_DIR
   git add -A
-  git commit -am "release: $VERSION ($VERSION_LABEL)"
+  git commit -am "release: $VERSION ($VERSION_NAME)"
 
   git push -q origin gh-pages
 

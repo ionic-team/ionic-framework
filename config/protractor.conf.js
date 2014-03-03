@@ -11,7 +11,7 @@ exports.config = {
     defaultTimeoutInterval: 120000
   },
 
-  baseUrl: 'http://localhost:8080',
+  baseUrl: 'http://localhost:8765',
 
   //local build: chrome
   chromeOnly: true,

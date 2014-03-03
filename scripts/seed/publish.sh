@@ -4,6 +4,7 @@ echo "# Update ionic-angular-cordova-seed #"
 echo "#####################################"
 
 ARG_DEFS=(
+  "--version=(.*)"
 )
 
 function init {
@@ -18,10 +19,14 @@ function init {
 function run {
   cd ../..
 
-  VERSION=$(readJsonProp "package.json" "version")
+  rm -rf $SEED_DIR
+  mkdir -p $SEED_DIR
 
   echo "-- Cloning ionic-angular-cordova-seed..."
-  git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic-angular-cordova-seed.git $SEED_DIR
+  git clone \
+    https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic-angular-cordova-seed.git \
+    $SEED_DIR \
+    --depth=10
 
   cd $SEED_DIR
 
@@ -29,7 +34,7 @@ function run {
   cp -Rf $BUILD_DIR/* $SEED_DIR/www/lib/
 
   git add -A
-  git commit -am "chore(release): update ionic to v$VERSION"
+  git commit -am "release: update ionic to v$VERSION"
   git push -q origin master
 
   echo "-- ionic-angular-cordova-seed files update to v$VERSION successfully!"

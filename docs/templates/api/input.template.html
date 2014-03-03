@@ -1,0 +1,12 @@
+<@ include "lib/macros.html" -@>
+<@ extends "api/directive.template.html" @>
+
+<@ block usage @>
+  <h2>Usage</h2>
+  <@ code @>
+  <input type="<$ doc.inputType $>"
+    <@- for param in doc.params @>
+         <$ directiveParam(param.alias or param.name, param.type, '="', '"') $>
+    <@- endfor @>>
+  <@ endcode @>
+<@ endblock @>
