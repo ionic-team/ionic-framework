@@ -8,6 +8,14 @@
 .toggle {
   position: relative;
   display: inline-block;
+  margin: -$toggle-hit-area-expansion;
+  padding: $toggle-hit-area-expansion;
+
+  &.dragging {
+    .handle {
+      background-color: $toggle-handle-dragging-bg-color !important;
+    }
+  }
 }
 
 /* hide the actual input checkbox */
@@ -37,8 +45,8 @@
 .toggle .handle {
   @include transition($toggle-transition-duration ease-in-out);
   position: absolute;
-  top: $toggle-border-width;
-  left: $toggle-border-width;
+  top: $toggle-border-width + $toggle-hit-area-expansion;
+  left: $toggle-border-width + $toggle-hit-area-expansion;
   display: block;
   width: $toggle-handle-width;
   height: $toggle-handle-height;

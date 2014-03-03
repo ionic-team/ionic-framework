@@ -419,6 +419,7 @@ $toggle-border-radius:            20px !default;
 $toggle-handle-width:             $toggle-height - ($toggle-border-width * 2) !default;
 $toggle-handle-height:            $toggle-handle-width !default;
 $toggle-handle-radius:            50% !default;
+$toggle-handle-dragging-bg-color: darken(#fff, 5%) !default;
 
 $toggle-off-bg-color:             #E5E5E5 !default;
 $toggle-off-border-color:         #E5E5E5 !default;
@@ -426,10 +427,13 @@ $toggle-off-border-color:         #E5E5E5 !default;
 $toggle-on-bg-color:              #4A87EE !default;
 $toggle-on-border-color:          $toggle-on-bg-color !default;
 
+
 $toggle-handle-off-bg-color:      $light !default;
 $toggle-handle-on-bg-color:       $toggle-handle-off-bg-color !default;
 
-$toggle-transition-duration:      .1s !default;
+$toggle-transition-duration:      .2s !default;
+
+$toggle-hit-area-expansion:   5px;
 
 
 // Checkbox
