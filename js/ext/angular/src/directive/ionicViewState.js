@@ -126,12 +126,14 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           $scope.oldTitle = $scope.title;
           $scope.title = data && data.title || '';
 
-          //If no animation, we're done!
-          if (!$scope.animateEnabled) {
-            hb.align();
-            return;
-          } else {
-            animateTitles();
+          // only change if they're different
+          if($scope.oldTitle !== $scope.title) {
+            if (!$scope.animateEnabled) {
+              //If no animation, we're done!
+              hb.align();
+            } else {
+              animateTitles();
+            }
           }
         }
 
@@ -142,7 +144,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           //replace the first one with an oldTitle element
           currentTitles = $element[0].querySelectorAll('.title');
           if (currentTitles.length) {
-            oldTitleEl = $compile('<h1 ng-bind-html="oldTitle" class="title"></h1>')($scope);
+            oldTitleEl = $compile('<h1 class="title" ng-bind-html="oldTitle"></h1>')($scope);
             angular.element(currentTitles[0]).replaceWith(oldTitleEl);
           }
           //Compile new title
