@@ -56,6 +56,9 @@
     top: $item-padding;
     right: ($item-padding * 2) + 5;
   }
+  &.item-divider .badge {
+    top: $item-padding / 2;
+  }
   .badge + .badge {
     margin-right: 5px;
   }
