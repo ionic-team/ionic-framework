@@ -418,7 +418,7 @@ $toggle-border-radius:            20px !default;
 
 $toggle-handle-width:             $toggle-height - ($toggle-border-width * 2) !default;
 $toggle-handle-height:            $toggle-handle-width !default;
-$toggle-handle-radius:            50% !default;
+$toggle-handle-radius:            $toggle-handle-width !default;
 $toggle-handle-dragging-bg-color: darken(#fff, 5%) !default;
 
 $toggle-off-bg-color:             #E5E5E5 !default;
