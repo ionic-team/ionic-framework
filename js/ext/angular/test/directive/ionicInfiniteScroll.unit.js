@@ -4,7 +4,7 @@ describe('ionicInfiniteScroll directive', function() {
   var scrollTopValue;
   var scrollMaxValue;
   var ctrl;
-  function setup(attrs, scopeProps, noCtrl) {
+  function setup(attrs, scopeProps) {
     var element;
     scrollTopValue = 50;
     scrollMaxValue = 101;
@@ -13,21 +13,19 @@ describe('ionicInfiniteScroll directive', function() {
       angular.extend(scope, scopeProps || {});
       element = angular.element('<ion-infinite-scroll '+(attrs||'')+'></ion-infinite-scroll>');
       ionic.animationFrameThrottle = function(cb) { return function() { cb(); }; };
-      if (!noCtrl) {
-        element.data('$$ionicScrollController', {
-          scrollView: {
-            getValues: jasmine.createSpy('getValues').andCallFake(function() {
-              return { top: scrollTopValue };
-            }),
-            getScrollMax: jasmine.createSpy('getScrollMax').andCallFake(function() {
-              return { top: scrollMaxValue };
-            }),
-            resize: jasmine.createSpy('resize')
-          },
-          resize: jasmine.createSpy('resize'),
-          $element: angular.element('<div>')
-        });
-      }
+      element.data('$$ionicScrollController', {
+        scrollView: {
+          getValues: jasmine.createSpy('getValues').andCallFake(function() {
+            return { top: scrollTopValue };
+          }),
+          getScrollMax: jasmine.createSpy('getScrollMax').andCallFake(function() {
+            return { top: scrollMaxValue };
+          }),
+          resize: jasmine.createSpy('resize')
+        },
+        resize: jasmine.createSpy('resize'),
+        $element: angular.element('<div>')
+      });
       $compile(element)(scope);
       ctrl = element.controller('ionInfiniteScroll');
       scope.$apply();
