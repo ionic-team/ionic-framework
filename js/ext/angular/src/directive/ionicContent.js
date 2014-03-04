@@ -199,11 +199,8 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
         var scrollCtrl = $element.controller('$ionicScroll');
         var scrollView = scrollCtrl.scrollView;
 
-        $ionicBind($scope, $attrs, {
-          distance: '@infiniteScrollDistance'
-        });
         function maxScroll() {
-          var dist = $scope.distance || '1%';
+          var dist = $scope.infiniteScrollDistance || '1%';
           return dist.indexOf('%') > -1 ?
             scrollView.getScrollMax().top * (1 - parseInt(dist,10) / 100) :
             scrollView.getScrollMax().top - parseInt(dist, 10);
