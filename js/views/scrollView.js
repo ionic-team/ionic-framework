@@ -652,7 +652,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
       var mousedown = false;
 
       container.addEventListener("mousedown", function(e) {
-        console.log('Touch start', e);
         if (e.defaultPrevented || shouldIgnorePress(e)) {
           return;
         }
