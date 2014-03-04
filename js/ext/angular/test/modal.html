@@ -7,6 +7,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <script src="dom-trace.js"></script>
   </head>
   <body>
     <ion-pane ng-controller="AppCtrl">
@@ -23,7 +24,7 @@
 
     <script id="modal.html" type="text/ng-template">
       <div class="modal" ng-controller="ModalCtrl">
-        <header class="bar bar-header bar-positive">
+        <header class="bar bar-header bar-assertive">
           <h1 class="title">New Contact</h1>
           <button class="button button-clear button-primary" ng-click="close()">Cancel</button>
         </header>
@@ -42,8 +43,8 @@
                 <span class="input-label">Email</span>
                 <input type="text" placeholder="">
               </label>
-              <button class="button button-full button-positive" ng-click="closeModal()">Create</button>
-              <button class="button button-full button-positive" ng-click="openActionSheet()">ActionSheet</button>
+              <button class="button button-block button-positive" ng-click="closeModal()">Create</button>
+              <button class="button button-block button-positive" ng-click="openActionSheet()">ActionSheet</button>
             </div>
           </div>
         </ion-content>
@@ -127,6 +128,8 @@
         };
 
       });
+
+      domTrace.observe();
     </script>
   </body>
 </html>

@@ -53,25 +53,21 @@ describe('Ionic Modal', function() {
     expect(m.isShown()).toBe(false);
   });
 
-  it('show & remove should add .model-open to body', inject(function($animate) {
+  it('show & remove should add .model-open to body', inject(function() {
     var m = modal.fromTemplate('<div class="modal">hi</div>');
     m.show();
     expect(angular.element(document.body).hasClass('modal-open')).toBe(true);
-    spyOn($animate, 'leave').andCallFake(function(el, cb) {
-      cb();
-    });
     m.remove();
+    timeout.flush();
     expect(angular.element(document.body).hasClass('modal-open')).toBe(false);
   }));
 
-  it('show & hide should add .model-open body', inject(function($animate) {
+  it('show & hide should add .model-open body', inject(function() {
     var m = modal.fromTemplate('<div class="modal">hi</div>');
     m.show();
     expect(angular.element(document.body).hasClass('modal-open')).toBe(true);
-    spyOn($animate, 'removeClass').andCallFake(function(el, cls, cb) {
-      cb();
-    });
     m.hide();
+    timeout.flush();
     expect(angular.element(document.body).hasClass('modal-open')).toBe(false);
   }));
 
@@ -80,7 +76,7 @@ describe('Ionic Modal', function() {
     spyOn($animate, 'leave').andCallFake(function(el, cb) { cb(); });
     spyOn(m.scope, '$destroy');
     m.remove();
-    expect($animate.leave).toHaveBeenCalled();
+    timeout.flush();
     expect(m.scope.$destroy).toHaveBeenCalled();
   }));
 
@@ -89,7 +85,7 @@ describe('Ionic Modal', function() {
     var modalInstance = modal.fromTemplate(template);
     modalInstance.show();
 
-    //timeout.flush();
+    timeout.flush();
 
     expect(modalInstance.el.classList.contains('active')).toBe(true);
 
@@ -97,6 +93,7 @@ describe('Ionic Modal', function() {
       target: document
     });
 
+    timeout.flush();
     expect(modalInstance.el.classList.contains('active')).toBe(false);
   });
 
@@ -105,14 +102,15 @@ describe('Ionic Modal', function() {
     var m = modal.fromTemplate(template, {});
     spyOn(m.scope.$parent, '$broadcast');
     m.show();
-    expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.shown', m);
+    timeout.flush();
+    expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.shown');
   });
   it('should broadcast "modal.hidden" on hide', function() {
     var template = '<div class="modal"></div>';
     var m = modal.fromTemplate(template, {});
     spyOn(m.scope.$parent, '$broadcast');
     m.hide();
-    expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.hidden', m);
+    expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.hidden');
   });
   it('should broadcast "modal.removed" on remove', inject(function($animate) {
     var template = '<div class="modal"></div>';
@@ -125,9 +123,9 @@ describe('Ionic Modal', function() {
     spyOn(m.scope.$parent, '$broadcast').andCallFake(function(e, modal) {
       broadcastedModal = modal;
     });
-    spyOn($animate, 'leave').andCallFake(function(el, cb) { cb(); });
 
     m.remove();
-    expect(broadcastedModal).toBe(m);
+    expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.removed');
+    timeout.flush();
   }));
 });

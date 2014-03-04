@@ -10,73 +10,78 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
     // Show the modal
     show: function() {
       var self = this;
-      var element = angular.element(this.el);
+      var element = angular.element(self.el);
 
       document.body.classList.add('modal-open');
 
       self._isShown = true;
 
       if(!element.parent().length) {
-        element.addClass(this.animation);
-        $animate.enter(element, angular.element($document[0].body), null, function() {
-        });
-        ionic.views.Modal.prototype.show.call(self);
-      } else {
-        $animate.addClass(element, this.animation, function() {
-        });
+        self.el.classList.add(self.animation);
+        $document[0].body.appendChild(self.el);
       }
 
-      if(!this.didInitEvents) {
-        var onHardwareBackButton = function() {
-          self.hide();
-        };
+      element.addClass('ng-enter active');
+      element.removeClass('ng-leave ng-leave-active');
 
-        self.scope.$on('$destroy', function() {
-          $ionicPlatform.offHardwareBackButton(onHardwareBackButton);
-        });
+      $timeout(function(){
+        element.addClass('ng-enter-active');
 
-        // Support Android back button to close
-        $ionicPlatform.onHardwareBackButton(onHardwareBackButton);
+        if(!self.didInitEvents) {
+          var onHardwareBackButton = function() {
+            self.hide();
+          };
 
-        this.didInitEvents = true;
-      }
+          self.scope.$on('$destroy', function() {
+            $ionicPlatform.offHardwareBackButton(onHardwareBackButton);
+          });
 
-      this.scope.$parent.$broadcast('modal.shown', this);
+          // Support Android back button to close
+          $ionicPlatform.onHardwareBackButton(onHardwareBackButton);
+
+          self.didInitEvents = true;
+        }
+
+        self.scope.$parent.$broadcast('modal.shown');
+      }, 20);
 
     },
     // Hide the modal
     hide: function() {
       this._isShown = false;
       var element = angular.element(this.el);
-      $animate.removeClass(element, this.animation, function() {
-        onHideModal(element[0]);
-      });
+
+      element.addClass('ng-leave');
+
+      $timeout(function(){
+        element.addClass('ng-leave-active');
+        element.removeClass('ng-enter ng-enter-active active');
+      }, 20);
+
+      $timeout(function(){
+        document.body.classList.remove('modal-open');
+      }, 400);
 
       ionic.views.Modal.prototype.hide.call(this);
 
-      this.scope.$parent.$broadcast('modal.hidden', this);
+      this.scope.$parent.$broadcast('modal.hidden');
     },
 
     // Remove and destroy the modal scope
     remove: function() {
-      var self  = this,
-          element = angular.element(this.el);
-      this._isShown = false;
-      $animate.leave(angular.element(this.el), function() {
-        onHideModal(element[0]);
-        self.scope.$parent.$broadcast('modal.removed', self);
+      var self = this;
+      self.hide();
+      self.scope.$parent.$broadcast('modal.removed');
+
+      $timeout(function(){
         self.scope.$destroy();
-      });
+      }, 500);
     },
 
     isShown: function() {
       return !!this._isShown;
     }
   });
-
-  function onHideModal(element) {
-    document.body.classList.remove('modal-open');
-  }
 
   var createModal = function(templateString, options) {
     // Create a new scope for the modal
@@ -116,6 +121,6 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
         cb ? cb(modal) : null;
         return modal;
       });
-    },
+    }
   };
 }]);

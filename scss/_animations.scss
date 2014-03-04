@@ -17,7 +17,7 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
 @-webkit-keyframes slideInUp {
   0% {
     @include translate3d(0, 100%, 0);
-    opacity: 0;
+    opacity: 1;
   }
   100% {
     @include translate3d(0, 0, 0);
@@ -27,7 +27,7 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
 @-moz-keyframes slideInUp {
   0% {
     @include translate3d(0, 100%, 0);
-    opacity: 0;
+    opacity: 1;
   }
   100% {
     @include translate3d(0, 0, 0);
@@ -41,7 +41,7 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
   }
   100% {
     @include translate3d(0, 100%, 0);
-    opacity: 0;
+    opacity: 1;
   }
 }
 @-moz-keyframes slideOutUp {
@@ -51,7 +51,7 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
   }
   100% {
     @include translate3d(0, 100%, 0);
-    opacity: 0;
+    opacity: 1;
   }
 }
 
@@ -160,14 +160,14 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
 // Spin
 // -------------------------------
 
-@-webkit-keyframes spin { 
-  100% { -webkit-transform: rotate(360deg); } 
+@-webkit-keyframes spin {
+  100% { -webkit-transform: rotate(360deg); }
 }
-@-moz-keyframes spin { 
-  100% { -moz-transform: rotate(360deg); } 
+@-moz-keyframes spin {
+  100% { -moz-transform: rotate(360deg); }
 }
-@keyframes spin { 
-  100% { transform: rotate(360deg); } 
+@keyframes spin {
+  100% { transform: rotate(360deg); }
 }
 
 .no-animation {
@@ -201,7 +201,7 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
  */
 
 .slide-left-right {
-  > .ng-enter, &.ng-enter, 
+  > .ng-enter, &.ng-enter,
   > .ng-leave, &.ng-leave {
     @include transition(all ease-in-out $transition-duration);
     position: absolute;
@@ -249,14 +249,14 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
 
 
 /**
- * iOS7 style slide left to right 
+ * iOS7 style slide left to right
  * --------------------------------------------------
  */
 $ios7-timing-function: ease-in-out;
 $ios7-transition-duration: 250ms;
 
 .slide-left-right-ios7 {
-  > .ng-enter, &.ng-enter, 
+  > .ng-enter, &.ng-enter,
   > .ng-leave, &.ng-leave {
     @include transition(all $ios7-timing-function $ios7-transition-duration);
     position: absolute;
@@ -280,7 +280,7 @@ $ios7-transition-duration: 250ms;
     /* OLD content ACTIVELY sliding OUT to the LEFT */
     @include translate3d(-15%, 0, 0);
   }
-  
+
   &.reverse {
     > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
       @include transition(all $ios7-timing-function $ios7-transition-duration);
@@ -420,54 +420,29 @@ $ios7-transition-duration: 250ms;
   @include animation-name(slideOutToRight);
 }
 
+
+/**
+ * Slide up from the bottom, used for modals
+ * --------------------------------------------------
+ */
+
 .slide-in-up {
-  // Start it down low
+  @include translate3d(0, 100%, 0);
+}
+.slide-in-up.ng-enter,
+.slide-in-up .ng-enter {
+  @include transition(all $slide-in-up-function 400ms);
+}
+.slide-in-up.ng-enter-active,
+.slide-in-up .ng-enter-active {
   @include translate3d(0, 0, 0);
-  opacity: 1;
-
-  &.ng-enter, .ng-enter {
-    // Start it down low
-    @include translate3d(0, 100%, 0);
-
-    @include animation-duration(400ms);
-    @include animation-timing-function($slide-in-up-function);
-    @include animation-fill-mode(both);
-    // Start hidden
-    opacity: 0;
-  }
-
-  &.ng-enter-active, .ng-enter-active {
-    @include animation-name(slideInUp);
-  }
-
-  &.ng-leave, .ng-leave {
-    @include animation-duration(400ms);
-    @include animation-timing-function($slide-in-up-function);
-    @include animation-fill-mode(both);
-  }
-
-  &.ng-leave-active, .ng-leave {
-    @include animation-name(slideOutUp);
-  }
 }
 
-.slide-in-up-add {
-  @include animation-duration(400ms);
-  @include animation-timing-function($slide-in-up-function);
-  @include animation-fill-mode(forwards);
-}
-.slide-in-up-add-active {
-  @include animation-name(slideInUp);
+.slide-in-up.ng-leave,
+.slide-in-up .ng-leave {
+  @include transition(all ease-in-out 250ms);
 }
 
-.slide-in-up-remove {
-  @include animation-duration(400ms);
-  @include animation-timing-function($slide-in-up-function);
-  @include animation-fill-mode(forwards);
-}
-.slide-in-up-remove-active {
-  @include animation-name(slideOutUp);
-}
 
 .fade-in {
   @include animation(fadeOut 0.3s);
@@ -492,7 +467,7 @@ $ios7-transition-duration: 250ms;
  */
 $nav-title-slide-ios7-delay: 250ms;
 .nav-title-slide-ios7 {
-  > .ng-enter, &.ng-enter, 
+  > .ng-enter, &.ng-enter,
   > .ng-leave, &.ng-leave {
     @include transition(all $nav-title-slide-ios7-delay);
     @include transition-timing-function($ios7-timing-function);
@@ -512,7 +487,7 @@ $nav-title-slide-ios7-delay: 250ms;
   }
 
   &.reverse {
-    > .ng-enter, &.ng-enter, 
+    > .ng-enter, &.ng-enter,
     > .ng-leave, &.ng-leave {
       @include transition(all ease-in-out $transition-duration);
       opacity: 1;
