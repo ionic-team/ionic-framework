@@ -45,7 +45,11 @@
       window.clearTimeout(this._showDelayTimeout);
 
       this.el.classList.remove('active');
-    }
+    },
+
+    setContent: function(content){
+      angular.element(this._loadingBox).text(content);
+    }    
   });
 
 })(ionic);
