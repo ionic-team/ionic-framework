@@ -3,23 +3,6 @@
  * --------------------------------------------------
  */
 
-@-webkit-keyframes fadeInHalf {
-  from { background-color: rgba(0,0,0,0); }
-  to { background-color: rgba(0,0,0,0.5); }
-}
-@keyframes fadeInHalf {
-  from { background-color: rgba(0,0,0,0); }
-  to { background-color: rgba(0,0,0,0.5); }
-}
-@-webkit-keyframes fadeOutHalf {
-  from { background-color: rgba(0,0,0,0.5); }
-  to { background-color: rgba(0,0,0,0); }
-}
-@keyframes fadeOutHalf {
-  from { background-color: rgba(0,0,0,0.5); }
-  to { background-color: rgba(0,0,0,0); }
-}
-
 .action-sheet-backdrop {
   position: fixed;
   top: 0;
@@ -41,62 +24,21 @@
   }
 }
 
-@-webkit-keyframes actionSheetUp {
-  0% {
-    @include translate3d(0, 100%, 0);
-    opacity: 0;
-  }
-  100% {
-    @include translate3d(0, 0, 0);
-    opacity: 1;
-  }
+.action-sheet-wrapper {
+  @include translate3d(0, 100%, 0);
+  @include transition(all ease-in-out 300ms);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
-@-webkit-keyframes actionSheetOut {
-  0% {
-    @include translate3d(0, 0, 0);
-    opacity: 1;
-  }
-  100% {
-    @include translate3d(0, 100%, 0);
-    opacity: 0;
-  }
-}
-$slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
 
 .action-sheet-up {
-  // Start it down low
-  @include translate3d(0, 0%, 0);
-  opacity: 1;
-
-  &.ng-enter, .ng-enter {
-    // Start it down low
-    @include translate3d(0, 100%, 0);
-
-    @include animation-duration(400ms);
-    @include animation-fill-mode(both);
-    @include animation-timing-function($slide-in-up-function);
-    // Start hidden
-    opacity: 0;
-  }
-
-  &.ng-enter-active, .ng-enter-active {
-    @include animation-name(actionSheetUp);
-  }
-
-  &.ng-leave, .ng-leave {
-    @include animation-duration(400ms);
-    @include animation-fill-mode(both);
-    @include animation-timing-function($slide-in-up-function);
-  }
-
-  &.ng-leave-active, .ng-leave {
-    @include animation-name(actionSheetOut);
-  }
+  @include translate3d(0, 0, 0);
 }
 
 .action-sheet {
-  margin-left: 15px; 
-  margin-right: 15px; 
+  margin-left: 15px;
+  margin-right: 15px;
   width: auto;
   z-index: $z-index-action-sheet;
   overflow: hidden;
@@ -116,12 +58,6 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
       color: $assertive;
     }
   }
-}
-
-.action-sheet-wrapper {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
 }
 
 .action-sheet-title {

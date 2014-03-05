@@ -31,7 +31,7 @@ angular.module('ionic.ui.actionSheet', [])
       $element.bind('click', backdropClick);
     },
     template: '<div class="action-sheet-backdrop">' +
-                '<div class="action-sheet-wrapper action-sheet-up">' + 
+                '<div class="action-sheet-wrapper">' +
                   '<div class="action-sheet">' +
                     '<div class="action-sheet-group">' +
                       '<div class="action-sheet-title" ng-if="titleText">{{titleText}}</div>' +

@@ -13,6 +13,16 @@ describe('Ionic ActionSheet Service', function() {
     expect(s.el.classList.contains('active')).toBe(true);
   });
 
+  it('Should add .action-sheet-up to .action-sheet-wrapper', function() {
+    var s = sheet.show();
+    var el = angular.element(s.el);
+    var wrapper = angular.element(s.el.querySelector('.action-sheet-wrapper'));
+    expect(wrapper.length).toEqual(1);
+    expect(wrapper.hasClass('action-sheet-up')).toEqual(false);
+    timeout.flush();
+    expect(wrapper.hasClass('action-sheet-up')).toEqual(true);
+  });
+
   it('Should handle hardware back button', function() {
     // Fake cordova
     window.device = {};
@@ -30,7 +40,7 @@ describe('Ionic ActionSheet Service', function() {
     var s = sheet.show();
 
     expect(angular.element(document.body).hasClass('action-sheet-open')).toBe(true);
-    
+
     ionic.trigger('backbutton', {
       target: document
     });

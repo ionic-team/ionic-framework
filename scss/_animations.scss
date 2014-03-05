@@ -5,7 +5,9 @@
  * and pretty easy on performance. They can be overidden
  * and enhanced easily.
  */
- $transition-duration: 250ms;
+
+$transition-duration: 250ms;
+$slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
 
 
 /**
@@ -13,47 +15,39 @@
  * --------------------------------------------------
  */
 
-$slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
+// Slide In From The Bottom To The Top
+// -------------------------------
+
 @-webkit-keyframes slideInUp {
-  0% {
-    @include translate3d(0, 100%, 0);
-    opacity: 1;
-  }
-  100% {
-    @include translate3d(0, 0, 0);
-    opacity: 1;
-  }
+  0%   { -webkit-transform: translate3d(0, 100%, 0); }
+  100% { -webkit-transform: translate3d(0, 0, 0); }
 }
 @-moz-keyframes slideInUp {
-  0% {
-    @include translate3d(0, 100%, 0);
-    opacity: 1;
-  }
-  100% {
-    @include translate3d(0, 0, 0);
-    opacity: 1;
-  }
+  0%   { -moz-transform: translate3d(0, 100%, 0); }
+  100% { -moz-transform: translate3d(0, 0, 0); }
 }
+@keyframes slideInUp {
+  0%   { transform: translate3d(0, 100%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+
+// Slide Out From The Top To Bottom
+// -------------------------------
+
 @-webkit-keyframes slideOutUp {
-  0% {
-    @include translate3d(0, 0, 0);
-    opacity: 1;
-  }
-  100% {
-    @include translate3d(0, 100%, 0);
-    opacity: 1;
-  }
+  0%   { -webkit-transform: translate3d(0, 0, 0); }
+  100% { -webkit-transform: translate3d(0, 100%, 0); }
 }
 @-moz-keyframes slideOutUp {
-  0% {
-    @include translate3d(0, 0, 0);
-    opacity: 1;
-  }
-  100% {
-    @include translate3d(0, 100%, 0);
-    opacity: 1;
-  }
+  0%   { -moz-transform: translate3d(0, 0, 0); }
+  100% { -moz-transform: translate3d(0, 100%, 0); }
 }
+@keyframes slideOutUp {
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(0, 100%, 0); }
+}
+
 
 // Slide In From Left
 // -------------------------------
@@ -154,6 +148,40 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+
+// Fade Half In
+// -------------------------------
+
+@-webkit-keyframes fadeInHalf {
+  from { background-color: rgba(0,0,0,0); }
+  to { background-color: rgba(0,0,0,0.5); }
+}
+@-moz-keyframes fadeInHalf {
+  from { background-color: rgba(0,0,0,0); }
+  to { background-color: rgba(0,0,0,0.5); }
+}
+@keyframes fadeInHalf {
+  from { background-color: rgba(0,0,0,0); }
+  to { background-color: rgba(0,0,0,0.5); }
+}
+
+
+// Fade Half Out
+// -------------------------------
+
+@-webkit-keyframes fadeOutHalf {
+  from { background-color: rgba(0,0,0,0.5); }
+  to { background-color: rgba(0,0,0,0); }
+}
+@-moz-keyframes fadeOutHalf {
+  from { background-color: rgba(0,0,0,0.5); }
+  to { background-color: rgba(0,0,0,0); }
+}
+@keyframes fadeOutHalf {
+  from { background-color: rgba(0,0,0,0.5); }
+  to { background-color: rgba(0,0,0,0); }
 }
 
 
