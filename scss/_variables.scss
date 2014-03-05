@@ -424,7 +424,7 @@ $toggle-handle-dragging-bg-color: darken(#fff, 5%) !default;
 $toggle-off-bg-color:             #E5E5E5 !default;
 $toggle-off-border-color:         #E5E5E5 !default;
 
-$toggle-on-bg-color:              #4A87EE !default;
+$toggle-on-bg-color:              $positive !default;
 $toggle-on-border-color:          $toggle-on-bg-color !default;
 
 
@@ -445,10 +445,10 @@ $checkbox-border-radius:          $checkbox-width !default;
 $checkbox-border-width:           1px !default;
 
 $checkbox-off-bg-color:           #fff !default;
-$checkbox-off-border-color:       #4A87EE !default;
+$checkbox-off-border-color:       $positive !default;
 
-$checkbox-on-bg-color:            #4A87EE !default;
-$checkbox-on-border-color:        #4A87EE !default;
+$checkbox-on-bg-color:            $positive !default;
+$checkbox-on-border-color:        $positive !default;
 
 $checkbox-check-width:            3px !default;
 $checkbox-check-color:            #fff !default;
