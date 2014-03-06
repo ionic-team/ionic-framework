@@ -393,7 +393,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           }
           link(viewScope);
 
-          var viewHistoryData = $ionicViewService._getView(viewRegisterData.viewId) || {};
+          var viewHistoryData = $ionicViewService._getViewById(viewRegisterData.viewId) || {};
           viewScope.$broadcast('$viewContentLoaded', viewHistoryData);
 
           if (onloadExp) viewScope.$eval(onloadExp);
