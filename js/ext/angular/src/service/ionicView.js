@@ -7,6 +7,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
   // init the variables that keep track of the view history
   $rootScope.$viewHistory = {
     histories: { root: { historyId: 'root', parentHistoryId: null, stack: [], cursor: -1 } },
+    views: {},
     backView: null,
     forwardView: null,
     currentView: null,
@@ -199,7 +200,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
           if(forwardView && currentView.stateId !== forwardView.stateId) {
             // they navigated to a new view but the stack already has a forward view
             // since its a new view remove any forwards that existed
-            var forwardsHistory = this._getView(forwardView.historyId);
+            var forwardsHistory = this._getHistoryById(forwardView.historyId);
             if(forwardsHistory) {
               // the forward has a history
               for(var x=forwardsHistory.stack.length - 1; x >= forwardView.index; x--) {
@@ -215,8 +216,8 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
           rsp.navAction = 'initialView';
         }
 
-        // add the new view to the stack
-        viewHistory.histories[rsp.viewId] = this.createView({
+        // add the new view
+        viewHistory.views[rsp.viewId] = this.createView({
           viewId: rsp.viewId,
           index: hist.stack.length,
           historyId: hist.historyId,
@@ -230,7 +231,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
         });
 
         // add the new view to this history's stack
-        hist.stack.push(viewHistory.histories[rsp.viewId]);
+        hist.stack.push(viewHistory.views[rsp.viewId]);
       }
 
       this.setNavViews(rsp.viewId);
@@ -243,7 +244,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
     setNavViews: function(viewId) {
       var viewHistory = $rootScope.$viewHistory;
 
-      viewHistory.currentView = this._getView(viewId);
+      viewHistory.currentView = this._getViewById(viewId);
       viewHistory.backView = this._getBackView(viewHistory.currentView);
       viewHistory.forwardView = this._getForwardView(viewHistory.currentView);
 
@@ -335,16 +336,20 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
       }
     },
 
-    _getView: function(viewId) {
-      return (viewId ? $rootScope.$viewHistory.histories[ viewId ] : null );
+    _getViewById: function(viewId) {
+      return (viewId ? $rootScope.$viewHistory.views[ viewId ] : null );
     },
 
     _getBackView: function(view) {
-      return (view ? this._getView(view.backViewId) : null );
+      return (view ? this._getViewById(view.backViewId) : null );
     },
 
     _getForwardView: function(view) {
-      return (view ? this._getView(view.forwardViewId) : null );
+      return (view ? this._getViewById(view.forwardViewId) : null );
+    },
+
+    _getHistoryById: function(historyId) {
+      return (historyId ? $rootScope.$viewHistory.histories[ historyId ] : null );
     },
 
     _getHistory: function(scope) {
@@ -493,11 +498,11 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
     },
 
     clearHistory: function() {
-      var historyId, x, view,
+      var
       histories = $rootScope.$viewHistory.histories,
       currentView = $rootScope.$viewHistory.currentView;
 
-      for(historyId in histories) {
+      for(var historyId in histories) {
 
         if(histories[historyId].stack) {
           histories[historyId].stack = [];
@@ -512,6 +517,12 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
           histories[historyId].destroy();
         }
 
+      }
+
+      for(var viewId in $rootScope.$viewHistory.views) {
+        if(viewId !== currentView.viewId) {
+          delete $rootScope.$viewHistory.views[viewId];
+        }
       }
 
       this.setNavViews(currentView.viewId);

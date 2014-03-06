@@ -88,7 +88,7 @@ describe('Ionic View Service', function() {
     expect(rootScope.$viewHistory.currentView.stateName).toEqual('home');
 
     expect(rsp.viewId).not.toBeUndefined();
-    expect(rootScope.$viewHistory.histories[rsp.viewId].viewId).toEqual(rsp.viewId);
+    expect(rootScope.$viewHistory.views[rsp.viewId].viewId).toEqual(rsp.viewId);
     expect(viewService.getBackView()).toEqual(null);
     expect(viewService.getForwardView()).toEqual(null);
 
@@ -684,7 +684,9 @@ describe('Ionic View Service', function() {
     expect(rootScope.$viewHistory.histories[tab1view2Reg.historyId].stack.length).toEqual(2);
     backView = viewService.getBackView();
     expect(backView).toBeDefined();
+    expect( Object.keys(rootScope.$viewHistory.views).length ).toEqual(4);
     viewService.clearHistory();
+    expect( Object.keys(rootScope.$viewHistory.views).length ).toEqual(1);
     expect(rootScope.$viewHistory.histories[tab1view2Reg.historyId].stack.length).toEqual(1);
     backView = viewService.getBackView();
     expect(backView).toEqual(null);
