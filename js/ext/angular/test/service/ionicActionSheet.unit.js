@@ -1,11 +1,13 @@
 describe('Ionic ActionSheet Service', function() {
-  var sheet, timeout;
+  var sheet, timeout, ionicPlatform;
 
   beforeEach(module('ionic.service.actionSheet'));
+  beforeEach(module('ionic.service.platform'));
 
-  beforeEach(inject(function($ionicActionSheet, $timeout) {
+  beforeEach(inject(function($ionicActionSheet, $timeout, $ionicPlatform) {
     sheet = $ionicActionSheet;
     timeout = $timeout;
+    ionicPlatform = $ionicPlatform;
   }));
 
   it('Should show', function() {
@@ -23,15 +25,10 @@ describe('Ionic ActionSheet Service', function() {
     expect(wrapper.hasClass('action-sheet-up')).toEqual(true);
   });
 
-  it('Should handle hardware back button', function() {
-    // Fake cordova
-    window.device = {};
-    ionic.Platform.isReady = true;
+  it('should handle hardware back button', function() {
     var s = sheet.show();
 
-    ionic.trigger('backbutton', {
-      target: document
-    });
+    ionicPlatform.hardwareBackButtonClick();
 
     expect(s.el.classList.contains('active')).toBe(false);
   });
@@ -41,9 +38,7 @@ describe('Ionic ActionSheet Service', function() {
 
     expect(angular.element(document.body).hasClass('action-sheet-open')).toBe(true);
 
-    ionic.trigger('backbutton', {
-      target: document
-    });
+    ionicPlatform.hardwareBackButtonClick();
 
     expect(angular.element(document.body).hasClass('action-sheet-open')).toBe(false);
   }));

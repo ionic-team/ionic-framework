@@ -1,12 +1,15 @@
 describe('Ionic Modal', function() {
-  var modal, q, timeout;
+  var modal, q, timeout, ionicPlatform, rootScope;
 
   beforeEach(module('ionic.service.modal'));
+  beforeEach(module('ionic.service.platform'));
 
-  beforeEach(inject(function($ionicModal, $q, $templateCache, $timeout) {
+  beforeEach(inject(function($ionicModal, $q, $templateCache, $timeout, $ionicPlatform, $rootScope) {
     q = $q;
     modal = $ionicModal;
     timeout = $timeout;
+    ionicPlatform = $ionicPlatform;
+    rootScope = $rootScope;
 
     $templateCache.put('modal.html', '<div class="modal"></div>');
   }));
@@ -87,14 +90,12 @@ describe('Ionic Modal', function() {
 
     timeout.flush();
 
-    expect(modalInstance.el.classList.contains('active')).toBe(true);
+    expect(modalInstance.isShown()).toBe(true);
 
-    ionic.trigger('backbutton', {
-      target: document
-    });
+    expect( Object.keys(rootScope.$backButtonActions).length ).toEqual(1);
 
-    timeout.flush();
-    expect(modalInstance.el.classList.contains('active')).toBe(false);
+    ionicPlatform.hardwareBackButtonClick();
+    expect(modalInstance.isShown()).toBe(false);
   });
 
   it('should broadcast "modal.shown" on show', function() {
@@ -105,6 +106,7 @@ describe('Ionic Modal', function() {
     timeout.flush();
     expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.shown');
   });
+
   it('should broadcast "modal.hidden" on hide', function() {
     var template = '<div class="modal"></div>';
     var m = modal.fromTemplate(template, {});
@@ -112,6 +114,7 @@ describe('Ionic Modal', function() {
     m.hide();
     expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.hidden');
   });
+
   it('should broadcast "modal.removed" on remove', inject(function($animate) {
     var template = '<div class="modal"></div>';
     var m = modal.fromTemplate(template, {});

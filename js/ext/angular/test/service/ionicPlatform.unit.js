@@ -1,9 +1,13 @@
 describe('Ionic Platform Service', function() {
-  var window;
+  var window, ionicPlatform, rootScope;
 
-  beforeEach(inject(function($window) {
+  beforeEach(module('ionic.service.platform'));
+
+  beforeEach(inject(function($window, $ionicPlatform, $rootScope) {
     window = $window;
     ionic.Platform.ua = '';
+    ionicPlatform = $ionicPlatform;
+    rootScope = $rootScope;
   }));
 
   it('should set platform name', function() {
@@ -114,7 +118,7 @@ describe('Ionic Platform Service', function() {
     window.cordova = {};
     ionic.Platform.setPlatform('iOS');
     ionic.Platform.setVersion('7.0.3');
-    
+
     ionic.Platform._checkPlatforms()
 
     expect(ionic.Platform.platforms[0]).toEqual('cordova');
@@ -127,7 +131,7 @@ describe('Ionic Platform Service', function() {
     window.cordova = {};
     ionic.Platform.setPlatform('android');
     ionic.Platform.setVersion('4.2.3');
-    
+
     ionic.Platform._checkPlatforms()
 
     expect(ionic.Platform.platforms[0]).toEqual('cordova');
@@ -241,6 +245,64 @@ describe('Ionic Platform Service', function() {
     expect(ionic.Platform.is('ios7_1')).toEqual(true);
     expect(ionic.Platform.is('cordova')).toEqual(true);
     expect(ionic.Platform.is('android')).toEqual(false);
+  });
+
+  it('should register/deregister a hardware back button action and add it to $ionicPlatform.backButtonActions', function() {
+    var deregisterFn = ionicPlatform.registerBackButtonAction(function(){});
+    expect( Object.keys( rootScope.$backButtonActions ).length ).toEqual(1);
+    deregisterFn();
+    expect( Object.keys( rootScope.$backButtonActions ).length ).toEqual(0);
+  });
+
+  it('should register multiple back button actions and only call the highest priority on hardwareBackButtonClick', function() {
+    ionicPlatform.registerBackButtonAction(function(){}, 1, 'action1');
+    ionicPlatform.registerBackButtonAction(function(){}, 2, 'action2');
+    ionicPlatform.registerBackButtonAction(function(){}, 3, 'action3');
+
+    var rsp = ionicPlatform.hardwareBackButtonClick();
+    expect(rsp.priority).toEqual(3);
+    expect(rsp.id).toEqual('action3');
+  });
+
+  it('should register multiple back button actions w/ the same priority and only call the last highest priority on hardwareBackButtonClick', function() {
+    ionicPlatform.registerBackButtonAction(function(){}, 3, 'action1');
+    ionicPlatform.registerBackButtonAction(function(){}, 3, 'action2');
+    ionicPlatform.registerBackButtonAction(function(){}, 3, 'action3');
+
+    var rsp = ionicPlatform.hardwareBackButtonClick();
+    expect(rsp.priority).toEqual(3);
+    expect(rsp.id).toEqual('action3');
+  });
+
+  it('should register no back button actions and do nothing on hardwareBackButtonClick', function() {
+    var rsp = ionicPlatform.hardwareBackButtonClick();
+    expect(rsp).toBeUndefined();
+  });
+
+  it('should register multiple back button actions, call hardwareBackButtonClick, deregister, and call hardwareBackButtonClick again', function() {
+    var dereg1 = ionicPlatform.registerBackButtonAction(function(){}, 1, 'action1');
+    var dereg2 = ionicPlatform.registerBackButtonAction(function(){}, 2, 'action2');
+    var dereg3 = ionicPlatform.registerBackButtonAction(function(){}, 3, 'action3');
+
+    var rsp = ionicPlatform.hardwareBackButtonClick();
+    expect(rsp.priority).toEqual(3);
+    expect(rsp.id).toEqual('action3');
+
+    dereg3();
+
+    rsp = ionicPlatform.hardwareBackButtonClick();
+    expect(rsp.priority).toEqual(2);
+    expect(rsp.id).toEqual('action2');
+
+    dereg2();
+
+    rsp = ionicPlatform.hardwareBackButtonClick();
+    expect(rsp.priority).toEqual(1);
+    expect(rsp.id).toEqual('action1');
+
+    dereg1();
+    rsp = ionicPlatform.hardwareBackButtonClick();
+    expect(rsp).toBeUndefined();
   });
 
 });

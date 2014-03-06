@@ -63,7 +63,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
     e.preventDefault();
     return false;
   }
-  $ionicPlatform.onHardwareBackButton(onHardwareBackButton);
+  $ionicPlatform.registerBackButtonAction(onHardwareBackButton, 100);
 
 }])
 

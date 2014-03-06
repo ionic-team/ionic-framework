@@ -26,24 +26,12 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
 
       $timeout(function(){
         element.addClass('ng-enter-active');
-
-        if(!self.didInitEvents) {
-          var onHardwareBackButton = function() {
-            self.hide();
-          };
-
-          self.scope.$on('$destroy', function() {
-            $ionicPlatform.offHardwareBackButton(onHardwareBackButton);
-          });
-
-          // Support Android back button to close
-          $ionicPlatform.onHardwareBackButton(onHardwareBackButton);
-
-          self.didInitEvents = true;
-        }
-
         self.scope.$parent.$broadcast('modal.shown');
       }, 20);
+
+      self._deregisterBackButton = $ionicPlatform.registerBackButtonAction(function(){
+        self.hide();
+      }, 200);
 
     },
     // Hide the modal
@@ -65,6 +53,8 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
       ionic.views.Modal.prototype.hide.call(this);
 
       this.scope.$parent.$broadcast('modal.hidden');
+
+      this._deregisterBackButton && this._deregisterBackButton();
     },
 
     // Remove and destroy the modal scope

@@ -36,18 +36,14 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
         });
 
         $document[0].body.classList.remove('action-sheet-open');
-      };
 
-      var onHardwareBackButton = function() {
-        hideSheet();
+        scope.$deregisterBackButton && scope.$deregisterBackButton();
       };
-
-      scope.$on('$destroy', function() {
-        $ionicPlatform.offHardwareBackButton(onHardwareBackButton);
-      });
 
       // Support Android back button to close
-      $ionicPlatform.onHardwareBackButton(onHardwareBackButton);
+      scope.$deregisterBackButton = $ionicPlatform.registerBackButtonAction(function(){
+        hideSheet();
+      }, 300);
 
       scope.cancel = function() {
         hideSheet(true);
