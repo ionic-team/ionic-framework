@@ -46,11 +46,14 @@ gulp.task('watch', function() {
   gulp.watch('scss/**/*.scss', ['sass']);
 });
 
+gulp.task('changelog', function() {
+  gutil.log(gutil.colors.red('TODO: Add working changelog task'));
+});
+
 gulp.task('bundle', [
   'scripts',
   'scripts-ng',
   'vendor',
-  'version',
 ], function() {
   IS_RELEASE_BUILD && gulp.src(buildConfig.ionicBundleFiles.map(function(src) {
       return src.replace(/.js$/, '.min.js');
@@ -58,6 +61,16 @@ gulp.task('bundle', [
       .pipe(header(buildConfig.bundleBanner))
       .pipe(concat('ionic.bundle.min.js'))
       .pipe(gulp.dest(buildConfig.distJs));
+
+  var d = new Date();
+  fs.writeFileSync('dist/version.json', JSON.stringify({
+    version: pkg.version,
+    codename: pkg.codename,
+    date: d.toISOString().substring(0,10),
+    time: pad(d.getUTCHours()) +
+      ':' + pad(d.getUTCMinutes()) +
+      ':' + pad(d.getUTCSeconds())
+  }, null, 2));
 
   return gulp.src(buildConfig.ionicBundleFiles)
     .pipe(header(buildConfig.bundleBanner))
@@ -79,18 +92,6 @@ gulp.task('ddescribe-iit', function() {
       'xit',
       'xdescribe'
     ]));
-});
-
-gulp.task('version', function(done) {
-  var d = new Date();
-  fs.writeFile('dist/version.json', JSON.stringify({
-    version: pkg.version,
-    codename: pkg.codename,
-    date: d.toISOString().substring(0,10),
-    time: pad(d.getUTCHours()) +
-      ':' + pad(d.getUTCMinutes()) +
-      ':' + pad(d.getUTCSeconds())
-  }, null, 2), done);
 });
 
 gulp.task('vendor', function() {
