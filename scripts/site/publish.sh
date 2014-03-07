@@ -47,23 +47,23 @@ function updateConfig {
 
 # Example: ./scripts/site/publish.sh --action=docs --version-name=nightly
 function docs {
-  cd $PROJECT_DIR
-  gulp docs
+  # cd $PROJECT_DIR
+  # gulp docs
 
-  cd $IONIC_SITE_DIR
+  # cd $IONIC_SITE_DIR
 
-  CHANGES=$(git status --porcelain)
+  # CHANGES=$(git status --porcelain)
 
-  # if no changes, don't commit
-  if [[ "$CHANGES" != "" ]]; then
-    git add -A
-    git commit -am "docs: update for $VERSION_NAME"
-    git push -q -f git@github.com:ajoslin/ionic-site.git gh-pages
+  # # if no changes, don't commit
+  # if [[ "$CHANGES" != "" ]]; then
+  #   git add -A
+  #   git commit -am "docs: update for $VERSION_NAME"
+  #   git push -q origin gh-pages
 
-    echo "-- Updated docs for $VERSION_NAME succesfully!"
-  else
-    echo "-- No changes detected in docs for $VERSION_NAME; docs not updated."
-  fi
+  #   echo "-- Updated docs for $VERSION_NAME succesfully!"
+  # else
+  #   echo "-- No changes detected in docs for $VERSION_NAME; docs not updated."
+  # fi
 }
 
 source $(dirname $0)/../utils.inc
