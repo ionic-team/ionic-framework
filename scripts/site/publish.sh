@@ -47,8 +47,10 @@ function updateConfig {
 
 # Example: ./scripts/site/publish.sh --action=docs --version-name=nightly
 function docs {
-  cd $IONIC_SITE_DIR
+  cd $PROJECT_DIR
   gulp docs
+
+  cd $IONIC_SITE_DIR
 
   CHANGES=$(git status --porcelain)
 
