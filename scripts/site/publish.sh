@@ -47,6 +47,7 @@ function updateConfig {
 
 # Example: ./scripts/site/publish.sh --action=docs --version-name=nightly
 function docs {
+  echo "-- Docs Update"
   # cd $PROJECT_DIR
   # gulp docs
 
