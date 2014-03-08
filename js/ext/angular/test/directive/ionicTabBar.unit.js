@@ -244,7 +244,7 @@ describe('tabs', function() {
     beforeEach(module('ionic'));
     var tabsCtrl, tabsEl, scope;
     function setup(attrs, content) {
-      inject(function($compile, $rootScope, $injector) {
+      inject(function($compile, $rootScope) {
         tabsEl = angular.element('<ion-tabs><ion-tab '+(attrs||'')+'>'+(content||'')+'</ion-tab></ion-tabs>');
 
         $compile(tabsEl)($rootScope.$new());
@@ -256,6 +256,19 @@ describe('tabs', function() {
         spyOn(tabsCtrl, 'remove');
       });
     }
+    
+    it('should not initially compile content until selected', inject(function($compile, $rootScope) {
+      var el = $compile('<ion-tabs>' +
+        '<ion-tab></ion-tab>' +
+        '<ion-tab><div ng-init="$root.elephant = \'banana\'"></div></ion-tab>' +
+      '</ion-tabs>')($rootScope);
+      $rootScope.$apply();
+      expect($rootScope.elephant).toBeUndefined();
+      el.controller('ionTabs').select(1);
+      $rootScope.$apply();
+      expect($rootScope.elephant).toBe('banana');
+    }));
+
 
     it('should add itself to tabsCtrl and remove on $destroy', function() {
       var el = setup();
@@ -292,26 +305,28 @@ describe('tabs', function() {
       expect(tabsCtrl.tabs[0].navViewName).toBeUndefined();
     });
 
-    it('should set navViewName and select when necessary if a child nav-view', inject(function($ionicViewService, $rootScope) {
-      var isCurrent = false;
-      spyOn($ionicViewService, 'isCurrentStateNavView').andCallFake(function(name) {
-        return isCurrent;
-      });
+    angular.forEach(['ion-nav-view', 'data-ion-nav-view'], function(directive) {
+      it('should set navViewName and select when necessary if a child '+directive, inject(function($ionicViewService, $rootScope) {
+        var isCurrent = false;
+        spyOn($ionicViewService, 'isCurrentStateNavView').andCallFake(function(name) {
+          return isCurrent;
+        });
 
-      setup('', '<ion-nav-view name="banana"></ion-nav-view>');
-      spyOn(tabsCtrl, 'select');
-      var tab = tabsCtrl.tabs[0];
+        setup('', '<' + directive + ' name="banana"></' + directive + '>');
+        spyOn(tabsCtrl, 'select');
+        var tab = tabsCtrl.tabs[0];
 
-      expect(tab.navViewName).toBe('banana');
-      expect($ionicViewService.isCurrentStateNavView).toHaveBeenCalledWith('banana');
+        expect(tab.navViewName).toBe('banana');
+        expect($ionicViewService.isCurrentStateNavView).toHaveBeenCalledWith('banana');
 
-      $ionicViewService.isCurrentStateNavView.reset();
-      isCurrent = true;
-      $rootScope.$broadcast('$stateChangeSuccess');
+        $ionicViewService.isCurrentStateNavView.reset();
+        isCurrent = true;
+        $rootScope.$broadcast('$stateChangeSuccess');
 
-      expect($ionicViewService.isCurrentStateNavView).toHaveBeenCalledWith('banana');
-      expect(tabsCtrl.select).toHaveBeenCalledWith(tab);
-    }));
+        expect($ionicViewService.isCurrentStateNavView).toHaveBeenCalledWith('banana');
+        expect(tabsCtrl.select).toHaveBeenCalledWith(tab);
+      }));
+    });
 
     it('should transclude on $tabSelected=true', function() {
       setup('', '<div class="inside-content"></div>');
