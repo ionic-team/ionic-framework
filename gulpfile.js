@@ -97,22 +97,23 @@ gulp.task('scripts', function() {
   return gulp.src(buildConfig.ionicFiles)
     .pipe(concat('ionic.js'))
     .pipe(gulpif(IS_RELEASE_BUILD, stripDebug()))
+    .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distJs))
     .pipe(gulpif(IS_RELEASE_BUILD, uglify()))
-    .pipe(header(banner))
     .pipe(rename({ extname: '.min.js' }))
+    .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distJs));
 });
 
 gulp.task('scripts-ng', function() {
   return gulp.src(buildConfig.angularIonicFiles)
-    .pipe(header(banner))
     .pipe(concat('ionic-angular.js'))
     .pipe(gulpif(IS_RELEASE_BUILD, uglify()))
+    .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distJs))
     .pipe(gulpif(IS_RELEASE_BUILD, stripDebug()))
-    .pipe(header(banner))
     .pipe(rename({ extname: '.min.js' }))
+    .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distJs));
 });
 
@@ -130,12 +131,13 @@ gulp.task('sass', function(done) {
       }
     }))
     .pipe(concat('ionic.css'))
+    .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distCss))
     .pipe(gulpif(IS_RELEASE_BUILD, minifyCss({
       keepSpecialComments: 0
     })))
-    .pipe(header(banner))
     .pipe(rename({ extname: '.min.css' }))
+    .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distCss))
     .on('end', done);
 });
@@ -182,11 +184,6 @@ gulp.task('protractor-sauce', ['sauce-connect', 'connect-server'], function(cb) 
   return protractor(cb, ['config/protractor-sauce.conf.js']);
 });
 
-gulp.task('e2e-local', ['connect-server'], function(cb) {
-});
-gulp.task('e2e-sauce', ['sauce-connect', 'connect-server'], function(cb) {
-});
-
 function karma(cb, args) {
   if (argv.browsers) {
     args.push('--browsers='+argv.browsers.trim());
@@ -205,7 +202,7 @@ function karma(cb, args) {
 }
 
 function pad(n) {
-  if (n<10) return '0' + n;
+  if (n<10) { return '0' + n; }
   return n;
 }
 
