@@ -12,7 +12,7 @@ function run {
 
   VERSION=$(readJsonProp "package.json" "version")
 
-  NEW_VERSION="$VERSION-$TRAVIS_BUILD_NUMBER"
+  NEW_VERSION="$VERSION-nightly-$TRAVIS_BUILD_NUMBER"
 
   replaceJsonProp "package.json" "version" "$NEW_VERSION"
 

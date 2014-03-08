@@ -1,8 +1,4 @@
 
-echo "#################################"
-echo "#### Update Site #################"
-echo "#################################"
-
 ARG_DEFS=(
   "[--version-name=(.*)]"
   "--action=(clone|updateConfig|docs)"
@@ -16,10 +12,13 @@ function init {
 }
 
 function clone {
+  echo "#################################"
+  echo "## Cloning ionic-site repo.... ##"
+  echo "#################################"
+
   rm -rf $IONIC_SITE_DIR
   mkdir -p $IONIC_SITE_DIR
 
-  echo "-- Cloning ionic-site..."
   git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic-site.git \
     $IONIC_SITE_DIR \
     --depth=10 \
@@ -27,6 +26,10 @@ function clone {
 }
 
 function updateConfig {
+  echo "#####################################"
+  echo "## Cloning ionic-site config.yml... #"
+  echo "#####################################"
+
   VERSION=$(readJsonProp "$BUILD_DIR/version.json" "version")
   CODENAME=$(readJsonProp "$BUILD_DIR/version.json" "codename")
   DATE=$(readJsonProp "$BUILD_DIR/version.json" "date")
@@ -47,7 +50,9 @@ function updateConfig {
 
 # Example: ./scripts/site/publish.sh --action=docs --version-name=nightly
 function docs {
-  echo "-- Docs Update"
+  echo "#####################################"
+  echo "## Updating docs for $VERSION_NAME ##"
+  echo "#####################################"
   # cd $PROJECT_DIR
   # gulp docs
 
@@ -56,14 +61,14 @@ function docs {
   # CHANGES=$(git status --porcelain)
 
   # # if no changes, don't commit
-  # if [[ "$CHANGES" != "" ]]; then
+  # if [[ "$CHANGES" == "" ]]; then
+  #   echo "-- No changes detected in docs for $VERSION_NAME; docs not updated."
+  # else 
   #   git add -A
   #   git commit -am "docs: update for $VERSION_NAME"
   #   git push -q origin gh-pages
 
   #   echo "-- Updated docs for $VERSION_NAME succesfully!"
-  # else
-  #   echo "-- No changes detected in docs for $VERSION_NAME; docs not updated."
   # fi
 }
 
