@@ -60,6 +60,7 @@ gulp.task('bundle', [
       return src.replace(/.js$/, '.min.js');
     }))
       .pipe(header(buildConfig.bundleBanner))
+      .pipe(header(buildConfig.bundleBanner))
       .pipe(concat('ionic.bundle.min.js'))
       .pipe(gulp.dest(buildConfig.distJs));
 
@@ -107,11 +108,11 @@ gulp.task('scripts', function() {
 
 gulp.task('scripts-ng', function() {
   return gulp.src(buildConfig.angularIonicFiles)
+    .pipe(gulpif(IS_RELEASE_BUILD, stripDebug()))
     .pipe(concat('ionic-angular.js'))
-    .pipe(gulpif(IS_RELEASE_BUILD, uglify()))
     .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distJs))
-    .pipe(gulpif(IS_RELEASE_BUILD, stripDebug()))
+    .pipe(gulpif(IS_RELEASE_BUILD, uglify()))
     .pipe(rename({ extname: '.min.js' }))
     .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distJs));
