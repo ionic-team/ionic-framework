@@ -4,7 +4,6 @@ var connect = require('connect');
 var dgeni = require('dgeni');
 var http = require('http');
 var cp = require('child_process');
-var fs = require('fs');
 var gulp = require('gulp');
 var pkg = require('./package.json');
 var through = require('through');
@@ -13,10 +12,10 @@ var argv = require('minimist')(process.argv.slice(2));
 
 var bump = require('gulp-bump');
 var concat = require('gulp-concat');
-var cssmin = require('gulp-cssmin');
 var gulpif = require('gulp-if');
 var header = require('gulp-header');
 var jshint = require('gulp-jshint');
+var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var stripDebug = require('gulp-strip-debug');
@@ -28,7 +27,7 @@ var banner = _.template(buildConfig.banner, { pkg: pkg });
 
 var IS_RELEASE_BUILD = !!argv.release;
 if (IS_RELEASE_BUILD) {
-  gutil.log(gutil.colors.red('--release=true:'),
+  gutil.log(gutil.colors.red('--release:'),
     'Building release version (minified, debugs stripped)...'
   );
 }
@@ -40,7 +39,9 @@ gulp.task('docs', function() {
   dgeni('docs/docs.config.js').generateDocs();
 });
 
+var IS_WATCH = false;
 gulp.task('watch', function() {
+  IS_WATCH = true;
   gulp.watch('js/**/*.js', ['bundle', 'docs']);
   gulp.watch('docs/**/*', ['docs']);
   gulp.watch('scss/**/*.scss', ['sass']);
@@ -54,6 +55,7 @@ gulp.task('bundle', [
   'scripts',
   'scripts-ng',
   'vendor',
+  'version',
 ], function() {
   IS_RELEASE_BUILD && gulp.src(buildConfig.ionicBundleFiles.map(function(src) {
       return src.replace(/.js$/, '.min.js');
@@ -61,16 +63,6 @@ gulp.task('bundle', [
       .pipe(header(buildConfig.bundleBanner))
       .pipe(concat('ionic.bundle.min.js'))
       .pipe(gulp.dest(buildConfig.distJs));
-
-  var d = new Date();
-  fs.writeFileSync('dist/version.json', JSON.stringify({
-    version: pkg.version,
-    codename: pkg.codename,
-    date: d.toISOString().substring(0,10),
-    time: pad(d.getUTCHours()) +
-      ':' + pad(d.getUTCMinutes()) +
-      ':' + pad(d.getUTCSeconds())
-  }, null, 2));
 
   return gulp.src(buildConfig.ionicBundleFiles)
     .pipe(header(buildConfig.bundleBanner))
@@ -125,17 +117,46 @@ gulp.task('scripts-ng', function() {
     .pipe(gulp.dest(buildConfig.distJs));
 });
 
-gulp.task('sass', function() {
-  return gulp.src('scss/ionic.scss')
+gulp.task('sass', function(done) {
+  gulp.src('scss/ionic.scss')
     .pipe(header(banner))
-    .pipe(sass())
+    .pipe(sass({
+      onError: function(err) {
+        //If we're watching, don't exit on error
+        if (IS_WATCH) {
+          console.log(gutil.colors.red(err));
+        } else {
+          done(err);
+        }
+      }
+    }))
     .pipe(concat('ionic.css'))
     .pipe(gulp.dest(buildConfig.distCss))
-    .pipe(gulpif(IS_RELEASE_BUILD, cssmin()))
+    .pipe(gulpif(IS_RELEASE_BUILD, minifyCss({
+      keepSpecialComments: 0
+    })))
     .pipe(header(banner))
     .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest(buildConfig.distCss));
+    .pipe(gulp.dest(buildConfig.distCss))
+    .on('end', done);
 });
+
+gulp.task('version', function() {
+  var d = new Date();
+  var date = d.toISOString().substring(0,10);
+  var time = pad(d.getUTCHours()) +
+      ':' + pad(d.getUTCMinutes()) +
+      ':' + pad(d.getUTCSeconds());
+  return gulp.src('config/version.template.json')
+    .pipe(template({
+      pkg: pkg,
+      date: date,
+      time: time
+    }))
+    .pipe(rename('version.json'))
+    .pipe(gulp.dest('dist'));
+});
+
 
 gulp.task('sauce-connect', sauceConnect);
 
