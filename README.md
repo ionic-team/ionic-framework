@@ -95,18 +95,15 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 
 * Uses http://github.com/ajoslin/conventional-changelog conventions
 
-### Pushing Releases
+### Pushing New Release of Ionic
 
-(uses AngularJS's bash utils - when you run any script, run it with `--git-push-dryrun=true` to do 'mock' git pushes)
-
-* Run `./scripts/release/finalize-version.sh --action=prepare` to:
-  - Remove version suffix
-  - Write new version to package/bower/component.json
-  - Move build files to `release/`
-  - Commit & tag the release
-* Run `./scripts/release/finalize-version.sh --action=publish` to:
-  - Push out new version
-* Once new version is pushed out, run `./scripts/release/initialize-new-version.sh` (usage is shown in file), to bump to next version with bump type / version suffix / version name specified.
+- Almost all of the logic for releasing Ionic is done on the Travis server
+- To push a new release:
+  1. Update package.json version to new version
+  2. Update package.json codename to new codename
+  3. Generate changelog with `gulp changelog` and make sure it is OK
+  4. Commit these and push to master
+- Travis will detect that this commit changed the version in package.json and push out all necessary for this new release (tags, release files, site config, ...)
 
 ## LICENSE
 
