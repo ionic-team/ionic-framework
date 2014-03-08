@@ -1,18 +1,20 @@
 #!/bin/bash
 
+echo "##############################"
+echo "# Pushing release to $RELEASE_REMOTE #"
+echo "##############################"
+
 # Inspired by AngularJS's finalize-version script
 # Run by travis when it detects a commit that changes package.json version
 
 ARG_DEFS=(
-  "[--remote=(.*)]"
   "--codename=(.*)"
   "--version=(.*)"
 )
 
-function init {
+function run {
   cd ../..
 
-  REMOTE=$REMOTE || "origin"
   CODENAME=$(readJsonProp "package.json" "codename")
 
   replaceJsonProp "bower.json" "version" "$VERSION"
@@ -26,11 +28,11 @@ function init {
   cp -Rf dist/* release
 
   git add -A
-  git commit -m "release: v$VERSION \"$CODENAME\""
+  git commit -m "finalize-release: v$VERSION \"$CODENAME\""
   git tag -f -m "v$VERSION" v$VERSION
 
-  git push $REMOTE master
-  git push -q $REMOTE v$VERSION
+  git push -q -f $RELEASE_REMOTE master
+  git push -q -f $RELEASE_REMOTE v$VERSION
 
   echo "-- v$VERSION \"$CODENAME\" pushed to ionic#master successfully!"
 }

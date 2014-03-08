@@ -11,6 +11,7 @@ function init {
     git config --global user.name 'Ionotron'
     git config --global user.email hi@ionicframework.com
     export GH_ORG=driftyco
+    export RELEASE_REMOTE=origin
   else
     # For testing if we aren't on travis
     export TRAVIS_BUILD_NUMBER=$RANDOM
@@ -19,6 +20,7 @@ function init {
     export TRAVIS_BRANCH=master
     # use your github username as GH_ORG to push to, and it will push to ORG/ionic-code, etc
     export GH_ORG=ajoslin
+    export RELEASE_REMOTE=ajoslin
   fi
 }
 
@@ -26,6 +28,7 @@ function run {
   cd ../..
 
   echo "GH_ORG=$GH_ORG"
+  echo "RELEASE_REMOTE=$RELEASE_REMOTE"
   echo "TRAVIS_BRANCH=$TRAVIS_BRANCH"
   echo "TRAVIS_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER"
   echo "TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
