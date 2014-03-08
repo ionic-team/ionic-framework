@@ -35,11 +35,11 @@ function run {
   echo "TRAVIS_COMMIT=$TRAVIS_COMMIT"
 
   # check for stupid mistakes
-  # gulp ddescribe-iit
+  gulp ddescribe-iit
 
   # Run simple quick tests on Phantom to be sure any tests pass
   # Tests are run on cloud browsers after build
-  # gulp karma --browsers=PhantomJS --reporters=dots
+  gulp karma --browsers=PhantomJS --reporters=dots
 
   if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
     echo "-- This is a pull request build; will not push build out."
