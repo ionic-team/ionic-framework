@@ -26,10 +26,12 @@ var banner = _.template(buildConfig.banner, { pkg: pkg });
 
 var IS_RELEASE_BUILD = !!argv.release;
 if (IS_RELEASE_BUILD) {
-  gutil.log(gutil.colors.red('--release:'),
+  gutil.log(
+    gutil.colors.red('--release:'),
     'Building release version (minified, debugs stripped)...'
   );
 }
+
 
 gulp.task('default', ['build']);
 gulp.task('build', ['bundle', 'sass']);
@@ -59,7 +61,6 @@ gulp.task('bundle', [
   IS_RELEASE_BUILD && gulp.src(buildConfig.ionicBundleFiles.map(function(src) {
       return src.replace(/.js$/, '.min.js');
     }))
-      .pipe(header(buildConfig.bundleBanner))
       .pipe(header(buildConfig.bundleBanner))
       .pipe(concat('ionic.bundle.min.js'))
       .pipe(gulp.dest(buildConfig.distJs));
@@ -96,8 +97,8 @@ gulp.task('vendor', function() {
 
 gulp.task('scripts', function() {
   return gulp.src(buildConfig.ionicFiles)
-    .pipe(concat('ionic.js'))
     .pipe(gulpif(IS_RELEASE_BUILD, stripDebug()))
+    .pipe(concat('ionic.js'))
     .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distJs))
     .pipe(gulpif(IS_RELEASE_BUILD, uglify()))
