@@ -88,7 +88,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 * `gulp watch` to watch and rebuild on change
 * `gulp karma` to test one-time
 * `gulp karma-watch` to test and re-run on source change
-* `grunt protractor` to test e2e tests locally (requires static server on port 8080)
+* `grunt protractor` to test e2e tests locally
 * `grunt cloudtest` to run e2e tests in the cloud
 
 ### Commit Conventions
