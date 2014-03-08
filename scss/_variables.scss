@@ -426,6 +426,8 @@ $toggle-off-border-color:         #E5E5E5 !default;
 $toggle-on-bg-color:              $positive !default;
 $toggle-on-border-color:          $toggle-on-bg-color !default;
 
+$toggle-on-royal-bg:              $royal !default;
+$toggle-on-royal-border:          $toggle-on-royal-bg !default;
 
 $toggle-handle-off-bg-color:      $light !default;
 $toggle-handle-on-bg-color:       $toggle-handle-off-bg-color !default;
@@ -444,10 +446,27 @@ $checkbox-border-radius:          $checkbox-width !default;
 $checkbox-border-width:           1px !default;
 
 $checkbox-off-bg-color:           #fff !default;
-$checkbox-off-border-color:       $positive !default;
+$checkbox-off-border-light:       $button-light-border !default;
+$checkbox-on-bg-light:            $button-light-border !default;
+$checkbox-off-border-stable:      $button-stable-border !default;
+$checkbox-on-bg-stable:           $button-stable-border !default;
+$checkbox-off-border-positive:    $positive !default;
+$checkbox-on-bg-positive:         $positive !default;
+$checkbox-off-border-calm:        $calm !default;
+$checkbox-on-bg-calm:             $calm !default;
+$checkbox-off-border-assertive:   $assertive !default;
+$checkbox-on-bg-assertive:        $assertive !default;
+$checkbox-off-border-balanced:    $balanced !default;
+$checkbox-on-bg-balanced:         $balanced !default;
+$checkbox-off-border-energized:   $energized !default;
+$checkbox-on-bg-energized:        $energized !default;
+$checkbox-off-border-royal:       $royal !default;
+$checkbox-on-bg-royal:            $royal !default;
+$checkbox-off-border-dark:        $dark !default;
+$checkbox-on-bg-dark:             $dark !default;
+$checkbox-off-border-default:     $button-stable-border !default;
+$checkbox-on-bg-default:          $button-stable-border !default;
 
-$checkbox-on-bg-color:            $positive !default;
-$checkbox-on-border-color:        $positive !default;
 
 $checkbox-check-width:            3px !default;
 $checkbox-check-color:            #fff !default;

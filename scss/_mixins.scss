@@ -121,6 +121,21 @@
 }
 
 
+// Checkbox Mixins
+// --------------------------------------------------
+
+@mixin checkbox-style($off-border-color, $on-bg-color) {
+  & input:before {
+    border: $checkbox-border-width solid $off-border-color;
+  }
+
+  /* what the background looks like when its checked */
+  & input:checked:before {
+    background: $on-bg-color;
+  }
+}
+
+
 // Clearfix
 // --------------------------------------------------
 
