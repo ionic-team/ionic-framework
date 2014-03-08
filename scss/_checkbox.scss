@@ -5,10 +5,41 @@
  */
 
 .checkbox {
+  // set the color defaults
+  @include checkbox-style($checkbox-off-border-default, $checkbox-on-bg-default);
+
   position: relative;
   display: inline-block;
   padding: ($checkbox-height / 4) ($checkbox-width / 4);
   cursor: pointer;
+
+  &.checkbox-light  {
+    @include checkbox-style($checkbox-off-border-light, $checkbox-on-bg-light);
+  }
+  &.checkbox-stable  {
+    @include checkbox-style($checkbox-off-border-stable, $checkbox-on-bg-stable);
+  }
+  &.checkbox-positive  {
+    @include checkbox-style($checkbox-off-border-positive, $checkbox-on-bg-positive);
+  }
+  &.checkbox-calm  {
+    @include checkbox-style($checkbox-off-border-calm, $checkbox-on-bg-calm);
+  }
+  &.checkbox-assertive  {
+    @include checkbox-style($checkbox-off-border-assertive, $checkbox-on-bg-assertive);
+  }
+  &.checkbox-balanced  {
+    @include checkbox-style($checkbox-off-border-balanced, $checkbox-on-bg-balanced);
+  }
+  &.checkbox-energized  {
+    @include checkbox-style($checkbox-off-border-energized, $checkbox-on-bg-energized);
+  }
+  &.checkbox-royal  {
+    @include checkbox-style($checkbox-off-border-royal, $checkbox-on-bg-royal);
+  }
+  &.checkbox-dark  {
+    @include checkbox-style($checkbox-off-border-dark, $checkbox-on-bg-dark);
+  }
 }
 
 .checkbox input {
@@ -25,7 +56,6 @@
     display: table;
     width: 100%;
     height: 100%;
-    border: $checkbox-border-width solid $checkbox-off-border-color;
     border-radius: $checkbox-border-radius;
     background: $checkbox-off-bg-color;
     content: ' ';
@@ -59,11 +89,6 @@
   font-weight: bold;
   font-size: 20px;
   content: '\2713';
-}
-
-/* what the background looks like when its checked */
-.checkbox input:checked:before {
-  background: $checkbox-on-bg-color;
 }
 
 /* what the checkmark looks like when its checked */
