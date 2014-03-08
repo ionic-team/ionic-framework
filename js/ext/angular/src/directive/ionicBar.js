@@ -50,7 +50,7 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  *  align-title="center">
  * </ion-header-bar>
  * ```
- * 
+ *
  */
 .directive('ionHeaderBar', ['$ionicScrollDelegate', function($ionicScrollDelegate) {
   return {
