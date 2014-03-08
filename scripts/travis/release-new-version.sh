@@ -31,10 +31,10 @@ function run {
   git commit -m "finalize-release: v$VERSION \"$CODENAME\""
   git tag -f -m "v$VERSION" v$VERSION
 
-  git push -q -f $RELEASE_REMOTE master
-  git push -q -f $RELEASE_REMOTE v$VERSION
+  git push -q $RELEASE_REMOTE master
+  git push -q $RELEASE_REMOTE v$VERSION
 
-  echo "-- v$VERSION \"$CODENAME\" pushed to ionic#master successfully!"
+  echo "-- v$VERSION \"$CODENAME\" pushed to $RELEASE_REMOTE/master successfully!"
 }
 
 source $(dirname $0)/../utils.inc

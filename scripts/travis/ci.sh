@@ -73,7 +73,7 @@ function run {
   fi
 
   # Build files after we are sure our version is correct
-  gulp build --release=true
+  gulp build --release
 
   if [[ $IS_RELEASE == "true" ]]; then
 
