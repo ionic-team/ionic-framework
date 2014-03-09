@@ -136,6 +136,18 @@
 }
 
 
+// Toggle Mixins
+// --------------------------------------------------
+
+@mixin toggle-style($on-border-color, $on-bg-color) {
+  /* the track when the toggle is "on" */
+  & input:checked + .track {
+    border-color: $on-border-color;
+    background-color: $on-bg-color;
+  }
+}
+
+
 // Clearfix
 // --------------------------------------------------
 

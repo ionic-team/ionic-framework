@@ -423,11 +423,26 @@ $toggle-handle-dragging-bg-color: darken(#fff, 5%) !default;
 $toggle-off-bg-color:             #E5E5E5 !default;
 $toggle-off-border-color:         #E5E5E5 !default;
 
-$toggle-on-bg-color:              $positive !default;
-$toggle-on-border-color:          $toggle-on-bg-color !default;
-
+$toggle-on-light-bg:              $button-light-border !default;
+$toggle-on-light-border:          $toggle-on-light-bg !default;
+$toggle-on-stable-bg:             $button-stable-border !default;
+$toggle-on-stable-border:         $toggle-on-stable-bg !default;
+$toggle-on-positive-bg:           $positive !default;
+$toggle-on-positive-border:       $toggle-on-positive-bg !default;
+$toggle-on-calm-bg:               $calm !default;
+$toggle-on-calm-border:           $toggle-on-calm-bg !default;
+$toggle-on-assertive-bg:          $assertive !default;
+$toggle-on-assertive-border:      $toggle-on-assertive-bg !default;
+$toggle-on-balanced-bg:           $balanced !default;
+$toggle-on-balanced-border:       $toggle-on-balanced-bg !default;
+$toggle-on-energized-bg:          $energized !default;
+$toggle-on-energized-border:      $toggle-on-energized-bg !default;
 $toggle-on-royal-bg:              $royal !default;
 $toggle-on-royal-border:          $toggle-on-royal-bg !default;
+$toggle-on-dark-bg:               $dark !default;
+$toggle-on-dark-border:           $toggle-on-dark-bg !default;
+$toggle-on-default-bg:            $positive !default;
+$toggle-on-default-border:        $toggle-on-default-bg !default;
 
 $toggle-handle-off-bg-color:      $light !default;
 $toggle-handle-on-bg-color:       $toggle-handle-off-bg-color !default;
