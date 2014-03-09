@@ -139,12 +139,27 @@
       var maxLeft = this.left && this.left.width || 0;
       var maxRight = this.right && this.right.width || 0;
 
+      console.log('Opening amount', amount);
+
       // Check if we can move to that side, depending if the left/right panel is enabled
-      if((!(this.left && this.left.isEnabled) && amount > 0) || (!(this.right && this.right.isEnabled) && amount < 0)) {
+      if(!(this.left && this.left.isEnabled) && amount > 0) {
+        this.content.setTranslateX(0);
         return;
       }
 
-      if((this._leftShowing && amount > maxLeft) || (this._rightShowing && amount < -maxRight)) {
+      if(!(this.right && this.right.isEnabled) && amount < 0) {
+        console.log('Blocked right');
+        this.content.setTranslateX(0);
+        return;
+      }
+
+      if(this._leftShowing && amount > maxLeft) {
+        this.content.setTranslateX(maxLeft);
+        return;
+      }
+
+      if(this._rightShowing && amount < -maxRight) {
+        this.content.setTranslateX(-maxRight);
         return;
       }
 
