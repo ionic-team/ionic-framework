@@ -1,12 +1,17 @@
 <@ include "lib/macros.html" @>
 <@ extends "api/api.template.html" @>
 
-<@ block additional @>  
+<@ block additional @>
+
+<@ if doc.usage @>
+## Usage
+<$ doc.usage $>
+<@ endif @>
 
   <@ if doc.params or doc.returns or doc.this or doc.kind == 'function' -@>
     <h2 id="usage">Usage</h2>
     <@ if doc.usage @>
-      <$ doc.usage | code $>
+      <$ doc.usage $>
     <@ else @>
       <$ functionSyntax(doc) $>
     <@ endif @>

@@ -1,27 +1,25 @@
 <@- if doc.methods @>
-<h2>Methods</h2>
-<ul class="methods">
-  <@- for method in doc.methods @>
-  <li id="<$ method.name $>">
-    <h3><$ functionSyntax(method) $></h3>
-    <div><$ method.description | marked $></div>
+## Methods
+<@- for method in doc.methods @>
 
-    <@ if method.params @>
-    <h4>Parameters</h4>
-    <$ paramTable(method.params) $>
-    <@ endif @>
+<div id="<$ method.name $>"></div>
+### <$ functionSyntax(method) $>
 
-    <@ if method.this @>
-    <h4>Method's <@ code @>this<@ endcode @></h4>
-    <$ method.this | marked $>
-    <@ endif @>
+<$ method.description $>
+
+<@ if method.params @>
+<$ paramTable(method.params) $>
+<@ endif @>
+
+<@ if method.this @>
+#### Method's `this`
+<$ method.this $>
+<@ endif @>
     
-    <@ if method.returns @>
-    <h4>Returns</h4>
-    <$ typeInfo(method.returns) $>
-    <@ endif @>
+<@ if method.returns @>
+**** Returns
+<$ typeInfo(method.returns) $>
+<@ endif @>
 
-  </li>
-  <@ endfor -@>
-</ul>
+<@ endfor -@>
 <@- endif -@>

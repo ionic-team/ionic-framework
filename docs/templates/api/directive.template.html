@@ -6,9 +6,7 @@
   <@ block usage @>
 ## Usage
   <@ if doc.usage @>
-
 <$ doc.usage $>
-
   <@ else @>
     <@ if doc.restrict.element @>
 
@@ -48,6 +46,9 @@
   <@- endif @>
   <@ endblock -@>
 
-  <@ include "lib/params.template.html" @>
+  <@ if doc.params @>
+## API
+<$ paramTable(doc.params, true) $>
+  <@ endif @>
   <@ include "lib/events.template.html" @>
 <@ endblock @>

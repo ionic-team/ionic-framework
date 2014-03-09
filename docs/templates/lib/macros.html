@@ -2,6 +2,37 @@
 <@ for typeName in types @><a href="" class="<$ typeName | typeClass $>"><$ typeName | escape $></a><@ endfor @>
 <@- endmacro -@>
 
+<@ macro paramTable(params, isDirective) @>
+<table class="table">
+  <thead>
+    <tr>
+      <th><@ if isDirective @>Attr<@ else @>Param<@ endif @></th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <@ for param in params @>
+    <tr>
+      <td>
+        <$ param.name $>
+        <@ if param.alias @>| <$ param.alias $><@ endif @>
+        <@ if param.type.optional @><div><em>(optional)</em></div><@ endif @>
+      </td>
+      <td>
+        <$ param.type.name $>
+      </td>
+      <td>
+        <$ param.description | marked $>
+        <@ if param.default @><p><em>(default: <$ param.default $>)</em></p><@ endif @>
+      </td>
+    </tr>
+    <@ endfor @>
+  </tbody>
+</table>
+<@ endmacro @>
+
+
 <@- macro directiveParam(name, type, join, sep) @>
   <@- if type.optional @>[<@ endif -@>
   <$ name | dashCase $><$ join $><$ type.description $><$ sep $>
@@ -9,21 +40,19 @@
 <@ endmacro -@>
 
 <@- macro functionSyntax(fn) @>
-  <@- set sep = joiner(', ') -@>
-  <@ marked -@>
-    `<$ fn.name $>(<@- for param in fn.params @><$ sep() $>
-    <@- if param.type.optional @>[<@ endif -@>
-    <$ param.name $>
-    <@- if param.type.optional @>]<@ endif -@>
-    <@ endfor @>);`
-  <@- endmarked @>
+<@- set sep = joiner(', ') -@>
+`<$ fn.name $>(<@- for param in fn.params @><$ sep() $>
+<@- if param.type.optional @>[<@ endif -@>
+<$ param.name $>
+<@- if param.type.optional @>]<@ endif -@>
+<@ endfor @>)`
 <@ endmacro -@>
 
 <@- macro typeInfo(fn) -@>
 <table class="variables-matrix return-arguments">
   <tr>
     <td><$ typeList(fn.typeList) $></td>
-    <td><$ fn.description | marked $></td>
+    <td><$ fn.description $></td>
   </tr>
 </table>
 <@- endmacro -@>

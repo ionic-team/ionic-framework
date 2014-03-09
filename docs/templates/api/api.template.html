@@ -3,7 +3,11 @@
 <@ block content @>
 
 <@ block header @>
+  <@ if doc.docType == "directive" @>
 ## <$ doc.name | dashCase $>
+  <@ else @>
+## <$ doc.name $>
+  <@ endif @>
 <@ endblock @>
 
 <@ block description @>

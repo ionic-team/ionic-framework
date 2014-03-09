@@ -148,7 +148,11 @@
                 <@ else @>
                   <li class="menu-item{% if page.doc == "<$ navItem.name $>" %} active{% endif %}">
                     <a href="{{ site.docs_0_9_0 }}/angularjs/<$ navItem.href $>">
-                      <$ navItem.name | dashCase $>
+                      <@ if navItem.type == "directive" @>
+                        <$ navItem.name | dashCase $>
+                      <@ else @>
+                        <$ navItem.name $>
+                      <@ endif @>
                     </a>
                   </li>
                 <@ endif @>
