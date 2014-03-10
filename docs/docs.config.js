@@ -46,6 +46,7 @@ module.exports = function(config) {
   ]);
 
   config.append('processing.tagDefinitions', require('./tag-defs/codepen'));
+  config.append('processing.tagDefinitions', require('./tag-defs/parent'));
 
   //Don't conflict with the jekyll tags
   config.set('rendering.nunjucks.config.tags', {

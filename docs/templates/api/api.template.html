@@ -4,7 +4,11 @@
 
 <@ block header @>
   <@ if doc.docType == "directive" @>
-## <$ doc.name | dashCase $>
+<h2><$ doc.name | dashCase $>
+    <@ if doc.parent @>
+<small>(must have a parent <$ doc.parent | dashCase $>)</small>
+    <@ endif @>
+</h2>
   <@ else @>
 ## <$ doc.name $>
   <@ endif @>
