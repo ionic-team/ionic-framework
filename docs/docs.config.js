@@ -10,7 +10,7 @@ module.exports = function(config) {
 
   config = basePackage(config);
 
-  config.set('logging.level', 'debug');
+  config.set('logging.level', 'info');
 
   config.prepend('rendering.templateFolders', [
     path.resolve(__dirname, 'templates')

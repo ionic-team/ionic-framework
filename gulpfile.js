@@ -37,7 +37,7 @@ gulp.task('default', ['build']);
 gulp.task('build', ['bundle', 'sass']);
 
 gulp.task('docs', function() {
-  dgeni('docs/docs.config.js').generateDocs();
+  return dgeni('docs/docs.config.js').generateDocs();
 });
 
 var IS_WATCH = false;

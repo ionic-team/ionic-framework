@@ -195,7 +195,7 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
  * @description
  * The ionInfiniteScroll directive, when placed inside of {@link ionic.directive:ionContent ionContent}, allows you to call a function whenever the user gets to the bottom of the page or near the bottom of the page.
  *
- * The expression you pass in for `on-scroll` is called when the user scrolls down until he is `distance` away from the bottom of the screen.
+ * The expression you pass in for `on-infinite` is called when the user scrolls greater than `distance` away from the bottom of the content.
  *
  * @param {expression} on-infinite What to call when the scroller reaches the bottom.
  * @param {string=} distance The distance from the bottom that the scroll must reach to trigger the on-infinite expression. Default 1%.

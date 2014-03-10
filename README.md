@@ -83,13 +83,24 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 
 * `npm install && npm install -g gulp protractor` to setup
 * `gulp` or `gulp build` to build
-* `gulp docs` to generate docs (they are generated in tmp/ionic-site; clone ionic-site there if you wish to test them).
+* `gulp docs` to generate docs (read Documentation below for how to test docs locally).
 * `gulp build --release` to build with minification & strip debugs
 * `gulp watch` to watch and rebuild on change
 * `gulp karma` to test one-time
 * `gulp karma-watch` to test and re-run on source change
 * `gulp protractor` to test e2e tests locally
 * `gulp cloudtest` to run e2e tests in the cloud
+
+### Documentation
+
+* To test documentation, follow these steps:
+  1. Clone ionic-site to `./tmp/ionic-site` - this is where the `gulp docs` task builds to.  `./tmp` is the folder that travis uses to do all of its tasks.
+    - `mkdir tmp && git clone git@github.com:driftyco/ionic-site tmp/ionic-site`
+  2. Make jekyll rebuild whenever you change the site.
+    - `cd tmp/ionic-site && jekyll serve -w`
+  3. Build the docs
+    - `gulp docs`
+  4. Open localhost:4000 and see your changes! Re-run `gulp docs` again whenever you change something, and jekyll will update the site.
 
 ### Commit Conventions
 
