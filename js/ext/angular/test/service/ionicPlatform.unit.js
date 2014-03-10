@@ -18,13 +18,13 @@ describe('Ionic Platform Service', function() {
     expect(ionic.Platform.platform()).toEqual('ios');
 
     ionic.Platform.setPlatform('');
-    expect(ionic.Platform.platform()).toEqual('unknown');
+    expect(ionic.Platform.platform()).toEqual('');
 
     ionic.Platform.setPlatform(null);
-    expect(ionic.Platform.platform()).toEqual('unknown');
+    expect(ionic.Platform.platform()).toEqual('');
 
     ionic.Platform.setPlatform();
-    expect(ionic.Platform.platform()).toEqual('unknown');
+    expect(ionic.Platform.platform()).toEqual('');
   });
 
   it('set version with device', function() {
@@ -138,6 +138,29 @@ describe('Ionic Platform Service', function() {
     expect(ionic.Platform.platforms[1]).toEqual('android');
     expect(ionic.Platform.platforms[2]).toEqual('android4');
     expect(ionic.Platform.platforms[3]).toEqual('android4_2');
+  });
+
+  it('should only set the cordova', function() {
+    window.cordova = {};
+    ionic.Platform.setPlatform('');
+    ionic.Platform.setVersion('');
+
+    ionic.Platform._checkPlatforms()
+
+    expect(ionic.Platform.platforms.length).toEqual(1);
+    expect(ionic.Platform.platforms[0]).toEqual('cordova');
+  });
+
+  it('should not set any platform', function() {
+    window.cordova = null;
+    window.PhoneGap = null;
+    window.phonegap = null;
+    ionic.Platform.setPlatform('');
+    ionic.Platform.setVersion('');
+
+    ionic.Platform._checkPlatforms()
+
+    expect(ionic.Platform.platforms.length).toEqual(0);
   });
 
   it('sets grade a from iOS7', function() {

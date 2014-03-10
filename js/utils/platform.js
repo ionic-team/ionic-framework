@@ -97,7 +97,7 @@
       } else if(this.ua.indexOf('iPhone') > -1 || this.ua.indexOf('iPad') > -1 || this.ua.indexOf('iPod') > -1) {
         platformName = 'ios';
       } else {
-        platformName = 'unknown';
+        platformName = '';
       }
     },
 
