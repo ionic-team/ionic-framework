@@ -124,8 +124,11 @@
       return stopEvent(e);
     }
 
-    while(ele) {
+    for(var x=0; x<5; x++) {
       // climb up the DOM looking to see if the tapped element is, or has a parent, of one of these
+      // only climb up a max of 5 parents, anything more is probably isn't beneficial
+      if(!ele) break;
+
       if( ele.tagName === "INPUT" ||
           ele.tagName === "A" ||
           ele.tagName === "BUTTON" ||
