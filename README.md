@@ -79,6 +79,11 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 + <https://twitter.com/adamdbradley>
 + <https://github.com/adamdbradley>
 
+**Andy Joslin**
+
++ <https://twitter.com/andytjoslin>
++ <https://github.com/ajoslin>
+
 ## Development
 
 * `npm install && npm install -g gulp protractor` to setup
