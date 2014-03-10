@@ -4,7 +4,7 @@
 <@ block additional @>
 
   <@ block usage @>
-### Usage
+<h2 id="usage">Usage</h2>
   <@ if doc.usage @>
 <$ doc.usage $>
   <@ else @>
@@ -46,9 +46,13 @@
   <@- endif @>
   <@ endblock -@>
 
+<h2 id="api" style="clear:both;">API</h2>
+
   <@ if doc.params @>
-<h3 style="clear:both;">API</h3>
 <$ paramTable(doc.params, true) $>
+  <@ else @>
+No options available.
   <@ endif @>
+
   <@ include "lib/events.template.html" @>
 <@ endblock @>

@@ -6,7 +6,9 @@
   <@ if doc.docType == "directive" @>
 <h2><$ doc.name | dashCase $>
     <@ if doc.parent @>
-<small>(must have a parent <$ doc.parent $>)</small>
+    <small>
+      (child of an <a href="<$ doc.parent.path $>"><$ doc.parent.name | dashCase $></a> element)
+    </small>
     <@ endif @>
 </h2>
   <@ else @>
