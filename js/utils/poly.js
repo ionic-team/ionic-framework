@@ -78,7 +78,7 @@
 
     var ele = target.control || target;
 
-    if(ele.disabled) return;
+    if(ele.disabled || ele.type === 'file') return;
 
     console.debug('tapElement', ele.tagName, ele.className);
 
@@ -126,7 +126,7 @@
 
     for(var x=0; x<5; x++) {
       // climb up the DOM looking to see if the tapped element is, or has a parent, of one of these
-      // only climb up a max of 5 parents, anything more is probably isn't beneficial
+      // only climb up a max of 5 parents, anything more probably isn't beneficial
       if(!ele) break;
 
       if( ele.tagName === "INPUT" ||
