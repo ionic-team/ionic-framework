@@ -3,6 +3,43 @@
 
 angular.module('ionic.ui.list', ['ngAnimate'])
 
+/**
+ * @ngdoc directive
+ * @name ionItem
+ * @module ionic
+ * @restrict E
+ * @parent ionList
+ *
+ * @description
+ * The ionItem directive creates a list-item that can easily be swiped, 
+ * deleted, reordered, edited, and more.
+ *
+ * @usage
+ * ```html
+ * <ion-list>
+ *   <ion-item ng-repeat="item in items"
+ *     item="item"
+ *     can-swipe="true" 
+ *     left-buttons="myItemButtons">
+ *   </ion-item>
+ * </ion-list>
+ * ```
+ *
+ * @param {string=} item-type The type of this item.  See [the list CSS page](/docs/components/#list) for available item types.
+ * @param {expression=} option-buttons The option buttons to show when swiping the item to the left (if swiping is enabled).  Defaults to the ionList parent's option-buttons setting.  The format of each button object is: 
+ *   ```js
+ *   { 
+ *     text: 'Edit',
+ *     type: 'Button',
+ *     onTap: function(item) {}
+ *   }
+ *   ```
+ *
+ * @param {expression=} item The 'object' representing this item, to be passed in to swipe, delete, and reorder callbacks.
+ * @param {boolean=} can-swipe Whether or not this item can be swiped. Defaults ot hte ionList parent's can-swipe setting.
+ * @param {boolean=} can-delete Whether or not this item can be deleted. Defaults to the ionList parent's can-delete setting.
+ * @param {boolean=} can-reorder Whether or not this item can be reordered. Defaults to the ionList parent's can-reorder setting.
+ */
 .directive('ionItem', ['$timeout', '$parse', function($timeout, $parse) {
   return {
     restrict: 'E',
@@ -95,6 +132,53 @@ angular.module('ionic.ui.list', ['ngAnimate'])
   };
 }])
 
+/**
+ * @ngdoc directive
+ * @name ionList
+ * @module ionic
+ * @restrict E
+ * @codepen jsHjf
+ *
+ * @description
+ * The List is a widely used interface element in almost any mobile app,
+ * and can include content ranging from basic text all the way to buttons, 
+ * toggles, icons, and thumbnails.
+ *
+ * Both the list, which contains items, and the list items themselves can be
+ * any HTML element. The containing element requires the list class and each 
+ * list item requires the item class. Ionic also comes with pre-built Angular
+ * directives to make it easier to create a complex list.
+ * 
+ * Using the ionList and {@link ionic.directive:ionItem ionItem} directives 
+ * make it easy to support various interaction modes such as swipe to edit,
+ * drag to reorder, and removing items. 
+ *
+ * However, if you need just a simple list you won't be required to use the
+ * directives, but rather just use the classnames. 
+ * This demo is a simple list without using the directives.
+ * 
+ * See the {@link ionic.directive:ionItem ionItem documentation} for more information on list items.
+ *
+ * @usage
+ * ```html
+ * <ion-list>
+ *   <ion-item ng-repeat="item in items" item="item">
+ *   </ion-item>
+ * </ion-list>
+ * ```
+ *
+ * @param {string=} item-type The type of this item.  See [the list CSS page](/docs/components/#list) for available item types.
+ * @param {function()=} on-delete Called when a child item is deleted.
+ * @param {function()=} on-reorder Called when a child item is reordered.
+ * @param {boolean=} show-delete Whether to show each item delete button.
+ * @param {boolean=} show-reoder Whether to show each item's reorder button.
+ * @param {boolean=} can-delete Whether child items are able to be deleted or not. 
+ * @param {boolean=} can-reorder Whether child items can be reordered or not.
+ * @param {boolean=} can-swipe Whether child items can be swiped to reveal option buttons.
+ * @param {string=} delete-icon The class name of the icon to show on child items while deleting.  Defaults to `ion-minus-circled`.
+ * @param {string=} reorder-icon The class name to show on child items while reordering. Defaults to `ion-navicon`.
+ * @param {string=} animation An animation class to apply to the list for animating when child items enter or exit the list.
+ */
 .directive('ionList', ['$timeout', function($timeout) {
   return {
     restrict: 'E',
@@ -157,6 +241,6 @@ angular.module('ionic.ui.list', ['ngAnimate'])
 
     }
   };
-}]);
+}])
 
 })();
