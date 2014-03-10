@@ -26,7 +26,7 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
 
       $timeout(function(){
         element.addClass('ng-enter-active');
-        self.scope.$parent.$broadcast('modal.shown');
+        self.scope.$parent && self.scope.$parent.$broadcast('modal.shown');
       }, 20);
 
       self._deregisterBackButton = $ionicPlatform.registerBackButtonAction(function(){
@@ -65,7 +65,8 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
 
       $timeout(function(){
         self.scope.$destroy();
-      }, 500);
+        self.el && self.el.parentElement && self.el.parentElement.removeChild(self.el);
+      }, 1000);
     },
 
     isShown: function() {

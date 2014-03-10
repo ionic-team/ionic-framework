@@ -26,7 +26,6 @@
       <div class="modal" ng-controller="ModalCtrl">
         <header class="bar bar-header bar-assertive">
           <h1 class="title">New Contact</h1>
-          <button class="button button-clear button-primary" ng-click="close()">Cancel</button>
         </header>
         <ion-content has-header="true">
           <div class="padding">
@@ -43,7 +42,8 @@
                 <span class="input-label">Email</span>
                 <input type="text" placeholder="">
               </label>
-              <button class="button button-block button-positive" ng-click="closeModal()">Create</button>
+              <button class="button button-block button-positive" ng-click="hideModal()">Hide Modal</button>
+              <button class="button button-block button-positive" ng-click="removeModal()">Remove Modal</button>
               <button class="button button-block button-positive" ng-click="openActionSheet()">ActionSheet</button>
             </div>
           </div>
@@ -72,9 +72,6 @@
         $scope.openModal = function() {
           $scope.modal.show();
         };
-        $scope.closeModal = function() {
-          $scope.modal.hide();
-        };
         $ionicModal.fromTemplateUrl('modal.html', function(modal) {
           $scope.modal = modal;
         }, {
@@ -85,9 +82,12 @@
       })
 
       .controller('ModalCtrl', function($scope, $ionicActionSheet) {
-        $scope.close = function() {
+        $scope.hideModal = function() {
           $scope.modal.hide();
-        }
+        };
+        $scope.removeModal = function() {
+          $scope.modal.remove();
+        };
 
         $scope.openActionSheet = function() {
           $ionicActionSheet.show({
