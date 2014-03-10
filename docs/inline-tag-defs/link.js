@@ -14,7 +14,7 @@ module.exports = {
         var linkInfo = partialNames.getLink(uri, title, doc);
 
         if ( !linkInfo.valid ) {
-          log.warn(linkInfo.error);
+          log.warn(linkInfo.error, 'in', doc.relativePath + '#' + doc.name);
         }
 
         return '<a href="/docs/angularjs/' + linkInfo.url + '">' + linkInfo.title + '</a>';

@@ -6,7 +6,7 @@
   <@ if doc.docType == "directive" @>
 <h2><$ doc.name | dashCase $>
     <@ if doc.parent @>
-<small>(must have a parent <$ doc.parent | dashCase $>)</small>
+<small>(must have a parent <$ doc.parent $>)</small>
     <@ endif @>
 </h2>
   <@ else @>
