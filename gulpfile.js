@@ -43,8 +43,7 @@ gulp.task('docs', function() {
 var IS_WATCH = false;
 gulp.task('watch', function() {
   IS_WATCH = true;
-  gulp.watch('js/**/*.js', ['bundle', 'docs']);
-  gulp.watch('docs/**/*', ['docs']);
+  gulp.watch('js/**/*.js', ['bundle']);
   gulp.watch('scss/**/*.scss', ['sass']);
 });
 
