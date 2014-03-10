@@ -45,6 +45,8 @@ module.exports = function(config) {
     require('./inline-tag-defs/link')
   ]);
 
+  config.append('processing.tagDefinitions', require('./tag-defs/codepen'));
+
   //Don't conflict with the jekyll tags
   config.set('rendering.nunjucks.config.tags', {
     blockStart: '<@',
