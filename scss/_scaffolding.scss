@@ -275,9 +275,13 @@ ion-infinite-scroll.active .scroll-infinite {
   bottom: $bar-height;
 }
 
-// Specify that a content area will have tabs
-.has-tabs {
-  bottom: 49px;
+.has-tabs,
+.bar-footer.has-tabs {
+  bottom: $tabs-height;
+}
+
+.has-footer.has-tabs {
+  bottom: $tabs-height + $bar-height;
 }
 
 // A full screen section with a solid background
