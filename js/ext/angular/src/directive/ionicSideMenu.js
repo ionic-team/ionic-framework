@@ -20,6 +20,54 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
   $ionicViewService.disableRegisterByTagName('ion-side-menus');
 }])
 
+/**
+ * @ngdoc directive
+ * @name ionSideMenus
+ * @module ionic
+ * @restrict E
+ *
+ * @description
+ *
+ * A container element for side menu(s) and the main content.  By default, allows the left and/or
+ * right side menu to be toggled by dragging the main content area side to side.
+ *
+ * ![Side Menu](http://ionicframework.com.s3.amazonaws.com/docs/controllers/sidemenu.gif)
+ *
+ * Exposes `$scope.sideMenuController` on all child scopes, with `toggleLeft()` and `toggleRight()` methods.
+ *
+ * For more information on side menus, check out the documenation for
+ * {@link ionic.directive:ionSideMenuContent ionSideMenuContent}
+ * {@link ionic.directive:ionSideMenu ionSideMenu}.
+ *
+ * @usage
+ * To use side menus, add an `<ion-side-menus>` parent element,
+ * an `<ion-pane ion-side-menu-content>` for the center content,
+ * and one or more `<ion-side-menu>` directives.
+ *
+ * ```html
+ * <ion-side-menus>
+ *   <!-- Center content -->
+ *   <ion-pane ion-side-menu-content ng-controller="ContentController">
+ *   </ion-pane>
+ *
+ *   <!-- Left menu -->
+ *   <ion-side-menu side="left">
+ *   </ion-side-menu>
+ *
+ *   <!-- Right menu -->
+ *   <ion-side-menu side="right">
+ *   </ion-side-menu>
+ * </ion-side-menus>
+ * ```
+ * ```js
+ * function ContentController($scope) {
+ *   $scope.toggleLeft = function() {
+ *     $scope.sideMenuController.toggleLeft();
+ *   };
+ * }
+ * ```
+ *
+ */
 .directive('ionSideMenus', function() {
   return {
     restrict: 'ECA',
@@ -43,6 +91,31 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
   };
 })
 
+/**
+ * @ngdoc directive
+ * @name ionSideMenuContent
+ * @module ionic
+ * @restrict A
+ * @parent ionSideMenus
+ *
+ * @description
+ * A container for the main visible content, sibling to one or more
+ * {@link ionic.directive:ionSideMenu ionSideMenu} directives.
+ *
+ * An attribute directive, recommended to be used as part of an `<ion-pane>` element.
+ *
+ * @usage
+ * ```html
+ * <div ion-side-menu-content 
+ *   drag-content="canDragContent()">
+ * </div>
+ * ```
+ * For a complete side menu example, see the
+ * {@link ionic.directive:ionSideMenus#usage ionSideMenus} documentation.
+ *
+ * @param {boolean=} drag-content Whether the content can be dragged.
+ *
+ */
 .directive('ionSideMenuContent', ['$timeout', '$ionicGesture', function($timeout, $ionicGesture) {
   return {
     restrict: 'AC',
@@ -144,7 +217,31 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
   };
 }])
 
-
+/**
+ * @ngdoc directive
+ * @name ionSideMenu
+ * @module ionic
+ * @restrict E
+ * @parent ionSideMenus
+ *
+ * @description
+ * A container for a side menu, sibling to an {@link ionic.directive:ionSideMenuContent} directive.
+ *
+ * @usage
+ * ```html
+ * <ion-side-menu 
+ *   side="left" 
+ *   width="myWidthValue + 20"
+ *   is-enabled="shouldLeftSideMenuBeEnabled()">
+ * </ion-side-menu>
+ * ```
+ * For a complete side menu example, see the
+ * {@link ionic.directive:ionSideMenus#usage ionSideMenus} documentation.
+ *
+ * @param {string} side Which side the side menu is currently on.  Allowed values: 'left' or 'right'.
+ * @param {boolean=} is-enabled Whether this side menu is enabled.
+ * @param {number=} width How many pixels wide the side menu should be.  Defaults to 275.
+ */
 .directive('ionSideMenu', function() {
   return {
     restrict: 'E',
@@ -158,7 +255,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
       angular.isUndefined(attr.width) && attr.$set('width', '275');
 
       return function($scope, $element, $attr, sideMenuCtrl) {
-        $scope.side = $attr.side;
+        $scope.side = $attr.side || 'left';
 
         var sideMenu = sideMenuCtrl[$scope.side] = new ionic.views.SideMenu({
           width: 275,
