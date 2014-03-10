@@ -1,18 +1,44 @@
 (function() {
 'use strict';
 
-/**
- * @description
- * The slideBoxCtrol lets you quickly create a multi-page 
- * container where each page can be swiped or dragged between
- */
-
 angular.module('ionic.ui.slideBox', [])
 
 /**
  * The internal controller for the slide box controller.
  */
 
+/**
+ * @ngdoc directive
+ * @name ionSlideBox
+ * @module ionic
+ * @restrict E
+ * @description
+ * The Slide Box is a multi-page container where each page can be swiped or dragged between:
+ *
+ * ![SlideBox](http://ionicframework.com.s3.amazonaws.com/docs/controllers/slideBox.gif)
+ *
+ * @usage
+ * ```html
+ * <ion-slide-box>
+ *   <ion-slide>
+ *     <div class="box blue"><h1>BLUE</h1></div>
+ *   </ion-slide>
+ *   <ion-slide>
+ *     <div class="box yellow"><h1>YELLOW</h1></div>
+ *   </ion-slide>
+ *   <ion-slide>
+ *     <div class="box pink"><h1>PINK</h1></div>
+ *   </ion-slide>
+ * </ion-slide-box>
+ * ```
+ *
+ * @param {boolean=} does-continue Whether the slide box should automatically slide.
+ * @param {number=} slide-interval How many milliseconds to wait to change slides (if does-continue is true). Defaults to 4000.
+ * @param {boolean=} show-pager Whether a pager should be shown for this slide box.
+ * @param {boolean=} disable-scroll Whether to disallow scrolling/dragging of the slide-box content.
+ * @param {expression=} on-slide-changed Expression called whenever the slide is changed.
+ * @param {expression=} active-slide Model to bind the current slide to.
+ */
 .directive('ionSlideBox', ['$timeout', '$compile', '$ionicSlideBoxDelegate', function($timeout, $compile, $ionicSlideBoxDelegate) {
   return {
     restrict: 'E',
