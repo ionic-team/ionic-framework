@@ -15,7 +15,7 @@
     "karma-script-launcher": "~0.1.0",
     "sauce-connect-launcher": "^0.2.2",
     "dgeni": "^0.2.0",
-    "dgeni-packages": "ajoslin/dgeni-packages#nunjucks-config",
+    "dgeni-packages": "git://github.com/ajoslin/dgeni-packages.git#api-config",
     "jshint-stylish": "^0.1.5",
     "gulp-template": "^0.1.1",
     "gulp-concat": "^2.1.7",
