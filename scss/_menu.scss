@@ -26,20 +26,20 @@
 
 .grade-b .menu-content,
 .grade-c .menu-content {
+  @include box-sizing(content-box);
   right: -1px;
   left: -1px;
-  @include box-sizing(content-box);
   border-right: 1px solid #ccc;
   border-left: 1px solid #ccc;
   box-shadow: none;
 }
 
-.menu-left { 
-  left: 0; 
+.menu-left {
+  left: 0;
 }
 
-.menu-right { 
-  right: 0; 
+.menu-right {
+  right: 0;
 }
 
 .menu-animated {
