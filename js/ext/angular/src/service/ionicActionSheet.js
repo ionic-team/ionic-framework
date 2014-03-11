@@ -4,7 +4,6 @@ angular.module('ionic.service.actionSheet', ['ionic.service.templateLoad', 'ioni
  * @ngdoc service
  * @name $ionicActionSheet
  * @module ionic
- * @restrict E
  * @description
  * The Action Sheet is a slide-up pane that lets the user choose from a set of options.
  * Dangerous options are highlighted in red and made obvious.
