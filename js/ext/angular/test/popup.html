@@ -36,11 +36,13 @@
                 title: 'Do you like ice cream?',
                 buttons: [
                   { text: 'No', onTap: function(e) { return true; } },
-                  { text: '<b>Yes</b>', onTap: function(e) { console.log('Details', e); } },
+                  { text: '<b>Yes, of course</b>', onTap: function(e) { console.log('Details', e); } },
                 ]
               });
             }, 1000);
           };
+
+          $scope.showPopups();
       });
     </script>
   </body>

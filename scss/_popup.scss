@@ -7,9 +7,33 @@
   position: fixed;
   top: 50%;
   left: 50%;
+  z-index: 11;
+
+  // Start hidden
+  visibility: hidden;
+
+  width: $popup-width;
 
   border-radius: 8px;
   background-color: rgba(255,255,255,0.9);
+
+  &.popup-hidden {
+    @include animation-name(scaleOut);
+    @include animation-duration($popup-leave-animation-duration);
+    @include animation-timing-function(ease-in-out);
+    @include animation-fill-mode(both);
+  }
+
+  &.popup-showing {
+    visibility: visible;
+  }
+
+  &.active {
+    @include animation-name(superScaleIn);
+    @include animation-duration($popup-enter-animation-duration);
+    @include animation-timing-function(ease-in-out);
+    @include animation-fill-mode(both);
+  }
 }
 
 .popup-head {
@@ -43,12 +67,23 @@
 }
 
 .popup-backdrop {
-  &.active {
-    background-color: rgba(0,0,0,0.4);
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+
+  width: 100%;
+  height: 100%;
+    
+  background-color: rgba(0,0,0,0.4);
+
+  @include animation-name(fadeIn);
+  @include animation-duration($popup-backdrop-fadein-duration);
+  @include animation-timing-function(linear);
+  @include animation-fill-mode(both);
 }
 
-.loading-backdrop, .popup-backdrop {
+.loading-backdrop {
   position: fixed;
   top: 0;
   left: 0;
