@@ -39,6 +39,9 @@ angular.module('ionic.ui.list', ['ngAnimate'])
  * @param {boolean=} can-swipe Whether or not this item can be swiped. Defaults ot hte ionList parent's can-swipe setting.
  * @param {boolean=} can-delete Whether or not this item can be deleted. Defaults to the ionList parent's can-delete setting.
  * @param {boolean=} can-reorder Whether or not this item can be reordered. Defaults to the ionList parent's can-reorder setting.
+ * @param {expression=} on-delete The expression to call when this item is deleted.
+ * @param {string=} delete-icon The class name of the icon to show on this item while deleting. Defaults to the ionList parent's delete-icon setting.
+ * @param {string=} reorder-icon The class name of the icon to show on this item while reordering. Defaults to the ionList parent's reorder-icon setting.
  */
 .directive('ionItem', ['$timeout', '$parse', function($timeout, $parse) {
   return {
@@ -168,8 +171,8 @@ angular.module('ionic.ui.list', ['ngAnimate'])
  * ```
  *
  * @param {string=} item-type The type of this item.  See [the list CSS page](/docs/components/#list) for available item types.
- * @param {function()=} on-delete Called when a child item is deleted.
- * @param {function()=} on-reorder Called when a child item is reordered.
+ * @param {expression=} on-delete Called when a child item is deleted.
+ * @param {expression=} on-reorder Called when a child item is reordered.
  * @param {boolean=} show-delete Whether to show each item delete button.
  * @param {boolean=} show-reoder Whether to show each item's reorder button.
  * @param {boolean=} can-delete Whether child items are able to be deleted or not.
