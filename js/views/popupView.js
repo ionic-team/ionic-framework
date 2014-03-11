@@ -48,8 +48,6 @@
       }
     },
     setButtons: function(buttons) {
-      this.cleanupButtons();
-
       var buttonsEl = this.el.querySelector('.popup-buttons');
       if(!buttonsEl || !buttons) { return; }
 
@@ -75,7 +73,7 @@
       var handler = function(e) {
         var close = button.onTap && button.onTap(e);
         if(close === true) {
-          self.hide();
+          self.remove();
         }
       };
       ionic.on('tap', handler, buttonEl);
@@ -103,11 +101,17 @@
         _this.el.classList.add('active');
       });
     },
-    hide: function() {
+    remove: function() {
+      var popups;
+
       // Force a reflow so the animation will actually run
       this.el.offsetWidth;
 
       this.el.classList.remove('active');
+
+      this.cleanupButtons();
+      this.el.remove();
+
     }
   });
 

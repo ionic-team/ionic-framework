@@ -11,7 +11,7 @@
 
   </head>
   <body ng-controller="PopupCtrl">
-    <button class="button button-dark" ng-click="startLoading()">Load</button>
+    <button class="button button-dark" ng-click="showPopups()">Show</button>
 
     <script id="popup-template.html" type="text/ng-template">
       <input type="text">
@@ -21,24 +21,26 @@
       angular.module('ionic.example', ['ionic'])
 
       .controller('PopupCtrl', function($scope, $timeout, $ionicPopup) {
-          $ionicPopup.show({
-            templateUrl: 'popup-template.html',
-            title: 'Enter Wi-Fi Password',
-            buttons: [
-              { text: 'Cancel', onTap: function(e) { return true; } },
-              { text: '<b>Save</b>', onTap: function(e) { console.log('Details', e); } },
-            ]
-          });
-
-          $timeout(function() {
+          $scope.showPopups = function() {
             $ionicPopup.show({
-              title: 'Do you like ice cream?',
+              templateUrl: 'popup-template.html',
+              title: 'Enter Wi-Fi Password',
               buttons: [
-                { text: 'No', onTap: function(e) { return true; } },
-                { text: '<b>Yes</b>', onTap: function(e) { console.log('Details', e); } },
+                { text: 'Cancel', onTap: function(e) { return true; } },
+                { text: '<b>Save</b>', onTap: function(e) { console.log('Details', e); } },
               ]
             });
-          }, 1000);
+
+            $timeout(function() {
+              $ionicPopup.show({
+                title: 'Do you like ice cream?',
+                buttons: [
+                  { text: 'No', onTap: function(e) { return true; } },
+                  { text: '<b>Yes</b>', onTap: function(e) { console.log('Details', e); } },
+                ]
+              });
+            }, 1000);
+          };
       });
     </script>
   </body>
