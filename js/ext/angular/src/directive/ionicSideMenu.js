@@ -21,19 +21,37 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
 }])
 
 /**
+ * @ngdoc controller
+ * @name ionicSideMenus
+ * @module ionic
+ *
+ * @description
+ * Controller for the {@link ionic.directive:ionSideMenus} directive.
+ */
+/**
+ * @ngdoc method
+ * @name ionicSideMenus#toggleLeft
+ * @description Toggle the left side menu (if it exists).
+ */
+/**
+ * @ngdoc method
+ * @name ionicSideMenus#toggleRight
+ * @description Toggle the right side menu (if it exists).
+ */
+
+/**
  * @ngdoc directive
  * @name ionSideMenus
  * @module ionic
  * @restrict E
+ * @controller ionicSideMenus
  *
  * @description
- *
- * A container element for side menu(s) and the main content.  By default, allows the left and/or
- * right side menu to be toggled by dragging the main content area side to side.
+ * A container element for side menu(s) and the main content. Allows the left
+ * and/or right side menu to be toggled by dragging the main content area side
+ * to side.
  *
  * ![Side Menu](http://ionicframework.com.s3.amazonaws.com/docs/controllers/sidemenu.gif)
- *
- * Exposes `$scope.sideMenuController` on all child scopes, with `toggleLeft()` and `toggleRight()` methods.
  *
  * For more information on side menus, check out the documenation for
  * {@link ionic.directive:ionSideMenuContent ionSideMenuContent}
@@ -66,6 +84,8 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  *   };
  * }
  * ```
+ *
+ * @param {expression=} model The model to assign this side menu container's {@link ionic.controller:ionicSideMenus ionicSideMenus} controller to. By default, assigns  to $scope.sideMenuController.
  *
  */
 .directive('ionSideMenus', function() {
@@ -106,7 +126,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  *
  * @usage
  * ```html
- * <div ion-side-menu-content 
+ * <div ion-side-menu-content
  *   drag-content="canDragContent()">
  * </div>
  * ```
@@ -229,8 +249,8 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  *
  * @usage
  * ```html
- * <ion-side-menu 
- *   side="left" 
+ * <ion-side-menu
+ *   side="left"
  *   width="myWidthValue + 20"
  *   is-enabled="shouldLeftSideMenuBeEnabled()">
  * </ion-side-menu>
