@@ -148,16 +148,30 @@
   }
 
   function preventGhostClick(e) {
-    if(e.target.control) {
-      // this is a label that has an associated input
-      // the native layer will send the actual event, so stop this one
-      console.debug('preventGhostClick', 'label');
-      return stopEvent(e);
-    }
 
-    if( isRecentTap(e) ) {
-      // a tap has already happened at these coordinates recently, ignore this event
-      console.debug('preventGhostClick', 'isRecentTap', e.target.tagName);
+    console.debug((function(){
+      // Great for debugging, and thankfully this gets removed from the build, OMG it's ugly
+
+      if(e.target.control) {
+        // this is a label that has an associated input
+        // the native layer will send the actual event, so stop this one
+        console.debug('preventGhostClick', 'label');
+
+      } else if(isRecentTap(e)) {
+        // a tap has already happened at these coordinates recently, ignore this event
+        console.debug('preventGhostClick', 'isRecentTap', e.target.tagName);
+
+      } else if(isScrolledSinceStart(e)) {
+        // this click's coordinates are different than its touchstart/mousedown, must have been scrolling
+        console.debug('preventGhostClick', 'isScrolledSinceStart, startCoordinates, x:' + startCoordinates.x + ' y:' + startCoordinates.y);
+      }
+
+      var c = getCoordinates(e);
+      return 'click at x:' + c.x + ', y:' + c.y;
+    })());
+
+
+    if(e.target.control || isRecentTap(e) || isScrolledSinceStart(e)) {
       return stopEvent(e);
     }
 
@@ -182,6 +196,16 @@
         return existingCoordinates;
       }
     }
+  }
+
+  function isScrolledSinceStart(event) {
+    // check if this click's coordinates are different than its touchstart/mousedown
+    var c = getCoordinates(event);
+
+    return (c.x > startCoordinates.x + HIT_RADIUS ||
+            c.x < startCoordinates.x - HIT_RADIUS ||
+            c.y > startCoordinates.y + HIT_RADIUS ||
+            c.y < startCoordinates.y - HIT_RADIUS);
   }
 
   function recordCoordinates(event) {
@@ -242,7 +266,12 @@
     }
   }
 
+  function recordStartCoordinates(e) {
+    startCoordinates = getCoordinates(e);
+  }
+
   var tapCoordinates = {}; // used to remember coordinates to ignore if they happen again quickly
+  var startCoordinates = {}; // used to remember where the coordinates of the start of the tap
   var CLICK_PREVENT_DURATION = 1500; // max milliseconds ghostclicks in the same area should be prevented
   var REMOVE_PREVENT_DELAY = 375; // delay after a touchend/mouseup before removing the ghostclick prevent
   var HIT_RADIUS = 15;
@@ -256,5 +285,9 @@
   // listeners used to remove ghostclick prevention
   document.addEventListener('touchend', removeClickPrevent, false);
   document.addEventListener('mouseup', removeClickPrevent, false);
+
+  // in the case the user touched the screen, then scrolled, it shouldn't fire the click
+  document.addEventListener('touchstart', recordStartCoordinates, false);
+  document.addEventListener('mousedown', recordStartCoordinates, false);
 
 })(this, document, ionic);

@@ -67,11 +67,20 @@
       .my-repeat-animation > .ng-move.ng-move-active {
         opacity:1;
       }
+      #click-notify {
+        position: absolute;
+        z-index: 9999;
+        background: red;
+        min-width: 50px;
+        left: 48%;
+        top: 150px;
+        display: none;
+      }
     </style>
 
   </head>
   <body ng-controller="TestCtrl">
-
+    <div id="click-notify">CLICK!</div>
     <ion-pane>
 
       <header class="bar bar-header bar-positive">
@@ -211,7 +220,11 @@
 
 
         $scope.itemClick = function() {
-          console.debug('itemClick');
+          console.info('itemClick');
+          document.getElementById('click-notify').style.display = 'block';
+          setTimeout(function(){
+            document.getElementById('click-notify').style.display = 'none';
+          }, 500);
         };
 
         // Item Methods/Properties
