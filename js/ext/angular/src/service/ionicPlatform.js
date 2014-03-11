@@ -3,11 +3,14 @@
 angular.module('ionic.service.platform', [])
 
 /**
- * The platformProvider makes it easy to set and detect which platform
- * the app is currently running on. It has some auto detection built in
- * for PhoneGap and Cordova. This provider also takes care of
- * initializing some defaults that depend on the platform, such as the
- * height of header bars on iOS 7.
+ * @ngdoc service
+ * @name $ionicPlatform
+ * @module ionic
+ * @description
+ * An angular abstraction of {@link ionic.utility:ionic.Platform}.
+ *
+ * Used to detect the current platform, as well as do things like override the
+ * Android back button in PhoneGap/Cordova.
  */
 .provider('$ionicPlatform', function() {
 
@@ -15,9 +18,12 @@ angular.module('ionic.service.platform', [])
     $get: ['$q', '$rootScope', function($q, $rootScope) {
       return {
         /**
-         * Some platforms have hardware back buttons, so this is one way to bind to it.
-         *
-         * @param {function} cb the callback to trigger when this event occurs
+         * @ngdoc method
+         * @name $ionicPlatform#onHardwareBackButton
+         * @description
+         * Some platforms have a hardware back button, so this is one way to
+         * bind to it.
+         * @param {function} callback the callback to trigger when this event occurs
          */
         onHardwareBackButton: function(cb) {
           ionic.Platform.ready(function() {
@@ -26,9 +32,12 @@ angular.module('ionic.service.platform', [])
         },
 
         /**
+         * @ngdoc method
+         * @name $ionicPlatform#offHardwareBackButton
+         * @description
          * Remove an event listener for the backbutton.
-         *
-         * @param {function} fn the listener function that was originally bound.
+         * @param {function} callback The listener function that was
+         * originally bound.
          */
         offHardwareBackButton: function(fn) {
           ionic.Platform.ready(function() {
@@ -37,14 +46,24 @@ angular.module('ionic.service.platform', [])
         },
 
         /**
-         * Register a hardware back button action. Only one action will execute when
-         * the back button is clicked, so this method decides which of the registered
-         * back button actions has the highest priority. For example, if an actionsheet
-         * is showing, the back button should close the actionsheet, but it should not
-         * also go back a page view or close a modal which may be open.
+         * @ngdoc method
+         * @name $ionicPlatform#registerBackButtonAction
+         * @description
+         * Register a hardware back button action. Only one action will execute
+         * when the back button is clicked, so this method decides which of
+         * the registered back button actions has the highest priority.
          *
-         * @param {function} fn the listener function that was originally bound.
+         * For example, if an actionsheet is showing, the back button should
+         * close the actionsheet, but it should not also go back a page view
+         * or close a modal which may be open.
+         *
+         * @param {function} callback Called when the back button is pressed,
+         * if this listener is the highest priority.
          * @param {number} priority Only the highest priority will execute.
+         * @param {*=} actionId The id to assign this action. Default: a
+         * random unique id.
+         * @returns {function} A function that, when called, will deregister
+         * this backButtonAction.
          */
         registerBackButtonAction: function(fn, priority, actionId) {
           var self = this;
@@ -69,6 +88,9 @@ angular.module('ionic.service.platform', [])
           };
         },
 
+        /**
+         * @private
+         */
         hardwareBackButtonClick: function(e){
           // loop through all the registered back button actions
           // and only run the last one of the highest priority
@@ -89,8 +111,12 @@ angular.module('ionic.service.platform', [])
         },
 
         /**
-         * Trigger a callback once the device is ready, or immediately if the device is already
-         * ready.
+         * @ngdoc method
+         * @name $ionicPlatform#ready
+         * @description
+         * Trigger a callback once the device is ready,
+         * or immediately if the device is already ready.
+         * @param {function} callback The function to call.
          */
         ready: function(cb) {
           var q = $q.defer();

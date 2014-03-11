@@ -1,4 +1,7 @@
 angular.module('ionic.service.bind', [])
+/**
+ * @private
+ */
 .factory('$ionicBind', ['$parse', '$interpolate', function($parse, $interpolate) {
   var LOCAL_REGEXP = /^\s*([@=&])(\??)\s*(\w*)\s*$/;
   return function(scope, attrs, bindDefinition) {

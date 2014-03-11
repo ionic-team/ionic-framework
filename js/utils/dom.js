@@ -23,23 +23,39 @@
             };
   })();
 
+  /**
+  * @ngdoc utility
+  * @name ionic.DomUtil
+  * @module ionic
+  */
   ionic.DomUtil = {
     //Call with proper context
+    /**
+     * @ngdoc method
+     * @name ionic.DomUtil#requestAnimationFrame
+     * @alias ionic.requestAnimationFrame
+     * @description Calls [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window.requestAnimationFrame), or a polyfill if not available.
+     * @param {function} callback The function to call when the next frame
+     * happens.
+     */
     requestAnimationFrame: function(cb) {
       window._rAF(cb);
     },
 
-    /*
+    /**
+     * @ngdoc method
+     * @name ionic.DomUtil#animationFrameThrottle
+     * @alias ionic.animationFrameThrottle
+     * @description
      * When given a callback, if that callback is called 100 times between
-     * animation frames, Throttle will make it only call the last of 100tha call
+     * animation frames, adding Throttle will make it only run the last of
+     * the 100 calls.
      *
-     * It returns a function, which will then call the passed in callback.  The
-     * passed in callback will receive the context the returned function is called with.
-     *
-     * @example
-     *   this.setTranslateX = ionic.animationFrameThrottle(function(x) {
-     *     this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + x + 'px, 0, 0)';
-     *   })
+     * @param {function} callback a function which will be throttled to
+     * requestAnimationFrame
+     * @returns {function} A function which will then call the passed in callback.
+     * The passed in callback will receive the context the returned function is
+     * called with.
      */
     animationFrameThrottle: function(cb) {
       var args, isQueued, context;
@@ -56,10 +72,15 @@
       };
     },
 
-    /*
-     * Find an element's offset, then add it to the offset of the parent
-     * until we are at the direct child of parentEl
-     * use-case: find scroll offset of any element within a scroll container
+    /**
+     * @ngdoc method
+     * @name ionic.DomUtil#getPositionInParent
+     * @description
+     * Find an element's scroll offset within its container.
+     * @param {DOMElement} element The element to find the offset of.
+     * @returns {object} A position object with the following properties:
+     *   - `{number}` `left` The left offset of the element.
+     *   - `{number}` `top` The top offset of the element.
      */
     getPositionInParent: function(el) {
       return {
@@ -68,6 +89,14 @@
       };
     },
 
+    /**
+     * @ngdoc method
+     * @name ionic.DomUtil#ready
+     * @description
+     * Call a function when the dom is ready, or if it is already ready
+     * call the function immediately.
+     * @param {function} callback The function to be called.
+     */
     ready: function(cb) {
       if(document.readyState === "complete") {
         ionic.requestAnimationFrame(cb);
@@ -76,6 +105,20 @@
       }
     },
 
+    /**
+     * @ngdoc method
+     * @name ionic.DomUtil#getTextBounds
+     * @description
+     * Get a rect representing the bounds of the given textNode.
+     * @param {DOMElement} textNode The textNode to find the bounds of.
+     * @returns {object} An object representing the bounds of the node. Properties:
+     *   - `{number}` `left` The left positton of the textNode.
+     *   - `{number}` `right` The right positton of the textNode.
+     *   - `{number}` `top` The top positton of the textNode.
+     *   - `{number}` `bottom` The bottom position of the textNode.
+     *   - `{number}` `width` The width of the textNode.
+     *   - `{number}` `height` The height of the textNode.
+     */
     getTextBounds: function(textNode) {
       if(document.createRange) {
         var range = document.createRange();
@@ -100,6 +143,16 @@
       return null;
     },
 
+    /**
+     * @ngdoc method
+     * @name ionic.DomUtil#getChildIndex
+     * @description
+     * Get the first index of a child node within the given element of the
+     * specified type.
+     * @param {DOMElement} element The element to find the index of.
+     * @param {string} type The nodeName to match children of element against.
+     * @returns {number} The index, or -1, of a child with nodeName matching type.
+     */
     getChildIndex: function(element, type) {
       if(type) {
         var ch = element.parentNode.children;
@@ -116,11 +169,20 @@
       }
       return Array.prototype.slice.call(element.parentNode.children).indexOf(element);
     },
+
+    /**
+     * @private
+     */
     swapNodes: function(src, dest) {
       dest.parentNode.insertBefore(src, dest);
     },
     /**
-     * {returns} the closest parent matching the className
+     * @ngdoc method
+     * @name ionic.DomUtil#getParentWithClass
+     * @param {DOMElement} element
+     * @param {string} className
+     * @returns {DOMElement} The closest parent of element matching the 
+     * className, or null.
      */
     getParentWithClass: function(e, className) {
       while(e.parentNode) {
@@ -132,7 +194,12 @@
       return null;
     },
     /**
-     * {returns} the closest parent or self matching the className
+     * @ngdoc method
+     * @name ionic.DomUtil#getParentWithClass
+     * @param {DOMElement} element
+     * @param {string} className
+     * @returns {DOMElement} The closest parent or self matching the 
+     * className, or null.
      */
     getParentOrSelfWithClass: function(e, className) {
       while(e) {
@@ -144,6 +211,18 @@
       return null;
     },
 
+    /**
+     * @ngdoc method
+     * @name ionic.DomUtil#rectContains
+     * @param {number} x
+     * @param {number} y
+     * @param {number} x1
+     * @param {number} y1
+     * @param {number} x2
+     * @param {number} y2
+     * @returns {boolean} Whether {x,y} fits within the rectangle defined by 
+     * {x1,y1,x2,y2}.
+     */
     rectContains: function(x, y, x1, y1, x2, y2) {
       if(x < x1 || x > x2) return false;
       if(y < y1 || y > y2) return false;

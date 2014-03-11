@@ -1,16 +1,83 @@
 angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.service.platform', 'ionic.ui.modal'])
 
-
+/**
+ * @ngdoc service
+ * @name $ionicModal
+ * @module ionic
+ * @controller ionicModal
+ * @description
+ * The Modal is a content pane that can go over the user's main view
+ * temporarily.  Usually used for making a choice or editing an item.
+ *
+ * @usage
+ * ```html
+ * <script id="my-modal.html" type="text/ng-template">
+ *   <div class="modal">
+ *     <ion-header-bar title="My Modal Title"></ion-header-bar>
+ *     <ion-content>
+ *       Hello!
+ *     </ion-content>
+ *   </div>
+ * </script>
+ * ```
+ * ```js
+ * angular.module('testApp', ['ionic'])
+ * .controller('MyController', function($scope, $ionicModal) {
+ *   $ionicModal.fromTemplateUrl('modal.html', {
+ *     scope: $scope,
+ *     animation: 'slide-in-up'
+ *   }).then(function(modal) {
+ *     $scope.modal = modal;
+ *   });
+ *   $scope.openModal = function() {
+ *     $scope.modal.show();
+ *   };
+ *   $scope.closeModal = function() {
+ *     $scope.modal.hide();
+ *   };
+ *   //Cleanup the modal when we're done with it!
+ *   $scope.$on('$destroy', function() {
+ *     $scope.modal.remove();
+ *   });
+ * });
+ * ```
+ */
 .factory('$ionicModal', ['$rootScope', '$document', '$compile', '$timeout', '$ionicPlatform', '$ionicTemplateLoader',
                 function( $rootScope,   $document,   $compile,   $timeout,   $ionicPlatform,   $ionicTemplateLoader) {
 
+  /**
+   * @ngdoc controller
+   * @name ionicModal
+   * @module ionic
+   * @description
+   * Instantiated by the {@link ionic.service:$ionicModal} service.
+   *
+   * Hint: Be sure to call [remove()](#remove) when you are done with each modal
+   * to clean it up and avoid memory leaks.
+   */
   var ModalView = ionic.views.Modal.inherit({
+    /**
+     * @ngdoc method
+     * @name ionicModal#initialize
+     * @description Creates a new modal controller instance.
+     * @param {object} options An options object with the following properties:
+     *  - `{object=}` `scope` The scope to be a child of.
+     *    Default: creates a child of $rootScope.
+     *  - `{string=}` `animation` The animation to show & hide with.
+     *    Default: 'slide-in-up'
+     *  - `{boolean=}` `focusFirstInput` Whether to autofocus the first input of
+     *    the modal when shown.  Default: false.
+     */
     initialize: function(opts) {
       ionic.views.Modal.prototype.initialize.call(this, opts);
       this.animation = opts.animation || 'slide-in-up';
     },
 
-    // Show the modal
+    /**
+     * @ngdoc method
+     * @name ionicModal#show
+     * @description Show this modal instance.
+     */
     show: function() {
       var self = this;
       var modalEl = angular.element(self.modalEl);
@@ -38,7 +105,11 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
 
     },
 
-    // Hide the modal
+    /**
+     * @ngdoc method
+     * @name ionicModal#hide
+     * @description Hide this modal instance.
+     */
     hide: function() {
       this._isShown = false;
       var modalEl = angular.element(this.modalEl);
@@ -61,7 +132,11 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
       this._deregisterBackButton && this._deregisterBackButton();
     },
 
-    // Remove and destroy the modal scope
+    /**
+     * @ngdoc method
+     * @name ionicModal#remove
+     * @description Remove this modal instance from the DOM and clean up.
+     */
     remove: function() {
       var self = this;
       self.hide();
@@ -73,6 +148,11 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
       }, 750);
     },
 
+    /**
+     * @ngdoc method
+     * @name ionicModal#isShown
+     * @returns boolean Whether this modal is currently shown.
+     */
     isShown: function() {
       return !!this._isShown;
     }
@@ -102,19 +182,37 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
 
   return {
     /**
-     * Load a modal with the given template string.
-     *
-     * A new isolated scope will be created for the
-     * modal and the new element will be appended into the body.
+     * @ngdoc method
+     * @name $ionicModal#fromTemplate
+     * @param {string} templateString The template string to use as the modal's
+     * content.
+     * @param {object} options Options to be passed {@link ionic.controller:ionicModal#initialize ionicModal#initialize} method.
+     * @returns {object} An instance of an {@link ionic.controller:ionicModal}
+     * controller.
      */
     fromTemplate: function(templateString, options) {
       var modal = createModal(templateString, options || {});
       return modal;
     },
-    fromTemplateUrl: function(url, cb, options) {
+    /**
+     * @ngdoc method
+     * @name $ionicModal#fromTemplateUrl
+     * @param {string} templateUrl The url to load the template from.
+     * @param {object} options Options to be passed {@link ionic.controller:ionicModal#initialize ionicModal#initialize} method.
+     * options object.
+     * @returns {promise} A promise that will be resolved with an instance of
+     * an {@link ionic.controller:ionicModal} controller.
+     */
+    fromTemplateUrl: function(url, options) {
+      var cb;
+      //Deprecated: allow a callback as second parameter. Now we return a promise.
+      if (arguments.length === 3) {
+        cb = arguments[1];
+        options = arguments[2] || {};
+      }
       return $ionicTemplateLoader.load(url).then(function(templateString) {
         var modal = createModal(templateString, options || {});
-        cb ? cb(modal) : null;
+        cb && cb(modal);
         return modal;
       });
     }

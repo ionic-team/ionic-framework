@@ -4,7 +4,7 @@
 <@- endmacro -@>
 
 <@ macro paramTable(params, isDirective) @>
-<table class="table">
+<table class="table" style="margin:0;">
   <thead>
     <tr>
       <th><@ if isDirective @>Attr<@ else @>Param<@ endif @></th>
@@ -42,11 +42,11 @@
 
 <@- macro functionSyntax(fn) @>
 <@- set sep = joiner(', ') -@>
-`<$ fn.name $>(<@- for param in fn.params @><$ sep() $>
-<@- if param.type.optional @>[<@ endif -@>
-<$ param.name $>
-<@- if param.type.optional @>]<@ endif -@>
-<@ endfor @>)`
+<code><$ fn.name $>(<@- for param in fn.params @><$ sep() $>
+  <@- if param.type.optional @>[<@ endif -@>
+  <$ param.name $>
+  <@- if param.type.optional @>]<@ endif -@>
+  <@ endfor @>)</code><@ if fn.alias @><small>(alias: <$ fn.alias $>)</small><@ endif @>
 <@ endmacro -@>
 
 <@- macro typeInfo(fn) -@>

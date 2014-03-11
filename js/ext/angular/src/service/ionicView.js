@@ -1,7 +1,11 @@
 angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
 
 
-.run(     ['$rootScope', '$state', '$location', '$document', '$animate', '$ionicPlatform',
+/**
+ * @private
+ * TODO document
+ */
+.run(['$rootScope', '$state', '$location', '$document', '$animate', '$ionicPlatform',
   function( $rootScope,   $state,   $location,   $document,   $animate,   $ionicPlatform) {
 
   // init the variables that keep track of the view history

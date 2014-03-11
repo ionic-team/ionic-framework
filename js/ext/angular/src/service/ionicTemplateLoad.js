@@ -1,5 +1,8 @@
 angular.module('ionic.service.templateLoad', [])
 
+/**
+ * @private
+ */
 .factory('$ionicTemplateLoader', ['$q', '$http', '$templateCache', function($q, $http, $templateCache) {
   return {
     load: function(url) {

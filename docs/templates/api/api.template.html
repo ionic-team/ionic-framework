@@ -3,22 +3,23 @@
 <@ block content @>
 
 <@ block header @>
-  <@ if doc.docType == "directive" @>
-<h2><$ doc.name | dashCase $>
-    <@ if doc.parent @>
-    <small>
-      (child of <$ doc.parent $>)
-    </small>
-    <@ endif @>
-    <@ if doc.controller @>
-    <small>
-      (controller: <$ doc.controller $>)
-    </small>
-    <@ endif @>
+<h2>
+<@ if doc.docType == "directive" @>
+  <$ doc.name | dashCase $>
+<@ else @>
+  <$ doc.name $>
+<@ endif @>
+<@ if doc.parent @>
+<small>
+  (child of <$ doc.parent $>)
+</small>
+<@ endif @>
+<@ if doc.controller @>
+<small>
+  (controller: <$ doc.controller $>)
+</small>
+<@ endif @>
 </h2>
-  <@ else @>
-## <$ doc.name $>
-  <@ endif @>
 
 <@ if doc.codepen @>
 {% include codepen.html id="<$ doc.codepen $>" %}

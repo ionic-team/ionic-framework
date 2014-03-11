@@ -202,16 +202,15 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
  * @restrict E
  *
  * @description
- * The ionInfiniteScroll directive, when placed inside of 
- * {@link ionic.directive:ionContent}, allows you to call a function whenever 
+ * The ionInfiniteScroll directive allows you to call a function whenever
  * the user gets to the bottom of the page or near the bottom of the page.
  *
- * The expression you pass in for `on-infinite` is called when the user scrolls 
+ * The expression you pass in for `on-infinite` is called when the user scrolls
  * greater than `distance` away from the bottom of the content.
  *
- * @param {expression} on-infinite What to call when the scroller reaches the 
+ * @param {expression} on-infinite What to call when the scroller reaches the
  * bottom.
- * @param {string=} distance The distance from the bottom that the scroll must 
+ * @param {string=} distance The distance from the bottom that the scroll must
  * reach to trigger the on-infinite expression. Default 1%.
  *
  * @usage
@@ -235,7 +234,7 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
  * }
  * ```
  *
- * An easy to way to stop infinite scroll once there is no more data to load 
+ * An easy to way to stop infinite scroll once there is no more data to load
  * is to use angular's `ng-if` directive:
  *
  * ```html

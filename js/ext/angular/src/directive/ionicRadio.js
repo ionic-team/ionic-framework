@@ -3,8 +3,6 @@
 
 angular.module('ionic.ui.radio', [])
 
-// The radio button is a radio powered element with only
-// one possible selection in a set of options.
 /**
  * @ngdoc directive
  * @name ionRadio

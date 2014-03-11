@@ -1,22 +1,6 @@
 (function() {
 'use strict';
 
-/**
- * @description
- * The NavController is a navigation stack View Controller modelled off of
- * UINavigationController from Cocoa Touch. With the Nav Controller, you can
- * "push" new "pages" on to the navigation stack, and then pop them off to go
- * back. The NavController controls a navigation bar with a back button and title
- * which updates as the pages switch.
- *
- * The NavController makes sure to not recycle scopes of old pages
- * so that a pop will still show the same state that the user left.
- *
- * However, once a page is popped, its scope is destroyed and will have to be
- * recreated then next time it is pushed.
- *
- */
-
 angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gesture', 'ngSanitize'])
 
 /**
@@ -27,9 +11,9 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  *
  * @usage
  * If have an {@link ionic.directive:ionNavView} directive, we can also create an
- * <ion-nav-bar>, which will create a topbar that updates as the application state changes. 
+ * <ion-nav-bar>, which will create a topbar that updates as the application state changes.
  * We can also add some styles and set up animations:
- * 
+ *
  * ```html
  * <body ng-app="starter">
  *   <!-- The nav bar that will be updated as we navigate -->
@@ -37,7 +21,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  *            type="bar-positive"
  *            back-button-type="button-icon"
  *            back-button-icon="ion-arrow-left-c"></ion-nav-bar>
- * 
+ *
  *   <!-- where the initial view template will be rendered -->
  *   <ion-nav-view animation="slide-left-right"></ion-nav-view>
  * </body>
@@ -46,7 +30,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  * @param {string=} back-button-type The type of the back button's icon. Available: 'button-icon' or just 'button'.
  * @param {string=} back-button-icon The icon to use for the back button. For example, 'ion-arrow-left-c'.
  * @param {string=} back-button-label The label to use for the back button. For example, 'Back'.
- * @param animation {string=} The animation used to transition between titles. 
+ * @param animation {string=} The animation used to transition between titles.
  * @param type {string=} The className for the navbar.  For example, 'bar-positive'.
  * @param align {string=} Where to align the title of the navbar. Available: 'left', 'right', 'center'. Defaults to 'center'.
  */
@@ -210,39 +194,37 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
   };
 }])
 
-.directive('ionNavBarTitle', function() {
-  return {
-    restrict: 'A',
-    require: '^ionNavBar',
-    link: function($scope, $element, $attr, navBarCtrl) {
-      $scope.headerBarView && $scope.headerBarView.align();
-      $element.on('$animate:close', function() {
-        $scope.headerBarView && $scope.headerBarView.align();
-      });
-    }
-  };
-})
-
-/*
- * Directive to put on an element that has 'invisible' class when rendered.
- * This removes the visible class one frame later.
- * Fixes flickering in iOS7 and old android.
- * Used in title and back button
- */
-.directive('ionAsyncVisible', function() {
-  return function($scope, $element) {
-    ionic.requestAnimationFrame(function() {
-      $element[0].classList.remove('invisible');
-    });
-  };
-})
-
 /**
-* @ngdoc directive
-* @name ionView
-* @module ionic
-* @restrict E
-*/
+ * @ngdoc directive
+ * @name ionView
+ * @module ionic
+ * @restrict E
+ * @parent ionNavBar
+ *
+ * @description
+ * A container for content, used to tell a parent {@link ionic.directive:ionNavBar}
+ * about the current view.
+ *
+ * @usage
+ * Below is an example where our page will load with a navbar containing "My Page" as the title.
+ *
+ * ```html
+ * <ion-nav-bar></ion-nav-bar>
+ * <ion-nav-view>
+ *   <ion-view title="My Page">
+ *     <ion-content>
+ *       Hello!
+ *     </ion-content>
+ *   </ion-view>
+ * </ion-nav-view>
+ * ```
+ *
+ * @param {expression=} left-buttons The leftButtons to display on the parent {@link ionic.directive:ionNavBar}.
+ * @param {expression=} right-buttons The rightButtons to display on the parent {@link ionic.directive:ionNavBar}.
+ * @param {string=} title The title to display on the parent {@link ionic.directive:ionNavBar}.
+ * @param {boolean=} hideBackButton Whether to hide the back button on the parent {@link ionic.directive:ionNavBar}.
+ * @param {boolean=} hideNavBar Whether to hide the parent {@link ionic.directive:ionNavBar}.
+ */
 .directive('ionView', ['$ionicViewService', '$rootScope', '$animate',
            function( $ionicViewService,   $rootScope,   $animate) {
   return {
@@ -251,15 +233,9 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     scope: {
       leftButtons: '=',
       rightButtons: '=',
-      title: '=',
-      icon: '@',
-      iconOn: '@',
-      iconOff: '@',
-      type: '@',
-      alignTitle: '@',
+      title: '@',
       hideBackButton: '@',
       hideNavBar: '@',
-      animation: '@'
     },
 
     compile: function(tElement, tAttrs, transclude) {
@@ -301,6 +277,9 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
 }])
 
 
+/**
+* @private
+*/
 .directive('ionNavBackButton', ['$ionicViewService', '$rootScope',
                      function($ionicViewService,   $rootScope) {
 
@@ -412,10 +391,10 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  * having to fetch them from the network.
  *
  * Please visit [AngularUI Router's docs](https://github.com/angular-ui/ui-router/wiki) for
- * more info. Below is a great video by the AngularUI Router guys that may help to explain 
+ * more info. Below is a great video by the AngularUI Router guys that may help to explain
  * how it all works:
- * 
- * <iframe width="560" height="315" src="//www.youtube.com/embed/dqJRoh8MnBo" 
+ *
+ * <iframe width="560" height="315" src="//www.youtube.com/embed/dqJRoh8MnBo"
  * frameborder="0" allowfullscreen></iframe>
  *
  * @param {string=} name A view name. The name should be unique amongst the other views in the

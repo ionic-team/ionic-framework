@@ -11,7 +11,7 @@
  * @name ionicSlideBox
  * @module ionic
  * @description
- * Controller for the {@link ionic.directive:ionTabs} directive.
+ * Controller for the {@link ionic.directive:ionSlideBox} directive.
  */
 
 (function(ionic) {

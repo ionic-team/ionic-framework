@@ -12,6 +12,7 @@ angular.module('ionic.ui.slideBox', [])
  * @name ionSlideBox
  * @module ionic
  * @restrict E
+ * @controller ionicSlideBox
  * @description
  * The Slide Box is a multi-page container where each page can be swiped or dragged between:
  *

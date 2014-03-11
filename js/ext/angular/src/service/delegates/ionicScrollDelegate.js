@@ -3,26 +3,85 @@
 
 angular.module('ionic.ui.service.scrollDelegate', [])
 
+/**
+ * @ngdoc service
+ * @name $ionicScrollDelegate
+ * @module ionic
+ * @description
+ * Allows you to have some control over a scrollable area (created by an
+ * {@link ionic.directive:ionContent} or {@link ionic.directive:ionScroll}
+ * directive).
+ *
+ * Inject it into a controller, and its methods will send messages to the nearest scrollView and all of its children.
+ *
+ * @usage
+ * ```html
+ * <ion-content ng-controller="MyController">
+ *   <button class="button" ng-click="scrollToTop()">
+ *     Scroll To Top
+ *   </button>
+ * </ion-content>
+ * ```
+ * ```js
+ * function MyController($scope, $ionicScrollDelegate) {
+ *   $scope.scrollToTop = function() {
+ *     $ionicScrollDelegate.scrollTop();
+ *   };
+ * }
+ * ```
+ */
 .factory('$ionicScrollDelegate', ['$rootScope', '$timeout', '$q', '$anchorScroll', '$location', '$document', function($rootScope, $timeout, $q, $anchorScroll, $location, $document) {
   return {
     /**
-     * Trigger a scroll-to-top event on child scrollers.
+     * @ngdoc method
+     * @name $ionicScrollDelegate#scrollTop
+     * @param {boolean=} shouldAnimate Whether the scroll should animate.
      */
     scrollTop: function(animate) {
       $rootScope.$broadcast('scroll.scrollTop', animate);
     },
+    /**
+     * @ngdoc method
+     * @name $ionicScrollDelegate#scrollBottom
+     * @param {boolean=} shouldAnimate Whether the scroll should animate.
+     */
     scrollBottom: function(animate) {
       $rootScope.$broadcast('scroll.scrollBottom', animate);
     },
+    /**
+     * @ngdoc method
+     * @name $ionicScrollDelegate#scroll
+     * @param {number} left The x-value to scroll to.
+     * @param {number} top The y-value to scroll to.
+     * @param {boolean=} shouldAnimate Whether the scroll should animate.
+     */
     scrollTo: function(left, top, animate) {
       $rootScope.$broadcast('scroll.scrollTo', left, top, animate);
     },
-    resize: function() {
-      $rootScope.$broadcast('scroll.resize');
-    },
+    /**
+     * @ngdoc method
+     * @name $ionicScrollDelegate#anchorScroll
+     * @description Tell the scrollView to scroll to the element with an id
+     * matching window.location.hash.
+     *
+     * If no matching element is found, it will scroll to top.
+     *
+     * @param {boolean=} shouldAnimate Whether the scroll should animate.
+     */
     anchorScroll: function(animate) {
       $rootScope.$broadcast('scroll.anchorScroll', animate);
     },
+    /**
+     * @ngdoc method
+     * @name $ionicScrollDelegate#resize
+     * @description Tell the scrollView to recalculate the size of its container.
+     */
+    resize: function() {
+      $rootScope.$broadcast('scroll.resize');
+    },
+    /**
+     * @private
+     */
     tapScrollToTop: function(element, animate) {
       var _this = this;
       if (!angular.isDefined(animate)) {
@@ -50,6 +109,7 @@ angular.module('ionic.ui.service.scrollDelegate', [])
     },
 
     /**
+     * @private
      * Attempt to get the current scroll view in scope (if any)
      *
      * Note: will not work in an isolated scope context.
@@ -59,6 +119,7 @@ angular.module('ionic.ui.service.scrollDelegate', [])
     },
 
     /**
+     * @private
      * Register a scope and scroll view for scroll event handling.
      * $scope {Scope} the scope to register and listen for events
      */

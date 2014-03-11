@@ -1,5 +1,8 @@
 angular.module('ionic.decorator.location', [])
 
+/**
+ * @private
+ */
 .config(['$provide', function($provide) {
   $provide.decorator('$location', ['$delegate', '$timeout', $LocationDecorator]);
 }]);
@@ -7,7 +10,7 @@ angular.module('ionic.decorator.location', [])
 function $LocationDecorator($location, $timeout) {
 
   $location.__hash = $location.hash;
-  //Fix: first time window.location.hash is set, the scrollable area
+  //Fix: when window.location.hash is set, the scrollable area
   //found nearest to body's scrollTop is set to scroll to an element
   //with that ID.
   $location.hash = function(value) {

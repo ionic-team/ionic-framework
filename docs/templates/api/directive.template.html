@@ -46,12 +46,10 @@
   <@- endif @>
   <@ endblock -@>
 
-<h2 id="api" style="clear:both;">API</h2>
 
   <@ if doc.params @>
+<h2 id="api" style="clear:both;">API</h2>
 <$ paramTable(doc.params, true) $>
-  <@ else @>
-No options available.
   <@ endif @>
 
   <@ include "lib/events.template.html" @>

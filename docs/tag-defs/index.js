@@ -18,5 +18,8 @@ module.exports = [
   },
   {
     name: 'codepen'
+  },
+  {
+    name: 'alias'
   }
 ];
