@@ -76,7 +76,6 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
       type: '@',
       alignTitle: '@'
     },
-
     link: function($scope, $element, $attr) {
       var hb = new ionic.views.HeaderBar({
         el: $element[0],
