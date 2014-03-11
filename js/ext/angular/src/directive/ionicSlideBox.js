@@ -65,7 +65,7 @@ angular.module('ionic.ui.slideBox', [])
         continuous: continuous,
         startSlide: $scope.activeSlide,
         slidesChanged: function() {
-          $scope.currentSlide = slider.getPos();
+          $scope.currentSlide = slider.currentIndex();
 
           // Try to trigger a digest
           $timeout(function() {});
@@ -102,8 +102,8 @@ angular.module('ionic.ui.slideBox', [])
 
       $ionicSlideBoxDelegate.register($scope, $element);
 
-      this.getNumSlides = function() {
-        return slider.getNumSlides();
+      this.slidesCount = function() {
+        return slider.slidesCount();
       };
 
       $timeout(function() {
@@ -158,7 +158,7 @@ angular.module('ionic.ui.slideBox', [])
       };
 
       $scope.numSlides = function() {
-        return new Array(slideBox.getNumSlides());
+        return new Array(slideBox.slidesCount());
       };
 
       $scope.$watch('currentSlide', function(v) {
