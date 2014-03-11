@@ -1,5 +1,6 @@
 <a href="https://travis-ci.org/driftyco/ionic"><img src="https://travis-ci.org/driftyco/ionic.png?branch=master" data-bindattr-164="164" title="Build Status Images"></a>
 
+
 The best place to start with Ionic is our [documentation page](http://ionicframework.com/docs/).
 
 Note: Ionic currently best supports iOS 6+ and Android 4.1+, with limited support for Android 2.3. Ionic is changing quickly as we work towards the beta.
