@@ -35,10 +35,10 @@
         titleEl.innerHTML = title;
       }
     },
-    setMessage: function(message) {
+    setContent: function(content) {
       var bodyEl = this.el.querySelector('.popup-body');
       if(bodyEl) {
-        bodyEl.innerHTML = message;
+        bodyEl.innerHTML = content;
       }
     },
     setButtons: function(buttons) {
@@ -86,7 +86,9 @@
       var _this = this;
 
       ionic.requestAnimationFrame(function() {
-        _this.setMessage(opts.message);
+        if(opts.content) {
+          _this.setContent(opts.content);
+        }
         _this.setTitle(opts.title);
         _this.setButtons(opts.buttons);
         _this._position();

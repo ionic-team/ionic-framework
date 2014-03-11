@@ -14,7 +14,21 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     }
   };
 
+  // Append the element to the screen, create the popup view,
+  // and add the popup to the scope
+  var constructPopupOnScope = function(element, scope) {
+    $document[0].body.appendChild(element[0]);
+
+    var popup = new ionic.views.Popup({el: element[0] });
+
+    scope.popup = popup;
+
+    return popup;
+  }
+
   var createPopup = function(opts) {
+    var q = $q.defer();
+
     var defaults = {
       title: '',
       animation: 'fade-in',
@@ -25,15 +39,22 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     var scope = opts.scope && opts.scope.$new() || $rootScope.$new(true);
     angular.extend(scope, opts);
 
-    // Compile the template
-    var element = $compile('<ion-popup>' + opts.content + '</ion-popup>')(scope);
-    $document[0].body.appendChild(element[0]);
+    // Check if we need to load a template for the content of the popup
+    if(opts.templateUrl) {
+      $ionicTemplateLoader.load(opts.templateUrl).then(function(templateString) {
+        var element = $compile('<ion-popup>' + templateString + '</ion-popup>')(scope);
+        q.resolve(constructPopupOnScope(element, scope));
+      }, function(err) {
+        q.reject(err);
+      });
 
-    var popup = new ionic.views.Popup({el: element[0] });
+    } else {
+      // Compile the template
+      var element = $compile('<ion-popup>' + opts.content + '</ion-popup>')(scope);
+      q.resolve(constructPopupOnScope(element, scope));
+    }
 
-    scope.popup = popup;
-
-    return popup;
+    return q.promise;
   };
 
   return {
@@ -45,9 +66,11 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
         return existing.popup.show(data);
       }
 
-      var popup = createPopup(data);
-
-      popup.show(data);
+      createPopup(data).then(function(popup) {
+        popup.show(data);
+      }, function(err) {
+        console.error('Unable to load popup:', err);
+      });
 
       return q.promise;
     },

@@ -13,15 +13,20 @@
   <body ng-controller="PopupCtrl">
     <button class="button button-dark" ng-click="startLoading()">Load</button>
 
+    <script id="popup-template.html" type="text/ng-template">
+      <input type="text">
+    </script>
+
     <script>
       angular.module('ionic.example', ['ionic'])
 
       .controller('PopupCtrl', function($scope, $timeout, $ionicPopup) {
           $ionicPopup.show({
-            title: 'You must do this',
+            templateUrl: 'popup-template.html',
+            title: 'Enter Wi-Fi Password',
             buttons: [
               { text: 'Cancel', onTap: function(e) { return true; } },
-              { text: '<b>Details</b>', onTap: function(e) { console.log('Details', e); } },
+              { text: '<b>Save</b>', onTap: function(e) { console.log('Details', e); } },
             ]
           });
       });
