@@ -30,23 +30,28 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
  * @module ionic
  *
  * @description
- * The ionContent directive provides an easy to use content area that can be configured to use
- * Ionic's custom Scroll View, or the built in overflow scorlling of the browser.
+ * The ionContent directive provides an easy to use content area that can be configured 
+ * to use Ionic's custom Scroll View, or the built in overflow scorlling of the browser.
  *
- * While we recommend using the custom Scroll features in Ionic in most cases, sometimes (for performance reasons) only the browser's native overflow scrolling will suffice, and so we've made it easy to toggle between the Ionic scroll implementation and overflow scrolling.
+ * While we recommend using the custom Scroll features in Ionic in most cases, sometimes 
+ * (for performance reasons) only the browser's native overflow scrolling will suffice,
+ * and so we've made it easy to toggle between the Ionic scroll implementation and 
+ * overflow scrolling.
  *
- * You can implement pull-to-refresh with the {@link ionic.directive:ionRefresher} directive, and infinite scrolling with the {@link ionic.directive:ionInfiniteScroll} directive.
+ * You can implement pull-to-refresh with the {@link ionic.directive:ionRefresher} 
+ * directive, and infinite scrolling with the {@link ionic.directive:ionInfiniteScroll} 
+ * directive.
  *
  * @restrict E
  * @param {boolean=} scroll Whether to allow scrolling of content.  Defaults to true.
- * @param {boolean=} overflow-scroll Whether to use overflow-scrolling instead of Ionic scroll.
+ * @param {boolean=} overflow-scroll Whether to use overflow-scrolling instead of 
+ * Ionic scroll.
  * @param {boolean=} padding Whether to add padding to the content.
  * @param {boolean=} has-header Whether to offset the content for a header bar.
  * @param {boolean=} has-subheader Whether to offset the content for a subheader bar.
  * @param {boolean=} has-footer Whether to offset the content for a footer bar.
- * @param {boolean=} has-bouncing Whether to allow scrolling to bounce past the edges of the content.  Defaults to true on iOS, false on Android.
- * @param {expression=} on-refresh Expression to evaluate on refresh completion.
- * @param {expression=} on-refresh-opening Expression to evaluate on refresh opening.
+ * @param {boolean=} has-bouncing Whether to allow scrolling to bounce past the edges 
+ * of the content.  Defaults to true on iOS, false on Android.
  * @param {expression=} on-scroll Expression to evaluate when the content is scrolled.
  * @param {expression=} on-scroll-complete Expression to evaluate when a scroll action completes.
  */
