@@ -436,8 +436,6 @@ $ios7-transition-duration: 250ms;
   }
 }
 
-.slide-out-right {
-}
 .slide-out-right-add {
   @include translate3d(0,0,0);
   @include animation-duration($transition-duration);
@@ -458,16 +456,16 @@ $ios7-transition-duration: 250ms;
   @include translate3d(0, 100%, 0);
 }
 .slide-in-up.ng-enter,
-.slide-in-up .ng-enter {
+.slide-in-up > .ng-enter {
   @include transition(all $slide-in-up-function 400ms);
 }
 .slide-in-up.ng-enter-active,
-.slide-in-up .ng-enter-active {
+.slide-in-up > .ng-enter-active {
   @include translate3d(0, 0, 0);
 }
 
 .slide-in-up.ng-leave,
-.slide-in-up .ng-leave {
+.slide-in-up > .ng-leave {
   @include transition(all ease-in-out 250ms);
 }
 
