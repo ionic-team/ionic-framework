@@ -54,7 +54,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * ![Side Menu](http://ionicframework.com.s3.amazonaws.com/docs/controllers/sidemenu.gif)
  *
  * For more information on side menus, check out the documenation for
- * {@link ionic.directive:ionSideMenuContent ionSideMenuContent}
+ * {@link ionic.directive:ionSideMenuContent ionSideMenuContent} and
  * {@link ionic.directive:ionSideMenu ionSideMenu}.
  *
  * @usage
@@ -91,7 +91,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
 .directive('ionSideMenus', function() {
   return {
     restrict: 'ECA',
-    controller: ['$scope', '$attrs', function($scope, $attrs) {
+    controller: ['$scope', '$attrs', '$parse', function($scope, $attrs, $parse) {
       var _this = this;
 
       angular.extend(this, ionic.controllers.SideMenuController.prototype);
@@ -103,7 +103,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
 
       $scope.sideMenuContentTranslateX = 0;
 
-      $scope.sideMenuController = this;
+      $parse($attrs.model || 'sideMenuController').assign($scope, this);
     }],
     replace: true,
     transclude: true,

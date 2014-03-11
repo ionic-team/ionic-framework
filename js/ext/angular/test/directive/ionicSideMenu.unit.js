@@ -7,13 +7,21 @@ describe('Ionic Angular Side Menu', function() {
 
   beforeEach(module('ionic.ui.sideMenu'));
 
-  beforeEach(inject(function($compile, $rootScope) {
-    el = $compile('<ion-side-menus></ion-side-menus>')($rootScope);
+  it('should assign sideMenuController', inject(function($compile, $rootScope) {
+    var el = $compile('<ion-side-menus></ion-side-menus>')($rootScope);
+    var scope = el.scope();
+    expect(el.controller('ionSideMenus')).toBeDefined();
+    expect(scope.sideMenuController).toBe(el.controller('ionSideMenus'));
+  }));
+  
+  it('should assign sideMenuController with option', inject(function($compile, $rootScope) {
+    var el = $compile('<ion-side-menus model="supermodel"></ion-side-menus>')($rootScope);
+    var scope = el.scope();
+    expect(el.controller('ionSideMenus')).toBeDefined();
+    expect(scope.supermodel).toBe(el.controller('ionSideMenus'));
   }));
 
-  it('Should init', function() {
-    var scope = el.scope();
-    expect(scope.sideMenuController).not.toBe(undefined);
+  it('should init with custom model attr', function() {
   });
 });
 
