@@ -6,12 +6,13 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
 .factory('$ionicPopup', ['$rootScope', '$q', '$document', '$compile', '$timeout', '$ionicTemplateLoader',
   function($rootScope, $q, $document, $compile, $timeout, $ionicTemplateLoader) {
 
-
+  // Center the given popup
   var positionPopup = function(popup) {
     popup.el.style.marginLeft = (-popup.el.offsetWidth) / 2 + 'px';
     popup.el.style.marginTop = (-popup.el.offsetHeight) / 2 + 'px';
   };
 
+  // Hide the body of the given popup if it's empty
   var hideBody = function(popup) {
     var bodyEl = popup.el.querySelector('.popup-body');
     if(bodyEl && bodyEl.innerHTML.trim() == '') {
@@ -19,6 +20,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     }
   };
 
+  // Show a single popup
   var showSinglePopup = function(popup, opts) {
     var _this = this;
 
@@ -31,6 +33,16 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     });
   };
 
+  // Show a popup that was already shown at one point in the past
+  var reshowSinglePopup = function(popup) {
+    ionic.requestAnimationFrame(function() {
+      popup.el.classList.remove('popup-hidden');
+      popup.el.classList.add('popup-showing');
+      popup.el.classList.add('active');
+    });
+  };
+
+  // Hide a single popup
   var hideSinglePopup = function(popup) {
     ionic.requestAnimationFrame(function() {
       popup.el.classList.remove('active');
@@ -38,15 +50,17 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     });
   };
 
-  var removePopup = function(popup) {
-    var popups;
-
+  // Remove a popup once and for all
+  var removeSinglePopup = function(popup) {
     // Force a reflow so the animation will actually run
-    this.el.offsetWidth;
+    popup.el.offsetWidth;
 
-    this.el.classList.remove('active');
+    popup.el.classList.remove('active');
+    popup.el.classList.add('popup-hidden');
 
-    this.el.remove();
+    $timeout(function() {
+      popup.el.remove();
+    }, 400);
   };
 
 
@@ -55,10 +69,16 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
    */
 
   var popupStack = [];
+  var backdropEl = null;
 
   var showBackdrop = function() {
     var el = $compile('<ion-popup-backdrop></ion-popup-backdrop>')($rootScope.$new(true));
     $document[0].body.appendChild(el[0]);
+    backdropEl = el;
+  };
+
+  var removeBackdrop = function() {
+    backdropEl.remove();
   };
 
   // Push the new popup onto the stack with the given data and scope.
@@ -88,7 +108,18 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
 
   };
 
+  // Pop the current popup off the stack. If there are other popups, show them
+  // otherwise hide the backdrop.
   var popAndRemove = function(popup) {
+    var lastPopup = popupStack.pop();
+    var nextPopup = popupStack[popupStack.length-1];
+    removeSinglePopup(lastPopup);
+
+    if(nextPopup) {
+      reshowSinglePopup(nextPopup);
+    } else {
+      removeBackdrop();
+    }
   };
 
   // Append the element to the screen, create the popup view,
@@ -128,6 +159,13 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     // Create a new scope, and bind some of the options stuff to that scope
     var scope = opts.scope && opts.scope.$new() || $rootScope.$new(true);
     angular.extend(scope, opts);
+
+    scope.onClose = function() {
+      popAndRemove(scope.popup);
+    }
+    scope.onButtonTap = function() {
+      console.log('ON BUTTON!!!');
+    }
 
     // Check if we need to load a template for the content of the popup
     if(opts.templateUrl) {

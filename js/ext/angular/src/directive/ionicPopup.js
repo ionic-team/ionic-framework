@@ -16,15 +16,16 @@ angular.module('ionic.ui.popup', [])
     restrict: 'E',
     replace: true,
     transclude: true,
+    scope: true,
     link: function($scope, $element, $attr) {
       $ionicBind($scope, $attr, {
         title: '@',
         buttons: '=',
-        $onButtonTap: '&',
-        $onClose: '&'
+        $onButtonTap: '&onButtonTap',
+        $onClose: '&onClose'
       });
 
-      $scope.onButtonTap = function(button, event) {
+      $scope._buttonTapped = function(button, event) {
         console.log('Button tapped', button, event);
         var close = button.onTap && button.onTap(event);
         if(close === true) {
@@ -32,7 +33,7 @@ angular.module('ionic.ui.popup', [])
           $scope.$onClose(button, event);
           //self.remove();
         }
-        $scope.$onButtonTap(button, event);
+        $scope.$onButtonTap({button: button, event: event});
       }
     },
     template:   '<div class="popup">' +
@@ -42,7 +43,7 @@ angular.module('ionic.ui.popup', [])
                   '<div class="popup-body" ng-transclude>' +
                   '</div>' +
                   '<div class="popup-buttons row">' +
-                    '<button ng-repeat="button in buttons" ng-click="onButtonTap(button, $event)" class="button button-clear col" ng-class="button.type || \'button-positive\'" ng-bind-html="button.text"></button>' +
+                    '<button ng-repeat="button in buttons" ng-click="_buttonTapped(button, $event)" class="button button-clear col" ng-class="button.type || \'button-positive\'" ng-bind-html="button.text"></button>' +
                   '</div>' +
                 '</div>'
   };
