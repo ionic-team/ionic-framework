@@ -13,6 +13,9 @@
   {% endif %}
 
     <style>
+    .docked-menu.no-fixed.fixed-menu {
+      position: static;
+    }
     .left-menu .api-section {
       display: none;
       border-top: 1px solid #EEE;
@@ -44,7 +47,7 @@
 
         <div class="col-md-2 col-sm-3 aside-menu">
 
-          <div class="docked-menu">
+          <div class="docked-menu{% if page.active == "javascript" %} no-fixed{% endif %}">
 
 
             <!-- Getting Started -->
