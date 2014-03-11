@@ -62,6 +62,6 @@ describe('Ionic Angular Slide Box', function() {
     </ion-slide-box>')(rootScope);
 
    var scope = el.scope();
-   expect(scope.slideBox.getPos()).toBe(2);
+   expect(scope.slideBox.currentIndex()).toBe(2);
   });
 });

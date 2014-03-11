@@ -24,8 +24,8 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  * provide dynamic layout features such as auto-title centering and animation.
  * They are also used by the Views and Navigation Controller to animate a title
  * on navigation and toggle a back button.
- * *
- * The main header bar feature provide is auto title centering.
+ *
+ * The main header bar feature provided is auto title centering.
  * In this situation, the title text will center itself until either the
  * left or right button content is too wide for the label to center.
  * In that case, it will slide left or right until it can fit.
