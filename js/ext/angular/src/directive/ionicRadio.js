@@ -120,7 +120,7 @@ angular.module('ionic.ui.radio', [])
           $element.addClass('active');
         }
       });
-        
+
       ionic.on('tap', clickHandler, $element[0]);
 
       $scope.$on('$destroy', function() {

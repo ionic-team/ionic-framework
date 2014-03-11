@@ -32,7 +32,7 @@ angular.module('ionic.ui.slideBox', [])
  * </ion-slide-box>
  * ```
  *
- * @param {expression=} model The model to assign this slide box container's {@link ionic.controller:ionicSlideBox ionicSlideBox} controller to. By default, assigns to $scope.slideBoxController.
+ * @param {expression=} model The model to assign this slide box container's {@link ionic.controller:ionicSlideBox} controller to. By default, assigns to $scope.slideBoxController.
  * @param {boolean=} does-continue Whether the slide box should automatically slide.
  * @param {number=} slide-interval How many milliseconds to wait to change slides (if does-continue is true). Defaults to 4000.
  * @param {boolean=} show-pager Whether a pager should be shown for this slide box.

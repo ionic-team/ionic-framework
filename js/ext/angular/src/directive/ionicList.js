@@ -152,7 +152,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
  * list item requires the item class. Ionic also comes with pre-built Angular
  * directives to make it easier to create a complex list.
  *
- * Using the ionList and {@link ionic.directive:ionItem ionItem} directives
+ * Using the ionList and {@link ionic.directive:ionItem} directives
  * make it easy to support various interaction modes such as swipe to edit,
  * drag to reorder, and removing items.
  *
@@ -160,7 +160,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
  * directives, but rather just use the classnames.
  * This demo is a simple list without using the directives.
  *
- * See the {@link ionic.directive:ionItem ionItem documentation} for more information on list items.
+ * See the {@link ionic.directive:ionItem} documentation for more information on list items.
  *
  * @usage
  * ```html

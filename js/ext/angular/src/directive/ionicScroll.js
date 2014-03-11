@@ -3,6 +3,22 @@
 
 angular.module('ionic.ui.scroll', [])
 
+/**
+ * @ngdoc directive
+ * @name ionScroll
+ * @module ionic
+ * @restrict E
+ *
+ * @description
+ * Creates a scrollable container for all content inside.
+ *
+ * @param {string=} direction Which way to scroll. 'x' or 'y'. Default 'y'.
+ * @param {boolean=} paging Whether to scroll with paging.
+ * @param {expression=} on-refresh Called on pull-to-refresh, triggered by an {@link ionic.directive:ionRefresher}.
+ * @param {expression=} on-scroll Called whenever the user scrolls.
+ * @param {boolean=} scrollbar-x Whether to show the horizontal scrollbar. Default false.
+ * @param {boolean=} scrollbar-x Whether to show the vertical scrollbar. Default true.
+ */
 .directive('ionScroll', ['$parse', '$timeout', '$controller', function($parse, $timeout, $controller) {
   return {
     restrict: 'E',
@@ -14,7 +30,6 @@ angular.module('ionic.ui.scroll', [])
       paging: '@',
       onRefresh: '&',
       onScroll: '&',
-      refreshComplete: '=',
       scroll: '@',
       scrollbarX: '@',
       scrollbarY: '@',

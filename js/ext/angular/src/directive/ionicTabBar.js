@@ -12,7 +12,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
  * @module ionic
  *
  * @description
- * Controller for the {@link ionic.directive:ionTabs ionTabs} directive.
+ * Controller for the {@link ionic.directive:ionTabs} directive.
  */
 .controller('ionicTabs', ['$scope', '$ionicViewService', '$element', function($scope, $ionicViewService, $element) {
   var _selectedTab = null;
@@ -81,7 +81,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
    * @param {boolean=} shouldChangeHistory Whether this selection should load this tab's view history
    * (if it exists) and use it, or just loading the default page. Default false.
    * Hint: you probably want this to be true if you have an
-   * {@link ionic.directive:ionNavView ionNavView} inside your tab.
+   * {@link ionic.directive:ionNavView} inside your tab.
    */
   self.select = function(tab, shouldEmitEvent) {
     var tabIndex;
@@ -138,7 +138,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
  * @description
  * Powers a multi-tabbed interface with a Tab Bar and a set of "pages" that can be tabbed through.
  *
- * See the {@link ionic.directive:ionTab ionTab} directive's documentation for more details.
+ * See the {@link ionic.directive:ionTab} directive's documentation for more details.
  *
  * @usage
  * ```html
@@ -158,7 +158,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
  * </ion-tabs>
  * ```
  *
- * @param {expression=} model The model to assign this tabbar's {@link ionic.controller:ionicTabs ionicTabs} controller to. By default, assigns  to $scope.tabsController.
+ * @param {expression=} model The model to assign this tabbar's {@link ionic.controller:ionicTabs} controller to. By default, assigns  to $scope.tabsController.
  * @param {string=} animation The animation to use when changing between tab pages.
  * @param {string=} tabs-style The class to apply to the tabs. Defaults to 'tabs-positive'.
  * @param {string=} tabs-type Whether to put the tabs on the top or bottom. Defaults to 'tabs-bottom'.
@@ -230,7 +230,7 @@ function($scope, $ionicViewService, $rootScope, $element) {
  *   on-deselect="onTabDeselected()">
  * </ion-tab>
  * ```
- * For a complete, working tab bar example, see the {@link ionic.directive:ionTabs ionTabs} documentation.
+ * For a complete, working tab bar example, see the {@link ionic.directive:ionTabs} documentation.
  *
  * @param {string} title The title of the tab.
  * @param {string=} href The link that this tab will navigate to when tapped.
@@ -239,8 +239,8 @@ function($scope, $ionicViewService, $rootScope, $element) {
  * @param {string=} icon-off The icon of the tab while it is not selected.
  * @param {expression=} badge The badge to put on this tab (usually a number).
  * @param {expression=} badge-style The style of badge to put on this tab (eg tabs-positive).
- * @param {expression=} left-buttons The left buttons to use on a parent {@link ionic.directive:ionNavBar ionNavBar} while this tab is selected.
- * @param {expression=} right-buttons The right buttons to use on a parent {@link ionic.directive:ionNavBar ionNavBar} while this tab is selected.
+ * @param {expression=} left-buttons The left buttons to use on a parent {@link ionic.directive:ionNavBar} while this tab is selected.
+ * @param {expression=} right-buttons The right buttons to use on a parent {@link ionic.directive:ionNavBar} while this tab is selected.
  * @param {expression=} on-select Called when this tab is selected.
  * @param {expression=} on-deselect Called when this tab is deselected.
  */

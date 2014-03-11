@@ -7,6 +7,14 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
  * Panel is a simple 100% width and height, fixed panel. It's meant for content to be
  * added to it, or animated around.
  */
+/**
+ * @ngdoc directive
+ * @name ionPane
+ * @module ionic
+ * @restrict E
+ *
+ * @description A simple container that fits content, with no side effects.  Adds the 'pane' class to the element.
+ */
 .directive('ionPane', function() {
   return {
     restrict: 'E',
@@ -27,7 +35,7 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
  *
  * While we recommend using the custom Scroll features in Ionic in most cases, sometimes (for performance reasons) only the browser's native overflow scrolling will suffice, and so we've made it easy to toggle between the Ionic scroll implementation and overflow scrolling.
  *
- * You can implement pull-to-refresh with the {@link ionic.directive:ionRefresher ionRefresher} directive, and infinite scrolling with the {@link ionic.directive:ionInfiniteScroll ionInfiniteScroll} directive.
+ * You can implement pull-to-refresh with the {@link ionic.directive:ionRefresher} directive, and infinite scrolling with the {@link ionic.directive:ionInfiniteScroll} directive.
  *
  * @restrict E
  * @param {boolean=} scroll Whether to allow scrolling of content.  Defaults to true.
@@ -190,15 +198,21 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
  * @ngdoc directive
  * @name ionInfiniteScroll
  * @module ionic
+ * @parent ionContent, ionScroll
  * @restrict E
  *
  * @description
- * The ionInfiniteScroll directive, when placed inside of {@link ionic.directive:ionContent ionContent}, allows you to call a function whenever the user gets to the bottom of the page or near the bottom of the page.
+ * The ionInfiniteScroll directive, when placed inside of 
+ * {@link ionic.directive:ionContent}, allows you to call a function whenever 
+ * the user gets to the bottom of the page or near the bottom of the page.
  *
- * The expression you pass in for `on-infinite` is called when the user scrolls greater than `distance` away from the bottom of the content.
+ * The expression you pass in for `on-infinite` is called when the user scrolls 
+ * greater than `distance` away from the bottom of the content.
  *
- * @param {expression} on-infinite What to call when the scroller reaches the bottom.
- * @param {string=} distance The distance from the bottom that the scroll must reach to trigger the on-infinite expression. Default 1%.
+ * @param {expression} on-infinite What to call when the scroller reaches the 
+ * bottom.
+ * @param {string=} distance The distance from the bottom that the scroll must 
+ * reach to trigger the on-infinite expression. Default 1%.
  *
  * @usage
  * ```html
@@ -221,7 +235,8 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
  * }
  * ```
  *
- * An easy to way to stop infinite scroll once there is no more data to load is to use angular's `ng-if` directive:
+ * An easy to way to stop infinite scroll once there is no more data to load 
+ * is to use angular's `ng-if` directive:
  *
  * ```html
  * <ion-infinite-scroll

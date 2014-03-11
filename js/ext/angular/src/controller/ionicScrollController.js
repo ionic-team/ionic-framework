@@ -3,6 +3,9 @@
 
 angular.module('ionic.ui.scroll')
 
+/**
+ * @private
+ */
 .controller('$ionicScroll', ['$scope', 'scrollViewOptions', '$timeout', '$ionicScrollDelegate', '$window', function($scope, scrollViewOptions, $timeout, $ionicScrollDelegate, $window) {
 
   var self = this;

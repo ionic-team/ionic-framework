@@ -54,8 +54,8 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * ![Side Menu](http://ionicframework.com.s3.amazonaws.com/docs/controllers/sidemenu.gif)
  *
  * For more information on side menus, check out the documenation for
- * {@link ionic.directive:ionSideMenuContent ionSideMenuContent} and
- * {@link ionic.directive:ionSideMenu ionSideMenu}.
+ * {@link ionic.directive:ionSideMenuContent} and
+ * {@link ionic.directive:ionSideMenu}.
  *
  * @usage
  * To use side menus, add an `<ion-side-menus>` parent element,
@@ -85,7 +85,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * }
  * ```
  *
- * @param {expression=} model The model to assign this side menu container's {@link ionic.controller:ionicSideMenus ionicSideMenus} controller to. By default, assigns  to $scope.sideMenuController.
+ * @param {expression=} model The model to assign this side menu container's {@link ionic.controller:ionicSideMenus} controller to. By default, assigns  to $scope.sideMenuController.
  *
  */
 .directive('ionSideMenus', function() {
@@ -120,7 +120,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  *
  * @description
  * A container for the main visible content, sibling to one or more
- * {@link ionic.directive:ionSideMenu ionSideMenu} directives.
+ * {@link ionic.directive:ionSideMenu} directives.
  *
  * An attribute directive, recommended to be used as part of an `<ion-pane>` element.
  *
@@ -131,7 +131,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * </div>
  * ```
  * For a complete side menu example, see the
- * {@link ionic.directive:ionSideMenus#usage ionSideMenus} documentation.
+ * {@link ionic.directive:ionSideMenus} documentation.
  *
  * @param {boolean=} drag-content Whether the content can be dragged.
  *
@@ -256,7 +256,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * </ion-side-menu>
  * ```
  * For a complete side menu example, see the
- * {@link ionic.directive:ionSideMenus#usage ionSideMenus} documentation.
+ * {@link ionic.directive:ionSideMenus} documentation.
  *
  * @param {string} side Which side the side menu is currently on.  Allowed values: 'left' or 'right'.
  * @param {boolean=} is-enabled Whether this side menu is enabled.

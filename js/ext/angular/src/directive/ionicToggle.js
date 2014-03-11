@@ -3,8 +3,20 @@
 
 angular.module('ionic.ui.toggle', [])
 
-// The Toggle directive is a toggle switch that can be tapped to change
-// its value
+/**
+ * @ngdoc directive
+ * @name ionToggle
+ * @module ionic
+ * @restrict E
+ *
+ * @description
+ * An animated switch which binds a given model to a boolean.
+ *
+ * Allows dragging of the switch's nub.
+ *
+ * Behaves like any [AngularJS checkbox](http://docs.angularjs.org/api/ng/input/input[checkbox]) otherwise.
+ *
+ */
 .directive('ionToggle', ['$ionicGesture', '$timeout', function($ionicGesture, $timeout) {
 
   return {

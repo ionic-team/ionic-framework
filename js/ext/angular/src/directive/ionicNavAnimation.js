@@ -7,7 +7,7 @@ angular.module('ionic.ui.navAnimation', [])
  * @parent ionNavView
  *
  * @description
- * When used under an {@link ionic.directive:ionNavView ionNavView} and on an `<a>` element,
+ * When used under an {@link ionic.directive:ionNavView} and on an `<a>` element,
  * allows you to set the animation all clicks on that link within the navView use.
  *
  * @usage
