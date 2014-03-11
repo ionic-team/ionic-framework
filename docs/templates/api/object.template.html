@@ -1,4 +1,4 @@
-<@ include "lib/macros.html" @>
+<@ include "lib/macros.html" -@>
 <@ extends "api/api.template.html" @>
 
 <@ block additional @>
@@ -16,7 +16,7 @@
       <$ functionSyntax(doc) $>
     <@ endif @>
 
-    <@ include "lib/params.template.html" @>
+    <$ paramTable(doc.params) $>
     <@ include "lib/this.template.html" @>
     <@ include "lib/returns.template.html" @>
   <@- endif @>

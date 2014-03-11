@@ -7,7 +7,12 @@
 <h2><$ doc.name | dashCase $>
     <@ if doc.parent @>
     <small>
-      (child of an <a href="<$ doc.parent.path $>"><$ doc.parent.name | dashCase $></a> element)
+      (child of <a href="<$ doc.parent.path $>"><$ doc.parent.name | dashCase $></a>)
+    </small>
+    <@ endif @>
+    <@ if doc.controller @>
+    <small>
+      (controller: <a href="<$ doc.controller.path $>"><$ doc.controller.name $></a>)
     </small>
     <@ endif @>
 </h2>

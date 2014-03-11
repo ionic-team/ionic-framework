@@ -15,10 +15,9 @@
 #### Method's `this`
 <$ method.this $>
 <@ endif @>
-    
+
 <@ if method.returns @>
-**** Returns
-<$ typeInfo(method.returns) $>
+* Returns: <$ typeInfo(method.returns) $>
 <@ endif @>
 
 <@ endfor -@>

@@ -12,6 +12,28 @@
   <body class="docs {% if page.body_css %}{{ page.body_css }}{% else %}docs-page{% endif %}">
   {% endif %}
 
+    <style>
+    .left-menu .api-section {
+      display: none;
+      border-top: 1px solid #EEE;
+      padding-left: 10px;
+    }
+    .left-menu .api-section.active {
+      border-color: #72a4f8;
+    }
+    .left-menu.active-menu .api-section {
+      display: block;
+    }
+    .left-menu li.menu-subsection {
+      margin-bottom: 0;
+      padding-left: 0.5em;
+      font-weight: bold;
+    }
+    .left-menu li.menu-subsection.active > a {
+      border: none;
+    }
+    </style>
+
     {% include nav_links.html %}
 
     {% include header.html %}
@@ -140,21 +162,28 @@
                   Javascript
                 </a>
               </li>
-              <@ for navItem in doc.areas.api.navGroups[0].navItems @>
-                <@ if navItem.type == "section" @>
-                  <li class="menu-subsection">
-                    <$ navItem.name $>
-                  </li>
-                <@ else @>
-                  <li class="menu-item{% if page.doc == "<$ navItem.name $>" %} active{% endif %}">
-                    <a href="{{ site.docs_0_9_0 }}/angularjs/<$ navItem.href $>">
-                      <@ if navItem.type == "directive" @>
-                        <$ navItem.name | dashCase $>
-                      <@ else @>
-                        <$ navItem.name $>
-                      <@ endif @>
+              <@ for section in doc.areas.api.navGroups[0].navItems @>
+                <@ if section.type == "section" @>
+                  <li class="menu-subsection{% if page.doc == "<$ section.name $>" %} active{% endif %}">
+                    <a href="{{ site.docs_0_9_0}}/angularjs/<$ section.href $>">
+                      <$ section.name $>
                     </a>
                   </li>
+                  <div class="api-section{% if page.docType == "<$ section.name $>" %} active{% endif %}">
+                    <@ for component in doc.areas.api.navGroups[0].navItems @>
+                      <@ if component.type == section.name @>
+                        <li class="menu-item{% if page.doc == "<$ component.name $>" %} active{% endif %}">
+                          <a href="{{ site.docs_0_9_0 }}/angularjs/<$ component.href $>">
+                            <@ if component.type == "directive" @>
+                              <$ component.name | dashCase $>
+                            <@ else @>
+                              <$ component.name $>
+                            <@ endif @>
+                          </a>
+                        </li>
+                      <@ endif @>
+                    <@ endfor @>
+                  </div>
                 <@ endif @>
               <@ endfor @>
             </ul>
@@ -287,14 +316,5 @@ ol-b">
     {% include footer.html %}
 
     {% include base_scripts.html %}
-
-    <style>
-    .left-menu li.menu-subsection {
-      padding-left: 0.5em;
-      font-weight: bold;
-    }
-    .left-menu li.menu-item {
-    }
-    </style>
   </body>
 </html>

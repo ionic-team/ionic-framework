@@ -4,6 +4,7 @@ active: javascript
 title: "<@ if doc.docType == "directive" @><$ doc.name | dashCase $><@ else @><$ doc.name $><@ endif @>"
 header_sub_title: "<$ doc.docType | capital $> in module <$ doc.module $>"
 doc: "<$ doc.name $>"
+docType: "<$ doc.docType $>"
 ---
 
 <div class="pull-right">

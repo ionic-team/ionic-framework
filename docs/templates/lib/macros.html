@@ -1,5 +1,6 @@
 <@ macro typeList(types) -@>
-<@ for typeName in types @><a href="" class="<$ typeName | typeClass $>"><$ typeName | escape $></a><@ endfor @>
+  <@ set separator = joiner("|") @>
+  <@ for type in types @><$ separator() $><$ type | code $><@ endfor @>
 <@- endmacro -@>
 
 <@ macro paramTable(params, isDirective) @>
@@ -20,7 +21,7 @@
         <@ if param.type.optional @><div><em>(optional)</em></div><@ endif @>
       </td>
       <td>
-        <$ param.type.name $>
+        <$ typeList(param.typeList) $>
       </td>
       <td>
         <$ param.description | marked $>
@@ -49,10 +50,5 @@
 <@ endmacro -@>
 
 <@- macro typeInfo(fn) -@>
-<table class="variables-matrix return-arguments">
-  <tr>
-    <td><$ typeList(fn.typeList) $></td>
-    <td><$ fn.description $></td>
-  </tr>
-</table>
+<$ typeList(fn.typeList) $> <$ fn.description $>
 <@- endmacro -@>
