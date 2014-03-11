@@ -18,8 +18,9 @@ describe('Ionic Modal', function() {
     var template = '<div class="modal"></div>';
     var modalInstance = modal.fromTemplate(template);
     modalInstance.show();
-    expect(modalInstance.el.classList.contains('modal')).toBe(true);
-    expect(modalInstance.el.classList.contains('slide-in-up')).toBe(true);
+    expect(modalInstance.el.classList.contains('modal-backdrop')).toBe(true);
+    expect(modalInstance.modalEl.classList.contains('modal')).toBe(true);
+    expect(modalInstance.modalEl.classList.contains('slide-in-up')).toBe(true);
   });
 
   it('Should show for dynamic template', function() {
@@ -30,8 +31,9 @@ describe('Ionic Modal', function() {
     var modalInstance = modal.fromTemplateUrl('modal.html', function(modalInstance) {
       done = true;
       modalInstance.show();
-      expect(modalInstance.el.classList.contains('modal')).toBe(true);
-      expect(modalInstance.el.classList.contains('active')).toBe(true);
+      expect(modalInstance.el.classList.contains('modal-backdrop')).toBe(true);
+      expect(modalInstance.modalEl.classList.contains('modal')).toBe(true);
+      expect(modalInstance.modalEl.classList.contains('active')).toBe(true);
     });
 
     timeout.flush();

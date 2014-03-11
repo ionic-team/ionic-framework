@@ -1,31 +1,34 @@
-angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.service.platform', 'ngAnimate'])
+angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.service.platform', 'ionic.ui.modal'])
 
 
-.factory('$ionicModal', ['$rootScope', '$document', '$compile', '$animate', '$q', '$timeout', '$ionicPlatform', '$ionicTemplateLoader', function($rootScope, $document, $compile, $animate, $q, $timeout, $ionicPlatform, $ionicTemplateLoader) {
+.factory('$ionicModal', ['$rootScope', '$document', '$compile', '$timeout', '$ionicPlatform', '$ionicTemplateLoader',
+                function( $rootScope,   $document,   $compile,   $timeout,   $ionicPlatform,   $ionicTemplateLoader) {
+
   var ModalView = ionic.views.Modal.inherit({
     initialize: function(opts) {
       ionic.views.Modal.prototype.initialize.call(this, opts);
       this.animation = opts.animation || 'slide-in-up';
     },
+
     // Show the modal
     show: function() {
       var self = this;
-      var element = angular.element(self.el);
+      var modalEl = angular.element(self.modalEl);
 
-      document.body.classList.add('modal-open');
+      $document[0].body.classList.add('modal-open');
 
       self._isShown = true;
 
-      if(!element.parent().length) {
-        self.el.classList.add(self.animation);
+      if(!self.el.parentElement) {
+        modalEl.addClass(self.animation);
         $document[0].body.appendChild(self.el);
       }
 
-      element.addClass('ng-enter active');
-      element.removeClass('ng-leave ng-leave-active');
+      modalEl.addClass('ng-enter active')
+             .removeClass('ng-leave ng-leave-active');
 
       $timeout(function(){
-        element.addClass('ng-enter-active');
+        modalEl.addClass('ng-enter-active');
         self.scope.$parent && self.scope.$parent.$broadcast('modal.shown');
       }, 20);
 
@@ -34,25 +37,26 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
       }, 200);
 
     },
+
     // Hide the modal
     hide: function() {
       this._isShown = false;
-      var element = angular.element(this.el);
+      var modalEl = angular.element(this.modalEl);
 
-      element.addClass('ng-leave');
+      modalEl.addClass('ng-leave');
 
       $timeout(function(){
-        element.addClass('ng-leave-active');
-        element.removeClass('ng-enter ng-enter-active active');
+        modalEl.addClass('ng-leave-active')
+               .removeClass('ng-enter ng-enter-active active');
       }, 20);
 
       $timeout(function(){
-        document.body.classList.remove('modal-open');
-      }, 400);
+        $document[0].body.classList.remove('modal-open');
+      }, 350);
 
       ionic.views.Modal.prototype.hide.call(this);
 
-      this.scope.$parent.$broadcast('modal.hidden');
+      this.scope.$parent && this.scope.$parent.$broadcast('modal.hidden');
 
       this._deregisterBackButton && this._deregisterBackButton();
     },
@@ -61,12 +65,12 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
     remove: function() {
       var self = this;
       self.hide();
-      self.scope.$parent.$broadcast('modal.removed');
+      self.scope.$parent && self.scope.$parent.$broadcast('modal.removed');
 
       $timeout(function(){
         self.scope.$destroy();
         self.el && self.el.parentElement && self.el.parentElement.removeChild(self.el);
-      }, 1000);
+      }, 750);
     },
 
     isShown: function() {
@@ -79,9 +83,10 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
     var scope = options.scope && options.scope.$new() || $rootScope.$new(true);
 
     // Compile the template
-    var element = $compile(templateString)(scope);
+    var element = $compile('<ion-modal>' + templateString + '</ion-modal>')(scope);
 
     options.el = element[0];
+    options.modalEl = options.el.querySelector('.modal');
     var modal = new ModalView(options);
 
     modal.scope = scope;
