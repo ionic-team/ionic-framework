@@ -41,6 +41,12 @@
         bodyEl.innerHTML = content;
       }
     },
+    hideBody: function() {
+      var bodyEl = this.el.querySelector('.popup-body');
+      if(bodyEl) {
+        bodyEl.style.display = 'none';
+      }
+    },
     setButtons: function(buttons) {
       this.cleanupButtons();
 
@@ -86,7 +92,9 @@
       var _this = this;
 
       ionic.requestAnimationFrame(function() {
-        if(opts.content) {
+        if(!opts.content && !opts.templateUrl)  {
+          _this.hideBody();
+        } else if(opts.content) {
           _this.setContent(opts.content);
         }
         _this.setTitle(opts.title);

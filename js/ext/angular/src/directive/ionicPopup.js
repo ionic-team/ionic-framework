@@ -9,7 +9,6 @@ angular.module('ionic.ui.popup', [])
     replace: true,
     transclude: true,
     link: function($scope, $element){
-      //$element.addClass($scope.animation || '');
     },
     template: '<div class="popup-backdrop active">' +
                 '<div class="popup">' +

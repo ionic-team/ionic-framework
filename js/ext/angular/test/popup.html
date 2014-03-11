@@ -1,7 +1,7 @@
 <html ng-app="ionic.example">
   <head>
     <meta charset="utf-8">
-    <title>Loading</title>
+    <title>Popups</title>
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -29,6 +29,16 @@
               { text: '<b>Save</b>', onTap: function(e) { console.log('Details', e); } },
             ]
           });
+
+          $timeout(function() {
+            $ionicPopup.show({
+              title: 'Do you like ice cream?',
+              buttons: [
+                { text: 'No', onTap: function(e) { return true; } },
+                { text: '<b>Yes</b>', onTap: function(e) { console.log('Details', e); } },
+              ]
+            });
+          }, 1000);
       });
     </script>
   </body>

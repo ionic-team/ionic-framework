@@ -3,17 +3,6 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
 
 .factory('$ionicPopup', ['$rootScope', '$q', '$document', '$compile', '$ionicTemplateLoader', function($rootScope, $q, $document, $compile, $ionicTemplateLoader) {
 
-  var getPopup = function() {
-    // Make sure there is only one loading element on the page at one point in time
-    var existing = angular.element($document[0].querySelector('.popup'));
-    if(existing.length) {
-      var scope = existing.scope();
-      if(scope.popup) {
-        return scope;
-      }
-    }
-  };
-
   // Append the element to the screen, create the popup view,
   // and add the popup to the scope
   var constructPopupOnScope = function(element, scope) {
@@ -50,7 +39,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
 
     } else {
       // Compile the template
-      var element = $compile('<ion-popup>' + opts.content + '</ion-popup>')(scope);
+      var element = $compile('<ion-popup></ion-popup>')(scope);
       q.resolve(constructPopupOnScope(element, scope));
     }
 
@@ -60,11 +49,6 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
   return {
     showPopup: function(data) {
       var q = $q.defer();
-      // If there is an existing popup, just show that one
-      var existing = getPopup();
-      if(existing) {
-        return existing.popup.show(data);
-      }
 
       createPopup(data).then(function(popup) {
         popup.show(data);
