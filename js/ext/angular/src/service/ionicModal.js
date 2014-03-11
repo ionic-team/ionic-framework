@@ -203,12 +203,12 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
      * @returns {promise} A promise that will be resolved with an instance of
      * an {@link ionic.controller:ionicModal} controller.
      */
-    fromTemplateUrl: function(url, options) {
+    fromTemplateUrl: function(url, options, _) {
       var cb;
       //Deprecated: allow a callback as second parameter. Now we return a promise.
-      if (arguments.length === 3) {
-        cb = arguments[1];
-        options = arguments[2] || {};
+      if (angular.isFunction(options)) {
+        cb = options;
+        options = _;
       }
       return $ionicTemplateLoader.load(url).then(function(templateString) {
         var modal = createModal(templateString, options || {});

@@ -23,11 +23,11 @@ describe('Ionic View', function() {
 
   it('should broacast view enter on link', function() {
     spyOn(scope, '$broadcast');
-    var element = compile('<ion-view title="\'Me Title\'"></ion-view>')(scope);
+    var element = compile('<ion-view title="Me Title"></ion-view>')(scope);
     expect(scope.$broadcast).toHaveBeenCalledWith('viewState.viewEnter', { title: 'Me Title', navDirection: undefined });
 
     scope.$navDirection = 'forward';
-    element = compile('<ion-view title="\'Me Title\'"></ion-view>')(scope);
+    element = compile('<ion-view title="Me Title"></ion-view>')(scope);
     expect(scope.$broadcast).toHaveBeenCalledWith('viewState.viewEnter', { title: 'Me Title', navDirection: 'forward' });
   });
 
@@ -109,7 +109,7 @@ describe('Ionic View', function() {
 
   it('should show and update navBar title when using view attr or events', function() {
     scope.viewTitle = 'Title';
-    var element = compile('<div><ion-nav-bar></ion-nav-bar><ion-view title="viewTitle"></ion-view></div>')(scope);
+    var element = compile('<div><ion-nav-bar></ion-nav-bar><ion-view title="{{viewTitle}}"></ion-view></div>')(scope);
     scope.$digest();
     var navBar = element.find('header');
     var title = navBar.find('h1');
