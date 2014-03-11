@@ -275,8 +275,6 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
       var infiniteScrollCtrl = ctrls[1];
       var scrollView = infiniteScrollCtrl.scrollView = scrollCtrl.scrollView;
 
-      var iconElement = $element[0].querySelector('.icon');
-
       $scope.icon = function() {
         return angular.isDefined($attrs.icon) ? $attrs.icon : 'ion-loading-d';
       };
