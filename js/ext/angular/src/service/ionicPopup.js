@@ -220,16 +220,28 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     },
 
     // Show a standard alert popup 
-    alert: function(message, title, $scope) {
-      this.showPopup({
-        message: message,
-        title: title,
-        scope: $scope
+    alert: function(title, message) {
+      return this.showPopup({
+        content: message,
+        title: title || '',
+        buttons: [
+          {
+            text: 'OK',
+            type: 'button-positive',
+            onTap: function(e) {
+              return true
+            }
+          }
+        ]
       });
     },
 
     // Show a standard confirm popup
-    confirm: function(cb) {
+    confirm: function(message) {
+      return this.showPopup({
+        content: message,
+        title: title
+      });
     },
 
     // Show a standard prompt popup

@@ -11,7 +11,10 @@
 
   </head>
   <body ng-controller="PopupCtrl">
-    <button class="button button-dark" ng-click="showPopups()">Show</button>
+    <button class="button button-dark" ng-click="showPopup()">Generic</button>
+    <button class="button button-primary" ng-click="showConfirm()">Confirm</button>
+    <button class="button button-balanced" ng-click="showPrompt()">Prompt</button>
+    <button class="button button-positive" ng-click="showAlert()">Alert</button>
 
     <script id="popup-template.html" type="text/ng-template">
       <input ng-model="data.wifi" type="text" placeholder="Password">
@@ -21,7 +24,7 @@
       angular.module('ionic.example', ['ionic'])
 
       .controller('PopupCtrl', function($scope, $timeout, $q, $ionicPopup) {
-          $scope.showPopups = function() {
+          $scope.showPopup = function() {
             $scope.data = {}
 
             $ionicPopup.show({
@@ -60,7 +63,25 @@
             */
           };
 
-          $scope.showPopups();
+          $scope.showConfirm = function() {
+            $ionicPopup.confirm('Are you sure?').then(function(res) {
+              if(res) {
+                console.log('You are sure');
+              } else {
+                console.log('You are not sure');
+              }
+            });
+          };
+          $scope.showPrompt = function() {
+            $ionicPopup.prompt('What is your name?').then(function(res) {
+              console.log('Your name is', res);
+            });
+          };
+          $scope.showAlert = function() {
+            $ionicPopup.alert('Don\'t eat that!', 'It might taste good').then(function(res) {
+              console.log('Thank you for not eating my delicious ice cream cone');
+            });
+          };
       });
     </script>
   </body>
