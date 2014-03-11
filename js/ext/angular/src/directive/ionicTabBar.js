@@ -1,23 +1,40 @@
 angular.module('ionic.ui.tabs', ['ionic.service.view'])
 
-/**
- * @description
- *
- * The Tab Controller renders a set of pages that switch based on taps
- * on a tab bar. Modelled off of UITabBarController.
- */
-
 .run(['$ionicViewService', function($ionicViewService) {
   // set that the tabs directive should not animate when transitioning
   // to it. Instead, the children <tab> directives would animate
   $ionicViewService.disableRegisterByTagName('ion-tabs');
 }])
 
-.controller('$ionicTabs', ['$scope', '$ionicViewService', '$element', function($scope, $ionicViewService, $element) {
-  var self = $scope.tabsController = this;
+/**
+ * @ngdoc controller
+ * @name ionicTabs
+ * @module ionic
+ *
+ * @description
+ * Controller for the {@link ionic.directive:ionTabs ionTabs} directive.
+ */
+.controller('ionicTabs', ['$scope', '$ionicViewService', '$element', function($scope, $ionicViewService, $element) {
+  var _selectedTab = null;
+  var self = this;
   self.tabs = [];
 
-  self.selectedTab = null;
+  /**
+   * @ngdoc method
+   * @name ionicTabs#selectedTabIndex
+   * @returns `number` The index of the selected tab, or -1.
+   */
+  self.selectedTabIndex = function() {
+    return self.tabs.indexOf(_selectedTab);
+  };
+  /**
+   * @ngdoc method
+   * @name ionicTabs#selectedTab
+   * @returns `ionTab` The selected tab or null if none selected.
+   */
+  self.selectedTab = function() {
+    return _selectedTab;
+  };
 
   self.add = function(tab) {
     $ionicViewService.registerHistory(tab);
@@ -47,18 +64,25 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
     self.tabs.splice(tabIndex, 1);
   };
 
-  self.getTabIndex = function(tab) {
-    return self.tabs.indexOf(tab);
-  };
-
   self.deselect = function(tab) {
     if (tab.$tabSelected) {
-      self.selectedTab = null;
+      _selectedTab = null;
       tab.$tabSelected = false;
       (tab.onDeselect || angular.noop)();
     }
   };
 
+  /**
+   * @ngdoc method
+   * @name ionicTabs#select
+   * @description Select the given tab or tab index.
+   *
+   * @param {ionTab|number} tabOrIndex A tab object or index of a tab to select
+   * @param {boolean=} shouldChangeHistory Whether this selection should load this tab's view history
+   * (if it exists) and use it, or just loading the default page. Default false.
+   * Hint: you probably want this to be true if you have an
+   * {@link ionic.directive:ionNavView ionNavView} inside your tab.
+   */
   self.select = function(tab, shouldEmitEvent) {
     var tabIndex;
     if (angular.isNumber(tab)) {
@@ -71,7 +95,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
       throw new Error('Cannot select tab "' + tabIndex + '"!');
     }
 
-    if (self.selectedTab && self.selectedTab.$historyId == tab.$historyId) {
+    if (_selectedTab && _selectedTab.$historyId == tab.$historyId) {
       if (shouldEmitEvent) {
         $ionicViewService.goToHistoryRoot(tab.$historyId);
       }
@@ -80,7 +104,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
         self.deselect(tab);
       });
 
-      self.selectedTab = tab;
+      _selectedTab = tab;
       //Use a funny name like $tabSelected so the developer doesn't overwrite the var in a child scope
       tab.$tabSelected = true;
       (tab.onSelect || angular.noop)();
@@ -103,13 +127,50 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
   };
 }])
 
-.directive('ionTabs', ['$ionicViewService', '$ionicBind', function($ionicViewService, $ionicBind) {
+/**
+ * @ngdoc directive
+ * @name ionTabs
+ * @module ionic
+ * @restrict E
+ * @controller ionicTabs
+ * @codepen KbrzJ
+ *
+ * @description
+ * Powers a multi-tabbed interface with a Tab Bar and a set of "pages" that can be tabbed through.
+ *
+ * See the {@link ionic.directive:ionTab ionTab} directive's documentation for more details.
+ *
+ * @usage
+ * ```html
+ * <ion-tabs tabs-type="tabs-icon-only">
+ *
+ *   <ion-tab title="Home" icon-on="ion-ios7-filing" icon-off="ion-ios7-filing-outline">
+ *     <!-- Tab 1 content -->
+ *   </ion-tab>
+ *
+ *   <ion-tab title="About" icon-on="ion-ios7-clock" icon-off="ion-ios7-clock-outline">
+ *     <!-- Tab 2 content -->
+ *   </ion-tab>
+ *
+ *   <ion-tab title="Settings" icon-on="ion-ios7-gear" icon-off="ion-ios7-gear-outline">
+ *     <!-- Tab 3 content -->
+ *   </ion-tab>
+ * </ion-tabs>
+ * ```
+ *
+ * @param {expression=} model The model to assign this tabbar's {@link ionic.controller:ionicTabs ionicTabs} controller to. By default, assigns  to $scope.tabsController.
+ * @param {string=} animation The animation to use when changing between tab pages.
+ * @param {string=} tabs-style The class to apply to the tabs. Defaults to 'tabs-positive'.
+ * @param {string=} tabs-type Whether to put the tabs on the top or bottom. Defaults to 'tabs-bottom'.
+ */
+
+.directive('ionTabs', ['$ionicViewService', '$ionicBind', '$parse', function($ionicViewService, $ionicBind, $parse) {
   return {
     restrict: 'E',
     replace: true,
     scope: true,
     transclude: true,
-    controller: '$ionicTabs',
+    controller: 'ionicTabs',
     template:
     '<div class="view {{$animation}}">' +
       '<div class="tabs {{$tabsStyle}} {{$tabsType}}">' +
@@ -126,6 +187,8 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
           $tabsType: '@tabsType'
         });
 
+        $parse(attr.model || 'tabsController').assign($scope, tabsCtrl);
+
         tabsCtrl.$scope = $scope;
         tabsCtrl.$element = $element;
         tabsCtrl.$tabsElement = angular.element($element[0].querySelector('.tabs'));
@@ -138,13 +201,50 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
   };
 }])
 
-.controller('$ionicTab', ['$scope', '$ionicViewService', '$rootScope', '$element',
+.controller('ionicTab', ['$scope', '$ionicViewService', '$rootScope', '$element',
 function($scope, $ionicViewService, $rootScope, $element) {
   this.$scope = $scope;
 }])
 
-// Generic controller directive
-.directive('ionTab', ['$rootScope', '$animate', '$ionicBind', '$compile', '$ionicViewService', 
+/**
+ * @ngdoc directive
+ * @name ionTab
+ * @module ionic
+ * @restrict E
+ * @parent ionTabs
+ *
+ * @description
+ * Contains a tab's content.  The content only exists while the given tab is selected.
+ *
+ * Each ionTab has its own view history.
+ *
+ * Whenever a tab is shown or hidden, it will broadcast a 'tab.shown' or 'tab.hidden' event.
+ *
+ * @usage
+ * ```html
+ * <ion-tab
+ *   title="Tab!"
+ *   icon="my-icon"
+ *   href="#/tab/tab-link"
+ *   on-select="onTabSelected()"
+ *   on-deselect="onTabDeselected()">
+ * </ion-tab>
+ * ```
+ * For a complete, working tab bar example, see the {@link ionic.directive:ionTabs ionTabs} documentation.
+ *
+ * @param {string} title The title of the tab.
+ * @param {string=} href The link that this tab will navigate to when tapped.
+ * @param {string=} icon The icon of the tab. If given, this will become the default for icon-on and icon-off.
+ * @param {string=} icon-on The icon of the tab while it is selected.
+ * @param {string=} icon-off The icon of the tab while it is not selected.
+ * @param {expression=} badge The badge to put on this tab (usually a number).
+ * @param {expression=} badge-style The style of badge to put on this tab (eg tabs-positive).
+ * @param {expression=} left-buttons The left buttons to use on a parent {@link ionic.directive:ionNavBar ionNavBar} while this tab is selected.
+ * @param {expression=} right-buttons The right buttons to use on a parent {@link ionic.directive:ionNavBar ionNavBar} while this tab is selected.
+ * @param {expression=} on-select Called when this tab is selected.
+ * @param {expression=} on-deselect Called when this tab is deselected.
+ */
+.directive('ionTab', ['$rootScope', '$animate', '$ionicBind', '$compile', '$ionicViewService',
 function($rootScope, $animate, $ionicBind, $compile, $ionicViewService) {
 
   //Returns ' key="value"' if value exists
@@ -155,11 +255,11 @@ function($rootScope, $animate, $ionicBind, $compile, $ionicViewService) {
     restrict: 'E',
     require: ['^ionTabs', 'ionTab'],
     replace: true,
-    controller: '$ionicTab',
+    controller: 'ionicTab',
     scope: true,
     compile: function(element, attr) {
       //Do we have a navView?
-      var navView = element[0].querySelector('ion-nav-view') || 
+      var navView = element[0].querySelector('ion-nav-view') ||
         element[0].querySelector('data-ion-nav-view');
       var navViewName = navView && navView.getAttribute('name');
 
@@ -271,7 +371,7 @@ function($rootScope, $animate, $ionicBind, $compile, $ionicViewService) {
         };
 
         $scope.isTabActive = function() {
-          return tabsCtrl.selectedTab === tabCtrl.$scope;
+          return tabsCtrl.selectedTab() === tabCtrl.$scope;
         };
         $scope.selectTab = function(e) {
           e.preventDefault();
