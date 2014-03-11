@@ -35,12 +35,13 @@ angular.module('ionic.ui.popup', [])
     },
     template:   '<div class="popup">' +
                   '<div class="popup-head">' +
-                    '<h3 class="popup-title">{{title}}</h3>' +
+                    '<h3 class="popup-title" ng-bind-html="title"></h3>' +
+                    '<h5 class="popup-sub-title" ng-bind-html="subTitle" ng-if="subTitle"></h5>' +
                   '</div>' +
                   '<div class="popup-body" ng-transclude>' +
                   '</div>' +
                   '<div class="popup-buttons row">' +
-                    '<button ng-repeat="button in buttons" ng-click="_buttonTapped(button, $event)" class="button button-clear col" ng-class="button.type || \'button-positive\'" ng-bind-html="button.text"></button>' +
+                    '<button ng-repeat="button in buttons" ng-click="_buttonTapped(button, $event)" class="button col" ng-class="button.type || \'button-default\'" ng-bind-html="button.text"></button>' +
                   '</div>' +
                 '</div>'
   };

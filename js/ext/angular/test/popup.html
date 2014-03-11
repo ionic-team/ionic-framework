@@ -14,7 +14,7 @@
     <button class="button button-dark" ng-click="showPopups()">Show</button>
 
     <script id="popup-template.html" type="text/ng-template">
-      <input ng-model="data.wifi" type="text">
+      <input ng-model="data.wifi" type="text" placeholder="Password">
     </script>
 
     <script>
@@ -27,19 +27,23 @@
             $ionicPopup.show({
               templateUrl: 'popup-template.html',
               title: 'Enter Wi-Fi Password',
+              subTitle: 'Please use normal things',
               scope: $scope,
               buttons: [
                 { text: 'Cancel', onTap: function(e) { return true; } },
                 {
-                  text: '<b>Save</b>', onTap: function(e) {
+                  text: '<b>Save</b>',
+                  type: 'button-positive',
+                  onTap: function(e) {
+
                     if($scope.data.wifi == 'pizza') {
-                      return true;
+                      return $scope.data.wifi;
                     }
                   }
                 },
               ]
-              }).then(function(a, b) {
-                console.log('Tapped!', a, b);
+              }).then(function(res) {
+                console.log('Tapped!', res);
               }, function(err) {
                 console.log('Err:', err);
               }, function(msg) {
