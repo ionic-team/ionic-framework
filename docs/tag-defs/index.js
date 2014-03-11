@@ -1,20 +1,19 @@
+function linkify(type, id) {
+  return '{@link ionic.' + type + ':' + id.trim() + '}';
+}
 module.exports = [
   {
     name: 'controller',
     transformFn: function(doc, tag) {
-      return {
-        path: '/docs/angularjs/api/ionic/controller/' + tag.description,
-        name: tag.description
-      };
+      return linkify('controller', tag.description);
     }
   },
   {
     name: 'parent',
     transformFn: function(doc, tag) {
-      return {
-        path: '/docs/angularjs/api/ionic/directive/' + tag.description,
-        name: tag.description
-      };
+      return tag.description.split(',').map(function(id) {
+        return linkify('directive', id);
+      }).join(' or ');
     }
   },
   {

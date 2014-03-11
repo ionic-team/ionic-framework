@@ -13,27 +13,20 @@
   {% endif %}
 
     <style>
-    .docked-menu.no-fixed.fixed-menu {
-      position: static;
-    }
-    .left-menu .api-section {
-      display: none;
-      border-top: 1px solid #EEE;
-      padding-left: 10px;
-    }
-    .left-menu .api-section.active {
-      border-color: #72a4f8;
-    }
-    .left-menu.active-menu .api-section {
-      display: block;
-    }
     .left-menu li.menu-subsection {
-      margin-bottom: 0;
       padding-left: 0.5em;
       font-weight: bold;
+      border-bottom: 1px solid #EEE;
+    }
+    .left-menu li.menu-subsection.active {
+      border-color: #72a4f8;
     }
     .left-menu li.menu-subsection.active > a {
       border: none;
+      color: #444;
+    }
+    .docked-menu.no-fixed.fixed-menu {
+      position: static;
     }
     </style>
 
@@ -157,7 +150,6 @@
               </li>
             </ul>
 
-
             <!-- AngularJS -->
             <ul class="nav left-menu{% if page.active == "javascript" %} active-menu{% endif %}">
               <li class="menu-title">
@@ -165,31 +157,27 @@
                   Javascript
                 </a>
               </li>
-              <@ for section in doc.areas.api.navGroups[0].navItems @>
-                <@ if section.type == "section" @>
-                  <li class="menu-subsection{% if page.doc == "<$ section.name $>" %} active{% endif %}">
-                    <a href="{{ site.docs_0_9_0}}/angularjs/<$ section.href $>">
-                      <$ section.name $>
+              <@ for component in doc.areas.api.navGroups[0].navItems @>
+                <@ if component.type == "section" @>
+                  <li class="menu-subsection{% if page.docType == "<$ component.name $>" %} active{% endif %}">
+                    <a href="{{ site.docs_0_9_0}}/angularjs/<$ component.href $>">
+                      <$ component.name $>
                     </a>
                   </li>
-                  <div class="api-section{% if page.docType == "<$ section.name $>" %} active{% endif %}">
-                    <@ for component in doc.areas.api.navGroups[0].navItems @>
-                      <@ if component.type == section.name @>
-                        <li class="menu-item{% if page.doc == "<$ component.name $>" %} active{% endif %}">
-                          <a href="{{ site.docs_0_9_0 }}/angularjs/<$ component.href $>">
-                            <@ if component.type == "directive" @>
-                              <$ component.name | dashCase $>
-                            <@ else @>
-                              <$ component.name $>
-                            <@ endif @>
-                          </a>
-                        </li>
+                <@ else @>
+                  <li class="menu-item{% if page.doc == "<$ component.name $>" %} active{% endif %}">
+                    <a href="{{ site.docs_0_9_0 }}/angularjs/<$ component.href $>">
+                      <@ if component.type == "directive" @>
+                        <$ component.name | dashCase $>
+                      <@ else @>
+                        <$ component.name $>
                       <@ endif @>
-                    <@ endfor @>
-                  </div>
+                    </a>
+                  </li>
                 <@ endif @>
               <@ endfor @>
             </ul>
+
 
             <!-- Tutorials -->
             <ul class="nav left-menu{% if page.active == "tutorials" %} active-menu{% endif %}">

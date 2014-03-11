@@ -15,6 +15,7 @@ module.exports = {
 
         if ( !linkInfo.valid ) {
           log.warn(linkInfo.error, 'in', doc.relativePath + '#' + doc.name);
+          linkInfo.title = 'TODO:' + linkInfo.title;
         }
 
         return '<a href="/docs/angularjs/' + linkInfo.url + '">' + linkInfo.title + '</a>';
