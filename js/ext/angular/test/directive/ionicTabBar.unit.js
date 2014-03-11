@@ -11,26 +11,27 @@ describe('tabs', function() {
     }));
   });
 
-  describe('$ionicTabs controller', function() {
+  describe('ionicTabs controller', function() {
     beforeEach(module('ionic'));
     var ctrl, scope;
     beforeEach(inject(function($rootScope, $controller) {
       scope = $rootScope.$new();
-      ctrl = $controller('$ionicTabs', {
+      ctrl = $controller('ionicTabs', {
         $scope: scope,
         $element: angular.element('<div>')
       });
     }));
 
-    it('should add itself to scope', function() {
-      expect(scope.tabsController).toBe(ctrl);
-    });
-
     it('.getTabIndex should return indexOf tab', function() {
-      ctrl.tabs = [1,2];
-      expect(ctrl.getTabIndex(1)).toBe(0);
-      expect(ctrl.getTabIndex(2)).toBe(1);
-      expect(ctrl.getTabIndex(3)).toBe(-1);
+      expect(ctrl.selectedTabIndex()).toBe(-1);
+      var tab1 = {}, tab2 = {};
+      ctrl.add(tab1);
+      ctrl.add(tab2);
+      expect(ctrl.selectedTabIndex()).toBe(0);
+      ctrl.select(tab2);
+      expect(ctrl.selectedTabIndex()).toBe(1);
+      ctrl.deselect(tab2);
+      expect(ctrl.selectedTabIndex()).toBe(-1);
     });
 
     it('.add should add tab and select if empty, & set historyId', inject(function($ionicViewService) {
@@ -56,19 +57,19 @@ describe('tabs', function() {
       ctrl.add(tab1);
       ctrl.add(tab2);
       ctrl.add(tab3);
-      expect(ctrl.selectedTab).toBe(tab1);
+      expect(ctrl.selectedTab()).toBe(tab1);
 
       ctrl.select(tab3);
-      expect(ctrl.selectedTab).toBe(tab3);
+      expect(ctrl.selectedTab()).toBe(tab3);
 
       ctrl.remove(tab3);
-      expect(ctrl.selectedTab).toBe(tab2);
+      expect(ctrl.selectedTab()).toBe(tab2);
       expect(ctrl.tabs.indexOf(tab3)).toBe(-1);
       ctrl.remove(tab1);
-      expect(ctrl.selectedTab).toBe(tab2);
+      expect(ctrl.selectedTab()).toBe(tab2);
       expect(ctrl.tabs.indexOf(tab1)).toBe(-1);
       ctrl.remove(tab2)
-      expect(ctrl.selectedTab).toBe(null);
+      expect(ctrl.selectedTab()).toBe(null);
       expect(ctrl.tabs.indexOf(tab2)).toBe(-1);
       expect(ctrl.tabs.length).toBe(0);
     });
@@ -76,13 +77,12 @@ describe('tabs', function() {
     it('.deselect should unselect if visible', function() {
       var tab1 = {
         $tabSelected: true,
-        onDeselect: jasmine.createSpy('deselect')
+        onDeselect: jasmine.createSpy('deselect'),
       };
-      ctrl.selectedTab = tab1;
       ctrl.deselect(tab1);
       expect(tab1.$tabSelected).toBe(false);
       expect(tab1.onDeselect).toHaveBeenCalled();
-      expect(ctrl.selectedTab).toBe(null);
+      expect(ctrl.selectedTab()).toBe(null);
     });
 
     it('.deselect should do nothing if not visible', function() {
@@ -90,11 +90,13 @@ describe('tabs', function() {
         $tabSelected: false,
         onDeselect: jasmine.createSpy('deselect')
       };
-      ctrl.selectedTab = 'foo';
+      spyOn(ctrl, 'selectedTab').andCallFake(function() {
+        return 'foo';
+      });
       ctrl.deselect(tab1);
       expect(tab1.$tabSelected).toBe(false);
       expect(tab1.onDeselect).not.toHaveBeenCalled();
-      expect(ctrl.selectedTab).toBe('foo');
+      expect(ctrl.selectedTab()).toBe('foo');
     });
 
     it('.select should throw error if tab doesnt exist', function() {
@@ -130,23 +132,23 @@ describe('tabs', function() {
       ctrl.add(tab2);
 
       ctrl.select(tab2);
-      expect(ctrl.selectedTab).toBe(tab2);
+      expect(ctrl.selectedTab()).toBe(tab2);
 
       ctrl.select(0);
-      expect(ctrl.selectedTab).toBe(tab1);
+      expect(ctrl.selectedTab()).toBe(tab1);
 
       ctrl.select(1);
-      expect(ctrl.selectedTab).toBe(tab2);
+      expect(ctrl.selectedTab()).toBe(tab2);
 
       ctrl.select(tab1);
-      expect(ctrl.selectedTab).toBe(tab1);
+      expect(ctrl.selectedTab()).toBe(tab1);
     });
 
     it('.select on selected tab should do nothing or go to history root', inject(function($ionicViewService) {
       spyOn($ionicViewService, 'goToHistoryRoot');
       var tab = { $historyId: '1' };
       ctrl.add(tab);
-      expect(ctrl.selectedTab).toBe(tab);
+      expect(ctrl.selectedTab()).toBe(tab);
 
       //Do nothing unless emit event is passed
       ctrl.select(tab);
@@ -169,7 +171,7 @@ describe('tabs', function() {
       expect(ctrl.deselect).toHaveBeenCalledWith(tab2);
 
       expect(tab2.$tabSelected).toBe(true);
-      expect(ctrl.selectedTab).toBe(tab2);
+      expect(ctrl.selectedTab()).toBe(tab2);
       expect(tab2.onSelect).toHaveBeenCalled();
     });
 
@@ -222,6 +224,18 @@ describe('tabs', function() {
       return element;
     }
 
+    it('should bind controller to scope.tabsController by default', function() {
+      var el = setup();
+      expect(el.controller('ionTabs')).toBeTruthy(); //sanity
+      expect(el.scope().tabsController).toBe(el.controller('ionTabs'));
+    });
+
+    it('should bind controller to scope[attr.model]', function() {
+      var el = setup('model="superman"');
+      expect(el.controller('ionTabs')).toBeTruthy();
+      expect(el.scope().superman).toBe(el.controller('ionTabs'));
+    });
+
     it('should set attr classes', function() {
       var el = setup('animation="foo" tabs-style="bar" tabs-type="baz"');
       expect(el.hasClass('foo')).toBe(true);
@@ -256,7 +270,7 @@ describe('tabs', function() {
         spyOn(tabsCtrl, 'remove');
       });
     }
-    
+
     it('should not initially compile content until selected', inject(function($compile, $rootScope) {
       var el = $compile('<ion-tabs>' +
         '<ion-tab></ion-tab>' +
@@ -365,7 +379,11 @@ describe('tabs', function() {
     var tabsCtrl, tabCtrl;
     function setup(attrs) {
       tabsCtrl = {
-        select: jasmine.createSpy('select')
+        select: jasmine.createSpy('select'),
+        _selectedTab: null,
+        selectedTab: function() {
+          return this._selectedTab;
+        }
       };
       tabCtrl = {
         $scope: {}
@@ -387,9 +405,9 @@ describe('tabs', function() {
     it('.isTabActive should be correct', function() {
       var el = setup();
       expect(el.isolateScope().isTabActive()).toBe(false);
-      tabsCtrl.selectedTab = tabCtrl.$scope;
+      tabsCtrl._selectedTab = tabCtrl.$scope;
       expect(el.isolateScope().isTabActive()).toBe(true);
-      tabsCtrl.selectedTab = null;
+      tabsCtrl._selectedTab = null;
       expect(el.isolateScope().isTabActive()).toBe(false);
     });
     it('.selectTab should be correct and preventDefault', function() {
