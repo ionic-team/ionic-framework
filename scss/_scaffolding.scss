@@ -211,7 +211,7 @@ body.grade-c {
   }
 
   .ionic-refresher-content {
-    .icon-pulling {
+    .icon.icon-pulling {
       @include animation-name(refresh-spin);
     }
   }

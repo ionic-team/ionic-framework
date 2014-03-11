@@ -14,9 +14,9 @@
 
     <ion-header-bar title="'Sample UL'" type="bar-positive"></ion-header-bar>
 
-    <ion-content on-infinite-scroll="addMore()" has-header="true" scroll="true" ng-controller="ContentCtrl" on-refresh="onRefresh()" has-footer="true" padding="false">
+    <ion-content has-header="true" scroll="true" ng-controller="ContentCtrl" has-footer="true" padding="false">
 
-      <ion-refresher></ion-refresher>
+      <ion-refresher on-refresh="onRefresh()"></ion-refresher>
 
       <ul class="list">
         <li class="item">This ion-list should *exactly* fit</li>
@@ -48,7 +48,7 @@
         <li ng-repeat="i in more">more {{$index}}</li>
        </ul>
 
-       <ion-infinite-scroll></ion-infinite-scroll>
+       <ion-infinite-scroll on-infinite="addMore()"></ion-infinite-scroll>
 
     </ion-content>
 

@@ -69,7 +69,7 @@ describe('$ionicScroll Controller', function() {
     expect($ionicScrollDelegate.register).toHaveBeenCalledWith(scope, ctrl.$element, ctrl.scrollView);
   }));
 
-  it('should not setup if no child .scroll-refresher', function() {
+  it('should not activatePullToRefresh if setRefresher is not called', function() {
     setup();
     timeout.flush();
     expect(ctrl.refresher).toBeFalsy();
@@ -77,16 +77,7 @@ describe('$ionicScroll Controller', function() {
     expect(ctrl.scrollView.activatePullToRefresh).not.toHaveBeenCalled();
   });
 
-  it('should not setup ctrl.refresher until after timeout', function() {
-    setup({
-      el: angular.element('<div><div class="scroll-refresher"></div></div>')[0]
-    });
-    expect(ctrl.refresher).toBeUndefined();
-    timeout.flush();
-    expect(ctrl.refresher).toBe(ctrl.element.children[0]);
-  });
-
-  it('should work with .scroll-refresher child and proper refresher', function() {
+  it('should activatePullToRefresh and work when setRefresher', function() {
     var startCb, refreshingCb, doneCb, refresherEl;
     setup({
       el: angular.element('<div><div class="scroll-refresher"></div></div>')[0]
@@ -96,6 +87,9 @@ describe('$ionicScroll Controller', function() {
       refreshingCb = refreshing;
       doneCb = done;
     });
+    ctrl.setRefresher(scope, ctrl.element);
+
+    var scrollOnRefreshSpy = jasmine.createSpy('scroll.onRefresh');
 
     scope.$onRefresh = jasmine.createSpy('onRefresh');
     scope.$onRefreshOpening = jasmine.createSpy('onRefreshOpening');

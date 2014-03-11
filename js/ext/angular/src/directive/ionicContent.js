@@ -86,15 +86,10 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
 
         $ionicBind($scope, $attr, {
           //Use $ to stop onRefresh from recursively calling itself
-          //DEPRECATED, use <ion-infinite-scroll on-infinite-scroll="">
           $onRefresh: '&onRefresh',
           $onRefreshOpening: '&onRefreshOpening',
           $onScroll: '&onScroll',
           $onScrollComplete: '&onScrollComplete',
-          //DEPRECATED, use <ion-infinite-scroll on-infinite-scroll="">
-          $onInfiniteScroll: '&onInfiniteScroll',
-          refreshComplete: '=',
-          infiniteScrollDistance: '@',
           hasBouncing: '@',
           scroll: '@',
           padding: '@',
@@ -154,8 +149,6 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
           if(attr.refreshComplete) {
             $scope.refreshComplete = function() {
               if($scope.scrollView) {
-                scrollCtrl.refresher && scrollCtrl.refresher.classList.remove('active');
-                scrollView.finishPullToRefresh();
                 $scope.$parent.$broadcast('scroll.onRefreshComplete');
               }
             };
@@ -175,24 +168,99 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
   };
 }])
 
-.directive('ionRefresher', function() {
+/**
+ * @ngdoc directive
+ * @name ionRefresher
+ * @module ionic
+ * @restrict E
+ * @parent ionContent, ionScroll
+ * @description
+ * Allows you to add pull-to-refresh to a scrollView.
+ *
+ * Place it as the first child of your {@link ionic.directive:ionContent} or
+ * {@link ionic.directive:ionScroll} element.
+ *
+ * When refreshing is complete, $broadcast the 'scroll.refreshComplete' event
+ * from your controller.
+ *
+ * @param {expression=} on-refresh Called when the user pulls down enough and lets go 
+ * of the refresher.
+ * @param {expression=} on-pulling Called when the user starts to pull down 
+ * on the refresher.
+ * @param {string=} pulling-icon The icon to display while the user is pulling down.  
+ * Default: 'ion-arrow-down-c'.
+ * @param {string=} pulling-text The text to display while the user is pulling down. 
+ * @param {string=} refreshing-icon The icon to display after user lets go of the 
+ * refresher.
+ * @param {string=} refreshing-text The text to display after the user lets go of
+ * the refresher.
+ *
+ * @usage
+ * ```html
+ * <ion-content ng-controller="MyController">
+ *   <ion-refresher
+ *     pulling-text="Pull to refresh..."
+ *     on-refresh="doRefresh()">
+ *   </ion-refresher>
+ *   <ion-list>
+ *     <ion-item ng-repeat="item in items"></ion-item>
+ *   </ion-list>
+ * </ion-content>
+ * ```
+ * ```js
+ * angular.module('testApp', ['ionic'])
+ * .controller('MyController', function($scope, $http) {
+ *   $scope.items = [1,2,3];
+ *   $scope.doRefresh = function() {
+ *     $http.get('/new-items').success(function(newItems) {
+ *       $scope.items = newItems;
+ *       //Stop the ion-refresher from spinning
+ *       $scope.$broadcast('scroll.refreshComplete');
+ *     });
+ *   };
+ * });
+ * ```
+ */
+.directive('ionRefresher', ['$ionicBind', function($ionicBind) {
   return {
     restrict: 'E',
     replace: true,
-    require: ['^?ionContent', '^?ionList'],
-    template: '<div class="scroll-refresher"><div class="ionic-refresher-content"><i class="icon ion-arrow-down-c icon-pulling"></i><i class="icon ion-loading-d icon-refreshing"></i></div></div>',
-    scope: true
-  };
-})
+    require: '^$ionicScroll',
+    template:
+    '<div class="scroll-refresher">' +
+    '<div class="ionic-refresher-content">' +
+        '<i class="icon {{pullingIcon}} icon-pulling"></i>' +
+        '<span class="icon-pulling" ng-bind-html="pullingText"></span>' +
+        '<i class="icon {{refreshingIcon}} icon-refreshing"></i>' +
+        '<span class="icon-refreshing" ng-bind-html="refreshingText"></span>' +
+      '</div>' +
+    '</div>',
+    compile: function($element, $attrs) {
+      if (angular.isUndefined($attrs.pullingIcon)) {
+        $attrs.$set('pullingIcon', 'ion-arrow-down-c');
+      }
+      if (angular.isUndefined($attrs.refreshingIcon)) {
+        $attrs.$set('refreshingIcon', 'ion-loading-d');
+      }
+      return function($scope, $element, $attrs, scrollCtrl) {
+        $ionicBind($scope, $attrs, {
+          pullingIcon: '@',
+          pullingText: '@',
+          refreshingIcon: '@',
+          refreshingText: '@',
+          $onRefresh: '&onRefresh',
+          $onRefreshOpening: '&onRefreshOpening'
+        });
 
-.directive('ionScrollRefresher', function() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<div class="scroll-refresher"><div class="scroll-refresher-content" ng-transclude></div></div>'
+        scrollCtrl.setRefresher($scope, $element[0]);
+        $scope.$on('scroll.refreshComplete', function() {
+          $element[0].classList.remove('active');
+          scrollCtrl.scrollView.finishPullToRefresh();
+        });
+      };
+    }
   };
-})
+}])
 
 /**
  * @ngdoc directive
@@ -261,10 +329,7 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
       this.isLoading = false;
       this.scrollView = null; //given by link function
       this.getMaxScroll = function() {
-        var dist = $attrs.distance ||
-          //deprecated: allow infiniteScrollDistance from ionContent
-          $scope.infiniteScrollDistance ||
-          '1%';
+        var dist = $attrs.distance || '1%';
         return dist.indexOf('%') > -1 ?
           this.scrollView.getScrollMax().top * (1 - parseInt(dist,10) / 100) :
           this.scrollView.getScrollMax().top - parseInt(dist, 10);
@@ -292,9 +357,7 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
             scrollView.getValues().top >= infiniteScrollCtrl.getMaxScroll()) {
           $element[0].classList.add('active');
           infiniteScrollCtrl.isLoading = true;
-
-          //deprecated: allow $onInfiniteScroll from parent
-          $scope.$apply($attrs.onInfinite || $scope.$onInfiniteScroll);
+          $scope.$parent.$apply($attrs.onInfinite || '');
         }
       }));
     }

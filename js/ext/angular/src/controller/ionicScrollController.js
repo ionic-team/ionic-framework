@@ -36,28 +36,36 @@ angular.module('ionic.ui.scroll')
     scrollView.resize();
   }
 
+  this.setRefresher = function(refresherScope, refresherElement) {
+    var refresher = this.refresher = refresherElement;
+    var refresherHeight = self.refresher.clientHeight || 0;
+    scrollView.activatePullToRefresh(refresherHeight, function() {
+      refresher.classList.add('active');
+      refresherScope.$onRefreshOpening();
+    }, function() {
+      refresher.classList.remove('refreshing');
+      refresher.classList.remove('active');
+    }, function() {
+      refresher.classList.add('refreshing');
+      refresherScope.$onRefresh();
+    });
+  };
+
   $timeout(function() {
     scrollView.run();
-
-    self.refresher = element.querySelector('.scroll-refresher');
-
-    // Activate pull-to-refresh
-    if(self.refresher) {
-      var refresherHeight = self.refresher.clientHeight || 0;
-      scrollView.activatePullToRefresh(refresherHeight, function() {
-        self.refresher.classList.add('active');
-        $scope.$onRefreshOpening && $scope.$onRefreshOpening();
-      }, function() {
-        self.refresher.classList.remove('refreshing');
-        self.refresher.classList.remove('active');
-      }, function() {
-        self.refresher.classList.add('refreshing');
-        $scope.$onRefresh && $scope.$onRefresh();
-        $scope.$parent.$broadcast('scroll.onRefresh');
-      });
-    }
   });
-
 }]);
 
 })();
+
+var popups = [];
+function showPopup() {
+  var newPopupDeferred = $q.defer();
+  $q.all(popups).then(showThisPopup);
+
+  popups.push(newPopupDeferred);
+
+  function showThisPopup() {
+    popups.splice(popups.indexOf(newPopupDeferred.promise), 1);
+  }
+}
