@@ -6,6 +6,12 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
 .factory('$ionicPopup', ['$rootScope', '$q', '$document', '$compile', '$timeout', '$ionicTemplateLoader',
   function($rootScope, $q, $document, $compile, $timeout, $ionicTemplateLoader) {
 
+  // TODO: Make this configurable
+  var popupOptions = {
+    // How long to wait after a popup is already shown to show another one
+    stackPushDelay: 50
+  }
+
   // Center the given popup
   var positionPopup = function(popup) {
     popup.el.style.marginLeft = (-popup.el.offsetWidth) / 2 + 'px';
@@ -71,19 +77,21 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
   var popupStack = [];
   var backdropEl = null;
 
+  // Show the backdrop element
   var showBackdrop = function() {
     var el = $compile('<ion-popup-backdrop></ion-popup-backdrop>')($rootScope.$new(true));
     $document[0].body.appendChild(el[0]);
     backdropEl = el;
   };
 
+  // Remove the backdrop element
   var removeBackdrop = function() {
     backdropEl.remove();
   };
 
   // Push the new popup onto the stack with the given data and scope.
   // If this is the first one in the stack, show the backdrop, otherwise don't.
-  var pushAndShow = function(popup, data, q) {
+  var pushAndShow = function(popup, data) {
     var lastPopup = popupStack[popupStack.length-1];
 
     popupStack.push(popup);
@@ -93,14 +101,12 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
       showBackdrop();
     }
 
-    // TODO: Use the q field to resolve/reject based on popup response
-
     // If we have an existing popup, add a delay between hiding and showing it
     if(lastPopup) {
       hideSinglePopup(lastPopup);
       $timeout(function() {
         showSinglePopup(popup);
-      }, 50);
+      }, popupOptions.stackPushDelay);
     } else {
       // Otherwise, immediately show it
       showSinglePopup(popup);
@@ -145,7 +151,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
   // Given an options object, build a new popup window and return a promise
   // which will contain the constructed popup at a later date. Perhaps at a later
   // year even. At this point, it's hard to say.
-  var createPopup = function(opts) {
+  var createPopup = function(opts, responseDeferred) {
     var q = $q.defer();
 
     // Create some defaults
@@ -163,8 +169,8 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     scope.onClose = function() {
       popAndRemove(scope.popup);
     }
-    scope.onButtonTap = function() {
-      console.log('ON BUTTON!!!');
+    scope.onButtonTap = function(button, event) {
+      responseDeferred.notify(button, event);
     }
 
     // Check if we need to load a template for the content of the popup
@@ -195,16 +201,15 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
   };
 
 
-
   // Public API
   return {
     showPopup: function(data) {
       var q = $q.defer();
 
-      createPopup(data).then(function(popup, scope) {
+      createPopup(data, q).then(function(popup, scope) {
 
         // We constructed the popup, push it on the stack and show it
-        pushAndShow(popup, data, scope, q);
+        pushAndShow(popup, data);
 
       }, function(err) {
         console.error('Unable to load popup:', err);
@@ -212,6 +217,8 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
 
       return q.promise;
     },
+
+    // Show a standard alert popup 
     alert: function(message, title, $scope) {
       this.showPopup({
         message: message,
@@ -219,18 +226,18 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
         scope: $scope
       });
     },
+
+    // Show a standard confirm popup
     confirm: function(cb) {
     },
+
+    // Show a standard prompt popup
     prompt: function(cb) {
     },
+    
+    // Show an arbitrary popup
     show: function(data) {
-      // data.title
-      // data.template
-      // data.buttons
-      this.showPopup(data);
-    },
-    showFromTemplate: function(url, data) {
-
+      return this.showPopup(data);
     }
   };
 }]);

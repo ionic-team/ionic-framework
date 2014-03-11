@@ -14,23 +14,39 @@
     <button class="button button-dark" ng-click="showPopups()">Show</button>
 
     <script id="popup-template.html" type="text/ng-template">
-      <input type="text">
+      <input ng-model="data.wifi" type="text">
     </script>
 
     <script>
       angular.module('ionic.example', ['ionic'])
 
-      .controller('PopupCtrl', function($scope, $timeout, $ionicPopup) {
+      .controller('PopupCtrl', function($scope, $timeout, $q, $ionicPopup) {
           $scope.showPopups = function() {
+            $scope.data = {}
+
             $ionicPopup.show({
               templateUrl: 'popup-template.html',
               title: 'Enter Wi-Fi Password',
+              scope: $scope,
               buttons: [
                 { text: 'Cancel', onTap: function(e) { return true; } },
-                { text: '<b>Save</b>', onTap: function(e) { console.log('Details', e); } },
+                {
+                  text: '<b>Save</b>', onTap: function(e) {
+                    if($scope.data.wifi == 'pizza') {
+                      return true;
+                    }
+                  }
+                },
               ]
-            });
+              }).then(function(a, b) {
+                console.log('Tapped!', a, b);
+              }, function(err) {
+                console.log('Err:', err);
+              }, function(msg) {
+                console.log('message:', msg);
+              });
 
+            /*
             $timeout(function() {
               $ionicPopup.show({
                 title: 'Do you like ice cream?',
@@ -40,6 +56,7 @@
                 ]
               });
             }, 1000);
+            */
           };
 
           $scope.showPopups();

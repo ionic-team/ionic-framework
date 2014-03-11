@@ -26,12 +26,9 @@ angular.module('ionic.ui.popup', [])
       });
 
       $scope._buttonTapped = function(button, event) {
-        console.log('Button tapped', button, event);
         var close = button.onTap && button.onTap(event);
         if(close === true) {
-          console.log('Closing!');
           $scope.$onClose(button, event);
-          //self.remove();
         }
         $scope.$onButtonTap({button: button, event: event});
       }
