@@ -32,12 +32,20 @@ describe('Ionic Angular Slide Box', function() {
 
   it('Should init', function() {
     var scope = el.scope();
-    expect(scope.slideBox).not.toBe(undefined);
+    expect(scope.slideBoxController).toBeDefined()
+    expect(scope.slideBoxController.slide).toBeDefined();
   });
+
+  it('Should init with custom model attr', inject(function($compile, $rootScope) {
+    var el = $compile('<ion-slide-box model="myModel"></ion-slide-box>')($rootScope);
+    var scope = el.scope();
+    expect(scope.myModel).toBeDefined();
+    expect(scope.myModel.slide).toBeDefined();
+  }));
 
   it('Should update with delegate', function() {
     var scope = el.scope();
-    var slideBox = scope.slideBox;
+    var slideBox = scope.slideBoxController;
     spyOn(slideBox, 'setup');
     delegate.update();
     timeout.flush();
@@ -62,6 +70,6 @@ describe('Ionic Angular Slide Box', function() {
     </ion-slide-box>')(rootScope);
 
    var scope = el.scope();
-   expect(scope.slideBox.currentIndex()).toBe(2);
+   expect(scope.slideBoxController.currentIndex()).toBe(2);
   });
 });

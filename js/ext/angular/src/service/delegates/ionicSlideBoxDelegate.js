@@ -18,7 +18,7 @@ angular.module('ionic.ui.service.slideBoxDelegate', [])
           return;
         }
         $timeout(function() {
-          $scope.$parent.slideBox.setup();
+          $scope.$parent.slideBoxController.setup();
         });
         e.preventDefault();
       });

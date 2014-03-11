@@ -524,7 +524,7 @@ ionic.views.Slider = ionic.views.View.inherit({
     /**
      * @ngdoc method
      * @name ionicSlideBox#currentIndex
-     * @returns {number} index The index of the current slide.
+     * @returns number The index of the current slide.
      */
     this.currentIndex = function() {
       // return current index position
@@ -534,7 +534,7 @@ ionic.views.Slider = ionic.views.View.inherit({
     /**
      * @ngdoc method
      * @name ionicSlideBox#slidesCount
-     * @returns {number} count The number of slides there are currently.
+     * @returns number The number of slides there are currently.
      */
     this.slidesCount = function() {
       // return total number of slides
