@@ -142,7 +142,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
   }
 
   var buildPopupTemplate = function(opts, content) {
-    return '<ion-popup title="' + opts.title + '" buttons="buttons" on-button-tap="onButtonTap(button, event)" on-close="onClose(button, event)">' 
+    return '<ion-popup title="' + opts.title + '" buttons="buttons" on-button-tap="onButtonTap(button, event)" on-close="onClose(button, result, event)">' 
         + (content || '') + 
       '</ion-popup>';
   };
@@ -166,12 +166,13 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     var scope = opts.scope && opts.scope.$new() || $rootScope.$new(true);
     angular.extend(scope, opts);
 
-    scope.onClose = function() {
+    scope.onClose = function(button, result, event) {
       popAndRemove(scope.popup);
-    }
-    scope.onButtonTap = function(button, event) {
-      responseDeferred.notify(button, event);
-    }
+      console.log('ON CLOSE', button, result, event);
+      if(result) {
+        responseDeferred.resolve(result);
+      }
+    };
 
     // Check if we need to load a template for the content of the popup
     if(opts.templateUrl) {
