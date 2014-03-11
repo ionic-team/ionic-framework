@@ -57,15 +57,3 @@ angular.module('ionic.ui.scroll')
 }]);
 
 })();
-
-var popups = [];
-function showPopup() {
-  var newPopupDeferred = $q.defer();
-  $q.all(popups).then(showThisPopup);
-
-  popups.push(newPopupDeferred);
-
-  function showThisPopup() {
-    popups.splice(popups.indexOf(newPopupDeferred.promise), 1);
-  }
-}
