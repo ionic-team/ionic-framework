@@ -152,31 +152,32 @@
             <!-- AngularJS -->
             <ul class="nav left-menu{% if page.active == "javascript" %} active-menu{% endif %}">
               <li class="menu-title">
-                <a href="<$ doc.currentVersion.href $>/<$ group.href $>">
+              <a href="{% if page.versionHref %}{{page.versionHref}}{% else %}{{site.docs_latest}}{% endif %}">
                   Javascript
                 </a>
               </li>
               <li class="menu-item">
                 Version:
-                  <select style="width: 100px"
-                    onchange="window.location.href=this.options[this.selectedIndex].value">
-                    <@ for version in doc.versions @>
-                    <option value="<$ version.href $>"{% if page.version == "<$ version.name $>" %} selected{% endif %}>
+                <select style="width: 100px"
+                  onchange="window.location.href=this.options[this.selectedIndex].value">
+                  <@ for version in version.list @>
+                    <option value="<$ version.href $>"
+                    {% if page.version == "<$ version.name $>" %}selected{% endif %}>
                       <$ version.name $>
                     </option>
                   <@ endfor @>
-                  </select>
+                </select>
               </li>
               <@ for component in doc.areas.api.navGroups[0].navItems @>
                 <@ if component.type == "section" @>
                   <li class="menu-subsection{% if page.docType == "<$ component.name $>" %} active{% endif %}">
-                  <a href="<$ doc.currentVersion.href $>/<$ component.href $>">
+                  <a href="{{page.versionHref}}/<$ component.href $>">
                       <$ component.name $>
                     </a>
                   </li>
                 <@ else @>
                   <li class="menu-item{% if page.doc == "<$ component.name $>" %} active{% endif %}">
-                  <a href="<$ doc.currentVersion.href $>/<$ component.href $>">
+                  <a href="{{page.versionHref}}/<$ component.href $>">
                       <@ if component.type == "directive" @>
                         <$ component.name | dashCase $>
                       <@ else @>

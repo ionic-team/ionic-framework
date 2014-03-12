@@ -59,6 +59,7 @@ module.exports = function(config) {
   });
 
   config.append('processing.processors', [
+    require('./processors/version-data'),
     require('./processors/git-data'),
     require('./processors/keywords'),
     require('./processors/pages-data'),

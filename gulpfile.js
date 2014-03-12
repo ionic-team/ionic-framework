@@ -6,6 +6,7 @@ var http = require('http');
 var cp = require('child_process');
 var gulp = require('gulp');
 var pkg = require('./package.json');
+var semver = require('semver');
 var through = require('through');
 
 var argv = require('minimist')(process.argv.slice(2));
@@ -38,10 +39,8 @@ gulp.task('build', ['bundle', 'sass']);
 
 gulp.task('docs', function(done) {
   var docVersion = argv['doc-version'];
-  if (!docVersion) {
-    console.log('Usage: gulp docs --doc-version=VERSION\n\n' +
-                'Example: gulp docs --doc-version=nightly\n' +
-                'Example: gulp docs --doc-version=0.9.33\n');
+  if (docVersion != 'nightly' && !semver.valid(docVersion)) {
+    console.log('Usage: gulp docs --doc-version=(nightly|versionName)');
     return process.exit(1);
   }
   process.env.DOC_VERSION = docVersion;

@@ -1,8 +1,6 @@
 var _ = require('lodash');
 var path = require('canonical-path');
 var log = require('winston');
-var fs = require('fs');
-var semver = require('semver');
 
 var AREA_NAMES = {
   api: 'API',
@@ -209,7 +207,6 @@ module.exports = {
       .indexBy('path')
       .value();
 
-
     var docData = {
       docType: 'pages-data',
       id: 'pages-data',
@@ -219,26 +216,6 @@ module.exports = {
       areas: areas,
       pages: pages
     };
-
-    var docsBaseFolder = path.resolve(__dirname, '../../tmp/ionic-site/docs');
-    var pkg = require('../../package.json');
-
-    //Array of versions sorted backwards
-    var versions = fs.readdirSync(docsBaseFolder)
-      .filter(function(name) {
-        return semver.valid(name) || name == 'nightly';
-      })
-      .sort(semver.rcompare);
-    if (!_.contains(versions, currentVersion)) {
-      versions.unshift(currentVersion);
-    }
-    docData.versions = versions.map(function(ver) {
-      return {
-        href: '/docs/' + ver,
-        name: ver
-      };
-    });
-    docData.currentVersion = _.find(docData.versions, { name: currentVersion });
 
     docs.push(docData);
   }
