@@ -40,11 +40,11 @@ describe('ionRefresher directive', function() {
 
   it('should bind $onRefreshOpening', function() {
     var spyMe = jasmine.createSpy('onRefreshOpening');
-    var el = setup('on-refresh-opening="spyMe()"', {
+    var el = setup('on-pulling="spyMe()"', {
       spyMe: spyMe
     });
     expect(spyMe).not.toHaveBeenCalled();
-    el.scope().$onRefreshOpening();
+    el.scope().$onPulling();
     expect(spyMe).toHaveBeenCalled();
   });
 

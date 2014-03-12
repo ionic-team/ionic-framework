@@ -92,7 +92,7 @@ describe('$ionicScroll Controller', function() {
     var scrollOnRefreshSpy = jasmine.createSpy('scroll.onRefresh');
 
     scope.$onRefresh = jasmine.createSpy('onRefresh');
-    scope.$onRefreshOpening = jasmine.createSpy('onRefreshOpening');
+    scope.$onPulling = jasmine.createSpy('onPulling');
 
     timeout.flush();
     var refresher = ctrl.refresher;
@@ -103,7 +103,7 @@ describe('$ionicScroll Controller', function() {
     startCb();
     expect(refresher.classList.contains('active')).toBe(true);
     expect(refresher.classList.contains('refreshing')).toBe(false);
-    expect(scope.$onRefreshOpening).toHaveBeenCalled();
+    expect(scope.$onPulling).toHaveBeenCalled();
 
     refreshingCb();
     expect(refresher.classList.contains('active')).toBe(false);
