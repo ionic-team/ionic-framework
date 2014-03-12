@@ -217,14 +217,14 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     },
 
     // Show a standard alert popup 
-    alert: function(title, message) {
+    alert: function(opts) {
       return this.showPopup({
-        content: message,
-        title: title || '',
+        content: opts.content || '',
+        title: opts.title || '',
         buttons: [
           {
-            text: 'OK',
-            type: 'button-positive',
+            text: opts.okText || 'OK',
+            type: opts.okType || 'button-positive',
             onTap: function(e) {
               return true;
             }
@@ -234,15 +234,19 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     },
 
     // Show a standard confirm popup
-    confirm: function(title, message) {
+    confirm: function(opts) {
       return this.showPopup({
-        content: message,
-        title: title || '',
+        content: opts.content || '',
+        title: opts.title || '',
         buttons: [
-          { text: 'Cancel', onTap: function(e) { e.preventDefault(); } },
           {
-            text: 'OK',
-            type: 'button-positive',
+            text: opts.cancelText || 'Cancel' ,
+            type: opts.cancelType || 'button-default',
+            onTap: function(e) { e.preventDefault(); }
+          },
+          {
+            text: opts.okText || 'OK',
+            type: opts.okType || 'button-positive',
             onTap: function(e) {
               return true;
             }
@@ -252,19 +256,23 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     },
 
     // Show a standard prompt popup
-    prompt: function(title, message, inputType, inputPlaceholder) {
+    prompt: function(opts) {
       var scope = $rootScope.$new(true);
       scope.data = {};
       return this.showPopup({
-        content: message,
-        title: title || '',
+        content: opts.content || '',
+        title: opts.title || '',
         scope: scope,
-        template: '<input ng-model="data.response" type="' + (inputType || 'text') + '" placeholder="' + (inputPlaceholder || '') + '">',
+        template: '<input ng-model="data.response" type="' + (opts.inputType || 'text') + '" placeholder="' + (opts.inputPlaceholder || '') + '">',
         buttons: [
-          { text: 'Cancel', onTap: function(e) { e.preventDefault(); } },
           {
-            text: 'OK',
-            type: 'button-positive',
+            text: opts.cancelText || 'Cancel',
+            type: opts.okType || 'button-default',
+            onTap: function(e) { e.preventDefault(); }
+          },
+          {
+            text: opts.okText || 'OK',
+            type: opts.okType || 'button-positive',
             onTap: function(e) {
               return scope.data.response;
             }

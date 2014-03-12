@@ -65,7 +65,10 @@
           };
 
           $scope.showConfirm = function() {
-            $ionicPopup.confirm('Are you sure?').then(function(res) {
+            $ionicPopup.confirm({
+              title: 'Consume Ice Cream',
+              content: 'Are you sure you want to eat this ice cream?'
+            }).then(function(res) {
               if(res) {
                 console.log('You are sure');
               } else {
@@ -74,17 +77,28 @@
             });
           };
           $scope.showPrompt = function() {
-            $ionicPopup.prompt('What is your name?').then(function(res) {
+            $ionicPopup.prompt({
+              title: 'ID Check',
+              content: 'What is your name?'
+            }).then(function(res) {
               console.log('Your name is', res);
             });
           };
           $scope.showPasswordPrompt = function() {
-            $ionicPopup.prompt('Enter your secret password', null, 'password', 'Your password').then(function(res) {
+            $ionicPopup.prompt({
+              title: 'Password Check',
+              content: 'Enter your secret password',
+              inputType: 'password',
+              inputPlaceholder: 'Your password'
+            }).then(function(res) {
               console.log('Your name is', res);
             });
           };
           $scope.showAlert = function() {
-            $ionicPopup.alert('Don\'t eat that!', 'It might taste good').then(function(res) {
+            $ionicPopup.alert({
+              title: 'Don\'t eat that!',
+              content: 'It might taste good'
+            }).then(function(res) {
               console.log('Thank you for not eating my delicious ice cream cone');
             });
           };
