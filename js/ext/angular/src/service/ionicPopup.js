@@ -189,7 +189,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
 
     } else {
       // Compile the template
-      var popupTemplate = buildPopupTemplate(opts, opts.content);
+      var popupTemplate = buildPopupTemplate(opts, opts.template || opts.content);
       var element = $compile(popupTemplate)(scope);
       $document[0].body.appendChild(element[0]);
       q.resolve(constructPopupOnScope(element, scope));
@@ -252,7 +252,25 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     },
 
     // Show a standard prompt popup
-    prompt: function(cb) {
+    prompt: function(title, message, inputType, inputPlaceholder) {
+      var scope = $rootScope.$new(true);
+      scope.data = {};
+      return this.showPopup({
+        content: message,
+        title: title || '',
+        scope: scope,
+        template: '<input ng-model="data.response" type="' + (inputType || 'text') + '" placeholder="' + (inputPlaceholder || '') + '">',
+        buttons: [
+          { text: 'Cancel', onTap: function(e) { e.preventDefault(); } },
+          {
+            text: 'OK',
+            type: 'button-positive',
+            onTap: function(e) {
+              return scope.data.response;
+            }
+          }
+        ]
+      });
     },
     
     // Show an arbitrary popup

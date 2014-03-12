@@ -14,6 +14,7 @@
     <button class="button button-dark" ng-click="showPopup()">Generic</button>
     <button class="button button-primary" ng-click="showConfirm()">Confirm</button>
     <button class="button button-balanced" ng-click="showPrompt()">Prompt</button>
+    <button class="button button-balanced" ng-click="showPasswordPrompt()">Password Prompt</button>
     <button class="button button-positive" ng-click="showAlert()">Alert</button>
 
     <script id="popup-template.html" type="text/ng-template">
@@ -74,6 +75,11 @@
           };
           $scope.showPrompt = function() {
             $ionicPopup.prompt('What is your name?').then(function(res) {
+              console.log('Your name is', res);
+            });
+          };
+          $scope.showPasswordPrompt = function() {
+            $ionicPopup.prompt('Enter your secret password', null, 'password', 'Your password').then(function(res) {
               console.log('Your name is', res);
             });
           };
