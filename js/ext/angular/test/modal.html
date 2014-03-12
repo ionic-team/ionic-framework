@@ -15,6 +15,16 @@
         </ion-header-bar>
         <ion-content has-header="true">
           <ion-list>
+
+            <div class="item item-input-inset">
+              <label class="item-input-wrapper">
+                <input ng-focus="openModal()" type="text" placeholder="Email">
+              </label>
+              <button class="button button-small">
+                Cancel
+              </button>
+            </div>
+
             <ion-item ng-repeat="contact in contacts">
               {{contact.name}}
             </ion-item>

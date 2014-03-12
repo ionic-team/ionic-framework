@@ -103,6 +103,8 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
         self.hide();
       }, 200);
 
+      ionic.views.Modal.prototype.show.call(this);
+
     },
 
     /**
