@@ -51,17 +51,15 @@
                 console.log('message:', msg);
               });
 
-            /*
             $timeout(function() {
-              $ionicPopup.show({
+              $ionicPopup.confirm({
                 title: 'Do you like ice cream?',
-                buttons: [
-                  { text: 'No', onTap: function(e) { return true; } },
-                  { text: '<b>Yes, of course</b>', onTap: function(e) { console.log('Details', e); } },
-                ]
+                cancelText: 'No'
+                okText: 'Yes, of course'
+              }).then(function(res) {
+                console.log('Your love for ice cream:', res);
               });
             }, 1000);
-            */
           };
 
           $scope.showConfirm = function() {
