@@ -37,6 +37,7 @@ angular.module('ionic.ui.popup', [])
         if(result) {
           return $scope.$onClose({button: button, result: result, event: event });
         }
+        debugger;
         $scope.$onButtonTap({button: button, event: event});
       }
     },

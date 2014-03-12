@@ -50,7 +50,6 @@ module.exports = {
     'js/views/loadingView.js',
     'js/views/modalView.js',
     'js/views/navBarView.js',
-    'js/views/popupView.js',
     'js/views/sideMenuView.js',
     'js/views/sliderView.js',
     'js/views/tabBarView.js',

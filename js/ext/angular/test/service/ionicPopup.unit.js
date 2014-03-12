@@ -1,10 +1,13 @@
 describe('Ionic Popup', function() {
-  var popup;
+  var popup, timeout, scope;
 
   beforeEach(module('ionic.service.popup'));
 
-  beforeEach(inject(function($ionicPopup) {
+  beforeEach(inject(function($ionicPopup, $rootScope, $timeout) {
+    ionic.requestAnimationFrame = function(cb) { cb(); }
+    scope = $rootScope;
     popup = $ionicPopup;
+    timeout = $timeout;
   }));
 
   iit('Should show popup', function() {
@@ -17,11 +20,23 @@ describe('Ionic Popup', function() {
       buttons: [
         {
           text: 'Okay',
-          tap: obj.popupTapFn
+          onTap: obj.popupTapFn
         }
       ]
     });
+        
+    timeout.flush();
 
-    expect(popup.el.classList.contains('active')).toBe(true);
+    runs(function() {
+      timeout(function() {
+        console.log(document.body);
+        var popup = document.body.querySelector('.popup-backdrop');
+        console.log(popup);
+        expect(popup).not.toEqual(null);
+      });
+
+      scope.$digest();
+      timeout.flush();
+    });
   });
 });
