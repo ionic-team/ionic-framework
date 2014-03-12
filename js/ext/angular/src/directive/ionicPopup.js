@@ -28,9 +28,13 @@ angular.module('ionic.ui.popup', [])
       $scope._buttonTapped = function(button, event) {
         var result = button.onTap && button.onTap(event);
 
+        // A way to return false
+        if(event.defaultPrevented) {
+          return $scope.$onClose({button: button, result: false, event: event });
+        }
+
         // Truthy test to see if we should close the window
         if(result) {
-          console.log('Closing', result);
           return $scope.$onClose({button: button, result: result, event: event });
         }
         $scope.$onButtonTap({button: button, event: event});

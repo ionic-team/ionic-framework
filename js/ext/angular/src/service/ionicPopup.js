@@ -168,10 +168,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
 
     scope.onClose = function(button, result, event) {
       popAndRemove(scope.popup);
-      console.log('ON CLOSE', button, result, event);
-      if(result) {
-        responseDeferred.resolve(result);
-      }
+      responseDeferred.resolve(result);
     };
 
     // Check if we need to load a template for the content of the popup
@@ -229,7 +226,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
             text: 'OK',
             type: 'button-positive',
             onTap: function(e) {
-              return true
+              return true;
             }
           }
         ]
@@ -237,10 +234,20 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     },
 
     // Show a standard confirm popup
-    confirm: function(message) {
+    confirm: function(title, message) {
       return this.showPopup({
         content: message,
-        title: title
+        title: title || '',
+        buttons: [
+          { text: 'Cancel', onTap: function(e) { e.preventDefault(); } },
+          {
+            text: 'OK',
+            type: 'button-positive',
+            onTap: function(e) {
+              return true;
+            }
+          }
+        ]
       });
     },
 
