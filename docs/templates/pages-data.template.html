@@ -42,7 +42,6 @@
 
           <div class="docked-menu{% if page.active == "javascript" %} no-fixed{% endif %}">
 
-
             <!-- Getting Started -->
             <ul class="nav left-menu{% if page.active == "docs-overview" %} active-menu{% endif %}">
               <li class="menu-title">
@@ -153,20 +152,31 @@
             <!-- AngularJS -->
             <ul class="nav left-menu{% if page.active == "javascript" %} active-menu{% endif %}">
               <li class="menu-title">
-                <a href="{{ site.docs_0_9_0 }}/angularjs/<$ group.href $>">
+                <a href="<$ doc.currentVersion.href $>/<$ group.href $>">
                   Javascript
                 </a>
+              </li>
+              <li class="menu-item">
+                Version:
+                  <select style="width: 100px"
+                    onchange="window.location.href=this.options[this.selectedIndex].value">
+                    <@ for version in doc.versions @>
+                    <option value="<$ version.href $>"{% if page.version == "<$ version.name $>" %} selected{% endif %}>
+                      <$ version.name $>
+                    </option>
+                  <@ endfor @>
+                  </select>
               </li>
               <@ for component in doc.areas.api.navGroups[0].navItems @>
                 <@ if component.type == "section" @>
                   <li class="menu-subsection{% if page.docType == "<$ component.name $>" %} active{% endif %}">
-                    <a href="{{ site.docs_0_9_0}}/angularjs/<$ component.href $>">
+                  <a href="<$ doc.currentVersion.href $>/<$ component.href $>">
                       <$ component.name $>
                     </a>
                   </li>
                 <@ else @>
                   <li class="menu-item{% if page.doc == "<$ component.name $>" %} active{% endif %}">
-                    <a href="{{ site.docs_0_9_0 }}/angularjs/<$ component.href $>">
+                  <a href="<$ doc.currentVersion.href $>/<$ component.href $>">
                       <@ if component.type == "directive" @>
                         <$ component.name | dashCase $>
                       <@ else @>

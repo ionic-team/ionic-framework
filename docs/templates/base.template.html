@@ -1,6 +1,5 @@
 ---
-layout: docs_0.9.0
-active: javascript
+<@ include "lib/yaml.template.html" @>
 title: "<@ if doc.docType == "directive" @><$ doc.name | dashCase $><@ else @><$ doc.name $><@ endif @>"
 header_sub_title: "<$ doc.docType | capital $> in module <$ doc.module $>"
 doc: "<$ doc.name $>"

@@ -4,9 +4,10 @@ var log = require('winston');
 module.exports = {
   name: 'link',
   description: 'Process inline link tags (of the form {@link some/uri Some Title}), replacing them with HTML anchors',
-  handlerFactory: function(partialNames) {
+  handlerFactory: function(partialNames, config) {
 
     return function handleLinkTags(doc, tagName, tagDescription) {
+      var version = config.get('currentVersion');
 
       // Parse out the uri and title
       return tagDescription.replace(INLINE_LINK, function(match, uri, title) {
@@ -18,7 +19,7 @@ module.exports = {
           linkInfo.title = 'TODO:' + linkInfo.title;
         }
 
-        return '<a href="/docs/angularjs/' + linkInfo.url + '">' + linkInfo.title + '</a>';
+        return '<a href="/docs/' + version + '/' + linkInfo.url + '">' + linkInfo.title + '</a>';
       });
     };
   }

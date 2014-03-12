@@ -7,6 +7,7 @@ var basePackage = require('dgeni-packages/ngdoc');
 var pkg = require('../package.json');
 
 module.exports = function(config) {
+  config.set('currentVersion', process.env.DOC_VERSION || 'nightly');
 
   config = basePackage(config);
 
@@ -19,7 +20,7 @@ module.exports = function(config) {
   config.set('basePath', __dirname);
   config.set('source.projectPath', '.');
   config.set('rendering.outputFolder', '../tmp/ionic-site');
-  config.set('rendering.contentsFolder', 'docs/angularjs');
+  config.set('rendering.contentsFolder', 'docs/' + config.get('currentVersion'));
 
   config.set('processing.api-docs', {
     outputPath: '${area}/${module}/${docType}/${name}/index.md',
@@ -60,8 +61,8 @@ module.exports = function(config) {
   config.append('processing.processors', [
     require('./processors/git-data'),
     require('./processors/keywords'),
-    require('./processors/versions-data'),
     require('./processors/pages-data'),
+    require('./processors/index-page'),
     require('./processors/debug-dump')
   ]);
 

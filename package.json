@@ -15,7 +15,7 @@
     "karma-script-launcher": "~0.1.0",
     "sauce-connect-launcher": "^0.2.2",
     "dgeni": "^0.2.0",
-    "dgeni-packages": "git://github.com/ajoslin/dgeni-packages.git#api-config",
+    "dgeni-packages": "^0.7.1",
     "jshint-stylish": "^0.1.5",
     "gulp-template": "^0.1.1",
     "gulp-concat": "^2.1.7",
@@ -35,7 +35,8 @@
     "lodash": "^2.4.1",
     "winston": "^0.7.2",
     "minimist": "0.0.8",
-    "gulp-minify-css": "^0.3.0"
+    "gulp-minify-css": "^0.3.0",
+    "semver": "^2.2.1"
   },
   "licenses": [
     {
