@@ -31,7 +31,7 @@ module.exports = function(config) {
 
   config.set('processing.pages-data', {
     template: ['pages-data.template.html'],
-    outputPath: '_layouts/docs_0.9.0.html'
+    outputPath: '_layouts/docs_api.html'
   });
 
   config.append('rendering.filters', [

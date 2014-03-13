@@ -4,31 +4,23 @@
     {% include meta_tags.html %}
     <title>{{page.title}} - Ionic Framework</title>
     {% include head_includes.html %}
+    <style>
+      .left-menu li.menu-subsection {
+        padding-left: 0.5em;
+        font-weight: bold;
+        border-bottom: 1px solid #EEE;
+      }
+      .left-menu li.menu-subsection.active {
+        border-color: #72a4f8;
+      }
+      .left-menu li.menu-subsection.active > a {
+        border: none;
+        color: #444;
+      }
+    </style>
   </head>
 
-  {% if page.full %}
-  <body class="body-full {% if page.body_css %}{{ page.body_css }}{% else %}docs-page{% endif %}">
-  {% else %}
-  <body class="docs {% if page.body_css %}{{ page.body_css }}{% else %}docs-page{% endif %}">
-  {% endif %}
-
-    <style>
-    .left-menu li.menu-subsection {
-      padding-left: 0.5em;
-      font-weight: bold;
-      border-bottom: 1px solid #EEE;
-    }
-    .left-menu li.menu-subsection.active {
-      border-color: #72a4f8;
-    }
-    .left-menu li.menu-subsection.active > a {
-      border: none;
-      color: #444;
-    }
-    .docked-menu.no-fixed.fixed-menu {
-      position: static;
-    }
-    </style>
+  <body class="docs docs-page docs-api">
 
     {% include nav_links.html %}
 
@@ -40,120 +32,25 @@
 
         <div class="col-md-2 col-sm-3 aside-menu">
 
-          <div class="docked-menu{% if page.active == "javascript" %} no-fixed{% endif %}">
+          <div>
 
-            <!-- Getting Started -->
-            <ul class="nav left-menu{% if page.active == "docs-overview" %} active-menu{% endif %}">
+            <ul class="nav left-menu">
               <li class="menu-title">
-                <a href="{{ site.docs_0_9_0 }}/overview/">Overview</a>
-              </li>
-              <li><a href="{{ site.docs_0_9_0 }}/overview/#download">Download</a></li>
-              <li><a href="{{ site.docs_0_9_0 }}/overview/#starter">Starter Project</a></li>
-              <li><a href="{{ site.docs_0_9_0 }}/overview/#whats-included">What's included</a></li>
-              <li><a href="{{ site.docs_0_9_0 }}/overview/#css-sass">CSS/SASS</a></li>
-              <li><a href="{{ site.docs_0_9_0 }}/overview/#angularjs">AngularJS</a></li>
-              <li><a href="{{ site.docs_0_9_0 }}/overview/#phonegap">Phonegap</a></li>
-              <li><a href="{{ site.docs_0_9_0 }}/overview/#browser-support">Browser Support</a></li>
-              <li><a href="{{ site.docs_0_9_0 }}/overview/#license">Licensing</a></li>
-              <li><a href="{{ site.docs_0_9_0 }}/overview/#contribute">Contribute</a></li>
-              <li><a href="{{ site.docs_0_9_0 }}/overview/#about">About Ionic</a></li>
-            </ul>
-
-
-            <!-- Components -->
-            <ul class="nav left-menu{% if page.active == "components" %} active-menu{% endif %}">
-              <li class="menu-title">
-                <a href="{{ site.docs_0_9_0 }}/components/">CSS</a>
-              </li>
-              <li>
-                <a href="{{ site.docs_0_9_0 }}/components/#header">Header</a>
-                <ul style="display: none;">
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#subheader">Sub Header</a></li>
-                </ul>
-              </li>
-              <li><a href="{{ site.docs_0_9_0 }}/components/#content">Content</a></li>
-              <li><a href="{{ site.docs_0_9_0 }}/components/#footer">Footer</a></li>
-              <li>
-                <a href="{{ site.docs_0_9_0 }}/components/#buttons">Buttons</a>
-                <ul>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#block-buttons">Block</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#full-buttons">Full Width</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#outlined-buttons">Outlined</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#clear-buttons">Clear</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#icon-buttons">Icons</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#buttons-headers-footers">Headers/Footers</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#clear-buttons-headers">Clear Buttons in Headers</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#button-bar">Button Bar</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="{{ site.docs_0_9_0 }}/components/#list">List</a>
-                <ul>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#item-dividers">Divider</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#item-icons">Icons</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#item-buttons">Buttons</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#item-avatars">Avatars</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#item-thumbnails">Thumbnails</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="{{ site.docs_0_9_0 }}/components/#cards">Cards</a>
-                <ul>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#card-headers-footers">Headers &amp; Footers</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#card-lists">Lists</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#card-images">Images</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#card-showcase">Showcase</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="{{ site.docs_0_9_0 }}/components/#forms">Forms</a>
-                <ul>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#forms-placeholder-labels">Placeholder Labels</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#forms-inline-labels">Inline Labels</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#forms-stacked-labels">Stacked Labels</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#inset-forms">Inset Forms</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#item-input-inset">Inset Inputs</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#input-icons">Input Icons</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#bar-inputs">Header Inputs</a></li>
-                </ul>
-              </li>
-              <li><a href="{{ site.docs_0_9_0 }}/components/#toggle">Toggle</a></li>
-              <li><a href="{{ site.docs_0_9_0 }}/components/#checkbox">Checkbox</a></li>
-              <li><a href="{{ site.docs_0_9_0 }}/components/#radio-buttons">Radio Buttons</a></li>
-              <li><a href="{{ site.docs_0_9_0 }}/components/#range">Range</a></li>
-              <li>
-                <a href="{{ site.docs_0_9_0 }}/components/#tabs">Tabs</a>
-                <ul>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#icon-only-tabs">Icon-only</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#icon-top-tabs">Top Icon</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#icon-left-tabs">Left Icon</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="{{ site.docs_0_9_0 }}/components/#grid">Grid</a>
-                <ul>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#grid-even">Even Columns</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#grid-explicit">Explicit Column Sized</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#grid-offset">Offset Columns</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#grid-vertically-align">Vertically Aligned</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#grid-responsive">Responsive Grid</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="{{ site.docs_0_9_0 }}/components/#utility">Utility</a>
-                <ul>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#colors">Colors</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#icons">Icons</a></li>
-                  <li><a href="{{ site.docs_0_9_0 }}/components/#padding">Padding</a></li>
-                </ul>
+                <a href="/docs/overview/">Overview</a>
               </li>
             </ul>
 
-            <!-- AngularJS -->
-            <ul class="nav left-menu{% if page.active == "javascript" %} active-menu{% endif %}">
+            <ul class="nav left-menu">
               <li class="menu-title">
-              <a href="{% if page.versionHref %}{{page.versionHref}}{% else %}{{site.docs_latest}}{% endif %}">
-                  Javascript
+                <a href="/docs/components/">CSS</a>
+              </li>
+            </ul>
+
+            <!-- Docs: JavaScript -->
+            <ul class="nav left-menu active-menu">
+              <li class="menu-title">
+                <a href="{% if page.versionHref %}{{page.versionHref}}{% else %}{{site.docs_latest}}{% endif %}">
+                  JavaScript
                 </a>
               </li>
               <li class="menu-item">
@@ -161,7 +58,7 @@
                 <select style="width: 100px"
                   onchange="window.location.href=this.options[this.selectedIndex].value">
                   <@ for ver in version.list @>
-                    <option 
+                    <option
                     value="<$ ver.href $>/{% if page.path %}{{page.path}}{% endif %}"
                      {% if page.version == "<$ ver.name $>" %}selected{% endif %}>
                       <$ ver.name $>
@@ -190,29 +87,16 @@
               <@ endfor @>
             </ul>
 
-
-            <!-- Tutorials -->
-            <ul class="nav left-menu{% if page.active == "tutorials" %} active-menu{% endif %}">
+            <ul class="nav left-menu">
               <li class="menu-title">
                 <a href="/tutorials/">Tutorials</a>
               </li>
-              <li><a href="/tutorials/fade-status-bar/">Fading Status Bar</a></li>
-              <li><a href="/tutorials/fullscreen-apps/">Fullscreen Apps</a></li>
-              <li><a href="/tutorials/customizing-ionic-with-sass/">Customizing Ionic with Sass</a></li>
-              <!--<li><a href="/tutorials/intro-tutorial/">Intro Tutorial Screen</a></li>-->
             </ul>
 
-            <!-- Guide -->
-            <ul class="nav left-menu{% if page.active == "guide" %} active-menu{% endif %}">
+            <ul class="nav left-menu">
               <li class="menu-title">
-                <a href="{{ site.docs_0_9_0 }}/guide/">Guide</a>
+                <a href="/docs/guide/">Guide</a>
               </li>
-              <li><a href="{{ site.docs_0_9_0 }}/guide/preface.html">1. What is Ionic?</a></li>
-              <li><a href="{{ site.docs_0_9_0 }}/guide/installation.html">2. Installation</a></li>
-              <li><a href="{{ site.docs_0_9_0 }}/guide/starting.html">3. Starting our app</a></li>
-              <li><a href="{{ site.docs_0_9_0 }}/guide/building.html">4. Building it out</a></li>
-              <li><a href="{{ site.docs_0_9_0 }}/guide/publishing.html">5. Publishing</a></li>
-              <!--<li><a href="{{ site.docs_0_9_0 }}/guide/closing.html">6. Closing Thoughts</a></li>-->
             </ul>
 
           </div>
@@ -227,97 +111,37 @@
 
     </div>
 
-    {% if page.active == "docs-home" %}
+    <div class="pre-footer">
 
-      <div class="pre-footer">
+      <div class="row ionic">
 
-        <div class="row ionic">
+        <div class="col-sm-6 col-a">
+          <h4>
+            <a href="/getting-started/">Getting started <span class="icon ion-arrow-right-c"></span></a>
+          </h4>
+          <p>
+            Learn more about how Ionic was built, why you should use it, and what's included. We'll cover
+            the basics and help you get started from the ground up.
+          </p>
+        </div>
 
-          <div class="col-sm-6 col-a">
-            <h4>
-              <a href="/docs/guide/">Read the Book <span class="icon ion-arrow-right-c"></span></a>
-            </h4>
-            <p>
-              A walk through of getting Ionic installed, creating a new project, building the UI, adding logic, testing, deploying on the device, and publishing to various app stores.
-            </p>
-          </div>
-
-          <div class="col-sm-6 col-b">
-            <h4>
-              <a href="http://forum.ionicframework.com/">Community Forum <span class="icon ion-arrow-right-c"></span></a>
-            </h4>
-            <p>
-              Discuss and share ideas, hacks, and quesitons with others building with Ionic on the official Ionic Forum. Stop by and say Hello!
-            </p>
-          </div>
-
+        <div class="col-sm-6 col-b">
+          <h4>
+            <a href="/docs/">Documentation <span class="icon ion-arrow-right-c"></span></a>
+          </h4>
+          <p>
+            What are you waiting for? Take a look and get coding! Our documentation covers all you need to know
+            to get an app up and running in minutes.
+          </p>
         </div>
 
       </div>
 
-    {% elsif page.active == "components" %}
-
-      <div class="pre-footer">
-
-        <div class="row ionic">
-
-          <div class="col-sm-6 col-a">
-            <h4>
-              <a href="/docs/guide/">Read the Guide <span class="icon ion-arrow-right-c"></span></a>
-            </h4>
-            <p>
-              A walk through of getting Ionic installed, creating a new project, building the UI, adding logic, testing, deploying on the device, and publishing to various app stores.
-            </p>
-          </div>
-
-          <div class="col-sm-6 c100 13690  100 13690    0     0  25015      0 --:--:-- --:--:-- --:--:-- 24981
-ol-b">
-            <h4>
-              <a href="http://forum.ionicframework.com/">Community Forum <span class="icon ion-arrow-right-c"></span></a>
-            </h4>
-            <p>
-              Discuss and share ideas, hacks, and quesitons with others building with Ionic on the official Ionic Forum. Stop by and say Hello!
-            </p>
-          </div>
-
-        </div>
-
-      </div>
-
-    {% else %}
-
-      <div class="pre-footer">
-
-        <div class="row ionic">
-
-          <div class="col-sm-6 col-a">
-            <h4>
-              <a href="/getting-started/">Getting started <span class="icon ion-arrow-right-c"></span></a>
-            </h4>
-            <p>
-              Learn more about how Ionic was built, why you should use it, and what's included. We'll cover
-              the basics and help you get started from the ground up.
-            </p>
-          </div>
-
-          <div class="col-sm-6 col-b">
-            <h4>
-              <a href="/docs/">Documentation <span class="icon ion-arrow-right-c"></span></a>
-            </h4>
-            <p>
-              What are you waiting for? Take a look and get coding! Our documentation covers all you need to know
-              to get an app up and running in minutes.
-            </p>
-          </div>
-
-        </div>
-
-      </div>
-
-    {% endif %}
+    </div>
 
     {% include footer.html %}
 
     {% include base_scripts.html %}
+
   </body>
 </html>
