@@ -1,7 +1,7 @@
 describe('Ionic Popup', function() {
   var popup, timeout, scope;
 
-  beforeEach(module('ionic.service.popup'));
+  beforeEach(module('ionic'));
 
   beforeEach(inject(function($ionicPopup, $rootScope, $timeout) {
     ionic.requestAnimationFrame = function(cb) { cb(); }
@@ -10,33 +10,61 @@ describe('Ionic Popup', function() {
     timeout = $timeout;
   }));
 
-  iit('Should show popup', function() {
-    var obj = {
-      popupTapFn: function() {
-      }
-    };
+  it('Should show popup', function() {
     popup.show({
-      type: 'split',
+      title: 'Cats',
+      content: 'Dogs',
       buttons: [
         {
           text: 'Okay',
-          onTap: obj.popupTapFn
+          type: 'button-balanced',
+          onTap: function(e) {}
         }
       ]
     });
         
     timeout.flush();
 
-    runs(function() {
-      timeout(function() {
-        console.log(document.body);
-        var popup = document.body.querySelector('.popup-backdrop');
-        console.log(popup);
-        expect(popup).not.toEqual(null);
-      });
+    var popupBackdropEl = document.body.querySelector('.popup-backdrop');
+    expect(popupBackdropEl).not.toEqual(null);
 
-      scope.$digest();
-      timeout.flush();
+    var popupEl = document.body.querySelector('.popup');
+    expect(popupEl.classList.contains('active')).toBe(true);
+    expect(popupEl.classList.contains('popup-showing')).toBe(true);
+
+    popup.show({
+      title: 'Cats',
+      content: 'Dogs',
+      buttons: [
+        {
+          text: 'Okay',
+          type: 'button-balanced',
+          onTap: function(e) {}
+        }
+      ]
     });
+        
+    timeout.flush();
+
+    // Make sure there are two popups
+    expect(document.body.querySelectorAll('.popup').length).toEqual(2);
+  });
+
+  it('Should set correct element data', function() {
+    popup.show({
+      title: 'Cats',
+      content: 'Dogs',
+      buttons: [
+        {
+          text: 'Okay',
+          type: 'button-balanced',
+          onTap: function(e) {}
+        }
+      ]
+    });
+
+    var popupEl = document.body.querySelector('.popup');
+    expect(popupEl.querySelector('.popup-title').innerText).toEqual('Cats');
+    expect(popupEl.querySelector('.popup-body').innerText).toEqual('Dogs');
   });
 });
