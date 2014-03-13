@@ -1,6 +1,8 @@
 language: node_js
 node_js:
-- 0.1
+- 0.10.24
+npm:
+- 1.4.3
 
 env:
   global:
