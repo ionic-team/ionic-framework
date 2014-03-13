@@ -4,27 +4,35 @@
     {% include meta_tags.html %}
     <title>{{page.title}} - Ionic Framework</title>
     {% include head_includes.html %}
-    <style>
-      .left-menu li.menu-subsection {
-        padding-left: 0.5em;
-        font-weight: bold;
-        border-bottom: 1px solid #EEE;
-      }
-      .left-menu li.menu-subsection.active {
-        border-color: #72a4f8;
-      }
-      .left-menu li.menu-subsection.active > a {
-        border: none;
-        color: #444;
-      }
-    </style>
   </head>
 
   <body class="docs docs-page docs-api">
 
     {% include nav_links.html %}
 
-    {% include header.html %}
+    <div class="header horizontal-gradient">
+      <div class="container">
+        <h3>{% if page.header_title %}{{ page.header_title }}{% else %}{{ page.title }}{% endif %}</h3>
+        <h4>{% if page.header_sub_title %}{{ page.header_sub_title}}{% else %}How to get the most out of Ionic.{% endif %}</h4>
+      </div>
+      <div class="news">
+        <div class="container">
+
+          <div class="picker">
+            <select onchange="window.location.href=this.options[this.selectedIndex].value">
+              <@ for ver in version.list @>
+                <option
+                value="<$ ver.href $>/{% if page.path %}{{page.path}}{% endif %}"
+                 {% if page.version == "<$ ver.name $>" %}selected{% endif %}>
+                  <$ ver.name $>
+                </option>
+              <@ endfor @>
+            </select>
+          </div>
+
+        </div>
+      </div>
+    </div>
 
     <div class="container content-container">
 
@@ -52,19 +60,6 @@
               <a href="{% if page.versionHref %}{{page.versionHref}}{% else %}}<$ version.stable.href $>{% endif %}">
                   JavaScript
                 </a>
-              </li>
-              <li class="menu-item">
-                Version:
-                <select style="width: 100px"
-                  onchange="window.location.href=this.options[this.selectedIndex].value">
-                  <@ for ver in version.list @>
-                    <option
-                    value="<$ ver.href $>/{% if page.path %}{{page.path}}{% endif %}"
-                     {% if page.version == "<$ ver.name $>" %}selected{% endif %}>
-                      <$ ver.name $>
-                    </option>
-                  <@ endfor @>
-                </select>
               </li>
               <@ for component in doc.areas.api.navGroups[0].navItems @>
                 <@ if component.type == "section" @>
