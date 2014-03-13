@@ -44,7 +44,9 @@ gulp.task('docs', function(done) {
     return process.exit(1);
   }
   process.env.DOC_VERSION = docVersion;
-  dgeni('docs/docs.config.js').generateDocs().then(done);
+  return dgeni('docs/docs.config.js').generateDocs().then(function() {
+    gutil.log('Docs for', gutil.colors.cyan(docVersion), 'generated!');
+  });
 });
 
 var IS_WATCH = false;

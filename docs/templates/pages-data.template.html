@@ -160,10 +160,11 @@
                 Version:
                 <select style="width: 100px"
                   onchange="window.location.href=this.options[this.selectedIndex].value">
-                  <@ for version in version.list @>
-                    <option value="<$ version.href $>"
-                    {% if page.version == "<$ version.name $>" %}selected{% endif %}>
-                      <$ version.name $>
+                  <@ for ver in version.list @>
+                    <option 
+                    value="<$ ver.href $>/{% if page.path %}{{page.path}}{% endif %}"
+                     {% if page.version == "<$ ver.name $>" %}selected{% endif %}>
+                      <$ ver.name $>
                     </option>
                   <@ endfor @>
                 </select>
