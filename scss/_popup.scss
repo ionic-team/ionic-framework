@@ -5,14 +5,95 @@
 
 .popup {
   position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 11;
+
+  // Start hidden
+  visibility: hidden;
+
+  width: $popup-width;
+
+  border-radius: $popup-border-radius;
+  background-color: $popup-background-color;
+
+  &.popup-hidden {
+    @include animation-name(scaleOut);
+    @include animation-duration($popup-leave-animation-duration);
+    @include animation-timing-function(ease-in-out);
+    @include animation-fill-mode(both);
+  }
+
+  &.popup-showing {
+    visibility: visible;
+  }
+
+  &.active {
+    @include animation-name(superScaleIn);
+    @include animation-duration($popup-enter-animation-duration);
+    @include animation-timing-function(ease-in-out);
+    @include animation-fill-mode(both);
+  }
 }
 
-.popup-content {
+.popup-head {
+  padding: 15px 0px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+.popup-title {
+  font-size: 15px;
+  margin: 0;
+  padding: 0;
+}
+.popup-sub-title {
+  font-size: 11px;
+  margin: 5px 0 0 0;
+  padding: 0;
+  font-weight: normal;
+}
+.popup-body {
   padding: 10px;
 }
 
+.popup-buttons {
+  &.row {
+    padding: 10px 10px;
+  }
+
+  .button {
+    margin: 0px 5px;
+    min-height: $popup-button-min-height;
+    line-height: $popup-button-line-height;
+    border-radius: $popup-button-border-radius;
+
+    &:first-child {
+      margin-left: 0px;
+    }
+    &:last-child {
+      margin-right: 0px;
+    }
+  }
+}
+
+.popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+
+  width: 100%;
+  height: 100%;
+    
+  background-color: rgba(0,0,0,0.4);
+
+  @include animation-name(fadeIn);
+  @include animation-duration($popup-backdrop-fadein-duration);
+  @include animation-timing-function(linear);
+  @include animation-fill-mode(both);
+}
+
 .loading-backdrop {
-  @include transition(visibility 0s linear 0.3s);
   position: fixed;
   top: 0;
   left: 0;
@@ -22,13 +103,16 @@
   width: 100%;
   height: 100%;
 
-  &.enabled {
-    background-color: rgba(0,0,0,0.7);
-  }
-
   &.active {
     @include transition-delay(0s);
     visibility: visible;
+  }
+}
+
+.loading-backdrop {
+  @include transition(visibility 0s linear 0.3s);
+  &.active {
+    background-color: rgba(0,0,0,0.7);
   }
 }
 
