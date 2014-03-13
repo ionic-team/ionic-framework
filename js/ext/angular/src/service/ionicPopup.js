@@ -3,6 +3,111 @@
 
 angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
 
+/**
+ * @ngdoc service
+ * @name $ionicPopup
+ * @module ionic
+ * @restrict E
+ * @description
+ *
+ * The Ionic Popup service makes it easy to programatically create and show popup
+ * windows that require the user to respond in order to continue:
+ *
+ * ![Popup](http://ionicframework.com.s3.amazonaws.com/docs/controllers/popup.png)
+ *
+ * The popup system has support for nicer versions of the built in `alert()` `prompt()` and `confirm()` functions
+ * you are used to in the browser, but with more powerful support for customizing input types in the case of
+ * prompt, or customizing the look of the window.
+ *
+ * But the true power of the Popup is when a built-in popup just won't cut it. Luckily, the popup window
+ * has full support for arbitrary popup content, and a simple promise-based system for returning data
+ * entered by the user.
+ *
+ * @usage
+ * To trigger a Popup in your code, use the $ionicPopup service in your angular controllers:
+ *
+ * ```js
+ * angular.module('mySuperApp', ['ionic'])
+ * .controller(function($scope, $ionicPopup) {
+ *
+ *  // Triggered on a button click, or some other target
+    $scope.showPopup = function() {
+      $scope.data = {}
+
+      // An elaborate, custom popup
+      $ionicPopup.show({
+        templateUrl: 'popup-template.html',
+        title: 'Enter Wi-Fi Password',
+        subTitle: 'Please use normal things',
+        scope: $scope,
+        buttons: [
+          { text: 'Cancel', onTap: function(e) { return true; } },
+          {
+            text: '<b>Save</b>',
+            type: 'button-positive',
+            onTap: function(e) {
+              return $scope.data.wifi;
+            }
+          },
+        ]
+      }).then(function(res) {
+        console.log('Tapped!', res);
+      }, function(err) {
+        console.log('Err:', err);
+      }, function(msg) {
+        console.log('message:', msg);
+      });
+
+      // A confirm dialog
+      $scope.showConfirm = function() {
+        $ionicPopup.confirm({
+          title: 'Consume Ice Cream',
+          content: 'Are you sure you want to eat this ice cream?'
+        }).then(function(res) {
+          if(res) {
+            console.log('You are sure');
+          } else {
+            console.log('You are not sure');
+          }
+        });
+      };
+
+      // A prompt dialog
+      $scope.showPrompt = function() {
+        $ionicPopup.prompt({
+          title: 'ID Check',
+          content: 'What is your name?'
+        }).then(function(res) {
+          console.log('Your name is', res);
+        });
+      };
+
+      // A prompt with password input dialog
+      $scope.showPasswordPrompt = function() {
+        $ionicPopup.prompt({
+          title: 'Password Check',
+          content: 'Enter your secret password',
+          inputType: 'password',
+          inputPlaceholder: 'Your password'
+        }).then(function(res) {
+          console.log('Your name is', res);
+        });
+      };
+
+      // An alert dialog
+      $scope.showAlert = function() {
+        $ionicPopup.alert({
+          title: 'Don\'t eat that!',
+          content: 'It might taste good'
+        }).then(function(res) {
+          console.log('Thank you for not eating my delicious ice cream cone');
+        });
+      };
+    };
+  });
+  ```
+ 
+ */
 .factory('$ionicPopup', ['$rootScope', '$q', '$document', '$compile', '$timeout', '$ionicTemplateLoader',
   function($rootScope, $q, $document, $compile, $timeout, $ionicTemplateLoader) {
 
