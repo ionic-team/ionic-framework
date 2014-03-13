@@ -1,11 +1,9 @@
 Editing Doc Pages
 -----------------
 
-After following these steps: https://github.com/driftyco/ionic#documentation
+First, follow these steps: https://github.com/driftyco/ionic#documentation
 
-**Templates in `template` folder**
-
-(src) => (dest)
+**Templates in `templates` folder**
 
 - `pages-data.template.html` => `_layout/docs_0.9.0.html`
 - `index.template.html` => The 'index' page for a doc version - http://ajoslin.github.io/docs/0.9.26/
