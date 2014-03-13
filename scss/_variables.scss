@@ -548,6 +548,22 @@ $sheet-border-radius:             3px 3px 3px 3px !default;
 $sheet-border-radius-top:         3px 3px 0px 0px !default;
 $sheet-border-radius-bottom:      0px 0px 3px 3px !default;
 
+// Popups
+// -------------------------------
+
+$popup-backdrop-fadein-duration: 0.1s;
+$popup-width: 250px;
+$popup-enter-animation: superScaleIn;
+$popup-enter-animation-duration: 0.2s;
+$popup-leave-animation-duration: 0.1s;
+
+$popup-border-radius: 0px;
+$popup-background-color: rgba(255,255,255,0.9);
+
+$popup-button-border-radius: 2px;
+$popup-button-line-height: 20px;
+$popup-button-min-height: 45px;
+
 
 // Badges
 // -------------------------------

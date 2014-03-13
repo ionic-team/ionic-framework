@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*!
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
@@ -3175,15 +3176,39 @@ a.subdued {
  * --------------------------------------------------
  */
 .popup {
-  position: fixed; }
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.9); }
 
-.popup-content {
+.popup-head {
+  padding: 15px 0px;
+  text-align: center;
+  border-bottom: 1px solid #eee; }
+
+.popup-title {
+  font-size: 14px;
+  margin: 0;
+  padding: 0; }
+
+.popup-body {
   padding: 10px; }
 
-.loading-backdrop {
-  -webkit-transition: visibility 0s linear 0.3s;
-  -moz-transition: visibility 0s linear 0.3s;
-  transition: visibility 0s linear 0.3s;
+.popup-buttons.row {
+  padding: 0; }
+.popup-buttons .button {
+  line-height: 30px;
+  border: none;
+  border-right: 1px solid #eee;
+  border-radius: 0px 0px 8px 8px; }
+  .popup-buttons .button:last-child {
+    border-right: none; }
+
+.popup-backdrop.enabled {
+  background-color: rgba(0, 0, 0, 0.4); }
+
+.loading-backdrop, .popup-backdrop {
   position: fixed;
   top: 0;
   left: 0;
@@ -3191,13 +3216,18 @@ a.subdued {
   visibility: hidden;
   width: 100%;
   height: 100%; }
-  .loading-backdrop.enabled {
-    background-color: rgba(0, 0, 0, 0.7); }
-  .loading-backdrop.active {
+  .loading-backdrop.active, .popup-backdrop.active {
     -webkit-transition-delay: 0s;
     -moz-transition-delay: 0s;
     transition-delay: 0s;
     visibility: visible; }
+
+.loading-backdrop {
+  -webkit-transition: visibility 0s linear 0.3s;
+  -moz-transition: visibility 0s linear 0.3s;
+  transition: visibility 0s linear 0.3s; }
+  .loading-backdrop.enabled {
+    background-color: rgba(0, 0, 0, 0.7); }
 
 .loading {
   position: fixed;

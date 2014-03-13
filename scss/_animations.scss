@@ -184,6 +184,56 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
   to { background-color: rgba(0,0,0,0); }
 }
 
+// Scale Out
+// Scale from hero (1 in this case) to zero
+// -------------------------------
+
+@-webkit-keyframes scaleOut {
+  from { -webkit-transform: scale(1); opacity: 1; }
+  to { -webkit-transform: scale(0.8); opacity: 0; }
+}
+@-moz-keyframes scaleOut {
+  from { -moz-transform: scale(1); opacity: 1; }
+  to { -moz-transform: scale(0.8); opacity: 0; }
+}
+@keyframes scaleOut {
+  from { transform: scale(1); opacity: 1; }
+  to { transform: scale(0.8); opacity: 0; }
+}
+
+// Scale In
+// Scale from 0 to hero (1 in this case)
+// -------------------------------
+
+@-webkit-keyframes scaleIn {
+  from { -webkit-transform: scale(0); }
+  to { -webkit-transform: scale(1); }
+}
+@-moz-keyframes scaleIn {
+  from { -moz-transform: scale(0); }
+  to { -moz-transform: scale(1); }
+}
+@keyframes scaleIn {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+// Super Scale In
+// Scale from super (1.x) to duper (1 in this case)
+// -------------------------------
+
+@-webkit-keyframes superScaleIn {
+  from { -webkit-transform: scale(1.2); opacity: 0; }
+  to { -webkit-transform: scale(1); opacity: 1 }
+}
+@-moz-keyframes superScaleIn {
+  from { -moz-transform: scale(1.2); opacity: 0; }
+  to { -moz-transform: scale(1); opacity: 1; }
+}
+@keyframes superScaleIn {
+  from { transform: scale(1.2); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 
 // Spin
 // -------------------------------
