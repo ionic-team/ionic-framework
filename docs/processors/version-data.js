@@ -39,7 +39,8 @@ module.exports = {
       list: versions,
       current: _.find(versions, { name: currentVersion }),
       //Stable = most recent (first) valid semver version
-      stable: _.find(versions, function(v) { return semver.valid(v.name); })
+      stable: _.find(versions, function(v) { return semver.valid(v.name); }) ||
+        _.first(versions)
     };
   }
 };
