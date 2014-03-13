@@ -48,7 +48,7 @@
     },
 
     setContent: function(content){
-      angular.element(this._loadingBox).text(content);
+      angular.element(this._loadingBox).html(content);
     }    
   });
 
