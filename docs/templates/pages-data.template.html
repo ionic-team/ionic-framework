@@ -49,7 +49,7 @@
             <!-- Docs: JavaScript -->
             <ul class="nav left-menu active-menu">
               <li class="menu-title">
-                <a href="{% if page.versionHref %}{{page.versionHref}}{% else %}{{site.docs_latest}}{% endif %}">
+              <a href="{% if page.versionHref %}{{page.versionHref}}{% else %}}<$ version.stable.href $>{% endif %}">
                   JavaScript
                 </a>
               </li>
