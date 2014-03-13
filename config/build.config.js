@@ -36,6 +36,7 @@ module.exports = {
     'js/utils/gestures.js',
     'js/utils/platform.js',
     'js/utils/poly.js',
+    'js/utils/tap.js',
     'js/utils/utils.js',
     'js/utils/keyboard.js',
 
