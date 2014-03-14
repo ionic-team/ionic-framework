@@ -1,74 +1,53 @@
-describe('Ionic Header Bar', function() {
-  var el, rootScope, compile;
-
+describe('bar directives', function() {
   beforeEach(module('ionic'));
 
-  beforeEach(inject(function($animate, $compile, $rootScope) {
-    compile = $compile;
-    rootScope = $rootScope;
-    ionic.requestAnimationFrame = function(cb) { cb(); };
-    $animate.enabled(false);
-    el = null;
-  }));
+  angular.forEach([{
+    tag: 'ion-header-bar',
+    element: 'header',
+    model: 'headerBarController'
+  }, {
+    tag: 'ion-footer-bar',
+    element: 'footer',
+    model: 'footerBarController'
+  }], function(data) {
+    describe(data.tag, function() {
 
-  it('Should not add title-left or title-right classes when align-title=center', function() {
-    el = compile('<ion-header-bar align-title="center"></ion-header-bar>')(rootScope);
-    var headerView = el.isolateScope().headerBarView;
-    var title = angular.element(headerView.el.querySelector('.title'));
-    expect(title.hasClass('title-left')).not.toEqual(true);
-    expect(title.hasClass('title-right')).not.toEqual(true);
+      function setup(attrs) {
+        var el;
+        ionic.views.HeaderBar = function(opts) {
+          this.opts = opts;
+          this.align = jasmine.createSpy('align');
+        };
+        inject(function($compile, $rootScope) {
+          el = angular.element('<'+data.tag+' '+(attrs||'')+'>');
+          el = $compile(el)($rootScope.$new());
+          $rootScope.$apply();
+        });
+        return el;
+      }
+
+      it('should compile to ' + data.element, function() {
+        var el = setup();
+        expect(el[0].tagName.toLowerCase()).toBe(data.element);
+      });
+
+      it('should assign views.HeaderBar to default model', function() {
+        var el = setup();
+        expect(el.scope()[data.model] instanceof ionic.views.HeaderBar).toBe(true);
+      });
+      it('should assign views.HeaderBar to attr model', function() {
+        var el = setup('model="monkeys"');
+        expect(el.scope().monkeys instanceof ionic.views.HeaderBar).toBe(true);
+      });
+
+      it('should pass center to views.HeaderBar option by default', function() {
+        var el = setup();
+        expect(el.scope()[data.model].opts.alignTitle).toBe('center');
+      });
+      it('should pass attr.alignTitle to views.HeaderBar', function() {
+        var el = setup('align-title="left"');
+        expect(el.scope()[data.model].opts.alignTitle).toBe('left');
+      });
+    });
   });
-
-  it('Should add title-left class when align-title=left', inject(function($animate) {
-    el = compile('<ion-header-bar align-title="left"></ion-header-bar>')(rootScope);
-    rootScope.$apply();
-    var headerView = el.isolateScope().headerBarView;
-    var title = angular.element(headerView.el.querySelector('.title'));
-    expect(title.hasClass('title-left')).toEqual(true);
-  }));
-
-  it('Should add title-right class when align-title=right', function() {
-    el = compile('<ion-header-bar align-title="right"></ion-header-bar>')(rootScope);
-    rootScope.$apply();
-    var headerView = el.isolateScope().headerBarView;
-    var title = angular.element(headerView.el.querySelector('.title'));
-    expect(title.hasClass('title-right')).toEqual(true);
-  });
-
-  it('Should re-align the title when leftButtons change', function() {
-    rootScope.leftButtons = [];
-    el = compile('<ion-header-bar left-buttons="leftButtons" align-title="right"></ion-header-bar>')(rootScope);
-    var headerView = el.isolateScope().headerBarView;
-
-    //trigger initial align()
-    rootScope.$apply();
-
-    spyOn(headerView, 'align');
-
-    var button = { content: '<i class="icon ion-gear-a"></i>' };
-    rootScope.leftButtons.push(button);
-    rootScope.$apply();
-
-    expect(headerView.align).toHaveBeenCalled();
-  });
-
-    it('Should re-align the title when rightButtons change', function() {
-    rootScope.rightButtons = [];
-    el = compile('<ion-header-bar right-buttons="rightButtons" align-title="right"></ion-header-bar>')(rootScope);
-    var headerView = el.isolateScope().headerBarView;
-
-    //trigger initial align()
-    rootScope.$apply();
-
-    spyOn(headerView, 'align');
-
-    var button = { content: '<i class="icon ion-gear-a"></i>' };
-    rootScope.rightButtons.push(button);
-    rootScope.$apply();
-
-    expect(headerView.align).toHaveBeenCalled();
-  });
-
-
-
 });
