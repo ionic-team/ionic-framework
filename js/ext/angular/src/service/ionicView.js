@@ -105,7 +105,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
   };
   View.prototype.destroy = function() {
     if(this.scope) {
-      this.scope.destroy && this.scope.destroy();
+      this.scope.$destroy && this.scope.$destroy();
       this.scope = null;
     }
   };
