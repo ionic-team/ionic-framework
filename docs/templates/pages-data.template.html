@@ -64,9 +64,7 @@
               <@ for component in doc.areas.api.navGroups[0].navItems @>
                 <@ if component.type == "section" @>
                   <li class="menu-subsection{% if page.docType == "<$ component.name $>" %} active{% endif %}">
-                  <a href="{{page.versionHref}}/<$ component.href $>">
-                      <$ component.name $>
-                    </a>
+                    <$ component.name $>
                   </li>
                 <@ else @>
                   <li class="menu-item{% if page.doc == "<$ component.name $>" %} active{% endif %}">
