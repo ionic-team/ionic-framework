@@ -26,8 +26,8 @@ function run {
 
   echo "-- Cloning ionic-bower..."
   git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic-bower.git \
-    $BOWER_DIR \
-    --depth=10
+     $BOWER_DIR \
+     --depth=10
 
   # move the files from the build
   echo "-- Putting build files in ionic-bower..."
@@ -42,8 +42,10 @@ function run {
   rm -rf $BOWER_DIR/js/ionic.bundle.*
   rm -rf $BOWER_DIR/version.json # unneeded
 
-  # update bower.json
-  # tag each repo
+  echo "-- Copying bower.json from project_dir and renaming main files"
+  cp -Rf $PROJECT_DIR/bower.json $BOWER_DIR
+  replaceInFile "bower.json" "release\/" ""
+
   echo "-- Updating version in ionic-bower to $VERSION"
   replaceJsonProp "bower.json" "version" "$VERSION"
 
