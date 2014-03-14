@@ -177,6 +177,8 @@ gulp.task('bower', function() {
         json.main.forEach(function(path) {
             main.push(path.replace(/release\//g, './'));
         });
+        // Bower should not ignore anything when getting the ionic-bower package.
+        delete(json.ignore);
         json.main = main;
         return json;
     }))
