@@ -8,7 +8,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
  * @name $ionicPopup
  * @module ionic
  * @restrict E
- * @codepen jsHjf
+ * @codepen zkmhJ
  * @description
  *
  * The Ionic Popup service makes it easy to programatically create and show popup
