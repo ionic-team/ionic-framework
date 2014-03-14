@@ -6,8 +6,8 @@ doc: "<$ doc.name $>"
 docType: "<$ doc.docType $>"
 ---
 
-<div class="pull-right">
-  <a href='http://github.com/driftyco/ionic/edit/master/<$ doc.relativePath $>#L<$ doc.startingLine $>' class='improve-docs'>
+<div class="improve-docs">
+  <a href='http://github.com/driftyco/ionic/edit/master/<$ doc.relativePath $>#L<$ doc.startingLine $>'>
     Improve this doc
   </a>
 </div>
@@ -15,7 +15,7 @@ docType: "<$ doc.docType $>"
 <@ block content @>
 
 <@ block header @>
-<h2>
+<h1 class="api-title">
 <@ if doc.docType == "directive" @>
   <$ doc.name | dashCase $>
 <@ else @>
@@ -31,7 +31,7 @@ docType: "<$ doc.docType $>"
   (controller: <$ doc.controller $>)
 </small>
 <@ endif @>
-</h2>
+</h1>
 
 <@ if doc.codepen @>
 {% include codepen.html id="<$ doc.codepen $>" %}
