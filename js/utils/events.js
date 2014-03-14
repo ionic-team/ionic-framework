@@ -49,6 +49,7 @@
    * @ngdoc utility
    * @name ionic.EventController
    * @module ionic
+   * @group utilities
    */
   ionic.EventController = {
     VIRTUALIZED_EVENTS: ['tap', 'swipe', 'swiperight', 'swipeleft', 'drag', 'hold', 'release'],

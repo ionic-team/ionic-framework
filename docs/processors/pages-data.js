@@ -2,130 +2,6 @@ var _ = require('lodash');
 var path = require('canonical-path');
 var log = require('winston');
 
-var AREA_NAMES = {
-  api: 'API',
-  guide: 'Developer Guide',
-  misc: 'Miscellaneous',
-  tutorial: 'Tutorial',
-  error: 'Error Reference'
-};
-
-function getNavGroup(pages, area, pageSorter, pageMapper) {
-
-  var navItems = _(pages)
-    // We don't want the child to include the index page as this is already catered for
-    .omit(function(page) { return page.id === 'index'; })
-
-    // Apply the supplied sorting function
-    .sortBy(pageSorter)
-
-    // Apply the supplied mapping function
-    .map(pageMapper)
-
-    .value();
-
-  return {
-    name: area.name,
-    type: 'group',
-    href: area.id,
-    navItems: navItems
-  };
-}
-
-
-var navGroupMappers = {
-  api: function(areaPages, area) {
-    var navGroups = _(areaPages)
-      .groupBy('module')
-
-      .map(function(modulePages, moduleName) {
-        log.debug('moduleName: ' + moduleName);
-        var navItems = [];
-        var modulePath;
-
-        _(modulePages)
-
-          .groupBy('docType')
-
-          .tap(function(docTypes) {
-            log.debug(_.keys(docTypes));
-            modulePath = 'api/ionic';
-            delete docTypes.module;
-          })
-
-          .tap(function(docTypes) {
-            if ( docTypes.input ) {
-              docTypes.directive = docTypes.directive || [];
-              // Combine input docTypes into directive docTypes
-              docTypes.directive = docTypes.directive.concat(docTypes.input);
-              delete docTypes.input;
-            }
-          })
-
-          .forEach(function(sectionPages, sectionName) {
-
-            sectionPages = _.sortBy(sectionPages, 'name');
-
-            if ( sectionPages.length > 0 ) {
-              // Push a navItem for this section
-              navItems.push({
-                name: sectionName,
-                type: 'section',
-                href: path.dirname(sectionPages[0].path)
-              });
-
-              // Push the rest of the sectionPages for this section
-              _.forEach(sectionPages, function(sectionPage) {
-
-                navItems.push({
-                  name: sectionPage.name,
-                  href: sectionPage.path,
-                  type: sectionPage.docType
-                });
-
-              });
-            }
-          });
-        return {
-          name: moduleName,
-          href: modulePath,
-          type: 'group',
-          navItems: navItems
-        };
-      })
-      .value();
-    return navGroups;
-  },
-  tutorial: function(pages, area) {
-    return [getNavGroup(pages, area, 'step', function(page) {
-      return {
-        name: page.name,
-        step: page.step,
-        href: page.path,
-        type: 'tutorial'
-      };
-    })];
-  },
-  error: function(pages, area) {
-    return [getNavGroup(pages, area, 'path', function(page) {
-      return {
-        name: page.name,
-        href: page.path,
-        type: page.docType === 'errorNamespace' ? 'section' : 'error'
-      };
-    })];
-  },
-  pages: function(pages, area) {
-    return [getNavGroup(pages, area, 'path', function(page) {
-      return {
-        name: page.name,
-        href: page.path,
-        type: 'page'
-      };
-    })];
-  }
-};
-
 var outputFolder;
 var processorConfig;
 var currentVersion;
@@ -142,53 +18,61 @@ module.exports = {
     currentVersion = config.get('currentVersion');
   },
   process: function(docs) {
-
-    _(docs)
-    .filter(function(doc) { return doc.area === 'api'; })
-    .filter(function(doc) { return doc.docType === 'module'; })
-    .map(function(doc) { return _.pick(doc, ['id', 'module', 'docType', 'area']); })
-    .tap(function(docs) {
-      log.debug(docs);
-    });
-
-
-    // We are only interested in docs that are in a area and not landing pages
-    var navPages = _.filter(docs, function(page) {
-      return page.area &&
-        page.docType != 'componentGroup';
-    });
-
-    // Generate an object collection of pages that is grouped by area e.g.
-    // - area "api"
-    //  - group "ng"
-    //    - section "directive"
-    //    - ngApp
-    //    - ngBind
-    //    - section "global"
-    //    - angular.element
-    //    - angular.bootstrap
-    //    - section "service"
-    //    - $compile
-    //  - group "ngRoute"
-    //    - section "directive"
-    //    - ngView
-    //    - section "service"
-    //    - $route
+    // Generate an object collection of pages that is grouped by section e.g.
+    // - section "directive"
+    //  - group "Tab Bar"
+    //    - ion-tabs
+    //    - ion-tab
+    //  - group ""
+    //    - ion-toggle
+    //    - ion-checkbox
+    //    - ...
     //
-    var areas = {};
-    _(navPages)
-      .groupBy('area')
-      .forEach(function(pages, areaId) {
-        var area = {
-          id: areaId,
-          name: AREA_NAMES[areaId]
+    var groups = _(docs)
+      .filter(function(doc) { return doc.area === 'api'; })
+      .filter(function(doc) { return doc.module === 'ionic'; })
+      .filter(function(doc) { return doc.docType !== 'componentGroup'; })
+      .groupBy(function(doc) { if (!doc.group) doc.group = 'Other'; return doc.group; })
+      .map(function(pages, groupName) {
+        var sections = _(pages)
+          .groupBy('docType')
+          .map(function(pages, docType) {
+            return {
+              name: docType,
+              pages: _(pages)
+                .sortBy(function(doc) {
+                  return doc.groupMainItem;
+                })
+                .map(function(doc) {
+                  return {
+                    href: doc.path,
+                    name: doc.name,
+                    docType: doc.docType,
+                    type: doc.docType,
+                  };
+                })
+                .filter(function(doc) {
+                  return !!doc.name;
+                })
+                .value()
+            };
+          })
+          .sortBy(function(section) {
+            //Directives always first
+            return section.name != 'directive';
+          })
+          .value();
+
+        return {
+          name: groupName,
+          sections: sections
         };
-        areas[areaId] = area;
-
-        var navGroupMapper = navGroupMappers[area.id] || navGroupMappers['pages'];
-        area.navGroups = navGroupMapper(pages, area);
-      });
-
+      })
+      .sortBy(function(group) {
+        //Sort by groups with most items last
+        return _.values(group.sections).length;
+      })
+      .value();
 
     _.forEach(docs, function(doc) {
       if ( !doc.path ) {
@@ -196,25 +80,13 @@ module.exports = {
       }
     });
 
-    // Extract a list of basic page information for mapping paths to paritals and for client side searching
-    var pages = _(docs)
-      .map(function(doc) {
-        var page = _.pick(doc, [
-          'docType', 'id', 'name', 'area', 'outputPath', 'path', 'searchTerms'
-        ]);
-        return page;
-      })
-      .indexBy('path')
-      .value();
-
     var docData = {
       docType: 'pages-data',
       id: 'pages-data',
       template: processorConfig.template || 'pages-data.template.js',
       outputPath: processorConfig.outputPath || 'js/pages-data.js',
 
-      areas: areas,
-      pages: pages
+      groups: groups
     };
 
     docs.push(docData);

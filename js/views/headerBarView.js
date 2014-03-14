@@ -5,6 +5,7 @@
    * @ngdoc controller
    * @name ionicBar
    * @module ionic
+   * @group page layout
    * @description
    * Controller for the {@link ionic.directive:ionHeaderBar} and
    * {@link ionic.directive:ionFooterBar} directives.

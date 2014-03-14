@@ -1,19 +1,19 @@
-function linkify(type, id) {
-  return '{@link ionic.' + type + ':' + id.trim() + '}';
-}
 module.exports = [
   {
     name: 'controller',
     transformFn: function(doc, tag) {
-      return linkify('controller', tag.description);
+      return '{@link ionic.controller:' + tag.description.trim() + '}';
     }
   },
   {
     name: 'parent',
     transformFn: function(doc, tag) {
-      return tag.description.split(',').map(function(id) {
-        return linkify('directive', id);
+      doc.parentLinks = tag.description.split(',').map(function(id) {
+        return '{@link ' + id.trim() + '}';
       }).join(' or ');
+      return tag.description.split(',').map(function(parent) {
+        return parent.trim();
+      });
     }
   },
   {
@@ -21,5 +21,11 @@ module.exports = [
   },
   {
     name: 'alias'
+  },
+  {
+    name: 'group'
+  },
+  {
+    name: 'groupMainItem'
   }
 ];

@@ -4,7 +4,7 @@ angular.module('ionic.ui.navAnimation', [])
  * @name ionNavAnimation
  * @module ionic
  * @restrict A
- * @parent ionNavView
+ * @parent ionic.directive:ionNavView
  *
  * @description
  * When used under an {@link ionic.directive:ionNavView} and on an `<a>` element,

@@ -36,7 +36,9 @@
     "winston": "^0.7.2",
     "minimist": "0.0.8",
     "gulp-minify-css": "^0.3.0",
-    "semver": "^2.2.1"
+    "semver": "^2.2.1",
+    "cp-r": "^0.1.1",
+    "mkdirp": "^0.3.5"
   },
   "licenses": [
     {

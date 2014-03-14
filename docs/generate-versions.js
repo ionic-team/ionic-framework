@@ -10,61 +10,28 @@ module.exports = function(config) {
 
   var docsBaseFolder = path.resolve(basePath, outputFolder, 'docs');
 
-  var versions;
-  try {
-    versions = require(docsBaseFolder + '/version-data.json');
-  } catch(e) {
-    versions = [];
-  }
+  var versions = fs.readdirSync(docsBaseFolder)
+    .filter(semver.valid)
+    .sort(semver.rcompare);
 
-  var hasNightlyVersion = currentVersion == 'nightly' ||
-    _.find(versions, {name: 'nightly'});
-  var nightlyVersion = {
-    href: '/docs/nightly',
-    folder: 'nightly',
-    name: 'nightly'
-  };
+  !_.contains(versions, currentVersion) && versions.unshift(currentVersion);
+  !_.contains(versions, 'nightly') && versions.unshift('nightly');
 
-  //Remove nightly from versions before trying to sort things out
-  //because it's different (the only non-semver version)
-  _.remove(versions, {name: 'nightly'});
-
-  if (currentVersion == 'nightly') {
-    //do nothing
-
-  } else if ( !_.find(versions, {name: currentVersion}) ) {
-    //If version doesn't exist, add it...
-    versions.unshift({
-      href: '/docs/latest',
-      folder: 'latest',
-      name: currentVersion
-    });
-
-    versions.forEach(function(version, index) {
-      //Make sure the other versions aren't still latest,
-      //if so rename them
-      if (_.contains(version.href, 'latest') && index > 0) {
-        version.href = '/docs/'+version.name,
-        version.folder = version.name;
-        fs.unlinkSync(docsBaseFolder + '/' + version.name);
-        fs.renameSync(
-          docsBaseFolder + '/latest',
-          docsBaseFolder + '/' + version.name
-        );
-      }
-    });
-  }
-
-  //Add nightly back to front if it exists
-  if (hasNightlyVersion) {
-    versions.unshift(nightlyVersion);
-  }
-  console.log(versions);
+  //First semver valid version is latest
+  var latestVersion = _.find(versions, semver.valid);
+  versions = versions.map(function(version) {
+    //Latest version is in docs root
+    var folder = version == latestVersion ? '' : version;
+    return {
+      href: path.join('/docs', folder),
+      folder: folder,
+      name: version
+    };
+  });
 
   return {
     list: versions,
     current: _.find(versions, { name: currentVersion }),
-    latest: _.find(versions, function(v) { return semver.valid(v.name); }) ||
-      _.first(versions)
+    latest: _.find(versions, {name: latestVersion}) || _.first(versions)
   };
 };

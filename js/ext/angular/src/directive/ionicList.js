@@ -8,7 +8,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
  * @name ionItem
  * @module ionic
  * @restrict E
- * @parent ionList
+ * @parent ionic.directive:ionList
  *
  * @description
  * The ionItem directive creates a list-item that can easily be swiped,

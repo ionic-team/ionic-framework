@@ -6,6 +6,7 @@ angular.module('ionic.service.platform', [])
  * @ngdoc service
  * @name $ionicPlatform
  * @module ionic
+ * @group utilities
  * @description
  * An angular abstraction of {@link ionic.utility:ionic.Platform}.
  *

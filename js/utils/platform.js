@@ -4,6 +4,7 @@
    * @ngdoc utility
    * @name ionic.Platform
    * @module ionic
+   * @group utilities
    */
   ionic.Platform = {
 
@@ -33,7 +34,7 @@
     grade: null,
     ua: navigator.userAgent,
 
-    /** 
+    /**
      * @ngdoc method
      * @name ionic.Platform#ready
      * @description

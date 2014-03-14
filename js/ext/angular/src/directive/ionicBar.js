@@ -18,6 +18,7 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  * @name ionHeaderBar
  * @module ionic
  * @restrict E
+ * @group page layout
  * @controller ionicBar
  *
  * @description
@@ -26,8 +27,8 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  * Is able to have left or right buttons, and additionally its title can be
  * aligned through the {@link ionic.controller:ionicBar ionicBar controller}.
  *
- * @param {string=} model The model to assign this headerBar's 
- * {@link ionic.controller:ionicBar ionicBar controller} to. 
+ * @param {string=} model The model to assign this headerBar's
+ * {@link ionic.controller:ionicBar ionicBar controller} to.
  * Defaults to assigning to $scope.headerBarController.
  * @param {string=} align-title Where to align the title at the start.
  * Avaialble: 'left', 'right', or 'center'.  Defaults to 'center'.
@@ -55,6 +56,7 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  * @name ionFooterBar
  * @module ionic
  * @restrict E
+ * @group page layout
  * @controller ionicBar
  *
  * @description
@@ -63,8 +65,8 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  * Is able to have left or right buttons, and additionally its title can be
  * aligned through the {@link ionic.controller:ionicBar ionicBar controller}.
  *
- * @param {string=} model The model to assign this footerBar's 
- * {@link ionic.controller:ionicBar ionicBar controller} to. 
+ * @param {string=} model The model to assign this footerBar's
+ * {@link ionic.controller:ionicBar ionicBar controller} to.
  * Defaults to assigning to $scope.footerBarController.
  * @param {string=} align-title Where to align the title at the start.
  * Avaialble: 'left', 'right', or 'center'.  Defaults to 'center'.
@@ -91,8 +93,8 @@ function barDirective(isHeader) {
   var BAR_TEMPLATE = isHeader ?
     '<header class="bar bar-header" ng-transclude></header>' :
     '<footer class="bar bar-header" ng-transclude></footer>';
-  var BAR_MODEL_DEFAULT = isHeader ? 
-    'headerBarController' : 
+  var BAR_MODEL_DEFAULT = isHeader ?
+    'headerBarController' :
     'footerBarController';
   return ['$parse', function($parse) {
     return {

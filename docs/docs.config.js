@@ -23,7 +23,7 @@ module.exports = function(config) {
 
   var versionData = require('./generate-versions')(config);
   config.set('versionData', versionData);
-  config.set('rendering.contentsFolder', 'docs/' + versionData.current.folder);
+  config.set('rendering.contentsFolder', path.join('docs', versionData.current.folder));
 
   config.set('processing.api-docs', {
     outputPath: 'api/${docType}/${name}/index.md',
@@ -62,10 +62,11 @@ module.exports = function(config) {
   });
 
   config.append('processing.processors', [
-    require('./processors/version-data'),
+    require('./processors/latest-version'),
     require('./processors/keywords'),
     require('./processors/pages-data'),
     require('./processors/index-page'),
+    require('./processors/version-data')
   ]);
 
   return config;

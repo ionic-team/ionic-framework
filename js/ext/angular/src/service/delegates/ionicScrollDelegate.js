@@ -7,6 +7,7 @@ angular.module('ionic.ui.service.scrollDelegate', [])
  * @ngdoc service
  * @name $ionicScrollDelegate
  * @module ionic
+ * @group page layout
  * @description
  * Allows you to have some control over a scrollable area (created by an
  * {@link ionic.directive:ionContent} or {@link ionic.directive:ionScroll}

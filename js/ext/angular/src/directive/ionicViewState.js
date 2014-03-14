@@ -8,7 +8,8 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  * @name ionView
  * @module ionic
  * @restrict E
- * @parent ionNavBar
+ * @group navigation
+ * @parent ionic.directive:ionNavBar
  *
  * @description
  * A container for content, used to tell a parent {@link ionic.directive:ionNavBar}
@@ -78,6 +79,8 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  * @name ionNavView
  * @module ionic
  * @restrict E
+ * @group navigation
+ * @groupMainItem
  * @codepen HjnFx
  *
  * @description

@@ -8,6 +8,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
 
 /**
  * @ngdoc controller
+ * @group tab bar
  * @name ionicTabs
  * @module ionic
  *
@@ -132,6 +133,8 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
  * @name ionTabs
  * @module ionic
  * @restrict E
+ * @group tab bar
+ * @groupMainItem
  * @controller ionicTabs
  * @codepen KbrzJ
  *
@@ -158,7 +161,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
  * </ion-tabs>
  * ```
  *
- * @param {expression=} model The model to assign this tabbar's {@link ionic.controller:ionicTabs} controller to. By default, assigns  to $scope.tabsController.
+ * @param {expression=} model The model to assign this tab bar's {@link ionic.controller:ionicTabs} controller to. By default, assigns  to $scope.tabsController.
  * @param {string=} animation The animation to use when changing between tab pages.
  * @param {string=} tabs-style The class to apply to the tabs. Defaults to 'tabs-positive'.
  * @param {string=} tabs-type Whether to put the tabs on the top or bottom. Defaults to 'tabs-bottom'.
@@ -208,10 +211,11 @@ function($scope, $ionicViewService, $rootScope, $element) {
 
 /**
  * @ngdoc directive
+ * @group tab bar
  * @name ionTab
  * @module ionic
  * @restrict E
- * @parent ionTabs
+ * @parent ionic.directive:ionTabs
  *
  * @description
  * Contains a tab's content.  The content only exists while the given tab is selected.

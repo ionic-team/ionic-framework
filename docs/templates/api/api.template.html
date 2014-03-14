@@ -21,9 +21,9 @@ docType: "<$ doc.docType $>"
 <@ else @>
   <$ doc.name $>
 <@ endif @>
-<@ if doc.parent @>
+<@ if doc.parentLinks @>
 <small>
-  (child of <$ doc.parent $>)
+  (child of <$ doc.parentLinks $>)
 </small>
 <@ endif @>
 <@ if doc.controller @>

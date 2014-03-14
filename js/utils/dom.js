@@ -27,6 +27,7 @@
   * @ngdoc utility
   * @name ionic.DomUtil
   * @module ionic
+  * @group utilities
   */
   ionic.DomUtil = {
     //Call with proper context
@@ -181,7 +182,7 @@
      * @name ionic.DomUtil#getParentWithClass
      * @param {DOMElement} element
      * @param {string} className
-     * @returns {DOMElement} The closest parent of element matching the 
+     * @returns {DOMElement} The closest parent of element matching the
      * className, or null.
      */
     getParentWithClass: function(e, className) {
@@ -198,7 +199,7 @@
      * @name ionic.DomUtil#getParentWithClass
      * @param {DOMElement} element
      * @param {string} className
-     * @returns {DOMElement} The closest parent or self matching the 
+     * @returns {DOMElement} The closest parent or self matching the
      * className, or null.
      */
     getParentOrSelfWithClass: function(e, className) {
@@ -220,7 +221,7 @@
      * @param {number} y1
      * @param {number} x2
      * @param {number} y2
-     * @returns {boolean} Whether {x,y} fits within the rectangle defined by 
+     * @returns {boolean} Whether {x,y} fits within the rectangle defined by
      * {x1,y1,x2,y2}.
      */
     rectContains: function(x, y, x1, y1, x2, y2) {
