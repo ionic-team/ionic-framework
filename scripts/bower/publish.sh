@@ -43,8 +43,11 @@ function run {
   rm -rf $BOWER_DIR/version.json # unneeded
 
   echo "-- Copying bower.json from project_dir and renaming main files"
-  cp -Rf $PROJECT_DIR/bower.json $BOWER_DIR
-  replaceInFile "bower.json" "release\/" ""
+  node -p "var b = require('$PROJECT_DIR/bower.json'); \
+    delete b.ignore; \
+    b.main = b.main.map(function(s) { return s.replace(/^release\//,''); }); \
+    console.log(JSON.stringify(b,null,2));" \
+    > $BOWER_DIR/bower.json
 
   echo "-- Updating version in ionic-bower to $VERSION"
   replaceJsonProp "bower.json" "version" "$VERSION"
