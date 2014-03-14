@@ -17,15 +17,25 @@
 
     <div ng-controller="AppCtrl">
       <ion-nav-bar animation="nav-title-slide-ios7"
-               type="bar-positive"
-               back-button-type="button-icon"
-               back-button-label=" Back"
-               back-button-icon="ion-arrow-left-c"></ion-nav-bar>
+        type="bar-positive">
+        <ion-nav-back-button class="button-icon">
+          <i class="icon ion-arrow-left-c"></i> Back
+        </ion-nav-back-button>
+      </ion-nav-bar>
       <ion-nav-view animation="slide-left-right"></ion-nav-view>
     </div>
 
     <script id="sign-in.html" type="text/ng-template">
-      <ion-view title="Sign-In" left-buttons="leftButtons" right-buttons="rightButtons">
+      <ion-view title="Sign-In">
+        <ion-nav-buttons side="left">
+          <button class="button button-icon icon ion-home">
+            Home
+          </button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+          <button class="button button-icon icon ion-navicon">
+          </button>
+        </ion-nav-buttons>
         <ion-content has-header="true">
           <div class="list">
             <label class="item item-input">
@@ -295,17 +305,6 @@
         $scope.signIn = function(user) {
           $state.go('tabs.autolist');
         };
-
-        $scope.leftButtons = [{
-          type: 'button-icon icon ion-home',
-          content: 'Home',
-          tap: function(e) { }
-        }];
-
-        $scope.rightButtons = [{
-          type: 'button-icon icon ion-navicon',
-          tap: function(e) { }
-        }];
 
       })
 
