@@ -20,13 +20,16 @@ module.exports = function(config) {
   config.set('basePath', __dirname);
   config.set('source.projectPath', '.');
   config.set('rendering.outputFolder', '../tmp/ionic-site');
-  config.set('rendering.contentsFolder', 'docs/' + config.get('currentVersion'));
+
+  var versionData = require('./generate-versions')(config);
+  config.set('versionData', versionData);
+  config.set('rendering.contentsFolder', 'docs/' + versionData.current.folder);
 
   config.set('processing.api-docs', {
-    outputPath: '${area}/${module}/${docType}/${name}/index.md',
-    path: '${area}/${module}/${docType}/${name}',
-    moduleOutputPath: '${area}/${name}/index.md',
-    modulePath: '${area}/${name}'
+    outputPath: 'api/${docType}/${name}/index.md',
+    path: 'api/${docType}/${name}',
+    moduleOutputPath: 'api/module/${name}/index.md',
+    modulePath: 'api/module/${name}'
   });
 
   config.set('processing.pages-data', {
@@ -60,11 +63,9 @@ module.exports = function(config) {
 
   config.append('processing.processors', [
     require('./processors/version-data'),
-    require('./processors/git-data'),
     require('./processors/keywords'),
     require('./processors/pages-data'),
     require('./processors/index-page'),
-    require('./processors/debug-dump')
   ]);
 
   return config;

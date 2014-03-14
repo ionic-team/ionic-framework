@@ -7,7 +7,7 @@ module.exports = {
   handlerFactory: function(partialNames, config) {
 
     return function handleLinkTags(doc, tagName, tagDescription) {
-      var version = config.get('currentVersion');
+      var versionData = config.get('versionData');
 
       // Parse out the uri and title
       return tagDescription.replace(INLINE_LINK, function(match, uri, title) {
@@ -19,7 +19,7 @@ module.exports = {
           linkInfo.title = 'TODO:' + linkInfo.title;
         }
 
-        return '<a href="/docs/' + version + '/' + linkInfo.url + '">' + linkInfo.title + '</a>';
+        return '<a href="' + versionData.current.href + '/' + linkInfo.url + '">' + linkInfo.title + '</a>';
       });
     };
   }
