@@ -95,8 +95,8 @@
 }
 
 // Link and Button Active States
-.item.active,
-.ionic-pseudo .item:active,
+.item.active:not(.item-divider),
+.item:active:not(.item-divider),
 .item-complex.active .item-content {
   @include item-active-style($item-default-active-bg, $item-default-active-border);
 
