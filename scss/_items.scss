@@ -536,6 +536,11 @@ button.item-button-right:after,
   font-weight: bold;
 }
 
+.item-divider.active,
+.item-divider:active {
+  @include item-active-style($item-divider-bg, $item-default-border);
+}
+
 
 // Item Note
 // -------------------------------
