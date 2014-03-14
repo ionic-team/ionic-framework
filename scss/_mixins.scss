@@ -42,7 +42,7 @@
     border-color: $color;
     @if $text-color == "" {
       $text-color: $color;
-    } 
+    }
     color: $text-color;
     &.active, &:active {
       background-color: $color;
@@ -129,7 +129,7 @@
     border: $checkbox-border-width solid $off-border-color;
   }
 
-  /* what the background looks like when its checked */
+  // what the background looks like when its checked
   & input:checked:before {
     background: $on-bg-color;
   }
@@ -140,7 +140,7 @@
 // --------------------------------------------------
 
 @mixin toggle-style($on-border-color, $on-bg-color) {
-  /* the track when the toggle is "on" */
+  // the track when the toggle is "on"
   & input:checked + .track {
     border-color: $on-border-color;
     background-color: $on-bg-color;
@@ -187,9 +187,9 @@
 // --------------------------------------------------
 
 @mixin text-size-adjust($value: none) {
-  -webkit-text-size-adjust: $value; 
+  -webkit-text-size-adjust: $value;
      -moz-text-size-adjust: $value;
-          text-size-adjust: $value; 
+          text-size-adjust: $value;
 }
 @mixin tap-highlight-transparent() {
   -webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -229,7 +229,7 @@
   @include font-family-monospace();
   @include font-shorthand($size, $weight, $line-height);
 }
-@mixin font-smoothing($font-smoothing) { 
+@mixin font-smoothing($font-smoothing) {
   -webkit-font-smoothing: $font-smoothing;
           font-smoothing: $font-smoothing;
 }
@@ -524,8 +524,8 @@
   -moz-flex-wrap: $value;
   @if $value == nowrap {
       -ms-flex-wrap: none;
-  } @else { 
-      -ms-flex-wrap: $value; 
+  } @else {
+      -ms-flex-wrap: $value;
   }
   flex-wrap: $value;
 }
