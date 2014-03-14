@@ -14,8 +14,6 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
  * The Ionic Popup service makes it easy to programatically create and show popup
  * windows that require the user to respond in order to continue:
  *
- * ![Popup](http://ionicframework.com.s3.amazonaws.com/docs/controllers/popup.png)
- *
  * The popup system has support for nicer versions of the built in `alert()` `prompt()` and `confirm()` functions
  * you are used to in the browser, but with more powerful support for customizing input types in the case of
  * prompt, or customizing the look of the window.
