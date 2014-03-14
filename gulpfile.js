@@ -22,6 +22,7 @@ var stripDebug = require('gulp-strip-debug');
 var template = require('gulp-template');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
+var jeditor = require("gulp-json-editor");
 
 var banner = _.template(buildConfig.banner, { pkg: pkg });
 
@@ -65,6 +66,7 @@ gulp.task('bundle', [
   'scripts-ng',
   'vendor',
   'version',
+  'bower',
 ], function() {
   IS_RELEASE_BUILD && gulp.src(buildConfig.ionicBundleFiles.map(function(src) {
       return src.replace(/.js$/, '.min.js');
@@ -165,6 +167,23 @@ gulp.task('version', function() {
       time: time
     }))
     .pipe(rename('version.json'))
+    .pipe(gulp.dest('dist'));
+});
+
+gulp.task('bower', function() {
+  return gulp.src('bower.json')
+    .pipe(jeditor(function(json) {
+        main = [];
+        json.main.forEach(function(path) {
+            main.push(path.replace(/release\//g, './'));
+        });
+        json.main = main;
+        
+        // Bower should not ignore anything when getting the ionic-bower package.
+        delete(json.ignore);
+        
+        return json;
+    }))
     .pipe(gulp.dest('dist'));
 });
 
