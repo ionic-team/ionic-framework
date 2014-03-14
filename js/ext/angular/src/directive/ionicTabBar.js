@@ -239,8 +239,6 @@ function($scope, $ionicViewService, $rootScope, $element) {
  * @param {string=} icon-off The icon of the tab while it is not selected.
  * @param {expression=} badge The badge to put on this tab (usually a number).
  * @param {expression=} badge-style The style of badge to put on this tab (eg tabs-positive).
- * @param {expression=} left-buttons The left buttons to use on a parent {@link ionic.directive:ionNavBar} while this tab is selected.
- * @param {expression=} right-buttons The right buttons to use on a parent {@link ionic.directive:ionNavBar} while this tab is selected.
  * @param {expression=} on-select Called when this tab is selected.
  * @param {expression=} on-deselect Called when this tab is deselected.
  */
@@ -273,8 +271,6 @@ function($rootScope, $animate, $ionicBind, $compile, $ionicViewService) {
 
         $ionicBind($scope, $attr, {
           animate: '=',
-          leftButtons: '=',
-          rightButtons: '=',
           onSelect: '&',
           onDeselect: '&',
           title: '@',
