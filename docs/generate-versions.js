@@ -17,34 +17,49 @@ module.exports = function(config) {
     versions = [];
   }
 
+  var hasNightlyVersion = currentVersion == 'nightly' ||
+    _.find(versions, {name: 'nightly'});
   var nightlyVersion = {
     href: '/docs/nightly',
     folder: 'nightly',
     name: 'nightly'
   };
 
-  if ( !_.find(versions, {name: currentVersion}) ) {
-    //Make sure nightly version is always at the front of the list
-    if (currentVersion != 'nightly') {
-      versions.unshift({
-        href: '/docs/latest',
-        folder: 'latest',
-        name: currentVersion
-      });
-      //Make sure that if we have a nightly version, it moves back to the front
-      if (_.contains(versions, {name:'nightly'})) {
-        _.remove(versions, {name:'nightly'});
-        versions.unshift(nightlyVersion);
+  //Remove nightly from versions before trying to sort things out
+  //because it's different (the only non-semver version)
+  _.remove(versions, {name: 'nightly'});
+
+  if (currentVersion == 'nightly') {
+    //do nothing
+
+  } else if ( !_.find(versions, {name: currentVersion}) ) {
+    //If version doesn't exist, add it...
+    versions.unshift({
+      href: '/docs/latest',
+      folder: 'latest',
+      name: currentVersion
+    });
+
+    versions.forEach(function(version, index) {
+      //Make sure the other versions aren't still latest,
+      //if so rename them
+      if (_.contains(version.href, 'latest') && index > 0) {
+        version.href = '/docs/'+version.name,
+        version.folder = version.name;
+        fs.unlinkSync(docsBaseFolder + '/' + version.name);
+        fs.renameSync(
+          docsBaseFolder + '/latest',
+          docsBaseFolder + '/' + version.name
+        );
       }
-    } else {
-      versions.unshift(nightlyVersion);
-    }
+    });
   }
 
-  //Add current version to the top of the list if not exists
-  if (!_.find(versions, {name: currentVersion})) {
-    versions.unshift(currentVersion);
+  //Add nightly back to front if it exists
+  if (hasNightlyVersion) {
+    versions.unshift(nightlyVersion);
   }
+  console.log(versions);
 
   return {
     list: versions,
