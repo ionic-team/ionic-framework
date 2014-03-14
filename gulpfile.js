@@ -175,7 +175,6 @@ gulp.task('bower', function() {
     .pipe(jeditor(function(json) {
         main = [];
         json.main.forEach(function(path) {
-            console.log(path);
             main.push(path.replace(/release\//g, './'));
         });
         json.main = main;
