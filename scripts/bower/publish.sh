@@ -46,7 +46,7 @@ function run {
   node -p "var b = require('$PROJECT_DIR/bower.json'); \
     delete b.ignore; \
     b.main = b.main.map(function(s) { return s.replace(/^release\//,''); }); \
-    console.log(JSON.stringify(b,null,2));" \
+    JSON.stringify(b,null,2);" \
     > $BOWER_DIR/bower.json
 
   echo "-- Updating version in ionic-bower to $VERSION"
