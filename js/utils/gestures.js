@@ -968,86 +968,86 @@
    * detection sessionic. It has the following properties
    *      @param  {String}    name
    *      contains the name of the gesture we have detected. it has not a real function,
-  *      only to check in other gestures if something is detected.
-    *      like in the drag gesture we set it to 'drag' and in the swipe gesture we can
-    *      check if the current gesture is 'drag' by accessing ionic.Gestures.detectionic.current.name
-    *
-    *      readonly
-    *      @param  {ionic.Gestures.Instance}    inst
-    *      the instance we do the detection for
-    *
-    *      readonly
-    *      @param  {Object}    startEvent
-    *      contains the properties of the first gesture detection in this sessionic.
-    *      Used for calculations about timing, distance, etc.
-    *
-    *      readonly
-    *      @param  {Object}    lastEvent
-    *      contains all the properties of the last gesture detect in this sessionic.
-    *
-    * after the gesture detection session has been completed (user has released the screen)
-    * the ionic.Gestures.detectionic.current object is copied into ionic.Gestures.detectionic.previous,
-    * this is usefull for gestures like doubletap, where you need to know if the
-      * previous gesture was a tap
-      *
-      * options that have been set by the instance can be received by calling inst.options
-      *
-      * You can trigger a gesture event by calling inst.trigger("mygesture", event).
-      * The first param is the name of your gesture, the second the event argument
-      *
-      *
-      * Register gestures
-      * --------------------
-      * When an gesture is added to the ionic.Gestures.gestures object, it is auto registered
-      * at the setup of the first ionic.Gestures instance. You can also call ionic.Gestures.detectionic.register
-      * manually and pass your gesture object as a param
-      *
-      */
+   *      only to check in other gestures if something is detected.
+   *      like in the drag gesture we set it to 'drag' and in the swipe gesture we can
+   *      check if the current gesture is 'drag' by accessing ionic.Gestures.detectionic.current.name
+   *
+   *      readonly
+   *      @param  {ionic.Gestures.Instance}    inst
+   *      the instance we do the detection for
+   *
+   *      readonly
+   *      @param  {Object}    startEvent
+   *      contains the properties of the first gesture detection in this sessionic.
+   *      Used for calculations about timing, distance, etc.
+   *
+   *      readonly
+   *      @param  {Object}    lastEvent
+   *      contains all the properties of the last gesture detect in this sessionic.
+   *
+   * after the gesture detection session has been completed (user has released the screen)
+   * the ionic.Gestures.detectionic.current object is copied into ionic.Gestures.detectionic.previous,
+   * this is usefull for gestures like doubletap, where you need to know if the
+   * previous gesture was a tap
+   *
+   * options that have been set by the instance can be received by calling inst.options
+   *
+   * You can trigger a gesture event by calling inst.trigger("mygesture", event).
+   * The first param is the name of your gesture, the second the event argument
+   *
+   *
+   * Register gestures
+   * --------------------
+   * When an gesture is added to the ionic.Gestures.gestures object, it is auto registered
+   * at the setup of the first ionic.Gestures instance. You can also call ionic.Gestures.detectionic.register
+   * manually and pass your gesture object as a param
+   *
+   */
 
-      /**
-       * Hold
-       * Touch stays at the same place for x time
-       * events  hold
-       */
-      ionic.Gestures.gestures.Hold = {
-        name: 'hold',
-        index: 10,
-        defaults: {
-          hold_timeout	: 500,
-          hold_threshold	: 1
-        },
-        timer: null,
-        handler: function holdGesture(ev, inst) {
-          switch(ev.eventType) {
-            case ionic.Gestures.EVENT_START:
-              // clear any running timers
-              clearTimeout(this.timer);
+  /**
+   * Hold
+   * Touch stays at the same place for x time
+   * events  hold
+   */
+  ionic.Gestures.gestures.Hold = {
+    name: 'hold',
+    index: 10,
+    defaults: {
+      hold_timeout	: 500,
+      hold_threshold	: 1
+    },
+    timer: null,
+    handler: function holdGesture(ev, inst) {
+      switch(ev.eventType) {
+        case ionic.Gestures.EVENT_START:
+          // clear any running timers
+          clearTimeout(this.timer);
 
-              // set the gesture so we can check in the timeout if it still is
-              ionic.Gestures.detection.current.name = this.name;
+          // set the gesture so we can check in the timeout if it still is
+          ionic.Gestures.detection.current.name = this.name;
 
-              // set timer and if after the timeout it still is hold,
-              // we trigger the hold event
-              this.timer = setTimeout(function() {
-                if(ionic.Gestures.detection.current.name == 'hold') {
-                  inst.trigger('hold', ev);
-                }
-              }, inst.options.hold_timeout);
-              break;
+          // set timer and if after the timeout it still is hold,
+          // we trigger the hold event
+          this.timer = setTimeout(function() {
+            if(ionic.Gestures.detection.current.name == 'hold') {
+              inst.trigger('hold', ev);
+            }
+          }, inst.options.hold_timeout);
+          break;
 
-              // when you move or end we clear the timer
-            case ionic.Gestures.EVENT_MOVE:
-              if(ev.distance > inst.options.hold_threshold) {
-                clearTimeout(this.timer);
-              }
-              break;
-
-            case ionic.Gestures.EVENT_END:
-              clearTimeout(this.timer);
-              break;
+          // when you move or end we clear the timer
+        case ionic.Gestures.EVENT_MOVE:
+          if(ev.distance > inst.options.hold_threshold) {
+            clearTimeout(this.timer);
           }
-        }
-      };
+          break;
+
+        case ionic.Gestures.EVENT_END:
+          clearTimeout(this.timer);
+          break;
+      }
+    }
+  };
 
 
   /**
