@@ -125,7 +125,7 @@ gulp.task('scripts', function() {
 
 gulp.task('scripts-ng', function() {
   return gulp.src(buildConfig.angularIonicFiles)
-    .pipe(gulpif(IS_RELEASE_BUILD, stripDebug()))
+    // .pipe(gulpif(IS_RELEASE_BUILD, stripDebug()))
     .pipe(concat('ionic-angular.js'))
     .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distJs))

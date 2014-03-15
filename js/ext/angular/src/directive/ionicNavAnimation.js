@@ -1,3 +1,4 @@
+(function() {
 angular.module('ionic.ui.navAnimation', [])
 /**
  * @ngdoc directive
@@ -39,3 +40,4 @@ angular.module('ionic.ui.navAnimation', [])
     }
   };
 });
+})();
