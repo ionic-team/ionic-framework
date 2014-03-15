@@ -104,8 +104,7 @@
 .item-toggle {
   padding-right: ($item-padding * 3) + $toggle-width;
 
-  &.active,
-  &:active {
+  &.active {
     box-shadow: none;
   }
 }

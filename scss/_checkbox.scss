@@ -100,8 +100,7 @@
 .item-checkbox {
   padding-left: ($item-padding * 2) + $checkbox-width;
 
-  &.active,
-  &:active {
+  &.active {
     box-shadow: none;
   }
 }

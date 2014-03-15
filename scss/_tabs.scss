@@ -168,8 +168,7 @@
 /* Navigational tab */
 
 /* Active state for tab */
-.tab-item.active,
-.tab-item:active {
+.tab-item.active {
   opacity: 1;
 
   &.tab-item-light {

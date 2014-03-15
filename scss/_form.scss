@@ -68,12 +68,6 @@ textarea {
     font-size: 16px;
   }
 
-  &.item.active,
-  .ionic-pseudo &.item:active {
-    border-color: $item-default-border;
-    background-color: transparent;
-  }
-
   .button-bar {
     @include border-radius(0);
     @include flex(1, 0, 220px);
