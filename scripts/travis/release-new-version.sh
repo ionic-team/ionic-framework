@@ -12,8 +12,25 @@ ARG_DEFS=(
   "--version=(.*)"
 )
 
+function init {
+  TMP_DIR=$SCRIPT_DIR/../../tmp
+  BUILD_DIR=$SCRIPT_DIR/../../dist
+  PROJECT_DIR=$SCRIPT_DIR/../..
+
+  IONIC_DIR=$TMP_DIR/ionic
+}
+
 function run {
   cd ../..
+
+  rm -rf $IONIC_DIR
+  mkdir -p $IONIC_DIR
+
+  git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic.git \
+    $IONIC_DIR
+
+  cd $IONIC_DIR
+  git checkout -qf $TRAVIS_COMMIT
 
   CODENAME=$(readJsonProp "package.json" "codename")
 
@@ -25,7 +42,7 @@ function run {
 
   echo "-- Putting built files into release folder"
   mkdir -p release
-  cp -Rf dist/* release
+  cp -Rf $PROJECT_DIR/dist/* release
 
   git add -A
   git commit -m "finalize-release: v$VERSION \"$CODENAME\""

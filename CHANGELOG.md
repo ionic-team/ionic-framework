@@ -1,3 +1,123 @@
+<a name="0.9.27"></a>
+### 0.9.27 (2014-03-15)
+
+
+#### Bug Fixes
+
+* **actionsheet:**
+  * Use transition instead of animation for backdrop, fix for Android 2.3 ([c91622b7](https://github.com/driftyco/ionic/commit/c91622b760dd4e919f890de2ecdf46d4e9573d13))
+  * Dismiss actionsheet when tapping backdrop, closes #733 ([668c646f](https://github.com/driftyco/ionic/commit/668c646faa25a10d67cf2beebb4bf119e758ff1d))
+  * Fix slide-up animation, closes #713 ([44b31e18](https://github.com/driftyco/ionic/commit/44b31e18878b89d47d769505a619aa7f97cf740a))
+* **backbutton:** Allow only one back button listener to run per click, closes #693 ([a491f22c](https://github.com/driftyco/ionic/commit/a491f22c1f2297dcbe7dbd9679593b896584cc87))
+* **badge:**
+  * Vertical align a badge in an item-divider, closes #707 ([cb5510c1](https://github.com/driftyco/ionic/commit/cb5510c1843c3debeb0b29d71cda7abbcd00f753))
+  * Update badge alignment in tab items, closes #694 ([c4eed02f](https://github.com/driftyco/ionic/commit/c4eed02f29be9a82752915ee32c12be4f453645a))
+* **button:**
+  * Correct vertical alignment of header right buttons, closes #704 ([438f5fba](https://github.com/driftyco/ionic/commit/438f5fba582b7e391ec174d4c9a37d53579b7b47))
+  * Tweak vertical alignment of button icons, closes #739 ([7ec0605e](https://github.com/driftyco/ionic/commit/7ec0605e06f89c6f3008c7ff16c795f6535822dc))
+* **checkbox:** Fix checkmark in Android 2.3 ([717148d9](https://github.com/driftyco/ionic/commit/717148d9868922d899c29403d97943b679749617))
+* **colors:** Update all #4A87EE colors to use $positive color, closes #731 ([d113ddfa](https://github.com/driftyco/ionic/commit/d113ddfa52c2c751be78de0770b50da0c7407123))
+* **footer:** Show footers within tab content, closes #728 ([9c5772f3](https://github.com/driftyco/ionic/commit/9c5772f3c3aeb41ea10d8484867f4f240f48d953))
+* **history:** Separate histories and views, clear other views in clearHistory(), closes #724 ([c99427aa](https://github.com/driftyco/ionic/commit/c99427aa9221caa9297a204abc7558c33594c38a))
+* **input:** Correct vertical alignment of inputs and their labels, closes #799 ([6547ca60](https://github.com/driftyco/ionic/commit/6547ca60cbf445cb225f74154d4fa1563388229c))
+* **ionTabs:** do not pre-transclude; stops error on compile ([ecfdbaa6](https://github.com/driftyco/ionic/commit/ecfdbaa67b076bab61e9573fc650ee6eccb459b1), closes [#730](https://github.com/driftyco/ionic/issues/730))
+* **item:**
+  * Fix badge moving to new line when text is too long, closes #551 ([4d366710](https://github.com/driftyco/ionic/commit/4d3667106e4078dc411aa55244b5efbd1e5672df))
+  * Fix item-icon-left / right animating Ionicon not centered, closes #670 ([11a4338d](https://github.com/driftyco/ionic/commit/11a4338d136bb5be26f58a794b8c2e1ad9fe429f))
+* **list:** Drag to expose list option buttons, closes #701 ([25650005](https://github.com/driftyco/ionic/commit/2565000564b12f408ac025d1a6b6dea2fe8c1181))
+* **modal:**
+  * Do not apply the same modal animation to all of its children, closes #683 ([9cff5d03](https://github.com/driftyco/ionic/commit/9cff5d030ce4b25abd0cfe1c68425b82761063d4))
+  * Fix removing modal from DOM on .remove(), closes #755 ([c4ca7a85](https://github.com/driftyco/ionic/commit/c4ca7a85e0014cadd047065522b13b6eae4788f8))
+  * Improve slide-up/down animations, remove flickers ([b593cf1b](https://github.com/driftyco/ionic/commit/b593cf1be67a98e95ba0d71c0997da0a9bda4bf7))
+* **navView:** _getView renamed to _getViewById, closes #736 ([78206d0e](https://github.com/driftyco/ionic/commit/78206d0e7caee2212b13b75044681cdd534e9822))
+* **platform:** Fix Platform.showStatusBar so it can be used multiple times, closes #702 ([a6c47cd3](https://github.com/driftyco/ionic/commit/a6c47cd3bfb5d441d906f18d85e39d10d90326ec))
+* **sideMenu:**
+  * Not snapping on close on certain conditions #795 ([a5899918](https://github.com/driftyco/ionic/commit/a58999180b9dbf4d07823dfef9cc67b8babc25ac))
+  * Fix flashing when closing right side menu, closes #556 ([a0d60d52](https://github.com/driftyco/ionic/commit/a0d60d5228e385b952d6561ed6454e6add45401e))
+  * Close side-menu if open and content tapped, closes #648 ([0c5c6751](https://github.com/driftyco/ionic/commit/0c5c675164eaf785f050e517842aa2002559c97f))
+* **sideMenuController:** sticking issue #738 ([ea04e393](https://github.com/driftyco/ionic/commit/ea04e393c00b629455e737b64bdaccff6ff99424))
+* **sidemenu:** Side menu always needs to have translate3d applied, closes #710 ([16ac2ff1](https://github.com/driftyco/ionic/commit/16ac2ff1d6ec7f7a32e8b6f7a21c3e7a807dbe4d))
+* **tap:**
+  * Do not trigger a click if the element was scrolled after touchstart/mousedown ([98e7e1aa](https://github.com/driftyco/ionic/commit/98e7e1aa87ef6fddc01443faa447a7f72f56994d))
+  * Do not detect taps for input[type=file], closes #652 ([6f2d6e7c](https://github.com/driftyco/ionic/commit/6f2d6e7c5a775218a0f7424e6bdb0269fd9c7603))
+* **toggle:** Fix toggle handle on Android 2.3 ([72f2e840](https://github.com/driftyco/ionic/commit/72f2e8407eabc87329ea89e476e9fd9b9989d405))
+
+
+#### Features
+
+* **active:** Removing use of :active in favor of .active for more control of active state ([baa04cde](https://github.com/driftyco/ionic/commit/baa04cde4d7292d07ec2bfae949e008aeaafae1b))
+* **animation:** Add right to left animations, and their reverse, for RTL support, closes #643 ([4628b9fb](https://github.com/driftyco/ionic/commit/4628b9fb23c16cab8ba969342f6bd0be1a1bfc84))
+* **ionInfiniteScroll:** 
+  * allow configuration of icon and text through `icon` and `text` attributes ([5f2c32ea](https://github.com/driftyco/ionic/commit/5f2c32ea9b19a773e943a9b21704f2138037e681))
+* **ionRefresher:** allow custom text & icons through `pulling-text`, `pulling-icon`, `refreshing-text`, `refreshing-icon` attributes. ([573df56d](https://github.com/driftyco/ionic/commit/573df56db4d79eee517df61b45c4f780a58ce4f8), closes [#760](https://github.com/driftyco/ionic/issues/760))
+* **modal:**
+  * On larger displays modals will be inset and centered, not full width/height, clo ([ba2a40c8](https://github.com/driftyco/ionic/commit/ba2a40c845dade7cdc6f99de14b5467e327d1d3c))
+  * Create a modal backdrop wrapper w/ internal modal directive, closes #605 ([7d076bd5](https://github.com/driftyco/ionic/commit/7d076bd55b2117b3ac569ef41ae9f42bc56eca58))
+* **popup:** Added popup support ([a30b0b7d](https://github.com/driftyco/ionic/commit/a30b0b7d4fa5bc83e0ccdadee1d78faf996bef00))
+* **toggle:** Added dragging support to toggle switches ([cc15a5b4](https://github.com/driftyco/ionic/commit/cc15a5b455b7b59469eb04503f0a7292d4ceddf2))
+
+
+#### Breaking Changes
+
+* on-refresh and on-refresh-opening are no longer on the
+ion-content directive.  They are on the ion-refresher. In addition,
+on-refresh-opening has been renamed to on-pulling.
+
+Change your code from this:
+
+```html
+<ion-content on-refresh="onRefresh()"
+  on-refresh-opening="onRefreshOpening()">
+  <ion-refresher></ion-refresher>
+</ion-content>
+```
+
+To this:
+
+```html
+<ion-content>
+  <ion-refresher on-refresh="onRefresh()"
+    on-pulling="onRefreshOpening()">
+  </ion-refresher>
+</ion-content>
+```
+ ([573df56d](https://github.com/driftyco/ionic/commit/573df56db4d79eee517df61b45c4f780a58ce4f8))
+
+* on-infinite-scroll and infinite-scroll-distance are no longer attributes on the ion-content directive.  They are on the ion-infinite-scroll element.
+
+Chang your code from this:
+
+```html
+<ion-content on-infinite-scroll="onInfiniteScroll()" 
+  infinite-scroll-distance="1%">
+</ion-content>
+```
+
+To this:
+
+```html
+<ion-content>
+  <ion-infinite-scroll on-infinite="onInfiniteScroll()"
+    distance="1%"
+  </ion-infinite-scroll>
+</ion-content>
+```
+
+
+* 
+ionHeaderBar's title attribute is now interpolated.
+
+Change this code: `<ion-header-bar title="myTitleVar"></ion-header-bar>`
+
+To this code: `<ion-header-bar title="{{myTitleVar}}"></ion-header-bar>`
+ ([a8e1524c](https://github.com/driftyco/ionic/commit/a8e1524ce8e6d2a805770585ffd7bb457460a104))
+* 
+ionicSlideBox#getPos has been renamed to ionicSlideBox#currentIndex.
+
+ionicSlideBox#numSlides has been renamed to ionicSlideBox#slidesCount.
+ ([1dd55276](https://github.com/driftyco/ionic/commit/1dd552765568ba272dcc132a4889140c259b3ff1))
+
+
 <a name="0.9.26"></a>
 ### 0.9.26 "Rabbit" (2014-02-26)
 

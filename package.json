@@ -1,7 +1,7 @@
 {
   "name": "ionic",
   "private": false,
-  "version": "0.10.0-alpha",
+  "version": "0.9.27",
   "codename": "salamander",
   "repository": {
     "url": "git://github.com/driftyco/ionic.git"
@@ -20,7 +20,7 @@
     "gulp-template": "^0.1.1",
     "gulp-concat": "^2.1.7",
     "gulp-jshint": "^1.5.0",
-    "gulp-strip-debug": "^0.2.0",
+    "gulp-strip-debug": "0.2.0",
     "gulp-sass": "^0.7.1",
     "gulp-util": "^2.2.14",
     "gulp-uglify": "^0.2.1",
