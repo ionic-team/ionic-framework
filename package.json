@@ -38,7 +38,8 @@
     "gulp-minify-css": "^0.3.0",
     "semver": "^2.2.1",
     "cp-r": "^0.1.1",
-    "mkdirp": "^0.3.5"
+    "mkdirp": "^0.3.5",
+    "conventional-changelog": "0.0.6"
   },
   "licenses": [
     {
