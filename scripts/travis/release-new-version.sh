@@ -27,10 +27,12 @@ function run {
   mkdir -p $IONIC_DIR
 
   git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic.git \
-    $IONIC_DIR
+    $IONIC_DIR \
+    --depth=10
 
   cd $IONIC_DIR
-  git checkout -qf $TRAVIS_COMMIT
+
+  git reset --hard $TRAVIS_COMMIT
 
   CODENAME=$(readJsonProp "package.json" "codename")
 
@@ -48,8 +50,8 @@ function run {
   git commit -m "finalize-release: v$VERSION \"$CODENAME\""
   git tag -f -m "v$VERSION" v$VERSION
 
-  git push -q $RELEASE_REMOTE master
-  git push -q $RELEASE_REMOTE v$VERSION
+  git push -qf $RELEASE_REMOTE master
+  git push -qf $RELEASE_REMOTE v$VERSION
 
   echo "-- v$VERSION \"$CODENAME\" pushed to $RELEASE_REMOTE/master successfully!"
 }
