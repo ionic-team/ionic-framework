@@ -282,7 +282,7 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
  * </ion-nav-bar>
  * ```
  */
-.directive('ionNavBackButton', [function() {
+.directive('ionNavBackButton', ['$ionicNgClick', function($ionicNgClick) {
   return {
     restrict: 'E',
     require: '^ionNavBar',
@@ -292,8 +292,9 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
       '<button class="button back-button" ng-transclude>' +
       '</button>',
     link: function($scope, $element, $attr, navBarCtrl) {
+      $scope.$navBack = navBarCtrl.back;
       if (!$attr.ngClick) {
-        ionic.on('tap', navBarCtrl.back, $element[0]);
+        $ionicNgClick($scope, $element, '$navBack($event)');
       }
 
       //If the current viewstate does not allow a back button,
