@@ -68,7 +68,7 @@ textarea {
     font-size: 16px;
   }
 
-  &.item.active, 
+  &.item.active,
   .ionic-pseudo &.item:active {
     border-color: $item-default-border;
     background-color: transparent;
@@ -78,6 +78,10 @@ textarea {
     @include border-radius(0);
     @include flex(1, 0, 220px);
     @include appearance(none);
+  }
+
+  .icon {
+    min-width: 14px;
   }
 }
 
@@ -116,6 +120,7 @@ textarea {
   max-width: 200px;
   color: $input-label-color;
   font-weight: bold;
+  font-size: $font-size-base;
 }
 
 .placeholder-icon {
@@ -175,11 +180,12 @@ input[type="search"],
 input[type="tel"],
 input[type="color"] {
   display: block;
+  padding-top: 2px;
   height: $line-height-computed + $font-size-base;
   color: $input-color;
   vertical-align: middle;
   font-size: $font-size-base;
-  line-height: $line-height-computed;
+  line-height: $font-size-base + 2;
 }
 
 input,
