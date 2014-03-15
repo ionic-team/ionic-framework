@@ -270,10 +270,8 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
  *
  * Will show up when the user is able to go back in the current navigation stack.
  *
- * By default, will go back when clicked.  If you wish to set a custom action on click,
- * simply define an `ng-click` attribute and use
- * {@link ionic.controller:ionicNavBar#back ionicNavBar controller's .back method} to go back
- * when wished.
+ * By default, will go back when clicked.  If you wish for more advanced behavior, see the 
+ * examples below.
  *
  * @usage
  *
@@ -287,16 +285,28 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
  * </ion-nav-bar>
  * ```
  *
- * With custom click action:
+ * With custom click action, using {@link ionic.controller:ionicNavBar ionicNavBar controller}:
  *
  * ```html
- * <ion-nav-bar>
+ * <ion-nav-bar model="navBarController">
  *   <ion-nav-back-button class="button-icon"
  *     ng-click="canGoBack && navBarController.back()">
- *     <i class="ion-arrow-left-c"></i> Back!
+ *     <i class="ion-arrow-left-c"></i> Back
  *   </ion-nav-back-button>
  * </ion-nav-bar>
  * ```
+ *
+ * Displaying the previous title on the back button, again using
+ * {@link ionic.controller:ionicNavBar ionicNavBar controller}.
+ *
+ * ```html
+ * <ion-nav-bar model="navBarController">
+ *   <ion-nav-back-button class="button button-icon ion-arrow-left-c">
+ *     {% raw %}{{navBarController.getPreviousTitle() || 'Back'}}{% endraw %}
+ *   </ion-nav-back-button>
+ * </ion-nav-bar>
+ * ```
+ *
  */
 .directive('ionNavBackButton', ['$ionicNgClick', function($ionicNgClick) {
   return {
