@@ -84,12 +84,38 @@ describe('ionNavBar', function() {
 
     it('should setTitle', function() {
       var ctrl = setup();
-      expect($scope.title).toBeUndefined();
+      expect($scope.title).toBeFalsy();
+      expect($scope.oldTitle).toBeFalsy();
       ctrl.setTitle('foo');
       expect($scope.title).toBe('foo');
-      ctrl.setTitle(null);
-      expect($scope.title).toBe('');
+      expect($scope.oldTitle).toBeFalsy();
+      ctrl.setTitle('bar');
+      expect($scope.title).toBe('bar');
+      expect($scope.oldTitle).toBe('foo');
+      ctrl.setTitle('baz');
+      expect($scope.title).toBe('baz');
+      expect($scope.oldTitle).toBe('bar');
     })
+
+    it('should getTitle', function() {
+      var ctrl = setup();
+      expect(ctrl.getTitle()).toBeFalsy();
+      ctrl.setTitle('bar');
+      expect(ctrl.getTitle()).toBe('bar');
+      ctrl.setTitle('baz');
+      expect(ctrl.getTitle()).toBe('baz');
+    });
+
+    it('should getPreviousTitle', function() {
+      var ctrl = setup();
+      expect(ctrl.getPreviousTitle()).toBeFalsy();
+      ctrl.setTitle('foo');
+      expect(ctrl.getPreviousTitle()).toBeFalsy();
+      ctrl.setTitle('bar');
+      expect(ctrl.getPreviousTitle()).toBe('foo');
+      ctrl.setTitle('baz');
+      expect(ctrl.getPreviousTitle()).toBe('bar');
+    });
 
     describe('changeTitle', function() {
       var ctrl;
@@ -120,15 +146,13 @@ describe('ionNavBar', function() {
         expect($scope.shouldAnimate).toBe(false);
       });
 
-      it('should set title & oldTitle', function() {
+      it('should call setTitle', function() {
         expect($scope.oldTitle).toBeFalsy();
-        ctrl.setTitle('title1');
+        spyOn(ctrl, 'setTitle');
+        ctrl.changeTitle('title1');
+        expect(ctrl.setTitle).toHaveBeenCalledWith('title1');
         ctrl.changeTitle('title2');
-        expect($scope.oldTitle).toBe('title1');
-        expect($scope.title).toBe('title2');
-        ctrl.changeTitle('title3');
-        expect($scope.oldTitle).toBe('title2');
-        expect($scope.title).toBe('title3');
+        expect(ctrl.setTitle).toHaveBeenCalledWith('title2');
       });
 
       it('should only align if no navDirection', function() {

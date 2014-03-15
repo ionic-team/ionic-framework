@@ -108,6 +108,23 @@ function($scope, $element, $ionicViewService, $animate, $compile) {
   };
 
   /**
+   * @ngdoc method
+   * @name ionicNavBar#getTitle
+   * @returns {string} The current title of the navbar.
+   */
+  this.getTitle = function() {
+    return $scope.title || '';
+  };
+  /**
+   * @ngdoc method
+   * @name ionicNavBar#getPreviousTitle
+   * @returns {string} The previous title of the navbar.
+   */
+  this.getPreviousTitle = function() {
+    return $scope.oldTitle || '';
+  };
+
+  /**
    * @private
    * Exposed for testing
    */
