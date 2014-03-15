@@ -5,6 +5,7 @@ angular.module('ionic.ui.navBar', ['ionic.service.view', 'ngSanitize'])
  * @ngdoc controller
  * @name ionicNavBar
  * @module ionic
+ * @group navigation
  * @description
  * Controller for the {@link ionic.directive:ionNavBar} directive.
  */
@@ -157,6 +158,7 @@ function($scope, $element, $ionicViewService, $animate, $compile) {
  * @ngdoc directive
  * @name ionNavBar
  * @module ionic
+ * @group navigation
  * @controller ionicNavBar
  * @restrict E
  *
@@ -215,8 +217,7 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
     compile: function(tElement, tAttrs, transclude) {
 
       return function link($scope, $element, $attr, navBarCtrl) {
-        $parse($attr.model || 'navBarController')
-          .assign($scope.$parent, navBarCtrl);
+        $parse($attr.model || 'navBarController').assign($scope.$parent, navBarCtrl);
 
         //Put transcluded content (usually a back button) before the rest
         transclude($scope, function(clone) {
@@ -245,6 +246,7 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
  * @name ionNavBackButton
  * @module ionic
  * @restrict E
+ * @group navigation
  * @parent ionNavBar
  * @description
  * Creates a back button inside an {@link ionic.directive:ionNavBar}.
@@ -318,6 +320,7 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
  * @name ionNavButtons
  * @module ionic
  * @restrict E
+ * @group navigation
  * @parent ionNavView
  *
  * @description

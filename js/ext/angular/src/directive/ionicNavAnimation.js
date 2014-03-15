@@ -4,6 +4,7 @@ angular.module('ionic.ui.navAnimation', [])
  * @ngdoc directive
  * @name ionNavAnimation
  * @module ionic
+ * @group navigation
  * @restrict A
  * @parent ionic.directive:ionNavView
  *
