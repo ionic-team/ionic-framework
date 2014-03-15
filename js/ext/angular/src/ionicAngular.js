@@ -26,25 +26,26 @@ angular.module('ionic.service', [
 // UI specific services and delegates
 angular.module('ionic.ui.service', [
   'ionic.ui.service.scrollDelegate',
-  'ionic.ui.service.slideBoxDelegate'
+  'ionic.ui.service.slideBoxDelegate',
+  'ionic.ui.service.sideMenuDelegate',
 ]);
 
 angular.module('ionic.ui', [
-    'ionic.ui.checkbox',
-    'ionic.ui.content',
-    'ionic.ui.header',
-    'ionic.ui.list',
-    'ionic.ui.navBar',
-    'ionic.ui.popup',
-    'ionic.ui.radio',
-    'ionic.ui.scroll',
-    'ionic.ui.sideMenu',
-    'ionic.ui.slideBox',
-    'ionic.ui.tabs',
-    'ionic.ui.toggle',
-    'ionic.ui.touch',
-    'ionic.ui.viewState'
-]);
+                            'ionic.ui.content',
+                            'ionic.ui.scroll',
+                            'ionic.ui.tabs',
+                            'ionic.ui.viewState',
+                            'ionic.ui.header',
+                            'ionic.ui.sideMenu',
+                            'ionic.ui.slideBox',
+                            'ionic.ui.list',
+                            'ionic.ui.checkbox',
+                            'ionic.ui.toggle',
+                            'ionic.ui.radio',
+                            'ionic.ui.touch',
+                            'ionic.ui.popup'
+                           ]);
+
 
 angular.module('ionic', [
     'ionic.service',
