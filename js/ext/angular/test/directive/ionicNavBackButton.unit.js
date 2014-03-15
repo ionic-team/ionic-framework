@@ -1,5 +1,5 @@
 describe('ionNavBackButton directive', function() {
-  beforeEach(module('ionic.ui.navBar'));
+  beforeEach(module('ionic'));
 
   function setup(attr, content) {
     var el;
@@ -53,19 +53,19 @@ describe('ionNavBackButton directive', function() {
     expect(el.children().eq(0)[0].tagName.toLowerCase()).toBe('b');
   });
 
-  it('should add onTap if ngClick isnt defined', function() {
-    spyOn(ionic, 'on');
+  it('should $navBack on click by default', function() {
     var el = setup();
-    expect(ionic.on).toHaveBeenCalledWith(
-      'tap',
-      el.controller('ionNavBar').back,
-      el[0]
-    );
+    el.scope().$navBack = jasmine.createSpy('$navBack');
+    el.triggerHandler('click');
+    expect(el.scope().$navBack).toHaveBeenCalled();
   });
 
-  it('should not add onTap if ngClick is defined', function() {
-    spyOn(ionic, 'on');
+  it('should do ngClick expression if defined', function() {
     var el = setup('ng-click="doSomething()"');
-    expect(ionic.on).not.toHaveBeenCalled();
+    el.scope().$navBack = jasmine.createSpy('$navBack');
+    el.scope().doSomething = jasmine.createSpy('doSomething');
+    el.triggerHandler('click');
+    expect(el.scope().$navBack).not.toHaveBeenCalled();
+    expect(el.scope().doSomething).toHaveBeenCalled();
   });
 });
