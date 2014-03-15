@@ -81,14 +81,13 @@ function run {
       --codename=$CODENAME \
       --version=$VERSION
 
-    ./scripts/seed/publish.sh \
-      --version="$VERSION"
-
     # Version name used on the CDN/docs: nightly or the version
     VERSION_NAME=$VERSION
 
     ./scripts/site/publish.sh --action="clone"
+
     ./scripts/site/publish.sh --action="updateConfig"
+
     ./scripts/seed/publish.sh --version="$VERSION"
   else
     ./scripts/site/publish.sh --action="clone"
