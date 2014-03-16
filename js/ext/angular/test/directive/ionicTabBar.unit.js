@@ -294,7 +294,9 @@ describe('tabs', function() {
     it('should compile a <ion-tab-nav> with all of the relevant attrs', function() {
       setup('title=1 icon-on=2 icon-off=3 badge=4 badge-style=5 ng-click=6');
       var navItem = angular.element(tabsEl[0].querySelector('.tab-item'));
-      expect(navItem.attr('title')).toEqual('1');
+      //Use .scope for title because we remove title attr
+      //(for dom-tooltip not to appear)
+      expect(navItem.scope().title).toEqual('1');
       expect(navItem.attr('icon-on')).toEqual('2');
       expect(navItem.attr('icon-off')).toEqual('3');
       expect(navItem.attr('badge')).toEqual('4');
@@ -400,6 +402,12 @@ describe('tabs', function() {
       });
       return element;
     }
+
+    it('should remove title attribute', function() {
+      var el = setup('title="something"');
+      expect(el[0].hasAttribute('title')).toBe(false);
+      expect(el.isolateScope().title).toBe('something');
+    });
 
     // These next two are REALLY specific unit tests,
     // but also are really really vital pieces of code
