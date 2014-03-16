@@ -619,9 +619,11 @@
       -ms-flex-direction: column;
       flex-direction: column;
 
-      .col {
-        width: 100%;
+      .col, .col-10, .col-20, .col-25, .col-33, .col-34, .col-50, .col-66, .col-67, .col-75, .col-80, .col-90 {
+        @include flex(1);
         margin-bottom: ($grid-padding-width * 3) / 2;
+        max-width: 100%;
+        width: 100%;
       }
     }
   }
