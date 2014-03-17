@@ -25,7 +25,6 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  * Is able to have left or right buttons, and additionally its title can be
  * aligned through the {@link ionic.controller:ionicBar ionicBar controller}.
  *
- * @param {string=} type The type of the bar. For example 'bar-positive'.
  * @param {string=} model The model to assign this headerBar's
  * {@link ionic.controller:ionicBar ionicBar controller} to.
  * Defaults to assigning to $scope.headerBarController.
@@ -34,7 +33,7 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  *
  * @usage
  * ```html
- * <ion-header-bar align-title="left">
+ * <ion-header-bar align-title="left" class="bar-positive">
  *   <div class="buttons">
  *     <button class="button">Left Button</button>
  *   </div>
@@ -63,7 +62,6 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  * Is able to have left or right buttons, and additionally its title can be
  * aligned through the {@link ionic.controller:ionicBar ionicBar controller}.
  *
- * @param {string=} type The type of the bar. For example 'bar-positive'.
  * @param {string=} model The model to assign this footerBar's
  * {@link ionic.controller:ionicBar ionicBar controller} to.
  * Defaults to assigning to $scope.footerBarController.
@@ -75,7 +73,7 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  * <ion-content>
  *   Some content!
  * </ion-content>
- * <ion-footer-bar align-title="left">
+ * <ion-footer-bar align-title="left" class="bar-assertive">
  *   <div class="buttons">
  *     <button class="button">Left Button</button>
  *   </div>
@@ -108,11 +106,6 @@ function barDirective(isHeader) {
         });
 
         $parse($attr.model || BAR_MODEL_DEFAULT).assign($scope.$parent || $scope, hb);
-
-        $attr.$observe('type', function(val, oldVal) {
-          oldVal && $element.removeClass(oldVal);
-          $element.addClass(val);
-        });
       }
     };
   }];

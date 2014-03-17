@@ -267,12 +267,5 @@ describe('ionNavBar', function() {
       el.isolateScope().$apply('isReverse = false');
       expect(el.hasClass('reverse')).toBe(false);
     });
-
-    it('should have type class', function() {
-      var el = setup();
-      expect(el.hasClass('superbar')).toBe(false);
-      el.isolateScope().$apply('type = "superbar"');
-      expect(el.hasClass('superbar')).toBe(true);
-    });
   });
 });

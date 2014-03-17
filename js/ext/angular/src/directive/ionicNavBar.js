@@ -193,7 +193,7 @@ function($scope, $element, $ionicViewService, $animate, $compile) {
  *   <!-- The nav bar that will be updated as we navigate -->
  *   <ion-nav-bar
  *     animation="nav-title-slide-ios7"
- *     type="bar-positive"></ion-nav-bar>
+ *     class="bar-positive"></ion-nav-bar>
  *
  *   <!-- where the initial view template will be rendered -->
  *   <ion-nav-view animation="slide-left-right"></ion-nav-view>
@@ -204,7 +204,6 @@ function($scope, $element, $ionicViewService, $animate, $compile) {
  * {@link ionic.controller:ionicNavBar ionicNavBar controller} to.
  * Default: assigns it to $scope.navBarController.
  * @param animation {string=} The animation used to transition between titles.
- * @param type {string=} The className for the navbar.  For example, 'bar-positive'.
  * @param align {string=} Where to align the title of the navbar.
  * Available: 'left', 'right', 'center'. Defaults to 'center'.
  */
@@ -218,7 +217,6 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
     controller: '$ionicNavBar',
     scope: {
       animation: '@',
-      type: '@',
       alignTitle: '@'
     },
     template:
@@ -246,8 +244,7 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
         $scope.isInvisible = true;
 
         $scope.navBarClass = function() {
-          return ($scope.type ? ' ' + $scope.type : '') +
-            ($scope.isReverse ? ' reverse' : '') +
+          return ($scope.isReverse ? ' reverse' : '') +
             ($scope.isInvisible ? ' invisible' : '') +
             ($scope.shouldAnimate && $scope.animation ? ' ' + $scope.animation : '');
         };
