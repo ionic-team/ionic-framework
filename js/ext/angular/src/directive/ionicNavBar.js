@@ -191,9 +191,9 @@ function($scope, $element, $ionicViewService, $animate, $compile) {
  * ```html
  * <body ng-app="starter">
  *   <!-- The nav bar that will be updated as we navigate -->
- *   <ion-nav-bar
- *     animation="nav-title-slide-ios7"
- *     class="bar-positive"></ion-nav-bar>
+ *   <ion-nav-bar class="bar-positive"
+ *     animation="nav-title-slide-ios7">
+ *   </ion-nav-bar>
  *
  *   <!-- where the initial view template will be rendered -->
  *   <ion-nav-view animation="slide-left-right"></ion-nav-view>

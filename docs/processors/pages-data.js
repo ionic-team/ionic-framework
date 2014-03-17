@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var fs = require('fs');
 var path = require('canonical-path');
 var log = require('winston');
 
@@ -17,7 +18,7 @@ module.exports = {
     processorConfig = config.get('processing.pages-data', {});
     currentVersion = config.get('currentVersion');
   },
-  process: function(docs) {
+  process: function(docs, config) {
     // Generate an object collection of pages that is grouped by section e.g.
     // - section "directive"
     //  - group "Tab Bar"
@@ -28,67 +29,49 @@ module.exports = {
     //    - ion-checkbox
     //    - ...
     //
-    var groups = _(docs)
+    var sections = _(docs)
       .filter(function(doc) { return doc.area === 'api'; })
       .filter(function(doc) { return doc.module === 'ionic'; })
       .filter(function(doc) { return doc.docType !== 'componentGroup'; })
-      .groupBy(function(doc) { if (!doc.group) doc.group = 'Other'; return doc.group; })
-      .map(function(pages, groupName) {
-        var sections = _(pages)
-          .groupBy('docType')
-          .map(function(pages, docType) {
+      .groupBy('docType')
+      .map(function(pages, docType) {
+        return {
+          name: docType,
+          components: pages.map(function(page) {
             return {
-              name: docType,
-              pages: _(pages)
-                .sortBy(function(doc) {
-                  return doc.groupMainItem;
-                })
-                .map(function(doc) {
-                  return {
-                    href: doc.path,
-                    name: doc.name,
-                    docType: doc.docType,
-                    type: doc.docType,
-                  };
-                })
-                .filter(function(doc) {
-                  return !!doc.name;
-                })
-                .value()
+              href: page.path,
+              name: page.name,
+              docType: page.docType,
+              type: page.docType
             };
           })
-          .sortBy(function(section) {
-            //Directives always first
-            return section.name != 'directive';
-          })
-          .value();
-
-        return {
-          name: groupName,
-          sections: sections
         };
       })
-      .sortBy(function(group) {
-        //Sort by groups with most items last
-        return _.values(group.sections).length;
+      .sortBy(function(section) {
+        //Directives always first
+        return section.name != 'directive';
       })
       .value();
 
-    _.forEach(docs, function(doc) {
-      if ( !doc.path ) {
-        log.warn('Missing path property for ', doc.id);
-      }
-    });
+    var outputFolder = path.join(config.get('basePath'), config.get('rendering.outputFolder'));
+    var menuFileName = '_includes/api_menu_' + config.versionData.current.name + '.html';
+    var menuInclude = path.join(outputFolder, menuFileName);
 
-    var docData = {
+    if (!fs.existsSync(menuInclude)) {
+      docs.push({
+        docType: 'menu-data',
+        id: 'menu-data',
+        template: 'menu-data.template.html',
+        outputPath: menuFileName,
+        sections: sections
+      });
+    }
+
+    docs.push({
       docType: 'pages-data',
       id: 'pages-data',
       template: processorConfig.template || 'pages-data.template.js',
       outputPath: processorConfig.outputPath || 'js/pages-data.js',
-
-      groups: groups
-    };
-
-    docs.push(docData);
+    });
   }
 };

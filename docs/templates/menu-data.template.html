@@ -1,0 +1,12 @@
+<@ for section in doc.sections @>
+  <li class="menu-section">
+    <$ section.name $>
+  </li>
+  <@ for component in section.components @>
+  <li class="menu-item{% if page.path == "<$ component.href $>" %} active{% endif %}">
+    <a href="<$ version.current.href $>/<$ component.href $>">
+      <@ if component.docType == "directive" @> <$ component.name | dashCase $><@ else @><$ component.name $><@ endif @>
+    </a>
+  </li>
+  <@ endfor @>
+<@ endfor @>

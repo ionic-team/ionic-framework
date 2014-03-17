@@ -66,8 +66,7 @@ module.exports = function(config) {
     require('./processors/keywords'),
     require('./processors/pages-data'),
     require('./processors/index-page'),
-    require('./processors/version-data'),
-    require('./processors/output')
+    require('./processors/version-data')
   ]);
 
   return config;
