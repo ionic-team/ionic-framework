@@ -3,6 +3,9 @@ var buildConfig = require('./config/build.config.js');
 var changelog = require('conventional-changelog');
 var connect = require('connect');
 var dgeni = require('dgeni');
+var lunr = require('lunr');
+var fileUtils = require('file');
+var fs = require('fs');
 var http = require('http');
 var cp = require('child_process');
 var gulp = require('gulp');
@@ -38,6 +41,26 @@ if (IS_RELEASE_BUILD) {
 gulp.task('default', ['build']);
 gulp.task('build', ['bundle', 'sass']);
 
+gulp.task('index', function() {
+  var idx = lunr(function() {
+    this.field('path'); 
+    this.field('body');
+  });
+  fileUtils.walkSync('tmp/ionic-site', function(dirPath, dirs, files) {
+    files = files.filter(function(file){
+      var ext = file.split('.').pop();
+      return ext == 'md' || ext == 'html';
+    });
+    for(i in files) {
+      var file = files[i];
+      var path = fileUtils.path.join(fileUtils.path.relativePath('tmp/ionic-site', dirPath),file);
+
+      idx.add({'path': path, 'body': fs.readFileSync(fileUtils.path.join(dirPath, file))});
+    }
+  });
+  fs.writeFileSync('index.json', JSON.stringify(idx));
+});
+
 gulp.task('docs', function(done) {
   var docVersion = argv['doc-version'];
   if (docVersion != 'nightly' && !semver.valid(docVersion)) {
@@ -47,6 +70,7 @@ gulp.task('docs', function(done) {
   process.env.DOC_VERSION = docVersion;
   return dgeni('docs/docs.config.js').generateDocs().then(function() {
     gutil.log('Docs for', gutil.colors.cyan(docVersion), 'generated!');
+    gulp.run('index');
   });
 });
 
