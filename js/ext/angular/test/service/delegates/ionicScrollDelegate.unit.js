@@ -11,6 +11,13 @@ describe('Ionic ScrollDelegate Service', function() {
     compile = $compile;
   }));
 
+  it('should just return rootScope if no scrollCtrl', inject(function($rootScope) {
+    expect(function() {
+      $ionicScrollDelegate($rootScope);
+    }).not.toThrow();
+    expect($ionicScrollDelegate($rootScope).getScrollView()).toBeFalsy();
+  }));
+
   it('Should get scroll view', function() {
     var scope = rootScope.$new();
     var el = compile('<ion-content></ion-content>')(scope);
@@ -136,6 +143,50 @@ describe('Ionic ScrollDelegate Service', function() {
         timeout.flush();
         expect(sv.resize).toHaveBeenCalled();
         expect(sv.scrollTo.mostRecentCall.args).toEqual([2, 3, animate]);
+      });
+
+      it('should throw error on rememberScroll if no id', function() {
+        var scope = rootScope.$new();
+        var el = compile('<ion-content></ion-content>');
+        var del = $ionicScrollDelegate(scope);
+        expect(del.rememberScrollPosition).toThrow();
+      });
+
+      it('scrollToRememberedPosition should scroll if exists', function() {
+        var scope = rootScope.$new();
+        var el = compile('<ion-content></ion-content>')(scope);
+        var del = $ionicScrollDelegate(scope);
+        var sv = del.getScrollView();
+        scope.$apply();
+        $ionicScrollDelegate._rememberedScrollValues['1'] = {
+          left: 3,
+          top: 4
+        };
+        del.scrollToRememberedPosition('1', animate);
+        spyOn(sv, 'scrollTo');
+        timeout.flush();
+        expect(sv.scrollTo).toHaveBeenCalledWith(3, 4, animate);
+      });
+
+      it('should save on destroy for rememberScrollPosition', function() {
+        var scope = rootScope.$new();
+        var el = compile('<ion-content></ion-content>')(scope);
+        var del = $ionicScrollDelegate(scope);
+        var sv = del.getScrollView();
+        scope.$apply();
+        $ionicScrollDelegate._rememberedScrollValues['1'] = {
+          left: -1,
+          top: -1
+        };
+        del.rememberScrollPosition('1', animate);
+        spyOn(sv, 'getValues').andCallFake(function() {
+          return { foo: 'bar' };
+        });
+        scope.$destroy();
+        expect(sv.getValues).toHaveBeenCalled();
+        expect($ionicScrollDelegate._rememberedScrollValues['1']).toEqual({
+          foo: 'bar'
+        });
       });
     });
   }

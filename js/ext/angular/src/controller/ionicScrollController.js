@@ -6,7 +6,7 @@ angular.module('ionic.ui.scroll')
 /**
  * @private
  */
-.controller('$ionicScroll', ['$scope', 'scrollViewOptions', '$timeout', '$ionicScrollDelegate', '$window', '$ionicViewService', function($scope, scrollViewOptions, $timeout, $ionicScrollDelegate, $window, $ionicViewService) {
+.controller('$ionicScroll', ['$scope', 'scrollViewOptions', '$timeout', '$ionicScrollDelegate', '$window', function($scope, scrollViewOptions, $timeout, $ionicScrollDelegate, $window) {
 
   var self = this;
 
@@ -34,13 +34,27 @@ angular.module('ionic.ui.scroll')
   var resize = angular.bind(scrollView, scrollView.resize);
   $window.addEventListener('resize', resize);
 
+  $scope.$on('$viewContentLoaded', function(e, historyData) {
+    if (e.defaultPrevented) {
+      return;
+    }
+    //only the top-most scroll area under a view should remember that view's
+    //scroll position
+    e.preventDefault();
+
+    var values = historyData && historyData.rememberedScrollValues;
+    if (values) {
+      $timeout(function() {
+        scrollView.scrollTo(+values.left || null, +values.top || null);
+      }, 0, false);
+    }
+    $scope.$on('$destroy', function() {
+      historyData && (historyData.rememberedScrollValues = scrollView.getValues());
+    });
+  });
+
   $scope.$on('$destroy', function() {
     $window.removeEventListener('resize', resize);
-
-    var view = $ionicViewService.getCurrentView();
-    if (view) {
-      view.rememberedScrollValues = scrollView.getValues();
-    }
   });
 
   this.setRefresher = function(refresherScope, refresherElement) {

@@ -63,6 +63,27 @@ describe('$ionicScroll Controller', function() {
     expect(ctrl.scrollView.resize).toHaveBeenCalled();
   });
 
+  it('should remember scroll position on $viewContentLoaded event', function() {
+    var historyData = { rememberedScrollValues: { left: 1, top: 2 } };
+    setup();
+    spyOn(ctrl.scrollView, 'scrollTo');
+    scope.$broadcast('$viewContentLoaded', historyData);
+    timeout.flush();
+    expect(ctrl.scrollView.scrollTo).toHaveBeenCalledWith(1, 2);
+
+    spyOn(ctrl.scrollView, 'getValues').andCallFake(function() {
+      return {
+        left: 33,
+        top: 44
+      };
+    });
+    scope.$broadcast('$destroy');
+    expect(historyData.rememberedScrollValues).toEqual({
+      left: 33,
+      top: 44
+    });
+  });
+
   it('should unbind window event listener on scope destroy', function() {
     spyOn(window, 'removeEventListener');
     spyOn(window, 'addEventListener');

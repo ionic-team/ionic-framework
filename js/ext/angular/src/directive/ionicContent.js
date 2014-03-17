@@ -61,10 +61,9 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
 .directive('ionContent', [
   '$parse',
   '$timeout',
-  '$ionicScrollDelegate',
   '$controller',
   '$ionicBind',
-function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
+function($parse, $timeout, $controller, $ionicBind) {
   return {
     restrict: 'E',
     replace: true,
@@ -135,9 +134,6 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
           });
           //Publish scrollView to parent so children can access it
           scrollView = $scope.$parent.scrollView = scrollCtrl.scrollView;
-
-          var delegate = $ionicScrollDelegate($scope);
-          delegate.rememberScrollPosition();
         }
 
         transclude($scope, function(clone) {

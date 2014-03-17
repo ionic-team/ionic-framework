@@ -141,7 +141,7 @@ describe('Ionic View Service', function() {
     registerData = viewService.register({});
     currentView = viewService.getCurrentView();
     //Set test value for remembered scroll
-    currentView.scrollValues = 'foo';
+    currentView.rememberedScrollValues = 'foo';
     backView = viewService.getBackView();
     forwardView = viewService.getForwardView();
     expect(backView.stateName).toEqual('about');
@@ -159,7 +159,7 @@ describe('Ionic View Service', function() {
     currentView = viewService.getCurrentView();
     backView = viewService.getBackView();
     forwardView = viewService.getForwardView();
-    expect(forwardView.scrollValues).toEqual({});
+    expect(forwardView.rememberedScrollValues).toEqual({});
     expect(currentView.stateName).toEqual('about');
     expect(currentView.backViewId).toEqual(backView.viewId);
     expect(currentView.forwardViewId).toEqual(forwardView.viewId);

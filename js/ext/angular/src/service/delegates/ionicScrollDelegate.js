@@ -14,10 +14,17 @@ angular.module('ionic.ui.service.scrollDelegate', [])
  * directive).
  *
  * Inject it into a controller, create a new instance based upon the current scope,
- * and its methods will send messages to the nearest scrollView and all of
- * its children.
+ * and its methods will send messages to the nearest scrollView and its children.
  *
  * @usage
+ * ```js
+ * function MyController($scope, $ionicScrollDelegate) {
+ *   var delegate = $ionicScrollDelegate($scope);
+ *   $scope.scrollToTop = function() {
+ *     delegate.scrollTop();
+ *   };
+ * }
+ * ```
  * ```html
  * <ion-content ng-controller="MyController">
  *   <button class="button" ng-click="scrollToTop()">
@@ -25,16 +32,10 @@ angular.module('ionic.ui.service.scrollDelegate', [])
  *   </button>
  * </ion-content>
  * ```
- * ```js
- * function MyController($scope, $ionicScrollDelegate) {
- *   $scope.scrollToTop = function() {
- *     var delegate = $ionicScrollDelegate($scope);
- *     delegate.scrollTop();
- *   };
- * }
- * ```
  */
 .factory('$ionicScrollDelegate', ['$rootScope', '$timeout', '$location', '$ionicViewService', function($rootScope, $timeout, $location, $ionicViewService) {
+  //Exposed for testing
+  var rememberedScrollValues = ionicScrollDelegate._rememberedScrollValues = {};
 
   function getScrollCtrl($scope) {
     var ctrl;
@@ -55,7 +56,7 @@ angular.module('ionic.ui.service.scrollDelegate', [])
       /**
        * @ngdoc method
        * @name $ionicScrollDelegate#scrollTop
-       * @description Used on an instance of $ionicScrollDelegate.
+       * @description 
        * @param {boolean=} shouldAnimate Whether the scroll should animate.
        */
       scrollTop: function(animate) {
@@ -64,7 +65,7 @@ angular.module('ionic.ui.service.scrollDelegate', [])
       /**
        * @ngdoc method
        * @name $ionicScrollDelegate#scrollBottom
-       * @description Used on an instance of $ionicScrollDelegate.
+       * @description 
        * @param {boolean=} shouldAnimate Whether the scroll should animate.
        */
       scrollBottom: function(animate) {
@@ -73,7 +74,7 @@ angular.module('ionic.ui.service.scrollDelegate', [])
       /**
        * @ngdoc method
        * @name $ionicScrollDelegate#scroll
-       * @description Used on an instance of $ionicScrollDelegate.
+       * @description 
        * @param {number} left The x-value to scroll to.
        * @param {number} top The y-value to scroll to.
        * @param {boolean=} shouldAnimate Whether the scroll should animate.
@@ -84,7 +85,7 @@ angular.module('ionic.ui.service.scrollDelegate', [])
       /**
        * @ngdoc method
        * @name $ionicScrollDelegate#anchorScroll
-       * @description Used on an instance of $ionicScrollDelegate.
+       * @description 
        *
        * Tell the scrollView to scroll to the element with an id
        * matching window.location.hash.
@@ -99,7 +100,7 @@ angular.module('ionic.ui.service.scrollDelegate', [])
       /**
        * @ngdoc method
        * @name $ionicScrollDelegate#resize
-       * @description Used on an instance of $ionicScrollDelegate.
+       * @description 
        *
        * Tell the scrollView to recalculate the size of its container.
        */
@@ -134,13 +135,36 @@ angular.module('ionic.ui.service.scrollDelegate', [])
       /**
        * @ngdoc method
        * @name $ionicScrollDelegate#rememberScrollPosition
-       * @description Used on an instance of $ionicScrollDelegate.
+       * @description 
        *
-       * If this scroll area is associated with a view in the history,
-       * load the last scroll position from the last time this view was shown.
+       * When this scroll area is destroyed, its last scroll position will be
+       * saved using the given id.
+       *
+       * @param {string} id The identifier for this saved scroll position.
        */
-      rememberScrollPosition: function(animate) {
-        scrollScope.$broadcast('scroll.rememberPosition', !!animate);
+      rememberScrollPosition: function(id) {
+        if (!id) {
+          throw new Error("Must supply a unique id!");
+        }
+        scrollScope.$broadcast('scroll.rememberPosition', id);
+      },
+
+      /**
+       * @ngdoc method
+       * @name $ionicScrollDelegate#scrollToRememberedPosition
+       * @description 
+       *
+       * If a scroll position was remembered using the given id, loads the
+       * remembered scroll position and scrolls there.
+       *
+       * @param {string} id The identifier for this saved scroll position.
+       * @param {boolean=} shouldAnimate Whether to animate the scroll.
+       */
+      scrollToRememberedPosition: function(id, animate) {
+        if (!id) {
+          throw new Error("Must supply a unique id!");
+        }
+        scrollScope.$broadcast('scroll.scrollToRememberedPosition', id, !!animate);
       },
 
       /**
@@ -216,14 +240,24 @@ angular.module('ionic.ui.service.scrollDelegate', [])
         }
       });
     });
-    $scope.$on('scroll.rememberPosition', function(e, animate) {
-      scrollViewResize().then(function() {
-        var view = $ionicViewService.getCurrentView();
-        var values = view && view.rememberedScrollValues;
-        if (view && values) {
+
+    var rememberScrollId;
+    $scope.$on('scroll.rememberPosition', function(e, id) {
+      rememberScrollId = id;
+    });
+    $scope.$on('$destroy', function() {
+      if (rememberScrollId) {
+        rememberedScrollValues[rememberScrollId] = scrollView.getValues();
+      }
+    });
+
+    $scope.$on('scroll.scrollToRememberedPosition', function(e, id, animate) {
+      var values = rememberedScrollValues[id];
+      if (values) {
+        scrollViewResize().then(function() {
           scrollView.scrollTo(+values.left || null, +values.top || null, animate);
-        }
-      });
+        });
+      }
     });
   };
 
