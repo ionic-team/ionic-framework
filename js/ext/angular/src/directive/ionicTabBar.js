@@ -218,8 +218,6 @@ function($scope, $ionicViewService, $rootScope, $element) {
  *
  * Each ionTab has its own view history.
  *
- * Whenever a tab is shown or hidden, it will broadcast a 'tab.shown' or 'tab.hidden' event.
- *
  * @usage
  * ```html
  * <ion-tab
@@ -308,9 +306,6 @@ function($rootScope, $animate, $ionicBind, $compile, $ionicViewService) {
         tabsCtrl.$tabsElement.append($compile(tabNavElement)($scope));
 
         $scope.$watch('$tabSelected', function(value) {
-          if (!value) {
-            $scope.$broadcast('tab.hidden', $scope);
-          }
           childScope && childScope.$destroy();
           childScope = null;
           childElement && $animate.leave(childElement);
@@ -320,7 +315,6 @@ function($rootScope, $animate, $ionicBind, $compile, $ionicViewService) {
             childElement = tabContent.clone();
             $animate.enter(childElement, tabsCtrl.$element);
             $compile(childElement)(childScope);
-            $scope.$broadcast('tab.shown', $scope);
           }
         });
 

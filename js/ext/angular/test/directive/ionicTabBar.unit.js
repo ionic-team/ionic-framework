@@ -363,7 +363,6 @@ describe('tabs', function() {
       var contentScope = tabContent.scope();
       expect(tabContent.length).toBe(1);
       expect(tabContent.find('.inside-content').length).toBe(1);
-      expect(tab.$broadcast).toHaveBeenCalledWith('tab.shown', tab);
 
       spyOn(tabContent, 'remove');
       spyOn(contentScope, '$destroy');
@@ -372,7 +371,6 @@ describe('tabs', function() {
       tab.$apply('$tabSelected = false');
       expect(tabContent.parent().length).toBe(0); //removed check
       expect(contentScope.$destroy).toHaveBeenCalled();
-      expect(tab.$broadcast).toHaveBeenCalledWith('tab.hidden', tab);
     });
 
   });
