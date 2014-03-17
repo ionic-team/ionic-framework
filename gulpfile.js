@@ -46,16 +46,16 @@ gulp.task('index', function() {
     this.field('path'); 
     this.field('body');
   });
-  fileUtils.walkSync('tmp/ionic-site', function(dirPath, dirs, files) {
+  fileUtils.walkSync('tmp/ionic-site/_site', function(dirPath, dirs, files) {
     files = files.filter(function(file){
       var ext = file.split('.').pop();
       return ext == 'md' || ext == 'html';
     });
     for(i in files) {
       var file = files[i];
-      var path = fileUtils.path.join(fileUtils.path.relativePath('tmp/ionic-site', dirPath),file);
-
-      idx.add({'path': path, 'body': fs.readFileSync(fileUtils.path.join(dirPath, file))});
+      var path = fileUtils.path.join(fileUtils.path.relativePath('tmp/ionic-site/_site', dirPath),file);
+      var html = fs.readFileSync(fileUtils.path.join(dirPath, file));
+      idx.add({'path': path, 'body': html});
     }
   });
   fs.writeFileSync('index.json', JSON.stringify(idx));
