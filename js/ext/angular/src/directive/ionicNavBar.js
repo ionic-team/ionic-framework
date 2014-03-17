@@ -391,7 +391,7 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
 
         //When our ion-nav-buttons container is destroyed,
         //destroy everything in the navbar
-        $element.on('$destroy', function() {
+        $scope.$on('$destroy', function() {
           $animate.leave(clone);
         });
 
