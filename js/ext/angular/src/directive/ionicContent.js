@@ -11,7 +11,6 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
  * @ngdoc directive
  * @name ionPane
  * @module ionic
- * @group page layout
  * @restrict E
  *
  * @description A simple container that fits content, with no side effects.  Adds the 'pane' class to the element.
@@ -29,8 +28,6 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
  * @ngdoc directive
  * @name ionContent
  * @module ionic
- * @group page layout
- * @groupMainItem
  *
  * @description
  * The ionContent directive provides an easy to use content area that can be configured
@@ -153,7 +150,6 @@ function($parse, $timeout, $controller, $ionicBind) {
  * @name ionRefresher
  * @module ionic
  * @restrict E
- * @group page layout
  * @parent ionic.directive:ionContent, ionic.directive:ionScroll
  * @description
  * Allows you to add pull-to-refresh to a scrollView.
@@ -247,7 +243,6 @@ function($parse, $timeout, $controller, $ionicBind) {
  * @ngdoc directive
  * @name ionInfiniteScroll
  * @module ionic
- * @group page layout
  * @parent ionic.directive:ionContent, ionic.directive:ionScroll
  * @restrict E
  *

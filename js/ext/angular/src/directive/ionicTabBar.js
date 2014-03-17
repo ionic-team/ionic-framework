@@ -8,7 +8,6 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
 
 /**
  * @ngdoc controller
- * @group tab bar
  * @name ionicTabs
  * @module ionic
  *
@@ -133,8 +132,6 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
  * @name ionTabs
  * @module ionic
  * @restrict E
- * @group tab bar
- * @groupMainItem
  * @controller ionicTabs
  * @codepen KbrzJ
  *
@@ -211,7 +208,6 @@ function($scope, $ionicViewService, $rootScope, $element) {
 
 /**
  * @ngdoc directive
- * @group tab bar
  * @name ionTab
  * @module ionic
  * @restrict E

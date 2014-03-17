@@ -24,7 +24,6 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * @ngdoc controller
  * @name ionicSideMenus
  * @module ionic
- * @group side menu
  *
  * @description
  * Controller for the {@link ionic.directive:ionSideMenus} directive.
@@ -45,8 +44,6 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * @name ionSideMenus
  * @module ionic
  * @restrict E
- * @group side menu
- * @groupMainItem
  * @controller ionicSideMenus
  *
  * @description
@@ -119,7 +116,6 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * @name ionSideMenuContent
  * @module ionic
  * @restrict A
- * @group side menu
  * @parent ionic.directive:ionSideMenus
  *
  * @description
@@ -246,7 +242,6 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * @name ionSideMenu
  * @module ionic
  * @restrict E
- * @group side menu
  * @parent ionic.directive:ionSideMenus
  *
  * @description

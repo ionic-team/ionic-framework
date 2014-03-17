@@ -8,7 +8,6 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  * @name ionView
  * @module ionic
  * @restrict E
- * @group navigation
  * @parent ionNavBar
  *
  * @description
@@ -80,8 +79,6 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  * @module ionic
  * @restrict E
  * @codepen HjnFx
- * @group navigation
- * @groupMainItem
  *
  * @description
  * As a user navigates throughout your app, Ionic is able to keep track of their
