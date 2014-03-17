@@ -3,8 +3,15 @@ var buildConfig = require('./config/build.config.js');
 var changelog = require('conventional-changelog');
 var connect = require('connect');
 var dgeni = require('dgeni');
+var lunr = require('lunr');
+var htmlparser = require('htmlparser2');
+var yaml = require('js-yaml');
+var es = require('event-stream');
+
 var http = require('http');
 var cp = require('child_process');
+var fs = require('fs');
+
 var gulp = require('gulp');
 var pkg = require('./package.json');
 var semver = require('semver');
@@ -37,6 +44,63 @@ if (IS_RELEASE_BUILD) {
 
 gulp.task('default', ['build']);
 gulp.task('build', ['bundle', 'sass']);
+
+gulp.task('docs-index', function() {
+  var idx = lunr(function() {
+    this.field('path'); 
+    this.field('title', {boost: 10});
+    this.field('body');
+    this.ref('path')
+  });
+  var ref = {};
+
+  return gulp.src([
+    'tmp/ionic-site/docs/{components,guide,overview,angularjs}/**/*.{md,html}', 
+    'tmp/ionic-site/tutorials/**/*.{md,html}'
+  ])
+    .pipe(es.map(function(file, callback) {
+      //docs for gulp file objects: https://github.com/wearefractal/vinyl
+      var contents = file.contents.toString(); //was buffer
+      // Grab relative path from ionic-site root
+      var relpath = file.path.replace(/^.*?tmp\/ionic-site\//, '');
+
+      // Read out the yaml portion of the Jekyll file
+      var title, layout;
+      var yamlStartIndex = contents.indexOf('---');
+      var yamlEndIndex = contents.indexOf('---', yamlStartIndex+3); //starting from start
+      var yamlRaw = contents.substring(yamlStartIndex+3, yamlEndIndex);
+
+      var properties =  yaml.safeLoad(yamlRaw);
+      contents = contents.slice(yamlEndIndex+3);
+      
+      if(properties.title && properties.layout) {
+        title = properties.title;
+        layout = properties.layout;
+      } else {
+        return callback('layout and title properties not found in Jekyll file '+relpath);
+      }
+
+      var body = '';
+      // Parse all html and use only text portion
+      var parser = new htmlparser.Parser({
+        ontext: function(text){
+          // Ignore any Jekyll expressions
+          body += text.replace(/{%.*%}/, '', 'g');
+        },
+      });      
+      parser.write(contents);
+      parser.end();
+
+      // Add the data to the indexer and ref object
+      idx.add({'path': relpath, 'body': body, 'title': title});
+      ref[relpath] = {'title': title, 'layout': layout};
+
+      callback();
+    })).on('end', function() {
+      // Write out as one json file
+      fs.writeFileSync('tmp/ionic-site/data/index.json', JSON.stringify({'ref': ref, 'index': idx.toJSON()}));
+    });
+});
 
 gulp.task('docs', function(done) {
   var docVersion = argv['doc-version'];
