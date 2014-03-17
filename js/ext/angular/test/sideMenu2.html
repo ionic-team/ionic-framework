@@ -190,7 +190,7 @@
         $urlRouterProvider.otherwise("/event/home");
       })
 
-      .controller('MainCtrl', function($scope, $ionicSideMenuDelegate) {
+      .controller('MainCtrl', function($scope) {
         console.log('MainCtrl');
 
         $scope.data = {
@@ -198,7 +198,7 @@
         };
 
         $scope.closeMenu = function() {
-          $ionicSideMenuDelegate.close($scope);
+          $scope.sideMenuController.toggleLeft(false);
         };
 
         setTimeout(function(){

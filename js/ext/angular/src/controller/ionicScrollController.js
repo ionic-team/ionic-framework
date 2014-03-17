@@ -6,7 +6,7 @@ angular.module('ionic.ui.scroll')
 /**
  * @private
  */
-.controller('$ionicScroll', ['$scope', 'scrollViewOptions', '$timeout', '$ionicScrollDelegate', '$window', function($scope, scrollViewOptions, $timeout, $ionicScrollDelegate, $window) {
+.controller('$ionicScroll', ['$scope', 'scrollViewOptions', '$timeout', '$ionicScrollDelegate', '$window', '$ionicViewService', function($scope, scrollViewOptions, $timeout, $ionicScrollDelegate, $window, $ionicViewService) {
 
   var self = this;
 
@@ -31,13 +31,17 @@ angular.module('ionic.ui.scroll')
   //Register delegate for event handling
   $ionicScrollDelegate.register($scope, $element, scrollView);
 
+  var resize = angular.bind(scrollView, scrollView.resize);
   $window.addEventListener('resize', resize);
+
   $scope.$on('$destroy', function() {
     $window.removeEventListener('resize', resize);
+
+    var view = $ionicViewService.getCurrentView();
+    if (view) {
+      view.rememberedScrollValues = scrollView.getValues();
+    }
   });
-  function resize() {
-    scrollView.resize();
-  }
 
   this.setRefresher = function(refresherScope, refresherElement) {
     var refresher = this.refresher = refresherElement;

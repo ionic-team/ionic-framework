@@ -34,7 +34,7 @@ angular.module('ionic.ui.service.scrollDelegate', [])
  * }
  * ```
  */
-.factory('$ionicScrollDelegate', ['$rootScope', '$timeout', '$location', function($rootScope, $timeout, $location) {
+.factory('$ionicScrollDelegate', ['$rootScope', '$timeout', '$location', '$ionicViewService', function($rootScope, $timeout, $location, $ionicViewService) {
 
   function getScrollCtrl($scope) {
     var ctrl;
@@ -132,6 +132,18 @@ angular.module('ionic.ui.service.scrollDelegate', [])
       },
 
       /**
+       * @ngdoc method
+       * @name $ionicScrollDelegate#rememberScrollPosition
+       * @description Used on an instance of $ionicScrollDelegate.
+       *
+       * If this scroll area is associated with a view in the history,
+       * load the last scroll position from the last time this view was shown.
+       */
+      rememberScrollPosition: function(animate) {
+        scrollScope.$broadcast('scroll.rememberPosition', !!animate);
+      },
+
+      /**
        * @private
        * Attempt to get the current scroll view in scope (if any)
        *
@@ -201,6 +213,15 @@ angular.module('ionic.ui.service.scrollDelegate', [])
         if (sv) {
           var max = sv.getScrollMax();
           sv.scrollTo(max.left, max.top, !!animate);
+        }
+      });
+    });
+    $scope.$on('scroll.rememberPosition', function(e, animate) {
+      scrollViewResize().then(function() {
+        var view = $ionicViewService.getCurrentView();
+        var values = view && view.rememberedScrollValues;
+        if (view && values) {
+          scrollView.scrollTo(+values.left || null, +values.top || null, animate);
         }
       });
     });

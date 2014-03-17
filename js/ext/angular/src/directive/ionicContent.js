@@ -136,21 +136,8 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
           //Publish scrollView to parent so children can access it
           scrollView = $scope.$parent.scrollView = scrollCtrl.scrollView;
 
-          $scope.$on('$viewContentLoaded', function(e, viewHistoryData) {
-            viewHistoryData || (viewHistoryData = {});
-            var scroll = viewHistoryData.scrollValues;
-            if (scroll) {
-              $timeout(function() {
-                scrollView.scrollTo(+scroll.left || null, +scroll.top || null);
-              }, 0);
-            }
-
-            //Save scroll onto viewHistoryData when scope is destroyed
-            $scope.$on('$destroy', function() {
-              viewHistoryData.scrollValues = scrollView.getValues();
-            });
-          });
-
+          var delegate = $ionicScrollDelegate($scope);
+          delegate.rememberScrollPosition();
         }
 
         transclude($scope, function(clone) {

@@ -231,7 +231,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
           stateName: this.getCurrentStateName(),
           stateParams: this.getCurrentStateParams(),
           url: $location.url(),
-          scrollValues: null
+          rememberedScrollValues: null
         });
 
         // add the new view to this history's stack
