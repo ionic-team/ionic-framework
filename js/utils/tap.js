@@ -165,7 +165,7 @@
               gesture.originalEvent.changedTouches[0]) ||
           touches[0].originalEvent || touches[0];
 
-      if(e) return { x: e.clientX, y: e.clientY };
+      if(e) return { x: e.clientX || e.pageX, y: e.clientY || e.pageY };
     }
     return { x:0, y:0 };
   }

@@ -46,7 +46,7 @@
       <ion-side-menus>
         <ion-pane ion-side-menu-content>
           <ion-header-bar left-buttons="leftButtons" right-buttons="rightButtons" title=""></ion-header-bar>
-          <ion-slide-box on-slide-changed="slideChanged(index)" does-continue="true">
+          <ion-slide-box on-slide-changed="slideChanged(index)">
             <ion-slide ng-controller="FirstSlideCtrl">
               <h3>Thank you for choosing the Awesome App!</h3>
               <div id="logo">
@@ -60,6 +60,9 @@
               </p>
               <p>
                 <button class="button button-dark" ng-click="toLast()">Skip to last</button>
+              </p>
+              <p>
+                <button class="button button-dark" ng-click="clickTest()">Click Test</button>
               </p>
             </ion-slide>
             <ion-slide>
@@ -98,6 +101,13 @@
         $scope.next = function() {
           console.log('NEXT');
           $scope.$broadcast('slideBox.nextSlide');
+        };
+
+        var clickCount = 0;
+
+        $scope.clickTest = function() {
+          clickCount++;
+          console.log('click', clickCount);
         };
 
         var rightButtons = [
