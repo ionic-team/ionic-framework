@@ -61,31 +61,7 @@
                   JavaScript
                 </a>
               </li>
-              <@ for group in doc.groups @>
-              <div class="menu-group-container{% if page.group == "<$ group.name $>" %} active{% endif %}">
-                  <li class="menu-group">
-                    <a href="{{page.versionHref}}/<$ group.sections[0].pages[0].href $>">
-                      <@ if group.name == "Other" @>User Interaction<@ else @><$ group.name $><@ endif @>
-                    </a>
-                  </li>
-                  <@ for section in group.sections @>
-                    <div class="menu-section">
-                      <$ section.name $>
-                    </div>
-                    <@ for component in section.pages @>
-                      <li class="menu-item{% if page.doc == "<$ component.name $>" %} active{% endif %}">
-                        <a href="{{page.versionHref}}/<$ component.href $>">
-                          <@ if component.type == "directive" @>
-                            <$ component.name | dashCase $>
-                          <@ else @>
-                            <$ component.name $>
-                          <@ endif @>
-                        </a>
-                      </li>
-                    <@ endfor @>
-                  <@ endfor @>
-                </div>
-              <@ endfor @>
+              {% include api_menu_<$ version.current.name $>.html %}
             </ul>
 
             <ul class="nav left-menu">

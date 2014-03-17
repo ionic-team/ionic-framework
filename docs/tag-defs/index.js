@@ -21,11 +21,5 @@ module.exports = [
   },
   {
     name: 'alias'
-  },
-  {
-    name: 'group'
-  },
-  {
-    name: 'groupMainItem'
   }
 ];
