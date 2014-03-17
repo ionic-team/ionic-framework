@@ -23,7 +23,7 @@
       <ion-content class="has-header">
 
       <ion-list>
-        <ion-item ng-repeat="item in items" 
+        <ion-item ng-repeat="item in items"
               item="item"
               id="foo-{{item.id}}"
               href="#/item/{{item.id}}">
@@ -36,14 +36,15 @@
 
     <script>
 function MyCtrl($scope, $location, $ionicScrollDelegate) {
+  var delegate = $ionicScrollDelegate($scope);
   $scope.items = [];
   for (var i=0; i < 100; i++) {
     $scope.items.push({id:i});
   }
-  
+
   $scope.doScroll = function() {
     $location.hash('foo-50');
-    $ionicScrollDelegate.anchorScroll(true);
+    delegate.anchorScroll(true);
   }
 }
     </script>

@@ -72,7 +72,7 @@ function($parse, $timeout, $ionicScrollDelegate, $controller, $ionicBind) {
     require: '^?ionNavView',
     scope: true,
     template:
-    '<div class="scroll-content">' +
+    '<div class="scroll-content" ng-class="$$contentState.getClassName()">' +
       '<div class="scroll"></div>' +
     '</div>',
     compile: function(element, attr, transclude) {

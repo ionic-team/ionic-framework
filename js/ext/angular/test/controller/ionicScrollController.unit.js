@@ -22,6 +22,17 @@ describe('$ionicScroll Controller', function() {
     });
   }
 
+  it('should set this.$scope', function() {
+    setup();
+    //Just an arbitrary way of checking that it is indeed a scope
+    expect(typeof ctrl.$scope.$id).toBe('string');
+  });
+
+  it('should set $scope.$$ionicScrollController', function() {
+    setup();
+    expect(ctrl.$scope.$$ionicScrollController).toBe(ctrl);
+  });
+
   it('should set this.element and this.$element', function() {
     setup();
     expect(ctrl.element.tagName).toMatch(/div/i);

@@ -13,6 +13,9 @@ angular.module('ionic.ui.scroll')
   var element = this.element = scrollViewOptions.el;
   var scrollView = this.scrollView = new ionic.views.Scroll(scrollViewOptions);
 
+  this.$scope = $scope;
+  $scope.$parent.$$ionicScrollController = this;
+
   if (!angular.isDefined(scrollViewOptions.bouncing)) {
     ionic.Platform.ready(function() {
       scrollView.options.bouncing = !ionic.Platform.isAndroid();
