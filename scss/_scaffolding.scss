@@ -176,6 +176,7 @@ body.grade-c {
   font-size: 30px;
 
   .icon-pulling {
+    @include animation-name(refresh-spin-back);
     @include animation-duration(200ms);
     @include animation-timing-function(linear);
     @include animation-fill-mode(both);
@@ -190,6 +191,16 @@ body.grade-c {
 @-webkit-keyframes refresh-spin {
   0% {-webkit-transform: rotate(0); }
   100% {-webkit-transform: rotate(-180deg); }
+}
+
+@keyframes refresh-spin-back {
+  0% { transform: rotate(-180deg); }
+  100% { transform: rotate(0); }
+}
+
+@-webkit-keyframes refresh-spin-back {
+  0% {-webkit-transform: rotate(-180deg); }
+  100% {-webkit-transform: rotate(0); }
 }
 
 .scroll-refresher.active {
