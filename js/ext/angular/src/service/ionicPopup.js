@@ -145,7 +145,6 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     var _this = this;
 
     ionic.requestAnimationFrame(function() {
-
       hideBody(popup);
       positionPopup(popup);
       popup.el.classList.remove('popup-hidden');
@@ -169,8 +168,6 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
   // Hide a single popup
   var hideSinglePopup = function(popup) {
     ionic.requestAnimationFrame(function() {
-      var buttons, lastButton;
-
       popup.el.classList.remove('active');
       popup.el.classList.add('popup-hidden');
     });
