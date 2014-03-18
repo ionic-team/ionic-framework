@@ -22,11 +22,13 @@ describe('Ionic Content directive', function() {
   });
 
   it('should add padding classname', function() {
-    var element = compile('<ion-content padding="true"></ion-content>')(scope);
-    expect(element.hasClass('scroll-content')).toEqual(true);
-    expect(element.hasClass('padding')).toEqual(false);
+    var element = compile('<ion-content padding="shouldPad"></ion-content>')(scope);
     var scrollElement = element.find('.scroll');
+    expect(scrollElement.hasClass('padding')).toEqual(false);
+    element.scope().$apply('shouldPad = true');
     expect(scrollElement.hasClass('padding')).toEqual(true);
+    element.scope().$apply('shouldPad = false');
+    expect(scrollElement.hasClass('padding')).toEqual(false);
   });
 
   it('Disables bouncing when has-bouncing = false', function() {
