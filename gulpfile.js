@@ -46,16 +46,16 @@ gulp.task('default', ['build']);
 gulp.task('build', ['bundle', 'sass']);
 
 gulp.task('index', function() {
+  var includePaths = ['docs/components', 'docs/guide', 'docs/overview', 'docs/angularjs', 'tutorials'];
+  var jekyllReplace = new RegExp('{%.*%}');
+  
   var idx = lunr(function() {
     this.field('path'); 
     this.field('body');
+    this.ref('path')
   });
-  var id = 0;
 
-  fileUtils.walkSync('tmp/ionic-site', function(dirPath, dirs, files) {
-    if(dirPath.indexOf('_site') >= 0) {
-      return;
-    }
+  var walker = function(dirPath, dirs, files) {
     files = files.filter(function(file){
       var ext = path.extname(file);
       return ext == '.md' || ext == '.html';
@@ -63,27 +63,29 @@ gulp.task('index', function() {
 
     for(i in files) {
       var file = files[i];
-      var fullpath = fileUtils.path.join(fileUtils.path.relativePath('tmp/ionic-site', dirPath), file);  
+      var relpath = fileUtils.path.join(fileUtils.path.relativePath('tmp/ionic-site', dirPath), file);  
       var unparsed = fs.readFileSync(fileUtils.path.join(dirPath, file));
 
       var parsed = '';
       var parser = new htmlparser.Parser({
         ontext: function(text){
-            parsed += text;
+            parsed += text.replace(jekyllReplace, '');
         },
       });
       
-      if(path.extname(file) == '.html') {
-        parser.write(unparsed);
-        parser.end();
-      } else {
-        parsed = unparsed;
-      }
+      parser.write(unparsed);
+      parser.end();
 
-      idx.add({'path': fullpath, 'body': parsed, 'id': id});
-      id++;
+      idx.add({'path': relpath, 'body': parsed});
     }
-  });
+  };
+
+  for(var i in includePaths) {
+    fileUtils.walkSync('tmp/ionic-site/'+includePaths[i], walker);
+  }  
+
+  //console.log(idx.search('ion-nav'));
+
   fs.writeFileSync('index.json', JSON.stringify(idx.toJSON()));
 });
 
