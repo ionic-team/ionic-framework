@@ -2,8 +2,16 @@ module.exports = [
   {
     name: 'controller',
     transformFn: function(doc, tag) {
-      return '{@link ionic.controller:' + tag.description.trim() + '}';
+      var desc = tag.description.trim();
+      var id = desc.split(' ')[0];
+      var other = desc.split(' ').splice(1).join(' ');
+
+      var link = '{@link ionic.controller:' + id + '}';
+      return link + (other ? ' ' + other : '');
     }
+  },
+  {
+    name: 'controllerBind',
   },
   {
     name: 'parent',

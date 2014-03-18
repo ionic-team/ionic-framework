@@ -232,11 +232,11 @@ describe('ionNavBar', function() {
     it('should assign $scope.navBarController by default', function() {
       var el = setup();
       expect(el.controller('ionNavBar')).toBeTruthy(); //sanity
-      expect(el.scope().navBarController).toBe(el.controller('ionNavBar'));
+      expect(el.scope().$ionicNavBarController).toBe(el.controller('ionNavBar'));
     });
 
     it('should assign $scope.navBarController to attr.model if set', function() {
-      var el = setup('model="theNavBarCtrl"');
+      var el = setup('controller-bind="theNavBarCtrl"');
       expect(el.controller('ionNavBar')).toBeTruthy();
       expect(el.scope().theNavBarCtrl).toBe(el.controller('ionNavBar'));
     });
@@ -244,27 +244,18 @@ describe('ionNavBar', function() {
     it('should have isInvisible class (default true)', function() {
       var el = setup();
       expect(el.hasClass('invisible')).toBe(true);
-      el.isolateScope().$apply('isInvisible = false');
+      el.scope().$apply('isInvisible = false');
       expect(el.hasClass('invisible')).toBe(false);
-      el.isolateScope().$apply('isInvisible = true');
+      el.scope().$apply('isInvisible = true');
       expect(el.hasClass('invisible')).toBe(true);
-    });
-
-    it('should have animation class', function() {
-      var el = setup('animation="my-anim"');
-      expect(el.hasClass('my-anim')).toBe(true);
-      el.isolateScope().$apply('shouldAnimate = false');
-      expect(el.hasClass('my-anim')).toBe(false);
-      el.isolateScope().$apply('shouldAnimate = true');
-      expect(el.hasClass('my-anim')).toBe(true);
     });
 
     it('should have reverse class', function() {
       var el = setup();
       expect(el.hasClass('reverse')).toBe(false);
-      el.isolateScope().$apply('isReverse = true');
+      el.scope().$apply('isReverse = true');
       expect(el.hasClass('reverse')).toBe(true);
-      el.isolateScope().$apply('isReverse = false');
+      el.scope().$apply('isReverse = false');
       expect(el.hasClass('reverse')).toBe(false);
     });
   });

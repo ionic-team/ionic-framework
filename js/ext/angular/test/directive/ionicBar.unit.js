@@ -4,11 +4,11 @@ describe('bar directives', function() {
   angular.forEach([{
     tag: 'ion-header-bar',
     element: 'header',
-    model: 'headerBarController'
+    controllerBind: '$ionicHeaderBarController'
   }, {
     tag: 'ion-footer-bar',
     element: 'footer',
-    model: 'footerBarController'
+    controllerBind: '$ionicFooterBarController'
   }], function(data) {
     describe(data.tag, function() {
 
@@ -31,22 +31,22 @@ describe('bar directives', function() {
         expect(el[0].tagName.toLowerCase()).toBe(data.element);
       });
 
-      it('should assign views.HeaderBar to default model', function() {
+      it('should assign views.HeaderBar to default controllerBind', function() {
         var el = setup();
-        expect(el.scope()[data.model] instanceof ionic.views.HeaderBar).toBe(true);
+        expect(el.scope()[data.controllerBind] instanceof ionic.views.HeaderBar).toBe(true);
       });
-      it('should assign views.HeaderBar to attr model', function() {
-        var el = setup('model="monkeys"');
+      it('should assign views.HeaderBar to attr controllerBind', function() {
+        var el = setup('controller-bind="monkeys"');
         expect(el.scope().monkeys instanceof ionic.views.HeaderBar).toBe(true);
       });
 
       it('should pass center to views.HeaderBar option by default', function() {
         var el = setup();
-        expect(el.scope()[data.model].opts.alignTitle).toBe('center');
+        expect(el.scope()[data.controllerBind].opts.alignTitle).toBe('center');
       });
       it('should pass attr.alignTitle to views.HeaderBar', function() {
         var el = setup('align-title="left"');
-        expect(el.scope()[data.model].opts.alignTitle).toBe('left');
+        expect(el.scope()[data.controllerBind].opts.alignTitle).toBe('left');
       });
     });
   });

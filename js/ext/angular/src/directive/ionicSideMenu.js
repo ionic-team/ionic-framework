@@ -32,11 +32,25 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * @ngdoc method
  * @name ionicSideMenus#toggleLeft
  * @description Toggle the left side menu (if it exists).
+ * @param {boolean=} isOpen Whether to open or close the menu.
+ * Default: Toggles the menu.
  */
 /**
  * @ngdoc method
  * @name ionicSideMenus#toggleRight
  * @description Toggle the right side menu (if it exists).
+ * @param {boolean=} isOpen Whether to open or close the menu.
+ * Default: Toggles the menu.
+ */
+/**
+ * @ngdoc method
+ * @name ionicSideMenus#isOpenLeft
+ * @returns {boolean} Whether the left menu is currently opened.
+ */
+/**
+ * @ngdoc method
+ * @name ionicSideMenus#isOpenRight
+ * @returns {boolean} Whether the right menu is currently opened.
  */
 
 /**
@@ -44,7 +58,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * @name ionSideMenus
  * @module ionic
  * @restrict E
- * @controller ionicSideMenus
+ * @controller ionicSideMenus as $scope.$ionicSideMenusController
  *
  * @description
  * A container element for side menu(s) and the main content. Allows the left
@@ -85,7 +99,9 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * }
  * ```
  *
- * @param {expression=} model The model to assign this side menu container's {@link ionic.controller:ionicSideMenus} controller to. By default, assigns  to $scope.sideMenuController.
+ * @param {string=} controller-bind The scope variable to bind these side menus'
+ * {@link ionic.controller:ionicSideMenus ionicSideMenus controller} to.
+ * Default: $scope.$ionicSideMenusController.
  *
  */
 .directive('ionSideMenus', function() {
@@ -103,7 +119,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
 
       $scope.sideMenuContentTranslateX = 0;
 
-      $parse($attrs.model || 'sideMenuController').assign($scope, this);
+      $parse($attrs.controllerBind || '$ionicSideMenusController').assign($scope, this);
     }],
     replace: true,
     transclude: true,

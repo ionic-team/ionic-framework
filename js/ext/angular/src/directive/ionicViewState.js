@@ -8,7 +8,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  * @name ionView
  * @module ionic
  * @restrict E
- * @parent ionNavBar
+ * @parent ionNavView
  *
  * @description
  * A container for content, used to tell a parent {@link ionic.directive:ionNavBar}
@@ -19,7 +19,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  *
  * ```html
  * <ion-nav-bar></ion-nav-bar>
- * <ion-nav-view>
+ * <ion-nav-view class="slide-left-right">
  *   <ion-view title="My Page">
  *     <ion-content>
  *       Hello!
@@ -30,8 +30,9 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  *
  * @param {string=} title The title to display on the parent {@link ionic.directive:ionNavBar}.
  * @param {boolean=} hideBackButton Whether to hide the back button on the parent
- * {@link ionic.directive:ionNavBar}.
- * @param {boolean=} hideNavBar Whether to hide the parent {@link ionic.directive:ionNavBar}.
+ * {@link ionic.directive:ionNavBar} by default.
+ * @param {boolean=} hideNavBar Whether to hide the parent
+ * {@link ionic.directive:ionNavBar} by default.
  */
 .directive('ionView', ['$ionicViewService', '$rootScope', '$animate',
            function( $ionicViewService,   $rootScope,   $animate) {
@@ -107,8 +108,11 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  * {@link ionic.directive:ionNavBar} directive which will render a header bar that updates as we
  * navigate through the navigation stack.
  *
+ * You can any [animation class](/docs/components#animation) on the navView to have its pages slide.
+ * Recommended for page transitions: 'slide-left-right', 'slide-left-right-ios7', 'slide-in-up'.
+ *
  * ```html
- * <ion-nav-view>
+ * <ion-nav-view class="slide-left-right">
  *   <!-- Center content -->
  *   <ion-nav-bar>
  *   </ion-nav-bar>
@@ -163,8 +167,6 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  * @param {string=} name A view name. The name should be unique amongst the other views in the
  * same state. You can have views of the same name that live in different states. For more
  * information, see ui-router's [ui-view documentation](http://angular-ui.github.io/ui-router/site/#/api/ui.router.state.directive:ui-view).
- * @param {string=} animation The animation to use for views underneath this ionNavView.
- * Defaults to 'slide-left-right'.
  */
 .directive('ionNavView', ['$ionicViewService', '$state', '$compile', '$controller', '$animate',
               function( $ionicViewService,   $state,   $compile,   $controller,   $animate) {
@@ -177,10 +179,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     terminal: true,
     priority: 2000,
     transclude: true,
-    controller: ['$scope', function($scope) {
-      this.setNextAnimation = function(anim) {
-        $scope.$nextAnimation = anim;
-      };
+    controller: [function(){
     }],
     compile: function (element, attr, transclude) {
       return function(scope, element, attr, navViewCtrl) {

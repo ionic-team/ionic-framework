@@ -17,7 +17,7 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  * @name ionHeaderBar
  * @module ionic
  * @restrict E
- * @controller ionicBar
+ * @controller ionicBar as $scope.$ionicHeaderBarController
  *
  * @description
  * Adds a fixed header bar above some content.
@@ -25,9 +25,9 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  * Is able to have left or right buttons, and additionally its title can be
  * aligned through the {@link ionic.controller:ionicBar ionicBar controller}.
  *
- * @param {string=} model The model to assign this headerBar's
+ * @param {string=} controller-bind The scope variable to bind this header bar's
  * {@link ionic.controller:ionicBar ionicBar controller} to.
- * Defaults to assigning to $scope.headerBarController.
+ * Default: $scope.$ionicHeaderBarController.
  * @param {string=} align-title Where to align the title at the start.
  * Avaialble: 'left', 'right', or 'center'.  Defaults to 'center'.
  *
@@ -54,7 +54,7 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  * @name ionFooterBar
  * @module ionic
  * @restrict E
- * @controller ionicBar
+ * @controller ionicBar as $scope.$ionicFooterBarController
  *
  * @description
  * Adds a fixed footer bar below some content.
@@ -62,9 +62,9 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  * Is able to have left or right buttons, and additionally its title can be
  * aligned through the {@link ionic.controller:ionicBar ionicBar controller}.
  *
- * @param {string=} model The model to assign this footerBar's
+ * @param {string=} controller-bind The scope variable to bind this footer bar's
  * {@link ionic.controller:ionicBar ionicBar controller} to.
- * Defaults to assigning to $scope.footerBarController.
+ * Default: $scope.$ionicFooterBarController.
  * @param {string=} align-title Where to align the title at the start.
  * Avaialble: 'left', 'right', or 'center'.  Defaults to 'center'.
  *
@@ -91,8 +91,8 @@ function barDirective(isHeader) {
     '<header class="bar bar-header" ng-transclude></header>' :
     '<footer class="bar bar-footer" ng-transclude></footer>';
   var BAR_MODEL_DEFAULT = isHeader ?
-    'headerBarController' :
-    'footerBarController';
+    '$ionicHeaderBarController' :
+    '$ionicFooterBarController';
   return ['$parse', function($parse) {
     return {
       restrict: 'E',
@@ -105,7 +105,7 @@ function barDirective(isHeader) {
           alignTitle: $attr.alignTitle || 'center'
         });
 
-        $parse($attr.model || BAR_MODEL_DEFAULT).assign($scope, hb);
+        $parse($attr.controllerBind || BAR_MODEL_DEFAULT).assign($scope, hb);
       }
     };
   }];

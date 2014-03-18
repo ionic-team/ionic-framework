@@ -224,27 +224,16 @@ describe('tabs', function() {
       return element;
     }
 
-    it('should bind controller to scope.tabsController by default', function() {
+    it('should bind controller to scope.$ionicTabsController by default', function() {
       var el = setup();
       expect(el.controller('ionTabs')).toBeTruthy(); //sanity
-      expect(el.scope().tabsController).toBe(el.controller('ionTabs'));
+      expect(el.scope().$ionicTabsController).toBe(el.controller('ionTabs'));
     });
 
     it('should bind controller to scope[attr.model]', function() {
       var el = setup('model="superman"');
       expect(el.controller('ionTabs')).toBeTruthy();
       expect(el.scope().superman).toBe(el.controller('ionTabs'));
-    });
-
-    it('should set attr classes', function() {
-      var el = setup('animation="foo" tabs-style="bar" tabs-type="baz"');
-      expect(el.hasClass('foo')).toBe(true);
-      expect(el.children().hasClass('bar baz')).toBe(true);
-    });
-
-    it('should default tabsType to tabs-positive', function() {
-      var el = setup();
-      expect(el.children().hasClass('tabs-positive')).toBe(true);
     });
 
     it('should transclude content with same scope', function() {

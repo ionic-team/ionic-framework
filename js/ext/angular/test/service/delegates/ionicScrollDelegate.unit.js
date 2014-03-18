@@ -1,4 +1,4 @@
-describe('Ionic ScrollDelegate Service', function() {
+xdescribe('Ionic ScrollDelegate Service', function() {
   var $ionicScrollDelegate, rootScope, compile, timeout, document;
 
   beforeEach(module('ionic'));

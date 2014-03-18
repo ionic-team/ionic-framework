@@ -1,4 +1,4 @@
-
+/*
 (function() {
 'use strict';
 
@@ -33,7 +33,6 @@ function isTagNameInList(element, list){
 
 // Utility to find the viewport/content elements given the start element:
 function findViewportAndContent(startElement){
-  /*jshint eqeqeq:false, curly:false */
   var root = $rootElement[0];
   var e, n;
   // Somewhere between the grandparent and the root node
@@ -123,13 +122,13 @@ function computeRowHeight(element){
 
 angular.module('ionic.ui.virtualRepeat', [])
 
-/**
- * A replacement for ng-repeat that supports virtual lists.
- * This is not a 1 to 1 replacement for ng-repeat. However, in situations
- * where you have huge lists, this repeater will work with our virtual
- * scrolling to only render items that are showing or will be showing
- * if a scroll is made.
- */
+//
+// A replacement for ng-repeat that supports virtual lists.
+// This is not a 1 to 1 replacement for ng-repeat. However, in situations
+// where you have huge lists, this repeater will work with our virtual
+// scrolling to only render items that are showing or will be showing
+// if a scroll is made.
+//
 .directive('ionVirtualRepeat', ['$log', function($log) {
     return {
       require: ['?ngModel, ^virtualList'],
@@ -326,3 +325,4 @@ angular.module('ionic.ui.virtualRepeat', [])
   }]);
 
 })(ionic);
+*/

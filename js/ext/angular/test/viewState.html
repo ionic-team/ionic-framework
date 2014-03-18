@@ -12,8 +12,7 @@
   <body>
 
     <div ng-controller="AppCtrl">
-      <ion-nav-bar animation="nav-title-slide-ios7"
-        type="bar-positive">
+      <ion-nav-bar class="nav-title-slide-ios7 bar-positive">
         <ion-nav-back-button class="button-icon icon ion-arrow-left-c">
           Back
         </ion-nav-back-button>
@@ -34,7 +33,7 @@
           <button class="button button-icon ion-navicon"></button>
         </ion-nav-buttons>
 
-        <ion-content has-header="true">
+        <ion-content class="has-header" padding="true">
           <div class="padding">
             <button class="button button-block button-positive" ng-click="signIn(user)">
               Sign-In
@@ -56,7 +55,7 @@
     </script>
 
     <script id="forgot-password.html" type="text/ng-template">
-      <ion-view title="'Forgot Password'" hide-nav-bar="true">
+      <ion-view title="Forgot Password" hide-nav-bar="true">
         <ion-content has-header="true" padding="true">
           <p>This ion-view hides the nav bar using the hideNavBar attribute.</p>
           <p>
@@ -102,7 +101,7 @@
 
     <script id="tabs.html" type="text/ng-template">
 
-      <ion-tabs tabs-style="tabs-icon-top" tabs-type="tabs-positive">
+      <ion-tabs class="tabs-icon-top tabs-positive tabs-top">
 
         <ion-tab title="Automobiles" icon="ion-model-s" href="#/tabs/autos">
           <ion-nav-view name="auto-nav-view"></ion-nav-view>
@@ -117,8 +116,8 @@
         </ion-tab>
 
         <ion-tab title="Info" icon="ion-information-circled">
-          <ion-view title="'Information'">
-            <ion-content has-header="true" has-tabs="true" padding="true">
+          <ion-view title="Information">
+            <ion-content class="has-header  has-subheader" padding="true">
               <h3>Information</h3>
               <p>
                 This is a sample seed project for the Ionic Framework. Please change it to match your needs.
@@ -140,8 +139,8 @@
     </script>
 
     <script id="auto-list.html" type="text/ng-template">
-      <ion-view title="'Auto List'">
-        <ion-content has-header="true" has-tabs="true">
+      <ion-view title="Auto List">
+        <ion-content class="has-header  has-subheader" padding="true">
           <ion-list>
             <ion-item ng-repeat="auto in autos" ng-href="#/tabs/autos/{{ $index }}" ion-nav-animation="{{$index === 0 ? 'slide-in-up' : 'slide-left-right'}}">
               {{ auto.year }} {{ auto.make }} {{ auto.model }}
@@ -160,12 +159,12 @@
     </script>
 
     <script id="auto-detail.html" type="text/ng-template">
-      <ion-view title="'Auto Details'">
+      <ion-view title="Auto Details">
         <ion-nav-buttons side="left">
           <button class="button button-icon icon ion-refresher">
           </button>
         </ion-nav-buttons>
-        <ion-content has-header="true" has-tabs="true" padding="true">
+        <ion-content class="has-header  has-subheader" padding="true">
 
           <h2>{{ auto.year }} {{ auto.make }} {{ auto.model }}</h2>
           <p ng-bind="auto.desc"></p>
@@ -202,8 +201,8 @@
     </script>
 
     <script id="add-auto.html" type="text/ng-template">
-      <ion-view title="'Add Auto'">
-        <ion-content has-header="true" has-tabs="true">
+      <ion-view title="Add Auto">
+        <ion-content class="has-header  has-subheader" padding="true">
 
           <div class="list">
             <label class="item item-input">
@@ -232,8 +231,8 @@
     </script>
 
     <script id="about.html" type="text/ng-template">
-      <ion-view title="'About'">
-        <ion-content has-header="true" has-tabs="true" padding="true">
+      <ion-view title="About">
+        <ion-content class="has-header  has-subheader" padding="true">
           <h3>About this app!</h3>
           <p>
             Current View: {{ $viewHistory.currentView }}<br>

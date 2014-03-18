@@ -88,7 +88,21 @@ describe('SideMenuController', function() {
     ctrl.toggleRight();
     expect(ctrl.getOpenPercentage()).toEqual(-100);
   });
-  
+
+  it('should isOpenLeft', function() {
+    expect(ctrl.isOpenLeft()).toEqual(false);
+    ctrl.toggleLeft();
+    expect(ctrl.getOpenPercentage()).toEqual(100);
+    expect(ctrl.isOpenLeft()).toEqual(true);
+  });
+
+  it('should isOpenRight', function() {
+    expect(ctrl.isOpenRight()).toEqual(false);
+    ctrl.toggleRight();
+    expect(ctrl.getOpenPercentage()).toEqual(-100);
+    expect(ctrl.isOpenRight()).toEqual(true);
+  });
+
   // Snap
   it('Should snap', function() {
 
@@ -131,7 +145,7 @@ describe('SideMenuController', function() {
       }
     });
     expect(ctrl.getOpenPercentage()).toEqual(-100);
-      
+
     // Going right, more than half, or quickly (snap open)
     ctrl.openPercentage(-51);
     ctrl.snapToRest({

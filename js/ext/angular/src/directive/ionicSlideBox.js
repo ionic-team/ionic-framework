@@ -12,7 +12,7 @@ angular.module('ionic.ui.slideBox', [])
  * @name ionSlideBox
  * @module ionic
  * @restrict E
- * @controller ionicSlideBox
+ * @controller ionicSlideBox as $scope.$ionicSlideBoxController
  * @description
  * The Slide Box is a multi-page container where each page can be swiped or dragged between:
  *
@@ -33,7 +33,9 @@ angular.module('ionic.ui.slideBox', [])
  * </ion-slide-box>
  * ```
  *
- * @param {expression=} model The model to assign this slide box container's {@link ionic.controller:ionicSlideBox} controller to. By default, assigns to $scope.slideBoxController.
+ * @param {string=} controller-bind The scope variable to bind this slide box's
+ * {@link ionic.controller:ionicSlideBox ionicSlideBox controller} to.
+ * Default: $scope.$ionicSlideBoxController.
  * @param {boolean=} does-continue Whether the slide box should automatically slide.
  * @param {number=} slide-interval How many milliseconds to wait to change slides (if does-continue is true). Defaults to 4000.
  * @param {boolean=} show-pager Whether a pager should be shown for this slide box.
@@ -41,7 +43,7 @@ angular.module('ionic.ui.slideBox', [])
  * @param {expression=} on-slide-changed Expression called whenever the slide is changed.
  * @param {expression=} active-slide Model to bind the current slide to.
  */
-.directive('ionSlideBox', ['$timeout', '$compile', '$ionicSlideBoxDelegate', function($timeout, $compile, $ionicSlideBoxDelegate) {
+.directive('ionSlideBox', ['$timeout', '$compile', function($timeout, $compile) {
   return {
     restrict: 'E',
     replace: true,
@@ -100,9 +102,7 @@ angular.module('ionic.ui.slideBox', [])
         slider.slide(index);
       });
 
-      $parse($attrs.model || 'slideBoxController').assign($scope.$parent, slider);
-
-      $ionicSlideBoxDelegate.register($scope, $element);
+      $parse($attrs.controllerBind || '$ionicSlideBoxController').assign($scope.$parent, slider);
 
       this.slidesCount = function() {
         return slider.slidesCount();

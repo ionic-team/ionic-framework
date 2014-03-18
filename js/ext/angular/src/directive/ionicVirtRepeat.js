@@ -1,3 +1,4 @@
+/*
 (function() {
 'use strict';
 
@@ -20,3 +21,4 @@ angular.module('ionic.ui.virtRepeat', [])
   };
 });
 })(ionic);
+*/

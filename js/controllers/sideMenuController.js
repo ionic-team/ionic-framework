@@ -49,29 +49,43 @@
       };
     },
 
+    isOpenLeft: function() {
+      return this._leftShowing;
+    },
+
+    isOpenRight: function() {
+      return this._rightShowing;
+    },
+
     /**
      * Toggle the left menu to open 100%
      */
-    toggleLeft: function() {
+    toggleLeft: function(shouldOpen) {
+      if (arguments.length === 0) {
+        shouldOpen = !this._leftShowing;
+      }
       this.content.enableAnimation();
       var openAmount = this.getOpenAmount();
-      if(openAmount > 0) {
-        this.openPercentage(0);
-      } else {
+      if(shouldOpen) {
         this.openPercentage(100);
+      } else {
+        this.openPercentage(0);
       }
     },
 
     /**
      * Toggle the right menu to open 100%
      */
-    toggleRight: function() {
+    toggleRight: function(shouldOpen) {
+      if (arguments.length === 0) {
+        shouldOpen = !this._rightShowing;
+      }
       this.content.enableAnimation();
       var openAmount = this.getOpenAmount();
-      if(openAmount < 0) {
-        this.openPercentage(0);
-      } else {
+      if(shouldOpen) {
         this.openPercentage(-100);
+      } else {
+        this.openPercentage(0);
       }
     },
 

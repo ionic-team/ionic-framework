@@ -28,42 +28,6 @@
   background-size: 0;
   line-height: $tabs-height;
 
-  &.tabs-light {
-    @include tab-style($tabs-light-bg, $tabs-light-border, $tabs-light-text);
-    @include tab-badge-style($tabs-light-text, $tabs-light-bg);
-  }
-  &.tabs-stable {
-    @include tab-style($tabs-stable-bg, $tabs-stable-border, $tabs-stable-text);
-    @include tab-badge-style($tabs-stable-text, $tabs-stable-bg);
-  }
-  &.tabs-positive {
-    @include tab-style($tabs-positive-bg, $tabs-positive-border, $tabs-positive-text);
-    @include tab-badge-style($tabs-positive-text, $tabs-positive-bg);
-  }
-  &.tabs-calm {
-    @include tab-style($tabs-calm-bg, $tabs-calm-border, $tabs-calm-text);
-    @include tab-badge-style($tabs-calm-text, $tabs-calm-bg);
-  }
-  &.tabs-assertive {
-    @include tab-style($tabs-assertive-bg, $tabs-assertive-border, $tabs-assertive-text);
-    @include tab-badge-style($tabs-assertive-text, $tabs-assertive-bg);
-  }
-  &.tabs-balanced {
-    @include tab-style($tabs-balanced-bg, $tabs-balanced-border, $tabs-balanced-text);
-    @include tab-badge-style($tabs-balanced-text, $tabs-balanced-bg);
-  }
-  &.tabs-energized {
-    @include tab-style($tabs-energized-bg, $tabs-energized-border, $tabs-energized-text);
-    @include tab-badge-style($tabs-energized-text, $tabs-energized-bg);
-  }
-  &.tabs-royal {
-    @include tab-style($tabs-royal-bg, $tabs-royal-border, $tabs-royal-text);
-    @include tab-badge-style($tabs-royal-text, $tabs-royal-bg);
-  }
-  &.tabs-dark {
-    @include tab-style($tabs-dark-bg, $tabs-dark-border, $tabs-dark-text);
-    @include tab-badge-style($tabs-dark-text, $tabs-dark-bg);
-  }
   @media (min--moz-device-pixel-ratio: 1.5),
          (-webkit-min-device-pixel-ratio: 1.5),
          (min-device-pixel-ratio: 1.5),
@@ -76,9 +40,58 @@
     background-size: 100% 1px;
     background-repeat: no-repeat;
   }
+
+}
+/* Allow parent element of tabs to define color, or just the tab itself */
+.tabs-light > .tabs,
+.tabs.tabs-light {
+  @include tab-style($tabs-light-bg, $tabs-light-border, $tabs-light-text);
+  @include tab-badge-style($tabs-light-text, $tabs-light-bg);
+}
+.tabs-stable > .tabs,
+.tabs.tabs-stable {
+  @include tab-style($tabs-stable-bg, $tabs-stable-border, $tabs-stable-text);
+  @include tab-badge-style($tabs-stable-text, $tabs-stable-bg);
+}
+.tabs-positive > .tabs,
+.tabs.tabs-positive {
+  @include tab-style($tabs-positive-bg, $tabs-positive-border, $tabs-positive-text);
+  @include tab-badge-style($tabs-positive-text, $tabs-positive-bg);
+}
+.tabs-calm > .tabs,
+.tabs.tabs-calm {
+  @include tab-style($tabs-calm-bg, $tabs-calm-border, $tabs-calm-text);
+  @include tab-badge-style($tabs-calm-text, $tabs-calm-bg);
+}
+.tabs-assertive > .tabs,
+.tabs.tabs-assertive {
+  @include tab-style($tabs-assertive-bg, $tabs-assertive-border, $tabs-assertive-text);
+  @include tab-badge-style($tabs-assertive-text, $tabs-assertive-bg);
+}
+.tabs-balanced > .tabs,
+.tabs.tabs-balanced {
+  @include tab-style($tabs-balanced-bg, $tabs-balanced-border, $tabs-balanced-text);
+  @include tab-badge-style($tabs-balanced-text, $tabs-balanced-bg);
+}
+.tabs-energized > .tabs,
+.tabs.tabs-energized {
+  @include tab-style($tabs-energized-bg, $tabs-energized-border, $tabs-energized-text);
+  @include tab-badge-style($tabs-energized-text, $tabs-energized-bg);
+}
+.tabs-royal > .tabs,
+.tabs.tabs-royal {
+  @include tab-style($tabs-royal-bg, $tabs-royal-border, $tabs-royal-text);
+  @include tab-badge-style($tabs-royal-text, $tabs-royal-bg);
+}
+.tabs-dark > .tabs,
+.tabs.tabs-dark {
+  @include tab-style($tabs-dark-bg, $tabs-dark-border, $tabs-dark-text);
+  @include tab-badge-style($tabs-dark-text, $tabs-dark-bg);
 }
 
-.tabs-top {
+/* Allow parent element to have tabs-top */
+.tabs-top > .tabs,
+.tabs.tabs-top {
   top: $bar-height;
   padding-top: 0;
   padding-bottom: 2px;

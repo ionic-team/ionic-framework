@@ -3,12 +3,11 @@
  * see the core Ionic sideMenu controller tests.
  */
 describe('Ionic Angular Slide Box', function() {
-  var el, delegate, compile, rootScope, timeout;
+  var el, compile, rootScope, timeout;
 
   beforeEach(module('ionic'));
 
-  beforeEach(inject(function($compile, $rootScope, $timeout, $ionicSlideBoxDelegate) {
-    delegate = $ionicSlideBoxDelegate;
+  beforeEach(inject(function($compile, $rootScope, $timeout) {
     timeout = $timeout;
     rootScope = $rootScope;
     compile = $compile;
@@ -32,25 +31,16 @@ describe('Ionic Angular Slide Box', function() {
 
   it('Should init', function() {
     var scope = el.scope();
-    expect(scope.slideBoxController).toBeDefined()
-    expect(scope.slideBoxController.slide).toBeDefined();
+    expect(scope.$ionicSlideBoxController).toBeDefined()
+    expect(scope.$ionicSlideBoxController.slide).toBeDefined();
   });
 
-  it('Should init with custom model attr', inject(function($compile, $rootScope) {
-    var el = $compile('<ion-slide-box model="myModel"></ion-slide-box>')($rootScope);
+  it('Should init with custom controller-bind attr', inject(function($compile, $rootScope) {
+    var el = $compile('<ion-slide-box controller-bind="myModel"></ion-slide-box>')($rootScope);
     var scope = el.scope();
     expect(scope.myModel).toBeDefined();
     expect(scope.myModel.slide).toBeDefined();
   }));
-
-  it('Should update with delegate', function() {
-    var scope = el.scope();
-    var slideBox = scope.slideBoxController;
-    spyOn(slideBox, 'setup');
-    delegate.update();
-    timeout.flush();
-    expect(slideBox.setup).toHaveBeenCalled();
-  });
 
   it('Should set initial active slide', function() {
     el = compile('<ion-slide-box active-slide="2">\
@@ -70,6 +60,6 @@ describe('Ionic Angular Slide Box', function() {
     </ion-slide-box>')(rootScope);
 
    var scope = el.scope();
-   expect(scope.slideBoxController.currentIndex()).toBe(2);
+   expect(scope.$ionicSlideBoxController.currentIndex()).toBe(2);
   });
 });

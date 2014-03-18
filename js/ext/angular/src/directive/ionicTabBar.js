@@ -132,17 +132,23 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
  * @name ionTabs
  * @module ionic
  * @restrict E
- * @controller ionicTabs
+ * @controller ionicTabs as $scope.$ionicTabsController
  * @codepen KbrzJ
  *
  * @description
- * Powers a multi-tabbed interface with a Tab Bar and a set of "pages" that can be tabbed through.
+ * Powers a multi-tabbed interface with a Tab Bar and a set of "pages" that can be tabbed
+ * through.
  *
- * See the {@link ionic.directive:ionTab} directive's documentation for more details.
+ * Assign any [tabs class](/docs/components#tabs) or
+ * [animation class](/docs/components#animation) to the element to define
+ * its look and feel.
+ *
+ * See the {@link ionic.directive:ionTab} directive's documentation for more details on
+ * individual tabs.
  *
  * @usage
  * ```html
- * <ion-tabs tabs-type="tabs-icon-only">
+ * <ion-tabs class="tabs-positive tabs-icon-only">
  *
  *   <ion-tab title="Home" icon-on="ion-ios7-filing" icon-off="ion-ios7-filing-outline">
  *     <!-- Tab 1 content -->
@@ -158,13 +164,12 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
  * </ion-tabs>
  * ```
  *
- * @param {expression=} model The model to assign this tab bar's {@link ionic.controller:ionicTabs} controller to. By default, assigns  to $scope.tabsController.
- * @param {string=} animation The animation to use when changing between tab pages.
- * @param {string=} tabs-style The class to apply to the tabs. Defaults to 'tabs-positive'.
- * @param {string=} tabs-type Whether to put the tabs on the top or bottom. Defaults to 'tabs-bottom'.
+ * @param {string=} controller-bind The scope variable to bind these tabs'
+ * {@link ionic.controller:ionicTabs ionicTabs controller} to.
+ * Default: $scope.$ionicTabsController.
  */
 
-.directive('ionTabs', ['$ionicViewService', '$ionicBind', '$parse', function($ionicViewService, $ionicBind, $parse) {
+.directive('ionTabs', ['$ionicViewService', '$parse', function($ionicViewService, $parse) {
   return {
     restrict: 'E',
     replace: true,
@@ -172,22 +177,14 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
     transclude: true,
     controller: 'ionicTabs',
     template:
-    '<div class="view {{$animation}}">' +
-      '<div class="tabs {{$tabsStyle}} {{$tabsType}}">' +
+    '<div class="view">' +
+      '<div class="tabs">' +
       '</div>' +
     '</div>',
     compile: function(element, attr, transclude) {
-      if(angular.isUndefined(attr.tabsType)) attr.$set('tabsType', 'tabs-positive');
 
       return function link($scope, $element, $attr, tabsCtrl) {
-
-        $ionicBind($scope, $attr, {
-          $animation: '@animation',
-          $tabsStyle: '@tabsStyle',
-          $tabsType: '@tabsType'
-        });
-
-        $parse(attr.model || 'tabsController').assign($scope, tabsCtrl);
+        $parse(attr.model || '$ionicTabsController').assign($scope, tabsCtrl);
 
         tabsCtrl.$scope = $scope;
         tabsCtrl.$element = $element;

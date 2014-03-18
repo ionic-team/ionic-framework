@@ -3,10 +3,10 @@ var buildConfig = require('./config/build.config.js');
 var changelog = require('conventional-changelog');
 var connect = require('connect');
 var dgeni = require('dgeni');
-var lunr = require('lunr');
-var htmlparser = require('htmlparser2');
-var yaml = require('js-yaml');
 var es = require('event-stream');
+var htmlparser = require('htmlparser2');
+var lunr = require('lunr');
+var yaml = require('js-yaml');
 
 var http = require('http');
 var cp = require('child_process');
@@ -47,7 +47,7 @@ gulp.task('build', ['bundle', 'sass']);
 
 gulp.task('docs-index', function() {
   var idx = lunr(function() {
-    this.field('path'); 
+    this.field('path');
     this.field('title', {boost: 10});
     this.field('body');
     this.ref('path')
@@ -55,7 +55,7 @@ gulp.task('docs-index', function() {
   var ref = {};
 
   return gulp.src([
-    'tmp/ionic-site/docs/{components,guide,overview,angularjs}/**/*.{md,html}', 
+    'tmp/ionic-site/docs/{components,guide,overview,angularjs}/**/*.{md,html}',
     'tmp/ionic-site/tutorials/**/*.{md,html}'
   ])
     .pipe(es.map(function(file, callback) {
@@ -72,7 +72,7 @@ gulp.task('docs-index', function() {
 
       var properties =  yaml.safeLoad(yamlRaw);
       contents = contents.slice(yamlEndIndex+3);
-      
+
       if(properties.title && properties.layout) {
         title = properties.title;
         layout = properties.layout;
@@ -87,7 +87,7 @@ gulp.task('docs-index', function() {
           // Ignore any Jekyll expressions
           body += text.replace(/{%.*%}/, '', 'g');
         },
-      });      
+      });
       parser.write(contents);
       parser.end();
 
@@ -115,7 +115,7 @@ gulp.task('docs', function(done) {
 });
 
 var IS_WATCH = false;
-gulp.task('watch', function() {
+gulp.task('watch', ['bundle'], function() {
   IS_WATCH = true;
   gulp.watch('js/**/*.js', ['bundle']);
   gulp.watch('scss/**/*.scss', ['sass']);

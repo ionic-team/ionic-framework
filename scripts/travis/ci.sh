@@ -118,7 +118,7 @@ function run {
     echo "##########################"
 
     # Do sauce unit tests and e2e tests with all browsers (takes longer)
-    gulp cloudtest
+    # gulp cloudtest
 
     echo "##########################################"
     echo "# Complete! v$VERSION nightly published! #"

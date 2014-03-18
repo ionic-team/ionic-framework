@@ -8,16 +8,18 @@ angular.module('ionic.ui.navBar', ['ionic.service.view', 'ngSanitize'])
  * @description
  * Controller for the {@link ionic.directive:ionNavBar} directive.
  */
-.controller('$ionicNavBar', ['$scope', '$element', '$ionicViewService', '$animate', '$compile',
+.controller('$ionicNavBar', [
+  '$scope',
+  '$element',
+  '$ionicViewService',
+  '$animate',
+  '$compile',
 function($scope, $element, $ionicViewService, $animate, $compile) {
   //Let the parent know about our controller too so that children of
-  //sibling content elements can know about us.
+  //sibling content elements can know about us
   $element.parent().data('$ionNavBarController', this);
 
-  var hb = this._headerBarView = new ionic.views.HeaderBar({
-    el: $element[0],
-    alignTitle: $scope.alignTitle || 'center'
-  });
+  var self = this;
 
   this.leftButtonsElement = angular.element(
     $element[0].querySelector('.buttons.left-buttons')
@@ -148,7 +150,7 @@ function($scope, $element, $ionicViewService, $animate, $compile) {
 
       var insert = oldTitleEl && angular.element(oldTitleEl) || null;
       $animate.enter(newTitleEl, $element, insert, function() {
-        hb.align();
+        self._headerBarView.align();
       });
 
       //Cleanup any old titles leftover (besides the one we already did replaceWith on)
@@ -174,7 +176,7 @@ function($scope, $element, $ionicViewService, $animate, $compile) {
  * @ngdoc directive
  * @name ionNavBar
  * @module ionic
- * @controller ionicNavBar
+ * @controller ionicNavBar as $scope.$ionicNavBarController
  * @restrict E
  *
  * @description
@@ -186,25 +188,26 @@ function($scope, $element, $ionicViewService, $animate, $compile) {
  * We can add buttons depending on the currently visible view using
  * {@link ionic.directive:ionNavButtons}.
  *
+ * Assign an [animation class](/docs/components#animations) to the element to
+ * enable animated changing of titles (recommended: 'slide-left-right' or 'nav-title-slide-ios7')
+ *
  * @usage
  *
  * ```html
  * <body ng-app="starter">
  *   <!-- The nav bar that will be updated as we navigate -->
- *   <ion-nav-bar class="bar-positive"
- *     animation="nav-title-slide-ios7">
+ *   <ion-nav-bar class="bar-positive nav-title-slide-ios7">
  *   </ion-nav-bar>
  *
  *   <!-- where the initial view template will be rendered -->
- *   <ion-nav-view animation="slide-left-right"></ion-nav-view>
+ *   <ion-nav-view></ion-nav-view>
  * </body>
  * ```
  *
- * @param model {string=} The model to assign the
+ * @param controller-bind {string=} The scope expression to bind this element's
  * {@link ionic.controller:ionicNavBar ionicNavBar controller} to.
- * Default: assigns it to $scope.navBarController.
- * @param animation {string=} The animation used to transition between titles.
- * @param align {string=} Where to align the title of the navbar.
+ * Default: $ionicNavBarController.
+ * @param align-title {string=} Where to align the title of the navbar.
  * Available: 'left', 'right', 'center'. Defaults to 'center'.
  */
 .directive('ionNavBar', ['$ionicViewService', '$rootScope', '$animate', '$compile', '$parse',
@@ -215,10 +218,6 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
     replace: true,
     transclude: true,
     controller: '$ionicNavBar',
-    scope: {
-      animation: '@',
-      alignTitle: '@'
-    },
     template:
       '<header class="bar bar-header nav-bar{{navBarClass()}}">' +
         '<div class="buttons left-buttons"> ' +
@@ -230,7 +229,13 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
     compile: function(tElement, tAttrs, transclude) {
 
       return function link($scope, $element, $attr, navBarCtrl) {
-        $parse($attr.model || 'navBarController').assign($scope.$parent, navBarCtrl);
+        navBarCtrl._headerBarView = new ionic.views.HeaderBar({
+          el: $element[0],
+          alignTitle: $attr.alignTitle || 'center'
+        });
+
+        $parse($attr.controllerBind || '$ionicNavBarController')
+          .assign($scope, navBarCtrl);
 
         //Put transcluded content (usually a back button) before the rest
         transclude($scope, function(clone) {
@@ -246,7 +251,7 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
         $scope.navBarClass = function() {
           return ($scope.isReverse ? ' reverse' : '') +
             ($scope.isInvisible ? ' invisible' : '') +
-            ($scope.shouldAnimate && $scope.animation ? ' ' + $scope.animation : '');
+            (!$scope.shouldAnimate ? ' no-animation' : '');
         };
       };
     }
@@ -282,9 +287,9 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
  * With custom click action, using {@link ionic.controller:ionicNavBar ionicNavBar controller}:
  *
  * ```html
- * <ion-nav-bar model="navBarController">
+ * <ion-nav-bar>
  *   <ion-nav-back-button class="button-icon"
- *     ng-click="canGoBack && navBarController.back()">
+ *     ng-click="canGoBack && $ionicNavBarController.back()">
  *     <i class="ion-arrow-left-c"></i> Back
  *   </ion-nav-back-button>
  * </ion-nav-bar>
@@ -294,9 +299,9 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
  * {@link ionic.controller:ionicNavBar ionicNavBar controller}.
  *
  * ```html
- * <ion-nav-bar model="navBarController">
+ * <ion-nav-bar>
  *   <ion-nav-back-button class="button button-icon ion-arrow-left-c">
- *     {% raw %}{{navBarController.getPreviousTitle() || 'Back'}}{% endraw %}
+ *     {% raw %}{{$ionicNavBarController.getPreviousTitle() || 'Back'}}{% endraw %}
  *   </ion-nav-back-button>
  * </ion-nav-bar>
  * ```
@@ -395,7 +400,8 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
           $animate.leave(clone);
         });
 
-        //The original element is just a completely empty <ion-nav-buttons></ion-nav-buttons> - make it invisible
+        // The original element is just a completely empty <ion-nav-buttons> element.
+        // make it invisible just to be sure it doesn't change any layout
         $element.css('display', 'none');
       };
     }
