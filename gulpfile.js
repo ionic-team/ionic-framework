@@ -4,14 +4,13 @@ var changelog = require('conventional-changelog');
 var connect = require('connect');
 var dgeni = require('dgeni');
 var lunr = require('lunr');
-var fileUtils = require('file');
 var htmlparser = require('htmlparser2');
 var yaml = require('js-yaml');
+var es = require('event-stream');
 
-var fs = require('fs');
-var path = require('path');
 var http = require('http');
 var cp = require('child_process');
+var fs = require('fs');
 
 var gulp = require('gulp');
 var pkg = require('./package.json');
@@ -46,68 +45,59 @@ if (IS_RELEASE_BUILD) {
 gulp.task('default', ['build']);
 gulp.task('build', ['bundle', 'sass']);
 
-gulp.task('index', function() {
-  var includePaths = ['docs/components', 'docs/guide', 'docs/overview', 'docs/angularjs', 'tutorials'];
-  
-  var ref = {};
+gulp.task('docs-index', function() {
   var idx = lunr(function() {
     this.field('path'); 
     this.field('title', {boost: 10});
     this.field('body');
     this.ref('path')
   });
+  var ref = {};
 
-  var walker = function(dirPath, dirs, files) {
-    // Only use markdown and html files
-    files = files.filter(function(file){
-      var ext = path.extname(file);
-      return ext == '.md' || ext == '.html';
-    });
-
-    for(i in files) {
-      var file = files[i];
-      var relpath = fileUtils.path.join(fileUtils.path.relativePath('tmp/ionic-site', dirPath), file);  
-      var unparsed = fs.readFileSync(fileUtils.path.join(dirPath, file)).toString();
+  return gulp.src([
+    'tmp/ionic-site/docs/{components,guide,overview,angularjs}/**/*.{md,html}', 
+    'tmp/ionic-site/tutorials/**/*.{md,html}'
+  ])
+    .pipe(es.map(function(file, callback) {
+      //docs for gulp file objects: https://github.com/wearefractal/vinyl
+      var contents = file.contents.toString(); //was buffer
+      // Grab relative path from ionic-site root
+      var relpath = file.path.slice(file.cwd.length+'/tmp/ionic-site/'.length);
 
       // Read out the yaml portion of the Jekyll file
-      var properties = {};
-      if (/^---\n/.test(unparsed)) {
-        var end = unparsed.search('\n---\n');
-        var config =  yaml.safeLoad(unparsed.slice(4, end + 1));
-        unparsed = unparsed.slice(end + 5);
-        if(config.title && config.layout) {
-          properties.title = config.title;
-          properties.layout = config.layout;
+      var title, layout;
+      if (/^---\n/.test(contents)) {
+        var end = contents.indexOf('\n---\n');
+        var properties =  yaml.safeLoad(contents.slice('---\n'.length, end + 1));
+        contents = contents.slice(end + '\n---\n'.length);
+        if(properties.title && properties.layout) {
+          title = properties.title;
+          layout = properties.layout;
         } else {
-          console.log('layout and title properties not found in '+relpath);
-          return process.exit(1);
+          return callback('layout and title properties not found in Jekyll file '+relpath);
         }
       }
 
+      var body = '';
       // Parse all html and use only text portion
-      var parsed = '';
       var parser = new htmlparser.Parser({
         ontext: function(text){
-          // Ignore an Jekyll expressions
-          parsed += text.replace(/{%.*%}/, '');
+          // Ignore any Jekyll expressions
+          body += text.replace(/{%.*%}/, '', 'g');
         },
       });      
-      parser.write(unparsed);
+      parser.write(contents);
       parser.end();
 
       // Add the data to the indexer and ref object
-      idx.add({'path': relpath, 'body': parsed, 'title': properties.title});
-      ref[relpath] = properties;
-    }
-  };
+      idx.add({'path': relpath, 'body': body, 'title': title});
+      ref[relpath] = {'title': title, 'layout': layout};
 
-  // Walk through each of the included directories
-  for(var i in includePaths) {
-    fileUtils.walkSync('tmp/ionic-site/'+includePaths[i], walker);
-  }  
-
-  // Write out as one json file
-  fs.writeFileSync('index.json', JSON.stringify({'ref': ref, 'index': idx.toJSON()}));
+      callback();
+    })).on('end', function() {
+      // Write out as one json file
+      fs.writeFileSync('tmp/ionic-site/data/index.json', JSON.stringify({'ref': ref, 'index': idx.toJSON()}));
+    });
 });
 
 gulp.task('docs', function(done) {
