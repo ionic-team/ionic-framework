@@ -5,9 +5,13 @@ var connect = require('connect');
 var dgeni = require('dgeni');
 var lunr = require('lunr');
 var fileUtils = require('file');
+var htmlparser = require('htmlparser2');
+
 var fs = require('fs');
+var path = require('path');
 var http = require('http');
 var cp = require('child_process');
+
 var gulp = require('gulp');
 var pkg = require('./package.json');
 var semver = require('semver');
@@ -46,19 +50,41 @@ gulp.task('index', function() {
     this.field('path'); 
     this.field('body');
   });
-  fileUtils.walkSync('tmp/ionic-site/_site', function(dirPath, dirs, files) {
+  var id = 0;
+
+  fileUtils.walkSync('tmp/ionic-site', function(dirPath, dirs, files) {
+    if(dirPath.indexOf('_site') >= 0) {
+      return;
+    }
     files = files.filter(function(file){
-      var ext = file.split('.').pop();
-      return ext == 'md' || ext == 'html';
+      var ext = path.extname(file);
+      return ext == '.md' || ext == '.html';
     });
+
     for(i in files) {
       var file = files[i];
-      var path = fileUtils.path.join(fileUtils.path.relativePath('tmp/ionic-site/_site', dirPath),file);
-      var html = fs.readFileSync(fileUtils.path.join(dirPath, file));
-      idx.add({'path': path, 'body': html});
+      var fullpath = fileUtils.path.join(fileUtils.path.relativePath('tmp/ionic-site', dirPath), file);  
+      var unparsed = fs.readFileSync(fileUtils.path.join(dirPath, file));
+
+      var parsed = '';
+      var parser = new htmlparser.Parser({
+        ontext: function(text){
+            parsed += text;
+        },
+      });
+      
+      if(path.extname(file) == '.html') {
+        parser.write(unparsed);
+        parser.end();
+      } else {
+        parsed = unparsed;
+      }
+
+      idx.add({'path': fullpath, 'body': parsed, 'id': id});
+      id++;
     }
   });
-  fs.writeFileSync('index.json', JSON.stringify(idx));
+  fs.writeFileSync('index.json', JSON.stringify(idx.toJSON()));
 });
 
 gulp.task('docs', function(done) {

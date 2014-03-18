@@ -41,7 +41,8 @@
     "mkdirp": "^0.3.5",
     "conventional-changelog": "0.0.6",
     "lunr": "0.4.5",
-    "file": "0.2.2"
+    "file": "0.2.2",
+    "htmlparser2": "3.7.0"
   },
   "licenses": [
     {
