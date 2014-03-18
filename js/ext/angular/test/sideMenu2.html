@@ -26,7 +26,7 @@
           <header class="bar bar-header bar-assertive">
             <div class="title">Left Menu</div>
           </header>
-          <ion-content has-header="true">
+          <ion-content class="has-header">
             <div class="list">
               <a ng-click="closeMenu()" href="#/event/check-in" class="item">Check-in</a>
               <a ng-click="closeMenu()" href="#/event/attendees" class="item">Attendees</a>
@@ -53,7 +53,7 @@
 
     <script id="home.html" type="text/ng-template">
       <ion-view title="'Welcome'">
-        <ion-content has-header="true" padding="true">
+        <ion-content class="has-header" padding="true">
           <p>Swipe to the right to reveal the left menu.</p>
           <div class="button" ng-click="sideMenuController.toggleLeft()" style="position: absolute; left: 100px; top: 200px;">
             Left Menu
@@ -89,7 +89,7 @@
 
     <script id="check-in.html" type="text/ng-template">
       <ion-view title="'Event Check-in'" hide-back-button="true">
-        <ion-content has-header="true">
+        <ion-content class="has-header">
           <form class="list" ng-show="showForm">
             <div class="item item-divider">
               Attendee Info
@@ -129,7 +129,7 @@
 
     <script id="attendees.html" type="text/ng-template">
       <ion-view title="'Event Attendees'">
-        <ion-content has-header="true">
+        <ion-content class="has-header">
           <div class="list">
             <ion-toggle ng-repeat="attendee in attendees | orderBy:'firstname' | orderBy:'lastname'"
                     ng-model="attendee.arrived"
