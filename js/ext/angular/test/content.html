@@ -11,7 +11,7 @@
   </head>
   <body ng-controller="ThisCtrl">
     <ion-pane>
-      <ion-header-bar id="header" class="bar-primary">
+      <ion-header-bar id="header" class="bar-positive">
         <h1 class="title">Title</h1>
       </ion-header-bar>
 
@@ -24,6 +24,7 @@
         padding="true"
         has-tabs="true"
         has-header="true"
+        header-shrink="60"
         >
         <ion-refresher></ion-refresher>
         <div id="search-box" class="bar bar-header item-input-inset">
@@ -70,6 +71,45 @@
     <script>
       angular.module('navTest', ['ionic'])
 
+      .directive('headerShrink', function($document) {
+        var fadeAmt;
+
+        var shrink = function(header, amt, max) {
+          console.log('Translating up', amt);
+          amt = Math.min(max - 20, amt);
+          fadeAmt = 1 - amt / (max - 20);
+          ionic.requestAnimationFrame(function() {
+            header.style[ionic.CSS.TRANSFORM] = 'translate3d(0, -' + amt + 'px, 0)';
+            for(var i = 0, j = header.children.length; i < j; i++) {
+              header.children[i].style.opacity = fadeAmt;
+            }
+          });
+        };
+
+        return {
+          restrict: 'A',
+          link: function($scope, $element, $attr) {
+            var starty = $scope.$eval($attr.headerShrink) || 0;
+            var shrinkAmt;
+            
+            var header = $document[0].body.querySelector('.bar-header');
+            var headerHeight = header.offsetHeight;
+            
+            $element.bind('scroll', function(e) {
+              if(e.detail.scrollTop > starty) {
+                // Start shrinking
+                shrinkAmt = headerHeight - Math.max(0, (starty + headerHeight) - e.detail.scrollTop);
+                shrink(header, shrinkAmt, headerHeight);
+              } else {
+                shrink(header, 0, headerHeight);
+              }
+            });
+          }
+        }
+      })
+
+    
+
       .directive('hidesHeader', function() {
         return {
           link: function($scope, $element, $attr) {
@@ -105,6 +145,7 @@
           }, 1000);
         };
         $scope.onScroll = function(event, scrollTop, scrollLeft) {
+          console.log('Scroll', scrollTop, scrollLeft);
         /*
           if(scrollTop > startTop) {
             var diff = scrollTop - startTop;
@@ -112,7 +153,6 @@
             header.style[ionic.CSS.TRANSFORM] = 'translate3d(0px, -' + diff + 'px, 0)';
             content.style.marginTop = -diff + 'px';
           }
-          console.log('Scroll', scrollTop, scrollLeft);
           */
         };
       })
