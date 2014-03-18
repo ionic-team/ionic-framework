@@ -25,10 +25,8 @@
   top: 0;
   z-index: $z-index-modal;
   overflow: hidden;
-
   min-height: 100%;
   width: 100%;
-
   background-color: $modal-bg-color;
 }
 
@@ -42,7 +40,6 @@
     left: $modal-inset-mode-left;
     overflow: visible;
     min-height: $modal-inset-mode-min-height;
-    max-width: $modal-inset-mode-max-width;
     width: (100% - $modal-inset-mode-left - $modal-inset-mode-right);
   }
 

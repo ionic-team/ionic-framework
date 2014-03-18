@@ -11,7 +11,11 @@
   </head>
   <body>
     <ion-pane ng-controller="AppCtrl">
-        <ion-header-bar type="bar-positive" title="'Contacts'" right-buttons="contactsRightButtons">
+        <ion-header-bar class="bar-positive" title="Contacts">
+          <h1 class="title">Modal</h1>
+          <div class="buttons">
+            <button class="button" ng-click="modal.show()">Modal</button>
+          </div>
         </ion-header-bar>
         <ion-content has-header="true">
           <ion-list>
@@ -69,15 +73,6 @@
           { name: 'Gordon Freeman' },
           { name: 'Barney Calhoun' },
           { name: 'Lamarr the Headcrab' },
-        ];
-        $scope.contactsRightButtons = [
-          {
-            type: 'button-icon',
-            content: '<i class="icon ion-compose"></i>',
-            tap: function(e) {
-              $scope.openModal();
-            }
-          }
         ];
         $scope.openModal = function() {
           $scope.modal.show();
