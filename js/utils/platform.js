@@ -118,7 +118,7 @@
     },
     /**
      * @ngdoc method
-     * @name ionic.Platform#isiPad
+     * @name ionic.Platform#isIPad
      * @returns {boolean} Whether we are running on iPad.
      */
     isIPad: function() {
@@ -126,7 +126,7 @@
     },
     /**
      * @ngdoc method
-     * @name ionic.Platform#isiOS
+     * @name ionic.Platform#isIOS
      * @returns {boolean} Whether we are running on iOS.
      */
     isIOS: function() {
