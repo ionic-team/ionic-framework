@@ -35,7 +35,7 @@ var IS_EMBEDDED_OBJECT_REGEX = /object|embed/i;
 
 	// Create namespaces
 	if (!global.core) {
-		global.core = { effect : {} };
+		var core = global.core = { effect : {} };
 
 	} else if (!core.effect) {
 		core.effect = {};
