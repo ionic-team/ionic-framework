@@ -257,6 +257,11 @@ function($rootScope, $animate, $ionicBind, $compile, $ionicViewService) {
         element[0].querySelector('data-ion-nav-view');
       var navViewName = navView && navView.getAttribute('name');
 
+      var tabNavItem = angular.element(
+        element[0].querySelector('ion-tab-nav') ||
+        element[0].querySelector('data-ion-tab-nav')
+      ).remove();
+
       //Remove the contents of the element so we can compile them later, if tab is selected
       var tabContent = angular.element('<div class="pane">')
         .append( element.contents().remove() );

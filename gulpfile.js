@@ -6,6 +6,7 @@ var dgeni = require('dgeni');
 var es = require('event-stream');
 var htmlparser = require('htmlparser2');
 var lunr = require('lunr');
+var mkdirp = require('mkdirp');
 var yaml = require('js-yaml');
 
 var http = require('http');
@@ -71,7 +72,7 @@ gulp.task('docs-index', function() {
       var yamlRaw = contents.substring(yamlStartIndex+3, yamlEndIndex);
 
       var properties =  yaml.safeLoad(yamlRaw);
-      contents = contents.slice(yamlEndIndex+3);
+      contents = contents.substring(yamlEndIndex+3);
 
       if(properties.title && properties.layout) {
         title = properties.title;
@@ -98,6 +99,7 @@ gulp.task('docs-index', function() {
       callback();
     })).on('end', function() {
       // Write out as one json file
+      mkdirp.sync('tmp/ionic-site/data');
       fs.writeFileSync('tmp/ionic-site/data/index.json', JSON.stringify({'ref': ref, 'index': idx.toJSON()}));
     });
 });
