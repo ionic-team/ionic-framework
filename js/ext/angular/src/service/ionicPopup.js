@@ -131,16 +131,28 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     }
   };
 
+  var focusLastButton = function(popup) {
+    var buttons, lastButton;
+    buttons = popup.el.querySelectorAll('button');
+    lastButton = buttons[buttons.length-1];
+    if(lastButton) {
+      lastButton.focus();
+    }
+  }
+
   // Show a single popup
   var showSinglePopup = function(popup, opts) {
     var _this = this;
 
     ionic.requestAnimationFrame(function() {
+
       hideBody(popup);
       positionPopup(popup);
       popup.el.classList.remove('popup-hidden');
       popup.el.classList.add('popup-showing');
       popup.el.classList.add('active');
+
+      focusLastButton(popup);
     });
   };
 
@@ -150,12 +162,15 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
       popup.el.classList.remove('popup-hidden');
       popup.el.classList.add('popup-showing');
       popup.el.classList.add('active');
+      focusLastButton(popup);
     });
   };
 
   // Hide a single popup
   var hideSinglePopup = function(popup) {
     ionic.requestAnimationFrame(function() {
+      var buttons, lastButton;
+
       popup.el.classList.remove('active');
       popup.el.classList.add('popup-hidden');
     });
