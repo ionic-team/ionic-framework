@@ -1,24 +1,22 @@
 <html ng-app="ionicApp">
   <head>
     <meta charset="utf-8">
-    <title>Side Menus</title>
+    <title>Side Menus2</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <script src="../../../../dist/js/ionic.bundle.js"></script>
   </head>
   <body>
 
-    <div>
-      <ion-nav-view></ion-nav-view>
-    </div>
+    <ion-nav-view animation="slide-left-right"></ion-nav-view>
 
     <script id="event-menu.html" type="text/ng-template">
       <ion-side-menus>
 
         <ion-pane ion-side-menu-content>
-          <ion-nav-bar type="bar-positive"
-                   back-button-type=""
-                   back-button-icon="ion-ios7-arrow-back"></ion-nav-bar>
+          <ion-nav-bar class="bar-positive">
+            <ion-nav-back-button class="button-icon icon ion-ios7-arrow-back"></ion-nav-back-button>
+          </ion-nav-bar>
           <ion-nav-view name="menuContent"></ion-nav-view>
         </ion-pane>
 
@@ -28,22 +26,16 @@
           </header>
           <ion-content has-header="true">
             <div class="list">
-              <a ng-click="closeMenu()" href="#/event/check-in" class="item">Check-in</a>
-              <a ng-click="closeMenu()" href="#/event/attendees" class="item">Attendees</a>
-              <div class="item item-divider">
-                Range
-              </div>
-              <div class="range">
-                <i class="icon ion-volume-low"></i>
-                <input type="range" name="volume">
-                <i class="icon ion-volume-high"></i>
-              </div>
+              <a menu-nav href="#/event/check-in" class="item">Check-in</a>
+              <a menu-nav href="#/event/attendees" class="item">Attendees</a>
+              <a menu-nav href="#/event/about" class="item">About</a>
+              <a menu-nav href="#/event/home" class="item">Home</a>
             </div>
           </ion-content>
         </ion-side-menu>
 
         <ion-side-menu side="right">
-          <header class="bar bar-header bar-assertive">
+          <header class="bar bar-header bar-royal">
             <div class="title">Right Menu</div>
           </header>
         </ion-side-menu>
@@ -52,22 +44,14 @@
     </script>
 
     <script id="home.html" type="text/ng-template">
-      <ion-view title="'Welcome'">
-        <ion-content has-header="true" padding="true">
-          <p>Swipe to the right to reveal the left menu.</p>
-          <div class="button" ng-click="sideMenuController.toggleLeft()" style="position: absolute; left: 100px; top: 200px;">
-            Left Menu
-          </div>
-          <select ng-model="data.grade" ng-change="gradeChange(data.grade)">
-            <option>grade-a</option>
-            <option>grade-b</option>
-            <option>grade-c</option>
-          </select>
+      <ion-view title="Home">
 
+        <ion-nav-buttons side="left">
+          <button class="button button-icon icon ion-navicon" ng-click="sideMenuController.toggleLeft()"></button>
+        </ion-nav-buttons>
+
+        <ion-content has-header="true" padding="true">
           <div class="list">
-            <div class="item">
-              <b>Body Class:</b> <span id="bodyClass"></span>
-            </div>
             <ion-item ion-item="item" ng-href="#" ng-click="itemClick()" ng-repeat="item in range">
               <strong>{{$index}}</strong>
               <b>:</b>
@@ -82,13 +66,36 @@
             </ion-item>
           </div>
 
-          <p>(On desktop click and drag from left to right)</p>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="about.html" type="text/ng-template">
+      <ion-view title="About">
+
+        <ion-nav-buttons side="left">
+          <button class="button button-icon icon ion-navicon" ng-click="sideMenuController.toggleLeft()"></button>
+        </ion-nav-buttons>
+
+        <ion-content has-header="true">
+          <p>This is the about page.</p>
+          <div class="list">
+            <a href="#/event/check-in" class="item">Check-in</a>
+            <a href="#/event/attendees" class="item">Attendees</a>
+            <a href="#/event/home" class="item">Home</a>
+          </div>
+
         </ion-content>
       </ion-view>
     </script>
 
     <script id="check-in.html" type="text/ng-template">
-      <ion-view title="'Event Check-in'" hide-back-button="true">
+      <ion-view title="Check-in">
+
+        <ion-nav-buttons side="left">
+          <button class="button button-icon icon ion-navicon" ng-click="sideMenuController.toggleLeft()"></button>
+        </ion-nav-buttons>
+
         <ion-content has-header="true">
           <form class="list" ng-show="showForm">
             <div class="item item-divider">
@@ -128,7 +135,12 @@
     </script>
 
     <script id="attendees.html" type="text/ng-template">
-      <ion-view title="'Event Attendees'">
+
+      <ion-nav-buttons side="left">
+        <button class="button button-icon icon ion-navicon" ng-click="sideMenuController.toggleLeft()"></button>
+      </ion-nav-buttons>
+
+      <ion-view title="Attendees">
         <ion-content has-header="true">
           <div class="list">
             <ion-toggle ng-repeat="attendee in attendees | orderBy:'firstname' | orderBy:'lastname'"
@@ -168,6 +180,14 @@
               }
             }
           })
+          .state('eventmenu.about', {
+            url: "/about",
+            views: {
+              'menuContent' :{
+                templateUrl: "about.html"
+              }
+            }
+          })
           .state('eventmenu.checkin', {
             url: "/check-in",
             views: {
@@ -192,22 +212,6 @@
 
       .controller('MainCtrl', function($scope) {
         console.log('MainCtrl');
-
-        $scope.data = {
-          grade: ''
-        };
-
-        $scope.closeMenu = function() {
-          $scope.sideMenuController.toggleLeft(false);
-        };
-
-        setTimeout(function(){
-          //document.getElementById('bodyClass').innerHTML = document.body.className;
-        }, 1500);
-
-        $scope.gradeChange = function(grade) {
-          document.body.className = grade;
-        };
 
         $scope.range = [];
         for (var i=0; i<100; i++) $scope.range.push(i);

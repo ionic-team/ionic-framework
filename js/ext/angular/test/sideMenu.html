@@ -2,21 +2,21 @@
   <head>
     <meta charset="utf-8">
     <title>Side Menus</title>
-
-    <!-- Sets initial viewport load and disables zooming  -->
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <script src="../../../../dist/js/ionic.bundle.js"></script>
   </head>
   <body>
 
     <div ng-controller="MenuCtrl">
+
       <ion-side-menus>
+
         <ion-pane ion-side-menu-content>
-          <header class="bar bar-header bar-assertive">
-            <button class="button button-icon ion-navicon" ng-click="openLeft()"></button>
+          <header class="bar bar-header bar-positive">
+            <button class="button button-icon ion-navicon" ng-click="sideMenuController.toggleLeft(false)"></button>
             <h1 class="title">Slide me</h1>
-            <button class="button button-icon ion-navicon" ng-click="openRight()"></button>
+            <button class="button button-icon ion-navicon" ng-click="sideMenuController.toggleRight(false)"></button>
           </header>
           <ion-content has-header="true">
             <ion-toggle ng-model="$root.$draggy">Hello</ion-toggle>
@@ -38,8 +38,9 @@
             </ul>
           </ion-content>
         </ion-side-menu>
+
         <ion-side-menu side="right">
-          <header class="bar bar-header bar-assertive">
+          <header class="bar bar-header bar-royal">
             <h1 class="title">Right</h1>
           </header>
           <ion-content>
@@ -50,29 +51,27 @@
             </ul>
           </ion-content>
         </ion-side-menu>
+
       </ion-side-menus>
+
     </div>
     <script>
       angular.module('sideMenuTest', ['ionic'])
 
-      .controller('MenuCtrl', function($scope, $ionicSideMenuDelegate) {
+      .controller('MenuCtrl', function($scope) {
         $scope.list = [];
         for(var i = 0; i < 20; i++) {
           $scope.list.push({
             text: 'Item ' + i
           });
         }
-        $scope.openLeft = function() {
-          $ionicSideMenuDelegate.toggleLeft($scope);
-        };
-        $scope.openRight = function() {
-          $ionicSideMenuDelegate.toggleRight($scope);
-        };
       })
+
       .controller('LeftCtrl', function($scope) {
         $scope.value = true;
         $scope.list = [{text:1},{text:2},{text:3}];
       });
+
     </script>
   </body>
 </html>

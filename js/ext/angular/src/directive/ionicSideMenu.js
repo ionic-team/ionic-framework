@@ -299,5 +299,23 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
       };
     }
   };
-});
+})
+
+
+.directive('menuNav', ['$ionicViewService', function($ionicViewService) {
+  return {
+    restrict: 'AC',
+    require: '^ionSideMenus',
+    link: function($scope, $element, $attr, sideMenuCtrl) {
+      $element.bind('click', function(){
+        $ionicViewService.nextViewOptions({
+          disableAnimate: true,
+          disableBack: true
+        });
+        sideMenuCtrl.close();
+      });
+    }
+  };
+}]);
+
 })();
