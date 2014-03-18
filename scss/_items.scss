@@ -56,6 +56,9 @@
     top: $item-padding;
     right: ($item-padding * 2) + 5;
   }
+  &.item-button-right .badge {
+    right: ($item-padding * 2) + 35;
+  }
   &.item-divider .badge {
     top: $item-padding / 2;
   }
@@ -382,41 +385,38 @@ button.item.item-button-right {
 
 a.item,
 button.item,
-.item a[href].item-content,
-.item[ng-click] a.item-content {
+.item[href] .item-content,
+.item[ng-click] .item-content {
   padding-right: (($item-padding * 3) - 5);
-}
 
-a.item:after,
-button.item:after,
-.item a[href].item-content:after,
-.item[ng-click] a.item-content:after {
-  /* By default, both <a> and <button> have right side arrow icons */
-  @include display-flex();
-  @include align-items(center);
-  @include font-smoothing(antialiased);
-  position: absolute;
-  top: 0;
-  right: $item-padding - 4;
-  height: 100%;
-  color: #ccc;
-  content: "\f125"; // ion-chevron-right
-  text-transform: none;
-  font-weight: normal;
-  font-style: normal;
-  font-variant: normal;
-  font-size: 16px;
-  font-family: 'Ionicons';
-  line-height: 1;
-  speak: none;
+  &:after {
+    // By default, both <a> and <button> have right side arrow icons
+    @include display-flex();
+    @include align-items(center);
+    @include font-smoothing(antialiased);
+    position: absolute;
+    top: 0;
+    right: $item-padding - 4;
+    height: 100%;
+    color: #ccc;
+    content: "\f125"; // ion-chevron-right
+    text-transform: none;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 16px;
+    font-family: 'Ionicons';
+    line-height: 1;
+    speak: none;
+  }
 }
 
 .grade-b,
 .grade-c {
   a.item:after,
   button.item:after,
-  .item a[href].item-content:after,
-  .item[ng-click] a.item-content:after {
+  .item[href] .item-content:after,
+  .item[ng-click] .item-content:after {
     // override Ionicon arrow with boring character for low end devices
     @include font-smoothing(none);
     content: '>';
