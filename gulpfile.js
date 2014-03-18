@@ -62,20 +62,22 @@ gulp.task('docs-index', function() {
       //docs for gulp file objects: https://github.com/wearefractal/vinyl
       var contents = file.contents.toString(); //was buffer
       // Grab relative path from ionic-site root
-      var relpath = file.path.slice(file.cwd.length+'/tmp/ionic-site/'.length);
+      var relpath = file.path.replace(/^.*?tmp\/ionic-site\//, '');
 
       // Read out the yaml portion of the Jekyll file
       var title, layout;
-      if (/^---\n/.test(contents)) {
-        var end = contents.indexOf('\n---\n');
-        var properties =  yaml.safeLoad(contents.slice('---\n'.length, end + 1));
-        contents = contents.slice(end + '\n---\n'.length);
-        if(properties.title && properties.layout) {
-          title = properties.title;
-          layout = properties.layout;
-        } else {
-          return callback('layout and title properties not found in Jekyll file '+relpath);
-        }
+      var yamlStartIndex = contents.indexOf('---');
+      var yamlEndIndex = contents.indexOf('---', yamlStartIndex+3); //starting from start
+      var yamlRaw = contents.substring(yamlStartIndex+3, yamlEndIndex);
+
+      var properties =  yaml.safeLoad(yamlRaw);
+      contents = contents.slice(yamlEndIndex+3);
+      
+      if(properties.title && properties.layout) {
+        title = properties.title;
+        layout = properties.layout;
+      } else {
+        return callback('layout and title properties not found in Jekyll file '+relpath);
       }
 
       var body = '';
