@@ -105,7 +105,7 @@ function barDirective(isHeader) {
           alignTitle: $attr.alignTitle || 'center'
         });
 
-        $parse($attr.model || BAR_MODEL_DEFAULT).assign($scope.$parent || $scope, hb);
+        $parse($attr.model || BAR_MODEL_DEFAULT).assign($scope, hb);
       }
     };
   }];
