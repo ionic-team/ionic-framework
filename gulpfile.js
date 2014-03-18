@@ -48,7 +48,6 @@ gulp.task('build', ['bundle', 'sass']);
 
 gulp.task('index', function() {
   var includePaths = ['docs/components', 'docs/guide', 'docs/overview', 'docs/angularjs', 'tutorials'];
-  var jekyllReplace = new RegExp('{%.*%}');
   
   var ref = {};
   var idx = lunr(function() {
@@ -59,6 +58,7 @@ gulp.task('index', function() {
   });
 
   var walker = function(dirPath, dirs, files) {
+    // Only use markdown and html files
     files = files.filter(function(file){
       var ext = path.extname(file);
       return ext == '.md' || ext == '.html';
@@ -69,35 +69,45 @@ gulp.task('index', function() {
       var relpath = fileUtils.path.join(fileUtils.path.relativePath('tmp/ionic-site', dirPath), file);  
       var unparsed = fs.readFileSync(fileUtils.path.join(dirPath, file)).toString();
 
-      var config = {};
+      // Read out the yaml portion of the Jekyll file
+      var properties = {};
       if (/^---\n/.test(unparsed)) {
         var end = unparsed.search('\n---\n');
-        config =  yaml.safeLoad(unparsed.slice(4, end + 1));
+        var config =  yaml.safeLoad(unparsed.slice(4, end + 1));
         unparsed = unparsed.slice(end + 5);
+        if(config.title && config.layout) {
+          properties.title = config.title;
+          properties.layout = config.layout;
+        } else {
+          console.log('layout and title properties not found in '+relpath);
+          return process.exit(1);
+        }
       }
 
+      // Parse all html and use only text portion
       var parsed = '';
       var parser = new htmlparser.Parser({
         ontext: function(text){
-            parsed += text.replace(jekyllReplace, '');
+          // Ignore an Jekyll expressions
+          parsed += text.replace(/{%.*%}/, '');
         },
-      });
-      
+      });      
       parser.write(unparsed);
       parser.end();
 
-      idx.add({'path': relpath, 'body': parsed, 'title': config.title});
-      ref[relpath] = config;
+      // Add the data to the indexer and ref object
+      idx.add({'path': relpath, 'body': parsed, 'title': properties.title});
+      ref[relpath] = properties;
     }
   };
 
+  // Walk through each of the included directories
   for(var i in includePaths) {
     fileUtils.walkSync('tmp/ionic-site/'+includePaths[i], walker);
   }  
 
-  //console.log(idx.search('ion-nav'));
-  fs.writeFileSync('ref.json', JSON.stringify(ref, null, 2));
-  fs.writeFileSync('index.json', JSON.stringify(idx.toJSON()));
+  // Write out as one json file
+  fs.writeFileSync('index.json', JSON.stringify({'ref': ref, 'index': idx.toJSON()}));
 });
 
 gulp.task('docs', function(done) {
@@ -107,9 +117,8 @@ gulp.task('docs', function(done) {
     return process.exit(1);
   }
   process.env.DOC_VERSION = docVersion;
-return dgeni('docs/docs.config.js').generateDocs().then(function() {
+  return dgeni('docs/docs.config.js').generateDocs().then(function() {
     gutil.log('Docs for', gutil.colors.cyan(docVersion), 'generated!');
-    gulp.run('index');
   });
 });
 
