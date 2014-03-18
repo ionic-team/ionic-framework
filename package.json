@@ -42,7 +42,8 @@
     "conventional-changelog": "0.0.6",
     "lunr": "0.4.5",
     "file": "0.2.2",
-    "htmlparser2": "3.7.0"
+    "htmlparser2": "3.7.0",
+    "js-yaml": "3.0.2"
   },
   "licenses": [
     {

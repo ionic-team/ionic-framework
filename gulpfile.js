@@ -6,6 +6,7 @@ var dgeni = require('dgeni');
 var lunr = require('lunr');
 var fileUtils = require('file');
 var htmlparser = require('htmlparser2');
+var yaml = require('js-yaml');
 
 var fs = require('fs');
 var path = require('path');
@@ -49,8 +50,10 @@ gulp.task('index', function() {
   var includePaths = ['docs/components', 'docs/guide', 'docs/overview', 'docs/angularjs', 'tutorials'];
   var jekyllReplace = new RegExp('{%.*%}');
   
+  var ref = {};
   var idx = lunr(function() {
     this.field('path'); 
+    this.field('title', {boost: 10});
     this.field('body');
     this.ref('path')
   });
@@ -64,7 +67,14 @@ gulp.task('index', function() {
     for(i in files) {
       var file = files[i];
       var relpath = fileUtils.path.join(fileUtils.path.relativePath('tmp/ionic-site', dirPath), file);  
-      var unparsed = fs.readFileSync(fileUtils.path.join(dirPath, file));
+      var unparsed = fs.readFileSync(fileUtils.path.join(dirPath, file)).toString();
+
+      var config = {};
+      if (/^---\n/.test(unparsed)) {
+        var end = unparsed.search('\n---\n');
+        config =  yaml.safeLoad(unparsed.slice(4, end + 1));
+        unparsed = unparsed.slice(end + 5);
+      }
 
       var parsed = '';
       var parser = new htmlparser.Parser({
@@ -76,7 +86,8 @@ gulp.task('index', function() {
       parser.write(unparsed);
       parser.end();
 
-      idx.add({'path': relpath, 'body': parsed});
+      idx.add({'path': relpath, 'body': parsed, 'title': config.title});
+      ref[relpath] = config;
     }
   };
 
@@ -85,7 +96,7 @@ gulp.task('index', function() {
   }  
 
   //console.log(idx.search('ion-nav'));
-
+  fs.writeFileSync('ref.json', JSON.stringify(ref, null, 2));
   fs.writeFileSync('index.json', JSON.stringify(idx.toJSON()));
 });
 
@@ -96,7 +107,7 @@ gulp.task('docs', function(done) {
     return process.exit(1);
   }
   process.env.DOC_VERSION = docVersion;
-  return dgeni('docs/docs.config.js').generateDocs().then(function() {
+return dgeni('docs/docs.config.js').generateDocs().then(function() {
     gutil.log('Docs for', gutil.colors.cyan(docVersion), 'generated!');
     gulp.run('index');
   });
