@@ -131,6 +131,11 @@
     // check if this click's coordinates are different than its touchstart/mousedown
     var c = getCoordinates(event);
 
+    // Quick check for 0,0 which could be simulated mouse click for form submission
+    if(c.x === 0 && c.y === 0) {
+      return false;
+    }
+
     return (c.x > startCoordinates.x + HIT_RADIUS ||
             c.x < startCoordinates.x - HIT_RADIUS ||
             c.y > startCoordinates.y + HIT_RADIUS ||
