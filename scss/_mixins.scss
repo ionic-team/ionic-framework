@@ -354,6 +354,11 @@
     -moz-animation-duration: $duration;
          animation-duration: $duration;
 }
+@mixin animation-direction($direction) {
+ -webkit-animation-direction: $direction;
+    -moz-animation-direction: $direction;
+         animation-direction: $direction;
+}
 @mixin animation-timing-function($animation-timing) {
  -webkit-animation-timing-function: $animation-timing;
     -moz-animation-timing-function: $animation-timing;
