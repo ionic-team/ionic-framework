@@ -84,61 +84,8 @@
           console.log('NEXT');
           $scope.$broadcast('slideBox.nextSlide');
         };
-
-        var rightButtons = [
-          {
-            content: 'Next',
-            type: 'button-positive button-clear',
-            tap: function(e) {
-              console.log('NEXT');
-              $scope.next();
-            }
-          }
-        ];
-        var leftButtons = [
-          {
-            content: 'Skip',
-            type: 'button-positive button-clear',
-            tap: function(e) {
-              alert('Skipping');
-            }
-          }
-        ];
-
-        $scope.leftButtons = leftButtons;
-        $scope.rightButtons = rightButtons;
-
-
         $scope.slideChanged = function(index) {
           console.log('Slide changed', index);
-
-          if(index > 0) {
-            $scope.leftButtons = [
-              {
-                content: 'Back',
-                type: 'button-positive button-clear',
-                tap: function(e) {
-                  $scope.$broadcast('slideBox.prevSlide');
-                }
-              }
-            ];
-          } else {
-            $scope.leftButtons = leftButtons;
-          }
-
-          if(index == 2) {
-            $scope.rightButtons = [
-              {
-                content: 'Start using MyApp',
-                type: 'button-positive button-clear',
-                tap: function(e) {
-                  alert('Done!');
-                }
-              }
-            ];
-          } else {
-            $scope.rightButtons = rightButtons;
-          }
         };
       });
     </script>
