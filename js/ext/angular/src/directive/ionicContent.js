@@ -42,14 +42,14 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
  * directive, and infinite scrolling with the {@link ionic.directive:ionInfiniteScroll}
  * directive.
  *
- * @restrict E
+ * Use the classes 'has-header', 'has-subheader', 'has-footer', and 'has-tabs' 
+ * to modify the positioning of the ion-content relative to surrounding elements.
+ *
+ * @param {boolean=} padding Whether to add padding to the content.
+ * of the content.  Defaults to true on iOS, false on Android.
  * @param {boolean=} scroll Whether to allow scrolling of content.  Defaults to true.
  * @param {boolean=} overflow-scroll Whether to use overflow-scrolling instead of
  * Ionic scroll.
- * @param {boolean=} padding Whether to add padding to the content.
- * @param {boolean=} has-header Whether to offset the content for a header bar.
- * @param {boolean=} has-subheader Whether to offset the content for a subheader bar.
- * @param {boolean=} has-footer Whether to offset the content for a footer bar.
  * @param {boolean=} has-bouncing Whether to allow scrolling to bounce past the edges
  * of the content.  Defaults to true on iOS, false on Android.
  * @param {expression=} on-scroll Expression to evaluate when the content is scrolled.
@@ -72,10 +72,6 @@ function($parse, $timeout, $controller, $ionicBind) {
       '<div class="scroll"></div>' +
     '</div>',
     compile: function(element, attr, transclude) {
-      if(attr.hasHeader == "true") { element.addClass('has-header'); }
-      if(attr.hasSubheader == "true") { element.addClass('has-subheader'); }
-      if(attr.hasFooter == "true") { element.addClass('has-footer'); }
-      if(attr.hasTabs == "true") { element.addClass('has-tabs'); }
       if(attr.padding == "true") { element.find('div').addClass('padding'); }
 
       return {
@@ -101,6 +97,10 @@ function($parse, $timeout, $controller, $ionicBind) {
           startX: '@',
           startY: '@',
           scrollEventInterval: '@'
+        });
+
+        $scope.$watch($attr.padding, function(newVal) {
+          $element.toggleClass('padding', !!newVal);
         });
 
         if ($scope.scroll === "false") {
