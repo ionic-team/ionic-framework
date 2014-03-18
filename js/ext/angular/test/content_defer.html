@@ -21,9 +21,7 @@
         on-refresh="onRefresh()"
         on-refresh-opening="onRefreshOpening(amount)"
         refresh-complete="refreshComplete"
-        has-tabs="true"
-        has-header="true"
-        >
+        class="has-header has-tabs">
         <div ng-repeat="items in items">{{$index}}</div>
       </ion-content>
       <nav id="tab-bar" class="tabs tabs-icon-top">
