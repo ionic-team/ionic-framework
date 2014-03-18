@@ -1,5 +1,5 @@
 <a name="0.9.27"></a>
-### 0.9.27 (2014-03-15)
+### 0.9.27 "Salamander" (2014-03-15)
 
 
 #### Bug Fixes
@@ -47,7 +47,7 @@
 
 * **active:** Removing use of :active in favor of .active for more control of active state ([baa04cde](https://github.com/driftyco/ionic/commit/baa04cde4d7292d07ec2bfae949e008aeaafae1b))
 * **animation:** Add right to left animations, and their reverse, for RTL support, closes #643 ([4628b9fb](https://github.com/driftyco/ionic/commit/4628b9fb23c16cab8ba969342f6bd0be1a1bfc84))
-* **ionInfiniteScroll:** 
+* **ionInfiniteScroll:**
   * allow configuration of icon and text through `icon` and `text` attributes ([5f2c32ea](https://github.com/driftyco/ionic/commit/5f2c32ea9b19a773e943a9b21704f2138037e681))
 * **ionRefresher:** allow custom text & icons through `pulling-text`, `pulling-icon`, `refreshing-text`, `refreshing-icon` attributes. ([573df56d](https://github.com/driftyco/ionic/commit/573df56db4d79eee517df61b45c4f780a58ce4f8), closes [#760](https://github.com/driftyco/ionic/issues/760))
 * **modal:**
@@ -88,7 +88,7 @@ To this:
 Chang your code from this:
 
 ```html
-<ion-content on-infinite-scroll="onInfiniteScroll()" 
+<ion-content on-infinite-scroll="onInfiniteScroll()"
   infinite-scroll-distance="1%">
 </ion-content>
 ```
@@ -104,14 +104,14 @@ To this:
 ```
 
 
-* 
+*
 ionHeaderBar's title attribute is now interpolated.
 
 Change this code: `<ion-header-bar title="myTitleVar"></ion-header-bar>`
 
 To this code: `<ion-header-bar title="{{myTitleVar}}"></ion-header-bar>`
  ([a8e1524c](https://github.com/driftyco/ionic/commit/a8e1524ce8e6d2a805770585ffd7bb457460a104))
-* 
+*
 ionicSlideBox#getPos has been renamed to ionicSlideBox#currentIndex.
 
 ionicSlideBox#numSlides has been renamed to ionicSlideBox#slidesCount.
@@ -302,10 +302,10 @@ To this HTML:
 * **ionic:** remove angular-sanitize (ngSanitize) as dependency ([e7556233](https://github.com/driftyco/ionic/commit/e755623331c1ad2099b61cd07c93cb91ae992640))
 * **list:** reordering scrolls page, reordering performance better ([7f4b28d9](https://github.com/driftyco/ionic/commit/7f4b28d9da9e77a055f840d3b44384138af48ca2), closes [#521](https://github.com/driftyco/ionic/issues/521))
 * **sideMenuContent:** watch `drag-content` attribute ([7f9bfb5a](https://github.com/driftyco/ionic/commit/7f9bfb5a9499537f5aa18291b7c2043da2aced49))
-* **tabs:** 
+* **tabs:**
   * allow html in tab `title` attribute ([0facb120](https://github.com/driftyco/ionic/commit/0facb120c74f010a0a60e9e70c388b5b8264b890), closes [#528](https://github.com/driftyco/ionic/issues/528))
   * allow tab `badge-style` attribute to set badge class ([b11e0f51](https://github.com/driftyco/ionic/commit/b11e0f512bc332ed92aee1ce3fa4b8d331b6193e))
-* **toggle:** 
+* **toggle:**
   * Disable toggle w/ ng-disabled, closes #541 ([2eab747d](https://github.com/driftyco/ionic/commit/2eab747d47dbe3b299d7f3ed69fd790cad936e4e))
   * allow ngDisabled binding ([0fe44867](https://github.com/driftyco/ionic/commit/0fe4486737c9780b3c2d7c86d84eab57c961834c))
 
@@ -323,11 +323,11 @@ To this HTML:
  - Created release folder to hold the latest release
  - Automate bulding the nightly folder in the CDN
  - Clicking tab item takes user to root/home of the tab
- - Add tab badges with `badge` attribute 
+ - Add tab badges with `badge` attribute
  - Remember the previous scroll of a page when going back to it
 
  **Breaking Changes**
- 
+
  - `bower install ionic`: release files are now located in the `release` folder, not `dist`.
 
 
@@ -413,7 +413,7 @@ To this HTML:
 
 
 ### 0.9.11 "Alpha Cat Dog" (2013-11-23)
- 
+
 
 ### 0.9.10 "Alpha Cat" (2013-11-23)
 

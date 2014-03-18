@@ -320,7 +320,6 @@
     }
     readyCallbacks = [];
     ionic.trigger('platformready', { target: document });
-    document.removeEventListener("deviceready", onPlatformReady, false);
   }
 
 })(window.ionic);
