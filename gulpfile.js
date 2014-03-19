@@ -51,7 +51,7 @@ gulp.task('docs-index', function() {
     this.field('path');
     this.field('title', {boost: 10});
     this.field('body');
-    this.ref('path')
+    this.ref('path');
   });
   var ref = {};
 
@@ -100,7 +100,10 @@ gulp.task('docs-index', function() {
     })).on('end', function() {
       // Write out as one json file
       mkdirp.sync('tmp/ionic-site/data');
-      fs.writeFileSync('tmp/ionic-site/data/index.json', JSON.stringify({'ref': ref, 'index': idx.toJSON()}));
+      fs.writeFileSync(
+        'tmp/ionic-site/data/index.json',
+        JSON.stringify({'ref': ref, 'index': idx.toJSON()})
+      );
     });
 });
 
@@ -180,6 +183,7 @@ gulp.task('vendor', function() {
 gulp.task('scripts', function() {
   return gulp.src(buildConfig.ionicFiles)
     .pipe(gulpif(IS_RELEASE_BUILD, stripDebug()))
+    .pipe(template({ pkg: pkg }))
     .pipe(concat('ionic.js'))
     .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distJs))
@@ -191,7 +195,7 @@ gulp.task('scripts', function() {
 
 gulp.task('scripts-ng', function() {
   return gulp.src(buildConfig.angularIonicFiles)
-    // .pipe(gulpif(IS_RELEASE_BUILD, stripDebug()))
+    .pipe(gulpif(IS_RELEASE_BUILD, stripDebug()))
     .pipe(concat('ionic-angular.js'))
     .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distJs))

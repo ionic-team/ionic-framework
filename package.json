@@ -20,7 +20,6 @@
     "gulp-template": "^0.1.1",
     "gulp-concat": "^2.1.7",
     "gulp-jshint": "^1.5.0",
-    "gulp-strip-debug": "0.2.0",
     "gulp-sass": "^0.7.1",
     "gulp-util": "^2.2.14",
     "gulp-uglify": "^0.2.1",
@@ -43,7 +42,8 @@
     "lunr": "0.4.5",
     "htmlparser2": "3.7.0",
     "js-yaml": "3.0.2",
-    "event-stream": "3.1.0"
+    "event-stream": "3.1.0",
+    "gulp-strip-debug": "^0.3.0"
   },
   "licenses": [
     {
