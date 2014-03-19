@@ -437,16 +437,18 @@ button.item-button-right:after,
 // Item Avatar
 // -------------------------------
 
-.item-avatar {
-  padding-left: $item-avitar-width + ($item-padding * 2);
-  min-height: $item-avitar-width + ($item-padding * 2);
+.item-avatar,
+.item-avatar .item-content {
+  padding-left: $item-avatar-width + ($item-padding * 2);
+  min-height: $item-avatar-width + ($item-padding * 2);
 
-  img:first-child, .item-img {
+  > img:first-child,
+  .item-img {
     position: absolute;
     top: $item-padding;
     left: $item-padding;
-    max-width: $item-avitar-width;
-    max-height: $item-avitar-height;
+    max-width: $item-avatar-width;
+    max-height: $item-avatar-height;
     width: 100%;
     border-radius: 4px;
   }
@@ -461,7 +463,8 @@ button.item-button-right:after,
   padding-left: $item-thumbnail-width + $item-thumbnail-margin + $item-padding;
   min-height: $item-thumbnail-height + ($item-thumbnail-margin * 2);
 
-  > img:first-child, > .item-image {
+  > img:first-child,
+  .item-image {
     position: absolute;
     top: $item-thumbnail-margin;
     left: $item-thumbnail-margin;
@@ -470,6 +473,7 @@ button.item-button-right:after,
     width: 100%;
   }
 }
+.item-avatar.item-complex,
 .item-thumbnail-left.item-complex {
   padding-left: 0;
 }
@@ -479,7 +483,8 @@ button.item-button-right:after,
   padding-right: $item-thumbnail-width + $item-thumbnail-margin + $item-padding;
   min-height: $item-thumbnail-height + ($item-thumbnail-margin * 2);
 
-  > img:first-child, > .item-image {
+  > img:first-child,
+  .item-image {
     position: absolute;
     top: $item-thumbnail-margin;
     right: $item-thumbnail-margin;
@@ -488,7 +493,7 @@ button.item-button-right:after,
     width: 100%;
   }
 }
-.item-thumbnail-left.item-complex {
+.item-thumbnail-right.item-complex {
   padding-right: 0;
 }
 
