@@ -441,10 +441,15 @@
 
       // Or check if this is a swipe to the side drag
       else if(!this._didDragUpOrDown && (e.gesture.direction == 'left' || e.gesture.direction == 'right') && Math.abs(e.gesture.deltaX) > 5) {
-        this._dragOp = new SlideDrag({ el: this.el });
-        this._dragOp.start(e);
-        e.preventDefault();
-        return;
+
+        // Make sure this is an item with buttons
+        var item = this._getItem(e.target);
+        if(item && item.querySelector('.item-options')) {
+          this._dragOp = new SlideDrag({ el: this.el });
+          this._dragOp.start(e);
+          e.preventDefault();
+          return;
+        }
       }
 
       // We aren't handling it, so pass it up the chain
