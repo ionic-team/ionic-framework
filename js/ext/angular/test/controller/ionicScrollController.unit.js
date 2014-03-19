@@ -2,6 +2,10 @@ describe('$ionicScroll Controller', function() {
 
   beforeEach(module('ionic'));
 
+  beforeEach(function() {
+    ionic.Platform.ready = function(cb) { cb(); };
+  });
+
   var scope, ctrl, timeout;
   function setup(options) {
     options = options || {};
@@ -35,21 +39,24 @@ describe('$ionicScroll Controller', function() {
     expect(scope.something).toBe(ctrl);
   });
 
-  it('should set bounce to !isAndroid after platformReady, if not options.boucing', function() {
-    var isAndroid;
-    spyOn(ionic.Platform, 'isAndroid').andCallFake(function() {
-      return isAndroid;
-    });
+  it('should set bouncing to option if given', function() {
+    spyOn(ionic.Platform, 'isAndroid');
     setup({
       bouncing: true
     });
     expect(ionic.Platform.isAndroid).not.toHaveBeenCalled();
-
-    isAndroid = true;
+  });
+  it('should set bouncing false if isAndroid true', function() {
+    spyOn(ionic.Platform, 'isAndroid').andCallFake(function() {
+      return true;
+    });
     setup();
     expect(ctrl.scrollView.options.bouncing).toBe(false);
-
-    isAndroid = false;
+  });
+  it('should set bouncing true if android false', function() {
+    spyOn(ionic.Platform, 'isAndroid').andCallFake(function() {
+      return false;
+    });
     setup();
     expect(ctrl.scrollView.options.bouncing).toBe(true);
   });
@@ -139,14 +146,12 @@ describe('$ionicScroll Controller', function() {
   });
 
   it('should unbind window event listener on scope destroy', inject(function($window) {
-    spyOn($window, 'removeEventListener');
-    spyOn($window, 'addEventListener');
+    spyOn(ionic, 'on');
+    spyOn(ionic, 'off');
     setup();
-    expect($window.addEventListener).toHaveBeenCalled();
-    expect($window.addEventListener.mostRecentCall.args[0]).toBe('resize');
+    expect(ionic.on).toHaveBeenCalledWith('resize', jasmine.any(Function), $window);
     scope.$destroy();
-    expect($window.removeEventListener).toHaveBeenCalled();
-    expect($window.removeEventListener.mostRecentCall.args[0]).toBe('resize');
+    expect(ionic.off).toHaveBeenCalledWith('resize', jasmine.any(Function), $window);
   }));
 
   it('rememberScrollPosition should set id', function() {

@@ -52,12 +52,13 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
   }
 
   var resize = angular.bind(scrollView, scrollView.resize);
-  $window.addEventListener('resize', resize);
+  ionic.on('resize', resize, $window);
 
   // set by rootScope listener if needed
   var backListenDone = angular.noop;
 
   $scope.$on('$destroy', function() {
+    ionic.off('resize', resize, $window);
     $window.removeEventListener('resize', resize);
     backListenDone();
     if (self._rememberScrollId) {
