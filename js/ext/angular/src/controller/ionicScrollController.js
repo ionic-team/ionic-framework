@@ -15,7 +15,7 @@ angular.module('ionic.ui.scroll')
  * @name ionicScroll
  * @module ionic
  * @description
- * Controller for the {@link ionic.directive:ionContent} and 
+ * Controller for the {@link ionic.directive:ionContent} and
  * {@link ionic.directive:ionScroll} directives.
  */
 .controller('$ionicScroll', [
@@ -170,12 +170,12 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
   /**
    * @ngdoc method
    * @name ionicScroll#rememberScrollPosition
-   * @description 
+   * @description
    * Will make it so, when this scrollView is destroyed (user leaves the page),
-   * the last scroll position the page was on will be saved, indexed by the 
+   * the last scroll position the page was on will be saved, indexed by the
    * given id.
    *
-   * Note: for pages associated with a view under an ion-nav-view, 
+   * Note: for pages associated with a view under an ion-nav-view,
    * rememberScrollPosition automatically saves their scroll.
    *
    * Related methods: scrollToRememberedPosition, forgetScrollPosition (below).
@@ -195,7 +195,10 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
    * ```
    * ```js
    * function ScrollCtrl($scope) {
+   *   // Put any unique ID here.  The point of this is: every time the controller is recreated
+   *   // we want to load the correct remembered scroll values.
    *   $scope.$ionicScrollController.rememberScrollPosition('my-scroll-id');
+   *
    *   $scope.$ionicScrollController.scrollToRememberedPosition();
 
    *   $scope.items = [];
@@ -205,7 +208,7 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
    * }
    * ```
    *
-   * @param {string} id The id to remember the scroll position of this 
+   * @param {string} id The id to remember the scroll position of this
    * scrollView by.
    */
   this.rememberScrollPosition = function(id) {
