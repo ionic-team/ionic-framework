@@ -316,8 +316,8 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
     compile: function(tElement, tAttrs) {
       tElement.addClass('button back-button');
       return function($scope, $element, $attr, navBarCtrl) {
-        $scope.$navBack = navBarCtrl.back;
         if (!$attr.ngClick) {
+          $scope.$navBack = navBarCtrl.back;
           $ionicNgClick($scope, $element, '$navBack($event)');
         }
 
