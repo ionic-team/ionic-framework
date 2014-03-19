@@ -38,6 +38,7 @@ angular.module('ionic.ui.scroll', [])
       scrollbarX: '@',
       scrollbarY: '@',
     },
+    priority: 501,
 
     controller: function() {},
 

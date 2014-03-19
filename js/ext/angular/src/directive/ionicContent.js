@@ -167,19 +167,8 @@ function($parse, $timeout, $controller, $ionicBind) {
  * When refreshing is complete, $broadcast the 'scroll.refreshComplete' event
  * from your controller.
  *
- * @param {expression=} on-refresh Called when the user pulls down enough and lets go
- * of the refresher.
- * @param {expression=} on-pulling Called when the user starts to pull down
- * on the refresher.
- * @param {string=} pulling-icon The icon to display while the user is pulling down.
- * Default: 'ion-arrow-down-c'.
- * @param {string=} pulling-text The text to display while the user is pulling down.
- * @param {string=} refreshing-icon The icon to display after user lets go of the
- * refresher.
- * @param {string=} refreshing-text The text to display after the user lets go of
- * the refresher.
- *
  * @usage
+ *
  * ```html
  * <ion-content ng-controller="MyController">
  *   <ion-refresher
@@ -204,6 +193,19 @@ function($parse, $timeout, $controller, $ionicBind) {
  *   };
  * });
  * ```
+ *
+ * @param {expression=} on-refresh Called when the user pulls down enough and lets go
+ * of the refresher.
+ * @param {expression=} on-pulling Called when the user starts to pull down
+ * on the refresher.
+ * @param {string=} pulling-icon The icon to display while the user is pulling down.
+ * Default: 'ion-arrow-down-c'.
+ * @param {string=} pulling-text The text to display while the user is pulling down.
+ * @param {string=} refreshing-icon The icon to display after user lets go of the
+ * refresher.
+ * @param {string=} refreshing-text The text to display after the user lets go of
+ * the refresher.
+ *
  */
 .directive('ionRefresher', ['$ionicBind', function($ionicBind) {
   return {

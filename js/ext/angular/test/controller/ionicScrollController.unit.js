@@ -138,16 +138,16 @@ describe('$ionicScroll Controller', function() {
     }).toThrow();
   });
 
-  it('should unbind window event listener on scope destroy', function() {
-    spyOn(window, 'removeEventListener');
-    spyOn(window, 'addEventListener');
+  it('should unbind window event listener on scope destroy', inject(function($window) {
+    spyOn($window, 'removeEventListener');
+    spyOn($window, 'addEventListener');
     setup();
-    expect(window.addEventListener).toHaveBeenCalled();
-    expect(window.addEventListener.mostRecentCall.args[0]).toBe('resize');
+    expect($window.addEventListener).toHaveBeenCalled();
+    expect($window.addEventListener.mostRecentCall.args[0]).toBe('resize');
     scope.$destroy();
-    expect(window.removeEventListener).toHaveBeenCalled();
-    expect(window.removeEventListener.mostRecentCall.args[0]).toBe('resize');
-  });
+    expect($window.removeEventListener).toHaveBeenCalled();
+    expect($window.removeEventListener.mostRecentCall.args[0]).toBe('resize');
+  }));
 
   it('rememberScrollPosition should set id', function() {
     setup();
@@ -195,17 +195,7 @@ describe('$ionicScroll Controller', function() {
   [false, true].forEach(function(shouldAnimate) {
     describe('with animate='+shouldAnimate, function() {
 
-      it('scrollToRememberedPosition should work', inject(function($$scrollValueCache) {
-        setup();
-        spyOn(ctrl.scrollView, 'scrollTo');
-        $$scrollValueCache.foo = { left: 3, top: 4 };
-        ctrl._rememberScrollId = 'foo';
-        expect(ctrl.scrollView.scrollTo).not.toHaveBeenCalled();
-        ctrl.scrollToRememberedPosition(shouldAnimate);
-        expect(ctrl.scrollView.scrollTo).toHaveBeenCalledWith(3, 4, shouldAnimate);
-      }));
-
-      describe('scroll action', function() {
+      ddescribe('scroll action', function() {
         beforeEach(function() {
           setup();
           //Mock resize to insta-call through for easier tests
@@ -213,6 +203,15 @@ describe('$ionicScroll Controller', function() {
             return { then: function(cb) { cb(); } };
           };
         });
+
+        it('scrollToRememberedPosition should work', inject(function($$scrollValueCache) {
+          spyOn(ctrl.scrollView, 'scrollTo');
+          $$scrollValueCache.foo = { left: 3, top: 4 };
+          ctrl._rememberScrollId = 'foo';
+          expect(ctrl.scrollView.scrollTo).not.toHaveBeenCalled();
+          ctrl.scrollToRememberedPosition(shouldAnimate);
+          expect(ctrl.scrollView.scrollTo).toHaveBeenCalledWith(3, 4, shouldAnimate);
+        }));
         it('.scrollTop', function() {
           spyOn(ctrl.scrollView, 'scrollTo');
           ctrl.scrollTop(shouldAnimate);
