@@ -16,7 +16,7 @@
       <ion-side-menus>
 
         <ion-pane ion-side-menu-content>
-          <ion-nav-bar type="bar-positive"
+          <ion-nav-bar class="bar-positive"
                    back-button-type=""
                    back-button-icon="ion-ios7-arrow-back"></ion-nav-bar>
           <ion-nav-view name="menuContent"></ion-nav-view>
@@ -28,8 +28,8 @@
           </header>
           <ion-content class="has-header">
             <div class="list">
-              <a ng-click="closeMenu()" href="#/event/check-in" class="item">Check-in</a>
-              <a ng-click="closeMenu()" href="#/event/attendees" class="item">Attendees</a>
+              <a nav-clear menu-close href="#/event/check-in" class="item">Check-in</a>
+              <a nav-clear menu-close href="#/event/attendees" class="item">Attendees</a>
               <div class="item item-divider">
                 Range
               </div>
@@ -43,7 +43,7 @@
         </ion-side-menu>
 
         <ion-side-menu side="right">
-          <header class="bar bar-header bar-assertive">
+          <header class="bar bar-header bar-royal">
             <div class="title">Right Menu</div>
           </header>
         </ion-side-menu>
@@ -52,7 +52,7 @@
     </script>
 
     <script id="home.html" type="text/ng-template">
-      <ion-view title="'Welcome'">
+      <ion-view title="Welcome">
         <ion-content class="has-header" padding="true">
           <p>Swipe to the right to reveal the left menu.</p>
           <div class="button" ng-click="sideMenuController.toggleLeft()" style="position: absolute; left: 100px; top: 200px;">
@@ -88,7 +88,7 @@
     </script>
 
     <script id="check-in.html" type="text/ng-template">
-      <ion-view title="'Event Check-in'" hide-back-button="true">
+      <ion-view title="Check-in" hide-back-button="true">
         <ion-content class="has-header">
           <form class="list" ng-show="showForm">
             <div class="item item-divider">
@@ -128,7 +128,7 @@
     </script>
 
     <script id="attendees.html" type="text/ng-template">
-      <ion-view title="'Event Attendees'">
+      <ion-view title="Attendees">
         <ion-content class="has-header">
           <div class="list">
             <ion-toggle ng-repeat="attendee in attendees | orderBy:'firstname' | orderBy:'lastname'"
