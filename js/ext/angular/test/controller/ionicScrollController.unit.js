@@ -91,6 +91,17 @@ describe('$ionicScroll Controller', function() {
     expect(ctrl.scrollView.resize).toHaveBeenCalled();
   });
 
+  it('should not remember scroll position on $viewContentLoaded if no viewId', function() {
+    var historyData = {};
+    setup();
+    spyOn(ctrl, 'rememberScrollPosition');
+    spyOn(ctrl, 'scrollToRememberedPosition');
+    scope.$broadcast('$viewContentLoaded', historyData);
+    timeout.flush();
+    expect(ctrl.rememberScrollPosition).not.toHaveBeenCalledWith();
+    expect(ctrl.scrollToRememberedPosition).not.toHaveBeenCalled();
+  });
+
   it('should remember scroll position on $viewContentLoaded event', function() {
     var historyData = { viewId: '1' };
     setup();
