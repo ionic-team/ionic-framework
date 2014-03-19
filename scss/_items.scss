@@ -443,7 +443,7 @@ button.item-button-right:after,
   min-height: $item-avatar-width + ($item-padding * 2);
 
   > img:first-child,
-  .item-img {
+  .item-image {
     position: absolute;
     top: $item-padding;
     left: $item-padding;
