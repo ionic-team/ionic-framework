@@ -132,10 +132,17 @@ function($parse, $timeout, $controller, $ionicBind) {
         }
 
         transclude($scope, function(clone) {
-          if (scrollCtrl) {
-            clone.data('$$ionicScrollController', scrollCtrl);
+          if($scope.scroll === "false") {
+            $element.append(clone);
+            $element.removeClass("scroll-content");
+            scrollContent.remove();
           }
-          scrollContent.append(clone);
+          else{
+            if (scrollCtrl) {
+              clone.data('$$ionicScrollController', scrollCtrl);
+            }
+            scrollContent.append(clone);
+          }
         });
 
       }
