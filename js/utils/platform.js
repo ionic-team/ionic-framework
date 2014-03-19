@@ -251,11 +251,11 @@
         ionic.requestAnimationFrame(function(){
           if(ionic.Platform._showStatusBar) {
             // they do not want it to be full screen
-            StatusBar.show();
+            window.StatusBar && window.StatusBar.show();
             document.body.classList.remove('status-bar-hide');
           } else {
             // it should be full screen
-            StatusBar.hide();
+            window.StatusBar && window.StatusBar.hide();
             document.body.classList.add('status-bar-hide');
           }
         });
