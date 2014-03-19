@@ -273,6 +273,40 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     }
   };
   return directive;
+}])
+
+
+/**
+ * @ngdoc directive
+ * @name navClear
+ * @module ionic
+ * @restrict AC
+ *
+ * @description
+ * Disables any transition animations between views, along with removing the back
+ * button which would normally show on the next view. This directive is useful for
+ * links within a sideMenu.
+ *
+ * @usage
+ * Below is an example of a link within a side menu. Tapping this link would disable
+ * any animations which would normally occur between views.
+ *
+ * ```html
+ * <a nav-clear menu-close href="#/home" class="item">Home</a>
+ * ```
+ */
+.directive('navClear', ['$ionicViewService', function($ionicViewService) {
+  return {
+    restrict: 'AC',
+    link: function($scope, $element, $attr) {
+      $element.bind('click', function(){
+        $ionicViewService.nextViewOptions({
+          disableAnimate: true,
+          disableBack: true
+        });
+      });
+    }
+  };
 }]);
 
 })();
