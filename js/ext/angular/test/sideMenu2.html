@@ -16,10 +16,10 @@
       <ion-side-menus>
 
         <ion-pane ion-side-menu-content>
-          <ion-nav-bar class="bar-positive"
-                   back-button-type=""
-                   back-button-icon="ion-ios7-arrow-back"></ion-nav-bar>
-          <ion-nav-view name="menuContent"></ion-nav-view>
+          <ion-nav-bar class="bar-positive">
+            <ion-nav-back-button class="button-icon icon ion-arrow-left-c"></ion-nav-back-button>
+          </ion-nav-bar>
+          <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
         </ion-pane>
 
         <ion-side-menu side="left">
@@ -30,6 +30,9 @@
             <div class="list">
               <a nav-clear menu-close href="#/event/check-in" class="item">Check-in</a>
               <a nav-clear menu-close href="#/event/attendees" class="item">Attendees</a>
+              <a nav-clear menu-close href="#/event/about" class="item">About</a>
+              <a nav-clear menu-close href="#/event/contact" class="item">Contact</a>
+              <a nav-clear menu-close href="#/event/home" class="item">Home</a>
               <div class="item item-divider">
                 Range
               </div>
@@ -53,21 +56,19 @@
 
     <script id="home.html" type="text/ng-template">
       <ion-view title="Welcome">
+
+        <ion-nav-buttons side="left">
+          <button ng-click="sideMenuController.toggleLeft(false)" class="button button-icon ion-navicon"></button>
+        </ion-nav-buttons>
+
+        <ion-nav-buttons side="right">
+          <button ng-click="sideMenuController.toggleRight(false)" class="button button-icon ion-navicon"></button>
+        </ion-nav-buttons>
+
         <ion-content class="has-header" padding="true">
           <p>Swipe to the right to reveal the left menu.</p>
-          <div class="button" ng-click="sideMenuController.toggleLeft()" style="position: absolute; left: 100px; top: 200px;">
-            Left Menu
-          </div>
-          <select ng-model="data.grade" ng-change="gradeChange(data.grade)">
-            <option>grade-a</option>
-            <option>grade-b</option>
-            <option>grade-c</option>
-          </select>
 
           <div class="list">
-            <div class="item">
-              <b>Body Class:</b> <span id="bodyClass"></span>
-            </div>
             <ion-item ion-item="item" ng-href="#" ng-click="itemClick()" ng-repeat="item in range">
               <strong>{{$index}}</strong>
               <b>:</b>
@@ -148,6 +149,34 @@
       </ion-view>
     </script>
 
+    <script id="about.html" type="text/ng-template">
+      <ion-view title="About">
+        <ion-content class="has-header">
+          <h2>About us</h2>
+          <div class="list">
+            <a href="#/event/check-in" class="item">Check-in</a>
+            <a href="#/event/attendees" class="item">Attendees</a>
+            <a href="#/event/contact" class="item">Contact</a>
+            <a href="#/event/home" class="item">Home</a>
+          </div>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="contact.html" type="text/ng-template">
+      <ion-view title="Contact">
+        <ion-content class="has-header">
+          <h2>Contact us</h2>
+          <div class="list">
+            <a href="#/event/check-in" class="item">Check-in</a>
+            <a href="#/event/attendees" class="item">Attendees</a>
+            <a href="#/event/about" class="item">About</a>
+            <a href="#/event/home" class="item">Home</a>
+          </div>
+        </ion-content>
+      </ion-view>
+    </script>
+
     <script>
       angular.module('ionicApp', ['ionic'])
 
@@ -186,6 +215,22 @@
               }
             }
           })
+          .state('eventmenu.about', {
+            url: "/about",
+            views: {
+              'menuContent' :{
+                templateUrl: "about.html"
+              }
+            }
+          })
+          .state('eventmenu.contact', {
+            url: "/contact",
+            views: {
+              'menuContent' :{
+                templateUrl: "contact.html"
+              }
+            }
+          })
 
         $urlRouterProvider.otherwise("/event/home");
       })
@@ -193,20 +238,8 @@
       .controller('MainCtrl', function($scope) {
         console.log('MainCtrl');
 
-        $scope.data = {
-          grade: ''
-        };
-
         $scope.closeMenu = function() {
           $scope.sideMenuController.toggleLeft(false);
-        };
-
-        setTimeout(function(){
-          //document.getElementById('bodyClass').innerHTML = document.body.className;
-        }, 1500);
-
-        $scope.gradeChange = function(grade) {
-          document.body.className = grade;
         };
 
         $scope.range = [];
