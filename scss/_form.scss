@@ -49,13 +49,14 @@ textarea {
   @include align-items(center);
   position: relative;
   overflow: hidden;
-  padding: 6px 8px 5px;
+  padding: 6px 0 5px 8px;
 
   input {
     @include border-radius(0);
     @include flex(1, 0, 220px);
     @include appearance(none);
     margin: 0;
+    padding-right: 24px;
     background-color: transparent;
   }
 
