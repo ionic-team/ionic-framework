@@ -72,7 +72,6 @@ function($parse, $timeout, $controller, $ionicBind) {
     transclude: true,
     require: '^?ionNavView',
     scope: true,
-    priority: 501,
     template:
     '<div class="scroll-content">' +
       '<div class="scroll"></div>' +
