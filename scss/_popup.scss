@@ -77,6 +77,18 @@
   }
 }
 
+.popup-open {
+  pointer-events: none;
+
+  &.modal-open .modal {
+    pointer-events: none;
+  }
+
+  .popup-backdrop, .popup {
+    pointer-events: auto;
+  }
+}
+
 .popup-backdrop {
   @include animation-name(fadeIn);
   @include animation-duration($popup-backdrop-fadein-duration);

@@ -106,7 +106,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
   });
   ```
 
- 
+
  */
 .factory('$ionicPopup', ['$rootScope', '$q', '$document', '$compile', '$timeout', '$ionicTemplateLoader',
   function($rootScope, $q, $document, $compile, $timeout, $ionicTemplateLoader) {
@@ -199,11 +199,13 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     var el = $compile('<ion-popup-backdrop></ion-popup-backdrop>')($rootScope.$new(true));
     $document[0].body.appendChild(el[0]);
     backdropEl = el;
+    $document[0].body.classList.add('popup-open');
   };
 
   // Remove the backdrop element
   var removeBackdrop = function() {
     backdropEl.remove();
+    $document[0].body.classList.remove('popup-open');
   };
 
   // Push the new popup onto the stack with the given data and scope.
@@ -259,8 +261,8 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
   }
 
   var buildPopupTemplate = function(opts, content) {
-    return '<ion-popup title="' + opts.title + '" buttons="buttons" on-button-tap="onButtonTap(button, event)" on-close="onClose(button, result, event)">' 
-        + (content || '') + 
+    return '<ion-popup title="' + opts.title + '" buttons="buttons" on-button-tap="onButtonTap(button, event)" on-close="onClose(button, result, event)">'
+        + (content || '') +
       '</ion-popup>';
   };
 
@@ -346,7 +348,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
      *   subTitle: '', // String (optional). The sub-title of the popup
      *   templateUrl: '', // URL String (optional). The URL of a template to load as the content (instead of the `content` field)
      *   scope: null, // Scope (optional). A scope to apply to the popup content (for using ng-model in a template, for example)
-     *   buttons: 
+     *   buttons:
      *     [
      *       {
      *         text: 'Cancel',
@@ -369,7 +371,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
      *         }
      *       }
      *     ]
-     * 
+     *
      * }
      * ```
     */
@@ -386,7 +388,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
      *
      * ```javascript
      *  $ionicPopup.alert({
-     *    title: 'Hey!;,
+     *    title: 'Hey!',
      *    content: 'Don\'t do that!'
      *  }).then(function(res) {
      *    // Accepted
@@ -479,7 +481,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
      * @ngdoc method
      * @name $ionicPopup#prompt
      * @description show a simple prompt dialog.
-     * 
+     *
      * ```javascript
      *  $ionicPopup.prompt({
      *    title: 'Password Check',
@@ -532,7 +534,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
         ]
       });
     }
-    
+
   };
 }]);
 

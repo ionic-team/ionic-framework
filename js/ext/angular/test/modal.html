@@ -59,6 +59,7 @@
               <button class="button button-block button-positive" ng-click="hideModal()">Hide Modal</button>
               <button class="button button-block button-positive" ng-click="removeModal()">Remove Modal</button>
               <button class="button button-block button-positive" ng-click="openActionSheet()">ActionSheet</button>
+              <button class="button button-block button-positive" ng-click="openPopup()">Popup</button>
             </div>
           </div>
         </ion-content>
@@ -86,7 +87,7 @@
 
       })
 
-      .controller('ModalCtrl', function($scope, $ionicActionSheet) {
+      .controller('ModalCtrl', function($scope, $ionicActionSheet, $ionicPopup) {
         $scope.hideModal = function() {
           $scope.modal.hide();
         };
@@ -130,6 +131,13 @@
               return true;
             }
           });
+        };
+
+        $scope.openPopup = function() {
+          $ionicPopup.alert({
+           title: 'Hey!',
+           content: 'Don\'t do that!'
+          }).then(function(res) {});
         };
 
       });
