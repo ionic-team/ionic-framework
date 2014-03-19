@@ -1,13 +1,16 @@
-(function(ionic) {
+(function(window, document, ionic) {
 
-  var readyCallbacks = [],
-  domReady = function() {
+  var readyCallbacks = [];
+  var isDomReady = false;
+
+  function domReady() {
+    isDomReady = true;
     for(var x=0; x<readyCallbacks.length; x++) {
       ionic.requestAnimationFrame(readyCallbacks[x]);
     }
     readyCallbacks = [];
     document.removeEventListener('DOMContentLoaded', domReady);
-  };
+  }
   document.addEventListener('DOMContentLoaded', domReady);
 
   // From the man himself, Mr. Paul Irish.
@@ -93,12 +96,12 @@
      * @ngdoc method
      * @name ionic.DomUtil#ready
      * @description
-     * Call a function when the dom is ready, or if it is already ready
+     * Call a function when the DOM is ready, or if it is already ready
      * call the function immediately.
      * @param {function} callback The function to be called.
      */
     ready: function(cb) {
-      if(document.readyState === "complete") {
+      if(isDomReady || document.readyState === "complete") {
         ionic.requestAnimationFrame(cb);
       } else {
         readyCallbacks.push(cb);
@@ -235,4 +238,4 @@
   //Shortcuts
   ionic.requestAnimationFrame = ionic.DomUtil.requestAnimationFrame;
   ionic.animationFrameThrottle = ionic.DomUtil.animationFrameThrottle;
-})(window.ionic);
+})(this, document, ionic);
