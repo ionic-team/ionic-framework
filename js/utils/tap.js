@@ -7,7 +7,7 @@
 
     var ele = target.control || target;
 
-    if(ele.disabled || ele.type === 'file') return;
+    if(ele.disabled || ele.type === 'file' || ele.type === 'range') return;
 
     console.debug('tapElement', ele.tagName, ele.className);
 
