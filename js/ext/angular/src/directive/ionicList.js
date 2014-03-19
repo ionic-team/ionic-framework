@@ -229,6 +229,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
       var destroyShowReorderWatch = $scope.$watch('showReorder', function(val) {
         if(val) {
           $element[0].classList.add('item-options-hide');
+          $scope.listView && $scope.listView.clearDragEffects();
         } else if(val === false) {
           // false checking is because it could be undefined
           // if its undefined then we don't care to do anything
