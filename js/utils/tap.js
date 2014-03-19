@@ -21,7 +21,7 @@
 
     ele.dispatchEvent(clickEvent);
 
-    if(ele.tagName === 'INPUT' || ele.tagName === 'TEXTAREA' || ele.tagName === 'SELECT') {
+    if(ele.tagName === 'INPUT' || ele.tagName === 'TEXTAREA') {
       ele.focus();
       e.preventDefault();
     } else {
@@ -62,8 +62,7 @@
           ele.tagName === "A" ||
           ele.tagName === "BUTTON" ||
           ele.tagName === "LABEL" ||
-          ele.tagName === "TEXTAREA" ||
-          ele.tagName === "SELECT" ) {
+          ele.tagName === "TEXTAREA" ) {
 
         return ionic.tapElement(ele, e);
       }
@@ -191,8 +190,7 @@
   function blurActive() {
     var ele = document.activeElement;
     if(ele && (ele.tagName === "INPUT" ||
-               ele.tagName === "TEXTAREA" ||
-               ele.tagName === "SELECT")) {
+               ele.tagName === "TEXTAREA")) {
       // using a timeout to prevent funky scrolling while a keyboard hides
       setTimeout(function(){
         ele.blur();
