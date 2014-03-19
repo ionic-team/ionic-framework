@@ -26,6 +26,7 @@ describe('Ionic Scroll Directive', function() {
 
   it('should add padding classname', function() {
     element = compile('<ion-scroll padding="true"></ion-scroll>')(scope);
+    scope.$apply();
     expect(element.children().eq(0).hasClass('padding')).toEqual(true);
     var scrollElement = element.find('.scroll');
     expect(scrollElement.hasClass('padding')).toEqual(true);

@@ -112,25 +112,47 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
 .directive('ionFooterBar', barDirective(false));
 
 function barDirective(isHeader) {
-  var BAR_TEMPLATE = isHeader ?
-    '<header class="bar bar-header" ng-transclude></header>' :
-    '<footer class="bar bar-footer" ng-transclude></footer>';
-  var BAR_MODEL_DEFAULT = isHeader ?
-    '$ionicHeaderBarController' :
-    '$ionicFooterBarController';
   return ['$parse', function($parse) {
     return {
       restrict: 'E',
-      replace: true,
-      transclude: true,
-      template: BAR_TEMPLATE,
-      link: function($scope, $element, $attr) {
-        var hb = new ionic.views.HeaderBar({
-          el: $element[0],
-          alignTitle: $attr.alignTitle || 'center'
-        });
+      compile: function($element, $attr) {
+        $element.addClass(isHeader ? 'bar bar-header' : 'bar bar-footer');
+        return { pre: prelink };
+        function prelink($scope, $element, $attr) {
+          var hb = new ionic.views.HeaderBar({
+            el: $element[0],
+            alignTitle: $attr.alignTitle || 'center'
+          });
 
-        $parse($attr.controllerBind || BAR_MODEL_DEFAULT).assign($scope, hb);
+          $parse($attr.controllerBind ||
+            (isHeader ? '$ionicHeaderBarController' : '$ionicFooterBarController')
+          ).assign($scope, hb);
+
+          var el = $element[0];
+
+          if (isHeader) {
+            $scope.$watch(function() { return el.className; }, function(value) {
+              var isSubheader = value.indexOf('bar-subheader') !== -1;
+              $scope.$parent.$hasHeader = !isSubheader;
+              $scope.$parent.$hasSubheader = isSubheader;
+            });
+            $scope.$on('$destroy', function() {
+              $scope.$parent.$hasHeader = $scope.$parent.$hasSubheader = null;
+            });
+          } else {
+            $scope.$watch(function() { return el.className; }, function(value) {
+              var isSubfooter = value.indexOf('bar-subfooter') !== -1;
+              $scope.$parent.$hasFooter = !isSubfooter;
+              $scope.$parent.$hasSubfooter = isSubfooter;
+            });
+            $scope.$on('$destroy', function() {
+              $scope.$parent.$hasFooter = $scope.$parent.$hasSubfooter = null;
+            });
+            $scope.$watch('$hasTabs', function(val) {
+              $element.toggleClass('has-tabs', !!val);
+            });
+          }
+        }
       }
     };
   }];

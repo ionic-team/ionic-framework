@@ -224,6 +224,21 @@ describe('tabs', function() {
       return element;
     }
 
+    it('should $hasTabs and $hasTabsTop', function() {
+      var el = setup();
+      var scope = el.scope();
+      expect(scope.$hasTabs).toBe(true);
+      expect(scope.$hasTabsTop).toBe(false);
+      el.addClass('tabs-top');
+      scope.$apply();
+      expect(scope.$hasTabs).toBe(false);
+      expect(scope.$hasTabsTop).toBe(true);
+      el.removeClass('tabs-top');
+      scope.$apply();
+      expect(scope.$hasTabs).toBe(true);
+      expect(scope.$hasTabsTop).toBe(false);
+    });
+
     it('should bind controller to scope.$ionicTabsController by default', function() {
       var el = setup();
       expect(el.controller('ionTabs')).toBeTruthy(); //sanity
@@ -238,8 +253,7 @@ describe('tabs', function() {
 
     it('should transclude content with same scope', function() {
       var el = setup('', '<div class="content"></div>');
-      expect(el.children().eq(1).hasClass('content')).toBe(true);
-      expect(el.children().eq(1).scope()).toBe(el.scope());
+      expect(el[0].querySelector('.tabs .content')).toBeTruthy();
     });
   });
 

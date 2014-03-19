@@ -26,9 +26,6 @@ angular.module('ionic.ui.scroll', [])
 .directive('ionScroll', ['$parse', '$timeout', '$controller', function($parse, $timeout, $controller) {
   return {
     restrict: 'E',
-    replace: true,
-    template: '<div class="scroll-view"><div class="scroll" ng-transclude></div></div>',
-    transclude: true,
     scope: {
       direction: '@',
       paging: '@',
@@ -39,23 +36,25 @@ angular.module('ionic.ui.scroll', [])
       scrollbarY: '@',
     },
     controller: function() {},
-    compile: function(element, attr, transclude) {
+    compile: function(element, attr) {
+      element.addClass('scroll-view');
 
-      return {
-        //Prelink <ion-scroll> so it can compile before other directives compile.
-        //Then other directives can require ionicScrollCtrl
-        pre: prelink
-      };
+      //We cannot transclude here because it breaks element.data() inheritance on compile
+      var innerElement = angular.element('<div class="scroll"></div>');
+      innerElement.append(element.contents());
+      element.append(innerElement);
 
+      return { pre: prelink };
       function prelink($scope, $element, $attr) {
-        var scrollView, scrollCtrl,
-          sc = $element[0].children[0];
+        var scrollView, scrollCtrl;
 
-        if(attr.padding == "true") {
-          sc.classList.add('padding');
+        if (angular.isDefined($attr.padding)) {
+          $scope.$watch($attr.padding, function(newVal) {
+            innerElement.toggleClass('padding', !!newVal);
+          });
         }
         if($scope.$eval($scope.paging) === true) {
-          sc.classList.add('scroll-paging');
+          innerElement.addClass('scroll-paging');
         }
 
         if(!$scope.direction) { $scope.direction = 'y'; }

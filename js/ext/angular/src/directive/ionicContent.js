@@ -44,9 +44,6 @@ angular.module('ionic.ui.content', ['ionic.ui.scroll'])
  * directive, and infinite scrolling with the {@link ionic.directive:ionInfiniteScroll}
  * directive.
  *
- * Use the classes 'has-header', 'has-subheader', 'has-footer', and 'has-tabs'
- * to modify the positioning of the ion-content relative to surrounding elements.
- *
  * @param {string=} controller-bind The scope variable to bind this element's scrollView's
  * {@link ionic.controller:ionicScroll ionicScroll controller} to.
  * Default: $scope.$ionicScrollController.
@@ -68,24 +65,31 @@ angular.module('ionic.ui.content', ['ionic.ui.scroll'])
 function($parse, $timeout, $controller, $ionicBind) {
   return {
     restrict: 'E',
-    replace: true,
-    transclude: true,
     require: '^?ionNavView',
     scope: true,
-    template:
-    '<div class="scroll-content">' +
-      '<div class="scroll"></div>' +
-    '</div>',
-    compile: function(element, attr, transclude) {
-      return {
-        //Prelink <ion-content> so it can compile before other directives compile.
-        //Then other directives can require ionicScrollCtrl
-        pre: prelink
-      };
+    compile: function(element, attr) {
+      element.addClass('scroll-content');
 
+      //We cannot transclude here because it breaks element.data() inheritance on compile
+      var innerElement = angular.element('<div class="scroll"></div>');
+      innerElement.append(element.contents());
+      element.append(innerElement);
+
+      return { pre: prelink };
       function prelink($scope, $element, $attr, navViewCtrl) {
-        var clone, sc, scrollView, scrollCtrl,
-          scrollContent = angular.element($element[0].querySelector('.scroll'));
+        var clone, sc, scrollView, scrollCtrl;
+
+        $scope.$watch(function() {
+          return ($scope.$hasHeader ? ' has-header' : '')  +
+            ($scope.$hasSubheader ? ' has-subheader' : '') +
+            ($scope.$hasFooter ? ' has-footer' : '') +
+            ($scope.$hasSubfooter ? ' has-subfooter' : '') +
+            ($scope.$hasTabs ? ' has-tabs' : '') +
+            ($scope.$hasTabsTop ? ' has-tabs-top' : '');
+        }, function(className, oldClassName) {
+          $element.removeClass(oldClassName);
+          $element.addClass(className);
+        });
 
         $ionicBind($scope, $attr, {
           $onScroll: '&onScroll',
@@ -104,7 +108,7 @@ function($parse, $timeout, $controller, $ionicBind) {
 
         if (angular.isDefined($attr.padding)) {
           $scope.$watch($attr.padding, function(newVal) {
-            scrollContent.toggleClass('padding', !!newVal);
+            innerElement.toggleClass('padding', !!newVal);
           });
         }
 
@@ -138,13 +142,6 @@ function($parse, $timeout, $controller, $ionicBind) {
           //Publish scrollView to parent so children can access it
           scrollView = scrollCtrl.scrollView;
         }
-
-        transclude($scope, function(clone) {
-          if (scrollCtrl) {
-            clone.data('$$ionicScrollController', scrollCtrl);
-          }
-          scrollContent.append(clone);
-        });
 
       }
     }

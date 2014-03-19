@@ -157,8 +157,9 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
     restrict: 'AC',
     require: '^ionSideMenus',
     scope: true,
-    compile: function(element, attr, transclude) {
-      return function($scope, $element, $attr, sideMenuCtrl) {
+    compile: function(element, attr) {
+      return { pre: prelink };
+      function prelink($scope, $element, $attr, sideMenuCtrl) {
 
         $element.addClass('menu-content');
 
@@ -248,7 +249,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
           $ionicGesture.off(releaseGesture, 'release', dragReleaseFn);
           ionic.off('tap', contentTap, $element[0]);
         });
-      };
+      }
     }
   };
 }])
@@ -282,13 +283,12 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
   return {
     restrict: 'E',
     require: '^ionSideMenus',
-    replace: true,
-    transclude: true,
     scope: true,
-    template: '<div class="menu menu-{{side}}"></div>',
-    compile: function(element, attr, transclude) {
+    compile: function(element, attr) {
       angular.isUndefined(attr.isEnabled) && attr.$set('isEnabled', 'true');
       angular.isUndefined(attr.width) && attr.$set('width', '275');
+
+      element.addClass('menu menu-' + attr.side);
 
       return function($scope, $element, $attr, sideMenuCtrl) {
         $scope.side = $attr.side || 'left';
@@ -307,10 +307,6 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
         });
         $scope.$watch($attr.isEnabled, function(val) {
           sideMenu.setIsEnabled(!!val);
-        });
-
-        transclude($scope, function(clone) {
-          $element.append(clone);
         });
       };
     }

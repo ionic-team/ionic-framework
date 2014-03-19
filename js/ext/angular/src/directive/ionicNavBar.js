@@ -215,20 +215,22 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
 
   return {
     restrict: 'E',
-    replace: true,
-    transclude: true,
     controller: '$ionicNavBar',
-    template:
-      '<header class="bar bar-header nav-bar{{navBarClass()}}">' +
-        '<div class="buttons left-buttons"> ' +
-        '</div>' +
-        '<h1 ng-bind-html="title" class="title"></h1>' +
-        '<div class="buttons right-buttons"> ' +
-        '</div>' +
-      '</header>',
-    compile: function(tElement, tAttrs, transclude) {
+    scope: true,
+    compile: function(tElement, tAttrs) {
+      //We cannot transclude here because it breaks element.data() inheritance on compile
+      tElement
+        .addClass('bar bar-header nav-bar')
+        .append(
+          '<div class="buttons left-buttons"> ' +
+          '</div>' +
+          '<h1 ng-bind-html="title" class="title"></h1>' +
+          '<div class="buttons right-buttons"> ' +
+          '</div>'
+        );
 
-      return function link($scope, $element, $attr, navBarCtrl) {
+      return { pre: prelink };
+      function prelink($scope, $element, $attr, navBarCtrl) {
         navBarCtrl._headerBarView = new ionic.views.HeaderBar({
           el: $element[0],
           alignTitle: $attr.alignTitle || 'center'
@@ -237,23 +239,23 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
         $parse($attr.controllerBind || '$ionicNavBarController')
           .assign($scope, navBarCtrl);
 
-        //Put transcluded content (usually a back button) before the rest
-        transclude($scope, function(clone) {
-          $element.prepend(clone);
-        });
-
         //defaults
         $scope.backButtonShown = false;
         $scope.shouldAnimate = true;
         $scope.isReverse = false;
         $scope.isInvisible = true;
+        $scope.$parent.$hasHeader = true;
 
-        $scope.navBarClass = function() {
+        $scope.$watch(function() {
           return ($scope.isReverse ? ' reverse' : '') +
             ($scope.isInvisible ? ' invisible' : '') +
             (!$scope.shouldAnimate ? ' no-animation' : '');
-        };
-      };
+        }, function(className, oldClassName) {
+          $element.removeClass(oldClassName);
+          $element.addClass(className);
+        });
+
+      }
     }
   };
 }])
@@ -311,32 +313,30 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
   return {
     restrict: 'E',
     require: '^ionNavBar',
-    replace: true,
-    transclude: true,
-    template:
-      '<button class="button back-button" ng-transclude>' +
-      '</button>',
-    link: function($scope, $element, $attr, navBarCtrl) {
-      $scope.$navBack = navBarCtrl.back;
-      if (!$attr.ngClick) {
-        $ionicNgClick($scope, $element, '$navBack($event)');
-      }
-
-      //If the current viewstate does not allow a back button,
-      //always hide it.
-      var deregisterListener = $scope.$parent.$on(
-        '$viewHistory.historyChange',
-        function(e, data) {
-          $scope.hasBackButton = !!data.showBack;
+    compile: function(tElement, tAttrs) {
+      tElement.addClass('button back-button');
+      return function($scope, $element, $attr, navBarCtrl) {
+        $scope.$navBack = navBarCtrl.back;
+        if (!$attr.ngClick) {
+          $ionicNgClick($scope, $element, '$navBack($event)');
         }
-      );
-      $scope.$on('$destroy', deregisterListener);
 
-      //Make sure both that a backButton is allowed in the first place,
-      //and that it is shown by the current view.
-      $scope.$watch('!!(backButtonShown && hasBackButton)', function(val) {
-        $element.toggleClass('hide', !val);
-      });
+        //If the current viewstate does not allow a back button,
+        //always hide it.
+        var deregisterListener = $scope.$parent.$on(
+          '$viewHistory.historyChange',
+          function(e, data) {
+            $scope.hasBackButton = !!data.showBack;
+          }
+        );
+        $scope.$on('$destroy', deregisterListener);
+
+        //Make sure both that a backButton is allowed in the first place,
+        //and that it is shown by the current view.
+        $scope.$watch('!!(backButtonShown && hasBackButton)', function(val) {
+          $element.toggleClass('hide', !val);
+        });
+      };
     }
   };
 }])
@@ -379,9 +379,8 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
 .directive('ionNavButtons', ['$compile', '$animate', function($compile, $animate) {
   return {
     require: '^ionNavBar',
-    transclude: true,
     restrict: 'E',
-    compile: function($element, $attrs, transclude) {
+    compile: function($element, $attrs) {
       return function($scope, $element, $attrs, navBarCtrl) {
         var navElement = $attrs.side === 'right' ?
           navBarCtrl.rightButtonsElement :
@@ -391,13 +390,13 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
         //so we can remove them all when this element dies -
         //even if the buttons have changed through an ng-repeat or the like,
         //we just remove their div parent and they are gone.
-        var clone = angular.element('<div>').append(transclude($scope));
-        $animate.enter(clone, navElement);
+        var buttons = angular.element('<div>').append($element.contents().remove());
+        $animate.enter(buttons, navElement);
 
         //When our ion-nav-buttons container is destroyed,
         //destroy everything in the navbar
         $scope.$on('$destroy', function() {
-          $animate.leave(clone);
+          $animate.leave(buttons);
         });
 
         // The original element is just a completely empty <ion-nav-buttons> element.

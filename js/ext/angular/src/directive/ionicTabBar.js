@@ -172,28 +172,33 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
 .directive('ionTabs', ['$ionicViewService', '$parse', function($ionicViewService, $parse) {
   return {
     restrict: 'E',
-    replace: true,
     scope: true,
-    transclude: true,
     controller: 'ionicTabs',
-    template:
-    '<div class="view">' +
-      '<div class="tabs">' +
-      '</div>' +
-    '</div>',
-    compile: function(element, attr, transclude) {
+    compile: function(element, attr) {
+      element.addClass('view');
+      //We cannot transclude here because it breaks element.data() inheritance on compile
+      var innerElement = angular.element('<div class="tabs"></div>');
+      innerElement.append(element.contents());
+      element.append(innerElement);
 
-      return function link($scope, $element, $attr, tabsCtrl) {
+      return { pre: prelink };
+      function prelink($scope, $element, $attr, tabsCtrl) {
         $parse(attr.model || '$ionicTabsController').assign($scope, tabsCtrl);
 
         tabsCtrl.$scope = $scope;
         tabsCtrl.$element = $element;
         tabsCtrl.$tabsElement = angular.element($element[0].querySelector('.tabs'));
 
-        transclude($scope, function(clone) {
-          $element.append(clone);
+        var el = $element[0];
+        $scope.$watch(function() { return el.className; }, function(value) {
+          var isTabsTop = value.indexOf('tabs-top') !== -1;
+          $scope.$hasTabs = !isTabsTop;
+          $scope.$hasTabsTop = isTabsTop;
         });
-      };
+        $scope.$on('$destroy', function() {
+          $scope.$hasTabs = $scope.$hasTabsTop = null;
+        });
+      }
     }
   };
 }])

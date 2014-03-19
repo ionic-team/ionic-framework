@@ -229,6 +229,11 @@ describe('ionNavBar', function() {
       expect(el.children().eq(0).html()).toBe('<b>super</b> content 4');
     });
 
+    it('should $parent.$hasHeader', function() {
+      var el = setup();
+      expect(el.scope().$parent.$hasHeader).toBe(true);
+    });
+
     it('should assign $scope.navBarController by default', function() {
       var el = setup();
       expect(el.controller('ionNavBar')).toBeTruthy(); //sanity

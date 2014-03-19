@@ -16,7 +16,12 @@
       <h1 class="title">Header!</h1>
     </ion-header-bar>
 
-    <ion-content scroll="true" ng-controller="ContentCtrl" padding="false" class="has-header" ng-class="{'has-subheader': $root.isSub}">
+    <ion-content scroll="true" ng-controller="ContentCtrl" padding="false">
+
+    <pre>
+    $hasHeader: {{!!$hasHeader}}
+    $hasSubheader: {{!!$hasSubheader}}
+    </pre>
 
       <ion-refresher on-refresh="onRefresh()" pulling-text="pull!" refreshing-text="refreshing!"></ion-refresher>
 
