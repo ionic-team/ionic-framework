@@ -116,18 +116,13 @@
         }
       })
 
-      .controller('TestCtrl', function($scope, $timeout, $ionicScrollDelegate) {
-        var delegate = $ionicScrollDelegate($scope);
+      .controller('TestCtrl', function($scope, $timeout) {
         console.log('CONSTRUCT');
-
         $timeout(function() {
-          var view = delegate.getScrollView($scope);
-          console.log(view);
         });
       })
 
-      .controller('ThisCtrl', function($scope, $timeout, $ionicScrollDelegate) {
-        var delegate = $ionicScrollDelegate($scope);
+      .controller('ThisCtrl', function($scope, $timeout) {
         var header = document.getElementById('header');
         var content = document.getElementById('container');
         var startTop = header.offsetTop;
@@ -139,7 +134,7 @@
         var last = 0;
         $scope.onRefresh = function() {
           $timeout(function() {
-            delegate.finishRefreshing($scope);
+            $scope.$broadcast('scroll.refreshComplete');
           }, 1000);
         };
         $scope.onScroll = function(event, scrollTop, scrollLeft) {

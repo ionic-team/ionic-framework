@@ -184,8 +184,9 @@
      * @returns {DOMElement} The closest parent of element matching the
      * className, or null.
      */
-    getParentWithClass: function(e, className) {
-      while(e.parentNode) {
+    getParentWithClass: function(e, className, depth) {
+      depth = depth || 10;
+      while(e.parentNode && depth--) {
         if(e.parentNode.classList && e.parentNode.classList.contains(className)) {
           return e.parentNode;
         }
@@ -201,8 +202,9 @@
      * @returns {DOMElement} The closest parent or self matching the
      * className, or null.
      */
-    getParentOrSelfWithClass: function(e, className) {
-      while(e) {
+    getParentOrSelfWithClass: function(e, className, depth) {
+      depth = depth || 10;
+      while(e && depth--) {
         if(e.classList && e.classList.contains(className)) {
           return e;
         }

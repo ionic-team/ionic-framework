@@ -1,6 +1,58 @@
 describe('bar directives', function() {
   beforeEach(module('ionic'));
 
+  describe('barHeader tapScrollToTop', function() {
+    function setup() {
+      var el;
+      inject(function($compile, $rootScope) {
+        el = angular.element('<div class="bar-header">')
+        el.data('$$ionicScrollController', {
+          scrollTop: jasmine.createSpy('scrollTop')
+        });
+        ionic.requestAnimationFrame = function(cb) { cb(); };
+        $compile(el)($rootScope.$new());
+        $rootScope.$apply();
+      });
+      return el;
+    }
+    it('should listen for tap, unlisten on destroy', function() {
+      var callback;
+      spyOn(ionic, 'on').andCallFake(function(name, cb) {
+        callback = cb;
+      });
+      spyOn(ionic, 'off');
+      var el = setup();
+      expect(ionic.on).toHaveBeenCalledWith('tap', jasmine.any(Function), el[0]);
+      expect(ionic.off).not.toHaveBeenCalled();
+      el.scope().$destroy();
+      expect(ionic.off).toHaveBeenCalledWith('tap', callback, el[0]);
+    });
+    it('should ignore tap if it\'s in a button', function() {
+      var el = setup();
+      spyOn(ionic.DomUtil, 'rectContains');
+      var child = angular.element('<div class="button">');
+      el.append(child);
+      ionic.trigger('tap', { target: child[0] }, true, true);
+      expect(ionic.DomUtil.rectContains).not.toHaveBeenCalled();
+    });
+    it('should scrollTop if tap is inside headerBar', function() {
+      var el = setup();
+      spyOn(ionic.DomUtil, 'rectContains').andCallFake(function() {
+        return true;
+      });
+      ionic.trigger('tap', { target: el[0], touches: [{pageX:0,pageY:0}] });
+      expect(el.controller('$ionicScroll').scrollTop).toHaveBeenCalledWith(true);
+    });
+    it('should not scrollTop if tap isnt inside headerBar', function() {
+      var el = setup();
+      spyOn(ionic.DomUtil, 'rectContains').andCallFake(function() {
+        return false;
+      });
+      ionic.trigger('tap', { target: el[0], touches: [{pageX:0,pageY:0}] });
+      expect(el.controller('$ionicScroll').scrollTop).not.toHaveBeenCalled();
+    });
+  });
+
   angular.forEach([{
     tag: 'ion-header-bar',
     element: 'header',

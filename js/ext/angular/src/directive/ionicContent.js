@@ -1,7 +1,7 @@
 (function() {
 'use strict';
 
-angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
+angular.module('ionic.ui.content', ['ionic.ui.scroll'])
 
 /**
  * Panel is a simple 100% width and height, fixed panel. It's meant for content to be
@@ -28,6 +28,8 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
  * @ngdoc directive
  * @name ionContent
  * @module ionic
+ * @controller ionicScroll as $scope.$ionicScrollController
+ * @restrict E
  *
  * @description
  * The ionContent directive provides an easy to use content area that can be configured
@@ -45,6 +47,9 @@ angular.module('ionic.ui.content', ['ionic.ui.service', 'ionic.ui.scroll'])
  * Use the classes 'has-header', 'has-subheader', 'has-footer', and 'has-tabs'
  * to modify the positioning of the ion-content relative to surrounding elements.
  *
+ * @param {string=} controller-bind The scope variable to bind this element's scrollView's
+ * {@link ionic.controller:ionicScroll ionicScroll controller} to.
+ * Default: $scope.$ionicScrollController.
  * @param {boolean=} padding Whether to add padding to the content.
  * of the content.  Defaults to true on iOS, false on Android.
  * @param {boolean=} scroll Whether to allow scrolling of content.  Defaults to true.
@@ -67,6 +72,7 @@ function($parse, $timeout, $controller, $ionicBind) {
     transclude: true,
     require: '^?ionNavView',
     scope: true,
+    priority: 501,
     template:
     '<div class="scroll-content">' +
       '<div class="scroll"></div>' +
@@ -97,9 +103,11 @@ function($parse, $timeout, $controller, $ionicBind) {
           scrollEventInterval: '@'
         });
 
-        $scope.$watch($attr.padding, function(newVal) {
-          scrollContent.toggleClass('padding', !!newVal);
-        });
+        if (angular.isDefined($attr.padding)) {
+          $scope.$watch($attr.padding, function(newVal) {
+            scrollContent.toggleClass('padding', !!newVal);
+          });
+        }
 
         if ($scope.scroll === "false") {
           //do nothing
@@ -111,6 +119,7 @@ function($parse, $timeout, $controller, $ionicBind) {
             $scope: $scope,
             scrollViewOptions: {
               el: $element[0],
+              controllerBind: $attr.controllerBind,
               bouncing: $scope.$eval($scope.hasBouncing),
               startX: $scope.$eval($scope.startX) || 0,
               startY: $scope.$eval($scope.startY) || 0,
@@ -128,7 +137,7 @@ function($parse, $timeout, $controller, $ionicBind) {
             }
           });
           //Publish scrollView to parent so children can access it
-          scrollView = $scope.$parent.scrollView = scrollCtrl.scrollView;
+          scrollView = scrollCtrl.scrollView;
         }
 
         transclude($scope, function(clone) {
@@ -227,7 +236,7 @@ function($parse, $timeout, $controller, $ionicBind) {
           $onPulling: '&onPulling'
         });
 
-        scrollCtrl.setRefresher($scope, $element[0]);
+        scrollCtrl._setRefresher($scope, $element[0]);
         $scope.$on('scroll.refreshComplete', function() {
           $element[0].classList.remove('active');
           scrollCtrl.scrollView.finishPullToRefresh();

@@ -57,7 +57,7 @@
     <script>
       angular.module('slideBoxTest', ['ionic'])
 
-      .controller('SlideCtrl', function($scope, $timeout, $ionicSlideBoxDelegate) {
+      .controller('SlideCtrl', function($scope, $timeout) {
 
         $timeout(function() {
           $scope.pages = [ {
@@ -71,8 +71,6 @@
               This is a really long page text'
             }
           ];
-
-          $ionicSlideBoxDelegate.update();
         }, 100);
       })
 

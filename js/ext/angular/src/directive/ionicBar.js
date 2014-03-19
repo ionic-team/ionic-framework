@@ -3,11 +3,36 @@
 
 angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
 
-.directive('barHeader', ['$ionicScrollDelegate', function($ionicScrollDelegate) {
+.directive('barHeader', ['$document', function($document) {
   return {
     restrict: 'C',
     link: function($scope, $element, $attr) {
-      $ionicScrollDelegate($scope).tapScrollToTop($element);
+      ionic.requestAnimationFrame(function() {
+        var scrollCtrl = $element.controller('$ionicScroll');
+        if (!scrollCtrl) {
+          return;
+        }
+
+        ionic.on('tap', onTap, $element[0]);
+        $scope.$on('$destroy', function() {
+          ionic.off('tap', onTap, $element[0]);
+        });
+
+        function onTap(e) {
+          if (ionic.DomUtil.getParentOrSelfWithClass(e.target, 'button', 4)) {
+            return;
+          }
+          var touch = e.gesture && e.gesture.touches[0] || e.detail.touches[0];
+          var bounds = $element[0].getBoundingClientRect();
+          if(ionic.DomUtil.rectContains(
+            touch.pageX, touch.pageY,
+            bounds.left, bounds.top - 20,
+            bounds.left + bounds.width, bounds.top + bounds.height)
+          ) {
+            scrollCtrl.scrollTop(true);
+          }
+        }
+      });
     }
   };
 }])

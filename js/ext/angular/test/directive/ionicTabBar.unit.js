@@ -272,7 +272,6 @@ describe('tabs', function() {
       expect($rootScope.elephant).toBe('banana');
     }));
 
-
     it('should add itself to tabsCtrl and remove on $destroy', function() {
       var el = setup();
       var tab = tabsCtrl.tabs[0];

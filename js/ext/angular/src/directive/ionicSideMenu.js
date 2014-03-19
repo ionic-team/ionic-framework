@@ -94,7 +94,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * ```js
  * function ContentController($scope) {
  *   $scope.toggleLeft = function() {
- *     $scope.sideMenuController.toggleLeft();
+ *     $scope.$ionicSideMenusController.toggleLeft();
  *   };
  * }
  * ```

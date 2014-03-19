@@ -159,8 +159,6 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
         rsp.viewId = backView.viewId;
         rsp.navAction = 'moveBack';
         rsp.viewId = backView.viewId;
-        //when going back, erase scrollValues
-        currentView.rememberedScrollValues = {};
         if(backView.historyId === currentView.historyId) {
           // went back in the same history
           rsp.navDirection = 'back';
@@ -234,8 +232,12 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
           stateName: this.getCurrentStateName(),
           stateParams: this.getCurrentStateParams(),
           url: $location.url(),
-          rememberedScrollValues: null
         });
+
+        if (rsp.navAction == 'moveBack') {
+          //moveBack(from, to);
+          $rootScope.$emit('$viewHistory.viewBack', currentView.viewId, rsp.viewId);
+        }
 
         // add the new view to this history's stack
         hist.stack.push(viewHistory.views[rsp.viewId]);

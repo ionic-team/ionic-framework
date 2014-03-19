@@ -23,11 +23,6 @@ angular.module('ionic.service', [
   'ionic.decorator.location'
 ]);
 
-// UI specific services and delegates
-angular.module('ionic.ui.service', [
-  'ionic.ui.service.scrollDelegate'
-]);
-
 angular.module('ionic.ui', [
     'ionic.ui.checkbox',
     'ionic.ui.content',
@@ -47,7 +42,6 @@ angular.module('ionic.ui', [
 
 angular.module('ionic', [
     'ionic.service',
-    'ionic.ui.service',
     'ionic.ui',
 
     // Angular deps

@@ -270,6 +270,9 @@ function($rootScope, $animate, $ionicBind, $compile, $ionicViewService) {
           tabsCtrl = ctrls[0],
           tabCtrl = ctrls[1];
 
+        //Remove title attribute so browser-tooltip does not apear
+        $element[0].removeAttribute('title');
+
         $ionicBind($scope, $attr, {
           animate: '=',
           onSelect: '&',

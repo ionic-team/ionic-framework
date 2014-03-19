@@ -688,12 +688,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
       }, false);
 
       var wheelShowBarFn = ionic.debounce(function() {
-        console.log('SHOWFN');
         self.__fadeScrollbars('in');
       }, 500, true);
 
       var wheelHideBarFn = ionic.debounce(function() {
-        console.log('HIDEFN');
         self.__fadeScrollbars('out');
       }, 100, false);
 

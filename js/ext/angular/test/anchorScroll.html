@@ -35,8 +35,7 @@
     </div>
 
     <script>
-function MyCtrl($scope, $location, $ionicScrollDelegate) {
-  var delegate = $ionicScrollDelegate($scope);
+function MyCtrl($scope, $location) {
   $scope.items = [];
   for (var i=0; i < 100; i++) {
     $scope.items.push({id:i});
@@ -44,7 +43,7 @@ function MyCtrl($scope, $location, $ionicScrollDelegate) {
 
   $scope.doScroll = function() {
     $location.hash('foo-50');
-    delegate.anchorScroll(true);
+    $scope.$ionicScrollController.anchorScroll(true);
   }
 }
     </script>

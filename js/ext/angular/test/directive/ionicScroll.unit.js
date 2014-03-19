@@ -31,38 +31,16 @@ describe('Ionic Scroll Directive', function() {
     expect(scrollElement.hasClass('padding')).toEqual(true);
   });
 
-  // it('Enables bouncing by default', function() {
-  //   ionic.Platform.setPlatform('iPhone');
-  //   element = compile('<ion-content has-header="true"></ion-scroll>')(scope);
-  //   scope.$apply();
-  //   var newScope = element.isolateScope();
-  //   var scrollView = scope.scrollView;
-  //   expect(scrollView.options.bouncing).toBe(true);
-  // });
-
-  it('Disables bouncing when has-bouncing = false', function() {
-    ionic.Platform.setPlatform('iPhone');
-    element = compile('<ion-content has-header="true" has-bouncing="false"></ion-scroll>')(scope);
+  it('should pass attr.controllerBind ionicScrollController', function() {
+    var element = compile('<ion-scroll controller-bind="scrolly">')(scope);
     scope.$apply();
-    var newScope = element.isolateScope();
-    var scrollView = scope.scrollView;
-    expect(scrollView.options.bouncing).toBe(false);
-  });
-
-  it('Disables bouncing by default on Android', function() {
-    ionic.Platform.setPlatform('Android');
-    element = compile('<ion-content has-header="true"></ion-scroll>')(scope);
-    scope.$apply();
-    var newScope = element.isolateScope();
-    var scrollView = scope.scrollView;
-    expect(scrollView.options.bouncing).toBe(false);
+    expect(scope.scrolly).toBe(element.controller('$ionicScroll'));
   });
 
   it('Should set start x and y', function() {
     element = compile('<ion-content start-x="100" start-y="300" has-header="true"></ion-scroll>')(scope);
     scope.$apply();
-    var newScope = element.isolateScope();
-    var scrollView = scope.scrollView;
+    var scrollView = scope.$ionicScrollController.scrollView;
     var vals = scrollView.getValues();
     expect(vals.left).toBe(100);
     expect(vals.top).toBe(300);

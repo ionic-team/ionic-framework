@@ -5,7 +5,7 @@ describe('ionRefresher directive', function() {
     inject(function($compile, $rootScope) {
       var scope = $rootScope.$new();
       var ionicScrollCtrl = {
-        setRefresher: jasmine.createSpy('setRefresher'),
+        _setRefresher: jasmine.createSpy('setRefresher'),
         scrollView: {
           finishPullToRefresh: jasmine.createSpy('finishPullToRefresh')
         }
@@ -50,8 +50,8 @@ describe('ionRefresher directive', function() {
 
   it('should setRefresher on scrollCtrl', function() {
     var el = setup();
-    expect(el.controller('$ionicScroll').setRefresher.callCount).toBe(1);
-    expect(el.controller('$ionicScroll').setRefresher).toHaveBeenCalledWith(
+    expect(el.controller('$ionicScroll')._setRefresher.callCount).toBe(1);
+    expect(el.controller('$ionicScroll')._setRefresher).toHaveBeenCalledWith(
       el.scope(), el[0]
     )
   });
