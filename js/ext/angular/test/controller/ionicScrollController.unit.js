@@ -195,7 +195,7 @@ describe('$ionicScroll Controller', function() {
   [false, true].forEach(function(shouldAnimate) {
     describe('with animate='+shouldAnimate, function() {
 
-      ddescribe('scroll action', function() {
+      describe('scroll action', function() {
         beforeEach(function() {
           setup();
           //Mock resize to insta-call through for easier tests
