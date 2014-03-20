@@ -53,8 +53,10 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
         console.log('Tapped!', res);
       }, function(err) {
         console.log('Err:', err);
-      }, function(msg) {
-        console.log('message:', msg);
+      }, function(popup) {
+        // If you need to access the popup directly, do it in the notify method
+        // This is also where you can programatically close the popup:
+        // popup.close();
       });
 
       // A confirm dialog
@@ -252,7 +254,10 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
   var constructPopupOnScope = function(element, scope) {
     var popup = {
       el: element[0],
-      scope: scope
+      scope: scope,
+      close: function() {
+        popAndRemove(this);
+      }
     };
 
     scope.popup = popup;
@@ -318,12 +323,19 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
   };
 
 
+
   // Public API
   return {
+    /**
+     * @private
+     */
     showPopup: function(data) {
       var q = $q.defer();
 
       createPopup(data, q).then(function(popup, scope) {
+
+        // Send the popup back
+        q.notify(popup);
 
         // We constructed the popup, push it on the stack and show it
         pushAndShow(popup, data);
@@ -340,7 +352,8 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
      * @name $ionicPopup#show
      * @description show a complex popup. This is the master show function for all popups
      * @param {data} object The options for showing a popup, of the form:
-     *
+     * @returns {Promise} an Angular promise which resolves when the user enters the correct data, and also
+     * sends the constructed popup in the notify function (for programatic closing, as shown in the example above).
      * ```
      * {
      *   content: '', // String. The content of the popup
