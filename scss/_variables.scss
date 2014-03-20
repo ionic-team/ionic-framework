@@ -361,6 +361,20 @@ $item-default-active-bg:          #D9D9D9 !default;
 $item-default-active-border:      $item-light-active-border !default;
 
 
+// Item Editing
+// -------------------------------
+
+$item-edit-transition-duration:   250ms !default;
+$item-edit-transition-function:   ease-in-out !default;
+
+$item-edit-right-open-width:      50px !default;
+$item-edit-left-open-width:       50px !default;
+
+$item-delete-icon-left:           8px !default;
+$item-delete-icon-size:           24px !default;
+$item-delete-icon-color:          $assertive !default;
+
+
 // Lists
 // -------------------------------
 

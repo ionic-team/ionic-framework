@@ -5,7 +5,6 @@
 
 .item {
   @include item-style($item-default-bg, $item-default-border, $item-default-text);
-  @include transition(margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out);
 
   position: relative;
   z-index: $z-index-item; // Make sure the borders and stuff don't get hidden by children
@@ -183,18 +182,10 @@ button.item.item-complex {
 }
 .item-complex .item-content,
 .item-radio .item-content {
-  /**
-   * The content area of a complex list item. This area can
-   * Slide left and right and be dragged to support different
-   * UI interactions.
-   */
-  @include transition(all 0.1s ease-in-out);
   position: relative;
   z-index: $z-index-item;
-
   padding: $item-padding (($item-padding * 3) - 5) $item-padding $item-padding;
   border: none;
-
   background-color: white;
 }
 
@@ -554,30 +545,60 @@ button.item-button-right:after,
 // Item Editing
 // -------------------------------
 
-.item-reordering {
-  position: absolute;
-  z-index: $z-index-item-reordering;
-  width: 100%;
+.item-left-editable .item-content,
+.item-right-editable .item-content {
+  // setup standard transition settings
+  @include transition-duration( $item-edit-transition-duration );
+  @include transition-timing-function( $item-edit-transition-function );
+  @include transition-property( none );
 }
 
-.item-placeholder {
-  opacity: 0.7;
+.item-left-editable .item-content {
+  // set transition property for an item just left editable
+  -webkit-transition-property: -webkit-transform;
+     -moz-transition-property: -moz-transform;
+          transition-property: transform;
+}
+
+.item-right-editable .item-content {
+  // set transition property for an item just right editable
+  @include transition-property(margin-right);
+}
+
+.item-left-editable.item-right-editable .item-content {
+  // set transition property for an item that's both left/right editable
+  -webkit-transition-property: -webkit-transform, margin-right;
+     -moz-transition-property: -moz-transform, margin-right;
+          transition-property: transform, margin-right;
+}
+
+.list-left-editing .item-left-editable .item-content,
+.item-left-editing.item-left-editable .item-content {
+  // actively editing the left side of the item
+  @include translate3d($item-edit-left-open-width, 0, 0);
+}
+
+.list-right-editing .item-right-editable .item-content,
+.item-right-editing.item-right-editable .item-content {
+  // actively editing the right side of the item
+  margin-right: $item-edit-right-open-width;
 }
 
 
-/**
- * The left-side edit area of a complex list item. This area shows
- * whe the list item is in edit mode.
- */
-.item-edit {
-  @include transition(left 0.2s ease-in-out, opacity 0.2s ease-in-out);
+// Item Left Edit Button
+// -------------------------------
+
+.item-left-edit {
+  @include transition(all $item-edit-transition-function $item-edit-transition-duration);
+  @include translate3d( $item-delete-icon-left - $item-edit-left-open-width, 0, 0);
   position: absolute;
   top: 0;
-  left: 8px;
+  left: 0;
   z-index: $z-index-item-edit;
-  width: 48px;
+  width: $item-edit-left-open-width;
   height: 100%;
   line-height: 100%;
+  opacity: 0;
 
   .button {
     height: 100%;
@@ -589,29 +610,46 @@ button.item-button-right:after,
       top: 0;
       left: 0;
       height: 100%;
-      color: $assertive;
-      font-size: 24px;
     }
   }
+}
 
-  &.ng-enter {
-    @include transition(left 0.2s ease-in-out, opacity 0.2s ease-in-out);
-    left: -48px;
-    opacity: 0;
+.list-left-editing .item-left-edit {
+  @include translate3d($item-delete-icon-left, 0, 0);
+  opacity: 1;
+}
+
+
+// Item Delete
+// -------------------------------
+
+.item-delete .button.icon {
+  color: $item-delete-icon-color;
+  font-size: $item-delete-icon-size;
+
+  &:hover {
+    opacity: .7;
   }
-  &.ng-enter-active {
-    left: 8px;
-    opacity: 1;
+}
+
+
+// Item Reordering
+// -------------------------------
+
+.list-reordering {
+  .item-drag {
+    z-index: 1;
   }
-  &.ng-leave {
-    @include transition(left 0.2s ease-in-out, opacity 0.2s ease-in-out);
-    left: 0px;
-    opacity: 1;
-  }
-  &.ng-leave-active {
-    left: -48px;
-    opacity: 0;
-  }
+}
+
+.item-reordering {
+  position: absolute;
+  z-index: $z-index-item-reordering;
+  width: 100%;
+}
+
+.item-placeholder {
+  opacity: 0.7;
 }
 
 .item-drag {
@@ -637,6 +675,8 @@ button.item-button-right:after,
     }
   }
 }
+
+
 /**
  * The hidden right-side buttons that can be exposed under a list item
  * with dragging.

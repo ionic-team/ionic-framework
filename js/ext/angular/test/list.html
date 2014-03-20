@@ -95,12 +95,6 @@
 
       <ion-content class="has-header">
 
-        <div contenteditable="true">
-          Hello!
-
-          Hello!
-        </div>
-
         <ion-list show-delete="isDeletingItems"
               show-reorder="isReorderingItems"
               on-refresh-holding="refreshHolding()"
@@ -118,7 +112,7 @@
               option-buttons="optionButtons1">
 
           <!-- shows that the item directive does not need attributes and can get values from the list attributes -->
-          <ion-item ion-item="item" ng-href="#" ng-click="itemClick()" class="item-thumbnail-left" ng-repeat="item in items" ng-class="{ active: item.isActive}">
+          <ion-item ion-item="item" ng-href="#" ng-click="itemClick()" class="item-thumbnail-left" ng-repeat="item in items">
             <img ng-src="{{item.face}}">
             <h2>{{item.from}}</h2>
             <p>{{item.text}}</p>
@@ -198,9 +192,14 @@
 
         // Build Mock Data
         $scope.items = [
-          { from: 'Ben', face: 'https://pbs.twimg.com/profile_images/378800000571933189/278e8e1b7871a115b95fc550cd07af40.png', text: 'Did you prepare?' },
-          { from: 'Adam', face: 'https://pbs.twimg.com/profile_images/2927292174/25b170ee2e3044fd936ad1319bc4b82d_bigger.jpeg', text: 'Don\'t forget to smile!' },
-          { from: 'Tim', face: 'https://pbs.twimg.com/profile_images/378800000290028838/ee3303b02223f25cb0f9b082b55b2eeb.jpeg', text: 'Bring some shirts!', isActive: true }
+          { from: 'Ben', face: 'https://pbs.twimg.com/profile_images/378800000571933189/278e8e1b7871a115b95fc550cd07af40.png', text: 'Whoa, whoa, whoa. There’s still plenty of meat on that bone. Now you take this home, throw it in a pot, add some broth, a potato. Baby, you\'ve got a stew going.' },
+          { from: 'Adam', face: 'https://pbs.twimg.com/profile_images/2927292174/25b170ee2e3044fd936ad1319bc4b82d_bigger.jpeg', text: 'It Ain\'t Easy Being Cheesy' },
+          { from: 'Tim', face: 'https://pbs.twimg.com/profile_images/378800000290028838/ee3303b02223f25cb0f9b082b55b2eeb.jpeg', text: 'Baxter! You know I don\'t speak spanish!' },
+          { from: 'Brody', face: 'https://pbs.twimg.com/profile_images/378800000138067018/554c103ebf37c2ba3b923b8deea46b0d.jpeg', text: 'Sounds like some sort of marmalade' },
+          { from: 'Peter', face: 'https://pbs.twimg.com/profile_images/378800000238071493/08f76337bdc91b1e1e73a9d55c57a451.jpeg', text: 'A cooked goose for everyone!' },
+          { from: 'Max', face: 'https://pbs.twimg.com/profile_images/430001754747305984/qa5DFLgU.jpeg', text: 'Yes my dear man, more beans. oooohh' },
+          { from: 'Andy', face: 'https://pbs.twimg.com/profile_images/423294834229522433/BSlEOBYt.jpeg', text: 'I did it all for her' },
+          { from: 'Melissa', face: 'https://pbs.twimg.com/profile_images/412451928816111616/VZ3_md1N.jpeg', text: 'I think I want my money back' }
         ];
 
 
