@@ -320,6 +320,10 @@
     }
     readyCallbacks = [];
     ionic.trigger('platformready', { target: document });
+
+    ionic.requestAnimationFrame(function(){
+      document.body.classList.add('platform-ready');
+    });
   }
 
 })(this, document, ionic);
