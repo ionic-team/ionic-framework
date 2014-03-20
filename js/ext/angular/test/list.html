@@ -108,7 +108,7 @@
               on-refresh="refreshItems()"
               on-reorder="onReorder(el, start, end)"
               refresh-complete="refreshComplete"
-              on-delete="deleteListItem(item)"
+              on-delete="deleteListItem(item, index)"
               delete-icon="ion-minus-circled"
               reorder-icon="ion-navicon"
               animation="my-repeat-animation"
@@ -118,7 +118,7 @@
               option-buttons="optionButtons1">
 
           <!-- shows that the item directive does not need attributes and can get values from the list attributes -->
-          <ion-item ion-item="item" ng-href="#" ng-click="itemClick()" class="item-thumbnail-left" ng-repeat="item in items" ng-class="{ active: item.isActive}">
+          <ion-item item="item" ng-href="#" ng-click="itemClick()" class="item-thumbnail-left" ng-repeat="item in items" ng-class="{ active: item.isActive}">
             <img ng-src="{{item.face}}">
             <h2>{{item.from}}</h2>
             <p>{{item.text}}</p>
@@ -140,7 +140,7 @@
           </ion-item>
 
           <!-- shows that the item directive can receive many attributes and overrides the list attributes -->
-          <ion-item on-delete="deleteItem(item)"
+          <ion-item on-delete="deleteItem(item, index)"
                 delete-icon="ion-trash-a"
                 reorder-icon="ion-navicon-round"
                 can-delete="true"
@@ -228,11 +228,11 @@
         };
 
         // Item Methods/Properties
-        $scope.deleteItem = function(item) {
-          alert('onDelete from the "item" directive on-delete attribute. Lets not delete this item today ok!');
+        $scope.deleteItem = function(item, index) {
+          console.log('onDelete from the "item" directive on-delete attribute. Lets not delete this item today ok!', item, index);
         };
-        $scope.deleteListItem = function(item) {
-          alert('onDelete from the "list" on-delete attribute');
+        $scope.deleteListItem = function(item, index) {
+          console.log('onDelete from the "list" on-delete attribute', item, index);
           $scope.items.splice($scope.items.indexOf(item), 1);
         };
         $scope.onReorder = function(el, start, end) {
