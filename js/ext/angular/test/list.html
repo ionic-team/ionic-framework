@@ -232,7 +232,7 @@
         };
         $scope.deleteListItem = function(item, index) {
           console.log('onDelete from the "list" on-delete attribute', item, index);
-          $scope.items.splice($scope.items.indexOf(item), 1);
+          $scope.items.splice(index, 1);
         };
         $scope.onReorder = function(el, start, end) {
           console.log('On reorder', el, start, end);
