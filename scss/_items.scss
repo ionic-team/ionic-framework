@@ -614,7 +614,8 @@ button.item-button-right:after,
   }
 }
 
-.list-left-editing .item-left-edit {
+.list-left-editing .item-left-edit,
+.item-left-editing .item-left-edit {
   @include translate3d($item-delete-icon-left, 0, 0);
   opacity: 1;
 }
