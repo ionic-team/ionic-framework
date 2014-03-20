@@ -367,12 +367,16 @@ $item-default-active-border:      $item-light-active-border !default;
 $item-edit-transition-duration:   250ms !default;
 $item-edit-transition-function:   ease-in-out !default;
 
-$item-edit-right-open-width:      50px !default;
-$item-edit-left-open-width:       50px !default;
+$item-left-edit-left:             8px !default;  // item's left side edit's "left" property
 
-$item-delete-icon-left:           8px !default;
+$item-right-edit-open-width:      50px !default;
+$item-left-edit-open-width:       50px !default;
+
 $item-delete-icon-size:           24px !default;
 $item-delete-icon-color:          $assertive !default;
+
+$item-reorder-icon-size:          32px !default;
+$item-reorder-icon-color:         $dark !default;
 
 
 // Lists

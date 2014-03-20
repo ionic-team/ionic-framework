@@ -67,7 +67,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
               <button class="button button-icon icon" ng-class="deleteIconClass" ng-click="deleteClick()" ion-stop-event="click"></button>\
             </div>\
             <a class="item-content" ng-href="{{ href }}" ng-transclude></a>\
-            <div class="item-right-edit item-drag" ng-if="reorderIconClass !== undefined">\
+            <div class="item-right-edit item-reorder" ng-if="reorderIconClass !== undefined">\
               <button data-ionic-action="reorder" class="button button-icon icon" ng-class="reorderIconClass"></button>\
             </div>\
             <div class="item-options" ng-if="itemOptionButtons">\

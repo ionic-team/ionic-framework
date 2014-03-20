@@ -290,7 +290,8 @@ describe('Ionic Item Directive', function () {
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
     expect(itemScope.reorderIconClass).toBe(undefined);
-    expect(itemElement.find('.item-drag').length).toBe(0);
+    expect(itemElement.find('.item-reorder').length).toBe(0);
+    expect(itemElement.find('.item-right-edit').length).toBe(0);
   }));
 
   it('Should be able to reorder cuz item can-reorder attribute true', inject(function ($timeout) {
@@ -299,7 +300,8 @@ describe('Ionic Item Directive', function () {
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
     expect(itemScope.reorderIconClass).toBe('test-icon');
-    expect(itemElement.find('.item-drag').length).toBe(1);
+    expect(itemElement.find('.item-reorder').length).toBe(1);
+    expect(itemElement.find('.item-right-edit').length).toBe(1);
   }));
 
   it('Should be able to reorder cuz list can-reorder attribute true', inject(function ($timeout) {
@@ -311,7 +313,8 @@ describe('Ionic Item Directive', function () {
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
     expect(itemScope.reorderIconClass).toBe('test-icon');
-    expect(itemElement.find('.item-drag').length).toBe(1);
+    expect(itemElement.find('.item-reorder').length).toBe(1);
+    expect(itemElement.find('.item-right-edit').length).toBe(1);
   }));
 
   it('Should not have options cuz no optionButtons', inject(function ($timeout) {
@@ -332,7 +335,8 @@ describe('Ionic Item Directive', function () {
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
     expect(itemScope.reorderIconClass).toBe('ion-navicon');
-    expect(itemElement.find('.item-drag').length).toBe(1);
+    expect(itemElement.find('.item-reorder').length).toBe(1);
+    expect(itemElement.find('.item-right-edit').length).toBe(1);
   }));
 
   it('Should not have options cuz item can-swipe false', inject(function ($timeout) {

@@ -7,7 +7,7 @@
   var ITEM_OPTIONS_CLASS = 'item-options';
   var ITEM_PLACEHOLDER_CLASS = 'item-placeholder';
   var ITEM_REORDERING_CLASS = 'item-reordering';
-  var ITEM_DRAG_CLASS = 'item-drag';
+  var ITEM_REORDER_BTN_CLASS = 'item-reorder';
 
   var DragOp = function() {};
   DragOp.prototype = {
@@ -420,7 +420,7 @@
     _initDrag: function() {
       //ionic.views.ListView.__super__._initDrag.call(this);
 
-      // Store the last one 
+      // Store the last one
       this._lastDragOp = this._dragOp;
 
       this._dragOp = null;
@@ -448,7 +448,7 @@
       var lastDragOp = this._lastDragOp;
 
       // Check if this is a reorder drag
-      if(ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_DRAG_CLASS) && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
+      if(ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_REORDER_BTN_CLASS) && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
         var item = this._getItem(e.target);
 
         if(item) {
