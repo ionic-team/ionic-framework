@@ -11,11 +11,14 @@
 
   </head>
   <body ng-controller="PopupCtrl">
-    <button class="button button-dark" ng-click="showPopup()">Generic</button>
-    <button class="button button-primary" ng-click="showConfirm()">Confirm</button>
-    <button class="button button-balanced" ng-click="showPrompt()">Prompt</button>
-    <button class="button button-balanced" ng-click="showPasswordPrompt()">Password Prompt</button>
-    <button class="button button-positive" ng-click="showAlert()">Alert</button>
+    <ion-content>
+      <button class="button button-dark" ng-click="showPopup()">Generic</button>
+      <button class="button button-primary" ng-click="showConfirm()">Confirm</button>
+      <button class="button button-balanced" ng-click="showPrompt()">Prompt</button>
+      <button class="button button-balanced" ng-click="showPasswordPrompt()">Password Prompt</button>
+      <button class="button button-positive" ng-click="showAlert()">Alert</button>
+      <div style="height: 3000px; width: 50px; background-color: rgba(0,0,0,0.5);"></div>
+    </ion-content>
 
     <script id="popup-template.html" type="text/ng-template">
       <input ng-model="data.wifi" type="text" placeholder="Password">
@@ -94,11 +97,17 @@
           };
           $scope.showAlert = function() {
             $ionicPopup.alert({
-              title: 'Don\'t eat that!',
-              content: 'It might taste good'
-            }).then(function(res) {
-              console.log('Thank you for not eating my delicious ice cream cone');
-            });
+              title: 'Draft Saved',
+              content: 'Your Data has been saved!'
+              }).then(function(res) {
+                console.log('Your Data has been saved!');
+              }, function(err) {},
+              function(popup) {
+                console.log('Got popup', popup);
+                $timeout(function() {
+                  popup.close();
+                }, 1000);
+              });
           };
       });
     </script>
