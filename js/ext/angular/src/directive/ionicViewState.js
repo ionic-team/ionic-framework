@@ -40,11 +40,6 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
     restrict: 'EA',
     priority: 1000,
     require: '^?ionNavBar',
-    scope: {
-      title: '@',
-      hideBackButton: '&',
-      hideNavBar: '&',
-    },
     compile: function(tElement, tAttrs, transclude) {
       tElement.addClass('pane');
       tElement[0].removeAttribute('title');
@@ -53,18 +48,21 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
         if (!navBarCtrl) {
           return;
         }
-        navBarCtrl.changeTitle($scope.title, $scope.$parent.$navDirection);
+        navBarCtrl.changeTitle($attr.title, $scope.$navDirection);
 
-        // Should we hide a back button when this tab is shown
-        navBarCtrl.showBackButton(!$scope.hideBackButton());
+        $scope.$watch($attr.hideBackButton, function(value) {
+          // Should we hide a back button when this tab is shown
+          navBarCtrl.showBackButton(!value);
+        });
 
-        // Should the nav bar be hidden for this view or not?
-        navBarCtrl.showBar(!$scope.hideNavBar());
+        $scope.$watch($attr.hideNavBar, function(value) {
+          // Should the nav bar be hidden for this view or not?
+          navBarCtrl.showBar(!value);
+        });
 
         // watch for changes in the title
-        $scope.$watch('title', function(val, oldVal) {
-          //Don't send in initial value, changeTitle does that
-          if (val !== oldVal) {
+        $attr.$observe('title', function(val, oldVal) {
+          if (val) {
             navBarCtrl.setTitle(val);
           }
         });

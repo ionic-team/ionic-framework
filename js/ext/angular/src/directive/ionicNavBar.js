@@ -381,6 +381,7 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
     require: '^ionNavBar',
     restrict: 'E',
     compile: function($element, $attrs) {
+      var content = $element.contents().remove();
       return function($scope, $element, $attrs, navBarCtrl) {
         var navElement = $attrs.side === 'right' ?
           navBarCtrl.rightButtonsElement :
@@ -390,7 +391,14 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
         //so we can remove them all when this element dies -
         //even if the buttons have changed through an ng-repeat or the like,
         //we just remove their div parent and they are gone.
-        var buttons = angular.element('<div>').append($element.contents().remove());
+        var buttons = angular.element('<div>').append(content);
+
+        //Compile buttons inside content so they have access to everything
+        //something inside content does (eg parent ionicScroll)
+        $element.append(buttons);
+        $compile(buttons)($scope);
+
+        //Append buttons to navbar
         $animate.enter(buttons, navElement);
 
         //When our ion-nav-buttons container is destroyed,

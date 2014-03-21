@@ -1,5 +1,15 @@
 describe('ionNavBackButton directive', function() {
-  beforeEach(module('ionic'));
+  beforeEach(module('ionic', function($compileProvider) {
+    $compileProvider.directive('needsScroll', function() {
+      return {
+        //Test if the buttons are 'children of ionScroll' when compiled 
+        require: '^$ionicScroll',
+        link: function(scope, element, attrs, ctrl) {
+          element.data('scrollCtrl', ctrl);
+        }
+      };
+    });
+  }));
 
   function setup(attr, content) {
     var el;
@@ -13,6 +23,27 @@ describe('ionNavBackButton directive', function() {
     });
     return el;
   }
+
+  it('should compile buttons with same scope & access the same data on compile', inject(function($compile, $rootScope) {
+    var el = $compile('<div>' +
+     '<ion-nav-bar></ion-nav-bar>' +
+     '<ion-view>' +
+       '<ion-content>' +
+         '<ion-nav-buttons side="left">' +
+           '<button needs-scroll>Hello!</button>' +
+         '</ion-nav-buttons>' +
+       '</ion-content>' +
+     '</ion-view>' +
+    '</div>')($rootScope.$new());
+    $rootScope.$apply();
+    expect(el.find('ion-content').children().scope())
+      .toBe(el.find('.left-buttons button').scope());
+
+    //Test if the button was compiled able to access the parents of ion-nav-buttons
+    var scrollCtrl = el.find('ion-content').controller('$ionicScroll');
+    expect(scrollCtrl).toBeTruthy();
+    expect(el.find('button[needs-scroll]').data('scrollCtrl')).toBe(scrollCtrl);
+  }));
 
   it('should error without a parent ionNavBar', inject(function($compile, $rootScope) {
     expect(function() {

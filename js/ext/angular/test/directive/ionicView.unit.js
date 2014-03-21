@@ -40,24 +40,27 @@ describe('ionView directive', function() {
     expect(el.controller('ionNavBar').changeTitle).toHaveBeenCalledWith('Hi, 1!', 'foo');
   });
 
-  it('should showBackButten depending on what is given', function() {
-    var el = setup();
+  it('should showBackButton depending on what is given', function() {
+    var el = setup('hide-back-button="shouldHideBack"');
     expect(el.controller('ionNavBar').showBackButton).toHaveBeenCalledWith(true);
-    el = setup('hide-back-button="true"');
+    el.scope().$apply('shouldHideBack = true');
     expect(el.controller('ionNavBar').showBackButton).toHaveBeenCalledWith(false);
+    el.scope().$apply('shouldHideBack = false');
+    expect(el.controller('ionNavBar').showBackButton).toHaveBeenCalledWith(true);
   });
 
   it('should showBar depending on what is given', function() {
-    var el = setup();
+    var el = setup('hide-nav-bar="shouldHide"');
     expect(el.controller('ionNavBar').showBar).toHaveBeenCalledWith(true);
-    var el = setup('hide-nav-bar="true"');
+    el.scope().$apply('shouldHide = true');
     expect(el.controller('ionNavBar').showBar).toHaveBeenCalledWith(false);
+    el.scope().$apply('shouldHide = false');
+    expect(el.controller('ionNavBar').showBar).toHaveBeenCalledWith(true);
   });
 
   it('should setTitle on change', function() {
-    var el = setup('', {title: 'foo'});
-    expect(el.controller('ionNavBar').setTitle).not.toHaveBeenCalled();
-    el.isolateScope().$apply('title = "bar"');
-    expect(el.controller('ionNavBar').setTitle).toHaveBeenCalledWith('bar');
+    var el = setup('title="{{something}}1"');
+    el.scope().$apply('something = "bar"');
+    expect(el.controller('ionNavBar').setTitle).toHaveBeenCalledWith('bar1');
   });
 });

@@ -24,7 +24,7 @@
       <ion-view title="Sign-In">
 
         <ion-nav-buttons side="left">
-          <button class="button button-icon icon ion-home">
+          <button class="button button-icon icon ion-home" ng-click="foo()">
             Home
           </button>
         </ion-nav-buttons>
@@ -321,6 +321,10 @@
       })
 
       .controller('SignInCtrl', function($scope, $state) {
+          $scope.foo = function() {
+            alert('foo');
+          };
+
         $scope.signIn = function(user) {
           $state.go('tabs.autolist');
         };
