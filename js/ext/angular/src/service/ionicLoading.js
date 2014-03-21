@@ -40,6 +40,7 @@ angular.module('ionic.service.loading', ['ionic.ui.loading'])
      * @returns {object} A shown loader with the following methods:
      *  - `hide()` - Hides the loader.
      *  - `show()` - Shows the loader.
+     *  - `setContent(string)` - Sets the html content of the loader.
      */
     show: function(opts) {
       var defaults = {
