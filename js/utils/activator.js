@@ -37,6 +37,7 @@
           // in XX milliseconds, set the queued elements to active
           // add listeners to clear all queued/active elements onMove
           if(e.type === 'touchstart') {
+            document.body.removeEventListener('mousedown', ionic.activator.start);
             document.body.addEventListener('touchmove', clear, false);
             setTimeout(activateElements, 85);
           } else {
