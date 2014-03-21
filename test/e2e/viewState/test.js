@@ -8,8 +8,8 @@ describe('viewState', function() {
   }
   function navButtons(dir) {
     return dir == 'back' ?
-      element(by.css('header .back-button')) :
-      element(by.css('header .'+dir+'-buttons .button'));
+      element(by.css('.bar-header .back-button')) :
+      element(by.css('.bar-header .'+dir+'-buttons .button'));
   }
 
   it('navbar with multiple histories', function() {
@@ -37,14 +37,14 @@ describe('viewState', function() {
     expect(navButtons('left').isPresent()).toBe(false);
     expect(navButtons('right').isPresent()).toBe(false);
 
-    element(by.css('.tabs a:nth-child(2)')).click();
+    element(by.css('.tabs .tab-item:nth-of-type(2)')).click();
 
     expect(navTitle().getText()).toBe('Add Auto');
     expect(navButtons('back').getAttribute('class')).toContain('hide');
     expect(navButtons('left').isPresent()).toBe(false);
     expect(navButtons('right').isPresent()).toBe(false);
 
-    element(by.css('.tabs a:nth-child(1)')).click();
+    element(by.css('.tabs .tab-item:nth-of-type(1)')).click();
 
     expect(navTitle().getText()).toBe('Auto Details');
     expect(navButtons('back').getAttribute('class')).not.toContain('hide');
@@ -65,7 +65,7 @@ describe('viewState', function() {
     expect(navButtons('left').isPresent()).toBe(false);
     expect(navButtons('right').isPresent()).toBe(false);
 
-    element(by.css('.tabs a:nth-child(1)')).click();
+    element(by.css('.tabs a:nth-of-type(1)')).click();
 
     expect(navTitle().getText()).toBe('Auto List');
     expect(navButtons('back').getAttribute('class')).toContain('hide');
@@ -79,7 +79,7 @@ describe('viewState', function() {
     expect(navButtons('left').isPresent()).toBe(false);
     expect(navButtons('right').isPresent()).toBe(false);
 
-    element(by.css('.tabs a:nth-child(4)')).click();
+    element(by.css('.tabs a:nth-of-type(4)')).click();
 
     expect(navTitle().getText()).toBe('Sign-In');
     expect(navButtons('back').getAttribute('class')).toContain('hide');
