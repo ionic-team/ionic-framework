@@ -107,6 +107,7 @@
 }
 
 .loading-backdrop {
+  @include transition(visibility 0s linear 0.3s);
   position: fixed;
   top: 0;
   left: 0;
@@ -119,13 +120,9 @@
   &.active {
     @include transition-delay(0s);
     visibility: visible;
-  }
-}
-
-.loading-backdrop {
-  @include transition(visibility 0s linear 0.3s);
-  &.active {
-    background-color: rgba(0,0,0,0.7);
+    &.show-backdrop {
+      background-color: rgba(0,0,0,0.7);
+    }
   }
 }
 

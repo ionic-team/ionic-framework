@@ -15,7 +15,7 @@ angular.module('ionic.ui.loading', [])
     link: function($scope, $element){
       $element.addClass($scope.animation || '');
     },
-    template: '<div class="loading-backdrop" ng-class="{enabled: showBackdrop}">' +
+    template: '<div class="loading-backdrop" ng-class="{\'show-backdrop\': showBackdrop}">' +
                 '<div class="loading" ng-transclude>' +
                 '</div>' +
               '</div>'
