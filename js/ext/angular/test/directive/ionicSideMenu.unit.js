@@ -15,10 +15,10 @@ describe('Ionic Angular Side Menu', function() {
   }));
 
   it('should assign sideMenuController with option', inject(function($compile, $rootScope) {
-    var el = $compile('<ion-side-menus controller-bind="supermodel"></ion-side-menus>')($rootScope);
+    var el = $compile('<ion-side-menus controller-bind="supermodel"></ion-side-menus>')($rootScope.$new());
     var scope = el.scope();
     expect(el.controller('ionSideMenus')).toBeDefined();
-    expect(scope.supermodel).toBe(el.controller('ionSideMenus'));
+    expect(scope.$parent.supermodel).toBe(el.controller('ionSideMenus'));
   }));
 
   it('should init with custom model attr', function() {

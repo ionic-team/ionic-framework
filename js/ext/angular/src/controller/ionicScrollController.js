@@ -43,7 +43,7 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     .data('$$ionicScrollController', this);
 
   $parse(scrollViewOptions.controllerBind || '$ionicScrollController')
-    .assign($scope.$parent, this);
+    .assign($scope.$parent || $scope, this);
 
   if (!angular.isDefined(scrollViewOptions.bouncing)) {
     ionic.Platform.ready(function() {

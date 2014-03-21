@@ -119,7 +119,8 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
 
       $scope.sideMenuContentTranslateX = 0;
 
-      $parse($attrs.controllerBind || '$ionicSideMenusController').assign($scope, this);
+      $parse($attrs.controllerBind || '$ionicSideMenusController')
+        .assign($scope.$parent || $scope, this);
     }],
     replace: true,
     transclude: true,

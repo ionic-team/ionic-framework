@@ -124,12 +124,13 @@ function barDirective(isHeader) {
             alignTitle: $attr.alignTitle || 'center'
           });
 
+          var el = $element[0];
+          //just incase header is on rootscope
+          var parentScope = $scope.$parent || $scope;
+
           $parse($attr.controllerBind ||
             (isHeader ? '$ionicHeaderBarController' : '$ionicFooterBarController')
-          ).assign($scope, hb);
-
-          var el = $element[0];
-          var parentScope = $scope.$parent || $scope; //just incase header is on rootscope
+          ).assign(parentScope, hb);
 
           if (isHeader) {
             $scope.$watch(function() { return el.className; }, function(value) {
