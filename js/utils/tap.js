@@ -205,21 +205,29 @@
   var tapCoordinates = {}; // used to remember coordinates to ignore if they happen again quickly
   var startCoordinates = {}; // used to remember where the coordinates of the start of the tap
   var CLICK_PREVENT_DURATION = 1500; // max milliseconds ghostclicks in the same area should be prevented
-  var REMOVE_PREVENT_DELAY = 375; // delay after a touchend/mouseup before removing the ghostclick prevent
+  var REMOVE_PREVENT_DELAY = 380; // delay after a touchend/mouseup before removing the ghostclick prevent
   var HIT_RADIUS = 15;
 
-  // set global click handler and check if the event should stop or not
-  document.addEventListener('click', preventGhostClick, true);
+  ionic.Platform.ready(function(){
 
-  // global tap event listener polyfill for HTML elements that were "tapped" by the user
-  ionic.on("tap", tapPolyfill, document);
+    if(ionic.Platform.grade === 'c') {
+      // low performing phones should have a longer ghostclick prevent
+      REMOVE_PREVENT_DELAY = 800;
+    }
 
-  // listeners used to remove ghostclick prevention
-  document.addEventListener('touchend', removeClickPrevent, false);
-  document.addEventListener('mouseup', removeClickPrevent, false);
+    // set global click handler and check if the event should stop or not
+    document.addEventListener('click', preventGhostClick, true);
 
-  // in the case the user touched the screen, then scrolled, it shouldn't fire the click
-  document.addEventListener('touchstart', recordStartCoordinates, false);
-  document.addEventListener('mousedown', recordStartCoordinates, false);
+    // global tap event listener polyfill for HTML elements that were "tapped" by the user
+    ionic.on("tap", tapPolyfill, document);
+
+    // listeners used to remove ghostclick prevention
+    document.addEventListener('touchend', removeClickPrevent, false);
+    document.addEventListener('mouseup', removeClickPrevent, false);
+
+    // in the case the user touched the screen, then scrolled, it shouldn't fire the click
+    document.addEventListener('touchstart', recordStartCoordinates, false);
+    document.addEventListener('mousedown', recordStartCoordinates, false);
+  });
 
 })(this, document, ionic);
