@@ -22,7 +22,7 @@ describe('Ionic Content directive', function() {
   });
 
   it('has $onScroll (used by $ionicScrollController)', function() {
-    element = compile('<ion-scroll on-scroll="foo()"></ion-scroll>')(scope);
+    element = compile('<ion-content on-scroll="foo()"></ion-content>')(scope);
     scope = element.scope();
     scope.foo = jasmine.createSpy('foo');
     scope.$apply();
