@@ -16,7 +16,7 @@
 
       this.showDelay = opts.showDelay || 0;
 
-      this._loadingBox = this.el.querySelector('.loading');
+      this._loadingBox = this.el.querySelector('.loading') || this.el;
     },
     show: function() {
       var _this = this;
