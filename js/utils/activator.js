@@ -5,18 +5,34 @@
   var activeElements = {};  // elements that are currently active
   var keyId = 0;            // a counter for unique keys for the above ojects
 
-  function onStart(e) {
-    // when an element is touched/clicked, it climbs up a few
-    // parents to see if it is an .item or .button element
+  ionic.activator = {
 
-    ionic.requestAnimationFrame(function(){
-      var x, ele = e.target;
-      for(x=0; x<5; x++) {
-        if(!ele || ele.tagName === 'LABEL') break;
-        if( ele.classList.contains('item') || ele.classList.contains('button') ) {
+    start: function(e) {
+      // when an element is touched/clicked, it climbs up a few
+      // parents to see if it is an .item or .button element
+      ionic.requestAnimationFrame(function(){
+        var ele = e.target;
+        var eleToActivate;
 
+        for(var x=0; x<4; x++) {
+          if(!ele) break;
+          if(eleToActivate && ele.classList.contains('item')) {
+            eleToActivate = ele;
+            break;
+          }
+          if( ele.tagName == 'A' || ele.tagName == 'BUTTON' || ele.getAttribute('ng-click') ) {
+            eleToActivate = ele;
+          }
+          if( ele.classList.contains('button') ) {
+            eleToActivate = ele;
+            break;
+          }
+          ele = ele.parentElement;
+        }
+
+        if(eleToActivate) {
           // queue that this element should be set to active
-          queueElements[keyId] = ele;
+          queueElements[keyId] = eleToActivate;
 
           // in XX milliseconds, set the queued elements to active
           // add listeners to clear all queued/active elements onMove
@@ -29,12 +45,11 @@
           }
 
           keyId = (keyId > 19 ? 0 : keyId + 1);
-          break;
         }
-        ele = ele.parentElement;
-      }
-    });
-  }
+
+      });
+    }
+  };
 
   function activateElements() {
     // activate all elements in the queue
@@ -76,8 +91,8 @@
   // use window.onload because this doesn't need to run immediately
   window.addEventListener('load', function(){
     // start an active element
-    document.body.addEventListener('touchstart', onStart, false);
-    document.body.addEventListener('mousedown', onStart, false);
+    document.body.addEventListener('touchstart', ionic.activator.start, false);
+    document.body.addEventListener('mousedown', ionic.activator.start, false);
 
     // clear all active elements after XX milliseconds
     document.body.addEventListener('touchend', onEnd, false);
