@@ -362,7 +362,7 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
  * <ion-nav-view>
  *   <ion-view>
  *     <ion-nav-buttons side="left">
- *       <button class="button">
+ *       <button class="button" ng-click="doSomething()">
  *         I'm a button on the left of the navbar!
  *       </button>
  *     </ion-nav-buttons>
