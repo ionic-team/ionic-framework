@@ -193,6 +193,7 @@
   .title + .button:last-child,
   > .button + .button:last-child,
   > .button.pull-right,
+  .buttons.pull-right, 
   .title + .buttons {
     position: absolute;
     top: 5px;
