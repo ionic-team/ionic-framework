@@ -21,6 +21,18 @@ describe('Ionic Content directive', function() {
     expect(element.hasClass('scroll-content')).toBe(true);
   });
 
+  it('has $onScroll (used by $ionicScrollController)', function() {
+    element = compile('<ion-scroll on-scroll="foo()"></ion-scroll>')(scope);
+    scope = element.scope();
+    scope.foo = jasmine.createSpy('foo');
+    scope.$apply();
+    expect(typeof scope.$onScroll).toBe('function');
+
+    expect(scope.foo).not.toHaveBeenCalled();
+    scope.$onScroll();
+    expect(scope.foo).toHaveBeenCalled();
+  });
+
   it('should add padding classname', function() {
     var element = compile('<ion-content padding="shouldPad"></ion-content>')(scope);
     var scrollElement = element.find('.scroll');

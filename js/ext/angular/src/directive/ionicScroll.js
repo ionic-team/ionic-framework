@@ -23,18 +23,10 @@ angular.module('ionic.ui.scroll', [])
  * @param {boolean=} scrollbar-x Whether to show the horizontal scrollbar. Default false.
  * @param {boolean=} scrollbar-x Whether to show the vertical scrollbar. Default true.
  */
-.directive('ionScroll', ['$parse', '$timeout', '$controller', function($parse, $timeout, $controller) {
+.directive('ionScroll', ['$parse', '$timeout', '$controller', '$ionicBind', function($parse, $timeout, $controller, $ionicBind) {
   return {
     restrict: 'E',
-    scope: {
-      direction: '@',
-      paging: '@',
-      onRefresh: '&',
-      onScroll: '&',
-      scroll: '@',
-      scrollbarX: '@',
-      scrollbarY: '@',
-    },
+    scope: true,
     controller: function() {},
     compile: function(element, attr) {
       element.addClass('scroll-view');
@@ -47,6 +39,15 @@ angular.module('ionic.ui.scroll', [])
       return { pre: prelink };
       function prelink($scope, $element, $attr) {
         var scrollView, scrollCtrl;
+
+        $ionicBind($scope, $attr, {
+          direction: '@',
+          paging: '@',
+          $onScroll: '&onScroll',
+          scroll: '@',
+          scrollbarX: '@',
+          scrollbarY: '@',
+        });
 
         if (angular.isDefined($attr.padding)) {
           $scope.$watch($attr.padding, function(newVal) {

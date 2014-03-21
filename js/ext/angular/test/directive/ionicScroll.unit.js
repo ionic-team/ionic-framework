@@ -19,6 +19,18 @@ describe('Ionic Scroll Directive', function() {
     expect(element.controller('$ionicScroll').element).toBe(element[0]);
   });
 
+  it('has $onScroll (used by $ionicScrollController)', function() {
+    element = compile('<ion-scroll on-scroll="foo()"></ion-scroll>')(scope);
+    scope = element.scope();
+    scope.foo = jasmine.createSpy('foo');
+    scope.$apply();
+    expect(typeof scope.$onScroll).toBe('function');
+
+    expect(scope.foo).not.toHaveBeenCalled();
+    scope.$onScroll();
+    expect(scope.foo).toHaveBeenCalled();
+  });
+
   it('Has scroll-view class', function() {
     element = compile('<ion-scroll></ion-scroll>')(scope);
     expect(element.hasClass('scroll-view')).toBe(true);
