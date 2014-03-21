@@ -94,6 +94,10 @@
     @include item-style($item-dark-bg, $item-dark-border, $item-dark-text);
   }
 
+  &[ng-click]:hover {
+    cursor: pointer;
+  }
+
 }
 
 // Link and Button Active States

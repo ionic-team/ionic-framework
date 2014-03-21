@@ -4,11 +4,11 @@
  * --------------------------------------------------
  * Adapted from normalize.css and some reset.css. We don't care even one
  * bit about old IE, so we don't need any hacks for that in here.
- * 
+ *
  * There are probably other things we could remove here, as well.
  *
  * normalize.css v2.1.2 | MIT License | git.io/normalize
- 
+
  * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
  * http://cssreset.com
  */
@@ -23,7 +23,7 @@ dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed, fieldset,
-figure, figcaption, footer, header, hgroup, 
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
   margin: 0;
@@ -100,10 +100,10 @@ body {
 /**
  * Remove default outlines.
  */
-a, 
+a,
 button,
-:focus, 
-a:focus, 
+:focus,
+a:focus,
 button:focus,
 a:active,
 a:hover {
