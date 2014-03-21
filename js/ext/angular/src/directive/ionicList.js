@@ -214,6 +214,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
 
     link: function($scope, $element, $attr, ionicScrollCtrl) {
       $scope.listView = new ionic.views.ListView({
+        canSwipe: $scope.canSwipe !== "false" && !!$scope.optionButtons(),
         el: $element[0],
         listEl: $element[0].children[0],
         scrollEl: ionicScrollCtrl && ionicScrollCtrl.element,

@@ -315,7 +315,8 @@
       opts = ionic.extend({
         onReorder: function(el, oldIndex, newIndex) {},
         virtualRemoveThreshold: -200,
-        virtualAddThreshold: 200
+        virtualAddThreshold: 200,
+        canSwipe: false
       }, opts);
 
       ionic.extend(this, opts);
@@ -504,6 +505,10 @@
      */
     _handleDrag: function(e) {
       var _this = this, content, buttons;
+
+      if (!this.canSwipe) {
+        return;
+      }
 
       if(Math.abs(e.gesture.deltaY) > 5) {
         this._didDragUpOrDown = true;

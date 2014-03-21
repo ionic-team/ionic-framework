@@ -14,14 +14,17 @@
 
         <ion-pane ion-side-menu-content>
           <header class="bar bar-header bar-positive">
-            <button class="button button-icon ion-navicon" ng-click="sideMenuController.toggleLeft(false)"></button>
+            <button class="button button-icon ion-navicon" ng-click="$ionicSideMenusController.toggleLeft()"></button>
             <h1 class="title">Slide me</h1>
-            <button class="button button-icon ion-navicon" ng-click="sideMenuController.toggleRight(false)"></button>
+            <button class="button button-icon ion-navicon" ng-click="$ionicSideMenusController.toggleRight()"></button>
           </header>
           <ion-content class="has-header">
             <ion-toggle ng-model="$root.$draggy">Hello</ion-toggle>
             <input type="range" ng-model="$root.menuWidth" min="0" max="300">
             <h1>Content</h1>
+            <ion-list option-buttons="[{text:'Hello',type:'button-positive'}]">
+              <ion-item>Sup</ion-item>
+            </ion-list>
           </ion-content>
         </ion-pane>
 
