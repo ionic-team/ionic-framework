@@ -469,6 +469,16 @@ ionic.views.Slider = ionic.views.View.inherit({
     }
 
     // Public API
+    /**
+     * @ngdoc method
+     * @name ionicSlideBox#update
+     * @description
+     * Update the slidebox (for example if using Angular with ng-repeat,
+     * resize it for the elements inside).
+     */
+    this.update = function() {
+      setTimeout(setup);
+    };
     this.setup = function() {
       setup();
     };
