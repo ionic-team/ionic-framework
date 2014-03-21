@@ -1,16 +1,15 @@
 describe('bar directives', function() {
   beforeEach(module('ionic'));
 
-  describe('barHeader tapScrollToTop', function() {
+  describe('tapScrollToTop', function() {
     function setup() {
       var el;
       inject(function($compile, $rootScope) {
-        el = angular.element('<div class="bar-header">')
-        el.data('$$ionicScrollController', {
-          scrollTop: jasmine.createSpy('scrollTop')
-        });
+        el = angular.element('<ion-header-bar>')
+        var container = angular.element('<ion-content>').append(el);
         ionic.requestAnimationFrame = function(cb) { cb(); };
-        $compile(el)($rootScope.$new());
+        $compile(container)($rootScope.$new());
+        container.controller('$ionicScroll').scrollTop = jasmine.createSpy('scrollTop')
         $rootScope.$apply();
       });
       return el;

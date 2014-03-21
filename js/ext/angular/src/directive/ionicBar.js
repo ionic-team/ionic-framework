@@ -3,10 +3,10 @@
 
 angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
 
-.directive('barHeader', ['$document', function($document) {
+.directive('ionHeaderBar', ['$document', function($document) {
   return {
-    restrict: 'C',
-    link: function($scope, $element, $attr) {
+    restrict: 'E',
+    link: function($scope, $element, $attr, scrollCtrl) {
       ionic.requestAnimationFrame(function() {
         var scrollCtrl = $element.controller('$ionicScroll');
         if (!scrollCtrl) {
@@ -129,24 +129,25 @@ function barDirective(isHeader) {
           ).assign($scope, hb);
 
           var el = $element[0];
+          var parentScope = $scope.$parent || $scope; //just incase header is on rootscope
 
           if (isHeader) {
             $scope.$watch(function() { return el.className; }, function(value) {
               var isSubheader = value.indexOf('bar-subheader') !== -1;
-              $scope.$parent.$hasHeader = !isSubheader;
-              $scope.$parent.$hasSubheader = isSubheader;
+              parentScope.$hasHeader = !isSubheader;
+              parentScope.$hasSubheader = isSubheader;
             });
             $scope.$on('$destroy', function() {
-              $scope.$parent.$hasHeader = $scope.$parent.$hasSubheader = null;
+              parentScope.$hasHeader = parentScope.$hasSubheader = null;
             });
           } else {
             $scope.$watch(function() { return el.className; }, function(value) {
               var isSubfooter = value.indexOf('bar-subfooter') !== -1;
-              $scope.$parent.$hasFooter = !isSubfooter;
-              $scope.$parent.$hasSubfooter = isSubfooter;
+              parentScope.$hasFooter = !isSubfooter;
+              parentScope.$hasSubfooter = isSubfooter;
             });
             $scope.$on('$destroy', function() {
-              $scope.$parent.$hasFooter = $scope.$parent.$hasSubfooter = null;
+              parentScope.$hasFooter = parentScope.$hasSubfooter = null;
             });
             $scope.$watch('$hasTabs', function(val) {
               $element.toggleClass('has-tabs', !!val);
