@@ -13,6 +13,11 @@ describe('$location decorator', function() {
       $location.hash('123');
       $timeout.flush();
       expect(scroll.scrollTop).toBe(0);
+
+      scroll.scrollTop = 33;
+      $location.hash('456');
+      $timeout.flush();
+      expect(scroll.scrollTop).toBe(0);
     }));
 
   });
