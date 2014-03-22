@@ -132,7 +132,7 @@ gulp.task('changelog', function(done) {
     version: pkg.version,
   }, function(err, data) {
     if (err) return done(err);
-    require('fs').writeFileSync('CHANGELOG.md', data);
+    fs.writeFileSync('CHANGELOG.md', data);
     done();
   });
 });
