@@ -1,4 +1,3 @@
-var fs = require('fs');
 module.exports = {
   dist: 'dist',
   distJs: 'dist/js',
