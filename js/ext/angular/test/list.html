@@ -2,82 +2,9 @@
   <head>
     <meta charset="utf-8">
     <title>List</title>
-
-    <!-- Sets initial viewport load and disables zooming  -->
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <script src="../../../../dist/js/ionic.bundle.js"></script>
-    <style>
-      .box {
-        width: 100%;
-        height: 50px;
-        color: #fff;
-      }
-      .box h1 {
-        position: absolute;
-        top: 50%;
-        width: 100%;
-        margin-top: -50px;
-
-        color: #fff;
-
-        font-size: 60px;
-        text-align: center;
-        font-weight: bold;
-      }
-      .blue {
-        background-color: rgb(71, 138, 238);
-      }
-      .yellow {
-        background-color: rgb(233, 233, 109);
-      }
-      .pink {
-        background-color: rgb(233, 109, 233);
-      }
-      .my-repeat-animation > .ng-enter,
-      .my-repeat-animation > .ng-leave,
-      .my-repeat-animation > .ng-move {
-        -webkit-transition: 0.2s linear all;
-        transition: 0.2s linear all;
-        position: relative;
-      }
-
-      .my-repeat-animation > .ng-enter {
-        left:-10px;
-        opacity:0;
-        z-index: 10;
-      }
-      .my-repeat-animation > .ng-enter.ng-enter-active {
-        left:0;
-        opacity:1;
-      }
-
-      .my-repeat-animation > .ng-leave {
-        left:0;
-        opacity:1;
-      }
-      .my-repeat-animation > .ng-leave.ng-leave-active {
-        left:-10px;
-        opacity:0;
-      }
-
-      .my-repeat-animation > .ng-move {
-        opacity:0.5;
-      }
-      .my-repeat-animation > .ng-move.ng-move-active {
-        opacity:1;
-      }
-      #click-notify {
-        position: absolute;
-        z-index: 9999;
-        background: red;
-        min-width: 50px;
-        left: 48%;
-        top: 150px;
-        display: none;
-      }
-    </style>
-
   </head>
   <body ng-controller="TestCtrl">
     <div id="click-notify">CLICK!</div>
