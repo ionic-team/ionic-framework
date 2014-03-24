@@ -16,14 +16,15 @@ module.exports = {
     ' *\n' +
     ' * Licensed under the MIT license. Please see LICENSE for more information.\n'+
     ' *\n' +
-    ' */\n\n' ,
+    ' */\n\n',
   bundleBanner:
     '/*!\n' +
     ' * ionic.bundle.js is a concatenation of:\n' +
     ' * ionic.js, angular.js, angular-animate.js,\n'+
     ' * angular-ui-router.js, and ionic-angular.js\n'+
     ' */\n\n',
-  footer: '\n})();',
+  closureStart: '(function() {\n',
+  closureEnd: '\n})();',
 
   ionicFiles: [
     // Base

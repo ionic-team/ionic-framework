@@ -43,7 +43,8 @@
     "htmlparser2": "3.7.0",
     "js-yaml": "3.0.2",
     "event-stream": "3.1.0",
-    "gulp-strip-debug": "^0.3.0"
+    "gulp-strip-debug": "^0.3.0",
+    "gulp-footer": "^1.0.4"
   },
   "licenses": [
     {

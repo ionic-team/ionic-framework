@@ -21,6 +21,7 @@ var through = require('through');
 var argv = require('minimist')(process.argv.slice(2));
 
 var concat = require('gulp-concat');
+var footer = require('gulp-footer');
 var gulpif = require('gulp-if');
 var header = require('gulp-header');
 var jshint = require('gulp-jshint');
@@ -185,6 +186,8 @@ gulp.task('scripts', function() {
     .pipe(gulpif(IS_RELEASE_BUILD, stripDebug()))
     .pipe(template({ pkg: pkg }))
     .pipe(concat('ionic.js'))
+    .pipe(header(buildConfig.closureStart))
+    .pipe(footer(buildConfig.closureEnd))
     .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distJs))
     .pipe(gulpif(IS_RELEASE_BUILD, uglify()))
@@ -197,6 +200,8 @@ gulp.task('scripts-ng', function() {
   return gulp.src(buildConfig.angularIonicFiles)
     .pipe(gulpif(IS_RELEASE_BUILD, stripDebug()))
     .pipe(concat('ionic-angular.js'))
+    .pipe(header(buildConfig.closureStart))
+    .pipe(footer(buildConfig.closureEnd))
     .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distJs))
     .pipe(gulpif(IS_RELEASE_BUILD, uglify()))
