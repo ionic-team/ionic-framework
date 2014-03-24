@@ -24,12 +24,12 @@ function androidKeyboardFix() {
     //If the height changes, and it's less than before, we have a keyboard open
     } else if (rememberedDeviceHeight !== window.innerHeight &&
                window.innerHeight < rememberedDeviceHeight) {
-      document.body.classList.add('hide-footer');
+      document.body.classList.add('footer-hide');
       //Wait for next frame so document.activeElement is set
       ionic.requestAnimationFrame(handleKeyboardChange);
     } else {
       //Otherwise we have a keyboard close or a *really* weird resize
-      document.body.classList.remove('hide-footer');
+      document.body.classList.remove('footer-hide');
     }
 
     function handleKeyboardChange() {

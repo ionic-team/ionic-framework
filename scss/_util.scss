@@ -25,7 +25,7 @@
   visibility: hidden;
 }
 
-.hide-footer {
+.footer-hide {
   .bar-footer,
   .tabs {
     display: none;
@@ -49,7 +49,7 @@
 }
 
 .disable-user-behavior {
-  // used to prevent the browser from doing its native behavior. this doesnt 
+  // used to prevent the browser from doing its native behavior. this doesnt
   // prevent the scrolling, but cancels the contextmenu, tap highlighting, etc
 
   @include user-select(none);
@@ -57,7 +57,7 @@
   @include tap-highlight-transparent();
 
   -webkit-user-drag: none;
-  
+
   -ms-touch-action: none;
   -ms-content-zooming: none;
 }
