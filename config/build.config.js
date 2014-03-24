@@ -16,8 +16,7 @@ module.exports = {
     ' *\n' +
     ' * Licensed under the MIT license. Please see LICENSE for more information.\n'+
     ' *\n' +
-    ' */\n\n' +
-    '(function() {\n',
+    ' */\n\n' ,
   bundleBanner:
     '/*!\n' +
     ' * ionic.bundle.js is a concatenation of:\n' +
