@@ -135,10 +135,10 @@
       return false;
     }
 
-    return (c.x > startCoordinates.x + HIT_RADIUS ||
-            c.x < startCoordinates.x - HIT_RADIUS ||
-            c.y > startCoordinates.y + HIT_RADIUS ||
-            c.y < startCoordinates.y - HIT_RADIUS);
+    return (c.x > startCoordinates.x + 2 ||
+            c.x < startCoordinates.x - 2 ||
+            c.y > startCoordinates.y + 2 ||
+            c.y < startCoordinates.y - 2);
   }
 
   function recordCoordinates(event) {
@@ -174,12 +174,19 @@
     return { x:0, y:0 };
   }
 
+  var clickPreventTimerId;
   function removeClickPrevent(e) {
-    setTimeout(function(){
+    clearTimeout(clickPreventTimerId);
+    clickPreventTimerId = setTimeout(function(){
       var tap = isRecentTap(e);
       if(tap) delete tapCoordinates[tap.id];
       startCoordinates = {};
     }, REMOVE_PREVENT_DELAY);
+  }
+
+  function touchEnd(e) {
+    tapPolyfill(e);
+    removeClickPrevent(e);
   }
 
   function stopEvent(e){
@@ -216,14 +223,13 @@
       REMOVE_PREVENT_DELAY = 800;
     }
 
+    // global action event listener for HTML elements that were tapped or held by the user
+    document.addEventListener('touchend', touchEnd, false);
+
     // set global click handler and check if the event should stop or not
     document.addEventListener('click', preventGhostClick, true);
 
-    // global tap event listener polyfill for HTML elements that were "tapped" by the user
-    ionic.on("tap", tapPolyfill, document);
-
-    // listeners used to remove ghostclick prevention
-    document.addEventListener('touchend', removeClickPrevent, false);
+    // listener used to remove ghostclick prevention
     document.addEventListener('mouseup', removeClickPrevent, false);
 
     // in the case the user touched the screen, then scrolled, it shouldn't fire the click
