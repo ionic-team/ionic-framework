@@ -485,26 +485,29 @@ describe('tabs', function() {
 
       expect(el.find('.icon.superIcon').length).toBe(1);
     });
+
     it('should change classes based on active', function() {
       var el = setup('icon-on="{{true}}" icon-off="{{false}}"');
 
       el.isolateScope().isTabActive = function() { return true; };
       el.isolateScope().$apply();
-      expect(el.hasClass('active')).toBe(true);
+      expect(el.hasClass('tab-item-active')).toBe(true);
       expect(el.find('.icon.true').length).toBe(1);
       expect(el.find('.icon.false').length).toBe(0);
 
       el.isolateScope().isTabActive = function() { return false; };
       el.isolateScope().$apply();
-      expect(el.hasClass('active')).toBe(false);
+      expect(el.hasClass('tab-item-active')).toBe(false);
       expect(el.find('.icon.true').length).toBe(0);
       expect(el.find('.icon.false').length).toBe(1);
     });
+
     it('shouldnt has-badge without badge', function() {
       var el = setup();
       expect(el.hasClass('has-badge')).toBe(false);
       expect(el.find('.badge').length).toBe(0);
     });
+
     it('should have badge', function() {
       var el = setup('badge="\'badger\'" badge-style="super-style"');
       expect(el.hasClass('has-badge')).toBe(true);
