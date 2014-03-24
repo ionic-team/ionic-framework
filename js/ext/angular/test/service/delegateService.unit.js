@@ -11,7 +11,7 @@ describe('DelegateFactory', function() {
   it('should have properties', function() {
     expect(setup()._instances).toEqual({});
     expect(setup()._registerInstance).toEqual(jasmine.any(Function));
-    expect(setup().withHandle).toEqual(jasmine.any(Function));
+    expect(setup().forHandle).toEqual(jasmine.any(Function));
   });
 
   it('should allow reg & dereg of instance with handle', function() {
@@ -94,12 +94,12 @@ describe('DelegateFactory', function() {
     expect(delegate.fn()).toBe('ret2');
   });
 
-  it('withHandle should return this for blank handle', function() {
+  it('forHandle should return this for blank handle', function() {
     var delegate = setup();
-    expect(delegate.withHandle()).toBe(delegate);
+    expect(delegate.forHandle()).toBe(delegate);
   });
 
-  describe('withHandle', function() {
+  describe('forHandle', function() {
     var delegate, instance1, instance2;
     beforeEach(function() {
       delegate = setup(['a']);
@@ -115,24 +115,24 @@ describe('DelegateFactory', function() {
       };
     });
     it('should return an InstanceWithHandle object with fields', function() {
-      expect(delegate.withHandle('one').a).toEqual(jasmine.any(Function));
-      expect(delegate.withHandle('two').a).toEqual(jasmine.any(Function));
-      expect(delegate.withHandle('invalid').a).toEqual(jasmine.any(Function));
+      expect(delegate.forHandle('one').a).toEqual(jasmine.any(Function));
+      expect(delegate.forHandle('two').a).toEqual(jasmine.any(Function));
+      expect(delegate.forHandle('invalid').a).toEqual(jasmine.any(Function));
     });
     it('should do nothing if calling for a non-added instance', function() {
-      expect(delegate.withHandle('one').a()).toBeUndefined();
+      expect(delegate.forHandle('one').a()).toBeUndefined();
     });
     it('should call an added instance\'s method', function() {
       delegate._registerInstance(instance1, '1');
       delegate._registerInstance(instance2, '2');
 
-      var result = delegate.withHandle('1').a(1,2,3);
+      var result = delegate.forHandle('1').a(1,2,3);
       expect(instance1.a).toHaveBeenCalledWith(1,2,3);
       expect(instance2.a).not.toHaveBeenCalled();
       expect(result).toBe('a1');
 
       instance1.a.reset();
-      var result = delegate.withHandle('2').a(2,3,4);
+      var result = delegate.forHandle('2').a(2,3,4);
       expect(instance2.a).toHaveBeenCalledWith(2,3,4);
       expect(instance1.a).not.toHaveBeenCalled();
       expect(result).toBe('a2');

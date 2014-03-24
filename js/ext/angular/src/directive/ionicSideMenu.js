@@ -85,7 +85,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
   'isOpenRight'
   /**
    * @ngdoc method
-   * @name $ionicSideMenuDelegate#withHandle
+   * @name $ionicSideMenuDelegate#forHandle
    * @param {string} handle
    * @returns `delegateInstance` A delegate instance that controls only the
    * sideMenu with delegate-handle matching the given handle.

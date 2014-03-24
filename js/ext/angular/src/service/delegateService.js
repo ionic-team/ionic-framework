@@ -13,22 +13,22 @@ function delegateService(methodNames) {
       };
     };
 
-    this.withHandle = function(handle) {
+    this.forHandle = function(handle) {
       if (!handle) {
         return delegate;
       }
-      return new InstanceWithHandle(handle);
+      return new InstanceForHandle(handle);
     };
 
     /*
      * Creates a new object that will have all the methodNames given,
      * and call them on the given the controller instance matching given
      * handle.
-     * The reason we don't just let withHandle return the controller instance
+     * The reason we don't just let forHandle return the controller instance
      * itself is that the controller instance might not exist yet.
      *
      * We want people to be able to do
-     * `var instance = $ionicScrollDelegate.withHandle('foo')` on controller
+     * `var instance = $ionicScrollDelegate.forHandle('foo')` on controller
      * instantiation, but on controller instantiation a child directive
      * may not have been compiled yet!
      *
@@ -36,11 +36,11 @@ function delegateService(methodNames) {
      * that will only try to fetch the controller with given handle
      * once the methods are actually called.
      */
-    function InstanceWithHandle(handle) {
+    function InstanceForHandle(handle) {
       this.handle = handle;
     }
     methodNames.forEach(function(methodName) {
-      InstanceWithHandle.prototype[methodName] = function() {
+      InstanceForHandle.prototype[methodName] = function() {
         var instance = delegate._instances[this.handle];
         if (!instance) {
           return $log.error(
