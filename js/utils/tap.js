@@ -178,6 +178,7 @@
     setTimeout(function(){
       var tap = isRecentTap(e);
       if(tap) delete tapCoordinates[tap.id];
+      startCoordinates = {};
     }, REMOVE_PREVENT_DELAY);
   }
 
