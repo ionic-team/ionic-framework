@@ -192,8 +192,9 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
         var el = $element[0];
         $scope.$watch(function() { return el.className; }, function(value) {
           var isTabsTop = value.indexOf('tabs-top') !== -1;
-          $scope.$hasTabs = !isTabsTop;
-          $scope.$hasTabsTop = isTabsTop;
+          var isHidden = value.indexOf('tabs-item-hide') !== -1;
+          $scope.$hasTabs = !isTabsTop && !isHidden;
+          $scope.$hasTabsTop = isTabsTop && !isHidden;
         });
         $scope.$on('$destroy', function() {
           $scope.$hasTabs = $scope.$hasTabsTop = null;
