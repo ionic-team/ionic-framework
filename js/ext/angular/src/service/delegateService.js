@@ -65,9 +65,10 @@ function delegateService(methodNames) {
       function callMethod(instancesToUse, methodName, args) {
         var finalResult;
         var result;
-        instancesToUse.forEach(function(instance) {
+        instancesToUse.forEach(function(instance, index) {
           result = instance[methodName].apply(instance, args);
-          if (!angular.isDefined(finalResult)) {
+          //Make it so the first result is the one returned
+          if (index === 0) {
             finalResult = result;
           }
         });
