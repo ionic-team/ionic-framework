@@ -10,7 +10,8 @@
   @include box-sizing(border-box);
 }
 
-body, .ionic-body {
+body,
+.ionic-body {
   @include touch-callout(none);
   @include font-smoothing(antialiased);
   @include text-size-adjust(none);
@@ -309,7 +310,8 @@ ion-infinite-scroll.active .scroll-infinite {
 .view {
   z-index: $z-index-view;
 }
-.pane, .view {
+.pane,
+.view {
   position: absolute;
   top: 0;
   right: 0;
