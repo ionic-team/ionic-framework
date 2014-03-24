@@ -31,14 +31,14 @@ angular.module('ionic.ui.touch', [])
         });
       });
 
-      element[0].addEventListener('touchend', onTap, false);
+      ionic.on("release", onTap, element[0]);
 
       // Hack for iOS Safari's benefit. It goes searching for onclick handlers and is liable to click
       // something else nearby.
       element.onclick = function(event) { };
 
       scope.$on('$destroy', function () {
-        element[0].removeEventListener('touchend', onTap);
+        ionic.off("release", onTap, element[0]);
       });
     };
   }])
