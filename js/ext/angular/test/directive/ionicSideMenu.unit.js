@@ -7,18 +7,13 @@ describe('Ionic Angular Side Menu', function() {
 
   beforeEach(module('ionic.ui.sideMenu'));
 
-  it('should assign $ionicSideMenusController', inject(function($compile, $rootScope) {
-    var el = $compile('<ion-side-menus></ion-side-menus>')($rootScope);
-    var scope = el.scope();
+  it('should register with $ionicSideMenuDelegate', inject(function($compile, $rootScope, $ionicSideMenuDelegate) {
+    spyOn($ionicSideMenuDelegate, '_registerInstance');
+    var el = $compile('<ion-side-menus delegate-handle="superHandle">')($rootScope.$new());
+    $rootScope.$apply();
     expect(el.controller('ionSideMenus')).toBeDefined();
-    expect(scope.$ionicSideMenusController).toBe(el.controller('ionSideMenus'));
-  }));
-
-  it('should assign sideMenuController with option', inject(function($compile, $rootScope) {
-    var el = $compile('<ion-side-menus controller-bind="supermodel"></ion-side-menus>')($rootScope.$new());
-    var scope = el.scope();
-    expect(el.controller('ionSideMenus')).toBeDefined();
-    expect(scope.supermodel).toBe(el.controller('ionSideMenus'));
+    expect($ionicSideMenuDelegate._registerInstance)
+      .toHaveBeenCalledWith(el.controller('ionSideMenus'), 'superHandle');
   }));
 });
 

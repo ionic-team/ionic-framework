@@ -14,9 +14,9 @@
 
         <ion-pane ion-side-menu-content>
           <header class="bar bar-header bar-positive">
-            <button class="button button-icon ion-navicon" ng-click="$ionicSideMenusController.toggleLeft()"></button>
+            <button class="button button-icon ion-navicon" ng-click="toggleLeft()"></button>
             <h1 class="title">Slide me</h1>
-            <button class="button button-icon ion-navicon" ng-click="$ionicSideMenusController.toggleRight()"></button>
+            <button class="button button-icon ion-navicon" ng-click="toggleRight()"></button>
           </header>
           <ion-content class="has-header">
             <ion-toggle ng-model="$root.$draggy">Hello</ion-toggle>
@@ -61,7 +61,11 @@
     <script>
       angular.module('sideMenuTest', ['ionic'])
 
-      .controller('MenuCtrl', function($scope) {
+      .controller('MenuCtrl', function($scope, $ionicSideMenuDelegate) {
+
+        $scope.toggleLeft = $ionicSideMenuDelegate.toggleLeft;
+        $scope.toggleRight = $ionicSideMenuDelegate.toggleRight;
+
         $scope.list = [];
         for(var i = 0; i < 20; i++) {
           $scope.list.push({

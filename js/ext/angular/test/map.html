@@ -23,7 +23,7 @@
   </ion-nav-bar>
 
   <ion-nav-buttons side="left">
-    <button class="button button-icon ion-navicon-round" ng-click="$ionicSideMenusController.toggleLeft()"></button>
+    <button class="button button-icon ion-navicon-round" ng-click="toggleLeft()"></button>
     </ion-nav-buttons>
   <ion-nav-view name="mainView" animation="slide-left-right"></ion-nav-view>
   </ion-pane>
@@ -84,7 +84,10 @@ AppCtrl.config(function($stateProvider, $urlRouterProvider) {
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/ps/index');
 });
-AppCtrl.controller('mainCtrl', function($scope) {
+AppCtrl.controller('mainCtrl', function($scope, $ionicSideMenuDelegate) {
+    $scope.toggleLeft = function() {
+      $ionicSideMenuDelegate.toggleLeft();
+    };
 });
 AppCtrl.controller('indexCtrl', function($scope) {
   var poczX = 51.9874;

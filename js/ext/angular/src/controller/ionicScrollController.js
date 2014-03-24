@@ -13,8 +13,6 @@ angular.module('ionic.ui.scroll')
  *
  * @usage
  *
- * Basic Usage:
- *
  * ```html
  * <body ng-controller="MainCtrl">
  *   <ion-content>
@@ -59,13 +57,6 @@ angular.module('ionic.ui.scroll')
  * ```
  */
 
-/**
- * @ngdoc method
- * @name $ionicScrollDelegate#withHandle
- * @param {string} handle
- * @returns `delegateInstance` A delegate instance that controls only the
- * scrollView with delegate-handle matching the given handle.
- */
 .service('$ionicScrollDelegate', delegateService([
   /**
    * @ngdoc method
@@ -166,6 +157,13 @@ angular.module('ionic.ui.scroll')
    * @param {boolean=} shouldAnimate Whether to animate the scroll.
    */
   'scrollToRememberedPosition'
+  /**
+   * @ngdoc method
+   * @name $ionicScrollDelegate#withHandle
+   * @param {string} handle
+   * @returns `delegateInstance` A delegate instance that controls only the
+   * scrollView with delegate-handle matching the given handle.
+   */
 ]))
 
 /**
@@ -191,8 +189,6 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
   var self = this;
 
   this._scrollViewOptions = scrollViewOptions; //for testing
-
-  $parse('$ionicScrollController').assign($scope.$parent || $scope, this);
 
   var element = this.element = scrollViewOptions.el;
   var $element = this.$element = angular.element(element);
