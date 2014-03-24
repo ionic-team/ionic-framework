@@ -3,39 +3,8 @@
 
 angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
 
-.directive('ionHeaderBar', ['$document', function($document) {
-  return {
-    restrict: 'E',
-    link: function($scope, $element, $attr, scrollCtrl) {
-      ionic.requestAnimationFrame(function() {
-        var scrollCtrl = $element.controller('$ionicScroll');
-        if (!scrollCtrl) {
-          return;
-        }
-
-        ionic.on('tap', onTap, $element[0]);
-        $scope.$on('$destroy', function() {
-          ionic.off('tap', onTap, $element[0]);
-        });
-
-        function onTap(e) {
-          if (ionic.DomUtil.getParentOrSelfWithClass(e.target, 'button', 4)) {
-            return;
-          }
-          var touch = e.gesture && e.gesture.touches[0] || e.detail.touches[0];
-          var bounds = $element[0].getBoundingClientRect();
-          if(ionic.DomUtil.rectContains(
-            touch.pageX, touch.pageY,
-            bounds.left, bounds.top - 20,
-            bounds.left + bounds.width, bounds.top + bounds.height)
-          ) {
-            scrollCtrl.scrollTop(true);
-          }
-        }
-      });
-    }
-  };
-}])
+.directive('ionNavBar', TapScrollToTopDirective())
+.directive('ionHeaderBar', TapScrollToTopDirective())
 
 /**
  * @ngdoc directive
@@ -110,6 +79,43 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  * ```
  */
 .directive('ionFooterBar', barDirective(false));
+
+function TapScrollToTopDirective() {
+  return ['$document', function($document) {
+    return {
+      restrict: 'E',
+      link: function($scope, $element, $attr, scrollCtrl) {
+        ionic.requestAnimationFrame(function() {
+          var scrollCtrl = $element.controller('$ionicScroll');
+          if (!scrollCtrl) {
+            return;
+          }
+
+          ionic.on('tap', onTap, $element[0]);
+          $scope.$on('$destroy', function() {
+            ionic.off('tap', onTap, $element[0]);
+          });
+
+          function onTap(e) {
+            if (ionic.DomUtil.getParentOrSelfWithClass(e.target, 'button', 4)) {
+              return;
+            }
+            var touch = e.gesture && e.gesture.touches[0] || e.detail.touches[0];
+            var bounds = $element[0].getBoundingClientRect();
+            if(ionic.DomUtil.rectContains(
+              touch.pageX, touch.pageY,
+              bounds.left, bounds.top - 20,
+              bounds.left + bounds.width, bounds.top + bounds.height)
+            ) {
+              scrollCtrl.scrollTop(true);
+            }
+          }
+        });
+      }
+    };
+  }];
+}
+
 
 function barDirective(isHeader) {
   return ['$parse', function($parse) {
