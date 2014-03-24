@@ -10,7 +10,7 @@
   </head>
   <body>
    <ion-toggle ng-model="shouldShowScrollView"></ion-toggle>
-   <ion-scroll ng-if="shouldShowScrollView">
+   <ion-scroll delegate-handle="myScroll" ng-if="shouldShowScrollView">
      <div ng-controller="ScrollCtrl">
        <ion-list>
          <ion-item ng-repeat="i in items">{{i}}</ion-item>
@@ -18,9 +18,11 @@
      </div>
    </ion-scroll>
    <script>
-   function ScrollCtrl($scope) {
-     $scope.$ionicScrollController.rememberScrollPosition('my-scroll-id');
-     $scope.$ionicScrollController.scrollToRememberedPosition();
+   function ScrollCtrl($scope, $ionicScrollDelegate) {
+     var delegate = $ionicScrollDelegate.withHandle('myScroll');
+
+     delegate.rememberScrollPosition('my-scroll-id');
+     delegate.scrollToRememberedPosition();
 
      $scope.items = [];
      for (var i=0; i<100; i++) {

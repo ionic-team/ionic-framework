@@ -16,6 +16,12 @@ describe('Ionic Content directive', function() {
     expect(element.controller('$ionicScroll').element).toBe(element[0]);
   });
 
+  it('passes delegateHandle attribute', function() {
+    var element = compile('<ion-content delegate-handle="handleMe">')(scope);
+    expect(element.controller('$ionicScroll')._scrollViewOptions.delegateHandle)
+      .toBe('handleMe');
+  });
+
   it('Has content class', function() {
     var element = compile('<ion-content></ion-content>')(scope);
     expect(element.hasClass('scroll-content')).toBe(true);
@@ -46,16 +52,10 @@ describe('Ionic Content directive', function() {
   it('Should set start x and y', function() {
     var element = compile('<ion-content start-x="100" start-y="300"></ion-content>')(scope);
     scope.$apply();
-    var scrollView = scope.$ionicScrollController.scrollView;
+    var scrollView = element.controller('$ionicScroll').scrollView;
     var vals = scrollView.getValues();
     expect(vals.left).toBe(100);
     expect(vals.top).toBe(300);
-  });
-
-  it('should pass attr.controllerBind ionicScrollController', function() {
-    var element = compile('<ion-content controller-bind="scrolly">')(scope);
-    scope.$apply();
-    expect(scope.scrolly).toBe(element.controller('$ionicScroll'));
   });
 
 });

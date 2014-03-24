@@ -7,15 +7,13 @@ angular.module('ionic.ui.scroll', [])
  * @ngdoc directive
  * @name ionScroll
  * @module ionic
- * @controller ionicScroll as $scope.$ionicScrollController
  * @restrict E
  *
  * @description
  * Creates a scrollable container for all content inside.
  *
- * @param {string=} controller-bind The scope variable to bind this element's scrollView's
- * {@link ionic.controller:ionicScroll ionicScroll controller} to.
- * Default: $scope.$ionicScrollController.
+ * @param {string=} delegate-handle The handle used to identify this scrollView
+ * with {@link ionic.service:$ionicScrollDelegate}.
  * @param {string=} direction Which way to scroll. 'x' or 'y'. Default 'y'.
  * @param {boolean=} paging Whether to scroll with paging.
  * @param {expression=} on-refresh Called on pull-to-refresh, triggered by an {@link ionic.directive:ionRefresher}.
@@ -63,7 +61,7 @@ angular.module('ionic.ui.scroll', [])
 
         var scrollViewOptions= {
           el: $element[0],
-          controllerBind: $attr.controllerBind,
+          delegateHandle: $attr.delegateHandle,
           paging: isPaging,
           scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
           scrollbarY: $scope.$eval($scope.scrollbarY) !== false,

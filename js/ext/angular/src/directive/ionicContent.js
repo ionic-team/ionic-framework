@@ -28,7 +28,6 @@ angular.module('ionic.ui.content', ['ionic.ui.scroll'])
  * @ngdoc directive
  * @name ionContent
  * @module ionic
- * @controller ionicScroll as $scope.$ionicScrollController
  * @restrict E
  *
  * @description
@@ -44,9 +43,8 @@ angular.module('ionic.ui.content', ['ionic.ui.scroll'])
  * directive, and infinite scrolling with the {@link ionic.directive:ionInfiniteScroll}
  * directive.
  *
- * @param {string=} controller-bind The scope variable to bind this element's scrollView's
- * {@link ionic.controller:ionicScroll ionicScroll controller} to.
- * Default: $scope.$ionicScrollController.
+ * @param {string=} delegate-handle The handle used to identify this scrollView
+ * with {@link ionic.service:$ionicScrollDelegate}.
  * @param {boolean=} padding Whether to add padding to the content.
  * of the content.  Defaults to true on iOS, false on Android.
  * @param {boolean=} scroll Whether to allow scrolling of content.  Defaults to true.
@@ -122,7 +120,7 @@ function($parse, $timeout, $controller, $ionicBind) {
             $scope: $scope,
             scrollViewOptions: {
               el: $element[0],
-              controllerBind: $attr.controllerBind,
+              delegateHandle: attr.delegateHandle,
               bouncing: $scope.$eval($scope.hasBouncing),
               startX: $scope.$eval($scope.startX) || 0,
               startY: $scope.$eval($scope.startY) || 0,

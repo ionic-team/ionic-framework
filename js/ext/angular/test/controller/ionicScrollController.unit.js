@@ -27,17 +27,28 @@ describe('$ionicScroll Controller', function() {
     });
   }
 
-  it('should set $scope.$ionicScrollController by default', function() {
-    setup()
-    expect(scope.$ionicScrollController).toBe(ctrl);
-  });
+  it('should register with no handle', inject(function($ionicScrollDelegate) {
+    spyOn($ionicScrollDelegate, '_registerInstance');
+    var el = setup();
+    expect($ionicScrollDelegate._registerInstance)
+      .toHaveBeenCalledWith(ctrl, undefined);
+  }));
 
-  it('should set options.controllerBind to ctrl', function() {
-    setup({
-      controllerBind: 'something'
+  it('should register with given handle and deregister on destroy', inject(function($ionicScrollDelegate) {
+    var deregisterSpy = jasmine.createSpy('deregister');
+    spyOn($ionicScrollDelegate, '_registerInstance').andCallFake(function() {
+      return deregisterSpy;
     });
-    expect(scope.something).toBe(ctrl);
-  });
+    setup({
+      delegateHandle: 'something'
+    });
+    expect($ionicScrollDelegate._registerInstance)
+      .toHaveBeenCalledWith(ctrl, 'something');
+
+    expect(deregisterSpy).not.toHaveBeenCalled();
+    scope.$destroy();
+    expect(deregisterSpy).toHaveBeenCalled();
+  }));
 
   it('should set bouncing to option if given', function() {
     spyOn(ionic.Platform, 'isAndroid');

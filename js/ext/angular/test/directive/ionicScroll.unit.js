@@ -14,9 +14,10 @@ describe('Ionic Scroll Directive', function() {
     });
   }));
 
-  it('Has $ionicScroll controller', function() {
-    element = compile('<ion-scroll></ion-scroll>')(scope);
-    expect(element.controller('$ionicScroll').element).toBe(element[0]);
+  it('passes delegateHandle attribute', function() {
+    var element = compile('<ion-scroll delegate-handle="handleThis">')(scope);
+    expect(element.controller('$ionicScroll')._scrollViewOptions.delegateHandle)
+      .toBe('handleThis');
   });
 
   it('has $onScroll (used by $ionicScrollController)', function() {
@@ -44,16 +45,10 @@ describe('Ionic Scroll Directive', function() {
     expect(scrollElement.hasClass('padding')).toEqual(true);
   });
 
-  it('should pass attr.controllerBind ionicScrollController', function() {
-    var element = compile('<ion-scroll controller-bind="scrolly">')(scope);
-    scope.$apply();
-    expect(scope.scrolly).toBe(element.controller('$ionicScroll'));
-  });
-
   it('Should set start x and y', function() {
     element = compile('<ion-content start-x="100" start-y="300" has-header="true"></ion-scroll>')(scope);
     scope.$apply();
-    var scrollView = scope.$ionicScrollController.scrollView;
+    var scrollView = element.controller('$ionicScroll').scrollView;
     var vals = scrollView.getValues();
     expect(vals.left).toBe(100);
     expect(vals.top).toBe(300);

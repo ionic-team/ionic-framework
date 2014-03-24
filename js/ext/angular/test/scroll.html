@@ -87,7 +87,7 @@
         }
       })
 
-      .controller('ThisCtrl', function($scope) {
+      .controller('ThisCtrl', function($scope, $ionicScrollDelegate) {
         var header = document.getElementById('header');
         var content = document.getElementById('container');
 
@@ -103,7 +103,7 @@
         }
         $scope.scrollTo = function() {
           console.log('scrollTo');
-          $scope.$ionicScrollController.scrollTo(0, 100, true);
+          $ionicScrollDelegate.scrollTo(0, 100, true);
         };
         $scope.onScroll = function(event, scrollTop, scrollLeft) {
         /*
