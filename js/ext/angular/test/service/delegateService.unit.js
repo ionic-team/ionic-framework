@@ -2,14 +2,13 @@ describe('DelegateFactory', function() {
   function setup(methods) {
     var delegate;
     inject(function($log, $injector) {
-      $log.error = jasmine.createSpy('error');
       delegate = $injector.instantiate(delegateService(methods || []));
     });
     return delegate;
   }
 
   it('should have properties', function() {
-    expect(setup()._instances).toEqual({});
+    expect(setup()._instances).toEqual([]);
     expect(setup()._registerInstance).toEqual(jasmine.any(Function));
     expect(setup().forHandle).toEqual(jasmine.any(Function));
   });
@@ -18,9 +17,10 @@ describe('DelegateFactory', function() {
     var delegate = setup();
     var instance = {};
     var deregister = delegate._registerInstance(instance, 'handle');
-    expect(delegate._instances['handle']).toBe(instance);
+    expect(instance.$$delegateHandle).toBe('handle');
+    expect(delegate._instances[0]).toBe(instance);
     deregister();
-    expect(delegate._instances['handle']).toBeUndefined();
+    expect(delegate._instances.length).toBe(0);
   });
 
   it('should allow reg & dereg of instance, and make its own handle', function() {
@@ -31,9 +31,10 @@ describe('DelegateFactory', function() {
     var instance = {};
     var deregister = delegate._registerInstance(instance);
     expect(ionic.Utils.nextUid).toHaveBeenCalled();
-    expect(delegate._instances['uid']).toBe(instance);
+    expect(instance.$$delegateHandle).toBe('uid');
+    expect(delegate._instances[0]).toBe(instance);
     deregister();
-    expect(delegate._instances['uid']).toBeUndefined();
+    expect(delegate._instances.length).toBe(0);
   });
 
   it('should have given methodNames on root', function() {
@@ -119,9 +120,12 @@ describe('DelegateFactory', function() {
       expect(delegate.forHandle('two').a).toEqual(jasmine.any(Function));
       expect(delegate.forHandle('invalid').a).toEqual(jasmine.any(Function));
     });
-    it('should do nothing if calling for a non-added instance', function() {
+    it('should noop & warn if calling for a non-added instance', inject(function($log) {
+      spyOn($log, 'warn');
       expect(delegate.forHandle('one').a()).toBeUndefined();
-    });
+      expect($log.warn).toHaveBeenCalled();
+    }));
+
     it('should call an added instance\'s method', function() {
       delegate._registerInstance(instance1, '1');
       delegate._registerInstance(instance2, '2');
@@ -136,6 +140,26 @@ describe('DelegateFactory', function() {
       expect(instance2.a).toHaveBeenCalledWith(2,3,4);
       expect(instance1.a).not.toHaveBeenCalled();
       expect(result).toBe('a2');
+    });
+
+    it('should call multiple instances with the same handle', function() {
+      var instance3 = {
+        a: jasmine.createSpy('a3')
+      };
+      delegate._registerInstance(instance1, '1');
+      delegate._registerInstance(instance2, '1');
+      delegate._registerInstance(instance3, 'other');
+
+      var delegateInstance = delegate.forHandle('1');
+
+      expect(instance1.a).not.toHaveBeenCalled();
+      expect(instance2.a).not.toHaveBeenCalled();
+      expect(instance3.a).not.toHaveBeenCalled();
+      var result = delegateInstance.a('1');
+      expect(instance1.a).toHaveBeenCalledWith('1');
+      expect(instance2.a).toHaveBeenCalledWith('1');
+      expect(instance3.a).not.toHaveBeenCalled();
+      expect(result).toBe('a1');
     });
   });
 });

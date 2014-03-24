@@ -3,13 +3,18 @@ function delegateService(methodNames) {
   return ['$log', function($log) {
     var delegate = this;
 
-    this._instances = {};
+    var instances = this._instances = [];
     this._registerInstance = function(instance, handle) {
       handle || (handle = ionic.Utils.nextUid());
-      delegate._instances[handle] = instance;
+
+      instance.$$delegateHandle = handle;
+      instances.push(instance);
 
       return function deregister() {
-        delete delegate._instances[handle];
+        var index = instances.indexOf(instance);
+        if (index !== -1) {
+          instances.splice(index, 1);
+        }
       };
     };
 
@@ -41,26 +46,33 @@ function delegateService(methodNames) {
     }
     methodNames.forEach(function(methodName) {
       InstanceForHandle.prototype[methodName] = function() {
-        var instance = delegate._instances[this.handle];
-        if (!instance) {
-          return $log.error(
-            'Delegate with handle "'+this.handle+'" could not find a',
+        var handle = this.handle;
+        var instancesToUse = instances.filter(function(instance) {
+          return instance.$$delegateHandle === handle;
+        });
+        if (!instancesToUse.length) {
+          return $log.warn(
+            'Delegate for handle "'+this.handle+'" could not find a',
             'corresponding element with delegate-handle="'+this.handle+'"!',
             methodName, 'was not called!');
         }
-        return instance[methodName].apply(instance, arguments);
+        return callMethod(instancesToUse, methodName, arguments);
       };
       delegate[methodName] = function() {
-        var args = arguments;
-        var returnValue;
-        angular.forEach(delegate._instances, function(instance) {
-          var result = instance[methodName].apply(instance, args);
-          if (!angular.isDefined(returnValue)) {
-            returnValue = result;
+        return callMethod(instances, methodName, arguments);
+      };
+
+      function callMethod(instancesToUse, methodName, args) {
+        var finalResult;
+        var result;
+        instancesToUse.forEach(function(instance) {
+          result = instance[methodName].apply(instance, args);
+          if (!angular.isDefined(finalResult)) {
+            finalResult = result;
           }
         });
-        return returnValue;
-      };
+        return finalResult;
+      }
     });
   }];
 }
