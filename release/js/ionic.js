@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v0.9.27
+ * Ionic, v1.0.0-beta.1
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -12,13 +12,14 @@
  *
  */
 
+(function() {
 
 // Create namespaces
 //
 window.ionic = {
   controllers: {},
   views: {},
-  version: '{{ VERSION }}'
+  version: '1.0.0-beta.1'
 };
 
 (function(ionic) {
@@ -135,16 +136,19 @@ window.ionic = {
   };
 })(ionic);
 
-(function(ionic) {
+(function(window, document, ionic) {
 
-  var readyCallbacks = [],
-  domReady = function() {
+  var readyCallbacks = [];
+  var isDomReady = false;
+
+  function domReady() {
+    isDomReady = true;
     for(var x=0; x<readyCallbacks.length; x++) {
       ionic.requestAnimationFrame(readyCallbacks[x]);
     }
     readyCallbacks = [];
     document.removeEventListener('DOMContentLoaded', domReady);
-  };
+  }
   document.addEventListener('DOMContentLoaded', domReady);
 
   // From the man himself, Mr. Paul Irish.
@@ -164,7 +168,6 @@ window.ionic = {
   * @ngdoc utility
   * @name ionic.DomUtil
   * @module ionic
-  * @group utilities
   */
   ionic.DomUtil = {
     //Call with proper context
@@ -231,12 +234,12 @@ window.ionic = {
      * @ngdoc method
      * @name ionic.DomUtil#ready
      * @description
-     * Call a function when the dom is ready, or if it is already ready
+     * Call a function when the DOM is ready, or if it is already ready
      * call the function immediately.
      * @param {function} callback The function to be called.
      */
     ready: function(cb) {
-      if(document.readyState === "complete") {
+      if(isDomReady || document.readyState === "complete") {
         ionic.requestAnimationFrame(cb);
       } else {
         readyCallbacks.push(cb);
@@ -322,8 +325,9 @@ window.ionic = {
      * @returns {DOMElement} The closest parent of element matching the
      * className, or null.
      */
-    getParentWithClass: function(e, className) {
-      while(e.parentNode) {
+    getParentWithClass: function(e, className, depth) {
+      depth = depth || 10;
+      while(e.parentNode && depth--) {
         if(e.parentNode.classList && e.parentNode.classList.contains(className)) {
           return e.parentNode;
         }
@@ -339,8 +343,9 @@ window.ionic = {
      * @returns {DOMElement} The closest parent or self matching the
      * className, or null.
      */
-    getParentOrSelfWithClass: function(e, className) {
-      while(e) {
+    getParentOrSelfWithClass: function(e, className, depth) {
+      depth = depth || 10;
+      while(e && depth--) {
         if(e.classList && e.classList.contains(className)) {
           return e;
         }
@@ -371,7 +376,7 @@ window.ionic = {
   //Shortcuts
   ionic.requestAnimationFrame = ionic.DomUtil.requestAnimationFrame;
   ionic.animationFrameThrottle = ionic.DomUtil.animationFrameThrottle;
-})(window.ionic);
+})(this, document, ionic);
 
 /**
  * ion-events.js
@@ -424,7 +429,6 @@ window.ionic = {
    * @ngdoc utility
    * @name ionic.EventController
    * @module ionic
-   * @group utilities
    */
   ionic.EventController = {
     VIRTUALIZED_EVENTS: ['tap', 'swipe', 'swiperight', 'swipeleft', 'drag', 'hold', 'release'],
@@ -494,7 +498,7 @@ window.ionic = {
      * @ngdoc method
      * @name ionic.EventController#onGesture
      * @alias ionic.onGesture
-     * @description Add an event listener for a gesture on an element. 
+     * @description Add an event listener for a gesture on an element.
      * @param {string} eventType The gesture event to listen for.
      * @param {function(e)} callback The function to call when the gesture
      * happens.
@@ -510,7 +514,7 @@ window.ionic = {
      * @ngdoc method
      * @name ionic.EventController#offGesture
      * @alias ionic.offGesture
-     * @description Remove an event listener for a gesture on an element. 
+     * @description Remove an event listener for a gesture on an element.
      * @param {string} eventType The gesture event.
      * @param {function(e)} callback The listener that was added earlier.
      * @param {DOMElement} element The element the listener was added on.
@@ -1930,13 +1934,12 @@ window.ionic = {
   };
 })(window.ionic);
 
-(function(ionic) {
+(function(window, document, ionic) {
 
   /**
    * @ngdoc utility
    * @name ionic.Platform
    * @module ionic
-   * @group utilities
    */
   ionic.Platform = {
 
@@ -1989,18 +1992,15 @@ window.ionic = {
      * @private
      */
     detect: function() {
-      var i, bodyClass = document.body.className;
-
       ionic.Platform._checkPlatforms();
 
-      // only change the body class if we got platform info
-      for(i = 0; i < this.platforms.length; i++) {
-        bodyClass += ' platform-' + this.platforms[i];
-      }
-
-      bodyClass += ' grade-' + this.grade;
-
-      document.body.className = bodyClass.trim();
+      ionic.requestAnimationFrame(function(){
+        // only add to the body class if we got platform info
+        for(var i = 0; i < ionic.Platform.platforms.length; i++) {
+          document.body.classList.add('platform-' + ionic.Platform.platforms[i]);
+        }
+        document.body.classList.add('grade-' + ionic.Platform.grade);
+      });
     },
 
     /**
@@ -2054,7 +2054,7 @@ window.ionic = {
     },
     /**
      * @ngdoc method
-     * @name ionic.Platform#isiPad
+     * @name ionic.Platform#isIPad
      * @returns {boolean} Whether we are running on iPad.
      */
     isIPad: function() {
@@ -2062,7 +2062,7 @@ window.ionic = {
     },
     /**
      * @ngdoc method
-     * @name ionic.Platform#isiOS
+     * @name ionic.Platform#isIOS
      * @returns {boolean} Whether we are running on iOS.
      */
     isIOS: function() {
@@ -2184,15 +2184,17 @@ window.ionic = {
       this._showStatusBar = val;
       this.ready(function(){
         // run this only when or if the platform (cordova) is ready
-        if(ionic.Platform._showStatusBar) {
-          // they do not want it to be full screen
-          StatusBar.show();
-          document.body.classList.remove('status-bar-hide');
-        } else {
-          // it should be full screen
-          StatusBar.hide();
-          document.body.classList.add('status-bar-hide');
-        }
+        ionic.requestAnimationFrame(function(){
+          if(ionic.Platform._showStatusBar) {
+            // they do not want it to be full screen
+            window.StatusBar && window.StatusBar.show();
+            document.body.classList.remove('status-bar-hide');
+          } else {
+            // it should be full screen
+            window.StatusBar && window.StatusBar.hide();
+            document.body.classList.add('status-bar-hide');
+          }
+        });
       });
     },
 
@@ -2201,25 +2203,26 @@ window.ionic = {
      * @name ionic.Platform#fullScreen
      * @description
      * Sets whether the app is fullscreen or not (in Cordova).
-     * @param {boolean} showFullScreen Whether or not to set the app to fullscreen.
+     * @param {boolean=} showFullScreen Whether or not to set the app to fullscreen. Defaults to true.
+     * @param {boolean=} showStatusBar Whether or not to show the device's status bar. Defaults to false.
      */
     fullScreen: function(showFullScreen, showStatusBar) {
-      // fullScreen( [showFullScreen[, showStatusBar] ] )
       // showFullScreen: default is true if no param provided
       this.isFullScreen = (showFullScreen !== false);
 
       // add/remove the fullscreen classname to the body
       ionic.DomUtil.ready(function(){
         // run this only when or if the DOM is ready
-        if(ionic.Platform.isFullScreen) {
-          document.body.classList.add('fullscreen');
-        } else {
-          document.body.classList.remove('fullscreen');
-        }
+        ionic.requestAnimationFrame(function(){
+          if(ionic.Platform.isFullScreen) {
+            document.body.classList.add('fullscreen');
+          } else {
+            document.body.classList.remove('fullscreen');
+          }
+        });
+        // showStatusBar: default is false if no param provided
+        ionic.Platform.showStatusBar( (showStatusBar === true) );
       });
-
-      // showStatusBar: default is false if no param provided
-      this.showStatusBar( (showStatusBar === true) );
     }
 
   };
@@ -2253,10 +2256,13 @@ window.ionic = {
     }
     readyCallbacks = [];
     ionic.trigger('platformready', { target: document });
-    document.removeEventListener("deviceready", onPlatformReady, false);
+
+    ionic.requestAnimationFrame(function(){
+      document.body.classList.add('platform-ready');
+    });
   }
 
-})(window.ionic);
+})(this, document, ionic);
 
 (function(document, ionic) {
   'use strict';
@@ -2343,7 +2349,7 @@ window.ionic = {
 
     var ele = target.control || target;
 
-    if(ele.disabled || ele.type === 'file') return;
+    if(ele.disabled || ele.type === 'file' || ele.type === 'range') return;
 
     void 0;
 
@@ -2357,7 +2363,7 @@ window.ionic = {
 
     ele.dispatchEvent(clickEvent);
 
-    if(ele.tagName === 'INPUT' || ele.tagName === 'TEXTAREA' || ele.tagName === 'SELECT') {
+    if(ele.tagName === 'INPUT' || ele.tagName === 'TEXTAREA') {
       ele.focus();
       e.preventDefault();
     } else {
@@ -2398,8 +2404,7 @@ window.ionic = {
           ele.tagName === "A" ||
           ele.tagName === "BUTTON" ||
           ele.tagName === "LABEL" ||
-          ele.tagName === "TEXTAREA" ||
-          ele.tagName === "SELECT" ) {
+          ele.tagName === "TEXTAREA" ) {
 
         return ionic.tapElement(ele, e);
       }
@@ -2448,10 +2453,15 @@ window.ionic = {
     // check if this click's coordinates are different than its touchstart/mousedown
     var c = getCoordinates(event);
 
-    return (c.x > startCoordinates.x + HIT_RADIUS ||
-            c.x < startCoordinates.x - HIT_RADIUS ||
-            c.y > startCoordinates.y + HIT_RADIUS ||
-            c.y < startCoordinates.y - HIT_RADIUS);
+    // Quick check for 0,0 which could be simulated mouse click for form submission
+    if(c.x === 0 && c.y === 0) {
+      return false;
+    }
+
+    return (c.x > startCoordinates.x + 2 ||
+            c.x < startCoordinates.x - 2 ||
+            c.y > startCoordinates.y + 2 ||
+            c.y < startCoordinates.y - 2);
   }
 
   function recordCoordinates(event) {
@@ -2482,23 +2492,19 @@ window.ionic = {
               gesture.originalEvent.changedTouches[0]) ||
           touches[0].originalEvent || touches[0];
 
-      if(e) return { x: e.clientX, y: e.clientY };
+      if(e) return { x: e.clientX || e.pageX, y: e.clientY || e.pageY };
     }
     return { x:0, y:0 };
   }
 
+  var clickPreventTimerId;
   function removeClickPrevent(e) {
-    setTimeout(function(){
+    clearTimeout(clickPreventTimerId);
+    clickPreventTimerId = setTimeout(function(){
       var tap = isRecentTap(e);
       if(tap) delete tapCoordinates[tap.id];
+      startCoordinates = {};
     }, REMOVE_PREVENT_DELAY);
-
-    setTimeout(function(){
-      for(var hitKey in hitElements) {
-        hitElements[hitKey] && hitElements[hitKey].classList.remove('active');
-        delete hitElements[hitKey];
-      }
-    }, 150);
   }
 
   function stopEvent(e){
@@ -2510,8 +2516,7 @@ window.ionic = {
   function blurActive() {
     var ele = document.activeElement;
     if(ele && (ele.tagName === "INPUT" ||
-               ele.tagName === "TEXTAREA" ||
-               ele.tagName === "SELECT")) {
+               ele.tagName === "TEXTAREA")) {
       // using a timeout to prevent funky scrolling while a keyboard hides
       setTimeout(function(){
         ele.blur();
@@ -2521,45 +2526,142 @@ window.ionic = {
 
   function recordStartCoordinates(e) {
     startCoordinates = getCoordinates(e);
-
-    var x, ele = e.target;
-    for(x=0; x<5; x++) {
-      if(!ele || ele.tagName === 'LABEL') break;
-      if( ele.classList.contains('item') || ele.classList.contains('button') ) {
-        hitElements[hitCounts] = ele;
-        hitCounts = (hitCounts > 24 ? 0 : hitCounts + 1);
-        ionic.requestAnimationFrame(function(){
-          ele.classList.add('active');
-        });
-        break;
-      }
-      ele = ele.parentElement;
-    }
   }
 
   var tapCoordinates = {}; // used to remember coordinates to ignore if they happen again quickly
   var startCoordinates = {}; // used to remember where the coordinates of the start of the tap
   var CLICK_PREVENT_DURATION = 1500; // max milliseconds ghostclicks in the same area should be prevented
-  var REMOVE_PREVENT_DELAY = 375; // delay after a touchend/mouseup before removing the ghostclick prevent
+  var REMOVE_PREVENT_DELAY = 380; // delay after a touchend/mouseup before removing the ghostclick prevent
   var HIT_RADIUS = 15;
-  var hitElements = {};
-  var hitCounts = 0;
 
-  // set global click handler and check if the event should stop or not
-  document.addEventListener('click', preventGhostClick, true);
+  ionic.Platform.ready(function(){
 
-  // global tap event listener polyfill for HTML elements that were "tapped" by the user
-  ionic.on("tap", tapPolyfill, document);
+    if(ionic.Platform.grade === 'c') {
+      // low performing phones should have a longer ghostclick prevent
+      REMOVE_PREVENT_DELAY = 800;
+    }
 
-  // listeners used to remove ghostclick prevention
-  document.addEventListener('touchend', removeClickPrevent, false);
-  document.addEventListener('mouseup', removeClickPrevent, false);
+    // set global click handler and check if the event should stop or not
+    document.addEventListener('click', preventGhostClick, true);
 
-  // in the case the user touched the screen, then scrolled, it shouldn't fire the click
-  document.addEventListener('touchstart', recordStartCoordinates, false);
-  document.addEventListener('mousedown', recordStartCoordinates, false);
+    // global release event listener polyfill for HTML elements that were tapped or held
+    ionic.on("release", tapPolyfill, document);
+
+    // listeners used to remove ghostclick prevention
+    document.addEventListener('touchend', removeClickPrevent, false);
+    document.addEventListener('mouseup', removeClickPrevent, false);
+
+    // in the case the user touched the screen, then scrolled, it shouldn't fire the click
+    document.addEventListener('touchstart', recordStartCoordinates, false);
+    document.addEventListener('mousedown', recordStartCoordinates, false);
+  });
 
 })(this, document, ionic);
+
+(function(document, ionic) {
+  'use strict';
+
+  var queueElements = {};   // elements that should get an active state in XX milliseconds
+  var activeElements = {};  // elements that are currently active
+  var keyId = 0;            // a counter for unique keys for the above ojects
+
+  ionic.activator = {
+
+    start: function(e) {
+      // when an element is touched/clicked, it climbs up a few
+      // parents to see if it is an .item or .button element
+      ionic.requestAnimationFrame(function(){
+        var ele = e.target;
+        var eleToActivate;
+
+        for(var x=0; x<4; x++) {
+          if(!ele) break;
+          if(eleToActivate && ele.classList.contains('item')) {
+            eleToActivate = ele;
+            break;
+          }
+          if( ele.tagName == 'A' || ele.tagName == 'BUTTON' || ele.getAttribute('ng-click') ) {
+            eleToActivate = ele;
+          }
+          if( ele.classList.contains('button') ) {
+            eleToActivate = ele;
+            break;
+          }
+          ele = ele.parentElement;
+        }
+
+        if(eleToActivate) {
+          // queue that this element should be set to active
+          queueElements[keyId] = eleToActivate;
+
+          // in XX milliseconds, set the queued elements to active
+          // add listeners to clear all queued/active elements onMove
+          if(e.type === 'touchstart') {
+            document.body.removeEventListener('mousedown', ionic.activator.start);
+            document.body.addEventListener('touchmove', clear, false);
+            setTimeout(activateElements, 85);
+          } else {
+            document.body.addEventListener('mousemove', clear, false);
+            ionic.requestAnimationFrame(activateElements);
+          }
+
+          keyId = (keyId > 19 ? 0 : keyId + 1);
+        }
+
+      });
+    }
+  };
+
+  function activateElements() {
+    // activate all elements in the queue
+    for(var key in queueElements) {
+      if(queueElements[key]) {
+        queueElements[key].classList.add('active');
+        activeElements[key] = queueElements[key];
+      }
+    }
+    queueElements = {};
+  }
+
+  function deactivateElements() {
+    for(var key in activeElements) {
+      if(activeElements[key]) {
+        activeElements[key].classList.remove('active');
+        delete activeElements[key];
+      }
+    }
+  }
+
+  function onEnd(e) {
+    // clear out any active/queued elements after XX milliseconds
+    setTimeout(clear, 200);
+  }
+
+  function clear() {
+    // clear out any elements that are queued to be set to active
+    queueElements = {};
+
+    // in the next frame, remove the active class from all active elements
+    ionic.requestAnimationFrame(deactivateElements);
+
+    // remove onMove listeners that clear out active elements
+    document.body.removeEventListener('mousemove', clear);
+    document.body.removeEventListener('touchmove', clear);
+  }
+
+  // use window.onload because this doesn't need to run immediately
+  window.addEventListener('load', function(){
+    // start an active element
+    document.body.addEventListener('touchstart', ionic.activator.start, false);
+    document.body.addEventListener('mousedown', ionic.activator.start, false);
+
+    // clear all active elements after XX milliseconds
+    document.body.addEventListener('touchend', onEnd, false);
+    document.body.addEventListener('mouseup', onEnd, false);
+    document.body.addEventListener('touchcancel', onEnd, false);
+  }, false);
+
+})(document, ionic);
 
 (function(ionic) {
 
@@ -2773,12 +2875,12 @@ function androidKeyboardFix() {
     //If the height changes, and it's less than before, we have a keyboard open
     } else if (rememberedDeviceHeight !== window.innerHeight &&
                window.innerHeight < rememberedDeviceHeight) {
-      document.body.classList.add('hide-footer');
+      document.body.classList.add('footer-hide');
       //Wait for next frame so document.activeElement is set
       ionic.requestAnimationFrame(handleKeyboardChange);
     } else {
       //Otherwise we have a keyboard close or a *really* weird resize
-      document.body.classList.remove('hide-footer');
+      document.body.classList.remove('footer-hide');
     }
 
     function handleKeyboardChange() {
@@ -2850,7 +2952,7 @@ var IS_EMBEDDED_OBJECT_REGEX = /object|embed/i;
 
 	// Create namespaces
 	if (!global.core) {
-		global.core = { effect : {} };
+		var core = global.core = { effect : {} };
 
 	} else if (!core.effect) {
 		core.effect = {};
@@ -3436,8 +3538,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
     function shouldIgnorePress(e) {
       // Don't react if initial down happens on a form element
       return e.target.tagName.match(IS_INPUT_LIKE_REGEX) ||
-        e.target.isContentEditable ||
-        e.target.tagName.match(IS_EMBEDDED_OBJECT_REGEX);
+             e.target.isContentEditable ||
+             e.target.tagName.match(IS_EMBEDDED_OBJECT_REGEX) ||
+             e.target.dataset.preventScroll;
     }
 
 
@@ -3502,8 +3605,18 @@ ionic.views.Scroll = ionic.views.View.inherit({
         mousedown = false;
       }, false);
 
+      var wheelShowBarFn = ionic.debounce(function() {
+        self.__fadeScrollbars('in');
+      }, 500, true);
+
+      var wheelHideBarFn = ionic.debounce(function() {
+        self.__fadeScrollbars('out');
+      }, 100, false);
+
       document.addEventListener("mousewheel", function(e) {
+        wheelShowBarFn();
         self.scrollBy(e.wheelDeltaX/self.options.wheelDampen, -e.wheelDeltaY/self.options.wheelDampen);
+        wheelHideBarFn();
       });
     }
   },
@@ -3557,9 +3670,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
   __resizeScrollbars: function() {
     var self = this;
-
-    // Bring the scrollbars in to show the content change
-    self.__fadeScrollbars('in');
 
     // Update horiz bar
     if(self.__indicatorX) {
@@ -4175,8 +4285,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     var self = this;
 
-    self.__fadeScrollbars('in');
-
     // Reset interruptedAnimation flag
     self.__interruptedAnimation = true;
 
@@ -4419,6 +4527,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.__isDragging = (self.__enableScrollX || self.__enableScrollY) && (distanceX >= minimumTrackingForDrag || distanceY >= minimumTrackingForDrag);
       if (self.__isDragging) {
         self.__interruptedAnimation = false;
+        self.__fadeScrollbars('in');
       }
 
     }
@@ -4921,15 +5030,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
 (function(ionic) {
 'use strict';
 
-  /**
-   * @ngdoc controller
-   * @name ionicBar
-   * @module ionic
-   * @group page layout
-   * @description
-   * Controller for the {@link ionic.directive:ionHeaderBar} and
-   * {@link ionic.directive:ionFooterBar} directives.
-   */
   ionic.views.HeaderBar = ionic.views.View.inherit({
     initialize: function(opts) {
       this.el = opts.el;
@@ -4941,16 +5041,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
       this.align();
     },
 
-    /**
-     * @ngdoc method
-     * @name ionicBar#align
-     * @description
-     * Aligns the title text with the buttons in the bar
-     * so that the title size is maximized and aligned correctly
-     * as much as possible.
-     * @param {string=} direction Which direction to align the title towards.
-     * Available: 'left', 'right', 'center'. Default: 'center'.
-     */
     align: function(align) {
 
       align || (align = this.alignTitle);
@@ -5034,7 +5124,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
   var ITEM_OPTIONS_CLASS = 'item-options';
   var ITEM_PLACEHOLDER_CLASS = 'item-placeholder';
   var ITEM_REORDERING_CLASS = 'item-reordering';
-  var ITEM_DRAG_CLASS = 'item-drag';
+  var ITEM_REORDER_BTN_CLASS = 'item-reorder';
 
   var DragOp = function() {};
   DragOp.prototype = {
@@ -5043,6 +5133,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
     drag: function(e) {
     },
     end: function(e) {
+    },
+    isSameItem: function(item) {
+      return false;
     }
   };
 
@@ -5054,6 +5147,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
   };
 
   SlideDrag.prototype = new DragOp();
+
   SlideDrag.prototype.start = function(e) {
     var content, buttons, offsetX, buttonsWidth;
 
@@ -5089,6 +5183,27 @@ ionic.views.Scroll = ionic.views.View.inherit({
       content: content,
       startOffsetX: offsetX
     };
+  };
+
+  /**
+   * Check if this is the same item that was previously dragged.
+   */
+  SlideDrag.prototype.isSameItem = function(op) {
+    if(op._lastDrag && this._currentDrag) {
+      return this._currentDrag.content == op._lastDrag.content;
+    }
+    return false;
+  };
+
+  SlideDrag.prototype.clean = function(e) {
+    var lastDrag = this._lastDrag;
+
+    if(!lastDrag) return;
+
+    ionic.requestAnimationFrame(function() {
+      lastDrag.content.style[ionic.CSS.TRANSITION] = '';
+      lastDrag.content.style[ionic.CSS.TRANSFORM] = 'translate3d(0, 0, 0)';
+    });
   };
 
   SlideDrag.prototype.drag = ionic.animationFrameThrottle(function(e) {
@@ -5151,21 +5266,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     }
 
-    // var content = this._currentDrag.content;
-
-    // var onRestingAnimationEnd = function(e) {
-    //   if(e.propertyName == '-webkit-transform') {
-    //     if(content) content.classList.remove(ITEM_SLIDING_CLASS);
-    //   }
-    //   e.target.removeEventListener('webkitTransitionEnd', onRestingAnimationEnd);
-    // };
-
     ionic.requestAnimationFrame(function() {
-      // var currentX = parseFloat(_this._currentDrag.content.style[ionic.CSS.TRANSFORM].replace('translate3d(', '').split(',')[0]) || 0;
-      // if(currentX !== restingPoint) {
-      //   _this._currentDrag.content.classList.add(ITEM_SLIDING_CLASS);
-      //   _this._currentDrag.content.addEventListener('webkitTransitionEnd', onRestingAnimationEnd);
-      // }
       if(restingPoint === 0) {
         _this._currentDrag.content.style[ionic.CSS.TRANSFORM] = '';
       } else {
@@ -5175,8 +5276,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
 
       // Kill the current drag
+      _this._lastDrag = _this._currentDrag;
       _this._currentDrag = null;
-
 
       // We are done, notify caller
       doneCallback && doneCallback();
@@ -5331,7 +5432,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
       opts = ionic.extend({
         onReorder: function(el, oldIndex, newIndex) {},
         virtualRemoveThreshold: -200,
-        virtualAddThreshold: 200
+        virtualAddThreshold: 200,
+        canSwipe: false
       }, opts);
 
       ionic.extend(this, opts);
@@ -5345,10 +5447,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
       this.onRefresh = opts.onRefresh || function() {};
       this.onRefreshOpening = opts.onRefreshOpening || function() {};
       this.onRefreshHolding = opts.onRefreshHolding || function() {};
-
-      window.ionic.onGesture('touch', function(e) {
-        _this._handleTouch(e);
-      }, this.el);
 
       window.ionic.onGesture('release', function(e) {
         _this._handleEndDrag(e);
@@ -5427,10 +5525,22 @@ ionic.views.Scroll = ionic.views.View.inherit({
       }
     },
 
+    /**
+     * Clear any active drag effects on the list.
+     */
+    clearDragEffects: function() {
+      if(this._lastDragOp) {
+        this._lastDragOp.clean && this._lastDragOp.clean();
+        this._lastDragOp = null;
+      }
+    },
+
     _initDrag: function() {
       //ionic.views.ListView.__super__._initDrag.call(this);
 
-      //this._isDragging = false;
+      // Store the last one
+      this._lastDragOp = this._dragOp;
+
       this._dragOp = null;
     },
 
@@ -5449,10 +5559,14 @@ ionic.views.Scroll = ionic.views.View.inherit({
     _startDrag: function(e) {
       var _this = this;
 
+      var didStart = false;
+
       this._isDragging = false;
 
+      var lastDragOp = this._lastDragOp;
+
       // Check if this is a reorder drag
-      if(ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_DRAG_CLASS) && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
+      if(ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_REORDER_BTN_CLASS) && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
         var item = this._getItem(e.target);
 
         if(item) {
@@ -5466,20 +5580,25 @@ ionic.views.Scroll = ionic.views.View.inherit({
           });
           this._dragOp.start(e);
           e.preventDefault();
-          return;
         }
       }
 
       // Or check if this is a swipe to the side drag
       else if(!this._didDragUpOrDown && (e.gesture.direction == 'left' || e.gesture.direction == 'right') && Math.abs(e.gesture.deltaX) > 5) {
-        this._dragOp = new SlideDrag({ el: this.el });
-        this._dragOp.start(e);
-        e.preventDefault();
-        return;
+
+        // Make sure this is an item with buttons
+        var item = this._getItem(e.target);
+        if(item && item.querySelector('.item-options')) {
+          this._dragOp = new SlideDrag({ el: this.el });
+          this._dragOp.start(e);
+          e.preventDefault();
+        }
       }
 
-      // We aren't handling it, so pass it up the chain
-      //ionic.views.ListView.__super__._startDrag.call(this, e);
+      // If we had a last drag operation and this is a new one on a different item, clean that last one
+      if(lastDragOp && this._dragOp && !this._dragOp.isSameItem(lastDragOp) && e.defaultPrevented) {
+        lastDragOp.clean && lastDragOp.clean();
+      }
     },
 
 
@@ -5493,13 +5612,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
         return;
       }
 
-      // Cancel touch timeout
-      clearTimeout(this._touchTimeout);
-      var items = _this.el.querySelectorAll('.item');
-      for(var i = 0, l = items.length; i < l; i++) {
-        items[i].classList.remove('active');
-      }
-
       this._dragOp.end(e, function() {
         _this._initDrag();
       });
@@ -5511,17 +5623,14 @@ ionic.views.Scroll = ionic.views.View.inherit({
     _handleDrag: function(e) {
       var _this = this, content, buttons;
 
+      if (!this.canSwipe) {
+        return;
+      }
+
       if(Math.abs(e.gesture.deltaY) > 5) {
         this._didDragUpOrDown = true;
       }
 
-      // If the user has a touch timeout to highlight an element, clear it if we
-      // get sufficient draggage
-      if(Math.abs(e.gesture.deltaX) > 10 || Math.abs(e.gesture.deltaY) > 10) {
-        clearTimeout(this._touchTimeout);
-      }
-
-      clearTimeout(this._touchTimeout);
       // If we get a drag event, make sure we aren't in another drag, then check if we should
       // start one
       if(!this.isDragging && !this._dragOp) {
@@ -5536,25 +5645,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       e.gesture.srcEvent.preventDefault();
       this._dragOp.drag(e);
-    },
-
-    /**
-     * Handle the touch event to show the active state on an item if necessary.
-     */
-    _handleTouch: function(e) {
-      var _this = this;
-
-      var item = ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_CLASS);
-      if(!item) { return; }
-
-      this._touchTimeout = setTimeout(function() {
-        var items = _this.el.querySelectorAll('.item');
-        for(var i = 0, l = items.length; i < l; i++) {
-          items[i].classList.remove('active');
-        }
-        item.classList.add('active');
-      }, 250);
-    },
+    }
 
   });
 
@@ -5578,7 +5669,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       this.showDelay = opts.showDelay || 0;
 
-      this._loadingBox = this.el.querySelector('.loading');
+      this._loadingBox = this.el.querySelector('.loading') || this.el;
     },
     show: function() {
       var _this = this;
@@ -5607,6 +5698,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
       window.clearTimeout(this._showDelayTimeout);
 
       this.el.classList.remove('active');
+    },
+    setContent: function(html) {
+      if (this._loadingBox) {
+        this._loadingBox.innerHTML = html || '';
+      }
     }
   });
 
@@ -5787,14 +5883,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
  * Copyright 2013, MIT License
  *
 */
-
-/**
- * @ngdoc controller
- * @name ionicSlideBox
- * @module ionic
- * @description
- * Controller for the {@link ionic.directive:ionSlideBox} directive.
- */
 
 (function(ionic) {
 'use strict';
@@ -6251,16 +6339,13 @@ ionic.views.Slider = ionic.views.View.inherit({
     }
 
     // Public API
+    this.update = function() {
+      setTimeout(setup);
+    };
     this.setup = function() {
       setup();
     };
 
-    /**
-     * @ngdoc method
-     * @name ionicSlideBox#slide
-     * @param {number} to The index to slide to.
-     * @param {number=} speed The number of milliseconds for the change to take.
-     */
     this.slide = function(to, speed) {
       // cancel slideshow
       stop();
@@ -6268,23 +6353,13 @@ ionic.views.Slider = ionic.views.View.inherit({
       slide(to, speed);
     };
 
-    /**
-     * @ngdoc method
-     * @name ionicSlideBox#prev
-     * @description Go to the previous slide. Wraps around if at the beginning.
-     */
-    this.prev = function() {
+    this.prev = this.previous = function() {
       // cancel slideshow
       stop();
 
       prev();
     };
 
-    /**
-     * @ngdoc method
-     * @name ionicSlideBox#next
-     * @description Go to the next slide. Wraps around if at the end.
-     */
     this.next = function() {
       // cancel slideshow
       stop();
@@ -6292,32 +6367,16 @@ ionic.views.Slider = ionic.views.View.inherit({
       next();
     };
 
-    /**
-     * @ngdoc method
-     * @name ionicSlideBox#stop
-     * @description Stop sliding. The slideBox will not move again until
-     * explicitly told to do so.
-     */
     this.stop = function() {
       // cancel slideshow
       stop();
     };
 
-    /**
-     * @ngdoc method
-     * @name ionicSlideBox#currentIndex
-     * @returns number The index of the current slide.
-     */
     this.currentIndex = function() {
       // return current index position
       return index;
     };
 
-    /**
-     * @ngdoc method
-     * @name ionicSlideBox#slidesCount
-     * @returns number The number of slides there are currently.
-     */
     this.slidesCount = function() {
       // return total number of slides
       return length;
@@ -6996,13 +7055,24 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
       };
     },
 
+    isOpenLeft: function() {
+      return this.getOpenAmount() > 0;
+    },
+
+    isOpenRight: function() {
+      return this.getOpenAmount() < 0;
+    },
+
     /**
      * Toggle the left menu to open 100%
      */
-    toggleLeft: function() {
-      this.content.enableAnimation();
+    toggleLeft: function(shouldOpen) {
       var openAmount = this.getOpenAmount();
-      if(openAmount > 0) {
+      if (arguments.length === 0) {
+        shouldOpen = openAmount <= 0;
+      }
+      this.content.enableAnimation();
+      if(!shouldOpen) {
         this.openPercentage(0);
       } else {
         this.openPercentage(100);
@@ -7012,10 +7082,13 @@ ionic.controllers.NavController = ionic.controllers.ViewController.inherit({
     /**
      * Toggle the right menu to open 100%
      */
-    toggleRight: function() {
-      this.content.enableAnimation();
+    toggleRight: function(shouldOpen) {
       var openAmount = this.getOpenAmount();
-      if(openAmount < 0) {
+      if (arguments.length === 0) {
+        shouldOpen = openAmount >= 0;
+      }
+      this.content.enableAnimation();
+      if(!shouldOpen) {
         this.openPercentage(0);
       } else {
         this.openPercentage(-100);
@@ -7381,3 +7454,5 @@ ionic.controllers.TabBarController = ionic.controllers.ViewController.inherit({
 });
 
 })(window.ionic);
+
+})();

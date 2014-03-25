@@ -1,7 +1,7 @@
 {
   "name": "ionic",
-  "version": "0.9.27",
-  "codename": "salamander",
+  "version": "1.0.0-beta.1",
+  "codename": "actinium",
   "homepage": "https://github.com/driftyco/ionic",
   "authors": [
     "Max Lynch <max@drifty.com>",
