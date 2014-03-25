@@ -66,12 +66,17 @@ function($timeout, $controller, $ionicBind) {
     require: '^?ionNavView',
     scope: true,
     compile: function(element, attr) {
+      var innerElement;
+
       element.addClass('scroll-content');
 
-      //We cannot transclude here because it breaks element.data() inheritance on compile
-      var innerElement = angular.element('<div class="scroll"></div>');
-      innerElement.append(element.contents());
-      element.append(innerElement);
+      // todo: scroll can't be changed via binding as it requires the template to be recompiled
+      if(attr.scroll != 'false') {
+        //We cannot transclude here because it breaks element.data() inheritance on compile
+        innerElement = angular.element('<div class="scroll"></div>');
+        innerElement.append(element.contents());
+        element.append(innerElement);
+      }
 
       return { pre: prelink };
       function prelink($scope, $element, $attr, navViewCtrl) {
@@ -104,7 +109,7 @@ function($timeout, $controller, $ionicBind) {
 
         if (angular.isDefined($attr.padding)) {
           $scope.$watch($attr.padding, function(newVal) {
-            innerElement.toggleClass('padding', !!newVal);
+              (innerElement || $element).toggleClass('padding', !!newVal);
           });
         }
 
