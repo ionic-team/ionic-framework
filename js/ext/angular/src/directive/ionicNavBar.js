@@ -2,22 +2,98 @@
 angular.module('ionic.ui.navBar', ['ionic.service.view', 'ngSanitize'])
 
 /**
- * @ngdoc controller
- * @name ionicNavBar
+ * @ngdoc service
+ * @name $ionicNavBarDelegate
  * @module ionic
  * @description
- * Controller for the {@link ionic.directive:ionNavBar} directive.
+ * Delegate for controlling the {@link ionic.directive:ionNavBar} directive.
  */
+.service('$ionicNavBarDelegate', delegateService([
+  /**
+   * @ngdoc method
+   * @name $ionicNavBarDelegate#back
+   * @description Goes back in the view history.
+   * @param {DOMEvent=} event The event object (eg from a tap event)
+   */
+  'back',
+  /**
+   * @ngdoc method
+   * @name $ionicNavBarDelegate#align
+   * @description Calls {@link ionic.controller:ionicBar#align ionicBar#align} for this navBar.
+   * @param {string=} direction The direction to the align the title text towards.
+   */
+  'align',
+  /**
+   * @ngdoc method
+   * @name $ionicNavBarDelegate#showBackButton
+   * @description
+   * Set whether the {@link ionic.directive:ionNavBackButton} should be shown (if it exists).
+   * @param {boolean} show Whether to show the back button.
+   */
+  'showBackButton',
+  /**
+   * @ngdoc method
+   * @name $ionicNavBarDelegate#showBar
+   * @description
+   * Set whether the {@link ionic.directive:ionNavBar} should be shown.
+   * @param {boolean} show Whether to show the bar.
+   */
+  'showBar',
+  /**
+   * @ngdoc method
+   * @name $ionicNavBarDelegate#setTitle
+   * @description
+   * Set the title for the {@link ionic.directive:ionNavBar}.
+   * @param {string} title The new title to show.
+   */
+  'setTitle',
+  /**
+   * @ngdoc method
+   * @name $ionicNavBarDelegate#changeTitle
+   * @description
+   * Change the title, transitioning the new title in and the old one out in a given direction.
+   * @param {string} title The new title to show.
+   * @param {string} direction The direction to transition the new title in.
+   * Available: 'forward', 'back'.
+   */
+  'changeTitle',
+  /**
+   * @ngdoc method
+   * @name $ionicNavBarDelegate#getTitle
+   * @returns {string} The current title of the navbar.
+   */
+  'getTitle',
+  /**
+   * @ngdoc method
+   * @name $ionicNavBarDelegate#getPreviousTitle
+   * @returns {string} The previous title of the navbar.
+   */
+  'getPreviousTitle'
+  /**
+   * @ngdoc method
+   * @name $ionicNavBarDelegate#forHandle
+   * @param {string} handle
+   * @returns `delegateInstance` A delegate instance that controls only the
+   * navBars with delegate-handle matching the given handle.
+   */
+]))
+
 .controller('$ionicNavBar', [
   '$scope',
   '$element',
+  '$attrs',
   '$ionicViewService',
   '$animate',
   '$compile',
-function($scope, $element, $ionicViewService, $animate, $compile) {
+  '$ionicNavBarDelegate',
+function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionicNavBarDelegate) {
   //Let the parent know about our controller too so that children of
   //sibling content elements can know about us
   $element.parent().data('$ionNavBarController', this);
+
+  var deregisterInstance = $ionicNavBarDelegate._registerInstance(this, $attrs.delegateHandle);
+
+  $scope.$on('$destroy', deregisterInstance);
 
   var self = this;
 
@@ -28,12 +104,6 @@ function($scope, $element, $ionicViewService, $animate, $compile) {
     $element[0].querySelector('.buttons.right-buttons')
   );
 
-  /**
-   * @ngdoc method
-   * @name ionicNavBar#back
-   * @description Goes back in the view history.
-   * @param {DOMEvent=} event The event object (eg from a tap event)
-   */
   this.back = function(e) {
     var backView = $ionicViewService.getBackView();
     backView && backView.go();
@@ -41,56 +111,23 @@ function($scope, $element, $ionicViewService, $animate, $compile) {
     return false;
   };
 
-  /**
-   * @ngdoc method
-   * @name ionicNavBar#align
-   * @description Calls {@link ionic.controller:ionicBar#align ionicBar#align} for this navBar.
-   * @param {string=} direction The direction to the align the title text towards.
-   */
   this.align = function(direction) {
     this._headerBarView.align(direction);
   };
 
-  /**
-   * @ngdoc method
-   * @name ionicNavBar#showBackButton
-   * @description
-   * Set whether the {@link ionic.directive:ionNavBackButton} should be shown (if it exists).
-   * @param {boolean} show Whether to show the back button.
-   */
   this.showBackButton = function(show) {
     $scope.backButtonShown = !!show;
   };
-  /**
-   * @ngdoc method
-   * @name ionicNavBar#showBar
-   * @description
-   * Set whether the {@link ionic.directive:ionNavBar} should be shown.
-   * @param {boolean} show Whether to show the bar.
-   */
+
   this.showBar = function(show) {
     $scope.isInvisible = !show;
   };
-  /**
-   * @ngdoc method
-   * @name ionicNavBar#setTitle
-   * @description
-   * Set the title for the {@link ionic.directive:ionNavBar}.
-   * @param {string} title The new title to show.
-   */
+
   this.setTitle = function(title) {
     $scope.oldTitle = $scope.title;
     $scope.title = title || '';
   };
-  /**
-   * @ngdoc method
-   * @name ionicNavBar#changeTitle
-   * @description
-   * Change the title, transitioning the new title in and the old one out in a given direction.
-   * @param {string} title The new title to show.
-   * @param {string} direction The direction to transition the new title in.
-   * Available: 'forward', 'back'.
-   */
+
   this.changeTitle = function(title, direction) {
     if ($scope.title === title) {
       return false;
@@ -108,25 +145,15 @@ function($scope, $element, $ionicViewService, $animate, $compile) {
     return true;
   };
 
-  /**
-   * @ngdoc method
-   * @name ionicNavBar#getTitle
-   * @returns {string} The current title of the navbar.
-   */
   this.getTitle = function() {
     return $scope.title || '';
   };
-  /**
-   * @ngdoc method
-   * @name ionicNavBar#getPreviousTitle
-   * @returns {string} The previous title of the navbar.
-   */
+
   this.getPreviousTitle = function() {
     return $scope.oldTitle || '';
   };
 
   /**
-   * @private
    * Exposed for testing
    */
   this._animateTitles = function() {
@@ -176,7 +203,7 @@ function($scope, $element, $ionicViewService, $animate, $compile) {
  * @ngdoc directive
  * @name ionNavBar
  * @module ionic
- * @controller ionicNavBar as $scope.$ionicNavBarController
+ * @controller $ionicNavBarDelegate as $scope.$$ionicNavBarDelegateController
  * @restrict E
  *
  * @description
@@ -204,9 +231,8 @@ function($scope, $element, $ionicViewService, $animate, $compile) {
  * </body>
  * ```
  *
- * @param controller-bind {string=} The scope expression to bind this element's
- * {@link ionic.controller:ionicNavBar ionicNavBar controller} to.
- * Default: $ionicNavBarController.
+ * @param {string=} delegate-handle The handle used to identify this navBar
+ * with {@link ionic.service:$ionicNavBarDelegate}.
  * @param align-title {string=} Where to align the title of the navbar.
  * Available: 'left', 'right', 'center'. Defaults to 'center'.
  */
@@ -236,7 +262,7 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
           alignTitle: $attr.alignTitle || 'center'
         });
 
-        $parse($attr.controllerBind || '$ionicNavBarController')
+        $parse($attr.controllerBind || '$$ionicNavBarDelegateController')
           .assign($scope, navBarCtrl);
 
         //defaults
@@ -286,28 +312,41 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
  * </ion-nav-bar>
  * ```
  *
- * With custom click action, using {@link ionic.controller:ionicNavBar ionicNavBar controller}:
+ * With custom click action, using {@link ionic.service:$ionicNavBarDelegate}:
  *
  * ```html
- * <ion-nav-bar>
+ * <ion-nav-bar ng-controller="MyCtrl">
  *   <ion-nav-back-button class="button-icon"
- *     ng-click="canGoBack && $ionicNavBarController.back()">
+ *     ng-click="canGoBack && goBack()">
  *     <i class="ion-arrow-left-c"></i> Back
  *   </ion-nav-back-button>
  * </ion-nav-bar>
  * ```
+ * ```js
+ * function MyCtrl($scope, $ionicNavBarDelegate) {
+ *   $scope.goBack = function() {
+ *     $ionicNavBarDelegate.back();
+ *   };
+ * }
+ * ```
  *
  * Displaying the previous title on the back button, again using
- * {@link ionic.controller:ionicNavBar ionicNavBar controller}.
+ * {@link ionic.service:$ionicNavBarDelegate}.
  *
  * ```html
- * <ion-nav-bar>
+ * <ion-nav-bar ng-controller="MyCtrl">
  *   <ion-nav-back-button class="button button-icon ion-arrow-left-c">
- *     {% raw %}{{$ionicNavBarController.getPreviousTitle() || 'Back'}}{% endraw %}
+ *     {% raw %}{{getPreviousTitle() || 'Back'}}{% endraw %}
  *   </ion-nav-back-button>
  * </ion-nav-bar>
  * ```
- *
+ * ```js
+ * function MyCtrl($scope, $ionicNavBarDelegate) {
+ *   $scope.getPreviousTitle = function() {
+ *     return $ionicNavBarDelegate.getPreviousTitle();
+ *   };
+ * }
+ * ```
  */
 .directive('ionNavBackButton', ['$ionicNgClick', function($ionicNgClick) {
   return {

@@ -88,7 +88,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
    * @name $ionicSideMenuDelegate#forHandle
    * @param {string} handle
    * @returns `delegateInstance` A delegate instance that controls only the
-   * sideMenu with delegate-handle matching the given handle.
+   * sideMenus with delegate-handle matching the given handle.
    */
 ]))
 
@@ -137,9 +137,8 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * }
  * ```
  *
- * @param {string=} controller-bind The scope variable to bind these side menus'
- * {@link ionic.controller:$ionicSideMenuDelegate $ionicSideMenuDelegate controller} to.
- * Default: $scope.$$ionicSideMenuDelegateController.
+ * @param {string=} delegate-handle The handle used to identify this side menu
+ * with {@link ionic.service:$ionicSideMenuDelegate}.
  *
  */
 .directive('ionSideMenus', function() {

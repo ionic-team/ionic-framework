@@ -8,12 +8,20 @@ describe('Ionic Angular Side Menu', function() {
   beforeEach(module('ionic.ui.sideMenu'));
 
   it('should register with $ionicSideMenuDelegate', inject(function($compile, $rootScope, $ionicSideMenuDelegate) {
-    spyOn($ionicSideMenuDelegate, '_registerInstance');
+    var deregisterSpy = jasmine.createSpy('deregister');
+    spyOn($ionicSideMenuDelegate, '_registerInstance').andCallFake(function() {
+      return deregisterSpy;
+    });
     var el = $compile('<ion-side-menus delegate-handle="superHandle">')($rootScope.$new());
     $rootScope.$apply();
+
     expect(el.controller('ionSideMenus')).toBeDefined();
     expect($ionicSideMenuDelegate._registerInstance)
       .toHaveBeenCalledWith(el.controller('ionSideMenus'), 'superHandle');
+
+    expect(deregisterSpy).not.toHaveBeenCalled();
+    el.scope().$destroy();
+    expect(deregisterSpy).toHaveBeenCalled();
   }));
 });
 

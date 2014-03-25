@@ -29,21 +29,28 @@ describe('Ionic Angular Slide Box', function() {
     </ion-slide-box>')($rootScope);
   }));
 
-  it('Should init', function() {
-    var scope = el.scope();
-    expect(scope.$ionicSlideBoxController).toBeDefined()
-    expect(scope.$ionicSlideBoxController.slide).toBeDefined();
-  });
+  it('should register with $ionicSlideBoxDelegate', inject(function($compile, $rootScope, $ionicSlideBoxDelegate) {
+    var deregisterSpy = jasmine.createSpy('deregister');
+    spyOn($ionicSlideBoxDelegate, '_registerInstance').andCallFake(function() {
+      return deregisterSpy;
+    });
+    var el = $compile('<ion-slide-box delegate-handle="superHandle">')($rootScope.$new());
+    $rootScope.$apply();
 
-  it('Should init with custom controller-bind attr', inject(function($compile, $rootScope) {
-    var el = $compile('<ion-slide-box controller-bind="myModel"></ion-slide-box>')($rootScope);
-    var scope = el.scope();
-    expect(scope.myModel).toBeDefined();
-    expect(scope.myModel.slide).toBeDefined();
+    expect($ionicSlideBoxDelegate._registerInstance)
+      .toHaveBeenCalledWith(el.controller('ionSlideBox').__slider, 'superHandle');
+
+    expect(deregisterSpy).not.toHaveBeenCalled();
+    el.scope().$destroy();
+    expect(deregisterSpy).toHaveBeenCalled();
   }));
+});
 
-  it('Should set initial active slide', function() {
-    el = compile('<ion-slide-box active-slide="2">\
+describe('ionSlideBox with active slide', function() {
+  beforeEach(module('ionic'));
+
+  it('Should set initial active slide', inject(function($ionicSlideBoxDelegate, $rootScope, $compile) {
+    el = $compile('<ion-slide-box active-slide="2">\
       <ion-slide>\
         <div class="box blue">\
           <h1>BLUE {{slideBox.slideIndex}}</h1>\
@@ -57,9 +64,10 @@ describe('Ionic Angular Slide Box', function() {
       <ion-slide>\
       <div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>\
       </ion-slide>\
-    </ion-slide-box>')(rootScope);
+    </ion-slide-box>')($rootScope.$new());
 
    var scope = el.scope();
-   expect(scope.$ionicSlideBoxController.currentIndex()).toBe(2);
-  });
+   scope.$apply();
+   expect($ionicSlideBoxDelegate.currentIndex()).toBe(2);
+  }));
 });

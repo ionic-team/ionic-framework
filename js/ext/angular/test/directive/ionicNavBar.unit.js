@@ -25,7 +25,8 @@ describe('ionNavBar', function() {
 
         ctrl = $controller('$ionicNavBar', {
           $element: el,
-          $scope: $scope
+          $scope: $scope,
+          $attrs: {}
         });
         ctrl._headerBarView = { align: jasmine.createSpy('align') };
       });
@@ -213,7 +214,7 @@ describe('ionNavBar', function() {
     });
   });
 
-  describe('ionNavBar directive', function() {
+  describe('directive', function() {
     beforeEach(module('ionic.ui.navBar'));
     function setup(attrs, content) {
       var el;
@@ -234,19 +235,22 @@ describe('ionNavBar', function() {
       expect(el.scope().$parent.$hasHeader).toBe(true);
     });
 
-    it('should assign $scope.navBarController by default', function() {
-      var el = setup();
-      expect(el.controller('ionNavBar')).toBeTruthy(); //sanity
-      expect(el.scope().$ionicNavBarController).toBe(el.controller('ionNavBar'));
-    });
+    it('should register with $ionicNavBarDelegate', inject(function($ionicNavBarDelegate) {
+      var deregisterSpy = jasmine.createSpy('deregister');
+      spyOn($ionicNavBarDelegate, '_registerInstance').andCallFake(function() {
+        return deregisterSpy;
+      });
 
-    it('should assign $scope.navBarController to attr.model if set', function() {
-      var el = setup('controller-bind="theNavBarCtrl"');
-      expect(el.controller('ionNavBar')).toBeTruthy();
-      expect(el.scope().theNavBarCtrl).toBe(el.controller('ionNavBar'));
-    });
+      var el = setup('delegate-handle="theBestHandle"');
+      expect($ionicNavBarDelegate._registerInstance)
+        .toHaveBeenCalledWith(el.controller('ionNavBar'), 'theBestHandle');
 
-    it('should have isInvisible class (default true)', function() {
+      expect(deregisterSpy).not.toHaveBeenCalled();
+      el.scope().$destroy();
+      expect(deregisterSpy).toHaveBeenCalled();
+    }));
+
+    it('should have invisible class (default true)', function() {
       var el = setup();
       expect(el.hasClass('invisible')).toBe(true);
       el.scope().$apply('isInvisible = false');

@@ -101,7 +101,7 @@ describe('DelegateFactory', function() {
   });
 
   describe('forHandle', function() {
-    var delegate, instance1, instance2;
+    var delegate, instance1, instance2, instance3;
     beforeEach(function() {
       delegate = setup(['a']);
       instance1 = {
@@ -113,6 +113,11 @@ describe('DelegateFactory', function() {
         a: jasmine.createSpy('a2').andCallFake(function() {
           return 'a2';
         }),
+      };
+      instance3 = {
+        a: jasmine.createSpy('a3').andCallFake(function() {
+          return 'a3';
+        })
       };
     });
     it('should return an InstanceWithHandle object with fields', function() {
@@ -143,10 +148,7 @@ describe('DelegateFactory', function() {
     });
 
     it('should call multiple instances with the same handle', function() {
-      var instance3 = {
-        a: jasmine.createSpy('a3')
-      };
-      delegate._registerInstance(instance1, '1');
+      var deregister = delegate._registerInstance(instance1, '1');
       delegate._registerInstance(instance2, '1');
       delegate._registerInstance(instance3, 'other');
 
@@ -160,6 +162,14 @@ describe('DelegateFactory', function() {
       expect(instance2.a).toHaveBeenCalledWith('1');
       expect(instance3.a).not.toHaveBeenCalled();
       expect(result).toBe('a1');
+
+      instance1.a.reset();
+      deregister();
+      var result = delegateInstance.a(2);
+      expect(instance1.a).not.toHaveBeenCalled();
+      expect(instance2.a).toHaveBeenCalledWith(2);
+      expect(instance3.a).not.toHaveBeenCalled();
+      expect(result).toBe('a2');
     });
   });
 });

@@ -162,7 +162,7 @@ angular.module('ionic.ui.scroll')
    * @name $ionicScrollDelegate#forHandle
    * @param {string} handle
    * @returns `delegateInstance` A delegate instance that controls only the
-   * scrollView with delegate-handle matching the given handle.
+   * scrollViews with delegate-handle matching the given handle.
    */
 ]))
 

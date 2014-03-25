@@ -6,14 +6,6 @@
  *
 */
 
-/**
- * @ngdoc controller
- * @name ionicSlideBox
- * @module ionic
- * @description
- * Controller for the {@link ionic.directive:ionSlideBox} directive.
- */
-
 (function(ionic) {
 'use strict';
 
@@ -469,13 +461,6 @@ ionic.views.Slider = ionic.views.View.inherit({
     }
 
     // Public API
-    /**
-     * @ngdoc method
-     * @name ionicSlideBox#update
-     * @description
-     * Update the slidebox (for example if using Angular with ng-repeat,
-     * resize it for the elements inside).
-     */
     this.update = function() {
       setTimeout(setup);
     };
@@ -483,12 +468,6 @@ ionic.views.Slider = ionic.views.View.inherit({
       setup();
     };
 
-    /**
-     * @ngdoc method
-     * @name ionicSlideBox#slide
-     * @param {number} to The index to slide to.
-     * @param {number=} speed The number of milliseconds for the change to take.
-     */
     this.slide = function(to, speed) {
       // cancel slideshow
       stop();
@@ -496,11 +475,6 @@ ionic.views.Slider = ionic.views.View.inherit({
       slide(to, speed);
     };
 
-    /**
-     * @ngdoc method
-     * @name ionicSlideBox#prev
-     * @description Go to the previous slide. Wraps around if at the beginning.
-     */
     this.prev = function() {
       // cancel slideshow
       stop();
@@ -508,11 +482,6 @@ ionic.views.Slider = ionic.views.View.inherit({
       prev();
     };
 
-    /**
-     * @ngdoc method
-     * @name ionicSlideBox#next
-     * @description Go to the next slide. Wraps around if at the end.
-     */
     this.next = function() {
       // cancel slideshow
       stop();
@@ -520,32 +489,16 @@ ionic.views.Slider = ionic.views.View.inherit({
       next();
     };
 
-    /**
-     * @ngdoc method
-     * @name ionicSlideBox#stop
-     * @description Stop sliding. The slideBox will not move again until
-     * explicitly told to do so.
-     */
     this.stop = function() {
       // cancel slideshow
       stop();
     };
 
-    /**
-     * @ngdoc method
-     * @name ionicSlideBox#currentIndex
-     * @returns number The index of the current slide.
-     */
     this.currentIndex = function() {
       // return current index position
       return index;
     };
 
-    /**
-     * @ngdoc method
-     * @name ionicSlideBox#slidesCount
-     * @returns number The number of slides there are currently.
-     */
     this.slidesCount = function() {
       // return total number of slides
       return length;
