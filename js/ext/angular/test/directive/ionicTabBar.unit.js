@@ -23,15 +23,15 @@ describe('tabs', function() {
     }));
 
     it('.getTabIndex should return indexOf tab', function() {
-      expect(ctrl.selectedTabIndex()).toBe(-1);
+      expect(ctrl.selectedIndex()).toBe(-1);
       var tab1 = {}, tab2 = {};
       ctrl.add(tab1);
       ctrl.add(tab2);
-      expect(ctrl.selectedTabIndex()).toBe(0);
+      expect(ctrl.selectedIndex()).toBe(0);
       ctrl.select(tab2);
-      expect(ctrl.selectedTabIndex()).toBe(1);
+      expect(ctrl.selectedIndex()).toBe(1);
       ctrl.deselect(tab2);
-      expect(ctrl.selectedTabIndex()).toBe(-1);
+      expect(ctrl.selectedIndex()).toBe(-1);
     });
 
     it('.add should add tab and select if empty, & set historyId', inject(function($ionicViewService) {

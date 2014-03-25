@@ -29,7 +29,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * Delegate for controlling the {@link ionic.directive:ionSideMenus} directive.
  *
  * Methods called directly on the $ionicSideMenuDelegate service will control all side
- * menus.  Use the {@link ionic.service:$ionicSideMenuDelegate#getByHandle getByHandle}
+ * menus.  Use the {@link ionic.service:$ionicSideMenuDelegate#$getByHandle $getByHandle}
  * method to control specific ionSideMenus instances.
  *
  * @usage
@@ -96,13 +96,13 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
   'canDragContent',
   /**
    * @ngdoc method
-   * @name $ionicSideMenuDelegate#getByHandle
+   * @name $ionicSideMenuDelegate#$getByHandle
    * @param {string} handle
    * @returns `delegateInstance` A delegate instance that controls only the
    * {@link ionic.directive:ionSideMenus} directives with `delegate-handle` matching
    * the given handle.
    *
-   * Example: `$ionicSideMenuDelegate.getByHandle('my-handle').toggleLeft();`
+   * Example: `$ionicSideMenuDelegate.$getByHandle('my-handle').toggleLeft();`
    */
 ]))
 

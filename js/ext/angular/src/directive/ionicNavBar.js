@@ -7,6 +7,25 @@ angular.module('ionic.ui.navBar', ['ionic.service.view', 'ngSanitize'])
  * @module ionic
  * @description
  * Delegate for controlling the {@link ionic.directive:ionNavBar} directive.
+ *
+ * @usage
+ *
+ * ```html
+ * <body ng-controller="MyCtrl">
+ *   <ion-nav-bar>
+ *     <button ng-click="setNavTitle('banana')">
+ *       Set title to banana!
+ *     </button>
+ *   </ion-nav-bar>
+ * </body>
+ * ```
+ * ```js
+ * function MyCtrl($scope, $ionicNavBarDelegate) {
+ *   $scope.setNavTitle = function(title) {
+ *     $ionicNavBarDelegate.setTitle(title);
+ *   }
+ * }
+ * ```
  */
 .service('$ionicNavBarDelegate', delegateService([
   /**
@@ -20,7 +39,7 @@ angular.module('ionic.ui.navBar', ['ionic.service.view', 'ngSanitize'])
    * @ngdoc method
    * @name $ionicNavBarDelegate#align
    * @description Aligns the title with the buttons in a given direction.
-   * @param {string=} direction The direction to the align the title text towards. 
+   * @param {string=} direction The direction to the align the title text towards.
    * Available: 'left', 'right', 'center'. Default: 'center'.
    */
   'align',
@@ -28,7 +47,7 @@ angular.module('ionic.ui.navBar', ['ionic.service.view', 'ngSanitize'])
    * @ngdoc method
    * @name $ionicNavBarDelegate#showBackButton
    * @description
-   * Set whether the {@link ionic.directive:ionNavBackButton} should be shown 
+   * Set whether the {@link ionic.directive:ionNavBackButton} should be shown
    * (if it exists).
    * @param {boolean} show Whether to show the back button.
    */
@@ -73,10 +92,12 @@ angular.module('ionic.ui.navBar', ['ionic.service.view', 'ngSanitize'])
   'getPreviousTitle'
   /**
    * @ngdoc method
-   * @name $ionicNavBarDelegate#getByHandle
+   * @name $ionicNavBarDelegate#$getByHandle
    * @param {string} handle
    * @returns `delegateInstance` A delegate instance that controls only the
    * navBars with delegate-handle matching the given handle.
+   *
+   * Example: `$ionicNavBarDelegate.$getByHandle('myHandle').setTitle('newTitle')`
    */
 ]))
 

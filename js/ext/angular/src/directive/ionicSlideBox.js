@@ -11,8 +11,34 @@ angular.module('ionic.ui.slideBox', [])
  * Delegate that controls the {@link ionic.directive:ionSlideBox} directive.
  *
  * Methods called directly on the $ionicSlideBoxDelegate service will control all side
- * menus.  Use the {@link ionic.service:$ionicSlideBoxDelegate#getByHandle getByHandle}
+ * menus.  Use the {@link ionic.service:$ionicSlideBoxDelegate#$getByHandle $getByHandle}
  * method to control specific slide box instances.
+ *
+ * @usage
+ *
+ * ```html
+ * <body ng-controller="MyCtrl">
+ *   <ion-slide-box>
+ *     <ion-slide>
+ *       <div class="box blue">
+ *         <button ng-click="nextSlide()">Next slide!</button>
+ *       </div>
+ *     </ion-slide>
+ *     <ion-slide>
+ *       <div class="box red">
+ *         Slide 2!
+ *       </div>
+ *     </ion-slide>
+ *   </ion-slide-box>
+ * </body>
+ * ```
+ * ```js
+ * function MyCtrl($scope, $ionicSlideBoxDelegate) {
+ *   $scope.nextSlide = function() {
+ *     $ionicSlideBoxDelegate.next();
+ *   }
+ * }
+ * ```
  */
 .service('$ionicSlideBoxDelegate', delegateService([
   /**
@@ -63,13 +89,13 @@ angular.module('ionic.ui.slideBox', [])
   'slidesCount'
   /**
    * @ngdoc method
-   * @name $ionicSlideBoxDelegate#getByHandle
+   * @name $ionicSlideBoxDelegate#$getByHandle
    * @param {string} handle
    * @returns `delegateInstance` A delegate instance that controls only the
    * {@link ionic.directive:ionSlideBox} directives with `delegate-handle` matching
    * the given handle.
    *
-   * Example: `$ionicSlideBoxDelegate.getByHandle('my-handle').stop();`
+   * Example: `$ionicSlideBoxDelegate.$getByHandle('my-handle').stop();`
    */
 ]))
 
