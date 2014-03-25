@@ -9,7 +9,9 @@ angular.module('ionic.ui.scroll')
  * {@link ionic.directive:ionContent} and
  * {@link ionic.directive:ionScroll} directives).
  *
- * Each method on $ionicScrollDelegate can be called on the service itself to control all scrollViews.  Alternatively, one can control one specific scrollView using `forHandle` and `delegate-handle`. See the example below.
+ * Methods called directly on the $ionicScrollDelegate service will control all scroll
+ * views.  Use the {@link ionic.service:$ionicScrollDelegate#getByHandle getByHandle}
+ * method to control specific scrollViews.
  *
  * @usage
  *
@@ -48,10 +50,10 @@ angular.module('ionic.ui.scroll')
  * ```js
  * function MainCtrl($scope, $ionicScrollDelegate) {
  *   $scope.scrollMainToTop = function() {
- *     $ionicScrollDelegate.forHandle('mainScroll').scrollTop();
+ *     $ionicScrollDelegate.getByHandle('mainScroll').scrollTop();
  *   };
  *   $scope.scrollSmallToTop = function() {
- *     $ionicScrollDelegate.forHandle('small').scrollTop();
+ *     $ionicScrollDelegate.getByHandle('small').scrollTop();
  *   };
  * }
  * ```
@@ -123,7 +125,7 @@ angular.module('ionic.ui.scroll')
    * ```
    * ```js
    * function ScrollCtrl($scope, $ionicScrollDelegate) {
-   *   var delegate = $ionicScrollDelegate.forHandle('myScroll');
+   *   var delegate = $ionicScrollDelegate.getByHandle('myScroll');
    *
    *   // Put any unique ID here.  The point of this is: every time the controller is recreated
    *   // we want to load the correct remembered scroll values.
@@ -159,10 +161,10 @@ angular.module('ionic.ui.scroll')
   'scrollToRememberedPosition'
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate#forHandle
+   * @name $ionicScrollDelegate#getByHandle
    * @param {string} handle
    * @returns `delegateInstance` A delegate instance that controls only the
-   * scrollViews with delegate-handle matching the given handle.
+   * scrollViews with `delegate-handle` matching the given handle.
    */
 ]))
 

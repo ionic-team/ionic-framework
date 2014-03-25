@@ -71,7 +71,7 @@ angular.module('ionic.ui.navBar', ['ionic.service.view', 'ngSanitize'])
   'getPreviousTitle'
   /**
    * @ngdoc method
-   * @name $ionicNavBarDelegate#forHandle
+   * @name $ionicNavBarDelegate#getByHandle
    * @param {string} handle
    * @returns `delegateInstance` A delegate instance that controls only the
    * navBars with delegate-handle matching the given handle.

@@ -19,7 +19,7 @@
    </ion-scroll>
    <script>
    function ScrollCtrl($scope, $ionicScrollDelegate) {
-     var delegate = $ionicScrollDelegate.forHandle('myScroll');
+     var delegate = $ionicScrollDelegate.getByHandle('myScroll');
 
      delegate.rememberScrollPosition('my-scroll-id');
      delegate.scrollToRememberedPosition();

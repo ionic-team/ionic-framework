@@ -10,7 +10,7 @@ describe('DelegateFactory', function() {
   it('should have properties', function() {
     expect(setup()._instances).toEqual([]);
     expect(setup()._registerInstance).toEqual(jasmine.any(Function));
-    expect(setup().forHandle).toEqual(jasmine.any(Function));
+    expect(setup().getByHandle).toEqual(jasmine.any(Function));
   });
 
   it('should allow reg & dereg of instance with handle', function() {
@@ -95,12 +95,12 @@ describe('DelegateFactory', function() {
     expect(delegate.fn()).toBe('ret2');
   });
 
-  it('forHandle should return this for blank handle', function() {
+  it('getByHandle should return this for blank handle', function() {
     var delegate = setup();
-    expect(delegate.forHandle()).toBe(delegate);
+    expect(delegate.getByHandle()).toBe(delegate);
   });
 
-  describe('forHandle', function() {
+  describe('getByHandle', function() {
     var delegate, instance1, instance2, instance3;
     beforeEach(function() {
       delegate = setup(['a']);
@@ -121,13 +121,13 @@ describe('DelegateFactory', function() {
       };
     });
     it('should return an InstanceWithHandle object with fields', function() {
-      expect(delegate.forHandle('one').a).toEqual(jasmine.any(Function));
-      expect(delegate.forHandle('two').a).toEqual(jasmine.any(Function));
-      expect(delegate.forHandle('invalid').a).toEqual(jasmine.any(Function));
+      expect(delegate.getByHandle('one').a).toEqual(jasmine.any(Function));
+      expect(delegate.getByHandle('two').a).toEqual(jasmine.any(Function));
+      expect(delegate.getByHandle('invalid').a).toEqual(jasmine.any(Function));
     });
     it('should noop & warn if calling for a non-added instance', inject(function($log) {
       spyOn($log, 'warn');
-      expect(delegate.forHandle('one').a()).toBeUndefined();
+      expect(delegate.getByHandle('one').a()).toBeUndefined();
       expect($log.warn).toHaveBeenCalled();
     }));
 
@@ -135,13 +135,13 @@ describe('DelegateFactory', function() {
       delegate._registerInstance(instance1, '1');
       delegate._registerInstance(instance2, '2');
 
-      var result = delegate.forHandle('1').a(1,2,3);
+      var result = delegate.getByHandle('1').a(1,2,3);
       expect(instance1.a).toHaveBeenCalledWith(1,2,3);
       expect(instance2.a).not.toHaveBeenCalled();
       expect(result).toBe('a1');
 
       instance1.a.reset();
-      var result = delegate.forHandle('2').a(2,3,4);
+      var result = delegate.getByHandle('2').a(2,3,4);
       expect(instance2.a).toHaveBeenCalledWith(2,3,4);
       expect(instance1.a).not.toHaveBeenCalled();
       expect(result).toBe('a2');
@@ -152,7 +152,7 @@ describe('DelegateFactory', function() {
       delegate._registerInstance(instance2, '1');
       delegate._registerInstance(instance3, 'other');
 
-      var delegateInstance = delegate.forHandle('1');
+      var delegateInstance = delegate.getByHandle('1');
 
       expect(instance1.a).not.toHaveBeenCalled();
       expect(instance2.a).not.toHaveBeenCalled();

@@ -9,6 +9,10 @@ angular.module('ionic.ui.slideBox', [])
  * @module ionic
  * @description
  * Delegate that controls the {@link ionic.directive:ionSlideBox} directive.
+ *
+ * Methods called directly on the $ionicSlideBoxDelegate service will control all side
+ * menus.  Use the {@link ionic.service:$ionicSlideBoxDelegate#getByHandle getByHandle}
+ * method to control specific slide box instances.
  */
 .service('$ionicSlideBoxDelegate', delegateService([
   /**
@@ -57,6 +61,14 @@ angular.module('ionic.ui.slideBox', [])
    * @returns number The number of slides there are currently.
    */
   'slidesCount'
+  /**
+   * @ngdoc method
+   * @name $ionicSlideBoxDelegate#getByHandle
+   * @param {string} handle
+   * @returns `delegateInstance` A delegate instance that controls only the
+   * {@link ionic.directive:ionSlideBox} directives with `delegate-handle` matching
+   * the given handle.
+   */
 ]))
 
 /**
@@ -68,7 +80,6 @@ angular.module('ionic.ui.slideBox', [])
  * @name ionSlideBox
  * @module ionic
  * @restrict E
- * @controller ionicSlideBox as $scope.$ionicSlideBoxController
  * @description
  * The Slide Box is a multi-page container where each page can be swiped or dragged between:
  *
@@ -89,7 +100,7 @@ angular.module('ionic.ui.slideBox', [])
  * </ion-slide-box>
  * ```
  *
- * @param {string=} delegate-handle The handle used to identify this navBar
+ * @param {string=} delegate-handle The handle used to identify this slideBox
  * with {@link ionic.service:$ionicSlideBoxDelegate}.
  * @param {boolean=} does-continue Whether the slide box should automatically slide.
  * @param {number=} slide-interval How many milliseconds to wait to change slides (if does-continue is true). Defaults to 4000.
@@ -99,9 +110,9 @@ angular.module('ionic.ui.slideBox', [])
  * @param {expression=} active-slide Model to bind the current slide to.
  */
 .directive('ionSlideBox', [
-  '$timeout', 
-  '$compile', 
-  '$ionicSlideBoxDelegate', 
+  '$timeout',
+  '$compile',
+  '$ionicSlideBoxDelegate',
 function($timeout, $compile, $ionicSlideBoxDelegate) {
   return {
     restrict: 'E',
