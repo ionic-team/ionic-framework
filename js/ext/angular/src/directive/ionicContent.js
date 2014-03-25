@@ -74,8 +74,6 @@ function($timeout, $controller, $ionicBind) {
 
       return { pre: prelink };
       function prelink($scope, $element, $attr, navViewCtrl) {
-        var clone, sc, scrollView, scrollCtrl;
-
         $scope.$watch(function() {
           return ($scope.$hasHeader ? ' has-header' : '')  +
             ($scope.$hasSubheader ? ' has-subheader' : '') +
@@ -114,8 +112,7 @@ function($timeout, $controller, $ionicBind) {
         } else if(attr.overflowScroll === "true") {
           $element.addClass('overflow-scroll');
         } else {
-
-          scrollCtrl = $controller('$ionicScroll', {
+          $controller('$ionicScroll', {
             $scope: $scope,
             scrollViewOptions: {
               el: $element[0],
@@ -136,8 +133,6 @@ function($timeout, $controller, $ionicBind) {
               }
             }
           });
-          //Publish scrollView to parent so children can access it
-          scrollView = scrollCtrl.scrollView;
         }
 
       }
