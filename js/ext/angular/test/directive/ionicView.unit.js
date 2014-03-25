@@ -1,4 +1,4 @@
-ddescribe('ionView directive', function() {
+describe('ionView directive', function() {
   beforeEach(module('ionic.ui.viewState'));
 
   function setup(attrs, scopeProps, content) {
