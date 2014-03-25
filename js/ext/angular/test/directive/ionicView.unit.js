@@ -1,6 +1,4 @@
-'use strict';
-
-describe('ionView directive', function() {
+ddescribe('ionView directive', function() {
   beforeEach(module('ionic.ui.viewState'));
 
   function setup(attrs, scopeProps, content) {
@@ -58,9 +56,11 @@ describe('ionView directive', function() {
     expect(el.controller('ionNavBar').showBar).toHaveBeenCalledWith(true);
   });
 
-  it('should setTitle on change', function() {
-    var el = setup('title="{{something}}1"');
-    el.scope().$apply('something = "bar"');
-    expect(el.controller('ionNavBar').setTitle).toHaveBeenCalledWith('bar1');
+  it('should setTitle on change, but not with initial value', function() {
+    var el = setup('title="{{something}}-1"');
+    //Should not setTitle with initial value
+    expect(el.controller('ionNavBar').setTitle).not.toHaveBeenCalled();
+    el.scope().$apply('something = 2');
+    expect(el.controller('ionNavBar').setTitle).toHaveBeenCalledWith('2-1');
   });
 });

@@ -48,7 +48,15 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
         if (!navBarCtrl) {
           return;
         }
-        navBarCtrl.changeTitle($attr.title, $scope.$navDirection);
+        var initialTitle = $attr.title;
+        navBarCtrl.changeTitle(initialTitle, $scope.$navDirection);
+
+        // watch for changes in the title, don't set initial value as changeTitle does that
+        $attr.$observe('title', function(val, oldVal) {
+          if (val !== initialTitle) {
+            navBarCtrl.setTitle(val);
+          }
+        });
 
         $scope.$watch($attr.hideBackButton, function(value) {
           // Should we hide a back button when this tab is shown
@@ -60,12 +68,6 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
           navBarCtrl.showBar(!value);
         });
 
-        // watch for changes in the title
-        $attr.$observe('title', function(val, oldVal) {
-          if (val) {
-            navBarCtrl.setTitle(val);
-          }
-        });
       };
     }
   };
