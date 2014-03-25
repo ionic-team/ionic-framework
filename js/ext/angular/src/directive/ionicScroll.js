@@ -21,7 +21,11 @@ angular.module('ionic.ui.scroll', [])
  * @param {boolean=} scrollbar-x Whether to show the horizontal scrollbar. Default false.
  * @param {boolean=} scrollbar-x Whether to show the vertical scrollbar. Default true.
  */
-.directive('ionScroll', ['$parse', '$timeout', '$controller', '$ionicBind', function($parse, $timeout, $controller, $ionicBind) {
+.directive('ionScroll', [
+  '$timeout',
+  '$controller',
+  '$ionicBind',
+function($timeout, $controller, $ionicBind) {
   return {
     restrict: 'E',
     scope: true,

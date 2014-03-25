@@ -97,7 +97,7 @@ function tapScrollToTopDirective() {
 
 
 function barDirective(isHeader) {
-  return [function($parse) {
+  return [function() {
     return {
       restrict: 'E',
       compile: function($element, $attr) {

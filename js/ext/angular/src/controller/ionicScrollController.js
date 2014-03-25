@@ -187,8 +187,7 @@ angular.module('ionic.ui.scroll')
   '$rootScope',
   '$document',
   '$ionicScrollDelegate',
-  '$parse', //DEPRECATED
-function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $location, $rootScope, $document, $ionicScrollDelegate, $parse) {
+function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $location, $rootScope, $document, $ionicScrollDelegate) {
 
   var self = this;
 

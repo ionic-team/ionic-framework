@@ -154,7 +154,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
       onSlideChanged: '&',
       activeSlide: '=?'
     },
-    controller: ['$scope', '$element', '$attrs', '$parse', function($scope, $element, $attrs) {
+    controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
       var _this = this;
 
       var continuous = $scope.$eval($scope.doesContinue) === true;

@@ -56,11 +56,10 @@ angular.module('ionic.ui.content', ['ionic.ui.scroll'])
  * @param {expression=} on-scroll-complete Expression to evaluate when a scroll action completes.
  */
 .directive('ionContent', [
-  '$parse',
   '$timeout',
   '$controller',
   '$ionicBind',
-function($parse, $timeout, $controller, $ionicBind) {
+function($timeout, $controller, $ionicBind) {
   return {
     restrict: 'E',
     require: '^?ionNavView',
