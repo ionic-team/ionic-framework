@@ -48,7 +48,7 @@ angular.module('ionic.ui.content', ['ionic.ui.scroll'])
  * with {@link ionic.service:$ionicScrollDelegate}.
  * @param {boolean=} padding Whether to add padding to the content.
  * of the content.  Defaults to true on iOS, false on Android.
- * @param {boolean=} scroll Whether to allow scrolling of content.  Defaults to true.
+ * @param {boolean=} scroll Whether to allow scrolling of content.  Defaults to true. Note: scroll="false" removes the .scroll child element on element compilation, not on scope change
  * @param {boolean=} overflow-scroll Whether to use overflow-scrolling instead of
  * Ionic scroll.
  * @param {boolean=} has-bouncing Whether to allow scrolling to bounce past the edges
