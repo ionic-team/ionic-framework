@@ -354,14 +354,14 @@
         };
       })
 
-      .controller('AutoDetailCtrl', function($scope, $state, $stateParams) {
+      .controller('AutoDetailCtrl', function($scope, $state, $stateParams, $ionicNavBarDelegate) {
         $scope.autoDetailData = "AutoDetailCtrl Data";
 
         $scope.hideBackButton = function() {
-          $scope.$emit('viewState.showBackButton', false);
+          $ionicNavBarDelegate.showBackButton(false);
         };
         $scope.showBackButton = function() {
-          $scope.$emit('viewState.showBackButton', true);
+          $ionicNavBarDelegate.showBackButton(true);
         };
 
         $scope.auto = $scope.autos[$stateParams.id];

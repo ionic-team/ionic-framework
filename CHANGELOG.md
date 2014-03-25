@@ -110,6 +110,8 @@ New Code:
 * **ionNavBar, ionView**: Remove `left-buttons`, `right-buttons`, `type`, `animation`, 
 `back-button-*` attributes from ionNavBar. Remove `left-buttons`, `right-buttons` from ionView. 
 
+Additionally, all 'viewState.*' have been removed.
+
 Relevant Documentation: [ionNavBar](http://ionicframework.com/docs/api/directive/ionNavBar),
 [ionView](http://ionicframework.com/docs/api/directive/ionView),
 [ionNavBackButton](http://ionicframework.com/docs/api/directive/ionNavBackButton) (new),
