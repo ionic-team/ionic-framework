@@ -39,6 +39,27 @@ describe('Ionic Content directive', function() {
     expect(scope.foo).toHaveBeenCalled();
   });
 
+  ['header','subheader','footer','subfooter','tabs','tabs-top'].forEach(function(type) {
+    var scopeVar = '$has' + type.split('-').map(function(part) {
+      return part.charAt(0).toUpperCase() + part.substring(1);
+    }).join('');
+    var className = 'has-'+type;
+
+    it('should has-' + type + ' when ' + scopeVar + ' == true', function() {
+      var element = compile('<ion-content>')(scope.$new());
+      scope = element.scope();
+
+      expect(element.hasClass(className)).toBe(false);
+      expect(scope[scopeVar]).toBeFalsy();
+
+      scope.$apply(scopeVar + ' = true');
+      expect(element.hasClass(className)).toBe(true);
+
+      scope.$apply(scopeVar + ' = false');
+      expect(element.hasClass(className)).toBe(false);
+    });
+  });
+
   it('should add padding classname', function() {
     var element = compile('<ion-content padding="shouldPad"></ion-content>')(scope);
     var scrollElement = element.find('.scroll');
