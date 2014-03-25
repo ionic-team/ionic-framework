@@ -475,7 +475,7 @@ ionic.views.Slider = ionic.views.View.inherit({
       slide(to, speed);
     };
 
-    this.prev = function() {
+    this.prev = this.previous = function() {
       // cancel slideshow
       stop();
 

@@ -58,11 +58,11 @@
       <ion-view title="Welcome">
 
         <ion-nav-buttons side="left">
-          <button ng-click="sideMenuController.toggleLeft(false)" class="button button-icon ion-navicon"></button>
+          <button ng-click="toggleLeft()" class="button button-icon ion-navicon"></button>
         </ion-nav-buttons>
 
         <ion-nav-buttons side="right">
-          <button ng-click="sideMenuController.toggleRight(false)" class="button button-icon ion-navicon"></button>
+          <button ng-click="toggleRight()" class="button button-icon ion-navicon"></button>
         </ion-nav-buttons>
 
         <ion-content class="has-header" padding="true">
@@ -235,11 +235,16 @@
         $urlRouterProvider.otherwise("/event/home");
       })
 
-      .controller('MainCtrl', function($scope) {
-        console.log('MainCtrl');
+      .controller('MainCtrl', function($scope, $ionicSideMenuDelegate) {
 
         $scope.closeMenu = function() {
-          $scope.sideMenuController.toggleLeft(false);
+          $ionicSideMenuDelegate.toggleLeft(false);
+        };
+        $scope.toggleLeft = function() {
+          $ionicSideMenuDelegate.toggleLeft();
+        };
+        $scope.toggleRight = function() {
+          $ionicSideMenuDelegate.toggleRight();
         };
 
         $scope.range = [];

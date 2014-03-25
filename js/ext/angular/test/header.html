@@ -9,7 +9,7 @@
     <script src="../../../../dist/js/ionic.bundle.js"></script>
   </head>
   <body ng-controller="TestCtrl">
-    <ion-header-bar class="bar-positive" model="barController">
+    <ion-header-bar class="bar-positive">
       <div class="buttons">
         <button class="button">
           Hello <b>Hello</b>
@@ -47,7 +47,6 @@
       document.body.appendChild(box);
       window.onresize = function() {
         var s = angular.element(document.getElementsByTagName('header')[0]).scope();
-        s.barController.align(s.align);
       };
     </script>
   </body>

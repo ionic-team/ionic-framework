@@ -56,12 +56,10 @@ describe('bar directives', function() {
 
   angular.forEach([{
     tag: 'ion-header-bar',
-    className: 'bar bar-header',
-    controllerBind: '$ionicHeaderBarController'
+    className: 'bar bar-header'
   }, {
     tag: 'ion-footer-bar',
-    className: 'bar bar-footer',
-    controllerBind: '$ionicFooterBarController'
+    className: 'bar bar-footer'
   }], function(data) {
     describe(data.tag, function() {
 
