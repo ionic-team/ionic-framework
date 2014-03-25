@@ -7,31 +7,57 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
 }])
 
 /**
- * @ngdoc controller
- * @name ionicTabs
+ * @ngdoc service
+ * @name $ionicTabsDelegate
  * @module ionic
  *
  * @description
- * Controller for the {@link ionic.directive:ionTabs} directive.
+ * Delegate for controlling the {@link ionic.directive:ionTabs} directive.
+ *
+ * Methods called directly on the $ionicTabsDelegate service will control all ionTabs
+ * directives. Use the {@link ionic.service:$ionicTabsDelegate#getByHandle getByHandle}
+ * method to control specific ionTabs instances.
  */
+.service('$ionicTabsDelegate', delegateService([
+  /**
+   * @ngdoc method
+   * @name $ionicTabsDelegate#select
+   * @description Select the tab matching the given index.
+   *
+   * @param {number} index Index of the tab to select.
+   * @param {boolean=} shouldChangeHistory Whether this selection should load this tab's
+   * view history (if it exists) and use it, or just load the default page.
+   * Default false.
+   * Hint: you probably want this to be true if you have an
+   * {@link ionic.directive:ionNavView} inside your tab.
+   */
+  'select',
+  /**
+   * @ngdoc method
+   * @name $ionicTabsDelegate#selectedTabIndex
+   * @returns `number` The index of the selected tab, or -1.
+   */
+  'selectedIndex'
+  /**
+   * @ngdoc method
+   * @name $ionicTabsDelegate#getByHandle
+   * @param {string} handle
+   * @returns `delegateInstance` A delegate instance that controls only the
+   * {@link ionic.directive:ionTabs} directives with `delegate-handle` matching
+   * the given handle.
+   *
+   * Example: `$ionicTabsDelegate.getByHandle('my-handle').select(0);`
+   */
+]))
+
 .controller('ionicTabs', ['$scope', '$ionicViewService', '$element', function($scope, $ionicViewService, $element) {
   var _selectedTab = null;
   var self = this;
   self.tabs = [];
 
-  /**
-   * @ngdoc method
-   * @name ionicTabs#selectedTabIndex
-   * @returns `number` The index of the selected tab, or -1.
-   */
   self.selectedTabIndex = function() {
     return self.tabs.indexOf(_selectedTab);
   };
-  /**
-   * @ngdoc method
-   * @name ionicTabs#selectedTab
-   * @returns `ionTab` The selected tab or null if none selected.
-   */
   self.selectedTab = function() {
     return _selectedTab;
   };
@@ -72,17 +98,6 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
     }
   };
 
-  /**
-   * @ngdoc method
-   * @name ionicTabs#select
-   * @description Select the given tab or tab index.
-   *
-   * @param {ionTab|number} tabOrIndex A tab object or index of a tab to select
-   * @param {boolean=} shouldChangeHistory Whether this selection should load this tab's view history
-   * (if it exists) and use it, or just loading the default page. Default false.
-   * Hint: you probably want this to be true if you have an
-   * {@link ionic.directive:ionNavView} inside your tab.
-   */
   self.select = function(tab, shouldEmitEvent) {
     var tabIndex;
     if (angular.isNumber(tab)) {
@@ -132,7 +147,6 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
  * @name ionTabs
  * @module ionic
  * @restrict E
- * @controller ionicTabs as $scope.$ionicTabsController
  * @codepen KbrzJ
  *
  * @description
@@ -161,15 +175,15 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
  *   <ion-tab title="Settings" icon-on="ion-ios7-gear" icon-off="ion-ios7-gear-outline">
  *     <!-- Tab 3 content -->
  *   </ion-tab>
+ *
  * </ion-tabs>
  * ```
  *
- * @param {string=} controller-bind The scope variable to bind these tabs'
- * {@link ionic.controller:ionicTabs ionicTabs controller} to.
- * Default: $scope.$ionicTabsController.
+ * @param {string=} delegate-handle The handle used to identify these tabs
+ * with {@link ionic.service:$ionicTabsDelegate}.
  */
 
-.directive('ionTabs', ['$ionicViewService', '$parse', function($ionicViewService, $parse) {
+.directive('ionTabs', ['$ionicViewService', '$ionicTabsDelegate', function($ionicViewService, $ionicTabsDelegate) {
   return {
     restrict: 'E',
     scope: true,
@@ -183,7 +197,11 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
 
       return { pre: prelink };
       function prelink($scope, $element, $attr, tabsCtrl) {
-        $parse(attr.model || '$ionicTabsController').assign($scope, tabsCtrl);
+        var deregisterInstance = $ionicTabsDelegate._registerInstance(
+          tabsCtrl, $attr.delegateHandle
+        );
+
+        $scope.$on('$destroy', deregisterInstance);
 
         tabsCtrl.$scope = $scope;
         tabsCtrl.$element = $element;
@@ -242,7 +260,7 @@ function($scope, $ionicViewService, $rootScope, $element) {
  * @param {expression=} badge-style The style of badge to put on this tab (eg tabs-positive).
  * @param {expression=} on-select Called when this tab is selected.
  * @param {expression=} on-deselect Called when this tab is deselected.
- * @param {expression=} ng-click By default, the tab will be selected on click. If ngClick is set, it will not.  You can explicitly switch tabs using {@link ionic.controller:ionicTabs#select ionicTabBar controller's select method}.
+ * @param {expression=} ng-click By default, the tab will be selected on click. If ngClick is set, it will not.  You can explicitly switch tabs using {@link ionic.service:$ionicTabsDelegate#select $ionicTabsDelegate.select()}.
  */
 .directive('ionTab', ['$rootScope', '$animate', '$ionicBind', '$compile', '$ionicViewService',
 function($rootScope, $animate, $ionicBind, $compile, $ionicViewService) {

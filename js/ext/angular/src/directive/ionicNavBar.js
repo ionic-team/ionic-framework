@@ -19,15 +19,17 @@ angular.module('ionic.ui.navBar', ['ionic.service.view', 'ngSanitize'])
   /**
    * @ngdoc method
    * @name $ionicNavBarDelegate#align
-   * @description Calls {@link ionic.controller:ionicBar#align ionicBar#align} for this navBar.
-   * @param {string=} direction The direction to the align the title text towards.
+   * @description Aligns the title with the buttons in a given direction.
+   * @param {string=} direction The direction to the align the title text towards. 
+   * Available: 'left', 'right', 'center'. Default: 'center'.
    */
   'align',
   /**
    * @ngdoc method
    * @name $ionicNavBarDelegate#showBackButton
    * @description
-   * Set whether the {@link ionic.directive:ionNavBackButton} should be shown (if it exists).
+   * Set whether the {@link ionic.directive:ionNavBackButton} should be shown 
+   * (if it exists).
    * @param {boolean} show Whether to show the back button.
    */
   'showBackButton',

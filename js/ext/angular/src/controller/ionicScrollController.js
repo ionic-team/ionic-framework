@@ -165,6 +165,8 @@ angular.module('ionic.ui.scroll')
    * @param {string} handle
    * @returns `delegateInstance` A delegate instance that controls only the
    * scrollViews with `delegate-handle` matching the given handle.
+   *
+   * Example: `$ionicScrollDelegate.getByHandle('my-handle').scrollTop();`
    */
 ]))
 

@@ -5,7 +5,7 @@
 describe('Ionic Angular Side Menu', function() {
   var el;
 
-  beforeEach(module('ionic.ui.sideMenu'));
+  beforeEach(module('ionic'));
 
   it('should register with $ionicSideMenuDelegate', inject(function($compile, $rootScope, $ionicSideMenuDelegate) {
     var deregisterSpy = jasmine.createSpy('deregister');
@@ -22,6 +22,21 @@ describe('Ionic Angular Side Menu', function() {
     expect(deregisterSpy).not.toHaveBeenCalled();
     el.scope().$destroy();
     expect(deregisterSpy).toHaveBeenCalled();
+  }));
+
+  it('should canDragContent', inject(function($compile, $rootScope) {
+    var el = $compile('<ion-side-menus><div ion-side-menu-content></div></ion-side-menus>')($rootScope.$new());
+    $rootScope.$apply();
+    expect(el.controller('ionSideMenus').canDragContent()).toBe(true);
+    expect(el.scope().dragContent).toBe(true);
+
+    el.controller('ionSideMenus').canDragContent(false);
+    expect(el.controller('ionSideMenus').canDragContent()).toBe(false);
+    expect(el.scope().dragContent).toBe(false);
+
+    el.controller('ionSideMenus').canDragContent(true);
+    expect(el.controller('ionSideMenus').canDragContent()).toBe(true);
+    expect(el.scope().dragContent).toBe(true);
   }));
 });
 

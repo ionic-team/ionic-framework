@@ -11,18 +11,11 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  * @name ionHeaderBar
  * @module ionic
  * @restrict E
- * @controller ionicBar as $scope.$ionicHeaderBarController
  *
  * @description
  * Adds a fixed header bar above some content.
  *
- * Is able to have left or right buttons, and additionally its title can be
- * aligned through the {@link ionic.controller:ionicBar ionicBar controller}.
- *
- * @param {string=} controller-bind The scope variable to bind this header bar's
- * {@link ionic.controller:ionicBar ionicBar controller} to.
- * Default: $scope.$ionicHeaderBarController.
- * @param {string=} align-title Where to align the title at the start.
+ * @param {string=} align-title Where to align the title.
  * Avaialble: 'left', 'right', or 'center'.  Defaults to 'center'.
  *
  * @usage
@@ -48,18 +41,11 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  * @name ionFooterBar
  * @module ionic
  * @restrict E
- * @controller ionicBar as $scope.$ionicFooterBarController
  *
  * @description
  * Adds a fixed footer bar below some content.
  *
- * Is able to have left or right buttons, and additionally its title can be
- * aligned through the {@link ionic.controller:ionicBar ionicBar controller}.
- *
- * @param {string=} controller-bind The scope variable to bind this footer bar's
- * {@link ionic.controller:ionicBar ionicBar controller} to.
- * Default: $scope.$ionicFooterBarController.
- * @param {string=} align-title Where to align the title at the start.
+ * @param {string=} align-title Where to align the title.
  * Avaialble: 'left', 'right', or 'center'.  Defaults to 'center'.
  *
  * @usage
@@ -111,21 +97,18 @@ function tapScrollToTopDirective() {
 
 
 function barDirective(isHeader) {
-  return ['$parse', function($parse) {
+  return [function($parse) {
     return {
       restrict: 'E',
       compile: function($element, $attr) {
         $element.addClass(isHeader ? 'bar bar-header' : 'bar bar-footer');
+
         return { pre: prelink };
         function prelink($scope, $element, $attr) {
           var hb = new ionic.views.HeaderBar({
             el: $element[0],
             alignTitle: $attr.alignTitle || 'center'
           });
-
-          $parse($attr.controllerBind ||
-            (isHeader ? '$ionicHeaderBarController' : '$ionicFooterBarController')
-          ).assign($scope, hb);
 
           var el = $element[0];
           //just incase header is on rootscope

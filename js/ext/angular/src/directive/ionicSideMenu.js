@@ -85,7 +85,15 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
    * @name $ionicSideMenuDelegate#isOpenRight
    * @returns {boolean} Whether the right menu is currently opened.
    */
-  'isOpenRight'
+  'isOpenRight',
+  /**
+   * @ngdoc method
+   * @name $ionicSideMenuDelegate#canDragContent
+   * @param {boolean=} canDrag Set whether the content can or cannot be dragged to open
+   * side menus.
+   * @returns {boolean} Whether the content can be dragged to open side menus.
+   */
+  'canDragContent',
   /**
    * @ngdoc method
    * @name $ionicSideMenuDelegate#getByHandle
@@ -93,6 +101,8 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
    * @returns `delegateInstance` A delegate instance that controls only the
    * {@link ionic.directive:ionSideMenus} directives with `delegate-handle` matching
    * the given handle.
+   *
+   * Example: `$ionicSideMenuDelegate.getByHandle('my-handle').toggleLeft();`
    */
 ]))
 
@@ -134,9 +144,9 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * </ion-side-menus>
  * ```
  * ```js
- * function ContentController($scope) {
+ * function ContentController($scope, $ionicSideMenuDelegate) {
  *   $scope.toggleLeft = function() {
- *     $scope.$$ionicSideMenuDelegateController.toggleLeft();
+ *     $ionicSideMenuDelegate.toggleLeft();
  *   };
  * }
  * ```
@@ -157,6 +167,13 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
         left: { width: 275 },
         right: { width: 275 }
       });
+
+      this.canDragContent = function(canDrag) {
+        if (arguments.length) {
+          $scope.dragContent = !!canDrag;
+        }
+        return $scope.dragContent;
+      };
 
       $scope.sideMenuContentTranslateX = 0;
 
@@ -188,7 +205,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * @usage
  * ```html
  * <div ion-side-menu-content
- *   drag-content="canDragContent()">
+ *   drag-content="canDrag">
  * </div>
  * ```
  * For a complete side menu example, see the
@@ -210,10 +227,10 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
 
         if (angular.isDefined(attr.dragContent)) {
           $scope.$watch(attr.dragContent, function(value) {
-            $scope.dragContent = value;
+            sideMenuCtrl.canDragContent(value);
           });
         } else {
-          $scope.dragContent = true;
+          sideMenuCtrl.canDragContent(true);
         }
 
         var defaultPrevented = false;

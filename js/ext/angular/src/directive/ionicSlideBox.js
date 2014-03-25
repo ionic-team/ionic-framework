@@ -68,6 +68,8 @@ angular.module('ionic.ui.slideBox', [])
    * @returns `delegateInstance` A delegate instance that controls only the
    * {@link ionic.directive:ionSlideBox} directives with `delegate-handle` matching
    * the given handle.
+   *
+   * Example: `$ionicSlideBoxDelegate.getByHandle('my-handle').stop();`
    */
 ]))
 

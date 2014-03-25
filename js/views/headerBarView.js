@@ -1,14 +1,6 @@
 (function(ionic) {
 'use strict';
 
-  /**
-   * @ngdoc controller
-   * @name ionicBar
-   * @module ionic
-   * @description
-   * Controller for the {@link ionic.directive:ionHeaderBar} and
-   * {@link ionic.directive:ionFooterBar} directives.
-   */
   ionic.views.HeaderBar = ionic.views.View.inherit({
     initialize: function(opts) {
       this.el = opts.el;
@@ -20,16 +12,6 @@
       this.align();
     },
 
-    /**
-     * @ngdoc method
-     * @name ionicBar#align
-     * @description
-     * Aligns the title text with the buttons in the bar
-     * so that the title size is maximized and aligned correctly
-     * as much as possible.
-     * @param {string=} direction Which direction to align the title towards.
-     * Available: 'left', 'right', 'center'. Default: 'center'.
-     */
     align: function(align) {
 
       align || (align = this.alignTitle);

@@ -124,24 +124,6 @@ describe('bar directives', function() {
         var el = setup();
         expect(el.hasClass(data.className)).toBe(true);
       });
-
-      it('should assign views.HeaderBar to default controllerBind', function() {
-        var el = setup();
-        expect(el.scope()[data.controllerBind] instanceof ionic.views.HeaderBar).toBe(true);
-      });
-      it('should assign views.HeaderBar to attr controllerBind', function() {
-        var el = setup('controller-bind="monkeys"');
-        expect(el.scope().monkeys instanceof ionic.views.HeaderBar).toBe(true);
-      });
-
-      it('should pass center to views.HeaderBar option by default', function() {
-        var el = setup();
-        expect(el.scope()[data.controllerBind].opts.alignTitle).toBe('center');
-      });
-      it('should pass attr.alignTitle to views.HeaderBar', function() {
-        var el = setup('align-title="left"');
-        expect(el.scope()[data.controllerBind].opts.alignTitle).toBe('left');
-      });
     });
   });
 });

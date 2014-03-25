@@ -224,6 +224,22 @@ describe('tabs', function() {
       return element;
     }
 
+    it('should register with given handle and deregister on destroy', inject(function($ionicTabsDelegate) {
+      var deregisterSpy = jasmine.createSpy('deregister');
+      spyOn($ionicTabsDelegate, '_registerInstance').andCallFake(function() {
+        return deregisterSpy;
+      });
+      var el = setup('delegate-handle="banana"');
+
+      expect($ionicTabsDelegate._registerInstance)
+        .toHaveBeenCalledWith(el.controller('ionTabs'), 'banana');
+
+      expect(deregisterSpy).not.toHaveBeenCalled();
+      el.scope().$destroy();
+      expect(deregisterSpy).toHaveBeenCalled();
+    }));
+
+
     it('should $hasTabs and $hasTabsTop', function() {
       var el = setup();
       var scope = el.scope();
@@ -237,18 +253,6 @@ describe('tabs', function() {
       scope.$apply();
       expect(scope.$hasTabs).toBe(true);
       expect(scope.$hasTabsTop).toBe(false);
-    });
-
-    it('should bind controller to scope.$ionicTabsController by default', function() {
-      var el = setup();
-      expect(el.controller('ionTabs')).toBeTruthy(); //sanity
-      expect(el.scope().$ionicTabsController).toBe(el.controller('ionTabs'));
-    });
-
-    it('should bind controller to scope[attr.model]', function() {
-      var el = setup('model="superman"');
-      expect(el.controller('ionTabs')).toBeTruthy();
-      expect(el.scope().superman).toBe(el.controller('ionTabs'));
     });
 
     it('should transclude content with same scope', function() {
