@@ -4,7 +4,6 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
  * @ngdoc service
  * @name $ionicModal
  * @module ionic
- * @controller ionicModal
  * @description
  * The Modal is a content pane that can go over the user's main view
  * temporarily.  Usually used for making a choice or editing an item.
