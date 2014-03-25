@@ -53,23 +53,23 @@ function docs {
   echo "#####################################"
   echo "## Updating docs for $VERSION_NAME ##"
   echo "#####################################"
-  # cd $PROJECT_DIR
-  # gulp docs
+  cd $PROJECT_DIR
+  gulp docs --doc-version="$VERSION_NAME"
 
-  # cd $IONIC_SITE_DIR
+  cd $IONIC_SITE_DIR
 
-  # CHANGES=$(git status --porcelain)
+  CHANGES=$(git status --porcelain)
 
-  # # if no changes, don't commit
-  # if [[ "$CHANGES" == "" ]]; then
-  #   echo "-- No changes detected in docs for $VERSION_NAME; docs not updated."
-  # else 
-  #   git add -A
-  #   git commit -am "docs: update for $VERSION_NAME"
-  #   git push -q origin gh-pages
+  # if no changes, don't commit
+  if [[ "$CHANGES" == "" ]]; then
+    echo "-- No changes detected in docs for $VERSION_NAME; docs not updated."
+  else
+    git add -A
+    git commit -am "docs: update for $VERSION_NAME"
+    git push -q origin gh-pages
 
-  #   echo "-- Updated docs for $VERSION_NAME succesfully!"
-  # fi
+    echo "-- Updated docs for $VERSION_NAME succesfully!"
+  fi
 }
 
 source $(dirname $0)/../utils.inc
