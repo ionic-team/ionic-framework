@@ -80,7 +80,7 @@ angular.module('ionic.ui.scroll')
   'scrollBottom',
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate#scroll
+   * @name $ionicScrollDelegate#scrollTo
    * @param {number} left The x-value to scroll to.
    * @param {number} top The y-value to scroll to.
    * @param {boolean=} shouldAnimate Whether the scroll should animate.
