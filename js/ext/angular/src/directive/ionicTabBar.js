@@ -169,6 +169,7 @@ angular.module('ionic.ui.tabs', ['ionic.service.view'])
  * @ngdoc directive
  * @name ionTabs
  * @module ionic
+ * @delegate ionic.service:$ionicTabsDelegate
  * @restrict E
  * @codepen KbrzJ
  *

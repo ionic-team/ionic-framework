@@ -107,6 +107,7 @@ angular.module('ionic.ui.slideBox', [])
  * @ngdoc directive
  * @name ionSlideBox
  * @module ionic
+ * @delegate ionic.service:$ionicSlideBoxDelegate
  * @restrict E
  * @description
  * The Slide Box is a multi-page container where each page can be swiped or dragged between:

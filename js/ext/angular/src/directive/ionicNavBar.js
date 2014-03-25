@@ -226,7 +226,7 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
  * @ngdoc directive
  * @name ionNavBar
  * @module ionic
- * @controller $ionicNavBarDelegate as $scope.$$ionicNavBarDelegateController
+ * @delegate ionic.service:$ionicNavBarDelegate
  * @restrict E
  *
  * @description

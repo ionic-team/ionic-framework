@@ -7,6 +7,7 @@ angular.module('ionic.ui.scroll', [])
  * @ngdoc directive
  * @name ionScroll
  * @module ionic
+ * @delegate ionic.service:$ionicScrollDelegate
  * @restrict E
  *
  * @description

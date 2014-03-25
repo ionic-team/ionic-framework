@@ -110,6 +110,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * @ngdoc directive
  * @name ionSideMenus
  * @module ionic
+ * @delegate ionic.service:$ionicSideMenuDelegate
  * @restrict E
  *
  * @description
@@ -125,14 +126,14 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  *
  * @usage
  * To use side menus, add an `<ion-side-menus>` parent element,
- * an `<ion-pane ion-side-menu-content>` for the center content,
+ * an `<ion-side-menu-content>` for the center content,
  * and one or more `<ion-side-menu>` directives.
  *
  * ```html
  * <ion-side-menus>
  *   <!-- Center content -->
- *   <ion-pane ion-side-menu-content ng-controller="ContentController">
- *   </ion-pane>
+ *   <ion-side-menu-content ng-controller="ContentController">
+ *   </io-side-menu-content>
  *
  *   <!-- Left menu -->
  *   <ion-side-menu side="left">
@@ -193,20 +194,18 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * @ngdoc directive
  * @name ionSideMenuContent
  * @module ionic
- * @restrict A
+ * @restrict E
  * @parent ionic.directive:ionSideMenus
  *
  * @description
  * A container for the main visible content, sibling to one or more
  * {@link ionic.directive:ionSideMenu} directives.
  *
- * An attribute directive, recommended to be used as part of an `<ion-pane>` element.
- *
  * @usage
  * ```html
- * <div ion-side-menu-content
+ * <ion-side-menu-content
  *   drag-content="canDrag">
- * </div>
+ * </ion-side-menu-content>
  * ```
  * For a complete side menu example, see the
  * {@link ionic.directive:ionSideMenus} documentation.
@@ -216,14 +215,14 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  */
 .directive('ionSideMenuContent', ['$timeout', '$ionicGesture', function($timeout, $ionicGesture) {
   return {
-    restrict: 'AC',
+    restrict: 'EA', //DEPRECATED 'A'
     require: '^ionSideMenus',
     scope: true,
     compile: function(element, attr) {
       return { pre: prelink };
       function prelink($scope, $element, $attr, sideMenuCtrl) {
 
-        $element.addClass('menu-content');
+        $element.addClass('menu-content pane');
 
         if (angular.isDefined(attr.dragContent)) {
           $scope.$watch(attr.dragContent, function(value) {

@@ -1,17 +1,9 @@
 module.exports = [
   {
-    name: 'controller',
+    name: 'delegate',
     transformFn: function(doc, tag) {
-      var desc = tag.description.trim();
-      var id = desc.split(' ')[0];
-      var other = desc.split(' ').splice(1).join(' ');
-
-      var link = '{@link ionic.controller:' + id + '}';
-      return link + (other ? ' ' + other : '');
+      return '{@link ' + tag.description + '}';
     }
-  },
-  {
-    name: 'controllerBind',
   },
   {
     name: 'parent',

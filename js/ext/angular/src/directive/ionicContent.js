@@ -28,11 +28,12 @@ angular.module('ionic.ui.content', ['ionic.ui.scroll'])
  * @ngdoc directive
  * @name ionContent
  * @module ionic
+ * @delegate ionic.service:$ionicScrollDelegate
  * @restrict E
  *
  * @description
  * The ionContent directive provides an easy to use content area that can be configured
- * to use Ionic's custom Scroll View, or the built in overflow scorlling of the browser.
+ * to use Ionic's custom Scroll View, or the built in overflow scrolling of the browser.
  *
  * While we recommend using the custom Scroll features in Ionic in most cases, sometimes
  * (for performance reasons) only the browser's native overflow scrolling will suffice,
