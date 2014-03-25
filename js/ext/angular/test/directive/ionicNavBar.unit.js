@@ -230,9 +230,12 @@ describe('ionNavBar', function() {
       expect(el.children().eq(0).html()).toBe('<b>super</b> content 4');
     });
 
-    it('should $parent.$hasHeader', function() {
+    it('should $parent.$hasHeader and unset on $destroy', function() {
       var el = setup();
-      expect(el.scope().$parent.$hasHeader).toBe(true);
+      var parentScope = el.scope().$parent;
+      expect(parentScope.$hasHeader).toBe(true);
+      el.scope().$destroy();
+      expect(parentScope.$hasHeader).toBe(false);
     });
 
     it('should register with $ionicNavBarDelegate', inject(function($ionicNavBarDelegate) {

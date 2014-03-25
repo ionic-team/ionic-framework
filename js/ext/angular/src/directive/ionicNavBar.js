@@ -259,8 +259,8 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
  * @param align-title {string=} Where to align the title of the navbar.
  * Available: 'left', 'right', 'center'. Defaults to 'center'.
  */
-.directive('ionNavBar', ['$ionicViewService', '$rootScope', '$animate', '$compile', '$parse',
-function($ionicViewService, $rootScope, $animate, $compile, $parse) {
+.directive('ionNavBar', ['$ionicViewService', '$rootScope', '$animate', '$compile',
+function($ionicViewService, $rootScope, $animate, $compile) {
 
   return {
     restrict: 'E',
@@ -285,15 +285,16 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
           alignTitle: $attr.alignTitle || 'center'
         });
 
-        $parse($attr.controllerBind || '$$ionicNavBarDelegateController')
-          .assign($scope, navBarCtrl);
-
         //defaults
         $scope.backButtonShown = false;
         $scope.shouldAnimate = true;
         $scope.isReverse = false;
         $scope.isInvisible = true;
         $scope.$parent.$hasHeader = true;
+
+        $scope.$on('$destroy', function() {
+          $scope.$parent.$hasHeader = false;
+        });
 
         $scope.$watch(function() {
           return ($scope.isReverse ? ' reverse' : '') +
@@ -395,8 +396,8 @@ function($ionicViewService, $rootScope, $animate, $compile, $parse) {
 
         //Make sure both that a backButton is allowed in the first place,
         //and that it is shown by the current view.
-        $scope.$watch('!!(backButtonShown && hasBackButton)', function(val) {
-          $element.toggleClass('hide', !val);
+        $scope.$watch('!!(backButtonShown && hasBackButton)', function(show) {
+          $element.toggleClass('hide', !show);
         });
       };
     }
