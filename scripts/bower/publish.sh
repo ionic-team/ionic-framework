@@ -38,8 +38,6 @@ function run {
 
   # Angular dependencies are managed by bower, don't include them
   rm -rf $BOWER_DIR/js/angular*
-  # Remove bundle, dependencies are again managed by bower!
-  rm -rf $BOWER_DIR/js/ionic.bundle.*
   rm -rf $BOWER_DIR/version.json # unneeded
 
   echo "-- Copying bower.json from project_dir and renaming main files"
