@@ -57,7 +57,7 @@ gulp.task('docs-index', function() {
   var ref = {};
 
   return gulp.src([
-    'tmp/ionic-site/docs/{components,guide,overview,angularjs}/**/*.{md,html}',
+    'tmp/ionic-site/docs/{components,guide,overview,api}/**/*.{md,html}',
     'tmp/ionic-site/tutorials/**/*.{md,html}'
   ])
     .pipe(es.map(function(file, callback) {
