@@ -69,6 +69,11 @@ gulp.task('docs-index', function() {
       // Read out the yaml portion of the Jekyll file
       var title, layout;
       var yamlStartIndex = contents.indexOf('---');
+
+      if (yamlStartIndex === -1) {
+        return callback();
+      }
+
       var yamlEndIndex = contents.indexOf('---', yamlStartIndex+3); //starting from start
       var yamlRaw = contents.substring(yamlStartIndex+3, yamlEndIndex);
 
