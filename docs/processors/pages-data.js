@@ -67,11 +67,13 @@ module.exports = {
       });
     }
 
+    /*
     docs.push({
       docType: 'pages-data',
       id: 'pages-data',
       template: processorConfig.template || 'pages-data.template.js',
       outputPath: processorConfig.outputPath || 'js/pages-data.js',
     });
+    */
   }
 };

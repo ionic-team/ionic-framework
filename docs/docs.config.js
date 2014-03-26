@@ -32,11 +32,6 @@ module.exports = function(config) {
     modulePath: 'api/module/${name}'
   });
 
-  config.set('processing.pages-data', {
-    template: ['pages-data.template.html'],
-    outputPath: '_layouts/docs_api.html'
-  });
-
   config.append('rendering.filters', [
     require('./filters/capital')
   ]);
