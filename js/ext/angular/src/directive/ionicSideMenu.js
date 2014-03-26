@@ -37,12 +37,12 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * ```html
  * <body ng-controller="MainCtrl">
  *   <ion-side-menus>
- *     <ion-pane ion-side-menu-content>
+ *     <ion-side-menu-content>
  *       Content!
  *       <button ng-click="toggleLeftSideMenu()">
  *         Toggle Left Side Menu
  *       </button>
- *     </ion-pane>
+ *     </ion-side-menu-content>
  *     <ion-side-menu side="left">
  *       Left Menu!
  *     <ion-side-menu>
@@ -133,7 +133,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * <ion-side-menus>
  *   <!-- Center content -->
  *   <ion-side-menu-content ng-controller="ContentController">
- *   </io-side-menu-content>
+ *   </ion-side-menu-content>
  *
  *   <!-- Left menu -->
  *   <ion-side-menu side="left">

@@ -48,6 +48,10 @@
             <button class="button button-block button-positive" ng-click="signIn(user)">
               Sign-In
             </button>
+            <form ng-submit="something()">
+              <input type="text">
+              <button type="submit"></button>
+            </form>
             <p class="text-center">
               <a href="#/sign-in">Sign-In</a> -
               <a href="#/forgot-password">Forgot password</a> -
@@ -323,6 +327,9 @@
       .controller('SignInCtrl', function($scope, $state) {
           $scope.foo = function() {
             alert('foo');
+          };
+          $scope.something = function() {
+          alert('something');
           };
 
         $scope.signIn = function(user) {
