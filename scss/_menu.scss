@@ -5,6 +5,27 @@
  * Side panel structure
  */
 
+.menu-split {
+  @include display-flex();
+  @include align-items(stretch);
+  width: 100%;
+  height: 100%;
+
+  .menu {
+    @include flex(0, 0, $split-pane-menu-width);
+    overflow-y: auto;
+    width: $split-pane-menu-width;
+    height: 100%;
+    border-right: 1px solid $split-pane-menu-border-color;
+  }
+
+  .menu-content {
+    @include flex(1, 0, auto);
+    @include transform(none);
+    box-shadow: $menu-side-shadow;
+  }
+}
+
 .menu {
   position: absolute;
   top: 0;
@@ -17,11 +38,6 @@
   width: $menu-width;
 
   background-color: #fff;
-}
-
-.menu-content {
-  @include transform(none);
-  box-shadow: $menu-side-shadow;
 }
 
 .grade-b .menu-content,

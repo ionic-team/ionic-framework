@@ -1,0 +1,58 @@
+<html ng-app="test">
+  <head>
+    <meta charset="utf-8">
+    <title>List</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <style>
+      #click-notify {
+        position: absolute;
+        display: none;
+        top: 150px;
+        left: 48%;
+        z-index: 9999;
+        background: red;
+      }
+    </style>
+  </head>
+  <body>
+    <ion-side-menus class="menu-split">
+      <ion-side-menu side="left" width="$root.menuWidth || 270" ng-controller="LeftCtrl">
+        <header class="bar bar-header bar-assertive">
+          <h1 class="title">Left</h1>
+        </header>
+        <ion-content class="has-header">
+          <ion-list item-type="item-icon-left">
+            <ion-item ng-repeat="email in emails">
+              <i class="icon ion-email"></i>
+              {{email.subject}}
+              <small>{{email.content}}</small>
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-side-menu>
+      <ion-side-menu-content>
+        <header class="bar bar-header bar-positive">
+          <h1 class="title">Content</h1>
+        </header>
+        <ion-content class="has-header">
+          <h1>Content</h1>
+        </ion-content>
+      </ion-side-menu-content>
+
+    </ion-side-menus>
+    <script>
+      angular.module('test', ['ionic'])
+
+      .controller('LeftCtrl', function($scope) {
+        $scope.emails = [];
+
+        for(var i = 0; i < 100; i++) {
+          $scope.emails.push({ subject: 'Hey! Read this!', content: 'Are you ready to change your life?' });
+        }
+      });
+    </script>
+  </body>
+</html>
+
