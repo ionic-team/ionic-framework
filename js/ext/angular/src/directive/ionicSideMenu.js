@@ -401,7 +401,8 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
     restrict: 'AC',
     require: '^ionSideMenus',
     link: function($scope, $element, $attr, sideMenuCtrl) {
-      var side = $scope.$eval($attr.menuToggle) || 'left';
+      //This is always left because scope.$eval('right') will try to read scope.right
+      var side = $attr.menuToggle || 'left';
       $element.bind('click', function(){
         if(side === 'left') {
           sideMenuCtrl.toggleLeft();

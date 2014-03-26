@@ -18,114 +18,126 @@
   </head>
   <body ng-controller="TestCtrl">
     <div id="click-notify">CLICK!</div>
-    <ion-pane>
+    <ion-side-menus>
 
-      <header class="bar bar-header bar-positive">
-        <div class="buttons">
-          <button ng-click="toggleDelete()" class="button button-clear">{{ editBtnText }}</button>
-        </div>
-        <h1 class="title">List Tests</h1>
-        <div class="buttons">
-          <button ng-click="toggleReorder()" class="button button-clear">{{ reorderBtnText }}</button>
-        </div>
-      </header>
+      <ion-side-menu-content>
 
-      <ion-content class="has-header">
-
-        <ion-list show-delete="isDeletingItems"
-              show-reorder="isReorderingItems"
-              on-refresh-holding="refreshHolding()"
-              on-refresh-opening="refreshOpening(ratio)"
-              on-refresh="refreshItems()"
-              on-reorder="onReorder(el, start, end)"
-              refresh-complete="refreshComplete"
-              on-delete="deleteListItem(item, index)"
-              delete-icon="ion-minus-circled"
-              reorder-icon="ion-navicon"
-              animation="my-repeat-animation"
-              can-delete="true"
-              can-reorder="true"
-              can-swipe="true"
-              option-buttons="optionButtons1">
-
-          <!-- shows that the item directive does not need attributes and can get values from the list attributes -->
-          <ion-item item="item" ng-href="#" ng-click="itemClick()" class="item-thumbnail-left" ng-repeat="item in items" ng-class="{ active: item.isActive}">
-            <img ng-src="{{item.face}}">
-            <h2>{{item.from}}</h2>
-            <p>{{item.text}}</p>
-          </ion-item>
-
-          <!-- shows how a divider could be included-->
-          <div class="item item-divider">
-            Me Divider, just plain ol' HTML nested in the list directive.
+        <ion-header-bar class="bar-positive">
+          <div class="buttons">
+            <button ng-click="toggleDelete()" class="button button-clear">{{ editBtnText }}</button>
+            <button ng-click="toggleLeft()" class="button">Toggle Left Menu</button>
           </div>
+          <h1 class="title">List Tests</h1>
+          <div class="buttons">
+            <button ng-click="toggleReorder()" class="button button-clear">{{ reorderBtnText }}</button>
+          </div>
+        </ion-header-bar>
 
-          <!-- shows it can override the attributes set by the list -->
-          <ion-item can-delete="false"
-                can-reorder="false"
-                can-swipe="false"
-                item-type="item-icon-left item-icon-right">
-            <i class="icon ion-stats-bars"></i>
-            Individual item directive, but can't do much. Overrides list attributes with its own left and right icons.
-            <i class="icon ion-arrow-graph-up-right"></i>
-          </ion-item>
+        <ion-content class="has-header">
 
-          <!-- shows that the item directive can receive many attributes and overrides the list attributes -->
-          <ion-item on-delete="deleteItem(item, index)"
-                delete-icon="ion-trash-a"
-                reorder-icon="ion-navicon-round"
+          <ion-list show-delete="isDeletingItems"
+                show-reorder="isReorderingItems"
+                on-refresh-holding="refreshHolding()"
+                on-refresh-opening="refreshOpening(ratio)"
+                on-refresh="refreshItems()"
+                on-reorder="onReorder(el, start, end)"
+                refresh-complete="refreshComplete"
+                on-delete="deleteListItem(item, index)"
+                delete-icon="ion-minus-circled"
+                reorder-icon="ion-navicon"
+                animation="my-repeat-animation"
                 can-delete="true"
                 can-reorder="true"
-                option-buttons="optionButtons2">
-            <i class="icon ion-person-stalker"></i>
-            Individual item directive and overrides list attrs with item attributes
-          </ion-item>
+                can-swipe="true"
+                option-buttons="optionButtons1">
 
-          <!-- shows how a divider could be included-->
-          <div class="item item-divider">
-            Below is NOT using the item directive, but just nested HTML
-          </div>
+            <!-- shows that the item directive does not need attributes and can get values from the list attributes -->
+            <ion-item item="item" ng-href="#" ng-click="itemClick()" class="item-thumbnail-left" ng-repeat="item in items" ng-class="{ active: item.isActive}">
+              <img ng-src="{{item.face}}">
+              <h2>{{item.from}}</h2>
+              <p>{{item.text}}</p>
+            </ion-item>
 
-          <!-- shows how very simple lists don't need the item directive at all -->
-          <div class="item item-thumbnail-left">
-            <img src="http://pbs.twimg.com/profile_images/2913427048/ed94193baa04ace85aa8a8bf4bf6c5a9.jpeg">
-            <h2>Nic Cage</h2>
-            <p>I am not a demon. I am a lizard, a shark, a heat-seeking panther. I want to be Bob Denver on acid playing the accordion.</p>
-          </div>
+            <!-- shows how a divider could be included-->
+            <div class="item item-divider">
+              Me Divider, just plain ol' HTML nested in the list directive.
+            </div>
 
-          <a class="item item-icon-left" href="{{ item.url }}" ng-repeat="item in urlItems" ng-class="{ active: item.isActive}">
-            <i class="icon {{ item.icon }}"></i>
-            {{ item.text }}
-          </a>
-          <input type="text" placeholder="text input">
-          <div class="item">
-            <ion-slide-box show-pager="false">
-              <ion-slide>
-                <div class="box blue">
-                  <h1>BLUE {{slideBox.slideIndex}}</h1>
-                </div>
-              </ion-slide>
-              <ion-slide>
-                <div class="box yellow">
-                  <h1>YELLOW {{slideBox.slideIndex}}</h1>
-                </div>
-              </ion-slide>
-              <ion-slide>
-                <div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>
-              </ion-slide>
-            </ion-slide-box>
-          </div>
+            <!-- shows it can override the attributes set by the list -->
+            <ion-item can-delete="false"
+                  can-reorder="false"
+                  can-swipe="false"
+                  item-type="item-icon-left item-icon-right">
+              <i class="icon ion-stats-bars"></i>
+              Individual item directive, but can't do much. Overrides list attributes with its own left and right icons.
+              <i class="icon ion-arrow-graph-up-right"></i>
+            </ion-item>
 
-        </ion-list>
+            <!-- shows that the item directive can receive many attributes and overrides the list attributes -->
+            <ion-item on-delete="deleteItem(item, index)"
+                  delete-icon="ion-trash-a"
+                  reorder-icon="ion-navicon-round"
+                  can-delete="true"
+                  can-reorder="true"
+                  option-buttons="optionButtons2">
+              <i class="icon ion-person-stalker"></i>
+              Individual item directive and overrides list attrs with item attributes
+            </ion-item>
 
-      </ion-content>
+            <!-- shows how a divider could be included-->
+            <div class="item item-divider">
+              Below is NOT using the item directive, but just nested HTML
+            </div>
 
-    </ion-pane>
+            <!-- shows how very simple lists don't need the item directive at all -->
+            <div class="item item-thumbnail-left">
+              <img src="http://pbs.twimg.com/profile_images/2913427048/ed94193baa04ace85aa8a8bf4bf6c5a9.jpeg">
+              <h2>Nic Cage</h2>
+              <p>I am not a demon. I am a lizard, a shark, a heat-seeking panther. I want to be Bob Denver on acid playing the accordion.</p>
+            </div>
+
+            <a class="item item-icon-left" href="{{ item.url }}" ng-repeat="item in urlItems" ng-class="{ active: item.isActive}">
+              <i class="icon {{ item.icon }}"></i>
+              {{ item.text }}
+            </a>
+            <input type="text" placeholder="text input">
+            <div class="item">
+              <ion-slide-box show-pager="false">
+                <ion-slide>
+                  <div class="box blue">
+                    <h1>BLUE {{slideBox.slideIndex}}</h1>
+                  </div>
+                </ion-slide>
+                <ion-slide>
+                  <div class="box yellow">
+                    <h1>YELLOW {{slideBox.slideIndex}}</h1>
+                  </div>
+                </ion-slide>
+                <ion-slide>
+                  <div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>
+                </ion-slide>
+              </ion-slide-box>
+            </div>
+
+          </ion-list>
+
+        </ion-content>
+
+      </ion-side-menu-content>
+
+      <ion-side-menu side="left">
+        Left menu!
+      </ion-side-menu>
+    </ion-side-menus>
 
     <script>
       angular.module('navTest', ['ionic'])
 
-      .controller('TestCtrl', function($scope, $timeout) {
+      .controller('TestCtrl', function($scope, $timeout, $ionicSideMenuDelegate) {
+
+          $scope.toggleLeft = function() {
+            $ionicSideMenuDelegate.toggleLeft();
+          };
 
         // Build Mock Data
         $scope.items = [
