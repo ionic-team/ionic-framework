@@ -20,7 +20,7 @@ angular.module('ionic.ui.list', ['ngAnimate'])
  *   <ion-item ng-repeat="item in items"
  *     item="item"
  *     can-swipe="true"
- *     left-buttons="myItemButtons">
+ *     option-buttons="myItemButtons">
  *   </ion-item>
  * </ion-list>
  * ```
