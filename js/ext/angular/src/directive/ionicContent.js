@@ -205,9 +205,9 @@ function($timeout, $controller, $ionicBind) {
     '<div class="scroll-refresher">' +
     '<div class="ionic-refresher-content">' +
         '<i class="icon {{pullingIcon}} icon-pulling"></i>' +
-        '<span class="icon-pulling" ng-bind-html="pullingText"></span>' +
+        '<div class="icon-pulling pulling-text" ng-bind-html="pullingText"></div>' +
         '<i class="icon {{refreshingIcon}} icon-refreshing"></i>' +
-        '<span class="icon-refreshing" ng-bind-html="refreshingText"></span>' +
+        '<div class="icon-refreshing refreshing-text" ng-bind-html="refreshingText"></div>' +
       '</div>' +
     '</div>',
     compile: function($element, $attrs) {

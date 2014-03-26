@@ -92,11 +92,11 @@ describe('ionRefresher directive', function() {
   });
   it('should allow pullingText', function() {
     var el = setup('pulling-text="{{2+2}} <b>some</b> text"');
-    expect(el[0].querySelector('span.icon-pulling').innerHTML).toBe('4 <b>some</b> text');
+    expect(el[0].querySelector('.pulling-text').innerHTML).toBe('4 <b>some</b> text');
   });
   it('should allow refreshingText', function() {
     var el = setup('refreshing-text="{{3+2}} <b>text</b>"');
-    expect(el[0].querySelector('span.icon-refreshing').innerHTML).toBe('5 <b>text</b>');
+    expect(el[0].querySelector('.refreshing-text').innerHTML).toBe('5 <b>text</b>');
   });
 
 });
