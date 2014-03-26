@@ -52,12 +52,13 @@ gulp.task('docs-index', function() {
     this.field('path');
     this.field('title', {boost: 10});
     this.field('body');
-    this.ref('path');
+    this.ref('id');
   });
   var ref = {};
+  var refId = 0;
 
   return gulp.src([
-    'tmp/ionic-site/docs/{components,guide,overview,api}/**/*.{md,html}',
+    'tmp/ionic-site/docs/{components,guide,api}/**/*.{md,html}',
     'tmp/ionic-site/tutorials/**/*.{md,html}'
   ])
     .pipe(es.map(function(file, callback) {
@@ -65,6 +66,11 @@ gulp.task('docs-index', function() {
       var contents = file.contents.toString(); //was buffer
       // Grab relative path from ionic-site root
       var relpath = file.path.replace(/^.*?tmp\/ionic-site\//, '');
+
+      var path = '/' + relpath.replace('index.md', '')
+                              .replace('index.html', '')
+                              .replace('.md', '.html')
+                              .replace('.markdown', '.html');
 
       // Read out the yaml portion of the Jekyll file
       var title, layout;
@@ -99,8 +105,9 @@ gulp.task('docs-index', function() {
       parser.end();
 
       // Add the data to the indexer and ref object
-      idx.add({'path': relpath, 'body': body, 'title': title});
-      ref[relpath] = {'title': title, 'layout': layout};
+      idx.add({'path': path, 'body': body, 'title': title, id: refId});
+      ref[refId] = {'p': path, 't': title, 'l': layout};
+      refId++;
 
       callback();
     })).on('end', function() {
