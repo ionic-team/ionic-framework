@@ -54,7 +54,9 @@ function docs {
   echo "## Updating docs for $VERSION_NAME ##"
   echo "#####################################"
   cd $PROJECT_DIR
+
   gulp docs --doc-version="$VERSION_NAME"
+  gulp docs-index
 
   cd $IONIC_SITE_DIR
 
