@@ -114,3 +114,72 @@ describe('Ionic Side Menu Directive', function () {
     expect(sideMenuCtrl.left.el.style.width).toBe('222px');
   });
 });
+
+describe('menuToggle directive', function() {
+  beforeEach(module('ionic'));
+  it('should error without a side menu', inject(function($compile, $rootScope) {
+    expect(function() {
+      $compile('<div menu-toggle>')($rootScope.$new());
+    }).toThrow();
+  }));
+  var toggleLeftSpy, toggleRightSpy;
+  function setup(side) {
+    var el = angular.element('<div menu-toggle="' + (side||'') + '">');
+    toggleLeftSpy = jasmine.createSpy('toggleLeft')
+    toggleRightSpy = jasmine.createSpy('toggleRight')
+    el.data('$ionSideMenusController', {
+      toggleLeft: toggleLeftSpy,
+      toggleRight: toggleRightSpy
+    });
+    inject(function($compile, $rootScope) {
+      $compile(el)($rootScope.$new());
+      $rootScope.$apply();
+    });
+    return el;
+  }
+  it('should toggle left on click by default', function() {
+    var el = setup();
+    expect(toggleLeftSpy).not.toHaveBeenCalled();
+    expect(toggleRightSpy).not.toHaveBeenCalled();
+    el.triggerHandler('click');
+    expect(toggleLeftSpy).toHaveBeenCalled();
+    expect(toggleRightSpy).not.toHaveBeenCalled();
+  });
+  it('should toggle left on click with attr', function() {
+    var el = setup('left');
+    expect(toggleLeftSpy).not.toHaveBeenCalled();
+    expect(toggleRightSpy).not.toHaveBeenCalled();
+    el.triggerHandler('click');
+    expect(toggleLeftSpy).toHaveBeenCalled();
+    expect(toggleRightSpy).not.toHaveBeenCalled();
+  });
+  it('should toggle right on click with attr', function() {
+    var el = setup('right');
+    expect(toggleLeftSpy).not.toHaveBeenCalled();
+    expect(toggleRightSpy).not.toHaveBeenCalled();
+    el.triggerHandler('click');
+    expect(toggleLeftSpy).not.toHaveBeenCalled();
+    expect(toggleRightSpy).toHaveBeenCalled();
+  });
+});
+
+describe('menuClose directive', function() {
+  beforeEach(module('ionic'));
+  it('should error without a side menu', inject(function($compile, $rootScope) {
+    expect(function() {
+      $compile('<div menu-close>')($rootScope.$new());
+    }).toThrow();
+  }));
+  it('should close on click', inject(function($compile, $rootScope) {
+    var el = angular.element('<div menu-close>');
+    var closeSpy = jasmine.createSpy('sideMenuClose')
+    el.data('$ionSideMenusController', {
+      close: closeSpy
+    });
+    $compile(el)($rootScope.$new());
+    $rootScope.$apply();
+    expect(closeSpy).not.toHaveBeenCalled();
+    el.triggerHandler('click');
+    expect(closeSpy).toHaveBeenCalled();
+  }));
+});
