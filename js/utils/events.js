@@ -119,6 +119,14 @@
      * @name ionic.EventController#onGesture
      * @alias ionic.onGesture
      * @description Add an event listener for a gesture on an element.
+     *
+     * Available eventTypes (from [hammer.js](http://eightmedia.github.io/hammer.js/)):
+     *
+     * `hold`, `tap`, `doubletap`, `drag`, `dragstart`, `dragend`, `dragup`, `dragdown`, <br/>
+     * `dragleft`, `dragright`, `swipe`, `swipeup`, `swipedown`, `swipeleft`, `swiperight`, <br/>
+     * `transform`, `transformstart`, `transformend`, `rotate`, `pinch`, `pinchin`, `pinchout`, </br>
+     * `touch`, `release`
+     *
      * @param {string} eventType The gesture event to listen for.
      * @param {function(e)} callback The function to call when the gesture
      * happens.
