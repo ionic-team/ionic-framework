@@ -74,13 +74,22 @@ describe('ionNavBar', function() {
       expect($scope.backButtonShown).toBe(false);
     });
 
-    it('should showBar', function() {
+    it('showBar should set isInvisible', function() {
       var ctrl = setup();
       expect($scope.isInvisible).toBeUndefined();
       ctrl.showBar(true);
       expect($scope.isInvisible).toBe(false);
       ctrl.showBar(false);
       expect($scope.isInvisible).toBe(true);
+    });
+
+    it('showBar should set $parent.$hasHeader', function() {
+      var ctrl = setup();
+      expect($scope.$parent.$hasHeader).toBeUndefined();
+      ctrl.showBar(true);
+      expect($scope.$parent.$hasHeader).toBe(true);
+      ctrl.showBar(false);
+      expect($scope.$parent.$hasHeader).toBe(false);
     });
 
     it('should setTitle', function() {
@@ -230,10 +239,10 @@ describe('ionNavBar', function() {
       expect(el.children().eq(0).html()).toBe('<b>super</b> content 4');
     });
 
-    it('should $parent.$hasHeader and unset on $destroy', function() {
+    it('should set $parent.$hasHeader to false on $scope.$destroy', function() {
       var el = setup();
       var parentScope = el.scope().$parent;
-      expect(parentScope.$hasHeader).toBe(true);
+      parentScope.$hasHeader = true;
       el.scope().$destroy();
       expect(parentScope.$hasHeader).toBe(false);
     });
@@ -255,6 +264,7 @@ describe('ionNavBar', function() {
 
     it('should have invisible class (default true)', function() {
       var el = setup();
+      el.scope().$apply();
       expect(el.hasClass('invisible')).toBe(true);
       el.scope().$apply('isInvisible = false');
       expect(el.hasClass('invisible')).toBe(false);

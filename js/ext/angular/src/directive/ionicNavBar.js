@@ -144,6 +144,7 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
 
   this.showBar = function(show) {
     $scope.isInvisible = !show;
+    $scope.$parent.$hasHeader = !!show;
   };
 
   this.setTitle = function(title) {
@@ -290,7 +291,6 @@ function($ionicViewService, $rootScope, $animate, $compile) {
         $scope.shouldAnimate = true;
         $scope.isReverse = false;
         $scope.isInvisible = true;
-        $scope.$parent.$hasHeader = true;
 
         $scope.$on('$destroy', function() {
           $scope.$parent.$hasHeader = false;
