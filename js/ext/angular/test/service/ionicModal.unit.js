@@ -1,4 +1,4 @@
-ddescribe('Ionic Modal', function() {
+describe('Ionic Modal', function() {
   var modal, q, timeout, ionicPlatform, rootScope;
 
   beforeEach(module('ionic.service.modal'));
