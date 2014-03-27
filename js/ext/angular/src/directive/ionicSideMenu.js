@@ -204,7 +204,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * @usage
  * ```html
  * <ion-side-menu-content
- *   drag-content="canDrag">
+ *   drag-content=1>
  * </ion-side-menu-content>
  * ```
  * For a complete side menu example, see the
