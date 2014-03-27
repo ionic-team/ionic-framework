@@ -20,12 +20,5 @@ module.exports = {
       template: 'index.template.html',
       outputPath: contentsFolder + '/api/index.md'
     });
-    // docs.push({
-    //   docType: 'index-page',
-    //   id: 'index-page',
-    //   currentVersion: currentVersion,
-    //   template: 'index.template.html',
-    //   outputPath: contentsFolder + '/index.md'
-    // });
   }
 };

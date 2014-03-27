@@ -52,28 +52,5 @@ module.exports = {
         return section.name != 'directive';
       })
       .value();
-
-    var outputFolder = path.join(config.get('basePath'), config.get('rendering.outputFolder'));
-    var menuFileName = '_includes/api_menu_' + config.versionData.current.name + '.html';
-    var menuInclude = path.join(outputFolder, menuFileName);
-
-    if (!fs.existsSync(menuInclude)) {
-      docs.push({
-        docType: 'menu-data',
-        id: 'menu-data',
-        template: 'menu-data.template.html',
-        outputPath: menuFileName,
-        sections: sections
-      });
-    }
-
-    /*
-    docs.push({
-      docType: 'pages-data',
-      id: 'pages-data',
-      template: processorConfig.template || 'pages-data.template.js',
-      outputPath: processorConfig.outputPath || 'js/pages-data.js',
-    });
-    */
   }
 };
