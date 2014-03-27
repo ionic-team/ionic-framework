@@ -1,4 +1,4 @@
-describe('Ionic Modal', function() {
+ddescribe('Ionic Modal', function() {
   var modal, q, timeout, ionicPlatform, rootScope;
 
   beforeEach(module('ionic.service.modal'));
@@ -133,4 +133,33 @@ describe('Ionic Modal', function() {
     expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.removed');
     timeout.flush();
   }));
+
+  it('show should return a promise resolved on hide', function() {
+    var template = '<div class="modal"></div>';
+    var m = modal.fromTemplate(template, {});
+    var done = false;
+
+    m.hide().then(function() {
+      done = true;
+    });
+    expect(m.el.classList.contains('hide')).toBe(false);
+    timeout.flush();
+    expect(m.el.classList.contains('hide')).toBe(true);
+    expect(done).toBe(true);
+  });
+
+  it('show should return a promise resolved on remove', function() {
+    var template = '<div class="modal"></div>';
+    var m = modal.fromTemplate(template, {});
+    var done = false;
+
+    m.remove().then(function() {
+      done = true;
+    });
+    spyOn(m.scope, '$destroy');
+    timeout.flush();
+    expect(m.scope.$destroy).toHaveBeenCalled();
+    expect(done).toBe(true);
+  });
+
 });

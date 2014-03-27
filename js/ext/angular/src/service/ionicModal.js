@@ -41,8 +41,15 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
  * });
  * ```
  */
-.factory('$ionicModal', ['$rootScope', '$document', '$compile', '$timeout', '$ionicPlatform', '$ionicTemplateLoader',
-                function( $rootScope,   $document,   $compile,   $timeout,   $ionicPlatform,   $ionicTemplateLoader) {
+.factory('$ionicModal', [
+  '$rootScope',
+  '$document',
+  '$compile',
+  '$timeout',
+  '$ionicPlatform',
+  '$ionicTemplateLoader',
+  '$q',
+function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $q) {
 
   /**
    * @ngdoc controller
@@ -76,16 +83,14 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
      * @ngdoc method
      * @name ionicModal#show
      * @description Show this modal instance.
+     * @returns {promise} A promise which is resolved when the modal is finished animating in.
      */
     show: function() {
       var self = this;
       var modalEl = angular.element(self.modalEl);
 
       self.el.classList.remove('hide');
-
       $document[0].body.classList.add('modal-open');
-
-      self._isShown = true;
 
       if(!self.el.parentElement) {
         modalEl.addClass(self.animation);
@@ -95,28 +100,32 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
       modalEl.addClass('ng-enter active')
              .removeClass('ng-leave ng-leave-active');
 
+
+      self._isShown = true;
+      self._deregisterBackButton = $ionicPlatform.registerBackButtonAction(function(){
+        self.hide();
+      }, 200);
+      self._isOpenPromise = $q.defer();
+
+      ionic.views.Modal.prototype.show.call(self);
+
       $timeout(function(){
         modalEl.addClass('ng-enter-active');
         self.scope.$parent && self.scope.$parent.$broadcast('modal.shown');
         self.el.classList.add('active');
       }, 20);
 
-      self._deregisterBackButton = $ionicPlatform.registerBackButtonAction(function(){
-        self.hide();
-      }, 200);
-
-      ionic.views.Modal.prototype.show.call(self);
-
+      return $timeout(angular.noop, 400);
     },
 
     /**
      * @ngdoc method
      * @name ionicModal#hide
      * @description Hide this modal instance.
+     * @returns {promise} A promise which is resolved when the modal is finished animating out.
      */
     hide: function() {
       var self = this;
-      self._isShown = false;
       var modalEl = angular.element(self.modalEl);
 
       self.el.classList.remove('active');
@@ -127,32 +136,32 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
                .removeClass('ng-enter ng-enter-active active');
       }, 20);
 
-      $timeout(function(){
-        $document[0].body.classList.remove('modal-open');
-        self.el.classList.add('hide');
-      }, 350);
+      self._isShown = false;
+      self.scope.$parent && self.scope.$parent.$broadcast('modal.hidden');
+      self._deregisterBackButton && self._deregisterBackButton();
 
       ionic.views.Modal.prototype.hide.call(self);
 
-      self.scope.$parent && self.scope.$parent.$broadcast('modal.hidden');
-
-      self._deregisterBackButton && self._deregisterBackButton();
+      return $timeout(function(){
+        $document[0].body.classList.remove('modal-open');
+        self.el.classList.add('hide');
+      }, 350);
     },
 
     /**
      * @ngdoc method
      * @name ionicModal#remove
      * @description Remove this modal instance from the DOM and clean up.
+     * @returns {promise} A promise which is resolved when the modal is finished animating out.
      */
     remove: function() {
       var self = this;
-      self.hide();
       self.scope.$parent && self.scope.$parent.$broadcast('modal.removed');
 
-      $timeout(function(){
+      return self.hide().then(function() {
         self.scope.$destroy();
         self.el && self.el.parentElement && self.el.parentElement.removeChild(self.el);
-      }, 750);
+      });
     },
 
     /**
