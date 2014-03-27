@@ -238,11 +238,8 @@ gulp.task('sass', function(done) {
     .pipe(concat('ionic.css'))
     .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distCss))
-    .pipe(gulpif(IS_RELEASE_BUILD, minifyCss({
-      keepSpecialComments: 0
-    })))
+    .pipe(gulpif(IS_RELEASE_BUILD, minifyCss()))
     .pipe(rename({ extname: '.min.css' }))
-    .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distCss))
     .on('end', done);
 });
