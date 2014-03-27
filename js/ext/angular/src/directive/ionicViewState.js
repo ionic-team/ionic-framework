@@ -19,7 +19,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  *
  * ```html
  * <ion-nav-bar></ion-nav-bar>
- * <ion-nav-view class="slide-left-right">
+ * <ion-nav-view animation="slide-left-right">
  *   <ion-view title="My Page">
  *     <ion-content>
  *       Hello!
