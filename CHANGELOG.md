@@ -49,7 +49,6 @@
 * **grid:** Remove column offset with responsive grid breaks ([73ba2a40](https://github.com/driftyco/ionic/commit/73ba2a405fabb306ac85f039620ee5df2d12bff2))
 * **ion-content:** watch padding attribute ([532d473e](https://github.com/driftyco/ionic/commit/532d473e351db95160c3e8a2878dbf5a1de549a9))
 * **ionTabs:** add available tabs-item-hide class ([5966dbf4](https://github.com/driftyco/ionic/commit/5966dbf43e56f2f65b18cb6f030a7b60ead236f2), closes [#395](https://github.com/driftyco/ionic/issues/395))
-* **ionic:** remove all delegates ([dbe4e390](https://github.com/driftyco/ionic/commit/dbe4e3901d6ee70bae85e48b6e58c097b9f2810e))
 * **ionicNavBar:** add getTitle() and getPreviousTitle() methods ([215b1c1e](https://github.com/driftyco/ionic/commit/215b1c1ea058bb76e4950d06e3e7e127c5a43cc6))
 * **loadingView:**
   * add setContent method ([366bd686](https://github.com/driftyco/ionic/commit/366bd6866ffa513c1d99b36b841d5ad3fbe23622), closes [#732](https://github.com/driftyco/ionic/issues/732))
