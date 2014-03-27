@@ -58,6 +58,8 @@ function docs {
   gulp docs --doc-version="$VERSION_NAME"
   gulp docs-index
 
+  VERSION=$(readJsonProp "package.json" "version")
+
   cd $IONIC_SITE_DIR
 
   CHANGES=$(git status --porcelain)
@@ -67,7 +69,7 @@ function docs {
     echo "-- No changes detected in docs for $VERSION_NAME; docs not updated."
   else
     git add -A
-    git commit -am "docs: update for $VERSION_NAME"
+    git commit -am "docs: update for $VERSION"
     git push -q origin gh-pages
 
     echo "-- Updated docs for $VERSION_NAME succesfully!"
