@@ -57,59 +57,116 @@ gulp.task('docs-index', function() {
   var ref = {};
   var refId = 0;
 
+  function addToIndex(path, title, layout, body) {
+    // Add the data to the indexer and ref object
+    idx.add({'path': path, 'body': body, 'title': title, id: refId});
+    ref[refId] = {'p': path, 't': title, 'l': layout};
+    refId++;
+  }
+
   return gulp.src([
-    'tmp/ionic-site/docs/{components,guide,api}/**/*.{md,html}',
-    'tmp/ionic-site/tutorials/**/*.{md,html}'
+    'tmp/ionic-site/docs/{components,guide,api,overview}/**/*.{md,html,markdown}',
+    'tmp/ionic-site/docs/index.html',
+    'tmp/ionic-site/getting-started/index.html',
+    'tmp/ionic-site/tutorials/**/*.{md,html,markdown}',
+    'tmp/ionic-site/_posts/**/*.{md,html,markdown}'
   ])
     .pipe(es.map(function(file, callback) {
       //docs for gulp file objects: https://github.com/wearefractal/vinyl
       var contents = file.contents.toString(); //was buffer
+
       // Grab relative path from ionic-site root
       var relpath = file.path.replace(/^.*?tmp\/ionic-site\//, '');
 
-      var path = '/' + relpath.replace('index.md', '')
-                              .replace('index.html', '')
-                              .replace('.md', '.html')
-                              .replace('.markdown', '.html');
-
       // Read out the yaml portion of the Jekyll file
-      var title, layout;
       var yamlStartIndex = contents.indexOf('---');
 
       if (yamlStartIndex === -1) {
         return callback();
       }
 
+      // read Jekyll's page yaml variables at the top of the file
       var yamlEndIndex = contents.indexOf('---', yamlStartIndex+3); //starting from start
       var yamlRaw = contents.substring(yamlStartIndex+3, yamlEndIndex);
 
-      var properties =  yaml.safeLoad(yamlRaw);
-      contents = contents.substring(yamlEndIndex+3);
-
-      if(properties.title && properties.layout) {
-        title = properties.title;
-        layout = properties.layout;
-      } else {
-        return callback('layout and title properties not found in Jekyll file '+relpath);
+      var pageData =  yaml.safeLoad(yamlRaw);
+      if(!pageData.title || !pageData.layout) {
+        return callback();
       }
 
-      var body = '';
-      // Parse all html and use only text portion
-      var parser = new htmlparser.Parser({
-        ontext: function(text){
-          // Ignore any Jekyll expressions
-          body += text.replace(/{%.*%}/, '', 'g');
-        },
-      });
-      parser.write(contents);
-      parser.end();
+      // manually set to not be searchable, or for a blog post, manually set to be searchable
+      if(pageData.searchable === false || (pageData.layout == 'post' && pageData.searchable !== true)) {
+        return callback();
+      }
 
-      // Add the data to the indexer and ref object
-      idx.add({'path': path, 'body': body, 'title': title, id: refId});
-      ref[refId] = {'p': path, 't': title, 'l': layout};
-      refId++;
+      // clean up some content so code variables are searchable too
+      contents = contents.substring(yamlEndIndex+3);
+      contents = contents.replace(/<code?>/gi, '');
+      contents = contents.replace(/<\/code>/gi, '');
+      contents = contents.replace(/<code?></gi, '');
+      contents = contents.replace(/><\/code>/gi, '');
+      contents = contents.replace(/`</gi, '');
+      contents = contents.replace(/>`/gi, '');
+
+      // create a clean path to the URL
+      var path = '/' + relpath.replace('index.md', '')
+                              .replace('index.html', '')
+                              .replace('.md', '.html')
+                              .replace('.markdown', '.html');
+      if(pageData.layout == 'post') {
+        path = '/blog/' + path.substring(19).replace('.html', '/');
+      }
+
+      if(pageData.search_sections === true) {
+        // each section within the content should be its own search result
+        var section = { body: '', title: '' };
+        var isTitleOpen = false;
+
+        var parser = new htmlparser.Parser({
+          ontext: function(text){
+            if(isTitleOpen) {
+              section.title += text; // get the title of this section
+            } else {
+              section.body += text.replace(/{%.*%}/, '', 'g'); // Ignore any Jekyll expressions
+            }
+          },
+          onopentag: function(name, attrs) {
+            if(name == 'section' && attrs.id) {
+              // start building new section data
+              section = { body: '', path: path + '#' + attrs.id, title: '' };
+            } else if( (name == 'h1' || name == 'h2' || name == 'h3') && attrs.class == 'title') {
+              isTitleOpen = true; // the next text will be this sections title
+            }
+          },
+          onclosetag: function(name) {
+            if(name == 'section') {
+              // section closed, index this section then clear it out
+              addToIndex(section.path, section.title, pageData.layout, section.body);
+              section = { body: '', title: '' };
+            } else if( (name == 'h1' || name == 'h2' || name == 'h3') && isTitleOpen) {
+              isTitleOpen = false;
+            }
+          }
+        });
+        parser.write(contents);
+        parser.end();
+
+      } else {
+        // index the entire page
+        var body = '';
+        var parser = new htmlparser.Parser({
+          ontext: function(text){
+            body += text.replace(/{%.*%}/, '', 'g'); // Ignore any Jekyll expressions
+          }
+        });
+        parser.write(contents);
+        parser.end();
+
+        addToIndex(path, pageData.title, pageData.layout, body);
+      }
 
       callback();
+
     })).on('end', function() {
       // Write out as one json file
       mkdirp.sync('tmp/ionic-site/data');
