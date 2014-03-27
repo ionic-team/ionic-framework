@@ -70,7 +70,7 @@ function ContentCtrl($scope, $timeout) {
   $scope.onRefresh = function() {
     $timeout(function() {
 		  $scope.$broadcast('scroll.refreshComplete');
-    }, 1000);
+    }, 1500);
   };
   $scope.more = [];
   $scope.addMore = function() {

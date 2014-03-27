@@ -138,52 +138,6 @@ body.grade-c {
   }
 }
 
-
-// Scroll refresher (for pull to refresh)
-.scroll-refresher {
-  position: absolute;
-  top: -60px;
-  right: 0;
-  left: 0;
-  overflow: hidden;
-  margin: auto;
-  height: 60px;
-
-  .icon-refreshing {
-    @include animation-duration(1.5s);
-    display: none;
-  }
-}
-
-.scroll-refresher-content {
-  position: absolute;
-  bottom: 15px;
-  left: 0;
-  width: 100%;
-  color: $scroll-refresh-icon-color;
-  text-align: center;
-
-  font-size: 30px;
-}
-
-.ionic-refresher-content {
-  position: absolute;
-  bottom: 15px;
-  left: 0;
-  width: 100%;
-  color: $scroll-refresh-icon-color;
-  text-align: center;
-
-  font-size: 30px;
-
-  .icon-pulling {
-    @include animation-name(refresh-spin-back);
-    @include animation-duration(200ms);
-    @include animation-timing-function(linear);
-    @include animation-fill-mode(both);
-  }
-}
-
 @keyframes refresh-spin {
   0% { transform: rotate(0); }
   100% { transform: rotate(-180deg); }
@@ -204,29 +158,82 @@ body.grade-c {
   100% {-webkit-transform: rotate(0); }
 }
 
-.scroll-refresher.active {
-
-  .icon-pulling {
-    display: block;
-  }
-  .icon-refreshing {
-    display: none;
-  }
-
-  &.refreshing {
-    .icon-pulling {
-      display: none;
-    }
-    .icon-refreshing {
-      display: block;
-    }
-  }
+// Scroll refresher (for pull to refresh)
+.scroll-refresher {
+  position: absolute;
+  top: -60px;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+  margin: auto;
+  height: 60px;
 
   .ionic-refresher-content {
-    i.icon.icon-pulling {
-      @include animation-name(refresh-spin);
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    width: 100%;
+    color: $scroll-refresh-icon-color;
+    text-align: center;
+
+    font-size: 30px;
+
+    .text-refreshing,
+    .text-pulling {
+      line-height: 16px;
+      font-size: 16px;
     }
   }
+
+  .icon-pulling {
+    @include animation-name(refresh-spin-back);
+    @include animation-duration(200ms);
+    @include animation-timing-function(linear);
+    @include animation-fill-mode(both);
+  }
+  .icon-refreshing,
+  .text-refreshing {
+    display: none;
+  }
+  .icon-refreshing {
+    @include animation-duration(1.5s);
+  }
+
+  &.active {
+    .icon-pulling,
+    .text-pulling {
+      display: block;
+    }
+    .icon-pulling {
+      @include animation-name(refresh-spin);
+    }
+    .icon-refreshing,
+    .text-refreshing {
+      display: none;
+    }
+
+    &.refreshing {
+      .icon-pulling,
+      .text-pulling {
+        display: none;
+      }
+      .icon-refreshing,
+      .text-refreshing {
+        display: block;
+      }
+    }
+  }
+}
+
+.scroll-refresher-content {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  color: $scroll-refresh-icon-color;
+  text-align: center;
+
+  font-size: 30px;
 }
 
 // Infinite scroll
