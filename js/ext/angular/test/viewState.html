@@ -338,17 +338,17 @@
 
       })
 
-      .controller('ForgotPasswordCtrl', function($ionicViewService, $rootScope, $scope, $state) {
+      .controller('ForgotPasswordCtrl', function($ionicViewService, $rootScope, $scope, $state, $ionicNavBarDelegate) {
         $scope.clearViewHistory = function() {
           $ionicViewService.clearHistory();
         };
 
         $scope.hideNavBar = function() {
-          $rootScope.$broadcast('viewState.showNavBar', false);
+          $ionicNavBarDelegate.showBar(false);
         };
 
         $scope.showNavBar = function() {
-          $rootScope.$broadcast('viewState.showNavBar', true);
+          $ionicNavBarDelegate.showBar(true);
         };
       })
 
