@@ -45,7 +45,7 @@ describe('Ionic Content directive', function() {
     }).join('');
     var className = 'has-'+type;
 
-    it('should has-' + type + ' when ' + scopeVar + ' == true', function() {
+    it('should has-' + type + ' when $parent.' + scopeVar + ' == true', function() {
       var element = compile('<ion-content>')(scope.$new());
       scope = element.scope();
 
