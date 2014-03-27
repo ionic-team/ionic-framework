@@ -20,6 +20,7 @@ angular.module('ionic.service', [
   'ionic.service.popup',
   'ionic.service.templateLoad',
   'ionic.service.view',
+  'ionic.service.layout',
   'ionic.decorator.location'
 ]);
 
