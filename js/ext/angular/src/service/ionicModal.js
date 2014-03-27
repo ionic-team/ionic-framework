@@ -12,7 +12,9 @@ angular.module('ionic.service.modal', ['ionic.service.templateLoad', 'ionic.serv
  * ```html
  * <script id="my-modal.html" type="text/ng-template">
  *   <div class="modal">
- *     <ion-header-bar title="My Modal Title"></ion-header-bar>
+ *     <ion-header-bar>
+ *       <h1 class="title">My Modal title</h1>
+ *     </ion-header-bar>
  *     <ion-content>
  *       Hello!
  *     </ion-content>
