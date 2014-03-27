@@ -52,11 +52,19 @@ describe('Ionic Content directive', function() {
       expect(element.hasClass(className)).toBe(false);
       expect(scope[scopeVar]).toBeFalsy();
 
-      scope.$apply(scopeVar + ' = true');
+      scope.$apply('$parent.' + scopeVar + ' = true');
       expect(element.hasClass(className)).toBe(true);
 
-      scope.$apply(scopeVar + ' = false');
+      scope.$apply('$parent.' + scopeVar + ' = false');
       expect(element.hasClass(className)).toBe(false);
+    });
+
+    it('should set $scope.' + scopeVar + ' to false on the ionContent element child scope, to stop inheritance of the has* classes', function() {
+      var compileScope = scope.$new();
+      compileScope[scopeVar] = true;
+      var element = compile('<ion-content>')(compileScope);
+      expect(compileScope[scopeVar]).toBe(true);
+      expect(element.scope()[scopeVar]).toBe(false);
     });
   });
 
@@ -74,11 +82,11 @@ describe('Ionic Content directive', function() {
     // by default, ion-content should have a scroll element, and the scroll element should not be padded
     expect(scroll.hasClass('padding')).toEqual(false);
     expect(element.hasClass('padding')).toEqual(false);
-    
+
     element.scope().$apply('shouldPad = true');
     expect(scroll.hasClass('padding')).toEqual(true);
     expect(element.hasClass('padding')).toEqual(false);
-    
+
     element.scope().$apply('shouldPad = false');
     expect(scroll.hasClass('padding')).toEqual(false);
     expect(element.hasClass('padding')).toEqual(false);
