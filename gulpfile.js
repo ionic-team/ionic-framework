@@ -141,7 +141,7 @@ gulp.task('watch', ['bundle'], function() {
 
 gulp.task('changelog', function(done) {
   changelog({
-    repository: pkg.repository.url,
+    repository: 'https://github.com/driftyco/ionic',
     version: pkg.version,
   }, function(err, data) {
     if (err) return done(err);
