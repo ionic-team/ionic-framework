@@ -9,23 +9,46 @@
 
     <script src="/dist/js/ionic.bundle.js"></script>
 
+    <script src="ionicPhysics.js"></script>
     <script src="lib/physicsjs/physicsjs-full-0.5.4.js"></script>
+
+    <style>
+    .scene {
+      position: fixed;
+      display: block;
+      left: 0;
+      right: 0;
+      bottom: 44px;
+      border: 4px dotted red;
+    }
+    .physics-body {
+      -webkit-transform: translateZ(0);
+    }
+    </style>
   </head>
   <body ng-controller="PhysicsCtrl">
     <ion-pane>
       <ion-header-bar id="header" class="bar-positive">
         <h1 class="title">Ionic Physics</h1>
       </ion-header-bar>
-
-      <ion-content id="container">
+      <ion-content scroll="false" ion-scene id="container">
+      <ion-body ng-repeat="body in bodies" x="{{body.x}}" y="{{body.y}}" width="100" height="100" style="background-color: red">
+        </ion-body>
       </ion-content>
     </ion-pane>
 
     <script>
-      angular.module('physics', ['ionic'])
+      angular.module('physics', ['ionic', 'ionic.contrib.physics'])
 
-      .controller('PhysicsCtrl', function($document) {
-      });
+      .controller('PhysicsCtrl', function($scope, $ionicPhysics, $timeout) {
+        $scope.bodies = [];
+        for(var i = 0; i < 10; i++) {
+          $scope.bodies.push({
+            x: Math.random() * (window.innerWidth - 100),
+            y: Math.random() * (window.innerHeight - 100)
+          });
+        }
+      })
     </script>
   </body>
 </html>
