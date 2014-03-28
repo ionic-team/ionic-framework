@@ -143,6 +143,49 @@ angular.module('ionic.contrib.physics', ['ionic'])
 
       this._world.step(time);
       this._world.render();
+    },
+
+    touchForceStart: function(e) {
+    },
+
+    startTouch: function(e) {
+      e.gesture.srcEvent.preventDefault();
+
+      var x = e.gesture.touches[0].pageX;
+      var y = e.gesture.touches[0].pageY;
+
+		  var body = this._world.findOne({ $at: Physics.vector(x, y) });
+      $log.log('Starting touch on', body);
+
+      if(body) {
+        var md = Physics.body('point', {
+          x: x,
+          y: y
+        });
+
+        this._tapJoint = constraints.distanceConstraint(md, body, 0.2);
+      }
+    },
+    touchDrag: function(e) {
+      e.gesture.srcEvent.preventDefault();
+
+      if(!this._tapJoint) { return; }
+      var x = e.gesture.touches[0].pageX;
+      var y = e.gesture.touches[0].pageY;
+        
+      $log.log('Touch dragging!');
+					
+      this._tapJoint.bodyA.state.pos.set(x, y);
+        
+    },
+    endTouch: function(e) {
+      e.gesture.srcEvent.preventDefault();
+      $log.log('Ending touch');
+
+      if(this._tapJoint) {
+		    constraints.remove(this._tapJoint);
+      }
+      this._tapJoint = null;
     }
   };
 }])
@@ -182,13 +225,29 @@ angular.module('ionic.contrib.physics', ['ionic'])
   }
 }])
 
-.directive('ionScene', ['$timeout', '$ionicPhysics', function($timeout, $ionicPhysics) {
+.directive('ionScene', ['$timeout', '$ionicPhysics', '$ionicGesture', function($timeout, $ionicPhysics, $ionicGesture) {
   return {
     restrict: 'AE',
     link: function($scope, $element, $attr) {
       $element.addClass('scene');
 
       $ionicPhysics.init($element);
+
+      $ionicGesture.on('dragstart', function(e) {
+        $ionicPhysics.startTouch(e);
+      }, $element);
+
+      $ionicGesture.on('dragstop', function(e) {
+        $ionicPhysics.endTouch(e);
+      }, $element);
+
+      $ionicGesture.on('release', function(e) {
+        $ionicPhysics.endTouch(e);
+      }, $element);
+
+      $ionicGesture.on('drag', function(e) {
+        $ionicPhysics.touchDrag(e);
+      }, $element);
 
       $timeout(function() {
         $ionicPhysics.go();
