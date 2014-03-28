@@ -218,7 +218,7 @@ a.item-content {
 .item-body h5,
 .item-body h6,
 .item-body p {
-  overflow: hidden;
+  overflow: visible;
   white-space: normal;
 }
 .item-complex.item-text-wrap,
@@ -229,8 +229,8 @@ a.item-content {
 .item-complex.item-text-wrap h5,
 .item-complex.item-text-wrap h6,
 .item-complex.item-text-wrap p {
-  overflow: hidden;
-  white-space: nowrap;
+  overflow: visible;
+  white-space: normal;
 }
 
 
