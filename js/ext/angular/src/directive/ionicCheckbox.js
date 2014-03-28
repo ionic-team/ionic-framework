@@ -26,7 +26,8 @@ angular.module('ionic.ui.checkbox', [])
     scope: {
       ngModel: '=?',
       ngValue: '=?',
-      ngChecked: '=?',
+      ngChecked: ‘=?’,
+      ngDisabled: ‘=?’,
       ngChange: '&'
     },
     transclude: true,
@@ -42,6 +43,7 @@ angular.module('ionic.ui.checkbox', [])
       var input = element.find('input');
       if(attr.name) input.attr('name', attr.name);
       if(attr.ngChecked) input.attr('ng-checked', 'ngChecked');
+      if(attr.ngDisabled) input.attr('ng-disabled', 'ngDisabled');
       if(attr.ngTrueValue) input.attr('ng-true-value', attr.ngTrueValue);
       if(attr.ngFalseValue) input.attr('ng-false-value', attr.ngFalseValue);
     }
