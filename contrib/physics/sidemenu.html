@@ -1,7 +1,7 @@
 <html ng-app="physics">
   <head>
     <meta charset="utf-8">
-    <title>Content</title>
+    <title>Side Menu</title>
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -31,8 +31,10 @@
       <ion-header-bar id="header" class="bar-positive">
         <h1 class="title">Ionic Physics</h1>
       </ion-header-bar>
-      <ion-content scroll="false" ion-scene id="container" gravity="[0,1]">
-        <ion-body ng-repeat="body in bodies" x="{{body.x}}" y="{{body.y}}" width="{{body.width}}" height="{{body.height}}" style="background-color: red">
+      <ion-content scroll="false" ion-scene id="container" gravity="gravity">
+        <ion-body x="0" y="0" height="568" width="280" style="background-color: red; z-index: 4">
+        </ion-body>
+        <ion-body x="0" y="0" height="568" width="320" style="background-color: blue; z-index: 2">
         </ion-body>
       </ion-content>
     </ion-pane>
@@ -41,15 +43,7 @@
       angular.module('physics', ['ionic', 'ionic.contrib.physics'])
 
       .controller('PhysicsCtrl', function($scope, $ionicPhysics, $timeout) {
-        $scope.bodies = [];
-        for(var i = 0; i < 5; i++) {
-          $scope.bodies.push({
-            x: Math.random() * (window.innerWidth - 100),
-            y: Math.random() * (window.innerHeight - 100),
-            width: 50,
-            height: 50
-          });
-        }
+        $scope.gravity = [-1, 0];
       })
     </script>
   </body>

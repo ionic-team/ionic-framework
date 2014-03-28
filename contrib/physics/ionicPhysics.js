@@ -17,11 +17,15 @@ angular.module('ionic.contrib.physics', ['ionic'])
 			var stage = [
                     $viewportEl[0].offsetLeft,
                     $viewportEl[0].offsetTop,
-                    $viewportEl[0].offsetWidth,
+                    $viewportEl[0].offsetWidth + 280,
                     $viewportEl[0].offsetHeight
                   ];
 
-      $log.log('Stage', stage);
+      console.log('Stage', stage);
+
+      this._tapPos = Physics.vector();
+      this._tapPosOld = Physics.vector();
+      this._tapOffset = Physics.vector();
 
       this._stage = stage;
 
@@ -32,7 +36,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
       this._initWorld();
     },
     _initWorld: function() {
-			this._gravity = { x: 0, y: 1 };
+			this._gravity = [1, 0];
       this._delta = [0, 0];
 
 			var timeStep = 1000 / 260; 
@@ -42,6 +46,8 @@ angular.module('ionic.contrib.physics', ['ionic'])
         timestep: timeStep,
         maxIPF: iterations
       });
+
+      world.subscribe('integrate:positions', this.integrate, this);
 
 
       // CREATE BEHAVIORS AND SHIT
@@ -74,6 +80,24 @@ angular.module('ionic.contrib.physics', ['ionic'])
       this._world = world;
     },
 
+    // Process one step of the integration
+    integrate: function(dt) {
+      if(this._selectedBody) {
+        // if we have a body, we need to move it the the new mouse position.
+        // we'll also track the velocity of the mouse movement so that when it's released
+        // the body can be "thrown"
+        this._selectedBody.state.pos.clone(this._tapPos).vsub(this._tapOffset);
+        this._selectedBody.state.vel.clone(this._selectedBody.state.pos).vsub(this._tapPosOld).vadd(this._tapOffset).mult(1 / 30);
+        this._selectedBody.state.vel.clamp({ x: -1, y: -1 }, { x: 1, y: 1 });
+        return;
+      }
+
+      if(!this._selectedBody) {
+        return;
+      }
+
+    },
+
     addBody: function($element) {
       var properties = [parseFloat($element[0].style.left), parseFloat($element[0].style.top), parseFloat($element[0].style.width), parseFloat($element[0].style.height)];
 
@@ -81,7 +105,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
 
       $element[0].style.position = 'absolute';
       $element[0].style.left = (-properties[2]/2) + 'px';
-      $element[0].style.top = (-properties[3]/2);
+      $element[0].style.top = (-properties[3]/2) + 'px';
 
       var body = Physics.body('convex-polygon', {
         // centerx
@@ -93,17 +117,26 @@ angular.module('ionic.contrib.physics', ['ionic'])
           { x: properties[2], y: 0 },
           { x: properties[2], y: properties[3] },
           { x: 0, y: properties[3] }
-        ]
+        ],
+        vx: 0,
+        cof: 0.99,
+        restitution: 0.99,
       });
 					
       body.view = $element[0];
 
-      this._bodies.push(body);
+      this._world.add(body);
+    },
+
+    setGravity: function(gravity) {
+      console.log('Gravity', gravity);
+      /*
+      this._gravity = gravity;
+      this._gravityBehavior.setAcceleration(gravity);
+      */
     },
 
     go: function() {
-      console.log('GOING', this._bodies);
-      this._world.add( this._bodies );
       // renderer
       var renderer = Physics.renderer('dom', {
         el: this._viewportEl,
@@ -114,78 +147,77 @@ angular.module('ionic.contrib.physics', ['ionic'])
       this._world.add(renderer);
       // position the views
       this._world.render();
-      this._world.pause();
 
       Physics.util.ticker.subscribe(ionic.proxy(this._loop, this));
       Physics.util.ticker.start();
-		  this._world.unpause();
-
-
-      // magic to trigger GPU
-      /*
-      this._world.subscribe('render', function( data ){
-        var style;
-        for ( var i = 0, l = data.bodies.length; i < l; ++i ){
-          style = data.bodies[ i ].view.style;
-          style[ionic.CSS.TRANSFORM] += ' translateZ(0)';
-        }
-      });
-      */
     },
     _loop: function(time) {
 	    this._delta[0] += (0 - this._delta[0]) * .5;
 			this._delta[1] += (0 - this._delta[1]) * .5;
 
       this._gravityBehavior.setAcceleration({ 
-        x: this._gravity.x * 5e-4 + this._delta[0], 
-        y: this._gravity.y * 5e-4 + this._delta[1]
+        x: this._gravity[0] * 5e-4 + this._delta[0], 
+        //y: this._gravity[1] * 5e-4 + this._delta[1]
       });
 
       this._world.step(time);
       this._world.render();
     },
 
-    touchForceStart: function(e) {
-    },
 
     startTouch: function(e) {
       e.gesture.srcEvent.preventDefault();
 
+      
       var x = e.gesture.touches[0].pageX;
       var y = e.gesture.touches[0].pageY;
 
+      this._tapPos.set(x, y);
+
 		  var body = this._world.findOne({ $at: Physics.vector(x, y) });
-      $log.log('Starting touch on', body);
+      console.log('Starting touch on', body);
+
+      this._selectedBody = body;
 
       if(body) {
+        body.fixed = true;
+        this._tapOffset.clone(this._tapPos).vsub(body.state.pos);
+
+        /*
         var md = Physics.body('point', {
           x: x,
           y: y
         });
 
         this._tapJoint = constraints.distanceConstraint(md, body, 0.2);
+        */
       }
     },
     touchDrag: function(e) {
       e.gesture.srcEvent.preventDefault();
+      this._tapPosOld.clone(this._tapPos);
 
-      if(!this._tapJoint) { return; }
       var x = e.gesture.touches[0].pageX;
       var y = e.gesture.touches[0].pageY;
-        
-      $log.log('Touch dragging!');
-					
-      this._tapJoint.bodyA.state.pos.set(x, y);
-        
+      this._tapPos.set(x, y);
     },
     endTouch: function(e) {
       e.gesture.srcEvent.preventDefault();
-      $log.log('Ending touch');
+      console.log('Ending touch');
 
-      if(this._tapJoint) {
-		    constraints.remove(this._tapJoint);
+      var x = e.gesture.touches[0].pageX;
+      var y = e.gesture.touches[0].pageY;
+
+      this._tapPosOld.clone(this._tapPos);
+      this._tapPos.set(x, y);
+
+      if(this._selectedBody) {
+        console.log("not fixed");
+        this._selectedBody.fixed = false;
       }
+
       this._tapJoint = null;
+      this._selectedBody = null;
     }
   };
 }])
@@ -219,39 +251,58 @@ angular.module('ionic.contrib.physics', ['ionic'])
       }
 
       function postlink($scope, $element, $attr) {
-        $ionicPhysics.addBody($element);
+        $timeout(function() {
+          $ionicPhysics.addBody($element);
+        });
       }
     }
   }
 }])
 
-.directive('ionScene', ['$timeout', '$ionicPhysics', '$ionicGesture', function($timeout, $ionicPhysics, $ionicGesture) {
+.directive('ionScene', ['$timeout', '$ionicBind', '$ionicPhysics', '$ionicGesture', function($timeout, $ionicBind, $ionicPhysics, $ionicGesture) {
   return {
     restrict: 'AE',
-    link: function($scope, $element, $attr) {
-      $element.addClass('scene');
+    scope: true,
+    compile: function(element, attr) {
+      return { pre: prelink, post: postlink };
 
-      $ionicPhysics.init($element);
+      function prelink($scope, $element, $attr) {
+        $element.addClass('physics-body');
 
-      $ionicGesture.on('dragstart', function(e) {
-        $ionicPhysics.startTouch(e);
-      }, $element);
+        $ionicBind($scope, $attr, {
+          gravity: '='
+        });
 
-      $ionicGesture.on('dragstop', function(e) {
-        $ionicPhysics.endTouch(e);
-      }, $element);
+        $scope.$watch('gravity', function(gravity) {
+          $ionicPhysics.setGravity(gravity);
+        });
+      }
 
-      $ionicGesture.on('release', function(e) {
-        $ionicPhysics.endTouch(e);
-      }, $element);
+      function postlink($scope, $element, $attr) {
+        $element.addClass('scene');
 
-      $ionicGesture.on('drag', function(e) {
-        $ionicPhysics.touchDrag(e);
-      }, $element);
+        console.log('Gravity', $scope.gravity);
 
-      $timeout(function() {
+        $ionicPhysics.init($element);
+
+        $ionicGesture.on('touch', function(e) {
+          $ionicPhysics.startTouch(e);
+        }, $element);
+
+        $ionicGesture.on('dragstop', function(e) {
+          $ionicPhysics.endTouch(e);
+        }, $element);
+
+        $ionicGesture.on('release', function(e) {
+          $ionicPhysics.endTouch(e);
+        }, $element);
+
+        $ionicGesture.on('drag', function(e) {
+          $ionicPhysics.touchDrag(e);
+        }, $element);
+
         $ionicPhysics.go();
-      });
+      }
     }
   }
 }])
