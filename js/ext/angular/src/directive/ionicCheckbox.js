@@ -8,6 +8,7 @@ angular.module('ionic.ui.checkbox', [])
  * @name ionCheckbox
  * @module ionic
  * @restrict E
+ * @codepen hqcju
  * @description
  * No different than the HTML checkbox input, except it's styled differently.
  *
