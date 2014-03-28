@@ -52,6 +52,8 @@ function run {
   git push -q $RELEASE_REMOTE v$VERSION
 
   echo "-- v$VERSION \"$CODENAME\" pushed to $RELEASE_REMOTE/master successfully!"
+
+  gulp tweet --release --codeversion "$VERSION" --codename "$CODENAME"
 }
 
 source $(dirname $0)/../utils.inc
