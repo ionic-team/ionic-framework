@@ -1,0 +1,32 @@
+<html ng-app="physics">
+  <head>
+    <meta charset="utf-8">
+    <title>Content</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="/dist/css/ionic.css">
+
+    <script src="/dist/js/ionic.bundle.js"></script>
+
+    <script src="lib/physicsjs/physicsjs-full-0.5.4.js"></script>
+  </head>
+  <body ng-controller="PhysicsCtrl">
+    <ion-pane>
+      <ion-header-bar id="header" class="bar-positive">
+        <h1 class="title">Ionic Physics</h1>
+      </ion-header-bar>
+
+      <ion-content id="container">
+      </ion-content>
+    </ion-pane>
+
+    <script>
+      angular.module('physics', ['ionic'])
+
+      .controller('PhysicsCtrl', function($document) {
+      });
+    </script>
+  </body>
+</html>
+
