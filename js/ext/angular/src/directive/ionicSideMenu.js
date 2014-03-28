@@ -76,6 +76,14 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
   'toggleRight',
   /**
    * @ngdoc method
+   * @name $ionicSideMenuDelegate#getOpenRatio
+   * @returns {float} The ratio of open amount over menu width. For example, a
+   * menu of width 100 open 50 pixels would be open 50% or a ratio of 0.5. Value is negative
+   * for right menu.
+   */
+  'getOpenRatio',
+  /**
+   * @ngdoc method
    * @name $ionicSideMenuDelegate#isOpenLeft
    * @returns {boolean} Whether the left menu is currently opened.
    */
