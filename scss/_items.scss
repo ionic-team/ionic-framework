@@ -294,7 +294,8 @@ a.item-content {
 .item-icon-left.item-icon-right .icon:first-child {
   right: auto;
 }
-.item-icon-left.item-icon-right .icon:last-child {
+.item-icon-left.item-icon-right .icon:last-child,
+.item-icon-left .item-delete .icon {
   left: auto;
 }
 
