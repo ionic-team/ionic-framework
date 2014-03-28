@@ -23,15 +23,11 @@ describe('DelegateFactory', function() {
     expect(delegate._instances.length).toBe(0);
   });
 
-  it('should allow reg & dereg of instance, and make its own handle', function() {
-    spyOn(ionic.Utils, 'nextUid').andCallFake(function() {
-      return 'uid';
-    });
+  it('should allow reg & dereg of instance, without handle', function() {
     var delegate = setup();
     var instance = {};
-    var deregister = delegate._registerInstance(instance);
-    expect(ionic.Utils.nextUid).toHaveBeenCalled();
-    expect(instance.$$delegateHandle).toBe('uid');
+    var deregister = delegate._registerInstance(instance, null);
+    expect(instance.$$delegateHandle).toBe(null);
     expect(delegate._instances[0]).toBe(instance);
     deregister();
     expect(delegate._instances.length).toBe(0);
@@ -78,14 +74,10 @@ describe('DelegateFactory', function() {
   it('should return the first return value from multiple instances', function() {
     var delegate = setup(['fn']);
     var instance1 = {
-      fn: jasmine.createSpy('fn').andCallFake(function() {
-        return 'ret1';
-      })
+      fn: jasmine.createSpy('fn').andReturn('ret1')
     };
     var instance2 = {
-      fn: jasmine.createSpy('fn').andCallFake(function() {
-        return 'ret2';
-      })
+      fn: jasmine.createSpy('fn').andReturn('ret2')
     };
     var deregister = delegate._registerInstance(instance1);
     delegate._registerInstance(instance2);
@@ -105,19 +97,13 @@ describe('DelegateFactory', function() {
     beforeEach(function() {
       delegate = setup(['a']);
       instance1 = {
-        a: jasmine.createSpy('a1').andCallFake(function() {
-          return 'a1';
-        }),
+        a: jasmine.createSpy('a1').andReturn('a1')
       };
       instance2 = {
-        a: jasmine.createSpy('a2').andCallFake(function() {
-          return 'a2';
-        }),
+        a: jasmine.createSpy('a2').andReturn('a2')
       };
       instance3 = {
-        a: jasmine.createSpy('a3').andCallFake(function() {
-          return 'a3';
-        })
+        a: jasmine.createSpy('a3').andReturn('a3')
       };
     });
     it('should return an InstanceWithHandle object with fields', function() {

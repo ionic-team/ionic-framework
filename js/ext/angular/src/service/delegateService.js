@@ -5,8 +5,6 @@ function delegateService(methodNames) {
 
     var instances = this._instances = [];
     this._registerInstance = function(instance, handle) {
-      handle || (handle = ionic.Utils.nextUid());
-
       instance.$$delegateHandle = handle;
       instances.push(instance);
 
@@ -47,19 +45,48 @@ function delegateService(methodNames) {
     methodNames.forEach(function(methodName) {
       InstanceForHandle.prototype[methodName] = function() {
         var handle = this.handle;
-        var instancesToUse = instances.filter(function(instance) {
-          return instance.$$delegateHandle === handle;
+        var args = arguments;
+        var matchingInstancesFound = 0;
+        var finalResult;
+        var result;
+
+        //This logic is repeated below; we could factor some of it out to a function
+        //but don't because it lets this method be more performant (one loop versus 2)
+        instances.forEach(function(instance) {
+          if (instance.$$delegateHandle === handle) {
+            matchingInstancesFound++;
+            result = instance[methodName].apply(instance, args);
+            //Only return the value from the first call
+            if (matchingInstancesFound === 1) {
+              finalResult = result;
+            }
+          }
         });
-        if (!instancesToUse.length) {
+
+        if (!matchingInstancesFound) {
           return $log.warn(
             'Delegate for handle "'+this.handle+'" could not find a',
             'corresponding element with delegate-handle="'+this.handle+'"!',
             methodName, 'was not called!');
         }
-        return callMethod(instancesToUse, methodName, arguments);
+
+        return finalResult;
       };
       delegate[methodName] = function() {
-        return callMethod(instances, methodName, arguments);
+        var args = arguments;
+        var finalResult;
+        var result;
+
+        //This logic is repeated above
+        instances.forEach(function(instance, index) {
+          result = instance[methodName].apply(instance, args);
+          //Only return the value from the first call
+          if (index === 0) {
+            finalResult = result;
+          }
+        });
+
+        return finalResult;
       };
 
       function callMethod(instancesToUse, methodName, args) {
