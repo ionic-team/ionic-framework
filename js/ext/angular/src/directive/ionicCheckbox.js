@@ -10,9 +10,9 @@ angular.module('ionic.ui.checkbox', [])
  * @restrict E
  * @codepen hqcju
  * @description
- * No different than the HTML checkbox input, except it's styled differently.
+ * The checkbox is no different than the HTML checkbox input, except it's styled differently.
  *
- * Behaves like any [AngularJS checkbox](http://docs.angularjs.org/api/ng/input/input[checkbox]).
+ * The checkbox behaves like any [AngularJS checkbox](http://docs.angularjs.org/api/ng/input/input[checkbox]).
  *
  * @usage
  * ```html
