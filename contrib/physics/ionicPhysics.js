@@ -1,5 +1,25 @@
 angular.module('ionic.contrib.physics', ['ionic'])
 
+.factory('$ionicGravityBehavior', function() {
+  return function(vectorish) {
+    return Physics.behavior('constant-acceleration', { acc: vectorish });
+  }
+})
+
+.factory('$ionicCollisionBehavior', function() {
+  return function(opts) {
+    return Physics.behavior('edge-collision-detection', {
+      aabb: opts.bounds,
+
+      // Try 0.4 for a good default
+      restitution: opts.elasticity,
+
+      // 0.5 might be nice here
+      cof: opts.damping
+    });
+  }
+})
+
 /**
  * @ngdoc service
  * @name $ionicDynamics
@@ -7,7 +27,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
  * @description An angular service exposing ionic's dynamics and Physics based UI features.
  * {@link ionic.utility:ionic.EventController}'s gestures.
  */
-.factory('$ionicPhysics', ['$log', '$document', function($log, $document) {
+.factory('$ionicPhysics', ['$log', '$document', '$ionicGravityBehavior', '$ionicCollisionBehavior', function($log, $document, $ionicGravityBehavior, $ionicCollisionBehavior) {
   return {
     init: function($viewportEl) {
       this._viewportEl = $viewportEl[0];
@@ -53,10 +73,10 @@ angular.module('ionic.contrib.physics', ['ionic'])
       // CREATE BEHAVIORS AND SHIT
 
       // walls
-      edgeBounce = Physics.behavior('edge-collision-detection', {
-        aabb: this._worldAABB,
-        restitution: 0.4,
-        cof: 0.5
+      var edgeBounce = $ionicCollisionBehavior({
+        bounds: this._worldAABB,
+        elasticity: 0.4,
+        damping: 0.5
       });
 
       world.add( edgeBounce );
@@ -73,7 +93,8 @@ angular.module('ionic.contrib.physics', ['ionic'])
       world.add( constraints );
 
       // add gravity
-      gravityBehavior = Physics.behavior('constant-acceleration', { acc: this._gravity });
+      gravityBehavior = $ionicGravityBehavior(this._gravity);
+
       world.add( gravityBehavior );
       this._gravityBehavior = gravityBehavior;
 
