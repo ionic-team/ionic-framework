@@ -117,7 +117,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  * Recommended for page transitions: 'slide-left-right', 'slide-left-right-ios7', 'slide-in-up'.
  *
  * ```html
- * <ion-nav-view class="slide-left-right">
+ * <ion-nav-view animation="slide-left-right">
  *   <!-- Center content -->
  *   <ion-nav-bar>
  *   </ion-nav-bar>
