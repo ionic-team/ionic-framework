@@ -8,7 +8,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
 
 .factory('$ionicCollisionBehavior', function() {
   return function(opts) {
-    return Physics.behavior('edge-collision-detection', {
+    var edgeCollision = Physics.behavior('edge-collision-detection', {
       aabb: opts.bounds,
 
       // Try 0.4 for a good default
@@ -17,9 +17,25 @@ angular.module('ionic.contrib.physics', ['ionic'])
       // 0.5 might be nice here
       cof: opts.damping
     });
+
+    var bodyCollision = Physics.behavior('body-collision-detection', {
+      checkAll: false
+    });
+
+    return {
+      addBody: function(body) {
+      },
+      addBoundary: function(bounds) {
+      },
+      getEdgeCollisionBehavior: function() {
+        return edgeCollision;
+      },
+      getBodyCollisionBehavior: function() {
+        return bodyCollision;
+      }
+    }
   }
 })
-
 /**
  * @ngdoc service
  * @name $ionicDynamics
@@ -73,15 +89,16 @@ angular.module('ionic.contrib.physics', ['ionic'])
       // CREATE BEHAVIORS AND SHIT
 
       // walls
-      var edgeBounce = $ionicCollisionBehavior({
+      var collision = $ionicCollisionBehavior({
         bounds: this._worldAABB,
-        elasticity: 0.4,
-        damping: 0.5
+        elasticity: 0.1,
+        damping: 1.5,
+        checkAll: false
       });
 
-      world.add( edgeBounce );
+      world.add(collision.getEdgeCollisionBehavior());
+      world.add(collision.getBodyCollisionBehavior());
 
-      world.add( Physics.behavior('body-collision-detection', { checkAll: false }) );
       world.add( Physics.behavior('sweep-prune') );
       world.add( Physics.behavior('body-impulse-response') );
 
