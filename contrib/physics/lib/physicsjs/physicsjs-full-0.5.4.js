@@ -3170,6 +3170,24 @@ Physics.geometry.nearestPointOnLine = function nearestPointOnLine( pt, linePt1, 
             return this;
         },
 
+        removeAllBehaviors: function() {
+          var behavior, behaviors = this._behaviors;
+
+          while(behaviors.length > 0) {
+            behavior = behaviors.pop();
+
+            behavior.setWorld(null);
+
+            // notify
+            notify = {
+                topic: 'remove:behavior',
+                behavior: behavior
+            };
+
+            this.publish( notify );
+          }
+        },
+
         /**
          * Get copied list of behaviors in the world
          * @return {Array} Array of behaviors

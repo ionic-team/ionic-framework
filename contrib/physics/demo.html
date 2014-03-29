@@ -26,21 +26,31 @@
     }
     </style>
   </head>
-  <body ng-controller="PhysicsCtrl">
+  <body>
     <ion-pane>
       <ion-header-bar id="header" class="bar-positive">
         <h1 class="title">Ionic Physics</h1>
       </ion-header-bar>
       <ion-content scroll="false" ion-scene id="container" gravity="[0,1]">
-        <ion-body ng-repeat="body in bodies" x="{{body.x}}" y="{{body.y}}" width="{{body.width}}" height="{{body.height}}" style="background-color: red">
-        </ion-body>
+        <div ng-controller="PhysicsCtrl">
+          <ion-body ng-repeat="body in bodies" x="{{body.x}}" y="{{body.y}}" width="{{body.width}}" height="{{body.height}}" style="background-color: red">
+          </ion-body>
+        </div>
       </ion-content>
     </ion-pane>
 
     <script>
       angular.module('physics', ['ionic', 'ionic.contrib.physics'])
 
-      .controller('PhysicsCtrl', function($scope, $ionicPhysics, $timeout) {
+      .controller('PhysicsCtrl', function($scope, $ionicDynamicAnimator, $ionicGravityBehavior, $timeout) {
+
+        $timeout(function() {
+          console.log('Animator', $scope.dynamicAnimator);
+          var gravity = $ionicGravityBehavior([0, 1]);
+          $scope.dynamicAnimator.addBehavior(gravity);
+        });
+
+
         $scope.bodies = [];
         for(var i = 0; i < 5; i++) {
           $scope.bodies.push({
