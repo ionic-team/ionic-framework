@@ -18,32 +18,49 @@
       display: block;
       left: 0;
       right: 0;
-      bottom: 44px;
       border: 4px dotted red;
     }
     .physics-body {
       -webkit-transform: translateZ(0);
     }
+    #container {
+      width: 100%;
+      height: 100%;
+    }
     </style>
   </head>
-  <body ng-controller="PhysicsCtrl">
+  <body>
     <ion-pane>
-      <ion-header-bar id="header" class="bar-positive">
-        <h1 class="title">Ionic Physics</h1>
-      </ion-header-bar>
-      <ion-content scroll="false" ion-scene id="container" gravity="gravity">
-        <ion-body x="0" y="0" height="568" width="280" style="background-color: red; z-index: 4">
-        </ion-body>
-        <ion-body x="0" y="0" height="568" width="320" style="background-color: blue; z-index: 2">
-        </ion-body>
-      </ion-content>
+      <div id="container" gravity="gravity" dynamics>
+        <div ng-controller="PhysicsCtrl">
+          <ion-view x="0" y="0" width="280" height="568" dynamics-body>
+            <ion-header-bar class="bar-positive">
+              <h1 class="title">Menu</h1>
+            </ion-header-bar>
+            <ion-content>
+              <ion-list>
+                <ion-item>Hello</ion-item>
+              </ion-list>
+            </ion-content>
+          </ion-view>
+          <ion-view x="0" y="0" width="320" height="568" dynamics-body>
+            <ion-header-bar class="bar-positive">
+              <h1 class="title">Content</h1>
+            </ion-header-bar>
+          </ion-view>
+        </div>
+      </div>
     </ion-pane>
 
     <script>
       angular.module('physics', ['ionic', 'ionic.contrib.physics'])
 
       .controller('PhysicsCtrl', function($scope, $ionicDynamicAnimator, $ionicGravityBehavior, $timeout) {
-        $scope.gravity = [-1, 0];
+        $timeout(function() {
+          console.log('Animator', $scope.dynamicAnimator);
+          var gravity = $ionicGravityBehavior([1, 0]);
+          $scope.dynamicAnimator.addBehavior(gravity);
+        });
       })
     </script>
   </body>

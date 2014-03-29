@@ -117,7 +117,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
       });
 
       world.add(collision.getEdgeCollisionBehavior());
-      world.add(collision.getBodyCollisionBehavior());
+      //world.add(collision.getBodyCollisionBehavior());
 
       world.add(Physics.behavior('sweep-prune'));
       world.add(Physics.behavior('body-impulse-response'));
@@ -256,11 +256,11 @@ angular.module('ionic.contrib.physics', ['ionic'])
   }
 }])
 
-.directive('ionBody', ['$timeout', '$ionicBind', '$ionicDynamicAnimator', function($timeout, $ionicBind, $ionicDynamicAnimator) {
+.directive('dynamicsBody', ['$timeout', '$ionicBind', '$ionicDynamicAnimator', '$ionicGravityBehavior', function($timeout, $ionicBind, $ionicDynamicAnimator, $ionicGravityBehavior) {
   return {
-    restrict: 'E',
+    restrict: 'A',
     scope: true,
-    require: '^ionScene',
+    require: '^dynamics',
     compile: function(element, attr) {
       return { pre: prelink, post: postlink };
 
@@ -271,7 +271,8 @@ angular.module('ionic.contrib.physics', ['ionic'])
           width: '@',
           height: '@',
           x: '@',
-          y: '@'
+          y: '@',
+          gravity: '='
         });
         $element[0].style.display = 'block';
         $element[0].style.left = $scope.x + 'px',//, -parseInt($scope.width)/2;
@@ -281,6 +282,15 @@ angular.module('ionic.contrib.physics', ['ionic'])
       }
 
       function postlink($scope, $element, $attr, animatorCtrl) {
+
+        $scope.$watch('gravity', function(gravityVal) {
+          if(gravityVal) {
+            var gravity = $ionicGravityBehavior(gravityVal);
+            console.log('Adding gravity', gravity);
+            animatorCtrl.addBehavior(gravity);
+          }
+        });
+
         $timeout(function() {
           animatorCtrl.addView($element);
         });
@@ -289,9 +299,9 @@ angular.module('ionic.contrib.physics', ['ionic'])
   }
 }])
 
-.directive('ionScene', ['$timeout', '$ionicBind', '$ionicDynamicAnimator', '$ionicGravityBehavior', '$ionicGesture', function($timeout, $ionicBind, $ionicDynamicAnimator, $ionicGravityBehavior, $ionicGesture) {
+.directive('dynamics', ['$timeout', '$ionicBind', '$ionicDynamicAnimator', '$ionicGravityBehavior', '$ionicGesture', function($timeout, $ionicBind, $ionicDynamicAnimator, $ionicGravityBehavior, $ionicGesture) {
   return {
-    restrict: 'AE',
+    restrict: 'A',
     scope: true,
     controller: ['$scope', '$element', function($scope, $element) {
       return $ionicDynamicAnimator($element);
@@ -300,10 +310,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
       return { pre: prelink, post: postlink };
 
       function prelink($scope, $element, $attr) {
-        $element.addClass('physics-body');
-
         $ionicBind($scope, $attr, {
-          gravity: '='
         });
       }
 
@@ -311,12 +318,6 @@ angular.module('ionic.contrib.physics', ['ionic'])
         $element.addClass('scene');
 
         $scope.dynamicAnimator = animator;
-
-        $scope.$watch('gravity', function(gravity) {
-          var gravity = $ionicGravityBehavior(gravity);
-          console.log('Adding gravity', gravity);
-          animator.addBehavior(gravity);
-        });
 
         $ionicGesture.on('touch', function(e) {
           animator.startTouch(e);

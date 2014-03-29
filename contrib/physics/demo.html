@@ -31,10 +31,10 @@
       <ion-header-bar id="header" class="bar-positive">
         <h1 class="title">Ionic Physics</h1>
       </ion-header-bar>
-      <ion-content scroll="false" ion-scene id="container" gravity="[0,1]">
+      <ion-content scroll="false" id="container" dynamics>
         <div ng-controller="PhysicsCtrl">
-          <ion-body ng-repeat="body in bodies" x="{{body.x}}" y="{{body.y}}" width="{{body.width}}" height="{{body.height}}" style="background-color: red">
-          </ion-body>
+          <div -repeat="body in bodies" x="{{body.x}}" y="{{body.y}}" width="{{body.width}}" height="{{body.height}}" style="background-color: red" dynamics-body>
+          </div>
         </div>
       </ion-content>
     </ion-pane>
