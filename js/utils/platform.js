@@ -1,13 +1,46 @@
-(function(ionic) {
+(function(window, document, ionic) {
 
+  /**
+   * @ngdoc utility
+   * @name ionic.Platform
+   * @module ionic
+   */
   ionic.Platform = {
 
+    /**
+     * @ngdoc property
+     * @name ionic.Platform#isReady
+     * @returns {boolean} Whether the device is ready.
+     */
     isReady: false,
+    /**
+     * @ngdoc property
+     * @name ionic.Platform#isFullScreen
+     * @returns {boolean} Whether the device is fullscreen.
+     */
     isFullScreen: false,
+    /**
+     * @ngdoc property
+     * @name ionic.Platform#platforms
+     * @returns {Array(string)} An array of all platforms found.
+     */
     platforms: null,
+    /**
+     * @ngdoc property
+     * @name ionic.Platform#grade
+     * @returns {string} What grade the current platform is.
+     */
     grade: null,
     ua: navigator.userAgent,
 
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#ready
+     * @description
+     * Trigger a callback once the device is ready,
+     * or immediately if the device is already ready.
+     * @param {function} callback The function to call.
+     */
     ready: function(cb) {
       // run through tasks to complete now that the device is ready
       if(this.isReady) {
@@ -19,21 +52,27 @@
       }
     },
 
+    /**
+     * @private
+     */
     detect: function() {
-      var i, bodyClass = document.body.className;
-
       ionic.Platform._checkPlatforms();
 
-      // only change the body class if we got platform info
-      for(i = 0; i < this.platforms.length; i++) {
-        bodyClass += ' platform-' + this.platforms[i];
-      }
-
-      bodyClass += ' grade-' + this.grade;
-
-      document.body.className = bodyClass.trim();
+      ionic.requestAnimationFrame(function(){
+        // only add to the body class if we got platform info
+        for(var i = 0; i < ionic.Platform.platforms.length; i++) {
+          document.body.classList.add('platform-' + ionic.Platform.platforms[i]);
+        }
+        document.body.classList.add('grade-' + ionic.Platform.grade);
+      });
     },
 
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#device
+     * @description Return the current device (given by cordova).
+     * @returns {object} The device object.
+     */
     device: function() {
       if(window.device) return window.device;
       if(this.isCordova()) console.error('device plugin required');
@@ -69,26 +108,53 @@
       }
     },
 
-    // Check if we are running in Cordova
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#isCordova
+     * @returns {boolean} Whether we are running on Cordova.
+     */
     isCordova: function() {
       return !(!window.cordova && !window.PhoneGap && !window.phonegap);
     },
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#isIPad
+     * @returns {boolean} Whether we are running on iPad.
+     */
     isIPad: function() {
       return this.ua.toLowerCase().indexOf('ipad') >= 0;
     },
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#isIOS
+     * @returns {boolean} Whether we are running on iOS.
+     */
     isIOS: function() {
       return this.is('ios');
     },
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#isAndroid
+     * @returns {boolean} Whether we are running on Android.
+     */
     isAndroid: function() {
       return this.is('android');
     },
 
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#platform
+     * @returns {string} The name of the current platform.
+     */
     platform: function() {
       // singleton to get the platform name
       if(platformName === null) this.setPlatform(this.device().platform);
       return platformName;
     },
 
+    /**
+     * @private
+     */
     setPlatform: function(n) {
       if(typeof n != 'undefined' && n !== null && n.length) {
         platformName = n.toLowerCase();
@@ -97,16 +163,24 @@
       } else if(this.ua.indexOf('iPhone') > -1 || this.ua.indexOf('iPad') > -1 || this.ua.indexOf('iPod') > -1) {
         platformName = 'ios';
       } else {
-        platformName = 'unknown';
+        platformName = '';
       }
     },
 
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#version
+     * @returns {string} The version of the current device platform.
+     */
     version: function() {
       // singleton to get the platform version
       if(platformVersion === null) this.setVersion(this.device().version);
       return platformVersion;
     },
 
+    /**
+     * @private
+     */
     setVersion: function(v) {
       if(typeof v != 'undefined' && v !== null) {
         v = v.split('.');
@@ -152,46 +226,67 @@
       return this.ua.toLowerCase().indexOf(type) >= 0;
     },
 
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#exitApp
+     * @description Exit the app.
+     */
     exitApp: function() {
       this.ready(function(){
         navigator.app && navigator.app.exitApp && navigator.app.exitApp();
       });
     },
 
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#showStatusBar
+     * @description Shows or hides the device status bar (in Cordova).
+     * @param {boolean} shouldShow Whether or not to show the status bar.
+     */
     showStatusBar: function(val) {
       // Only useful when run within cordova
       this._showStatusBar = val;
       this.ready(function(){
         // run this only when or if the platform (cordova) is ready
-        if(ionic.Platform._showStatusBar) {
-          // they do not want it to be full screen
-          StatusBar.show();
-          document.body.classList.remove('status-bar-hide');
-        } else {
-          // it should be full screen
-          StatusBar.hide();
-          document.body.classList.add('status-bar-hide');
-        }
+        ionic.requestAnimationFrame(function(){
+          if(ionic.Platform._showStatusBar) {
+            // they do not want it to be full screen
+            window.StatusBar && window.StatusBar.show();
+            document.body.classList.remove('status-bar-hide');
+          } else {
+            // it should be full screen
+            window.StatusBar && window.StatusBar.hide();
+            document.body.classList.add('status-bar-hide');
+          }
+        });
       });
     },
 
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#fullScreen
+     * @description
+     * Sets whether the app is fullscreen or not (in Cordova).
+     * @param {boolean=} showFullScreen Whether or not to set the app to fullscreen. Defaults to true.
+     * @param {boolean=} showStatusBar Whether or not to show the device's status bar. Defaults to false.
+     */
     fullScreen: function(showFullScreen, showStatusBar) {
-      // fullScreen( [showFullScreen[, showStatusBar] ] )
       // showFullScreen: default is true if no param provided
       this.isFullScreen = (showFullScreen !== false);
 
       // add/remove the fullscreen classname to the body
       ionic.DomUtil.ready(function(){
         // run this only when or if the DOM is ready
-        if(ionic.Platform.isFullScreen) {
-          document.body.classList.add('fullscreen');
-        } else {
-          document.body.classList.remove('fullscreen');
-        }
+        ionic.requestAnimationFrame(function(){
+          if(ionic.Platform.isFullScreen) {
+            document.body.classList.add('fullscreen');
+          } else {
+            document.body.classList.remove('fullscreen');
+          }
+        });
+        // showStatusBar: default is false if no param provided
+        ionic.Platform.showStatusBar( (showStatusBar === true) );
       });
-
-      // showStatusBar: default is false if no param provided
-      this.showStatusBar( (showStatusBar === true) );
     }
 
   };
@@ -225,7 +320,10 @@
     }
     readyCallbacks = [];
     ionic.trigger('platformready', { target: document });
-    document.removeEventListener("deviceready", onPlatformReady, false);
+
+    ionic.requestAnimationFrame(function(){
+      document.body.classList.add('platform-ready');
+    });
   }
 
-})(window.ionic);
+})(this, document, ionic);

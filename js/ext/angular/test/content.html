@@ -8,54 +8,12 @@
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
 
     <script src="../../../../dist/js/ionic.bundle.js"></script>
-    <style>
-      .reveal-animation {
-        /*
-        -webkit-transform: translate3d(0%, 0, 0);
-                transform: translate3d(0%, 0, 0);
-
-       -webkit-transition: -webkit-transform 1s ease-in-out;
-               transition:         transform 1s ease-in-out;
-        */
-      }
-      .reveal-animation.ng-enter {
-        -webkit-transition: .2s ease-in-out all;
-        -webkit-transform:translate3d(100%,0,0) ;
-      }
-      .reveal-animation.ng-enter-active {
-        -webkit-transform:translate3d(0,0,0) ;
-      }
-      .reveal-animation.ng-leave {
-        -webkit-transition: .2s ease-in-out all;
-        -webkit-transform:translate3d(0%,0,0);
-      }
-      .reveal-animation.ng-leave-active {
-        -webkit-transition: .2s ease-in-out all;
-        -webkit-transform:translate3d(-100%,0,0);
-      }
-
-      .scroll-refresher {
-        border-bottom: 1px solid #eee;
-      }
-      #refresh-content {
-        color: #999;
-        text-align: center;
-        font-size: 48px;
-        position: absolute;
-        bottom: 10px;
-        width: 100%;
-      }
-      #search-box {
-        margin-bottom: 20px;
-      }
-      .scroll {
-      }
-    </style>
-
   </head>
   <body ng-controller="ThisCtrl">
     <ion-pane>
-      <ion-header-bar id="header" title="'Title'" type="bar-primary" hides-header></ion-header-bar>
+      <ion-header-bar id="header" class="bar-positive">
+        <h1 class="title">Title</h1>
+      </ion-header-bar>
 
       <ion-content id="container"
         start-y="55"
@@ -64,9 +22,8 @@
         on-refresh="onRefresh()"
         on-refresh-opening="onRefreshOpening(amount)"
         padding="true"
-        has-tabs="true"
-        has-header="true"
-        >
+        header-shrink="60"
+        class="has-tabs has-header">
         <ion-refresher></ion-refresher>
         <div id="search-box" class="bar bar-header item-input-inset">
           <label class="item-input-wrapper">
@@ -112,6 +69,45 @@
     <script>
       angular.module('navTest', ['ionic'])
 
+      .directive('headerShrink', function($document) {
+        var fadeAmt;
+
+        var shrink = function(header, amt, max) {
+          console.log('Translating up', amt);
+          amt = Math.min(max - 20, amt);
+          fadeAmt = 1 - amt / (max - 20);
+          ionic.requestAnimationFrame(function() {
+            header.style[ionic.CSS.TRANSFORM] = 'translate3d(0, -' + amt + 'px, 0)';
+            for(var i = 0, j = header.children.length; i < j; i++) {
+              header.children[i].style.opacity = fadeAmt;
+            }
+          });
+        };
+
+        return {
+          restrict: 'A',
+          link: function($scope, $element, $attr) {
+            var starty = $scope.$eval($attr.headerShrink) || 0;
+            var shrinkAmt;
+            
+            var header = $document[0].body.querySelector('.bar-header');
+            var headerHeight = header.offsetHeight;
+            
+            $element.bind('scroll', function(e) {
+              if(e.detail.scrollTop > starty) {
+                // Start shrinking
+                shrinkAmt = headerHeight - Math.max(0, (starty + headerHeight) - e.detail.scrollTop);
+                shrink(header, shrinkAmt, headerHeight);
+              } else {
+                shrink(header, 0, headerHeight);
+              }
+            });
+          }
+        }
+      })
+
+    
+
       .directive('hidesHeader', function() {
         return {
           link: function($scope, $element, $attr) {
@@ -120,16 +116,13 @@
         }
       })
 
-      .controller('TestCtrl', function($scope, $timeout, $ionicScrollDelegate) {
+      .controller('TestCtrl', function($scope, $timeout) {
         console.log('CONSTRUCT');
-
         $timeout(function() {
-          var view = $ionicScrollDelegate.getScrollView($scope);
-          console.log(view);
         });
       })
 
-      .controller('ThisCtrl', function($scope, $timeout, $ionicScrollDelegate) {
+      .controller('ThisCtrl', function($scope, $timeout) {
         var header = document.getElementById('header');
         var content = document.getElementById('container');
         var startTop = header.offsetTop;
@@ -141,10 +134,11 @@
         var last = 0;
         $scope.onRefresh = function() {
           $timeout(function() {
-            $ionicScrollDelegate.finishRefreshing($scope);
+            $scope.$broadcast('scroll.refreshComplete');
           }, 1000);
         };
         $scope.onScroll = function(event, scrollTop, scrollLeft) {
+          console.log('Scroll', scrollTop, scrollLeft);
         /*
           if(scrollTop > startTop) {
             var diff = scrollTop - startTop;
@@ -152,7 +146,6 @@
             header.style[ionic.CSS.TRANSFORM] = 'translate3d(0px, -' + diff + 'px, 0)';
             content.style.marginTop = -diff + 'px';
           }
-          console.log('Scroll', scrollTop, scrollLeft);
           */
         };
       })

@@ -1,9 +1,43 @@
-<@ extends "base.template.html" @>
+---
+<@ include "lib/yaml.template.html" @>
+title: "<@ if doc.docType == "directive" @><$ doc.name | dashCase $><@ else @><$ doc.name $><@ endif @>"
+header_sub_title: "<$ doc.docType | capital $> in module <$ doc.module $>"
+doc: "<$ doc.name $>"
+docType: "<$ doc.docType $>"
+---
+
+<div class="improve-docs">
+  <a href='http://github.com/driftyco/ionic/edit/master/<$ doc.relativePath $>#L<$ doc.startingLine $>'>
+    Improve this doc
+  </a>
+</div>
 
 <@ block content @>
 
 <@ block header @>
-## <$ doc.name | dashCase $>
+<h1 class="api-title">
+<@ if doc.docType == "directive" @>
+  <$ doc.name | dashCase $>
+<@ else @>
+  <$ doc.name $>
+<@ endif @>
+<@ if doc.parentLinks @>
+<br />
+<small>
+  Child of <$ doc.parentLinks $>
+</small>
+<@ endif @>
+<@ if doc.delegate @>
+<br/>
+<small>
+  Delegate: <$ doc.delegate $>
+</small>
+<@ endif @>
+</h1>
+
+<@ if doc.codepen @>
+{% include codepen.html id="<$ doc.codepen $>" %}
+<@ endif @>
 <@ endblock @>
 
 <@ block description @>

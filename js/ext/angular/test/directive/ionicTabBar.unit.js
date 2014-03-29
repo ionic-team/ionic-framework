@@ -11,26 +11,27 @@ describe('tabs', function() {
     }));
   });
 
-  describe('$ionicTabs controller', function() {
+  describe('ionicTabs controller', function() {
     beforeEach(module('ionic'));
     var ctrl, scope;
     beforeEach(inject(function($rootScope, $controller) {
       scope = $rootScope.$new();
-      ctrl = $controller('$ionicTabs', {
+      ctrl = $controller('ionicTabs', {
         $scope: scope,
         $element: angular.element('<div>')
       });
     }));
 
-    it('should add itself to scope', function() {
-      expect(scope.tabsController).toBe(ctrl);
-    });
-
     it('.getTabIndex should return indexOf tab', function() {
-      ctrl.tabs = [1,2];
-      expect(ctrl.getTabIndex(1)).toBe(0);
-      expect(ctrl.getTabIndex(2)).toBe(1);
-      expect(ctrl.getTabIndex(3)).toBe(-1);
+      expect(ctrl.selectedIndex()).toBe(-1);
+      var tab1 = {}, tab2 = {};
+      ctrl.add(tab1);
+      ctrl.add(tab2);
+      expect(ctrl.selectedIndex()).toBe(0);
+      ctrl.select(tab2);
+      expect(ctrl.selectedIndex()).toBe(1);
+      ctrl.deselect(tab2);
+      expect(ctrl.selectedIndex()).toBe(-1);
     });
 
     it('.add should add tab and select if empty, & set historyId', inject(function($ionicViewService) {
@@ -56,19 +57,19 @@ describe('tabs', function() {
       ctrl.add(tab1);
       ctrl.add(tab2);
       ctrl.add(tab3);
-      expect(ctrl.selectedTab).toBe(tab1);
+      expect(ctrl.selectedTab()).toBe(tab1);
 
       ctrl.select(tab3);
-      expect(ctrl.selectedTab).toBe(tab3);
+      expect(ctrl.selectedTab()).toBe(tab3);
 
       ctrl.remove(tab3);
-      expect(ctrl.selectedTab).toBe(tab2);
+      expect(ctrl.selectedTab()).toBe(tab2);
       expect(ctrl.tabs.indexOf(tab3)).toBe(-1);
       ctrl.remove(tab1);
-      expect(ctrl.selectedTab).toBe(tab2);
+      expect(ctrl.selectedTab()).toBe(tab2);
       expect(ctrl.tabs.indexOf(tab1)).toBe(-1);
       ctrl.remove(tab2)
-      expect(ctrl.selectedTab).toBe(null);
+      expect(ctrl.selectedTab()).toBe(null);
       expect(ctrl.tabs.indexOf(tab2)).toBe(-1);
       expect(ctrl.tabs.length).toBe(0);
     });
@@ -76,13 +77,12 @@ describe('tabs', function() {
     it('.deselect should unselect if visible', function() {
       var tab1 = {
         $tabSelected: true,
-        onDeselect: jasmine.createSpy('deselect')
+        onDeselect: jasmine.createSpy('deselect'),
       };
-      ctrl.selectedTab = tab1;
       ctrl.deselect(tab1);
       expect(tab1.$tabSelected).toBe(false);
       expect(tab1.onDeselect).toHaveBeenCalled();
-      expect(ctrl.selectedTab).toBe(null);
+      expect(ctrl.selectedTab()).toBe(null);
     });
 
     it('.deselect should do nothing if not visible', function() {
@@ -90,11 +90,13 @@ describe('tabs', function() {
         $tabSelected: false,
         onDeselect: jasmine.createSpy('deselect')
       };
-      ctrl.selectedTab = 'foo';
+      spyOn(ctrl, 'selectedTab').andCallFake(function() {
+        return 'foo';
+      });
       ctrl.deselect(tab1);
       expect(tab1.$tabSelected).toBe(false);
       expect(tab1.onDeselect).not.toHaveBeenCalled();
-      expect(ctrl.selectedTab).toBe('foo');
+      expect(ctrl.selectedTab()).toBe('foo');
     });
 
     it('.select should throw error if tab doesnt exist', function() {
@@ -130,23 +132,23 @@ describe('tabs', function() {
       ctrl.add(tab2);
 
       ctrl.select(tab2);
-      expect(ctrl.selectedTab).toBe(tab2);
+      expect(ctrl.selectedTab()).toBe(tab2);
 
       ctrl.select(0);
-      expect(ctrl.selectedTab).toBe(tab1);
+      expect(ctrl.selectedTab()).toBe(tab1);
 
       ctrl.select(1);
-      expect(ctrl.selectedTab).toBe(tab2);
+      expect(ctrl.selectedTab()).toBe(tab2);
 
       ctrl.select(tab1);
-      expect(ctrl.selectedTab).toBe(tab1);
+      expect(ctrl.selectedTab()).toBe(tab1);
     });
 
     it('.select on selected tab should do nothing or go to history root', inject(function($ionicViewService) {
       spyOn($ionicViewService, 'goToHistoryRoot');
       var tab = { $historyId: '1' };
       ctrl.add(tab);
-      expect(ctrl.selectedTab).toBe(tab);
+      expect(ctrl.selectedTab()).toBe(tab);
 
       //Do nothing unless emit event is passed
       ctrl.select(tab);
@@ -169,7 +171,7 @@ describe('tabs', function() {
       expect(ctrl.deselect).toHaveBeenCalledWith(tab2);
 
       expect(tab2.$tabSelected).toBe(true);
-      expect(ctrl.selectedTab).toBe(tab2);
+      expect(ctrl.selectedTab()).toBe(tab2);
       expect(tab2.onSelect).toHaveBeenCalled();
     });
 
@@ -222,21 +224,40 @@ describe('tabs', function() {
       return element;
     }
 
-    it('should set attr classes', function() {
-      var el = setup('animation="foo" tabs-style="bar" tabs-type="baz"');
-      expect(el.hasClass('foo')).toBe(true);
-      expect(el.children().hasClass('bar baz')).toBe(true);
-    });
+    it('should register with given handle and deregister on destroy', inject(function($ionicTabsDelegate) {
+      var deregisterSpy = jasmine.createSpy('deregister');
+      spyOn($ionicTabsDelegate, '_registerInstance').andCallFake(function() {
+        return deregisterSpy;
+      });
+      var el = setup('delegate-handle="banana"');
 
-    it('should default tabsType to tabs-positive', function() {
+      expect($ionicTabsDelegate._registerInstance)
+        .toHaveBeenCalledWith(el.controller('ionTabs'), 'banana');
+
+      expect(deregisterSpy).not.toHaveBeenCalled();
+      el.scope().$destroy();
+      expect(deregisterSpy).toHaveBeenCalled();
+    }));
+
+
+    it('should $hasTabs and $hasTabsTop', function() {
       var el = setup();
-      expect(el.children().hasClass('tabs-positive')).toBe(true);
+      var scope = el.scope();
+      expect(scope.$hasTabs).toBe(true);
+      expect(scope.$hasTabsTop).toBe(false);
+      el.addClass('tabs-top');
+      scope.$apply();
+      expect(scope.$hasTabs).toBe(false);
+      expect(scope.$hasTabsTop).toBe(true);
+      el.removeClass('tabs-top');
+      scope.$apply();
+      expect(scope.$hasTabs).toBe(true);
+      expect(scope.$hasTabsTop).toBe(false);
     });
 
     it('should transclude content with same scope', function() {
       var el = setup('', '<div class="content"></div>');
-      expect(el.children().eq(1).hasClass('content')).toBe(true);
-      expect(el.children().eq(1).scope()).toBe(el.scope());
+      expect(el[0].querySelector('.tabs .content')).toBeTruthy();
     });
   });
 
@@ -244,7 +265,7 @@ describe('tabs', function() {
     beforeEach(module('ionic'));
     var tabsCtrl, tabsEl, scope;
     function setup(attrs, content) {
-      inject(function($compile, $rootScope, $injector) {
+      inject(function($compile, $rootScope) {
         tabsEl = angular.element('<ion-tabs><ion-tab '+(attrs||'')+'>'+(content||'')+'</ion-tab></ion-tabs>');
 
         $compile(tabsEl)($rootScope.$new());
@@ -257,6 +278,18 @@ describe('tabs', function() {
       });
     }
 
+    it('should not initially compile content until selected', inject(function($compile, $rootScope) {
+      var el = $compile('<ion-tabs>' +
+        '<ion-tab></ion-tab>' +
+        '<ion-tab><div ng-init="$root.elephant = \'banana\'"></div></ion-tab>' +
+      '</ion-tabs>')($rootScope);
+      $rootScope.$apply();
+      expect($rootScope.elephant).toBeUndefined();
+      el.controller('ionTabs').select(1);
+      $rootScope.$apply();
+      expect($rootScope.elephant).toBe('banana');
+    }));
+
     it('should add itself to tabsCtrl and remove on $destroy', function() {
       var el = setup();
       var tab = tabsCtrl.tabs[0];
@@ -265,13 +298,16 @@ describe('tabs', function() {
     });
 
     it('should compile a <ion-tab-nav> with all of the relevant attrs', function() {
-      setup('title=1 icon-on=2 icon-off=3 badge=4 badge-style=5');
+      setup('title=1 icon-on=2 icon-off=3 badge=4 badge-style=5 ng-click=6');
       var navItem = angular.element(tabsEl[0].querySelector('.tab-item'));
-      expect(navItem.attr('title')).toEqual('1');
+      //Use .scope for title because we remove title attr
+      //(for dom-tooltip not to appear)
+      expect(navItem.scope().title).toEqual('1');
       expect(navItem.attr('icon-on')).toEqual('2');
       expect(navItem.attr('icon-off')).toEqual('3');
       expect(navItem.attr('badge')).toEqual('4');
       expect(navItem.attr('badge-style')).toEqual('5');
+      expect(navItem.attr('ng-click')).toEqual('6');
 
       expect(navItem.parent()[0]).toBe(tabsCtrl.$tabsElement[0]);
     });
@@ -292,26 +328,28 @@ describe('tabs', function() {
       expect(tabsCtrl.tabs[0].navViewName).toBeUndefined();
     });
 
-    it('should set navViewName and select when necessary if a child nav-view', inject(function($ionicViewService, $rootScope) {
-      var isCurrent = false;
-      spyOn($ionicViewService, 'isCurrentStateNavView').andCallFake(function(name) {
-        return isCurrent;
-      });
+    angular.forEach(['ion-nav-view', 'data-ion-nav-view'], function(directive) {
+      it('should set navViewName and select when necessary if a child '+directive, inject(function($ionicViewService, $rootScope) {
+        var isCurrent = false;
+        spyOn($ionicViewService, 'isCurrentStateNavView').andCallFake(function(name) {
+          return isCurrent;
+        });
 
-      setup('', '<ion-nav-view name="banana"></ion-nav-view>');
-      spyOn(tabsCtrl, 'select');
-      var tab = tabsCtrl.tabs[0];
+        setup('', '<' + directive + ' name="banana"></' + directive + '>');
+        spyOn(tabsCtrl, 'select');
+        var tab = tabsCtrl.tabs[0];
 
-      expect(tab.navViewName).toBe('banana');
-      expect($ionicViewService.isCurrentStateNavView).toHaveBeenCalledWith('banana');
+        expect(tab.navViewName).toBe('banana');
+        expect($ionicViewService.isCurrentStateNavView).toHaveBeenCalledWith('banana');
 
-      $ionicViewService.isCurrentStateNavView.reset();
-      isCurrent = true;
-      $rootScope.$broadcast('$stateChangeSuccess');
+        $ionicViewService.isCurrentStateNavView.reset();
+        isCurrent = true;
+        $rootScope.$broadcast('$stateChangeSuccess');
 
-      expect($ionicViewService.isCurrentStateNavView).toHaveBeenCalledWith('banana');
-      expect(tabsCtrl.select).toHaveBeenCalledWith(tab);
-    }));
+        expect($ionicViewService.isCurrentStateNavView).toHaveBeenCalledWith('banana');
+        expect(tabsCtrl.select).toHaveBeenCalledWith(tab);
+      }));
+    });
 
     it('should transclude on $tabSelected=true', function() {
       setup('', '<div class="inside-content"></div>');
@@ -331,7 +369,6 @@ describe('tabs', function() {
       var contentScope = tabContent.scope();
       expect(tabContent.length).toBe(1);
       expect(tabContent.find('.inside-content').length).toBe(1);
-      expect(tab.$broadcast).toHaveBeenCalledWith('tab.shown', tab);
 
       spyOn(tabContent, 'remove');
       spyOn(contentScope, '$destroy');
@@ -340,7 +377,6 @@ describe('tabs', function() {
       tab.$apply('$tabSelected = false');
       expect(tabContent.parent().length).toBe(0); //removed check
       expect(contentScope.$destroy).toHaveBeenCalled();
-      expect(tab.$broadcast).toHaveBeenCalledWith('tab.hidden', tab);
     });
 
   });
@@ -350,7 +386,11 @@ describe('tabs', function() {
     var tabsCtrl, tabCtrl;
     function setup(attrs) {
       tabsCtrl = {
-        select: jasmine.createSpy('select')
+        select: jasmine.createSpy('select'),
+        _selectedTab: null,
+        selectedTab: function() {
+          return this._selectedTab;
+        }
       };
       tabCtrl = {
         $scope: {}
@@ -367,14 +407,20 @@ describe('tabs', function() {
       return element;
     }
 
+    it('should remove title attribute', function() {
+      var el = setup('title="something"');
+      expect(el[0].hasAttribute('title')).toBe(false);
+      expect(el.isolateScope().title).toBe('something');
+    });
+
     // These next two are REALLY specific unit tests,
     // but also are really really vital pieces of code
     it('.isTabActive should be correct', function() {
       var el = setup();
       expect(el.isolateScope().isTabActive()).toBe(false);
-      tabsCtrl.selectedTab = tabCtrl.$scope;
+      tabsCtrl._selectedTab = tabCtrl.$scope;
       expect(el.isolateScope().isTabActive()).toBe(true);
-      tabsCtrl.selectedTab = null;
+      tabsCtrl._selectedTab = null;
       expect(el.isolateScope().isTabActive()).toBe(false);
     });
     it('.selectTab should be correct and preventDefault', function() {
@@ -404,10 +450,18 @@ describe('tabs', function() {
 
     });
 
-    it('should select tab on click', function() {
+    it('should select tab on click by default', function() {
       var el = setup();
       el.triggerHandler('click');
       expect(tabsCtrl.select).toHaveBeenCalledWith(tabCtrl.$scope, true);
+    });
+
+    it('should use ngClick if defined', function() {
+      var el = setup('ng-click="doSomething()"');
+      el.scope().doSomething = jasmine.createSpy('doSomething');
+      el.triggerHandler('click');
+      expect(tabsCtrl.select).not.toHaveBeenCalled();
+      expect(el.scope().doSomething).toHaveBeenCalled();
     });
 
     it('should have title and only title', function() {
@@ -435,26 +489,29 @@ describe('tabs', function() {
 
       expect(el.find('.icon.superIcon').length).toBe(1);
     });
+
     it('should change classes based on active', function() {
       var el = setup('icon-on="{{true}}" icon-off="{{false}}"');
 
       el.isolateScope().isTabActive = function() { return true; };
       el.isolateScope().$apply();
-      expect(el.hasClass('active')).toBe(true);
+      expect(el.hasClass('tab-item-active')).toBe(true);
       expect(el.find('.icon.true').length).toBe(1);
       expect(el.find('.icon.false').length).toBe(0);
 
       el.isolateScope().isTabActive = function() { return false; };
       el.isolateScope().$apply();
-      expect(el.hasClass('active')).toBe(false);
+      expect(el.hasClass('tab-item-active')).toBe(false);
       expect(el.find('.icon.true').length).toBe(0);
       expect(el.find('.icon.false').length).toBe(1);
     });
+
     it('shouldnt has-badge without badge', function() {
       var el = setup();
       expect(el.hasClass('has-badge')).toBe(false);
       expect(el.find('.badge').length).toBe(0);
     });
+
     it('should have badge', function() {
       var el = setup('badge="\'badger\'" badge-style="super-style"');
       expect(el.hasClass('has-badge')).toBe(true);

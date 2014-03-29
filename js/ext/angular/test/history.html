@@ -7,18 +7,21 @@
 </head>
 
 <body ng-app="starter" animation="slide-left-right-ios7">
-  <ion-nav-bar type="bar-light" animation="nav-title-slide-ios7" back-button-type="button-icon button-clear" back-button-icon="ion-ios7-arrow-back" back-button-label="Back"></ion-nav-bar>
+  <ion-nav-bar type="bar-light" animation="nav-title-slide-ios7">
+    <ion-nav-back-button class="button-icon button-clear ion-ios7-arrow-back">
+    </ion-nav-back-button>
+  </ion-nav-bar>
 
   <ion-nav-view></ion-nav-view>
 
   <script>
     angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
     .run(function($templateCache){
-      $templateCache.put("templates/about.html","<ion-view title=\"'About Ionic'\"><ion-content has-header=\"true\" has-tabs=\"true\" padding=\"true\"></ion-content></ion-view>");
+      $templateCache.put("templates/about.html","<ion-view title='About Ionic'><ion-content class='has-header has-tabs' padding='true'></ion-content></ion-view>");
 
-      $templateCache.put("templates/tabs.html","<ion-tabs tabs-style=\"tabs-icon-top\" tabs-type=\"tabs-default\"><ion-tab title=\"Pets\" icon=\"icon ion-home\" href=\"#/tab/pets\"><ion-nav-view name=\"pets-tab\"></ion-nav-view></ion-tab><ion-tab title=\"About\" icon=\"icon ion-search\" href=\"#/tab/about\"><ion-nav-view name=\"about-tab\"></ion-nav-view></ion-tab></ion-tabs>");
-      $templateCache.put("templates/pet-index.html","<ion-view title=\"'Pet Information'\"><ion-content has-header=\"true\" has-tabs=\"true\"><div class=\"list\"><a class=\"item item-thumbnail-left\" ng-repeat=\"pet in pets\" ng-href=\"#/tab/pet/{{pet.id}}\" ><img ng-src=\"{{pet.thumbnail}}\"><h3>{{pet.title}}</h3><p>{{pet.description}}</p></a></div></ion-content></ion-view>");
-      $templateCache.put("templates/pet-detail.html","<ion-view title=\"pet.title\" right-buttons=\"rightButtons\"><ion-content has-header=\"true\" padding=\"true\"><p>{{ pet.description }}</p><p><a class=\"button button-small icon ion-arrow-left-b\" href=\"#/tab/pets\"> All Pets</a></p><button class=\"button button-small\" ng-click=\"clearViewHistories()\">clearViewHistories</button><button class=\"button button-small\" ng-click=\"historyConsole()\">Console Log</button><pre>{{ $viewHistory | json }}</pre></ion-content></ion-view>");
+      $templateCache.put("templates/tabs.html","<ion-tabs tabs-style='tabs-icon-top' tabs-type='tabs-default'><ion-tab title='Pets' icon='icon ion-home' href='#/tab/pets'><ion-nav-view name='pets-tab'></ion-nav-view></ion-tab><ion-tab title='About' icon='icon ion-search' href='#/tab/about'><ion-nav-view name='about-tab'></ion-nav-view></ion-tab></ion-tabs>");
+      $templateCache.put("templates/pet-index.html","<ion-view title='Pet Information'><ion-content class='has-header has-tabs'><div class='list'><a class='item item-thumbnail-left' ng-repeat='pet in pets' ng-href='#/tab/pet/{{pet.id}}' ><img ng-src='{{pet.thumbnail}}'><h3>{{pet.title}}</h3><p>{{pet.description}}</p></a></div></ion-content></ion-view>");
+      $templateCache.put("templates/pet-detail.html","<ion-view title='{{pet.title}}'><ion-content class='has-header' padding='true'><p>{{ pet.description }}</p><p><a class='button button-small icon ion-arrow-left-b' href='#/tab/pets'> All Pets</a></p><button class='button button-small' ng-click='clearViewHistories()'>clearViewHistories</button><button class='button button-small' ng-click='historyConsole()'>Console Log</button><pre>{{ $viewHistory | json }}</pre></ion-content></ion-view>");
 
     })
     .config(function($stateProvider, $urlRouterProvider) {

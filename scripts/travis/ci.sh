@@ -73,7 +73,7 @@ function run {
   fi
 
   # Build files after we are sure our version is correct
-  gulp build --release=true
+  gulp build --release
 
   if [[ $IS_RELEASE == "true" ]]; then
 
@@ -81,14 +81,13 @@ function run {
       --codename=$CODENAME \
       --version=$VERSION
 
-    ./scripts/seed/publish.sh \
-      --version="$VERSION"
-
     # Version name used on the CDN/docs: nightly or the version
     VERSION_NAME=$VERSION
 
     ./scripts/site/publish.sh --action="clone"
+
     ./scripts/site/publish.sh --action="updateConfig"
+
     ./scripts/seed/publish.sh --version="$VERSION"
   else
     ./scripts/site/publish.sh --action="clone"
@@ -119,7 +118,7 @@ function run {
     echo "##########################"
 
     # Do sauce unit tests and e2e tests with all browsers (takes longer)
-    gulp cloudtest
+    # gulp cloudtest
 
     echo "##########################################"
     echo "# Complete! v$VERSION nightly published! #"

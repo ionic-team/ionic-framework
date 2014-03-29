@@ -16,7 +16,7 @@
 
       this.showDelay = opts.showDelay || 0;
 
-      this._loadingBox = this.el.querySelector('.loading');
+      this._loadingBox = this.el.querySelector('.loading') || this.el;
     },
     show: function() {
       var _this = this;
@@ -45,6 +45,11 @@
       window.clearTimeout(this._showDelayTimeout);
 
       this.el.classList.remove('active');
+    },
+    setContent: function(html) {
+      if (this._loadingBox) {
+        this._loadingBox.innerHTML = html || '';
+      }
     }
   });
 

@@ -1,7 +1,11 @@
 angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
 
 
-.run(     ['$rootScope', '$state', '$location', '$document', '$animate', '$ionicPlatform',
+/**
+ * @private
+ * TODO document
+ */
+.run(['$rootScope', '$state', '$location', '$document', '$animate', '$ionicPlatform',
   function( $rootScope,   $state,   $location,   $document,   $animate,   $ionicPlatform) {
 
   // init the variables that keep track of the view history
@@ -99,9 +103,9 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
 
     return null;
   };
-  View.prototype.destory = function() {
+  View.prototype.destroy = function() {
     if(this.scope) {
-      this.scope.destory && this.scope.destory();
+      this.scope.$destroy && this.scope.$destroy();
       this.scope = null;
     }
   };
@@ -120,6 +124,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
           currentView = viewHistory.currentView,
           backView = viewHistory.backView,
           forwardView = viewHistory.forwardView,
+          nextViewOptions = this.nextViewOptions(),
           rsp = {
             viewId: null,
             navAction: null,
@@ -153,7 +158,7 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
         // they went back one, set the old current view as a forward view
         rsp.viewId = backView.viewId;
         rsp.navAction = 'moveBack';
-        currentView.scrollValues = {}; //when going back, erase scrollValues
+        rsp.viewId = backView.viewId;
         if(backView.historyId === currentView.historyId) {
           // went back in the same history
           rsp.navDirection = 'back';
@@ -204,8 +209,8 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
             if(forwardsHistory) {
               // the forward has a history
               for(var x=forwardsHistory.stack.length - 1; x >= forwardView.index; x--) {
-                // starting from the end destory all forwards in this history from this point
-                forwardsHistory.stack[x].destory();
+                // starting from the end destroy all forwards in this history from this point
+                forwardsHistory.stack[x].destroy();
                 forwardsHistory.stack.splice(x);
               }
             }
@@ -227,11 +232,21 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
           stateName: this.getCurrentStateName(),
           stateParams: this.getCurrentStateParams(),
           url: $location.url(),
-          scrollValues: null
         });
+
+        if (rsp.navAction == 'moveBack') {
+          //moveBack(from, to);
+          $rootScope.$emit('$viewHistory.viewBack', currentView.viewId, rsp.viewId);
+        }
 
         // add the new view to this history's stack
         hist.stack.push(viewHistory.views[rsp.viewId]);
+      }
+
+      if(nextViewOptions) {
+        if(nextViewOptions.disableAnimate) rsp.navDirection = null;
+        if(nextViewOptions.disableBack) viewHistory.views[rsp.viewId].backViewId = null;
+        this.nextViewOptions(null);
       }
 
       this.setNavViews(rsp.viewId);
@@ -381,6 +396,14 @@ angular.module('ionic.service.view', ['ui.router', 'ionic.service.platform'])
       }
       // no history for for the parent, use the root
       return { historyId: 'root', scope: $rootScope };
+    },
+
+    nextViewOptions: function(opts) {
+      if(arguments.length) {
+        this._nextOpts = opts;
+      } else {
+        return this._nextOpts;
+      }
     },
 
     getRenderer: function(navViewElement, navViewAttrs, navViewScope) {

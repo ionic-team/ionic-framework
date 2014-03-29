@@ -18,8 +18,9 @@ describe('Ionic Modal', function() {
     var template = '<div class="modal"></div>';
     var modalInstance = modal.fromTemplate(template);
     modalInstance.show();
-    expect(modalInstance.el.classList.contains('modal')).toBe(true);
-    expect(modalInstance.el.classList.contains('slide-in-up')).toBe(true);
+    expect(modalInstance.el.classList.contains('modal-backdrop')).toBe(true);
+    expect(modalInstance.modalEl.classList.contains('modal')).toBe(true);
+    expect(modalInstance.modalEl.classList.contains('slide-in-up')).toBe(true);
   });
 
   it('Should show for dynamic template', function() {
@@ -30,8 +31,9 @@ describe('Ionic Modal', function() {
     var modalInstance = modal.fromTemplateUrl('modal.html', function(modalInstance) {
       done = true;
       modalInstance.show();
-      expect(modalInstance.el.classList.contains('modal')).toBe(true);
-      expect(modalInstance.el.classList.contains('active')).toBe(true);
+      expect(modalInstance.el.classList.contains('modal-backdrop')).toBe(true);
+      expect(modalInstance.modalEl.classList.contains('modal')).toBe(true);
+      expect(modalInstance.modalEl.classList.contains('active')).toBe(true);
     });
 
     timeout.flush();
@@ -131,4 +133,33 @@ describe('Ionic Modal', function() {
     expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.removed');
     timeout.flush();
   }));
+
+  it('show should return a promise resolved on hide', function() {
+    var template = '<div class="modal"></div>';
+    var m = modal.fromTemplate(template, {});
+    var done = false;
+
+    m.hide().then(function() {
+      done = true;
+    });
+    expect(m.el.classList.contains('hide')).toBe(false);
+    timeout.flush();
+    expect(m.el.classList.contains('hide')).toBe(true);
+    expect(done).toBe(true);
+  });
+
+  it('show should return a promise resolved on remove', function() {
+    var template = '<div class="modal"></div>';
+    var m = modal.fromTemplate(template, {});
+    var done = false;
+
+    m.remove().then(function() {
+      done = true;
+    });
+    spyOn(m.scope, '$destroy');
+    timeout.flush();
+    expect(m.scope.$destroy).toHaveBeenCalled();
+    expect(done).toBe(true);
+  });
+
 });

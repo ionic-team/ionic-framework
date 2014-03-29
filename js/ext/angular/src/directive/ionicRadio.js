@@ -3,8 +3,24 @@
 
 angular.module('ionic.ui.radio', [])
 
-// The radio button is a radio powered element with only
-// one possible selection in a set of options.
+/**
+ * @ngdoc directive
+ * @name ionRadio
+ * @module ionic
+ * @restrict E
+ * @codepen saoBG
+ * @description
+ * The radio directive is no different than the HTML radio input, except it's styled differently.
+ *
+ * Radio behaves like any [AngularJS radio](http://docs.angularjs.org/api/ng/input/input[radio]).
+ *
+ * @usage
+ * ```html
+ * <ion-radio ng-model="choice" value="A">Choose A</ion-radio>
+ * <ion-radio ng-model="choice" value="B">Choose B</ion-radio>
+ * <ion-radio ng-model="choice" value="C">Choose C</ion-radio>
+ * ```
+ */
 .directive('ionRadio', function() {
   return {
     restrict: 'E',
@@ -86,7 +102,6 @@ angular.module('ionic.ui.radio', [])
       if(!ngModel || !radioButtons) { return; }
 
       var setIt = function() {
-        console.log('SET');
         $element.addClass('active');
         ngModel.$setViewValue($scope.$eval($attr.ngValue));
 
@@ -94,7 +109,6 @@ angular.module('ionic.ui.radio', [])
       };
 
       var clickHandler = function(e) {
-        console.log('CLICK');
         setIt();
       };
 
@@ -103,7 +117,7 @@ angular.module('ionic.ui.radio', [])
           $element.addClass('active');
         }
       });
-        
+
       ionic.on('tap', clickHandler, $element[0]);
 
       $scope.$on('$destroy', function() {

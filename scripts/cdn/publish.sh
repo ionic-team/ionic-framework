@@ -31,11 +31,11 @@ function run {
   mkdir -p $VERSION_DIR
 
   cd $VERSION_DIR
-  cp -R $BUILD_DIR/* $VERSION_DIR
+  cp -Rf $BUILD_DIR/* $VERSION_DIR
 
   echo "-- Generating versions.json..."
   cd $IONIC_CODE_DIR/builder
-  python ./generate.py > /dev/null
+  python ./generate.py
 
   cd $IONIC_CODE_DIR
   git add -A

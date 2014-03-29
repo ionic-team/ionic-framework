@@ -32,7 +32,7 @@ describe('ionicInfiniteScroll directive', function() {
     });
     return element;
   }
-  
+
   it('should error if no ionicScroll parent', function() {
     expect(function() {
       inject(function($compile, $rootScope) {
@@ -45,6 +45,28 @@ describe('ionicInfiniteScroll directive', function() {
     var el = setup();
     expect(el.hasClass('active')).toBe(false);
     expect(ctrl.isLoading).toBe(false);
+  });
+
+  describe('icon', function() {
+    it('should have default icon ion-loading-d', function() {
+      var el = setup();
+      var icon = angular.element(el[0].querySelector('.icon'));
+      expect(icon.hasClass('ion-loading-d')).toBe(true);
+    });
+
+    it('should allow icon attr blank', function() {
+      var el = setup('icon=""');
+      var icon = angular.element(el[0].querySelector('.icon'));
+      expect(icon.hasClass('ion-loading-d')).toBe(false);
+    });
+
+    it('should allow interpolated icon attr', function() {
+      var el = setup('icon="{{someIcon}}"');
+      var icon = angular.element(el[0].querySelector('.icon'));
+      expect(icon.hasClass('ion-loading-d')).toBe(false);
+      el.scope().$apply('someIcon = "super-icon"');
+      expect(icon.hasClass('super-icon')).toBe(true);
+    });
   });
 
   describe('getMaxScroll', function() {
@@ -62,16 +84,6 @@ describe('ionicInfiniteScroll directive', function() {
       var el = setup('distance=5%');
       expect(ctrl.getMaxScroll()).toBe(101 * 0.95);
     });
-
-    it('getMaxScroll should use scope.infiniteScrolDistance as number', function() {
-      var el = setup('', { infiniteScrollDistance: '11' });
-      expect(ctrl.getMaxScroll()).toBe(90);
-    });
-
-    it('getMaxScroll should use scope.infiniteScrolDistance as percent', function() {
-      var el = setup('', { infiniteScrollDistance: '50%' });
-      expect(ctrl.getMaxScroll()).toBe(101 * 0.5);
-    });
   });
 
   describe('scroll event', function() {
@@ -84,16 +96,6 @@ describe('ionicInfiniteScroll directive', function() {
       expect(el.hasClass('active')).toBe(true);
       expect(ctrl.isLoading).toBe(true);
       expect(el.scope().foo).toBe(1);
-    });
-    it('should add active and call $scope.$onInfiniteScroll if past top', function() {
-      var onScrollSpy = jasmine.createSpy('onInfiniteScroll');
-      var el = setup('', { $onInfiniteScroll: onScrollSpy });
-      scrollTopValue = scrollMaxValue;
-      el.controller('$ionicScroll').$element.triggerHandler('scroll');
-
-      expect(el.hasClass('active')).toBe(true);
-      expect(ctrl.isLoading).toBe(true);
-      expect(onScrollSpy).toHaveBeenCalled();
     });
     it('should not run the event twice if isLoading is true', function() {
       var onScrollSpy = jasmine.createSpy('onInfiniteScroll');

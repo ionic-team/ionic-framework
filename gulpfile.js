@@ -1,16 +1,27 @@
-var _ = require('lodash');
-var buildConfig = require('./config/build.config.js');
-var connect = require('connect');
-var dgeni = require('dgeni');
-var http = require('http');
-var cp = require('child_process');
 var gulp = require('gulp');
 var pkg = require('./package.json');
+var semver = require('semver');
 var through = require('through');
 
 var argv = require('minimist')(process.argv.slice(2));
 
+var _ = require('lodash');
+var buildConfig = require('./config/build.config.js');
+var changelog = require('conventional-changelog');
+var connect = require('connect');
+var dgeni = require('dgeni');
+var es = require('event-stream');
+var htmlparser = require('htmlparser2');
+var lunr = require('lunr');
+var mkdirp = require('mkdirp');
+var yaml = require('js-yaml');
+
+var http = require('http');
+var cp = require('child_process');
+var fs = require('fs');
+
 var concat = require('gulp-concat');
+var footer = require('gulp-footer');
 var gulpif = require('gulp-if');
 var header = require('gulp-header');
 var jshint = require('gulp-jshint');
@@ -19,6 +30,7 @@ var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var stripDebug = require('gulp-strip-debug');
 var template = require('gulp-template');
+var twitter = require('gulp-twitter');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 
@@ -26,7 +38,8 @@ var banner = _.template(buildConfig.banner, { pkg: pkg });
 
 var IS_RELEASE_BUILD = !!argv.release;
 if (IS_RELEASE_BUILD) {
-  gutil.log(gutil.colors.red('--release:'),
+  gutil.log(
+    gutil.colors.red('--release:'),
     'Building release version (minified, debugs stripped)...'
   );
 }
@@ -34,20 +47,34 @@ if (IS_RELEASE_BUILD) {
 gulp.task('default', ['build']);
 gulp.task('build', ['bundle', 'sass']);
 
-gulp.task('docs', function() {
-  dgeni('docs/docs.config.js').generateDocs();
+gulp.task('docs', function(done) {
+  var docVersion = argv['doc-version'];
+  if (docVersion != 'nightly' && !semver.valid(docVersion)) {
+    console.log('Usage: gulp docs --doc-version=(nightly|versionName)');
+    return process.exit(1);
+  }
+  process.env.DOC_VERSION = docVersion;
+  return dgeni('docs/docs.config.js').generateDocs().then(function() {
+    gutil.log('Docs for', gutil.colors.cyan(docVersion), 'generated!');
+  });
 });
 
 var IS_WATCH = false;
-gulp.task('watch', function() {
+gulp.task('watch', ['bundle'], function() {
   IS_WATCH = true;
-  gulp.watch('js/**/*.js', ['bundle', 'docs']);
-  gulp.watch('docs/**/*', ['docs']);
+  gulp.watch('js/**/*.js', ['bundle']);
   gulp.watch('scss/**/*.scss', ['sass']);
 });
 
-gulp.task('changelog', function() {
-  gutil.log(gutil.colors.red('TODO: Add working changelog task'));
+gulp.task('changelog', function(done) {
+  changelog({
+    repository: 'https://github.com/driftyco/ionic',
+    version: pkg.version,
+  }, function(err, data) {
+    if (err) return done(err);
+    fs.writeFileSync('CHANGELOG.md', data);
+    done();
+  });
 });
 
 gulp.task('bundle', [
@@ -95,24 +122,30 @@ gulp.task('vendor', function() {
 
 gulp.task('scripts', function() {
   return gulp.src(buildConfig.ionicFiles)
-    .pipe(concat('ionic.js'))
     .pipe(gulpif(IS_RELEASE_BUILD, stripDebug()))
+    .pipe(template({ pkg: pkg }))
+    .pipe(concat('ionic.js'))
+    .pipe(header(buildConfig.closureStart))
+    .pipe(footer(buildConfig.closureEnd))
+    .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distJs))
     .pipe(gulpif(IS_RELEASE_BUILD, uglify()))
-    .pipe(header(banner))
     .pipe(rename({ extname: '.min.js' }))
+    .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distJs));
 });
 
 gulp.task('scripts-ng', function() {
   return gulp.src(buildConfig.angularIonicFiles)
-    .pipe(header(banner))
-    .pipe(concat('ionic-angular.js'))
-    .pipe(gulpif(IS_RELEASE_BUILD, uglify()))
-    .pipe(gulp.dest(buildConfig.distJs))
     .pipe(gulpif(IS_RELEASE_BUILD, stripDebug()))
+    .pipe(concat('ionic-angular.js'))
+    .pipe(header(buildConfig.closureStart))
+    .pipe(footer(buildConfig.closureEnd))
     .pipe(header(banner))
+    .pipe(gulp.dest(buildConfig.distJs))
+    .pipe(gulpif(IS_RELEASE_BUILD, uglify()))
     .pipe(rename({ extname: '.min.js' }))
+    .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distJs));
 });
 
@@ -130,11 +163,9 @@ gulp.task('sass', function(done) {
       }
     }))
     .pipe(concat('ionic.css'))
-    .pipe(gulp.dest(buildConfig.distCss))
-    .pipe(gulpif(IS_RELEASE_BUILD, minifyCss({
-      keepSpecialComments: 0
-    })))
     .pipe(header(banner))
+    .pipe(gulp.dest(buildConfig.distCss))
+    .pipe(gulpif(IS_RELEASE_BUILD, minifyCss()))
     .pipe(rename({ extname: '.min.css' }))
     .pipe(gulp.dest(buildConfig.distCss))
     .on('end', done);
@@ -156,6 +187,151 @@ gulp.task('version', function() {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('tweet', function() {
+  var oauth = {
+    consumerKey: process.env.TWITTER_CONSUMER_KEY,
+    consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+    accessToken: process.env.TWITTER_ACCESS_TOKEN,
+    accessTokenSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+  };
+  var exclamations = ["Aah","Ah","Aha","All right","Aw","Ay","Aye","Bah","Boy","By golly","Boom","Cheerio","Cheers","Come on","Crikey","Dear me","Egads","Fiddle-dee-dee","Gadzooks","Gangway","G'day","Gee whiz","Gesundheit","Get outta here","Good golly","Good job","Gosh","Gracious","Great","Gulp","Ha","Ha-ha","Hah","Hallelujah","Harrumph","Hey","Hooray","Hot dog","Hurray","Huzza","I say","La-di-dah","Look","Look here","Long time","Lordy","Most certainly","My my","My word","Oh","Oho","Oh-oh","Oh no","Okay","Okey-dokey","Ooh","Oye","Phew","Quite","Ready","Right on","Roger that","Rumble","Say","See ya","Snap","Sup","Ta-da","Take that","Tally ho","Thanks","Toodles","Touche","Tut-tut","Very nice","Very well","Voila","Vroom","Well done","Well, well","Whoa","Whoopee","Whew","Word up","Wow","Wuzzup","Ya","Yea","Yeah","Yippee","Yo","Yoo-hoo","You bet","You don't say","You know","Yow","Yum","Yummy","Zap","Zounds","Zowie"];
+  if(IS_RELEASE_BUILD && argv.codeversion && argv.codename) {
+    var tweet = exclamations[Math.floor(Math.random()*exclamations.length)]+'! Just released @IonicFramework '+argv.codename+' v'+argv.codeversion+' https://github.com/driftyco/ionic/releases/tag/v'+argv.codeversion;
+    console.log(tweet);
+    return gulp.src('package.json')
+            .pipe(twitter(oauth, tweet));
+  }        
+});
+
+gulp.task('docs-index', function() {
+  var idx = lunr(function() {
+    this.field('path');
+    this.field('title', {boost: 10});
+    this.field('body');
+    this.ref('id');
+  });
+  var ref = {};
+  var refId = 0;
+
+  function addToIndex(path, title, layout, body) {
+    // Add the data to the indexer and ref object
+    idx.add({'path': path, 'body': body, 'title': title, id: refId});
+    ref[refId] = {'p': path, 't': title, 'l': layout};
+    refId++;
+  }
+
+  return gulp.src([
+    'tmp/ionic-site/docs/{components,guide,api,overview}/**/*.{md,html,markdown}',
+    'tmp/ionic-site/docs/index.html',
+    'tmp/ionic-site/getting-started/index.html',
+    'tmp/ionic-site/tutorials/**/*.{md,html,markdown}',
+    'tmp/ionic-site/_posts/**/*.{md,html,markdown}'
+  ])
+    .pipe(es.map(function(file, callback) {
+      //docs for gulp file objects: https://github.com/wearefractal/vinyl
+      var contents = file.contents.toString(); //was buffer
+
+      // Grab relative path from ionic-site root
+      var relpath = file.path.replace(/^.*?tmp\/ionic-site\//, '');
+
+      // Read out the yaml portion of the Jekyll file
+      var yamlStartIndex = contents.indexOf('---');
+
+      if (yamlStartIndex === -1) {
+        return callback();
+      }
+
+      // read Jekyll's page yaml variables at the top of the file
+      var yamlEndIndex = contents.indexOf('---', yamlStartIndex+3); //starting from start
+      var yamlRaw = contents.substring(yamlStartIndex+3, yamlEndIndex);
+
+      var pageData =  yaml.safeLoad(yamlRaw);
+      if(!pageData.title || !pageData.layout) {
+        return callback();
+      }
+
+      // manually set to not be searchable, or for a blog post, manually set to be searchable
+      if(pageData.searchable === false || (pageData.layout == 'post' && pageData.searchable !== true)) {
+        return callback();
+      }
+
+      // clean up some content so code variables are searchable too
+      contents = contents.substring(yamlEndIndex+3);
+      contents = contents.replace(/<code?>/gi, '');
+      contents = contents.replace(/<\/code>/gi, '');
+      contents = contents.replace(/<code?></gi, '');
+      contents = contents.replace(/><\/code>/gi, '');
+      contents = contents.replace(/`</gi, '');
+      contents = contents.replace(/>`/gi, '');
+
+      // create a clean path to the URL
+      var path = '/' + relpath.replace('index.md', '')
+                              .replace('index.html', '')
+                              .replace('.md', '.html')
+                              .replace('.markdown', '.html');
+      if(pageData.layout == 'post') {
+        path = '/blog/' + path.substring(19).replace('.html', '/');
+      }
+
+      if(pageData.search_sections === true) {
+        // each section within the content should be its own search result
+        var section = { body: '', title: '' };
+        var isTitleOpen = false;
+
+        var parser = new htmlparser.Parser({
+          ontext: function(text){
+            if(isTitleOpen) {
+              section.title += text; // get the title of this section
+            } else {
+              section.body += text.replace(/{%.*%}/, '', 'g'); // Ignore any Jekyll expressions
+            }
+          },
+          onopentag: function(name, attrs) {
+            if(name == 'section' && attrs.id) {
+              // start building new section data
+              section = { body: '', path: path + '#' + attrs.id, title: '' };
+            } else if( (name == 'h1' || name == 'h2' || name == 'h3') && attrs.class == 'title') {
+              isTitleOpen = true; // the next text will be this sections title
+            }
+          },
+          onclosetag: function(name) {
+            if(name == 'section') {
+              // section closed, index this section then clear it out
+              addToIndex(section.path, section.title, pageData.layout, section.body);
+              section = { body: '', title: '' };
+            } else if( (name == 'h1' || name == 'h2' || name == 'h3') && isTitleOpen) {
+              isTitleOpen = false;
+            }
+          }
+        });
+        parser.write(contents);
+        parser.end();
+
+      } else {
+        // index the entire page
+        var body = '';
+        var parser = new htmlparser.Parser({
+          ontext: function(text){
+            body += text.replace(/{%.*%}/, '', 'g'); // Ignore any Jekyll expressions
+          }
+        });
+        parser.write(contents);
+        parser.end();
+
+        addToIndex(path, pageData.title, pageData.layout, body);
+      }
+
+      callback();
+
+    })).on('end', function() {
+      // Write out as one json file
+      mkdirp.sync('tmp/ionic-site/data');
+      fs.writeFileSync(
+        'tmp/ionic-site/data/index.json',
+        JSON.stringify({'ref': ref, 'index': idx.toJSON()})
+      );
+    });
+});
 
 gulp.task('sauce-connect', sauceConnect);
 
@@ -182,11 +358,6 @@ gulp.task('protractor-sauce', ['sauce-connect', 'connect-server'], function(cb) 
   return protractor(cb, ['config/protractor-sauce.conf.js']);
 });
 
-gulp.task('e2e-local', ['connect-server'], function(cb) {
-});
-gulp.task('e2e-sauce', ['sauce-connect', 'connect-server'], function(cb) {
-});
-
 function karma(cb, args) {
   if (argv.browsers) {
     args.push('--browsers='+argv.browsers.trim());
@@ -205,7 +376,7 @@ function karma(cb, args) {
 }
 
 function pad(n) {
-  if (n<10) return '0' + n;
+  if (n<10) { return '0' + n; }
   return n;
 }
 

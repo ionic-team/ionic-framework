@@ -12,11 +12,20 @@
 
   <body>
 
-    <ion-header-bar title="'Sample UL'" type="bar-positive"></ion-header-bar>
+    <ion-header-bar class="bar-positive" ng-class="{'bar-subheader': $root.isSub}">
+      <h1 class="title">Header!</h1>
+    </ion-header-bar>
 
-    <ion-content on-infinite-scroll="addMore()" has-header="true" scroll="true" ng-controller="ContentCtrl" on-refresh="onRefresh()" has-footer="true" padding="false">
+    <ion-content scroll="true" ng-controller="ContentCtrl" padding="false">
 
-      <ion-refresher></ion-refresher>
+    <pre>
+    $hasHeader: {{!!$hasHeader}}
+    $hasSubheader: {{!!$hasSubheader}}
+    </pre>
+
+      <ion-refresher on-refresh="onRefresh()" pulling-text="pull!" refreshing-text="refreshing!"></ion-refresher>
+
+      <ion-checkbox ng-model="$root.isSub">isSub</ion-checkbox>
 
       <ul class="list">
         <li class="item">This ion-list should *exactly* fit</li>
@@ -48,11 +57,11 @@
         <li ng-repeat="i in more">more {{$index}}</li>
        </ul>
 
-       <ion-infinite-scroll></ion-infinite-scroll>
+       <ion-infinite-scroll on-infinite="addMore()"></ion-infinite-scroll>
 
     </ion-content>
 
-    <ion-footer-bar type="bar-assertive">
+    <ion-footer-bar class="bar-assertive">
       <h1 class="title">Footer!</h1>
     </ion-footer-bar>
 
@@ -61,7 +70,7 @@ function ContentCtrl($scope, $timeout) {
   $scope.onRefresh = function() {
     $timeout(function() {
 		  $scope.$broadcast('scroll.refreshComplete');
-    }, 1000);
+    }, 1500);
   };
   $scope.more = [];
   $scope.addMore = function() {

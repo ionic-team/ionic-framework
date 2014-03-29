@@ -5,20 +5,46 @@
  * Modals are independent windows that slide in from off-screen.
  */
 
+.modal-backdrop {
+  @include transition(background-color 300ms ease-in-out);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $z-index-modal;
+  width: 100%;
+  height: 100%;
+  background-color: $modal-backdrop-bg-inactive;
+
+  &.active {
+    background-color: $modal-backdrop-bg-active;
+  }
+}
+
 .modal {
   position: absolute;
   top: 0;
   z-index: $z-index-modal;
   overflow: hidden;
-
   min-height: 100%;
   width: 100%;
-
   background-color: $modal-bg-color;
+}
 
-  // Active modal
-  &.active {
-    height: 100%;
+@media (min-width: $modal-inset-mode-break-point) {
+  // inset mode is when the modal doesn't fill the entire
+  // display but instead is centered within a large display
+  .modal {
+    top: $modal-inset-mode-top;
+    right: $modal-inset-mode-right;
+    bottom: $modal-inset-mode-bottom;
+    left: $modal-inset-mode-left;
+    overflow: visible;
+    min-height: $modal-inset-mode-min-height;
+    width: (100% - $modal-inset-mode-left - $modal-inset-mode-right);
+  }
+
+  .modal.ng-leave-active {
+    bottom: 0;
   }
 }
 

@@ -3,6 +3,10 @@
 
 angular.module('ionic.ui.actionSheet', [])
 
+/*
+ * We don't document the ionActionSheet directive, we instead document
+ * the $ionicActionSheet service
+ */
 .directive('ionActionSheet', ['$document', function($document) {
   return {
     restrict: 'E',

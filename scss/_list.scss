@@ -11,27 +11,8 @@
   padding-left: 0; // reset padding because ul and ol
   margin-bottom: 20px;
 }
-/* If a list is the last item in a container, don't add margin-bottom */
 .list:last-child {
   margin-bottom: 0px;
-}
-
-/**
- * List editing styles. These trigger when the entire list goes into
- * "edit mode" or reordering list items
- */
-.list-editing {
-  .item-content {
-    @include translate3d(50px, 0, 0);
-  }
-}
-.list-reordering {
-  .item-content {
-    margin-right: 50px;
-  }
-  .item-drag {
-    z-index: 1;
-  }
 }
 
 

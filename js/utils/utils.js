@@ -2,7 +2,7 @@
 
   /* for nextUid() function below */
   var uid = ['0','0','0'];
-  
+
   /**
    * Various utilities used throughout Ionic
    *
@@ -33,7 +33,7 @@
 
     /**
      * Only call a function once in the given interval.
-     * 
+     *
      * @param func {Function} the function to call
      * @param wait {int} how long to wait before/after to allow function calls
      * @param immediate {boolean} whether to call immediately or after the wait interval

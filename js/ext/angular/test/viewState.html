@@ -12,31 +12,46 @@
   <body>
 
     <div ng-controller="AppCtrl">
-      <ion-nav-bar animation="nav-title-slide-ios7"
-               type="bar-positive"
-               back-button-type="button-icon"
-               back-button-label=" Back"
-               back-button-icon="ion-arrow-left-c"></ion-nav-bar>
+      <ion-nav-bar class="nav-title-slide-ios7 bar-positive">
+        <ion-nav-back-button class="button-icon icon ion-arrow-left-c">
+          Back
+        </ion-nav-back-button>
+      </ion-nav-bar>
       <ion-nav-view animation="slide-left-right"></ion-nav-view>
     </div>
 
     <script id="sign-in.html" type="text/ng-template">
-      <ion-view title="'Sign-In'" left-buttons="leftButtons" right-buttons="rightButtons">
-        <ion-content has-header="true">
+      <ion-view title="Sign-In">
+
+        <ion-nav-buttons side="left">
+          <button class="button button-icon icon ion-home" ng-click="foo()">
+            Home
+          </button>
+        </ion-nav-buttons>
+
+        <ion-nav-buttons side="right">
+          <button class="button button-icon ion-navicon"></button>
+        </ion-nav-buttons>
+
+        <ion-content>
           <div class="list">
             <label class="item item-input">
               <span class="input-label">Username</span>
-              <input type="text" ng-model="user.username">
+              <input type="text">
             </label>
             <label class="item item-input">
               <span class="input-label">Password</span>
-              <input type="password" ng-model="user.password">
+              <input type="password">
             </label>
           </div>
           <div class="padding">
             <button class="button button-block button-positive" ng-click="signIn(user)">
               Sign-In
             </button>
+            <form ng-submit="something()">
+              <input type="text">
+              <button type="submit"></button>
+            </form>
             <p class="text-center">
               <a href="#/sign-in">Sign-In</a> -
               <a href="#/forgot-password">Forgot password</a> -
@@ -49,12 +64,13 @@
             </p>
           </div>
         </ion-content>
+
       </ion-view>
     </script>
 
     <script id="forgot-password.html" type="text/ng-template">
-      <ion-view title="'Forgot Password'" hide-nav-bar="true">
-        <ion-content has-header="true" padding="true">
+      <ion-view title="Forgot Password" hide-nav-bar="true">
+        <ion-content padding="true">
           <p>This ion-view hides the nav bar using the hideNavBar attribute.</p>
           <p>
             <button ng-click="hideNavBar()">Hide Nav Bar</button>
@@ -79,7 +95,7 @@
 
     <script id="contact.html" type="text/ng-template">
       <ion-view hide-back-button="true">
-        <ion-content has-header="true" padding="true">
+        <ion-content padding="true">
           <p>The views title is blank on purpose.</p>
           <p>The hideBackButton attribute is "true" for this view.</p>
           <p>@drifty</p>
@@ -99,7 +115,7 @@
 
     <script id="tabs.html" type="text/ng-template">
 
-      <ion-tabs tabs-style="tabs-icon-top" tabs-type="tabs-positive">
+      <ion-tabs class="tabs-icon-top tabs-positive">
 
         <ion-tab title="Automobiles" icon="ion-model-s" href="#/tabs/autos">
           <ion-nav-view name="auto-nav-view"></ion-nav-view>
@@ -114,8 +130,8 @@
         </ion-tab>
 
         <ion-tab title="Info" icon="ion-information-circled">
-          <ion-view title="'Information'">
-            <ion-content has-header="true" has-tabs="true" padding="true">
+          <ion-view title="Information">
+            <ion-content padding="true">
               <h3>Information</h3>
               <p>
                 This is a sample seed project for the Ionic Framework. Please change it to match your needs.
@@ -137,8 +153,8 @@
     </script>
 
     <script id="auto-list.html" type="text/ng-template">
-      <ion-view title="'Auto List'">
-        <ion-content has-header="true" has-tabs="true">
+      <ion-view title="Auto List">
+        <ion-content padding="true">
           <ion-list>
             <ion-item ng-repeat="auto in autos" ng-href="#/tabs/autos/{{ $index }}" ion-nav-animation="{{$index === 0 ? 'slide-in-up' : 'slide-left-right'}}">
               {{ auto.year }} {{ auto.make }} {{ auto.model }}
@@ -157,8 +173,13 @@
     </script>
 
     <script id="auto-detail.html" type="text/ng-template">
-      <ion-view title="'Auto Details'">
-        <ion-content has-header="true" has-tabs="true" padding="true">
+      <ion-view title="Auto Details">
+        <ion-nav-buttons side="left">
+          <button class="button button-icon icon ion-refresher">
+          </button>
+        </ion-nav-buttons>
+        <ion-content padding="true">
+
           <h2>{{ auto.year }} {{ auto.make }} {{ auto.model }}</h2>
           <p ng-bind="auto.desc"></p>
           <p><a class="button" ng-href="{{ auto.url }}">Read More</a></p>
@@ -194,8 +215,8 @@
     </script>
 
     <script id="add-auto.html" type="text/ng-template">
-      <ion-view title="'Add Auto'">
-        <ion-content has-header="true" has-tabs="true">
+      <ion-view title="Add Auto">
+        <ion-content padding="true">
 
           <div class="list">
             <label class="item item-input">
@@ -224,8 +245,8 @@
     </script>
 
     <script id="about.html" type="text/ng-template">
-      <ion-view title="'About'">
-        <ion-content has-header="true" has-tabs="true" padding="true">
+      <ion-view title="About">
+        <ion-content padding="true">
           <h3>About this app!</h3>
           <p>
             Current View: {{ $viewHistory.currentView }}<br>
@@ -304,34 +325,30 @@
       })
 
       .controller('SignInCtrl', function($scope, $state) {
+          $scope.foo = function() {
+            alert('foo');
+          };
+          $scope.something = function() {
+          alert('something');
+          };
+
         $scope.signIn = function(user) {
           $state.go('tabs.autolist');
         };
 
-        $scope.leftButtons = [{
-          type: 'button-icon icon ion-home',
-          content: 'Home',
-          tap: function(e) { }
-        }];
-
-        $scope.rightButtons = [{
-          type: 'button-icon icon ion-navicon',
-          tap: function(e) { }
-        }];
-
       })
 
-      .controller('ForgotPasswordCtrl', function($ionicViewService, $rootScope, $scope, $state) {
+      .controller('ForgotPasswordCtrl', function($ionicViewService, $rootScope, $scope, $state, $ionicNavBarDelegate) {
         $scope.clearViewHistory = function() {
           $ionicViewService.clearHistory();
         };
 
         $scope.hideNavBar = function() {
-          $rootScope.$broadcast('viewState.showNavBar', false);
+          $ionicNavBarDelegate.showBar(false);
         };
 
         $scope.showNavBar = function() {
-          $rootScope.$broadcast('viewState.showNavBar', true);
+          $ionicNavBarDelegate.showBar(true);
         };
       })
 
@@ -344,14 +361,14 @@
         };
       })
 
-      .controller('AutoDetailCtrl', function($scope, $state, $stateParams) {
+      .controller('AutoDetailCtrl', function($scope, $state, $stateParams, $ionicNavBarDelegate) {
         $scope.autoDetailData = "AutoDetailCtrl Data";
 
         $scope.hideBackButton = function() {
-          $scope.$emit('viewState.showBackButton', false);
+          $ionicNavBarDelegate.showBackButton(false);
         };
         $scope.showBackButton = function() {
-          $scope.$emit('viewState.showBackButton', true);
+          $ionicNavBarDelegate.showBackButton(true);
         };
 
         $scope.auto = $scope.autos[$stateParams.id];

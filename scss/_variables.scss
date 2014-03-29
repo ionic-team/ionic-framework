@@ -289,8 +289,8 @@ $item-button-line-height:         32px !default;
 $item-icon-font-size:             32px !default;
 $item-icon-fill-font-size:        28px !default;
 
-$item-avitar-width:               40px !default;
-$item-avitar-height:              40px !default;
+$item-avatar-width:               40px !default;
+$item-avatar-height:              40px !default;
 
 $item-thumbnail-width:            80px !default;
 $item-thumbnail-height:           80px !default;
@@ -361,6 +361,24 @@ $item-default-active-bg:          #D9D9D9 !default;
 $item-default-active-border:      $item-light-active-border !default;
 
 
+// Item Editing
+// -------------------------------
+
+$item-edit-transition-duration:   250ms !default;
+$item-edit-transition-function:   ease-in-out !default;
+
+$item-left-edit-left:             8px !default;  // item's left side edit's "left" property
+
+$item-right-edit-open-width:      50px !default;
+$item-left-edit-open-width:       50px !default;
+
+$item-delete-icon-size:           24px !default;
+$item-delete-icon-color:          $assertive !default;
+
+$item-reorder-icon-size:          32px !default;
+$item-reorder-icon-color:         $dark !default;
+
+
 // Lists
 // -------------------------------
 
@@ -384,12 +402,6 @@ $card-border-color:               #ccc !default;
 $card-border-radius:              2px !default;
 
 
-// Icons
-// -------------------------------
-
-$icon-fill-border-radius:         6px !default;
-
-
 // Forms
 // -------------------------------
 
@@ -405,6 +417,13 @@ $input-border:                    $item-default-border !default;
 $input-border-width:              $item-border-width !default;
 $input-label-color:               $dark !default;
 $input-color-placeholder:         lighten($dark, 40%) !default;
+
+
+// Progress
+// -------------------------------
+
+$progress-width:                  100% !default;
+$progress-margin:                 15px auto !default;
 
 
 // Toggle
@@ -423,11 +442,26 @@ $toggle-handle-dragging-bg-color: darken(#fff, 5%) !default;
 $toggle-off-bg-color:             #E5E5E5 !default;
 $toggle-off-border-color:         #E5E5E5 !default;
 
-$toggle-on-bg-color:              $positive !default;
-$toggle-on-border-color:          $toggle-on-bg-color !default;
-
+$toggle-on-light-bg:              $button-light-border !default;
+$toggle-on-light-border:          $toggle-on-light-bg !default;
+$toggle-on-stable-bg:             $button-stable-border !default;
+$toggle-on-stable-border:         $toggle-on-stable-bg !default;
+$toggle-on-positive-bg:           $positive !default;
+$toggle-on-positive-border:       $toggle-on-positive-bg !default;
+$toggle-on-calm-bg:               $calm !default;
+$toggle-on-calm-border:           $toggle-on-calm-bg !default;
+$toggle-on-assertive-bg:          $assertive !default;
+$toggle-on-assertive-border:      $toggle-on-assertive-bg !default;
+$toggle-on-balanced-bg:           $balanced !default;
+$toggle-on-balanced-border:       $toggle-on-balanced-bg !default;
+$toggle-on-energized-bg:          $energized !default;
+$toggle-on-energized-border:      $toggle-on-energized-bg !default;
 $toggle-on-royal-bg:              $royal !default;
 $toggle-on-royal-border:          $toggle-on-royal-bg !default;
+$toggle-on-dark-bg:               $dark !default;
+$toggle-on-dark-border:           $toggle-on-dark-bg !default;
+$toggle-on-default-bg:            $positive !default;
+$toggle-on-default-border:        $toggle-on-default-bg !default;
 
 $toggle-handle-off-bg-color:      $light !default;
 $toggle-handle-on-bg-color:       $toggle-handle-off-bg-color !default;
@@ -464,8 +498,8 @@ $checkbox-off-border-royal:       $royal !default;
 $checkbox-on-bg-royal:            $royal !default;
 $checkbox-off-border-dark:        $dark !default;
 $checkbox-on-bg-dark:             $dark !default;
-$checkbox-off-border-default:     $button-stable-border !default;
-$checkbox-on-bg-default:          $button-stable-border !default;
+$checkbox-off-border-default:     $positive !default;
+$checkbox-on-bg-default:          $positive !default;
 
 
 $checkbox-check-width:            3px !default;
@@ -511,6 +545,15 @@ $split-pane-menu-border-color:    #eee !default;
 // -------------------------------
 
 $modal-bg-color:                  #fff !default;
+$modal-backdrop-bg-active:        rgba(0,0,0,0.5) !default;
+$modal-backdrop-bg-inactive:      rgba(0,0,0,0) !default;
+
+$modal-inset-mode-break-point:    680px !default;  // @media min-width
+$modal-inset-mode-top:            20% !default;
+$modal-inset-mode-right:          20% !default;
+$modal-inset-mode-bottom:         20% !default;
+$modal-inset-mode-left:           20% !default;
+$modal-inset-mode-min-height:     240px !default;
 
 
 // Grids
@@ -528,10 +571,26 @@ $grid-responsive-lg-break:        1023px !default; // smaller than landscape tab
 $sheet-bg-color:                  rgba(255, 255, 255, 0.6) !default;
 $sheet-opacity:                   0.95 !default;
 
-// Border radii for the action sheet button groups
 $sheet-border-radius:             3px 3px 3px 3px !default;
 $sheet-border-radius-top:         3px 3px 0px 0px !default;
 $sheet-border-radius-bottom:      0px 0px 3px 3px !default;
+
+
+// Popups
+// -------------------------------
+
+$popup-backdrop-fadein-duration:  0.1s !default;
+$popup-width:                     250px !default;
+$popup-enter-animation:           superScaleIn !default;
+$popup-enter-animation-duration:  0.2s !default;
+$popup-leave-animation-duration:  0.1s !default;
+
+$popup-border-radius:             0px !default;
+$popup-background-color:          rgba(255,255,255,0.9) !default;
+
+$popup-button-border-radius:      2px !default;
+$popup-button-line-height:        20px !default;
+$popup-button-min-height:         45px !default;
 
 
 // Badges
@@ -577,6 +636,7 @@ $badge-default-text:              #AAAAAA !default;
 // -------------------------------
 
 $z-index-action-sheet:            11 !default;
+$z-index-badge:                   1 !default;
 $z-index-bar:                     10 !default;
 $z-index-bar-title:               0 !default;
 $z-index-bar-button:              1 !default;
@@ -591,7 +651,10 @@ $z-index-item-toggle:             3 !default;
 $z-index-menu:                    0 !default;
 $z-index-modal:                   10 !default;
 $z-index-pane:                    1 !default;
+$z-index-popup:                   11 !default;
+$z-index-popup-backdrop:          10 !default;
 $z-index-scroll-bar:              9999 !default;
+$z-index-slider-pager:            1 !default;
 $z-index-tabs:                    5 !default;
 $z-index-view:                    1 !default;
 

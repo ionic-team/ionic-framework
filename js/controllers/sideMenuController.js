@@ -49,13 +49,24 @@
       };
     },
 
+    isOpenLeft: function() {
+      return this.getOpenAmount() > 0;
+    },
+
+    isOpenRight: function() {
+      return this.getOpenAmount() < 0;
+    },
+
     /**
      * Toggle the left menu to open 100%
      */
-    toggleLeft: function() {
-      this.content.enableAnimation();
+    toggleLeft: function(shouldOpen) {
       var openAmount = this.getOpenAmount();
-      if(openAmount > 0) {
+      if (arguments.length === 0) {
+        shouldOpen = openAmount <= 0;
+      }
+      this.content.enableAnimation();
+      if(!shouldOpen) {
         this.openPercentage(0);
       } else {
         this.openPercentage(100);
@@ -65,10 +76,13 @@
     /**
      * Toggle the right menu to open 100%
      */
-    toggleRight: function() {
-      this.content.enableAnimation();
+    toggleRight: function(shouldOpen) {
       var openAmount = this.getOpenAmount();
-      if(openAmount < 0) {
+      if (arguments.length === 0) {
+        shouldOpen = openAmount >= 0;
+      }
+      this.content.enableAnimation();
+      if(!shouldOpen) {
         this.openPercentage(0);
       } else {
         this.openPercentage(-100);
@@ -140,11 +154,23 @@
       var maxRight = this.right && this.right.width || 0;
 
       // Check if we can move to that side, depending if the left/right panel is enabled
-      if((!(this.left && this.left.isEnabled) && amount > 0) || (!(this.right && this.right.isEnabled) && amount < 0)) {
+      if(!(this.left && this.left.isEnabled) && amount > 0) {
+        this.content.setTranslateX(0);
         return;
       }
 
-      if((this._leftShowing && amount > maxLeft) || (this._rightShowing && amount < -maxRight)) {
+      if(!(this.right && this.right.isEnabled) && amount < 0) {
+        this.content.setTranslateX(0);
+        return;
+      }
+
+      if(this._leftShowing && amount > maxLeft) {
+        this.content.setTranslateX(maxLeft);
+        return;
+      }
+
+      if(this._rightShowing && amount < -maxRight) {
+        this.content.setTranslateX(-maxRight);
         return;
       }
 
@@ -187,8 +213,11 @@
       // what the drag velocity is
       var ratio = this.getOpenRatio();
 
-      if(ratio === 0)
+      if(ratio === 0) {
+        // Just to be safe
+        this.openPercentage(0);
         return;
+      }
 
       var velocityThreshold = 0.3;
       var velocityX = e.gesture.velocityX;

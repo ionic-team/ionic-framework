@@ -1,14 +1,46 @@
 angular.module('ionic.service.loading', ['ionic.ui.loading'])
 
+/**
+ * @ngdoc service
+ * @name $ionicLoading
+ * @module ionic
+ * @description
+ * An overlay that can be used to indicate activity while blocking user
+ * interaction.
+ *
+ * @usage
+ * ```js
+ * angular.module('LoadingApp', ['ionic'])
+ * .controller('LoadingCtrl', function($scope, $ionicLoading) {
+ *   $scope.show = function() {
+ *     $scope.loading = $ionicLoading.show({
+ *       content: 'Loading',
+ *     });
+ *   };
+ *   $scope.hide = function(){
+ *     $scope.loading.hide();
+ *   };
+ * });
+ * ```
+ */
 .factory('$ionicLoading', ['$rootScope', '$document', '$compile', function($rootScope, $document, $compile) {
   return {
     /**
-     * Load an action sheet with the given template string.
-     *
-     * A new isolated scope will be created for the
-     * action sheet and the new element will be appended into the body.
-     *
-     * @param {object} opts the options for this ActionSheet (see docs)
+     * @ngdoc method
+     * @name $ionicLoading#show
+     * @param {object} opts The options for the indicator. Available properties:
+     *  - `{string=}` `content` The content of the indicator. Default: none.
+     *  - `{string=}` `animation` The animation of the indicator.
+     *    Default: 'fade-in'.
+     *  - `{boolean=}` `showBackdrop` Whether to show a backdrop. Default: true.
+     *  - `{number=}` `maxWidth` The maximum width of the indicator, in pixels.
+     *    Default: 200.
+     *  - `{number=}` `showDelay` How many milliseconds to delay showing the
+     *    indicator.  Default: 0.
+     * @returns {object} A shown loader with the following methods:
+     *  - `hide()` - Hides the loader.
+     *  - `show()` - Shows the loader.
+     *  - `setContent(string)` - Sets the html content of the loader.
      */
     show: function(opts) {
       var defaults = {

@@ -5,7 +5,7 @@
   * Ported from github.com/EightMedia/hammer.js Gestures - thanks!
   */
 (function(ionic) {
-  
+
   /**
    * ionic.Gestures
    * use this to create instances
@@ -23,7 +23,7 @@
   // default settings
   ionic.Gestures.defaults = {
     // add css to the element to prevent the browser from doing
-    // its native behavior. this doesnt prevent the scrolling, 
+    // its native behavior. this doesnt prevent the scrolling,
     // but cancels the contextmenu, tap highlighting etc
     // set to false to disable this
     stop_browser_behavior: 'disable-user-behavior'
@@ -213,21 +213,21 @@
    * this holds the last move event,
    * used to fix empty touchend issue
    * see the onTouch event for an explanation
-   * @type {Object}
+   * type {Object}
    */
   var last_move_event = null;
 
 
   /**
    * when the mouse is hold down, this is true
-   * @type {Boolean}
+   * type {Boolean}
    */
   var enable_detect = false;
 
 
   /**
    * when touch events have been fired, this is true
-   * @type {Boolean}
+   * type {Boolean}
    */
   var touch_triggered = false;
 
@@ -456,7 +456,7 @@
   ionic.Gestures.PointerEvent = {
     /**
      * holds all pointers
-     * @type {Object}
+     * type {Object}
      */
     pointers: {},
 
@@ -536,7 +536,7 @@
      * also used for cloning when dest is an empty object
      * @param   {Object}    dest
      * @param   {Object}    src
-     * @parm	{Boolean}	merge		do a merge
+     * @param	{Boolean}	merge		do a merge
      * @returns {Object}    dest
      */
     extend: function extend(dest, src, merge) {
@@ -968,92 +968,92 @@
    * detection sessionic. It has the following properties
    *      @param  {String}    name
    *      contains the name of the gesture we have detected. it has not a real function,
-  *      only to check in other gestures if something is detected.
-    *      like in the drag gesture we set it to 'drag' and in the swipe gesture we can
-    *      check if the current gesture is 'drag' by accessing ionic.Gestures.detectionic.current.name
-    *
-    *      @readonly
-    *      @param  {ionic.Gestures.Instance}    inst
-    *      the instance we do the detection for
-    *
-    *      @readonly
-    *      @param  {Object}    startEvent
-    *      contains the properties of the first gesture detection in this sessionic.
-    *      Used for calculations about timing, distance, etc.
-    *
-    *      @readonly
-    *      @param  {Object}    lastEvent
-    *      contains all the properties of the last gesture detect in this sessionic.
-    *
-    * after the gesture detection session has been completed (user has released the screen)
-    * the ionic.Gestures.detectionic.current object is copied into ionic.Gestures.detectionic.previous,
-    * this is usefull for gestures like doubletap, where you need to know if the
-      * previous gesture was a tap
-      *
-      * options that have been set by the instance can be received by calling inst.options
-      *
-      * You can trigger a gesture event by calling inst.trigger("mygesture", event).
-      * The first param is the name of your gesture, the second the event argument
-      *
-      *
-      * Register gestures
-      * --------------------
-      * When an gesture is added to the ionic.Gestures.gestures object, it is auto registered
-      * at the setup of the first ionic.Gestures instance. You can also call ionic.Gestures.detectionic.register
-      * manually and pass your gesture object as a param
-      *
-      */
+   *      only to check in other gestures if something is detected.
+   *      like in the drag gesture we set it to 'drag' and in the swipe gesture we can
+   *      check if the current gesture is 'drag' by accessing ionic.Gestures.detectionic.current.name
+   *
+   *      readonly
+   *      @param  {ionic.Gestures.Instance}    inst
+   *      the instance we do the detection for
+   *
+   *      readonly
+   *      @param  {Object}    startEvent
+   *      contains the properties of the first gesture detection in this sessionic.
+   *      Used for calculations about timing, distance, etc.
+   *
+   *      readonly
+   *      @param  {Object}    lastEvent
+   *      contains all the properties of the last gesture detect in this sessionic.
+   *
+   * after the gesture detection session has been completed (user has released the screen)
+   * the ionic.Gestures.detectionic.current object is copied into ionic.Gestures.detectionic.previous,
+   * this is usefull for gestures like doubletap, where you need to know if the
+   * previous gesture was a tap
+   *
+   * options that have been set by the instance can be received by calling inst.options
+   *
+   * You can trigger a gesture event by calling inst.trigger("mygesture", event).
+   * The first param is the name of your gesture, the second the event argument
+   *
+   *
+   * Register gestures
+   * --------------------
+   * When an gesture is added to the ionic.Gestures.gestures object, it is auto registered
+   * at the setup of the first ionic.Gestures instance. You can also call ionic.Gestures.detectionic.register
+   * manually and pass your gesture object as a param
+   *
+   */
 
-      /**
-       * Hold
-       * Touch stays at the same place for x time
-       * @events  hold
-       */
-      ionic.Gestures.gestures.Hold = {
-        name: 'hold',
-        index: 10,
-        defaults: {
-          hold_timeout	: 500,
-          hold_threshold	: 1
-        },
-        timer: null,
-        handler: function holdGesture(ev, inst) {
-          switch(ev.eventType) {
-            case ionic.Gestures.EVENT_START:
-              // clear any running timers
-              clearTimeout(this.timer);
+  /**
+   * Hold
+   * Touch stays at the same place for x time
+   * events  hold
+   */
+  ionic.Gestures.gestures.Hold = {
+    name: 'hold',
+    index: 10,
+    defaults: {
+      hold_timeout	: 500,
+      hold_threshold	: 1
+    },
+    timer: null,
+    handler: function holdGesture(ev, inst) {
+      switch(ev.eventType) {
+        case ionic.Gestures.EVENT_START:
+          // clear any running timers
+          clearTimeout(this.timer);
 
-              // set the gesture so we can check in the timeout if it still is
-              ionic.Gestures.detection.current.name = this.name;
+          // set the gesture so we can check in the timeout if it still is
+          ionic.Gestures.detection.current.name = this.name;
 
-              // set timer and if after the timeout it still is hold,
-              // we trigger the hold event
-              this.timer = setTimeout(function() {
-                if(ionic.Gestures.detection.current.name == 'hold') {
-                  inst.trigger('hold', ev);
-                }
-              }, inst.options.hold_timeout);
-              break;
+          // set timer and if after the timeout it still is hold,
+          // we trigger the hold event
+          this.timer = setTimeout(function() {
+            if(ionic.Gestures.detection.current.name == 'hold') {
+              inst.trigger('hold', ev);
+            }
+          }, inst.options.hold_timeout);
+          break;
 
-              // when you move or end we clear the timer
-            case ionic.Gestures.EVENT_MOVE:
-              if(ev.distance > inst.options.hold_threshold) {
-                clearTimeout(this.timer);
-              }
-              break;
-
-            case ionic.Gestures.EVENT_END:
-              clearTimeout(this.timer);
-              break;
+          // when you move or end we clear the timer
+        case ionic.Gestures.EVENT_MOVE:
+          if(ev.distance > inst.options.hold_threshold) {
+            clearTimeout(this.timer);
           }
-        }
-      };
+          break;
+
+        case ionic.Gestures.EVENT_END:
+          clearTimeout(this.timer);
+          break;
+      }
+    }
+  };
 
 
   /**
    * Tap/DoubleTap
    * Quick touch at a place or double at the same place
-   * @events  tap, doubletap
+   * events  tap, doubletap
    */
   ionic.Gestures.gestures.Tap = {
     name: 'tap',
@@ -1099,7 +1099,7 @@
   /**
    * Swipe
    * triggers swipe events when the end velocity is above the threshold
-   * @events  swipe, swipeleft, swiperight, swipeup, swipedown
+   * events  swipe, swipeleft, swiperight, swipeup, swipedown
    */
   ionic.Gestures.gestures.Swipe = {
     name: 'swipe',
@@ -1135,7 +1135,7 @@
    * Move with x fingers (default 1) around on the page. Blocking the scrolling when
    * moving left and right is a good practice. When all the drag events are blocking
    * you disable scrolling on that area.
-   * @events  drag, drapleft, dragright, dragup, dragdown
+   * events  drag, drapleft, dragright, dragup, dragdown
    */
   ionic.Gestures.gestures.Drag = {
     name: 'drag',
@@ -1256,7 +1256,7 @@
   /**
    * Transform
    * User want to scale or rotate with 2 fingers
-   * @events  transform, pinch, pinchin, pinchout, rotate
+   * events  transform, pinch, pinchin, pinchout, rotate
    */
   ionic.Gestures.gestures.Transform = {
     name: 'transform',
@@ -1346,7 +1346,7 @@
   /**
    * Touch
    * Called as first, tells the user has touched the screen
-   * @events  touch
+   * events  touch
    */
   ionic.Gestures.gestures.Touch = {
     name: 'touch',
@@ -1382,7 +1382,7 @@
   /**
    * Release
    * Called as last, tells the user has released the screen
-   * @events  release
+   * events  release
    */
   ionic.Gestures.gestures.Release = {
     name: 'release',

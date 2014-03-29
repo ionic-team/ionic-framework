@@ -82,13 +82,48 @@ describe('SideMenuController', function() {
   });
 
   // Open
-  it('Should toggle left and right', function() {
+  it('Should toggle left', function() {
     ctrl.toggleLeft();
     expect(ctrl.getOpenPercentage()).toEqual(100);
+    ctrl.toggleLeft();
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+    ctrl.toggleLeft();
+    expect(ctrl.getOpenPercentage()).toEqual(100);
+    ctrl.toggleLeft();
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+  });
+
+  it('should toggle right', function() {
     ctrl.toggleRight();
     expect(ctrl.getOpenPercentage()).toEqual(-100);
+    ctrl.toggleRight();
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+    ctrl.toggleRight();
+    expect(ctrl.getOpenPercentage()).toEqual(-100);
+    ctrl.toggleRight();
+    expect(ctrl.getOpenPercentage()).toEqual(0);
   });
-  
+
+  it('should isOpenLeft', function() {
+    expect(ctrl.isOpenLeft()).toEqual(false);
+    ctrl.toggleLeft();
+    expect(ctrl.isOpenLeft()).toEqual(true);
+    ctrl.toggleLeft();
+    expect(ctrl.isOpenLeft()).toEqual(false);
+    ctrl.toggleLeft();
+    expect(ctrl.isOpenLeft()).toEqual(true);
+  });
+
+  it('should isOpenRight', function() {
+    expect(ctrl.isOpenRight()).toEqual(false);
+    ctrl.toggleRight();
+    expect(ctrl.isOpenRight()).toEqual(true);
+    ctrl.toggleRight();
+    expect(ctrl.isOpenRight()).toEqual(false);
+    ctrl.toggleRight();
+    expect(ctrl.isOpenRight()).toEqual(true);
+  });
+
   // Snap
   it('Should snap', function() {
 
@@ -131,7 +166,7 @@ describe('SideMenuController', function() {
       }
     });
     expect(ctrl.getOpenPercentage()).toEqual(-100);
-      
+
     // Going right, more than half, or quickly (snap open)
     ctrl.openPercentage(-51);
     ctrl.snapToRest({

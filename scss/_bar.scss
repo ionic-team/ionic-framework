@@ -173,19 +173,19 @@
       }
     }
 
-    &.back-button:active,
-    &.back-button.active {
+    &.back-button.active,
+    &.back-button.activated {
       opacity: 1;
     }
   }
 
-  .button-bar > .button, 
+  .button-bar > .button,
   .buttons > .button {
     min-height: $button-bar-button-height - 1;
     line-height: $button-bar-button-height;
   }
 
-  .button-bar + .button, 
+  .button-bar + .button,
   .button + .button-bar {
     margin-left: 5px;
   }
@@ -194,9 +194,10 @@
   .title + .button:last-child,
   > .button + .button:last-child,
   > .button.pull-right,
+  .buttons.pull-right,
   .title + .buttons {
     position: absolute;
-    top: 6px;
+    top: 5px;
     right: 5px;
     bottom: 5px;
   }

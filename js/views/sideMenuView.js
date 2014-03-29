@@ -9,7 +9,7 @@
   ionic.views.SideMenu = ionic.views.View.inherit({
     initialize: function(opts) {
       this.el = opts.el;
-      this.isEnabled = opts.isEnabled || true;
+      this.isEnabled = (typeof opts.isEnabled === 'undefined') ? true : opts.isEnabled;
       this.setWidth(opts.width);
     },
 

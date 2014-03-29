@@ -461,6 +461,9 @@ ionic.views.Slider = ionic.views.View.inherit({
     }
 
     // Public API
+    this.update = function() {
+      setTimeout(setup);
+    };
     this.setup = function() {
       setup();
     };
@@ -472,7 +475,7 @@ ionic.views.Slider = ionic.views.View.inherit({
       slide(to, speed);
     };
 
-    this.prev = function() {
+    this.prev = this.previous = function() {
       // cancel slideshow
       stop();
 
@@ -491,12 +494,12 @@ ionic.views.Slider = ionic.views.View.inherit({
       stop();
     };
 
-    this.getPos = function() {
+    this.currentIndex = function() {
       // return current index position
       return index;
     };
 
-    this.getNumSlides = function() {
+    this.slidesCount = function() {
       // return total number of slides
       return length;
     };

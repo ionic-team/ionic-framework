@@ -11,7 +11,9 @@
   </head>
   <body ng-controller="ThisCtrl">
     <ion-pane>
-      <ion-header-bar id="header" title="'Title'" type="bar-primary" hides-header></ion-header-bar>
+      <ion-header-bar id="header" class="bar-primary">>
+        <h1 class="title">Title</h1>
+      </ion-header-bar>
 
       <ion-content id="container"
         on-scroll="onScroll(event, scrollTop, scrollLeft)"
@@ -19,9 +21,7 @@
         on-refresh="onRefresh()"
         on-refresh-opening="onRefreshOpening(amount)"
         refresh-complete="refreshComplete"
-        has-tabs="true"
-        has-header="true"
-        >
+        class="has-header has-tabs">
         <div ng-repeat="items in items">{{$index}}</div>
       </ion-content>
       <nav id="tab-bar" class="tabs tabs-icon-top">

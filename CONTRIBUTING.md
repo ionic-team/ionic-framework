@@ -24,4 +24,4 @@ Always use two spaces, no tabs. This goes for any HTML, CSS, or Javascript.
 
 ### License 
 
-By contributing your code, you agree to license your contribution under the MIT license.
+By contributing your code to the driftyco/ionic GitHub Repository, you agree to license your contribution under the MIT license.

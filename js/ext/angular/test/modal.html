@@ -11,10 +11,24 @@
   </head>
   <body>
     <ion-pane ng-controller="AppCtrl">
-        <ion-header-bar type="bar-positive" title="'Contacts'" right-buttons="contactsRightButtons">
+        <ion-header-bar class="bar-positive" title="Contacts">
+          <h1 class="title">Modal</h1>
+          <div class="buttons">
+            <button class="button" ng-click="modal.show()">Modal</button>
+          </div>
         </ion-header-bar>
-        <ion-content has-header="true">
+        <ion-content class="has-header">
           <ion-list>
+
+            <div class="item item-input-inset">
+              <label class="item-input-wrapper">
+                <input ng-focus="openModal()" type="text" placeholder="Email">
+              </label>
+              <button class="button button-small">
+                Cancel
+              </button>
+            </div>
+
             <ion-item ng-repeat="contact in contacts">
               {{contact.name}}
             </ion-item>
@@ -24,11 +38,10 @@
 
     <script id="modal.html" type="text/ng-template">
       <div class="modal" ng-controller="ModalCtrl">
-        <header class="bar bar-header bar-assertive">
+        <ion-header-bar>
           <h1 class="title">New Contact</h1>
-          <button class="button button-clear button-primary" ng-click="close()">Cancel</button>
-        </header>
-        <ion-content has-header="true">
+        </ion-header-bar>
+        <ion-content>
           <div class="padding">
             <div class="list">
               <label class="item item-input">
@@ -43,8 +56,10 @@
                 <span class="input-label">Email</span>
                 <input type="text" placeholder="">
               </label>
-              <button class="button button-block button-positive" ng-click="closeModal()">Create</button>
+              <button class="button button-block button-positive" ng-click="hideModal()">Hide Modal</button>
+              <button class="button button-block button-positive" ng-click="removeModal()">Remove Modal</button>
               <button class="button button-block button-positive" ng-click="openActionSheet()">ActionSheet</button>
+              <button class="button button-block button-positive" ng-click="openPopup()">Popup</button>
             </div>
           </div>
         </ion-content>
@@ -60,20 +75,8 @@
           { name: 'Barney Calhoun' },
           { name: 'Lamarr the Headcrab' },
         ];
-        $scope.contactsRightButtons = [
-          {
-            type: 'button-icon',
-            content: '<i class="icon ion-compose"></i>',
-            tap: function(e) {
-              $scope.openModal();
-            }
-          }
-        ];
         $scope.openModal = function() {
           $scope.modal.show();
-        };
-        $scope.closeModal = function() {
-          $scope.modal.hide();
         };
         $ionicModal.fromTemplateUrl('modal.html', function(modal) {
           $scope.modal = modal;
@@ -84,10 +87,13 @@
 
       })
 
-      .controller('ModalCtrl', function($scope, $ionicActionSheet) {
-        $scope.close = function() {
+      .controller('ModalCtrl', function($scope, $ionicActionSheet, $ionicPopup) {
+        $scope.hideModal = function() {
           $scope.modal.hide();
-        }
+        };
+        $scope.removeModal = function() {
+          $scope.modal.remove();
+        };
 
         $scope.openActionSheet = function() {
           $ionicActionSheet.show({
@@ -125,6 +131,13 @@
               return true;
             }
           });
+        };
+
+        $scope.openPopup = function() {
+          $ionicPopup.alert({
+           title: 'Hey!',
+           content: 'Don\'t do that!'
+          }).then(function(res) {});
         };
 
       });

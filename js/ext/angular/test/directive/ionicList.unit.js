@@ -25,8 +25,8 @@ describe('Ionic List', function() {
 
   it('Should init', function() {
     var element = compile('<ion-list>' +
-      '<ion-item></ion-item>' + 
-      '<ion-item></ion-item>' + 
+      '<ion-item></ion-item>' +
+      '<ion-item></ion-item>' +
       '</ion-list>')(scope);
 
     expect(element.children().length).toBe(2);
@@ -37,18 +37,18 @@ describe('Ionic List', function() {
     expect(element.hasClass('my-animation')).toBe(true);
   });
 
-  it('Should add list-editing class', function() {
-    expect(listElement.hasClass('list-editing')).toBe(false);
+  it('Should add list-left-editing class because of showDelete', function() {
+    expect(listElement.hasClass('list-left-editing')).toBe(false);
     scope.showDelete = true;
     scope.$digest();
-    expect(listElement.hasClass('list-editing')).toBe(true);
+    expect(listElement.hasClass('list-left-editing')).toBe(true);
   });
 
-  it('Should add list-reordering class', function() {
-    expect(listElement.hasClass('list-reordering')).toBe(false);
+  it('Should add list-right-editing class because of showReorder', function() {
+    expect(listElement.hasClass('list-right-editing')).toBe(false);
     scope.showReorder = true;
     scope.$digest();
-    expect(listElement.hasClass('list-reordering')).toBe(true);
+    expect(listElement.hasClass('list-right-editing')).toBe(true);
   });
 
   it('Should add item-options-hide class', function() {
@@ -221,7 +221,8 @@ describe('Ionic Item Directive', function () {
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
     expect(itemScope.deleteClick).not.toBe(undefined);
-    expect(itemElement.find('.item-edit').length).toBe(1);
+    expect(itemElement.find('.item-left-edit').length).toBe(1);
+    expect(itemElement.find('.item-delete').length).toBe(1);
     expect(itemScope.deleteIconClass).toBe("test-icon");
   }));
 
@@ -277,7 +278,8 @@ describe('Ionic Item Directive', function () {
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
     expect(itemScope.deleteClick).not.toBe(undefined);
-    expect(itemElement.find('.item-edit').length).toBe(1);
+    expect(itemElement.find('.item-left-edit').length).toBe(1);
+    expect(itemElement.find('.item-delete').length).toBe(1);
 
     expect(itemScope.deleteIconClass).toBe("test-icon");
   }));
@@ -288,7 +290,8 @@ describe('Ionic Item Directive', function () {
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
     expect(itemScope.reorderIconClass).toBe(undefined);
-    expect(itemElement.find('.item-drag').length).toBe(0);
+    expect(itemElement.find('.item-reorder').length).toBe(0);
+    expect(itemElement.find('.item-right-edit').length).toBe(0);
   }));
 
   it('Should be able to reorder cuz item can-reorder attribute true', inject(function ($timeout) {
@@ -297,7 +300,8 @@ describe('Ionic Item Directive', function () {
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
     expect(itemScope.reorderIconClass).toBe('test-icon');
-    expect(itemElement.find('.item-drag').length).toBe(1);
+    expect(itemElement.find('.item-reorder').length).toBe(1);
+    expect(itemElement.find('.item-right-edit').length).toBe(1);
   }));
 
   it('Should be able to reorder cuz list can-reorder attribute true', inject(function ($timeout) {
@@ -309,7 +313,8 @@ describe('Ionic Item Directive', function () {
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
     expect(itemScope.reorderIconClass).toBe('test-icon');
-    expect(itemElement.find('.item-drag').length).toBe(1);
+    expect(itemElement.find('.item-reorder').length).toBe(1);
+    expect(itemElement.find('.item-right-edit').length).toBe(1);
   }));
 
   it('Should not have options cuz no optionButtons', inject(function ($timeout) {
@@ -330,7 +335,8 @@ describe('Ionic Item Directive', function () {
     $rootScope.$digest();
     itemScope = itemElement.isolateScope();
     expect(itemScope.reorderIconClass).toBe('ion-navicon');
-    expect(itemElement.find('.item-drag').length).toBe(1);
+    expect(itemElement.find('.item-reorder').length).toBe(1);
+    expect(itemElement.find('.item-right-edit').length).toBe(1);
   }));
 
   it('Should not have options cuz item can-swipe false', inject(function ($timeout) {

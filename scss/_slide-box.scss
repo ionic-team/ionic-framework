@@ -6,23 +6,23 @@
 
 .slider {
   position: relative;
+  visibility: hidden;
   // Make sure items don't scroll over ever
   overflow: hidden;
-  visibility: hidden;
 }
+
 .slider-slides {
   position: relative;
   height: 100%;
 }
 
 .slider-slide {
-  display: block;
   position: relative;
+  display: block;
+  float: left;
   width: 100%;
   height: 100%;
-  float: left;
   vertical-align: top;
-
 }
 
 .slider-slide-image {
@@ -34,9 +34,10 @@
 .slider-pager {
   position: absolute;
   bottom: 20px;
+  z-index: $z-index-slider-pager;
   width: 100%;
+  height: 15px;
   text-align: center;
-  z-index: 1;
 
   .slider-pager-page {
     display: inline-block;
@@ -48,8 +49,8 @@
     opacity: 0.3;
 
     &.active {
-      opacity: 1;
       @include transition(opacity 0.4s ease-in);
+      opacity: 1;
     }
   }
 }

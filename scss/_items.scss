@@ -5,7 +5,6 @@
 
 .item {
   @include item-style($item-default-bg, $item-default-border, $item-default-text);
-  @include transition(margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out, left 0.2s ease-in-out);
 
   position: relative;
   z-index: $z-index-item; // Make sure the borders and stuff don't get hidden by children
@@ -56,6 +55,9 @@
     top: $item-padding;
     right: ($item-padding * 2) + 5;
   }
+  &.item-button-right .badge {
+    right: ($item-padding * 2) + 35;
+  }
   &.item-divider .badge {
     top: $item-padding / 2;
   }
@@ -92,12 +94,17 @@
     @include item-style($item-dark-bg, $item-dark-border, $item-dark-text);
   }
 
+  &[ng-click]:hover {
+    cursor: pointer;
+  }
+
 }
 
 // Link and Button Active States
 .item.active,
-.ionic-pseudo .item:active,
-.item-complex.active .item-content {
+.item.activated,
+.item-complex.active .item-content,
+.item-complex.activated .item-content {
   @include item-active-style($item-default-active-bg, $item-default-active-border);
 
   // Different active themes for <a> and <button> items
@@ -181,18 +188,10 @@ button.item.item-complex {
 }
 .item-complex .item-content,
 .item-radio .item-content {
-  /**
-   * The content area of a complex list item. This area can
-   * Slide left and right and be dragged to support different
-   * UI interactions.
-   */
-  @include transition(all 0.1s ease-in-out);
   position: relative;
   z-index: $z-index-item;
-
   padding: $item-padding (($item-padding * 3) - 5) $item-padding $item-padding;
   border: none;
-
   background-color: white;
 }
 
@@ -295,7 +294,8 @@ a.item-content {
 .item-icon-left.item-icon-right .icon:first-child {
   right: auto;
 }
-.item-icon-left.item-icon-right .icon:last-child {
+.item-icon-left.item-icon-right .icon:last-child,
+.item-icon-left .item-delete .icon {
   left: auto;
 }
 
@@ -383,41 +383,38 @@ button.item.item-button-right {
 
 a.item,
 button.item,
-.item a[href].item-content,
-.item[ng-click] a.item-content {
+.item[href] .item-content,
+.item[ng-click] .item-content {
   padding-right: (($item-padding * 3) - 5);
-}
 
-a.item:after,
-button.item:after,
-.item a[href].item-content:after,
-.item[ng-click] a.item-content:after {
-  /* By default, both <a> and <button> have right side arrow icons */
-  @include display-flex();
-  @include align-items(center);
-  @include font-smoothing(antialiased);
-  position: absolute;
-  top: 0;
-  right: $item-padding - 4;
-  height: 100%;
-  color: #ccc;
-  content: "\f125"; // ion-chevron-right
-  text-transform: none;
-  font-weight: normal;
-  font-style: normal;
-  font-variant: normal;
-  font-size: 16px;
-  font-family: 'Ionicons';
-  line-height: 1;
-  speak: none;
+  &:after {
+    // By default, both <a> and <button> have right side arrow icons
+    @include display-flex();
+    @include align-items(center);
+    @include font-smoothing(antialiased);
+    position: absolute;
+    top: 0;
+    right: $item-padding - 4;
+    height: 100%;
+    color: #ccc;
+    content: "\f125"; // ion-chevron-right
+    text-transform: none;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 16px;
+    font-family: 'Ionicons';
+    line-height: 1;
+    speak: none;
+  }
 }
 
 .grade-b,
 .grade-c {
   a.item:after,
   button.item:after,
-  .item a[href].item-content:after,
-  .item[ng-click] a.item-content:after {
+  .item[href] .item-content:after,
+  .item[ng-click] .item-content:after {
     // override Ionicon arrow with boring character for low end devices
     @include font-smoothing(none);
     content: '>';
@@ -438,16 +435,18 @@ button.item-button-right:after,
 // Item Avatar
 // -------------------------------
 
-.item-avatar {
-  padding-left: $item-avitar-width + ($item-padding * 2);
-  min-height: $item-avitar-width + ($item-padding * 2);
+.item-avatar,
+.item-avatar .item-content {
+  padding-left: $item-avatar-width + ($item-padding * 2);
+  min-height: $item-avatar-width + ($item-padding * 2);
 
-  img:first-child, .item-img {
+  > img:first-child,
+  .item-image {
     position: absolute;
     top: $item-padding;
     left: $item-padding;
-    max-width: $item-avitar-width;
-    max-height: $item-avitar-height;
+    max-width: $item-avatar-width;
+    max-height: $item-avatar-height;
     width: 100%;
     border-radius: 4px;
   }
@@ -462,7 +461,8 @@ button.item-button-right:after,
   padding-left: $item-thumbnail-width + $item-thumbnail-margin + $item-padding;
   min-height: $item-thumbnail-height + ($item-thumbnail-margin * 2);
 
-  > img:first-child, > .item-image {
+  > img:first-child,
+  .item-image {
     position: absolute;
     top: $item-thumbnail-margin;
     left: $item-thumbnail-margin;
@@ -471,6 +471,7 @@ button.item-button-right:after,
     width: 100%;
   }
 }
+.item-avatar.item-complex,
 .item-thumbnail-left.item-complex {
   padding-left: 0;
 }
@@ -480,7 +481,8 @@ button.item-button-right:after,
   padding-right: $item-thumbnail-width + $item-thumbnail-margin + $item-padding;
   min-height: $item-thumbnail-height + ($item-thumbnail-margin * 2);
 
-  > img:first-child, > .item-image {
+  > img:first-child,
+  .item-image {
     position: absolute;
     top: $item-thumbnail-margin;
     right: $item-thumbnail-margin;
@@ -489,7 +491,7 @@ button.item-button-right:after,
     width: 100%;
   }
 }
-.item-thumbnail-left.item-complex {
+.item-thumbnail-right.item-complex {
   padding-right: 0;
 }
 
@@ -550,30 +552,60 @@ button.item-button-right:after,
 // Item Editing
 // -------------------------------
 
-.item-reordering {
-  position: absolute;
-  z-index: $z-index-item-reordering;
-  width: 100%;
+.item-left-editable .item-content,
+.item-right-editable .item-content {
+  // setup standard transition settings
+  @include transition-duration( $item-edit-transition-duration );
+  @include transition-timing-function( $item-edit-transition-function );
+  @include transition-property( none );
 }
 
-.item-placeholder {
-  opacity: 0.7;
+.item-left-editable .item-content {
+  // set transition property for an item just left editable
+  -webkit-transition-property: -webkit-transform;
+     -moz-transition-property: -moz-transform;
+          transition-property: transform;
+}
+
+.item-right-editable .item-content {
+  // set transition property for an item just right editable
+  @include transition-property(margin-right);
+}
+
+.item-left-editable.item-right-editable .item-content {
+  // set transition property for an item that's both left/right editable
+  -webkit-transition-property: -webkit-transform, margin-right;
+     -moz-transition-property: -moz-transform, margin-right;
+          transition-property: transform, margin-right;
+}
+
+.list-left-editing .item-left-editable .item-content,
+.item-left-editing.item-left-editable .item-content {
+  // actively editing the left side of the item
+  @include translate3d($item-left-edit-open-width, 0, 0);
+}
+
+.list-right-editing .item-right-editable .item-content,
+.item-right-editing.item-right-editable .item-content {
+  // actively editing the right side of the item
+  margin-right: $item-right-edit-open-width;
 }
 
 
-/**
- * The left-side edit area of a complex list item. This area shows
- * whe the list item is in edit mode.
- */
-.item-edit {
-  @include transition(left 0.2s ease-in-out, opacity 0.2s ease-in-out);
+// Item Left Edit Button
+// -------------------------------
+
+.item-left-edit {
+  @include transition(all $item-edit-transition-function $item-edit-transition-duration);
+  @include translate3d( $item-left-edit-left - $item-left-edit-open-width, 0, 0);
   position: absolute;
   top: 0;
-  left: 8px;
+  left: 0;
   z-index: $z-index-item-edit;
-  width: 48px;
+  width: $item-left-edit-open-width;
   height: 100%;
   line-height: 100%;
+  opacity: 0;
 
   .button {
     height: 100%;
@@ -583,56 +615,85 @@ button.item-button-right:after,
       @include align-items(center);
       position: absolute;
       top: 0;
-      left: 0;
       height: 100%;
-      color: $assertive;
-      font-size: 24px;
     }
-  }
-
-  &.ng-enter {
-    @include transition(left 0.2s ease-in-out, opacity 0.2s ease-in-out);
-    left: -48px;
-    opacity: 0;
-  }
-  &.ng-enter-active {
-    left: 8px;
-    opacity: 1;
-  }
-  &.ng-leave {
-    @include transition(left 0.2s ease-in-out, opacity 0.2s ease-in-out);
-    left: 0px;
-    opacity: 1;
-  }
-  &.ng-leave-active {
-    left: -48px;
-    opacity: 0;
   }
 }
 
-.item-drag {
+.list-left-editing .item-left-edit,
+.item-left-editing .item-left-edit {
+  @include translate3d($item-left-edit-left, 0, 0);
+  opacity: 1;
+}
+
+
+// Item Delete (Left side edit button)
+// -------------------------------
+
+.item-delete .button.icon {
+  color: $item-delete-icon-color;
+  font-size: $item-delete-icon-size;
+
+  &:hover {
+    opacity: .7;
+  }
+}
+
+
+// Item Right Edit Button
+// -------------------------------
+
+.item-right-edit {
   position: absolute;
   top: 0;
   right: 0;
   z-index: 0;
-  width: 50px;
+  width: $item-right-edit-open-width;
   height: 100%;
   background: inherit;
 
   .button {
-    min-width: 42px;
+    min-width: $item-right-edit-open-width;
     height: 100%;
 
-    &.icon:before {
+    &.icon {
       @include display-flex();
       @include align-items(center);
       position: absolute;
       top: 0;
       height: 100%;
-      font-size: 32px;
+      font-size: $item-reorder-icon-size;
     }
   }
 }
+
+
+// Item Reordering (Right side edit button)
+// -------------------------------
+
+.item-reorder .button.icon {
+  color: $item-reorder-icon-color;
+  font-size: $item-reorder-icon-size;
+}
+
+.item-reordering {
+  // item is actively being reordered
+  position: absolute;
+  z-index: $z-index-item-reordering;
+  width: 100%;
+  box-shadow: 0px 0px 10px 0px #aaa;
+
+  .item-reorder {
+    z-index: 1;
+  }
+}
+
+.item-placeholder {
+  // placeholder for the item that's being reordered
+  opacity: 0.7;
+}
+
+
 /**
  * The hidden right-side buttons that can be exposed under a list item
  * with dragging.

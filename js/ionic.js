@@ -4,5 +4,5 @@
 window.ionic = {
   controllers: {},
   views: {},
-  version: '{{ VERSION }}'
+  version: '<%= pkg.version %>'
 };

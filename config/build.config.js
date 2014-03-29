@@ -1,4 +1,3 @@
-var fs = require('fs');
 module.exports = {
   dist: 'dist',
   distJs: 'dist/js',
@@ -24,6 +23,8 @@ module.exports = {
     ' * ionic.js, angular.js, angular-animate.js,\n'+
     ' * angular-ui-router.js, and ionic-angular.js\n'+
     ' */\n\n',
+  closureStart: '(function() {\n',
+  closureEnd: '\n})();',
 
   ionicFiles: [
     // Base
@@ -36,6 +37,8 @@ module.exports = {
     'js/utils/gestures.js',
     'js/utils/platform.js',
     'js/utils/poly.js',
+    'js/utils/tap.js',
+    'js/utils/activator.js',
     'js/utils/utils.js',
     'js/utils/keyboard.js',
 
@@ -50,7 +53,6 @@ module.exports = {
     'js/views/loadingView.js',
     'js/views/modalView.js',
     'js/views/navBarView.js',
-    'js/views/popupView.js',
     'js/views/sideMenuView.js',
     'js/views/sliderView.js',
     'js/views/tabBarView.js',

@@ -13,17 +13,17 @@
   <body>
 
     <div ng-controller="MyCtrl">
-      <header class="bar bar-header bar-positive">
+      <ion-header-bar class="bar-positive">
         <div class="buttons">
           <button class="button button-icon icon ion-clock" ng-click="doScroll()"></button>
         </div>
         <h1 class="title">Click the Clock to Get Stuck</h1>
-      </header>
+      </ion-header-bar>
 
       <ion-content class="has-header">
 
       <ion-list>
-        <ion-item ng-repeat="item in items" 
+        <ion-item ng-repeat="item in items"
               item="item"
               id="foo-{{item.id}}"
               href="#/item/{{item.id}}">
@@ -40,7 +40,7 @@ function MyCtrl($scope, $location, $ionicScrollDelegate) {
   for (var i=0; i < 100; i++) {
     $scope.items.push({id:i});
   }
-  
+
   $scope.doScroll = function() {
     $location.hash('foo-50');
     $ionicScrollDelegate.anchorScroll(true);

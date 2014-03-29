@@ -20,7 +20,7 @@
     $filter('<$ doc.name $>')(<@ for param in doc.params @><$ sep() $><$ param.name $><@ endfor -@>)
   <@- endcode @>
 
-  <@ include "lib/params.template.html" @>
+  <$ paramTable(doc.params) $>
   <@ include "lib/this.template.html" @>
   <@ include "lib/returns.template.html" @>
 <@ endblock @>
