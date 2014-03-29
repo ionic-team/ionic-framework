@@ -1,8 +1,60 @@
+Physics.behavior('gravity', function( parent ){
+  var defaults = {
+    acc: { x : 0, y: 0.0004 },
+    bodies: []
+  };
+
+  return {
+
+    /**
+     * Initialization
+     * @param  {Object} options Configuration object
+     * @return {void}
+     */
+    init: function( options ){
+
+      parent.init.call(this, options);
+
+      // extend options
+      this.options = Physics.util.extend(this.options, defaults, options);
+      this._acc = Physics.vector();
+      this.setAcceleration( this.options.acc );
+    },
+
+    /**
+     * Set the acceleration of the behavior
+     * @param {Vectorish} acc The acceleration vector
+     * @return {self}
+     */
+    setAcceleration: function( acc ){
+      this._acc.clone( acc );
+      return this;
+    },
+
+    /**
+     * Callback run on integrate:positions event
+     * @param  {Object} data Event data
+     * @return {void}
+     */
+    behave: function( data ){
+      //console.log('Gravity behaving on', this.options.bodies);
+      var bodies = this.options.bodies;
+
+      for ( var i = 0, l = bodies.length; i < l; ++i ){
+        bodies[ i ].accelerate( this._acc );
+      }
+    }
+  };
+});
+
 angular.module('ionic.contrib.physics', ['ionic'])
 
 .factory('$ionicGravityBehavior', function() {
-  return function(vector) {
-    return Physics.behavior('constant-acceleration', { acc: {x: vector[0] * 5e-4, y: vector[1] * 5e-4} });
+  return function(data) {
+    return Physics.behavior('gravity', {
+      acc: {x: data.vector[0] * 5e-4, y: data.vector[1] * 5e-4},
+      bodies: data.items
+    });
   }
 })
 
@@ -57,8 +109,10 @@ angular.module('ionic.contrib.physics', ['ionic'])
 .factory('$ionicDynamicAnimator', ['$log', '$document', '$ionicGravityBehavior', '$ionicCollisionBehavior', function($log, $document, $ionicGravityBehavior, $ionicCollisionBehavior) {
 
   return function($viewport) {
-
     var world, selectedBody, tapPos, tapPosOld, tapOffset;
+
+    // The map of names to groups of bodies
+    var bodiesMap = {};
 
     this.$viewport = $viewport;
     this.viewport = $viewport[0];
@@ -76,6 +130,28 @@ angular.module('ionic.contrib.physics', ['ionic'])
     tapPos = Physics.vector();
     tapPosOld = Physics.vector();
     tapOffset = Physics.vector();
+
+    var registerBody = function(body, groupName) {
+      if(!bodiesMap[groupName]) {
+        bodiesMap[groupName] = [];
+      }
+      bodiesMap[groupName].push(body);
+    };
+
+    var unregisterBody = function(body, groupName) {
+      var bodyGroup = bodiesMap[groupName];
+
+      if(!bodyGroup) {
+        return;
+      }
+
+      for(var i = 0, j = bodyGroup.length; i < j; i++) {
+        if(bodyGroup[i] == body) {
+          bodyGroup.splice(i, 1);
+          return;
+        }
+      }
+    };
 
     // Process one step of the integration
     var integrate = function(dt) {
@@ -109,6 +185,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
       // CREATE BEHAVIORS AND SHIT
 
       // walls
+      /*
       var collision = $ionicCollisionBehavior({
         bounds:Physics.aabb.apply(null, stage),
         elasticity: 0.1,
@@ -116,8 +193,9 @@ angular.module('ionic.contrib.physics', ['ionic'])
         checkAll: false
       });
 
-      world.add(collision.getEdgeCollisionBehavior());
+      //world.add(collision.getEdgeCollisionBehavior());
       //world.add(collision.getBodyCollisionBehavior());
+      */
 
       world.add(Physics.behavior('sweep-prune'));
       world.add(Physics.behavior('body-impulse-response'));
@@ -177,7 +255,11 @@ angular.module('ionic.contrib.physics', ['ionic'])
         world.removeAllBehaviors();
       },
 
-      addView: function($element) {
+      getBodiesInGroup: function(groupName) {
+        return bodiesMap[groupName] || [];
+      },
+
+      addView: function($element, groupName) {
         var properties = [parseFloat($element[0].style.left), parseFloat($element[0].style.top), parseFloat($element[0].style.width), parseFloat($element[0].style.height)];
 
         console.log(properties);
@@ -205,6 +287,8 @@ angular.module('ionic.contrib.physics', ['ionic'])
         body.view = $element[0];
 
         world.add(body);
+
+        registerBody(body, groupName);
       },
 
       startTouch: function(e) {
@@ -272,7 +356,8 @@ angular.module('ionic.contrib.physics', ['ionic'])
           height: '@',
           x: '@',
           y: '@',
-          gravity: '='
+          gravity: '=',
+          dynamicsGroupName: '@'
         });
         $element[0].style.display = 'block';
         $element[0].style.left = $scope.x + 'px',//, -parseInt($scope.width)/2;
@@ -282,18 +367,9 @@ angular.module('ionic.contrib.physics', ['ionic'])
       }
 
       function postlink($scope, $element, $attr, animatorCtrl) {
+        animatorCtrl.addView($element, $scope.dynamicsGroupName);
 
-        $scope.$watch('gravity', function(gravityVal) {
-          if(gravityVal) {
-            var gravity = $ionicGravityBehavior(gravityVal);
-            console.log('Adding gravity', gravity);
-            animatorCtrl.addBehavior(gravity);
-          }
-        });
-
-        $timeout(function() {
-          animatorCtrl.addView($element);
-        });
+        console.log('Added body to item', $scope.dynamicsGroupName);
       }
     }
   }
