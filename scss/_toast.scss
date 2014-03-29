@@ -1,0 +1,44 @@
+/**
+ * Toast
+ * --------------------------------------------------
+ */
+
+.toast {
+  @include translate3d(0, 0, 0);
+  @include transition(all ease-in-out 300ms);
+  position: absolute;
+  z-index: $z-index-toast;
+  text-align:center;
+  opacity:0;
+  pointer-events: none;
+  // default to bottom position
+  top:auto;
+  bottom: 20px;
+  left:20px;
+  right:20px;
+
+  &.toast-up {
+    opacity: 1;
+  }
+  &.middle {
+    bottom:auto;
+    top: 45%;
+    left:20px;
+    right:20px;
+  }
+  &.top {
+    bottom:auto;
+    top: 20px;
+    left:20px;
+    right:20px;
+  }
+}
+
+.toast-message {
+  pointer-events: auto;
+  display:inline-block;
+  background-color:#505050;
+  border-radius:100px;
+  color:#FFF;
+  padding:10px 20px;
+}

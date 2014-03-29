@@ -48,6 +48,7 @@ module.exports = {
     'js/views/scrollView.js',
 
     'js/views/actionSheetView.js',
+    'js/views/toastView.js',
     'js/views/headerBarView.js',
     'js/views/listView.js',
     'js/views/loadingView.js',
