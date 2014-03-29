@@ -87,6 +87,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 ## Development
 
 * `npm install && npm install -g gulp protractor` to setup
+* `webdriver-manager update --chrome` to install your webdriver.
 * `gulp` or `gulp build` to build
 * `gulp docs` to generate docs (read Documentation below for how to test docs locally).
 * `gulp build --release` to build with minification & strip debugs
