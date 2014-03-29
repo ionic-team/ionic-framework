@@ -297,7 +297,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
   }
 }])
 
-.directive('ionScene', ['$timeout', '$ionicBind', '$ionicDynamicAnimator', '$ionicGesture', function($timeout, $ionicBind, $ionicDynamicAnimator, $ionicGesture) {
+.directive('ionScene', ['$timeout', '$ionicBind', '$ionicDynamicAnimator', '$ionicGravityBehavior', '$ionicGesture', function($timeout, $ionicBind, $ionicDynamicAnimator, $ionicGravityBehavior, $ionicGesture) {
   return {
     restrict: 'AE',
     scope: true,
@@ -313,16 +313,17 @@ angular.module('ionic.contrib.physics', ['ionic'])
         $ionicBind($scope, $attr, {
           gravity: '='
         });
-
-        $scope.$watch('gravity', function(gravity) {
-          //$ionicDynamicAnimator.setGravity(gravity);
-        });
       }
 
       function postlink($scope, $element, $attr, animator) {
         $element.addClass('scene');
 
         console.log('Gravity', $scope.gravity);
+
+        $scope.$watch('gravity', function(gravity) {
+          var gravity = $ionicGravityBehavior([0, -1]);
+          animator.addBehavior(gravity);
+        });
 
         $ionicGesture.on('touch', function(e) {
           animator.startTouch(e);
