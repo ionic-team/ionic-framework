@@ -1,83 +1,55 @@
-Physics.behavior('gravity', function( parent ){
-  var defaults = {
-    acc: { x : 0, y: 0.0004 },
-    bodies: []
-  };
-
-  return {
-
-    /**
-     * Initialization
-     * @param  {Object} options Configuration object
-     * @return {void}
-     */
-    init: function( options ){
-
-      parent.init.call(this, options);
-
-      // extend options
-      this.options = Physics.util.extend(this.options, defaults, options);
-      this._acc = Physics.vector();
-      this.setAcceleration( this.options.acc );
-    },
-
-    /**
-     * Set the acceleration of the behavior
-     * @param {Vectorish} acc The acceleration vector
-     * @return {self}
-     */
-    setAcceleration: function( acc ){
-      this._acc.clone( acc );
-      return this;
-    },
-
-    /**
-     * Callback run on integrate:positions event
-     * @param  {Object} data Event data
-     * @return {void}
-     */
-    behave: function( data ){
-      //console.log('Gravity behaving on', this.options.bodies);
-      var bodies = this.options.bodies;
-
-      for ( var i = 0, l = bodies.length; i < l; ++i ){
-        bodies[ i ].accelerate( this._acc );
-      }
-    }
-  };
-});
-
 angular.module('ionic.contrib.physics', ['ionic'])
 
 .factory('$ionicGravityBehavior', function() {
   return function(data) {
-    return Physics.behavior('gravity', {
+    var behavior = Physics.behavior('gravity', {
       acc: {x: data.vector[0] * 5e-4, y: data.vector[1] * 5e-4},
       bodies: data.items
     });
+    return {
+      addToWorld: function(world) {
+        world.add(behavior);
+      }
+    }
   }
 })
 
 .factory('$ionicCollisionBehavior', function() {
   return function(opts) {
-    var edgeCollision = Physics.behavior('edge-collision-detection', {
-      aabb: opts.bounds,
+    var edgeCollision, bodyCollision;
 
-      // Try 0.4 for a good default
-      restitution: opts.elasticity,
-
-      // 0.5 might be nice here
-      cof: opts.damping
-    });
-
-    var bodyCollision = Physics.behavior('body-collision-detection', {
+    var bodyCollision = Physics.behavior('body-list-collision-detection', {
+      bodies: opts.items,
       checkAll: false
     });
 
     return {
+      addToWorld: function(world) {
+        if(bodyCollision) {
+          world.add(bodyCollision);
+        }
+        if(edgeCollision) {
+          world.add(edgeCollision);
+        }
+      },
       addBody: function(body) {
       },
-      addBoundary: function(bounds) {
+      setBounds: function(bounds) {
+        console.log('Bounds', bounds);
+        if(!edgeCollision) {
+          edgeCollision = Physics.behavior('body-list-edge-collision-detection', {
+            bodies: opts.items,
+            aabb: Physics.aabb.apply(null, bounds),
+
+            // Try 0.4 for a good default
+            restitution: opts.elasticity || 0.9,
+
+            // 0.5 might be nice here
+            cof: opts.damping
+          });
+        } else {
+          edgeCollision.setAABB(Physics.aabb.apply(null, bounds));
+        }
       },
       getEdgeCollisionBehavior: function() {
         return edgeCollision;
@@ -106,7 +78,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
   }
 })
 
-.factory('$ionicDynamicAnimator', ['$log', '$document', '$ionicGravityBehavior', '$ionicCollisionBehavior', function($log, $document, $ionicGravityBehavior, $ionicCollisionBehavior) {
+.factory('$ionicDynamicAnimator', ['$document', '$ionicGravityBehavior', '$ionicCollisionBehavior', function($document, $ionicGravityBehavior, $ionicCollisionBehavior) {
 
   return function($viewport) {
     var world, selectedBody, tapPos, tapPosOld, tapOffset;
@@ -246,7 +218,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
     */
     return {
       addBehavior: function(behavior) {
-        world.add(behavior)
+        behavior.addToWorld(world);
       },
       removeBehavior: function(behavior) {
         return world.removeBehavior(behavior);
@@ -357,7 +329,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
           x: '@',
           y: '@',
           gravity: '=',
-          dynamicsGroupName: '@'
+          dynamicsGroup: '@'
         });
         $element[0].style.display = 'block';
         $element[0].style.left = $scope.x + 'px',//, -parseInt($scope.width)/2;
@@ -367,9 +339,9 @@ angular.module('ionic.contrib.physics', ['ionic'])
       }
 
       function postlink($scope, $element, $attr, animatorCtrl) {
-        animatorCtrl.addView($element, $scope.dynamicsGroupName);
+        animatorCtrl.addView($element, $scope.dynamicsGroup);
 
-        console.log('Added body to item', $scope.dynamicsGroupName);
+        console.log('Added body to item', $scope.dynamicsGroup);
       }
     }
   }

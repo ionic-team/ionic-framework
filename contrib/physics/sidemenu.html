@@ -10,6 +10,7 @@
     <script src="/dist/js/ionic.bundle.js"></script>
 
     <script src="lib/physicsjs/physicsjs-full-0.5.4.js"></script>
+    <script src="lib/physicsBehaviors.js"></script>
     <script src="ionicPhysics.js"></script>
 
     <style>
@@ -25,6 +26,7 @@
     }
     #container {
       position: fixed;
+      width: 40px;
       top: 0px;
       bottom: 44px;
     }
@@ -34,7 +36,7 @@
     <ion-pane>
       <div id="container" gravity="gravity" dynamics>
         <div ng-controller="PhysicsCtrl">
-          <ion-view x="0" y="0" width="280" height="568" dynamics-body>
+          <ion-view x="0" y="0" width="280" height="568" dynamics-body dynamics-group="sidemenu">
             <ion-header-bar class="bar-positive">
               <h1 class="title">Menu</h1>
             </ion-header-bar>
@@ -44,7 +46,7 @@
               </ion-list>
             </ion-content>
           </ion-view>
-          <ion-view x="0" y="0" width="320" height="568" dynamics-body>
+          <ion-view x="0" y="0" width="320" height="568" dynamics-body dynamics-group="content">
             <ion-header-bar class="bar-positive">
               <h1 class="title">Content</h1>
             </ion-header-bar>
@@ -56,11 +58,24 @@
     <script>
       angular.module('physics', ['ionic', 'ionic.contrib.physics'])
 
-      .controller('PhysicsCtrl', function($scope, $ionicDynamicAnimator, $ionicGravityBehavior, $timeout) {
+      .controller('PhysicsCtrl', function($scope, $ionicDynamicAnimator, $ionicGravityBehavior, $ionicCollisionBehavior, $timeout) {
         $timeout(function() {
           console.log('Animator', $scope.dynamicAnimator);
-          var gravity = $ionicGravityBehavior([1, 0]);
+
+          var gravity = $ionicGravityBehavior({
+            vector: [1, 0],
+            items: $scope.dynamicAnimator.getBodiesInGroup('content')
+          });
+
           $scope.dynamicAnimator.addBehavior(gravity);
+
+          var collision = $ionicCollisionBehavior({
+            items: $scope.dynamicAnimator.getBodiesInGroup('content')
+          });
+
+          collision.setBounds([0, 0, 320+280, 568]);
+
+          $scope.dynamicAnimator.addBehavior(collision);
         });
       })
     </script>
