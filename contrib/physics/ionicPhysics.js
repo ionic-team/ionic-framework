@@ -36,56 +36,62 @@ angular.module('ionic.contrib.physics', ['ionic'])
     }
   }
 })
-/**
- * @ngdoc service
- * @name $ionicDynamics
- * @module ionic
- * @description An angular service exposing ionic's dynamics and Physics based UI features.
- * {@link ionic.utility:ionic.EventController}'s gestures.
- */
-.factory('$ionicPhysics', ['$log', '$document', '$ionicGravityBehavior', '$ionicCollisionBehavior', function($log, $document, $ionicGravityBehavior, $ionicCollisionBehavior) {
-  return {
-    init: function($viewportEl) {
-      this._viewportEl = $viewportEl[0];
 
-      console.log($viewportEl);
+.factory('$ionicDynamicAnimator', ['$log', '$document', '$ionicGravityBehavior', '$ionicCollisionBehavior', function($log, $document, $ionicGravityBehavior, $ionicCollisionBehavior) {
 
-			var stage = [
-                    $viewportEl[0].offsetLeft,
-                    $viewportEl[0].offsetTop,
-                    $viewportEl[0].offsetWidth + 280,
-                    $viewportEl[0].offsetHeight
-                  ];
+  return function($viewport) {
 
-      console.log('Stage', stage);
+    var world, delta, selectedBody, tapPos, tapPosOld, tapOffset;
 
-      this._tapPos = Physics.vector();
-      this._tapPosOld = Physics.vector();
-      this._tapOffset = Physics.vector();
+    this.$viewport = $viewport;
+    this.viewport = $viewport[0];
+    var stage = [
+                  $viewport[0].offsetLeft,
+                  $viewport[0].offsetTop,
+                  $viewport[0].offsetWidth + 280,
+                  $viewport[0].offsetHeight
+                ];
 
-      this._stage = stage;
+    console.log('Built animator with view', $viewport, 'and stage', stage);
 
-	    this._worldAABB = Physics.aabb.apply(null, stage);
+    // Some intial finger state stuff
+    // TODO: Move this?
+    tapPos = Physics.vector();
+    tapPosOld = Physics.vector();
+    tapOffset = Physics.vector();
 
-      this._bodies = [];
+    // Process one step of the integration
+    var integrate = function(dt) {
+      if(selectedBody) {
+        // if we have a body, we need to move it the the new mouse position.
+        // we'll also track the velocity of the mouse movement so that when it's released
+        // the body can be "thrown"
+        selectedBody.state.pos.clone(tapPos).vsub(tapOffset);
+        selectedBody.state.vel.clone(selectedBody.state.pos).vsub(tapPosOld).vadd(tapOffset).mult(1 / 30);
+        selectedBody.state.vel.clamp({ x: -1, y: -1 }, { x: 1, y: 1 });
+        return;
+      }
 
-      this._initWorld();
-    },
-    _initWorld: function() {
-			this._gravity = [1, 0];
-      this._delta = [0, 0];
+      if(!selectedBody) {
+        return;
+      }
+    };
 
-			var timeStep = 1000 / 260; 
-			var iterations = 16;
+    var initWorld = function() {
+      delta = [0, 0];
 
-      var world = Physics({
+      // Hardcoded, good simulation defaults
+      var timeStep = 1000 / 260; 
+      var iterations = 16;
+
+      world = Physics({
         timestep: timeStep,
         maxIPF: iterations
       });
 
-      world.subscribe('integrate:positions', this.integrate, this);
+      world.subscribe('integrate:positions', integrate, this);
 
-
+      /*
       // CREATE BEHAVIORS AND SHIT
 
       // walls
@@ -98,177 +104,171 @@ angular.module('ionic.contrib.physics', ['ionic'])
 
       world.add(collision.getEdgeCollisionBehavior());
       world.add(collision.getBodyCollisionBehavior());
+      */
 
-      world.add( Physics.behavior('sweep-prune') );
-      world.add( Physics.behavior('body-impulse-response') );
+      world.add(Physics.behavior('sweep-prune'));
+      world.add(Physics.behavior('body-impulse-response'));
 
-      // constraints
+      // Standard verlet constraints
       constraints = Physics.behavior('verlet-constraints', {
         iterations: 2
       });
 
-      world.add( constraints );
+      world.add(constraints);
+    };
 
-      // add gravity
-      gravityBehavior = $ionicGravityBehavior(this._gravity);
+    var loop = function(time) {
+      delta[0] += (0 - delta[0]) * .5;
+      delta[1] += (0 - delta[1]) * .5;
 
-      world.add( gravityBehavior );
-      this._gravityBehavior = gravityBehavior;
-
-      this._world = world;
-    },
-
-    // Process one step of the integration
-    integrate: function(dt) {
-      if(this._selectedBody) {
-        // if we have a body, we need to move it the the new mouse position.
-        // we'll also track the velocity of the mouse movement so that when it's released
-        // the body can be "thrown"
-        this._selectedBody.state.pos.clone(this._tapPos).vsub(this._tapOffset);
-        this._selectedBody.state.vel.clone(this._selectedBody.state.pos).vsub(this._tapPosOld).vadd(this._tapOffset).mult(1 / 30);
-        this._selectedBody.state.vel.clamp({ x: -1, y: -1 }, { x: 1, y: 1 });
-        return;
-      }
-
-      if(!this._selectedBody) {
-        return;
-      }
-
-    },
-
-    addBody: function($element) {
-      var properties = [parseFloat($element[0].style.left), parseFloat($element[0].style.top), parseFloat($element[0].style.width), parseFloat($element[0].style.height)];
-
-      console.log(properties);
-
-      $element[0].style.position = 'absolute';
-      $element[0].style.left = (-properties[2]/2) + 'px';
-      $element[0].style.top = (-properties[3]/2) + 'px';
-
-      var body = Physics.body('convex-polygon', {
-        // centerx
-        x: properties[0] + properties[2]/2,
-        // centery
-        y: properties[1] + properties[3]/2,
-        vertices: [
-          { x: 0, y: 0 },
-          { x: properties[2], y: 0 },
-          { x: properties[2], y: properties[3] },
-          { x: 0, y: properties[3] }
-        ],
-        vx: 0,
-        cof: 0.99,
-        restitution: 0.99,
-      });
-					
-      body.view = $element[0];
-
-      this._world.add(body);
-    },
-
-    setGravity: function(gravity) {
-      console.log('Gravity', gravity);
       /*
-      this._gravity = gravity;
-      this._gravityBehavior.setAcceleration(gravity);
-      */
-    },
-
-    go: function() {
-      // renderer
-      var renderer = Physics.renderer('dom', {
-        el: this._viewportEl,
-        width: this._stage[2],
-        height: this._stage[3]
-      });
-
-      this._world.add(renderer);
-      // position the views
-      this._world.render();
-
-      Physics.util.ticker.subscribe(ionic.proxy(this._loop, this));
-      Physics.util.ticker.start();
-    },
-    _loop: function(time) {
-	    this._delta[0] += (0 - this._delta[0]) * .5;
-			this._delta[1] += (0 - this._delta[1]) * .5;
-
       this._gravityBehavior.setAcceleration({ 
         x: this._gravity[0] * 5e-4 + this._delta[0], 
         //y: this._gravity[1] * 5e-4 + this._delta[1]
       });
+      */
 
-      this._world.step(time);
-      this._world.render();
-    },
+      world.step(time);
+      world.render();
+    };
+
+    var go = function() {
+      // renderer
+      renderer = Physics.renderer('dom', {
+        el: viewport,
+        width: stage[2],
+        height: stage[3]
+      });
+
+      world.add(renderer);
+      // position the views
+      world.render();
+
+      Physics.util.ticker.subscribe(ionic.proxy(loop, this));
+      Physics.util.ticker.start();
+    };
+
+    initWorld();
+    go();
+
+    /* MOVE
+
+    console.log('Stage', stage);
 
 
-    startTouch: function(e) {
-      e.gesture.srcEvent.preventDefault();
+    this._stage = stage;
 
-      
-      var x = e.gesture.touches[0].pageX;
-      var y = e.gesture.touches[0].pageY;
+    this._worldAABB = Physics.aabb.apply(null, stage);
 
-      this._tapPos.set(x, y);
+    this._bodies = [];
 
-		  var body = this._world.findOne({ $at: Physics.vector(x, y) });
-      console.log('Starting touch on', body);
+    */
+    return {
+      addBehavior: function(behavior) {
+        world.add(behavior)
+      },
 
-      this._selectedBody = body;
+      addBody: function($element) {
+        var properties = [parseFloat($element[0].style.left), parseFloat($element[0].style.top), parseFloat($element[0].style.width), parseFloat($element[0].style.height)];
 
-      if(body) {
-        body.fixed = true;
-        this._tapOffset.clone(this._tapPos).vsub(body.state.pos);
+        console.log(properties);
 
-        /*
-        var md = Physics.body('point', {
-          x: x,
-          y: y
+        $element[0].style.position = 'absolute';
+        $element[0].style.left = (-properties[2]/2) + 'px';
+        $element[0].style.top = (-properties[3]/2) + 'px';
+
+        var body = Physics.body('convex-polygon', {
+          // centerx
+          x: properties[0] + properties[2]/2,
+          // centery
+          y: properties[1] + properties[3]/2,
+          vertices: [
+            { x: 0, y: 0 },
+            { x: properties[2], y: 0 },
+            { x: properties[2], y: properties[3] },
+            { x: 0, y: properties[3] }
+          ],
+          vx: 0,
+          cof: 0.99,
+          restitution: 0.99,
         });
+            
+        body.view = $element[0];
 
-        this._tapJoint = constraints.distanceConstraint(md, body, 0.2);
+        world.add(body);
+      },
+
+      setGravity: function(gravity) {
+        console.log('Gravity', gravity);
+        /*
+        this._gravity = gravity;
+        this._gravityBehavior.setAcceleration(gravity);
         */
+      },
+
+
+      startTouch: function(e) {
+        e.gesture.srcEvent.preventDefault();
+
+        
+        var x = e.gesture.touches[0].pageX;
+        var y = e.gesture.touches[0].pageY;
+
+        tapPos.set(x, y);
+
+        var body = world.findOne({ $at: Physics.vector(x, y) });
+        console.log('Starting touch on', body);
+
+        selectedBody = body;
+
+        if(body) {
+          body.fixed = true;
+          tapOffset.clone(tapPos).vsub(body.state.pos);
+
+          /*
+          var md = Physics.body('point', {
+            x: x,
+            y: y
+          });
+
+          this._tapJoint = constraints.distanceConstraint(md, body, 0.2);
+          */
+        }
+      },
+      touchDrag: function(e) {
+        e.gesture.srcEvent.preventDefault();
+        tapPosOld.clone(tapPos);
+
+        var x = e.gesture.touches[0].pageX;
+        var y = e.gesture.touches[0].pageY;
+        tapPos.set(x, y);
+      },
+      endTouch: function(e) {
+        e.gesture.srcEvent.preventDefault();
+        console.log('Ending touch');
+
+        var x = e.gesture.touches[0].pageX;
+        var y = e.gesture.touches[0].pageY;
+
+        tapPosOld.clone(tapPos);
+        tapPos.set(x, y);
+
+        if(selectedBody) {
+          console.log("not fixed");
+          selectedBody.fixed = false;
+        }
+
+        selectedBody = null;
       }
-    },
-    touchDrag: function(e) {
-      e.gesture.srcEvent.preventDefault();
-      this._tapPosOld.clone(this._tapPos);
-
-      var x = e.gesture.touches[0].pageX;
-      var y = e.gesture.touches[0].pageY;
-      this._tapPos.set(x, y);
-    },
-    endTouch: function(e) {
-      e.gesture.srcEvent.preventDefault();
-      console.log('Ending touch');
-
-      var x = e.gesture.touches[0].pageX;
-      var y = e.gesture.touches[0].pageY;
-
-      this._tapPosOld.clone(this._tapPos);
-      this._tapPos.set(x, y);
-
-      if(this._selectedBody) {
-        console.log("not fixed");
-        this._selectedBody.fixed = false;
-      }
-
-      this._tapJoint = null;
-      this._selectedBody = null;
     }
-  };
+  }
 }])
 
-.factory('$ionicDynamicAnimator', [function() {
-  return {
-  };
-}])
-
-.directive('ionBody', ['$timeout', '$ionicBind', '$ionicPhysics', function($timeout, $ionicBind, $ionicPhysics) {
+.directive('ionBody', ['$timeout', '$ionicBind', '$ionicDynamicAnimator', function($timeout, $ionicBind, $ionicDynamicAnimator) {
   return {
     restrict: 'E',
     scope: true,
+    require: '^ionScene',
     compile: function(element, attr) {
       return { pre: prelink, post: postlink };
 
@@ -288,19 +288,22 @@ angular.module('ionic.contrib.physics', ['ionic'])
         $element[0].style.height = $scope.height + 'px';
       }
 
-      function postlink($scope, $element, $attr) {
+      function postlink($scope, $element, $attr, animatorCtrl) {
         $timeout(function() {
-          $ionicPhysics.addBody($element);
+          animatorCtrl.addBody($element);
         });
       }
     }
   }
 }])
 
-.directive('ionScene', ['$timeout', '$ionicBind', '$ionicPhysics', '$ionicGesture', function($timeout, $ionicBind, $ionicPhysics, $ionicGesture) {
+.directive('ionScene', ['$timeout', '$ionicBind', '$ionicDynamicAnimator', '$ionicGesture', function($timeout, $ionicBind, $ionicDynamicAnimator, $ionicGesture) {
   return {
     restrict: 'AE',
     scope: true,
+    controller: ['$scope', '$element', function($scope, $element) {
+      return $ionicDynamicAnimator($element);
+    }],
     compile: function(element, attr) {
       return { pre: prelink, post: postlink };
 
@@ -312,34 +315,30 @@ angular.module('ionic.contrib.physics', ['ionic'])
         });
 
         $scope.$watch('gravity', function(gravity) {
-          $ionicPhysics.setGravity(gravity);
+          //$ionicDynamicAnimator.setGravity(gravity);
         });
       }
 
-      function postlink($scope, $element, $attr) {
+      function postlink($scope, $element, $attr, animator) {
         $element.addClass('scene');
 
         console.log('Gravity', $scope.gravity);
 
-        $ionicPhysics.init($element);
-
         $ionicGesture.on('touch', function(e) {
-          $ionicPhysics.startTouch(e);
+          animator.startTouch(e);
         }, $element);
 
         $ionicGesture.on('dragstop', function(e) {
-          $ionicPhysics.endTouch(e);
+          animator.endTouch(e);
         }, $element);
 
         $ionicGesture.on('release', function(e) {
-          $ionicPhysics.endTouch(e);
+          animator.endTouch(e);
         }, $element);
 
         $ionicGesture.on('drag', function(e) {
-          $ionicPhysics.touchDrag(e);
+          animator.touchDrag(e);
         }, $element);
-
-        $ionicPhysics.go();
       }
     }
   }

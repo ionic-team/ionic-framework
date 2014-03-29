@@ -42,7 +42,7 @@
     <script>
       angular.module('physics', ['ionic', 'ionic.contrib.physics'])
 
-      .controller('PhysicsCtrl', function($scope, $ionicPhysics, $timeout) {
+      .controller('PhysicsCtrl', function($scope, $ionicDynamicAnimator, $timeout) {
         $scope.gravity = [-1, 0];
       })
     </script>
