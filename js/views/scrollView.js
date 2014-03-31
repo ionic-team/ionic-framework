@@ -1,5 +1,3 @@
-var IS_INPUT_LIKE_REGEX = /input|textarea|select/i;
-var IS_EMBEDDED_OBJECT_REGEX = /object|embed/i;
 /*
  * Scroller
  * http://github.com/zynga/scroller
@@ -620,10 +618,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     function shouldIgnorePress(e) {
       // Don't react if initial down happens on a form element
-      return e.target.tagName.match(IS_INPUT_LIKE_REGEX) ||
+      return e.target.tagName.match(/input|textarea|select|object|embed/i) ||
              e.target.isContentEditable ||
-             e.target.tagName.match(IS_EMBEDDED_OBJECT_REGEX) ||
-             e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-default') == 'true';
+             (e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-default') == 'true');
     }
 
 
