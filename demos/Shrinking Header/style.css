@@ -1,41 +1,31 @@
-.bar.bar-loading {
-  display: block;
-  height: 24px;
-  
-  /* starts right below a normal header */
-  top: 44px;
-  
-  /* make the text centered vertically and horizontally */
+.fake-statusbar {
+  height: 20px;
+  max-height: 20px;
+  font-size: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  color: #fff;
+  padding: 2px 3px 3px 3px;
+}
+.fake-statusbar .time {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   text-align: center;
-  padding: 0;
-  line-height: 24px;
-
-  /* transition 'sliding down' (check below)*/
-  -webkit-transition: 200ms all;
 }
-
-
-/* 
- * make the content's top changes animate.
- * might not always look good, but looks
- * good when our loader is added & removed
- */
-.has-header {
-  -webkit-transition: 200ms top;
+.fake-statusbar .pull-left {
+  float: left;
 }
-.has-header.has-loading {
-  /* 44px (header) + 24px */
-  top: 68px;
+.fake-statusbar .pull-right {
+  float: right;
 }
-
-/* make loading bar slide up/down */
-.bar-loading.ng-enter,
-.bar-loading.ng-leave.ng-leave-active {
-  height: 0;
-  border-width: 0px;
+.bar-header {
+  height: 64px !important;
 }
-.bar-loading.ng-enter.ng-enter-active,
-.bar-loading.ng-leave {
-  height: 24px;
-  border-width: 1px;
+.bar-header > * {
+  margin-top: 20px !important;
 }

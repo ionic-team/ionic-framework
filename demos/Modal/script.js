@@ -1,7 +1,34 @@
 angular.module('ionicApp', ['ionic'])
 
-.controller('MainCtrl', ['$scope', function($scope) {
-  $scope.data = {
-    isLoading: false
+.controller('AppCtrl', function ($scope, $ionicModal) {
+
+  $scope.contacts = [
+    {
+      name: 'Gordon Freeman'
+    },
+    {
+      name: 'Barney Calhoun'
+    },
+    {
+      name: 'Lamarr the Headcrab'
+    },
+  ];
+  $ionicModal.fromTemplateUrl('modal.html', function (modal) {
+    $scope.modal = modal;
+  }, {
+    animation: 'slide-in-up',
+    focusFirstInput: true
+  });
+
+})
+
+.controller('ModalCtrl', function ($scope) {
+
+  $scope.newUser = {};
+
+  $scope.createContact = function () {
+    console.log('Create Contact', $scope.newUser);
+    $scope.modal.hide();
   };
-}]);
+
+});

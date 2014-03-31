@@ -1,41 +1,39 @@
-.bar.bar-loading {
-  display: block;
-  height: 24px;
-  
-  /* starts right below a normal header */
-  top: 44px;
-  
-  /* make the text centered vertically and horizontally */
-  text-align: center;
+body {
+  cursor: url('http://ionicframework.com/img/finger.png'), auto;
+}
+.messages {
+  margin: 0;
   padding: 0;
-  line-height: 24px;
-
-  /* transition 'sliding down' (check below)*/
-  -webkit-transition: 200ms all;
+  list-style-type: none;
 }
-
-
-/* 
- * make the content's top changes animate.
- * might not always look good, but looks
- * good when our loader is added & removed
- */
-.has-header {
-  -webkit-transition: 200ms top;
+.messages li {
+  display: block;
+  float: left;
+  clear: both;
+  max-width: 65%;
+  margin: 0 0 1rem 0;
+  padding: 0;
 }
-.has-header.has-loading {
-  /* 44px (header) + 24px */
-  top: 68px;
+.messages li:nth-child(even) {
+  float: right;
 }
-
-/* make loading bar slide up/down */
-.bar-loading.ng-enter,
-.bar-loading.ng-leave.ng-leave-active {
-  height: 0;
-  border-width: 0px;
+.messages li:nth-child(even) img {
+  float: right;
 }
-.bar-loading.ng-enter.ng-enter-active,
-.bar-loading.ng-leave {
-  height: 24px;
-  border-width: 1px;
+.messages p {
+  border-radius: .75rem;
+  background: #e6e5eb;
+  color: #383641;
+  padding: .6875rem;
+  margin: 0;
+  font-size: .875rem;
+}
+.messages li:nth-child(even) p {
+  background: #158ffe;
+  color: #fff;
+}
+.messages img {
+  display: block;
+  max-width: 65%;
+  border-radius: .75rem;
 }

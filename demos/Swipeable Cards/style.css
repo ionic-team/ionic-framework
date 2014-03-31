@@ -1,41 +1,95 @@
-.bar.bar-loading {
+body {
+  cursor: url('http://ionicframework.com/img/finger.png'), auto;
+}
+/* Your app's CSS, go crazy, make it your own */
+
+.ionic-logo {
   display: block;
-  height: 24px;
-  
-  /* starts right below a normal header */
-  top: 44px;
-  
-  /* make the text centered vertically and horizontally */
+  margin: 15px auto;
+  width: 96px;
+  height: 96px;
+}
+.pane {
+  background-color: #333 !important
+}
+.bar.bar-transparent {
+  background-color: transparent;
+  background-image: none;
+  border: none;
+}
+.bar .title {
+  color: #eee;
+}
+.swipe-cards {
+  position: fixed;
+}
+.swipe-card {
+  -webkit-perspective: 1000;
+  -webkit-backface-visibility: hidden;
+  display: none;
+  position: fixed;
+  -webkit-transform: scale(1, 1);
+  left: 50%;
+  top: 50%;
+  width: 300px;
+  height: 300px;
+  margin-left: -150px;
+  margin-top: -150px;
+  box-sizing: border-box;
+  background-color: rgb(255, 255, 255);
+  border-radius: 4px;
+  overflow: hidden;
+  -webkit-animation-fill-mode: forwards;
+}
+.swipe-card .title {
+  height: 40px;
+  padding: 5px;
+  line-height: 30px;
+  color: #444;
+}
+.swipe-card .image {
+  overflow: hidden;
+  max-height: 210px;
+}
+.swipe-card .button {
+  border: none;
+}
+.swipe-card .image img {
+  width: 100%;
+  border-radius: 0px 0px 4px 4px;
+}
+#start-card {
+  color: #fff;
+  background-color: #30BD8A;
+  line-height: 300px;
+  word-wrap: break-word;
+  border: 6px solid #4CD68E;
   text-align: center;
-  padding: 0;
-  line-height: 24px;
-
-  /* transition 'sliding down' (check below)*/
-  -webkit-transition: 200ms all;
 }
-
-
-/* 
- * make the content's top changes animate.
- * might not always look good, but looks
- * good when our loader is added & removed
- */
-.has-header {
-  -webkit-transition: 200ms top;
+#start-card span {
+  display: inline-block;
+  line-height: 40px;
+  width: 200px;
+  font-size: 30px;
+  vertical-align: middle;
 }
-.has-header.has-loading {
-  /* 44px (header) + 24px */
-  top: 68px;
+#footer .button {
+  color: #fff;
 }
-
-/* make loading bar slide up/down */
-.bar-loading.ng-enter,
-.bar-loading.ng-leave.ng-leave-active {
-  height: 0;
-  border-width: 0px;
+@-webkit-keyframes bounceIn {
+  0% {
+    -webkit-transform: scale(0, 0);
+  }
+  70% {
+    -webkit-transform: scale(1.2, 1.2);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+  }
 }
-.bar-loading.ng-enter.ng-enter-active,
-.bar-loading.ng-leave {
-  height: 24px;
-  border-width: 1px;
+.swipe-card.pop-in-start {
+  -webkit-transform: scale(0, 0);
+}
+.swipe-card.pop-in {
+  -webkit-animation: bounceIn 0.3s ease-out;
 }

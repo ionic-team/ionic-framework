@@ -1,41 +1,30 @@
-.bar.bar-loading {
-  display: block;
-  height: 24px;
-  
-  /* starts right below a normal header */
-  top: 44px;
-  
-  /* make the text centered vertically and horizontally */
+body {
+  cursor: url('http://ionicframework.com/img/finger.png'), auto;
+}
+.slider {
+  height: 100%;
+}
+.slider-slide {
+  padding-top: 80px;
+  color: #000;
+  background-color: #fff;
   text-align: center;
-  padding: 0;
-  line-height: 24px;
-
-  /* transition 'sliding down' (check below)*/
-  -webkit-transition: 200ms all;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
 }
-
-
-/* 
- * make the content's top changes animate.
- * might not always look good, but looks
- * good when our loader is added & removed
- */
-.has-header {
-  -webkit-transition: 200ms top;
+#logo {
+  margin: 30px 0px;
 }
-.has-header.has-loading {
-  /* 44px (header) + 24px */
-  top: 68px;
+#list {
+  width: 170px;
+  margin: 30px auto;
+  font-size: 20px;
 }
-
-/* make loading bar slide up/down */
-.bar-loading.ng-enter,
-.bar-loading.ng-leave.ng-leave-active {
-  height: 0;
-  border-width: 0px;
+#list ol {
+  margin-top: 30px;
 }
-.bar-loading.ng-enter.ng-enter-active,
-.bar-loading.ng-leave {
-  height: 24px;
-  border-width: 1px;
+#list ol li {
+  text-align: left;
+  list-style: decimal;
+  margin: 10px 0px;
 }
