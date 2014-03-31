@@ -247,18 +247,43 @@ Physics.behavior('body-list-collision-detection', function( parent ){
 
             var candidates = data.candidates
                 ,pair
+                ,aValid
+                ,bValid
+                ,body
                 ,collisions = []
                 ,ret
                 ;
 
+
+            // Restrict to active bodies
+
             for ( var i = 0, l = candidates.length; i < l; ++i ){
-                
                 pair = candidates[ i ];
+                aValid = false;
+                bValid = false;
 
-                ret = checkPair( pair.bodyA, pair.bodyB );
+                for(var k = 0, m = this.options.bodies.length; k < m; ++k) {
+                  body = this.options.bodies[k];
+                  if(pair.bodyA == body) {
+                    aValid = true;
+                  }
+                  if(pair.bodyB == body) {
+                    bValid = true;
+                  }
 
-                if ( ret ){
-                    collisions.push( ret );
+                  if(aValid && bValid) {
+                    break;
+                  }
+                }
+
+                
+                if(aValid && bValid) {
+
+                  ret = checkPair( pair.bodyA, pair.bodyB );
+
+                  if ( ret ){
+                      collisions.push( ret );
+                  }
                 }
             }
 
@@ -278,7 +303,7 @@ Physics.behavior('body-list-collision-detection', function( parent ){
          */
         checkAll: function( data ){
 
-            var bodies = data.bodies
+            var bodies = this.options.bodies//data.bodies
                 ,dt = data.dt
                 ,bodyA
                 ,bodyB

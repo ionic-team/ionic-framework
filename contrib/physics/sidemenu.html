@@ -70,10 +70,10 @@
           $scope.dynamicAnimator.addBehavior(gravity);
 
           var collision = $ionicCollisionBehavior({
-            items: $scope.dynamicAnimator.getBodiesInGroup('content')
+            items: $scope.dynamicAnimator.getBodiesInGroup('content').concat($scope.dynamicAnimator.getBodiesInGroup('sidemenu'))
           });
 
-          collision.setBounds([0, 0, 320+280, 568]);
+          collision.setBounds([0, 0, 320+10280, 568]);
 
           $scope.dynamicAnimator.addBehavior(collision);
         });

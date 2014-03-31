@@ -60,17 +60,17 @@
           $scope.dynamicAnimator.addBehavior(gravity);
 
           var collision = $ionicCollisionBehavior({
-            items: $scope.dynamicAnimator.getBodiesInGroup('cat')
+            items: $scope.dynamicAnimator.getBodiesInGroup('cat').concat($scope.dynamicAnimator.getBodiesInGroup('dog'))
           });
 
-          collision.setBounds([0, 200, 500, 500]);
+          collision.setBounds([0, 0, 1000, 1000]);
 
           $scope.dynamicAnimator.addBehavior(collision);
         });
 
 
         $scope.bodies = [];
-        for(var i = 0; i < 2; i++) {
+        for(var i = 0; i < 5; i++) {
           $scope.bodies.push({
             x: Math.random() * (window.innerWidth - 100),
             y: Math.random() * (window.innerHeight - 100),
@@ -79,7 +79,7 @@
             name: 'cat'
           });
         }
-        for(var i = 0; i < 2; i++) {
+        for(var i = 0; i < 5; i++) {
           $scope.bodies.push({
             x: Math.random() * (window.innerWidth - 100),
             y: Math.random() * (window.innerHeight - 100),

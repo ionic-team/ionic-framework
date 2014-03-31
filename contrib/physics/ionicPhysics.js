@@ -42,7 +42,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
             aabb: Physics.aabb.apply(null, bounds),
 
             // Try 0.4 for a good default
-            restitution: opts.elasticity || 0.9,
+            restitution: opts.elasticity || 0.4,
 
             // 0.5 might be nice here
             cof: opts.damping
