@@ -48,7 +48,7 @@
         $timeout(function() {
           console.log('Animator', $scope.dynamicAnimator);
           var gravity = $ionicGravityBehavior({
-            vector: [0, 1],
+            vector: [0, 0.4],
             items: $scope.dynamicAnimator.getBodiesInGroup('cat')
           });
           $scope.dynamicAnimator.addBehavior(gravity);
@@ -59,18 +59,24 @@
           });
           $scope.dynamicAnimator.addBehavior(gravity);
 
-          var collision = $ionicCollisionBehavior({
-            items: $scope.dynamicAnimator.getBodiesInGroup('cat').concat($scope.dynamicAnimator.getBodiesInGroup('dog'))
+          var collision1 = $ionicCollisionBehavior({
+            items: $scope.dynamicAnimator.getBodiesInGroup('cat')
           });
 
-          collision.setBounds([0, 0, 1000, 1000]);
+          var collision2 = $ionicCollisionBehavior({
+            items: $scope.dynamicAnimator.getBodiesInGroup('dog')
+          });
 
-          $scope.dynamicAnimator.addBehavior(collision);
+          collision1.setBounds([0, 0, 1000, 1000]);
+          collision2.setBounds([0, 0, 1000, 1000]);
+
+          $scope.dynamicAnimator.addBehavior(collision1);
+          $scope.dynamicAnimator.addBehavior(collision2);
         });
 
 
         $scope.bodies = [];
-        for(var i = 0; i < 5; i++) {
+        for(var i = 0; i < 1; i++) {
           $scope.bodies.push({
             x: Math.random() * (window.innerWidth - 100),
             y: Math.random() * (window.innerHeight - 100),
@@ -79,7 +85,7 @@
             name: 'cat'
           });
         }
-        for(var i = 0; i < 5; i++) {
+        for(var i = 0; i < 0; i++) {
           $scope.bodies.push({
             x: Math.random() * (window.innerWidth - 100),
             y: Math.random() * (window.innerHeight - 100),

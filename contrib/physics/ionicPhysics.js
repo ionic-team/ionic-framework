@@ -42,10 +42,10 @@ angular.module('ionic.contrib.physics', ['ionic'])
             aabb: Physics.aabb.apply(null, bounds),
 
             // Try 0.4 for a good default
-            restitution: opts.elasticity || 0.4,
+            restitution: opts.elasticity || 0.5,
 
             // 0.5 might be nice here
-            cof: opts.damping
+            cof: opts.damping || 0.5
           });
         } else {
           edgeCollision.setAABB(Physics.aabb.apply(null, bounds));
@@ -70,10 +70,6 @@ angular.module('ionic.contrib.physics', ['ionic'])
   }
 })
 .factory('$ionicAttachBehavior', function() {
-  return function(opts) {
-  }
-})
-.factory('$ionicItemBehavior', function() {
   return function(opts) {
   }
 })
@@ -252,8 +248,8 @@ angular.module('ionic.contrib.physics', ['ionic'])
             { x: 0, y: properties[3] }
           ],
           vx: 0,
-          cof: 0.99,
-          restitution: 0.99,
+          cof: 0.1,
+          restitution: 1.7,
         });
             
         body.view = $element[0];

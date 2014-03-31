@@ -2094,10 +2094,14 @@ var Decorator = Physics.util.decorator = function Decorator( type, baseProto ){
          * @return {this}
          */
         accelerate: function( acc ){
-
+          this.output();
             this.state.acc.vadd( acc );
             return this;
         },
+
+        output: ionic.throttle(function() {
+            //console.log('accelerating body', this.state.vel._[1]);
+          }, 50),
 
         /**
          * Apply a force at center of mass, or at point "p" relative to the center of mass
@@ -2106,6 +2110,8 @@ var Decorator = Physics.util.decorator = function Decorator( type, baseProto ){
          * @return {this}
          */
         applyForce: function( force, p ){
+
+          console.log('Aplying force', force);
 
             var scratch = Physics.scratchpad()
                 ,r = scratch.vector()
@@ -3672,6 +3678,7 @@ Physics.integrator('verlet', function( parent ){
                     state.angular.pos += state.angular.vel;
                     state.angular.vel /= dt;
                     state.old.angular.vel = state.angular.vel;
+
                 }
             }
         }
@@ -4555,6 +4562,7 @@ Physics.behavior('body-impulse-response', function( parent ){
             }
 
             impulse =  - ((1 + cor) * vproj) / ( invMassA + invMassB + (invMoiA * rAreg * rAreg) + (invMoiB * rBreg * rBreg) );
+
             // vproj += impulse * ( invMass + (invMoi * rreg * rreg) );
             // angVel -= impulse * rreg * invMoi;
 
@@ -4645,13 +4653,14 @@ Physics.behavior('body-impulse-response', function( parent ){
          */
         respond: function( data ){
 
+
             var self = this
                 ,col
                 ,collisions = Physics.util.shuffle(data.collisions)
                 ;
 
             for ( var i = 0, l = collisions.length; i < l; ++i ){
-                
+
                 col = collisions[ i ];
                 self.collideBodies( 
                     col.bodyA,
@@ -4718,7 +4727,7 @@ Physics.behavior('constant-acceleration', function( parent ){
             var bodies = data.bodies;
 
             for ( var i = 0, l = bodies.length; i < l; ++i ){
-                
+
                 bodies[ i ].accelerate( this._acc );
             }
         }
@@ -6681,7 +6690,9 @@ Physics.renderer('dom', function( proto ){
         drawBody = function( body, view ){
 
             var pos = body.state.pos;
-            view.style[cssTransform] = 'translate3d('+pos.get(0)+'px,'+pos.get(1)+'px, 0) rotate('+body.state.angular.pos+'rad)';
+
+            view.style[cssTransform] = 'translate3d('+pos.get(0)+'px, '+pos.get(1)+'px, 0px) rotate(' + body.state.angular.pos.toFixed(20) + 'rad)';
+            console.log(view.style[cssTransform]);
         };
     } else {
         drawBody = function( body, view ){

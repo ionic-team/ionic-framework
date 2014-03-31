@@ -431,6 +431,7 @@ Physics.behavior('body-list-edge-collision-detection', function( parent ){
 
             dir.set( -1, 0 ).rotateInv( trans.setRotation( body.state.angular.pos ) );
 
+
             collision = {
                 bodyA: body,
                 bodyB: dummy,

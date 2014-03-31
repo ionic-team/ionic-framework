@@ -36,7 +36,7 @@
     <ion-pane>
       <div id="container" gravity="gravity" dynamics>
         <div ng-controller="PhysicsCtrl">
-          <ion-view x="0" y="0" width="280" height="568" dynamics-body dynamics-group="sidemenu">
+          <ion-view x="0" y="0" width="280" height="568" dynamics-group="sidemenu">
             <ion-header-bar class="bar-positive">
               <h1 class="title">Menu</h1>
             </ion-header-bar>
@@ -48,6 +48,9 @@
           </ion-view>
           <ion-view x="0" y="0" width="320" height="568" dynamics-body dynamics-group="content">
             <ion-header-bar class="bar-positive">
+              <div class="buttons">
+                <button class="button button-icon icon ion-navicon"></button>
+              </div>
               <h1 class="title">Content</h1>
             </ion-header-bar>
           </ion-view>
@@ -70,10 +73,10 @@
           $scope.dynamicAnimator.addBehavior(gravity);
 
           var collision = $ionicCollisionBehavior({
-            items: $scope.dynamicAnimator.getBodiesInGroup('content').concat($scope.dynamicAnimator.getBodiesInGroup('sidemenu'))
+            items: $scope.dynamicAnimator.getBodiesInGroup('content')//.concat($scope.dynamicAnimator.getBodiesInGroup('sidemenu'))
           });
 
-          collision.setBounds([0, 0, 320+10280, 568]);
+          collision.setBounds([0, 0, 320+260, 568]);
 
           $scope.dynamicAnimator.addBehavior(collision);
         });
