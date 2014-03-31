@@ -1313,7 +1313,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * Scroll by the given offset
    *
    * @param left {Number} Scroll x-axis by given offset
-   * @param top {Number} Scroll x-axis by given offset
+   * @param top {Number} Scroll y-axis by given offset
    * @param animate {Boolean} Whether to animate the given change
    */
   scrollBy: function(left, top, animate) {

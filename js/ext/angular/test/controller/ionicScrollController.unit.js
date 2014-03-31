@@ -257,6 +257,11 @@ describe('$ionicScroll Controller', function() {
           ctrl.scrollTo(1, 2, shouldAnimate);
           expect(ctrl.scrollView.scrollTo).toHaveBeenCalledWith(1, 2, shouldAnimate);
         });
+        it('.scrollBy', function() {
+          spyOn(ctrl.scrollView, 'scrollBy');
+          ctrl.scrollBy(1, 2, shouldAnimate);
+          expect(ctrl.scrollView.scrollBy).toHaveBeenCalledWith(1, 2, shouldAnimate);
+        });
         it('.anchorScroll without hash should scrollTop', inject(function($location, $document) {
           $document[0].getElementById = jasmine.createSpy();
           $location.hash = function() { return null; };
