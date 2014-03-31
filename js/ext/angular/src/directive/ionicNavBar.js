@@ -450,11 +450,11 @@ function($ionicViewService, $rootScope, $animate, $compile) {
           navBarCtrl.rightButtonsElement :
           navBarCtrl.leftButtonsElement;
 
-        //Put all of our inside buttons into their own div,
+        //Put all of our inside buttons into their own span,
         //so we can remove them all when this element dies -
         //even if the buttons have changed through an ng-repeat or the like,
         //we just remove their div parent and they are gone.
-        var buttons = angular.element('<div>').append(content);
+        var buttons = angular.element('<span>').append(content);
 
         //Compile buttons inside content so they have access to everything
         //something inside content does (eg parent ionicScroll)
