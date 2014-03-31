@@ -116,14 +116,14 @@ angular.module('ionic.service.platform', [])
          * @description
          * Trigger a callback once the device is ready,
          * or immediately if the device is already ready.
-         * @param {function} callback The function to call.
+         * @param {function=} callback The function to call.
          */
         ready: function(cb) {
           var q = $q.defer();
 
           ionic.Platform.ready(function(){
             q.resolve();
-            cb();
+            cb && cb();
           });
 
           return q.promise;
