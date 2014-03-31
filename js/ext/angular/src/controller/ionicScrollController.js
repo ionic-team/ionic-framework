@@ -88,6 +88,14 @@ angular.module('ionic.ui.scroll')
   'scrollTo',
   /**
    * @ngdoc method
+   * @name $ionicScrollDelegate#scrollBy
+   * @param {number} left The x-offset to scroll by.
+   * @param {number} top The y-offset to scroll by.
+   * @param {boolean=} shouldAnimate Whether the scroll should animate.
+   */
+  'scrollBy',
+  /**
+   * @ngdoc method
    * @name $ionicScrollDelegate#anchorScroll
    * @description Tell the scrollView to scroll to the element with an id
    * matching window.location.hash.
@@ -284,6 +292,12 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
   this.scrollTo = function(left, top, shouldAnimate) {
     this.resize().then(function() {
       scrollView.scrollTo(left, top, !!shouldAnimate);
+    });
+  };
+
+  this.scrollBy = function(left, top, shouldAnimate) {
+    this.resize().then(function() {
+      scrollView.scrollBy(left, top, !!shouldAnimate);
     });
   };
 
