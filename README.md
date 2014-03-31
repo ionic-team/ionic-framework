@@ -38,11 +38,11 @@ $ ionic start myproject
 - Download the latest **stable** release from:
   * The release folder of this repository
   * The Ionic CDN: [Latest Release](http://code.ionicframework.com/)
-  * `bower install ionic` 
+  * `bower install ionic`
 - Download the **bleeding edge just-from-master release** from:
   * The Ionic CDN: [Nightly Build](http://code.ionicframework.com/#nightly)
   * Look in the [ionic-bower Repository](https://github.com/driftyco/ionic-bower) for the latest version, and do for example `bower install driftyco/ionic-bower#0.9.23-alpha-652` (`bower install ionic` will have the latest available soon)
-  
+
 Once you have a release, use `js/ionic.js`, `js/ionic-angular.js`, and `css/ionic.css`.
 
 For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/` and `js/angular-ui-router/`.
@@ -59,7 +59,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 * Subscribe to the [Ionic Newsletter](http://ionicframework.com/subscribe/).
 * Have a question that's not a feature request or bug report? [Discuss on the Ionic Forum](http://forum.ionicframework.com/).
 * Read our [Blog](http://ionicframework.com/blog/).
-* Have a feature request or find a bug? [Submit an issue](https://github.com/driftyco/ionic/issues).
+* Have a feature request or find a bug? [Submit an issue](http://ionicframework.com/submit-issue/).
 
 
 ## Authors

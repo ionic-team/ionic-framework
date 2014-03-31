@@ -8,7 +8,7 @@ If you think you have found a bug, or have a new feature idea, please start by m
 
 If not, then [create a codepen.io](http://codepen.io/ionic/public-list) that demonstrates the problem (try to use as little code as possible: the more minimalist, the faster we can debug it). Also, please do not group multiple topics into one issue, but instead each should be its own issue.
 
-Next, [create a new issue](https://github.com/driftyco/ionic/issues/new) that briefly explains the problem, and provides a bit of background as to the circumstances that triggered it. Don't forget to include the link to that [codepen.io](http://codepen.io/ionic/public-list) you created! 
+Next, [create a new issue](http://ionicframework.com/submit-issue/) that briefly explains the problem, and provides a bit of background as to the circumstances that triggered it. Don't forget to include the link to that [codepen.io](http://codepen.io/ionic/public-list) you created!
 
 
 
@@ -22,6 +22,6 @@ It's always best to create two smaller PRs than one big one.
 
 Always use two spaces, no tabs. This goes for any HTML, CSS, or Javascript.
 
-### License 
+### License
 
 By contributing your code to the driftyco/ionic GitHub Repository, you agree to license your contribution under the MIT license.
