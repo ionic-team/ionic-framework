@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="ionic.example">
+
+<head>
+  <meta charset="utf-8">
+  <title>Popups</title>
+
+  <!-- Sets initial viewport load and disables zooming  -->
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link href="http://code.ionicframework.com/1.0.0-beta.1/css/ionic.min.css" rel="stylesheet">
+  <script src="http://code.ionicframework.com/1.0.0-beta.1/js/ionic.bundle.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+
+</head>
+
+<body ng-controller="PopupCtrl" class="padding">
+  <button class="button button-dark" ng-click="showPopup()">Multiple</button>
+  <button class="button button-primary" ng-click="showConfirm()">Confirm</button>
+  <button class="button button-balanced" ng-click="showPrompt()">Prompt</button>
+  <button class="button button-assertive" ng-click="showPasswordPrompt()">Password Prompt</button>
+  <button class="button button-positive" ng-click="showAlert()">Alert</button>
+
+  <script id="popup-template.html" type="text/ng-template">
+    < input ng - model = "data.wifi"
+    type = "text"
+    placeholder = "Password" >
+  </script>
+</body>
+
+</html>
+
