@@ -623,7 +623,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       return e.target.tagName.match(IS_INPUT_LIKE_REGEX) ||
              e.target.isContentEditable ||
              e.target.tagName.match(IS_EMBEDDED_OBJECT_REGEX) ||
-             e.target.dataset.preventScroll;
+             e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-default') == 'true';
     }
 
 
