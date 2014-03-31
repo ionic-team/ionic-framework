@@ -134,6 +134,8 @@ angular.module('ionic.ui.slideBox', [])
  * @param {boolean=} does-continue Whether the slide box should automatically slide.
  * @param {number=} slide-interval How many milliseconds to wait to change slides (if does-continue is true). Defaults to 4000.
  * @param {boolean=} show-pager Whether a pager should be shown for this slide box.
+ * @param {string=} pager-icon Type of icon to use for the pager when slide is not active.
+ *  @param {string=} pager-icon-active Type of icon to use for the pager when slide is active.
  * @param {boolean=} disable-scroll Whether to disallow scrolling/dragging of the slide-box content.
  * @param {expression=} on-slide-changed Expression called whenever the slide is changed.
  * @param {expression=} active-slide Model to bind the current slide to.
@@ -151,6 +153,8 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
       doesContinue: '@',
       slideInterval: '@',
       showPager: '@',
+      pagerIcon: '@',
+      pagerIconActive: '@',
       disableScroll: '@',
       onSlideChanged: '&',
       activeSlide: '=?'
@@ -249,8 +253,10 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
     restrict: 'E',
     replace: true,
     require: '^ionSlideBox',
-    template: '<div class="slider-pager"><span class="slider-pager-page" ng-repeat="slide in numSlides() track by $index" ng-class="{active: $index == currentSlide}"><i class="icon ion-record"></i></span></div>',
+    template: '<div class="slider-pager"><span class="slider-pager-page" ng-repeat="slide in numSlides() track by $index" ng-class="{active: $index == currentSlide}"><i class="icon" ng-class="{true: pagerIconActive, false: pagerIcon}[$index == currentSlide]"></i></span></div>',
     link: function($scope, $element, $attr, slideBox) {
+      $scope.pagerIcon = $scope.pagerIcon || 'ion-record';
+      $scope.pagerIconActive = $scope.pagerIconActive || 'ion-record';
       var selectPage = function(index) {
         var children = $element[0].children;
         var length = children.length;
