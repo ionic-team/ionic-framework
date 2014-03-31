@@ -14,6 +14,7 @@ angular.module('ionic.service', [
   'ionic.service.bind',
   'ionic.service.platform',
   'ionic.service.actionSheet',
+  'ionic.service.toast',
   'ionic.service.gesture',
   'ionic.service.loading',
   'ionic.service.modal',
