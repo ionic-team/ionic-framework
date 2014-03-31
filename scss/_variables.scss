@@ -501,7 +501,6 @@ $checkbox-on-bg-dark:             $dark !default;
 $checkbox-off-border-default:     $positive !default;
 $checkbox-on-bg-default:          $positive !default;
 
-
 $checkbox-check-width:            3px !default;
 $checkbox-check-color:            #fff !default;
 
@@ -593,6 +592,19 @@ $popup-button-line-height:        20px !default;
 $popup-button-min-height:         45px !default;
 
 
+// Loading
+// -------------------------------
+
+$loading-text-color:              #fff !default;
+$loading-bg-color:                rgba(0,0,0,0.7) !default;
+$loading-padding:                 20px !default;
+$loading-border-radius:           5px !default;
+$loading-font-size:               15px !default;
+
+$loading-backdrop-fadein-duration:0.3s !default;
+$loading-backdrop-bg-color:       rgba(0,0,0,0.7) !default;
+
+
 // Badges
 // -------------------------------
 
@@ -648,6 +660,7 @@ $z-index-item-options:            1 !default;
 $z-index-item-radio:              3 !default;
 $z-index-item-reordering:         9 !default;
 $z-index-item-toggle:             3 !default;
+$z-index-loading-backdrop:        11 !default;
 $z-index-menu:                    0 !default;
 $z-index-modal:                   10 !default;
 $z-index-pane:                    1 !default;
