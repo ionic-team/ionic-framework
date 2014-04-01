@@ -60,7 +60,7 @@ gulp.task('docs', function(done) {
 });
 
 var IS_WATCH = false;
-gulp.task('watch', ['bundle'], function() {
+gulp.task('watch', ['build'], function() {
   IS_WATCH = true;
   gulp.watch('js/**/*.js', ['bundle']);
   gulp.watch('scss/**/*.scss', ['sass']);
@@ -200,7 +200,7 @@ gulp.task('tweet', function() {
     console.log(tweet);
     return gulp.src('package.json')
             .pipe(twitter(oauth, tweet));
-  }        
+  }
 });
 
 gulp.task('docs-index', function() {

@@ -286,8 +286,8 @@ function($scope, $ionicViewService, $rootScope, $element) {
  * @param {expression=} on-deselect Called when this tab is deselected.
  * @param {expression=} ng-click By default, the tab will be selected on click. If ngClick is set, it will not.  You can explicitly switch tabs using {@link ionic.service:$ionicTabsDelegate#select $ionicTabsDelegate.select()}.
  */
-.directive('ionTab', ['$rootScope', '$animate', '$ionicBind', '$compile', '$ionicViewService',
-function($rootScope, $animate, $ionicBind, $compile, $ionicViewService) {
+.directive('ionTab', ['$rootScope', '$animate', '$ionicBind', '$compile', '$ionicViewService', '$state', '$location',
+function($rootScope, $animate, $ionicBind, $compile, $ionicViewService, $state, $location) {
 
   //Returns ' key="value"' if value exists
   function attrStr(k,v) {
@@ -372,9 +372,14 @@ function($rootScope, $animate, $ionicBind, $compile, $ionicViewService) {
         });
 
         function selectTabIfMatchesState() {
-          // this tab's ui-view is the current one, go to it!
-          if ($ionicViewService.isCurrentStateNavView($scope.navViewName)) {
-            tabsCtrl.select($scope);
+          var href = $attr.href.replace(/^#/, '');
+          var stateName = $attr.uiSref.split('(')[0];
+
+          if ($location.path().indexOf(href) === 0 || $state.includes(stateName)) {
+            // this tab's ui-view is the current one, go to it!
+            if ($ionicViewService.isCurrentStateNavView($scope.navViewName)) {
+              tabsCtrl.select($scope);
+            }
           }
         }
       };
