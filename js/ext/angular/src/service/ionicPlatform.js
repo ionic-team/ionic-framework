@@ -117,6 +117,7 @@ angular.module('ionic.service.platform', [])
          * Trigger a callback once the device is ready,
          * or immediately if the device is already ready.
          * @param {function=} callback The function to call.
+         * @returns {promise} A promise which is resolved when the device is ready.
          */
         ready: function(cb) {
           var q = $q.defer();
