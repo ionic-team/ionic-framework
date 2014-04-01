@@ -124,4 +124,4 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 
 ## LICENSE
 
-Ionic is licensed under the MIT Open Source license. For more information, see the LICENSE file in this repository.
+Ionic is licensed under the MIT Open Source license. For more information, see the LICENSE file in this repository...
