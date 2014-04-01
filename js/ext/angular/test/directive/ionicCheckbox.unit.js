@@ -18,7 +18,7 @@ describe('Ionic Checkbox', function() {
     el = compile('<ion-checkbox>INNER TEXT</ion-checkbox>')(scope);
     expect(el.hasClass('item')).toEqual(true);
     expect(el.hasClass('item-checkbox')).toEqual(true);
-    var label = el.find('label');
+    var label = el.find('div');
     expect(label.hasClass('checkbox')).toEqual(true);
     var input = el.find('input');
     expect(input.attr('type')).toEqual('checkbox');
