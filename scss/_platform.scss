@@ -10,19 +10,37 @@
   // Bump down everything to make room for it. However, if
   // if its in Cordova, and set to fullscreen, then disregard the bump.
   &:not(.fullscreen) {
-    margin-top: 20px;
-    /*
-     * Make header bar go under the status bar
-     */
     .bar-header:not(.bar-subheader) {
-      top: -$ios7-statusbar-height;
       height: $bar-height + $ios7-statusbar-height;
+
+      &.item-input-inset .item-input-wrapper {
+        margin-top: 19px !important;
+      }
+
       > * {
-        margin-top: $ios7-statusbar-height;
+        margin-top: 20px;
       }
     }
+    .tabs-top > .tabs,
+    .tabs.tabs-top {
+      top: $bar-height + $ios7-statusbar-height;
+    }
+
+    .has-header, 
+    .bar-subheader {
+      top: $bar-height + $ios7-statusbar-height;
+    }
+    .has-subheader {
+      top: (2 * $bar-height) + $ios7-statusbar-height;
+    }
+    .has-tabs-top {
+      top: $bar-height + $tabs-height + $ios7-statusbar-height;
+    }
+    .has-header.has-subheader.has-tabs-top {
+      top: 2 * $bar-height + $tabs-height + $ios7-statusbar-height;
+    }
   }
-  &.status-bar-hide {
+  &.statusbar-hide {
     // Cordova doesn't adjust the body height correctly, this makes up for it
     margin-bottom: 20px;
   }
