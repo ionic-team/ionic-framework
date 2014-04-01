@@ -1,0 +1,39 @@
+#search-input {
+  text-align: center;
+}
+
+#photos {
+  margin: auto;
+}
+
+.photo {
+  float: left;
+  overflow: hidden;
+  margin: 1px;
+  width: 100px;
+  height: 100px;
+}
+.photo img {
+  min-width: 100%;
+  min-height: 100%;
+  max-width: 150%;
+  max-height: 150%;
+}
+
+#search-bar {
+  position: absolute;
+  top: 44px;
+  z-index: 3;
+  width: 100%;
+  height: 40px;
+  background: none;
+}
+#search-bar .item {
+  border: none;
+  background: none;
+}
+#content {
+  top: 44px;
+  padding-top: 45px;
+  padding-bottom: 20px;
+}

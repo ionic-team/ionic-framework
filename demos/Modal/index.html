@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html ng-app="ionicApp">
-
 <head>
+
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
   <title>Ionic Modal</title>
 
   <link href="http://code.ionicframework.com/1.0.0-beta.1/css/ionic.min.css" rel="stylesheet">
-  <script src="http://code.ionicframework.com/1.0.0-beta.1/js/ionic.bundle.js"></script>
+  <link href="style.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css">
+  <script src="http://code.ionicframework.com/1.0.0-beta.1/js/ionic.bundle.min.js"></script>
   <script src="script.js"></script>
 
 </head>
@@ -24,6 +24,7 @@
       </button>
     </div>
   </ion-header-bar>
+
   <ion-content>
     <ion-list>
       <ion-item ng-repeat="contact in contacts">
@@ -33,33 +34,32 @@
   </ion-content>
 
   <script id="modal.html" type="text/ng-template">
-      <div class="modal" ng-controller="ModalCtrl">
-        <ion-header-bar class="bar bar-header bar-positive">
-          <h1 class="title">New Contact</h1>
-          <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
-        </ion-header-bar>
-        <ion-content>
-          <div class="padding">
-            <div class="list">
-              <label class="item item-input">
-                <span class="input-label">First Name</span>
-                <input ng-model="newUser.firstName" type="text">
-              </label>
-              <label class="item item-input">
-                <span class="input-label">Last Name</span>
-                <input ng-model="newUser.lastName" type="text">
-              </label>
-              <label class="item item-input">
-                <span class="input-label">Email</span>
-                <input ng-model="newUser.email" type="text">
-              </label>
-              <button class="button button-full button-positive" ng-click="createContact()">Create</button>
-            </div>
+    <div class="modal" ng-controller="ModalCtrl">
+      <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">New Contact</h1>
+        <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+      </ion-header-bar>
+      <ion-content>
+        <div class="padding">
+          <div class="list">
+            <label class="item item-input">
+              <span class="input-label">First Name</span>
+              <input ng-model="newUser.firstName" type="text">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Last Name</span>
+              <input ng-model="newUser.lastName" type="text">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Email</span>
+              <input ng-model="newUser.email" type="text">
+            </label>
+            <button class="button button-full button-positive" ng-click="createContact()">Create</button>
           </div>
-        </ion-content>
-      </div>
-    </script>
+        </div>
+      </ion-content>
+    </div>
+  </script>
 
 </body>
-
 </html>

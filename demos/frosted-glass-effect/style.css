@@ -1,0 +1,39 @@
+body {
+  cursor: url('http://ionicframework.com/img/finger.png'), auto;
+}
+.messages {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.messages li {
+  display: block;
+  float: left;
+  clear: both;
+  margin: 0 0 1rem 0;
+  padding: 0;
+  max-width: 65%;
+}
+.messages li:nth-child(even) {
+  float: right;
+}
+.messages li:nth-child(even) img {
+  float: right;
+}
+.messages p {
+  margin: 0;
+  padding: .6875rem;
+  border-radius: .75rem;
+  background: #e6e5eb;
+  color: #383641;
+  font-size: .875rem;
+}
+.messages li:nth-child(even) p {
+  background: #158ffe;
+  color: #fff;
+}
+.messages img {
+  display: block;
+  max-width: 65%;
+  border-radius: .75rem;
+}
