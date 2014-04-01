@@ -18,7 +18,7 @@
       }
 
       > * {
-        margin-top: 20px;
+        margin-top: $ios7-statusbar-height;
       }
     }
     .tabs-top > .tabs,
@@ -40,7 +40,7 @@
       top: 2 * $bar-height + $tabs-height + $ios7-statusbar-height;
     }
   }
-  &.statusbar-hide {
+  &.status-bar-hide {
     // Cordova doesn't adjust the body height correctly, this makes up for it
     margin-bottom: 20px;
   }
