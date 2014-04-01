@@ -87,7 +87,7 @@ function demos {
   cp -Rf $PROJECT_DIR/demos/* demos
 
   CHANGES=$(git status --porcelain)
-  VERSION=$(readJsonProp "package.json" "version")
+  VERSION=$(readJsonProp "$PROJECT_DIR/package.json" "version")
 
   # if no changes, don't commit
   if [[ "$CHANGES" == "" ]]; then
@@ -95,6 +95,7 @@ function demos {
   else
     git add -A
     git commit -am "demos: update for $VERSION"
+    git push -q origin gh-pages
 
     echo "-- Updated deoms for $VERSION successfully!"
   fi
