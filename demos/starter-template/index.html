@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <title>Ionic Starter Template</title>
+
+  <link href="http://code.ionicframework.com/1.0.0-beta.1/css/ionic.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+
+  <script src="http://code.ionicframework.com/1.0.0-beta.1/js/ionic.bundle.min.js"></script>
+  <script src="script.js"></script>
+
+</head>
+
+<body ng-controller="MyCtrl">
+
+  <ion-header-bar class="bar-positive">
+    <button class="button" ng-click="doSomething()">
+      Do Something!
+    </button>
+    <h1 class="title">{{myTitle}}</h1>
+  </ion-header-bar>
+
+  <ion-content class="padding">
+    <h2>Content</h2>
+  </ion-content>
+
+</body>
+</html>

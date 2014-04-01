@@ -1,0 +1,31 @@
+.fake-statusbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  box-sizing: border-box;
+  padding: 2px 3px 3px 3px;
+  max-height: 20px;
+  width: 100%;
+  height: 20px;
+  color: #fff;
+  font-size: 12px;
+}
+.fake-statusbar .time {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.fake-statusbar .pull-left {
+  float: left;
+}
+.fake-statusbar .pull-right {
+  float: right;
+}
+.bar-header {
+  height: 64px !important;
+}
+.bar-header > * {
+  margin-top: 20px !important;
+}

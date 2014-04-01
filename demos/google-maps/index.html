@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <title>Ionic Google Map</title>
+
+  <link href="http://code.ionicframework.com/1.0.0-beta.1/css/ionic.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+
+  <script src="http://code.ionicframework.com/1.0.0-beta.1/js/ionic.bundle.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es&sensor=true"></script>
+  <script src="script.js"></script>
+
+</head>
+
+<body ng-controller="MapCtrl">
+
+  <ion-header-bar class="bar-dark">
+    <h1 class="title">Map</h1>
+  </ion-header-bar>
+
+  <ion-content scroll="false">
+    <div id="map"></div>
+  </ion-content>
+
+  <ion-footer-bar class="bar-dark">
+    <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate">Find Me</a>
+  </ion-footer-bar>
+
+</body>
+</html>
