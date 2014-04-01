@@ -71,7 +71,6 @@ body.grade-c {
 
   // Hide the top border if any
   margin-top: -1px;
-  height: 100%;
 }
 
 /**
@@ -286,6 +285,10 @@ ion-infinite-scroll.active .scroll-infinite {
 /* If you change these, change platform.scss as well */
 .has-header {
   top: $bar-height;
+}
+// Force no header
+.no-header {
+  top: 0;
 }
 
 .has-subheader {
