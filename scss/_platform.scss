@@ -11,6 +11,16 @@
   // if its in Cordova, and set to fullscreen, then disregard the bump.
   &:not(.fullscreen) {
     margin-top: 20px;
+    /*
+     * Make header bar go under the status bar
+     */
+    .bar-header:not(.bar-subheader) {
+      top: -$ios7-statusbar-height;
+      height: $bar-height + $ios7-statusbar-height;
+      > * {
+        margin-top: $ios7-statusbar-height;
+      }
+    }
   }
   &.status-bar-hide {
     // Cordova doesn't adjust the body height correctly, this makes up for it
