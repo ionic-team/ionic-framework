@@ -33,12 +33,12 @@ angular.module('ionic.ui.checkbox', [])
     },
     transclude: true,
 
-    template: '<div class="item item-checkbox disable-pointer-events">' +
-                '<label class="checkbox enable-pointer-events">' +
+    template: '<label class="item item-checkbox">' +
+                '<div class="checkbox">' +
                   '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
-                '</label>' +
-                '<div class="item-content" ng-transclude></div>' +
-              '</div>',
+                '</div>' +
+                '<div class="item-content disable-pointer-events" ng-transclude></div>' +
+              '</label>',
 
     compile: function(element, attr) {
       var input = element.find('input');
