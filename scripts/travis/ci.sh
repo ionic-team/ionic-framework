@@ -100,7 +100,7 @@ function run {
     --version-name="$VERSION_NAME"
 
   ./scripts/site/publish.sh \
-    --action="demos"
+    --action="demos" \
     --version-name="$VERSION_NAME"
 
   ./scripts/cdn/publish.sh \
