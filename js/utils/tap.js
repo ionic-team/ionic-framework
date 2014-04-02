@@ -213,24 +213,24 @@
   var TOUCH_TOLERANCE_Y = 2; // how much the Y coordinates can be off between start/end, but still a click
 
   ionic.Platform.ready(function(){
-
     if(ionic.Platform.grade === 'c') {
       // low performing phones should have a longer ghostclick prevent
       REMOVE_PREVENT_DELAY = 800;
     }
-
-    // set global click handler and check if the event should stop or not
-    document.addEventListener('click', preventGhostClick, true);
-
-    // global release event listener polyfill for HTML elements that were tapped or held
-    ionic.on("release", tapPolyfill, document);
-
-    // listeners used to remove ghostclick prevention
-    document.addEventListener('touchend', removeClickPrevent, false);
-    document.addEventListener('mouseup', removeClickPrevent, false);
-
-    // in the case the user touched the screen, then scrolled, it shouldn't fire the click
-    document.addEventListener('touchstart', recordStartCoordinates, false);
   });
+
+  // set global click handler and check if the event should stop or not
+  document.addEventListener('click', preventGhostClick, true);
+
+  // global release event listener polyfill for HTML elements that were tapped or held
+  ionic.on("release", tapPolyfill, document);
+
+  // listeners used to remove ghostclick prevention
+  document.addEventListener('touchend', removeClickPrevent, false);
+  document.addEventListener('mouseup', removeClickPrevent, false);
+
+  // in the case the user touched the screen, then scrolled, it shouldn't fire the click
+  document.addEventListener('touchstart', recordStartCoordinates, false);
+
 
 })(this, document, ionic);
