@@ -111,8 +111,10 @@ textarea {
 
 .input-label {
   @include flex(1, 0, 100px);
+  display: table;
   padding: 7px 10px 7px 3px;
   max-width: 200px;
+  width: 35%;
   color: $input-label-color;
   font-weight: bold;
   font-size: $font-size-base;

@@ -6,16 +6,16 @@
     <link href="../../dist/css/ionic.css" rel="stylesheet">
     <script src="../../dist/js/ionic.bundle.js"></script>
     <script>
-      angular.module('ionicApp', ['ionic'])
+      angular.module('ionicApp', ['ionic']);
     </script>
   </head>
-  <body class="ionic-pseudo" ng-app="ionicApp">
+  <body ng-app="ionicApp">
 
     <header class="bar bar-header bar-dark">
       <h1 class="title">Text Inputs</h1>
     </header>
 
-    <ion-content has-header="true">
+    <ion-content class="has-header">
 
       <h3>Default Text Input, Not Inset, No Content Padding</h3>
       <div class="list">
@@ -239,7 +239,7 @@
       <h3>Stacked Label On Top Of Text Input, No Parent Content Padding</h3>
       <div class="list">
         <label class="item item-input item-stacked-label">
-          <i class="icon ion-email"></i> 
+          <i class="icon ion-email"></i>
           <span class="input-label">Email</span>
           <input type="text" placeholder="your@email.com">
         </label>
@@ -250,7 +250,7 @@
         <h3>Stacked Label On Top Of Text Input, With Parent Content Padding</h3>
         <div class="list">
           <label class="item item-input item-stacked-label">
-            <i class="icon ion-cloud"></i> 
+            <i class="icon ion-cloud"></i>
             <span class="input-label">SaaS</span>
             <input type="text" placeholder="Codiqa">
           </label>
@@ -259,7 +259,7 @@
         <h3>Stacked Label On Top Of Text Input, list-inset, With Parent Content Padding</h3>
         <div class="list list-inset">
           <label class="item item-input item-stacked-label">
-            <i class="icon ion-headphone"></i> 
+            <i class="icon ion-headphone"></i>
             <span class="input-label">Favorite Music</span>
             <input type="text" placeholder="Bee Gees">
           </label>
