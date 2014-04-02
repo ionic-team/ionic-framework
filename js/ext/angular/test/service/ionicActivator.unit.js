@@ -1,6 +1,8 @@
 describe('Ionic Element Activator', function() {
 
-  window.setTimeout = ionic.requestAnimationFrame = function(cb) { cb(); };
+  beforeEach(function() {
+    window.setTimeout = ionic.requestAnimationFrame = function(cb) { cb(); };
+  });
 
   it('Should activate an <a>', function() {
     var e = { target: document.createElement('a') };
