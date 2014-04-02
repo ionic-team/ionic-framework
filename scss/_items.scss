@@ -390,13 +390,12 @@ button.item,
 
   &:after {
     // By default, both <a> and <button> have right side arrow icons
-    @include display-flex();
-    @include align-items(center);
     @include font-smoothing(antialiased);
     position: absolute;
-    top: 0;
+    top: 50%;
     right: $item-padding - 4;
-    height: 100%;
+    display: block;
+    margin-top: -8px;
     color: #ccc;
     content: "\f125"; // ion-chevron-right
     text-transform: none;
@@ -410,16 +409,12 @@ button.item,
   }
 }
 
-.grade-b,
 .grade-c {
   a.item:after,
   button.item:after,
   .item[href] .item-content:after,
   .item[ng-click] .item-content:after {
-    // override Ionicon arrow with boring character for low end devices
     @include font-smoothing(none);
-    content: '>';
-    font-family: 'monospace';
   }
 }
 
