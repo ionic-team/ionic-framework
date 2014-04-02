@@ -22,7 +22,10 @@
     ele.dispatchEvent(clickEvent);
 
     if(ele.tagName === 'INPUT' || ele.tagName === 'TEXTAREA') {
-      ele.focus();
+      if(ele.selectionStart === 0 && ele.selectionEnd === 0 && !isScrolledSinceStart(e)) {
+        ele.focus();
+        ele.setSelectionRange && ele.setSelectionRange(ele.value.length, ele.value.length);
+      }
       e.preventDefault();
     } else {
       blurActive();

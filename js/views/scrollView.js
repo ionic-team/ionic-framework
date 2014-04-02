@@ -617,12 +617,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
     });
 
     function shouldIgnorePress(e) {
-      // Don't react if initial down happens on a form element
-      return e.target.tagName.match(/object|embed/i) ||
+      return e.target.tagName.match(/input|textarea|select|object|embed/i) ||
              e.target.isContentEditable ||
              (e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-default') == 'true');
     }
-
 
     if ('ontouchstart' in window) {
 

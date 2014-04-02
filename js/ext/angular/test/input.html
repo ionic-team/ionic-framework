@@ -1,7 +1,7 @@
 <html ng-app="navTest">
   <head>
     <meta charset="utf-8">
-    <title>Checkbox</title>
+    <title>Inputs</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <style>
@@ -24,7 +24,9 @@
           <input type="text" value="header input">
         </label>
       </header>
-      <ion-content class="has-header" padding="true" overflow-scroll="false">
+
+      <ion-content class="has-header padding">
+
         <div class="list">
           <label class="item item-input">
             <span class="input-label">Your Name</span>
@@ -51,6 +53,66 @@
         <label class="item item-input item-stacked-label">
           <span class="input-label">Comment</span>
           <textarea id="textarea">comment textarea</textarea>
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">From</span>
+          <input type="text" value="">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">To</span>
+          <input type="text" value="">
+        </label>
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Comment</span>
+          <textarea id="textarea"></textarea>
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">From</span>
+          <input type="text" value="">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">To</span>
+          <input type="text" value="">
+        </label>
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Comment</span>
+          <textarea id="textarea"></textarea>
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">From</span>
+          <input type="text" value="">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">To</span>
+          <input type="text" value="">
+        </label>
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Comment</span>
+          <textarea id="textarea"></textarea>
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">From</span>
+          <input type="text" value="">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">To</span>
+          <input type="text" value="">
+        </label>
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Comment</span>
+          <textarea id="textarea"></textarea>
         </label>
 
         <button class="button button-block button-energized" ng-click="openModal()">
@@ -98,7 +160,7 @@
 
       var msgs = [];
       var timerId;
-      console.debug = function() {
+      console.debug2 = function() {
         var msg = [];
         for (var i = 0, j = arguments.length; i < j; i++){
           msg.push(arguments[i]);
