@@ -601,7 +601,6 @@ button.item-button-right:after,
   width: $item-left-edit-open-width;
   height: 100%;
   line-height: 100%;
-  opacity: 0;
 
   .button {
     height: 100%;
@@ -619,7 +618,6 @@ button.item-button-right:after,
 .list-left-editing .item-left-edit,
 .item-left-editing .item-left-edit {
   @include translate3d($item-left-edit-left, 0, 0);
-  opacity: 1;
 }
 
 
@@ -640,6 +638,7 @@ button.item-button-right:after,
 // -------------------------------
 
 .item-right-edit {
+  @include transition(all $item-edit-transition-function $item-edit-transition-duration);
   position: absolute;
   top: 0;
   right: 0;
@@ -675,6 +674,8 @@ button.item-button-right:after,
 .item-reordering {
   // item is actively being reordered
   position: absolute;
+  left: 0;
+  top: 0;
   z-index: $z-index-item-reordering;
   width: 100%;
   box-shadow: 0px 0px 10px 0px #aaa;
@@ -687,6 +688,18 @@ button.item-button-right:after,
 .item-placeholder {
   // placeholder for the item that's being reordered
   opacity: 0.7;
+}
+
+.item-left-edit.item-delete,
+.item-right-edit.item-reorder {
+  opacity: 1;
+  &.ng-hide {
+    opacity: 0;
+  }
+  &.ng-hide-add,
+  &.ng-hide-remove {
+    display: block !important;
+  }
 }
 
 
@@ -706,8 +719,4 @@ button.item-button-right:after,
     border: none;
     border-radius: 0;
   }
-}
-
-.item-options-hide .item-options {
-  display: none;
 }
