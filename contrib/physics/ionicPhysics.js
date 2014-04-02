@@ -122,6 +122,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
     };
 
     // Process one step of the integration
+    /*
     var integrate = function(dt) {
       if(selectedBody) {
         // if we have a body, we need to move it the the new mouse position.
@@ -137,6 +138,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
         return;
       }
     };
+    */
 
     var initWorld = function() {
       // Hardcoded, good simulation defaults
@@ -148,7 +150,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
         maxIPF: iterations
       });
 
-      world.subscribe('integrate:positions', integrate, this);
+      //world.subscribe('integrate:positions', integrate, this);
 
       // CREATE BEHAVIORS AND SHIT
 
@@ -266,26 +268,42 @@ angular.module('ionic.contrib.physics', ['ionic'])
         var x = e.gesture.touches[0].pageX;
         var y = e.gesture.touches[0].pageY;
 
-        tapPos.set(x, y);
+        //tapPos.set(x, y);
 
         var body = world.findOne({ $at: Physics.vector(x, y) });
         console.log('Starting touch on', body);
 
         selectedBody = body;
 
+        /*
         if(body) {
           body.fixed = true;
           tapOffset.clone(tapPos).vsub(body.state.pos);
+        }
+        */
+
+        if(body) {
+          var md = Physics.body('point', {
+            x: x,
+            y: y
+          });
+
+          this._tapJoint = constraints.distanceConstraint(md, body, 0.2);
         }
       },
 
       touchDrag: function(e) {
         e.gesture.srcEvent.preventDefault();
-        tapPosOld.clone(tapPos);
+        //tapPosOld.clone(tapPos);
 
         var x = e.gesture.touches[0].pageX;
         var y = e.gesture.touches[0].pageY;
-        tapPos.set(x, y);
+        console.log(x, y);
+        //tapPos.set(x, y);
+
+        if(this._tapJoint)
+          this._tapJoint.bodyA.state.pos.set(x, y);
+
       },
       endTouch: function(e) {
         e.gesture.srcEvent.preventDefault();
@@ -294,6 +312,12 @@ angular.module('ionic.contrib.physics', ['ionic'])
         var x = e.gesture.touches[0].pageX;
         var y = e.gesture.touches[0].pageY;
 
+        if(this._tapJoint) {
+          constraints.remove(this._tapJoint);
+        }
+        this._tapJoint = null;
+
+        /*
         tapPosOld.clone(tapPos);
         tapPos.set(x, y);
 
@@ -301,6 +325,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
           console.log("not fixed");
           selectedBody.fixed = false;
         }
+        */
 
         selectedBody = null;
       }

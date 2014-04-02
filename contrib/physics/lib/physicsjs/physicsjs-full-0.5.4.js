@@ -6692,7 +6692,6 @@ Physics.renderer('dom', function( proto ){
             var pos = body.state.pos;
 
             view.style[cssTransform] = 'translate3d('+pos.get(0)+'px, '+pos.get(1)+'px, 0px) rotate(' + body.state.angular.pos.toFixed(20) + 'rad)';
-            console.log(view.style[cssTransform]);
         };
     } else {
         drawBody = function( body, view ){
