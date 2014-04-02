@@ -47,9 +47,10 @@
     var e = orgEvent.gesture.srcEvent; // evaluate the actual source event, not the created event by gestures.js
     var ele = e.target;
 
-    if( isRecentTap(e) ) {
-      // if a tap in the same area just happened, don't continue
-      console.debug('tapPolyfill', 'isRecentTap', ele.tagName);
+    if( isRecentTap(e) || e.type === 'touchcancel' ) {
+      // if a tap in the same area just happened,
+      // or it was a touchcanel event, don't continue
+      console.debug('tapPolyfill', 'isRecentTap', ele.tagName, 'type:', e.type);
       return stopEvent(e);
     }
 
