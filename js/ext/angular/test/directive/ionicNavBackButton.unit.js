@@ -2,7 +2,7 @@ describe('ionNavBackButton directive', function() {
   beforeEach(module('ionic', function($compileProvider) {
     $compileProvider.directive('needsScroll', function() {
       return {
-        //Test if the buttons are 'children of ionScroll' when compiled 
+        //Test if the buttons are 'children of ionScroll' when compiled
         require: '^$ionicScroll',
         link: function(scope, element, attrs, ctrl) {
           element.data('scrollCtrl', ctrl);
@@ -24,7 +24,7 @@ describe('ionNavBackButton directive', function() {
     return el;
   }
 
-  it('should compile buttons with same scope & access the same data on compile', inject(function($compile, $rootScope) {
+  it('ionNavButtons should compile buttons with same scope & access the same data on compile', inject(function($compile, $rootScope) {
     var el = $compile('<div>' +
      '<ion-nav-bar></ion-nav-bar>' +
      '<ion-view>' +
@@ -66,16 +66,17 @@ describe('ionNavBackButton directive', function() {
   });
 
   it('should hide based on backButtonShown && hasBackButton', function() {
+    ionic.animationFrameThrottle = function(cb) { return cb; };
     var el = setup();
-    expect(el.hasClass('hide')).toBe(true);
+    expect(el.hasClass('ng-hide')).toBe(true);
     el.scope().$apply('backButtonShown = true; hasBackButton = true');
-    expect(el.hasClass('hide')).toBe(false);
+    expect(el.hasClass('ng-hide')).toBe(false);
     el.scope().$apply('backButtonShown = false; hasBackButton = true');
-    expect(el.hasClass('hide')).toBe(true);
+    expect(el.hasClass('ng-hide')).toBe(true);
     el.scope().$apply('backButtonShown = true; hasBackButton = false');
-    expect(el.hasClass('hide')).toBe(true);
+    expect(el.hasClass('ng-hide')).toBe(true);
     el.scope().$apply('backButtonShown = true; hasBackButton = true');
-    expect(el.hasClass('hide')).toBe(false);
+    expect(el.hasClass('ng-hide')).toBe(false);
   });
 
   it('should transclude content', function() {
