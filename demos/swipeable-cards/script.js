@@ -1,19 +1,5 @@
 
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.services' is found in services.js
-// 'starter.controllers' is found in controllers.js
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.services' is found in services.js
-// 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ionic.contrib.ui.cards'])
+angular.module('cardsApp', ['ionic', 'ionic.contrib.ui.cards'])
 
 .directive('noScroll', function($document) {
 
@@ -25,7 +11,7 @@ angular.module('starter', ['ionic', 'ionic.contrib.ui.cards'])
         e.preventDefault();
       });
     }
-  }
+  };
 })
 
 .controller('CardsCtrl', function($scope, $ionicSwipeCardDelegate) {
@@ -51,7 +37,7 @@ angular.module('starter', ['ionic', 'ionic.contrib.ui.cards'])
     var newCard = cardTypes[Math.floor(Math.random() * cardTypes.length)];
     newCard.id = Math.random();
     $scope.cards.push(angular.extend({}, newCard));
-  }
+  };
 })
 
 .controller('CardCtrl', function($scope, $ionicSwipeCardDelegate) {
