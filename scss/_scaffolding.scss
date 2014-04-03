@@ -269,17 +269,6 @@ ion-infinite-scroll.active .scroll-infinite {
 }
 
 
-.overflow-scroll {
-  overflow-x: hidden;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-
-  .scroll {
-    position: static;
-    height: 100%;
-  }
-}
-
 // Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
 // Note: For these to work, content must come after both bars in the markup
 /* If you change these, change platform.scss as well */
