@@ -547,7 +547,7 @@ $ios7-transition-duration: 250ms;
  */
 $nav-title-slide-ios7-delay: 250ms;
 .nav-title-slide-ios7 {
-  .button.back-button {
+  &:not(.no-animation) .button.back-button {
     @include transition(all $nav-title-slide-ios7-delay);
     @include transition-timing-function($ios7-timing-function);
 
