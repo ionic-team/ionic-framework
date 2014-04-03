@@ -38,6 +38,76 @@ describe('Ionic Angular Side Menu', function() {
     expect(el.controller('ionSideMenus').canDragContent()).toBe(true);
     expect(el.scope().dragContent).toBe(true);
   }));
+
+  it('should isDraggableTarget', inject(function($compile, $rootScope) {
+    var el = $compile('<ion-side-menus><ion-side-menu-content></ion-side-menu-content></ion-side-menus>')($rootScope.$new());
+    $rootScope.$apply();
+
+    expect(el.controller('ionSideMenus').canDragContent()).toBe(true);
+
+    var e = {
+      gesture: {
+        srcEvent: {
+          defaultPrevented: false
+        }
+      },
+      target: {
+        tagName: 'DIV',
+        dataset: {
+          preventScroll: false
+        }
+      }
+    };
+
+    var ctrl = el.controller('ionSideMenus');
+    expect(ctrl.isDraggableTarget(e)).toBe(true);
+
+    el.controller('ionSideMenus').canDragContent(false);
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
+    el.controller('ionSideMenus').canDragContent(true);
+
+    e.gesture.srcEvent.defaultPrevented = true;
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
+    e.gesture.srcEvent.defaultPrevented = false;
+
+    e.target.tagName = 'INPUT';
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
+
+    e.target.tagName = 'TEXTAREA';
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
+
+    e.target.tagName = 'SELECT';
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
+
+    e.target.tagName = 'OBJECT';
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
+
+    e.target.tagName = 'EMBED';
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
+
+    e.target.tagName = 'DIV';
+    expect(ctrl.isDraggableTarget(e)).toBe(true);
+
+    e.target.isContentEditable = true;
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
+    e.target.isContentEditable = false;
+
+    e.target.dataset.preventScroll = true
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
+    e.target.isContentEditable = false;
+
+    e.target.dataset = undefined;
+    e.target.getAttribute = function(val){
+      return (val == 'data-prevent-default' ? 'true' : undefined);
+    }
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
+
+    e.target.getAttribute = function(){
+      return null;
+    }
+    expect(ctrl.isDraggableTarget(e)).toBe(true);
+
+  }));
 });
 
 describe('Ionic Side Menu Content Directive', function () {

@@ -1,7 +1,7 @@
 
 ARG_DEFS=(
   "[--version-name=(.*)]"
-  "--action=(clone|updateConfig|docs)"
+  "--action=(clone|updateConfig|docs|demos)"
 )
 
 function init {
@@ -73,6 +73,31 @@ function docs {
     git push -q origin gh-pages
 
     echo "-- Updated docs for $VERSION_NAME succesfully!"
+  fi
+}
+
+function demos {
+  echo "######################################"
+  echo "## Updating demos for $VERSION_NAME ##"
+  echo "######################################"
+
+  cd $IONIC_SITE_DIR
+
+  mkdir -p demos
+  cp -Rf $PROJECT_DIR/demos/* demos
+
+  CHANGES=$(git status --porcelain)
+  VERSION=$(readJsonProp "$PROJECT_DIR/package.json" "version")
+
+  # if no changes, don't commit
+  if [[ "$CHANGES" == "" ]]; then
+    echo "-- No changes detected in demos for $VERSION; demos not updated."
+  else
+    git add -A
+    git commit -am "demos: update for $VERSION"
+    git push -q origin gh-pages
+
+    echo "-- Updated deoms for $VERSION successfully!"
   fi
 }
 

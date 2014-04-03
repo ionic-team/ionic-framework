@@ -86,9 +86,9 @@
   left: 4px;
   border: none;
   color: $checkbox-check-color;
+  content: '\2713';
   font-weight: bold;
   font-size: 20px;
-  content: '\2713';
 }
 
 /* what the checkmark looks like when its checked */
@@ -107,11 +107,9 @@
 
 /* position the checkbox to the left within an item */
 .item-checkbox .checkbox {
-  @include display-flex();
-  @include align-items(center);
   position: absolute;
-  top: 0;
+  top: 50%;
   left: $item-padding / 2;
   z-index: $z-index-item-checkbox;
-  height: 100%;
+  margin-top: (($checkbox-height + ($checkbox-height / 2)) / 2) * -1;
 }

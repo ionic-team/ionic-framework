@@ -90,6 +90,7 @@
 }
 
 /* Allow parent element to have tabs-top */
+/* If you change this, change platform.scss as well */
 .tabs-top > .tabs,
 .tabs.tabs-top {
   top: $bar-height;

@@ -1,0 +1,94 @@
+
+/**
+ * Select
+ * --------------------------------------------------
+ */
+
+
+// shared styles for transparent select elements
+.select-inline select,
+.item-select select {
+  @include appearance(none);
+  border: none;
+  background: transparent;
+  color: #333;
+
+  // hack to hide default dropdown arrow in FF
+  text-indent: 1px;
+  text-overflow: '';
+
+  white-space: nowrap;
+  font-size: $font-size-base;
+}
+
+.select-inline {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  border: $input-border-width solid $input-border;
+  border-radius: 2px;
+  background-color: $input-bg;
+  color: $input-color;
+
+  vertical-align: middle;
+  font-size: $font-size-base;
+  line-height: $font-size-base + 2;
+
+  select {
+    padding: 6px 25px 7px 8px;
+  }
+}
+
+.select-inline + .select-inline {
+  margin-left: 6px;
+}
+
+.item-select {
+  position: static; // required for Android 2.3
+
+  select {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: ($item-padding - 2) ($item-padding * 3) ($item-padding) 5px;
+    width: 100%;
+    direction: rtl; // right align the select text
+
+    &:focus {
+      min-width: 20%;
+      width: auto; // shrink width when opened
+    }
+  }
+}
+
+
+// shared styles for dropdown arrow
+.select-inline:after,
+.item-select:after {
+  position: absolute;
+  top: 50%;
+  margin-top: -3px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid;
+  border-right: 5px solid rgba(0, 0, 0, 0);
+  border-left: 5px solid rgba(0, 0, 0, 0);
+  color: #999;
+  content: "";
+  pointer-events: none;
+}
+
+.select-inline:after {
+  right: 7px;
+}
+
+.item-select:after {
+  right: $item-padding;
+}
+
+select {
+  &[multiple],
+  &[size] {
+    height: auto;
+  }
+}

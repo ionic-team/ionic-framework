@@ -22,7 +22,9 @@
     ele.dispatchEvent(clickEvent);
 
     if(ele.tagName === 'INPUT' || ele.tagName === 'TEXTAREA') {
-      ele.focus();
+      if(!isScrolledSinceStart(e)) {
+        ele.focus();
+      }
       e.preventDefault();
     } else {
       blurActive();
@@ -47,9 +49,10 @@
     var e = orgEvent.gesture.srcEvent; // evaluate the actual source event, not the created event by gestures.js
     var ele = e.target;
 
-    if( isRecentTap(e) ) {
-      // if a tap in the same area just happened, don't continue
-      console.debug('tapPolyfill', 'isRecentTap', ele.tagName);
+    if( isRecentTap(e) || e.type === 'touchcancel' ) {
+      // if a tap in the same area just happened,
+      // or it was a touchcanel event, don't continue
+      console.debug('tapPolyfill', 'isRecentTap', ele.tagName, 'type:', e.type);
       return stopEvent(e);
     }
 
@@ -135,10 +138,10 @@
       return false;
     }
 
-    return (c.x > startCoordinates.x + 2 ||
-            c.x < startCoordinates.x - 2 ||
-            c.y > startCoordinates.y + 2 ||
-            c.y < startCoordinates.y - 2);
+    return (c.x > startCoordinates.x + TOUCH_TOLERANCE_X ||
+            c.x < startCoordinates.x - TOUCH_TOLERANCE_X ||
+            c.y > startCoordinates.y + TOUCH_TOLERANCE_Y ||
+            c.y < startCoordinates.y - TOUCH_TOLERANCE_Y);
   }
 
   function recordCoordinates(event) {
@@ -180,7 +183,6 @@
     clickPreventTimerId = setTimeout(function(){
       var tap = isRecentTap(e);
       if(tap) delete tapCoordinates[tap.id];
-      startCoordinates = {};
     }, REMOVE_PREVENT_DELAY);
   }
 
@@ -206,31 +208,32 @@
   }
 
   var tapCoordinates = {}; // used to remember coordinates to ignore if they happen again quickly
-  var startCoordinates = {}; // used to remember where the coordinates of the start of the tap
+  var startCoordinates = {}; // used to remember where the coordinates of the start of a touch
   var CLICK_PREVENT_DURATION = 1500; // max milliseconds ghostclicks in the same area should be prevented
   var REMOVE_PREVENT_DELAY = 380; // delay after a touchend/mouseup before removing the ghostclick prevent
-  var HIT_RADIUS = 15;
+  var HIT_RADIUS = 15; // surrounding area of a click that if a ghostclick happens it would get ignored
+  var TOUCH_TOLERANCE_X = 4; // how much the X coordinates can be off between start/end, but still a click
+  var TOUCH_TOLERANCE_Y = 2; // how much the Y coordinates can be off between start/end, but still a click
 
   ionic.Platform.ready(function(){
-
     if(ionic.Platform.grade === 'c') {
       // low performing phones should have a longer ghostclick prevent
       REMOVE_PREVENT_DELAY = 800;
     }
-
-    // set global click handler and check if the event should stop or not
-    document.addEventListener('click', preventGhostClick, true);
-
-    // global release event listener polyfill for HTML elements that were tapped or held
-    ionic.on("release", tapPolyfill, document);
-
-    // listeners used to remove ghostclick prevention
-    document.addEventListener('touchend', removeClickPrevent, false);
-    document.addEventListener('mouseup', removeClickPrevent, false);
-
-    // in the case the user touched the screen, then scrolled, it shouldn't fire the click
-    document.addEventListener('touchstart', recordStartCoordinates, false);
-    document.addEventListener('mousedown', recordStartCoordinates, false);
   });
+
+  // set global click handler and check if the event should stop or not
+  document.addEventListener('click', preventGhostClick, true);
+
+  // global release event listener polyfill for HTML elements that were tapped or held
+  ionic.on("release", tapPolyfill, document);
+
+  // listeners used to remove ghostclick prevention
+  document.addEventListener('touchend', removeClickPrevent, false);
+  document.addEventListener('mouseup', removeClickPrevent, false);
+
+  // in the case the user touched the screen, then scrolled, it shouldn't fire the click
+  document.addEventListener('touchstart', recordStartCoordinates, false);
+
 
 })(this, document, ionic);

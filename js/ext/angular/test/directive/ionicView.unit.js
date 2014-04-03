@@ -33,7 +33,17 @@ describe('ionView directive', function() {
     expect(el.html()).toBe('<b>some</b> html');
   });
 
-  it('should changeTitle with a navDirection', function() {
+  it('should not changeTitle with undefined title attr', function() {
+    var el = setup();
+    expect(el.controller('ionNavBar').changeTitle).not.toHaveBeenCalled();
+  });
+
+  it('should changeTitle with blank if title attr is blank', function() {
+    var el = setup('title=""', {$navDirection: 'someDirection'});
+    expect(el.controller('ionNavBar').changeTitle).toHaveBeenCalledWith('', 'someDirection');
+  });
+
+  it('should changeTitle with a navDirection if title set', function() {
     var el = setup('title="Hi, {{1}}!"', {$navDirection: 'foo'});
     expect(el.controller('ionNavBar').changeTitle).toHaveBeenCalledWith('Hi, 1!', 'foo');
   });

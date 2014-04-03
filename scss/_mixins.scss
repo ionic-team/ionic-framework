@@ -12,7 +12,8 @@
     color: $color;
     text-decoration: none;
   }
-  &.active {
+  &.active,
+  &.activated {
     border-color: $active-border-color;
     background-color: $active-bg-color;
     box-shadow: inset 0px 1px 3px rgba(0,0,0,0.15);
@@ -44,7 +45,8 @@
       $text-color: $color;
     }
     color: $text-color;
-    &.active {
+    &.active,
+    &.activated {
       background-color: $color;
       box-shadow: none;
       color: #fff;

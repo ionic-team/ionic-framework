@@ -7,14 +7,15 @@ angular.module('ionic.ui.toggle', [])
  * @ngdoc directive
  * @name ionToggle
  * @module ionic
+ * @codepen tfAzj
  * @restrict E
  *
  * @description
- * An animated switch which binds a given model to a boolean.
+ * A toggle is an animated switch which binds a given model to a boolean.
  *
  * Allows dragging of the switch's nub.
  *
- * Behaves like any [AngularJS checkbox](http://docs.angularjs.org/api/ng/input/input[checkbox]) otherwise.
+ * The toggle behaves like any [AngularJS checkbox](http://docs.angularjs.org/api/ng/input/input[checkbox]) otherwise.
  *
  */
 .directive('ionToggle', ['$ionicGesture', '$timeout', function($ionicGesture, $timeout) {
@@ -55,7 +56,7 @@ angular.module('ionic.ui.toggle', [])
          checkbox = el.children[0];
          track = el.children[1];
          handle = track.children[0];
-         
+
          var ngModelController = angular.element(checkbox).controller('ngModel');
 
          $scope.toggle = new ionic.views.Toggle({

@@ -65,12 +65,12 @@ body.grade-c {
 }
 
 .scroll-view {
+  display: block;
   position: relative;
   overflow: hidden;
 
   // Hide the top border if any
   margin-top: -1px;
-  height: 100%;
 }
 
 /**
@@ -282,8 +282,13 @@ ion-infinite-scroll.active .scroll-infinite {
 
 // Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
 // Note: For these to work, content must come after both bars in the markup
+/* If you change these, change platform.scss as well */
 .has-header {
   top: $bar-height;
+}
+// Force no header
+.no-header {
+  top: 0;
 }
 
 .has-subheader {

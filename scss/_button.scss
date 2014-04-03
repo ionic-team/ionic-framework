@@ -164,7 +164,8 @@
   border-color: transparent;
   background: none;
 
-  &.button.active {
+  &.button.active,
+  &.button.activated {
     border-color: transparent;
     background: none;
     box-shadow: none;
@@ -186,7 +187,8 @@
   background: none;
   box-shadow: none;
 
-  &.active {
+  &.active,
+  &.activated {
     opacity: 0.3;
   }
 }

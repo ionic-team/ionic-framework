@@ -99,6 +99,10 @@ function run {
     --action="docs" \
     --version-name="$VERSION_NAME"
 
+  ./scripts/site/publish.sh \
+    --action="demos" \
+    --version-name="$VERSION_NAME"
+
   ./scripts/cdn/publish.sh \
     --version=$VERSION \
     --version-name="$VERSION_NAME"

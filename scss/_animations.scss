@@ -541,11 +541,27 @@ $ios7-transition-duration: 250ms;
 }
 
 
+
 /**
  * Some component specific animations
  */
 $nav-title-slide-ios7-delay: 250ms;
 .nav-title-slide-ios7 {
+  .button.back-button {
+    @include transition(all $nav-title-slide-ios7-delay);
+    @include transition-timing-function($ios7-timing-function);
+
+    @include translate3d(0%, 0, 0);
+    opacity: 1;
+    &.ng-hide {
+      opacity: 0;
+      @include translate3d(30%, 0, 0);
+    }
+    &.ng-hide-add,
+    &.ng-hide-remove {
+      display: block !important;
+    }
+  }
   > .ng-enter, &.ng-enter,
   > .ng-leave, &.ng-leave {
     @include transition(all $nav-title-slide-ios7-delay);

@@ -4,9 +4,6 @@ echo "##############################"
 echo "# Pushing release to $RELEASE_REMOTE #"
 echo "##############################"
 
-# Inspired by AngularJS's finalize-version script
-# Run by travis when it detects a commit that changes package.json version
-
 ARG_DEFS=(
   "--codename=(.*)"
   "--version=(.*)"
@@ -52,6 +49,8 @@ function run {
   git push -q $RELEASE_REMOTE v$VERSION
 
   echo "-- v$VERSION \"$CODENAME\" pushed to $RELEASE_REMOTE/master successfully!"
+
+  gulp tweet --release --codeversion "$VERSION" --codename "$CODENAME"
 }
 
 source $(dirname $0)/../utils.inc

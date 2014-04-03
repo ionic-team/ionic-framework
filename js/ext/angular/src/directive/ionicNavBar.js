@@ -372,12 +372,15 @@ function($ionicViewService, $rootScope, $animate, $compile) {
  * }
  * ```
  */
-.directive('ionNavBackButton', ['$ionicNgClick', function($ionicNgClick) {
+.directive('ionNavBackButton', [
+  '$ionicNgClick',
+  '$animate',
+function($ionicNgClick, $animate) {
   return {
     restrict: 'E',
     require: '^ionNavBar',
     compile: function(tElement, tAttrs) {
-      tElement.addClass('button back-button');
+      tElement.addClass('button back-button ng-hide');
       return function($scope, $element, $attr, navBarCtrl) {
         if (!$attr.ngClick) {
           $scope.$navBack = navBarCtrl.back;
@@ -396,9 +399,10 @@ function($ionicViewService, $rootScope, $animate, $compile) {
 
         //Make sure both that a backButton is allowed in the first place,
         //and that it is shown by the current view.
-        $scope.$watch('!!(backButtonShown && hasBackButton)', function(show) {
-          $element.toggleClass('hide', !show);
-        });
+        $scope.$watch('!!(backButtonShown && hasBackButton)', ionic.animationFrameThrottle(function(show) {
+          if (show) $animate.removeClass($element, 'ng-hide');
+          else $animate.addClass($element, 'ng-hide');
+        }));
       };
     }
   };
@@ -450,11 +454,11 @@ function($ionicViewService, $rootScope, $animate, $compile) {
           navBarCtrl.rightButtonsElement :
           navBarCtrl.leftButtonsElement;
 
-        //Put all of our inside buttons into their own div,
+        //Put all of our inside buttons into their own span,
         //so we can remove them all when this element dies -
         //even if the buttons have changed through an ng-repeat or the like,
         //we just remove their div parent and they are gone.
-        var buttons = angular.element('<div>').append(content);
+        var buttons = angular.element('<span>').append(content);
 
         //Compile buttons inside content so they have access to everything
         //something inside content does (eg parent ionicScroll)

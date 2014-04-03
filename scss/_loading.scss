@@ -1,0 +1,46 @@
+
+/**
+ * Loading
+ * --------------------------------------------------
+ */
+
+.loading-backdrop {
+  @include transition(visibility 0s linear $loading-backdrop-fadein-duration);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $z-index-loading-backdrop;
+
+  visibility: hidden;
+  width: 100%;
+  height: 100%;
+
+  &.active {
+    @include transition-delay(0s);
+    visibility: visible;
+
+    &.show-backdrop {
+      background-color: $loading-backdrop-bg-color;
+    }
+  }
+}
+
+.loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  padding: $loading-padding;
+
+  border-radius: $loading-border-radius;
+  background-color: $loading-bg-color;
+
+  color: $loading-text-color;
+
+  text-align: center;
+  text-overflow: ellipsis;
+  font-size: $loading-font-size;
+
+  h1, h2, h3, h4, h5, h6 {
+    color: $loading-text-color;
+  }
+}

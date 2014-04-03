@@ -261,12 +261,103 @@ describe('tabs', function() {
     });
   });
 
-  describe('ionTab directive', function() {
+  describe('ionicTab controller', function() {
     beforeEach(module('ionic'));
-    var tabsCtrl, tabsEl, scope;
+    function setup(attrs) {
+      var ctrl;
+      inject(function($controller, $rootScope) {
+        ctrl = $controller('ionicTab', {
+          $scope: $rootScope.$new(),
+          $attrs: attrs || {}
+        });
+      });
+      return ctrl;
+    }
+
+    it('.hrefMatchesState', inject(function($location) {
+      spyOn($location, 'path').andReturn('/a/b/c');
+      var attr = {};
+      var ctrl = setup(attr);
+
+      expect(ctrl.hrefMatchesState()).toBeFalsy();
+
+      attr.href = 'a';
+      expect(ctrl.hrefMatchesState()).toBe(false);
+
+      attr.href = '/a';
+      expect(ctrl.hrefMatchesState()).toBe(true);
+
+      attr.href = '#/a';
+      expect(ctrl.hrefMatchesState()).toBe(true);
+
+      attr.href = '#/a/b/c';
+      expect(ctrl.hrefMatchesState()).toBe(true);
+
+      attr.href = '#/a/b/c/';
+      expect(ctrl.hrefMatchesState()).toBe(true);
+
+      attr.href = '/a/b/c/';
+      expect(ctrl.hrefMatchesState()).toBe(true);
+
+      attr.href = '/a/b/c/d';
+      expect(ctrl.hrefMatchesState()).toBe(false);
+
+      attr.href = 'something';
+      expect(ctrl.hrefMatchesState()).toBe(false);
+    }));
+
+    it('.srefMatchesState', inject(function($state) {
+      spyOn($state, 'includes').andReturn(111);
+      var attr = {};
+      var ctrl = setup(attr);
+
+      expect(ctrl.srefMatchesState()).toBeFalsy();
+      expect($state.includes).not.toHaveBeenCalled();
+
+      //We won't unit test $state.includes, only that it was called
+      attr.uiSref = 'abc';
+      expect(ctrl.srefMatchesState()).toBe(111);
+      expect($state.includes).toHaveBeenCalledWith('abc');
+
+      $state.includes.reset();
+      attr.uiSref = 'def({ param: "value" })';
+      ctrl.srefMatchesState();
+      expect($state.includes).toHaveBeenCalledWith('def');
+    }));
+
+    it('.navNameMatchesState', inject(function($ionicViewService) {
+      spyOn($ionicViewService, 'isCurrentStateNavView').andReturn(123);
+
+      var ctrl = setup();
+      expect(ctrl.navNameMatchesState()).toBeFalsy();
+
+      ctrl.navViewName = 'foo';
+      expect(ctrl.navNameMatchesState()).toBe(123);
+      expect($ionicViewService.isCurrentStateNavView).toHaveBeenCalledWith('foo');
+    }));
+  });
+
+  describe('ionTab directive', function() {
+    var tabDoesMatch;
+    beforeEach(module('ionic', function($controllerProvider) {
+      $controllerProvider.register('ionicTab', function($scope) {
+        this.$scope = $scope;
+        this.tabMatchesState = jasmine.createSpy('tabMatchesState')
+          .andCallFake(function() {
+            return tabDoesMatch;
+          });
+      });
+    }));
+
+    var tabsCtrl, tabsEl, scope, tabEl;
     function setup(attrs, content) {
       inject(function($compile, $rootScope) {
-        tabsEl = angular.element('<ion-tabs><ion-tab '+(attrs||'')+'>'+(content||'')+'</ion-tab></ion-tabs>');
+        tabsEl = angular.element(
+          '<ion-tabs>' +
+            '<ion-tab '+(attrs||'')+'>'+(content||'')+'</ion-tab>' +
+          '</ion-tabs>'
+        );
+        tabEl = tabsEl.find('ion-tab');
 
         $compile(tabsEl)($rootScope.$new());
         $rootScope.$apply();
@@ -323,32 +414,48 @@ describe('tabs', function() {
       expect(navItem.parent().length).toBe(0);
     });
 
-    it('should not set navViewName if no child nav-view', function() {
+    it('should not set navViewName by default', function() {
       setup();
-      expect(tabsCtrl.tabs[0].navViewName).toBeUndefined();
+      expect(tabEl.controller('ionTab').navViewName).toBeUndefined();
     });
 
     angular.forEach(['ion-nav-view', 'data-ion-nav-view'], function(directive) {
-      it('should set navViewName and select when necessary if a child '+directive, inject(function($ionicViewService, $rootScope) {
-        var isCurrent = false;
-        spyOn($ionicViewService, 'isCurrentStateNavView').andCallFake(function(name) {
-          return isCurrent;
-        });
-
+      it('should set navViewName if a child '+directive, inject(function($ionicViewService, $rootScope) {
         setup('', '<' + directive + ' name="banana"></' + directive + '>');
         spyOn(tabsCtrl, 'select');
         var tab = tabsCtrl.tabs[0];
 
-        expect(tab.navViewName).toBe('banana');
-        expect($ionicViewService.isCurrentStateNavView).toHaveBeenCalledWith('banana');
-
-        $ionicViewService.isCurrentStateNavView.reset();
-        isCurrent = true;
-        $rootScope.$broadcast('$stateChangeSuccess');
-
-        expect($ionicViewService.isCurrentStateNavView).toHaveBeenCalledWith('banana');
-        expect(tabsCtrl.select).toHaveBeenCalledWith(tab);
+        expect(tabEl.controller('ionTab').navViewName).toBe('banana');
       }));
+    });
+
+    it('should call tabMatchesState on compile and if match select', function() {
+      setup();
+      expect(tabEl.controller('ionTab').tabMatchesState).toHaveBeenCalled();
+
+      tabDoesMatch = true;
+      setup();
+      expect(tabEl.controller('ionTab').tabMatchesState).toHaveBeenCalled();
+    });
+
+    it('should call selectIfMatchesState on $stateChangeSuccess', function() {
+      setup();
+      var tabMatchesState = tabEl.controller('ionTab').tabMatchesState;
+
+      tabMatchesState.reset();
+      spyOn(tabsCtrl, 'select');
+      tabDoesMatch = false;
+
+      tabEl.scope().$broadcast('$stateChangeSuccess');
+      expect(tabMatchesState).toHaveBeenCalled();
+      expect(tabsCtrl.select).not.toHaveBeenCalled();
+
+      tabMatchesState.reset();
+      tabDoesMatch = true;
+
+      tabEl.scope().$broadcast('$stateChangeSuccess');
+      expect(tabMatchesState).toHaveBeenCalled();
+      expect(tabsCtrl.select).toHaveBeenCalledWith(tabEl.scope());
     });
 
     it('should transclude on $tabSelected=true', function() {

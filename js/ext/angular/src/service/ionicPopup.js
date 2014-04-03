@@ -184,7 +184,7 @@ angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
     popup.el.classList.add('popup-hidden');
 
     $timeout(function() {
-      popup.el.remove();
+      popup.el.parentNode.removeChild(popup.el);
     }, 400);
   };
 

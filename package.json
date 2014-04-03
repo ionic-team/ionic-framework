@@ -44,7 +44,8 @@
     "js-yaml": "3.0.2",
     "event-stream": "3.1.0",
     "gulp-strip-debug": "^0.3.0",
-    "gulp-footer": "^1.0.4"
+    "gulp-footer": "^1.0.4",
+    "gulp-twitter": "0.0.3"
   },
   "licenses": [
     {

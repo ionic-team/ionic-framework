@@ -69,6 +69,12 @@
           <p>Swipe to the right to reveal the left menu.</p>
 
           <div class="list">
+            <div class="item item-input range range-positive">
+              <span class="input-label">Range</span>
+              5 km
+              <input type="range" min="5" max="700">
+              700 km
+            </div>
             <ion-item ion-item="item" ng-href="#" ng-click="itemClick()" ng-repeat="item in range">
               <strong>{{$index}}</strong>
               <b>:</b>

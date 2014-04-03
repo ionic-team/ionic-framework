@@ -101,8 +101,10 @@
 }
 
 // Link and Button Active States
-.item.active:not(.item-divider):not(.item-input):not(.item-input-inset),
-.item-complex.active .item-content {
+.item.active,
+.item.activated,
+.item-complex.active .item-content,
+.item-complex.activated .item-content {
   @include item-active-style($item-default-active-bg, $item-default-active-border);
 
   // Different active themes for <a> and <button> items
@@ -200,6 +202,7 @@ a.item-content {
 }
 
 .item-text-wrap .item,
+.item-text-wrap .item-content,
 .item-text-wrap,
 .item-text-wrap h1,
 .item-text-wrap h2,
@@ -216,7 +219,7 @@ a.item-content {
 .item-body h5,
 .item-body h6,
 .item-body p {
-  overflow: hidden;
+  overflow: visible;
   white-space: normal;
 }
 .item-complex.item-text-wrap,
@@ -227,8 +230,8 @@ a.item-content {
 .item-complex.item-text-wrap h5,
 .item-complex.item-text-wrap h6,
 .item-complex.item-text-wrap p {
-  overflow: hidden;
-  white-space: nowrap;
+  overflow: visible;
+  white-space: normal;
 }
 
 
@@ -292,7 +295,8 @@ a.item-content {
 .item-icon-left.item-icon-right .icon:first-child {
   right: auto;
 }
-.item-icon-left.item-icon-right .icon:last-child {
+.item-icon-left.item-icon-right .icon:last-child,
+.item-icon-left .item-delete .icon {
   left: auto;
 }
 
@@ -386,13 +390,12 @@ button.item,
 
   &:after {
     // By default, both <a> and <button> have right side arrow icons
-    @include display-flex();
-    @include align-items(center);
     @include font-smoothing(antialiased);
     position: absolute;
-    top: 0;
+    top: 50%;
     right: $item-padding - 4;
-    height: 100%;
+    display: block;
+    margin-top: -8px;
     color: #ccc;
     content: "\f125"; // ion-chevron-right
     text-transform: none;
@@ -406,16 +409,12 @@ button.item,
   }
 }
 
-.grade-b,
 .grade-c {
   a.item:after,
   button.item:after,
   .item[href] .item-content:after,
   .item[ng-click] .item-content:after {
-    // override Ionicon arrow with boring character for low end devices
     @include font-smoothing(none);
-    content: '>';
-    font-family: 'monospace';
   }
 }
 
