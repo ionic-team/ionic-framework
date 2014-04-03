@@ -163,7 +163,6 @@ gulp.task('sass', function(done) {
       }
     }))
     .pipe(concat('ionic.css'))
-    .pipe(header(banner))
     .pipe(gulp.dest(buildConfig.distCss))
     .pipe(gulpif(IS_RELEASE_BUILD, minifyCss()))
     .pipe(rename({ extname: '.min.css' }))
@@ -273,12 +272,13 @@ gulp.task('docs-index', function() {
         path = '/blog/' + path.substring(19).replace('.html', '/');
       }
 
+      var parser;
       if(pageData.search_sections === true) {
         // each section within the content should be its own search result
         var section = { body: '', title: '' };
         var isTitleOpen = false;
 
-        var parser = new htmlparser.Parser({
+        parser = new htmlparser.Parser({
           ontext: function(text){
             if(isTitleOpen) {
               section.title += text; // get the title of this section
@@ -310,7 +310,7 @@ gulp.task('docs-index', function() {
       } else {
         // index the entire page
         var body = '';
-        var parser = new htmlparser.Parser({
+        parser = new htmlparser.Parser({
           ontext: function(text){
             body += text.replace(/{%.*%}/, '', 'g'); // Ignore any Jekyll expressions
           }
