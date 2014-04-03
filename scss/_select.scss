@@ -44,7 +44,7 @@
 }
 
 .item-select {
-  position: static; // required for Android 2.3
+  position: relative;
 
   select {
     position: absolute;
