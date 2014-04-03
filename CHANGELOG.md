@@ -75,7 +75,7 @@ New Code:
 
 * **ionHeaderBar, ionFooterBar**: remove `type`, `title`, `left-buttons`, `right-buttons`.
 
-Relevant Documentation: [ionHeaderBar](http://ionicframework.com/docs/api/directive/ionHeaerBar),
+Relevant Documentation: [ionHeaderBar](http://ionicframework.com/docs/api/directive/ionHeaderBar),
 [ionFooterBar](http://ionicframework.com/docs/api/directive/ionFooterBar).
 
 Old Code:
