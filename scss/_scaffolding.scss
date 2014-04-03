@@ -139,23 +139,23 @@ body.grade-c {
 }
 
 @keyframes refresh-spin {
-  0% { transform: rotate(0); }
-  100% { transform: rotate(-180deg); }
+  0% { transform: translate3d(0,0,0) rotate(0); }
+  100% { transform: translate3d(0,0,0) rotate(-180deg); }
 }
 
 @-webkit-keyframes refresh-spin {
-  0% {-webkit-transform: rotate(0); }
-  100% {-webkit-transform: rotate(-180deg); }
+  0% {-webkit-transform: translate3d(0,0,0) rotate(0); }
+  100% {-webkit-transform: translate3d(0,0,0) rotate(-180deg); }
 }
 
 @keyframes refresh-spin-back {
-  0% { transform: rotate(-180deg); }
-  100% { transform: rotate(0); }
+  0% { transform: translate3d(0,0,0) rotate(-180deg); }
+  100% { transform: translate3d(0,0,0) rotate(0); }
 }
 
 @-webkit-keyframes refresh-spin-back {
-  0% {-webkit-transform: rotate(-180deg); }
-  100% {-webkit-transform: rotate(0); }
+  0% {-webkit-transform: translate3d(0,0,0) rotate(-180deg); }
+  100% {-webkit-transform: translate3d(0,0,0) rotate(0); }
 }
 
 // Scroll refresher (for pull to refresh)
@@ -185,11 +185,21 @@ body.grade-c {
     }
   }
 
+  .icon-refreshing,
   .icon-pulling {
+    width: 100%;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
+  .icon-pulling {
+    -webkit-transform: translate3d(0,0,0) rotate(0deg);
+    transform: translate3d(0,0,0) rotate(0deg);
     @include animation-name(refresh-spin-back);
     @include animation-duration(200ms);
     @include animation-timing-function(linear);
-    @include animation-fill-mode(both);
+    @include animation-fill-mode(none);
   }
   .icon-refreshing,
   .text-refreshing {
@@ -200,18 +210,11 @@ body.grade-c {
   }
 
   &.active {
-    .icon-pulling,
-    .text-pulling {
-      display: block;
-    }
     .icon-pulling {
       @include animation-name(refresh-spin);
+      -webkit-transform: translate3d(0,0,0) rotate(-180deg);
+      transform: translate3d(0,0,0) rotate(-180deg);
     }
-    .icon-refreshing,
-    .text-refreshing {
-      display: none;
-    }
-
     &.refreshing {
       .icon-pulling,
       .text-pulling {

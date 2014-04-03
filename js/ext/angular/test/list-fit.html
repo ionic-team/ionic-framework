@@ -11,54 +11,16 @@
   </head>
 
   <body>
-
-    <ion-header-bar class="bar-positive" ng-class="{'bar-subheader': $root.isSub}">
-      <h1 class="title">Header!</h1>
-    </ion-header-bar>
-
-    <ion-content scroll="true" ng-controller="ContentCtrl" padding="false">
-
-    <pre>
-    $hasHeader: {{!!$hasHeader}}
-    $hasSubheader: {{!!$hasSubheader}}
-    </pre>
+    <ion-content ng-controller="ContentCtrl" padding="false">
 
       <ion-refresher on-refresh="onRefresh()" pulling-text="pull!" refreshing-text="refreshing!"></ion-refresher>
 
-      <ion-checkbox ng-model="$root.isSub">isSub</ion-checkbox>
-
-      <ul class="list">
-        <li class="item">This ion-list should *exactly* fit</li>
-        <li class="item">between header and footer (no gap),</li>
-        <li class="item">even with pull-to-refresh.</li>
-        <li class="item">4</li>
-        <li class="item">5</li>
-        <li class="item">6</li>
-        <li class="item">7</li>
-        <li class="item">8</li>
-        <li class="item">9</li>
-        <li class="item">10</li>
-        <li class="item">11</li>
-        <li class="item">12</li>
-        <li class="item">13</li>
-        <li class="item">14</li>
-        <li class="item">15</li>
-        <li class="item">16</li>
-        <li class="item">17</li>
-        <li class="item">18</li>
-        <li class="item">19</li>
-        <li class="item">20</li>
-        <li class="item">21</li>
-        <li class="item">22</li>
-        <li class="item">23</li>
-        <li class="item">24</li>
-        <li class="item">25</li>
-        <li class="item">26</li>
-        <li ng-repeat="i in more">more {{$index}}</li>
-       </ul>
-
-       <ion-infinite-scroll on-infinite="addMore()"></ion-infinite-scroll>
-
+      <p>...</p><br/><br/><br/>
+      <p>...</p><br/><br/><br/>
+      <p>...</p><br/><br/><br/>
+      <p>...</p><br/><br/><br/>
+      <p>...</p><br/><br/><br/>
+      <p>...</p><br/><br/><br/>
     </ion-content>
 
     <ion-footer-bar class="bar-assertive">
