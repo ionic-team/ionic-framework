@@ -21,7 +21,8 @@ module.exports = {
     '/*!\n' +
     ' * ionic.bundle.js is a concatenation of:\n' +
     ' * ionic.js, angular.js, angular-animate.js,\n'+
-    ' * angular-ui-router.js, and ionic-angular.js\n'+
+    ' * angular-sanitize.js, angular-ui-router.js,\n'+
+    ' * and ionic-angular.js\n'+
     ' */\n\n',
   closureStart: '(function() {\n',
   closureEnd: '\n})();',
