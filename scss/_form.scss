@@ -160,7 +160,6 @@ textarea {
 // -------------------------------
 
 // Shared size and type resets
-select,
 textarea,
 input[type="text"],
 input[type="password"],
@@ -232,22 +231,9 @@ input[type="checkbox"] {
   width: auto; // Override of generic input selector
 }
 
-// Make multiple select elements height not fixed
-select[multiple],
-select[size] {
-  height: auto;
-}
-
-// Set the height of select and file controls to match text inputs
-select,
+// Set the height of file to match text inputs
 input[type="file"] {
   line-height: $input-height-base;
-}
-
-// Make select elements obey height by applying a border
-select {
-  border: $input-border-width solid $input-border;
-  background-color: $input-bg; // Chrome on Linux and Mobile Safari need background-color
 }
 
 
