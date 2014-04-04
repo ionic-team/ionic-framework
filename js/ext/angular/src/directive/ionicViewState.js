@@ -300,15 +300,12 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  */
 .directive('navClear', [
   '$ionicViewService',
-  '$location',
-  '$timeout',
-function($ionicViewService, $location, $timeout) {
+function($ionicViewService) {
   return {
     priority: Number.MAX_VALUE,
     restrict: 'AC',
     compile: function($element) {
       return { pre: prelink };
-
       function prelink($scope, $element) {
         $element.on('click', function(e){
           $ionicViewService.nextViewOptions({
