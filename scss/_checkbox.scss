@@ -109,6 +109,7 @@
 .item-checkbox .checkbox {
   position: absolute;
   top: 50%;
+  right: $item-padding / 2;
   left: $item-padding / 2;
   z-index: $z-index-item-checkbox;
   margin-top: (($checkbox-height + ($checkbox-height / 2)) / 2) * -1;
