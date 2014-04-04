@@ -18,6 +18,10 @@ angular.module('ionic.ui.checkbox', [])
  * ```html
  * <ion-checkbox ng-model="isChecked">Checkbox Label</ion-checkbox>
  * ```
+ * To enable touching anywhere on the bar add the following css to your project
+ * ```css
+ * .item.item-checkbox label { width: 100%; }
+ * ```
  */
 .directive('ionCheckbox', function() {
   return {
