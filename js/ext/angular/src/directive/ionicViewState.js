@@ -302,7 +302,7 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
   '$ionicViewService',
 function($ionicViewService) {
   return {
-    priority: Number.MAX_VALUE,
+    priority: 100,
     restrict: 'AC',
     compile: function($element) {
       return { pre: prelink };
