@@ -126,7 +126,7 @@ angular.module('ionic.ui.scroll')
    * <ion-scroll delegate-handle="myScroll" ng-if="shouldShowScrollView">
    *   <div ng-controller="ScrollCtrl">
    *     <ion-list>
-   *       <ion-item ng-repeat="i in items">{{i}}</ion-item>
+   *       {% raw %}<ion-item ng-repeat="i in items">{{i}}</ion-item>{% endraw %}
    *     </ion-list>
    *   </div>
    * </ion-scroll>

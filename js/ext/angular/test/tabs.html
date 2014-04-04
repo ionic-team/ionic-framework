@@ -54,27 +54,14 @@
 
           <ion-tab title="<img src='http://placekitten.com/40/40'>" ng-controller="HomeCtrl">
         <header class="bar bar-header bar-positive">
-          <button class="button button-icon icon ion-plus" ng-click="newTask()"></button>
           <h1 class="title">Tasks</h1>
-          <button class="button button-clear" ng-click="isDeletingItems = !isDeletingItems">Edit</button>
         </header>
         <ion-content class="has-header has-subheader" on-refresh="onRefresh()" on-scroll="scroll(scrollTop, scrollLeft)">
 
           <ion-refresher></ion-refresher>
 
-          <ion-list ion-scroll="false"
-               on-reorder="onReorder(el, start, end)"
-               can-delete="true"
-               can-reorder="true"
-               can-swipe="true"
-               on-delete="deleteItem(item)"
-               show-delete="isDeletingItems"
-               animation="fade-out"
-               delete-icon="ion-minus-circled"
-               reorder-icon="ion-navicon">
-
-            <ion-item ng-repeat="item in items"
-                  item="item">
+          <ion-list>
+            <ion-item ng-repeat="item in items">
               {{item.title}}
             </list-item>
           </ion-list>

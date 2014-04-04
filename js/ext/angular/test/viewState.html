@@ -156,7 +156,8 @@
       <ion-view title="Auto List">
         <ion-content padding="true">
           <ion-list>
-            <ion-item ng-repeat="auto in autos" ng-href="#/tabs/autos/{{ $index }}" ion-nav-animation="{{$index === 0 ? 'slide-in-up' : 'slide-left-right'}}">
+            <ion-item ng-repeat="auto in autos"
+              ng-href="#/tabs/autos/{{ $index }}" >
               {{ auto.year }} {{ auto.make }} {{ auto.model }}
             </ion-item>
           </ion-list>

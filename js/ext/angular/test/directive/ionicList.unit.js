@@ -1,389 +1,290 @@
 'use strict';
+describe('$ionicList controller', function() {
+  beforeEach(module('ionic'));
+  function setup(attrs) {
+    var ctrl;
+    inject(function($controller, $rootScope) {
+      var scope = $rootScope.$new();
+      ctrl = $controller('$ionicList', {
+        $scope: scope,
+        $attrs: attrs || {},
+      });
+      ctrl.$scope = scope;
+    });
+    return ctrl;
+  }
 
-describe('Ionic List', function() {
-  var compile, scope, listElement, listCtrl;
-
-  beforeEach(module('ionic.ui.list'));
-
-  beforeEach(inject(function($compile, $rootScope, $controller) {
-    compile = $compile;
-    scope = $rootScope;
+  it('should register with handle', inject(function($ionicListDelegate) {
+    spyOn($ionicListDelegate, '_registerInstance');
+    var ctrl = setup({delegateHandle: 'foobar'});
+    expect($ionicListDelegate._registerInstance)
+      .toHaveBeenCalledWith(ctrl, 'foobar');
   }));
 
-  beforeEach(inject(function (_$compile_, _$rootScope_) {
-    compile = _$compile_;
-    scope.showDelete = false;
-    scope.showReorder = false;
+  it('should register with given handle and deregister on destroy', inject(function($ionicListDelegate) {
+    var deregisterSpy = jasmine.createSpy('deregister');
+    spyOn($ionicListDelegate, '_registerInstance').andCallFake(function() {
+      return deregisterSpy;
+    });
+    var ctrl = setup({
+      delegateHandle: 'something'
+    });
+    expect($ionicListDelegate._registerInstance)
+      .toHaveBeenCalledWith(ctrl, 'something');
 
-    listElement = angular.element('<ion-list show-delete="showDelete" show-reorder="showReorder">');
-    listElement = _$compile_(listElement)(scope);
-
-    listCtrl = listElement.controller('list');
-
-    scope.$digest();
+    expect(deregisterSpy).not.toHaveBeenCalled();
+    ctrl.$scope.$destroy();
+    expect(deregisterSpy).toHaveBeenCalled();
   }));
 
-  it('Should init', function() {
-    var element = compile('<ion-list>' +
-      '<ion-item></ion-item>' +
-      '<ion-item></ion-item>' +
-      '</ion-list>')(scope);
-
-    expect(element.children().length).toBe(2);
+  it('.showReorder sets/gets', function() {
+    var ctrl = setup();
+    expect(ctrl.showReorder()).toBe(false);
+    ctrl.showReorder(true);
+    expect(ctrl.showReorder()).toBe(true);
   });
 
-  it('Should add animation class', function() {
-    var element = compile('<ion-list animation="my-animation">')(scope);
-    expect(element.hasClass('my-animation')).toBe(true);
+  it('.showDelete sets/gets', function() {
+    var ctrl = setup();
+    expect(ctrl.showDelete()).toBe(false);
+    ctrl.showDelete(true);
+    expect(ctrl.showDelete()).toBe(true);
   });
 
-  it('Should add list-left-editing class because of showDelete', function() {
-    expect(listElement.hasClass('list-left-editing')).toBe(false);
-    scope.showDelete = true;
-    scope.$digest();
-    expect(listElement.hasClass('list-left-editing')).toBe(true);
+  it('.canSwipeItems sets/gets', function() {
+    var ctrl = setup();
+    expect(ctrl.canSwipeItems()).toBe(true);
+    ctrl.canSwipeItems(false);
+    expect(ctrl.canSwipeItems()).toBe(false);
   });
 
-  it('Should add list-right-editing class because of showReorder', function() {
-    expect(listElement.hasClass('list-right-editing')).toBe(false);
-    scope.showReorder = true;
-    scope.$digest();
-    expect(listElement.hasClass('list-right-editing')).toBe(true);
-  });
-
-  it('Should add item-options-hide class', function() {
-    expect(listElement.hasClass('item-options-hide')).toBe(false);
-    scope.showReorder = true;
-    scope.$digest();
-    expect(listElement.hasClass('item-options-hide')).toBe(true);
-  });
-
-  it('Should reorder', function() {
-    scope.onReorder = function(el, start, end) {
-    };
-
-    listElement = angular.element('<ion-list on-reorder="onReorder(el, start, end)"></ion-list>');
-    listElement = compile(listElement)(scope);
-
-    var lv = listElement.isolateScope().listView;
-
-    spyOn(scope, 'onReorder');
-
-    lv.onReorder({}, 0, 1);
-
-    expect(scope.onReorder).toHaveBeenCalledWith({}, 0, 1);
+  it('.closeOptionButtons closes calls clearDragEffects', function() {
+    var ctrl = setup();
+    ctrl.listView = { clearDragEffects: jasmine.createSpy('clearDragEffects') };
+    ctrl.closeOptionButtons();
+    expect(ctrl.listView.clearDragEffects).toHaveBeenCalled();
   });
 });
 
-describe('Ionic Item Directive', function () {
-  var $rootScope, $compile, listCtrl, options, listScope, itemScope, listElement, itemElement;
+describe('ionList directive', function() {
+  beforeEach(module('ionic'));
 
-  beforeEach(module('ionic.ui.list'));
+  function setup(attrs, content) {
+    var el;
+    inject(function($compile, $rootScope) {
+      var scope = $rootScope.$new();
+      el = angular.element('<ion-list '+(attrs||'')+'>'+(content||'')+'</ion-list>');
+      el.data('$$ionicScrollController', {
+        scrollView: {},
+        element: angular.element('<div>')
+      });
+      $compile(el)(scope);
+      scope.$apply();
+    });
+    return el;
+  }
+  function flush() {
+    inject(function($timeout) { $timeout.flush(); });
+  }
 
-  beforeEach(inject(function (_$compile_, _$rootScope_) {
-    $rootScope = _$rootScope_;
-    $compile = _$compile_;
-    $rootScope.showDelete = false;
+  it('should put contents in a list wrapper', function() {
+    var el = setup('', '<hello></hello>');
+    expect(el.children().hasClass('list')).toBe(true);
+    expect(el.children().html()).toBe('<hello></hello>');
+  });
 
-    listElement = angular.element('<ion-list show-delete="showDelete">');
-    listElement = _$compile_(listElement)($rootScope);
-    listScope = listElement.isolateScope();
+  it('should give options to listView after init', function() {
+    var options;
+    spyOn(ionic.views, 'ListView').andCallFake(function(o) {
+      options = o;
+    });
+    var el = setup();
+    flush();
+    expect(ionic.views.ListView).toHaveBeenCalled();
+    expect(options.el).toBe(el[0]);
+    expect(options.listEl).toBe(el.children()[0]);
+    expect(options.scrollEl).toBe(el.controller('$ionicScroll').element);
+    expect(options.scrollView).toBe(el.controller('$ionicScroll').scrollView);
 
-    listCtrl = listElement.controller('list');
+    spyOn(el.controller('ionList'), 'canSwipeItems').andReturn('swipey');
+    expect(options.canSwipe()).toBe('swipey');
 
-    itemElement = angular.element('<ion-item>').appendTo(listElement);
-    itemElement = _$compile_(itemElement)($rootScope);
+    el.scope().$onReorder = jasmine.createSpy('$onReorder');
+    options.onReorder(el, 2, 3);
+    expect(el.scope().$onReorder).toHaveBeenCalledWith(2,3);
+  });
 
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
+  it('should watch canSwipe if given', function() {
+    var el = setup('can-swipe="shouldSwipe"');
+    flush();
+    expect(el.controller('ionList').canSwipeItems()).toBe(false);
+    el.scope().$apply('shouldSwipe = true');
+    expect(el.controller('ionList').canSwipeItems()).toBe(true);
+  });
+
+  it('should showDelete true', inject(function($animate) {
+    var el = setup('show-delete="shouldDelete"', '<div class="item-delete item-left-edit ng-hide"></div><div></div>');
+    flush();
+
+    spyOn(el.controller('ionList'), 'closeOptionButtons');
+    spyOn(el.controller('ionList'), 'showDelete');
+    spyOn($animate, 'removeClass');
+
+    el.scope().$apply('shouldDelete = true');
+
+    expect(el.controller('ionList').closeOptionButtons).toHaveBeenCalled();
+    expect(el.controller('ionList').showDelete).toHaveBeenCalledWith(true);
+    expect(el.children().hasClass('list-left-editing')).toBe(true);
+    expect($animate.removeClass).toHaveBeenCalled();
+    expect($animate.removeClass.mostRecentCall.args[0][0])
+      .toBe(el[0].querySelector('.item-delete.item-left-edit'));
+    expect($animate.removeClass.mostRecentCall.args[1]).toBe('ng-hide');
   }));
 
-  it('Should set item type from item attribute', inject(function ($timeout) {
-    itemElement = angular.element('<ion-item>').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.itemClass).toBe(undefined);
+  it('should showDelete false', inject(function($animate) {
+    var el = setup('show-delete="shouldDelete"', '<div class="item-delete item-left-edit ng-hide"></div><div></div>');
+    flush();
 
-    itemElement = angular.element('<ion-item item-type="item-type-test">').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.itemType).toBe("item-type-test");
-    expect(itemElement.hasClass('item-type-test')).toBe(true);
+    el.scope().$apply('shouldDelete = true');
+
+    spyOn(el.controller('ionList'), 'closeOptionButtons');
+    spyOn(el.controller('ionList'), 'showDelete');
+    spyOn($animate, 'addClass');
+
+    el.scope().$apply('shouldDelete = false');
+
+    expect(el.controller('ionList').closeOptionButtons).not.toHaveBeenCalled();
+    expect(el.controller('ionList').showDelete).toHaveBeenCalledWith(false);
+    expect(el.children().hasClass('list-left-editing')).toBe(false);
+    expect($animate.addClass).toHaveBeenCalled();
+    expect($animate.addClass.mostRecentCall.args[0][0])
+      .toBe(el[0].querySelector('.item-delete.item-left-edit'));
+    expect($animate.addClass.mostRecentCall.args[1]).toBe('ng-hide');
   }));
 
-  it('Should set item type from list attribute', inject(function ($timeout) {
-    listElement = angular.element('<ion-list item-type="list-item-type-test">');
-    listElement = $compile(listElement)($rootScope);
-    itemElement = angular.element('<ion-item>').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemElement.hasClass('list-item-type-test')).toBe(true);
+  it('should showReorder true', inject(function($animate) {
+    var el = setup('show-reorder="shouldReorder"', '<div class="item-reorder item-right-edit ng-hide"></div><div></div>');
+    flush();
+
+    spyOn(el.controller('ionList'), 'closeOptionButtons');
+    spyOn(el.controller('ionList'), 'showReorder');
+    spyOn($animate, 'removeClass');
+
+    el.scope().$apply('shouldReorder = true');
+
+    expect(el.controller('ionList').closeOptionButtons).toHaveBeenCalled();
+    expect(el.controller('ionList').showReorder).toHaveBeenCalledWith(true);
+    expect(el.children().hasClass('list-right-editing')).toBe(true);
+    expect($animate.removeClass).toHaveBeenCalled();
+    expect($animate.removeClass.mostRecentCall.args[0][0])
+      .toBe(el[0].querySelector('.item-reorder.item-right-edit'));
+    expect($animate.removeClass.mostRecentCall.args[1]).toBe('ng-hide');
   }));
 
-  it('Should item option buttons from item attribute', inject(function ($timeout) {
-    itemElement = angular.element('<ion-item>').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.optionButtons()).toBe(undefined);
-    expect(itemScope.itemOptionButtons).toBe(undefined);
-    expect(itemElement.find('.item-options').length).toBe(0);
+  it('should showReorder false', inject(function($animate) {
+    var el = setup('show-reorder="shouldReorder"', '<div class="item-reorder item-right-edit ng-hide"></div><div></div>');
+    flush();
 
-    $rootScope.buttons = [
-      { text: 'Edit' }, { text: 'Cancel' }
-    ];
-    itemElement = angular.element('<ion-item option-buttons="buttons">').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.optionButtons().length).toBe(2);
-    expect(itemScope.itemOptionButtons.length).toBe(2);
-    expect(itemElement.find('.item-options').find('button').length).toBe(2);
+    el.scope().$apply('shouldReorder = true');
+
+    spyOn(el.controller('ionList'), 'closeOptionButtons');
+    spyOn(el.controller('ionList'), 'showReorder');
+    spyOn($animate, 'addClass');
+
+    el.scope().$apply('shouldReorder = false');
+
+    expect(el.controller('ionList').closeOptionButtons).not.toHaveBeenCalled();
+    expect(el.controller('ionList').showReorder).toHaveBeenCalledWith(false);
+    expect(el.children().hasClass('list-right-editing')).toBe(false);
+    expect($animate.addClass).toHaveBeenCalled();
+    expect($animate.addClass.mostRecentCall.args[0][0])
+      .toBe(el[0].querySelector('.item-reorder.item-right-edit'));
+    expect($animate.addClass.mostRecentCall.args[1]).toBe('ng-hide');
   }));
-
-  it('Should item option buttons from list attribute', inject(function ($timeout) {
-    $rootScope.buttons = [
-      { text: 'Edit' }, { text: 'Cancel' }
-    ];
-
-    listElement = angular.element('<ion-list option-buttons="buttons">');
-    listElement = $compile(listElement)($rootScope);
-    listScope = listElement.isolateScope();
-    expect(listScope.optionButtons().length ).toBe(2);
-
-    itemElement = angular.element('<ion-item>').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-
-    expect(itemScope.optionButtons()).toBe(undefined);
-    expect(itemScope.itemOptionButtons.length).toBe(2);
-    expect(itemElement.find('.item-options').find('button').length).toBe(2);
-  }));
-
-  it('Should have no option buttons by disabling item canSwipe', inject(function ($timeout) {
-    $rootScope.buttons = [
-      { text: 'Edit' }, { text: 'Cancel' }
-    ];
-
-    itemElement = angular.element('<ion-item can-swipe="false" option-buttons="buttons">').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-
-    expect(itemScope.itemOptionButtons).toBe(undefined);
-  }));
-
-  it('Should have no option buttons by disabling list canSwipe', inject(function ($timeout) {
-    $rootScope.buttons = [
-      { text: 'Edit' }, { text: 'Cancel' }
-    ];
-
-    listElement = angular.element('<ion-list can-swipe="false" option-buttons="buttons">');
-    listElement = $compile(listElement)($rootScope);
-    listScope = listElement.isolateScope();
-    expect(listScope.optionButtons().length ).toBe(2);
-
-    itemElement = angular.element('<ion-item>').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-
-    expect(itemScope.itemOptionButtons).toBe(undefined);
-  }));
-
-  it('Should hide delete w/ item can-delete attribute true but no list or item onDelete', inject(function ($timeout) {
-    itemElement = angular.element('<ion-item can-delete="true">').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.deleteClick).toBe(undefined);
-    expect(itemElement.find('.item-edit').length).toBe(0);
-  }));
-
-  it('Should hide delete w/ item can-delete attribute false but with item onDelete', inject(function ($timeout) {
-    $rootScope.onDelete = function() {};
-    itemElement = angular.element('<ion-item can-delete="false" on-delete="onDelete">').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.deleteClick).toBe(undefined);
-    expect(itemElement.find('.item-edit').length).toBe(0);
-  }));
-
-  it('Should show delete w/ no item can-delete attribute but with item onDelete', inject(function ($timeout) {
-    $rootScope.onDelete = function() {};
-    itemElement = angular.element('<ion-item on-delete="onDelete" delete-icon="test-icon">').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.deleteClick).not.toBe(undefined);
-    expect(itemElement.find('.item-left-edit').length).toBe(1);
-    expect(itemElement.find('.item-delete').length).toBe(1);
-    expect(itemScope.deleteIconClass).toBe("test-icon");
-  }));
-
-  it('Should hide delete w/ list can-delete attribute true but no list or item onDelete', inject(function ($timeout) {
-    $rootScope.onDelete = function() {};
-    listElement = angular.element('<ion-list can-delete="true">');
-    listElement = $compile(listElement)($rootScope);
-    listScope = listElement.isolateScope();
-
-    itemElement = angular.element('<ion-item>').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.deleteClick).toBe(undefined);
-    expect(itemElement.find('.item-edit').length).toBe(0);
-  }));
-
-  it('Should hide delete w/ list can-delete attribute false but with list onDelete', inject(function ($timeout) {
-    $rootScope.onDelete = function() {};
-    listElement = angular.element('<ion-list can-delete="false" on-delete="onDelete">');
-    listElement = $compile(listElement)($rootScope);
-    listScope = listElement.isolateScope();
-
-    itemElement = angular.element('<ion-item>').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.deleteClick).toBe(undefined);
-    expect(itemElement.find('.item-edit').length).toBe(0);
-  }));
-
-  it('Should hide delete w/ list can-delete attribute false but with item onDelete', inject(function ($timeout) {
-    $rootScope.onDelete = function() {};
-    listElement = angular.element('<ion-list can-delete="false">');
-    listElement = $compile(listElement)($rootScope);
-    listScope = listElement.isolateScope();
-
-    itemElement = angular.element('<ion-item on-delete="onDelete">').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.deleteClick).toBe(undefined);
-    expect(itemElement.find('.item-edit').length).toBe(0);
-  }));
-
-  it('Should show delete w/ no can-delete attribute but with list onDelete', inject(function ($timeout) {
-    $rootScope.onDelete = function() {};
-    listElement = angular.element('<ion-list on-delete="onDelete" delete-icon="test-icon">');
-    listElement = $compile(listElement)($rootScope);
-    listScope = listElement.isolateScope();
-    itemElement = angular.element('<ion-item>').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.deleteClick).not.toBe(undefined);
-    expect(itemElement.find('.item-left-edit').length).toBe(1);
-    expect(itemElement.find('.item-delete').length).toBe(1);
-
-    expect(itemScope.deleteIconClass).toBe("test-icon");
-  }));
-
-  it('Should not be able to reorder cuz no item or list can-reorder attribute true', inject(function ($timeout) {
-    itemElement = angular.element('<ion-item reorder-icon="test-icon">').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.reorderIconClass).toBe(undefined);
-    expect(itemElement.find('.item-reorder').length).toBe(0);
-    expect(itemElement.find('.item-right-edit').length).toBe(0);
-  }));
-
-  it('Should be able to reorder cuz item can-reorder attribute true', inject(function ($timeout) {
-    itemElement = angular.element('<ion-item can-reorder="true" reorder-icon="test-icon">').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.reorderIconClass).toBe('test-icon');
-    expect(itemElement.find('.item-reorder').length).toBe(1);
-    expect(itemElement.find('.item-right-edit').length).toBe(1);
-  }));
-
-  it('Should be able to reorder cuz list can-reorder attribute true', inject(function ($timeout) {
-    listElement = angular.element('<ion-list can-reorder="true" reorder-icon="test-icon">');
-    listElement = $compile(listElement)($rootScope);
-    listScope = listElement.isolateScope();
-    itemElement = angular.element('<ion-item>').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.reorderIconClass).toBe('test-icon');
-    expect(itemElement.find('.item-reorder').length).toBe(1);
-    expect(itemElement.find('.item-right-edit').length).toBe(1);
-  }));
-
-  it('Should not have options cuz no optionButtons', inject(function ($timeout) {
-    itemElement = angular.element('<ion-item>').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.itemOptionButtons).toBe(undefined);
-    expect(itemElement.find('.item-options').length).toBe(0);
-  }));
-
-  it('Should be able to reorder cuz list can-reorder attribute false and item can-reorder true', inject(function ($timeout) {
-    listElement = angular.element('<ion-list can-reorder="false">');
-    listElement = $compile(listElement)($rootScope);
-    listScope = listElement.isolateScope();
-    itemElement = angular.element('<ion-item can-reorder="true">').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.reorderIconClass).toBe('ion-navicon');
-    expect(itemElement.find('.item-reorder').length).toBe(1);
-    expect(itemElement.find('.item-right-edit').length).toBe(1);
-  }));
-
-  it('Should not have options cuz item can-swipe false', inject(function ($timeout) {
-    $rootScope.optionButtons = [{text:'BUTTON'}];
-    itemElement = angular.element('<ion-item option-buttons="optionButtons" can-swipe="false">').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.itemOptionButtons).toBe(undefined);
-    expect(itemElement.find('.item-options').length).toBe(0);
-  }));
-
-  it('Should not have options cuz list can-swipe false', inject(function ($timeout) {
-    $rootScope.optionButtons = [{text:'BUTTON'}];
-    listElement = angular.element('<ion-list option-buttons="optionButtons" can-swipe="false">');
-    listElement = $compile(listElement)($rootScope);
-    listScope = listElement.isolateScope();
-    itemElement = angular.element('<ion-item>').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.itemOptionButtons).toBe(undefined);
-    expect(itemElement.find('.item-options').length).toBe(0);
-  }));
-
-  it('Should have options cuz item option-buttons and no can-swipe false', inject(function ($timeout) {
-    $rootScope.optionButtons = [{text:'BUTTON'}];
-    itemElement = angular.element('<ion-item option-buttons="optionButtons">').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.itemOptionButtons.length).toBe(1);
-    expect(itemElement.find('.item-options').find('button').length).toBe(1);
-  }));
-
-  it('Should have options cuz list option-buttons and no can-swipe false', inject(function ($timeout) {
-    $rootScope.optionButtons = [{text:'BUTTON'}];
-    listElement = angular.element('<ion-list option-buttons="optionButtons">');
-    listElement = $compile(listElement)($rootScope);
-    listScope = listElement.isolateScope();
-    itemElement = angular.element('<ion-item>').appendTo(listElement);
-    itemElement = $compile(itemElement)($rootScope);
-    $rootScope.$digest();
-    itemScope = itemElement.isolateScope();
-    expect(itemScope.itemOptionButtons.length).toBe(1);
-    expect(itemElement.find('.item-options').find('button').length).toBe(1);
-  }));
-
 });
 
+describe('ionItem directive', function() {
+  beforeEach(module('ionic'));
+  function setup(attrs, content) {
+    var el;
+    inject(function($rootScope, $compile) {
+      el = angular.element('<ion-item '+(attrs||'')+'>').html(content || '');
+      el.data('$ionListController', {});
+      $compile(el)($rootScope);
+      $rootScope.$apply();
+    });
+    return el;
+  }
+
+  it('should be simple item by default', function() {
+    var el = setup('', '{{1}} <b>2</b>');
+    expect(el.html()).toBe('1 <b>2</b>');
+    expect(el.hasClass('item')).toBe(true);
+    expect(el.hasClass('item-complex')).toBe(false);
+  });
+  ['href', 'ng-href'].forEach(function(attr) {
+    it('should be complex anchor if '+attr+' is defined', function() {
+      var el = setup(attr+'="something"');
+      expect(el.hasClass('item item-complex')).toBe(true);
+      expect(el.children()[0].tagName).toBe('A');
+      expect(el.children().hasClass('item-content')).toBe(true);
+      expect(el.children().attr('ng-href')).toBe('something');
+    });
+  });
+  ['ion-option-button','ion-reorder-button','ion-delete-button'].forEach(function(tag) {
+    it('should be complex div if '+tag+' is found', function() {
+      var el = setup('', tag);
+      expect(el.hasClass('item item-complex')).toBe(true);
+      expect(el.children()[0].tagName).toBe('DIV');
+      expect(el.children().hasClass('item-content')).toBe(true);
+      expect(el.children().html()).toBe(tag);
+    });
+  });
+});
+
+describe('ionDeleteButton directive', function() {
+  beforeEach(module('ionic'));
+  it('should have delete button', inject(function($compile, $rootScope) {
+    var setSpy = jasmine.createSpy('setDeleteButton')
+    var el = angular.element('<ion-item><ion-delete-button></ion-delete-button></ion-item>');
+    el.data('$ionListController', {});
+    $compile(el)($rootScope.$new());
+    $rootScope.$apply();
+
+    var deleteContainer = angular.element(el[0].querySelector('.item-left-edit.item-delete'));
+    expect(deleteContainer.length).toBe(1);
+    expect(deleteContainer.children().hasClass('button icon button-icon')).toBe(true);
+  }));
+});
+
+describe('ionReorderButton directive', function() {
+  beforeEach(module('ionic'));
+  it('should have reorder button', inject(function($compile, $rootScope) {
+    var setSpy = jasmine.createSpy('setReorderButton')
+    var el = angular.element('<ion-item><ion-reorder-button></ion-reorder-button></ion-item>');
+    el.data('$ionListController', {});
+    $compile(el)($rootScope.$new());
+    $rootScope.$apply();
+
+    var reorderContainer = angular.element(el[0].querySelector('.item-right-edit.item-reorder'));
+    expect(reorderContainer.length).toBe(1);
+    expect(reorderContainer.children().hasClass('button icon button-icon')).toBe(true);
+    expect(reorderContainer.attr('data-prevent-scroll')).toBe('true');
+    expect(reorderContainer.children().attr('data-prevent-scroll')).toBe('true');
+  }));
+});
+
+describe('ionOptionButton directive', function() {
+  beforeEach(module('ionic'));
+  it('should have option button', inject(function($compile, $rootScope) {
+    var setSpy = jasmine.createSpy('setOptionButton')
+    var el = angular.element('<ion-item><ion-option-button></ion-option-button></ion-item>');
+    el.data('$ionListController', {});
+    $compile(el)($rootScope.$new());
+    $rootScope.$apply();
+
+    var optionContainer = angular.element(el[0].querySelector('.item-options'));
+    expect(optionContainer.length).toBe(1);
+    expect(optionContainer.children().hasClass('button')).toBe(true);
+  }));
+});
