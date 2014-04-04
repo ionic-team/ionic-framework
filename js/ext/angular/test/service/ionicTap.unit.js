@@ -71,16 +71,16 @@ describe('Ionic Tap', function() {
   it('Should setStart and hasScrolled true if >= touch tolerance', function() {
     ionic.tap.setStart({ clientX: 100, clientY: 100 });
 
-    var s = ionic.tap.hasScrolled({ clientX: 105, clientY: 100 });
+    var s = ionic.tap.hasScrolled({ clientX: 111, clientY: 100 });
     expect(s).toEqual(true);
 
-    s = ionic.tap.hasScrolled({ clientX: 95, clientY: 100 });
+    s = ionic.tap.hasScrolled({ clientX: 89, clientY: 100 });
     expect(s).toEqual(true);
 
-    s = ionic.tap.hasScrolled({ clientX: 100, clientY: 103 });
+    s = ionic.tap.hasScrolled({ clientX: 100, clientY: 107 });
     expect(s).toEqual(true);
 
-    s = ionic.tap.hasScrolled({ clientX: 100, clientY: 97 });
+    s = ionic.tap.hasScrolled({ clientX: 100, clientY: 93 });
     expect(s).toEqual(true);
 
     s = ionic.tap.hasScrolled({ clientX: 100, clientY: 200 });

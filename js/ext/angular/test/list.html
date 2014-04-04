@@ -267,11 +267,14 @@
       });
 
       var mouseTimerId;
+      var mouseMoveCount = 0;
       function onMouseMove(e) {
         clearTimeout(mouseTimerId);
         mouseTimerId = setTimeout(function(){
           var el = document.getElementById('mousemove-notify');
           el.style.display = 'block';
+          mouseMoveCount++;
+          el.innerText = 'Mouse Move! ' + mouseMoveCount;
           clearTimeout(mouseTimerId);
           mouseTimerId = setTimeout(function(){
             el.style.display = 'none';
@@ -280,11 +283,14 @@
       }
 
       var touchTimerId;
+      var touchMoveCount = 0;
       function onTouchMove(e) {
         clearTimeout(touchTimerId);
         touchTimerId = setTimeout(function(){
           var el = document.getElementById('touchmove-notify');
           el.style.display = 'block';
+          touchMoveCount++;
+          el.innerText = 'Touch Move! ' + touchMoveCount;
           clearTimeout(touchTimerId);
           touchTimerId = setTimeout(function(){
             el.style.display = 'none';

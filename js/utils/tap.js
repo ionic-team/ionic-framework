@@ -5,8 +5,8 @@
   var REMOVE_PREVENT_DELAY = 380; // delay after a touchend/mouseup before removing the ghostclick prevent
   var REMOVE_PREVENT_DELAY_GRADE_C = 800; // same as REMOVE_PREVENT_DELAY, but for grade c devices
   var HIT_RADIUS = 15; // surrounding area of a click that if a ghostclick happens it would get ignored
-  var TOUCH_TOLERANCE_X = 4; // how much the X coordinates can be off between start/end, but still a click
-  var TOUCH_TOLERANCE_Y = 2; // how much the Y coordinates can be off between start/end, but still a click
+  var TOUCH_TOLERANCE_X = 10; // how much the X coordinates can be off between start/end, but still a click
+  var TOUCH_TOLERANCE_Y = 6; // how much the Y coordinates can be off between start/end, but still a click
   var tapCoordinates = {}; // used to remember coordinates to ignore if they happen again quickly
   var startCoordinates = {}; // used to remember where the coordinates of the start of a touch
   var clickPreventTimerId;
@@ -110,11 +110,11 @@
 
         } else if(ionic.tap.hasScrolled(e)) {
           // this click's coordinates are different than its touchstart/mousedown, must have been scrolling
-          console.debug('preventGhostClick', 'hasScrolled, startCoordinates, x:' + startCoordinates.x + ' y:' + startCoordinates.y);
+          console.debug('preventGhostClick', 'hasScrolled');
         }
 
         var c = ionic.tap.getCoordinates(e);
-        return 'click at x:' + c.x + ', y:' + c.y;
+        return 'click(' + c.x + ',' + c.y + '), start(' + startCoordinates.x + ',' + startCoordinates.y + ')';
       })());
 
 
@@ -153,6 +153,7 @@
         return false;
       }
 
+      // the allowed distance between touchstart/mousedown and
       return (c.x > startCoordinates.x + TOUCH_TOLERANCE_X ||
               c.x < startCoordinates.x - TOUCH_TOLERANCE_X ||
               c.y > startCoordinates.y + TOUCH_TOLERANCE_Y ||
