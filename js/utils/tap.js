@@ -10,6 +10,7 @@
   var tapCoordinates = {}; // used to remember coordinates to ignore if they happen again quickly
   var startCoordinates = {}; // used to remember where the coordinates of the start of a touch
   var clickPreventTimerId;
+  var _hasTouchScrolled = false; // if the touchmove already exceeded the touchmove tolerance
 
 
   ionic.tap = {
@@ -21,10 +22,10 @@
       var e = orgEvent.gesture.srcEvent; // evaluate the actual source event, not the created event by gestures.js
       var ele = e.target; // get the target element that was actually tapped
 
-      if( ionic.tap.isRecentTap(e) || e.type === 'touchcancel' ) {
+      if( ionic.tap.isRecentTap(e) || ionic.tap.hasTouchScrolled(e) || e.type === 'touchcancel') {
         // if a tap in the same area just happened,
         // or it was a touchcanel event, don't continue
-        console.debug('tapInspect', 'isRecentTap', ele.tagName, 'type:', e.type);
+        console.debug('tapInspect stopEvent', e.type, ele.tagName);
         return stopEvent(e);
       }
 
@@ -60,7 +61,7 @@
         return;
       }
 
-      console.debug('simulateClick', ele.tagName, ele.className);
+      console.debug('simulateClick', e.type, ele.tagName, ele.className);
 
       var c = ionic.tap.getCoordinates(e);
 
@@ -73,9 +74,7 @@
       ele.dispatchEvent(clickEvent);
 
       if(ele.tagName === 'INPUT' || ele.tagName === 'TEXTAREA') {
-        if(!ionic.tap.hasScrolled(e)) {
-          ele.focus();
-        }
+        ele.focus();
         e.preventDefault();
       } else {
         ionic.tap.blurActive();
@@ -108,9 +107,9 @@
           // a tap has already happened at these coordinates recently, ignore this event
           console.debug('preventGhostClick', 'isRecentTap', e.target.tagName);
 
-        } else if(ionic.tap.hasScrolled(e)) {
+        } else if(ionic.tap.hasTouchScrolled(e)) {
           // this click's coordinates are different than its touchstart/mousedown, must have been scrolling
-          console.debug('preventGhostClick', 'hasScrolled');
+          console.debug('preventGhostClick', 'hasTouchScrolled');
         }
 
         var c = ionic.tap.getCoordinates(e);
@@ -118,7 +117,7 @@
       })());
 
 
-      if(e.target.control || ionic.tap.isRecentTap(e) || ionic.tap.hasScrolled(e)) {
+      if(e.target.control || ionic.tap.isRecentTap(e) || ionic.tap.hasTouchScrolled(e)) {
         return stopEvent(e);
       }
 
@@ -144,7 +143,9 @@
       return { x:0, y:0 };
     },
 
-    hasScrolled: function(event) {
+    hasTouchScrolled: function(event) {
+      if(_hasTouchScrolled) return true;
+
       // check if this click's coordinates are different than its touchstart/mousedown
       var c = ionic.tap.getCoordinates(event);
 
@@ -218,8 +219,18 @@
       }
     },
 
-    setStart: function(e) {
+    setTouchStart: function(e) {
+      _hasTouchScrolled = false;
       startCoordinates = ionic.tap.getCoordinates(e);
+      document.body.addEventListener('touchmove', ionic.tap.onTouchMove, false);
+    },
+
+    onTouchMove: function(e) {
+      if( ionic.tap.hasTouchScrolled(e) ) {
+        _hasTouchScrolled = true;
+        document.body.removeEventListener('touchmove', ionic.tap.onTouchMove);
+        console.debug('hasTouchScrolled');
+      }
     },
 
     reset: function() {
@@ -254,6 +265,6 @@
 
   // remember where the user first started touching the screen
   // so that if they scrolled, it shouldn't fire the click
-  document.addEventListener('touchstart', ionic.tap.setStart, false);
+  document.addEventListener('touchstart', ionic.tap.setTouchStart, false);
 
 })(this, document, ionic);

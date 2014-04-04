@@ -5,30 +5,13 @@ describe('Ionic Tap', function() {
     ionic.tap.reset();
   });
 
-  it('Should not focus on an input if it has scrolled', function() {
-    var targetEle = {
-      dispatchEvent: function() {},
-      focus: function() { this.isFocused = true; }
-    };
-
-    ionic.tap.setStart({clientX: 100, clientY: 100});
-
-    targetEle.tagName = 'INPUT';
-    var e = {
-      clientX: 100, clientY: 200,
-      preventDefault: function() {}
-    };
-    ionic.tap.simulateClick(targetEle, e);
-    expect(targetEle.isFocused).toBeUndefined();
-  });
-
   it('Should focus on an input if it hasnt scrolled', function() {
     var targetEle = {
       dispatchEvent: function() {},
       focus: function() { this.isFocused = true; }
     };
 
-    ionic.tap.setStart({clientX: 100, clientY: 100});
+    ionic.tap.setTouchStart({clientX: 100, clientY: 100});
 
     targetEle.tagName = 'INPUT';
     var e = {
@@ -46,7 +29,7 @@ describe('Ionic Tap', function() {
       focus: function() {}
     };
 
-    ionic.tap.setStart({ clientX: 100, clientY: 100 });
+    ionic.tap.setTouchStart({ clientX: 100, clientY: 100 });
     var e = {
       clientX: 100, clientY: 100,
       preventDefault: function() { this.preventedDefault = true }
@@ -68,46 +51,46 @@ describe('Ionic Tap', function() {
     e.preventedDefault = false;
   });
 
-  it('Should setStart and hasScrolled true if >= touch tolerance', function() {
-    ionic.tap.setStart({ clientX: 100, clientY: 100 });
+  it('Should setTouchStart and hasTouchScrolled true if >= touch tolerance', function() {
+    ionic.tap.setTouchStart({ clientX: 100, clientY: 100 });
 
-    var s = ionic.tap.hasScrolled({ clientX: 111, clientY: 100 });
+    var s = ionic.tap.hasTouchScrolled({ clientX: 111, clientY: 100 });
     expect(s).toEqual(true);
 
-    s = ionic.tap.hasScrolled({ clientX: 89, clientY: 100 });
+    s = ionic.tap.hasTouchScrolled({ clientX: 89, clientY: 100 });
     expect(s).toEqual(true);
 
-    s = ionic.tap.hasScrolled({ clientX: 100, clientY: 107 });
+    s = ionic.tap.hasTouchScrolled({ clientX: 100, clientY: 107 });
     expect(s).toEqual(true);
 
-    s = ionic.tap.hasScrolled({ clientX: 100, clientY: 93 });
+    s = ionic.tap.hasTouchScrolled({ clientX: 100, clientY: 93 });
     expect(s).toEqual(true);
 
-    s = ionic.tap.hasScrolled({ clientX: 100, clientY: 200 });
+    s = ionic.tap.hasTouchScrolled({ clientX: 100, clientY: 200 });
     expect(s).toEqual(true);
   });
 
-  it('Should setStart and hasScrolled false if less than touch tolerance', function() {
-    ionic.tap.setStart({ clientX: 100, clientY: 100 });
+  it('Should setTouchStart and hasTouchScrolled false if less than touch tolerance', function() {
+    ionic.tap.setTouchStart({ clientX: 100, clientY: 100 });
 
-    var s = ionic.tap.hasScrolled({ clientX: 100, clientY: 100 });
+    var s = ionic.tap.hasTouchScrolled({ clientX: 100, clientY: 100 });
     expect(s).toEqual(false);
 
-    s = ionic.tap.hasScrolled({ clientX: 104, clientY: 100 });
+    s = ionic.tap.hasTouchScrolled({ clientX: 104, clientY: 100 });
     expect(s).toEqual(false);
 
-    s = ionic.tap.hasScrolled({ clientX: 96, clientY: 100 });
+    s = ionic.tap.hasTouchScrolled({ clientX: 96, clientY: 100 });
     expect(s).toEqual(false);
 
-    s = ionic.tap.hasScrolled({ clientX: 100, clientY: 102 });
+    s = ionic.tap.hasTouchScrolled({ clientX: 100, clientY: 102 });
     expect(s).toEqual(false);
 
-    s = ionic.tap.hasScrolled({ clientX: 100, clientY: 98 });
+    s = ionic.tap.hasTouchScrolled({ clientX: 100, clientY: 98 });
     expect(s).toEqual(false);
   });
 
-  it('Should not be hasScrolled if 0 coordinates', function() {
-    var s = ionic.tap.hasScrolled({ clientX: 0, clientY: 0 });
+  it('Should not be hasTouchScrolled if 0 coordinates', function() {
+    var s = ionic.tap.hasTouchScrolled({ clientX: 0, clientY: 0 });
     expect(s).toEqual(false);
   });
 

@@ -44,8 +44,8 @@
             document.body.removeEventListener('mousedown', ionic.activator.start);
             touchMoveClearTimer = setTimeout(function(){
               document.body.addEventListener('touchmove', onTouchMove, false);
-            }, 85);
-            setTimeout(activateElements, 85);
+            }, 80);
+            setTimeout(activateElements, 80);
           } else {
             document.body.addEventListener('mousemove', clear, false);
             ionic.requestAnimationFrame(activateElements);
@@ -79,7 +79,7 @@
   }
 
   function onTouchMove(e) {
-    if( ionic.tap.hasScrolled(e) ) {
+    if( ionic.tap.hasTouchScrolled(e) ) {
       clear();
     }
   }
