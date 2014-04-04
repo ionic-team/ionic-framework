@@ -1,4 +1,3 @@
-
 /**
  * Grid
  * --------------------------------------------------
@@ -38,6 +37,12 @@
 }
 .row-center {
   @include align-items(center);
+}
+.row-stretch {
+  @include align-items(stretch);
+}
+.row-baseline {
+  @include align-items(baseline);
 }
 
 /* .col-* vertically aligns an individual .col */
