@@ -622,81 +622,76 @@ ionic.views.Scroll = ionic.views.View.inherit({
              (e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-default') == 'true');
     }
 
-    if ('ontouchstart' in window) {
+    container.addEventListener("touchstart", function(e) {
+      if (e.defaultPrevented || shouldIgnorePress(e)) {
+        return;
+      }
+      self.doTouchStart(e.touches, e.timeStamp);
+      e.preventDefault();
+    }, false);
 
-      container.addEventListener("touchstart", function(e) {
-        if (e.defaultPrevented || shouldIgnorePress(e)) {
-          return;
-        }
-        self.doTouchStart(e.touches, e.timeStamp);
-        e.preventDefault();
-      }, false);
+    document.addEventListener("touchmove", function(e) {
+      if(e.defaultPrevented) {
+        return;
+      }
+      self.doTouchMove(e.touches, e.timeStamp);
+    }, false);
 
-      document.addEventListener("touchmove", function(e) {
-        if(e.defaultPrevented) {
-          return;
-        }
-        self.doTouchMove(e.touches, e.timeStamp);
-      }, false);
+    document.addEventListener("touchend", function(e) {
+      self.doTouchEnd(e.timeStamp);
+    }, false);
 
-      document.addEventListener("touchend", function(e) {
-        self.doTouchEnd(e.timeStamp);
-      }, false);
+    var mousedown = false;
 
-    } else {
+    container.addEventListener("mousedown", function(e) {
+      if (e.defaultPrevented || shouldIgnorePress(e)) {
+        return;
+      }
+      self.doTouchStart([{
+        pageX: e.pageX,
+        pageY: e.pageY
+      }], e.timeStamp);
 
-      var mousedown = false;
+      e.preventDefault();
+      mousedown = true;
+    }, false);
 
-      container.addEventListener("mousedown", function(e) {
-        if (e.defaultPrevented || shouldIgnorePress(e)) {
-          return;
-        }
-        self.doTouchStart([{
-          pageX: e.pageX,
-          pageY: e.pageY
-        }], e.timeStamp);
+    document.addEventListener("mousemove", function(e) {
+      if (!mousedown || e.defaultPrevented) {
+        return;
+      }
 
-        e.preventDefault();
-        mousedown = true;
-      }, false);
+      self.doTouchMove([{
+        pageX: e.pageX,
+        pageY: e.pageY
+      }], e.timeStamp);
 
-      document.addEventListener("mousemove", function(e) {
-        if (!mousedown || e.defaultPrevented) {
-          return;
-        }
+      mousedown = true;
+    }, false);
 
-        self.doTouchMove([{
-          pageX: e.pageX,
-          pageY: e.pageY
-        }], e.timeStamp);
+    document.addEventListener("mouseup", function(e) {
+      if (!mousedown) {
+        return;
+      }
 
-        mousedown = true;
-      }, false);
+      self.doTouchEnd(e.timeStamp);
 
-      document.addEventListener("mouseup", function(e) {
-        if (!mousedown) {
-          return;
-        }
+      mousedown = false;
+    }, false);
 
-        self.doTouchEnd(e.timeStamp);
+    var wheelShowBarFn = ionic.debounce(function() {
+      self.__fadeScrollbars('in');
+    }, 500, true);
 
-        mousedown = false;
-      }, false);
+    var wheelHideBarFn = ionic.debounce(function() {
+      self.__fadeScrollbars('out');
+    }, 100, false);
 
-      var wheelShowBarFn = ionic.debounce(function() {
-        self.__fadeScrollbars('in');
-      }, 500, true);
-
-      var wheelHideBarFn = ionic.debounce(function() {
-        self.__fadeScrollbars('out');
-      }, 100, false);
-
-      document.addEventListener("mousewheel", function(e) {
-        wheelShowBarFn();
-        self.scrollBy(e.wheelDeltaX/self.options.wheelDampen, -e.wheelDeltaY/self.options.wheelDampen);
-        wheelHideBarFn();
-      });
-    }
+    document.addEventListener("mousewheel", function(e) {
+      wheelShowBarFn();
+      self.scrollBy(e.wheelDeltaX/self.options.wheelDampen, -e.wheelDeltaY/self.options.wheelDampen);
+      wheelHideBarFn();
+    });
   },
 
   /** Create a scroll bar div with the given direction **/
