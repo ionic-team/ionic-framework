@@ -47,7 +47,6 @@
         <ion-header-bar class="bar-positive">
           <div class="buttons">
             <button ng-click="toggleDelete()" class="button button-clear">{{ editBtnText }}</button>
-            <button ng-click="toggleLeft()" class="button">Toggle Left Menu</button>
           </div>
           <h1 class="title">List Tests</h1>
           <div class="buttons">
@@ -69,8 +68,9 @@
 
             <ion-item>
               <p>
-                <ion-toggle ng-model="$root.showOption">Show Option?</ion-toggle>
+                <ion-toggle ng-model="showOption">Show Option?</ion-toggle>
               </p>
+              <ion-option-button ng-if="showOption">Hello!</ion-option-button>
             </ion-item>
 
             <!-- shows how a divider could be included-->

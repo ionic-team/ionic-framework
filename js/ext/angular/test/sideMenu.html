@@ -22,8 +22,11 @@
             <ion-toggle ng-model="$root.$draggy">Hello</ion-toggle>
             <input type="range" ng-model="$root.menuWidth" min="0" max="300">
             <h1>Content</h1>
-            <ion-list option-buttons="[{text:'Hello',type:'button-positive'}]">
-              <ion-item>Sup</ion-item>
+            <ion-list>
+              <ion-item>
+                Sup
+                <ion-option-button class="button-positive">Hello</ion-option-button>
+              </ion-item>
             </ion-list>
           </ion-content>
         </ion-side-menu-content>
