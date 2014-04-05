@@ -19,6 +19,8 @@
 
   white-space: nowrap;
   font-size: $font-size-base;
+
+  cursor: pointer;
 }
 
 .select-inline {
@@ -55,7 +57,7 @@
     direction: rtl; // right align the select text
 
     &:focus {
-      min-width: 20%;
+      min-width: 30%;
       width: auto; // shrink width when opened
     }
   }
