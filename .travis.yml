@@ -11,6 +11,7 @@ env:
   - secure: 2fk0b82A5q+FtU8M5MUIjxfbm+nxlDC3e7eHksgqfRY7v8odHWjJxJliBF50sP8qkVsop3HRONtxHcX09RpYfjAg2JVWd0QNtKF3PtpyJQO1Oe3oRBLCQSLM3H2O8vp0lXOrqjP3gKCVcqKZftPOJkR1HwwSmgCuDEkEBja/WlU=
   - secure: venr/q6rVyF2AbiT34XjWZvtXXOPKSusgbIcpNRoSBhs/fxJu6LKZ1byPJsdohBPLxsxd6J+3RJLU+dQul49uY6HCk7+uFETgQAU/H+DE3585eHaUwOyuOoYv/psoEuMXAopbAekJwZw/rnnpGh73CxychuQQUVDsJnt5QsbOwI=
 notifications:
+  slack: drifty:Wkm8lcIlUNlRXlglGRFxPNQa
   hipchat:
     rooms:
       secure: mkHfRTsuxidtOOORbJJ0Jspb/DSa8jAiQwWWUljqLwefy1p4HGC9P/rLdXXg3vsjiulCzyjEkfvDWAHXvu34GhGWfQuD8U140Fon1Os3AO5Hbme+yRmjXmTcgH8XetSLQufyBBMqXHMd6o1tkxXql1p54G1IShhgAdPNe76d5ZE=
