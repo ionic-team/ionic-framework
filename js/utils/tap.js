@@ -34,12 +34,7 @@
         // only climb up a max of 5 parents, anything more probably isn't beneficial
         if(!ele) break;
 
-        if( ele.tagName === "INPUT" ||
-            ele.tagName === "A" ||
-            ele.tagName === "BUTTON" ||
-            ele.tagName === "LABEL" ||
-            ele.tagName === "TEXTAREA" ) {
-
+        if( ele.tagName.match(/a|input|button|label|textarea|select/i) ) {
           return ionic.tap.simulateClick(ele, e);
         }
         ele = ele.parentElement;
@@ -73,9 +68,12 @@
 
       ele.dispatchEvent(clickEvent);
 
-      if(ele.tagName === 'INPUT' || ele.tagName === 'TEXTAREA') {
+      if( ele.tagName.match(/input|textarea/i) ) {
         ele.focus();
         e.preventDefault();
+      } else if( ele.tagName == 'SELECT' ) {
+        // select simulateClick should not preventDefault or else no options dialog
+        ele.focus();
       } else {
         ionic.tap.blurActive();
       }

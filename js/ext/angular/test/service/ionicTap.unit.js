@@ -98,7 +98,8 @@ describe('Ionic Tap', function() {
     var targetEle = {
       dispatchEvent: function(clickEvent) {
         this.clickEvent = clickEvent;
-      }
+      },
+      tagName: 'LABEL'
     };
     var e = { clientX: 99, clientY: 88 };
     ionic.tap.simulateClick(targetEle, e);
