@@ -374,39 +374,14 @@ button.item.item-button-right {
   }
 }
 
-
 /**
- * Auto Right Arrow Icon
- * --------------------------------------------------
- * By default, if an .item is created out of an <a> or <button>
- * then a arrow will be added to the right side of the item.
+ * Item padding for right side icons, notes, and elements.
  */
-
 a.item,
 button.item,
 .item[href] .item-content,
 .item[ng-click] .item-content {
   padding-right: (($item-padding * 3) - 5);
-
-  &:after {
-    // By default, both <a> and <button> have right side arrow icons
-    @include font-smoothing(antialiased);
-    position: absolute;
-    top: 50%;
-    right: $item-padding - 4;
-    display: block;
-    margin-top: -8px;
-    color: #ccc;
-    content: "\f125"; // ion-chevron-right
-    text-transform: none;
-    font-weight: normal;
-    font-style: normal;
-    font-variant: normal;
-    font-size: 16px;
-    font-family: 'Ionicons';
-    line-height: 1;
-    speak: none;
-  }
 }
 
 .grade-c {
@@ -416,15 +391,6 @@ button.item,
   .item[ng-click] .item-content:after {
     @include font-smoothing(none);
   }
-}
-
-// do not show the default right arrow when they want their own right side icon
-a.item-icon-right:after,
-button.item-icon-right:after,
-a.item-button-right:after,
-button.item-button-right:after,
-.item a.item-content:after {
-  display: none;
 }
 
 
