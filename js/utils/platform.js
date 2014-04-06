@@ -37,8 +37,12 @@
      * @ngdoc method
      * @name ionic.Platform#ready
      * @description
-     * Trigger a callback once the device is ready,
-     * or immediately if the device is already ready.
+     * Trigger a callback once the device is ready, or immediately
+     * if the device is already ready. This method can be ran from
+     * anywhere and does not need to be wrapped by any additonal methods.
+     * When the app is within a WebView (Cordova), it'll fire
+     * the callback once the device is ready. If the app is within
+     * a web browser, it'll fire the callback after `window.load`.
      * @param {function} callback The function to call.
      */
     ready: function(cb) {
