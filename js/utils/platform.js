@@ -38,7 +38,7 @@
      * @name ionic.Platform#ready
      * @description
      * Trigger a callback once the device is ready, or immediately
-     * if the device is already ready. This method can be ran from
+     * if the device is already ready. This method can be run from
      * anywhere and does not need to be wrapped by any additonal methods.
      * When the app is within a WebView (Cordova), it'll fire
      * the callback once the device is ready. If the app is within
