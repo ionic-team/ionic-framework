@@ -1,91 +1,231 @@
-describe('Ionic Popup', function() {
-  var popup, timeout, scope, document;
-
+describe('$ionicPopup service', function() {
   beforeEach(module('ionic'));
-
-  beforeEach(inject(function($ionicPopup, $rootScope, $timeout, $document) {
-    ionic.requestAnimationFrame = function(cb) { cb(); }
-    scope = $rootScope;
-    popup = $ionicPopup;
-    timeout = $timeout;
-    document = $document;
-    document[0].body.className = '';
+  var $ionicPopup;
+  beforeEach(inject(function(_$ionicPopup_) {
+    $ionicPopup = _$ionicPopup_;
+    ionic.requestAnimationFrame = function(cb) { cb(); };
   }));
 
-  it('Should show popup', function() {
-    popup.show({
-      title: 'Cats',
-      content: 'Dogs',
-      buttons: [
-        {
-          text: 'Okay',
-          type: 'button-balanced',
-          onTap: function(e) {}
-        }
-      ]
+  describe('createPopup', function() {
+    it('should make a popup element appended to body', function() {
+      var popup = TestUtil.unwrapPromise($ionicPopup._createPopup());
+      expect(popup.element).toBeTruthy();
+      expect(popup.element.hasClass('popup')).toBe(true);
+      expect(popup.element.parent()[0]).toBe(document.body);
+    });
+    it('should default to $rootScope child as scope', inject(function($rootScope) {
+      var popup = TestUtil.unwrapPromise($ionicPopup._createPopup());
+      expect(popup.scope.$parent).toBe($rootScope);
+    }));
+    it('should use child of passed in scope', inject(function($rootScope) {
+      var scope = $rootScope.$new();
+      var popup = TestUtil.unwrapPromise($ionicPopup._createPopup({
+        scope: scope
+      }));
+      expect(popup.scope.$parent).toBe(scope);
+    }));
+    it('should set .popup-body html to content option', function() {
+      var popup = TestUtil.unwrapPromise($ionicPopup._createPopup({
+        content: 'Hello, friend!'
+      }));
+      var popupBody = popup.element[0].querySelector('.popup-body');
+      expect(popupBody.innerText).toBe('Hello, friend!');
+    });
+    it('should set .popup-body html to template option', function() {
+      var popup = TestUtil.unwrapPromise($ionicPopup._createPopup({
+        template: 'Hello, comrade!'
+      }));
+      var popupBody = popup.element[0].querySelector('.popup-body');
+      expect(popupBody.innerText).toBe('Hello, comrade!');
+    });
+    it('should set .popup-body html to templateUrl option', inject(function($ionicTemplateLoader, $q) {
+      spyOn($ionicTemplateLoader, 'load').andReturn($q.when('Hello, amigo!'));
+      var popup = TestUtil.unwrapPromise($ionicPopup._createPopup({
+        templateUrl: 'hello.html'
+      }));
+      expect($ionicTemplateLoader.load).toHaveBeenCalledWith('hello.html');
+      var popupBody = popup.element[0].querySelector('.popup-body');
+      expect(popupBody.innerText).toBe('Hello, amigo!');
+    }));
+    it('should remove .popup-body if no content|template|templateUrl', function() {
+      var popup = TestUtil.unwrapPromise($ionicPopup._createPopup());
+      var popupBody = popup.element[0].querySelector('.popup-body');
+      expect(popupBody).toBe(null);
     });
 
-    timeout.flush();
-
-    var popupBackdropEl = document[0].body.querySelector('.popup-backdrop');
-    expect(popupBackdropEl).not.toEqual(null);
-
-    var popupEl = document[0].body.querySelector('.popup');
-    expect(popupEl.classList.contains('active')).toBe(true);
-    expect(popupEl.classList.contains('popup-showing')).toBe(true);
-
-    popup.show({
-      title: 'Cats',
-      content: 'Dogs',
-      buttons: [
-        {
-          text: 'Okay',
-          type: 'button-balanced',
-          onTap: function(e) {}
-        }
-      ]
+    describe('$buttonTapped', function() {
+      var popup;
+      var button;
+      var event;
+      beforeEach(function() {
+        popup = TestUtil.unwrapPromise($ionicPopup._createPopup());
+        button = { onTap: jasmine.createSpy('onTap') };
+        event = {};
+        spyOn(popup.responseDeferred, 'resolve');
+      });
+      it('should call button.onTap with event', function() {
+        var button = { onTap: jasmine.createSpy('onTap') };
+        var event = {};
+        popup.scope.$buttonTapped(button, event);
+        expect(button.onTap).toHaveBeenCalledWith(event);
+      });
+      it('should do nothing if no result & not defaultPrevented', function() {
+        popup.scope.$buttonTapped(button, event);
+        expect(popup.responseDeferred.resolve).not.toHaveBeenCalled();
+      });
+      it('should resolve if defaultPrevented', function() {
+        event.defaultPrevented = true;
+        popup.scope.$buttonTapped(button, event);
+        expect(popup.responseDeferred.resolve).toHaveBeenCalledWith(undefined);
+      });
+      it('should resolve with result if result', function() {
+        button.onTap = jasmine.createSpy('onTap').andReturn('123');
+        popup.scope.$buttonTapped(button, event);
+        expect(popup.responseDeferred.resolve).toHaveBeenCalledWith('123');
+      });
     });
 
-    timeout.flush();
+    describe('show', function() {
+      it('should add classes', function() {
+        var popup = TestUtil.unwrapPromise($ionicPopup._createPopup());
+        popup.element.addClass('popup-hidden');
+        popup.show();
+        expect(popup.element.hasClass('popup-hidden')).toBe(false);
+        expect(popup.element.hasClass('popup-showing active')).toBe(true);
+      });
+      it('should set isShown to true', function() {
+        var popup = TestUtil.unwrapPromise($ionicPopup._createPopup());
+        expect(popup.isShown).toBeFalsy();
+        popup.show();
+        expect(popup.isShown).toBe(true);
+      });
+    });
 
-    // Make sure there are two popups
-    expect(document[0].body.querySelectorAll('.popup').length).toEqual(2);
+    describe('hide', function() {
+      it('should remove active, add popup-hidden, and call callback', inject(function($timeout) {
+        var popup = TestUtil.unwrapPromise($ionicPopup._createPopup());
+        popup.element.addClass('active');
+        popup.isShown = true;
+        var spy = jasmine.createSpy('callback');
+        popup.hide(spy);
+        expect(popup.element.hasClass('active')).toBe(false);
+        expect(popup.element.hasClass('popup-hidden')).toBe(true);
+        expect(spy).not.toHaveBeenCalled();
+        $timeout.flush();
+        expect(spy).toHaveBeenCalled();
+      }));
+      it('should keep class if isShown isnt true', inject(function($ionicBackdrop) {
+        var popup = TestUtil.unwrapPromise($ionicPopup._createPopup());
+        popup.element.addClass('active');
+        popup.isShown = false;
+        popup.hide();
+        expect(popup.element.hasClass('active')).toBe(true);
+      }));
+    });
+
+    describe('remove', function() {
+      it('should hide and then remove the element and destroy the scope', function() {
+        var popup = TestUtil.unwrapPromise($ionicPopup._createPopup());
+        spyOn(popup, 'hide').andCallFake(function(cb) {
+          cb();
+        });
+        spyOn(popup.element, 'remove');
+        spyOn(popup.scope, '$destroy');
+        popup.remove();
+        expect(popup.hide).toHaveBeenCalled();
+        expect(popup.element.remove).toHaveBeenCalled();
+        expect(popup.scope.$destroy).toHaveBeenCalled();
+      });
+    });
+
   });
 
-  it('Should set correct element data', function() {
-    popup.show({
-      title: 'Cats',
-      content: 'Dogs',
-      buttons: [
-        {
-          text: 'Okay',
-          type: 'button-balanced',
-          onTap: function(e) {}
-        }
-      ]
+  describe('show()', function() {
+    afterEach(function() {
+      document.body.classList.remove('popup-open');
     });
+    it('should add popup-open and retain backdrop if no previous popup', inject(function($ionicBackdrop, $timeout) {
+      spyOn($ionicBackdrop, 'retain');
+      $ionicPopup.show();
+      $timeout.flush();
+      expect(angular.element(document.body).hasClass('popup-open')).toBe(true);
+      expect($ionicBackdrop.retain).toHaveBeenCalled();
+    }));
+    it('should hide previous popup if exists and not popup-open & backdrop', inject(function($ionicBackdrop, $timeout) {
+      var previousPopup = { hide: jasmine.createSpy('hide') };
+      spyOn($ionicBackdrop, 'retain');
+      $ionicPopup._popupStack.unshift(previousPopup);
+      $ionicPopup.show();
+      $timeout.flush();
+      expect(previousPopup.hide).toHaveBeenCalled();
+      expect(angular.element(document.body).hasClass('popup-open')).toBe(false);
+      expect($ionicBackdrop.retain).not.toHaveBeenCalled();
+    }));
 
-    var popupEl = document[0].body.querySelector('.popup');
-    expect(popupEl.querySelector('.popup-title').innerText).toEqual('Cats');
-    expect(popupEl.querySelector('.popup-body').innerText).toEqual('Dogs');
-  });
+    it('should after timeout add popup to popupstack and show it', inject(function($ionicPopup, $timeout, $q) {
+      var fakePopup = {
+        show: jasmine.createSpy('show'),
+        responseDeferred: $q.defer()
+      };
+      spyOn($ionicPopup, '_createPopup').andReturn($q.when(fakePopup));
+      expect($ionicPopup._popupStack.length).toBe(0);
+      $ionicPopup.show();
+      expect(fakePopup.show).not.toHaveBeenCalled();
+      $timeout.flush();
+      expect($ionicPopup._popupStack.length).toBe(1);
+      expect($ionicPopup._popupStack[0]).toBe(fakePopup);
+      expect(fakePopup.show).toHaveBeenCalled();
+    }));
 
-  it('Should add .popup-open from body', function() {
-    expect(document[0].body.classList.contains('popup-open')).toEqual(false);
+    it('should after timeout and resolve remove popup, then return result', inject(function($ionicPopup, $timeout, $q, $rootScope) {
+      var fakePopup = {
+        show: jasmine.createSpy('show'),
+        remove: jasmine.createSpy('remove'),
+        responseDeferred: $q.defer()
+      };
+      spyOn($ionicPopup, '_createPopup').andReturn($q.when(fakePopup));
+      var result = $ionicPopup.show();
+      $timeout.flush();
+      expect(fakePopup.remove).not.toHaveBeenCalled();
+      fakePopup.responseDeferred.resolve('popup result!');
+      $rootScope.$apply();
+      expect(fakePopup.remove).toHaveBeenCalled();
+      expect($ionicPopup._popupStack.length).toBe(0);
+      expect(TestUtil.unwrapPromise(result)).toBe('popup result!');
+    }));
 
-    popup.show({
-      title: 'Cats',
-      content: 'Dogs',
-      buttons: [
-        {
-          text: 'Okay',
-          type: 'button-balanced',
-          onTap: function(e) {}
-        }
-      ]
-    });
+    it('should show previous popup on resolve if exists', inject(function($q, $timeout) {
+      var fakePopup = {
+        show: jasmine.createSpy('show'),
+        remove: jasmine.createSpy('remove'),
+        responseDeferred: $q.defer()
+      };
+      var previousPopup = {
+        show: jasmine.createSpy('show'),
+        hide: jasmine.createSpy('hide')
+      };
+      spyOn($ionicPopup, '_createPopup').andReturn($q.when(fakePopup));
+      $ionicPopup._popupStack.unshift(previousPopup);
+      $ionicPopup.show();
+      fakePopup.responseDeferred.resolve();
+      $timeout.flush();
+      expect(previousPopup.show).toHaveBeenCalled();
+    }));
 
-    timeout.flush();
-    expect(document[0].body.classList.contains('popup-open')).toEqual(true);
+    it('should release backdrop and remove popup-open if no previous', inject(function($q, $timeout, $ionicBackdrop) {
+      var fakePopup = {
+        show: jasmine.createSpy('show'),
+        remove: jasmine.createSpy('remove'),
+        responseDeferred: $q.defer()
+      };
+      document.body.classList.add('popup-open');
+      spyOn($ionicBackdrop, 'release');
+      spyOn($ionicPopup, '_createPopup').andReturn($q.when(fakePopup));
+      $ionicPopup.show();
+      fakePopup.responseDeferred.resolve();
+      $timeout.flush();
+      expect($ionicBackdrop.release).toHaveBeenCalled();
+      expect(document.body.classList.contains('popup-open')).toBe(false);
+    }));
   });
 });

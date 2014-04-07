@@ -179,6 +179,15 @@
     swapNodes: function(src, dest) {
       dest.parentNode.insertBefore(src, dest);
     },
+
+    /**
+     * @private
+     */
+    centerElementByMargin: function(el) {
+      el.style.marginLeft = (-el.offsetWidth) / 2 + 'px';
+      el.style.marginTop = (-el.offsetHeight) / 2 + 'px';
+    },
+
     /**
      * @ngdoc method
      * @name ionic.DomUtil#getParentWithClass

@@ -13,20 +13,14 @@
     <button class="button button-dark" ng-click="startLoading()">Load</button>
     <script src="../../../../dist/js/ionic.bundle.js"></script>
     <script>
-      angular.module('ionic.example', ['ionic.service.loading'])
+      angular.module('ionic.example', ['ionic'])
 
-      .controller('LoadingCtrl', function($scope, $timeout, $ionicLoading) {
+      .controller('LoadingCtrl', function($scope, $ionicLoading) {
         $scope.startLoading = function() {
-          var loading = $ionicLoading.show({
-            width: 200,
-            height: 100,
-            animation: 'fade-in',
-            content: 'Getting current location...'
+          window.loader = $ionicLoading.show({
+            content: 'Getting current location...',
+            duration: 2000
           });
-
-          $timeout(function() {
-            loading.hide();
-          }, 2000);
         };
       });
     </script>

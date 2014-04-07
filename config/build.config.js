@@ -69,7 +69,7 @@ module.exports = {
   ],
 
   angularIonicFiles: [
-    'js/ext/angular/src/ionicAngular.js',
+    'js/ext/angular/src/*.js',
     'js/ext/angular/src/service/**/*.js',
     'js/ext/angular/src/directive/**/*.js',
     'js/ext/angular/src/controller/**/*.js'
