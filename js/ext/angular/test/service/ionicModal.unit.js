@@ -100,21 +100,21 @@ describe('Ionic Modal', function() {
     expect(modalInstance.isShown()).toBe(false);
   });
 
-  it('should broadcast "modal.shown" on show', function() {
+  it('should broadcast "modal.shown" on show with self', function() {
     var template = '<div class="modal"></div>';
     var m = modal.fromTemplate(template, {});
     spyOn(m.scope.$parent, '$broadcast');
     m.show();
     timeout.flush();
-    expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.shown');
+    expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.shown', m);
   });
 
-  it('should broadcast "modal.hidden" on hide', function() {
+  it('should broadcast "modal.hidden" on hide with self', function() {
     var template = '<div class="modal"></div>';
     var m = modal.fromTemplate(template, {});
     spyOn(m.scope.$parent, '$broadcast');
     m.hide();
-    expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.hidden');
+    expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.hidden', m);
   });
 
   it('should broadcast "modal.removed" on remove', inject(function($animate) {
