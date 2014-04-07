@@ -432,7 +432,9 @@ button.item-button-right:after,
 // -------------------------------
 
 .item-avatar,
-.item-avatar .item-content {
+.item-avatar .item-content,
+.item-avatar-left,
+.item-avatar-left .item-content {
   padding-left: $item-avatar-width + ($item-padding * 2);
   min-height: $item-avatar-width + ($item-padding * 2);
 
@@ -468,6 +470,7 @@ button.item-button-right:after,
   }
 }
 .item-avatar.item-complex,
+.item-avatar-left.item-complex,
 .item-thumbnail-left.item-complex {
   padding-left: 0;
 }
