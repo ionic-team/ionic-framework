@@ -1,4 +1,4 @@
-ddescribe('navClear directive', function() {
+describe('navClear directive', function() {
   beforeEach(module('ionic'));
 
   it('should call nextViewOptions on click & stateChangeSuccess', inject(function($rootScope, $compile, $ionicViewService) {
