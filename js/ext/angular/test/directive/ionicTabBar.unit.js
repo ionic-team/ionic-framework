@@ -382,23 +382,45 @@ describe('tabs', function() {
     }));
 
     it('should add itself to tabsCtrl and remove on $destroy', function() {
-      var el = setup();
+      setup();
       var tab = tabsCtrl.tabs[0];
       tab.$destroy();
       expect(tabsCtrl.remove).toHaveBeenCalledWith(tab);
     });
 
     it('should compile a <ion-tab-nav> with all of the relevant attrs', function() {
-      setup('title=1 icon-on=2 icon-off=3 badge=4 badge-style=5 ng-click=6');
+      setup('title="{{a}}" icon-on="{{b}}" icon-off="{{c}}" badge="d" badge-style="{{e}}" ng-click="click"');
+      angular.extend(tabEl.scope(), {
+        a: 'title',
+        b: 'on',
+        c: 'off',
+        d: 6,
+        e: 'badger'
+      });
+      tabEl.scope().$apply();
       var navItem = angular.element(tabsEl[0].querySelector('.tab-item'));
       //Use .scope for title because we remove title attr
       //(for dom-tooltip not to appear)
-      expect(navItem.scope().title).toEqual('1');
-      expect(navItem.attr('icon-on')).toEqual('2');
-      expect(navItem.attr('icon-off')).toEqual('3');
-      expect(navItem.attr('badge')).toEqual('4');
-      expect(navItem.attr('badge-style')).toEqual('5');
-      expect(navItem.attr('ng-click')).toEqual('6');
+      expect(navItem.isolateScope().title).toEqual('title');
+      expect(navItem.isolateScope().iconOn).toEqual('on');
+      expect(navItem.isolateScope().iconOff).toEqual('off');
+      expect(navItem.isolateScope().badge).toEqual(6);
+      expect(navItem.isolateScope().badgeStyle).toEqual('badger');
+      expect(navItem.attr('ng-click')).toEqual('click');
+
+      angular.extend(tabEl.scope(), {
+        a: 'title2',
+        b: 'on2',
+        c: 'off2',
+        d: 7,
+        e: 'badger2'
+      });
+      tabEl.scope().$apply();
+      expect(navItem.isolateScope().title).toEqual('title2');
+      expect(navItem.isolateScope().iconOn).toEqual('on2');
+      expect(navItem.isolateScope().iconOff).toEqual('off2');
+      expect(navItem.isolateScope().badge).toEqual(7);
+      expect(navItem.isolateScope().badgeStyle).toEqual('badger2');
 
       expect(navItem.parent()[0]).toBe(tabsCtrl.$tabsElement[0]);
     });
