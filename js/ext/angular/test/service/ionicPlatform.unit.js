@@ -102,16 +102,16 @@ describe('Ionic Platform Service', function() {
     expect(ionic.Platform.isAndroid()).toEqual(true);
   });
 
-  it('is Cordova', function() {
-    expect(ionic.Platform.isCordova()).toEqual(false);
+  it('is WebView', function() {
+    expect(ionic.Platform.isWebView()).toEqual(false);
     window.cordova = {};
-    expect(ionic.Platform.isCordova()).toEqual(true);
+    expect(ionic.Platform.isWebView()).toEqual(true);
     delete window.cordova;
     window.PhoneGap = {};
-    expect(ionic.Platform.isCordova()).toEqual(true);
+    expect(ionic.Platform.isWebView()).toEqual(true);
     delete window.phonegap;
     window.phonegap = {};
-    expect(ionic.Platform.isCordova()).toEqual(true);
+    expect(ionic.Platform.isWebView()).toEqual(true);
   });
 
   it('sets ios platforms', function() {
@@ -121,10 +121,11 @@ describe('Ionic Platform Service', function() {
 
     ionic.Platform._checkPlatforms()
 
-    expect(ionic.Platform.platforms[0]).toEqual('cordova');
-    expect(ionic.Platform.platforms[1]).toEqual('ios');
-    expect(ionic.Platform.platforms[2]).toEqual('ios7');
-    expect(ionic.Platform.platforms[3]).toEqual('ios7_0');
+    expect(ionic.Platform.platforms[0]).toEqual('webview');
+    expect(ionic.Platform.platforms[1]).toEqual('cordova');
+    expect(ionic.Platform.platforms[2]).toEqual('ios');
+    expect(ionic.Platform.platforms[3]).toEqual('ios7');
+    expect(ionic.Platform.platforms[4]).toEqual('ios7_0');
   });
 
   it('sets android platforms', function() {
@@ -134,21 +135,23 @@ describe('Ionic Platform Service', function() {
 
     ionic.Platform._checkPlatforms()
 
-    expect(ionic.Platform.platforms[0]).toEqual('cordova');
-    expect(ionic.Platform.platforms[1]).toEqual('android');
-    expect(ionic.Platform.platforms[2]).toEqual('android4');
-    expect(ionic.Platform.platforms[3]).toEqual('android4_2');
+    expect(ionic.Platform.platforms[0]).toEqual('webview');
+    expect(ionic.Platform.platforms[1]).toEqual('cordova');
+    expect(ionic.Platform.platforms[2]).toEqual('android');
+    expect(ionic.Platform.platforms[3]).toEqual('android4');
+    expect(ionic.Platform.platforms[4]).toEqual('android4_2');
   });
 
-  it('should only set the cordova', function() {
+  it('should only set the webview', function() {
     window.cordova = {};
     ionic.Platform.setPlatform('');
     ionic.Platform.setVersion('');
 
     ionic.Platform._checkPlatforms()
 
-    expect(ionic.Platform.platforms.length).toEqual(1);
-    expect(ionic.Platform.platforms[0]).toEqual('cordova');
+    expect(ionic.Platform.platforms.length).toEqual(2);
+    expect(ionic.Platform.platforms[0]).toEqual('webview');
+    expect(ionic.Platform.platforms[1]).toEqual('cordova');
   });
 
   it('should not set any platform', function() {

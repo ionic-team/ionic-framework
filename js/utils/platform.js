@@ -79,7 +79,7 @@
      */
     device: function() {
       if(window.device) return window.device;
-      if(this.isCordova()) console.error('device plugin required');
+      if(this.isWebView()) console.error('device plugin required');
       return {};
     },
 
@@ -87,7 +87,10 @@
       this.platforms = [];
       this.grade = 'a';
 
-      if(this.isCordova()) this.platforms.push('cordova');
+      if(this.isWebView()) {
+        this.platforms.push('webview');
+        this.platforms.push('cordova');
+      }
       if(this.isIPad()) this.platforms.push('ipad');
 
       var platform = this.platform();
@@ -114,10 +117,10 @@
 
     /**
      * @ngdoc method
-     * @name ionic.Platform#isCordova
-     * @returns {boolean} Whether we are running on Cordova.
+     * @name ionic.Platform#isWebView
+     * @returns {boolean} Check if we are running within a WebView (such as Cordova).
      */
-    isCordova: function() {
+    isWebView: function() {
       return !(!window.cordova && !window.PhoneGap && !window.phonegap);
     },
     /**
@@ -301,7 +304,7 @@
 
   // setup listeners to know when the device is ready to go
   function onWindowLoad() {
-    if(ionic.Platform.isCordova()) {
+    if(ionic.Platform.isWebView()) {
       // the window and scripts are fully loaded, and a cordova/phonegap
       // object exists then let's listen for the deviceready
       document.addEventListener("deviceready", onPlatformReady, false);
