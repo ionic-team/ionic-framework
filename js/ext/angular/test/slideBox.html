@@ -46,7 +46,7 @@
       <ion-side-menus>
         <ion-side-menu-content>
           <ion-header-bar left-buttons="leftButtons" right-buttons="rightButtons" title=""></ion-header-bar>
-          <ion-slide-box on-slide-changed="slideChanged(index)">
+          <ion-slide-box on-slide-changed="slideChanged(index)" show-pager="true" pager-click="pagerClick(index)">
             <ion-slide ng-controller="FirstSlideCtrl">
               <h3>Thank you for choosing the Awesome App!</h3>
               <div id="logo">
@@ -133,6 +133,9 @@
         $scope.leftButtons = leftButtons;
         $scope.rightButtons = rightButtons;
 
+        $scope.pagerClick = function(index) {
+          alert('pagerClick ' + index);
+        };
 
         $scope.slideChanged = function(index) {
           console.log('Slide changed', index);

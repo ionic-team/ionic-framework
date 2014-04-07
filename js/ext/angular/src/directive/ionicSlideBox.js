@@ -134,8 +134,9 @@ angular.module('ionic.ui.slideBox', [])
  * @param {boolean=} does-continue Whether the slide box should automatically slide.
  * @param {number=} slide-interval How many milliseconds to wait to change slides (if does-continue is true). Defaults to 4000.
  * @param {boolean=} show-pager Whether a pager should be shown for this slide box.
+ * @param {expression=} pager-click Expression to call when a pager is clicked (if show-pager is true). Is passed the 'index' variable.
  * @param {boolean=} disable-scroll Whether to disallow scrolling/dragging of the slide-box content.
- * @param {expression=} on-slide-changed Expression called whenever the slide is changed.
+ * @param {expression=} on-slide-changed Expression called whenever the slide is changed.  Is passed an 'index' variable.
  * @param {expression=} active-slide Model to bind the current slide to.
  */
 .directive('ionSlideBox', [
@@ -151,6 +152,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
       doesContinue: '@',
       slideInterval: '@',
       showPager: '@',
+      pagerClick: '&',
       disableScroll: '@',
       onSlideChanged: '&',
       activeSlide: '=?'
@@ -205,11 +207,15 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
       this.__slider = slider;
 
       var deregisterInstance = $ionicSlideBoxDelegate._registerInstance(slider, $attrs.delegateHandle);
-
       $scope.$on('$destroy', deregisterInstance);
 
       this.slidesCount = function() {
         return slider.slidesCount();
+      };
+
+      this.onPagerClick = function(index) {
+        console.log('pagerClick', index);
+        $scope.pagerClick({index: index});
       };
 
       $timeout(function() {
@@ -239,7 +245,8 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
     require: '^ionSlideBox',
     compile: function(element, attr) {
       element.addClass('slider-slide');
-      return function($scope, $element, $attr) {};
+      return function($scope, $element, $attr) {
+      };
     },
   };
 })
@@ -249,7 +256,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
     restrict: 'E',
     replace: true,
     require: '^ionSlideBox',
-    template: '<div class="slider-pager"><span class="slider-pager-page" ng-repeat="slide in numSlides() track by $index" ng-class="{active: $index == currentSlide}"><i class="icon ion-record"></i></span></div>',
+    template: '<div class="slider-pager"><span class="slider-pager-page" ng-repeat="slide in numSlides() track by $index" ng-class="{active: $index == currentSlide}" ng-click="pagerClick($index)"><i class="icon ion-record"></i></span></div>',
     link: function($scope, $element, $attr, slideBox) {
       var selectPage = function(index) {
         var children = $element[0].children;
@@ -261,6 +268,10 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
             children[i].classList.remove('active');
           }
         }
+      };
+
+      $scope.pagerClick = function(index) {
+        slideBox.onPagerClick(index);
       };
 
       $scope.numSlides = function() {
