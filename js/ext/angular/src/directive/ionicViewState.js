@@ -300,19 +300,33 @@ angular.module('ionic.ui.viewState', ['ionic.service.view', 'ionic.service.gestu
  */
 .directive('navClear', [
   '$ionicViewService',
-function($ionicViewService) {
+  '$state',
+  '$location',
+  '$window',
+  '$rootScope',
+function($ionicViewService, $location, $state, $window, $rootScope) {
+  $rootScope.$on('$stateChangeError', function() {
+    $ionicViewService.nextViewOptions(null);
+  });
   return {
     priority: 100,
     restrict: 'AC',
     compile: function($element) {
       return { pre: prelink };
-      function prelink($scope, $element) {
-        $element.on('click', function(e){
-          $ionicViewService.nextViewOptions({
-            disableAnimate: true,
-            disableBack: true
+      function prelink($scope, $element, $attrs) {
+        var unregisterListener;
+        function listenForStateChange() {
+          unregisterListener = $scope.$on('$stateChangeStart', function() {
+            $ionicViewService.nextViewOptions({
+              disableAnimate: true,
+              disableBack: true
+            });
+            unregisterListener();
           });
-        });
+          $window.setTimeout(unregisterListener, 300);
+        }
+
+        $element.on('click', listenForStateChange);
       }
     }
   };
