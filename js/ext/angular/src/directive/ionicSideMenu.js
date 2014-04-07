@@ -87,6 +87,12 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
   'getOpenRatio',
   /**
    * @ngdoc method
+   * @name $ionicSideMenuDelegate#isOpen
+   * @returns {boolean} Whether either the left or right menu is currently opened.
+   */
+  'isOpen',
+  /**
+   * @ngdoc method
    * @name $ionicSideMenuDelegate#isOpenLeft
    * @returns {boolean} Whether the left menu is currently opened.
    */

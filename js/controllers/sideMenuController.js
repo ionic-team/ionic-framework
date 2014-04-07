@@ -117,7 +117,7 @@
     },
 
     isOpen: function() {
-      return this.getOpenRatio() == 1;
+      return this.getOpenAmount() !== 0;
     },
 
     /**
