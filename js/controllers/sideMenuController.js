@@ -130,11 +130,20 @@
     },
 
     /**
-     * Open the menu with a given percentage amount.
+     * Open the menu with a given percentage amount and add a corresponding class to the content element.
      * @param {float} percentage The percentage (positive or negative for left/right) to open the menu.
      */
     openPercentage: function(percentage) {
       var p = percentage / 100;
+
+      // Add/remove class 'menu-left-open' or 'menu-right-open' on content element
+      if (this.content && this.content.el) {
+        if (percentage > 0 || percentage < 0) {
+          this.content.el.classList.add('menu-' + ((percentage > 0) ? 'left' : 'right') + '-open');
+        } else {
+          this.content.el.classList.remove('menu-' + ((this.getOpenPercentage() > 0) ? 'left' : 'right') + '-open');
+        }
+      }
 
       if(this.left && percentage >= 0) {
         this.openAmount(this.left.width * p);
