@@ -302,6 +302,13 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
             $timeout(function() {
               $scope.sideMenuContentTranslateX = amount;
             });
+            
+            var side = (amount > 0) ? 'left' : 'right';
+            if (amount > 0 || amount < 0) {
+              $element[0].classList.add('menu-' + side + '-open');
+            } else {
+              $element[0].classList.remove('menu-' + side + '-open');
+            }
           }),
           enableAnimation: function() {
             //this.el.classList.add(this.animateClass);
