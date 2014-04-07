@@ -23,34 +23,6 @@ describe('Ionic Tap', function() {
     expect(targetEle.isFocused).toEqual(true);
   });
 
-  it('Should preventDefault on an input', function() {
-    var targetEle = {
-      dispatchEvent: function() {},
-      focus: function() {}
-    };
-
-    ionic.tap.setTouchStart({ clientX: 100, clientY: 100 });
-    var e = {
-      clientX: 100, clientY: 100,
-      preventDefault: function() { this.preventedDefault = true }
-    };
-
-    targetEle.tagName = 'INPUT';
-    ionic.tap.simulateClick(targetEle, e);
-    expect(e.preventedDefault).toEqual(true);
-    e.preventedDefault = false;
-
-    targetEle.tagName = 'TEXTAREA';
-    ionic.tap.simulateClick(targetEle, e);
-    expect(e.preventedDefault).toEqual(true);
-    e.preventedDefault = false;
-
-    targetEle.tagName = 'DIV';
-    ionic.tap.simulateClick(targetEle, e);
-    expect(e.preventedDefault).toEqual(false);
-    e.preventedDefault = false;
-  });
-
   it('Should setTouchStart and hasTouchScrolled true if >= touch tolerance', function() {
     ionic.tap.setTouchStart({ clientX: 100, clientY: 100 });
 
@@ -183,13 +155,6 @@ describe('Ionic Tap', function() {
     expect( ionic.tap.ignoreSimulateClick(targetEle) ).toEqual(true);
   });
 
-  it('Should ignoreSimulateClick for input[file] elements', function() {
-    // Reported that on Android input[file] does not open using the tap
-    var targetEle = document.createElement('input');
-    targetEle.type = 'file';
-    expect( ionic.tap.ignoreSimulateClick(targetEle) ).toEqual(true);
-  });
-
   it('Should ignoreSimulateClick for input[range] elements', function() {
     // Range and tap do not agree, probably because it doesn't have a delay to begin with
     var targetEle = document.createElement('input');
@@ -225,6 +190,58 @@ describe('Ionic Tap', function() {
     expect(ionic.tap.isTapElement('ASIDE')).toEqual(false);
     expect(ionic.tap.isTapElement('LI')).toEqual(false);
     expect(ionic.tap.isTapElement('P')).toEqual(false);
+  });
+
+  it('Should focus input', function() {
+    var ele = {
+      tagName: 'input',
+      focus: function(){ this.hasFocus=true; }
+    }
+    ionic.tap.handleFocus(ele);
+    expect( ele.hasFocus ).toEqual(true);
+  });
+
+  it('Should focus textarea', function() {
+    var ele = {
+      tagName: 'textarea',
+      focus: function(){ this.hasFocus=true; }
+    }
+    ionic.tap.handleFocus(ele);
+    expect( ele.hasFocus ).toEqual(true);
+  });
+
+  it('Should focus select', function() {
+    var ele = {
+      tagName: 'select',
+      focus: function(){ this.hasFocus=true; }
+    }
+    ionic.tap.handleFocus(ele);
+    expect( ele.hasFocus ).toEqual(true);
+  });
+
+  it('Should not focus on common elements', function() {
+    var tags = ['div', 'span', 'i', 'body', 'section', 'article', 'aside', 'li', 'p', 'header', 'button', 'ion-content'];
+    for(var x=0; x<tags.length; x++) {
+      var ele = {
+        tagName: tags[x],
+        focus: function(){ this.hasFocus=true; }
+      }
+      ionic.tap.handleFocus(ele);
+      expect( ele.hasFocus ).toBeUndefined();
+    }
+  });
+
+  it('Should not focus on an input that already has focus', function() {
+    var ele = {
+      tagName: 'input',
+      focus: function(){ this.hasFocus=true; }
+    }
+    ionic.tap.handleFocus(ele);
+    expect( ele.hasFocus ).toEqual(true);
+
+    ele.focus = function(){ this.hasSecondFocus=true }
+    ionic.tap.handleFocus(ele);
+    expect( ele.hasSecondFocus ).toBeUndefined();
   });
 
 });

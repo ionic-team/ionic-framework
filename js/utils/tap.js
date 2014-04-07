@@ -11,6 +11,7 @@
   var startCoordinates = {}; // used to remember where the coordinates of the start of a touch
   var clickPreventTimerId;
   var _hasTouchScrolled = false; // if the touchmove already exceeded the touchmove tolerance
+  var _activeElement; // the element which has focus
 
 
   ionic.tap = {
@@ -74,15 +75,8 @@
 
       ele.dispatchEvent(clickEvent);
 
-      if( ele.tagName.match(/input|textarea/i) ) {
-        ele.focus();
-        e.preventDefault();
-      } else if( ele.tagName == 'SELECT' ) {
-        // select simulateClick should not preventDefault or else no options dialog
-        ele.focus();
-      } else {
-        ionic.tap.blurActive();
-      }
+      // if it's an input, focus in on the target, otherwise blur
+      ionic.tap.handleFocus(ele);
 
       // remember the coordinates of this tap so if it happens again we can ignore it
       // but only if the coordinates are not already being actively disabled
@@ -98,7 +92,20 @@
     },
 
     ignoreSimulateClick: function(ele) {
-      return ele.disabled || ele.type === 'file' || ele.type === 'range';
+      return ele.disabled || ele.type === 'range';
+    },
+
+    handleFocus: function(ele) {
+      if(ionic.tap.activeElement() !== ele) {
+        // only set the focus if it doesn't already have it
+        if( ele.tagName.match(/input|textarea|select/i) ) {
+          ionic.tap.activeElement(ele);
+          ele.focus();
+        } else {
+          ionic.tap.activeElement(null);
+          ionic.tap.blurActive();
+        }
+      }
     },
 
     preventGhostClick: function(e) {
@@ -217,14 +224,20 @@
     },
 
     blurActive: function() {
-      var ele = document.activeElement;
-      if(ele && (ele.tagName === "INPUT" ||
-                 ele.tagName === "TEXTAREA")) {
-        // using a timeout to prevent funky scrolling while a keyboard hides
+      var ele = ionic.tap.activeElement();
+      if(ele && ele.tagName.match(/input|textarea|select/i) ) {
         setTimeout(function(){
           ele.blur();
+          ionic.tap.activeElement(null);
         }, 400);
       }
+    },
+
+    activeElement: function(ele) {
+      if(arguments.length) {
+        _activeElement = ele;
+      }
+      return _activeElement || document.activeElement;
     },
 
     setTouchStart: function(e) {
