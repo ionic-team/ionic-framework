@@ -42,7 +42,12 @@
   }
 }
 
-.checkbox input {
+.checkbox-input-hidden input {
+  display: none;
+}
+
+.checkbox input,
+.checkbox .checkbox-handle {
   position: relative;
   width: $checkbox-width;
   height: $checkbox-height;
@@ -64,7 +69,8 @@
 }
 
 /* the checkmark within the box */
-.checkbox input:after {
+.checkbox input:after,
+.checkbox .checkbox-handle:after {
   @include transition(opacity .05s ease-in-out);
   @include rotate(-45deg);
   position: absolute;
@@ -80,7 +86,8 @@
   opacity: 0;
 }
 
-.grade-c .checkbox input:after {
+.grade-c .checkbox input:after,
+.grade-c .checkbox .checkbox-handle:after {
   @include rotate(0);
   top: 3px;
   left: 4px;
@@ -92,7 +99,8 @@
 }
 
 /* what the checkmark looks like when its checked */
-.checkbox input:checked:after {
+.checkbox input:checked:after,
+.checkbox input:checked + .checkbox-handle:after {
   opacity: 1;
 }
 

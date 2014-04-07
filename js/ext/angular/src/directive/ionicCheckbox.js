@@ -34,8 +34,9 @@ angular.module('ionic.ui.checkbox', [])
     transclude: true,
 
     template: '<label class="item item-checkbox">' +
-                '<div class="checkbox">' +
+                '<div class="checkbox checkbox-input-hidden">' +
                   '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
+                  '<div class="checkbox-handle"></div>' +
                 '</div>' +
                 '<div class="item-content disable-pointer-events" ng-transclude></div>' +
               '</label>',
