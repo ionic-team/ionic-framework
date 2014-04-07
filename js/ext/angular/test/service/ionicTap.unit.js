@@ -174,22 +174,18 @@ describe('Ionic Tap', function() {
     expect( ionic.tap.ignoreSimulateClick( document.createElement('select') ) ).toEqual(false);
   });
 
-  it('Should correctly check for tap elements', function() {
-    expect(ionic.tap.isTapElement('A')).toEqual(true);
-    expect(ionic.tap.isTapElement('INPUT')).toEqual(true);
-    expect(ionic.tap.isTapElement('BUTTON')).toEqual(true);
-    expect(ionic.tap.isTapElement('LABEL')).toEqual(true);
-    expect(ionic.tap.isTapElement('TEXTAREA')).toEqual(true);
-    expect(ionic.tap.isTapElement('SELECT')).toEqual(true);
+  it('Should be a tap element', function() {
+    var tags = ['A', 'INPUT', 'BUTTON', 'LABEL', 'TEXTAREA', 'SELECT'];
+    for(var x=0; x<tags.length; x++) {
+      expect(ionic.tap.isTapElement( tags[x] )).toEqual(true);
+    }
+  });
 
-    expect(ionic.tap.isTapElement('DIV')).toEqual(false);
-    expect(ionic.tap.isTapElement('SPAN')).toEqual(false);
-    expect(ionic.tap.isTapElement('I')).toEqual(false);
-    expect(ionic.tap.isTapElement('BODY')).toEqual(false);
-    expect(ionic.tap.isTapElement('SECTION')).toEqual(false);
-    expect(ionic.tap.isTapElement('ASIDE')).toEqual(false);
-    expect(ionic.tap.isTapElement('LI')).toEqual(false);
-    expect(ionic.tap.isTapElement('P')).toEqual(false);
+  it('Should not be a tap element', function() {
+    var tags = ['DIV', 'SPAN', 'I', 'LI', 'P', 'BODY', 'SECTION', 'ASIDE', 'HEADER', 'FOOTER', 'ARTICLE'];
+    for(var x=0; x<tags.length; x++) {
+      expect(ionic.tap.isTapElement( tags[x] )).toEqual(false);
+    }
   });
 
   it('Should focus input', function() {
