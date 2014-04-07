@@ -104,6 +104,25 @@ describe('SideMenuController', function() {
     expect(ctrl.getOpenPercentage()).toEqual(0);
   });
 
+  it('should isOpen', function() {
+    expect(ctrl.isOpen()).toEqual(false);
+    ctrl.toggleLeft();
+    expect(ctrl.isOpen()).toEqual(true);
+    ctrl.toggleLeft();
+    expect(ctrl.isOpen()).toEqual(false);
+    ctrl.toggleLeft();
+    expect(ctrl.isOpen()).toEqual(true);
+    ctrl.toggleLeft();
+    
+    expect(ctrl.isOpen()).toEqual(false);
+    ctrl.toggleRight();
+    expect(ctrl.isOpen()).toEqual(true);
+    ctrl.toggleRight();
+    expect(ctrl.isOpen()).toEqual(false);
+    ctrl.toggleRight();
+    expect(ctrl.isOpen()).toEqual(true);
+  });
+
   it('should isOpenLeft', function() {
     expect(ctrl.isOpenLeft()).toEqual(false);
     ctrl.toggleLeft();
