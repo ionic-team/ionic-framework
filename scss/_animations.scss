@@ -561,6 +561,9 @@ $nav-title-slide-ios7-delay: 250ms;
     &.ng-hide-remove {
       display: block !important;
     }
+    &.ng-hide-add {
+      position: absolute;
+    }
   }
   > .ng-enter, &.ng-enter,
   > .ng-leave, &.ng-leave {
