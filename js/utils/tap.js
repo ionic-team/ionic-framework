@@ -34,7 +34,7 @@
         // only climb up a max of 5 parents, anything more probably isn't beneficial
         if(!ele) break;
 
-        if( ele.tagName.match(/a|input|button|label|textarea|select/i) ) {
+        if( ionic.tap.isTapElement(ele.tagName) ) {
           return ionic.tap.simulateClick(ele, e);
         }
         ele = ele.parentElement;
@@ -46,15 +46,21 @@
       ionic.tap.blurActive();
     },
 
+    isTapElement: function(tagName) {
+      return tagName == 'A' ||
+             tagName == 'INPUT' ||
+             tagName == 'BUTTON' ||
+             tagName == 'LABEL' ||
+             tagName == 'TEXTAREA' ||
+             tagName == 'SELECT';
+    },
+
     simulateClick: function(target, e) {
       // simulate a normal click by running the element's click method then focus on it
 
       var ele = target.control || target;
 
-      if(ele.disabled || ele.type === 'file' || ele.type === 'range') {
-        e.tapIgnored = true;
-        return;
-      }
+      if( ionic.tap.ignoreSimulateClick(ele) ) return;
 
       console.debug('simulateClick', e.type, ele.tagName, ele.className);
 
@@ -89,6 +95,10 @@
         return stopEvent(e);
       }
 
+    },
+
+    ignoreSimulateClick: function(ele) {
+      return ele.disabled || ele.type === 'file' || ele.type === 'range';
     },
 
     preventGhostClick: function(e) {

@@ -176,31 +176,55 @@ describe('Ionic Tap', function() {
     expect(c).toEqual({x:0, y: 0});
   });
 
-  it('Should not fire a tap for disabled elements', function() {
+  it('Should ignoreSimulateClick for disabled elements', function() {
     // Disabled elements should not be tapped
     var targetEle = document.createElement('input');
     targetEle.disabled = true;
-    var event = {};
-    ionic.tap.simulateClick(targetEle, event);
-    expect(event.tapIgnored).toEqual(true);
+    expect( ionic.tap.ignoreSimulateClick(targetEle) ).toEqual(true);
   });
 
-  it('Should not fire a tap for input[file] elements', function() {
+  it('Should ignoreSimulateClick for input[file] elements', function() {
     // Reported that on Android input[file] does not open using the tap
     var targetEle = document.createElement('input');
     targetEle.type = 'file';
-    var event = {};
-    ionic.tap.simulateClick(targetEle, event);
-    expect(event.tapIgnored).toEqual(true);
+    expect( ionic.tap.ignoreSimulateClick(targetEle) ).toEqual(true);
   });
 
-  it('Should not fire a tap for input[range] elements', function() {
+  it('Should ignoreSimulateClick for input[range] elements', function() {
     // Range and tap do not agree, probably because it doesn't have a delay to begin with
     var targetEle = document.createElement('input');
     targetEle.type = 'range';
-    var event = {};
-    ionic.tap.simulateClick(targetEle, event);
-    expect(event.tapIgnored).toEqual(true);
+    expect( ionic.tap.ignoreSimulateClick(targetEle) ).toEqual(true);
+  });
+
+  it('Should not ignoreSimulateClick for common inputs', function() {
+    var inputTypes = ['text', 'email', 'search', 'tel', 'number', 'date', 'month', 'password', null, undefined, ''];
+    for(var x=0; x<inputTypes.length; x++) {
+      var targetEle = document.createElement('input');
+      targetEle.type = inputTypes[x];
+      expect( ionic.tap.ignoreSimulateClick(targetEle) ).toEqual(false);
+    }
+    expect( ionic.tap.ignoreSimulateClick( document.createElement('div') ) ).toEqual(false);
+    expect( ionic.tap.ignoreSimulateClick( document.createElement('textarea') ) ).toEqual(false);
+    expect( ionic.tap.ignoreSimulateClick( document.createElement('select') ) ).toEqual(false);
+  });
+
+  it('Should correctly check for tap elements', function() {
+    expect(ionic.tap.isTapElement('A')).toEqual(true);
+    expect(ionic.tap.isTapElement('INPUT')).toEqual(true);
+    expect(ionic.tap.isTapElement('BUTTON')).toEqual(true);
+    expect(ionic.tap.isTapElement('LABEL')).toEqual(true);
+    expect(ionic.tap.isTapElement('TEXTAREA')).toEqual(true);
+    expect(ionic.tap.isTapElement('SELECT')).toEqual(true);
+
+    expect(ionic.tap.isTapElement('DIV')).toEqual(false);
+    expect(ionic.tap.isTapElement('SPAN')).toEqual(false);
+    expect(ionic.tap.isTapElement('I')).toEqual(false);
+    expect(ionic.tap.isTapElement('BODY')).toEqual(false);
+    expect(ionic.tap.isTapElement('SECTION')).toEqual(false);
+    expect(ionic.tap.isTapElement('ASIDE')).toEqual(false);
+    expect(ionic.tap.isTapElement('LI')).toEqual(false);
+    expect(ionic.tap.isTapElement('P')).toEqual(false);
   });
 
 });
