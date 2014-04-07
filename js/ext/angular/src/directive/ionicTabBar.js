@@ -409,7 +409,7 @@ function($rootScope, $animate, $ionicBind, $compile, $ionicViewService, $state, 
       '<span class="tab-title" ng-bind-html="title"></span>' +
     '</a>',
     scope: {
-      title: '@',
+      title: '=',
       icon: '@',
       iconOn: '@',
       iconOff: '@',
