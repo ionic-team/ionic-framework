@@ -139,9 +139,9 @@
       // Add/remove class 'menu-left-open' or 'menu-right-open' on content element
       if (this.content && this.content.el) {
         if (percentage > 0 || percentage < 0) {
-          this.content.el.classList.add('menu-' + (percentage > 0) ? 'left' : 'right' + '-open');
+          this.content.el.classList.add('menu-' + ((percentage > 0) ? 'left' : 'right') + '-open');
         } else {
-          this.content.el.classList.remove('menu-' + (this.getOpenPercentage() > 0) ? 'left' : 'right' + '-open');
+          this.content.el.classList.remove('menu-' + ((this.getOpenPercentage() > 0) ? 'left' : 'right') + '-open');
         }
       }
 
