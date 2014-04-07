@@ -23,7 +23,7 @@
       var e = orgEvent.gesture.srcEvent; // evaluate the actual source event, not the created event by gestures.js
       var ele = e.target; // get the target element that was actually tapped
 
-      if( ionic.tap.isRecentTap(e) || ionic.tap.hasTouchScrolled(e) || e.type === 'touchcancel') {
+      if( ionic.tap.ignoreTapInspect(e) ) {
         // if a tap in the same area just happened,
         // or it was a touchcanel event, don't continue
         console.debug('tapInspect stopEvent', e.type, ele.tagName);
@@ -45,6 +45,12 @@
       // if the currently active element is an input, and they tapped outside
       // of the current input, then unset its focus (blur) so the keyboard goes away
       ionic.tap.blurActive();
+    },
+
+    ignoreTapInspect: function(e) {
+      return !!ionic.tap.isRecentTap(e) ||
+             ionic.tap.hasTouchScrolled(e) ||
+             e.type === 'touchcancel';
     },
 
     isTapElement: function(tagName) {

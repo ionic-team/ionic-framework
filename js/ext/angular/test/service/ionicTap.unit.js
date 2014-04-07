@@ -3,6 +3,12 @@ describe('Ionic Tap', function() {
   beforeEach(function() {
     window.console.debug = function(){};
     ionic.tap.reset();
+    window._setTimeout = window.setTimeout;
+    window.setTimeout = function(){};
+  });
+
+  afterEach(function(){
+    window.setTimeout = window._setTimeout;
   });
 
   it('Should focus on an input if it hasnt scrolled', function() {
@@ -238,6 +244,50 @@ describe('Ionic Tap', function() {
     ele.focus = function(){ this.hasSecondFocus=true }
     ionic.tap.handleFocus(ele);
     expect( ele.hasSecondFocus ).toBeUndefined();
+  });
+
+  it('Should recordCoordinates and isRecentTap', function() {
+    var e = {
+      clientX: 100,
+      clientY: 100
+    };
+    expect( ionic.tap.isRecentTap(e) ).toBeUndefined();
+    ionic.tap.recordCoordinates(e);
+    expect( ionic.tap.isRecentTap(e) ).toBeDefined();
+  });
+
+  it('Should ignoreTapInspect because of isRecentTap', function() {
+    var e = {
+      type: 'touchend',
+      clientX: 100,
+      clientY: 100
+    };
+    ionic.tap.recordCoordinates(e);
+    expect( ionic.tap.ignoreTapInspect(e) ).toEqual(true);
+  });
+
+  it('Should ignoreTapInspect because of hasTouchScrolled', function() {
+    ionic.tap.setTouchStart({ clientX: 100, clientY: 100 });
+    var e = {
+      type: 'touchend',
+      clientX: 200,
+      clientY: 200
+    };
+    expect( ionic.tap.ignoreTapInspect(e) ).toEqual(true);
+  });
+
+  it('Should ignoreTapInspect because of touchcancel event', function() {
+    var e = {
+      type: 'touchcancel'
+    };
+    expect( ionic.tap.ignoreTapInspect(e) ).toEqual(true);
+  });
+
+  it('Should not ignoreTapInspect', function() {
+    var e = {
+      type: 'touchend'
+    };
+    expect( ionic.tap.ignoreTapInspect(e) ).toEqual(false);
   });
 
 });
