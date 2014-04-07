@@ -183,6 +183,10 @@ describe('Ionic Side Menu Directive', function () {
     expect(sideMenuCtrl.left.width).toBe(222);
     expect(sideMenuCtrl.left.el.style.width).toBe('222px');
   });
+  
+  it('should publish the content element to it\'s public API', function () {
+    expect(sideMenuCtrl.content.el).toBeTruthy();
+  });
 });
 
 describe('menuToggle directive', function() {
