@@ -292,6 +292,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
         var releaseGesture = $ionicGesture.on('release', dragReleaseFn, $element);
 
         sideMenuCtrl.setContent({
+          el: $element[0],
           onDrag: function(e) {},
           endDrag: function(e) {},
           getTranslateX: function() {
