@@ -153,6 +153,16 @@
     </script>
 
     <script id="auto-list.html" type="text/ng-template">
+
+        <ion-nav-buttons side="left">
+          <button class="button button-icon icon ion-home" ng-click="foo()">
+            What?
+          </button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+          <button class="button button-icon icon ion-navicon" ng-click="foo()">
+          </button>
+        </ion-nav-buttons>
       <ion-view title="Auto List">
         <ion-content padding="true">
           <ion-list>
@@ -175,10 +185,18 @@
 
     <script id="auto-detail.html" type="text/ng-template">
       <ion-view title="Auto Details">
-        <ion-nav-buttons side="left">
-          <button class="button button-icon icon ion-refresher">
+
+        <!-- <ion-nav-buttons side="left"> -->
+        <!--   <button class="button button-icon icon ion-home" ng-click="foo()"> -->
+        <!--     Home -->
+        <!--   </button> -->
+        <!-- </ion-nav-buttons> -->
+        <ion-nav-buttons side="right">
+          <button class="button button-icon icon ion-home" ng-click="foo()">
+            Home
           </button>
         </ion-nav-buttons>
+
         <ion-content padding="true">
 
           <h2>{{ auto.year }} {{ auto.make }} {{ auto.model }}</h2>

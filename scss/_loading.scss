@@ -4,31 +4,14 @@
  * --------------------------------------------------
  */
 
-.loading-backdrop {
-  @include transition(visibility 0s linear $loading-backdrop-fadein-duration);
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: $z-index-loading-backdrop;
-
-  visibility: hidden;
-  width: 100%;
-  height: 100%;
-
-  &.active {
-    @include transition-delay(0s);
-    visibility: visible;
-
-    &.show-backdrop {
-      background-color: $loading-backdrop-bg-color;
-    }
-  }
-}
-
 .loading {
+  @include ng-hide-fade(0.2s);
+
   position: fixed;
   top: 50%;
   left: 50%;
+
+  z-index: $z-index-loading;
   padding: $loading-padding;
 
   border-radius: $loading-border-radius;

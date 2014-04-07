@@ -1,4 +1,15 @@
-angular.module('ionic.service.loading', ['ionic.ui.loading'])
+
+var TPL_LOADING =
+  '<div class="loading ng-hide" ng-bind-html="html">' +
+  '</div>';
+
+var HIDE_DEPRECATED = '$ionicLoading instance.hide() has been deprecated. Use $ionicLoading.hide().';
+var SHOW_DEPRECATED = '$ionicLoading instance.show() has been deprecated. Use $ionicLoading.show().';
+var SET_DEPRECATED = '$ionicLoading instance.setContent() has been deprecated. Use $ionicLoading.show({ content: \'my content\' }).';
+var SHOW_DELAY_DEPRECATED = '$ionicLoading options.showDelay has been deprecated. Use options.delay instead.';
+var SHOW_BACKDROP_DEPRECATED = '$ionicLoading options.showBackdrop has been deprecated. Use options.noBackdrop instead.';
+
+angular.module('ionic.service.loading', [])
 
 /**
  * @ngdoc service
@@ -13,71 +24,129 @@ angular.module('ionic.service.loading', ['ionic.ui.loading'])
  * angular.module('LoadingApp', ['ionic'])
  * .controller('LoadingCtrl', function($scope, $ionicLoading) {
  *   $scope.show = function() {
- *     $scope.loading = $ionicLoading.show({
- *       content: 'Loading',
+ *     $ionicLoading.show({
+ *       content: 'Loading...'
  *     });
  *   };
  *   $scope.hide = function(){
- *     $scope.loading.hide();
+ *     $ionicLoading.hide();
  *   };
  * });
  * ```
  */
-.factory('$ionicLoading', ['$rootScope', '$document', '$compile', function($rootScope, $document, $compile) {
+.factory('$ionicLoading', [
+  '$animate',
+  '$document',
+  '$ionicTemplateLoader',
+  '$ionicBackdrop',
+  '$timeout',
+  '$q',
+  '$log',
+function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log) {
+
+  var loaderInstance;
+
   return {
     /**
      * @ngdoc method
      * @name $ionicLoading#show
-     * @param {object} opts The options for the indicator. Available properties:
-     *  - `{string=}` `content` The content of the indicator. Default: none.
-     *  - `{string=}` `animation` The animation of the indicator.
-     *    Default: 'fade-in'.
-     *  - `{boolean=}` `showBackdrop` Whether to show a backdrop. Default: true.
-     *  - `{number=}` `maxWidth` The maximum width of the indicator, in pixels.
-     *    Default: 200.
-     *  - `{number=}` `showDelay` How many milliseconds to delay showing the
-     *    indicator.  Default: 0.
-     * @returns {object} A shown loader with the following methods:
-     *  - `hide()` - Hides the loader.
-     *  - `show()` - Shows the loader.
-     *  - `setContent(string)` - Sets the html content of the loader.
+     * @description Shows a loading indicator. If the indicator is already shown,
+     * it will set the options given and keep the indicator shown.
+     * @param {object} opts The options for the loading indicator. Available properties:
+     *  - `{string=}` `content` The html content of the indicator.
+     *  - `{boolean=}` `noBackdrop` Whether to hide the backdrop.
+     *  - `{number=}` `delay` How many milliseconds to delay showing the indicator.
+     *  - `{number=} `duration` How many milliseconds to wait until automatically
+     *  hiding the indicator.
      */
-    show: function(opts) {
-      var defaults = {
-        content: '',
-        animation: 'fade-in',
-        showBackdrop: true,
-        maxWidth: 200,
-        showDelay: 0
-      };
-
-      opts = angular.extend(defaults, opts);
-
-      var scope = $rootScope.$new(true);
-      angular.extend(scope, opts);
-
-      // Make sure there is only one loading element on the page at one point in time
-      var existing = angular.element($document[0].querySelector('.loading-backdrop'));
-      if(existing.length) {
-        existing.remove();
-      }
-
-      // Compile the template
-      var element = $compile('<ion-loading>' + opts.content + '</ion-loading>')(scope);
-
-      $document[0].body.appendChild(element[0]);
-
-      var loading = new ionic.views.Loading({
-        el: element[0],
-        maxWidth: opts.maxWidth,
-        showDelay: opts.showDelay
-      });
-
-      loading.show();
-
-      scope.loading = loading;
-
-      return loading;
-    }
+    show: showLoader,
+    /**
+     * @ngdoc method
+     * @name $ionicLoading#hide
+     * @description Hides the loading indicator, if shown.
+     */
+    hide: hideLoader,
+    /**
+     * @private for testing
+     */
+    _getLoader: getLoader
   };
+
+  function getLoader() {
+    if (!loaderInstance) {
+      loaderInstance = $ionicTemplateLoader.compile({
+        template: TPL_LOADING,
+        appendTo: $document[0].body
+      })
+      .then(function(loader) {
+        loader.show = function(options) {
+          if (!this.isShown) {
+            this.hasBackdrop = !options.noBackdrop || options.showBackdrop === false;
+            if (this.hasBackdrop) {
+              $ionicBackdrop.retain();
+            }
+          }
+
+          if (options.duration) {
+            $timeout.cancel(this.durationTimeout);
+            this.durationTimeout = $timeout(angular.bind(this, this.hide),
+                                            +options.duration);
+          }
+          if (options.content) {
+            this.scope.html = options.content;
+          }
+
+          var el = this.element;
+          ionic.requestAnimationFrame(function() {
+            $animate.removeClass(el, 'ng-hide');
+            ionic.DomUtil.centerElementByMargin(el[0]);
+          });
+
+          this.isShown = true;
+        };
+        loader.hide = function() {
+          if (this.isShown) {
+            if (this.hasBackdrop) {
+              $ionicBackdrop.release();
+            }
+            $animate.addClass(this.element, 'ng-hide');
+          }
+          $timeout.cancel(this.durationTimeout);
+          this.isShown = false;
+        };
+        return loader;
+      });
+    }
+    return $q.when(loaderInstance);
+  }
+
+  function showLoader(options) {
+    options || (options = {});
+
+    deprecated.field(SHOW_DELAY_DEPRECATED, $log.warn, options, 'showDelay', options.showDelay);
+    deprecated.field(SHOW_BACKDROP_DEPRECATED, $log.warn, options, 'showBackdrop', options.showBackdrop);
+
+    $timeout(getLoader, options.delay || options.showDelay || 0)
+    .then(function(loader) {
+      return loader.show(options);
+    });
+
+    return {
+      hide: deprecated.method(HIDE_DEPRECATED, $log.warn, hideLoader),
+      show: deprecated.method(SHOW_DEPRECATED, $log.warn, function() {
+        showLoader(options);
+      }),
+      setContent: deprecated.method(SET_DEPRECATED, $log.warn, function(content) {
+        getLoader().then(function(loader) {
+          loader.scope.html = content;
+        });
+      })
+    };
+  }
+
+  function hideLoader() {
+    getLoader().then(function(loader) {
+      loader.hide();
+    });
+  }
 }]);
