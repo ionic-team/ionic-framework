@@ -248,25 +248,39 @@ function($animate, $timeout) {
             });
           }
 
-          $scope.$watch('!!(' + $attr.showDelete + ')', function(value, oldValue) {
-            //Don't care about first false value
-            if (!value && !angular.isDefined(oldValue)) return;
+          if (angular.isDefined($attr.showDelete)) {
+            $scope.$watch('!!(' + $attr.showDelete + ')', function(value) {
+              listCtrl.showDelete(value);
+            });
+          }
+          if (angular.isDefined($attr.showReorder)) {
+            $scope.$watch('!!(' + $attr.showReorder + ')', function(value) {
+              listCtrl.showReorder(value);
+            });
+          }
 
-            if (value) listCtrl.closeOptionButtons();
-            listCtrl.showDelete(value);
+          $scope.$watch(function() {
+            return listCtrl.showDelete();
+          }, function(isShown, wasShown) {
+            //Only use isShown=false if it was already shown
+            if (!isShown && !wasShown) { return; }
 
-            $element.children().toggleClass('list-left-editing', value);
-            toggleNgHide('.item-delete.item-left-edit', value);
+            if (isShown) listCtrl.closeOptionButtons();
+
+            $element.children().toggleClass('list-left-editing', isShown);
+            toggleNgHide('.item-delete.item-left-edit', isShown);
           });
-          $scope.$watch('!!(' + $attr.showReorder + ')', function(value, oldValue) {
-            //Don't care about first false value
-            if (!value && !angular.isDefined(oldValue)) return;
+          $scope.$watch(function() {
+            return listCtrl.showReorder();
+          }, function(isShown, wasShown) {
+            //Only use isShown=false if it was already shown
+            if (!isShown && !wasShown) { return; }
 
-            if (value) listCtrl.closeOptionButtons();
-            listCtrl.showReorder(value);
+            if (isShown) listCtrl.closeOptionButtons();
+            listCtrl.showReorder(isShown);
 
-            $element.children().toggleClass('list-right-editing', value);
-            toggleNgHide('.item-reorder.item-right-edit', value);
+            $element.children().toggleClass('list-right-editing', isShown);
+            toggleNgHide('.item-reorder.item-right-edit', isShown);
           });
 
           function toggleNgHide(selector, shouldShow) {
