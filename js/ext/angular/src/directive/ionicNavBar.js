@@ -47,9 +47,10 @@ angular.module('ionic.ui.navBar', ['ionic.service.view', 'ngSanitize'])
    * @ngdoc method
    * @name $ionicNavBarDelegate#showBackButton
    * @description
-   * Set whether the {@link ionic.directive:ionNavBackButton} should be shown
+   * Set/get whether the {@link ionic.directive:ionNavBackButton} is shown
    * (if it exists).
-   * @param {boolean} show Whether to show the back button.
+   * @param {boolean=} show Whether to show the back button.
+   * @returns {boolean} Whether the back button is shown.
    */
   'showBackButton',
   /**
@@ -140,7 +141,10 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
   };
 
   this.showBackButton = function(show) {
-    $scope.backButtonShown = !!show;
+    if (arguments.length) {
+      $scope.backButtonShown = !!show;
+    }
+    return !!($scope.hasBackButton && $scope.backButtonShown);
   };
 
   this.showBar = function(show) {
