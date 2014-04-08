@@ -582,7 +582,6 @@ $sheet-border-radius-bottom:      0px 0px 3px 3px !default;
 // Popups
 // -------------------------------
 
-$popup-backdrop-fadein-duration:  0.1s !default;
 $popup-width:                     250px !default;
 $popup-enter-animation:           superScaleIn !default;
 $popup-enter-animation-duration:  0.2s !default;
@@ -653,6 +652,7 @@ $badge-default-text:              #AAAAAA !default;
 
 $z-index-action-sheet:            11 !default;
 $z-index-badge:                   1 !default;
+$z-index-backdrop:                10 !default;
 $z-index-bar:                     10 !default;
 $z-index-bar-title:               0 !default;
 $z-index-bar-button:              1 !default;
@@ -664,12 +664,11 @@ $z-index-item-options:            1 !default;
 $z-index-item-radio:              3 !default;
 $z-index-item-reordering:         9 !default;
 $z-index-item-toggle:             3 !default;
-$z-index-loading-backdrop:        11 !default;
+$z-index-loading:                 11 !default;
 $z-index-menu:                    0 !default;
 $z-index-modal:                   10 !default;
 $z-index-pane:                    1 !default;
 $z-index-popup:                   11 !default;
-$z-index-popup-backdrop:          10 !default;
 $z-index-scroll-bar:              9999 !default;
 $z-index-slider-pager:            1 !default;
 $z-index-tabs:                    5 !default;

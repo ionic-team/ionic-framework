@@ -2,6 +2,18 @@
 // Button Mixins
 // --------------------------------------------------
 
+@mixin ng-hide-fade($transition-duration:0.15s, $transition-timing-function:ease-out) {
+  @include transition(opacity $transition-duration $transition-timing-function);
+  opacity: 1;
+  &.ng-hide {
+    opacity: 0;
+  }
+  &.ng-hide-remove,
+  &.ng-hide-add {
+    display: block !important;
+  }
+}
+
 @mixin button-style($bg-color, $border-color, $active-bg-color, $active-border-color, $color) {
   border-color: $border-color;
   background-color: $bg-color;

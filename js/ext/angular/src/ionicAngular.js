@@ -29,7 +29,6 @@ angular.module('ionic.ui', [
     'ionic.ui.header',
     'ionic.ui.list',
     'ionic.ui.navBar',
-    'ionic.ui.popup',
     'ionic.ui.radio',
     'ionic.ui.scroll',
     'ionic.ui.sideMenu',
