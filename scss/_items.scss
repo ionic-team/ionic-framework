@@ -53,13 +53,13 @@
     @include display-flex();
     position: absolute;
     top: $item-padding;
-    right: ($item-padding * 2) + 5;
+    right: ($item-padding * 2);
   }
   &.item-button-right .badge {
     right: ($item-padding * 2) + 35;
   }
   &.item-divider .badge {
-    top: $item-padding / 2;
+    top: ceil($item-padding / 2);
   }
   .badge + .badge {
     margin-right: 5px;
@@ -190,7 +190,7 @@ button.item.item-complex {
 .item-radio .item-content {
   position: relative;
   z-index: $z-index-item;
-  padding: $item-padding (($item-padding * 3) - 5) $item-padding $item-padding;
+  padding: $item-padding (ceil( ($item-padding * 3) + ($item-padding / 3) ) - 5) $item-padding $item-padding;
   border: none;
   background-color: white;
 }
@@ -263,32 +263,32 @@ a.item-content {
 }
 
 .item-icon-left {
-  padding-left: ($item-padding * 3);
+  padding-left: ceil( ($item-padding * 3) + ($item-padding / 3) );
 
   .icon {
-    left: $item-padding / 2;
+    left: ceil( ($item-padding / 3) * 2);
   }
 }
 .item-complex.item-icon-left {
   padding-left: 0;
 
   .item-content {
-    padding-left: ($item-padding * 3);
+    padding-left: ceil( ($item-padding * 3) + ($item-padding / 3) );
   }
 }
 
 .item-icon-right {
-  padding-right: ($item-padding * 3);
+  padding-right: ceil( ($item-padding * 3) + ($item-padding / 3) );
 
   .icon {
-    right: $item-padding / 2;
+    right: ceil( ($item-padding / 3) * 2);
   }
 }
 .item-complex.item-icon-right {
   padding-right: 0;
 
   .item-content {
-    padding-right: ($item-padding * 3);
+    padding-right: ceil( ($item-padding * 3) + ($item-padding / 3) );
   }
 }
 
@@ -306,10 +306,10 @@ a.item-content {
   font-size: $item-icon-accessory-font-size;
 }
 .item-icon-left .icon-accessory {
-  left: round($item-padding / 5);
+  left: floor($item-padding / 5);
 }
 .item-icon-right .icon-accessory {
-  right: round($item-padding / 5);
+  right: floor($item-padding / 5);
 }
 
 
@@ -320,7 +320,7 @@ a.item-content {
  */
 
 .item-button-left {
-  padding-left: $item-padding * 4.5;
+  padding-left: ceil($item-padding * 4.5);
 }
 
 .item-button-left > .button,
@@ -328,8 +328,8 @@ a.item-content {
   @include display-flex();
   @include align-items(center);
   position: absolute;
-  top: $item-padding / 2;
-  left: $item-padding / 2;
+  top: ceil($item-padding / 2);
+  left: ceil( ($item-padding / 3) * 2);
   min-width: $item-icon-font-size + ($button-border-width * 2);
   min-height: $item-icon-font-size + ($button-border-width * 2);
   font-size: $item-button-font-size;
@@ -363,7 +363,7 @@ button.item.item-button-right {
   @include display-flex();
   @include align-items(center);
   position: absolute;
-  top: $item-padding / 2;
+  top: ceil($item-padding / 2);
   right: $item-padding;
   min-width: $item-icon-font-size + ($button-border-width * 2);
   min-height: $item-icon-font-size + ($button-border-width * 2);
@@ -405,7 +405,24 @@ button.item.item-button-right {
     max-width: $item-avatar-width;
     max-height: $item-avatar-height;
     width: 100%;
-    border-radius: 4px;
+    border-radius: $item-avatar-border-radius;
+  }
+}
+
+.item-avatar-right,
+.item-avatar-right .item-content {
+  padding-right: $item-avatar-width + ($item-padding * 2);
+  min-height: $item-avatar-width + ($item-padding * 2);
+
+  > img:first-child,
+  .item-image {
+    position: absolute;
+    top: $item-padding;
+    right: $item-padding;
+    max-width: $item-avatar-width;
+    max-height: $item-avatar-height;
+    width: 100%;
+    border-radius: $item-avatar-border-radius;
   }
 }
 
@@ -449,6 +466,7 @@ button.item.item-button-right {
     width: 100%;
   }
 }
+.item-avatar-right.item-complex,
 .item-thumbnail-right.item-complex {
   padding-right: 0;
 }
@@ -488,8 +506,8 @@ button.item.item-button-right {
 // -------------------------------
 
 .item-divider {
-  padding-top: $item-padding / 2;
-  padding-bottom: $item-padding / 2;
+  padding-top: ceil($item-padding / 2);
+  padding-bottom: ceil($item-padding / 2);
   min-height: 30px;
   background-color: $item-divider-bg;
   color: $item-divider-color;
