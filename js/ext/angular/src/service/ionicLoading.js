@@ -89,8 +89,10 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
 
           if (options.duration) {
             $timeout.cancel(this.durationTimeout);
-            this.durationTimeout = $timeout(angular.bind(this, this.hide),
-                                            +options.duration);
+            this.durationTimeout = $timeout(
+              angular.bind(this, this.hide),
+              +options.duration
+            );
           }
           if (options.content) {
             this.scope.html = options.content;
@@ -100,7 +102,7 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
           var scope = this.scope;
           ionic.requestAnimationFrame(function() {
             $animate.removeClass(el, 'ng-hide');
-            //Fix for ios: if we center the element twice, it always gets 
+            //Fix for ios: if we center the element twice, it always gets
             //position right. Otherwise, it doesn't
             ionic.DomUtil.centerElementByMargin(el[0]);
             //One frame after it's visible, position it

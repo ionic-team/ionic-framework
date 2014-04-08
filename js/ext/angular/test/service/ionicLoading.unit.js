@@ -1,0 +1,107 @@
+describe('$ionicLoading service', function() {
+  beforeEach(module('ionic'));
+  it('should reuse loader instance for getLoader', inject(function($ionicLoading) {
+    var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+    var loader2 = TestUtil.unwrapPromise($ionicLoading._getLoader());
+    expect(loader).toBe(loader2);
+  }));
+
+  describe('loader instance', function() {
+
+    describe('.show()', function() {
+
+      it('should retain backdrop if !noBackdrop and !isShown', inject(function($ionicLoading, $ionicBackdrop) {
+        spyOn($ionicBackdrop, 'retain');
+        var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+        loader.show({})
+        expect($ionicBackdrop.retain).toHaveBeenCalled();
+      }));
+      it('should not retain backdrop if noBackdrop', inject(function($ionicLoading, $ionicBackdrop) {
+        spyOn($ionicBackdrop, 'retain');
+        var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+        loader.show({ noBackdrop: true })
+        expect($ionicBackdrop.retain).not.toHaveBeenCalled();
+      }));
+      it('should not retain backdrop if isShown', inject(function($ionicLoading, $ionicBackdrop) {
+        spyOn($ionicBackdrop, 'retain');
+        var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+        loader.isShown = true;
+        loader.show({})
+        expect($ionicBackdrop.retain).not.toHaveBeenCalled();
+      }));
+
+      it('should not timeout if no duration', inject(function($ionicLoading, $timeout) {
+        var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+        loader.show({});
+        expect(loader.durationTimeout).toBeFalsy();
+      }));
+      it('should timeout if duration', inject(function($ionicLoading, $timeout) {
+        var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+        loader.show({ duration: 1000 });
+        expect(loader.durationTimeout).toBeTruthy();
+        expect(loader.durationTimeout.$$timeoutId).toBeTruthy();
+      }));
+      it('should remove ng-hide after raf', inject(function($ionicLoading) {
+        var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+        ionic.requestAnimationFrame = function(cb) { cb(); };
+        expect(loader.element.hasClass('ng-hide')).toBe(true);
+        loader.show({});
+        expect(loader.element.hasClass('ng-hide')).toBe(false);
+      }));
+      it('should isShown = true', inject(function($ionicLoading) {
+        var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+        expect(loader.isShown).toBeFalsy();
+        loader.show({});
+        expect(loader.isShown).toBe(true);
+      }));
+
+    });
+
+    describe('.hide()', function() {
+
+      it('should release backdrop if hasBackdrop and isShown', inject(function($ionicLoading, $ionicBackdrop) {
+        spyOn($ionicBackdrop, 'release');
+        var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+        loader.isShown = true;
+        loader.hasBackdrop = true;
+        loader.hide();
+        expect($ionicBackdrop.release).toHaveBeenCalled();
+      }));
+      it('should not release backdrop if !hasBackdrop', inject(function($ionicLoading, $ionicBackdrop) {
+        spyOn($ionicBackdrop, 'release');
+        var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+        loader.isShown = true;
+        loader.hide();
+        expect($ionicBackdrop.release).not.toHaveBeenCalled();
+      }));
+      it('should cancel durationTimeout and set isShown to false', inject(function($ionicLoading, $timeout) {
+        spyOn($timeout, 'cancel');
+        var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+        loader.durationTimeout = {};
+        loader.isShown = true;
+        loader.hide({});
+        expect($timeout.cancel).toHaveBeenCalledWith(loader.durationTimeout);
+        expect(loader.isShown).toBe(false);
+      }));
+
+    });
+
+    it('should show with options', inject(function($ionicLoading, $timeout) {
+      var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+      spyOn(loader, 'show');
+      var options = {};
+      $ionicLoading.show(options);
+      $timeout.flush();
+      expect(loader.show).toHaveBeenCalledWith(options);
+    }));
+
+    it('should hide', inject(function($ionicLoading, $rootScope) {
+      var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+      spyOn(loader, 'hide');
+      $ionicLoading.hide();
+      $rootScope.$apply();
+      expect(loader.hide).toHaveBeenCalled();
+    }));
+
+  });
+});
