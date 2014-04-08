@@ -4,6 +4,12 @@
     <title>Search</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <link href="../../dist/css/ionic.css" rel="stylesheet">
+    <style>
+      .bar {
+        position: relative;
+        top: 0;
+      }
+    </style>
   </head>
   <body class="platform-ios7">
 
@@ -18,6 +24,16 @@
           Cancel
         </button>
       </header>
+
+      <div class="bar bar-header item-input-inset">
+        <label class="item-input-wrapper">
+          <i class="icon ion-ios7-search placeholder-icon"></i>
+          <input type="search" placeholder="Search">
+        </label>
+        <button class="button button-clear">
+          取消
+        </button>
+      </div>
 
     </section>
 
