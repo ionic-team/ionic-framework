@@ -3,11 +3,11 @@ var TPL_LOADING =
   '<div class="loading ng-hide" ng-bind-html="html">' +
   '</div>';
 
-var HIDE_DEPRECATED = '$ionicLoading instance.hide() has been deprecated. Use $ionicLoading.hide().';
-var SHOW_DEPRECATED = '$ionicLoading instance.show() has been deprecated. Use $ionicLoading.show().';
-var SET_DEPRECATED = '$ionicLoading instance.setContent() has been deprecated. Use $ionicLoading.show({ content: \'my content\' }).';
-var SHOW_DELAY_DEPRECATED = '$ionicLoading options.showDelay has been deprecated. Use options.delay instead.';
-var SHOW_BACKDROP_DEPRECATED = '$ionicLoading options.showBackdrop has been deprecated. Use options.noBackdrop instead.';
+var HIDE_LOADING_DEPRECATED = '$ionicLoading instance.hide() has been deprecated. Use $ionicLoading.hide().';
+var SHOW_LOADING_DEPRECATED = '$ionicLoading instance.show() has been deprecated. Use $ionicLoading.show().';
+var SET_LOADING_DEPRECATED = '$ionicLoading instance.setContent() has been deprecated. Use $ionicLoading.show({ content: \'my content\' }).';
+var SHOW_DELAY_LOADING_DEPRECATED = '$ionicLoading options.showDelay has been deprecated. Use options.delay instead.';
+var SHOW_BACKDROP_LOADING_DEPRECATED = '$ionicLoading options.showBackdrop has been deprecated. Use options.noBackdrop instead.';
 
 angular.module('ionic.service.loading', [])
 
@@ -97,9 +97,16 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
           }
 
           var el = this.element;
+          var scope = this.scope;
           ionic.requestAnimationFrame(function() {
             $animate.removeClass(el, 'ng-hide');
+            //Fix for ios: if we center the element twice, it always gets 
+            //position right. Otherwise, it doesn't
             ionic.DomUtil.centerElementByMargin(el[0]);
+            //One frame after it's visible, position it
+            ionic.requestAnimationFrame(function() {
+              ionic.DomUtil.centerElementByMargin(el[0]);
+            });
           });
 
           this.isShown = true;
@@ -123,8 +130,8 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
   function showLoader(options) {
     options || (options = {});
 
-    deprecated.field(SHOW_DELAY_DEPRECATED, $log.warn, options, 'showDelay', options.showDelay);
-    deprecated.field(SHOW_BACKDROP_DEPRECATED, $log.warn, options, 'showBackdrop', options.showBackdrop);
+    deprecated.field(SHOW_DELAY_LOADING_DEPRECATED, $log.warn, options, 'showDelay', options.showDelay);
+    deprecated.field(SHOW_BACKDROP_LOADING_DEPRECATED, $log.warn, options, 'showBackdrop', options.showBackdrop);
 
     $timeout(getLoader, options.delay || options.showDelay || 0)
     .then(function(loader) {
@@ -132,11 +139,11 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
     });
 
     return {
-      hide: deprecated.method(HIDE_DEPRECATED, $log.warn, hideLoader),
-      show: deprecated.method(SHOW_DEPRECATED, $log.warn, function() {
+      hide: deprecated.method(HIDE_LOADING_DEPRECATED, $log.warn, hideLoader),
+      show: deprecated.method(SHOW_LOADING_DEPRECATED, $log.warn, function() {
         showLoader(options);
       }),
-      setContent: deprecated.method(SET_DEPRECATED, $log.warn, function(content) {
+      setContent: deprecated.method(SET_LOADING_DEPRECATED, $log.warn, function(content) {
         getLoader().then(function(loader) {
           loader.scope.html = content;
         });

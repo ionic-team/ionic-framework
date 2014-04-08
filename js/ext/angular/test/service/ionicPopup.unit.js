@@ -55,12 +55,8 @@ describe('$ionicPopup service', function() {
 
     describe('$buttonTapped', function() {
       var popup;
-      var button;
-      var event;
       beforeEach(function() {
         popup = TestUtil.unwrapPromise($ionicPopup._createPopup());
-        button = { onTap: jasmine.createSpy('onTap') };
-        event = {};
         spyOn(popup.responseDeferred, 'resolve');
       });
       it('should call button.onTap with event', function() {
@@ -69,19 +65,19 @@ describe('$ionicPopup service', function() {
         popup.scope.$buttonTapped(button, event);
         expect(button.onTap).toHaveBeenCalledWith(event);
       });
-      it('should do nothing if no result & not defaultPrevented', function() {
-        popup.scope.$buttonTapped(button, event);
-        expect(popup.responseDeferred.resolve).not.toHaveBeenCalled();
-      });
-      it('should resolve if defaultPrevented', function() {
-        event.defaultPrevented = true;
-        popup.scope.$buttonTapped(button, event);
-        expect(popup.responseDeferred.resolve).toHaveBeenCalledWith(undefined);
-      });
-      it('should resolve with result if result', function() {
-        button.onTap = jasmine.createSpy('onTap').andReturn('123');
-        popup.scope.$buttonTapped(button, event);
+      it('should resolve with return value from button.onTap', function() {
+        popup.scope.$buttonTapped({
+          onTap: function() { return '123' }
+        }, {});
         expect(popup.responseDeferred.resolve).toHaveBeenCalledWith('123');
+      });
+      it('should not resolve if defaultPrevented', function() {
+        popup.scope.$buttonTapped({
+          onTap: function(){}
+        }, {
+          defaultPrevented: true
+        });
+        expect(popup.responseDeferred.resolve).not.toHaveBeenCalled();
       });
     });
 
@@ -140,7 +136,7 @@ describe('$ionicPopup service', function() {
 
   });
 
-  describe('show()', function() {
+  describe('$ionicPopup.showPopup()', function() {
     afterEach(function() {
       document.body.classList.remove('popup-open');
     });
@@ -175,6 +171,16 @@ describe('$ionicPopup service', function() {
       expect($ionicPopup._popupStack.length).toBe(1);
       expect($ionicPopup._popupStack[0]).toBe(fakePopup);
       expect(fakePopup.show).toHaveBeenCalled();
+    }));
+
+    it('should have close function which resolves promise with argument', inject(function($ionicPopup, $q, $rootScope) {
+      var popup = TestUtil.unwrapPromise($ionicPopup._createPopup());
+      spyOn($ionicPopup, '_createPopup').andReturn($q.when(popup));
+      var result = $ionicPopup.show();
+      spyOn(popup.responseDeferred, 'resolve');
+      result.close('foobar');
+      $rootScope.$apply();
+      expect(popup.responseDeferred.resolve).toHaveBeenCalledWith('foobar');
     }));
 
     it('should after timeout and resolve remove popup, then return result', inject(function($ionicPopup, $timeout, $q, $rootScope) {
