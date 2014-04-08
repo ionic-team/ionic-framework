@@ -12,8 +12,7 @@ var TPL_POPUP =
     '</div>' +
   '</div>';
 
-var CONTENT_DEPRECATED = '$ionicPopup options.content has been deprecated. Use options.template instead.';
-var THEN_DEPRECATED = '$ionicPopup instance.then() has been deprecated. Use instance.promise.then instead. Example: `var $ionicPopup.alert().promise.then(function(){...})`';
+var CONTENT_POPUP_DEPRECATED = '$ionicPopup options.content has been deprecated. Use options.template instead.';
 
 angular.module('ionic.service.popup', ['ionic.service.templateLoad'])
 
@@ -275,7 +274,7 @@ function($animate, $ionicTemplateLoader, $ionicBackdrop, $log, $q, $timeout, $ro
       buttons: [],
     }, options || {});
 
-    deprecated.field(CONTENT_DEPRECATED, $log.warn, options, 'content', options.content);
+    deprecated.field(CONTENT_POPUP_DEPRECATED, $log.warn, options, 'content', options.content);
 
     var popupPromise = $ionicTemplateLoader.compile({
       template: TPL_POPUP,
