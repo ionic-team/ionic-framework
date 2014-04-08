@@ -89,20 +89,3 @@
     pointer-events: auto;
   }
 }
-
-.popup-backdrop {
-  @include animation-name(fadeIn);
-  @include animation-duration($popup-backdrop-fadein-duration);
-  @include animation-timing-function(linear);
-  @include animation-fill-mode(both);
-
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: $z-index-popup-backdrop;
-
-  width: 100%;
-  height: 100%;
-
-  background-color: rgba(0,0,0,0.4);
-}
