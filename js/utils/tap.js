@@ -263,6 +263,14 @@
     reset: function() {
       tapCoordinates = {};
       startCoordinates = {};
+    },
+
+    ignoreScrollStart: function(e) {
+      return (e.defaultPrevented) ||  // defaultPrevented has been assigned by another component handling the event
+             (e.target.tagName.match(/input|textarea/i) && ionic.tap.activeElement() === e.target) || // target is the active element, so its a second tap to select input text
+             (e.target.isContentEditable) ||
+             (e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-default')) == 'true' || // manually set within an elements attributes
+             (!!e.target.tagName.match(/object|embed/i));  // flash/movie/object touches should not try to scroll
     }
 
   };

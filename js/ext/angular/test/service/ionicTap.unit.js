@@ -290,4 +290,99 @@ describe('Ionic Tap', function() {
     expect( ionic.tap.ignoreTapInspect(e) ).toEqual(false);
   });
 
+  it('Should not prevent scrolling', function() {
+    var target = document.createElement('div');
+    var e = {
+      target: target
+    };
+    expect( ionic.tap.ignoreScrollStart(e) ).toEqual(false);
+  });
+
+  it('Should prevent scrolling because the event has defaultedPrevented', function() {
+    var target = document.createElement('div');
+    var e = {
+      target: target,
+      defaultPrevented: true
+    };
+    expect( ionic.tap.ignoreScrollStart(e) ).toEqual(true);
+  });
+
+  it('Should not prevent scrolling if the target was an input or textarea', function() {
+    var target = document.createElement('input');
+    var e = {
+      target: target
+    };
+    expect( ionic.tap.ignoreScrollStart(e) ).toEqual(false);
+  });
+
+  it('Should prevent scrolling if the target was an input or textarea, and the target is the same as the active element', function() {
+    var target = document.createElement('input');
+    ionic.tap.activeElement(target);
+    var e = {
+      target: target
+    };
+    expect( ionic.tap.ignoreScrollStart(e) ).toEqual(true);
+  });
+
+  it('Should not prevent scrolling if the target isContentEditable', function() {
+    var target = document.createElement('div');
+    target.isContentEditable = true;
+    var e = {
+      target: target
+    };
+    expect( ionic.tap.ignoreScrollStart(e) ).toEqual(false);
+  });
+
+  it('Should prevent scrolling if the target has dataset.preventScroll', function() {
+    var target = document.createElement('div');
+    target.setAttribute('data-prevent-scroll', 'true');
+    var e = {
+      target: target
+    };
+    expect( ionic.tap.ignoreScrollStart(e) ).toEqual(true);
+
+    target = document.createElement('div');
+    target.dataset.preventScroll = true;
+    e = {
+      target: target
+    };
+    expect( ionic.tap.ignoreScrollStart(e) ).toEqual(true);
+
+    target = document.createElement('div');
+    target.dataset.preventScroll = 'true';
+    e = {
+      target: target
+    };
+    expect( ionic.tap.ignoreScrollStart(e) ).toEqual(true);
+  });
+
+  it('Should prevent scrolling if the browser doesnt support dataset but target has data-prevent-default attribute', function() {
+    var target = {
+      tagName: 'div',
+      getAttribute: function(val) {
+        if(val === 'data-prevent-default') {
+          return 'true';
+        }
+      }
+    }
+    var e = {
+      target: target
+    };
+    expect( ionic.tap.ignoreScrollStart(e) ).toEqual(true);
+  });
+
+  it('Should prevent scrolling if the target is an object or embed', function() {
+    var target = document.createElement('object');
+    var e = {
+      target: target
+    };
+    expect( ionic.tap.ignoreScrollStart(e) ).toEqual(true);
+
+    target = document.createElement('embed');
+    e = {
+      target: target
+    };
+    expect( ionic.tap.ignoreScrollStart(e) ).toEqual(true);
+  });
+
 });
