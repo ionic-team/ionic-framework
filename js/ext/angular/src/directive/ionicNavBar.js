@@ -56,8 +56,9 @@ angular.module('ionic.ui.navBar', ['ionic.service.view', 'ngSanitize'])
    * @ngdoc method
    * @name $ionicNavBarDelegate#showBar
    * @description
-   * Set whether the {@link ionic.directive:ionNavBar} should be shown.
+   * Set/get whether the {@link ionic.directive:ionNavBar} is shown.
    * @param {boolean} show Whether to show the bar.
+   * @returns {boolean} Whether the bar is shown.
    */
   'showBar',
   /**
@@ -143,8 +144,11 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
   };
 
   this.showBar = function(show) {
-    $scope.isInvisible = !show;
-    $scope.$parent.$hasHeader = !!show;
+    if (arguments.length) {
+      $scope.isInvisible = !show;
+      $scope.$parent.$hasHeader = !!show;
+    }
+    return !$scope.isInvisible;
   };
 
   this.setTitle = function(title) {
