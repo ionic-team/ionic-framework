@@ -18,8 +18,8 @@
       .controller('LoadingCtrl', function($scope, $ionicLoading) {
         $scope.startLoading = function() {
           window.loader = $ionicLoading.show({
-            content: 'Getting current location...',
-            duration: 2000
+            template: 'Getting current location...',
+            duration: 4000
           });
         };
       });

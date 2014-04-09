@@ -6,9 +6,6 @@ var TPL_LOADING =
 var HIDE_LOADING_DEPRECATED = '$ionicLoading instance.hide() has been deprecated. Use $ionicLoading.hide().';
 var SHOW_LOADING_DEPRECATED = '$ionicLoading instance.show() has been deprecated. Use $ionicLoading.show().';
 var SET_LOADING_DEPRECATED = '$ionicLoading instance.setContent() has been deprecated. Use $ionicLoading.show({ template: \'my content\' }).';
-var CONTENT_LOADING_DEPRECATED = '$ionicLoading options.content has been deprecated. Use options.template or options.templateUrl instead.';
-var SHOW_DELAY_LOADING_DEPRECATED = '$ionicLoading options.showDelay has been deprecated. Use options.delay instead.';
-var SHOW_BACKDROP_LOADING_DEPRECATED = '$ionicLoading options.showBackdrop has been deprecated. Use options.noBackdrop instead.';
 
 angular.module('ionic.service.loading', [])
 
@@ -91,7 +88,7 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
             $q.when(options.template || options.content || '');
 
           if (!this.isShown) {
-            this.hasBackdrop = !options.noBackdrop || options.showBackdrop === false;
+            this.hasBackdrop = !options.noBackdrop;
             if (this.hasBackdrop) {
               $ionicBackdrop.retain();
             }
@@ -143,24 +140,20 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
 
   function showLoader(options) {
     options || (options = {});
+    var delay = options.delay || options.showDelay || 0;
 
-    deprecated.field(CONTENT_LOADING_DEPRECATED, $log.warn, options, 'content', options.content);
-    deprecated.field(SHOW_DELAY_LOADING_DEPRECATED, $log.warn, options, 'showDelay', options.showDelay);
-    deprecated.field(SHOW_BACKDROP_LOADING_DEPRECATED, $log.warn, options, 'showBackdrop', options.showBackdrop);
-
-    loadingShowDelay = $timeout(getLoader, options.delay || options.showDelay || 0)
-    .then(function(loader) {
+    loadingShowDelay = $timeout(getLoader, delay).then(function(loader) {
       return loader.show(options);
     });
 
     return {
-      hide: deprecated.method(HIDE_LOADING_DEPRECATED, $log.warn, hideLoader),
-      show: deprecated.method(SHOW_LOADING_DEPRECATED, $log.warn, function() {
+      hide: deprecated.method(HIDE_LOADING_DEPRECATED, $log.error, hideLoader),
+      show: deprecated.method(SHOW_LOADING_DEPRECATED, $log.error, function() {
         showLoader(options);
       }),
-      setContent: deprecated.method(SET_LOADING_DEPRECATED, $log.warn, function(content) {
+      setContent: deprecated.method(SET_LOADING_DEPRECATED, $log.error, function(content) {
         getLoader().then(function(loader) {
-          loader.scope.html = content;
+          loader.show({ template: content });
         });
       })
     };
