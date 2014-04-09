@@ -44,7 +44,7 @@ angular.module('ionic.service.loading', [])
   '$log',
 function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log) {
 
-  var loaderInstance;
+  var loaderInstance, showingLoaderTimeout;
 
   return {
     /**
@@ -100,29 +100,39 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
 
           var el = this.element;
           var scope = this.scope;
+          var self = this;
           ionic.requestAnimationFrame(function() {
-            $animate.removeClass(el, 'ng-hide');
-            //Fix for ios: if we center the element twice, it always gets
-            //position right. Otherwise, it doesn't
-            ionic.DomUtil.centerElementByMargin(el[0]);
-            //One frame after it's visible, position it
-            ionic.requestAnimationFrame(function() {
+            if (self.isShown || self.isShown === undefined) {
+              $animate.removeClass(el, 'ng-hide');
+              //Fix for ios: if we center the element twice, it always gets
+              //position right. Otherwise, it doesn't
               ionic.DomUtil.centerElementByMargin(el[0]);
-            });
+              //One frame after it's visible, position it
+              ionic.requestAnimationFrame(function() {
+                if (self.isShown || self.isShown === undefined) {
+                  ionic.DomUtil.centerElementByMargin(el[0]);
+                }
+              });
+            }
           });
 
           this.isShown = true;
         };
         loader.hide = function() {
-          if (this.isShown) {
-            if (this.hasBackdrop) {
-              $ionicBackdrop.release();
-            }
-            $animate.addClass(this.element, 'ng-hide');
+          var self = this;
+          if (showingLoaderTimeout) {
+            showingLoaderTimeout.then(function() {
+              if (self.isShown) {
+                if (self.hasBackdrop) {
+                  $ionicBackdrop.release();
+                }
+                $animate.addClass(self.element, 'ng-hide');
+              }
+              $timeout.cancel(self.durationTimeout);
+              self.isShown = false;
+            });
           }
-          $timeout.cancel(this.durationTimeout);
-          this.isShown = false;
-        };
+        }
         return loader;
       });
     }
@@ -135,7 +145,7 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
     deprecated.field(SHOW_DELAY_LOADING_DEPRECATED, $log.warn, options, 'showDelay', options.showDelay);
     deprecated.field(SHOW_BACKDROP_LOADING_DEPRECATED, $log.warn, options, 'showBackdrop', options.showBackdrop);
 
-    $timeout(getLoader, options.delay || options.showDelay || 0)
+    showingLoaderTimeout = $timeout(getLoader, options.delay || options.showDelay || 0)
     .then(function(loader) {
       return loader.show(options);
     });
