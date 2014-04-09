@@ -55,6 +55,22 @@ describe('$ionicLoading service', function() {
         expect(loader.isShown).toBe(true);
       }));
 
+      it('should use options.template', inject(function($ionicLoading, $rootScope) {
+        var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+        loader.show({ template: 'foo {{"bar"}}' });
+        $rootScope.$apply();
+        expect(loader.element.text()).toBe('foo bar');
+      }));
+
+      it('should use options.templateUrl', inject(function($ionicLoading, $rootScope, $ionicTemplateLoader, $q) {
+        spyOn($ionicTemplateLoader, 'load').andReturn($q.when('{{1}} content'));
+        var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+        loader.show({ templateUrl: 'template.html' });
+        expect($ionicTemplateLoader.load).toHaveBeenCalledWith('template.html');
+        $rootScope.$apply();
+        expect(loader.element.text()).toBe('1 content');
+      }));
+
     });
 
     describe('.hide()', function() {

@@ -1,11 +1,12 @@
 
 var TPL_LOADING =
-  '<div class="loading ng-hide" ng-bind-html="html">' +
+  '<div class="loading ng-hide">' +
   '</div>';
 
 var HIDE_LOADING_DEPRECATED = '$ionicLoading instance.hide() has been deprecated. Use $ionicLoading.hide().';
 var SHOW_LOADING_DEPRECATED = '$ionicLoading instance.show() has been deprecated. Use $ionicLoading.show().';
-var SET_LOADING_DEPRECATED = '$ionicLoading instance.setContent() has been deprecated. Use $ionicLoading.show({ content: \'my content\' }).';
+var SET_LOADING_DEPRECATED = '$ionicLoading instance.setContent() has been deprecated. Use $ionicLoading.show({ template: \'my content\' }).';
+var CONTENT_LOADING_DEPRECATED = '$ionicLoading options.content has been deprecated. Use options.template or options.templateUrl instead.';
 var SHOW_DELAY_LOADING_DEPRECATED = '$ionicLoading options.showDelay has been deprecated. Use options.delay instead.';
 var SHOW_BACKDROP_LOADING_DEPRECATED = '$ionicLoading options.showBackdrop has been deprecated. Use options.noBackdrop instead.';
 
@@ -25,7 +26,7 @@ angular.module('ionic.service.loading', [])
  * .controller('LoadingCtrl', function($scope, $ionicLoading) {
  *   $scope.show = function() {
  *     $ionicLoading.show({
- *       content: 'Loading...'
+ *       template: 'Loading...'
  *     });
  *   };
  *   $scope.hide = function(){
@@ -42,7 +43,8 @@ angular.module('ionic.service.loading', [])
   '$timeout',
   '$q',
   '$log',
-function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log) {
+  '$compile',
+function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log, $compile) {
 
   var loaderInstance;
   //default value
@@ -55,7 +57,8 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
      * @description Shows a loading indicator. If the indicator is already shown,
      * it will set the options given and keep the indicator shown.
      * @param {object} opts The options for the loading indicator. Available properties:
-     *  - `{string=}` `content` The html content of the indicator.
+     *  - `{string=}` `template` The html content of the indicator.
+     *  - `{string=}` `templateUrl` The url of an html template to load as the content of the indicator.
      *  - `{boolean=}` `noBackdrop` Whether to hide the backdrop.
      *  - `{number=}` `delay` How many milliseconds to delay showing the indicator.
      *  - `{number=} `duration` How many milliseconds to wait until automatically
@@ -82,6 +85,11 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
       })
       .then(function(loader) {
         loader.show = function(options) {
+          var self = this;
+          var templatePromise = options.templateUrl ?
+            $ionicTemplateLoader.load(options.templateUrl) :
+            $q.when(options.template || options.content || '');
+
           if (!this.isShown) {
             this.hasBackdrop = !options.noBackdrop || options.showBackdrop === false;
             if (this.hasBackdrop) {
@@ -96,20 +104,22 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
               +options.duration
             );
           }
-          if (options.content) {
-            this.scope.html = options.content;
-          }
 
-          var el = this.element;
-          var scope = this.scope;
+          templatePromise.then(function(html) {
+            if (html) {
+              self.element.html(html);
+              $compile(self.element.contents())(self.scope);
+            }
+          });
+
           ionic.requestAnimationFrame(function() {
-            $animate.removeClass(el, 'ng-hide');
+            $animate.removeClass(self.element, 'ng-hide');
             //Fix for ios: if we center the element twice, it always gets
             //position right. Otherwise, it doesn't
-            ionic.DomUtil.centerElementByMargin(el[0]);
+            ionic.DomUtil.centerElementByMargin(self.element[0]);
             //One frame after it's visible, position it
             ionic.requestAnimationFrame(function() {
-              ionic.DomUtil.centerElementByMargin(el[0]);
+              ionic.DomUtil.centerElementByMargin(self.element[0]);
             });
           });
 
@@ -134,6 +144,7 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
   function showLoader(options) {
     options || (options = {});
 
+    deprecated.field(CONTENT_LOADING_DEPRECATED, $log.warn, options, 'content', options.content);
     deprecated.field(SHOW_DELAY_LOADING_DEPRECATED, $log.warn, options, 'showDelay', options.showDelay);
     deprecated.field(SHOW_BACKDROP_LOADING_DEPRECATED, $log.warn, options, 'showBackdrop', options.showBackdrop);
 
