@@ -103,5 +103,21 @@ describe('$ionicLoading service', function() {
       expect(loader.hide).toHaveBeenCalled();
     }));
 
+    it('hide should happen after show', inject(function($ionicLoading, $timeout) {
+      ionic.requestAnimationFrame = function(cb) { cb(); };
+      var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+      spyOn(loader, 'hide').andCallThrough();
+      spyOn(loader, 'show').andCallThrough();
+      $ionicLoading.show({ delay: 1000 });
+      $ionicLoading.hide();
+      expect(loader.show).not.toHaveBeenCalled();
+      expect(loader.hide).not.toHaveBeenCalled();
+      $timeout.flush();
+      expect(loader.show).toHaveBeenCalled();
+      expect(loader.hide).toHaveBeenCalled();
+      expect(loader.isShown).toBe(false);
+      expect(loader.element.hasClass('ng-hide')).toBe(true);
+    }));
+
   });
 });

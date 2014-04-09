@@ -45,6 +45,8 @@ angular.module('ionic.service.loading', [])
 function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log) {
 
   var loaderInstance;
+  //default value
+  var loadingShowDelay = $q.when();
 
   return {
     /**
@@ -135,7 +137,7 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
     deprecated.field(SHOW_DELAY_LOADING_DEPRECATED, $log.warn, options, 'showDelay', options.showDelay);
     deprecated.field(SHOW_BACKDROP_LOADING_DEPRECATED, $log.warn, options, 'showBackdrop', options.showBackdrop);
 
-    $timeout(getLoader, options.delay || options.showDelay || 0)
+    loadingShowDelay = $timeout(getLoader, options.delay || options.showDelay || 0)
     .then(function(loader) {
       return loader.show(options);
     });
@@ -154,7 +156,7 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
   }
 
   function hideLoader() {
-    getLoader().then(function(loader) {
+    loadingShowDelay.then(getLoader).then(function(loader) {
       loader.hide();
     });
   }
