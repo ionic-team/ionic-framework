@@ -61,6 +61,14 @@ describe('ionicInfiniteScroll directive', function() {
     expect(ctrl.isLoading).toBe(false);
   });
 
+  it('should unbind scroll event on destroy', function() {
+    var el = setup();
+    spyOn(el.controller('$ionicScroll').$element, 'off');
+    el.scope().$destroy();
+    expect(el.controller('$ionicScroll').$element.off).toHaveBeenCalledWith('scroll', jasmine.any(Function));
+
+  });
+
   describe('icon', function() {
     it('should have default icon ion-loading-d', function() {
       var el = setup();

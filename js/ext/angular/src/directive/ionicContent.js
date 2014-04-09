@@ -353,9 +353,15 @@ function($timeout, $controller, $ionicBind) {
         }, 0, false);
         infiniteScrollCtrl.isLoading = false;
       });
+      $scope.$on('$destroy', function() {
+        scrollCtrl.$element.off('scroll', checkBounds);
+      });
 
-      scrollCtrl.$element.on('scroll', ionic.animationFrameThrottle(checkInfiniteBounds));
-      setTimeout(checkInfiniteBounds);
+      var checkBounds = ionic.animationFrameThrottle(checkInfiniteBounds);
+
+      //Check bounds on start, after scrollView is fully rendered
+      setTimeout(checkBounds);
+      scrollCtrl.$element.on('scroll', checkBounds);
       
       function checkInfiniteBounds() {
         if (infiniteScrollCtrl.isLoading) return;
