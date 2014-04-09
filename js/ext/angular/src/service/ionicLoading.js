@@ -85,10 +85,12 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
           var self = this;
           var templatePromise = options.templateUrl ?
             $ionicTemplateLoader.load(options.templateUrl) :
+            //options.content: deprecated
             $q.when(options.template || options.content || '');
 
           if (!this.isShown) {
-            this.hasBackdrop = !options.noBackdrop;
+            //options.showBackdrop: deprecated
+            this.hasBackdrop = !options.noBackdrop && options.showBackdrop !== false;
             if (this.hasBackdrop) {
               $ionicBackdrop.retain();
             }
