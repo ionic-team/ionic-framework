@@ -191,6 +191,8 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
   this._animateTitles = function() {
     var oldTitleEl, newTitleEl, currentTitles;
 
+    console.log('animateTItles');
+
     //If we have any title right now
     //(or more than one, they could be transitioning on switch),
     //replace the first one with an oldTitle element
@@ -248,7 +250,7 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
  * {@link ionic.directive:ionNavButtons}.
  *
  * Assign an [animation class](/docs/components#animations) to the element to
- * enable animated changing of titles (recommended: 'slide-left-right' or 'nav-title-slide-ios7')
+ * enable animated changing of titles (recommended: 'nav-title-slide-ios7')
  *
  * @usage
  *
