@@ -220,9 +220,9 @@ function($timeout, $controller, $ionicBind) {
     '<div class="scroll-refresher">' +
       '<div class="ionic-refresher-content">' +
         '<i class="icon {{pullingIcon}} icon-pulling"></i>' +
-        '<div class="text-pulling" ng-bind-html="pullingText"></div>' +
+        '<div class="text-pulling" ng-bind-html="pullingText || \'&nbsp;\'"></div>' +
         '<i class="icon {{refreshingIcon}} icon-refreshing"></i>' +
-        '<div class="text-refreshing" ng-bind-html="refreshingText"></div>' +
+        '<div class="text-refreshing" ng-bind-html="refreshingText || \'&nbsp;\'"></div>' +
       '</div>' +
     '</div>',
     compile: function($element, $attrs) {
@@ -362,7 +362,7 @@ function($timeout, $controller, $ionicBind) {
       //Check bounds on start, after scrollView is fully rendered
       setTimeout(checkBounds);
       scrollCtrl.$element.on('scroll', checkBounds);
-      
+
       function checkInfiniteBounds() {
         if (infiniteScrollCtrl.isLoading) return;
 

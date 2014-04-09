@@ -86,9 +86,13 @@ describe('ionRefresher directive', function() {
     expect(el[0].querySelector('.icon.icon-refreshing.monkey-icon')).toBeTruthy();
   });
 
-  it('should have no text by default', function() {
+  it('should have &nbsp; pulling-text by default', function() {
     var el = setup();
-    expect(el.text().trim()).toBe('');
+    expect(el[0].querySelector('.text-pulling').innerHTML).toBe('&nbsp;');
+  });
+  it('should have &nbsp; refreshing-text by default', function() {
+    var el = setup();
+    expect(el[0].querySelector('.text-refreshing').innerHTML).toBe('&nbsp;');
   });
   it('should allow pullingText', function() {
     var el = setup('pulling-text="{{2+2}} <b>some</b> text"');
