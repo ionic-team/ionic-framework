@@ -2,12 +2,16 @@ describe('ionicInfiniteScroll directive', function() {
   beforeEach(module('ionic'));
 
   var scrollTopValue;
-  var scrollMaxValue;
+  var scrollTopMaxValue;
+  var scrollLeftValue;
+  var scrollLeftMaxValue;
   var ctrl;
-  function setup(attrs, scopeProps) {
+  function setup(attrs, scopeProps, options) {
     var element;
     scrollTopValue = 50;
-    scrollMaxValue = 101;
+    scrollLeftValue = 60;
+    scrollLeftMaxValue = 101;
+    scrollTopMaxValue = 121;
     inject(function($rootScope, $compile) {
       var scope = $rootScope.$new();
       angular.extend(scope, scopeProps || {});
@@ -15,11 +19,21 @@ describe('ionicInfiniteScroll directive', function() {
       ionic.animationFrameThrottle = function(cb) { return function() { cb(); }; };
       element.data('$$ionicScrollController', {
         scrollView: {
+          options: angular.extend({
+            scrollingX: true,
+            scrollingY: true
+          }, options || {}),
           getValues: jasmine.createSpy('getValues').andCallFake(function() {
-            return { top: scrollTopValue };
+            return {
+              left: scrollLeftValue,
+              top: scrollTopValue
+            };
           }),
           getScrollMax: jasmine.createSpy('getScrollMax').andCallFake(function() {
-            return { top: scrollMaxValue };
+            return {
+              left: scrollLeftMaxValue,
+              top: scrollTopMaxValue
+            };
           }),
           resize: jasmine.createSpy('resize')
         },
@@ -70,27 +84,62 @@ describe('ionicInfiniteScroll directive', function() {
   });
 
   describe('getMaxScroll', function() {
-    it('getMaxScroll should default to 1%', function() {
-      var el = setup();
-      expect(ctrl.getMaxScroll()).toBe(101 * 0.99);
-    });
+    [ { scrollingX: true,  scrollingY: true, },
+      { scrollingX: false, scrollingY: true },
+      { scrollingX: true,  scrollingY: false }
+    ].forEach(function(opts) {
 
-    it('getMaxScroll should use attr.distance as number', function() {
-      var el = setup('distance=3');
-      expect(ctrl.getMaxScroll()).toBe(98);
-    });
+      describe('with scrollingX='+opts.scrollingX+', scrollingY='+opts.scrollingY, function() {
+        it('should default to 1%', function() {
+          var el = setup('', {}, opts);
+          expect(ctrl.getMaxScroll()).toEqual({
+            left: opts.scrollingX ? scrollLeftMaxValue * 0.99 : -1,
+            top: opts.scrollingY ? scrollTopMaxValue * 0.99 : -1
+          });
+        });
 
-    it('getMaxScroll should use attr.distance as percent', function() {
-      var el = setup('distance=5%');
-      expect(ctrl.getMaxScroll()).toBe(101 * 0.95);
+        it('should use attr.distance as number', function() {
+          var el = setup('distance=3', {}, opts);
+          expect(ctrl.getMaxScroll()).toEqual({
+            left: opts.scrollingX ? scrollLeftMaxValue - 3 : -1,
+            top: opts.scrollingY ? scrollTopMaxValue - 3 : -1
+          });
+        });
+
+        it('should use attr.distance as percent', function() {
+          var el = setup('distance=5%', {}, opts);
+          expect(ctrl.getMaxScroll()).toEqual({
+            left: opts.scrollingX ? scrollLeftMaxValue * 0.95 : -1,
+            top: opts.scrollingY ? scrollTopMaxValue * 0.95 : -1
+          });
+        });
+      });
+
     });
   });
 
   describe('scroll event', function() {
 
-    it('should add active and call attr.onInfinite if past top', function() {
+    it('should do nothing if < left and top', function() {
       var el = setup('on-infinite="foo=1"');
-      scrollTopValue = scrollMaxValue;
+      el.controller('$ionicScroll').$element.triggerHandler('scroll');
+
+      expect(el.hasClass('active')).toBe(false);
+      expect(ctrl.isLoading).toBe(false);
+      expect(el.scope().foo).not.toBe(1);
+    });
+    it('should add active and call attr.onInfinite if >= top', function() {
+      var el = setup('on-infinite="foo=1"');
+      scrollTopValue = scrollTopMaxValue;
+      el.controller('$ionicScroll').$element.triggerHandler('scroll');
+
+      expect(el.hasClass('active')).toBe(true);
+      expect(ctrl.isLoading).toBe(true);
+      expect(el.scope().foo).toBe(1);
+    });
+    it('should add active and call attr.onInfinite if >= left', function() {
+      var el = setup('on-infinite="foo=1"');
+      scrollLeftValue = scrollLeftMaxValue;
       el.controller('$ionicScroll').$element.triggerHandler('scroll');
 
       expect(el.hasClass('active')).toBe(true);
@@ -100,7 +149,7 @@ describe('ionicInfiniteScroll directive', function() {
     it('should not run the event twice if isLoading is true', function() {
       var onScrollSpy = jasmine.createSpy('onInfiniteScroll');
       var el = setup('', { $onInfiniteScroll: onScrollSpy });
-      scrollTopValue = scrollMaxValue;
+      scrollTopValue = scrollTopMaxValue;
       el.controller('$ionicScroll').$element.triggerHandler('scroll');
 
       expect(el.hasClass('active')).toBe(true);
