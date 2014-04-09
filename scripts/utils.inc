@@ -206,8 +206,7 @@ function readJsonProp {
 # - note: propertyRegex will be automatically placed into a
 #   capturing group! -> all other groups start at index 2!
 function replaceJsonProp {
-  local VALUE=$(readJsonProp $1 $2)
-  replaceInFile $1 $VALUE $3
+  replaceInFile $1 "\"$2\": \".*?\"" "\"$2\": \"$3\""
 }
 
 # replaceInFile(file, findPattern, replacePattern)
