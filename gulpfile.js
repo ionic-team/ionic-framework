@@ -69,10 +69,12 @@ gulp.task('watch', ['build'], function() {
 gulp.task('changelog', function(done) {
   changelog({
     repository: 'https://github.com/driftyco/ionic',
-    version: pkg.version,
+    codename: pkg.codename,
+    version: pkg.version
   }, function(err, data) {
     if (err) return done(err);
     fs.writeFileSync('CHANGELOG.md', data);
+    fs.writeFileSync(buildConfig.dist + '/CHANGELOG.md', data);
     done();
   });
 });

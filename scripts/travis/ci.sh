@@ -93,6 +93,8 @@ function run {
     ./scripts/site/publish.sh --action="clone"
 
     VERSION_NAME="nightly"
+
+    gulp changelog
   fi
 
   ./scripts/site/publish.sh \
