@@ -6,10 +6,12 @@ angular.module('ionic')
 .factory('$ionicBackdrop', [
   '$animate',
   '$document',
-function($animate, $document) {
+  '$q',
+function($animate, $document, $q) {
 
   var el;
   var backdropHolds = 0;
+  var showingPromise;
 
   return {
     retain: retain,
@@ -26,12 +28,18 @@ function($animate, $document) {
   }
   function retain() {
     if ( (++backdropHolds) === 1 ) {
-      $animate.removeClass(getElement(), 'ng-hide');
+      var retainDeferred = $q.defer();
+      showingPromise = retainDeferred.promise;
+      $animate.removeClass(getElement(), 'ng-hide', function() {
+        retainDeferred.resolve(null);
+      });
     }
   }
   function release() {
     if ( (--backdropHolds) === 0 ) {
-      $animate.addClass(getElement(), 'ng-hide');
+      showingPromise.then(function() {
+        $animate.addClass(getElement(), 'ng-hide');
+      });
     }
   }
 }]);
