@@ -13,6 +13,7 @@ var dgeni = require('dgeni');
 var es = require('event-stream');
 var htmlparser = require('htmlparser2');
 var lunr = require('lunr');
+var markdown = require('markdown').markdown;
 var mkdirp = require('mkdirp');
 var yaml = require('js-yaml');
 
@@ -33,6 +34,8 @@ var template = require('gulp-template');
 var twitter = require('gulp-twitter');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
+
+gutil.log = function(){};
 
 var banner = _.template(buildConfig.banner, { pkg: pkg });
 
@@ -67,14 +70,22 @@ gulp.task('watch', ['build'], function() {
 });
 
 gulp.task('changelog', function(done) {
+  var file = argv.prepend ? 'CHANGELOG.md' : '';
+  var subtitle = argv.subtitle || '"' + pkg.codename + '"';
+  var toHtml = !!argv.html;
+  var dest = argv.dest || 'CHANGELOG.md';
+  console.log(JSON.stringify(argv, null, 2));
   changelog({
     repository: 'https://github.com/driftyco/ionic',
-    codename: pkg.codename,
-    version: pkg.version
+    version: pkg.version,
+    subtitle: subtitle,
+    file: file
   }, function(err, data) {
     if (err) return done(err);
-    fs.writeFileSync('CHANGELOG.md', data);
-    fs.writeFileSync(buildConfig.dist + '/CHANGELOG.md', data);
+    if (toHtml) {
+      data = markdown.toHTML(data);
+    }
+    fs.writeFileSync(dest, data);
     done();
   });
 });
