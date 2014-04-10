@@ -327,14 +327,8 @@ function($animate, $ionicTemplateLoader, $ionicBackdrop, $log, $q, $timeout, $ro
 
           self.element.removeClass('popup-hidden');
           self.element.addClass('popup-showing active');
+          ionic.DomUtil.centerElementByMarginTwice(self.element[0]);
           focusLastButton(self.element);
-          //Fix for ios: if we center the element twice, it always gets
-          //position right. Otherwise, it doesn't
-          ionic.DomUtil.centerElementByMargin(self.element[0]);
-          //One frame after it's visible, position it
-          ionic.requestAnimationFrame(function() {
-            ionic.DomUtil.centerElementByMargin(self.element[0]);
-          });
         });
       };
       self.hide = function(callback) {

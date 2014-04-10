@@ -41,7 +41,8 @@ angular.module('ionic.service.loading', [])
   '$q',
   '$log',
   '$compile',
-function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log, $compile) {
+  '$animateClassToggler',
+function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log, $compile, $animateClassToggler) {
 
   var loaderInstance;
   //default value
@@ -81,12 +82,16 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
         appendTo: $document[0].body
       })
       .then(function(loader) {
+
+        var toggler = $animateClassToggler(loader.element, 'ng-hide');
+
         loader.show = function(options) {
           var self = this;
           var templatePromise = options.templateUrl ?
             $ionicTemplateLoader.load(options.templateUrl) :
             //options.content: deprecated
             $q.when(options.template || options.content || '');
+
 
           if (!this.isShown) {
             //options.showBackdrop: deprecated
@@ -111,26 +116,16 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
             }
           });
 
+          toggler.removeClass();
+          ionic.DomUtil.centerElementByMarginTwice(this.element[0]);
           this.isShown = true;
-          ionic.requestAnimationFrame(function() {
-            if (self.isShown) {
-              $animate.removeClass(self.element, 'ng-hide');
-              //Fix for ios: if we center the element twice, it always gets
-              //position right. Otherwise, it doesn't
-              ionic.DomUtil.centerElementByMargin(self.element[0]);
-              //One frame after it's visible, position it
-              ionic.requestAnimationFrame(function() {
-                ionic.DomUtil.centerElementByMargin(self.element[0]);
-              });
-            }
-          });
         };
         loader.hide = function() {
           if (this.isShown) {
             if (this.hasBackdrop) {
               $ionicBackdrop.release();
             }
-            $animate.addClass(this.element, 'ng-hide');
+            toggler.addClass();
           }
           $timeout.cancel(this.durationTimeout);
           this.isShown = false;

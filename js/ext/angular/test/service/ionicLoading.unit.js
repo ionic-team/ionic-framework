@@ -41,11 +41,12 @@ describe('$ionicLoading service', function() {
         expect(loader.durationTimeout).toBeTruthy();
         expect(loader.durationTimeout.$$timeoutId).toBeTruthy();
       }));
-      it('should remove ng-hide after raf', inject(function($ionicLoading) {
+      it('should remove ng-hide', inject(function($ionicLoading, $timeout) {
         var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
         ionic.requestAnimationFrame = function(cb) { cb(); };
         expect(loader.element.hasClass('ng-hide')).toBe(true);
         loader.show({});
+        $timeout.flush();
         expect(loader.element.hasClass('ng-hide')).toBe(false);
       }));
       it('should isShown = true', inject(function($ionicLoading) {
@@ -137,7 +138,7 @@ describe('$ionicLoading service', function() {
     it('show should only removeClass after raf is still isShown', inject(function($ionicLoading) {
       var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
       var rafCallback;
-      ionic.requestAnimationFrame = function(cb) { 
+      ionic.requestAnimationFrame = function(cb) {
         rafCallback = cb;
       };
       loader.show({});
