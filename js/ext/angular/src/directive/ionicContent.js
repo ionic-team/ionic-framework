@@ -373,7 +373,7 @@ function($timeout, $controller, $ionicBind) {
             (maxScroll.top !== -1 && scrollValues.top >= maxScroll.top)) {
           $element[0].classList.add('active');
           infiniteScrollCtrl.isLoading = true;
-          $scope.$parent.$apply($attrs.onInfinite || '');
+          $scope.$parent && $scope.$parent.$apply($attrs.onInfinite || '');
         }
       }
     }
