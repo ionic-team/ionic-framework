@@ -1,6 +1,6 @@
 
 var TPL_POPUP =
-  '<div class="popup popup-hidden">' +
+  '<div class="popup">' +
     '<div class="popup-head">' +
       '<h3 class="popup-title" ng-bind-html="title"></h3>' +
       '<h5 class="popup-sub-title" ng-bind-html="subTitle" ng-if="subTitle"></h5>' +
