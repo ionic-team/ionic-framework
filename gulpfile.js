@@ -35,8 +35,6 @@ var twitter = require('gulp-twitter');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 
-gutil.log = function(){};
-
 var banner = _.template(buildConfig.banner, { pkg: pkg });
 
 var IS_RELEASE_BUILD = !!argv.release;
@@ -74,7 +72,6 @@ gulp.task('changelog', function(done) {
   var subtitle = argv.subtitle || '"' + pkg.codename + '"';
   var toHtml = !!argv.html;
   var dest = argv.dest || 'CHANGELOG.md';
-  console.log(JSON.stringify(argv, null, 2));
   changelog({
     repository: 'https://github.com/driftyco/ionic',
     version: pkg.version,
