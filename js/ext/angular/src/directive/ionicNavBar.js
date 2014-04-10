@@ -191,8 +191,6 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
   this._animateTitles = function() {
     var oldTitleEl, newTitleEl, currentTitles;
 
-    console.log('animateTItles');
-
     //If we have any title right now
     //(or more than one, they could be transitioning on switch),
     //replace the first one with an oldTitle element

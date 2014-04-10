@@ -111,18 +111,19 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
             }
           });
 
-          ionic.requestAnimationFrame(function() {
-            $animate.removeClass(self.element, 'ng-hide');
-            //Fix for ios: if we center the element twice, it always gets
-            //position right. Otherwise, it doesn't
-            ionic.DomUtil.centerElementByMargin(self.element[0]);
-            //One frame after it's visible, position it
-            ionic.requestAnimationFrame(function() {
-              ionic.DomUtil.centerElementByMargin(self.element[0]);
-            });
-          });
-
           this.isShown = true;
+          ionic.requestAnimationFrame(function() {
+            if (self.isShown) {
+              $animate.removeClass(self.element, 'ng-hide');
+              //Fix for ios: if we center the element twice, it always gets
+              //position right. Otherwise, it doesn't
+              ionic.DomUtil.centerElementByMargin(self.element[0]);
+              //One frame after it's visible, position it
+              ionic.requestAnimationFrame(function() {
+                ionic.DomUtil.centerElementByMargin(self.element[0]);
+              });
+            }
+          });
         };
         loader.hide = function() {
           if (this.isShown) {

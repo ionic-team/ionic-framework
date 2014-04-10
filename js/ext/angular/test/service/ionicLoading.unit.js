@@ -134,6 +134,20 @@ describe('$ionicLoading service', function() {
       expect(loader.isShown).toBe(false);
       expect(loader.element.hasClass('ng-hide')).toBe(true);
     }));
+    it('show should only removeClass after raf is still isShown', inject(function($ionicLoading) {
+      var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+      var rafCallback;
+      ionic.requestAnimationFrame = function(cb) { 
+        rafCallback = cb;
+      };
+      loader.show({});
+      expect(loader.isShown).toBe(true);
+      loader.hide();
+      expect(loader.isShown).toBe(false);
+      rafCallback();
+      expect(loader.element.hasClass('ng-hide')).toBe(true);
+      ionic.requestAnimationFrame = function(cb) { cb(); };
+    }));
 
   });
 });
