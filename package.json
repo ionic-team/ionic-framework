@@ -45,14 +45,12 @@
     "event-stream": "3.1.0",
     "gulp-strip-debug": "^0.3.0",
     "gulp-footer": "^1.0.4",
-    "gulp-twitter": "0.0.3"
+    "gulp-twitter": "0.0.3",
+    "marked": "^0.3.2"
   },
   "licenses": [
     {
       "type": "MIT"
     }
-  ],
-  "dependencies": {
-    "markdown": "^0.5.0"
-  }
+  ]
 }

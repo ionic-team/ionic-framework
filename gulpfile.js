@@ -13,7 +13,7 @@ var dgeni = require('dgeni');
 var es = require('event-stream');
 var htmlparser = require('htmlparser2');
 var lunr = require('lunr');
-var markdown = require('markdown').markdown;
+var marked = require('marked');
 var mkdirp = require('mkdirp');
 var yaml = require('js-yaml');
 
@@ -80,7 +80,9 @@ gulp.task('changelog', function(done) {
   }, function(err, data) {
     if (err) return done(err);
     if (toHtml) {
-      data = markdown.toHTML(data);
+      data = marked(data, {
+        gfm: true
+      });
     }
     fs.writeFileSync(dest, data);
     done();
