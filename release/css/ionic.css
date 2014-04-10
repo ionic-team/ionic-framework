@@ -4319,8 +4319,8 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
     content: ' ';
     transition: background-color 0.1s ease-in-out; }
 
-/* the checkmark within the box */
-.checkbox input:after {
+/* the default checkmark within the box */
+.checkbox:not(.cross) input:after, .checkbox.check input:after {
   -webkit-transition: opacity 0.05s ease-in-out;
   -moz-transition: opacity 0.05s ease-in-out;
   transition: opacity 0.05s ease-in-out;
@@ -4338,6 +4338,15 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
   border-right: 0;
   content: ' ';
   opacity: 0; }
+  
+/* the checkmark cross within the box */
+.checkbox.cross input:after {
+	content: 'x';
+	font-size: 25px;
+	color: #FFF;
+	position: absolute;
+	top: -8%;
+	left: 30%; }
 
 .grade-c .checkbox input:after {
   -webkit-transform: rotate(0);
