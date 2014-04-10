@@ -1,6 +1,6 @@
 
 var TPL_POPUP =
-  '<div class="popup">' +
+  '<div class="popup popup-hidden">' +
     '<div class="popup-head">' +
       '<h3 class="popup-title" ng-bind-html="title"></h3>' +
       '<h5 class="popup-sub-title" ng-bind-html="subTitle" ng-if="subTitle"></h5>' +
@@ -320,7 +320,11 @@ function($animate, $ionicTemplateLoader, $ionicBackdrop, $log, $q, $timeout, $ro
       self.show = function() {
         if (self.isShown) return;
 
+        self.isShown = true;
         ionic.requestAnimationFrame(function() {
+          //if hidden while waiting for raf, don't show
+          if (!self.isShown) return;
+
           self.element.removeClass('popup-hidden');
           self.element.addClass('popup-showing active');
           focusLastButton(self.element);
@@ -332,18 +336,15 @@ function($animate, $ionicTemplateLoader, $ionicBackdrop, $log, $q, $timeout, $ro
             ionic.DomUtil.centerElementByMargin(self.element[0]);
           });
         });
-
-        self.isShown = true;
       };
       self.hide = function(callback) {
         callback = callback || angular.noop;
         if (!self.isShown) return callback();
 
+        self.isShown = false;
         self.element.removeClass('active');
         self.element.addClass('popup-hidden');
         $timeout(callback, 250);
-
-        self.isShown = false;
       };
       self.remove = function() {
         if (self.removed) return;

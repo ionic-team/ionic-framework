@@ -95,6 +95,19 @@ describe('$ionicPopup service', function() {
         popup.show();
         expect(popup.isShown).toBe(true);
       });
+      it('should not show if isShown=false during raf wait', function() {
+        var popup = TestUtil.unwrapPromise($ionicPopup._createPopup());
+        var rafCallback;
+        ionic.requestAnimationFrame = function(cb) { rafCallback = cb; };
+        expect(popup.isShown).toBeFalsy();
+        popup.show();
+        expect(popup.isShown).toBe(true);
+        popup.isShown = false;
+        rafCallback();
+        expect(popup.element.hasClass('popup-showing')).toBe(false);
+        expect(popup.element.hasClass('active')).toBe(false);
+        ionic.requestAnimationFrame = function(cb) { cb(); };
+      });
     });
 
     describe('hide', function() {
