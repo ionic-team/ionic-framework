@@ -5,7 +5,17 @@
  */
 
 .loading {
-  @include ng-hide-fade(0.2s);
+  @include transition(0.2s opacity linear);
+
+  visibility: hidden;
+  opacity: 0;
+
+  &.visible {
+    visibility: visible;
+  }
+  &.active {
+    opacity: 1;
+  }
 
   position: fixed;
   top: 50%;

@@ -10,5 +10,15 @@
 
   background-color: rgba(0,0,0,0.4);
 
-  @include ng-hide-fade();
+  visibility: hidden;
+  opacity: 0;
+
+  &.visible {
+    visibility: visible;
+  }
+  &.active {
+    opacity: 1;
+  }
+
+  @include transition(0.1s opacity linear);
 }

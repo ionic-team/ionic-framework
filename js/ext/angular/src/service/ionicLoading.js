@@ -1,6 +1,6 @@
 
 var TPL_LOADING =
-  '<div class="loading ng-hide">' +
+  '<div class="loading">' +
   '</div>';
 
 var HIDE_LOADING_DEPRECATED = '$ionicLoading instance.hide() has been deprecated. Use $ionicLoading.hide().';
@@ -33,7 +33,6 @@ angular.module('ionic.service.loading', [])
  * ```
  */
 .factory('$ionicLoading', [
-  '$animate',
   '$document',
   '$ionicTemplateLoader',
   '$ionicBackdrop',
@@ -41,8 +40,7 @@ angular.module('ionic.service.loading', [])
   '$q',
   '$log',
   '$compile',
-  '$animateClassToggler',
-function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log, $compile, $animateClassToggler) {
+function($document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log, $compile) {
 
   var loaderInstance;
   //default value
@@ -83,10 +81,9 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
       })
       .then(function(loader) {
 
-        var toggler = $animateClassToggler(loader.element, 'ng-hide');
+        var self = loader;
 
         loader.show = function(options) {
-          var self = this;
           var templatePromise = options.templateUrl ?
             $ionicTemplateLoader.load(options.templateUrl) :
             //options.content: deprecated
@@ -114,10 +111,17 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
               self.element.html(html);
               $compile(self.element.contents())(self.scope);
             }
+
+            //Don't show until template changes
+            if (self.isShown) {
+              self.element.addClass('visible');
+              ionic.DomUtil.centerElementByMarginTwice(self.element[0]);
+              ionic.requestAnimationFrame(function() {
+                self.isShown && self.element.addClass('active');
+              });
+            }
           });
 
-          toggler.removeClass();
-          ionic.DomUtil.centerElementByMarginTwice(this.element[0]);
           this.isShown = true;
         };
         loader.hide = function() {
@@ -125,7 +129,10 @@ function($animate, $document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q
             if (this.hasBackdrop) {
               $ionicBackdrop.release();
             }
-            toggler.addClass();
+            self.element.removeClass('active');
+            setTimeout(function() {
+              !self.isShown && self.element.removeClass('visible');
+            }, 200);
           }
           $timeout.cancel(this.durationTimeout);
           this.isShown = false;

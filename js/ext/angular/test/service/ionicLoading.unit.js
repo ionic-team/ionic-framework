@@ -41,13 +41,13 @@ describe('$ionicLoading service', function() {
         expect(loader.durationTimeout).toBeTruthy();
         expect(loader.durationTimeout.$$timeoutId).toBeTruthy();
       }));
-      it('should remove ng-hide', inject(function($ionicLoading, $timeout) {
+      it('should add active', inject(function($ionicLoading, $timeout) {
         var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
         ionic.requestAnimationFrame = function(cb) { cb(); };
-        expect(loader.element.hasClass('ng-hide')).toBe(true);
+        expect(loader.element.hasClass('active')).toBe(false);
         loader.show({});
         $timeout.flush();
-        expect(loader.element.hasClass('ng-hide')).toBe(false);
+        expect(loader.element.hasClass('active')).toBe(true);
       }));
       it('should isShown = true', inject(function($ionicLoading) {
         var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
@@ -133,9 +133,9 @@ describe('$ionicLoading service', function() {
       expect(loader.show).toHaveBeenCalled();
       expect(loader.hide).toHaveBeenCalled();
       expect(loader.isShown).toBe(false);
-      expect(loader.element.hasClass('ng-hide')).toBe(true);
+      expect(loader.element.hasClass('active')).toBe(false);
     }));
-    it('show should only removeClass after raf is still isShown', inject(function($ionicLoading) {
+    it('show should only active after raf is still isShown', inject(function($ionicLoading) {
       var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
       var rafCallback;
       ionic.requestAnimationFrame = function(cb) {
@@ -146,7 +146,7 @@ describe('$ionicLoading service', function() {
       loader.hide();
       expect(loader.isShown).toBe(false);
       rafCallback();
-      expect(loader.element.hasClass('ng-hide')).toBe(true);
+      expect(loader.element.hasClass('active')).toBe(false);
       ionic.requestAnimationFrame = function(cb) { cb(); };
     }));
 

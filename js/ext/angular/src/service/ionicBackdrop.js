@@ -4,14 +4,11 @@ angular.module('ionic')
  * @private
  */
 .factory('$ionicBackdrop', [
-  '$animate',
   '$document',
-  '$animateClassToggler',
-function($animate, $document, $animateClassToggler) {
+function($document) {
 
-  var el = angular.element('<div class="backdrop ng-hide">');
+  var el = angular.element('<div class="backdrop">');
   var backdropHolds = 0;
-  var toggler = $animateClassToggler(el, 'ng-hide');
 
   $document[0].body.appendChild(el[0]);
 
@@ -24,12 +21,18 @@ function($animate, $document, $animateClassToggler) {
 
   function retain() {
     if ( (++backdropHolds) === 1 ) {
-      toggler.removeClass();
+      el.addClass('visible');
+      ionic.requestAnimationFrame(function() {
+        backdropHolds && el.addClass('active');
+      });
     }
   }
   function release() {
     if ( (--backdropHolds) === 0 ) {
-      toggler.addClass();
+      el.removeClass('active');
+      setTimeout(function() {
+        !backdropHolds && el.removeClass('visible');
+      }, 100);
     }
   }
 }]);

@@ -5,41 +5,36 @@ describe('$ionicBackdrop service', function() {
     ionic.requestAnimationFrame = function(cb) { cb(); };
   }));
 
-  it('should remove ngHide on retain', inject(function($ionicBackdrop, $timeout) {
+  it('should add active on retain', inject(function($ionicBackdrop) {
     var el = $ionicBackdrop._element;
-    expect(el.hasClass('ng-hide')).toBe(true);
+    expect(el.hasClass('active')).toBe(false);
     $ionicBackdrop.retain();
-    $timeout.flush();
-    expect(el.hasClass('ng-hide')).toBe(false);
+    expect(el.hasClass('active')).toBe(true);
   }));
 
-  it('should add ngHide on retain', inject(function($ionicBackdrop, $timeout) {
+  it('should add and remove active on retain and release', inject(function($ionicBackdrop) {
     var el = $ionicBackdrop._element;
-    expect(el.hasClass('ng-hide')).toBe(true);
+    expect(el.hasClass('active')).toBe(false);
     $ionicBackdrop.retain();
-    $timeout.flush();
-    expect(el.hasClass('ng-hide')).toBe(false);
+    expect(el.hasClass('active')).toBe(true);
     $ionicBackdrop.release();
-    $timeout.flush();
-    expect(el.hasClass('ng-hide')).toBe(true);
+    expect(el.hasClass('active')).toBe(false);
   }));
 
-  it('should require equal releases and retains', inject(function($ionicBackdrop, $timeout) {
+  it('should require equal releases and retains', inject(function($ionicBackdrop) {
     var el = $ionicBackdrop._element;
-    expect(el.hasClass('ng-hide')).toBe(true);
+    expect(el.hasClass('active')).toBe(false);
     $ionicBackdrop.retain();
-    $timeout.flush();
-    expect(el.hasClass('ng-hide')).toBe(false);
+    expect(el.hasClass('active')).toBe(true);
     $ionicBackdrop.retain();
-    expect(el.hasClass('ng-hide')).toBe(false);
+    expect(el.hasClass('active')).toBe(true);
     $ionicBackdrop.retain();
-    expect(el.hasClass('ng-hide')).toBe(false);
+    expect(el.hasClass('active')).toBe(true);
     $ionicBackdrop.release();
-    expect(el.hasClass('ng-hide')).toBe(false);
+    expect(el.hasClass('active')).toBe(true);
     $ionicBackdrop.release();
-    expect(el.hasClass('ng-hide')).toBe(false);
+    expect(el.hasClass('active')).toBe(true);
     $ionicBackdrop.release();
-    $timeout.flush();
-    expect(el.hasClass('ng-hide')).toBe(true);
+    expect(el.hasClass('active')).toBe(false);
   }));
 });
