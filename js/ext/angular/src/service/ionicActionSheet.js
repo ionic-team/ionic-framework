@@ -71,7 +71,11 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
     show: function(opts) {
       var scope = $rootScope.$new(true);
 
-      angular.extend(scope, opts);
+      angular.extend(scope, {
+        cancel: angular.noop,
+        buttonClicked: angular.noop,
+        destructiveButtonClicked: angular.noop
+      }, opts);
 
       // Compile the template
       var element = $compile('<ion-action-sheet buttons="buttons"></ion-action-sheet>')(scope);
