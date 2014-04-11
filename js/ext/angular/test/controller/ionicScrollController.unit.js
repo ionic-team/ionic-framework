@@ -219,6 +219,17 @@ describe('$ionicScroll Controller', function() {
     expect(ctrl.scrollView.resize).toHaveBeenCalled();
   }));
 
+  it('.getScrollView', function() {
+    setup();
+    expect(ctrl.getScrollView()).toBe(ctrl.scrollView);
+  });
+  it('.getScrollPosition', function() {
+    setup();
+    var values = {};
+    spyOn(ctrl.scrollView, 'getValues').andReturn(values);
+    expect(ctrl.getScrollPosition()).toBe(values);
+  });
+
   [false, true].forEach(function(shouldAnimate) {
     describe('with animate='+shouldAnimate, function() {
 
