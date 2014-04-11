@@ -342,21 +342,23 @@ function($rootScope, $animate, $ionicBind, $compile, $ionicViewService) {
           $scope.$on('$stateChangeSuccess', selectTabIfMatchesState);
           selectTabIfMatchesState();
         }
-
-        tabNavElement = angular.element(
-          '<ion-tab-nav' +
-          attrStr('ng-click', attr.ngClick) +
-          attrStr('title', attr.title) +
-          attrStr('icon', attr.icon) +
-          attrStr('icon-on', attr.iconOn) +
-          attrStr('icon-off', attr.iconOff) +
-          attrStr('badge', attr.badge) +
-          attrStr('badge-style', attr.badgeStyle) +
-          '></ion-tab-nav>'
-        );
-        tabNavElement.data('$ionTabsController', tabsCtrl);
-        tabNavElement.data('$ionTabController', tabCtrl);
-        tabsCtrl.$tabsElement.append($compile(tabNavElement)($scope));
+        
+        if (attr.hidden !== 'true') {
+          tabNavElement = angular.element(
+            '<ion-tab-nav' +
+            attrStr('ng-click', attr.ngClick) +
+            attrStr('title', attr.title) +
+            attrStr('icon', attr.icon) +
+            attrStr('icon-on', attr.iconOn) +
+            attrStr('icon-off', attr.iconOff) +
+            attrStr('badge', attr.badge) +
+            attrStr('badge-style', attr.badgeStyle) +
+            '></ion-tab-nav>'
+          );
+          tabNavElement.data('$ionTabsController', tabsCtrl);
+          tabNavElement.data('$ionTabController', tabCtrl);
+          tabsCtrl.$tabsElement.append($compile(tabNavElement)($scope));
+        }
 
         $scope.$watch('$tabSelected', function(value) {
           childScope && childScope.$destroy();
