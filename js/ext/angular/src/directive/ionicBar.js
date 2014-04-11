@@ -15,6 +15,9 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  * @description
  * Adds a fixed header bar above some content.
  *
+ * Can also be a subheader (lower down) if the 'bar-subheader' class is applied.
+ * See [the header CSS docs](/docs/components/#subheader).
+ *
  * @param {string=} align-title Where to align the title.
  * Avaialble: 'left', 'right', or 'center'.  Defaults to 'center'.
  *
@@ -44,6 +47,9 @@ angular.module('ionic.ui.header', ['ngAnimate', 'ngSanitize'])
  *
  * @description
  * Adds a fixed footer bar below some content.
+ *
+ * Can also be a subfooter (higher up) if the 'bar-subfooter' class is applied.
+ * See [the footer CSS docs](/docs/components/#footer).
  *
  * @param {string=} align-title Where to align the title.
  * Avaialble: 'left', 'right', or 'center'.  Defaults to 'center'.
