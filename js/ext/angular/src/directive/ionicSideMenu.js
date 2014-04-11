@@ -348,7 +348,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * @usage
  * ```html
  * <ion-side-menu
- *   side="left"
+ *   side="'left'"
  *   width="myWidthValue + 20"
  *   is-enabled="shouldLeftSideMenuBeEnabled()">
  * </ion-side-menu>
