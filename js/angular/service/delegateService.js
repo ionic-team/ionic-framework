@@ -65,9 +65,14 @@ function delegateService(methodNames) {
 
         if (!matchingInstancesFound) {
           return $log.warn(
-            'Delegate for handle "'+this.handle+'" could not find a',
-            'corresponding element with delegate-handle="'+this.handle+'"!',
-            methodName, 'was not called!');
+            'Delegate for handle "'+this.handle+'" could not find a ' +
+            'corresponding element with delegate-handle="'+this.handle+'"!' +
+            methodName + '() was not called!\n' +
+            'Possible cause: If you are calling ' + methodName + '() immediately, and ' +
+            'your element with delegate-handle="messagesScroll" is a child of your ' +
+            'controller, then your element may not be compiled yet. Put a $timeout ' +
+            'around your call to ' + methodName + '() and try again.'
+          );
         }
 
         return finalResult;
