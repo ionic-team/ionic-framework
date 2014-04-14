@@ -233,7 +233,7 @@ angular.module('ionic.ui.sideMenu', ['ionic.service.gesture', 'ionic.service.vie
  * For a complete side menu example, see the
  * {@link ionic.directive:ionSideMenus} documentation.
  *
- * @param {boolean=} drag-content Whether the content can be dragged. Defaul true.
+ * @param {boolean=} drag-content Whether the content can be dragged. Default true.
  *
  */
 .directive('ionSideMenuContent', ['$timeout', '$ionicGesture', function($timeout, $ionicGesture) {
