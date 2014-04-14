@@ -25,8 +25,7 @@ module.exports = function(config) {
     .concat(buildConfig.ionicFiles)
     .concat(buildConfig.angularIonicFiles)
     .concat([
-      'test/unit/**/*.js',
-      'js/ext/angular/test/**/*.js'
+      'test/unit/**/*.js'
     ]),
 
     // list of files to exclude

@@ -45,34 +45,25 @@ module.exports = {
 
     // Views
     'js/views/view.js',
-
     'js/views/scrollView.js',
-
     'js/views/actionSheetView.js',
     'js/views/headerBarView.js',
     'js/views/listView.js',
-    'js/views/loadingView.js',
     'js/views/modalView.js',
-    'js/views/navBarView.js',
     'js/views/sideMenuView.js',
     'js/views/sliderView.js',
-    'js/views/tabBarView.js',
     'js/views/toggleView.js',
 
     // Controllers
     'js/controllers/viewController.js',
-
-    'js/controllers/navController.js',
     'js/controllers/sideMenuController.js',
-    'js/controllers/tabBarController.js'
-
   ],
 
   angularIonicFiles: [
-    'js/ext/angular/src/*.js',
-    'js/ext/angular/src/service/**/*.js',
-    'js/ext/angular/src/directive/**/*.js',
-    'js/ext/angular/src/controller/**/*.js'
+    'js/angular/*.js',
+    'js/angular/service/**/*.js',
+    'js/angular/controller/**/*.js',
+    'js/angular/directive/**/*.js',
   ],
 
   //Which vendor files to include in dist, used by build

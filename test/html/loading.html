@@ -1,24 +1,29 @@
-<html>
+<html ng-app="ionic.example">
   <head>
     <meta charset="utf-8">
     <title>Loading</title>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <link href="../../dist/css/ionic.css" rel="stylesheet">
-  </head>
-  <body>
-    <div id="loading" class="loading">
-      <h4>Loading</h4>
-    </div>
 
-    <button id="show" class="button">Show</button>
-    <script src="../../dist/js/ionic.js"></script>
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+
+  </head>
+  <body ng-controller="LoadingCtrl">
+    <button class="button button-dark" ng-click="startLoading()">Load</button>
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
     <script>
-      var loading = document.getElementById('loading');
-      var l = new ionic.views.Loading({el: loading});
-      var sb = document.getElementById('show');
-      sb.addEventListener('click', function(e) {
-        l.show();
+      angular.module('ionic.example', ['ionic'])
+
+      .controller('LoadingCtrl', function($scope, $ionicLoading) {
+        $scope.startLoading = function() {
+          window.loader = $ionicLoading.show({
+            template: 'Getting current location...',
+            duration: 4000
+          });
+        };
       });
     </script>
   </body>
 </html>
+
