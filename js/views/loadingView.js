@@ -32,6 +32,8 @@
         lb.style.marginTop = (-lb.offsetHeight) / 2 + 'px';
 
         // Wait 'showDelay' ms before showing the loading screen
+        if(this._showDelayTimeout)
+          window.clearTimeout(this._showDelayTimeout);
         this._showDelayTimeout = window.setTimeout(function() {
           _this.el.classList.add('active');
         }, _this.showDelay);
