@@ -55,7 +55,7 @@ gulp.task('docs', function(done) {
     return process.exit(1);
   }
   process.env.DOC_VERSION = docVersion;
-  return dgeni('docs/docs.config.js').generateDocs().then(function() {
+  return dgeni(__dirname + '/docs/docs.config.js').generateDocs().then(function() {
     gutil.log('Docs for', gutil.colors.cyan(docVersion), 'generated!');
   });
 });
@@ -68,7 +68,7 @@ gulp.task('watch', ['build'], function() {
 });
 
 gulp.task('changelog', function(done) {
-  var file = argv.prepend ? 'CHANGELOG.md' : '';
+  var file = argv.prepend ? __dirname + '/CHANGELOG.md' : '';
   var subtitle = argv.subtitle || '"' + pkg.codename + '"';
   var toHtml = !!argv.html;
   var dest = argv.dest || 'CHANGELOG.md';
@@ -352,10 +352,10 @@ gulp.task('cloudtest', ['protractor-sauce'], function(cb) {
 });
 
 gulp.task('karma', function(cb) {
-  return karma(cb, ['config/karma.conf.js', '--single-run=true']);
+  return karma(cb, [__dirname + '/config/karma.conf.js', '--single-run=true']);
 });
 gulp.task('karma-watch', function(cb) {
-  return karma(cb, ['config/karma.conf.js']);
+  return karma(cb, [__dirname + '/config/karma.conf.js']);
 });
 
 var connectServer;
@@ -378,7 +378,7 @@ function karma(cb, args) {
     args.push('--reporters='+argv.reporters.trim());
   }
   cp.spawn('node', [
-    './node_modules/karma/bin/karma',
+    __dirname + '/node_modules/karma/bin/karma',
     'start'
   ].concat(args), { stdio: 'inherit' })
   .on('exit', function(code) {

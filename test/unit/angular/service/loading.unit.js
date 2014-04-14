@@ -112,15 +112,17 @@ describe('$ionicLoading service', function() {
       expect(loader.show).toHaveBeenCalledWith(options);
     }));
 
-    it('should hide', inject(function($ionicLoading, $rootScope) {
+    it('should $timeout.cancel & hide', inject(function($ionicLoading, $rootScope, $timeout) {
       var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+      spyOn($timeout, 'cancel');
       spyOn(loader, 'hide');
       $ionicLoading.hide();
+      expect($timeout.cancel).toHaveBeenCalled();
       $rootScope.$apply();
       expect(loader.hide).toHaveBeenCalled();
     }));
 
-    it('hide should happen after show', inject(function($ionicLoading, $timeout) {
+    it('hide should cancel show delay and just go ahead and hide', inject(function($ionicLoading, $timeout) {
       ionic.requestAnimationFrame = function(cb) { cb(); };
       var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
       spyOn(loader, 'hide').andCallThrough();
@@ -130,7 +132,7 @@ describe('$ionicLoading service', function() {
       expect(loader.show).not.toHaveBeenCalled();
       expect(loader.hide).not.toHaveBeenCalled();
       $timeout.flush();
-      expect(loader.show).toHaveBeenCalled();
+      expect(loader.show).not.toHaveBeenCalled();
       expect(loader.hide).toHaveBeenCalled();
       expect(loader.isShown).toBe(false);
       expect(loader.element.hasClass('active')).toBe(false);

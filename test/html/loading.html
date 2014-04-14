@@ -17,10 +17,14 @@
 
       .controller('LoadingCtrl', function($scope, $ionicLoading) {
         $scope.startLoading = function() {
-          window.loader = $ionicLoading.show({
+          $ionicLoading.show({
             template: 'Getting current location...',
-            duration: 4000
+            delay: 100
           });
+          $ionicLoading.show({
+            template: 'Getting current location...',
+          });
+          $ionicLoading.hide();
         };
       });
     </script>
