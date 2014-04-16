@@ -67,7 +67,7 @@
     border-radius: $checkbox-border-radius;
     background: $checkbox-off-bg-color;
     content: ' ';
-    transition: background-color .1s ease-in-out;
+    transition: background-color 20ms ease-in-out;
   }
 }
 
