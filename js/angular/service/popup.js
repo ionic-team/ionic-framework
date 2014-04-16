@@ -12,8 +12,6 @@ var POPUP_TPL =
     '</div>' +
   '</div>';
 
-var POPUP_CONTENT_DEPRECATED = '$ionicPopup options.content has been deprecated. Use options.template instead.';
-
 /**
  * @ngdoc service
  * @name $ionicPopup
@@ -270,8 +268,6 @@ function($animate, $ionicTemplateLoader, $ionicBackdrop, $log, $q, $timeout, $ro
       title: '',
       buttons: [],
     }, options || {});
-
-    deprecated.field(POPUP_CONTENT_DEPRECATED, $log.warn, options, 'content', options.content);
 
     var popupPromise = $ionicTemplateLoader.compile({
       template: POPUP_TPL,
