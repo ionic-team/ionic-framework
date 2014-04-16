@@ -452,7 +452,7 @@ function($animate, $ionicTemplateLoader, $ionicBackdrop, $log, $q, $timeout, $ro
       buttons: [{
         text: opts.cancelText || 'Cancel',
         type: opts.cancelType|| 'button-default',
-        onTap: function(e) { e.preventDefault(); }
+        onTap: function(e) {}
       }, {
         text: opts.okText || 'OK',
         type: opts.okType || 'button-positive',
