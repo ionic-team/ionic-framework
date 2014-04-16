@@ -13,20 +13,20 @@ describe('$ionicLoading service', function() {
       it('should retain backdrop if !noBackdrop and !isShown', inject(function($ionicLoading, $ionicBackdrop) {
         spyOn($ionicBackdrop, 'retain');
         var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
-        loader.show({})
+        loader.show({});
         expect($ionicBackdrop.retain).toHaveBeenCalled();
       }));
       it('should not retain backdrop if noBackdrop', inject(function($ionicLoading, $ionicBackdrop) {
         spyOn($ionicBackdrop, 'retain');
         var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
-        loader.show({ noBackdrop: true })
+        loader.show({ noBackdrop: true });
         expect($ionicBackdrop.retain).not.toHaveBeenCalled();
       }));
       it('should not retain backdrop if isShown', inject(function($ionicLoading, $ionicBackdrop) {
         spyOn($ionicBackdrop, 'retain');
         var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
         loader.isShown = true;
-        loader.show({})
+        loader.show({});
         expect($ionicBackdrop.retain).not.toHaveBeenCalled();
       }));
 
