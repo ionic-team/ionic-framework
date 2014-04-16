@@ -163,7 +163,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
 
       return self.hide().then(function() {
         self.scope.$destroy();
-        self.el && self.el.parentElement && self.el.parentElement.removeChild(self.el);
+        angular.element(self.el).remove();
       });
     },
 
