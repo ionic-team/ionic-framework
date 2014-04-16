@@ -23,17 +23,25 @@
     <script id="sign-in.html" type="text/ng-template">
       <ion-view title="Sign-In">
 
-        <ion-nav-buttons side="left">
-          <button class="button button-icon icon ion-home" ng-click="foo()">
-            Home
-          </button>
+<ion-nav-buttons side="left">
+            <button
+                class="button button-icon icon ion-navicon"
+                menu-toggle="left">
+            </button>
         </ion-nav-buttons>
-
         <ion-nav-buttons side="right">
-          <button class="button button-icon ion-navicon"></button>
+            <button
+                class="button button-icon icon ion-close-circled"
+                ng-click="requestClearNotifications()">
+            </button>
+            <button
+                class="button button-icon icon ion-alert-circled"
+                ng-show="$root.showButton">
+            </button>
         </ion-nav-buttons>
 
         <ion-content>
+        <ion-toggle ng-model="$root.showButton"></ion-toggle>
           <div class="list">
             <label class="item item-input">
               <span class="input-label">Username</span>

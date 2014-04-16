@@ -10,42 +10,68 @@
     <script src="../../../../dist/js/ionic.bundle.js"></script>
   </head>
 
-  <body>
-    <ion-content ng-controller="ContentCtrl" padding="false">
-
-      <ion-refresher on-refresh="onRefresh()" pulling-text="pull!" refreshing-text="refreshing!"></ion-refresher>
-
-      <p>...</p><br/><br/><br/>
-      <p>...</p><br/><br/><br/>
-      <p>...</p><br/><br/><br/>
-      <p>...</p><br/><br/><br/>
-      <p>...</p><br/><br/><br/>
-      <p>...</p><br/><br/><br/>
+  <body ng-controller="MainCtrl">
+    <ion-header-bar class="bar-positive">
+      <h1 class="title">Hi</h1>
+      <a class="button" ng-click="scrollBottom(true)">
+        Bottom
+      </a>
+    </ion-header-bar>
+    <ion-content>
+      <ion-refresher on-refresh="onRefresh()"></ion-refresher>
+      <div>
+        <div class="item"
+          ng-click="alert(item)"
+          collection-repeat="item in items"
+          collection-item-height="52 + 3*($index % 52)">
+          {{item}}
+        </div>
+      </div>
     </ion-content>
-
-    <ion-footer-bar class="bar-assertive">
-      <h1 class="title">Footer!</h1>
-    </ion-footer-bar>
-
   <script>
-function ContentCtrl($scope, $timeout) {
+function MainCtrl($scope, $ionicScrollDelegate, $timeout) {
+  $scope.items = [];
+  for (var i = 0; i < 5000; i++) {
+    $scope.items.push('item '+i);
+  }
+
+  $scope.height = function(n) {
+    return 105 + (n % 40);
+  };
+  $scope.width = function(n) {
+    return 105 + (n % 40);
+  };
+
+  //$scope.alert = alert.bind(window);
+
   $scope.onRefresh = function() {
     $timeout(function() {
-		  $scope.$broadcast('scroll.refreshComplete');
+      var len = $scope.items.length;
+      $scope.items.unshift(2999 - $scope.items.length);
+      $scope.items.unshift(2999 - $scope.items.length);
+      $scope.items.unshift(2999 - $scope.items.length);
+      $scope.items.unshift(2999 - $scope.items.length);
+      $scope.items.unshift(2999 - $scope.items.length);
+      $scope.items.unshift(2999 - $scope.items.length);
+      $scope.items.unshift(2999 - $scope.items.length);
+      $scope.items.unshift(2999 - $scope.items.length);
+      $scope.$broadcast('scroll.refreshComplete');
     }, 1500);
   };
-  $scope.more = [];
-  $scope.addMore = function() {
-    $timeout(function() {
-      var l = $scope.more.length;
-      for (var i=l; i<l+15; i++) {
-        $scope.more.push(i);
-      }
-      $scope.$broadcast('scroll.infiniteScrollComplete');
-    }, 1500);
-  };
+
+  $scope.scrollBottom = $ionicScrollDelegate.scrollBottom;
 }
   </script>
-
-  </body>
+  <style>
+.item {
+  width: 100%;
+}
+.photo {
+  width: 105px;
+  height: 105px;
+  border: 1px solid black;
+  background-size: 103px 103px;
+  background-position: 1px 1px;
+}
+</body>
 </html>
