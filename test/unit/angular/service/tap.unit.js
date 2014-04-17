@@ -56,6 +56,11 @@ Physical Device Testing Scenarios
 - If you touchstart on a text input, then scrolland touchend, it should not bring up the keyboard
 - If you touchstart on a label wrapping a text input, then scroll and touchend, it should not bring up the keyboard
 - When focused in a text input, be able to get out when tapping a checkbox
+- Can scroll when the target is a select element (touch events only)
+- Can scroll when the target is a label which wraps select element
+- Can open the select options on touch when not scrolling
+- Can open the select options mouse click when target is a select
+- Can open the select options when target is a label wrapping a select
 
 Tested on:
 ----------------------------

@@ -183,7 +183,8 @@ function triggerMouseEvent(type, ele, x, y) {
 
 function tapClickGateKeeper(e) {
   // do not allow through any click events that were not created by ionic.tap
-  if( ionic.scroll.isScrolling || !e.isIonicTap && !tapRequiresNativeClick(e.target) ) {
+  if( (ionic.scroll.isScrolling && ionic.tap.containsOrIsTextInput(e.target) ) ||
+      (!e.isIonicTap && !tapRequiresNativeClick(e.target)) ) {
     console.debug('clickPrevent', e.target.tagName);
     e.stopPropagation();
 
