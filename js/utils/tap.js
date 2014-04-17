@@ -95,11 +95,15 @@ ionic.tap = {
            (ele.tagName == 'INPUT' && !(/radio|checkbox|range|file|submit|reset/i).test(ele.type)));
   },
 
-  isLabelWithInput: function(ele) {
+  isLabelWithTextInput: function(ele) {
     var container = tapContainingElement(ele, false);
 
-    return container &&
+    return !!container &&
            ionic.tap.isTextInput( tapTargetElement( container ) );
+  },
+
+  containsOrIsTextInput: function(ele) {
+    return ionic.tap.isTextInput(ele) || ionic.tap.isLabelWithTextInput(ele);
   },
 
   cloneFocusedInput: function(container, instance) {
@@ -183,7 +187,7 @@ function tapClickGateKeeper(e) {
     console.debug('clickPrevent', e.target.tagName);
     e.stopPropagation();
 
-    if( !ionic.tap.isLabelWithInput(e.target) ) {
+    if( !ionic.tap.isLabelWithTextInput(e.target) ) {
       // labels clicks from native should not preventDefault othersize keyboard will not show on input focus
       e.preventDefault();
     }
@@ -311,7 +315,7 @@ function tapIgnoreEvent(e) {
   if(e.isTapHandled) return true;
   e.isTapHandled = true;
 
-  if( ionic.scroll.isScrolling ) {
+  if( ionic.scroll.isScrolling && ionic.tap.containsOrIsTextInput(e.target) ) {
     e.preventDefault();
     return true;
   }

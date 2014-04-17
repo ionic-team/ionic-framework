@@ -928,6 +928,40 @@ describe('Ionic Tap', function() {
     expect( ionic.tap.isTextInput(ele) ).toEqual(false);
   });
 
+  it('Should isLabelWithTextInput', function() {
+    var label = document.createElement('label');
+    expect( ionic.tap.isLabelWithTextInput(label) ).toEqual(false);
+
+    var span = document.createElement('span');
+    expect( ionic.tap.isLabelWithTextInput(span) ).toEqual(false);
+
+    label.appendChild(span);
+    expect( ionic.tap.isLabelWithTextInput(span) ).toEqual(false);
+
+    var textarea = document.createElement('textarea');
+    expect( ionic.tap.isLabelWithTextInput(textarea) ).toEqual(false);
+
+    label.appendChild(textarea);
+    expect( ionic.tap.isLabelWithTextInput(textarea) ).toEqual(true);
+  });
+
+  it('Should containsOrIsTextInput', function() {
+    var label = document.createElement('label');
+    expect( ionic.tap.containsOrIsTextInput(label) ).toEqual(false);
+
+    var span = document.createElement('span');
+    expect( ionic.tap.containsOrIsTextInput(span) ).toEqual(false);
+
+    label.appendChild(span);
+    expect( ionic.tap.containsOrIsTextInput(span) ).toEqual(false);
+
+    var textarea = document.createElement('textarea');
+    expect( ionic.tap.containsOrIsTextInput(textarea) ).toEqual(true);
+
+    label.appendChild(textarea);
+    expect( ionic.tap.containsOrIsTextInput(textarea) ).toEqual(true);
+  });
+
   it('Should reset focus to tapTouchFocusedInput if the active element changed from mousedown', function() {
     tapEnabledTouchEvents = true;
     tapActiveElement(document.createElement('textarea'));
@@ -960,13 +994,59 @@ describe('Ionic Tap', function() {
     expect( tapIgnoreEvent(e) ).toEqual(true);
   });
 
-  it('Should tapIgnoreEvent true because ionic.scroll.isScrolling', function(){
+  it('Should tapIgnoreEvent true because ionic.scroll.isScrolling and target is a text input', function(){
+    var target = document.createElement('textarea');
     var e = {
+      target: target,
       preventDefault: function(){ this.preventedDefault=true; }
     };
     ionic.scroll.isScrolling = true;
     expect( tapIgnoreEvent(e) ).toEqual(true);
     expect( e.preventedDefault ).toEqual(true);
+  });
+
+  it('Should tapIgnoreEvent true because ionic.scroll.isScrolling and target is span in a label containing a text input', function(){
+    var label = document.createElement('label');
+    var span = document.createElement('span');
+    var textarea = document.createElement('textarea');
+
+    label.appendChild(span);
+    label.appendChild(textarea);
+
+    var e = {
+      target: label,
+      preventDefault: function(){ this.preventedDefault=true; }
+    };
+    ionic.scroll.isScrolling = true;
+    expect( tapIgnoreEvent(e) ).toEqual(true);
+    expect( e.preventedDefault ).toEqual(true);
+  });
+
+  it('Should tapIgnoreEvent false because ionic.scroll.isScrolling but target is not a text input', function(){
+    var target = document.createElement('span');
+    var e = {
+      target: target,
+      preventDefault: function(){ this.preventedDefault=true; }
+    };
+    ionic.scroll.isScrolling = true;
+    expect( tapIgnoreEvent(e) ).toBeUndefined();
+  });
+
+  it('Should tapIgnoreEvent false because ionic.scroll.isScrolling but target is a input[checkbox]', function(){
+    var label = document.createElement('label');
+    var span = document.createElement('span');
+    var checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+
+    label.appendChild(span);
+    label.appendChild(checkbox);
+
+    var e = {
+      target: span,
+      preventDefault: function(){ this.preventedDefault=true; }
+    };
+    ionic.scroll.isScrolling = true;
+    expect( tapIgnoreEvent(e) ).toBeUndefined();
   });
 
 });
