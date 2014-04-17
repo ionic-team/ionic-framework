@@ -1,6 +1,3 @@
-// Similar to Angular's ngTouch, however it uses Ionic's tap detection
-// and click simulation. ngClick
-
 IonicModule
 
 .config(['$provide', function($provide) {
@@ -15,10 +12,6 @@ IonicModule
  * @private
  */
 .factory('$ionicNgClick', ['$parse', function($parse) {
-  function onRelease(e) {
-    // wire this up to Ionic's tap/click simulation
-    ionic.tap.simulateClick(e.target, e);
-  }
   return function(scope, element, clickExpr) {
     var clickHandler = $parse(clickExpr);
 
@@ -28,15 +21,9 @@ IonicModule
       });
     });
 
-    ionic.on("release", onRelease, element[0]);
-
     // Hack for iOS Safari's benefit. It goes searching for onclick handlers and is liable to click
     // something else nearby.
     element.onclick = function(event) { };
-
-    scope.$on('$destroy', function () {
-      ionic.off("release", onRelease, element[0]);
-    });
   };
 }])
 

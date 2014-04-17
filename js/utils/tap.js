@@ -1,305 +1,445 @@
-(function(window, document, ionic) {
-  'use strict';
 
-  var CLICK_PREVENT_DURATION = 1500; // max milliseconds ghostclicks in the same area should be prevented
-  var REMOVE_PREVENT_DELAY = 380; // delay after a touchend/mouseup before removing the ghostclick prevent
-  var REMOVE_PREVENT_DELAY_GRADE_C = 800; // same as REMOVE_PREVENT_DELAY, but for grade c devices
-  var HIT_RADIUS = 15; // surrounding area of a click that if a ghostclick happens it would get ignored
-  var TOUCH_TOLERANCE_X = 10; // how much the X coordinates can be off between start/end, but still a click
-  var TOUCH_TOLERANCE_Y = 6; // how much the Y coordinates can be off between start/end, but still a click
-  var tapCoordinates = {}; // used to remember coordinates to ignore if they happen again quickly
-  var startCoordinates = {}; // used to remember where the coordinates of the start of a touch
-  var clickPreventTimerId;
-  var _hasTouchScrolled = false; // if the touchmove already exceeded the touchmove tolerance
-  var _activeElement; // the element which has focus
+/*
 
+ IONIC TAP
+ ---------------
+ - Both touch and mouse events are added to the document.body on DOM ready
+ - If a touch event happens, it removes the mouse event listeners (temporarily)
+ - Remembers the last touchstart event
+ - On touchend, if the distance between start and end was small, trigger a click
+ - In the triggered click event, add a 'isIonicTap' property
+ - The triggered click receives the same x,y coordinates as as the end event
+ - On document.body click listener (with useCapture=true), only allow clicks with 'isIonicTap'
+ - After XXms, bring back the mouse event listeners incase they switch from touch and mouse
+ - If no touch events and only mouse, then touch events never fire, only mouse
+ - Triggering clicks with mouse events work the same as touch, except with mousedown/mouseup
+ - Tapping inputs is disabled during scrolling
 
-  ionic.tap = {
+ - Does not require other libraries to hook into ionic.tap, it just works
+ - Elements can come and go from the DOM and it doesn't have to keep adding and removing listeners
+ - No "tap delay" after the first "tap" (you can tap as fast as you want, they all click)
+ - Minimal events listeners, only being added to document.body
+ - Correct focus in/out on each input type on each platform/device
+ - Shows and hides virtual keyboard correctly for each platform/device
+ - No user-agent sniffing
+ - Works with labels surrounding inputs
+ - Does not fire off a click if the user moves the pointer too far
+ - Adds and removes an 'activated' css class
+ - Multiple unit tests for each scenario
 
-    tapInspect: function(orgEvent) {
-      // if the event doesn't have a gesture then don't continue
-      if(!orgEvent.gesture || !orgEvent.gesture.srcEvent) return;
+*/
 
-      var e = orgEvent.gesture.srcEvent; // evaluate the actual source event, not the created event by gestures.js
-      var ele = e.target; // get the target element that was actually tapped
+var tapDoc; // the element which the listeners are on (document.body)
+var tapActiveEle; // the element which is active (probably has focus)
+var tapEnabledTouchEvents;
+var tapMouseResetTimer;
+var tapPointerMoved;
+var tapPointerStart;
+var tapTouchFocusedInput;
 
-      if( ionic.tap.ignoreTapInspect(e) ) {
-        // if a tap in the same area just happened,
-        // or it was a touchcanel event, don't continue
-        console.debug('tapInspect stopEvent', e.type, ele.tagName);
-        return stopEvent(e);
+var TAP_RELEASE_TOLERANCE = 6; // how much the coordinates can be off between start/end, but still a click
+
+var tapEventListeners = {
+  'click': tapClickGateKeeper,
+
+  'mousedown': tapMouseDown,
+  'mouseup': tapMouseUp,
+  'mousemove': tapMouseMove,
+
+  'touchstart': tapTouchStart,
+  'touchend': tapTouchEnd,
+  'touchcancel': tapTouchCancel,
+  'touchmove': tapTouchMove,
+
+  'focusin': tapFocusIn,
+  'focusout': tapFocusOut
+};
+
+ionic.tap = {
+
+  register: function(ele) {
+    tapDoc = ele;
+
+    tapEventListener('click', true, true);
+    tapEventListener('mouseup');
+    tapEventListener('mousedown');
+    tapEventListener('touchstart');
+    tapEventListener('touchend');
+    tapEventListener('touchcancel');
+    tapEventListener('focusin');
+    tapEventListener('focusout');
+
+    return function() {
+      for(var type in tapEventListeners) {
+        tapEventListener(type, false);
       }
+      tapDoc = null;
+      tapActiveEle = null;
+      tapEnabledTouchEvents = false;
+      tapPointerMoved = false;
+      tapPointerStart = null;
+    };
+  },
 
-      for(var x=0; x<5; x++) {
-        // climb up the DOM looking to see if the tapped element is, or has a parent, of one of these
-        // only climb up a max of 5 parents, anything more probably isn't beneficial
-        if(!ele) break;
+  ignoreScrollStart: function(e) {
+    return (e.defaultPrevented) ||  // defaultPrevented has been assigned by another component handling the event
+           (e.target.isContentEditable) ||
+           (e.target.type === 'range') ||
+           (e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-default')) == 'true' || // manually set within an elements attributes
+           (!!(/object|embed/i).test(e.target.tagName));  // flash/movie/object touches should not try to scroll
+  },
 
-        if( ionic.tap.isTapElement(ele.tagName) ) {
-          return ionic.tap.simulateClick(ele, e);
-        }
-        ele = ele.parentElement;
-      }
+  isTextInput: function(ele) {
+    return !!ele &&
+           (ele.tagName == 'TEXTAREA' ||
+           (ele.tagName == 'INPUT' && !(/radio|checkbox|range|file|submit|reset/i).test(ele.type)));
+  },
 
-      // they didn't tap one of the above elements
-      // if the currently active element is an input, and they tapped outside
-      // of the current input, then unset its focus (blur) so the keyboard goes away
-      ionic.tap.blurActive();
-    },
+  isLabelWithTextInput: function(ele) {
+    var container = tapContainingElement(ele, false);
 
-    ignoreTapInspect: function(e) {
-      return !!ionic.tap.isRecentTap(e) ||
-             ionic.tap.hasTouchScrolled(e) ||
-             e.type === 'touchcancel';
-    },
+    return !!container &&
+           ionic.tap.isTextInput( tapTargetElement( container ) );
+  },
 
-    isTapElement: function(tagName) {
-      return tagName == 'A' ||
-             tagName == 'INPUT' ||
-             tagName == 'BUTTON' ||
-             tagName == 'LABEL' ||
-             tagName == 'TEXTAREA' ||
-             tagName == 'SELECT';
-    },
+  containsOrIsTextInput: function(ele) {
+    return ionic.tap.isTextInput(ele) || ionic.tap.isLabelWithTextInput(ele);
+  },
 
-    simulateClick: function(target, e) {
-      // simulate a normal click by running the element's click method then focus on it
+  cloneFocusedInput: function(container, instance) {
+    if(ionic.tap.hasCheckedClone) return;
+    ionic.tap.hasCheckedClone = true;
 
-      var ele = target.control || target;
-
-      if( ionic.tap.ignoreSimulateClick(ele) ) return;
-
-      console.debug('simulateClick', e.type, ele.tagName, ele.className);
-
-      var c = ionic.tap.getCoordinates(e);
-
-      // using initMouseEvent instead of MouseEvent for our Android friends
-      var clickEvent = document.createEvent("MouseEvents");
-      clickEvent.initMouseEvent('click', true, true, window,
-                                1, 0, 0, c.x, c.y,
-                                false, false, false, false, 0, null);
-
-      ele.dispatchEvent(clickEvent);
-
-      // if it's an input, focus in on the target, otherwise blur
-      ionic.tap.handleFocus(ele);
-
-      // remember the coordinates of this tap so if it happens again we can ignore it
-      // but only if the coordinates are not already being actively disabled
-      if( !ionic.tap.isRecentTap(e) ) {
-        ionic.tap.recordCoordinates(e);
-      }
-
-      if(target.control) {
-        console.debug('simulateClick, target.control, stop');
-        return stopEvent(e);
-      }
-
-    },
-
-    ignoreSimulateClick: function(ele) {
-      return ele.disabled || ele.type === 'range';
-    },
-
-    handleFocus: function(ele) {
-      if(ionic.tap.activeElement() !== ele) {
-        // only set the focus if it doesn't already have it
-        if( ele.tagName.match(/input|textarea|select/i) ) {
-          ionic.tap.activeElement(ele);
-          ele.focus();
-        } else {
-          ionic.tap.activeElement(null);
-          ionic.tap.blurActive();
-        }
-      }
-    },
-
-    preventGhostClick: function(e) {
-
-      console.debug((function(){
-        // Great for debugging, and thankfully this gets removed from the build, OMG it's ugly
-
-        if(e.target.control) {
-          // this is a label that has an associated input
-          // the native layer will send the actual event, so stop this one
-          console.debug('preventGhostClick', 'label');
-
-        } else if(ionic.tap.isRecentTap(e)) {
-          // a tap has already happened at these coordinates recently, ignore this event
-          console.debug('preventGhostClick', 'isRecentTap', e.target.tagName);
-
-        } else if(ionic.tap.hasTouchScrolled(e)) {
-          // this click's coordinates are different than its touchstart/mousedown, must have been scrolling
-          console.debug('preventGhostClick', 'hasTouchScrolled');
-        }
-
-        var c = ionic.tap.getCoordinates(e);
-        return 'click(' + c.x + ',' + c.y + '), start(' + startCoordinates.x + ',' + startCoordinates.y + ')';
-      })());
-
-
-      if(e.target.control || ionic.tap.isRecentTap(e) || ionic.tap.hasTouchScrolled(e)) {
-        return stopEvent(e);
-      }
-
-      // remember the coordinates of this click so if a tap or click in the
-      // same area quickly happened again we can ignore it
-      ionic.tap.recordCoordinates(e);
-    },
-
-    getCoordinates: function(event) {
-      // This method can get coordinates for both a mouse click
-      // or a touch depending on the given event
-      var gesture = (event.gesture ? event.gesture : event);
-
-      if(gesture) {
-        var touches = gesture.touches && gesture.touches.length ? gesture.touches : [gesture];
-        var e = (gesture.changedTouches && gesture.changedTouches[0]) ||
-            (gesture.originalEvent && gesture.originalEvent.changedTouches &&
-                gesture.originalEvent.changedTouches[0]) ||
-            touches[0].originalEvent || touches[0];
-
-        if(e) return { x: e.clientX || e.pageX || 0, y: e.clientY || e.pageY || 0 };
-      }
-      return { x:0, y:0 };
-    },
-
-    hasTouchScrolled: function(event) {
-      if(_hasTouchScrolled) return true;
-
-      // check if this click's coordinates are different than its touchstart/mousedown
-      var c = ionic.tap.getCoordinates(event);
-
-      // Quick check for 0,0 which could be simulated mouse click for form submission
-      if(c.x === 0 && c.y === 0) {
-        return false;
-      }
-
-      // the allowed distance between touchstart/mousedown and
-      return (c.x > startCoordinates.x + TOUCH_TOLERANCE_X ||
-              c.x < startCoordinates.x - TOUCH_TOLERANCE_X ||
-              c.y > startCoordinates.y + TOUCH_TOLERANCE_Y ||
-              c.y < startCoordinates.y - TOUCH_TOLERANCE_Y);
-    },
-
-    recordCoordinates: function(event) {
-      // get the coordinates of this event and remember them for later
-      var c = ionic.tap.getCoordinates(event);
-      if(c.x && c.y) {
-        var tapId = Date.now();
-
-        // only record tap coordinates if we have valid ones
-        tapCoordinates[tapId] = { x: c.x, y: c.y, id: tapId };
-
-        setTimeout(function() {
-          // delete the tap coordinates after X milliseconds, basically allowing
-          // it so a tap can happen again in the same area in the future
-          // this is only a fallback, most tap coordinates will be removed
-          // from the removeClickPrevent event fired by touchend/mouseup
-          delete tapCoordinates[tapId];
-        }, CLICK_PREVENT_DURATION);
-      }
-    },
-
-    removeClickPrevent: function(e) {
-      // fired by touchend/mouseup
-      // after X milliseconds, remove tap coordinates
-      clearTimeout(clickPreventTimerId);
-      clickPreventTimerId = setTimeout(function(){
-        var tap = ionic.tap.isRecentTap(e);
-        if(tap) delete tapCoordinates[tap.id];
-      }, REMOVE_PREVENT_DELAY);
-    },
-
-    isRecentTap: function(event) {
-      // loop through the tap coordinates and see if the same area has been tapped recently
-      var tapId, existingCoordinates, currentCoordinates;
-
-      for(tapId in tapCoordinates) {
-        existingCoordinates = tapCoordinates[tapId];
-        if(!currentCoordinates) currentCoordinates = ionic.tap.getCoordinates(event); // lazy load it when needed
-
-        if(currentCoordinates.x > existingCoordinates.x - HIT_RADIUS &&
-           currentCoordinates.x < existingCoordinates.x + HIT_RADIUS &&
-           currentCoordinates.y > existingCoordinates.y - HIT_RADIUS &&
-           currentCoordinates.y < existingCoordinates.y + HIT_RADIUS) {
-          // the current tap coordinates are in the same area as a recent tap
-          return existingCoordinates;
+    ionic.requestAnimationFrame(function(){
+      var focusInput = container.querySelector(':focus');
+      if( ionic.tap.isTextInput(focusInput) ) {
+        var clonedInput = focusInput.parentElement.querySelector('.cloned-text-input');
+        if(!clonedInput) {
+          clonedInput = document.createElement(focusInput.tagName);
+          clonedInput.type = focusInput.type;
+          clonedInput.value = focusInput.value;
+          clonedInput.className = 'cloned-text-input';
+          focusInput.parentElement.insertBefore(clonedInput, focusInput);
+          focusInput.style.top = focusInput.offsetTop;
+          focusInput.classList.add('previous-input-focus');
         }
       }
-    },
+    });
+  },
 
-    blurActive: function() {
-      var ele = ionic.tap.activeElement();
-      if(ele && ele.tagName.match(/input|textarea|select/i) ) {
-        setTimeout(function(){
-          ele.blur();
-          ionic.tap.activeElement(null);
-        }, 400);
+  hasCheckedClone: false,
+
+  removeClonedInputs: function(container) {
+    ionic.tap.hasCheckedClone = false;
+
+    ionic.requestAnimationFrame(function(){
+      var clonedInputs = container.querySelectorAll('.cloned-text-input');
+      var previousInputFocus = container.querySelectorAll('.previous-input-focus');
+      var x;
+
+      for(x=0; x<clonedInputs.length; x++) {
+        clonedInputs[x].parentElement.removeChild( clonedInputs[x] );
       }
-    },
 
-    activeElement: function(ele) {
-      if(arguments.length) {
-        _activeElement = ele;
+      for(x=0; x<previousInputFocus.length; x++) {
+        previousInputFocus[x].classList.remove('previous-input-focus');
+        previousInputFocus[x].style.top = '';
+        previousInputFocus[x].focus();
       }
-      return _activeElement || document.activeElement;
-    },
+    });
+  }
 
-    setTouchStart: function(e) {
-      _hasTouchScrolled = false;
-      startCoordinates = ionic.tap.getCoordinates(e);
-      document.body.addEventListener('touchmove', ionic.tap.onTouchMove, false);
-    },
+};
 
-    onTouchMove: function(e) {
-      if( ionic.tap.hasTouchScrolled(e) ) {
-        _hasTouchScrolled = true;
-        document.body.removeEventListener('touchmove', ionic.tap.onTouchMove);
-        console.debug('hasTouchScrolled');
+function tapEventListener(type, enable, useCapture) {
+  if(enable !== false) {
+    tapDoc.addEventListener(type, tapEventListeners[type], useCapture);
+  } else {
+    tapDoc.removeEventListener(type, tapEventListeners[type]);
+  }
+}
+
+function tapClick(e) {
+  // simulate a normal click by running the element's click method then focus on it
+  var container = tapContainingElement(e.target);
+  var ele = tapTargetElement(container);
+
+  if( tapRequiresNativeClick(ele) || tapPointerMoved ) return false;
+
+  var c = getPointerCoordinates(e);
+
+  console.debug('tapClick', e.type, ele.tagName, '('+c.x+','+c.y+')');
+  triggerMouseEvent('click', ele, c.x, c.y);
+
+  // if it's an input, focus in on the target, otherwise blur
+  tapHandleFocus(ele);
+}
+
+function triggerMouseEvent(type, ele, x, y) {
+  // using initMouseEvent instead of MouseEvent for our Android friends
+  var clickEvent = document.createEvent("MouseEvents");
+  clickEvent.initMouseEvent(type, true, true, window, 1, 0, 0, x, y, false, false, false, false, 0, null);
+  clickEvent.isIonicTap = true;
+  ele.dispatchEvent(clickEvent);
+}
+
+function tapClickGateKeeper(e) {
+  // do not allow through any click events that were not created by ionic.tap
+  if( (ionic.scroll.isScrolling && ionic.tap.containsOrIsTextInput(e.target) ) ||
+      (!e.isIonicTap && !tapRequiresNativeClick(e.target)) ) {
+    console.debug('clickPrevent', e.target.tagName);
+    e.stopPropagation();
+
+    if( !ionic.tap.isLabelWithTextInput(e.target) ) {
+      // labels clicks from native should not preventDefault othersize keyboard will not show on input focus
+      e.preventDefault();
+    }
+    return false;
+  }
+}
+
+function tapRequiresNativeClick(ele) {
+  if(!ele || ele.disabled || (/file|range/i).test(ele.type) || (/object|video/i).test(ele.tagName) ) {
+    return true;
+  }
+  if(ele.nodeType === 1) {
+    var element = ele;
+    while(element) {
+      if( (element.dataset ? element.dataset.tapDisabled : element.getAttribute('data-tap-disabled')) == 'true' ) {
+        return true;
       }
-    },
+      element = element.parentElement;
+    }
+  }
+  return false;
+}
 
-    reset: function() {
-      tapCoordinates = {};
-      startCoordinates = {};
-    },
+// MOUSE
+function tapMouseDown(e) {
+  if(e.isIonicTap || tapIgnoreEvent(e)) return;
 
-    ignoreScrollStart: function(e) {
-      return (e.defaultPrevented) ||  // defaultPrevented has been assigned by another component handling the event
-             (e.target.tagName.match(/input|textarea/i) && ionic.tap.activeElement() === e.target) || // target is the active element, so its a second tap to select input text
-             (e.target.isContentEditable) ||
-             (e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-default')) == 'true' || // manually set within an elements attributes
-             (!!e.target.tagName.match(/object|embed/i));  // flash/movie/object touches should not try to scroll
+  if(tapEnabledTouchEvents) {
+    console.debug('mousedown', 'stop event');
+    e.stopPropagation();
+
+    if( !ionic.tap.isTextInput(e.target) ) {
+      // If you preventDefault on a text input then you cannot move its text caret/cursor.
+      // Allow through only the text input default. However, without preventDefault on an
+      // input the 300ms delay can change focus on inputs after the keyboard shows up.
+      // The focusin event handles the chance of focus changing after the keyboard shows.
+      e.preventDefault();
     }
 
-  };
-
-  function stopEvent(e){
-    e.stopPropagation();
-    e.preventDefault();
     return false;
   }
 
-  ionic.Platform.ready(function(){
-    if(ionic.Platform.grade === 'c') {
-      // low performing devices should have a longer ghostclick prevent
-      REMOVE_PREVENT_DELAY = REMOVE_PREVENT_DELAY_GRADE_C;
+  tapPointerMoved = false;
+  tapPointerStart = getPointerCoordinates(e);
+
+  tapEventListener('mousemove');
+  ionic.activator.start(e);
+}
+
+function tapMouseUp(e) {
+  if( tapIgnoreEvent(e) ) return;
+
+  if( !tapHasPointerMoved(e) ) {
+    tapClick(e);
+  }
+  tapEventListener('mousemove', false);
+  ionic.activator.end();
+  tapPointerMoved = false;
+}
+
+function tapMouseMove(e) {
+  if( tapHasPointerMoved(e) ) {
+    tapEventListener('mousemove', false);
+    ionic.activator.end();
+    tapPointerMoved = true;
+    return false;
+  }
+}
+
+
+// TOUCH
+function tapTouchStart(e) {
+  if( tapIgnoreEvent(e) ) return;
+
+  tapPointerMoved = false;
+
+  tapEnableTouchEvents();
+  tapPointerStart = getPointerCoordinates(e);
+
+  tapEventListener('touchmove');
+  ionic.activator.start(e);
+}
+
+function tapTouchEnd(e) {
+  if( tapIgnoreEvent(e) ) return;
+
+  tapEnableTouchEvents();
+  if( !tapHasPointerMoved(e) ) {
+    tapClick(e);
+  }
+
+  tapTouchCancel();
+}
+
+function tapTouchMove(e) {
+  if( tapHasPointerMoved(e) ) {
+    tapPointerMoved = true;
+    tapEventListener('touchmove', false);
+    ionic.activator.end();
+    return false;
+  }
+}
+
+function tapTouchCancel(e) {
+  tapEventListener('touchmove', false);
+  ionic.activator.end();
+  tapPointerMoved = false;
+}
+
+function tapEnableTouchEvents() {
+  if(!tapEnabledTouchEvents) {
+    tapEventListener('mouseup', false);
+    tapEnabledTouchEvents = true;
+  }
+  clearTimeout(tapMouseResetTimer);
+  tapMouseResetTimer = setTimeout(tapResetMouseEvent, 2500);
+}
+
+function tapResetMouseEvent() {
+  tapEventListener('mouseup', false);
+  tapEnabledTouchEvents = false;
+}
+
+function tapIgnoreEvent(e) {
+  if(e.isTapHandled) return true;
+  e.isTapHandled = true;
+
+  if( ionic.scroll.isScrolling && ionic.tap.containsOrIsTextInput(e.target) ) {
+    e.preventDefault();
+    return true;
+  }
+}
+
+function tapHandleFocus(ele) {
+  tapTouchFocusedInput = null;
+
+  if(ele.tagName == 'SELECT') {
+    // trick to force Android options to show up
+    console.debug('tapHandleFocus', ele.tagName);
+    triggerMouseEvent('mousedown', ele, 0, 0);
+    tapActiveElement(ele);
+    ele.focus && ele.focus();
+
+  } else if(tapActiveElement() !== ele) {
+    if( (/input|textarea/i).test(ele.tagName) ) {
+      console.debug('tapHandleFocus', ele.tagName, ele.id);
+      tapActiveElement(ele);
+      ele.focus && ele.focus();
+      ele.value = ele.value;
+      if( tapEnabledTouchEvents ) {
+        tapTouchFocusedInput = ele;
+      }
+    } else {
+      tapFocusOutActive();
     }
-  });
+  }
+}
 
-  // set click handler and check if the event should be stopped or not
-  document.addEventListener('click', ionic.tap.preventGhostClick, true);
+function tapFocusOutActive() {
+  var ele = tapActiveElement();
+  if(ele && (/input|textarea|select/i).test(ele.tagName) ) {
+    console.debug('tapFocusOutActive', ele.tagName);
+    ele.blur();
+  }
+  tapActiveElement(null);
+}
 
-  // set release event listener for HTML elements that were tapped or held
-  ionic.on("release", ionic.tap.tapInspect, document);
+function tapFocusIn(e) {
+  // Because a text input doesn't preventDefault (so the caret still works) there's a chance
+  // that it's mousedown event 300ms later will change the focus to another element after
+  // the keyboard shows up.
 
-  // listeners used to clear out active taps which are used to prevention ghostclicks
-  document.addEventListener('touchend', ionic.tap.removeClickPrevent, false);
-  document.addEventListener('mouseup', ionic.tap.removeClickPrevent, false);
+  if( tapEnabledTouchEvents &&
+      ionic.tap.isTextInput( tapActiveElement() ) &&
+      ionic.tap.isTextInput(tapTouchFocusedInput) &&
+      tapTouchFocusedInput !== e.target ) {
 
-  // remember where the user first started touching the screen
-  // so that if they scrolled, it shouldn't fire the click
-  document.addEventListener('touchstart', ionic.tap.setTouchStart, false);
+    // 1) The pointer is from touch events
+    // 2) There is an active element which is a text input
+    // 3) A text input was just set to be focused on by a touch event
+    // 4) A new focus has been set, however the target isn't the one the touch event wanted
+    console.debug('focusin', 'tapTouchFocusedInput');
+    tapTouchFocusedInput.focus();
+    tapTouchFocusedInput = null;
+  }
+  ionic.scroll.isScrolling = false;
+}
 
-})(this, document, ionic);
+function tapFocusOut() {
+  tapActiveElement(null);
+}
+
+function tapActiveElement(ele) {
+  if(arguments.length) {
+    tapActiveEle = ele;
+  }
+  return tapActiveEle || document.activeElement;
+}
+
+function tapHasPointerMoved(endEvent) {
+  if(!endEvent || !tapPointerStart || ( tapPointerStart.x === 0 && tapPointerStart.y === 0 )) {
+    return false;
+  }
+  var endCoordinates = getPointerCoordinates(endEvent);
+
+  return Math.abs(tapPointerStart.x - endCoordinates.x) > TAP_RELEASE_TOLERANCE ||
+         Math.abs(tapPointerStart.y - endCoordinates.y) > TAP_RELEASE_TOLERANCE;
+}
+
+function getPointerCoordinates(event) {
+  // This method can get coordinates for both a mouse click
+  // or a touch depending on the given event
+  var c = { x:0, y:0 };
+  if(event) {
+    var touches = event.touches && event.touches.length ? event.touches : [event];
+    var e = (event.changedTouches && event.changedTouches[0]) || touches[0];
+    if(e) {
+      c.x = e.clientX || e.pageX || 0;
+      c.y = e.clientY || e.pageY || 0;
+    }
+  }
+  return c;
+}
+
+function tapContainingElement(ele, allowSelf) {
+  var climbEle = ele;
+  for(var x=0; x<6; x++) {
+    if(!climbEle) break;
+    if(climbEle.tagName === 'LABEL') return climbEle;
+    climbEle = ele.parentElement;
+  }
+  if(allowSelf !== false) return ele;
+}
+
+function tapTargetElement(ele) {
+  if(ele && ele.tagName === 'LABEL') {
+    if(ele.control) return ele.control;
+
+    // older devices do not support the "control" property
+    if(ele.querySelector) {
+      var control = ele.querySelector('input,textarea,select');
+      if(control) return control;
+    }
+  }
+  return ele;
+}
+
+ionic.DomUtil.ready(function(){
+
+  ionic.tap.register(document.body);
+
+});

@@ -213,30 +213,6 @@ input[type="color"] {
   border: 0;
 }
 
-// Fix to hide input overlays on old Android
-.platform-android2,
-.platform-android4_0 {
-  textarea,
-  input[type="text"],
-  input[type="password"],
-  input[type="datetime"],
-  input[type="datetime-local"],
-  input[type="date"],
-  input[type="month"],
-  input[type="time"],
-  input[type="week"],
-  input[type="number"],
-  input[type="email"],
-  input[type="url"],
-  input[type="search"],
-  input[type="tel"],
-  input[type="color"] {
-    position: relative;
-    top: -9999px;
-    @include translate3d(0, 9999px, 0);
-  }
-}
-
 // Position radios and checkboxes better
 input[type="radio"],
 input[type="checkbox"] {
@@ -258,6 +234,15 @@ input[type="checkbox"] {
 // Set the height of file to match text inputs
 input[type="file"] {
   line-height: $input-height-base;
+}
+
+// Text input classes to hide text caret during scroll
+.previous-input-focus,
+.cloned-text-input + input,
+.cloned-text-input + textarea {
+  position: absolute;
+  left: -9999px;
+  width: 200px;
 }
 
 

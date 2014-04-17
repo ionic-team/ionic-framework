@@ -1,5 +1,5 @@
 IonicModule
-.directive('ionTabNav', ['$ionicNgClick', function($ionicNgClick) {
+.directive('ionTabNav', [function() {
   return {
     restrict: 'E',
     replace: true,
@@ -33,7 +33,11 @@ IonicModule
           tabsCtrl.select(tabCtrl.$scope, true);
         };
         if (!$attrs.ngClick) {
-          $ionicNgClick($scope, $element, 'selectTab($event)');
+          $element.on('click', function(event) {
+            $scope.$apply(function() {
+              $scope.selectTab(event);
+            });
+          });
         }
 
         $scope.getIconOn = function() {
