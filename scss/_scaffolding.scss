@@ -18,7 +18,6 @@ body,
   @include tap-highlight-transparent();
   @include user-select(none);
 
-  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
@@ -136,6 +135,14 @@ body.grade-c {
   &.scroll-bar-fade-out {
     @include transition(none);
   }
+}
+
+.previous-input-focus,
+.cloned-text-input + input,
+.cloned-text-input + textarea {
+  position: absolute;
+  left: -9999px;
+  width: 200px;
 }
 
 @keyframes refresh-spin {

@@ -23,218 +23,218 @@
  * based on the pure time difference.
  */
 (function(global) {
-	var time = Date.now || function() {
-		return +new Date();
-	};
-	var desiredFrames = 60;
-	var millisecondsPerSecond = 1000;
-	var running = {};
-	var counter = 1;
+  var time = Date.now || function() {
+    return +new Date();
+  };
+  var desiredFrames = 60;
+  var millisecondsPerSecond = 1000;
+  var running = {};
+  var counter = 1;
 
-	// Create namespaces
-	if (!global.core) {
-		var core = global.core = { effect : {} };
+  // Create namespaces
+  if (!global.core) {
+    var core = global.core = { effect : {} };
 
-	} else if (!core.effect) {
-		core.effect = {};
-	}
+  } else if (!core.effect) {
+    core.effect = {};
+  }
 
-	core.effect.Animate = {
+  core.effect.Animate = {
 
-		/**
-		 * A requestAnimationFrame wrapper / polyfill.
-		 *
-		 * @param callback {Function} The callback to be invoked before the next repaint.
-		 * @param root {HTMLElement} The root element for the repaint
-		 */
-		requestAnimationFrame: (function() {
+    /**
+     * A requestAnimationFrame wrapper / polyfill.
+     *
+     * @param callback {Function} The callback to be invoked before the next repaint.
+     * @param root {HTMLElement} The root element for the repaint
+     */
+    requestAnimationFrame: (function() {
 
-			// Check for request animation Frame support
-			var requestFrame = global.requestAnimationFrame || global.webkitRequestAnimationFrame || global.mozRequestAnimationFrame || global.oRequestAnimationFrame;
-			var isNative = !!requestFrame;
+      // Check for request animation Frame support
+      var requestFrame = global.requestAnimationFrame || global.webkitRequestAnimationFrame || global.mozRequestAnimationFrame || global.oRequestAnimationFrame;
+      var isNative = !!requestFrame;
 
-			if (requestFrame && !/requestAnimationFrame\(\)\s*\{\s*\[native code\]\s*\}/i.test(requestFrame.toString())) {
-				isNative = false;
-			}
+      if (requestFrame && !/requestAnimationFrame\(\)\s*\{\s*\[native code\]\s*\}/i.test(requestFrame.toString())) {
+        isNative = false;
+      }
 
-			if (isNative) {
-				return function(callback, root) {
-					requestFrame(callback, root)
-				};
-			}
+      if (isNative) {
+        return function(callback, root) {
+          requestFrame(callback, root)
+        };
+      }
 
-			var TARGET_FPS = 60;
-			var requests = {};
-			var requestCount = 0;
-			var rafHandle = 1;
-			var intervalHandle = null;
-			var lastActive = +new Date();
+      var TARGET_FPS = 60;
+      var requests = {};
+      var requestCount = 0;
+      var rafHandle = 1;
+      var intervalHandle = null;
+      var lastActive = +new Date();
 
-			return function(callback, root) {
-				var callbackHandle = rafHandle++;
+      return function(callback, root) {
+        var callbackHandle = rafHandle++;
 
-				// Store callback
-				requests[callbackHandle] = callback;
-				requestCount++;
+        // Store callback
+        requests[callbackHandle] = callback;
+        requestCount++;
 
-				// Create timeout at first request
-				if (intervalHandle === null) {
+        // Create timeout at first request
+        if (intervalHandle === null) {
 
-					intervalHandle = setInterval(function() {
+          intervalHandle = setInterval(function() {
 
-						var time = +new Date();
-						var currentRequests = requests;
+            var time = +new Date();
+            var currentRequests = requests;
 
-						// Reset data structure before executing callbacks
-						requests = {};
-						requestCount = 0;
+            // Reset data structure before executing callbacks
+            requests = {};
+            requestCount = 0;
 
-						for(var key in currentRequests) {
-							if (currentRequests.hasOwnProperty(key)) {
-								currentRequests[key](time);
-								lastActive = time;
-							}
-						}
+            for(var key in currentRequests) {
+              if (currentRequests.hasOwnProperty(key)) {
+                currentRequests[key](time);
+                lastActive = time;
+              }
+            }
 
-						// Disable the timeout when nothing happens for a certain
-						// period of time
-						if (time - lastActive > 2500) {
-							clearInterval(intervalHandle);
-							intervalHandle = null;
-						}
+            // Disable the timeout when nothing happens for a certain
+            // period of time
+            if (time - lastActive > 2500) {
+              clearInterval(intervalHandle);
+              intervalHandle = null;
+            }
 
-					}, 1000 / TARGET_FPS);
-				}
+          }, 1000 / TARGET_FPS);
+        }
 
-				return callbackHandle;
-			};
+        return callbackHandle;
+      };
 
-		})(),
-
-
-		/**
-		 * Stops the given animation.
-		 *
-		 * @param id {Integer} Unique animation ID
-		 * @return {Boolean} Whether the animation was stopped (aka, was running before)
-		 */
-		stop: function(id) {
-			var cleared = running[id] != null;
-			if (cleared) {
-				running[id] = null;
-			}
-
-			return cleared;
-		},
+    })(),
 
 
-		/**
-		 * Whether the given animation is still running.
-		 *
-		 * @param id {Integer} Unique animation ID
-		 * @return {Boolean} Whether the animation is still running
-		 */
-		isRunning: function(id) {
-			return running[id] != null;
-		},
+    /**
+     * Stops the given animation.
+     *
+     * @param id {Integer} Unique animation ID
+     * @return {Boolean} Whether the animation was stopped (aka, was running before)
+     */
+    stop: function(id) {
+      var cleared = running[id] != null;
+      if (cleared) {
+        running[id] = null;
+      }
+
+      return cleared;
+    },
 
 
-		/**
-		 * Start the animation.
-		 *
-		 * @param stepCallback {Function} Pointer to function which is executed on every step.
-		 *   Signature of the method should be `function(percent, now, virtual) { return continueWithAnimation; }`
-		 * @param verifyCallback {Function} Executed before every animation step.
-		 *   Signature of the method should be `function() { return continueWithAnimation; }`
-		 * @param completedCallback {Function}
-		 *   Signature of the method should be `function(droppedFrames, finishedAnimation) {}`
-		 * @param duration {Integer} Milliseconds to run the animation
-		 * @param easingMethod {Function} Pointer to easing function
-		 *   Signature of the method should be `function(percent) { return modifiedValue; }`
-		 * @param root {Element} Render root, when available. Used for internal
-		 *   usage of requestAnimationFrame.
-		 * @return {Integer} Identifier of animation. Can be used to stop it any time.
-		 */
-		start: function(stepCallback, verifyCallback, completedCallback, duration, easingMethod, root) {
+    /**
+     * Whether the given animation is still running.
+     *
+     * @param id {Integer} Unique animation ID
+     * @return {Boolean} Whether the animation is still running
+     */
+    isRunning: function(id) {
+      return running[id] != null;
+    },
 
-			var start = time();
-			var lastFrame = start;
-			var percent = 0;
-			var dropCounter = 0;
-			var id = counter++;
 
-			if (!root) {
-				root = document.body;
-			}
+    /**
+     * Start the animation.
+     *
+     * @param stepCallback {Function} Pointer to function which is executed on every step.
+     *   Signature of the method should be `function(percent, now, virtual) { return continueWithAnimation; }`
+     * @param verifyCallback {Function} Executed before every animation step.
+     *   Signature of the method should be `function() { return continueWithAnimation; }`
+     * @param completedCallback {Function}
+     *   Signature of the method should be `function(droppedFrames, finishedAnimation) {}`
+     * @param duration {Integer} Milliseconds to run the animation
+     * @param easingMethod {Function} Pointer to easing function
+     *   Signature of the method should be `function(percent) { return modifiedValue; }`
+     * @param root {Element} Render root, when available. Used for internal
+     *   usage of requestAnimationFrame.
+     * @return {Integer} Identifier of animation. Can be used to stop it any time.
+     */
+    start: function(stepCallback, verifyCallback, completedCallback, duration, easingMethod, root) {
 
-			// Compacting running db automatically every few new animations
-			if (id % 20 === 0) {
-				var newRunning = {};
-				for (var usedId in running) {
-					newRunning[usedId] = true;
-				}
-				running = newRunning;
-			}
+      var start = time();
+      var lastFrame = start;
+      var percent = 0;
+      var dropCounter = 0;
+      var id = counter++;
 
-			// This is the internal step method which is called every few milliseconds
-			var step = function(virtual) {
+      if (!root) {
+        root = document.body;
+      }
 
-				// Normalize virtual value
-				var render = virtual !== true;
+      // Compacting running db automatically every few new animations
+      if (id % 20 === 0) {
+        var newRunning = {};
+        for (var usedId in running) {
+          newRunning[usedId] = true;
+        }
+        running = newRunning;
+      }
 
-				// Get current time
-				var now = time();
+      // This is the internal step method which is called every few milliseconds
+      var step = function(virtual) {
 
-				// Verification is executed before next animation step
-				if (!running[id] || (verifyCallback && !verifyCallback(id))) {
+        // Normalize virtual value
+        var render = virtual !== true;
 
-					running[id] = null;
-					completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), id, false);
-					return;
+        // Get current time
+        var now = time();
 
-				}
+        // Verification is executed before next animation step
+        if (!running[id] || (verifyCallback && !verifyCallback(id))) {
 
-				// For the current rendering to apply let's update omitted steps in memory.
-				// This is important to bring internal state variables up-to-date with progress in time.
-				if (render) {
+          running[id] = null;
+          completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), id, false);
+          return;
 
-					var droppedFrames = Math.round((now - lastFrame) / (millisecondsPerSecond / desiredFrames)) - 1;
-					for (var j = 0; j < Math.min(droppedFrames, 4); j++) {
-						step(true);
-						dropCounter++;
-					}
+        }
 
-				}
+        // For the current rendering to apply let's update omitted steps in memory.
+        // This is important to bring internal state variables up-to-date with progress in time.
+        if (render) {
 
-				// Compute percent value
-				if (duration) {
-					percent = (now - start) / duration;
-					if (percent > 1) {
-						percent = 1;
-					}
-				}
+          var droppedFrames = Math.round((now - lastFrame) / (millisecondsPerSecond / desiredFrames)) - 1;
+          for (var j = 0; j < Math.min(droppedFrames, 4); j++) {
+            step(true);
+            dropCounter++;
+          }
 
-				// Execute step callback, then...
-				var value = easingMethod ? easingMethod(percent) : percent;
-				if ((stepCallback(value, now, render) === false || percent === 1) && render) {
-					running[id] = null;
-					completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), id, percent === 1 || duration == null);
-				} else if (render) {
-					lastFrame = now;
-					core.effect.Animate.requestAnimationFrame(step, root);
-				}
-			};
+        }
 
-			// Mark as running
-			running[id] = true;
+        // Compute percent value
+        if (duration) {
+          percent = (now - start) / duration;
+          if (percent > 1) {
+            percent = 1;
+          }
+        }
 
-			// Init first step
-			core.effect.Animate.requestAnimationFrame(step, root);
+        // Execute step callback, then...
+        var value = easingMethod ? easingMethod(percent) : percent;
+        if ((stepCallback(value, now, render) === false || percent === 1) && render) {
+          running[id] = null;
+          completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), id, percent === 1 || duration == null);
+        } else if (render) {
+          lastFrame = now;
+          core.effect.Animate.requestAnimationFrame(step, root);
+        }
+      };
 
-			// Return unique animation ID
-			return id;
-		}
-	};
+      // Mark as running
+      running[id] = true;
+
+      // Init first step
+      core.effect.Animate.requestAnimationFrame(step, root);
+
+      // Return unique animation ID
+      return id;
+    }
+  };
 })(this);
 
 /*
@@ -254,28 +254,28 @@
 var Scroller;
 
 (function(ionic) {
-	var NOOP = function(){};
+  var NOOP = function(){};
 
-	// Easing Equations (c) 2003 Robert Penner, all rights reserved.
-	// Open source under the BSD License.
+  // Easing Equations (c) 2003 Robert Penner, all rights reserved.
+  // Open source under the BSD License.
 
-	/**
-	 * @param pos {Number} position between 0 (start of effect) and 1 (end of effect)
-	**/
-	var easeOutCubic = function(pos) {
-		return (Math.pow((pos - 1), 3) + 1);
-	};
+  /**
+   * @param pos {Number} position between 0 (start of effect) and 1 (end of effect)
+  **/
+  var easeOutCubic = function(pos) {
+    return (Math.pow((pos - 1), 3) + 1);
+  };
 
-	/**
-	 * @param pos {Number} position between 0 (start of effect) and 1 (end of effect)
-	**/
-	var easeInOutCubic = function(pos) {
-		if ((pos /= 0.5) < 1) {
-			return 0.5 * Math.pow(pos, 3);
-		}
+  /**
+   * @param pos {Number} position between 0 (start of effect) and 1 (end of effect)
+  **/
+  var easeInOutCubic = function(pos) {
+    if ((pos /= 0.5) < 1) {
+      return 0.5 * Math.pow(pos, 3);
+    }
 
-		return 0.5 * (Math.pow((pos - 2), 3) + 2);
-	};
+    return 0.5 * (Math.pow((pos - 2), 3) + 2);
+  };
 
 
 /**
@@ -301,7 +301,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       }
     });
 
-		this.options = {
+    this.options = {
 
       /** Disable scrolling on x-axis by default */
       scrollingX: false,
@@ -370,17 +370,42 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       // The ms interval for triggering scroll events
       scrollEventInterval: 50
-		};
+    };
 
-		for (var key in options) {
-			this.options[key] = options[key];
-		}
+    for (var key in options) {
+      this.options[key] = options[key];
+    }
 
     this.hintResize = ionic.debounce(function() {
       self.resize();
     }, 1000, true);
 
+    this.onScroll = function(scrollTop) {
+
+      if(!ionic.scroll.isScrolling) {
+        setTimeout(self.setScrollStart, 50);
+      } else {
+        clearTimeout(self.scrollTimer);
+        self.scrollTimer = setTimeout(self.setScrollStop, 80);
+      }
+
+    };
+
+    this.setScrollStart = function() {
+      ionic.scroll.isScrolling = Math.abs(ionic.scroll.lastTop - self.__scrollTop) > 1;
+      clearTimeout(self.scrollTimer);
+      self.scrollTimer = setTimeout(self.setScrollStop, 80);
+    };
+
+    this.setScrollStop = function() {
+      ionic.scroll.isScrolling = false;
+      ionic.scroll.lastTop = self.__scrollTop;
+    };
+
     this.triggerScrollEvent = ionic.throttle(function() {
+
+      self.onScroll();
+
       ionic.trigger('scroll', {
         scrollTop: self.__scrollTop,
         scrollLeft: self.__scrollLeft,
@@ -401,7 +426,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     // Get the render update function, initialize event handlers,
     // and calculate the size of the scroll container
-		this.__callback = this.getRenderFn();
+    this.__callback = this.getRenderFn();
     this.__initEventHandlers();
     this.__createScrollbars();
 
@@ -412,7 +437,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     // Fade them out
     this.__fadeScrollbars('out', this.options.scrollbarResizeFadeDelay);
-	},
+  },
 
 
 
@@ -597,18 +622,49 @@ ionic.views.Scroll = ionic.views.View.inherit({
     //Broadcasted when keyboard is shown on some platforms.
     //See js/utils/keyboard.js
     container.addEventListener('scrollChildIntoView', function(e) {
+      var keyboardHeight = e.detail.keyboardHeight || 0;
       var deviceHeight = window.innerHeight;
-      var element = e.target;
-      var elementHeight = e.target.offsetHeight;
 
-      //getBoundingClientRect() will actually give us position relative to the viewport
-      var elementDeviceTop = element.getBoundingClientRect().top;
-      var elementScrollTop = ionic.DomUtil.getPositionInParent(element, container).top;
+      var frameHeight;
+      if (ionic.Platform.isIOS() && ionic.Platform.version() >= 7.0  || (!ionic.Platform.isWebView() && ionic.Platform.isAndroid())){
+        frameHeight = deviceHeight;
+      }
+      else {
+        frameHeight = deviceHeight - keyboardHeight;
+      }
+
+      var element = e.target;
+
+      //getBoundingClientRect() will give us position relative to the viewport
+      var elementDeviceBottom = element.getBoundingClientRect().bottom;
+
+      if (e.detail.firstKeyboardShow){
+        //shrink scrollview so we can actually scroll if the input is hidden
+        //if it isn't shrink so we can scroll to inputs under the keyboard
+        container.style.height = (container.clientHeight - keyboardHeight) + "px";
+
+        //update scroll view
+        self.resize();
+      }
 
       //If the element is positioned under the keyboard...
-      if (elementDeviceTop + elementHeight > deviceHeight) {
+      if (elementDeviceBottom > frameHeight) {
         //Put element in middle of visible screen
-        self.scrollTo(0, elementScrollTop + elementHeight - (deviceHeight * 0.5), true);
+        //Wait for resize() to reset scroll position
+        setTimeout(function(){
+          //distance from top of input to the top of the keyboard
+          var keyboardTopOffset = element.getBoundingClientRect().top - frameHeight;
+          //middle of the scrollview, where we want to scroll to
+          var scrollViewMidpointOffset = container.clientHeight * 0.5;
+          var scrollOffset = keyboardTopOffset + scrollViewMidpointOffset;
+          self.scrollBy(0, scrollOffset, true);
+
+          //please someone tell me there's a better way to do this
+          //wait until input is scrolled into view, then fix focus
+          setTimeout(function(){
+            element.value = element.value; //thanks @adambradley 1337h4x
+          }, 600);
+        }, 32);
       }
 
       //Only the first scrollView parent of the element that broadcasted this event
@@ -616,26 +672,95 @@ ionic.views.Scroll = ionic.views.View.inherit({
       e.stopPropagation();
     });
 
-    if ('ontouchstart' in window) {
+    container.addEventListener('resetScrollView', function(e) {
+      //return scrollview to original height once keyboard has hidden
+      container.style.height = "";
+      self.resize();
+    });
 
-      container.addEventListener("touchstart", function(e) {
-        if ( ionic.tap.ignoreScrollStart(e) ) {
-          return;
-        }
+
+    self.touchStart = function(e) {
+      self.startCoordinates = getPointerCoordinates(e);
+
+      if ( ionic.tap.ignoreScrollStart(e) ) {
+        return;
+      }
+
+      if( ionic.tap.isTextInput(e.target) || ionic.tap.isLabelWithInput(e.target) ) {
+        // do not start if the target is a text input
+        // if there is a touchmove on this input, then we can start the scroll
+        self.__hasStarted = false;
+        return;
+      }
+
+      self.__isSelectable = true;
+      self.__enableScrollY = true;
+      self.__hasStarted = true;
+      self.doTouchStart(e.touches, e.timeStamp);
+      e.preventDefault();
+    };
+
+    self.touchMove = function(e) {
+      if(e.defaultPrevented) {
+        return;
+      }
+
+      if( !self.__hasStarted && ( (ionic.tap.isTextInput(e.target) || ionic.tap.isLabelWithInput(e.target)) ) ) {
+        // the target is a text input and scroll has started
+        // since the text input doesn't start on touchStart, do it here
+        self.__hasStarted = true;
         self.doTouchStart(e.touches, e.timeStamp);
         e.preventDefault();
-      }, false);
+        return;
+      }
 
-      document.addEventListener("touchmove", function(e) {
-        if(e.defaultPrevented) {
-          return;
+      if(self.startCoordinates) {
+        // we have start coordinates, so get this touch move's current coordinates
+        var currentCoordinates = getPointerCoordinates(e);
+
+        if( self.__isSelectable &&
+            ionic.tap.isTextInput(e.target) &&
+            Math.abs(self.startCoordinates.x - currentCoordinates.x) > 20 ) {
+          // user slid the text input's caret on its x axis, disable any future y scrolling
+          self.__enableScrollY = false;
+          self.__isSelectable = true;
         }
-        self.doTouchMove(e.touches, e.timeStamp);
-      }, false);
 
-      document.addEventListener("touchend", function(e) {
-        self.doTouchEnd(e.timeStamp);
-      }, false);
+        if( self.__enableScrollY && Math.abs(self.startCoordinates.y - currentCoordinates.y) > 10 ) {
+          // user scrolled the entire view on the y axis
+          // disabled being able to select text on an input
+          // hide the input which has focus, and show a cloned one that doesn't have focus
+          self.__isSelectable = false;
+          ionic.tap.cloneFocusedInput(self.__container);
+        }
+      }
+
+      self.doTouchMove(e.touches, e.timeStamp);
+    };
+
+    self.touchEnd = function(e) {
+      self.doTouchEnd(e.timeStamp);
+      self.__hasStarted = false;
+      self.__isSelectable = true;
+      self.__enableScrollY = true;
+
+      if( !self.__isDragging && !self.__isDecelerating && !self.__isAnimating ) {
+        ionic.tap.removeClonedInputs(self.__container);
+      }
+    };
+
+    self.options.orgScrollingComplete = self.options.scrollingComplete;
+    self.options.scrollingComplete = function() {
+      ionic.tap.removeClonedInputs(self.__container);
+      self.options.orgScrollingComplete();
+    };
+
+
+    if ('ontouchstart' in window) {
+      container.addEventListener("touchstart", self.touchStart, false);
+      document.addEventListener("touchmove", self.touchMove, false);
+      document.addEventListener("touchend", self.touchEnd, false);
+      document.addEventListener("touchcancel", self.touchEnd, false);
 
     } else {
 
@@ -898,9 +1023,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
     // Update Scroller dimensions for changed content
     // Add padding to bottom of content
     this.setDimensions(
-    	this.__container.clientWidth,
-    	this.__container.clientHeight,
-    	Math.max(this.__content.scrollWidth, this.__content.offsetWidth),
+      this.__container.clientWidth,
+      this.__container.clientHeight,
+      Math.max(this.__content.scrollWidth, this.__content.offsetWidth),
       Math.max(this.__content.scrollHeight, this.__content.offsetHeight)
     );
   },
@@ -915,7 +1040,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     var content = this.__content;
 
-	  var docStyle = document.documentElement.style;
+    var docStyle = document.documentElement.style;
 
     var engine;
     if ('MozAppearance' in docStyle) {
@@ -2069,5 +2194,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
     }
   }
 });
+
+ionic.scroll = {
+  isScrolling: false,
+  lastTop: 0
+};
 
 })(ionic);

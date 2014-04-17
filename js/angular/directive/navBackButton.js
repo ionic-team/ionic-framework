@@ -62,9 +62,8 @@
  */
 IonicModule
 .directive('ionNavBackButton', [
-  '$ionicNgClick',
   '$animate',
-function($ionicNgClick, $animate) {
+function($animate) {
   return {
     restrict: 'E',
     require: '^ionNavBar',
@@ -73,7 +72,11 @@ function($ionicNgClick, $animate) {
       return function($scope, $element, $attr, navBarCtrl) {
         if (!$attr.ngClick) {
           $scope.$navBack = navBarCtrl.back;
-          $ionicNgClick($scope, $element, '$navBack($event)');
+          $element.on('click', function(event){
+            $scope.$apply(function() {
+              $scope.$navBack(event);
+            });
+          });
         }
 
         //If the current viewstate does not allow a back button,

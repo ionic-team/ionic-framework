@@ -3,19 +3,32 @@
     <meta charset="utf-8">
     <title>Inputs</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <link rel="stylesheet" href="../../dist/css/ionic.css">
     <style>
-      .dot {
-        position: absolute;
-        width: 3px;
-        height: 3px;
-        background-color: red;
-        z-index: 1000;
-        pointer-events: none;
+      input,
+      textarea {
+        background: #ddd !important;
+      }
+
+      input[type=text],
+      textarea {
+        background: orange !important;
+      }
+
+      input[type=text]:focus,
+      textarea:focus {
+        background: yellow !important;
+      }
+
+      input[type=text].cloned-text-input,
+      textarea.cloned-text-input {
+        background: red !important;
       }
     </style>
   </head>
   <body ng-controller="AppCtrl">
+
+    <div id="logs" style="position:fixed; top:0; left:0; z-index:9999; background: #eee; font-size:8px; line-height:10px; display:none; "></div>
 
     <ion-view id="view">
       <header>
@@ -30,88 +43,88 @@
         <div class="list">
           <label class="item item-input">
             <span class="input-label">Your Name</span>
-            <input type="text" value="name input">
+            <input type="text" value="name input" id="name">
           </label>
           <div class="item item-checkbox">
             <span class="input-label">Remember me</span>
             <label class="checkbox">
-                <input type="checkbox">
+                <input type="checkbox" id="remember-me">
             </label>
           </div>
         </div>
 
         <label class="item item-input">
-          <span class="input-label">From</span>
-          <input type="text" value="from input">
+          <span class="input-label">From 1</span>
+          <input type="text" value="from input" id="from1">
         </label>
 
         <label class="item item-input">
-          <span class="input-label">To</span>
-          <input type="text" value="to input">
+          <span class="input-label">To 1</span>
+          <input type="text" value="to input" id="to1">
         </label>
 
         <label class="item item-input item-stacked-label">
-          <span class="input-label">Comment</span>
-          <textarea id="textarea">comment textarea</textarea>
+          <span class="input-label">Comment 1</span>
+          <textarea id="textarea" id="comment1">comment textarea</textarea>
         </label>
 
         <label class="item item-input">
-          <span class="input-label">From</span>
+          <span class="input-label">From 2</span>
+          <input type="text" value="" id="from2">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">To 2</span>
+          <input type="text" value="" id="to2">
+        </label>
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Comment 2</span>
+          <textarea id="textarea" id="comment2"></textarea>
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">From 3</span>
           <input type="text" value="">
         </label>
 
         <label class="item item-input">
-          <span class="input-label">To</span>
+          <span class="input-label">To 3</span>
           <input type="text" value="">
         </label>
 
         <label class="item item-input item-stacked-label">
-          <span class="input-label">Comment</span>
+          <span class="input-label">Comment 3</span>
           <textarea id="textarea"></textarea>
         </label>
 
         <label class="item item-input">
-          <span class="input-label">From</span>
+          <span class="input-label">From 4</span>
           <input type="text" value="">
         </label>
 
         <label class="item item-input">
-          <span class="input-label">To</span>
+          <span class="input-label">To 4</span>
           <input type="text" value="">
         </label>
 
         <label class="item item-input item-stacked-label">
-          <span class="input-label">Comment</span>
+          <span class="input-label">Comment 4</span>
           <textarea id="textarea"></textarea>
         </label>
 
         <label class="item item-input">
-          <span class="input-label">From</span>
+          <span class="input-label">From 5</span>
           <input type="text" value="">
         </label>
 
         <label class="item item-input">
-          <span class="input-label">To</span>
+          <span class="input-label">To 5</span>
           <input type="text" value="">
         </label>
 
         <label class="item item-input item-stacked-label">
-          <span class="input-label">Comment</span>
-          <textarea id="textarea"></textarea>
-        </label>
-
-        <label class="item item-input">
-          <span class="input-label">From</span>
-          <input type="text" value="">
-        </label>
-
-        <label class="item item-input">
-          <span class="input-label">To</span>
-          <input type="text" value="">
-        </label>
-
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Comment</span>
+          <span class="input-label">Comment 5</span>
           <textarea id="textarea"></textarea>
         </label>
 
@@ -214,6 +227,51 @@
           $scope.modal.hide();
         }
       });
+
+      var msgs = [];
+      var index = 0;
+      var timeId;
+      var consoleDebug = console.debug;
+
+      console.debug = function() {
+        index++;
+        var msg = [];
+        msg.push(index);
+        for (var i = 0, j = arguments.length; i < j; i++){
+          msg.push(arguments[i]);
+        }
+
+        msg = msg.join(', ');
+
+        if(arguments[0] === 'ERROR!') msg = '<span style="color:red;font-weight:bold">' + msg + '</span>';
+
+        if(arguments[0] === 'touchstart') msg = '<span style="color:pink">' + msg + '</span>';
+        if(arguments[0] === 'touchend') msg = '<span style="color:red">' + msg + '</span>';
+
+        if(arguments[0] === 'mousedown') msg = '<span style="color:lightblue">' + msg + '</span>';
+        if(arguments[0] === 'mouseup') msg = '<span style="color:blue">' + msg + '</span>';
+
+        if(arguments[0] === 'focusin') msg = '<span style="color:orange">' + msg + '</span>';
+        if(arguments[0] === 'focusout') msg = '<span style="color:orangered">' + msg + '</span>';
+
+        if(arguments[0] === 'click') msg = '<span style="color:green;font-weight:bold">' + msg + '</span>';
+
+        if(arguments[0] === 'clickPrevent') msg = '<span style="color:gray;">' + msg + '</span>';
+
+        msgs.unshift( msg );
+
+        if(msgs.length > 30) {
+          msgs.splice(40);
+        }
+
+        // do this so we try not to interfere with the device performance
+        clearTimeout(timeId);
+        timeId = setTimeout(function(){
+          document.getElementById('logs').innerHTML = msgs.join('<br>');
+        }, 150);
+
+        consoleDebug.apply(this, arguments);
+      }
 
     </script>
   </body>
