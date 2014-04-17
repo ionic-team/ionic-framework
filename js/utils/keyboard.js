@@ -7,23 +7,22 @@ ionic.Platform.ready(function() {
   var rememberedActiveEl;
   var alreadyOpen = false;
 
+  window.addEventListener('focusin', onBrowserFocusIn);
+
   if(ionic.Platform.isWebView() && window.cordova && cordova.plugins && cordova.plugins.Keyboard) {
-    if (ionic.Platform.isIOS()) {
-      window.addEventListener('focusin', onBrowserFocusIn);
-    }
     window.addEventListener('native.showkeyboard', onNativeKeyboardShow);
     window.addEventListener('native.hidekeyboard', onNativeKeyboardHide);
 
   } else if (ionic.Platform.isAndroid()){
     window.addEventListener('resize', onBrowserResize);
-    window.addEventListener('focusin', onBrowserFocusIn);
   }
 
   function onBrowserFocusIn(e) {
-    if(e.srcElement.tagName == 'INPUT' || e.srcElement.tagName == 'TEXTAREA' || e.srcElement.isContentEditable) {
-      //stop browser from scrolling the whole frame, use virtual scroll instead
-      document.body.scrollTop = 0;
-    }
+      if (ionic.tap.containsOrIsTextInput(e.target) || e.srcElement.isContentEditable){
+        document.body.scrollTop = 0;
+      }
+
+      rememberedActiveEl = e.srcElement;
   }
 
   function onBrowserResize() {
@@ -40,7 +39,7 @@ ionic.Platform.ready(function() {
       keyboardHeight = rememberedDeviceHeight - window.innerHeight;
       setTimeout(function() {
         ionic.trigger('scrollChildIntoView', {
-          target: document.activeElement
+          target: rememberedActiveEl, 
         }, true);
       }, 100);
 
@@ -51,7 +50,6 @@ ionic.Platform.ready(function() {
   }
 
   function onNativeKeyboardShow(e) {
-    rememberedActiveEl = document.activeElement;
     if(rememberedActiveEl) {
       // This event is caught by the nearest parent scrollView
       // of the activeElement
