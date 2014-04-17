@@ -103,10 +103,6 @@ IonicModule
         $element[0].classList.remove('active');
         $timeout(function() {
           scrollView.resize();
-          $timeout(function() {
-            var max = scrollView.getScrollMax();
-            scrollView.scrollTo(max.left, max.top, true, null, true);
-          }, 5, false);
         }, 0, false);
         infiniteScrollCtrl.isLoading = false;
       };
