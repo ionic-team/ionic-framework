@@ -260,6 +260,15 @@ input[type="file"] {
   line-height: $input-height-base;
 }
 
+// Text input classes to hide text caret during scroll
+.previous-input-focus,
+.cloned-text-input + input,
+.cloned-text-input + textarea {
+  position: absolute;
+  left: -9999px;
+  width: 200px;
+}
+
 
 // Placeholder
 // -------------------------------

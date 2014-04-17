@@ -120,6 +120,7 @@ ionic.tap = {
           clonedInput.value = focusInput.value;
           clonedInput.className = 'cloned-text-input';
           focusInput.parentElement.insertBefore(clonedInput, focusInput);
+          focusInput.style.top = focusInput.offsetTop;
           focusInput.classList.add('previous-input-focus');
         }
       }
@@ -142,6 +143,7 @@ ionic.tap = {
 
       for(x=0; x<previousInputFocus.length; x++) {
         previousInputFocus[x].classList.remove('previous-input-focus');
+        previousInputFocus[x].style.top = '';
         previousInputFocus[x].focus();
       }
     });
