@@ -257,4 +257,4 @@
   //Shortcuts
   ionic.requestAnimationFrame = ionic.DomUtil.requestAnimationFrame;
   ionic.animationFrameThrottle = ionic.DomUtil.animationFrameThrottle;
-})(this, document, ionic);
+})(window, document, ionic);
