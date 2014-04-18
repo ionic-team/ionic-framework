@@ -175,12 +175,12 @@
 
 .tab-item .badge {
   position: absolute;
-  padding: $tabs-badge-padding;
   top: 4%;
   right: 33%; // fallback
   right: calc(50% - 26px);
-  font-size: $tabs-badge-font-size;
+  padding: $tabs-badge-padding;
   height: auto;
+  font-size: $tabs-badge-font-size;
   line-height: $tabs-badge-font-size + 4;
 }
 
@@ -231,6 +231,6 @@
 .tab-item.disabled,
 .tab-item[disabled] {
   opacity: .4;
-  cursor: default !important;
+  cursor: default;
   pointer-events: none;
 }
