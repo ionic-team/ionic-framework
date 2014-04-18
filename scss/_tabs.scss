@@ -227,3 +227,10 @@
     position: relative;
   }
 }
+
+.tab-item.disabled,
+.tab-item[disabled] {
+  opacity: .4;
+  cursor: default !important;
+  pointer-events: none;
+}
