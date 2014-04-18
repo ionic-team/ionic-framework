@@ -8,7 +8,7 @@ Note: Ionic currently best supports iOS 6+ and Android 4.1+, with limited suppor
 
 Ionic is the open source HTML5 Mobile Framework for building amazing, cross-platform hybrid native apps with HTML, JavaScript, and CSS. Just like this one:
 
-![Weather Demo](http://ionicframework.com/img/weather1x.png)
+![Ionic GUI](http://ionicframework.com/img/gui_screen.jpg)
 
 We built Ionic because we wanted a framework that focused on building hybrid native apps, rather than mobile websites. We wanted this framework to be obsessive about great design and performance. A framework that left the past behind and focused on the future where mobile devices could make HTML5 feel native.
 
