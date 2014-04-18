@@ -5,7 +5,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <link href="../../dist/css/ionic.css" rel="stylesheet">
   </head>
-  <body>
+  <body class="tabs-icon-bottom">
 
     <header class="bar bar-header bar-dark">
       <h1 class="title">Tab Bars</h1>
@@ -24,8 +24,40 @@
         <li><a href="./">Homepage</a></li>
       </ul>
 
+      <div class="list card tabs-icon-left">
+
+        <div class="item item-avatar">
+          <img src="http://ionicframework.com/img/docs/mcfly.jpg">
+          <h2>Marty McFly</h2>
+          <p>November 05, 1955</p>
+        </div>
+
+        <div class="item item-body">
+          <p>
+            This is a crude example of the parent tabs having .tabs-icon-bottom set,
+            while a nested tabs has .tabs-icon-left set.
+          </p>
+        </div>
+
+        <div class="item tabs tabs-secondary tabs-icon-left">
+          <a class="tab-item" href="#">
+            <i class="icon ion-thumbsup"></i>
+            Like
+          </a>
+          <a class="tab-item" href="#">
+            <i class="icon ion-chatbox"></i>
+            Comment
+          </a>
+          <a class="tab-item" href="#">
+            <i class="icon ion-share"></i>
+            Share
+          </a>
+        </div>
+
+      </div>
+
     </main>
-    
+
     <nav id="tab-bar" class="tabs tabs-icon-bottom tabs-positive">
       <a class="tab-item" href="#">
         Fun
