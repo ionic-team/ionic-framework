@@ -36,6 +36,10 @@
  *       $scope.$broadcast('scroll.infiniteScrollComplete');
  *     });
  *   };
+ * 
+ *   $scope.$on('stateChangeSuccess', function() {
+ *     $scope.loadMore();
+ *   });
  * }
  * ```
  *
