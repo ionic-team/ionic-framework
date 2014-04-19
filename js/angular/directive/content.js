@@ -112,7 +112,7 @@ function($timeout, $controller, $ionicBind) {
               scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
               scrollingX: $scope.$eval($scope.hasScrollX) === true,
               scrollingY: $scope.$eval($scope.hasScrollY) !== false,
-              scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 20,
+              scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 10,
               scrollingComplete: function() {
                 $scope.$onScrollComplete({
                   scrollTop: this.__scrollTop,
