@@ -369,7 +369,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       penetrationAcceleration : 0.08,
 
       // The ms interval for triggering scroll events
-      scrollEventInterval: 50
+      scrollEventInterval: 20
     };
 
     for (var key in options) {
