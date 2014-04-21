@@ -256,41 +256,72 @@ describe('ionItem directive', function() {
 describe('ionDeleteButton directive', function() {
   beforeEach(module('ionic'));
   it('should have delete button', inject(function($compile, $rootScope) {
-    var setSpy = jasmine.createSpy('setDeleteButton')
+    var setSpy = jasmine.createSpy('setDeleteButton');
     var el = angular.element('<ion-item><ion-delete-button></ion-delete-button></ion-item>');
-    el.data('$ionListController', {});
+    el.data('$ionListController', {
+      showDelete: function() { return false; }
+    });
+    $compile(el)($rootScope.$new());
+    $rootScope.$apply();
+
+    var deleteContainer = angular.element(el[0].querySelector('.item-left-edit.item-delete.ng-hide'));
+    expect(deleteContainer.length).toBe(1);
+    expect(deleteContainer.children().hasClass('button icon button-icon')).toBe(true);
+  }));
+  it('should unhide if delete is shown', inject(function($compile, $rootScope) {
+    var setSpy = jasmine.createSpy('setDeleteButton');
+    var el = angular.element('<ion-item><ion-delete-button></ion-delete-button></ion-item>');
+    el.data('$ionListController', {
+      showDelete: function() { return true; }
+    });
     $compile(el)($rootScope.$new());
     $rootScope.$apply();
 
     var deleteContainer = angular.element(el[0].querySelector('.item-left-edit.item-delete'));
     expect(deleteContainer.length).toBe(1);
-    expect(deleteContainer.children().hasClass('button icon button-icon')).toBe(true);
+    expect(deleteContainer.hasClass('ng-hide')).toBe(false);
   }));
 });
 
 describe('ionReorderButton directive', function() {
   beforeEach(module('ionic'));
   it('should have reorder button', inject(function($compile, $rootScope) {
-    var setSpy = jasmine.createSpy('setReorderButton')
+    var setSpy = jasmine.createSpy('setReorderButton');
     var el = angular.element('<ion-item><ion-reorder-button></ion-reorder-button></ion-item>');
-    el.data('$ionListController', {});
+    el.data('$ionListController', {
+      showReorder: function() { return false; }
+    });
     $compile(el)($rootScope.$new());
     $rootScope.$apply();
 
-    var reorderContainer = angular.element(el[0].querySelector('.item-right-edit.item-reorder'));
+    var reorderContainer = angular.element(el[0].querySelector('.item-right-edit.item-reorder.ng-hide'));
     expect(reorderContainer.length).toBe(1);
     expect(reorderContainer.children().hasClass('button icon button-icon')).toBe(true);
     expect(reorderContainer.attr('data-prevent-scroll')).toBe('true');
     expect(reorderContainer.children().attr('data-prevent-scroll')).toBe('true');
+  }));
+  it('should remove ng-hide if reorder is already active', inject(function($compile, $rootScope) {
+    var setSpy = jasmine.createSpy('setReorderButton');
+    var el = angular.element('<ion-item><ion-reorder-button></ion-reorder-button></ion-item>');
+    el.data('$ionListController', {
+      showReorder: function() { return true; }
+    });
+    $compile(el)($rootScope.$new());
+    $rootScope.$apply();
+    var reorderContainer = angular.element(el[0].querySelector('.item-right-edit.item-reorder'));
+    expect(reorderContainer.length).toBe(1);
+    expect(reorderContainer.hasClass('ng-hide')).toBe(false);
   }));
 });
 
 describe('ionOptionButton directive', function() {
   beforeEach(module('ionic'));
   it('should have option button', inject(function($compile, $rootScope) {
-    var setSpy = jasmine.createSpy('setOptionButton')
+    var setSpy = jasmine.createSpy('setOptionButton');
     var el = angular.element('<ion-item><ion-option-button></ion-option-button></ion-item>');
-    el.data('$ionListController', {});
+    el.data('$ionListController', {
+      showDelete: function() { return false; }
+    });
     $compile(el)($rootScope.$new());
     $rootScope.$apply();
 

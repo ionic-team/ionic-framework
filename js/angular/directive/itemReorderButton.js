@@ -46,15 +46,17 @@ var ITEM_TPL_REORDER_BUTTON =
 * Parameters given: $fromIndex, $toIndex.
 */
 IonicModule
-.directive('ionReorderButton', [function() {
+.directive('ionReorderButton', ['$animate', function($animate) {
   return {
     restrict: 'E',
-    require: '^ionItem',
+    require: ['^ionItem', '^ionList'],
     priority: Number.MAX_VALUE,
     compile: function($element, $attr) {
       $attr.$set('class', ($attr.class || '') + ' button icon button-icon', true);
       $element[0].setAttribute('data-prevent-scroll', true);
-      return function($scope, $element, $attr, itemCtrl) {
+      return function($scope, $element, $attr, ctrls) {
+        var itemCtrl = ctrls[0];
+        var listCtrl = ctrls[1];
         $scope.$onReorder = function(oldIndex, newIndex) {
           $scope.$eval($attr.onReorder, {
             $fromIndex: oldIndex,
@@ -65,6 +67,10 @@ IonicModule
         var container = angular.element(ITEM_TPL_REORDER_BUTTON);
         container.append($element);
         itemCtrl.$element.append(container).addClass('item-right-editable');
+
+        if (listCtrl.showReorder()) {
+          $animate.removeClass(container, 'ng-hide');
+        }
       };
     }
   };

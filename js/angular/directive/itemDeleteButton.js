@@ -30,10 +30,10 @@ var ITEM_TPL_DELETE_BUTTON =
 * ```
 */
 IonicModule
-.directive('ionDeleteButton', [function() {
+.directive('ionDeleteButton', ['$animate', function($animate) {
   return {
     restrict: 'E',
-    require: '^ionItem',
+    require: ['^ionItem', '^ionList'],
     //Run before anything else, so we can move it before other directives process
     //its location (eg ngIf relies on the location of the directive in the dom)
     priority: Number.MAX_VALUE,
@@ -41,10 +41,16 @@ IonicModule
       //Add the classes we need during the compile phase, so that they stay
       //even if something else like ngIf removes the element and re-addss it
       $attr.$set('class', ($attr.class || '') + ' button icon button-icon', true);
-      return function($scope, $element, $attr, itemCtrl) {
+      return function($scope, $element, $attr, ctrls) {
+        var itemCtrl = ctrls[0];
+        var listCtrl = ctrls[1];
         var container = angular.element(ITEM_TPL_DELETE_BUTTON);
         container.append($element);
         itemCtrl.$element.append(container).addClass('item-left-editable');
+
+        if (listCtrl.showDelete()) {
+          $animate.removeClass(container, 'ng-hide');
+        }
       };
     }
   };
