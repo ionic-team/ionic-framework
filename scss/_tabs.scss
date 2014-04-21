@@ -129,6 +129,10 @@
   display: none;
 }
 
+/* Allow parent element to have tabs-top */
+/* If you change this, change platform.scss as well */
+.tabs.tabs-icon-top > .tab-item,
+.tabs.tabs-icon-bottom > .tab-item,
 .tabs-icon-top > .tabs .tab-item,
 .tabs-icon-bottom > .tabs .tab-item {
   font-size: $tabs-text-font-size-side-icon;
@@ -142,6 +146,8 @@
   font-size: $tabs-icon-size;
 }
 
+.tabs.tabs-icon-left > .tab-item,
+.tabs.tabs-icon-right > .tab-item,
 .tabs-icon-left > .tabs .tab-item,
 .tabs-icon-right > .tabs .tab-item {
   font-size: $tabs-text-font-size-side-icon;
@@ -157,15 +163,18 @@
   }
 }
 
-.tabs-icon-left .tab-item .icon {
+.tabs-icon-left > .tabs > .tab-item .icon,
+.tabs.tabs-icon-left > .tab-item .icon {
   padding-right: 3px;
 }
 
-.tabs-icon-right .tab-item .icon {
+.tabs-icon-right > .tabs > .tab-item .icon,
+.tabs.tabs-icon-right > .tab-item .icon {
   padding-left: 3px;
 }
 
-.tabs-icon-only .icon {
+.tabs-icon-only > .tabs > .tab-item .icon,
+.tabs.tabs-icon-only > .tab-item .icon {
   line-height: inherit;
 }
 
