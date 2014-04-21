@@ -115,7 +115,7 @@ describe('Ionic Content directive', function() {
   });
 
 });
-/* Tests #555 */
+/* Tests #555, #1155 */
 describe('Ionic Content Directive scoping', function() {
   beforeEach(module('ionic', function($controllerProvider) {
     $controllerProvider.register('ContentTestCtrl', function($scope){
@@ -125,10 +125,16 @@ describe('Ionic Content Directive scoping', function() {
   it('should have same scope as content', inject(function($compile, $rootScope) {
     var element = $compile('<ion-content ng-controller="ContentTestCtrl">' +
                            '<form name="myForm"></form>' +
+                           '<input ng-model="foo">' +
                            '</ion-content>')($rootScope.$new());
     var contentScope = element.scope();
     var ctrl = element.data('$ngControllerController');
     expect(contentScope.myForm).toBeTruthy();
     expect(ctrl.$scope.myForm).toBeTruthy();
+    var input = angular.element(element[0].querySelector('input'));
+    input.val('bar');
+    input.triggerHandler('input');
+    expect(input.scope().foo).toBe('bar');
+    expect(ctrl.$scope.foo).toBe('bar');
   }));
 });

@@ -40,6 +40,7 @@ function($timeout, $controller, $ionicBind) {
     restrict: 'E',
     require: '^?ionNavView',
     scope: true,
+    priority: 800,
     compile: function(element, attr) {
       var innerElement;
 
