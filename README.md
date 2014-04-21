@@ -1,4 +1,4 @@
-<a href="https://travis-ci.org/driftyco/ionic"><img src="https://travis-ci.org/driftyco/ionic.svg?branch=master" data-bindattr-164="164" title="Build Status Images"></a>
+<a href="https://travis-ci.org/driftyco/ionic"><img src="http://img.shields.io/travis/driftyco/ionic.svg?style=flat" data-bindattr-164="164" title="Build Status Images"></a>
 
 The best place to start with Ionic is our [documentation page](http://ionicframework.com/docs/).
 
