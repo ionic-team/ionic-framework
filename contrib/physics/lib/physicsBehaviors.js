@@ -1,3 +1,95 @@
+Physics.behavior('attach', function(parent) {
+  var defaults = {
+    magnitude: 0,
+    angle: 0,
+    isContinuous: false
+  };
+
+  return {
+
+    /**
+     * Initialization
+     * @param  {Object} options Configuration object
+     * @return {void}
+     */
+    init: function(options){
+      // call parent init method
+      parent.init.call(this, options);
+
+      options = Physics.util.extend({}, defaults, options);
+
+      this.items = options.items;
+      this.anchor = options.anchor;
+    },
+    
+    /**
+     * Apply newtonian acceleration between all bodies
+     * @param  {Object} data Event data
+     * @return {void}
+     */
+    behave: function(data) {
+      for(var i = 0; i < this.items.length; i++) {
+        body = this.items[i];
+        //body.fixed = true;
+        Physics.vector(this.anchor).vsub(body.state.pos);
+      }
+    }
+  }
+});
+Physics.behavior('push', function( parent ){
+
+  var defaults = {
+    magnitude: 0,
+    angle: 0,
+    isContinuous: false
+  };
+
+  return {
+
+    /**
+     * Initialization
+     * @param  {Object} options Configuration object
+     * @return {void}
+     */
+    init: function(options){
+      // call parent init method
+      parent.init.call(this, options);
+
+      options = Physics.util.extend({}, defaults, options);
+
+      this.items = options.items;
+      console.log(this.items);
+      this.magnitude = options.magnitude;
+      this.angle = options.angle;
+      this.pushDirection = Physics.vector() || options.pushDirection;
+      this.isContinuous = options.isContinuous;
+
+      this.active = false;
+    },
+    
+    /**
+     * Apply newtonian acceleration between all bodies
+     * @param  {Object} data Event data
+     * @return {void}
+     */
+    behave: function(data) {
+      var body;
+      if(this.active) {
+        for(var i = 0; i < this.items.length; i++) {
+          body = this.items[i];
+          body.applyForce(this.pushDirection);
+        }
+
+        // If this is not continuous (the default), apply the force once
+        // and then stop
+        if(!this.isContinuous) {
+          this.active = false;
+        }
+      }
+    }
+  }
+});
+
 /**
  * Body collision detection
  * @module behaviors/body-collision-detection

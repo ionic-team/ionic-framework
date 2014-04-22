@@ -2111,8 +2111,6 @@ var Decorator = Physics.util.decorator = function Decorator( type, baseProto ){
          */
         applyForce: function( force, p ){
 
-          console.log('Aplying force', force);
-
             var scratch = Physics.scratchpad()
                 ,r = scratch.vector()
                 ,state

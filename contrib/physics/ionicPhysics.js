@@ -63,6 +63,23 @@ angular.module('ionic.contrib.physics', ['ionic'])
 
 .factory('$ionicPushBehavior', function() {
   return function(opts) {
+    //self.pushBehavior.pushDirection = CGVectorMake(velocity.x / 10.0f, 0);
+    var pushBehavior = Physics.behavior('push', opts);
+
+    return {
+      setIsContinuous: function(isContinuous) {
+        pushBehavior.isContinuous = isContinuous;
+      },
+      setActive: function(isActive) {
+        pushBehavior.active = isActive;
+      },
+      setPushDirection: function(pushDirection) {
+        pushBehavior.pushDirection = pushDirection;
+      },
+      addToWorld: function(world) {
+        world.add(pushBehavior);
+      }
+    }
   }
 })
 .factory('$ionicSnapBehavior', function() {
@@ -71,6 +88,15 @@ angular.module('ionic.contrib.physics', ['ionic'])
 })
 .factory('$ionicAttachBehavior', function() {
   return function(opts) {
+    var attachBehavior = Physics.behavior('attach', opts);
+    return {
+      setAnchor: function(anchor) {
+        attachBehavior.anchor = anchor;
+      },
+      addToWorld: function(world) {
+        world.add(attachBehavior);
+      }
+    }
   }
 })
 
@@ -388,6 +414,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
 
         $scope.dynamicAnimator = animator;
 
+        /*
         $ionicGesture.on('touch', function(e) {
           animator.startTouch(e);
         }, $element);
@@ -403,6 +430,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
         $ionicGesture.on('drag', function(e) {
           animator.touchDrag(e);
         }, $element);
+        */
       }
     }
   }
