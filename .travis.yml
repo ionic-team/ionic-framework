@@ -1,6 +1,8 @@
 language: node_js
 node_js:
 - 0.1
+git:
+  depth: 750
 env:
   global:
   - secure: C49JZxX08FSiXEZYpIFDs4YRdZGB0Hyygkk8zFknALLxPCREwk/MLhs64FOftgcVYjyo1CpmEZfmlKdHDnuko8mUjERrn/3iFHO2Fi0Z/zbj1pDkHlkoeIWGu3JS9y5mDAC1N0AO+pbMQp1jy+qTbHZsBsRCM4tVeEoLVdLmwOU=
