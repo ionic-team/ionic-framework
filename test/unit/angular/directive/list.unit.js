@@ -235,11 +235,13 @@ describe('ionItem directive', function() {
   });
   ['href', 'ng-href'].forEach(function(attr) {
     it('should be complex anchor if '+attr+' is defined', function() {
-      var el = setup(attr+'="something"');
+      var el = setup(attr+'="something/{{foo}}"');
       expect(el.hasClass('item item-complex')).toBe(true);
       expect(el.children()[0].tagName).toBe('A');
       expect(el.children().hasClass('item-content')).toBe(true);
-      expect(el.children().attr('ng-href')).toBe('something');
+      expect(el.children().attr('href')).toBe('something/');
+      el.scope().$apply('foo = 44');
+      expect(el.children().attr('href')).toBe('something/44');
     });
   });
   ['ion-option-button','ion-reorder-button','ion-delete-button'].forEach(function(tag) {

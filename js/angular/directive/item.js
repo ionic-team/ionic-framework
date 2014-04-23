@@ -42,7 +42,7 @@ function($animate, $compile) {
       var isAnchor = angular.isDefined($attrs.href) || angular.isDefined($attrs.ngHref);
       var isComplexItem = isAnchor ||
         //Lame way of testing, but we have to know at compile what to do with the element
-        /ion-(delete|option|reorder)-button/.test($element.html());
+        /ion-(delete|option|reorder)-button/i.test($element.html());
 
         if (isComplexItem) {
           var innerElement = angular.element(isAnchor ? ITEM_TPL_CONTENT_ANCHOR : ITEM_TPL_CONTENT);
