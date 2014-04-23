@@ -98,7 +98,7 @@ function run {
       --html=true \
       --subtitle="(changes since $OLD_VERSION)" \
       --dest="dist/CHANGELOG.html" \
-      --version="$OLD_VERSION"
+      --from="$OLD_VERSION"
   fi
 
   ./scripts/site/publish.sh \
