@@ -19,7 +19,7 @@
     </ion-header-bar>
     <ion-content>
       <ion-refresher on-refresh="onRefresh()"></ion-refresher>
-      <div>
+      <div class="list">
         <div class="item"
           ng-click="alert(item)"
           collection-repeat="item in items"
@@ -64,14 +64,8 @@ function MainCtrl($scope, $ionicScrollDelegate, $timeout) {
   </script>
   <style>
 .item {
-  width: 100%;
-}
-.photo {
-  width: 105px;
-  height: 105px;
-  border: 1px solid black;
-  background-size: 103px 103px;
-  background-position: 1px 1px;
+  left: 0;
+  right: 0;
 }
 </body>
 </html>
