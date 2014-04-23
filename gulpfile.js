@@ -72,11 +72,13 @@ gulp.task('changelog', function(done) {
   var subtitle = argv.subtitle || '"' + pkg.codename + '"';
   var toHtml = !!argv.html;
   var dest = argv.dest || 'CHANGELOG.md';
+  var from = argv.from;
   changelog({
     repository: 'https://github.com/driftyco/ionic',
     version: pkg.version,
     subtitle: subtitle,
-    file: file
+    file: file,
+    from: from
   }, function(err, data) {
     if (err) return done(err);
     if (toHtml) {
