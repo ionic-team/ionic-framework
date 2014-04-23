@@ -1,8 +1,9 @@
 Physics.behavior('attach', function(parent) {
   var defaults = {
-    magnitude: 0,
-    angle: 0,
-    isContinuous: false
+    item: null,
+    anchor: null,
+    anchorItem: null,
+    damping: 0.2
   };
 
   return {
@@ -18,8 +19,23 @@ Physics.behavior('attach', function(parent) {
 
       options = Physics.util.extend({}, defaults, options);
 
-      this.items = options.items;
+      this.item = options.item;
       this.anchor = options.anchor;
+      this.anchorItem = options.anchorItem;
+      this.damping = options.damping;
+    },
+
+    stop: function() {
+      if(this._joint) {
+        constraints.remove(this._joint);
+      }
+    },
+
+    updateAnchor: function(anchor) {
+      this.anchor = anchor;
+      if(this._joint) {
+		    this._joint.bodyA.state.pos.set(anchor[0], anchor[1]);
+      }
     },
     
     /**
@@ -28,10 +44,15 @@ Physics.behavior('attach', function(parent) {
      * @return {void}
      */
     behave: function(data) {
-      for(var i = 0; i < this.items.length; i++) {
-        body = this.items[i];
-        //body.fixed = true;
-        Physics.vector(this.anchor).vsub(body.state.pos);
+      if(this.anchorItem) {
+      } else if(this.anchor) {
+        if(!this._joint) {
+          var point = Physics.body('point', {
+            x: this.anchor[0],
+            y: this.anchor[1]
+          });
+          this._joint = constraints.distanceConstraint(point, this.item, this.damping);
+        }
       }
     }
   }

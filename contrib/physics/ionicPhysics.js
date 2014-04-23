@@ -93,6 +93,12 @@ angular.module('ionic.contrib.physics', ['ionic'])
       setAnchor: function(anchor) {
         attachBehavior.anchor = anchor;
       },
+      updateAnchor: function(anchor) {
+        attachBehavior.updateAnchor(anchor);
+      },
+      stop: function() {
+        world.remove(attachBehavior);
+      },
       addToWorld: function(world) {
         world.add(attachBehavior);
       }

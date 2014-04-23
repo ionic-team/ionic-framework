@@ -91,7 +91,7 @@
 
           $ionicGesture.on('dragstart', function(e) {
             attach = $ionicAttachBehavior({
-              items: $scope.dynamicAnimator.getBodiesInGroup('content'),
+              item: $scope.dynamicAnimator.getBodiesInGroup('content')[0],
               anchor: [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY]
             });
             $scope.dynamicAnimator.addBehavior(attach);
@@ -99,7 +99,7 @@
 
           $ionicGesture.on('drag', function(e) {
             if(attach) {
-              attach.setAnchor([e.gesture.touches[0].pageX, e.gesture.touches[0].pageY]);
+              attach.updateAnchor([e.gesture.touches[0].pageX, e.gesture.touches[0].pageY]);
             }
           }, angular.element(document.getElementById('content')))
 
