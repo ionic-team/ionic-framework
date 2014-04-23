@@ -1,0 +1,32 @@
+<html ng-app="ionic">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <title>Collection-Repeat: Early Preview</title>
+
+  <link href="http://code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
+  <script src="script.js"></script>
+</head>
+
+<body ng-controller="MainCtrl">
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Try On a Phone</h1>
+    <a class="button" ng-click="scrollBottom(true)">
+      Scroll Bottom
+    </a>
+  </ion-header-bar>
+  <ion-content>
+    <ion-refresher on-refresh="onRefresh()"></ion-refresher>
+    <div class="list">
+      <div class="item"
+        collection-repeat="item in items"
+        collection-item-height="getItemHeight($index)">
+        {{item}}
+      </div>
+    </div>
+  </ion-content>
+</body>
+</html>
