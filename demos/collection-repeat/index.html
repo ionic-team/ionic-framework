@@ -23,6 +23,7 @@
     <div class="list">
       <div class="item"
         collection-repeat="item in items"
+        ng-style="{height: getItemHeight($index)}"
         collection-item-height="getItemHeight($index)">
         {{item}}
       </div>
