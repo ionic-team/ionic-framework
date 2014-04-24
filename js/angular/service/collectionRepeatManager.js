@@ -68,8 +68,6 @@ function($rootScope, $timeout) {
       }
     },
     resize: function() {
-      this.scrollView.resize();
-
       var primaryPos = 0;
       var secondaryPos = 0;
       var itemsPerSpace = 0;
@@ -77,23 +75,21 @@ function($rootScope, $timeout) {
       this.dimensions = this.dataSource.dimensions.map(function(dimensions, index) {
         var rect = {
           primarySize: this.isVertical ? dimensions.height : dimensions.width,
-          secondarySize: this.isVertical ? dimensions.width: dimensions.height,
+          secondarySize: this.isVertical ? dimensions.width : dimensions.height,
           primaryPos: primaryPos,
           secondaryPos: secondaryPos
         };
 
-        if (secondaryPos + rect.secondarySize >= this.getSecondaryScrollSize()) {
+        itemsPerSpace++;
+        secondaryPos += rect.secondarySize;
+        if (secondaryPos >= this.getSecondaryScrollSize()) {
           secondaryPos = 0;
           primaryPos += rect.primarySize;
 
-          rect.primaryPos = primaryPos;
-          rect.secondaryPos = secondaryPos;
           if (!this.itemsPerSpace) {
             this.itemsPerSpace = itemsPerSpace;
           }
         }
-        itemsPerSpace++;
-        secondaryPos += rect.secondarySize;
 
         return rect;
       }, this);
@@ -147,6 +143,10 @@ function($rootScope, $timeout) {
       return i;
     },
     render: function(shouldRedrawAll) {
+      if (this.currentIndex >= this.dataSource.getLength()) {
+        return;
+      }
+
       var i;
       if (shouldRedrawAll) {
         for (i in this.renderedItems) {
@@ -157,7 +157,6 @@ function($rootScope, $timeout) {
       var scrollDelta = scrollValue - this.lastRenderScrollValue;
       var scrollSize = this.scrollSize();
       var scrollSizeEnd = scrollSize + scrollValue;
-
       var startIndex = this.getIndexForScrollValue(this.currentIndex, scrollValue);
       var bufferStartIndex = Math.max(0, startIndex - this.itemsPerSpace);
       var startPos = this.dimensions[bufferStartIndex].primaryPos;
@@ -199,7 +198,6 @@ function($rootScope, $timeout) {
     removeItem: function(dataIndex) {
       var item = this.renderedItems[dataIndex];
       if (item) {
-        console.log('removing', dataIndex, item);
         this.dataSource.detachItem(item);
         delete this.renderedItems[dataIndex];
       }

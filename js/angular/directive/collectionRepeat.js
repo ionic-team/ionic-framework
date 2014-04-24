@@ -28,6 +28,10 @@ function($collectionRepeatManager, $collectionRepeatDataSource, $parse) {
       var widthGetter = $attr.collectionItemWidth ?
         $parse($attr.collectionItemWidth) :
         function() { return scrollView.__clientWidth; };
+      console.log(widthGetter());
+      setTimeout(function() {
+      console.log(widthGetter());
+      });
 
       var match = $attr.collectionRepeat.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
       if (!match) {
@@ -54,6 +58,7 @@ function($collectionRepeatManager, $collectionRepeatDataSource, $parse) {
         if (value && !angular.isArray(value)) {
           throw new Error("collection-repeat expects an array to repeat over, but instead got '" + typeof value + "'.");
         }
+        scrollView.resize();
         dataSource.setData(value);
         collectionRepeatManager.resize();
       });
