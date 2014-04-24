@@ -1,5 +1,16 @@
 angular.module('ionic.contrib.physics', ['ionic'])
 
+.factory('$ionicRectGeom', function() {
+  return {
+    getMidpoint: function(body) {
+      var vertices = body.geometry.vertices[0];
+      var v = [vertices.get(0), vertices.get(1), vertices.get(2), vertices.get(3)];
+      console.log(v);
+      return [(v[0] + v[2])/2, (v[1] + v[3])/2];
+    }
+  }
+})
+
 .factory('$ionicGravityBehavior', function() {
   return function(data) {
     var behavior = Physics.behavior('gravity', {
@@ -90,6 +101,7 @@ angular.module('ionic.contrib.physics', ['ionic'])
   return function(opts) {
     var attachBehavior = Physics.behavior('attach', opts);
     return {
+      item: opts.item,
       setAnchor: function(anchor) {
         attachBehavior.anchor = anchor;
       },
@@ -282,8 +294,8 @@ angular.module('ionic.contrib.physics', ['ionic'])
             { x: 0, y: properties[3] }
           ],
           vx: 0,
-          cof: 0.1,
-          restitution: 1.7,
+          cof: 0,
+          restitution: 0,
         });
             
         body.view = $element[0];

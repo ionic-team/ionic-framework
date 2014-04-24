@@ -61,6 +61,7 @@
       angular.module('physics', ['ionic', 'ionic.contrib.physics'])
 
       .controller('PhysicsCtrl', function($scope, $ionicGesture, $ionicDynamicAnimator,
+            $ionicRectGeom,
             $ionicGravityBehavior, $ionicAttachBehavior, $ionicPushBehavior, $ionicCollisionBehavior, $timeout) {
 
         $timeout(function() {
@@ -98,8 +99,10 @@
           }, angular.element(document.getElementById('content')))
 
           $ionicGesture.on('drag', function(e) {
+            var midpoint = $ionicRectGeom.getMidpoint(attach.item);
+            console.log(midpoint);
             if(attach) {
-              attach.updateAnchor([e.gesture.touches[0].pageX, e.gesture.touches[0].pageY]);
+              attach.updateAnchor([e.gesture.touches[0].pageX, midpoint[1]]);
             }
           }, angular.element(document.getElementById('content')))
 
