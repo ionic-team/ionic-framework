@@ -1,4 +1,4 @@
-<html ng-app="ionic">
+<html ng-app="contactsApp">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
@@ -23,7 +23,7 @@
     <div class="list">
       <div class="item"
         collection-repeat="item in getContacts()"
-        collection-item-height="getHeight(item)"
+        collection-item-height="getItemHeight(item)"
         ng-class="{'item-divider': item.isLetter}">
         {{item.letter || (item.first_name+' '+item.last_name)}}
       </div>
