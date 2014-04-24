@@ -80,8 +80,16 @@ function tapScrollToTopDirective() {
         });
 
         function onTap(e) {
-          if (ionic.DomUtil.getParentOrSelfWithClass(e.target, 'button', 4)) {
-            return;
+          var depth = 3;
+          var current = e.target;
+          //Don't scroll to top in certain cases
+          while (depth-- && current) {
+            if (current.classList.contains('button') ||
+                current.tagName.match(/input|textarea|select/i) ||
+                current.isContentEditable) {
+              return;
+            } 
+            current = current.parentNode;
           }
           var touch = e.gesture && e.gesture.touches[0] || e.detail.touches[0];
           var bounds = $element[0].getBoundingClientRect();

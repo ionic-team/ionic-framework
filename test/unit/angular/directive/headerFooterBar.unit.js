@@ -27,7 +27,25 @@ describe('bar directives', function() {
         el.scope().$destroy();
         expect(ionic.off).toHaveBeenCalledWith('tap', callback, el[0]);
       });
-      it('should ignore tap if it\'s in a button', function() {
+      ['input','textarea','select'].forEach(function(tag) {
+        it('should ignore tap if it\'s in a ' + tag, function() {
+          var el = setup();
+          spyOn(ionic.DomUtil, 'rectContains');
+          var child = angular.element('<' + tag + '>');
+          el.append(child);
+          ionic.trigger('tap', { target: child[0] }, true, true);
+          expect(ionic.DomUtil.rectContains).not.toHaveBeenCalled();
+        });
+      });
+      it('should ignore tap if it\'s in a [contenteditable]', function() {
+        var el = setup();
+        spyOn(ionic.DomUtil, 'rectContains');
+        var child = angular.element('<div contenteditable>');
+        el.append(child);
+        ionic.trigger('tap', { target: child[0] }, true, true);
+        expect(ionic.DomUtil.rectContains).not.toHaveBeenCalled();
+      });
+      it('should ignore tap if it\'s in a .button', function() {
         var el = setup();
         spyOn(ionic.DomUtil, 'rectContains');
         var child = angular.element('<div class="button">');
