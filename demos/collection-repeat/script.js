@@ -42,11 +42,12 @@ angular.module('contactsApp', ['ionic'])
     return item.isLetter ? 38 : 52;
   };
 
+  var letterHasMatch = {};
   $scope.getContacts = function() {
+    letterHasMatch = {};
     //Filter contacts by $scope.search.
     //Additionally, filter letters so that they only show if there
     //is one or more matching contact
-    var letterHasMatch = {};
     return contacts.filter(function(item) {
       var itemDoesMatch = !$scope.search || item.isLetter ||
         item.first_name.toLowerCase().indexOf($scope.search.toLowerCase()) > -1 ||

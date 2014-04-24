@@ -18,6 +18,10 @@
   </ion-header-bar>
   <ion-header-bar class="bar-light bar-subheader">
     <input type="search" placeholder="Filter contacts..." ng-model="search">
+    <button ng-show="search.length"
+      class="button button-icon ion-android-close input-button"
+      ng-click="search = ''">
+    </button>
   </ion-header-bar>
   <ion-content>
     <div class="list">
@@ -33,7 +37,7 @@
     <div class="letter"
       ng-repeat="letter in letters"
       ng-click="goToLetter(letter)"
-      ng-style="{top: (100/26)*$index + '%'}">
+      ng-style="{top: (100/letters.length)*$index + '%'}">
       {{letter}}
     </div>
   </div>
@@ -53,6 +57,12 @@
   right: 0;
   position: absolute;
   z-index: 100;
+}
+.button.button-icon.input-button {
+  position: absolute;
+  right: 0;
+  top: 5px;
+  color: #bbb;
 }
 </style>
 </body>
