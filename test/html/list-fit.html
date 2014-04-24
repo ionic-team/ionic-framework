@@ -23,7 +23,9 @@
         <div class="item"
           ng-click="alert(item)"
           collection-repeat="item in items"
-          collection-item-height="52 + 3*($index % 52)">
+          collection-item-height="52"
+          collection-item-width="120 + 2*($index % 40)"
+          ng-style="{width: 120 + 2*($index % 40)}">
           {{item}}
         </div>
       </div>
@@ -62,10 +64,5 @@ function MainCtrl($scope, $ionicScrollDelegate, $timeout) {
   $scope.scrollBottom = $ionicScrollDelegate.scrollBottom;
 }
   </script>
-  <style>
-.item {
-  left: 0;
-  right: 0;
-}
 </body>
 </html>
