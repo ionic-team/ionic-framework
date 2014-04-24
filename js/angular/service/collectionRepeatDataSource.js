@@ -67,15 +67,10 @@ function($cacheFactory, $parse) {
       this.dimensions = this.data.map(function(value, index) {
         locals[this.keyExpr] = value;
         locals.$index = index;
-        var ret = {
+        return {
           width: this.widthGetter(this.scope, locals),
-          height: this.heightGetter(this.scope, locals),
-          totalWidth: totalWidth,
-          totalHeight: totalHeight
+          height: this.heightGetter(this.scope, locals)
         };
-        totalWidth += ret.width;
-        totalHeight += ret.height;
-        return ret;
       }, this);
       this.totalWidth = totalWidth;
       this.totalHeight = totalHeight;
@@ -91,7 +86,7 @@ function($cacheFactory, $parse) {
 
       this.transcludeFn(item.scope, function(clone) {
         item.element = clone;
-        item.element[0].classList.add('scroll-collection-item');
+        item.element[0].style.position = 'absolute';
       });
 
       return this.itemCache.put(key, item);
@@ -101,7 +96,7 @@ function($cacheFactory, $parse) {
       var item = this.compileItem(index, value);
 
       if (item.scope.$index !== index) {
-        item.scope.$index = item.index = index;
+        item.scope.$index = index;
         item.scope.$first = (index === 0);
         item.scope.$last = (index === (this.getLength() - 1));
         item.scope.$middle = !(item.scope.$first || item.scope.$last);

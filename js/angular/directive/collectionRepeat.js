@@ -13,7 +13,7 @@ function($collectionRepeatManager, $collectionRepeatDataSource, $parse) {
     link: function($scope, $element, $attr, scrollCtrl, $transclude) {
       var scrollView = scrollCtrl.scrollView;
       if (scrollView.options.scrollingX && scrollView.options.scrollingY) {
-        throw new Error("Cannot create a collection-repeat within a scrollView that is scrollable on both x and y axis.  Choose only one.");
+        throw new Error("Cannot create a collection-repeat within a scrollView that is scrollable on both x and y axis.  Choose either x direction or y direction.");
       }
 
       var isVertical = !!scrollView.options.scrollingY;
@@ -57,13 +57,14 @@ function($collectionRepeatManager, $collectionRepeatDataSource, $parse) {
         dataSource.setData(value);
         collectionRepeatManager.resize();
       });
-      ionic.on('resize', function() {
-        collectionRepeatManager.resize();
-      }, window);
+
+      var resize = angular.bind(collectionRepeatManager, collectionRepeatManager.resize);
+      ionic.on('resize', resize, window);
 
       $scope.$on('$destroy', function() {
         collectionRepeatManager.destroy();
         dataSource.destroy();
+        ionic.off('resize', resize, window);
       });
     }
   };
