@@ -20,6 +20,8 @@
     <input type="search" 
       placeholder="Filter contacts..." 
       ng-model="search"
+      ng-focus="searchFocused = true"
+      ng-blur="searchFocused = false"
       ng-change="scrollTop()">
     <button ng-if="search.length"
       class="button button-icon ion-android-close input-button"
@@ -36,7 +38,7 @@
       </div>
     </div>
   </ion-content>
-  <div class="letters has-header has-subheader">
+  <div class="letters has-header has-subheader" ng-if="!searchFocused">
     <div class="letter"
       ng-repeat="letter in letters"
       ng-click="goToLetter(letter)"
