@@ -5,32 +5,55 @@
 
   <title>Collection-Repeat: Early Preview</title>
 
-  <link href="http://code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">
+  <link href="../../dist/css/ionic.css" rel="stylesheet">
+  <script src="../../dist/js/ionic.bundle.js"></script>
   <link href="style.css" rel="stylesheet">
-  <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
   <script src="script.js"></script>
+  <script src="contacts.js"></script>
 </head>
 
 <body ng-controller="MainCtrl">
   <ion-header-bar class="bar-positive">
-    <h1 class="title">collection-repeat</h1>
-    <a class="button" ng-click="scrollBottom(true)">
-      Scroll Bottom
-    </a>
+    <h1 class="title">Contacts</h1>
   </ion-header-bar>
   <ion-header-bar class="bar-light bar-subheader">
-    <input type="search" placeholder="Filter items..." ng-model="search">
+    <input type="search" placeholder="Filter contacts..." ng-model="search">
   </ion-header-bar>
   <ion-content>
-    <ion-refresher on-refresh="onRefresh()"></ion-refresher>
     <div class="list">
       <div class="item"
-        collection-repeat="item in items | filter:search"
-        ng-style="{height: getItemHeight($index)}"
-        collection-item-height="getItemHeight($index)">
-        {{item}}
+        collection-repeat="item in getContacts()"
+        collection-item-height="getHeight(item)"
+        ng-class="{'item-divider': item.isLetter}">
+        {{item.letter || (item.first_name+' '+item.last_name)}}
       </div>
     </div>
   </ion-content>
+  <div class="letters has-header has-subheader">
+    <div class="letter"
+      ng-repeat="letter in letters"
+      ng-click="goToLetter(letter)"
+      ng-style="{top: (100/26)*$index + '%'}">
+      {{letter}}
+    </div>
+  </div>
+<style>
+.letters {
+  right: 0;
+  bottom: 0;
+  width: 25px;
+  position: absolute;
+}
+.letter {
+  text-align: center;
+  font-size: 15px;
+  height: 20px;
+  width: 100%;
+  cursor: pointer;
+  right: 0;
+  position: absolute;
+  z-index: 100;
+}
+</style>
 </body>
 </html>
