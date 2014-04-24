@@ -85,4 +85,11 @@ angular.module('contactsApp', ['ionic'])
     }
     $ionicScrollDelegate.scrollTo(0, scrollValue);
   };
+
+  $scope.scrollTop = function() {
+    $ionicScrollDelegate.scrollTop();
+  };
+  $scope.clearSearch = function() {
+    $scope.search = '';
+  };
 });

@@ -5,8 +5,8 @@
 
   <title>Collection-Repeat: Early Preview</title>
 
-  <link href="http://code.ionicframework.com/nightly/css/ionic.min.css" rel="stylesheet">
-  <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.min.js"></script>
+  <link href="../../dist/css/ionic.css" rel="stylesheet">
+  <script src="../../dist/js/ionic.bundle.js"></script>
   <link href="style.css" rel="stylesheet">
   <script src="script.js"></script>
   <script src="contacts.js"></script>
@@ -17,10 +17,13 @@
     <h1 class="title">3000 Contacts</h1>
   </ion-header-bar>
   <ion-header-bar class="bar-light bar-subheader">
-    <input type="search" placeholder="Filter contacts..." ng-model="search">
-    <button ng-show="search.length"
+    <input type="search" 
+      placeholder="Filter contacts..." 
+      ng-model="search"
+      ng-change="scrollTop()">
+    <button ng-if="search.length"
       class="button button-icon ion-android-close input-button"
-      ng-click="search = ''">
+      ng-click="clearSearch()">
     </button>
   </ion-header-bar>
   <ion-content>
