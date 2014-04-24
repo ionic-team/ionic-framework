@@ -13,16 +13,19 @@
 
 <body ng-controller="MainCtrl">
   <ion-header-bar class="bar-positive">
-    <h1 class="title">Try On a Phone</h1>
+    <h1 class="title">collection-repeat</h1>
     <a class="button" ng-click="scrollBottom(true)">
       Scroll Bottom
     </a>
+  </ion-header-bar>
+  <ion-header-bar class="bar-light bar-subheader">
+    <input type="search" placeholder="Filter items..." ng-model="search">
   </ion-header-bar>
   <ion-content>
     <ion-refresher on-refresh="onRefresh()"></ion-refresher>
     <div class="list">
       <div class="item"
-        collection-repeat="item in items"
+        collection-repeat="item in items | filter:search"
         ng-style="{height: getItemHeight($index)}"
         collection-item-height="getItemHeight($index)">
         {{item}}
