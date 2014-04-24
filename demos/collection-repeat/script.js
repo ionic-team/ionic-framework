@@ -31,10 +31,24 @@ function MainCtrl($scope, $ionicScrollDelegate, filterFilter) {
   }
 
   $scope.getContacts = function() {
+    var contactsByLetter = {};
     return contacts.filter(function(item) {
-      return !$scope.search || item.isLetter ||
+      var itemDoesMatch = !$scope.search || item.isLetter ||
         item.first_name.toLowerCase().indexOf($scope.search.toLowerCase()) > -1 ||
         item.last_name.toLowerCase().indexOf($scope.search.toLowerCase()) > -1;
+
+      if (!item.isLetter && itemDoesMatch) {
+        var letter = item.last_name.charAt(0).toUpperCase();
+        contactsByLetter[letter] = contactsByLetter[letter] || 0;
+        contactsByLetter[letter]++;
+      }
+
+      return itemDoesMatch;
+    }).filter(function(item) {
+      if (item.isLetter && !contactsByLetter[item.letter]) {
+        return false;
+      }
+      return true;
     });
   };
 
