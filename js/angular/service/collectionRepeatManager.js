@@ -4,7 +4,6 @@ IonicModule
   '$rootScope',
   '$timeout',
 function($rootScope, $timeout) {
-  var BUFFER_SPACES = 1;
   function CollectionRepeatManager(options) {
     var self = this;
     this.dataSource = options.dataSource;
@@ -25,10 +24,6 @@ function($rootScope, $timeout) {
 
     this.scrollView.__$callback = this.scrollView.__callback;
     this.scrollView.__callback = angular.bind(this, this.renderScroll);
-
-    function getter(prop) {
-      return self[prop];
-    }
 
     function getItemHeight(item) { return item.height; }
     function getItemWidth(item) { return item.width; }

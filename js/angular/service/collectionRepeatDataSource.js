@@ -131,7 +131,7 @@ function($cacheFactory, $parse) {
       return this.data && this.data.length || 0;
     },
     setData: function(value) {
-      this.data = value;
+      this.data = value || [];
       this.calculateDataDimensions();
     },
   };
