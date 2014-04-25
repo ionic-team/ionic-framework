@@ -5,8 +5,10 @@
 
   <title>Collection-Repeat: Early Preview</title>
 
-  <link href="http://code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">
-  <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
+  <!-- <link href="http://code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet"> -->
+  <!-- <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.js"></script> -->
+  <link href="../../dist/css/ionic.css" rel="stylesheet">
+  <script src="../../dist/js/ionic.bundle.js"></script>
   <link href="style.css" rel="stylesheet">
   <script src="script.js"></script>
   <script src="contacts.js"></script>
@@ -30,33 +32,38 @@
   </ion-header-bar>
   <ion-content>
     <div class="list">
-      <div class="item"
+      <a class="item"
         collection-repeat="item in getContacts()"
         collection-item-height="getItemHeight(item)"
+        ng-href="https://www.google.com/#q={{item.first_name + '+' + item.last_name}}"
+        ng-style="{height: getItemHeight(item), 'line-height': getItemHeight(item) + 'px', 'padding-top': 0, 'padding-bottom': 0}"
         ng-class="{'item-divider': item.isLetter}">
+        <img ng-if="!item.isLetter" ng-src="http://placekitten.com/60/{{55 + ($index % 10)}}">
         {{item.letter || (item.first_name+' '+item.last_name)}}
-      </div>
+      </a>
     </div>
   </ion-content>
-  <div class="letters has-header has-subheader" ng-if="!searchFocused">
-    <div class="letter"
-      ng-repeat="letter in letters"
-      ng-click="goToLetter(letter)"
-      ng-style="{top: (100/letters.length)*$index + '%'}">
-      {{letter}}
-    </div>
-  </div>
+  <!-- <div class="letters has-header has-subheader" ng-if="!searchFocused"> -->
+  <!--   <div class="letter" -->
+  <!--     ng-repeat="letter in letters" -->
+  <!--     ng-click="goToLetter(letter)" -->
+  <!--     ng-style="{top: (100/letters.length)*$index + '%'}"> -->
+  <!--     {{letter}} -->
+  <!--   </div> -->
+  <!-- </div> -->
 <style>
 .letters {
   right: 0;
   bottom: 0;
-  width: 25px;
+  width: 50px;
   position: absolute;
 }
 .letter {
   text-align: center;
   font-size: 15px;
-  height: 20px;
+  height: 3.85%;
+  padding-top: 1.625%;
+  border: 1px solid black;
   width: 100%;
   cursor: pointer;
   right: 0;
@@ -68,6 +75,13 @@
   right: 0;
   top: 5px;
   color: #bbb;
+}
+.item img {
+  height: 60px;
+  width: 60px;
+  float: left;
+  margin-top: 10px;
+  margin-right: 10px;
 }
 </style>
 </body>

@@ -261,7 +261,7 @@ describe('$collectionDataSource service', function() {
     });
   });
 
-  describe('setData', function() {
+  describe('.setData()', function() {
     it('should set data and calculateDataDimensions()', function() {
       var source = setup();
       spyOn(source, 'calculateDataDimensions');

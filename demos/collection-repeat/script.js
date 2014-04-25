@@ -39,7 +39,7 @@ angular.module('contactsApp', ['ionic'])
 
   //Letters are shorter, everything else is 52 pixels
   $scope.getItemHeight = function(item) {
-    return item.isLetter ? 38 : 52;
+    return item.isLetter ? 38 : 80;
   };
 
   var letterHasMatch = {};
