@@ -261,9 +261,9 @@ textarea {
 input[disabled],
 select[disabled],
 textarea[disabled],
-input[readonly],
-select[readonly],
-textarea[readonly] {
+input[readonly]:not(.cloned-text-input),
+textarea[readonly]:not(.cloned-text-input),
+select[readonly] {
   background-color: $input-bg-disabled;
   cursor: not-allowed;
 }

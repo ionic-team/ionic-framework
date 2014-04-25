@@ -42,6 +42,7 @@ module.exports = {
     'js/utils/activator.js',
     'js/utils/utils.js',
     'js/utils/keyboard.js',
+    'js/utils/viewport.js',
 
     // Views
     'js/views/view.js',

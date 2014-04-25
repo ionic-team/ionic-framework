@@ -2,7 +2,9 @@
   <head>
     <meta charset="utf-8">
     <title>Inputs</title>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, height=device-height">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="../../dist/css/ionic.css">
     <style>
       input,
@@ -24,21 +26,46 @@
       textarea.cloned-text-input {
         background: red !important;
       }
+
+      header .item {
+        background: lightblue !important;
+      }
+      body {
+        background: purple;
+      }
+      .pane {
+        background: black;
+      }
+      .scroll-content {
+        background: pink;
+        overflow: hidden !important;
+      }
+      .scroll {
+        background: lightgreen;
+      }
+
+      input,
+      textarea {
+        border: 1px solid blue !important;
+      }
+
     </style>
   </head>
   <body ng-controller="AppCtrl">
 
-    <div id="logs" style="position:fixed; top:0; left:0; z-index:9999; background: #eee; font-size:8px; line-height:10px; display:none; "></div>
+    <div id="logs" style="position:fixed; top:0; left:0; z-index:9999; background: #eee; font-size:8px; line-height:10px; display:block; "></div>
 
     <ion-view id="view">
-      <header>
+      <ion-header-bar>
         <label class="item item-input">
           <span class="input-label">Header</span>
           <input type="text" value="header input">
         </label>
-      </header>
+      </ion-header-bar>
 
-      <ion-content class="has-header padding">
+      <ion-content class="padding">
+
+        <form ng-submit="formSubmit()">
 
         <div class="list">
           <label class="item item-input">
@@ -128,9 +155,15 @@
           <textarea id="textarea"></textarea>
         </label>
 
-        <button class="button button-block button-energized" ng-click="openModal()">
+        <button type="button" class="button button-block button-energized" ng-click="openModal()">
           Open Modal
         </button>
+
+        <button type="submit" class="button button-block button-calm">
+          Submit!
+        </button>
+
+        </form>
 
         <p>
           <a href="clickTests.html">Click Tests</a> -
@@ -220,6 +253,10 @@
           focusFirstInput: true
         });
 
+        $scope.formSubmit = function(){
+          alert('SUBMIT!');
+        };
+
       })
 
       .controller('ModalCtrl', function($scope) {
@@ -233,6 +270,11 @@
       var timeId;
       var consoleDebug = console.debug;
 
+      function getTime() {
+        var d = new Date();
+        return d.getMilliseconds();
+      }
+
       console.debug = function() {
         index++;
         var msg = [];
@@ -240,6 +282,7 @@
         for (var i = 0, j = arguments.length; i < j; i++){
           msg.push(arguments[i]);
         }
+        //msg.push(getTime());
 
         msg = msg.join(', ');
 

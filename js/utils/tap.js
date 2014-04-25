@@ -92,7 +92,8 @@ ionic.tap = {
   isTextInput: function(ele) {
     return !!ele &&
            (ele.tagName == 'TEXTAREA' ||
-           (ele.tagName == 'INPUT' && !(/radio|checkbox|range|file|submit|reset/i).test(ele.type)));
+            ele.contentEditable === 'true' ||
+            (ele.tagName == 'INPUT' && !(/radio|checkbox|range|file|submit|reset/i).test(ele.type)) );
   },
 
   isLabelWithTextInput: function(ele) {
@@ -106,7 +107,7 @@ ionic.tap = {
     return ionic.tap.isTextInput(ele) || ionic.tap.isLabelWithTextInput(ele);
   },
 
-  cloneFocusedInput: function(container, instance) {
+  cloneFocusedInput: function(container, scrollIntance) {
     if(ionic.tap.hasCheckedClone) return;
     ionic.tap.hasCheckedClone = true;
 
@@ -119,6 +120,7 @@ ionic.tap = {
           clonedInput.type = focusInput.type;
           clonedInput.value = focusInput.value;
           clonedInput.className = 'cloned-text-input';
+          clonedInput.readOnly = true;
           focusInput.parentElement.insertBefore(clonedInput, focusInput);
           focusInput.style.top = focusInput.offsetTop;
           focusInput.classList.add('previous-input-focus');
@@ -129,7 +131,7 @@ ionic.tap = {
 
   hasCheckedClone: false,
 
-  removeClonedInputs: function(container) {
+  removeClonedInputs: function(container, scrollIntance) {
     ionic.tap.hasCheckedClone = false;
 
     ionic.requestAnimationFrame(function(){
@@ -184,6 +186,11 @@ function triggerMouseEvent(type, ele, x, y) {
 }
 
 function tapClickGateKeeper(e) {
+  if(e.target.type == 'submit' && e.detail === 0) {
+    // do not prevent click if it came from an "Enter" or "Go" keypress submit
+    return;
+  }
+
   // do not allow through any click events that were not created by ionic.tap
   if( (ionic.scroll.isScrolling && ionic.tap.containsOrIsTextInput(e.target) ) ||
       (!e.isIonicTap && !tapRequiresNativeClick(e.target)) ) {
@@ -241,6 +248,12 @@ function tapMouseDown(e) {
 }
 
 function tapMouseUp(e) {
+  if(tapEnabledTouchEvents) {
+    e.stopPropagation();
+    e.preventDefault();
+    return false;
+  }
+
   if( tapIgnoreEvent(e) ) return;
 
   if( !tapHasPointerMoved(e) ) {
@@ -272,6 +285,19 @@ function tapTouchStart(e) {
 
   tapEventListener('touchmove');
   ionic.activator.start(e);
+
+  if( ionic.Platform.isIOS() && ionic.tap.isLabelWithTextInput(e.target) ) {
+    // if the tapped element is a label, which has a child input
+    // then preventDefault so iOS doesn't ugly auto scroll to the input
+    // but do not prevent default on Android or else you cannot move the text caret
+    // and do not prevent default on Android or else no virtual keyboard shows up
+
+    var textInput = tapTargetElement( tapContainingElement(e.target) );
+    if( textInput !== tapActiveEle ) {
+      // don't preventDefault on an already focused input or else iOS's text caret isn't usable
+      e.preventDefault();
+    }
+  }
 }
 
 function tapTouchEnd(e) {
@@ -301,17 +327,11 @@ function tapTouchCancel(e) {
 }
 
 function tapEnableTouchEvents() {
-  if(!tapEnabledTouchEvents) {
-    tapEventListener('mouseup', false);
-    tapEnabledTouchEvents = true;
-  }
+  tapEnabledTouchEvents = true;
   clearTimeout(tapMouseResetTimer);
-  tapMouseResetTimer = setTimeout(tapResetMouseEvent, 2500);
-}
-
-function tapResetMouseEvent() {
-  tapEventListener('mouseup', false);
-  tapEnabledTouchEvents = false;
+  tapMouseResetTimer = setTimeout(function(){
+    tapEnabledTouchEvents = false;
+  }, 2000);
 }
 
 function tapIgnoreEvent(e) {
@@ -327,25 +347,35 @@ function tapIgnoreEvent(e) {
 function tapHandleFocus(ele) {
   tapTouchFocusedInput = null;
 
+  var triggerFocusIn = false;
+
   if(ele.tagName == 'SELECT') {
     // trick to force Android options to show up
-    console.debug('tapHandleFocus', ele.tagName);
     triggerMouseEvent('mousedown', ele, 0, 0);
-    tapActiveElement(ele);
     ele.focus && ele.focus();
+    triggerFocusIn = true;
 
-  } else if(tapActiveElement() !== ele) {
-    if( (/input|textarea/i).test(ele.tagName) ) {
-      console.debug('tapHandleFocus', ele.tagName, ele.id);
-      tapActiveElement(ele);
-      ele.focus && ele.focus();
-      ele.value = ele.value;
-      if( tapEnabledTouchEvents ) {
-        tapTouchFocusedInput = ele;
-      }
-    } else {
-      tapFocusOutActive();
+  } else if(tapActiveElement() === ele) {
+    // already is the active element and has focus
+    triggerFocusIn = true;
+
+  } else if( (/input|textarea/i).test(ele.tagName) ) {
+    triggerFocusIn = true;
+    ele.focus && ele.focus();
+    ele.value = ele.value;
+    if( tapEnabledTouchEvents ) {
+      tapTouchFocusedInput = ele;
     }
+
+  } else {
+    tapFocusOutActive();
+  }
+
+  if(triggerFocusIn) {
+    tapActiveElement(ele);
+    ionic.trigger('ionic.focusin', {
+      target: ele
+    }, true);
   }
 }
 
@@ -439,7 +469,5 @@ function tapTargetElement(ele) {
 }
 
 ionic.DomUtil.ready(function(){
-
-  ionic.tap.register(document.body);
-
+  ionic.tap.register(document);
 });

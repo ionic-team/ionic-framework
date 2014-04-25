@@ -626,50 +626,31 @@ ionic.views.Scroll = ionic.views.View.inherit({
     //Broadcasted when keyboard is shown on some platforms.
     //See js/utils/keyboard.js
     container.addEventListener('scrollChildIntoView', function(e) {
-      var keyboardHeight = e.detail.keyboardHeight || 0;
-      var deviceHeight = window.innerHeight;
-
-      var frameHeight;
-      if (ionic.Platform.isIOS() && ionic.Platform.version() >= 7.0  || (!ionic.Platform.isWebView() && ionic.Platform.isAndroid())){
-        frameHeight = deviceHeight;
-      }
-      else {
-        frameHeight = deviceHeight - keyboardHeight;
-      }
-
-      var element = e.target;
-
-      //getBoundingClientRect() will give us position relative to the viewport
-      var elementDeviceBottom = element.getBoundingClientRect().bottom;
-
-      if (e.detail.firstKeyboardShow){
-        //shrink scrollview so we can actually scroll if the input is hidden
-        //if it isn't shrink so we can scroll to inputs under the keyboard
-        container.style.height = (container.clientHeight - keyboardHeight) + "px";
+      if( !self.isScrolledIntoView ) {
+        // shrink scrollview so we can actually scroll if the input is hidden
+        // if it isn't shrink so we can scroll to inputs under the keyboard
+        container.style.height = (container.clientHeight - e.detail.keyboardHeight) + "px";
         container.style.overflow = "visible";
-
+        self.isScrolledIntoView = true;
         //update scroll view
         self.resize();
       }
 
       //If the element is positioned under the keyboard...
-      if (elementDeviceBottom > frameHeight) {
+      if( e.detail.isElementUnderKeyboard ) {
         //Put element in middle of visible screen
         //Wait for resize() to reset scroll position
+        ionic.scroll.isScrolling = true;
         setTimeout(function(){
-          //distance from top of input to the top of the keyboard
-          var keyboardTopOffset = element.getBoundingClientRect().top - frameHeight;
           //middle of the scrollview, where we want to scroll to
           var scrollViewMidpointOffset = container.clientHeight * 0.5;
-          var scrollOffset = keyboardTopOffset + scrollViewMidpointOffset;
-          self.scrollBy(0, scrollOffset, true);
-
-          //please someone tell me there's a better way to do this
-          //wait until input is scrolled into view, then fix focus
-          setTimeout(function(){
-            element.value = element.value; //thanks @adambradley 1337h4x
-          }, 600);
-        }, 32);
+          var scrollTop = e.detail.keyboardTopOffset + scrollViewMidpointOffset;
+          console.debug('scrollChildIntoView', scrollTop);
+          ionic.tap.cloneFocusedInput(container, self);
+          self.scrollBy(0, scrollTop, true);
+        },
+          (ionic.Platform.isIOS() ? 80 : 350)
+        );
       }
 
       //Only the first scrollView parent of the element that broadcasted this event
@@ -679,9 +660,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     container.addEventListener('resetScrollView', function(e) {
       //return scrollview to original height once keyboard has hidden
+      self.isScrolledIntoView = false;
       container.style.height = "";
       container.style.overflow = "";
       self.resize();
+      ionic.scroll.isScrolling = false;
     });
 
 
@@ -737,7 +720,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
           // disabled being able to select text on an input
           // hide the input which has focus, and show a cloned one that doesn't have focus
           self.__isSelectable = false;
-          ionic.tap.cloneFocusedInput(self.__container);
+          ionic.tap.cloneFocusedInput(container, self);
         }
       }
 
@@ -751,13 +734,13 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.__enableScrollY = true;
 
       if( !self.__isDragging && !self.__isDecelerating && !self.__isAnimating ) {
-        ionic.tap.removeClonedInputs(self.__container);
+        ionic.tap.removeClonedInputs(container, self);
       }
     };
 
     self.options.orgScrollingComplete = self.options.scrollingComplete;
     self.options.scrollingComplete = function() {
-      ionic.tap.removeClonedInputs(self.__container);
+      ionic.tap.removeClonedInputs(container, self);
       self.options.orgScrollingComplete();
     };
 

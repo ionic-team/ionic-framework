@@ -1,84 +1,214 @@
-(function(ionic) {
+
+/*
+IONIC KEYBOARD
+---------------
+
+*/
+
+var keyboardViewportHeight = window.innerHeight;
+var keyboardIsOpen;
+var keyboardActiveElement;
+var keyboardFocusOutTimer;
+var keyboardFocusInTimer;
+
+var KEYBOARD_OPEN_CSS = 'keyboard-open';
+var SCROLL_CONTAINER_CSS = 'scroll';
+
+ionic.keyboard = {
+  isOpen: false,
+  height: null
+};
+
+function keyboardInit() {
+  if( keyboardHasPlugin() ) {
+    window.addEventListener('native.showkeyboard', keyboardNativeShow);
+  }
+
+  document.body.addEventListener('ionic.focusin', keyboardBrowserFocusIn);
+  document.body.addEventListener('focusin', keyboardBrowserFocusIn);
+
+  document.body.addEventListener('focusout', keyboardFocusOut);
+  document.body.addEventListener('orientationchange', keyboardOrientationChange);
+
+  document.removeEventListener('touchstart', keyboardInit);
+}
+
+function keyboardNativeShow(e) {
+  ionic.keyboard.height = e.keyboardHeight;
+}
+
+function keyboardBrowserFocusIn(e) {
+  if( !e.target || !ionic.tap.isTextInput(e.target) || !keyboardIsWithinScroll(e.target) ) return;
+
+  document.addEventListener('keydown', keyboardOnKeyDown, false);
+
+  document.body.scrollTop = 0;
+  document.body.querySelector('.scroll-content').scrollTop = 0;
+
+  keyboardActiveElement = e.target;
+
+  keyboardSetShow(e);
+}
+
+function keyboardSetShow(e) {
+  clearTimeout(keyboardFocusInTimer);
+  clearTimeout(keyboardFocusOutTimer);
+
+  keyboardFocusInTimer = setTimeout(function(){
+    var keyboardHeight = keyboardGetHeight();
+    var elementBounds = keyboardActiveElement.getBoundingClientRect();
+
+    keyboardShow(e.target, elementBounds.top, elementBounds.bottom, keyboardViewportHeight, keyboardHeight);
+  }, 32);
+}
+
+function keyboardShow(element, elementTop, elementBottom, viewportHeight, keyboardHeight) {
+  var details = {
+    target: element,
+    elementTop: Math.round(elementTop),
+    elementBottom: Math.round(elementBottom),
+    keyboardHeight: keyboardHeight
+  };
+
+  if( keyboardIsOverWebView() ) {
+    // keyboard sits on top of the view, but doesn't adjust the view's height
+    // lower the content height by subtracting the keyboard height from the view height
+    details.contentHeight = viewportHeight - keyboardHeight;
+  } else {
+    // view's height was shrunk down and the keyboard takes up the space the view doesn't fill
+    // do not add extra padding at the bottom of the scroll view, native already did that
+    details.contentHeight = viewportHeight;
+  }
+
+  console.debug('keyboardShow', keyboardHeight, details.contentHeight);
+
+  // distance from top of input to the top of the keyboard
+  details.keyboardTopOffset = details.elementTop - details.contentHeight;
+
+  console.debug('keyboardTopOffset', details.elementTop, details.contentHeight, details.keyboardTopOffset);
+
+  // figure out if the element is under the keyboard
+  details.isElementUnderKeyboard = (details.elementBottom > details.contentHeight);
+
+  ionic.keyboard.isOpen = true;
+
+  // send event so the scroll view adjusts
+  keyboardActiveElement = element;
+  ionic.trigger('scrollChildIntoView', details, true);
+
+  ionic.requestAnimationFrame(function(){
+    document.body.classList.add(KEYBOARD_OPEN_CSS);
+  });
+
+  // any showing part of the document that isn't within the scroll the user
+  // could touchmove and cause some ugly changes to the app, so disable
+  // any touchmove events while the keyboard is open using e.preventDefault()
+  document.addEventListener('touchmove', keyboardPreventDefault, false);
+
+  return details;
+}
+
+function keyboardFocusOut(e) {
+  clearTimeout(keyboardFocusInTimer);
+  clearTimeout(keyboardFocusOutTimer);
+
+  keyboardFocusOutTimer = setTimeout(keyboardHide, 350);
+}
+
+function keyboardHide() {
+  console.debug('keyboardHide');
+  ionic.keyboard.isOpen = false;
+
+  ionic.trigger('resetScrollView', {
+    target: keyboardActiveElement
+  }, true);
+
+  ionic.requestAnimationFrame(function(){
+    document.body.classList.remove(KEYBOARD_OPEN_CSS);
+  });
+
+  // the keyboard is gone now, remove the touchmove that disables native scroll
+  document.removeEventListener('touchmove', keyboardPreventDefault);
+  document.removeEventListener('keydown', keyboardOnKeyDown);
+}
+
+function keyboardUpdateViewportHeight() {
+  if( window.innerHeight > keyboardViewportHeight ) {
+    keyboardViewportHeight = window.innerHeight;
+  }
+}
+
+function keyboardOnKeyDown(e) {
+  if( ionic.scroll.isScrolling ) {
+    keyboardPreventDefault(e);
+  }
+}
+
+function keyboardPreventDefault(e) {
+  e.preventDefault();
+}
+
+function keyboardOrientationChange() {
+  keyboardViewportHeight = window.innerHeight;
+  setTimeout(function(){
+    keyboardViewportHeight = window.innerHeight;
+  }, 999);
+}
+
+function keyboardGetHeight() {
+  // check if we are already have a keyboard height from the plugin
+  if (ionic.keyboard.height ) {
+    return ionic.keyboard.height;
+  }
+
+  // fallback for when its the webview without the plugin
+  // or for just the standard web browser
+  if( ionic.Platform.isIOS() ) {
+    if( ionic.Platform.isWebView() ) {
+      return 260;
+    }
+    return 216;
+  } else if( ionic.Platform.isAndroid() ) {
+    if( ionic.Platform.isWebView() ) {
+      return 220;
+    }
+    if( ionic.Platform.version() <= 4.3) {
+      return 230;
+    }
+  }
+
+  // safe guess
+  return 275;
+}
+
+function keyboardIsWithinScroll(ele) {
+  while(ele) {
+    if(ele.classList.contains(SCROLL_CONTAINER_CSS)) {
+      return true;
+    }
+    ele = ele.parentElement;
+  }
+  return false;
+}
+
+function keyboardIsOverWebView() {
+  return ( ionic.Platform.isIOS() ) ||
+         ( ionic.Platform.isAndroid() && !ionic.Platform.isWebView() );
+}
+
+function keyboardHasPlugin() {
+  return !!(window.cordova && cordova.plugins && cordova.plugins.Keyboard);
+}
 
 ionic.Platform.ready(function() {
-  var rememberedDeviceWidth = window.innerWidth;
-  var rememberedDeviceHeight = window.innerHeight;
-  var keyboardHeight;
-  var rememberedActiveEl;
-  var alreadyOpen = false;
+  keyboardUpdateViewportHeight();
 
-  window.addEventListener('focusin', onBrowserFocusIn);
+  // Android sometimes reports bad innerHeight on window.load
+  // try it again in a lil bit to play it safe
+  setTimeout(keyboardUpdateViewportHeight, 999);
 
-  if(ionic.Platform.isWebView() && window.cordova && cordova.plugins && cordova.plugins.Keyboard) {
-    window.addEventListener('native.showkeyboard', onNativeKeyboardShow);
-    window.addEventListener('native.hidekeyboard', onNativeKeyboardHide);
-
-  } else if (ionic.Platform.isAndroid()){
-    window.addEventListener('resize', onBrowserResize);
-  }
-
-  function onBrowserFocusIn(e) {
-      if (ionic.tap.containsOrIsTextInput(e.target) || e.srcElement.isContentEditable){
-        document.body.scrollTop = 0;
-      }
-
-      rememberedActiveEl = e.srcElement;
-  }
-
-  function onBrowserResize() {
-    if(rememberedDeviceWidth !== window.innerWidth) {
-      // If the width of the window changes, we have an orientation change
-      rememberedDeviceWidth = window.innerWidth;
-      rememberedDeviceHeight = window.innerHeight;
-
-    } else if(rememberedDeviceHeight !== window.innerHeight &&
-               window.innerHeight < rememberedDeviceHeight) {
-      // If the height changes, and it's less than before, we have a keyboard open
-      document.body.classList.add('keyboard-open');
-
-      keyboardHeight = rememberedDeviceHeight - window.innerHeight;
-      setTimeout(function() {
-        ionic.trigger('scrollChildIntoView', {
-          target: rememberedActiveEl, 
-        }, true);
-      }, 100);
-
-    } else {
-      // Otherwise we have a keyboard close or a *really* weird resize
-      document.body.classList.remove('keyboard-open');
-    }
-  }
-
-  function onNativeKeyboardShow(e) {
-    if(rememberedActiveEl) {
-      // This event is caught by the nearest parent scrollView
-      // of the activeElement
-      if(cordova.plugins.Keyboard.isVisible) {
-        document.body.classList.add('keyboard-open');
-        ionic.trigger('scrollChildIntoView', {
-          keyboardHeight: e.keyboardHeight,
-          target: rememberedActiveEl,
-          firstKeyboardShow: !alreadyOpen
-        }, true);
-
-        if(!alreadyOpen) alreadyOpen = true;
-      }
-    }
-  }
-
-  function onNativeKeyboardHide() {
-    // wait to see if we're just switching inputs
-    setTimeout(function() {
-      if(!cordova.plugins.Keyboard.isVisible) {
-        document.body.classList.remove('keyboard-open');
-        alreadyOpen = false;
-        ionic.trigger('resetScrollView', {
-          target: rememberedActiveEl
-        }, true);
-      }
-    }, 100);
-  }
-
+  // only initialize the adjustments for the virtual keyboard
+  // if a touchstart event happens
+  document.addEventListener('touchstart', keyboardInit, false);
 });
 
-})(window.ionic);
