@@ -34,13 +34,13 @@ IonicModule
 }])
 
 .directive('ionStopEvent', function () {
-  function stopEvent(e) {
-    e.stopPropagation();
-  }
   return {
     restrict: 'A',
     link: function (scope, element, attr) {
-      element.bind(attr.ionStopEvent, stopEvent);
+      element.bind(attr.ionStopEvent, eventStopPropagation);
     }
   };
 });
+function eventStopPropagation(e) {
+  e.stopPropagation();
+}

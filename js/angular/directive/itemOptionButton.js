@@ -41,6 +41,8 @@ return {
         itemCtrl.$element.append(itemCtrl.optionsContainer);
       }
       itemCtrl.optionsContainer.append($element);
+
+      $element.on('click', eventStopPropagation);
     };
   }
 };
