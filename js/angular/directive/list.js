@@ -137,6 +137,7 @@ function($animate, $timeout) {
 
             $element.children().toggleClass('list-left-editing', isShown);
             toggleNgHide('.item-delete.item-left-edit', isShown);
+            toggleTapDisabled('.item-content', isShown);
           });
           $scope.$watch(function() {
             return listCtrl.showReorder();
@@ -149,13 +150,25 @@ function($animate, $timeout) {
 
             $element.children().toggleClass('list-right-editing', isShown);
             toggleNgHide('.item-reorder.item-right-edit', isShown);
+            toggleTapDisabled('.item-content', isShown);
           });
 
           function toggleNgHide(selector, shouldShow) {
             angular.forEach($element[0].querySelectorAll(selector), function(node) {
-              if (shouldShow) $animate.removeClass(angular.element(node), 'ng-hide');
-              else $animate.addClass(angular.element(node), 'ng-hide');
+              if (shouldShow) {
+                $animate.removeClass(angular.element(node), 'ng-hide');
+              } else {
+                $animate.addClass(angular.element(node), 'ng-hide');
+              }
             });
+          }
+          function toggleTapDisabled(selector, shouldDisable) {
+            var el = angular.element($element[0].querySelectorAll(selector));
+            if (shouldDisable) {
+              el.attr('data-tap-disabled', 'true');
+            } else {
+              el.removeAttr('data-tap-disabled');
+            }
           }
         }
 

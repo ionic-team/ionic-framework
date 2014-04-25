@@ -1,5 +1,3 @@
-describe('',function(){
-
 describe('$ionicList controller', function() {
   beforeEach(module('ionic'));
   function setup(attrs) {
@@ -331,6 +329,4 @@ describe('ionOptionButton directive', function() {
     expect(optionContainer.length).toBe(1);
     expect(optionContainer.children().hasClass('button')).toBe(true);
   }));
-});
-
 });

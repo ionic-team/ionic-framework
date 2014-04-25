@@ -1,5 +1,6 @@
 <html ng-app="ionicApp">
   <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Ionic List Directive</title>
@@ -51,7 +52,7 @@
   		Type 1
   		</div>
         <ion-item ng-repeat="item in items"
-                  href="#{{item.id}}"
+                  ng-click="alert(item.id)"
                   class="item item-avatar-left item-icon-right"
                   type="item-avatar" >
           <img src="{{item.image}}">
@@ -69,7 +70,7 @@
                              ng-click="share(item)">
             Share
           </ion-option-button>
-          <ion-reorder-button class="ion-navicon" on-reoder="moveItem(item, fromIndex, toIndex)"></ion-reorder-button>
+          <ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
         </ion-item>
 
       </ion-list>
@@ -85,16 +86,20 @@ angular.module('ionicApp', ['ionic'])
     showDelete: false
   };
 
+  $scope.moveItem = function(item, from, to) {
+    console.log('beforeReorder', item, from, to, $scope.items.slice(0,5));
+    $scope.items.splice(from, 1);
+    $scope.items.splice(to, 0, item);
+    console.log('afterReorder', $scope.items.slice(0,5));
+  };
+
+  $scope.alert = window.alert.bind(window);
+
   $scope.edit = function(item) {
     alert('Edit Item: ' + item.id);
   };
   $scope.share = function(item) {
     alert('Share Item: ' + item.id);
-  };
-
-  $scope.moveItem = function(item, fromIndex, toIndex) {
-    $scope.items.splice(fromIndex, 1);
-    $scope.items.splice(toIndex, 0, item);
   };
 
   $scope.onItemDelete = function(item) {
