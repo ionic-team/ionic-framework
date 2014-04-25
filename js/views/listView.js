@@ -182,6 +182,7 @@
   var ReorderDrag = function(opts) {
     this.dragThresholdY = opts.dragThresholdY || 0;
     this.onReorder = opts.onReorder;
+    this.listEl = opts.listEl;
     this.el = opts.el;
     this.scrollEl = opts.scrollEl;
     this.scrollView = opts.scrollView;
@@ -190,7 +191,10 @@
   ReorderDrag.prototype = new DragOp();
 
   ReorderDrag.prototype._moveElement = function(e) {
-    var y = e.gesture.center.pageY - this._currentDrag.elementHeight + this._currentDrag.scrollDelta;
+    var y = e.gesture.center.pageY -
+      this._currentDrag.elementHeight + 
+      this._currentDrag.scrollDelta - 
+      this.listEl.offsetTop;
     this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(0, '+y+'px, 0)';
   };
 
@@ -463,6 +467,7 @@
 
         if(item) {
           this._dragOp = new ReorderDrag({
+            listEl: this.el,
             el: item,
             scrollEl: this.scrollEl,
             scrollView: this.scrollView,

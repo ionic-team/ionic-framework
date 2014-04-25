@@ -1,246 +1,156 @@
-<html ng-app="navTest">
+<html ng-app="ionicApp">
   <head>
     <meta charset="utf-8">
-    <title>List</title>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
-    <script src="../../../../dist/js/ionic.bundle.js"></script>
-    <style>
-      #click-notify {
-        position: absolute;
-        top: 100px;
-        left: 40%;
-        z-index: 9997;
-        display: none;
-        padding: 8px;
-        background: red;
-        color: white;
-      }
-      #mousemove-notify {
-        position: absolute;
-        top: 140px;
-        left: 40%;
-        z-index: 9998;
-        display: none;
-        padding: 8px;
-        background: orange;
-      }
-      #touchmove-notify {
-        position: absolute;
-        top: 180px;
-        left: 40%;
-        z-index: 9999;
-        display: none;
-        padding: 8px;
-        background: yellow;
-      }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Ionic List Directive</title>
+
+    <link href="../../dist/css/ionic.css" rel="stylesheet">
+    <script src="../../dist/js/ionic.bundle.js"></script>
   </head>
-  <body ng-controller="TestCtrl">
-    <div id="click-notify">CLICK!</div>
-    <div id="mousemove-notify">Mouse Move!</div>
-    <div id="touchmove-notify">Touch Move!</div>
-    <!-- <ion-side-menus>
 
-      <ion-side-menu-content>
- -->
-        <ion-header-bar class="bar-positive">
-          <div class="buttons">
-            <button ng-click="toggleDelete()" class="button button-clear">{{ editBtnText }}</button>
-          </div>
-          <h1 class="title">List Tests</h1>
-          <div class="buttons">
-            <button ng-click="toggleReorder()" class="button button-clear">{{ reorderBtnText }}</button>
-          </div>
-        </ion-header-bar>
+  <body ng-controller="MyCtrl">
 
-        <ion-content class="has-header">
+    <ion-header-bar class="bar-positive">
+      <div class="buttons">
+        <button class="button button-icon icon ion-ios7-minus-outline"
+          ng-click="data.showDelete = !data.showDelete; data.showReorder = false"></button>
+      </div>
+      <h1 class="title">Ionic Delete/Option Buttons</h1>
+      <button class="button"
+          ng-click="data.showDelete = false; data.showReorder = !data.showReorder">
+            Reorder
+          </button>
+      </div>
+    </ion-header-bar>
 
-          <ion-list show-delete="isDeletingItems" show-reorder="isReorderingItems">
-            <ion-item item="item" ng-href="#" ng-click="itemClick()" class="item-thumbnail-left" ng-repeat="item in items" ng-class="{ active: item.isActive}">
-              <img ng-src="{{item.face}}">
-              <h2>{{item.from}}</h2>
-              <p>{{item.text}}</p>
-              <ion-option-button class="button-positive">Hello!</ion-option-button>
-              <ion-delete-button ng-click="items.splice($index, 1)" class="ion-minus-circled"></ion-delete-button>
-              <ion-reorder-button class="ion-navicon" on-reorder="onReorder(item, $fromIndex, $toIndex)"></ion-reorder-button>
-            </ion-item>
+    <ion-content>
+      <!--
+        Search bar
+      -->
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+            <i class="icon ion-ios7-search placeholder-icon"></i>
+            <input id="searchKey" type="search" ng-model="query" ng-change="search()" placeholder="search" ng-model="searchKey" autocorrect="off" >
+            <button class="button button-clear icon ion-close-circled placeholder-icon smallicon" ng-click="clearSearch()"></button>
+            <!--i class="icon ion-close-circled placeholder-icon" ng-click="clearSearch()"></i-->
+        </label>
+      </div>
+      <!--
+        Buttons  Tipo - Tarjeta - Ordenar
+      -->
+      <div class="padding">
+        <div class="button-bar bar-outline bar-positive">
+          <a class="button button-positive" ng-click="Modal.show()">Button 1</a>
+          <a class="button button-positive" ng-click="Modal.show()">Button 2</a>
+          <a class="button button-positive" ng-click="Modal.show()">Button 3</a>
+        </div>
+      </div>
 
-            <ion-item>
-              <p>
-                <ion-toggle ng-model="showOption">Show Option?</ion-toggle>
-              </p>
-              <ion-option-button ng-if="showOption">Hello!</ion-option-button>
-            </ion-item>
+      <ion-list show-delete="data.showDelete" show-reorder="data.showReorder" can-swipe="true">
+  		<div class="item item-divider">
+  		Type 1
+  		</div>
+        <ion-item ng-repeat="item in items"
+                  href="#{{item.id}}"
+                  class="item item-avatar-left item-icon-right"
+                  type="item-avatar" >
+          <img src="{{item.image}}">
+          <h2>Item {{ item.id }}</h2>
+          <p>{{item.id}}</p>
+          <i class="icon ion-chevron-right icon-accessory"></i>
+          <ion-delete-button class="ion-minus-circled"
+                             ng-click="onItemDelete(item)">
+          </ion-delete-button>
+          <ion-option-button class="button-assertive"
+                             ng-click="edit(item)">
+            Edit
+          </ion-option-button>
+          <ion-option-button class="button-calm"
+                             ng-click="share(item)">
+            Share
+          </ion-option-button>
+          <ion-reorder-button class="ion-navicon" on-reoder="moveItem(item, fromIndex, toIndex)"></ion-reorder-button>
+        </ion-item>
 
-            <!-- shows how a divider could be included-->
-            <div class="item item-divider">
-              Me Divider, just plain ol HTML nested in the list directive.
-            </div>
+      </ion-list>
 
-            <!-- shows it can override the attributes set by the list -->
-          </ion-list>
-
-        </ion-content>
-<!--
-      </ion-side-menu-content>
-
-      <ion-side-menu side="left">
-        Left menu!
-      </ion-side-menu>
-    </ion-side-menus> -->
+    </ion-content>
 
     <script>
-      angular.module('navTest', ['ionic'])
+angular.module('ionicApp', ['ionic'])
 
-      .controller('TestCtrl', function($scope, $timeout, $ionicSideMenuDelegate) {
+.controller('MyCtrl', function($scope) {
 
-          $scope.toggleLeft = function() {
-            $ionicSideMenuDelegate.toggleLeft();
-          };
+  $scope.data = {
+    showDelete: false
+  };
 
-        // Build Mock Data
-        $scope.items = [
-          {
-            from: 'Ben',
-            face: 'https://pbs.twimg.com/profile_images/378800000571933189/278e8e1b7871a115b95fc550cd07af40.png',
-            text: 'Whoa, whoa, whoa. There’s still plenty of meat on that bone. Now you take this home, throw it in a pot, add some broth, a potato. Baby, you\'ve got a stew going.' },
-          {
-            from: 'Adam',
-            face: 'https://pbs.twimg.com/profile_images/2927292174/25b170ee2e3044fd936ad1319bc4b82d_bigger.jpeg',
-            text: 'It Ain\'t Easy Being Cheesy' },
-          {
-            from: 'Tim',
-            face: 'https://pbs.twimg.com/profile_images/378800000290028838/ee3303b02223f25cb0f9b082b55b2eeb.jpeg',
-            text: 'Baxter! You know I don\'t speak spanish!' },
-          {
-            from: 'Brody',
-            face: 'https://pbs.twimg.com/profile_images/378800000138067018/554c103ebf37c2ba3b923b8deea46b0d.jpeg',
-            text: 'Sounds like some sort of marmalade' },
-          {
-            from: 'Peter',
-            face: 'https://pbs.twimg.com/profile_images/378800000238071493/08f76337bdc91b1e1e73a9d55c57a451.jpeg',
-            text: 'A cooked goose for everyone!' },
-          {
-            from: 'Max',
-            face: 'https://pbs.twimg.com/profile_images/430001754747305984/qa5DFLgU.jpeg',
-            text: 'Yes my dear man, more beans. oooohh' },
-          {
-            from: 'Andy',
-            face: 'https://pbs.twimg.com/profile_images/423294834229522433/BSlEOBYt.jpeg',
-            text: 'I did it all for her' },
-          {
-            from: 'Melissa',
-            face: 'https://pbs.twimg.com/profile_images/412451928816111616/VZ3_md1N.jpeg',
-            text: 'I think I want my money back' }
-        ];
+  $scope.edit = function(item) {
+    alert('Edit Item: ' + item.id);
+  };
+  $scope.share = function(item) {
+    alert('Share Item: ' + item.id);
+  };
 
+  $scope.moveItem = function(item, fromIndex, toIndex) {
+    $scope.items.splice(fromIndex, 1);
+    $scope.items.splice(toIndex, 0, item);
+  };
 
-        // List Toggles
-        $scope.editBtnText = 'Edit';
-        $scope.toggleDelete = function() {
-          $scope.isDeletingItems = !$scope.isDeletingItems;
-          $scope.isReorderingItems = false;
-          $scope.editBtnText = ($scope.isDeletingItems ? 'Done' : 'Edit');
-        };
-        $scope.reorderBtnText = 'Reorder';
-        $scope.toggleReorder = function() {
-          $scope.isReorderingItems = !$scope.isReorderingItems;
-          $scope.isDeletingItems = false;
-          $scope.reorderBtnText = ($scope.isReorderingItems ? 'Done' : 'Reorder');
-        };
+  $scope.onItemDelete = function(item) {
+    $scope.items.splice($scope.items.indexOf(item), 1);
+  };
 
+  $scope.items = [
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
+    { id: 5 },
+    { id: 6 },
+    { id: 7 },
+    { id: 8 },
+    { id: 9 },
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
+    { id: 5 },
+    { id: 6 },
+    { id: 7 },
+    { id: 8 },
+    { id: 9 },
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
+    { id: 5 },
+    { id: 6 },
+    { id: 7 },
+    { id: 8 },
+    { id: 9 },
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
+    { id: 5 },
+    { id: 6 },
+    { id: 7 },
+    { id: 8 },
+    { id: 9 },
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
+    { id: 5 },
+    { id: 6 },
+    { id: 7 },
+    { id: 8 },
+    { id: 9 },
+    { id: 10 }
+  ];
 
-        $scope.itemClick = function(item) {
-          var el = document.getElementById('click-notify');
-          el.style.display = 'block';
-          el.innerText = 'Click! ' + item.from;
-
-          setTimeout(function(){
-            document.getElementById('click-notify').style.display = 'none';
-          }, 300);
-        };
-
-        // Item Methods/Properties
-        $scope.deleteItem = function(item, index) {
-          console.log('onDelete from the "item" directive on-delete attribute. Lets not delete this item today ok!', item, index);
-        };
-        $scope.deleteListItem = function(item, index) {
-          console.log('onDelete from the "list" on-delete attribute', item, index);
-          $scope.items.splice(index, 1);
-        };
-        $scope.onReorder = function(item, fromIndex, toIndex) {
-          console.log('On reorder', item, fromIndex, toIndex);
-          $scope.items.splice(fromIndex, 1);
-          $scope.items.splice(toIndex, 0, item);
-          console.log($scope.items);
-        };
-
-        $scope.optionButtons1 = [
-          {
-            text: 'Edit',
-            onTap: function(item, button) { alert(button.text + ' Button: ' + item.text) }
-          },
-          {
-            text: 'Share',
-            type: 'button-balanced',
-            onTap: function(item, button) { alert(button.text + ' Button: ' + item.text) }
-          }
-        ];
-
-        $scope.optionButtons2 = [
-          {
-            text: 'Cancel',
-            onTap: function() { alert('CANCEL!') }
-          },
-          {
-            text: 'Submit',
-            onTap: function() { alert('SUBMIT!') }
-          }
-        ];
-
-        $scope.urlItems = [
-          { text: 'Biography', icon: 'ion-person', url: 'http://en.wikipedia.org/wiki/Nicolas_Cage' },
-          { text: 'Fan Club', icon: 'ion-star', url: 'http://cagealot.com/', isActive: true }
-        ];
-
-      });
-
-      var mouseTimerId;
-      var mouseMoveCount = 0;
-      function onMouseMove(e) {
-        clearTimeout(mouseTimerId);
-        mouseTimerId = setTimeout(function(){
-          var el = document.getElementById('mousemove-notify');
-          el.style.display = 'block';
-          mouseMoveCount++;
-          el.innerText = 'Mouse Move! ' + mouseMoveCount;
-          clearTimeout(mouseTimerId);
-          mouseTimerId = setTimeout(function(){
-            el.style.display = 'none';
-          }, 1000);
-        }, 0);
-      }
-
-      var touchTimerId;
-      var touchMoveCount = 0;
-      function onTouchMove(e) {
-        clearTimeout(touchTimerId);
-        touchTimerId = setTimeout(function(){
-          var el = document.getElementById('touchmove-notify');
-          el.style.display = 'block';
-          touchMoveCount++;
-          el.innerText = 'Touch Move! ' + touchMoveCount;
-          clearTimeout(touchTimerId);
-          touchTimerId = setTimeout(function(){
-            el.style.display = 'none';
-          }, 1000);
-        }, 0);
-      }
-
-      document.addEventListener('touchmove', onTouchMove, false);
-      document.addEventListener('mousemove', onMouseMove, false);
+});
     </script>
   </body>
 </html>
-
