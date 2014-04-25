@@ -9,9 +9,11 @@
   ionic.activator = {
 
     start: function(e) {
+
       // when an element is touched/clicked, it climbs up a few
       // parents to see if it is an .item or .button element
       ionic.requestAnimationFrame(function(){
+        if (tapRequiresNativeClick(e.target)) return;
         var ele = e.target;
         var eleToActivate;
 

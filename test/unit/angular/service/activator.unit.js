@@ -4,6 +4,13 @@ describe('Ionic Element Activator', function() {
     window.setTimeout = ionic.requestAnimationFrame = function(cb) { cb(); };
   });
 
+  it('should not active an <a> if tapRequiresNativeClick is true', function() {
+    spyOn(window, 'tapRequiresNativeClick').andReturn(true);
+    var e = { target: document.createElement('a') };
+    ionic.activator.start(e);
+    expect(e.target.classList.contains('activated')).toEqual(false);
+  });
+
   it('Should activate an <a>', function() {
     var e = { target: document.createElement('a') };
     ionic.activator.start(e);
