@@ -1,9 +1,9 @@
 IonicModule
 .directive('collectionRepeat', [
   '$collectionRepeatManager',
-  '$collectionRepeatDataSource',
+  '$collectionDataSource',
   '$parse',
-function($collectionRepeatManager, $collectionRepeatDataSource, $parse) {
+function($collectionRepeatManager, $collectionDataSource, $parse) {
   return {
     priority: 1000,
     transclude: 'element',
@@ -38,7 +38,7 @@ function($collectionRepeatManager, $collectionRepeatDataSource, $parse) {
         throw new Error("collection-repeat expected expression in form of '_item_ in _collection_[ track by _id_]' but got '" + $attr.collectionRepeat + "'.");
       }
 
-      var dataSource = new $collectionRepeatDataSource({
+      var dataSource = new $collectionDataSource({
         scope: $scope,
         transcludeFn: $transclude,
         transcludeParent: $element.parent(),

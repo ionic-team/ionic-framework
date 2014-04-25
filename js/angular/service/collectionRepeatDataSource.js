@@ -1,5 +1,5 @@
 IonicModule
-.factory('$collectionRepeatDataSource', [
+.factory('$collectionDataSource', [
   '$cacheFactory',
   '$parse',
 function($cacheFactory, $parse) {
@@ -17,16 +17,19 @@ function($cacheFactory, $parse) {
     this.heightGetter = options.heightGetter;
     this.widthGetter = options.widthGetter;
 
+    this.dimensions = [];
+    this.data = [];
+
     if (this.trackByExpr) {
       var trackByGetter = $parse(this.trackByExpr);
       var hashFnLocals = {$id: hashKey};
-      this.trackByIdGetter = function(index, value) {
+      this.itemHashGetter = function(index, value) {
         hashFnLocals[self.keyExpr] = value;
         hashFnLocals.$index = index;
         return trackByGetter(self.scope, hashFnLocals);
       };
     } else {
-      this.trackByIdGetter = function(index, value) {
+      this.itemHashGetter = function(index, value) {
         return hashKey(value);
       };
     }
@@ -46,24 +49,21 @@ function($cacheFactory, $parse) {
       return _remove(key);
     };
     this.itemCache.keys = function() {
-      return cacheKeys;
+      return Object.keys(cacheKeys);
     };
   }
   CollectionRepeatDataSource.prototype = {
     destroy: function() {
       this.dimensions.length = 0;
-      for (var key in this.itemCache.keys()) {
+      this.itemCache.keys().forEach(function(key) {
         var item = this.itemCache.get(key);
         item.element.remove();
         item.scope.$destroy();
-      }
+      }, this);
       this.itemCache.removeAll();
     },
     calculateDataDimensions: function() {
-      var totalWidth = 0;
-      var totalHeight = 0;
       var locals = {};
-
       this.dimensions = this.data.map(function(value, index) {
         locals[this.keyExpr] = value;
         locals.$index = index;
@@ -72,11 +72,9 @@ function($cacheFactory, $parse) {
           height: this.heightGetter(this.scope, locals)
         };
       }, this);
-      this.totalWidth = totalWidth;
-      this.totalHeight = totalHeight;
     },
     compileItem: function(index, value) {
-      var key = this.trackByIdGetter(index, value);
+      var key = this.itemHashGetter(index, value);
       var cachedItem = this.itemCache.get(key);
       if (cachedItem) return cachedItem;
 
