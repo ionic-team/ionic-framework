@@ -41,9 +41,7 @@
       -->
       <div class="padding">
         <div class="button-bar bar-outline bar-positive">
-          <a class="button button-positive" ng-click="Modal.show()">Button 1</a>
-          <a class="button button-positive" ng-click="Modal.show()">Button 2</a>
-          <a class="button button-positive" ng-click="Modal.show()">Button 3</a>
+          <a class="button-block button button-positive" ng-click="toggleCanSwipe()">Toggle Can Swipe (is {{canSwipe()}})</a>
         </div>
       </div>
 
@@ -80,7 +78,15 @@
     <script>
 angular.module('ionicApp', ['ionic'])
 
-.controller('MyCtrl', function($scope) {
+.controller('MyCtrl', function($scope, $ionicListDelegate) {
+
+  $scope.toggleCanSwipe = function() {
+  $ionicListDelegate.canSwipeItems(!$scope.canSwipe());
+  };
+  $scope.canSwipe = function() {
+  return $ionicListDelegate.canSwipeItems();
+  };
+
 
   $scope.data = {
     showDelete: false

@@ -134,6 +134,7 @@ function($animate, $timeout) {
             if (!isShown && !wasShown) { return; }
 
             if (isShown) listCtrl.closeOptionButtons();
+            listCtrl.canSwipeItems(!isShown);
 
             $element.children().toggleClass('list-left-editing', isShown);
             toggleNgHide('.item-delete.item-left-edit', isShown);
@@ -146,7 +147,7 @@ function($animate, $timeout) {
             if (!isShown && !wasShown) { return; }
 
             if (isShown) listCtrl.closeOptionButtons();
-            listCtrl.showReorder(isShown);
+            listCtrl.canSwipeItems(!isShown);
 
             $element.children().toggleClass('list-right-editing', isShown);
             toggleNgHide('.item-reorder.item-right-edit', isShown);
