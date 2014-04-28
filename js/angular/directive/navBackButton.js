@@ -18,8 +18,8 @@
  *
  * ```html
  * <ion-nav-bar>
- *   <ion-nav-back-button class="button-icon">
- *     <i class="ion-arrow-left-c"></i> Back!
+ *   <ion-nav-back-button class="button-clear">
+ *     <i class="ion-arrow-left-c"></i> Back
  *   </ion-nav-back-button>
  * </ion-nav-bar>
  * ```
@@ -28,7 +28,7 @@
  *
  * ```html
  * <ion-nav-bar ng-controller="MyCtrl">
- *   <ion-nav-back-button class="button-icon"
+ *   <ion-nav-back-button class="button-clear"
  *     ng-click="canGoBack && goBack()">
  *     <i class="ion-arrow-left-c"></i> Back
  *   </ion-nav-back-button>
@@ -47,8 +47,8 @@
  *
  * ```html
  * <ion-nav-bar ng-controller="MyCtrl">
- *   <ion-nav-back-button class="button button-icon ion-arrow-left-c">
- *     {% raw %}{{getPreviousTitle() || 'Back'}}{% endraw %}
+ *   <ion-nav-back-button class="button-icon">
+ *     <i class="icon ion-arrow-left-c"></i>{% raw %}{{getPreviousTitle() || 'Back'}}{% endraw %}
  *   </ion-nav-back-button>
  * </ion-nav-bar>
  * ```
