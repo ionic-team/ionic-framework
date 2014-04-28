@@ -31,11 +31,11 @@ function($ionicGesture, $timeout) {
       ngDisabled: '=?'
     },
     transclude: true,
-    template: '<div class="item item-toggle disable-pointer-events">' +
+    template: '<div class="item item-toggle">' +
                 '<div ng-transclude></div>' +
-                '<label class="toggle enable-pointer-events">' +
+                '<label class="toggle">' +
                   '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()" ng-disabled="ngDisabled">' +
-                  '<div class="track disable-pointer-events">' +
+                  '<div class="track">' +
                     '<div class="handle"></div>' +
                   '</div>' +
                 '</label>' +
