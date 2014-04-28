@@ -629,8 +629,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
       if( !self.isScrolledIntoView ) {
         // shrink scrollview so we can actually scroll if the input is hidden
         // if it isn't shrink so we can scroll to inputs under the keyboard
-        container.style.height = (container.clientHeight - e.detail.keyboardHeight) + "px";
-        container.style.overflow = "visible";
+        if (ionic.Platform.isIOS() || ionic.Platform.isFullScreen){
+          container.style.height = (container.clientHeight - e.detail.keyboardHeight) + "px";
+          container.style.overflow = "visible";
+        }
         self.isScrolledIntoView = true;
         //update scroll view
         self.resize();
