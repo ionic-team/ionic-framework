@@ -9,14 +9,13 @@ function($rootScope, $timeout) {
     this.dataSource = options.dataSource;
     this.element = options.element;
     this.scrollView = options.scrollView;
-    this.itemSizePrimary = options.itemSizePrimary;
-    this.itemSizeSecondary = options.itemSizeSecondary;
 
     this.isVertical = !!this.scrollView.options.scrollingY;
     this.renderedItems = {};
 
     this.lastRenderScrollValue = this.bufferTransformOffset = this.hasBufferStartIndex =
       this.hasBufferEndIndex = this.bufferItemsLength = 0;
+    this.setCurrentIndex(0);
 
     this.scrollView.__$callback = this.scrollView.__callback;
     this.scrollView.__callback = angular.bind(this, this.renderScroll);
@@ -34,11 +33,17 @@ function($rootScope, $timeout) {
       this.scrollSize = function() {
         return this.scrollView.__clientHeight;
       };
-      this.getSecondaryScrollSize = function() {
+      this.secondaryScrollSize = function() {
         return this.scrollView.__clientWidth;
       };
       this.transformString = function(y, x) {
         return 'translate3d('+x+'px,'+y+'px,0)';
+      };
+      this.primaryDimension = function(dim) {
+        return dim.height;
+      };
+      this.secondaryDimension = function(dim) {
+        return dim.width;
       };
     } else {
       this.scrollView.options.getContentWidth = getViewportSize;
@@ -52,11 +57,17 @@ function($rootScope, $timeout) {
       this.scrollSize = function() {
         return this.scrollView.__clientWidth;
       };
-      this.getSecondaryScrollSize = function() {
+      this.secondaryScrollSize = function() {
         return this.scrollView.__clientHeight;
       };
       this.transformString = function(x, y) {
         return 'translate3d('+x+'px,'+y+'px,0)';
+      };
+      this.primaryDimension = function(dim) {
+        return dim.width;
+      };
+      this.secondaryDimension = function(dim) {
+        return dim.height;
       };
     }
   }
@@ -67,36 +78,41 @@ function($rootScope, $timeout) {
         this.removeItem(i);
       }
     },
-    resize: function() {
+    calculateDimensions: function() {
       var primaryPos = 0;
       var secondaryPos = 0;
-      var itemsPerSpace = 0;
       var len = this.dataSource.dimensions.length;
-      this.dimensions = this.dataSource.dimensions.map(function(dimensions, index) {
+      var secondaryScrollSize = this.secondaryScrollSize();
+      var previous;
+
+      return this.dataSource.dimensions.map(function(dim) {
         var rect = {
-          primarySize: this.isVertical ? dimensions.height : dimensions.width,
-          secondarySize: this.isVertical ? dimensions.width : dimensions.height,
-          primaryPos: primaryPos,
-          secondaryPos: secondaryPos
+          primarySize: this.primaryDimension(dim),
+          secondarySize: Math.min(this.secondaryDimension(dim), secondaryScrollSize)
         };
 
-        itemsPerSpace++;
-        secondaryPos += rect.secondarySize;
-        if (secondaryPos >= this.getSecondaryScrollSize()) {
-          secondaryPos = 0;
-          primaryPos += rect.primarySize;
-
-          if (!this.itemsPerSpace) {
-            this.itemsPerSpace = itemsPerSpace;
+        if (previous) {
+          secondaryPos += previous.secondarySize;
+          if (previous.primaryPos === primaryPos &&
+              secondaryPos + rect.secondarySize > secondaryScrollSize) {
+            secondaryPos = 0;
+            primaryPos += previous.primarySize;
+          } else {
           }
         }
 
+        rect.primaryPos = primaryPos;
+        rect.secondaryPos = secondaryPos;
+
+        previous = rect;
         return rect;
       }, this);
-
-      this.viewportSize = primaryPos;
+    },
+    resize: function() {
+      this.dimensions = this.calculateDimensions();
+      var last = this.dimensions[this.dimensions.length - 1];
+      this.viewportSize = last ? last.primaryPos + last.primarySize : 0;
       this.setCurrentIndex(0);
-      this.lastRenderScrollValue = 0;
       this.render(true);
     },
     setCurrentIndex: function(index, height) {
@@ -129,40 +145,45 @@ function($rootScope, $timeout) {
     },
     getIndexForScrollValue: function(i, scrollValue) {
       var rect;
-      //Scrolling down
+      //Scrolling up
       if (scrollValue <= this.dimensions[i].primaryPos) {
         while ( (rect = this.dimensions[i - 1]) && rect.primaryPos > scrollValue) {
-          i -= this.itemsPerSpace;
+          i--;
         }
-      //Scrolling up
+      //Scrolling down
       } else {
         while ( (rect = this.dimensions[i + 1]) && rect.primaryPos < scrollValue) {
-          i += this.itemsPerSpace;
+          i++;
         }
       }
       return i;
     },
     render: function(shouldRedrawAll) {
-      if (this.currentIndex >= this.dataSource.getLength()) {
-        return;
-      }
-
       var i;
-      if (shouldRedrawAll) {
+      if (this.currentIndex >= this.dataSource.getLength() || shouldRedrawAll) {
         for (i in this.renderedItems) {
           this.removeItem(i);
         }
+        if (this.currentIndex >= this.dataSource.getLength()) return null;
       }
+
+      var rect;
       var scrollValue = this.scrollValue();
       var scrollDelta = scrollValue - this.lastRenderScrollValue;
       var scrollSize = this.scrollSize();
       var scrollSizeEnd = scrollSize + scrollValue;
       var startIndex = this.getIndexForScrollValue(this.currentIndex, scrollValue);
-      var bufferStartIndex = Math.max(0, startIndex - this.itemsPerSpace);
+
+      //Make buffer start on previous row
+      var bufferStartIndex = Math.max(startIndex - 1, 0);
+      while (bufferStartIndex > 0 &&
+         (rect = this.dimensions[bufferStartIndex]) &&
+         rect.primaryPos === this.dimensions[startIndex - 1].primaryPos) {
+        bufferStartIndex--;
+      }
       var startPos = this.dimensions[bufferStartIndex].primaryPos;
 
       i = bufferStartIndex;
-      var rect;
       while ((rect = this.dimensions[i]) && (rect.primaryPos - rect.primarySize < scrollSizeEnd)) {
         this.renderItem(i, rect.primaryPos - startPos, rect.secondaryPos);
         i++;
@@ -183,7 +204,6 @@ function($rootScope, $timeout) {
       }
     },
     renderItem: function(dataIndex, primaryPos, secondaryPos) {
-      var self = this;
       var item = this.dataSource.getItem(dataIndex);
       if (item) {
         this.dataSource.attachItem(item);

@@ -22,16 +22,30 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
       } else if (!isVertical && !$attr.collectionItemWidth) {
         throw new Error("collection-repeat expected attribute collection-item-width to be a an expression that returns a number.");
       }
-      var heightGetter = $attr.collectionItemHeight ?
+      $attr.collectionItemHeight = $attr.collectionItemHeight || '100%';
+      $attr.collectionItemWidth = $attr.collectionItemWidth || '100%';
+
+      var heightParsed = $attr.collectionItemHeight ?
         $parse($attr.collectionItemHeight) :
         function() { return scrollView.__clientHeight; };
-      var widthGetter = $attr.collectionItemWidth ?
+      var widthParsed = $attr.collectionItemWidth ?
         $parse($attr.collectionItemWidth) :
         function() { return scrollView.__clientWidth; };
-      console.log(widthGetter());
-      setTimeout(function() {
-      console.log(widthGetter());
-      });
+
+      var heightGetter = function(scope, locals) {
+        var result = heightParsed(scope, locals);
+        if (angular.isString(result) && result.indexOf('%') > -1) {
+          return Math.floor(parseInt(result, 10) / 100 * scrollView.__clientHeight);
+        }
+        return result;
+      };
+      var widthGetter = function(scope, locals) {
+        var result = widthParsed(scope, locals);
+        if (angular.isString(result) && result.indexOf('%') > -1) {
+          return Math.floor(parseInt(result, 10) / 100 * scrollView.__clientWidth);
+        }
+        return result;
+      };
 
       var match = $attr.collectionRepeat.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
       if (!match) {

@@ -35,8 +35,9 @@
       <a class="item"
         collection-repeat="item in getContacts()"
         collection-item-height="getItemHeight(item)"
+        collection-item-width="getItemWidth(item)"
         ng-href="https://www.google.com/#q={{item.first_name + '+' + item.last_name}}"
-        ng-style="{height: getItemHeight(item), 'line-height': getItemHeight(item) + 'px', 'padding-top': 0, 'padding-bottom': 0}"
+        ng-style="{height: getItemHeight(item), 'line-height': getItemHeight(item) + 'px', 'padding-top': 0, 'padding-bottom': 0, width: getItemWidth(item)}"
         ng-class="{'item-divider': item.isLetter}">
         <img ng-if="!item.isLetter" ng-src="http://placekitten.com/60/{{55 + ($index % 10)}}">
         {{item.letter || (item.first_name+' '+item.last_name)}}
@@ -82,6 +83,9 @@
   float: left;
   margin-top: 10px;
   margin-right: 10px;
+}
+.list {
+  height: 100%;
 }
 </style>
 </body>
