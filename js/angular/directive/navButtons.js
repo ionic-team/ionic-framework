@@ -57,7 +57,9 @@ IonicModule
         $compile(buttons)($scope);
 
         //Append buttons to navbar
-        $animate.enter(buttons, navElement);
+        ionic.requestAnimationFrame(function() {
+          $animate.enter(buttons, navElement);
+        });
 
         //When our ion-nav-buttons container is destroyed,
         //destroy everything in the navbar
