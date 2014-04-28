@@ -17,6 +17,9 @@
 <body ng-controller="MainCtrl">
   <ion-header-bar class="bar-positive">
     <h1 class="title">3000 Contacts</h1>
+    <div class="button" ng-click="scrollBottom()">
+      Scroll Bottom
+    </div>
   </ion-header-bar>
   <ion-header-bar class="bar-light bar-subheader">
     <input type="search"
@@ -32,61 +35,17 @@
   </ion-header-bar>
   <ion-content>
     <div class="list">
-      <a class="item"
+      <a class="item my-item"
         collection-repeat="item in getContacts()"
         collection-item-height="getItemHeight(item)"
-        collection-item-width="getItemWidth(item)"
+        collection-item-width="100 + '%'"
         ng-href="https://www.google.com/#q={{item.first_name + '+' + item.last_name}}"
-        ng-style="{height: getItemHeight(item), 'line-height': getItemHeight(item) + 'px', 'padding-top': 0, 'padding-bottom': 0, width: getItemWidth(item)}"
+        ng-style="{'line-height': getItemHeight(item) + 'px'}"
         ng-class="{'item-divider': item.isLetter}">
         <img ng-if="!item.isLetter" ng-src="http://placekitten.com/60/{{55 + ($index % 10)}}">
         {{item.letter || (item.first_name+' '+item.last_name)}}
       </a>
     </div>
   </ion-content>
-  <!-- <div class="letters has-header has-subheader" ng-if="!searchFocused"> -->
-  <!--   <div class="letter" -->
-  <!--     ng-repeat="letter in letters" -->
-  <!--     ng-click="goToLetter(letter)" -->
-  <!--     ng-style="{top: (100/letters.length)*$index + '%'}"> -->
-  <!--     {{letter}} -->
-  <!--   </div> -->
-  <!-- </div> -->
-<style>
-.letters {
-  right: 0;
-  bottom: 0;
-  width: 50px;
-  position: absolute;
-}
-.letter {
-  text-align: center;
-  font-size: 15px;
-  height: 3.85%;
-  padding-top: 1.625%;
-  border: 1px solid black;
-  width: 100%;
-  cursor: pointer;
-  right: 0;
-  position: absolute;
-  z-index: 100;
-}
-.button.button-icon.input-button {
-  position: absolute;
-  right: 0;
-  top: 5px;
-  color: #bbb;
-}
-.item img {
-  height: 60px;
-  width: 60px;
-  float: left;
-  margin-top: 10px;
-  margin-right: 10px;
-}
-.list {
-  height: 100%;
-}
-</style>
 </body>
 </html>

@@ -114,7 +114,7 @@ IonicModule
   'anchorScroll',
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate.#getScrollView
+   * @name $ionicScrollDelegate#getScrollView
    * @returns {object} The scrollView associated with this delegate.
    */
   'getScrollView',

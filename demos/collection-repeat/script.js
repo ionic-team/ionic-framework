@@ -39,10 +39,11 @@ angular.module('contactsApp', ['ionic'])
 
   //Letters are shorter, everything else is 52 pixels
   $scope.getItemHeight = function(item) {
-    return item.isLetter ? 45 : '25%';
+    return item.isLetter ? 40 : 100;
   };
-  $scope.getItemWidth = function(item) {
-    return item.isLetter ? '100%' : '50%';
+
+  $scope.scrollBottom = function() {
+    $ionicScrollDelegate.scrollBottom(true);
   };
 
   var letterHasMatch = {};
@@ -73,25 +74,6 @@ angular.module('contactsApp', ['ionic'])
     });
   };
 
-  //We have to figure out which scrollValue to go to for the letter
-  //Luckily, we already supply the height of every item to collection-repeat,
-  //so we will just use that!
-  $scope.goToLetter = function(letter) {
-    var scrollValue = 0;
-    var contacts = $scope.getContacts();
-    //Find the height of every item until we hit the given letter
-    for (var i = 0, ii = contacts.length; i < ii; i++) {
-      if (contacts[i].isLetter && contacts[i].letter === letter) {
-        break;
-      }
-      scrollValue += $scope.getItemHeight(contacts[i]);
-    }
-    $ionicScrollDelegate.scrollTo(0, scrollValue);
-  };
-
-  $scope.scrollTop = function() {
-    $ionicScrollDelegate.scrollTop();
-  };
   $scope.clearSearch = function() {
     $scope.search = '';
   };
