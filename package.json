@@ -1,8 +1,8 @@
 {
   "name": "ionic",
   "private": false,
-  "version": "1.0.0-beta.1",
-  "codename": "actinium",
+  "version": "1.0.0-beta.2",
+  "codename": "aluminum",
   "repository": {
     "url": "git://github.com/driftyco/ionic.git"
   },
