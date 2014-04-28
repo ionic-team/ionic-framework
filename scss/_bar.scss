@@ -151,6 +151,7 @@
     }
 
     &.button-icon {
+      font-size: $bar-title-font-size;
       .icon:before,
       &:before,
       &.icon-left:before,
