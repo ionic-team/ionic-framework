@@ -3,30 +3,31 @@
  * @module ionic
  * @name collectionRepeat
  * @restrict A
+ * @codepen mFygh
  * @description
  * `collection-repeat` is a directive that allows you to render lists with
  * thousands of items in them, and experience little to no performance penalty.
  *
- * Demo: 
+ * Demo:
  *
- * The directive renders onto the screen only the items that should be currently visible.   
- * So if you have 1,000 items in your list but only ten fit on your screen, 
+ * The directive renders onto the screen only the items that should be currently visible.
+ * So if you have 1,000 items in your list but only ten fit on your screen,
  * collection-repeat will only render into the DOM the ten that are in the current
  * scroll position.
  *
  * Here are a few things to keep in mind while using collection-repeat:
- * 
+ *
  * 1. The data supplied to collection-repeat must be an array.
- * 2. You must explicitly tell the directive what size your items will be in the DOM 
+ * 2. You must explicitly tell the directive what size your items will be in the DOM
  * (pixel amount or percentage), using directive attributes (see below).
  * 3. The elements rendered will be absolutely positioned: be sure to let your CSS work with this (see below).
  * 4. Keep the HTML of your repeated elements as simple as possible. As the user scrolls down, elements
- * will be lazily compiled. Resultingly, the more complicated your elements, the more likely it is that 
+ * will be lazily compiled. Resultingly, the more complicated your elements, the more likely it is that
  * the on-demand compilation will cause jankiness in the user's scrolling.
  * 5. The more elements you render on the screen at a time, the slower the scrolling will be.
  * It is recommended to keep grids of collection-repeat list elements at 3-wide or less.
- * 6. Each collection-repeat list will take up all of its parent scrollView's space. 
- * If you wish to have multiple lists on one page, put each list within its own 
+ * 6. Each collection-repeat list will take up all of its parent scrollView's space.
+ * If you wish to have multiple lists on one page, put each list within its own
  * {@link ionic.directive:ionScroll ionScroll} container.
  *
  *
@@ -37,7 +38,7 @@
  *
  * Notice two things here: we use ng-style to set the height of the item to match
  * what the repeater thinks our item height is.  Additionally, we add a css rule
- * to make our item stretch to fit the full screen (since it will be absolutely 
+ * to make our item stretch to fit the full screen (since it will be absolutely
  * positioned).
  *
  * ```html
@@ -121,8 +122,8 @@
  *
  *     For example: `item in items | filter:searchText track by item.id` is a pattern that might be used to apply a filter
  *     to items in conjunction with a tracking expression.
- *     
- * @param {expression} collection-item-width The width of the repeated element.  Can be a number (in pixels) or a percentage.  
+ *
+ * @param {expression} collection-item-width The width of the repeated element.  Can be a number (in pixels) or a percentage.
  * @param {expression} collection-item-height The height of the repeated element.  Can be a number (in pixels), or a percentage.
  *
  */
