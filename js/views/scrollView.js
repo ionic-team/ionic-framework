@@ -648,6 +648,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
           console.debug('scrollChildIntoView', scrollTop);
           ionic.tap.cloneFocusedInput(container, self);
           self.scrollBy(0, scrollTop, true);
+          self.onScroll();
         },
           (ionic.Platform.isIOS() ? 80 : 350)
         );
