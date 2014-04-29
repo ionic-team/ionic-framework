@@ -94,7 +94,7 @@ function run {
 
     VERSION_NAME="nightly"
 
-    gulp changelog --no-prepend \
+    gulp changelog --standalone \
       --html=true \
       --subtitle="(changes since $OLD_VERSION)" \
       --dest="dist/CHANGELOG.html" \

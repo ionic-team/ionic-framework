@@ -68,7 +68,7 @@ gulp.task('watch', ['build'], function() {
 });
 
 gulp.task('changelog', function(done) {
-  var file = argv.prepend ? __dirname + '/CHANGELOG.md' : '';
+  var file = argv.standalone ? '' : __dirname + '/CHANGELOG.md';
   var subtitle = argv.subtitle || '"' + pkg.codename + '"';
   var toHtml = !!argv.html;
   var dest = argv.dest || 'CHANGELOG.md';
