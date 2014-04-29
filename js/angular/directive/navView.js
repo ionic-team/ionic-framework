@@ -32,12 +32,12 @@
  * the {@link ionic.directive:ionNavBar} directive that updates as we navigate through the
  * navigation stack.
  *
- * You can use any [animation class](/docs/components#animation) on the navView to have its pages slide.
+ * You can any [animation class](/docs/components#animation) on the navView to have its pages slide.
  * Recommended for page transitions: 'slide-left-right', 'slide-left-right-ios7', 'slide-in-up'.
  *
  * ```html
  * <ion-nav-bar></ion-nav-bar>
- * <ion-nav-view class="slide-left-right">
+ * <ion-nav-view animation="slide-left-right">
  *   <!-- Center content -->
  * </ion-nav-view>
  * ```
