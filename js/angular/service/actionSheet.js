@@ -24,7 +24,7 @@
  *    // Show the action sheet
  *    $ionicActionSheet.show({
  *      buttons: [
- *        { text: 'Share' },
+ *        { text: '<b>Share</b> This' },
  *        { text: 'Move' },
  *      ],
  *      destructiveText: 'Delete',

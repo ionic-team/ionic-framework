@@ -136,12 +136,12 @@
         $scope.show = function() {
           $ionicActionSheet.show({
             buttons: [
-              { text: 'Share' },
-              { text: 'Move' },
+              { text: 'Share <i class="icon ion-beaker"></i>' },
+              { text: 'Move <i class="icon ion-person"></i>' },
             ],
-            destructiveText: 'Delete',
-            titleText: 'Modify your album',
-            cancelText: 'Cancel',
+            destructiveText: 'Delete <i class="icon ion-minus"></i>',
+            titleText: 'Modify your album <i class="icon ion-android-book"></i>',
+            cancelText: 'Cancel <i class="icon ion-no-smoking"></i>',
             cancel: function() {
               console.log('CANCELLED');
             },
