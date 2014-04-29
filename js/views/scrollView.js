@@ -632,10 +632,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
         if (ionic.Platform.isIOS() || ionic.Platform.isFullScreen){
           container.style.height = (container.clientHeight - e.detail.keyboardHeight) + "px";
           container.style.overflow = "visible";
+          //update scroll view
+          self.resize();
         }
         self.isScrolledIntoView = true;
-        //update scroll view
-        self.resize();
       }
 
       //If the element is positioned under the keyboard...
@@ -651,9 +651,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
           ionic.tap.cloneFocusedInput(container, self);
           self.scrollBy(0, scrollTop, true);
           self.onScroll();
-        },
-          (ionic.Platform.isIOS() ? 80 : 350)
-        );
+        }, 80 );
       }
 
       //Only the first scrollView parent of the element that broadcasted this event

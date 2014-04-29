@@ -16,7 +16,8 @@ var SCROLL_CONTAINER_CSS = 'scroll';
 
 ionic.keyboard = {
   isOpen: false,
-  height: null
+  height: null,
+  landscape: false,
 };
 
 function keyboardInit() {
@@ -55,12 +56,25 @@ function keyboardSetShow(e) {
   clearTimeout(keyboardFocusOutTimer);
 
   keyboardFocusInTimer = setTimeout(function(){
-    var keyboardHeight = keyboardGetHeight();
+    var keyboardHeight; 
     var elementBounds = keyboardActiveElement.getBoundingClientRect();
-    
-    setTimeout(function(){
-      keyboardShow(e.target, elementBounds.top, elementBounds.bottom, keyboardViewportHeight, keyboardHeight);
-    }, (ionic.Platform.isIOS() ? 0 : 350)); 
+    var count = 0;
+
+    var pollKeyboardHeight = setInterval(function(){
+
+      keyboardHeight = keyboardGetHeight();
+      if (count > 10){
+        clearInterval(pollKeyboardHeight);
+        //waited long enough, just guess
+        keyboardHeight = 275;
+      }
+      if (keyboardHeight){
+        keyboardShow(e.target, elementBounds.top, elementBounds.bottom, keyboardViewportHeight, keyboardHeight);
+        clearInterval(pollKeyboardHeight);
+      }
+      count++;
+      
+    }, 100); 
   }, 32);
 }
 
@@ -72,15 +86,7 @@ function keyboardShow(element, elementTop, elementBottom, viewportHeight, keyboa
     keyboardHeight: keyboardHeight
   };
 
-  if( keyboardIsOverWebView() ) {
-    // keyboard sits on top of the view, but doesn't adjust the view's height
-    // lower the content height by subtracting the keyboard height from the view height
-    details.contentHeight = viewportHeight - keyboardHeight;
-  } else {
-    // view's height was shrunk down and the keyboard takes up the space the view doesn't fill
-    // do not add extra padding at the bottom of the scroll view, native already did that
-    details.contentHeight = window.innerHeight;
-  }
+  details.contentHeight = viewportHeight - keyboardHeight;
 
   console.debug('keyboardShow', keyboardHeight, details.contentHeight);
 
@@ -151,28 +157,66 @@ function keyboardPreventDefault(e) {
 }
 
 function keyboardOrientationChange() {
-  keyboardViewportHeight = window.innerHeight;
-  setTimeout(function(){
-    keyboardViewportHeight = window.innerHeight;
-  }, 999);
+  var updatedViewportHeight = window.innerHeight;
+
+  //too slow, have to wait for updated height
+  if (updatedViewportHeight === keyboardViewportHeight){
+    var count = 0;
+    var pollViewportHeight = setInterval(function(){
+      //give up
+      if (count > 10){
+        clearInterval(pollViewportHeight);
+      }
+
+      updatedViewportHeight = window.innerHeight;
+      
+      if (updatedViewportHeight !== keyboardViewportHeight){
+        if (updatedViewportHeight < keyboardViewportHeight){
+          ionic.keyboard.landscape = true; 
+        }
+        else {
+          ionic.keyboard.landscape = false;
+        }
+        keyboardViewportHeight = updatedViewportHeight;
+        clearInterval(pollViewportHeight);
+      }
+      count++;
+
+    }, 50);
+  }
+  else {
+    keyboardViewportHeight = updatedViewportHeight;    
+  }
 }
 
 function keyboardGetHeight() {
   // check if we are already have a keyboard height from the plugin
-  if (ionic.keyboard.height ) {
+  if ( ionic.keyboard.height ) {
     return ionic.keyboard.height;
+  }
+
+  if ( ionic.Platform.isAndroid() ){
+    //should be using the plugin, no way to know how big the keyboard is, so guess
+    if ( ionic.Platform.isFullScreen ){
+      return 275;
+    }
+    //otherwise, wait for the screen to resize
+    if ( window.innerHeight < keyboardViewportHeight ){
+      return keyboardViewportHeight - window.innerHeight;
+    }
+    else {
+      return 0;
+    }
   }
 
   // fallback for when its the webview without the plugin
   // or for just the standard web browser
   if( ionic.Platform.isIOS() ) {
-    if( ionic.Platform.isWebView() ) {
-      return 260;
+    if ( ionic.keyboard.landscape ){
+      return 206;
     }
-    return 216;
-  } else if( ionic.Platform.isAndroid() ) {
-    //guess for now
-    return 275;
+
+    return 260;
   }
 
   // safe guess
