@@ -199,9 +199,9 @@ function($rootScope, $timeout) {
       this.setCurrentIndex(startIndex);
       this.lastRenderScrollValue = startPos;
 
-      if (!this.dataSource.scope.$$phase) {
-        this.dataSource.scope.$digest();
-      }
+      // if (!this.dataSource.scope.$$phase) {
+      //   this.dataSource.scope.$digest();
+      // }
     },
     renderItem: function(dataIndex, primaryPos, secondaryPos) {
       var item = this.dataSource.getItem(dataIndex);
@@ -211,6 +211,7 @@ function($rootScope, $timeout) {
           primaryPos, secondaryPos, secondaryPos
         );
         this.renderedItems[dataIndex] = item;
+        item.scope.$digest();
       } else {
         delete this.renderedItems[dataIndex];
       }
