@@ -75,7 +75,8 @@ IonicModule
           $scope.$hasTabsTop = isTabsTop && !isHidden;
         });
         $scope.$on('$destroy', function() {
-          $scope.$hasTabs = $scope.$hasTabsTop = null;
+          delete $scope.$hasTabs;
+          delete $scope.$hasTabsTop;
         });
       }
     }

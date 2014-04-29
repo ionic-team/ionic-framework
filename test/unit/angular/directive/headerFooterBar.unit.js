@@ -98,7 +98,7 @@ describe('bar directives', function() {
       if (data.tag === 'ion-header-bar') {
         it('$hasHeader $hasSubheader', function() {
           var el = setup();
-          var scope = el.scope().$parent;
+          var scope = el.scope();
           expect(scope.$hasHeader).toEqual(true);
           expect(scope.$hasSubheader).toEqual(false);
           el.addClass('bar-subheader');
@@ -113,7 +113,7 @@ describe('bar directives', function() {
       } else {
         it('$hasFooter $hasSubheader', function() {
           var el = setup();
-          var scope = el.scope().$parent;
+          var scope = el.scope();
           expect(scope.$hasFooter).toEqual(true);
           expect(scope.$hasSubfooter).toEqual(false);
           el.addClass('bar-subfooter');
@@ -127,7 +127,7 @@ describe('bar directives', function() {
         });
         it('.has-tabs', function() {
           var el = setup();
-          var scope = el.scope().$parent;
+          var scope = el.scope();
           expect(el.hasClass('has-tabs')).toBe(false);
           scope.$apply('$hasTabs = true');
           expect(el.hasClass('has-tabs')).toBe(true);

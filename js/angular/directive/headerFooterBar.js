@@ -88,7 +88,7 @@ function tapScrollToTopDirective() {
                 current.tagName.match(/input|textarea|select/i) ||
                 current.isContentEditable) {
               return;
-            } 
+            }
             current = current.parentNode;
           }
           var touch = e.gesture && e.gesture.touches[0] || e.detail.touches[0];
@@ -121,26 +121,26 @@ function headerFooterBarDirective(isHeader) {
           });
 
           var el = $element[0];
-          //just incase header is on rootscope
-          var parentScope = $scope.$parent || $scope;
 
           if (isHeader) {
             $scope.$watch(function() { return el.className; }, function(value) {
               var isSubheader = value.indexOf('bar-subheader') !== -1;
-              parentScope.$hasHeader = !isSubheader;
-              parentScope.$hasSubheader = isSubheader;
+              $scope.$hasHeader = !isSubheader;
+              $scope.$hasSubheader = isSubheader;
             });
             $scope.$on('$destroy', function() {
-              parentScope.$hasHeader = parentScope.$hasSubheader = null;
+              delete $scope.$hasHeader;
+              delete $scope.$hasSubheader;
             });
           } else {
             $scope.$watch(function() { return el.className; }, function(value) {
               var isSubfooter = value.indexOf('bar-subfooter') !== -1;
-              parentScope.$hasFooter = !isSubfooter;
-              parentScope.$hasSubfooter = isSubfooter;
+              $scope.$hasFooter = !isSubfooter;
+              $scope.$hasSubfooter = isSubfooter;
             });
             $scope.$on('$destroy', function() {
-              parentScope.$hasFooter = parentScope.$hasSubfooter = null;
+              delete $scope.$hasFooter;
+              delete $scope.$hasSubfooter;
             });
             $scope.$watch('$hasTabs', function(val) {
               $element.toggleClass('has-tabs', !!val);
