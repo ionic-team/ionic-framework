@@ -52,7 +52,7 @@ IonicModule
     require: ['^ionItem', '^ionList'],
     priority: Number.MAX_VALUE,
     compile: function($element, $attr) {
-      $attr.$set('class', ($attr.class || '') + ' button icon button-icon', true);
+      $attr.$set('class', ($attr['class'] || '') + ' button icon button-icon', true);
       $element[0].setAttribute('data-prevent-scroll', true);
       return function($scope, $element, $attr, ctrls) {
         var itemCtrl = ctrls[0];

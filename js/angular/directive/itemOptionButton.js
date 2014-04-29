@@ -34,7 +34,7 @@ return {
   require: '^ionItem',
   priority: Number.MAX_VALUE,
   compile: function($element, $attr) {
-    $attr.$set('class', ($attr.class || '') + ' button', true);
+    $attr.$set('class', ($attr['class'] || '') + ' button', true);
     return function($scope, $element, $attr, itemCtrl) {
       if (!itemCtrl.optionsContainer) {
         itemCtrl.optionsContainer = angular.element(ITEM_TPL_OPTION_BUTTONS);

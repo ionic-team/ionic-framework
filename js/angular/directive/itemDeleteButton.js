@@ -40,7 +40,7 @@ IonicModule
     compile: function($element, $attr) {
       //Add the classes we need during the compile phase, so that they stay
       //even if something else like ngIf removes the element and re-addss it
-      $attr.$set('class', ($attr.class || '') + ' button icon button-icon', true);
+      $attr.$set('class', ($attr['class'] || '') + ' button icon button-icon', true);
       return function($scope, $element, $attr, ctrls) {
         var itemCtrl = ctrls[0];
         var listCtrl = ctrls[1];
