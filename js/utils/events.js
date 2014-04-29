@@ -12,8 +12,12 @@
 
 (function(ionic) {
 
-  // Custom event polyfill
-  if(!window.CustomEvent) {
+  // Custom event polyfill and IE9+ compatibility
+  msie = parseInt(((/msie (\d+)/i.exec(navigator.userAgent) || [])[1]),10);
+  if (isNaN(msie)) {
+    msie = parseInt((/trident\/.*; rv:(\d+)/i.exec(navigator.userAgent) || [])[1], 10);
+  }
+  if(msie >= 9 || !window.CustomEvent) {
     (function() {
       var CustomEvent;
 
