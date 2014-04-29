@@ -68,7 +68,7 @@
   }
 
   function activateElements() {
-    console.log('ACTIVATING');
+    // console.log('ACTIVATING');
     // activate all elements in the queue
     for(var key in queueElements) {
       if(queueElements[key]) {
