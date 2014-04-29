@@ -51,7 +51,7 @@ function($document) {
     retain: retain,
     /**
      * @ngdoc method
-     * @name $ionicBackdrop#retain
+     * @name $ionicBackdrop#release
      * @description
      * Releases the backdrop.
      */
