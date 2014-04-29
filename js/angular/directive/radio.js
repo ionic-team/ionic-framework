@@ -26,7 +26,8 @@ IonicModule
       ngModel: '=?',
       ngValue: '=?',
       ngChange: '&',
-      icon: '@'
+      icon: '@',
+      name: '@'
     },
     transclude: true,
     template: '<label class="item item-radio">' +
