@@ -46,7 +46,7 @@
  *   <div class="list">
  *     <div class="item my-item"
  *       collection-repeat="item in items"
- *       collection-item-width="100%"
+ *       collection-item-width="'100%'"
  *       collection-item-height="getItemHeight(item, $index)"
  *       ng-style="{height: getItemHeight(item, $index)}">
  *       {% raw %}{{item}}{% endraw %}
@@ -80,8 +80,8 @@
  * <ion-content>
  *   <div class="item item-avatar my-image-item"
  *     collection-repeat="image in images"
- *     collection-item-width="33%"
- *     collection-item-height="33%">
+ *     collection-item-width="'33%'"
+ *     collection-item-height="'33%'">
  *     <img ng-src="{{image.src}}">
  *   </div>
  * </ion-content>
@@ -151,8 +151,8 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
       } else if (!isVertical && !$attr.collectionItemWidth) {
         throw new Error("collection-repeat expected attribute collection-item-width to be a an expression that returns a number.");
       }
-      $attr.collectionItemHeight = $attr.collectionItemHeight || '100%';
-      $attr.collectionItemWidth = $attr.collectionItemWidth || '100%';
+      $attr.collectionItemHeight = $attr.collectionItemHeight || '"100%"';
+      $attr.collectionItemWidth = $attr.collectionItemWidth || '"100%"';
 
       var heightParsed = $attr.collectionItemHeight ?
         $parse($attr.collectionItemHeight) :
