@@ -59,19 +59,21 @@ IonicModule
 
         }
 
-        if (angular.isDefined($attr.hideBackButton)) {
-          $scope.$watch($attr.hideBackButton, function(value) {
-            // Should we hide a back button when this tab is shown
-            navBarCtrl.showBackButton(!value);
-          });
-        }
+        var hideBackAttr = angular.isDefined($attr.hideBackButton) ?
+          $attr.hideBackButton :
+          'false';
+        $scope.$watch(hideBackAttr, function(value) {
+          // Should we hide a back button when this tab is shown
+          navBarCtrl.showBackButton(!value);
+        });
 
-        if (angular.isDefined($attr.hideNavBar)) {
-          $scope.$watch($attr.hideNavBar, function(value) {
-            // Should the nav bar be hidden for this view or not?
-            navBarCtrl.showBar(!value);
-          });
-        }
+        var hideNavAttr = angular.isDefined($attr.hideNavBar) ?
+          $attr.hideNavBar :
+          'false';
+        $scope.$watch(hideNavAttr, function(value) {
+          // Should the nav bar be hidden for this view or not?
+          navBarCtrl.showBar(!value);
+        });
 
       };
     }

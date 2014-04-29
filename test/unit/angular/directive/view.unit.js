@@ -57,12 +57,22 @@ describe('ionView directive', function() {
     expect(el.controller('ionNavBar').showBackButton).toHaveBeenCalledWith(true);
   });
 
+  it('should show back button by default', function() {
+    var el = setup();
+    expect(el.controller('ionNavBar').showBackButton).toHaveBeenCalledWith(true);
+  });
+
   it('should showBar depending on what is given', function() {
     var el = setup('hide-nav-bar="shouldHide"');
     expect(el.controller('ionNavBar').showBar).toHaveBeenCalledWith(true);
     el.scope().$apply('shouldHide = true');
     expect(el.controller('ionNavBar').showBar).toHaveBeenCalledWith(false);
     el.scope().$apply('shouldHide = false');
+    expect(el.controller('ionNavBar').showBar).toHaveBeenCalledWith(true);
+  });
+
+  it('should showBar by default', function() {
+    var el = setup();
     expect(el.controller('ionNavBar').showBar).toHaveBeenCalledWith(true);
   });
 
