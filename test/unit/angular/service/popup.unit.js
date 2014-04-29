@@ -153,13 +153,21 @@ describe('$ionicPopup service', function() {
     afterEach(function() {
       document.body.classList.remove('popup-open');
     });
-    it('should add popup-open and retain backdrop if no previous popup', inject(function($ionicBackdrop, $timeout) {
+
+    it('should add popup-open and retain backdrop and register back button action if no previous popup', inject(function($ionicBackdrop, $timeout, $ionicPlatform) {
+      spyOn($ionicPlatform, 'registerBackButtonAction').andReturn('actionReturn');
       spyOn($ionicBackdrop, 'retain');
       $ionicPopup.show();
       $timeout.flush();
       expect(angular.element(document.body).hasClass('popup-open')).toBe(true);
       expect($ionicBackdrop.retain).toHaveBeenCalled();
+      expect($ionicPlatform.registerBackButtonAction).toHaveBeenCalledWith(
+        jasmine.any(Function),
+        PLATFORM_BACK_BUTTON_PRIORITY_POPUP
+      );
+      expect($ionicPopup._backButtonActionDone).toBe('actionReturn');
     }));
+
     it('should hide previous popup if exists and not popup-open & backdrop', inject(function($ionicBackdrop, $timeout) {
       var previousPopup = { hide: jasmine.createSpy('hide') };
       spyOn($ionicBackdrop, 'retain');
@@ -231,19 +239,21 @@ describe('$ionicPopup service', function() {
       expect(previousPopup.show).toHaveBeenCalled();
     }));
 
-    it('should release backdrop and remove popup-open if no previous', inject(function($q, $timeout, $ionicBackdrop) {
+    it('should release backdrop and remove popup-open and deregister back if no previous', inject(function($q, $timeout, $ionicBackdrop, $ionicPlatform) {
       var fakePopup = {
         show: jasmine.createSpy('show'),
         remove: jasmine.createSpy('remove'),
         responseDeferred: $q.defer()
       };
-      document.body.classList.add('popup-open');
+      var backDoneSpy = jasmine.createSpy('backDone');
+      spyOn($ionicPlatform, 'registerBackButtonAction').andReturn(backDoneSpy);
       spyOn($ionicBackdrop, 'release');
       spyOn($ionicPopup, '_createPopup').andReturn($q.when(fakePopup));
       $ionicPopup.show();
       fakePopup.responseDeferred.resolve();
       $timeout.flush();
       expect($ionicBackdrop.release).toHaveBeenCalled();
+      expect(backDoneSpy).toHaveBeenCalled();
       expect(document.body.classList.contains('popup-open')).toBe(false);
     }));
   });

@@ -98,16 +98,15 @@ var POPUP_TPL =
  */
 IonicModule
 .factory('$ionicPopup', [
-  '$animate',
   '$ionicTemplateLoader',
   '$ionicBackdrop',
-  '$log',
   '$q',
   '$timeout',
   '$rootScope',
   '$document',
   '$compile',
-function($animate, $ionicTemplateLoader, $ionicBackdrop, $log, $q, $timeout, $rootScope, $document, $compile) {
+  '$ionicPlatform',
+function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $document, $compile, $ionicPlatform) {
   //TODO allow this to be configured
   var config = {
     stackPushDelay: 50
@@ -348,6 +347,10 @@ function($animate, $ionicTemplateLoader, $ionicBackdrop, $log, $q, $timeout, $ro
     });
   }
 
+  function onHardwareBackButton(e) {
+    popupStack[0] && popupStack[0].responseDeferred.resolve();
+  }
+
   function showPopup(options) {
     var popupPromise = $ionicPopup._createPopup(options);
     var previousPopup = popupStack[0];
@@ -363,6 +366,10 @@ function($animate, $ionicTemplateLoader, $ionicBackdrop, $log, $q, $timeout, $ro
         //Add popup-open & backdrop if this is first popup
         document.body.classList.add('popup-open');
         $ionicBackdrop.retain();
+        $ionicPopup._backButtonActionDone = $ionicPlatform.registerBackButtonAction(
+          onHardwareBackButton,
+          PLATFORM_BACK_BUTTON_PRIORITY_POPUP
+        );
       }
       popupStack.unshift(popup);
       popup.show();
@@ -386,6 +393,7 @@ function($animate, $ionicTemplateLoader, $ionicBackdrop, $log, $q, $timeout, $ro
           //Remove popup-open & backdrop if this is last popup
           document.body.classList.remove('popup-open');
           $ionicBackdrop.release();
+          ($ionicPopup._backButtonActionDone || angular.noop)();
         }
 
         return result;

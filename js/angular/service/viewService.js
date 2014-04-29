@@ -79,7 +79,10 @@ function($rootScope, $state, $location, $document, $animate, $ionicPlatform, $io
     e.preventDefault();
     return false;
   }
-  $ionicPlatform.registerBackButtonAction(onHardwareBackButton, 100);
+  $ionicPlatform.registerBackButtonAction(
+    onHardwareBackButton, 
+    PLATFORM_BACK_BUTTON_PRIORITY_VIEW
+  );
 
 }])
 
