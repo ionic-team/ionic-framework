@@ -24,9 +24,9 @@
  * ```
  *
  * @param {string=} title The title to display on the parent {@link ionic.directive:ionNavBar}.
- * @param {boolean=} hideBackButton Whether to hide the back button on the parent
+ * @param {boolean=} hideBackButton Whether to hide the back button on the parent (default false)
  * {@link ionic.directive:ionNavBar} by default.
- * @param {boolean=} hideNavBar Whether to hide the parent
+ * @param {boolean=} hideNavBar Whether to hide the parent (default false)
  * {@link ionic.directive:ionNavBar} by default.
  */
 IonicModule
@@ -39,6 +39,8 @@ IonicModule
     compile: function(tElement, tAttrs, transclude) {
       tElement.addClass('pane');
       tElement[0].removeAttribute('title');
+      tAttrs.hideBackButton = tAttrs.hideBackButton || false;
+      tAttrs.hideNavBar = tAttrs.hideNavBar || false;
 
       return function link($scope, $element, $attr, navBarCtrl) {
         if (!navBarCtrl) {
