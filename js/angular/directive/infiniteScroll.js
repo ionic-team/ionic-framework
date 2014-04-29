@@ -36,7 +36,7 @@
  *       $scope.$broadcast('scroll.infiniteScrollComplete');
  *     });
  *   };
- * 
+ *
  *   $scope.$on('stateChangeSuccess', function() {
  *     $scope.loadMore();
  *   });
@@ -131,10 +131,6 @@ IonicModule
         var scrollValues = scrollView.getValues();
         var maxScroll = infiniteScrollCtrl.getMaxScroll();
 
-        if(maxScroll.top === 0) {
-          return;
-        }
-             
         if ((maxScroll.left !== -1 && scrollValues.left >= maxScroll.left) ||
             (maxScroll.top !== -1 && scrollValues.top >= maxScroll.top)) {
           onInfinite();
