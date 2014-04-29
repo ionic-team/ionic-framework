@@ -178,7 +178,7 @@ gulp.task('sass', function(done) {
     }))
     .pipe(concat('ionic.css'))
     .pipe(gulp.dest(buildConfig.distCss))
-    .pipe(gulpif(IS_RELEASE_BUILD, minifyCss()))
+    // .pipe(gulpif(IS_RELEASE_BUILD, minifyCss()))
     .pipe(rename({ extname: '.min.css' }))
     .pipe(gulp.dest(buildConfig.distCss))
     .on('end', done);
