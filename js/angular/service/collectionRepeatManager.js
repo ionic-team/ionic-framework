@@ -207,7 +207,7 @@ function($rootScope, $timeout) {
           primaryPos, secondaryPos, secondaryPos
         );
         this.renderedItems[dataIndex] = item;
-        if (!item.scope.$$phase) {
+        if (item.scope && !item.scope.$$phase) {
           item.scope.$digest();
         }
       } else {
