@@ -54,7 +54,7 @@ function run {
 
   echo "-- v$VERSION \"$CODENAME\" pushed to $RELEASE_REMOTE/master successfully!"
 
-  gulp tweet --release --codeversion "$VERSION" --codename "$CODENAME"
+  gulp release-tweet release-irc
 }
 
 source $(dirname $0)/../utils.inc

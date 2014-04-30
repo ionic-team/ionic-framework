@@ -12,9 +12,11 @@ var connect = require('connect');
 var dgeni = require('dgeni');
 var es = require('event-stream');
 var htmlparser = require('htmlparser2');
+var irc = require('ircb');
 var lunr = require('lunr');
 var marked = require('marked');
 var mkdirp = require('mkdirp');
+var twitter = require('node-twitter-api');
 var yaml = require('js-yaml');
 
 var http = require('http');
@@ -31,7 +33,6 @@ var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var stripDebug = require('gulp-strip-debug');
 var template = require('gulp-template');
-var twitter = require('gulp-twitter');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 
@@ -200,20 +201,36 @@ gulp.task('version', function() {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('tweet', function() {
+gulp.task('release-tweet', function(done) {
   var oauth = {
     consumerKey: process.env.TWITTER_CONSUMER_KEY,
     consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
     accessToken: process.env.TWITTER_ACCESS_TOKEN,
     accessTokenSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET
   };
-  var exclamations = ["Aah","Ah","Aha","All right","Aw","Ay","Aye","Bah","Boy","By golly","Boom","Cheerio","Cheers","Come on","Crikey","Dear me","Egads","Fiddle-dee-dee","Gadzooks","Gangway","G'day","Gee whiz","Gesundheit","Get outta here","Good golly","Good job","Gosh","Gracious","Great","Gulp","Ha","Ha-ha","Hah","Hallelujah","Harrumph","Hey","Hooray","Hot dog","Hurray","Huzza","I say","La-di-dah","Look","Look here","Long time","Lordy","Most certainly","My my","My word","Oh","Oho","Oh-oh","Oh no","Okay","Okey-dokey","Ooh","Oye","Phew","Quite","Ready","Right on","Roger that","Rumble","Say","See ya","Snap","Sup","Ta-da","Take that","Tally ho","Thanks","Toodles","Touche","Tut-tut","Very nice","Very well","Voila","Vroom","Well done","Well, well","Whoa","Whoopee","Whew","Word up","Wow","Wuzzup","Ya","Yea","Yeah","Yippee","Yo","Yoo-hoo","You bet","You don't say","You know","Yow","Yum","Yummy","Zap","Zounds","Zowie"];
-  if(IS_RELEASE_BUILD && argv.codeversion && argv.codename) {
-    var tweet = exclamations[Math.floor(Math.random()*exclamations.length)]+'! Just released @IonicFramework '+argv.codename+' v'+argv.codeversion+' https://github.com/driftyco/ionic/releases/tag/v'+argv.codeversion;
-    console.log(tweet);
-    return gulp.src('package.json')
-            .pipe(twitter(oauth, tweet));
-  }
+  var client = new twitter(oauth);
+  client.statuses(
+    'update',
+    { status: buildConfig.releaseMessage() },
+    oauth.accessToken,
+    oauth.accessTokenSecret,
+    done
+  );
+});
+
+gulp.task('release-irc', function(done) {
+  var client = irc({
+    host: 'irc.freenode.net',
+    secure: true,
+    nick: 'ionitron',
+    username: 'ionitron',
+    realName: 'ionitron',
+    channels: ['#ionic']
+  }, function() {
+    client.say('#ionic', buildConfig.releaseMessage(), function() {
+      client.quit('', done);
+    });
+  });
 });
 
 gulp.task('docs-index', function() {

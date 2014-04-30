@@ -1,3 +1,5 @@
+var pkg = require('../package.json');
+
 module.exports = {
   dist: 'dist',
   distJs: 'dist/js',
@@ -93,5 +95,16 @@ module.exports = {
     'dist/js/angular/angular-sanitize.js',
     'dist/js/angular-ui/angular-ui-router.js',
     'dist/js/ionic-angular.js'
-  ]
+  ],
+
+  exclamations: [
+    "Aah","Ah","Aha","All right","Aw","Ay","Aye","Bah","Boy","By golly","Boom","Cheerio","Cheers","Come on","Crikey","Dear me","Egads","Fiddle-dee-dee","Gadzooks","Gangway","G'day","Gee whiz","Gesundheit","Get outta here","Gosh","Gracious","Great","Gulp","Ha","Ha-ha","Hah","Harrumph","Hey","Hooray","Hurray","Huzzah","I say","Look","Look here","Long time","Lordy","Most certainly","My my","My word","Oh","Oh-oh","Oh no","Okay","Okey-dokey","Ooh","Oye","Phew","Quite","Ready","Right on","Roger that","Rumble","Say","See ya","Snap","Sup","Ta-da","Take that","Tally ho","Thanks","Toodles","Touche","Tut-tut","Very nice","Very well","Voila","Vroom","Well done","Well, well","Whoa","Whoopee","Whew","Word up","Wow","Wuzzup","Ya","Yea","Yeah","Yippee","Yo","Yoo-hoo","You bet","You don't say","You know","Yow","Yum","Yummy","Zap","Zounds","Zowie"
+  ],
+
+  releaseMessage: function() {
+    return this.exclamations[Math.floor(Math.random()*this.exclamations.length)] + '! ' +
+      'Just released @IonicFramework v' + pkg.version + ' "' + pkg.codename + '"! ' +
+      'https://github.com/driftyco/ionic/releases/tag/v' + pkg.version;
+  },
+
 };
