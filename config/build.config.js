@@ -103,8 +103,8 @@ module.exports = {
 
   releaseMessage: function() {
     return this.exclamations[Math.floor(Math.random()*this.exclamations.length)] + '! ' +
-      'Just released @IonicFramework v' + pkg.version + ' "' + pkg.codename + '"! ' +
-      'https://github.com/driftyco/ionic/releases/tag/v' + pkg.version;
+      'Just released @IonicFramework v' + pkg.version + ' "' + pkg.codename + '"!\n\n' +
+      'Changelog at ' + pkg.repository.changelogUrl + '. Download at ' + pkg.repository.downloadUrl;
   },
 
 };
