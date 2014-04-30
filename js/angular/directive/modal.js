@@ -8,7 +8,7 @@ IonicModule
     restrict: 'E',
     transclude: true,
     replace: true,
-    template: '<div class="modal-backdrop">' +
+    template: '<div class="modal-backdrop" ng-click="modal.hide()">' +
                 '<div class="modal-wrapper" ng-transclude></div>' +
               '</div>'
   };

@@ -51,7 +51,8 @@
 .modal-open {
   pointer-events: none;
 
-  .modal {
+  .modal,
+  .modal-backdrop {
     pointer-events: auto;
   }
 }
