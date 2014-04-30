@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.2
+ * Ionic, v1.0.0-beta.3
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -2232,7 +2232,8 @@ ion-infinite-scroll.active .scroll-infinite {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff; }
+  background-color: #fff;
+  overflow: hidden; }
 
 /**
  * Typography
