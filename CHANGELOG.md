@@ -1,3 +1,31 @@
+<a name="1.0.0-beta.3"></a>
+### 1.0.0-beta.3 "americium" (2014-04-30)
+
+
+#### Bug Fixes
+
+* **$ionicModal:** do not inherit has-header etc from parent scope ([6c0c8350](https://github.com/driftyco/ionic/commit/6c0c8350f2d925a91bcf1460dc58c7beb8c97922), closes [#1191](https://github.com/driftyco/ionic/issues/1191))
+* **.pane:** make pane class have overflow: hidden; fixes scrolling whole page from header/footer errors ([dca87e2c](https://github.com/driftyco/ionic/commit/dca87e2c5f8992c0b38ac02e3e71b73b6e18388d), closes [#1218](https://github.com/driftyco/ionic/issues/1218))
+* **android-2.2:** use string notation for reserved 'class' keyword ([3bcf06f2](https://github.com/driftyco/ionic/commit/3bcf06f217582922bc16af198597ccc17274b929), closes [#1228](https://github.com/driftyco/ionic/issues/1228))
+* **collectionRepeat:** allow percent expressions ([94bcbf75](https://github.com/driftyco/ionic/commit/94bcbf753bdefd2b7ff5ac34d1eb594af5bfb02d))
+* **infiniteScroll:** allow to fire if list does not fill up screen ([e35b95e1](https://github.com/driftyco/ionic/commit/e35b95e1238038787def75c1cb9bf4cbb524d327))
+* **ionHeaderBar:** have no side effects with content in other views ([7fd31b6a](https://github.com/driftyco/ionic/commit/7fd31b6aed4dbe132566071f54b5a7cbf6ab46cb), closes [#1095](https://github.com/driftyco/ionic/issues/1095))
+* **ionList:** make reorder follow an offset list as it scrolls ([3a68a2c9](https://github.com/driftyco/ionic/commit/3a68a2c9022e586c7c313418be8c05005dc5c682))
+* **ionRadio:** pass name property down to input element ([9995f46b](https://github.com/driftyco/ionic/commit/9995f46b223406fdf4a45270f185eacb5135bc37), closes [#1229](https://github.com/driftyco/ionic/issues/1229))
+* **ionTab:** make it so tabNav works with ngRepeat ([288d4ac2](https://github.com/driftyco/ionic/commit/288d4ac230a00898b9388fdb6e6caf386dfb840d))
+* **ionView:**
+  * initialize hideBack/hideNav to false if undefined ([5e56c2d6](https://github.com/driftyco/ionic/commit/5e56c2d6b78dbb8943adc738dc214ffef066e654))
+  * only $watch attributes if defined ([12e5f6c1](https://github.com/driftyco/ionic/commit/12e5f6c1162adc1094026c5539932a66f5767fb9), closes [#1216](https://github.com/driftyco/ionic/issues/1216))
+* **scrollView:** stop polluting global.core ([8992e7c9](https://github.com/driftyco/ionic/commit/8992e7c903543340b50f3074a43eff3e1b884b45))
+
+
+#### Features
+
+* **$ionicActionSheet:** allow html binding of buttons and title ([3e5b39f2](https://github.com/driftyco/ionic/commit/3e5b39f20175fbe16d7439bdfbeb508544782fbf), closes [#1219](https://github.com/driftyco/ionic/issues/1219))
+* **$ionicPopup:** on android, make back button close popup ([b87bcb30](https://github.com/driftyco/ionic/commit/b87bcb30c33fb577b41139c43089b2a864211d56), closes [#1222](https://github.com/driftyco/ionic/issues/1222))
+* **$ionicSlideBoxDelegate:** add enableSlide(true/false) method ([e003bf18](https://github.com/driftyco/ionic/commit/e003bf18bc0d771c85ae124e89f0ad2dad0aae71), closes [#1122](https://github.com/driftyco/ionic/issues/1122))
+
+
 <a name="1.0.0-beta.2"></a>
 ### 1.0.0-beta.2 "aluminum" (2014-04-28)
 
