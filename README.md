@@ -1,4 +1,3 @@
-[![Stories in Ready](https://badge.waffle.io/driftyco/ionic.png?label=ready&title=Ready)](https://waffle.io/driftyco/ionic)
 <a href="https://travis-ci.org/driftyco/ionic"><img src="http://img.shields.io/travis/driftyco/ionic.svg?style=flat" data-bindattr-164="164" title="Build Status Images"></a>
 
 [![Issues Ready](https://badge.waffle.io/driftyco/ionic.png?label=ready&title=Ready)](https://waffle.io/driftyco/ionic)
