@@ -440,7 +440,7 @@
     // Return the list item from the given target
     _getItem: function(target) {
       while(target) {
-        if(target.classList.contains(ITEM_CLASS)) {
+        if(target.classList && target.classList.contains(ITEM_CLASS)) {
           return target;
         }
         target = target.parentNode;
