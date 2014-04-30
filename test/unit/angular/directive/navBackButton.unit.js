@@ -56,28 +56,35 @@ describe('ionNavBackButton directive', function() {
     expect(el.hasClass('button back-button')).toBe(true);
   });
 
-  it('should set hasBackButton through historyChange event', function() {
+  it('should hide based on historyChange', inject(function($rootScope) {
+    ionic.animationFrameThrottle = function(cb) { return cb; };
     var el = setup();
-    expect(el.scope().hasBackButton).toBeFalsy();
-    el.scope().$parent.$broadcast('$viewHistory.historyChange', {showBack: true});
-    expect(el.scope().hasBackButton).toBe(true);
-    el.scope().$parent.$broadcast('$viewHistory.historyChange', {showBack: false});
-    expect(el.scope().hasBackButton).toBe(false);
-  });
+    el.scope().backButtonShown = true;
+    expect(el.hasClass('ng-hide')).toBe(true);
+    $rootScope.$broadcast('$viewHistory.historyChange', {showBack:true});
+    el.scope().$apply();
+    expect(el.hasClass('ng-hide')).toBe(false);
+    $rootScope.$broadcast('$viewHistory.historyChange', {showBack:false});
+    el.scope().$apply();
+    expect(el.hasClass('ng-hide')).toBe(true);
+  }));
 
-  it('should hide based on backButtonShown && hasBackButton', function() {
+  it('should hide based on backButtonShown', inject(function($rootScope) {
     ionic.animationFrameThrottle = function(cb) { return cb; };
     var el = setup();
     expect(el.hasClass('ng-hide')).toBe(true);
-    el.scope().$apply('backButtonShown = true; hasBackButton = true');
+    $rootScope.$broadcast('$viewHistory.historyChange', {showBack:true});
+    el.scope().$apply('backButtonShown = true');
     expect(el.hasClass('ng-hide')).toBe(false);
-    el.scope().$apply('backButtonShown = false; hasBackButton = true');
+    el.scope().$apply('backButtonShown = false');
     expect(el.hasClass('ng-hide')).toBe(true);
-    el.scope().$apply('backButtonShown = true; hasBackButton = false');
+    $rootScope.$broadcast('$viewHistory.historyChange', {showBack:false});
+    el.scope().$apply('backButtonShown = true');
     expect(el.hasClass('ng-hide')).toBe(true);
-    el.scope().$apply('backButtonShown = true; hasBackButton = true');
+    $rootScope.$broadcast('$viewHistory.historyChange', {showBack:true});
+    el.scope().$apply('backButtonShown = true');
     expect(el.hasClass('ng-hide')).toBe(false);
-  });
+  }));
 
   it('should transclude content', function() {
     var el = setup('', '<b>content</b> {{1+2}}');
