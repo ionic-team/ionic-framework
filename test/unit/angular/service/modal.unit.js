@@ -15,11 +15,11 @@ describe('Ionic Modal', function() {
 
   it('Should show for static template', function() {
     var template = '<div class="modal"></div>';
-    var modalInstance = modal.fromTemplate(template);
-    modalInstance.show();
-    expect(modalInstance.el.classList.contains('modal-backdrop')).toBe(true);
-    expect(modalInstance.modalEl.classList.contains('modal')).toBe(true);
-    expect(modalInstance.modalEl.classList.contains('slide-in-up')).toBe(true);
+    var instance = modal.fromTemplate(template);
+    instance.show();
+    expect(instance.el.classList.contains('modal-backdrop')).toBe(true);
+    expect(instance.modalEl.classList.contains('modal')).toBe(true);
+    expect(instance.modalEl.classList.contains('slide-in-up')).toBe(true);
   });
 
   it('Should show for dynamic template', function() {
@@ -27,12 +27,12 @@ describe('Ionic Modal', function() {
 
     var done = false;
 
-    var modalInstance = modal.fromTemplateUrl('modal.html', function(modalInstance) {
+    var instance = modal.fromTemplateUrl('modal.html', function(instance) {
       done = true;
-      modalInstance.show();
-      expect(modalInstance.el.classList.contains('modal-backdrop')).toBe(true);
-      expect(modalInstance.modalEl.classList.contains('modal')).toBe(true);
-      expect(modalInstance.modalEl.classList.contains('active')).toBe(true);
+      instance.show();
+      expect(instance.el.classList.contains('modal-backdrop')).toBe(true);
+      expect(instance.modalEl.classList.contains('modal')).toBe(true);
+      expect(instance.modalEl.classList.contains('active')).toBe(true);
     });
 
     timeout.flush();
@@ -40,37 +40,37 @@ describe('Ionic Modal', function() {
   });
 
   it('should set isShown on show/hide', function() {
-    var m = modal.fromTemplate('<div class="modal">hello</div>');
-    expect(m.isShown()).toBe(false);
-    m.show();
-    expect(m.isShown()).toBe(true);
-    m.hide();
-    expect(m.isShown()).toBe(false);
+    var instance = modal.fromTemplate('<div class="modal">hello</div>');
+    expect(instance.isShown()).toBe(false);
+    instance.show();
+    expect(instance.isShown()).toBe(true);
+    instance.hide();
+    expect(instance.isShown()).toBe(false);
   });
 
   it('should set isShown on remove', function() {
-    var m = modal.fromTemplate('<div class="modal">hello</div>');
-    expect(m.isShown()).toBe(false);
-    m.show();
-    expect(m.isShown()).toBe(true);
-    m.remove();
-    expect(m.isShown()).toBe(false);
+    var instance = modal.fromTemplate('<div class="modal">hello</div>');
+    expect(instance.isShown()).toBe(false);
+    instance.show();
+    expect(instance.isShown()).toBe(true);
+    instance.remove();
+    expect(instance.isShown()).toBe(false);
   });
 
   it('show & remove should add .model-open to body', inject(function() {
-    var m = modal.fromTemplate('<div class="modal">hi</div>');
-    m.show();
+    var instance = modal.fromTemplate('<div class="modal">hi</div>');
+    instance.show();
     expect(angular.element(document.body).hasClass('modal-open')).toBe(true);
-    m.remove();
+    instance.remove();
     timeout.flush();
     expect(angular.element(document.body).hasClass('modal-open')).toBe(false);
   }));
 
   it('show & hide should add .model-open body', inject(function() {
-    var m = modal.fromTemplate('<div class="modal">hi</div>');
-    m.show();
+    var instance = modal.fromTemplate('<div class="modal">hi</div>');
+    instance.show();
     expect(angular.element(document.body).hasClass('modal-open')).toBe(true);
-    m.hide();
+    instance.hide();
     timeout.flush();
     expect(angular.element(document.body).hasClass('modal-open')).toBe(false);
   }));
@@ -86,27 +86,27 @@ describe('Ionic Modal', function() {
 
   it('Should close on hardware back button', inject(function($ionicPlatform) {
     var template = '<div class="modal"></div>';
-    var modalInstance = modal.fromTemplate(template);
+    var instance = modal.fromTemplate(template);
     spyOn($ionicPlatform, 'registerBackButtonAction').andCallThrough();
-    modalInstance.show();
+    instance.show();
 
     timeout.flush();
-    expect(modalInstance.isShown()).toBe(true);
+    expect(instance.isShown()).toBe(true);
     expect($ionicPlatform.registerBackButtonAction).toHaveBeenCalled();
 
     ionicPlatform.hardwareBackButtonClick();
 
-    expect(modalInstance.isShown()).toBe(false);
+    expect(instance.isShown()).toBe(false);
   }));
 
   it('should close modal on backdrop click after animate is done', function() {
     var template = '<div class="modal"></div>';
-    var m = modal.fromTemplate(template);
-    spyOn(m, 'hide');
-    m.show();
+    var instance = modal.fromTemplate(template);
+    spyOn(instance, 'hide');
+    instance.show();
     timeout.flush();
-    m.$el.triggerHandler('click');
-    expect(m.hide).toHaveBeenCalled();
+    instance.$el.triggerHandler('click');
+    expect(instance.hide).toHaveBeenCalled();
   });
 
   it('should close modal on backdrop click if target is not backdrop', function() {
@@ -130,65 +130,73 @@ describe('Ionic Modal', function() {
     instance.$el.triggerHandler('click');
     expect(instance.hide).toHaveBeenCalled();
   });
+  
+  it('should remove click listener on hide', function() {
+    var template = '<div class="modal"></div>';
+    var instance = modal.fromTemplate(template);
+    spyOn(instance.$el, 'off');
+    instance.hide();
+    expect(instance.$el.off).toHaveBeenCalledWith('click');
+  });
 
   it('should broadcast "modal.shown" on show with self', function() {
     var template = '<div class="modal"></div>';
-    var m = modal.fromTemplate(template, {});
-    spyOn(m.scope.$parent, '$broadcast').andCallThrough();
-    m.show();
+    var instance = modal.fromTemplate(template, {});
+    spyOn(instance.scope.$parent, '$broadcast').andCallThrough();
+    instance.show();
     timeout.flush();
-    expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.shown', m);
+    expect(instance.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.shown', instance);
   });
 
   it('should broadcast "modal.hidden" on hide with self', function() {
     var template = '<div class="modal"></div>';
-    var m = modal.fromTemplate(template, {});
-    spyOn(m.scope.$parent, '$broadcast');
-    m.hide();
-    expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.hidden', m);
+    var instance = modal.fromTemplate(template, {});
+    spyOn(instance.scope.$parent, '$broadcast');
+    instance.hide();
+    expect(instance.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.hidden', instance);
   });
 
   it('should broadcast "modal.removed" on remove', inject(function($animate) {
     var template = '<div class="modal"></div>';
-    var m = modal.fromTemplate(template, {});
+    var instance = modal.fromTemplate(template, {});
     var broadcastedModal;
     var done = false;
 
-    //By the time m.remove() is done, our scope will be destroyed. so we have to save the modal
+    //By the time instance.remove() is done, our scope will be destroyed. so we have to save the modal
     //it gives us
-    spyOn(m.scope.$parent, '$broadcast').andCallThrough();
-    spyOn(m.scope, '$destroy');
+    spyOn(instance.scope.$parent, '$broadcast').andCallThrough();
+    spyOn(instance.scope, '$destroy');
 
-    m.remove();
-    expect(m.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.removed', m);
+    instance.remove();
+    expect(instance.scope.$parent.$broadcast).toHaveBeenCalledWith('modal.removed', instance);
     timeout.flush();
   }));
 
   it('show should return a promise resolved on hide', function() {
     var template = '<div class="modal"></div>';
-    var m = modal.fromTemplate(template, {});
+    var instance = modal.fromTemplate(template, {});
     var done = false;
 
-    m.hide().then(function() {
+    instance.hide().then(function() {
       done = true;
     });
-    expect(m.el.classList.contains('hide')).toBe(false);
+    expect(instance.el.classList.contains('hide')).toBe(false);
     timeout.flush();
-    expect(m.el.classList.contains('hide')).toBe(true);
+    expect(instance.el.classList.contains('hide')).toBe(true);
     expect(done).toBe(true);
   });
 
   it('show should return a promise resolved on remove', function() {
     var template = '<div class="modal"></div>';
-    var m = modal.fromTemplate(template, {});
+    var instance = modal.fromTemplate(template, {});
     var done = false;
 
-    m.remove().then(function() {
+    instance.remove().then(function() {
       done = true;
     });
-    spyOn(m.scope, '$destroy');
+    spyOn(instance.scope, '$destroy');
     timeout.flush();
-    expect(m.scope.$destroy).toHaveBeenCalled();
+    expect(instance.scope.$destroy).toHaveBeenCalled();
     expect(done).toBe(true);
   });
 
