@@ -41,7 +41,7 @@ Tested On
 - Android 4.2 Cordova
 
 
-iOS 7.1 Cordova with AND without viewport height DOES resize, DOES NOT fire resize event 
+iOS 7.1 Cordova with AND without viewport height DOES resize, DOES NOT fire resize event
 iOS 7.1 Safari with AND without viewport height DOES NOT resize
 
 iOS 7.0 Cordova with viewport height DOES resize, DOES fire resize event
@@ -49,17 +49,17 @@ iOS 7.0 Cordova without viewport height DOES resize, DOES NOT fire resize event
 iOS 7.0 Safari with AND without viewport height DOES NOT resize
 
 iOS 6.1 Cordova with AND without viewport height DOES NOT resize
-iOS 6.1 Safari without viewport height DOES NOT resize 
+iOS 6.1 Safari without viewport height DOES NOT resize
 
-NOTES: 
+NOTES:
  -iOS 7.1 Safari with viewport height screws up ionic layout
  -iOS 7.0 Safari with viewport height, the scroll view does not resize properly on keyboardhide
  -iOS 7.0 Cordova without viewport height, scroll view does not resize properly switching inputs at bottom of page
- -iOS 6.1 Cordova and Safari don't work well with viewport height 
+ -iOS 6.1 Cordova and Safari don't work well with viewport height
 
 RECOMMENDATIONS:
  -iOS 7.1 Cordova no viewport height, keyboard is not over webview
- -iOS 7.1 Safari no viewport height, keyboard is over webview 
+ -iOS 7.1 Safari no viewport height, keyboard is over webview
 
  -iOS 7.0 Cordova yes viewport height, keyboard is not over webview
  -iOS 7.0 Safari no viewport height, keyboard is over webview
@@ -213,18 +213,6 @@ describe('Ionic Keyboard', function() {
     var details = keyboardShow(element, elementTop, elementBottom, deviceHeight, keyboardHeight);
 
     expect( details.isElementUnderKeyboard ).toEqual(false);
-  });
-
-  it('Should not subtract the keyboard height from the contentHeight if not keyboardIsOverWebView()', function(){
-    var element = document.createElement('textarea');
-    var elementTop = 300;
-    var elementBottom = 400;
-    var keyboardHeight = 200;
-    var deviceHeight = 260;
-    window.innerHeight = 260;
-    var details = keyboardShow(element, elementTop, elementBottom, deviceHeight, keyboardHeight);
-
-    expect( details.contentHeight ).toEqual(260);
   });
 
   it('Should subtract the keyboard height from the contentHeight if keyboardIsOverWebView()', function(){

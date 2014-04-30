@@ -25,18 +25,23 @@ function viewportLoadTag() {
 }
 
 function viewportInitWebView() {
-  var hasViewportChange = false;
+  var initHeight = viewportProperties.height;
 
   if( ionic.Platform.isWebView() ) {
-    if( viewportProperties.height != 'device-height' ) {
-      viewportProperties.height = 'device-height';
-      hasViewportChange = true;
-    }
+    viewportProperties.height = 'device-height';
+
+  } else if( ionic.Platform.isIOS() && viewportProperties.height ) {
+    // if its not a webview, and a viewport height was set, just removing
+    // the height value doesn't trigger the change, but setting to 0 does the trick
+    viewportProperties.height = '0';
+
   } else if( viewportProperties.height ) {
     delete viewportProperties.height;
-    hasViewportChange = true;
   }
-  if(hasViewportChange) viewportUpdate();
+
+  // only update the viewport tag if there was a change
+  if(initHeight !== viewportProperties.height) viewportUpdate();
+  console.debug(viewportTag.content)
 }
 
 function viewportUpdate(updates) {
@@ -49,7 +54,7 @@ function viewportUpdate(updates) {
     if(viewportProperties[key]) props.push(key + '=' + viewportProperties[key]);
   }
 
-  viewportTag.content = props.join(',');
+  viewportTag.content = props.join(', ');
 }
 
 ionic.DomUtil.ready(function() {

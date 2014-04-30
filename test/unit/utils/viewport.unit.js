@@ -12,10 +12,12 @@
  iOS 6.1 Safari without viewport height DOES NOT resize
 
  NOTES:
-   -iOS 7.1 Safari with viewport height screws up ionic layout
-   -iOS 7.0 Safari with viewport height, the scroll view does not resize properly on keyboardhide
-   -iOS 7.0 Cordova without viewport height, scroll view does not resize properly switching inputs at bottom of page
-   -iOS 6.1 Cordova and Safari don't work well with viewport height
+   - iOS 7.1 Safari with viewport height screws up ionic layout
+   - iOS 7.0 Safari with viewport height, the scroll view does not resize properly on keyboardhide
+   - iOS 7.0 Cordova without viewport height, scroll view does not resize properly switching inputs at bottom of page
+   - iOS 6.1 Cordova and Safari don't work well with viewport height
+   - If its not a webview, and a viewport height was set, just removing
+     the height value doesn't trigger the change, but setting height=0 does the trick
 
  RECOMMENDATIONS:
    -iOS 7.1 Cordova no viewport height, keyboard is not over webview
@@ -120,6 +122,16 @@ describe('Ionic Viewport', function() {
 
     // if it was changed the spaces would have been removed
     expect( vportTag.content ).toEqual(originalViewport);
+  });
+
+  it('Should set height=0 if browser and height=device-height was already in', function(){
+    ionic.Platform.setPlatform('ios');
+    var originalViewport = 'initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, height=device-height';
+    vportTag.setAttribute('content', originalViewport);
+    viewportLoadTag();
+
+    // if it was changed the spaces would have been removed
+    expect( vportTag.content ).toEqual('initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, height=0');
   });
 
 });
