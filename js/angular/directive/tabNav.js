@@ -26,7 +26,7 @@ IonicModule
           tabCtrl = ctrls[1];
 
         //Remove title attribute so browser-tooltip does not apear
-        $element[0].removeAttribute('title');
+        // $element[0].removeAttribute('title');
 
         $scope.selectTab = function(e) {
           e.preventDefault();
