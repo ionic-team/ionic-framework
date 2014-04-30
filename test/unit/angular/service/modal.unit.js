@@ -76,12 +76,12 @@ describe('Ionic Modal', function() {
   }));
 
   it('should animate leave and destroy scope on remove', inject(function($animate) {
-    var m = modal.fromTemplate('<div class="modal"></div>');
+    var instance = modal.fromTemplate('<div class="modal"></div>');
     spyOn($animate, 'leave').andCallFake(function(el, cb) { cb(); });
-    spyOn(m.scope, '$destroy');
-    m.remove();
+    spyOn(instance.scope, '$destroy');
+    instance.remove();
     timeout.flush();
-    expect(m.scope.$destroy).toHaveBeenCalled();
+    expect(instance.scope.$destroy).toHaveBeenCalled();
   }));
 
   it('Should close on hardware back button', inject(function($ionicPlatform) {
@@ -98,6 +98,38 @@ describe('Ionic Modal', function() {
 
     expect(modalInstance.isShown()).toBe(false);
   }));
+
+  it('should close modal on backdrop click after animate is done', function() {
+    var template = '<div class="modal"></div>';
+    var m = modal.fromTemplate(template);
+    spyOn(m, 'hide');
+    m.show();
+    timeout.flush();
+    m.$el.triggerHandler('click');
+    expect(m.hide).toHaveBeenCalled();
+  });
+
+  it('should close modal on backdrop click if target is not backdrop', function() {
+    var template = '<div class="modal"></div>';
+    var instance = modal.fromTemplate(template);
+    spyOn(instance, 'hide');
+    instance.show();
+    timeout.flush();
+    ionic.trigger('click', { target: instance.el.firstElementChild }, true);
+    expect(instance.hide).not.toHaveBeenCalled();
+  });
+
+  it('should not close modal on backdrop click until animation is done', function() {
+    var template = '<div class="modal"></div>';
+    var instance = modal.fromTemplate(template);
+    spyOn(instance, 'hide');
+    instance.show();
+    instance.$el.triggerHandler('click');
+    expect(instance.hide).not.toHaveBeenCalled();
+    timeout.flush();
+    instance.$el.triggerHandler('click');
+    expect(instance.hide).toHaveBeenCalled();
+  });
 
   it('should broadcast "modal.shown" on show with self', function() {
     var template = '<div class="modal"></div>';

@@ -120,7 +120,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
 
       return $timeout(function() {
         //After animating in, allow hide on backdrop click
-        angular.element(self.el).on('click', function(e) {
+        self.$el.on('click', function(e) {
           if (e.target === self.el) {
             self.hide();
           }
@@ -146,7 +146,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
                .removeClass('ng-enter ng-enter-active active');
       }, 20);
 
-      angular.element(self.el).off('click');
+      self.$el.off('click');
       self._isShown = false;
       self.scope.$parent && self.scope.$parent.$broadcast('modal.hidden', self);
       self._deregisterBackButton && self._deregisterBackButton();
@@ -171,7 +171,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
 
       return self.hide().then(function() {
         self.scope.$destroy();
-        angular.element(self.el).remove();
+        self.$el.remove();
       });
     },
 
@@ -201,6 +201,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
     // Compile the template
     var element = $compile('<ion-modal>' + templateString + '</ion-modal>')(scope);
 
+    options.$el = element;
     options.el = element[0];
     options.modalEl = options.el.querySelector('.modal');
     var modal = new ModalView(options);
