@@ -8,8 +8,8 @@ IonicModule
     restrict: 'E',
     transclude: true,
     replace: true,
-    template: '<div class="modal-backdrop" ng-click="modal.hide()">' +
+    template: '<div class="modal-backdrop">' +
                 '<div class="modal-wrapper" ng-transclude></div>' +
-              '</div>'
+                '</div>'
   };
 }]);

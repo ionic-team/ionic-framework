@@ -118,7 +118,14 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
         self.el.classList.add('active');
       }, 20);
 
-      return $timeout(angular.noop, 400);
+      return $timeout(function() {
+        //After animating in, allow hide on backdrop click
+        angular.element(self.el).on('click', function(e) {
+          if (e.target === self.el) {
+            self.hide();
+          }
+        });
+      }, 400);
     },
 
     /**
@@ -139,6 +146,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
                .removeClass('ng-enter ng-enter-active active');
       }, 20);
 
+      angular.element(self.el).off('click');
       self._isShown = false;
       self.scope.$parent && self.scope.$parent.$broadcast('modal.hidden', self);
       self._deregisterBackButton && self._deregisterBackButton();
