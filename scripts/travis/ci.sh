@@ -8,7 +8,7 @@ ARG_DEFS=(
 function init {
   # If we are on travis, set our git credentials to make the travis commits look better
   if [[ "$TRAVIS" == "true" ]]; then
-    git config --global user.name 'Ionotron'
+    git config --global user.name 'Ionitron'
     git config --global user.email hi@ionicframework.com
     export GH_ORG=driftyco
     export RELEASE_REMOTE=origin
