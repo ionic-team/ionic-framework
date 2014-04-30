@@ -5,7 +5,6 @@ echo "# Pushing release to $RELEASE_REMOTE #"
 echo "##############################"
 
 ARG_DEFS=(
-  "--codename=(.*)"
   "--version=(.*)"
 )
 
@@ -29,11 +28,16 @@ function run {
 
   cd $IONIC_DIR
 
-  CODENAME=$(readJsonProp "package.json" "codename")
+  # Get first codename in list
+  CODENAME=$(cat config/CODENAMES | head -n 1)
+
+  # Remove first line of codenames, it's used now
+  sed -i '' 1d config/CODENAMES
 
   replaceJsonProp "bower.json" "version" "$VERSION"
   replaceJsonProp "component.json" "version" "$VERSION"
 
+  replaceJsonProp "package.json" "codename" "$CODENAME"
   replaceJsonProp "bower.json" "codename" "$CODENAME"
   replaceJsonProp "component.json" "codename" "$CODENAME"
 
