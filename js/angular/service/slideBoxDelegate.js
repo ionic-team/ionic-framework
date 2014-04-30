@@ -54,6 +54,13 @@ IonicModule
   'slide',
   /**
    * @ngdoc method
+   * @name $ionicSlideBoxDelegate#enableSlide
+   * @param {boolean=} shouldEnable Whether to enable sliding the slidebox.
+   * @returns {boolean} Whether sliding is enabled.
+   */
+  'enableSlide',
+  /**
+   * @ngdoc method
    * @name $ionicSlideBoxDelegate#previous
    * @description Go to the previous slide. Wraps around if at the beginning.
    */
