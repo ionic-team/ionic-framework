@@ -216,6 +216,10 @@ function keyboardGetHeight() {
       return 206;
     }
 
+    if (!ionic.Platform.isWebView()){
+      return 216;
+    }
+
     return 260;
   }
 
@@ -231,27 +235,6 @@ function keyboardIsWithinScroll(ele) {
     ele = ele.parentElement;
   }
   return false;
-}
-
-function keyboardIsOverWebView() {
-  if (ionic.Platform.isIOS()){
-    if ( ionic.Platform.isWebView() ){
-      //6.1 is over webview
-      return (ionic.Platform.version() < 7.0); 
-    }
-    else {
-      //safari is always over webview
-      return true;
-    }
-  }
-
-  if ( ionic.Platform.isAndroid() && ionic.Platform.isWebView() ){
-    return ionic.Platform.isFullScreen;
-  }
-
-  return false;
-
-  
 }
 
 function keyboardHasPlugin() {
