@@ -60,6 +60,13 @@ module.exports = {
     // Controllers
     'js/controllers/viewController.js',
     'js/controllers/sideMenuController.js',
+
+    // Animation
+    'js/animation/animation.js',
+    'js/animation/bezier.js',
+    'js/animation/dynamics.js',
+    'js/animation/timing-functions.js',
+    'js/animation/instance.js'
   ],
 
   angularIonicFiles: [
