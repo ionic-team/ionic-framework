@@ -36,14 +36,22 @@
           Repeat
           <input type="number" ng-model="anim.repeat">
         </label>
+        <br>
         <label>
           Delay
           <input type="number" ng-model="anim.delay">
         </label>
+        <br>
         <label>
           Auto reverse
           <input type="checkbox" ng-model="anim.autoReverse">
         </label>
+        <br>
+        <label>
+          Reverse
+          <input type="checkbox" ng-model="anim.reverse">
+        </label>
+        <br>
         <button ng-click="do('{{v}}')" ng-repeat="v in fns">{{v}}</button>
       </div>
     </div>
@@ -63,8 +71,9 @@
         ];
         $scope.anim = {
           duration: 500,
-          delay: 500,
+          delay: 0,
           repeat: -1,
+          reverse: true,
           autoReverse: false
         }
         var el = angular.element(document.querySelector('.box'));

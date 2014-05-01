@@ -85,6 +85,8 @@
     duration: 500,
     delay: 0,
     repeat: -1,
+    reverse: false,
+    autoReverse: false,
 
     step: function(percent) {},
 
@@ -116,7 +118,7 @@
         return true;
       }, function(droppedFrames, finishedAnimation) {
         console.log('Finished anim:', droppedFrames, finishedAnimation);
-      }, this.duration, tf, this.delay);
+      }, this.duration, tf, this.delay, this.reverse, this.repeat);
     },
 
     /**
@@ -133,12 +135,14 @@
      *   Signature of the method should be `function(percent) { return modifiedValue; }`
      * @return {Integer} Identifier of animation. Can be used to stop it any time.
      */
-    _run: function(stepCallback, verifyCallback, completedCallback, duration, easingMethod, delay) {
+    _run: function(stepCallback, verifyCallback, completedCallback, duration, easingMethod, delay, isReverse, repeat) {
 
       var start = time();
       var lastFrame = start;
       var startTime = start + delay;
-      var percent = 0;
+      var startPercent = isReverse === true ? 1 : 0;
+      var endPercent = isReverse === true ? 0 : 1;
+      var percent = startPercent;
       var dropCounter = 0;
       var id = counter++;
 
@@ -186,16 +190,23 @@
         // Compute percent value
         if (diff > delay && duration) {
           percent = (diff - delay) / duration;
-          if (percent > 1) {
-            percent = 1;
+          if(isReverse === true) {
+            percent = 1 - percent;
+            if (percent < 0) {
+              percent = 0;
+            }
+          } else {
+            if (percent > 1) {
+              percent = 1;
+            }
           }
         }
 
         // Execute step callback, then...
         var value = easingMethod ? easingMethod(percent) : percent;
-        if ((stepCallback(value, now, render) === false || percent === 1) && render) {
+        if ((stepCallback(value, now, render) === false || percent === endPercent) && render) {
           running[id] = null;
-          completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), id, percent === 1 || duration == null);
+          completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), id, percent === endPercent || duration == null);
         } else if (render) {
           lastFrame = now;
           ionic.requestAnimationFrame(step);
