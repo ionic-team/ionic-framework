@@ -12,6 +12,15 @@
  *
  * The toggle behaves like any [AngularJS checkbox](http://docs.angularjs.org/api/ng/input/input[checkbox]) otherwise.
  *
+ * @param toggle-class {string=} Sets the CSS class on the inner `label.toggle` element created by the directive.
+ *
+ * @usage
+ * Below is an example of a toggle directive which is wired up to the `airplaneMode` model
+ * and has the `toggle-calm` CSS class assigned to the inner element.
+ *
+ * ```html
+ * <ion-toggle ng-model="airplaneMode" toggle-class="toggle-calm">Airplane Mode</ion-toggle>
+ * ```
  */
 IonicModule
 .directive('ionToggle', [
@@ -47,6 +56,9 @@ function($ionicGesture, $timeout) {
       if(attr.ngChecked) input.attr('ng-checked', 'ngChecked');
       if(attr.ngTrueValue) input.attr('ng-true-value', attr.ngTrueValue);
       if(attr.ngFalseValue) input.attr('ng-false-value', attr.ngFalseValue);
+      if(attr.toggleClass) {
+        element[0].getElementsByTagName('label')[0].classList.add(attr.toggleClass);
+      }
 
       return function($scope, $element, $attr) {
          var el, checkbox, track, handle;
