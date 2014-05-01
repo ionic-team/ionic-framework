@@ -24,9 +24,9 @@
  * ```
  *
  * @param {string=} title The title to display on the parent {@link ionic.directive:ionNavBar}.
- * @param {boolean=} hideBackButton Whether to hide the back button on the parent
+ * @param {boolean=} hide-back-button Whether to hide the back button on the parent
  * {@link ionic.directive:ionNavBar} by default.
- * @param {boolean=} hideNavBar Whether to hide the parent
+ * @param {boolean=} hide-nav-bar Whether to hide the parent
  * {@link ionic.directive:ionNavBar} by default.
  */
 IonicModule
