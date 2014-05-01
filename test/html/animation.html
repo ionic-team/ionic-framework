@@ -53,6 +53,11 @@
         </label>
         <br>
         <button ng-click="do('{{v}}')" ng-repeat="v in fns">{{v}}</button>
+        <p>
+          <button ng-click="togglePause()">Toggle Pause/Play</button>
+          <button ng-click="stop()">Stop</button>
+          <button ng-click="restart()">Restart</button>
+        </p>
       </div>
     </div>
 
@@ -62,6 +67,7 @@
         //$ionicAnimationProvider.setSlowAnimations(true);
       }])
       .controller('MyCtrl', function($scope, $ionicAnimation) {
+        var currentAnimation;
         $scope.fns = [
           'linear',
           'ease',
@@ -78,7 +84,7 @@
         }
         var el = angular.element(document.querySelector('.box'));
         $scope.do = function(fn) {
-          var fadeIn = $ionicAnimation(angular.extend({
+          currentAnimation = $ionicAnimation(angular.extend({
             el: el,
             name: 'fadeIn',
             duration: 500,
@@ -88,11 +94,27 @@
             curve: fn,
             step: function(v) {
               el[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (v * 400) + 'px, 0,0)';
+            },
+            complete: function() {
+              console.log('Animation complete!');
             }
           }, $scope.anim));
 
-          fadeIn.start();
+          currentAnimation.start();
         }
+        $scope.togglePause = function() {
+          if(currentAnimation.isPaused) {
+            currentAnimation.play();
+          } else {
+            currentAnimation.pause();
+          }
+        };
+        $scope.stop = function() {
+          currentAnimation.stop();
+        };
+        $scope.restart = function() {
+          currentAnimation.restart();
+        };
       });
     </script>
   </body>

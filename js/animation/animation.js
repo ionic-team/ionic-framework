@@ -18,6 +18,32 @@
       return new ionic.Animation.Animation(opts);
     },
 
+    animationStarted: function(instance) {
+      var id = counter++;
+
+      // Compacting running db automatically every few new animations
+      if (id % 20 === 0) {
+        var newRunning = {};
+        for (var usedId in running) {
+          newRunning[usedId] = true;
+        }
+        running = newRunning;
+      }
+
+      // Mark as running
+      running[id] = true;
+
+      instance.isRunning = true;
+      instance._animationId = id;
+
+      // Return unique animation ID
+      return id;
+    },
+
+    animationStopped: function(instance) {
+      instance.isRunning = false;
+    }
+
     /* TODO: Move animation set management here instead of instance
     anims: [],
     add: function(animation) {
@@ -95,6 +121,24 @@
     step: function(percent) {},
 
     stop: function() {
+      this.isRunning = false;
+      this.shouldEnd = true;
+    },
+    play: function() {
+      this.isPaused = false;
+      this.start();
+    },
+    pause: function() {
+      this.isPaused = true;
+    },
+    _saveState: function(percent, iteration, reverse) {
+      this._pauseState = {
+        percent: percent,
+        iteration: iteration,
+        reverse: reverse
+      }
+    },
+    restart: function() {
     },
 
     start: function() {
@@ -103,6 +147,7 @@
       var tf;
 
       console.log('Starting animation', this);
+
 
       // Grab the timing function
       if(typeof this.curve === 'string') {
@@ -114,15 +159,35 @@
       // Get back a timing function for the given duration (used for precision)
       tf = tf(this.duration);
 
+      // Set up the initial animation state
+      var animState = {
+        startPercent: this.reverse === true ? 1 : 0,
+        endPercent: this.reverse === true ? 0 : 1,
+        duration: this.duration,
+        easingMethod: tf,
+        delay: this.delay,
+        reverse: this.reverse,
+        repeat: this.repeat,
+        autoReverse: this.autoReverse
+      }
+
+
+      if(this._pauseState) {
+        // We were paused, so update the fields
+        ionic.extend(animState, this._pauseState);
+        this._pauseState = null;
+      }
+
+      ionic.Animation.animationStarted(this);
+
       return this._run(function(percent, now, render) {
         if(render) {
           self.step(percent);
         }
-      }, function() {
-        return true;
       }, function(droppedFrames, finishedAnimation) {
+        ionic.Animation.animationStopped(self);
         console.log('Finished anim:', droppedFrames, finishedAnimation);
-      }, this.duration, tf, this.delay, this.reverse, this.repeat, this.autoReverse);
+      }, animState);
     },
 
     /**
@@ -130,8 +195,6 @@
      *
      * @param stepCallback {Function} Pointer to function which is executed on every step.
     *   Signature of the method should be `function(percent, now, virtual) { return continueWithAnimation; }`
-     * @param verifyCallback {Function} Executed before every animation step.
-     *   Signature of the method should be `function() { return continueWithAnimation; }`
      * @param completedCallback {Function}
      *   Signature of the method should be `function(droppedFrames, finishedAnimation) {}`
      * @param duration {Integer} Milliseconds to run the animation
@@ -139,34 +202,31 @@
      *   Signature of the method should be `function(percent) { return modifiedValue; }`
      * @return {Integer} Identifier of animation. Can be used to stop it any time.
      */
-    _run: function(stepCallback, verifyCallback, completedCallback,
-              duration, easingMethod, delay, isReverse, repeat, autoReverse) {
+    _run: function(stepCallback, completedCallback, state) {
 
+      var self = this;
       var start = time();
       var lastFrame = start;
-      var startTime = start + delay;
-      var startPercent = isReverse === true ? 1 : 0;
-      var endPercent = isReverse === true ? 0 : 1;
-      var percent = startPercent;
+      var startTime = start + state.delay;
+      var percent = state.startPercent;
+      var startPercent = state.startPercent;
+      var endPercent = state.endPercent;
+      var autoReverse = state.autoReverse;
+      var delay = state.delay;
+      var duration = state.duration;
+      var easingMethod = state.easingMethod;
+      var repeat = state.repeat;
+      var reverse = state.reverse;
+
       var dropCounter = 0;
       var iteration = 0;
-      var id = counter++;
-
-      // Compacting running db automatically every few new animations
-      if (id % 20 === 0) {
-        var newRunning = {};
-        for (var usedId in running) {
-          newRunning[usedId] = true;
-        }
-        running = newRunning;
-      }
 
       var perhapsAutoreverse = function() {
         // Check if we hit the end and should auto reverse
         if(percent === endPercent && autoReverse) {
           // Flip the start and end values
           var sp = endPercent;
-          isReverse = !isReverse;
+          reverse = !reverse;
           endPercent = startPercent;
           startPercent = sp;
 
@@ -194,10 +254,14 @@
         var diff = now - start;
 
         // Verification is executed before next animation step
-        if (!running[id] || (verifyCallback && !verifyCallback(id))) {
+        if(self.isPaused) {
+          self._saveState(percent, iteration, reverse);
+          return;
+        }
 
-          running[id] = null;
-          completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), id, false);
+        if (!self.isRunning) {// || (verifyCallback && !verifyCallback(id))) {
+
+          completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), self._animationId, false);
           return;
 
         }
@@ -218,7 +282,7 @@
         // Compute percent value
         if (diff > delay && duration) {
           percent = (diff - delay) / duration;
-          if(isReverse === true) {
+          if(reverse === true) {
             percent = 1 - percent;
             if (percent < 0) {
               percent = 0;
@@ -242,9 +306,7 @@
           } else if(repeat === 0 && autoReverse) {
             perhapsAutoreverse();
           } else {
-            // A repeat of zero. Just end it
-            running[id] = null;
-            completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), id, percent === endPercent || duration == null);
+            completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), self._animationId, percent === endPercent || duration == null);
           }
         } else if (render) {
           lastFrame = now;
@@ -252,14 +314,10 @@
         }
       };
 
-      // Mark as running
-      running[id] = true;
 
       // Init first step
       ionic.requestAnimationFrame(step);
 
-      // Return unique animation ID
-      return id;
     }
   };
 
