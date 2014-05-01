@@ -187,6 +187,7 @@ input[type="color"] {
 input,
 textarea {
   width: 100%;
+  resize: none;
 }
 
 // Reset height since textareas have rows
