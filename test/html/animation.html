@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app="ionic">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title></title>
+
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css" />
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <style>
+      .box {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background-color: black;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <div ng-controller="MyCtrl">
+      <div class="box"></div>
+    </div>
+
+    <script>
+      function MyCtrl($scope, $ionicAnimation) {
+        var el = angular.element(document.querySelector('.box'));
+        var fadeIn = $ionicAnimation({
+          el: el,
+          name: 'fadeIn',
+          duration: 500,
+          delay: 0,
+          autoReverse: false,
+          repeat: -1,
+          curve: 'ease-in-out'
+        });
+
+        fadeIn.start();
+      }
+    </script>
+  </body>
+</html>
