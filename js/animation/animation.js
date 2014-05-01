@@ -101,7 +101,7 @@
       tf = tf(this.duration);
 
       return this._run(function(percent, now, virtual) {
-        //console.log('Animation step', percent, now, virtual);
+        console.log(percent);
         self.el[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (percent * 400) + 'px, 0,0)';
       }, function() {
         return true;

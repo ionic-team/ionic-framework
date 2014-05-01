@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="ionic">
+<html ng-app="myApp">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title></title>
@@ -14,6 +14,11 @@
         height: 100px;
         background-color: black;
       }
+      #opts {
+        position: absolute;
+        top: 200px;
+        left: 10px;
+      }
     </style>
 
   </head>
@@ -22,23 +27,36 @@
 
     <div ng-controller="MyCtrl">
       <div class="box"></div>
+      <div id="opts">
+        <button ng-click="do('{{v}}')" ng-repeat="v in fns">{{v}}</button>
+      </div>
     </div>
 
     <script>
-      function MyCtrl($scope, $ionicAnimation) {
+      angular.module('myApp', ['ionic'])
+      .controller('MyCtrl', function($scope, $ionicAnimation) {
+        $scope.fns = [
+          'linear',
+          'ease',
+          'ease-in',
+          'ease-out',
+          'ease-in-out'
+        ];
         var el = angular.element(document.querySelector('.box'));
-        var fadeIn = $ionicAnimation({
-          el: el,
-          name: 'fadeIn',
-          duration: 500,
-          delay: 0,
-          autoReverse: false,
-          repeat: -1,
-          curve: 'ease-in-out'
-        });
+        $scope.do = function(fn) {
+          var fadeIn = $ionicAnimation({
+            el: el,
+            name: 'fadeIn',
+            duration: 500,
+            delay: 0,
+            autoReverse: false,
+            repeat: -1,
+            curve: fn
+          });
 
-        fadeIn.start();
-      }
+          fadeIn.start();
+        }
+      });
     </script>
   </body>
 </html>
