@@ -110,7 +110,7 @@
         return true;
       }, function(droppedFrames, finishedAnimation) {
         console.log('Finished anim:', droppedFrames, finishedAnimation);
-      }, this.duration, tf);
+      }, this.duration, tf, this.delay);
     },
 
     /**
@@ -127,10 +127,11 @@
      *   Signature of the method should be `function(percent) { return modifiedValue; }`
      * @return {Integer} Identifier of animation. Can be used to stop it any time.
      */
-    _run: function(stepCallback, verifyCallback, completedCallback, duration, easingMethod) {
+    _run: function(stepCallback, verifyCallback, completedCallback, duration, easingMethod, delay) {
 
       var start = time();
       var lastFrame = start;
+      var startTime = start + delay;
       var percent = 0;
       var dropCounter = 0;
       var id = counter++;
@@ -152,6 +153,7 @@
 
         // Get current time
         var now = time();
+        var diff = now - start;
 
         // Verification is executed before next animation step
         if (!running[id] || (verifyCallback && !verifyCallback(id))) {
@@ -161,6 +163,7 @@
           return;
 
         }
+
 
         // For the current rendering to apply let's update omitted steps in memory.
         // This is important to bring internal state variables up-to-date with progress in time.
@@ -175,8 +178,8 @@
         }
 
         // Compute percent value
-        if (duration) {
-          percent = (now - start) / duration;
+        if (diff > delay && duration) {
+          percent = (diff - delay) / duration;
           if (percent > 1) {
             percent = 1;
           }
