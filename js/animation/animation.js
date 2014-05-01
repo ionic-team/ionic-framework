@@ -71,6 +71,12 @@
    */
   ionic.Animation.Animation = function(opts) {
     ionic.extend(this, opts);
+
+    if(opts.useSlowAnimations) {
+      console.warn('Running animation', opts.name, 'with SLOW animations (duration and delay increased by 3x)');
+      this.delay *= 3;
+      this.duration *= 3;
+    }
   };
 
   ionic.Animation.Animation.prototype = {

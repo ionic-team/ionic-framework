@@ -50,6 +50,9 @@
 
     <script>
       angular.module('myApp', ['ionic'])
+      .config(['$ionicAnimationProvider', function($ionicAnimationProvider) {
+        //$ionicAnimationProvider.setSlowAnimations(true);
+      }])
       .controller('MyCtrl', function($scope, $ionicAnimation) {
         $scope.fns = [
           'linear',

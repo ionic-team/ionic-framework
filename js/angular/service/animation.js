@@ -1,3 +1,4 @@
+
 /**
  * @ngdoc service
  * @name $ionicAnimation
@@ -45,14 +46,16 @@
  *
  */
 IonicModule
-.factory('$ionicAnimation', [
-  '$rootScope',
-  '$document',
-  '$compile',
-  '$timeout',
-  '$interval',
-function($rootScope, $document, $compile, $timeout, $interval) {
-  return function(opts) {
-    return ionic.Animation.create(opts);
-  }
-}]);
+.provider('$ionicAnimation', function() {
+  var useSlowAnimations = false;
+  this.setSlowAnimations = function(isSlow) {
+    useSlowAnimations = isSlow;
+  };
+
+  this.$get = [function() {
+    return function(opts) {
+      opts.useSlowAnimations = useSlowAnimations;
+      return ionic.Animation.create(opts);
+    }
+  }]
+});
