@@ -14,12 +14,14 @@
    * The main animation system manager. Treated as a singleton.
    */
   ionic.Animation = {
+    create: function(opts) {
+      return new ionic.Animation.Animation(opts);
+    },
+
+    /* TODO: Move animation set management here instead of instance
     anims: [],
     add: function(animation) {
       this.anims.push(animation);
-    },
-    create: function(opts) {
-      return new ionic.Animation.Animation(opts);
     },
     remove: function(animation) {
       var i, j;
@@ -37,13 +39,14 @@
         }
       }
     },
+    */
 
     /**
      * Stops the given animation.
      *
      * @param id {Integer} Unique animation ID
      * @return {Boolean} Whether the animation was stopped (aka, was running before)
-     */
+     * TODO: Requires above fix
     stop: function(id) {
       var cleared = running[id] != null;
       if (cleared) {
@@ -52,6 +55,7 @@
 
       return cleared;
     },
+     */
 
 
     /**
@@ -59,10 +63,10 @@
      *
      * @param id {Integer} Unique animation ID
      * @return {Boolean} Whether the animation is still running
-     */
     isRunning: function(id) {
       return running[id] != null;
     },
+     */
 
   };
 
@@ -144,6 +148,7 @@
       var endPercent = isReverse === true ? 0 : 1;
       var percent = startPercent;
       var dropCounter = 0;
+      var iteration = 0;
       var id = counter++;
 
       // Compacting running db automatically every few new animations
@@ -205,8 +210,21 @@
         // Execute step callback, then...
         var value = easingMethod ? easingMethod(percent) : percent;
         if ((stepCallback(value, now, render) === false || percent === endPercent) && render) {
-          running[id] = null;
-          completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), id, percent === endPercent || duration == null);
+          if(repeat === -1) {
+            start = time();
+            percent = startPercent;
+            lastFrame = now;
+            ionic.requestAnimationFrame(step);
+          } else if(iteration < repeat) {
+            iteration++;
+            start = time();
+            percent = startPercent;
+            lastFrame = now;
+            ionic.requestAnimationFrame(step);
+          } else {
+            running[id] = null;
+            completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), id, percent === endPercent || duration == null);
+          }
         } else if (render) {
           lastFrame = now;
           ionic.requestAnimationFrame(step);
