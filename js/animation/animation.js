@@ -122,7 +122,7 @@
         return true;
       }, function(droppedFrames, finishedAnimation) {
         console.log('Finished anim:', droppedFrames, finishedAnimation);
-      }, this.duration, tf, this.delay, this.reverse, this.repeat);
+      }, this.duration, tf, this.delay, this.reverse, this.repeat, this.autoReverse);
     },
 
     /**
@@ -139,7 +139,8 @@
      *   Signature of the method should be `function(percent) { return modifiedValue; }`
      * @return {Integer} Identifier of animation. Can be used to stop it any time.
      */
-    _run: function(stepCallback, verifyCallback, completedCallback, duration, easingMethod, delay, isReverse, repeat) {
+    _run: function(stepCallback, verifyCallback, completedCallback,
+              duration, easingMethod, delay, isReverse, repeat, autoReverse) {
 
       var start = time();
       var lastFrame = start;
@@ -159,6 +160,29 @@
         }
         running = newRunning;
       }
+
+      var perhapsAutoreverse = function() {
+        // Check if we hit the end and should auto reverse
+        if(percent === endPercent && autoReverse) {
+          // Flip the start and end values
+          var sp = endPercent;
+          isReverse = !isReverse;
+          endPercent = startPercent;
+          startPercent = sp;
+
+          if(repeat === 0) {
+            autoReverse = false;
+          }
+        } else {
+          // Otherwise, just start over
+          percent = startPercent;
+          lastFrame = now;
+        }
+        // Start fresh either way
+        start = time();
+        ionic.requestAnimationFrame(step);
+      }
+
 
       // This is the internal step method which is called every few milliseconds
       var step = function(virtual) {
@@ -211,17 +235,15 @@
         var value = easingMethod ? easingMethod(percent) : percent;
         if ((stepCallback(value, now, render) === false || percent === endPercent) && render) {
           if(repeat === -1) {
-            start = time();
-            percent = startPercent;
-            lastFrame = now;
-            ionic.requestAnimationFrame(step);
+            perhapsAutoreverse();
           } else if(iteration < repeat) {
+            // Track iterations
             iteration++;
-            start = time();
-            percent = startPercent;
-            lastFrame = now;
-            ionic.requestAnimationFrame(step);
+            perhapsAutoreverse();
+          } else if(repeat === 0 && autoReverse) {
+            perhapsAutoreverse();
           } else {
+            // A repeat of zero. Just end it
             running[id] = null;
             completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), id, percent === endPercent || duration == null);
           }
