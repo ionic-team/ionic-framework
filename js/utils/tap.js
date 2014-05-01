@@ -84,7 +84,7 @@ ionic.tap = {
   ignoreScrollStart: function(e) {
     return (e.defaultPrevented) ||  // defaultPrevented has been assigned by another component handling the event
            (e.target.isContentEditable) ||
-           (e.target.type === 'range') ||
+           (/file|range/i).test(e.target.type) ||
            (e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-default')) == 'true' || // manually set within an elements attributes
            (!!(/object|embed/i).test(e.target.tagName));  // flash/movie/object touches should not try to scroll
   },
@@ -149,6 +149,22 @@ ionic.tap = {
         previousInputFocus[x].focus();
       }
     });
+  },
+
+  requiresNativeClick: function(ele) {
+    if(!ele || ele.disabled || (/file|range/i).test(ele.type) || (/object|video/i).test(ele.tagName) ) {
+      return true;
+    }
+    if(ele.nodeType === 1) {
+      var element = ele;
+      while(element) {
+        if( (element.dataset ? element.dataset.tapDisabled : element.getAttribute('data-tap-disabled')) == 'true' ) {
+          return true;
+        }
+        element = element.parentElement;
+      }
+    }
+    return false;
   }
 
 };
@@ -166,7 +182,7 @@ function tapClick(e) {
   var container = tapContainingElement(e.target);
   var ele = tapTargetElement(container);
 
-  if( tapRequiresNativeClick(ele) || tapPointerMoved ) return false;
+  if( ionic.tap.requiresNativeClick(ele) || tapPointerMoved ) return false;
 
   var c = getPointerCoordinates(e);
 
@@ -193,7 +209,7 @@ function tapClickGateKeeper(e) {
 
   // do not allow through any click events that were not created by ionic.tap
   if( (ionic.scroll.isScrolling && ionic.tap.containsOrIsTextInput(e.target) ) ||
-      (!e.isIonicTap && !tapRequiresNativeClick(e.target)) ) {
+      (!e.isIonicTap && !ionic.tap.requiresNativeClick(e.target)) ) {
     console.debug('clickPrevent', e.target.tagName);
     e.stopPropagation();
 
@@ -203,22 +219,6 @@ function tapClickGateKeeper(e) {
     }
     return false;
   }
-}
-
-function tapRequiresNativeClick(ele) {
-  if(!ele || ele.disabled || (/file|range/i).test(ele.type) || (/object|video/i).test(ele.tagName) ) {
-    return true;
-  }
-  if(ele.nodeType === 1) {
-    var element = ele;
-    while(element) {
-      if( (element.dataset ? element.dataset.tapDisabled : element.getAttribute('data-tap-disabled')) == 'true' ) {
-        return true;
-      }
-      element = element.parentElement;
-    }
-  }
-  return false;
 }
 
 // MOUSE
