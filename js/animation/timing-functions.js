@@ -7,32 +7,27 @@
   ionic.Animation.TimingFn = {
     'linear': function(duration) {
       return function(t) {
-        return t;
+        return ionic.Animation.Bezier.linear(t, duration);
       }
     },
     'ease': function(duration) {
-      var bz = ionic.Animation.Bezier.getCubicBezier(0.25, 0.1, 0.25, 1.0, duration);
       return function(t) {
-        return bz(t);
+        return ionic.Animation.Bezier.ease(t, duration);
       }
     },
     'ease-in': function(duration) {
-      //0.42, 0.0, 1.0, 1.0
-      var bz = ionic.Animation.Bezier.getCubicBezier(0.42, 0.0, 1.0, 1.0, duration);
       return function(t) {
-        return bz(t);
+        return ionic.Animation.Bezier.easeIn(t, duration);
       }
     },
     'ease-out': function(duration) {
-      var bz = ionic.Animation.Bezier.getCubicBezier(0.0, 0.0, 0.58, 1.0, duration);
       return function(t) {
-        return bz(t);
+        return ionic.Animation.Bezier.easeOut(t, duration);
       }
     },
     'ease-in-out': function(duration) {
-      var bz = ionic.Animation.Bezier.getCubicBezier(0.42, 0.0, 0.58, 1.0, duration);
       return function(t) {
-        return bz(t);
+        return ionic.Animation.Bezier.easeInOut(t, duration);
       }
     }
   };

@@ -101,7 +101,6 @@
       tf = tf(this.duration);
 
       return this._run(function(percent, now, virtual) {
-        console.log(percent);
         self.el[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (percent * 400) + 'px, 0,0)';
       }, function() {
         return true;
@@ -122,21 +121,15 @@
      * @param duration {Integer} Milliseconds to run the animation
      * @param easingMethod {Function} Pointer to easing function
      *   Signature of the method should be `function(percent) { return modifiedValue; }`
-     * @param root {Element} Render root, when available. Used for internal
-     *   usage of requestAnimationFrame.
      * @return {Integer} Identifier of animation. Can be used to stop it any time.
      */
-    _run: function(stepCallback, verifyCallback, completedCallback, duration, easingMethod, root) {
+    _run: function(stepCallback, verifyCallback, completedCallback, duration, easingMethod) {
 
       var start = time();
       var lastFrame = start;
       var percent = 0;
       var dropCounter = 0;
       var id = counter++;
-
-      if (!root) {
-        root = document.body;
-      }
 
       // Compacting running db automatically every few new animations
       if (id % 20 === 0) {
@@ -192,7 +185,7 @@
           completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), id, percent === 1 || duration == null);
         } else if (render) {
           lastFrame = now;
-          ionic.requestAnimationFrame(step, root);
+          ionic.requestAnimationFrame(step);
         }
       };
 
@@ -200,7 +193,7 @@
       running[id] = true;
 
       // Init first step
-      ionic.requestAnimationFrame(step, root);
+      ionic.requestAnimationFrame(step);
 
       // Return unique animation ID
       return id;
