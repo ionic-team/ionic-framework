@@ -284,7 +284,7 @@ describe('Ionic Tap', function() {
 
   it('Should set tapPointerMoved=false on tapMouseUp', function() {
     tapPointerMoved = true;
-    tapMouseUp({});
+    tapMouseUp({ target: {} });
     expect( tapPointerMoved ).toEqual(false);
   });
 
@@ -307,9 +307,22 @@ describe('Ionic Tap', function() {
     expect( e.preventedDefault ).toEqual(true);
   });
 
+  it('Should not stop event on mouseup if the target was a select element', function() {
+    tapEnabledTouchEvents = false;
+    e = {
+      target: document.createElement('select'),
+      stopPropagation: function() { this.stoppedPropagation = true; },
+      preventDefault: function() { this.preventedDefault = true; }
+    }
+    expect( tapMouseUp(e) ).toEqual(false);
+    expect( e.stoppedPropagation ).toBeUndefined();
+    expect( e.preventedDefault ).toBeUndefined();
+  });
+
   it('Should not stop event on mouseup if touch is not enabled', function() {
     tapEnabledTouchEvents = false;
     e = {
+      target: document.createElement('button'),
       stopPropagation: function() { this.stoppedPropagation = true; },
       preventDefault: function() { this.preventedDefault = true; }
     }
@@ -404,13 +417,20 @@ describe('Ionic Tap', function() {
   });
 
   it('Should cancel click when mouseup coordinates are too far from mousedown coordinates', function() {
-    var e = {
+    var e1 = {
+      target: document.createElement('button'),
       clientX: 100, clientY: 100,
       dispatchEvent: function(){ this.dispatchedEvent = true; }
     };
-    tapMouseDown(e);
-    tapMouseUp({ clientX: 200, clientY: 100 });
-    expect( e.dispatchedEvent ).toBeUndefined();
+    tapMouseDown(e1);
+
+    var e2 = {
+      target: document.createElement('button'),
+      clientX: 100, clientY: 100,
+      dispatchEvent: function(){ this.dispatchedEvent = true; }
+    };
+    tapMouseUp(e2);
+    expect( e2.dispatchedEvent ).toBeUndefined();
   });
 
   it('Should do nothing if mousedown is a custom event from ionic tap', function() {

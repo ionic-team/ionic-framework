@@ -254,7 +254,7 @@ function tapMouseUp(e) {
     return false;
   }
 
-  if( tapIgnoreEvent(e) || e.target.tagName === 'SELECT' ) return;
+  if( tapIgnoreEvent(e) || e.target.tagName === 'SELECT' ) return false;
 
   if( !tapHasPointerMoved(e) ) {
     tapClick(e);
