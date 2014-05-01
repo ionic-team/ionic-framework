@@ -28,6 +28,22 @@
     <div ng-controller="MyCtrl">
       <div class="box"></div>
       <div id="opts">
+        <label>
+          Duration:
+          <input type="number" ng-model="anim.duration">
+        </label>
+        <label>
+          Repeat
+          <input type="number" ng-model="anim.repeat">
+        </label>
+        <label>
+          Delay
+          <input type="number" ng-model="anim.delay">
+        </label>
+        <label>
+          Auto reverse
+          <input type="checkbox" ng-model="anim.autoReverse">
+        </label>
         <button ng-click="do('{{v}}')" ng-repeat="v in fns">{{v}}</button>
       </div>
     </div>
@@ -42,17 +58,26 @@
           'ease-out',
           'ease-in-out'
         ];
+        $scope.anim = {
+          duration: 500,
+          delay: 0,
+          repeat: -1,
+          autoReverse: false
+        }
         var el = angular.element(document.querySelector('.box'));
         $scope.do = function(fn) {
-          var fadeIn = $ionicAnimation({
+          var fadeIn = $ionicAnimation(angular.extend({
             el: el,
             name: 'fadeIn',
             duration: 500,
             delay: 0,
             autoReverse: false,
             repeat: -1,
-            curve: fn
-          });
+            curve: fn,
+            step: function(v) {
+              el[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (v * 400) + 'px, 0,0)';
+            }
+          }, $scope.anim));
 
           fadeIn.start();
         }

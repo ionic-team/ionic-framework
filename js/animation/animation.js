@@ -80,6 +80,8 @@
     delay: 0,
     repeat: -1,
 
+    step: function(percent) {},
+
     stop: function() {
     },
 
@@ -100,8 +102,10 @@
       // Get back a timing function for the given duration (used for precision)
       tf = tf(this.duration);
 
-      return this._run(function(percent, now, virtual) {
-        self.el[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (percent * 400) + 'px, 0,0)';
+      return this._run(function(percent, now, render) {
+        if(render) {
+          self.step(percent);
+        }
       }, function() {
         return true;
       }, function(droppedFrames, finishedAnimation) {
