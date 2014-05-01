@@ -176,7 +176,6 @@
         } else {
           // Otherwise, just start over
           percent = startPercent;
-          lastFrame = now;
         }
         // Start fresh either way
         start = time();
