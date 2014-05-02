@@ -105,13 +105,18 @@
   background-color: $toggle-handle-on-bg-color;
 }
 
-.item-toggle {
+.item-toggle.active {
+  box-shadow: none;
+}
+
+.item-toggle,
+.item-toggle.item-complex .item-content {
   // make sure list item content have enough padding on right to fit the toggle
   padding-right: ($item-padding * 3) + $toggle-width;
+}
 
-  &.active {
-    box-shadow: none;
-  }
+.item-toggle.item-complex {
+  padding-right: 0;
 }
 
 .item-toggle .toggle {
