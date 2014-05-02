@@ -5,6 +5,9 @@ describe('Ionic Platform Service', function() {
 
   beforeEach(inject(function($window, $ionicPlatform, $rootScope) {
     window = $window;
+    window.navigator = {
+      platform: ''
+    };
     ionic.Platform.ua = '';
     ionicPlatform = $ionicPlatform;
     rootScope = $rootScope;
@@ -84,6 +87,39 @@ describe('Ionic Platform Service', function() {
     expect(ionic.Platform.version()).toEqual(7.0);
   });
 
+  it('should not be iPad from none iPad user agent', function() {
+    ionic.Platform.ua = 'Mozilla/5.0 (iPhone; CPU OS 7_0_4 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11B554a Safari/9537.53';
+    ionic.Platform.setPlatform(undefined);
+    ionic.Platform.setVersion(undefined);
+    expect(ionic.Platform.isIPad()).toEqual(false);
+  });
+
+  it('should be iPad from user agent', function() {
+    ionic.Platform.ua = 'Mozilla/5.0 (iPad; CPU OS 7_0_4 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11B554a Safari/9537.53';
+    ionic.Platform.setPlatform(undefined);
+    ionic.Platform.setVersion(undefined);
+    expect(ionic.Platform.isIPad()).toEqual(true);
+  });
+
+  it('should be iPad from iPad in window.navigator.platform and webview, but iPhone in user agent', function() {
+    window.cordova = {};
+    ionic.Platform.ua = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25';
+    window.navigator = {
+      platform: 'iPad Simulator'
+    };
+    ionic.Platform.setPlatform(undefined);
+    ionic.Platform.setVersion(undefined);
+    expect(ionic.Platform.isIPad()).toEqual(true);
+  });
+
+  it('should not be iPad from no in window.navigator.platform, and iPhone in user agent', function() {
+    ionic.Platform.ua = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25';
+    window.navigator = {};
+    ionic.Platform.setPlatform(undefined);
+    ionic.Platform.setVersion(undefined);
+    expect(ionic.Platform.isIPad()).toEqual(false);
+  });
+
   it('is iOS', function() {
     ionic.Platform.setPlatform('iOS');
     expect(ionic.Platform.isIOS()).toEqual(true);
@@ -104,6 +140,7 @@ describe('Ionic Platform Service', function() {
   });
 
   it('is WebView', function() {
+    window.cordova = undefined;
     expect(ionic.Platform.isWebView()).toEqual(false);
     window.cordova = {};
     expect(ionic.Platform.isWebView()).toEqual(true);
@@ -155,7 +192,7 @@ describe('Ionic Platform Service', function() {
     expect(ionic.Platform.platforms[1]).toEqual('cordova');
   });
 
-  it('should not set any platform', function() {
+  it('should not set if its not a webview but only a browser', function() {
     window.cordova = null;
     window.PhoneGap = null;
     window.phonegap = null;
@@ -164,7 +201,7 @@ describe('Ionic Platform Service', function() {
 
     ionic.Platform._checkPlatforms()
 
-    expect(ionic.Platform.platforms.length).toEqual(0);
+    expect(ionic.Platform.platforms[0]).toEqual('browser');
   });
 
   it('sets grade a from iOS7', function() {

@@ -37,19 +37,20 @@ describe('Scroll View', function() {
 
   it('Should resize when the keyboard is showing', function() {
     var element = document.createElement('textarea');
+    ionic.Platform.setPlatform('ios');
     s.appendChild(element);
     document.body.appendChild(sc);
 
     var sv = new ionic.views.Scroll({
       el: sc,
     });
-    
+
     var scHeight = 500;
     sc.style.height = scHeight + "px";
     sc.style.display = "block";
 
     var keyboardHeight  = 200;
-    details = { 
+    details = {
       contentHeight: 260,
       elementBottom: 400,
       elementTop: 300,

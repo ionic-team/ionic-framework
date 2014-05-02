@@ -2,6 +2,14 @@
 var viewportTag;
 var viewportProperties = {};
 
+ionic.viewport = {
+  orientation: function() {
+    // 0 = Portrait
+    // 90 = Landscape
+    // not using window.orientation because each device has a different implementation
+    return (window.innerWidth > window.innerHeight ? 90 : 0);
+  }
+};
 
 function viewportLoadTag() {
   var x;
@@ -20,38 +28,96 @@ function viewportLoadTag() {
       keyValue = props[x].split('=');
       if(keyValue.length == 2) viewportProperties[ keyValue[0] ] = keyValue[1];
     }
-    viewportInitWebView();
+    viewportUpdate();
   }
 }
 
-function viewportInitWebView() {
+function viewportUpdate() {
+  // unit tests in viewport.unit.js
+
+  var initWidth = viewportProperties.width;
   var initHeight = viewportProperties.height;
+  var p = ionic.Platform;
+  var version = p.version();
+  var DEVICE_WIDTH = 'device-width';
+  var DEVICE_HEIGHT = 'device-height';
+  var orientation = ionic.viewport.orientation();
 
-  if( ionic.Platform.isWebView() ) {
-    viewportProperties.height = 'device-height';
+  // Most times we're removing the height and adding the width
+  // So this is the default to start with, then modify per platform/version/oreintation
+  delete viewportProperties.height;
+  viewportProperties.width = DEVICE_WIDTH;
 
-  } else if( ionic.Platform.isIOS() && viewportProperties.height ) {
-    // if its not a webview, and a viewport height was set, just removing
-    // the height value doesn't trigger the change, but setting to 0 does the trick
-    viewportProperties.height = '0';
+  if( p.isIPad() ) {
+    // iPad
 
-  } else if( viewportProperties.height ) {
-    delete viewportProperties.height;
+    if( version > 7 ) {
+      // iPad >= 7.1
+      // https://issues.apache.org/jira/browse/CB-4323
+      delete viewportProperties.width;
+
+    } else {
+      // iPad <= 7.0
+
+      if( p.isWebView() ) {
+        // iPad <= 7.0 WebView
+
+        if( orientation == 90 ) {
+          // iPad <= 7.0 WebView Landscape
+          viewportProperties.height = '0';
+
+        } else if(version == 7) {
+          // iPad <= 7.0 WebView Portait
+          viewportProperties.height = DEVICE_HEIGHT;
+        }
+      } else {
+        // iPad <= 6.1 Browser
+        if(version < 7) {
+          viewportProperties.height = '0';
+        }
+      }
+    }
+
+  } else if( p.isIOS() ) {
+    // iPhone
+
+    if( p.isWebView() ) {
+      // iPhone WebView
+
+      if(version > 7) {
+        // iPhone >= 7.1 WebView
+        delete viewportProperties.width;
+
+      } else if(version < 7) {
+        // iPhone <= 6.1 WebView
+        // if height was set it needs to get removed with this hack for <= 6.1
+        if( initHeight ) viewportProperties.height = '0';
+      }
+
+    } else {
+      // iPhone Browser
+
+      if (version < 7) {
+        // iPhone <= 6.1 Browser
+        // if height was set it needs to get removed with this hack for <= 6.1
+        if( initHeight ) viewportProperties.height = '0';
+      }
+    }
+
   }
 
   // only update the viewport tag if there was a change
-  if(initHeight !== viewportProperties.height) viewportUpdate();
-  console.debug(viewportTag.content)
+  if(initWidth !== viewportProperties.width || initHeight !== viewportProperties.height) {
+    viewportTagUpdate();
+  }
 }
 
-function viewportUpdate(updates) {
-  if(!viewportTag) return;
-
+function viewportTagUpdate(updates) {
   ionic.Utils.extend(viewportProperties, updates);
 
   var key, props = [];
   for(key in viewportProperties) {
-    if(viewportProperties[key]) props.push(key + '=' + viewportProperties[key]);
+    if( viewportProperties[key] ) props.push(key + '=' + viewportProperties[key]);
   }
 
   viewportTag.content = props.join(', ');
@@ -59,4 +125,8 @@ function viewportUpdate(updates) {
 
 ionic.DomUtil.ready(function() {
   viewportLoadTag();
+
+  window.addEventListener("orientationchange", function(){
+    setTimeout(viewportUpdate, 1000);
+  }, false);
 });

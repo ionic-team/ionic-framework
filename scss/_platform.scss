@@ -26,7 +26,7 @@
       top: $bar-height + $ios7-statusbar-height;
     }
 
-    .has-header, 
+    .has-header,
     .bar-subheader {
       top: $bar-height + $ios7-statusbar-height;
     }
@@ -43,5 +43,11 @@
   &.status-bar-hide {
     // Cordova doesn't adjust the body height correctly, this makes up for it
     margin-bottom: 20px;
+  }
+}
+
+@media (orientation:landscape) {
+  .platform-ios7.platform-browser.platform-ipad {
+    position: fixed; // required for iPad 7 Safari
   }
 }

@@ -90,6 +90,8 @@
       if(this.isWebView()) {
         this.platforms.push('webview');
         this.platforms.push('cordova');
+      } else {
+        this.platforms.push('browser');
       }
       if(this.isIPad()) this.platforms.push('ipad');
 
@@ -129,7 +131,10 @@
      * @returns {boolean} Whether we are running on iPad.
      */
     isIPad: function() {
-      return this.ua.toLowerCase().indexOf('ipad') >= 0;
+      if( /iPad/i.test(window.navigator.platform) ) {
+        return true;
+      }
+      return /iPad/i.test(this.ua);
     },
     /**
      * @ngdoc method
@@ -170,7 +175,7 @@
       } else if(this.ua.indexOf('iPhone') > -1 || this.ua.indexOf('iPad') > -1 || this.ua.indexOf('iPod') > -1) {
         platformName = 'ios';
       } else {
-        platformName = '';
+        platformName = window.navigator.platform && window.navigator.platform.toLowerCase().split(' ')[0] || '';
       }
     },
 
