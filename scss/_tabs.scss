@@ -157,15 +157,15 @@
   }
 }
 
-.tabs-icon-left .tab-item .icon {
+.tabs-icon-left > .tabs .tab-item .icon {
   padding-right: 3px;
 }
 
-.tabs-icon-right .tab-item .icon {
+.tabs-icon-right > .tabs .tab-item .icon {
   padding-left: 3px;
 }
 
-.tabs-icon-only .icon {
+.tabs-icon-only > .tabs .icon {
   line-height: inherit;
 }
 
