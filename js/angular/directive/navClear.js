@@ -6,13 +6,16 @@
  * @restrict AC
  *
  * @description
- * Disables any transition animations between views, along with removing the back
- * button which would normally show on the next view. This directive is useful for
- * links within a sideMenu.
+ * nav-clear is an attribute directive which should be used with an element that changes
+ * the view on click, for example an `<a href>` or a `<button ui-sref>`.
+ *
+ * nav-clear will cause the given element, when clicked, to disable the next view transition.
+ * This directive is useful, for example, for links within a sideMenu.
  *
  * @usage
- * Below is an example of a link within a side menu. Tapping this link would disable
- * any animations which would normally occur between views.
+ * Below is a link in a side menu, with the nav-clear directive added to it.
+ * Tapping this link will disable any animations that would normally occur
+ * between views.
  *
  * ```html
  * <a nav-clear menu-close href="#/home" class="item">Home</a>
