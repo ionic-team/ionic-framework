@@ -94,7 +94,10 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
       var modalEl = angular.element(self.modalEl);
 
       self.el.classList.remove('hide');
-      $document[0].body.classList.add('modal-open');
+      $timeout(function(){
+        $document[0].body.classList.add('modal-open');
+      }, 400)
+
 
       if(!self.el.parentElement) {
         modalEl.addClass(self.animation);

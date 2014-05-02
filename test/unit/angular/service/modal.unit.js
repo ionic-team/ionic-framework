@@ -60,6 +60,7 @@ describe('Ionic Modal', function() {
   it('show & remove should add .model-open to body', inject(function() {
     var instance = modal.fromTemplate('<div class="modal">hi</div>');
     instance.show();
+    timeout.flush();
     expect(angular.element(document.body).hasClass('modal-open')).toBe(true);
     instance.remove();
     timeout.flush();
@@ -69,6 +70,7 @@ describe('Ionic Modal', function() {
   it('show & hide should add .model-open body', inject(function() {
     var instance = modal.fromTemplate('<div class="modal">hi</div>');
     instance.show();
+    timeout.flush();
     expect(angular.element(document.body).hasClass('modal-open')).toBe(true);
     instance.hide();
     timeout.flush();
@@ -130,7 +132,7 @@ describe('Ionic Modal', function() {
     instance.$el.triggerHandler('click');
     expect(instance.hide).toHaveBeenCalled();
   });
-  
+
   it('should remove click listener on hide', function() {
     var template = '<div class="modal"></div>';
     var instance = modal.fromTemplate(template);
