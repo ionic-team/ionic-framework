@@ -1,4 +1,3 @@
-
 /**
  * @ngdoc directive
  * @name ionNavBar
@@ -31,6 +30,7 @@
  * </body>
  * ```
  *
+ * @param title {string=} The title to display in the nav-bar
  * @param {string=} delegate-handle The handle used to identify this navBar
  * with {@link ionic.service:$ionicNavBarDelegate}.
  * @param align-title {string=} Where to align the title of the navbar.
