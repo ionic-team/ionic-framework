@@ -25,8 +25,10 @@ function viewportLoadTag() {
     var props = viewportTag.content.toLowerCase().replace(/\s+/g, '').split(',');
     var keyValue;
     for(x=0; x<props.length; x++) {
-      keyValue = props[x].split('=');
-      if(keyValue.length == 2) viewportProperties[ keyValue[0] ] = keyValue[1];
+      if(props[x] != '') {
+        keyValue = props[x].split('=');
+        viewportProperties[ keyValue[0] ] = (keyValue.length > 1 ? keyValue[1] : '_');
+      }
     }
     viewportUpdate();
   }
@@ -112,12 +114,12 @@ function viewportUpdate() {
   }
 }
 
-function viewportTagUpdate(updates) {
-  ionic.Utils.extend(viewportProperties, updates);
-
+function viewportTagUpdate() {
   var key, props = [];
   for(key in viewportProperties) {
-    if( viewportProperties[key] ) props.push(key + '=' + viewportProperties[key]);
+    if( viewportProperties[key] ) {
+      props.push(key + (viewportProperties[key] == '_' ? '' : '=' + viewportProperties[key]) );
+    }
   }
 
   viewportTag.content = props.join(', ');

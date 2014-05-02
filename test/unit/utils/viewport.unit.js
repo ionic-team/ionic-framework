@@ -479,6 +479,18 @@ describe('Ionic Viewport', function() {
 
 
 
+  it('Should set viewport properties that have a key but without a value', function(){
+    vportTag.content = '   keyonly,   , ,,  WIDTH=DeViCe-wIDTH , minimal-ui    ';
+    viewportLoadTag();
+
+    expect( viewportProperties['keyonly'] ).toEqual('_');
+    expect( viewportProperties['width'] ).toEqual('device-width');
+    expect( viewportProperties['minimal-ui'] ).toEqual('_');
+
+    viewportTagUpdate();
+    expect( vportTag.content ).toEqual('keyonly, width=device-width, minimal-ui');
+  });
+
   it('Should get portrait (0) orientation', function(){
     window.innerWidth = 768;
     window.innerHeight = 1024;
