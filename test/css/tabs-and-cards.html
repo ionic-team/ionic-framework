@@ -1,0 +1,53 @@
+<html ng-app>
+  <head>
+    <meta charset="utf-8">
+    <title>Tabs: Top Icons</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link href="../../dist/css/ionic.css" rel="stylesheet">
+    <script src="../../config/lib/js/angular/angular.js"></script>
+  </head>
+  <body>
+
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Tab Bars & Cards</h1>
+    </header>
+
+    <main class="padding has-header">
+      <div class="{{iconTypeMain}}">
+        <div class="tabs">
+          <a class="tab-item" href="#">
+            <i class="icon ion-game-controller-a"></i>
+            {{iconTypeMain}}
+          </a>
+        </div>
+        <div class="pane">
+          <div class="list card">
+            Main Icon Type
+            <label class="item item-input">
+              <input type="text" ng-model="iconTypeMain" ng-init="iconTypeMain = 'tabs-icon-top'">
+            </label>
+
+            <br/>
+            Card Icon Type
+            <label class="item item-input">
+              <input type="text" ng-model="iconTypeSecondary" ng-init="iconTypeSecondary = 'tabs-icon-left'">
+            </label>
+
+            <br/>
+            <div class="item tabs {{iconTypeSecondary}} tabs-positive">
+              <a disabled class="tab-item">
+                <i class="icon ion-close"></i>
+                {{iconTypeSecondary}}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <style>
+main { top: 0; left: 0; right: 0; bottom: 0; position: absolute; }
+    </style>
+  </body>
+</html>
