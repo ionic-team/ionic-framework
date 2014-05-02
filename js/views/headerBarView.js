@@ -58,6 +58,9 @@
 
         var margin = Math.max(leftWidth, rightWidth) + 10;
 
+        //Reset left and right before setting again
+        titleEl.style.left = titleEl.style.right = '';
+
         // Size and align the header titleEl based on the sizes of the left and
         // right children, and the desired alignment mode
         if(align == 'center') {
