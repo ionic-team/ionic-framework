@@ -640,6 +640,15 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       //If the element is positioned under the keyboard...
       if( e.detail.isElementUnderKeyboard ) {
+        var delay;
+        // Wait on android for scroll view to resize
+        if ( !ionic.Platform.isFullScreen && e.detail.hasPlugin ) {
+          delay = 350;
+        }
+        else {
+          delay = 80;
+        }
+
         //Put element in middle of visible screen
         //Wait for resize() to reset scroll position
         ionic.scroll.isScrolling = true;
@@ -651,7 +660,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
           ionic.tap.cloneFocusedInput(container, self);
           self.scrollBy(0, scrollTop, true);
           self.onScroll();
-        }, 80 );
+        }, delay);
       }
 
       //Only the first scrollView parent of the element that broadcasted this event

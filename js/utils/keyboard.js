@@ -23,12 +23,15 @@ ionic.keyboard = {
 function keyboardInit() {
   if( keyboardHasPlugin() ) {
     window.addEventListener('native.showkeyboard', keyboardNativeShow);
+    window.addEventListener('native.hidekeyboard', keyboardFocusOut);
+  }
+  else {
+    document.body.addEventListener('focusout', keyboardFocusOut);
   }
 
   document.body.addEventListener('ionic.focusin', keyboardBrowserFocusIn);
   document.body.addEventListener('focusin', keyboardBrowserFocusIn);
 
-  document.body.addEventListener('focusout', keyboardFocusOut);
   document.body.addEventListener('orientationchange', keyboardOrientationChange);
 
   document.removeEventListener('touchstart', keyboardInit);
@@ -85,6 +88,8 @@ function keyboardShow(element, elementTop, elementBottom, viewportHeight, keyboa
     elementBottom: Math.round(elementBottom),
     keyboardHeight: keyboardHeight
   };
+
+  details.hasPlugin = keyboardHasPlugin();
 
   details.contentHeight = viewportHeight - keyboardHeight;
 
