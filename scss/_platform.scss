@@ -46,8 +46,15 @@
   }
 }
 
+@media (orientation:landscape) {
+  .platform-ios7.platform-browser.platform-ipad {
+    position: fixed; // required for iPad 7 Safari
+  }
+}
+
 .platform-android2:not(.enable-transitions) * {
   // disable transitions on Android 2
   -webkit-transition: none !important;
   transition: none !important;
 }
+
