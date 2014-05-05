@@ -35,8 +35,6 @@ function($animate, $compile) {
       this.$scope = $scope;
       this.$element = $element;
     }],
-    priorty: Number.MAX_VALUE,
-    require: ['ionItem', '^ionList'],
     scope: true,
     compile: function($element, $attrs) {
       var isAnchor = angular.isDefined($attrs.href) || angular.isDefined($attrs.ngHref);
