@@ -65,7 +65,8 @@ IonicModule
     require: '^$ionicScroll',
     template:
     '<div class="scroll-refresher">' +
-      '<div class="ionic-refresher-content">' +
+      '<div class="ionic-refresher-content" ' +
+      'ng-class="{\'ionic-refresher-with-text\': pullingText || refreshingText}">' +
         '<i class="icon {{pullingIcon}} icon-pulling"></i>' +
         '<div class="text-pulling" ng-bind-html="pullingText"></div>' +
         '<i class="icon {{refreshingIcon}} icon-refreshing"></i>' +
