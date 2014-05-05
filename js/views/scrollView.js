@@ -805,6 +805,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       //For Firefox
       document.addEventListener('mousewheel', onMouseWheel);
       function onMouseWheel(e) {
+        self.hintResize();
         wheelShowBarFn();
         self.scrollBy(e.wheelDeltaX/self.options.wheelDampen, -e.wheelDeltaY/self.options.wheelDampen);
         wheelHideBarFn();
