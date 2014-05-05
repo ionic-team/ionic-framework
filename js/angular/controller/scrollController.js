@@ -76,15 +76,17 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
 
     var viewId = historyData && historyData.viewId;
     if (viewId) {
-      self.rememberScrollPosition(viewId);
-      self.scrollToRememberedPosition();
+      $timeout(function() {
+        self.rememberScrollPosition(viewId);
+        self.scrollToRememberedPosition();
 
-      backListenDone = $rootScope.$on('$viewHistory.viewBack', function(e, fromViewId, toViewId) {
-        //When going back from this view, forget its saved scroll position
-        if (viewId === fromViewId) {
-          self.forgetScrollPosition();
-        }
-      });
+        backListenDone = $rootScope.$on('$viewHistory.viewBack', function(e, fromViewId, toViewId) {
+          //When going back from this view, forget its saved scroll position
+          if (viewId === fromViewId) {
+            self.forgetScrollPosition();
+          }
+        });
+      }, 1, false);
     }
   });
 

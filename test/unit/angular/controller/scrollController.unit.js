@@ -124,11 +124,12 @@ describe('$ionicScroll Controller', function() {
     expect(ctrl.scrollToRememberedPosition).toHaveBeenCalled();
   });
 
-  it('should forget on $viewHistory.viewBack after $viewContentLoaded', inject(function($rootScope) {
+  it('should forget on $viewHistory.viewBack after $viewContentLoaded', inject(function($rootScope, $timeout) {
     var historyData = { viewId: 'foo' };
     setup();
     spyOn($rootScope, '$on').andCallThrough();;
     scope.$broadcast('$viewContentLoaded', historyData);
+    $timeout.flush();
     expect(scope.$on).toHaveBeenCalledWith('$viewHistory.viewBack', jasmine.any(Function));
 
     //Should not forget unless backViewId is the same
