@@ -74,7 +74,7 @@ describe('$collectionDataSource service', function() {
 
     it('should be $cacheFactory', function() {
       var cache = {};
-      module('ionic', function($provide) { 
+      module('ionic', function($provide) {
         $provide.value('$cacheFactory', function() { return cache; });
       });
       var source = setup();
@@ -89,7 +89,7 @@ describe('$collectionDataSource service', function() {
       source.itemCache.remove('a');
       expect(source.itemCache.keys()).toEqual(['b']);
     });
-    
+
   });
 
   it('.destroy() should cleanup dimensions & cache', function() {
@@ -210,7 +210,7 @@ describe('$collectionDataSource service', function() {
   });
 
   describe('.attachItem()', function() {
-    it('should add element if it has no parent', function() {
+    it('should add element if it has no parent and digest', inject(function($rootScope) {
       var source = setup({
         transcludeParent: angular.element('<div>')
       });
@@ -218,16 +218,18 @@ describe('$collectionDataSource service', function() {
       spyOn(window, 'reconnectScope');
       var item = {
         element: element,
-        scope: {}
+        scope: $rootScope.$new()
       };
 
+      spyOn(item.scope, '$digest');
       spyOn(source.transcludeParent[0], 'appendChild');
       source.attachItem(item);
       expect(source.transcludeParent[0].appendChild).toHaveBeenCalledWith(element[0]);
       expect(reconnectScope).toHaveBeenCalledWith(item.scope);
-    });
+      expect(item.scope.$digest).toHaveBeenCalled();
+    }));
 
-    it('should not append element if it has a parent already', function() {
+    it('should not append element if it has a parent already', inject(function($rootScope) {
       var element = angular.element('<div>');
       var source = setup({
         transcludeParent: angular.element('<div>')
@@ -236,13 +238,15 @@ describe('$collectionDataSource service', function() {
       spyOn(window, 'reconnectScope');
       var item = {
         element: element,
-        scope: {}
+        scope: $rootScope.$new()
       };
+      spyOn(item.scope, '$digest');
       source.attachItem(item);
       spyOn(source.transcludeParent[0], 'appendChild');
       expect(source.transcludeParent[0].appendChild).not.toHaveBeenCalled();
       expect(reconnectScope).toHaveBeenCalledWith(item.scope);
-    });
+      expect(item.scope.$digest).toHaveBeenCalled();
+    }));
   });
 
   describe('.getLength()', function() {

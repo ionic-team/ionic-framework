@@ -186,7 +186,7 @@ describe('collectionRepeatManager service', function() {
         { width: 100, height: 40 },
         { width: 100, height: 50 }
       ];
-      manager.secondaryScrollSize = function() { 
+      manager.secondaryScrollSize = function() {
         return 100;
       };
       var result = manager.calculateDimensions();
@@ -271,7 +271,7 @@ describe('collectionRepeatManager service', function() {
     it('should work with data', function() {
       var manager = setup();
       spyOn(manager, 'calculateDimensions').andReturn([{
-        primaryPos: 100, primarySize: 30 
+        primaryPos: 100, primarySize: 30
       }]);
       manager.resize();
       expect(manager.viewportSize).toBe(130);
@@ -438,8 +438,87 @@ describe('collectionRepeatManager service', function() {
       expect(manager.removeItem).toHaveBeenCalledWith('b');
     });
 
-    //TODO test .render() logic
-    
+    function mockRendering(options) {
+      var manager = setup({}, {
+        keyExpr: 'item',
+        listExpr: 'items',
+        heightGetter: function() {
+          return options.itemHeight;
+        },
+        widthGetter: function() {
+          return options.itemWidth;
+        }
+      });
+      spyOn(manager, 'scrollSize').andReturn(options.scrollHeight);
+      spyOn(manager, 'secondaryScrollSize').andReturn(options.scrollWidth);
+      spyOn(manager, 'renderItem').andCallFake(function(i) {
+        manager.renderedItems[i] = true;
+      });
+      spyOn(manager, 'removeItem').andCallFake(function(i) {
+        delete manager.renderedItems[i];
+      });
+      var data = [];
+      for (var i = 0; i < 100; i++) {
+        data.push(i);
+      }
+      manager.dataSource.setData(data);
+      return manager;
+    }
+
+    it('should render the first items that fit on screen', function() {
+      var manager = mockRendering({
+        itemWidth: 3,
+        itemHeight: 20,
+        scrollWidth: 10,
+        scrollHeight: 100
+      });
+      manager.resize(); //triggers render
+
+      //it should render (items that fit * items per row) with one extra row at end
+      expect(Object.keys(manager.renderedItems).length).toBe(18);
+      for (var i = 0; i < 18; i++) {
+        expect(manager.renderedItems[i]).toBe(true);
+      }
+      expect(manager.renderedItems[18]).toBeUndefined();
+    });
+
+    it('should render items in the middle of the screen', function() {
+      var manager = mockRendering({
+        itemWidth: 3,
+        itemHeight: 20,
+        scrollWidth: 10,
+        scrollHeight: 100
+      });
+      spyOn(manager, 'scrollValue').andReturn(111);
+      manager.resize();
+      var startIndex = 17;
+      var bufferStartIndex = 14; //one row of buffer before the start
+      var bufferEndIndex = 35;  //start + 17 + 6
+
+      expect(Object.keys(manager.renderedItems).length).toBe(22);
+      for (var i = bufferStartIndex; i <= bufferEndIndex; i++) {
+        expect(manager.renderedItems[i]).toBe(true);
+      }
+      expect(manager.renderedItems[bufferStartIndex - 1]).toBeUndefined();
+      expect(manager.renderedItems[bufferEndIndex + 1]).toBeUndefined();
+    });
+
+    it('should remove items outside the range', function() {
+      var manager = mockRendering({
+        itemWidth: 3,
+        itemHeight: 20,
+        scrollWidth: 10,
+        scrollHeight: 100
+      });
+      manager.resize();
+      manager.removeItem.reset();
+      manager.renderedItems = { 17: true, 18: true, 19: true };
+      //resize() re-renders everything, need to just do a normal rerender
+      manager.render();
+      expect(manager.removeItem.callCount).toBe(2);
+      expect(manager.removeItem).toHaveBeenCalledWith('18');
+      expect(manager.removeItem).toHaveBeenCalledWith('19');
+    });
   });
 
   describe('.renderItem()', function() {

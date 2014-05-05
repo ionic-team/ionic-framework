@@ -188,7 +188,7 @@ function($rootScope, $timeout) {
         this.renderItem(i, rect.primaryPos - startPos, rect.secondaryPos);
         i++;
       }
-      var bufferEndIndex = i -1;
+      var bufferEndIndex = i - 1;
 
       for (i in this.renderedItems) {
         if (i < bufferStartIndex || i > bufferEndIndex) {
@@ -207,9 +207,6 @@ function($rootScope, $timeout) {
           primaryPos, secondaryPos, secondaryPos
         );
         this.renderedItems[dataIndex] = item;
-        if (item.scope && !item.scope.$$phase) {
-          item.scope.$digest();
-        }
       } else {
         delete this.renderedItems[dataIndex];
       }
