@@ -10,6 +10,7 @@ var keyboardIsOpen;
 var keyboardActiveElement;
 var keyboardFocusOutTimer;
 var keyboardFocusInTimer;
+var keyboardLastShow = 0;
 
 var KEYBOARD_OPEN_CSS = 'keyboard-open';
 var SCROLL_CONTAINER_CSS = 'scroll';
@@ -59,6 +60,8 @@ function keyboardSetShow(e) {
   clearTimeout(keyboardFocusOutTimer);
 
   keyboardFocusInTimer = setTimeout(function(){
+    if ( keyboardLastShow + 350 > Date.now() ) return; 
+    keyboardLastShow = Date.now();
     var keyboardHeight; 
     var elementBounds = keyboardActiveElement.getBoundingClientRect();
     var count = 0;
