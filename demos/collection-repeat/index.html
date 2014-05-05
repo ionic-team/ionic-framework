@@ -23,8 +23,6 @@
     <input type="search"
       placeholder="Filter contacts..."
       ng-model="search"
-      ng-focus="searchFocused = true"
-      ng-blur="searchFocused = false"
       ng-change="scrollTop()">
     <button ng-if="search.length"
       class="button button-icon ion-android-close input-button"

@@ -18,18 +18,18 @@
  * Here are a few things to keep in mind while using collection-repeat:
  *
  * 1. The data supplied to collection-repeat must be an array.
- * 2. You must explicitly tell the directive what size your items will be in the DOM
- * (pixel amount or percentage), using directive attributes (see below).
- * 3. The elements rendered will be absolutely positioned: be sure to let your CSS work with this (see below).
- * 4. Keep the HTML of your repeated elements as simple as possible. As the user scrolls down, elements
- * will be lazily compiled. Resultingly, the more complicated your elements, the more likely it is that
- * the on-demand compilation will cause jankiness in the user's scrolling.
- * 5. The more elements you render on the screen at a time, the slower the scrolling will be.
- * It is recommended to keep grids of collection-repeat list elements at 3-wide or less.
+ * 2. You must explicitly tell the directive what size your items will be in the DOM, using directive attributes. Pixel amounts or percentages are allowed (see below).
+ * 3. The elements rendered will be absolutely positioned: be sure to let your CSS work with
+ * this (see below).
+ * 4. Keep the HTML of your repeated elements as simple as possible. As the user scrolls down,
+ * elements will be lazily compiled. Resultingly, the more complicated your elements, the more
+ * likely it is that the on-demand compilation will cause some jerkiness in the user's scrolling.
+ * 5. The more elements you render on the screen per row, the more likelihood for scrolling to
+ * slow down. It is recommended to keep grids of collection-repeat list elements at 3-wide or less.
+ * For example, if you have a gallery of images just set their width to 33%.
  * 6. Each collection-repeat list will take up all of its parent scrollView's space.
  * If you wish to have multiple lists on one page, put each list within its own
  * {@link ionic.directive:ionScroll ionScroll} container.
- *
  *
  *
  * @usage
@@ -127,6 +127,11 @@
  * @param {expression} collection-item-height The height of the repeated element.  Can be a number (in pixels), or a percentage.
  *
  */
+var COLLECTION_REPEAT_SCROLLVIEW_XY_ERROR = "Cannot create a collection-repeat within a scrollView that is scrollable on both x and y axis.  Choose either x direction or y direction.";
+var COLLECTION_REPEAT_ATTR_HEIGHT_ERROR = "collection-repeat expected attribute collection-item-height to be a an expression that returns a number (in pixels) or percentage.";
+var COLLECTION_REPEAT_ATTR_WIDTH_ERROR = "collection-repeat expected attribute collection-item-width to be a an expression that returns a number (in pixels) or percentage.";
+var COLLECTION_REPEAT_ATTR_REPEAT_ERROR = "collection-repeat expected expression in form of '_item_ in _collection_[ track by _id_]' but got '%'";
+
 IonicModule
 .directive('collectionRepeat', [
   '$collectionRepeatManager',
@@ -142,14 +147,14 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
     link: function($scope, $element, $attr, scrollCtrl, $transclude) {
       var scrollView = scrollCtrl.scrollView;
       if (scrollView.options.scrollingX && scrollView.options.scrollingY) {
-        throw new Error("Cannot create a collection-repeat within a scrollView that is scrollable on both x and y axis.  Choose either x direction or y direction.");
+        throw new Error(COLLECTION_REPEAT_SCROLLVIEW_XY_ERROR);
       }
 
       var isVertical = !!scrollView.options.scrollingY;
       if (isVertical && !$attr.collectionItemHeight) {
-        throw new Error("collection-repeat expected attribute collection-item-height to be a an expression that returns a number.");
+        throw new Error(COLLECTION_REPEAT_ATTR_HEIGHT_ERROR);
       } else if (!isVertical && !$attr.collectionItemWidth) {
-        throw new Error("collection-repeat expected attribute collection-item-width to be a an expression that returns a number.");
+        throw new Error(COLLECTION_REPEAT_ATTR_WIDTH_ERROR);
       }
       $attr.collectionItemHeight = $attr.collectionItemHeight || '"100%"';
       $attr.collectionItemWidth = $attr.collectionItemWidth || '"100%"';
@@ -178,16 +183,20 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
 
       var match = $attr.collectionRepeat.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
       if (!match) {
-        throw new Error("collection-repeat expected expression in form of '_item_ in _collection_[ track by _id_]' but got '" + $attr.collectionRepeat + "'.");
+        throw new Error(COLLECTION_REPEAT_ATTR_REPEAT_ERROR
+                        .replace('%', $attr.collectionRepeat));
       }
+      var keyExpr = match[1];
+      var listExpr = match[2];
+      var trackByExpr = match[3];
 
       var dataSource = new $collectionDataSource({
         scope: $scope,
         transcludeFn: $transclude,
         transcludeParent: $element.parent(),
-        keyExpr: match[1],
-        listExpr: match[2],
-        trackByExpr: match[3],
+        keyExpr: keyExpr,
+        listExpr: listExpr,
+        trackByExpr: trackByExpr,
         heightGetter: heightGetter,
         widthGetter: widthGetter
       });
@@ -197,7 +206,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         scrollView: scrollCtrl.scrollView,
       });
 
-      $scope.$watchCollection(dataSource.listExpr, function(value) {
+      $scope.$watchCollection(listExpr, function(value) {
         if (value && !angular.isArray(value)) {
           throw new Error("collection-repeat expects an array to repeat over, but instead got '" + typeof value + "'.");
         }
@@ -209,15 +218,16 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         dataSource.setData(value);
         collectionRepeatManager.resize();
       }
-      var resize = angular.bind(collectionRepeatManager, collectionRepeatManager.resize);
-      ionic.on('resize', function() {
-        rerender($scope.$eval(dataSource.listExpr));
-      }, window);
+      function onWindowResize() {
+        rerender($scope.$eval(listExpr));
+      }
+
+      ionic.on('resize', onWindowResize, window);
 
       $scope.$on('$destroy', function() {
         collectionRepeatManager.destroy();
         dataSource.destroy();
-        ionic.off('resize', resize, window);
+        ionic.off('resize', onWindowResize, window);
       });
     }
   };

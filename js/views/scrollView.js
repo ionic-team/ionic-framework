@@ -802,11 +802,15 @@ ionic.views.Scroll = ionic.views.View.inherit({
         self.__fadeScrollbars('out');
       }, 100, false);
 
-      document.addEventListener("mousewheel", function(e) {
+      //For Firefox
+      document.addEventListener('DOMMouseScroll', onMouseWheel);
+      document.addEventListener('mousewheel', onMouseWheel);
+      function onMouseWheel(e) {
+        console.log('wheel', e);
         wheelShowBarFn();
         self.scrollBy(e.wheelDeltaX/self.options.wheelDampen, -e.wheelDeltaY/self.options.wheelDampen);
         wheelHideBarFn();
-      });
+      }
     }
   },
 
