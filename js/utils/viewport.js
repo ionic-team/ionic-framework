@@ -125,7 +125,7 @@ function viewportTagUpdate() {
   viewportTag.content = props.join(', ');
 }
 
-ionic.DomUtil.ready(function() {
+ionic.Platform.ready(function() {
   viewportLoadTag();
 
   window.addEventListener("orientationchange", function(){
