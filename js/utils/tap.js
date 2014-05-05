@@ -1,4 +1,16 @@
 
+/**
+ * @ngdoc page
+ * @name tap
+ * @module ionic
+ * @description
+ * This is the tap page.
+ *
+ * - data-tap-disabled
+ * - why not ngTouch and fastclick?
+ * - ionic keyboard plugin
+ * - other notes
+ */
 /*
 
  IONIC TAP
