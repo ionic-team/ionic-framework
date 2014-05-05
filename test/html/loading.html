@@ -6,12 +6,12 @@
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <link rel="stylesheet" href="../../dist/css/ionic.css">
 
   </head>
   <body ng-controller="LoadingCtrl">
     <button class="button button-dark" ng-click="startLoading()">Load</button>
-    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <script src="../../dist/js/ionic.bundle.js"></script>
     <script>
       angular.module('ionic.example', ['ionic'])
 
@@ -19,12 +19,9 @@
         $scope.startLoading = function() {
           $ionicLoading.show({
             template: 'Getting current location...',
-            delay: 100
+            delay: 100,
+            duration: 500
           });
-          $ionicLoading.show({
-            template: 'Getting current location...',
-          });
-          $ionicLoading.hide();
         };
       });
     </script>
