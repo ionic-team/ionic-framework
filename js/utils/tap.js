@@ -6,21 +6,22 @@
  * @description
  * On touch devices such as a phone or tablet, some browsers implement a 300ms delay between
  * the time the user stops touching the display and the moment the browser executes the
- * click. It was initially introduced so the browser can tell if the user wants to double-tap
- * to zoom in on the webpage. Basically the browser waits roughly 300ms to see if the user
- * is double-tapping, or just tapping on the display once.
+ * click. This delay was initially introduced so the browser can know whether the user wants to
+ * double-tap to zoom in on the webpage.  Basically, the browser waits roughly 300ms to see if
+ * the user is double-tapping, or just tapping on the display once.
  *
- * Out of the box Ionic automatically removes the 300ms delay in order to make Ionic apps
- * feel more "native" like. Other solutions such as [fastclick](https://github.com/ftlabs/fastclick)
- * and Angular's [ngTouch](https://docs.angularjs.org/api/ngTouch) should be avoided otherwise
- * conflicts may arise.
+ * Out of the box, Ionic automatically removes the 300ms delay in order to make Ionic apps
+ * feel more "native" like. Resultingly, other solutions such as
+ * [fastclick](https://github.com/ftlabs/fastclick) and Angular's
+ * [ngTouch](https://docs.angularjs.org/api/ngTouch) should not be included, to avoid conflicts.
  *
- * In some cases, third-party libraries may also be working with touch events which can interfer
- * with the tap system. For example, mapping libraries like Google or Leaflet Maps often
- * cannot use a tap solution to remove the 300ms delay.
+ * In some cases, third-party libraries may also be working with touch events which can interfere
+ * with the tap system. For example, mapping libraries like Google or Leaflet Maps often implement
+ * a touch detection system which conflicts with Ionic's tap system.
  *
  * ### Disabling the tap system
- * To disable the tap for any element and all of its children elements,
+ *
+ * To disable the tap for an element and all of its children elements,
  * add the attribute `data-tap-disabled="true"`.
  *
  * ```html
@@ -32,7 +33,8 @@
  * ### Additional Notes:
  *
  * - Ionic tap  works with Ionic's JavaScript scrolling
- * - Elements can come and go from the DOM and it doesn't have to keep adding and removing listeners
+ * - Elements can come and go from the DOM and Ionic tap doesn't keep adding and removing
+ *   listeners
  * - No "tap delay" after the first "tap" (you can tap as fast as you want, they all click)
  * - Minimal events listeners, only being added to document
  * - Correct focus in/out on each input type (select, textearea, range) on each platform/device
