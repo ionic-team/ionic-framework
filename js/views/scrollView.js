@@ -380,7 +380,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.resize();
     }, 1000, true);
 
-    this.onScroll = function(scrollTop) {
+    this.onScroll = function() {
 
       if(!ionic.scroll.isScrolling) {
         setTimeout(self.setScrollStart, 50);
@@ -403,6 +403,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     };
 
     this.triggerScrollEvent = ionic.throttle(function() {
+      self.onScroll();
       ionic.trigger('scroll', {
         scrollTop: self.__scrollTop,
         scrollLeft: self.__scrollLeft,
