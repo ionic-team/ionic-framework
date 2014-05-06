@@ -41,7 +41,7 @@
     "semver": "^2.2.1",
     "cp-r": "^0.1.1",
     "mkdirp": "^0.3.5",
-    "conventional-changelog": "0.0.8",
+    "conventional-changelog": "0.0.9",
     "lunr": "0.4.5",
     "htmlparser2": "3.7.0",
     "js-yaml": "3.0.2",
