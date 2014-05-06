@@ -3,8 +3,12 @@ IonicModule
   '$scope',
   '$attrs',
   '$ionicSideMenuDelegate',
-function($scope, $attrs, $ionicSideMenuDelegate) {
+  '$ionicPlatform',
+function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform) {
+  var self = this;
   angular.extend(this, ionic.controllers.SideMenuController.prototype);
+
+  this.$scope = $scope;
 
   ionic.controllers.SideMenuController.call(this, {
     left: { width: 275 },
@@ -27,6 +31,21 @@ function($scope, $attrs, $ionicSideMenuDelegate) {
   };
 
   $scope.sideMenuContentTranslateX = 0;
+
+
+  var deregisterBackButtonAction = angular.noop;
+  var closeSideMenu = angular.bind(this, this.close);
+  $scope.$watch(function() {
+    return self.getOpenAmount() !== 0;
+  }, function(isOpen) {
+    deregisterBackButtonAction();
+    if (isOpen) {
+      deregisterBackButtonAction = $ionicPlatform.registerBackButtonAction(
+        closeSideMenu,
+        PLATFORM_BACK_BUTTON_PRIORITY_SIDE_MENU
+      );
+    }
+  });
 
   var deregisterInstance = $ionicSideMenuDelegate._registerInstance(
     this, $attrs.delegateHandle
