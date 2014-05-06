@@ -14,7 +14,8 @@
 
   // Custom event polyfill
   ionic.CustomEvent = window.CustomEvent || (function() {
-    function CustomEvent(event, params) {
+    var CustomEvent;
+    CustomEvent = function(event, params) {
       var evt;
       params = params || {
         bubbles: false,
@@ -35,6 +36,7 @@
       return evt;
     }
     CustomEvent.prototype = window.Event.prototype;
+    return CustomEvent;
   })();
 
 
