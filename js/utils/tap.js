@@ -4,41 +4,57 @@
  * @name tap
  * @module ionic
  * @description
- * This is the tap page.
+ * On touch devices such as a phone or tablet, some browsers implement a 300ms delay between
+ * the time the user stops touching the display and the moment the browser executes the
+ * click. It was initially introduced so the browser can tell if the user wants to double-tap
+ * to zoom in on the webpage. Basically the browser waits roughly 300ms to see if the user
+ * is double-tapping, or just tapping on the display once.
  *
- * - data-tap-disabled
- * - why not ngTouch and fastclick?
- * - ionic keyboard plugin
- * - other notes
+ * Out of the box Ionic automatically removes the 300ms delay in order to make Ionic apps
+ * feel more "native" like. Other solutions such as [fastclick](https://github.com/ftlabs/fastclick)
+ * and Angular's [ngTouch](https://docs.angularjs.org/api/ngTouch) should be avoided otherwise
+ * conflicts may arise.
+ *
+ * In some cases, third-party libraries may also be working with touch events which can interfer
+ * with the tap system. For example, mapping libraries like Google or Leaflet Maps often
+ * cannot use a tap solution to remove the 300ms delay.
+ *
+ * ### Disabling the tap system
+ * To disable the tap for any element and all of its children elements,
+ * add the attribute `data-prevent-default="true"`.
+ *
+ * ```html
+ * <div data-prevent-default="true">
+ *     <div id="google-map"></div>
+ * </div>
+ * ```
+ *
+ * ### Additional Notes:
+ *
+ * - Ionic tap  works with Ionic's JavaScript scrolling
+ * - Elements can come and go from the DOM and it doesn't have to keep adding and removing listeners
+ * - No "tap delay" after the first "tap" (you can tap as fast as you want, they all click)
+ * - Minimal events listeners, only being added to document
+ * - Correct focus in/out on each input type (select, textearea, range) on each platform/device
+ * - Shows and hides virtual keyboard correctly for each platform/device
+ * - Works with labels surrounding inputs
+ * - Does not fire off a click if the user moves the pointer too far
+ * - Adds and removes an 'activated' css class
+ * - Multiple [unit tests](https://github.com/driftyco/ionic/blob/master/test/unit/utils/tap.unit.js) for each scenario
+ *
  */
 /*
 
  IONIC TAP
  ---------------
  - Both touch and mouse events are added to the document.body on DOM ready
- - If a touch event happens, it removes the mouse event listeners (temporarily)
- - Remembers the last touchstart event
+ - If a touch event happens, it does not use mouse event listeners
  - On touchend, if the distance between start and end was small, trigger a click
  - In the triggered click event, add a 'isIonicTap' property
  - The triggered click receives the same x,y coordinates as as the end event
  - On document.body click listener (with useCapture=true), only allow clicks with 'isIonicTap'
- - After XXms, bring back the mouse event listeners incase they switch from touch and mouse
- - If no touch events and only mouse, then touch events never fire, only mouse
  - Triggering clicks with mouse events work the same as touch, except with mousedown/mouseup
  - Tapping inputs is disabled during scrolling
-
- - Does not require other libraries to hook into ionic.tap, it just works
- - Elements can come and go from the DOM and it doesn't have to keep adding and removing listeners
- - No "tap delay" after the first "tap" (you can tap as fast as you want, they all click)
- - Minimal events listeners, only being added to document.body
- - Correct focus in/out on each input type on each platform/device
- - Shows and hides virtual keyboard correctly for each platform/device
- - No user-agent sniffing
- - Works with labels surrounding inputs
- - Does not fire off a click if the user moves the pointer too far
- - Adds and removes an 'activated' css class
- - Multiple unit tests for each scenario
-
 */
 
 var tapDoc; // the element which the listeners are on (document.body)
