@@ -34,4 +34,20 @@ describe('$ionicSideMenus controller', function() {
     ctrl.$scope.$apply();
     expect(deregSpy).toHaveBeenCalled();
   }));
+
+  it('should deregister back button action on $destroy', inject(function($ionicPlatform) {
+    var openAmount = 0;
+    var deregSpy = jasmine.createSpy('deregister');
+    spyOn($ionicPlatform, 'registerBackButtonAction').andReturn(deregSpy);
+
+    var ctrl = setup();
+    spyOn(ctrl, 'getOpenAmount').andCallFake(function() { return openAmount; });
+
+    expect($ionicPlatform.registerBackButtonAction).not.toHaveBeenCalled();
+    openAmount = 1;
+    ctrl.$scope.$apply();
+    expect(deregSpy).not.toHaveBeenCalled();
+    ctrl.$scope.$destroy();
+    expect(deregSpy).toHaveBeenCalled();
+  }));
 });

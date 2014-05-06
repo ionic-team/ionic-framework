@@ -50,5 +50,8 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform) {
   var deregisterInstance = $ionicSideMenuDelegate._registerInstance(
     this, $attrs.delegateHandle
   );
-  $scope.$on('$destroy', deregisterInstance);
+  $scope.$on('$destroy', function() {
+    deregisterInstance();
+    deregisterBackButtonAction();
+  });
 }]);
