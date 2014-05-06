@@ -21,10 +21,10 @@
  *
  * ### Disabling the tap system
  * To disable the tap for any element and all of its children elements,
- * add the attribute `data-prevent-default="true"`.
+ * add the attribute `data-tap-disabled="true"`.
  *
  * ```html
- * <div data-prevent-default="true">
+ * <div data-tap-disabled="true">
  *     <div id="google-map"></div>
  * </div>
  * ```
