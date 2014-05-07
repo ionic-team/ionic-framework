@@ -84,10 +84,9 @@ function run {
     VERSION_NAME=$VERSION
 
     ./scripts/site/publish.sh --action="clone"
-
     ./scripts/site/publish.sh --action="updateConfig"
-
     ./scripts/seed/publish.sh --version="$VERSION"
+    ./scripts/app-base/publish.sh --version="$VERSION"
   else
     ./scripts/site/publish.sh --action="clone"
 
