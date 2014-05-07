@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.3
+ * Ionic, v1.0.0-beta.4
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -2116,6 +2116,8 @@ body.grade-b, body.grade-c {
     .scroll-refresher .ionic-refresher-content .text-refreshing, .scroll-refresher .ionic-refresher-content .text-pulling {
       line-height: 16px;
       font-size: 16px; }
+    .scroll-refresher .ionic-refresher-content.ionic-refresher-with-text {
+      bottom: 10px; }
   .scroll-refresher .icon-refreshing, .scroll-refresher .icon-pulling {
     width: 100%;
     -webkit-backface-visibility: hidden;
@@ -2232,8 +2234,7 @@ ion-infinite-scroll.active .scroll-infinite {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff;
-  overflow: hidden; }
+  background-color: #fff; }
 
 /**
  * Typography
@@ -3000,7 +3001,7 @@ a.subdued {
 .tabs-item-hide > .tabs, .tabs.tabs-item-hide {
   display: none; }
 
-.tabs-icon-top > .tabs .tab-item, .tabs-icon-bottom > .tabs .tab-item {
+.tabs-icon-top > .tabs .tab-item, .tabs-icon-top.tabs .tab-item, .tabs-icon-bottom > .tabs .tab-item, .tabs-icon-bottom.tabs .tab-item {
   font-size: 12px;
   line-height: 14px; }
 
@@ -3010,22 +3011,22 @@ a.subdued {
   height: 32px;
   font-size: 32px; }
 
-.tabs-icon-left > .tabs .tab-item, .tabs-icon-right > .tabs .tab-item {
+.tabs-icon-left.tabs .tab-item, .tabs-icon-left > .tabs .tab-item, .tabs-icon-right.tabs .tab-item, .tabs-icon-right > .tabs .tab-item {
   font-size: 12px; }
-  .tabs-icon-left > .tabs .tab-item .icon, .tabs-icon-right > .tabs .tab-item .icon {
+  .tabs-icon-left.tabs .tab-item .icon, .tabs-icon-left > .tabs .tab-item .icon, .tabs-icon-right.tabs .tab-item .icon, .tabs-icon-right > .tabs .tab-item .icon {
     display: inline-block;
     vertical-align: top; }
-    .tabs-icon-left > .tabs .tab-item .icon:before, .tabs-icon-right > .tabs .tab-item .icon:before {
+    .tabs-icon-left.tabs .tab-item .icon:before, .tabs-icon-left > .tabs .tab-item .icon:before, .tabs-icon-right.tabs .tab-item .icon:before, .tabs-icon-right > .tabs .tab-item .icon:before {
       font-size: 24px;
       line-height: 49px; }
 
-.tabs-icon-left .tab-item .icon {
+.tabs-icon-left > .tabs .tab-item .icon, .tabs-icon-left.tabs .tab-item .icon {
   padding-right: 3px; }
 
-.tabs-icon-right .tab-item .icon {
+.tabs-icon-right > .tabs .tab-item .icon, .tabs-icon-right.tabs .tab-item .icon {
   padding-left: 3px; }
 
-.tabs-icon-only .icon {
+.tabs-icon-only > .tabs .icon, .tabs-icon-only.tabs .icon {
   line-height: inherit; }
 
 .tab-item.has-badge {
@@ -3165,7 +3166,7 @@ a.subdued {
 
 .modal-open {
   pointer-events: none; }
-  .modal-open .modal {
+  .modal-open .modal, .modal-open .modal-backdrop {
     pointer-events: auto; }
 
 /**
@@ -4463,10 +4464,14 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
   transform: translate3d(22px, 0, 0);
   background-color: #fff; }
 
-.item-toggle {
+.item-toggle.active {
+  box-shadow: none; }
+
+.item-toggle, .item-toggle.item-complex .item-content {
   padding-right: 99px; }
-  .item-toggle.active {
-    box-shadow: none; }
+
+.item-toggle.item-complex {
+  padding-right: 0; }
 
 .item-toggle .toggle {
   position: absolute;
@@ -6194,9 +6199,10 @@ a.button {
 .invisible {
   visibility: hidden; }
 
-.keyboard-open .bar-footer, .keyboard-open .tabs, .footer-hide .bar-footer, .footer-hide .tabs {
+.keyboard-open .hide-on-keyboard-open {
   display: none; }
-.keyboard-open .has-footer, .keyboard-open .has-tabs, .footer-hide .has-footer, .footer-hide .has-tabs {
+
+.keyboard-open .tabs.hide-on-keyboard-open + .pane .has-tabs, .keyboard-open .bar-footer.hide-on-keyboard-open + .pane .has-footer {
   bottom: 0; }
 
 .inline {
@@ -6219,6 +6225,9 @@ a.button {
   -webkit-user-drag: none;
   -ms-touch-action: none;
   -ms-content-zooming: none; }
+
+.no-resize {
+  resize: none; }
 
 .block {
   display: block;
@@ -6359,7 +6368,7 @@ a.button {
 /**
  * Platform
  * --------------------------------------------------
- * Platform specific tweaks when in Cordova.
+ * Platform specific tweaks
  */
 .platform-ios7.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader) {
   height: 64px; }
@@ -6379,3 +6388,11 @@ a.button {
   top: 157px; }
 .platform-ios7.platform-cordova.status-bar-hide {
   margin-bottom: 20px; }
+
+@media (orientation: landscape) {
+  .platform-ios7.platform-browser.platform-ipad {
+    position: fixed; } }
+
+.platform-android2:not(.enable-transitions) * {
+  -webkit-transition: none !important;
+  transition: none !important; }
