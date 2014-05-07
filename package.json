@@ -5,9 +5,7 @@
   "codename": "americium",
   "changelog": "http://git.io/wliUjg",
   "repository": {
-    "url": "git://github.com/driftyco/ionic.git",
-    "changelogUrl": "http://git.io/LoDTyQ",
-    "downloadUrl": "http://git.io/EHfQ_g"
+    "url": "git://github.com/driftyco/ionic.git"
   },
   "devDependencies": {
     "karma": "~0.11.13",

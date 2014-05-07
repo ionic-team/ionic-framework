@@ -83,6 +83,10 @@ function run {
       --action="github" \
       --version=$VERSION \
       --old-version=$OLD_VERSION
+    ./scripts/travis/release-new-version.sh \
+      --action="discourse" \
+      --version=$VERSION \
+      --old-version=$OLD_VERSION
 
     # Version name used on the CDN/docs: nightly or the version
     VERSION_NAME=$VERSION
@@ -91,6 +95,8 @@ function run {
     ./scripts/site/publish.sh --action="updateConfig"
     ./scripts/seed/publish.sh --version="$VERSION"
     ./scripts/app-base/publish.sh --version="$VERSION"
+
+    gulp release-tweet release-irc
   else
     ./scripts/site/publish.sh --action="clone"
 

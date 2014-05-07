@@ -1,9 +1,11 @@
 var pkg = require('../package.json');
+var fs = require('fs');
 
 module.exports = {
   dist: 'dist',
   distJs: 'dist/js',
   distCss: 'dist/css',
+  releasePostUrl: fs.readFileSync('config/RELEASE_POST_URL'),
 
   banner:
     '/*!\n' +
@@ -109,8 +111,8 @@ module.exports = {
   //and can have up to a 14 char long exclamation prepended.
   releaseMessage: function() {
     return this.exclamations[Math.floor(Math.random()*this.exclamations.length)] + '! ' +
-      'Just released @IonicFramework v' + pkg.version + ' "' + pkg.codename + '"!\n' +
-      'Changelog at ' + pkg.repository.changelogUrl + '. Download at ' + pkg.repository.downloadUrl;
+      'Just released @IonicFramework v' + pkg.version + ' "' + pkg.codename + '"! ' +
+      this.releasePostUrl;
   },
 
 };
