@@ -34,9 +34,11 @@ function run {
   echo "-- Updating files..."
   rm -rf $APPBASE_DIR/www/lib/ionic
   mkdir -p $APPBASE_DIR/www/lib/ionic
-  
+
   cp -Rf $BUILD_DIR/* $APPBASE_DIR/www/lib/ionic
-  cp -Rf $PROJECT_DIR/scss/* $APPBASE_DIR/www/lib/ionic
+
+  mkdir -p $APPBASE_DIR/www/lib/ionic/scss
+  cp -Rf $PROJECT_DIR/scss/* $APPBASE_DIR/www/lib/ionic/scss
 
   git add -A
   git commit -am "release: update ionic to v$VERSION"
