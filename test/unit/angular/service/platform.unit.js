@@ -71,6 +71,14 @@ describe('Ionic Platform Service', function() {
     expect(ionic.Platform.version()).toEqual(2.2);
   });
 
+  it('set windowsphone with user agent', function() {
+    ionic.Platform.ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch;';
+    ionic.Platform.setPlatform(undefined);
+    ionic.Platform.setVersion(undefined);
+    expect(ionic.Platform.platform()).toEqual('windowsphone');
+    expect(ionic.Platform.version()).toEqual(8);
+  });
+
   it('set ios with iPhone user agent', function() {
     ionic.Platform.ua = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25';
     ionic.Platform.setPlatform(undefined);
