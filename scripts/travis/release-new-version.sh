@@ -1,11 +1,9 @@
 #!/bin/bash
 
-echo "##############################"
-echo "# Pushing release to $RELEASE_REMOTE #"
-echo "##############################"
-
 ARG_DEFS=(
   "--version=(.*)"
+  "[--old-version=(.*)]"
+  "--action=(.*)"
 )
 
 function init {
@@ -16,12 +14,18 @@ function init {
   IONIC_DIR=$TMP_DIR/ionic
 }
 
-function run {
+function push {
+
+  echo "##############################"
+  echo "# Pushing release $VERSION   #"
+  echo "##############################"
+
   cd ../..
 
   rm -rf $IONIC_DIR
   mkdir -p $IONIC_DIR
 
+  echo "-- Cloning ionic master ..."
   git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic.git \
     $IONIC_DIR \
     --depth=10
@@ -30,7 +34,6 @@ function run {
 
   # Get first codename in list
   CODENAME=$(cat config/CODENAMES | head -n 1)
-
   # Remove first line of codenames, it's used now
   sed -i '' 1d config/CODENAMES
 
@@ -53,8 +56,40 @@ function run {
   git push -q $RELEASE_REMOTE v$VERSION
 
   echo "-- v$VERSION \"$CODENAME\" pushed to $RELEASE_REMOTE/master successfully!"
-
   gulp release-tweet release-irc
+}
+
+function github {
+  # Get only newest things in changelog - sed until previous version is hit
+  sed -e '/'"$OLD_VERSION"'/,$d' $PROJECT_DIR/CHANGELOG.md | tail -n +3 \
+    > $TMP_DIR/CHANGELOG_NEW.md
+
+  CODENAME=$(readJsonProp "$PROJECT_DIR/package.json" "codename")
+
+  curl https://api.github.com/repos/$GH_ORG/ionic/releases > $TMP_DIR/releases.json
+
+  node -e "var releases = require('$TMP_DIR/releases.json'); \
+    var release; \
+    releases.forEach(function(r) { \
+      if (r.tag_name == 'v$VERSION') { \
+        release = r.id; \
+      } \
+    }); \
+    require('fs').writeFileSync('$TMP_DIR/RELEASE_ID', release);"
+  RELEASE_ID=$(cat $TMP_DIR/RELEASE_ID)
+
+  node -e "require('fs').writeFileSync('$TMP_DIR/github.json', JSON.stringify({ \
+      name: \"v$VERSION '$CODENAME'\", \
+      body: fs.readFileSync('$TMP_DIR/CHANGELOG_NEW.md').toString() \
+    }));"
+
+  curl -X PATCH https://api.github.com/repos/$GH_ORG/ionic/releases/$RELEASE_ID \
+    -H "Authorization: token $GH_TOKEN" \
+    --data-binary @$TMP_DIR/github.json
+}
+
+function discourse {
+  
 }
 
 source $(dirname $0)/../utils.inc

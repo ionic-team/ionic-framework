@@ -77,8 +77,12 @@ function run {
   if [[ $IS_RELEASE == "true" ]]; then
 
     ./scripts/travis/release-new-version.sh \
-      --codename=$CODENAME \
+      --action="push" \
       --version=$VERSION
+    ./scripts/travis/release-new-version.sh \
+      --action="github" \
+      --version=$VERSION \
+      --old-version=$OLD_VERSION
 
     # Version name used on the CDN/docs: nightly or the version
     VERSION_NAME=$VERSION
