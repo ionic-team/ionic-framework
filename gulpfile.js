@@ -69,8 +69,9 @@ gulp.task('watch', ['build'], function() {
 });
 
 gulp.task('changelog', function(done) {
+  var newCodename = fs.readFileSync('config/CODENAMES').toString().split('\n')[0];
   var file = argv.standalone ? '' : __dirname + '/CHANGELOG.md';
-  var subtitle = argv.subtitle || '"' + pkg.codename + '"';
+  var subtitle = argv.subtitle || '"' + newCodename + '"';
   var toHtml = !!argv.html;
   var dest = argv.dest || 'CHANGELOG.md';
   var from = argv.from;
