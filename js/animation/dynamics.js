@@ -3,6 +3,8 @@
   /**
    * A HUGE thank you to dynamics.js which inspired these dynamics simulations.
    * https://github.com/michaelvillar/dynamics.js
+   *
+   * Also licensed under MIT
    */
 
   // Namespace
@@ -73,5 +75,107 @@
       //return [t, v, At, frictionT, angle];
       return v;
     }
+  }
+
+  ionic.Animation.Dynamics.Gravity = function(opts) {
+    var defaults = {
+      bounce: 40,
+      gravity: 1000,
+      initialForce: false
+    };
+    this.curves = [];
+    ionic.extend(this, defaults);
+
+    this.init();
+  };
+
+  ionic.Animation.Dynamics.Gravity.prototype = {
+    length: function() {
+      var L, b, bounce, curve, gravity;
+      bounce = Math.min(this.bounce / 100, 80);
+      gravity = this.gravity / 100;
+      b = Math.sqrt(2 / gravity);
+      curve = {
+        a: -b,
+        b: b,
+        H: 1
+      };
+      if (this.initialForce) {
+        curve.a = 0;
+        curve.b = curve.b * 2;
+      }
+      while (curve.H > 0.001) {
+        L = curve.b - curve.a;
+        curve = {
+          a: curve.b,
+          b: curve.b + L * bounce,
+          H: curve.H * bounce * bounce
+        };
+      }
+      return curve.b;
+    },
+    init: function() {
+      var L, b, bounce, curve, gravity, _results;
+
+      L = this.length();
+      gravity = (this.gravity / 100) * L * L;
+      bounce = Math.min(this.bounce / 100, 80);
+      b = Math.sqrt(2 / gravity);
+      this.curves = [];
+      curve = {
+        a: -b,
+        b: b,
+        H: 1
+      };
+      if (this.initialForce) {
+        curve.a = 0;
+        curve.b = curve.b * 2;
+      }
+      this.curves.push(curve);
+      _results = [];
+      while (curve.b < 1 && curve.H > 0.001) {
+        L = curve.b - curve.a;
+        curve = {
+          a: curve.b,
+          b: curve.b + L * bounce,
+          H: curve.H * bounce * bounce
+        };
+        _results.push(this.curves.push(curve));
+      }
+      return _results;
+    },
+    curve: function(a, b, H, t){ 
+      
+      var L, c, t2;
+      L = b - a;
+      t2 = (2 / L) * t - 1 - (a * 2 / L);
+      c = t2 * t2 * H - H + 1;
+      if (this.initialForce) {
+        c = 1 - c;
+      }
+      return c;
+    },
+    at: function(t) {
+      var bounce, curve, gravity, i, v;
+      bounce = this.bounce / 100;
+      gravity = this.gravity;
+      i = 0;
+      curve = this.curves[i];
+      while (!(t >= curve.a && t <= curve.b)) {
+        i += 1;
+        curve = this.curves[i];
+        if (!curve) {
+          break;
+        }
+      }
+      if (!curve) {
+        v = this.initialForce ? 0 : 1;
+      } else {
+        v = this.curve(curve.a, curve.b, curve.H, t);
+      }
+      //return [t, v];
+      return v;
+    }
+    
   }
 })(window);

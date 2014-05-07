@@ -232,7 +232,6 @@
         var value;
         if(state.dynamic) {
           value = state.dynamic.at(percent);
-          console.log('Dynamics v', value);
         } else {
           value = easingMethod ? easingMethod(percent) : percent;
         }
