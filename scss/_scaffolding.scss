@@ -10,6 +10,12 @@
   @include box-sizing(border-box);
 }
 
+html {
+  overflow: hidden;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+}
+
 body,
 .ionic-body {
   @include touch-callout(none);
@@ -64,8 +70,8 @@ body.grade-c {
 }
 
 .scroll-view {
-  display: block;
   position: relative;
+  display: block;
   overflow: hidden;
 
   // Hide the top border if any
@@ -179,8 +185,8 @@ body.grade-c {
 
     .text-refreshing,
     .text-pulling {
-      line-height: 16px;
       font-size: 16px;
+      line-height: 16px;
     }
     &.ionic-refresher-with-text {
       bottom: 10px;
@@ -196,12 +202,12 @@ body.grade-c {
     transform-style: preserve-3d;
   }
   .icon-pulling {
-    -webkit-transform: translate3d(0,0,0) rotate(0deg);
-    transform: translate3d(0,0,0) rotate(0deg);
     @include animation-name(refresh-spin-back);
     @include animation-duration(200ms);
     @include animation-timing-function(linear);
     @include animation-fill-mode(none);
+    -webkit-transform: translate3d(0,0,0) rotate(0deg);
+    transform: translate3d(0,0,0) rotate(0deg);
   }
   .icon-refreshing,
   .text-refreshing {

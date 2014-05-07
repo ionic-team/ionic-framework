@@ -82,7 +82,7 @@ Tested on:
 
 */
 
-window.console.debug = function(){};
+window.console.log = function(){};
 
 describe('Ionic Tap', function() {
   var deregisterTap;
