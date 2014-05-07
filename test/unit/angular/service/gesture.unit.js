@@ -17,7 +17,7 @@ describe('Ionic Gesture Service', function() {
     spyOn(handlers, 'dragHandle');
     gesture.on('drag', handlers.dragHandle, angular.element(el));
 
-    var event = new CustomEvent('drag', { target: el });
+    var event = new ionic.CustomEvent('drag', { target: el });
     el.dispatchEvent(event);
 
     expect(handlers.dragHandle).toHaveBeenCalled();
@@ -33,14 +33,14 @@ describe('Ionic Gesture Service', function() {
 
     var g = gesture.on('drag', handlers.dragHandle, angular.element(el));
 
-    var event = new CustomEvent('drag', { target: el });
+    var event = new ionic.CustomEvent('drag', { target: el });
     el.dispatchEvent(event);
 
     expect(handlers.dragHandle).toHaveBeenCalled();
 
     gesture.off(g, 'drag', handlers.dragHandle);
 
-    event = new CustomEvent('drag', { target: el });
+    event = new ionic.CustomEvent('drag', { target: el });
     el.dispatchEvent(event);
 
     expect(handlers.dragHandle).toHaveBeenCalled();
