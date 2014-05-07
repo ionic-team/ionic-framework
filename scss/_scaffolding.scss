@@ -10,6 +10,11 @@
   @include box-sizing(border-box);
 }
 
+html {
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+}
+
 body,
 .ionic-body {
   @include touch-callout(none);
