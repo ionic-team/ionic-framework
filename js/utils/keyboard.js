@@ -39,6 +39,7 @@ function keyboardInit() {
 }
 
 function keyboardNativeShow(e) {
+  clearTimeout(keyboardFocusOutTimer);
   ionic.keyboard.height = e.keyboardHeight;
 }
 
