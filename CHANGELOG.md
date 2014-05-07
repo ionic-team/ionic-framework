@@ -1,5 +1,5 @@
 <a name="1.0.0-beta.4"></a>
-### 1.0.0-beta.4 "americium" (2014-05-07)
+### 1.0.0-beta.4 "antimony-antelope" (2014-05-07)
 
 
 #### Bug Fixes
