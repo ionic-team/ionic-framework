@@ -60,9 +60,9 @@ function keyboardSetShow(e) {
   clearTimeout(keyboardFocusOutTimer);
 
   keyboardFocusInTimer = setTimeout(function(){
-    if ( keyboardLastShow + 350 > Date.now() ) return; 
+    if ( keyboardLastShow + 350 > Date.now() ) return;
     keyboardLastShow = Date.now();
-    var keyboardHeight; 
+    var keyboardHeight;
     var elementBounds = keyboardActiveElement.getBoundingClientRect();
     var count = 0;
 
@@ -79,8 +79,8 @@ function keyboardSetShow(e) {
         clearInterval(pollKeyboardHeight);
       }
       count++;
-      
-    }, 100); 
+
+    }, 100);
   }, 32);
 }
 
@@ -96,12 +96,12 @@ function keyboardShow(element, elementTop, elementBottom, viewportHeight, keyboa
 
   details.contentHeight = viewportHeight - keyboardHeight;
 
-  console.debug('keyboardShow', keyboardHeight, details.contentHeight);
+  console.log('keyboardShow', keyboardHeight, details.contentHeight);
 
   // distance from top of input to the top of the keyboard
   details.keyboardTopOffset = details.elementTop - details.contentHeight;
 
-  console.debug('keyboardTopOffset', details.elementTop, details.contentHeight, details.keyboardTopOffset);
+  console.log('keyboardTopOffset', details.elementTop, details.contentHeight, details.keyboardTopOffset);
 
   // figure out if the element is under the keyboard
   details.isElementUnderKeyboard = (details.elementBottom > details.contentHeight);
@@ -132,7 +132,7 @@ function keyboardFocusOut(e) {
 }
 
 function keyboardHide() {
-  console.debug('keyboardHide');
+  console.log('keyboardHide');
   ionic.keyboard.isOpen = false;
 
   ionic.trigger('resetScrollView', {
@@ -177,10 +177,10 @@ function keyboardOrientationChange() {
       }
 
       updatedViewportHeight = window.innerHeight;
-      
+
       if (updatedViewportHeight !== keyboardViewportHeight){
         if (updatedViewportHeight < keyboardViewportHeight){
-          ionic.keyboard.landscape = true; 
+          ionic.keyboard.landscape = true;
         }
         else {
           ionic.keyboard.landscape = false;
@@ -193,7 +193,7 @@ function keyboardOrientationChange() {
     }, 50);
   }
   else {
-    keyboardViewportHeight = updatedViewportHeight;    
+    keyboardViewportHeight = updatedViewportHeight;
   }
 }
 
