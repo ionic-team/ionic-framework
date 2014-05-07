@@ -1,9 +1,8 @@
 {
   "name": "ionic",
   "private": false,
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.4",
   "codename": "americium",
-  "changelog": "http://git.io/wliUjg",
   "repository": {
     "url": "git://github.com/driftyco/ionic.git"
   },

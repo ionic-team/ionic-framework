@@ -1,3 +1,36 @@
+<a name="1.0.0-beta.4"></a>
+### 1.0.0-beta.4 "americium" (2014-05-07)
+
+
+#### Bug Fixes
+
+* **.pane:** Remove overflow:hidden from .pane,.view ([64f0030b](https://github.com/driftyco/ionic/commit/64f0030b99ba83772d698252470894740e270f9b))
+* **.tabs-icon-*:** only work on directly descendant tabs ([77f26831](https://github.com/driftyco/ionic/commit/77f268312468b8272d009bd68b2e408316e00dc0), closes [#1261](https://github.com/driftyco/ionic/issues/1261))
+* **bar:** properly align titles if switching to view with no buttons ([ade143ed](https://github.com/driftyco/ionic/commit/ade143ed35a4a17e5ffffaec17b5529eae3b1dde), closes [#1242](https://github.com/driftyco/ionic/issues/1242))
+* **collectionRepeat:** correctly save user scroll position on back ([0a640758](https://github.com/driftyco/ionic/commit/0a640758842d4307dba43aa702fe8d9dc17b164a))
+* **ionItem:** fix error when repeating ([f370db45](https://github.com/driftyco/ionic/commit/f370db45bc9cce3aee3d8b3dccad6f38dd203a20))
+* **ionSlideBox:**
+  * fix disable-scroll attr, deprecate in favor of $ionicSlideBoxDelegate.enableSlide(true/false) ([1bdb5e8d](https://github.com/driftyco/ionic/commit/1bdb5e8d9f1798fcd0acbf7cce6bd7b6166a0096), closes [#1113](https://github.com/driftyco/ionic/issues/1113))
+  * prevent NPE during drag ([920dc59d](https://github.com/driftyco/ionic/commit/920dc59d75acdcc0a109a6731088b3d3cff09d85), closes [#1240](https://github.com/driftyco/ionic/issues/1240))
+* **modal:** Remove modal flicker, closes #1150 ([d2ebed84](https://github.com/driftyco/ionic/commit/d2ebed847e0214e4654337947c8d3c15ee7c87f9))
+* **scrollView:** recalculate size on mousewheel scroll ([89a9ed15](https://github.com/driftyco/ionic/commit/89a9ed1547010d90591798625eeaea973aaf6c20))
+* **select:** Select options w/ mouse events, closes #1251 ([e3306293](https://github.com/driftyco/ionic/commit/e3306293cc62ff9ef931b4dc6d0b76c61ab247a2))
+* **tap:** input[file] clicks within ion-content, closes #1237 ([05a6d7cc](https://github.com/driftyco/ionic/commit/05a6d7cca660e7f5b3b2ee4b5698dfb33df7b605))
+* **toggle:** Right side padding for item-complex, closes #1091 ([45106a6a](https://github.com/driftyco/ionic/commit/45106a6acfedf8b77a0f46d9f0b1b35e4a76c548))
+* **transitions:** Disable transitions on Android 2, closes #780 ([9c58d47b](https://github.com/driftyco/ionic/commit/9c58d47b2b7c4d5695c1eb1b2ee7d23555ae0137))
+* **viewport:**
+  * Auto update viewport tag ([5f8e9040](https://github.com/driftyco/ionic/commit/5f8e9040bd8eb8dfef0db5bfef9275ef4a51f0da))
+  * Remove height value on iOS browser ([0ad10ede](https://github.com/driftyco/ionic/commit/0ad10edefcdcc67d20fb837f635609974af5dbd7))
+
+
+#### Features
+
+* **$ionicLoading:** on android, no back button action while loading ([fc8711c7](https://github.com/driftyco/ionic/commit/fc8711c7d000d06bfc30fcf813b2b9e26c228be5), closes [#1273](https://github.com/driftyco/ionic/issues/1273))
+* **$ionicModal:** close on backdrop click on desktop/tablet ([554c4398](https://github.com/driftyco/ionic/commit/554c43980e555d4506b4035ed100aca22c51da0c), closes [#1087](https://github.com/driftyco/ionic/issues/1087))
+* **ionNavBar:** allow navbar inside ion-view to transition whole bar ([42177c3b](https://github.com/driftyco/ionic/commit/42177c3b939f6fd2dafb7b6c30bce4ef31540411), closes [#1232](https://github.com/driftyco/ionic/issues/1232))
+* **sideMenu:** make android back button close side menu ([10103559](https://github.com/driftyco/ionic/commit/101035593f520ded77d61013d0330f537d270168), closes [#1264](https://github.com/driftyco/ionic/issues/1264))
+
+
 <a name="1.0.0-beta.3"></a>
 ### 1.0.0-beta.3 "americium" (2014-04-30)
 

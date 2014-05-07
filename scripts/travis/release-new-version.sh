@@ -35,7 +35,7 @@ function push {
   # Get first codename in list
   CODENAME=$(cat config/CODENAMES | head -n 1)
   # Remove first line of codenames, it's used now
-  sed -i '' 1d config/CODENAMES
+  echo $(cat config/CODENAMES | tail -n +2) > config/CODENAMES
 
   replaceJsonProp "bower.json" "version" "$VERSION"
   replaceJsonProp "component.json" "version" "$VERSION"
@@ -59,8 +59,8 @@ function push {
 }
 
 function github {
-  echo "-- Pushing out github release..." 
-  
+  echo "-- Pushing out github release..."
+
   # Get only newest things in changelog - sed until previous version is hit
   sed -e '/'"$OLD_VERSION"'/,$d' $PROJECT_DIR/CHANGELOG.md | tail -n +3 \
     > $TMP_DIR/CHANGELOG_NEW.md
@@ -71,21 +71,32 @@ function github {
   curl https://api.github.com/repos/$GH_ORG/ionic/releases > $TMP_DIR/releases.json
 
   node -e "var releases = require('$TMP_DIR/releases.json'); \
+    var id; \
     releases.forEach(function(r) { \
       if (r.tag_name == 'v$VERSION') { \
-        require('fs').writeFileSync('$TMP_DIR/RELEASE_ID', r.id); \
+        id = r.id; \
       } \
-    });"
-  RELEASE_ID=$(cat $TMP_DIR/RELEASE_ID)
+    }); \
+    require('fs').writeFileSync('$TMP_DIR/RELEASE_ID', id || '');"
 
-  node -e "require('fs').writeFileSync('$TMP_DIR/github.json', JSON.stringify({ \
+  node -e "var fs = require('fs'); \
+    fs.writeFileSync('$TMP_DIR/github.json', JSON.stringify({ \
       name: \"v$VERSION '$CODENAME'\", \
+      tag_name: \"v$VERSION\", \
       body: fs.readFileSync('$TMP_DIR/CHANGELOG_NEW.md').toString() \
     }));"
 
-  curl -X PATCH https://api.github.com/repos/$GH_ORG/ionic/releases/$RELEASE_ID \
-    -H "Authorization: token $GH_TOKEN" \
-    --data-binary @$TMP_DIR/github.json
+  RELEASE_ID=$(cat $TMP_DIR/RELEASE_ID)
+  if [[ "$RELEASE_ID" == "" ]]; then
+    curl -X POST https://api.github.com/repos/$GH_ORG/ionic/releases \
+      -H "Authorization: token $GH_TOKEN" \
+      --data-binary @$TMP_DIR/github.json
+  else
+    curl -X PATCH https://api.github.com/repos/$GH_ORG/ionic/releases/$RELEASE_ID \
+      -H "Authorization: token $GH_TOKEN" \
+      --data-binary @$TMP_DIR/github.json
+  fi
+
 
   echo "-- Github release pushed out successfully!"
 }
