@@ -262,7 +262,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
   return $ionicPopup;
 
   function createPopup(options) {
-    options = angular.extend({
+    options = extend({
       scope: null,
       title: '',
       buttons: [],
@@ -287,7 +287,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
 
       //Can't ng-bind-html for popup-body because it can be insecure html
       //(eg an input in case of prompt)
-      var body = angular.element(self.element[0].querySelector('.popup-body'));
+      var body = jqLite(self.element[0].querySelector('.popup-body'));
       if (content) {
         body.html(content);
         $compile(body.contents())(self.scope);
@@ -295,7 +295,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
         body.remove();
       }
 
-      angular.extend(self.scope, {
+      extend(self.scope, {
         title: options.title,
         buttons: options.buttons,
         subTitle: options.subTitle,
@@ -424,7 +424,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
   }
 
   function showAlert(opts) {
-    return showPopup( angular.extend({
+    return showPopup( extend({
       buttons: [{
         text: opts.okText || 'OK',
         type: opts.okType || 'button-positive',
@@ -436,7 +436,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
   }
 
   function showConfirm(opts) {
-    return showPopup( angular.extend({
+    return showPopup( extend({
       buttons: [{
         text: opts.cancelText || 'Cancel' ,
         type: opts.cancelType || 'button-default',
@@ -452,7 +452,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
   function showPrompt(opts) {
     var scope = $rootScope.$new(true);
     scope.data = {};
-    return showPopup( angular.extend({
+    return showPopup( extend({
       template: '<input ng-model="data.response" type="' + (opts.inputType || 'text') +
         '" placeholder="' + (opts.inputPlaceholder || '') + '">',
       scope: scope,

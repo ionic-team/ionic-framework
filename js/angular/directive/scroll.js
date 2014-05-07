@@ -34,7 +34,7 @@ function($timeout, $controller, $ionicBind) {
       element.addClass('scroll-view');
 
       //We cannot transclude here because it breaks element.data() inheritance on compile
-      var innerElement = angular.element('<div class="scroll"></div>');
+      var innerElement = jqLite('<div class="scroll"></div>');
       innerElement.append(element.contents());
       element.append(innerElement);
 

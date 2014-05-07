@@ -82,7 +82,7 @@ function($animate, $timeout) {
     require: ['ionList', '^?$ionicScroll'],
     controller: '$ionicList',
     compile: function($element, $attr) {
-      var listEl = angular.element('<div class="list">')
+      var listEl = jqLite('<div class="list">')
       .append( $element.contents() );
       $element.append(listEl);
 
@@ -100,7 +100,7 @@ function($animate, $timeout) {
             scrollEl: scrollCtrl && scrollCtrl.element,
             scrollView: scrollCtrl && scrollCtrl.scrollView,
             onReorder: function(el, oldIndex, newIndex) {
-              var itemScope = angular.element(el).scope();
+              var itemScope = jqLite(el).scope();
               if (itemScope && itemScope.$onReorder) {
                 itemScope.$onReorder(oldIndex, newIndex);
               }
@@ -155,16 +155,16 @@ function($animate, $timeout) {
           });
 
           function toggleNgHide(selector, shouldShow) {
-            angular.forEach($element[0].querySelectorAll(selector), function(node) {
+            forEach($element[0].querySelectorAll(selector), function(node) {
               if (shouldShow) {
-                $animate.removeClass(angular.element(node), 'ng-hide');
+                $animate.removeClass(jqLite(node), 'ng-hide');
               } else {
-                $animate.addClass(angular.element(node), 'ng-hide');
+                $animate.addClass(jqLite(node), 'ng-hide');
               }
             });
           }
           function toggleTapDisabled(selector, shouldDisable) {
-            var el = angular.element($element[0].querySelectorAll(selector));
+            var el = jqLite($element[0].querySelectorAll(selector));
             if (shouldDisable) {
               el.attr('data-tap-disabled', 'true');
             } else {

@@ -91,7 +91,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
      */
     show: function() {
       var self = this;
-      var modalEl = angular.element(self.modalEl);
+      var modalEl = jqLite(self.modalEl);
 
       self.el.classList.remove('hide');
       $timeout(function(){
@@ -139,7 +139,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
      */
     hide: function() {
       var self = this;
-      var modalEl = angular.element(self.modalEl);
+      var modalEl = jqLite(self.modalEl);
 
       self.el.classList.remove('active');
       modalEl.addClass('ng-leave');
@@ -192,7 +192,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
     // Create a new scope for the modal
     var scope = options.scope && options.scope.$new() || $rootScope.$new(true);
 
-    angular.extend(scope, {
+    extend(scope, {
       $hasHeader: false,
       $hasSubheader: false,
       $hasFooter: false,

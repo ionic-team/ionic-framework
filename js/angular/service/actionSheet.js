@@ -77,7 +77,7 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
     show: function(opts) {
       var scope = $rootScope.$new(true);
 
-      angular.extend(scope, {
+      extend(scope, {
         cancel: angular.noop,
         buttonClicked: angular.noop,
         destructiveButtonClicked: angular.noop
@@ -87,7 +87,7 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
       var element = $compile('<ion-action-sheet buttons="buttons"></ion-action-sheet>')(scope);
 
       // Grab the sheet element for animation
-      var sheetEl = angular.element(element[0].querySelector('.action-sheet-wrapper'));
+      var sheetEl = jqLite(element[0].querySelector('.action-sheet-wrapper'));
 
       var hideSheet = function(didCancel) {
         sheetEl.removeClass('action-sheet-up');

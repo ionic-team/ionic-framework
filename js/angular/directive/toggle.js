@@ -68,7 +68,7 @@ function($ionicGesture, $timeout) {
          track = el.children[1];
          handle = track.children[0];
 
-         var ngModelController = angular.element(checkbox).controller('ngModel');
+         var ngModelController = jqLite(checkbox).controller('ngModel');
 
          $scope.toggle = new ionic.views.Toggle({
            el: el,

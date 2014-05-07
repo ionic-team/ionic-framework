@@ -168,14 +168,14 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
 
       var heightGetter = function(scope, locals) {
         var result = heightParsed(scope, locals);
-        if (angular.isString(result) && result.indexOf('%') > -1) {
+        if (isString(result) && result.indexOf('%') > -1) {
           return Math.floor(parseInt(result, 10) / 100 * scrollView.__clientHeight);
         }
         return result;
       };
       var widthGetter = function(scope, locals) {
         var result = widthParsed(scope, locals);
-        if (angular.isString(result) && result.indexOf('%') > -1) {
+        if (isString(result) && result.indexOf('%') > -1) {
           return Math.floor(parseInt(result, 10) / 100 * scrollView.__clientWidth);
         }
         return result;

@@ -18,10 +18,10 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
 
   var self = this;
 
-  this.leftButtonsElement = angular.element(
+  this.leftButtonsElement = jqLite(
     $element[0].querySelector('.buttons.left-buttons')
   );
-  this.rightButtonsElement = angular.element(
+  this.rightButtonsElement = jqLite(
     $element[0].querySelector('.buttons.right-buttons')
   );
 
@@ -93,7 +93,7 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
     currentTitles = $element[0].querySelectorAll('.title');
     if (currentTitles.length) {
       oldTitleEl = $compile('<h1 class="title" ng-bind-html="oldTitle"></h1>')($scope);
-      angular.element(currentTitles[0]).replaceWith(oldTitleEl);
+      jqLite(currentTitles[0]).replaceWith(oldTitleEl);
     }
     //Compile new title
     newTitleEl = $compile('<h1 class="title invisible" ng-bind-html="title"></h1>')($scope);
@@ -101,18 +101,18 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
     //Animate in on next frame
     ionic.requestAnimationFrame(function() {
 
-      oldTitleEl && $animate.leave(angular.element(oldTitleEl));
+      oldTitleEl && $animate.leave(jqLite(oldTitleEl));
 
-      var insert = oldTitleEl && angular.element(oldTitleEl) || null;
+      var insert = oldTitleEl && jqLite(oldTitleEl) || null;
       $animate.enter(newTitleEl, $element, insert, function() {
         self._headerBarView.align();
       });
 
       //Cleanup any old titles leftover (besides the one we already did replaceWith on)
-      angular.forEach(currentTitles, function(el) {
+      forEach(currentTitles, function(el) {
         if (el && el.parentNode) {
           //Use .remove() to cleanup things like .data()
-          angular.element(el).remove();
+          jqLite(el).remove();
         }
       });
 

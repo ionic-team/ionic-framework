@@ -54,7 +54,7 @@ IonicModule
       element.addClass('view');
       //We cannot use regular transclude here because it breaks element.data()
       //inheritance on compile
-      var innerElement = angular.element('<div class="tabs"></div>');
+      var innerElement = jqLite('<div class="tabs"></div>');
       innerElement.append(element.contents());
       element.append(innerElement);
 
@@ -68,7 +68,7 @@ IonicModule
 
         tabsCtrl.$scope = $scope;
         tabsCtrl.$element = $element;
-        tabsCtrl.$tabsElement = angular.element($element[0].querySelector('.tabs'));
+        tabsCtrl.$tabsElement = jqLite($element[0].querySelector('.tabs'));
 
         var el = $element[0];
         $scope.$watch(function() { return el.className; }, function(value) {

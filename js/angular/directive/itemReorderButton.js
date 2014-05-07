@@ -64,7 +64,7 @@ IonicModule
           });
         };
 
-        var container = angular.element(ITEM_TPL_REORDER_BUTTON);
+        var container = jqLite(ITEM_TPL_REORDER_BUTTON);
         container.append($element);
         itemCtrl.$element.append(container).addClass('item-right-editable');
 

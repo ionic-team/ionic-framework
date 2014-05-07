@@ -6,7 +6,7 @@ IonicModule
   '$ionicPlatform',
 function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform) {
   var self = this;
-  angular.extend(this, ionic.controllers.SideMenuController.prototype);
+  extend(this, ionic.controllers.SideMenuController.prototype);
 
   this.$scope = $scope;
 

@@ -49,7 +49,7 @@ function($timeout, $controller, $ionicBind) {
       if (attr.scroll != 'false') {
         //We cannot use normal transclude here because it breaks element.data()
         //inheritance on compile
-        innerElement = angular.element('<div class="scroll"></div>');
+        innerElement = jqLite('<div class="scroll"></div>');
         innerElement.append(element.contents());
         element.append(innerElement);
       }

@@ -128,7 +128,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
       // If the pager should show, append it to the slide box
       if($scope.$eval($scope.showPager) !== false) {
         var childScope = $scope.$new();
-        var pager = angular.element('<ion-pager></ion-pager>');
+        var pager = jqLite('<ion-pager></ion-pager>');
         $element.append(pager);
         $compile(pager)(childScope);
       }

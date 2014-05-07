@@ -37,7 +37,7 @@ return {
     $attr.$set('class', ($attr['class'] || '') + ' button', true);
     return function($scope, $element, $attr, itemCtrl) {
       if (!itemCtrl.optionsContainer) {
-        itemCtrl.optionsContainer = angular.element(ITEM_TPL_OPTION_BUTTONS);
+        itemCtrl.optionsContainer = jqLite(ITEM_TPL_OPTION_BUTTONS);
         itemCtrl.$element.append(itemCtrl.optionsContainer);
       }
       itemCtrl.optionsContainer.append($element);
