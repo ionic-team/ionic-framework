@@ -440,7 +440,7 @@ window.ionic = {
         evt.initEvent(event, params.bubbles, params.cancelable);
       }
       return evt;
-    }
+    };
     CustomEvent.prototype = window.Event.prototype;
     return CustomEvent;
   })();
@@ -2940,7 +2940,7 @@ ionic.DomUtil.ready(function(){
 
     end: function() {
       // clear out any active/queued elements after XX milliseconds
-      clearTimeout(this._activateTimeout)
+      clearTimeout(this._activateTimeout);
       setTimeout(clear, 200);
     }
 
@@ -3630,7 +3630,7 @@ var zyngaCore = { effect: {} };
 
       if (isNative) {
         return function(callback, root) {
-          requestFrame(callback, root)
+          requestFrame(callback, root);
         };
       }
 
@@ -6573,7 +6573,7 @@ ionic.views.Slider = ionic.views.View.inherit({
 
     // utilities
     var noop = function() {}; // simple no operation function
-    var offloadFn = function(fn) { setTimeout(fn || noop, 0) }; // offload a functions execution
+    var offloadFn = function(fn) { setTimeout(fn || noop, 0); }; // offload a functions execution
 
     // check browser capabilities
     var browser = {
@@ -6879,7 +6879,7 @@ ionic.views.Slider = ionic.views.View.inherit({
         delta = {
           x: touches.pageX - start.x,
           y: touches.pageY - start.y
-        }
+        };
 
         // determine if scrolling test has run - one time test
         if ( typeof isScrolling == 'undefined') {
@@ -7002,11 +7002,11 @@ ionic.views.Slider = ionic.views.View.inherit({
 
         // kill touchmove and touchend event listeners until touchstart called again
         if(browser.touch) {
-          element.removeEventListener('touchmove', events, false)
-          element.removeEventListener('touchend', events, false)
+          element.removeEventListener('touchmove', events, false);
+          element.removeEventListener('touchend', events, false);
         } else {
-          element.removeEventListener('mousemove', events, false)
-          element.removeEventListener('mouseup', events, false)
+          element.removeEventListener('mousemove', events, false);
+          element.removeEventListener('mouseup', events, false);
           document.removeEventListener('mouseup', events, false);
         }
 
@@ -7023,7 +7023,7 @@ ionic.views.Slider = ionic.views.View.inherit({
 
       }
 
-    }
+    };
 
     // Public API
     this.update = function() {
@@ -7146,10 +7146,10 @@ ionic.views.Slider = ionic.views.View.inherit({
 
       } else {
 
-        window.onresize = function () { setup() }; // to play nice with old IE
+        window.onresize = function () { setup(); }; // to play nice with old IE
 
       }
-    }
+    };
 
   }
 });
@@ -7764,7 +7764,7 @@ ionic.views.Slider = ionic.views.View.inherit({
         percent: percent,
         iteration: iteration,
         reverse: reverse
-      }
+      };
     },
     restart: function() {
     },
@@ -7797,7 +7797,7 @@ ionic.views.Slider = ionic.views.View.inherit({
         reverse: this.reverse,
         repeat: this.repeat,
         autoReverse: this.autoReverse
-      }
+      };
 
 
       if(this._pauseState) {
@@ -7868,7 +7868,7 @@ ionic.views.Slider = ionic.views.View.inherit({
         // Start fresh either way
         start = time();
         ionic.requestAnimationFrame(step);
-      }
+      };
 
 
       // This is the internal step method which is called every few milliseconds
@@ -7989,7 +7989,7 @@ ionic.views.Slider = ionic.views.View.inherit({
   function B3(t) { return 3*t*(1-t)*(1-t); }
   function B4(t) { return (1-t)*(1-t)*(1-t); }
 
-  ionic.Animation = ionic.Animation || {}
+  ionic.Animation = ionic.Animation || {};
 
  
   /**
@@ -8481,7 +8481,7 @@ var glMatrix = {};
  */
 glMatrix.setMatrixArrayType = function(type) {
     GLMAT_ARRAY_TYPE = type;
-}
+};
 
 if(typeof(exports) !== 'undefined') {
     exports.glMatrix = glMatrix;
