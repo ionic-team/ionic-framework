@@ -35,7 +35,7 @@ function push {
   # Get first codename in list
   CODENAME=$(cat config/CODENAMES | head -n 1)
   # Remove first line of codenames, it's used now
-  tail -n +2 config/CODENAMES > config/CODENAMES
+  echo "`tail -n +2 config/CODENAMES`" > config/CODENAMES
 
   replaceJsonProp "bower.json" "version" "$VERSION"
   replaceJsonProp "component.json" "version" "$VERSION"
