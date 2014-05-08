@@ -58,7 +58,10 @@ IonicModule
 
         //Append buttons to navbar
         ionic.requestAnimationFrame(function() {
-          $animate.enter(buttons, navElement);
+          //If the scope is destroyed before raf runs, be sure not to enter
+          if (!$scope.$$destroyed) {
+            $animate.enter(buttons, navElement);
+          }
         });
 
         //When our ion-nav-buttons container is destroyed,
