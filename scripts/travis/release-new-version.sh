@@ -132,8 +132,8 @@ function discourse {
 
   curl -X PUT "$POST_URL/status" \
     --data "api_key=$DISCOURSE_TOKEN&api_username=Ionitron&status=pinned&enabled=true"
-  curl -X PUT "$POST_URL/status" \
-    --data "api_key=$DISCOURSE_TOKEN&api_username=Ionitron&status=closed&enabled=true"
+  # curl -X PUT "$POST_URL/status" \
+  #   --data "api_key=$DISCOURSE_TOKEN&api_username=Ionitron&status=closed&enabled=true"
 
   cd $IONIC_DIR
   git add config
