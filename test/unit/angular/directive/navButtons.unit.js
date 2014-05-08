@@ -1,4 +1,4 @@
-ddescribe('ionNavButtons directive', function() {
+describe('ionNavButtons directive', function() {
 
   beforeEach(module('ionic', function($compileProvider) {
     $compileProvider.directive('needsScroll', function() {
