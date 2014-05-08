@@ -334,8 +334,8 @@ IonicModule
     return function(opts) {
       opts.useSlowAnimations = useSlowAnimations;
       return ionic.Animation.create(opts);
-    }
-  }]
+    };
+  }];
 });
 
 /**
@@ -1338,7 +1338,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
       self.el.classList.remove('hide');
       $timeout(function(){
         $document[0].body.classList.add('modal-open');
-      }, 400)
+      }, 400);
 
 
       if(!self.el.parentElement) {
@@ -2689,7 +2689,7 @@ IonicModule
    *
    * Example: `$ionicTabsDelegate.$getByHandle('my-handle').select(0);`
    */
-]))
+]));
 
 
 IonicModule
@@ -3604,7 +3604,7 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
       });
     });
   };
-}])
+}]);
 
 
 /**
@@ -4706,7 +4706,7 @@ IonicModule
         $element[0].classList.add('active');
         infiniteScrollCtrl.isLoading = true;
         $scope.$parent && $scope.$parent.$apply($attrs.onInfinite || '');
-      }
+      };
 
       var finishInfiniteScroll = function() {
         $element[0].classList.remove('active');
@@ -5243,7 +5243,7 @@ IonicModule
       });
     }
   };
-}])
+}]);
 
 
 /*
