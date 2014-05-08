@@ -679,7 +679,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         return;
       }
 
-      if( ionic.tap.containsOrIsTextInput(e.target) ) {
+      if( ionic.tap.containsOrIsTextInput(e.target) || e.target.tagName === 'SELECT' ) {
         // do not start if the target is a text input
         // if there is a touchmove on this input, then we can start the scroll
         self.__hasStarted = false;
@@ -698,7 +698,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         return;
       }
 
-      if( !self.__hasStarted && ionic.tap.containsOrIsTextInput(e.target) ) {
+      if( !self.__hasStarted && ( ionic.tap.containsOrIsTextInput(e.target) || e.target.tagName === 'SELECT' ) ) {
         // the target is a text input and scroll has started
         // since the text input doesn't start on touchStart, do it here
         self.__hasStarted = true;
