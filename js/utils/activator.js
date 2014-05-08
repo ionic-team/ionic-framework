@@ -53,7 +53,7 @@
 
     end: function() {
       // clear out any active/queued elements after XX milliseconds
-      clearTimeout(this._activateTimeout)
+      clearTimeout(this._activateTimeout);
       setTimeout(clear, 200);
     }
 

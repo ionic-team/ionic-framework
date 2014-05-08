@@ -136,7 +136,7 @@
         percent: percent,
         iteration: iteration,
         reverse: reverse
-      }
+      };
     },
     restart: function() {
     },
@@ -151,7 +151,7 @@
 
       // Grab the timing function
       if(typeof this.curve === 'string') {
-        tf = ionic.Animation.TimingFn[this.curve] || ionic.Animation.TimingFn['linear'];
+        tf = ionic.Animation.TimingFn[this.curve] || ionic.Animation.TimingFn.linear;
       } else {
         tf = this.curve;
       }
@@ -169,7 +169,7 @@
         reverse: this.reverse,
         repeat: this.repeat,
         autoReverse: this.autoReverse
-      }
+      };
 
 
       if(this._pauseState) {
@@ -240,7 +240,7 @@
         // Start fresh either way
         start = time();
         ionic.requestAnimationFrame(step);
-      }
+      };
 
 
       // This is the internal step method which is called every few milliseconds
@@ -306,7 +306,7 @@
           } else if(repeat === 0 && autoReverse) {
             perhapsAutoreverse();
           } else {
-            completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), self._animationId, percent === endPercent || duration == null);
+            completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), self._animationId, percent === endPercent || duration === null);
           }
         } else if (render) {
           lastFrame = now;

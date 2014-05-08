@@ -101,7 +101,7 @@ IonicModule
         $element[0].classList.add('active');
         infiniteScrollCtrl.isLoading = true;
         $scope.$parent && $scope.$parent.$apply($attrs.onInfinite || '');
-      }
+      };
 
       var finishInfiniteScroll = function() {
         $element[0].classList.remove('active');

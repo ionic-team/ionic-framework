@@ -125,5 +125,5 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
       });
     });
   };
-}])
+}]);
 

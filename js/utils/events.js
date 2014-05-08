@@ -35,7 +35,7 @@
         evt.initEvent(event, params.bubbles, params.cancelable);
       }
       return evt;
-    }
+    };
     customEvent.prototype = window.Event.prototype;
     return customEvent;
   })();
@@ -147,8 +147,7 @@
       gesture.off(type, callback);
     },
 
-    handlePopState: function(event) {
-    },
+    handlePopState: function(event) {}
   };
 
 

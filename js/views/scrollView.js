@@ -52,7 +52,7 @@ var zyngaCore = { effect: {} };
 
       if (isNative) {
         return function(callback, root) {
-          requestFrame(callback, root)
+          requestFrame(callback, root);
         };
       }
 
