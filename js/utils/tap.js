@@ -66,6 +66,7 @@ var tapMouseResetTimer;
 var tapPointerMoved;
 var tapPointerStart;
 var tapTouchFocusedInput;
+var tapLastTouchTarget;
 
 var TAP_RELEASE_TOLERANCE = 6; // how much the coordinates can be off between start/end, but still a click
 
@@ -259,7 +260,7 @@ function tapMouseDown(e) {
     console.log('mousedown', 'stop event');
     e.stopPropagation();
 
-    if( !ionic.tap.isTextInput(e.target) ) {
+    if( !ionic.tap.isTextInput(e.target) || tapLastTouchTarget !== e.target ) {
       // If you preventDefault on a text input then you cannot move its text caret/cursor.
       // Allow through only the text input default. However, without preventDefault on an
       // input the 300ms delay can change focus on inputs after the keyboard shows up.
@@ -336,8 +337,13 @@ function tapTouchEnd(e) {
   tapEnableTouchEvents();
   if( !tapHasPointerMoved(e) ) {
     tapClick(e);
+
+    if( e.target.tagName === 'SELECT' ) {
+      e.preventDefault();
+    }
   }
 
+  tapLastTouchTarget = e.target;
   tapTouchCancel();
 }
 

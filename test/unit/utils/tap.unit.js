@@ -405,6 +405,26 @@ describe('Ionic Tap', function() {
     expect( e.dispatchedEvent ).toBeUndefined();
   });
 
+  it('Should preventDefault on touchend when the target is a select', function() {
+    var e = {
+      target: document.createElement('select'),
+      clientX: 100, clientY: 100,
+      dispatchEvent: function(){ this.dispatchedEvent = true; },
+      preventDefault:function(){ this.preventedDefault = true; }
+    };
+    tapTouchEnd(e);
+    expect( e.preventedDefault ).toEqual(true);
+
+    e = {
+      target: document.createElement('div'),
+      clientX: 100, clientY: 100,
+      dispatchEvent: function(){ this.dispatchedEvent = true; },
+      preventDefault:function(){ this.preventedDefault = true; }
+    };
+    tapTouchEnd(e);
+    expect( e.preventedDefault ).toBeUndefined();
+  });
+
   it('Should cancel click when mousemove coordinates goes too far from mousedown coordinates', function() {
     var e = { clientX: 100, clientY: 100 };
     tapMouseDown(e);
@@ -440,6 +460,27 @@ describe('Ionic Tap', function() {
     };
     tapMouseDown(e);
     expect( e.isTapHandled ).toEqual(false);
+  });
+
+  it('Should preventDefault on mousedown if touchend target is different than mousedown target', function() {
+    tapLastTouchTarget = null;
+
+    var touchEndEvent = {
+      target: document.createElement('button'),
+      clientX: 100, clientY: 100,
+      preventDefault: function(){ this.defaultedPrevented = true; }
+    };
+    tapTouchEnd(touchEndEvent);
+    expect( tapLastTouchTarget ).toEqual(touchEndEvent.target);
+
+    var mouseDownEvent = {
+      target: document.createElement('textarea'),
+      clientX: 100, clientY: 100,
+      preventDefault: function(){ this.defaultedPrevented = true; },
+      stopPropagation: function(){ this.stoppedPropagation = true; }
+    };
+    tapMouseDown(mouseDownEvent);
+    expect( mouseDownEvent.defaultedPrevented ).toEqual(true);
   });
 
   it('Should tapClick with touchend and fire immediately', function() {
