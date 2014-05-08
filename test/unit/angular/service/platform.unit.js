@@ -165,7 +165,7 @@ describe('Ionic Platform Service', function() {
     ionic.Platform.setPlatform('iOS');
     ionic.Platform.setVersion('7.0.3');
 
-    ionic.Platform._checkPlatforms()
+    ionic.Platform._checkPlatforms();
 
     expect(ionic.Platform.platforms[0]).toEqual('webview');
     expect(ionic.Platform.platforms[1]).toEqual('cordova');
@@ -179,7 +179,7 @@ describe('Ionic Platform Service', function() {
     ionic.Platform.setPlatform('android');
     ionic.Platform.setVersion('4.2.3');
 
-    ionic.Platform._checkPlatforms()
+    ionic.Platform._checkPlatforms();
 
     expect(ionic.Platform.platforms[0]).toEqual('webview');
     expect(ionic.Platform.platforms[1]).toEqual('cordova');
@@ -193,7 +193,7 @@ describe('Ionic Platform Service', function() {
     ionic.Platform.setPlatform('');
     ionic.Platform.setVersion('');
 
-    ionic.Platform._checkPlatforms()
+    ionic.Platform._checkPlatforms();
 
     expect(ionic.Platform.platforms.length).toEqual(2);
     expect(ionic.Platform.platforms[0]).toEqual('webview');
@@ -207,7 +207,7 @@ describe('Ionic Platform Service', function() {
     ionic.Platform.setPlatform('');
     ionic.Platform.setVersion('');
 
-    ionic.Platform._checkPlatforms()
+    ionic.Platform._checkPlatforms();
 
     expect(ionic.Platform.platforms[0]).toEqual('browser');
   });
@@ -216,7 +216,7 @@ describe('Ionic Platform Service', function() {
     window.cordova = {};
     ionic.Platform.setPlatform('iOS');
     ionic.Platform.setVersion('7.1.1');
-    ionic.Platform._checkPlatforms()
+    ionic.Platform._checkPlatforms();
     expect(ionic.Platform.grade).toEqual('a');
   });
 
@@ -224,7 +224,7 @@ describe('Ionic Platform Service', function() {
     window.cordova = {};
     ionic.Platform.setPlatform('iOS');
     ionic.Platform.setVersion('6.1.1');
-    ionic.Platform._checkPlatforms()
+    ionic.Platform._checkPlatforms();
     expect(ionic.Platform.grade).toEqual('a');
   });
 
@@ -232,7 +232,7 @@ describe('Ionic Platform Service', function() {
     window.cordova = {};
     ionic.Platform.setPlatform('android');
     ionic.Platform.setVersion('4.4.1');
-    ionic.Platform._checkPlatforms()
+    ionic.Platform._checkPlatforms();
     expect(ionic.Platform.grade).toEqual('a');
   });
 
@@ -240,7 +240,7 @@ describe('Ionic Platform Service', function() {
     window.cordova = {};
     ionic.Platform.setPlatform('android');
     ionic.Platform.setVersion('4.3.1');
-    ionic.Platform._checkPlatforms()
+    ionic.Platform._checkPlatforms();
     expect(ionic.Platform.grade).toEqual('b');
   });
 
@@ -248,7 +248,7 @@ describe('Ionic Platform Service', function() {
     window.cordova = {};
     ionic.Platform.setPlatform('android');
     ionic.Platform.setVersion('4.0.0');
-    ionic.Platform._checkPlatforms()
+    ionic.Platform._checkPlatforms();
     expect(ionic.Platform.grade).toEqual('b');
   });
 
@@ -256,7 +256,7 @@ describe('Ionic Platform Service', function() {
     window.cordova = {};
     ionic.Platform.setPlatform('android');
     ionic.Platform.setVersion('3.0.0');
-    ionic.Platform._checkPlatforms()
+    ionic.Platform._checkPlatforms();
     expect(ionic.Platform.grade).toEqual('c');
   });
 
@@ -264,7 +264,7 @@ describe('Ionic Platform Service', function() {
     window.cordova = {};
     ionic.Platform.setPlatform('android');
     ionic.Platform.setVersion('2.3.4');
-    ionic.Platform._checkPlatforms()
+    ionic.Platform._checkPlatforms();
     expect(ionic.Platform.grade).toEqual('c');
   });
 
@@ -272,7 +272,7 @@ describe('Ionic Platform Service', function() {
     window.cordova = {};
     ionic.Platform.setPlatform('android');
     ionic.Platform.setVersion('0');
-    ionic.Platform._checkPlatforms()
+    ionic.Platform._checkPlatforms();
     expect(ionic.Platform.grade).toEqual('a');
   });
 
@@ -280,7 +280,7 @@ describe('Ionic Platform Service', function() {
     window.cordova = {};
     ionic.Platform.setPlatform('whatever');
     ionic.Platform.setVersion('20.3.4');
-    ionic.Platform._checkPlatforms()
+    ionic.Platform._checkPlatforms();
     expect(ionic.Platform.grade).toEqual('a');
   });
 

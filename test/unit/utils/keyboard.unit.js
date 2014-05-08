@@ -141,7 +141,7 @@ describe('Ionic Keyboard', function() {
     expect( ionic.Platform.isFullScreen ).toEqual(false);
 
     keyboardViewportHeight = 480;
-    window.innerHeight = 280
+    window.innerHeight = 280;
 
     expect( keyboardGetHeight() ).toEqual(200);
   });
@@ -161,14 +161,14 @@ describe('Ionic Keyboard', function() {
     ionic.keyboard.landscape = true;
 
     expect( keyboardGetHeight() ).toEqual(206);
-  })
+  });
 
   it('keyboardGetHeight() should = 216 if iOS Safari', function(){
     ionic.Platform.setPlatform('iOS');
 
     expect( ionic.Platform.isWebView() ).toEqual(false);
     expect( keyboardGetHeight() ).toEqual(216);
-  })
+  });
 
   it('keyboardGetHeight() should = 260 if iOS Cordova', function(){
     ionic.Platform.setPlatform('iOS');
@@ -176,13 +176,13 @@ describe('Ionic Keyboard', function() {
 
     expect( ionic.Platform.isWebView() ).toEqual(true);
     expect( keyboardGetHeight() ).toEqual(260);
-  })
+  });
 
   it('keyboardGetHeight() should = 275 if not Android or iOS', function(){
     ionic.Platform.setPlatform('WP8');
 
     expect( keyboardGetHeight() ).toEqual(275);
-  })
+  });
 
   it('keyboardUpdateViewportHeight() should update when window.innerHeight > keyboardViewportHeight', function(){
     window.innerHeight = 460;

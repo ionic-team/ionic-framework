@@ -301,7 +301,7 @@ describe('Ionic Tap', function() {
     var e = {
       stopPropagation: function() { this.stoppedPropagation = true; },
       preventDefault: function() { this.preventedDefault = true; }
-    }
+    };
     tapMouseUp(e);
     expect( e.stoppedPropagation ).toEqual(true);
     expect( e.preventedDefault ).toEqual(true);
@@ -313,7 +313,7 @@ describe('Ionic Tap', function() {
       target: document.createElement('select'),
       stopPropagation: function() { this.stoppedPropagation = true; },
       preventDefault: function() { this.preventedDefault = true; }
-    }
+    };
     expect( tapMouseUp(e) ).toEqual(false);
     expect( e.stoppedPropagation ).toBeUndefined();
     expect( e.preventedDefault ).toBeUndefined();
@@ -325,7 +325,7 @@ describe('Ionic Tap', function() {
       target: document.createElement('button'),
       stopPropagation: function() { this.stoppedPropagation = true; },
       preventDefault: function() { this.preventedDefault = true; }
-    }
+    };
     tapMouseUp(e);
     expect( e.stoppedPropagation ).toBeUndefined();
     expect( e.preventedDefault ).toBeUndefined();
@@ -783,10 +783,13 @@ describe('Ionic Tap', function() {
 
   it('Should not focus on common elements', function() {
     var tags = ['div', 'span', 'i', 'body', 'section', 'article', 'aside', 'li', 'p', 'header', 'button', 'ion-content'];
+    function setFocus() {
+      this.hasFocus = true;
+    }
     for(var x=0; x<tags.length; x++) {
       var ele = {
         tagName: tags[x],
-        focus: function(){ this.hasFocus=true; }
+        focus: setFocus
       };
       tapHandleFocus(ele);
       expect( ele.hasFocus ).toBeUndefined();
@@ -808,10 +811,11 @@ describe('Ionic Tap', function() {
 
   it('Should not focus out on common elements', function() {
     var tags = ['div', 'span', 'i', 'body', 'section', 'article', 'aside', 'li', 'p', 'header', 'button', 'ion-content'];
+    function setBlurred() { this.hasBlurred = true; }
     for(var x=0; x<tags.length; x++) {
       var ele = {
         tagName: tags[x],
-        blur: function(){ this.hasBlurred=true; }
+        blur: setBlurred
       };
       tapActiveElement(ele);
       tapFocusOutActive(ele);
@@ -821,10 +825,11 @@ describe('Ionic Tap', function() {
 
   it('Should focus out on input elements', function() {
     var tags = ['input', 'textarea', 'select'];
+    function setBlurred() { this.hasBlurred=true; }
     for(var x=0; x<tags.length; x++) {
       var ele = {
         tagName: tags[x],
-        blur: function(){ this.hasBlurred=true; }
+        blur: setBlurred
       };
       tapActiveElement(ele);
       tapFocusOutActive(ele);

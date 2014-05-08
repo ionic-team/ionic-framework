@@ -12,21 +12,21 @@ describe('Ionic Angular Slide Box', function() {
     rootScope = $rootScope;
     compile = $compile;
 
-    el = $compile('<ion-slide-box>\
-      <ion-slide>\
-        <div class="box blue">\
-          <h1>BLUE {{slideBox.slideIndex}}</h1>\
-        </div>\
-      </ion-slide>\
-      <ion-slide>\
-        <div class="box yellow">\
-          <h1>YELLOW {{slideBox.slideIndex}}</h1>\
-        </div>\
-      </ion-slide>\
-      <ion-slide>\
-      <div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>\
-      </ion-slide>\
-    </ion-slide-box>')($rootScope);
+    el = $compile('<ion-slide-box>' +
+      '<ion-slide>' +
+        '<div class="box blue">' +
+          '<h1>BLUE {{slideBox.slideIndex}}</h1>' +
+        '</div>' +
+      '</ion-slide>' +
+      '<ion-slide>' +
+        '<div class="box yellow">' +
+          '<h1>YELLOW {{slideBox.slideIndex}}</h1>' +
+        '</div>' +
+      '</ion-slide>' +
+      '<ion-slide>' +
+      '<div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>' +
+      '</ion-slide>' +
+    '</ion-slide-box>')($rootScope);
   }));
 
   it('should register with $ionicSlideBoxDelegate', inject(function($compile, $rootScope, $ionicSlideBoxDelegate) {
@@ -50,21 +50,21 @@ describe('ionSlideBox with active slide', function() {
   beforeEach(module('ionic'));
 
   it('Should set initial active slide', inject(function($ionicSlideBoxDelegate, $rootScope, $compile) {
-    el = $compile('<ion-slide-box active-slide="2">\
-      <ion-slide>\
-        <div class="box blue">\
-          <h1>BLUE {{slideBox.slideIndex}}</h1>\
-        </div>\
-      </ion-slide>\
-      <ion-slide>\
-        <div class="box yellow">\
-          <h1>YELLOW {{slideBox.slideIndex}}</h1>\
-        </div>\
-      </ion-slide>\
-      <ion-slide>\
-      <div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>\
-      </ion-slide>\
-    </ion-slide-box>')($rootScope.$new());
+    el = $compile('<ion-slide-box active-slide="2">' +
+      '<ion-slide>' +
+        '<div class="box blue">' +
+          '<h1>BLUE {{slideBox.slideIndex}}</h1>' +
+        '</div>' +
+      '</ion-slide>' +
+      '<ion-slide>' +
+        '<div class="box yellow">' +
+          '<h1>YELLOW {{slideBox.slideIndex}}</h1>' +
+        '</div>' +
+      '</ion-slide>' +
+      '<ion-slide>' +
+      '<div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>' +
+      '</ion-slide>' +
+    '</ion-slide-box>')($rootScope.$new());
 
    var scope = el.scope();
    scope.$apply();

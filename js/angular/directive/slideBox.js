@@ -119,10 +119,10 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
         slider.load();
       });
     }],
-    template: '<div class="slider">\
-            <div class="slider-slides" ng-transclude>\
-            </div>\
-          </div>',
+    template: '<div class="slider">' +
+      '<div class="slider-slides" ng-transclude>' +
+      '</div>' +
+    '</div>',
 
     link: function($scope, $element, $attr, slideBoxCtrl) {
       // If the pager should show, append it to the slide box

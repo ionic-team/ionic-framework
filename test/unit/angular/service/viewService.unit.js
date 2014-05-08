@@ -30,7 +30,7 @@ describe('Ionic View Service', function() {
 
       .state('tabs.tab3view1', {})
       .state('tabs.tab3view2', {})
-      .state('tabs.tab3view3', {})
+      .state('tabs.tab3view3', {});
 
   }));
 
@@ -38,7 +38,7 @@ describe('Ionic View Service', function() {
     viewService = $ionicViewService;
     rootScope = $rootScope;
     window = $window;
-    window.history.go = function(val) { return val };
+    window.history.go = function(val) { return val; };
   }));
 
   it('should do nothing if the same state happens', inject(function($state) {
@@ -375,7 +375,7 @@ describe('Ionic View Service', function() {
     homeViewScope = {};
     $state.go('home');
     rootScope.$apply();
-    var homeReg = viewService.register(homeViewScope);
+    homeReg = viewService.register(homeViewScope);
     expect(rootScope.$viewHistory.histories.root.cursor).toEqual(0);
     expect(rootScope.$viewHistory.histories.root.stack.length).toEqual(1);
     expect(homeReg.historyId).toEqual('root');
@@ -472,7 +472,7 @@ describe('Ionic View Service', function() {
     expect(viewService.getCurrentStateName()).toEqual('tabs.tab1view2');
     expect(viewService.getBackView().stateName).toEqual('tabs.tab1view1');
     expect(viewService.getForwardView()).toEqual(null);
-    var lastView = viewService.getCurrentView();
+    lastView = viewService.getCurrentView();
     expect(lastView.index).toEqual(1);
     expect(tab1view2ScopeReg.viewId).toEqual(lastView.viewId);
     expect(tab1view2ScopeReg.navAction).toEqual('newView');
@@ -487,7 +487,7 @@ describe('Ionic View Service', function() {
     expect(viewService.getCurrentStateName()).toEqual('tabs.tab1view1');
     expect(viewService.getBackView().stateName).toEqual('home');
     expect(viewService.getForwardView().stateName).toEqual('tabs.tab1view2');
-    var lastView = viewService.getCurrentView();
+    lastView = viewService.getCurrentView();
     expect(lastView.index).toEqual(0);
     expect(tab1view1Scope2Reg.navAction).toEqual('moveBack');
     expect(tab1view1Scope2Reg.navDirection).toEqual('back');
@@ -716,7 +716,7 @@ describe('Ionic View Service', function() {
     var result = newView.go();
     expect(result).toEqual(null);
 
-    $location.url('/nochange')
+    $location.url('/nochange');
     newView = viewService.createView({ url: '/nochange' });
     result = newView.go();
     expect(result).toEqual(null);
@@ -746,13 +746,13 @@ describe('Ionic View Service', function() {
     rootScope.$broadcast("viewState.changeHistory", { url: '/url' });
     expect($location.url()).toEqual('/url');
 
-    rootScope.$viewHistory.histories['h123'] = { stack: [], cursor: -1 }
+    rootScope.$viewHistory.histories.h123 = { stack: [], cursor: -1 };
     rootScope.$broadcast("viewState.changeHistory", { historyId: 'h123' });
     expect($location.url()).toEqual('/url');
 
     var newView = viewService.createView({ stateName: 'about' });
-    rootScope.$viewHistory.histories['h123'].stack.push(newView);
-    rootScope.$viewHistory.histories['h123'].cursor++;
+    rootScope.$viewHistory.histories.h123.stack.push(newView);
+    rootScope.$viewHistory.histories.h123.cursor++;
     rootScope.$broadcast("viewState.changeHistory", { historyId: 'h123' });
     rootScope.$apply();
     expect($state.current.name).toEqual('about');

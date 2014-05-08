@@ -627,7 +627,7 @@ vec2.str = function (a) {
 if(typeof(exports) !== 'undefined') {
     exports.vec2 = vec2;
 }
-;
+
 /* Copyright (c) 2013, Brandon Jones, Colin MacKenzie IV. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -1120,23 +1120,23 @@ vec3.transformQuat = function(out, a, q) {
 * @returns {vec3} out
 */
 vec3.rotateX = function(out, a, b, c){
-   var p = [], r=[];
-	  //Translate point to the origin
-	  p[0] = a[0] - b[0];
-	  p[1] = a[1] - b[1];
-  	p[2] = a[2] - b[2];
+  var p = [], r=[];
+  //Translate point to the origin
+  p[0] = a[0] - b[0];
+  p[1] = a[1] - b[1];
+  p[2] = a[2] - b[2];
 
-	  //perform rotation
-	  r[0] = p[0];
-	  r[1] = p[1]*Math.cos(c) - p[2]*Math.sin(c);
-	  r[2] = p[1]*Math.sin(c) + p[2]*Math.cos(c);
+  //perform rotation
+  r[0] = p[0];
+  r[1] = p[1]*Math.cos(c) - p[2]*Math.sin(c);
+  r[2] = p[1]*Math.sin(c) + p[2]*Math.cos(c);
 
-	  //translate to correct position
-	  out[0] = r[0] + b[0];
-	  out[1] = r[1] + b[1];
-	  out[2] = r[2] + b[2];
+  //translate to correct position
+  out[0] = r[0] + b[0];
+  out[1] = r[1] + b[1];
+  out[2] = r[2] + b[2];
 
-  	return out;
+  return out;
 };
 
 /*
@@ -1148,23 +1148,23 @@ vec3.rotateX = function(out, a, b, c){
 * @returns {vec3} out
 */
 vec3.rotateY = function(out, a, b, c){
-  	var p = [], r=[];
-  	//Translate point to the origin
-  	p[0] = a[0] - b[0];
-  	p[1] = a[1] - b[1];
-  	p[2] = a[2] - b[2];
+  var p = [], r=[];
+  //Translate point to the origin
+  p[0] = a[0] - b[0];
+  p[1] = a[1] - b[1];
+  p[2] = a[2] - b[2];
 
-  	//perform rotation
-  	r[0] = p[2]*Math.sin(c) + p[0]*Math.cos(c);
-  	r[1] = p[1];
-  	r[2] = p[2]*Math.cos(c) - p[0]*Math.sin(c);
+  //perform rotation
+  r[0] = p[2]*Math.sin(c) + p[0]*Math.cos(c);
+  r[1] = p[1];
+  r[2] = p[2]*Math.cos(c) - p[0]*Math.sin(c);
 
-  	//translate to correct position
-  	out[0] = r[0] + b[0];
-  	out[1] = r[1] + b[1];
-  	out[2] = r[2] + b[2];
+  //translate to correct position
+  out[0] = r[0] + b[0];
+  out[1] = r[1] + b[1];
+  out[2] = r[2] + b[2];
 
-  	return out;
+  return out;
 };
 
 /*
@@ -1176,23 +1176,23 @@ vec3.rotateY = function(out, a, b, c){
 * @returns {vec3} out
 */
 vec3.rotateZ = function(out, a, b, c){
-  	var p = [], r=[];
-  	//Translate point to the origin
-  	p[0] = a[0] - b[0];
-  	p[1] = a[1] - b[1];
-  	p[2] = a[2] - b[2];
+  var p = [], r=[];
+  //Translate point to the origin
+  p[0] = a[0] - b[0];
+  p[1] = a[1] - b[1];
+  p[2] = a[2] - b[2];
 
-  	//perform rotation
-  	r[0] = p[0]*Math.cos(c) - p[1]*Math.sin(c);
-  	r[1] = p[0]*Math.sin(c) + p[1]*Math.cos(c);
-  	r[2] = p[2];
+  //perform rotation
+  r[0] = p[0]*Math.cos(c) - p[1]*Math.sin(c);
+  r[1] = p[0]*Math.sin(c) + p[1]*Math.cos(c);
+  r[2] = p[2];
 
-  	//translate to correct position
-  	out[0] = r[0] + b[0];
-  	out[1] = r[1] + b[1];
-  	out[2] = r[2] + b[2];
+  //translate to correct position
+  out[0] = r[0] + b[0];
+  out[1] = r[1] + b[1];
+  out[2] = r[2] + b[2];
 
-  	return out;
+  return out;
 };
 
 /**
@@ -1249,7 +1249,7 @@ vec3.str = function (a) {
 if(typeof(exports) !== 'undefined') {
     exports.vec3 = vec3;
 }
-;
+
 /* Copyright (c) 2013, Brandon Jones, Colin MacKenzie IV. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -1774,7 +1774,7 @@ vec4.str = function (a) {
 if(typeof(exports) !== 'undefined') {
     exports.vec4 = vec4;
 }
-;
+
 /* Copyright (c) 2013, Brandon Jones, Colin MacKenzie IV. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -2017,7 +2017,7 @@ mat2.str = function (a) {
  * @returns {Number} Frobenius norm
  */
 mat2.frob = function (a) {
-    return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2)))
+  return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2)));
 };
 
 /**
@@ -2039,7 +2039,7 @@ mat2.LDU = function (L, D, U, a) {
 if(typeof(exports) !== 'undefined') {
     exports.mat2 = mat2;
 }
-;
+
 /* Copyright (c) 2013, Brandon Jones, Colin MacKenzie IV. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -2291,13 +2291,13 @@ mat2d.str = function (a) {
  * @returns {Number} Frobenius norm
  */
 mat2d.frob = function (a) {
-    return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + 1))
+  return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + 1));
 };
 
 if(typeof(exports) !== 'undefined') {
     exports.mat2d = mat2d;
 }
-;
+
 /* Copyright (c) 2013, Brandon Jones, Colin MacKenzie IV. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -2781,14 +2781,14 @@ mat3.str = function (a) {
  * @returns {Number} Frobenius norm
  */
 mat3.frob = function (a) {
-    return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2)))
+  return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2)));
 };
 
 
 if(typeof(exports) !== 'undefined') {
     exports.mat3 = mat3;
 }
-;
+
 /* Copyright (c) 2013, Brandon Jones, Colin MacKenzie IV. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -3693,14 +3693,14 @@ mat4.str = function (a) {
  * @returns {Number} Frobenius norm
  */
 mat4.frob = function (a) {
-    return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2) + Math.pow(a[9], 2) + Math.pow(a[10], 2) + Math.pow(a[11], 2) + Math.pow(a[12], 2) + Math.pow(a[13], 2) + Math.pow(a[14], 2) + Math.pow(a[15], 2) ))
+  return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2) + Math.pow(a[9], 2) + Math.pow(a[10], 2) + Math.pow(a[11], 2) + Math.pow(a[12], 2) + Math.pow(a[13], 2) + Math.pow(a[14], 2) + Math.pow(a[15], 2) ));
 };
 
 
 if(typeof(exports) !== 'undefined') {
     exports.mat4 = mat4;
 }
-;
+
 /* Copyright (c) 2013, Brandon Jones, Colin MacKenzie IV. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -4230,7 +4230,7 @@ quat.str = function (a) {
 if(typeof(exports) !== 'undefined') {
     exports.quat = quat;
 }
-;
+
 
 
 

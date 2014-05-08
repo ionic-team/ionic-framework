@@ -25,7 +25,7 @@ function viewportLoadTag() {
     var props = viewportTag.content.toLowerCase().replace(/\s+/g, '').split(',');
     var keyValue;
     for(x=0; x<props.length; x++) {
-      if(props[x] != '') {
+      if(props[x]) {
         keyValue = props[x].split('=');
         viewportProperties[ keyValue[0] ] = (keyValue.length > 1 ? keyValue[1] : '_');
       }

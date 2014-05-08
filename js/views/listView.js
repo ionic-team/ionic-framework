@@ -192,7 +192,7 @@
 
   ReorderDrag.prototype._moveElement = function(e) {
     var y = e.gesture.center.pageY -
-      this._currentDrag.elementHeight + 
+      this._currentDrag.elementHeight +
       this.scrollView.getValues().top -
       this.listEl.offsetTop;
     this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(0, '+y+'px, 0)';
@@ -457,10 +457,11 @@
       this._isDragging = false;
 
       var lastDragOp = this._lastDragOp;
+      var item;
 
       // Check if this is a reorder drag
       if(ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_REORDER_BTN_CLASS) && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
-        var item = this._getItem(e.target);
+        item = this._getItem(e.target);
 
         if(item) {
           this._dragOp = new ReorderDrag({
@@ -481,7 +482,7 @@
       else if(!this._didDragUpOrDown && (e.gesture.direction == 'left' || e.gesture.direction == 'right') && Math.abs(e.gesture.deltaX) > 5) {
 
         // Make sure this is an item with buttons
-        var item = this._getItem(e.target);
+        item = this._getItem(e.target);
         if(item && item.querySelector('.item-options')) {
           this._dragOp = new SlideDrag({ el: this.el, canSwipe: this.canSwipe });
           this._dragOp.start(e);

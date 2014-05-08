@@ -16,7 +16,6 @@
     "sauce-connect-launcher": "^0.2.2",
     "dgeni": "^0.2.0",
     "dgeni-packages": "^0.7.1",
-    "jshint-stylish": "^0.1.5",
     "gulp-template": "^0.1.1",
     "gulp-concat": "^2.1.7",
     "gulp-jshint": "^1.5.0",
@@ -47,7 +46,9 @@
     "gulp-footer": "^1.0.4",
     "marked": "^0.3.2",
     "ircb": "^0.3.1",
-    "node-twitter-api": "^1.2.2"
+    "node-twitter-api": "^1.2.2",
+    "chalk": "^0.4.0",
+    "jshint-summary": "^0.3.0"
   },
   "licenses": [
     {

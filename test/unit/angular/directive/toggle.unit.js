@@ -36,7 +36,7 @@ describe('Ionic Toggle', function() {
 
     // Not disabled, we can toggle
     expect(toggle.val()).toBe(false);
-    ionic.trigger('click', {target: label})
+    ionic.trigger('click', {target: label});
     expect(toggle.val()).toBe(true);
 
     // Disable it
@@ -45,7 +45,7 @@ describe('Ionic Toggle', function() {
     expect(input.getAttribute('disabled')).toBe('disabled');
 
     // We shouldn't be able to toggle it now
-    ionic.trigger('click', {target: label})
+    ionic.trigger('click', {target: label});
     expect(toggle.val()).toBe(true);
 
     // Re-enable it
@@ -53,7 +53,7 @@ describe('Ionic Toggle', function() {
     rootScope.$apply();
 
     // Should be able to toggle it now
-    ionic.trigger('click', {target: label})
+    ionic.trigger('click', {target: label});
     expect(toggle.val()).toBe(false);
     expect(input.getAttribute('disabled')).not.toBe('disabled');
   });
@@ -62,9 +62,9 @@ describe('Ionic Toggle', function() {
     var toggle = el.isolateScope().toggle;
     var label = el[0].querySelector('label');
     expect(toggle.val()).toBe(false);
-    ionic.trigger('click', {target: label})
+    ionic.trigger('click', {target: label});
     expect(toggle.val()).toBe(true);
-    ionic.trigger('click', {target: label})
+    ionic.trigger('click', {target: label});
     expect(toggle.val()).toBe(false);
 
   });

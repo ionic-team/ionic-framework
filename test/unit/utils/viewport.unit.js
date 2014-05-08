@@ -483,8 +483,8 @@ describe('Ionic Viewport', function() {
     vportTag.content = '   keyonly,   , ,,  WIDTH=DeViCe-wIDTH , minimal-ui    ';
     viewportLoadTag();
 
-    expect( viewportProperties['keyonly'] ).toEqual('_');
-    expect( viewportProperties['width'] ).toEqual('device-width');
+    expect( viewportProperties.keyonly ).toEqual('_');
+    expect( viewportProperties.width ).toEqual('device-width');
     expect( viewportProperties['minimal-ui'] ).toEqual('_');
 
     viewportTagUpdate();

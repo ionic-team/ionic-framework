@@ -67,7 +67,7 @@ describe('$ionicPopup service', function() {
       });
       it('should resolve with return value from button.onTap', function() {
         popup.scope.$buttonTapped({
-          onTap: function() { return '123' }
+          onTap: function() { return '123'; }
         }, {});
         expect(popup.responseDeferred.resolve).toHaveBeenCalledWith('123');
       });

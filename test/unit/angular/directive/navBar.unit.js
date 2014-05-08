@@ -105,7 +105,7 @@ describe('ionNavBar', function() {
       ctrl.setTitle('baz');
       expect($scope.title).toBe('baz');
       expect($scope.oldTitle).toBe('bar');
-    })
+    });
 
     it('should getTitle', function() {
       var ctrl = setup();

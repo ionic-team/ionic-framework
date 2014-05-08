@@ -12,6 +12,8 @@
  * License: MIT + Apache (V2)
  */
 
+/* jshint eqnull: true */
+
 /**
  * Generic animation class with support for dropped frames both optional easing and duration.
  *
@@ -805,12 +807,12 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       //For Firefox
       document.addEventListener('mousewheel', onMouseWheel);
-      function onMouseWheel(e) {
-        self.hintResize();
-        wheelShowBarFn();
-        self.scrollBy(e.wheelDeltaX/self.options.wheelDampen, -e.wheelDeltaY/self.options.wheelDampen);
-        wheelHideBarFn();
-      }
+    }
+    function onMouseWheel(e) {
+      self.hintResize();
+      wheelShowBarFn();
+      self.scrollBy(e.wheelDeltaX/self.options.wheelDampen, -e.wheelDeltaY/self.options.wheelDampen);
+      wheelHideBarFn();
     }
   },
 
@@ -1965,7 +1967,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.__maxScrollLeft = Math.max((self.__contentWidth * zoomLevel) - self.__clientWidth, 0);
     self.__maxScrollTop = Math.max((self.__contentHeight * zoomLevel) - self.__clientHeight, 0);
 
-    if(!self.__didWaitForSize && self.__maxScrollLeft == 0 && self.__maxScrollTop == 0) {
+    if(!self.__didWaitForSize && !self.__maxScrollLeft && !self.__maxScrollTop) {
       self.__didWaitForSize = true;
       self.__waitForSize();
     }
@@ -1984,7 +1986,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     var sizer = function() {
       self.resize();
 
-      if((self.options.scrollingX && self.__maxScrollLeft == 0) || (self.options.scrollingY && self.__maxScrollTop == 0)) {
+      if((self.options.scrollingX && !self.__maxScrollLeft) || (self.options.scrollingY && !self.__maxScrollTop)) {
         //self.__sizerTimeout = setTimeout(sizer, 1000);
       }
     };

@@ -127,7 +127,7 @@ describe('$ionicScroll Controller', function() {
   it('should forget on $viewHistory.viewBack after $viewContentLoaded', inject(function($rootScope, $timeout) {
     var historyData = { viewId: 'foo' };
     setup();
-    spyOn($rootScope, '$on').andCallThrough();;
+    spyOn($rootScope, '$on').andCallThrough();
     scope.$broadcast('$viewContentLoaded', historyData);
     $timeout.flush();
     expect(scope.$on).toHaveBeenCalledWith('$viewHistory.viewBack', jasmine.any(Function));

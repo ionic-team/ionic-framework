@@ -48,6 +48,7 @@ if (IS_RELEASE_BUILD) {
 
 gulp.task('default', ['build']);
 gulp.task('build', ['bundle', 'sass']);
+gulp.task('validate', ['jshint', 'ddescribe-iit', 'karma']);
 
 gulp.task('docs', function(done) {
   var docVersion = argv['doc-version'];
@@ -113,18 +114,21 @@ gulp.task('bundle', [
 });
 
 gulp.task('jshint', function() {
-  return gulp.src(['js/**/*.js', 'test/**/*.js'])
+  return gulp.src(['js/**/*.js'])
     .pipe(jshint('.jshintrc'))
-    .pipe(jshint.reporter('jshint-stylish'));
+    .pipe(jshint.reporter(require('jshint-summary')({
+      fileColCol: ',bold',
+      positionCol: ',bold',
+      codeCol: 'green,bold',
+      reasonCol: 'cyan'
+    })))
+    .pipe(jshint.reporter('fail'));
 });
 
 gulp.task('ddescribe-iit', function() {
   return gulp.src(['test/**/*.js', 'js/**/*.js'])
     .pipe(notContains([
-      'ddescribe',
-      'iit',
-      'xit',
-      'xdescribe'
+      'ddescribe', 'iit', 'xit', 'xdescribe'
     ]));
 });
 

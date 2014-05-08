@@ -58,7 +58,7 @@ describe('Scroll View', function() {
       keyboardHeight: keyboardHeight,
       keyboardTopOffset: 40,
       target: element,
-    }
+    };
 
     expect( sv.isScrolledIntoView ).toBeFalsy();
     ionic.trigger('scrollChildIntoView', details, true);

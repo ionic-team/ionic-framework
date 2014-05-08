@@ -53,7 +53,7 @@ describe('ionRefresher directive', function() {
     expect(el.controller('$ionicScroll')._setRefresher.callCount).toBe(1);
     expect(el.controller('$ionicScroll')._setRefresher).toHaveBeenCalledWith(
       el.scope(), el[0]
-    )
+    );
   });
 
   it('should listen for scroll.refreshComplete', function() {
