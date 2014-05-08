@@ -35,6 +35,7 @@ function run {
   echo "TRAVIS_COMMIT=$TRAVIS_COMMIT"
 
   # check for stupid mistakes
+  gulp jshint
   gulp ddescribe-iit
 
   # Run simple quick tests on Phantom to be sure any tests pass
