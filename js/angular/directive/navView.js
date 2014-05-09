@@ -3,7 +3,7 @@
  * @name ionNavView
  * @module ionic
  * @restrict E
- * @codepen HjnFx
+ * @codepen odqCz
  *
  * @description
  * As a user navigates throughout your app, Ionic is able to keep track of their
