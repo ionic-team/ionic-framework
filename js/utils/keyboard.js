@@ -126,7 +126,6 @@ function keyboardShow(element, elementTop, elementBottom, viewportHeight, keyboa
 }
 
 function keyboardFocusOut(e) {
-  clearTimeout(keyboardFocusInTimer);
   clearTimeout(keyboardFocusOutTimer);
 
   keyboardFocusOutTimer = setTimeout(keyboardHide, 350);

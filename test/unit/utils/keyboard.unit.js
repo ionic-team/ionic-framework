@@ -72,6 +72,8 @@ Notes:
 iOS 7 keyboard is 216px tall without the accessory bar
 iOS 7 keyboard is 260px tall with the accessory bar
 
+Switching inputs fires focusOut on iOS, doesn't on Android
+
 */
 
 
