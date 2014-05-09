@@ -116,6 +116,8 @@
 
           if(this.isAndroid() && version < 4.4) {
             this.grade = (version < 4 ? 'c' : 'b');
+          } else if(this.isWindowsPhone()) {
+            this.grade = 'b';
           }
         }
       }

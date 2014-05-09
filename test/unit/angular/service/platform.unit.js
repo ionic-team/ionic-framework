@@ -276,6 +276,14 @@ describe('Ionic Platform Service', function() {
     expect(ionic.Platform.grade).toEqual('a');
   });
 
+  it('sets grade b from Windows Phone platform', function() {
+    window.cordova = {};
+    ionic.Platform.setPlatform('windowsphone');
+    ionic.Platform.setVersion('8.0');
+    ionic.Platform._checkPlatforms();
+    expect(ionic.Platform.grade).toEqual('b');
+  });
+
   it('sets grade a from unknown platform', function() {
     window.cordova = {};
     ionic.Platform.setPlatform('whatever');

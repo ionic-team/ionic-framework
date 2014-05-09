@@ -52,8 +52,8 @@
   }
 }
 
-.platform-android2:not(.enable-transitions) * {
-  // disable transitions on Android 2
+.platform-c:not(.enable-transitions) * {
+  // disable transitions on grade-c devices (Android 2)
   -webkit-transition: none !important;
   transition: none !important;
 }
