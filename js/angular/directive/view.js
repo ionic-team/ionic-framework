@@ -54,6 +54,9 @@ IonicModule
           $attr.$observe('title', function(val, oldVal) {
             if (val !== initialTitle) {
               navBarCtrl.setTitle(val);
+            } else {
+              //Safety to make sure the navbar's title is correct
+              navBarCtrl.setTitle(initialTitle);
             }
           });
 
