@@ -322,10 +322,10 @@ describe('Ionic Viewport', function() {
     vportTag.content = 'user-scalable=no, width=device-width, height=device-height';
     viewportLoadTag();
 
-    expect( vportTag.content ).toEqual('user-scalable=no, width=device-width');
+    expect( vportTag.content ).toEqual('user-scalable=no, width=device-width, height=device-height');
   });
 
-  it('Should add width, but not height to viewport for iOS 7.0, iPhone, WebView', function(){
+  it('Should add width and height to viewport for iOS 7.0, iPhone, WebView', function(){
     ionic.Platform.setPlatform('iOS');
     ionic.Platform.setVersion('7.0');
     window.cordova = {};
@@ -333,7 +333,7 @@ describe('Ionic Viewport', function() {
     vportTag.content = 'user-scalable=no';
     viewportLoadTag();
 
-    expect( vportTag.content ).toEqual('user-scalable=no, width=device-width');
+    expect( vportTag.content ).toEqual('user-scalable=no, width=device-width, height=device-height');
   });
 
 

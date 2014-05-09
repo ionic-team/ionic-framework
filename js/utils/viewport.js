@@ -94,6 +94,10 @@ function viewportUpdate() {
         // iPhone <= 6.1 WebView
         // if height was set it needs to get removed with this hack for <= 6.1
         if( initHeight ) viewportProperties.height = '0';
+
+      } else if(version == 7) {
+        //iPhone == 7.0 WebView
+        viewportProperties.height = DEVICE_HEIGHT;
       }
 
     } else {
