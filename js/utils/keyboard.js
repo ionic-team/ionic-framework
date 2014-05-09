@@ -161,7 +161,9 @@ function keyboardOnKeyDown(e) {
 }
 
 function keyboardPreventDefault(e) {
-  e.preventDefault();
+  if( e.target.tagName !== 'TEXTAREA' ) {
+    e.preventDefault();
+  }
 }
 
 function keyboardOrientationChange() {

@@ -146,12 +146,12 @@ textarea {
 .item-stacked-label textarea
 {
   @include border-radius(2px);
-  overflow: hidden;
   padding: 4px 8px 3px;
   border: none;
   background-color: $input-bg;
 }
 .item-stacked-label input {
+  overflow: hidden;
   height: $line-height-computed + $font-size-base + 12px;
 }
 
