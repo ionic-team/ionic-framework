@@ -553,6 +553,9 @@ $nav-title-slide-ios7-delay: 250ms;
 
     @include translate3d(0%, 0, 0);
     opacity: 1;
+    &.active, &.activated {
+      opacity: 0.5;
+    }
     &.ng-hide {
       opacity: 0;
       @include translate3d(30%, 0, 0);
