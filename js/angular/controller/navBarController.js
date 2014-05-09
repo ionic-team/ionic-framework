@@ -52,6 +52,9 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
   };
 
   this.setTitle = function(title) {
+    if ($scope.title === title) {
+      return;
+    }
     $scope.oldTitle = $scope.title;
     $scope.title = title || '';
   };

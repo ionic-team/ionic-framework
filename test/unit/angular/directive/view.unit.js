@@ -76,10 +76,10 @@ describe('ionView directive', function() {
     expect(el.controller('ionNavBar').showBar).toHaveBeenCalledWith(true);
   });
 
-  it('should setTitle on change, but not with initial value', function() {
+  it('should setTitle on change', function() {
     var el = setup('title="{{something}}-1"');
     //Should not setTitle with initial value
-    expect(el.controller('ionNavBar').setTitle).not.toHaveBeenCalled();
+    expect(el.controller('ionNavBar').setTitle).toHaveBeenCalledWith('-1');
     el.scope().$apply('something = 2');
     expect(el.controller('ionNavBar').setTitle).toHaveBeenCalledWith('2-1');
   });

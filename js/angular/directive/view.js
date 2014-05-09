@@ -52,14 +52,8 @@ IonicModule
 
           // watch for changes in the title, don't set initial value as changeTitle does that
           $attr.$observe('title', function(val, oldVal) {
-            if (val !== initialTitle) {
-              navBarCtrl.setTitle(val);
-            } else {
-              //Safety to make sure the navbar's title is correct
-              navBarCtrl.setTitle(initialTitle);
-            }
+            navBarCtrl.setTitle(val);
           });
-
         }
 
         var hideBackAttr = angular.isDefined($attr.hideBackButton) ?

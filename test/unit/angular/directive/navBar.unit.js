@@ -107,6 +107,19 @@ describe('ionNavBar', function() {
       expect($scope.oldTitle).toBe('bar');
     });
 
+    it('setTitle should not change if title is same as old', function() {
+      var ctrl = setup();
+      ctrl.setTitle('okay');
+      expect($scope.title).toBe('okay');
+      expect($scope.oldTitle).toBeFalsy();
+      ctrl.setTitle('okay');
+      expect($scope.title).toBe('okay');
+      expect($scope.oldTitle).toBeFalsy();
+      ctrl.setTitle('okay-2');
+      expect($scope.title).toBe('okay-2');
+      expect($scope.oldTitle).toBe('okay');
+    });
+
     it('should getTitle', function() {
       var ctrl = setup();
       expect(ctrl.getTitle()).toBeFalsy();
