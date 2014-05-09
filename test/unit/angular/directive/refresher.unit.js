@@ -68,12 +68,12 @@ describe('ionRefresher directive', function() {
 
   it('should have default pullingIcon', function() {
     var el = setup();
-    expect(el[0].querySelector('.icon.icon-pulling.ion-arrow-down-c')).toBeTruthy();
+    expect(el[0].querySelector('.icon-pulling .ion-arrow-down-c')).toBeTruthy();
   });
   it('should allow custom pullingIcon', function() {
     var el = setup('pulling-icon="super-icon"');
-    expect(el[0].querySelector('.icon.icon-pulling.ion-arrow-down-c')).toBeFalsy();
-    expect(el[0].querySelector('.icon.icon-pulling.super-icon')).toBeTruthy();
+    expect(el[0].querySelector('.icon-pulling .ion-arrow-down-c')).toBeFalsy();
+    expect(el[0].querySelector('.icon-pulling .super-icon')).toBeTruthy();
   });
 
   it('should have default refreshingIcon', function() {
