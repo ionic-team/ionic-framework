@@ -195,8 +195,8 @@
   
   // Android 4.4 messes with the display property
   .buttons,
-  .buttons .left-buttons,
-  .buttons .right-buttons {
+  .buttons.left-buttons,
+  .buttons.right-buttons {
     display: inherit;
   }
   // Place the last button in a bar on the right of the bar
