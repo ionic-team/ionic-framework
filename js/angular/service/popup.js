@@ -413,16 +413,19 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
   }
 
   function focusInputOrButton(element) {
-    var inputs = element[0].querySelectorAll('input');
+    var inputs = element[0].querySelectorAll('input'),
+		last
     if (!inputs.length) {
       inputs = element[0].querySelectorAll('button');
-    }
-    var last = inputs[inputs.length-1];
+      last = inputs[inputs.length-1];
+    } else {
+      last = inputs[0];
+	}
     if(last) {
       last.focus();
     }
   }
-
+  
   function showAlert(opts) {
     return showPopup( extend({
       buttons: [{
