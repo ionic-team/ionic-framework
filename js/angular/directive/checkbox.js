@@ -22,6 +22,7 @@ IonicModule
     replace: true,
     require: '?ngModel',
     scope: {
+      class: '@',
       ngModel: '=?',
       ngValue: '=?',
       ngChecked: '=?',
@@ -30,7 +31,7 @@ IonicModule
     },
     transclude: true,
 
-    template: '<label class="item item-checkbox">' +
+    template: '<label>' +
                 '<div class="checkbox checkbox-input-hidden disable-pointer-events">' +
                   '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
                   '<i class="checkbox-icon"></i>' +
@@ -39,6 +40,11 @@ IonicModule
               '</label>',
 
     compile: function(element, attr) {
+      var div = element.find('div').eq(0);
+      if (attr.class) div.addClass(attr.class);
+
+      element.addClass('item item-checkbox');
+
       var input = element.find('input');
       if(attr.name) input.attr('name', attr.name);
       if(attr.ngChecked) input.attr('ng-checked', attr.ngChecked);
