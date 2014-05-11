@@ -111,6 +111,24 @@
   color: $color;
 }
 
+// Dropdown Mixins
+// --------------------------------------------------
+
+@mixin dropdown-style($bg-color, $color, $border-color) {
+	background-color: $bg-color;
+	color: $color;
+	border: 1px solid $border-color;
+
+	>.arrow {
+		&:before {
+			border-bottom: $dropdown-arrow-size solid $border-color;
+		}
+		&:after {
+			border-bottom: $dropdown-arrow-size solid $bg-color;
+		}
+	}
+}
+
 
 // Range Mixins
 // --------------------------------------------------

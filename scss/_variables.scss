@@ -558,6 +558,61 @@ $modal-inset-mode-left:           20% !default;
 $modal-inset-mode-min-height:     240px !default;
 
 
+// Dropdowns
+// -------------------------------
+
+$dropdown-default-bg:             transparent !default;
+$dropdown-default-text:           #AAAAAA !default;
+$dropdown-default-border:				  #fff;
+
+$dropdown-light-bg:               $button-light-bg !default;
+$dropdown-light-text:             $button-light-text !default;
+$dropdown-light-border:           #e3e3e3;
+
+$dropdown-stable-bg:              $button-stable-bg !default;
+$dropdown-stable-text:            $button-stable-text !default;
+$dropdown-stable-border:          $dropdown-default-border;
+
+$dropdown-positive-bg:            $button-positive-bg !default;
+$dropdown-positive-text:          $button-positive-text !default;
+$dropdown-positive-border:        $dropdown-default-border;
+
+$dropdown-calm-bg:                $button-calm-bg !default;
+$dropdown-calm-text:              $button-calm-text !default;
+$dropdown-calm-border:				    $dropdown-default-border;
+
+$dropdown-balanced-bg:            $button-balanced-bg !default;
+$dropdown-balanced-text:          $button-balanced-text !default;
+$dropdown-balanced-border:				$dropdown-default-border;
+
+$dropdown-assertive-bg:           $button-assertive-bg !default;
+$dropdown-assertive-text:         $button-assertive-text !default;
+$dropdown-assertive-border:				$dropdown-default-border;
+
+$dropdown-energized-bg:           $button-energized-bg !default;
+$dropdown-energized-text:         $button-energized-text !default;
+$dropdown-energized-border:				$dropdown-default-border;
+
+$dropdown-royal-bg:               $button-royal-bg !default;
+$dropdown-royal-text:             $button-royal-text !default;
+$dropdown-royal-border:				    $dropdown-default-border;
+
+$dropdown-dark-bg:                $button-dark-bg !default;
+$dropdown-dark-text:              $button-dark-text !default;
+$dropdown-dark-border:				    $dropdown-default-border;
+
+$dropdown-backdrop-bg-active:     rgba(0,0,0,0.5) !default;
+$dropdown-backdrop-bg-inactive:   rgba(0,0,0,0) !default;
+
+$dropdown-inset-mode-break-point: 680px !default;  // @media min-width
+$dropdown-inset-mode-top:         0px !default;
+$dropdown-inset-mode-right:       0px !default;
+$dropdown-inset-mode-bottom:      0px !default;
+$dropdown-inset-mode-left:        0px !default;
+$dropdown-inset-mode-min-height:  240px !default;
+$dropdown-arrow-size:					    14px;
+
+
 // Grids
 // -------------------------------
 
@@ -645,7 +700,6 @@ $badge-dark-text:                 $button-dark-text !default;
 $badge-default-bg:                transparent !default;
 $badge-default-text:              #AAAAAA !default;
 
-
 // Z-Indexes
 // -------------------------------
 
@@ -663,9 +717,10 @@ $z-index-item-options:            1 !default;
 $z-index-item-radio:              3 !default;
 $z-index-item-reordering:         9 !default;
 $z-index-item-toggle:             3 !default;
-$z-index-loading:                 11 !default;
+$z-index-loading:                 13 !default;
 $z-index-menu:                    0 !default;
 $z-index-modal:                   10 !default;
+$z-index-dropdown:                12 !default;
 $z-index-pane:                    1 !default;
 $z-index-popup:                   11 !default;
 $z-index-scroll-bar:              9999 !default;

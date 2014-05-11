@@ -270,6 +270,87 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
   position: absolute;
 }
 
+@-webkit-keyframes scaleInY {
+	from { -webkit-transform: scaleY(0); }
+	to { -webkit-transform: scaleY(1); }
+}
+
+/**
+ * Scale Y in/out, used for dropdowns
+ * --------------------------------------------------
+ */
+
+$scaleDownUpDuration: 150ms;
+
+.scale-down-up {
+	opacity: 0.1;
+	-webkit-transform-origin : 50% 0%;
+	-moz-transform-origin : 50% 0%;
+	-ms-transform-origin : 50% 0%;
+	transform-origin : 50% 0%;
+	-webkit-transform: scaleY(0);
+	-moz-transform:    scaleY(0);
+	-ms-transform:     scaleY(0);
+	transform:         scaleY(0);
+}
+
+.scale-down-up.ng-enter {
+	-webkit-transition: -webkit-transform $scaleDownUpDuration ease-out, opacity $scaleDownUpDuration ease-out;
+	-moz-transition: -moz-transform $scaleDownUpDuration ease-out, opacity $scaleDownUpDuration ease-out;
+	-ms-transform: -ms-transform $scaleDownUpDuration ease-out, opacity $scaleDownUpDuration ease-out;
+	transition: transform $scaleDownUpDuration ease-out, opacity $scaleDownUpDuration ease-out;
+}
+
+.scale-down-up.ng-leave {
+	-webkit-transition: -webkit-transform $scaleDownUpDuration ease-in, opacity $scaleDownUpDuration ease-in;
+	-moz-transition: -moz-transform $scaleDownUpDuration ease-in, opacity $scaleDownUpDuration ease-in;
+	-ms-transform: -ms-transform $scaleDownUpDuration ease-in, opacity $scaleDownUpDuration ease-in;
+	transition: transform $scaleDownUpDuration ease-in, opacity $scaleDownUpDuration ease-in;
+}
+
+.scale-down-up.ng-enter,
+.scale-down-up.ng-leave.ng-leave-active {
+	opacity: 0.1;
+	-webkit-transform-origin : 50% 0%;
+	-moz-transform-origin : 50% 0%;
+	-ms-transform-origin : 50% 0%;
+	transform-origin : 50% 0%;
+	-webkit-transform: scaleY(0);
+	-moz-transform:    scaleY(0);
+	-ms-transform:     scaleY(0);
+	transform:         scaleY(0);
+}
+
+.scale-down-up.ng-leave,
+.scale-down-up.ng-enter.ng-enter-active {
+	opacity: 1;
+	-webkit-transform-origin : 50% 0%;
+	-moz-transform-origin : 50% 0%;
+	-ms-transform-origin : 50% 0%;
+	transform-origin : 50% 0%;
+	-webkit-transform: scaleY(1);
+	-moz-transform:    scaleY(1);
+	-ms-transform:     scaleY(1);
+	transform:         scaleY(1);
+}
+
+.slide-in-up {
+	@include translate3d(0, 100%, 0);
+}
+.slide-in-up.ng-enter,
+.slide-in-up > .ng-enter {
+	@include transition(all $slide-in-up-function 400ms);
+}
+.slide-in-up.ng-enter-active,
+.slide-in-up > .ng-enter-active {
+	@include translate3d(0, 0, 0);
+}
+
+.slide-in-up.ng-leave,
+.slide-in-up > .ng-leave {
+	@include transition(all ease-in-out 250ms);
+}
+
 
 /**
  * Slide Left-Right, and Right-Left, each with the reserve

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <title>Ionic Dropdown</title>
+
+  <link href="../../dist/css/ionic.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+
+  <script src="../../dist/js/ionic.bundle.js"></script>
+  <script src="script.js"></script>
+
+</head>
+
+<body ng-controller="DropdownCtrl" class="padding">
+
+  <ion-header-bar class="bar bar-header bar-light">
+    <button class="button button-icon"
+            ng-click="ionic.toggle($event.target)">
+      <i class="icon ion-ionic"></i>
+    </button>
+    <button class="button button-icon"
+            ng-click="chat.toggle($event.target)">
+      <i class="icon ion-chatboxes"></i>
+    </button>
+    <button class="button button-icon"
+            ng-click="fork.toggle($event.target)">
+      <i class="icon ion-fork-repo"></i>
+    </button>
+    <h1 class="title">Warp 9</h1>
+    <button class="button button-light"
+            ng-click="drop.toggle($event.target)">
+      DROP IT
+    </button>
+  </ion-header-bar>
+
+</body>
+</html>
