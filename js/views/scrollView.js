@@ -678,6 +678,12 @@ ionic.views.Scroll = ionic.views.View.inherit({
       ionic.scroll.isScrolling = false;
     });
 
+    function getEventTouches(e) {
+      return e.touches && e.touches.length ? e.touches : [{
+        pageX: e.pageX,
+        pageY: e.pageY
+      }];
+    }
 
     self.touchStart = function(e) {
       self.startCoordinates = getPointerCoordinates(e);
@@ -685,6 +691,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
       if ( ionic.tap.ignoreScrollStart(e) ) {
         return;
       }
+
+      self.__isDown = true;
 
       if( ionic.tap.containsOrIsTextInput(e.target) || e.target.tagName === 'SELECT' ) {
         // do not start if the target is a text input
@@ -696,12 +704,13 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.__isSelectable = true;
       self.__enableScrollY = true;
       self.__hasStarted = true;
-      self.doTouchStart(e.touches, e.timeStamp);
+      self.doTouchStart(getEventTouches(e), e.timeStamp);
       e.preventDefault();
     };
 
     self.touchMove = function(e) {
-      if(e.defaultPrevented ||
+      if(!self.__isDown ||
+        e.defaultPrevented ||
         (e.target.tagName === 'TEXTAREA' && e.target.parentElement.querySelector(':focus')) ) {
         return;
       }
@@ -710,7 +719,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         // the target is a text input and scroll has started
         // since the text input doesn't start on touchStart, do it here
         self.__hasStarted = true;
-        self.doTouchStart(e.touches, e.timeStamp);
+        self.doTouchStart(getEventTouches(e), e.timeStamp);
         e.preventDefault();
         return;
       }
@@ -736,11 +745,15 @@ ionic.views.Scroll = ionic.views.View.inherit({
         }
       }
 
-      self.doTouchMove(e.touches, e.timeStamp, e.scale);
+      self.doTouchMove(getEventTouches(e), e.timeStamp, e.scale);
+      self.__isDown = true;
     };
 
     self.touchEnd = function(e) {
+      if(!self.__isDown) return;
+
       self.doTouchEnd(e.timeStamp);
+      self.__isDown = false;
       self.__hasStarted = false;
       self.__isSelectable = true;
       self.__enableScrollY = true;
@@ -756,25 +769,36 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.options.orgScrollingComplete();
     };
 
-
     if ('ontouchstart' in window) {
+      // Touch Events
       container.addEventListener("touchstart", self.touchStart, false);
       document.addEventListener("touchmove", self.touchMove, false);
       document.addEventListener("touchend", self.touchEnd, false);
       document.addEventListener("touchcancel", self.touchEnd, false);
 
-    } else {
+    } else if (window.navigator.pointerEnabled) {
+      // Pointer Events
+      container.addEventListener("pointerdown", self.touchStart, false);
+      document.addEventListener("pointermove", self.touchMove, false);
+      document.addEventListener("pointerup", self.touchEnd, false);
+      document.addEventListener("pointercancel", self.touchEnd, false);
 
+    } else if (window.navigator.msPointerEnabled) {
+      // IE10, WP8 (Pointer Events)
+      container.addEventListener("MSPointerDown", self.touchStart, false);
+      document.addEventListener("MSPointerMove", self.touchMove, false);
+      document.addEventListener("MSPointerUp", self.touchEnd, false);
+      document.addEventListener("MSPointerCancel", self.touchEnd, false);
+
+    } else {
+      // Mouse Events
       var mousedown = false;
 
       container.addEventListener("mousedown", function(e) {
         if ( ionic.tap.ignoreScrollStart(e) || e.target.tagName === 'SELECT' ) {
           return;
         }
-        self.doTouchStart([{
-          pageX: e.pageX,
-          pageY: e.pageY
-        }], e.timeStamp);
+        self.doTouchStart(getEventTouches(e), e.timeStamp);
 
         e.preventDefault();
         mousedown = true;
@@ -785,10 +809,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
           return;
         }
 
-        self.doTouchMove([{
-          pageX: e.pageX,
-          pageY: e.pageY
-        }], e.timeStamp);
+        self.doTouchMove(getEventTouches(e), e.timeStamp);
 
         mousedown = true;
       }, false);
@@ -1476,16 +1497,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
   doTouchStart: function(touches, timeStamp) {
     this.hintResize();
 
-    // Array-like check is enough here
-    if (touches.length == null) {
-      throw new Error("Invalid touch list: " + touches);
-    }
-
     if (timeStamp instanceof Date) {
       timeStamp = timeStamp.valueOf();
     }
     if (typeof timeStamp !== "number") {
-      throw new Error("Invalid timestamp value: " + timeStamp);
+      timeStamp = Date.now();
     }
 
     var self = this;
@@ -1561,17 +1577,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * Touch move handler for scrolling support
    */
   doTouchMove: function(touches, timeStamp, scale) {
-
-    // Array-like check is enough here
-    if (touches.length == null) {
-      throw new Error("Invalid touch list: " + touches);
-    }
-
     if (timeStamp instanceof Date) {
       timeStamp = timeStamp.valueOf();
     }
     if (typeof timeStamp !== "number") {
-      throw new Error("Invalid timestamp value: " + timeStamp);
+      timeStamp = Date.now();
     }
 
     var self = this;
@@ -1580,7 +1590,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
     if (!self.__isTracking) {
       return;
     }
-
 
     var currentTouchLeft, currentTouchTop;
 
@@ -1750,12 +1759,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * Touch end handler for scrolling support
    */
   doTouchEnd: function(timeStamp) {
-
     if (timeStamp instanceof Date) {
       timeStamp = timeStamp.valueOf();
     }
     if (typeof timeStamp !== "number") {
-      throw new Error("Invalid timestamp value: " + timeStamp);
+      timeStamp = Date.now();
     }
 
     var self = this;
