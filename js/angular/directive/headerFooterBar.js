@@ -98,7 +98,8 @@ function tapScrollToTopDirective() {
             bounds.left, bounds.top - 20,
             bounds.left + bounds.width, bounds.top + bounds.height
           )) {
-            $ionicScrollDelegate.scrollTop(true);
+            var scrollCtrl = $element.controller('$ionicScroll');
+            scrollCtrl && scrollCtrl.scrollTop(true);
           }
         }
       }
