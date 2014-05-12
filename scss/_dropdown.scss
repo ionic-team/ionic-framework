@@ -1,0 +1,100 @@
+/**
+ * Dropdowns
+ * --------------------------------------------------
+ * Dropdowns are independent windows that scale in from off-screen.
+ */
+
+.dropdown-backdrop {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	z-index: $z-index-dropdown;
+}
+
+.dropdown {
+	color: #fff;
+	position: absolute;
+	top: 0px;
+	z-index: $z-index-dropdown;
+	padding: 10px;
+  box-shadow: 0px 5px 4px rgba(0,0,0,0.15);
+
+	@include dropdown-style($dropdown-default-bg, $dropdown-default-text, $dropdown-default-border);
+
+	&.dropdown-light {
+		@include dropdown-style($dropdown-light-bg, $dropdown-light-text, $dropdown-light-border);
+	}
+
+	&.dropdown-stable {
+		@include dropdown-style($dropdown-stable-bg, $dropdown-stable-text, $dropdown-stable-border);
+	}
+
+	&.dropdown-positive {
+		@include dropdown-style($dropdown-positive-bg, $dropdown-positive-text, $dropdown-positive-border);
+	}
+
+	&.dropdown-calm {
+		@include dropdown-style($dropdown-calm-bg, $dropdown-calm-text, $dropdown-calm-border);
+	}
+
+	&.dropdown-balanced {
+		@include dropdown-style($dropdown-balanced-bg, $dropdown-balanced-text, $dropdown-balanced-border);
+	}
+
+	&.dropdown-assertive {
+		@include dropdown-style($dropdown-assertive-bg, $dropdown-assertive-text, $dropdown-assertive-border);
+	}
+
+	&.dropdown-energized {
+		@include dropdown-style($dropdown-energized-bg, $dropdown-energized-text, $dropdown-energized-border);
+	}
+
+	&.dropdown-royal {
+		@include dropdown-style($dropdown-royal-bg, $dropdown-royal-text, $dropdown-royal-border);
+	}
+
+	&.dropdown-dark {
+		@include dropdown-style($dropdown-dark-bg, $dropdown-dark-text, $dropdown-dark-border);
+	}
+
+	> .arrow {
+		position: absolute;
+		top: -$dropdown-arrow-size + 1;
+		width: $dropdown-arrow-size * 2;
+		height: 0px;
+		margin: 0px auto;
+		&:before {
+			position: absolute;
+			content: " ";
+			top: -1px;
+			border-left: $dropdown-arrow-size solid transparent;
+			border-right: $dropdown-arrow-size solid transparent;
+		}
+		&:after {
+			position: absolute;
+			content: " ";
+			border-left: $dropdown-arrow-size solid transparent;
+			border-right: $dropdown-arrow-size solid transparent;
+		}
+	}
+
+	&.dropdown-padded {
+		border-radius: 4px;
+	}
+}
+
+@media (min-width: $dropdown-inset-mode-break-point) {
+	// inset mode is when the dropdown doesn't fill the entire
+	// display but instead is centered within a large display
+}
+
+.dropdown-open {
+	pointer-events: none;
+
+	.dropdown,
+	.dropdown-backdrop {
+		pointer-events: auto;
+	}
+}

@@ -1,0 +1,19 @@
+body, html {
+	width: 100%;
+	height: 100%
+}
+
+body {
+	background: url("img/bg.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.ionic-tweets .item {
+	width: 300px;
+	color: #222;
+}
+
+.ionic-tweets .item-divider {
+	color: #576A90;
+}
