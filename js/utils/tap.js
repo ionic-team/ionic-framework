@@ -15,6 +15,15 @@
  * [fastclick](https://github.com/ftlabs/fastclick) and Angular's
  * [ngTouch](https://docs.angularjs.org/api/ngTouch) should not be included, to avoid conflicts.
  *
+ * Some browsers already remove the delay with certain settings, such as the CSS property
+ * `touch-events: none` or with specific meta tag viewport values. However, each of these
+ * browsers still handle clicks differently, such as when to fire off or cancel the event
+ * (like scrolling when the target is a button, or holding a button down).
+ * For browsers that already remove the 300ms delay, consider Ionic's tap system as a way to
+ * normalize how clicks are handled across the various devices so there's an expected response
+ * no matter what the device, platform or version. Additionally, Ionic will prevent
+ * ghostclicks which even browsers that remove the delay still experience.
+ *
  * In some cases, third-party libraries may also be working with touch events which can interfere
  * with the tap system. For example, mapping libraries like Google or Leaflet Maps often implement
  * a touch detection system which conflicts with Ionic's tap system.
@@ -67,6 +76,7 @@ var tapPointerMoved;
 var tapPointerStart;
 var tapTouchFocusedInput;
 var tapLastTouchTarget;
+var tapTouchMoveListener = 'touchmove';
 
 var TAP_RELEASE_TOLERANCE = 6; // how much the coordinates can be off between start/end, but still a click
 
@@ -82,6 +92,16 @@ var tapEventListeners = {
   'touchcancel': tapTouchCancel,
   'touchmove': tapTouchMove,
 
+  'pointerdown': tapTouchStart,
+  'pointerup': tapTouchEnd,
+  'pointercancel': tapTouchCancel,
+  'pointermove': tapTouchMove,
+
+  'MSPointerDown': tapTouchStart,
+  'MSPointerUp': tapTouchEnd,
+  'MSPointerCancel': tapTouchCancel,
+  'MSPointerMove': tapTouchMove,
+
   'focusin': tapFocusIn,
   'focusout': tapFocusOut
 };
@@ -94,9 +114,25 @@ ionic.tap = {
     tapEventListener('click', true, true);
     tapEventListener('mouseup');
     tapEventListener('mousedown');
-    tapEventListener('touchstart');
-    tapEventListener('touchend');
-    tapEventListener('touchcancel');
+
+    if( window.navigator.pointerEnabled ) {
+      tapEventListener('pointerdown');
+      tapEventListener('pointerup');
+      tapEventListener('pointcancel');
+      tapTouchMoveListener = 'pointermove';
+
+    } else if (window.navigator.msPointerEnabled) {
+      tapEventListener('MSPointerDown');
+      tapEventListener('MSPointerUp');
+      tapEventListener('MSPointerCancel');
+      tapTouchMoveListener = 'MSPointerMove';
+
+    } else {
+      tapEventListener('touchstart');
+      tapEventListener('touchend');
+      tapEventListener('touchcancel');
+    }
+
     tapEventListener('focusin');
     tapEventListener('focusout');
 
@@ -314,7 +350,7 @@ function tapTouchStart(e) {
   tapEnableTouchEvents();
   tapPointerStart = getPointerCoordinates(e);
 
-  tapEventListener('touchmove');
+  tapEventListener(tapTouchMoveListener);
   ionic.activator.start(e);
 
   if( ionic.Platform.isIOS() && ionic.tap.isLabelWithTextInput(e.target) ) {
@@ -350,14 +386,14 @@ function tapTouchEnd(e) {
 function tapTouchMove(e) {
   if( tapHasPointerMoved(e) ) {
     tapPointerMoved = true;
-    tapEventListener('touchmove', false);
+    tapEventListener(tapTouchMoveListener, false);
     ionic.activator.end();
     return false;
   }
 }
 
 function tapTouchCancel(e) {
-  tapEventListener('touchmove', false);
+  tapEventListener(tapTouchMoveListener, false);
   ionic.activator.end();
   tapPointerMoved = false;
 }
