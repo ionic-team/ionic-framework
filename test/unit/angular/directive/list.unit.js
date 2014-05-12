@@ -245,6 +245,12 @@ describe('ionItem directive', function() {
     expect(el.hasClass('item')).toBe(true);
     expect(el.hasClass('item-complex')).toBe(false);
   });
+  it('should be complex if ui-sref', function() {
+    var el = setup('ui-sref="something"');
+    expect(el.hasClass('item item-complex')).toBe(true);
+    expect(el.children()[0].tagName).toBe('A');
+    expect(el.children().hasClass('item-content')).toBe(true);
+  });
   ['href', 'ng-href'].forEach(function(attr) {
     it('should be complex anchor if '+attr+' is defined', function() {
       var el = setup(attr+'="something/{{foo}}"');
