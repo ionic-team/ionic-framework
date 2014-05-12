@@ -74,6 +74,7 @@
   content: ' ';
   cursor: pointer;
   pointer-events: none;
+  -webkit-background-clip: padding-box;
 }
 
 /* the handle (circle) thats inside the toggle's track area */
