@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title></title>
+
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css" />
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <script src="dynamics.js"></script>
+    <style>
+      .box {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background-color: black;
+      }
+      #draggable {
+        top: 200px;
+      }
+      #opts {
+        position: absolute;
+        top: 400px;
+        left: 10px;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <div ng-controller="MyCtrl">
+      <div class="box"></div>
+      <div class="box" id="draggable"></div>
+      <div id="opts">
+        <label>
+          Duration:
+          <input type="number" ng-model="anim.duration">
+        </label>
+        <label>
+          Repeat
+          <input type="number" ng-model="anim.repeat">
+        </label>
+        <br>
+        <label>
+          Delay
+          <input type="number" ng-model="anim.delay">
+        </label>
+        <br>
+        <label>
+          Auto reverse
+          <input type="checkbox" ng-model="anim.autoReverse">
+        </label>
+        <br>
+        <label>
+          Reverse
+          <input type="checkbox" ng-model="anim.reverse">
+        </label>
+        <br>
+        <button ng-click="do('{{v}}')" ng-repeat="v in fns">{{v}}</button>
+        <button ng-click="do('spring')">Spring</button>
+        <button ng-click="do('gravity')">Gravity</button>
+        <p>
+        <input type="text" ng-model="anim.bx1">
+        <input type="text" ng-model="anim.by1">
+        <input type="text" ng-model="anim.bx2">
+        <input type="text" ng-model="anim.by2">
+        <button ng-click="do('cubic-bezier')">cubic-bezier</button>
+        </p>
+        <p>
+          <button ng-click="togglePause()">Toggle Pause/Play</button>
+          <button ng-click="stop()">Stop</button>
+          <button ng-click="restart()">Restart</button>
+        </p>
+      </div>
+      {{animationResult}}
+    </div>
+
+    <script>
+      angular.module('myApp', ['ionic'])
+      .config(['$ionicAnimationProvider', function($ionicAnimationProvider) {
+        var animOne = $ionicAnimationProvider.create({
+          name: 'fadeIn',
+          duration: 2000,
+          delay: 500,
+          autoReverse: false,
+          repeat: 0,
+          curve: 'ease',
+
+          onComplete: function(didComplete, droppedFrames) {
+            console.log('Done. Dropped ' + droppedFrames + '. Did complete? ' + didComplete);
+          },
+          
+          step: function(v) {
+            console.log('Anim stepping', v);
+            //el[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (v * 400) + 'px, 0,0)';
+          },
+          complete: function() {
+            console.log('Animation complete!');
+          }
+
+        });
+        animOne.start();
+        var ot = animOne.clone();
+        ot.step = function(v) {
+          console.log('A2', v);
+        };
+        ot.start();
+      }])
+      .controller('MyCtrl', function($scope, $ionicAnimation, $ionicGesture) {
+        var gestureEl = angular.element(document.getElementById('draggable'));
+        var dragAnim = $ionicAnimation({
+          curve: 'linear',
+          step: function(v) {
+            console.log(v);
+            gestureEl[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (v * 400) + 'px, 0,0)';
+          }
+        });
+        $ionicGesture.on('drag', function(e) {
+          var x = e.gesture.touches[0].pageX;
+          dragAnim.setPercent(Math.max(0, Math.min(x, 400) / 400));
+        }, gestureEl);
+
+
+        var currentAnimation;
+        $scope.fns = [
+          'linear',
+          'ease',
+          'ease-in',
+          'ease-out',
+          'ease-in-out'
+        ];
+        $scope.anim = {
+          duration: 2000,
+          delay: 0,
+          repeat: 0,
+          reverse: false,
+          autoReverse: false,
+          bx1: 0.17,
+          by1: 0.67,
+          bx2: 0.83,
+          by2: 0.67
+        }
+        var el = angular.element(document.querySelector('.box'));
+        $scope.do = function(fn) {
+          console.log(fn);
+          if(fn == 'cubic-bezier') {
+            fn = 'cubic-bezier(' +
+                $scope.anim.bx1 + ',' +
+                $scope.anim.by1 + ',' +
+                $scope.anim.bx2 + ',' +
+                $scope.anim.by2 + ')';
+          }
+          currentAnimation = angular.extend({
+            name: 'fadeIn',
+            duration: 2000,
+            delay: 500,
+            autoReverse: false,
+            repeat: 0,
+            curve: fn,
+          
+
+            onComplete: function(didComplete, droppedFrames) {
+              console.log('Done. Dropped ' + droppedFrames + '. Did complete? ' + didComplete);
+            },
+            
+            step: function(v) {
+              el[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (v * 400) + 'px, 0,0)';
+            },
+            complete: function() {
+              console.log('Animation complete!');
+            }
+          }, $scope.anim);
+
+          if(fn == 'spring') {
+            currentAnimation = angular.extend(currentAnimation, {
+              dynamicsType: ionic.Animation.Dynamics.Spring,
+              frequency: 15,
+              friction: 200,
+              initialForce: false,
+            });
+          } else if (fn == 'gravity') {
+
+            currentAnimation = angular.extend(currentAnimation, {
+              dynamicsType: ionic.Animation.Dynamics.Gravity,
+              frequency: 15,
+              friction: 200,
+              initialForce: false,
+            });
+          }
+
+          currentAnimation = $ionicAnimation(currentAnimation);
+
+          $ionicGesture.on('drag', function(e) {
+            var x = e.gesture.touches[0].pageX;
+            currentAnimation.setPercent(Math.max(0, Math.min(x, 400) / 400));
+          }, angular.element(el));
+          $ionicGesture.on('release', function(e) {
+            currentAnimation.play();
+          }, angular.element(el));
+
+          currentAnimation.start();
+        }
+        $scope.togglePause = function() {
+          if(currentAnimation.isPaused) {
+            currentAnimation.play();
+          } else {
+            currentAnimation.pause();
+          }
+        };
+        $scope.stop = function() {
+          currentAnimation.stop();
+        };
+        $scope.restart = function() {
+          currentAnimation.restart();
+        };
+      });
+    </script>
+  </body>
+</html>
