@@ -21,7 +21,6 @@
   };
 
   ionic.Animation.Animation.prototype = {
-    el: null,
     curve: 'linear',
     curveFn: ionic.Animation.TimingFn['linear'],
     duration: 500,

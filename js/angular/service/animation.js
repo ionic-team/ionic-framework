@@ -52,6 +52,10 @@ IonicModule
     useSlowAnimations = isSlow;
   };
 
+  this.create = function(animation) {
+    return ionic.Animation.create(animation);
+  };
+
   this.$get = [function() {
     return function(opts) {
       opts.useSlowAnimations = useSlowAnimations;

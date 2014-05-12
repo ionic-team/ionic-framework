@@ -79,7 +79,28 @@
     <script>
       angular.module('myApp', ['ionic'])
       .config(['$ionicAnimationProvider', function($ionicAnimationProvider) {
-        //$ionicAnimationProvider.setSlowAnimations(true);
+        var animOne = $ionicAnimationProvider.create({
+          name: 'fadeIn',
+          duration: 2000,
+          delay: 500,
+          autoReverse: false,
+          repeat: 0,
+          curve: 'ease',
+
+          onComplete: function(didComplete, droppedFrames) {
+            console.log('Done. Dropped ' + droppedFrames + '. Did complete? ' + didComplete);
+          },
+          
+          step: function(v) {
+            console.log('Anim stepping', v);
+            //el[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (v * 400) + 'px, 0,0)';
+          },
+          complete: function() {
+            console.log('Animation complete!');
+          }
+
+        });
+        animOne.start();
       }])
       .controller('MyCtrl', function($scope, $ionicAnimation, $ionicGesture) {
         var gestureEl = angular.element(document.getElementById('draggable'));
@@ -126,7 +147,6 @@
                 $scope.anim.by2 + ')';
           }
           currentAnimation = angular.extend({
-            el: el,
             name: 'fadeIn',
             duration: 2000,
             delay: 500,
