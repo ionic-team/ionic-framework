@@ -58,6 +58,8 @@
         </label>
         <br>
         <button ng-click="do('{{v}}')" ng-repeat="v in fns">{{v}}</button>
+        <button ng-click="do('spring')">Spring</button>
+        <button ng-click="do('gravity')">Gravity</button>
         <p>
         <input type="text" ng-model="anim.bx1">
         <input type="text" ng-model="anim.by1">
@@ -71,6 +73,7 @@
           <button ng-click="restart()">Restart</button>
         </p>
       </div>
+      {{animationResult}}
     </div>
 
     <script>
@@ -122,7 +125,7 @@
                 $scope.anim.bx2 + ',' +
                 $scope.anim.by2 + ')';
           }
-          currentAnimation = $ionicAnimation(angular.extend({
+          currentAnimation = angular.extend({
             el: el,
             name: 'fadeIn',
             duration: 2000,
@@ -131,10 +134,10 @@
             repeat: 0,
             curve: fn,
           
-            dynamicsType: ionic.Animation.Dynamics.Gravity,
-            frequency: 15,
-            friction: 200,
-            initialForce: true,
+
+            onComplete: function(didComplete, droppedFrames) {
+              console.log('Done. Dropped ' + droppedFrames + '. Did complete? ' + didComplete);
+            },
             
             step: function(v) {
               el[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (v * 400) + 'px, 0,0)';
@@ -142,7 +145,26 @@
             complete: function() {
               console.log('Animation complete!');
             }
-          }, $scope.anim));
+          }, $scope.anim);
+
+          if(fn == 'spring') {
+            currentAnimation = angular.extend(currentAnimation, {
+              dynamicsType: ionic.Animation.Dynamics.Spring,
+              frequency: 15,
+              friction: 200,
+              initialForce: false,
+            });
+          } else if (fn == 'gravity') {
+
+            currentAnimation = angular.extend(currentAnimation, {
+              dynamicsType: ionic.Animation.Dynamics.Gravity,
+              frequency: 15,
+              friction: 200,
+              initialForce: false,
+            });
+          }
+
+          currentAnimation = $ionicAnimation(currentAnimation);
 
           $ionicGesture.on('drag', function(e) {
             var x = e.gesture.touches[0].pageX;

@@ -30,6 +30,8 @@
     reverse: false,
     autoReverse: false,
 
+    onComplete: function(didComplete, droppedFrames) {},
+
     // Overridable
     step: function(percent) {},
 
@@ -104,6 +106,7 @@
         }
       }, function(droppedFrames, finishedAnimation) {
         ionic.Animation.animationStopped(self);
+        self.onComplete && self.onComplete(finishedAnimation, droppedFrames);
         console.log('Finished anim:', droppedFrames, finishedAnimation);
       }, animState);
     },
