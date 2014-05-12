@@ -6,7 +6,8 @@
       opts = ionic.extend({
         focusFirstInput: false,
         unfocusOnHide: true,
-        focusFirstDelay: 600
+        focusFirstDelay: 600,
+        backdropClickToClose: true,
       }, opts);
 
       ionic.extend(this, opts);

@@ -38,7 +38,7 @@
  *   $scope.$on('$destroy', function() {
  *     $scope.modal.remove();
  *   });
- *   // Execute action on hide modal 
+ *   // Execute action on hide modal
  *   $scope.$on('modal.hide', function() {
  *     // Execute action
  *   });
@@ -85,6 +85,8 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
      *    Default: 'slide-in-up'
      *  - `{boolean=}` `focusFirstInput` Whether to autofocus the first input of
      *    the modal when shown.  Default: false.
+     *  - `{boolean=} `backdropClickToClose` Whether to close the modal on clicking the backdrop.
+     *    Default: true.
      */
     initialize: function(opts) {
       ionic.views.Modal.prototype.initialize.call(this, opts);
@@ -132,7 +134,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
       return $timeout(function() {
         //After animating in, allow hide on backdrop click
         self.$el.on('click', function(e) {
-          if (e.target === self.el) {
+          if (self.backdropClickToClose && e.target === self.el) {
             self.hide();
           }
         });

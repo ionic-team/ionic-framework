@@ -111,7 +111,17 @@ describe('Ionic Modal', function() {
     expect(instance.hide).toHaveBeenCalled();
   });
 
-  it('should close modal on backdrop click if target is not backdrop', function() {
+  it('should not close modal on backdrop click if options.backdropClickToClose', function() {
+    var template = '<div class="modal"></div>';
+    var instance = modal.fromTemplate(template, { backdropClickToClose: false });
+    spyOn(instance, 'hide');
+    instance.show();
+    timeout.flush();
+    instance.$el.triggerHandler('click');
+    expect(instance.hide).not.toHaveBeenCalled();
+  });
+
+  it('should not close modal on backdrop click if target is not backdrop', function() {
     var template = '<div class="modal"></div>';
     var instance = modal.fromTemplate(template);
     spyOn(instance, 'hide');
