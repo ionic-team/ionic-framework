@@ -643,7 +643,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       if( e.detail.isElementUnderKeyboard ) {
         var delay;
         // Wait on android for scroll view to resize
-        if ( !ionic.Platform.isFullScreen && e.detail.hasPlugin ) {
+        if ( ionic.Platform.isAndroid() && !ionic.Platform.isFullScreen ) {
           delay = 350;
         }
         else {
