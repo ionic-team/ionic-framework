@@ -78,29 +78,28 @@
   }
 
   ionic.Animation.Dynamics.Gravity = function(opts) {
-    var defaults = {
+    this.options = {
       bounce: 40,
       gravity: 1000,
       initialForce: false
     };
+    ionic.extend(this.options, opts);
     this.curves = [];
-    ionic.extend(this, defaults);
-
     this.init();
   };
 
   ionic.Animation.Dynamics.Gravity.prototype = {
     length: function() {
       var L, b, bounce, curve, gravity;
-      bounce = Math.min(this.bounce / 100, 80);
-      gravity = this.gravity / 100;
+      bounce = Math.min(this.options.bounce / 100, 80);
+      gravity = this.options.gravity / 100;
       b = Math.sqrt(2 / gravity);
       curve = {
         a: -b,
         b: b,
         H: 1
       };
-      if (this.initialForce) {
+      if (this.options.initialForce) {
         curve.a = 0;
         curve.b = curve.b * 2;
       }
@@ -118,8 +117,8 @@
       var L, b, bounce, curve, gravity, _results;
 
       L = this.length();
-      gravity = (this.gravity / 100) * L * L;
-      bounce = Math.min(this.bounce / 100, 80);
+      gravity = (this.options.gravity / 100) * L * L;
+      bounce = Math.min(this.options.bounce / 100, 80);
       b = Math.sqrt(2 / gravity);
       this.curves = [];
       curve = {
@@ -127,7 +126,7 @@
         b: b,
         H: 1
       };
-      if (this.initialForce) {
+      if (this.options.initialForce) {
         curve.a = 0;
         curve.b = curve.b * 2;
       }
@@ -157,8 +156,8 @@
     },
     at: function(t) {
       var bounce, curve, gravity, i, v;
-      bounce = this.bounce / 100;
-      gravity = this.gravity;
+      bounce = this.options.bounce / 100;
+      gravity = this.options.gravity;
       i = 0;
       curve = this.curves[i];
       while (!(t >= curve.a && t <= curve.b)) {
@@ -169,7 +168,7 @@
         }
       }
       if (!curve) {
-        v = this.initialForce ? 0 : 1;
+        v = this.options.initialForce ? 0 : 1;
       } else {
         v = this.curve(curve.a, curve.b, curve.H, t);
       }

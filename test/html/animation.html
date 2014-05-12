@@ -104,7 +104,7 @@
         $scope.anim = {
           duration: 2000,
           delay: 0,
-          repeat: -1,
+          repeat: 0,
           reverse: false,
           autoReverse: false,
           bx1: 0.17,
@@ -128,12 +128,13 @@
             duration: 2000,
             delay: 500,
             autoReverse: false,
-            repeat: -1,
+            repeat: 0,
             curve: fn,
           
             dynamicsType: ionic.Animation.Dynamics.Gravity,
             frequency: 15,
             friction: 200,
+            initialForce: true,
             
             step: function(v) {
               el[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (v * 400) + 'px, 0,0)';
