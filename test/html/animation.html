@@ -101,6 +101,11 @@
 
         });
         animOne.start();
+        var ot = animOne.clone();
+        ot.step = function(v) {
+          console.log('A2', v);
+        };
+        ot.start();
       }])
       .controller('MyCtrl', function($scope, $ionicAnimation, $ionicGesture) {
         var gestureEl = angular.element(document.getElementById('draggable'));

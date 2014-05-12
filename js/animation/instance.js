@@ -21,6 +21,19 @@
   };
 
   ionic.Animation.Animation.prototype = {
+    clone: function() {
+      return new ionic.Animation.Animation({
+        curve: this.curve,
+        curveFn: this.curveFn,
+        duration: this.duration,
+        delay: this.delay,
+        repeat: this.repeat,
+        reverse: this.reverse,
+        autoReverse: this.autoReverse,
+        onComplete: this.onComplete,
+        step: this.step
+      });
+    },
     curve: 'linear',
     curveFn: ionic.Animation.TimingFn['linear'],
     duration: 500,
