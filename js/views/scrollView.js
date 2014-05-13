@@ -651,13 +651,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
           // android y u resize so slow
           if ( ionic.Platform.version() < 4.4) {
             delay = 500;
-          }
-          else {
+          } else {
             // probably overkill for chrome
             delay = 350;
           }
-        }
-        else {
+        } else {
           delay = 80;
         }
 
