@@ -21,30 +21,30 @@ IonicModule
     restrict: 'E',
     replace: true,
     require: '?ngModel',
-    scope: {
-      ngModel: '=?',
-      ngValue: '=?',
-      ngChecked: '=?',
-      ngDisabled: '=?',
-      ngChange: '&'
-    },
     transclude: true,
-
     template: '<label class="item item-checkbox">' +
                 '<div class="checkbox checkbox-input-hidden disable-pointer-events">' +
-                  '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
+                  '<input type="checkbox">' +
                   '<i class="checkbox-icon"></i>' +
                 '</div>' +
                 '<div class="item-content disable-pointer-events" ng-transclude></div>' +
               '</label>',
-
     compile: function(element, attr) {
       var input = element.find('input');
-      if(attr.name) input.attr('name', attr.name);
-      if(attr.ngChecked) input.attr('ng-checked', attr.ngChecked);
-      if(attr.ngDisabled) input.attr('ng-disabled', attr.ngDisabled);
-      if(attr.ngTrueValue) input.attr('ng-true-value', attr.ngTrueValue);
-      if(attr.ngFalseValue) input.attr('ng-false-value', attr.ngFalseValue);
+      forEach({
+        'name': attr.name,
+        'ng-value': attr.ngValue,
+        'ng-model': attr.ngModel,
+        'ng-checked': attr.ngChecked,
+        'ng-disabled': attr.ngDisabled,
+        'ng-true-value': attr.ngTrueValue,
+        'ng-false-value': attr.ngFalseValue,
+        'ng-change': attr.ngChange
+      }, function(value, name) {
+        if (isDefined(value)) {
+          input.attr(name, value);
+        }
+      });
     }
 
   };

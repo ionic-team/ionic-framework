@@ -17,6 +17,12 @@
       <div ng-controller="TestCtrl">
 
         <div class="list">
+          <ion-checkbox ng-model="checkModel" ng-change="myChange = checkModel">
+            Main Check
+          </ion-checkbox>
+          <ion-checkbox ng-checked="myChange">
+            Follows ng-change of Main Check
+          </ion-checkbox>
           <ion-toggle ng-model="myModel" ng-disabled="isDisabled">myModel ({{!!myModel}})</ion-toggle>
           <ion-toggle ng-model="catModel" ng-disabled="isDisabled" ng-true-value="cats" ng-false-value="dogs">Cats or dogs? ({{catModel}})</ion-toggle>
           <ion-toggle ng-model="isDisabled">Disable myModel ({{!!isDisabled}})</ion-toggle>
