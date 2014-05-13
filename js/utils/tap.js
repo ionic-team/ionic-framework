@@ -541,5 +541,8 @@ function tapTargetElement(ele) {
 }
 
 ionic.DomUtil.ready(function(){
-  ionic.tap.register(document);
+  //do nothing for e2e tests
+  if (!angular.scenario) {
+    ionic.tap.register(document);
+  }
 });
