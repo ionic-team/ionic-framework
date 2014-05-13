@@ -107,6 +107,7 @@
     margin: 0 10px;
 
     min-width: 30px;
+    height: $bar-height - 1;
 
     text-align: center;
 
@@ -135,8 +136,8 @@
     padding: 0 $button-bar-button-padding;
     min-width: initial;
     min-height: $button-bar-button-height - 1;
-    font-size: $button-bar-button-font-size;
     font-weight: 400;
+    font-size: $button-bar-button-font-size;
     line-height: $button-bar-button-height;
 
     &.button-icon:before,
@@ -162,10 +163,10 @@
       }
     }
     &.button-clear {
-      font-size: $bar-title-font-size;
-      font-weight: 300;
       padding-right: 2px;
       padding-left: 2px;
+      font-weight: 300;
+      font-size: $bar-title-font-size;
 
       .icon:before,
       &.icon:before,
@@ -192,7 +193,7 @@
   .button + .button-bar {
     margin-left: 5px;
   }
-  
+
   // Android 4.4 messes with the display property
   .buttons,
   .buttons.left-buttons,
