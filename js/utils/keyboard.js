@@ -144,11 +144,6 @@ function keyboardShow(element, elementTop, elementBottom, viewportHeight, keyboa
 
   console.log('keyboardShow', keyboardHeight, details.contentHeight);
 
-  // distance from top of input to the top of the keyboard
-  details.keyboardTopOffset = details.elementTop - details.contentHeight;
-
-  console.log('keyboardTopOffset', details.elementTop, details.contentHeight, details.keyboardTopOffset);
-
   // figure out if the element is under the keyboard
   details.isElementUnderKeyboard = (details.elementBottom > details.contentHeight);
 

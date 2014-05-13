@@ -622,15 +622,19 @@ ionic.views.Scroll = ionic.views.View.inherit({
     //Broadcasted when keyboard is shown on some platforms.
     //See js/utils/keyboard.js
     container.addEventListener('scrollChildIntoView', function(e) {
+
+      //distance from bottom of scrollview to top of viewport
+      var scrollBottomOffsetToTop;
+
       if( !self.isScrolledIntoView ) {
         // shrink scrollview so we can actually scroll if the input is hidden
         // if it isn't shrink so we can scroll to inputs under the keyboard
         if (ionic.Platform.isIOS() || ionic.Platform.isFullScreen){
           // if there are things below the scroll view account for them and
           // subtract them from the keyboard height when resizing
-          var offsetToTop = container.getBoundingClientRect().bottom;
-          var offsetToBottom = e.detail.viewportHeight - offsetToTop;
-          var keyboardOffset = Math.max(0, e.detail.keyboardHeight - offsetToBottom);
+          scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
+          var scrollBottomOffsetToBottom = e.detail.viewportHeight - scrollBottomOffsetToTop;
+          var keyboardOffset = Math.max(0, e.detail.keyboardHeight - scrollBottomOffsetToBottom);
           container.style.height = (container.clientHeight - keyboardOffset) + "px";
           container.style.overflow = "visible";
           //update scroll view
@@ -642,22 +646,33 @@ ionic.views.Scroll = ionic.views.View.inherit({
       //If the element is positioned under the keyboard...
       if( e.detail.isElementUnderKeyboard ) {
         var delay;
-        // Wait on android for scroll view to resize
+        // Wait on android for web view to resize
         if ( ionic.Platform.isAndroid() && !ionic.Platform.isFullScreen ) {
-          delay = 350;
+          // android y u resize so slow
+          if ( ionic.Platform.version() < 4.4) {
+            delay = 500;
+          }
+          else {
+            // probably overkill for chrome
+            delay = 350;
+          }
         }
         else {
           delay = 80;
         }
 
         //Put element in middle of visible screen
-        //Wait for resize() to reset scroll position
+        //Wait for android to update view height and resize() to reset scroll position
         ionic.scroll.isScrolling = true;
         setTimeout(function(){
           //middle of the scrollview, where we want to scroll to
-          var scrollViewMidpointOffset = container.clientHeight * 0.5;
-          var scrollTop = e.detail.keyboardTopOffset + scrollViewMidpointOffset;
-          console.log('scrollChildIntoView', scrollTop);
+          var scrollMidpointOffset = container.clientHeight * 0.5;
+
+          scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
+          //distance from top of focused element to the bottom of the scroll view
+          var elementTopOffsetToScrollBottom = e.detail.elementTop - scrollBottomOffsetToTop; 
+
+          var scrollTop = elementTopOffsetToScrollBottom  + scrollMidpointOffset;
           ionic.tap.cloneFocusedInput(container, self);
           self.scrollBy(0, scrollTop, true);
           self.onScroll();
