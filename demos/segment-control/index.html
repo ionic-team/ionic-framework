@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <title>Ionic Segmented Controls</title>
+
+  <!-- <link href="http://code.ionicframework.com/nightly/css/ionic.min.css" rel="stylesheet"> -->
+  <link href="/dist/css/ionic.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+
+  <!-- <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.min.js"></script> -->
+  <script src="/dist/js/ionic.bundle.js"></script>
+  <script src="script.js"></script>
+
+</head>
+
+<body ng-controller="MainCtrl">
+
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Segmented Controls</h1>
+  </ion-header-bar>
+
+  <ion-content>
+
+    <ion-list>
+      <div class="item">
+        <ion-segmented-control ng-model='value' options='possibleValues'></ion-segmented-control>
+      </div>
+      <div class="item">
+        <ion-segmented-control class="segmented-control-positive" ng-model='value' options='possibleValues'></ion-segmented-control>
+      </div>
+    </ion-list>
+
+  </ion-content>
+
+</body>
+</html>

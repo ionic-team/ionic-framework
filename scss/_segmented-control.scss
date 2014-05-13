@@ -1,0 +1,25 @@
+
+/**
+ * Segmented Control
+ * --------------------------------------------------
+ */
+
+.segmented-control {
+  @include segmented-control-style($segmented-control-selected-color);
+
+  position: relative;
+  display: inline-block;
+  margin: 0;
+
+  .segmented-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 8px 16px;
+  }
+
+  &.segmented-control-positive {
+    @include segmented-control-style($positive);
+  }
+}
