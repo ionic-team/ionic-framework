@@ -139,6 +139,17 @@
 }
 
 
+// Segmented control
+// --------------------------------------------------
+
+@mixin segmented-control-style($selected-color) {
+  border: 1px solid $selected-color;
+  & .segmented-button.selected {
+    background: $selected-color;
+    color: #fff;
+  }
+}
+
 // Toggle Mixins
 // --------------------------------------------------
 
