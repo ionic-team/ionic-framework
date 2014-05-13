@@ -44,7 +44,7 @@ describe('Ionic Element Activator', function() {
     expect(e.target.classList.contains('activated')).toEqual(false);
   });
 
-  it('Should activate .item with a child "a"', function() {
+  it('Should activate "a" in a .item', function() {
     var itemEle = document.createElement('div');
     itemEle.className = 'item';
 
@@ -54,11 +54,11 @@ describe('Ionic Element Activator', function() {
     var e = { target: aEle };
 
     ionic.activator.start(e);
-    expect(itemEle.classList.contains('activated')).toEqual(true);
-    expect(aEle.classList.contains('activated')).toEqual(false);
+    expect(itemEle.classList.contains('activated')).toEqual(false);
+    expect(aEle.classList.contains('activated')).toEqual(true);
   });
 
-  it('Should activate .item with a child "div.item-content a"', function() {
+  it('Should activate "div.item-content a" child of .item', function() {
     var itemEle = document.createElement('div');
     itemEle.className = 'item';
 
@@ -72,12 +72,12 @@ describe('Ionic Element Activator', function() {
     var e = { target: aEle };
 
     ionic.activator.start(e);
-    expect(itemEle.classList.contains('activated')).toEqual(true);
+    expect(itemEle.classList.contains('activated')).toEqual(false);
     expect(itemContentEle.classList.contains('activated')).toEqual(false);
-    expect(aEle.classList.contains('activated')).toEqual(false);
+    expect(aEle.classList.contains('activated')).toEqual(true);
   });
 
-  it('Should activate .item with a child "div.item-content div[ng-click]"', function() {
+  it('Should activate child "div.item-content div[ng-click]" of a .item', function() {
     var itemEle = document.createElement('div');
     itemEle.className = 'item';
 
@@ -92,9 +92,9 @@ describe('Ionic Element Activator', function() {
     var e = { target: divEle };
 
     ionic.activator.start(e);
-    expect(itemEle.classList.contains('activated')).toEqual(true);
+    expect(itemEle.classList.contains('activated')).toEqual(false);
     expect(itemContentEle.classList.contains('activated')).toEqual(false);
-    expect(divEle.classList.contains('activated')).toEqual(false);
+    expect(divEle.classList.contains('activated')).toEqual(true);
   });
 
 });
