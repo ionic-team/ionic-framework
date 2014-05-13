@@ -232,6 +232,10 @@ ionic.tap = {
       }
     }
     return false;
+  },
+
+  setTolerance: function(val) {
+    TAP_RELEASE_TOLERANCE = val;
   }
 
 };
