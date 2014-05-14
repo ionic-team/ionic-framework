@@ -142,6 +142,12 @@
         var maxRight = this.right.width;
         this.openAmount(this.right.width * p);
       }
+
+      if(percentage !== 0) {
+        document.body.classList.add('menu-open');
+      } else {
+        document.body.classList.remove('menu-open');
+      }
     },
 
     /**

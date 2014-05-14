@@ -24,6 +24,10 @@
   box-shadow: $menu-side-shadow;
 }
 
+.menu-open .scroll-content {
+  pointer-events: none;
+}
+
 .grade-b .menu-content,
 .grade-c .menu-content {
   @include box-sizing(content-box);
