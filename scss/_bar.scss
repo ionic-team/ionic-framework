@@ -283,6 +283,10 @@
   border-top-width: 1px;
   border-bottom-width: 0;
   background-position: top;
+
+  &.item-input-inset {
+    position: absolute;
+  }
 }
 
 // Don't render padding if the bar is just for tabs
