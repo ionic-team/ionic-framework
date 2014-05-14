@@ -24,7 +24,8 @@
   box-shadow: $menu-side-shadow;
 }
 
-.menu-open .scroll-content {
+.menu-open .menu-content .pane,
+.menu-open .menu-content .scroll-content {
   pointer-events: none;
 }
 
