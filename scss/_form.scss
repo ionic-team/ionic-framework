@@ -184,6 +184,17 @@ input[type="color"] {
   line-height: $font-size-base + 2;
 }
 
+.platform-ios,
+.platform-android {
+  input[type="datetime-local"],
+  input[type="date"],
+  input[type="month"],
+  input[type="time"],
+  input[type="week"] {
+    padding-top: 8px;
+  }
+}
+
 input,
 textarea {
   width: 100%;
