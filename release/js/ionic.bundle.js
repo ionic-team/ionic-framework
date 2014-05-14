@@ -9,7 +9,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.4
+ * Ionic, v1.0.0-beta.5
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -26,7 +26,7 @@
 window.ionic = {
   controllers: {},
   views: {},
-  version: '1.0.0-beta.4'
+  version: '1.0.0-beta.5'
 };
 
 (function(ionic) {
@@ -171,6 +171,15 @@ window.ionic = {
             };
   })();
 
+  var vendors = ['webkit', 'moz'];
+  for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+    window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+    window.cancelAnimationFrame =
+      window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+  }
+  window.cancelAnimationFrame =
+        window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+
   /**
   * @ngdoc utility
   * @name ionic.DomUtil
@@ -188,6 +197,9 @@ window.ionic = {
      */
     requestAnimationFrame: function(cb) {
       window._rAF(cb);
+    },
+
+    cancelAnimationFrame: function(cb) {
     },
 
     /**
@@ -337,8 +349,11 @@ window.ionic = {
     centerElementByMarginTwice: function(el) {
       ionic.requestAnimationFrame(function() {
         ionic.DomUtil.centerElementByMargin(el);
-        ionic.requestAnimationFrame(function() {
+        setTimeout(function() {
           ionic.DomUtil.centerElementByMargin(el);
+          setTimeout(function() {
+            ionic.DomUtil.centerElementByMargin(el);
+          });
         });
       });
     },
@@ -401,6 +416,7 @@ window.ionic = {
 
   //Shortcuts
   ionic.requestAnimationFrame = ionic.DomUtil.requestAnimationFrame;
+  ionic.cancelAnimationFrame = ionic.DomUtil.cancelAnimationFrame;
   ionic.animationFrameThrottle = ionic.DomUtil.animationFrameThrottle;
 })(window, document, ionic);
 
@@ -419,9 +435,10 @@ window.ionic = {
 (function(ionic) {
 
   // Custom event polyfill
-  ionic.CustomEvent = window.CustomEvent || (function() {
-    var CustomEvent;
-    CustomEvent = function(event, params) {
+  ionic.CustomEvent = (function() {
+    if( typeof window.CustomEvent === 'function' ) return CustomEvent;
+
+    var customEvent = function(event, params) {
       var evt;
       params = params || {
         bubbles: false,
@@ -441,8 +458,8 @@ window.ionic = {
       }
       return evt;
     };
-    CustomEvent.prototype = window.Event.prototype;
-    return CustomEvent;
+    customEvent.prototype = window.Event.prototype;
+    return customEvent;
   })();
 
 
@@ -552,8 +569,7 @@ window.ionic = {
       gesture.off(type, callback);
     },
 
-    handlePopState: function(event) {
-    },
+    handlePopState: function(event) {}
   };
 
 
@@ -1965,6 +1981,10 @@ window.ionic = {
 
 (function(window, document, ionic) {
 
+  var IOS = 'ios';
+  var ANDROID = 'android';
+  var WINDOWS_PHONE = 'windowsphone';
+
   /**
    * @ngdoc utility
    * @name ionic.Platform
@@ -2077,6 +2097,8 @@ window.ionic = {
 
           if(this.isAndroid() && version < 4.4) {
             this.grade = (version < 4 ? 'c' : 'b');
+          } else if(this.isWindowsPhone()) {
+            this.grade = 'b';
           }
         }
       }
@@ -2107,7 +2129,7 @@ window.ionic = {
      * @returns {boolean} Whether we are running on iOS.
      */
     isIOS: function() {
-      return this.is('ios');
+      return this.is(IOS);
     },
     /**
      * @ngdoc method
@@ -2115,7 +2137,15 @@ window.ionic = {
      * @returns {boolean} Whether we are running on Android.
      */
     isAndroid: function() {
-      return this.is('android');
+      return this.is(ANDROID);
+    },
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#isWindowsPhone
+     * @returns {boolean} Whether we are running on Windows Phone.
+     */
+    isWindowsPhone: function() {
+      return this.is(WINDOWS_PHONE);
     },
 
     /**
@@ -2136,11 +2166,13 @@ window.ionic = {
       if(typeof n != 'undefined' && n !== null && n.length) {
         platformName = n.toLowerCase();
       } else if(this.ua.indexOf('Android') > 0) {
-        platformName = 'android';
+        platformName = ANDROID;
       } else if(this.ua.indexOf('iPhone') > -1 || this.ua.indexOf('iPad') > -1 || this.ua.indexOf('iPod') > -1) {
-        platformName = 'ios';
+        platformName = IOS;
+      } else if(this.ua.indexOf('Windows Phone') > -1) {
+        platformName = WINDOWS_PHONE;
       } else {
-        platformName = window.navigator.platform && window.navigator.platform.toLowerCase().split(' ')[0] || '';
+        platformName = window.navigator.platform && navigator.platform.toLowerCase().split(' ')[0] || '';
       }
     },
 
@@ -2174,7 +2206,8 @@ window.ionic = {
       var pName = this.platform();
       var versionMatch = {
         'android': /Android (\d+).(\d+)?/,
-        'ios': /OS (\d+)_(\d+)?/
+        'ios': /OS (\d+)_(\d+)?/,
+        'windowsphone': /Windows Phone (\d+).(\d+)?/
       };
       if(versionMatch[pName]) {
         v = this.ua.match( versionMatch[pName] );
@@ -2315,7 +2348,7 @@ window.ionic = {
 
     // transform
     var i, keys = ['webkitTransform', 'transform', '-webkit-transform', 'webkit-transform',
-                '-moz-transform', 'moz-transform', 'MozTransform', 'mozTransform'];
+                   '-moz-transform', 'moz-transform', 'MozTransform', 'mozTransform', 'msTransform'];
 
     for(i = 0; i < keys.length; i++) {
       if(document.documentElement.style[keys[i]] !== undefined) {
@@ -2325,7 +2358,7 @@ window.ionic = {
     }
 
     // transition
-    keys = ['webkitTransition', 'mozTransition', 'transition'];
+    keys = ['webkitTransition', 'mozTransition', 'msTransition', 'transition'];
     for(i = 0; i < keys.length; i++) {
       if(document.documentElement.style[keys[i]] !== undefined) {
         ionic.CSS.TRANSITION = keys[i];
@@ -2398,6 +2431,15 @@ window.ionic = {
  * [fastclick](https://github.com/ftlabs/fastclick) and Angular's
  * [ngTouch](https://docs.angularjs.org/api/ngTouch) should not be included, to avoid conflicts.
  *
+ * Some browsers already remove the delay with certain settings, such as the CSS property
+ * `touch-events: none` or with specific meta tag viewport values. However, each of these
+ * browsers still handle clicks differently, such as when to fire off or cancel the event
+ * (like scrolling when the target is a button, or holding a button down).
+ * For browsers that already remove the 300ms delay, consider Ionic's tap system as a way to
+ * normalize how clicks are handled across the various devices so there's an expected response
+ * no matter what the device, platform or version. Additionally, Ionic will prevent
+ * ghostclicks which even browsers that remove the delay still experience.
+ *
  * In some cases, third-party libraries may also be working with touch events which can interfere
  * with the tap system. For example, mapping libraries like Google or Leaflet Maps often implement
  * a touch detection system which conflicts with Ionic's tap system.
@@ -2449,6 +2491,8 @@ var tapMouseResetTimer;
 var tapPointerMoved;
 var tapPointerStart;
 var tapTouchFocusedInput;
+var tapLastTouchTarget;
+var tapTouchMoveListener = 'touchmove';
 
 var TAP_RELEASE_TOLERANCE = 6; // how much the coordinates can be off between start/end, but still a click
 
@@ -2464,6 +2508,16 @@ var tapEventListeners = {
   'touchcancel': tapTouchCancel,
   'touchmove': tapTouchMove,
 
+  'pointerdown': tapTouchStart,
+  'pointerup': tapTouchEnd,
+  'pointercancel': tapTouchCancel,
+  'pointermove': tapTouchMove,
+
+  'MSPointerDown': tapTouchStart,
+  'MSPointerUp': tapTouchEnd,
+  'MSPointerCancel': tapTouchCancel,
+  'MSPointerMove': tapTouchMove,
+
   'focusin': tapFocusIn,
   'focusout': tapFocusOut
 };
@@ -2476,9 +2530,25 @@ ionic.tap = {
     tapEventListener('click', true, true);
     tapEventListener('mouseup');
     tapEventListener('mousedown');
-    tapEventListener('touchstart');
-    tapEventListener('touchend');
-    tapEventListener('touchcancel');
+
+    if( window.navigator.pointerEnabled ) {
+      tapEventListener('pointerdown');
+      tapEventListener('pointerup');
+      tapEventListener('pointcancel');
+      tapTouchMoveListener = 'pointermove';
+
+    } else if (window.navigator.msPointerEnabled) {
+      tapEventListener('MSPointerDown');
+      tapEventListener('MSPointerUp');
+      tapEventListener('MSPointerCancel');
+      tapTouchMoveListener = 'MSPointerMove';
+
+    } else {
+      tapEventListener('touchstart');
+      tapEventListener('touchend');
+      tapEventListener('touchcancel');
+    }
+
     tapEventListener('focusin');
     tapEventListener('focusout');
 
@@ -2578,6 +2648,10 @@ ionic.tap = {
       }
     }
     return false;
+  },
+
+  setTolerance: function(val) {
+    TAP_RELEASE_TOLERANCE = val;
   }
 
 };
@@ -2642,7 +2716,7 @@ function tapMouseDown(e) {
     void 0;
     e.stopPropagation();
 
-    if( !ionic.tap.isTextInput(e.target) ) {
+    if( !ionic.tap.isTextInput(e.target) || tapLastTouchTarget !== e.target ) {
       // If you preventDefault on a text input then you cannot move its text caret/cursor.
       // Allow through only the text input default. However, without preventDefault on an
       // input the 300ms delay can change focus on inputs after the keyboard shows up.
@@ -2667,7 +2741,7 @@ function tapMouseUp(e) {
     return false;
   }
 
-  if( tapIgnoreEvent(e) || e.target.tagName === 'SELECT' ) return false;
+  if( tapIgnoreEvent(e) || (/select|option/i).test(e.target.tagName) ) return;
 
   if( !tapHasPointerMoved(e) ) {
     tapClick(e);
@@ -2696,7 +2770,7 @@ function tapTouchStart(e) {
   tapEnableTouchEvents();
   tapPointerStart = getPointerCoordinates(e);
 
-  tapEventListener('touchmove');
+  tapEventListener(tapTouchMoveListener);
   ionic.activator.start(e);
 
   if( ionic.Platform.isIOS() && ionic.tap.isLabelWithTextInput(e.target) ) {
@@ -2719,22 +2793,27 @@ function tapTouchEnd(e) {
   tapEnableTouchEvents();
   if( !tapHasPointerMoved(e) ) {
     tapClick(e);
+
+    if( (/select|option/i).test(e.target.tagName) ) {
+      e.preventDefault();
+    }
   }
 
+  tapLastTouchTarget = e.target;
   tapTouchCancel();
 }
 
 function tapTouchMove(e) {
   if( tapHasPointerMoved(e) ) {
     tapPointerMoved = true;
-    tapEventListener('touchmove', false);
+    tapEventListener(tapTouchMoveListener, false);
     ionic.activator.end();
     return false;
   }
 }
 
 function tapTouchCancel(e) {
-  tapEventListener('touchmove', false);
+  tapEventListener(tapTouchMoveListener, false);
   ionic.activator.end();
   tapPointerMoved = false;
 }
@@ -2882,7 +2961,10 @@ function tapTargetElement(ele) {
 }
 
 ionic.DomUtil.ready(function(){
-  ionic.tap.register(document);
+  //do nothing for e2e tests
+  if (!angular.scenario) {
+    ionic.tap.register(document);
+  }
 });
 
 (function(document, ionic) {
@@ -2913,6 +2995,7 @@ ionic.DomUtil.ready(function(){
           }
           if( ele.tagName == 'A' || ele.tagName == 'BUTTON' || ele.hasAttribute('ng-click') ) {
             eleToActivate = ele;
+            break;
           }
           if( ele.classList.contains('button') ) {
             eleToActivate = ele;
@@ -3095,7 +3178,7 @@ ionic.DomUtil.ready(function(){
       // `parent`'s constructor function.
       var Surrogate = function(){ this.constructor = child; };
       Surrogate.prototype = parent.prototype;
-      child.prototype = new Surrogate;
+      child.prototype = new Surrogate();
 
       // Add prototype properties (instance properties) to the subclass,
       // if supplied.
@@ -3162,6 +3245,50 @@ ionic.DomUtil.ready(function(){
 
 })(window.ionic);
 
+/**
+ * @ngdoc page
+ * @name keyboard
+ * @module ionic
+ * @description
+ * On both Android and iOS, Ionic will attempt to prevent the keyboard from obscuring inputs and 
+ * focusable elements when it appears by scrolling them into view.  In order for this to work,
+ * any focusable elements must be within a [Scroll View](http://ionicframework.com/docs/api/directive/ionScroll/)
+ * or a directive such as [Content](http://ionicframework.com/docs/api/directive/ionContent/) that has a Scroll View.
+ *
+ * It will also attempt to prevent the native overflow scrolling on focus, which can cause layout issues such as 
+ * pushing headers up and out of view.
+ *
+ * The keyboard fixes work best in conjunction with the [Ionic Keyboard Plugin](https://github.com/driftyco/ionic-plugins-keyboard),
+ * although it will perform reasonably well without.  However, if you are using Cordova there is no reason not to use the plugin.
+ *
+ * ### Hide when keyboard shows
+ * 
+ * To hide an element when the keyboard is open, add the class `hide-on-keyboard-open`.
+ *
+ * ```html
+ * <div class="hide-on-keyboard-open">
+ *   <div id="google-map"></div>
+ * </div>
+ * ```
+ * 
+ *
+ * ### Android Notes
+ * - If your app is running in fullscreen, i.e. you have `<preference name="Fullscreen" value="true" />` in your `config.xml` file
+ * you will need to set `ionic.Platform.isFullScreen = true` manually.
+ *
+ * - You can configure the behavior of the web view when the keyboard shows by setting 
+ *   [android:windowSoftInputMode](http://developer.android.com/reference/android/R.attr.html#windowSoftInputMode) to either `adjustPan`, `adjustResize` or `adjustNothing` in your app's activity in `AndroidManifest.xml`. `adjustResize` is the recommended setting for Ionic, but if for some reason you do use `adjustPan` you will need to set `ionic.Platform.isFullScreen = true`.
+ *
+ *   ```xml
+ *   <activity android:windowSoftInputMode="adjustResize">
+ *
+ *   ```
+ *
+ * ### iOS Notes
+ * - if you are not using the keyboard plugin, switching to inputs below the keyboard using the accessory bar will automatically use the native browser's
+ * overflow scrolling and push headers out of view
+ * 
+ */
 
 /*
 IONIC KEYBOARD
@@ -3225,9 +3352,9 @@ function keyboardSetShow(e) {
   clearTimeout(keyboardFocusOutTimer);
 
   keyboardFocusInTimer = setTimeout(function(){
-    if ( keyboardLastShow + 350 > Date.now() ) return; 
+    if ( keyboardLastShow + 350 > Date.now() ) return;
     keyboardLastShow = Date.now();
-    var keyboardHeight; 
+    var keyboardHeight;
     var elementBounds = keyboardActiveElement.getBoundingClientRect();
     var count = 0;
 
@@ -3244,8 +3371,8 @@ function keyboardSetShow(e) {
         clearInterval(pollKeyboardHeight);
       }
       count++;
-      
-    }, 100); 
+
+    }, 100);
   }, 32);
 }
 
@@ -3254,17 +3381,13 @@ function keyboardShow(element, elementTop, elementBottom, viewportHeight, keyboa
     target: element,
     elementTop: Math.round(elementTop),
     elementBottom: Math.round(elementBottom),
-    keyboardHeight: keyboardHeight
+    keyboardHeight: keyboardHeight,
+    viewportHeight: viewportHeight
   };
 
   details.hasPlugin = keyboardHasPlugin();
 
   details.contentHeight = viewportHeight - keyboardHeight;
-
-  void 0;
-
-  // distance from top of input to the top of the keyboard
-  details.keyboardTopOffset = details.elementTop - details.contentHeight;
 
   void 0;
 
@@ -3290,7 +3413,6 @@ function keyboardShow(element, elementTop, elementBottom, viewportHeight, keyboa
 }
 
 function keyboardFocusOut(e) {
-  clearTimeout(keyboardFocusInTimer);
   clearTimeout(keyboardFocusOutTimer);
 
   keyboardFocusOutTimer = setTimeout(keyboardHide, 350);
@@ -3326,7 +3448,9 @@ function keyboardOnKeyDown(e) {
 }
 
 function keyboardPreventDefault(e) {
-  e.preventDefault();
+  if( e.target.tagName !== 'TEXTAREA' ) {
+    e.preventDefault();
+  }
 }
 
 function keyboardOrientationChange() {
@@ -3342,10 +3466,10 @@ function keyboardOrientationChange() {
       }
 
       updatedViewportHeight = window.innerHeight;
-      
+
       if (updatedViewportHeight !== keyboardViewportHeight){
         if (updatedViewportHeight < keyboardViewportHeight){
-          ionic.keyboard.landscape = true; 
+          ionic.keyboard.landscape = true;
         }
         else {
           ionic.keyboard.landscape = false;
@@ -3358,7 +3482,7 @@ function keyboardOrientationChange() {
     }, 50);
   }
   else {
-    keyboardViewportHeight = updatedViewportHeight;    
+    keyboardViewportHeight = updatedViewportHeight;
   }
 }
 
@@ -3454,7 +3578,7 @@ function viewportLoadTag() {
     var props = viewportTag.content.toLowerCase().replace(/\s+/g, '').split(',');
     var keyValue;
     for(x=0; x<props.length; x++) {
-      if(props[x] != '') {
+      if(props[x]) {
         keyValue = props[x].split('=');
         viewportProperties[ keyValue[0] ] = (keyValue.length > 1 ? keyValue[1] : '_');
       }
@@ -3523,6 +3647,10 @@ function viewportUpdate() {
         // iPhone <= 6.1 WebView
         // if height was set it needs to get removed with this hack for <= 6.1
         if( initHeight ) viewportProperties.height = '0';
+
+      } else if(version == 7) {
+        //iPhone == 7.0 WebView
+        viewportProperties.height = DEVICE_HEIGHT;
       }
 
     } else {
@@ -3589,6 +3717,8 @@ ionic.Platform.ready(function() {
  * Copyright 2011, Deutsche Telekom AG
  * License: MIT + Apache (V2)
  */
+
+/* jshint eqnull: true */
 
 /**
  * Generic animation class with support for dropped frames both optional easing and duration.
@@ -4198,11 +4328,20 @@ ionic.views.Scroll = ionic.views.View.inherit({
     //Broadcasted when keyboard is shown on some platforms.
     //See js/utils/keyboard.js
     container.addEventListener('scrollChildIntoView', function(e) {
+
+      //distance from bottom of scrollview to top of viewport
+      var scrollBottomOffsetToTop;
+
       if( !self.isScrolledIntoView ) {
         // shrink scrollview so we can actually scroll if the input is hidden
         // if it isn't shrink so we can scroll to inputs under the keyboard
         if (ionic.Platform.isIOS() || ionic.Platform.isFullScreen){
-          container.style.height = (container.clientHeight - e.detail.keyboardHeight) + "px";
+          // if there are things below the scroll view account for them and
+          // subtract them from the keyboard height when resizing
+          scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
+          var scrollBottomOffsetToBottom = e.detail.viewportHeight - scrollBottomOffsetToTop;
+          var keyboardOffset = Math.max(0, e.detail.keyboardHeight - scrollBottomOffsetToBottom);
+          container.style.height = (container.clientHeight - keyboardOffset) + "px";
           container.style.overflow = "visible";
           //update scroll view
           self.resize();
@@ -4213,22 +4352,31 @@ ionic.views.Scroll = ionic.views.View.inherit({
       //If the element is positioned under the keyboard...
       if( e.detail.isElementUnderKeyboard ) {
         var delay;
-        // Wait on android for scroll view to resize
-        if ( !ionic.Platform.isFullScreen && e.detail.hasPlugin ) {
-          delay = 350;
-        }
-        else {
+        // Wait on android for web view to resize
+        if ( ionic.Platform.isAndroid() && !ionic.Platform.isFullScreen ) {
+          // android y u resize so slow
+          if ( ionic.Platform.version() < 4.4) {
+            delay = 500;
+          } else {
+            // probably overkill for chrome
+            delay = 350;
+          }
+        } else {
           delay = 80;
         }
 
         //Put element in middle of visible screen
-        //Wait for resize() to reset scroll position
+        //Wait for android to update view height and resize() to reset scroll position
         ionic.scroll.isScrolling = true;
         setTimeout(function(){
           //middle of the scrollview, where we want to scroll to
-          var scrollViewMidpointOffset = container.clientHeight * 0.5;
-          var scrollTop = e.detail.keyboardTopOffset + scrollViewMidpointOffset;
-          void 0;
+          var scrollMidpointOffset = container.clientHeight * 0.5;
+
+          scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
+          //distance from top of focused element to the bottom of the scroll view
+          var elementTopOffsetToScrollBottom = e.detail.elementTop - scrollBottomOffsetToTop; 
+
+          var scrollTop = elementTopOffsetToScrollBottom  + scrollMidpointOffset;
           ionic.tap.cloneFocusedInput(container, self);
           self.scrollBy(0, scrollTop, true);
           self.onScroll();
@@ -4249,6 +4397,12 @@ ionic.views.Scroll = ionic.views.View.inherit({
       ionic.scroll.isScrolling = false;
     });
 
+    function getEventTouches(e) {
+      return e.touches && e.touches.length ? e.touches : [{
+        pageX: e.pageX,
+        pageY: e.pageY
+      }];
+    }
 
     self.touchStart = function(e) {
       self.startCoordinates = getPointerCoordinates(e);
@@ -4257,7 +4411,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
         return;
       }
 
-      if( ionic.tap.containsOrIsTextInput(e.target) ) {
+      self.__isDown = true;
+
+      if( ionic.tap.containsOrIsTextInput(e.target) || e.target.tagName === 'SELECT' ) {
         // do not start if the target is a text input
         // if there is a touchmove on this input, then we can start the scroll
         self.__hasStarted = false;
@@ -4267,20 +4423,22 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.__isSelectable = true;
       self.__enableScrollY = true;
       self.__hasStarted = true;
-      self.doTouchStart(e.touches, e.timeStamp);
+      self.doTouchStart(getEventTouches(e), e.timeStamp);
       e.preventDefault();
     };
 
     self.touchMove = function(e) {
-      if(e.defaultPrevented) {
+      if(!self.__isDown ||
+        e.defaultPrevented ||
+        (e.target.tagName === 'TEXTAREA' && e.target.parentElement.querySelector(':focus')) ) {
         return;
       }
 
-      if( !self.__hasStarted && ionic.tap.containsOrIsTextInput(e.target) ) {
+      if( !self.__hasStarted && ( ionic.tap.containsOrIsTextInput(e.target) || e.target.tagName === 'SELECT' ) ) {
         // the target is a text input and scroll has started
         // since the text input doesn't start on touchStart, do it here
         self.__hasStarted = true;
-        self.doTouchStart(e.touches, e.timeStamp);
+        self.doTouchStart(getEventTouches(e), e.timeStamp);
         e.preventDefault();
         return;
       }
@@ -4306,11 +4464,15 @@ ionic.views.Scroll = ionic.views.View.inherit({
         }
       }
 
-      self.doTouchMove(e.touches, e.timeStamp, e.scale);
+      self.doTouchMove(getEventTouches(e), e.timeStamp, e.scale);
+      self.__isDown = true;
     };
 
     self.touchEnd = function(e) {
+      if(!self.__isDown) return;
+
       self.doTouchEnd(e.timeStamp);
+      self.__isDown = false;
       self.__hasStarted = false;
       self.__isSelectable = true;
       self.__enableScrollY = true;
@@ -4326,25 +4488,36 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.options.orgScrollingComplete();
     };
 
-
     if ('ontouchstart' in window) {
+      // Touch Events
       container.addEventListener("touchstart", self.touchStart, false);
       document.addEventListener("touchmove", self.touchMove, false);
       document.addEventListener("touchend", self.touchEnd, false);
       document.addEventListener("touchcancel", self.touchEnd, false);
 
-    } else {
+    } else if (window.navigator.pointerEnabled) {
+      // Pointer Events
+      container.addEventListener("pointerdown", self.touchStart, false);
+      document.addEventListener("pointermove", self.touchMove, false);
+      document.addEventListener("pointerup", self.touchEnd, false);
+      document.addEventListener("pointercancel", self.touchEnd, false);
 
+    } else if (window.navigator.msPointerEnabled) {
+      // IE10, WP8 (Pointer Events)
+      container.addEventListener("MSPointerDown", self.touchStart, false);
+      document.addEventListener("MSPointerMove", self.touchMove, false);
+      document.addEventListener("MSPointerUp", self.touchEnd, false);
+      document.addEventListener("MSPointerCancel", self.touchEnd, false);
+
+    } else {
+      // Mouse Events
       var mousedown = false;
 
       container.addEventListener("mousedown", function(e) {
         if ( ionic.tap.ignoreScrollStart(e) || e.target.tagName === 'SELECT' ) {
           return;
         }
-        self.doTouchStart([{
-          pageX: e.pageX,
-          pageY: e.pageY
-        }], e.timeStamp);
+        self.doTouchStart(getEventTouches(e), e.timeStamp);
 
         e.preventDefault();
         mousedown = true;
@@ -4355,10 +4528,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
           return;
         }
 
-        self.doTouchMove([{
-          pageX: e.pageX,
-          pageY: e.pageY
-        }], e.timeStamp);
+        self.doTouchMove(getEventTouches(e), e.timeStamp);
 
         mousedown = true;
       }, false);
@@ -4383,12 +4553,12 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       //For Firefox
       document.addEventListener('mousewheel', onMouseWheel);
-      function onMouseWheel(e) {
-        self.hintResize();
-        wheelShowBarFn();
-        self.scrollBy(e.wheelDeltaX/self.options.wheelDampen, -e.wheelDeltaY/self.options.wheelDampen);
-        wheelHideBarFn();
-      }
+    }
+    function onMouseWheel(e) {
+      self.hintResize();
+      wheelShowBarFn();
+      self.scrollBy(e.wheelDeltaX/self.options.wheelDampen, -e.wheelDeltaY/self.options.wheelDampen);
+      wheelHideBarFn();
     }
   },
 
@@ -5046,16 +5216,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
   doTouchStart: function(touches, timeStamp) {
     this.hintResize();
 
-    // Array-like check is enough here
-    if (touches.length == null) {
-      throw new Error("Invalid touch list: " + touches);
-    }
-
     if (timeStamp instanceof Date) {
       timeStamp = timeStamp.valueOf();
     }
     if (typeof timeStamp !== "number") {
-      throw new Error("Invalid timestamp value: " + timeStamp);
+      timeStamp = Date.now();
     }
 
     var self = this;
@@ -5131,17 +5296,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * Touch move handler for scrolling support
    */
   doTouchMove: function(touches, timeStamp, scale) {
-
-    // Array-like check is enough here
-    if (touches.length == null) {
-      throw new Error("Invalid touch list: " + touches);
-    }
-
     if (timeStamp instanceof Date) {
       timeStamp = timeStamp.valueOf();
     }
     if (typeof timeStamp !== "number") {
-      throw new Error("Invalid timestamp value: " + timeStamp);
+      timeStamp = Date.now();
     }
 
     var self = this;
@@ -5150,7 +5309,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
     if (!self.__isTracking) {
       return;
     }
-
 
     var currentTouchLeft, currentTouchTop;
 
@@ -5320,12 +5478,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * Touch end handler for scrolling support
    */
   doTouchEnd: function(timeStamp) {
-
     if (timeStamp instanceof Date) {
       timeStamp = timeStamp.valueOf();
     }
     if (typeof timeStamp !== "number") {
-      throw new Error("Invalid timestamp value: " + timeStamp);
+      timeStamp = Date.now();
     }
 
     var self = this;
@@ -5543,7 +5700,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.__maxScrollLeft = Math.max((self.__contentWidth * zoomLevel) - self.__clientWidth, 0);
     self.__maxScrollTop = Math.max((self.__contentHeight * zoomLevel) - self.__clientHeight, 0);
 
-    if(!self.__didWaitForSize && self.__maxScrollLeft == 0 && self.__maxScrollTop == 0) {
+    if(!self.__didWaitForSize && !self.__maxScrollLeft && !self.__maxScrollTop) {
       self.__didWaitForSize = true;
       self.__waitForSize();
     }
@@ -5562,7 +5719,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     var sizer = function() {
       self.resize();
 
-      if((self.options.scrollingX && self.__maxScrollLeft == 0) || (self.options.scrollingY && self.__maxScrollTop == 0)) {
+      if((self.options.scrollingX && !self.__maxScrollLeft) || (self.options.scrollingY && !self.__maxScrollTop)) {
         //self.__sizerTimeout = setTimeout(sizer, 1000);
       }
     };
@@ -6092,9 +6249,10 @@ ionic.scroll = {
   ReorderDrag.prototype = new DragOp();
 
   ReorderDrag.prototype._moveElement = function(e) {
-    var y = e.gesture.center.pageY -
-      this._currentDrag.elementHeight + 
+    var y = e.gesture.center.pageY +
       this.scrollView.getValues().top -
+      this.scrollView.__container.offsetTop -
+      (this._currentDrag.elementHeight / 2) -
       this.listEl.offsetTop;
     this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(0, '+y+'px, 0)';
   };
@@ -6124,17 +6282,19 @@ ionic.scroll = {
 
   ReorderDrag.prototype.drag = ionic.animationFrameThrottle(function(e) {
     // We really aren't dragging
+    var self = this;
     if(!this._currentDrag) {
       return;
     }
 
     var scrollY = 0;
     var pageY = e.gesture.center.pageY;
+    var offset = this.listEl.offsetTop + this.scrollView.__container.offsetTop;
 
     //If we have a scrollView, check scroll boundaries for dragged element and scroll if necessary
     if (this.scrollView) {
-      var container = this.scrollEl;
 
+      var container = this.scrollView.__container;
       scrollY = this.scrollView.getValues().top;
 
       var containerTop = container.offsetTop;
@@ -6143,10 +6303,18 @@ ionic.scroll = {
 
       if (e.gesture.deltaY < 0 && pixelsPastTop > 0 && scrollY > 0) {
         this.scrollView.scrollBy(null, -pixelsPastTop);
+        //Trigger another drag so the scrolling keeps going
+        setTimeout(function() {
+          self.drag(e);
+        }.bind(this));
       }
       if (e.gesture.deltaY > 0 && pixelsPastBottom > 0) {
         if (scrollY < this.scrollView.getScrollMax().top) {
           this.scrollView.scrollBy(null, pixelsPastBottom);
+          //Trigger another drag so the scrolling keeps going
+          setTimeout(function() {
+            self.drag(e);
+          }.bind(this));
         }
       }
     }
@@ -6160,7 +6328,7 @@ ionic.scroll = {
     if(this._isDragging) {
       this._moveElement(e);
 
-      this._currentDrag.currentY = scrollY + pageY - this._currentDrag.placeholder.parentNode.offsetTop;
+      this._currentDrag.currentY = scrollY + pageY - offset;
 
       this._reorderItems();
     }
@@ -6180,13 +6348,14 @@ ionic.scroll = {
     var bottomSibling = siblings[Math.min(siblings.length, index+1)];
     var thisOffsetTop = this._currentDrag.currentY;// + this._currentDrag.startOffsetTop;
 
-    if(topSibling && (thisOffsetTop < topSibling.offsetTop + topSibling.offsetHeight/2)) {
+   if(topSibling && (thisOffsetTop < topSibling.offsetTop + topSibling.offsetHeight)) {
       ionic.DomUtil.swapNodes(this._currentDrag.placeholder, topSibling);
       return index - 1;
-    } else if(bottomSibling && thisOffsetTop > (bottomSibling.offsetTop + bottomSibling.offsetHeight/2)) {
+    } else if(bottomSibling && thisOffsetTop > (bottomSibling.offsetTop)) {
       ionic.DomUtil.swapNodes(bottomSibling, this._currentDrag.placeholder);
       return index + 1;
     }
+  
   };
 
   ReorderDrag.prototype.end = function(e, doneCallback) {
@@ -6358,10 +6527,11 @@ ionic.scroll = {
       this._isDragging = false;
 
       var lastDragOp = this._lastDragOp;
+      var item;
 
       // Check if this is a reorder drag
       if(ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_REORDER_BTN_CLASS) && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
-        var item = this._getItem(e.target);
+        item = this._getItem(e.target);
 
         if(item) {
           this._dragOp = new ReorderDrag({
@@ -6382,7 +6552,7 @@ ionic.scroll = {
       else if(!this._didDragUpOrDown && (e.gesture.direction == 'left' || e.gesture.direction == 'right') && Math.abs(e.gesture.deltaX) > 5) {
 
         // Make sure this is an item with buttons
-        var item = this._getItem(e.target);
+        item = this._getItem(e.target);
         if(item && item.querySelector('.item-options')) {
           this._dragOp = new SlideDrag({ el: this.el, canSwipe: this.canSwipe });
           this._dragOp.start(e);
@@ -6450,7 +6620,8 @@ ionic.scroll = {
       opts = ionic.extend({
         focusFirstInput: false,
         unfocusOnHide: true,
-        focusFirstDelay: 600
+        focusFirstDelay: 600,
+        backdropClickToClose: true,
       }, opts);
 
       ionic.extend(this, opts);
@@ -6752,11 +6923,11 @@ ionic.views.Slider = ionic.views.View.inherit({
 
       }
 
-      var start = +new Date;
+      var start = +new Date();
 
       var timer = setInterval(function() {
 
-        var timeElap = +new Date - start;
+        var timeElap = +new Date() - start;
 
         if (timeElap > speed) {
 
@@ -6841,7 +7012,7 @@ ionic.views.Slider = ionic.views.View.inherit({
           y: touches.pageY,
 
           // store time to determine touch duration
-          time: +new Date
+          time: +new Date()
 
         };
 
@@ -6906,9 +7077,9 @@ ionic.views.Slider = ionic.views.View.inherit({
 
             delta.x =
               delta.x /
-                ( (!index && delta.x > 0               // if first slide and sliding left
-                  || index == slides.length - 1        // or if last slide and sliding right
-                  && delta.x < 0                       // and if sliding at all
+                ( (!index && delta.x > 0 ||         // if first slide and sliding left
+                  index == slides.length - 1 &&     // or if last slide and sliding right
+                  delta.x < 0                       // and if sliding at all
                 ) ?
                 ( Math.abs(delta.x) / width + 1 )      // determine resistance level
                 : 1 );                                 // no resistance if false
@@ -6925,18 +7096,18 @@ ionic.views.Slider = ionic.views.View.inherit({
       end: function(event) {
 
         // measure duration
-        var duration = +new Date - start.time;
+        var duration = +new Date() - start.time;
 
         // determine if slide attempt triggers next/prev slide
         var isValidSlide =
-              Number(duration) < 250               // if slide duration is less than 250ms
-              && Math.abs(delta.x) > 20            // and if slide amt is greater than 20px
-              || Math.abs(delta.x) > width/2;      // or if slide amt is greater than half the width
+              Number(duration) < 250 &&         // if slide duration is less than 250ms
+              Math.abs(delta.x) > 20 ||         // and if slide amt is greater than 20px
+              Math.abs(delta.x) > width/2;      // or if slide amt is greater than half the width
 
         // determine if slide attempt is past start and end
         var isPastBounds =
-              !index && delta.x > 0                            // if first slide and slide amt is greater than 0
-              || index == slides.length - 1 && delta.x < 0;    // or if last slide and slide amt is less than 0
+              !index && delta.x > 0 |                    // if first slide and slide amt is greater than 0
+              index == slides.length - 1 && delta.x < 0; // or if last slide and slide amt is less than 0
 
         if (options.continuous) isPastBounds = false;
 
@@ -7230,6 +7401,7 @@ ionic.views.Slider = ionic.views.View.inherit({
       e.gesture.srcEvent.preventDefault();
 
       ionic.requestAnimationFrame(function(amount) {
+        if (!self._dragInfo) { return; }
 
         var slidePageLeft = self.track.offsetLeft + (self.handle.offsetWidth / 2);
         var slidePageRight = self.track.offsetLeft + self.track.offsetWidth - (self.handle.offsetWidth / 2);
@@ -7463,6 +7635,12 @@ ionic.views.Slider = ionic.views.View.inherit({
         var maxRight = this.right.width;
         this.openAmount(this.right.width * p);
       }
+
+      if(percentage !== 0) {
+        document.body.classList.add('menu-open');
+      } else {
+        document.body.classList.remove('menu-open');
+      }
     },
 
     /**
@@ -7627,22 +7805,39 @@ ionic.views.Slider = ionic.views.View.inherit({
 })(ionic);
 
 (function(window) {
-  var time = Date.now || function() {
-    return +new Date();
-  };
-  var desiredFrames = 60;
-  var millisecondsPerSecond = 1000;
-  var running = {};
   var counter = 1;
+  var running = {};
 
   // Namespace
-  ionic.Animation = {};
+  ionic.Animation = ionic.Animation || {};
 
   /**
    * The main animation system manager. Treated as a singleton.
    */
   ionic.Animation = {
     create: function(opts) {
+      var tf;
+
+      if(typeof opts.curve === 'string') {
+        tf = ionic.Animation.TimingFn[opts.curve] || ionic.Animation.TimingFn['linear'];
+        if(opts.curve.indexOf('cubic-bezier(') >= 0) {
+          var parts = opts.curve.replace('cubic-bezier(', '').replace(')', '').split(',');
+          tf = ionic.Animation.TimingFn['cubic-bezier'];
+          tf = tf(parts[0], parts[1], parts[2], parts[3], opts.duration);
+        } else {
+          tf = tf(opts.duration);
+        }
+      } else {
+        tf = opts.curve;
+        tf = tf(opts.duration);
+      }
+
+      opts.curveFn = tf;
+
+      if(opts.dynamicsType) {
+        opts.dynamic = new opts.dynamicsType(opts);
+      }
+
       return new ionic.Animation.Animation(opts);
     },
 
@@ -7724,231 +7919,6 @@ ionic.views.Slider = ionic.views.View.inherit({
 
   };
 
-  /**
-   * Animation instance
-   */
-  ionic.Animation.Animation = function(opts) {
-    ionic.extend(this, opts);
-
-    if(opts.useSlowAnimations) {
-      void 0;
-      this.delay *= 3;
-      this.duration *= 3;
-    }
-  };
-
-  ionic.Animation.Animation.prototype = {
-    el: null,
-    curve: 'linear',
-    duration: 500,
-    delay: 0,
-    repeat: -1,
-    reverse: false,
-    autoReverse: false,
-
-    step: function(percent) {},
-
-    stop: function() {
-      this.isRunning = false;
-      this.shouldEnd = true;
-    },
-    play: function() {
-      this.isPaused = false;
-      this.start();
-    },
-    pause: function() {
-      this.isPaused = true;
-    },
-    _saveState: function(percent, iteration, reverse) {
-      this._pauseState = {
-        percent: percent,
-        iteration: iteration,
-        reverse: reverse
-      };
-    },
-    restart: function() {
-    },
-
-    start: function() {
-      var self = this;
-
-      var tf;
-
-      void 0;
-
-
-      // Grab the timing function
-      if(typeof this.curve === 'string') {
-        tf = ionic.Animation.TimingFn[this.curve] || ionic.Animation.TimingFn['linear'];
-      } else {
-        tf = this.curve;
-      }
-
-      // Get back a timing function for the given duration (used for precision)
-      tf = tf(this.duration);
-
-      // Set up the initial animation state
-      var animState = {
-        startPercent: this.reverse === true ? 1 : 0,
-        endPercent: this.reverse === true ? 0 : 1,
-        duration: this.duration,
-        easingMethod: tf,
-        delay: this.delay,
-        reverse: this.reverse,
-        repeat: this.repeat,
-        autoReverse: this.autoReverse
-      };
-
-
-      if(this._pauseState) {
-        // We were paused, so update the fields
-        ionic.extend(animState, this._pauseState);
-        this._pauseState = null;
-      }
-
-      ionic.Animation.animationStarted(this);
-
-      return this._run(function(percent, now, render) {
-        if(render) {
-          self.step(percent);
-        }
-      }, function(droppedFrames, finishedAnimation) {
-        ionic.Animation.animationStopped(self);
-        void 0;
-      }, animState);
-    },
-
-    /**
-     * Start the animation.
-     *
-     * @param stepCallback {Function} Pointer to function which is executed on every step.
-    *   Signature of the method should be `function(percent, now, virtual) { return continueWithAnimation; }`
-     * @param completedCallback {Function}
-     *   Signature of the method should be `function(droppedFrames, finishedAnimation) {}`
-     * @param duration {Integer} Milliseconds to run the animation
-     * @param easingMethod {Function} Pointer to easing function
-     *   Signature of the method should be `function(percent) { return modifiedValue; }`
-     * @return {Integer} Identifier of animation. Can be used to stop it any time.
-     */
-    _run: function(stepCallback, completedCallback, state) {
-
-      var self = this;
-      var start = time();
-      var lastFrame = start;
-      var startTime = start + state.delay;
-      var percent = state.startPercent;
-      var startPercent = state.startPercent;
-      var endPercent = state.endPercent;
-      var autoReverse = state.autoReverse;
-      var delay = state.delay;
-      var duration = state.duration;
-      var easingMethod = state.easingMethod;
-      var repeat = state.repeat;
-      var reverse = state.reverse;
-
-      var dropCounter = 0;
-      var iteration = 0;
-
-      var perhapsAutoreverse = function() {
-        // Check if we hit the end and should auto reverse
-        if(percent === endPercent && autoReverse) {
-          // Flip the start and end values
-          var sp = endPercent;
-          reverse = !reverse;
-          endPercent = startPercent;
-          startPercent = sp;
-
-          if(repeat === 0) {
-            autoReverse = false;
-          }
-        } else {
-          // Otherwise, just start over
-          percent = startPercent;
-        }
-        // Start fresh either way
-        start = time();
-        ionic.requestAnimationFrame(step);
-      };
-
-
-      // This is the internal step method which is called every few milliseconds
-      var step = function(virtual) {
-
-        // Normalize virtual value
-        var render = virtual !== true;
-
-        // Get current time
-        var now = time();
-        var diff = now - start;
-
-        // Verification is executed before next animation step
-        if(self.isPaused) {
-          self._saveState(percent, iteration, reverse);
-          return;
-        }
-
-        if (!self.isRunning) {// || (verifyCallback && !verifyCallback(id))) {
-
-          completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), self._animationId, false);
-          return;
-
-        }
-
-
-        // For the current rendering to apply let's update omitted steps in memory.
-        // This is important to bring internal state variables up-to-date with progress in time.
-        if (render) {
-
-          var droppedFrames = Math.round((now - lastFrame) / (millisecondsPerSecond / desiredFrames)) - 1;
-          for (var j = 0; j < Math.min(droppedFrames, 4); j++) {
-            step(true);
-            dropCounter++;
-          }
-
-        }
-
-        // Compute percent value
-        if (diff > delay && duration) {
-          percent = (diff - delay) / duration;
-          if(reverse === true) {
-            percent = 1 - percent;
-            if (percent < 0) {
-              percent = 0;
-            }
-          } else {
-            if (percent > 1) {
-              percent = 1;
-            }
-          }
-        }
-
-        // Execute step callback, then...
-        var value = easingMethod ? easingMethod(percent) : percent;
-        if ((stepCallback(value, now, render) === false || percent === endPercent) && render) {
-          if(repeat === -1) {
-            perhapsAutoreverse();
-          } else if(iteration < repeat) {
-            // Track iterations
-            iteration++;
-            perhapsAutoreverse();
-          } else if(repeat === 0 && autoReverse) {
-            perhapsAutoreverse();
-          } else {
-            completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), self._animationId, percent === endPercent || duration == null);
-          }
-        } else if (render) {
-          lastFrame = now;
-          ionic.requestAnimationFrame(step);
-        }
-      };
-
-
-      // Init first step
-      ionic.requestAnimationFrame(step);
-
-    }
-  };
-
 
 })(window);
 
@@ -7989,7 +7959,7 @@ ionic.views.Slider = ionic.views.View.inherit({
   function B3(t) { return 3*t*(1-t)*(1-t); }
   function B4(t) { return (1-t)*(1-t)*(1-t); }
 
-  ionic.Animation = ionic.Animation || {};
+  ionic.Animation = ionic.Animation || {}
 
  
   /**
@@ -8220,8 +8190,8 @@ ionic.views.Slider = ionic.views.View.inherit({
        * @param duration {number} the duration of the animation in milliseconds
        * @return {number} the y value along the bezier curve
        */
-      cubicBezier: function(p1x, p1y, p2x, p2y, x, duration) {
-        return unitBezier(p1x, p1y, p2x, p2y)(x, duration);
+      cubicBezier: function(p1x, p1y, p2x, p2y) {
+        return unitBezier(p1x, p1y, p2x, p2y);
       }
     };
   })();
@@ -8382,4254 +8352,186 @@ var Easing = (function(){
 })();
 })(ionic);
 
-/**
- * @fileoverview gl-matrix - High performance matrix and vector operations
- * @author Brandon Jones
- * @author Colin MacKenzie IV
- * @version 2.2.1
- */
+(function(window) {
 
-/* Copyright (c) 2013, Brandon Jones, Colin MacKenzie IV. All rights reserved.
+  /**
+   * A HUGE thank you to dynamics.js which inspired these dynamics simulations.
+   * https://github.com/michaelvillar/dynamics.js
+   *
+   * Also licensed under MIT
+   */
 
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-  * Redistributions of source code must retain the above copyright notice, this
-    list of conditions and the following disclaimer.
-  * Redistributions in binary form must reproduce the above copyright notice,
-    this list of conditions and the following disclaimer in the documentation
-    and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
+  // Namespace
+  ionic.Animation = ionic.Animation || {};
 
 
-(function(_global) {
-  "use strict";
+  ionic.Animation.Dynamics = {};
 
-  var shim = {};
-  if (typeof(exports) === 'undefined') {
-    if(typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
-      shim.exports = {};
-      define(function() {
-        return shim.exports;
-      });
-    } else {
-      // gl-matrix lives in a browser, define its namespaces in global
-      shim.exports = typeof(window) !== 'undefined' ? window : _global;
+  ionic.Animation.Dynamics.Spring = function(opts) {
+    var defaults = {
+      frequency: 15,
+      friction: 200,
+      anticipationStrength: 0,
+      anticipationSize: 0
+    };
+    ionic.extend(this, defaults);
+
+    var maxs = {
+      frequency: 100,
+      friction: 1000,
+      anticipationStrength: 1000,
+      anticipationSize: 99
+    };
+
+    var mins = {
+      frequency: 0,
+      friction: 1,
+      anticipationStrength: 0,
+      anticipationSize: 0
+    };
+    
+    ionic.extend(this, opts);
+  };
+
+  ionic.Animation.Dynamics.Spring.prototype = {
+    at: function(t) {
+      var A, At, a, angle, b, decal, frequency, friction, frictionT, s, v, y0, yS,
+        _this = this;
+      frequency = Math.max(1, this.frequency);
+      friction = Math.pow(20, this.friction / 100);
+      s = this.anticipationSize / 100;
+      decal = Math.max(0, s);
+      frictionT = (t / (1 - s)) - (s / (1 - s));
+      if (t < s) {
+        A = function(t) {
+          var M, a, b, x0, x1;
+          M = 0.8;
+          x0 = s / (1 - s);
+          x1 = 0;
+          b = (x0 - (M * x1)) / (x0 - x1);
+          a = (M - b) / x0;
+          return (a * t * _this.anticipationStrength / 100) + b;
+        };
+        yS = (s / (1 - s)) - (s / (1 - s));
+        y0 = (0 / (1 - s)) - (s / (1 - s));
+        b = Math.acos(1 / A(yS));
+        a = (Math.acos(1 / A(y0)) - b) / (frequency * (-s));
+      } else {
+        A = function(t) {
+          return Math.pow(friction / 10, -t) * (1 - t);
+        };
+        b = 0;
+        a = 1;
+      }
+      At = A(frictionT);
+      angle = frequency * (t - s) * a + b;
+      v = 1 - (At * Math.cos(angle));
+      //return [t, v, At, frictionT, angle];
+      return v;
     }
   }
-  else {
-    // gl-matrix lives in commonjs, define its namespaces in exports
-    shim.exports = exports;
+
+  ionic.Animation.Dynamics.Gravity = function(opts) {
+    this.options = {
+      bounce: 40,
+      gravity: 1000,
+      initialForce: false
+    };
+    ionic.extend(this.options, opts);
+    this.curves = [];
+    this.init();
+  };
+
+  ionic.Animation.Dynamics.Gravity.prototype = {
+    length: function() {
+      var L, b, bounce, curve, gravity;
+      bounce = Math.min(this.options.bounce / 100, 80);
+      gravity = this.options.gravity / 100;
+      b = Math.sqrt(2 / gravity);
+      curve = {
+        a: -b,
+        b: b,
+        H: 1
+      };
+      if (this.options.initialForce) {
+        curve.a = 0;
+        curve.b = curve.b * 2;
+      }
+      while (curve.H > 0.001) {
+        L = curve.b - curve.a;
+        curve = {
+          a: curve.b,
+          b: curve.b + L * bounce,
+          H: curve.H * bounce * bounce
+        };
+      }
+      return curve.b;
+    },
+    init: function() {
+      var L, b, bounce, curve, gravity, _results;
+
+      L = this.length();
+      gravity = (this.options.gravity / 100) * L * L;
+      bounce = Math.min(this.options.bounce / 100, 80);
+      b = Math.sqrt(2 / gravity);
+      this.curves = [];
+      curve = {
+        a: -b,
+        b: b,
+        H: 1
+      };
+      if (this.options.initialForce) {
+        curve.a = 0;
+        curve.b = curve.b * 2;
+      }
+      this.curves.push(curve);
+      _results = [];
+      while (curve.b < 1 && curve.H > 0.001) {
+        L = curve.b - curve.a;
+        curve = {
+          a: curve.b,
+          b: curve.b + L * bounce,
+          H: curve.H * bounce * bounce
+        };
+        _results.push(this.curves.push(curve));
+      }
+      return _results;
+    },
+    curve: function(a, b, H, t){ 
+      
+      var L, c, t2;
+      L = b - a;
+      t2 = (2 / L) * t - 1 - (a * 2 / L);
+      c = t2 * t2 * H - H + 1;
+      if (this.initialForce) {
+        c = 1 - c;
+      }
+      return c;
+    },
+    at: function(t) {
+      var bounce, curve, gravity, i, v;
+      bounce = this.options.bounce / 100;
+      gravity = this.options.gravity;
+      i = 0;
+      curve = this.curves[i];
+      while (!(t >= curve.a && t <= curve.b)) {
+        i += 1;
+        curve = this.curves[i];
+        if (!curve) {
+          break;
+        }
+      }
+      if (!curve) {
+        v = this.options.initialForce ? 0 : 1;
+      } else {
+        v = this.curve(curve.a, curve.b, curve.H, t);
+      }
+      //return [t, v];
+      return v;
+    }
+    
   }
-
-  (function(exports) {
-    /* Copyright (c) 2013, Brandon Jones, Colin MacKenzie IV. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-  * Redistributions of source code must retain the above copyright notice, this
-    list of conditions and the following disclaimer.
-  * Redistributions in binary form must reproduce the above copyright notice,
-    this list of conditions and the following disclaimer in the documentation 
-    and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
-
-
-if(!GLMAT_EPSILON) {
-    var GLMAT_EPSILON = 0.000001;
-}
-
-if(!GLMAT_ARRAY_TYPE) {
-    var GLMAT_ARRAY_TYPE = (typeof Float32Array !== 'undefined') ? Float32Array : Array;
-}
-
-if(!GLMAT_RANDOM) {
-    var GLMAT_RANDOM = Math.random;
-}
-
-/**
- * @class Common utilities
- * @name glMatrix
- */
-var glMatrix = {};
-
-/**
- * Sets the type of array used when creating new vectors and matricies
- *
- * @param {Type} type Array type, such as Float32Array or Array
- */
-glMatrix.setMatrixArrayType = function(type) {
-    GLMAT_ARRAY_TYPE = type;
-};
-
-if(typeof(exports) !== 'undefined') {
-    exports.glMatrix = glMatrix;
-}
-
-var degree = Math.PI / 180;
-
-/**
-* Convert Degree To Radian
-*
-* @param {Number} Angle in Degrees
-*/
-glMatrix.toRadian = function(a){
-     return a * degree;
-}
-;
-/* Copyright (c) 2013, Brandon Jones, Colin MacKenzie IV. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-  * Redistributions of source code must retain the above copyright notice, this
-    list of conditions and the following disclaimer.
-  * Redistributions in binary form must reproduce the above copyright notice,
-    this list of conditions and the following disclaimer in the documentation 
-    and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
-
-/**
- * @class 2 Dimensional Vector
- * @name vec2
- */
-
-var vec2 = {};
-
-/**
- * Creates a new, empty vec2
- *
- * @returns {vec2} a new 2D vector
- */
-vec2.create = function() {
-    var out = new GLMAT_ARRAY_TYPE(2);
-    out[0] = 0;
-    out[1] = 0;
-    return out;
-};
-
-/**
- * Creates a new vec2 initialized with values from an existing vector
- *
- * @param {vec2} a vector to clone
- * @returns {vec2} a new 2D vector
- */
-vec2.clone = function(a) {
-    var out = new GLMAT_ARRAY_TYPE(2);
-    out[0] = a[0];
-    out[1] = a[1];
-    return out;
-};
-
-/**
- * Creates a new vec2 initialized with the given values
- *
- * @param {Number} x X component
- * @param {Number} y Y component
- * @returns {vec2} a new 2D vector
- */
-vec2.fromValues = function(x, y) {
-    var out = new GLMAT_ARRAY_TYPE(2);
-    out[0] = x;
-    out[1] = y;
-    return out;
-};
-
-/**
- * Copy the values from one vec2 to another
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the source vector
- * @returns {vec2} out
- */
-vec2.copy = function(out, a) {
-    out[0] = a[0];
-    out[1] = a[1];
-    return out;
-};
-
-/**
- * Set the components of a vec2 to the given values
- *
- * @param {vec2} out the receiving vector
- * @param {Number} x X component
- * @param {Number} y Y component
- * @returns {vec2} out
- */
-vec2.set = function(out, x, y) {
-    out[0] = x;
-    out[1] = y;
-    return out;
-};
-
-/**
- * Adds two vec2's
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {vec2} out
- */
-vec2.add = function(out, a, b) {
-    out[0] = a[0] + b[0];
-    out[1] = a[1] + b[1];
-    return out;
-};
-
-/**
- * Subtracts vector b from vector a
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {vec2} out
- */
-vec2.subtract = function(out, a, b) {
-    out[0] = a[0] - b[0];
-    out[1] = a[1] - b[1];
-    return out;
-};
-
-/**
- * Alias for {@link vec2.subtract}
- * @function
- */
-vec2.sub = vec2.subtract;
-
-/**
- * Multiplies two vec2's
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {vec2} out
- */
-vec2.multiply = function(out, a, b) {
-    out[0] = a[0] * b[0];
-    out[1] = a[1] * b[1];
-    return out;
-};
-
-/**
- * Alias for {@link vec2.multiply}
- * @function
- */
-vec2.mul = vec2.multiply;
-
-/**
- * Divides two vec2's
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {vec2} out
- */
-vec2.divide = function(out, a, b) {
-    out[0] = a[0] / b[0];
-    out[1] = a[1] / b[1];
-    return out;
-};
-
-/**
- * Alias for {@link vec2.divide}
- * @function
- */
-vec2.div = vec2.divide;
-
-/**
- * Returns the minimum of two vec2's
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {vec2} out
- */
-vec2.min = function(out, a, b) {
-    out[0] = Math.min(a[0], b[0]);
-    out[1] = Math.min(a[1], b[1]);
-    return out;
-};
-
-/**
- * Returns the maximum of two vec2's
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {vec2} out
- */
-vec2.max = function(out, a, b) {
-    out[0] = Math.max(a[0], b[0]);
-    out[1] = Math.max(a[1], b[1]);
-    return out;
-};
-
-/**
- * Scales a vec2 by a scalar number
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the vector to scale
- * @param {Number} b amount to scale the vector by
- * @returns {vec2} out
- */
-vec2.scale = function(out, a, b) {
-    out[0] = a[0] * b;
-    out[1] = a[1] * b;
-    return out;
-};
-
-/**
- * Adds two vec2's after scaling the second operand by a scalar value
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @param {Number} scale the amount to scale b by before adding
- * @returns {vec2} out
- */
-vec2.scaleAndAdd = function(out, a, b, scale) {
-    out[0] = a[0] + (b[0] * scale);
-    out[1] = a[1] + (b[1] * scale);
-    return out;
-};
-
-/**
- * Calculates the euclidian distance between two vec2's
- *
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {Number} distance between a and b
- */
-vec2.distance = function(a, b) {
-    var x = b[0] - a[0],
-        y = b[1] - a[1];
-    return Math.sqrt(x*x + y*y);
-};
-
-/**
- * Alias for {@link vec2.distance}
- * @function
- */
-vec2.dist = vec2.distance;
-
-/**
- * Calculates the squared euclidian distance between two vec2's
- *
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {Number} squared distance between a and b
- */
-vec2.squaredDistance = function(a, b) {
-    var x = b[0] - a[0],
-        y = b[1] - a[1];
-    return x*x + y*y;
-};
-
-/**
- * Alias for {@link vec2.squaredDistance}
- * @function
- */
-vec2.sqrDist = vec2.squaredDistance;
-
-/**
- * Calculates the length of a vec2
- *
- * @param {vec2} a vector to calculate length of
- * @returns {Number} length of a
- */
-vec2.length = function (a) {
-    var x = a[0],
-        y = a[1];
-    return Math.sqrt(x*x + y*y);
-};
-
-/**
- * Alias for {@link vec2.length}
- * @function
- */
-vec2.len = vec2.length;
-
-/**
- * Calculates the squared length of a vec2
- *
- * @param {vec2} a vector to calculate squared length of
- * @returns {Number} squared length of a
- */
-vec2.squaredLength = function (a) {
-    var x = a[0],
-        y = a[1];
-    return x*x + y*y;
-};
-
-/**
- * Alias for {@link vec2.squaredLength}
- * @function
- */
-vec2.sqrLen = vec2.squaredLength;
-
-/**
- * Negates the components of a vec2
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a vector to negate
- * @returns {vec2} out
- */
-vec2.negate = function(out, a) {
-    out[0] = -a[0];
-    out[1] = -a[1];
-    return out;
-};
-
-/**
- * Normalize a vec2
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a vector to normalize
- * @returns {vec2} out
- */
-vec2.normalize = function(out, a) {
-    var x = a[0],
-        y = a[1];
-    var len = x*x + y*y;
-    if (len > 0) {
-        //TODO: evaluate use of glm_invsqrt here?
-        len = 1 / Math.sqrt(len);
-        out[0] = a[0] * len;
-        out[1] = a[1] * len;
-    }
-    return out;
-};
-
-/**
- * Calculates the dot product of two vec2's
- *
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {Number} dot product of a and b
- */
-vec2.dot = function (a, b) {
-    return a[0] * b[0] + a[1] * b[1];
-};
-
-/**
- * Computes the cross product of two vec2's
- * Note that the cross product must by definition produce a 3D vector
- *
- * @param {vec3} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {vec3} out
- */
-vec2.cross = function(out, a, b) {
-    var z = a[0] * b[1] - a[1] * b[0];
-    out[0] = out[1] = 0;
-    out[2] = z;
-    return out;
-};
-
-/**
- * Performs a linear interpolation between two vec2's
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @param {Number} t interpolation amount between the two inputs
- * @returns {vec2} out
- */
-vec2.lerp = function (out, a, b, t) {
-    var ax = a[0],
-        ay = a[1];
-    out[0] = ax + t * (b[0] - ax);
-    out[1] = ay + t * (b[1] - ay);
-    return out;
-};
-
-/**
- * Generates a random vector with the given scale
- *
- * @param {vec2} out the receiving vector
- * @param {Number} [scale] Length of the resulting vector. If ommitted, a unit vector will be returned
- * @returns {vec2} out
- */
-vec2.random = function (out, scale) {
-    scale = scale || 1.0;
-    var r = GLMAT_RANDOM() * 2.0 * Math.PI;
-    out[0] = Math.cos(r) * scale;
-    out[1] = Math.sin(r) * scale;
-    return out;
-};
-
-/**
- * Transforms the vec2 with a mat2
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the vector to transform
- * @param {mat2} m matrix to transform with
- * @returns {vec2} out
- */
-vec2.transformMat2 = function(out, a, m) {
-    var x = a[0],
-        y = a[1];
-    out[0] = m[0] * x + m[2] * y;
-    out[1] = m[1] * x + m[3] * y;
-    return out;
-};
-
-/**
- * Transforms the vec2 with a mat2d
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the vector to transform
- * @param {mat2d} m matrix to transform with
- * @returns {vec2} out
- */
-vec2.transformMat2d = function(out, a, m) {
-    var x = a[0],
-        y = a[1];
-    out[0] = m[0] * x + m[2] * y + m[4];
-    out[1] = m[1] * x + m[3] * y + m[5];
-    return out;
-};
-
-/**
- * Transforms the vec2 with a mat3
- * 3rd vector component is implicitly '1'
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the vector to transform
- * @param {mat3} m matrix to transform with
- * @returns {vec2} out
- */
-vec2.transformMat3 = function(out, a, m) {
-    var x = a[0],
-        y = a[1];
-    out[0] = m[0] * x + m[3] * y + m[6];
-    out[1] = m[1] * x + m[4] * y + m[7];
-    return out;
-};
-
-/**
- * Transforms the vec2 with a mat4
- * 3rd vector component is implicitly '0'
- * 4th vector component is implicitly '1'
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the vector to transform
- * @param {mat4} m matrix to transform with
- * @returns {vec2} out
- */
-vec2.transformMat4 = function(out, a, m) {
-    var x = a[0], 
-        y = a[1];
-    out[0] = m[0] * x + m[4] * y + m[12];
-    out[1] = m[1] * x + m[5] * y + m[13];
-    return out;
-};
-
-/**
- * Perform some operation over an array of vec2s.
- *
- * @param {Array} a the array of vectors to iterate over
- * @param {Number} stride Number of elements between the start of each vec2. If 0 assumes tightly packed
- * @param {Number} offset Number of elements to skip at the beginning of the array
- * @param {Number} count Number of vec2s to iterate over. If 0 iterates over entire array
- * @param {Function} fn Function to call for each vector in the array
- * @param {Object} [arg] additional argument to pass to fn
- * @returns {Array} a
- * @function
- */
-vec2.forEach = (function() {
-    var vec = vec2.create();
-
-    return function(a, stride, offset, count, fn, arg) {
-        var i, l;
-        if(!stride) {
-            stride = 2;
-        }
-
-        if(!offset) {
-            offset = 0;
-        }
-        
-        if(count) {
-            l = Math.min((count * stride) + offset, a.length);
-        } else {
-            l = a.length;
-        }
-
-        for(i = offset; i < l; i += stride) {
-            vec[0] = a[i]; vec[1] = a[i+1];
-            fn(vec, vec, arg);
-            a[i] = vec[0]; a[i+1] = vec[1];
-        }
-        
-        return a;
-    };
-})();
-
-/**
- * Returns a string representation of a vector
- *
- * @param {vec2} vec vector to represent as a string
- * @returns {String} string representation of the vector
- */
-vec2.str = function (a) {
-    return 'vec2(' + a[0] + ', ' + a[1] + ')';
-};
-
-if(typeof(exports) !== 'undefined') {
-    exports.vec2 = vec2;
-}
-;
-/* Copyright (c) 2013, Brandon Jones, Colin MacKenzie IV. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-  * Redistributions of source code must retain the above copyright notice, this
-    list of conditions and the following disclaimer.
-  * Redistributions in binary form must reproduce the above copyright notice,
-    this list of conditions and the following disclaimer in the documentation 
-    and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
-
-/**
- * @class 3 Dimensional Vector
- * @name vec3
- */
-
-var vec3 = {};
-
-/**
- * Creates a new, empty vec3
- *
- * @returns {vec3} a new 3D vector
- */
-vec3.create = function() {
-    var out = new GLMAT_ARRAY_TYPE(3);
-    out[0] = 0;
-    out[1] = 0;
-    out[2] = 0;
-    return out;
-};
-
-/**
- * Creates a new vec3 initialized with values from an existing vector
- *
- * @param {vec3} a vector to clone
- * @returns {vec3} a new 3D vector
- */
-vec3.clone = function(a) {
-    var out = new GLMAT_ARRAY_TYPE(3);
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    return out;
-};
-
-/**
- * Creates a new vec3 initialized with the given values
- *
- * @param {Number} x X component
- * @param {Number} y Y component
- * @param {Number} z Z component
- * @returns {vec3} a new 3D vector
- */
-vec3.fromValues = function(x, y, z) {
-    var out = new GLMAT_ARRAY_TYPE(3);
-    out[0] = x;
-    out[1] = y;
-    out[2] = z;
-    return out;
-};
-
-/**
- * Copy the values from one vec3 to another
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the source vector
- * @returns {vec3} out
- */
-vec3.copy = function(out, a) {
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    return out;
-};
-
-/**
- * Set the components of a vec3 to the given values
- *
- * @param {vec3} out the receiving vector
- * @param {Number} x X component
- * @param {Number} y Y component
- * @param {Number} z Z component
- * @returns {vec3} out
- */
-vec3.set = function(out, x, y, z) {
-    out[0] = x;
-    out[1] = y;
-    out[2] = z;
-    return out;
-};
-
-/**
- * Adds two vec3's
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {vec3} out
- */
-vec3.add = function(out, a, b) {
-    out[0] = a[0] + b[0];
-    out[1] = a[1] + b[1];
-    out[2] = a[2] + b[2];
-    return out;
-};
-
-/**
- * Subtracts vector b from vector a
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {vec3} out
- */
-vec3.subtract = function(out, a, b) {
-    out[0] = a[0] - b[0];
-    out[1] = a[1] - b[1];
-    out[2] = a[2] - b[2];
-    return out;
-};
-
-/**
- * Alias for {@link vec3.subtract}
- * @function
- */
-vec3.sub = vec3.subtract;
-
-/**
- * Multiplies two vec3's
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {vec3} out
- */
-vec3.multiply = function(out, a, b) {
-    out[0] = a[0] * b[0];
-    out[1] = a[1] * b[1];
-    out[2] = a[2] * b[2];
-    return out;
-};
-
-/**
- * Alias for {@link vec3.multiply}
- * @function
- */
-vec3.mul = vec3.multiply;
-
-/**
- * Divides two vec3's
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {vec3} out
- */
-vec3.divide = function(out, a, b) {
-    out[0] = a[0] / b[0];
-    out[1] = a[1] / b[1];
-    out[2] = a[2] / b[2];
-    return out;
-};
-
-/**
- * Alias for {@link vec3.divide}
- * @function
- */
-vec3.div = vec3.divide;
-
-/**
- * Returns the minimum of two vec3's
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {vec3} out
- */
-vec3.min = function(out, a, b) {
-    out[0] = Math.min(a[0], b[0]);
-    out[1] = Math.min(a[1], b[1]);
-    out[2] = Math.min(a[2], b[2]);
-    return out;
-};
-
-/**
- * Returns the maximum of two vec3's
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {vec3} out
- */
-vec3.max = function(out, a, b) {
-    out[0] = Math.max(a[0], b[0]);
-    out[1] = Math.max(a[1], b[1]);
-    out[2] = Math.max(a[2], b[2]);
-    return out;
-};
-
-/**
- * Scales a vec3 by a scalar number
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the vector to scale
- * @param {Number} b amount to scale the vector by
- * @returns {vec3} out
- */
-vec3.scale = function(out, a, b) {
-    out[0] = a[0] * b;
-    out[1] = a[1] * b;
-    out[2] = a[2] * b;
-    return out;
-};
-
-/**
- * Adds two vec3's after scaling the second operand by a scalar value
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @param {Number} scale the amount to scale b by before adding
- * @returns {vec3} out
- */
-vec3.scaleAndAdd = function(out, a, b, scale) {
-    out[0] = a[0] + (b[0] * scale);
-    out[1] = a[1] + (b[1] * scale);
-    out[2] = a[2] + (b[2] * scale);
-    return out;
-};
-
-/**
- * Calculates the euclidian distance between two vec3's
- *
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {Number} distance between a and b
- */
-vec3.distance = function(a, b) {
-    var x = b[0] - a[0],
-        y = b[1] - a[1],
-        z = b[2] - a[2];
-    return Math.sqrt(x*x + y*y + z*z);
-};
-
-/**
- * Alias for {@link vec3.distance}
- * @function
- */
-vec3.dist = vec3.distance;
-
-/**
- * Calculates the squared euclidian distance between two vec3's
- *
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {Number} squared distance between a and b
- */
-vec3.squaredDistance = function(a, b) {
-    var x = b[0] - a[0],
-        y = b[1] - a[1],
-        z = b[2] - a[2];
-    return x*x + y*y + z*z;
-};
-
-/**
- * Alias for {@link vec3.squaredDistance}
- * @function
- */
-vec3.sqrDist = vec3.squaredDistance;
-
-/**
- * Calculates the length of a vec3
- *
- * @param {vec3} a vector to calculate length of
- * @returns {Number} length of a
- */
-vec3.length = function (a) {
-    var x = a[0],
-        y = a[1],
-        z = a[2];
-    return Math.sqrt(x*x + y*y + z*z);
-};
-
-/**
- * Alias for {@link vec3.length}
- * @function
- */
-vec3.len = vec3.length;
-
-/**
- * Calculates the squared length of a vec3
- *
- * @param {vec3} a vector to calculate squared length of
- * @returns {Number} squared length of a
- */
-vec3.squaredLength = function (a) {
-    var x = a[0],
-        y = a[1],
-        z = a[2];
-    return x*x + y*y + z*z;
-};
-
-/**
- * Alias for {@link vec3.squaredLength}
- * @function
- */
-vec3.sqrLen = vec3.squaredLength;
-
-/**
- * Negates the components of a vec3
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a vector to negate
- * @returns {vec3} out
- */
-vec3.negate = function(out, a) {
-    out[0] = -a[0];
-    out[1] = -a[1];
-    out[2] = -a[2];
-    return out;
-};
-
-/**
- * Normalize a vec3
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a vector to normalize
- * @returns {vec3} out
- */
-vec3.normalize = function(out, a) {
-    var x = a[0],
-        y = a[1],
-        z = a[2];
-    var len = x*x + y*y + z*z;
-    if (len > 0) {
-        //TODO: evaluate use of glm_invsqrt here?
-        len = 1 / Math.sqrt(len);
-        out[0] = a[0] * len;
-        out[1] = a[1] * len;
-        out[2] = a[2] * len;
-    }
-    return out;
-};
-
-/**
- * Calculates the dot product of two vec3's
- *
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {Number} dot product of a and b
- */
-vec3.dot = function (a, b) {
-    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
-};
-
-/**
- * Computes the cross product of two vec3's
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {vec3} out
- */
-vec3.cross = function(out, a, b) {
-    var ax = a[0], ay = a[1], az = a[2],
-        bx = b[0], by = b[1], bz = b[2];
-
-    out[0] = ay * bz - az * by;
-    out[1] = az * bx - ax * bz;
-    out[2] = ax * by - ay * bx;
-    return out;
-};
-
-/**
- * Performs a linear interpolation between two vec3's
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @param {Number} t interpolation amount between the two inputs
- * @returns {vec3} out
- */
-vec3.lerp = function (out, a, b, t) {
-    var ax = a[0],
-        ay = a[1],
-        az = a[2];
-    out[0] = ax + t * (b[0] - ax);
-    out[1] = ay + t * (b[1] - ay);
-    out[2] = az + t * (b[2] - az);
-    return out;
-};
-
-/**
- * Generates a random vector with the given scale
- *
- * @param {vec3} out the receiving vector
- * @param {Number} [scale] Length of the resulting vector. If ommitted, a unit vector will be returned
- * @returns {vec3} out
- */
-vec3.random = function (out, scale) {
-    scale = scale || 1.0;
-
-    var r = GLMAT_RANDOM() * 2.0 * Math.PI;
-    var z = (GLMAT_RANDOM() * 2.0) - 1.0;
-    var zScale = Math.sqrt(1.0-z*z) * scale;
-
-    out[0] = Math.cos(r) * zScale;
-    out[1] = Math.sin(r) * zScale;
-    out[2] = z * scale;
-    return out;
-};
-
-/**
- * Transforms the vec3 with a mat4.
- * 4th vector component is implicitly '1'
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the vector to transform
- * @param {mat4} m matrix to transform with
- * @returns {vec3} out
- */
-vec3.transformMat4 = function(out, a, m) {
-    var x = a[0], y = a[1], z = a[2];
-    out[0] = m[0] * x + m[4] * y + m[8] * z + m[12];
-    out[1] = m[1] * x + m[5] * y + m[9] * z + m[13];
-    out[2] = m[2] * x + m[6] * y + m[10] * z + m[14];
-    return out;
-};
-
-/**
- * Transforms the vec3 with a mat3.
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the vector to transform
- * @param {mat4} m the 3x3 matrix to transform with
- * @returns {vec3} out
- */
-vec3.transformMat3 = function(out, a, m) {
-    var x = a[0], y = a[1], z = a[2];
-    out[0] = x * m[0] + y * m[3] + z * m[6];
-    out[1] = x * m[1] + y * m[4] + z * m[7];
-    out[2] = x * m[2] + y * m[5] + z * m[8];
-    return out;
-};
-
-/**
- * Transforms the vec3 with a quat
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the vector to transform
- * @param {quat} q quaternion to transform with
- * @returns {vec3} out
- */
-vec3.transformQuat = function(out, a, q) {
-    // benchmarks: http://jsperf.com/quaternion-transform-vec3-implementations
-
-    var x = a[0], y = a[1], z = a[2],
-        qx = q[0], qy = q[1], qz = q[2], qw = q[3],
-
-        // calculate quat * vec
-        ix = qw * x + qy * z - qz * y,
-        iy = qw * y + qz * x - qx * z,
-        iz = qw * z + qx * y - qy * x,
-        iw = -qx * x - qy * y - qz * z;
-
-    // calculate result * inverse quat
-    out[0] = ix * qw + iw * -qx + iy * -qz - iz * -qy;
-    out[1] = iy * qw + iw * -qy + iz * -qx - ix * -qz;
-    out[2] = iz * qw + iw * -qz + ix * -qy - iy * -qx;
-    return out;
-};
-
-/*
-* Rotate a 3D vector around the x-axis
-* @param {vec3} out The receiving vec3
-* @param {vec3} a The vec3 point to rotate
-* @param {vec3} b The origin of the rotation
-* @param {Number} c The angle of rotation
-* @returns {vec3} out
-*/
-vec3.rotateX = function(out, a, b, c){
-   var p = [], r=[];
-	  //Translate point to the origin
-	  p[0] = a[0] - b[0];
-	  p[1] = a[1] - b[1];
-  	p[2] = a[2] - b[2];
-
-	  //perform rotation
-	  r[0] = p[0];
-	  r[1] = p[1]*Math.cos(c) - p[2]*Math.sin(c);
-	  r[2] = p[1]*Math.sin(c) + p[2]*Math.cos(c);
-
-	  //translate to correct position
-	  out[0] = r[0] + b[0];
-	  out[1] = r[1] + b[1];
-	  out[2] = r[2] + b[2];
-
-  	return out;
-};
-
-/*
-* Rotate a 3D vector around the y-axis
-* @param {vec3} out The receiving vec3
-* @param {vec3} a The vec3 point to rotate
-* @param {vec3} b The origin of the rotation
-* @param {Number} c The angle of rotation
-* @returns {vec3} out
-*/
-vec3.rotateY = function(out, a, b, c){
-  	var p = [], r=[];
-  	//Translate point to the origin
-  	p[0] = a[0] - b[0];
-  	p[1] = a[1] - b[1];
-  	p[2] = a[2] - b[2];
-  
-  	//perform rotation
-  	r[0] = p[2]*Math.sin(c) + p[0]*Math.cos(c);
-  	r[1] = p[1];
-  	r[2] = p[2]*Math.cos(c) - p[0]*Math.sin(c);
-  
-  	//translate to correct position
-  	out[0] = r[0] + b[0];
-  	out[1] = r[1] + b[1];
-  	out[2] = r[2] + b[2];
-  
-  	return out;
-};
-
-/*
-* Rotate a 3D vector around the z-axis
-* @param {vec3} out The receiving vec3
-* @param {vec3} a The vec3 point to rotate
-* @param {vec3} b The origin of the rotation
-* @param {Number} c The angle of rotation
-* @returns {vec3} out
-*/
-vec3.rotateZ = function(out, a, b, c){
-  	var p = [], r=[];
-  	//Translate point to the origin
-  	p[0] = a[0] - b[0];
-  	p[1] = a[1] - b[1];
-  	p[2] = a[2] - b[2];
-  
-  	//perform rotation
-  	r[0] = p[0]*Math.cos(c) - p[1]*Math.sin(c);
-  	r[1] = p[0]*Math.sin(c) + p[1]*Math.cos(c);
-  	r[2] = p[2];
-  
-  	//translate to correct position
-  	out[0] = r[0] + b[0];
-  	out[1] = r[1] + b[1];
-  	out[2] = r[2] + b[2];
-  
-  	return out;
-};
-
-/**
- * Perform some operation over an array of vec3s.
- *
- * @param {Array} a the array of vectors to iterate over
- * @param {Number} stride Number of elements between the start of each vec3. If 0 assumes tightly packed
- * @param {Number} offset Number of elements to skip at the beginning of the array
- * @param {Number} count Number of vec3s to iterate over. If 0 iterates over entire array
- * @param {Function} fn Function to call for each vector in the array
- * @param {Object} [arg] additional argument to pass to fn
- * @returns {Array} a
- * @function
- */
-vec3.forEach = (function() {
-    var vec = vec3.create();
-
-    return function(a, stride, offset, count, fn, arg) {
-        var i, l;
-        if(!stride) {
-            stride = 3;
-        }
-
-        if(!offset) {
-            offset = 0;
-        }
-        
-        if(count) {
-            l = Math.min((count * stride) + offset, a.length);
-        } else {
-            l = a.length;
-        }
-
-        for(i = offset; i < l; i += stride) {
-            vec[0] = a[i]; vec[1] = a[i+1]; vec[2] = a[i+2];
-            fn(vec, vec, arg);
-            a[i] = vec[0]; a[i+1] = vec[1]; a[i+2] = vec[2];
-        }
-        
-        return a;
-    };
-})();
-
-/**
- * Returns a string representation of a vector
- *
- * @param {vec3} vec vector to represent as a string
- * @returns {String} string representation of the vector
- */
-vec3.str = function (a) {
-    return 'vec3(' + a[0] + ', ' + a[1] + ', ' + a[2] + ')';
-};
-
-if(typeof(exports) !== 'undefined') {
-    exports.vec3 = vec3;
-}
-;
-/* Copyright (c) 2013, Brandon Jones, Colin MacKenzie IV. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-  * Redistributions of source code must retain the above copyright notice, this
-    list of conditions and the following disclaimer.
-  * Redistributions in binary form must reproduce the above copyright notice,
-    this list of conditions and the following disclaimer in the documentation 
-    and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
-
-/**
- * @class 4 Dimensional Vector
- * @name vec4
- */
-
-var vec4 = {};
-
-/**
- * Creates a new, empty vec4
- *
- * @returns {vec4} a new 4D vector
- */
-vec4.create = function() {
-    var out = new GLMAT_ARRAY_TYPE(4);
-    out[0] = 0;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    return out;
-};
-
-/**
- * Creates a new vec4 initialized with values from an existing vector
- *
- * @param {vec4} a vector to clone
- * @returns {vec4} a new 4D vector
- */
-vec4.clone = function(a) {
-    var out = new GLMAT_ARRAY_TYPE(4);
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[3];
-    return out;
-};
-
-/**
- * Creates a new vec4 initialized with the given values
- *
- * @param {Number} x X component
- * @param {Number} y Y component
- * @param {Number} z Z component
- * @param {Number} w W component
- * @returns {vec4} a new 4D vector
- */
-vec4.fromValues = function(x, y, z, w) {
-    var out = new GLMAT_ARRAY_TYPE(4);
-    out[0] = x;
-    out[1] = y;
-    out[2] = z;
-    out[3] = w;
-    return out;
-};
-
-/**
- * Copy the values from one vec4 to another
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the source vector
- * @returns {vec4} out
- */
-vec4.copy = function(out, a) {
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[3];
-    return out;
-};
-
-/**
- * Set the components of a vec4 to the given values
- *
- * @param {vec4} out the receiving vector
- * @param {Number} x X component
- * @param {Number} y Y component
- * @param {Number} z Z component
- * @param {Number} w W component
- * @returns {vec4} out
- */
-vec4.set = function(out, x, y, z, w) {
-    out[0] = x;
-    out[1] = y;
-    out[2] = z;
-    out[3] = w;
-    return out;
-};
-
-/**
- * Adds two vec4's
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {vec4} out
- */
-vec4.add = function(out, a, b) {
-    out[0] = a[0] + b[0];
-    out[1] = a[1] + b[1];
-    out[2] = a[2] + b[2];
-    out[3] = a[3] + b[3];
-    return out;
-};
-
-/**
- * Subtracts vector b from vector a
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {vec4} out
- */
-vec4.subtract = function(out, a, b) {
-    out[0] = a[0] - b[0];
-    out[1] = a[1] - b[1];
-    out[2] = a[2] - b[2];
-    out[3] = a[3] - b[3];
-    return out;
-};
-
-/**
- * Alias for {@link vec4.subtract}
- * @function
- */
-vec4.sub = vec4.subtract;
-
-/**
- * Multiplies two vec4's
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {vec4} out
- */
-vec4.multiply = function(out, a, b) {
-    out[0] = a[0] * b[0];
-    out[1] = a[1] * b[1];
-    out[2] = a[2] * b[2];
-    out[3] = a[3] * b[3];
-    return out;
-};
-
-/**
- * Alias for {@link vec4.multiply}
- * @function
- */
-vec4.mul = vec4.multiply;
-
-/**
- * Divides two vec4's
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {vec4} out
- */
-vec4.divide = function(out, a, b) {
-    out[0] = a[0] / b[0];
-    out[1] = a[1] / b[1];
-    out[2] = a[2] / b[2];
-    out[3] = a[3] / b[3];
-    return out;
-};
-
-/**
- * Alias for {@link vec4.divide}
- * @function
- */
-vec4.div = vec4.divide;
-
-/**
- * Returns the minimum of two vec4's
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {vec4} out
- */
-vec4.min = function(out, a, b) {
-    out[0] = Math.min(a[0], b[0]);
-    out[1] = Math.min(a[1], b[1]);
-    out[2] = Math.min(a[2], b[2]);
-    out[3] = Math.min(a[3], b[3]);
-    return out;
-};
-
-/**
- * Returns the maximum of two vec4's
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {vec4} out
- */
-vec4.max = function(out, a, b) {
-    out[0] = Math.max(a[0], b[0]);
-    out[1] = Math.max(a[1], b[1]);
-    out[2] = Math.max(a[2], b[2]);
-    out[3] = Math.max(a[3], b[3]);
-    return out;
-};
-
-/**
- * Scales a vec4 by a scalar number
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the vector to scale
- * @param {Number} b amount to scale the vector by
- * @returns {vec4} out
- */
-vec4.scale = function(out, a, b) {
-    out[0] = a[0] * b;
-    out[1] = a[1] * b;
-    out[2] = a[2] * b;
-    out[3] = a[3] * b;
-    return out;
-};
-
-/**
- * Adds two vec4's after scaling the second operand by a scalar value
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @param {Number} scale the amount to scale b by before adding
- * @returns {vec4} out
- */
-vec4.scaleAndAdd = function(out, a, b, scale) {
-    out[0] = a[0] + (b[0] * scale);
-    out[1] = a[1] + (b[1] * scale);
-    out[2] = a[2] + (b[2] * scale);
-    out[3] = a[3] + (b[3] * scale);
-    return out;
-};
-
-/**
- * Calculates the euclidian distance between two vec4's
- *
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {Number} distance between a and b
- */
-vec4.distance = function(a, b) {
-    var x = b[0] - a[0],
-        y = b[1] - a[1],
-        z = b[2] - a[2],
-        w = b[3] - a[3];
-    return Math.sqrt(x*x + y*y + z*z + w*w);
-};
-
-/**
- * Alias for {@link vec4.distance}
- * @function
- */
-vec4.dist = vec4.distance;
-
-/**
- * Calculates the squared euclidian distance between two vec4's
- *
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {Number} squared distance between a and b
- */
-vec4.squaredDistance = function(a, b) {
-    var x = b[0] - a[0],
-        y = b[1] - a[1],
-        z = b[2] - a[2],
-        w = b[3] - a[3];
-    return x*x + y*y + z*z + w*w;
-};
-
-/**
- * Alias for {@link vec4.squaredDistance}
- * @function
- */
-vec4.sqrDist = vec4.squaredDistance;
-
-/**
- * Calculates the length of a vec4
- *
- * @param {vec4} a vector to calculate length of
- * @returns {Number} length of a
- */
-vec4.length = function (a) {
-    var x = a[0],
-        y = a[1],
-        z = a[2],
-        w = a[3];
-    return Math.sqrt(x*x + y*y + z*z + w*w);
-};
-
-/**
- * Alias for {@link vec4.length}
- * @function
- */
-vec4.len = vec4.length;
-
-/**
- * Calculates the squared length of a vec4
- *
- * @param {vec4} a vector to calculate squared length of
- * @returns {Number} squared length of a
- */
-vec4.squaredLength = function (a) {
-    var x = a[0],
-        y = a[1],
-        z = a[2],
-        w = a[3];
-    return x*x + y*y + z*z + w*w;
-};
-
-/**
- * Alias for {@link vec4.squaredLength}
- * @function
- */
-vec4.sqrLen = vec4.squaredLength;
-
-/**
- * Negates the components of a vec4
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a vector to negate
- * @returns {vec4} out
- */
-vec4.negate = function(out, a) {
-    out[0] = -a[0];
-    out[1] = -a[1];
-    out[2] = -a[2];
-    out[3] = -a[3];
-    return out;
-};
-
-/**
- * Normalize a vec4
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a vector to normalize
- * @returns {vec4} out
- */
-vec4.normalize = function(out, a) {
-    var x = a[0],
-        y = a[1],
-        z = a[2],
-        w = a[3];
-    var len = x*x + y*y + z*z + w*w;
-    if (len > 0) {
-        len = 1 / Math.sqrt(len);
-        out[0] = a[0] * len;
-        out[1] = a[1] * len;
-        out[2] = a[2] * len;
-        out[3] = a[3] * len;
-    }
-    return out;
-};
-
-/**
- * Calculates the dot product of two vec4's
- *
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {Number} dot product of a and b
- */
-vec4.dot = function (a, b) {
-    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3];
-};
-
-/**
- * Performs a linear interpolation between two vec4's
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @param {Number} t interpolation amount between the two inputs
- * @returns {vec4} out
- */
-vec4.lerp = function (out, a, b, t) {
-    var ax = a[0],
-        ay = a[1],
-        az = a[2],
-        aw = a[3];
-    out[0] = ax + t * (b[0] - ax);
-    out[1] = ay + t * (b[1] - ay);
-    out[2] = az + t * (b[2] - az);
-    out[3] = aw + t * (b[3] - aw);
-    return out;
-};
-
-/**
- * Generates a random vector with the given scale
- *
- * @param {vec4} out the receiving vector
- * @param {Number} [scale] Length of the resulting vector. If ommitted, a unit vector will be returned
- * @returns {vec4} out
- */
-vec4.random = function (out, scale) {
-    scale = scale || 1.0;
-
-    //TODO: This is a pretty awful way of doing this. Find something better.
-    out[0] = GLMAT_RANDOM();
-    out[1] = GLMAT_RANDOM();
-    out[2] = GLMAT_RANDOM();
-    out[3] = GLMAT_RANDOM();
-    vec4.normalize(out, out);
-    vec4.scale(out, out, scale);
-    return out;
-};
-
-/**
- * Transforms the vec4 with a mat4.
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the vector to transform
- * @param {mat4} m matrix to transform with
- * @returns {vec4} out
- */
-vec4.transformMat4 = function(out, a, m) {
-    var x = a[0], y = a[1], z = a[2], w = a[3];
-    out[0] = m[0] * x + m[4] * y + m[8] * z + m[12] * w;
-    out[1] = m[1] * x + m[5] * y + m[9] * z + m[13] * w;
-    out[2] = m[2] * x + m[6] * y + m[10] * z + m[14] * w;
-    out[3] = m[3] * x + m[7] * y + m[11] * z + m[15] * w;
-    return out;
-};
-
-/**
- * Transforms the vec4 with a quat
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the vector to transform
- * @param {quat} q quaternion to transform with
- * @returns {vec4} out
- */
-vec4.transformQuat = function(out, a, q) {
-    var x = a[0], y = a[1], z = a[2],
-        qx = q[0], qy = q[1], qz = q[2], qw = q[3],
-
-        // calculate quat * vec
-        ix = qw * x + qy * z - qz * y,
-        iy = qw * y + qz * x - qx * z,
-        iz = qw * z + qx * y - qy * x,
-        iw = -qx * x - qy * y - qz * z;
-
-    // calculate result * inverse quat
-    out[0] = ix * qw + iw * -qx + iy * -qz - iz * -qy;
-    out[1] = iy * qw + iw * -qy + iz * -qx - ix * -qz;
-    out[2] = iz * qw + iw * -qz + ix * -qy - iy * -qx;
-    return out;
-};
-
-/**
- * Perform some operation over an array of vec4s.
- *
- * @param {Array} a the array of vectors to iterate over
- * @param {Number} stride Number of elements between the start of each vec4. If 0 assumes tightly packed
- * @param {Number} offset Number of elements to skip at the beginning of the array
- * @param {Number} count Number of vec2s to iterate over. If 0 iterates over entire array
- * @param {Function} fn Function to call for each vector in the array
- * @param {Object} [arg] additional argument to pass to fn
- * @returns {Array} a
- * @function
- */
-vec4.forEach = (function() {
-    var vec = vec4.create();
-
-    return function(a, stride, offset, count, fn, arg) {
-        var i, l;
-        if(!stride) {
-            stride = 4;
-        }
-
-        if(!offset) {
-            offset = 0;
-        }
-        
-        if(count) {
-            l = Math.min((count * stride) + offset, a.length);
-        } else {
-            l = a.length;
-        }
-
-        for(i = offset; i < l; i += stride) {
-            vec[0] = a[i]; vec[1] = a[i+1]; vec[2] = a[i+2]; vec[3] = a[i+3];
-            fn(vec, vec, arg);
-            a[i] = vec[0]; a[i+1] = vec[1]; a[i+2] = vec[2]; a[i+3] = vec[3];
-        }
-        
-        return a;
-    };
-})();
-
-/**
- * Returns a string representation of a vector
- *
- * @param {vec4} vec vector to represent as a string
- * @returns {String} string representation of the vector
- */
-vec4.str = function (a) {
-    return 'vec4(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ')';
-};
-
-if(typeof(exports) !== 'undefined') {
-    exports.vec4 = vec4;
-}
-;
-/* Copyright (c) 2013, Brandon Jones, Colin MacKenzie IV. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-  * Redistributions of source code must retain the above copyright notice, this
-    list of conditions and the following disclaimer.
-  * Redistributions in binary form must reproduce the above copyright notice,
-    this list of conditions and the following disclaimer in the documentation 
-    and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
-
-/**
- * @class 2x2 Matrix
- * @name mat2
- */
-
-var mat2 = {};
-
-/**
- * Creates a new identity mat2
- *
- * @returns {mat2} a new 2x2 matrix
- */
-mat2.create = function() {
-    var out = new GLMAT_ARRAY_TYPE(4);
-    out[0] = 1;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 1;
-    return out;
-};
-
-/**
- * Creates a new mat2 initialized with values from an existing matrix
- *
- * @param {mat2} a matrix to clone
- * @returns {mat2} a new 2x2 matrix
- */
-mat2.clone = function(a) {
-    var out = new GLMAT_ARRAY_TYPE(4);
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[3];
-    return out;
-};
-
-/**
- * Copy the values from one mat2 to another
- *
- * @param {mat2} out the receiving matrix
- * @param {mat2} a the source matrix
- * @returns {mat2} out
- */
-mat2.copy = function(out, a) {
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[3];
-    return out;
-};
-
-/**
- * Set a mat2 to the identity matrix
- *
- * @param {mat2} out the receiving matrix
- * @returns {mat2} out
- */
-mat2.identity = function(out) {
-    out[0] = 1;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 1;
-    return out;
-};
-
-/**
- * Transpose the values of a mat2
- *
- * @param {mat2} out the receiving matrix
- * @param {mat2} a the source matrix
- * @returns {mat2} out
- */
-mat2.transpose = function(out, a) {
-    // If we are transposing ourselves we can skip a few steps but have to cache some values
-    if (out === a) {
-        var a1 = a[1];
-        out[1] = a[2];
-        out[2] = a1;
-    } else {
-        out[0] = a[0];
-        out[1] = a[2];
-        out[2] = a[1];
-        out[3] = a[3];
-    }
-    
-    return out;
-};
-
-/**
- * Inverts a mat2
- *
- * @param {mat2} out the receiving matrix
- * @param {mat2} a the source matrix
- * @returns {mat2} out
- */
-mat2.invert = function(out, a) {
-    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3],
-
-        // Calculate the determinant
-        det = a0 * a3 - a2 * a1;
-
-    if (!det) {
-        return null;
-    }
-    det = 1.0 / det;
-    
-    out[0] =  a3 * det;
-    out[1] = -a1 * det;
-    out[2] = -a2 * det;
-    out[3] =  a0 * det;
-
-    return out;
-};
-
-/**
- * Calculates the adjugate of a mat2
- *
- * @param {mat2} out the receiving matrix
- * @param {mat2} a the source matrix
- * @returns {mat2} out
- */
-mat2.adjoint = function(out, a) {
-    // Caching this value is nessecary if out == a
-    var a0 = a[0];
-    out[0] =  a[3];
-    out[1] = -a[1];
-    out[2] = -a[2];
-    out[3] =  a0;
-
-    return out;
-};
-
-/**
- * Calculates the determinant of a mat2
- *
- * @param {mat2} a the source matrix
- * @returns {Number} determinant of a
- */
-mat2.determinant = function (a) {
-    return a[0] * a[3] - a[2] * a[1];
-};
-
-/**
- * Multiplies two mat2's
- *
- * @param {mat2} out the receiving matrix
- * @param {mat2} a the first operand
- * @param {mat2} b the second operand
- * @returns {mat2} out
- */
-mat2.multiply = function (out, a, b) {
-    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3];
-    var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3];
-    out[0] = a0 * b0 + a2 * b1;
-    out[1] = a1 * b0 + a3 * b1;
-    out[2] = a0 * b2 + a2 * b3;
-    out[3] = a1 * b2 + a3 * b3;
-    return out;
-};
-
-/**
- * Alias for {@link mat2.multiply}
- * @function
- */
-mat2.mul = mat2.multiply;
-
-/**
- * Rotates a mat2 by the given angle
- *
- * @param {mat2} out the receiving matrix
- * @param {mat2} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat2} out
- */
-mat2.rotate = function (out, a, rad) {
-    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3],
-        s = Math.sin(rad),
-        c = Math.cos(rad);
-    out[0] = a0 *  c + a2 * s;
-    out[1] = a1 *  c + a3 * s;
-    out[2] = a0 * -s + a2 * c;
-    out[3] = a1 * -s + a3 * c;
-    return out;
-};
-
-/**
- * Scales the mat2 by the dimensions in the given vec2
- *
- * @param {mat2} out the receiving matrix
- * @param {mat2} a the matrix to rotate
- * @param {vec2} v the vec2 to scale the matrix by
- * @returns {mat2} out
- **/
-mat2.scale = function(out, a, v) {
-    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3],
-        v0 = v[0], v1 = v[1];
-    out[0] = a0 * v0;
-    out[1] = a1 * v0;
-    out[2] = a2 * v1;
-    out[3] = a3 * v1;
-    return out;
-};
-
-/**
- * Returns a string representation of a mat2
- *
- * @param {mat2} mat matrix to represent as a string
- * @returns {String} string representation of the matrix
- */
-mat2.str = function (a) {
-    return 'mat2(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ')';
-};
-
-/**
- * Returns Frobenius norm of a mat2
- *
- * @param {mat2} a the matrix to calculate Frobenius norm of
- * @returns {Number} Frobenius norm
- */
-mat2.frob = function (a) {
-    return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2)))
-};
-
-/**
- * Returns L, D and U matrices (Lower triangular, Diagonal and Upper triangular) by factorizing the input matrix
- * @param {mat2} L the lower triangular matrix 
- * @param {mat2} D the diagonal matrix 
- * @param {mat2} U the upper triangular matrix 
- * @param {mat2} a the input matrix to factorize
- */
-
-mat2.LDU = function (L, D, U, a) { 
-    L[2] = a[2]/a[0]; 
-    U[0] = a[0]; 
-    U[1] = a[1]; 
-    U[3] = a[3] - L[2] * U[1]; 
-    return [L, D, U];       
-}; 
-
-if(typeof(exports) !== 'undefined') {
-    exports.mat2 = mat2;
-}
-;
-/* Copyright (c) 2013, Brandon Jones, Colin MacKenzie IV. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-  * Redistributions of source code must retain the above copyright notice, this
-    list of conditions and the following disclaimer.
-  * Redistributions in binary form must reproduce the above copyright notice,
-    this list of conditions and the following disclaimer in the documentation 
-    and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
-
-/**
- * @class 2x3 Matrix
- * @name mat2d
- * 
- * @description 
- * A mat2d contains six elements defined as:
- * <pre>
- * [a, c, tx,
- *  b, d, ty]
- * </pre>
- * This is a short form for the 3x3 matrix:
- * <pre>
- * [a, c, tx,
- *  b, d, ty,
- *  0, 0, 1]
- * </pre>
- * The last row is ignored so the array is shorter and operations are faster.
- */
-
-var mat2d = {};
-
-/**
- * Creates a new identity mat2d
- *
- * @returns {mat2d} a new 2x3 matrix
- */
-mat2d.create = function() {
-    var out = new GLMAT_ARRAY_TYPE(6);
-    out[0] = 1;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 1;
-    out[4] = 0;
-    out[5] = 0;
-    return out;
-};
-
-/**
- * Creates a new mat2d initialized with values from an existing matrix
- *
- * @param {mat2d} a matrix to clone
- * @returns {mat2d} a new 2x3 matrix
- */
-mat2d.clone = function(a) {
-    var out = new GLMAT_ARRAY_TYPE(6);
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[3];
-    out[4] = a[4];
-    out[5] = a[5];
-    return out;
-};
-
-/**
- * Copy the values from one mat2d to another
- *
- * @param {mat2d} out the receiving matrix
- * @param {mat2d} a the source matrix
- * @returns {mat2d} out
- */
-mat2d.copy = function(out, a) {
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[3];
-    out[4] = a[4];
-    out[5] = a[5];
-    return out;
-};
-
-/**
- * Set a mat2d to the identity matrix
- *
- * @param {mat2d} out the receiving matrix
- * @returns {mat2d} out
- */
-mat2d.identity = function(out) {
-    out[0] = 1;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 1;
-    out[4] = 0;
-    out[5] = 0;
-    return out;
-};
-
-/**
- * Inverts a mat2d
- *
- * @param {mat2d} out the receiving matrix
- * @param {mat2d} a the source matrix
- * @returns {mat2d} out
- */
-mat2d.invert = function(out, a) {
-    var aa = a[0], ab = a[1], ac = a[2], ad = a[3],
-        atx = a[4], aty = a[5];
-
-    var det = aa * ad - ab * ac;
-    if(!det){
-        return null;
-    }
-    det = 1.0 / det;
-
-    out[0] = ad * det;
-    out[1] = -ab * det;
-    out[2] = -ac * det;
-    out[3] = aa * det;
-    out[4] = (ac * aty - ad * atx) * det;
-    out[5] = (ab * atx - aa * aty) * det;
-    return out;
-};
-
-/**
- * Calculates the determinant of a mat2d
- *
- * @param {mat2d} a the source matrix
- * @returns {Number} determinant of a
- */
-mat2d.determinant = function (a) {
-    return a[0] * a[3] - a[1] * a[2];
-};
-
-/**
- * Multiplies two mat2d's
- *
- * @param {mat2d} out the receiving matrix
- * @param {mat2d} a the first operand
- * @param {mat2d} b the second operand
- * @returns {mat2d} out
- */
-mat2d.multiply = function (out, a, b) {
-    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5],
-        b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3], b4 = b[4], b5 = b[5];
-    out[0] = a0 * b0 + a2 * b1;
-    out[1] = a1 * b0 + a3 * b1;
-    out[2] = a0 * b2 + a2 * b3;
-    out[3] = a1 * b2 + a3 * b3;
-    out[4] = a0 * b4 + a2 * b5 + a4;
-    out[5] = a1 * b4 + a3 * b5 + a5;
-    return out;
-};
-
-/**
- * Alias for {@link mat2d.multiply}
- * @function
- */
-mat2d.mul = mat2d.multiply;
-
-
-/**
- * Rotates a mat2d by the given angle
- *
- * @param {mat2d} out the receiving matrix
- * @param {mat2d} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat2d} out
- */
-mat2d.rotate = function (out, a, rad) {
-    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5],
-        s = Math.sin(rad),
-        c = Math.cos(rad);
-    out[0] = a0 *  c + a2 * s;
-    out[1] = a1 *  c + a3 * s;
-    out[2] = a0 * -s + a2 * c;
-    out[3] = a1 * -s + a3 * c;
-    out[4] = a4;
-    out[5] = a5;
-    return out;
-};
-
-/**
- * Scales the mat2d by the dimensions in the given vec2
- *
- * @param {mat2d} out the receiving matrix
- * @param {mat2d} a the matrix to translate
- * @param {vec2} v the vec2 to scale the matrix by
- * @returns {mat2d} out
- **/
-mat2d.scale = function(out, a, v) {
-    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5],
-        v0 = v[0], v1 = v[1];
-    out[0] = a0 * v0;
-    out[1] = a1 * v0;
-    out[2] = a2 * v1;
-    out[3] = a3 * v1;
-    out[4] = a4;
-    out[5] = a5;
-    return out;
-};
-
-/**
- * Translates the mat2d by the dimensions in the given vec2
- *
- * @param {mat2d} out the receiving matrix
- * @param {mat2d} a the matrix to translate
- * @param {vec2} v the vec2 to translate the matrix by
- * @returns {mat2d} out
- **/
-mat2d.translate = function(out, a, v) {
-    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5],
-        v0 = v[0], v1 = v[1];
-    out[0] = a0;
-    out[1] = a1;
-    out[2] = a2;
-    out[3] = a3;
-    out[4] = a0 * v0 + a2 * v1 + a4;
-    out[5] = a1 * v0 + a3 * v1 + a5;
-    return out;
-};
-
-/**
- * Returns a string representation of a mat2d
- *
- * @param {mat2d} a matrix to represent as a string
- * @returns {String} string representation of the matrix
- */
-mat2d.str = function (a) {
-    return 'mat2d(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + 
-                    a[3] + ', ' + a[4] + ', ' + a[5] + ')';
-};
-
-/**
- * Returns Frobenius norm of a mat2d
- *
- * @param {mat2d} a the matrix to calculate Frobenius norm of
- * @returns {Number} Frobenius norm
- */
-mat2d.frob = function (a) { 
-    return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + 1))
-}; 
-
-if(typeof(exports) !== 'undefined') {
-    exports.mat2d = mat2d;
-}
-;
-/* Copyright (c) 2013, Brandon Jones, Colin MacKenzie IV. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-  * Redistributions of source code must retain the above copyright notice, this
-    list of conditions and the following disclaimer.
-  * Redistributions in binary form must reproduce the above copyright notice,
-    this list of conditions and the following disclaimer in the documentation 
-    and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
-
-/**
- * @class 3x3 Matrix
- * @name mat3
- */
-
-var mat3 = {};
-
-/**
- * Creates a new identity mat3
- *
- * @returns {mat3} a new 3x3 matrix
- */
-mat3.create = function() {
-    var out = new GLMAT_ARRAY_TYPE(9);
-    out[0] = 1;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[4] = 1;
-    out[5] = 0;
-    out[6] = 0;
-    out[7] = 0;
-    out[8] = 1;
-    return out;
-};
-
-/**
- * Copies the upper-left 3x3 values into the given mat3.
- *
- * @param {mat3} out the receiving 3x3 matrix
- * @param {mat4} a   the source 4x4 matrix
- * @returns {mat3} out
- */
-mat3.fromMat4 = function(out, a) {
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[4];
-    out[4] = a[5];
-    out[5] = a[6];
-    out[6] = a[8];
-    out[7] = a[9];
-    out[8] = a[10];
-    return out;
-};
-
-/**
- * Creates a new mat3 initialized with values from an existing matrix
- *
- * @param {mat3} a matrix to clone
- * @returns {mat3} a new 3x3 matrix
- */
-mat3.clone = function(a) {
-    var out = new GLMAT_ARRAY_TYPE(9);
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[3];
-    out[4] = a[4];
-    out[5] = a[5];
-    out[6] = a[6];
-    out[7] = a[7];
-    out[8] = a[8];
-    return out;
-};
-
-/**
- * Copy the values from one mat3 to another
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the source matrix
- * @returns {mat3} out
- */
-mat3.copy = function(out, a) {
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[3];
-    out[4] = a[4];
-    out[5] = a[5];
-    out[6] = a[6];
-    out[7] = a[7];
-    out[8] = a[8];
-    return out;
-};
-
-/**
- * Set a mat3 to the identity matrix
- *
- * @param {mat3} out the receiving matrix
- * @returns {mat3} out
- */
-mat3.identity = function(out) {
-    out[0] = 1;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[4] = 1;
-    out[5] = 0;
-    out[6] = 0;
-    out[7] = 0;
-    out[8] = 1;
-    return out;
-};
-
-/**
- * Transpose the values of a mat3
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the source matrix
- * @returns {mat3} out
- */
-mat3.transpose = function(out, a) {
-    // If we are transposing ourselves we can skip a few steps but have to cache some values
-    if (out === a) {
-        var a01 = a[1], a02 = a[2], a12 = a[5];
-        out[1] = a[3];
-        out[2] = a[6];
-        out[3] = a01;
-        out[5] = a[7];
-        out[6] = a02;
-        out[7] = a12;
-    } else {
-        out[0] = a[0];
-        out[1] = a[3];
-        out[2] = a[6];
-        out[3] = a[1];
-        out[4] = a[4];
-        out[5] = a[7];
-        out[6] = a[2];
-        out[7] = a[5];
-        out[8] = a[8];
-    }
-    
-    return out;
-};
-
-/**
- * Inverts a mat3
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the source matrix
- * @returns {mat3} out
- */
-mat3.invert = function(out, a) {
-    var a00 = a[0], a01 = a[1], a02 = a[2],
-        a10 = a[3], a11 = a[4], a12 = a[5],
-        a20 = a[6], a21 = a[7], a22 = a[8],
-
-        b01 = a22 * a11 - a12 * a21,
-        b11 = -a22 * a10 + a12 * a20,
-        b21 = a21 * a10 - a11 * a20,
-
-        // Calculate the determinant
-        det = a00 * b01 + a01 * b11 + a02 * b21;
-
-    if (!det) { 
-        return null; 
-    }
-    det = 1.0 / det;
-
-    out[0] = b01 * det;
-    out[1] = (-a22 * a01 + a02 * a21) * det;
-    out[2] = (a12 * a01 - a02 * a11) * det;
-    out[3] = b11 * det;
-    out[4] = (a22 * a00 - a02 * a20) * det;
-    out[5] = (-a12 * a00 + a02 * a10) * det;
-    out[6] = b21 * det;
-    out[7] = (-a21 * a00 + a01 * a20) * det;
-    out[8] = (a11 * a00 - a01 * a10) * det;
-    return out;
-};
-
-/**
- * Calculates the adjugate of a mat3
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the source matrix
- * @returns {mat3} out
- */
-mat3.adjoint = function(out, a) {
-    var a00 = a[0], a01 = a[1], a02 = a[2],
-        a10 = a[3], a11 = a[4], a12 = a[5],
-        a20 = a[6], a21 = a[7], a22 = a[8];
-
-    out[0] = (a11 * a22 - a12 * a21);
-    out[1] = (a02 * a21 - a01 * a22);
-    out[2] = (a01 * a12 - a02 * a11);
-    out[3] = (a12 * a20 - a10 * a22);
-    out[4] = (a00 * a22 - a02 * a20);
-    out[5] = (a02 * a10 - a00 * a12);
-    out[6] = (a10 * a21 - a11 * a20);
-    out[7] = (a01 * a20 - a00 * a21);
-    out[8] = (a00 * a11 - a01 * a10);
-    return out;
-};
-
-/**
- * Calculates the determinant of a mat3
- *
- * @param {mat3} a the source matrix
- * @returns {Number} determinant of a
- */
-mat3.determinant = function (a) {
-    var a00 = a[0], a01 = a[1], a02 = a[2],
-        a10 = a[3], a11 = a[4], a12 = a[5],
-        a20 = a[6], a21 = a[7], a22 = a[8];
-
-    return a00 * (a22 * a11 - a12 * a21) + a01 * (-a22 * a10 + a12 * a20) + a02 * (a21 * a10 - a11 * a20);
-};
-
-/**
- * Multiplies two mat3's
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the first operand
- * @param {mat3} b the second operand
- * @returns {mat3} out
- */
-mat3.multiply = function (out, a, b) {
-    var a00 = a[0], a01 = a[1], a02 = a[2],
-        a10 = a[3], a11 = a[4], a12 = a[5],
-        a20 = a[6], a21 = a[7], a22 = a[8],
-
-        b00 = b[0], b01 = b[1], b02 = b[2],
-        b10 = b[3], b11 = b[4], b12 = b[5],
-        b20 = b[6], b21 = b[7], b22 = b[8];
-
-    out[0] = b00 * a00 + b01 * a10 + b02 * a20;
-    out[1] = b00 * a01 + b01 * a11 + b02 * a21;
-    out[2] = b00 * a02 + b01 * a12 + b02 * a22;
-
-    out[3] = b10 * a00 + b11 * a10 + b12 * a20;
-    out[4] = b10 * a01 + b11 * a11 + b12 * a21;
-    out[5] = b10 * a02 + b11 * a12 + b12 * a22;
-
-    out[6] = b20 * a00 + b21 * a10 + b22 * a20;
-    out[7] = b20 * a01 + b21 * a11 + b22 * a21;
-    out[8] = b20 * a02 + b21 * a12 + b22 * a22;
-    return out;
-};
-
-/**
- * Alias for {@link mat3.multiply}
- * @function
- */
-mat3.mul = mat3.multiply;
-
-/**
- * Translate a mat3 by the given vector
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the matrix to translate
- * @param {vec2} v vector to translate by
- * @returns {mat3} out
- */
-mat3.translate = function(out, a, v) {
-    var a00 = a[0], a01 = a[1], a02 = a[2],
-        a10 = a[3], a11 = a[4], a12 = a[5],
-        a20 = a[6], a21 = a[7], a22 = a[8],
-        x = v[0], y = v[1];
-
-    out[0] = a00;
-    out[1] = a01;
-    out[2] = a02;
-
-    out[3] = a10;
-    out[4] = a11;
-    out[5] = a12;
-
-    out[6] = x * a00 + y * a10 + a20;
-    out[7] = x * a01 + y * a11 + a21;
-    out[8] = x * a02 + y * a12 + a22;
-    return out;
-};
-
-/**
- * Rotates a mat3 by the given angle
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat3} out
- */
-mat3.rotate = function (out, a, rad) {
-    var a00 = a[0], a01 = a[1], a02 = a[2],
-        a10 = a[3], a11 = a[4], a12 = a[5],
-        a20 = a[6], a21 = a[7], a22 = a[8],
-
-        s = Math.sin(rad),
-        c = Math.cos(rad);
-
-    out[0] = c * a00 + s * a10;
-    out[1] = c * a01 + s * a11;
-    out[2] = c * a02 + s * a12;
-
-    out[3] = c * a10 - s * a00;
-    out[4] = c * a11 - s * a01;
-    out[5] = c * a12 - s * a02;
-
-    out[6] = a20;
-    out[7] = a21;
-    out[8] = a22;
-    return out;
-};
-
-/**
- * Scales the mat3 by the dimensions in the given vec2
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the matrix to rotate
- * @param {vec2} v the vec2 to scale the matrix by
- * @returns {mat3} out
- **/
-mat3.scale = function(out, a, v) {
-    var x = v[0], y = v[1];
-
-    out[0] = x * a[0];
-    out[1] = x * a[1];
-    out[2] = x * a[2];
-
-    out[3] = y * a[3];
-    out[4] = y * a[4];
-    out[5] = y * a[5];
-
-    out[6] = a[6];
-    out[7] = a[7];
-    out[8] = a[8];
-    return out;
-};
-
-/**
- * Copies the values from a mat2d into a mat3
- *
- * @param {mat3} out the receiving matrix
- * @param {mat2d} a the matrix to copy
- * @returns {mat3} out
- **/
-mat3.fromMat2d = function(out, a) {
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = 0;
-
-    out[3] = a[2];
-    out[4] = a[3];
-    out[5] = 0;
-
-    out[6] = a[4];
-    out[7] = a[5];
-    out[8] = 1;
-    return out;
-};
-
-/**
-* Calculates a 3x3 matrix from the given quaternion
-*
-* @param {mat3} out mat3 receiving operation result
-* @param {quat} q Quaternion to create matrix from
-*
-* @returns {mat3} out
-*/
-mat3.fromQuat = function (out, q) {
-    var x = q[0], y = q[1], z = q[2], w = q[3],
-        x2 = x + x,
-        y2 = y + y,
-        z2 = z + z,
-
-        xx = x * x2,
-        yx = y * x2,
-        yy = y * y2,
-        zx = z * x2,
-        zy = z * y2,
-        zz = z * z2,
-        wx = w * x2,
-        wy = w * y2,
-        wz = w * z2;
-
-    out[0] = 1 - yy - zz;
-    out[3] = yx - wz;
-    out[6] = zx + wy;
-
-    out[1] = yx + wz;
-    out[4] = 1 - xx - zz;
-    out[7] = zy - wx;
-
-    out[2] = zx - wy;
-    out[5] = zy + wx;
-    out[8] = 1 - xx - yy;
-
-    return out;
-};
-
-/**
-* Calculates a 3x3 normal matrix (transpose inverse) from the 4x4 matrix
-*
-* @param {mat3} out mat3 receiving operation result
-* @param {mat4} a Mat4 to derive the normal matrix from
-*
-* @returns {mat3} out
-*/
-mat3.normalFromMat4 = function (out, a) {
-    var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
-        a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
-        a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
-        a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15],
-
-        b00 = a00 * a11 - a01 * a10,
-        b01 = a00 * a12 - a02 * a10,
-        b02 = a00 * a13 - a03 * a10,
-        b03 = a01 * a12 - a02 * a11,
-        b04 = a01 * a13 - a03 * a11,
-        b05 = a02 * a13 - a03 * a12,
-        b06 = a20 * a31 - a21 * a30,
-        b07 = a20 * a32 - a22 * a30,
-        b08 = a20 * a33 - a23 * a30,
-        b09 = a21 * a32 - a22 * a31,
-        b10 = a21 * a33 - a23 * a31,
-        b11 = a22 * a33 - a23 * a32,
-
-        // Calculate the determinant
-        det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
-
-    if (!det) { 
-        return null; 
-    }
-    det = 1.0 / det;
-
-    out[0] = (a11 * b11 - a12 * b10 + a13 * b09) * det;
-    out[1] = (a12 * b08 - a10 * b11 - a13 * b07) * det;
-    out[2] = (a10 * b10 - a11 * b08 + a13 * b06) * det;
-
-    out[3] = (a02 * b10 - a01 * b11 - a03 * b09) * det;
-    out[4] = (a00 * b11 - a02 * b08 + a03 * b07) * det;
-    out[5] = (a01 * b08 - a00 * b10 - a03 * b06) * det;
-
-    out[6] = (a31 * b05 - a32 * b04 + a33 * b03) * det;
-    out[7] = (a32 * b02 - a30 * b05 - a33 * b01) * det;
-    out[8] = (a30 * b04 - a31 * b02 + a33 * b00) * det;
-
-    return out;
-};
-
-/**
- * Returns a string representation of a mat3
- *
- * @param {mat3} mat matrix to represent as a string
- * @returns {String} string representation of the matrix
- */
-mat3.str = function (a) {
-    return 'mat3(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + 
-                    a[3] + ', ' + a[4] + ', ' + a[5] + ', ' + 
-                    a[6] + ', ' + a[7] + ', ' + a[8] + ')';
-};
-
-/**
- * Returns Frobenius norm of a mat3
- *
- * @param {mat3} a the matrix to calculate Frobenius norm of
- * @returns {Number} Frobenius norm
- */
-mat3.frob = function (a) {
-    return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2)))
-};
-
-
-if(typeof(exports) !== 'undefined') {
-    exports.mat3 = mat3;
-}
-;
-/* Copyright (c) 2013, Brandon Jones, Colin MacKenzie IV. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-  * Redistributions of source code must retain the above copyright notice, this
-    list of conditions and the following disclaimer.
-  * Redistributions in binary form must reproduce the above copyright notice,
-    this list of conditions and the following disclaimer in the documentation 
-    and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
-
-/**
- * @class 4x4 Matrix
- * @name mat4
- */
-
-var mat4 = {};
-
-/**
- * Creates a new identity mat4
- *
- * @returns {mat4} a new 4x4 matrix
- */
-mat4.create = function() {
-    var out = new GLMAT_ARRAY_TYPE(16);
-    out[0] = 1;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[4] = 0;
-    out[5] = 1;
-    out[6] = 0;
-    out[7] = 0;
-    out[8] = 0;
-    out[9] = 0;
-    out[10] = 1;
-    out[11] = 0;
-    out[12] = 0;
-    out[13] = 0;
-    out[14] = 0;
-    out[15] = 1;
-    return out;
-};
-
-/**
- * Creates a new mat4 initialized with values from an existing matrix
- *
- * @param {mat4} a matrix to clone
- * @returns {mat4} a new 4x4 matrix
- */
-mat4.clone = function(a) {
-    var out = new GLMAT_ARRAY_TYPE(16);
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[3];
-    out[4] = a[4];
-    out[5] = a[5];
-    out[6] = a[6];
-    out[7] = a[7];
-    out[8] = a[8];
-    out[9] = a[9];
-    out[10] = a[10];
-    out[11] = a[11];
-    out[12] = a[12];
-    out[13] = a[13];
-    out[14] = a[14];
-    out[15] = a[15];
-    return out;
-};
-
-/**
- * Copy the values from one mat4 to another
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the source matrix
- * @returns {mat4} out
- */
-mat4.copy = function(out, a) {
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[3];
-    out[4] = a[4];
-    out[5] = a[5];
-    out[6] = a[6];
-    out[7] = a[7];
-    out[8] = a[8];
-    out[9] = a[9];
-    out[10] = a[10];
-    out[11] = a[11];
-    out[12] = a[12];
-    out[13] = a[13];
-    out[14] = a[14];
-    out[15] = a[15];
-    return out;
-};
-
-/**
- * Set a mat4 to the identity matrix
- *
- * @param {mat4} out the receiving matrix
- * @returns {mat4} out
- */
-mat4.identity = function(out) {
-    out[0] = 1;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[4] = 0;
-    out[5] = 1;
-    out[6] = 0;
-    out[7] = 0;
-    out[8] = 0;
-    out[9] = 0;
-    out[10] = 1;
-    out[11] = 0;
-    out[12] = 0;
-    out[13] = 0;
-    out[14] = 0;
-    out[15] = 1;
-    return out;
-};
-
-/**
- * Transpose the values of a mat4
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the source matrix
- * @returns {mat4} out
- */
-mat4.transpose = function(out, a) {
-    // If we are transposing ourselves we can skip a few steps but have to cache some values
-    if (out === a) {
-        var a01 = a[1], a02 = a[2], a03 = a[3],
-            a12 = a[6], a13 = a[7],
-            a23 = a[11];
-
-        out[1] = a[4];
-        out[2] = a[8];
-        out[3] = a[12];
-        out[4] = a01;
-        out[6] = a[9];
-        out[7] = a[13];
-        out[8] = a02;
-        out[9] = a12;
-        out[11] = a[14];
-        out[12] = a03;
-        out[13] = a13;
-        out[14] = a23;
-    } else {
-        out[0] = a[0];
-        out[1] = a[4];
-        out[2] = a[8];
-        out[3] = a[12];
-        out[4] = a[1];
-        out[5] = a[5];
-        out[6] = a[9];
-        out[7] = a[13];
-        out[8] = a[2];
-        out[9] = a[6];
-        out[10] = a[10];
-        out[11] = a[14];
-        out[12] = a[3];
-        out[13] = a[7];
-        out[14] = a[11];
-        out[15] = a[15];
-    }
-    
-    return out;
-};
-
-/**
- * Inverts a mat4
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the source matrix
- * @returns {mat4} out
- */
-mat4.invert = function(out, a) {
-    var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
-        a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
-        a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
-        a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15],
-
-        b00 = a00 * a11 - a01 * a10,
-        b01 = a00 * a12 - a02 * a10,
-        b02 = a00 * a13 - a03 * a10,
-        b03 = a01 * a12 - a02 * a11,
-        b04 = a01 * a13 - a03 * a11,
-        b05 = a02 * a13 - a03 * a12,
-        b06 = a20 * a31 - a21 * a30,
-        b07 = a20 * a32 - a22 * a30,
-        b08 = a20 * a33 - a23 * a30,
-        b09 = a21 * a32 - a22 * a31,
-        b10 = a21 * a33 - a23 * a31,
-        b11 = a22 * a33 - a23 * a32,
-
-        // Calculate the determinant
-        det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
-
-    if (!det) { 
-        return null; 
-    }
-    det = 1.0 / det;
-
-    out[0] = (a11 * b11 - a12 * b10 + a13 * b09) * det;
-    out[1] = (a02 * b10 - a01 * b11 - a03 * b09) * det;
-    out[2] = (a31 * b05 - a32 * b04 + a33 * b03) * det;
-    out[3] = (a22 * b04 - a21 * b05 - a23 * b03) * det;
-    out[4] = (a12 * b08 - a10 * b11 - a13 * b07) * det;
-    out[5] = (a00 * b11 - a02 * b08 + a03 * b07) * det;
-    out[6] = (a32 * b02 - a30 * b05 - a33 * b01) * det;
-    out[7] = (a20 * b05 - a22 * b02 + a23 * b01) * det;
-    out[8] = (a10 * b10 - a11 * b08 + a13 * b06) * det;
-    out[9] = (a01 * b08 - a00 * b10 - a03 * b06) * det;
-    out[10] = (a30 * b04 - a31 * b02 + a33 * b00) * det;
-    out[11] = (a21 * b02 - a20 * b04 - a23 * b00) * det;
-    out[12] = (a11 * b07 - a10 * b09 - a12 * b06) * det;
-    out[13] = (a00 * b09 - a01 * b07 + a02 * b06) * det;
-    out[14] = (a31 * b01 - a30 * b03 - a32 * b00) * det;
-    out[15] = (a20 * b03 - a21 * b01 + a22 * b00) * det;
-
-    return out;
-};
-
-/**
- * Calculates the adjugate of a mat4
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the source matrix
- * @returns {mat4} out
- */
-mat4.adjoint = function(out, a) {
-    var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
-        a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
-        a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
-        a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
-
-    out[0]  =  (a11 * (a22 * a33 - a23 * a32) - a21 * (a12 * a33 - a13 * a32) + a31 * (a12 * a23 - a13 * a22));
-    out[1]  = -(a01 * (a22 * a33 - a23 * a32) - a21 * (a02 * a33 - a03 * a32) + a31 * (a02 * a23 - a03 * a22));
-    out[2]  =  (a01 * (a12 * a33 - a13 * a32) - a11 * (a02 * a33 - a03 * a32) + a31 * (a02 * a13 - a03 * a12));
-    out[3]  = -(a01 * (a12 * a23 - a13 * a22) - a11 * (a02 * a23 - a03 * a22) + a21 * (a02 * a13 - a03 * a12));
-    out[4]  = -(a10 * (a22 * a33 - a23 * a32) - a20 * (a12 * a33 - a13 * a32) + a30 * (a12 * a23 - a13 * a22));
-    out[5]  =  (a00 * (a22 * a33 - a23 * a32) - a20 * (a02 * a33 - a03 * a32) + a30 * (a02 * a23 - a03 * a22));
-    out[6]  = -(a00 * (a12 * a33 - a13 * a32) - a10 * (a02 * a33 - a03 * a32) + a30 * (a02 * a13 - a03 * a12));
-    out[7]  =  (a00 * (a12 * a23 - a13 * a22) - a10 * (a02 * a23 - a03 * a22) + a20 * (a02 * a13 - a03 * a12));
-    out[8]  =  (a10 * (a21 * a33 - a23 * a31) - a20 * (a11 * a33 - a13 * a31) + a30 * (a11 * a23 - a13 * a21));
-    out[9]  = -(a00 * (a21 * a33 - a23 * a31) - a20 * (a01 * a33 - a03 * a31) + a30 * (a01 * a23 - a03 * a21));
-    out[10] =  (a00 * (a11 * a33 - a13 * a31) - a10 * (a01 * a33 - a03 * a31) + a30 * (a01 * a13 - a03 * a11));
-    out[11] = -(a00 * (a11 * a23 - a13 * a21) - a10 * (a01 * a23 - a03 * a21) + a20 * (a01 * a13 - a03 * a11));
-    out[12] = -(a10 * (a21 * a32 - a22 * a31) - a20 * (a11 * a32 - a12 * a31) + a30 * (a11 * a22 - a12 * a21));
-    out[13] =  (a00 * (a21 * a32 - a22 * a31) - a20 * (a01 * a32 - a02 * a31) + a30 * (a01 * a22 - a02 * a21));
-    out[14] = -(a00 * (a11 * a32 - a12 * a31) - a10 * (a01 * a32 - a02 * a31) + a30 * (a01 * a12 - a02 * a11));
-    out[15] =  (a00 * (a11 * a22 - a12 * a21) - a10 * (a01 * a22 - a02 * a21) + a20 * (a01 * a12 - a02 * a11));
-    return out;
-};
-
-/**
- * Calculates the determinant of a mat4
- *
- * @param {mat4} a the source matrix
- * @returns {Number} determinant of a
- */
-mat4.determinant = function (a) {
-    var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
-        a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
-        a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
-        a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15],
-
-        b00 = a00 * a11 - a01 * a10,
-        b01 = a00 * a12 - a02 * a10,
-        b02 = a00 * a13 - a03 * a10,
-        b03 = a01 * a12 - a02 * a11,
-        b04 = a01 * a13 - a03 * a11,
-        b05 = a02 * a13 - a03 * a12,
-        b06 = a20 * a31 - a21 * a30,
-        b07 = a20 * a32 - a22 * a30,
-        b08 = a20 * a33 - a23 * a30,
-        b09 = a21 * a32 - a22 * a31,
-        b10 = a21 * a33 - a23 * a31,
-        b11 = a22 * a33 - a23 * a32;
-
-    // Calculate the determinant
-    return b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
-};
-
-/**
- * Multiplies two mat4's
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the first operand
- * @param {mat4} b the second operand
- * @returns {mat4} out
- */
-mat4.multiply = function (out, a, b) {
-    var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
-        a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
-        a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
-        a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
-
-    // Cache only the current line of the second matrix
-    var b0  = b[0], b1 = b[1], b2 = b[2], b3 = b[3];  
-    out[0] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
-    out[1] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
-    out[2] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
-    out[3] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
-
-    b0 = b[4]; b1 = b[5]; b2 = b[6]; b3 = b[7];
-    out[4] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
-    out[5] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
-    out[6] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
-    out[7] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
-
-    b0 = b[8]; b1 = b[9]; b2 = b[10]; b3 = b[11];
-    out[8] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
-    out[9] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
-    out[10] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
-    out[11] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
-
-    b0 = b[12]; b1 = b[13]; b2 = b[14]; b3 = b[15];
-    out[12] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
-    out[13] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
-    out[14] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
-    out[15] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
-    return out;
-};
-
-/**
- * Alias for {@link mat4.multiply}
- * @function
- */
-mat4.mul = mat4.multiply;
-
-/**
- * Translate a mat4 by the given vector
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to translate
- * @param {vec3} v vector to translate by
- * @returns {mat4} out
- */
-mat4.translate = function (out, a, v) {
-    var x = v[0], y = v[1], z = v[2],
-        a00, a01, a02, a03,
-        a10, a11, a12, a13,
-        a20, a21, a22, a23;
-
-    if (a === out) {
-        out[12] = a[0] * x + a[4] * y + a[8] * z + a[12];
-        out[13] = a[1] * x + a[5] * y + a[9] * z + a[13];
-        out[14] = a[2] * x + a[6] * y + a[10] * z + a[14];
-        out[15] = a[3] * x + a[7] * y + a[11] * z + a[15];
-    } else {
-        a00 = a[0]; a01 = a[1]; a02 = a[2]; a03 = a[3];
-        a10 = a[4]; a11 = a[5]; a12 = a[6]; a13 = a[7];
-        a20 = a[8]; a21 = a[9]; a22 = a[10]; a23 = a[11];
-
-        out[0] = a00; out[1] = a01; out[2] = a02; out[3] = a03;
-        out[4] = a10; out[5] = a11; out[6] = a12; out[7] = a13;
-        out[8] = a20; out[9] = a21; out[10] = a22; out[11] = a23;
-
-        out[12] = a00 * x + a10 * y + a20 * z + a[12];
-        out[13] = a01 * x + a11 * y + a21 * z + a[13];
-        out[14] = a02 * x + a12 * y + a22 * z + a[14];
-        out[15] = a03 * x + a13 * y + a23 * z + a[15];
-    }
-
-    return out;
-};
-
-/**
- * Scales the mat4 by the dimensions in the given vec3
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to scale
- * @param {vec3} v the vec3 to scale the matrix by
- * @returns {mat4} out
- **/
-mat4.scale = function(out, a, v) {
-    var x = v[0], y = v[1], z = v[2];
-
-    out[0] = a[0] * x;
-    out[1] = a[1] * x;
-    out[2] = a[2] * x;
-    out[3] = a[3] * x;
-    out[4] = a[4] * y;
-    out[5] = a[5] * y;
-    out[6] = a[6] * y;
-    out[7] = a[7] * y;
-    out[8] = a[8] * z;
-    out[9] = a[9] * z;
-    out[10] = a[10] * z;
-    out[11] = a[11] * z;
-    out[12] = a[12];
-    out[13] = a[13];
-    out[14] = a[14];
-    out[15] = a[15];
-    return out;
-};
-
-/**
- * Rotates a mat4 by the given angle
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @param {vec3} axis the axis to rotate around
- * @returns {mat4} out
- */
-mat4.rotate = function (out, a, rad, axis) {
-    var x = axis[0], y = axis[1], z = axis[2],
-        len = Math.sqrt(x * x + y * y + z * z),
-        s, c, t,
-        a00, a01, a02, a03,
-        a10, a11, a12, a13,
-        a20, a21, a22, a23,
-        b00, b01, b02,
-        b10, b11, b12,
-        b20, b21, b22;
-
-    if (Math.abs(len) < GLMAT_EPSILON) { return null; }
-    
-    len = 1 / len;
-    x *= len;
-    y *= len;
-    z *= len;
-
-    s = Math.sin(rad);
-    c = Math.cos(rad);
-    t = 1 - c;
-
-    a00 = a[0]; a01 = a[1]; a02 = a[2]; a03 = a[3];
-    a10 = a[4]; a11 = a[5]; a12 = a[6]; a13 = a[7];
-    a20 = a[8]; a21 = a[9]; a22 = a[10]; a23 = a[11];
-
-    // Construct the elements of the rotation matrix
-    b00 = x * x * t + c; b01 = y * x * t + z * s; b02 = z * x * t - y * s;
-    b10 = x * y * t - z * s; b11 = y * y * t + c; b12 = z * y * t + x * s;
-    b20 = x * z * t + y * s; b21 = y * z * t - x * s; b22 = z * z * t + c;
-
-    // Perform rotation-specific matrix multiplication
-    out[0] = a00 * b00 + a10 * b01 + a20 * b02;
-    out[1] = a01 * b00 + a11 * b01 + a21 * b02;
-    out[2] = a02 * b00 + a12 * b01 + a22 * b02;
-    out[3] = a03 * b00 + a13 * b01 + a23 * b02;
-    out[4] = a00 * b10 + a10 * b11 + a20 * b12;
-    out[5] = a01 * b10 + a11 * b11 + a21 * b12;
-    out[6] = a02 * b10 + a12 * b11 + a22 * b12;
-    out[7] = a03 * b10 + a13 * b11 + a23 * b12;
-    out[8] = a00 * b20 + a10 * b21 + a20 * b22;
-    out[9] = a01 * b20 + a11 * b21 + a21 * b22;
-    out[10] = a02 * b20 + a12 * b21 + a22 * b22;
-    out[11] = a03 * b20 + a13 * b21 + a23 * b22;
-
-    if (a !== out) { // If the source and destination differ, copy the unchanged last row
-        out[12] = a[12];
-        out[13] = a[13];
-        out[14] = a[14];
-        out[15] = a[15];
-    }
-    return out;
-};
-
-/**
- * Rotates a matrix by the given angle around the X axis
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat4} out
- */
-mat4.rotateX = function (out, a, rad) {
-    var s = Math.sin(rad),
-        c = Math.cos(rad),
-        a10 = a[4],
-        a11 = a[5],
-        a12 = a[6],
-        a13 = a[7],
-        a20 = a[8],
-        a21 = a[9],
-        a22 = a[10],
-        a23 = a[11];
-
-    if (a !== out) { // If the source and destination differ, copy the unchanged rows
-        out[0]  = a[0];
-        out[1]  = a[1];
-        out[2]  = a[2];
-        out[3]  = a[3];
-        out[12] = a[12];
-        out[13] = a[13];
-        out[14] = a[14];
-        out[15] = a[15];
-    }
-
-    // Perform axis-specific matrix multiplication
-    out[4] = a10 * c + a20 * s;
-    out[5] = a11 * c + a21 * s;
-    out[6] = a12 * c + a22 * s;
-    out[7] = a13 * c + a23 * s;
-    out[8] = a20 * c - a10 * s;
-    out[9] = a21 * c - a11 * s;
-    out[10] = a22 * c - a12 * s;
-    out[11] = a23 * c - a13 * s;
-    return out;
-};
-
-/**
- * Rotates a matrix by the given angle around the Y axis
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat4} out
- */
-mat4.rotateY = function (out, a, rad) {
-    var s = Math.sin(rad),
-        c = Math.cos(rad),
-        a00 = a[0],
-        a01 = a[1],
-        a02 = a[2],
-        a03 = a[3],
-        a20 = a[8],
-        a21 = a[9],
-        a22 = a[10],
-        a23 = a[11];
-
-    if (a !== out) { // If the source and destination differ, copy the unchanged rows
-        out[4]  = a[4];
-        out[5]  = a[5];
-        out[6]  = a[6];
-        out[7]  = a[7];
-        out[12] = a[12];
-        out[13] = a[13];
-        out[14] = a[14];
-        out[15] = a[15];
-    }
-
-    // Perform axis-specific matrix multiplication
-    out[0] = a00 * c - a20 * s;
-    out[1] = a01 * c - a21 * s;
-    out[2] = a02 * c - a22 * s;
-    out[3] = a03 * c - a23 * s;
-    out[8] = a00 * s + a20 * c;
-    out[9] = a01 * s + a21 * c;
-    out[10] = a02 * s + a22 * c;
-    out[11] = a03 * s + a23 * c;
-    return out;
-};
-
-/**
- * Rotates a matrix by the given angle around the Z axis
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat4} out
- */
-mat4.rotateZ = function (out, a, rad) {
-    var s = Math.sin(rad),
-        c = Math.cos(rad),
-        a00 = a[0],
-        a01 = a[1],
-        a02 = a[2],
-        a03 = a[3],
-        a10 = a[4],
-        a11 = a[5],
-        a12 = a[6],
-        a13 = a[7];
-
-    if (a !== out) { // If the source and destination differ, copy the unchanged last row
-        out[8]  = a[8];
-        out[9]  = a[9];
-        out[10] = a[10];
-        out[11] = a[11];
-        out[12] = a[12];
-        out[13] = a[13];
-        out[14] = a[14];
-        out[15] = a[15];
-    }
-
-    // Perform axis-specific matrix multiplication
-    out[0] = a00 * c + a10 * s;
-    out[1] = a01 * c + a11 * s;
-    out[2] = a02 * c + a12 * s;
-    out[3] = a03 * c + a13 * s;
-    out[4] = a10 * c - a00 * s;
-    out[5] = a11 * c - a01 * s;
-    out[6] = a12 * c - a02 * s;
-    out[7] = a13 * c - a03 * s;
-    return out;
-};
-
-/**
- * Creates a matrix from a quaternion rotation and vector translation
- * This is equivalent to (but much faster than):
- *
- *     mat4.identity(dest);
- *     mat4.translate(dest, vec);
- *     var quatMat = mat4.create();
- *     quat4.toMat4(quat, quatMat);
- *     mat4.multiply(dest, quatMat);
- *
- * @param {mat4} out mat4 receiving operation result
- * @param {quat4} q Rotation quaternion
- * @param {vec3} v Translation vector
- * @returns {mat4} out
- */
-mat4.fromRotationTranslation = function (out, q, v) {
-    // Quaternion math
-    var x = q[0], y = q[1], z = q[2], w = q[3],
-        x2 = x + x,
-        y2 = y + y,
-        z2 = z + z,
-
-        xx = x * x2,
-        xy = x * y2,
-        xz = x * z2,
-        yy = y * y2,
-        yz = y * z2,
-        zz = z * z2,
-        wx = w * x2,
-        wy = w * y2,
-        wz = w * z2;
-
-    out[0] = 1 - (yy + zz);
-    out[1] = xy + wz;
-    out[2] = xz - wy;
-    out[3] = 0;
-    out[4] = xy - wz;
-    out[5] = 1 - (xx + zz);
-    out[6] = yz + wx;
-    out[7] = 0;
-    out[8] = xz + wy;
-    out[9] = yz - wx;
-    out[10] = 1 - (xx + yy);
-    out[11] = 0;
-    out[12] = v[0];
-    out[13] = v[1];
-    out[14] = v[2];
-    out[15] = 1;
-    
-    return out;
-};
-
-mat4.fromQuat = function (out, q) {
-    var x = q[0], y = q[1], z = q[2], w = q[3],
-        x2 = x + x,
-        y2 = y + y,
-        z2 = z + z,
-
-        xx = x * x2,
-        yx = y * x2,
-        yy = y * y2,
-        zx = z * x2,
-        zy = z * y2,
-        zz = z * z2,
-        wx = w * x2,
-        wy = w * y2,
-        wz = w * z2;
-
-    out[0] = 1 - yy - zz;
-    out[1] = yx + wz;
-    out[2] = zx - wy;
-    out[3] = 0;
-
-    out[4] = yx - wz;
-    out[5] = 1 - xx - zz;
-    out[6] = zy + wx;
-    out[7] = 0;
-
-    out[8] = zx + wy;
-    out[9] = zy - wx;
-    out[10] = 1 - xx - yy;
-    out[11] = 0;
-
-    out[12] = 0;
-    out[13] = 0;
-    out[14] = 0;
-    out[15] = 1;
-
-    return out;
-};
-
-/**
- * Generates a frustum matrix with the given bounds
- *
- * @param {mat4} out mat4 frustum matrix will be written into
- * @param {Number} left Left bound of the frustum
- * @param {Number} right Right bound of the frustum
- * @param {Number} bottom Bottom bound of the frustum
- * @param {Number} top Top bound of the frustum
- * @param {Number} near Near bound of the frustum
- * @param {Number} far Far bound of the frustum
- * @returns {mat4} out
- */
-mat4.frustum = function (out, left, right, bottom, top, near, far) {
-    var rl = 1 / (right - left),
-        tb = 1 / (top - bottom),
-        nf = 1 / (near - far);
-    out[0] = (near * 2) * rl;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[4] = 0;
-    out[5] = (near * 2) * tb;
-    out[6] = 0;
-    out[7] = 0;
-    out[8] = (right + left) * rl;
-    out[9] = (top + bottom) * tb;
-    out[10] = (far + near) * nf;
-    out[11] = -1;
-    out[12] = 0;
-    out[13] = 0;
-    out[14] = (far * near * 2) * nf;
-    out[15] = 0;
-    return out;
-};
-
-/**
- * Generates a perspective projection matrix with the given bounds
- *
- * @param {mat4} out mat4 frustum matrix will be written into
- * @param {number} fovy Vertical field of view in radians
- * @param {number} aspect Aspect ratio. typically viewport width/height
- * @param {number} near Near bound of the frustum
- * @param {number} far Far bound of the frustum
- * @returns {mat4} out
- */
-mat4.perspective = function (out, fovy, aspect, near, far) {
-    var f = 1.0 / Math.tan(fovy / 2),
-        nf = 1 / (near - far);
-    out[0] = f / aspect;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[4] = 0;
-    out[5] = f;
-    out[6] = 0;
-    out[7] = 0;
-    out[8] = 0;
-    out[9] = 0;
-    out[10] = (far + near) * nf;
-    out[11] = -1;
-    out[12] = 0;
-    out[13] = 0;
-    out[14] = (2 * far * near) * nf;
-    out[15] = 0;
-    return out;
-};
-
-/**
- * Generates a orthogonal projection matrix with the given bounds
- *
- * @param {mat4} out mat4 frustum matrix will be written into
- * @param {number} left Left bound of the frustum
- * @param {number} right Right bound of the frustum
- * @param {number} bottom Bottom bound of the frustum
- * @param {number} top Top bound of the frustum
- * @param {number} near Near bound of the frustum
- * @param {number} far Far bound of the frustum
- * @returns {mat4} out
- */
-mat4.ortho = function (out, left, right, bottom, top, near, far) {
-    var lr = 1 / (left - right),
-        bt = 1 / (bottom - top),
-        nf = 1 / (near - far);
-    out[0] = -2 * lr;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[4] = 0;
-    out[5] = -2 * bt;
-    out[6] = 0;
-    out[7] = 0;
-    out[8] = 0;
-    out[9] = 0;
-    out[10] = 2 * nf;
-    out[11] = 0;
-    out[12] = (left + right) * lr;
-    out[13] = (top + bottom) * bt;
-    out[14] = (far + near) * nf;
-    out[15] = 1;
-    return out;
-};
-
-/**
- * Generates a look-at matrix with the given eye position, focal point, and up axis
- *
- * @param {mat4} out mat4 frustum matrix will be written into
- * @param {vec3} eye Position of the viewer
- * @param {vec3} center Point the viewer is looking at
- * @param {vec3} up vec3 pointing up
- * @returns {mat4} out
- */
-mat4.lookAt = function (out, eye, center, up) {
-    var x0, x1, x2, y0, y1, y2, z0, z1, z2, len,
-        eyex = eye[0],
-        eyey = eye[1],
-        eyez = eye[2],
-        upx = up[0],
-        upy = up[1],
-        upz = up[2],
-        centerx = center[0],
-        centery = center[1],
-        centerz = center[2];
-
-    if (Math.abs(eyex - centerx) < GLMAT_EPSILON &&
-        Math.abs(eyey - centery) < GLMAT_EPSILON &&
-        Math.abs(eyez - centerz) < GLMAT_EPSILON) {
-        return mat4.identity(out);
-    }
-
-    z0 = eyex - centerx;
-    z1 = eyey - centery;
-    z2 = eyez - centerz;
-
-    len = 1 / Math.sqrt(z0 * z0 + z1 * z1 + z2 * z2);
-    z0 *= len;
-    z1 *= len;
-    z2 *= len;
-
-    x0 = upy * z2 - upz * z1;
-    x1 = upz * z0 - upx * z2;
-    x2 = upx * z1 - upy * z0;
-    len = Math.sqrt(x0 * x0 + x1 * x1 + x2 * x2);
-    if (!len) {
-        x0 = 0;
-        x1 = 0;
-        x2 = 0;
-    } else {
-        len = 1 / len;
-        x0 *= len;
-        x1 *= len;
-        x2 *= len;
-    }
-
-    y0 = z1 * x2 - z2 * x1;
-    y1 = z2 * x0 - z0 * x2;
-    y2 = z0 * x1 - z1 * x0;
-
-    len = Math.sqrt(y0 * y0 + y1 * y1 + y2 * y2);
-    if (!len) {
-        y0 = 0;
-        y1 = 0;
-        y2 = 0;
-    } else {
-        len = 1 / len;
-        y0 *= len;
-        y1 *= len;
-        y2 *= len;
-    }
-
-    out[0] = x0;
-    out[1] = y0;
-    out[2] = z0;
-    out[3] = 0;
-    out[4] = x1;
-    out[5] = y1;
-    out[6] = z1;
-    out[7] = 0;
-    out[8] = x2;
-    out[9] = y2;
-    out[10] = z2;
-    out[11] = 0;
-    out[12] = -(x0 * eyex + x1 * eyey + x2 * eyez);
-    out[13] = -(y0 * eyex + y1 * eyey + y2 * eyez);
-    out[14] = -(z0 * eyex + z1 * eyey + z2 * eyez);
-    out[15] = 1;
-
-    return out;
-};
-
-/**
- * Returns a string representation of a mat4
- *
- * @param {mat4} mat matrix to represent as a string
- * @returns {String} string representation of the matrix
- */
-mat4.str = function (a) {
-    return 'mat4(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ', ' +
-                    a[4] + ', ' + a[5] + ', ' + a[6] + ', ' + a[7] + ', ' +
-                    a[8] + ', ' + a[9] + ', ' + a[10] + ', ' + a[11] + ', ' + 
-                    a[12] + ', ' + a[13] + ', ' + a[14] + ', ' + a[15] + ')';
-};
-
-/**
- * Returns Frobenius norm of a mat4
- *
- * @param {mat4} a the matrix to calculate Frobenius norm of
- * @returns {Number} Frobenius norm
- */
-mat4.frob = function (a) {
-    return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2) + Math.pow(a[9], 2) + Math.pow(a[10], 2) + Math.pow(a[11], 2) + Math.pow(a[12], 2) + Math.pow(a[13], 2) + Math.pow(a[14], 2) + Math.pow(a[15], 2) ))
-};
-
-
-if(typeof(exports) !== 'undefined') {
-    exports.mat4 = mat4;
-}
-;
-/* Copyright (c) 2013, Brandon Jones, Colin MacKenzie IV. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-  * Redistributions of source code must retain the above copyright notice, this
-    list of conditions and the following disclaimer.
-  * Redistributions in binary form must reproduce the above copyright notice,
-    this list of conditions and the following disclaimer in the documentation 
-    and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
-
-/**
- * @class Quaternion
- * @name quat
- */
-
-var quat = {};
-
-/**
- * Creates a new identity quat
- *
- * @returns {quat} a new quaternion
- */
-quat.create = function() {
-    var out = new GLMAT_ARRAY_TYPE(4);
-    out[0] = 0;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 1;
-    return out;
-};
-
-/**
- * Sets a quaternion to represent the shortest rotation from one
- * vector to another.
- *
- * Both vectors are assumed to be unit length.
- *
- * @param {quat} out the receiving quaternion.
- * @param {vec3} a the initial vector
- * @param {vec3} b the destination vector
- * @returns {quat} out
- */
-quat.rotationTo = (function() {
-    var tmpvec3 = vec3.create();
-    var xUnitVec3 = vec3.fromValues(1,0,0);
-    var yUnitVec3 = vec3.fromValues(0,1,0);
-
-    return function(out, a, b) {
-        var dot = vec3.dot(a, b);
-        if (dot < -0.999999) {
-            vec3.cross(tmpvec3, xUnitVec3, a);
-            if (vec3.length(tmpvec3) < 0.000001)
-                vec3.cross(tmpvec3, yUnitVec3, a);
-            vec3.normalize(tmpvec3, tmpvec3);
-            quat.setAxisAngle(out, tmpvec3, Math.PI);
-            return out;
-        } else if (dot > 0.999999) {
-            out[0] = 0;
-            out[1] = 0;
-            out[2] = 0;
-            out[3] = 1;
-            return out;
-        } else {
-            vec3.cross(tmpvec3, a, b);
-            out[0] = tmpvec3[0];
-            out[1] = tmpvec3[1];
-            out[2] = tmpvec3[2];
-            out[3] = 1 + dot;
-            return quat.normalize(out, out);
-        }
-    };
-})();
-
-/**
- * Sets the specified quaternion with values corresponding to the given
- * axes. Each axis is a vec3 and is expected to be unit length and
- * perpendicular to all other specified axes.
- *
- * @param {vec3} view  the vector representing the viewing direction
- * @param {vec3} right the vector representing the local "right" direction
- * @param {vec3} up    the vector representing the local "up" direction
- * @returns {quat} out
- */
-quat.setAxes = (function() {
-    var matr = mat3.create();
-
-    return function(out, view, right, up) {
-        matr[0] = right[0];
-        matr[3] = right[1];
-        matr[6] = right[2];
-
-        matr[1] = up[0];
-        matr[4] = up[1];
-        matr[7] = up[2];
-
-        matr[2] = -view[0];
-        matr[5] = -view[1];
-        matr[8] = -view[2];
-
-        return quat.normalize(out, quat.fromMat3(out, matr));
-    };
-})();
-
-/**
- * Creates a new quat initialized with values from an existing quaternion
- *
- * @param {quat} a quaternion to clone
- * @returns {quat} a new quaternion
- * @function
- */
-quat.clone = vec4.clone;
-
-/**
- * Creates a new quat initialized with the given values
- *
- * @param {Number} x X component
- * @param {Number} y Y component
- * @param {Number} z Z component
- * @param {Number} w W component
- * @returns {quat} a new quaternion
- * @function
- */
-quat.fromValues = vec4.fromValues;
-
-/**
- * Copy the values from one quat to another
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a the source quaternion
- * @returns {quat} out
- * @function
- */
-quat.copy = vec4.copy;
-
-/**
- * Set the components of a quat to the given values
- *
- * @param {quat} out the receiving quaternion
- * @param {Number} x X component
- * @param {Number} y Y component
- * @param {Number} z Z component
- * @param {Number} w W component
- * @returns {quat} out
- * @function
- */
-quat.set = vec4.set;
-
-/**
- * Set a quat to the identity quaternion
- *
- * @param {quat} out the receiving quaternion
- * @returns {quat} out
- */
-quat.identity = function(out) {
-    out[0] = 0;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 1;
-    return out;
-};
-
-/**
- * Sets a quat from the given angle and rotation axis,
- * then returns it.
- *
- * @param {quat} out the receiving quaternion
- * @param {vec3} axis the axis around which to rotate
- * @param {Number} rad the angle in radians
- * @returns {quat} out
- **/
-quat.setAxisAngle = function(out, axis, rad) {
-    rad = rad * 0.5;
-    var s = Math.sin(rad);
-    out[0] = s * axis[0];
-    out[1] = s * axis[1];
-    out[2] = s * axis[2];
-    out[3] = Math.cos(rad);
-    return out;
-};
-
-/**
- * Adds two quat's
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a the first operand
- * @param {quat} b the second operand
- * @returns {quat} out
- * @function
- */
-quat.add = vec4.add;
-
-/**
- * Multiplies two quat's
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a the first operand
- * @param {quat} b the second operand
- * @returns {quat} out
- */
-quat.multiply = function(out, a, b) {
-    var ax = a[0], ay = a[1], az = a[2], aw = a[3],
-        bx = b[0], by = b[1], bz = b[2], bw = b[3];
-
-    out[0] = ax * bw + aw * bx + ay * bz - az * by;
-    out[1] = ay * bw + aw * by + az * bx - ax * bz;
-    out[2] = az * bw + aw * bz + ax * by - ay * bx;
-    out[3] = aw * bw - ax * bx - ay * by - az * bz;
-    return out;
-};
-
-/**
- * Alias for {@link quat.multiply}
- * @function
- */
-quat.mul = quat.multiply;
-
-/**
- * Scales a quat by a scalar number
- *
- * @param {quat} out the receiving vector
- * @param {quat} a the vector to scale
- * @param {Number} b amount to scale the vector by
- * @returns {quat} out
- * @function
- */
-quat.scale = vec4.scale;
-
-/**
- * Rotates a quaternion by the given angle about the X axis
- *
- * @param {quat} out quat receiving operation result
- * @param {quat} a quat to rotate
- * @param {number} rad angle (in radians) to rotate
- * @returns {quat} out
- */
-quat.rotateX = function (out, a, rad) {
-    rad *= 0.5; 
-
-    var ax = a[0], ay = a[1], az = a[2], aw = a[3],
-        bx = Math.sin(rad), bw = Math.cos(rad);
-
-    out[0] = ax * bw + aw * bx;
-    out[1] = ay * bw + az * bx;
-    out[2] = az * bw - ay * bx;
-    out[3] = aw * bw - ax * bx;
-    return out;
-};
-
-/**
- * Rotates a quaternion by the given angle about the Y axis
- *
- * @param {quat} out quat receiving operation result
- * @param {quat} a quat to rotate
- * @param {number} rad angle (in radians) to rotate
- * @returns {quat} out
- */
-quat.rotateY = function (out, a, rad) {
-    rad *= 0.5; 
-
-    var ax = a[0], ay = a[1], az = a[2], aw = a[3],
-        by = Math.sin(rad), bw = Math.cos(rad);
-
-    out[0] = ax * bw - az * by;
-    out[1] = ay * bw + aw * by;
-    out[2] = az * bw + ax * by;
-    out[3] = aw * bw - ay * by;
-    return out;
-};
-
-/**
- * Rotates a quaternion by the given angle about the Z axis
- *
- * @param {quat} out quat receiving operation result
- * @param {quat} a quat to rotate
- * @param {number} rad angle (in radians) to rotate
- * @returns {quat} out
- */
-quat.rotateZ = function (out, a, rad) {
-    rad *= 0.5; 
-
-    var ax = a[0], ay = a[1], az = a[2], aw = a[3],
-        bz = Math.sin(rad), bw = Math.cos(rad);
-
-    out[0] = ax * bw + ay * bz;
-    out[1] = ay * bw - ax * bz;
-    out[2] = az * bw + aw * bz;
-    out[3] = aw * bw - az * bz;
-    return out;
-};
-
-/**
- * Calculates the W component of a quat from the X, Y, and Z components.
- * Assumes that quaternion is 1 unit in length.
- * Any existing W component will be ignored.
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a quat to calculate W component of
- * @returns {quat} out
- */
-quat.calculateW = function (out, a) {
-    var x = a[0], y = a[1], z = a[2];
-
-    out[0] = x;
-    out[1] = y;
-    out[2] = z;
-    out[3] = -Math.sqrt(Math.abs(1.0 - x * x - y * y - z * z));
-    return out;
-};
-
-/**
- * Calculates the dot product of two quat's
- *
- * @param {quat} a the first operand
- * @param {quat} b the second operand
- * @returns {Number} dot product of a and b
- * @function
- */
-quat.dot = vec4.dot;
-
-/**
- * Performs a linear interpolation between two quat's
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a the first operand
- * @param {quat} b the second operand
- * @param {Number} t interpolation amount between the two inputs
- * @returns {quat} out
- * @function
- */
-quat.lerp = vec4.lerp;
-
-/**
- * Performs a spherical linear interpolation between two quat
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a the first operand
- * @param {quat} b the second operand
- * @param {Number} t interpolation amount between the two inputs
- * @returns {quat} out
- */
-quat.slerp = function (out, a, b, t) {
-    // benchmarks:
-    //    http://jsperf.com/quaternion-slerp-implementations
-
-    var ax = a[0], ay = a[1], az = a[2], aw = a[3],
-        bx = b[0], by = b[1], bz = b[2], bw = b[3];
-
-    var        omega, cosom, sinom, scale0, scale1;
-
-    // calc cosine
-    cosom = ax * bx + ay * by + az * bz + aw * bw;
-    // adjust signs (if necessary)
-    if ( cosom < 0.0 ) {
-        cosom = -cosom;
-        bx = - bx;
-        by = - by;
-        bz = - bz;
-        bw = - bw;
-    }
-    // calculate coefficients
-    if ( (1.0 - cosom) > 0.000001 ) {
-        // standard case (slerp)
-        omega  = Math.acos(cosom);
-        sinom  = Math.sin(omega);
-        scale0 = Math.sin((1.0 - t) * omega) / sinom;
-        scale1 = Math.sin(t * omega) / sinom;
-    } else {        
-        // "from" and "to" quaternions are very close 
-        //  ... so we can do a linear interpolation
-        scale0 = 1.0 - t;
-        scale1 = t;
-    }
-    // calculate final values
-    out[0] = scale0 * ax + scale1 * bx;
-    out[1] = scale0 * ay + scale1 * by;
-    out[2] = scale0 * az + scale1 * bz;
-    out[3] = scale0 * aw + scale1 * bw;
-    
-    return out;
-};
-
-/**
- * Calculates the inverse of a quat
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a quat to calculate inverse of
- * @returns {quat} out
- */
-quat.invert = function(out, a) {
-    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3],
-        dot = a0*a0 + a1*a1 + a2*a2 + a3*a3,
-        invDot = dot ? 1.0/dot : 0;
-    
-    // TODO: Would be faster to return [0,0,0,0] immediately if dot == 0
-
-    out[0] = -a0*invDot;
-    out[1] = -a1*invDot;
-    out[2] = -a2*invDot;
-    out[3] = a3*invDot;
-    return out;
-};
-
-/**
- * Calculates the conjugate of a quat
- * If the quaternion is normalized, this function is faster than quat.inverse and produces the same result.
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a quat to calculate conjugate of
- * @returns {quat} out
- */
-quat.conjugate = function (out, a) {
-    out[0] = -a[0];
-    out[1] = -a[1];
-    out[2] = -a[2];
-    out[3] = a[3];
-    return out;
-};
-
-/**
- * Calculates the length of a quat
- *
- * @param {quat} a vector to calculate length of
- * @returns {Number} length of a
- * @function
- */
-quat.length = vec4.length;
-
-/**
- * Alias for {@link quat.length}
- * @function
- */
-quat.len = quat.length;
-
-/**
- * Calculates the squared length of a quat
- *
- * @param {quat} a vector to calculate squared length of
- * @returns {Number} squared length of a
- * @function
- */
-quat.squaredLength = vec4.squaredLength;
-
-/**
- * Alias for {@link quat.squaredLength}
- * @function
- */
-quat.sqrLen = quat.squaredLength;
-
-/**
- * Normalize a quat
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a quaternion to normalize
- * @returns {quat} out
- * @function
- */
-quat.normalize = vec4.normalize;
-
-/**
- * Creates a quaternion from the given 3x3 rotation matrix.
- *
- * NOTE: The resultant quaternion is not normalized, so you should be sure
- * to renormalize the quaternion yourself where necessary.
- *
- * @param {quat} out the receiving quaternion
- * @param {mat3} m rotation matrix
- * @returns {quat} out
- * @function
- */
-quat.fromMat3 = function(out, m) {
-    // Algorithm in Ken Shoemake's article in 1987 SIGGRAPH course notes
-    // article "Quaternion Calculus and Fast Animation".
-    var fTrace = m[0] + m[4] + m[8];
-    var fRoot;
-
-    if ( fTrace > 0.0 ) {
-        // |w| > 1/2, may as well choose w > 1/2
-        fRoot = Math.sqrt(fTrace + 1.0);  // 2w
-        out[3] = 0.5 * fRoot;
-        fRoot = 0.5/fRoot;  // 1/(4w)
-        out[0] = (m[7]-m[5])*fRoot;
-        out[1] = (m[2]-m[6])*fRoot;
-        out[2] = (m[3]-m[1])*fRoot;
-    } else {
-        // |w| <= 1/2
-        var i = 0;
-        if ( m[4] > m[0] )
-          i = 1;
-        if ( m[8] > m[i*3+i] )
-          i = 2;
-        var j = (i+1)%3;
-        var k = (i+2)%3;
-        
-        fRoot = Math.sqrt(m[i*3+i]-m[j*3+j]-m[k*3+k] + 1.0);
-        out[i] = 0.5 * fRoot;
-        fRoot = 0.5 / fRoot;
-        out[3] = (m[k*3+j] - m[j*3+k]) * fRoot;
-        out[j] = (m[j*3+i] + m[i*3+j]) * fRoot;
-        out[k] = (m[k*3+i] + m[i*3+k]) * fRoot;
-    }
-    
-    return out;
-};
-
-/**
- * Returns a string representation of a quatenion
- *
- * @param {quat} vec vector to represent as a string
- * @returns {String} string representation of the vector
- */
-quat.str = function (a) {
-    return 'quat(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ')';
-};
-
-if(typeof(exports) !== 'undefined') {
-    exports.quat = quat;
-}
-;
-
-
-
-
-
-
-
-
-
-
-
-
-
-  })(shim.exports);
-})(this);
+})(window);
 
 (function(window) {
 
@@ -12638,6 +8540,16 @@ if(typeof(exports) !== 'undefined') {
 
 
   ionic.Animation.TimingFn = {
+    'spring': function(duration) {
+      return function(t) {
+        return ionic.Animation.Dynamics.Spring(t, duration);
+      }
+    },
+    'gravity': function(duration) {
+      return function(t) {
+        return ionic.Animation.Dynamics.Gravity(t, duration);
+      }
+    },
     'linear': function(duration) {
       return function(t) {
         return ionic.Animation.Bezier.linear(t, duration);
@@ -12662,6 +8574,290 @@ if(typeof(exports) !== 'undefined') {
       return function(t) {
         return ionic.Animation.Bezier.easeInOut(t, duration);
       }
+    },
+    'cubic-bezier': function(x1, y1, x2, y2, duration) {
+      var bz = ionic.Animation.Bezier.cubicBezier(x1, y1, x2, y2);//, t, duration);
+      return function(t) {
+        return bz(t, duration);
+      }
+    }
+  };
+})(window);
+
+(function(window) {
+  var time = Date.now || function() {
+    return +new Date();
+  };
+  var desiredFrames = 60;
+  var millisecondsPerSecond = 1000;
+
+  // Namespace
+  ionic.Animation = ionic.Animation || {};
+/**
+   * Animation instance
+   */
+  ionic.Animation.Animation = function(opts) {
+    ionic.extend(this, opts);
+
+    if(opts.useSlowAnimations) {
+      void 0;
+      this.delay *= 3;
+      this.duration *= 3;
+    }
+  };
+
+  ionic.Animation.Animation.prototype = {
+    clone: function() {
+      return new ionic.Animation.Animation({
+        curve: this.curve,
+        curveFn: this.curveFn,
+        duration: this.duration,
+        delay: this.delay,
+        repeat: this.repeat,
+        reverse: this.reverse,
+        autoReverse: this.autoReverse,
+        onComplete: this.onComplete,
+        step: this.step
+      });
+    },
+    curve: 'linear',
+    curveFn: ionic.Animation.TimingFn['linear'],
+    duration: 500,
+    delay: 0,
+    repeat: -1,
+    reverse: false,
+    autoReverse: false,
+
+    onComplete: function(didComplete, droppedFrames) {},
+
+    // Overridable
+    step: function(percent) {},
+
+    setPercent: function(percent, doesSetState) {
+      this.pause();
+
+      var v = this.curveFn(percent);
+
+      // Check if we should change any internal saved state (to resume
+      // from this value later on, for example. Defaults to true)
+      if(doesSetState !== false && this._pauseState) {
+        // Not sure yet on this
+      }
+
+      this.step(v);
+      //var value = easingMethod ? easingMethod(percent) : percent;
+    },
+    stop: function() {
+      this.isRunning = false;
+      this.shouldEnd = true;
+    },
+    play: function() {
+      this.isPaused = false;
+      if(this._lastStepFn) {
+        this._unpausedAnimation = true;
+        ionic.cancelAnimationFrame(this._lastStepFn);
+        ionic.requestAnimationFrame(this._lastStepFn);
+      }
+    },
+    pause: function() {
+      this.isPaused = true;
+    },
+    _saveState: function(now, closure) {
+      this._pauseState = {
+        pausedAt: now,
+      }
+      this._lastStepFn = closure;
+      window.cancelAnimationFrame(closure);
+    },
+    restart: function() {
+      var self = this;
+
+      this.isRunning = false;
+
+      // TODO: Verify this isn't totally stupid
+      ionic.requestAnimationFrame(function() {
+        self.start();
+      })
+    },
+
+    start: function() {
+      var self = this;
+
+      // Set up the initial animation state
+      var animState = {
+        startPercent: this.reverse === true ? 1 : 0,
+        endPercent: this.reverse === true ? 0 : 1,
+        duration: this.duration,
+        easingMethod: this.curveFn,
+        delay: this.delay,
+        reverse: this.reverse,
+        repeat: this.repeat,
+        autoReverse: this.autoReverse,
+        dynamic: this.dynamic
+      }
+
+      ionic.Animation.animationStarted(this);
+
+      return this._run(function(percent, now, render) {
+        if(render) {
+          self.step(percent);
+        }
+      }, function(droppedFrames, finishedAnimation) {
+        ionic.Animation.animationStopped(self);
+        self.onComplete && self.onComplete(finishedAnimation, droppedFrames);
+        void 0;
+      }, animState);
+    },
+
+    /**
+     * Start the animation.
+     *
+     * @param stepCallback {Function} Pointer to function which is executed on every step.
+    *   Signature of the method should be `function(percent, now, virtual) { return continueWithAnimation; }`
+     * @param completedCallback {Function}
+     *   Signature of the method should be `function(droppedFrames, finishedAnimation) {}`
+     * @param duration {Integer} Milliseconds to run the animation
+     * @param easingMethod {Function} Pointer to easing function
+     *   Signature of the method should be `function(percent) { return modifiedValue; }`
+     * @return {Integer} Identifier of animation. Can be used to stop it any time.
+     */
+    _run: function(stepCallback, completedCallback, state) {
+      var self = this;
+      var start = time();
+      var lastFrame = start;
+      var startTime = start + state.delay;
+      var percent = state.startPercent;
+      var startPercent = state.startPercent;
+      var endPercent = state.endPercent;
+      var autoReverse = state.autoReverse;
+      var delay = state.delay;
+      var duration = state.duration;
+      var easingMethod = state.easingMethod;
+      var repeat = state.repeat;
+      var reverse = state.reverse;
+
+      var dropCounter = 0;
+      var iteration = 0;
+
+      var perhapsAutoreverse = function() {
+        // Check if we hit the end and should auto reverse
+        if(percent === endPercent && autoReverse) {
+          // Flip the start and end values
+          var sp = endPercent;
+          reverse = !reverse;
+          endPercent = startPercent;
+          startPercent = sp;
+
+          if(repeat === 0) {
+            autoReverse = false;
+          }
+        } else {
+          // Otherwise, just start over
+          percent = startPercent;
+        }
+        // Start fresh either way
+        start = time();
+        ionic.requestAnimationFrame(step);
+      }
+
+
+      // This is the internal step method which is called every few milliseconds
+      var step = function(virtual) {
+        var now = time();
+
+        if(self._unpausedAnimation) {
+          // We unpaused. Increase the start time to account
+          // for the gap in playback (to keep timing the same)
+          var t = self._pauseState.pausedAt;
+          start = start + (now - t);
+          lastFrame = now;
+        }
+
+        // Normalize virtual value
+        var render = virtual !== true;
+
+        // Get current time
+        var diff = now - start;
+
+        // Verification is executed before next animation step
+        if(self.isPaused) {
+          self._saveState(now, step);//percent, iteration, reverse);
+          return;
+        }
+
+        if (!self.isRunning) {// || (verifyCallback && !verifyCallback(id))) {
+
+          completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), self._animationId, false);
+          return;
+
+        }
+
+
+        // For the current rendering to apply let's update omitted steps in memory.
+        // This is important to bring internal state variables up-to-date with progress in time.
+        if (render) {
+
+          var droppedFrames = Math.round((now - lastFrame) / (millisecondsPerSecond / desiredFrames)) - 1;
+          if(self._unpausedAnimation) {
+            void 0;
+          }
+          for (var j = 0; j < Math.min(droppedFrames, 4); j++) {
+            void 0;
+            step(true);
+            dropCounter++;
+          }
+
+        }
+
+        // Compute percent value
+        if (diff > delay && duration) {
+          percent = (diff - delay) / duration;
+
+          // If we are animating in the opposite direction,
+          // the percentage is 1 minus this perc val
+          if(reverse === true) {
+            percent = 1 - percent;
+            if (percent < 0) {
+              percent = 0;
+            }
+          } else {
+            if (percent > 1) {
+              percent = 1;
+            }
+          }
+        }
+
+        self._unpausedAnimation = false;
+
+        // Execute step callback, then...
+        var value;
+        if(state.dynamic) {
+          value = state.dynamic.at(percent);
+        } else {
+          value = easingMethod ? easingMethod(percent) : percent;
+        }
+        if ((stepCallback(value, now, render) === false || percent === endPercent) && render) {
+          if(repeat === -1) {
+            perhapsAutoreverse();
+          } else if(iteration < repeat) {
+            // Track iterations
+            iteration++;
+            perhapsAutoreverse();
+          } else if(repeat === 0 && autoReverse) {
+            perhapsAutoreverse();
+          } else {
+            completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), self._animationId, percent === endPercent || duration == null);
+          }
+        } else if (render) {
+          lastFrame = now;
+          ionic.requestAnimationFrame(step);
+        }
+      };
+
+
+      // Init first step
+      ionic.requestAnimationFrame(step);
+
     }
   };
 })(window);
@@ -35608,7 +31804,7 @@ angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
 
 /**
  * State-based routing for AngularJS
- * @version v0.2.7
+ * @version v0.2.10
  * @link http://angular-ui.github.com/
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -35658,8 +31854,7 @@ function ancestors(first, second) {
   var path = [];
 
   for (var n in first.path) {
-    if (first.path[n] === "") continue;
-    if (!second.path[n]) break;
+    if (first.path[n] !== second.path[n]) break;
     path.push(first.path[n]);
   }
   return path;
@@ -35784,19 +31979,98 @@ function filterByKeys(keys, values) {
   });
   return filtered;
 }
-
+/**
+ * @ngdoc overview
+ * @name ui.router.util
+ *
+ * @description
+ * # ui.router.util sub-module
+ *
+ * This module is a dependency of other sub-modules. Do not include this module as a dependency
+ * in your angular app (use {@link ui.router} module instead).
+ *
+ */
 angular.module('ui.router.util', ['ng']);
-angular.module('ui.router.router', ['ui.router.util']);
-angular.module('ui.router.state', ['ui.router.router', 'ui.router.util']);
-angular.module('ui.router', ['ui.router.state']);
-angular.module('ui.router.compat', ['ui.router']);
-
 
 /**
- * Service (`ui-util`). Manages resolution of (acyclic) graphs of promises.
- * @module $resolve
+ * @ngdoc overview
+ * @name ui.router.router
+ * 
+ * @requires ui.router.util
+ *
+ * @description
+ * # ui.router.router sub-module
+ *
+ * This module is a dependency of other sub-modules. Do not include this module as a dependency
+ * in your angular app (use {@link ui.router} module instead).
+ */
+angular.module('ui.router.router', ['ui.router.util']);
+
+/**
+ * @ngdoc overview
+ * @name ui.router.state
+ * 
+ * @requires ui.router.router
+ * @requires ui.router.util
+ *
+ * @description
+ * # ui.router.state sub-module
+ *
+ * This module is a dependency of the main ui.router module. Do not include this module as a dependency
+ * in your angular app (use {@link ui.router} module instead).
+ * 
+ */
+angular.module('ui.router.state', ['ui.router.router', 'ui.router.util']);
+
+/**
+ * @ngdoc overview
+ * @name ui.router
+ *
+ * @requires ui.router.state
+ *
+ * @description
+ * # ui.router
+ * 
+ * ## The main module for ui.router 
+ * There are several sub-modules included with the ui.router module, however only this module is needed
+ * as a dependency within your angular app. The other modules are for organization purposes. 
+ *
+ * The modules are:
+ * * ui.router - the main "umbrella" module
+ * * ui.router.router - 
+ * 
+ * *You'll need to include **only** this module as the dependency within your angular app.*
+ * 
+ * <pre>
+ * <!doctype html>
+ * <html ng-app="myApp">
+ * <head>
+ *   <script src="js/angular.js"></script>
+ *   <!-- Include the ui-router script -->
+ *   <script src="js/angular-ui-router.min.js"></script>
+ *   <script>
+ *     // ...and add 'ui.router' as a dependency
+ *     var myApp = angular.module('myApp', ['ui.router']);
+ *   </script>
+ * </head>
+ * <body>
+ * </body>
+ * </html>
+ * </pre>
+ */
+angular.module('ui.router', ['ui.router.state']);
+
+angular.module('ui.router.compat', ['ui.router']);
+
+/**
+ * @ngdoc object
+ * @name ui.router.util.$resolve
+ *
  * @requires $q
  * @requires $injector
+ *
+ * @description
+ * Manages resolution of (acyclic) graphs of promises.
  */
 $Resolve.$inject = ['$q', '$injector'];
 function $Resolve(  $q,    $injector) {
@@ -35810,15 +32084,24 @@ function $Resolve(  $q,    $injector) {
   
 
   /**
+   * @ngdoc function
+   * @name ui.router.util.$resolve#study
+   * @methodOf ui.router.util.$resolve
+   *
+   * @description
    * Studies a set of invocables that are likely to be used multiple times.
-   *      $resolve.study(invocables)(locals, parent, self)
+   * <pre>
+   * $resolve.study(invocables)(locals, parent, self)
+   * </pre>
    * is equivalent to
-   *      $resolve.resolve(invocables, locals, parent, self)
-   * but the former is more efficient (in fact `resolve` just calls `study` internally).
-   * See {@link module:$resolve/resolve} for details.
-   * @function
-   * @param {Object} invocables
-   * @return {Function}
+   * <pre>
+   * $resolve.resolve(invocables, locals, parent, self)
+   * </pre>
+   * but the former is more efficient (in fact `resolve` just calls `study` 
+   * internally).
+   *
+   * @param {object} invocables Invocable objects
+   * @return {function} a function to pass in locals, parent and self
    */
   this.study = function (invocables) {
     if (!isObject(invocables)) throw new Error("'invocables' must be an object");
@@ -35954,51 +32237,65 @@ function $Resolve(  $q,    $injector) {
   };
   
   /**
-   * Resolves a set of invocables. An invocable is a function to be invoked via `$injector.invoke()`,
-   * and can have an arbitrary number of dependencies. An invocable can either return a value directly,
-   * or a `$q` promise. If a promise is returned it will be resolved and the resulting value will be
-   * used instead. Dependencies of invocables are resolved (in this order of precedence)
+   * @ngdoc function
+   * @name ui.router.util.$resolve#resolve
+   * @methodOf ui.router.util.$resolve
+   *
+   * @description
+   * Resolves a set of invocables. An invocable is a function to be invoked via 
+   * `$injector.invoke()`, and can have an arbitrary number of dependencies. 
+   * An invocable can either return a value directly,
+   * or a `$q` promise. If a promise is returned it will be resolved and the 
+   * resulting value will be used instead. Dependencies of invocables are resolved 
+   * (in this order of precedence)
    *
    * - from the specified `locals`
    * - from another invocable that is part of this `$resolve` call
-   * - from an invocable that is inherited from a `parent` call to `$resolve` (or recursively
-   *   from any ancestor `$resolve` of that parent).
+   * - from an invocable that is inherited from a `parent` call to `$resolve` 
+   *   (or recursively
+   * - from any ancestor `$resolve` of that parent).
    *
-   * The return value of `$resolve` is a promise for an object that contains (in this order of precedence)
+   * The return value of `$resolve` is a promise for an object that contains 
+   * (in this order of precedence)
    *
    * - any `locals` (if specified)
    * - the resolved return values of all injectables
    * - any values inherited from a `parent` call to `$resolve` (if specified)
    *
-   * The promise will resolve after the `parent` promise (if any) and all promises returned by injectables
-   * have been resolved. If any invocable (or `$injector.invoke`) throws an exception, or if a promise
-   * returned by an invocable is rejected, the `$resolve` promise is immediately rejected with the same error.
-   * A rejection of a `parent` promise (if specified) will likewise be propagated immediately. Once the
-   * `$resolve` promise has been rejected, no further invocables will be called.
+   * The promise will resolve after the `parent` promise (if any) and all promises 
+   * returned by injectables have been resolved. If any invocable 
+   * (or `$injector.invoke`) throws an exception, or if a promise returned by an 
+   * invocable is rejected, the `$resolve` promise is immediately rejected with the 
+   * same error. A rejection of a `parent` promise (if specified) will likewise be 
+   * propagated immediately. Once the `$resolve` promise has been rejected, no 
+   * further invocables will be called.
    * 
-   * Cyclic dependencies between invocables are not permitted and will caues `$resolve` to throw an
-   * error. As a special case, an injectable can depend on a parameter with the same name as the injectable,
-   * which will be fulfilled from the `parent` injectable of the same name. This allows inherited values
-   * to be decorated. Note that in this case any other injectable in the same `$resolve` with the same
+   * Cyclic dependencies between invocables are not permitted and will caues `$resolve`
+   * to throw an error. As a special case, an injectable can depend on a parameter 
+   * with the same name as the injectable, which will be fulfilled from the `parent` 
+   * injectable of the same name. This allows inherited values to be decorated. 
+   * Note that in this case any other injectable in the same `$resolve` with the same
    * dependency would see the decorated value, not the inherited value.
    *
-   * Note that missing dependencies -- unlike cyclic dependencies -- will cause an (asynchronous) rejection
-   * of the `$resolve` promise rather than a (synchronous) exception.
+   * Note that missing dependencies -- unlike cyclic dependencies -- will cause an 
+   * (asynchronous) rejection of the `$resolve` promise rather than a (synchronous) 
+   * exception.
    *
-   * Invocables are invoked eagerly as soon as all dependencies are available. This is true even for
-   * dependencies inherited from a `parent` call to `$resolve`.
+   * Invocables are invoked eagerly as soon as all dependencies are available. 
+   * This is true even for dependencies inherited from a `parent` call to `$resolve`.
    *
-   * As a special case, an invocable can be a string, in which case it is taken to be a service name
-   * to be passed to `$injector.get()`. This is supported primarily for backwards-compatibility with the
-   * `resolve` property of `$routeProvider` routes.
+   * As a special case, an invocable can be a string, in which case it is taken to 
+   * be a service name to be passed to `$injector.get()`. This is supported primarily 
+   * for backwards-compatibility with the `resolve` property of `$routeProvider` 
+   * routes.
    *
-   * @function
-   * @param {Object.<string, Function|string>} invocables  functions to invoke or `$injector` services to fetch.
-   * @param {Object.<string, *>} [locals]  values to make available to the injectables
-   * @param {Promise.<Object>} [parent]  a promise returned by another call to `$resolve`.
-   * @param {Object} [self]  the `this` for the invoked methods
-   * @return {Promise.<Object>}  Promise for an object that contains the resolved return value
-   *    of all invocables, as well as any inherited and local values.
+   * @param {object} invocables functions to invoke or 
+   * `$injector` services to fetch.
+   * @param {object} locals  values to make available to the injectables
+   * @param {object} parent  a promise returned by another call to `$resolve`.
+   * @param {object} self  the `this` for the invoked methods
+   * @return {object} Promise for an object that contains the resolved return value
+   * of all invocables, as well as any inherited and local values.
    */
   this.resolve = function (invocables, locals, parent, self) {
     return this.study(invocables)(locals, parent, self);
@@ -36009,35 +32306,43 @@ angular.module('ui.router.util').service('$resolve', $Resolve);
 
 
 /**
- * Service. Manages loading of templates.
- * @constructor
- * @name $templateFactory
+ * @ngdoc object
+ * @name ui.router.util.$templateFactory
+ *
  * @requires $http
  * @requires $templateCache
  * @requires $injector
+ *
+ * @description
+ * Service. Manages loading of templates.
  */
 $TemplateFactory.$inject = ['$http', '$templateCache', '$injector'];
 function $TemplateFactory(  $http,   $templateCache,   $injector) {
 
   /**
+   * @ngdoc function
+   * @name ui.router.util.$templateFactory#fromConfig
+   * @methodOf ui.router.util.$templateFactory
+   *
+   * @description
    * Creates a template from a configuration object. 
-   * @function
-   * @name $templateFactory#fromConfig
-   * @methodOf $templateFactory
-   * @param {Object} config  Configuration object for which to load a template. The following
-   *    properties are search in the specified order, and the first one that is defined is
-   *    used to create the template:
-   * @param {string|Function} config.template  html string template or function to load via
-   *    {@link $templateFactory#fromString fromString}.
-   * @param {string|Function} config.templateUrl  url to load or a function returning the url
-   *    to load via {@link $templateFactory#fromUrl fromUrl}.
-   * @param {Function} config.templateProvider  function to invoke via
-   *    {@link $templateFactory#fromProvider fromProvider}.
-   * @param {Object} params  Parameters to pass to the template function.
-   * @param {Object} [locals] Locals to pass to `invoke` if the template is loaded via a
-   *      `templateProvider`. Defaults to `{ params: params }`.
-   * @return {string|Promise.<string>}  The template html as a string, or a promise for that string,
-   *      or `null` if no template is configured.
+   *
+   * @param {object} config Configuration object for which to load a template. 
+   * The following properties are search in the specified order, and the first one 
+   * that is defined is used to create the template:
+   *
+   * @param {string|object} config.template html string template or function to 
+   * load via {@link ui.router.util.$templateFactory#fromString fromString}.
+   * @param {string|object} config.templateUrl url to load or a function returning 
+   * the url to load via {@link ui.router.util.$templateFactory#fromUrl fromUrl}.
+   * @param {Function} config.templateProvider function to invoke via 
+   * {@link ui.router.util.$templateFactory#fromProvider fromProvider}.
+   * @param {object} params  Parameters to pass to the template function.
+   * @param {object} locals Locals to pass to `invoke` if the template is loaded 
+   * via a `templateProvider`. Defaults to `{ params: params }`.
+   *
+   * @return {string|object}  The template html as a string, or a promise for 
+   * that string,or `null` if no template is configured.
    */
   this.fromConfig = function (config, params, locals) {
     return (
@@ -36049,27 +32354,37 @@ function $TemplateFactory(  $http,   $templateCache,   $injector) {
   };
 
   /**
+   * @ngdoc function
+   * @name ui.router.util.$templateFactory#fromString
+   * @methodOf ui.router.util.$templateFactory
+   *
+   * @description
    * Creates a template from a string or a function returning a string.
-   * @function
-   * @name $templateFactory#fromString
-   * @methodOf $templateFactory
-   * @param {string|Function} template  html template as a string or function that returns an html
-   *      template as a string.
-   * @param {Object} params  Parameters to pass to the template function.
-   * @return {string|Promise.<string>}  The template html as a string, or a promise for that string.
+   *
+   * @param {string|object} template html template as a string or function that 
+   * returns an html template as a string.
+   * @param {object} params Parameters to pass to the template function.
+   *
+   * @return {string|object} The template html as a string, or a promise for that 
+   * string.
    */
   this.fromString = function (template, params) {
     return isFunction(template) ? template(params) : template;
   };
 
   /**
+   * @ngdoc function
+   * @name ui.router.util.$templateFactory#fromUrl
+   * @methodOf ui.router.util.$templateFactory
+   * 
+   * @description
    * Loads a template from the a URL via `$http` and `$templateCache`.
-   * @function
-   * @name $templateFactory#fromUrl
-   * @methodOf $templateFactory
-   * @param {string|Function} url  url of the template to load, or a function that returns a url.
-   * @param {Object} params  Parameters to pass to the url function.
-   * @return {string|Promise.<string>}  The template html as a string, or a promise for that string.
+   *
+   * @param {string|Function} url url of the template to load, or a function 
+   * that returns a url.
+   * @param {Object} params Parameters to pass to the url function.
+   * @return {string|Promise.<string>} The template html as a string, or a promise 
+   * for that string.
    */
   this.fromUrl = function (url, params) {
     if (isFunction(url)) url = url(params);
@@ -36080,14 +32395,19 @@ function $TemplateFactory(  $http,   $templateCache,   $injector) {
   };
 
   /**
+   * @ngdoc function
+   * @name ui.router.util.$templateFactory#fromUrl
+   * @methodOf ui.router.util.$templateFactory
+   *
+   * @description
    * Creates a template by invoking an injectable provider function.
-   * @function
-   * @name $templateFactory#fromUrl
-   * @methodOf $templateFactory
+   *
    * @param {Function} provider Function to invoke via `$injector.invoke`
    * @param {Object} params Parameters for the template.
-   * @param {Object} [locals] Locals to pass to `invoke`. Defaults to `{ params: params }`.
-   * @return {string|Promise.<string>} The template html as a string, or a promise for that string.
+   * @param {Object} locals Locals to pass to `invoke`. Defaults to 
+   * `{ params: params }`.
+   * @return {string|Promise.<string>} The template html as a string, or a promise 
+   * for that string.
    */
   this.fromProvider = function (provider, params, locals) {
     return $injector.invoke(provider, null, locals || { params: params });
@@ -36097,19 +32417,23 @@ function $TemplateFactory(  $http,   $templateCache,   $injector) {
 angular.module('ui.router.util').service('$templateFactory', $TemplateFactory);
 
 /**
+ * @ngdoc object
+ * @name ui.router.util.type:UrlMatcher
+ *
+ * @description
  * Matches URLs against patterns and extracts named parameters from the path or the search
  * part of the URL. A URL pattern consists of a path pattern, optionally followed by '?' and a list
  * of search parameters. Multiple search parameter names are separated by '&'. Search parameters
  * do not influence whether or not a URL is matched, but their values are passed through into
- * the matched parameters returned by {@link UrlMatcher#exec exec}.
+ * the matched parameters returned by {@link ui.router.util.type:UrlMatcher#methods_exec exec}.
  * 
  * Path parameter placeholders can be specified using simple colon/catch-all syntax or curly brace
  * syntax, which optionally allows a regular expression for the parameter to be specified:
  *
- * * ':' name - colon placeholder
- * * '*' name - catch-all placeholder
- * * '{' name '}' - curly placeholder
- * * '{' name ':' regexp '}' - curly placeholder with regexp. Should the regexp itself contain
+ * * `':'` name - colon placeholder
+ * * `'*'` name - catch-all placeholder
+ * * `'{' name '}'` - curly placeholder
+ * * `'{' name ':' regexp '}'` - curly placeholder with regexp. Should the regexp itself contain
  *   curly braces, they must be in matched pairs or escaped with a backslash.
  *
  * Parameter names may contain only word characters (latin letters, digits, and underscore) and
@@ -36118,26 +32442,36 @@ angular.module('ui.router.util').service('$templateFactory', $TemplateFactory);
  * number of characters other than '/'. For catch-all placeholders the path parameter matches
  * any number of characters.
  * 
- * ### Examples
+ * Examples:
  * 
- * * '/hello/' - Matches only if the path is exactly '/hello/'. There is no special treatment for
+ * * `'/hello/'` - Matches only if the path is exactly '/hello/'. There is no special treatment for
  *   trailing slashes, and patterns have to match the entire path, not just a prefix.
- * * '/user/:id' - Matches '/user/bob' or '/user/1234!!!' or even '/user/' but not '/user' or
+ * * `'/user/:id'` - Matches '/user/bob' or '/user/1234!!!' or even '/user/' but not '/user' or
  *   '/user/bob/details'. The second path segment will be captured as the parameter 'id'.
- * * '/user/{id}' - Same as the previous example, but using curly brace syntax.
- * * '/user/{id:[^/]*}' - Same as the previous example.
- * * '/user/{id:[0-9a-fA-F]{1,8}}' - Similar to the previous example, but only matches if the id
+ * * `'/user/{id}'` - Same as the previous example, but using curly brace syntax.
+ * * `'/user/{id:[^/]*}'` - Same as the previous example.
+ * * `'/user/{id:[0-9a-fA-F]{1,8}}'` - Similar to the previous example, but only matches if the id
  *   parameter consists of 1 to 8 hex digits.
- * * '/files/{path:.*}' - Matches any URL starting with '/files/' and captures the rest of the
+ * * `'/files/{path:.*}'` - Matches any URL starting with '/files/' and captures the rest of the
  *   path into the parameter 'path'.
- * * '/files/*path' - ditto.
+ * * `'/files/*path'` - ditto.
  *
- * @constructor
  * @param {string} pattern  the pattern to compile into a matcher.
  *
  * @property {string} prefix  A static prefix of this pattern. The matcher guarantees that any
- *   URL matching this matcher (i.e. any string for which {@link UrlMatcher#exec exec()} returns
+ *   URL matching this matcher (i.e. any string for which {@link ui.router.util.type:UrlMatcher#methods_exec exec()} returns
  *   non-null) will start with this prefix.
+ *
+ * @property {string} source  The pattern that was passed into the contructor
+ *
+ * @property {string} sourcePath  The path portion of the source property
+ *
+ * @property {string} sourceSearch  The search portion of the source property
+ *
+ * @property {string} regex  The constructed regex that will be used to match against the url when 
+ *   it is time to determine which url will match.
+ *
+ * @returns {Object}  New UrlMatcher object
  */
 function UrlMatcher(pattern) {
 
@@ -36208,12 +32542,17 @@ function UrlMatcher(pattern) {
 }
 
 /**
+ * @ngdoc function
+ * @name ui.router.util.type:UrlMatcher#concat
+ * @methodOf ui.router.util.type:UrlMatcher
+ *
+ * @description
  * Returns a new matcher for a pattern constructed by appending the path part and adding the
  * search parameters of the specified pattern to this pattern. The current pattern is not
  * modified. This can be understood as creating a pattern for URLs that are relative to (or
  * suffixes of) the current pattern.
  *
- * ### Example
+ * @example
  * The following two matchers are equivalent:
  * ```
  * new UrlMatcher('/user/{id}?q').concat('/details?date');
@@ -36221,7 +32560,7 @@ function UrlMatcher(pattern) {
  * ```
  *
  * @param {string} pattern  The pattern to append.
- * @return {UrlMatcher}  A matcher for the concatenated pattern.
+ * @returns {ui.router.util.type:UrlMatcher}  A matcher for the concatenated pattern.
  */
 UrlMatcher.prototype.concat = function (pattern) {
   // Because order of search parameters is irrelevant, we can add our own search
@@ -36235,13 +32574,18 @@ UrlMatcher.prototype.toString = function () {
 };
 
 /**
+ * @ngdoc function
+ * @name ui.router.util.type:UrlMatcher#exec
+ * @methodOf ui.router.util.type:UrlMatcher
+ *
+ * @description
  * Tests the specified path against this matcher, and returns an object containing the captured
  * parameter values, or null if the path does not match. The returned object contains the values
  * of any search parameters that are mentioned in the pattern, but their value may be null if
  * they are not present in `searchParams`. This means that search parameters are always treated
  * as optional.
  *
- * ### Example
+ * @example
  * ```
  * new UrlMatcher('/user/{id}?q&r').exec('/user/bob', { x:'1', q:'hello' });
  * // returns { id:'bob', q:'hello', r:null }
@@ -36249,7 +32593,7 @@ UrlMatcher.prototype.toString = function () {
  *
  * @param {string} path  The URL path to match, e.g. `$location.path()`.
  * @param {Object} searchParams  URL search parameters, e.g. `$location.search()`.
- * @return {Object}  The captured parameter values.
+ * @returns {Object}  The captured parameter values.
  */
 UrlMatcher.prototype.exec = function (path, searchParams) {
   var m = this.regexp.exec(path);
@@ -36268,8 +32612,14 @@ UrlMatcher.prototype.exec = function (path, searchParams) {
 };
 
 /**
+ * @ngdoc function
+ * @name ui.router.util.type:UrlMatcher#parameters
+ * @methodOf ui.router.util.type:UrlMatcher
+ *
+ * @description
  * Returns the names of all path and search parameters of this pattern in an unspecified order.
- * @return {Array.<string>}  An array of parameter names. Must be treated as read-only. If the
+ * 
+ * @returns {Array.<string>}  An array of parameter names. Must be treated as read-only. If the
  *    pattern has no parameters, an empty array is returned.
  */
 UrlMatcher.prototype.parameters = function () {
@@ -36277,18 +32627,23 @@ UrlMatcher.prototype.parameters = function () {
 };
 
 /**
+ * @ngdoc function
+ * @name ui.router.util.type:UrlMatcher#format
+ * @methodOf ui.router.util.type:UrlMatcher
+ *
+ * @description
  * Creates a URL that matches this pattern by substituting the specified values
  * for the path and search parameters. Null values for path parameters are
  * treated as empty strings.
  *
- * ### Example
+ * @example
  * ```
  * new UrlMatcher('/user/{id}?q').format({ id:'bob', q:'yes' });
  * // returns '/user/bob?q=yes'
  * ```
  *
  * @param {Object} values  the values to substitute for the parameters in this pattern.
- * @return {string}  the formatted URL (path and optionally search part).
+ * @returns {string}  the formatted URL (path and optionally search part).
  */
 UrlMatcher.prototype.format = function (values) {
   var segments = this.segments, params = this.params;
@@ -36314,37 +32669,49 @@ UrlMatcher.prototype.format = function (values) {
   return result;
 };
 
+
+
 /**
- * Service. Factory for {@link UrlMatcher} instances. The factory is also available to providers
+ * @ngdoc object
+ * @name ui.router.util.$urlMatcherFactory
+ *
+ * @description
+ * Factory for {@link ui.router.util.type:UrlMatcher} instances. The factory is also available to providers
  * under the name `$urlMatcherFactoryProvider`.
- * @constructor
- * @name $urlMatcherFactory
  */
 function $UrlMatcherFactory() {
+
   /**
-   * Creates a {@link UrlMatcher} for the specified pattern.
-   * @function
-   * @name $urlMatcherFactory#compile
-   * @methodOf $urlMatcherFactory
+   * @ngdoc function
+   * @name ui.router.util.$urlMatcherFactory#compile
+   * @methodOf ui.router.util.$urlMatcherFactory
+   *
+   * @description
+   * Creates a {@link ui.router.util.type:UrlMatcher} for the specified pattern.
+   *   
    * @param {string} pattern  The URL pattern.
-   * @return {UrlMatcher}  The UrlMatcher.
+   * @returns {ui.router.util.type:UrlMatcher}  The UrlMatcher.
    */
   this.compile = function (pattern) {
     return new UrlMatcher(pattern);
   };
 
   /**
+   * @ngdoc function
+   * @name ui.router.util.$urlMatcherFactory#isMatcher
+   * @methodOf ui.router.util.$urlMatcherFactory
+   *
+   * @description
    * Returns true if the specified object is a UrlMatcher, or false otherwise.
-   * @function
-   * @name $urlMatcherFactory#isMatcher
-   * @methodOf $urlMatcherFactory
-   * @param {Object} o
-   * @return {boolean}
+   *
+   * @param {Object} object  The object to perform the type check against.
+   * @returns {Boolean}  Returns `true` if the object has the following functions: `exec`, `format`, and `concat`.
    */
   this.isMatcher = function (o) {
     return isObject(o) && isFunction(o.exec) && isFunction(o.format) && isFunction(o.concat);
   };
-
+  
+  /* No need to document $get, since it returns this */
   this.$get = function () {
     return this;
   };
@@ -36353,7 +32720,21 @@ function $UrlMatcherFactory() {
 // Register as a provider so it's available to other providers
 angular.module('ui.router.util').provider('$urlMatcherFactory', $UrlMatcherFactory);
 
-
+/**
+ * @ngdoc object
+ * @name ui.router.router.$urlRouterProvider
+ *
+ * @requires ui.router.util.$urlMatcherFactoryProvider
+ *
+ * @description
+ * `$urlRouterProvider` has the responsibility of watching `$location`. 
+ * When `$location` changes it runs through a list of rules one by one until a 
+ * match is found. `$urlRouterProvider` is used behind the scenes anytime you specify 
+ * a url in a state configuration. All urls are compiled into a UrlMatcher object.
+ *
+ * There are several methods on `$urlRouterProvider` that make it useful to use directly
+ * in your module config.
+ */
 $UrlRouterProvider.$inject = ['$urlMatcherFactoryProvider'];
 function $UrlRouterProvider(  $urlMatcherFactory) {
   var rules = [], 
@@ -36372,6 +32753,37 @@ function $UrlRouterProvider(  $urlMatcherFactory) {
     });
   }
 
+  /**
+   * @ngdoc function
+   * @name ui.router.router.$urlRouterProvider#rule
+   * @methodOf ui.router.router.$urlRouterProvider
+   *
+   * @description
+   * Defines rules that are used by `$urlRouterProvider to find matches for
+   * specific URLs.
+   *
+   * @example
+   * <pre>
+   * var app = angular.module('app', ['ui.router.router']);
+   *
+   * app.config(function ($urlRouterProvider) {
+   *   // Here's an example of how you might allow case insensitive urls
+   *   $urlRouterProvider.rule(function ($injector, $location) {
+   *     var path = $location.path(),
+   *         normalized = path.toLowerCase();
+   *
+   *     if (path !== normalized) {
+   *       return normalized;
+   *     }
+   *   });
+   * });
+   * </pre>
+   *
+   * @param {object} rule Handler function that takes `$injector` and `$location`
+   * services as arguments. You can use them to return a valid path as a string.
+   *
+   * @return {object} $urlRouterProvider - $urlRouterProvider instance
+   */
   this.rule =
     function (rule) {
       if (!isFunction(rule)) throw new Error("'rule' must be a function");
@@ -36379,6 +32791,37 @@ function $UrlRouterProvider(  $urlMatcherFactory) {
       return this;
     };
 
+  /**
+   * @ngdoc object
+   * @name ui.router.router.$urlRouterProvider#otherwise
+   * @methodOf ui.router.router.$urlRouterProvider
+   *
+   * @description
+   * Defines a path that is used when an invalied route is requested.
+   *
+   * @example
+   * <pre>
+   * var app = angular.module('app', ['ui.router.router']);
+   *
+   * app.config(function ($urlRouterProvider) {
+   *   // if the path doesn't match any of the urls you configured
+   *   // otherwise will take care of routing the user to the
+   *   // specified url
+   *   $urlRouterProvider.otherwise('/index');
+   *
+   *   // Example of using function rule as param
+   *   $urlRouterProvider.otherwise(function ($injector, $location) {
+   *     ...
+   *   });
+   * });
+   * </pre>
+   *
+   * @param {string|object} rule The url path you want to redirect to or a function 
+   * rule that returns the url path. The function version is passed two params: 
+   * `$injector` and `$location` services.
+   *
+   * @return {object} $urlRouterProvider - $urlRouterProvider instance
+   */
   this.otherwise =
     function (rule) {
       if (isString(rule)) {
@@ -36397,6 +32840,43 @@ function $UrlRouterProvider(  $urlMatcherFactory) {
     return isDefined(result) ? result : true;
   }
 
+  /**
+   * @ngdoc function
+   * @name ui.router.router.$urlRouterProvider#when
+   * @methodOf ui.router.router.$urlRouterProvider
+   *
+   * @description
+   * Registers a handler for a given url matching. if handle is a string, it is
+   * treated as a redirect, and is interpolated according to the syyntax of match
+   * (i.e. like String.replace() for RegExp, or like a UrlMatcher pattern otherwise).
+   *
+   * If the handler is a function, it is injectable. It gets invoked if `$location`
+   * matches. You have the option of inject the match object as `$match`.
+   *
+   * The handler can return
+   *
+   * - **falsy** to indicate that the rule didn't match after all, then `$urlRouter`
+   *   will continue trying to find another one that matches.
+   * - **string** which is treated as a redirect and passed to `$location.url()`
+   * - **void** or any **truthy** value tells `$urlRouter` that the url was handled.
+   *
+   * @example
+   * <pre>
+   * var app = angular.module('app', ['ui.router.router']);
+   *
+   * app.config(function ($urlRouterProvider) {
+   *   $urlRouterProvider.when($state.url, function ($match, $stateParams) {
+   *     if ($state.$current.navigable !== state ||
+   *         !equalForKeys($match, $stateParams) {
+   *      $state.transitionTo(state, $match, false);
+   *     }
+   *   });
+   * });
+   * </pre>
+   *
+   * @param {string|object} what The incoming path that you want to redirect.
+   * @param {string|object} handler The path you want to redirect your user to.
+   */
   this.when =
     function (what, handler) {
       var redirect, handlerIsString = isString(handler);
@@ -36443,6 +32923,17 @@ function $UrlRouterProvider(  $urlMatcherFactory) {
       throw new Error("invalid 'what' in when()");
     };
 
+  /**
+   * @ngdoc object
+   * @name ui.router.router.$urlRouter
+   *
+   * @requires $location
+   * @requires $rootScope
+   * @requires $injector
+   *
+   * @description
+   *
+   */
   this.$get =
     [        '$location', '$rootScope', '$injector',
     function ($location,   $rootScope,   $injector) {
@@ -36468,6 +32959,32 @@ function $UrlRouterProvider(  $urlMatcherFactory) {
       $rootScope.$on('$locationChangeSuccess', update);
 
       return {
+        /**
+         * @ngdoc function
+         * @name ui.router.router.$urlRouter#sync
+         * @methodOf ui.router.router.$urlRouter
+         *
+         * @description
+         * Triggers an update; the same update that happens when the address bar url changes, aka `$locationChangeSuccess`.
+         * This method is useful when you need to use `preventDefault()` on the `$locationChangeSuccess` event, 
+         * perform some custom logic (route protection, auth, config, redirection, etc) and then finally proceed 
+         * with the transition by calling `$urlRouter.sync()`.
+         *
+         * @example
+         * <pre>
+         * angular.module('app', ['ui.router']);
+         *   .run(function($rootScope, $urlRouter) {
+         *     $rootScope.$on('$locationChangeSuccess', function(evt) {
+         *       // Halt state change from even starting
+         *       evt.preventDefault();
+         *       // Perform custom logic
+         *       var meetsRequirement = ...
+         *       // Continue with the update and state transition if logic allows
+         *       if (meetsRequirement) $urlRouter.sync();
+         *     });
+         * });
+         * </pre>
+         */
         sync: function () {
           update();
         }
@@ -36477,6 +32994,28 @@ function $UrlRouterProvider(  $urlMatcherFactory) {
 
 angular.module('ui.router.router').provider('$urlRouter', $UrlRouterProvider);
 
+/**
+ * @ngdoc object
+ * @name ui.router.state.$stateProvider
+ *
+ * @requires ui.router.router.$urlRouterProvider
+ * @requires ui.router.util.$urlMatcherFactoryProvider
+ * @requires $locationProvider
+ *
+ * @description
+ * The new `$stateProvider` works similar to Angular's v1 router, but it focuses purely
+ * on state.
+ *
+ * A state corresponds to a "place" in the application in terms of the overall UI and
+ * navigation. A state describes (via the controller / template / view properties) what
+ * the UI looks like and does at that place.
+ *
+ * States often have things in common, and the primary way of factoring out these
+ * commonalities in this model is via the state hierarchy, i.e. parent/child states aka
+ * nested states.
+ *
+ * The `$stateProvider` provides interfaces to declare these states for your app.
+ */
 $StateProvider.$inject = ['$urlRouterProvider', '$urlMatcherFactoryProvider', '$locationProvider'];
 function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $locationProvider) {
 
@@ -36675,6 +33214,41 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
     return state;
   }
 
+  // Checks text to see if it looks like a glob.
+  function isGlob (text) {
+    return text.indexOf('*') > -1;
+  }
+
+  // Returns true if glob matches current $state name.
+  function doesStateMatchGlob (glob) {
+    var globSegments = glob.split('.'),
+        segments = $state.$current.name.split('.');
+
+    //match greedy starts
+    if (globSegments[0] === '**') {
+       segments = segments.slice(segments.indexOf(globSegments[1]));
+       segments.unshift('**');
+    }
+    //match greedy ends
+    if (globSegments[globSegments.length - 1] === '**') {
+       segments.splice(segments.indexOf(globSegments[globSegments.length - 2]) + 1, Number.MAX_VALUE);
+       segments.push('**');
+    }
+
+    if (globSegments.length != segments.length) {
+      return false;
+    }
+
+    //match single stars
+    for (var i = 0, l = globSegments.length; i < l; i++) {
+      if (globSegments[i] === '*') {
+        segments[i] = '*';
+      }
+    }
+
+    return segments.join('') === globSegments.join('');
+  }
+
 
   // Implicit root state that is always active
   root = registerState({
@@ -36686,9 +33260,96 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
   root.navigable = null;
 
 
-  // .decorator()
-  // .decorator(name)
-  // .decorator(name, function)
+  /**
+   * @ngdoc function
+   * @name ui.router.state.$stateProvider#decorator
+   * @methodOf ui.router.state.$stateProvider
+   *
+   * @description
+   * Allows you to extend (carefully) or override (at your own peril) the 
+   * `stateBuilder` object used internally by `$stateProvider`. This can be used 
+   * to add custom functionality to ui-router, for example inferring templateUrl 
+   * based on the state name.
+   *
+   * When passing only a name, it returns the current (original or decorated) builder
+   * function that matches `name`.
+   *
+   * The builder functions that can be decorated are listed below. Though not all
+   * necessarily have a good use case for decoration, that is up to you to decide.
+   *
+   * In addition, users can attach custom decorators, which will generate new 
+   * properties within the state's internal definition. There is currently no clear 
+   * use-case for this beyond accessing internal states (i.e. $state.$current), 
+   * however, expect this to become increasingly relevant as we introduce additional 
+   * meta-programming features.
+   *
+   * **Warning**: Decorators should not be interdependent because the order of 
+   * execution of the builder functions in non-deterministic. Builder functions 
+   * should only be dependent on the state definition object and super function.
+   *
+   *
+   * Existing builder functions and current return values:
+   *
+   * - **parent** `{object}` - returns the parent state object.
+   * - **data** `{object}` - returns state data, including any inherited data that is not
+   *   overridden by own values (if any).
+   * - **url** `{object}` - returns a {link ui.router.util.type:UrlMatcher} or null.
+   * - **navigable** `{object}` - returns closest ancestor state that has a URL (aka is 
+   *   navigable).
+   * - **params** `{object}` - returns an array of state params that are ensured to 
+   *   be a super-set of parent's params.
+   * - **views** `{object}` - returns a views object where each key is an absolute view 
+   *   name (i.e. "viewName@stateName") and each value is the config object 
+   *   (template, controller) for the view. Even when you don't use the views object 
+   *   explicitly on a state config, one is still created for you internally.
+   *   So by decorating this builder function you have access to decorating template 
+   *   and controller properties.
+   * - **ownParams** `{object}` - returns an array of params that belong to the state, 
+   *   not including any params defined by ancestor states.
+   * - **path** `{string}` - returns the full path from the root down to this state. 
+   *   Needed for state activation.
+   * - **includes** `{object}` - returns an object that includes every state that 
+   *   would pass a '$state.includes()' test.
+   *
+   * @example
+   * <pre>
+   * // Override the internal 'views' builder with a function that takes the state
+   * // definition, and a reference to the internal function being overridden:
+   * $stateProvider.decorator('views', function ($state, parent) {
+   *   var result = {},
+   *       views = parent(state);
+   *
+   *   angular.forEach(view, function (config, name) {
+   *     var autoName = (state.name + '.' + name).replace('.', '/');
+   *     config.templateUrl = config.templateUrl || '/partials/' + autoName + '.html';
+   *     result[name] = config;
+   *   });
+   *   return result;
+   * });
+   *
+   * $stateProvider.state('home', {
+   *   views: {
+   *     'contact.list': { controller: 'ListController' },
+   *     'contact.item': { controller: 'ItemController' }
+   *   }
+   * });
+   *
+   * // ...
+   *
+   * $state.go('home');
+   * // Auto-populates list and item views with /partials/home/contact/list.html,
+   * // and /partials/home/contact/item.html, respectively.
+   * </pre>
+   *
+   * @param {string} name The name of the builder function to decorate. 
+   * @param {object} func A function that is responsible for decorating the original 
+   * builder function. The function receives two parameters:
+   *
+   *   - `{object}` - state - The state config object.
+   *   - `{object}` - super - The original builder function.
+   *
+   * @return {object} $stateProvider - $stateProvider instance
+   */
   this.decorator = decorator;
   function decorator(name, func) {
     /*jshint validthis: true */
@@ -36705,8 +33366,138 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
     return this;
   }
 
-  // .state(state)
-  // .state(name, state)
+  /**
+   * @ngdoc function
+   * @name ui.router.state.$stateProvider#state
+   * @methodOf ui.router.state.$stateProvider
+   *
+   * @description
+   * Registers a state configuration under a given state name. The stateConfig object
+   * has the following acceptable properties.
+   *
+   * <a id='template'></a>
+   *
+   * - **`template`** - {string|function=} - html template as a string or a function that returns
+   *   an html template as a string which should be used by the uiView directives. This property 
+   *   takes precedence over templateUrl.
+   *   
+   *   If `template` is a function, it will be called with the following parameters:
+   *
+   *   - {array.&lt;object&gt;} - state parameters extracted from the current $location.path() by
+   *     applying the current state
+   *
+   * <a id='templateUrl'></a>
+   *
+   * - **`templateUrl`** - {string|function=} - path or function that returns a path to an html 
+   *   template that should be used by uiView.
+   *   
+   *   If `templateUrl` is a function, it will be called with the following parameters:
+   *
+   *   - {array.&lt;object&gt;} - state parameters extracted from the current $location.path() by 
+   *     applying the current state
+   *
+   * <a id='templateProvider'></a>
+   *
+   * - **`templateProvider`** - {function=} - Provider function that returns HTML content
+   *   string.
+   *
+   * <a id='controller'></a>
+   *
+   * - **`controller`** - {string|function=} -  Controller fn that should be associated with newly 
+   *   related scope or the name of a registered controller if passed as a string.
+   *
+   * <a id='controllerProvider'></a>
+   *
+   * - **`controllerProvider`** - {function=} - Injectable provider function that returns
+   *   the actual controller or string.
+   *
+   * <a id='controllerAs'></a>
+   * 
+   * - **`controllerAs`** – {string=} – A controller alias name. If present the controller will be 
+   *   published to scope under the controllerAs name.
+   *
+   * <a id='resolve'></a>
+   *
+   * - **`resolve`** - {object.&lt;string, function&gt;=} - An optional map of dependencies which 
+   *   should be injected into the controller. If any of these dependencies are promises, 
+   *   the router will wait for them all to be resolved or one to be rejected before the 
+   *   controller is instantiated. If all the promises are resolved successfully, the values 
+   *   of the resolved promises are injected and $stateChangeSuccess event is fired. If any 
+   *   of the promises are rejected the $stateChangeError event is fired. The map object is:
+   *   
+   *   - key - {string}: name of dependency to be injected into controller
+   *   - factory - {string|function}: If string then it is alias for service. Otherwise if function, 
+   *     it is injected and return value it treated as dependency. If result is a promise, it is 
+   *     resolved before its value is injected into controller.
+   *
+   * <a id='url'></a>
+   *
+   * - **`url`** - {string=} - A url with optional parameters. When a state is navigated or
+   *   transitioned to, the `$stateParams` service will be populated with any 
+   *   parameters that were passed.
+   *
+   * <a id='params'></a>
+   *
+   * - **`params`** - {object=} - An array of parameter names or regular expressions. Only 
+   *   use this within a state if you are not using url. Otherwise you can specify your
+   *   parameters within the url. When a state is navigated or transitioned to, the 
+   *   $stateParams service will be populated with any parameters that were passed.
+   *
+   * <a id='views'></a>
+   *
+   * - **`views`** - {object=} - Use the views property to set up multiple views or to target views
+   *   manually/explicitly.
+   *
+   * <a id='abstract'></a>
+   *
+   * - **`abstract`** - {boolean=} - An abstract state will never be directly activated, 
+   *   but can provide inherited properties to its common children states.
+   *
+   * <a id='onEnter'></a>
+   *
+   * - **`onEnter`** - {object=} - Callback function for when a state is entered. Good way
+   *   to trigger an action or dispatch an event, such as opening a dialog.
+   *
+   * <a id='onExit'></a>
+   *
+   * - **`onExit`** - {object=} - Callback function for when a state is exited. Good way to
+   *   trigger an action or dispatch an event, such as opening a dialog.
+   *
+   * <a id='reloadOnSearch'></a>
+   *
+   * - **`reloadOnSearch = true`** - {boolean=} - If `false`, will not retrigger the same state 
+   *   just because a search/query parameter has changed (via $location.search() or $location.hash()). 
+   *   Useful for when you'd like to modify $location.search() without triggering a reload.
+   *
+   * <a id='data'></a>
+   *
+   * - **`data`** - {object=} - Arbitrary data object, useful for custom configuration.
+   *
+   * @example
+   * <pre>
+   * // Some state name examples
+   *
+   * // stateName can be a single top-level name (must be unique).
+   * $stateProvider.state("home", {});
+   *
+   * // Or it can be a nested state name. This state is a child of the 
+   * // above "home" state.
+   * $stateProvider.state("home.newest", {});
+   *
+   * // Nest states as deeply as needed.
+   * $stateProvider.state("home.newest.abc.xyz.inception", {});
+   *
+   * // state() returns $stateProvider, so you can chain state declarations.
+   * $stateProvider
+   *   .state("home", {})
+   *   .state("about", {})
+   *   .state("contacts", {});
+   * </pre>
+   *
+   * @param {string} name A unique state name, e.g. "home", "about", "contacts". 
+   * To create a parent/child state use a dot, e.g. "about.sales", "home.newest".
+   * @param {object} definition State configuration object.
+   */
   this.state = state;
   function state(name, definition) {
     /*jshint validthis: true */
@@ -36716,16 +33507,40 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
     return this;
   }
 
+  /**
+   * @ngdoc object
+   * @name ui.router.state.$state
+   *
+   * @requires $rootScope
+   * @requires $q
+   * @requires ui.router.state.$view
+   * @requires $injector
+   * @requires ui.router.util.$resolve
+   * @requires ui.router.state.$stateParams
+   *
+   * @property {object} params A param object, e.g. {sectionId: section.id)}, that 
+   * you'd like to test against the current active state.
+   * @property {object} current A reference to the state's config object. However 
+   * you passed it in. Useful for accessing custom data.
+   * @property {object} transition Currently pending transition. A promise that'll 
+   * resolve or reject.
+   *
+   * @description
+   * `$state` service is responsible for representing states as well as transitioning
+   * between them. It also provides interfaces to ask for current state or even states
+   * you're coming from.
+   */
   // $urlRouter is injected just to ensure it gets instantiated
   this.$get = $get;
-  $get.$inject = ['$rootScope', '$q', '$view', '$injector', '$resolve', '$stateParams', '$location', '$urlRouter'];
-  function $get(   $rootScope,   $q,   $view,   $injector,   $resolve,   $stateParams,   $location,   $urlRouter) {
+  $get.$inject = ['$rootScope', '$q', '$view', '$injector', '$resolve', '$stateParams', '$location', '$urlRouter', '$browser'];
+  function $get(   $rootScope,   $q,   $view,   $injector,   $resolve,   $stateParams,   $location,   $urlRouter,   $browser) {
 
     var TransitionSuperseded = $q.reject(new Error('transition superseded'));
     var TransitionPrevented = $q.reject(new Error('transition prevented'));
     var TransitionAborted = $q.reject(new Error('transition aborted'));
     var TransitionFailed = $q.reject(new Error('transition failed'));
     var currentLocation = $location.url();
+    var baseHref = $browser.baseHref();
 
     function syncUrl() {
       if ($location.url() !== currentLocation) {
@@ -36742,14 +33557,145 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
       transition: null
     };
 
+    /**
+     * @ngdoc function
+     * @name ui.router.state.$state#reload
+     * @methodOf ui.router.state.$state
+     *
+     * @description
+     * A method that force reloads the current state. All resolves are re-resolved, events are not re-fired, 
+     * and controllers reinstantiated (bug with controllers reinstantiating right now, fixing soon).
+     *
+     * @example
+     * <pre>
+     * var app angular.module('app', ['ui.router']);
+     *
+     * app.controller('ctrl', function ($scope, $state) {
+     *   $scope.reload = function(){
+     *     $state.reload();
+     *   }
+     * });
+     * </pre>
+     *
+     * `reload()` is just an alias for:
+     * <pre>
+     * $state.transitionTo($state.current, $stateParams, { 
+     *   reload: true, inherit: false, notify: false 
+     * });
+     * </pre>
+     */
     $state.reload = function reload() {
       $state.transitionTo($state.current, $stateParams, { reload: true, inherit: false, notify: false });
     };
 
+    /**
+     * @ngdoc function
+     * @name ui.router.state.$state#go
+     * @methodOf ui.router.state.$state
+     *
+     * @description
+     * Convenience method for transitioning to a new state. `$state.go` calls 
+     * `$state.transitionTo` internally but automatically sets options to 
+     * `{ location: true, inherit: true, relative: $state.$current, notify: true }`. 
+     * This allows you to easily use an absolute or relative to path and specify 
+     * only the parameters you'd like to update (while letting unspecified parameters 
+     * inherit from the currently active ancestor states).
+     *
+     * @example
+     * <pre>
+     * var app = angular.module('app', ['ui.router']);
+     *
+     * app.controller('ctrl', function ($scope, $state) {
+     *   $scope.changeState = function () {
+     *     $state.go('contact.detail');
+     *   };
+     * });
+     * </pre>
+     * <img src='../ngdoc_assets/StateGoExamples.png'/>
+     *
+     * @param {string} to Absolute state name or relative state path. Some examples:
+     *
+     * - `$state.go('contact.detail')` - will go to the `contact.detail` state
+     * - `$state.go('^')` - will go to a parent state
+     * - `$state.go('^.sibling')` - will go to a sibling state
+     * - `$state.go('.child.grandchild')` - will go to grandchild state
+     *
+     * @param {object=} params A map of the parameters that will be sent to the state, 
+     * will populate $stateParams. Any parameters that are not specified will be inherited from currently 
+     * defined parameters. This allows, for example, going to a sibling state that shares parameters
+     * specified in a parent state. Parameter inheritance only works between common ancestor states, I.e.
+     * transitioning to a sibling will get you the parameters for all parents, transitioning to a child
+     * will get you all current parameters, etc.
+     * @param {object=} options Options object. The options are:
+     *
+     * - **`location`** - {boolean=true|string=} - If `true` will update the url in the location bar, if `false`
+     *    will not. If string, must be `"replace"`, which will update url and also replace last history record.
+     * - **`inherit`** - {boolean=true}, If `true` will inherit url parameters from current url.
+     * - **`relative`** - {object=$state.$current}, When transitioning with relative path (e.g '^'), 
+     *    defines which state to be relative from.
+     * - **`notify`** - {boolean=true}, If `true` will broadcast $stateChangeStart and $stateChangeSuccess events.
+     * - **`reload`** (v0.2.5) - {boolean=false}, If `true` will force transition even if the state or params 
+     *    have not changed, aka a reload of the same state. It differs from reloadOnSearch because you'd
+     *    use this when you want to force a reload when *everything* is the same, including search params.
+     *
+     * @returns {promise} A promise representing the state of the new transition.
+     *
+     * Possible success values:
+     *
+     * - $state.current
+     *
+     * <br/>Possible rejection values:
+     *
+     * - 'transition superseded' - when a newer transition has been started after this one
+     * - 'transition prevented' - when `event.preventDefault()` has been called in a `$stateChangeStart` listener
+     * - 'transition aborted' - when `event.preventDefault()` has been called in a `$stateNotFound` listener or
+     *   when a `$stateNotFound` `event.retry` promise errors.
+     * - 'transition failed' - when a state has been unsuccessfully found after 2 tries.
+     * - *resolve error* - when an error has occurred with a `resolve`
+     *
+     */
     $state.go = function go(to, params, options) {
       return this.transitionTo(to, params, extend({ inherit: true, relative: $state.$current }, options));
     };
 
+    /**
+     * @ngdoc function
+     * @name ui.router.state.$state#transitionTo
+     * @methodOf ui.router.state.$state
+     *
+     * @description
+     * Low-level method for transitioning to a new state. {@link ui.router.state.$state#methods_go $state.go}
+     * uses `transitionTo` internally. `$state.go` is recommended in most situations.
+     *
+     * @example
+     * <pre>
+     * var app = angular.module('app', ['ui.router']);
+     *
+     * app.controller('ctrl', function ($scope, $state) {
+     *   $scope.changeState = function () {
+     *     $state.transitionTo('contact.detail');
+     *   };
+     * });
+     * </pre>
+     *
+     * @param {string} to State name.
+     * @param {object=} toParams A map of the parameters that will be sent to the state,
+     * will populate $stateParams.
+     * @param {object=} options Options object. The options are:
+     *
+     * - **`location`** - {boolean=true|string=} - If `true` will update the url in the location bar, if `false`
+     *    will not. If string, must be `"replace"`, which will update url and also replace last history record.
+     * - **`inherit`** - {boolean=false}, If `true` will inherit url parameters from current url.
+     * - **`relative`** - {object=}, When transitioning with relative path (e.g '^'), 
+     *    defines which state to be relative from.
+     * - **`notify`** - {boolean=true}, If `true` will broadcast $stateChangeStart and $stateChangeSuccess events.
+     * - **`reload`** (v0.2.5) - {boolean=false}, If `true` will force transition even if the state or params 
+     *    have not changed, aka a reload of the same state. It differs from reloadOnSearch because you'd
+     *    use this when you want to force a reload when *everything* is the same, including search params.
+     *
+     * @returns {promise} A promise representing the state of the new transition. See
+     * {@link ui.router.state.$state#methods_go $state.go}.
+     */
     $state.transitionTo = function transitionTo(to, toParams, options) {
       toParams = toParams || {};
       options = extend({
@@ -36762,6 +33708,39 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
       if (!isDefined(toState)) {
         // Broadcast not found event and abort the transition if prevented
         var redirect = { to: to, toParams: toParams, options: options };
+
+        /**
+         * @ngdoc event
+         * @name ui.router.state.$state#$stateNotFound
+         * @eventOf ui.router.state.$state
+         * @eventType broadcast on root scope
+         * @description
+         * Fired when a requested state **cannot be found** using the provided state name during transition.
+         * The event is broadcast allowing any handlers a single chance to deal with the error (usually by
+         * lazy-loading the unfound state). A special `unfoundState` object is passed to the listener handler,
+         * you can see its three properties in the example. You can use `event.preventDefault()` to abort the
+         * transition and the promise returned from `go` will be rejected with a `'transition aborted'` value.
+         *
+         * @param {Object} event Event object.
+         * @param {Object} unfoundState Unfound State information. Contains: `to, toParams, options` properties.
+         * @param {State} fromState Current state object.
+         * @param {Object} fromParams Current state params.
+         *
+         * @example
+         *
+         * <pre>
+         * // somewhere, assume lazy.state has not been defined
+         * $state.go("lazy.state", {a:1, b:2}, {inherit:false});
+         *
+         * // somewhere else
+         * $scope.$on('$stateNotFound',
+         * function(event, unfoundState, fromState, fromParams){
+         *     console.log(unfoundState.to); // "lazy.state"
+         *     console.log(unfoundState.toParams); // {a:1, b:2}
+         *     console.log(unfoundState.options); // {inherit:false} + default options
+         * })
+         * </pre>
+         */
         evt = $rootScope.$broadcast('$stateNotFound', redirect, from.self, fromParams);
         if (evt.defaultPrevented) {
           syncUrl();
@@ -36827,6 +33806,33 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
 
       // Broadcast start event and cancel the transition if requested
       if (options.notify) {
+        /**
+         * @ngdoc event
+         * @name ui.router.state.$state#$stateChangeStart
+         * @eventOf ui.router.state.$state
+         * @eventType broadcast on root scope
+         * @description
+         * Fired when the state transition **begins**. You can use `event.preventDefault()`
+         * to prevent the transition from happening and then the transition promise will be
+         * rejected with a `'transition prevented'` value.
+         *
+         * @param {Object} event Event object.
+         * @param {State} toState The state being transitioned to.
+         * @param {Object} toParams The params supplied to the `toState`.
+         * @param {State} fromState The current state, pre-transition.
+         * @param {Object} fromParams The params supplied to the `fromState`.
+         *
+         * @example
+         *
+         * <pre>
+         * $rootScope.$on('$stateChangeStart',
+         * function(event, toState, toParams, fromState, fromParams){
+         *     event.preventDefault();
+         *     // transitionTo() promise will be rejected with
+         *     // a 'transition prevented' error
+         * })
+         * </pre>
+         */
         evt = $rootScope.$broadcast('$stateChangeStart', to.self, toParams, from.self, fromParams);
         if (evt.defaultPrevented) {
           syncUrl();
@@ -36895,6 +33901,20 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
         }
 
         if (options.notify) {
+        /**
+         * @ngdoc event
+         * @name ui.router.state.$state#$stateChangeSuccess
+         * @eventOf ui.router.state.$state
+         * @eventType broadcast on root scope
+         * @description
+         * Fired once the state transition is **complete**.
+         *
+         * @param {Object} event Event object.
+         * @param {State} toState The state being transitioned to.
+         * @param {Object} toParams The params supplied to the `toState`.
+         * @param {State} fromState The current state, pre-transition.
+         * @param {Object} fromParams The params supplied to the `fromState`.
+         */
           $rootScope.$broadcast('$stateChangeSuccess', to.self, toParams, from.self, fromParams);
         }
         currentLocation = $location.url();
@@ -36904,6 +33924,24 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
         if ($state.transition !== transition) return TransitionSuperseded;
 
         $state.transition = null;
+        /**
+         * @ngdoc event
+         * @name ui.router.state.$state#$stateChangeError
+         * @eventOf ui.router.state.$state
+         * @eventType broadcast on root scope
+         * @description
+         * Fired when an **error occurs** during transition. It's important to note that if you
+         * have any errors in your resolve functions (javascript errors, non-existent services, etc)
+         * they will not throw traditionally. You must listen for this $stateChangeError event to
+         * catch **ALL** errors.
+         *
+         * @param {Object} event Event object.
+         * @param {State} toState The state being transitioned to.
+         * @param {Object} toParams The params supplied to the `toState`.
+         * @param {State} fromState The current state, pre-transition.
+         * @param {Object} fromParams The params supplied to the `fromState`.
+         * @param {Error} error The resolve error object.
+         */
         $rootScope.$broadcast('$stateChangeError', to.self, toParams, from.self, fromParams, error);
         syncUrl();
 
@@ -36913,6 +33951,30 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
       return transition;
     };
 
+    /**
+     * @ngdoc function
+     * @name ui.router.state.$state#is
+     * @methodOf ui.router.state.$state
+     *
+     * @description
+     * Similar to {@link ui.router.state.$state#methods_includes $state.includes},
+     * but only checks for the full state name. If params is supplied then it will be 
+     * tested for strict equality against the current active params object, so all params 
+     * must match with none missing and no extras.
+     *
+     * @example
+     * <pre>
+     * $state.is('contact.details.item'); // returns true
+     * $state.is(contactDetailItemStateObject); // returns true
+     *
+     * // everything else would return false
+     * </pre>
+     *
+     * @param {string|object} stateName The state name or state object you'd like to check.
+     * @param {object=} params A param object, e.g. `{sectionId: section.id}`, that you'd like 
+     * to test against the current active state.
+     * @returns {boolean} Returns true if it is the state.
+     */
     $state.is = function is(stateOrName, params) {
       var state = findState(stateOrName);
 
@@ -36924,10 +33986,61 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
         return false;
       }
 
-      return isDefined(params) ? angular.equals($stateParams, params) : true;
+      return isDefined(params) && params !== null ? angular.equals($stateParams, params) : true;
     };
 
+    /**
+     * @ngdoc function
+     * @name ui.router.state.$state#includes
+     * @methodOf ui.router.state.$state
+     *
+     * @description
+     * A method to determine if the current active state is equal to or is the child of the 
+     * state stateName. If any params are passed then they will be tested for a match as well.
+     * Not all the parameters need to be passed, just the ones you'd like to test for equality.
+     *
+     * @example
+     * <pre>
+     * $state.$current.name = 'contacts.details.item';
+     *
+     * $state.includes("contacts"); // returns true
+     * $state.includes("contacts.details"); // returns true
+     * $state.includes("contacts.details.item"); // returns true
+     * $state.includes("contacts.list"); // returns false
+     * $state.includes("about"); // returns false
+     * </pre>
+     *
+     * @description
+     * Basic globing patterns will also work.
+     *
+     * @example
+     * <pre>
+     * $state.$current.name = 'contacts.details.item.url';
+     *
+     * $state.includes("*.details.*.*"); // returns true
+     * $state.includes("*.details.**"); // returns true
+     * $state.includes("**.item.**"); // returns true
+     * $state.includes("*.details.item.url"); // returns true
+     * $state.includes("*.details.*.url"); // returns true
+     * $state.includes("*.details.*"); // returns false
+     * $state.includes("item.**"); // returns false
+     * </pre>
+     *
+     * @param {string} stateOrName A partial name to be searched for within the current state name.
+     * @param {object} params A param object, e.g. `{sectionId: section.id}`, 
+     * that you'd like to test against the current active state.
+     * @returns {boolean} Returns true if it does include the state
+     */
+
     $state.includes = function includes(stateOrName, params) {
+      if (isString(stateOrName) && isGlob(stateOrName)) {
+        if (doesStateMatchGlob(stateOrName)) {
+          stateOrName = $state.$current.name;
+        } else {
+          return false;
+        }
+      }
+
       var state = findState(stateOrName);
       if (!isDefined(state)) {
         return undefined;
@@ -36946,6 +34059,34 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
       return validParams;
     };
 
+
+    /**
+     * @ngdoc function
+     * @name ui.router.state.$state#href
+     * @methodOf ui.router.state.$state
+     *
+     * @description
+     * A url generation method that returns the compiled url for the given state populated with the given params.
+     *
+     * @example
+     * <pre>
+     * expect($state.href("about.person", { person: "bob" })).toEqual("/about/bob");
+     * </pre>
+     *
+     * @param {string|object} stateOrName The state name or state object you'd like to generate a url from.
+     * @param {object=} params An object of parameter values to fill the state's required parameters.
+     * @param {object=} options Options object. The options are:
+     *
+     * - **`lossy`** - {boolean=true} -  If true, and if there is no url associated with the state provided in the
+     *    first parameter, then the constructed href url will be built from the first navigable ancestor (aka
+     *    ancestor with a valid url).
+     * - **`inherit`** - {boolean=false}, If `true` will inherit url parameters from current url.
+     * - **`relative`** - {object=$state.$current}, When transitioning with relative path (e.g '^'), 
+     *    defines which state to be relative from.
+     * - **`absolute`** - {boolean=false},  If true will generate an absolute url, e.g. "http://www.example.com/fullurl".
+     * 
+     * @returns {string} compiled state url
+     */
     $state.href = function href(stateOrName, params, options) {
       options = extend({ lossy: true, inherit: false, absolute: false, relative: $state.$current }, options || {});
       var state = findState(stateOrName, options.relative);
@@ -36957,6 +34098,15 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
       if (!$locationProvider.html5Mode() && url) {
         url = "#" + $locationProvider.hashPrefix() + url;
       }
+
+      if (baseHref !== '/') {
+        if ($locationProvider.html5Mode()) {
+          url = baseHref.slice(0, -1) + url;
+        } else if (options.absolute){
+          url = baseHref.slice(1) + url;
+        }
+      }
+
       if (options.absolute && url) {
         url = $location.protocol() + '://' + 
               $location.host() + 
@@ -36967,6 +34117,18 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
       return url;
     };
 
+    /**
+     * @ngdoc function
+     * @name ui.router.state.$state#get
+     * @methodOf ui.router.state.$state
+     *
+     * @description
+     * Returns the state configuration object for any specific state or all states.
+     *
+     * @param {string|object=} stateOrName If provided, will only get the config for
+     * the requested state. If not provided, returns an array of ALL state configs.
+     * @returns {object|array} State configuration object or array of all objects.
+     */
     $state.get = function (stateOrName, context) {
       if (!isDefined(stateOrName)) {
         var list = [];
@@ -37012,6 +34174,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
           }
           // Provide access to the state itself for internal use
           result.$$state = state;
+          result.$$controllerAs = view.controllerAs;
           dst[name] = result;
         }));
       });
@@ -37041,10 +34204,30 @@ $ViewProvider.$inject = [];
 function $ViewProvider() {
 
   this.$get = $get;
+  /**
+   * @ngdoc object
+   * @name ui.router.state.$view
+   *
+   * @requires ui.router.util.$templateFactory
+   * @requires $rootScope
+   *
+   * @description
+   *
+   */
   $get.$inject = ['$rootScope', '$templateFactory'];
   function $get(   $rootScope,   $templateFactory) {
     return {
       // $view.load('full.viewName', { template: ..., controller: ..., resolve: ..., async: false, params: ... })
+      /**
+       * @ngdoc function
+       * @name ui.router.state.$view#load
+       * @methodOf ui.router.state.$view
+       *
+       * @description
+       *
+       * @param {string} name name
+       * @param {object} options option object.
+       */
       load: function load(name, options) {
         var result, defaults = {
           template: null, controller: null, view: null, locals: null, notify: true, async: true, params: {}
@@ -37055,6 +34238,29 @@ function $ViewProvider() {
           result = $templateFactory.fromConfig(options.view, options.params, options.locals);
         }
         if (result && options.notify) {
+        /**
+         * @ngdoc event
+         * @name ui.router.state.$state#$viewContentLoading
+         * @eventOf ui.router.state.$view
+         * @eventType broadcast on root scope
+         * @description
+         *
+         * Fired once the view **begins loading**, *before* the DOM is rendered.
+         *
+         * @param {Object} event Event object.
+         * @param {Object} viewConfig The view config properties (template, controller, etc).
+         *
+         * @example
+         *
+         * <pre>
+         * $scope.$on('$viewContentLoading',
+         * function(event, viewConfig){
+         *     // Access to all the view config properties.
+         *     // and one special property 'targetView'
+         *     // viewConfig.targetView
+         * });
+         * </pre>
+         */
           $rootScope.$broadcast('$viewContentLoading', options);
         }
         return result;
@@ -37065,123 +34271,349 @@ function $ViewProvider() {
 
 angular.module('ui.router.state').provider('$view', $ViewProvider);
 
+/**
+ * @ngdoc object
+ * @name ui.router.state.$uiViewScrollProvider
+ *
+ * @description
+ * Provider that returns the {@link ui.router.state.$uiViewScroll} service function.
+ */
+function $ViewScrollProvider() {
 
-$ViewDirective.$inject = ['$state', '$compile', '$controller', '$injector', '$anchorScroll'];
-function $ViewDirective(   $state,   $compile,   $controller,   $injector,   $anchorScroll) {
-  var $animator = $injector.has('$animator') ? $injector.get('$animator') : false;
-  var viewIsUpdating = false;
+  var useAnchorScroll = false;
+
+  /**
+   * @ngdoc function
+   * @name ui.router.state.$uiViewScrollProvider#useAnchorScroll
+   * @methodOf ui.router.state.$uiViewScrollProvider
+   *
+   * @description
+   * Reverts back to using the core [`$anchorScroll`](http://docs.angularjs.org/api/ng.$anchorScroll) service for
+   * scrolling based on the url anchor.
+   */
+  this.useAnchorScroll = function () {
+    useAnchorScroll = true;
+  };
+
+  /**
+   * @ngdoc object
+   * @name ui.router.state.$uiViewScroll
+   *
+   * @requires $anchorScroll
+   * @requires $timeout
+   *
+   * @description
+   * When called with a jqLite element, it scrolls the element into view (after a
+   * `$timeout` so the DOM has time to refresh).
+   *
+   * If you prefer to rely on `$anchorScroll` to scroll the view to the anchor,
+   * this can be enabled by calling {@link ui.router.state.$uiViewScrollProvider#methods_useAnchorScroll `$uiViewScrollProvider.useAnchorScroll()`}.
+   */
+  this.$get = ['$anchorScroll', '$timeout', function ($anchorScroll, $timeout) {
+    if (useAnchorScroll) {
+      return $anchorScroll;
+    }
+
+    return function ($element) {
+      $timeout(function () {
+        $element[0].scrollIntoView();
+      }, 0, false);
+    };
+  }];
+}
+
+angular.module('ui.router.state').provider('$uiViewScroll', $ViewScrollProvider);
+
+/**
+ * @ngdoc directive
+ * @name ui.router.state.directive:ui-view
+ *
+ * @requires ui.router.state.$state
+ * @requires $compile
+ * @requires $controller
+ * @requires $injector
+ * @requires ui.router.state.$uiViewScroll
+ * @requires $document
+ *
+ * @restrict ECA
+ *
+ * @description
+ * The ui-view directive tells $state where to place your templates.
+ *
+ * @param {string=} ui-view A view name. The name should be unique amongst the other views in the
+ * same state. You can have views of the same name that live in different states.
+ *
+ * @param {string=} autoscroll It allows you to set the scroll behavior of the browser window
+ * when a view is populated. By default, $anchorScroll is overridden by ui-router's custom scroll
+ * service, {@link ui.router.state.$uiViewScroll}. This custom service let's you
+ * scroll ui-view elements into view when they are populated during a state activation.
+ *
+ * *Note: To revert back to old [`$anchorScroll`](http://docs.angularjs.org/api/ng.$anchorScroll)
+ * functionality, call `$uiViewScrollProvider.useAnchorScroll()`.*
+ *
+ * @param {string=} onload Expression to evaluate whenever the view updates.
+ * 
+ * @example
+ * A view can be unnamed or named. 
+ * <pre>
+ * <!-- Unnamed -->
+ * <div ui-view></div> 
+ * 
+ * <!-- Named -->
+ * <div ui-view="viewName"></div>
+ * </pre>
+ *
+ * You can only have one unnamed view within any template (or root html). If you are only using a 
+ * single view and it is unnamed then you can populate it like so:
+ * <pre>
+ * <div ui-view></div> 
+ * $stateProvider.state("home", {
+ *   template: "<h1>HELLO!</h1>"
+ * })
+ * </pre>
+ * 
+ * The above is a convenient shortcut equivalent to specifying your view explicitly with the {@link ui.router.state.$stateProvider#views `views`}
+ * config property, by name, in this case an empty name:
+ * <pre>
+ * $stateProvider.state("home", {
+ *   views: {
+ *     "": {
+ *       template: "<h1>HELLO!</h1>"
+ *     }
+ *   }    
+ * })
+ * </pre>
+ * 
+ * But typically you'll only use the views property if you name your view or have more than one view 
+ * in the same template. There's not really a compelling reason to name a view if its the only one, 
+ * but you could if you wanted, like so:
+ * <pre>
+ * <div ui-view="main"></div>
+ * </pre> 
+ * <pre>
+ * $stateProvider.state("home", {
+ *   views: {
+ *     "main": {
+ *       template: "<h1>HELLO!</h1>"
+ *     }
+ *   }    
+ * })
+ * </pre>
+ * 
+ * Really though, you'll use views to set up multiple views:
+ * <pre>
+ * <div ui-view></div>
+ * <div ui-view="chart"></div> 
+ * <div ui-view="data"></div> 
+ * </pre>
+ * 
+ * <pre>
+ * $stateProvider.state("home", {
+ *   views: {
+ *     "": {
+ *       template: "<h1>HELLO!</h1>"
+ *     },
+ *     "chart": {
+ *       template: "<chart_thing/>"
+ *     },
+ *     "data": {
+ *       template: "<data_thing/>"
+ *     }
+ *   }    
+ * })
+ * </pre>
+ *
+ * Examples for `autoscroll`:
+ *
+ * <pre>
+ * <!-- If autoscroll present with no expression,
+ *      then scroll ui-view into view -->
+ * <ui-view autoscroll/>
+ *
+ * <!-- If autoscroll present with valid expression,
+ *      then scroll ui-view into view if expression evaluates to true -->
+ * <ui-view autoscroll='true'/>
+ * <ui-view autoscroll='false'/>
+ * <ui-view autoscroll='scopeVariable'/>
+ * </pre>
+ */
+$ViewDirective.$inject = ['$state', '$injector', '$uiViewScroll'];
+function $ViewDirective(   $state,   $injector,   $uiViewScroll) {
+
+  function getService() {
+    return ($injector.has) ? function(service) {
+      return $injector.has(service) ? $injector.get(service) : null;
+    } : function(service) {
+      try {
+        return $injector.get(service);
+      } catch (e) {
+        return null;
+      }
+    };
+  }
+
+  var service = getService(),
+      $animator = service('$animator'),
+      $animate = service('$animate');
+
+  // Returns a set of DOM manipulation functions based on which Angular version
+  // it should use
+  function getRenderer(attrs, scope) {
+    var statics = function() {
+      return {
+        enter: function (element, target, cb) { target.after(element); cb(); },
+        leave: function (element, cb) { element.remove(); cb(); }
+      };
+    };
+
+    if ($animate) {
+      return {
+        enter: function(element, target, cb) { $animate.enter(element, null, target, cb); },
+        leave: function(element, cb) { $animate.leave(element, cb); }
+      };
+    }
+
+    if ($animator) {
+      var animate = $animator && $animator(scope, attrs);
+
+      return {
+        enter: function(element, target, cb) {animate.enter(element, null, target); cb(); },
+        leave: function(element, cb) { animate.leave(element); cb(); }
+      };
+    }
+
+    return statics();
+  }
 
   var directive = {
     restrict: 'ECA',
     terminal: true,
-    priority: 1000,
-    transclude: true,
-    compile: function (element, attr, transclude) {
-      return function(scope, element, attr) {
-        var viewScope, viewLocals,
-            name = attr[directive.name] || attr.name || '',
-            onloadExp = attr.onload || '',
-            animate = $animator && $animator(scope, attr),
-            initialView = transclude(scope);
+    priority: 400,
+    transclude: 'element',
+    compile: function (tElement, tAttrs, $transclude) {
+      return function (scope, $element, attrs) {
+        var previousEl, currentEl, currentScope, latestLocals,
+            onloadExp     = attrs.onload || '',
+            autoScrollExp = attrs.autoscroll,
+            renderer      = getRenderer(attrs, scope);
 
-        // Returns a set of DOM manipulation functions based on whether animation
-        // should be performed
-        var renderer = function(doAnimate) {
-          return ({
-            "true": {
-              remove: function(element) { animate.leave(element.contents(), element); },
-              restore: function(compiled, element) { animate.enter(compiled, element); },
-              populate: function(template, element) {
-                var contents = angular.element('<div></div>').html(template).contents();
-                animate.enter(contents, element);
-                return contents;
+        scope.$on('$stateChangeSuccess', function() {
+          updateView(false);
+        });
+        scope.$on('$viewContentLoading', function() {
+          updateView(false);
+        });
+
+        updateView(true);
+
+        function cleanupLastView() {
+          if (previousEl) {
+            previousEl.remove();
+            previousEl = null;
+          }
+
+          if (currentScope) {
+            currentScope.$destroy();
+            currentScope = null;
+          }
+
+          if (currentEl) {
+            renderer.leave(currentEl, function() {
+              previousEl = null;
+            });
+
+            previousEl = currentEl;
+            currentEl = null;
+          }
+        }
+
+        function updateView(firstTime) {
+          var newScope        = scope.$new(),
+              name            = currentEl && currentEl.data('$uiViewName'),
+              previousLocals  = name && $state.$current && $state.$current.locals[name];
+
+          if (!firstTime && previousLocals === latestLocals) return; // nothing to do
+
+          var clone = $transclude(newScope, function(clone) {
+            renderer.enter(clone, $element, function onUiViewEnter() {
+              if (angular.isDefined(autoScrollExp) && !autoScrollExp || scope.$eval(autoScrollExp)) {
+                $uiViewScroll(clone);
               }
-            },
-            "false": {
-              remove: function(element) { element.html(''); },
-              restore: function(compiled, element) { element.append(compiled); },
-              populate: function(template, element) {
-                element.html(template);
-                return element.contents();
-              }
-            }
-          })[doAnimate.toString()];
-        };
+            });
+            cleanupLastView();
+          });
 
-        // Put back the compiled initial view
-        element.append(initialView);
+          latestLocals = $state.$current.locals[clone.data('$uiViewName')];
 
-        // Find the details of the parent view directive (if any) and use it
-        // to derive our own qualified view name, then hang our own details
-        // off the DOM so child directives can find it.
-        var parent = element.parent().inheritedData('$uiView');
-        if (name.indexOf('@') < 0) name  = name + '@' + (parent ? parent.state.name : '');
-        var view = { name: name, state: null };
-        element.data('$uiView', view);
-
-        var eventHook = function() {
-          if (viewIsUpdating) return;
-          viewIsUpdating = true;
-
-          try { updateView(true); } catch (e) {
-            viewIsUpdating = false;
-            throw e;
-          }
-          viewIsUpdating = false;
-        };
-
-        scope.$on('$stateChangeSuccess', eventHook);
-        scope.$on('$viewContentLoading', eventHook);
-        updateView(false);
-
-        function updateView(doAnimate) {
-          var locals = $state.$current && $state.$current.locals[name];
-          if (locals === viewLocals) return; // nothing to do
-          var render = renderer(animate && doAnimate);
-
-          // Remove existing content
-          render.remove(element);
-
-          // Destroy previous view scope
-          if (viewScope) {
-            viewScope.$destroy();
-            viewScope = null;
-          }
-
-          if (!locals) {
-            viewLocals = null;
-            view.state = null;
-
-            // Restore the initial view
-            return render.restore(initialView, element);
-          }
-
-          viewLocals = locals;
-          view.state = locals.$$state;
-
-          var link = $compile(render.populate(locals.$template, element));
-          viewScope = scope.$new();
-
-          if (locals.$$controller) {
-            locals.$scope = viewScope;
-            var controller = $controller(locals.$$controller, locals);
-            element.children().data('$ngControllerController', controller);
-          }
-          link(viewScope);
-          viewScope.$emit('$viewContentLoaded');
-          if (onloadExp) viewScope.$eval(onloadExp);
-
-          // TODO: This seems strange, shouldn't $anchorScroll listen for $viewContentLoaded if necessary?
-          // $anchorScroll might listen on event...
-          $anchorScroll();
+          currentEl = clone;
+          currentScope = newScope;
+          /**
+           * @ngdoc event
+           * @name ui.router.state.directive:ui-view#$viewContentLoaded
+           * @eventOf ui.router.state.directive:ui-view
+           * @eventType emits on ui-view directive scope
+           * @description           *
+           * Fired once the view is **loaded**, *after* the DOM is rendered.
+           *
+           * @param {Object} event Event object.
+           */
+          currentScope.$emit('$viewContentLoaded');
+          currentScope.$eval(onloadExp);
         }
       };
     }
   };
+
   return directive;
 }
 
+$ViewDirectiveFill.$inject = ['$compile', '$controller', '$state'];
+function $ViewDirectiveFill ($compile, $controller, $state) {
+  return {
+    restrict: 'ECA',
+    priority: -400,
+    compile: function (tElement) {
+      var initial = tElement.html();
+      return function (scope, $element, attrs) {
+        var name      = attrs.uiView || attrs.name || '',
+            inherited = $element.inheritedData('$uiView');
+
+        if (name.indexOf('@') < 0) {
+          name = name + '@' + (inherited ? inherited.state.name : '');
+        }
+
+        $element.data('$uiViewName', name);
+
+        var current = $state.$current,
+            locals  = current && current.locals[name];
+
+        if (! locals) {
+          return;
+        }
+
+        $element.data('$uiView', { name: name, state: locals.$$state });
+        $element.html(locals.$template ? locals.$template : initial);
+
+        var link = $compile($element.contents());
+
+        if (locals.$$controller) {
+          locals.$scope = scope;
+          var controller = $controller(locals.$$controller, locals);
+          if (locals.$$controllerAs) {
+            scope[locals.$$controllerAs] = controller;
+          }
+          $element.data('$ngControllerController', controller);
+          $element.children().data('$ngControllerController', controller);
+        }
+
+        link(scope);
+      };
+    }
+  };
+}
+
 angular.module('ui.router.state').directive('uiView', $ViewDirective);
+angular.module('ui.router.state').directive('uiView', $ViewDirectiveFill);
 
 function parseStateRef(ref) {
   var parsed = ref.replace(/\n/g, " ").match(/^([^(]+?)\s*(\((.*)\))?$/);
@@ -37197,8 +34629,72 @@ function stateContext(el) {
   }
 }
 
+/**
+ * @ngdoc directive
+ * @name ui.router.state.directive:ui-sref
+ *
+ * @requires ui.router.state.$state
+ * @requires $timeout
+ *
+ * @restrict A
+ *
+ * @description
+ * A directive that binds a link (`<a>` tag) to a state. If the state has an associated 
+ * URL, the directive will automatically generate & update the `href` attribute via 
+ * the {@link ui.router.state.$state#methods_href $state.href()} method. Clicking 
+ * the link will trigger a state transition with optional parameters. 
+ *
+ * Also middle-clicking, right-clicking, and ctrl-clicking on the link will be 
+ * handled natively by the browser.
+ *
+ * You can also use relative state paths within ui-sref, just like the relative 
+ * paths passed to `$state.go()`. You just need to be aware that the path is relative
+ * to the state that the link lives in, in other words the state that loaded the 
+ * template containing the link.
+ *
+ * You can specify options to pass to {@link ui.router.state.$state#go $state.go()}
+ * using the `ui-sref-opts` attribute. Options are restricted to `location`, `inherit`,
+ * and `reload`.
+ *
+ * @example
+ * Here's an example of how you'd use ui-sref and how it would compile. If you have the 
+ * following template:
+ * <pre>
+ * <a ui-sref="home">Home</a> | <a ui-sref="about">About</a>
+ * 
+ * <ul>
+ *     <li ng-repeat="contact in contacts">
+ *         <a ui-sref="contacts.detail({ id: contact.id })">{{ contact.name }}</a>
+ *     </li>
+ * </ul>
+ * </pre>
+ * 
+ * Then the compiled html would be (assuming Html5Mode is off):
+ * <pre>
+ * <a href="#/home" ui-sref="home">Home</a> | <a href="#/about" ui-sref="about">About</a>
+ * 
+ * <ul>
+ *     <li ng-repeat="contact in contacts">
+ *         <a href="#/contacts/1" ui-sref="contacts.detail({ id: contact.id })">Joe</a>
+ *     </li>
+ *     <li ng-repeat="contact in contacts">
+ *         <a href="#/contacts/2" ui-sref="contacts.detail({ id: contact.id })">Alice</a>
+ *     </li>
+ *     <li ng-repeat="contact in contacts">
+ *         <a href="#/contacts/3" ui-sref="contacts.detail({ id: contact.id })">Bob</a>
+ *     </li>
+ * </ul>
+ *
+ * <a ui-sref="home" ui-sref-opts="{reload: true}">Home</a>
+ * </pre>
+ *
+ * @param {string} ui-sref 'stateName' can be any valid absolute or relative state
+ * @param {Object} ui-sref-opts options to pass to {@link ui.router.state.$state#go $state.go()}
+ */
 $StateRefDirective.$inject = ['$state', '$timeout'];
 function $StateRefDirective($state, $timeout) {
+  var allowedOptions = ['location', 'inherit', 'reload'];
+
   return {
     restrict: 'A',
     require: '?^uiSrefActive',
@@ -37208,20 +34704,30 @@ function $StateRefDirective($state, $timeout) {
       var isForm = element[0].nodeName === "FORM";
       var attr = isForm ? "action" : "href", nav = true;
 
+      var options = {
+        relative: base
+      };
+      var optionsOverride = scope.$eval(attrs.uiSrefOpts) || {};
+      angular.forEach(allowedOptions, function(option) {
+        if (option in optionsOverride) {
+          options[option] = optionsOverride[option];
+        }
+      });
+
       var update = function(newVal) {
         if (newVal) params = newVal;
         if (!nav) return;
 
-        var newHref = $state.href(ref.state, params, { relative: base });
+        var newHref = $state.href(ref.state, params, options);
 
+        if (uiSrefActive) {
+          uiSrefActive.$$setStateInfo(ref.state, params);
+        }
         if (!newHref) {
           nav = false;
           return false;
         }
         element[0][attr] = newHref;
-        if (uiSrefActive) {
-          uiSrefActive.$$setStateInfo(ref.state, params);
-        }
       };
 
       if (ref.paramExpr) {
@@ -37236,13 +34742,10 @@ function $StateRefDirective($state, $timeout) {
 
       element.bind("click", function(e) {
         var button = e.which || e.button;
-
-        if ((button === 0 || button == 1) && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        if ( !(button > 1 || e.ctrlKey || e.metaKey || e.shiftKey || element.attr('target')) ) {
           // HACK: This is to allow ng-clicks to be processed before the transition is initiated:
           $timeout(function() {
-            scope.$apply(function() {
-              $state.go(ref.state, params, { relative: base });
-            });
+            $state.go(ref.state, params, options);
           });
           e.preventDefault();
         }
@@ -37251,11 +34754,60 @@ function $StateRefDirective($state, $timeout) {
   };
 }
 
+/**
+ * @ngdoc directive
+ * @name ui.router.state.directive:ui-sref-active
+ *
+ * @requires ui.router.state.$state
+ * @requires ui.router.state.$stateParams
+ * @requires $interpolate
+ *
+ * @restrict A
+ *
+ * @description
+ * A directive working alongside ui-sref to add classes to an element when the 
+ * related ui-sref directive's state is active, and removing them when it is inactive.
+ * The primary use-case is to simplify the special appearance of navigation menus 
+ * relying on `ui-sref`, by having the "active" state's menu button appear different,
+ * distinguishing it from the inactive menu items.
+ *
+ * @example
+ * Given the following template:
+ * <pre>
+ * <ul>
+ *   <li ui-sref-active="active" class="item">
+ *     <a href ui-sref="app.user({user: 'bilbobaggins'})">@bilbobaggins</a>
+ *   </li>
+ * </ul>
+ * </pre>
+ * 
+ * When the app state is "app.user", and contains the state parameter "user" with value "bilbobaggins", 
+ * the resulting HTML will appear as (note the 'active' class):
+ * <pre>
+ * <ul>
+ *   <li ui-sref-active="active" class="item active">
+ *     <a ui-sref="app.user({user: 'bilbobaggins'})" href="/users/bilbobaggins">@bilbobaggins</a>
+ *   </li>
+ * </ul>
+ * </pre>
+ * 
+ * The class name is interpolated **once** during the directives link time (any further changes to the 
+ * interpolated value are ignored). 
+ * 
+ * Multiple classes may be specified in a space-separated format:
+ * <pre>
+ * <ul>
+ *   <li ui-sref-active='class1 class2 class3'>
+ *     <a ui-sref="app.user">link</a>
+ *   </li>
+ * </ul>
+ * </pre>
+ */
 $StateActiveDirective.$inject = ['$state', '$stateParams', '$interpolate'];
 function $StateActiveDirective($state, $stateParams, $interpolate) {
   return {
     restrict: "A",
-    controller: function($scope, $element, $attrs) {
+    controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
       var state, params, activeClass;
 
       // There probably isn't much point in $observing this
@@ -37282,7 +34834,7 @@ function $StateActiveDirective($state, $stateParams, $interpolate) {
       function matchesParams() {
         return !params || equalForKeys(params, $stateParams);
       }
-    }
+    }]
   };
 }
 
@@ -37290,6 +34842,60 @@ angular.module('ui.router.state')
   .directive('uiSref', $StateRefDirective)
   .directive('uiSrefActive', $StateActiveDirective);
 
+/**
+ * @ngdoc filter
+ * @name ui.router.state.filter:isState
+ *
+ * @requires ui.router.state.$state
+ *
+ * @description
+ * Translates to {@link ui.router.state.$state#methods_is $state.is("stateName")}.
+ */
+$IsStateFilter.$inject = ['$state'];
+function $IsStateFilter($state) {
+  return function(state) {
+    return $state.is(state);
+  };
+}
+
+/**
+ * @ngdoc filter
+ * @name ui.router.state.filter:includedByState
+ *
+ * @requires ui.router.state.$state
+ *
+ * @description
+ * Translates to {@link ui.router.state.$state#methods_includes $state.includes('fullOrPartialStateName')}.
+ */
+$IncludedByStateFilter.$inject = ['$state'];
+function $IncludedByStateFilter($state) {
+  return function(state) {
+    return $state.includes(state);
+  };
+}
+
+angular.module('ui.router.state')
+  .filter('isState', $IsStateFilter)
+  .filter('includedByState', $IncludedByStateFilter);
+
+/*
+ * @ngdoc object
+ * @name ui.router.compat.$routeProvider
+ *
+ * @requires ui.router.state.$stateProvider
+ * @requires ui.router.router.$urlRouterProvider
+ *
+ * @description
+ * `$routeProvider` of the `ui.router.compat` module overwrites the existing
+ * `routeProvider` from the core. This is done to provide compatibility between
+ * the UI Router and the core router.
+ *
+ * It also provides a `when()` method to register routes that map to certain urls.
+ * Behind the scenes it actually delegates either to 
+ * {@link ui.router.router.$urlRouterProvider $urlRouterProvider} or to the 
+ * {@link ui.router.state.$stateProvider $stateProvider} to postprocess the given 
+ * router definition object.
+ */
 $RouteProvider.$inject = ['$stateProvider', '$urlRouterProvider'];
 function $RouteProvider(  $stateProvider,    $urlRouterProvider) {
 
@@ -37309,6 +34915,32 @@ function $RouteProvider(  $stateProvider,    $urlRouterProvider) {
   }
 
   this.when = when;
+  /*
+   * @ngdoc function
+   * @name ui.router.compat.$routeProvider#when
+   * @methodOf ui.router.compat.$routeProvider
+   *
+   * @description
+   * Registers a route with a given route definition object. The route definition
+   * object has the same interface the angular core route definition object has.
+   * 
+   * @example
+   * <pre>
+   * var app = angular.module('app', ['ui.router.compat']);
+   *
+   * app.config(function ($routeProvider) {
+   *   $routeProvider.when('home', {
+   *     controller: function () { ... },
+   *     templateUrl: 'path/to/template'
+   *   });
+   * });
+   * </pre>
+   *
+   * @param {string} url URL as string
+   * @param {object} route Route definition object
+   *
+   * @return {object} $routeProvider - $routeProvider instance
+   */
   function when(url, route) {
     /*jshint validthis: true */
     if (route.redirectTo != null) {
@@ -37339,6 +34971,24 @@ function $RouteProvider(  $stateProvider,    $urlRouterProvider) {
     return this;
   }
 
+  /*
+   * @ngdoc object
+   * @name ui.router.compat.$route
+   *
+   * @requires ui.router.state.$state
+   * @requires $rootScope
+   * @requires $routeParams
+   *
+   * @property {object} routes - Array of registered routes.
+   * @property {object} params - Current route params as object.
+   * @property {string} current - Name of the current route.
+   *
+   * @description
+   * The `$route` service provides interfaces to access defined routes. It also let's
+   * you access route params through `$routeParams` service, so you have fully
+   * control over all the stuff you would actually get from angular's core `$route`
+   * service.
+   */
   this.$get = $get;
   $get.$inject = ['$state', '$rootScope', '$routeParams'];
   function $get(   $state,   $rootScope,   $routeParams) {
@@ -37375,7 +35025,6 @@ angular.module('ui.router.compat')
   .provider('$route', $RouteProvider)
   .directive('ngView', $ViewDirective);
 })(window, window.angular);
-
 /*!
  * ionic.bundle.js is a concatenation of:
  * ionic.js, angular.js, angular-animate.js,
@@ -37387,7 +35036,7 @@ angular.module('ui.router.compat')
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.4
+ * Ionic, v1.0.0-beta.5
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -37444,12 +35093,13 @@ var deprecated = {
 };
 
 
-var IonicModule = angular.module('ionic', [
-  // Angular deps
-  'ngAnimate',
-  'ngSanitize',
-  'ui.router'
-]);
+var IonicModule = angular.module('ionic', ['ngAnimate', 'ngSanitize', 'ui.router']),
+  extend = angular.extend,
+  forEach = angular.forEach,
+  isDefined = angular.isDefined,
+  isString = angular.isString,
+  jqLite = angular.element;
+
 
 /**
  * @ngdoc service
@@ -37522,25 +35172,26 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
      *  - `{string=}` `destructiveText` The text for a 'danger' on the action sheet.
      *  - `{function=}` `cancel` Called if the cancel button is pressed or the backdrop is tapped.
      *  - `{function=}` `buttonClicked` Called when one of the non-destructive buttons is clicked,
-     *     with the index of the button that was clicked. Return true to close the action sheet,
-     *     or false to keep it opened.
+     *     with the index of the button that was clicked and the button object. Return true to close
+     *     the action sheet, or false to keep it opened.
      *  - `{function=}` `destructiveButtonClicked` Called when the destructive button is clicked.
      *     Return true to close the action sheet, or false to keep it opened.
      */
     show: function(opts) {
       var scope = $rootScope.$new(true);
 
-      angular.extend(scope, {
+      extend(scope, {
         cancel: angular.noop,
         buttonClicked: angular.noop,
-        destructiveButtonClicked: angular.noop
+        destructiveButtonClicked: angular.noop,
+        buttons: []
       }, opts);
 
       // Compile the template
       var element = $compile('<ion-action-sheet buttons="buttons"></ion-action-sheet>')(scope);
 
       // Grab the sheet element for animation
-      var sheetEl = angular.element(element[0].querySelector('.action-sheet-wrapper'));
+      var sheetEl = jqLite(element[0].querySelector('.action-sheet-wrapper'));
 
       var hideSheet = function(didCancel) {
         sheetEl.removeClass('action-sheet-up');
@@ -37574,7 +35225,7 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
       scope.buttonClicked = function(index) {
         // Check if the button click event returned true, which means
         // we can close the action sheet
-        if((opts.buttonClicked && opts.buttonClicked(index)) === true) {
+        if((opts.buttonClicked && opts.buttonClicked(index, opts.buttons[index])) === true) {
           hideSheet(false);
         }
       };
@@ -37607,7 +35258,7 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
 }]);
 
 
-angular.element.prototype.addClass = function(cssClasses) {
+jqLite.prototype.addClass = function(cssClasses) {
   var x, y, cssClass, el, splitClasses, existingClasses;
   if (cssClasses && cssClasses != 'ng-scope' && cssClasses != 'ng-isolate-scope') {
     for(x=0; x<this.length; x++) {
@@ -37635,7 +35286,7 @@ angular.element.prototype.addClass = function(cssClasses) {
   return this;
 };
 
-angular.element.prototype.removeClass = function(cssClasses) {
+jqLite.prototype.removeClass = function(cssClasses) {
   var x, y, splitClasses, cssClass, el;
   if (cssClasses) {
     for(x=0; x<this.length; x++) {
@@ -37715,6 +35366,10 @@ IonicModule
     useSlowAnimations = isSlow;
   };
 
+  this.create = function(animation) {
+    return ionic.Animation.create(animation);
+  };
+
   this.$get = [function() {
     return function(opts) {
       opts.useSlowAnimations = useSlowAnimations;
@@ -37762,7 +35417,7 @@ IonicModule
   '$document',
 function($document) {
 
-  var el = angular.element('<div class="backdrop">');
+  var el = jqLite('<div class="backdrop">');
   var backdropHolds = 0;
 
   $document[0].body.appendChild(el[0]);
@@ -37810,7 +35465,7 @@ IonicModule
 .factory('$ionicBind', ['$parse', '$interpolate', function($parse, $interpolate) {
   var LOCAL_REGEXP = /^\s*([@=&])(\??)\s*(\w*)\s*$/;
   return function(scope, attrs, bindDefinition) {
-    angular.forEach(bindDefinition || {}, function (definition, scopeName) {
+    forEach(bindDefinition || {}, function (definition, scopeName) {
       //Adapted from angular.js $compile
       var match = definition.match(LOCAL_REGEXP) || [],
         attrName = match[3] || scopeName,
@@ -38559,6 +36214,7 @@ function($document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log, $c
               ionic.DomUtil.centerElementByMarginTwice(self.element[0]);
               ionic.requestAnimationFrame(function() {
                 self.isShown && self.element.addClass('active');
+                ionic.DomUtil.centerElementByMarginTwice(self.element[0]);
               });
             }
           });
@@ -38631,7 +36287,8 @@ function($document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log, $c
  * @module ionic
  * @description
  * The Modal is a content pane that can go over the user's main view
- * temporarily.  Usually used for making a choice or editing an item.
+ * temporarily.  Usually used for making a choice or editing an item. 
+ * Note that you need to put the content of the modal inside a div with the class `modal`.
  *
  * @usage
  * ```html
@@ -38664,6 +36321,14 @@ function($document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log, $c
  *   //Cleanup the modal when we're done with it!
  *   $scope.$on('$destroy', function() {
  *     $scope.modal.remove();
+ *   });
+ *   // Execute action on hide modal
+ *   $scope.$on('modal.hide', function() {
+ *     // Execute action
+ *   });
+ *   // Execute action on remove modal
+ *   $scope.$on('modal.removed', function() {
+ *     // Execute action
  *   });
  * });
  * ```
@@ -38704,6 +36369,8 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
      *    Default: 'slide-in-up'
      *  - `{boolean=}` `focusFirstInput` Whether to autofocus the first input of
      *    the modal when shown.  Default: false.
+     *  - `{boolean=} `backdropClickToClose` Whether to close the modal on clicking the backdrop.
+     *    Default: true.
      */
     initialize: function(opts) {
       ionic.views.Modal.prototype.initialize.call(this, opts);
@@ -38718,12 +36385,12 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
      */
     show: function() {
       var self = this;
-      var modalEl = angular.element(self.modalEl);
+      var modalEl = jqLite(self.modalEl);
 
       self.el.classList.remove('hide');
       $timeout(function(){
         $document[0].body.classList.add('modal-open');
-      }, 400)
+      }, 400);
 
 
       if(!self.el.parentElement) {
@@ -38751,7 +36418,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
       return $timeout(function() {
         //After animating in, allow hide on backdrop click
         self.$el.on('click', function(e) {
-          if (e.target === self.el) {
+          if (self.backdropClickToClose && e.target === self.el) {
             self.hide();
           }
         });
@@ -38766,7 +36433,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
      */
     hide: function() {
       var self = this;
-      var modalEl = angular.element(self.modalEl);
+      var modalEl = jqLite(self.modalEl);
 
       self.el.classList.remove('active');
       modalEl.addClass('ng-leave');
@@ -38819,7 +36486,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
     // Create a new scope for the modal
     var scope = options.scope && options.scope.$new() || $rootScope.$new(true);
 
-    angular.extend(scope, {
+    extend(scope, {
       $hasHeader: false,
       $hasSubheader: false,
       $hasFooter: false,
@@ -39394,7 +37061,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
   return $ionicPopup;
 
   function createPopup(options) {
-    options = angular.extend({
+    options = extend({
       scope: null,
       title: '',
       buttons: [],
@@ -39419,7 +37086,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
 
       //Can't ng-bind-html for popup-body because it can be insecure html
       //(eg an input in case of prompt)
-      var body = angular.element(self.element[0].querySelector('.popup-body'));
+      var body = jqLite(self.element[0].querySelector('.popup-body'));
       if (content) {
         body.html(content);
         $compile(body.contents())(self.scope);
@@ -39427,7 +37094,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
         body.remove();
       }
 
-      angular.extend(self.scope, {
+      extend(self.scope, {
         title: options.title,
         buttons: options.buttons,
         subTitle: options.subTitle,
@@ -39556,7 +37223,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
   }
 
   function showAlert(opts) {
-    return showPopup( angular.extend({
+    return showPopup( extend({
       buttons: [{
         text: opts.okText || 'OK',
         type: opts.okType || 'button-positive',
@@ -39568,7 +37235,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
   }
 
   function showConfirm(opts) {
-    return showPopup( angular.extend({
+    return showPopup( extend({
       buttons: [{
         text: opts.cancelText || 'Cancel' ,
         type: opts.cancelType || 'button-default',
@@ -39584,7 +37251,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
   function showPrompt(opts) {
     var scope = $rootScope.$new(true);
     scope.data = {};
-    return showPopup( angular.extend({
+    return showPopup( extend({
       template: '<input ng-model="data.response" type="' + (opts.inputType || 'text') +
         '" placeholder="' + (opts.inputPlaceholder || '') + '">',
       scope: scope,
@@ -39910,8 +37577,7 @@ IonicModule
  * @description
  * Delegate that controls the {@link ionic.directive:ionSlideBox} directive.
  *
- * Methods called directly on the $ionicSlideBoxDelegate service will control all side
- * menus.  Use the {@link ionic.service:$ionicSlideBoxDelegate#$getByHandle $getByHandle}
+ * Methods called directly on the $ionicSlideBoxDelegate service will control all slide boxes.  Use the {@link ionic.service:$ionicSlideBoxDelegate#$getByHandle $getByHandle}
  * method to control specific slide box instances.
  *
  * @usage
@@ -40074,7 +37740,7 @@ IonicModule
    *
    * Example: `$ionicTabsDelegate.$getByHandle('my-handle').select(0);`
    */
-]))
+]));
 
 
 IonicModule
@@ -40100,7 +37766,7 @@ function($compile, $controller, $http, $q, $rootScope, $templateCache) {
   }
 
   function loadAndCompile(options) {
-    options = angular.extend({
+    options = extend({
       template: '',
       templateUrl: '',
       scope: null,
@@ -40118,19 +37784,19 @@ function($compile, $controller, $http, $q, $rootScope, $templateCache) {
       var scope = options.scope || $rootScope.$new();
 
       //Incase template doesn't have just one root element, do this
-      var element = angular.element('<div>').html(template).contents();
+      var element = jqLite('<div>').html(template).contents();
 
       if (options.controller) {
         controller = $controller(
           options.controller,
-          angular.extend(options.locals, {
+          extend(options.locals, {
             $scope: scope
           })
         );
         element.children().data('$ngControllerController', controller);
       }
       if (options.appendTo) {
-        angular.element(options.appendTo).append(element);
+        jqLite(options.appendTo).append(element);
       }
 
       $compile(element)(scope);
@@ -40882,10 +38548,10 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
 
   var self = this;
 
-  this.leftButtonsElement = angular.element(
+  this.leftButtonsElement = jqLite(
     $element[0].querySelector('.buttons.left-buttons')
   );
-  this.rightButtonsElement = angular.element(
+  this.rightButtonsElement = jqLite(
     $element[0].querySelector('.buttons.right-buttons')
   );
 
@@ -40916,6 +38582,9 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
   };
 
   this.setTitle = function(title) {
+    if ($scope.title === title) {
+      return;
+    }
     $scope.oldTitle = $scope.title;
     $scope.title = title || '';
   };
@@ -40957,7 +38626,7 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
     currentTitles = $element[0].querySelectorAll('.title');
     if (currentTitles.length) {
       oldTitleEl = $compile('<h1 class="title" ng-bind-html="oldTitle"></h1>')($scope);
-      angular.element(currentTitles[0]).replaceWith(oldTitleEl);
+      jqLite(currentTitles[0]).replaceWith(oldTitleEl);
     }
     //Compile new title
     newTitleEl = $compile('<h1 class="title invisible" ng-bind-html="title"></h1>')($scope);
@@ -40965,18 +38634,18 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
     //Animate in on next frame
     ionic.requestAnimationFrame(function() {
 
-      oldTitleEl && $animate.leave(angular.element(oldTitleEl));
+      oldTitleEl && $animate.leave(jqLite(oldTitleEl));
 
-      var insert = oldTitleEl && angular.element(oldTitleEl) || null;
+      var insert = oldTitleEl && jqLite(oldTitleEl) || null;
       $animate.enter(newTitleEl, $element, insert, function() {
         self._headerBarView.align();
       });
 
       //Cleanup any old titles leftover (besides the one we already did replaceWith on)
-      angular.forEach(currentTitles, function(el) {
+      forEach(currentTitles, function(el) {
         if (el && el.parentNode) {
           //Use .remove() to cleanup things like .data()
-          angular.element(el).remove();
+          jqLite(el).remove();
         }
       });
 
@@ -40989,7 +38658,7 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
       });
     });
   };
-}])
+}]);
 
 
 /**
@@ -41018,7 +38687,7 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
   this._scrollViewOptions = scrollViewOptions; //for testing
 
   var element = this.element = scrollViewOptions.el;
-  var $element = this.$element = angular.element(element);
+  var $element = this.$element = jqLite(element);
   var scrollView = this.scrollView = new ionic.views.Scroll(scrollViewOptions);
 
   //Attach self to element as a controller so other directives can require this controller
@@ -41159,8 +38828,6 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     }
   };
 
-
-
   /**
    * @private
    */
@@ -41189,7 +38856,7 @@ IonicModule
   '$ionicPlatform',
 function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform) {
   var self = this;
-  angular.extend(this, ionic.controllers.SideMenuController.prototype);
+  extend(this, ionic.controllers.SideMenuController.prototype);
 
   this.$scope = $scope;
 
@@ -41337,7 +39004,7 @@ function($scope, $ionicViewService, $element) {
         $ionicViewService.goToHistoryRoot(tab.$historyId);
       }
     } else {
-      angular.forEach(self.tabs, function(tab) {
+      forEach(self.tabs, function(tab) {
         self.deselect(tab);
       });
 
@@ -41439,30 +39106,30 @@ IonicModule
     restrict: 'E',
     replace: true,
     require: '?ngModel',
-    scope: {
-      ngModel: '=?',
-      ngValue: '=?',
-      ngChecked: '=?',
-      ngDisabled: '=?',
-      ngChange: '&'
-    },
     transclude: true,
-
     template: '<label class="item item-checkbox">' +
                 '<div class="checkbox checkbox-input-hidden disable-pointer-events">' +
-                  '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()">' +
+                  '<input type="checkbox">' +
                   '<i class="checkbox-icon"></i>' +
                 '</div>' +
                 '<div class="item-content disable-pointer-events" ng-transclude></div>' +
               '</label>',
-
     compile: function(element, attr) {
       var input = element.find('input');
-      if(attr.name) input.attr('name', attr.name);
-      if(attr.ngChecked) input.attr('ng-checked', attr.ngChecked);
-      if(attr.ngDisabled) input.attr('ng-disabled', attr.ngDisabled);
-      if(attr.ngTrueValue) input.attr('ng-true-value', attr.ngTrueValue);
-      if(attr.ngFalseValue) input.attr('ng-false-value', attr.ngFalseValue);
+      forEach({
+        'name': attr.name,
+        'ng-value': attr.ngValue,
+        'ng-model': attr.ngModel,
+        'ng-checked': attr.ngChecked,
+        'ng-disabled': attr.ngDisabled,
+        'ng-true-value': attr.ngTrueValue,
+        'ng-false-value': attr.ngFalseValue,
+        'ng-change': attr.ngChange
+      }, function(value, name) {
+        if (isDefined(value)) {
+          input.attr(name, value);
+        }
+      });
     }
 
   };
@@ -41500,6 +39167,7 @@ IonicModule
  * 6. Each collection-repeat list will take up all of its parent scrollView's space.
  * If you wish to have multiple lists on one page, put each list within its own
  * {@link ionic.directive:ionScroll ionScroll} container.
+ * 7. You should not use the ng-show and ng-hide directives on your ion-content/ion-scroll elements that have a collection-repeat inside.  ng-show and ng-hide apply the `display: none` css rule to the content's style, causing the scrollView to read the width and height of the content as 0.  Resultingly, collection-repeat will render elements that have just been un-hidden incorrectly.
  *
  *
  * @usage
@@ -41638,14 +39306,14 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
 
       var heightGetter = function(scope, locals) {
         var result = heightParsed(scope, locals);
-        if (angular.isString(result) && result.indexOf('%') > -1) {
+        if (isString(result) && result.indexOf('%') > -1) {
           return Math.floor(parseInt(result, 10) / 100 * scrollView.__clientHeight);
         }
         return result;
       };
       var widthGetter = function(scope, locals) {
         var result = widthParsed(scope, locals);
-        if (angular.isString(result) && result.indexOf('%') > -1) {
+        if (isString(result) && result.indexOf('%') > -1) {
           return Math.floor(parseInt(result, 10) / 100 * scrollView.__clientWidth);
         }
         return result;
@@ -41754,7 +39422,7 @@ function($timeout, $controller, $ionicBind) {
       if (attr.scroll != 'false') {
         //We cannot use normal transclude here because it breaks element.data()
         //inheritance on compile
-        innerElement = angular.element('<div class="scroll"></div>');
+        innerElement = jqLite('<div class="scroll"></div>');
         innerElement.append(element.contents());
         element.append(innerElement);
       }
@@ -41934,7 +39602,8 @@ function tapScrollToTopDirective() {
             bounds.left, bounds.top - 20,
             bounds.left + bounds.width, bounds.top + bounds.height
           )) {
-            $ionicScrollDelegate.scrollTop(true);
+            var scrollCtrl = $element.controller('$ionicScroll');
+            scrollCtrl && scrollCtrl.scrollTop(true);
           }
         }
       }
@@ -41960,9 +39629,10 @@ function headerFooterBarDirective(isHeader) {
 
           if (isHeader) {
             $scope.$watch(function() { return el.className; }, function(value) {
+              var isShown = value.indexOf('ng-hide') === -1;
               var isSubheader = value.indexOf('bar-subheader') !== -1;
-              $scope.$hasHeader = !isSubheader;
-              $scope.$hasSubheader = isSubheader;
+              $scope.$hasHeader = isShown && !isSubheader;
+              $scope.$hasSubheader = isShown && isSubheader;
             });
             $scope.$on('$destroy', function() {
               delete $scope.$hasHeader;
@@ -41970,9 +39640,10 @@ function headerFooterBarDirective(isHeader) {
             });
           } else {
             $scope.$watch(function() { return el.className; }, function(value) {
+              var isShown = value.indexOf('ng-hide') === -1;
               var isSubfooter = value.indexOf('bar-subfooter') !== -1;
-              $scope.$hasFooter = !isSubfooter;
-              $scope.$hasSubfooter = isSubfooter;
+              $scope.$hasFooter = isShown && !isSubfooter;
+              $scope.$hasSubfooter = isShown && isSubfooter;
             });
             $scope.$on('$destroy', function() {
               delete $scope.$hasFooter;
@@ -42091,7 +39762,7 @@ IonicModule
         $element[0].classList.add('active');
         infiniteScrollCtrl.isLoading = true;
         $scope.$parent && $scope.$parent.$apply($attrs.onInfinite || '');
-      }
+      };
 
       var finishInfiniteScroll = function() {
         $element[0].classList.remove('active');
@@ -42169,13 +39840,15 @@ function($animate, $compile) {
     }],
     scope: true,
     compile: function($element, $attrs) {
-      var isAnchor = angular.isDefined($attrs.href) || angular.isDefined($attrs.ngHref);
+      var isAnchor = angular.isDefined($attrs.href) ||
+        angular.isDefined($attrs.ngHref) ||
+        angular.isDefined($attrs.uiSref);
       var isComplexItem = isAnchor ||
         //Lame way of testing, but we have to know at compile what to do with the element
         /ion-(delete|option|reorder)-button/i.test($element.html());
 
         if (isComplexItem) {
-          var innerElement = angular.element(isAnchor ? ITEM_TPL_CONTENT_ANCHOR : ITEM_TPL_CONTENT);
+          var innerElement = jqLite(isAnchor ? ITEM_TPL_CONTENT_ANCHOR : ITEM_TPL_CONTENT);
           innerElement.append($element.contents());
 
           $element.append(innerElement);
@@ -42240,7 +39913,7 @@ IonicModule
       return function($scope, $element, $attr, ctrls) {
         var itemCtrl = ctrls[0];
         var listCtrl = ctrls[1];
-        var container = angular.element(ITEM_TPL_DELETE_BUTTON);
+        var container = jqLite(ITEM_TPL_DELETE_BUTTON);
         container.append($element);
         itemCtrl.$element.append(container).addClass('item-left-editable');
 
@@ -42291,7 +39964,7 @@ return {
     $attr.$set('class', ($attr['class'] || '') + ' button', true);
     return function($scope, $element, $attr, itemCtrl) {
       if (!itemCtrl.optionsContainer) {
-        itemCtrl.optionsContainer = angular.element(ITEM_TPL_OPTION_BUTTONS);
+        itemCtrl.optionsContainer = jqLite(ITEM_TPL_OPTION_BUTTONS);
         itemCtrl.$element.append(itemCtrl.optionsContainer);
       }
       itemCtrl.optionsContainer.append($element);
@@ -42368,7 +40041,7 @@ IonicModule
           });
         };
 
-        var container = angular.element(ITEM_TPL_REORDER_BUTTON);
+        var container = jqLite(ITEM_TPL_REORDER_BUTTON);
         container.append($element);
         itemCtrl.$element.append(container).addClass('item-right-editable');
 
@@ -42464,7 +40137,7 @@ function($animate, $timeout) {
     require: ['ionList', '^?$ionicScroll'],
     controller: '$ionicList',
     compile: function($element, $attr) {
-      var listEl = angular.element('<div class="list">')
+      var listEl = jqLite('<div class="list">')
       .append( $element.contents() );
       $element.append(listEl);
 
@@ -42482,7 +40155,7 @@ function($animate, $timeout) {
             scrollEl: scrollCtrl && scrollCtrl.element,
             scrollView: scrollCtrl && scrollCtrl.scrollView,
             onReorder: function(el, oldIndex, newIndex) {
-              var itemScope = angular.element(el).scope();
+              var itemScope = jqLite(el).scope();
               if (itemScope && itemScope.$onReorder) {
                 itemScope.$onReorder(oldIndex, newIndex);
               }
@@ -42537,16 +40210,16 @@ function($animate, $timeout) {
           });
 
           function toggleNgHide(selector, shouldShow) {
-            angular.forEach($element[0].querySelectorAll(selector), function(node) {
+            forEach($element[0].querySelectorAll(selector), function(node) {
               if (shouldShow) {
-                $animate.removeClass(angular.element(node), 'ng-hide');
+                $animate.removeClass(jqLite(node), 'ng-hide');
               } else {
-                $animate.addClass(angular.element(node), 'ng-hide');
+                $animate.addClass(jqLite(node), 'ng-hide');
               }
             });
           }
           function toggleTapDisabled(selector, shouldDisable) {
-            var el = angular.element($element[0].querySelectorAll(selector));
+            var el = jqLite($element[0].querySelectorAll(selector));
             if (shouldDisable) {
               el.attr('data-tap-disabled', 'true');
             } else {
@@ -42628,7 +40301,7 @@ IonicModule
       });
     }
   };
-}])
+}]);
 
 
 /*
@@ -42920,7 +40593,7 @@ IonicModule
         //so we can remove them all when this element dies -
         //even if the buttons have changed through an ng-repeat or the like,
         //we just remove their div parent and they are gone.
-        var buttons = angular.element('<span>').append(content);
+        var buttons = jqLite('<span>').append(content);
 
         //Compile buttons inside content so they have access to everything
         //something inside content does (eg parent ionicScroll)
@@ -42929,7 +40602,10 @@ IonicModule
 
         //Append buttons to navbar
         ionic.requestAnimationFrame(function() {
-          $animate.enter(buttons, navElement);
+          //If the scope is destroyed before raf runs, be sure not to enter
+          if (!$scope.$$destroyed) {
+            $animate.enter(buttons, navElement);
+          }
         });
 
         //When our ion-nav-buttons container is destroyed,
@@ -43009,7 +40685,7 @@ function($ionicViewService, $location, $state, $window, $rootScope) {
  * @name ionNavView
  * @module ionic
  * @restrict E
- * @codepen HjnFx
+ * @codepen odqCz
  *
  * @description
  * As a user navigates throughout your app, Ionic is able to keep track of their
@@ -43174,7 +40850,7 @@ function( $ionicViewService,   $state,   $compile,   $controller,   $animate) {
             return element.append(initialView);
           }
 
-          var newElement = angular.element('<div></div>').html(locals.$template).contents();
+          var newElement = jqLite('<div></div>').html(locals.$template).contents();
           var viewRegisterData = renderer().register(newElement);
 
           // Remove existing content
@@ -43392,7 +41068,9 @@ IonicModule
     '<div class="scroll-refresher">' +
       '<div class="ionic-refresher-content" ' +
       'ng-class="{\'ionic-refresher-with-text\': pullingText || refreshingText}">' +
-        '<i class="icon {{pullingIcon}} icon-pulling"></i>' +
+        '<div class="icon-pulling">' +
+          '<i class="icon {{pullingIcon}}"></i>' +
+        '</div>' +
         '<div class="text-pulling" ng-bind-html="pullingText"></div>' +
         '<i class="icon {{refreshingIcon}} icon-refreshing"></i>' +
         '<div class="text-refreshing" ng-bind-html="refreshingText"></div>' +
@@ -43461,7 +41139,7 @@ function($timeout, $controller, $ionicBind) {
       element.addClass('scroll-view');
 
       //We cannot transclude here because it breaks element.data() inheritance on compile
-      var innerElement = angular.element('<div class="scroll"></div>');
+      var innerElement = jqLite('<div class="scroll"></div>');
       innerElement.append(element.contents());
       element.append(innerElement);
 
@@ -43889,16 +41567,16 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
         slider.load();
       });
     }],
-    template: '<div class="slider">\
-            <div class="slider-slides" ng-transclude>\
-            </div>\
-          </div>',
+    template: '<div class="slider">' +
+      '<div class="slider-slides" ng-transclude>' +
+      '</div>' +
+    '</div>',
 
     link: function($scope, $element, $attr, slideBoxCtrl) {
       // If the pager should show, append it to the slide box
       if($scope.$eval($scope.showPager) !== false) {
         var childScope = $scope.$new();
-        var pager = angular.element('<ion-pager></ion-pager>');
+        var pager = jqLite('<ion-pager></ion-pager>');
         $element.append(pager);
         $compile(pager)(childScope);
       }
@@ -44022,7 +41700,7 @@ function($rootScope, $animate, $ionicBind, $compile) {
 
       //Remove the contents of the element so we can compile them later, if tab is selected
       //We don't use regular transclusion because it breaks element inheritance
-      var tabContent = angular.element('<div class="pane">')
+      var tabContent = jqLite('<div class="pane">')
         .append( element.contents().remove() );
 
       return function link($scope, $element, $attr, ctrls) {
@@ -44065,7 +41743,7 @@ function($rootScope, $animate, $ionicBind, $compile) {
           }
         }
 
-        var tabNavElement = angular.element(tabNavTemplate);
+        var tabNavElement = jqLite(tabNavTemplate);
         tabNavElement.data('$ionTabsController', tabsCtrl);
         tabNavElement.data('$ionTabController', tabCtrl);
         tabsCtrl.$tabsElement.append($compile(tabNavElement)($scope));
@@ -44201,7 +41879,7 @@ IonicModule
       element.addClass('view');
       //We cannot use regular transclude here because it breaks element.data()
       //inheritance on compile
-      var innerElement = angular.element('<div class="tabs"></div>');
+      var innerElement = jqLite('<div class="tabs"></div>');
       innerElement.append(element.contents());
       element.append(innerElement);
 
@@ -44215,7 +41893,7 @@ IonicModule
 
         tabsCtrl.$scope = $scope;
         tabsCtrl.$element = $element;
-        tabsCtrl.$tabsElement = angular.element($element[0].querySelector('.tabs'));
+        tabsCtrl.$tabsElement = jqLite($element[0].querySelector('.tabs'));
 
         var el = $element[0];
         $scope.$watch(function() { return el.className; }, function(value) {
@@ -44303,7 +41981,7 @@ function($ionicGesture, $timeout) {
          track = el.children[1];
          handle = track.children[0];
 
-         var ngModelController = angular.element(checkbox).controller('ngModel');
+         var ngModelController = jqLite(checkbox).controller('ngModel');
 
          $scope.toggle = new ionic.views.Toggle({
            el: el,
@@ -44383,11 +42061,8 @@ IonicModule
 
           // watch for changes in the title, don't set initial value as changeTitle does that
           $attr.$observe('title', function(val, oldVal) {
-            if (val !== initialTitle) {
-              navBarCtrl.setTitle(val);
-            }
+            navBarCtrl.setTitle(val);
           });
-
         }
 
         var hideBackAttr = angular.isDefined($attr.hideBackButton) ?
