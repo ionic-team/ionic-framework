@@ -325,7 +325,7 @@ function tapMouseUp(e) {
     return false;
   }
 
-  if( tapIgnoreEvent(e) || (/select|option/i).test(e.target) ) return;
+  if( tapIgnoreEvent(e) || (/select|option/i).test(e.target.tagName) ) return;
 
   if( !tapHasPointerMoved(e) ) {
     tapClick(e);
@@ -378,7 +378,7 @@ function tapTouchEnd(e) {
   if( !tapHasPointerMoved(e) ) {
     tapClick(e);
 
-    if( (/select|option/i).test(e.target) ) {
+    if( (/select|option/i).test(e.target.tagName) ) {
       e.preventDefault();
     }
   }
