@@ -165,8 +165,6 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     }
   };
 
-
-
   /**
    * @private
    */
