@@ -35,7 +35,7 @@
       });
     },
     curve: 'linear',
-    curveFn: ionic.Animation.TimingFn['linear'],
+    curveFn: ionic.Animation.TimingFn.linear,
     duration: 500,
     delay: 0,
     repeat: -1,
@@ -79,7 +79,7 @@
     _saveState: function(now, closure) {
       this._pauseState = {
         pausedAt: now,
-      }
+      };
       this._lastStepFn = closure;
       window.cancelAnimationFrame(closure);
     },
@@ -91,7 +91,7 @@
       // TODO: Verify this isn't totally stupid
       ionic.requestAnimationFrame(function() {
         self.start();
-      })
+      });
     },
 
     start: function() {
@@ -108,7 +108,7 @@
         repeat: this.repeat,
         autoReverse: this.autoReverse,
         dynamic: this.dynamic
-      }
+      };
 
       ionic.Animation.animationStarted(this);
 
@@ -172,7 +172,7 @@
         // Start fresh either way
         start = time();
         ionic.requestAnimationFrame(step);
-      }
+      };
 
 
       // This is the internal step method which is called every few milliseconds
@@ -260,7 +260,11 @@
           } else if(repeat === 0 && autoReverse) {
             perhapsAutoreverse();
           } else {
-            completedCallback && completedCallback(desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)), self._animationId, percent === endPercent || duration == null);
+            completedCallback && completedCallback(
+              desiredFrames - (dropCounter / ((now - start) / millisecondsPerSecond)),
+              self._animationId,
+              percent === endPercent || duration === null
+            );
           }
         } else if (render) {
           lastFrame = now;
