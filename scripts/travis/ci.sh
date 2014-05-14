@@ -97,7 +97,9 @@ function run {
     ./scripts/seed/publish.sh --version="$VERSION"
     ./scripts/app-base/publish.sh --version="$VERSION"
 
-    gulp release-tweet release-irc
+    ./scripts/travis/release-new-version.sh \
+      --action="tweetAndIrc"
+      --version=$VERSION
   else
     ./scripts/site/publish.sh --action="clone"
 
