@@ -314,7 +314,7 @@ describe('Ionic Tap', function() {
       stopPropagation: function() { this.stoppedPropagation = true; },
       preventDefault: function() { this.preventedDefault = true; }
     };
-    expect( tapMouseUp(e) ).toEqual(false);
+    expect( tapMouseUp(e) ).toBeFalsy();
     expect( e.stoppedPropagation ).toBeUndefined();
     expect( e.preventedDefault ).toBeUndefined();
   });
