@@ -109,6 +109,14 @@ describe('bar directives', function() {
           scope.$apply();
           expect(scope.$hasHeader).toEqual(true);
           expect(scope.$hasSubheader).toEqual(false);
+          el.addClass('ng-hide');
+          scope.$apply();
+          expect(scope.$hasHeader).toEqual(false);
+          expect(scope.$hasSubheader).toEqual(false);
+          el.removeClass('ng-hide');
+          scope.$apply();
+          expect(scope.$hasHeader).toEqual(true);
+          expect(scope.$hasSubheader).toEqual(false);
         });
       } else {
         it('$hasFooter $hasSubheader', function() {
@@ -121,6 +129,14 @@ describe('bar directives', function() {
           expect(scope.$hasFooter).toEqual(false);
           expect(scope.$hasSubfooter).toEqual(true);
           el.removeClass('bar-subfooter');
+          scope.$apply();
+          expect(scope.$hasFooter).toEqual(true);
+          expect(scope.$hasSubfooter).toEqual(false);
+          el.addClass('ng-hide');
+          scope.$apply();
+          expect(scope.$hasFooter).toEqual(false);
+          expect(scope.$hasSubfooter).toEqual(false);
+          el.removeClass('ng-hide');
           scope.$apply();
           expect(scope.$hasFooter).toEqual(true);
           expect(scope.$hasSubfooter).toEqual(false);

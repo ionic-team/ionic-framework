@@ -125,9 +125,10 @@ function headerFooterBarDirective(isHeader) {
 
           if (isHeader) {
             $scope.$watch(function() { return el.className; }, function(value) {
+              var isShown = value.indexOf('ng-hide') === -1;
               var isSubheader = value.indexOf('bar-subheader') !== -1;
-              $scope.$hasHeader = !isSubheader;
-              $scope.$hasSubheader = isSubheader;
+              $scope.$hasHeader = isShown && !isSubheader;
+              $scope.$hasSubheader = isShown && isSubheader;
             });
             $scope.$on('$destroy', function() {
               delete $scope.$hasHeader;
@@ -135,9 +136,10 @@ function headerFooterBarDirective(isHeader) {
             });
           } else {
             $scope.$watch(function() { return el.className; }, function(value) {
+              var isShown = value.indexOf('ng-hide') === -1;
               var isSubfooter = value.indexOf('bar-subfooter') !== -1;
-              $scope.$hasFooter = !isSubfooter;
-              $scope.$hasSubfooter = isSubfooter;
+              $scope.$hasFooter = isShown && !isSubfooter;
+              $scope.$hasSubfooter = isShown && isSubfooter;
             });
             $scope.$on('$destroy', function() {
               delete $scope.$hasFooter;
