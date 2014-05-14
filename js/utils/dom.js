@@ -204,8 +204,11 @@
     centerElementByMarginTwice: function(el) {
       ionic.requestAnimationFrame(function() {
         ionic.DomUtil.centerElementByMargin(el);
-        ionic.requestAnimationFrame(function() {
+        setTimeout(function() {
           ionic.DomUtil.centerElementByMargin(el);
+          setTimeout(function() {
+            ionic.DomUtil.centerElementByMargin(el);
+          });
         });
       });
     },

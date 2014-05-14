@@ -118,6 +118,7 @@ function($document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log, $c
               ionic.DomUtil.centerElementByMarginTwice(self.element[0]);
               ionic.requestAnimationFrame(function() {
                 self.isShown && self.element.addClass('active');
+                ionic.DomUtil.centerElementByMarginTwice(self.element[0]);
               });
             }
           });

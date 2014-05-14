@@ -18,9 +18,9 @@
       .controller('LoadingCtrl', function($scope, $ionicLoading) {
         $scope.startLoading = function() {
           $ionicLoading.show({
-            template: 'Getting current location...',
+            template: '<div>Connection problem.</div><br/><div>Please check your internet connection!</div>',
             delay: 100,
-            duration: 500
+            duration: 3000
           });
         };
       });
