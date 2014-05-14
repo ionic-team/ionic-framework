@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.5
+ * Ionic, v1.0.0-beta.5b
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -2029,8 +2029,7 @@ body.grade-b, body.grade-c {
   text-size-adjust: none;
   -webkit-transform-origin: left top;
   -moz-transform-origin: left top;
-  transform-origin: left top;
-  -webkit-backface-visibility: hidden; }
+  transform-origin: left top; }
 
 .scroll-bar {
   position: absolute;
@@ -2239,7 +2238,8 @@ ion-infinite-scroll.active .scroll-infinite {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff; }
+  background-color: #fff;
+  overflow: hidden; }
 
 /**
  * Typography
@@ -3113,7 +3113,7 @@ a.subdued {
   transform: none;
   box-shadow: -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0, 0, 0, 0.2); }
 
-.menu-open .scroll-content {
+.menu-open .menu-content .pane, .menu-open .menu-content .scroll-content {
   pointer-events: none; }
 
 .grade-b .menu-content, .grade-c .menu-content {
@@ -4381,6 +4381,13 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
   left: 7.5px;
   z-index: 3;
   margin-top: -21px; }
+
+.item-checkbox.item-checkbox-right {
+  padding-right: 58px;
+  padding-left: 15px; }
+
+.item-checkbox-right .checkbox input, .item-checkbox-right .checkbox-icon {
+  float: right; }
 
 /**
  * Toggle
