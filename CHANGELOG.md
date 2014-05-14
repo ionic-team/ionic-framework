@@ -1,3 +1,19 @@
+<a name="1.0.0-beta.5b"></a>
+### 1.0.0-beta.5b "cadmium-camel" (2014-05-14)
+
+
+#### Bug Fixes
+
+* **sideMenu:**
+  * do not let the user scroll the whole body by dragging the menu horizontally ([6e149eef](https://github.com/driftyco/ionic/commit/6e149eef9bf5fbee454448f6cfa6f0ea9cce60d3))
+  * fix disabled menu links ([fa8aa6a8](https://github.com/driftyco/ionic/commit/fa8aa6a835eaa4608984e5a37b4c2a5b8fa19498), closes [#1388](https://github.com/driftyco/ionic/issues/1388))
+
+
+#### Features
+
+* **checkbox:** right align w/ .item-checkbox-right ([610e2328](https://github.com/driftyco/ionic/commit/610e2328403388453854984ae4534f0686358d48), closes [#1290](https://github.com/driftyco/ionic/issues/1290))
+
+
 <a name="1.0.0-beta.5"></a>
 ### 1.0.0-beta.5 "barium-bobcat" (2014-05-14)
 
