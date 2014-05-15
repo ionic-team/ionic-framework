@@ -12,14 +12,14 @@
  *
  * @usage
  * ```html
- * <ion-slide-box>
+ * <ion-slide-box on-slide-changed="slideHasChanged(index)">
  *   <ion-slide>
  *     <div class="box blue"><h1>BLUE</h1></div>
  *   </ion-slide>
  *   <ion-slide>
  *     <div class="box yellow"><h1>YELLOW</h1></div>
  *   </ion-slide>
- *   <ion-slide on-slide-changed="slideHasChanged(index)">
+ *   <ion-slide>
  *     <div class="box pink"><h1>PINK</h1></div>
  *   </ion-slide>
  * </ion-slide-box>
