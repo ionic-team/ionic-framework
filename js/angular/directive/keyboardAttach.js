@@ -34,20 +34,22 @@ IonicModule
       if ( scrollCtrl ) {
         scrollCtrl.scrollView.__container.style.bottom = keyboardHeight + keyboardAttachGetClientHeight(element[0]) + "px";
       }
-    };
+    }
 
     function onHide() {
       element.css('bottom', '');
-      if ( scrollCtrl ) { 
+      if ( scrollCtrl ) {
         scrollCtrl.scrollView.__container.style.bottom = '';
       }
-    };
+    }
 
     scope.$on('$destroy', function() {
       window.removeEventListener('native.showkeyboard', onShow);
       window.removeEventListener('native.hidekeyboard', onHide);
     });
   };
-})
+});
 
-function keyboardAttachGetClientHeight(element) { return element.clientHeight }
+function keyboardAttachGetClientHeight(element) {
+  return element.clientHeight;
+}
