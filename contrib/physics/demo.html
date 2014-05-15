@@ -1,0 +1,101 @@
+<html ng-app="physics">
+  <head>
+    <meta charset="utf-8">
+    <title>Content</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="/dist/css/ionic.css">
+
+    <script src="/dist/js/ionic.bundle.js"></script>
+
+    <script src="lib/physicsjs/physicsjs-full-0.5.4.js"></script>
+    <script src="lib/physicsBehaviors.js"></script>
+    <script src="ionicPhysics.js"></script>
+
+    <style>
+    .scene {
+      position: fixed;
+      display: block;
+      left: 0;
+      right: 0;
+      bottom: 44px;
+      border: 4px dotted red;
+    }
+    .physics-body {
+      -webkit-transform: translateZ(0);
+    }
+    </style>
+  </head>
+  <body>
+    <ion-pane>
+      <ion-header-bar id="header" class="bar-positive">
+        <h1 class="title">Ionic Physics</h1>
+      </ion-header-bar>
+      <ion-content scroll="false" id="container" dynamics>
+        <div ng-controller="PhysicsCtrl">
+          <div ng-repeat="body in bodies" x="{{body.x}}" y="{{body.y}}" width="{{body.width}}" height="{{body.height}}" style="background-color: red" dynamics-body dynamics-group="{{body.name}}">
+          </div>
+        </div>
+      </ion-content>
+    </ion-pane>
+
+    <script>
+      angular.module('physics', ['ionic', 'ionic.contrib.physics'])
+
+      .controller('PhysicsCtrl', function($scope, $ionicDynamicAnimator, $ionicCollisionBehavior, $ionicGravityBehavior, $timeout) {
+
+        $timeout(function() {
+          console.log('Animator', $scope.dynamicAnimator);
+          var gravity = $ionicGravityBehavior({
+            vector: [0, 0.4],
+            items: $scope.dynamicAnimator.getBodiesInGroup('cat')
+          });
+          $scope.dynamicAnimator.addBehavior(gravity);
+
+          gravity = $ionicGravityBehavior({
+            vector: [0.1, 0.5],
+            items: $scope.dynamicAnimator.getBodiesInGroup('dog')
+          });
+          $scope.dynamicAnimator.addBehavior(gravity);
+
+          var collision1 = $ionicCollisionBehavior({
+            items: $scope.dynamicAnimator.getBodiesInGroup('cat')
+          });
+
+          var collision2 = $ionicCollisionBehavior({
+            items: $scope.dynamicAnimator.getBodiesInGroup('dog')
+          });
+
+          collision1.setBounds([0, 0, 1000, 1000]);
+          collision2.setBounds([0, 0, 1000, 1000]);
+
+          $scope.dynamicAnimator.addBehavior(collision1);
+          $scope.dynamicAnimator.addBehavior(collision2);
+        });
+
+
+        $scope.bodies = [];
+        for(var i = 0; i < 1; i++) {
+          $scope.bodies.push({
+            x: Math.random() * (window.innerWidth - 100),
+            y: Math.random() * (window.innerHeight - 100),
+            width: 50,
+            height: 50,
+            name: 'cat'
+          });
+        }
+        for(var i = 0; i < 0; i++) {
+          $scope.bodies.push({
+            x: Math.random() * (window.innerWidth - 100),
+            y: Math.random() * (window.innerHeight - 100),
+            width: 100,
+            height: 20,
+            name: 'dog'
+          });
+        }
+      })
+    </script>
+  </body>
+</html>
+

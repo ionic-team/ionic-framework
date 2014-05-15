@@ -1,0 +1,125 @@
+<html ng-app="physics">
+  <head>
+    <meta charset="utf-8">
+    <title>Side Menu</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="/dist/css/ionic.css">
+
+    <script src="/dist/js/ionic.bundle.js"></script>
+
+    <script src="lib/physicsjs/physicsjs-full-0.5.4.js"></script>
+    <script src="lib/physicsBehaviors.js"></script>
+    <script src="ionicPhysics.js"></script>
+
+    <style>
+    .scene {
+      position: fixed;
+      display: block;
+      left: 0;
+      right: 0;
+    }
+    .physics-body {
+      -webkit-transform: translateZ(0);
+    }
+    #container {
+      position: fixed;
+      width: 40px;
+      top: 0px;
+      bottom: 44px;
+    }
+    </style>
+  </head>
+  <body>
+    <ion-pane>
+      <div id="container" gravity="gravity" dynamics>
+        <div ng-controller="PhysicsCtrl">
+          <ion-view x="0" y="0" width="280" height="568" dynamics-group="sidemenu">
+            <ion-header-bar class="bar-positive">
+              <h1 class="title">Menu</h1>
+            </ion-header-bar>
+            <ion-content>
+              <ion-list>
+                <ion-item>Hello</ion-item>
+              </ion-list>
+            </ion-content>
+          </ion-view>
+          <ion-view x="0" y="0" width="320" height="568" dynamics-body dynamics-group="content" id="content">
+            <ion-header-bar class="bar-positive">
+              <div class="buttons">
+                <button class="button button-icon icon ion-navicon" ng-click="push()"></button>
+              </div>
+              <h1 class="title">Content</h1>
+            </ion-header-bar>
+          </ion-view>
+        </div>
+      </div>
+    </ion-pane>
+
+    <script>
+      angular.module('physics', ['ionic', 'ionic.contrib.physics'])
+
+      .controller('PhysicsCtrl', function($scope, $ionicGesture, $ionicDynamicAnimator,
+            $ionicRectGeom,
+            $ionicGravityBehavior, $ionicAttachBehavior, $ionicPushBehavior, $ionicCollisionBehavior, $timeout) {
+
+        $timeout(function() {
+          console.log('Animator', $scope.dynamicAnimator);
+        
+          var attach;
+
+          var push = $ionicPushBehavior({
+            items: $scope.dynamicAnimator.getBodiesInGroup('content'),
+            isContinuous: false
+          });
+
+          var gravity = $ionicGravityBehavior({
+            vector: [1, 0],
+            items: $scope.dynamicAnimator.getBodiesInGroup('content')
+          });
+
+          //$scope.dynamicAnimator.addBehavior(gravity);
+
+          var collision = $ionicCollisionBehavior({
+            items: $scope.dynamicAnimator.getBodiesInGroup('content')//.concat($scope.dynamicAnimator.getBodiesInGroup('sidemenu'))
+          });
+
+          collision.setBounds([0, 0, 320+260, 568]);
+
+          $scope.dynamicAnimator.addBehavior(collision);
+          $scope.dynamicAnimator.addBehavior(push);
+
+          $ionicGesture.on('dragstart', function(e) {
+            attach = $ionicAttachBehavior({
+              item: $scope.dynamicAnimator.getBodiesInGroup('content')[0],
+              anchor: [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY]
+            });
+            $scope.dynamicAnimator.addBehavior(attach);
+          }, angular.element(document.getElementById('content')))
+
+          $ionicGesture.on('drag', function(e) {
+            var midpoint = $ionicRectGeom.getMidpoint(attach.item);
+            console.log(midpoint);
+            if(attach) {
+              attach.updateAnchor([e.gesture.touches[0].pageX, midpoint[1]]);
+            }
+          }, angular.element(document.getElementById('content')))
+
+          $ionicGesture.on('dragstop', function(e) {
+            if(attach) {
+              $scope.dynamicAnimator.removeBehavior(attach);
+            }
+            attach = null;
+          }, angular.element(document.getElementById('content')))
+
+          $scope.push = function() {
+            push.setActive(true);
+            push.setPushDirection(Physics.vector(0.2, 0));
+          }
+        });
+      })
+    </script>
+  </body>
+</html>
+
