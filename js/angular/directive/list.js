@@ -74,8 +74,8 @@
 */
 IonicModule
 .directive('ionList', [
-'$animate',
-'$timeout',
+  '$animate',
+  '$timeout',
 function($animate, $timeout) {
   return {
     restrict: 'E',
