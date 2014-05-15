@@ -319,6 +319,30 @@ describe('Ionic Tap', function() {
     expect( e.preventedDefault ).toBeUndefined();
   });
 
+  it('Should not stop event on mouseup if the target was an option element', function() {
+    tapEnabledTouchEvents = false;
+    e = {
+      target: document.createElement('option'),
+      stopPropagation: function() { this.stoppedPropagation = true; },
+      preventDefault: function() { this.preventedDefault = true; }
+    };
+    expect( tapMouseUp(e) ).toEqual(false);
+    expect( e.stoppedPropagation ).toBeUndefined();
+    expect( e.preventedDefault ).toBeUndefined();
+  });
+
+  it('Should stop event on mouseup if the target was an ion-option-button element', function() {
+    tapEnabledTouchEvents = false;
+    e = {
+      target: document.createElement('ion-option-button'),
+      stopPropagation: function() { this.stoppedPropagation = true; },
+      preventDefault: function() { this.preventedDefault = true; }
+    };
+    expect( tapMouseUp(e) ).toBeUndefined();
+    expect( e.stoppedPropagation ).toBeUndefined();
+    expect( e.preventedDefault ).toBeUndefined();
+  });
+
   it('Should not stop event on mouseup if touch is not enabled', function() {
     tapEnabledTouchEvents = false;
     e = {

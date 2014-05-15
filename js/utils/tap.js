@@ -151,16 +151,16 @@ ionic.tap = {
   ignoreScrollStart: function(e) {
     return (e.defaultPrevented) ||  // defaultPrevented has been assigned by another component handling the event
            (e.target.isContentEditable) ||
-           (/file|range/i).test(e.target.type) ||
+           (/^(file|range)$/i).test(e.target.type) ||
            (e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-default')) == 'true' || // manually set within an elements attributes
-           (!!(/object|embed/i).test(e.target.tagName));  // flash/movie/object touches should not try to scroll
+           (!!(/^(object|embed)$/i).test(e.target.tagName));  // flash/movie/object touches should not try to scroll
   },
 
   isTextInput: function(ele) {
     return !!ele &&
            (ele.tagName == 'TEXTAREA' ||
             ele.contentEditable === 'true' ||
-            (ele.tagName == 'INPUT' && !(/radio|checkbox|range|file|submit|reset/i).test(ele.type)) );
+            (ele.tagName == 'INPUT' && !(/^(radio|checkbox|range|file|submit|reset)$/i).test(ele.type)) );
   },
 
   isLabelWithTextInput: function(ele) {
@@ -219,7 +219,7 @@ ionic.tap = {
   },
 
   requiresNativeClick: function(ele) {
-    if(!ele || ele.disabled || (/file|range/i).test(ele.type) || (/object|video/i).test(ele.tagName) ) {
+    if(!ele || ele.disabled || (/^(file|range)$/i).test(ele.type) || (/^(object|video)$/i).test(ele.tagName) ) {
       return true;
     }
     if(ele.nodeType === 1) {
@@ -325,7 +325,7 @@ function tapMouseUp(e) {
     return false;
   }
 
-  if( tapIgnoreEvent(e) || (/select|option/i).test(e.target.tagName) ) return;
+  if( tapIgnoreEvent(e) || (/^(select|option)$/i).test(e.target.tagName) ) return false;
 
   if( !tapHasPointerMoved(e) ) {
     tapClick(e);
@@ -378,7 +378,7 @@ function tapTouchEnd(e) {
   if( !tapHasPointerMoved(e) ) {
     tapClick(e);
 
-    if( (/select|option/i).test(e.target.tagName) ) {
+    if( (/^(select|option)$/i).test(e.target.tagName) ) {
       e.preventDefault();
     }
   }
@@ -435,7 +435,7 @@ function tapHandleFocus(ele) {
     // already is the active element and has focus
     triggerFocusIn = true;
 
-  } else if( (/input|textarea/i).test(ele.tagName) ) {
+  } else if( (/^(input|textarea)$/i).test(ele.tagName) ) {
     triggerFocusIn = true;
     ele.focus && ele.focus();
     ele.value = ele.value;
@@ -457,7 +457,7 @@ function tapHandleFocus(ele) {
 
 function tapFocusOutActive() {
   var ele = tapActiveElement();
-  if(ele && (/input|textarea|select/i).test(ele.tagName) ) {
+  if(ele && (/^(input|textarea|select)$/i).test(ele.tagName) ) {
     console.log('tapFocusOutActive', ele.tagName);
     ele.blur();
   }
