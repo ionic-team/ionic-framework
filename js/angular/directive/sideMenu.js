@@ -57,3 +57,4 @@ IonicModule
     }
   };
 });
+

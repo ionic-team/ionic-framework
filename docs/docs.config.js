@@ -25,11 +25,16 @@ module.exports = function(config) {
   config.set('versionData', versionData);
   config.set('rendering.contentsFolder', path.join('docs', versionData.current.folder));
 
+  config.set('demos.outputFolder', path.join(__dirname, '../tmp/ionic-demo'));
+
   config.set('processing.api-docs', {
     outputPath: 'api/${docType}/${name}/index.md',
     path: 'api/${docType}/${name}/',
     moduleOutputPath: 'api/module/${name}/index.md',
-    modulePath: 'api/module/${name}/'
+    modulePath: 'api/module/${name}/',
+    mergeableTypes: {
+      demo: 'demos'
+    }
   });
 
   config.append('rendering.filters', [
@@ -59,10 +64,10 @@ module.exports = function(config) {
   config.append('processing.processors', [
     require('./processors/latest-version'),
     require('./processors/keywords'),
-    require('./processors/pages-data'),
     require('./processors/index-page'),
     require('./processors/version-data'),
-    require('./processors/jekyll')
+    require('./processors/jekyll'),
+    require('./processors/demos')
   ]);
 
   return config;

@@ -50,6 +50,51 @@ IonicModule
  * with {@link ionic.service:$ionicSideMenuDelegate}.
  *
  */
+/**
+ * @ngdoc demo
+ * @name ionSideMenus#simple
+ * @module sideMenusSimple
+ * @javascript
+var app = angular.module('sideMenusSimple', ['ionic']);
+app.controller('SideMenusSimpleCtrl', function($scope, $ionicSideMenuDelegate) {
+
+  $scope.toggleLeft = function() {
+    $ionicSideMenuDelegate.toggleLeft();
+  };
+
+});
+ *
+ * @html
+<ion-view title="Side Menus Simple" ng-controller="SideMenusSimpleCtrl">
+  <ion-side-menus>
+
+    <ion-side-menu-content>
+      <ion-header-bar class="bar-positive">
+        <div class="buttons">
+          <div class="button button-clear" ng-click="toggleLeft()">
+            <i class="icon ion-navicon"></i>
+          </div>
+        </div>
+      </ion-header-bar>
+      <ion-content class="padding">
+        <p>Slide the content or press the button on the header to open a side menu.</p>
+      </ion-content>
+    </ion-side-menu-content>
+
+    <ion-side-menu side="left">
+      <ion-header-bar class="bar-positive">
+      </ion-header-bar>
+      <ion-content>
+        <a class="item" ng-click="toggleLeft()">
+          Close Menu
+        </a>
+      </ion-content>
+    </ion-side-menu>
+
+  </ion-side-menus>
+</ion-view>
+ */
+
 .directive('ionSideMenus', [function() {
   return {
     restrict: 'ECA',

@@ -20,6 +20,10 @@ describe('viewState', function() {
     expect(navButtons('right').getText()).toEqual('');
     expect(navButtons('right').getAttribute('class')).toContain('ion-navicon');
 
+    browser.takeScreenshot().then(function(png) {
+      console.log(png);
+    });
+
 
     element(by.id('sign-in-button')).click();
 
