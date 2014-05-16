@@ -176,7 +176,8 @@ describe('Ionic Tap', function() {
       target: {
         tagName: 'INPUT',
         dispatchEvent: function() { e.target.dispatchedEvent = true; },
-        focus: function() { e.target.focused = true; }
+        focus: function() { e.target.focused = true; },
+        classList: { contains: function(){} }
       },
       stopPropagation: function() { e.stoppedPropagation = true; },
       preventDefault: function() { e.preventedDefault = true; }
@@ -196,7 +197,8 @@ describe('Ionic Tap', function() {
       target: {
         tagName: 'INPUT',
         dispatchEvent: function() { e.target.dispatchedEvent = true; },
-        focus: function() { e.target.focused = true; }
+        focus: function() { e.target.focused = true; },
+        classList: { contains: function(){} }
       },
       stopPropagation: function() { e.stoppedPropagation = true; },
       preventDefault: function() { e.preventedDefault = true; }
@@ -272,7 +274,7 @@ describe('Ionic Tap', function() {
     tapPointerMoved = null;
     tapTouchStart({ clientX: 100, clientY: 100, preventDefault:function(){} });
     expect( tapPointerMoved ).toEqual(false);
-    tapTouchMove({ clientX: 200, clientY: 100 });
+    tapTouchMove({ clientX: 200, clientY: 100, target: document.createElement('button') });
     expect( tapPointerMoved ).toEqual(true);
   });
 
@@ -292,7 +294,7 @@ describe('Ionic Tap', function() {
     tapPointerMoved = null;
     tapMouseDown({ clientX: 100, clientY: 100 });
     expect( tapPointerMoved ).toEqual(false);
-    tapMouseMove({ clientX: 200, clientY: 100 });
+    tapMouseMove({ clientX: 200, clientY: 100, target: document.createElement('button') });
     expect( tapPointerMoved ).toEqual(true);
   });
 
@@ -362,7 +364,8 @@ describe('Ionic Tap', function() {
       target: {
         tagName: 'INPUT',
         dispatchEvent: function() { e.target.dispatchedEvent = true; },
-        focus: function() { e.target.focused = true; }
+        focus: function() { e.target.focused = true; },
+        classList: { contains:function(){}}
       },
       stopPropagation: function() { e.stoppedPropagation = true; },
       preventDefault: function() { e.preventedDefault = true; }
@@ -381,7 +384,8 @@ describe('Ionic Tap', function() {
       target: {
         tagName: 'INPUT',
         dispatchEvent: function() { e.target.dispatchedEvent = true; },
-        focus: function() { e.target.focused = true; }
+        focus: function() { e.target.focused = true; },
+        classList: { contains:function(){}}
       },
       stopPropagation: function() { e.stoppedPropagation = true; },
       preventDefault: function() { e.preventedDefault = true; }
@@ -411,21 +415,22 @@ describe('Ionic Tap', function() {
     var e = { clientX: 100, clientY: 100, preventDefault:function(){} };
     tapTouchStart(e);
 
-    expect( tapTouchMove({ clientX: 102, clientY: 100 }) ).toBeUndefined();
+    expect( tapTouchMove({ clientX: 102, clientY: 100, target: document.createElement('button') }) ).toBeUndefined();
 
-    expect( tapTouchMove({ clientX: 105, clientY: 100 }) ).toBeUndefined();
+    expect( tapTouchMove({ clientX: 105, clientY: 100, target: document.createElement('button') }) ).toBeUndefined();
 
-    expect( tapTouchMove({ clientX: 200, clientY: 100 }) ).toEqual(false);
+    expect( tapTouchMove({ clientX: 200, clientY: 100, target: document.createElement('button') }) ).toEqual(false);
   });
 
   it('Should cancel click when touchend coordinates are too far from touchstart coordinates', function() {
     var e = {
       clientX: 100, clientY: 100,
       dispatchEvent: function(){ this.dispatchedEvent = true; },
-      preventDefault:function(){}
+      preventDefault:function(){},
+      classList: { contains:function(){}}
     };
     tapTouchStart(e);
-    tapTouchEnd({ clientX: 200, clientY: 100 });
+    tapTouchEnd({ clientX: 200, clientY: 100, target: document.createElement('button') });
     expect( e.dispatchedEvent ).toBeUndefined();
   });
 
@@ -453,11 +458,11 @@ describe('Ionic Tap', function() {
     var e = { clientX: 100, clientY: 100 };
     tapMouseDown(e);
 
-    expect( tapMouseMove({ clientX: 102, clientY: 100 }) ).toBeUndefined();
+    expect( tapMouseMove({ clientX: 102, clientY: 100, target: document.createElement('button') }) ).toBeUndefined();
 
-    expect( tapMouseMove({ clientX: 105, clientY: 100 }) ).toBeUndefined();
+    expect( tapMouseMove({ clientX: 105, clientY: 100, target: document.createElement('button') }) ).toBeUndefined();
 
-    expect( tapMouseMove({ clientX: 200, clientY: 100 }) ).toEqual(false);
+    expect( tapMouseMove({ clientX: 200, clientY: 100, target: document.createElement('button') }) ).toEqual(false);
   });
 
   it('Should cancel click when mouseup coordinates are too far from mousedown coordinates', function() {
@@ -538,38 +543,38 @@ describe('Ionic Tap', function() {
   it('Should tapHasPointerMoved true if greater than or equal to release tolerance', function() {
     tapPointerStart = { x: 100, y: 100 };
 
-    var s = tapHasPointerMoved({ clientX: 111, clientY: 100 });
+    var s = tapHasPointerMoved({ clientX: 111, clientY: 100, target: document.createElement('button') });
     expect(s).toEqual(true);
 
-    s = tapHasPointerMoved({ clientX: 89, clientY: 100 });
+    s = tapHasPointerMoved({ clientX: 89, clientY: 100, target: document.createElement('button') });
     expect(s).toEqual(true);
 
-    s = tapHasPointerMoved({ clientX: 100, clientY: 109 });
+    s = tapHasPointerMoved({ clientX: 100, clientY: 109, target: document.createElement('button') });
     expect(s).toEqual(true);
 
-    s = tapHasPointerMoved({ clientX: 100, clientY: 91 });
+    s = tapHasPointerMoved({ clientX: 100, clientY: 91, target: document.createElement('button') });
     expect(s).toEqual(true);
 
-    s = tapHasPointerMoved({ clientX: 100, clientY: 200 });
+    s = tapHasPointerMoved({ clientX: 100, clientY: 200, target: document.createElement('button') });
     expect(s).toEqual(true);
   });
 
   it('Should tapHasPointerMoved false if less than release tolerance', function() {
     tapPointerStart = { x: 100, y: 100 };
 
-    var s = tapHasPointerMoved({ clientX: 100, clientY: 100 });
+    var s = tapHasPointerMoved({ clientX: 100, clientY: 100, target: document.createElement('button') });
     expect(s).toEqual(false);
 
-    s = tapHasPointerMoved({ clientX: 104, clientY: 100 });
+    s = tapHasPointerMoved({ clientX: 104, clientY: 100, target: document.createElement('button') });
     expect(s).toEqual(false);
 
-    s = tapHasPointerMoved({ clientX: 96, clientY: 100 });
+    s = tapHasPointerMoved({ clientX: 96, clientY: 100, target: document.createElement('button') });
     expect(s).toEqual(false);
 
-    s = tapHasPointerMoved({ clientX: 100, clientY: 102 });
+    s = tapHasPointerMoved({ clientX: 100, clientY: 102, target: document.createElement('button') });
     expect(s).toEqual(false);
 
-    s = tapHasPointerMoved({ clientX: 100, clientY: 98 });
+    s = tapHasPointerMoved({ clientX: 100, clientY: 98, target: document.createElement('button') });
     expect(s).toEqual(false);
   });
 
