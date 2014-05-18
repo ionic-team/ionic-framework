@@ -59,7 +59,7 @@ function($document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log, $c
      *  - `{boolean=}` `noBackdrop` Whether to hide the backdrop. By default it will be shown.
      *  - `{number=}` `delay` How many milliseconds to delay showing the indicator. By default there is no delay.
      *  - `{number=}` `duration` How many milliseconds to wait until automatically
-     *  hiding the indicator. By default the indicator will be shown until `.hide()` is called.
+     *  hiding the indicator. By default, the indicator will be shown until `.hide()` is called.
      */
     show: showLoader,
     /**
