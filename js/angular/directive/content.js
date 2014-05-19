@@ -79,7 +79,6 @@ function($timeout, $controller, $ionicBind) {
           $onScroll: '&onScroll',
           $onScrollComplete: '&onScrollComplete',
           hasBouncing: '@',
-          scroll: '@',
           padding: '@',
           hasScrollX: '@',
           hasScrollY: '@',
@@ -96,7 +95,7 @@ function($timeout, $controller, $ionicBind) {
           });
         }
 
-        if ($scope.scroll === "false") {
+        if ($attr.scroll === "false") {
           //do nothing
         } else if(attr.overflowScroll === "true") {
           $element.addClass('overflow-scroll');
