@@ -301,7 +301,6 @@ function keyboardHasPlugin() {
 }
 
 ionic.Platform.ready(function() {
-  ionic.Platform.isFullScreen = true;
   keyboardUpdateViewportHeight();
 
   // Android sometimes reports bad innerHeight on window.load
