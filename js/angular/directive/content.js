@@ -8,6 +8,10 @@
  * @description
  * The ionContent directive provides an easy to use content area that can be configured
  * to use Ionic's custom Scroll View, or the built in overflow scrolling of the browser.
+ * 
+ * Please be very aware of that the directive gets its own scope. If you do not fully
+ * understand scopes and why it is important, please read
+ * https://docs.angularjs.org/guide/scope.
  *
  * While we recommend using the custom Scroll features in Ionic in most cases, sometimes
  * (for performance reasons) only the browser's native overflow scrolling will suffice,
