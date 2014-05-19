@@ -250,6 +250,17 @@
       return null;
     },
 
+    elementHasParent: function(element, parent) {
+      var current = element;
+      while (current) {
+        if (current.parentNode === parent) {
+          return true;
+        }
+        current = current.parentNode;
+      }
+      return false;
+    },
+
     /**
      * @ngdoc method
      * @name ionic.DomUtil#rectContains
