@@ -21,8 +21,13 @@
 IonicModule
 .directive('keyboardAttach', function() {
   return function(scope, element, attrs) {
+    window.addEventListener('native.keyboardshow', onShow);
+    window.addEventListener('native.keyboardhide', onHide);
+
+    //deprecated
     window.addEventListener('native.showkeyboard', onShow);
     window.addEventListener('native.hidekeyboard', onHide);
+
 
     var scrollCtrl;
 
@@ -44,6 +49,9 @@ IonicModule
     }
 
     scope.$on('$destroy', function() {
+      window.removeEventListener('native.keyboardshow', onShow);
+      window.removeEventListener('native.keyboardhide', onHide);
+      
       window.removeEventListener('native.showkeyboard', onShow);
       window.removeEventListener('native.hidekeyboard', onHide);
     });

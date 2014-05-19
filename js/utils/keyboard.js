@@ -72,6 +72,10 @@ ionic.keyboard = {
 
 function keyboardInit() {
   if( keyboardHasPlugin() ) {
+    window.addEventListener('native.keyboardshow', keyboardNativeShow);
+    window.addEventListener('native.keyboardhide', keyboardFocusOut);
+
+    //deprecated
     window.addEventListener('native.showkeyboard', keyboardNativeShow);
     window.addEventListener('native.hidekeyboard', keyboardFocusOut);
   }
@@ -297,6 +301,7 @@ function keyboardHasPlugin() {
 }
 
 ionic.Platform.ready(function() {
+  ionic.Platform.isFullScreen = true;
   keyboardUpdateViewportHeight();
 
   // Android sometimes reports bad innerHeight on window.load
