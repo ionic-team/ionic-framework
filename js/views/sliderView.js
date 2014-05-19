@@ -377,8 +377,8 @@ ionic.views.Slider = ionic.views.View.inherit({
 
         // determine if slide attempt is past start and end
         var isPastBounds =
-              !index && delta.x > 0 |                    // if first slide and slide amt is greater than 0
-              index == slides.length - 1 && delta.x < 0; // or if last slide and slide amt is less than 0
+              (!index && delta.x > 0) |                    // if first slide and slide amt is greater than 0
+              (index == slides.length - 1 && delta.x < 0); // or if last slide and slide amt is less than 0
 
         if (options.continuous) isPastBounds = false;
 
