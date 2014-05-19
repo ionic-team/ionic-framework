@@ -47,7 +47,7 @@ function($timeout, $controller, $ionicBind) {
     compile: function(element, attr) {
       var innerElement;
 
-      element.addClass('scroll-content');
+      element.addClass('scroll-content ionic-scroll');
 
       if (attr.scroll != 'false') {
         //We cannot use normal transclude here because it breaks element.data()

@@ -838,12 +838,15 @@ ionic.views.Scroll = ionic.views.View.inherit({
       };
 
       self.mouseWheel = ionic.animationFrameThrottle(function(e) {
-        if (ionic.DomUtil.elementHasParent(e.target, self.__container)) {
+        var scrollParent = ionic.DomUtil.getParentOrSelfWithClass(e.target, 'ionic-scroll');
+        if (scrollParent === self.__container) {
+
           self.hintResize();
           self.scrollBy(
             e.wheelDeltaX/self.options.wheelDampen, 
             -e.wheelDeltaY/self.options.wheelDampen
           );
+
           self.__fadeScrollbars('in');
           clearTimeout(self.__wheelHideBarTimeout);
           self.__wheelHideBarTimeout = setTimeout(function() {
