@@ -400,8 +400,6 @@ describe('tabs', function() {
       });
       tabEl.scope().$apply();
       var navItem = angular.element(tabsEl[0].querySelector('.tab-item'));
-      //Use .scope for title because we remove title attr
-      //(for dom-tooltip not to appear)
       expect(navItem.isolateScope().title).toEqual('title');
       expect(navItem.isolateScope().iconOn).toEqual('on');
       expect(navItem.isolateScope().iconOff).toEqual('off');
