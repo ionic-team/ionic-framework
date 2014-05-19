@@ -668,7 +668,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
           scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
           //distance from top of focused element to the bottom of the scroll view
-          var elementTopOffsetToScrollBottom = e.detail.elementTop - scrollBottomOffsetToTop; 
+          var elementTopOffsetToScrollBottom = e.detail.elementTop - scrollBottomOffsetToTop;
 
           var scrollTop = elementTopOffsetToScrollBottom  + scrollMidpointOffset;
           ionic.tap.cloneFocusedInput(container, self);
@@ -1551,6 +1551,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.__initialTouchLeft = currentTouchLeft;
     self.__initialTouchTop = currentTouchTop;
 
+    // Store initial touchList for scale calculation
+    self.__initialTouches = touches;
+
     // Store current zoom level
     self.__zoomLevelStart = self.__zoomLevel;
 
@@ -1610,6 +1613,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
     if (touches.length === 2) {
       currentTouchLeft = Math.abs(touches[0].pageX + touches[1].pageX) / 2;
       currentTouchTop = Math.abs(touches[0].pageY + touches[1].pageY) / 2;
+
+      // Calculate scale when not present and only when touches are used
+      if (!scale && self.options.zooming) {
+        var scale = self.__getScale(self.__initialTouches, touches);
+      }
     } else {
       currentTouchLeft = touches[0].pageX;
       currentTouchTop = touches[0].pageY;
@@ -2221,6 +2229,39 @@ ionic.views.Scroll = ionic.views.View.inherit({
         }
       }
     }
+  },
+
+
+  /**
+   * calculate the distance between two touches
+   * @param   {Touch}     touch1
+   * @param   {Touch}     touch2
+   * @returns {Number}    distance
+   */
+  __getDistance: function getDistance(touch1, touch2) {
+    var x = touch2.pageX - touch1.pageX,
+    y = touch2.pageY - touch1.pageY;
+    return Math.sqrt((x*x) + (y*y));
+  },
+
+
+  /**
+   * calculate the scale factor between two touchLists (fingers)
+   * no scale is 1, and goes down to 0 when pinched together, and bigger when pinched out
+   * @param   {Array}     start
+   * @param   {Array}     end
+   * @returns {Number}    scale
+   */
+  __getScale: function getScale(start, end) {
+
+    var self = this;
+
+    // need two fingers...
+    if(start.length >= 2 && end.length >= 2) {
+      return self.__getDistance(end[0], end[1]) /
+        self.__getDistance(start[0], start[1]);
+    }
+    return 1;
   }
 });
 
