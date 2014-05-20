@@ -32,7 +32,7 @@
   <div class="buttons right-buttons">
     <a class="button" ng-click="demoScratch($demo); $event.stopPropagation()">
       <i class="icon ion-code"></i>
-      View Source
+      Source
     </a>
 </div>
 
@@ -93,39 +93,62 @@
 
   <script>
 angular.module(<@ if doc.demoData @>'<$ doc.demoData.module $>'<@ else @>'demoApp', ['ionic']<@ endif @>)
-  .controller('IonicDemoCtrl', function($scope, $ionicModal, $http) {
+  .controller('IonicDemoCtrl', function($scope, $ionicModal, $ionicLoading) {
     $scope.$demos = DEMOS;
     $scope.$demo = DEMO;
 
+    <@ if doc.demoData @>
     $ionicModal.fromTemplateUrl('ionic-demo-modal.html', {
       scope: $scope
     }).then(function(modal) {
       $scope.$demoModal = modal;
     });
 
-    if (DEMO) {
-      //don't try this at home
-      ionic.onGesture('dragup', function(e) {
-        if (e.gesture.distance > 35 && !$scope.$demoModal.isShown()) {
-          $scope.$apply(function(e) {
-            $scope.$demoModal.show();
-          });
-        }
-      }, document.querySelector('.demo-footer'));
-    }
+    //don't try this at home
+    ionic.onGesture('dragup', function(e) {
+      if (e.gesture.distance > 35 && !$scope.$demoModal.isShown()) {
+        $scope.$apply(function(e) {
+          $scope.$demoModal.show();
+        });
+      }
+    }, document.querySelector('.demo-footer'));
 
     $scope.demoScratch = function(demo) {
-      var data = new FormData();
-      data.append('html', demo.html && demo.html.content || '');
-      data.append('css', demo.css && demo.css.content || '');
-      data.append('js', demo.javascript && demo.javascript.content || '');
-      $http.post('http://scratch.ionicsdk.com/embed', data, {
-        transformRequest: angular.identity,
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+      var form = angular.element('<form method="POST" action="http://scratch.ionicsdk.com/embed">');
+
+      var htmlInput = angular.element('<textarea type="text" name="html">')
+        .val(['<html ng-app="<$ doc.demoData.module $>">',
+          '<head>',
+          '  <meta charset="utf-8">',
+          '  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">',
+          '  <link rel="stylesheet" href="http://code.ionicframework.com/<$ version.current.name $>/css/ionic.css">',
+          '  <script src="http://code.ionicframework.com/<$ version.current.name $>/js/ionic.bundle.js"><'+'/script>',
+          '</head>',
+          '<body>',
+          (demo.html && demo.html.content || ''),
+          '</body>',
+        '</html>'].join('\n'));
+
+      var cssInput = angular.element('<textarea type="text" name="css">')
+        .val(demo.css && demo.css.content || '');
+
+      var jsInput = angular.element('<textarea type="text" name="js">')
+        .val(demo.javascript && demo.javascript.content || '');
+
+      form
+        .css('display','none')
+        .append(htmlInput)
+        .append(cssInput)
+        .append(jsInput);
+
+      document.body.appendChild(form[0]);
+      form[0].submit();
+
+      $ionicLoading.show({
+        template: 'Opening in Scratchpad...'
       });
     };
+    <@ endif @>
   })
   .filter('capitalize', function() {
     return function(input) {
