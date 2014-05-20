@@ -74,7 +74,7 @@
 */
 /**
  * @ngdoc demo
- * @name ionList#everything
+ * @name ionList#reorderDelete
  * @module listEverything
  * @javascript
  * angular.module('listEverything', ['ionic'])
