@@ -8,10 +8,11 @@
 <link rel="stylesheet" href="/<$ doc.demoData.css.path $>">
 <@ endif @>
 <script src="http://code.ionicframework.com/<$ version.current.name $>/js/ionic.bundle.min.js"></script>
-<script src="<@if version.current.folder @><$ '/'+version.current.folder @><@ endif @>/demo-list.js"></script>
+<script src="/<$ version.current.folder $>/demo-list.js"></script>
 <@ if doc.demoData and doc.demoData.javascript @>
 <script src="/<$ doc.demoData.javascript.path $>"></script>
 <@ endif @>
+<script src="demo.js"></script>
 </head>
 <body>
 
@@ -112,8 +113,6 @@
       font-size: 18px;
     }
   </style>
-
-  <script src="demo.js"></script>
 
 </body>
 </html>
