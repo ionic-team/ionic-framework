@@ -9,19 +9,18 @@
 
       <ion-tab title="So Tabular!">
 
-        <div ng-if="$root.headerExists">
-          <ion-header-bar class="bar-positive"
-            ng-class="{'bar-subheader': $root.isSubheader}">
-            <h1 class="title">Header Bar</h1>
-          </ion-header-bar>
+        <ion-header-bar ng-show="$root.headerExists"
+          class="bar-positive"
+          ng-class="{'bar-subheader': $root.isSubheader}">
+          <h1 class="title">Header Bar</h1>
+        </ion-header-bar>
         </div>
 
-        <div ng-if="$root.footerExists">
-          <ion-footer-bar class="bar-assertive"
-            ng-class="{'bar-subfooter': $root.isSubfooter}">
-            <h1 class="title">Footer bar</h1>
-          </ion-footer-bar>
-        </div>
+        <ion-footer-bar ng-show="$root.footerExists"
+          class="bar-assertive"
+          ng-class="{'bar-subfooter': $root.isSubfooter}">
+          <h1 class="title">Footer bar</h1>
+        </ion-footer-bar>
 
         <ion-content>
           <div class="card">
