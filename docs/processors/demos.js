@@ -135,6 +135,17 @@ module.exports = {
       )
     });
 
+    //Write the demo list to current version (eg at /nightly);
+    docs.push({
+      docType: 'demo',
+      template: 'demo_list.template.js',
+      outputPath: path.join(
+        config.get('demos.outputFolder'),
+        config.get('versionData.current.folder'),
+        'demo-list.js'
+      )
+    });
+
     extraData.demos = allDemos;
   }
 };

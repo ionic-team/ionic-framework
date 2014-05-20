@@ -1,4 +1,3 @@
-var DEMOS = <$ demos | json $>;
 var DEMO;
 <@ if doc.demoData @>
   DEMO = <$ doc.demoData | json $>;
@@ -65,7 +64,7 @@ angular.module(<@ if doc.demoData @>'<$ doc.demoData.module $>'
 })
 .filter('humanize', function() {
   return function(input) {
-    return input.charAt(0).toUpperCase() + 
+    return input.charAt(0).toUpperCase() +
       input.substring(1).replace(/[A-Z]/g, function(match, i) {
         return ' ' + match.toUpperCase();
       });
