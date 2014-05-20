@@ -32,6 +32,10 @@ IonicModule
     var scrollCtrl;
 
     function onShow(e) {
+      if (ionic.Platform.isAndroid() && !ionic.Platform.isFullScreen) {
+        return;
+      }
+
       //for testing
       var keyboardHeight = e.keyboardHeight || e.detail.keyboardHeight;
       element.css('bottom', keyboardHeight + "px");
@@ -42,6 +46,10 @@ IonicModule
     }
 
     function onHide() {
+      if (ionic.Platform.isAndroid() && !ionic.Platform.isFullScreen) {
+        return;
+      }
+
       element.css('bottom', '');
       if ( scrollCtrl ) {
         scrollCtrl.scrollView.__container.style.bottom = '';
