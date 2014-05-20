@@ -304,6 +304,9 @@ ion-infinite-scroll.active .scroll-infinite {
 .has-footer {
   bottom: $bar-height;
 }
+.has-subfooter {
+  bottom: $bar-height * 2;
+}
 
 .has-tabs,
 .bar-footer.has-tabs {
