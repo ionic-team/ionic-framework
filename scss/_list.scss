@@ -91,6 +91,10 @@
 .padding-horizontal > .list .item {
   margin-right: 0;
   margin-left: 0;
+
+  &.item-input input {
+    padding-right: 44px;
+  }
 }
 .padding-left > .list .item {
   margin-left: 0;
