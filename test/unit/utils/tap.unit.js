@@ -512,6 +512,31 @@ describe('Ionic Tap', function() {
     expect( mouseDownEvent.defaultedPrevented ).toEqual(true);
   });
 
+  it('Should not preventDefault on mousedown if the target is a select element', function() {
+    tapEnabledTouchEvents = true;
+    var e = {
+      isTapHandled: false,
+      isIonicTap: false,
+      target: document.createElement('select'),
+      preventDefault: function(){ this.defaultedPrevented = true; },
+      stopPropagation: function(){ this.stoppedPropagation = true; }
+    };
+    tapMouseDown(e);
+    expect( e.stoppedPropagation ).toEqual(true);
+    expect( e.defaultedPrevented ).toBeUndefined();
+
+    e = {
+      isTapHandled: false,
+      isIonicTap: false,
+      target: document.createElement('option'),
+      preventDefault: function(){ this.defaultedPrevented = true; },
+      stopPropagation: function(){ this.stoppedPropagation = true; }
+    };
+    tapMouseDown(e);
+    expect( e.stoppedPropagation ).toEqual(true);
+    expect( e.defaultedPrevented ).toBeUndefined();
+  });
+
   it('Should tapClick with touchend and fire immediately', function() {
     var e = {
       target: {
