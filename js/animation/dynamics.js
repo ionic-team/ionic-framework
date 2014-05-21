@@ -13,6 +13,39 @@
 
   ionic.Animation.Dynamics = {};
 
+  ionic.Animation.Dynamics.Decay = function(opts) {
+    var defaults = {
+      velocity: 5000,
+      minVelocity: 5,
+      deceleration: 0.9998
+    }
+
+    ionic.extend(this, defaults);
+    ionic.extend(this, opts);
+  };
+
+  ionic.Animation.Dynamics.Decay.prototype = {
+    at: function(t) {
+      /*
+      var vScaled = this.velocity / 1000;
+
+      var k = 0.01 * this.minVelocity / 1000;
+      var vx = k / vScaled;
+      var d = Math.log(this.deceleration) * 1000;
+      */
+
+      var v0 = this.velocity / 1000;
+      var kv = Math.pow(this.deceleration, t);
+      console.log(kv);
+      //kv = kv * 1000;
+
+      return v0 * this.deceleration * (1 - kv) / (1 - this.deceleration);
+
+      //var kx = this.deceleration * (1 - kv) / (1 - this.deceleration);
+      //return v0 * kx
+    }
+  };
+
   ionic.Animation.Dynamics.Spring = function(opts) {
     var defaults = {
       frequency: 15,
