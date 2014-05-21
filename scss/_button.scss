@@ -47,7 +47,9 @@
   .icon:before,
   &.icon:before,
   &.icon-left:before,
-  &.icon-right:before {
+  &.icon-right:before,
+  &.icon-left .icon:before,
+  &.icon-right .icon:before {
     display: inline-block;
     padding: 0 0 $button-border-width 0;
     vertical-align: inherit;
@@ -55,12 +57,14 @@
     line-height: $button-height - $button-border-width;
     pointer-events: none;
   }
-  &.icon-left:before {
+  &.icon-left:before,
+  &.icon-left .icon:before {
     float: left;
     padding-right: .2em;
     padding-left: 0;
   }
-  &.icon-right:before {
+  &.icon-right:before,
+  &.icon-right .icon:before {
     float: right;
     padding-right: 0;
     padding-left: .2em;
@@ -136,7 +140,9 @@
   .icon:before,
   &.icon:before,
   &.icon-left:before,
-  &.icon-right:before {
+  &.icon-right:before,
+  &.icon-left .icon:before,
+  &.icon-right .icon:before {
     font-size: $button-small-icon-size;
     line-height: $button-small-icon-size + 3;
     margin-top: 3px;
@@ -153,7 +159,9 @@
   .icon:before,
   &.icon:before,
   &.icon-left:before,
-  &.icon-right:before {
+  &.icon-right:before,
+  &.icon-left .icon:before,
+  &.icon-right .icon:before {
     padding-bottom: ($button-border-width * 2);
     font-size: $button-large-icon-size;
     line-height: $button-large-height - ($button-border-width * 2) - 1;
