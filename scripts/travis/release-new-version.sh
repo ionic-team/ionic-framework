@@ -33,16 +33,10 @@ function push {
   cd $IONIC_DIR
 
   # Get first codename in list
-  CODENAME=$(cat config/CODENAMES | head -n 1)
-  # Remove first line of codenames, it's used now
-  echo "`tail -n +2 config/CODENAMES`" > config/CODENAMES
+  CODENAME=readJsonProp "$PROJECT_DIR/package.json" "codename"
 
   replaceJsonProp "bower.json" "version" "$VERSION"
   replaceJsonProp "component.json" "version" "$VERSION"
-
-  replaceJsonProp "package.json" "codename" "$CODENAME"
-  replaceJsonProp "bower.json" "codename" "$CODENAME"
-  replaceJsonProp "component.json" "codename" "$CODENAME"
 
   echo "-- Putting built files into release folder"
   mkdir -p release

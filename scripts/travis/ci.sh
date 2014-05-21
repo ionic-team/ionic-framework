@@ -49,12 +49,22 @@ function run {
 
   mkdir -p tmp
   git show $TRAVIS_COMMIT~1:package.json > tmp/package.old.json
-  OLD_VERSION=$(readJsonProp "tmp/package.old.json" "version")
+  OLD_VERSION="TEST" #$(readJsonProp "tmp/package.old.json" "version")
   VERSION=$(readJsonProp "package.json" "version")
   CODENAME=$(readJsonProp "package.json" "codename")
 
   if [[ "$OLD_VERSION" != "$VERSION" ]]; then
     IS_RELEASE=true
+
+    # Get first codename in list
+    CODENAME=$(cat config/CODENAMES | head -n 1)
+    # Remove first line of codenames, it's used now
+    echo "`tail -n +2 config/CODENAMES`" > config/CODENAMES
+
+    replaceJsonProp "package.json" "codename" "$CODENAME"
+    replaceJsonProp "bower.json" "codename" "$CODENAME"
+    replaceJsonProp "component.json" "codename" "$CODENAME"
+
     echo "#######################################"
     echo "# Releasing v$VERSION \"$CODENAME\"! #"
     echo "#######################################"
@@ -80,14 +90,6 @@ function run {
     ./scripts/travis/release-new-version.sh \
       --action="push" \
       --version=$VERSION
-    ./scripts/travis/release-new-version.sh \
-      --action="github" \
-      --version=$VERSION \
-      --old-version=$OLD_VERSION
-    ./scripts/travis/release-new-version.sh \
-      --action="discourse" \
-      --version=$VERSION \
-      --old-version=$OLD_VERSION
 
     # Version name used on the CDN/docs: nightly or the version
     VERSION_NAME=$VERSION
