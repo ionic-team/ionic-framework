@@ -35,6 +35,7 @@ function push {
   # Get first codename in list
   CODENAME=$(readJsonProp "$PROJECT_DIR/package.json" "codename")
 
+  replaceJsonProp "package.json" "version" "$VERSION"
   replaceJsonProp "bower.json" "version" "$VERSION"
   replaceJsonProp "component.json" "version" "$VERSION"
 
