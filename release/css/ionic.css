@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.5b
+ * Ionic, v1.0.0-beta.6
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -2215,6 +2215,9 @@ ion-infinite-scroll.active .scroll-infinite {
 .has-footer {
   bottom: 44px; }
 
+.has-subfooter {
+  bottom: 88px; }
+
 .has-tabs, .bar-footer.has-tabs {
   bottom: 49px; }
 
@@ -3883,6 +3886,8 @@ a.item-content {
 .card .item, .list-inset .item, .padding > .list .item, .padding-horizontal > .list .item {
   margin-right: 0;
   margin-left: 0; }
+  .card .item.item-input input, .list-inset .item.item-input input, .padding > .list .item.item-input input, .padding-horizontal > .list .item.item-input input {
+    padding-right: 44px; }
 
 .padding-left > .list .item {
   margin-left: 0; }
@@ -4459,6 +4464,11 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
   content: ' ';
   cursor: pointer;
   pointer-events: none; }
+
+/* Fix to avoid background color bleeding */
+/* (occured on (at least) Android 4.2, Asus MeMO Pad HD7 ME173X) */
+.platform-android4_2 .toggle .track {
+  -webkit-background-clip: padding-box; }
 
 /* the handle (circle) thats inside the toggle's track area */
 /* also the handle's appearance when it is "off" */
