@@ -145,7 +145,12 @@
       var endPercent = state.endPercent;
       var autoReverse = state.autoReverse;
       var delay = state.delay;
+
       var duration = state.duration;
+      if(state.dynamic && state.dynamic.computeDuration) {
+        duration = state.dynamic.computeDuration();
+      }
+
       var easingMethod = state.easingMethod;
       var repeat = state.repeat;
       var reverse = state.reverse;
@@ -178,6 +183,11 @@
       // This is the internal step method which is called every few milliseconds
       var step = function(virtual) {
         var now = time();
+
+        if(state.dynamic && state.dynamic.computeDuration) {
+          var computedDuration = state.dynamic.computeDuration();
+          //console.log('Computed duration', computedDuration);
+        }
 
         if(self._unpausedAnimation) {
           // We unpaused. Increase the start time to account
@@ -246,7 +256,7 @@
         // Execute step callback, then...
         var value;
         if(state.dynamic) {
-          value = state.dynamic.at(percent);
+          value = state.dynamic.at(percent, diff);
         } else {
           value = easingMethod ? easingMethod(percent) : percent;
         }
