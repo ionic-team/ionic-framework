@@ -38,6 +38,7 @@ function run {
 
   # Angular dependencies are managed by bower, don't include them
   rm -rf $BOWER_DIR/js/angular*
+  rm -rf $BOWER_DIR/CHANGELOG*
   rm -rf $BOWER_DIR/version.json # unneeded
 
   echo "-- Copying bower.json from project_dir and renaming main files"
