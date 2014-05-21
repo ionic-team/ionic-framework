@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var karma = require('karma').server;
 var pkg = require('./package.json');
 var semver = require('semver');
 var through = require('through');
@@ -376,10 +377,15 @@ gulp.task('cloudtest', ['protractor-sauce'], function(cb) {
 });
 
 gulp.task('karma', function(cb) {
-  return karma(cb, [__dirname + '/config/karma.conf.js', '--single-run=true']);
+  return karma.start(_.assign(require('./config/karma.conf.js'), {singleRun: true}), cb);
 });
 gulp.task('karma-watch', function(cb) {
-  return karma(cb, [__dirname + '/config/karma.conf.js']);
+  return karma.start(_.assign(require('./config/karma.conf.js'), {singleRun: false}), cb);
+});
+gulp.task('karma-sauce', ['sauce-connect'], function(cb) {
+  return karma.start(require('./config/karma-sauce.conf.js'), function() {
+    sauceDisconnect(cb);
+  });
 });
 
 var connectServer;
