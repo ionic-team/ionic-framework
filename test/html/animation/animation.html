@@ -7,7 +7,6 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="../../../../dist/css/ionic.css" />
     <script src="../../../../dist/js/ionic.bundle.js"></script>
-    <script src="dynamics.js"></script>
     <style>
       .box {
         position: absolute;
@@ -161,6 +160,7 @@
             autoReverse: false,
             repeat: 0,
             curve: fn,
+            deceleration: 0.997,
           
 
             onComplete: function(didComplete, droppedFrames) {
@@ -169,7 +169,7 @@
             
             step: function(v) {
               //console.log('Stepping', v);
-              el[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (v * 400) + 'px, 0,0)';
+              el[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (v*400) + 'px, 0,0)';
             },
             complete: function() {
               console.log('Animation complete!');

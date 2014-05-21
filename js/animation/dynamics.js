@@ -13,12 +13,16 @@
 
   ionic.Animation.Dynamics = {};
 
-  ionic.Animation.Dynamics.Decay = function(opts) {
+  ionic.Animation.Dynamics.Decay = function(opts, animation) {
     var defaults = {
       velocity: [1000, 0],
       minVelocity: 5,
       deceleration: 0.998
     }
+
+
+    this.animation = animation;
+    //this.val = new ionic.Animation.Property('x', {}, 0);
 
     ionic.extend(this, defaults);
     ionic.extend(this, opts);
@@ -34,7 +38,9 @@
 
       this.velocity = [v0[0] * kv * 1000, v0[1] * kv * 1000];
 
-      return t + v0[0] * kx;
+      var x0 = this.animation.property.getValue();
+
+      return this.animation.property.setValue([x0[0] + v0[0] * kx, x0[1] + v0[1] * kx]);//t + v0[0] * kx;
     },
 
     computeDuration: function() {

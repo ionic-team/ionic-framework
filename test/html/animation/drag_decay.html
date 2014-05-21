@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title></title>
+
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css" />
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <script src="dynamics.js"></script>
+    <style>
+      #box1 {
+        -webkit-transform: translate3d(100px, 100px, 0);
+      }
+      .box {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border-radius: 50px;
+        background-color: #4a87ee;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <div ng-controller="MyCtrl">
+      <div id="box1" class="box"></div>
+    <script>
+      angular.module('myApp', ['ionic'])
+      .controller('MyCtrl', function($scope, $ionicAnimation, $ionicGesture) {
+        var b = angular.element(document.getElementById('box1'));
+
+        var obj = {};
+
+        var anim = $ionicAnimation({
+          name: 'dragDecay',
+          deceleration: 0.997,
+          propertyName: 'x',
+          propertyObject: obj,
+          propertyDefault: [100,100],
+          dynamicsType: ionic.Animation.Dynamics.Decay,
+
+          onComplete: function(didComplete, droppedFrames) {
+            console.log('Done. Dropped ' + droppedFrames + '. Did complete? ' + didComplete);
+          },
+          
+          step: function(v) {
+            console.log('Stepping', v);
+            b[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (v[0]) + 'px, ' + v[1] + 'px,0)';
+          },
+          complete: function() {
+            console.log('Animation complete!');
+          }
+        }, $scope.anim);
+
+        var g = $ionicGesture.on('dragend', function(e) {
+          var vx = e.gesture.velocityX;
+          var vy = e.gesture.velocityY;
+
+          anim.velocity = [vx, vy];
+          anim.property.setValue([e.gesture.touches[0].pageX, e.gesture.touches[0].pageY]);
+          anim.start();
+          console.log('Drag End!', vx, vy);
+        }, b);
+
+      });
+    </script>
+  </body>
+</html>

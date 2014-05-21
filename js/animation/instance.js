@@ -13,6 +13,10 @@
   ionic.Animation.Animation = function(opts) {
     ionic.extend(this, opts);
 
+    if(this.propertyName && this.propertyObject) {
+      this.property = new ionic.Animation.Property(this.propertyName, this.propertyObject, this.propertyDefault);
+    }
+
     if(opts.useSlowAnimations) {
       console.warn('Running animation', opts.name, 'with SLOW animations (duration and delay increased by 3x)');
       this.delay *= 3;
@@ -23,6 +27,7 @@
   ionic.Animation.Animation.prototype = {
     clone: function() {
       return new ionic.Animation.Animation({
+        property: this.property,
         curve: this.curve,
         curveFn: this.curveFn,
         duration: this.duration,

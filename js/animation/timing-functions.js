@@ -5,16 +5,6 @@
 
 
   ionic.Animation.TimingFn = {
-    'spring': function(duration) {
-      return function(t) {
-        return ionic.Animation.Dynamics.Spring(t, duration);
-      };
-    },
-    'gravity': function(duration) {
-      return function(t) {
-        return ionic.Animation.Dynamics.Gravity(t, duration);
-      };
-    },
     'linear': function(duration) {
       return function(t) {
         return ionic.Animation.Bezier.linear(t, duration);
