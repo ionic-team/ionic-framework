@@ -550,8 +550,9 @@ function tapTargetElement(ele) {
 }
 
 ionic.DomUtil.ready(function(){
+  var ng = typeof angular !== 'undefined' ? angular : null;
   //do nothing for e2e tests
-  if (!angular.scenario) {
+  if (!ng || (ng && !ng.scenario)) {
     ionic.tap.register(document);
   }
 });
