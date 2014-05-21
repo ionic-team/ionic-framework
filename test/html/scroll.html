@@ -50,9 +50,8 @@
   <body ng-controller="ThisCtrl">
     <ion-pane>
 
-      <ion-content class="has-header" scroll="false">
+      <ion-scroll class="has-header" direction="xy" style="width:100%;height:50%;">
         <h3>Hourly Forecast</h3>
-        <ion-scroll direction="x" style="width: 100%; height: 20%;">
           <div class="hours">
             <div ng-repeat="hour in hours">
               <div class="icons">
@@ -65,14 +64,57 @@
               </div>
             </div>
           </div>
-        </ion-scroll>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
+          <br/><p>...</p>
         <a class="button" ng-click="scrollTo()">
           Scroll to 100
         </a>
         <ion-scroll direction="y" style="height: 400px; width: 300px; background: red;">
           <div style="width: 100px; height: 4000px; background: url('tree_bark.png') repeat"></div>
         </ion-scroll>
-      </ion-content>
+      </ion-scroll>
     </ion-pane>
 
     <script>

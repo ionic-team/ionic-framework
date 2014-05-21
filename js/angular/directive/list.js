@@ -203,6 +203,7 @@
  * }
  * .animated-item {
  *   line-height: 52px;
+ *   max-height: 52px;
  *   padding-top: 0;
  *   padding-bottom: 0;
  *   -webkit-transition: all 0.15s linear;
