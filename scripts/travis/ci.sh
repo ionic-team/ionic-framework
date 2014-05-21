@@ -100,7 +100,7 @@ function run {
     ./scripts/app-base/publish.sh --version="$VERSION"
 
     ./scripts/travis/release-new-version.sh \
-      --action="tweetAndIrc"
+      --action="tweetAndIrc" \
       --version=$VERSION
   else
     ./scripts/site/publish.sh --action="clone"
