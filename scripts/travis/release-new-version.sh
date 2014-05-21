@@ -33,7 +33,7 @@ function push {
   cd $IONIC_DIR
 
   # Get first codename in list
-  CODENAME=readJsonProp "$PROJECT_DIR/package.json" "codename"
+  CODENAME=$(readJsonProp "$PROJECT_DIR/package.json" "codename")
 
   replaceJsonProp "bower.json" "version" "$VERSION"
   replaceJsonProp "component.json" "version" "$VERSION"
@@ -52,6 +52,7 @@ function push {
   echo "-- v$VERSION \"$CODENAME\" pushed to $RELEASE_REMOTE/master successfully!"
 }
 
+# Unused. TODO remove and rewrite as node.js script
 function github {
   echo "-- Pushing out github release..."
 
@@ -95,6 +96,7 @@ function github {
   echo "-- Github release pushed out successfully!"
 }
 
+# Unused. TODO remove and rewrite as node.js script
 function discourse {
   CODENAME=$(readJsonProp "$IONIC_DIR/package.json" "codename")
   # Get only newest things in changelog - sed until previous version is hit

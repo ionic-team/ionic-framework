@@ -1,3 +1,29 @@
+<a name="1.0.0-beta.6"></a>
+### 1.0.0-beta.6 "darmstadtium-dingo" (2014-05-21)
+
+#### Bug Fixes
+
+* **click:** fix mouseup click for ion-option-button ([29ee6407](https://github.com/driftyco/ionic/commit/29ee640701195b0eef1cb7a52f1b7112b08259f6))
+* **collectionRepeat:** fix rare NPE error on android 4.1 ([94f0b5b7](https://github.com/driftyco/ionic/commit/94f0b5b705d09fc17f2e34977c35e52747767bb1), closes [#1292](https://github.com/driftyco/ionic/issues/1292))
+* **input:** fix long input text adjusting left on focus ([e6b5ff22](https://github.com/driftyco/ionic/commit/e6b5ff223b005e933f2503e6122e26010019fb90), closes [#1390](https://github.com/driftyco/ionic/issues/1390))
+* **ionContent:** make content scrollable if it is a child of a non-scrollable content ([488bd5c0](https://github.com/driftyco/ionic/commit/488bd5c08cefda6acc91e5c4cc9ec837ae5d31f0), closes [#1421](https://github.com/driftyco/ionic/issues/1421))
+* **ionFooterBar:** properly offset content for bar-subfooter ([46e33664](https://github.com/driftyco/ionic/commit/46e3366498f2bb894b6c6a7564bf9f7ccdcd0fee))
+* **ionReorderButton:** fix onReorder not triggering an angular digest ([cc46735c](https://github.com/driftyco/ionic/commit/cc46735c82b7fe2e9ddcdec9a2aa09c6b9bb9dee))
+* **ionSlideBox:** fix regression allowing slide past boundaries ([ec5a2763](https://github.com/driftyco/ionic/commit/ec5a2763379fc5ee14261a086d80458e13488278), closes [#1414](https://github.com/driftyco/ionic/issues/1414), [#1405](https://github.com/driftyco/ionic/issues/1405), [#1409](https://github.com/driftyco/ionic/issues/1409), [#1321](https://github.com/driftyco/ionic/issues/1321))
+* **requirejs:** fix bug with requirejs & loading order of angular taps ([36181091](https://github.com/driftyco/ionic/commit/3618109187a07c03d5d192579366f14a3f2c239c))
+* **scrollView:**
+  * make xy scrolling work on ionScroll and ionContent ([49f06f9c](https://github.com/driftyco/ionic/commit/49f06f9c3dc9c8ee68bdf91090df497dc5cbbc02), closes [#1462](https://github.com/driftyco/ionic/issues/1462))
+  * fix clonedInputs not being removed for large textareas on keyboardshow ([88e41e1a](https://github.com/driftyco/ionic/commit/88e41e1aa55d0633513dd3f1ebdd61aa9e25ad52), closes [#1420](https://github.com/driftyco/ionic/issues/1420))
+  * on desktop, make mousewheel only scroll the scrollView under the mouse ([3250d10d](https://github.com/driftyco/ionic/commit/3250d10da754a6e70535a79d9be5fa1b6570d69c), closes [#1376](https://github.com/driftyco/ionic/issues/1376))
+  * stop memory-leak when destroying scrollView ([4a210130](https://github.com/driftyco/ionic/commit/4a210130b4babf759f1aab9ba45411ba306a2a9f), closes [#1096](https://github.com/driftyco/ionic/issues/1096))
+* **tap:** select tag not working in IE ([7059b818](https://github.com/driftyco/ionic/commit/7059b818ce1866a647b124440758fce601cf1cbe), closes [#1435](https://github.com/driftyco/ionic/issues/1435))
+
+
+#### Features
+
+* **footer:** keyboard-attach attribute directive to position footer above keyboard ([09d1197a](https://github.com/driftyco/ionic/commit/09d1197acd97e7c9424969757d5c1bd1f60783ae))
+
+
 <a name="1.0.0-beta.5b"></a>
 ### 1.0.0-beta.5b "cadmium-camel" (2014-05-14)
 
