@@ -525,14 +525,17 @@ describe('collectionRepeatManager service', function() {
     it('should attachItem and set the element transform', function() {
       var manager = setup();
       var item = {
-        element: [{ style: {} }]
+        element: angular.element('<div>')
       };
+      spyOn(item.element, 'css');
       spyOn(manager.dataSource, 'getItem').andReturn(item);
       spyOn(manager.dataSource, 'attachItem');
       manager.renderItem(0, 33, 44);
       expect(manager.dataSource.attachItem).toHaveBeenCalledWith(item);
-      expect(item.element[0].style[ionic.CSS.TRANSFORM])
-        .toEqual(manager.transformString(33, 44));
+      expect(item.element.css).toHaveBeenCalledWith(
+        ionic.CSS.TRANSFORM,
+        manager.transformString(33, 44)
+      );
       expect(manager.renderedItems[0]).toBe(item);
     });
   });

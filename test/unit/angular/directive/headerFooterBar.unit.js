@@ -22,10 +22,12 @@ describe('bar directives', function() {
         });
         spyOn(ionic, 'off');
         var el = setup();
-        expect(ionic.on).toHaveBeenCalledWith('tap', jasmine.any(Function), el[0]);
+        expect(ionic.on.mostRecentCall.args[0]).toBe('tap');
         expect(ionic.off).not.toHaveBeenCalled();
         el.scope().$destroy();
-        expect(ionic.off).toHaveBeenCalledWith('tap', callback, el[0]);
+        expect(ionic.off.mostRecentCall.args[0]).toBe('tap');
+        expect(ionic.off.mostRecentCall.args[1]).toBe(callback);
+        expect(ionic.off.mostRecentCall.args[2]).toBe(el[0]);
       });
       ['input','textarea','select'].forEach(function(tag) {
         it('should ignore tap if it\'s in a ' + tag, function() {

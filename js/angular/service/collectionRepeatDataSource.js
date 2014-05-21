@@ -83,8 +83,8 @@ function($cacheFactory, $parse) {
       item.scope[this.keyExpr] = value;
 
       this.transcludeFn(item.scope, function(clone) {
+        clone.css('position', 'absolute');
         item.element = clone;
-        item.element[0].style.position = 'absolute';
       });
 
       return this.itemCache.put(key, item);

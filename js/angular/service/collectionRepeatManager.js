@@ -201,11 +201,11 @@ function($rootScope, $timeout) {
     },
     renderItem: function(dataIndex, primaryPos, secondaryPos) {
       var item = this.dataSource.getItem(dataIndex);
-      if (item) {
+      if (item && item.element) {
         this.dataSource.attachItem(item);
-        item.element[0].style[ionic.CSS.TRANSFORM] = this.transformString(
+        item.element.css(ionic.CSS.TRANSFORM, this.transformString(
           primaryPos, secondaryPos, secondaryPos
-        );
+        ));
         this.renderedItems[dataIndex] = item;
       } else {
         delete this.renderedItems[dataIndex];
