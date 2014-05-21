@@ -377,7 +377,15 @@ gulp.task('cloudtest', ['protractor-sauce'], function(cb) {
 });
 
 gulp.task('karma', function(cb) {
-  return karma.start(_.assign(require('./config/karma.conf.js'), {singleRun: true}), cb);
+  var config = require('./config/karma.conf.js');
+  config.singleRun = true;
+  if (argv.browsers) {
+    config.browsers = argv.browsers.trim().split(',');
+  }
+  if (argv.reporters) {
+    config.reporters = argv.reporters.trim().split(',');
+  }
+  return karma.start(config, cb);
 });
 gulp.task('karma-watch', function(cb) {
   return karma.start(_.assign(require('./config/karma.conf.js'), {singleRun: false}), cb);
@@ -401,12 +409,6 @@ gulp.task('protractor-sauce', ['sauce-connect', 'connect-server'], function(cb) 
 });
 
 function karma(cb, args) {
-  if (argv.browsers) {
-    args.push('--browsers='+argv.browsers.trim());
-  }
-  if (argv.reporters) {
-    args.push('--reporters='+argv.reporters.trim());
-  }
   cp.spawn('node', [
     __dirname + '/node_modules/karma/bin/karma',
     'start'

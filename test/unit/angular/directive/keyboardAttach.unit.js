@@ -46,18 +46,10 @@ describe('keyboardAttach directive', function() {
   });
   
   it('should remove listeners on destroy', function() {
-    spyOn(window, 'removeEventListener');
+    spyOn(ionic, 'off');
     var el = setup().el;
     el.scope().$destroy();
-    expect(window.removeEventListener).toHaveBeenCalledWith('native.showkeyboard', jasmine.any(Function));
-    expect(window.removeEventListener).toHaveBeenCalledWith('native.hidekeyboard', jasmine.any(Function));
-  });
-
-  it('should remove listeners on destroy', function() {
-    spyOn(window, 'removeEventListener');
-    var el = setup().el;
-    el.scope().$destroy();
-    expect(window.removeEventListener).toHaveBeenCalledWith('native.showkeyboard', jasmine.any(Function));
-    expect(window.removeEventListener).toHaveBeenCalledWith('native.hidekeyboard', jasmine.any(Function));
+    expect(ionic.off).toHaveBeenCalledWith('native.keyboardshow', jasmine.any(Function), window);
+    expect(ionic.off).toHaveBeenCalledWith('native.keyboardhide', jasmine.any(Function), window);
   });
 })

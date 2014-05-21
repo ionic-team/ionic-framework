@@ -6,11 +6,11 @@
  *
  * @description
  * keyboard-attach is an attribute directive which will cause an element to float above
- * the keyboard when the keyboard shows. Currently only supports the 
+ * the keyboard when the keyboard shows. Currently only supports the
  * [ion-footer-bar]({{ page.versionHref }}/api/directive/ionFooterBar/) directive.
- * 
- * ### Notes 
- * - This directive requires the 
+ *
+ * ### Notes
+ * - This directive requires the
  * [Ionic Keyboard Plugin](https://github.com/driftyco/ionic-plugins-keyboard).
  * - On Android not in fullscreen mode, i.e. you have
  *   `<preference name="Fullscreen" value="true" />` in your `config.xml` file,
@@ -30,12 +30,12 @@
 IonicModule
 .directive('keyboardAttach', function() {
   return function(scope, element, attrs) {
-    window.addEventListener('native.keyboardshow', onShow);
-    window.addEventListener('native.keyboardhide', onHide);
+    ionic.on('native.keyboardshow', onShow, window);
+    ionic.on('native.keyboardhide', onHide, window);
 
     //deprecated
-    window.addEventListener('native.showkeyboard', onShow);
-    window.addEventListener('native.hidekeyboard', onHide);
+    ionic.on('native.showkeyboard', onShow, window);
+    ionic.on('native.hidekeyboard', onHide, window);
 
 
     var scrollCtrl;
@@ -66,11 +66,12 @@ IonicModule
     }
 
     scope.$on('$destroy', function() {
-      window.removeEventListener('native.keyboardshow', onShow);
-      window.removeEventListener('native.keyboardhide', onHide);
-      
-      window.removeEventListener('native.showkeyboard', onShow);
-      window.removeEventListener('native.hidekeyboard', onHide);
+      ionic.off('native.keyboardshow', onShow, window);
+      ionic.off('native.keyboardhide', onHide, window);
+
+      //deprecated
+      ionic.off('native.showkeyboard', onShow, window);
+      ionic.off('native.hidekeyboard', onHide, window);
     });
   };
 });
