@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var karma = require('karma').server;
+var path = require('canonical-path');
 var pkg = require('./package.json');
 var semver = require('semver');
 var through = require('through');
@@ -47,6 +48,10 @@ if (IS_RELEASE_BUILD) {
   );
 }
 
+if (argv.dist) {
+  buildConfig.dist = argv.dist;
+}
+
 gulp.task('default', ['build']);
 gulp.task('build', ['bundle', 'sass']);
 gulp.task('validate', ['jshint', 'ddescribe-iit', 'karma']);
@@ -57,8 +62,11 @@ gulp.task('docs', function(done) {
     console.log('Usage: gulp docs --doc-version=(nightly|versionName)');
     return process.exit(1);
   }
-  process.env.DOC_VERSION = docVersion;
-  return dgeni.generator(__dirname + '/docs/docs.config.js')().then(function() {
+
+  var config = dgeni.loadConfig(path.join(__dirname, '/config/dgeni/docs.config.js'));
+  config.set('currentVersion', docVersion);
+
+  return dgeni.generator(config)().then(function() {
     gutil.log('Docs for', gutil.colors.cyan(docVersion), 'generated!');
   });
 });
@@ -106,12 +114,12 @@ gulp.task('bundle', [
     }))
       .pipe(header(buildConfig.bundleBanner))
       .pipe(concat('ionic.bundle.min.js'))
-      .pipe(gulp.dest(buildConfig.distJs));
+      .pipe(gulp.dest(buildConfig.dist + '/js'));
 
   return gulp.src(buildConfig.ionicBundleFiles)
     .pipe(header(buildConfig.bundleBanner))
     .pipe(concat('ionic.bundle.js'))
-    .pipe(gulp.dest(buildConfig.distJs));
+    .pipe(gulp.dest(buildConfig.dist + '/js'));
 });
 
 gulp.task('jshint', function() {
@@ -149,11 +157,11 @@ gulp.task('scripts', function() {
     .pipe(header(buildConfig.closureStart))
     .pipe(footer(buildConfig.closureEnd))
     .pipe(header(banner))
-    .pipe(gulp.dest(buildConfig.distJs))
+    .pipe(gulp.dest(buildConfig.dist + '/js'))
     .pipe(gulpif(IS_RELEASE_BUILD, uglify()))
     .pipe(rename({ extname: '.min.js' }))
     .pipe(header(banner))
-    .pipe(gulp.dest(buildConfig.distJs));
+    .pipe(gulp.dest(buildConfig.dist + '/js'));
 });
 
 gulp.task('scripts-ng', function() {
@@ -163,11 +171,11 @@ gulp.task('scripts-ng', function() {
     .pipe(header(buildConfig.closureStart))
     .pipe(footer(buildConfig.closureEnd))
     .pipe(header(banner))
-    .pipe(gulp.dest(buildConfig.distJs))
+    .pipe(gulp.dest(buildConfig.dist + '/js'))
     .pipe(gulpif(IS_RELEASE_BUILD, uglify()))
     .pipe(rename({ extname: '.min.js' }))
     .pipe(header(banner))
-    .pipe(gulp.dest(buildConfig.distJs));
+    .pipe(gulp.dest(buildConfig.dist + '/js'));
 });
 
 gulp.task('sass', function(done) {
@@ -184,10 +192,10 @@ gulp.task('sass', function(done) {
       }
     }))
     .pipe(concat('ionic.css'))
-    .pipe(gulp.dest(buildConfig.distCss))
+    .pipe(gulp.dest(buildConfig.dist + '/css'))
     .pipe(gulpif(IS_RELEASE_BUILD, minifyCss()))
     .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest(buildConfig.distCss))
+    .pipe(gulp.dest(buildConfig.dist + '/css'))
     .on('end', done);
 });
 
@@ -204,7 +212,7 @@ gulp.task('version', function() {
       time: time
     }))
     .pipe(rename('version.json'))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest(buildConfig.dist));
 });
 
 gulp.task('release-tweet', function(done) {

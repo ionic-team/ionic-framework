@@ -12,37 +12,31 @@ ARG_DEFS=(
 )
 
 function init {
-  TMP_DIR=$SCRIPT_DIR/../../temp
-  BUILD_DIR=$SCRIPT_DIR/../../dist
-  PROJECT_DIR=$SCRIPT_DIR/../..
+  BOWER_DIR=$IONIC_DIST_DIR/ionic-bower
 
-  BOWER_DIR=$TMP_DIR/ionic-bower
-}
-
-function run {
+  echo "-- Cloning ionic-bower..."
 
   rm -rf $BOWER_DIR
   mkdir -p $BOWER_DIR
-
-  echo "-- Cloning ionic-bower..."
-  git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic-bower.git \
+  git clone https://driftyco:$GH_TOKEN@github.com/driftyco/ionic-bower.git \
      $BOWER_DIR \
-     --depth=10
+     --depth=1
+}
+
+function run {
 
   # move the files from the build
   echo "-- Putting build files in ionic-bower..."
 
   cd $BOWER_DIR
-  cp -Rf $BUILD_DIR/* $BOWER_DIR
-  cp -Rf $PROJECT_DIR/scss $BOWER_DIR
+  cp -Rf $IONIC_BUILD_DIR/* $BOWER_DIR
+  cp -Rf $IONIC_SCSS_DIR $BOWER_DIR
 
   # Angular dependencies are managed by bower, don't include them
-  rm -rf $BOWER_DIR/js/angular*
-  rm -rf $BOWER_DIR/CHANGELOG*
-  rm -rf $BOWER_DIR/version.json # unneeded
+  rm -rf $BOWER_DIR/{js/angular*,CHANGELOG*,version.json}
 
   echo "-- Copying bower.json from project_dir and renaming main files"
-  node -p "var b = require('$PROJECT_DIR/bower.json'); \
+  node -p "var b = require('$IONIC_DIR/bower.json'); \
     delete b.ignore; \
     b.main = b.main.map(function(s) { return s.replace(/^release\//,''); }); \
     JSON.stringify(b,null,2);" \

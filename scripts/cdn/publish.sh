@@ -10,34 +10,33 @@ ARG_DEFS=(
 )
 
 function init {
-  PROJECT_DIR=$SCRIPT_DIR/../..
-  BUILD_DIR=$SCRIPT_DIR/../../dist
+  CDN_DIR=$IONIC_DIST_DIR/ionic-code
 
-  IONIC_CODE_DIR=$SCRIPT_DIR/../../temp/ionic-code
-  rm -rf $IONIC_CODE_DIR
-  mkdir -p $IONIC_CODE_DIR
+  echo "-- Cloning ionic-code..."
+
+  rm -rf $CDN_DIR
+  mkdir -p $CDN_DIR
+  git clone https://driftyco:$GH_TOKEN@github.com/driftyco/ionic-code.git \
+    $CDN_DIR \
+    --branch gh-pages \
+    --depth=1
 }
 
 function run {
 
-  echo "-- Cloning ionic-code..."
-  git clone https://$GH_ORG:$GH_TOKEN@github.com/$GH_ORG/ionic-code.git \
-    $IONIC_CODE_DIR \
-    --depth=10 \
-    --branch gh-pages
+  VERSION_DIR=$CDN_DIR/$VERSION_NAME
 
-  VERSION_DIR=$IONIC_CODE_DIR/$VERSION_NAME
   rm -rf $VERSION_DIR
   mkdir -p $VERSION_DIR
-
   cd $VERSION_DIR
-  cp -Rf $BUILD_DIR/* $VERSION_DIR
+
+  cp -Rf $IONIC_BUILD_DIR/* $VERSION_DIR
 
   echo "-- Generating versions.json..."
-  cd $IONIC_CODE_DIR/builder
+  cd $CDN_DIR/builder
   python ./generate.py
 
-  cd $IONIC_CODE_DIR
+  cd $CDN_DIR
   git add -A
   git commit -am "release: $VERSION ($VERSION_NAME)"
 

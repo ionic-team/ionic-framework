@@ -20,7 +20,6 @@ module.exports = [
   { name: 'alias' },
   { name: 'demo' },
   { name: 'javascript' },
-  { name: 'css' },
   { name: 'html' },
-  { name: 'ngModule' }
+  { name: 'css' }
 ];
