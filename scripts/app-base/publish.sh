@@ -35,6 +35,8 @@ function run {
   rm -rf $APPBASE_DIR/www/lib/ionic
   mkdir -p $APPBASE_DIR/www/lib/ionic
 
+  replaceJsonProp "$APPBASE_DIR/bower.json" "ionic" "driftyco/ionic-bower#$VERSION"
+
   cp -Rf $BUILD_DIR/* $APPBASE_DIR/www/lib/ionic
 
   mkdir -p $APPBASE_DIR/www/lib/ionic/scss

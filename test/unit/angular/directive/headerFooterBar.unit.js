@@ -1,12 +1,12 @@
 describe('bar directives', function() {
   beforeEach(module('ionic'));
 
-  ['<ion-header-bar>', '<ion-nav-bar>'].forEach(function(tpl) {
+  ['ion-header-bar', 'ion-nav-bar'].forEach(function(tpl) {
     describe('tapScrollToTop ' + tpl, function() {
-      function setup() {
+      function setup(attrs) {
         var el;
         inject(function($compile, $rootScope) {
-          el = angular.element(tpl);
+          el = angular.element('<' + tpl + ' ' + (attrs||'') + '>');
           var container = angular.element('<ion-content>').append(el);
           ionic.requestAnimationFrame = function(cb) { cb(); };
           $compile(container)($rootScope.$new());
@@ -15,6 +15,12 @@ describe('bar directives', function() {
         });
         return el;
       }
+      it('should not listen for tap if attr.noTapScroll', function() {
+        spyOn(ionic, 'on');
+        setup('no-tap-scroll');
+        expect(ionic.on).not.toHaveBeenCalledWith('tap');
+      });
+
       it('should listen for tap, unlisten on destroy', function() {
         var callback;
         spyOn(ionic, 'on').andCallFake(function(name, cb) {

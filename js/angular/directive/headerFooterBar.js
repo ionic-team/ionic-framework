@@ -19,6 +19,9 @@ IonicModule
  * will not align correctly.  This will be fixed soon.
  *
  * @param {string=} align-title Where to align the title.
+ * @param {boolean=} no-tap-scroll By default, the header bar will scroll the
+ * content to the top when tapped.  Set no-tap-scroll to true to disable this 
+ * behavior.
  * Avaialble: 'left', 'right', or 'center'.  Defaults to 'center'.
  *
  * @usage
@@ -159,6 +162,9 @@ function tapScrollToTopDirective() {
     return {
       restrict: 'E',
       link: function($scope, $element, $attr) {
+        if ($attr.noTapScroll) {
+          return;
+        }
         ionic.on('tap', onTap, $element[0]);
         $scope.$on('$destroy', function() {
           ionic.off('tap', onTap, $element[0]);
