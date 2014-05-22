@@ -8,12 +8,12 @@ function init {
   SITE_DIR=$IONIC_DIST_DIR/ionic-site
 
   echo "-- Cloning ionic-site..."
-  # rm -rf $SITE_DIR
-  # mkdir -p $SITE_DIR
-  # git clone https://driftyco:$GH_TOKEN@github.com/driftyco/ionic-site.git \
-  #   $SITE_DIR \
-  #   --depth=1 \
-  #   --branch=gh-pages
+  rm -rf $SITE_DIR
+  mkdir -p $SITE_DIR
+  git clone https://driftyco:$GH_TOKEN@github.com/driftyco/ionic-site.git \
+    $SITE_DIR \
+    --depth=1 \
+    --branch=gh-pages
 }
 
 function updateConfig {
