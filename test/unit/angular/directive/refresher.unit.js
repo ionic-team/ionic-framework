@@ -62,6 +62,9 @@ describe('ionRefresher directive', function() {
     var ctrl = el.controller('$ionicScroll');
     expect(ctrl.scrollView.finishPullToRefresh).not.toHaveBeenCalled();
     el.scope().$broadcast('scroll.refreshComplete');
+    expect(el.hasClass('active')).toBe(true);
+    expect(ctrl.scrollView.finishPullToRefresh).not.toHaveBeenCalled();
+    el.scope().$apply();
     expect(el.hasClass('active')).toBe(false);
     expect(ctrl.scrollView.finishPullToRefresh).toHaveBeenCalled();
   });

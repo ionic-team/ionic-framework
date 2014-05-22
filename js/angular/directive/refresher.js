@@ -61,7 +61,7 @@
  * @ngdoc demo
  * @name ionRefresher#withAList
  * @module refresherList
- * @javascript 
+ * @javascript
  * angular.module('refresherList', ['ionic'])
  * .controller('RefresherCtrl', function($scope, $timeout) {
  *   $scope.items = ['Item 1', 'Item 2', 'Item 3'];
@@ -81,19 +81,19 @@
  * <ion-header-bar class="bar-positive">
  *   <h1 class="title">Refresher</h1>
  * </ion-header-bar>
- * 
+ *
  * <ion-content ng-controller="RefresherCtrl">
- * 
- *   <ion-refresher on-refresh="doRefresh()" 
- *                  pulling-text="Pull to refresh..." 
- *                  refreshing-text="Refreshing!" 
+ *
+ *   <ion-refresher on-refresh="doRefresh()"
+ *                  pulling-text="Pull to refresh..."
+ *                  refreshing-text="Refreshing!"
  *                  refreshing-icon="ion-loading-c">
  *   </ion-refresher>
- * 
+ *
  *   <ion-list>
  *     <ion-item ng-repeat="item in items">{{item}}</ion-item>
  *   </ion-list>
- * 
+ *
  * </ion-content>
  */
 IonicModule
@@ -133,8 +133,10 @@ IonicModule
 
         scrollCtrl._setRefresher($scope, $element[0]);
         $scope.$on('scroll.refreshComplete', function() {
-          $element[0].classList.remove('active');
-          scrollCtrl.scrollView.finishPullToRefresh();
+          $scope.$evalAsync(function() {
+            $element[0].classList.remove('active');
+            scrollCtrl.scrollView.finishPullToRefresh();
+          });
         });
       };
     }
