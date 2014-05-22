@@ -56,10 +56,6 @@ angular.module(<@ if doc.demoData @>'<$ doc.demoData.module $>'
 
            document.body.appendChild(form[0]);
            form[0].submit();
-
-           $ionicLoading.show({
-             template: 'Opening in Scratchpad...'
-           });
     };
     <@ endif @>
 })

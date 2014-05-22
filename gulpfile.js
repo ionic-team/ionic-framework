@@ -58,7 +58,7 @@ gulp.task('docs', function(done) {
     return process.exit(1);
   }
   process.env.DOC_VERSION = docVersion;
-  return dgeni(__dirname + '/docs/docs.config.js').generateDocs().then(function() {
+  return dgeni.generator(__dirname + '/docs/docs.config.js')().then(function() {
     gutil.log('Docs for', gutil.colors.cyan(docVersion), 'generated!');
   });
 });
