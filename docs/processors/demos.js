@@ -14,8 +14,6 @@ module.exports = {
     contentsFolder = config.get('rendering.contentsFolder');
   },
   process: function(docs, config, extraData) {
-    //Disable demos for now
-    if(1) return;
     var demoTags = [
       'javascript',
       'html',

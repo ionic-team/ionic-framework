@@ -10,9 +10,14 @@ module.exports = function(config) {
 
   var docsBaseFolder = path.resolve(basePath, outputFolder, 'docs');
 
-  var versions = fs.readdirSync(docsBaseFolder)
-    .filter(semver.valid)
-    .sort(semver.rcompare);
+  var versions;
+  try {
+    versions = fs.readdirSync(docsBaseFolder)
+      .filter(semver.valid)
+      .sort(semver.rcompare);
+  } catch(e) {
+    versions = [];
+  }
 
   !_.contains(versions, currentVersion) && versions.unshift(currentVersion);
   !_.contains(versions, 'nightly') && versions.unshift('nightly');
