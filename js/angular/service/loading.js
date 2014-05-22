@@ -141,7 +141,7 @@ function($document, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log, $c
             //options.showBackdrop: deprecated
             this.hasBackdrop = !options.noBackdrop && options.showBackdrop !== false;
             if (this.hasBackdrop) {
-              $ionicBackdrop.retain();
+              $ionicBackdrop.retain('backdrop-loading');
             }
           }
 

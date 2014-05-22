@@ -39,6 +39,7 @@ function($document) {
 
   var el = jqLite('<div class="backdrop">');
   var backdropHolds = 0;
+  var backdropExtraClasses = null;
 
   $document[0].body.appendChild(el[0]);
 
@@ -60,12 +61,18 @@ function($document) {
     _element: el
   };
 
-  function retain() {
+  function retain(extraClasses) {
+    backdropExtraClasses = extraClasses;
+
     if ( (++backdropHolds) === 1 ) {
       el.addClass('visible');
       ionic.requestAnimationFrame(function() {
         backdropHolds && el.addClass('active');
       });
+    }
+    if(extraClasses) {
+      console.log('Adding', extraClasses);
+      el.addClass(extraClasses);
     }
   }
   function release() {
@@ -75,5 +82,7 @@ function($document) {
         !backdropHolds && el.removeClass('visible');
       }, 100);
     }
+    el.removeClass(backdropExtraClasses);
+    backdropExtraClasses = null;
   }
 }]);
