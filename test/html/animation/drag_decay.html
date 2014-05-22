@@ -47,7 +47,7 @@
           },
           
           step: function(v) {
-            console.log('Stepping', v);
+            //console.log('Stepping', v);
             b[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (v[0]) + 'px, ' + v[1] + 'px,0)';
           },
           complete: function() {
@@ -55,12 +55,24 @@
           }
         }, $scope.anim);
 
+        $ionicGesture.on('drag', function(e) {
+          var x = e.gesture.touches[0].pageX;
+          var y = e.gesture.touches[0].pageY;
+          ionic.requestAnimationFrame(function() {
+            b[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + x + 'px, ' + y + 'px,0)';
+          });
+        }, b);
+
         var g = $ionicGesture.on('dragend', function(e) {
           var vx = e.gesture.velocityX;
           var vy = e.gesture.velocityY;
 
-          anim.velocity = [vx, vy];
-          anim.property.setValue([e.gesture.touches[0].pageX, e.gesture.touches[0].pageY]);
+          var x = e.gesture.touches[0].pageX;
+          var y = e.gesture.touches[0].pageY;
+
+          anim.velocity = [vx*10000, vy*10000];
+          console.log(anim.velocity);
+          anim.property.setValue([x, y]);
           anim.start();
           console.log('Drag End!', vx, vy);
         }, b);
