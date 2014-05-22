@@ -65,6 +65,7 @@ module.exports = {
 
     // Animation
     'js/animation/animation.js',
+    'js/animation/property.js',
     'js/animation/bezier.js',
     'js/animation/dynamics.js',
     'js/animation/timing-functions.js',

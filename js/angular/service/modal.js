@@ -102,6 +102,11 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
      */
     show: function() {
       var self = this;
+
+      if(self.wasDestroyed) {
+        recreateModal(self);
+      }
+
       var modalEl = jqLite(self.modalEl);
 
       self.el.classList.remove('hide');
@@ -184,6 +189,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
       self.scope.$parent && self.scope.$parent.$broadcast('modal.removed', self);
 
       return self.hide().then(function() {
+        self.wasDestroyed = true;
         self.scope.$destroy();
         self.$el.remove();
       });
@@ -198,6 +204,17 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
       return !!this._isShown;
     }
   });
+
+  var recreateModal = function(modal) {
+    var scope = modal.scope.$new();
+    modal.scope = scope;
+
+    modal.$el = $compile(modal.$el)(scope);
+    modal.el = modal.$el[0];
+    modal.modalEl = modal.el.querySelector('.modal');
+
+    return modal;
+  };
 
   var createModal = function(templateString, options) {
     // Create a new scope for the modal

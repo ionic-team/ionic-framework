@@ -13,6 +13,56 @@
 
   ionic.Animation.Dynamics = {};
 
+  ionic.Animation.Dynamics.Decay = function(opts, animation) {
+    var defaults = {
+      velocity: [1000, 0],
+      minVelocity: 5,
+      deceleration: 0.998
+    }
+
+
+    this.animation = animation;
+    //this.val = new ionic.Animation.Property('x', {}, 0);
+
+    ionic.extend(this, defaults);
+    ionic.extend(this, opts);
+  };
+
+  ionic.Animation.Dynamics.Decay.prototype = {
+    at: function(t, dt) {
+      // Decay based on the deceleration with the timestep in ms
+      var kv = Math.pow(this.deceleration, dt);
+      var kx = this.deceleration * (1 - kv) / (1 - this.deceleration);
+
+      var v0 = [this.velocity[0]/1000, this.velocity[1]/1000];
+
+      this.velocity = [v0[0] * kv * 1000, v0[1] * kv * 1000];
+
+      var x0 = this.animation.property.getValue();
+
+      return this.animation.property.setValue([x0[0] + v0[0] * kx, x0[1] + v0[1] * kx]);//t + v0[0] * kx;
+    },
+
+    computeDuration: function() {
+      console.log('VELOCITY', this.velocity);
+      var vel = [this.velocity[0]/1000, this.velocity[1]/1000];
+
+      var k = 0.01 * this.minVelocity / 1000;
+
+      var vx = k / vel[0];
+      var vy = k / vel[1];
+      var d = Math.log(this.deceleration) * 1000;
+      
+      // Get the maximum duration for either vector component
+      var duration = Math.max(Math.log(Math.abs(vx)) / d, Math.log(Math.abs(vy)) / d);
+
+      if(isNaN(duration) || duration < 0) {
+        return 0;
+      }
+      return duration * 1000;
+    }
+  };
+
   ionic.Animation.Dynamics.Spring = function(opts) {
     var defaults = {
       frequency: 15,

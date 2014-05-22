@@ -7,7 +7,6 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="../../../../dist/css/ionic.css" />
     <script src="../../../../dist/js/ionic.bundle.js"></script>
-    <script src="dynamics.js"></script>
     <style>
       .box {
         position: absolute;
@@ -60,6 +59,8 @@
         <button ng-click="do('{{v}}')" ng-repeat="v in fns">{{v}}</button>
         <button ng-click="do('spring')">Spring</button>
         <button ng-click="do('gravity')">Gravity</button>
+        <button ng-click="do('decay')">Decay</button>
+        <input type="text" ng-model="anim.velocityX">
         <p>
         <input type="text" ng-model="anim.bx1">
         <input type="text" ng-model="anim.by1">
@@ -92,7 +93,7 @@
           },
           
           step: function(v) {
-            console.log('Anim stepping', v);
+            //console.log('Anim stepping', v);
             //el[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (v * 400) + 'px, 0,0)';
           },
           complete: function() {
@@ -100,12 +101,12 @@
           }
 
         });
-        animOne.start();
+        //animOne.start();
         var ot = animOne.clone();
         ot.step = function(v) {
           console.log('A2', v);
         };
-        ot.start();
+        //ot.start();
       }])
       .controller('MyCtrl', function($scope, $ionicAnimation, $ionicGesture) {
         var gestureEl = angular.element(document.getElementById('draggable'));
@@ -139,7 +140,8 @@
           bx1: 0.17,
           by1: 0.67,
           bx2: 0.83,
-          by2: 0.67
+          by2: 0.67,
+          velocityX: 1000
         }
         var el = angular.element(document.querySelector('.box'));
         $scope.do = function(fn) {
@@ -158,6 +160,7 @@
             autoReverse: false,
             repeat: 0,
             curve: fn,
+            deceleration: 0.997,
           
 
             onComplete: function(didComplete, droppedFrames) {
@@ -165,7 +168,8 @@
             },
             
             step: function(v) {
-              el[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (v * 400) + 'px, 0,0)';
+              //console.log('Stepping', v);
+              el[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (v*400) + 'px, 0,0)';
             },
             complete: function() {
               console.log('Animation complete!');
@@ -176,7 +180,7 @@
             currentAnimation = angular.extend(currentAnimation, {
               dynamicsType: ionic.Animation.Dynamics.Spring,
               frequency: 15,
-              friction: 200,
+              friction: 400,
               initialForce: false,
             });
           } else if (fn == 'gravity') {
@@ -186,6 +190,11 @@
               frequency: 15,
               friction: 200,
               initialForce: false,
+            });
+          } else if(fn == 'decay') {
+            currentAnimation = angular.extend(currentAnimation, {
+              dynamicsType: ionic.Animation.Dynamics.Decay,
+              velocity: [$scope.anim.velocityX, 0]
             });
           }
 

@@ -23,16 +23,19 @@
         }
       } else {
         tf = opts.curve;
-        tf = tf(opts.duration);
+        if(tf) {
+          tf = tf(opts.duration, this);
+        }
       }
 
       opts.curveFn = tf;
 
+      var anim = new ionic.Animation.Animation(opts);
       if(opts.dynamicsType) {
-        opts.dynamic = new opts.dynamicsType(opts);
+        anim.dynamic = new opts.dynamicsType(opts, anim);
       }
 
-      return new ionic.Animation.Animation(opts);
+      return anim;
     },
 
     animationStarted: function(instance) {
