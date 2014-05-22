@@ -47,9 +47,9 @@ function run {
     exit 0
   fi
 
-  mkdir -p tmp
-  git show $TRAVIS_COMMIT~1:package.json > tmp/package.old.json
-  OLD_VERSION=$(readJsonProp "tmp/package.old.json" "version")
+  mkdir -p temp
+  git show $TRAVIS_COMMIT~1:package.json > temp/package.old.json
+  OLD_VERSION=$(readJsonProp "temp/package.old.json" "version")
   VERSION=$(readJsonProp "package.json" "version")
   CODENAME=$(readJsonProp "package.json" "codename")
 

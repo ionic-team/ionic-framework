@@ -257,18 +257,18 @@ gulp.task('docs-index', function() {
   }
 
   return gulp.src([
-    'tmp/ionic-site/docs/{components,guide,api,overview}/**/*.{md,html,markdown}',
-    'tmp/ionic-site/docs/index.html',
-    'tmp/ionic-site/getting-started/index.html',
-    'tmp/ionic-site/tutorials/**/*.{md,html,markdown}',
-    'tmp/ionic-site/_posts/**/*.{md,html,markdown}'
+    'temp/ionic-site/docs/{components,guide,api,overview}/**/*.{md,html,markdown}',
+    'temp/ionic-site/docs/index.html',
+    'temp/ionic-site/getting-started/index.html',
+    'temp/ionic-site/tutorials/**/*.{md,html,markdown}',
+    'temp/ionic-site/_posts/**/*.{md,html,markdown}'
   ])
     .pipe(es.map(function(file, callback) {
       //docs for gulp file objects: https://github.com/wearefractal/vinyl
       var contents = file.contents.toString(); //was buffer
 
       // Grab relative path from ionic-site root
-      var relpath = file.path.replace(/^.*?tmp\/ionic-site\//, '');
+      var relpath = file.path.replace(/^.*?temp\/ionic-site\//, '');
 
       // Read out the yaml portion of the Jekyll file
       var yamlStartIndex = contents.indexOf('---');
@@ -362,9 +362,9 @@ gulp.task('docs-index', function() {
 
     })).on('end', function() {
       // Write out as one json file
-      mkdirp.sync('tmp/ionic-site/data');
+      mkdirp.sync('temp/ionic-site/data');
       fs.writeFileSync(
-        'tmp/ionic-site/data/index.json',
+        'temp/ionic-site/data/index.json',
         JSON.stringify({'ref': ref, 'index': idx.toJSON()})
       );
     });

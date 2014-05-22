@@ -27,7 +27,7 @@ angular.module(<@ if doc.demoData @>'<$ doc.demoData.module $>'
     }, document.querySelector('.demo-footer'));
 
     $scope.demoScratch = function(demo) {
-      var form = angular.element('<form method="POST" action="http://scratch.ionicsdk.com/embed">');
+      var form = angular.element('<form method="POST" action="http://scratch.ionicsdk.com/embed" target="_blank">');
 
       var htmlInput = angular.element('<textarea type="text" name="html">')
       .val(['<html ng-app="<$ doc.demoData.module $>">',

@@ -8,7 +8,7 @@ function init {
   PROJECT_DIR=$SCRIPT_DIR/../..
   BUILD_DIR=$SCRIPT_DIR/../../dist
 
-  IONIC_SITE_DIR=$SCRIPT_DIR/../../tmp/ionic-site
+  IONIC_SITE_DIR=$SCRIPT_DIR/../../temp/ionic-site
 }
 
 function clone {

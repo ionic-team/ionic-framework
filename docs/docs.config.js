@@ -19,13 +19,13 @@ module.exports = function(config) {
 
   config.set('basePath', __dirname);
   config.set('source.projectPath', '.');
-  config.set('rendering.outputFolder', '../tmp/ionic-site');
+  config.set('rendering.outputFolder', '../temp/ionic-site');
 
   var versionData = require('./generate-versions')(config);
   config.set('versionData', versionData);
   config.set('rendering.contentsFolder', path.join('docs', versionData.current.folder));
 
-  config.set('demos.outputFolder', path.join(__dirname, '../tmp/ionic-demo'));
+  config.set('demos.outputFolder', path.join(__dirname, '../temp/ionic-demo'));
 
   config.set('processing.api-docs', {
     outputPath: 'api/${docType}/${name}/index.md',

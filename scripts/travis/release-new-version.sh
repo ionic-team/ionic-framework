@@ -7,7 +7,7 @@ ARG_DEFS=(
 )
 
 function init {
-  TMP_DIR=$SCRIPT_DIR/../../tmp
+  TMP_DIR=$SCRIPT_DIR/../../temp
   BUILD_DIR=$SCRIPT_DIR/../../dist
   PROJECT_DIR=$SCRIPT_DIR/../..
 

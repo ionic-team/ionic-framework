@@ -13,7 +13,7 @@ function init {
   PROJECT_DIR=$SCRIPT_DIR/../..
   BUILD_DIR=$SCRIPT_DIR/../../dist
 
-  IONIC_CODE_DIR=$SCRIPT_DIR/../../tmp/ionic-code
+  IONIC_CODE_DIR=$SCRIPT_DIR/../../temp/ionic-code
   rm -rf $IONIC_CODE_DIR
   mkdir -p $IONIC_CODE_DIR
 }
