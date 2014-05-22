@@ -154,6 +154,7 @@
       var duration = state.duration;
       if(state.dynamic && state.dynamic.computeDuration) {
         duration = state.dynamic.computeDuration();
+        console.log('Duration', duration);
       }
 
       var easingMethod = state.easingMethod;
@@ -190,7 +191,7 @@
         var now = time();
 
         if(state.dynamic && state.dynamic.computeDuration) {
-          var computedDuration = state.dynamic.computeDuration();
+          //var computedDuration = state.dynamic.computeDuration();
           //console.log('Computed duration', computedDuration);
         }
 

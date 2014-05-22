@@ -44,6 +44,7 @@
     },
 
     computeDuration: function() {
+      console.log('VELOCITY', this.velocity);
       var vel = [this.velocity[0]/1000, this.velocity[1]/1000];
 
       var k = 0.01 * this.minVelocity / 1000;

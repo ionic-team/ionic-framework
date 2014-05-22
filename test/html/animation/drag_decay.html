@@ -25,8 +25,9 @@
 
   <body>
 
-    <div ng-controller="MyCtrl">
+    <ion-content has-bouncing="false" ng-controller="MyCtrl">
       <div id="box1" class="box"></div>
+    </ion-content>
     <script>
       angular.module('myApp', ['ionic'])
       .controller('MyCtrl', function($scope, $ionicAnimation, $ionicGesture) {
@@ -34,9 +35,12 @@
 
         var obj = {};
 
+        var offsetX, offsetY;
+
         var anim = $ionicAnimation({
           name: 'dragDecay',
           deceleration: 0.997,
+          repeat: 0,
           propertyName: 'x',
           propertyObject: obj,
           propertyDefault: [100,100],
@@ -55,23 +59,36 @@
           }
         }, $scope.anim);
 
-        $ionicGesture.on('drag', function(e) {
+        $ionicGesture.on('dragstart', function(e) {
           var x = e.gesture.touches[0].pageX;
           var y = e.gesture.touches[0].pageY;
+          var pos = anim.property.getValue();
+          offsetX = x - pos[0];
+          offsetY = y - pos[1];
+          console.log('OFFSET START', offsetX, offsetY);
+        }, b);
+
+        $ionicGesture.on('drag', function(e) {
+          var x = (e.gesture.touches[0].pageX - offsetX);
+          var y = (e.gesture.touches[0].pageY - offsetY);
+          var pos = anim.property.getValue();
           ionic.requestAnimationFrame(function() {
+            anim.property.setValue([x, y]);
             b[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + x + 'px, ' + y + 'px,0)';
           });
         }, b);
 
         var g = $ionicGesture.on('dragend', function(e) {
-          var vx = e.gesture.velocityX;
-          var vy = e.gesture.velocityY;
+            var vx = e.gesture.velocityX * (e.gesture.deltaX >= 0 ? 1 : -1);
+            var vy = e.gesture.velocityY * (e.gesture.deltaY >= 0 ? 1 : -1);
+
+          console.log(e, vx, vy);
 
           var x = e.gesture.touches[0].pageX;
           var y = e.gesture.touches[0].pageY;
 
-          anim.velocity = [vx*10000, vy*10000];
-          console.log(anim.velocity);
+          anim.dynamic.velocity = [vx*1000, vy*1000];
+          console.log(anim.dynamic.velocity);
           anim.property.setValue([x, y]);
           anim.start();
           console.log('Drag End!', vx, vy);
