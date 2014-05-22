@@ -187,6 +187,9 @@ angular.module('popupSimple', ['ionic'])
   };
 });
  * @html
+<ion-header-bar class="bar-positive">
+  <h1 class="title">Popups</h1>
+</ion-header-bar>
 <ion-content ng-controller="PopupCtrl">
   <button class="button button-dark" ng-click="showPopup()">Generic</button>
   <button class="button button-primary" ng-click="showConfirm()">Confirm</button>
@@ -194,7 +197,7 @@ angular.module('popupSimple', ['ionic'])
   <button class="button button-balanced" ng-click="showPasswordPrompt()">Password Prompt</button>
   <button class="button button-positive" ng-click="showAlert()">Alert</button>
   <div class="list">
-    <a class="item" href="#" 
+    <a class="item" href="#"
       ng-repeat="item in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
       Item {{item}}
     </a>
