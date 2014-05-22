@@ -17,7 +17,7 @@ describe('bar directives', function() {
       }
       it('should not listen for tap if attr.noTapScroll', function() {
         spyOn(ionic, 'on');
-        setup('no-tap-scroll');
+        setup('no-tap-scroll="true"');
         expect(ionic.on).not.toHaveBeenCalledWith('tap');
       });
 

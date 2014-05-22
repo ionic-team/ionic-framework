@@ -162,7 +162,7 @@ function tapScrollToTopDirective() {
     return {
       restrict: 'E',
       link: function($scope, $element, $attr) {
-        if ($attr.noTapScroll) {
+        if ($attr.noTapScroll == 'true') {
           return;
         }
         ionic.on('tap', onTap, $element[0]);
