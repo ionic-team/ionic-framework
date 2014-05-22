@@ -102,6 +102,14 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
      */
     show: function() {
       var self = this;
+
+      if(self.scope.$$destroyed) {
+        console.error('Cannot call modal.show() after remove(). Please create a new modal instance using $ionicModal.');
+        return;
+      }
+
+      console.log(self.scope);
+
       var modalEl = jqLite(self.modalEl);
 
       self.el.classList.remove('hide');
