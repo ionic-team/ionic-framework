@@ -116,7 +116,10 @@ gulp.task('bundle', [
       .pipe(concat('ionic.bundle.min.js'))
       .pipe(gulp.dest(buildConfig.dist + '/js'));
 
-  return gulp.src(buildConfig.ionicBundleFiles)
+  return gulp.src(buildConfig.ionicBundleFiles, {
+    base: buildConfig.dist,
+    cwd: buildConfig.dist
+  })
     .pipe(header(buildConfig.bundleBanner))
     .pipe(concat('ionic.bundle.js'))
     .pipe(gulp.dest(buildConfig.dist + '/js'));

@@ -96,12 +96,12 @@ module.exports = {
   ],
 
   ionicBundleFiles: [
-    'dist/js/ionic.js',
-    'dist/js/angular/angular.js',
-    'dist/js/angular/angular-animate.js',
-    'dist/js/angular/angular-sanitize.js',
-    'dist/js/angular-ui/angular-ui-router.js',
-    'dist/js/ionic-angular.js'
+    'js/ionic.js',
+    'js/angular/angular.js',
+    'js/angular/angular-animate.js',
+    'js/angular/angular-sanitize.js',
+    'js/angular-ui/angular-ui-router.js',
+    'js/ionic-angular.js'
   ],
 
   //Exclamation can be no longer than 14 chars
