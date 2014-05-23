@@ -71,9 +71,9 @@ module.exports = {
 
   angularIonicFiles: [
     'js/angular/*.js',
-    'js/angular/service/*/*.js',
-    'js/angular/controller/*/*.js',
-    'js/angular/directive/*/*.js',
+    'js/angular/service/**/*.js',
+    'js/angular/controller/**/*.js',
+    'js/angular/directive/**/*.js',
   ],
 
   //Which vendor files to include in dist, used by build
