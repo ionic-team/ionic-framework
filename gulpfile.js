@@ -111,7 +111,10 @@ gulp.task('bundle', [
 ], function() {
   IS_RELEASE_BUILD && gulp.src(buildConfig.ionicBundleFiles.map(function(src) {
       return src.replace(/.js$/, '.min.js');
-    }))
+    }), {
+      base: buildConfig.dist,
+      cwd: buildConfig.dist
+    })
       .pipe(header(buildConfig.bundleBanner))
       .pipe(concat('ionic.bundle.min.js'))
       .pipe(gulp.dest(buildConfig.dist + '/js'));
