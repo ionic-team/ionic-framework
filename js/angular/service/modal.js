@@ -40,7 +40,7 @@
  *     $scope.modal.remove();
  *   });
  *   // Execute action on hide modal
- *   $scope.$on('modal.hide', function() {
+ *   $scope.$on('modal.hidden', function() {
  *     // Execute action
  *   });
  *   // Execute action on remove modal
