@@ -24,7 +24,7 @@ IonicModule
     require: '?ngModel',
     scope: {
       ngModel: '=?',
-      ngValue: '=?',
+      ngValue: '@',
       ngChange: '&',
       icon: '@',
       name: '@'
