@@ -332,8 +332,8 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
  * iOS7 style slide left to right
  * --------------------------------------------------
  */
-$ios7-timing-function: ease-in-out;
-$ios7-transition-duration: 250ms;
+$ios7-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
+$ios7-transition-duration: 340ms;
 
 .slide-left-right-ios7,
 .slide-right-left-ios7.reverse {
@@ -354,6 +354,10 @@ $ios7-transition-duration: 250ms;
   > .ng-enter, &.ng-enter {
     /* NEW content placed far RIGHT BEFORE it slides IN from the RIGHT */
     @include translate3d(100%, 0, 0);
+    z-index: 2;
+  }
+  > .ng-leave, &.ng-leave {
+    z-index: 1;
   }
   > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
     /* NEW content ACTIVELY sliding IN from the RIGHT */
@@ -379,7 +383,11 @@ $ios7-transition-duration: 250ms;
   }
   > .ng-enter, &.ng-enter {
     /* NEW content placed far LEFT BEFORE it slides IN from the LEFT */
-    @include translate3d(-100%, 0, 0);
+    @include translate3d(-15%, 0, 0);
+    z-index: 1;
+  }
+  > .ng-leave, &.ng-leave {
+    z-index: 2;
   }
   > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
     /* NEW content ACTIVELY sliding IN from the LEFT */
@@ -387,7 +395,7 @@ $ios7-transition-duration: 250ms;
   }
   > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
     /* OLD content ACTIVELY sliding OUT to the RIGHT */
-    @include translate3d(15%, 0, 0);
+    @include translate3d(100%, 0, 0);
   }
 }
 
@@ -547,7 +555,7 @@ $ios7-transition-duration: 250ms;
 /**
  * Some component specific animations
  */
-$nav-title-slide-ios7-delay: 250ms;
+$nav-title-slide-ios7-delay: $ios7-transition-duration;
 .nav-title-slide-ios7 {
   &:not(.no-animation) .button.back-button {
     @include transition(all $nav-title-slide-ios7-delay);
@@ -579,6 +587,9 @@ $nav-title-slide-ios7-delay: 250ms;
   > .ng-enter, &.ng-enter {
     @include translate3d(30%, 0, 0);
     opacity: 0;
+    &.title {
+      @include translate3d(100%, 0, 0);
+    }
   }
   > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
     @include translate3d(0, 0, 0);
@@ -592,7 +603,8 @@ $nav-title-slide-ios7-delay: 250ms;
   &.reverse {
     > .ng-enter, &.ng-enter,
     > .ng-leave, &.ng-leave {
-      @include transition(all ease-in-out $transition-duration);
+      @include transition(all $nav-title-slide-ios7-delay);
+      @include transition-timing-function($ios7-timing-function);
       opacity: 1;
     }
     > .ng-enter, &.ng-enter {
@@ -604,7 +616,7 @@ $nav-title-slide-ios7-delay: 250ms;
       opacity: 1;
     }
     > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
-      @include translate3d(30%, 0, 0);
+      @include translate3d(100%, 0, 0);
       opacity: 0;
     }
   }

@@ -1,0 +1,159 @@
+<html ng-app="navState">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <title>Platforms</title>
+
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body>
+
+    <div ng-controller="AppCtrl">
+      <ion-nav-bar class="nav-title-slide-ios7 bar-positive">
+        <ion-nav-back-button class="button-icon icon ion-ios7-arrow-back">
+          Back
+        </ion-nav-back-button>
+      </ion-nav-bar>
+      <ion-nav-view animation="slide-left-right-ios7"></ion-nav-view>
+    </div>
+
+    <script id="home.html" type="text/ng-template">
+      <ion-view title="Home">
+        <!--
+        <ion-nav-buttons side="left">
+            <button
+                class="button button-icon icon ion-navicon"
+                menu-toggle="left">
+            </button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+            <button
+                class="button button-icon icon ion-close-circled"
+                ng-click="requestClearNotifications()">
+            </button>
+            <button
+                class="button button-icon icon ion-alert-circled"
+                ng-show="$root.showButton">
+            </button>
+        </ion-nav-buttons>
+        -->
+
+        <ion-content>
+          <a href="#/friends" class="button button-block button-primary">Friends</a>
+<div class="list">
+
+  <label class="item item-input item-select">
+    <div class="input-label">
+      Lightsaber
+    </div>
+    <select>
+      <option>Blue</option>
+      <option selected>Green</option>
+      <option>Red</option>
+    </select>
+  </label>
+
+</div>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="friends.html" type="text/ng-template">
+      <ion-view title="Friends">
+        <!--
+        <ion-nav-buttons side="left">
+            <button
+                class="button button-icon icon ion-navicon"
+                menu-toggle="left">
+            </button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+            <button
+                class="button button-icon icon ion-close-circled"
+                ng-click="requestClearNotifications()">
+            </button>
+            <button
+                class="button button-icon icon ion-alert-circled"
+                ng-show="$root.showButton">
+            </button>
+        </ion-nav-buttons>
+        -->
+
+        <ion-content>
+<div class="list">
+
+  <label class="item item-input item-select">
+    <div class="input-label">
+      Lightsaber
+    </div>
+    <select>
+      <option>Blue</option>
+      <option selected>Green</option>
+      <option>Red</option>
+    </select>
+  </label>
+
+</div>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="about.html" type="text/ng-template">
+      <ion-view title="Home">
+        <!--
+        <ion-nav-buttons side="left">
+            <button
+                class="button button-icon icon ion-navicon"
+                menu-toggle="left">
+            </button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+            <button
+                class="button button-icon icon ion-close-circled"
+                ng-click="requestClearNotifications()">
+            </button>
+            <button
+                class="button button-icon icon ion-alert-circled"
+                ng-show="$root.showButton">
+            </button>
+        </ion-nav-buttons>
+        -->
+
+        <ion-content>
+          <h1>About</h1>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script>
+      angular.module('navState', ['ionic'])
+
+
+      .config(function($stateProvider, $urlRouterProvider) {
+
+        $stateProvider
+          .state('home', {
+            url: "/",
+            templateUrl: "home.html"
+          })
+          .state('friends', {
+            url: "/friends",
+            templateUrl: "friends.html"
+          })
+          .state('about', {
+            url: "/about",
+            templateUrl: "about.html"
+          })
+
+         $urlRouterProvider.otherwise("/");
+
+      })
+
+      .controller('AppCtrl', function($scope) {
+        
+      });
+    </script>
+  </body>
+</html>
