@@ -19,6 +19,7 @@ IonicModule
   return {
     $get: ['$q', '$rootScope', function($q, $rootScope) {
       var self = {
+
         /**
          * @ngdoc method
          * @name $ionicPlatform#onHardwareBackButton
