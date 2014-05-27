@@ -15,59 +15,6 @@
  * <ion-checkbox ng-model="isChecked">Checkbox Label</ion-checkbox>
  * ```
  */
-/**
- * @ngdoc demo
- * @name ionCheckbox#simple
- * @module checkboxSimple
- * @javascript
- * var app = angular.module('checkboxSimple', ['ionic']);
- * app.controller('CheckboxSimpleCtrl', function($scope) {
- *   $scope.pizza = {
- *     pepperoni: true,
- *     sausage: false,
- *     anchovies: true,
- *     jalapenos: false
- *   };
- *
- *   $scope.toppings = function() {
- *     var toppings = Object.keys($scope.pizza).filter(function(flavor) {
- *       return $scope.pizza[flavor];
- *     });
- *     if (toppings.length > 1) {
- *       toppings[toppings.length - 1] = 'and ' + toppings[toppings.length - 1];
- *     }
- *     if (toppings.length > 2) {
- *       return toppings.join(', ');
- *     } else if (toppings.length) {
- *       return toppings.join(' ');
- *     } else {
- *       return 'nothing';
- *     }
- *   };
- * });
- *
- * @html
- * <ion-header-bar class="bar-positive">
- *   <h1 class="title">
- *     Checkbox: Simple Usage
- *   </h1>
- * </ion-header-bar>
- * <ion-content ng-controller="CheckboxSimpleCtrl" class="padding">
- *   <h3>Your pizza has {{toppings()}}!</h3>
- *   <ion-checkbox ng-model="pizza.pepperoni">
- *     Pepperoni?
- *   </ion-checkbox>
- *   <ion-checkbox ng-model="pizza.sausage">
- *     Sausage?
- *   </ion-checkbox>
- *   <ion-checkbox ng-model="pizza.anchovies">
- *     Jalapeno?
- *   </ion-checkbox>
- *   <ion-checkbox ng-model="pizza.jalapenos">
- *     Anchovies?
- *   </ion-checkbox>
- * </ion-content>
- */
 
 IonicModule
 .directive('ionCheckbox', function() {

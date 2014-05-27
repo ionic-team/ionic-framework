@@ -14,8 +14,6 @@
     "karma-sauce-launcher": "~0.2.0",
     "karma-script-launcher": "~0.1.0",
     "sauce-connect-launcher": "^0.2.2",
-    "dgeni": "angular/dgeni#master",
-    "dgeni-packages": "angular/dgeni-packages#master",
     "gulp-template": "^0.1.1",
     "gulp-concat": "^2.1.7",
     "gulp-jshint": "^1.5.0",
@@ -35,12 +33,10 @@
     "minimist": "0.0.8",
     "gulp-minify-css": "^0.3.0",
     "semver": "^2.2.1",
-    "cp-r": "^0.1.1",
     "mkdirp": "^0.3.5",
     "conventional-changelog": "0.0.9",
     "lunr": "0.4.5",
     "htmlparser2": "3.7.0",
-    "js-yaml": "3.0.2",
     "event-stream": "3.1.0",
     "gulp-strip-debug": "^0.3.0",
     "gulp-footer": "^1.0.4",
@@ -48,7 +44,13 @@
     "ircb": "^0.3.1",
     "node-twitter-api": "^1.2.2",
     "chalk": "^0.4.0",
-    "jshint-summary": "^0.3.0"
+    "jshint-summary": "^0.3.0",
+    "js-yaml": "^3.0.2",
+    "jasmine-node": "^1.14.3",
+    "q": "^1.0.1",
+    "cpr": "^0.2.0",
+    "dgeni": "^0.3.0",
+    "dgeni-packages": "^0.9.3"
   },
   "licenses": [
     {

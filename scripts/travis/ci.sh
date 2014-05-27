@@ -25,7 +25,6 @@ function run {
   cd ../..
 
   echo "GH_ORG=driftyco"
-  echo "RELEASE_REMOTE=$RELEASE_REMOTE"
   echo "TRAVIS_BRANCH=$TRAVIS_BRANCH"
   echo "TRAVIS_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER"
   echo "TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
@@ -118,7 +117,7 @@ function run {
     gulp changelog --standalone \
       --html=true \
       --subtitle="(changes since $OLD_VERSION)" \
-      --dest="dist/CHANGELOG.html" \
+      --dest="$IONIC_BUILD_DIR/CHANGELOG.html" \
       --from="$(git tag | grep $OLD_VERSION)"
   fi
 
@@ -133,6 +132,9 @@ function run {
   ./scripts/bower/publish.sh \
     --version="$VERSION" \
     --codename="$CODENAME"
+
+  ./scripts/demo/publish.sh \
+    --version="$VERSION"
 
 
   if [[ "$IS_RELEASE" == "true" ]]; then

@@ -54,47 +54,6 @@
  * </ion-infinite-scroll>
  * ```
  */
-/**
- * @ngdoc demo
- * @name ionInfiniteScroll#forever
- * @module infiniteScrollForever
- * @javascript
- * angular.module('infiniteScrollForever', ['ionic'])
- * .controller('ForeverCtrl', function($scope, $timeout) {
- *   $scope.items = [];
- *   for (var i = 0; i < 20; i++) {
- *     $scope.items.push(i);
- *   }
- *
- *   //Load more after 1 second delay
- *   $scope.loadMoreItems = function() {
- *     $timeout(function() {
- *       var i = $scope.items.length;
- *       var j = $scope.items.length + 5;
- *       for (; i < j; i++) {
- *         $scope.items.push('Item ' + i);
- *       }
- *       $scope.$broadcast('scroll.infiniteScrollComplete');
- *     }, 1000);
- *   };
- * });
- *
- * @html
- * <ion-header-bar>
- *   <h1 class="title">Scroll Down to Load More</h1>
- * </ion-header-bar>
- * <ion-content ng-controller="ForeverCtrl">
- *   <div class="list">
- *     <div class="item" ng-repeat="item in items">
- *       {{item}}
- *     </div>
- *   </div>
- *
- *   <ion-infinite-scroll on-infinite="loadMoreItems()"
- *     icon="ion-loading-c">
- *   </ion-infinite-scroll>
- * </ion-content>
- */
 IonicModule
 .directive('ionInfiniteScroll', ['$timeout', function($timeout) {
   function calculateMaxValue(distance, maximum, isPercent) {

@@ -40,45 +40,6 @@ IonicModule
  * </ion-content>
  * ```
  */
-/**
- * @ngdoc demo
- * @name ionHeaderBar#simple
- * @module headerBarSimple
- * @javascript
- * angular.module('headerBarSimple', ['ionic'])
- * .controller('HeaderBarSimpleCtrl', function($scope) {
- *   $scope.data = {
- *     isSubheader: false,
- *     isShown: true
- *   };
- *   $scope.items = [];
- *   for (var i = 0; i < 20; i++) {
- *     $scope.items.push('Item ' + i);
- *   }
- * });
- *
- * @html
- * <div ng-controller="HeaderBarSimpleCtrl">
- *   <ion-header-bar class="bar-positive"
- *     ng-class="{'bar-subheader': data.isSubheader}"
- *     ng-show="data.isShown">
- *     <h1 class="title">Tap Me to Scroll Top</h1>
- *   </ion-header-bar>
- *   <ion-content>
- *     <ion-toggle ng-model="data.isSubheader">
- *       Make it a Subheader?
- *     </ion-toggle>
- *     <ion-toggle ng-model="data.isShown">
- *       Show it?
- *     </ion-toggle>
- *     <div class="list">
- *       <div class="item" ng-repeat="item in items">
- *         {{item}}
- *       </div>
- *     </div>
- *   </ion-content>
- * </div>
- */
 .directive('ionHeaderBar', headerFooterBarDirective(true))
 
 /**
@@ -114,46 +75,6 @@ IonicModule
  *   </div>
  * </ion-footer-bar>
  * ```
- */
-/**
- * @ngdoc demo
- * @name ionFooterBar#simple
- * @module footerBarSimple
- * @javascript
- * angular.module('footerBarSimple', ['ionic'])
- * .controller('FooterBarSimpleCtrl', function($scope) {
- *   $scope.data = {
- *     isSubfooter: false,
- *     isShown: true
- *   };
- *
- *   $scope.items = [];
- *   for (var i = 0; i < 20; i++) {
- *     $scope.items.push('Item ' + i);
- *   }
- * });
- *
- * @html
- * <div ng-controller="FooterBarSimpleCtrl">
- *   <ion-footer-bar class="bar-assertive"
- *       ng-class="{'bar-subfooter': data.isSubfooter}"
- *       ng-show="data.isShown">
- *     <h1 class="title">Footer</h1>
- *   </ion-footer-bar>
- *   <ion-content>
- *     <ion-toggle ng-model="data.isSubfooter">
- *       Make it a Subfooter?
- *     </ion-toggle>
- *     <ion-toggle ng-model="data.isShown">
- *       Show it?
- *     </ion-toggle>
- *     <div class="list">
- *       <div class="item" ng-repeat="item in items">
- *         {{item}}
- *       </div>
- *     </div>
- *   </ion-content>
- * </div>
  */
 .directive('ionFooterBar', headerFooterBarDirective(false));
 

@@ -1,1 +1,0 @@
-var DEMOS = <$ demos | json $>;

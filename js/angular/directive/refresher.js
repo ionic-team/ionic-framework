@@ -57,45 +57,6 @@
  * the refresher.
  *
  */
-/**
- * @ngdoc demo
- * @name ionRefresher#withAList
- * @module refresherList
- * @javascript
- * angular.module('refresherList', ['ionic'])
- * .controller('RefresherCtrl', function($scope, $timeout) {
- *   $scope.items = ['Item 1', 'Item 2', 'Item 3'];
- *
- *   $scope.doRefresh = function() {
- *     $timeout(function() {
- *       $scope.items.push('New Item ' + Math.floor(Math.random() * 1000) + 4);
- *       $scope.items.push('New Item ' + Math.floor(Math.random() * 1000) + 4);
- *       $scope.items.push('New Item ' + Math.floor(Math.random() * 1000) + 4);
- *       $scope.items.push('New Item ' + Math.floor(Math.random() * 1000) + 4);
- *       $scope.$broadcast('scroll.refreshComplete');
- *     }, 1000);
- *   };
- * });
- *
- * @html
- * <ion-header-bar class="bar-positive">
- *   <h1 class="title">Refresher</h1>
- * </ion-header-bar>
- *
- * <ion-content ng-controller="RefresherCtrl">
- *
- *   <ion-refresher on-refresh="doRefresh()"
- *                  pulling-text="Pull to refresh..."
- *                  refreshing-text="Refreshing!"
- *                  refreshing-icon="ion-loading-c">
- *   </ion-refresher>
- *
- *   <ion-list>
- *     <ion-item ng-repeat="item in items">{{item}}</ion-item>
- *   </ion-list>
- *
- * </ion-content>
- */
 IonicModule
 .directive('ionRefresher', ['$ionicBind', function($ionicBind) {
   return {

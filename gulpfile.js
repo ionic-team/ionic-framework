@@ -56,18 +56,40 @@ gulp.task('default', ['build']);
 gulp.task('build', ['bundle', 'sass']);
 gulp.task('validate', ['jshint', 'ddescribe-iit', 'karma']);
 
-gulp.task('docs', function(done) {
-  var docVersion = argv['doc-version'];
+gulp.task('docs', function() {
+  var docVersion = argv['doc-version'] || 'nightly';
   if (docVersion != 'nightly' && !semver.valid(docVersion)) {
     console.log('Usage: gulp docs --doc-version=(nightly|versionName)');
     return process.exit(1);
   }
 
-  var config = dgeni.loadConfig(path.join(__dirname, '/config/dgeni/docs.config.js'));
+  var config = dgeni.loadConfig(path.join(__dirname, '/config/docs/docs.config.js'));
   config.set('currentVersion', docVersion);
 
   return dgeni.generator(config)().then(function() {
     gutil.log('Docs for', gutil.colors.cyan(docVersion), 'generated!');
+  });
+});
+
+gulp.task('demos', function(done) {
+  var demoVersion = argv['demo-version'] || 'nightly';
+  if (demoVersion != 'nightly' && !semver.valid(demoVersion)) {
+    console.log('Usage: gulp docs --doc-version=(nightly|versionName)');
+    return process.exit(1);
+  }
+
+  var config = dgeni.loadConfig(path.join(__dirname, '/config/demos/demos.config.js'));
+  config.set('currentVersion', demoVersion);
+
+  dgeni.generator(config)().then(function() {
+    gutil.log('Demos for', gutil.colors.cyan(demoVersion), 'generated!');
+    gutil.log('Building ionic into demo folder...');
+    cp.spawn('gulp', [
+      'build',
+      IS_RELEASE_BUILD ? '--release' : '--no-release',
+      '--dist='+config.get('rendering.outputFolder')+'/'+config.get('rendering.contentsFolder')+'/ionic'
+    ])
+    .on('exit', done);
   });
 });
 
@@ -109,7 +131,7 @@ gulp.task('bundle', [
   'vendor',
   'version',
 ], function() {
-  IS_RELEASE_BUILD && gulp.src(buildConfig.ionicBundleFiles.map(function(src) {
+  gulp.src(buildConfig.ionicBundleFiles.map(function(src) {
       return src.replace(/.js$/, '.min.js');
     }), {
       base: buildConfig.dist,
@@ -421,17 +443,6 @@ gulp.task('protractor', ['connect-server'], function(cb) {
 gulp.task('protractor-sauce', ['sauce-connect', 'connect-server'], function(cb) {
   return protractor(cb, ['config/protractor-sauce.conf.js']);
 });
-
-function karma(cb, args) {
-  cp.spawn('node', [
-    __dirname + '/node_modules/karma/bin/karma',
-    'start'
-  ].concat(args), { stdio: 'inherit' })
-  .on('exit', function(code) {
-    if (code) return cb('Karma test(s) failed. Exit code: ' + code);
-    cb();
-  });
-}
 
 function pad(n) {
   if (n<10) { return '0' + n; }

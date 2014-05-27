@@ -40,66 +40,6 @@
  * ```
  *
  */
-
-/**
- * @ngdoc demo
- * @name $ionicActionSheet#simple
- * @module actionSheetSimple
- * @javascript
- * angular.module('actionSheetSimple', ['ionic'])
- * .controller('ActionSheetCtrl', function($scope, $ionicActionSheet) {
- *   $scope.messages = [];
- *   $scope.takeAction = function() {
- *     $ionicActionSheet.show({
- *       buttons: [
- *         { text: 'Share <i class="icon ion-share">' },
- *         { text: 'Edit <i class="icon ion-edit">' }
- *       ],
- *       destructiveText: 'Delete <i class="icon ion-trash-b">',
- *       titleText: 'Modify your album',
- *       cancelText: 'Cancel',
- *       cancel: function() {
- *         $scope.message('Cancel');
- *         return true;
- *       },
- *       buttonClicked: function(index) {
- *         $scope.message(index === 0 ? 'Share' : 'Edit');
- *         return true;
- *       },
- *       destructiveButtonClicked: function() {
- *         $scope.message('Delete');
- *         return true;
- *       }
- *     });
- *   };
- *   $scope.message = function(msg) {
- *     $scope.messages.unshift({
- *       text: 'User pressed ' + msg
- *     });
- *   };
- *
- * });
- *
- * @html
- * <ion-header-bar class="bar-positive">
- *   <h1 class="title">Action</h1>
- * </ion-header-bar>
- * <ion-content ng-controller="ActionSheetCtrl" class="padding">
- *   <div class="button button-assertive button-block" ng-click="takeAction()">
- *     Take Action!
- *   </div>
- *   <div class="card" ng-show="messages.length">
- *     <div class="item item-divider">
- *       User Log
- *     </div>
- *     <div class="item item-text-wrap">
- *       <div ng-repeat="message in messages">
- *         {{message.text}}
- *       </div>
- *     </div> 
- *   </div>
- * </ion-content>
- */
 IonicModule
 .factory('$ionicActionSheet', [
   '$rootScope',
