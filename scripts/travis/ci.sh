@@ -134,7 +134,7 @@ function run {
     --codename="$CODENAME"
 
   ./scripts/demo/publish.sh \
-    --version="$VERSION"
+    --version-name="$VERSION_NAME"
 
 
   if [[ "$IS_RELEASE" == "true" ]]; then

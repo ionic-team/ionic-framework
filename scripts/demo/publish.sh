@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ARG_DEFS=(
-  "--version=(.*)"
+  "--version-name=(.*)"
 )
 
 function init {
@@ -17,10 +17,15 @@ function init {
 }
 
 function run {
+
+  echo "#####################################"
+  echo "## Updating ionic-demo...           #"
+  echo "#####################################"
+
   cd $IONIC_DIR
 
-  rm -rf $DEMO_DIR/$VERSION
-  gulp demos --release --demo-version=$VERSION
+  rm -rf $DEMO_DIR/$VERSION_NAME
+  gulp demos --release --demo-version=$VERSION_NAME
 
   cd $DEMO_DIR
 
@@ -28,13 +33,13 @@ function run {
 
   # if no changes, don't commit
   if [[ "$CHANGES" == "" ]]; then
-    echo "-- No changes detected in demos for $VERSION; demos not updated."
+    echo "-- No changes detected in demos for $VERSION_NAME; demos not updated."
   else
     git add -A
-    git commit -am "demos: update for $VERSION"
+    git commit -am "demos: update for $VERSION_NAME"
     git push -q origin gh-pages
 
-    echo "-- Updated demos for $VERSION succesfully!"
+    echo "-- Updated demos for $VERSION_NAME succesfully!"
   fi
 }
 
