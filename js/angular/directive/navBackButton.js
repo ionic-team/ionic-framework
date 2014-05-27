@@ -86,6 +86,10 @@ function($animate, $rootScope) {
           });
         }
 
+        // Check if we should auto generate the back button text from the title text
+        if($attr.textFromTitle) {
+        }
+
         //Make sure both that a backButton is allowed in the first place,
         //and that it is shown by the current view.
         $scope.$watch(function() {

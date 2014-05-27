@@ -49,7 +49,7 @@ IonicModule
         //so we can remove them all when this element dies -
         //even if the buttons have changed through an ng-repeat or the like,
         //we just remove their div parent and they are gone.
-        var buttons = jqLite('<span>').append(content);
+        var buttons = jqLite('<span class="buttons-inner">').append(content);
 
         //Compile buttons inside content so they have access to everything
         //something inside content does (eg parent ionicScroll)
@@ -67,7 +67,16 @@ IonicModule
         //When our ion-nav-buttons container is destroyed,
         //destroy everything in the navbar
         $scope.$on('$destroy', function() {
-          $animate.leave(buttons);
+          ionic.requestAnimationFrame(function() {
+            var left = buttons[0].offsetLeft;
+            var top = buttons[0].offsetTop;
+            buttons.parent().css({
+              position: 'fixed',
+              left: left + 'px',
+              top: top + 'px'
+            });
+            $animate.leave(buttons);
+          });
         });
 
         // The original element is just a completely empty <ion-nav-buttons> element.

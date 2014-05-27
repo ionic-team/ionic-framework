@@ -12,8 +12,9 @@
 
     <div ng-controller="AppCtrl">
       <ion-nav-bar class="nav-title-slide-ios7 bar-positive">
-        <ion-nav-back-button class="button-icon icon ion-ios7-arrow-back">
-          Back
+        <ion-nav-back-button text-from-title class="button-icon icon ion-ios7-arrow-back">
+
+        {{getPreviousTitle() || 'Back'}}
         </ion-nav-back-button>
       </ion-nav-bar>
       <ion-nav-view animation="slide-left-right-ios7"></ion-nav-view>
@@ -21,13 +22,12 @@
 
     <script id="home.html" type="text/ng-template">
       <ion-view title="Home">
-        <!--
         <ion-nav-buttons side="left">
-            <button
-                class="button button-icon icon ion-navicon"
-                menu-toggle="left">
+            <button class="button button-clear button-primary">
+              Edit
             </button>
         </ion-nav-buttons>
+        <!--
         <ion-nav-buttons side="right">
             <button
                 class="button button-icon icon ion-close-circled"
@@ -62,25 +62,6 @@
 
     <script id="friends.html" type="text/ng-template">
       <ion-view title="Friends">
-        <!--
-        <ion-nav-buttons side="left">
-            <button
-                class="button button-icon icon ion-navicon"
-                menu-toggle="left">
-            </button>
-        </ion-nav-buttons>
-        <ion-nav-buttons side="right">
-            <button
-                class="button button-icon icon ion-close-circled"
-                ng-click="requestClearNotifications()">
-            </button>
-            <button
-                class="button button-icon icon ion-alert-circled"
-                ng-show="$root.showButton">
-            </button>
-        </ion-nav-buttons>
-        -->
-
         <ion-content>
 <div class="list">
 
@@ -151,8 +132,11 @@
 
       })
 
-      .controller('AppCtrl', function($scope) {
+      .controller('AppCtrl', function($scope, $ionicNavBarDelegate) {
         
+          $scope.getPreviousTitle = function() {
+    return $ionicNavBarDelegate.getPreviousTitle();
+  };
       });
     </script>
   </body>
