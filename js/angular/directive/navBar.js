@@ -1,3 +1,6 @@
+IonicModule.constant('$ionicNavBarConfig', {
+  barTransition: 'nav-title-slide-ios7',
+});
 
 /**
  * @ngdoc directive
@@ -78,7 +81,8 @@ IonicModule
   '$rootScope',
   '$animate',
   '$compile',
-function($ionicViewService, $rootScope, $animate, $compile) {
+  '$ionicNavBarConfig',
+function($ionicViewService, $rootScope, $animate, $compile, $ionicNavBarConfig) {
 
   return {
     restrict: 'E',
@@ -87,7 +91,7 @@ function($ionicViewService, $rootScope, $animate, $compile) {
     compile: function(tElement, tAttrs) {
       //We cannot transclude here because it breaks element.data() inheritance on compile
       tElement
-        .addClass('bar bar-header nav-bar')
+        .addClass('bar bar-header nav-bar ' + $ionicNavBarConfig.barTransition)
         .append(
           '<div class="buttons left-buttons"> ' +
           '</div>' +
