@@ -71,7 +71,7 @@
           </ion-nav-back-button>
         </ion-nav-bar>
         <ion-content>
-          <a href="#/friends" class="button button-block button-primary">Friends</a>
+          <a href="#/about" class="button button-block button-primary">Friends</a>
           <div class="list">
 
             <label class="item item-input item-select">
@@ -118,9 +118,33 @@
 
     <script id="about.html" type="text/ng-template">
       <ion-view title="Home">
-        <ion-content>
-          <h1>About</h1>
-        </ion-content>
+        <ion-tabs
+          class="tabs-icon-only tabs-positive tabs-striped"
+          animation="fade-in-out"
+          controller-changed="onControllerChanged(oldController, oldIndex, newController, newIndex)">
+
+          <ion-tab title="Home">
+            <header class="bar bar-header bar-positive">
+              <h1 class="title">Home</h1>
+            </header>
+            <ion-content class="has-header has-subheader" on-refresh="onRefresh()" on-scroll="scroll(scrollTop, scrollLeft)">
+            </ion-content>
+          </ion-tab>
+          <ion-tab title="Friends">
+            <header class="bar bar-header bar-positive">
+              <h1 class="title">Friends</h1>
+            </header>
+            <ion-content class="has-header has-subheader" on-refresh="onRefresh()" on-scroll="scroll(scrollTop, scrollLeft)">
+            </ion-content>
+          </ion-tab>
+          <ion-tab title="About">
+            <header class="bar bar-header bar-positive">
+              <h1 class="title">About</h1>
+            </header>
+            <ion-content class="has-header has-subheader" on-refresh="onRefresh()" on-scroll="scroll(scrollTop, scrollLeft)">
+            </ion-content>
+          </ion-tab>
+        </ion-tabs>
       </ion-view>
     </script>
 

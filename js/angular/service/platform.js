@@ -20,6 +20,9 @@ IonicModule
   },
   '$ionicNavViewConfig': {
     transition: 'fade-implode'
+  },
+  '$ionicTabConfig': {
+    style: 'tab-item-stripe'
   }
 });
 

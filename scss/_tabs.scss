@@ -176,6 +176,7 @@
   line-height: inherit;
 }
 
+
 .tab-item.has-badge {
   position: relative;
 }
@@ -190,6 +191,7 @@
   font-size: $tabs-badge-font-size;
   line-height: $tabs-badge-font-size + 4;
 }
+
 
 /* Navigational tab */
 
@@ -242,4 +244,12 @@
   opacity: .4;
   cursor: default;
   pointer-events: none;
+}
+
+/** Platform styles **/
+
+.tab-item.tab-item-ios {
+}
+.tab-item.tab-item-android {
+  border-top: 2px solid inherit;
 }

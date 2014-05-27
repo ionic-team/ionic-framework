@@ -1,3 +1,5 @@
+IonicModule.constant('$ionicTabsConfig', {
+});
 
 /**
  * @ngdoc directive
@@ -223,7 +225,8 @@ IonicModule
 .directive('ionTabs', [
   '$ionicViewService', 
   '$ionicTabsDelegate', 
-function($ionicViewService, $ionicTabsDelegate) {
+  '$ionicTabsConfig', 
+function($ionicViewService, $ionicTabsDelegate, $ionicTabsConfig) {
   return {
     restrict: 'E',
     scope: true,
