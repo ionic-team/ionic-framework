@@ -70,12 +70,19 @@ IonicModule
           ionic.requestAnimationFrame(function() {
             var left = buttons[0].offsetLeft;
             var top = buttons[0].offsetTop;
-            buttons.parent().css({
+            var parent = buttons.parent();
+            parent.css({
               position: 'fixed',
               left: left + 'px',
               top: top + 'px'
             });
-            $animate.leave(buttons);
+            $animate.leave(buttons, function() {
+              parent.css({
+                position: '',
+                left: '',
+                top: ''
+              });
+            });
           });
         });
 
