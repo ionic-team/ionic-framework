@@ -1,5 +1,5 @@
 IonicModule.constant('$ionicNavViewConfig', {
-  navTransition: 'slide-left-right-ios7'
+  transition: 'slide-left-right-ios7'
 });
 
 /**

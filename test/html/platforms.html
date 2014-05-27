@@ -60,16 +60,16 @@
   <body>
 
     <div ng-controller="AppCtrl">
-      <ion-nav-bar class="bar-positive">
-        <ion-nav-back-button class="button-icon icon ion-ios7-arrow-back">
-          Back
-        </ion-nav-back-button>
-      </ion-nav-bar>
       <ion-nav-view></ion-nav-view>
     </div>
 
     <script id="home.html" type="text/ng-template">
       <ion-view title="Home">
+        <ion-nav-bar class="bar-positive">
+          <ion-nav-back-button class="button-icon icon ion-ios7-arrow-back">
+            Back
+          </ion-nav-back-button>
+        </ion-nav-bar>
         <ion-content>
           <a href="#/friends" class="button button-block button-primary">Friends</a>
           <div class="list">
@@ -92,6 +92,11 @@
 
     <script id="friends.html" type="text/ng-template">
       <ion-view title="Friends">
+        <ion-nav-bar class="bar-positive">
+          <ion-nav-back-button class="button-icon icon ion-ios7-arrow-back">
+            Back
+          </ion-nav-back-button>
+        </ion-nav-bar>
         <ion-content>
           <div class="list">
 
@@ -123,7 +128,7 @@
       angular.module('navState', ['ionic'])
 
       .config(function($ionicNavBarConfig) {
-        $ionicNavBarConfig.barTransition = 'nav-title-fade-only';
+        //$ionicNavBarConfig.transition = 'nav-title-fade-only';
       })
       .config(function($stateProvider, $urlRouterProvider) {
 

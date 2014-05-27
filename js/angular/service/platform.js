@@ -3,6 +3,55 @@ var PLATFORM_BACK_BUTTON_PRIORITY_SIDE_MENU = 150;
 var PLATFORM_BACK_BUTTON_PRIORITY_ACTION_SHEET = 300;
 var PLATFORM_BACK_BUTTON_PRIORITY_POPUP = 400;
 var PLATFORM_BACK_BUTTON_PRIORITY_LOADING = 500;
+
+IonicModule
+.constant('$ionicPlatformDefaultsIOS7', {
+  '$ionicNavBarConfig': {
+    transition: 'nav-title-slide-ios7'
+  },
+  '$ionicNavViewConfig': {
+    transition: 'slide-left-right-ios7'
+  }
+})
+
+.constant('$ionicPlatformDefaultsAndroid', {
+  '$ionicNavBarConfig': {
+    transition: 'no-animation'
+  },
+  '$ionicNavViewConfig': {
+    transition: 'fade-implode'
+  }
+});
+
+IonicModule.factory('$ionicPlatformConfig', [
+  '$ionicPlatformDefaultsIOS7',
+  '$ionicPlatformDefaultsAndroid',
+
+  '$ionicNavBarConfig',
+  '$ionicNavViewConfig',
+
+function($ionicPlatformDefaultsIOS7, $ionicPlatformDefaultsAndroid, $ionicNavBarConfig, $ionicNavViewConfig) {
+  var applyConfig = function(obj) {
+    angular.extend($ionicNavViewConfig, obj['$ionicNavViewConfig']);
+    angular.extend($ionicNavBarConfig, obj['$ionicNavBarConfig']);
+  };
+
+  return {
+    fromDetectedPlatform: function(platform) {
+      console.log('Doing config from detected', platform);
+
+      switch(platform) {
+        case 'ios':
+          applyConfig($ionicPlatformDefaultsIOS7);
+          break;
+        case 'android':
+          applyConfig($ionicPlatformDefaultsAndroid);
+          break;
+      }
+    }
+  }
+}]);
+
 /**
  * @ngdoc service
  * @name $ionicPlatform
@@ -15,10 +64,14 @@ var PLATFORM_BACK_BUTTON_PRIORITY_LOADING = 500;
  */
 IonicModule
 .provider('$ionicPlatform', function() {
-
   return {
-    $get: ['$q', '$rootScope', function($q, $rootScope) {
+    $get: ['$q', '$rootScope', '$ionicPlatformConfig', function($q, $rootScope, $ionicPlatformConfig) {
       var self = {
+
+        setPlatformDefaults: function() {
+          var platform = ionic.Platform.platform();
+          $ionicPlatformConfig.fromDetectedPlatform(platform);
+        },
 
         /**
          * @ngdoc method
@@ -138,3 +191,9 @@ IonicModule
   };
 
 });
+
+IonicModule
+.run(['$ionicPlatform', function($ionicPlatform) {
+  $ionicPlatform.setPlatformDefaults();
+}]);
+

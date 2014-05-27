@@ -444,7 +444,7 @@ function($rootScope, $state, $location, $window, $injector, $animate, $ionicNavV
 
         // If they don't have an animation set explicitly, use the value in the config
         if(!className) {
-          return $ionicNavViewConfig.navTransition;
+          return $ionicNavViewConfig.transition;
         }
 
         return className;
