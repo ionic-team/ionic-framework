@@ -103,7 +103,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 
 * Documentation is generated into `dist/ionic-site`.  To test documentation properly, follow these steps:
   1. Clone ionic-site into `./dist/ionic-site`.
-    - `git clone git@github.com:driftyco/ionic-site temp/ionic-site dist/ionic-site`
+    - `git clone git@github.com:driftyco/ionic-site dist/ionic-site`
   2. Start jekyll, telling it to rebuild whenever the site changes.
     - `cd dist/ionic-site && jekyll serve -w`
   3. Go back to project root and build the docs
