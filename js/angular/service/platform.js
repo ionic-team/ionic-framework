@@ -21,8 +21,8 @@ IonicModule
   '$ionicNavViewConfig': {
     transition: 'fade-implode'
   },
-  '$ionicTabConfig': {
-    style: 'tab-item-stripe'
+  '$ionicTabsConfig': {
+    tabsStyle: 'tabs-striped'
   }
 });
 
@@ -32,11 +32,17 @@ IonicModule.factory('$ionicPlatformConfig', [
 
   '$ionicNavBarConfig',
   '$ionicNavViewConfig',
+  '$ionicTabsConfig',
 
-function($ionicPlatformDefaultsIOS7, $ionicPlatformDefaultsAndroid, $ionicNavBarConfig, $ionicNavViewConfig) {
+function($ionicPlatformDefaultsIOS7, $ionicPlatformDefaultsAndroid,
+  $ionicNavBarConfig,
+  $ionicNavViewConfig,
+  $ionicTabsConfig) {
+
   var applyConfig = function(obj) {
     angular.extend($ionicNavViewConfig, obj['$ionicNavViewConfig']);
     angular.extend($ionicNavBarConfig, obj['$ionicNavBarConfig']);
+    angular.extend($ionicTabsConfig, obj['$ionicTabsConfig']);
   };
 
   return {
