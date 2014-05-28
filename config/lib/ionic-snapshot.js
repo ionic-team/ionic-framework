@@ -28,13 +28,19 @@ var IonicSnapshot = function(options) {
     self.flow = protractor.promise.controlFlow();
 
     // set browser size
-    self.width = options.width;
-    self.height = options.height;
-    if(self.width && self.height) {
+    self.width = browser.params.width || -1;
+    self.height = browser.params.height || -1;
+    if(self.width > 0 && self.height > 0) {
       self.flow.execute(function(){
         return browser.driver.manage().window().setSize(self.width, self.height);
       });
     }
+
+    self.platformId = browser.params.platform_id;
+
+    console.log('width', self.width);
+    console.log('height', self.height);
+    console.log('platformId', self.platformId);
 
     self.flow.execute(function(){
       var d = protractor.promise.defer();
@@ -44,6 +50,9 @@ var IonicSnapshot = function(options) {
         var data = {
           compare: self.compare,
           test_id: self.testId,
+          platform_id: self.platformId,
+          width: self.width,
+          height: self.height,
           browser: capabilities.get('browserName'),
           platform: capabilities.get('platform'),
           version: capabilities.get('version')
@@ -99,7 +108,9 @@ var IonicSnapshot = function(options) {
                 description: spec.getFullName(),
                 png_base64: pngBase64,
                 url: currentAppUrl,
-                access_key: self.accessKey
+                access_key: self.accessKey,
+                width: self.width,
+                height: self.height
               };
               pngBase64 = null;
 
@@ -172,16 +183,11 @@ var IonicSnapshot = function(options) {
     }
   };
 
-  // get --test_id cmd line argument
-  for(var x=0; x<this.process.argv.length;x++) {
-    var arg = this.process.argv[x].split('=');
-    if(arg.length == 2 && arg[0] == '--test_id') {
-      options.testId = arg[1];
-    }
-  }
+  options.testId = browser.params.test_id;
 
   if(!options.testId) {
-    console.error('--test_id=XXX cmd line arg w/ unique ID required');
+    console.error('--params.test_id w/ unique ID required');
+    browser.driver.quit();
     return;
   }
 

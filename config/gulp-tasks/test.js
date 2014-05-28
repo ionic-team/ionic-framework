@@ -66,9 +66,15 @@ module.exports = function(gulp, argv) {
 
   gulp.task('snapshot', ['snapshot-server'], function(done) {
     var uuid = require('node-uuid');
+    var testId = uuid.v4();
+
     return protractor(done, [
       'config/protractor.conf.js',
-      '--test_id=' + uuid.v4()
+      '--browser chrome',
+      '--params.platform_id=chrome_desktop_narrow',
+      '--params.width=400',
+      '--params.height=800',
+      '--params.test_id=' + testId,
     ]);
   });
 
