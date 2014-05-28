@@ -34,7 +34,7 @@
     "gulp-minify-css": "^0.3.0",
     "semver": "^2.2.1",
     "mkdirp": "^0.3.5",
-    "conventional-changelog": "0.0.9",
+    "conventional-changelog": "~0.0.11",
     "lunr": "0.4.5",
     "htmlparser2": "3.7.0",
     "event-stream": "3.1.0",
