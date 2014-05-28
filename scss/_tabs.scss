@@ -1,3 +1,13 @@
+@mixin tabs-striped($style, $color) {
+  &.#{$style} {
+    .tab-item.tab-item-active,
+    .tab-item.active,
+    .tab-item.activated {
+      margin-top: -4px;
+      border-top: 4px solid $color;
+    }
+  }
+}
 
 /**
  * Tabs
@@ -95,9 +105,18 @@
     border: none;
   }
 
+  @include tabs-striped('tabs-light', $light);
+  @include tabs-striped('tabs-stable', $stable);
+  @include tabs-striped('tabs-positive', $positive);
+  @include tabs-striped('tabs-calm', $calm);
+  @include tabs-striped('tabs-assertive', $assertive);
+  @include tabs-striped('tabs-balanced', $balanced);
+  @include tabs-striped('tabs-energized', $energized);
+  @include tabs-striped('tabs-royal', $royal);
+  @include tabs-striped('tabs-dark', $dark);
+
   .tab-item {
     color: black;
-
   }
   .tab-item + .tab-item:before {
     border-left: 1px solid #ccc;
@@ -109,15 +128,6 @@
     content: " ";
   }
 
-  .tab-item.tab-item-active,
-  .tab-item.active,
-  .tab-item.activated {
-    margin-top: -4px;
-  
-    &.tab-item-light {
-      border-top: 4px solid $light;
-    }
-  }
 }
 
 /* Allow parent element to have tabs-top */
