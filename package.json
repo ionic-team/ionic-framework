@@ -50,7 +50,8 @@
     "dgeni": "^0.3.0",
     "dgeni-packages": "^0.9.3",
     "request": "^2.36.0",
-    "node-uuid": "^1.4.1"
+    "node-uuid": "^1.4.1",
+    "js-yaml": "^3.0.2"
   },
   "licenses": [
     {
