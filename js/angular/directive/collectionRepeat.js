@@ -87,6 +87,7 @@
  *   </div>
  * </ion-content>
  * ```
+ * Percentage of total visible list dimensions. This example shows a 3 by 3 matrix fit on the screen (3 rows and 3 colums)
  * ```css
  * .my-image-item {
  *   height: 33%;
