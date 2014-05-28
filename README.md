@@ -96,8 +96,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 * `gulp watch` to watch and rebuild on change
 * `gulp karma` to test one-time
 * `gulp karma-watch` to test and re-run on source change
-* `gulp protractor` to test e2e tests locally
-* `gulp cloudtest` to run e2e tests in the cloud
+* `gulp snapshot` to test e2e tests locally (run `gulp demos` first to generate e2e tests)
 
 ### Documentation
 
