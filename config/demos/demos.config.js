@@ -7,6 +7,7 @@ var projectBase = path.resolve(__dirname, '../..');
 module.exports = function(config) {
 
   config = staticSite(config);
+  config.set('buildConfig', require('../build.config'));
 
   config.merge('rendering.nunjucks.config.tags', {
     variableStart: '{$',

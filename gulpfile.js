@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var karma = require('karma').server;
 var path = require('canonical-path');
 var pkg = require('./package.json');
 var semver = require('semver');
@@ -10,7 +9,6 @@ var argv = require('minimist')(process.argv.slice(2));
 var _ = require('lodash');
 var buildConfig = require('./config/build.config.js');
 var changelog = require('conventional-changelog');
-var connect = require('connect');
 var dgeni = require('dgeni');
 var es = require('event-stream');
 var htmlparser = require('htmlparser2');
@@ -21,7 +19,6 @@ var mkdirp = require('mkdirp');
 var twitter = require('node-twitter-api');
 var yaml = require('js-yaml');
 
-var http = require('http');
 var cp = require('child_process');
 var fs = require('fs');
 
@@ -47,6 +44,11 @@ if (IS_RELEASE_BUILD) {
     'Building release version (minified, debugs stripped)...'
   );
 }
+
+/**
+ * Load Test Tasks
+ */
+require('./config/gulp-tasks/test')(gulp, argv);
 
 if (argv.dist) {
   buildConfig.dist = argv.dist;
@@ -406,79 +408,6 @@ gulp.task('docs-index', function() {
     });
 });
 
-gulp.task('sauce-connect', sauceConnect);
-
-gulp.task('cloudtest', ['protractor-sauce'], function(cb) {
-  sauceDisconnect(cb);
-});
-
-gulp.task('karma', function(cb) {
-  var config = require('./config/karma.conf.js');
-  config.singleRun = true;
-  if (argv.browsers) {
-    config.browsers = argv.browsers.trim().split(',');
-  }
-  if (argv.reporters) {
-    config.reporters = argv.reporters.trim().split(',');
-  }
-  return karma.start(config, cb);
-});
-gulp.task('karma-watch', function(cb) {
-  return karma.start(_.assign(require('./config/karma.conf.js'), {singleRun: false}), cb);
-});
-gulp.task('karma-sauce', ['sauce-connect'], function(cb) {
-  return karma.start(require('./config/karma-sauce.conf.js'), function() {
-    sauceDisconnect(cb);
-  });
-});
-
-var connectServer;
-gulp.task('connect-server', function() {
-  var app = connect().use(connect.static(__dirname));
-  connectServer = http.createServer(app).listen(8765);
-});
-gulp.task('protractor', ['connect-server'], function(cb) {
-  return protractor(cb, ['config/protractor.conf.js']);
-});
-gulp.task('protractor-sauce', ['sauce-connect', 'connect-server'], function(cb) {
-  return protractor(cb, ['config/protractor-sauce.conf.js']);
-});
-
-function pad(n) {
-  if (n<10) { return '0' + n; }
-  return n;
-}
-
-function protractor(cb, args) {
-  cp.spawn('protractor', args, { stdio: 'inherit' })
-  .on('exit', function(code) {
-    connectServer && connectServer.close();
-    if (code) return cb('Protector test(s) failed. Exit code: ' + code);
-    cb();
-  });
-}
-
-var sauceInstance;
-function sauceConnect(cb) {
-  require('sauce-connect-launcher')({
-    username: process.env.SAUCE_USER,
-    accessKey: process.env.SAUCE_KEY,
-    verbose: true,
-    tunnelIdentifier: process.env.TRAVIS_BUILD_NUMBER
-  }, function(err, instance) {
-    if (err) return cb('Failed to launch sauce connect!');
-    sauceInstance = instance;
-    cb();
-  });
-}
-
-function sauceDisconnect(cb) {
-  if (sauceInstance) {
-    return sauceInstance.close(cb);
-  }
-  cb();
-}
-
 function notContains(disallowed) {
   disallowed = disallowed || [];
 
@@ -506,4 +435,8 @@ function notContains(disallowed) {
     // Return the match accounting for the first submatch length.
     return match !== null ? match.index + match[1].length : -1;
   }
+}
+function pad(n) {
+  if (n<10) { return '0' + n; }
+  return n;
 }

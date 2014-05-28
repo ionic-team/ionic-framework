@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var shared = require('./karma.conf.js');
 
-module.exports = _.assign(shared, {
+module.exports = _.assign({}, shared, {
   reporters: ['dots'],
   sauceLabs: {
     testName: 'Ionic unit tests',

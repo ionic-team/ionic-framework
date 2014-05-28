@@ -14,9 +14,21 @@ module.exports = {
   process: function(docs, config) {
 
     var contentsFolder = config.rendering.contentsFolder;
-    var assetOutputPath = path.join(contentsFolder, '${component}/${name}/${fileName}');
+    var assetOutputPath = '${component}/${name}/${fileName}';
 
     var pages = [];
+
+    var templates = {
+      '.scenario.js': 'scenario.template.js'
+    };
+    var transform = {
+      '.scenario.js': function(doc) {
+        doc.url = 'http://localhost:' + config.get('buildConfig.protractorPort') +
+          '/' + config.versionData.current.folder +
+          '/' + _.template(assetOutputPath, _.assign({},doc,{fileName:''}));
+        return doc;
+      }
+    };
 
     var demos = _(docs)
       .filter('yaml')
@@ -41,8 +53,10 @@ module.exports = {
           doc.contents = fragment.contents;
           doc.extension = doc.fileType.replace(/^\./,'');
 
-          doc.template = 'asset.contents.template',
-          doc.outputPath = _.template(assetOutputPath, doc);
+          doc.template = templates[doc.fileType] || 'asset.contents.template',
+          doc.outputPath = path.join(contentsFolder, _.template(assetOutputPath, doc));
+
+          doc = (transform[doc.fileType] || _.identity)(doc);
 
           demoData.files.push(doc);
           pages.push(doc);
@@ -50,19 +64,29 @@ module.exports = {
 
         var firstDoc = demoData.files[0];
 
-        var indexOutputPath = _.template(assetOutputPath, _.assign({}, firstDoc, {
-          fileName: 'index.html'
-        }));
-        var appOutputPath = _.template(assetOutputPath, _.assign({}, firstDoc, {
-          fileName: 'index-ionic-demo-app.js'
-        }, demoData));
+        var indexOutputPath = path.join(
+          contentsFolder,
+          _.template(assetOutputPath, _.assign({}, firstDoc, {
+            fileName: 'index.html'
+          }))
+        );
+        var appOutputPath = path.join(
+          contentsFolder,
+          _.template(assetOutputPath, _.assign({}, firstDoc, {
+            fileName: 'index-ionic-demo-app.js'
+          }, demoData))
+        );
 
 
         demoData.files = _.groupBy(demoData.files, 'extension');
         demoData.id = firstDoc.id;
         demoData.name = firstDoc.name;
         demoData.component = firstDoc.component;
-        demoData.href = '/' + _.template(assetOutputPath, _.assign({}, firstDoc, { fileName: '' }));
+        demoData.href = path.join(
+          '/',
+          contentsFolder,
+          _.template(assetOutputPath, _.assign({}, firstDoc, { fileName: '' }))
+        );
 
         pages.push({
           template: 'index.template.html',

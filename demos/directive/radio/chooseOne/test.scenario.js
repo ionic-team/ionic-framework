@@ -1,0 +1,4 @@
+---
+name: chooseOne
+component: ionRadio
+---

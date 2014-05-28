@@ -1,9 +1,11 @@
 var jsYaml = require('js-yaml');
 var path = require('canonical-path');
+
 var YAML_LINE_REGEX = /---+/;
+var FILE_PATTERN_REGEX = /\.(scenario.js|js|html|css)$/;
 
 module.exports = {
-  pattern: /\.*$/,
+  pattern: FILE_PATTERN_REGEX,
   processFile: function(filePath, contents, basePath) {
 
     contents = contents.trim();
@@ -26,7 +28,7 @@ module.exports = {
     var yamlJson = jsYaml.safeLoad(yamlContents);
 
     return [{
-      fileType: path.extname(filePath),
+      fileType: filePath.match(FILE_PATTERN_REGEX)[0].toString(),
       file: filePath,
       basePath: basePath,
       contents: contents,

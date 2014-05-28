@@ -5,6 +5,8 @@ module.exports = {
   dist: 'dist',
   releasePostUrl: fs.readFileSync('config/RELEASE_POST_URL'),
 
+  protractorPort: 8765,
+
   banner:
     '/*!\n' +
     ' * Copyright 2014 Drifty Co.\n' +
