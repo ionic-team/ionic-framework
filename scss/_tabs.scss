@@ -89,6 +89,37 @@
   @include tab-badge-style($tabs-dark-text, $tabs-dark-bg);
 }
 
+.tabs-striped {
+  .tabs {
+    background-color: white;
+    border: none;
+  }
+
+  .tab-item {
+    color: black;
+
+  }
+  .tab-item + .tab-item:before {
+    border-left: 1px solid #ccc;
+    display: block;
+    float: left;
+    width: 2px;
+    height: 26px;
+    margin: 11px auto;
+    content: " ";
+  }
+
+  .tab-item.tab-item-active,
+  .tab-item.active,
+  .tab-item.activated {
+    margin-top: -4px;
+  
+    &.tab-item-light {
+      border-top: 4px solid $light;
+    }
+  }
+}
+
 /* Allow parent element to have tabs-top */
 /* If you change this, change platform.scss as well */
 .tabs-top > .tabs,
