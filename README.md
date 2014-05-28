@@ -101,14 +101,23 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 
 ### Documentation
 
-* To test documentation, follow these steps:
-  1. Clone ionic-site to `./temp/ionic-site` - this is where the `gulp docs` task builds to.  `./temp` is the folder that travis uses to do all of its tasks.
-    - `mkdir temp && git clone git@github.com:driftyco/ionic-site temp/ionic-site`
-  2. Make jekyll rebuild whenever you change the site.
-    - `cd temp/ionic-site && jekyll serve -w`
+* Documentation is generated into `dist/ionic-site`.  To test documentation properly, follow these steps:
+  1. Clone ionic-site into `./dist/ionic-site`.
+    - `git clone git@github.com:driftyco/ionic-site temp/ionic-site dist/ionic-site`
+  2. Start jekyll, telling it to rebuild whenever the site changes.
+    - `cd dist/ionic-site && jekyll serve -w`
   3. Go back to project root and build the docs
-    - `gulp docs`
+    - `gulp docs [--doc-version=(versionName|nightly)]`
   4. Open localhost:4000 and see your changes! Re-run `gulp docs` again whenever you change something, and jekyll will update the site.
+
+### Demos / Kitchen Sink
+
+* The demo site is generated into `dist/ionic-demo`. To test the demons, follow these steps:
+  1. Run `gulp demos [--demo-version=(versionName|nightly)]`
+  2. Start an http server from `dist/ionic-demo`:
+    - `cd dist/ionic-demo && python -m SimpleHTTPServer`
+  3. Navigate to `http://localhost:8000/{versionName|nightly}` and use the demos
+  4. Run `gulp demos` again whenever you change the demos
 
 ### Commit Conventions
 
