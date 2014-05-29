@@ -12,10 +12,9 @@ branches:
 before_install:
   - npm install -g protractor gulp
 script:
-  SNAPSHOT_TEST_ID=$(git rev-parse HEAD)
-
-  gulp demos --demo-version=nightly
-  protractor config/protractor.conf.js \
+  - SNAPSHOT_TEST_ID=$(git rev-parse HEAD)
+  - gulp demos --demo-version=nightly
+  - protractor config/protractor.conf.js \
     --browser "$SNAPSHOT_BROWSER" \
     --params.platform_id="$SNAPSHOT_BROWSER_ID" \
     --params.width="$SNAPSHOT_WIDTH" \
