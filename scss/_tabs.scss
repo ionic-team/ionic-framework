@@ -125,6 +125,7 @@
 
   .tab-item {
     color: $tabs-striped-off-color;
+    opacity: $tabs-striped-off-opacity;
   }
   .tab-item + .tab-item:before {
     border-left: 1px solid #ccc;
