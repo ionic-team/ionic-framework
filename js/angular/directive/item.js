@@ -1,5 +1,5 @@
 var ITEM_TPL_CONTENT_ANCHOR =
-  '<a class="item-content" ng-href="{{$href()}}" target="{{$target}}></a>';
+  '<a class="item-content" ng-href="{{$href()}}" target="{{$target}}"></a>';
 var ITEM_TPL_CONTENT =
   '<div class="item-content"></div>';
 /**
@@ -58,7 +58,7 @@ function($animate, $compile) {
           $scope.$href = function() {
             return $attrs.href || $attrs.ngHref;
           };
-          $scope.$target = $attrs.href || '_self';
+          $scope.$target = $attrs.target || '_self';
         };
     }
   };
