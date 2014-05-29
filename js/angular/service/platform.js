@@ -24,6 +24,7 @@ IonicModule
   },
   '$ionicTabsConfig': {
     tabsStyle: 'tabs-striped',
+    tabsPosition: 'tabs-top'
   }
 });
 

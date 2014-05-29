@@ -103,13 +103,6 @@
 }
 
 .tabs-striped {
-  &.tabs-top {
-    .tab-item.tab-item-active,
-    .tab-item.active,
-    .tab-item.activated {
-      border-width: 0px 0px $tabs-striped-border-width 0px;
-    }
-  }
 
   .tabs {
     background-color: white;
@@ -143,6 +136,18 @@
     content: " ";
   }
 
+}
+
+.tabs-top {
+  &.tabs-striped {
+    .tab-item.tab-item-active,
+    .tab-item.active,
+    .tab-item.activated {
+      margin-top: 0;
+      margin-bottom: -4px;
+      border-width: 0px 0px $tabs-striped-border-width 0px !important;
+    }
+  }
 }
 
 /* Allow parent element to have tabs-top */
