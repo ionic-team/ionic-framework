@@ -6,8 +6,9 @@ env:
   - SNAPSHOT_BROWSER_ID=chrome_desktop_narrow SNAPSHOT_BROWSER_ID=safari_desktop_narrow
   - SNAPSHOT_WIDTH=400
   - SNAPSHOT_HEIGHT=800
-  - IONIC_SNAPSHOT_KEY=5f731d560dfa487e8746be878cfe6279
-
+branches:
+  only:
+    - master
 before_install:
   - npm install -g protractor gulp
 script:
