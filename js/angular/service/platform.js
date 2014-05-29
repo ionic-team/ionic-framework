@@ -50,7 +50,6 @@ function($ionicPlatformDefaultsIOS7, $ionicPlatformDefaultsAndroid,
     fromDetectedPlatform: function(platform) {
       console.log('Doing config from detected', platform);
 
-      platform = 'android';
       switch(platform) {
         case 'ios':
           applyConfig($ionicPlatformDefaultsIOS7);
