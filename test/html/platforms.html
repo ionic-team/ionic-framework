@@ -153,7 +153,8 @@
     <script>
       angular.module('navState', ['ionic'])
 
-      .config(function($ionicNavBarConfig) {
+      .config(function($ionicTabsConfig) {
+        $ionicTabsConfig.tabsPosition = '';
         //$ionicNavBarConfig.transition = 'nav-title-fade-only';
       })
       .config(function($stateProvider, $urlRouterProvider) {

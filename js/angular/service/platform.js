@@ -4,31 +4,65 @@ var PLATFORM_BACK_BUTTON_PRIORITY_ACTION_SHEET = 300;
 var PLATFORM_BACK_BUTTON_PRIORITY_POPUP = 400;
 var PLATFORM_BACK_BUTTON_PRIORITY_LOADING = 500;
 
+function componentConfig(defaults) {
+  defaults.$get = function() { return defaults; }
+  return defaults;
+}
+
 IonicModule
-.constant('$ionicPlatformDefaultsIOS7', {
-  '$ionicNavBarConfig': {
-    transition: 'nav-title-slide-ios7'
+.constant('$ionicPlatformDefaults', {
+  'ios': {
+    '$ionicNavBarConfig': {
+      transition: 'nav-title-slide-ios7'
+    },
+    '$ionicNavViewConfig': {
+      transition: 'slide-left-right-ios7'
+    }
   },
-  '$ionicNavViewConfig': {
-    transition: 'slide-left-right-ios7'
+  'android': {
+    '$ionicNavBarConfig': {
+      transition: 'no-animation',
+      titleAlign: 'left'
+    },
+    '$ionicNavViewConfig': {
+      transition: 'fade-implode'
+    },
+    '$ionicTabsConfig': {
+      tabsStyle: 'tabs-striped',
+      tabsPosition: 'tabs-top'
+    }
   }
 })
 
-.constant('$ionicPlatformDefaultsAndroid', {
-  '$ionicNavBarConfig': {
-    transition: 'no-animation',
-    titleAlign: 'left'
-  },
-  '$ionicNavViewConfig': {
-    transition: 'fade-implode'
-  },
-  '$ionicTabsConfig': {
-    tabsStyle: 'tabs-striped',
-    tabsPosition: 'tabs-top'
-  }
-});
 
-IonicModule.factory('$ionicPlatformConfig', [
+IonicModule.config([
+  '$ionicPlatformDefaults',
+
+  '$ionicNavViewConfig',
+  '$ionicNavBarConfig',
+  '$ionicTabsConfig',
+
+function($ionicPlatformDefaults, $ionicNavViewConfig, $ionicNavBarConfig, $ionicTabsConfig) {
+  console.log('Defaults config');
+  var platform = ionic.Platform.platform();
+
+  var applyConfig = function(obj) {
+    angular.extend($ionicNavViewConfig, obj['$ionicNavViewConfig']);
+    angular.extend($ionicNavBarConfig, obj['$ionicNavBarConfig']);
+    angular.extend($ionicTabsConfig, obj['$ionicTabsConfig']);
+  };
+
+  switch(platform) {
+    case 'ios':
+      applyConfig($ionicPlatformDefaults.ios);
+      break;
+    case 'android':
+      applyConfig($ionicPlatformDefaults.android);
+      break;
+  }
+}]);
+
+/*
   '$ionicPlatformDefaultsIOS7',
   '$ionicPlatformDefaultsAndroid',
 
@@ -41,27 +75,8 @@ function($ionicPlatformDefaultsIOS7, $ionicPlatformDefaultsAndroid,
   $ionicNavViewConfig,
   $ionicTabsConfig) {
 
-  var applyConfig = function(obj) {
-    angular.extend($ionicNavViewConfig, obj['$ionicNavViewConfig']);
-    angular.extend($ionicNavBarConfig, obj['$ionicNavBarConfig']);
-    angular.extend($ionicTabsConfig, obj['$ionicTabsConfig']);
-  };
-
-  return {
-    fromDetectedPlatform: function(platform) {
-      console.log('Doing config from detected', platform);
-
-      switch(platform) {
-        case 'ios':
-          applyConfig($ionicPlatformDefaultsIOS7);
-          break;
-        case 'android':
-          applyConfig($ionicPlatformDefaultsAndroid);
-          break;
-      }
-    }
-  }
 }]);
+*/
 
 /**
  * @ngdoc service
@@ -76,13 +91,8 @@ function($ionicPlatformDefaultsIOS7, $ionicPlatformDefaultsAndroid,
 IonicModule
 .provider('$ionicPlatform', function() {
   return {
-    $get: ['$q', '$rootScope', '$ionicPlatformConfig', function($q, $rootScope, $ionicPlatformConfig) {
+    $get: ['$q', '$rootScope', function($q, $rootScope) {
       var self = {
-
-        setPlatformDefaults: function() {
-          var platform = ionic.Platform.platform();
-          $ionicPlatformConfig.fromDetectedPlatform(platform);
-        },
 
         /**
          * @ngdoc method
@@ -202,9 +212,4 @@ IonicModule
   };
 
 });
-
-IonicModule
-.run(['$ionicPlatform', function($ionicPlatform) {
-  $ionicPlatform.setPlatformDefaults();
-}]);
 

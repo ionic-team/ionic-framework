@@ -1,7 +1,14 @@
+
 IonicModule.constant('$ionicNavBarConfig', {
   transition: 'nav-title-slide-ios7',
   titleAlign: 'center'
 });
+/*
+IonicModule.provider('$ionicNavBarConfig', componentConfig({
+  transition: 'nav-title-slide-ios7',
+  titleAlign: 'center'
+}));
+*/
 
 /**
  * @ngdoc directive
