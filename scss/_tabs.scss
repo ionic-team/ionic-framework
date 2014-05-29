@@ -4,7 +4,9 @@
     .tab-item.active,
     .tab-item.activated {
       margin-top: -4px;
-      border-top: 4px solid $color;
+      border-style: solid;
+      border-width: 4px 0 0 0;
+      border-color: $color;
     }
   }
 }
@@ -139,6 +141,18 @@
   padding-top: 0;
   padding-bottom: 2px;
   background-position: bottom;
+
+}
+.tabs-top {
+  &.tabs-striped {
+    .tab-item.tab-item-active,
+    .tab-item.active,
+    .tab-item.activated {
+      margin-top: 0;
+      margin-bottom: -4px;
+      border-width: 0px 0px 4px 0px;
+    }
+  }
 }
 
 .tab-item {
