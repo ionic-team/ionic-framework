@@ -2,7 +2,8 @@ IonicModule
 .factory('$collectionDataSource', [
   '$cacheFactory',
   '$parse',
-function($cacheFactory, $parse) {
+  '$rootScope',
+function($cacheFactory, $parse, $rootScope) {
   var nextCacheId = 0;
   function CollectionRepeatDataSource(options) {
     var self = this;
@@ -119,7 +120,7 @@ function($cacheFactory, $parse) {
         this.transcludeParent[0].appendChild(item.element[0]);
       }
       reconnectScope(item.scope);
-      !item.scope.$$phase && item.scope.$digest();
+      !$rootScope.$$phase && item.scope.$digest();
     },
     getLength: function() {
       return this.data && this.data.length || 0;
