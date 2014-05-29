@@ -13,6 +13,8 @@ function init {
 function run {
   cd ../..
 
+  SNAPSHOT_TEST_ID=$(git rev-parse HEAD)
+
   gulp demos --demo-version=nightly
 
   gulp snapshot-sauce \
