@@ -1,5 +1,5 @@
 var ITEM_TPL_CONTENT_ANCHOR =
-  '<a class="item-content" ng-href="{{$href()}}" target="{{$target}}></a>';
+  '<a class="item-content" ng-href="{{$href()}}" target="{{$target}}"></a>';
 var ITEM_TPL_CONTENT =
   '<div class="item-content"></div>';
 /**
