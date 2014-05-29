@@ -14,8 +14,6 @@ exports.config = {
 
   baseUrl: 'http://localhost:' + buildConfig.protractorPort,
 
-  chromeOnly: false,
-
   onPrepare: function() {
     var ionicSnapshot = require('./lib/ionic-snapshot.js');
     ionicSnapshot({

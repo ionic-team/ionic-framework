@@ -1,8 +1,10 @@
-var cp = require('child_process');
-var connect = require('connect');
-var http = require('http');
+var _ = require('lodash');
 var buildConfig = require('../build.config');
+var connect = require('connect');
+var cp = require('child_process');
+var http = require('http');
 var karma = require('karma').server;
+var uuid = require('node-uuid');
 
 var karmaConf = require('../karma.conf.js');
 var karmaSauceConf = require('../karma-sauce.conf.js');
@@ -17,7 +19,6 @@ module.exports = function(gulp, argv) {
     require('sauce-connect-launcher')({
       username: process.env.SAUCE_USER,
       accessKey: process.env.SAUCE_KEY,
-      verbose: true,
       tunnelIdentifier: process.env.TRAVIS_BUILD_NUMBER
     }, function(err, instance) {
       if (err) return done('Failed to launch sauce connect!');
@@ -65,22 +66,35 @@ module.exports = function(gulp, argv) {
   });
 
   gulp.task('snapshot', ['snapshot-server'], function(done) {
-    var uuid = require('node-uuid');
-    var testId = uuid.v4();
-
-    return protractor(done, [
-      'config/protractor.conf.js',
-      '--browser chrome',
-      '--params.platform_id=chrome_desktop_narrow',
-      '--params.width=400',
-      '--params.height=800',
-      '--params.test_id=' + testId,
-    ]);
+    snapshot(done, 'config/protractor.conf.js');
   });
 
   gulp.task('snapshot-sauce', ['sauce-connect', 'snapshot-server'], function(done) {
-    return protractor(done, ['config/protractor-sauce.conf.js']);
+    snapshot(done, 'config/protractor-sauce.conf.js');
   });
+
+  var snapshotValues = _.merge({
+    browser: 'chrome',
+    params: {
+      platform_id: 'chrome_local_test',
+      width: 400,
+      height: 800,
+      test_id: uuid.v4()
+    }
+  }, argv);
+  function snapshot(done, configFile) {
+    var protractorArgs = [
+      '--browser <%= browser %>',
+      '--params.platform_id=<%= params.platform_id %>',
+      '--params.width=<%= params.width %>',
+      '--params.height=<%= params.height %>',
+      '--params.test_id=<%= params.test_id %>',
+    ].map(function(argument) {
+      return _.template(argument, snapshotValues);
+    });
+
+    return protractor(done, [configFile].concat(protractorArgs));
+  }
 
   function protractor(done, args) {
     cp.spawn('protractor', args, { stdio: 'inherit' })
