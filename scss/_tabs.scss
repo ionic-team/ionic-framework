@@ -1,16 +1,3 @@
-@mixin tabs-striped($style, $color) {
-  &.#{$style} {
-    .tab-item.tab-item-active,
-    .tab-item.active,
-    .tab-item.activated {
-      margin-top: -4px;
-      border-style: solid;
-      border-width: 4px 0 0 0;
-      border-color: $color;
-    }
-  }
-}
-
 /**
  * Tabs
  * --------------------------------------------------
@@ -101,7 +88,29 @@
   @include tab-badge-style($tabs-dark-text, $tabs-dark-bg);
 }
 
+@mixin tabs-striped($style, $color) {
+  &.#{$style} {
+    .tab-item.tab-item-active,
+    .tab-item.active,
+    .tab-item.activated {
+      margin-top: -4px;
+      color: $color;
+      border-style: solid;
+      border-width: $tabs-striped-border-width 0 0 0;
+      border-color: $color;
+    }
+  }
+}
+
 .tabs-striped {
+  &.tabs-top {
+    .tab-item.tab-item-active,
+    .tab-item.active,
+    .tab-item.activated {
+      border-width: 0px 0px $tabs-striped-border-width 0px;
+    }
+  }
+
   .tabs {
     background-color: white;
     background-image: none;
@@ -118,8 +127,11 @@
   @include tabs-striped('tabs-royal', $royal);
   @include tabs-striped('tabs-dark', $dark);
 
+  &.tabs-icon-only .icon {
+  }
+
   .tab-item {
-    color: black;
+    color: $tabs-striped-off-color;
   }
   .tab-item + .tab-item:before {
     border-left: 1px solid #ccc;
@@ -142,17 +154,6 @@
   padding-bottom: 2px;
   background-position: bottom;
 
-}
-.tabs-top {
-  &.tabs-striped {
-    .tab-item.tab-item-active,
-    .tab-item.active,
-    .tab-item.activated {
-      margin-top: 0;
-      margin-bottom: -4px;
-      border-width: 0px 0px 4px 0px;
-    }
-  }
 }
 
 .tab-item {

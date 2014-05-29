@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html ng-app="navState">
   <head>
     <meta charset="utf-8">
@@ -124,21 +125,21 @@
           animation="fade-in-out"
           controller-changed="onControllerChanged(oldController, oldIndex, newController, newIndex)">
 
-          <ion-tab title="Home">
+          <ion-tab title="Home" icon="ion-home">
             <header class="bar bar-header bar-positive">
               <h1 class="title"><i class="icon ion-android-book"></i> Read Now</h1>
             </header>
             <ion-content class="has-header has-subheader" on-refresh="onRefresh()" on-scroll="scroll(scrollTop, scrollLeft)">
             </ion-content>
           </ion-tab>
-          <ion-tab title="Friends">
+          <ion-tab title="Friends" icon="ion-search">
             <header class="bar bar-header bar-positive">
               <h1 class="title">Friends</h1>
             </header>
             <ion-content class="has-header has-subheader" on-refresh="onRefresh()" on-scroll="scroll(scrollTop, scrollLeft)">
             </ion-content>
           </ion-tab>
-          <ion-tab title="About">
+          <ion-tab title="About" icon="ion-heart">
             <header class="bar bar-header bar-positive">
               <h1 class="title">About</h1>
             </header>
