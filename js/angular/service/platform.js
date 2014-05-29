@@ -16,7 +16,8 @@ IonicModule
 
 .constant('$ionicPlatformDefaultsAndroid', {
   '$ionicNavBarConfig': {
-    transition: 'no-animation'
+    transition: 'no-animation',
+    titleAlign: 'left'
   },
   '$ionicNavViewConfig': {
     transition: 'fade-implode'

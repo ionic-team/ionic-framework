@@ -5,6 +5,23 @@
  * Platform specific tweaks
  */
 
+.platform-android {
+
+  font-family: 'Roboto';
+
+  h1, h2, h3, h4, h5 {
+    font-family: 'Roboto';
+  }
+
+  .tab-item {
+    font-family: 'Roboto';
+  }
+
+  .bar .title {
+    text-align: left;
+  }
+}
+
 .platform-ios7.platform-cordova {
   // iOS7 has a status bar which sits on top of the header.
   // Bump down everything to make room for it. However, if
