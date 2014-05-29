@@ -114,7 +114,7 @@ function( $ionicViewService,   $state,   $compile,   $controller,   $animate) {
     compile: function (element, attr, transclude) {
       return function(scope, element, attr, navViewCtrl) {
         var viewScope, viewLocals,
-          name = attr[directive.name] || attr.name || '',
+          name = scope.$eval(attr[directive.name]) || scope.$eval(attr.name) || '',
           onloadExp = attr.onload || '',
           initialView = transclude(scope);
 
