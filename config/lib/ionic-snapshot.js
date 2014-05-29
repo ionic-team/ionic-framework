@@ -105,6 +105,7 @@ var IonicSnapshot = function(options) {
                 capability_test_id: self.capabilityTestId,
                 spec_id: spec.id,
                 suite_id: spec.suite.id,
+                platform_id: self.platformId,
                 description: spec.getFullName(),
                 png_base64: pngBase64,
                 url: currentAppUrl,
