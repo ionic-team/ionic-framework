@@ -22,7 +22,8 @@ IonicModule
   'android': {
     '$ionicNavBarConfig': {
       transition: 'no-animation',
-      titleAlign: 'left'
+      titleAlign: 'left',
+      backButtonIcon: 'ion-android-arrow-back'
     },
     '$ionicNavViewConfig': {
       transition: 'fade-implode'
