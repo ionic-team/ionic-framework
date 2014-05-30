@@ -7,6 +7,12 @@
 
 .platform-android {
 
+  .back-button {
+    &.ion-android-arrow-back:before {
+      font-size: 12px;
+    }
+  }
+
   /*
   font-family: 'Roboto';
 
