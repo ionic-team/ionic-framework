@@ -177,6 +177,9 @@
       }
     }
 
+    &.back-button {
+      padding: 0;
+    }
     &.back-button.active,
     &.back-button.activated {
       opacity: 1;
