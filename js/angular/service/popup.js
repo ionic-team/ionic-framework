@@ -416,17 +416,17 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
   function focusInputOrButton(element) {
     var focusOn;
     var inputs = element[0].querySelectorAll('input[autofocus]');
-		if (inputs.length) {
-			focusOn = inputs[0];
-		} else {
-			var inputs = element[0].querySelectorAll('input');
-			if (inputs.length) {
-				focusOn = inputs[0];
-			} else {
-				inputs = element[0].querySelectorAll('button');
-				focusOn = inputs[inputs.length-1];
-			}
-		}
+	if (inputs.length) {
+	  focusOn = inputs[0];
+	} else {
+	  var inputs = element[0].querySelectorAll('input');
+	  if (inputs.length) {
+	  	focusOn = inputs[0];
+	  } else {
+	  	inputs = element[0].querySelectorAll('button');
+	  	focusOn = inputs[inputs.length-1];
+	  }
+    }
     if(focusOn) {
       focusOn.focus();
     }
