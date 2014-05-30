@@ -8,9 +8,20 @@
 .platform-android {
 
   .back-button {
+    margin-left: -3px;
     &.ion-android-arrow-back:before {
       font-size: 12px;
     }
+  }
+
+  .back-button:not(.ng-hide) + .left-buttons + .title {
+    // Don't allow normal titles in this mode
+    display: none;
+  }
+
+  .bar .title {
+    text-align: left;
+    font-weight: normal;
   }
 
   /*
@@ -24,10 +35,6 @@
     font-family: 'Roboto', $font-family-base;
   }
 
-  .bar .title {
-    text-align: left;
-    font-weight: normal;
-  }
 
   input, button, select, textarea {
     font-family: 'Roboto', $font-family-base;

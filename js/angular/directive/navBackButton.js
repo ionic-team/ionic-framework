@@ -64,10 +64,11 @@ IonicModule
 .directive('ionNavBackButton', [
   '$animate',
   '$rootScope',
+  '$sanitize',
 
   '$ionicNavBarConfig',
 
-function($animate, $rootScope, $ionicNavBarConfig) {
+function($animate, $rootScope, $sanitize, $ionicNavBarConfig) {
   var backIsShown = false;
   //If the current viewstate does not allow a back button,
   //always hide it.
@@ -86,6 +87,7 @@ function($animate, $rootScope, $ionicNavBarConfig) {
       }
 
       return function($scope, $element, $attr, navBarCtrl) {
+        console.log($attr.textFromTitle);
         if (!$attr.ngClick) {
           $scope.$navBack = navBarCtrl.back;
           $element.on('click', function(event){
@@ -94,10 +96,12 @@ function($animate, $rootScope, $ionicNavBarConfig) {
             });
           });
         }
-
         //Make sure both that a backButton is allowed in the first place,
         //and that it is shown by the current view.
         $scope.$watch(function() {
+          if(typeof $attr.fromTitle !== 'undefined') {
+            $element[0].innerHTML = '<span class="back-button-title">' + $sanitize($scope.oldTitle) + '</span>';
+          }
           return !!(backIsShown && $scope.backButtonShown);
         }, ionic.animationFrameThrottle(function(show) {
           if (show) $animate.removeClass($element, 'ng-hide');
