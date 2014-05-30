@@ -15,6 +15,10 @@
     .button {
       line-height: 40px;
     }
+
+    .button-icon:before {
+      font-size: 24px;
+    }
   }
 
   .back-button {
@@ -39,7 +43,7 @@
     border-bottom-width: 2px;
     text-transform: uppercase;
     margin-top: 10px;
-    font-size: 15px;
+    font-size: 14px;
   }
   .item {
     border-left-width: 0;
