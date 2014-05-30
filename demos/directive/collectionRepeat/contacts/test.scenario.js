@@ -5,11 +5,13 @@ component: collectionRepeat
 it('should scroll to the bottom', function(){
   var ele = element(by.css('.bar-header .button'));
   ele.click();
+  browser.sleep(200);
 });
 
 it('should scroll to the top', function(){
   var ele = element(by.css('.bar-header'));
   ele.click();
+  browser.sleep(200);
 });
 
 it('should filter by juan', function(){

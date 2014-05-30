@@ -31,67 +31,66 @@ var POPUP_TPL =
  * A few basic examples, see below for details about all of the options available.
  *
  * ```js
- * angular.module('mySuperApp', ['ionic'])
- * .controller(function($scope, $ionicPopup, $timeout) {
+ *angular.module('mySuperApp', ['ionic'])
+ *.controller('PopupCtrl',function($scope, $ionicPopup, $timeout) {
  *
- *  // Triggered on a button click, or some other target
- *  $scope.showPopup = function() {
- *    $scope.data = {}
+ * // Triggered on a button click, or some other target
+ * $scope.showPopup = function() {
+ *   $scope.data = {}
  *
- *    // An elaborate, custom popup
- *    var myPopup = $ionicPopup.show({
- *      template: '<input type="password" ng-model="data.wifi">',
- *      title: 'Enter Wi-Fi Password',
- *      subTitle: 'Please use normal things',
- *      scope: $scope,
- *      buttons: [
- *        { text: 'Cancel' },
- *        {
- *          text: '<b>Save</b>',
- *          type: 'button-positive',
- *          onTap: function(e) {
- *            if (!$scope.data.wifi) {
- *              //don't allow the user to close unless he enters wifi password
- *              e.preventDefault();
- *            } else {
- *              return $scope.data.wifi;
- *            }
- *          }
- *        },
- *      ]
+ *   // An elaborate, custom popup
+ *   var myPopup = $ionicPopup.show({
+ *     template: '<input type="password" ng-model="data.wifi">',
+ *     title: 'Enter Wi-Fi Password',
+ *     subTitle: 'Please use normal things',
+ *     scope: $scope,
+ *     buttons: [
+ *       { text: 'Cancel' },
+ *       {
+ *         text: '<b>Save</b>',
+ *         type: 'button-positive',
+ *         onTap: function(e) {
+ *           if (!$scope.data.wifi) {
+ *             //don't allow the user to close unless he enters wifi password
+ *             e.preventDefault();
+ *           } else {
+ *             return $scope.data.wifi;
+ *           }
+ *         }
+ *       },
+ *     ]
+ *   });
+ *   myPopup.then(function(res) {
+ *     console.log('Tapped!', res);
+ *   });
+ *   $timeout(function() {
+ *      myPopup.close(); //close the popup after 3 seconds for some reason
+ *   }, 3000);
+ *  };
+ *  // A confirm dialog
+ *  $scope.showConfirm = function() {
+ *    var confirmPopup = $ionicPopup.confirm({
+ *      title: 'Consume Ice Cream',
+ *      template: 'Are you sure you want to eat this ice cream?'
  *    });
- *    myPopup.then(function(res) {
- *      console.log('Tapped!', res);
+ *    confirmPopup.then(function(res) {
+ *      if(res) {
+ *        console.log('You are sure');
+ *      } else {
+ *        console.log('You are not sure');
+ *      }
  *    });
- *    $timeout(function() {
- *       myPopup.close(); //close the popup after 3 seconds for some reason
- *    }, 3000);
+ *  };
  *
- *    // A confirm dialog
- *    $scope.showConfirm = function() {
- *      var confirmPopup = $ionicPopup.confirm({
- *        title: 'Consume Ice Cream',
- *        template: 'Are you sure you want to eat this ice cream?'
- *      });
- *      confirmPopup.then(function(res) {
- *        if(res) {
- *          console.log('You are sure');
- *        } else {
- *          console.log('You are not sure');
- *        }
- *      });
- *    };
- *
- *    // An alert dialog
- *    $scope.showAlert = function() {
- *      var alertPopup = $ionicPopup.alert({
- *        title: 'Don\'t eat that!',
- *        template: 'It might taste good'
- *      });
- *      alertPopup.then(function(res) {
- *        console.log('Thank you for not eating my delicious ice cream cone');
- *      });
- *    };
+ *  // An alert dialog
+ *  $scope.showAlert = function() {
+ *    var alertPopup = $ionicPopup.alert({
+ *      title: 'Don\'t eat that!',
+ *      template: 'It might taste good'
+ *    });
+ *    alertPopup.then(function(res) {
+ *      console.log('Thank you for not eating my delicious ice cream cone');
+ *    });
  *  };
  *});
  *```

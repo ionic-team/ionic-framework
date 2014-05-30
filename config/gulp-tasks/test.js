@@ -1,8 +1,11 @@
-var cp = require('child_process');
-var connect = require('connect');
-var http = require('http');
+var _ = require('lodash');
 var buildConfig = require('../build.config');
+var connect = require('connect');
+var cp = require('child_process');
+var gutil = require('gulp-util');
+var http = require('http');
 var karma = require('karma').server;
+var uuid = require('node-uuid');
 
 var karmaConf = require('../karma.conf.js');
 var karmaSauceConf = require('../karma-sauce.conf.js');
@@ -14,11 +17,12 @@ module.exports = function(gulp, argv) {
    */
   var sauceInstance;
   gulp.task('sauce-connect', function(done) {
+    gutil.log('sauce-connect parameters: ', _.pick(process.env, ['SAUCE_USER', 'SAUCE_KEY', 'SAUCE_TUNNEL_ID']));
     require('sauce-connect-launcher')({
       username: process.env.SAUCE_USER,
       accessKey: process.env.SAUCE_KEY,
-      verbose: true,
-      tunnelIdentifier: process.env.TRAVIS_BUILD_NUMBER
+      tunnelIdentifier: process.env.SAUCE_TUNNEL_ID || 0,
+      verbose: true
     }, function(err, instance) {
       if (err) return done('Failed to launch sauce connect!');
       sauceInstance = instance;
@@ -26,9 +30,9 @@ module.exports = function(gulp, argv) {
     });
   });
 
-  gulp.task('sauce-disconnect', function(done) {
-    sauceInstance && sauceInstance.close(done) || done();
-  });
+  function sauceDisconnect(done) {
+    sauceInstance ? sauceInstance.close(done) : done();
+  }
 
 
   /*
@@ -44,50 +48,73 @@ module.exports = function(gulp, argv) {
 
   gulp.task('karma-watch', function(done) {
     karmaConf.singleRun = false;
-
     karma.start(karmaConf, done);
   });
 
-  gulp.task('karma-sauce', ['sauce-connect'], function(done) {
-    return karma.start(karmaSauceConf, function() {
-      sauceDisconnect(done);
-    });
+  gulp.task('karm-sauce', ['run-karma-sauce'], sauceDisconnect);
+  gulp.task('run-karma-sauce', ['sauce-connect'], function(done) {
+    return karma.start(karmaSauceConf, done);
   });
 
 
   /*
    * Protractor Snapshot Tests
    */
-  var connectServer;
-  gulp.task('snapshot-server', function() {
+  var protractorHttpServer;
+  gulp.task('protractor-server', function() {
     var app = connect().use(connect.static(__dirname + '/../../dist/ionic-demo'));
-    connectServer = http.createServer(app).listen(buildConfig.protractorPort);
+    protractorHttpServer = http.createServer(app).listen(buildConfig.protractorPort);
   });
 
   gulp.task('snapshot', ['snapshot-server'], function(done) {
-    var uuid = require('node-uuid');
-    var testId = uuid.v4();
-
-    return protractor(done, [
-      'config/protractor.conf.js',
-      '--browser chrome',
-      '--params.platform_id=chrome_desktop_narrow',
-      '--params.width=400',
-      '--params.height=800',
-      '--params.test_id=' + testId,
-    ]);
+    snapshot(done, 'config/protractor.conf.js');
   });
 
-  gulp.task('snapshot-sauce', ['sauce-connect', 'snapshot-server'], function(done) {
-    return protractor(done, ['config/protractor-sauce.conf.js']);
+  gulp.task('snapshot-sauce', ['run-snapshot-sauce'], sauceDisconnect);
+  gulp.task('run-snapshot-sauce', ['sauce-connect', 'protractor-server'], function(done) {
+    snapshot(done, 'config/protractor-sauce.conf.js');
   });
+
+  var snapshotValues = _.merge({
+    browser: 'chrome',
+    platform: 'linux',
+    params: {
+      platform_id: 'chrome_local_test',
+      width: 400,
+      height: 800,
+      test_id: uuid.v4()
+    }
+  }, argv);
+  function snapshot(done, configFile) {
+    var protractorArgs = [
+      '--browser <%= browser %>',
+      '--platform <%= platform %>',
+      '--params.platform_id=<%= params.platform_id %>',
+      '--params.width=<%= params.width %>',
+      '--params.height=<%= params.height %>',
+      '--params.test_id=<%= params.test_id %>',
+    ].map(function(argument) {
+      return _.template(argument, snapshotValues);
+    });
+
+    return protractor(done, [configFile].concat(protractorArgs));
+  }
 
   function protractor(done, args) {
-    cp.spawn('protractor', args, { stdio: 'inherit' })
-    .on('exit', function(code) {
-      connectServer && connectServer.close();
-      if (code) return done('Protector test(s) failed. Exit code: ' + code);
-      done();
+    var child = cp.spawn('protractor', args, {
+      stdio: [process.stdin, process.stdout, 'pipe']
+    });
+
+    var finish = _.once(function(err) {
+      err && done(err) || done();
+      protractorHttpServer.close();
+    });
+
+    child.stderr.on('data', function(data) {
+      finish('Protractor tests failed. Error:', data.toString());
+    });
+    child.on('exit', function() {
+      finish();
     });
   }
 };

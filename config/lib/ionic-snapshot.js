@@ -2,7 +2,11 @@
 var IonicSnapshot = function(options) {
 
   // modules
+  var _ = require('lodash');
   var request = require('request');
+
+  var colors = require('gulp-util').colors;
+  var log = console.log.bind(console, '[' + colors.cyan('IonicReporter') + ']');
 
   var IonicReporter = function(options) {
     var self = this;
@@ -23,8 +27,6 @@ var IonicSnapshot = function(options) {
     self.accessKey = options.accessKey;
     self.ptor = protractor.getInstance();
 
-    console.log('Test Id:', self.testId);
-
     self.flow = protractor.promise.controlFlow();
 
     // set browser size
@@ -38,9 +40,7 @@ var IonicSnapshot = function(options) {
 
     self.platformId = browser.params.platform_id;
 
-    console.log('width', self.width);
-    console.log('height', self.height);
-    console.log('platformId', self.platformId);
+    log('init:', _.pick(self, ['testId', 'appId', 'width', 'height', 'platformId']));
 
     self.flow.execute(function(){
       var d = protractor.promise.defer();
@@ -51,6 +51,7 @@ var IonicSnapshot = function(options) {
           compare: self.compare,
           test_id: self.testId,
           platform_id: self.platformId,
+          app_id: self.appId,
           width: self.width,
           height: self.height,
           browser: capabilities.get('browserName'),
@@ -58,19 +59,20 @@ var IonicSnapshot = function(options) {
           version: capabilities.get('version')
         };
 
+        log('init with data:', data);
+
         request.post(
           'http://' + self.domain + '/' + self.groupId + '/' + self.appId + '/test',
           { form: data },
           function (error, response, body) {
-            console.log(body);
+            log('init response:', body);
             if(!error && response.statusCode == 200) {
               try {
                 var jsonData = JSON.parse(body);
                 self.capabilityTestId = jsonData.capability_test_id;
                 self.compareResultId = jsonData.compare_result_id;
               } catch(e) {
-                console.error('Error creating test');
-                console.error(e);
+                log(colors.red('init error creating test:'), e);
               }
             }
             d.fulfill();
@@ -105,6 +107,7 @@ var IonicSnapshot = function(options) {
                 capability_test_id: self.capabilityTestId,
                 spec_id: spec.id,
                 suite_id: spec.suite.id,
+                platform_id: self.platformId,
                 description: spec.getFullName(),
                 png_base64: pngBase64,
                 url: currentAppUrl,
@@ -118,15 +121,14 @@ var IonicSnapshot = function(options) {
                 'http://' + self.domain + '/screenshot',
                 { form: data },
                 function (error, response, body) {
-                  console.log(body);
+                  log('reportSpecResults:', body);
                   try {
                     var jsonData = JSON.parse(body);
                     self.totalCompares++;
                     self.totalRMS = self.totalRMS + jsonData.rms;
                     self.highestRMS = Math.max(self.highestRMS, jsonData.rms);
                   } catch(e) {
-                    console.error('Error posting screenshot');
-                    console.error(e);
+                    log(colors.red('reportSpecResults error posting screenshot:'), e);
                   }
 
                   var next = self.flow.getSchedule().toString();
@@ -165,7 +167,7 @@ var IonicSnapshot = function(options) {
         'http://' + self.domain + '/' + self.groupId + '/' + self.appId + '/' + self.testId + '/' + self.compareResultId + '/complete',
         { form: data },
         function (error, response, body) {
-          console.log(body);
+          log('onComplete:', body);
           try {
             var jsonData = JSON.parse(body);
             if(jsonData.compare_url) {
@@ -173,7 +175,7 @@ var IonicSnapshot = function(options) {
               spawn('open', [jsonData.compare_url]);
             }
           } catch(e) {
-            console.error(e);
+            log(colors.red('onComplete error:'), e);
           }
           d.fulfill();
         }
@@ -186,7 +188,7 @@ var IonicSnapshot = function(options) {
   options.testId = browser.params.test_id;
 
   if(!options.testId) {
-    console.error('--params.test_id w/ unique ID required');
+    log(colors.red('--params.test_id error:'), 'unique ID required');
     browser.driver.quit();
     return;
   }

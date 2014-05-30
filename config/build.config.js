@@ -5,7 +5,7 @@ module.exports = {
   dist: 'dist',
   releasePostUrl: fs.readFileSync('config/RELEASE_POST_URL'),
 
-  protractorPort: 8765,
+  protractorPort: 8876,
 
   banner:
     '/*!\n' +
