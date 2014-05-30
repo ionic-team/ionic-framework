@@ -77,6 +77,7 @@ module.exports = function(gulp, argv) {
 
   var snapshotValues = _.merge({
     browser: 'chrome',
+    platform: 'linux',
     params: {
       platform_id: 'chrome_local_test',
       width: 400,
@@ -87,6 +88,7 @@ module.exports = function(gulp, argv) {
   function snapshot(done, configFile) {
     var protractorArgs = [
       '--browser <%= browser %>',
+      '--platform <%= platform %>',
       '--params.platform_id=<%= params.platform_id %>',
       '--params.width=<%= params.width %>',
       '--params.height=<%= params.height %>',

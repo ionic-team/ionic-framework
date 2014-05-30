@@ -2,13 +2,12 @@ machine:
   node:
     version: v0.10.26
   environment:
-    SNAPSHOT_BROWSER: chrome
-    SNAPSHOT_BROWSER_ID: chrome_desktop_narrow
-    SNAPSHOT_WIDTH: 400
-    SNAPSHOT_HEIGHT: 800
+    SAUCE_TUNNEL_ID: $CIRCLE_BUILD_NUM
 dependencies:
   pre:
     - npm install -g protractor gulp
 test:
   override:
-    - ./scripts/snapshot/run.sh
+    - echo "SAUCE_TUNNEL_ID=$SAUCE_TUNNEL_ID"
+    - ./scripts/circle/run.sh
+      parallel: true
