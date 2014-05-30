@@ -7,19 +7,39 @@
 
 .platform-android {
 
+  .bar {
+    padding: 0;
+
+    line-height: 40px;
+
+    .button {
+      line-height: 40px;
+    }
+  }
+
   .back-button {
+    &:before {
+      line-height: 40px;
+    }
     margin-left: -3px;
+    padding: 0px 2px !important;
     &.ion-android-arrow-back:before {
       font-size: 12px;
+    }
+
+    &.back-button.active,
+    &.back-button.activated {
+      background-color: rgba(0,0,0,0.1);
     }
   }
 
   .item-divider {
     background: none;
     border-top-width: 0;
-    border-bottom-width: 3px;
+    border-bottom-width: 2px;
     text-transform: uppercase;
     margin-top: 10px;
+    font-size: 15px;
   }
   .item {
     border-left-width: 0;
