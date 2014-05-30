@@ -14,6 +14,22 @@
     }
   }
 
+  .item-divider {
+    background: none;
+    border-top-width: 0;
+    border-bottom-width: 3px;
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+  .item {
+    border-left-width: 0;
+    border-right-width: 0;
+  }
+
+  .item-divider ~ .item:not(.item-divider) {
+    border-bottom-width: 0;
+  }
+
   .back-button:not(.ng-hide) + .left-buttons + .title {
     // Don't allow normal titles in this mode
     display: none;

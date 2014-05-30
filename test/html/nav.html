@@ -22,7 +22,20 @@
     <script id="page1.html" type="text/ng-template">
       <ion-view title="Page 1">
         <ion-content padding="true">
-          <a href="#/page2" class="button button-positive">Page 2</a>
+          <ion-list>
+            <div class="item item-divider">
+              Things
+            </div>
+            <ion-item ng-repeat="item in items" href="#/page2">
+              Item {{$index}}
+            </ion-item>
+            <div class="item item-divider">
+              Stuff
+            </div>
+            <ion-item ng-repeat="item in items2" href="#/page2">
+              Item {{$index}}
+            </ion-item>
+          </ion-list>
         </ion-content>
       </ion-view>
     </script>
@@ -48,7 +61,8 @@
         $stateProvider
           .state('page1', {
             url: "/page1",
-            templateUrl: "page1.html"
+            templateUrl: "page1.html",
+            controller: 'Page1Ctrl'
           })
           .state('page2', {
             url: "/page2",
@@ -60,7 +74,18 @@
           })
 
          $urlRouterProvider.otherwise("/page1");
+       })
 
+       .controller('Page1Ctrl', function($scope) {
+         $scope.items = [];
+         for(var i = 0; i < 4; i++) {
+          $scope.items.push({});
+         }
+
+         $scope.items2 = [];
+         for(var i = 0; i < 4; i++) {
+          $scope.items2.push({});
+         }
        });
     </script>
   </body>
