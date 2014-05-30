@@ -13,7 +13,9 @@ function init {
 function run {
   cd ../..
 
-  SNAPSHOT_TEST_ID=$(git rev-parse HEAD)
+  export SNAPSHOT_TEST_ID=$(git rev-parse HEAD)
+  export SAUCE_TUNNEL_ID=$CIRCLE_BUILD_DUM
+  export SAUCE_BUILD_ID=$CIRCLE_SHA1
 
   gulp demos --demo-version=nightly
 

@@ -19,7 +19,7 @@ module.exports = function(gulp, argv) {
     require('sauce-connect-launcher')({
       username: process.env.SAUCE_USER,
       accessKey: process.env.SAUCE_KEY,
-      tunnelIdentifier: process.env.TRAVIS_BUILD_NUMBER
+      tunnelIdentifier: process.env.SAUCE_TUNNEL_ID
     }, function(err, instance) {
       if (err) return done('Failed to launch sauce connect!');
       sauceInstance = instance;

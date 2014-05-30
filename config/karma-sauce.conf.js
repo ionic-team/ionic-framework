@@ -8,7 +8,7 @@ module.exports = _.assign({}, shared, {
     username: process.env.SAUCE_USER,
     accessKey: process.env.SAUCE_KEY,
     startConnect: false,
-    tunnelIdentifier: process.env.TRAVIS_BUILD_NUMBER
+    tunnelIdentifier: process.env.SAUCE_TUNNEL_ID || 0
   },
   //Saucelabs mobile emulation (esp android emulator)
   //can be really slow sometimes, we need to give it time to connectk
