@@ -1,22 +1,24 @@
 #!/bin/bash
 
 function init {
+  # Set variables if they aren't, for local testing
   if [[ "$SNAPSHOT_BROWSER" == "" ]]; then
     export SNAPSHOT_BROWSER=chrome
     export SNAPSHOT_BROWSER_ID=chrome_desktop_test
     export SNAPSHOT_WIDTH=400
     export SNAPSHOT_HEIGHT=800
     export SNAPSHOT_TEST_ID=$RANDOM
+    export SAUCE_TUNNEL_ID=$RANDOM
+    export SAUCE_BUILD_ID=$RANDOM
+  else
+    export SNAPSHOT_TEST_ID=$CIRCLE_SHA1
+    export SAUCE_TUNNEL_ID=$CIRCLE_BUILD_NUM
+    export SAUCE_BUILD_ID=$CIRCLE_SHA1
   fi
 }
 
 function run {
   cd ../..
-
-  export SNAPSHOT_TEST_ID=$(git rev-parse HEAD)
-  export SAUCE_TUNNEL_ID=$CIRCLE_BUILD_DUM
-  export SAUCE_BUILD_ID=$CIRCLE_SHA1
-
   gulp demos --demo-version=nightly
 
   gulp snapshot-sauce \

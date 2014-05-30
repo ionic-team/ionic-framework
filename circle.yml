@@ -9,6 +9,6 @@ machine:
 dependencies:
   pre:
     - npm install -g protractor gulp
-test: 
+test:
   override:
     - ./scripts/shippable/ci.sh
