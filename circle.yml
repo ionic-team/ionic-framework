@@ -11,4 +11,4 @@ dependencies:
     - npm install -g protractor gulp
 test:
   override:
-    - ./scripts/shippable/ci.sh
+    - ./scripts/snapshot/run.sh
