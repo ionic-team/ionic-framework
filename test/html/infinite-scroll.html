@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html ng-app="ionicApp">
   <head>
     <meta charset="utf-8">
@@ -22,7 +22,7 @@
       <ion-infinite-scroll on-infinite="onInfinite()" distance="5px"></ion-infinite-scroll>
 
     </ion-content>
-    
+
   <script>
   angular.module('ionicApp', ['ionic'])
 
@@ -46,7 +46,7 @@
     for(var i = 0; i < 10; i++) {
       $scope.data.items.push({ title: 'Item ' + i });
     }
-                        
+
   }]);
   </script>
 
