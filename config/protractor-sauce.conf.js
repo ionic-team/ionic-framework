@@ -8,10 +8,11 @@ exports.config = _.merge({}, config, {
   sauceKey: process.env.SAUCE_KEY,
 
   capabilities: {
-    build: process.env.TRAVIS_BUILD_NUMBER,
-    'tunnel-identifier': process.env.TRAVIS_BUILD_NUMBER,
+    build: process.env.SAUCE_BUILD_ID || 1,
+    'tunnel-identifier': process.env.SAUCE_TUNNEL_ID || 0,
     name: 'Ionic!',
-    browserName: 'chrome'
+    browserName: 'safari',
+    platform: 'OS X 10.9'
   }
 });
 

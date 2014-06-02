@@ -233,7 +233,7 @@
     },
     /**
      * @ngdoc method
-     * @name ionic.DomUtil#getParentWithClass
+     * @name ionic.DomUtil#getParentOrSelfWithClass
      * @param {DOMElement} element
      * @param {string} className
      * @returns {DOMElement} The closest parent or self matching the

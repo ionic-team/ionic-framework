@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html ng-app="navTest">
   <head>
     <meta charset="utf-8">
@@ -89,10 +90,10 @@
           link: function($scope, $element, $attr) {
             var starty = $scope.$eval($attr.headerShrink) || 0;
             var shrinkAmt;
-            
+
             var header = $document[0].body.querySelector('.bar-header');
             var headerHeight = header.offsetHeight;
-            
+
             $element.bind('scroll', function(e) {
               if(e.detail.scrollTop > starty) {
                 // Start shrinking
@@ -106,7 +107,7 @@
         }
       })
 
-    
+
 
       .directive('hidesHeader', function() {
         return {
@@ -160,4 +161,3 @@
     </script>
   </body>
 </html>
-

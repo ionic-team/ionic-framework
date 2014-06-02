@@ -86,7 +86,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
      *    Default: 'slide-in-up'
      *  - `{boolean=}` `focusFirstInput` Whether to autofocus the first input of
      *    the modal when shown.  Default: false.
-     *  - `{boolean=} `backdropClickToClose` Whether to close the modal on clicking the backdrop.
+     *  - `{boolean=}` `backdropClickToClose` Whether to close the modal on clicking the backdrop.
      *    Default: true.
      */
     initialize: function(opts) {
