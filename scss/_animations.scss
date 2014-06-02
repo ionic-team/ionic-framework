@@ -354,7 +354,6 @@ $ios7-transition-duration: 340ms;
   > .ng-enter, &.ng-enter {
     /* NEW content placed far RIGHT BEFORE it slides IN from the RIGHT */
     @include translate3d(100%, 0, 0);
-    z-index: 2;
   }
   > .ng-leave, &.ng-leave {
     z-index: 1;
@@ -384,7 +383,6 @@ $ios7-transition-duration: 340ms;
   > .ng-enter, &.ng-enter {
     /* NEW content placed far LEFT BEFORE it slides IN from the LEFT */
     @include translate3d(-15%, 0, 0);
-    z-index: 1;
   }
   > .ng-leave, &.ng-leave {
     z-index: 2;
