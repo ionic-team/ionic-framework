@@ -1,9 +1,11 @@
 machine:
   node:
     version: v0.10.26
-dependencies:
-  pre:
-    - npm install -g protractor gulp
 test:
   override:
-    - ./scripts/circle/run.sh: {parallel: true}
+    - ./scripts/circle/test.sh --index=$CIRCLE_NODE_INDEX --total=$CIRCLE_NODE_TOTAL: {parallel: true}
+deployment:
+  tasks:
+    branch: master
+    commands:
+      - ./scripts/circle/deploy.sh --is-release=false --version-name="nightly": {parallel: true}

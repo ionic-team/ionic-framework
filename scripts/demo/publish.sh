@@ -4,28 +4,23 @@ ARG_DEFS=(
   "--version-name=(.*)"
 )
 
-function init {
-  DEMO_DIR=$IONIC_DIST_DIR/ionic-demo
+echo "##### "
+echo "##### demo/publish.sh"
+echo "#####"
 
-  echo "-- Cloning ionic-demo"
-  rm -rf $DEMO_DIR
-  mkdir -p $DEMO_DIR
-  git clone https://driftyco:$GH_TOKEN@github.com/driftyco/ionic-demo \
-    $DEMO_DIR \
-    --depth=1 \
-    --branch=gh-pages
+function init {
+  DEMO_DIR=$HOME/ionic-demo
+
+  ../clone/clone.sh --repository="driftyco/ionic-demo" \
+    --directory="$DEMO_DIR" \
+    --branch="gh-pages"
 }
 
 function run {
-
-  echo "#####################################"
-  echo "## Updating ionic-demo...           #"
-  echo "#####################################"
-
-  cd $IONIC_DIR
+  cd ../..
 
   rm -rf $DEMO_DIR/$VERSION_NAME
-  gulp demos --release --demo-version=$VERSION_NAME
+  node_modules/.bin/gulp demos --release --demo-version=$VERSION_NAME --dist=$DEMO_DIR
 
   cd $DEMO_DIR
 
@@ -39,7 +34,7 @@ function run {
     git commit -am "demos: update for $VERSION_NAME"
     git push -q origin gh-pages
 
-    echo "-- Updated demos for $VERSION_NAME succesfully!"
+    echo "-- Demos published $VERSION_NAME succesfully!"
   fi
 }
 

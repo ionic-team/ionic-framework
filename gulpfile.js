@@ -95,7 +95,8 @@ gulp.task('demos', function(done) {
   dgeni.generator(config)().then(function() {
     gutil.log('Demos for', gutil.colors.cyan(demoVersion), 'generated!');
     gutil.log('Building ionic into demo folder...');
-    cp.spawn('gulp', [
+    cp.spawn('node', [
+      __dirname + '/node_modules/.bin/gulp',
       'build',
       IS_RELEASE_BUILD ? '--release' : '--no-release',
       '--dist=' + config.rendering.outputFolder + '/' +

@@ -26,7 +26,7 @@
     "connect": "^2.13.0",
     "through": "^2.3.4",
     "gulp-if": "0.0.5",
-    "gulp": "^3.5.5",
+    "gulp": "^3.7.0",
     "canonical-path": "0.0.2",
     "lodash": "^2.4.1",
     "winston": "^0.7.2",
@@ -51,7 +51,9 @@
     "dgeni-packages": "^0.9.3",
     "request": "^2.36.0",
     "node-uuid": "^1.4.1",
-    "js-yaml": "^3.0.2"
+    "js-yaml": "^3.0.2",
+    "protractor": "^0.23.1",
+    "q": "^1.0.1"
   },
   "licenses": [
     {

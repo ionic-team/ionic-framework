@@ -17,8 +17,8 @@ module.exports = _.assign({}, shared, {
   browserNoActivityTimeout: 60 * 1000,
   browserDisconnectTolerance: 2,
   browsers: [
-    // 'sauce_ios',
-    // 'sauce_safari',
+    'sauce_ios',
+    'sauce_safari',
     // 'sauce_android',
     'sauce_chrome',
     // 'sauce_firefox',

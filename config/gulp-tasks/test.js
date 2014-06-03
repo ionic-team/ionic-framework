@@ -101,7 +101,7 @@ module.exports = function(gulp, argv) {
   }
 
   function protractor(done, args) {
-    var child = cp.spawn('protractor', args, {
+    var child = cp.spawn('node', [__dirname+'/../../node_modules/.bin/protractor'].concat(args), {
       stdio: [process.stdin, process.stdout, 'pipe']
     });
 

@@ -1,36 +1,37 @@
 
-echo "#################################"
-echo "#### Update CDN #################"
-echo "#################################"
-
 # Version name is "nightly" or a version number
 ARG_DEFS=(
-  "--version=(.*)"
   "--version-name=(.*)"
 )
 
+echo "##### "
+echo "##### cdn/publish.sh"
+echo "#####"
+
 function init {
-  CDN_DIR=$IONIC_DIST_DIR/ionic-code
-
-  echo "-- Cloning ionic-code..."
-
-  rm -rf $CDN_DIR
-  mkdir -p $CDN_DIR
-  git clone https://driftyco:$GH_TOKEN@github.com/driftyco/ionic-code.git \
-    $CDN_DIR \
-    --branch gh-pages \
-    --depth=1
+  CDN_DIR=$HOME/ionic-code
+  ../clone/clone.sh --repository="driftyco/ionic-code" \
+    --directory="$CDN_DIR" \
+    --branch="gh-pages"
 }
 
 function run {
+  cd ../..
 
   VERSION_DIR=$CDN_DIR/$VERSION_NAME
+  VERSION=$(readJsonProp "package.json" "version")
 
   rm -rf $VERSION_DIR
   mkdir -p $VERSION_DIR
-  cd $VERSION_DIR
 
-  cp -Rf $IONIC_BUILD_DIR/* $VERSION_DIR
+  node_modules/.bin/gulp build --release --dist=$VERSION_DIR
+  if [[ "$VERSION_NAME" == "nightly" ]]; then
+    node_modules/.bin/gulp changelog --standalone \
+      --html=true \
+      --subtitle="(changes since $OLD_VERSION)" \
+      --dest="$VERSION_DIR/CHANGELOG.html" \
+      --from="$(git tag | grep $OLD_VERSION)"
+  fi
 
   echo "-- Generating versions.json..."
   cd $CDN_DIR/builder
@@ -42,7 +43,7 @@ function run {
 
   git push -q origin gh-pages
 
-  echo "-- Published ionic-code to v$VERSION successfully!"
+  echo "-- Published ionic-code v$VERSION successfully!"
 }
 
 source $(dirname $0)/../utils.inc
