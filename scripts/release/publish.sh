@@ -14,11 +14,10 @@ echo "#####"
 function run {
   cd ../..
 
-  # These were bumped in the bump task
-  cp CHANGELOG.md $RELEASE_DIR
-  cp package.json $RELEASE_DIR
+  node_modules/.bin/gulp build --release --dist="$RELEASE_DIR"
+  node_modules/.bin/gulp changelog --dest="$RELEASE_DIR/CHANGELOG.md"
 
-  node_modules/.bin/gulp build --release --dist=$RELEASE_DIR
+  cp package.json $RELEASE_DIR
 
   cd $RELEASE_DIR
 

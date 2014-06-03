@@ -17,8 +17,6 @@ function run {
   replaceJsonProp "package.json" "codename" "$CODENAME"
   replaceJsonProp "package.json" "version" "$NEW_VERSION"
 
-  node_modules/.bin/gulp changelog
-
   echo "-- New Version: $NEW_VERSION"
   echo "-- New Codename: $CODENAME"
 }

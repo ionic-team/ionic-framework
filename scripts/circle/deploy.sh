@@ -1,23 +1,34 @@
 #!/bin/bash
 
 ARG_DEFS=(
-  "[--is-release=(true|false)]"
-  "--version-name=(.*)"
+  "--sha1=(.*)"
+  "--index=(.*)"
+  "--build-number=(.*)"
 )
 
 function run {
   cd ../..
 
+  # If --git-push-dryrun is set on this script, export it to all the scripts
+  export GIT_PUSH_DRYRUN=$GIT_PUSH_DRYRUN
+
   git config --global user.name 'Ionitron'
   git config --global user.email hi@ionicframework.com
 
-  if [[ "$IS_RELEASE" == "true" ]]; then
-    ./scripts/bump/release.sh --new-version="TEST"
+  git show $SHA1~1:package.json > .package.tmp.json
+  OLD_VERSION=$(readJsonProp ".package.tmp.json" "version")
+  VERSION=$(readJsonProp "package.json" "version")
+
+  if [[ "$OLD_VERSION" != "$VERSION" ]]; then
+    ./scripts/bump/release.sh --new-version="$VERSION"
+    IS_RELEASE=true
+    VERSION_NAME=$(readJsonProp "package.json" "version")
   else
-    ./scripts/bump/nightly.sh --build-number=$CIRCLE_BUILD_NUM
+    ./scripts/bump/nightly.sh --build-number=$BUILD_NUMBER
+    VERSION_NAME="nightly"
   fi
 
-  case $CIRCLE_NODE_INDEX in
+  case $INDEX in
   0)
     # Push release to ionic repo: release only
     if [[ "$IS_RELEASE" == "true" ]]; then
