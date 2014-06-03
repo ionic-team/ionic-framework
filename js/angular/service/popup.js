@@ -413,13 +413,16 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
   }
 
   function focusInputOrButton(element) {
-    var inputs = element[0].querySelectorAll('input');
-    if (!inputs.length) {
-      inputs = element[0].querySelectorAll('button');
+    var focusOn = element[0].querySelector('input[autofocus]');
+    if (!focusOn) {
+      focusOn = element[0].querySelector('input');
+      if (!focusOn) {
+        var buttons = element[0].querySelectorAll('button');
+        focusOn = buttons[buttons.length-1];
+      }
     }
-    var last = inputs[inputs.length-1];
-    if(last) {
-      last.focus();
+    if(focusOn) {
+      focusOn.focus();
     }
   }
 
