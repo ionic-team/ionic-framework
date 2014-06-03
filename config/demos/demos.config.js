@@ -9,6 +9,8 @@ module.exports = function(config) {
   config = staticSite(config);
   config.set('buildConfig', require('../build.config'));
 
+  //rendering.outputFolder set by gulp task
+
   config.merge('rendering.nunjucks.config.tags', {
     variableStart: '{$',
     variableEnd: '$}',
@@ -17,8 +19,6 @@ module.exports = function(config) {
   });
 
   config.set('logging.level', 'info');
-
-  config.set('rendering.outputFolder', path.resolve(projectBase, 'dist/ionic-demo'));
 
   config.set('rendering.templateFolders', [
     path.resolve(__dirname, 'templates')

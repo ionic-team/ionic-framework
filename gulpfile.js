@@ -67,6 +67,10 @@ gulp.task('docs', function() {
 
   var config = dgeni.loadConfig(path.join(__dirname, '/config/docs/docs.config.js'));
   config.set('currentVersion', docVersion);
+  config.set(
+    'rendering.outputFolder',
+    argv.dist ? argv.dist : path.resolve(__dirname, buildConfig.dist, 'ionic-site')
+  );
 
   return dgeni.generator(config)().then(function() {
     gutil.log('Docs for', gutil.colors.cyan(docVersion), 'generated!');
@@ -82,6 +86,11 @@ gulp.task('demos', function(done) {
 
   var config = dgeni.loadConfig(path.join(__dirname, '/config/demos/demos.config.js'));
   config.set('currentVersion', demoVersion);
+  config.set('dist', buildConfig.dist);
+  config.set(
+    'rendering.outputFolder',
+    argv.dist ? argv.dist : path.resolve(__dirname, buildConfig.dist, 'ionic-demo')
+  );
 
   dgeni.generator(config)().then(function() {
     gutil.log('Demos for', gutil.colors.cyan(demoVersion), 'generated!');
@@ -89,7 +98,8 @@ gulp.task('demos', function(done) {
     cp.spawn('gulp', [
       'build',
       IS_RELEASE_BUILD ? '--release' : '--no-release',
-      '--dist='+config.get('rendering.outputFolder')+'/'+config.get('rendering.contentsFolder')+'/ionic'
+      '--dist=' + config.rendering.outputFolder + '/' +
+        config.rendering.contentsFolder + '/ionic'
     ])
     .on('exit', done);
   });
@@ -103,9 +113,9 @@ gulp.task('watch', ['build'], function() {
 });
 
 gulp.task('changelog', function(done) {
-  var newCodename = fs.readFileSync('config/CODENAMES').toString().split('\n')[0];
+  var codename = pkg.codename;
   var file = argv.standalone ? '' : __dirname + '/CHANGELOG.md';
-  var subtitle = argv.subtitle || '"' + newCodename + '"';
+  var subtitle = argv.subtitle || '"' + codename + '"';
   var toHtml = !!argv.html;
   var dest = argv.dest || 'CHANGELOG.md';
   var from = argv.from;

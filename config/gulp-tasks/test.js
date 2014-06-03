@@ -17,12 +17,12 @@ module.exports = function(gulp, argv) {
    */
   var sauceInstance;
   gulp.task('sauce-connect', function(done) {
-    gutil.log('sauce-connect parameters: ', _.pick(process.env, ['SAUCE_USER', 'SAUCE_KEY', 'SAUCE_TUNNEL_ID']));
+    gutil.log('sauce-connect parameters: ', _.pick(process.env, ['SAUCE_USER', 'SAUCE_KEY', 'SAUCE_TUNNEL_ID', 'SAUCE_BUILD_ID']));
     require('sauce-connect-launcher')({
       username: process.env.SAUCE_USER,
       accessKey: process.env.SAUCE_KEY,
       tunnelIdentifier: process.env.SAUCE_TUNNEL_ID || 0,
-      verbose: true
+      // verbose: true
     }, function(err, instance) {
       if (err) return done('Failed to launch sauce connect!');
       sauceInstance = instance;
@@ -51,7 +51,7 @@ module.exports = function(gulp, argv) {
     karma.start(karmaConf, done);
   });
 
-  gulp.task('karm-sauce', ['run-karma-sauce'], sauceDisconnect);
+  gulp.task('karma-sauce', ['run-karma-sauce'], sauceDisconnect);
   gulp.task('run-karma-sauce', ['sauce-connect'], function(done) {
     return karma.start(karmaSauceConf, done);
   });
@@ -66,7 +66,7 @@ module.exports = function(gulp, argv) {
     protractorHttpServer = http.createServer(app).listen(buildConfig.protractorPort);
   });
 
-  gulp.task('snapshot', ['snapshot-server'], function(done) {
+  gulp.task('snapshot', ['protractor-server'], function(done) {
     snapshot(done, 'config/protractor.conf.js');
   });
 

@@ -17,14 +17,14 @@ module.exports = _.assign({}, shared, {
   browserNoActivityTimeout: 60 * 1000,
   browserDisconnectTolerance: 2,
   browsers: [
-    'sauce_ios',
+    // 'sauce_ios',
     // 'sauce_safari',
-    'sauce_android',
-    // 'sauce_chrome',
+    // 'sauce_android',
+    'sauce_chrome',
     // 'sauce_firefox',
     // 'sauce_ie9',
     // 'sauce_ie10',
-    // 'sauce_ie11'
+    // 'sauce_ie11',
   ],
   customLaunchers: {
     'sauce_ios': {

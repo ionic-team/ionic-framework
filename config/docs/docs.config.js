@@ -10,6 +10,8 @@ module.exports = function(config) {
 
   config = basePackage(config);
 
+  //rendering.outputFolder set by gulp task
+
   config.set('logging.level', 'info');
 
   config.prepend('rendering.templateFolders', [
@@ -20,8 +22,6 @@ module.exports = function(config) {
   config.set('source.projectPath', '.');
 
   config.set('versionFolderBase', 'docs');
-  config.set('rendering.outputFolder', path.resolve(projectBase, 'dist/ionic-site'));
-  //contentsFolder is set in the version-data processor
 
   config.set('processing.api-docs', {
     outputPath: 'api/${docType}/${name}/index.md',

@@ -4,7 +4,7 @@ exports.config = {
 
   // Spec patterns are relative to the location of the spec file. They may
   // include glob patterns.
-  specs: ['../dist/ionic-demo/nightly/**/*.scenario.js'],
+  specs: [__dirname + '/../dist/ionic-demo/nightly/**/*.scenario.js'],
 
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {

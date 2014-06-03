@@ -11,8 +11,7 @@ exports.config = _.merge({}, config, {
     build: process.env.SAUCE_BUILD_ID || 1,
     'tunnel-identifier': process.env.SAUCE_TUNNEL_ID || 0,
     name: 'Ionic!',
-    browserName: 'safari',
-    platform: 'OS X 10.9'
+    browserName: 'chrome'
   }
 });
 
