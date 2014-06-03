@@ -28,7 +28,7 @@ component: collectionRepeat
         collection-item-width="100 + '%'"
         ng-style="{'line-height': getItemHeight(item) + 'px'}"
         ng-class="{'item-divider': item.isLetter}">
-        <img ng-if="!item.isLetter" ng-src="http://placekitten.com/60/{{55 + ($index % 10)}}">
+        <i ng-if="!item.isLetter" class="icon" ng-class="['ion-ios7-person','ion-person','ion-android-contact','ion-android-social-user','ion-person-stalker'][$index % 5]"></i>
         {{item.letter || (item.first_name+' '+item.last_name)}}
       </a>
     </div>

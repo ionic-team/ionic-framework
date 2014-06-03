@@ -9,12 +9,14 @@ component: collectionRepeat
   top: 5px;
   color: #bbb;
 }
-.list .item.contact-item img {
+.contact-item i.icon {
+  display: inline-block;
   height: 60px;
-  width: 60px;
+  width: 40px;
   float: left;
-  margin-top: 20px;
-  margin-right: 10px;
+  margin-right: 15px;
+  font-size: 30px;
+  text-align: center;
 }
 .list .item.contact-item {
   left: 0;
