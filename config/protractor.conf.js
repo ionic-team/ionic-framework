@@ -10,7 +10,7 @@ exports.config = {
   jasmineNodeOpts: {
     showColors: true, // Use colors in the command line report.
     defaultTimeoutInterval: 120000,
-    isVerbose: true
+    // isVerbose: true
   },
 
   baseUrl: 'http://localhost:' + buildConfig.protractorPort,

@@ -1,3 +1,4 @@
+var q = require('q');
 
 var IonicSnapshot = function(options) {
 
@@ -22,6 +23,7 @@ var IonicSnapshot = function(options) {
     self.width = browser.params.width || -1;
     self.height = browser.params.height || -1;
     self.highestMismatch = 0;
+    self.screenshotRequestPromises = [];
 
     self.flow = protractor.promise.controlFlow();
 
@@ -48,7 +50,6 @@ var IonicSnapshot = function(options) {
         };
       });
     });
-
     process.on('exit', function() {
       log(colors.green('Highest Mismatch:'), self.highestMismatch, '%');
     });
@@ -61,7 +62,7 @@ var IonicSnapshot = function(options) {
 
     if(!self.testData.total_specs) {
       self.testData.total_specs = 0;
-      var allSpecs = jasmine.getEnv().currentRunner().specs()
+      var allSpecs = jasmine.getEnv().currentRunner().specs();
       for(var sId in allSpecs) {
         self.testData.total_specs++;
       }
@@ -75,7 +76,8 @@ var IonicSnapshot = function(options) {
         browser.sleep(self.sleepBetweenSpecs).then(function(){
 
           browser.takeScreenshot().then(function(pngBase64){
-            log('spec:', spec.id + 1, 'of', self.testData.total_specs);
+            var specIdString = '[' + (spec.id+1) + '/' + self.testData.total_specs + ']';
+            log(specIdString, spec.getFullName());
 
             self.testData.spec_id = spec.id;
             self.testData.description = spec.getFullName();
@@ -83,22 +85,25 @@ var IonicSnapshot = function(options) {
             self.testData.png_base64 = pngBase64;
             pngBase64 = null;
 
+            var requestDeferred = q.defer();
+            self.screenshotRequestPromises.push(requestDeferred.promise);
+
             request.post(
               'http://' + self.domain + '/screenshot',
               { form: self.testData },
               function (error, response, body) {
-                log('reportSpecResults:', body);
+                log(specIdString, 'reportSpecResults:', body);
                 try {
                   var rspData = JSON.parse(body);
                   self.highestMismatch = Math.max(self.highestMismatch, rspData.Mismatch);
                 } catch(e) {
-                  log(colors.red('reportSpecResults error posting screenshot:'), e);
+                  log(specIdString, colors.red('reportSpecResults', 'error posting screenshot:'), e);
                 }
-                d.fulfill();
+                requestDeferred.resolve();
               }
             );
+            d.fulfill();
           });
-
         });
 
       });
@@ -106,6 +111,22 @@ var IonicSnapshot = function(options) {
       return d.promise;
     });
   };
+
+  IonicReporter.prototype.reportRunnerResults = function() {
+    var self = this;
+
+    self.flow.execute(function() {
+      var d = protractor.promise.defer();
+      log('Waiting for all screenshots to be posted...');
+      // allSettled waits until all the promises are done, whether they are rejected or resolved
+      q.allSettled(self.screenshotRequestPromises).then(function(all) {
+        d.fulfill();
+        log('Finished!');
+      });
+    });
+  };
+
+
 
   this.jasmine.getEnv().addReporter( new IonicReporter(options) );
 
