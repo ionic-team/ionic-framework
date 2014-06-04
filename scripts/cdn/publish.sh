@@ -28,7 +28,7 @@ function run {
   if [[ "$VERSION_NAME" == "nightly" ]]; then
     node_modules/.bin/gulp changelog --standalone \
       --html=true \
-      --subtitle="(changes since $OLD_VERSION)" \
+      --subtitle="(changes since $(git describe --tags --abbrev=0))" \
       --dest="$VERSION_DIR/CHANGELOG.html" \
       --from="$(git tag | grep $OLD_VERSION)"
   fi
