@@ -9,6 +9,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform) {
   extend(this, ionic.controllers.SideMenuController.prototype);
 
   this.$scope = $scope;
+  this.dragThreshold = 25;
 
   ionic.controllers.SideMenuController.call(this, {
     left: { width: 275 },
@@ -20,6 +21,19 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform) {
       $scope.dragContent = !!canDrag;
     }
     return $scope.dragContent;
+  };
+
+  this.dragThreshold = 25;
+  this.edgeDragThreshold = function(value) {
+    if (arguments.length) {
+      if (angular.isNumber(value) && value > 0) {
+        this.dragThreshold = value;
+        this.dragOnlyEdge = true;
+      } else {
+        this.dragOnlyEdge = !!value;
+      }
+    }
+    return this.dragOnlyEdge;
   };
 
   this.isDraggableTarget = function(e) {

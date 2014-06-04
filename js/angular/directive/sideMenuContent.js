@@ -12,6 +12,7 @@
  * @usage
  * ```html
  * <ion-side-menu-content
+ *   edge-drag-threshold="true"
  *   drag-content="true">
  * </ion-side-menu-content>
  * ```
@@ -19,6 +20,10 @@
  * {@link ionic.directive:ionSideMenus} documentation.
  *
  * @param {boolean=} drag-content Whether the content can be dragged. Default true.
+ * @param {boolean|number=} edge-drag-threshold Whether the content drag can only start if it is below a certain threshold distance from the edge of the screen.  Default false. Accepts three types of values:
+   *  - If a non-zero number is given, that many pixels is used as the maximum allowed distance from the edge that starts dragging the side menu.
+   *  - If true is given, the default number of pixels (25) is used as the maximum allowed distance.
+   *  - If false or 0 is given, the edge drag threshold is disabled, and dragging from anywhere on the content is allowed.
  *
  */
 IonicModule
@@ -37,13 +42,19 @@ function($timeout, $ionicGesture) {
 
         $element.addClass('menu-content pane');
 
-        if (angular.isDefined(attr.dragContent)) {
+        if (isDefined(attr.dragContent)) {
           $scope.$watch(attr.dragContent, function(value) {
             sideMenuCtrl.canDragContent(value);
           });
         } else {
           sideMenuCtrl.canDragContent(true);
         }
+
+        if (isDefined(attr.edgeDragThreshold)) {
+          $scope.$watch(attr.edgeDragThreshold, function(value) {
+            sideMenuCtrl.edgeDragThreshold(value);
+          });
+         }
 
         var defaultPrevented = false;
         var isDragging = false;
@@ -87,6 +98,7 @@ function($timeout, $ionicGesture) {
         var releaseGesture = $ionicGesture.on('release', dragReleaseFn, $element);
 
         sideMenuCtrl.setContent({
+          element: element[0],
           onDrag: function(e) {},
           endDrag: function(e) {},
           getTranslateX: function() {
