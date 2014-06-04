@@ -59,7 +59,8 @@ IonicModule
   '$ionicPlatform',
   '$ionicTemplateLoader',
   '$q',
-function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $q) {
+  '$log',
+function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $q, $log) {
 
   /**
    * @ngdoc controller
@@ -88,6 +89,8 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
      *    the modal when shown.  Default: false.
      *  - `{boolean=}` `backdropClickToClose` Whether to close the modal on clicking the backdrop.
      *    Default: true.
+     *  - `{boolean=}` `hardwareBackButtonClose` Whether the modal can be closed using the hardware
+     *    back button on Android and similar devices.  Default: true.
      */
     initialize: function(opts) {
       ionic.views.Modal.prototype.initialize.call(this, opts);
@@ -104,11 +107,9 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
       var self = this;
 
       if(self.scope.$$destroyed) {
-        console.error('Cannot call modal.show() after remove(). Please create a new modal instance using $ionicModal.');
+        $log.error('Cannot call modal.show() after remove(). Please create a new modal instance using $ionicModal.');
         return;
       }
-
-      console.log(self.scope);
 
       var modalEl = jqLite(self.modalEl);
 
@@ -127,9 +128,13 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
              .removeClass('ng-leave ng-leave-active');
 
       self._isShown = true;
-      self._deregisterBackButton = $ionicPlatform.registerBackButtonAction(function(){
-        self.hide();
-      }, 200);
+      self._deregisterBackButton = self.hardwareBackButtonClose ?
+        $ionicPlatform.registerBackButtonAction(
+          angular.bind(self, self.hide),
+          PLATFORM_BACK_BUTTON_PRIORITY_MODAL
+        ) :
+        angular.noop;
+
       self._isOpenPromise = $q.defer();
 
       ionic.views.Modal.prototype.show.call(self);
