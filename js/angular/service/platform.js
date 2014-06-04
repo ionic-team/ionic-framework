@@ -29,8 +29,7 @@ IonicModule
       transition: 'fade-implode'
     },
     '$ionicTabsConfig': {
-      tabsStyle: 'tabs-striped',
-      tabsPosition: 'tabs-top'
+      tabsStyle: 'tabs-striped'
     }
   }
 })

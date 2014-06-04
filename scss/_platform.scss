@@ -5,7 +5,20 @@
  * Platform specific tweaks
  */
 
+
+/**
+ * Apply roboto font
+ */
+
+.roboto {
+  font-family: "Roboto", $font-family-base;
+
+  input {
+    font-family: "Roboto", $font-family-base;
+  }
+}
 .platform-android {
+
 
   .bar {
     padding: 0;
