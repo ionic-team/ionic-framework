@@ -1,6 +1,9 @@
 machine:
   node:
     version: v0.10.26
+checkout:
+  post:
+    - "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
 test:
   override:
     - ./scripts/circle/test.sh --index=$CIRCLE_NODE_INDEX --total=$CIRCLE_NODE_TOTAL: {parallel: true}
