@@ -19,6 +19,8 @@
  * @param {boolean=} zooming Whether to support pinch-to-zoom
  * @param {integer=} min-zoom The smallest zoom amount allowed (default is 0.5)
  * @param {integer=} max-zoom The largest zoom amount allowed (default is 3)
+ * @param {boolean=} has-bouncing Whether to allow scrolling to bounce past the edges
+ * of the content.  Defaults to true on iOS, false on Android.
  */
 IonicModule
 .directive('ionScroll', [
@@ -70,6 +72,7 @@ function($timeout, $controller, $ionicBind) {
         var scrollViewOptions= {
           el: $element[0],
           delegateHandle: $attr.delegateHandle,
+          bouncing: $scope.$eval($attr.hasBouncing),
           paging: isPaging,
           scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
           scrollbarY: $scope.$eval($scope.scrollbarY) !== false,

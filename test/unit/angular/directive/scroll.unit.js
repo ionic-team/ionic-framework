@@ -20,6 +20,11 @@ describe('Ionic Scroll Directive', function() {
       .toBe('handleThis');
   });
 
+  it('passes hasBouncing attribute', function() {
+    var el = compile('<ion-scroll has-bouncing="123">')(scope);
+    expect(el.controller('$ionicScroll')._scrollViewOptions.bouncing).toEqual(123);
+  });
+
   it('has $onScroll (used by $ionicScrollController)', function() {
     element = compile('<ion-scroll on-scroll="foo()"></ion-scroll>')(scope);
     scope = element.scope();
