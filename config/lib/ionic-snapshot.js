@@ -16,6 +16,8 @@ var IonicSnapshot = function(options) {
     self.appId = options.appId || 'test_app';
     self.testId = browser.params.test_id || 'test_id';
     self.platformId = browser.params.platform_id;
+    self.platformIndex = browser.params.platform_index;
+    self.platformCount = browser.params.platform_count;
     self.sleepBetweenSpecs = options.sleepBetweenSpecs || 450;
     self.width = browser.params.width || -1;
     self.height = browser.params.height || -1;
@@ -35,6 +37,8 @@ var IonicSnapshot = function(options) {
           app_id: self.appId,
           test_id: self.testId,
           platform_id: self.platformId,
+          platform_index: self.platformIndex,
+          platform_count: self.platformCount,
           width: self.width,
           height: self.height,
           browser: capabilities.get('browserName'),

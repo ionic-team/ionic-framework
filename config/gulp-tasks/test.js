@@ -80,6 +80,8 @@ module.exports = function(gulp, argv) {
     platform: 'linux',
     params: {
       platform_id: 'chrome_local_test',
+      platform_index: 0,
+      platform_count: 1,
       width: 400,
       height: 800,
       test_id: uuid.v4()
@@ -90,6 +92,8 @@ module.exports = function(gulp, argv) {
       '--browser <%= browser %>',
       '--platform <%= platform %>',
       '--params.platform_id=<%= params.platform_id %>',
+      '--params.platform_index=<%= params.platform_index %>',
+      '--params.platform_count=<%= params.platform_count %>',
       '--params.width=<%= params.width %>',
       '--params.height=<%= params.height %>',
       '--params.test_id=<%= params.test_id %>',
