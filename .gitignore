@@ -23,3 +23,5 @@ components/
 tmp
 temp
 dist
+
+.idea
