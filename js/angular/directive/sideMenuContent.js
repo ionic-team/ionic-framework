@@ -45,6 +45,14 @@ function($timeout, $ionicGesture) {
           sideMenuCtrl.canDragContent(true);
         }
 
+        if (angular.isDefined(attr.dragFromEdge)) {
+            $scope.$watch(attr.dragFromEdge, function(value) {
+              sideMenuCtrl.doDragFromEdge(value);
+            });
+         } else {
+            sideMenuCtrl.doDragFromEdge(true);
+         }
+
         var defaultPrevented = false;
         var isDragging = false;
 

@@ -89,7 +89,15 @@ IonicModule
    * side menus.
    * @returns {boolean} Whether the content can be dragged to open side menus.
    */
-  'canDragContent'
+  'canDragContent',
+  /**
+   * @ngdoc method
+   * @name $ionicSideMenuDelegate#doDragFromEdge
+   * @param {boolean=} doEdgeDrag Set whether de drag open action can only be done from the edge of the screen
+   * side menus.
+   * @returns {boolean} Whether the drag can only happen from the edge of the scren.
+   */
+  'doDragFromEdge'
   /**
    * @ngdoc method
    * @name $ionicSideMenuDelegate#$getByHandle

@@ -22,6 +22,13 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform) {
     return $scope.dragContent;
   };
 
+  this.doDragFromEdge = function(doEdgeDrag) {
+    if (arguments.length) {
+      $scope.dragFromEdge = !!doEdgeDrag;
+    }
+    return $scope.dragFromEdge;
+  };
+
   this.isDraggableTarget = function(e) {
     return $scope.dragContent &&
            (!e.gesture.srcEvent.defaultPrevented &&
