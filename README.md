@@ -94,7 +94,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 * `gulp watch` to watch and rebuild on change
 * `gulp karma` to test one-time
 * `gulp karma-watch` to test and re-run on source change
-* `gulp snapshot` to test e2e tests locally (run `gulp demos` first to generate e2e tests)
+* `gulp snapshot` to test e2e tests locally (run `gulp demos` first to generate e2e tests). Be sure to run `./node_modules/.bin/webdriver-manager update --chrome` to first install the chrome webdriver dependency.
 
 ### Documentation
 
