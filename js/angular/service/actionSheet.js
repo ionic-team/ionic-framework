@@ -67,7 +67,8 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
      *  - `{string}` `titleText` The title to show on the action sheet.
      *  - `{string=}` `cancelText` The text for a 'cancel' button on the action sheet.
      *  - `{string=}` `destructiveText` The text for a 'danger' on the action sheet.
-     *  - `{function=}` `cancel` Called if the cancel button is pressed or the backdrop is tapped.
+     *  - `{function=}` `cancel` Called if the cancel button is pressed, the backdrop is tapped or 
+     *     the hardware back button is pressed.
      *  - `{function=}` `buttonClicked` Called when one of the non-destructive buttons is clicked,
      *     with the index of the button that was clicked and the button object. Return true to close
      *     the action sheet, or false to keep it opened.
