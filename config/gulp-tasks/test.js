@@ -5,7 +5,10 @@ var cp = require('child_process');
 var gutil = require('gulp-util');
 var http = require('http');
 var karma = require('karma').server;
+var path = require('canonical-path');
 var uuid = require('node-uuid');
+
+var projectRoot = path.resolve(__dirname, '../..');
 
 var karmaConf = require('../karma.conf.js');
 var karmaSauceConf = require('../karma-sauce.conf.js');
@@ -62,7 +65,7 @@ module.exports = function(gulp, argv) {
    */
   var protractorHttpServer;
   gulp.task('protractor-server', function() {
-    var app = connect().use(connect.static(__dirname + '/../../dist/ionic-demo'));
+    var app = connect().use(connect.static(projectRoot));
     protractorHttpServer = http.createServer(app).listen(buildConfig.protractorPort);
   });
 
@@ -105,7 +108,9 @@ module.exports = function(gulp, argv) {
   }
 
   function protractor(done, args) {
-    var child = cp.spawn('node', [__dirname+'/../../node_modules/.bin/protractor'].concat(args), {
+    var child = cp.spawn('node', [
+      path.resolve(projectRoot, 'node_modules/.bin/protractor')
+    ].concat(args), {
       stdio: [process.stdin, process.stdout, 'pipe']
     });
 

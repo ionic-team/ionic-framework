@@ -11,7 +11,7 @@ module.exports = {
   description: 'Output demos to their files on ionic-demo website',
   runAfter: ['files-read'],
   runBefore: ['processing-docs'],
-  process: function(docs, config) {
+  process: function(docs, config, extraData) {
 
     var contentsFolder = config.rendering.contentsFolder;
     var assetOutputPath = '${component}/${name}/${fileName}';
@@ -23,9 +23,12 @@ module.exports = {
     };
     var transform = {
       '.scenario.js': function(doc) {
-        doc.url = 'http://localhost:' + config.get('buildConfig.protractorPort') +
-          '/' + config.versionData.current.folder +
-          '/' + _.template(assetOutputPath, _.assign({},doc,{fileName:''}));
+        doc.url = 'http://localhost:' +
+        config.get('buildConfig.protractorPort') + path.join(
+          config.demoFolderPrefix || '',
+          config.versionData.current.folder,
+          _.template(assetOutputPath, _.assign({},doc,{fileName:''}))
+        );
         return doc;
       }
     };
@@ -117,6 +120,8 @@ module.exports = {
       template: 'app.template.js',
       outputPath: path.join(contentsFolder, 'index-ionic-demo-app.js')
     });
+
+    extraData.demoFolderPrefix = config.get('demoFolderPrefix');
 
   return pages;
 }

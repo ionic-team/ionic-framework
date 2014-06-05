@@ -1,6 +1,6 @@
 describe('css snapshot', function() {
 
-  var tests = [
+  [
     'bars-clear',
     'buttons',
     'cards-header-footer',
@@ -22,15 +22,12 @@ describe('css snapshot', function() {
     'input-toogle',
     'list',
     'modals',
-  ];
-
-  for(var x=0; x<tests.length; x++) {
-    (function(){
-      var testId = tests[x];
-      it(testId, function() {
+  ].forEach(function(testId) {
+    describe(testId, function() {
+      it('init', function() {
         browser.get('http://localhost:8876/test/css/' + testId + '.html');
       });
-    })();
-  }
+    });
+  });
 
 });

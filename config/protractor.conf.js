@@ -1,10 +1,15 @@
 var buildConfig = require('./build.config');
+var path = require('canonical-path');
+var projectRoot = path.resolve(__dirname, '..');
 
 exports.config = {
 
   // Spec patterns are relative to the location of the spec file. They may
   // include glob patterns.
-  specs: [__dirname + '/../dist/ionic-demo/nightly/**/*.scenario.js'],
+  specs: [
+    path.resolve(projectRoot, 'test/css/**/*.scenario.js'),
+    path.resolve(projectRoot, 'dist/ionic-demo/**/*.scenario.js'),
+  ],
 
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {
