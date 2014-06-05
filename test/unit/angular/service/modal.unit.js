@@ -106,10 +106,14 @@ describe('Ionic Modal', function() {
     var instance = modal.fromTemplate(template, {
       hardwareBackButtonClose: false
     });
-    spyOn($ionicPlatform, 'registerBackButtonAction');
+    spyOn($ionicPlatform, 'registerBackButtonAction').andCallThrough();
     instance.show();
     timeout.flush();
-    expect($ionicPlatform.registerBackButtonAction).not.toHaveBeenCalled();
+    expect($ionicPlatform.registerBackButtonAction).toHaveBeenCalledWith(jasmine.any(Function), PLATFORM_BACK_BUTTON_PRIORITY_MODAL);
+
+    ionicPlatform.hardwareBackButtonClick();
+
+    expect(instance.isShown()).toBe(true);
   }));
 
   it('should call _deregisterBackButton on hide', function() {
