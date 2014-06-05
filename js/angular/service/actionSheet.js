@@ -85,13 +85,9 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
       // Grab the sheet element for animation
       var sheetEl = jqLite(element[0].querySelector('.action-sheet-wrapper'));
 
-      var hideSheet = function(didCancel) {
+      // removes the actionSheet from the screen
+      var hideSheet = function(h) {
         sheetEl.removeClass('action-sheet-up');
-        if(didCancel) {
-          $timeout(function(){
-            scope.cancel();
-          }, 200);
-        }
 
         $animate.removeClass(element, 'active', function() {
           scope.$destroy();
@@ -102,24 +98,28 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
         scope.$deregisterBackButton && scope.$deregisterBackButton();
       };
 
-      // Support Android back button to close
+      // registerBackButtonAction returns a callback to deregister the action
       scope.$deregisterBackButton = $ionicPlatform.registerBackButtonAction(
         function(){
-          hideSheet();
+          hideSheet(); //
         },
         PLATFORM_BACK_BUTTON_PRIORITY_ACTION_SHEET
       );
-
+      
+      // called when the user presses the cancel button
       scope.cancel = function() {
-        hideSheet(true);
-        opts.cancel && opts.cancel();
+        hideSheet();
+        $timeout(function(){
+          // after the animation is out, call the cancel callback
+          opts.cancel && opts.cancel();
+        },200)
       };
 
       scope.buttonClicked = function(index) {
         // Check if the button click event returned true, which means
         // we can close the action sheet
         if((opts.buttonClicked && opts.buttonClicked(index, opts.buttons[index])) === true) {
-          hideSheet(false);
+          hideSheet();
         }
       };
 
@@ -127,7 +127,7 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
         // Check if the destructive button click event returned true, which means
         // we can close the action sheet
         if((opts.destructiveButtonClicked && opts.destructiveButtonClicked()) === true) {
-          hideSheet(false);
+          hideSheet();
         }
       };
 
