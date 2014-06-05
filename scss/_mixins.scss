@@ -172,9 +172,6 @@
 // --------------------------------------------------
 
 @mixin placeholder($color: $input-color-placeholder) {
-  &:-moz-placeholder { /* Firefox 18- */
-    color: $color;
-  }
   &::-moz-placeholder { /* Firefox 19+ */
     color: $color;
   }
