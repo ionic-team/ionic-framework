@@ -101,7 +101,7 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
       // registerBackButtonAction returns a callback to deregister the action
       scope.$deregisterBackButton = $ionicPlatform.registerBackButtonAction(
         function(){
-          hideSheet(); //
+          scope.cancel(); //
         },
         PLATFORM_BACK_BUTTON_PRIORITY_ACTION_SHEET
       );
