@@ -89,7 +89,23 @@ component: ionTabs
 <script id="nav-stack.html" type="text/ng-template">
   <ion-view title="Tab Nav Stack">
     <ion-content class="padding">
-      <p><img src="http://ionicframework.com/img/diagrams/tabs-nav-stack.png" style="width:100%"></p>
+
+      <p>Almost every mobile application has some form of tab bar interface.</p>
+
+      <p>Ionic has a built-in <code>ion-tabs</code> directive that we can use in order to build our tabbed interface. Create the <code>ion-tabs</code> directive and we can start filling it with tabs. The directive to create a tab is just the <code>ion-tab</code> directive. This takes a title, and this specifies what the title of our tab will be. </p>
+
+      <p>When we save this, we now have a tab that pops up with the text of “Home tab”.</p>
+
+      <p>Let’s add a second tab, because a single-tabbed app is pretty boring. I’m just going to call this one “About”. I’m going to create some equally interesting content.</p>
+
+      <p>We can now swap between our tabs, and see that things happen! We may want to change the color scheme of our tabs. Ionic ships with several colors that are detailed in the documentation in the notes, but if we want to update that, we can set a class of <code>ion-tabs</code>.</p>
+
+      <p>Now, if we look in the documentation, the colors are unprefixed. If we want the blue color, we use the <code>positive</code> class. However, in the case of tabs, we want those to be able to be sub-customizable. For this, we have to prefix this class with ‘tabs-‘. Saving, we now see the nice color.</p>
+
+      <p>Let’s add a header. This can be added with the <code>ion-header-bar</code> directive. Inside, we can set what we want the title to be. Let’s set a color on it. This is interesting, but what if we want a different title for each section of the application?</p>
+
+      <p>You can set a navigation system up, which is detailed in more advanced videos and formulas. For the sake of simplicity in this video, we will create an <code>ion-header-bar</code> in each tab of our app. Copy the header bar, change the titles, and save. We now have updating headers across our tabs!</p>
+
     </ion-content>
   </ion-view>
 </script>
