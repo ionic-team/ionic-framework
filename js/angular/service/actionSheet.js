@@ -77,12 +77,7 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
     show: function(opts) {
       var scope = $rootScope.$new(true);
 
-      extend(scope, {
-        cancel: angular.noop,
-        buttonClicked: angular.noop,
-        destructiveButtonClicked: angular.noop,
-        buttons: []
-      }, opts);
+      angular.extend(scope, opts);
 
       // Compile the template
       var element = $compile('<ion-action-sheet buttons="buttons"></ion-action-sheet>')(scope);
@@ -94,7 +89,7 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
         sheetEl.removeClass('action-sheet-up');
         if(didCancel) {
           $timeout(function(){
-            opts.cancel();
+            scope.cancel();
           }, 200);
         }
 
