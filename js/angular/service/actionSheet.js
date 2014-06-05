@@ -112,6 +112,7 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
 
       scope.cancel = function() {
         hideSheet(true);
+        opts.cancel && opts.cancel();
       };
 
       scope.buttonClicked = function(index) {
