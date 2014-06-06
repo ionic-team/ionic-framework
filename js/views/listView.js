@@ -187,11 +187,11 @@
     this.scrollEl = opts.scrollEl;
     this.scrollView = opts.scrollView;
     // Get the True Top of the list el http://www.quirksmode.org/js/findpos.html
-    this.listEl.trueTop = 0;
+    this.listElTrueTop = 0;
     if (this.listEl.offsetParent) {
       var obj = this.listEl;
       do {
-        this.listEl.trueTop += obj.offsetTop;
+        this.listElTrueTop += obj.offsetTop;
         obj = obj.offsetParent;
       } while (obj);
     }
@@ -203,7 +203,7 @@
     var y = e.gesture.center.pageY +
       this.scrollView.getValues().top -
       (this._currentDrag.elementHeight / 2) -
-      this.listEl.trueTop;
+      this.listElTrueTop;
     this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(0, '+y+'px, 0)';
   };
 
@@ -239,7 +239,7 @@
 
     var scrollY = 0;
     var pageY = e.gesture.center.pageY;
-    var offset = this.listEl.trueTop;
+    var offset = this.listElTrueTop;
 
     //If we have a scrollView, check scroll boundaries for dragged element and scroll if necessary
     if (this.scrollView) {
