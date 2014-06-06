@@ -67,7 +67,8 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
      *  - `{string}` `titleText` The title to show on the action sheet.
      *  - `{string=}` `cancelText` The text for a 'cancel' button on the action sheet.
      *  - `{string=}` `destructiveText` The text for a 'danger' on the action sheet.
-     *  - `{function=}` `cancel` Called if the cancel button is pressed or the backdrop is tapped.
+     *  - `{function=}` `cancel` Called if the cancel button is pressed, the backdrop is tapped or 
+     *     the hardware back button is pressed.
      *  - `{function=}` `buttonClicked` Called when one of the non-destructive buttons is clicked,
      *     with the index of the button that was clicked and the button object. Return true to close
      *     the action sheet, or false to keep it opened.
@@ -77,12 +78,7 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
     show: function(opts) {
       var scope = $rootScope.$new(true);
 
-      extend(scope, {
-        cancel: angular.noop,
-        buttonClicked: angular.noop,
-        destructiveButtonClicked: angular.noop,
-        buttons: []
-      }, opts);
+      angular.extend(scope, opts);
 
       // Compile the template
       var element = $compile('<ion-action-sheet buttons="buttons"></ion-action-sheet>')(scope);
@@ -90,13 +86,9 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
       // Grab the sheet element for animation
       var sheetEl = jqLite(element[0].querySelector('.action-sheet-wrapper'));
 
-      var hideSheet = function(didCancel) {
+      // removes the actionSheet from the screen
+      var hideSheet = function(h) {
         sheetEl.removeClass('action-sheet-up');
-        if(didCancel) {
-          $timeout(function(){
-            opts.cancel();
-          }, 200);
-        }
 
         $animate.removeClass(element, 'active', function() {
           scope.$destroy();
@@ -107,23 +99,28 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
         scope.$deregisterBackButton && scope.$deregisterBackButton();
       };
 
-      // Support Android back button to close
+      // registerBackButtonAction returns a callback to deregister the action
       scope.$deregisterBackButton = $ionicPlatform.registerBackButtonAction(
         function(){
-          hideSheet();
+          scope.cancel(); //
         },
         PLATFORM_BACK_BUTTON_PRIORITY_ACTION_SHEET
       );
-
+      
+      // called when the user presses the cancel button
       scope.cancel = function() {
-        hideSheet(true);
+        hideSheet();
+        $timeout(function(){
+          // after the animation is out, call the cancel callback
+          opts.cancel && opts.cancel();
+        },200)
       };
 
       scope.buttonClicked = function(index) {
         // Check if the button click event returned true, which means
         // we can close the action sheet
         if((opts.buttonClicked && opts.buttonClicked(index, opts.buttons[index])) === true) {
-          hideSheet(false);
+          hideSheet();
         }
       };
 
@@ -131,7 +128,7 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
         // Check if the destructive button click event returned true, which means
         // we can close the action sheet
         if((opts.destructiveButtonClicked && opts.destructiveButtonClicked()) === true) {
-          hideSheet(false);
+          hideSheet();
         }
       };
 
