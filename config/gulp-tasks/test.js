@@ -100,6 +100,8 @@ module.exports = function(gulp, argv) {
       '--params.width=<%= params.width %>',
       '--params.height=<%= params.height %>',
       '--params.test_id=<%= params.test_id %>',
+      '--params.platform_index=<%= params.platform_index %>',
+      '--params.platform_count=<%= params.platform_count %>',
     ].map(function(argument) {
       return _.template(argument, snapshotValues);
     });
