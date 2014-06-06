@@ -24,6 +24,7 @@ var IonicSnapshot = function(options) {
     self.height = browser.params.height || -1;
     self.highestMismatch = 0;
     self.screenshotRequestPromises = [];
+    self.ptor = protractor.getInstance();
 
     self.flow = protractor.promise.controlFlow();
 
@@ -73,37 +74,42 @@ var IonicSnapshot = function(options) {
 
       browser.waitForAngular().then(function(){
 
-        browser.sleep(self.sleepBetweenSpecs).then(function(){
+        self.ptor.getCurrentUrl().then(function(currentUrl) {
 
-          browser.takeScreenshot().then(function(pngBase64){
-            var specIdString = '[' + (spec.id+1) + '/' + self.testData.total_specs + ']';
-            log(specIdString, spec.getFullName());
+          browser.sleep(self.sleepBetweenSpecs).then(function(){
 
-            self.testData.spec_id = spec.id;
-            self.testData.description = spec.getFullName();
-            self.testData.highest_mismatch = self.highestMismatch;
-            self.testData.png_base64 = pngBase64;
-            pngBase64 = null;
+            browser.takeScreenshot().then(function(pngBase64){
+              var specIdString = '[' + (spec.id+1) + '/' + self.testData.total_specs + ']';
+              log(specIdString, spec.getFullName());
 
-            var requestDeferred = q.defer();
-            self.screenshotRequestPromises.push(requestDeferred.promise);
+              self.testData.spec_id = spec.id;
+              self.testData.description = spec.getFullName();
+              self.testData.highest_mismatch = self.highestMismatch;
+              self.testData.png_base64 = pngBase64;
+              self.testData.url = currentUrl;
+              pngBase64 = null;
 
-            request.post(
-              'http://' + self.domain + '/screenshot',
-              { form: self.testData },
-              function (error, response, body) {
-                log(specIdString, 'reportSpecResults:', body);
-                try {
-                  var rspData = JSON.parse(body);
-                  self.highestMismatch = Math.max(self.highestMismatch, rspData.Mismatch);
-                } catch(e) {
-                  log(specIdString, colors.red('reportSpecResults', 'error posting screenshot:'), e);
+              var requestDeferred = q.defer();
+              self.screenshotRequestPromises.push(requestDeferred.promise);
+
+              request.post(
+                'http://' + self.domain + '/screenshot',
+                { form: self.testData },
+                function (error, response, body) {
+                  log(specIdString, 'reportSpecResults:', body);
+                  try {
+                    var rspData = JSON.parse(body);
+                    self.highestMismatch = Math.max(self.highestMismatch, rspData.Mismatch);
+                  } catch(e) {
+                    log(specIdString, colors.red('reportSpecResults', 'error posting screenshot:'), e);
+                  }
+                  requestDeferred.resolve();
                 }
-                requestDeferred.resolve();
-              }
-            );
-            d.fulfill();
+              );
+              d.fulfill();
+            });
           });
+
         });
 
       });
