@@ -51,7 +51,6 @@ module.exports = {
     // Views
     'js/views/view.js',
     'js/views/scrollView.js',
-    'js/views/actionSheetView.js',
     'js/views/headerBarView.js',
     'js/views/listView.js',
     'js/views/modalView.js',
