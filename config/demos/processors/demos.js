@@ -24,7 +24,7 @@ module.exports = {
     var transform = {
       '.scenario.js': function(doc) {
         doc.url = 'http://localhost:' +
-        config.get('buildConfig.protractorPort') + path.join(
+        config.get('buildConfig.protractorPort') + '/' + path.join(
           config.demoFolderPrefix || '',
           config.versionData.current.folder,
           _.template(assetOutputPath, _.assign({},doc,{fileName:''}))
