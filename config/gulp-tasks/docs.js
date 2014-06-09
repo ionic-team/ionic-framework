@@ -52,11 +52,10 @@ module.exports = function(gulp, argv) {
     dgeni.generator(config)().then(function() {
       gutil.log('Demos for', gutil.colors.cyan(demoVersion), 'generated!');
       gutil.log('Building ionic into demo folder...');
-      console.log(cp.spawn);
       cp.spawn('node', [
         projectRoot + '/node_modules/.bin/gulp',
         'build',
-        IS_RELEASE_BUILD ? '--release' : '--no-release',
+        argv.release ? '--release' : '--no-release',
         '--dist=' + config.rendering.outputFolder + '/' +
           config.rendering.contentsFolder + '/ionic'
       ])
