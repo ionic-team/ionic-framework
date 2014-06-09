@@ -82,7 +82,7 @@ var IonicSnapshot = function(options) {
               var specIdString = '[' + (spec.id+1) + '/' + self.testData.total_specs + ']';
               log(specIdString, spec.getFullName());
 
-              self.testData.spec_id = spec.id;
+              self.testData.spec_index = spec.id;
               self.testData.description = spec.getFullName();
               self.testData.highest_mismatch = self.highestMismatch;
               self.testData.png_base64 = pngBase64;
