@@ -20,7 +20,7 @@ describe('collectionRepeatManager service', function() {
       var dataSource = new $collectionDataSource(angular.extend({
         scope: $rootScope.$new(),
         transcludeParent: angular.element('<div>'),
-        trancsludeFn: function(scope, cb) {
+        transcludeFn: function(scope, cb) {
           cb($compile('<div></div>')(scope));
         },
         keyExpr: 'key',
@@ -328,41 +328,23 @@ describe('collectionRepeatManager service', function() {
   });
 
   describe('.renderScroll()', function() {
-    it('with isVertical', function() {
+    it('should pass the values to __$callback', function() {
       var manager = setup();
-      spyOn(manager, 'getTransformPosition').andReturn('banana');
       spyOn(manager.scrollView, '__$callback');
       manager.renderScroll(1, 2, 3, 4);
-      expect(manager.getTransformPosition).toHaveBeenCalledWith(2);
-      expect(manager.scrollView.__$callback).toHaveBeenCalledWith(1,'banana',3,4);
-    });
-
-    it('with !isVertical', function() {
-      var manager = setup();
-      manager.isVertical = false;
-      spyOn(manager, 'getTransformPosition').andReturn('blueberry');
-      spyOn(manager.scrollView, '__$callback');
-      manager.renderScroll(1, 2, 3, 4);
-      expect(manager.getTransformPosition).toHaveBeenCalledWith(1);
-      expect(manager.scrollView.__$callback).toHaveBeenCalledWith('blueberry',2,3,4);
+      expect(manager.scrollView.__$callback).toHaveBeenCalledWith(1, 2, 3, 4);
     });
   });
 
-  describe('.getTransformPosition()', function() {
-    it('should return pos - lastRenderScrollValue', function() {
-      var manager = setup();
-      manager.lastRenderScrollValue = 11;
-      expect(manager.getTransformPosition(44)).toBe(33);
-    });
-
+  describe('.renderIfNeeded()', function() {
     it('should render if >= nextPos', function() {
       var manager = setup();
       spyOn(manager, 'render');
       manager.hasNextIndex = true;
       manager.nextPos = 30;
-      manager.getTransformPosition(20);
+      manager.renderIfNeeded(20);
       expect(manager.render).not.toHaveBeenCalled();
-      manager.getTransformPosition(30);
+      manager.renderIfNeeded(30);
       expect(manager.render).toHaveBeenCalled();
     });
 
@@ -371,31 +353,11 @@ describe('collectionRepeatManager service', function() {
       spyOn(manager, 'render');
       manager.hasPrevIndex = true;
       manager.previousPos = 50;
-      manager.getTransformPosition(60);
+      manager.renderIfNeeded(60);
       expect(manager.render).not.toHaveBeenCalled();
-      manager.getTransformPosition(50);
+      manager.renderIfNeeded(50);
       expect(manager.render).not.toHaveBeenCalled();
-      manager.getTransformPosition(49);
-      expect(manager.render).toHaveBeenCalled();
-    });
-
-    it('should render if abs(val)>100', function() {
-      var manager = setup();
-      spyOn(manager, 'render');
-      manager.getTransformPosition(60);
-      expect(manager.render).not.toHaveBeenCalled();
-      manager.getTransformPosition(100);
-      expect(manager.render).not.toHaveBeenCalled();
-      manager.getTransformPosition(101);
-      expect(manager.render).toHaveBeenCalled();
-
-      manager.render.reset();
-
-      manager.getTransformPosition(-60);
-      expect(manager.render).not.toHaveBeenCalled();
-      manager.getTransformPosition(-100);
-      expect(manager.render).not.toHaveBeenCalled();
-      manager.getTransformPosition(-101);
+      manager.renderIfNeeded(49);
       expect(manager.render).toHaveBeenCalled();
     });
   });
@@ -425,7 +387,7 @@ describe('collectionRepeatManager service', function() {
       var manager = setup();
       manager.renderedItems = {'a':1, 'b':1};
       spyOn(manager, 'removeItem');
-      expect(manager.render()).toBe(null);
+      manager.render();
       expect(manager.removeItem).toHaveBeenCalledWith('a');
       expect(manager.removeItem).toHaveBeenCalledWith('b');
     });
@@ -522,16 +484,15 @@ describe('collectionRepeatManager service', function() {
   });
 
   describe('.renderItem()', function() {
-    it('should attachItem and set the element transform', function() {
+    it('should attachItemAtIndex and set the element transform', function() {
       var manager = setup();
       var item = {
         element: angular.element('<div>')
       };
       spyOn(item.element, 'css');
-      spyOn(manager.dataSource, 'getItem').andReturn(item);
-      spyOn(manager.dataSource, 'attachItem');
+      spyOn(manager.dataSource, 'attachItemAtIndex').andReturn(item);
       manager.renderItem(0, 33, 44);
-      expect(manager.dataSource.attachItem).toHaveBeenCalledWith(item);
+      expect(manager.dataSource.attachItemAtIndex).toHaveBeenCalledWith(0);
       expect(item.element.css).toHaveBeenCalledWith(
         ionic.CSS.TRANSFORM,
         manager.transformString(33, 44)
@@ -545,10 +506,9 @@ describe('collectionRepeatManager service', function() {
       var manager = setup();
       var item = {};
       manager.renderedItems[0] = item;
-      spyOn(manager.dataSource, 'getItem').andReturn(item);
+      spyOn(manager, 'removeItem').andCallThrough();
       spyOn(manager.dataSource, 'detachItem');
       manager.removeItem(0);
-      expect(manager.dataSource.detachItem).toHaveBeenCalledWith(item);
       expect(manager.renderedItems).toEqual({});
     });
   });

@@ -158,15 +158,9 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
       } else if (!isVertical && !$attr.collectionItemWidth) {
         throw new Error(COLLECTION_REPEAT_ATTR_WIDTH_ERROR);
       }
-      $attr.collectionItemHeight = $attr.collectionItemHeight || '"100%"';
-      $attr.collectionItemWidth = $attr.collectionItemWidth || '"100%"';
 
-      var heightParsed = $attr.collectionItemHeight ?
-        $parse($attr.collectionItemHeight) :
-        function() { return scrollView.__clientHeight; };
-      var widthParsed = $attr.collectionItemWidth ?
-        $parse($attr.collectionItemWidth) :
-        function() { return scrollView.__clientWidth; };
+      var heightParsed = $parse($attr.collectionItemHeight || '"100%"');
+      var widthParsed = $parse($attr.collectionItemWidth || '"100%"');
 
       var heightGetter = function(scope, locals) {
         var result = heightParsed(scope, locals);
