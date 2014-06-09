@@ -25,14 +25,17 @@ describe('Ionic ActionSheet Service', function() {
     expect(scope.element.hasClass('active')).toBe(true);
   }));
 
-  it('removeSheet should remove classes, remove element and destroy scope', inject(function($document, $timeout) {
+  it('removeSheet should remove classes, remove element and destroy scope', inject(function($document, $timeout, $animate) {
+    spyOn($animate, 'removeClass').andCallFake(function(el, cls, cb) {
+      el.removeClass(cls);
+      cb();
+    });
     var scope = setup();
     spyOn(scope, '$destroy');
     spyOn(scope.element, 'remove');
     scope.removeSheet();
     expect($document[0].body.classList.contains('action-sheet-open')).toBe(false);
     expect(scope.element.hasClass('active')).toBe(false);
-    $timeout.flush();
     expect(scope.$destroy).toHaveBeenCalled();
     expect(scope.element.remove).toHaveBeenCalled();
   }));
@@ -66,7 +69,11 @@ describe('Ionic ActionSheet Service', function() {
     expect(scope.removeSheet).toHaveBeenCalled();
   });
 
-  it('cancel should removeSheet and call opts.cancel', inject(function($timeout) {
+  it('cancel should removeSheet and call opts.cancel', inject(function($timeout, $animate) {
+    spyOn($animate, 'removeClass').andCallFake(function(el, cls, cb) {
+      el.removeClass(cls);
+      cb();
+    });
     var cancelSpy = jasmine.createSpy('opts.cancel');
     var scope = setup({
       cancel: cancelSpy
@@ -74,7 +81,6 @@ describe('Ionic ActionSheet Service', function() {
     spyOn(scope, 'removeSheet').andCallThrough();
     scope.cancel();
     expect(scope.removeSheet).toHaveBeenCalled();
-    $timeout.flush();
     expect(cancelSpy).toHaveBeenCalled();
   }));
 
