@@ -239,6 +239,12 @@ ionic.tap = {
   setTolerance: function(releaseTolerance, releaseButtonTolerance) {
     TAP_RELEASE_TOLERANCE = releaseTolerance;
     TAP_RELEASE_BUTTON_TOLERANCE = releaseButtonTolerance;
+  },
+
+  cancelClick: function() {
+    // used to cancel any simulated clicks which may happen on a touchend/mouseup
+    // gestures uses this method within its tap and hold events
+    tapPointerMoved = true;
   }
 
 };
