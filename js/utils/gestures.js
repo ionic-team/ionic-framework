@@ -1089,7 +1089,6 @@
 
         // do a single tap
         if(!did_doubletap || inst.options.tap_always) {
-          ionic.tap.cancelClick();
           ionic.Gestures.detection.current.name = 'tap';
           inst.trigger('tap', ev);
         }
