@@ -11,7 +11,7 @@
  * Note that you need to put the content of the modal inside a div with the class `modal`.
  *
  * Note: a modal will broadcast 'modal.shown', 'modal.hidden', and 'modal.removed' events from its originating
- * scope, passing in itself as an event argument. Note: both modal.removed and modal.hidden are
+ * scope, passing in itself as an event argument. Both the modal.removed and modal.hidden events are
  * called when the modal is removed.
  *
  * @usage
