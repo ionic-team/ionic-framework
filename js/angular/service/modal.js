@@ -4,7 +4,7 @@
  * @module ionic
  * @description
  *
- * Related {@link ionic.controller:ionicModal ionicModal controller}.
+ * Related: {@link ionic.controller:ionicModal ionicModal controller}.
  *
  * The Modal is a content pane that can go over the user's main view
  * temporarily.  Usually used for making a choice or editing an item.
