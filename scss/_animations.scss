@@ -447,8 +447,10 @@ $ios7-transition-duration: 340ms;
     bottom: 0;
     left: -1px;
     width: auto;
-    border-right: 1px solid #ddd;
-    border-left: 1px solid #ddd;
+    &:not(.bar) {
+      border-right: 1px solid #ddd;
+      border-left: 1px solid #ddd;
+    }
   }
   > .ng-enter, &.ng-enter {
     /* NEW content placed far LEFT BEFORE it slides IN from the LEFT */
