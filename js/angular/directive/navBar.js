@@ -1,7 +1,7 @@
 
 IonicModule.constant('$ionicNavBarConfig', {
   transition: 'nav-title-slide-ios7',
-  titleAlign: 'center',
+  alignTitle: 'center',
   backButtonIcon: 'ion-ios7-arrow-back'
 });
 
@@ -107,7 +107,7 @@ function($ionicViewService, $rootScope, $animate, $compile, $ionicNavBarConfig) 
       function prelink($scope, $element, $attr, navBarCtrl) {
         navBarCtrl._headerBarView = new ionic.views.HeaderBar({
           el: $element[0],
-          alignTitle: $attr.alignTitle || $ionicNavBarConfig.titleAlign || 'center'
+          alignTitle: $attr.alignTitle || $ionicNavBarConfig.alignTitle || 'center'
         });
 
         //defaults

@@ -13,7 +13,9 @@ IonicModule
 .constant('$ionicPlatformDefaults', {
   'ios': {
     '$ionicNavBarConfig': {
-      transition: 'nav-title-slide-ios7'
+      transition: 'nav-title-slide-ios7',
+      alignTitle: 'center',
+      backButtonIcon: 'ion-ios7-arrow-back'
     },
     '$ionicNavViewConfig': {
       transition: 'slide-left-right-ios7'
@@ -22,14 +24,14 @@ IonicModule
   'android': {
     '$ionicNavBarConfig': {
       transition: 'no-animation',
-      titleAlign: 'left',
+      alignTitle: 'left',
       backButtonIcon: 'ion-android-arrow-back'
     },
     '$ionicNavViewConfig': {
       transition: 'fade-implode'
     },
     '$ionicTabsConfig': {
-      tabsStyle: 'tabs-striped'
+      type: 'tabs-striped'
     }
   }
 })
@@ -38,18 +40,15 @@ IonicModule
 IonicModule.config([
   '$ionicPlatformDefaults',
 
-  '$ionicNavViewConfig',
-  '$ionicNavBarConfig',
-  '$ionicTabsConfig',
+  '$injector',
 
-function($ionicPlatformDefaults, $ionicNavViewConfig, $ionicNavBarConfig, $ionicTabsConfig) {
-  console.log('Defaults config');
+function($ionicPlatformDefaults, $injector) {
   var platform = ionic.Platform.platform();
 
-  var applyConfig = function(obj) {
-    angular.extend($ionicNavViewConfig, obj['$ionicNavViewConfig']);
-    angular.extend($ionicNavBarConfig, obj['$ionicNavBarConfig']);
-    angular.extend($ionicTabsConfig, obj['$ionicTabsConfig']);
+  var applyConfig = function(platformDefaults) {
+    forEach(platformDefaults, function(defaults, constantName) {
+      extend($injector.get(constantName), defaults);
+    });
   };
 
   switch(platform) {
@@ -61,22 +60,6 @@ function($ionicPlatformDefaults, $ionicNavViewConfig, $ionicNavBarConfig, $ionic
       break;
   }
 }]);
-
-/*
-  '$ionicPlatformDefaultsIOS7',
-  '$ionicPlatformDefaultsAndroid',
-
-  '$ionicNavBarConfig',
-  '$ionicNavViewConfig',
-  '$ionicTabsConfig',
-
-function($ionicPlatformDefaultsIOS7, $ionicPlatformDefaultsAndroid,
-  $ionicNavBarConfig,
-  $ionicNavViewConfig,
-  $ionicTabsConfig) {
-
-}]);
-*/
 
 /**
  * @ngdoc service

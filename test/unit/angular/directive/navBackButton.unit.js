@@ -1,3 +1,4 @@
+
 describe('ionNavBackButton directive', function() {
   beforeEach(module('ionic'));
 
@@ -75,5 +76,33 @@ describe('ionNavBackButton directive', function() {
     el.triggerHandler('click');
     expect(el.scope().$navBack).not.toHaveBeenCalled();
     expect(el.scope().doSomething).toHaveBeenCalled();
+  });
+
+
+  describe('ionNavBackButton directive: Platforms', function() {
+    describe('ionNavBackButton directive: iOS Platform', function() { 
+      beforeEach(module('ionic'));
+      beforeEach(function($provide) {
+        TestUtil.setPlatform('ios');
+      });
+
+      it('Should set default back button icon from ionicNavBarConfig ', inject(function($ionicNavBarConfig) {
+        var el = setup();
+        expect(el.hasClass('ion-ios7-arrow-back')).toBe(true);
+      }));
+    });
+
+    describe('ionNavBackButton directive: Android Platform', function() {
+
+      beforeEach(module('ionic'));
+      beforeEach(function($provide) {
+        TestUtil.setPlatform('android');
+      });
+
+      it('Should set default back button icon from ionicNavBarConfig ', inject(function($ionicNavBarConfig) {
+        var el = setup();
+        expect(el.hasClass('ion-android-arrow-back')).toBe(true);
+      }));
+    });
   });
 });

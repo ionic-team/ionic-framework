@@ -1,5 +1,5 @@
 IonicModule.constant('$ionicTabConfig', {
-  style: ''
+  type: ''
 });
 
 /**

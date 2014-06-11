@@ -81,13 +81,14 @@ function($animate, $rootScope, $sanitize, $ionicNavBarConfig) {
     compile: function(tElement, tAttrs) {
       tElement.addClass('button back-button ng-hide');
       
-      // Add a default back button icon based on the nav config, unless one is set
-      if(tElement[0].className.indexOf('ion-') < 0) {
-        tElement.addClass($ionicNavBarConfig.backButtonIcon);
-      }
-
       return function($scope, $element, $attr, navBarCtrl) {
         console.log($attr.textFromTitle);
+
+        // Add a default back button icon based on the nav config, unless one is set
+        if($element[0].className.indexOf('ion-') < 0) {
+          $element.addClass($ionicNavBarConfig.backButtonIcon);
+        }
+
         if (!$attr.ngClick) {
           $scope.$navBack = navBarCtrl.back;
           $element.on('click', function(event){
@@ -99,7 +100,7 @@ function($animate, $rootScope, $sanitize, $ionicNavBarConfig) {
         //Make sure both that a backButton is allowed in the first place,
         //and that it is shown by the current view.
         $scope.$watch(function() {
-          if(typeof $attr.fromTitle !== 'undefined') {
+          if(isDefined($attr.fromTitle)) {
             $element[0].innerHTML = '<span class="back-button-title">' + $sanitize($scope.oldTitle) + '</span>';
           }
           return !!(backIsShown && $scope.backButtonShown);

@@ -1,6 +1,6 @@
 IonicModule.constant('$ionicTabsConfig', {
-  tabsPosition: '',
-  tabsStyle: ''
+  position: '',
+  type: ''
 });
 
 /**
@@ -240,8 +240,8 @@ function($ionicViewService, $ionicTabsDelegate, $ionicTabsConfig) {
       var innerElement = jqLite('<div class="tabs"></div>');
       innerElement.append(element.contents());
       element.append(innerElement);
-      element.addClass($ionicTabsConfig.tabsPosition);
-      element.addClass($ionicTabsConfig.tabsStyle);
+      element.addClass($ionicTabsConfig.position);
+      element.addClass($ionicTabsConfig.type);
 
       return { pre: prelink };
       function prelink($scope, $element, $attr, tabsCtrl) {

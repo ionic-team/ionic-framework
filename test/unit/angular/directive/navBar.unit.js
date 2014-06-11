@@ -294,4 +294,51 @@ describe('ionNavBar', function() {
       expect(el.hasClass('reverse')).toBe(false);
     });
   });
+
+  describe('ionNavBar directive: platforms', function() {
+    beforeEach(module('ionic'));
+    function setup(attrs, content) {
+      var el;
+      inject(function($compile, $rootScope) {
+        el = $compile('<ion-nav-bar '+(attrs||'')+'>'+(content||'')+'</ion-nav-bar>')($rootScope.$new());
+        $rootScope.$apply();
+      });
+      return el;
+    }
+
+    describe('ionNavBar directive: iOS', function() {
+      beforeEach(function($provide) {
+        TestUtil.setPlatform('ios');
+      });
+
+      it('should have correct title align', function() {
+        var el = setup();
+        var controller = el.controller('ionNavBar');
+        expect(controller._headerBarView.alignTitle).toBe('center');
+      });
+
+      it('Should have correct transition', function() {
+        var el = setup();
+        expect(el.hasClass('nav-title-slide-ios7')).toBe(true);
+      });
+    });
+
+    describe('ionNavBar directive: Android', function() {
+      beforeEach(function($provide) {
+        TestUtil.setPlatform('android');
+      });
+
+      it('should have correct title align', function() {
+        var el = setup();
+        var controller = el.controller('ionNavBar');
+        expect(controller._headerBarView.alignTitle).toBe('left');
+      });
+
+      it('Should have correct transition', function() {
+        var el = setup();
+        // Nav bar titles don't animation by default on Android
+        expect(el.hasClass('no-animation')).toBe(true);
+      });
+    });
+  });
 });
