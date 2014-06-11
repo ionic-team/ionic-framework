@@ -397,7 +397,7 @@ describe('tabs', function() {
         c: 'off',
         d: 6,
         e: 'badger',
-        f: 'class'
+        f: 'someClass'
       });
       tabEl.scope().$apply();
       var navItem = angular.element(tabsEl[0].querySelector('.tab-item'));
@@ -406,7 +406,7 @@ describe('tabs', function() {
       expect(navItem.isolateScope().iconOff).toEqual('off');
       expect(navItem.isolateScope().badge).toEqual(6);
       expect(navItem.isolateScope().badgeStyle).toEqual('badger');
-      expect(navItem.isolateScope().class).toEqual('class');
+      expect(navItem[0].className).toMatch(/someClass/);
       expect(navItem.attr('ng-click')).toEqual('click');
 
       angular.extend(tabEl.scope(), {
@@ -415,7 +415,7 @@ describe('tabs', function() {
         c: 'off2',
         d: 7,
         e: 'badger2',
-        f: 'class2'
+        f: 'someClass2'
       });
       tabEl.scope().$apply();
       expect(navItem.isolateScope().title).toEqual('title2');
@@ -423,7 +423,7 @@ describe('tabs', function() {
       expect(navItem.isolateScope().iconOff).toEqual('off2');
       expect(navItem.isolateScope().badge).toEqual(7);
       expect(navItem.isolateScope().badgeStyle).toEqual('badger2');
-      expect(navItem.isolateScope().class).toEqual('class2');
+      expect(navItem[0].className).toMatch(/someClass2/);
 
       expect(navItem.parent()[0]).toBe(tabsCtrl.$tabsElement[0]);
     });
