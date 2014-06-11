@@ -206,6 +206,7 @@
   > .button.pull-right,
   .buttons.pull-right,
   .title + .buttons {
+    display: inherit;
     position: absolute;
     top: 5px;
     right: 5px;
