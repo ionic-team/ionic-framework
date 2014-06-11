@@ -47,6 +47,7 @@
     <script id="page2.html" type="text/ng-template">
       <ion-view title="Page 2">
         <ion-content padding="true">
+          <a ng-click="goBack()" class="button button-positive">Back</a>
           <a href="#/page3" class="button button-positive">Page 3</a>
         </ion-content>
       </ion-view>
@@ -54,6 +55,7 @@
     <script id="page3.html" type="text/ng-template">
       <ion-view title="Page 3">
         <ion-content padding="true">
+          <a ng-click="goBack()" class="button button-positive">Back</a>
           <a href="#/page1" class="button button-positive">Page 1</a>
         </ion-content>
       </ion-view>
@@ -71,11 +73,13 @@
           })
           .state('page2', {
             url: "/page2",
-            templateUrl: "page2.html"
+            templateUrl: "page2.html",
+            controller: 'Page2Ctrl'
           })
           .state('page3', {
             url: "/page3",
-            templateUrl: "page3.html"
+            templateUrl: "page3.html",
+            controller: 'Page3Ctrl'
           })
 
          $urlRouterProvider.otherwise("/page1");
@@ -91,7 +95,20 @@
          for(var i = 0; i < 4; i++) {
           $scope.items2.push({});
          }
-       });
+       })
+
+       .controller('Page2Ctrl', function($scope, $ionicNavBarDelegate) {
+        $scope.goBack = function() {
+          $ionicNavBarDelegate.back();
+        };
+       })
+
+       .controller('Page3Ctrl', function($scope, $ionicNavBarDelegate) {
+        $scope.goBack = function() {
+          $ionicNavBarDelegate.back();
+        };
+       })
+      
     </script>
   </body>
 </html>
