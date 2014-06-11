@@ -48,14 +48,7 @@ function($cacheFactory, $parse, $rootScope) {
     destroy: function() {
       this.dimensions.length = 0;
       this.data = null;
-      forEach(this.backupItemsArray, function(item) {
-        this.destroyItem(item);
-      }, this);
       this.backupItemsArray.length = 0;
-
-      forEach(this.attachedItems, function(item, key) {
-        this.destroyItem(item);
-      }, this);
       this.attachedItems = {};
     },
     calculateDataDimensions: function() {

@@ -168,15 +168,6 @@ describe('collectionRepeatManager service', function() {
 
   });
 
-  it('.destroy() should remove items', function() {
-    var manager = setup();
-    spyOn(manager, 'removeItem');
-    manager.renderedItems = { '1': true, '2': true };
-    manager.destroy();
-    expect(manager.removeItem).toHaveBeenCalledWith('1');
-    expect(manager.removeItem).toHaveBeenCalledWith('2');
-  });
-
   describe('.calculateDimensions()', function() {
     it('should work with 1 item per space', function() {
       var manager = setup();

@@ -78,9 +78,10 @@ function($rootScope, $timeout) {
 
   CollectionRepeatManager.prototype = {
     destroy: function() {
-      for (var i in this.renderedItems) {
-        this.removeItem(i);
-      }
+      this.renderedItems = {};
+      this.render = angular.noop;
+      this.calculateDimensions = angular.noop;
+      this.dimensions = [];
     },
 
     /*

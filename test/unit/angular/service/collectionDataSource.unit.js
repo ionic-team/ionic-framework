@@ -70,20 +70,6 @@ describe('$collectionDataSource service', function() {
     });
   });
 
-  it('.destroy() should cleanup dimensions backupItemsArray and attachedItems', function() {
-    var source = setup();
-    source.dimensions = [1,2,3];
-    source.attachedItems = {0: 'a'};
-    source.backupItemsArray = ['b'];
-    spyOn(source, 'destroyItem');
-    source.destroy();
-    expect(source.dimensions.length).toBe(0);
-    expect(source.destroyItem).toHaveBeenCalledWith('a');
-    expect(source.destroyItem).toHaveBeenCalledWith('b');
-    expect(source.attachedItems).toEqual({});
-    expect(source.backupItemsArray).toEqual([]);
-  });
-
   it('.calculateDataDimensions()', function() {
     function widthGetter(scope, locals) {
       return locals.$index + locals.item + 'w';
