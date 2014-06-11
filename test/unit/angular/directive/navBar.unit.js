@@ -295,7 +295,7 @@ describe('ionNavBar', function() {
     });
   });
 
-  describe('ionNavBar directive: platforms', function() {
+  describe('platforms', function() {
     function setup(attrs, content) {
       var el;
       inject(function($compile, $rootScope) {
@@ -305,7 +305,7 @@ describe('ionNavBar', function() {
       return el;
     }
 
-    describe('ionNavBar directive: iOS', function() {
+    describe('iOS', function() {
       beforeEach(module('ionic', function($provide) {
         TestUtil.setPlatform('ios');
         $provide.constant('$ionicNavBarConfig', { 
@@ -327,7 +327,7 @@ describe('ionNavBar', function() {
       });
     });
 
-    describe('ionNavBar directive: Android', function() {
+    describe('Android', function() {
       beforeEach(module('ionic', function($provide) {
         TestUtil.setPlatform('android');
         $provide.constant('$ionicNavBarConfig', { 

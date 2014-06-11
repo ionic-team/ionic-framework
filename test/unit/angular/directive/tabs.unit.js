@@ -261,8 +261,8 @@ describe('tabs', function() {
       expect(el[0].querySelector('.tabs .content')).toBeTruthy();
     });
 
-    describe('ionTabs Platform Styles', function() {
-      describe('ionTabs Platform Styles: iOS', function() {
+    describe('platform Styles', function() {
+      describe('iOS', function() {
         beforeEach(module('ionic', function($provide) {
           TestUtil.setPlatform('ios');
           $provide.constant('$ionicTabsConfig', { 
@@ -275,7 +275,7 @@ describe('tabs', function() {
           expect(el.hasClass('tabs-striped')).not.toBe(true);
         });
       });
-      describe('ionTabs Platform Styles: Android', function() {
+      describe('android', function() {
         beforeEach(module('ionic', function($provide) {
           TestUtil.setPlatform('android');
           $provide.constant('$ionicTabsConfig', {
