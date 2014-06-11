@@ -49,11 +49,9 @@ describe('ionNavBar', function() {
 
     it('should go back', inject(function($ionicViewService) {
       var ctrl = setup();
-      var e = { alreadyHandled: false };
-      ctrl.back(e);
+      ctrl.back();
       expect($ionicViewService.getBackView).toHaveBeenCalled();
       expect(backView.go).toHaveBeenCalled();
-      expect(e.alreadyHandled).toBe(true);
     }));
 
     it('should align', function() {
@@ -308,7 +306,7 @@ describe('ionNavBar', function() {
     describe('iOS', function() {
       beforeEach(module('ionic', function($provide) {
         TestUtil.setPlatform('ios');
-        $provide.constant('$ionicNavBarConfig', { 
+        $provide.constant('$ionicNavBarConfig', {
           alignTitle: 'center',
           transition: 'nav-title-slide-ios7',
           backButtonIcon: 'ion-ios7-arrow-back'
@@ -330,7 +328,7 @@ describe('ionNavBar', function() {
     describe('Android', function() {
       beforeEach(module('ionic', function($provide) {
         TestUtil.setPlatform('android');
-        $provide.constant('$ionicNavBarConfig', { 
+        $provide.constant('$ionicNavBarConfig', {
           alignTitle: 'left',
           transition: 'no-animation',
           backButtonIcon: 'ion-android-back'

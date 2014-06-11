@@ -1,4 +1,3 @@
-
 describe('ionNavBackButton directive', function() {
   beforeEach(module('ionic'));
 
@@ -62,11 +61,11 @@ describe('ionNavBackButton directive', function() {
     expect(el.children().eq(0)[0].tagName.toLowerCase()).toBe('b');
   });
 
-  it('should $navBack on click by default', function() {
+  it('should go back on click by default', function() {
     var el = setup();
-    el.scope().$navBack = jasmine.createSpy('$navBack');
+    expect(el.controller('ionNavBar').back).not.toHaveBeenCalled();
     el.triggerHandler('click');
-    expect(el.scope().$navBack).toHaveBeenCalled();
+    expect(el.controller('ionNavBar').back).toHaveBeenCalled();
   });
 
   it('should do ngClick expression if defined', function() {
@@ -80,7 +79,7 @@ describe('ionNavBackButton directive', function() {
 
 
   describe('ionNavBackButton directive: Platforms', function() {
-    describe('ionNavBackButton directive: iOS Platform', function() { 
+    describe('ionNavBackButton directive: iOS Platform', function() {
       beforeEach(function($provide) {
         TestUtil.setPlatform('ios');
       });
