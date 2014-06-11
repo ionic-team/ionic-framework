@@ -4,6 +4,69 @@ var PLATFORM_BACK_BUTTON_PRIORITY_MODAL = 200;
 var PLATFORM_BACK_BUTTON_PRIORITY_ACTION_SHEET = 300;
 var PLATFORM_BACK_BUTTON_PRIORITY_POPUP = 400;
 var PLATFORM_BACK_BUTTON_PRIORITY_LOADING = 500;
+
+function componentConfig(defaults) {
+  defaults.$get = function() { return defaults; }
+  return defaults;
+}
+
+IonicModule
+.constant('$ionicPlatformDefaults', {
+  'ios': {
+    '$ionicNavBarConfig': {
+      transition: 'nav-title-slide-ios7',
+      alignTitle: 'center',
+      backButtonIcon: 'ion-ios7-arrow-back'
+    },
+    '$ionicNavViewConfig': {
+      transition: 'slide-left-right-ios7'
+    },
+    '$ionicTabsConfig': {
+      type: '',
+      position: ''
+    }
+  },
+  'android': {
+    '$ionicNavBarConfig': {
+      transition: 'no-animation',
+      alignTitle: 'left',
+      backButtonIcon: 'ion-android-arrow-back'
+    },
+    '$ionicNavViewConfig': {
+      transition: 'fade-implode'
+    },
+    '$ionicTabsConfig': {
+      type: 'tabs-striped',
+      position: ''
+    }
+  }
+})
+
+
+IonicModule.config([
+  '$ionicPlatformDefaults',
+
+  '$injector',
+
+function($ionicPlatformDefaults, $injector) {
+  var platform = ionic.Platform.platform();
+
+  var applyConfig = function(platformDefaults) {
+    forEach(platformDefaults, function(defaults, constantName) {
+      extend($injector.get(constantName), defaults);
+    });
+  };
+
+  switch(platform) {
+    case 'ios':
+      applyConfig($ionicPlatformDefaults.ios);
+      break;
+    case 'android':
+      applyConfig($ionicPlatformDefaults.android);
+      break;
+  }
+}]);
+
 /**
  * @ngdoc service
  * @name $ionicPlatform
@@ -16,10 +79,10 @@ var PLATFORM_BACK_BUTTON_PRIORITY_LOADING = 500;
  */
 IonicModule
 .provider('$ionicPlatform', function() {
-
   return {
     $get: ['$q', '$rootScope', function($q, $rootScope) {
       var self = {
+
         /**
          * @ngdoc method
          * @name $ionicPlatform#onHardwareBackButton
@@ -138,3 +201,4 @@ IonicModule
   };
 
 });
+

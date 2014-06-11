@@ -92,7 +92,8 @@ describe('bar directives', function() {
       function setup(attrs) {
         var el;
         ionic.views.HeaderBar = function(opts) {
-          this.opts = opts;
+          this.alignTitle = opts.alignTitle;
+          this.el = opts.el;
           this.align = jasmine.createSpy('align');
         };
         inject(function($compile, $rootScope) {

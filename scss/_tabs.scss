@@ -1,4 +1,3 @@
-
 /**
  * Tabs
  * --------------------------------------------------
@@ -89,6 +88,69 @@
   @include tab-badge-style($tabs-dark-text, $tabs-dark-bg);
 }
 
+@mixin tabs-striped($style, $color) {
+  &.#{$style} {
+    .tab-item.tab-item-active,
+    .tab-item.active,
+    .tab-item.activated {
+      margin-top: -4px;
+      color: $color;
+      border-style: solid;
+      border-width: $tabs-striped-border-width 0 0 0;
+      border-color: $color;
+    }
+  }
+}
+
+.tabs-striped {
+
+  .tabs {
+    background-color: white;
+    background-image: none;
+    border: none;
+  }
+
+  @include tabs-striped('tabs-light', $light);
+  @include tabs-striped('tabs-stable', $stable);
+  @include tabs-striped('tabs-positive', $positive);
+  @include tabs-striped('tabs-calm', $calm);
+  @include tabs-striped('tabs-assertive', $assertive);
+  @include tabs-striped('tabs-balanced', $balanced);
+  @include tabs-striped('tabs-energized', $energized);
+  @include tabs-striped('tabs-royal', $royal);
+  @include tabs-striped('tabs-dark', $dark);
+
+  &.tabs-icon-only .icon {
+  }
+
+  .tab-item {
+    color: $tabs-striped-off-color;
+    opacity: $tabs-striped-off-opacity;
+  }
+  .tab-item + .tab-item:before {
+    border-left: 1px solid #ccc;
+    display: block;
+    float: left;
+    width: 2px;
+    height: 26px;
+    margin: 11px auto;
+    content: " ";
+  }
+
+}
+
+.tabs-top {
+  &.tabs-striped {
+    .tab-item.tab-item-active,
+    .tab-item.active,
+    .tab-item.activated {
+      margin-top: 0;
+      margin-bottom: -4px;
+      border-width: 0px 0px $tabs-striped-border-width 0px !important;
+    }
+  }
+}
+
 /* Allow parent element to have tabs-top */
 /* If you change this, change platform.scss as well */
 .tabs-top > .tabs,
@@ -97,6 +159,7 @@
   padding-top: 0;
   padding-bottom: 2px;
   background-position: bottom;
+
 }
 
 .tab-item {
@@ -176,6 +239,7 @@
   line-height: inherit;
 }
 
+
 .tab-item.has-badge {
   position: relative;
 }
@@ -190,6 +254,7 @@
   font-size: $tabs-badge-font-size;
   line-height: $tabs-badge-font-size + 4;
 }
+
 
 /* Navigational tab */
 
@@ -242,4 +307,12 @@
   opacity: .4;
   cursor: default;
   pointer-events: none;
+}
+
+/** Platform styles **/
+
+.tab-item.tab-item-ios {
+}
+.tab-item.tab-item-android {
+  border-top: 2px solid inherit;
 }

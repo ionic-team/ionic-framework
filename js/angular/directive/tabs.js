@@ -1,3 +1,7 @@
+IonicModule.constant('$ionicTabsConfig', {
+  position: '',
+  type: ''
+});
 
 /**
  * @ngdoc directive
@@ -46,9 +50,10 @@
 
 IonicModule
 .directive('ionTabs', [
-  '$ionicViewService',
-  '$ionicTabsDelegate',
-function($ionicViewService, $ionicTabsDelegate) {
+  '$ionicViewService', 
+  '$ionicTabsDelegate', 
+  '$ionicTabsConfig', 
+function($ionicViewService, $ionicTabsDelegate, $ionicTabsConfig) {
   return {
     restrict: 'E',
     scope: true,
@@ -60,6 +65,8 @@ function($ionicViewService, $ionicTabsDelegate) {
       var innerElement = jqLite('<div class="tabs"></div>');
       innerElement.append(element.contents());
       element.append(innerElement);
+      element.addClass($ionicTabsConfig.position);
+      element.addClass($ionicTabsConfig.type);
 
       return { pre: prelink };
       function prelink($scope, $element, $attr, tabsCtrl) {

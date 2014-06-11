@@ -1,3 +1,7 @@
+IonicModule.constant('$ionicTabConfig', {
+  type: ''
+});
+
 /**
  * @ngdoc directive
  * @name ionTab

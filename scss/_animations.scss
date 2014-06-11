@@ -334,6 +334,8 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
  */
 $ios7-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
 $ios7-transition-duration: 340ms;
+$ios-transition-box-shadow-start: -500px 0px 500px rgba(0,0,0,0), -5px 0px 5px rgba(0,0,0,0);
+$ios-transition-box-shadow-end: -500px 0px 500px rgba(0,0,0,0.10), -5px 0px 5px rgba(0,0,0,0.2);
 
 .slide-left-right-ios7,
 .slide-right-left-ios7.reverse {
@@ -347,9 +349,11 @@ $ios7-transition-duration: 340ms;
     left: -1px;
     width: auto;
     &:not(.bar) {
-      border-right: 1px solid #ddd;
-      border-left: 1px solid #ddd;
+      border-right: 1px solid transparent;
+      border-left: 1px solid transparent;
     }
+    border-right: none;
+    border-left: none;
   }
   > .ng-enter, &.ng-enter {
     /* NEW content placed far RIGHT BEFORE it slides IN from the RIGHT */
@@ -377,8 +381,8 @@ $ios7-transition-duration: 340ms;
     bottom: 0;
     left: -1px;
     width: auto;
-    border-right: 1px solid #ddd;
-    border-left: 1px solid #ddd;
+    border-right: 1px solid transparent;
+    border-left: 1px solid transparent;
   }
   > .ng-enter, &.ng-enter {
     /* NEW content placed far LEFT BEFORE it slides IN from the LEFT */
@@ -396,9 +400,169 @@ $ios7-transition-duration: 340ms;
     @include translate3d(100%, 0, 0);
   }
 }
+.grade-a {
+  .slide-left-right-ios7, .slide-right-left-ios7.reverse {
+    > .ng-enter, &.ng-enter {
+      box-shadow: $ios-transition-box-shadow-start;
+    }
+    > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+      box-shadow: $ios-transition-box-shadow-end;
+    }
+  }
+  .slide-left-right-ios7.reverse, .slide-right-left-ios7 {
+    > .ng-leave, &.ng-leave {
+      box-shadow: $ios-transition-box-shadow-end;
+    }
+    > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
+      box-shadow: $ios-transition-box-shadow-start;
+    }
+  }
+}
 
 
+/**
+ * Android style "pop in" with fade and scale
+ */
+.fade-explode {
+  > .ng-enter, &.ng-enter,
+  > .ng-leave, &.ng-leave {
+    @include transition(all ease-out 300ms);
+    position: absolute;
+    top: 0;
+    right: -1px;
+    bottom: 0;
+    left: -1px;
+    width: auto;
+    &:not(.bar) {
+      border-right: 1px solid #ddd;
+      border-left: 1px solid #ddd;
+    }
+  }
+  > .ng-enter, &.ng-enter {
+    /* NEW content placed far RIGHT BEFORE it slides IN from the RIGHT */
+    @include scale(1.6);
+    opacity: 0;
+    z-index: 2;
+  }
+  > .ng-leave, &.ng-leave {
+    z-index: 1;
+  }
+  > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+    /* NEW content ACTIVELY sliding IN from the RIGHT */
+    @include scale(1);
+    opacity: 1;
+  }
+  > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
+    /* OLD content ACTIVELY sliding OUT to the LEFT */
+    @include scale(0.95);
+  }
+}
 
+.fade-explode.reverse {
+  > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
+    @include transition(all ease-out 300ms);
+    position: absolute;
+    top: 0;
+    right: -1px;
+    bottom: 0;
+    left: -1px;
+    width: auto;
+    &:not(.bar) {
+      border-right: 1px solid #ddd;
+      border-left: 1px solid #ddd;
+    }
+  }
+  > .ng-enter, &.ng-enter {
+    /* NEW content placed far LEFT BEFORE it slides IN from the LEFT */
+    @include scale(0.95);
+    opacity: 0;
+    z-index: 1;
+  }
+  > .ng-leave, &.ng-leave {
+    @include scale(1);
+    opacity: 1;
+    z-index: 2;
+  }
+  > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+    @include scale(1);
+    opacity: 1;
+  }
+  > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
+    @include scale(1.6);
+    opacity: 0;
+  }
+}
+
+/**
+ * Android style "pop in" with fade and scale
+ */
+.fade-implode {
+  > .ng-enter, &.ng-enter,
+  > .ng-leave, &.ng-leave {
+    @include transition(all ease-out 200ms);
+    position: absolute;
+    top: 0;
+    right: -1px;
+    bottom: 0;
+    left: -1px;
+    width: auto;
+    &:not(.bar) {
+      border-right: 1px solid #ddd;
+      border-left: 1px solid #ddd;
+    }
+  }
+  > .ng-enter, &.ng-enter {
+    /* NEW content placed far RIGHT BEFORE it slides IN from the RIGHT */
+    @include scale(0.8);
+    opacity: 0;
+    z-index: 2;
+  }
+  > .ng-leave, &.ng-leave {
+    z-index: 1;
+  }
+  > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+    /* NEW content */
+    @include scale(1);
+    opacity: 1;
+  }
+  > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
+  }
+}
+
+.fade-implode.reverse {
+  > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
+    @include transition(all ease-out 200ms);
+    position: absolute;
+    top: 0;
+    right: -1px;
+    bottom: 0;
+    left: -1px;
+    width: auto;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+  }
+  > .ng-enter, &.ng-enter {
+    @include scale(1);
+    opacity: 1;
+    z-index: 1;
+  }
+  > .ng-leave, &.ng-leave {
+    @include scale(1);
+    opacity: 1;
+    z-index: 2;
+  }
+  > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+    opacity: 1;
+  }
+  > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
+    @include scale(0.8);
+    opacity: 0;
+  }
+}
+
+/**
+ * Simple slide-in animation
+ */
 .slide-in-left {
   @include translate3d(0%,0,0);
   &.ng-enter, > .ng-enter {
@@ -619,3 +783,5 @@ $nav-title-slide-ios7-delay: $ios7-transition-duration;
     }
   }
 }
+
+

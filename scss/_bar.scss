@@ -177,6 +177,16 @@
       }
     }
 
+    &.back-button {
+      padding: 0;
+      opacity: 0.8;
+      .back-button-title {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 4px;
+      }
+    }
+
     &.back-button.active,
     &.back-button.activated {
       opacity: 1;

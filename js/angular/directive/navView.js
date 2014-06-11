@@ -1,3 +1,7 @@
+IonicModule.constant('$ionicNavViewConfig', {
+  transition: 'slide-left-right-ios7'
+});
+
 /**
  * @ngdoc directive
  * @name ionNavView
