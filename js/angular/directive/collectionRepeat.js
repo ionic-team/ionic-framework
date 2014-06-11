@@ -18,19 +18,20 @@
  * Here are a few things to keep in mind while using collection-repeat:
  *
  * 1. The data supplied to collection-repeat must be an array.
- * 2. You must explicitly tell the directive what size your items will be in the DOM, using directive attributes. Pixel amounts or percentages are allowed (see below).
+ * 2. You must explicitly tell the directive what size your items will be in the DOM, using directive attributes. 
+ * Pixel amounts or percentages are allowed (see below).
  * 3. The elements rendered will be absolutely positioned: be sure to let your CSS work with
  * this (see below).
- * 4. Keep the HTML of your repeated elements as simple as possible. As the user scrolls down,
- * elements will be lazily compiled. Resultingly, the more complicated your elements, the more
- * likely it is that the on-demand compilation will cause some jerkiness in the user's scrolling.
- * 5. The more elements you render on the screen per row, the more likelihood for scrolling to
- * slow down. It is recommended to keep grids of collection-repeat list elements at 3-wide or less.
- * For example, if you have a gallery of images just set their width to 33%.
+ * 4. Keep the HTML of your repeated elements as simple as possible.
+ * The more complicated your elements, the more likely it is that the on-demand compilation will cause 
+ * some jerkiness in the user's scrolling.
  * 6. Each collection-repeat list will take up all of its parent scrollView's space.
  * If you wish to have multiple lists on one page, put each list within its own
  * {@link ionic.directive:ionScroll ionScroll} container.
- * 7. You should not use the ng-show and ng-hide directives on your ion-content/ion-scroll elements that have a collection-repeat inside.  ng-show and ng-hide apply the `display: none` css rule to the content's style, causing the scrollView to read the width and height of the content as 0.  Resultingly, collection-repeat will render elements that have just been un-hidden incorrectly.
+ * 7. You should not use the ng-show and ng-hide directives on your ion-content/ion-scroll elements that
+ * have a collection-repeat inside.  ng-show and ng-hide apply the `display: none` css rule to the content's
+ * style, causing the scrollView to read the width and height of the content as 0.  Resultingly, 
+ * collection-repeat will render elements that have just been un-hidden incorrectly.
  *
  *
  * @usage
@@ -87,9 +88,9 @@
  *   </div>
  * </ion-content>
  * ```
- * Percentage of total visible list dimensions. This example shows a 3 by 3 matrix fit on the screen (3 rows and 3 colums)
+ * Percentage of total visible list dimensions. This example shows a 3 by 3 matrix that fits on the screen (3 rows and 3 colums)
  * ```css
- * .my-image-item {
+ * .my-image-item img {
  *   height: 33%;
  *   width: 33%;
  * }
