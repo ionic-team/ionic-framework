@@ -818,7 +818,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
         }
         self.doTouchStart(getEventTouches(e), e.timeStamp);
 
-        e.preventDefault();
+        if( !ionic.tap.isTextInput(e.target) ) {
+          e.preventDefault();
+        }
         mousedown = true;
       };
 
