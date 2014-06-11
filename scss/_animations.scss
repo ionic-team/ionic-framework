@@ -334,8 +334,8 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
  */
 $ios7-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
 $ios7-transition-duration: 340ms;
-$ios-transition-box-shadow-start: -500px 0px 500px rgba(0,0,0,0.01), -5px 0px 5px rgba(0,0,0,0.01);
-$ios-transition-box-shadow-end: -500px 0px 500px rgba(0,0,0,0.10), -5px 0px 5px rgba(0,0,0,0.18);
+$ios-transition-box-shadow-start: -200px 0px 200px rgba(0,0,0,0), -5px 0px 5px rgba(0,0,0,0.01);
+$ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px rgba(0,0,0,0.18);
 
 .slide-left-right-ios7,
 .slide-right-left-ios7.reverse {
@@ -415,10 +415,10 @@ $ios-transition-box-shadow-end: -500px 0px 500px rgba(0,0,0,0.10), -5px 0px 5px 
   }
   .slide-left-right-ios7.reverse, .slide-right-left-ios7 {
     > .ng-leave, &.ng-leave {
-      box-shadow: $ios-transition-box-shadow-end;
+      //box-shadow: $ios-transition-box-shadow-end;
     }
     > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
-      box-shadow: $ios-transition-box-shadow-start;
+      //box-shadow: $ios-transition-box-shadow-start;
     }
   }
 }
