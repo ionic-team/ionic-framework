@@ -84,4 +84,20 @@ describe('Ionic ActionSheet Service', function() {
     expect(cancelSpy).toHaveBeenCalled();
   }));
 
+  it('should cancelOnStateChange by default', inject(function($rootScope) {
+    var scope = setup();
+    spyOn(scope, 'cancel');
+    $rootScope.$broadcast('$stateChangeSuccess');
+    expect(scope.cancel).toHaveBeenCalled();
+  }));
+
+  it('should not cancelOnStateChange with option as false', inject(function($rootScope) {
+    var scope = setup({
+      cancelOnStateChange: false
+    });
+    spyOn(scope, 'cancel');
+    $rootScope.$broadcast('$stateChangeSuccess');
+    expect(scope.cancel).not.toHaveBeenCalled();
+  }));
+
 });
