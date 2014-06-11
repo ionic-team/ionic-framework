@@ -19,6 +19,10 @@ IonicModule
     },
     '$ionicNavViewConfig': {
       transition: 'slide-left-right-ios7'
+    },
+    '$ionicTabsConfig': {
+      type: '',
+      position: ''
     }
   },
   'android': {
@@ -31,7 +35,8 @@ IonicModule
       transition: 'fade-implode'
     },
     '$ionicTabsConfig': {
-      type: 'tabs-striped'
+      type: 'tabs-striped',
+      position: ''
     }
   }
 })

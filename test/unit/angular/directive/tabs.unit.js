@@ -263,21 +263,25 @@ describe('tabs', function() {
 
     describe('ionTabs Platform Styles', function() {
       describe('ionTabs Platform Styles: iOS', function() {
-        beforeEach(function($provide) {
-          dump('Setting test');
+        beforeEach(module('ionic', function($provide) {
           TestUtil.setPlatform('ios');
-        });
+          $provide.constant('$ionicTabsConfig', { 
+            type: ''
+          });
+        }));
 
         it('should set iOS style', function() {
           var el = setup();
-          dump(el);
           expect(el.hasClass('tabs-striped')).not.toBe(true);
         });
       });
       describe('ionTabs Platform Styles: Android', function() {
-        beforeEach(function($provide) {
+        beforeEach(module('ionic', function($provide) {
           TestUtil.setPlatform('android');
-        });
+          $provide.constant('$ionicTabsConfig', {
+            type: 'tabs-striped'
+          });
+        }));
 
         it('should set Android style', function() {
           var el = setup();

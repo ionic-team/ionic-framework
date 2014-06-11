@@ -296,7 +296,6 @@ describe('ionNavBar', function() {
   });
 
   describe('ionNavBar directive: platforms', function() {
-    beforeEach(module('ionic'));
     function setup(attrs, content) {
       var el;
       inject(function($compile, $rootScope) {
@@ -307,9 +306,14 @@ describe('ionNavBar', function() {
     }
 
     describe('ionNavBar directive: iOS', function() {
-      beforeEach(function($provide) {
+      beforeEach(module('ionic', function($provide) {
         TestUtil.setPlatform('ios');
-      });
+        $provide.constant('$ionicNavBarConfig', { 
+          alignTitle: 'center',
+          transition: 'nav-title-slide-ios7',
+          backButtonIcon: 'ion-ios7-arrow-back'
+        });
+      }));
 
       it('should have correct title align', function() {
         var el = setup();
@@ -324,9 +328,14 @@ describe('ionNavBar', function() {
     });
 
     describe('ionNavBar directive: Android', function() {
-      beforeEach(function($provide) {
+      beforeEach(module('ionic', function($provide) {
         TestUtil.setPlatform('android');
-      });
+        $provide.constant('$ionicNavBarConfig', { 
+          alignTitle: 'left',
+          transition: 'no-animation',
+          backButtonIcon: 'ion-android-back'
+        });
+      }));
 
       it('should have correct title align', function() {
         var el = setup();

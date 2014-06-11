@@ -81,7 +81,6 @@ describe('ionNavBackButton directive', function() {
 
   describe('ionNavBackButton directive: Platforms', function() {
     describe('ionNavBackButton directive: iOS Platform', function() { 
-      beforeEach(module('ionic'));
       beforeEach(function($provide) {
         TestUtil.setPlatform('ios');
       });
@@ -93,8 +92,6 @@ describe('ionNavBackButton directive', function() {
     });
 
     describe('ionNavBackButton directive: Android Platform', function() {
-
-      beforeEach(module('ionic'));
       beforeEach(function($provide) {
         TestUtil.setPlatform('android');
       });
