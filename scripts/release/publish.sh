@@ -14,7 +14,8 @@ echo "#####"
 function run {
   cd ../..
 
-  node_modules/.bin/gulp build --release --dist="$RELEASE_DIR"
+  node_modules/.bin/gulp build --release --dist="$RELEASE_DIR/release"
+  node_modules/.bin/gulp version --dist="$RELEASE_DIR/release"
   node_modules/.bin/gulp changelog --dest="$RELEASE_DIR/CHANGELOG.md"
 
   cp package.json $RELEASE_DIR
