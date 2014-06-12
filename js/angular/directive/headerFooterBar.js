@@ -108,7 +108,7 @@ function tapScrollToTopDirective() {
           if (ionic.DomUtil.rectContains(
             touch.pageX, touch.pageY,
             bounds.left, bounds.top - 20,
-            bounds.left + bounds.width, bounds.top + bounds.height
+            bounds.left + bounds.width, bounds.top + 20 
           )) {
             var scrollCtrl = $element.controller('$ionicScroll');
             scrollCtrl && scrollCtrl.scrollTop(true);
