@@ -506,6 +506,10 @@ ionic.views.Slider = ionic.views.View.inherit({
       stop();
     };
 
+    this.start = function() {
+      begin();
+    };
+
     this.currentIndex = function() {
       // return current index position
       return index;
