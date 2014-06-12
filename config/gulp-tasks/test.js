@@ -69,7 +69,7 @@ module.exports = function(gulp, argv) {
     protractorHttpServer = http.createServer(app).listen(buildConfig.protractorPort);
   });
 
-  gulp.task('snapshot', ['protractor-server'], function(done) {
+  gulp.task('snapshot', ['protractor-server', 'demos'], function(done) {
     snapshot(done, 'config/protractor.conf.js');
   });
 
