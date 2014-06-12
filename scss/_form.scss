@@ -143,8 +143,7 @@ textarea {
 }
 
 .item-stacked-label input,
-.item-stacked-label textarea
-{
+.item-stacked-label textarea {
   @include border-radius(2px);
   padding: 4px 8px 3px;
   border: none;
@@ -165,12 +164,12 @@ textarea {
     padding: 5px 0 0 0;
     opacity: 0;
     top: 10px;
-    @include transition(opacity .2s ease-in, top .2s linear);
+    @include transition(opacity .15s ease-in, top .2s linear);
 
     &.has-input {
       opacity: 1;
       top: 0;
-      @include transition(opacity .2s ease-in, top .2s linear);
+      @include transition(opacity .15s ease-in, top .2s linear);
     }
   }
 }
