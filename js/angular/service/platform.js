@@ -28,12 +28,12 @@ IonicModule
   },
   'android': {
     '$ionicNavBarConfig': {
-      transition: 'no-animation',
-      alignTitle: 'left',
-      backButtonIcon: 'ion-android-arrow-back'
+      transition: 'nav-title-slide-ios7',
+      alignTitle: 'center',
+      backButtonIcon: 'ion-ios7-arrow-back'
     },
     '$ionicNavViewConfig': {
-      transition: 'fade-implode'
+      transition: 'slide-left-right-ios7'
     },
     '$ionicTabsConfig': {
       type: 'tabs-striped',

@@ -801,4 +801,39 @@ $nav-title-slide-ios7-delay: $ios7-transition-duration;
   }
 }
 
+$nav-title-android-delay: 200ms;
+$nav-title-android-timing-function: linear;
 
+.nav-title-android {
+  &:not(.no-animation) .button.back-button {
+    @include transition(all $nav-title-android-delay);
+    @include transition-timing-function($nav-title-android-timing-function);
+    opacity: 1;
+    &.ng-hide {
+      opacity: 0;
+    }
+    &.ng-hide-add,
+    &.ng-hide-remove {
+      display: block !important;
+    }
+    &.ng-hide-add {
+      position: absolute;
+    }
+    &.ng-hide-remove {
+    }
+  }
+  > .ng-enter, &.ng-enter,
+  > .ng-leave, &.ng-leave {
+    @include transition(all $nav-title-android-delay);
+    @include transition-timing-function($nav-title-android-timing-function);
+  }
+  > .ng-enter, &.ng-enter {
+    opacity: 0;
+  }
+  > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+    opacity: 1;
+  }
+  > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
+    opacity: 0;
+  }
+}
