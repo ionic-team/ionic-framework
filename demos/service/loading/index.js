@@ -2,7 +2,7 @@
 name: complete
 component: $ionicLoading
 ---
-angular.module('complete', [])
+angular.module('complete', ['ionic'])
 .controller('LoadingCtrl', function($scope, $ionicLoading) {
   $scope.loadingOptions = {
     duration: 1000,
