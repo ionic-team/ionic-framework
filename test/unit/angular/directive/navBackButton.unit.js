@@ -100,15 +100,16 @@ describe('ionNavBackButton directive', function() {
       }));
     });
 
-    describe('android', function() {
-      beforeEach(function($provide) {
-        TestUtil.setPlatform('android');
-      });
+    // Android defaults disabled for now
+    // describe('android', function() {
+    //   beforeEach(function($provide) {
+    //     TestUtil.setPlatform('android');
+    //   });
 
-      it('Should set default back button icon from ionicNavBarConfig ', inject(function($ionicNavBarConfig) {
-        var el = setup();
-        expect(el.hasClass('ion-android-arrow-back')).toBe(true);
-      }));
-    });
+    //   it('Should set default back button icon from ionicNavBarConfig ', inject(function($ionicNavBarConfig) {
+    //     var el = setup();
+    //     expect(el.hasClass('ion-android-arrow-back')).toBe(true);
+    //   }));
+    // });
   });
 });
