@@ -11,9 +11,9 @@
  *
  * @usage
  * ```html
- * <ion-radio ng-model="choice" ng-value="A">Choose A</ion-radio>
- * <ion-radio ng-model="choice" ng-value="B">Choose B</ion-radio>
- * <ion-radio ng-model="choice" ng-value="C">Choose C</ion-radio>
+ * <ion-radio ng-model="choice" ng-value="'A'">Choose A</ion-radio>
+ * <ion-radio ng-model="choice" ng-value="'B'">Choose B</ion-radio>
+ * <ion-radio ng-model="choice" ng-value="'C'">Choose C</ion-radio>
  * ```
  */
 IonicModule
@@ -40,6 +40,7 @@ IonicModule
     compile: function(element, attr) {
       if(attr.name) element.children().eq(0).attr('name', attr.name);
       if(attr.icon) element.children().eq(2).removeClass('ion-checkmark').addClass(attr.icon);
+      if(attr.value) element.children().eq(0).attr('value', attr.value);
     }
   };
 });
