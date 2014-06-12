@@ -645,7 +645,7 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
     @include animation-fill-mode(both);
   }
   &.ng-leave, > .ng-leave {
-    @include animation-name(slideInFromRight);
+    @include animation-name(slideOutToRight);
     @include animation-duration($transition-duration);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
