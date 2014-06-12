@@ -36,48 +36,48 @@
   <body ng-controller="AppCtrl">
 
     <p>
-      <button class="button" on-hold="gestureTest('hold')">
+      <button class="button" on-hold="gestureTest($event, 'hold')">
         Hold
       </button>
 
-      <button class="button" on-tap="gestureTest('tap')">
+      <button class="button" on-tap="gestureTest($event, 'tap')">
         Tap
       </button>
 
-      <button class="button" on-touch="gestureTest('touch')">
+      <button class="button" on-touch="gestureTest($event, 'touch')">
         Touch
       </button>
 
-      <button class="button" on-release="gestureTest('release')">
+      <button class="button" on-release="gestureTest($event, 'release')">
         Release
       </button>
 
-      <button class="button" ng-click="gestureTest('ng-click')">
+      <button class="button" ng-click="gestureTest($event, 'ng-click')">
         Click
       </button>
 
-      <button class="button" on-drag="gestureTest('drag')">
+      <button class="button" on-drag="gestureTest($event, 'drag')">
         Drag
       </button>
     </p>
 
     <div class="list">
-      <div class="item" on-swipe="gestureTest('swipe (any direction)')">
+      <div class="item" on-swipe="gestureTest($event, 'swipe (any direction)')">
         Swipe (any direction)
       </div>
-      <div class="item" on-swipe-left="gestureTest('swipe left')">
+      <div class="item" on-swipe-left="gestureTest($event, 'swipe left')">
         Swipe Left
       </div>
-      <div class="item" on-swipe-right="gestureTest('swipe right')">
+      <div class="item" on-swipe-right="gestureTest($event, 'swipe right')">
         Swipe Right
       </div>
     </div>
 
-    <div on-swipe-down="gestureTest('swipe down')" class="swipe-vertical">
+    <div on-swipe-down="gestureTest($event, 'swipe down')" class="swipe-vertical">
       Swipe Down
     </div>
 
-    <div on-swipe-up="gestureTest('swipe up')" class="swipe-vertical swipe-up">
+    <div on-swipe-up="gestureTest($event, 'swipe up')" class="swipe-vertical swipe-up">
       Swipe Up
     </div>
 
@@ -90,8 +90,8 @@
 
       .controller('AppCtrl', function($scope) {
 
-        $scope.gestureTest = function(data) {
-          o('gesture directive test', [data])
+        $scope.gestureTest = function($event, data) {
+          o('gesture directive test', [$event.type, data])
         };
 
       })
