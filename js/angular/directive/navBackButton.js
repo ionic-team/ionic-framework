@@ -80,10 +80,12 @@ function($animate, $rootScope, $sanitize, $ionicNavBarConfig, $ionicNgClick) {
     compile: function(tElement, tAttrs) {
       tElement.addClass('button back-button ng-hide');
 
+      var hasIconChild = !!(tElement.html() || '').match(/class=.*?ion-/);
+
       return function($scope, $element, $attr, navBarCtrl) {
 
         // Add a default back button icon based on the nav config, unless one is set
-        if($element[0].className.indexOf('ion-') < 0) {
+        if (!hasIconChild && $element[0].className.indexOf('ion-') === -1) {
           $element.addClass($ionicNavBarConfig.backButtonIcon);
         }
 

@@ -78,10 +78,20 @@ describe('ionNavBackButton directive', function() {
   });
 
 
-  describe('ionNavBackButton directive: Platforms', function() {
-    describe('ionNavBackButton directive: iOS Platform', function() {
+  describe('platforms', function() {
+    describe('iOS', function() {
       beforeEach(function($provide) {
         TestUtil.setPlatform('ios');
+      });
+
+      it('should not set default back button icon if icon classname exists', function() {
+        var el = setup('class="ion-navicon"');
+        expect(el.hasClass('ion-ios7-arrow-back')).toBe(false);
+      });
+
+      it('should not set default back button icon if icon child exists', function() {
+        var el = setup('', '<i class="ion-superstar"></i>');
+        expect(el.hasClass('ion-ios7-arrow-back')).toBe(false);
       });
 
       it('Should set default back button icon from ionicNavBarConfig ', inject(function($ionicNavBarConfig) {
@@ -90,7 +100,7 @@ describe('ionNavBackButton directive', function() {
       }));
     });
 
-    describe('ionNavBackButton directive: Android Platform', function() {
+    describe('android', function() {
       beforeEach(function($provide) {
         TestUtil.setPlatform('android');
       });
