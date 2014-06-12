@@ -155,6 +155,26 @@ textarea {
   height: $line-height-computed + $font-size-base + 12px;
 }
 
+.item-floating-label {
+  display: block;
+  background-color: transparent;
+  box-shadow: none;
+
+  .input-label {
+    position: relative;
+    padding: 5px 0 0 0;
+    opacity: 0;
+    top: 10px;
+    @include transition(opacity .2s ease-in, top .2s linear);
+
+    &.has-input {
+      opacity: 1;
+      top: 0;
+      @include transition(opacity .2s ease-in, top .2s linear);
+    }
+  }
+}
+
 
 // Form Controls
 // -------------------------------
