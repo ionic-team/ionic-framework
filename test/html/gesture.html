@@ -2,7 +2,7 @@
 <html ng-app="gestureTest">
   <head>
     <meta charset="utf-8">
-    <title>Nav Bars</title>
+    <title>Gestures</title>
 
     <!-- Sets initial viewport load and disables zooming  -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -10,44 +10,96 @@
     <script src="../../../../dist/js/ionic.bundle.js"></script>
     <style>
       #box {
-        position: fixed;
-        top: 0;
+        position: absolute;
+        top: 250px;
         left: 0;
         width: 100%;
         height: 100%;
         background-color: rgba(255, 100, 100, 0.5);
         overflow: auto;
       }
+      .swipe-vertical {
+        position: absolute;
+        background: gray;
+        width:150px;
+        height: 400px;
+        top: 0;
+        right: 0;
+        z-index: 99999;
+      }
+      .swipe-up {
+        right: 150px;
+        background: #ddd;
+      }
     </style>
   </head>
   <body ng-controller="AppCtrl">
+
+    <p>
+      <button class="button" on-hold="gestureTest('hold')">
+        Hold
+      </button>
+
+      <button class="button" on-tap="gestureTest('tap')">
+        Tap
+      </button>
+
+      <button class="button" on-touch="gestureTest('touch')">
+        Touch
+      </button>
+
+      <button class="button" on-release="gestureTest('release')">
+        Release
+      </button>
+
+      <button class="button" ng-click="gestureTest('ng-click')">
+        Click
+      </button>
+
+      <button class="button" on-drag="gestureTest('drag')">
+        Drag
+      </button>
+    </p>
+
+    <div class="list">
+      <div class="item" on-swipe="gestureTest('swipe (any direction)')">
+        Swipe (any direction)
+      </div>
+      <div class="item" on-swipe-left="gestureTest('swipe left')">
+        Swipe Left
+      </div>
+      <div class="item" on-swipe-right="gestureTest('swipe right')">
+        Swipe Right
+      </div>
+    </div>
+
+    <div on-swipe-down="gestureTest('swipe down')" class="swipe-vertical">
+      Swipe Down
+    </div>
+
+    <div on-swipe-up="gestureTest('swipe up')" class="swipe-vertical swipe-up">
+      Swipe Up
+    </div>
 
     <div id="box" class="box">
       <span id="output"></span>
     </div>
 
     <script>
-      angular.module('gestureTest', ['ionic', 'ngAnimate'])
+      angular.module('gestureTest', ['ionic'])
 
-      .controller('AppCtrl', function($scope, $compile, $element) {
+      .controller('AppCtrl', function($scope) {
+
+        $scope.gestureTest = function(data) {
+          o('gesture directive test', [data])
+        };
+
       })
 
       .directive('box', function($ionicGesture) {
         return {
           restrict: 'C',
           link: function($scope, $element, $attr) {
-            var output = angular.element(document.getElementById('output'));
-
-            // Debug output function
-            var o = function(type, d) {
-              var p = ['<div>' + type + ' event: '];
-              for(var i = 0; i < d.length; i++) {
-                p.push(d[i]);
-              }
-              p.push('</div>');
-              output.append(p.join(', '));
-              $element[0].scrollTop = $element[0].scrollHeight;
-            };
 
             var tapFn = function(e) {
               o('tap', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY]);
@@ -90,6 +142,19 @@
           }
         };
       });
+
+      var output = document.getElementById('output');
+
+      function o(type, d) {
+        var p = ['<div>' + type + ' event: '];
+        if(d) {
+          for(var i = 0; i < d.length; i++) {
+            p.push(d[i]);
+          }
+        }
+        p.push('</div>');
+        output.innerHTML = p.join(', ') + output.innerHTML;
+      }
     </script>
   </body>
 </html>
