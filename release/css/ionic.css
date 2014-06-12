@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.6
+ * Ionic, v1.0.0-beta.7
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -1959,8 +1959,8 @@ table {
 
 html {
   overflow: hidden;
-  -ms-touch-action: none;
-  touch-action: none; }
+  -ms-touch-action: pan-y;
+  touch-action: pan-y; }
 
 body, .ionic-body {
   -webkit-touch-callout: none;
@@ -2438,7 +2438,7 @@ a.subdued {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10;
+  z-index: 11;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
@@ -2619,6 +2619,13 @@ a.subdued {
       .bar .button.button-clear .icon:before, .bar .button.button-clear.icon:before, .bar .button.button-clear.icon-left:before, .bar .button.button-clear.icon-right:before {
         font-size: 32px;
         line-height: 32px; }
+    .bar .button.back-button {
+      padding: 0;
+      opacity: 0.8; }
+      .bar .button.back-button .back-button-title {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 4px; }
     .bar .button.back-button.active, .bar .button.back-button.activated {
       opacity: 1; }
   .bar .button-bar > .button, .bar .buttons > .button {
@@ -2980,6 +2987,81 @@ a.subdued {
     background-color: #fff;
     color: #444; }
 
+.tabs-striped .tabs {
+  background-color: white;
+  background-image: none;
+  border: none; }
+.tabs-striped.tabs-light .tab-item.tab-item-active, .tabs-striped.tabs-light .tab-item.active, .tabs-striped.tabs-light .tab-item.activated {
+  margin-top: -4px;
+  color: #fff;
+  border-style: solid;
+  border-width: 4px 0 0 0;
+  border-color: #fff; }
+.tabs-striped.tabs-stable .tab-item.tab-item-active, .tabs-striped.tabs-stable .tab-item.active, .tabs-striped.tabs-stable .tab-item.activated {
+  margin-top: -4px;
+  color: #f8f8f8;
+  border-style: solid;
+  border-width: 4px 0 0 0;
+  border-color: #f8f8f8; }
+.tabs-striped.tabs-positive .tab-item.tab-item-active, .tabs-striped.tabs-positive .tab-item.active, .tabs-striped.tabs-positive .tab-item.activated {
+  margin-top: -4px;
+  color: #4a87ee;
+  border-style: solid;
+  border-width: 4px 0 0 0;
+  border-color: #4a87ee; }
+.tabs-striped.tabs-calm .tab-item.tab-item-active, .tabs-striped.tabs-calm .tab-item.active, .tabs-striped.tabs-calm .tab-item.activated {
+  margin-top: -4px;
+  color: #43cee6;
+  border-style: solid;
+  border-width: 4px 0 0 0;
+  border-color: #43cee6; }
+.tabs-striped.tabs-assertive .tab-item.tab-item-active, .tabs-striped.tabs-assertive .tab-item.active, .tabs-striped.tabs-assertive .tab-item.activated {
+  margin-top: -4px;
+  color: #ef4e3a;
+  border-style: solid;
+  border-width: 4px 0 0 0;
+  border-color: #ef4e3a; }
+.tabs-striped.tabs-balanced .tab-item.tab-item-active, .tabs-striped.tabs-balanced .tab-item.active, .tabs-striped.tabs-balanced .tab-item.activated {
+  margin-top: -4px;
+  color: #66cc33;
+  border-style: solid;
+  border-width: 4px 0 0 0;
+  border-color: #66cc33; }
+.tabs-striped.tabs-energized .tab-item.tab-item-active, .tabs-striped.tabs-energized .tab-item.active, .tabs-striped.tabs-energized .tab-item.activated {
+  margin-top: -4px;
+  color: #f0b840;
+  border-style: solid;
+  border-width: 4px 0 0 0;
+  border-color: #f0b840; }
+.tabs-striped.tabs-royal .tab-item.tab-item-active, .tabs-striped.tabs-royal .tab-item.active, .tabs-striped.tabs-royal .tab-item.activated {
+  margin-top: -4px;
+  color: #8a6de9;
+  border-style: solid;
+  border-width: 4px 0 0 0;
+  border-color: #8a6de9; }
+.tabs-striped.tabs-dark .tab-item.tab-item-active, .tabs-striped.tabs-dark .tab-item.active, .tabs-striped.tabs-dark .tab-item.activated {
+  margin-top: -4px;
+  color: #444;
+  border-style: solid;
+  border-width: 4px 0 0 0;
+  border-color: #444; }
+.tabs-striped .tab-item {
+  color: #000;
+  opacity: 0.4; }
+.tabs-striped .tab-item + .tab-item:before {
+  border-left: 1px solid #ccc;
+  display: block;
+  float: left;
+  width: 2px;
+  height: 26px;
+  margin: 11px auto;
+  content: " "; }
+
+.tabs-top.tabs-striped .tab-item.tab-item-active, .tabs-top.tabs-striped .tab-item.active, .tabs-top.tabs-striped .tab-item.activated {
+  margin-top: 0;
+  margin-bottom: -4px;
+  border-width: 0px 0px 4px 0px !important; }
+
 /* Allow parent element to have tabs-top */
 /* If you change this, change platform.scss as well */
 .tabs-top > .tabs, .tabs.tabs-top {
@@ -3094,6 +3176,11 @@ a.subdued {
   cursor: default;
   pointer-events: none; }
 
+/** Platform styles **/
+
+.tab-item.tab-item-android {
+  border-top: 2px solid inherit; }
+
 /**
  * Menus
  * --------------------------------------------------
@@ -3193,7 +3280,7 @@ a.subdued {
   position: fixed;
   top: 50%;
   left: 50%;
-  z-index: 11;
+  z-index: 12;
   visibility: hidden;
   width: 250px;
   max-width: 100%;
@@ -3279,7 +3366,7 @@ a.subdued {
   position: fixed;
   top: 50%;
   left: 50%;
-  z-index: 11;
+  z-index: 13;
   padding: 20px;
   border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.7);
@@ -4214,6 +4301,25 @@ input, button, select, textarea {
   overflow: hidden;
   height: 46px; }
 
+.item-floating-label {
+  display: block;
+  background-color: transparent;
+  box-shadow: none; }
+  .item-floating-label .input-label {
+    position: relative;
+    padding: 5px 0 0 0;
+    opacity: 0;
+    top: 10px;
+    -webkit-transition: opacity 0.15s ease-in, top 0.2s linear;
+    -moz-transition: opacity 0.15s ease-in, top 0.2s linear;
+    transition: opacity 0.15s ease-in, top 0.2s linear; }
+    .item-floating-label .input-label.has-input {
+      opacity: 1;
+      top: 0;
+      -webkit-transition: opacity 0.15s ease-in, top 0.2s linear;
+      -moz-transition: opacity 0.15s ease-in, top 0.2s linear;
+      transition: opacity 0.15s ease-in, top 0.2s linear; }
+
 textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
   display: block;
   padding-top: 2px;
@@ -4250,7 +4356,8 @@ input[type="file"] {
   left: -9999px;
   width: 200px; }
 
-input:-moz-placeholder, textarea:-moz-placeholder {
+input::-moz-placeholder, textarea::-moz-placeholder {
+  /* Firefox 19+ */
   color: #aaaaaa; }
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color: #aaaaaa; }
@@ -5579,23 +5686,27 @@ a.button {
  * --------------------------------------------------
  */
 .slide-left-right-ios7 > .ng-enter, .slide-left-right-ios7.ng-enter, .slide-left-right-ios7 > .ng-leave, .slide-left-right-ios7.ng-leave, .slide-right-left-ios7.reverse > .ng-enter, .slide-right-left-ios7.reverse.ng-enter, .slide-right-left-ios7.reverse > .ng-leave, .slide-right-left-ios7.reverse.ng-leave {
-  -webkit-transition: all ease-in-out 250ms;
-  -moz-transition: all ease-in-out 250ms;
-  transition: all ease-in-out 250ms;
+  -webkit-transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 340ms;
+  -moz-transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 340ms;
+  transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 340ms;
   position: absolute;
   top: 0;
   right: -1px;
   bottom: 0;
   left: -1px;
-  width: auto; }
+  width: auto;
+  border-right: none;
+  border-left: none; }
   .slide-left-right-ios7 > .ng-enter:not(.bar), .slide-left-right-ios7.ng-enter:not(.bar), .slide-left-right-ios7 > .ng-leave:not(.bar), .slide-left-right-ios7.ng-leave:not(.bar), .slide-right-left-ios7.reverse > .ng-enter:not(.bar), .slide-right-left-ios7.reverse.ng-enter:not(.bar), .slide-right-left-ios7.reverse > .ng-leave:not(.bar), .slide-right-left-ios7.reverse.ng-leave:not(.bar) {
-    border-right: 1px solid #ddd;
-    border-left: 1px solid #ddd; }
+    border-right: 1px solid transparent;
+    border-left: 1px solid transparent; }
 .slide-left-right-ios7 > .ng-enter, .slide-left-right-ios7.ng-enter, .slide-right-left-ios7.reverse > .ng-enter, .slide-right-left-ios7.reverse.ng-enter {
   /* NEW content placed far RIGHT BEFORE it slides IN from the RIGHT */
   -webkit-transform: translate3d(100%, 0, 0);
   -moz-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0); }
+.slide-left-right-ios7 > .ng-leave, .slide-left-right-ios7.ng-leave, .slide-right-left-ios7.reverse > .ng-leave, .slide-right-left-ios7.reverse.ng-leave {
+  z-index: 1; }
 .slide-left-right-ios7 > .ng-enter.ng-enter-active, .slide-left-right-ios7.ng-enter.ng-enter-active, .slide-right-left-ios7.reverse > .ng-enter.ng-enter-active, .slide-right-left-ios7.reverse.ng-enter.ng-enter-active {
   /* NEW content ACTIVELY sliding IN from the RIGHT */
   -webkit-transform: translate3d(0, 0, 0);
@@ -5608,9 +5719,158 @@ a.button {
   transform: translate3d(-15%, 0, 0); }
 
 .slide-left-right-ios7.reverse > .ng-enter, .slide-left-right-ios7.reverse.ng-enter, .slide-left-right-ios7.reverse > .ng-leave, .slide-left-right-ios7.reverse.ng-leave, .slide-right-left-ios7 > .ng-enter, .slide-right-left-ios7.ng-enter, .slide-right-left-ios7 > .ng-leave, .slide-right-left-ios7.ng-leave {
-  -webkit-transition: all ease-in-out 250ms;
-  -moz-transition: all ease-in-out 250ms;
-  transition: all ease-in-out 250ms;
+  -webkit-transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 340ms;
+  -moz-transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 340ms;
+  transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 340ms;
+  position: absolute;
+  top: 0;
+  right: -1px;
+  bottom: 0;
+  left: -1px;
+  width: auto;
+  border-right: 1px solid transparent;
+  border-left: 1px solid transparent; }
+.slide-left-right-ios7.reverse > .ng-enter, .slide-left-right-ios7.reverse.ng-enter, .slide-right-left-ios7 > .ng-enter, .slide-right-left-ios7.ng-enter {
+  /* NEW content placed far LEFT BEFORE it slides IN from the LEFT */
+  -webkit-transform: translate3d(-15%, 0, 0);
+  -moz-transform: translate3d(-15%, 0, 0);
+  transform: translate3d(-15%, 0, 0); }
+.slide-left-right-ios7.reverse > .ng-leave, .slide-left-right-ios7.reverse.ng-leave, .slide-right-left-ios7 > .ng-leave, .slide-right-left-ios7.ng-leave {
+  z-index: 2; }
+.slide-left-right-ios7.reverse > .ng-enter.ng-enter-active, .slide-left-right-ios7.reverse.ng-enter.ng-enter-active, .slide-right-left-ios7 > .ng-enter.ng-enter-active, .slide-right-left-ios7.ng-enter.ng-enter-active {
+  /* NEW content ACTIVELY sliding IN from the LEFT */
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0); }
+.slide-left-right-ios7.reverse > .ng-leave.ng-leave-active, .slide-left-right-ios7.reverse.ng-leave.ng-leave-active, .slide-right-left-ios7 > .ng-leave.ng-leave-active, .slide-right-left-ios7.ng-leave.ng-leave-active {
+  /* OLD content ACTIVELY sliding OUT to the RIGHT */
+  -webkit-transform: translate3d(100%, 0, 0);
+  -moz-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0); }
+
+/**
+ * iPad doesn't like box shadows
+ */
+.grade-a:not(.platform-ipad) .slide-left-right-ios7 > .ng-enter, .grade-a:not(.platform-ipad) .slide-left-right-ios7.ng-enter, .grade-a:not(.platform-ipad) .slide-right-left-ios7.reverse > .ng-enter, .grade-a:not(.platform-ipad) .slide-right-left-ios7.reverse.ng-enter {
+  box-shadow: -200px 0px 200px rgba(0, 0, 0, 0), -5px 0px 5px rgba(0, 0, 0, 0.01); }
+.grade-a:not(.platform-ipad) .slide-left-right-ios7 > .ng-enter.ng-enter-active, .grade-a:not(.platform-ipad) .slide-left-right-ios7.ng-enter.ng-enter-active, .grade-a:not(.platform-ipad) .slide-right-left-ios7.reverse > .ng-enter.ng-enter-active, .grade-a:not(.platform-ipad) .slide-right-left-ios7.reverse.ng-enter.ng-enter-active {
+  box-shadow: -200px 0px 200px rgba(0, 0, 0, 0.15), -5px 0px 5px rgba(0, 0, 0, 0.18); }
+
+.grade-a.platform-ipad .slide-left-right-ios7 > .ng-enter, .grade-a.platform-ipad .slide-left-right-ios7.ng-enter, .grade-a.platform-ipad .slide-right-left-ios7.reverse > .ng-enter, .grade-a.platform-ipad .slide-right-left-ios7.reverse.ng-enter {
+  border-left: 1px solid #ddd; }
+.grade-a.platform-ipad .slide-left-right-ios7.reverse > .ng-leave, .grade-a.platform-ipad .slide-left-right-ios7.reverse.ng-leave, .grade-a.platform-ipad .slide-right-left-ios7 > .ng-leave, .grade-a.platform-ipad .slide-right-left-ios7.ng-leave {
+  border-left: 1px solid #ddd; }
+
+/**
+ * Android style "pop in" with fade and scale
+ */
+.fade-explode > .ng-enter, .fade-explode.ng-enter, .fade-explode > .ng-leave, .fade-explode.ng-leave {
+  -webkit-transition: all ease-out 300ms;
+  -moz-transition: all ease-out 300ms;
+  transition: all ease-out 300ms;
+  position: absolute;
+  top: 0;
+  right: -1px;
+  bottom: 0;
+  left: -1px;
+  width: auto; }
+  .fade-explode > .ng-enter:not(.bar), .fade-explode.ng-enter:not(.bar), .fade-explode > .ng-leave:not(.bar), .fade-explode.ng-leave:not(.bar) {
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd; }
+.fade-explode > .ng-enter, .fade-explode.ng-enter {
+  /* NEW content placed far RIGHT BEFORE it slides IN from the RIGHT */
+  -webkit-transform: scale(1.6);
+  -moz-transform: scale(1.6);
+  transform: scale(1.6);
+  opacity: 0;
+  z-index: 2; }
+.fade-explode > .ng-leave, .fade-explode.ng-leave {
+  z-index: 1; }
+.fade-explode > .ng-enter.ng-enter-active, .fade-explode.ng-enter.ng-enter-active {
+  /* NEW content ACTIVELY sliding IN from the RIGHT */
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  transform: scale(1);
+  opacity: 1; }
+.fade-explode > .ng-leave.ng-leave-active, .fade-explode.ng-leave.ng-leave-active {
+  /* OLD content ACTIVELY sliding OUT to the LEFT */
+  -webkit-transform: scale(0.95);
+  -moz-transform: scale(0.95);
+  transform: scale(0.95); }
+
+.fade-explode.reverse > .ng-enter, .fade-explode.reverse.ng-enter, .fade-explode.reverse > .ng-leave, .fade-explode.reverse.ng-leave {
+  -webkit-transition: all ease-out 300ms;
+  -moz-transition: all ease-out 300ms;
+  transition: all ease-out 300ms;
+  position: absolute;
+  top: 0;
+  right: -1px;
+  bottom: 0;
+  left: -1px;
+  width: auto; }
+  .fade-explode.reverse > .ng-enter:not(.bar), .fade-explode.reverse.ng-enter:not(.bar), .fade-explode.reverse > .ng-leave:not(.bar), .fade-explode.reverse.ng-leave:not(.bar) {
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd; }
+.fade-explode.reverse > .ng-enter, .fade-explode.reverse.ng-enter {
+  /* NEW content placed far LEFT BEFORE it slides IN from the LEFT */
+  -webkit-transform: scale(0.95);
+  -moz-transform: scale(0.95);
+  transform: scale(0.95);
+  opacity: 0;
+  z-index: 1; }
+.fade-explode.reverse > .ng-leave, .fade-explode.reverse.ng-leave {
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  transform: scale(1);
+  opacity: 1;
+  z-index: 2; }
+.fade-explode.reverse > .ng-enter.ng-enter-active, .fade-explode.reverse.ng-enter.ng-enter-active {
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  transform: scale(1);
+  opacity: 1; }
+.fade-explode.reverse > .ng-leave.ng-leave-active, .fade-explode.reverse.ng-leave.ng-leave-active {
+  -webkit-transform: scale(1.6);
+  -moz-transform: scale(1.6);
+  transform: scale(1.6);
+  opacity: 0; }
+
+/**
+ * Android style "pop in" with fade and scale
+ */
+.fade-implode > .ng-enter, .fade-implode.ng-enter, .fade-implode > .ng-leave, .fade-implode.ng-leave {
+  -webkit-transition: all ease-out 200ms;
+  -moz-transition: all ease-out 200ms;
+  transition: all ease-out 200ms;
+  position: absolute;
+  top: 0;
+  right: -1px;
+  bottom: 0;
+  left: -1px;
+  width: auto; }
+  .fade-implode > .ng-enter:not(.bar), .fade-implode.ng-enter:not(.bar), .fade-implode > .ng-leave:not(.bar), .fade-implode.ng-leave:not(.bar) {
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd; }
+.fade-implode > .ng-enter, .fade-implode.ng-enter {
+  /* NEW content placed far RIGHT BEFORE it slides IN from the RIGHT */
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  transform: scale(0.8);
+  opacity: 0;
+  z-index: 2; }
+.fade-implode > .ng-leave, .fade-implode.ng-leave {
+  z-index: 1; }
+.fade-implode > .ng-enter.ng-enter-active, .fade-implode.ng-enter.ng-enter-active {
+  /* NEW content */
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  transform: scale(1);
+  opacity: 1; }
+
+.fade-implode.reverse > .ng-enter, .fade-implode.reverse.ng-enter, .fade-implode.reverse > .ng-leave, .fade-implode.reverse.ng-leave {
+  -webkit-transition: all ease-out 200ms;
+  -moz-transition: all ease-out 200ms;
+  transition: all ease-out 200ms;
   position: absolute;
   top: 0;
   right: -1px;
@@ -5619,22 +5879,29 @@ a.button {
   width: auto;
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd; }
-.slide-left-right-ios7.reverse > .ng-enter, .slide-left-right-ios7.reverse.ng-enter, .slide-right-left-ios7 > .ng-enter, .slide-right-left-ios7.ng-enter {
-  /* NEW content placed far LEFT BEFORE it slides IN from the LEFT */
-  -webkit-transform: translate3d(-100%, 0, 0);
-  -moz-transform: translate3d(-100%, 0, 0);
-  transform: translate3d(-100%, 0, 0); }
-.slide-left-right-ios7.reverse > .ng-enter.ng-enter-active, .slide-left-right-ios7.reverse.ng-enter.ng-enter-active, .slide-right-left-ios7 > .ng-enter.ng-enter-active, .slide-right-left-ios7.ng-enter.ng-enter-active {
-  /* NEW content ACTIVELY sliding IN from the LEFT */
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0); }
-.slide-left-right-ios7.reverse > .ng-leave.ng-leave-active, .slide-left-right-ios7.reverse.ng-leave.ng-leave-active, .slide-right-left-ios7 > .ng-leave.ng-leave-active, .slide-right-left-ios7.ng-leave.ng-leave-active {
-  /* OLD content ACTIVELY sliding OUT to the RIGHT */
-  -webkit-transform: translate3d(15%, 0, 0);
-  -moz-transform: translate3d(15%, 0, 0);
-  transform: translate3d(15%, 0, 0); }
+.fade-implode.reverse > .ng-enter, .fade-implode.reverse.ng-enter {
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  transform: scale(1);
+  opacity: 1;
+  z-index: 1; }
+.fade-implode.reverse > .ng-leave, .fade-implode.reverse.ng-leave {
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  transform: scale(1);
+  opacity: 1;
+  z-index: 2; }
+.fade-implode.reverse > .ng-enter.ng-enter-active, .fade-implode.reverse.ng-enter.ng-enter-active {
+  opacity: 1; }
+.fade-implode.reverse > .ng-leave.ng-leave-active, .fade-implode.reverse.ng-leave.ng-leave-active {
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  transform: scale(0.8);
+  opacity: 0; }
 
+/**
+ * Simple slide-in animation
+ */
 .slide-in-left {
   -webkit-transform: translate3d(0%, 0, 0);
   -moz-transform: translate3d(0%, 0, 0);
@@ -5754,9 +6021,9 @@ a.button {
     -moz-animation-fill-mode: both;
     animation-fill-mode: both; }
   .slide-in-right.ng-leave, .slide-in-right > .ng-leave {
-    -webkit-animation-name: slideInFromRight;
-    -moz-animation-name: slideInFromRight;
-    animation-name: slideInFromRight;
+    -webkit-animation-name: slideOutToRight;
+    -moz-animation-name: slideOutToRight;
+    animation-name: slideOutToRight;
     -webkit-animation-duration: 250ms;
     -moz-animation-duration: 250ms;
     animation-duration: 250ms;
@@ -5881,12 +6148,12 @@ a.button {
  * Some component specific animations
  */
 .nav-title-slide-ios7:not(.no-animation) .button.back-button {
-  -webkit-transition: all 250ms;
-  -moz-transition: all 250ms;
-  transition: all 250ms;
-  -webkit-transition-timing-function: ease-in-out;
-  -moz-transition-timing-function: ease-in-out;
-  transition-timing-function: ease-in-out;
+  -webkit-transition: all 340ms;
+  -moz-transition: all 340ms;
+  transition: all 340ms;
+  -webkit-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
+  -moz-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
+  transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
   -webkit-transform: translate3d(0%, 0, 0);
   -moz-transform: translate3d(0%, 0, 0);
   transform: translate3d(0%, 0, 0);
@@ -5903,18 +6170,22 @@ a.button {
   .nav-title-slide-ios7:not(.no-animation) .button.back-button.ng-hide-add {
     position: absolute; }
 .nav-title-slide-ios7 > .ng-enter, .nav-title-slide-ios7.ng-enter, .nav-title-slide-ios7 > .ng-leave, .nav-title-slide-ios7.ng-leave {
-  -webkit-transition: all 250ms;
-  -moz-transition: all 250ms;
-  transition: all 250ms;
-  -webkit-transition-timing-function: ease-in-out;
-  -moz-transition-timing-function: ease-in-out;
-  transition-timing-function: ease-in-out;
+  -webkit-transition: all 340ms;
+  -moz-transition: all 340ms;
+  transition: all 340ms;
+  -webkit-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
+  -moz-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
+  transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
   opacity: 1; }
 .nav-title-slide-ios7 > .ng-enter, .nav-title-slide-ios7.ng-enter {
   -webkit-transform: translate3d(30%, 0, 0);
   -moz-transform: translate3d(30%, 0, 0);
   transform: translate3d(30%, 0, 0);
   opacity: 0; }
+  .nav-title-slide-ios7 > .ng-enter.title, .nav-title-slide-ios7.ng-enter.title {
+    -webkit-transform: translate3d(100%, 0, 0);
+    -moz-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0); }
 .nav-title-slide-ios7 > .ng-enter.ng-enter-active, .nav-title-slide-ios7.ng-enter.ng-enter-active {
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
@@ -5926,9 +6197,12 @@ a.button {
   transform: translate3d(-30%, 0, 0);
   opacity: 0; }
 .nav-title-slide-ios7.reverse > .ng-enter, .nav-title-slide-ios7.reverse.ng-enter, .nav-title-slide-ios7.reverse > .ng-leave, .nav-title-slide-ios7.reverse.ng-leave {
-  -webkit-transition: all ease-in-out 250ms;
-  -moz-transition: all ease-in-out 250ms;
-  transition: all ease-in-out 250ms;
+  -webkit-transition: all 340ms;
+  -moz-transition: all 340ms;
+  transition: all 340ms;
+  -webkit-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
+  -moz-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
+  transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
   opacity: 1; }
 .nav-title-slide-ios7.reverse > .ng-enter, .nav-title-slide-ios7.reverse.ng-enter {
   -webkit-transform: translate3d(-30%, 0, 0);
@@ -5941,9 +6215,37 @@ a.button {
   transform: translate3d(0, 0, 0);
   opacity: 1; }
 .nav-title-slide-ios7.reverse > .ng-leave.ng-leave-active, .nav-title-slide-ios7.reverse.ng-leave.ng-leave-active {
-  -webkit-transform: translate3d(30%, 0, 0);
-  -moz-transform: translate3d(30%, 0, 0);
-  transform: translate3d(30%, 0, 0);
+  -webkit-transform: translate3d(100%, 0, 0);
+  -moz-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+  opacity: 0; }
+
+.nav-title-android:not(.no-animation) .button.back-button {
+  -webkit-transition: all 200ms;
+  -moz-transition: all 200ms;
+  transition: all 200ms;
+  -webkit-transition-timing-function: linear;
+  -moz-transition-timing-function: linear;
+  transition-timing-function: linear;
+  opacity: 1; }
+  .nav-title-android:not(.no-animation) .button.back-button.ng-hide {
+    opacity: 0; }
+  .nav-title-android:not(.no-animation) .button.back-button.ng-hide-add, .nav-title-android:not(.no-animation) .button.back-button.ng-hide-remove {
+    display: block !important; }
+  .nav-title-android:not(.no-animation) .button.back-button.ng-hide-add {
+    position: absolute; }
+.nav-title-android > .ng-enter, .nav-title-android.ng-enter, .nav-title-android > .ng-leave, .nav-title-android.ng-leave {
+  -webkit-transition: all 200ms;
+  -moz-transition: all 200ms;
+  transition: all 200ms;
+  -webkit-transition-timing-function: linear;
+  -moz-transition-timing-function: linear;
+  transition-timing-function: linear; }
+.nav-title-android > .ng-enter, .nav-title-android.ng-enter {
+  opacity: 0; }
+.nav-title-android > .ng-enter.ng-enter-active, .nav-title-android.ng-enter.ng-enter-active {
+  opacity: 1; }
+.nav-title-android > .ng-leave.ng-leave-active, .nav-title-android.ng-leave.ng-leave-active {
   opacity: 0; }
 
 /**
@@ -6411,6 +6713,91 @@ a.button {
  * --------------------------------------------------
  * Platform specific tweaks
  */
+/**
+ * Apply roboto font
+ */
+.roboto {
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
+  .roboto input {
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
+
+/*
+.platform-android {
+
+
+  .bar {
+    padding: 0;
+
+    line-height: 40px;
+
+    .button {
+      line-height: 40px;
+    }
+
+    .button-icon:before {
+      font-size: 24px;
+    }
+  }
+
+  .back-button {
+    &.button-icon:before {
+      line-height: 40px;
+    }
+    margin-left: -3px;
+    padding: 0px 2px !important;
+    &.ion-android-arrow-back:before {
+      font-size: 12px;
+    }
+
+    &.back-button.active,
+    &.back-button.activated {
+      background-color: rgba(0,0,0,0.1);
+    }
+  }
+
+  .item-divider {
+    background: none;
+    border-top-width: 0;
+    border-bottom-width: 2px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  .item {
+    border-left-width: 0;
+    border-right-width: 0;
+  }
+
+  .item-divider ~ .item:not(.item-divider) {
+    border-bottom-width: 0;
+  }
+
+  .back-button:not(.ng-hide) + .left-buttons + .title {
+    // Don't allow normal titles in this mode
+    display: none;
+  }
+
+  .bar .title {
+    text-align: left;
+    font-weight: normal;
+  }
+
+  /*
+  font-family: 'Roboto';
+
+  h1, h2, h3, h4, h5 {
+    font-family: 'Roboto', $font-family-base;
+  }
+
+  .tab-item {
+    font-family: 'Roboto', $font-family-base;
+  }
+
+
+  input, button, select, textarea {
+    font-family: 'Roboto', $font-family-base;
+  }
+  */
 .platform-ios7.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader) {
   height: 64px; }
   .platform-ios7.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader).item-input-inset .item-input-wrapper {

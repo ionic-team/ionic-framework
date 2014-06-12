@@ -1,3 +1,6 @@
+### 1.0.0-beta.7 "einsteinium-emu" (2014-06-12)
+
+
 <a name="1.0.0-beta.6"></a>
 ### 1.0.0-beta.6 "darmstadtium-dingo" (2014-05-21)
 
