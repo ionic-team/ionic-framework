@@ -237,11 +237,12 @@ forEach(
 
 function gestureDirective(directiveName) {
   return ['$ionicGesture', '$parse', function($ionicGesture, $parse) {
+    var eventType = directiveName.substr(2).toLowerCase();
+
     return {
       restrict: 'A',
       compile: function($element, attr) {
         var fn = $parse( attr[directiveName] );
-        var eventType = directiveName.substr(2).toLowerCase();
 
         return function(scope, element, attr) {
 
