@@ -1,32 +1,16 @@
-/**
- * @ngdoc directive
- * @name itemFloatingLabel
- * @module ionic
- * @restrict C
- * @description
- * The floating label directive is a class directive that is used just like [item-stacked-label](http://ionicframework.com/docs/components/#forms-stacked-labels).
- *
- *
- * @usage
- * ```html
- * <label class="item item-input item-floating-label">
- *   <span class="input-label">First Name</span>
- *   <input type="text" placeholder="First Name">
- * </label> 
- * ```
- */
+
 IonicModule
 .directive('itemFloatingLabel', function() {
   return {
     restrict: 'C',
     link: function(scope, element) {
       var el = element[0];
-      var input = el.querySelector('input,textarea');
+      var input = el.querySelector('input, textarea');
       var inputLabel = el.querySelector('.input-label');
       
       if ( !input || !inputLabel ) return;
 
-      var onKeyUp = function() {
+      var onInput = function() {
         var hasInput = inputLabel.classList.contains('has-input');
         if ( input.value !== '' && !hasInput ) {
           inputLabel.classList.add('has-input');
@@ -36,10 +20,19 @@ IonicModule
         };
       }
 
-      input.addEventListener('keyup', onKeyUp); 
+      input.addEventListener('input', onInput); 
+
+      var ngModelCtrl = angular.element(input).controller('ngModel');
+      if ( ngModelCtrl ) {
+        ngModelCtrl.$render = function() {
+          if ( ngModelCtrl.$viewValue ) input.value = ngModelCtrl.$viewValue;
+          else input.value = '';
+          onInput();
+        }
+      }
 
       scope.$on('$destroy', function() {
-        input.removeEventListener('keyup', onKeyUp);
+        input.removeEventListener('input', onInput);
       });
     }
   }
