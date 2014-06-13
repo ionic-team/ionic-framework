@@ -69,6 +69,10 @@ body.grade-c {
   height: auto;
 }
 
+.scroll-content-false {
+  z-index: $z-index-scroll-content-false;
+}
+
 .scroll-view {
   position: relative;
   display: block;

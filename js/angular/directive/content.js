@@ -58,6 +58,8 @@ function($timeout, $controller, $ionicBind) {
         innerElement = jqLite('<div class="scroll"></div>');
         innerElement.append(element.contents());
         element.append(innerElement);
+      } else {
+        element.addClass('scroll-content-false');
       }
 
       return { pre: prelink };
