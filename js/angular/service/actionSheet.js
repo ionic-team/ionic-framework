@@ -25,7 +25,7 @@
  *    var hideSheet = $ionicActionSheet.show({
  *      buttons: [
  *        { text: '<b>Share</b> This' },
- *        { text: 'Move' },
+ *        { text: 'Move' }
  *      ],
  *      destructiveText: 'Delete',
  *      titleText: 'Modify your album',
