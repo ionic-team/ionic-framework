@@ -20,8 +20,8 @@ function($rootScope, $timeout) {
     this.setCurrentIndex(0);
 
     //Override scrollview's render callback
-    this.scrollView.__$callback = this.scrollView.__callback;
-    this.scrollView.__callback = angular.bind(this, this.renderScroll);
+    this.scrollView.$onScroll = this.scrollView.onScroll;
+    this.scrollView.onScroll = angular.bind(this, this.renderScroll);
 
     function getViewportSize() { return self.viewportSize; }
     //Set getters and setters to match whether this scrollview is vertical or not
@@ -183,13 +183,13 @@ function($rootScope, $timeout) {
      * override the scroller's render callback to check if we need to
      * re-render our collection
      */
-    renderScroll: ionic.animationFrameThrottle(function(transformLeft, transformTop, zoom, wasResize) {
+    renderScroll: ionic.animationFrameThrottle(function(transformTop, transformLeft) {
       if (this.isVertical) {
         this.renderIfNeeded(transformTop);
       } else {
         this.renderIfNeeded(transformLeft);
       }
-      return this.scrollView.__$callback(transformLeft, transformTop, zoom, wasResize);
+      return this.scrollView.$onScroll(transformTop, transformLeft);
     }),
 
     renderIfNeeded: function(scrollPos) {
