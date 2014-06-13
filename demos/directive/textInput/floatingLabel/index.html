@@ -1,0 +1,29 @@
+---
+name: floatingLabel
+component: itemFloatingLabel
+---
+
+<ion-header-bar class="bar-positive">
+  <h1 class="title">
+    Text Input: Floating Label
+  </h1>
+</ion-header-bar>
+
+<ion-content ng-controller="AppCtrl">
+
+  <div class="list">
+    <label class="item item-input item-floating-label">
+      <span class="input-label">Name</span>
+      <input type="text" placeholder="Name">
+    </label>
+    <label class="item item-input item-floating-label">
+      <span class="input-label">Profession</span>
+      <input type="text" placeholder="Profession">
+    </label>
+    <label class="item item-input item-floating-label">
+      <span class="input-label">Favorite Song</span>
+      <textarea placeholder="Favorite Song" ng-model="favSong"></textarea>
+    </label>
+  </div>
+
+</ion-content>
