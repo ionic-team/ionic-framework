@@ -276,7 +276,7 @@ var Scroller;
       return pos * ( 2 - pos );
   };
   
-  var quadraticTransition = "cubic-bezier(0.25, 0.46, 0.45, 0.94)";
+  var quadraticTransition = "cubic-bezier(.2,.36,.5,.9)";
 
 /**
  * ionic.views.Scroll
@@ -412,7 +412,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     };
 
     this.triggerScrollEvent = ionic.throttle(function() {
-      self.onScroll(self.__scrollTop, self.__scrollLeft);
+      self.onScroll();
       ionic.trigger('scroll', {
         scrollTop: self.__scrollTop,
         scrollLeft: self.__scrollLeft,
@@ -489,6 +489,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
   
   
   __isBadAndroid: /Android /.test(window.navigator.appVersion) && !(/Chrome\/\d/.test(window.navigator.appVersion)),
+  
+  
+  __onScrollTransition: null,
 
 
 
@@ -1148,8 +1151,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
     var transformProperty = vendorPrefix + "Transform";
     var transformOriginProperty = vendorPrefix + 'TransformOrigin';
     
-    var transitionProperty = vendorPrefix + "Transition";
-    var transitionDurationProperty = vendorPrefix + "TransitionDuration";
+    var transitionProperty = vendorPrefix ? vendorPrefix + "Transition" : "transition";
+    var transitionDurationProperty = vendorPrefix ? vendorPrefix + "TransitionDuration" : "transitionDuration";
 
     self.__perspectiveProperty = transformProperty;
     self.__transformProperty = transformProperty;
@@ -1825,6 +1828,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       // Sync scroll position
       self.__publish(scrollLeft, scrollTop, level);
+	  if(self.__onScrollTransition) self.__onScrollTransition(self.__scrollLeft, self.__scrollTop);
 
     // Otherwise figure out whether we are switching into dragging mode now.
     } else {
@@ -2170,6 +2174,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
             
             self.__repositionScrollbars();
             if(!wasResize) {
+              if(self.__onScrollTransition) self.__onScrollTransition(self.__scrollLeft, self.__scrollTop);
               self.triggerScrollEvent();
             }
         }

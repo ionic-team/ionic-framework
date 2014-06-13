@@ -16,12 +16,16 @@ function($rootScope, $timeout) {
 
     this.isVertical = !!this.scrollView.options.scrollingY;
     this.renderedItems = {};
-    this.dimensions = [];
+
     this.setCurrentIndex(0);
 
     //Override scrollview's render callback
-    this.scrollView.$onScroll = this.scrollView.onScroll;
-    this.scrollView.onScroll = angular.bind(this, this.renderScroll);
+    if(this.scrollView.options.transition){
+      this.scrollView.__onScrollTransition = angular.bind(this, this.renderScrollTransition);
+    }else{
+      this.scrollView.__$callback = this.scrollView.__callback;
+      this.scrollView.__callback = angular.bind(this, this.renderScroll);
+    }
 
     function getViewportSize() { return self.viewportSize; }
     //Set getters and setters to match whether this scrollview is vertical or not
@@ -100,23 +104,7 @@ function($rootScope, $timeout) {
       var secondaryScrollSize = this.secondaryScrollSize();
       var previousItem;
 
-      this.dataSource.beforeSiblings && this.dataSource.beforeSiblings.forEach(calculateSize, this);
-      var beforeSize = primaryPos + (previousItem ? previousItem.primarySize : 0);
-
-      primaryPos = secondaryPos = 0;
-      previousItem = null;
-
-      var dimensions = this.dataSource.dimensions.map(calculateSize, this);
-      var totalSize = primaryPos + (previousItem ? previousItem.primarySize : 0);
-
-      return {
-        beforeSize: beforeSize,
-        totalSize: totalSize,
-        dimensions: dimensions
-      };
-
-      function calculateSize(dim) {
-
+      return this.dataSource.dimensions.map(function(dim) {
         //Each dimension is an object {width: Number, height: Number} provided by
         //the dataSource
         var rect = {
@@ -145,53 +133,53 @@ function($rootScope, $timeout) {
 
         previousItem = rect;
         return rect;
-      }
+      }, this);
     },
     resize: function() {
-      var result = this.calculateDimensions();
-      this.dimensions = result.dimensions;
-      this.viewportSize = result.totalSize;
-      this.beforeSize = result.beforeSize;
+      this.dimensions = this.calculateDimensions();
+      var lastItem = this.dimensions[this.dimensions.length - 1];
+      this.viewportSize = lastItem ? lastItem.primaryPos + lastItem.primarySize : 0;
       this.setCurrentIndex(0);
       this.render(true);
-      this.dataSource.setup();
+      if (!this.dataSource.backupItemsArray.length) {
+        this.dataSource.setup();
+      }
     },
     /*
-     * setCurrentIndex sets the index in the list that matches the scroller's position.
+     * setCurrentIndex: set the index in the list that matches the scroller's position.
      * Also save the position in the scroller for next and previous items (if they exist)
      */
     setCurrentIndex: function(index, height) {
-      var currentPos = (this.dimensions[index] || {}).primaryPos || 0;
       this.currentIndex = index;
 
       this.hasPrevIndex = index > 0;
       if (this.hasPrevIndex) {
-        this.previousPos = Math.max(
-          currentPos - this.dimensions[index - 1].primarySize,
-          this.dimensions[index - 1].primaryPos
-        );
+        this.previousPos = this.dimensions[index - 1].primaryPos;
       }
       this.hasNextIndex = index + 1 < this.dataSource.getLength();
       if (this.hasNextIndex) {
-        this.nextPos = Math.min(
-          currentPos + this.dimensions[index + 1].primarySize,
-          this.dimensions[index + 1].primaryPos
-        );
+        this.nextPos = this.dimensions[index + 1].primaryPos;
       }
     },
     /**
      * override the scroller's render callback to check if we need to
      * re-render our collection
      */
-    renderScroll: ionic.animationFrameThrottle(function(transformTop, transformLeft) {
+    renderScroll: ionic.animationFrameThrottle(function(transformLeft, transformTop, zoom, wasResize) {
       if (this.isVertical) {
         this.renderIfNeeded(transformTop);
       } else {
         this.renderIfNeeded(transformLeft);
       }
-      return this.scrollView.$onScroll(transformTop, transformLeft);
+      return this.scrollView.__$callback(transformLeft, transformTop, zoom, wasResize);
     }),
-
+    renderScrollTransition: function(transformLeft, transformTop){
+      if (this.isVertical) {
+        this.renderIfNeeded(transformTop);
+      } else {
+        this.renderIfNeeded(transformLeft);
+      }
+    },
     renderIfNeeded: function(scrollPos) {
       if ((this.hasNextIndex && scrollPos >= this.nextPos) ||
           (this.hasPrevIndex && scrollPos < this.previousPos)) {
@@ -235,7 +223,6 @@ function($rootScope, $timeout) {
      * the data source to render the correct items into the DOM.
      */
     render: function(shouldRedrawAll) {
-      var self = this;
       var i;
       var isOutOfBounds = ( this.currentIndex >= this.dataSource.getLength() );
       // We want to remove all the items and redraw everything if we're out of bounds
@@ -275,41 +262,23 @@ function($rootScope, $timeout) {
       // Keep rendering items, adding them until we are past the end of the visible scroll area
       i = renderStartIndex;
       while ((rect = this.dimensions[i]) && (rect.primaryPos - rect.primarySize < scrollSizeEnd)) {
-        doRender(i, rect);
+        this.renderItem(i, rect.primaryPos, rect.secondaryPos);
         i++;
       }
-
-      // Render two extra items at the end as a buffer
-      if (self.dimensions[i]) {
-        doRender(i, self.dimensions[i]);
-        i++;
-      }
-      if (self.dimensions[i]) {
-        doRender(i, self.dimensions[i]);
-      }
-      var renderEndIndex = i;
+      var renderEndIndex = i - 1;
 
       // Remove any items that were rendered and aren't visible anymore
-      for (var renderIndex in this.renderedItems) {
-        if (renderIndex < renderStartIndex || renderIndex > renderEndIndex) {
-          this.removeItem(renderIndex);
+      for (i in this.renderedItems) {
+        if (i < renderStartIndex || i > renderEndIndex) {
+          this.removeItem(i);
         }
       }
 
       this.setCurrentIndex(startIndex);
-
-      function doRender(dataIndex, rect) {
-        if (dataIndex < self.dataSource.dataStartIndex) {
-          // do nothing
-        } else {
-          self.renderItem(dataIndex, rect.primaryPos - self.beforeSize, rect.secondaryPos);
-        }
-      }
     },
     renderItem: function(dataIndex, primaryPos, secondaryPos) {
       // Attach an item, and set its transform position to the required value
       var item = this.dataSource.attachItemAtIndex(dataIndex);
-      //console.log(dataIndex, item);
       if (item && item.element) {
         if (item.primaryPos !== primaryPos || item.secondaryPos !== secondaryPos) {
           item.element.css(ionic.CSS.TRANSFORM, this.transformString(
