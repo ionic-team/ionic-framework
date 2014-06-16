@@ -23,7 +23,7 @@ function run {
   VERSION=$(readJsonProp "package.json" "version")
 
   node_modules/.bin/gulp docs --doc-version="$VERSION_NAME" --dist=$SITE_DIR
-  node_modules/.bin/gulp docs-index
+  node_modules/.bin/gulp docs-index --dist=$SITE_DIR
 
   cd $SITE_DIR
 

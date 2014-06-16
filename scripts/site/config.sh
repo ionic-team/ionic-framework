@@ -20,7 +20,7 @@ function run {
 
   VERSION=$(readJsonProp "package.json" "version")
   CODENAME=$(readJsonProp "package.json" "codename")
-  DATE=$(readJsonProp "dist/version.json" "date")
+  DATE=$(date +"%Y-%m-%d")
 
   cd $SITE_DIR
 

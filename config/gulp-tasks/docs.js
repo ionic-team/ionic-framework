@@ -1,11 +1,15 @@
 var buildConfig = require('../build.config.js');
 var cp = require('child_process');
 var dgeni = require('dgeni');
+var es = require('event-stream');
+var fs = require('fs');
 var gutil = require('gulp-util');
 var htmlparser = require('htmlparser2');
 var lunr = require('lunr');
+var mkdirp = require('mkdirp');
 var path = require('canonical-path');
 var projectRoot = path.resolve(__dirname, '../..');
+var semver = require('semver');
 var yaml = require('js-yaml');
 
 module.exports = function(gulp, argv) {
@@ -80,19 +84,22 @@ module.exports = function(gulp, argv) {
       refId++;
     }
 
+    var docPath = buildConfig.dist + '/ionic-site';
+    gutil.log('Reading docs from', gutil.colors.cyan(docPath));
+
     return gulp.src([
-      'temp/ionic-site/docs/{components,guide,api,overview}/**/*.{md,html,markdown}',
-      'temp/ionic-site/docs/index.html',
-      'temp/ionic-site/getting-started/index.html',
-      'temp/ionic-site/tutorials/**/*.{md,html,markdown}',
-      'temp/ionic-site/_posts/**/*.{md,html,markdown}'
+      docPath + '/docs/{components,guide,api,overview}/**/*.{md,html,markdown}',
+      docPath + '/docs/index.html',
+      docPath + '/getting-started/index.html',
+      docPath + '/tutorials/**/*.{md,html,markdown}',
+      docPath + '/_posts/**/*.{md,html,markdown}'
     ])
       .pipe(es.map(function(file, callback) {
         //docs for gulp file objects: https://github.com/wearefractal/vinyl
         var contents = file.contents.toString(); //was buffer
 
         // Grab relative path from ionic-site root
-        var relpath = file.path.replace(/^.*?temp\/ionic-site\//, '');
+        var relpath = file.path.replace(RegExp('^.*?' + docPath + '/'), '');
 
         // Read out the yaml portion of the Jekyll file
         var yamlStartIndex = contents.indexOf('---');
@@ -186,9 +193,9 @@ module.exports = function(gulp, argv) {
 
       })).on('end', function() {
         // Write out as one json file
-        mkdirp.sync('temp/ionic-site/data');
+        mkdirp.sync(docPath + '/data');
         fs.writeFileSync(
-          'temp/ionic-site/data/index.json',
+          docPath + '/data/index.json',
           JSON.stringify({'ref': ref, 'index': idx.toJSON()})
         );
       });
