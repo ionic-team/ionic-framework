@@ -1,4 +1,4 @@
-### 1.0.0-beta.8 "einsteinium-emu" (2014-06-16)
+### 1.0.0-beta.8 "fermium-flamingo" (2014-06-16)
 
 
 #### Bug Fixes
