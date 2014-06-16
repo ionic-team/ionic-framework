@@ -196,6 +196,7 @@ describe('Ionic Tap', function() {
       clientX: 100, clientY: 100,
       target: {
         tagName: 'INPUT',
+        nodeType: 1,
         dispatchEvent: function() { e.target.dispatchedEvent = true; },
         focus: function() { e.target.focused = true; },
         classList: { contains: function(){} }
@@ -383,6 +384,7 @@ describe('Ionic Tap', function() {
       clientX: 100, clientY: 100,
       target: {
         tagName: 'INPUT',
+        nodeType: 1,
         dispatchEvent: function() { e.target.dispatchedEvent = true; },
         focus: function() { e.target.focused = true; },
         classList: { contains:function(){}}
@@ -560,7 +562,9 @@ describe('Ionic Tap', function() {
   });
 
   it('Should tapPointerStart false if are null', function() {
-    var e = {};
+    var e = {
+      target: document.createElement('input')
+    };
     tapPointerStart = {x:0, y:0};
     expect( tapHasPointerMoved(e) ).toEqual(false);
   });
@@ -604,7 +608,11 @@ describe('Ionic Tap', function() {
   });
 
   it('Should not be tapHasPointerMoved if 0 coordinates', function() {
-    var e = { clientX: 0, clientY: 0 };
+    var e = {
+      clientX: 0,
+      clientY: 0,
+      target: document.createElement('input')
+    };
     var s = tapHasPointerMoved(e, { clientX: 100, clientY: 100 });
     expect(s).toEqual(false);
   });
