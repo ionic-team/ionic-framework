@@ -1,3 +1,22 @@
+### 1.0.0-beta.8 "einsteinium-emu" (2014-06-16)
+
+
+#### Bug Fixes
+
+* **cancelAnimationFrame:** polyfill in ionic.DomUtil ([a0577346](https://github.com/driftyco/ionic/commit/a057734631ccdb2d81ec3e67c3172a87445102c5))
+* **content:** scroll=false in sidemenu hides content ([53c17104](https://github.com/driftyco/ionic/commit/53c171043eca5ca360a0db6c2ec9f8de118c061a), closes [#1485](https://github.com/driftyco/ionic/issues/1485))
+* **css:** reset FirefoxOS default gradients ([5f1ea5f6](https://github.com/driftyco/ionic/commit/5f1ea5f6326d9851dbddbee7fde164fe6c456427), closes [#1426](https://github.com/driftyco/ionic/issues/1426))
+* **headerBarView:** check for null in getTextBounds ([be351ce1](https://github.com/driftyco/ionic/commit/be351ce1face2c69c68a4eda2418e57998b3e3fa), closes [#1377](https://github.com/driftyco/ionic/issues/1377))
+* **tap:** error when releasing outside of browser ([8da9f34b](https://github.com/driftyco/ionic/commit/8da9f34ba27a16c629e9373e8d4120adb52a09de), closes [#1612](https://github.com/driftyco/ionic/issues/1612))
+
+
+#### Features
+
+* **ionicons:**
+  * v1.5.2 upgrade w/ :before pseudo ([17ee672f](https://github.com/driftyco/ionic/commit/17ee672fa3d967bdbd449157951d5fe0441ee66e))
+  * upgrade to Ionicons v1.5.1 ([191428a4](https://github.com/driftyco/ionic/commit/191428a49541307a6e54f9bca60b992638460623))
+
+
 <a name="1.0.0-beta.7"></a>
 ### 1.0.0-beta.7 "einsteinium-emu" (2014-06-12)
 
