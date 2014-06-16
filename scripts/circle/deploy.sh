@@ -38,16 +38,17 @@ function run {
     fi
     ;;
   1)
-    # Update site config: release only
-    if [[ "$IS_RELEASE" == "true" ]]; then
-      ./scripts/site/config.sh
-    fi
     # Update app-base: release only
     if [[ "$IS_RELEASE" == "true" ]]; then
       ./scripts/app-base/publish.sh
     fi
     ;;
   2)
+    # Be sure to update the site one after the other,
+    # so the tasks don't have a push conflict
+    if [[ "$IS_RELEASE" == "true" ]]; then
+      ./scripts/site/config.sh
+    fi
     # Update docs
     ./scripts/site/docs.sh --version-name="$VERSION_NAME"
     ;;
