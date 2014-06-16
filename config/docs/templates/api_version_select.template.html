@@ -1,7 +1,7 @@
 <select onchange="window.location.href=this.options[this.selectedIndex].value">
 <@ for ver in version.list @>
   <option
-   value="<$ ver.href $>/{% if page.path %}{{page.path}}{% endif %}"
+   value="<$ ver.href $>/{% if page.path != ''%}{{page.path}}{% else %}api/{% endif %}"
    {% if page.version == "<$ ver.name $>"%}selected{% endif %}>
     <$ ver.name $> <@ if version.latest.name == ver.name @>(latest)<@ endif @>
   </option>
