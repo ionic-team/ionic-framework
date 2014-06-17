@@ -372,7 +372,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         return Math.max(self.__content.scrollWidth, self.__content.offsetWidth);
       },
       getContentHeight: function() {
-        return Math.max(self.__content.scrollHeight, self.__content.offsetHeight);
+        return Math.max(self.__content.scrollHeight, self.__content.offsetHeight + self.__content.offsetTop);
       }
 		};
 
