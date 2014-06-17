@@ -23,7 +23,7 @@
           class="item-avatar-left item-icon-right"
           ng-click="alert(item)"
           collection-repeat="item in items"
-          collection-item-height="85"
+          collection-item-height="$index % 10 === 0 ? 500 : 85"
           collection-item-width="'100%'"
           style="position: absolute; left: 0; right: 0;">
           <img ng-src="{{item.image}}">
@@ -47,7 +47,7 @@ function convertImgToBase64(url, callback, outputFormat){
         ctx.drawImage(img,0,0);
         dataURL = canvas.toDataURL(outputFormat || 'image/png');
         callback.call(this, dataURL);
-        canvas = null; 
+        canvas = null;
     };
     img.src = url;
 }
@@ -61,7 +61,7 @@ function MainCtrl($scope, $ionicScrollDelegate, $timeout, $q, $ionicLoading) {
   for (var i = 0; i < 5; i++) {
     deferred = $q.defer();
     convertImgToBase64('http://placekitten.com/'+(40+(10*i))+'/'+(40+(10*i)), deferred.resolve);
-    images.push(deferred.promise);      
+    images.push(deferred.promise);
   }
 
   $q.all(images).then(function(dataUrls) {

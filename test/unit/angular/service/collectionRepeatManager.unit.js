@@ -284,7 +284,7 @@ describe('collectionRepeatManager service', function() {
     it('with next', function() {
       var manager = setup();
       spyOn(manager.dataSource, 'getLength').andReturn(2);
-      manager.dimensions = [{ primaryPos: 0 }, { primaryPos: 25 }];
+      manager.dimensions = [{ primaryPos: 0 ,primarySize: 25}, { primaryPos: 25, primarySize: 35 }];
       manager.setCurrentIndex(0);
       expect(manager.currentIndex).toBe(0);
       expect(manager.hasPrevIndex).toBe(false);
@@ -296,7 +296,7 @@ describe('collectionRepeatManager service', function() {
     it('with prev', function() {
       var manager = setup();
       spyOn(manager.dataSource, 'getLength').andReturn(2);
-      manager.dimensions = [{ primaryPos: 0 }, { primaryPos: 25 }];
+      manager.dimensions = [{ primaryPos: 0 , primarySize: 25 }, { primaryPos: 25, primarySize: 25 }];
       manager.setCurrentIndex(1);
       expect(manager.currentIndex).toBe(1);
       expect(manager.hasPrevIndex).toBe(true);
@@ -308,7 +308,7 @@ describe('collectionRepeatManager service', function() {
     it('with next and prev', function() {
       var manager = setup();
       spyOn(manager.dataSource, 'getLength').andReturn(3);
-      manager.dimensions = [{ primaryPos: 0 }, { primaryPos: 25 }, { primaryPos: 50 }];
+      manager.dimensions = [{ primarySize: 25, primaryPos: 0 }, { primarySize: 25, primaryPos: 25 }, { primarySize: 25, primaryPos: 50 }];
       manager.setCurrentIndex(1);
       expect(manager.currentIndex).toBe(1);
       expect(manager.hasPrevIndex).toBe(true);
@@ -378,6 +378,8 @@ describe('collectionRepeatManager service', function() {
       var manager = setup();
       manager.renderedItems = {'a':1, 'b':1};
       spyOn(manager, 'removeItem');
+      spyOn(manager.dataSource, 'getLength').andReturn(0);
+      manager.currentIndex = 1;
       manager.render();
       expect(manager.removeItem).toHaveBeenCalledWith('a');
       expect(manager.removeItem).toHaveBeenCalledWith('b');
@@ -385,6 +387,7 @@ describe('collectionRepeatManager service', function() {
     it('shouldRedrawAll should remove all', function() {
       var manager = setup();
       manager.renderedItems = {'a':1, 'b':1};
+      manager.currentIndex = 0;
       spyOn(manager, 'removeItem');
       manager.render(true);
       expect(manager.removeItem).toHaveBeenCalledWith('a');
