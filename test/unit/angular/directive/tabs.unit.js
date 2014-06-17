@@ -260,6 +260,35 @@ describe('tabs', function() {
       var el = setup('', '<div class="content"></div>');
       expect(el[0].querySelector('.tabs .content')).toBeTruthy();
     });
+
+    describe('platform Styles', function() {
+      describe('iOS', function() {
+        beforeEach(module('ionic', function($provide) {
+          TestUtil.setPlatform('ios');
+          $provide.constant('$ionicTabsConfig', { 
+            type: ''
+          });
+        }));
+
+        it('should set iOS style', function() {
+          var el = setup();
+          expect(el.hasClass('tabs-striped')).not.toBe(true);
+        });
+      });
+      describe('android', function() {
+        beforeEach(module('ionic', function($provide) {
+          TestUtil.setPlatform('android');
+          $provide.constant('$ionicTabsConfig', {
+            type: 'tabs-striped'
+          });
+        }));
+
+        it('should set Android style', function() {
+          var el = setup();
+          expect(el.hasClass('tabs-striped')).toBe(true);
+        });
+      });
+    });
   });
 
   describe('ionicTab controller', function() {
@@ -390,23 +419,23 @@ describe('tabs', function() {
     });
 
     it('should compile a <ion-tab-nav> with all of the relevant attrs', function() {
-      setup('title="{{a}}" icon-on="{{b}}" icon-off="{{c}}" badge="d" badge-style="{{e}}" ng-click="click"');
+      setup('title="{{a}}" icon-on="{{b}}" icon-off="{{c}}" badge="d" badge-style="{{e}}" class="{{f}}" ng-click="click"');
       angular.extend(tabEl.scope(), {
         a: 'title',
         b: 'on',
         c: 'off',
         d: 6,
-        e: 'badger'
+        e: 'badger',
+        f: 'someClass'
       });
       tabEl.scope().$apply();
       var navItem = angular.element(tabsEl[0].querySelector('.tab-item'));
-      //Use .scope for title because we remove title attr
-      //(for dom-tooltip not to appear)
       expect(navItem.isolateScope().title).toEqual('title');
       expect(navItem.isolateScope().iconOn).toEqual('on');
       expect(navItem.isolateScope().iconOff).toEqual('off');
       expect(navItem.isolateScope().badge).toEqual(6);
       expect(navItem.isolateScope().badgeStyle).toEqual('badger');
+      expect(navItem[0].className).toMatch(/someClass/);
       expect(navItem.attr('ng-click')).toEqual('click');
 
       angular.extend(tabEl.scope(), {
@@ -414,7 +443,8 @@ describe('tabs', function() {
         b: 'on2',
         c: 'off2',
         d: 7,
-        e: 'badger2'
+        e: 'badger2',
+        f: 'someClass2'
       });
       tabEl.scope().$apply();
       expect(navItem.isolateScope().title).toEqual('title2');
@@ -422,6 +452,7 @@ describe('tabs', function() {
       expect(navItem.isolateScope().iconOff).toEqual('off2');
       expect(navItem.isolateScope().badge).toEqual(7);
       expect(navItem.isolateScope().badgeStyle).toEqual('badger2');
+      expect(navItem[0].className).toMatch(/someClass2/);
 
       expect(navItem.parent()[0]).toBe(tabsCtrl.$tabsElement[0]);
     });

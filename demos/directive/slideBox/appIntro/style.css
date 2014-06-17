@@ -1,0 +1,31 @@
+---
+name: appIntro
+component: ionSlideBox
+---
+.slider {
+  height: 100%;
+}
+.slider-slide {
+  padding-top: 80px;
+  background-color: #fff;
+  color: #000;
+  text-align: center;
+  font-weight: 300;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+#logo {
+  margin: 30px 0px;
+}
+#list {
+  margin: 30px auto;
+  width: 170px;
+  font-size: 20px;
+}
+#list ol {
+  margin-top: 30px;
+}
+#list ol li {
+  margin: 10px 0px;
+  list-style: decimal;
+  text-align: left;
+}

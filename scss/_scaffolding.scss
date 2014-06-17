@@ -12,8 +12,8 @@
 
 html {
   overflow: hidden;
-  -ms-touch-action: none;
-  touch-action: none;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
 }
 
 body,
@@ -69,6 +69,10 @@ body.grade-c {
   height: auto;
 }
 
+.scroll-content-false {
+  z-index: $z-index-scroll-content-false;
+}
+
 .scroll-view {
   position: relative;
   display: block;
@@ -87,7 +91,6 @@ body.grade-c {
   @include touch-callout(none);
   @include text-size-adjust(none);
   @include transform-origin(left, top);
-  -webkit-backface-visibility: hidden;
 }
 
 // Scroll bar styles
@@ -305,6 +308,9 @@ ion-infinite-scroll.active .scroll-infinite {
 .has-footer {
   bottom: $bar-height;
 }
+.has-subfooter {
+  bottom: $bar-height * 2;
+}
 
 .has-tabs,
 .bar-footer.has-tabs {
@@ -333,4 +339,5 @@ ion-infinite-scroll.active .scroll-infinite {
   width: 100%;
   height: 100%;
   background-color: $base-background-color;
+  overflow: hidden;
 }

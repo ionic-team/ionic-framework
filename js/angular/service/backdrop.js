@@ -56,6 +56,9 @@ function($document) {
      * Releases the backdrop.
      */
     release: release,
+
+    getElement: getElement,
+
     // exposed for testing
     _element: el
   };
@@ -76,4 +79,9 @@ function($document) {
       }, 100);
     }
   }
+
+  function getElement() {
+    return el;
+  }
+
 }]);

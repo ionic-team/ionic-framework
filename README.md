@@ -1,4 +1,5 @@
-<a href="https://travis-ci.org/driftyco/ionic"><img src="http://img.shields.io/travis/driftyco/ionic.svg?style=flat" data-bindattr-164="164" title="Build Status Images"></a>
+[![Build Status](https://circleci.com/gh/driftyco/ionic.png?circle-token=7388822b8691078560c4f057d8eb0df0e8d7f1b5)](https://circleci.com/gh/driftyco/ionic)
+
 
 [![Issues Ready](https://badge.waffle.io/driftyco/ionic.png?label=ready&title=Ready)](https://waffle.io/driftyco/ionic)
 
@@ -18,7 +19,6 @@ It's important to realize that Ionic is not a replacement for frameworks used fo
 of great solutions that work well for websites, like [jQuery Mobile](http://jquerymobile.com/).
 
 Ionic is also not a good solution if you need to support older generation devices. Our [compatibility](http://ionicframework.com/docs/#browser-support) *starts* at iOS 6 and Android 4.1. We will never support versions earlier than those. This is a framework for the future. Learn more: [Where does the Ionic Framework fit in?](http://ionicframework.com/blog/where-does-the-ionic-framework-fit-in/)
-
 
 ## Quick Start
 
@@ -96,19 +96,27 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 * `gulp watch` to watch and rebuild on change
 * `gulp karma` to test one-time
 * `gulp karma-watch` to test and re-run on source change
-* `gulp protractor` to test e2e tests locally
-* `gulp cloudtest` to run e2e tests in the cloud
+* `gulp snapshot` to test e2e tests locally (run `gulp demos` first to generate e2e tests). Be sure to run `./node_modules/.bin/webdriver-manager update --chrome` to first install the chrome webdriver dependency.
 
 ### Documentation
 
-* To test documentation, follow these steps:
-  1. Clone ionic-site to `./tmp/ionic-site` - this is where the `gulp docs` task builds to.  `./tmp` is the folder that travis uses to do all of its tasks.
-    - `mkdir tmp && git clone git@github.com:driftyco/ionic-site tmp/ionic-site`
-  2. Make jekyll rebuild whenever you change the site.
-    - `cd tmp/ionic-site && jekyll serve -w`
+* Documentation is generated into `dist/ionic-site`.  To test documentation properly, follow these steps:
+  1. Clone ionic-site into `./dist/ionic-site`.
+    - `git clone git@github.com:driftyco/ionic-site dist/ionic-site`
+  2. Start jekyll, telling it to rebuild whenever the site changes.
+    - `cd dist/ionic-site && jekyll serve -w`
   3. Go back to project root and build the docs
-    - `gulp docs`
+    - `gulp docs [--doc-version=(versionName|nightly)]`
   4. Open localhost:4000 and see your changes! Re-run `gulp docs` again whenever you change something, and jekyll will update the site.
+
+### Demos / Kitchen Sink
+
+* The demo site is generated into `dist/ionic-demo`. To test the demons, follow these steps:
+  1. Run `gulp demos [--demo-version=(versionName|nightly)]`
+  2. Start an http server from `dist/ionic-demo`:
+    - `cd dist/ionic-demo && python -m SimpleHTTPServer`
+  3. Navigate to `http://localhost:8000/{versionName|nightly}` and use the demos
+  4. Run `gulp demos` again whenever you change the demos
 
 ### Commit Conventions
 

@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html ng-app="ionic">
   <head>
     <meta charset="utf-8">
@@ -18,48 +18,62 @@
       </a>
     </ion-header-bar>
     <ion-content>
-      <ion-refresher on-refresh="onRefresh()" refreshing-text="Refreshing!"></ion-refresher>
-      <div class="list">
-        <div class="item"
+      <ion-list>
+        <ion-item
+          class="item-avatar-left item-icon-right"
           ng-click="alert(item)"
           collection-repeat="item in items"
-          collection-item-height="52"
-          collection-item-width="120 + 2*($index % 40)"
-          ng-style="{width: 120 + 2*($index % 40)}">
-          {{item}}
-        </div>
-      </div>
+          collection-item-height="85"
+          collection-item-width="'100%'"
+          style="position: absolute; left: 0; right: 0;">
+          <img ng-src="{{item.image}}">
+          <h2>{{item.text}}</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porttitor diam urna, vitae consectetur lectus aliquet quis.</p>
+          <i class="icon" style="color:red; font-size: 30px;" ng-class="['ion-ios7-person','ion-person','ion-android-contact','ion-android-social-user','ion-person-stalker'][$index % 5]"></i>
+        </ion-item>
+      </ion-list>
     </ion-content>
   <script>
-function MainCtrl($scope, $ionicScrollDelegate, $timeout) {
-  $scope.items = [];
-  for (var i = 0; i < 5000; i++) {
-    $scope.items.push('item '+i);
+var dataUris = {};
+function convertImgToBase64(url, callback, outputFormat){
+    var canvas = document.createElement('CANVAS'),
+        ctx = canvas.getContext('2d'),
+        img = new Image;
+    img.crossOrigin = 'Anonymous';
+    img.onload = function(){
+        var dataURL;
+        canvas.height = img.height;
+        canvas.width = img.width;
+        ctx.drawImage(img,0,0);
+        dataURL = canvas.toDataURL(outputFormat || 'image/png');
+        callback.call(this, dataURL);
+        canvas = null; 
+    };
+    img.src = url;
+}
+function MainCtrl($scope, $ionicScrollDelegate, $timeout, $q, $ionicLoading) {
+  var images = [];
+
+  $ionicLoading.show({
+      template: 'Loading images...'
+  });
+  var deferred;
+  for (var i = 0; i < 5; i++) {
+    deferred = $q.defer();
+    convertImgToBase64('http://placekitten.com/'+(40+(10*i))+'/'+(40+(10*i)), deferred.resolve);
+    images.push(deferred.promise);      
   }
 
-  $scope.height = function(n) {
-    return 105 + (n % 40);
-  };
-  $scope.width = function(n) {
-    return 105 + (n % 40);
-  };
-
-  //$scope.alert = alert.bind(window);
-
-  $scope.onRefresh = function() {
-    $timeout(function() {
-      var len = $scope.items.length;
-      $scope.items.unshift(2999 - $scope.items.length);
-      $scope.items.unshift(2999 - $scope.items.length);
-      $scope.items.unshift(2999 - $scope.items.length);
-      $scope.items.unshift(2999 - $scope.items.length);
-      $scope.items.unshift(2999 - $scope.items.length);
-      $scope.items.unshift(2999 - $scope.items.length);
-      $scope.items.unshift(2999 - $scope.items.length);
-      $scope.items.unshift(2999 - $scope.items.length);
-      $scope.$broadcast('scroll.refreshComplete');
-    }, 1500);
-  };
+  $q.all(images).then(function(dataUrls) {
+    $scope.items = [];
+    for (var item = 0; item < 5000; item++) {
+      $scope.items.push({
+        text: 'Item ' + item,
+        image: dataUrls[item % 5]
+      });
+    }
+    $timeout($ionicLoading.hide, 200);
+  });
 
   $scope.scrollBottom = $ionicScrollDelegate.scrollBottom;
 }

@@ -9,7 +9,7 @@ var ITEM_TPL_OPTION_BUTTONS =
 * @restrict E
 * Creates an option button inside a list item, that is visible when the item is swiped
 * to the left by the user.  Swiped open option buttons can be hidden with
-* {@link ionic.directive:$ionicListDelegate#closeOptionButtons $ionicListDelegate#closeOptionButtons}.
+* {@link ionic.service:$ionicListDelegate#closeOptionButtons $ionicListDelegate#closeOptionButtons}.
 *
 * Can be assigned any button class.
 *
@@ -29,21 +29,25 @@ var ITEM_TPL_OPTION_BUTTONS =
 */
 IonicModule
 .directive('ionOptionButton', ['$compile', function($compile) {
-return {
-  restrict: 'E',
-  require: '^ionItem',
-  priority: Number.MAX_VALUE,
-  compile: function($element, $attr) {
-    $attr.$set('class', ($attr['class'] || '') + ' button', true);
-    return function($scope, $element, $attr, itemCtrl) {
-      if (!itemCtrl.optionsContainer) {
-        itemCtrl.optionsContainer = jqLite(ITEM_TPL_OPTION_BUTTONS);
-        itemCtrl.$element.append(itemCtrl.optionsContainer);
-      }
-      itemCtrl.optionsContainer.append($element);
-
-      $element.on('click', eventStopPropagation);
-    };
+  function stopPropagation(e) {
+    e.stopPropagation();
   }
-};
+  return {
+    restrict: 'E',
+    require: '^ionItem',
+    priority: Number.MAX_VALUE,
+    compile: function($element, $attr) {
+      $attr.$set('class', ($attr['class'] || '') + ' button', true);
+      return function($scope, $element, $attr, itemCtrl) {
+        if (!itemCtrl.optionsContainer) {
+          itemCtrl.optionsContainer = jqLite(ITEM_TPL_OPTION_BUTTONS);
+          itemCtrl.$element.append(itemCtrl.optionsContainer);
+        }
+        itemCtrl.optionsContainer.append($element);
+
+        //Don't bubble click up to main .item
+        $element.on('click', stopPropagation);
+      };
+    }
+  };
 }]);

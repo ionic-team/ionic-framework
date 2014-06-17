@@ -1,0 +1,25 @@
+---
+name: simple
+component: ionCheckbox
+---
+
+<ion-header-bar class="bar-positive">
+  <h1 class="title">
+    Checkbox: Simple Usage
+  </h1>
+</ion-header-bar>
+<ion-content ng-controller="CheckboxSimpleCtrl" class="padding">
+  <h4>Your pizza has {{toppings()}}!</h4>
+  <ion-checkbox ng-model="pizza.pepperoni">
+    Pepperoni?
+  </ion-checkbox>
+  <ion-checkbox ng-model="pizza.sausage">
+    Sausage?
+  </ion-checkbox>
+  <ion-checkbox ng-model="pizza.jalapenos">
+    Jalapeno?
+  </ion-checkbox>
+  <ion-checkbox ng-model="pizza.anchovies">
+    Anchovies?
+  </ion-checkbox>
+</ion-content>

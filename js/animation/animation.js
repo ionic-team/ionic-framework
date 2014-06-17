@@ -13,7 +13,7 @@
       var tf;
 
       if(typeof opts.curve === 'string') {
-        tf = ionic.Animation.TimingFn[opts.curve] || ionic.Animation.TimingFn['linear'];
+        tf = ionic.Animation.TimingFn[opts.curve] || ionic.Animation.TimingFn.linear;
         if(opts.curve.indexOf('cubic-bezier(') >= 0) {
           var parts = opts.curve.replace('cubic-bezier(', '').replace(')', '').split(',');
           tf = ionic.Animation.TimingFn['cubic-bezier'];

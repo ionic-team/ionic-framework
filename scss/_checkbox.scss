@@ -130,3 +130,14 @@ input:checked + .checkbox-icon:after {
   z-index: $z-index-item-checkbox;
   margin-top: (($checkbox-height + ($checkbox-height / 2)) / 2) * -1;
 }
+
+
+.item-checkbox.item-checkbox-right {
+  padding-right: ($item-padding * 2) + $checkbox-width;
+  padding-left: $item-padding;
+}
+
+.item-checkbox-right .checkbox input,
+.item-checkbox-right .checkbox-icon {
+  float: right;
+}

@@ -61,11 +61,11 @@ describe('ionNavBackButton directive', function() {
     expect(el.children().eq(0)[0].tagName.toLowerCase()).toBe('b');
   });
 
-  it('should $navBack on click by default', function() {
+  it('should go back on click by default', function() {
     var el = setup();
-    el.scope().$navBack = jasmine.createSpy('$navBack');
+    expect(el.controller('ionNavBar').back).not.toHaveBeenCalled();
     el.triggerHandler('click');
-    expect(el.scope().$navBack).toHaveBeenCalled();
+    expect(el.controller('ionNavBar').back).toHaveBeenCalled();
   });
 
   it('should do ngClick expression if defined', function() {
@@ -75,5 +75,41 @@ describe('ionNavBackButton directive', function() {
     el.triggerHandler('click');
     expect(el.scope().$navBack).not.toHaveBeenCalled();
     expect(el.scope().doSomething).toHaveBeenCalled();
+  });
+
+
+  describe('platforms', function() {
+    describe('iOS', function() {
+      beforeEach(function($provide) {
+        TestUtil.setPlatform('ios');
+      });
+
+      it('should not set default back button icon if icon classname exists', function() {
+        var el = setup('class="ion-navicon"');
+        expect(el.hasClass('ion-ios7-arrow-back')).toBe(false);
+      });
+
+      it('should not set default back button icon if icon child exists', function() {
+        var el = setup('', '<i class="ion-superstar"></i>');
+        expect(el.hasClass('ion-ios7-arrow-back')).toBe(false);
+      });
+
+      it('Should set default back button icon from ionicNavBarConfig ', inject(function($ionicNavBarConfig) {
+        var el = setup();
+        expect(el.hasClass('ion-ios7-arrow-back')).toBe(true);
+      }));
+    });
+
+    // Android defaults disabled for now
+    // describe('android', function() {
+    //   beforeEach(function($provide) {
+    //     TestUtil.setPlatform('android');
+    //   });
+
+    //   it('Should set default back button icon from ionicNavBarConfig ', inject(function($ionicNavBarConfig) {
+    //     var el = setup();
+    //     expect(el.hasClass('ion-android-arrow-back')).toBe(true);
+    //   }));
+    // });
   });
 });

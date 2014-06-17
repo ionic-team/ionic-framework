@@ -1,15 +1,14 @@
-<html>
+<!DOCTYPE html>
+<html ng-app="ionic">
   <head>
+    <script src="../../dist/js/ionic.bundle.js"></script>
     <meta charset="utf-8">
     <title>Text Inputs</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <link href="../../dist/css/ionic.css" rel="stylesheet">
     <script src="../../dist/js/ionic.bundle.js"></script>
-    <script>
-      angular.module('ionicApp', ['ionic']);
-    </script>
   </head>
-  <body ng-app="ionicApp">
+  <body>
 
     <header class="bar bar-header bar-dark">
       <h1 class="title">Text Inputs</h1>
@@ -27,6 +26,21 @@
         </label>
         <label class="item item-input">
           <input type="email" placeholder="Email">
+        </label>
+        <label class="item item-input">
+          <input type="date" value="2011-03-14">
+        </label>
+        <label class="item item-input">
+          <input type="datetime-local" value="2013-12-09T18:38">
+        </label>
+        <label class="item item-input">
+          <input type="month" value="2011-03">
+        </label>
+        <label class="item item-input">
+          <input type="time" value="04:24">
+        </label>
+        <label class="item item-input">
+          <input type="week" value="2011-W11">
         </label>
       </div>
 

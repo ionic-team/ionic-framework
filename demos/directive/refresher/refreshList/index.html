@@ -1,0 +1,21 @@
+---
+name: refreshList
+component: ionRefresher
+---
+<ion-header-bar class="bar-positive">
+  <h1 class="title">Pull to Refresh</h1>
+</ion-header-bar>
+
+<ion-content ng-controller="RefresherCtrl">
+
+  <ion-refresher on-refresh="doRefresh()"
+                 pulling-text="Pull..."
+                 refreshing-text="Refreshing!"
+                 refreshing-icon="ion-loading-c">
+  </ion-refresher>
+
+  <ion-list>
+    <ion-item ng-repeat="item in items">{{item}}</ion-item>
+  </ion-list>
+
+</ion-content>

@@ -25,10 +25,9 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
     $element[0].querySelector('.buttons.right-buttons')
   );
 
-  this.back = function(e) {
+  this.back = function() {
     var backView = $ionicViewService.getBackView();
     backView && backView.go();
-    e && (e.alreadyHandled = true);
     return false;
   };
 

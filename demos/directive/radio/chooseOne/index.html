@@ -1,0 +1,17 @@
+---
+name: chooseOne
+component: ionRadio
+---
+<ion-header-bar class="bar-positive">
+  <h1 class="title">Radios</h1>
+</ion-header-bar>
+<ion-content ng-controller="ChooseOneCtrl">
+  <h1>
+    Your Choice: <span class="assertive">{{choice}}</span> 
+  </h1>
+  <ion-radio ng-model="choice" value="one">One</ion-radio>
+  <ion-radio ng-model="choice" value="two">Two</ion-radio>
+  <ion-radio ng-model="choice" ng-value="'three'">Three</ion-radio>
+  <ion-radio ng-model="choice" ng-value="'four'">Four</ion-radio>
+  <ion-radio ng-model="choice" value="five">Five</ion-radio>
+</ion-content>

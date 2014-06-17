@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html ng-app="ionicApp">
   <head>
 
@@ -22,6 +23,10 @@
             Reorder
           </button>
       </div>
+    </ion-header-bar>
+
+    <ion-header-bar class="bar-positive bar-assertive bar-subheader">
+      <h1 class="title">Subheader</h1>
     </ion-header-bar>
 
     <ion-content>
@@ -49,6 +54,14 @@
   		<div class="item item-divider">
   		Type 1
   		</div>
+      <ion-item href="#">
+        <button class="button button-energized">
+          Hello
+        </button>
+      </ion-item>
+      <ion-item href="hello">
+        Woah!
+      </ion-item>
         <ion-item ng-repeat="item in items"
                   ng-click="alert(item.id)"
                   class="item item-avatar-left item-icon-right"

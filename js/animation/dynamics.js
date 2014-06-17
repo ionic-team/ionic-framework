@@ -35,7 +35,7 @@
       anticipationStrength: 0,
       anticipationSize: 0
     };
-    
+
     ionic.extend(this, opts);
   };
 
@@ -75,7 +75,7 @@
       //return [t, v, At, frictionT, angle];
       return v;
     }
-  }
+  };
 
   ionic.Animation.Dynamics.Gravity = function(opts) {
     this.options = {
@@ -143,8 +143,8 @@
       }
       return _results;
     },
-    curve: function(a, b, H, t){ 
-      
+    curve: function(a, b, H, t){
+
       var L, c, t2;
       L = b - a;
       t2 = (2 / L) * t - 1 - (a * 2 / L);
@@ -175,6 +175,6 @@
       //return [t, v];
       return v;
     }
-    
-  }
+
+  };
 })(window);

@@ -1,0 +1,33 @@
+---
+name: simple
+component: ionSideMenus
+---
+<ion-side-menus ng-controller="SideMenusSimpleCtrl">
+
+  <ion-side-menu-content>
+    <ion-header-bar class="bar-positive">
+      <div class="buttons">
+        <div class="button button-clear" ng-click="toggleLeft()">
+          <i class="icon ion-navicon"></i>
+        </div>
+      </div>
+      <h1 class="title">
+        Side
+      </h1>
+    </ion-header-bar>
+    <ion-content class="padding">
+      <p>Slide the content or press the button on the header to open a side menu.</p>
+    </ion-content>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left">
+    <ion-header-bar class="bar-positive">
+    </ion-header-bar>
+    <ion-content>
+      <a class="item" ng-click="toggleLeft()">
+        Close Menu
+      </a>
+    </ion-content>
+  </ion-side-menu>
+
+</ion-side-menus>

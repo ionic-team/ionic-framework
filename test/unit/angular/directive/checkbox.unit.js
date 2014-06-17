@@ -28,13 +28,48 @@ describe('Ionic Checkbox', function() {
   });
 
   it('should pass down attrs', function() {
-    el = compile('<ion-checkbox ng-checked=1 ng-disabled=2 ng-true-value=3 ng-false-value=4>')(scope);
+    el = compile('<ion-checkbox name="name" ng-model="model" ng-checked="checked" ng-disabled="disabled" ng-true-value="true-value" ng-false-value="false-value" ng-change="change">')(scope);
     scope.$apply();
     var input = el.find('input');
-    expect(input.attr('ng-checked')).toBe('1');
-    expect(input.attr('ng-disabled')).toBe('2');
-    expect(input.attr('ng-true-value')).toBe('3');
-    expect(input.attr('ng-false-value')).toBe('4');
+    expect(input.attr('name')).toBe('name');
+    expect(input.attr('ng-model')).toBe('model');
+    expect(input.attr('ng-checked')).toBe('checked');
+    expect(input.attr('ng-disabled')).toBe('disabled');
+    expect(input.attr('ng-true-value')).toBe('true-value');
+    expect(input.attr('ng-false-value')).toBe('false-value');
+    expect(input.attr('ng-change')).toBe('change');
+  });
+
+  it('should ngChecked properly', function() {
+    el = compile('<ion-checkbox ng-checked="shouldCheck">')(scope);
+    scope.$apply();
+    var input = el.find('input');
+    expect(input[0].hasAttribute('checked')).toBe(false);
+    scope.$apply('shouldCheck = true');
+    expect(input[0].hasAttribute('checked')).toBe(true);
+    scope.$apply('shouldCheck = false');
+    expect(input[0].hasAttribute('checked')).toBe(false);
+
+  });
+
+  it('should ngChange properly', function() {
+    el = compile('<ion-checkbox ng-change="change(val)" ng-model="val">')(scope);
+    scope.change = jasmine.createSpy('change');
+    scope.$apply();
+    var input = el.find('input');
+    var ngModel = input.controller('ngModel');
+
+    expect(scope.change).not.toHaveBeenCalled();
+
+    ngModel.$setViewValue(true);
+    scope.$apply();
+    expect(scope.change).toHaveBeenCalledWith(true);
+
+    scope.change.reset();
+    ngModel.$setViewValue(false);
+    scope.$apply();
+
+    expect(scope.change).toHaveBeenCalledWith(false);
   });
 
 });

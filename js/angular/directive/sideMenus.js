@@ -53,9 +53,9 @@ IonicModule
 .directive('ionSideMenus', [function() {
   return {
     restrict: 'ECA',
-    replace: true,
-    transclude: true,
     controller: '$ionicSideMenus',
-    template: '<div class="view" ng-transclude></div>'
+    compile: function(element, attr) {
+      attr.$set('class', (attr['class'] || '') + ' view');
+    }
   };
 }]);

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html ng-app="ionic">
+  <head>
+    <script src="../../dist/js/ionic.bundle.js"></script>
+    <meta charset="utf-8">
+    <title>Tabs: Bottom Icons</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link href="../../dist/css/ionic.css" rel="stylesheet">
+    <style>
+      body {
+        position: absolute;;
+      }
+    </style>
+  </head>
+  <body class="tabs-icon-bottom">
+
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Tabs: Bottom Icons</h1>
+    </header>
+
+    <main class="content padding has-header">
+
+      <div class="list card tabs-icon-left">
+
+        <div class="item item-body">
+          This is a crude example of the parent tabs having .tabs-icon-bottom set,
+          while a nested tabs has .tabs-icon-left set.
+        </div>
+
+        <div class="item tabs tabs-secondary tabs-icon-left">
+          <a class="tab-item" href="#">
+            <i class="icon ion-thumbsup"></i>
+            Like
+          </a>
+          <a class="tab-item" href="#">
+            <i class="icon ion-chatbox"></i>
+            Comment
+          </a>
+          <a class="tab-item" href="#">
+            <i class="icon ion-share"></i>
+            Share
+          </a>
+        </div>
+
+      </div>
+
+    </main>
+
+    <nav class="tabs tabs-icon-bottom tabs-positive">
+      <a class="tab-item" href="#">
+        Fun
+        <i class="icon ion-game-controller-a"></i>
+      </a>
+      <a class="tab-item">
+        Security
+        <i class="icon ion-locked"></i>
+      </a>
+      <a class="tab-item has-badge">
+        Light
+        <i class="badge">3</i>
+        <i class="icon ion-leaf"></i>
+      </a>
+      <a class="tab-item">
+        Clean
+        <i class="icon ion-waterdrop"></i>
+      </a>
+      <a class="tab-item disabled">
+        Disabled
+        <i class="icon ion-close-circled"></i>
+      </a>
+      <a disabled class="tab-item">
+        Inactive
+        <i class="icon ion-close"></i>
+      </a>
+    </nav>
+
+  </body>
+</html>

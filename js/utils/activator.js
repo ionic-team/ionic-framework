@@ -26,6 +26,7 @@
           }
           if( ele.tagName == 'A' || ele.tagName == 'BUTTON' || ele.hasAttribute('ng-click') ) {
             eleToActivate = ele;
+            break;
           }
           if( ele.classList.contains('button') ) {
             eleToActivate = ele;

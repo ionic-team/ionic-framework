@@ -104,7 +104,9 @@
 .item.active,
 .item.activated,
 .item-complex.active .item-content,
-.item-complex.activated .item-content {
+.item-complex.activated .item-content,
+.item .item-content.active,
+.item .item-content.activated {
   @include item-active-style($item-default-active-bg, $item-default-active-border);
 
   // Different active themes for <a> and <button> items

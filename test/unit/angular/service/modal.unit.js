@@ -86,7 +86,7 @@ describe('Ionic Modal', function() {
     expect(instance.scope.$destroy).toHaveBeenCalled();
   }));
 
-  it('Should close on hardware back button', inject(function($ionicPlatform) {
+  it('Should close on hardware back button by default', inject(function($ionicPlatform) {
     var template = '<div class="modal"></div>';
     var instance = modal.fromTemplate(template);
     spyOn($ionicPlatform, 'registerBackButtonAction').andCallThrough();
@@ -100,6 +100,31 @@ describe('Ionic Modal', function() {
 
     expect(instance.isShown()).toBe(false);
   }));
+
+  it('should not close on hardware back button if option', inject(function($ionicPlatform) {
+    var template = '<div class="modal"></div>';
+    var instance = modal.fromTemplate(template, {
+      hardwareBackButtonClose: false
+    });
+    spyOn($ionicPlatform, 'registerBackButtonAction').andCallThrough();
+    instance.show();
+    timeout.flush();
+    expect($ionicPlatform.registerBackButtonAction).toHaveBeenCalledWith(jasmine.any(Function), PLATFORM_BACK_BUTTON_PRIORITY_MODAL);
+
+    ionicPlatform.hardwareBackButtonClick();
+
+    expect(instance.isShown()).toBe(true);
+  }));
+
+  it('should call _deregisterBackButton on hide', function() {
+    var template = '<div class="modal"></div>';
+    var instance = modal.fromTemplate(template);
+    instance.show();
+    timeout.flush();
+    spyOn(instance, '_deregisterBackButton');
+    instance.hide();
+    expect(instance._deregisterBackButton).toHaveBeenCalled();
+  });
 
   it('should close modal on backdrop click after animate is done', function() {
     var template = '<div class="modal"></div>';

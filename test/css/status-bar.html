@@ -1,5 +1,7 @@
-<html ng-app="ionicApp">
+<!DOCTYPE html>
+<html ng-app="ionic">
   <head>
+    <script src="../../dist/js/ionic.bundle.js"></script>
     <meta charset="utf-8">
     <title>Status Bar</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
@@ -19,89 +21,6 @@
         display: block;
       }
     </style>
-    <script src="../../dist/js/ionic.bundle.js"></script>
-    <script>
-      angular.module('ionicApp', ['ionic'])
-
-      .controller('AppCtrl', function($scope, $timeout){
-
-        $scope.fullScreenTrueTrue = function() {
-          ionic.Platform.fullScreen(true, true);
-          showBodyClass();
-        };
-
-        $scope.fullScreenFalseTrue = function() {
-          ionic.Platform.fullScreen(false, true);
-          showBodyClass();
-        };
-
-        $scope.fullScreenFalseFalse = function() {
-          ionic.Platform.fullScreen(false, false);
-          showBodyClass();
-        };
-
-        $scope.fullScreenTrueFalse = function() {
-          ionic.Platform.fullScreen(true, false);
-          showBodyClass();
-        };
-
-        $scope.fullScreenDefault = function() {
-          ionic.Platform.fullScreen();
-          showBodyClass();
-        };
-
-        $scope.fullScreenTrueDefault = function() {
-          ionic.Platform.fullScreen(true);
-          showBodyClass();
-        };
-
-        $scope.fullScreenFalseDefault = function() {
-          ionic.Platform.fullScreen(false);
-          showBodyClass();
-        };
-
-        $scope.ios7 = function() {
-          document.body.classList.toggle('platform-ios7');
-          showBodyClass();
-        };
-
-        $scope.android = function() {
-          document.body.classList.toggle('platform-android');
-          showBodyClass();
-        };
-
-        $scope.cordova = function() {
-          document.body.classList.toggle('platform-cordova');
-          showBodyClass();
-        };
-
-        $scope.init = function() {
-          showBodyClass();
-        };
-
-        function showBodyClass() {
-          $timeout(function(){
-            $scope.bodyClass = document.body.className;
-            $scope.isFullScreen = ionic.Platform.isFullScreen;
-            $scope._showStatusBar = ionic.Platform._showStatusBar;
-          }, 50);
-        }
-
-      });
-
-      // fake cordova
-      window.StatusBar = {
-        show: function() {
-          console.log('StatusBar show');
-          document.getElementById('ios7-status-bar').style.display = '';
-        },
-        hide: function() {
-          console.log('StatusBar hide');
-          document.getElementById('ios7-status-bar').style.display = 'none';
-        }
-      }
-
-    </script>
   </head>
   <body ng-controller="AppCtrl" ng-init="init()">
 
@@ -112,34 +31,5 @@
       <h1 class="title">Status Bar</h1>
       <a class="button icon ion-home" href="./"> Home</a>
     </header>
-
-    <div class="content padding" style="padding-top: 100px">
-
-      <p><code>fullScreen: function(showFullScreen, showStatusBar)</code></p>
-
-      <p><code>Body Class: {{ bodyClass }}</code></p>
-
-      <p><code>isFullScreen: {{ isFullScreen }}</code></p>
-
-      <p><code>_showStatusBar: {{ _showStatusBar }}</code></p>
-
-      <p>
-        <button ng-click="fullScreenDefault()">fullScreen()</button>
-        <button ng-click="fullScreenTrueDefault()">fullScreen(true)</button>
-        <button ng-click="fullScreenFalseDefault()">fullScreen(false)</button>
-        <button ng-click="fullScreenTrueTrue()">fullScreen(true, true)</button>
-        <button ng-click="fullScreenFalseTrue()">fullScreen(false, true)</button>
-        <button ng-click="fullScreenFalseFalse()">fullScreen(false, false)</button>
-        <button ng-click="fullScreenTrueFalse()">fullScreen(true, false)</button>
-      </p>
-
-      <p>
-        <button ng-click="cordova()">.platform-cordova</button>
-        <button ng-click="ios7()">.platform-ios7</button>
-        <button ng-click="android()">.platform-android</button>
-      </p>
-
-    </div>
-
   </body>
 </html>

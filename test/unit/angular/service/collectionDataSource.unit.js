@@ -25,7 +25,7 @@ describe('$collectionDataSource service', function() {
     return dataSource;
   }
 
-  it('should have properties', function() {
+  it('should have properties', inject(function($collectionDataSource) {
     var source = setup({
       scope: 1,
       transcludeFn: 2,
@@ -44,7 +44,7 @@ describe('$collectionDataSource service', function() {
     expect(source.trackByExpr).toBe(6);
     expect(source.heightGetter).toBe(7);
     expect(source.widthGetter).toBe(8);
-  });
+  }));
 
   describe('.itemHashGetter()', function() {
 
@@ -68,42 +68,6 @@ describe('$collectionDataSource service', function() {
       expect(source.itemHashGetter(1, item)).toEqual('superhash');
       expect(idMakerSpy).toHaveBeenCalledWith(1, item);
     });
-  });
-
-  describe('itemCache', function() {
-
-    it('should be $cacheFactory', function() {
-      var cache = {};
-      module('ionic', function($provide) {
-        $provide.value('$cacheFactory', function() { return cache; });
-      });
-      var source = setup();
-      expect(source.itemCache).toBe(cache);
-    });
-
-    it('should have added keys() method', function() {
-      var source = setup();
-      source.itemCache.put('a', 1);
-      source.itemCache.put('b', 2);
-      expect(source.itemCache.keys()).toEqual(['a', 'b']);
-      source.itemCache.remove('a');
-      expect(source.itemCache.keys()).toEqual(['b']);
-    });
-
-  });
-
-  it('.destroy() should cleanup dimensions & cache', function() {
-    var source = setup();
-    source.dimensions = [1,2,3];
-    var cachedItem = {
-      scope: { $destroy: jasmine.createSpy('$destroy') },
-      element: { remove: jasmine.createSpy('remove') }
-    };
-    source.itemCache.put('a', cachedItem);
-    source.destroy();
-    expect(source.dimensions.length).toBe(0);
-    expect(cachedItem.scope.$destroy).toHaveBeenCalled();
-    expect(cachedItem.element.remove).toHaveBeenCalled();
   });
 
   it('.calculateDataDimensions()', function() {
@@ -135,64 +99,128 @@ describe('$collectionDataSource service', function() {
     });
   });
 
-  describe('.compileItem()', function() {
-    it('should get item from cache if exists', function() {
+  describe('.createItem()', function() {
+    it('should return item with new scope and transclude', function() {
       var source = setup();
-      var hash = source.itemHashGetter(1,2);
-      var item = {};
-      source.itemCache.put(hash, item);
-      expect(source.compileItem(1,2)).toBe(item);
-    });
 
-    it('should give back a compiled item and put in cache', function() {
-      var source = setup({
-        keyExpr: 'key'
-      });
-
-      var item = source.compileItem(1, 2);
+      var item = source.createItem();
 
       expect(item.scope.$parent).toBe(source.scope);
-      expect(item.scope.key).toBe(2);
 
       expect(item.element).toBeTruthy();
       expect(item.element.css('position')).toBe('absolute');
       expect(item.element.scope()).toBe(item.scope);
 
-      expect(source.itemCache.get(source.itemHashGetter(1,2))).toBe(item);
+      expect(item.element.parent()[0]).toBe(source.transcludeParent[0]);
     });
   });
 
   describe('.getItem()', function() {
-    it('should return a value with index values set', function() {
+    it('should return attachedItems[hash] if available', function() {
       var source = setup();
-      source.data = ['a', 'b', 'c'];
-      spyOn(source, 'compileItem').andCallFake(function() { return { scope: {} }; });
+      var item = {};
+      source.attachedItems['123'] = item;
+      expect(source.getItem('123')).toBe(item);
+    });
 
-      var item = source.getItem(0);
-      expect(item.scope.$index).toBe(0);
-      expect(item.scope.$first).toBe(true);
-      expect(item.scope.$last).toBe(false);
-      expect(item.scope.$middle).toBe(false);
-      expect(item.scope.$odd).toBe(false);
+    it('should return backupItemsArray item if available, and reconnect the item', function() {
+      var source = setup();
+      var item = {
+        scope: {},
+      };
+      spyOn(window, 'reconnectScope');
+      source.backupItemsArray = [item];
+      expect(source.getItem('123')).toBe(item);
+      expect(reconnectScope).toHaveBeenCalledWith(item.scope);
+    });
 
-      item = source.getItem(1);
-      expect(item.scope.$index).toBe(1);
-      expect(item.scope.$first).toBe(false);
-      expect(item.scope.$last).toBe(false);
-      expect(item.scope.$middle).toBe(true);
-      expect(item.scope.$odd).toBe(true);
-
-      item = source.getItem(2);
-      expect(item.scope.$index).toBe(2);
-      expect(item.scope.$first).toBe(false);
-      expect(item.scope.$last).toBe(true);
-      expect(item.scope.$middle).toBe(false);
-      expect(item.scope.$odd).toBe(false);
+    it('should last resort create an item', function() {
+      var source = setup();
+      var item = {};
+      spyOn(source, 'createItem').andReturn(item);
+      expect(source.getItem('123')).toBe(item);
     });
   });
 
+  describe('.attachItemAtIndex()', function() {
+    it('should return a value with index values set and put in attachedItems', inject(function($rootScope) {
+      var source = setup({
+        keyExpr: 'value'
+      });
+      source.data = ['a', 'b', 'c'];
+      spyOn(source, 'getItem').andCallFake(function() {
+        return { scope: $rootScope.$new() };
+      });
+      spyOn(source, 'itemHashGetter').andCallFake(function(index, value) {
+        return index + ':' + value;
+      });
+
+      var item1 = source.attachItemAtIndex(0);
+      expect(item1.scope.value).toEqual('a');
+      expect(item1.scope.$index).toBe(0);
+      expect(item1.scope.$first).toBe(true);
+      expect(item1.scope.$last).toBe(false);
+      expect(item1.scope.$middle).toBe(false);
+      expect(item1.scope.$odd).toBe(false);
+      expect(item1.hash).toEqual('0:a');
+
+      var item2 = source.attachItemAtIndex(1);
+      expect(item2.scope.value).toEqual('b');
+      expect(item2.scope.$index).toBe(1);
+      expect(item2.scope.$first).toBe(false);
+      expect(item2.scope.$last).toBe(false);
+      expect(item2.scope.$middle).toBe(true);
+      expect(item2.scope.$odd).toBe(true);
+      expect(item2.hash).toEqual('1:b');
+
+      var item3 = source.attachItemAtIndex(2);
+      expect(item3.scope.value).toEqual('c');
+      expect(item3.scope.$index).toBe(2);
+      expect(item3.scope.$first).toBe(false);
+      expect(item3.scope.$last).toBe(true);
+      expect(item3.scope.$middle).toBe(false);
+      expect(item3.scope.$odd).toBe(false);
+      expect(item3.hash).toEqual('2:c');
+
+      expect(source.attachedItems).toEqual({
+        '0:a': item1,
+        '1:b': item2,
+        '2:c': item3
+      });
+    }));
+  });
+
   describe('.detachItem()', function() {
-    it('should remove element from parent and disconnectScope', function() {
+    it('should detach item and add to backup array if there is room', function() {
+      var source = setup();
+      var item = {
+        element: angular.element('<div>'),
+        scope: {},
+        hash: 'foo'
+      };
+      source.backupItemsArray = [];
+      source.attachedItems[item.hash] = item;
+      spyOn(window, 'disconnectScope');
+      source.detachItem(item);
+      expect(source.attachedItems).toEqual({});
+      expect(source.backupItemsArray).toEqual([item]);
+      expect(disconnectScope).toHaveBeenCalledWith(item.scope);
+    });
+    it('should remove element from parent and disconnectScope if backupItemsArray is full', function() {
+      var source = setup();
+      spyOn(source, 'destroyItem');
+      source.BACKUP_ITEMS_LENGTH = 0;
+
+      var item = { hash: 'abc' };
+      source.attachedItems[item.hash] = item;
+      source.detachItem(item);
+      expect(source.destroyItem).toHaveBeenCalledWith(item);
+      expect(source.attachedItems).toEqual({});
+    });
+  });
+
+  describe('.destroyItem()', function() {
+    it('should remove element and destroy scope', function() {
       var source = setup();
       var element = angular.element('<div>');
       var parent = angular.element('<div>').append(element);
@@ -200,53 +228,15 @@ describe('$collectionDataSource service', function() {
         element: element,
         scope: {}
       };
-      spyOn(window, 'disconnectScope');
+      var destroySpy = item.scope.$destroy = jasmine.createSpy('$destroy');
 
       expect(element[0].parentNode).toBe(parent[0]);
-      source.detachItem(item);
+      source.destroyItem(item);
       expect(element[0].parentNode).toBeFalsy();
-      expect(disconnectScope).toHaveBeenCalledWith(item.scope);
+      expect(destroySpy).toHaveBeenCalled();
+      expect(item.scope).toBe(null);
+      expect(item.element).toBe(null);
     });
-  });
-
-  describe('.attachItem()', function() {
-    it('should add element if it has no parent and digest', inject(function($rootScope) {
-      var source = setup({
-        transcludeParent: angular.element('<div>')
-      });
-      var element = angular.element('<div>');
-      spyOn(window, 'reconnectScope');
-      var item = {
-        element: element,
-        scope: $rootScope.$new()
-      };
-
-      spyOn(item.scope, '$digest');
-      spyOn(source.transcludeParent[0], 'appendChild');
-      source.attachItem(item);
-      expect(source.transcludeParent[0].appendChild).toHaveBeenCalledWith(element[0]);
-      expect(reconnectScope).toHaveBeenCalledWith(item.scope);
-      expect(item.scope.$digest).toHaveBeenCalled();
-    }));
-
-    it('should not append element if it has a parent already', inject(function($rootScope) {
-      var element = angular.element('<div>');
-      var source = setup({
-        transcludeParent: angular.element('<div>')
-          .append(element)
-      });
-      spyOn(window, 'reconnectScope');
-      var item = {
-        element: element,
-        scope: $rootScope.$new()
-      };
-      spyOn(item.scope, '$digest');
-      source.attachItem(item);
-      spyOn(source.transcludeParent[0], 'appendChild');
-      expect(source.transcludeParent[0].appendChild).not.toHaveBeenCalled();
-      expect(reconnectScope).toHaveBeenCalledWith(item.scope);
-      expect(item.scope.$digest).toHaveBeenCalled();
-    }));
   });
 
   describe('.getLength()', function() {

@@ -107,6 +107,7 @@
     margin: 0 10px;
 
     min-width: 30px;
+    height: $bar-height - 1;
 
     text-align: center;
 
@@ -135,8 +136,8 @@
     padding: 0 $button-bar-button-padding;
     min-width: initial;
     min-height: $button-bar-button-height - 1;
-    font-size: $button-bar-button-font-size;
     font-weight: 400;
+    font-size: $button-bar-button-font-size;
     line-height: $button-bar-button-height;
 
     &.button-icon:before,
@@ -162,10 +163,10 @@
       }
     }
     &.button-clear {
-      font-size: $bar-title-font-size;
-      font-weight: 300;
       padding-right: 2px;
       padding-left: 2px;
+      font-weight: 300;
+      font-size: $bar-title-font-size;
 
       .icon:before,
       &.icon:before,
@@ -173,6 +174,16 @@
       &.icon-right:before {
         font-size: $button-large-icon-size;
         line-height: $button-bar-button-height;
+      }
+    }
+
+    &.back-button {
+      padding: 0;
+      opacity: 0.8;
+      .back-button-title {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 4px;
       }
     }
 
@@ -192,7 +203,7 @@
   .button + .button-bar {
     margin-left: 5px;
   }
-  
+
   // Android 4.4 messes with the display property
   .buttons,
   .buttons.left-buttons,
@@ -282,6 +293,10 @@
   border-top-width: 1px;
   border-bottom-width: 0;
   background-position: top;
+
+  &.item-input-inset {
+    position: absolute;
+  }
 }
 
 // Don't render padding if the bar is just for tabs

@@ -93,7 +93,8 @@ function($rootScope, $state, $location, $document, $animate, $ionicPlatform, $io
   '$window',
   '$injector',
   '$animate',
-function($rootScope, $state, $location, $window, $injector, $animate) {
+  '$ionicNavViewConfig',
+function($rootScope, $state, $location, $window, $injector, $animate, $ionicNavViewConfig) {
 
   var View = function(){};
   View.prototype.initialize = function(data) {
@@ -440,6 +441,12 @@ function($rootScope, $state, $location, $window, $injector, $animate) {
           className = el.getAttribute('animation');
           el = el.parentElement;
         }
+
+        // If they don't have an animation set explicitly, use the value in the config
+        if(!className) {
+          return $ionicNavViewConfig.transition;
+        }
+
         return className;
       }
 

@@ -74,8 +74,8 @@
 */
 IonicModule
 .directive('ionList', [
-'$animate',
-'$timeout',
+  '$animate',
+  '$timeout',
 function($animate, $timeout) {
   return {
     restrict: 'E',
@@ -102,7 +102,12 @@ function($animate, $timeout) {
             onReorder: function(el, oldIndex, newIndex) {
               var itemScope = jqLite(el).scope();
               if (itemScope && itemScope.$onReorder) {
-                itemScope.$onReorder(oldIndex, newIndex);
+                //Make sure onReorder is called in apply cycle,
+                //but also make sure it has no conflicts by doing
+                //$evalAsync
+                itemScope.$evalAsync(function() {
+                  itemScope.$onReorder(oldIndex, newIndex);
+                });
               }
             },
             canSwipe: function() {

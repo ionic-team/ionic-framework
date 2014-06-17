@@ -1,4 +1,10 @@
 
+IonicModule.constant('$ionicNavBarConfig', {
+  transition: 'nav-title-slide-ios7',
+  alignTitle: 'center',
+  backButtonIcon: 'ion-ios7-arrow-back'
+});
+
 /**
  * @ngdoc directive
  * @name ionNavBar
@@ -18,6 +24,9 @@
  * Assign an [animation class](/docs/components#animations) to the element to
  * enable animated changing of titles (recommended: 'nav-title-slide-ios7')
  *
+ * Note that the ion-nav-bar element will only work correctly if your content has an
+ * ionView around it.
+ *
  * @usage
  *
  * ```html
@@ -27,7 +36,11 @@
  *   </ion-nav-bar>
  *
  *   <!-- where the initial view template will be rendered -->
- *   <ion-nav-view></ion-nav-view>
+ *   <ion-nav-view>
+ *     <ion-view>
+ *       <ion-content>Hello!</ion-content>
+ *     </ion-view>
+ *   </ion-nav-view>
  * </body>
  * ```
  *
@@ -35,6 +48,8 @@
  * with {@link ionic.service:$ionicNavBarDelegate}.
  * @param align-title {string=} Where to align the title of the navbar.
  * Available: 'left', 'right', 'center'. Defaults to 'center'.
+ * @param {boolean=} no-tap-scroll By default, the navbar will scroll the content
+ * to the top when tapped.  Set no-tap-scroll to true to disable this behavior.
  *
  * </table><br/>
  *
@@ -49,17 +64,17 @@
  *
  *
  * ```html
- * <ion-nav-bar class="bar-positive">
- *   <ion-nav-back-button>
- *     Back
- *   </ion-nav-back-button>
- *   <div class="buttons right-buttons">
- *     <button class="button">
- *       Right Button
- *     </button>
- *   </div>
- * </ion-nav-bar>
  * <ion-view title="myTitle">
+ *   <ion-nav-bar class="bar-positive">
+ *     <ion-nav-back-button>
+ *       Back
+ *     </ion-nav-back-button>
+ *     <div class="buttons right-buttons">
+ *       <button class="button">
+ *         Right Button
+ *       </button>
+ *     </div>
+ *   </ion-nav-bar>
  * </ion-view>
  * ```
  */
@@ -69,7 +84,8 @@ IonicModule
   '$rootScope',
   '$animate',
   '$compile',
-function($ionicViewService, $rootScope, $animate, $compile) {
+  '$ionicNavBarConfig',
+function($ionicViewService, $rootScope, $animate, $compile, $ionicNavBarConfig) {
 
   return {
     restrict: 'E',
@@ -78,7 +94,7 @@ function($ionicViewService, $rootScope, $animate, $compile) {
     compile: function(tElement, tAttrs) {
       //We cannot transclude here because it breaks element.data() inheritance on compile
       tElement
-        .addClass('bar bar-header nav-bar')
+        .addClass('bar bar-header nav-bar ' + $ionicNavBarConfig.transition)
         .append(
           '<div class="buttons left-buttons"> ' +
           '</div>' +
@@ -91,7 +107,7 @@ function($ionicViewService, $rootScope, $animate, $compile) {
       function prelink($scope, $element, $attr, navBarCtrl) {
         navBarCtrl._headerBarView = new ionic.views.HeaderBar({
           el: $element[0],
-          alignTitle: $attr.alignTitle || 'center'
+          alignTitle: $attr.alignTitle || $ionicNavBarConfig.alignTitle || 'center'
         });
 
         //defaults

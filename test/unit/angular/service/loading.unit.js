@@ -70,6 +70,14 @@ describe('$ionicLoading service', function() {
       expect(loader.element.text()).toBe('1 content');
     }));
 
+    it('should add and remove backdrop-loading to backdrop', inject(function($ionicLoading, $ionicBackdrop) {
+      var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+      loader.show({ templateUrl: 'template.html' });
+      expect($ionicBackdrop._element.hasClass('backdrop-loading')).toBe(true);
+      loader.hide();
+      expect($ionicBackdrop._element.hasClass('backdrop-loading')).toBe(false);
+    }));
+
   });
 
   describe('.hide()', function() {

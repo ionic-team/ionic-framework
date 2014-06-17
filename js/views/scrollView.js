@@ -352,6 +352,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
       /** Multiply or decrease scrolling speed **/
       speedMultiplier: 1,
 
+      deceleration: 0.97,
+
       /** Callback that is fired on the later of touch end or deceleration end,
         provided that another scrolling action has not begun. Used to know
         when to fade out a scrollbar. */
@@ -622,15 +624,19 @@ ionic.views.Scroll = ionic.views.View.inherit({
     //Broadcasted when keyboard is shown on some platforms.
     //See js/utils/keyboard.js
     container.addEventListener('scrollChildIntoView', function(e) {
+
+      //distance from bottom of scrollview to top of viewport
+      var scrollBottomOffsetToTop;
+
       if( !self.isScrolledIntoView ) {
         // shrink scrollview so we can actually scroll if the input is hidden
         // if it isn't shrink so we can scroll to inputs under the keyboard
         if (ionic.Platform.isIOS() || ionic.Platform.isFullScreen){
           // if there are things below the scroll view account for them and
           // subtract them from the keyboard height when resizing
-          var offsetToTop = container.getBoundingClientRect().bottom;
-          var offsetToBottom = e.detail.viewportHeight - offsetToTop;
-          var keyboardOffset = Math.max(0, e.detail.keyboardHeight - offsetToBottom);
+          scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
+          var scrollBottomOffsetToBottom = e.detail.viewportHeight - scrollBottomOffsetToTop;
+          var keyboardOffset = Math.max(0, e.detail.keyboardHeight - scrollBottomOffsetToBottom);
           container.style.height = (container.clientHeight - keyboardOffset) + "px";
           container.style.overflow = "visible";
           //update scroll view
@@ -642,25 +648,37 @@ ionic.views.Scroll = ionic.views.View.inherit({
       //If the element is positioned under the keyboard...
       if( e.detail.isElementUnderKeyboard ) {
         var delay;
-        // Wait on android for scroll view to resize
+        // Wait on android for web view to resize
         if ( ionic.Platform.isAndroid() && !ionic.Platform.isFullScreen ) {
-          delay = 350;
-        }
-        else {
+          // android y u resize so slow
+          if ( ionic.Platform.version() < 4.4) {
+            delay = 500;
+          } else {
+            // probably overkill for chrome
+            delay = 350;
+          }
+        } else {
           delay = 80;
         }
 
         //Put element in middle of visible screen
-        //Wait for resize() to reset scroll position
+        //Wait for android to update view height and resize() to reset scroll position
         ionic.scroll.isScrolling = true;
         setTimeout(function(){
           //middle of the scrollview, where we want to scroll to
-          var scrollViewMidpointOffset = container.clientHeight * 0.5;
-          var scrollTop = e.detail.keyboardTopOffset + scrollViewMidpointOffset;
-          console.log('scrollChildIntoView', scrollTop);
-          ionic.tap.cloneFocusedInput(container, self);
-          self.scrollBy(0, scrollTop, true);
-          self.onScroll();
+          var scrollMidpointOffset = container.clientHeight * 0.5;
+
+          scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
+          //distance from top of focused element to the bottom of the scroll view
+          var elementTopOffsetToScrollBottom = e.detail.elementTop - scrollBottomOffsetToTop;
+
+          var scrollTop = elementTopOffsetToScrollBottom  + scrollMidpointOffset;
+
+          if (scrollTop > 0){
+            ionic.tap.cloneFocusedInput(container, self);
+            self.scrollBy(0, scrollTop, true);
+            self.onScroll();
+          }
         }, delay);
       }
 
@@ -794,17 +812,19 @@ ionic.views.Scroll = ionic.views.View.inherit({
       // Mouse Events
       var mousedown = false;
 
-      container.addEventListener("mousedown", function(e) {
+      self.mouseDown = function(e) {
         if ( ionic.tap.ignoreScrollStart(e) || e.target.tagName === 'SELECT' ) {
           return;
         }
         self.doTouchStart(getEventTouches(e), e.timeStamp);
 
-        e.preventDefault();
+        if( !ionic.tap.isTextInput(e.target) ) {
+          e.preventDefault();
+        }
         mousedown = true;
-      }, false);
+      };
 
-      document.addEventListener("mousemove", function(e) {
+      self.mouseMove = function(e) {
         if (!mousedown || e.defaultPrevented) {
           return;
         }
@@ -812,9 +832,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
         self.doTouchMove(getEventTouches(e), e.timeStamp);
 
         mousedown = true;
-      }, false);
+      };
 
-      document.addEventListener("mouseup", function(e) {
+      self.mouseUp = function(e) {
         if (!mousedown) {
           return;
         }
@@ -822,25 +842,55 @@ ionic.views.Scroll = ionic.views.View.inherit({
         self.doTouchEnd(e.timeStamp);
 
         mousedown = false;
-      }, false);
+      };
 
-      var wheelShowBarFn = ionic.debounce(function() {
-        self.__fadeScrollbars('in');
-      }, 500, true);
+      self.mouseWheel = ionic.animationFrameThrottle(function(e) {
+        var scrollParent = ionic.DomUtil.getParentOrSelfWithClass(e.target, 'ionic-scroll');
+        if (scrollParent === self.__container) {
 
-      var wheelHideBarFn = ionic.debounce(function() {
-        self.__fadeScrollbars('out');
-      }, 100, false);
+          self.hintResize();
+          self.scrollBy(
+            e.wheelDeltaX/self.options.wheelDampen,
+            -e.wheelDeltaY/self.options.wheelDampen
+          );
 
-      //For Firefox
-      document.addEventListener('mousewheel', onMouseWheel);
+          self.__fadeScrollbars('in');
+          clearTimeout(self.__wheelHideBarTimeout);
+          self.__wheelHideBarTimeout = setTimeout(function() {
+            self.__fadeScrollbars('out');
+          }, 100);
+        }
+      });
+
+      container.addEventListener("mousedown", self.mouseDown, false);
+      document.addEventListener("mousemove", self.mouseMove, false);
+      document.addEventListener("mouseup", self.mouseUp, false);
+      document.addEventListener('mousewheel', self.mouseWheel, false);
     }
-    function onMouseWheel(e) {
-      self.hintResize();
-      wheelShowBarFn();
-      self.scrollBy(e.wheelDeltaX/self.options.wheelDampen, -e.wheelDeltaY/self.options.wheelDampen);
-      wheelHideBarFn();
-    }
+  },
+
+  __removeEventHandlers: function() {
+    var container = this.__container;
+
+    container.removeEventListener('touchstart', self.touchStart);
+    document.removeEventListener('touchmove', self.touchMove);
+    document.removeEventListener('touchend', self.touchEnd);
+    document.removeEventListener('touchcancel', self.touchCancel);
+
+    container.removeEventListener("pointerdown", self.touchStart);
+    document.removeEventListener("pointermove", self.touchMove);
+    document.removeEventListener("pointerup", self.touchEnd);
+    document.removeEventListener("pointercancel", self.touchEnd);
+
+    container.removeEventListener("MSPointerDown", self.touchStart);
+    document.removeEventListener("MSPointerMove", self.touchMove);
+    document.removeEventListener("MSPointerUp", self.touchEnd);
+    document.removeEventListener("MSPointerCancel", self.touchEnd);
+
+    container.removeEventListener("mousedown", self.mouseDown);
+    document.removeEventListener("mousemove", self.mouseMove);
+    document.removeEventListener("mouseup", self.mouseUp);
+    document.removeEventListener('mousewheel', self.mouseWheel);
   },
 
   /** Create a scroll bar div with the given direction **/
@@ -1490,7 +1540,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
   },
 
-
   /**
    * Touch start handler for scrolling support
    */
@@ -1537,6 +1586,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
     // Store initial positions
     self.__initialTouchLeft = currentTouchLeft;
     self.__initialTouchTop = currentTouchTop;
+
+    // Store initial touchList for scale calculation
+    self.__initialTouches = touches;
 
     // Store current zoom level
     self.__zoomLevelStart = self.__zoomLevel;
@@ -1597,6 +1649,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
     if (touches.length === 2) {
       currentTouchLeft = Math.abs(touches[0].pageX + touches[1].pageX) / 2;
       currentTouchTop = Math.abs(touches[0].pageY + touches[1].pageY) / 2;
+
+      // Calculate scale when not present and only when touches are used
+      if (!scale && self.options.zooming) {
+        scale = self.__getScale(self.__initialTouches, touches);
+      }
     } else {
       currentTouchLeft = touches[0].pageX;
       currentTouchTop = touches[0].pageY;
@@ -2098,8 +2155,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
     //
 
     // Add deceleration to scroll position
-    var scrollLeft = self.__scrollLeft + self.__decelerationVelocityX;
-    var scrollTop = self.__scrollTop + self.__decelerationVelocityY;
+    var scrollLeft = self.__scrollLeft + self.__decelerationVelocityX;// * self.options.deceleration);
+    var scrollTop = self.__scrollTop + self.__decelerationVelocityY;// * self.options.deceleration);
 
 
     //
@@ -2149,7 +2206,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       // This is the factor applied to every iteration of the animation
       // to slow down the process. This should emulate natural behavior where
       // objects slow down when the initiator of the movement is removed
-      var frictionFactor = 0.95;
+      var frictionFactor = self.options.deceleration;
 
       self.__decelerationVelocityX *= frictionFactor;
       self.__decelerationVelocityY *= frictionFactor;
@@ -2208,6 +2265,39 @@ ionic.views.Scroll = ionic.views.View.inherit({
         }
       }
     }
+  },
+
+
+  /**
+   * calculate the distance between two touches
+   * @param   {Touch}     touch1
+   * @param   {Touch}     touch2
+   * @returns {Number}    distance
+   */
+  __getDistance: function getDistance(touch1, touch2) {
+    var x = touch2.pageX - touch1.pageX,
+    y = touch2.pageY - touch1.pageY;
+    return Math.sqrt((x*x) + (y*y));
+  },
+
+
+  /**
+   * calculate the scale factor between two touchLists (fingers)
+   * no scale is 1, and goes down to 0 when pinched together, and bigger when pinched out
+   * @param   {Array}     start
+   * @param   {Array}     end
+   * @returns {Number}    scale
+   */
+  __getScale: function getScale(start, end) {
+
+    var self = this;
+
+    // need two fingers...
+    if(start.length >= 2 && end.length >= 2) {
+      return self.__getDistance(end[0], end[1]) /
+        self.__getDistance(start[0], start[1]);
+    }
+    return 1;
   }
 });
 

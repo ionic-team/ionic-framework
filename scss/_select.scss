@@ -30,6 +30,11 @@
     direction: rtl; // right align the select text
   }
 
+  select::-ms-expand {
+    // hide default dropdown arrow in IE
+    display: none;
+  }
+
   option {
     direction: ltr;
   }

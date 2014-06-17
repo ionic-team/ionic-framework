@@ -79,6 +79,12 @@ IonicModule
   'stop',
   /**
    * @ngdoc method
+   * @name $ionicSlideBoxDelegate#start
+   * @description Start sliding again if the slideBox was stopped. 
+   */
+  'start',
+  /**
+   * @ngdoc method
    * @name $ionicSlideBoxDelegate#currentIndex
    * @returns number The index of the current slide.
    */
