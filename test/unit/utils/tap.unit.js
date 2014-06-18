@@ -940,6 +940,30 @@ describe('Ionic Tap', function() {
     }
   });
 
+  it('Should get containing element of label when passed a deeply nested div', function() {
+    var label = document.createElement('label');
+    var div1 = document.createElement('div');
+    var div2 = document.createElement('div');
+    var div3 = document.createElement('div');
+    var div4 = document.createElement('div');
+    var div5 = document.createElement('div');
+    var div6 = document.createElement('div');
+    div6.id = 'div6';
+
+    label.appendChild(div1);
+    div1.appendChild(div2);
+    div2.appendChild(div3);
+    div3.appendChild(div4);
+    div4.appendChild(div5);
+    div5.appendChild(div6);
+
+    // max depth
+    expect( tapContainingElement(div5).tagName ).toEqual('LABEL');
+
+    // too deep
+    expect( tapContainingElement(div6).id ).toEqual('div6');
+  });
+
   it('Should get containing element of label when passed a label', function() {
     var label = document.createElement('label');
     expect( tapContainingElement(label).tagName ).toEqual('LABEL');
