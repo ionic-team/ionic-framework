@@ -276,7 +276,7 @@ var Scroller;
       return pos * ( 2 - pos );
   };
   
-  var quadraticTransition = "cubic-bezier(.2,.36,.5,.9)";
+  var quadraticTransition = "cubic-bezier(.3,.55,.6,1)";
 
 /**
  * ionic.views.Scroll
