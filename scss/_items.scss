@@ -236,6 +236,66 @@ a.item-content {
   white-space: normal;
 }
 
+// Link and Button Active States
+
+.item-complex{
+  // Stylized items
+  &.item-light > .item-content{
+    @include item-style($item-light-bg, $item-light-border, $item-light-text);
+    &.active, &:active {
+      @include item-active-style($item-light-active-bg, $item-light-active-border);
+    }
+  }
+  &.item-stable > .item-content{
+    @include item-style($item-stable-bg, $item-stable-border, $item-stable-text);
+    &.active, &:active {
+      @include item-active-style($item-stable-active-bg, $item-stable-active-border);
+    }
+  }
+  &.item-positive > .item-content{
+    @include item-style($item-positive-bg, $item-positive-border, $item-positive-text);
+    &.active, &:active {
+      @include item-active-style($item-positive-active-bg, $item-positive-active-border);
+    }
+  }
+  &.item-calm > .item-content{
+    @include item-style($item-calm-bg, $item-calm-border, $item-calm-text);
+    &.active, &:active {
+      @include item-active-style($item-calm-active-bg, $item-calm-active-border);
+    }
+  }
+  &.item-assertive > .item-content{
+    @include item-style($item-assertive-bg, $item-assertive-border, $item-assertive-text);
+    &.active, &:active {
+      @include item-active-style($item-assertive-active-bg, $item-assertive-active-border);
+    }
+  }
+  &.item-balanced > .item-content{
+    @include item-style($item-balanced-bg, $item-balanced-border, $item-balanced-text);
+    &.active, &:active {
+      @include item-active-style($item-balanced-active-bg, $item-balanced-active-border);
+    }
+  }
+  &.item-energized > .item-content{
+    @include item-style($item-energized-bg, $item-energized-border, $item-energized-text);
+    &.active, &:active {
+      @include item-active-style($item-energized-active-bg, $item-energized-active-border);
+    }
+  }
+  &.item-royal > .item-content{
+    @include item-style($item-royal-bg, $item-royal-border, $item-royal-text);
+    &.active, &:active {
+      @include item-active-style($item-royal-active-bg, $item-royal-active-border);
+    }
+  }
+  &.item-dark > .item-content{
+    @include item-style($item-dark-bg, $item-dark-border, $item-dark-text);
+    &.active, &:active {
+      @include item-active-style($item-dark-active-bg, $item-dark-active-border);
+    }
+  }
+}
+
 
 /**
  * Item Icons
