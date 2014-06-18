@@ -38,6 +38,7 @@ describe('css', function() {
     "lists-avatar",
     "lists-buttons",
     "lists-colors",
+    "lists-colors-complex",
     "lists-icons",
     "lists-text",
     "lists-thumbnails",
