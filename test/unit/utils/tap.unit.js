@@ -1162,6 +1162,38 @@ describe('Ionic Tap', function() {
     expect( ionic.tap.isTextInput(ele) ).toEqual(false);
   });
 
+  it('Should isDateInput', function() {
+    expect( ionic.tap.isDateInput(null) ).toEqual(false);
+
+    ele = document.createElement('input');
+
+    ele.type = 'date';
+    expect( ionic.tap.isDateInput(ele) ).toEqual(true);
+
+    ele.type = 'datetime-local';
+    expect( ionic.tap.isDateInput(ele) ).toEqual(true);
+
+    ele.type = 'month';
+    expect( ionic.tap.isDateInput(ele) ).toEqual(true);
+
+    ele.type = 'week';
+    expect( ionic.tap.isDateInput(ele) ).toEqual(true);
+
+    ele.type = 'time';
+    expect( ionic.tap.isDateInput(ele) ).toEqual(true);
+
+    ele.type = 'checkbox';
+    expect( ionic.tap.isDateInput(ele) ).toEqual(false);
+
+    ele.type = '';
+    expect( ionic.tap.isDateInput(ele) ).toEqual(false);
+
+    ele.type = 'text';
+    expect( ionic.tap.isDateInput(ele) ).toEqual(false);
+    
+    
+  });
+
   it('Should isLabelWithTextInput', function() {
     var label = document.createElement('label');
     expect( ionic.tap.isLabelWithTextInput(label) ).toEqual(false);
