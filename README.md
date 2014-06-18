@@ -111,7 +111,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 
 ### Demos / Kitchen Sink
 
-* The demo site is generated into `dist/ionic-demo`. To test the demons, follow these steps:
+* The demo site is generated into `dist/ionic-demo`. To test the demos, follow these steps:
   1. Run `gulp demos [--demo-version=(versionName|nightly)]`
   2. Start an http server from `dist/ionic-demo`:
     - `cd dist/ionic-demo && python -m SimpleHTTPServer`
