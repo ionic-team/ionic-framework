@@ -608,8 +608,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
   /** Current factor to modify vertical scroll position with on every step */
   __decelerationVelocityY: null,
-  
-  __transitionTimer: null,
 
   /** the browser-specific property to use for transforms */
   __transformProperty: null,
@@ -1153,6 +1151,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     
     var transitionProperty = vendorPrefix ? vendorPrefix + "Transition" : "transition";
     var transitionDurationProperty = vendorPrefix ? vendorPrefix + "TransitionDuration" : "transitionDuration";
+    var transitionEndProperty = vendorPrefix ? vendorPrefix.toLowerCase() + "TransitionEnd" : "transitionEnd";
 
     self.__perspectiveProperty = transformProperty;
     self.__transformProperty = transformProperty;
@@ -1160,8 +1159,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
     
     self.__transitionProperty = transitionProperty;
     self.__transitionDurationProperty = transitionDurationProperty;
+    self.__transitionEndProperty = transitionEndProperty;
 	
     content.style[transitionProperty] = "all "+quadraticTransition+" 0s";
+	
+    content.addEventListener(transitionEndProperty, angular.bind(this, self.__transitionEnd), false)
     
     function isTransition (left, top, zoom, wasResize, time) {
         if ( self.options.transition && ( self.__isDecelerating || self.__isAnimating ) ) {
@@ -1584,12 +1586,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     // Reset interruptedAnimation flag
     self.__interruptedAnimation = true;
-    
-    // Stop transition timeout
-    if ( self.__transitionTimer ) {
-        clearTimeout(self.__transitionTimer);
-        self.__transitionTimer = false;
-    }
 
     // Stop deceleration
     if (self.__isDecelerating) {
@@ -2311,33 +2307,40 @@ ionic.views.Scroll = ionic.views.View.inherit({
           } else {
             self.__isAnimating = true;
               self.__callback(scrollLeft, scrollTop, self.__zoomLevel, 0, self.options.animationDuration);  
-          }
-          
-            
-          if ( scrollLeft < 0 ) {
-              scrollLeft = 0;
-          } else if ( scrollLeft > self.__maxScrollLeft ) {
-              scrollLeft = self.__maxScrollLeft;
-          } else {
-              isBouncingX = false;
-          }
-          
-          if ( scrollTop < 0 ) {
-              scrollTop = 0;
-          } else if ( scrollTop > self.__maxScrollTop ) {
-              scrollTop = self.__maxScrollTop;
-          } else {
-              isBouncingY = false;
-          }
-          
-          if ( isBouncingX || isBouncingY ) {
-              self.__transitionTimer = setTimeout (function () {
-                  self.__callback(scrollLeft, scrollTop, self.__zoomLevel, 0, self.options.animationDuration);
-              }, time)
           } 
             
       }
             
+  },
+  
+  __transitionEnd: function(){
+	  var self = this;
+	  var scrollLeft = self.__scrollLeft,
+	  	  scrollTop = self.__scrollTop,
+	  	  isBouncingY = true,
+	  	  isBouncingX = true;
+	  
+	  if ( scrollLeft < 0 ) {
+	  	  scrollLeft = 0;
+	  } else if ( scrollLeft > self.__maxScrollLeft ) {
+	  	  scrollLeft = self.__maxScrollLeft;
+	  } else {
+	  	  isBouncingX = false;
+	  }
+	  
+	  if ( scrollTop < 0 ) {
+	  	  scrollTop = 0;
+	  } else if ( scrollTop > self.__maxScrollTop ) {
+	  	  scrollTop = self.__maxScrollTop;
+	  } else {
+	  	  isBouncingY = false;
+	  }
+
+	  if ( isBouncingX || isBouncingY ) {
+	  	  self.__isDecelerating = false;
+	  	  self.__isAnimating = true;
+	  	  self.__callback(scrollLeft, scrollTop, self.__zoomLevel, 0, self.options.animationDuration);
+	  }
   },
 
 
