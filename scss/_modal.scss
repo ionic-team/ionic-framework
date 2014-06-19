@@ -46,6 +46,33 @@
   .modal.ng-leave-active {
     bottom: 0;
   }
+
+  // remove ios header padding from inset header
+  .platform-ios.platform-cordova .modal-wrapper .modal{
+    .bar-header:not(.bar-subheader) {
+      height: $bar-height;
+      > * {
+        margin-top: 0;
+      }
+    }
+    .tabs-top > .tabs,
+    .tabs.tabs-top {
+      top: $bar-height;
+    }
+    .has-header,
+    .bar-subheader {
+      top: $bar-height;
+    }
+    .has-subheader {
+      top: (2 * $bar-height);
+    }
+    .has-tabs-top {
+      top: $bar-height + $tabs-height;
+    }
+    .has-header.has-subheader.has-tabs-top {
+      top: 2 * $bar-height + $tabs-height;
+    }
+  }
 }
 
 .modal-open {
