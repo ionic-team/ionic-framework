@@ -404,6 +404,7 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
 /**
  * iPad doesn't like box shadows
  */
+/*
 .grade-a:not(.platform-ipad) {
   .slide-left-right-ios7, .slide-right-left-ios7.reverse {
     > .ng-enter, &.ng-enter {
@@ -422,6 +423,7 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
     }
   }
 }
+*/
 .grade-a.platform-ipad {
   .slide-left-right-ios7, .slide-right-left-ios7.reverse {
     > .ng-enter, &.ng-enter {
