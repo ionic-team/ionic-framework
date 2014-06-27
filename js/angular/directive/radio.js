@@ -25,6 +25,7 @@ IonicModule
     scope: {
       ngModel: '=?',
       ngValue: '=?',
+      ngDisabled: '=?',
       ngChange: '&',
       icon: '@',
       name: '@'
@@ -32,7 +33,7 @@ IonicModule
     transclude: true,
     template: '<label class="item item-radio">' +
                 '<input type="radio" name="radio-group"' +
-                ' ng-model="ngModel" ng-value="getValue()" ng-change="ngChange()">' +
+                ' ng-model="ngModel" ng-value="getValue()" ng-change="ngChange()" ng-disabled="ngDisabled">' +
                 '<div class="item-content disable-pointer-events" ng-transclude></div>' +
                 '<i class="radio-icon disable-pointer-events icon ion-checkmark"></i>' +
               '</label>',
