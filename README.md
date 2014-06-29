@@ -81,9 +81,9 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 + <https://twitter.com/adamdbradley>
 + <https://github.com/adamdbradley>
 
-**Andy Joslin**
+**Andrew Joslin**
 
-+ <https://twitter.com/andytjoslin>
++ <https://twitter.com/andrewtjoslin>
 + <https://github.com/ajoslin>
 
 ## Development
