@@ -18,11 +18,12 @@ IonicModule
  * Note: If you use ionHeaderBar in combination with ng-if, the surrounding content
  * will not align correctly.  This will be fixed soon.
  *
- * @param {string=} align-title Where to align the title.
+ * @param {string=} align-title Where to align the title. 
+ * Available: 'left', 'right', or 'center'.  Defaults to 'center'.
  * @param {boolean=} no-tap-scroll By default, the header bar will scroll the
  * content to the top when tapped.  Set no-tap-scroll to true to disable this 
  * behavior.
- * Avaialble: 'left', 'right', or 'center'.  Defaults to 'center'.
+ * Available: true or false.  Defaults to false.
  *
  * @usage
  * ```html
@@ -58,7 +59,7 @@ IonicModule
  * will not align correctly.  This will be fixed soon.
  *
  * @param {string=} align-title Where to align the title.
- * Avaialble: 'left', 'right', or 'center'.  Defaults to 'center'.
+ * Available: 'left', 'right', or 'center'.  Defaults to 'center'.
  *
  * @usage
  * ```html
