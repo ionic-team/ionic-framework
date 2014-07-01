@@ -332,6 +332,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       /** duration for animations triggered by scrollTo/zoomTo */
       animationDuration: 250,
+	  
+	  decelerationTransition: 0.0016, // Default 0.0006
 
       /** Enable bouncing (content can be slowly moved outside and jumps back after releasing) */
       bouncing: true,
@@ -2126,14 +2128,14 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.__sizerTimeout = setTimeout(sizer, 1000);
   },
   
-  __momentum: function (current, start, time, lowerMargin, wrapperSize, deceleration) {
+  __momentum: function (current, start, time, lowerMargin, wrapperSize) {
       
       var distance = current - start,
           speed = Math.abs(distance) / time,
           destination,
           duration;
 
-      deceleration = deceleration === undefined ? 0.0006 : deceleration;
+      deceleration = this.options.decelerationTransition;
 
       destination = current + ( speed * speed ) / ( 2 * deceleration ) * ( distance < 0 ? -1 : 1 );
       duration = speed / deceleration;
