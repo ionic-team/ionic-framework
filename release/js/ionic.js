@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.8
+ * Ionic, v1.0.0-beta.9
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -19,7 +19,7 @@
 window.ionic = {
   controllers: {},
   views: {},
-  version: '1.0.0-beta.8'
+  version: '1.0.0-beta.9'
 };
 
 (function(ionic) {
@@ -2593,6 +2593,11 @@ ionic.tap = {
             (ele.tagName == 'INPUT' && !(/^(radio|checkbox|range|file|submit|reset)$/i).test(ele.type)) );
   },
 
+  isDateInput: function(ele) {
+    return !!ele &&
+            (ele.tagName == 'INPUT' && (/^(date|time|datetime-local|month|week)$/i).test(ele.type));
+  },
+
   isLabelWithTextInput: function(ele) {
     var container = tapContainingElement(ele, false);
 
@@ -2614,6 +2619,7 @@ ionic.tap = {
         var clonedInput = focusInput.parentElement.querySelector('.cloned-text-input');
         if(!clonedInput) {
           clonedInput = document.createElement(focusInput.tagName);
+          clonedInput.placeholder = focusInput.placeholder;
           clonedInput.type = focusInput.type;
           clonedInput.value = focusInput.value;
           clonedInput.className = 'cloned-text-input';
@@ -2969,7 +2975,7 @@ function tapContainingElement(ele, allowSelf) {
   for(var x=0; x<6; x++) {
     if(!climbEle) break;
     if(climbEle.tagName === 'LABEL') return climbEle;
-    climbEle = ele.parentElement;
+    climbEle = climbEle.parentElement;
   }
   if(allowSelf !== false) return ele;
 }
@@ -3379,7 +3385,7 @@ function keyboardNativeShow(e) {
 }
 
 function keyboardBrowserFocusIn(e) {
-  if( !e.target || !ionic.tap.isTextInput(e.target) || !keyboardIsWithinScroll(e.target) ) return;
+  if( !e.target || !ionic.tap.isTextInput(e.target) || ionic.tap.isDateInput(e.target) || !keyboardIsWithinScroll(e.target) ) return;
 
   document.addEventListener('keydown', keyboardOnKeyDown, false);
 
@@ -4122,7 +4128,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         return Math.max(self.__content.scrollWidth, self.__content.offsetWidth);
       },
       getContentHeight: function() {
-        return Math.max(self.__content.scrollHeight, self.__content.offsetHeight);
+        return Math.max(self.__content.scrollHeight, self.__content.offsetHeight + self.__content.offsetTop);
       }
 		};
 
@@ -6895,7 +6901,7 @@ ionic.views.Slider = ionic.views.View.inherit({
       slidePos = new Array(slides.length);
 
       // determine width of each slide
-      width = container.getBoundingClientRect().width || container.offsetWidth;
+      width = container.offsetWidth || container.getBoundClientRect().width;
 
       element.style.width = (slides.length * width) + 'px';
 

@@ -1,3 +1,25 @@
+### 1.0.0-beta.9 "gadolinium-gator" (2014-07-02)
+
+
+#### Bug Fixes
+
+* **collectionRepeat:** fix scroll when item bigger than viewport ([b2585f19](https://github.com/driftyco/ionic/commit/b2585f19cac58d0393b8339cb2efddf213e57660), closes [#1621](https://github.com/driftyco/ionic/issues/1621))
+* **footerBar:** fixed top border position on retina displays. ([f4043e67](https://github.com/driftyco/ionic/commit/f4043e673c6e94b7e7fe2236ec78024243ff38c6), closes [#1661](https://github.com/driftyco/ionic/issues/1661))
+* **gestureDirectives:** fix problem with event being passed in ([b4b94073](https://github.com/driftyco/ionic/commit/b4b94073d5b26698be4a45b9fa4dbeb5a2cdcad4))
+* **header:** add iOS 8 support to iOS header fix. assumes all iOS will have 7 style headers. ([4a2296dc](https://github.com/driftyco/ionic/commit/4a2296dcae4079b114dd2ddb13f1a3492039b80d), closes [#1625](https://github.com/driftyco/ionic/issues/1625))
+* **headerBar:** scroll to top ([6eefee3d](https://github.com/driftyco/ionic/commit/6eefee3d7ed4b4ade4e7093158e83f4ac99d6fc1))
+* **listItem:** apply color styles to complex list items ([9ff1b965](https://github.com/driftyco/ionic/commit/9ff1b965bf8f5aac7d922a8cff5ec7dcd5e99312))
+* **menu:** safari z-index fix for `.menu .scroll-content` ([754ef461](https://github.com/driftyco/ionic/commit/754ef461e8fafcd3c00be103e655e44e4bb4292a), closes [#1408](https://github.com/driftyco/ionic/issues/1408))
+* **modal:** remove iOS style header padding from inset headers in modal popups on iPad in po ([e6dda6a5](https://github.com/driftyco/ionic/commit/e6dda6a5170fac4e8b14a4f3e2fc1d574058a797), closes [#1605](https://github.com/driftyco/ionic/issues/1605))
+* **popup:** if popup is taller than the window, shrink the popup body and make it scrollable ([3e6ce183](https://github.com/driftyco/ionic/commit/3e6ce1831b8eeeaab53e010c9603474cf9ddbbcd), closes [#1679](https://github.com/driftyco/ionic/issues/1679))
+* **radio:** suport ng-disabled. ([704fe402](https://github.com/driftyco/ionic/commit/704fe402e79b457150428856aa0b273986431779), closes [#1684](https://github.com/driftyco/ionic/issues/1684))
+* **scroll:** safari scroll content height ([96b2243f](https://github.com/driftyco/ionic/commit/96b2243f15628d4cfed84aba4649a6f2e28b6314))
+* **scrollController:** allow tab $historyId to remember scroll ([9b601b55](https://github.com/driftyco/ionic/commit/9b601b5523537f496b4a41bb8e57c1b1e916e949), closes [#1654](https://github.com/driftyco/ionic/issues/1654))
+* **scrollView:** clonedInputs get placeholder text if any ([f2f55199](https://github.com/driftyco/ionic/commit/f2f55199b9df4b007ac4b8b66ef9e8a9dfc50c57))
+* **sliderView:** find width properly when element is transformed ([86ce4806](https://github.com/driftyco/ionic/commit/86ce480696597882552665cbb1204d7e2af4fd6c), closes [#1313](https://github.com/driftyco/ionic/issues/1313))
+* **tap:** get containing label of deeply nested element ([2e3b8546](https://github.com/driftyco/ionic/commit/2e3b854658a5adf19321c433b28bdca95428d02d), closes [#1643](https://github.com/driftyco/ionic/issues/1643))
+
+
 ### 1.0.0-beta.8 "fermium-flamingo" (2014-06-16)
 
 

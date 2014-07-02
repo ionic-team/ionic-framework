@@ -9,7 +9,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.8
+ * Ionic, v1.0.0-beta.9
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -26,7 +26,7 @@
 window.ionic = {
   controllers: {},
   views: {},
-  version: '1.0.0-beta.8'
+  version: '1.0.0-beta.9'
 };
 
 (function(ionic) {
@@ -2600,6 +2600,11 @@ ionic.tap = {
             (ele.tagName == 'INPUT' && !(/^(radio|checkbox|range|file|submit|reset)$/i).test(ele.type)) );
   },
 
+  isDateInput: function(ele) {
+    return !!ele &&
+            (ele.tagName == 'INPUT' && (/^(date|time|datetime-local|month|week)$/i).test(ele.type));
+  },
+
   isLabelWithTextInput: function(ele) {
     var container = tapContainingElement(ele, false);
 
@@ -2621,6 +2626,7 @@ ionic.tap = {
         var clonedInput = focusInput.parentElement.querySelector('.cloned-text-input');
         if(!clonedInput) {
           clonedInput = document.createElement(focusInput.tagName);
+          clonedInput.placeholder = focusInput.placeholder;
           clonedInput.type = focusInput.type;
           clonedInput.value = focusInput.value;
           clonedInput.className = 'cloned-text-input';
@@ -2976,7 +2982,7 @@ function tapContainingElement(ele, allowSelf) {
   for(var x=0; x<6; x++) {
     if(!climbEle) break;
     if(climbEle.tagName === 'LABEL') return climbEle;
-    climbEle = ele.parentElement;
+    climbEle = climbEle.parentElement;
   }
   if(allowSelf !== false) return ele;
 }
@@ -3386,7 +3392,7 @@ function keyboardNativeShow(e) {
 }
 
 function keyboardBrowserFocusIn(e) {
-  if( !e.target || !ionic.tap.isTextInput(e.target) || !keyboardIsWithinScroll(e.target) ) return;
+  if( !e.target || !ionic.tap.isTextInput(e.target) || ionic.tap.isDateInput(e.target) || !keyboardIsWithinScroll(e.target) ) return;
 
   document.addEventListener('keydown', keyboardOnKeyDown, false);
 
@@ -4129,7 +4135,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         return Math.max(self.__content.scrollWidth, self.__content.offsetWidth);
       },
       getContentHeight: function() {
-        return Math.max(self.__content.scrollHeight, self.__content.offsetHeight);
+        return Math.max(self.__content.scrollHeight, self.__content.offsetHeight + self.__content.offsetTop);
       }
 		};
 
@@ -6902,7 +6908,7 @@ ionic.views.Slider = ionic.views.View.inherit({
       slidePos = new Array(slides.length);
 
       // determine width of each slide
-      width = container.getBoundingClientRect().width || container.offsetWidth;
+      width = container.offsetWidth || container.getBoundClientRect().width;
 
       element.style.width = (slides.length * width) + 'px';
 
@@ -36184,7 +36190,7 @@ angular.module('ui.router.compat')
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.8
+ * Ionic, v1.0.0-beta.9
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -36325,7 +36331,7 @@ function($rootScope, $document, $compile, $animate, $timeout, $ionicTemplateLoad
    *  - `[Object]` `buttons` Which buttons to show.  Each button is an object with a `text` field.
    *  - `{string}` `titleText` The title to show on the action sheet.
    *  - `{string=}` `cancelText` the text for a 'cancel' button on the action sheet.
-   *  - `{string=}` `destructivetext` The text for a 'danger' on the action sheet.
+   *  - `{string=}` `destructiveText` The text for a 'danger' on the action sheet.
    *  - `{function=}` `cancel` Called if the cancel button is pressed, the backdrop is tapped or
    *     the hardware back button is pressed.
    *  - `{function=}` `buttonClicked` Called when one of the non-destructive buttons is clicked,
@@ -36934,7 +36940,7 @@ function($rootScope, $timeout) {
 
     this.isVertical = !!this.scrollView.options.scrollingY;
     this.renderedItems = {};
-
+    this.dimensions = [];
     this.setCurrentIndex(0);
 
     //Override scrollview's render callback
@@ -37060,19 +37066,26 @@ function($rootScope, $timeout) {
       }
     },
     /*
-     * setCurrentIndex: set the index in the list that matches the scroller's position.
+     * setCurrentIndex sets the index in the list that matches the scroller's position.
      * Also save the position in the scroller for next and previous items (if they exist)
      */
     setCurrentIndex: function(index, height) {
+      var currentPos = (this.dimensions[index] || {}).primaryPos || 0;
       this.currentIndex = index;
 
       this.hasPrevIndex = index > 0;
       if (this.hasPrevIndex) {
-        this.previousPos = this.dimensions[index - 1].primaryPos;
+        this.previousPos = Math.max(
+          currentPos - this.dimensions[index - 1].primarySize,
+          this.dimensions[index - 1].primaryPos
+        );
       }
       this.hasNextIndex = index + 1 < this.dataSource.getLength();
       if (this.hasNextIndex) {
-        this.nextPos = this.dimensions[index + 1].primaryPos;
+        this.nextPos = Math.min(
+          currentPos + this.dimensions[index + 1].primarySize,
+          this.dimensions[index + 1].primaryPos
+        );
       }
     },
     /**
@@ -37956,7 +37969,7 @@ var PLATFORM_BACK_BUTTON_PRIORITY_POPUP = 400;
 var PLATFORM_BACK_BUTTON_PRIORITY_LOADING = 500;
 
 function componentConfig(defaults) {
-  defaults.$get = function() { return defaults; }
+  defaults.$get = function() { return defaults; };
   return defaults;
 }
 
@@ -37990,7 +38003,7 @@ IonicModule
       position: ''
     }
   }
-})
+});
 
 
 IonicModule.config([
@@ -38471,6 +38484,17 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
         ionic.requestAnimationFrame(function() {
           //if hidden while waiting for raf, don't show
           if (!self.isShown) return;
+
+          //if the popup is taller than the window, make the popup body scrollable
+          if(self.element[0].offsetHeight > window.innerHeight - 20){
+            self.element[0].style.height = window.innerHeight - 20+'px';
+            popupBody = self.element[0].querySelectorAll('.popup-body');
+            popupHead = self.element[0].querySelectorAll('.popup-head');
+            popupButtons = self.element[0].querySelectorAll('.popup-buttons');
+            self.element.addClass('popup-tall');
+            newHeight = window.innerHeight - popupHead[0].offsetHeight - popupButtons[0].offsetHeight -20;
+            popupBody[0].style.height =  newHeight + 'px';
+          }
 
           self.element.removeClass('popup-hidden');
           self.element.addClass('popup-showing active');
@@ -40099,6 +40123,7 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     backListenDone();
     if (self._rememberScrollId) {
       $$scrollValueCache[self._rememberScrollId] = scrollView.getValues();
+      void 0;
     }
   });
 
@@ -40117,11 +40142,13 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     if (e.defaultPrevented) { return; }
     e.preventDefault();
 
-    var viewId = historyData && historyData.viewId;
+    var viewId = historyData && historyData.viewId || $scope.$historyId;
     if (viewId) {
       $timeout(function() {
         self.rememberScrollPosition(viewId);
         self.scrollToRememberedPosition();
+
+        void 0;
 
         backListenDone = $rootScope.$on('$viewHistory.viewBack', function(e, fromViewId, toViewId) {
           //When going back from this view, forget its saved scroll position
@@ -40129,7 +40156,7 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
             self.forgetScrollPosition();
           }
         });
-      }, 1, false);
+      }, 0, false);
     }
   });
 
@@ -40606,7 +40633,7 @@ IonicModule
  *   </div>
  * </ion-content>
  * ```
- * Percentage of total visible list dimensions. This example shows a 3 by 3 matrix that fits on the screen (3 rows and 3 colums)
+ * Percentage of total visible list dimensions. This example shows a 3 by 3 matrix that fits on the screen (3 rows and 3 colums). Note that dimensions are used in the creation of the element and therefore a measurement of the item cannnot be used as an input dimension. 
  * ```css
  * .my-image-item img {
  *   height: 33%;
@@ -40781,7 +40808,8 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
  * Ionic scroll.
  * @param {boolean=} scrollbar-x Whether to show the horizontal scrollbar. Default true.
  * @param {boolean=} scrollbar-y Whether to show the vertical scrollbar. Default true.
- * @param {boolean=} has-bouncing Whether to allow scrolling to bounce past the edges
+ * @param {boolean=} scrollbar-y Whether to show the vertical scrollbar. Default true.
+ * @param {string=} start-y Initial vertical scroll position. Default 0.
  * of the content.  Defaults to true on iOS, false on Android.
  * @param {expression=} on-scroll Expression to evaluate when the content is scrolled.
  * @param {expression=} on-scroll-complete Expression to evaluate when a scroll action completes.
@@ -41126,26 +41154,22 @@ function gestureDirective(directiveName) {
   return ['$ionicGesture', '$parse', function($ionicGesture, $parse) {
     var eventType = directiveName.substr(2).toLowerCase();
 
-    return {
-      restrict: 'A',
-      compile: function($element, attr) {
-        var fn = $parse( attr[directiveName] );
+    return function(scope, element, attr) {
+      var fn = $parse( attr[directiveName] );
 
-        return function(scope, element, attr) {
-
-          var listener = function(ev) {
-            scope.$apply(function() {
-              fn(scope, {$event:event});
-            });
-          };
-
-          var gesture = $ionicGesture.on(eventType, listener, $element);
-
-          scope.$on('$destroy', function() {
-            $ionicGesture.off(gesture, eventType, listener);
+      var listener = function(ev) {
+        scope.$apply(function() {
+          fn(scope, {
+            $event: ev
           });
-        };
-      }
+        });
+      };
+
+      var gesture = $ionicGesture.on(eventType, listener, element);
+
+      scope.$on('$destroy', function() {
+        $ionicGesture.off(gesture, eventType, listener);
+      });
     };
   }];
 }
@@ -41260,10 +41284,9 @@ function tapScrollToTopDirective() {
           if (ionic.DomUtil.rectContains(
             touch.pageX, touch.pageY,
             bounds.left, bounds.top - 20,
-            bounds.left + bounds.width, bounds.top + 20 
+            bounds.left + bounds.width, bounds.top + bounds.height
           )) {
-            var scrollCtrl = $element.controller('$ionicScroll');
-            scrollCtrl && scrollCtrl.scrollTop(true);
+            $ionicScrollDelegate.scrollTop(true);
           }
         }
       }
@@ -42285,7 +42308,7 @@ IonicModule.constant('$ionicNavBarConfig', {
  * Alternatively, you may put ion-nav-bar inside of each individual view's ion-view element.
  * This will allow you to have the whole navbar, not just its contents, transition every view change.
  *
- * This is similar to using a header bar inside your ion-view, except it will has all the power of a navbar.
+ * This is similar to using a header bar inside your ion-view, except it will have all the power of a navbar.
  *
  * If you do this, simply put nav buttons inside the navbar itself; do not use `<ion-nav-buttons>`.
  *
@@ -42806,6 +42829,7 @@ IonicModule
     scope: {
       ngModel: '=?',
       ngValue: '=?',
+      ngDisabled: '=?',
       ngChange: '&',
       icon: '@',
       name: '@'
@@ -42813,7 +42837,7 @@ IonicModule
     transclude: true,
     template: '<label class="item item-radio">' +
                 '<input type="radio" name="radio-group"' +
-                ' ng-model="ngModel" ng-value="getValue()" ng-change="ngChange()">' +
+                ' ng-model="ngModel" ng-value="getValue()" ng-change="ngChange()" ng-disabled="ngDisabled">' +
                 '<div class="item-content disable-pointer-events" ng-transclude></div>' +
                 '<i class="radio-icon disable-pointer-events icon ion-checkmark"></i>' +
               '</label>',
