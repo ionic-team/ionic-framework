@@ -746,6 +746,24 @@ describe('Ionic Tap', function() {
     expect( ionic.tap.requiresNativeClick( div5 ) ).toEqual(true);
   });
 
+  it('Should ionic.tap.requiresNativeClick for labels containing input[file]', function() {
+    var lbl = document.createElement('label');
+    var ele = document.createElement('input');
+    ele.type = 'file';
+    lbl.appendChild(ele);
+    expect( ionic.tap.requiresNativeClick( lbl ) ).toEqual(true);
+  });
+
+  it('Should ionic.tap.requiresNativeClick for elements underneath labels containing input[file]', function() {
+    var lbl = document.createElement('label');
+    var txt = document.createElement('span');
+    var ele = document.createElement('input');
+    ele.type = 'file';
+    lbl.appendChild(ele);
+    lbl.appendChild(txt);
+    expect( ionic.tap.requiresNativeClick( txt ) ).toEqual(true);
+  });
+
   it('Should not allow a click that has an textarea target but not created by tapClick', function() {
     var e = {
       target: document.createElement('textarea'),
