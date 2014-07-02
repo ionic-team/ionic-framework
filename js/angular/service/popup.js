@@ -326,7 +326,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
             self.element.addClass('popup-tall');
             newHeight = window.innerHeight - popupHead[0].offsetHeight - popupButtons[0].offsetHeight -20;
             popupBody[0].style.height =  newHeight + 'px';
-          };
+          }
 
           self.element.removeClass('popup-hidden');
           self.element.addClass('popup-showing active');
