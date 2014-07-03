@@ -78,6 +78,17 @@ describe('$ionicLoading service', function() {
       expect($ionicBackdrop._element.hasClass('backdrop-loading')).toBe(false);
     }));
 
+    it('should add and remove loading-active class to body', inject(function($ionicLoading, $timeout) {
+      // used by _modal.scss to prevent clicks on modal screen when loading is active
+      var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+      ionic.requestAnimationFrame = function(cb) { cb(); };
+      loader.show({});
+      $timeout.flush();
+      expect(angular.element(document.body).hasClass('loading-active')).toBe(true);
+      loader.hide();
+      expect(angular.element(document.body).hasClass('loading-active')).toBe(false);
+    }));
+
   });
 
   describe('.hide()', function() {

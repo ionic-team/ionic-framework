@@ -75,11 +75,19 @@
   }
 }
 
+// disable clicks on all but the modal
 .modal-open {
   pointer-events: none;
 
   .modal,
   .modal-backdrop {
     pointer-events: auto;
+  }
+  // prevent clicks on modal when loading overlay is active though
+  &.loading-active {
+    .modal,
+    .modal-backdrop {
+      pointer-events: none;
+    }
   }
 }
