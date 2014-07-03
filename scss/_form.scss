@@ -270,7 +270,7 @@ input[type="file"] {
 .previous-input-focus,
 .cloned-text-input + input,
 .cloned-text-input + textarea {
-  position: absolute;
+  position: absolute !important;
   left: -9999px;
   width: 200px;
 }
