@@ -278,10 +278,25 @@
       this._startX = null;
       this._lastX = null;
       this._offsetX = null;
+      this._firstX = null;
+      this._doDrag = false;
     },
 
     // Handle a drag event
     _handleDrag: function(e) {
+
+      //Get the start position of the drag
+      if(!this._firstX) {
+       this._firstX = e.gesture.touches[0].pageX;
+      }
+
+      // Check if user has dradFromEdge enabled
+      if(!this.doDragFromEdge()) {
+        this._doDrag = true;
+      } else if(this._firstX <= 20 || this._firstX >= window.innerWidth-20) {
+        this._doDrag = true;
+      }
+
       // If we don't have start coords, grab and store them
       if(!this._startX) {
         this._startX = e.gesture.touches[0].pageX;
@@ -292,7 +307,7 @@
       }
 
       // Calculate difference from the tap points
-      if(!this._isDragging && Math.abs(this._lastX - this._startX) > this.dragThresholdX) {
+      if(!this._isDragging && this._doDrag && Math.abs(this._lastX - this._startX) > this.dragThresholdX) {
         // if the difference is greater than threshold, start dragging using the current
         // point as the starting point
         this._startX = this._lastX;
