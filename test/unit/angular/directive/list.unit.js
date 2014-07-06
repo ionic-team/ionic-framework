@@ -44,7 +44,7 @@ describe('ionList directive', function() {
     el.scope().$onReorder = jasmine.createSpy('$onReorder');
     options.onReorder(el, 2, 3);
     expect(el.scope().$onReorder).not.toHaveBeenCalled();
-    el.scope().$apply();
+    flush();
     expect(el.scope().$onReorder).toHaveBeenCalledWith(2,3);
   });
 

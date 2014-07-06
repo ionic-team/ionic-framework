@@ -24,6 +24,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform) {
   };
 
   this.dragThreshold = 25;
+  this.dragOnlyEdge = false;
   this.edgeDragThreshold = function(value) {
     if (arguments.length) {
       if (angular.isNumber(value) && value > 0) {
