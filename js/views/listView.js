@@ -254,17 +254,17 @@
       if (e.gesture.deltaY < 0 && pixelsPastTop > 0 && scrollY > 0) {
         this.scrollView.scrollBy(null, -pixelsPastTop);
         //Trigger another drag so the scrolling keeps going
-        setTimeout(function() {
+        ionic.requestAnimationFrame(function() {
           self.drag(e);
-        }.bind(this));
+        });
       }
       if (e.gesture.deltaY > 0 && pixelsPastBottom > 0) {
         if (scrollY < this.scrollView.getScrollMax().top) {
           this.scrollView.scrollBy(null, pixelsPastBottom);
           //Trigger another drag so the scrolling keeps going
-          setTimeout(function() {
+          ionic.requestAnimationFrame(function() {
             self.drag(e);
-          }.bind(this));
+          });
         }
       }
     }
@@ -280,32 +280,37 @@
 
       this._currentDrag.currentY = scrollY + pageY - offset;
 
-      this._reorderItems();
+      // this._reorderItems();
     }
   });
 
   // When an item is dragged, we need to reorder any items for sorting purposes
-  ReorderDrag.prototype._reorderItems = function() {
+  ReorderDrag.prototype._getReorderIndex = function() {
     var self = this;
     var placeholder = this._currentDrag.placeholder;
     var siblings = Array.prototype.slice.call(this._currentDrag.placeholder.parentNode.children)
       .filter(function(el) {
-        return el !== self.el;
+        return el.nodeName === self.el.nodeName && el !== self.el;
       });
 
-    var index = siblings.indexOf(this._currentDrag.placeholder);
-    var topSibling = siblings[Math.max(0, index - 1)];
-    var bottomSibling = siblings[Math.min(siblings.length, index+1)];
-    var thisOffsetTop = this._currentDrag.currentY;// + this._currentDrag.startOffsetTop;
-
-   if(topSibling && (thisOffsetTop < topSibling.offsetTop + topSibling.offsetHeight)) {
-      ionic.DomUtil.swapNodes(this._currentDrag.placeholder, topSibling);
-      return index - 1;
-    } else if(bottomSibling && thisOffsetTop > (bottomSibling.offsetTop)) {
-      ionic.DomUtil.swapNodes(bottomSibling, this._currentDrag.placeholder);
-      return index + 1;
+    var dragOffsetTop = this._currentDrag.currentY;
+    var el;
+    for (var i = 0, len = siblings.length; i < len; i++) {
+      el = siblings[i];
+      if (i === len - 1) {
+        if (dragOffsetTop > el.offsetTop) {
+          return i;
+        }
+      } else if (i === 0) {
+        if (dragOffsetTop < el.offsetTop + el.offsetHeight) {
+          return i;
+        }
+      } else if (dragOffsetTop > el.offsetTop - el.offsetHeight / 2 &&
+                 dragOffsetTop < el.offsetTop + el.offsetHeight * 1.5) {
+        return i;
+      }
     }
-  
+    return this._currentDrag.startIndex;
   };
 
   ReorderDrag.prototype.end = function(e, doneCallback) {
@@ -315,7 +320,7 @@
     }
 
     var placeholder = this._currentDrag.placeholder;
-    var finalPosition = ionic.DomUtil.getChildIndex(placeholder, placeholder.nodeName.toLowerCase());
+    var finalIndex = this._getReorderIndex();
 
     // Reposition the element
     this.el.classList.remove(ITEM_REORDERING_CLASS);
@@ -324,7 +329,7 @@
     placeholder.parentNode.insertBefore(this.el, placeholder);
     placeholder.parentNode.removeChild(placeholder);
 
-    this.onReorder && this.onReorder(this.el, this._currentDrag.startIndex, finalPosition);
+    this.onReorder && this.onReorder(this.el, this._currentDrag.startIndex, finalIndex);
 
     this._currentDrag = null;
     doneCallback && doneCallback();

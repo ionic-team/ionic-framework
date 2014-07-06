@@ -54,14 +54,6 @@
   		<div class="item item-divider">
   		Type 1
   		</div>
-      <ion-item href="#">
-        <button class="button button-energized">
-          Hello
-        </button>
-      </ion-item>
-      <ion-item href="hello">
-        Woah!
-      </ion-item>
         <ion-item ng-repeat="item in items"
                   ng-click="alert(item.id)"
                   class="item item-avatar-left item-icon-right"
@@ -106,10 +98,9 @@ angular.module('ionicApp', ['ionic'])
   };
 
   $scope.moveItem = function(item, from, to) {
-    console.log('beforeReorder', item, from, to, $scope.items.slice(0,5));
+    console.log('beforeReorder', item.id, from, to, $scope.items.slice(0,5));
     $scope.items.splice(from, 1);
     $scope.items.splice(to, 0, item);
-    console.log('afterReorder', $scope.items.slice(0,5));
   };
 
   $scope.alert = window.alert.bind(window);
@@ -125,54 +116,10 @@ angular.module('ionicApp', ['ionic'])
     $scope.items.splice($scope.items.indexOf(item), 1);
   };
 
-  $scope.items = [
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 },
-    { id: 8 },
-    { id: 9 },
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 },
-    { id: 8 },
-    { id: 9 },
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 },
-    { id: 8 },
-    { id: 9 },
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 },
-    { id: 8 },
-    { id: 9 },
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 },
-    { id: 8 },
-    { id: 9 },
-    { id: 10 }
-  ];
+  $scope.items = [];
+  for (var i=0; i<100; i++) {
+    $scope.items.push({id:i});
+  }
 
 });
     </script>

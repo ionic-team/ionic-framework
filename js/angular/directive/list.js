@@ -105,7 +105,7 @@ function($animate, $timeout) {
                 //Make sure onReorder is called in apply cycle,
                 //but also make sure it has no conflicts by doing
                 //$evalAsync
-                itemScope.$evalAsync(function() {
+                $timeout(function() {
                   itemScope.$onReorder(oldIndex, newIndex);
                 });
               }
@@ -115,18 +115,17 @@ function($animate, $timeout) {
             }
           });
 
-          if (angular.isDefined($attr.canSwipe)) {
+          if (isDefined($attr.canSwipe)) {
             $scope.$watch('!!(' + $attr.canSwipe + ')', function(value) {
               listCtrl.canSwipeItems(value);
             });
           }
-
-          if (angular.isDefined($attr.showDelete)) {
+          if (isDefined($attr.showDelete)) {
             $scope.$watch('!!(' + $attr.showDelete + ')', function(value) {
               listCtrl.showDelete(value);
             });
           }
-          if (angular.isDefined($attr.showReorder)) {
+          if (isDefined($attr.showReorder)) {
             $scope.$watch('!!(' + $attr.showReorder + ')', function(value) {
               listCtrl.showReorder(value);
             });
