@@ -46,6 +46,37 @@ IonicModule
           input.attr(name, value);
         }
       });
+
+      // function link
+      return function(scope, element, attr2){
+        if(element[0].querySelector){
+        	 // get the elements we need. label and checkboxIcon as event targets
+          var label = element[0].querySelector(".item-content");
+          var checkboxIcon = element[0].querySelector(".checkbox-icon");
+          // input to update the change
+          var input = element[0].querySelector(".checkbox input");
+
+          function performClick(evt){
+          	// stop propagation so other browsers don't re-toggle the checkbox
+            evt.stopPropagation();
+
+            input.checked = !input.checked;
+            // Update the ngModel, if it's available
+            if(attr.ngModel)
+            	scope.$eval(attr.ngModel + "=" + input.checked);
+
+            // And trigger ngChange, if it's available
+            if(attr.ngChange){
+              scope.$apply(function(){
+                scope.$eval(attr.ngChange);
+              });
+            }
+          }
+
+          label.addEventListener('click', performClick);
+          checkboxIcon.addEventListener('click', performClick);
+        }
+      }
     }
 
   };
