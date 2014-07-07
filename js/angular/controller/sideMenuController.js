@@ -38,7 +38,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform) {
   };
 
   this.isDraggableTarget = function(e) {
-    return $scope.dragContent &&
+    return (self.isOpen() || $scope.dragContent) &&
            (!e.gesture.srcEvent.defaultPrevented &&
             !e.target.tagName.match(/input|textarea|select|object|embed/i) &&
             !e.target.isContentEditable &&
