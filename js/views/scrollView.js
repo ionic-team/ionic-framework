@@ -2118,6 +2118,16 @@ ionic.views.Scroll = ionic.views.View.inherit({
         Math.abs(self.__decelerationVelocityY) >= self.__minVelocityToKeepDecelerating;
       if (!shouldContinue) {
         self.__didDecelerationComplete = true;
+
+        //Make sure the scroll values are within the boundaries after a bounce,
+        //not below 0 or above maximum
+        if (self.options.bouncing) {
+          self.scrollTo(
+            Math.min( Math.max(self.__scrollLeft, 0), self.__maxScrollLeft ),
+            Math.min( Math.max(self.__scrollTop, 0), self.__maxScrollTop ),
+            false
+          );
+        }
       }
       return shouldContinue;
     };
