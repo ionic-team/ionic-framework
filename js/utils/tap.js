@@ -530,7 +530,7 @@ function tapHasPointerMoved(endEvent) {
   }
   var endCoordinates = getPointerCoordinates(endEvent);
 
-  var hasClassList = endEvent.target.classList && endEvent.target.classList.contains;
+  var hasClassList = !!(endEvent.target.classList && endEvent.target.classList.contains);
   var releaseTolerance = hasClassList & endEvent.target.classList.contains('button') ?
     TAP_RELEASE_BUTTON_TOLERANCE :
     TAP_RELEASE_TOLERANCE;
