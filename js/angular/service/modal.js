@@ -8,7 +8,8 @@
  *
  * The Modal is a content pane that can go over the user's main view
  * temporarily.  Usually used for making a choice or editing an item.
- * Note that you need to put the content of the modal inside a div with the class `modal`.
+ *
+ * Put the content of the modal inside of an `<ion-modal-view>` element.
  *
  * Note: a modal will broadcast 'modal.shown', 'modal.hidden', and 'modal.removed' events from its originating
  * scope, passing in itself as an event argument. Both the modal.removed and modal.hidden events are
@@ -17,14 +18,14 @@
  * @usage
  * ```html
  * <script id="my-modal.html" type="text/ng-template">
- *   <div class="modal">
+ *   <ion-modal-view>
  *     <ion-header-bar>
  *       <h1 class="title">My Modal title</h1>
  *     </ion-header-bar>
  *     <ion-content>
  *       Hello!
  *     </ion-content>
- *   </div>
+ *   </ion-modal-view>
  * </script>
  * ```
  * ```js
@@ -76,7 +77,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
    * @description
    * Instantiated by the {@link ionic.service:$ionicModal} service.
    *
-   * Hint: Be sure to call [remove()](#remove) when you are done with each modal
+   * Be sure to call [remove()](#remove) when you are done with each modal
    * to clean it up and avoid memory leaks.
    *
    * Note: a modal will broadcast 'modal.shown', 'modal.hidden', and 'modal.removed' events from its originating

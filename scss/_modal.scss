@@ -21,6 +21,7 @@
 }
 
 .modal {
+  display: block;
   position: absolute;
   top: 0;
   z-index: $z-index-modal;
