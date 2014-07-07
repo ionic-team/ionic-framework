@@ -323,6 +323,12 @@ describe('ionNavBar', function() {
         var el = setup();
         expect(el.hasClass('nav-title-slide-ios7')).toBe(true);
       });
+
+      it('should not add transition if animation attribute is defined', function() {
+        var el = setup('animation="123abc"');
+        expect(el.hasClass('123abc')).toBe(true);
+        expect(el.hasClass('nav-title-slide-ios7')).toBe(false);
+      });
     });
 
     describe('Android', function() {
@@ -345,6 +351,12 @@ describe('ionNavBar', function() {
         var el = setup();
         // Nav bar titles don't animation by default on Android
         expect(el.hasClass('no-animation')).toBe(true);
+      });
+
+      it('should not add transition if animation attribute is defined', function() {
+        var el = setup('animation="123abc"');
+        expect(el.hasClass('123abc')).toBe(true);
+        expect(el.hasClass('no-animation')).toBe(false);
       });
     });
   });
