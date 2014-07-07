@@ -76,13 +76,11 @@ function($cacheFactory, $parse, $rootScope) {
       return item;
     },
     getItem: function(hash) {
-      window.AMOUNT = window.AMOUNT || 0;
       if ( (item = this.attachedItems[hash]) ) {
         //do nothing, the item is good
       } else if ( (item = this.backupItemsArray.pop()) ) {
         reconnectScope(item.scope);
       } else {
-        AMOUNT++;
         item = this.createItem();
       }
       return item;
