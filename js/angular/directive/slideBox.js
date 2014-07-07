@@ -27,6 +27,7 @@
  *
  * @param {string=} delegate-handle The handle used to identify this slideBox
  * with {@link ionic.service:$ionicSlideBoxDelegate}.
+ * @param {boolean=} auto-play Whether the slide box should continuously slide.
  * @param {boolean=} does-continue Whether the slide box should automatically slide.
  * @param {number=} slide-interval How many milliseconds to wait to change slides (if does-continue is true). Defaults to 4000.
  * @param {boolean=} show-pager Whether a pager should be shown for this slide box.
@@ -45,6 +46,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
     replace: true,
     transclude: true,
     scope: {
+      autoPlay: '@',
       doesContinue: '@',
       slideInterval: '@',
       showPager: '@',
@@ -57,7 +59,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
       var _this = this;
 
       var continuous = $scope.$eval($scope.doesContinue) === true;
-      var slideInterval = continuous ? $scope.$eval($scope.slideInterval) || 4000 : 0;
+      var slideInterval = $scope.$eval($scope.autoPlay) ? $scope.$eval($scope.slideInterval) || 4000 : 0;
 
       var slider = new ionic.views.Slider({
         el: $element[0],
