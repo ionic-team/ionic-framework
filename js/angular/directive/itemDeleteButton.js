@@ -1,5 +1,5 @@
 var ITEM_TPL_DELETE_BUTTON =
-  '<div class="item-left-edit item-delete ng-hide">' +
+  '<div class="item-left-edit item-delete ng-hide enable-pointer-events">' +
   '</div>';
 /**
 * @ngdoc directive
