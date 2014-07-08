@@ -136,6 +136,11 @@ var COLLECTION_REPEAT_ATTR_WIDTH_ERROR = "collection-repeat expected attribute c
 var COLLECTION_REPEAT_ATTR_REPEAT_ERROR = "collection-repeat expected expression in form of '_item_ in _collection_[ track by _id_]' but got '%'";
 
 IonicModule
+.directive({
+  ngSrc: collectionRepeatSrcDirective('ngSrc', 'src'),
+  ngSrcset: collectionRepeatSrcDirective('ngSrcset', 'srcset'),
+  ngHref: collectionRepeatSrcDirective('ngHref', 'href')
+})
 .directive('collectionRepeat', [
   '$collectionRepeatManager',
   '$collectionDataSource',
@@ -230,3 +235,28 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
     }
   };
 }]);
+
+// Fix for #1674
+// Problem: if an ngSrc or ngHref expression evaluates to a falsy value, it will 
+// not erase the previous truthy value of the href.
+// In collectionRepeat, we re-use elements from before. So if the ngHref expression
+// evaluates to truthy for item 1 and then falsy for item 2, if an element changes
+// from representing item 1 to representing item 2, item 2 will still have
+// item 1's href value.
+// Solution:  erase the href or src attribute if ngHref/ngSrc are falsy.
+function collectionRepeatSrcDirective(ngAttrName, attrName) {
+  return [function() {
+    return {
+      priority: '99', // it needs to run after the attributes are interpolated
+      require: '^?collectionRepeat',
+      link: function(scope, element, attr, collectionRepeatCtrl) {
+        if (!collectionRepeatCtrl) return;
+        attr.$observe(ngAttrName, function(value) {
+          if (!value) {
+            element.removeAttr(attrName);
+          }
+        });
+      }
+    };
+  }];
+}
