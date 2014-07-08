@@ -37,12 +37,12 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform) {
   };
 
   this.isDraggableTarget = function(e) {
+    //Only restrict edge when sidemenu is closed and restriction is enabled
+    var shouldOnlyAllowEdgeDrag = self.edgeThresholdEnabled && !self.isOpen();
     var startX = e.gesture.startEvent && e.gesture.startEvent.center &&
       e.gesture.startEvent.center.pageX;
 
-    //Only restrict edge when sidemenu is closed and it's enabled
-    var shouldAllowOnlyEdgeDrag = self.edgeThresholdEnabled && !self.isOpen();
-    var dragIsWithinBounds = !shouldAllowOnlyEdgeDrag ||
+    var dragIsWithinBounds = !shouldOnlyAllowEdgeDrag ||
       startX <= self.edgeThreshold ||
       startX >= self.content.offsetWidth - self.edgeThreshold;
 
