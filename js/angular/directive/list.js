@@ -140,13 +140,13 @@ function($animate, $timeout) {
             if (isShown) listCtrl.closeOptionButtons();
             listCtrl.canSwipeItems(!isShown);
 
-            var deleteButton = jqLite($element[0].getElementsByClassName('item-delete'));
-
             $element.children().toggleClass('list-left-editing', isShown);
-            toggleNgHide(deleteButton, isShown);
+            $element.toggleClass('disable-pointer-events left-editing', isShown);
 
-            $element.toggleClass('disable-pointer-events', isShown);
+            var deleteButton = jqLite($element[0].getElementsByClassName('item-delete'));
+            setButtonShown(deleteButton, listCtrl.showDelete);
           });
+
           $scope.$watch(function() {
             return listCtrl.showReorder();
           }, function(isShown, wasShown) {
@@ -156,21 +156,17 @@ function($animate, $timeout) {
             if (isShown) listCtrl.closeOptionButtons();
             listCtrl.canSwipeItems(!isShown);
 
-            var reorderButton = jqLite($element[0].getElementsByClassName('item-reorder'));
-
             $element.children().toggleClass('list-right-editing', isShown);
-            toggleNgHide(reorderButton, isShown);
+            $element.toggleClass('disable-pointer-events right-editing', isShown);
 
-            $element.toggleClass('disable-pointer-events', isShown);
+            var reorderButton = jqLite($element[0].getElementsByClassName('item-reorder'));
+            setButtonShown(reorderButton, listCtrl.showReorder);
           });
 
-          function toggleNgHide(element, shouldShow) {
-            forEach(element, function(node) {
-              if (shouldShow) {
-                $animate.removeClass(jqLite(node), 'ng-hide');
-              } else {
-                $animate.addClass(jqLite(node), 'ng-hide');
-              }
+          function setButtonShown(el, shown) {
+            shown() && el.addClass('visible') || el.removeClass('active');
+            ionic.requestAnimationFrame(function() {
+              shown() && el.addClass('active') || el.removeClass('invisible');
             });
           }
         }

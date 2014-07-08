@@ -92,7 +92,6 @@ describe('ionList directive', function() {
     expect(el.controller('ionList').closeOptionButtons).toHaveBeenCalled();
     var deleteButtons = angular.element(el[0].querySelectorAll('.item-delete.item-left-edit'));
     expect(deleteButtons.length).not.toBe(0);
-    expect(deleteButtons.hasClass('ng-hide')).toBe(false);
     expect(el.children().hasClass('list-left-editing')).toBe(true);
     var content = angular.element(el[0].querySelectorAll('.item-content'));
   }));
@@ -111,7 +110,6 @@ describe('ionList directive', function() {
     expect(el.controller('ionList').canSwipeItems()).toBe(true);
     expect(el.controller('ionList').closeOptionButtons.callCount).toBe(1);
     var deleteButtons = angular.element(el[0].querySelectorAll('.item-delete.item-left-edit'));
-    expect(deleteButtons.hasClass('ng-hide')).toBe(true);
     expect(deleteButtons.length).not.toBe(0);
     expect(el.children().hasClass('list-left-editing')).toBe(false);
     var content = angular.element(el[0].querySelectorAll('.item-content'));
@@ -131,7 +129,6 @@ describe('ionList directive', function() {
     expect(el.controller('ionList').canSwipeItems()).toBe(false);
     var reorderButtons = angular.element(el[0].querySelectorAll('.item-reorder.item-right-edit'));
     expect(reorderButtons.length).not.toBe(0);
-    expect(reorderButtons.hasClass('ng-hide')).toBe(false);
     expect(el.children().hasClass('list-right-editing')).toBe(true);
     var content = angular.element(el[0].querySelectorAll('.item-content'));
   }));
@@ -151,7 +148,6 @@ describe('ionList directive', function() {
     expect(el.controller('ionList').closeOptionButtons.callCount).toBe(1);
     var reorderButtons = angular.element(el[0].querySelectorAll('.item-reorder.item-right-edit'));
     expect(reorderButtons.length).not.toBe(0);
-    expect(reorderButtons.hasClass('ng-hide')).toBe(true);
     expect(el.children().hasClass('list-right-editing')).toBe(false);
     var content = angular.element(el[0].querySelectorAll('.item-content'));
   }));

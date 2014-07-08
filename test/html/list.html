@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Ionic List Directive</title>
 
-    <link href="../../dist/css/ionic.css" rel="stylesheet">
-    <script src="../../dist/js/ionic.bundle.js"></script>
+    <link href="../../dist/css/ionic.min.css" rel="stylesheet">
+    <script src="../../dist/js/ionic.bundle.min.js"></script>
   </head>
 
   <body ng-controller="MyCtrl">
@@ -117,7 +117,7 @@ angular.module('ionicApp', ['ionic'])
   };
 
   $scope.items = [];
-  for (var i=0; i<100; i++) {
+  for (var i=0; i<15; i++) {
     $scope.items.push({id:i});
   }
 

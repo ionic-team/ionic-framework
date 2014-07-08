@@ -1,5 +1,5 @@
 var ITEM_TPL_REORDER_BUTTON =
-  '<div data-prevent-scroll="true" class="item-right-edit item-reorder ng-hide enable-pointer-events">' +
+  '<div data-prevent-scroll="true" class="item-right-edit item-reorder enable-pointer-events">' +
   '</div>';
 
 /**
@@ -72,7 +72,7 @@ IonicModule
         itemCtrl.$element.append(container).addClass('item-right-editable');
 
         if (listCtrl && listCtrl.showReorder()) {
-          $animate.removeClass(container, 'ng-hide');
+          container.addClass('visible active');
         }
       };
     }

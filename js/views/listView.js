@@ -88,9 +88,9 @@
 
     if(!lastDrag) return;
 
+    lastDrag.content.style[ionic.CSS.TRANSITION] = '';
+    lastDrag.content.style[ionic.CSS.TRANSFORM] = '';
     ionic.requestAnimationFrame(function() {
-      lastDrag.content.style[ionic.CSS.TRANSITION] = '';
-      lastDrag.content.style[ionic.CSS.TRANSFORM] = '';
       setTimeout(function() {
         lastDrag.buttons && lastDrag.buttons.classList.add('invisible');
       }, 250);

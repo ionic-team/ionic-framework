@@ -1,5 +1,5 @@
 var ITEM_TPL_DELETE_BUTTON =
-  '<div class="item-left-edit item-delete ng-hide enable-pointer-events">' +
+  '<div class="item-left-edit item-delete enable-pointer-events">' +
   '</div>';
 /**
 * @ngdoc directive
@@ -49,7 +49,7 @@ IonicModule
         itemCtrl.$element.append(container).addClass('item-left-editable');
 
         if (listCtrl && listCtrl.showDelete()) {
-          $animate.removeClass(container, 'ng-hide');
+          container.addClass('visible active');
         }
       };
     }
