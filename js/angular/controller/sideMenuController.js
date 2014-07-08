@@ -9,7 +9,6 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform) {
   extend(this, ionic.controllers.SideMenuController.prototype);
 
   this.$scope = $scope;
-  this.dragThreshold = 25;
 
   ionic.controllers.SideMenuController.call(this, {
     left: { width: 275 },
@@ -23,26 +22,36 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform) {
     return $scope.dragContent;
   };
 
-  this.dragThreshold = 25;
-  this.dragOnlyEdge = false;
+  this.edgeThreshold = 25;
+  this.edgeThresholdEnabled = false;
   this.edgeDragThreshold = function(value) {
     if (arguments.length) {
       if (angular.isNumber(value) && value > 0) {
-        this.dragThreshold = value;
-        this.dragOnlyEdge = true;
+        this.edgeThreshold = value;
+        this.edgeThresholdEnabled = true;
       } else {
-        this.dragOnlyEdge = !!value;
+        this.edgeThresholdEnabled = !!value;
       }
     }
-    return this.dragOnlyEdge;
+    return this.edgeThresholdEnabled;
   };
 
   this.isDraggableTarget = function(e) {
-    return (self.isOpen() || $scope.dragContent) &&
-           (!e.gesture.srcEvent.defaultPrevented &&
-            !e.target.tagName.match(/input|textarea|select|object|embed/i) &&
-            !e.target.isContentEditable &&
-            !(e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-default') == 'true'));
+    var startX = e.gesture.startEvent && e.gesture.startEvent.center &&
+      e.gesture.startEvent.center.pageX;
+
+    //Only restrict edge when sidemenu is closed and it's enabled
+    var shouldAllowOnlyEdgeDrag = self.edgeThresholdEnabled && !self.isOpen();
+    var dragIsWithinBounds = !shouldAllowOnlyEdgeDrag ||
+      startX <= this.edgeThreshold ||
+      startX >= this.content.offsetWidth - this.edgeThreshold;
+
+    return ($scope.dragContent || self.isOpen()) &&
+           dragIsWithinBounds &&
+           !e.gesture.srcEvent.defaultPrevented &&
+           !e.target.tagName.match(/input|textarea|select|object|embed/i) &&
+           !e.target.isContentEditable &&
+           !(e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-default') == 'true');
   };
 
   $scope.sideMenuContentTranslateX = 0;
