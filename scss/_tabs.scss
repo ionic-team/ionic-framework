@@ -185,6 +185,9 @@
   &:hover {
     cursor: pointer;
   }
+  &.tab-hidden{
+    display:none;
+  }
 }
 
 .tabs-item-hide > .tabs,

@@ -97,6 +97,15 @@
         </ion-content>
       </ion-tab>
 
+      <ion-tab title="Hidden" icon-on="icon ion-ionic" icon-off="icon ion-ionic" hidden="true">
+        <header class="bar bar-header bar-positive">
+          <h1 class="title">Hidden Tab</h1>
+        </header>
+        <ion-content class="has-header" padding="true">
+          <h1>This tab should be hidden</h1>
+        </ion-content>
+      </ion-tab>
+
     </ion-tabs>
 
     <script id="newTask.html" type="text/ng-template">
@@ -111,7 +120,7 @@
       </div>
     </script>
 
-    <script>
+    <script type="text/javascript">
       angular.module('tabsTest', ['ionic'])
 
       .controller('RootCtrl', function($scope, $timeout) {
