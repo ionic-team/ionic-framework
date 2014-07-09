@@ -43555,6 +43555,7 @@ function($rootScope, $animate, $ionicBind, $compile) {
       //We create the tabNavTemplate in the compile phase so that the
       //attributes we pass down won't be interpolated yet - we want
       //to pass down the 'raw' versions of the attributes
+      if (attr.hidden !== 'true') {
       var tabNavTemplate = '<ion-tab-nav' +
         attrStr('ng-click', attr.ngClick) +
         attrStr('title', attr.title) +
@@ -43565,6 +43566,7 @@ function($rootScope, $animate, $ionicBind, $compile) {
         attrStr('badge-style', attr.badgeStyle) +
         attrStr('class', attr['class']) +
         '></ion-tab-nav>';
+      }
 
       //Remove the contents of the element so we can compile them later, if tab is selected
       //We don't use regular transclusion because it breaks element inheritance
