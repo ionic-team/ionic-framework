@@ -12,35 +12,45 @@
   display: inline-block;
   padding: ($checkbox-height / 4) ($checkbox-width / 4);
   cursor: pointer;
-
-  &.checkbox-light  {
-    @include checkbox-style($checkbox-off-border-light, $checkbox-on-bg-light);
-  }
-  &.checkbox-stable  {
-    @include checkbox-style($checkbox-off-border-stable, $checkbox-on-bg-stable);
-  }
-  &.checkbox-positive  {
-    @include checkbox-style($checkbox-off-border-positive, $checkbox-on-bg-positive);
-  }
-  &.checkbox-calm  {
-    @include checkbox-style($checkbox-off-border-calm, $checkbox-on-bg-calm);
-  }
-  &.checkbox-assertive  {
-    @include checkbox-style($checkbox-off-border-assertive, $checkbox-on-bg-assertive);
-  }
-  &.checkbox-balanced  {
-    @include checkbox-style($checkbox-off-border-balanced, $checkbox-on-bg-balanced);
-  }
-  &.checkbox-energized  {
-    @include checkbox-style($checkbox-off-border-energized, $checkbox-on-bg-energized);
-  }
-  &.checkbox-royal  {
-    @include checkbox-style($checkbox-off-border-royal, $checkbox-on-bg-royal);
-  }
-  &.checkbox-dark  {
-    @include checkbox-style($checkbox-off-border-dark, $checkbox-on-bg-dark);
-  }
 }
+.checkbox-light  {
+  @include checkbox-style($checkbox-off-border-light, $checkbox-on-bg-light);
+}
+.checkbox-stable  {
+  @include checkbox-style($checkbox-off-border-stable, $checkbox-on-bg-stable);
+}
+.checkbox-positive  {
+  @include checkbox-style($checkbox-off-border-positive, $checkbox-on-bg-positive);
+}
+.checkbox-calm  {
+  @include checkbox-style($checkbox-off-border-calm, $checkbox-on-bg-calm);
+}
+.checkbox-assertive  {
+  @include checkbox-style($checkbox-off-border-assertive, $checkbox-on-bg-assertive);
+}
+.checkbox-balanced  {
+  @include checkbox-style($checkbox-off-border-balanced, $checkbox-on-bg-balanced);
+}
+.checkbox-energized{
+  @include checkbox-style($checkbox-off-border-energized, $checkbox-on-bg-energized);
+}
+.checkbox-royal  {
+  @include checkbox-style($checkbox-off-border-royal, $checkbox-on-bg-royal);
+}
+.checkbox-dark  {
+  @include checkbox-style($checkbox-off-border-dark, $checkbox-on-bg-dark);
+}
+
+.checkbox input:disabled:before,
+.checkbox input:disabled + .checkbox-icon:before {
+  border-color: $checkbox-off-border-light;
+}
+
+.checkbox input:disabled:checked:before,
+.checkbox input:disabled:checked + .checkbox-icon:before {
+  background: $checkbox-on-bg-light;
+}
+
 
 .checkbox.checkbox-input-hidden input {
   display: none !important;
