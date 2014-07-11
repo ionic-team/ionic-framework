@@ -59,7 +59,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
       var _this = this;
 
       var continuous = $scope.$eval($scope.doesContinue) === true;
-      var shouldAutoPlay = isDefined($attrs.autoPlay) ? !!$scope.autoPlay : true;
+      var shouldAutoPlay = isDefined($attrs.autoPlay) ? !!$scope.autoPlay : false;
       var slideInterval = shouldAutoPlay ? $scope.$eval($scope.slideInterval) || 4000 : 0;
 
       var slider = new ionic.views.Slider({
