@@ -69,7 +69,8 @@ body.grade-c {
   height: auto;
 }
 
-.scroll-content-false {
+.scroll-content-false,
+.menu .scroll-content.scroll-content-false{
   z-index: $z-index-scroll-content-false;
 }
 
