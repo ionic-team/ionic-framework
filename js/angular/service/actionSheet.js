@@ -30,6 +30,9 @@
  *      destructiveText: 'Delete',
  *      titleText: 'Modify your album',
  *      cancelText: 'Cancel',
+ *      cancel: function() {
+          // add cancel code..
+        },
  *      buttonClicked: function(index) {
  *        return true;
  *      }
