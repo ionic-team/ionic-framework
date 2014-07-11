@@ -32,33 +32,34 @@ function($ionicGesture, $timeout) {
     restrict: 'E',
     replace: true,
     require: '?ngModel',
-    scope: {
-      ngModel: '=?',
-      ngValue: '=?',
-      ngChecked: '=?',
-      ngChange: '&',
-      ngDisabled: '=?'
-    },
     transclude: true,
-    template: '<div class="item item-toggle">' +
-                '<div ng-transclude></div>' +
-                '<label class="toggle">' +
-                  '<input type="checkbox" ng-model="ngModel" ng-value="ngValue" ng-change="ngChange()" ng-disabled="ngDisabled">' +
-                  '<div class="track">' +
-                    '<div class="handle"></div>' +
-                  '</div>' +
-                '</label>' +
-              '</div>',
+    template:
+      '<div class="item item-toggle">' +
+        '<div ng-transclude></div>' +
+        '<label class="toggle">' +
+          '<input type="checkbox">' +
+          '<div class="track">' +
+            '<div class="handle"></div>' +
+          '</div>' +
+        '</label>' +
+      '</div>',
 
     compile: function(element, attr) {
       var input = element.find('input');
-      if(attr.name) input.attr('name', attr.name);
-      if(attr.ngChecked) input.attr('ng-checked', 'ngChecked');
-      if(attr.ngTrueValue) input.attr('ng-true-value', attr.ngTrueValue);
-      if(attr.ngFalseValue) input.attr('ng-false-value', attr.ngFalseValue);
-      if(attr.toggleClass) {
-        element[0].getElementsByTagName('label')[0].classList.add(attr.toggleClass);
-      }
+      forEach({
+        'name': attr.name,
+        'ng-value': attr.ngValue,
+        'ng-model': attr.ngModel,
+        'ng-checked': attr.ngChecked,
+        'ng-disabled': attr.ngDisabled,
+        'ng-true-value': attr.ngTrueValue,
+        'ng-false-value': attr.ngFalseValue,
+        'ng-change': attr.ngChange
+      }, function(value, name) {
+        if (isDefined(value)) {
+          input.attr(name, value);
+        }
+      });
 
       return function($scope, $element, $attr) {
          var el, checkbox, track, handle;
