@@ -78,6 +78,8 @@ ionic.views.Slider = ionic.views.View.inherit({
           move(pos, index > pos ? -width : (index < pos ? width : 0), 0);
         }
 
+         hideSlidesFarAway(pos);
+
       }
 
       // reposition elements before and after index
@@ -114,7 +116,35 @@ ionic.views.Slider = ionic.views.View.inherit({
 
     }
 
+     function hideSlideFarAway(idx) {
+      
+      // puts a slide that is too far away from the current slide invisible.
+      // this speeds up rendering, and prevents ios from crashing due to
+      // memory warnings
+      var slide = slides[idx];
+      if(idx >= (index-2) && idx <= (index+2)) {
+          slide.style.visibility = 'visible';
+        }
+        else {
+          slide.style.visibility = 'hidden';
+        }
+
+    }
+
+    function hideSlidesFarAway(idx) {
+      
+      if(slides) {
+        var pos = slides.length;
+        while(pos--) {
+          hideSlideFarAway(pos);
+        }
+      }
+
+    }
+
     function slide(to, slideSpeed) {
+
+      hideSlidesFarAway(to);
 
       // do nothing if already on requested slide
       if (index == to) return;
@@ -154,6 +184,18 @@ ionic.views.Slider = ionic.views.View.inherit({
       }
 
       index = to;
+      console.log('after move. index = ', index);v
+      /* after move, hide/show appropriate slides
+      only the current slide, the one before that and the therafter are visible
+        this will prevent ios from crahsing, and speeds up rendering */
+        if(pos >= (index-1) && pos <= (index+1)) {
+          slide.style.visibility = 'visible';
+        }
+        else {
+          slide.style.visibility = 'hidden';
+        }
+
+
       offloadFn(options.callback && options.callback(index, slides[index]));
     }
 
