@@ -144,10 +144,11 @@ ionic.views.Slider = ionic.views.View.inherit({
 
     function slide(to, slideSpeed) {
 
-      hideSlidesFarAway(to);
-
       // do nothing if already on requested slide
-      if (index == to) return;
+      if (index == to) {
+        hideSlidesFarAway(to);
+        return;
+      }
 
       if (browser.transitions) {
 
@@ -181,6 +182,17 @@ ionic.views.Slider = ionic.views.View.inherit({
         to = circle(to);
         animate(index * -width, to * -width, slideSpeed || speed);
         //no fallback for a circular continuous if the browser does not accept transitions
+      }
+      // put visibility into correct state
+      var pos = slides.length;
+      while(pos--) {
+        var slide = slides[pos];
+        if(pos >= (to-2) && pos <= (to+2)) {
+          slide.style.visibility = 'visible';
+        }
+        else {
+          slide.style.visibility = 'hidden';
+        }
       }
 
       index = to;
