@@ -35,7 +35,7 @@ IonicModule
                   '<div class="action-sheet">' +
                     '<div class="action-sheet-group">' +
                       '<div class="action-sheet-title" ng-if="titleText" ng-bind-html="titleText"></div>' +
-                      '<button class="button" ng-click="buttonClicked($index)" ng-repeat="button in buttons" ng-bind-html="button.text"></button>' +
+                      '<button class="button" ng-click="buttonClicked($index)" ng-repeat="button in buttons" ng-bind-html="button.text" ng-show="!button.invisible"></button>' +
                     '</div>' +
                     '<div class="action-sheet-group" ng-if="destructiveText">' +
                       '<button class="button destructive" ng-click="destructiveButtonClicked()" ng-bind-html="destructiveText"></button>' +
