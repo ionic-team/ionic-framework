@@ -184,17 +184,6 @@ ionic.views.Slider = ionic.views.View.inherit({
       }
 
       index = to;
-      console.log('after move. index = ', index);v
-      /* after move, hide/show appropriate slides
-      only the current slide, the one before that and the therafter are visible
-        this will prevent ios from crahsing, and speeds up rendering */
-        if(pos >= (index-1) && pos <= (index+1)) {
-          slide.style.visibility = 'visible';
-        }
-        else {
-          slide.style.visibility = 'hidden';
-        }
-
 
       offloadFn(options.callback && options.callback(index, slides[index]));
     }
