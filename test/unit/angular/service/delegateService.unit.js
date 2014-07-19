@@ -127,7 +127,7 @@ describe('DelegateFactory', function() {
       expect(result).toBe('a1');
 
       instance1.a.reset();
-      var result = delegate.$getByHandle('2').a(2,3,4);
+      result = delegate.$getByHandle('2').a(2,3,4);
       expect(instance2.a).toHaveBeenCalledWith(2,3,4);
       expect(instance1.a).not.toHaveBeenCalled();
       expect(result).toBe('a2');
@@ -151,7 +151,7 @@ describe('DelegateFactory', function() {
 
       instance1.a.reset();
       deregister();
-      var result = delegateInstance.a(2);
+      result = delegateInstance.a(2);
       expect(instance1.a).not.toHaveBeenCalled();
       expect(instance2.a).toHaveBeenCalledWith(2);
       expect(instance3.a).not.toHaveBeenCalled();

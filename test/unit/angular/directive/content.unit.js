@@ -75,6 +75,20 @@ describe('Ionic Content directive', function() {
     expect(scroll.length).toBe(0);
   });
 
+  it('should work scrollable with nested ionScroll elements', function() {
+    var element = compile(
+      '<ion-content scroll="false" class="content1">' +
+        '<div>' +
+          '<ion-content class="content2">' +
+          '</ion-content>' +
+        '</div>' +
+      '</ion-content>')(scope);
+    scope.$apply();
+
+    expect(jqLite(element[0].querySelector('.content2')).controller('$ionicScroll')).toBeTruthy();
+    expect(element.controller('$ionicScroll')).toBeFalsy();
+  });
+
   it('should add padding classname to scroll element', function() {
     var element = compile('<ion-content padding="shouldPad"></ion-content>')(scope);
     var scroll = element.find('.scroll');

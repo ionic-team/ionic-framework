@@ -43,7 +43,10 @@
 
           childSize = null;
           if(c.nodeType == 3) {
-            childSize = ionic.DomUtil.getTextBounds(c).width;
+            var bounds = ionic.DomUtil.getTextBounds(c);
+            if(bounds) {
+              childSize = bounds.width;
+            }
           } else if(c.nodeType == 1) {
             childSize = c.offsetWidth;
           }
@@ -57,6 +60,9 @@
         }
 
         var margin = Math.max(leftWidth, rightWidth) + 10;
+
+        //Reset left and right before setting again
+        titleEl.style.left = titleEl.style.right = '';
 
         // Size and align the header titleEl based on the sizes of the left and
         // right children, and the desired alignment mode

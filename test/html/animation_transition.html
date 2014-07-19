@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title></title>
+
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css" />
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <style>
+      #v1 {
+        background-color: blue;
+      }
+      #v2 {
+        background-color: red;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <div ng-controller="MyCtrl">
+      <ion-view id="v1">
+        <h2>Page 1</h2>
+      </ion-view>
+      <ion-view id="v2">
+        <h2>Page 2</h2>
+      </ion-view>
+    </div>
+
+    <script>
+      angular.module('myApp', ['ionic'])
+      .config(['$ionicAnimationProvider', function($ionicAnimationProvider) {
+        //$ionicAnimationProvider.setSlowAnimations(true);
+      }])
+      .controller('MyCtrl', function($scope, $ionicAnimation, $ionicGesture) {
+        var v1 = angular.element(document.getElementById('v1'));
+        var v2 = angular.element(document.getElementById('v2'));
+
+        var dragAnim = $ionicAnimation({
+          curve: 'ease-in-out',
+          duration: 1,
+          step: function(v) {
+            console.log(v);
+            v2[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + (v * 400) + 'px, 0,0)';
+          }
+        });
+        $ionicGesture.on('drag', function(e) {
+          var x = e.gesture.touches[0].pageX;
+          dragAnim.setPercent(Math.max(0, Math.min(x, 400) / 400));
+        }, v2);
+      });
+    </script>
+  </body>
+</html>

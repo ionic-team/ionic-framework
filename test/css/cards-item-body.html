@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="ionic">
+  <head>
+    <script src="../../dist/js/ionic.bundle.js"></script>
+    <meta charset="utf-8">
+    <title>Cards</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link href="../../dist/css/ionic.css" rel="stylesheet">
+    <style>
+      body {
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Cards: Item Body</h1>
+    </header>
+
+    <div class="content has-header">
+
+      <div class="list card">
+
+        <div class="item item-body">
+          <img src="" style="background:black; width: 240px; height: 180px;">
+          <p>
+            This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
+            the content is from a card-body consisting of an image and paragraph text. The footer
+            consists of a Tab Bar, icons aligned left, within the card-footer.
+          </p>
+          <p>
+            <a href="#" class="subdued">1 Like</a>
+            <a href="#" class="subdued">5 Comments</a>
+          </p>
+        </div>
+
+        <div class="item tabs tabs-secondary tabs-icon-left">
+          <a class="tab-item" href="#">
+            <i class="icon ion-thumbsup"></i>
+            Like
+          </a>
+          <a class="tab-item" href="#">
+            <i class="icon ion-chatbox"></i>
+            Comment
+          </a>
+          <a class="tab-item" href="#">
+            <i class="icon ion-share"></i>
+            Share
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>

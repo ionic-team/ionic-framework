@@ -13,36 +13,32 @@
 (function(ionic) {
 
   // Custom event polyfill
-  if(!window.CustomEvent) {
-    (function() {
-      var CustomEvent;
+  ionic.CustomEvent = (function() {
+    if( typeof window.CustomEvent === 'function' ) return CustomEvent;
 
-      CustomEvent = function(event, params) {
-        var evt;
-        params = params || {
-          bubbles: false,
-          cancelable: false,
-          detail: undefined
-        };
-        try {
-          evt = document.createEvent("CustomEvent");
-          evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-        } catch (error) {
-          // fallback for browsers that don't support createEvent('CustomEvent')
-          evt = document.createEvent("Event");
-          for (var param in params) {
-            evt[param] = params[param];
-          }
-          evt.initEvent(event, params.bubbles, params.cancelable);
-        }
-        return evt;
+    var customEvent = function(event, params) {
+      var evt;
+      params = params || {
+        bubbles: false,
+        cancelable: false,
+        detail: undefined
       };
-
-      CustomEvent.prototype = window.Event.prototype;
-
-      window.CustomEvent = CustomEvent;
-    })();
-  }
+      try {
+        evt = document.createEvent("CustomEvent");
+        evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+      } catch (error) {
+        // fallback for browsers that don't support createEvent('CustomEvent')
+        evt = document.createEvent("Event");
+        for (var param in params) {
+          evt[param] = params[param];
+        }
+        evt.initEvent(event, params.bubbles, params.cancelable);
+      }
+      return evt;
+    };
+    customEvent.prototype = window.Event.prototype;
+    return customEvent;
+  })();
 
 
   /**
@@ -65,7 +61,7 @@
      */
     // Trigger a new event
     trigger: function(eventType, data, bubbles, cancelable) {
-      var event = new CustomEvent(eventType, {
+      var event = new ionic.CustomEvent(eventType, {
         detail: data,
         bubbles: !!bubbles,
         cancelable: !!cancelable
@@ -151,8 +147,7 @@
       gesture.off(type, callback);
     },
 
-    handlePopState: function(event) {
-    },
+    handlePopState: function(event) {}
   };
 
 

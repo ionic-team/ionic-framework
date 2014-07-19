@@ -1,9 +1,11 @@
 var pkg = require('../package.json');
+var fs = require('fs');
 
 module.exports = {
   dist: 'dist',
-  distJs: 'dist/js',
-  distCss: 'dist/css',
+  releasePostUrl: fs.readFileSync('config/RELEASE_POST_URL'),
+
+  protractorPort: 8876,
 
   banner:
     '/*!\n' +
@@ -49,7 +51,6 @@ module.exports = {
     // Views
     'js/views/view.js',
     'js/views/scrollView.js',
-    'js/views/actionSheetView.js',
     'js/views/headerBarView.js',
     'js/views/listView.js',
     'js/views/modalView.js',
@@ -62,7 +63,11 @@ module.exports = {
     'js/controllers/sideMenuController.js',
 
     // Animation
-    'js/animation/*.js'
+    'js/animation/animation.js',
+    'js/animation/bezier.js',
+    'js/animation/dynamics.js',
+    'js/animation/timing-functions.js',
+    'js/animation/instance.js'
   ],
 
   angularIonicFiles: [
@@ -92,12 +97,12 @@ module.exports = {
   ],
 
   ionicBundleFiles: [
-    'dist/js/ionic.js',
-    'dist/js/angular/angular.js',
-    'dist/js/angular/angular-animate.js',
-    'dist/js/angular/angular-sanitize.js',
-    'dist/js/angular-ui/angular-ui-router.js',
-    'dist/js/ionic-angular.js'
+    'js/ionic.js',
+    'js/angular/angular.js',
+    'js/angular/angular-animate.js',
+    'js/angular/angular-sanitize.js',
+    'js/angular-ui/angular-ui-router.js',
+    'js/ionic-angular.js'
   ],
 
   //Exclamation can be no longer than 14 chars
@@ -109,8 +114,8 @@ module.exports = {
   //and can have up to a 14 char long exclamation prepended.
   releaseMessage: function() {
     return this.exclamations[Math.floor(Math.random()*this.exclamations.length)] + '! ' +
-      'Just released @IonicFramework v' + pkg.version + ' "' + pkg.codename + '"!\n' +
-      'Changelog at ' + pkg.repository.changelogUrl + '. Download at ' + pkg.repository.downloadUrl;
+      'Just released @IonicFramework v' + pkg.version + ' "' + pkg.codename + '"! ' +
+      this.releasePostUrl;
   },
 
 };

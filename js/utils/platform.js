@@ -1,5 +1,9 @@
 (function(window, document, ionic) {
 
+  var IOS = 'ios';
+  var ANDROID = 'android';
+  var WINDOWS_PHONE = 'windowsphone';
+
   /**
    * @ngdoc utility
    * @name ionic.Platform
@@ -67,7 +71,25 @@
         for(var i = 0; i < ionic.Platform.platforms.length; i++) {
           document.body.classList.add('platform-' + ionic.Platform.platforms[i]);
         }
-        document.body.classList.add('grade-' + ionic.Platform.grade);
+      });
+    },
+
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#setGrade
+     * @description Set the grade of the device: 'a', 'b', or 'c'. 'a' is the best
+     * (most css features enabled), 'c' is the worst.  By default, sets the grade
+     * depending on the current device.
+     * @param {string} grade The new grade to set.
+     */
+    setGrade: function(grade) {
+      var oldGrade = this.grade;
+      this.grade = grade;
+      ionic.requestAnimationFrame(function() {
+        if (oldGrade) {
+          document.body.classList.remove('grade-' + oldGrade);
+        }
+        document.body.classList.add('grade-' + grade);
       });
     },
 
@@ -85,11 +107,13 @@
 
     _checkPlatforms: function(platforms) {
       this.platforms = [];
-      this.grade = 'a';
+      var grade = 'a';
 
       if(this.isWebView()) {
         this.platforms.push('webview');
         this.platforms.push('cordova');
+      } else {
+        this.platforms.push('browser');
       }
       if(this.isIPad()) this.platforms.push('ipad');
 
@@ -109,10 +133,14 @@
           this.platforms.push(platform + v);
 
           if(this.isAndroid() && version < 4.4) {
-            this.grade = (version < 4 ? 'c' : 'b');
+            grade = (version < 4 ? 'c' : 'b');
+          } else if(this.isWindowsPhone()) {
+            grade = 'b';
           }
         }
       }
+
+      this.setGrade(grade);
     },
 
     /**
@@ -129,7 +157,10 @@
      * @returns {boolean} Whether we are running on iPad.
      */
     isIPad: function() {
-      return this.ua.toLowerCase().indexOf('ipad') >= 0;
+      if( /iPad/i.test(window.navigator.platform) ) {
+        return true;
+      }
+      return /iPad/i.test(this.ua);
     },
     /**
      * @ngdoc method
@@ -137,7 +168,7 @@
      * @returns {boolean} Whether we are running on iOS.
      */
     isIOS: function() {
-      return this.is('ios');
+      return this.is(IOS);
     },
     /**
      * @ngdoc method
@@ -145,7 +176,15 @@
      * @returns {boolean} Whether we are running on Android.
      */
     isAndroid: function() {
-      return this.is('android');
+      return this.is(ANDROID);
+    },
+    /**
+     * @ngdoc method
+     * @name ionic.Platform#isWindowsPhone
+     * @returns {boolean} Whether we are running on Windows Phone.
+     */
+    isWindowsPhone: function() {
+      return this.is(WINDOWS_PHONE);
     },
 
     /**
@@ -166,11 +205,13 @@
       if(typeof n != 'undefined' && n !== null && n.length) {
         platformName = n.toLowerCase();
       } else if(this.ua.indexOf('Android') > 0) {
-        platformName = 'android';
+        platformName = ANDROID;
       } else if(this.ua.indexOf('iPhone') > -1 || this.ua.indexOf('iPad') > -1 || this.ua.indexOf('iPod') > -1) {
-        platformName = 'ios';
+        platformName = IOS;
+      } else if(this.ua.indexOf('Windows Phone') > -1) {
+        platformName = WINDOWS_PHONE;
       } else {
-        platformName = '';
+        platformName = window.navigator.platform && navigator.platform.toLowerCase().split(' ')[0] || '';
       }
     },
 
@@ -204,7 +245,8 @@
       var pName = this.platform();
       var versionMatch = {
         'android': /Android (\d+).(\d+)?/,
-        'ios': /OS (\d+)_(\d+)?/
+        'ios': /OS (\d+)_(\d+)?/,
+        'windowsphone': /Windows Phone (\d+).(\d+)?/
       };
       if(versionMatch[pName]) {
         v = this.ua.match( versionMatch[pName] );

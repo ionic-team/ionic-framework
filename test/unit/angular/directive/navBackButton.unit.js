@@ -1,15 +1,5 @@
 describe('ionNavBackButton directive', function() {
-  beforeEach(module('ionic', function($compileProvider) {
-    $compileProvider.directive('needsScroll', function() {
-      return {
-        //Test if the buttons are 'children of ionScroll' when compiled
-        require: '^$ionicScroll',
-        link: function(scope, element, attrs, ctrl) {
-          element.data('scrollCtrl', ctrl);
-        }
-      };
-    });
-  }));
+  beforeEach(module('ionic'));
 
   function setup(attr, content) {
     var el;
@@ -23,27 +13,6 @@ describe('ionNavBackButton directive', function() {
     });
     return el;
   }
-
-  it('ionNavButtons should compile buttons with same scope & access the same data on compile', inject(function($compile, $rootScope) {
-    var el = $compile('<div>' +
-     '<ion-nav-bar></ion-nav-bar>' +
-     '<ion-view>' +
-       '<ion-content>' +
-         '<ion-nav-buttons side="left">' +
-           '<button needs-scroll>Hello!</button>' +
-         '</ion-nav-buttons>' +
-       '</ion-content>' +
-     '</ion-view>' +
-    '</div>')($rootScope.$new());
-    $rootScope.$apply();
-    expect(el.find('ion-content').children().scope())
-      .toBe(el.find('.left-buttons button').scope());
-
-    //Test if the button was compiled able to access the parents of ion-nav-buttons
-    var scrollCtrl = el.find('ion-content').controller('$ionicScroll');
-    expect(scrollCtrl).toBeTruthy();
-    expect(el.find('button[needs-scroll]').data('scrollCtrl')).toBe(scrollCtrl);
-  }));
 
   it('should error without a parent ionNavBar', inject(function($compile, $rootScope) {
     expect(function() {
@@ -92,11 +61,11 @@ describe('ionNavBackButton directive', function() {
     expect(el.children().eq(0)[0].tagName.toLowerCase()).toBe('b');
   });
 
-  it('should $navBack on click by default', function() {
+  it('should go back on click by default', function() {
     var el = setup();
-    el.scope().$navBack = jasmine.createSpy('$navBack');
+    expect(el.controller('ionNavBar').back).not.toHaveBeenCalled();
     el.triggerHandler('click');
-    expect(el.scope().$navBack).toHaveBeenCalled();
+    expect(el.controller('ionNavBar').back).toHaveBeenCalled();
   });
 
   it('should do ngClick expression if defined', function() {
@@ -106,5 +75,41 @@ describe('ionNavBackButton directive', function() {
     el.triggerHandler('click');
     expect(el.scope().$navBack).not.toHaveBeenCalled();
     expect(el.scope().doSomething).toHaveBeenCalled();
+  });
+
+
+  describe('platforms', function() {
+    describe('iOS', function() {
+      beforeEach(function($provide) {
+        TestUtil.setPlatform('ios');
+      });
+
+      it('should not set default back button icon if icon classname exists', function() {
+        var el = setup('class="ion-navicon"');
+        expect(el.hasClass('ion-ios7-arrow-back')).toBe(false);
+      });
+
+      it('should not set default back button icon if icon child exists', function() {
+        var el = setup('', '<i class="ion-superstar"></i>');
+        expect(el.hasClass('ion-ios7-arrow-back')).toBe(false);
+      });
+
+      it('Should set default back button icon from ionicNavBarConfig ', inject(function($ionicNavBarConfig) {
+        var el = setup();
+        expect(el.hasClass('ion-ios7-arrow-back')).toBe(true);
+      }));
+    });
+
+    // Android defaults disabled for now
+    // describe('android', function() {
+    //   beforeEach(function($provide) {
+    //     TestUtil.setPlatform('android');
+    //   });
+
+    //   it('Should set default back button icon from ionicNavBarConfig ', inject(function($ionicNavBarConfig) {
+    //     var el = setup();
+    //     expect(el.hasClass('ion-android-arrow-back')).toBe(true);
+    //   }));
+    // });
   });
 });

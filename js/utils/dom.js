@@ -26,6 +26,11 @@
             };
   })();
 
+  var cancelAnimationFrame = window.cancelAnimationFrame ||
+    window.webkitCancelAnimationFrame ||
+    window.mozCancelAnimationFrame ||
+    window.webkitCancelRequestAnimationFrame;
+
   /**
   * @ngdoc utility
   * @name ionic.DomUtil
@@ -42,7 +47,11 @@
      * happens.
      */
     requestAnimationFrame: function(cb) {
-      window._rAF(cb);
+      return window._rAF(cb);
+    },
+
+    cancelAnimationFrame: function(requestId) {
+      cancelAnimationFrame(requestId);
     },
 
     /**
@@ -192,8 +201,11 @@
     centerElementByMarginTwice: function(el) {
       ionic.requestAnimationFrame(function() {
         ionic.DomUtil.centerElementByMargin(el);
-        ionic.requestAnimationFrame(function() {
+        setTimeout(function() {
           ionic.DomUtil.centerElementByMargin(el);
+          setTimeout(function() {
+            ionic.DomUtil.centerElementByMargin(el);
+          });
         });
       });
     },
@@ -218,7 +230,7 @@
     },
     /**
      * @ngdoc method
-     * @name ionic.DomUtil#getParentWithClass
+     * @name ionic.DomUtil#getParentOrSelfWithClass
      * @param {DOMElement} element
      * @param {string} className
      * @returns {DOMElement} The closest parent or self matching the
@@ -256,5 +268,6 @@
 
   //Shortcuts
   ionic.requestAnimationFrame = ionic.DomUtil.requestAnimationFrame;
+  ionic.cancelAnimationFrame = ionic.DomUtil.cancelAnimationFrame;
   ionic.animationFrameThrottle = ionic.DomUtil.animationFrameThrottle;
 })(window, document, ionic);

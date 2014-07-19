@@ -1,0 +1,29 @@
+---
+name: animated
+component: ionList
+---
+<div ng-controller="AnimatedListCtrl">
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Animated List</h1>
+  </ion-header-bar>
+  <ion-content>
+    <ion-list show-delete="showDelete">
+
+      <ion-item class="animated-item"
+                ng-repeat="item in items">
+        {{item}}
+        <div class="item-note">
+          <a class="button button-small"
+             ng-click="addItem($index)">
+             Add
+          </a>
+          <a class="button button-small"
+             ng-click="items.splice($index, 1)">
+            Remove
+          </a>
+        </div>
+      </ion-item>
+
+    </ion-list>
+  </ion-content>
+</div>

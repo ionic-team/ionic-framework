@@ -92,19 +92,19 @@ describe('Ionic Angular Side Menu', function() {
     expect(ctrl.isDraggableTarget(e)).toBe(false);
     e.target.isContentEditable = false;
 
-    e.target.dataset.preventScroll = true
+    e.target.dataset.preventScroll = true;
     expect(ctrl.isDraggableTarget(e)).toBe(false);
     e.target.isContentEditable = false;
 
     e.target.dataset = undefined;
     e.target.getAttribute = function(val){
       return (val == 'data-prevent-default' ? 'true' : undefined);
-    }
+    };
     expect(ctrl.isDraggableTarget(e)).toBe(false);
 
     e.target.getAttribute = function(){
       return null;
-    }
+    };
     expect(ctrl.isDraggableTarget(e)).toBe(true);
 
   }));
@@ -195,8 +195,8 @@ describe('menuToggle directive', function() {
   var toggleLeftSpy, toggleRightSpy;
   function setup(side) {
     var el = angular.element('<div menu-toggle="' + (side||'') + '">');
-    toggleLeftSpy = jasmine.createSpy('toggleLeft')
-    toggleRightSpy = jasmine.createSpy('toggleRight')
+    toggleLeftSpy = jasmine.createSpy('toggleLeft');
+    toggleRightSpy = jasmine.createSpy('toggleRight');
     el.data('$ionSideMenusController', {
       toggleLeft: toggleLeftSpy,
       toggleRight: toggleRightSpy
@@ -242,7 +242,7 @@ describe('menuClose directive', function() {
   }));
   it('should close on click', inject(function($compile, $rootScope) {
     var el = angular.element('<div menu-close>');
-    var closeSpy = jasmine.createSpy('sideMenuClose')
+    var closeSpy = jasmine.createSpy('sideMenuClose');
     el.data('$ionSideMenusController', {
       close: closeSpy
     });

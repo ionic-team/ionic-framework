@@ -1,0 +1,26 @@
+---
+name: animated
+component: ionList
+---
+.animated-item .item-note .button {
+  margin-top: 10px;
+}
+.animated-item {
+  line-height: 52px;
+  max-height: 52px;
+  padding-top: 0;
+  padding-bottom: 0;
+  -webkit-transition: all 0.15s linear;
+  -moz-transition: all 0.15s linear;
+  transition: all 0.15s linear;
+}
+.animated-item.ng-leave.ng-leave-active,
+.animated-item.ng-enter {
+  opacity: 0;
+  max-height: 0;
+}
+.animated-item.ng-leave,
+.animated-item.ng-enter.ng-enter-active {
+  opacity: 1;
+  max-height: 52px;
+}

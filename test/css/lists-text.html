@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html ng-app="ionic">
+  <head>
+    <script src="../../dist/js/ionic.bundle.js"></script>
+    <meta charset="utf-8">
+    <title>Lists</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link href="../../dist/css/ionic.css" rel="stylesheet">
+    <style>
+      body {
+        position: absolute;;
+      }
+    </style>
+  </head>
+  <body>
+
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Lists: Text</h1>
+    </header>
+
+    <div class="content has-header">
+
+      <div class="list">
+
+        <div class="list-header">
+          List Header
+        </div>
+
+        <a href="#" class="item item-icon-left item-icon-right">
+          <i class="icon ion-ios7-cog gray fill-icon"></i>
+          Default has no wrap! This is a list item with really really really really really
+          really really really really long long long long long long
+          text text text texxxxxttt text testy text!!!
+          <i class="icon ion-chevron-right icon-accessory"></i>
+        </a>
+
+        <a href="#" class="item item-icon-left item-icon-right item-text-wrap">
+          <i class="icon ion-ios7-cog gray fill-icon"></i>
+          Assigned "item-text-wrap". This is a list item with really really really really really
+          really really really really long long long long long long
+          text text text texxxxxttt text testy text!!!
+          <i class="icon ion-chevron-right icon-accessory"></i>
+        </a>
+
+        <a href="#" class="item item-complex item-icon-left item-icon-right item-slider">
+          <div class="item-content slide-left slide-right">
+            <i class="icon ion-ios7-cog gray fill-icon"></i>
+            Default no wrap and has item-content! This is a list item with really really really really really
+            really really really really long long long long long long
+            text text text texxxxxttt text testy text!!!
+            <i class="icon ion-chevron-right icon-accessory"></i>
+          </div>
+          <div class="item-options">
+           <button class="button">Button</button>
+         </div>
+        </a>
+
+        <a href="#" class="item item-complex item-icon-left item-icon-right item-text-wrap item-slider">
+          <div class="item-content slide-left slide-right">
+            <i class="icon ion-ios7-cog gray fill-icon"></i>
+            Assigned "item-text-wrap" and has item-content. This is a list item with really really really really really
+            really really really really long long long long long long
+            text text text texxxxxttt text testy text!!!
+            <i class="icon ion-chevron-right icon-accessory"></i>
+          </div>
+          <div class="item-options">
+           <button class="button">Button</button>
+         </div>
+        </a>
+
+        <a href="#" class="item item-icon-left">
+          <i class="icon ion-ios7-mic positive"></i>
+          Record album
+          <span class="item-note">
+            Grammy
+          </span>
+        </a>
+
+        <a href="#" class="item item-icon-left">
+          <i class="icon ion-flask calm"></i>
+          Breaking Bad
+          <span class="item-note">
+            Blue, yellow, pink
+          </span>
+        </a>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>

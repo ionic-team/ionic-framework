@@ -37,7 +37,7 @@ IonicModule
   '$document',
 function($document) {
 
-  var el = angular.element('<div class="backdrop">');
+  var el = jqLite('<div class="backdrop">');
   var backdropHolds = 0;
 
   $document[0].body.appendChild(el[0]);
@@ -56,6 +56,9 @@ function($document) {
      * Releases the backdrop.
      */
     release: release,
+
+    getElement: getElement,
+
     // exposed for testing
     _element: el
   };
@@ -76,4 +79,9 @@ function($document) {
       }, 100);
     }
   }
+
+  function getElement() {
+    return el;
+  }
+
 }]);

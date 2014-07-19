@@ -15,7 +15,7 @@ ionic.views.Slider = ionic.views.View.inherit({
 
     // utilities
     var noop = function() {}; // simple no operation function
-    var offloadFn = function(fn) { setTimeout(fn || noop, 0) }; // offload a functions execution
+    var offloadFn = function(fn) { setTimeout(fn || noop, 0); }; // offload a functions execution
 
     // check browser capabilities
     var browser = {
@@ -60,7 +60,7 @@ ionic.views.Slider = ionic.views.View.inherit({
       slidePos = new Array(slides.length);
 
       // determine width of each slide
-      width = container.getBoundingClientRect().width || container.offsetWidth;
+      width = container.offsetWidth || container.getBoundingClientRect().width;
 
       element.style.width = (slides.length * width) + 'px';
 
@@ -194,11 +194,11 @@ ionic.views.Slider = ionic.views.View.inherit({
 
       }
 
-      var start = +new Date;
+      var start = +new Date();
 
       var timer = setInterval(function() {
 
-        var timeElap = +new Date - start;
+        var timeElap = +new Date() - start;
 
         if (timeElap > speed) {
 
@@ -283,7 +283,7 @@ ionic.views.Slider = ionic.views.View.inherit({
           y: touches.pageY,
 
           // store time to determine touch duration
-          time: +new Date
+          time: +new Date()
 
         };
 
@@ -321,7 +321,7 @@ ionic.views.Slider = ionic.views.View.inherit({
         delta = {
           x: touches.pageX - start.x,
           y: touches.pageY - start.y
-        }
+        };
 
         // determine if scrolling test has run - one time test
         if ( typeof isScrolling == 'undefined') {
@@ -348,9 +348,9 @@ ionic.views.Slider = ionic.views.View.inherit({
 
             delta.x =
               delta.x /
-                ( (!index && delta.x > 0               // if first slide and sliding left
-                  || index == slides.length - 1        // or if last slide and sliding right
-                  && delta.x < 0                       // and if sliding at all
+                ( (!index && delta.x > 0 ||         // if first slide and sliding left
+                  index == slides.length - 1 &&     // or if last slide and sliding right
+                  delta.x < 0                       // and if sliding at all
                 ) ?
                 ( Math.abs(delta.x) / width + 1 )      // determine resistance level
                 : 1 );                                 // no resistance if false
@@ -367,18 +367,17 @@ ionic.views.Slider = ionic.views.View.inherit({
       end: function(event) {
 
         // measure duration
-        var duration = +new Date - start.time;
+        var duration = +new Date() - start.time;
 
         // determine if slide attempt triggers next/prev slide
         var isValidSlide =
-              Number(duration) < 250               // if slide duration is less than 250ms
-              && Math.abs(delta.x) > 20            // and if slide amt is greater than 20px
-              || Math.abs(delta.x) > width/2;      // or if slide amt is greater than half the width
+              Number(duration) < 250 &&         // if slide duration is less than 250ms
+              Math.abs(delta.x) > 20 ||         // and if slide amt is greater than 20px
+              Math.abs(delta.x) > width/2;      // or if slide amt is greater than half the width
 
         // determine if slide attempt is past start and end
-        var isPastBounds =
-              !index && delta.x > 0                            // if first slide and slide amt is greater than 0
-              || index == slides.length - 1 && delta.x < 0;    // or if last slide and slide amt is less than 0
+        var isPastBounds = (!index && delta.x > 0) ||      // if first slide and slide amt is greater than 0
+              (index == slides.length - 1 && delta.x < 0); // or if last slide and slide amt is less than 0
 
         if (options.continuous) isPastBounds = false;
 
@@ -444,11 +443,11 @@ ionic.views.Slider = ionic.views.View.inherit({
 
         // kill touchmove and touchend event listeners until touchstart called again
         if(browser.touch) {
-          element.removeEventListener('touchmove', events, false)
-          element.removeEventListener('touchend', events, false)
+          element.removeEventListener('touchmove', events, false);
+          element.removeEventListener('touchend', events, false);
         } else {
-          element.removeEventListener('mousemove', events, false)
-          element.removeEventListener('mouseup', events, false)
+          element.removeEventListener('mousemove', events, false);
+          element.removeEventListener('mouseup', events, false);
           document.removeEventListener('mouseup', events, false);
         }
 
@@ -465,7 +464,7 @@ ionic.views.Slider = ionic.views.View.inherit({
 
       }
 
-    }
+    };
 
     // Public API
     this.update = function() {
@@ -505,6 +504,10 @@ ionic.views.Slider = ionic.views.View.inherit({
     this.stop = function() {
       // cancel slideshow
       stop();
+    };
+
+    this.start = function() {
+      begin();
     };
 
     this.currentIndex = function() {
@@ -588,10 +591,10 @@ ionic.views.Slider = ionic.views.View.inherit({
 
       } else {
 
-        window.onresize = function () { setup() }; // to play nice with old IE
+        window.onresize = function () { setup(); }; // to play nice with old IE
 
       }
-    }
+    };
 
   }
 });

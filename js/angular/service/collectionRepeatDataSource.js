@@ -2,8 +2,9 @@ IonicModule
 .factory('$collectionDataSource', [
   '$cacheFactory',
   '$parse',
-function($cacheFactory, $parse) {
-  var nextCacheId = 0;
+  '$rootScope',
+function($cacheFactory, $parse, $rootScope) {
+
   function CollectionRepeatDataSource(options) {
     var self = this;
     this.scope = options.scope;
@@ -34,33 +35,21 @@ function($cacheFactory, $parse) {
       };
     }
 
-    var cacheKeys = {};
-    this.itemCache = $cacheFactory(nextCacheId++, {size: 500});
-
-    var _put = this.itemCache.put;
-    this.itemCache.put = function(key, value) {
-      cacheKeys[key] = true;
-      return _put(key, value);
-    };
-
-    var _remove = this.itemCache.remove;
-    this.itemCache.remove = function(key) {
-      delete cacheKeys[key];
-      return _remove(key);
-    };
-    this.itemCache.keys = function() {
-      return Object.keys(cacheKeys);
-    };
+    this.attachedItems = {};
+    this.BACKUP_ITEMS_LENGTH = 10;
+    this.backupItemsArray = [];
   }
   CollectionRepeatDataSource.prototype = {
+    setup: function() {
+      for (var i = 0; i < this.BACKUP_ITEMS_LENGTH; i++) {
+        this.detachItem(this.createItem());
+      }
+    },
     destroy: function() {
       this.dimensions.length = 0;
-      this.itemCache.keys().forEach(function(key) {
-        var item = this.itemCache.get(key);
-        item.element.remove();
-        item.scope.$destroy();
-      }, this);
-      this.itemCache.removeAll();
+      this.data = null;
+      this.backupItemsArray.length = 0;
+      this.attachedItems = {};
     },
     calculateDataDimensions: function() {
       var locals = {};
@@ -73,52 +62,72 @@ function($cacheFactory, $parse) {
         };
       }, this);
     },
-    compileItem: function(index, value) {
-      var key = this.itemHashGetter(index, value);
-      var cachedItem = this.itemCache.get(key);
-      if (cachedItem) return cachedItem;
-
+    createItem: function() {
       var item = {};
       item.scope = this.scope.$new();
-      item.scope[this.keyExpr] = value;
 
       this.transcludeFn(item.scope, function(clone) {
+        clone.css('position', 'absolute');
         item.element = clone;
-        item.element[0].style.position = 'absolute';
       });
 
-      return this.itemCache.put(key, item);
-    },
-    getItem: function(index) {
-      var value = this.data[index];
-      var item = this.compileItem(index, value);
+      this.transcludeParent.append(item.element);
 
-      if (item.scope.$index !== index) {
+      return item;
+    },
+    getItem: function(hash) {
+      if ( (item = this.attachedItems[hash]) ) {
+        //do nothing, the item is good
+      } else if ( (item = this.backupItemsArray.pop()) ) {
+        reconnectScope(item.scope);
+      } else {
+        item = this.createItem();
+      }
+      return item;
+    },
+    attachItemAtIndex: function(index) {
+      var value = this.data[index];
+      var hash = this.itemHashGetter(index, value);
+      var item = this.getItem(hash);
+
+      if (item.scope.$index !== index || item.scope[this.keyExpr] !== value) {
+        item.scope[this.keyExpr] = value;
         item.scope.$index = index;
         item.scope.$first = (index === 0);
         item.scope.$last = (index === (this.getLength() - 1));
         item.scope.$middle = !(item.scope.$first || item.scope.$last);
         item.scope.$odd = !(item.scope.$even = (index&1) === 0);
+
+        //We changed the scope, so digest if needed
+        if (!$rootScope.$$phase) {
+          item.scope.$digest();
+        }
       }
+
+      item.hash = hash;
+      this.attachedItems[hash] = item;
 
       return item;
     },
-    detachItem: function(item) {
-      var i, node, parent;
-      //Don't .remove(), that will destroy element data
-      for (i = 0; i < item.element.length; i++) {
-        node = item.element[i];
-        parent = node.parentNode;
-        parent && parent.removeChild(node);
-      }
-      //Don't .$destroy(), just stop watchers and events firing
-      disconnectScope(item.scope);
+    destroyItem: function(item) {
+      item.element.remove();
+      item.scope.$destroy();
+      item.scope = null;
+      item.element = null;
     },
-    attachItem: function(item) {
-      if (!item.element[0].parentNode) {
-        this.transcludeParent[0].appendChild(item.element[0]);
+    detachItem: function(item) {
+      delete this.attachedItems[item.hash];
+
+      // If we are at the limit of backup items, just get rid of the this element
+      if (this.backupItemsArray.length >= this.BACKUP_ITEMS_LENGTH) {
+        this.destroyItem(item);
+      // Otherwise, add it to our backup items
+      } else {
+        this.backupItemsArray.push(item);
+        item.element.css(ionic.CSS.TRANSFORM, 'translate3d(-2000px,-2000px,0)');
+        //Don't .$destroy(), just stop watchers and events firing
+        disconnectScope(item.scope);
       }
-      reconnectScope(item.scope);
     },
     getLength: function() {
       return this.data && this.data.length || 0;

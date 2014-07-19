@@ -8,7 +8,7 @@
 
     // transform
     var i, keys = ['webkitTransform', 'transform', '-webkit-transform', 'webkit-transform',
-                '-moz-transform', 'moz-transform', 'MozTransform', 'mozTransform'];
+                   '-moz-transform', 'moz-transform', 'MozTransform', 'mozTransform', 'msTransform'];
 
     for(i = 0; i < keys.length; i++) {
       if(document.documentElement.style[keys[i]] !== undefined) {
@@ -18,7 +18,7 @@
     }
 
     // transition
-    keys = ['webkitTransition', 'mozTransition', 'transition'];
+    keys = ['webkitTransition', 'mozTransition', 'msTransition', 'transition'];
     for(i = 0; i < keys.length; i++) {
       if(document.documentElement.style[keys[i]] !== undefined) {
         ionic.CSS.TRANSITION = keys[i];

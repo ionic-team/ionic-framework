@@ -53,7 +53,7 @@ describe('ionRefresher directive', function() {
     expect(el.controller('$ionicScroll')._setRefresher.callCount).toBe(1);
     expect(el.controller('$ionicScroll')._setRefresher).toHaveBeenCalledWith(
       el.scope(), el[0]
-    )
+    );
   });
 
   it('should listen for scroll.refreshComplete', function() {
@@ -62,18 +62,21 @@ describe('ionRefresher directive', function() {
     var ctrl = el.controller('$ionicScroll');
     expect(ctrl.scrollView.finishPullToRefresh).not.toHaveBeenCalled();
     el.scope().$broadcast('scroll.refreshComplete');
+    expect(el.hasClass('active')).toBe(true);
+    expect(ctrl.scrollView.finishPullToRefresh).not.toHaveBeenCalled();
+    el.scope().$apply();
     expect(el.hasClass('active')).toBe(false);
     expect(ctrl.scrollView.finishPullToRefresh).toHaveBeenCalled();
   });
 
   it('should have default pullingIcon', function() {
     var el = setup();
-    expect(el[0].querySelector('.icon.icon-pulling.ion-arrow-down-c')).toBeTruthy();
+    expect(el[0].querySelector('.icon-pulling .ion-arrow-down-c')).toBeTruthy();
   });
   it('should allow custom pullingIcon', function() {
     var el = setup('pulling-icon="super-icon"');
-    expect(el[0].querySelector('.icon.icon-pulling.ion-arrow-down-c')).toBeFalsy();
-    expect(el[0].querySelector('.icon.icon-pulling.super-icon')).toBeTruthy();
+    expect(el[0].querySelector('.icon-pulling .ion-arrow-down-c')).toBeFalsy();
+    expect(el[0].querySelector('.icon-pulling .super-icon')).toBeTruthy();
   });
 
   it('should have default refreshingIcon', function() {

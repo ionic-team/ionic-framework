@@ -1,44 +1,103 @@
 describe('Ionic ActionSheet Service', function() {
+
   var sheet, timeout, ionicPlatform;
 
-  beforeEach(module('ionic'));
-
-  beforeEach(inject(function($ionicActionSheet, $timeout, $ionicPlatform) {
-    sheet = $ionicActionSheet;
-    timeout = $timeout;
-    ionicPlatform = $ionicPlatform;
+  beforeEach(module('ionic', function($provide) {
+    // For the sake of this test, we don't want ionActionSheet to
+    // actually compile as a directive.
+    // We are only testing the service.
+    $provide.value('ionActionSheetDirective', []);
   }));
 
-  it('Should show', function() {
-    var s = sheet.show();
-    expect(s.el.classList.contains('active')).toBe(true);
-  });
+  function setup(options) {
+    var scope;
+    inject(function($ionicActionSheet, $ionicPlatform, $timeout) {
+      var hide = $ionicActionSheet.show(options || {});
+      $timeout.flush();
+      scope = hide.$scope;
+    });
+    return scope;
+  }
 
-  it('Should add .action-sheet-up to .action-sheet-wrapper', function() {
-    var s = sheet.show();
-    var el = angular.element(s.el);
-    var wrapper = angular.element(s.el.querySelector('.action-sheet-wrapper'));
-    expect(wrapper.length).toEqual(1);
-    expect(wrapper.hasClass('action-sheet-up')).toEqual(false);
-    timeout.flush();
-    expect(wrapper.hasClass('action-sheet-up')).toEqual(true);
-  });
-
-  it('should handle hardware back button', function() {
-    var s = sheet.show();
-
-    ionicPlatform.hardwareBackButtonClick();
-
-    expect(s.el.classList.contains('active')).toBe(false);
-  });
-
-  it('show & hide should add action-sheet-open to body', inject(function($animate) {
-    var s = sheet.show();
-
-    expect(angular.element(document.body).hasClass('action-sheet-open')).toBe(true);
-
-    ionicPlatform.hardwareBackButtonClick();
-
-    expect(angular.element(document.body).hasClass('action-sheet-open')).toBe(false);
+  it('should add classes on showing', inject(function($document) {
+    var scope = setup();
+    expect($document[0].body.classList.contains('action-sheet-open')).toBe(true);
+    expect(scope.element.hasClass('active')).toBe(true);
   }));
+
+  it('removeSheet should remove classes, remove element and destroy scope', inject(function($document, $timeout, $animate) {
+    spyOn($animate, 'removeClass').andCallFake(function(el, cls, cb) {
+      el.removeClass(cls);
+      cb();
+    });
+    var scope = setup();
+    spyOn(scope, '$destroy');
+    spyOn(scope.element, 'remove');
+    scope.removeSheet();
+    expect($document[0].body.classList.contains('action-sheet-open')).toBe(false);
+    expect(scope.element.hasClass('active')).toBe(false);
+    expect(scope.$destroy).toHaveBeenCalled();
+    expect(scope.element.remove).toHaveBeenCalled();
+  }));
+
+  it('destructiveButtonClicked should removeSheet if returning true', function() {
+    var destructiveReturnValue = false;
+    var scope = setup({
+      destructiveButtonClicked: function() {
+        return destructiveReturnValue;
+      }
+    });
+    spyOn(scope, 'removeSheet');
+    scope.destructiveButtonClicked();
+    expect(scope.removeSheet).not.toHaveBeenCalled();
+    destructiveReturnValue = true;
+    scope.destructiveButtonClicked();
+    expect(scope.removeSheet).toHaveBeenCalled();
+  });
+
+  it('buttonClicked should removeSheet if returning true for index', function() {
+    var scope = setup({
+      buttons: [{}, {}],
+      buttonClicked: function(index) {
+        return index === 0 ? false : true;
+      }
+    });
+    spyOn(scope, 'removeSheet');
+    scope.buttonClicked(0);
+    expect(scope.removeSheet).not.toHaveBeenCalled();
+    scope.buttonClicked(1);
+    expect(scope.removeSheet).toHaveBeenCalled();
+  });
+
+  it('cancel should removeSheet and call opts.cancel', inject(function($timeout, $animate) {
+    spyOn($animate, 'removeClass').andCallFake(function(el, cls, cb) {
+      el.removeClass(cls);
+      cb();
+    });
+    var cancelSpy = jasmine.createSpy('opts.cancel');
+    var scope = setup({
+      cancel: cancelSpy
+    });
+    spyOn(scope, 'removeSheet').andCallThrough();
+    scope.cancel();
+    expect(scope.removeSheet).toHaveBeenCalled();
+    expect(cancelSpy).toHaveBeenCalled();
+  }));
+
+  it('should cancelOnStateChange by default', inject(function($rootScope) {
+    var scope = setup();
+    spyOn(scope, 'cancel');
+    $rootScope.$broadcast('$stateChangeSuccess');
+    expect(scope.cancel).toHaveBeenCalled();
+  }));
+
+  it('should not cancelOnStateChange with option as false', inject(function($rootScope) {
+    var scope = setup({
+      cancelOnStateChange: false
+    });
+    spyOn(scope, 'cancel');
+    $rootScope.$broadcast('$stateChangeSuccess');
+    expect(scope.cancel).not.toHaveBeenCalled();
+  }));
+
 });

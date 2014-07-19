@@ -1,0 +1,4 @@
+---
+name: complete
+component: $ionicLoading
+---

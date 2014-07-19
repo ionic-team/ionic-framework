@@ -1,5 +1,5 @@
 
-angular.element.prototype.addClass = function(cssClasses) {
+jqLite.prototype.addClass = function(cssClasses) {
   var x, y, cssClass, el, splitClasses, existingClasses;
   if (cssClasses && cssClasses != 'ng-scope' && cssClasses != 'ng-isolate-scope') {
     for(x=0; x<this.length; x++) {
@@ -27,7 +27,7 @@ angular.element.prototype.addClass = function(cssClasses) {
   return this;
 };
 
-angular.element.prototype.removeClass = function(cssClasses) {
+jqLite.prototype.removeClass = function(cssClasses) {
   var x, y, splitClasses, cssClass, el;
   if (cssClasses) {
     for(x=0; x<this.length; x++) {

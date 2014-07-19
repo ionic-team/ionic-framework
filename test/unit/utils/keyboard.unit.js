@@ -41,11 +41,38 @@ Tested On
 - Android 4.2 Cordova
 
 
+iOS 7.1 Cordova with AND without viewport height DOES resize, DOES NOT fire resize event
+iOS 7.1 Safari with AND without viewport height DOES NOT resize
+
+iOS 7.0 Cordova with viewport height DOES resize, DOES fire resize event
+iOS 7.0 Cordova without viewport height DOES resize, DOES NOT fire resize event
+iOS 7.0 Safari with AND without viewport height DOES NOT resize
+
+iOS 6.1 Cordova with AND without viewport height DOES NOT resize
+iOS 6.1 Safari without viewport height DOES NOT resize
+
+NOTES:
+ -iOS 7.1 Safari with viewport height screws up ionic layout
+ -iOS 7.0 Safari with viewport height, the scroll view does not resize properly on keyboardhide
+ -iOS 7.0 Cordova without viewport height, scroll view does not resize properly switching inputs at bottom of page
+ -iOS 6.1 Cordova and Safari don't work well with viewport height
+
+RECOMMENDATIONS:
+ -iOS 7.1 Cordova no viewport height, keyboard is not over webview
+ -iOS 7.1 Safari no viewport height, keyboard is over webview
+
+ -iOS 7.0 Cordova yes viewport height, keyboard is not over webview
+ -iOS 7.0 Safari no viewport height, keyboard is over webview
+
+ -iOS 6.1 Cordova no viewport height, keyboard is over webview
+ -iOS 6.1 Safari no viewport height, keyboard is over webview
 
 Notes:
 ---------------------------------
 iOS 7 keyboard is 216px tall without the accessory bar
 iOS 7 keyboard is 260px tall with the accessory bar
+
+Switching inputs fires focusOut on iOS, doesn't on Android
 
 */
 
@@ -65,6 +92,9 @@ describe('Ionic Keyboard', function() {
     ionic.Platform.setPlatform('');
     ionic.Platform.setVersion('');
     ionic.keyboard.isOpen = false;
+    ionic.keyboard.height = null;
+    ionic.Platform.isFullScreen = false;
+    ionic.keyboard.landscape = false;
   }));
 
   afterEach(function(){
@@ -82,45 +112,6 @@ describe('Ionic Keyboard', function() {
     expect( details.keyboardHeight ).toEqual(200);
   });
 
-  it('Should keyboardIsOverWebView()=false if Android and not isWebView', function(){
-    // Android browser places the keyboard on top of the content and doesn't resize the window
-    ionic.Platform.setPlatform('Android');
-    expect( ionic.Platform.isAndroid() ).toEqual(true);
-    expect( ionic.Platform.isWebView() ).toEqual(false);
-
-    expect( ionic.Platform.isIOS() ).toEqual(false);
-
-    expect( keyboardIsOverWebView() ).toEqual(true);
-  });
-
-  it('Should keyboardIsOverWebView()=false if Android and isWebView', function(){
-    // Android webview gets shrunk by cordova and the keyboard fills the gap
-    ionic.Platform.setPlatform('Android');
-    window.cordova = {};
-    expect( ionic.Platform.isAndroid() ).toEqual(true);
-    expect( ionic.Platform.isWebView() ).toEqual(true);
-
-    expect( keyboardIsOverWebView() ).toEqual(false);
-  });
-
-  it('Should keyboardIsOverWebView()=true if iOS 7.0 or greater', function(){
-    ionic.Platform.setPlatform('iOS');
-    ionic.Platform.setVersion('7.0');
-    expect( ionic.Platform.isAndroid() ).toEqual(false);
-    expect( ionic.Platform.isIOS() ).toEqual(true);
-
-    expect( keyboardIsOverWebView() ).toEqual(true);
-  });
-
-  it('Should keyboardIsOverWebView()=true if less than iOS 7.0', function(){
-    ionic.Platform.setPlatform('iOS');
-    ionic.Platform.setVersion('6.0');
-    expect( ionic.Platform.isAndroid() ).toEqual(false);
-    expect( ionic.Platform.isIOS() ).toEqual(true);
-
-    expect( keyboardIsOverWebView() ).toEqual(true);
-  });
-
   it('Should keyboardHasPlugin', function() {
     expect( keyboardHasPlugin() ).toEqual(false);
 
@@ -134,7 +125,64 @@ describe('Ionic Keyboard', function() {
     expect( keyboardHasPlugin() ).toEqual(true);
   });
 
-  it('keyboardGetHeight() should = DEFAULT_KEYBOARD_HEIGHT if no plugin or resized view', function(){
+  it('keyboardGetHeight() should use the keyboard plugin if it is available', function(){
+    ionic.keyboard.height = 216;
+    expect( keyboardGetHeight() ).toEqual(216);
+  });
+
+  it('keyboardGetHeight() should = 275 if Cordova Android and is fullscreen', function(){
+    ionic.Platform.setPlatform('android');
+    window.cordova = {};
+    ionic.Platform.isFullScreen = true;
+
+    expect( keyboardGetHeight() ).toEqual(275);
+  });
+
+  it('keyboardGetHeight() should = (keyboardViewportHeight - window.innerHeight) if Android and not fullscreen', function(){
+    ionic.Platform.setPlatform('android');
+    expect( ionic.Platform.isFullScreen ).toEqual(false);
+
+    keyboardViewportHeight = 480;
+    window.innerHeight = 280;
+
+    expect( keyboardGetHeight() ).toEqual(200);
+  });
+
+  it('keyboardGetHeight() should = 0 if keyboardViewportHeight = window.innerHeight and Android and not fullscreen', function(){
+    ionic.Platform.setPlatform('android');
+    expect( ionic.Platform.isFullScreen ).toEqual(false);
+
+    keyboardViewportHeight = 480;
+    window.innerHeight = 480;
+
+    expect( keyboardGetHeight() ).toEqual(0);
+  });
+
+  it('keyboardGetHeight() should = 206 if iOS and in landscape orientation', function(){
+    ionic.Platform.setPlatform('iOS');
+    ionic.keyboard.landscape = true;
+
+    expect( keyboardGetHeight() ).toEqual(206);
+  });
+
+  it('keyboardGetHeight() should = 216 if iOS Safari', function(){
+    ionic.Platform.setPlatform('iOS');
+
+    expect( ionic.Platform.isWebView() ).toEqual(false);
+    expect( keyboardGetHeight() ).toEqual(216);
+  });
+
+  it('keyboardGetHeight() should = 260 if iOS Cordova', function(){
+    ionic.Platform.setPlatform('iOS');
+    window.cordova = {};
+
+    expect( ionic.Platform.isWebView() ).toEqual(true);
+    expect( keyboardGetHeight() ).toEqual(260);
+  });
+
+  it('keyboardGetHeight() should = 275 if not Android or iOS', function(){
+    ionic.Platform.setPlatform('WP8');
+
     expect( keyboardGetHeight() ).toEqual(275);
   });
 
@@ -171,34 +219,10 @@ describe('Ionic Keyboard', function() {
     var elementBottom = 200;
     var keyboardHeight = 200;
     var deviceHeight = 500;
+    window.innerHeight = 500;
     var details = keyboardShow(element, elementTop, elementBottom, deviceHeight, keyboardHeight);
 
     expect( details.isElementUnderKeyboard ).toEqual(false);
-  });
-
-  it('Should not subtract the keyboard height from the contentHeight if not keyboardIsOverWebView()', function(){
-    var element = document.createElement('textarea');
-    var elementTop = 300;
-    var elementBottom = 400;
-    var keyboardHeight = 200;
-    var deviceHeight = 260;
-    var details = keyboardShow(element, elementTop, elementBottom, deviceHeight, keyboardHeight);
-
-    expect( details.contentHeight ).toEqual(260);
-  });
-
-  it('Should subtract the keyboard height from the contentHeight if keyboardIsOverWebView()', function(){
-    ionic.Platform.setPlatform('iOS');
-    ionic.Platform.setVersion('7.1');
-
-    var element = document.createElement('textarea');
-    var elementTop = 300;
-    var elementBottom = 400;
-    var keyboardHeight = 200;
-    var deviceHeight = 568;
-    var details = keyboardShow(element, elementTop, elementBottom, deviceHeight, keyboardHeight);
-
-    expect( details.contentHeight ).toEqual(368);
   });
 
 });

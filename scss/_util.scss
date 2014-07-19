@@ -25,16 +25,13 @@
   visibility: hidden;
 }
 
-.keyboard-open,
-.footer-hide {
-  .bar-footer,
-  .tabs {
-    display: none;
-  }
-  .has-footer,
-  .has-tabs {
-    bottom: 0;
-  }
+.keyboard-open .hide-on-keyboard-open {
+  display: none;
+}
+
+.keyboard-open .tabs.hide-on-keyboard-open + .pane .has-tabs,
+.keyboard-open .bar-footer.hide-on-keyboard-open + .pane .has-footer {
+  bottom: 0;
 }
 
 .inline {

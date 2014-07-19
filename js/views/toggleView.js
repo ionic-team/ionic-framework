@@ -72,6 +72,7 @@
       e.gesture.srcEvent.preventDefault();
 
       ionic.requestAnimationFrame(function(amount) {
+        if (!self._dragInfo) { return; }
 
         var slidePageLeft = self.track.offsetLeft + (self.handle.offsetWidth / 2);
         var slidePageRight = self.track.offsetLeft + self.track.offsetWidth - (self.handle.offsetWidth / 2);

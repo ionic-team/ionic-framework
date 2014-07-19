@@ -1,5 +1,5 @@
 var ITEM_TPL_CONTENT_ANCHOR =
-  '<a class="item-content" ng-href="{{$href()}}"></a>';
+  '<a class="item-content" ng-href="{{$href()}}" target="{{$target()}}"></a>';
 var ITEM_TPL_CONTENT =
   '<div class="item-content"></div>';
 /**
@@ -35,17 +35,17 @@ function($animate, $compile) {
       this.$scope = $scope;
       this.$element = $element;
     }],
-    priorty: Number.MAX_VALUE,
-    require: ['ionItem', '^ionList'],
     scope: true,
     compile: function($element, $attrs) {
-      var isAnchor = angular.isDefined($attrs.href) || angular.isDefined($attrs.ngHref);
+      var isAnchor = angular.isDefined($attrs.href) ||
+        angular.isDefined($attrs.ngHref) ||
+        angular.isDefined($attrs.uiSref);
       var isComplexItem = isAnchor ||
         //Lame way of testing, but we have to know at compile what to do with the element
         /ion-(delete|option|reorder)-button/i.test($element.html());
 
         if (isComplexItem) {
-          var innerElement = angular.element(isAnchor ? ITEM_TPL_CONTENT_ANCHOR : ITEM_TPL_CONTENT);
+          var innerElement = jqLite(isAnchor ? ITEM_TPL_CONTENT_ANCHOR : ITEM_TPL_CONTENT);
           innerElement.append($element.contents());
 
           $element.append(innerElement);
@@ -57,6 +57,9 @@ function($animate, $compile) {
         return function link($scope, $element, $attrs) {
           $scope.$href = function() {
             return $attrs.href || $attrs.ngHref;
+          };
+          $scope.$target = function() {
+            return $attrs.target || '_self';
           };
         };
     }

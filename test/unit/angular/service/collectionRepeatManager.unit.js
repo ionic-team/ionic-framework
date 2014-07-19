@@ -20,7 +20,7 @@ describe('collectionRepeatManager service', function() {
       var dataSource = new $collectionDataSource(angular.extend({
         scope: $rootScope.$new(),
         transcludeParent: angular.element('<div>'),
-        trancsludeFn: function(scope, cb) {
+        transcludeFn: function(scope, cb) {
           cb($compile('<div></div>')(scope));
         },
         keyExpr: 'key',
@@ -168,15 +168,6 @@ describe('collectionRepeatManager service', function() {
 
   });
 
-  it('.destroy() should remove items', function() {
-    var manager = setup();
-    spyOn(manager, 'removeItem');
-    manager.renderedItems = { '1': true, '2': true };
-    manager.destroy();
-    expect(manager.removeItem).toHaveBeenCalledWith('1');
-    expect(manager.removeItem).toHaveBeenCalledWith('2');
-  });
-
   describe('.calculateDimensions()', function() {
     it('should work with 1 item per space', function() {
       var manager = setup();
@@ -186,7 +177,7 @@ describe('collectionRepeatManager service', function() {
         { width: 100, height: 40 },
         { width: 100, height: 50 }
       ];
-      manager.secondaryScrollSize = function() { 
+      manager.secondaryScrollSize = function() {
         return 100;
       };
       var result = manager.calculateDimensions();
@@ -271,7 +262,7 @@ describe('collectionRepeatManager service', function() {
     it('should work with data', function() {
       var manager = setup();
       spyOn(manager, 'calculateDimensions').andReturn([{
-        primaryPos: 100, primarySize: 30 
+        primaryPos: 100, primarySize: 30
       }]);
       manager.resize();
       expect(manager.viewportSize).toBe(130);
@@ -293,7 +284,7 @@ describe('collectionRepeatManager service', function() {
     it('with next', function() {
       var manager = setup();
       spyOn(manager.dataSource, 'getLength').andReturn(2);
-      manager.dimensions = [{ primaryPos: 0 }, { primaryPos: 25 }];
+      manager.dimensions = [{ primaryPos: 0 ,primarySize: 25}, { primaryPos: 25, primarySize: 35 }];
       manager.setCurrentIndex(0);
       expect(manager.currentIndex).toBe(0);
       expect(manager.hasPrevIndex).toBe(false);
@@ -305,7 +296,7 @@ describe('collectionRepeatManager service', function() {
     it('with prev', function() {
       var manager = setup();
       spyOn(manager.dataSource, 'getLength').andReturn(2);
-      manager.dimensions = [{ primaryPos: 0 }, { primaryPos: 25 }];
+      manager.dimensions = [{ primaryPos: 0 , primarySize: 25 }, { primaryPos: 25, primarySize: 25 }];
       manager.setCurrentIndex(1);
       expect(manager.currentIndex).toBe(1);
       expect(manager.hasPrevIndex).toBe(true);
@@ -317,7 +308,7 @@ describe('collectionRepeatManager service', function() {
     it('with next and prev', function() {
       var manager = setup();
       spyOn(manager.dataSource, 'getLength').andReturn(3);
-      manager.dimensions = [{ primaryPos: 0 }, { primaryPos: 25 }, { primaryPos: 50 }];
+      manager.dimensions = [{ primarySize: 25, primaryPos: 0 }, { primarySize: 25, primaryPos: 25 }, { primarySize: 25, primaryPos: 50 }];
       manager.setCurrentIndex(1);
       expect(manager.currentIndex).toBe(1);
       expect(manager.hasPrevIndex).toBe(true);
@@ -328,41 +319,23 @@ describe('collectionRepeatManager service', function() {
   });
 
   describe('.renderScroll()', function() {
-    it('with isVertical', function() {
+    it('should pass the values to __$callback', function() {
       var manager = setup();
-      spyOn(manager, 'getTransformPosition').andReturn('banana');
       spyOn(manager.scrollView, '__$callback');
       manager.renderScroll(1, 2, 3, 4);
-      expect(manager.getTransformPosition).toHaveBeenCalledWith(2);
-      expect(manager.scrollView.__$callback).toHaveBeenCalledWith(1,'banana',3,4);
-    });
-
-    it('with !isVertical', function() {
-      var manager = setup();
-      manager.isVertical = false;
-      spyOn(manager, 'getTransformPosition').andReturn('blueberry');
-      spyOn(manager.scrollView, '__$callback');
-      manager.renderScroll(1, 2, 3, 4);
-      expect(manager.getTransformPosition).toHaveBeenCalledWith(1);
-      expect(manager.scrollView.__$callback).toHaveBeenCalledWith('blueberry',2,3,4);
+      expect(manager.scrollView.__$callback).toHaveBeenCalledWith(1, 2, 3, 4);
     });
   });
 
-  describe('.getTransformPosition()', function() {
-    it('should return pos - lastRenderScrollValue', function() {
-      var manager = setup();
-      manager.lastRenderScrollValue = 11;
-      expect(manager.getTransformPosition(44)).toBe(33);
-    });
-
+  describe('.renderIfNeeded()', function() {
     it('should render if >= nextPos', function() {
       var manager = setup();
       spyOn(manager, 'render');
       manager.hasNextIndex = true;
       manager.nextPos = 30;
-      manager.getTransformPosition(20);
+      manager.renderIfNeeded(20);
       expect(manager.render).not.toHaveBeenCalled();
-      manager.getTransformPosition(30);
+      manager.renderIfNeeded(30);
       expect(manager.render).toHaveBeenCalled();
     });
 
@@ -371,31 +344,11 @@ describe('collectionRepeatManager service', function() {
       spyOn(manager, 'render');
       manager.hasPrevIndex = true;
       manager.previousPos = 50;
-      manager.getTransformPosition(60);
+      manager.renderIfNeeded(60);
       expect(manager.render).not.toHaveBeenCalled();
-      manager.getTransformPosition(50);
+      manager.renderIfNeeded(50);
       expect(manager.render).not.toHaveBeenCalled();
-      manager.getTransformPosition(49);
-      expect(manager.render).toHaveBeenCalled();
-    });
-
-    it('should render if abs(val)>100', function() {
-      var manager = setup();
-      spyOn(manager, 'render');
-      manager.getTransformPosition(60);
-      expect(manager.render).not.toHaveBeenCalled();
-      manager.getTransformPosition(100);
-      expect(manager.render).not.toHaveBeenCalled();
-      manager.getTransformPosition(101);
-      expect(manager.render).toHaveBeenCalled();
-
-      manager.render.reset();
-
-      manager.getTransformPosition(-60);
-      expect(manager.render).not.toHaveBeenCalled();
-      manager.getTransformPosition(-100);
-      expect(manager.render).not.toHaveBeenCalled();
-      manager.getTransformPosition(-101);
+      manager.renderIfNeeded(49);
       expect(manager.render).toHaveBeenCalled();
     });
   });
@@ -425,35 +378,119 @@ describe('collectionRepeatManager service', function() {
       var manager = setup();
       manager.renderedItems = {'a':1, 'b':1};
       spyOn(manager, 'removeItem');
-      expect(manager.render()).toBe(null);
+      spyOn(manager.dataSource, 'getLength').andReturn(0);
+      manager.currentIndex = 1;
+      manager.render();
       expect(manager.removeItem).toHaveBeenCalledWith('a');
       expect(manager.removeItem).toHaveBeenCalledWith('b');
     });
     it('shouldRedrawAll should remove all', function() {
       var manager = setup();
       manager.renderedItems = {'a':1, 'b':1};
+      manager.currentIndex = 0;
       spyOn(manager, 'removeItem');
       manager.render(true);
       expect(manager.removeItem).toHaveBeenCalledWith('a');
       expect(manager.removeItem).toHaveBeenCalledWith('b');
     });
 
-    //TODO test .render() logic
-    
+    function mockRendering(options) {
+      var manager = setup({}, {
+        keyExpr: 'item',
+        listExpr: 'items',
+        heightGetter: function() {
+          return options.itemHeight;
+        },
+        widthGetter: function() {
+          return options.itemWidth;
+        }
+      });
+      spyOn(manager, 'scrollSize').andReturn(options.scrollHeight);
+      spyOn(manager, 'secondaryScrollSize').andReturn(options.scrollWidth);
+      spyOn(manager, 'renderItem').andCallFake(function(i) {
+        manager.renderedItems[i] = true;
+      });
+      spyOn(manager, 'removeItem').andCallFake(function(i) {
+        delete manager.renderedItems[i];
+      });
+      var data = [];
+      for (var i = 0; i < 100; i++) {
+        data.push(i);
+      }
+      manager.dataSource.setData(data);
+      return manager;
+    }
+
+    it('should render the first items that fit on screen', function() {
+      var manager = mockRendering({
+        itemWidth: 3,
+        itemHeight: 20,
+        scrollWidth: 10,
+        scrollHeight: 100
+      });
+      manager.resize(); //triggers render
+
+      //it should render (items that fit * items per row) with one extra row at end
+      expect(Object.keys(manager.renderedItems).length).toBe(18);
+      for (var i = 0; i < 18; i++) {
+        expect(manager.renderedItems[i]).toBe(true);
+      }
+      expect(manager.renderedItems[18]).toBeUndefined();
+    });
+
+    it('should render items in the middle of the screen', function() {
+      var manager = mockRendering({
+        itemWidth: 3,
+        itemHeight: 20,
+        scrollWidth: 10,
+        scrollHeight: 100
+      });
+      spyOn(manager, 'scrollValue').andReturn(111);
+      manager.resize();
+      var startIndex = 17;
+      var bufferStartIndex = 14; //one row of buffer before the start
+      var bufferEndIndex = 35;  //start + 17 + 6
+
+      expect(Object.keys(manager.renderedItems).length).toBe(22);
+      for (var i = bufferStartIndex; i <= bufferEndIndex; i++) {
+        expect(manager.renderedItems[i]).toBe(true);
+      }
+      expect(manager.renderedItems[bufferStartIndex - 1]).toBeUndefined();
+      expect(manager.renderedItems[bufferEndIndex + 1]).toBeUndefined();
+    });
+
+    it('should remove items outside the range', function() {
+      var manager = mockRendering({
+        itemWidth: 3,
+        itemHeight: 20,
+        scrollWidth: 10,
+        scrollHeight: 100
+      });
+      manager.resize();
+      manager.removeItem.reset();
+      manager.renderedItems = { 17: true, 18: true, 19: true };
+      //resize() re-renders everything, need to just do a normal rerender
+      manager.render();
+      expect(manager.removeItem.callCount).toBe(2);
+      expect(manager.removeItem).toHaveBeenCalledWith('18');
+      expect(manager.removeItem).toHaveBeenCalledWith('19');
+    });
   });
 
   describe('.renderItem()', function() {
-    it('should attachItem and set the element transform', function() {
+    it('should attachItemAtIndex and set the element transform', function() {
       var manager = setup();
       var item = {
-        element: [{ style: {} }]
+        element: angular.element('<div>')
       };
-      spyOn(manager.dataSource, 'getItem').andReturn(item);
-      spyOn(manager.dataSource, 'attachItem');
+      spyOn(item.element, 'css');
+      spyOn(manager.dataSource, 'attachItemAtIndex').andReturn(item);
       manager.renderItem(0, 33, 44);
-      expect(manager.dataSource.attachItem).toHaveBeenCalledWith(item);
-      expect(item.element[0].style[ionic.CSS.TRANSFORM])
-        .toEqual(manager.transformString(33, 44));
+      expect(manager.dataSource.attachItemAtIndex).toHaveBeenCalledWith(0);
+      expect(item.element.css).toHaveBeenCalledWith(
+        ionic.CSS.TRANSFORM,
+        manager.transformString(33, 44)
+      );
       expect(manager.renderedItems[0]).toBe(item);
     });
   });
@@ -463,10 +500,9 @@ describe('collectionRepeatManager service', function() {
       var manager = setup();
       var item = {};
       manager.renderedItems[0] = item;
-      spyOn(manager.dataSource, 'getItem').andReturn(item);
+      spyOn(manager, 'removeItem').andCallThrough();
       spyOn(manager.dataSource, 'detachItem');
       manager.removeItem(0);
-      expect(manager.dataSource.detachItem).toHaveBeenCalledWith(item);
       expect(manager.renderedItems).toEqual({});
     });
   });

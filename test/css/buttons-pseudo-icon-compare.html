@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="ionic">
+  <head>
+    <script src="../../dist/js/ionic.bundle.js"></script>
+    <meta charset="utf-8">
+    <title>Buttons</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link href="../../dist/css/ionic.css" rel="stylesheet">
+    <style>
+      body {
+        position: absolute;;
+      }
+    </style>
+  </head>
+  <body>
+
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Buttons: pseudo and &lt;i&gt; icon compare</h1>
+    </header>
+
+    <div class="content has-header">
+
+      <button class="button icon-left ion-home">Default</button> .button.icon-left.ion-home<br>
+      <button class="button"><i class="icon ion-home"></i> Default</button> .button > .icon.ion-home<br>
+
+      <button class="button icon icon-right ion-home">Default</button> .button.icon-right.ion-home<br>
+      <button class="button">Default <i class="icon ion-home"></i></button> .button > .icon.ion-home<br>
+      <button class="button icon-left ion-home">Default</button> .button.icon-left.ion-home<br>
+      <button class="button"><i class="icon ion-home"></i> Default</button> .button > .icon.ion-home<br>
+
+      <button class="button button-small icon icon-left ion-home">Small</button> .button.button-small.icon-left.ion-home<br>
+      <button class="button button-small"><i class="icon ion-home"></i> Small</button> .button.button-small > .icon.ion-home<br>
+
+      <button class="button button-large icon icon-left ion-home">Large</button> .button.button-large.icon-left.ion-home<br>
+      <button class="button button-large"><i class="icon ion-home"></i> Large</button> .button.button-large > .icon.ion-home<br>
+
+      <button class="button icon ion-home"></button> .button.icon.ion-home<br>
+      <button class="button"><i class="icon ion-home"></i></button> .button > .icon.ion-home<br>
+
+      <button class="button button-icon icon ion-home"></button> .button.button-icon.ion-home<br>
+      <button class="button button-icon"><i class="icon ion-home"></i></button> .button > .button-icon.ion-home<br>
+
+    </div>
+
+  </body>
+</html>

@@ -239,6 +239,7 @@ legend {
  * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
  * 4. Remove any default :focus styles
  * 5. Make sure webkit font smoothing is being inherited
+ * 6. Remove default gradient in Android Firefox / FirefoxOS
  */
 
 button,
@@ -252,6 +253,7 @@ textarea {
   outline-style: none; /* 4 */
   outline-width: 0; /* 4 */
   -webkit-font-smoothing: inherit; /* 5 */
+  background-image: none; /* 6 */
 }
 
 /**

@@ -68,30 +68,57 @@
 
   &.bar-light {
     @include bar-style($bar-light-bg, $bar-light-border, $bar-light-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-light-border, $bar-light-border 50%, transparent 50%);
+    }
   }
   &.bar-stable {
     @include bar-style($bar-stable-bg, $bar-stable-border, $bar-stable-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-stable-border, $bar-stable-border 50%, transparent 50%);
+    }
   }
   &.bar-positive {
     @include bar-style($bar-positive-bg, $bar-positive-border, $bar-positive-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-positive-border, $bar-positive-border 50%, transparent 50%);
+    }
   }
   &.bar-calm {
     @include bar-style($bar-calm-bg, $bar-calm-border, $bar-calm-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-calm-border, $bar-calm-border 50%, transparent 50%);
+    }
   }
   &.bar-assertive {
     @include bar-style($bar-assertive-bg, $bar-assertive-border, $bar-assertive-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-assertive-border, $bar-assertive-border 50%, transparent 50%);
+    }
   }
   &.bar-balanced {
     @include bar-style($bar-balanced-bg, $bar-balanced-border, $bar-balanced-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-balanced-border, $bar-positive-border 50%, transparent 50%);
+    }
   }
   &.bar-energized {
     @include bar-style($bar-energized-bg, $bar-energized-border, $bar-energized-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-energized-border, $bar-energized-border 50%, transparent 50%);
+    }
   }
   &.bar-royal {
     @include bar-style($bar-royal-bg, $bar-royal-border, $bar-royal-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-royal-border, $bar-royal-border 50%, transparent 50%);
+    }
   }
   &.bar-dark {
     @include bar-style($bar-dark-bg, $bar-dark-border, $bar-dark-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-dark-border, $bar-dark-border 50%, transparent 50%);
+    }
   }
 
   // Title inside of a bar is centered
@@ -107,6 +134,7 @@
     margin: 0 10px;
 
     min-width: 30px;
+    height: $bar-height - 1;
 
     text-align: center;
 
@@ -135,8 +163,8 @@
     padding: 0 $button-bar-button-padding;
     min-width: initial;
     min-height: $button-bar-button-height - 1;
-    font-size: $button-bar-button-font-size;
     font-weight: 400;
+    font-size: $button-bar-button-font-size;
     line-height: $button-bar-button-height;
 
     &.button-icon:before,
@@ -162,10 +190,10 @@
       }
     }
     &.button-clear {
-      font-size: $bar-title-font-size;
-      font-weight: 300;
       padding-right: 2px;
       padding-left: 2px;
+      font-weight: 300;
+      font-size: $bar-title-font-size;
 
       .icon:before,
       &.icon:before,
@@ -173,6 +201,16 @@
       &.icon-right:before {
         font-size: $button-large-icon-size;
         line-height: $button-bar-button-height;
+      }
+    }
+
+    &.back-button {
+      padding: 0;
+      opacity: 0.8;
+      .back-button-title {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 4px;
       }
     }
 
@@ -193,6 +231,12 @@
     margin-left: 5px;
   }
 
+  // Android 4.4 messes with the display property
+  .buttons,
+  .buttons.left-buttons,
+  .buttons.right-buttons {
+    display: inherit;
+  }
   // Place the last button in a bar on the right of the bar
   .title + .button:last-child,
   > .button + .button:last-child,
@@ -276,6 +320,10 @@
   border-top-width: 1px;
   border-bottom-width: 0;
   background-position: top;
+
+  &.item-input-inset {
+    position: absolute;
+  }
 }
 
 // Don't render padding if the bar is just for tabs

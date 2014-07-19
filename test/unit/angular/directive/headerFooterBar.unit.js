@@ -1,12 +1,12 @@
 describe('bar directives', function() {
   beforeEach(module('ionic'));
 
-  ['<ion-header-bar>', '<ion-nav-bar>'].forEach(function(tpl) {
+  ['ion-header-bar', 'ion-nav-bar'].forEach(function(tpl) {
     describe('tapScrollToTop ' + tpl, function() {
-      function setup() {
+      function setup(attrs) {
         var el;
         inject(function($compile, $rootScope) {
-          el = angular.element(tpl);
+          el = angular.element('<' + tpl + ' ' + (attrs||'') + '>');
           var container = angular.element('<ion-content>').append(el);
           ionic.requestAnimationFrame = function(cb) { cb(); };
           $compile(container)($rootScope.$new());
@@ -15,6 +15,12 @@ describe('bar directives', function() {
         });
         return el;
       }
+      it('should not listen for tap if attr.noTapScroll', function() {
+        spyOn(ionic, 'on');
+        setup('no-tap-scroll="true"');
+        expect(ionic.on).not.toHaveBeenCalledWith('tap');
+      });
+
       it('should listen for tap, unlisten on destroy', function() {
         var callback;
         spyOn(ionic, 'on').andCallFake(function(name, cb) {
@@ -22,10 +28,12 @@ describe('bar directives', function() {
         });
         spyOn(ionic, 'off');
         var el = setup();
-        expect(ionic.on).toHaveBeenCalledWith('tap', jasmine.any(Function), el[0]);
+        expect(ionic.on.mostRecentCall.args[0]).toBe('tap');
         expect(ionic.off).not.toHaveBeenCalled();
         el.scope().$destroy();
-        expect(ionic.off).toHaveBeenCalledWith('tap', callback, el[0]);
+        expect(ionic.off.mostRecentCall.args[0]).toBe('tap');
+        expect(ionic.off.mostRecentCall.args[1]).toBe(callback);
+        expect(ionic.off.mostRecentCall.args[2]).toBe(el[0]);
       });
       ['input','textarea','select'].forEach(function(tag) {
         it('should ignore tap if it\'s in a ' + tag, function() {
@@ -84,7 +92,8 @@ describe('bar directives', function() {
       function setup(attrs) {
         var el;
         ionic.views.HeaderBar = function(opts) {
-          this.opts = opts;
+          this.alignTitle = opts.alignTitle;
+          this.el = opts.el;
           this.align = jasmine.createSpy('align');
         };
         inject(function($compile, $rootScope) {
@@ -109,6 +118,14 @@ describe('bar directives', function() {
           scope.$apply();
           expect(scope.$hasHeader).toEqual(true);
           expect(scope.$hasSubheader).toEqual(false);
+          el.addClass('ng-hide');
+          scope.$apply();
+          expect(scope.$hasHeader).toEqual(false);
+          expect(scope.$hasSubheader).toEqual(false);
+          el.removeClass('ng-hide');
+          scope.$apply();
+          expect(scope.$hasHeader).toEqual(true);
+          expect(scope.$hasSubheader).toEqual(false);
         });
       } else {
         it('$hasFooter $hasSubheader', function() {
@@ -121,6 +138,14 @@ describe('bar directives', function() {
           expect(scope.$hasFooter).toEqual(false);
           expect(scope.$hasSubfooter).toEqual(true);
           el.removeClass('bar-subfooter');
+          scope.$apply();
+          expect(scope.$hasFooter).toEqual(true);
+          expect(scope.$hasSubfooter).toEqual(false);
+          el.addClass('ng-hide');
+          scope.$apply();
+          expect(scope.$hasFooter).toEqual(false);
+          expect(scope.$hasSubfooter).toEqual(false);
+          el.removeClass('ng-hide');
           scope.$apply();
           expect(scope.$hasFooter).toEqual(true);
           expect(scope.$hasSubfooter).toEqual(false);

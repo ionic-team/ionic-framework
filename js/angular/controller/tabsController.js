@@ -68,7 +68,7 @@ function($scope, $ionicViewService, $element) {
         $ionicViewService.goToHistoryRoot(tab.$historyId);
       }
     } else {
-      angular.forEach(self.tabs, function(tab) {
+      forEach(self.tabs, function(tab) {
         self.deselect(tab);
       });
 

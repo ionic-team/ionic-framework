@@ -18,18 +18,20 @@
  * Here are a few things to keep in mind while using collection-repeat:
  *
  * 1. The data supplied to collection-repeat must be an array.
- * 2. You must explicitly tell the directive what size your items will be in the DOM
- * (pixel amount or percentage), using directive attributes (see below).
- * 3. The elements rendered will be absolutely positioned: be sure to let your CSS work with this (see below).
- * 4. Keep the HTML of your repeated elements as simple as possible. As the user scrolls down, elements
- * will be lazily compiled. Resultingly, the more complicated your elements, the more likely it is that
- * the on-demand compilation will cause jankiness in the user's scrolling.
- * 5. The more elements you render on the screen at a time, the slower the scrolling will be.
- * It is recommended to keep grids of collection-repeat list elements at 3-wide or less.
+ * 2. You must explicitly tell the directive what size your items will be in the DOM, using directive attributes.
+ * Pixel amounts or percentages are allowed (see below).
+ * 3. The elements rendered will be absolutely positioned: be sure to let your CSS work with
+ * this (see below).
+ * 4. Keep the HTML of your repeated elements as simple as possible.
+ * The more complicated your elements, the more likely it is that the on-demand compilation will cause
+ * some jerkiness in the user's scrolling.
  * 6. Each collection-repeat list will take up all of its parent scrollView's space.
  * If you wish to have multiple lists on one page, put each list within its own
  * {@link ionic.directive:ionScroll ionScroll} container.
- *
+ * 7. You should not use the ng-show and ng-hide directives on your ion-content/ion-scroll elements that
+ * have a collection-repeat inside.  ng-show and ng-hide apply the `display: none` css rule to the content's
+ * style, causing the scrollView to read the width and height of the content as 0.  Resultingly,
+ * collection-repeat will render elements that have just been un-hidden incorrectly.
  *
  *
  * @usage
@@ -86,8 +88,9 @@
  *   </div>
  * </ion-content>
  * ```
+ * Percentage of total visible list dimensions. This example shows a 3 by 3 matrix that fits on the screen (3 rows and 3 colums). Note that dimensions are used in the creation of the element and therefore a measurement of the item cannnot be used as an input dimension.
  * ```css
- * .my-image-item {
+ * .my-image-item img {
  *   height: 33%;
  *   width: 33%;
  * }
@@ -127,7 +130,17 @@
  * @param {expression} collection-item-height The height of the repeated element.  Can be a number (in pixels), or a percentage.
  *
  */
+var COLLECTION_REPEAT_SCROLLVIEW_XY_ERROR = "Cannot create a collection-repeat within a scrollView that is scrollable on both x and y axis.  Choose either x direction or y direction.";
+var COLLECTION_REPEAT_ATTR_HEIGHT_ERROR = "collection-repeat expected attribute collection-item-height to be a an expression that returns a number (in pixels) or percentage.";
+var COLLECTION_REPEAT_ATTR_WIDTH_ERROR = "collection-repeat expected attribute collection-item-width to be a an expression that returns a number (in pixels) or percentage.";
+var COLLECTION_REPEAT_ATTR_REPEAT_ERROR = "collection-repeat expected expression in form of '_item_ in _collection_[ track by _id_]' but got '%'";
+
 IonicModule
+.directive({
+  ngSrc: collectionRepeatSrcDirective('ngSrc', 'src'),
+  ngSrcset: collectionRepeatSrcDirective('ngSrcset', 'srcset'),
+  ngHref: collectionRepeatSrcDirective('ngHref', 'href')
+})
 .directive('collectionRepeat', [
   '$collectionRepeatManager',
   '$collectionDataSource',
@@ -139,38 +152,33 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
     terminal: true,
     $$tlb: true,
     require: '^$ionicScroll',
+    controller: [function(){}],
     link: function($scope, $element, $attr, scrollCtrl, $transclude) {
       var scrollView = scrollCtrl.scrollView;
       if (scrollView.options.scrollingX && scrollView.options.scrollingY) {
-        throw new Error("Cannot create a collection-repeat within a scrollView that is scrollable on both x and y axis.  Choose either x direction or y direction.");
+        throw new Error(COLLECTION_REPEAT_SCROLLVIEW_XY_ERROR);
       }
 
       var isVertical = !!scrollView.options.scrollingY;
       if (isVertical && !$attr.collectionItemHeight) {
-        throw new Error("collection-repeat expected attribute collection-item-height to be a an expression that returns a number.");
+        throw new Error(COLLECTION_REPEAT_ATTR_HEIGHT_ERROR);
       } else if (!isVertical && !$attr.collectionItemWidth) {
-        throw new Error("collection-repeat expected attribute collection-item-width to be a an expression that returns a number.");
+        throw new Error(COLLECTION_REPEAT_ATTR_WIDTH_ERROR);
       }
-      $attr.collectionItemHeight = $attr.collectionItemHeight || '"100%"';
-      $attr.collectionItemWidth = $attr.collectionItemWidth || '"100%"';
 
-      var heightParsed = $attr.collectionItemHeight ?
-        $parse($attr.collectionItemHeight) :
-        function() { return scrollView.__clientHeight; };
-      var widthParsed = $attr.collectionItemWidth ?
-        $parse($attr.collectionItemWidth) :
-        function() { return scrollView.__clientWidth; };
+      var heightParsed = $parse($attr.collectionItemHeight || '"100%"');
+      var widthParsed = $parse($attr.collectionItemWidth || '"100%"');
 
       var heightGetter = function(scope, locals) {
         var result = heightParsed(scope, locals);
-        if (angular.isString(result) && result.indexOf('%') > -1) {
+        if (isString(result) && result.indexOf('%') > -1) {
           return Math.floor(parseInt(result, 10) / 100 * scrollView.__clientHeight);
         }
         return result;
       };
       var widthGetter = function(scope, locals) {
         var result = widthParsed(scope, locals);
-        if (angular.isString(result) && result.indexOf('%') > -1) {
+        if (isString(result) && result.indexOf('%') > -1) {
           return Math.floor(parseInt(result, 10) / 100 * scrollView.__clientWidth);
         }
         return result;
@@ -178,16 +186,20 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
 
       var match = $attr.collectionRepeat.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
       if (!match) {
-        throw new Error("collection-repeat expected expression in form of '_item_ in _collection_[ track by _id_]' but got '" + $attr.collectionRepeat + "'.");
+        throw new Error(COLLECTION_REPEAT_ATTR_REPEAT_ERROR
+                        .replace('%', $attr.collectionRepeat));
       }
+      var keyExpr = match[1];
+      var listExpr = match[2];
+      var trackByExpr = match[3];
 
       var dataSource = new $collectionDataSource({
         scope: $scope,
         transcludeFn: $transclude,
         transcludeParent: $element.parent(),
-        keyExpr: match[1],
-        listExpr: match[2],
-        trackByExpr: match[3],
+        keyExpr: keyExpr,
+        listExpr: listExpr,
+        trackByExpr: trackByExpr,
         heightGetter: heightGetter,
         widthGetter: widthGetter
       });
@@ -197,7 +209,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         scrollView: scrollCtrl.scrollView,
       });
 
-      $scope.$watchCollection(dataSource.listExpr, function(value) {
+      $scope.$watchCollection(listExpr, function(value) {
         if (value && !angular.isArray(value)) {
           throw new Error("collection-repeat expects an array to repeat over, but instead got '" + typeof value + "'.");
         }
@@ -209,16 +221,42 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         dataSource.setData(value);
         collectionRepeatManager.resize();
       }
-      var resize = angular.bind(collectionRepeatManager, collectionRepeatManager.resize);
-      ionic.on('resize', function() {
-        rerender($scope.$eval(dataSource.listExpr));
-      }, window);
+      function onWindowResize() {
+        rerender($scope.$eval(listExpr));
+      }
+
+      ionic.on('resize', onWindowResize, window);
 
       $scope.$on('$destroy', function() {
         collectionRepeatManager.destroy();
         dataSource.destroy();
-        ionic.off('resize', resize, window);
+        ionic.off('resize', onWindowResize, window);
       });
     }
   };
 }]);
+
+// Fix for #1674
+// Problem: if an ngSrc or ngHref expression evaluates to a falsy value, it will 
+// not erase the previous truthy value of the href.
+// In collectionRepeat, we re-use elements from before. So if the ngHref expression
+// evaluates to truthy for item 1 and then falsy for item 2, if an element changes
+// from representing item 1 to representing item 2, item 2 will still have
+// item 1's href value.
+// Solution:  erase the href or src attribute if ngHref/ngSrc are falsy.
+function collectionRepeatSrcDirective(ngAttrName, attrName) {
+  return [function() {
+    return {
+      priority: '99', // it needs to run after the attributes are interpolated
+      require: '^?collectionRepeat',
+      link: function(scope, element, attr, collectionRepeatCtrl) {
+        if (!collectionRepeatCtrl) return;
+        attr.$observe(ngAttrName, function(value) {
+          if (!value) {
+            element.removeAttr(attrName);
+          }
+        });
+      }
+    };
+  }];
+}

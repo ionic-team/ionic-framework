@@ -21,7 +21,7 @@ function($compile, $controller, $http, $q, $rootScope, $templateCache) {
   }
 
   function loadAndCompile(options) {
-    options = angular.extend({
+    options = extend({
       template: '',
       templateUrl: '',
       scope: null,
@@ -39,19 +39,19 @@ function($compile, $controller, $http, $q, $rootScope, $templateCache) {
       var scope = options.scope || $rootScope.$new();
 
       //Incase template doesn't have just one root element, do this
-      var element = angular.element('<div>').html(template).contents();
+      var element = jqLite('<div>').html(template).contents();
 
       if (options.controller) {
         controller = $controller(
           options.controller,
-          angular.extend(options.locals, {
+          extend(options.locals, {
             $scope: scope
           })
         );
         element.children().data('$ngControllerController', controller);
       }
       if (options.appendTo) {
-        angular.element(options.appendTo).append(element);
+        jqLite(options.appendTo).append(element);
       }
 
       $compile(element)(scope);

@@ -13,7 +13,9 @@ IonicModule
  */
 .factory('$ionicNgClick', ['$parse', function($parse) {
   return function(scope, element, clickExpr) {
-    var clickHandler = $parse(clickExpr);
+    var clickHandler = angular.isFunction(clickExpr) ?
+      clickExpr :
+      $parse(clickExpr);
 
     element.on('click', function(event) {
       scope.$apply(function() {

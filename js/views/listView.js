@@ -88,9 +88,9 @@
 
     if(!lastDrag) return;
 
+    lastDrag.content.style[ionic.CSS.TRANSITION] = '';
+    lastDrag.content.style[ionic.CSS.TRANSFORM] = '';
     ionic.requestAnimationFrame(function() {
-      lastDrag.content.style[ionic.CSS.TRANSITION] = '';
-      lastDrag.content.style[ionic.CSS.TRANSFORM] = '';
       setTimeout(function() {
         lastDrag.buttons && lastDrag.buttons.classList.add('invisible');
       }, 250);
@@ -186,15 +186,24 @@
     this.el = opts.el;
     this.scrollEl = opts.scrollEl;
     this.scrollView = opts.scrollView;
+    // Get the True Top of the list el http://www.quirksmode.org/js/findpos.html
+    this.listElTrueTop = 0;
+    if (this.listEl.offsetParent) {
+      var obj = this.listEl;
+      do {
+        this.listElTrueTop += obj.offsetTop;
+        obj = obj.offsetParent;
+      } while (obj);
+    }
   };
 
   ReorderDrag.prototype = new DragOp();
 
   ReorderDrag.prototype._moveElement = function(e) {
-    var y = e.gesture.center.pageY -
-      this._currentDrag.elementHeight + 
+    var y = e.gesture.center.pageY +
       this.scrollView.getValues().top -
-      this.listEl.offsetTop;
+      (this._currentDrag.elementHeight / 2) -
+      this.listElTrueTop;
     this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(0, '+y+'px, 0)';
   };
 
@@ -223,17 +232,19 @@
 
   ReorderDrag.prototype.drag = ionic.animationFrameThrottle(function(e) {
     // We really aren't dragging
+    var self = this;
     if(!this._currentDrag) {
       return;
     }
 
     var scrollY = 0;
     var pageY = e.gesture.center.pageY;
+    var offset = this.listElTrueTop;
 
     //If we have a scrollView, check scroll boundaries for dragged element and scroll if necessary
     if (this.scrollView) {
-      var container = this.scrollEl;
 
+      var container = this.scrollView.__container;
       scrollY = this.scrollView.getValues().top;
 
       var containerTop = container.offsetTop;
@@ -242,10 +253,18 @@
 
       if (e.gesture.deltaY < 0 && pixelsPastTop > 0 && scrollY > 0) {
         this.scrollView.scrollBy(null, -pixelsPastTop);
+        //Trigger another drag so the scrolling keeps going
+        ionic.requestAnimationFrame(function() {
+          self.drag(e);
+        });
       }
       if (e.gesture.deltaY > 0 && pixelsPastBottom > 0) {
         if (scrollY < this.scrollView.getScrollMax().top) {
           this.scrollView.scrollBy(null, pixelsPastBottom);
+          //Trigger another drag so the scrolling keeps going
+          ionic.requestAnimationFrame(function() {
+            self.drag(e);
+          });
         }
       }
     }
@@ -259,33 +278,39 @@
     if(this._isDragging) {
       this._moveElement(e);
 
-      this._currentDrag.currentY = scrollY + pageY - this._currentDrag.placeholder.parentNode.offsetTop;
+      this._currentDrag.currentY = scrollY + pageY - offset;
 
-      this._reorderItems();
+      // this._reorderItems();
     }
   });
 
   // When an item is dragged, we need to reorder any items for sorting purposes
-  ReorderDrag.prototype._reorderItems = function() {
+  ReorderDrag.prototype._getReorderIndex = function() {
     var self = this;
     var placeholder = this._currentDrag.placeholder;
     var siblings = Array.prototype.slice.call(this._currentDrag.placeholder.parentNode.children)
       .filter(function(el) {
-        return el !== self.el;
+        return el.nodeName === self.el.nodeName && el !== self.el;
       });
 
-    var index = siblings.indexOf(this._currentDrag.placeholder);
-    var topSibling = siblings[Math.max(0, index - 1)];
-    var bottomSibling = siblings[Math.min(siblings.length, index+1)];
-    var thisOffsetTop = this._currentDrag.currentY;// + this._currentDrag.startOffsetTop;
-
-    if(topSibling && (thisOffsetTop < topSibling.offsetTop + topSibling.offsetHeight/2)) {
-      ionic.DomUtil.swapNodes(this._currentDrag.placeholder, topSibling);
-      return index - 1;
-    } else if(bottomSibling && thisOffsetTop > (bottomSibling.offsetTop + bottomSibling.offsetHeight/2)) {
-      ionic.DomUtil.swapNodes(bottomSibling, this._currentDrag.placeholder);
-      return index + 1;
+    var dragOffsetTop = this._currentDrag.currentY;
+    var el;
+    for (var i = 0, len = siblings.length; i < len; i++) {
+      el = siblings[i];
+      if (i === len - 1) {
+        if (dragOffsetTop > el.offsetTop) {
+          return i;
+        }
+      } else if (i === 0) {
+        if (dragOffsetTop < el.offsetTop + el.offsetHeight) {
+          return i;
+        }
+      } else if (dragOffsetTop > el.offsetTop - el.offsetHeight / 2 &&
+                 dragOffsetTop < el.offsetTop + el.offsetHeight * 1.5) {
+        return i;
+      }
     }
+    return this._currentDrag.startIndex;
   };
 
   ReorderDrag.prototype.end = function(e, doneCallback) {
@@ -295,7 +320,7 @@
     }
 
     var placeholder = this._currentDrag.placeholder;
-    var finalPosition = ionic.DomUtil.getChildIndex(placeholder, placeholder.nodeName.toLowerCase());
+    var finalIndex = this._getReorderIndex();
 
     // Reposition the element
     this.el.classList.remove(ITEM_REORDERING_CLASS);
@@ -304,7 +329,7 @@
     placeholder.parentNode.insertBefore(this.el, placeholder);
     placeholder.parentNode.removeChild(placeholder);
 
-    this.onReorder && this.onReorder(this.el, this._currentDrag.startIndex, finalPosition);
+    this.onReorder && this.onReorder(this.el, this._currentDrag.startIndex, finalIndex);
 
     this._currentDrag = null;
     doneCallback && doneCallback();
@@ -457,10 +482,11 @@
       this._isDragging = false;
 
       var lastDragOp = this._lastDragOp;
+      var item;
 
       // Check if this is a reorder drag
       if(ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_REORDER_BTN_CLASS) && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
-        var item = this._getItem(e.target);
+        item = this._getItem(e.target);
 
         if(item) {
           this._dragOp = new ReorderDrag({
@@ -481,7 +507,7 @@
       else if(!this._didDragUpOrDown && (e.gesture.direction == 'left' || e.gesture.direction == 'right') && Math.abs(e.gesture.deltaX) > 5) {
 
         // Make sure this is an item with buttons
-        var item = this._getItem(e.target);
+        item = this._getItem(e.target);
         if(item && item.querySelector('.item-options')) {
           this._dragOp = new SlideDrag({ el: this.el, canSwipe: this.canSwipe });
           this._dragOp.start(e);

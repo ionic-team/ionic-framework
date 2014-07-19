@@ -1,3 +1,7 @@
+IonicModule.constant('$ionicTabConfig', {
+  type: ''
+});
+
 /**
  * @ngdoc directive
  * @name ionTab
@@ -64,11 +68,13 @@ function($rootScope, $animate, $ionicBind, $compile) {
         attrStr('icon-off', attr.iconOff) +
         attrStr('badge', attr.badge) +
         attrStr('badge-style', attr.badgeStyle) +
+        attrStr('hidden', attr.hidden) +
+        attrStr('class', attr['class']) +
         '></ion-tab-nav>';
 
       //Remove the contents of the element so we can compile them later, if tab is selected
       //We don't use regular transclusion because it breaks element inheritance
-      var tabContent = angular.element('<div class="pane">')
+      var tabContent = jqLite('<div class="pane">')
         .append( element.contents().remove() );
 
       return function link($scope, $element, $attr, ctrls) {
@@ -111,7 +117,7 @@ function($rootScope, $animate, $ionicBind, $compile) {
           }
         }
 
-        var tabNavElement = angular.element(tabNavTemplate);
+        var tabNavElement = jqLite(tabNavTemplate);
         tabNavElement.data('$ionTabsController', tabsCtrl);
         tabNavElement.data('$ionTabController', tabCtrl);
         tabsCtrl.$tabsElement.append($compile(tabNavElement)($scope));

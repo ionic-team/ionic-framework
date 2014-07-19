@@ -391,7 +391,7 @@
       }
       // make fake touchlist from mouse position
       else {
-        ev.indentifier = 1;
+        ev.identifier = 1;
         return [ev];
       }
     },
@@ -1030,6 +1030,7 @@
           // we trigger the hold event
           this.timer = setTimeout(function() {
             if(ionic.Gestures.detection.current.name == 'hold') {
+              ionic.tap.cancelClick();
               inst.trigger('hold', ev);
             }
           }, inst.options.hold_timeout);
@@ -1089,7 +1090,7 @@
         // do a single tap
         if(!did_doubletap || inst.options.tap_always) {
           ionic.Gestures.detection.current.name = 'tap';
-          inst.trigger(ionic.Gestures.detection.current.name, ev);
+          inst.trigger('tap', ev);
         }
       }
     }

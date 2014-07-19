@@ -10,6 +10,12 @@
   @include box-sizing(border-box);
 }
 
+html {
+  overflow: hidden;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
+}
+
 body,
 .ionic-body {
   @include touch-callout(none);
@@ -63,9 +69,14 @@ body.grade-c {
   height: auto;
 }
 
+.scroll-content-false,
+.menu .scroll-content.scroll-content-false{
+  z-index: $z-index-scroll-content-false;
+}
+
 .scroll-view {
-  display: block;
   position: relative;
+  display: block;
   overflow: hidden;
 
   // Hide the top border if any
@@ -81,7 +92,6 @@ body.grade-c {
   @include touch-callout(none);
   @include text-size-adjust(none);
   @include transform-origin(left, top);
-  -webkit-backface-visibility: hidden;
 }
 
 // Scroll bar styles
@@ -179,8 +189,11 @@ body.grade-c {
 
     .text-refreshing,
     .text-pulling {
-      line-height: 16px;
       font-size: 16px;
+      line-height: 16px;
+    }
+    &.ionic-refresher-with-text {
+      bottom: 10px;
     }
   }
 
@@ -193,12 +206,12 @@ body.grade-c {
     transform-style: preserve-3d;
   }
   .icon-pulling {
-    -webkit-transform: translate3d(0,0,0) rotate(0deg);
-    transform: translate3d(0,0,0) rotate(0deg);
     @include animation-name(refresh-spin-back);
     @include animation-duration(200ms);
     @include animation-timing-function(linear);
     @include animation-fill-mode(none);
+    -webkit-transform: translate3d(0,0,0) rotate(0deg);
+    transform: translate3d(0,0,0) rotate(0deg);
   }
   .icon-refreshing,
   .text-refreshing {
@@ -295,6 +308,9 @@ ion-infinite-scroll.active .scroll-infinite {
 
 .has-footer {
   bottom: $bar-height;
+}
+.has-subfooter {
+  bottom: $bar-height * 2;
 }
 
 .has-tabs,

@@ -5,7 +5,7 @@ IonicModule
     replace: true,
     require: ['^ionTabs', '^ionTab'],
     template:
-    '<a ng-class="{\'tab-item-active\': isTabActive(), \'has-badge\':badge}" ' +
+    '<a ng-class="{\'tab-item-active\': isTabActive(), \'has-badge\':badge, \'tab-hidden\':isHidden()}" ' +
       ' class="tab-item">' +
       '<span class="badge {{badgeStyle}}" ng-if="badge">{{badge}}</span>' +
       '<i class="icon {{getIconOn()}}" ng-if="getIconOn() && isTabActive()"></i>' +
@@ -18,7 +18,9 @@ IonicModule
       iconOn: '@',
       iconOff: '@',
       badge: '=',
-      badgeStyle: '@'
+      hidden: '@',
+      badgeStyle: '@',
+      'class': '@'
     },
     compile: function(element, attr, transclude) {
       return function link($scope, $element, $attrs, ctrls) {
@@ -39,6 +41,11 @@ IonicModule
             });
           });
         }
+
+        $scope.isHidden = function() {
+          if($attrs.hidden === 'true' || $attrs.hidden === true)return true;
+          return false;
+        };
 
         $scope.getIconOn = function() {
           return $scope.iconOn || $scope.icon;

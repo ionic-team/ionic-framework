@@ -1,10 +1,17 @@
-<html>
+<!DOCTYPE html>
+<html ng-app="ionic">
   <head>
+    <script src="../../dist/js/ionic.bundle.js"></script>
     <meta charset="utf-8">
     <title>Input: Select</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <link href="../../dist/css/ionic.css" rel="stylesheet">
     <script src="../../dist/js/ionic.bundle.js"></script>
+    <style>
+      body {
+        position: absolute;;
+      }
+    </style>
   </head>
   <body>
 
@@ -13,89 +20,6 @@
     </header>
 
     <main class="content has-header padding">
-
-      <p>
-        <select>
-          <option>Unstyled select element</option>
-          <option>Unstyled select element</option>
-          <option>Unstyled select element</option>
-        </select>
-      </p>
-
-      <p>
-        <span class="select-inline">
-          <select>
-            <option>HTML</option>
-            <option>CSS</option>
-            <option>JavaScript</option>
-          </select>
-        </span>
-      </p>
-
-      <p>
-        <span class="select-inline">
-          <select>
-            <option>January</option>
-            <option>February</option>
-            <option>March</option>
-            <option>April</option>
-            <option>May</option>
-            <option>June</option>
-            <option>July</option>
-            <option>August</option>
-            <option>September</option>
-            <option>October</option>
-            <option>November</option>
-            <option>December</option>
-          </select>
-        </span>
-        <span class="select-inline">
-          <select>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
-            <option>11</option>
-            <option>12</option>
-            <option>13</option>
-            <option>14</option>
-            <option>15</option>
-            <option>16</option>
-            <option>17</option>
-            <option>18</option>
-            <option>19</option>
-            <option>20</option>
-            <option>21</option>
-            <option>22</option>
-            <option>23</option>
-            <option>24</option>
-            <option>25</option>
-            <option>26</option>
-            <option>27</option>
-            <option>28</option>
-            <option>29</option>
-            <option>30</option>
-            <option>31</option>
-          </select>
-        </span>
-        <span class="select-inline">
-          <select>
-            <option>2014</option>
-            <option>2015</option>
-            <option>2016</option>
-            <option>2017</option>
-            <option>2018</option>
-            <option>2019</option>
-            <option>2020</option>
-          </select>
-        </span>
-      </p>
 
       <div class="list">
 
@@ -157,11 +81,117 @@
             <option>Yavin</option>
           </select>
         </div>
-
-      </div>
-
-      <div class="margin">
-        <p><a class="button button-secondary" href="./">All CSS Tests</a></p>
+        <div class="item item-input item-select">
+          <div class="input-label">
+            Jedi - For over a thousand generations, the Jedi Knights were the guardians of peace and justice in the Old Republic.
+          </div>
+          <select>
+            <option>Yoda</option>
+            <option>Obi-Wan Kenobi</option>
+            <option>Qui-Gon Jinn</option>
+            <option>Mace Windu</option>
+            <option>Luke Skywalker</option>
+          </select>
+        </div>
+        <div class="item item-input item-select item-light">
+          <div class="input-label">
+            Sith - Those who have twisted the force to their malevolent purposes
+          </div>
+          <select>
+            <option>Emperor Palpatine</option>
+            <option>Darth Vader</option>
+            <option>Count Dooku</option>
+            <option>Darth Maul</option>
+          </select>
+        </div>
+        <div class="item item-input item-select item-stable">
+          <div class="input-label">
+            Sith - Those who have twisted the force to their malevolent purposes
+          </div>
+          <select>
+            <option>Emperor Palpatine</option>
+            <option>Darth Vader</option>
+            <option>Count Dooku</option>
+            <option>Darth Maul</option>
+          </select>
+        </div>
+        <div class="item item-input item-select item-positive">
+          <div class="input-label">
+            Sith - Those who have twisted the force to their malevolent purposes
+          </div>
+          <select>
+            <option>Emperor Palpatine</option>
+            <option>Darth Vader</option>
+            <option>Count Dooku</option>
+            <option>Darth Maul</option>
+          </select>
+        </div>
+        <div class="item item-input item-select item-calm">
+          <div class="input-label">
+            Sith - Those who have twisted the force to their malevolent purposes
+          </div>
+          <select>
+            <option>Emperor Palpatine</option>
+            <option>Darth Vader</option>
+            <option>Count Dooku</option>
+            <option>Darth Maul</option>
+          </select>
+        </div>
+        <div class="item item-input item-select item-assertive">
+          <div class="input-label">
+            Sith - Those who have twisted the force to their malevolent purposes
+          </div>
+          <select>
+            <option>Emperor Palpatine</option>
+            <option>Darth Vader</option>
+            <option>Count Dooku</option>
+            <option>Darth Maul</option>
+          </select>
+        </div>
+        <div class="item item-input item-select item-balanced">
+          <div class="input-label">
+            Sith - Those who have twisted the force to their malevolent purposes
+          </div>
+          <select>
+            <option>Emperor Palpatine</option>
+            <option>Darth Vader</option>
+            <option>Count Dooku</option>
+            <option>Darth Maul</option>
+          </select>
+        </div>
+        <div class="item item-input item-select item-energized">
+          <div class="input-label">
+            Sith - Those who have twisted the force to their malevolent purposes
+          </div>
+          <select>
+            <option>Emperor Palpatine</option>
+            <option>Darth Vader</option>
+            <option>Count Dooku</option>
+            <option>Darth Maul</option>
+          </select>
+        </div>
+        <div class="item item-input item-select item-royal">
+          <div class="input-label">
+            Sith - Those who have twisted the force to their malevolent purposes
+          </div>
+          <select>
+            <option>Emperor Palpatine</option>
+            <option>Darth Vader</option>
+            <option>Count Dooku</option>
+            <option>Darth Maul</option>
+          </select>
+        </div>
+        <div class="item item-input item-select item-dark">
+          <div class="input-label">
+            Sith - Those who have twisted the force to their malevolent purposes
+          </div>
+          <select>
+            <option>Emperor Palpatine</option>
+            <option>Darth Vader</option>
+            <option>Count Dooku</option>
+            <option>Darth Maul</option>
+          </select>
+        </div>
       </div>
 
     </main>

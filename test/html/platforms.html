@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html ng-app="navState">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <title>Platforms</title>
+
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <style>
+/**
+ * Some component specific animations
+ */
+.nav-title-fade-only:not(.no-animation) .button.back-button {
+  -webkit-transition: all 340ms;
+  -moz-transition: all 340ms;
+  transition: all 340ms;
+  -webkit-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
+  -moz-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
+  transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
+  opacity: 1; }
+  .nav-title-fade-only:not(.no-animation) .button.back-button.active, .nav-title-fade-only:not(.no-animation) .button.back-button.activated {
+    opacity: 0.5; }
+  .nav-title-fade-only:not(.no-animation) .button.back-button.ng-hide {
+    opacity: 0; }
+  .nav-title-fade-only:not(.no-animation) .button.back-button.ng-hide-add, .nav-title-fade-only:not(.no-animation) .button.back-button.ng-hide-remove {
+    display: block !important; }
+  .nav-title-fade-only:not(.no-animation) .button.back-button.ng-hide-add {
+    position: absolute; }
+.nav-title-fade-only > .ng-enter, .nav-title-fade-only.ng-enter, .nav-title-fade-only > .ng-leave, .nav-title-fade-only.ng-leave {
+  -webkit-transition: all 340ms;
+  -moz-transition: all 340ms;
+  transition: all 340ms;
+  -webkit-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
+  -moz-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
+  transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
+  opacity: 1; }
+.nav-title-fade-only > .ng-enter, .nav-title-fade-only.ng-enter {
+  opacity: 0; }
+.nav-title-fade-only > .ng-enter.ng-enter-active, .nav-title-fade-only.ng-enter.ng-enter-active {
+  opacity: 1; }
+.nav-title-fade-only > .ng-leave.ng-leave-active, .nav-title-fade-only.ng-leave.ng-leave-active {
+  opacity: 0; }
+.nav-title-fade-only.reverse > .ng-enter, .nav-title-fade-only.reverse.ng-enter, .nav-title-fade-only.reverse > .ng-leave, .nav-title-fade-only.reverse.ng-leave {
+  -webkit-transition: all 340ms;
+  -moz-transition: all 340ms;
+  transition: all 340ms;
+  -webkit-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
+  -moz-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
+  transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
+  opacity: 1; }
+.nav-title-fade-only.reverse > .ng-enter, .nav-title-fade-only.reverse.ng-enter {
+  opacity: 0; }
+.nav-title-fade-only.reverse > .ng-enter.ng-enter-active, .nav-title-fade-only.reverse.ng-enter.ng-enter-active {
+  opacity: 1; }
+.nav-title-fade-only.reverse > .ng-leave.ng-leave-active, .nav-title-fade-only.reverse.ng-leave.ng-leave-active {
+  opacity: 0; }
+    </style>
+  </head>
+  <body>
+
+    <div ng-controller="AppCtrl">
+      <ion-nav-view></ion-nav-view>
+    </div>
+
+    <script id="home.html" type="text/ng-template">
+      <ion-view title="Home">
+        <ion-nav-bar class="bar-positive">
+          <ion-nav-back-button class="button-icon icon ion-ios7-arrow-back">
+            Back
+          </ion-nav-back-button>
+        </ion-nav-bar>
+        <ion-content>
+          <a href="#/about" class="button button-block button-primary">Friends</a>
+          <div class="list">
+
+            <label class="item item-input item-select">
+              <div class="input-label">
+                Lightsaber
+              </div>
+              <select>
+                <option>Blue</option>
+                <option selected>Green</option>
+                <option>Red</option>
+              </select>
+            </label>
+
+          </div>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="friends.html" type="text/ng-template">
+      <ion-view title="Friends">
+        <ion-nav-bar class="bar-positive">
+          <ion-nav-back-button class="button-icon icon ion-ios7-arrow-back">
+            Back
+          </ion-nav-back-button>
+        </ion-nav-bar>
+        <ion-content>
+          <div class="list">
+
+            <label class="item item-input item-select">
+              <div class="input-label">
+                Lightsaber
+              </div>
+              <select>
+                <option>Blue</option>
+                <option selected>Green</option>
+                <option>Red</option>
+              </select>
+            </label>
+
+          </div>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="about.html" type="text/ng-template">
+      <ion-view title="Home">
+        <ion-tabs
+          class="tabs-icon-only tabs-positive"
+          animation="fade-in-out"
+          controller-changed="onControllerChanged(oldController, oldIndex, newController, newIndex)">
+
+          <ion-tab title="Home" icon="ion-home">
+            <header class="bar bar-header bar-positive">
+              <h1 class="title"><i class="icon ion-android-book"></i> Read Now</h1>
+            </header>
+            <ion-content class="has-header has-subheader" on-refresh="onRefresh()" on-scroll="scroll(scrollTop, scrollLeft)">
+            </ion-content>
+          </ion-tab>
+          <ion-tab title="Friends" icon="ion-search">
+            <header class="bar bar-header bar-positive">
+              <h1 class="title">Friends</h1>
+            </header>
+            <ion-content class="has-header has-subheader" on-refresh="onRefresh()" on-scroll="scroll(scrollTop, scrollLeft)">
+            </ion-content>
+          </ion-tab>
+          <ion-tab title="About" icon="ion-heart">
+            <header class="bar bar-header bar-positive">
+              <h1 class="title">About</h1>
+            </header>
+            <ion-content class="has-header has-subheader" on-refresh="onRefresh()" on-scroll="scroll(scrollTop, scrollLeft)">
+            </ion-content>
+          </ion-tab>
+        </ion-tabs>
+      </ion-view>
+    </script>
+
+    <script>
+      angular.module('navState', ['ionic'])
+
+      .config(function($ionicTabsConfig) {
+        $ionicTabsConfig.tabsPosition = '';
+        //$ionicNavBarConfig.transition = 'nav-title-fade-only';
+      })
+      .config(function($stateProvider, $urlRouterProvider) {
+
+        $stateProvider
+          .state('home', {
+            url: "/",
+            templateUrl: "home.html"
+          })
+          .state('friends', {
+            url: "/friends",
+            templateUrl: "friends.html"
+          })
+          .state('about', {
+            url: "/about",
+            templateUrl: "about.html"
+          })
+
+         $urlRouterProvider.otherwise("/");
+
+      })
+
+      .controller('AppCtrl', function($scope) {
+
+      });
+    </script>
+  </body>
+</html>

@@ -67,7 +67,7 @@ describe('$ionicPopup service', function() {
       });
       it('should resolve with return value from button.onTap', function() {
         popup.scope.$buttonTapped({
-          onTap: function() { return '123' }
+          onTap: function() { return '123'; }
         }, {});
         expect(popup.responseDeferred.resolve).toHaveBeenCalledWith('123');
       });
@@ -107,6 +107,18 @@ describe('$ionicPopup service', function() {
         expect(popup.element.hasClass('popup-showing')).toBe(false);
         expect(popup.element.hasClass('active')).toBe(false);
         ionic.requestAnimationFrame = function(cb) { cb(); };
+      });
+      it('should shrink .popup-body height so that the popup is never taller than the window', function() {
+        str = 'All work and no play... ';
+        for(var i=0; i<13;i++){
+          str = str + str;
+        }
+        var popup = TestUtil.unwrapPromise($ionicPopup._createPopup({
+          template: str
+        }));
+        popup.show();
+        var windowIsLarger = popup.element[0].offsetHeight < window.innerHeight;
+        expect(windowIsLarger).toBe(true);
       });
     });
 

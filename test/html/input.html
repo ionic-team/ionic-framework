@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html ng-app="navTest">
   <head>
     <meta charset="utf-8">
@@ -68,100 +69,113 @@
         <form ng-submit="formSubmit()">
 
         <div class="list">
+
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Email</span>
+            <textarea>
+                          Line 1
+                          Line 2
+                          Line 3
+                          Line 4
+                          Line 5
+            </textarea>
+          </label>
+
           <label class="item item-input">
             <span class="input-label">Your Name</span>
             <input type="text" value="name input" id="name">
           </label>
+
           <div class="item item-checkbox">
             <span class="input-label">Remember me</span>
             <label class="checkbox">
                 <input type="checkbox" id="remember-me">
             </label>
           </div>
+
+          <label class="item item-input">
+            <span class="input-label">From 1</span>
+            <input type="text" value="from input" id="from1">
+          </label>
+
+          <label class="item item-input">
+            <span class="input-label">To 1</span>
+            <input type="text" value="to input" id="to1">
+          </label>
+
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Comment 1</span>
+            <textarea id="textarea" id="comment1">comment textarea</textarea>
+          </label>
+
+          <label class="item item-input">
+            <span class="input-label">From 2</span>
+            <input type="text" value="" id="from2">
+          </label>
+
+          <label class="item item-input">
+            <span class="input-label">To 2</span>
+            <input type="text" value="" id="to2">
+          </label>
+
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Comment 2</span>
+            <textarea id="textarea" id="comment2"></textarea>
+          </label>
+
+          <label class="item item-input">
+            <span class="input-label">From 3</span>
+            <input type="text" value="">
+          </label>
+
+          <label class="item item-input">
+            <span class="input-label">To 3</span>
+            <input type="text" value="">
+          </label>
+
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Comment 3</span>
+            <textarea id="textarea"></textarea>
+          </label>
+
+          <label class="item item-input">
+            <span class="input-label">From 4</span>
+            <input type="text" value="">
+          </label>
+
+          <label class="item item-input">
+            <span class="input-label">To 4</span>
+            <input type="text" value="">
+          </label>
+
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Comment 4</span>
+            <textarea id="textarea"></textarea>
+          </label>
+
+          <label class="item item-input">
+            <span class="input-label">From 5</span>
+            <input type="text" value="">
+          </label>
+
+          <label class="item item-input">
+            <span class="input-label">To 5</span>
+            <input type="text" value="">
+          </label>
+
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Comment 5</span>
+            <textarea id="textarea"></textarea>
+          </label>
+
+          <button type="button" class="button button-block button-energized" ng-click="openModal()">
+            Open Modal
+          </button>
+
+          <button type="submit" class="button button-block button-calm">
+            Submit!
+          </button>
         </div>
-
-        <label class="item item-input">
-          <span class="input-label">From 1</span>
-          <input type="text" value="from input" id="from1">
-        </label>
-
-        <label class="item item-input">
-          <span class="input-label">To 1</span>
-          <input type="text" value="to input" id="to1">
-        </label>
-
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Comment 1</span>
-          <textarea id="textarea" id="comment1">comment textarea</textarea>
-        </label>
-
-        <label class="item item-input">
-          <span class="input-label">From 2</span>
-          <input type="text" value="" id="from2">
-        </label>
-
-        <label class="item item-input">
-          <span class="input-label">To 2</span>
-          <input type="text" value="" id="to2">
-        </label>
-
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Comment 2</span>
-          <textarea id="textarea" id="comment2"></textarea>
-        </label>
-
-        <label class="item item-input">
-          <span class="input-label">From 3</span>
-          <input type="text" value="">
-        </label>
-
-        <label class="item item-input">
-          <span class="input-label">To 3</span>
-          <input type="text" value="">
-        </label>
-
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Comment 3</span>
-          <textarea id="textarea"></textarea>
-        </label>
-
-        <label class="item item-input">
-          <span class="input-label">From 4</span>
-          <input type="text" value="">
-        </label>
-
-        <label class="item item-input">
-          <span class="input-label">To 4</span>
-          <input type="text" value="">
-        </label>
-
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Comment 4</span>
-          <textarea id="textarea"></textarea>
-        </label>
-
-        <label class="item item-input">
-          <span class="input-label">From 5</span>
-          <input type="text" value="">
-        </label>
-
-        <label class="item item-input">
-          <span class="input-label">To 5</span>
-          <input type="text" value="">
-        </label>
-
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Comment 5</span>
-          <textarea id="textarea"></textarea>
-        </label>
-
-        <button type="button" class="button button-block button-energized" ng-click="openModal()">
-          Open Modal
-        </button>
-
-        <button type="submit" class="button button-block button-calm">
-          Submit!
-        </button>
 
         </form>
 
@@ -206,31 +220,27 @@
 
       var msgs = [];
       var timerId;
-      console.debug2 = function() {
-        var msg = [];
-        for (var i = 0, j = arguments.length; i < j; i++){
-          msg.push(arguments[i]);
-        }
-        msg.push(getTime());
-
-        msgs.push(msg.join(', '));
-
-        clearTimeout(timerId);
-        timerId = setTimeout(function(){
-          document.getElementById('view').style.display = 'none';
-          document.writeln(msgs.join('<br>'));
-          console.debug = function(){};
-        }, 2000);
-      };
 
       document.addEventListener('touchstart', function(e){
-        console.debug('touchstart');
+        console.log('touchstart');
       });
       document.addEventListener('touchstart', function(e){
-        console.debug('touchend');
+        console.log('touchend');
+      });
+      document.addEventListener('mousedown', function(e){
+        console.log('mousedown');
+      });
+      document.addEventListener('mouseup', function(e){
+        console.log('mouseup');
+      });
+      document.addEventListener('MSPointerDown', function(e){
+        console.log('MSPointerDown');
+      });
+      document.addEventListener('MSPointerUp', function(e){
+        console.log('MSPointerUp');
       });
       document.addEventListener('click', function(event){
-        console.debug('click', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY);
+        console.log('click', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY);
       });
 
       function getTime() {
@@ -268,14 +278,24 @@
       var msgs = [];
       var index = 0;
       var timeId;
-      var consoleDebug = console.debug;
+      var consoleDebug = console.log;
+      var consoleError = console.log;
 
       function getTime() {
         var d = new Date();
         return d.getMilliseconds();
       }
 
-      console.debug = function() {
+      console.error = function() {
+        consoleError.apply(this, arguments);
+        var args = ['ERROR!'];
+        for (var i = 0, j = arguments.length; i < j; i++){
+          args.push(arguments[i]);
+        }
+        console.log.apply(this, args);
+      };
+
+      console.log = function() {
         index++;
         var msg = [];
         msg.push(index);

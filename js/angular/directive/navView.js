@@ -1,9 +1,13 @@
+IonicModule.constant('$ionicNavViewConfig', {
+  transition: 'slide-left-right-ios7'
+});
+
 /**
  * @ngdoc directive
  * @name ionNavView
  * @module ionic
  * @restrict E
- * @codepen HjnFx
+ * @codepen odqCz
  *
  * @description
  * As a user navigates throughout your app, Ionic is able to keep track of their
@@ -125,7 +129,7 @@ function( $ionicViewService,   $state,   $compile,   $controller,   $animate) {
         // to derive our own qualified view name, then hang our own details
         // off the DOM so child directives can find it.
         var parent = element.parent().inheritedData('$uiView');
-        if (name.indexOf('@') < 0) name  = name + '@' + (parent ? parent.state.name : '');
+        if (name.indexOf('@') < 0) name  = name + '@' + ((parent && parent.state) ? parent.state.name : '');
         var view = { name: name, state: null };
         element.data('$uiView', view);
 
@@ -168,7 +172,7 @@ function( $ionicViewService,   $state,   $compile,   $controller,   $animate) {
             return element.append(initialView);
           }
 
-          var newElement = angular.element('<div></div>').html(locals.$template).contents();
+          var newElement = jqLite('<div></div>').html(locals.$template).contents();
           var viewRegisterData = renderer().register(newElement);
 
           // Remove existing content

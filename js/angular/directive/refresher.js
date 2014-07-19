@@ -65,8 +65,11 @@ IonicModule
     require: '^$ionicScroll',
     template:
     '<div class="scroll-refresher">' +
-      '<div class="ionic-refresher-content">' +
-        '<i class="icon {{pullingIcon}} icon-pulling"></i>' +
+      '<div class="ionic-refresher-content" ' +
+      'ng-class="{\'ionic-refresher-with-text\': pullingText || refreshingText}">' +
+        '<div class="icon-pulling">' +
+          '<i class="icon {{pullingIcon}}"></i>' +
+        '</div>' +
         '<div class="text-pulling" ng-bind-html="pullingText"></div>' +
         '<i class="icon {{refreshingIcon}} icon-refreshing"></i>' +
         '<div class="text-refreshing" ng-bind-html="refreshingText"></div>' +
@@ -91,8 +94,10 @@ IonicModule
 
         scrollCtrl._setRefresher($scope, $element[0]);
         $scope.$on('scroll.refreshComplete', function() {
-          $element[0].classList.remove('active');
-          scrollCtrl.scrollView.finishPullToRefresh();
+          $scope.$evalAsync(function() {
+            $element[0].classList.remove('active');
+            scrollCtrl.scrollView.finishPullToRefresh();
+          });
         });
       };
     }

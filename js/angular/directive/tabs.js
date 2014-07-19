@@ -1,3 +1,7 @@
+IonicModule.constant('$ionicTabsConfig', {
+  position: '',
+  type: ''
+});
 
 /**
  * @ngdoc directive
@@ -17,6 +21,9 @@
  *
  * See the {@link ionic.directive:ionTab} directive's documentation for more details on
  * individual tabs.
+ *
+ * Note: do not place ion-tabs inside of an ion-content element; it has been known to cause a
+ * certain CSS bug.
  *
  * @usage
  * ```html
@@ -40,9 +47,13 @@
  * @param {string=} delegate-handle The handle used to identify these tabs
  * with {@link ionic.service:$ionicTabsDelegate}.
  */
-IonicModule
 
-.directive('ionTabs', ['$ionicViewService', '$ionicTabsDelegate', function($ionicViewService, $ionicTabsDelegate) {
+IonicModule
+.directive('ionTabs', [
+  '$ionicViewService', 
+  '$ionicTabsDelegate', 
+  '$ionicTabsConfig', 
+function($ionicViewService, $ionicTabsDelegate, $ionicTabsConfig) {
   return {
     restrict: 'E',
     scope: true,
@@ -51,9 +62,11 @@ IonicModule
       element.addClass('view');
       //We cannot use regular transclude here because it breaks element.data()
       //inheritance on compile
-      var innerElement = angular.element('<div class="tabs"></div>');
+      var innerElement = jqLite('<div class="tabs"></div>');
       innerElement.append(element.contents());
       element.append(innerElement);
+      element.addClass($ionicTabsConfig.position);
+      element.addClass($ionicTabsConfig.type);
 
       return { pre: prelink };
       function prelink($scope, $element, $attr, tabsCtrl) {
@@ -65,7 +78,7 @@ IonicModule
 
         tabsCtrl.$scope = $scope;
         tabsCtrl.$element = $element;
-        tabsCtrl.$tabsElement = angular.element($element[0].querySelector('.tabs'));
+        tabsCtrl.$tabsElement = jqLite($element[0].querySelector('.tabs'));
 
         var el = $element[0];
         $scope.$watch(function() { return el.className; }, function(value) {

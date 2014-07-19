@@ -38,5 +38,20 @@ var TestUtil = {
       }
     };
     return timeout;
+  },
+
+  setPlatform: function(platformName) {
+    switch(platformName) {
+      case 'ios':
+        ionic.Platform.ua = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25';
+        ionic.Platform.setPlatform('ios');
+        ionic.Platform.setVersion(null);
+        break;
+      case 'android':
+        ionic.Platform.ua = 'Mozilla/5.0 (Linux; U; Android 2.2.1; fr-ch; A43 Build/FROYO) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1';
+        ionic.Platform.setPlatform('android');
+        ionic.Platform.setVersion(undefined);
+        break;
+    }
   }
 };

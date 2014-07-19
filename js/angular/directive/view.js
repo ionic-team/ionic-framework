@@ -35,13 +35,17 @@ IonicModule
   return {
     restrict: 'EA',
     priority: 1000,
-    require: '^?ionNavBar',
+    require: ['^?ionNavBar', '^?ionModal'],
     compile: function(tElement, tAttrs, transclude) {
       tElement.addClass('pane');
       tElement[0].removeAttribute('title');
 
-      return function link($scope, $element, $attr, navBarCtrl) {
-        if (!navBarCtrl) {
+      return function link($scope, $element, $attr, ctrls) {
+        var navBarCtrl = ctrls[0];
+        var modalCtrl = ctrls[1];
+
+        //Don't use the ionView if we're inside a modal or there's no navbar
+        if (!navBarCtrl || modalCtrl) {
           return;
         }
 
@@ -52,11 +56,8 @@ IonicModule
 
           // watch for changes in the title, don't set initial value as changeTitle does that
           $attr.$observe('title', function(val, oldVal) {
-            if (val !== initialTitle) {
-              navBarCtrl.setTitle(val);
-            }
+            navBarCtrl.setTitle(val);
           });
-
         }
 
         var hideBackAttr = angular.isDefined($attr.hideBackButton) ?

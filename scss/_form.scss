@@ -101,7 +101,7 @@ textarea {
 .item-input-inset .item-input-wrapper input {
   padding-left: 4px;
   height: 29px;
-  background: inherit;
+  background: transparent;
   line-height: 18px;
 }
 
@@ -143,16 +143,35 @@ textarea {
 }
 
 .item-stacked-label input,
-.item-stacked-label textarea
-{
+.item-stacked-label textarea {
   @include border-radius(2px);
-  overflow: hidden;
   padding: 4px 8px 3px;
   border: none;
   background-color: $input-bg;
 }
 .item-stacked-label input {
+  overflow: hidden;
   height: $line-height-computed + $font-size-base + 12px;
+}
+
+.item-floating-label {
+  display: block;
+  background-color: transparent;
+  box-shadow: none;
+
+  .input-label {
+    position: relative;
+    padding: 5px 0 0 0;
+    opacity: 0;
+    top: 10px;
+    @include transition(opacity .15s ease-in, top .2s linear);
+
+    &.has-input {
+      opacity: 1;
+      top: 0;
+      @include transition(opacity .15s ease-in, top .2s linear);
+    }
+  }
 }
 
 
@@ -182,6 +201,17 @@ input[type="color"] {
   vertical-align: middle;
   font-size: $font-size-base;
   line-height: $font-size-base + 2;
+}
+
+.platform-ios,
+.platform-android {
+  input[type="datetime-local"],
+  input[type="date"],
+  input[type="month"],
+  input[type="time"],
+  input[type="week"] {
+    padding-top: 8px;
+  }
 }
 
 input,
@@ -240,7 +270,7 @@ input[type="file"] {
 .previous-input-focus,
 .cloned-text-input + input,
 .cloned-text-input + textarea {
-  position: absolute;
+  position: absolute !important;
   left: -9999px;
   width: 200px;
 }

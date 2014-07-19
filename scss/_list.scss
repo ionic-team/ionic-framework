@@ -13,6 +13,9 @@
 }
 .list:last-child {
   margin-bottom: 0px;
+  &.card{
+    margin-bottom:40px;
+  }
 }
 
 
@@ -91,6 +94,10 @@
 .padding-horizontal > .list .item {
   margin-right: 0;
   margin-left: 0;
+
+  &.item-input input {
+    padding-right: 44px;
+  }
 }
 .padding-left > .list .item {
   margin-left: 0;
