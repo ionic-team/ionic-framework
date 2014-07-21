@@ -292,7 +292,12 @@ describe('$ionicScroll Controller', function() {
         }));
         it('.anchorScroll with el matching hash should scroll to it', inject(function($location, $document) {
           $document[0].getElementById = jasmine.createSpy('byId').andCallFake(function() {
-            return { offsetLeft: 8, offsetTop: 9 };
+            return {
+              offsetLeft: 8,
+              offsetTop: 9,
+              attributes:[],
+              offsetParent:{}
+            };
           });
           spyOn($location, 'hash').andCallFake(function() {
             return 'foo';
@@ -302,6 +307,37 @@ describe('$ionicScroll Controller', function() {
           expect(ctrl.scrollView.scrollTo).toHaveBeenCalledWith(8, 9, shouldAnimate);
         }));
       });
+    });
+  });
+
+  it('should work', function() {
+    var ele = {
+      offsetLeft: 8,
+      offsetTop: 9,
+      attributes:[],
+      offsetParent:{
+        offsetLeft: 10,
+        offsetTop: 11,
+        attributes:[],
+        offsetParent:{}
+      }
+    };
+    module('ionic', function($provide) {
+      $provide.value('$document', [ { getElementById: function(){ return ele; } } ]);
+    });
+    inject(function($controller, $rootScope, $location, $timeout) {
+      var scrollCtrl = $controller('$ionicScroll', {
+        $scope: $rootScope.$new(),
+        $element: jqLite('<div><div></div></div>'),
+        scrollViewOptions: { el: jqLite('<div><div></div></div>')[0] }
+      });
+      spyOn($location, 'hash').andCallFake(function() {
+           return 'bar';
+      });
+      spyOn(scrollCtrl.scrollView, 'scrollTo')
+      scrollCtrl.anchorScroll()
+      $timeout.flush();
+      expect(scrollCtrl.scrollView.scrollTo.mostRecentCall.args).toEqual([18, 20, false]);
     });
   });
 
