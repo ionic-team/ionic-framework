@@ -871,7 +871,7 @@ window.ionic = {
           }
           // touch
           else if(sourceEventType.match(/touch/)) {
-            count_touches = ev.touches.length;
+            count_touches = (typeof(ev.touches) != 'undefined') ? ev.touches.length : 0;
           }
           // mouse
           else if(!touch_triggered) {
