@@ -1,6 +1,6 @@
 
 forEach(
-  'onHold onTap onTouch onRelease onDrag onDragUp onDragRight onDragDown onDragLeft onSwipe onSwipeUp onSwipeRight onSwipeBottom onSwipeLeft'.split(' '),
+  'onHold onTap onTouch onRelease onDrag onDragUp onDragRight onDragDown onDragLeft onSwipe onSwipeUp onSwipeRight onSwipeDown onSwipeLeft'.split(' '),
   function(name) {
     IonicModule.directive(name, gestureDirective(name));
   }
