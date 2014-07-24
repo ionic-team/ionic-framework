@@ -678,6 +678,7 @@ button.item.item-button-right {
   width: $item-right-edit-open-width *  1.5;
   height: 100%;
   background: inherit;
+  padding-left: 20px;
 
   .button {
     min-width: $item-right-edit-open-width;
@@ -698,6 +699,7 @@ button.item.item-button-right {
   @include translate3d($item-right-edit-open-width / 2, 0, 0);
   &.visible {
     display: block;
+    z-index: $z-index-item-reorder;
     &.active {
       opacity: 1;
       @include translate3d(0, 0, 0);
