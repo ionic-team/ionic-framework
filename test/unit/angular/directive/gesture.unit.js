@@ -12,7 +12,7 @@ describe('gesture directive', function() {
     };
   })
   .forEach(function(directive){
-    iit('should compile', inject(function($compile, $rootScope, $ionicGesture) {
+    it('should compile', inject(function($compile, $rootScope, $ionicGesture) {
       var fakeGesture = {};
       spyOn($ionicGesture, 'on').andCallFake(function(eventType, listener, el) {
         callback = listener;
