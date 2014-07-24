@@ -157,7 +157,7 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
         if(curElm !== null)scrollTop += curElm.offsetTop;
         curElm = curElm.offsetParent;
         levelsClimbed++;
-      } while (curElm.attributes != self.element.attributes && curElm.offsetParent !== null);
+      } while (curElm.attributes != self.element.attributes && curElm.offsetParent);
       scrollView.scrollTo(scrollLeft, scrollTop, !!shouldAnimate);
     });
   };

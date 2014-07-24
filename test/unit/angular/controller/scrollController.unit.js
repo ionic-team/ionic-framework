@@ -310,7 +310,7 @@ describe('$ionicScroll Controller', function() {
     });
   });
 
-  it('should work', function() {
+  it('.anchorScroll with el matching hash should scroll to it, even if the el is not directly below the list', function() {
     var ele = {
       offsetLeft: 8,
       offsetTop: 9,
