@@ -148,6 +148,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
 
       $timeout(function(){
         modalEl.addClass('ng-enter-active');
+        ionic.trigger('resize');
         self.scope.$parent && self.scope.$parent.$broadcast('modal.shown', self);
         self.el.classList.add('active');
       }, 20);

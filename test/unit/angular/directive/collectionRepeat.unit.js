@@ -152,24 +152,6 @@ describe('collectionRepeat directive', function() {
     expect(scrollView.resize.callCount).toBe(1);
   });
 
-  it('should rerender on modal popup', function() {
-    inject(function($rootScope) {
-      var el = setup('collection-repeat="item in items" collection-item-height="50"');
-      var scrollView = el.controller('$ionicScroll').scrollView;
-      spyOn(scrollView, 'resize');
-      dataSource.setData.reset();
-      repeatManager.resize.reset();
-
-      el.scope().items = [1, 2, 3];
-
-      $rootScope.$broadcast('modal.shown');
-
-      expect(dataSource.setData).toHaveBeenCalledWith(el.scope().items);
-      expect(repeatManager.resize.callCount).toBe(1);
-      expect(scrollView.resize.callCount).toBe(1);
-    });
-  });
-
   it('$destroy', function() {
     var el = setup('collection-repeat="item in items" collection-item-height="50"');
     dataSource.destroy = jasmine.createSpy('dataSourceDestroy');

@@ -48,6 +48,14 @@ describe('Ionic Modal', function() {
     expect(instance.isShown()).toBe(false);
   });
 
+  it('should trigger a resize event', function() {
+    var instance = modal.fromTemplate('<div class="modal">hello</div>');
+    spyOn(ionic, 'trigger');
+    instance.show();
+    timeout.flush();
+    expect(ionic.trigger).toHaveBeenCalledWith('resize');
+  });
+
   it('should set isShown on remove', function() {
     var instance = modal.fromTemplate('<div class="modal">hello</div>');
     expect(instance.isShown()).toBe(false);

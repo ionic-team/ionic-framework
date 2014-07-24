@@ -225,11 +225,6 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         rerender($scope.$eval(listExpr));
       }
 
-      // for lists inside a modal, recalc when the modal is shown
-      $scope.$on('modal.shown',function(){
-        onWindowResize();
-      });
-
       ionic.on('resize', onWindowResize, window);
 
       $scope.$on('$destroy', function() {
