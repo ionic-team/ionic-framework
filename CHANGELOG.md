@@ -1,4 +1,4 @@
-### 1.0.0-beta.10 "gadolinium-gator" (2014-07-25)
+### 1.0.0-beta.10 "hafnium-heron" (2014-07-25)
 
 
 #### Bug Fixes
@@ -50,7 +50,7 @@
 
 #### Breaking Changes
 
-* 
+*
 ion-toggle no longer has an isolate scope.
 This will break your toggle only if you were relying upon the toggle
 having an isolate scope: if you were referencing `$parent.value` as
@@ -705,9 +705,9 @@ Old Code:
 
 `<ion-tabs tabs-type="tabs-top" tabs-style="tabs-positive" animation="slide-left-right">`
 
-New Code: 
+New Code:
 
-`<ion-tabs class="tabs-top tabs-positive slide-left-right">` 
+`<ion-tabs class="tabs-top tabs-positive slide-left-right">`
 
 * **ionHeaderBar, ionFooterBar**: remove `type`, `title`, `left-buttons`, `right-buttons`.
 
@@ -717,14 +717,14 @@ Relevant Documentation: [ionHeaderBar](http://ionicframework.com/docs/api/direct
 Old Code:
 
 ```html
-<ion-header-bar type="bar-positive" 
-  title="{{someTitle}}" 
-  left-buttons="left" 
+<ion-header-bar type="bar-positive"
+  title="{{someTitle}}"
+  left-buttons="left"
   right-buttons="right">
 </ion-header-bar>
 ```
 
-New Code: 
+New Code:
 
 ```html
 <ion-header-bar class="bar-positive">
@@ -742,8 +742,8 @@ New Code:
 </ion-header-bar>
 ```
 
-* **ionNavBar, ionView**: Remove `left-buttons`, `right-buttons`, `type`, `animation`, 
-`back-button-*` attributes from ionNavBar. Remove `left-buttons`, `right-buttons` from ionView. 
+* **ionNavBar, ionView**: Remove `left-buttons`, `right-buttons`, `type`, `animation`,
+`back-button-*` attributes from ionNavBar. Remove `left-buttons`, `right-buttons` from ionView.
 
 Additionally, all 'viewState.*' events have been removed. Use [$ionicNavBarDelegate](http://ionicframework.com/docs/api/service/$ionicNavBarDelegate).
 
@@ -755,8 +755,8 @@ Relevant Documentation: [ionNavBar](http://ionicframework.com/docs/api/directive
 Old Code:
 
 ```html
-<ion-nav-bar type="bar-positive" 
-  animation="slide-left-right" 
+<ion-nav-bar type="bar-positive"
+  animation="slide-left-right"
   back-button-type="button-icon"
   back-button-icon="ion-arrow-left-c"
   back-button-label="Back">
