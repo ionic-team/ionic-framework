@@ -61,6 +61,10 @@ function($ionicGesture, $timeout) {
         }
       });
 
+      if(attr.toggleClass) {
+        element[0].getElementsByTagName('label')[0].classList.add(attr.toggleClass);
+      }
+
       return function($scope, $element, $attr) {
          var el, checkbox, track, handle;
 
