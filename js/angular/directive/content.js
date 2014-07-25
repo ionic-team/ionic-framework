@@ -31,7 +31,6 @@
  * Ionic scroll.
  * @param {boolean=} scrollbar-x Whether to show the horizontal scrollbar. Default true.
  * @param {boolean=} scrollbar-y Whether to show the vertical scrollbar. Default true.
- * @param {boolean=} scrollbar-y Whether to show the vertical scrollbar. Default true.
  * @param {string=} start-y Initial vertical scroll position. Default 0.
  * of the content.  Defaults to true on iOS, false on Android.
  * @param {expression=} on-scroll Expression to evaluate when the content is scrolled.
