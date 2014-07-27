@@ -29,7 +29,7 @@
  * ```html
  * <ion-nav-bar ng-controller="MyCtrl">
  *   <ion-nav-back-button class="button-clear"
- *     ng-click="doSomethingCool()">
+ *     ng-click="goBack()">
  *     <i class="ion-arrow-left-c"></i> Back
  *   </ion-nav-back-button>
  * </ion-nav-bar>
