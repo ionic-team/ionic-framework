@@ -26,6 +26,7 @@ describe('css', function() {
     "cards-text",
     "colors",
     "footers",
+    "form-simple",
     "grid",
     "headers",
     "input-checkbox",
