@@ -93,6 +93,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 * `gulp` or `gulp build` to build
 * `gulp docs` to generate docs (read Documentation below for how to test docs locally).
 * `gulp build --release` to build with minification & strip debugs
+* `gulp build --release --dist release` to update your own release (be sure to include is as a separate commit in PR's)
 * `gulp watch` to watch and rebuild on change
 * `gulp karma` to test one-time
 * `gulp karma-watch` to test and re-run on source change
