@@ -97,7 +97,7 @@ describe('bar directives', function() {
           this.align = jasmine.createSpy('align');
         };
         inject(function($compile, $rootScope) {
-          el = angular.element('<'+data.tag+' '+(attrs||'')+'>');
+          el = angular.element('<'+data.tag+' '+(attrs||'')+'></'+data.tag+'><div class="tabs-top"></div>');
           el = $compile(el)($rootScope.$new());
           $rootScope.$apply();
         });
@@ -158,6 +158,10 @@ describe('bar directives', function() {
           expect(el.hasClass('has-tabs')).toBe(true);
           scope.$apply('$hasTabs = false');
           expect(el.hasClass('has-tabs')).toBe(false);
+        });
+        it('.has-tabs-top', function() {
+          var el = setup();
+          expect(el.hasClass('has-tabs-top')).toBe(true);
         });
       }
 
