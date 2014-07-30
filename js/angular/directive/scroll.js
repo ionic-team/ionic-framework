@@ -3,10 +3,26 @@
  * @name ionScroll
  * @module ionic
  * @delegate ionic.service:$ionicScrollDelegate
+ * @codepen mwFuh
  * @restrict E
  *
  * @description
  * Creates a scrollable container for all content inside.
+ * 
+ * @usage
+ *
+ * Basic usage:
+ *
+ * ```html
+ * <ion-scroll zooming="true" direction="xy" style="width: 500px; height: 500px">
+ *   <div style="width: 5000px; height: 5000px; background: url('https://upload.wikimedia.org/wikipedia/commons/a/ad/Europe_geological_map-en.jpg') repeat"></div>
+ *  </ion-scroll>
+ * ```
+ * 
+ * Note that it's important to set the height of the scroll box as well as the height of the inner
+ * content to enable scrolling. This makes it possible to have full control over scrollable areas.
+ * 
+ * If you'd just like to have a center content scrolling area, use {@link ionic.directive:ionContent} instead.
  *
  * @param {string=} delegate-handle The handle used to identify this scrollView
  * with {@link ionic.service:$ionicScrollDelegate}.
