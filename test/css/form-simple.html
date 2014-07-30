@@ -10,7 +10,7 @@
     <script src="../../../../dist/js/ionic.bundle.js"></script>
   </head>
   <body>
-    <ion-content>
+    <ion-content padding="true">
       <form>
         <ion-list>
           <label class="item item-input">
@@ -137,6 +137,18 @@
           <ion-toggle ng-model="airplaneMode" toggle-class="toggle-calm">Airplane Mode</ion-toggle>
         </ion-list>
       </form>
+      <h3>Default Text Input, card, No Content Padding</h3>
+      <div class="list card">
+        <label class="item item-input">
+          <input type="text" placeholder="First Name">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Last Name">
+        </label>
+        <label class="item item-input">
+          <input type="email" placeholder="Email">
+        </label>
+      </div>
     </ion-content>
     <div id="margin-line" style="position: fixed; left: 15px; height: 100%; background-color: red; width: 1px; z-index: 1000"></div>
     <div id="margin-line" style="position: fixed; left: 26px; height: 100%; background-color: blue; width: 1px; z-index: 1000"></div>
