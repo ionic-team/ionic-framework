@@ -7,8 +7,8 @@
  * It is meant to be used where we need to absolute-position DOM elements in
  * relation to other, existing elements (this is the case for tooltips, popovers, etc.).
  *
- * Adapted from [ui.bootstrap.position](https://github.com/angular-ui/bootstrap/blob/master/src/position/position.js),
- * [License](https://github.com/angular-ui/bootstrap/blob/master/LICENSE)
+ * Adapted from [AngularUI Bootstrap](https://github.com/angular-ui/bootstrap/blob/master/src/position/position.js),
+ * ([license](https://github.com/angular-ui/bootstrap/blob/master/LICENSE))
  */
 IonicModule
 .factory('$ionicPosition', ['$document', '$window', function ($document, $window) {
@@ -49,7 +49,7 @@ IonicModule
      * @ngdoc method
      * @name $ionicPosition#position
      * @description Get the current coordinates of the element, relative to the offset parent.
-     * Read-only equivalent of [jQuery's position function](http://api.jquery.com/position/)
+     * Read-only equivalent of [jQuery's position function](http://api.jquery.com/position/).
      * @param {element} element The element to get the position of.
      * @returns {object} Returns an object containing the properties top, left, width and height.
      */
@@ -76,7 +76,7 @@ IonicModule
      * @ngdoc method
      * @name $ionicPosition#offset
      * @description Get the current coordinates of the element, relative to the document.
-     * Read-only equivalent of [jQuery's offset function](http://api.jquery.com/offset/)
+     * Read-only equivalent of [jQuery's offset function](http://api.jquery.com/offset/).
      * @param {element} element The element to get the offset of.
      * @returns {object} Returns an object containing the properties top, left, width and height.
      */
