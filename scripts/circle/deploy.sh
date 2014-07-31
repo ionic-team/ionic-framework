@@ -44,6 +44,8 @@ function run {
     fi
     ;;
   2)
+    # TEMPORARY, for new site deploy task, globally install gulp & jekyll
+    npm install -g gulp jekyll
     # Be sure to update the site one after the other,
     # so the tasks don't have a push conflict
     if [[ "$IS_RELEASE" == "true" ]]; then
