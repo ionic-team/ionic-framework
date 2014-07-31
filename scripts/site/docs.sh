@@ -13,7 +13,7 @@ function init {
 
   ../clone/clone.sh --repository="driftyco/ionic-site" \
     --directory="$SITE_DIR" \
-    --branch="gh-pages"
+    --branch="master"
 }
 
 # Example: ./scripts/site/publish.sh --action=docs --version-name=nightly
@@ -33,9 +33,10 @@ function run {
   if [[ "$CHANGES" == "" ]]; then
     echo "-- No changes detected in docs for $VERSION_NAME; docs not updated."
   else
-    git add -A
-    git commit -am "docs: update for $VERSION"
-    git push -q origin gh-pages
+    # git add -A
+    # git commit -am "docs: update for $VERSION"
+    # git push -q origin gh-pages
+    ./deploy.sh
 
     echo "-- Updated docs for $VERSION_NAME succesfully!"
   fi
