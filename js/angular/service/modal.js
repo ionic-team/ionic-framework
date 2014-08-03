@@ -194,7 +194,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
       return $timeout(function(){
         $document[0].body.classList.remove(self.viewType + '-open');
         self.el.classList.add('hide');
-      }, self.hideDelay || 500);
+      }, self.hideDelay || 320);
     },
 
     /**
