@@ -108,13 +108,15 @@
 
 // Android Popover
 .platform-android {
+
   .popover {
+    background-color: $popover-bg-color-android;
     box-shadow: $popover-box-shadow-android;
     margin-top: -32px;
 
     .item {
-      border-color: #fafafa;
-      background-color: #fafafa;
+      border-color: $popover-bg-color-android;
+      background-color: $popover-bg-color-android;
       color: #4d4d4d;
     }
   }
