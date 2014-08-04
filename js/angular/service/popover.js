@@ -65,8 +65,8 @@
 
 
 IonicModule
-.factory('$ionicPopover', ['$ionicPopover', '$ionicPosition', '$document',
-function($ionicPopover, $ionicPosition, $document) {
+.factory('$ionicPopover', ['$ionicModal', '$ionicPosition', '$document',
+function($ionicModal, $ionicPosition, $document) {
 
   var POPOVER_BODY_PADDING = 6;
 
@@ -179,7 +179,7 @@ function($ionicPopover, $ionicPosition, $document) {
      * controller ($ionicPopover is built on top of $ionicPopover).
      */
     fromTemplate: function(templateString, options) {
-      return $ionicPopover.fromTemplate(templateString, ionic.Utils.extend(options || {}, POPOVER_OPTIONS) );
+      return $ionicModal.fromTemplate(templateString, ionic.Utils.extend(options || {}, POPOVER_OPTIONS) );
     },
     /**
      * @ngdoc method
@@ -190,7 +190,7 @@ function($ionicPopover, $ionicPosition, $document) {
      * an {@link ionic.controller:ionicPopover} controller ($ionicPopover is built on top of $ionicPopover).
      */
     fromTemplateUrl: function(url, options, _) {
-      return $ionicPopover.fromTemplateUrl(url, options, ionic.Utils.extend(options || {}, POPOVER_OPTIONS) );
+      return $ionicModal.fromTemplateUrl(url, options, ionic.Utils.extend(options || {}, POPOVER_OPTIONS) );
     }
   };
 
