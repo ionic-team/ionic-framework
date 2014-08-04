@@ -44,16 +44,18 @@ function run {
     fi
     ;;
   2)
-    # TEMPORARILY disable site deploy tasks. We have to install jekyll.
-    # Which means ruby, which means it will take some thought.
+    # We have to install jekyll for the site task for now.
+    gem install jekyll
+    # Install gulp globally for site deploy script.
+    npm install -g gulp
 
     # Be sure to update the site one after the other,
     # so the tasks don't have a push conflict
     if [[ "$IS_RELEASE" == "true" ]]; then
-      # ./scripts/site/config.sh
+      ./scripts/site/config.sh
     fi
     # Update docs
-    # ./scripts/site/docs.sh --version-name="$VERSION_NAME"
+    ./scripts/site/docs.sh --version-name="$VERSION_NAME"
     ;;
   3)
     # Update demos

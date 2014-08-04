@@ -1,6 +1,8 @@
 machine:
   node:
     version: v0.10.26
+  ruby:
+    version: 2.1.2
 checkout:
   post:
     - "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
