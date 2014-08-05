@@ -81,6 +81,8 @@ var tapTouchMoveListener = 'touchmove';
 // how much the coordinates can be off between start/end, but still a click
 var TAP_RELEASE_TOLERANCE = 6; // default tolerance
 var TAP_RELEASE_BUTTON_TOLERANCE = 50; // button elements should have a larger tolerance
+var TAP_RELEASE_RADIUS = 30; // radius in pixels when moving within it, it is still an event occurs 'click'. (px)
+var ACTIVATOR_TIMEOUT = 150; // activator activity time. (ms)
 
 var tapEventListeners = {
   'click': tapClickGateKeeper,
@@ -428,7 +430,12 @@ function tapTouchMove(e) {
 
 function tapTouchCancel(e) {
   tapEventListener(tapTouchMoveListener, false);
-  ionic.activator.end();
+  // activator triggered, even with fast clicking on weak devices.
+  if(ionic.Platform.isAndroid()){
+    setTimeout(ionic.activator.end, ACTIVATOR_TIMEOUT); 
+  }else{
+    ionic.activator.end();
+  }
   tapPointerMoved = false;
 }
 
@@ -531,7 +538,12 @@ function tapHasPointerMoved(endEvent) {
     return false;
   }
   var endCoordinates = getPointerCoordinates(endEvent);
-
+  
+  // Click event is triggered even if the finger is moved, or if a large finger.
+  if(ionic.Platform.isAndroid() && ( Math.abs(tapPointerStart.x - endCoordinates.x) < TAP_RELEASE_RADIUS && Math.abs(tapPointerStart.y - endCoordinates.y) < TAP_RELEASE_RADIUS )){
+    return false;  
+  }
+  
   var hasClassList = !!(endEvent.target.classList && endEvent.target.classList.contains);
   var releaseTolerance = hasClassList & endEvent.target.classList.contains('button') ?
     TAP_RELEASE_BUTTON_TOLERANCE :
