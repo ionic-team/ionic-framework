@@ -237,6 +237,10 @@
   .buttons.right-buttons {
     display: inherit;
   }
+  .buttons span {
+    display: inline-flex;
+  }
+
   // Place the last button in a bar on the right of the bar
   .title + .button:last-child,
   > .button + .button:last-child,
