@@ -307,6 +307,7 @@
   .icon {
     display: inline-block;
     vertical-align: top;
+    margin-top: -.1em;
 
     &:before {
     font-size: $tabs-icon-size - 8;
