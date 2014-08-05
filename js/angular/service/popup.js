@@ -403,10 +403,10 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
         } else {
           //Remove popup-open & backdrop if this is last popup
           document.body.classList.remove('popup-open');
-          $ionicBackdrop.release();
           ($ionicPopup._backButtonActionDone || angular.noop)();
         }
-
+        // always release the backdrop since it has an internal backdrop counter
+        $ionicBackdrop.release();
         return result;
       });
     });
