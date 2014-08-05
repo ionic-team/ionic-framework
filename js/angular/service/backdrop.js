@@ -76,7 +76,7 @@ function($document) {
       el.removeClass('active');
       setTimeout(function() {
         !backdropHolds && el.removeClass('visible');
-      }, 100);
+      }, 400);
     }
   }
 
