@@ -210,6 +210,15 @@
       });
     },
 
+    elementIsDescendant: function(el, parent, stopAt) {
+      var current = el;
+      do {
+        if (current === parent) return true;
+        current = current.parentNode;
+      } while (current && current !== stopAt);
+      return false;
+    },
+
     /**
      * @ngdoc method
      * @name ionic.DomUtil#getParentWithClass

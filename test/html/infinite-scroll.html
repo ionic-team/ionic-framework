@@ -26,12 +26,11 @@
   <script>
   angular.module('ionicApp', ['ionic'])
 
-  .controller('MyCtrl', ['$scope', function($scope) {
+  .controller('MyCtrl', ['$scope', '$timeout', function($scope, $timeout) {
 
     $scope.data = { items: [] };
 
     var fetchItems = function() {
-      console.log('Pushing item');
       $scope.data.items.push({
         title: 'Item ' + $scope.data.items.length
       });
@@ -40,7 +39,7 @@
     };
 
     $scope.onInfinite = function() {
-      fetchItems();
+      $timeout(fetchItems, 2000);
     };
 
     for(var i = 0; i < 10; i++) {

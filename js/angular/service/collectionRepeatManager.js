@@ -100,7 +100,24 @@ function($rootScope, $timeout) {
       var secondaryScrollSize = this.secondaryScrollSize();
       var previousItem;
 
-      return this.dataSource.dimensions.map(function(dim) {
+      this.dataSource.beforeSiblings && this.dataSource.beforeSiblings.forEach(calculateSize, this);
+      var beforeSize = primaryPos + (previousItem ? previousItem.primarySize : 0);
+
+      primaryPos = secondaryPos = 0;
+      previousItem = null;
+
+
+      var dimensions = this.dataSource.dimensions.map(calculateSize, this);
+      var totalSize = primaryPos + (previousItem ? previousItem.primarySize : 0);
+
+      return {
+        beforeSize: beforeSize,
+        totalSize: totalSize,
+        dimensions: dimensions
+      };
+
+      function calculateSize(dim) {
+
         //Each dimension is an object {width: Number, height: Number} provided by
         //the dataSource
         var rect = {
@@ -129,12 +146,13 @@ function($rootScope, $timeout) {
 
         previousItem = rect;
         return rect;
-      }, this);
+      }
     },
     resize: function() {
-      this.dimensions = this.calculateDimensions();
-      var lastItem = this.dimensions[this.dimensions.length - 1];
-      this.viewportSize = lastItem ? lastItem.primaryPos + lastItem.primarySize : 0;
+      var result = this.calculateDimensions();
+      this.dimensions = result.dimensions;
+      this.viewportSize = result.totalSize;
+      this.beforeSize = result.beforeSize;
       this.setCurrentIndex(0);
       this.render(true);
       if (!this.dataSource.backupItemsArray.length) {
@@ -219,6 +237,7 @@ function($rootScope, $timeout) {
      * the data source to render the correct items into the DOM.
      */
     render: function(shouldRedrawAll) {
+      var self = this;
       var i;
       var isOutOfBounds = ( this.currentIndex >= this.dataSource.getLength() );
       // We want to remove all the items and redraw everything if we're out of bounds
@@ -258,10 +277,12 @@ function($rootScope, $timeout) {
       // Keep rendering items, adding them until we are past the end of the visible scroll area
       i = renderStartIndex;
       while ((rect = this.dimensions[i]) && (rect.primaryPos - rect.primarySize < scrollSizeEnd)) {
-        this.renderItem(i, rect.primaryPos, rect.secondaryPos);
-        i++;
+        doRender(i++);
       }
-      var renderEndIndex = i - 1;
+      //Add two more items at the end
+      doRender(i++);
+      doRender(i);
+      var renderEndIndex = i;
 
       // Remove any items that were rendered and aren't visible anymore
       for (i in this.renderedItems) {
@@ -271,6 +292,17 @@ function($rootScope, $timeout) {
       }
 
       this.setCurrentIndex(startIndex);
+
+      function doRender(dataIndex) {
+        var rect = self.dimensions[dataIndex];
+        if (!rect) {
+
+        }else if (dataIndex < self.dataSource.dataStartIndex) {
+          // do nothing
+        } else {
+          self.renderItem(dataIndex, rect.primaryPos - self.beforeSize, rect.secondaryPos);
+        }
+      }
     },
     renderItem: function(dataIndex, primaryPos, secondaryPos) {
       // Attach an item, and set its transform position to the required value
@@ -301,6 +333,15 @@ function($rootScope, $timeout) {
       }
     }
   };
+
+  var exceptions = {'renderScroll':1, 'renderIfNeeded':1};
+  forEach(CollectionRepeatManager.prototype, function(method, key) {
+    if (exceptions[key]) return;
+    CollectionRepeatManager.prototype[key] = function() {
+      console.log(key + '(', arguments, ')');
+      return method.apply(this, arguments);
+    };
+  });
 
   return CollectionRepeatManager;
 }]);

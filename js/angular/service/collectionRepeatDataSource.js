@@ -4,12 +4,16 @@ IonicModule
   '$parse',
   '$rootScope',
 function($cacheFactory, $parse, $rootScope) {
+  function hideWithTransform(element) {
+    element.css(ionic.CSS.TRANSFORM, 'translate3d(-2000px,-2000px,0)');
+  }
 
   function CollectionRepeatDataSource(options) {
     var self = this;
     this.scope = options.scope;
     this.transcludeFn = options.transcludeFn;
     this.transcludeParent = options.transcludeParent;
+    this.element = options.element;
 
     this.keyExpr = options.keyExpr;
     this.listExpr = options.listExpr;
@@ -61,6 +65,8 @@ function($cacheFactory, $parse, $rootScope) {
           height: this.heightGetter(this.scope, locals)
         };
       }, this);
+      this.dimensions = this.beforeSiblings.concat(this.dimensions).concat(this.afterSiblings);
+      this.dataStartIndex = this.beforeSiblings.length;
     },
     createItem: function() {
       var item = {};
@@ -87,6 +93,13 @@ function($cacheFactory, $parse, $rootScope) {
     },
     attachItemAtIndex: function(index) {
       var value = this.data[index];
+
+      if (index < this.dataStartIndex) {
+        return this.beforeSiblings[index];
+      } else if (index > this.data.length) {
+        return this.afterSiblings[index - this.data.length - this.dataStartIndex];
+      }
+
       var hash = this.itemHashGetter(index, value);
       var item = this.getItem(hash);
 
@@ -118,23 +131,36 @@ function($cacheFactory, $parse, $rootScope) {
     detachItem: function(item) {
       delete this.attachedItems[item.hash];
 
+      //If it's an outside item, only hide it. These items aren't part of collection
+      //repeat's list, only sit outside
+      if (item.isOutside) {
+        hideWithTransform(item.element);
+
       // If we are at the limit of backup items, just get rid of the this element
-      if (this.backupItemsArray.length >= this.BACKUP_ITEMS_LENGTH) {
+      } else if (this.backupItemsArray.length >= this.BACKUP_ITEMS_LENGTH) {
         this.destroyItem(item);
       // Otherwise, add it to our backup items
       } else {
         this.backupItemsArray.push(item);
-        item.element.css(ionic.CSS.TRANSFORM, 'translate3d(-2000px,-2000px,0)');
+        hideWithTransform(item.element);
         //Don't .$destroy(), just stop watchers and events firing
         disconnectScope(item.scope);
       }
+
     },
     getLength: function() {
-      return this.data && this.data.length || 0;
+      return this.dimensions && this.dimensions.length || 0;
     },
-    setData: function(value) {
+    setData: function(value, beforeSiblings, afterSiblings) {
       this.data = value || [];
+      this.beforeSiblings = beforeSiblings || [];
+      this.afterSiblings = afterSiblings || [];
       this.calculateDataDimensions();
+
+      this.afterSiblings.forEach(function(item) {
+        item.element.css({position: 'absolute', top: '0', left: '0' });
+        hideWithTransform(item.element);
+      });
     },
   };
 

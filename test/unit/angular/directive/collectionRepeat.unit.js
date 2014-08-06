@@ -106,16 +106,16 @@ describe('collectionRepeat directive', function() {
 
   it('should error if list is not an array and is truthy', function() {
     var el = setup('collection-repeat="item in items" collection-item-height="50"');
-    expect(function() { 
+    expect(function() {
       el.scope().$apply('items = "string"');
     }).toThrow();
-    expect(function() { 
+    expect(function() {
       el.scope().$apply('items = 123');
     }).toThrow();
-    expect(function() { 
+    expect(function() {
       el.scope().$apply('items = {}');
     }).toThrow();
-    expect(function() { 
+    expect(function() {
       el.scope().$apply('items = []');
     }).not.toThrow();
   });
@@ -128,11 +128,11 @@ describe('collectionRepeat directive', function() {
     repeatManager.resize.reset();
 
     el.scope().$apply('items = [ 1,2,3 ]');
-    expect(dataSource.setData).toHaveBeenCalledWith(el.scope().items);
+    expect(dataSource.setData).toHaveBeenCalledWith(el.scope().items, [], []);
     expect(repeatManager.resize.callCount).toBe(1);
     expect(scrollView.resize.callCount).toBe(1);
     el.scope().$apply('items = null');
-    expect(dataSource.setData).toHaveBeenCalledWith(null);
+    expect(dataSource.setData).toHaveBeenCalledWith(null, [], []);
     expect(repeatManager.resize.callCount).toBe(2);
     expect(scrollView.resize.callCount).toBe(2);
   });
@@ -147,7 +147,7 @@ describe('collectionRepeat directive', function() {
     el.scope().items = [1,2,3];
 
     ionic.trigger('resize', { target: window });
-    expect(dataSource.setData).toHaveBeenCalledWith(el.scope().items);
+    expect(dataSource.setData).toHaveBeenCalledWith(el.scope().items, [], []);
     expect(repeatManager.resize.callCount).toBe(1);
     expect(scrollView.resize.callCount).toBe(1);
   });

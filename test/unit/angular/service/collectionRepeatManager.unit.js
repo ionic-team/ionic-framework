@@ -180,7 +180,7 @@ describe('collectionRepeatManager service', function() {
       manager.secondaryScrollSize = function() {
         return 100;
       };
-      var result = manager.calculateDimensions();
+      var result = manager.calculateDimensions().dimensions;
       expect(result[0].primarySize).toBe(20);
       expect(result[0].secondarySize).toBe(100);
       expect(result[0].primaryPos).toBe(0);
@@ -214,7 +214,7 @@ describe('collectionRepeatManager service', function() {
       manager.secondaryScrollSize = function() {
         return 90;
       };
-      var result = manager.calculateDimensions();
+      var result = manager.calculateDimensions().dimensions;
       expect(result[0].primarySize).toBe(30);
       expect(result[0].secondarySize).toBe(30);
       expect(result[0].primaryPos).toBe(0);
@@ -251,7 +251,11 @@ describe('collectionRepeatManager service', function() {
     it('should work without data', function() {
       var manager = setup();
       spyOn(manager, 'render');
-      spyOn(manager, 'calculateDimensions').andReturn([]);
+      spyOn(manager, 'calculateDimensions').andReturn({ 
+        dimensions: [],
+        beforeSize: 0,
+        totalSize: 0
+      });
       spyOn(manager, 'setCurrentIndex');
       manager.resize();
       expect(manager.dimensions).toEqual([]);
@@ -261,9 +265,13 @@ describe('collectionRepeatManager service', function() {
     });
     it('should work with data', function() {
       var manager = setup();
-      spyOn(manager, 'calculateDimensions').andReturn([{
-        primaryPos: 100, primarySize: 30
-      }]);
+      spyOn(manager, 'calculateDimensions').andReturn({ 
+        dimensions: [{
+          primaryPos: 100, primarySize: 30
+        }],
+        beforeSize: 0,
+        totalSize: 130
+      });
       manager.resize();
       expect(manager.viewportSize).toBe(130);
     });
@@ -430,12 +438,12 @@ describe('collectionRepeatManager service', function() {
       });
       manager.resize(); //triggers render
 
-      //it should render (items that fit * items per row) with one extra row at end
-      expect(Object.keys(manager.renderedItems).length).toBe(18);
-      for (var i = 0; i < 18; i++) {
+      //it should render (items that fit * items per row) with three extra row at end
+      expect(Object.keys(manager.renderedItems).length).toBe(20);
+      for (var i = 0; i < 20; i++) {
         expect(manager.renderedItems[i]).toBe(true);
       }
-      expect(manager.renderedItems[18]).toBeUndefined();
+      expect(manager.renderedItems[20]).toBeUndefined();
     });
 
     it('should render items in the middle of the screen', function() {
@@ -449,31 +457,14 @@ describe('collectionRepeatManager service', function() {
       manager.resize();
       var startIndex = 17;
       var bufferStartIndex = 14; //one row of buffer before the start
-      var bufferEndIndex = 35;  //start + 17 + 6
+      var bufferEndIndex = 37;  //start + 17 + 6
 
-      expect(Object.keys(manager.renderedItems).length).toBe(22);
+      expect(Object.keys(manager.renderedItems).length).toBe(24);
       for (var i = bufferStartIndex; i <= bufferEndIndex; i++) {
         expect(manager.renderedItems[i]).toBe(true);
       }
       expect(manager.renderedItems[bufferStartIndex - 1]).toBeUndefined();
       expect(manager.renderedItems[bufferEndIndex + 1]).toBeUndefined();
-    });
-
-    it('should remove items outside the range', function() {
-      var manager = mockRendering({
-        itemWidth: 3,
-        itemHeight: 20,
-        scrollWidth: 10,
-        scrollHeight: 100
-      });
-      manager.resize();
-      manager.removeItem.reset();
-      manager.renderedItems = { 17: true, 18: true, 19: true };
-      //resize() re-renders everything, need to just do a normal rerender
-      manager.render();
-      expect(manager.removeItem.callCount).toBe(2);
-      expect(manager.removeItem).toHaveBeenCalledWith('18');
-      expect(manager.removeItem).toHaveBeenCalledWith('19');
     });
   });
 

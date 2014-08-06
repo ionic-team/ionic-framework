@@ -245,36 +245,27 @@ body.grade-c {
   }
 }
 
-.scroll-refresher-content {
-  position: absolute;
-  bottom: 15px;
-  left: 0;
-  width: 100%;
-  color: $scroll-refresh-icon-color;
-  text-align: center;
-
-  font-size: 30px;
-}
-
-// Infinite scroll
-ion-infinite-scroll .scroll-infinite {
-  position: relative;
-  overflow: hidden;
-  margin-top: -70px;
+ion-infinite-scroll {
   height: 60px;
-}
-
-.scroll-infinite-content {
-  position: absolute;
-  bottom: -1px;
-  left: 0;
   width: 100%;
-  color: #666666;
-  text-align: center;
-  font-size: 30px; }
+  opacity: 0;
+  display: block;
 
-ion-infinite-scroll.active .scroll-infinite {
-  margin-top: -30px;
+  @include transition(opacity 0.25s);
+  @include display-flex();
+  @include flex-direction(row);
+  @include justify-content(center);
+  @include align-items(center);
+
+  .icon {
+    color: #666666;
+    font-size: 30px;
+    color: $scroll-refresh-icon-color;
+  }
+
+  &.active {
+    opacity: 1;
+  }
 }
 
 .overflow-scroll {

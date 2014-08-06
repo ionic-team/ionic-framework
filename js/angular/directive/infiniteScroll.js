@@ -60,24 +60,19 @@ IonicModule
 .directive('ionInfiniteScroll', ['$timeout', function($timeout) {
   function calculateMaxValue(distance, maximum, isPercent) {
     return isPercent ?
-      maximum * (1 - parseInt(distance,10) / 100) :
-      maximum - parseInt(distance, 10);
+      maximum * (1 - parseFloat(distance,10) / 100) :
+      maximum - parseFloat(distance, 10);
   }
   return {
     restrict: 'E',
     require: ['^$ionicScroll', 'ionInfiniteScroll'],
-    template:
-      '<div class="scroll-infinite">' +
-        '<div class="scroll-infinite-content">' +
-          '<i class="icon {{icon()}} icon-refreshing"></i>' +
-        '</div>' +
-      '</div>',
+    template: '<i class="icon {{icon()}} icon-refreshing"></i>',
     scope: true,
     controller: ['$scope', '$attrs', function($scope, $attrs) {
       this.isLoading = false;
       this.scrollView = null; //given by link function
       this.getMaxScroll = function() {
-        var distance = ($attrs.distance || '1%').trim();
+        var distance = ($attrs.distance || '2.5%').trim();
         var isPercent = distance.indexOf('%') !== -1;
         var maxValues = this.scrollView.getScrollMax();
         return {
@@ -109,6 +104,7 @@ IonicModule
         $element[0].classList.remove('active');
         $timeout(function() {
           scrollView.resize();
+          checkBounds();
         }, 0, false);
         infiniteScrollCtrl.isLoading = false;
       };

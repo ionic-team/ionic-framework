@@ -18,65 +18,57 @@
       </a>
     </ion-header-bar>
     <ion-content>
+      <p>
+      Hi, I'm some text before the list.
+      </p>
+      <div class="card full">
+        Hi, I'm a card before the list.
+      </div>
       <ion-list>
         <ion-item
           class="item-avatar-left item-icon-right"
           ng-click="alert(item)"
           collection-repeat="item in items"
-          collection-item-height="$index % 10 === 0 ? 500 : 85"
+          collection-item-height="85"
           collection-item-width="'100%'"
-          style="position: absolute; left: 0; right: 0;">
-          <img ng-src="{{item.image}}">
+          ng-style="{height: '85px'}"
+          style="left: 0; right: 0;">
           <h2>{{item.text}}</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porttitor diam urna, vitae consectetur lectus aliquet quis.</p>
-          <i class="icon" style="color:red; font-size: 30px;" ng-class="['ion-ios7-person','ion-person','ion-android-contact','ion-android-social-user','ion-person-stalker'][$index % 5]"></i>
         </ion-item>
       </ion-list>
+      <ion-infinite-scroll on-infinite="loadMore()"></ion-infinite-scroll>
+      <div class="card full">
+        Hi, I'm a card after the list.
+      </div>
     </ion-content>
   <script>
-var dataUris = {};
-function convertImgToBase64(url, callback, outputFormat){
-    var canvas = document.createElement('CANVAS'),
-        ctx = canvas.getContext('2d'),
-        img = new Image;
-    img.crossOrigin = 'Anonymous';
-    img.onload = function(){
-        var dataURL;
-        canvas.height = img.height;
-        canvas.width = img.width;
-        ctx.drawImage(img,0,0);
-        dataURL = canvas.toDataURL(outputFormat || 'image/png');
-        callback.call(this, dataURL);
-        canvas = null;
-    };
-    img.src = url;
-}
 function MainCtrl($scope, $ionicScrollDelegate, $timeout, $q, $ionicLoading) {
-  var images = [];
-
-  $ionicLoading.show({
-      template: 'Loading images...'
-  });
-  var deferred;
-  for (var i = 0; i < 5; i++) {
-    deferred = $q.defer();
-    convertImgToBase64('http://placekitten.com/'+(40+(10*i))+'/'+(40+(10*i)), deferred.resolve);
-    images.push(deferred.promise);
+  $scope.items = [];
+  function addImage() {
+    var i = $scope.items.length;
+    $scope.items.push({
+      text: 'Item ' + i,
+      image: 'http://placekitten.com/'+(100+50%i)+'/'+(100+50%i)
+    });
   }
-
-  $q.all(images).then(function(dataUrls) {
-    $scope.items = [];
-    for (var item = 0; item < 5000; item++) {
-      $scope.items.push({
-        text: 'Item ' + item,
-        image: dataUrls[item % 5]
-      });
-    }
-    $timeout($ionicLoading.hide, 200);
-  });
+  for (var i = 0; i < 20; i++) addImage();
 
   $scope.scrollBottom = $ionicScrollDelegate.scrollBottom;
+
+  $scope.loadMore = function() {
+    $timeout(function() {
+      var n = 1 + Math.floor(4*Math.random());
+      for (var i = 0; i < n; i++) addImage();
+      $scope.$broadcast('scroll.infiniteScrollComplete');
+    }, 1500);
+  };
 }
   </script>
+  <style>
+.full {
+  left: 0;
+  right: 0;
+}
 </body>
 </html>
