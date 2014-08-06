@@ -36,11 +36,15 @@ the ng-disabled attribute, for example.
 
 Change your code from this:
 
+```
 <ion-radio ng-disabled="{{$parent.isDisabled}}"></ion-radio>
+```
 
 To this:
 
+```
 <ion-radio ng-disabled="{{isDisabled}}"></ion-radio>
+```
 
  ([53c437e2](https://github.com/driftyco/ionic/commit/53c437e2054e1f95d548e42b386f7a82aba56a14))
 
