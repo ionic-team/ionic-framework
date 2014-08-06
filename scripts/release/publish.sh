@@ -3,6 +3,7 @@
 function init {
   RELEASE_DIR=$HOME/ionic-release
   ../clone/clone.sh --repository="driftyco/ionic" \
+    --depth="1" \
     --directory="$RELEASE_DIR" \
     --branch="master"
 }
