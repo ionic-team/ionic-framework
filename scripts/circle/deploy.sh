@@ -9,8 +9,10 @@ ARG_DEFS=(
 function run {
   cd ../..
 
-  # If --git-push-dryrun is set on this script, export it to all the scripts
+  # If --git-push-dryrun or --verbose is set on this script,
+  # export it to all the scripts
   export GIT_PUSH_DRYRUN=$GIT_PUSH_DRYRUN
+  export VERBOSE=$VERBOSE
 
   git config --global user.name 'Ionitron'
   git config --global user.email hi@ionicframework.com

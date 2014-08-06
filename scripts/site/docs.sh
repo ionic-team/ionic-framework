@@ -37,7 +37,7 @@ function run {
     # git add -A
     # git commit -am "docs: update for $VERSION"
     # git push -q origin gh-pages
-    ./deploy.sh
+    source deploy.sh
 
     echo "-- Updated docs for $VERSION_NAME succesfully!"
   fi
