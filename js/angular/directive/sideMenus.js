@@ -69,7 +69,7 @@ IonicModule
           $document[0].body.classList.remove('menu-open');
         });
 
-      }
+      };
     }
   };
 }]);
