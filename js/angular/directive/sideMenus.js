@@ -57,12 +57,19 @@ IonicModule
  * with {@link ionic.service:$ionicSideMenuDelegate}.
  *
  */
-.directive('ionSideMenus', [function() {
+.directive('ionSideMenus', ['$document', function($document) {
   return {
     restrict: 'ECA',
     controller: '$ionicSideMenus',
     compile: function(element, attr) {
       attr.$set('class', (attr['class'] || '') + ' view');
+
+      return function($scope) {
+        $scope.$on('$destroy', function(){
+          $document[0].body.classList.remove('menu-open');
+        });
+
+      }
     }
   };
 }]);
