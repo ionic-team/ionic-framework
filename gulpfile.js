@@ -311,8 +311,8 @@ gulp.task('release-discourse', function(done) {
 
     return q.all([
       updatePost(newPostUrl, 'closed', true),
-      updatePost(newPostUrl, 'visible', false),
-      oldPostUrl && updatePost(oldPostUrl, 'pinned', true)
+      updatePost(newPostUrl, 'pinned', true),
+      oldPostUrl && updatePost(oldPostUrl, 'pinned', false)
     ]);
   });
 
