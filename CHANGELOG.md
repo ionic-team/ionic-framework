@@ -1,3 +1,12 @@
+### 1.0.0-beta.11 "indium-iguana" (2014-08-06)
+
+
+#### Bug Fixes
+
+* **actionSheet:** run $apply when closing actionSheet with back button ([d3ed66e0](https://github.com/driftyco/ionic/commit/d3ed66e0cd4b81f273c1bb8554786dcf973e0887))
+* **sideMenu:** remove .menu-open on destroy ([f246c5aa](https://github.com/driftyco/ionic/commit/f246c5aa2094ec74865ce149b3f1a1183dc4950a))
+
+
 ### 1.0.0-beta.10 "hafnium-heron" (2014-07-25)
 
 
