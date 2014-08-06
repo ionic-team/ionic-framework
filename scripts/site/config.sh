@@ -23,6 +23,7 @@ function run {
   DATE=$(date +"%Y-%m-%d")
 
   cd $SITE_DIR
+  npm install
 
   $(replaceInFile "_config.yml" "latest_download:.*$" "latest_download: http:\/\/code.ionicframework.com\/$VERSION\/ionic-v$VERSION.zip")
   $(replaceInFile "_config.yml" "latest_version:.*$" "latest_version: $VERSION \"$CODENAME\"")

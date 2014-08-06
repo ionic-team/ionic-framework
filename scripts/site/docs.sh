@@ -26,6 +26,7 @@ function run {
   node_modules/.bin/gulp docs-index --dist=$SITE_DIR
 
   cd $SITE_DIR
+  npm install
 
   CHANGES=$(git status --porcelain)
 
