@@ -698,7 +698,9 @@ describe('Ionic View Service', function() {
   }));
 
   it('should not error when clearing empty history', function() {
-    expect(viewService.clearHistory.bind(null)).not.toThrow();
+    expect(function() {
+      viewService.clearHistory();
+    }).not.toThrow();
   });
 
   it('should create a viewService view', inject(function($location) {
