@@ -1,3 +1,4 @@
+var GithubApi = require('github');
 var gulp = require('gulp');
 var path = require('canonical-path');
 var pkg = require('./package.json');
@@ -229,10 +230,10 @@ gulp.task('release-tweet', function(done) {
   var client = new twitter(oauth);
   client.statuses(
     'update',
-    { 
-      status: argv.test ? 
-        'This is a test.' : 
-        buildConfig.releaseMessage() 
+    {
+      status: argv.test ?
+        'This is a test.' :
+        buildConfig.releaseMessage()
     },
     oauth.accessToken,
     oauth.accessTokenSecret,
@@ -255,6 +256,30 @@ gulp.task('release-irc', function(done) {
   });
 });
 
+gulp.task('release-github', function(done) {
+  var github = new GithubApi({
+    version: '3.0.0'
+  });
+  github.authenticate({
+    type: 'oauth',
+    token: process.env.GH_TOKEN
+  });
+  makeChangelog({
+    standalone: true
+  })
+  .then(function(log) {
+    var version = 'v' + pkg.version;
+    github.releases.createRelease({
+      owner: 'driftyco',
+      repo: 'ionic',
+      tag_name: version,
+      name: version + ' "' + pkg.codename + '"',
+      body: log
+    }, done);
+  })
+  .fail(done);
+});
+
 gulp.task('release-discourse', function(done) {
   var oldPostUrl = buildConfig.releasePostUrl;
   var newPostUrl;
@@ -270,11 +295,11 @@ gulp.task('release-discourse', function(done) {
       form: {
         api_key: process.env.DISCOURSE_TOKEN,
         api_username: 'Ionitron',
-        title: argv.test ? 
+        title: argv.test ?
           ('This is a test. ' + Date.now()) :
           'v' + pkg.version + ' "' + pkg.codename + '" released!',
         raw: argv.test ?
-          ('This is a test. Again! ' + Date.now()) : 
+          ('This is a test. Again! ' + Date.now()) :
           content
       }
     });

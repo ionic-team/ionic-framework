@@ -34,7 +34,7 @@ function run {
 
   git add -A
   git commit -am "release: v$VERSION \"$CODENAME\""
-  git tag -f -m v$VERSION v$VERSION
+  git tag -f v$VERSION
 
   git push -q origin master
   git push -q origin v$VERSION
