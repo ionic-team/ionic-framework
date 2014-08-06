@@ -1,7 +1,7 @@
 {
   "name": "ionic",
-  "version": "1.0.0-beta.10",
-  "codename": "hafnium-heron",
+  "version": "1.0.0-beta.10-nightly-16570",
+  "codename": "krypton-koala",
   "homepage": "https://github.com/driftyco/ionic",
   "authors": [
     "Max Lynch <max@drifty.com>",

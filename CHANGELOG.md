@@ -1,3 +1,48 @@
+### 1.0.0-beta.10-nightly-16570 "krypton-koala" (2014-08-06)
+
+
+#### Bug Fixes
+
+* **backdrop:** disable tap longer after backdrop close ([7faeeda0](https://github.com/driftyco/ionic/commit/7faeeda099053f1d43d48407a0d89a9a09cb56a4), closes [#1536](https://github.com/driftyco/ionic/issues/1536))
+* **cards:** No more double margin if inside padding container ([03903239](https://github.com/driftyco/ionic/commit/0390323944b0e437c1b9716b6d897e2f94325f8c))
+* **demos:** fix HTML validation issue ([c47fcccc](https://github.com/driftyco/ionic/commit/c47fcccc723a69c0fcf74ccdfc5ebec265c09ea5))
+* **forms:** Normalized form styles ([89999cad](https://github.com/driftyco/ionic/commit/89999cadb17a9a20d65f3699722e390f982a27ce))
+* **header:** buttons do not align in Android 4.4 ([06086ee9](https://github.com/driftyco/ionic/commit/06086ee9ae2e0bfd02e5ed88ce086ae94ceadd70), closes [#1614](https://github.com/driftyco/ionic/issues/1614))
+* **ionRadio:** fix ng-change being reported before model changes ([53c437e2](https://github.com/driftyco/ionic/commit/53c437e2054e1f95d548e42b386f7a82aba56a14), closes [#1741](https://github.com/driftyco/ionic/issues/1741))
+* **nav:** Removed border on animation ([a9a52f64](https://github.com/driftyco/ionic/commit/a9a52f64f427889c15a94b2645ddcef6bb59340f))
+* **popup:** backdrop release fires with every close ([ae87c66b](https://github.com/driftyco/ionic/commit/ae87c66b12821b122eeb8acb778138b55776b873))
+* **tabs:**
+  * vertically center text and icons on tabs-icon-left/right ([93d586de](https://github.com/driftyco/ionic/commit/93d586dea4e9c6253fbdfd01a166456e0a1fd4da), closes [#1827](https://github.com/driftyco/ionic/issues/1827))
+  * remove important flag from `.tabs{border-bottom:none;} Fixes: 1652 ([bf1c1bc9](https://github.com/driftyco/ionic/commit/bf1c1bc97151e3c25345b5ba9024015ef9865879))
+* **toggle:** fix toggle-class attribute ([6fbd1a43](https://github.com/driftyco/ionic/commit/6fbd1a43067fbaf9a2d9c2f4098220e6dd1d7605), closes [#1851](https://github.com/driftyco/ionic/issues/1851))
+* **viewService:** No error on clearHistory for empty history ([64641b1b](https://github.com/driftyco/ionic/commit/64641b1be0aa93281223f6c2baae3941835c49e9))
+
+
+#### Features
+
+* **collectionRepeat:** other children of ion-content element fit in ([7ddb57e6](https://github.com/driftyco/ionic/commit/7ddb57e60b27072b69a0da66b9b22acdd44e6f10), closes [#1920](https://github.com/driftyco/ionic/issues/1920), [#1866](https://github.com/driftyco/ionic/issues/1866), [#1380](https://github.com/driftyco/ionic/issues/1380))
+* **popover:** created popovers ([c1215aa3](https://github.com/driftyco/ionic/commit/c1215aa300e8506d30fbeaf2c608b07058c46e3b))
+* **tabs:** Expand striped android style tab functionality. Closes 1694 ([ddda809b](https://github.com/driftyco/ionic/commit/ddda809b57ef334dc35ac2f33133f061d4856073))
+
+
+#### Breaking Changes
+
+* 
+ion-radio no longer has an isolate scope.
+This will break your radio only if you were relying upon the radio having an isolate scope: if you were referencing `$parent.value` as
+the ng-disabled attribute, for example.
+
+Change your code from this:
+
+<ion-radio ng-disabled="{{$parent.isDisabled}}"></ion-radio>
+
+To this:
+
+<ion-radio ng-disabled="{{isDisabled}}"></ion-radio>
+
+ ([53c437e2](https://github.com/driftyco/ionic/commit/53c437e2054e1f95d548e42b386f7a82aba56a14))
+
+
 ### 1.0.0-beta.10 "hafnium-heron" (2014-07-25)
 
 
