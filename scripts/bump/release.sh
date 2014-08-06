@@ -12,7 +12,6 @@ function run {
   cd ../..
 
   CODENAME=$(head -n 1 config/CODENAMES)
-  echo "$(tail -n +2 config/CODENAMES)" > config/CODENAMES
 
   replaceJsonProp "package.json" "codename" "$CODENAME"
   replaceJsonProp "package.json" "version" "$NEW_VERSION"

@@ -34,9 +34,9 @@ function run {
   if [[ "$CHANGES" == "" ]]; then
     echo "-- No changes detected in docs for $VERSION_NAME; docs not updated."
   else
-    # git add -A
-    # git commit -am "docs: update for $VERSION"
-    # git push -q origin gh-pages
+    git add -A
+    git commit -am "docs: update for $VERSION"
+    git push -q origin master
     source deploy.sh
 
     echo "-- Updated docs for $VERSION_NAME succesfully!"

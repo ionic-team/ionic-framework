@@ -19,9 +19,10 @@ function run {
 
   # Move modified files into the repo copy we're going to push
   cp package.json $RELEASE_DIR
-  cp config/CODENAMES $RELEASE_DIR
 
   cd $RELEASE_DIR
+
+  echo "$(tail -n +2 config/CODENAMES)" > config/CODENAMES
 
   VERSION=$(readJsonProp "package.json" "version")
   CODENAME=$(readJsonProp "package.json" "codename")

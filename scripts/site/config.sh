@@ -29,9 +29,9 @@ function run {
   $(replaceInFile "_config.yml" "latest_version:.*$" "latest_version: $VERSION \"$CODENAME\"")
   $(replaceInFile "_config.yml" "latest_release_date:.*$" "latest_release_date: $DATE")
 
-  # git add -A
-  # git commit -am "release: $VERSION"
-  # git push -q origin master
+  git add -A
+  git commit -am "release: $VERSION"
+  git push -q origin master
   source deploy.sh
 
   echo "-- Published ionic-site config v$VERSION successfully!"
