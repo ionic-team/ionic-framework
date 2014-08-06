@@ -13,9 +13,11 @@ function run {
 
   echo "-- Cloning $REPOSITORY#$BRANCH to $DIRECTORY..."
 
-  git clone https://driftyco:$GH_TOKEN@github.com/$REPOSITORY $DIRECTORY \
-    --depth=${DEPTH:-1} \
-    --branch=${BRANCH:-master}
+  ARGS="--branch=${BRANCH:-master}"
+  if [[ "$DEPTH" != "" ]]; then
+    ARGS="$ARGS --depth=$DEPTH"
+  fi
+  git clone https://driftyco:$GH_TOKEN@github.com/$REPOSITORY $DIRECTORY $ARGS
 }
 
 source $(dirname $0)/../utils.inc

@@ -32,7 +32,7 @@ function run {
   # git add -A
   # git commit -am "release: $VERSION"
   # git push -q origin master
-  ./deploy.sh
+  source deploy.sh
 
   echo "-- Published ionic-site config v$VERSION successfully!"
 }
