@@ -1,6 +1,8 @@
 var gulp = require('gulp');
 var path = require('canonical-path');
 var pkg = require('./package.json');
+var request = require('request');
+var q = require('q');
 var semver = require('semver');
 var through = require('through');
 
@@ -59,7 +61,6 @@ gulp.task('default', ['build']);
 gulp.task('build', ['bundle', 'sass']);
 gulp.task('validate', ['jshint', 'ddescribe-iit', 'karma']);
 
-
 var IS_WATCH = false;
 gulp.task('watch', ['build'], function() {
   IS_WATCH = true;
@@ -67,30 +68,38 @@ gulp.task('watch', ['build'], function() {
   gulp.watch('scss/**/*.scss', ['sass']);
 });
 
-gulp.task('changelog', function(done) {
-  var codename = pkg.codename;
-  var file = argv.standalone ? '' : __dirname + '/CHANGELOG.md';
-  var subtitle = argv.subtitle || '"' + codename + '"';
-  var toHtml = !!argv.html;
+gulp.task('changelog', function() {
   var dest = argv.dest || 'CHANGELOG.md';
-  var from = argv.from;
-  changelog({
-    repository: 'https://github.com/driftyco/ionic',
-    version: pkg.version,
-    subtitle: subtitle,
-    file: file,
-    from: from
-  }, function(err, data) {
-    if (err) return done(err);
+  var toHtml = !!argv.html;
+  return makeChangelog(argv).then(function(log) {
     if (toHtml) {
-      data = marked(data, {
+      log = marked(log, {
         gfm: true
       });
     }
-    fs.writeFileSync(dest, data);
-    done();
+    fs.writeFileSync(dest, log);
   });
 });
+
+function makeChangelog(options) {
+  var codename = pkg.codename;
+  var file = options.standalone ? '' : __dirname + '/CHANGELOG.md';
+  var subtitle = options.subtitle || '"' + codename + '"';
+  var from = options.from;
+  var version = options.version || pkg.version;
+  var deferred = q.defer();
+  changelog({
+    repository: 'https://github.com/driftyco/ionic',
+    version: version,
+    subtitle: subtitle,
+    file: file,
+    from: from
+  }, function(err, log) {
+    if (err) deferred.reject(err);
+    else deferred.resolve(log);
+  });
+  return deferred.promise;
+}
 
 gulp.task('bundle', [
   'scripts',
@@ -220,7 +229,11 @@ gulp.task('release-tweet', function(done) {
   var client = new twitter(oauth);
   client.statuses(
     'update',
-    { status: buildConfig.releaseMessage() },
+    { 
+      status: argv.test ? 
+        'This is a test.' : 
+        buildConfig.releaseMessage() 
+    },
     oauth.accessToken,
     oauth.accessTokenSecret,
     done
@@ -236,10 +249,60 @@ gulp.task('release-irc', function(done) {
     realName: 'ionitron',
     channels: ['#ionic']
   }, function() {
-    client.say('#ionic', buildConfig.releaseMessage(), function() {
+    client.say('#ionic', argv.test ? 'This is a test.' : buildConfig.releaseMessage(), function() {
       client.quit('', done);
     });
   });
+});
+
+gulp.task('release-discourse', function(done) {
+  var oldPostUrl = buildConfig.releasePostUrl;
+  var newPostUrl;
+
+  return makeChangelog({
+    standalone: true
+  })
+  .then(function(changelog) {
+    var content = 'Download Instructions: https://github.com/driftyco/ionic#quick-start\n\n' + changelog;
+    return qRequest({
+      url: 'http://forum.ionicframework.com/posts',
+      method: 'post',
+      form: {
+        api_key: process.env.DISCOURSE_TOKEN,
+        api_username: 'Ionitron',
+        title: argv.test ? 
+          ('This is a test. ' + Date.now()) :
+          'v' + pkg.version + ' "' + pkg.codename + '" released!',
+        raw: argv.test ?
+          ('This is a test. Again! ' + Date.now()) : 
+          content
+      }
+    });
+  })
+  .then(function(res) {
+    var body = JSON.parse(res.body);
+    newPostUrl = 'http://forum.ionicframework.com/t/' + body.topic_slug + '/' + body.topic_id;
+    fs.writeFileSync(buildConfig.releasePostFile, newPostUrl);
+
+    return q.all([
+      updatePost(newPostUrl, 'closed', true),
+      updatePost(newPostUrl, 'visible', false),
+      oldPostUrl && updatePost(oldPostUrl, 'pinned', true)
+    ]);
+  });
+
+  function updatePost(url, statusType, isEnabled) {
+    return qRequest({
+      url: url + '/status',
+      method: 'put',
+      form: {
+        api_key: process.env.DISCOURSE_TOKEN,
+        api_username: 'Ionitron',
+        status: statusType,
+        enabled: !!isEnabled
+      }
+    });
+  }
 });
 
 function notContains(disallowed) {
@@ -273,4 +336,12 @@ function notContains(disallowed) {
 function pad(n) {
   if (n<10) { return '0' + n; }
   return n;
+}
+function qRequest(opts) {
+  var deferred = q.defer();
+  request(opts, function(err, res, body) {
+    if (err) deferred.reject(err);
+    else deferred.resolve(res);
+  });
+  return deferred.promise;
 }

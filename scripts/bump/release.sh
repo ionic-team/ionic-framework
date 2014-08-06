@@ -11,7 +11,7 @@ echo "#####"
 function run {
   cd ../..
 
-  CODENAME=$(cat config/CODENAMES | head -n 1)
+  CODENAME=$(head -n 1 config/CODENAMES)
   echo "$(tail -n +2 config/CODENAMES)" > config/CODENAMES
 
   replaceJsonProp "package.json" "codename" "$CODENAME"

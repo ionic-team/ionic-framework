@@ -1,9 +1,12 @@
 var pkg = require('../package.json');
 var fs = require('fs');
 
+var DISCOURSE_FILE = __dirname + '/DISCOURSE_POST_URL';
+
 module.exports = {
   dist: 'dist',
-  releasePostUrl: fs.readFileSync('config/RELEASE_POST_URL'),
+  releasePostUrl: fs.readFileSync(DISCOURSE_FILE).toString(),
+  releasePostFile: DISCOURSE_FILE,
 
   protractorPort: 8876,
 

@@ -3,7 +3,6 @@
 function init {
   RELEASE_DIR=$HOME/ionic-release
   ../clone/clone.sh --repository="driftyco/ionic" \
-    --depth="1" \
     --directory="$RELEASE_DIR" \
     --branch="master"
 }
@@ -18,7 +17,9 @@ function run {
   node_modules/.bin/gulp build --release --dist="$RELEASE_DIR/release"
   node_modules/.bin/gulp changelog --dest="$RELEASE_DIR/CHANGELOG.md"
 
+  # Move modified files into the repo copy we're going to push
   cp package.json $RELEASE_DIR
+  cp config/CODENAMES $RELEASE_DIR
 
   cd $RELEASE_DIR
 
