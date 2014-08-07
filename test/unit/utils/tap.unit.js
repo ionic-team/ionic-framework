@@ -619,13 +619,13 @@ describe('Ionic Tap', function() {
 
   it('Should get coordinates from page mouse event', function() {
     var e = { pageX: 77, pageY: 77 };
-    var c = getPointerCoordinates(e);
+    var c = ionic.tap.pointerCoord(e);
     expect(c).toEqual({x:77, y: 77});
   });
 
   it('Should get coordinates from client mouse event', function() {
     var e = { clientX: 77, clientY: 77 };
-    var c = getPointerCoordinates(e);
+    var c = ionic.tap.pointerCoord(e);
     expect(c).toEqual({x:77, y: 77});
   });
 
@@ -634,7 +634,7 @@ describe('Ionic Tap', function() {
       touches: [{ clientX: 99, clientY: 99 }],
       changedTouches: [{ clientX: 88, clientY: 88 }]
     };
-    var c = getPointerCoordinates(e);
+    var c = ionic.tap.pointerCoord(e);
     expect(c).toEqual({x:88, y: 88});
   });
 
@@ -642,7 +642,7 @@ describe('Ionic Tap', function() {
     var e = {
       touches: [{ pageX: 99, pageY: 99 }]
     };
-    var c = getPointerCoordinates(e);
+    var c = ionic.tap.pointerCoord(e);
     expect(c).toEqual({x:99, y: 99});
   });
 
@@ -650,13 +650,13 @@ describe('Ionic Tap', function() {
     var e = {
       touches: [{ clientX: 99, clientY: 99 }]
     };
-    var c = getPointerCoordinates(e);
+    var c = ionic.tap.pointerCoord(e);
     expect(c).toEqual({x:99, y: 99});
   });
 
   it('Should get 0 coordinates', function() {
     var e = {};
-    var c = getPointerCoordinates(e);
+    var c = ionic.tap.pointerCoord(e);
     expect(c).toEqual({x:0, y: 0});
   });
 
@@ -1232,8 +1232,8 @@ describe('Ionic Tap', function() {
 
     ele.type = 'text';
     expect( ionic.tap.isDateInput(ele) ).toEqual(false);
-    
-    
+
+
   });
 
   it('Should isLabelWithTextInput', function() {
