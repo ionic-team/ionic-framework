@@ -96,7 +96,7 @@ function($timeout, $ionicGesture) {
 
           if(primaryScrollAxis) {
             // we already figured out which way they're scrolling
-            return primaryScrollAxis
+            return primaryScrollAxis;
           }
 
           if(gestureEvt && gestureEvt.gesture) {
