@@ -228,7 +228,6 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
      * ```javascript
      *  $ionicPopup.prompt({
      *    title: 'Password Check',
-     *    template: 'Enter your secret password',
      *    inputType: 'password',
      *    inputPlaceholder: 'Your password'
      *  }).then(function(res) {
