@@ -65,6 +65,9 @@ body.grade-c {
   // Hide the top border if any
   margin-top: -1px;
 
+  // Prevents any distortion of lines
+  padding-top:1px;
+
   width: auto;
   height: auto;
 }
