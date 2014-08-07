@@ -374,7 +374,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       getContentHeight: function() {
         return Math.max(self.__content.scrollHeight, self.__content.offsetHeight + self.__content.offsetTop);
       }
-		};
+    };
 
     for (var key in options) {
       this.options[key] = options[key];
@@ -1098,8 +1098,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
     // Update Scroller dimensions for changed content
     // Add padding to bottom of content
     this.setDimensions(
-    	this.__container.clientWidth,
-    	this.__container.clientHeight,
+      this.__container.clientWidth,
+      this.__container.clientHeight,
       this.options.getContentWidth(),
       this.options.getContentHeight()
     );
