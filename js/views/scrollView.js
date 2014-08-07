@@ -1261,8 +1261,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * @param activateCallback {Function} Callback to execute on activation. This is for signalling the user about a refresh is about to happen when he release.
    * @param deactivateCallback {Function} Callback to execute on deactivation. This is for signalling the user about the refresh being cancelled.
    * @param startCallback {Function} Callback to execute to start the real async refresh action. Call {@link #finishPullToRefresh} after finish of refresh.
+   * @param showCallback {Function} Callback to execute when the refresher should be shown. This is for showing the refresher during a negative scrollTop.
+   * @param hideCallback {Function} Callback to execute when the refresher should be hidden. This is for hiding the refresher when it's behind the nav bar.
    */
-  activatePullToRefresh: function(height, activateCallback, deactivateCallback, startCallback) {
+  activatePullToRefresh: function(height, activateCallback, deactivateCallback, startCallback, showCallback, hideCallback) {
 
     var self = this;
 
@@ -1270,7 +1272,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.__refreshActivate = activateCallback;
     self.__refreshDeactivate = deactivateCallback;
     self.__refreshStart = startCallback;
-
+    self.__refreshShow = showCallback;
+    self.__refreshHide = hideCallback;
   },
 
 
@@ -1741,6 +1744,15 @@ ionic.views.Scroll = ionic.views.View.inherit({
             // Support pull-to-refresh (only when only y is scrollable)
             if (!self.__enableScrollX && self.__refreshHeight != null) {
 
+              // hide the refresher when it's behind the header bar in case of header transparency
+              if(scrollTop < 0){
+                self.__refreshHidden = false;
+                self.__refreshShow();
+              }else{
+                self.__refreshHide();
+                self.__refreshHidden = true;
+              }
+
               if (!self.__refreshActive && scrollTop <= -self.__refreshHeight) {
 
                 self.__refreshActive = true;
@@ -1767,6 +1779,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
             scrollTop = 0;
 
           }
+        }else if(self.__refreshHeight && !self.__refreshHidden){
+          // if a positive scroll value and the refresher is still not hidden, hide it
+          self.__refreshHide();
+          self.__refreshHidden = true;
         }
       }
 

@@ -354,10 +354,12 @@ describe('$ionicScroll Controller', function() {
     setup({
       el: angular.element('<div><div class="scroll-refresher"></div></div>')[0]
     });
-    spyOn(ctrl.scrollView, 'activatePullToRefresh').andCallFake(function(height, start, refreshing, done) {
+    spyOn(ctrl.scrollView, 'activatePullToRefresh').andCallFake(function(height, start, refreshing, done, show, hide) {
       startCb = start;
       refreshingCb = refreshing;
       doneCb = done;
+      showCb = show;
+      hideCb = hide;
     });
     ctrl._setRefresher(scope, ctrl.element);
 
@@ -378,15 +380,26 @@ describe('$ionicScroll Controller', function() {
     expect(scope.$onPulling).toHaveBeenCalled();
 
     refreshingCb();
-    expect(refresher.classList.contains('active')).toBe(false);
+    expect(refresher.classList.contains('active')).toBe(true);
     expect(refresher.classList.contains('refreshing')).toBe(false);
 
     expect(scope.$onRefresh).not.toHaveBeenCalled();
 
     doneCb();
-    expect(refresher.classList.contains('active')).toBe(false);
+    expect(refresher.classList.contains('active')).toBe(true);
     expect(refresher.classList.contains('refreshing')).toBe(true);
     expect(scope.$onRefresh).toHaveBeenCalled();
+    timeout.flush();
+
+    expect(refresher.classList.contains('active')).toBe(false);
+    expect(refresher.classList.contains('refreshing')).toBe(false);
+    expect(refresher.classList.contains('invisible')).toBe(true);
+
+    showCb();
+    expect(refresher.classList.contains('invisible')).toBe(false);
+
+    hideCb();
+    expect(refresher.classList.contains('invisible')).toBe(true);
   });
 
 });
