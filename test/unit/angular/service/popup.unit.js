@@ -277,5 +277,16 @@ describe('$ionicPopup service', function() {
       $timeout.flush();
       expect($ionicBackdrop.release).toHaveBeenCalled();
     }));
+    it('template should only overwrite prompt input if it includes html', inject(function($timeout) {
+      spyOn($ionicPopup, '_createPopup');
+      $ionicPopup.prompt({template: "Tacos!"});
+      params = $ionicPopup._createPopup.mostRecentCall.args;
+      expect(params[0].template.indexOf('<span>Tacos!</span>')).toEqual(0);
+      expect(params[0].template.indexOf('<input')).toBeGreaterThan(6);
+
+      $ionicPopup.prompt({template: '<input type="email" />'});
+      params = $ionicPopup._createPopup.mostRecentCall.args;
+      expect(params[0].template.indexOf('<input type="email" />')).toEqual(0);
+    }));
   });
 });

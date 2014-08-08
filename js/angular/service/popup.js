@@ -464,8 +464,13 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
   function showPrompt(opts) {
     var scope = $rootScope.$new(true);
     scope.data = {};
+    var text = '';
+    if(opts.template && /<[a-z][\s\S]*>/i.test(opts.template) === false){
+      text = '<span>'+opts.template+'</span>';
+      delete opts.template;
+    }
     return showPopup( extend({
-      template: '<input ng-model="data.response" type="' + (opts.inputType || 'text') +
+      template: text+'<input ng-model="data.response" type="' + (opts.inputType || 'text') +
         '" placeholder="' + (opts.inputPlaceholder || '') + '">',
       scope: scope,
       buttons: [{
