@@ -132,9 +132,9 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     });
   };
 
-  this.scrollTo = function(left, top, shouldAnimate) {
+  this.scrollTo = function(left, top, shouldAnimate, zoom) {
     this.resize().then(function() {
-      scrollView.scrollTo(left, top, !!shouldAnimate);
+      scrollView.scrollTo(left, top, !!shouldAnimate, zoom);
     });
   };
 
