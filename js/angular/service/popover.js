@@ -73,7 +73,6 @@ function($ionicModal, $ionicPosition, $document) {
   var POPOVER_OPTIONS = {
     viewType: 'popover',
     hideDelay: 1,
-    animation: 'none',
     positionView: positionView
   };
 
@@ -179,7 +178,11 @@ function($ionicModal, $ionicPosition, $document) {
      * controller ($ionicPopover is built on top of $ionicPopover).
      */
     fromTemplate: function(templateString, options) {
-      return $ionicModal.fromTemplate(templateString, ionic.Utils.extend(options || {}, POPOVER_OPTIONS) );
+      options = options || {};
+      if (!angular.isString(options.animation)) {
+        options.animation = 'none';
+      }
+      return $ionicModal.fromTemplate(templateString, ionic.Utils.extend(options, POPOVER_OPTIONS) );
     },
     /**
      * @ngdoc method
@@ -190,7 +193,11 @@ function($ionicModal, $ionicPosition, $document) {
      * an {@link ionic.controller:ionicPopover} controller ($ionicPopover is built on top of $ionicPopover).
      */
     fromTemplateUrl: function(url, options, _) {
-      return $ionicModal.fromTemplateUrl(url, options, ionic.Utils.extend(options || {}, POPOVER_OPTIONS) );
+      options = options || {};
+      if (!angular.isString(options.animation)) {
+        options.animation = 'none';
+      }
+      return $ionicModal.fromTemplateUrl(url, options, ionic.Utils.extend(options, POPOVER_OPTIONS) );
     }
   };
 
