@@ -152,6 +152,16 @@ describe('collectionRepeat directive', function() {
     expect(scrollView.resize.callCount).toBe(1);
   });
 
+  it('should rerender on scrollCtrl resize', inject(function($timeout) {
+    var el = setup('collection-repeat="item in items" collection-item-height="50"');
+    var scrollCtrl = el.controller('$ionicScroll');
+    repeatManager.resize.reset();
+
+    scrollCtrl.resize();
+    $timeout.flush();
+    expect(repeatManager.resize.callCount).toBe(1);
+  }));
+
   it('$destroy', function() {
     var el = setup('collection-repeat="item in items" collection-item-height="50"');
     dataSource.destroy = jasmine.createSpy('dataSourceDestroy');
