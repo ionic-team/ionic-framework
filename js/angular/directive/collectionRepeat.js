@@ -133,11 +133,6 @@ var COLLECTION_REPEAT_ATTR_WIDTH_ERROR = "collection-repeat expected attribute c
 var COLLECTION_REPEAT_ATTR_REPEAT_ERROR = "collection-repeat expected expression in form of '_item_ in _collection_[ track by _id_]' but got '%'";
 
 IonicModule
-.directive({
-  ngSrc: collectionRepeatSrcDirective('ngSrc', 'src'),
-  ngSrcset: collectionRepeatSrcDirective('ngSrcset', 'srcset'),
-  ngHref: collectionRepeatSrcDirective('ngHref', 'href')
-})
 .directive('collectionRepeat', [
   '$collectionRepeatManager',
   '$collectionDataSource',
@@ -263,7 +258,12 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
       });
     }
   };
-}]);
+}])
+.directive({
+  ngSrc: collectionRepeatSrcDirective('ngSrc', 'src'),
+  ngSrcset: collectionRepeatSrcDirective('ngSrcset', 'srcset'),
+  ngHref: collectionRepeatSrcDirective('ngHref', 'href')
+});
 
 // Fix for #1674
 // Problem: if an ngSrc or ngHref expression evaluates to a falsy value, it will
@@ -277,13 +277,11 @@ function collectionRepeatSrcDirective(ngAttrName, attrName) {
   return [function() {
     return {
       priority: '99', // it needs to run after the attributes are interpolated
-      link: function(scope, element, attr, collectionRepeatCtrl) {
-        if (!collectionRepeatCtrl) return;
+      link: function(scope, element, attr) {
         attr.$observe(ngAttrName, function(value) {
-          element[0][attr] = '';
-          setTimeout(function() {
-            element[0][attr] = value;
-          });
+          if (!value) {
+            element[0].removeAttribute(attrName);
+          }
         });
       }
     };
