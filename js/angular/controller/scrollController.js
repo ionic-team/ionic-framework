@@ -207,11 +207,9 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     },function(){
       // showCallback
       refresher.classList.remove('invisible');
-      console.log('showing')
     },function(){
       // hideCallback
       refresher.classList.add('invisible');
-      console.log('hiding');
     });
   };
 }]);
