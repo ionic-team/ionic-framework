@@ -217,6 +217,8 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         rerender(value);
       });
 
+      // Find every sibling before and after the repeated items, and pass them
+      // to the dataSource
       var scrollViewContent = scrollCtrl.scrollView.__content;
       function rerender(value) {
         var beforeSiblings = [];
@@ -226,6 +228,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
           if ( ionic.DomUtil.elementIsDescendant($element[0], node, scrollViewContent) ) {
             before = false;
           } else {
+            if (node.hasAttribute('collection-repeat-ignore')) return;
             var width = node.offsetWidth;
             var height = node.offsetHeight;
             if (width && height) {
