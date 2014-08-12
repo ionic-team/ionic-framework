@@ -16,7 +16,6 @@
  * <ion-radio ng-model="choice" ng-value="'C'">Choose C</ion-radio>
  * ```
  * 
- * *
  * @param {string=} name The name of the radio input.
  * @param {expression=} value The value of the radio input.
  * @param {expression=} disabled The state of the radio input.
