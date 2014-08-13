@@ -155,9 +155,7 @@ function($rootScope, $timeout) {
       this.beforeSize = result.beforeSize;
       this.setCurrentIndex(0);
       this.render(true);
-      if (!this.dataSource.backupItemsArray.length) {
-        this.dataSource.setup();
-      }
+      this.dataSource.setup();
     },
     /*
      * setCurrentIndex sets the index in the list that matches the scroller's position.
@@ -194,6 +192,7 @@ function($rootScope, $timeout) {
       }
       return this.scrollView.__$callback(transformLeft, transformTop, zoom, wasResize);
     }),
+
     renderIfNeeded: function(scrollPos) {
       if ((this.hasNextIndex && scrollPos >= this.nextPos) ||
           (this.hasPrevIndex && scrollPos < this.previousPos)) {
@@ -333,15 +332,6 @@ function($rootScope, $timeout) {
       }
     }
   };
-
-  var exceptions = {'renderScroll':1, 'renderIfNeeded':1};
-  forEach(CollectionRepeatManager.prototype, function(method, key) {
-    if (exceptions[key]) return;
-    CollectionRepeatManager.prototype[key] = function() {
-      console.log(key + '(', arguments, ')');
-      return method.apply(this, arguments);
-    };
-  });
 
   return CollectionRepeatManager;
 }]);

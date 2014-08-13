@@ -59,11 +59,11 @@ function MainCtrl($scope, $ionicScrollDelegate, $timeout, $q, $ionicLoading) {
 
   $scope.loadMore = function() {
     $timeout(function() {
-      var n = 1 + Math.floor(4*Math.random());
+      var n = 100;//1 + Math.floor(4*Math.random());
       for (var i = 0; i < n; i++) addImage();
       $scope.$broadcast('scroll.infiniteScrollComplete');
       $scope.$broadcast('scroll.refreshComplete');
-    }, 1500);
+    }, 1);
   };
 }
   </script>

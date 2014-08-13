@@ -35,7 +35,6 @@ describe('$collectionDataSource service', function() {
       transcludeParent: 3,
       keyExpr: 4,
       listExpr: 5,
-      trackByExpr: 6,
       heightGetter: 7,
       widthGetter: 8
     });
@@ -44,34 +43,9 @@ describe('$collectionDataSource service', function() {
     expect(source.transcludeParent).toBe(3);
     expect(source.keyExpr).toBe(4);
     expect(source.listExpr).toBe(5);
-    expect(source.trackByExpr).toBe(6);
     expect(source.heightGetter).toBe(7);
     expect(source.widthGetter).toBe(8);
   }));
-
-  describe('.itemHashGetter()', function() {
-
-    it('should default to hashKey of value', function() {
-      spyOn(window, 'hashKey').andReturn('hashed');
-
-      var source = setup();
-      expect(source.itemHashGetter(1, 2)).toBe('hashed');
-      expect(hashKey).toHaveBeenCalledWith(2);
-    });
-
-    it('should use trackbyExpr if provided, and provide locals', function() {
-      var source = setup({
-        keyExpr: 'item',
-        trackByExpr: 'item.idMaker($index, item)'
-      });
-      var idMakerSpy = jasmine.createSpy('idMaker').andReturn('superhash');
-      var item = {
-        idMaker: idMakerSpy
-      };
-      expect(source.itemHashGetter(1, item)).toEqual('superhash');
-      expect(idMakerSpy).toHaveBeenCalledWith(1, item);
-    });
-  });
 
   it('.calculateDataDimensions()', function() {
     function widthGetter(scope, locals) {
@@ -119,7 +93,7 @@ describe('$collectionDataSource service', function() {
   });
 
   describe('.getItem()', function() {
-    it('should return attachedItems[hash] if available', function() {
+    it('should return attachedItems[index] if available', function() {
       var source = setup();
       var item = {};
       source.attachedItems['123'] = item;
@@ -155,9 +129,6 @@ describe('$collectionDataSource service', function() {
       spyOn(source, 'getItem').andCallFake(function() {
         return { scope: $rootScope.$new() };
       });
-      spyOn(source, 'itemHashGetter').andCallFake(function(index, value) {
-        return index + ':' + value;
-      });
 
       var item1 = source.attachItemAtIndex(0);
       expect(item1.scope.value).toEqual('a');
@@ -166,7 +137,6 @@ describe('$collectionDataSource service', function() {
       expect(item1.scope.$last).toBe(false);
       expect(item1.scope.$middle).toBe(false);
       expect(item1.scope.$odd).toBe(false);
-      expect(item1.hash).toEqual('0:a');
 
       var item2 = source.attachItemAtIndex(1);
       expect(item2.scope.value).toEqual('b');
@@ -175,7 +145,6 @@ describe('$collectionDataSource service', function() {
       expect(item2.scope.$last).toBe(false);
       expect(item2.scope.$middle).toBe(true);
       expect(item2.scope.$odd).toBe(true);
-      expect(item2.hash).toEqual('1:b');
 
       var item3 = source.attachItemAtIndex(2);
       expect(item3.scope.value).toEqual('c');
@@ -184,12 +153,11 @@ describe('$collectionDataSource service', function() {
       expect(item3.scope.$last).toBe(true);
       expect(item3.scope.$middle).toBe(false);
       expect(item3.scope.$odd).toBe(false);
-      expect(item3.hash).toEqual('2:c');
 
       expect(source.attachedItems).toEqual({
-        '0:a': item1,
-        '1:b': item2,
-        '2:c': item3
+        0: item1,
+        1: item2,
+        2: item3
       });
     }));
   });
@@ -200,10 +168,10 @@ describe('$collectionDataSource service', function() {
       var item = {
         element: angular.element('<div>'),
         scope: {},
-        hash: 'foo'
+        index: 1
       };
       source.backupItemsArray = [];
-      source.attachedItems[item.hash] = item;
+      source.attachedItems[1] = item;
       spyOn(window, 'disconnectScope');
       source.detachItem(item);
       expect(source.attachedItems).toEqual({});
@@ -215,8 +183,8 @@ describe('$collectionDataSource service', function() {
       spyOn(source, 'destroyItem');
       source.BACKUP_ITEMS_LENGTH = 0;
 
-      var item = { hash: 'abc' };
-      source.attachedItems[item.hash] = item;
+      var item = { index: 0 };
+      source.attachedItems[item.index] = item;
       source.detachItem(item);
       expect(source.destroyItem).toHaveBeenCalledWith(item);
       expect(source.attachedItems).toEqual({});
