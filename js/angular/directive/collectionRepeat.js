@@ -164,6 +164,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
 
       var heightParsed = $parse($attr.collectionItemHeight || '"100%"');
       var widthParsed = $parse($attr.collectionItemWidth || '"100%"');
+      var startPos = $parse($attr.collectionStartPos || '0')($scope,{});
 
       var heightGetter = function(scope, locals) {
         var result = heightParsed(scope, locals);
@@ -200,6 +201,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         widthGetter: widthGetter
       });
       var collectionRepeatManager = new $collectionRepeatManager({
+        startPos:startPos,
         dataSource: dataSource,
         element: scrollCtrl.$element,
         scrollView: scrollCtrl.scrollView,
