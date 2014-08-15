@@ -73,7 +73,7 @@ function($http, $templateCache, $timeout, $ionicConfig) {
 
   // run through methods - internal method
   var run = function(){
-    if($ionicConfig.prefetchTemplates === false)return
+    if($ionicConfig.prefetchTemplates === false)return;
     //console.log('prefetching', toCache);
     //for testing
     $ionicTemplateCache._runCount++;
@@ -89,7 +89,7 @@ function($http, $templateCache, $timeout, $ionicConfig) {
       i++;
     }
     // only preload 5 templates a second
-    if(toCache.length)$timeout(function(){run()}, 1000);
+    if(toCache.length)$timeout(function(){run();}, 1000);
   };
 
   // exposing for testing
@@ -114,11 +114,11 @@ function($stateProvider, $ionicConfigProvider) {
   $stateProvider.state = function(stateName, definition) {
     // don't even bother if it's disabled. note, another config may run after this, so it's not a catch-all
     if($ionicConfigProvider.prefetchTemplates() !== false){
-      var enabled = definition.prefetchTemplate != false;
+      var enabled = definition.prefetchTemplate !== false;
       if(enabled && isString(definition.templateUrl))templatesToCache.push(definition.templateUrl);
       if(angular.isObject(definition.views)){
         for (var key in definition.views){
-          enabled = definition.views[key].prefetchTemplate != false;
+          enabled = definition.views[key].prefetchTemplate !== false;
           if(enabled && isString(definition.views[key].templateUrl)) templatesToCache.push(definition.views[key].templateUrl);
         }
       }
