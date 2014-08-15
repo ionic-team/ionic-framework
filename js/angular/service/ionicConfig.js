@@ -25,7 +25,7 @@ IonicModule
   /**
    * @ngdoc method
    * @name $ionicConfigProvider#prefetchTemplates
-   * @description Set whether Ionic should prefetch all templateUrls defined in 
+   * @description Set whether Ionic should prefetch all templateUrls defined in
    * $stateProvider.state. Default true. If set to false, the user will have to wait
    * for a template to be fetched the first time he/she is going to a a new page.
    * @param shouldPrefetch Whether Ionic should prefetch templateUrls defined in
@@ -34,9 +34,9 @@ IonicModule
    */
   this.prefetchTemplates = function(newValue) {
     if (arguments.length) {
-      config.prefetchTemlates = newValue;
+      config.prefetchTemplates = newValue;
     }
-    return config.prefetchTemlates;
+    return config.prefetchTemplates;
   };
 
   // private: Service definition for internal Ionic use
