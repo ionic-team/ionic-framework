@@ -68,6 +68,8 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     if (self._rememberScrollId) {
       $$scrollValueCache[self._rememberScrollId] = scrollView.getValues();
     }
+    scrollViewOptions = null;
+    self._scrollViewOptions = null;
   });
 
   $element.on('scroll', function(e) {
