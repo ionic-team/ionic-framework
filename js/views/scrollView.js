@@ -890,6 +890,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
     delete this.__content;
     delete this.__indicatorX;
     delete this.__indicatorY;
+
+    this.resize = this.scrollTo = this.zoomTo = 
+      this.__scrollingComplete = angular.noop;
   },
 
   /** Create a scroll bar div with the given direction **/
@@ -1089,7 +1092,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
   __scrollingComplete: function() {
     var self = this;
     self.options.scrollingComplete();
-    ionic.tap.removeClonedInputs(container, self);
+    ionic.tap.removeClonedInputs(self.__container, self);
 
     self.__fadeScrollbars('out');
   },

@@ -37,7 +37,6 @@ IonicModule
     priority: 1000,
     require: ['^?ionNavBar', '^?ionModal'],
     compile: function(tElement, tAttrs, transclude) {
-      if(1) return;
       tElement.addClass('pane');
       tElement[0].removeAttribute('title');
 
