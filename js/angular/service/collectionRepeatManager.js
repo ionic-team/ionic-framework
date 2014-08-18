@@ -296,7 +296,7 @@ function($rootScope, $timeout) {
         var rect = self.dimensions[dataIndex];
         if (!rect) {
 
-        }else if (dataIndex < self.dataSource.dataStartIndex) {
+        } else if (dataIndex < self.dataSource.dataStartIndex) {
           // do nothing
         } else {
           self.renderItem(dataIndex, rect.primaryPos - self.beforeSize, rect.secondaryPos);
