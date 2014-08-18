@@ -144,7 +144,7 @@ describe('$ionicScroll Controller', function() {
     setup();
     spyOn(ctrl.scrollView, 'getValues');
     scope.$destroy();
-    expect(ctrl.scrollView.getValues).not.toHaveBeenCalled();
+    expect(ctrl.scrollView).toEqual(null);
     expect($$scrollValueCache).toEqual({});
   }));
 
@@ -155,7 +155,7 @@ describe('$ionicScroll Controller', function() {
       return 'scrollValues';
     });
     scope.$destroy();
-    expect(ctrl.scrollView.getValues).toHaveBeenCalled();
+    expect(ctrl.scrollView).toEqual(null);
     expect($$scrollValueCache).toEqual({
       'super': 'scrollValues'
     });
