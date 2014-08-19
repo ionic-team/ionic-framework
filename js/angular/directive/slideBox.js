@@ -34,6 +34,7 @@
  * @param {expression=} pager-click Expression to call when a pager is clicked (if show-pager is true). Is passed the 'index' variable.
  * @param {expression=} on-slide-changed Expression called whenever the slide is changed.  Is passed an '$index' variable.
  * @param {expression=} active-slide Model to bind the current slide to.
+ * @param {boolean=} stop events bubbling up to its parents.
  */
 IonicModule
 .directive('ionSlideBox', [
@@ -53,12 +54,14 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
       pagerClick: '&',
       disableScroll: '@',
       onSlideChanged: '&',
-      activeSlide: '=?'
+      activeSlide: '=?',
+      stopPropagation: '@',
     },
     controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
       var _this = this;
 
       var continuous = $scope.$eval($scope.doesContinue) === true;
+      var stopPropagation = $scope.$eval($scope.stopPropagation) === true;
       var shouldAutoPlay = isDefined($attrs.autoPlay) ? !!$scope.autoPlay : false;
       var slideInterval = shouldAutoPlay ? $scope.$eval($scope.slideInterval) || 4000 : 0;
 
@@ -67,6 +70,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
         auto: slideInterval,
         continuous: continuous,
         startSlide: $scope.activeSlide,
+        stopPropagation: stopPropagation,
         slidesChanged: function() {
           $scope.currentSlide = slider.currentIndex();
 
