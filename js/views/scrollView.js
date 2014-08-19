@@ -893,6 +893,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
     delete this.__indicatorY;
     delete this.options.el;
 
+    this.mouseMove = this.mouseDown = this.mouseUp = this.mouseWheel =
+      this.touchStart = this.touchMove = this.touchEnd = this.touchCancel = angular.noop;
+
     this.resize = this.scrollTo = this.zoomTo = 
       this.__scrollingComplete = angular.noop;
     container = null;
