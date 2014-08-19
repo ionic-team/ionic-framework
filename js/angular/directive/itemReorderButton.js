@@ -68,7 +68,7 @@ IonicModule
         };
 
         // prevent clicks from bubbling up to the item
-        if(!$attr['ngClick'] && !$attr['onClick'] && !$attr['onclick']){
+        if(!$attr.ngClick && !$attr.onClick && !$attr.onclick){
           $element[0].onclick = function(e){e.stopPropagation(); return false;};
         }
 
