@@ -158,8 +158,11 @@ function($ionicLoadingConfig, $document, $ionicTemplateLoader, $ionicBackdrop, $
               $ionicBackdrop.release();
               $ionicBackdrop.getElement().removeClass('backdrop-loading');
             }
-            self.element.removeClass('active');
-            $document[0].body.classList.remove('loading-active');
+            // wrapping in a timeout to make process asyncronous
+            $timeout(function(){
+              self.element.removeClass('active');
+              $document[0].body.classList.remove('loading-active');
+            }, 10);
             setTimeout(function() {
               !self.isShown && self.element.removeClass('visible');
             }, 200);

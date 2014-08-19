@@ -89,6 +89,7 @@ describe('$ionicLoading service', function() {
       $timeout.flush();
       expect(angular.element(document.body).hasClass('loading-active')).toBe(true);
       loader.hide();
+      $timeout.flush();
       expect(angular.element(document.body).hasClass('loading-active')).toBe(false);
     }));
 
