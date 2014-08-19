@@ -114,6 +114,23 @@ describe('ionReorderButton directive', function() {
     expect(reorderContainer.hasClass('visible')).toBe(true);
     expect(reorderContainer.hasClass('active')).toBe(true);
   }));
+  it('should allow click handlers, but not bubble up to item\'s click event', inject(function($compile, $rootScope) {
+    $rootScope.click = jasmine.createSpy('click');;
+
+    var el = angular.element('<ion-item ng-click="click()"><ion-reorder-button></ion-reorder-button></ion-item>');
+    $compile(el)($rootScope);
+    $rootScope.$apply();
+    var reorderContainer = angular.element(el[0].querySelector('ion-reorder-button'));
+    reorderContainer.triggerHandler('click');
+    expect($rootScope.click).not.toHaveBeenCalled();
+
+    var el = angular.element('<ion-item><ion-reorder-button  ng-click="click()"></ion-reorder-button></ion-item>');
+    $compile(el)($rootScope);
+    $rootScope.$apply();
+    var reorderContainer = angular.element(el[0].querySelector('ion-reorder-button'));
+    reorderContainer.triggerHandler('click');
+    expect($rootScope.click).toHaveBeenCalled();
+  }));
 });
 
 describe('ionOptionButton directive', function() {
