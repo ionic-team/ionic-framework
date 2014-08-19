@@ -71,6 +71,8 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     scrollViewOptions = null;
     self._scrollViewOptions = null;
     self.element = null;
+    $element = null;
+    self.$element = null;
   });
 
   $element.on('scroll', function(e) {
