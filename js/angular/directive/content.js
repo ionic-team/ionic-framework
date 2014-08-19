@@ -135,7 +135,7 @@ function($timeout, $controller, $ionicBind) {
           $scope.$on('$destroy', function() {
             scrollViewOptions.scrollingComplete = angular.noop;
             delete scrollViewOptions.el;
-            //innerElement = null;
+            innerElement = null;
             $element = null;
             attr.$$element = null;
           });

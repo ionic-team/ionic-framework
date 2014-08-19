@@ -865,6 +865,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
   __cleanup: function() {
     var container = this.__container;
+    var self = this;
 
     container.removeEventListener('touchstart', self.touchStart);
     document.removeEventListener('touchmove', self.touchMove);
@@ -894,6 +895,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     this.resize = this.scrollTo = this.zoomTo = 
       this.__scrollingComplete = angular.noop;
+    container = null;
   },
 
   /** Create a scroll bar div with the given direction **/
