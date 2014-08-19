@@ -621,9 +621,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     // Event Handler
     var container = this.__container;
 
-    //Broadcasted when keyboard is shown on some platforms.
-    //See js/utils/keyboard.js
-    container.addEventListener('scrollChildIntoView', function(e) {
+    self.scrollChildIntoView = function(e) {
 
       //distance from bottom of scrollview to top of viewport
       var scrollBottomOffsetToTop;
@@ -685,16 +683,21 @@ ionic.views.Scroll = ionic.views.View.inherit({
       //Only the first scrollView parent of the element that broadcasted this event
       //(the active element that needs to be shown) should receive this event
       e.stopPropagation();
-    });
+    };
 
-    container.addEventListener('resetScrollView', function(e) {
+    self.resetScrollView = function(e) {
       //return scrollview to original height once keyboard has hidden
       self.isScrolledIntoView = false;
       container.style.height = "";
       container.style.overflow = "";
       self.resize();
       ionic.scroll.isScrolling = false;
-    });
+    };
+
+    //Broadcasted when keyboard is shown on some platforms.
+    //See js/utils/keyboard.js
+    container.addEventListener('scrollChildIntoView', self.scrollChildIntoView);
+    container.addEventListener('resetScrollView', self.resetScrollView);
 
     function getEventTouches(e) {
       return e.touches && e.touches.length ? e.touches : [{
@@ -887,11 +890,18 @@ ionic.views.Scroll = ionic.views.View.inherit({
     document.removeEventListener("mouseup", self.mouseUp);
     document.removeEventListener('mousewheel', self.mouseWheel);
 
+    container.removeEventListener('scrollChildIntoView', self.scrollChildIntoView);
+    container.removeEventListener('resetScrollView', self.resetScrollView);
+
+    ionic.tap.removeClonedInputs(container, self);
+
     delete this.__container;
     delete this.__content;
     delete this.__indicatorX;
     delete this.__indicatorY;
     delete this.options.el;
+
+    this.__callback = this.scrollChildIntoView = this.resetScrollView = angular.noop;
 
     this.mouseMove = this.mouseDown = this.mouseUp = this.mouseWheel =
       this.touchStart = this.touchMove = this.touchEnd = this.touchCancel = angular.noop;

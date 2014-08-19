@@ -58,6 +58,7 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
 
   // set by rootScope listener if needed
   var backListenDone = angular.noop;
+  var viewContentLoaded = angular.noop;
 
   var scrollFunc = function(e) {
     var detail = (e.originalEvent || e).detail || {};
@@ -75,7 +76,7 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     scrollView.__cleanup();
     ionic.off('resize', resize, $window);
     $window.removeEventListener('resize', resize);
-
+    viewContentLoaded();
     backListenDone();
     if (self._rememberScrollId) {
       $$scrollValueCache[self._rememberScrollId] = scrollView.getValues();
@@ -86,10 +87,11 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     $element.off('scroll', scrollFunc);
     $element = null;
     self.$element = null;
+    self.scrollView = null;
+    scrollView = null;
   });
 
-
-  $scope.$on('$viewContentLoaded', function(e, historyData) {
+  viewContentLoaded = $scope.$on('$viewContentLoaded', function(e, historyData) {
     //only the top-most scroll area under a view should remember that view's
     //scroll position
     if (e.defaultPrevented) { return; }
