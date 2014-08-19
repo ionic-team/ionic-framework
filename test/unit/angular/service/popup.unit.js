@@ -108,6 +108,19 @@ describe('$ionicPopup service', function() {
         expect(popup.element.hasClass('active')).toBe(false);
         ionic.requestAnimationFrame = function(cb) { cb(); };
       });
+      // Test broken in PhantomJS because it uses element.offsetHeight
+      // it('should shrink .popup-body height so that the popup is never taller than the window', function() {
+      //   str = 'All work and no play... ';
+      //   for(var i=0; i<13;i++){
+      //     str = str + str;
+      //   }
+      //   var popup = TestUtil.unwrapPromise($ionicPopup._createPopup({
+      //     template: str
+      //   }));
+      //   popup.show();
+      //   var windowIsLarger = popup.element[0].offsetHeight < window.innerHeight;
+      //   expect(windowIsLarger).toBe(true);
+      // });
     });
 
     describe('hide', function() {
@@ -239,7 +252,7 @@ describe('$ionicPopup service', function() {
       expect(previousPopup.show).toHaveBeenCalled();
     }));
 
-    it('should release backdrop and remove popup-open and deregister back if no previous', inject(function($q, $timeout, $ionicBackdrop, $ionicPlatform) {
+    it('should always release backdrop and remove popup-open and deregister back if no previous', inject(function($q, $timeout, $ionicBackdrop, $ionicPlatform) {
       var fakePopup = {
         show: jasmine.createSpy('show'),
         remove: jasmine.createSpy('remove'),
@@ -255,6 +268,25 @@ describe('$ionicPopup service', function() {
       expect($ionicBackdrop.release).toHaveBeenCalled();
       expect(backDoneSpy).toHaveBeenCalled();
       expect(document.body.classList.contains('popup-open')).toBe(false);
+    }));
+    it('backdrop release should be called even if there are multiple popups', inject(function($q, $timeout, $ionicBackdrop) {
+      popup = $ionicPopup.show();
+      popup2 = $ionicPopup.show();
+      spyOn($ionicBackdrop, 'release');
+      popup.close();
+      $timeout.flush();
+      expect($ionicBackdrop.release).toHaveBeenCalled();
+    }));
+    it('template should only overwrite prompt input if it includes html', inject(function($timeout) {
+      spyOn($ionicPopup, '_createPopup');
+      $ionicPopup.prompt({template: "Tacos!"});
+      params = $ionicPopup._createPopup.mostRecentCall.args;
+      expect(params[0].template.indexOf('<span>Tacos!</span>')).toEqual(0);
+      expect(params[0].template.indexOf('<input')).toBeGreaterThan(6);
+
+      $ionicPopup.prompt({template: '<input type="email" />'});
+      params = $ionicPopup._createPopup.mostRecentCall.args;
+      expect(params[0].template.indexOf('<input type="email" />')).toEqual(0);
     }));
   });
 });

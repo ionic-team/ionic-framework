@@ -5,7 +5,7 @@ describe('Ionic Platform Service', function() {
 
   beforeEach(inject(function($window, $ionicPlatform, $rootScope) {
     window = $window;
-    window.navigator = {
+    ionic.Platform.navigator = {
       platform: ''
     };
     ionic.Platform.ua = '';
@@ -20,15 +20,6 @@ describe('Ionic Platform Service', function() {
 
     ionic.Platform.setPlatform('iOS');
     expect(ionic.Platform.platform()).toEqual('ios');
-
-    ionic.Platform.setPlatform('');
-    expect(ionic.Platform.platform()).toEqual('');
-
-    ionic.Platform.setPlatform(null);
-    expect(ionic.Platform.platform()).toEqual('');
-
-    ionic.Platform.setPlatform();
-    expect(ionic.Platform.platform()).toEqual('');
   });
 
   it('set version with device', function() {
@@ -109,10 +100,10 @@ describe('Ionic Platform Service', function() {
     expect(ionic.Platform.isIPad()).toEqual(true);
   });
 
-  it('should be iPad from iPad in window.navigator.platform and webview, but iPhone in user agent', function() {
+  it('should be iPad from iPad in ionic.Platform.navigator.platform and webview, but iPhone in user agent', function() {
     window.cordova = {};
     ionic.Platform.ua = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25';
-    window.navigator = {
+    ionic.Platform.navigator = {
       platform: 'iPad Simulator'
     };
     ionic.Platform.setPlatform(undefined);
@@ -120,9 +111,9 @@ describe('Ionic Platform Service', function() {
     expect(ionic.Platform.isIPad()).toEqual(true);
   });
 
-  it('should not be iPad from no in window.navigator.platform, and iPhone in user agent', function() {
+  it('should not be iPad from no in ionic.Platform.navigator.platform, and iPhone in user agent', function() {
     ionic.Platform.ua = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25';
-    window.navigator = {};
+    ionic.Platform.navigator = {};
     ionic.Platform.setPlatform(undefined);
     ionic.Platform.setVersion(undefined);
     expect(ionic.Platform.isIPad()).toEqual(false);

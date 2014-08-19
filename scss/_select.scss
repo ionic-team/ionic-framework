@@ -16,7 +16,7 @@
     max-width: 65%;
 
     border: none;
-    background: transparent;
+    background: $item-default-bg;
     color: #333;
 
     // hack to hide default dropdown arrow in FF
@@ -52,6 +52,84 @@
     color: #999;
     content: "";
     pointer-events: none;
+  }
+  &.item-light {
+    select{
+      background:$item-light-bg;
+      color:$item-light-text;
+    }
+  }
+  &.item-stable {
+    select{
+      background:$item-stable-bg;
+      color:$item-stable-text;
+    }
+    &:after, .input-label{
+      color:darken($item-stable-border,30%);
+    }
+  }
+  &.item-positive {
+    select{
+      background:$item-positive-bg;
+      color:$item-positive-text;
+    }
+    &:after, .input-label{
+      color:$item-positive-text;
+    }
+  }
+  &.item-calm {
+    select{
+      background:$item-calm-bg;
+      color:$item-calm-text;
+    }
+    &:after, .input-label{
+      color:$item-calm-text;
+    }
+  }
+  &.item-assertive {
+    select{
+      background:$item-assertive-bg;
+      color:$item-assertive-text;
+    }
+    &:after, .input-label{
+      color:$item-assertive-text;
+    }
+  }
+  &.item-balanced {
+    select{
+      background:$item-balanced-bg;
+      color:$item-balanced-text;
+    }
+    &:after, .input-label{
+      color:$item-balanced-text;
+    }
+  }
+  &.item-energized  {
+    select{
+      background:$item-energized-bg;
+      color:$item-energized-text;
+    }
+    &:after, .input-label{
+      color:$item-energized-text;
+    }
+  }
+  &.item-royal {
+    select{
+      background:$item-royal-bg;
+      color:$item-royal-text;
+    }
+    &:after, .input-label{
+      color:$item-royal-text;
+    }
+  }
+  &.item-dark  {
+    select{
+      background:$item-dark-bg;
+      color:$item-dark-text;
+    }
+    &:after, .input-label{
+      color:$item-dark-text;
+    }
   }
 }
 

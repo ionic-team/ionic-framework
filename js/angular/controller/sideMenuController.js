@@ -22,12 +22,36 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform) {
     return $scope.dragContent;
   };
 
+  this.edgeThreshold = 25;
+  this.edgeThresholdEnabled = false;
+  this.edgeDragThreshold = function(value) {
+    if (arguments.length) {
+      if (angular.isNumber(value) && value > 0) {
+        this.edgeThreshold = value;
+        this.edgeThresholdEnabled = true;
+      } else {
+        this.edgeThresholdEnabled = !!value;
+      }
+    }
+    return this.edgeThresholdEnabled;
+  };
+
   this.isDraggableTarget = function(e) {
-    return $scope.dragContent &&
-           (!e.gesture.srcEvent.defaultPrevented &&
-            !e.target.tagName.match(/input|textarea|select|object|embed/i) &&
-            !e.target.isContentEditable &&
-            !(e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-default') == 'true'));
+    //Only restrict edge when sidemenu is closed and restriction is enabled
+    var shouldOnlyAllowEdgeDrag = self.edgeThresholdEnabled && !self.isOpen();
+    var startX = e.gesture.startEvent && e.gesture.startEvent.center &&
+      e.gesture.startEvent.center.pageX;
+
+    var dragIsWithinBounds = !shouldOnlyAllowEdgeDrag ||
+      startX <= self.edgeThreshold ||
+      startX >= self.content.offsetWidth - self.edgeThreshold;
+
+    return ($scope.dragContent || self.isOpen()) &&
+           dragIsWithinBounds &&
+           !e.gesture.srcEvent.defaultPrevented &&
+           !e.target.tagName.match(/input|textarea|select|object|embed/i) &&
+           !e.target.isContentEditable &&
+           !(e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-default') == 'true');
   };
 
   $scope.sideMenuContentTranslateX = 0;

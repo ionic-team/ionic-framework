@@ -36,6 +36,12 @@
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
   }
+  &.popup-tall{
+    overflow:hidden;
+    .popup-body{
+      overflow:auto;
+    }
+  }
 }
 
 .popup-head {

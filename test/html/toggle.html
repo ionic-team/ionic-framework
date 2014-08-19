@@ -18,6 +18,9 @@
       <div ng-controller="TestCtrl">
 
         <div class="list">
+          <ion-toggle ng-model="checkModel2" ng-change="myChange = checkModel2">
+            Main Check
+          </ion-toggle>
           <ion-checkbox ng-model="checkModel" ng-change="myChange = checkModel">
             Main Check
           </ion-checkbox>

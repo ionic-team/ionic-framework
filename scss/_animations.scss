@@ -349,8 +349,8 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
     left: -1px;
     width: auto;
     &:not(.bar) {
-      border-right: 1px solid transparent;
-      border-left: 1px solid transparent;
+      border-right: none;
+      border-left: none;
     }
     border-right: none;
     border-left: none;
@@ -381,8 +381,8 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
     bottom: 0;
     left: -1px;
     width: auto;
-    border-right: 1px solid transparent;
-    border-left: 1px solid transparent;
+    border-right: none;
+    border-left: none;
   }
   > .ng-enter, &.ng-enter {
     /* NEW content placed far LEFT BEFORE it slides IN from the LEFT */
@@ -404,6 +404,7 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
 /**
  * iPad doesn't like box shadows
  */
+/*
 .grade-a:not(.platform-ipad) {
   .slide-left-right-ios7, .slide-right-left-ios7.reverse {
     > .ng-enter, &.ng-enter {
@@ -422,6 +423,7 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
     }
   }
 }
+*/
 .grade-a.platform-ipad {
   .slide-left-right-ios7, .slide-right-left-ios7.reverse {
     > .ng-enter, &.ng-enter {

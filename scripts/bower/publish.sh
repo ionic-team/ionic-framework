@@ -11,6 +11,7 @@ function init {
   BOWER_DIR=$HOME/ionic-bower
 
   ../clone/clone.sh --repository="driftyco/ionic-bower" \
+    --depth="1" \
     --directory="$BOWER_DIR" \
     --branch="master"
 }

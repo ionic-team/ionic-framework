@@ -34,7 +34,7 @@
          (min-resolution: 1.5dppx) {
     padding-top: 2px;
     border-top: none !important;
-    border-bottom: none !important;
+    border-bottom: none;
     background-position: top;
     background-size: 100% 1px;
     background-repeat: no-repeat;
@@ -88,65 +88,143 @@
   @include tab-badge-style($tabs-dark-text, $tabs-dark-bg);
 }
 
-@mixin tabs-striped($style, $color) {
+@mixin tabs-striped($style, $color, $background) {
   &.#{$style} {
-    .tab-item.tab-item-active,
-    .tab-item.active,
-    .tab-item.activated {
-      margin-top: -4px;
-      color: $color;
-      border-style: solid;
-      border-width: $tabs-striped-border-width 0 0 0;
-      border-color: $color;
+    .tabs{
+      background-color: $background;
+    }
+    .tab-item {
+      color: rgba($color, $tabs-striped-off-opacity);
+      opacity: 1;
+      .badge{
+        opacity:$tabs-striped-off-opacity;
+      }
+      &.tab-item-active,
+      &.active,
+      &.activated {
+        margin-top: -$tabs-striped-border-width;
+        color: $color;
+        border-style: solid;
+        border-width: $tabs-striped-border-width 0 0 0;
+        border-color: $color;
+        .badge{
+          top:$tabs-striped-border-width;
+          opacity: 1;
+        }
+      }
+    }
+  }
+  &.tabs-top{
+    .tab-item {
+      &.tab-item-active,
+      &.active,
+      &.activated {
+        .badge {
+          top: 4%;
+        }
+      }
+    }
+  }
+}
+
+@mixin tabs-background($style, $color) {
+  &.#{$style} {
+    .tabs {
+      background-color: $color;
+    }
+  }
+}
+
+@mixin tabs-color($style, $color) {
+  &.#{$style} {
+    .tab-item {
+      color: rgba($color, $tabs-striped-off-opacity);
+      opacity: 1;
+      .badge{
+        opacity:$tabs-striped-off-opacity;
+      }
+      &.tab-item-active,
+      &.active,
+      &.activated {
+        margin-top: -$tabs-striped-border-width;
+        color: $color;
+        border: 0 solid $color;
+        border-top-width: $tabs-striped-border-width;
+        .badge{
+          top:$tabs-striped-border-width;
+          opacity: 1;
+        }
+      }
     }
   }
 }
 
 .tabs-striped {
-
   .tabs {
     background-color: white;
     background-image: none;
     border: none;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+    padding-top: $tabs-striped-border-width;
   }
+  @include tabs-striped('tabs-light', $light, $dark);
+  @include tabs-striped('tabs-stable', $stable, $dark);
+  @include tabs-striped('tabs-positive', $positive, $light);
+  @include tabs-striped('tabs-calm', $calm, $light);
+  @include tabs-striped('tabs-assertive', $assertive, $light);
+  @include tabs-striped('tabs-balanced', $balanced, $light);
+  @include tabs-striped('tabs-energized', $energized, $light);
+  @include tabs-striped('tabs-royal', $royal, $light);
+  @include tabs-striped('tabs-dark', $dark, $light);
 
-  @include tabs-striped('tabs-light', $light);
-  @include tabs-striped('tabs-stable', $stable);
-  @include tabs-striped('tabs-positive', $positive);
-  @include tabs-striped('tabs-calm', $calm);
-  @include tabs-striped('tabs-assertive', $assertive);
-  @include tabs-striped('tabs-balanced', $balanced);
-  @include tabs-striped('tabs-energized', $energized);
-  @include tabs-striped('tabs-royal', $royal);
-  @include tabs-striped('tabs-dark', $dark);
 
-  &.tabs-icon-only .icon {
-  }
+  @include tabs-background('tabs-background-light', $light);
+  @include tabs-background('tabs-background-stable', $stable);
+  @include tabs-background('tabs-background-positive', $positive);
+  @include tabs-background('tabs-background-calm', $calm);
+  @include tabs-background('tabs-background-assertive', $assertive);
+  @include tabs-background('tabs-background-balanced', $balanced);
+  @include tabs-background('tabs-background-energized',$energized);
+  @include tabs-background('tabs-background-royal', $royal);
+  @include tabs-background('tabs-background-dark', $dark);
 
-  .tab-item {
-    color: $tabs-striped-off-color;
-    opacity: $tabs-striped-off-opacity;
-  }
-  .tab-item + .tab-item:before {
-    border-left: 1px solid #ccc;
-    display: block;
-    float: left;
-    width: 2px;
-    height: 26px;
-    margin: 11px auto;
-    content: " ";
-  }
-
+  @include tabs-color('tabs-color-light', $light);
+  @include tabs-color('tabs-color-stable', $stable);
+  @include tabs-color('tabs-color-positive', $positive);
+  @include tabs-color('tabs-color-calm', $calm);
+  @include tabs-color('tabs-color-assertive', $assertive);
+  @include tabs-color('tabs-color-balanced', $balanced);
+  @include tabs-color('tabs-color-energized',$energized);
+  @include tabs-color('tabs-color-royal', $royal);
+  @include tabs-color('tabs-color-dark', $dark);
 }
 
 .tabs-top {
   &.tabs-striped {
-    .tab-item.tab-item-active,
-    .tab-item.active,
-    .tab-item.activated {
-      margin-top: 0;
-      margin-bottom: -4px;
-      border-width: 0px 0px $tabs-striped-border-width 0px !important;
+    padding-bottom:0;
+    .tab-item{
+      background: transparent;
+      // animate the top bar, leave bottom for platform consistency
+      -webkit-transition: all .1s ease;
+      -moz-transition: all .1s ease;
+      -ms-transition: all .1s ease;
+      -o-transition: all .1s ease;
+      transition: all .1s ease;
+      &.tab-item-active,
+      &.active,
+      &.activated {
+        margin-top: 0;
+        margin-bottom: -$tabs-striped-border-width;
+        border-width: 0px 0px $tabs-striped-border-width 0px !important;
+        border-style: solid;
+      }
+      .badge{
+        -webkit-transition: all .2s ease;
+        -moz-transition: all .2s ease;
+        -ms-transition: all .2s ease;
+        -o-transition: all .2s ease;
+        transition: all .2s ease;
+      }
     }
   }
 }
@@ -157,9 +235,19 @@
 .tabs.tabs-top {
   top: $bar-height;
   padding-top: 0;
-  padding-bottom: 2px;
   background-position: bottom;
-
+  .tab-item {
+    &.tab-item-active,
+    &.active,
+    &.activated {
+      .badge {
+        top: 4%;
+      }
+    }
+  }
+}
+.tabs-top ~ .bar-header {
+  border-bottom-width: 0;
 }
 
 .tab-item {
@@ -184,6 +272,9 @@
 
   &:hover {
     cursor: pointer;
+  }
+  &.tab-hidden{
+    display:none;
   }
 }
 
@@ -216,6 +307,7 @@
   .icon {
     display: inline-block;
     vertical-align: top;
+    margin-top: -.1em;
 
     &:before {
     font-size: $tabs-icon-size - 8;

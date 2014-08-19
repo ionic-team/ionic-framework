@@ -1,8 +1,8 @@
 {
   "name": "ionic",
   "private": false,
-  "version": "1.0.0-beta.8",
-  "codename": "fermium-flamingo",
+  "version": "1.0.0-beta.11",
+  "codename": "indium-iguana",
   "repository": {
     "url": "git://github.com/driftyco/ionic.git"
   },
@@ -53,7 +53,8 @@
     "node-uuid": "^1.4.1",
     "js-yaml": "^3.0.2",
     "protractor": "^0.23.1",
-    "q": "^1.0.1"
+    "q": "^1.0.1",
+    "github": "^0.2.1"
   },
   "licenses": [
     {

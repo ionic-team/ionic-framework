@@ -6,7 +6,7 @@ var PLATFORM_BACK_BUTTON_PRIORITY_POPUP = 400;
 var PLATFORM_BACK_BUTTON_PRIORITY_LOADING = 500;
 
 function componentConfig(defaults) {
-  defaults.$get = function() { return defaults; }
+  defaults.$get = function() { return defaults; };
   return defaults;
 }
 
@@ -40,7 +40,7 @@ IonicModule
       position: ''
     }
   }
-})
+});
 
 
 IonicModule.config([

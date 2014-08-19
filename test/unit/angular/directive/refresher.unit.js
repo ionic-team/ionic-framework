@@ -65,7 +65,6 @@ describe('ionRefresher directive', function() {
     expect(el.hasClass('active')).toBe(true);
     expect(ctrl.scrollView.finishPullToRefresh).not.toHaveBeenCalled();
     el.scope().$apply();
-    expect(el.hasClass('active')).toBe(false);
     expect(ctrl.scrollView.finishPullToRefresh).toHaveBeenCalled();
   });
 

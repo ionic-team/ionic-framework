@@ -1,5 +1,5 @@
 var ITEM_TPL_DELETE_BUTTON =
-  '<div class="item-left-edit item-delete ng-hide">' +
+  '<div class="item-left-edit item-delete enable-pointer-events">' +
   '</div>';
 /**
 * @ngdoc directive
@@ -33,7 +33,7 @@ IonicModule
 .directive('ionDeleteButton', ['$animate', function($animate) {
   return {
     restrict: 'E',
-    require: ['^ionItem', '^ionList'],
+    require: ['^ionItem', '^?ionList'],
     //Run before anything else, so we can move it before other directives process
     //its location (eg ngIf relies on the location of the directive in the dom)
     priority: Number.MAX_VALUE,
@@ -48,8 +48,8 @@ IonicModule
         container.append($element);
         itemCtrl.$element.append(container).addClass('item-left-editable');
 
-        if (listCtrl.showDelete()) {
-          $animate.removeClass(container, 'ng-hide');
+        if (listCtrl && listCtrl.showDelete()) {
+          container.addClass('visible active');
         }
       };
     }

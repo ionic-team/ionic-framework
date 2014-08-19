@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="ionic">
+<html ng-app="ionicApp">
   <head>
     <script src="../../dist/js/ionic.bundle.js"></script>
     <meta charset="utf-8">
@@ -20,7 +20,7 @@
 
     <main class="content has-header">
 
-      <ul class="list">
+      <ul class="list" ng-controller="MainCtrl">
         <li class="item item-checkbox">
            <label class="checkbox">
              <input type="checkbox" checked>
@@ -51,9 +51,34 @@
            </label>
            Right side checkbox
         </li>
+        <li class="item item-checkbox">
+          <label class="checkbox">
+            <input type="checkbox" disabled="disabled">
+          </label>
+          Disabled Checkbox
+        </li>
+        <li class="item-divider">Directives</li>
+        <ion-checkbox ng-model="test" ng-checked="test" ng-disabled="test">Disabled Directive</ion-checkbox>
+        <ion-checkbox ng-model="test" ng-checked="test" class="checkbox-light">Light Directive</ion-checkbox>
+        <ion-checkbox ng-model="test" ng-checked="test" class="checkbox-stable">Stable Directive</ion-checkbox>
+        <ion-checkbox ng-model="test" ng-checked="test" class="checkbox-positive">Positive Directive</ion-checkbox>
+        <ion-checkbox ng-model="test" ng-checked="test" class="checkbox-calm">Calm Directive</ion-checkbox>
+        <ion-checkbox ng-model="test" ng-checked="test" class="checkbox-assertive">Assertive Directive</ion-checkbox>
+        <ion-checkbox ng-model="test" ng-checked="test" class="checkbox-balanced">Balanced Directive</ion-checkbox>
+        <ion-checkbox ng-model="test" ng-checked="test" class="checkbox-energized">Energized Directive</ion-checkbox>
+        <ion-checkbox ng-model="test" ng-checked="test" class="checkbox-royal">Royal Directive</ion-checkbox>
+        <ion-checkbox ng-model="test" ng-checked="test" class="checkbox-dark">Dark Directive</ion-checkbox>
       </ul>
 
     </main>
+    <script type="text/javascript">
+      angular.module('ionicApp', ['ionic'])
 
+          .controller('MainCtrl', function($scope) {
+
+            $scope.test = true;
+
+          });
+    </script>
   </body>
 </html>

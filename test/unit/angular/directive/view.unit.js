@@ -21,11 +21,19 @@ describe('ionView directive', function() {
     return el;
   }
 
-  it('should remove title & add pane, even with no navbar', inject(function($compile, $rootScope) {
+  it('should only remove title & add pane with no navbar', inject(function($compile, $rootScope) {
     var el = $compile('<ion-view title="1">')($rootScope.$new());
     $rootScope.$apply();
     expect(el.hasClass('pane')).toBe(true);
     expect(el[0].getAttribute('title')).toBe(null);
+  }));
+
+  it('should only remove title & add pane in a modal',inject(function($compile, $rootScope) {
+    var el = $compile('<ion-modal><ion-view title="1"></ion-modal>')($rootScope.$new());
+    var view = jqLite(el[0].querySelector('.pane'));
+    $rootScope.$apply();
+    expect(view.hasClass('pane')).toBe(true);
+    expect(view[0].getAttribute('title')).toBe(null);
   }));
 
   it('should have content inside', function() {

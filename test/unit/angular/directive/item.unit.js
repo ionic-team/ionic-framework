@@ -64,7 +64,7 @@ describe('ionDeleteButton directive', function() {
     $compile(el)($rootScope.$new());
     $rootScope.$apply();
 
-    var deleteContainer = angular.element(el[0].querySelector('.item-left-edit.item-delete.ng-hide'));
+    var deleteContainer = angular.element(el[0].querySelector('.item-left-edit.item-delete'));
     expect(deleteContainer.length).toBe(1);
     expect(deleteContainer.children().hasClass('button icon button-icon')).toBe(true);
   }));
@@ -79,7 +79,8 @@ describe('ionDeleteButton directive', function() {
 
     var deleteContainer = angular.element(el[0].querySelector('.item-left-edit.item-delete'));
     expect(deleteContainer.length).toBe(1);
-    expect(deleteContainer.hasClass('ng-hide')).toBe(false);
+    expect(deleteContainer.hasClass('visible')).toBe(true);
+    expect(deleteContainer.hasClass('active')).toBe(true);
   }));
 });
 
@@ -94,13 +95,13 @@ describe('ionReorderButton directive', function() {
     $compile(el)($rootScope.$new());
     $rootScope.$apply();
 
-    var reorderContainer = angular.element(el[0].querySelector('.item-right-edit.item-reorder.ng-hide'));
+    var reorderContainer = angular.element(el[0].querySelector('.item-right-edit.item-reorder'));
     expect(reorderContainer.length).toBe(1);
     expect(reorderContainer.children().hasClass('button icon button-icon')).toBe(true);
     expect(reorderContainer.attr('data-prevent-scroll')).toBe('true');
     expect(reorderContainer.children().attr('data-prevent-scroll')).toBe('true');
   }));
-  it('should remove ng-hide if reorder is already active', inject(function($compile, $rootScope) {
+  it('should show if reorder is already active', inject(function($compile, $rootScope) {
     var setSpy = jasmine.createSpy('setReorderButton');
     var el = angular.element('<ion-item><ion-reorder-button></ion-reorder-button></ion-item>');
     el.data('$ionListController', {
@@ -110,7 +111,8 @@ describe('ionReorderButton directive', function() {
     $rootScope.$apply();
     var reorderContainer = angular.element(el[0].querySelector('.item-right-edit.item-reorder'));
     expect(reorderContainer.length).toBe(1);
-    expect(reorderContainer.hasClass('ng-hide')).toBe(false);
+    expect(reorderContainer.hasClass('visible')).toBe(true);
+    expect(reorderContainer.hasClass('active')).toBe(true);
   }));
 });
 

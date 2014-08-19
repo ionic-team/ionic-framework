@@ -13,6 +13,9 @@
 }
 .list:last-child {
   margin-bottom: 0px;
+  &.card{
+    margin-bottom:40px;
+  }
 }
 
 
@@ -53,7 +56,14 @@
 .card {
   padding-top: $item-border-width;
   padding-bottom: $item-border-width;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
+}
+
+.padding {
+  .card, .list-inset {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 .card .item,
