@@ -1,8 +1,8 @@
 IonicModule
 .controller('$ionicTabs', [
-  '$scope', 
-  '$ionicViewService', 
-  '$element', 
+  '$scope',
+  '$ionicViewService',
+  '$element',
 function($scope, $ionicViewService, $element) {
   var _selectedTab = null;
   var self = this;
@@ -59,8 +59,9 @@ function($scope, $ionicViewService, $element) {
     } else {
       tabIndex = self.tabs.indexOf(tab);
     }
-    if (!tab || tabIndex == -1) {
-      throw new Error('Cannot select tab "' + tabIndex + '"!');
+
+    if (arguments.length === 1) {
+      shouldEmitEvent = !!(tab.navViewName || tab.uiSref);
     }
 
     if (_selectedTab && _selectedTab.$historyId == tab.$historyId) {
@@ -85,7 +86,6 @@ function($scope, $ionicViewService, $element) {
           navViewName: tab.navViewName,
           hasNavView: !!tab.navViewName,
           title: tab.title,
-          //Skip the first character of href if it's #
           url: tab.href,
           uiSref: tab.uiSref
         };

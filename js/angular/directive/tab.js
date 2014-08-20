@@ -107,13 +107,13 @@ function($rootScope, $animate, $ionicBind, $compile) {
         $element[0].removeAttribute('title');
 
         if (navViewName) {
-          tabCtrl.navViewName = navViewName;
+          tabCtrl.navViewName = $scope.navViewName = navViewName;
         }
         $scope.$on('$stateChangeSuccess', selectIfMatchesState);
         selectIfMatchesState();
         function selectIfMatchesState() {
           if (tabCtrl.tabMatchesState()) {
-            tabsCtrl.select($scope);
+            tabsCtrl.select($scope, false);
           }
         }
 
