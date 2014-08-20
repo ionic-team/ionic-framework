@@ -81,7 +81,7 @@ function($cacheFactory, $parse, $rootScope) {
     attachItemAtIndex: function(index) {
       if (index < this.dataStartIndex) {
         return this.beforeSiblings[index];
-      } else if (index > this.data.length) {
+      } else if (index > this.data.length - 1) {
         return this.afterSiblings[index - this.data.length - this.dataStartIndex];
       }
 
