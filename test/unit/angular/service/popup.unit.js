@@ -10,7 +10,7 @@ describe('$ionicPopup service', function() {
     it('should make a popup element appended to body', function() {
       var popup = TestUtil.unwrapPromise($ionicPopup._createPopup());
       expect(popup.element).toBeTruthy();
-      expect(popup.element.hasClass('popup')).toBe(true);
+      expect(popup.element.hasClass('popup-container')).toBe(true);
       expect(popup.element.parent()[0]).toBe(document.body);
     });
     it('should default to $rootScope child as scope', inject(function($rootScope) {
