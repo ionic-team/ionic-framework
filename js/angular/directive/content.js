@@ -24,6 +24,7 @@
  * @param {string=} delegate-handle The handle used to identify this scrollView
  * with {@link ionic.service:$ionicScrollDelegate}.
  * @param {string=} direction Which way to scroll. 'x' or 'y' or 'xy'. Default 'y'.
+ * @param {boolean=} locking Whether to lock scrolling in one direction at a time. Useful to set to false when zoomed in or scrolling in two directions. Default true.
  * @param {boolean=} padding Whether to add padding to the content.
  * of the content.  Defaults to true on iOS, false on Android.
  * @param {boolean=} scroll Whether to allow scrolling of content.  Defaults to true.
@@ -112,6 +113,7 @@ function($timeout, $controller, $ionicBind) {
           var scrollViewOptions = {
             el: $element[0],
             delegateHandle: attr.delegateHandle,
+            locking: (attr.locking || 'true') === 'true',
             bouncing: $scope.$eval($scope.hasBouncing),
             startX: $scope.$eval($scope.startX) || 0,
             startY: $scope.$eval($scope.startY) || 0,
