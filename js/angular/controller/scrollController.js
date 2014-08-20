@@ -140,6 +140,18 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     });
   };
 
+  this.zoomTo = function(zoom, shouldAnimate, originLeft, originTop) {
+    this.resize().then(function() {
+      scrollView.zoomTo(zoom, !!shouldAnimate, originLeft, originTop);
+    });
+  };
+
+  this.zoomBy = function(zoom, shouldAnimate, originLeft, originTop) {
+    this.resize().then(function() {
+      scrollView.zoomBy(zoom, !!shouldAnimate, originLeft, originTop);
+    });
+  };
+
   this.scrollBy = function(left, top, shouldAnimate) {
     this.resize().then(function() {
       scrollView.scrollBy(left, top, !!shouldAnimate);
