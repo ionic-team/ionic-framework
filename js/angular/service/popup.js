@@ -1,6 +1,6 @@
 
 var POPUP_TPL =
-  '<div class="popup">' +
+  '<div class="popup" ng-class="class">' +
     '<div class="popup-head">' +
       '<h3 class="popup-title" ng-bind-html="title"></h3>' +
       '<h5 class="popup-sub-title" ng-bind-html="subTitle" ng-if="subTitle"></h5>' +
@@ -304,6 +304,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
         title: options.title,
         buttons: options.buttons,
         subTitle: options.subTitle,
+        class: options.class,
         $buttonTapped: function(button, event) {
           var result = (button.onTap || angular.noop)(event);
           event = event.originalEvent || event; //jquery events
