@@ -145,7 +145,7 @@ function($ionicLoadingConfig, $document, $ionicTemplateLoader, $ionicBackdrop, $
               self.element.addClass('visible');
               ionic.requestAnimationFrame(function() {
                 self.isShown && self.element.addClass('active');
-                $document[0].body.classList.add('loading-active');
+                self.isShown && $document[0].body.classList.add('loading-active');
               });
             }
           });
@@ -158,11 +158,8 @@ function($ionicLoadingConfig, $document, $ionicTemplateLoader, $ionicBackdrop, $
               $ionicBackdrop.release();
               $ionicBackdrop.getElement().removeClass('backdrop-loading');
             }
-            // wrapping in a timeout to make process asyncronous
-            $timeout(function(){
-              self.element.removeClass('active');
-              $document[0].body.classList.remove('loading-active');
-            }, 10);
+            self.element.removeClass('active');
+            $document[0].body.classList.remove('loading-active');
             setTimeout(function() {
               !self.isShown && self.element.removeClass('visible');
             }, 200);
