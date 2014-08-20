@@ -11,7 +11,6 @@
   bottom: 0;
   right: 0;
   background: rgba(0,0,0,0);
-  pointer-events: none;
 
   @include display-flex();
   @include justify-content(center);
@@ -43,7 +42,6 @@
     width: $popup-width;
     max-width: 100%;
     max-height: 90%;
-    pointer-events: auto;
 
     border-radius: $popup-border-radius;
     background-color: $popup-background-color;
