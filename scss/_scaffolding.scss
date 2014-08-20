@@ -275,6 +275,11 @@ ion-infinite-scroll {
   overflow-x: hidden;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
 
   .scroll {
     position: static;
