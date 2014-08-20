@@ -28,10 +28,22 @@
       Content? Yes, content.
     </ion-content>
 
-    <ion-footer-bar>
+    <ion-footer-bar class="bar-subfooter">
       <button class="button" ng-click="setPlatform('ios')">iOS</button>
       <button class="button" ng-click="setPlatform('android')">Android</button>
       <button class="button" ng-click="setPlatform('base')">Base</button>
+    </ion-footer-bar>
+
+    <ion-footer-bar>
+      <div class="buttons">
+        <button class="button button-icon ion-android-more" ng-click="openPopover($event)"></button>
+      </div>
+      <h1 class="title">Popover</h1>
+      <div class="buttons">
+        <button class="button" ng-click="openPopover2($event)">Popover 2</button>
+        <button class="button" ng-click="openPopover($event)">Popover</button>
+        <button class="button" ng-click="openPopover($event)">Popover</button>
+      </div>
     </ion-footer-bar>
 
 
