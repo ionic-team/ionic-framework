@@ -69,15 +69,16 @@
     padding: 10px 10px;
   }
 
+  @include display-flex();
+  @include flex-direction(row);
+
   .button {
     margin: 0px 5px;
     min-height: $popup-button-min-height;
     border-radius: $popup-button-border-radius;
     line-height: $popup-button-line-height;
 
-    &:first-child {
-      margin-left: 0px;
-    }
+    margin-right: 5px;
     &:last-child {
       margin-right: 0px;
     }
