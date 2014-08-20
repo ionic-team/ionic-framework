@@ -91,6 +91,7 @@ IonicModule
    * @param {number} left The x-offset to scroll by.
    * @param {number} top The y-offset to scroll by.
    * @param {boolean=} shouldAnimate Whether the scroll should animate.
+   * @param {number=} zoom the expected zoom level after scroll
    */
   'scrollBy',
   /**
