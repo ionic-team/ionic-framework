@@ -333,7 +333,7 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
  * --------------------------------------------------
  */
 $ios-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
-$ios-transition-duration: 6340ms;
+$ios-transition-duration: 340ms;
 $ios-transition-box-shadow: 0px 0px 12px rgba(0,0,0,0.5);
 /*
 $ios-transition-box-shadow-start: -200px 0px 200px rgba(0,0,0,0), -5px 0px 5px rgba(0,0,0,0.01);
@@ -461,7 +461,7 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
 $full-slide-timing-function: ease-in-out;
 $full-slide-transition-duration: 340ms;
 
-.full-slide {
+.slide-full {
   > .ng-enter, &.ng-enter,
   > .ng-leave, &.ng-leave {
     @include transition(all $full-slide-timing-function $full-slide-transition-duration);
@@ -494,7 +494,7 @@ $full-slide-transition-duration: 340ms;
     @include translate3d(-100%, 0, 0);
   }
 }
-.full-slide.reverse {
+.slide-full.reverse {
   > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
     @include transition(all $full-slide-timing-function $full-slide-transition-duration);
     position: absolute;
