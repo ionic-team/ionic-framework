@@ -14,12 +14,13 @@ IonicModule
 .constant('$ionicPlatformDefaults', {
   'ios': {
     '$ionicNavBarConfig': {
-      transition: 'nav-title-slide-ios7',
+      transition: 'nav-title-slide-full',//nav-title-slide-ios7',
       alignTitle: 'center',
       backButtonIcon: 'ion-ios7-arrow-back'
     },
     '$ionicNavViewConfig': {
-      transition: 'slide-left-right-ios7'
+      //transition: 'slide-left-right-ios'
+      transition: 'full-slide'
     },
     '$ionicTabsConfig': {
       type: '',
@@ -33,7 +34,7 @@ IonicModule
       backButtonIcon: 'ion-ios7-arrow-back'
     },
     '$ionicNavViewConfig': {
-      transition: 'slide-left-right-ios7'
+      transition: 'slide-ios'
     },
     '$ionicTabsConfig': {
       type: 'tabs-striped',
