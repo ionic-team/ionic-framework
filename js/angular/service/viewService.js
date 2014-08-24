@@ -477,17 +477,20 @@ function($rootScope, $state, $location, $window, $injector, $animate, $ionicNavV
               setAnimationClass();
 
               element.addClass('ng-enter');
-              document.body.classList.add('disable-pointer-events');
+              //document.body.classList.add('disable-pointer-events');
+              ionic.tap.setEnabled(false);
 
               $animate.enter(element, navViewElement, null, function() {
-                document.body.classList.remove('disable-pointer-events');
+                //document.body.classList.remove('disable-pointer-events');
+                ionic.tap.setEnabled(true);
                 if (animationClass) {
                   navViewElement[0].classList.remove(animationClass);
                 }
               });
               return;
             } else if(!doAnimation) {
-              document.body.classList.remove('disable-pointer-events');
+              ionic.tap.setEnabled(true);
+              //document.body.classList.remove('disable-pointer-events');
             }
 
             // no animation
