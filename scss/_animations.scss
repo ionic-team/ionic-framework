@@ -348,9 +348,9 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
     @include transition(all $ios-timing-function $ios-transition-duration);
     position: absolute;
     top: 0;
-    right: -1px;
+    //right: -1px;
     bottom: 0;
-    left: -1px;
+    //left: -1px;
     width: auto;
     &:not(.bar) {
       border-right: none;
@@ -382,9 +382,9 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
     @include transition(all $ios-timing-function $ios-transition-duration);
     position: absolute;
     top: 0;
-    right: -1px;
+    //right: -1px;
     bottom: 0;
-    left: -1px;
+    //left: -1px;
     width: auto;
     border-right: none;
     border-left: none;
