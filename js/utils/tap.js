@@ -78,6 +78,9 @@ var tapTouchFocusedInput;
 var tapLastTouchTarget;
 var tapTouchMoveListener = 'touchmove';
 
+// Whether to allow any events at all, think "pointer-events: none";
+var masterEnabled = true;
+
 // how much the coordinates can be off between start/end, but still a click
 var TAP_RELEASE_TOLERANCE = 6; // default tolerance
 var TAP_RELEASE_BUTTON_TOLERANCE = 50; // button elements should have a larger tolerance
@@ -148,6 +151,10 @@ ionic.tap = {
       tapPointerMoved = false;
       tapPointerStart = null;
     };
+  },
+
+  setEnabled: function(isEnabled) {
+    masterEnabled = isEnabled;
   },
 
   ignoreScrollStart: function(e) {
@@ -285,6 +292,11 @@ ionic.tap = {
 
 };
 
+function notEnabled(e) {
+  e.preventDefault();
+  return false;
+}
+
 function tapEventListener(type, enable, useCapture) {
   if(enable !== false) {
     tapDoc.addEventListener(type, tapEventListeners[type], useCapture);
@@ -318,6 +330,8 @@ function triggerMouseEvent(type, ele, x, y) {
 }
 
 function tapClickGateKeeper(e) {
+  if(!masterEnabled) { return notEnabled(e); }
+
   if(e.target.type == 'submit' && e.detail === 0) {
     // do not prevent click if it came from an "Enter" or "Go" keypress submit
     return;
@@ -339,6 +353,7 @@ function tapClickGateKeeper(e) {
 
 // MOUSE
 function tapMouseDown(e) {
+  if(!masterEnabled) { return notEnabled(e); }
   if(e.isIonicTap || tapIgnoreEvent(e)) return;
 
   if(tapEnabledTouchEvents) {
@@ -364,6 +379,7 @@ function tapMouseDown(e) {
 }
 
 function tapMouseUp(e) {
+  if(!masterEnabled) { return notEnabled(e); }
   if(tapEnabledTouchEvents) {
     e.stopPropagation();
     e.preventDefault();
@@ -381,6 +397,7 @@ function tapMouseUp(e) {
 }
 
 function tapMouseMove(e) {
+  if(!masterEnabled) { return notEnabled(e); }
   if( tapHasPointerMoved(e) ) {
     tapEventListener('mousemove', false);
     ionic.activator.end();
@@ -392,6 +409,7 @@ function tapMouseMove(e) {
 
 // TOUCH
 function tapTouchStart(e) {
+  if(!masterEnabled) { return notEnabled(e); }
   if( tapIgnoreEvent(e) ) return;
 
   tapPointerMoved = false;
@@ -417,6 +435,7 @@ function tapTouchStart(e) {
 }
 
 function tapTouchEnd(e) {
+  if(!masterEnabled) { return notEnabled(e); }
   if( tapIgnoreEvent(e) ) return;
 
   tapEnableTouchEvents();
@@ -433,6 +452,7 @@ function tapTouchEnd(e) {
 }
 
 function tapTouchMove(e) {
+  if(!masterEnabled) { return notEnabled(e); }
   if( tapHasPointerMoved(e) ) {
     tapPointerMoved = true;
     tapEventListener(tapTouchMoveListener, false);
@@ -442,6 +462,7 @@ function tapTouchMove(e) {
 }
 
 function tapTouchCancel(e) {
+  if(!masterEnabled) { return notEnabled(e); }
   tapEventListener(tapTouchMoveListener, false);
   ionic.activator.end();
   tapPointerMoved = false;
@@ -456,6 +477,7 @@ function tapEnableTouchEvents() {
 }
 
 function tapIgnoreEvent(e) {
+  if(!masterEnabled) { return notEnabled(e); }
   if(e.isTapHandled) return true;
   e.isTapHandled = true;
 
@@ -510,6 +532,7 @@ function tapFocusOutActive() {
 }
 
 function tapFocusIn(e) {
+  if(!masterEnabled) { return notEnabled(e); }
   // Because a text input doesn't preventDefault (so the caret still works) there's a chance
   // that it's mousedown event 300ms later will change the focus to another element after
   // the keyboard shows up.
@@ -542,6 +565,7 @@ function tapActiveElement(ele) {
 }
 
 function tapHasPointerMoved(endEvent) {
+  if(!masterEnabled) { return notEnabled(endEvent); }
   if(!endEvent || endEvent.target.nodeType !== 1 || !tapPointerStart || ( tapPointerStart.x === 0 && tapPointerStart.y === 0 )) {
     return false;
   }
