@@ -409,14 +409,18 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
 /**
  * iPad doesn't like box shadows
  */
-.grade-a:not(.platform-ipad) {
+.grade-a {
   .slide-ios,
   .slide-left-right-ios7, .slide-right-left-ios7.reverse {
     > .ng-enter, &.ng-enter {
-      box-shadow: none;
+      &:not(.platform-ipad) {
+        box-shadow: none;
+      }
     }
     > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
-      box-shadow: $ios-transition-box-shadow;
+      &:not(.platform-ipad) {
+        box-shadow: $ios-transition-box-shadow;
+      }
     }
     > .ng-leave, &.ng-leave {
       opacity: 1;
@@ -439,21 +443,6 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
     }
     > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
       box-shadow: none;
-    }
-  }
-}
-.grade-a.platform-ipad {
-  .slide-ios,
-  .slide-left-right-ios7, .slide-right-left-ios7.reverse {
-    > .ng-enter, &.ng-enter {
-      border-left: 1px solid #ddd;
-    }
-  }
-
-  .slide-ios.reverse,
-  .slide-left-right-ios7.reverse, .slide-right-left-ios7 {
-    > .ng-leave, &.ng-leave {
-      border-left: 1px solid #ddd;
     }
   }
 }
