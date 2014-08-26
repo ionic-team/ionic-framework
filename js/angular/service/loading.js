@@ -161,6 +161,7 @@ function($ionicLoadingConfig, $document, $ionicTemplateLoader, $ionicBackdrop, $
             self.element.removeClass('active');
             $document[0].body.classList.remove('loading-active');
             setTimeout(function() {
+              !self.isShown && $document[0].body.classList.remove('loading-active');
               !self.isShown && self.element.removeClass('visible');
             }, 200);
           }
