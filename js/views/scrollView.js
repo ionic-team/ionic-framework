@@ -372,9 +372,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
         return Math.max(self.__content.scrollWidth, self.__content.offsetWidth);
       },
       getContentHeight: function() {
-        return Math.max(self.__content.scrollHeight, self.__content.offsetHeight);
+        return Math.max(self.__content.scrollHeight, self.__content.offsetHeight + self.__content.offsetTop);
       }
-		};
+    };
 
     for (var key in options) {
       this.options[key] = options[key];
@@ -704,7 +704,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     }
 
     self.touchStart = function(e) {
-      self.startCoordinates = getPointerCoordinates(e);
+      self.startCoordinates = ionic.tap.pointerCoord(e);
 
       if ( ionic.tap.ignoreScrollStart(e) ) {
         return;
@@ -744,7 +744,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       if(self.startCoordinates) {
         // we have start coordinates, so get this touch move's current coordinates
-        var currentCoordinates = getPointerCoordinates(e);
+        var currentCoordinates = ionic.tap.pointerCoord(e);
 
         if( self.__isSelectable &&
             ionic.tap.isTextInput(e.target) &&
@@ -779,12 +779,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
       if( !self.__isDragging && !self.__isDecelerating && !self.__isAnimating ) {
         ionic.tap.removeClonedInputs(container, self);
       }
-    };
-
-    self.options.orgScrollingComplete = self.options.scrollingComplete;
-    self.options.scrollingComplete = function() {
-      ionic.tap.removeClonedInputs(container, self);
-      self.options.orgScrollingComplete();
     };
 
     if ('ontouchstart' in window) {
@@ -869,7 +863,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     }
   },
 
-  __removeEventHandlers: function() {
+  __cleanup: function() {
     var container = this.__container;
 
     container.removeEventListener('touchstart', self.touchStart);
@@ -891,6 +885,14 @@ ionic.views.Scroll = ionic.views.View.inherit({
     document.removeEventListener("mousemove", self.mouseMove);
     document.removeEventListener("mouseup", self.mouseUp);
     document.removeEventListener('mousewheel', self.mouseWheel);
+
+    delete this.__container;
+    delete this.__content;
+    delete this.__indicatorX;
+    delete this.__indicatorY;
+
+    this.resize = this.scrollTo = this.zoomTo = 
+      this.__scrollingComplete = angular.noop;
   },
 
   /** Create a scroll bar div with the given direction **/
@@ -1090,6 +1092,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
   __scrollingComplete: function() {
     var self = this;
     self.options.scrollingComplete();
+    ionic.tap.removeClonedInputs(self.__container, self);
 
     self.__fadeScrollbars('out');
   },
@@ -1098,8 +1101,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
     // Update Scroller dimensions for changed content
     // Add padding to bottom of content
     this.setDimensions(
-    	this.__container.clientWidth,
-    	this.__container.clientHeight,
+      this.__container.clientWidth,
+      this.__container.clientHeight,
       this.options.getContentWidth(),
       this.options.getContentHeight()
     );
@@ -1261,8 +1264,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * @param activateCallback {Function} Callback to execute on activation. This is for signalling the user about a refresh is about to happen when he release.
    * @param deactivateCallback {Function} Callback to execute on deactivation. This is for signalling the user about the refresh being cancelled.
    * @param startCallback {Function} Callback to execute to start the real async refresh action. Call {@link #finishPullToRefresh} after finish of refresh.
+   * @param showCallback {Function} Callback to execute when the refresher should be shown. This is for showing the refresher during a negative scrollTop.
+   * @param hideCallback {Function} Callback to execute when the refresher should be hidden. This is for hiding the refresher when it's behind the nav bar.
    */
-  activatePullToRefresh: function(height, activateCallback, deactivateCallback, startCallback) {
+  activatePullToRefresh: function(height, activateCallback, deactivateCallback, startCallback, showCallback, hideCallback) {
 
     var self = this;
 
@@ -1270,7 +1275,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.__refreshActivate = activateCallback;
     self.__refreshDeactivate = deactivateCallback;
     self.__refreshStart = startCallback;
-
+    self.__refreshShow = showCallback;
+    self.__refreshHide = hideCallback;
   },
 
 
@@ -1741,6 +1747,15 @@ ionic.views.Scroll = ionic.views.View.inherit({
             // Support pull-to-refresh (only when only y is scrollable)
             if (!self.__enableScrollX && self.__refreshHeight != null) {
 
+              // hide the refresher when it's behind the header bar in case of header transparency
+              if(scrollTop < 0){
+                self.__refreshHidden = false;
+                self.__refreshShow();
+              }else{
+                self.__refreshHide();
+                self.__refreshHidden = true;
+              }
+
               if (!self.__refreshActive && scrollTop <= -self.__refreshHeight) {
 
                 self.__refreshActive = true;
@@ -1767,6 +1782,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
             scrollTop = 0;
 
           }
+        }else if(self.__refreshHeight && !self.__refreshHidden){
+          // if a positive scroll value and the refresher is still not hidden, hide it
+          self.__refreshHide();
+          self.__refreshHidden = true;
         }
       }
 
@@ -2118,6 +2137,16 @@ ionic.views.Scroll = ionic.views.View.inherit({
         Math.abs(self.__decelerationVelocityY) >= self.__minVelocityToKeepDecelerating;
       if (!shouldContinue) {
         self.__didDecelerationComplete = true;
+
+        //Make sure the scroll values are within the boundaries after a bounce,
+        //not below 0 or above maximum
+        if (self.options.bouncing) {
+          self.scrollTo(
+            Math.min( Math.max(self.__scrollLeft, 0), self.__maxScrollLeft ),
+            Math.min( Math.max(self.__scrollTop, 0), self.__maxScrollTop ),
+            false
+          );
+        }
       }
       return shouldContinue;
     };

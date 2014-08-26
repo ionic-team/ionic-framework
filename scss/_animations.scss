@@ -329,28 +329,32 @@ $slide-in-up-function: cubic-bezier(.1, .7, .1, 1);
 
 
 /**
- * iOS7 style slide left to right
+ * iOS style slide left to right
  * --------------------------------------------------
  */
-$ios7-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
-$ios7-transition-duration: 340ms;
+$ios-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
+$ios-transition-duration: 400ms;
+$ios-transition-box-shadow: 0px 0px 12px rgba(0,0,0,0.5);
+/*
 $ios-transition-box-shadow-start: -200px 0px 200px rgba(0,0,0,0), -5px 0px 5px rgba(0,0,0,0.01);
 $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px rgba(0,0,0,0.18);
+*/
 
+.slide-ios,
 .slide-left-right-ios7,
 .slide-right-left-ios7.reverse {
   > .ng-enter, &.ng-enter,
   > .ng-leave, &.ng-leave {
-    @include transition(all $ios7-timing-function $ios7-transition-duration);
+    @include transition(all $ios-timing-function $ios-transition-duration);
     position: absolute;
     top: 0;
-    right: -1px;
+    //right: -1px;
     bottom: 0;
-    left: -1px;
+    //left: -1px;
     width: auto;
     &:not(.bar) {
-      border-right: 1px solid transparent;
-      border-left: 1px solid transparent;
+      border-right: none;
+      border-left: none;
     }
     border-right: none;
     border-left: none;
@@ -368,25 +372,26 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
   }
   > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
     /* OLD content ACTIVELY sliding OUT to the LEFT */
-    @include translate3d(-15%, 0, 0);
+    @include translate3d(-20%, 0, 0);
   }
 }
+.slide-ios.reverse,
 .slide-left-right-ios7.reverse,
 .slide-right-left-ios7 {
   > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
-    @include transition(all $ios7-timing-function $ios7-transition-duration);
+    @include transition(all $ios-timing-function $ios-transition-duration);
     position: absolute;
     top: 0;
-    right: -1px;
+    //right: -1px;
     bottom: 0;
-    left: -1px;
+    //left: -1px;
     width: auto;
-    border-right: 1px solid transparent;
-    border-left: 1px solid transparent;
+    border-right: none;
+    border-left: none;
   }
   > .ng-enter, &.ng-enter {
     /* NEW content placed far LEFT BEFORE it slides IN from the LEFT */
-    @include translate3d(-15%, 0, 0);
+    @include translate3d(-20%, 0, 0);
   }
   > .ng-leave, &.ng-leave {
     z-index: 2;
@@ -404,46 +409,51 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
 /**
  * iPad doesn't like box shadows
  */
-.grade-a:not(.platform-ipad) {
+.grade-a {
+  .slide-ios,
   .slide-left-right-ios7, .slide-right-left-ios7.reverse {
     > .ng-enter, &.ng-enter {
-      box-shadow: $ios-transition-box-shadow-start;
+      &:not(.platform-ipad) {
+        box-shadow: none;
+      }
     }
     > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
-      box-shadow: $ios-transition-box-shadow-end;
+      &:not(.platform-ipad) {
+        box-shadow: $ios-transition-box-shadow;
+      }
     }
-  }
-  .slide-left-right-ios7.reverse, .slide-right-left-ios7 {
     > .ng-leave, &.ng-leave {
-      //box-shadow: $ios-transition-box-shadow-end;
+      opacity: 1;
     }
     > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
-      //box-shadow: $ios-transition-box-shadow-start;
+      opacity: 0.9;
     }
   }
-}
-.grade-a.platform-ipad {
-  .slide-left-right-ios7, .slide-right-left-ios7.reverse {
-    > .ng-enter, &.ng-enter {
-      border-left: 1px solid #ddd;
-    }
-  }
-
+  .slide-ios.reverse,
   .slide-left-right-ios7.reverse, .slide-right-left-ios7 {
+    > .ng-enter, &.ng-enter {
+      opacity: 0.9;
+    }
+    > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+      opacity: 1;
+    }
     > .ng-leave, &.ng-leave {
-      border-left: 1px solid #ddd;
+      box-shadow: 0px 0px 12px rgba(0,0,0,0.5);
+      opacity: 1;
+    }
+    > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
+      box-shadow: none;
     }
   }
 }
 
+$full-slide-timing-function: ease-in-out;
+$full-slide-transition-duration: 400ms;
 
-/**
- * Android style "pop in" with fade and scale
- */
-.fade-explode {
+.slide-full {
   > .ng-enter, &.ng-enter,
   > .ng-leave, &.ng-leave {
-    @include transition(all ease-out 300ms);
+    @include transition(all $full-slide-timing-function $full-slide-transition-duration);
     position: absolute;
     top: 0;
     right: -1px;
@@ -451,29 +461,57 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
     left: -1px;
     width: auto;
     &:not(.bar) {
-      border-right: 1px solid #ddd;
-      border-left: 1px solid #ddd;
+      border-right: none;
+      border-left: none;
     }
+    border-right: none;
+    border-left: none;
   }
   > .ng-enter, &.ng-enter {
     /* NEW content placed far RIGHT BEFORE it slides IN from the RIGHT */
-    @include scale(1.6);
-    opacity: 0;
-    z-index: 2;
+    @include translate3d(100%, 0, 0);
   }
   > .ng-leave, &.ng-leave {
     z-index: 1;
   }
   > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
     /* NEW content ACTIVELY sliding IN from the RIGHT */
-    @include scale(1);
-    opacity: 1;
+    @include translate3d(0, 0, 0);
   }
   > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
     /* OLD content ACTIVELY sliding OUT to the LEFT */
-    @include scale(0.95);
+    @include translate3d(-100%, 0, 0);
   }
 }
+.slide-full.reverse {
+  > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
+    @include transition(all $full-slide-timing-function $full-slide-transition-duration);
+    position: absolute;
+    top: 0;
+    right: -1px;
+    bottom: 0;
+    left: -1px;
+    width: auto;
+    border-right: none;
+    border-left: none;
+  }
+  > .ng-enter, &.ng-enter {
+    /* NEW content placed far LEFT BEFORE it slides IN from the LEFT */
+    @include translate3d(-100%, 0, 0);
+  }
+  > .ng-leave, &.ng-leave {
+    z-index: 2;
+  }
+  > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+    /* NEW content ACTIVELY sliding IN from the LEFT */
+    @include translate3d(0, 0, 0);
+  }
+  > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
+    /* OLD content ACTIVELY sliding OUT to the RIGHT */
+    @include translate3d(100%, 0, 0);
+  }
+}
+
 
 .fade-explode.reverse {
   > .ng-enter, &.ng-enter, > .ng-leave, &.ng-leave {
@@ -734,11 +772,12 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
 /**
  * Some component specific animations
  */
-$nav-title-slide-ios7-delay: $ios7-transition-duration;
+$nav-title-slide-ios-delay: $ios-transition-duration;
+.nav-title-slide-ios,
 .nav-title-slide-ios7 {
   &:not(.no-animation) .button.back-button {
-    @include transition(all $nav-title-slide-ios7-delay);
-    @include transition-timing-function($ios7-timing-function);
+    @include transition(all $nav-title-slide-ios-delay);
+    @include transition-timing-function($ios-timing-function);
 
     @include translate3d(0%, 0, 0);
     opacity: 1;
@@ -759,8 +798,8 @@ $nav-title-slide-ios7-delay: $ios7-transition-duration;
   }
   > .ng-enter, &.ng-enter,
   > .ng-leave, &.ng-leave {
-    @include transition(all $nav-title-slide-ios7-delay);
-    @include transition-timing-function($ios7-timing-function);
+    @include transition(all $nav-title-slide-ios-delay);
+    @include transition-timing-function($ios-timing-function);
     opacity: 1;
   }
   > .ng-enter, &.ng-enter {
@@ -782,8 +821,8 @@ $nav-title-slide-ios7-delay: $ios7-transition-duration;
   &.reverse {
     > .ng-enter, &.ng-enter,
     > .ng-leave, &.ng-leave {
-      @include transition(all $nav-title-slide-ios7-delay);
-      @include transition-timing-function($ios7-timing-function);
+      @include transition(all $nav-title-slide-ios-delay);
+      @include transition-timing-function($ios-timing-function);
       opacity: 1;
     }
     > .ng-enter, &.ng-enter {
@@ -800,6 +839,78 @@ $nav-title-slide-ios7-delay: $ios7-transition-duration;
     }
   }
 }
+
+
+/**
+ * Some component specific animations
+ */
+$nav-title-slide-full-duration: $full-slide-transition-duration;
+.nav-title-slide-full {
+  &:not(.no-animation) .button.back-button {
+    @include transition(all $nav-title-slide-full-duration);
+    @include transition-timing-function($full-slide-timing-function);
+
+    @include translate3d(0%, 0, 0);
+    opacity: 1;
+    &.active, &.activated {
+      opacity: 0.5;
+    }
+    &.ng-hide {
+      opacity: 0;
+      @include translate3d(30%, 0, 0);
+    }
+    &.ng-hide-add,
+    &.ng-hide-remove {
+      display: block !important;
+    }
+    &.ng-hide-add {
+      position: absolute;
+    }
+  }
+  > .ng-enter, &.ng-enter,
+  > .ng-leave, &.ng-leave {
+    @include transition(all $nav-title-slide-full-duration);
+    @include transition-timing-function($full-slide-timing-function);
+    opacity: 1;
+  }
+  > .ng-enter, &.ng-enter {
+    @include translate3d(30%, 0, 0);
+    opacity: 0;
+    &.title {
+      @include translate3d(100%, 0, 0);
+    }
+  }
+  > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+    @include translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
+    @include translate3d(-30%, 0, 0);
+    opacity: 0;
+  }
+
+  &.reverse {
+    > .ng-enter, &.ng-enter,
+    > .ng-leave, &.ng-leave {
+      @include transition(all $nav-title-slide-full-duration);
+      @include transition-timing-function($full-slide-timing-function);
+      opacity: 1;
+    }
+    > .ng-enter, &.ng-enter {
+      @include translate3d(-30%, 0, 0);
+      opacity: 0;
+    }
+    > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
+      @include translate3d(0, 0, 0);
+      opacity: 1;
+    }
+    > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
+      @include translate3d(100%, 0, 0);
+      opacity: 0;
+    }
+  }
+}
+
 
 $nav-title-android-delay: 200ms;
 $nav-title-android-timing-function: linear;

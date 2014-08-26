@@ -12,11 +12,18 @@ IonicModule
  * and/or right side menu to be toggled by dragging the main content area side
  * to side.
  *
+ * To automatically close an opened menu you can add the {@link ionic.directive:menuClose}
+ * attribute directive. Including the `menu-close` attribute is usually added to
+ * links and buttons within `ion-side-menu` content, so that when the element is
+ * clicked then the opened side menu will automatically close.
+ *
  * ![Side Menu](http://ionicframework.com.s3.amazonaws.com/docs/controllers/sidemenu.gif)
  *
- * For more information on side menus, check out the documenation for
- * {@link ionic.directive:ionSideMenuContent} and
- * {@link ionic.directive:ionSideMenu}.
+ * For more information on side menus, check out:
+ *
+ * - {@link ionic.directive:ionSideMenuContent}
+ * - {@link ionic.directive:ionSideMenu}
+ * - {@link ionic.directive:menuClose}
  *
  * @usage
  * To use side menus, add an `<ion-side-menus>` parent element,
@@ -50,12 +57,19 @@ IonicModule
  * with {@link ionic.service:$ionicSideMenuDelegate}.
  *
  */
-.directive('ionSideMenus', [function() {
+.directive('ionSideMenus', ['$document', function($document) {
   return {
     restrict: 'ECA',
     controller: '$ionicSideMenus',
     compile: function(element, attr) {
       attr.$set('class', (attr['class'] || '') + ' view');
+
+      return function($scope) {
+        $scope.$on('$destroy', function(){
+          $document[0].body.classList.remove('menu-open');
+        });
+
+      };
     }
   };
 }]);

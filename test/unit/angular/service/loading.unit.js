@@ -1,5 +1,8 @@
 describe('$ionicLoading service', function() {
-  beforeEach(module('ionic'));
+  beforeEach(module('ionic', function($provide) {
+    //Set default options to blank for the sake of tests
+    $provide.constant('$ionicLoadingConfig', {});
+  }));
   it('should reuse loader instance for getLoader', inject(function($ionicLoading) {
     var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
     var loader2 = TestUtil.unwrapPromise($ionicLoading._getLoader());
@@ -76,6 +79,17 @@ describe('$ionicLoading service', function() {
       expect($ionicBackdrop._element.hasClass('backdrop-loading')).toBe(true);
       loader.hide();
       expect($ionicBackdrop._element.hasClass('backdrop-loading')).toBe(false);
+    }));
+
+    it('should add and remove loading-active class to body', inject(function($ionicLoading, $timeout) {
+      // used by _modal.scss to prevent clicks on modal screen when loading is active
+      var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+      ionic.requestAnimationFrame = function(cb) { cb(); };
+      loader.show({});
+      $timeout.flush();
+      expect(angular.element(document.body).hasClass('loading-active')).toBe(true);
+      loader.hide();
+      expect(angular.element(document.body).hasClass('loading-active')).toBe(false);
     }));
 
   });
@@ -178,5 +192,29 @@ describe('$ionicLoading service', function() {
       expect(deregisterSpy).toHaveBeenCalled();
     }));
   });
+});
+describe('$ionicLoadingConfig', function() {
+  beforeEach(module('ionic', function($provide) {
+    $provide.constant('$ionicLoadingConfig', {
+      template: 'some template'
+    });
+  }));
+
+  it('should use $ionicLoadingConfig options by default', inject(function($ionicLoading, $timeout) {
+    var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+    $ionicLoading.show();
+    $timeout.flush();
+    expect(loader.element.text()).toBe('some template');
+  }));
+
+  it('should allow override', inject(function($ionicLoading, $timeout) {
+    var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+    $ionicLoading.show({
+      template: 'some other template'
+    });
+    $timeout.flush();
+    expect(loader.element.text()).toBe('some other template');
+  }));
 
 });
+

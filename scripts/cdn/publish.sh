@@ -11,6 +11,7 @@ echo "#####"
 function init {
   CDN_DIR=$HOME/ionic-code
   ../clone/clone.sh --repository="driftyco/ionic-code" \
+    --depth="1" \
     --directory="$CDN_DIR" \
     --branch="gh-pages"
 }

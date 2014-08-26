@@ -80,7 +80,7 @@ function($rootScope, $state, $location, $document, $animate, $ionicPlatform, $io
     return false;
   }
   $ionicPlatform.registerBackButtonAction(
-    onHardwareBackButton, 
+    onHardwareBackButton,
     PLATFORM_BACK_BUTTON_PRIORITY_VIEW
   );
 
@@ -486,6 +486,8 @@ function($rootScope, $state, $location, $window, $injector, $animate, $ionicNavV
                 }
               });
               return;
+            } else if(!doAnimation) {
+              document.body.classList.remove('disable-pointer-events');
             }
 
             // no animation
@@ -548,21 +550,23 @@ function($rootScope, $state, $location, $window, $injector, $animate, $ionicNavV
       histories = $rootScope.$viewHistory.histories,
       currentView = $rootScope.$viewHistory.currentView;
 
-      for(var historyId in histories) {
+      if(histories) {
+        for(var historyId in histories) {
 
-        if(histories[historyId].stack) {
-          histories[historyId].stack = [];
-          histories[historyId].cursor = -1;
+          if(histories[historyId].stack) {
+            histories[historyId].stack = [];
+            histories[historyId].cursor = -1;
+          }
+
+          if(currentView && currentView.historyId === historyId) {
+            currentView.backViewId = null;
+            currentView.forwardViewId = null;
+            histories[historyId].stack.push(currentView);
+          } else if(histories[historyId].destroy) {
+            histories[historyId].destroy();
+          }
+
         }
-
-        if(currentView.historyId === historyId) {
-          currentView.backViewId = null;
-          currentView.forwardViewId = null;
-          histories[historyId].stack.push(currentView);
-        } else if(histories[historyId].destroy) {
-          histories[historyId].destroy();
-        }
-
       }
 
       for(var viewId in $rootScope.$viewHistory.views) {
@@ -571,7 +575,9 @@ function($rootScope, $state, $location, $window, $injector, $animate, $ionicNavV
         }
       }
 
-      this.setNavViews(currentView.viewId);
+      if(currentView) {
+        this.setNavViews(currentView.viewId);
+      }
     }
 
   };

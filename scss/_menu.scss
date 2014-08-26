@@ -17,6 +17,14 @@
   width: $menu-width;
 
   background-color: $menu-bg;
+
+  .scroll-content {
+    z-index: $z-index-menu-scroll-content;
+  }
+
+  .bar-header {
+    z-index: $z-index-menu-bar-header;
+  }
 }
 
 .menu-content {

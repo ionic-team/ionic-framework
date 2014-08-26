@@ -10,7 +10,7 @@ describe('$ionicPopup service', function() {
     it('should make a popup element appended to body', function() {
       var popup = TestUtil.unwrapPromise($ionicPopup._createPopup());
       expect(popup.element).toBeTruthy();
-      expect(popup.element.hasClass('popup')).toBe(true);
+      expect(popup.element.hasClass('popup-container')).toBe(true);
       expect(popup.element.parent()[0]).toBe(document.body);
     });
     it('should default to $rootScope child as scope', inject(function($rootScope) {
@@ -108,6 +108,19 @@ describe('$ionicPopup service', function() {
         expect(popup.element.hasClass('active')).toBe(false);
         ionic.requestAnimationFrame = function(cb) { cb(); };
       });
+      // Test broken in PhantomJS because it uses element.offsetHeight
+      // it('should shrink .popup-body height so that the popup is never taller than the window', function() {
+      //   str = 'All work and no play... ';
+      //   for(var i=0; i<13;i++){
+      //     str = str + str;
+      //   }
+      //   var popup = TestUtil.unwrapPromise($ionicPopup._createPopup({
+      //     template: str
+      //   }));
+      //   popup.show();
+      //   var windowIsLarger = popup.element[0].offsetHeight < window.innerHeight;
+      //   expect(windowIsLarger).toBe(true);
+      // });
     });
 
     describe('hide', function() {
@@ -255,6 +268,17 @@ describe('$ionicPopup service', function() {
       expect($ionicBackdrop.release).toHaveBeenCalled();
       expect(backDoneSpy).toHaveBeenCalled();
       expect(document.body.classList.contains('popup-open')).toBe(false);
+    }));
+    it('template should only overwrite prompt input if it includes html', inject(function($timeout) {
+      spyOn($ionicPopup, '_createPopup');
+      $ionicPopup.prompt({template: "Tacos!"});
+      params = $ionicPopup._createPopup.mostRecentCall.args;
+      expect(params[0].template.indexOf('<span>Tacos!</span>')).toEqual(0);
+      expect(params[0].template.indexOf('<input')).toBeGreaterThan(6);
+
+      $ionicPopup.prompt({template: '<input type="email" />'});
+      params = $ionicPopup._createPopup.mostRecentCall.args;
+      expect(params[0].template.indexOf('<input type="email" />')).toEqual(0);
     }));
   });
 });

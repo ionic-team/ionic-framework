@@ -68,30 +68,57 @@
 
   &.bar-light {
     @include bar-style($bar-light-bg, $bar-light-border, $bar-light-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-light-border, $bar-light-border 50%, transparent 50%);
+    }
   }
   &.bar-stable {
     @include bar-style($bar-stable-bg, $bar-stable-border, $bar-stable-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-stable-border, $bar-stable-border 50%, transparent 50%);
+    }
   }
   &.bar-positive {
     @include bar-style($bar-positive-bg, $bar-positive-border, $bar-positive-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-positive-border, $bar-positive-border 50%, transparent 50%);
+    }
   }
   &.bar-calm {
     @include bar-style($bar-calm-bg, $bar-calm-border, $bar-calm-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-calm-border, $bar-calm-border 50%, transparent 50%);
+    }
   }
   &.bar-assertive {
     @include bar-style($bar-assertive-bg, $bar-assertive-border, $bar-assertive-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-assertive-border, $bar-assertive-border 50%, transparent 50%);
+    }
   }
   &.bar-balanced {
     @include bar-style($bar-balanced-bg, $bar-balanced-border, $bar-balanced-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-balanced-border, $bar-positive-border 50%, transparent 50%);
+    }
   }
   &.bar-energized {
     @include bar-style($bar-energized-bg, $bar-energized-border, $bar-energized-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-energized-border, $bar-energized-border 50%, transparent 50%);
+    }
   }
   &.bar-royal {
     @include bar-style($bar-royal-bg, $bar-royal-border, $bar-royal-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-royal-border, $bar-royal-border 50%, transparent 50%);
+    }
   }
   &.bar-dark {
     @include bar-style($bar-dark-bg, $bar-dark-border, $bar-dark-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, $bar-dark-border, $bar-dark-border 50%, transparent 50%);
+    }
   }
 
   // Title inside of a bar is centered
@@ -210,6 +237,10 @@
   .buttons.right-buttons {
     display: inherit;
   }
+  .buttons span {
+    display: inline-flex;
+  }
+
   // Place the last button in a bar on the right of the bar
   .title + .button:last-child,
   > .button + .button:last-child,
@@ -285,6 +316,9 @@
   top: 0;
   border-top-width: 0;
   border-bottom-width: 1px;
+  &.has-tabs-top{
+    border-bottom-width: 0px;
+  }
 }
 
 // Footer at bottom

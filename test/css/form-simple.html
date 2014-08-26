@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html ng-app="formTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Simple Forms</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body>
+    <ion-content padding="true">
+      <form>
+        <ion-list>
+          <label class="item item-input">
+            <input type="text" placeholder="First Name">
+          </label>
+          <label class="item item-input">
+            <textarea placeholder="Comments"></textarea>
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Username</span>
+            <input type="text">
+          </label>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">First Name</span>
+            <input type="text" placeholder="John">
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">First Name</span>
+            <input type="text" placeholder="First Name">
+          </label>
+          <li class="item item-toggle">
+          HTML5
+          <label class="toggle toggle-assertive">
+            <input type="checkbox">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+          </li>
+          <li class="item item-checkbox">
+            <label class="checkbox">
+              <input type="checkbox">
+            </label>
+            Flux Capacitor
+          </li>
+          <label class="item item-radio">
+            <input type="radio" name="group">
+            <div class="item-content">
+              Go
+            </div>
+            <i class="radio-icon ion-checkmark"></i>
+          </label>
+          <div class="range">
+            <i class="icon ion-volume-low"></i>
+            <input type="range" name="volume">
+            <i class="icon ion-volume-high"></i>
+          </div>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Lightsaber
+            </div>
+            <select>
+              <option>Blue</option>
+              <option selected>Green</option>
+              <option>Red</option>
+            </select>
+          </label>
+          <ion-checkbox ng-model="isChecked">Checkbox Label</ion-checkbox>
+          <ion-radio ng-model="choice" ng-value="'A'">Choose A</ion-radio>
+          <ion-radio ng-model="choice" ng-value="'B'">Choose B</ion-radio>
+          <ion-radio ng-model="choice" ng-value="'C'">Choose C</ion-radio>
+          <ion-toggle ng-model="airplaneMode" toggle-class="toggle-calm">Airplane Mode</ion-toggle>
+        </ion-list>
+        <ion-list type="list-inset">
+          <label class="item item-input">
+            <input type="text" placeholder="First Name">
+          </label>
+          <label class="item item-input">
+            <textarea placeholder="Comments"></textarea>
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Username</span>
+            <input type="text">
+          </label>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">First Name</span>
+            <input type="text" placeholder="John">
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">First Name</span>
+            <input type="text" placeholder="First Name">
+          </label>
+          <li class="item item-toggle">
+          HTML5
+          <label class="toggle toggle-assertive">
+            <input type="checkbox">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+          </li>
+          <li class="item item-checkbox">
+            <label class="checkbox">
+              <input type="checkbox">
+            </label>
+            Flux Capacitor
+          </li>
+          <label class="item item-radio">
+            <input type="radio" name="group">
+            <div class="item-content">
+              Go
+            </div>
+            <i class="radio-icon ion-checkmark"></i>
+          </label>
+          <div class="range">
+            <i class="icon ion-volume-low"></i>
+            <input type="range" name="volume">
+            <i class="icon ion-volume-high"></i>
+          </div>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Lightsaber
+            </div>
+            <select>
+              <option>Blue</option>
+              <option selected>Green</option>
+              <option>Red</option>
+            </select>
+          </label>
+          <ion-checkbox ng-model="isChecked">Checkbox Label</ion-checkbox>
+          <ion-radio ng-model="choice" ng-value="'A'">Choose A</ion-radio>
+          <ion-radio ng-model="choice" ng-value="'B'">Choose B</ion-radio>
+          <ion-radio ng-model="choice" ng-value="'C'">Choose C</ion-radio>
+          <ion-toggle ng-model="airplaneMode" toggle-class="toggle-calm">Airplane Mode</ion-toggle>
+        </ion-list>
+      </form>
+      <h3>Default Text Input, card, No Content Padding</h3>
+      <div class="list card">
+        <label class="item item-input">
+          <input type="text" placeholder="First Name">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Last Name">
+        </label>
+        <label class="item item-input">
+          <input type="email" placeholder="Email">
+        </label>
+      </div>
+    </ion-content>
+    <div id="margin-line" style="position: fixed; left: 15px; height: 100%; background-color: red; width: 1px; z-index: 1000"></div>
+    <div id="margin-line" style="position: fixed; left: 26px; height: 100%; background-color: blue; width: 1px; z-index: 1000"></div>
+    <script>
+      angular.module('formTest', ['ionic']);
+    </script>
+  </body>
+</html>

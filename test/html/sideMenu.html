@@ -13,14 +13,14 @@
 
       <ion-side-menus>
 
-        <ion-side-menu-content>
+        <ion-side-menu-content edge-drag-threshold="true" drag-content="!$root.disableDrag">
           <header class="bar bar-header bar-positive">
             <button class="button button-icon ion-navicon" ng-click="toggleLeft()"></button>
             <h1 class="title">Slide me</h1>
             <button class="button button-icon ion-navicon" ng-click="toggleRight()"></button>
           </header>
           <ion-content class="has-header">
-            <ion-toggle ng-model="$root.$draggy">Hello</ion-toggle>
+            <ion-toggle ng-model="$root.disableDrag">Disable Drag Content?</ion-toggle>
             <input type="range" ng-model="$root.menuWidth" min="0" max="300">
             <h1>Content</h1>
             <ion-list>

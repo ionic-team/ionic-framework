@@ -1,0 +1,36 @@
+<html ng-app="ionicApp">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <title>Radio Buttons</title>
+
+  <link rel="stylesheet" href="../../dist/css/ionic.css">
+  <script src="../../../../dist/js/ionic.bundle.js"></script>
+</head>
+
+<body ng-controller="MainCtrl">
+
+<ion-header-bar class="bar-positive">
+  <h1 class="title">Radio Buttons</h1>
+</ion-header-bar>
+
+<ion-content>
+  {{ $parent.formData }}
+  <div class="list">
+
+    <ion-radio ng-model="$parent.formData.applyDisabled" ng-value="true" name="applyDisabled">Apply Disabled</ion-radio>
+    <ion-radio ng-model="$parent.formData.applyDisabled" ng-value="false" name="applyDisabled">Enable</ion-radio>
+
+    <ion-radio ng-model="$parent.formData.color" ng-value="'red'" name="color" ng-disabled="$parent.formData.applyDisabled">gets disabled Red</ion-radio>
+    <ion-radio ng-model="$parent.formData.color" ng-value="'blue'" name="color" ng-disabled="$parent.formData.applyDisabled">gets disabled Blue</ion-radio>
+  </div>
+</ion-content>
+<script>
+angular.module('ionicApp', ['ionic'])
+.controller('MainCtrl', function($scope) {
+
+});
+</script>
+</body>
+</html>

@@ -65,11 +65,15 @@ body.grade-c {
   // Hide the top border if any
   margin-top: -1px;
 
+  // Prevents any distortion of lines
+  padding-top:1px;
+
   width: auto;
   height: auto;
 }
 
-.scroll-content-false {
+.scroll-content-false,
+.menu .scroll-content.scroll-content-false{
   z-index: $z-index-scroll-content-false;
 }
 
@@ -91,6 +95,11 @@ body.grade-c {
   @include touch-callout(none);
   @include text-size-adjust(none);
   @include transform-origin(left, top);
+}
+
+// hide webkit scrollbars
+::-webkit-scrollbar {
+  display:none;
 }
 
 // Scroll bar styles
@@ -239,42 +248,38 @@ body.grade-c {
   }
 }
 
-.scroll-refresher-content {
-  position: absolute;
-  bottom: 15px;
-  left: 0;
-  width: 100%;
-  color: $scroll-refresh-icon-color;
-  text-align: center;
-
-  font-size: 30px;
-}
-
-// Infinite scroll
-ion-infinite-scroll .scroll-infinite {
-  position: relative;
-  overflow: hidden;
-  margin-top: -70px;
+ion-infinite-scroll {
   height: 60px;
-}
-
-.scroll-infinite-content {
-  position: absolute;
-  bottom: -1px;
-  left: 0;
   width: 100%;
-  color: #666666;
-  text-align: center;
-  font-size: 30px; }
+  opacity: 0;
+  display: block;
 
-ion-infinite-scroll.active .scroll-infinite {
-  margin-top: -30px;
+  @include transition(opacity 0.25s);
+  @include display-flex();
+  @include flex-direction(row);
+  @include justify-content(center);
+  @include align-items(center);
+
+  .icon {
+    color: #666666;
+    font-size: 30px;
+    color: $scroll-refresh-icon-color;
+  }
+
+  &.active {
+    opacity: 1;
+  }
 }
 
 .overflow-scroll {
   overflow-x: hidden;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
 
   .scroll {
     position: static;
@@ -340,4 +345,13 @@ ion-infinite-scroll.active .scroll-infinite {
   height: 100%;
   background-color: $base-background-color;
   overflow: hidden;
+}
+
+ion-nav-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
 }

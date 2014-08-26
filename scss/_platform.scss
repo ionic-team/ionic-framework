@@ -78,7 +78,6 @@
     font-weight: normal;
   }
 
-  /*
   font-family: 'Roboto';
 
   h1, h2, h3, h4, h5 {
@@ -96,39 +95,39 @@
   */
 //}
 
-.platform-ios7.platform-cordova {
-  // iOS7 has a status bar which sits on top of the header.
+.platform-ios.platform-cordova {
+  // iOS7/8 has a status bar which sits on top of the header.
   // Bump down everything to make room for it. However, if
   // if its in Cordova, and set to fullscreen, then disregard the bump.
   &:not(.fullscreen) {
     .bar-header:not(.bar-subheader) {
-      height: $bar-height + $ios7-statusbar-height;
+      height: $bar-height + $ios-statusbar-height;
 
       &.item-input-inset .item-input-wrapper {
         margin-top: 19px !important;
       }
 
       > * {
-        margin-top: $ios7-statusbar-height;
+        margin-top: $ios-statusbar-height;
       }
     }
     .tabs-top > .tabs,
     .tabs.tabs-top {
-      top: $bar-height + $ios7-statusbar-height;
+      top: $bar-height + $ios-statusbar-height;
     }
 
     .has-header,
     .bar-subheader {
-      top: $bar-height + $ios7-statusbar-height;
+      top: $bar-height + $ios-statusbar-height;
     }
     .has-subheader {
-      top: (2 * $bar-height) + $ios7-statusbar-height;
+      top: (2 * $bar-height) + $ios-statusbar-height;
     }
     .has-tabs-top {
-      top: $bar-height + $tabs-height + $ios7-statusbar-height;
+      top: $bar-height + $tabs-height + $ios-statusbar-height;
     }
     .has-header.has-subheader.has-tabs-top {
-      top: 2 * $bar-height + $tabs-height + $ios7-statusbar-height;
+      top: 2 * $bar-height + $tabs-height + $ios-statusbar-height;
     }
   }
   &.status-bar-hide {
@@ -138,7 +137,7 @@
 }
 
 @media (orientation:landscape) {
-  .platform-ios7.platform-browser.platform-ipad {
+  .platform-ios.platform-browser.platform-ipad {
     position: fixed; // required for iPad 7 Safari
   }
 }
