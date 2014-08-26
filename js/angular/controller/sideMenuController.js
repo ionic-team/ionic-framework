@@ -4,10 +4,11 @@ IonicModule
   '$attrs',
   '$ionicSideMenuDelegate',
   '$ionicPlatform',
-function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform) {
+  '$document',
+function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $document) {
   var self = this;
   var rightShowing, leftShowing, isDragging;
-  var startX, lastX, offsetX;
+  var startX, lastX, offsetX, isAsideExposed;
 
   self.$scope = $scope;
 
@@ -132,9 +133,9 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform) {
     }
 
     if(percentage !== 0) {
-      document.body.classList.add('menu-open');
+      $document[0].body.classList.add('menu-open');
     } else {
-      document.body.classList.remove('menu-open');
+      $document[0].body.classList.remove('menu-open');
     }
   };
 
@@ -253,8 +254,32 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform) {
     }
   };
 
+  self.isAsideExposed = function() {
+    return !!isAsideExposed;
+  };
+
+  self.exposeAside = function(shouldExposeAside) {
+    isAsideExposed = shouldExposeAside;
+
+    // set the left marget width if it should be exposed
+    // otherwise set false so there's no left margin
+    self.content.setMarginLeft( isAsideExposed ? self.left.width : 0 );
+
+    self.$scope.$emit('$ionicExposeAside', isAsideExposed);
+  };
+
+  self.activeAsideResizing = function(isResizing) {
+    if(isResizing) {
+      $document[0].body.classList.add('aside-resizing');
+    } else {
+      $document[0].body.classList.remove('aside-resizing');
+    }
+  };
+
   // End a drag with the given event
   self._endDrag = function(e) {
+    if(isAsideExposed) return;
+
     if(isDragging) {
       self.snapToRest(e);
     }
@@ -265,6 +290,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform) {
 
   // Handle a drag event
   self._handleDrag = function(e) {
+    if(isAsideExposed) return;
 
     // If we don't have start coords, grab and store them
     if(!startX) {
