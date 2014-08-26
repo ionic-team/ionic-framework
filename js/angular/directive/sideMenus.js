@@ -17,6 +17,12 @@ IonicModule
  * links and buttons within `ion-side-menu` content, so that when the element is
  * clicked then the opened side menu will automatically close.
  *
+ * By default, side menus are hidden underneath its side menu content, and can be opened by
+ * either swiping the content left or right, or toggling a button to show the side menu. However,
+ * by adding the {@link ionic.directive:exposeAsideWhen} attribute directive to an
+ * {@link ionic.directive:ionSideMenu} element directive, a side menu can be given instructions
+ * on "when" the menu should be exposed (always viewable).
+ *
  * ![Side Menu](http://ionicframework.com.s3.amazonaws.com/docs/controllers/sidemenu.gif)
  *
  * For more information on side menus, check out:
@@ -24,6 +30,7 @@ IonicModule
  * - {@link ionic.directive:ionSideMenuContent}
  * - {@link ionic.directive:ionSideMenu}
  * - {@link ionic.directive:menuClose}
+ * - {@link ionic.directive:exposeAsideWhen}
  *
  * @usage
  * To use side menus, add an `<ion-side-menus>` parent element,
@@ -58,18 +65,35 @@ IonicModule
  *
  */
 .directive('ionSideMenus', ['$document', function($document) {
+
+  var ASIDE_OPEN_CSS = 'aside-open';
+
   return {
     restrict: 'ECA',
     controller: '$ionicSideMenus',
     compile: function(element, attr) {
       attr.$set('class', (attr['class'] || '') + ' view');
 
-      return function($scope) {
-        $scope.$on('$destroy', function(){
-          $document[0].body.classList.remove('menu-open');
+      return { pre: prelink };
+      function prelink($scope) {
+        var bodyClassList = $document[0].body.classList;
+
+        $scope.$on('$ionicExposeAside', function(evt, isAsideExposed){
+          if(!$scope.$exposeAside) $scope.$exposeAside = {};
+          $scope.$exposeAside.active = isAsideExposed;
+          if(isAsideExposed) {
+            bodyClassList.add(ASIDE_OPEN_CSS);
+          } else {
+            bodyClassList.remove(ASIDE_OPEN_CSS);
+          }
         });
 
-      };
+        $scope.$on('$destroy', function(){
+          bodyClassList.remove('menu-open');
+          bodyClassList.remove(ASIDE_OPEN_CSS);
+        });
+
+      }
     }
   };
 }]);
