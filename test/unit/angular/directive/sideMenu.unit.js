@@ -40,6 +40,18 @@ describe('Ionic Angular Side Menu', function() {
     expect(sideMenuController.isAsideExposed()).toBe(false);
   }));
 
+  it('should add/remove "aside-resizing" from the body tag when using activeAsideResizing', inject(function($compile, $rootScope, $document) {
+    var el = $compile('<ion-side-menus><ion-side-menu></><ion-side-menu-content></ion-side-menu-content></ion-side-menus>')($rootScope.$new());
+    $rootScope.$apply();
+    var sideMenuController = el.controller('ionSideMenus');
+
+    expect($document[0].body.classList.contains('aside-resizing')).toEqual(false);
+    sideMenuController.activeAsideResizing(true);
+    expect($document[0].body.classList.contains('aside-resizing')).toEqual(true);
+    sideMenuController.activeAsideResizing(false);
+    expect($document[0].body.classList.contains('aside-resizing')).toEqual(false);
+  }));
+
   it('should emit $ionicexposeAside', inject(function($compile, $rootScope) {
     var el = $compile('<ion-side-menus><ion-side-menu></><ion-side-menu-content></ion-side-menu-content></ion-side-menus>')($rootScope.$new());
     $rootScope.$apply();

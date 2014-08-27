@@ -84,6 +84,14 @@ describe('$ionicSideMenus controller', function() {
     expect(ctrl.getOpenPercentage()).toEqual(-50);
   });
 
+  it('should add/remove menu-open from the body class', inject(function($document) {
+    expect($document[0].body.classList.contains('menu-open')).toEqual(false);
+    ctrl.openPercentage(100);
+    expect($document[0].body.classList.contains('menu-open')).toEqual(true);
+    ctrl.openPercentage(0);
+    expect($document[0].body.classList.contains('menu-open')).toEqual(false);
+  }));
+
   // Open
   it('should toggle left', function() {
     ctrl.toggleLeft();
