@@ -1,19 +1,20 @@
 IonicModule
 .factory('$ionicClickBlock', [
   '$document',
-function($document) {
+  '$ionicBody',
+function($document, $ionicBody) {
   var cb = $document[0].createElement('div');
   cb.className = 'click-block';
   return {
     show: function() {
-      if(!cb.parentElement) {
-        $document[0].body.appendChild(cb);
+      if(cb.parentElement) {
+        cb.classList.remove('hide');
+      } else {
+        $ionicBody.append(cb);
       }
     },
     hide: function() {
-      if(cb.parentElement) {
-        cb.parentNode.removeChild(cb);
-      }
+      cb.classList.add('hide');
     }
   }
 }]);
