@@ -110,10 +110,10 @@ IonicModule
   '$q',
   '$timeout',
   '$rootScope',
-  '$document',
+  '$ionicBody',
   '$compile',
   '$ionicPlatform',
-function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $document, $compile, $ionicPlatform) {
+function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicBody, $compile, $ionicPlatform) {
   //TODO allow this to be configured
   var config = {
     stackPushDelay: 75
@@ -278,7 +278,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
     var popupPromise = $ionicTemplateLoader.compile({
       template: POPUP_TPL,
       scope: options.scope && options.scope.$new(),
-      appendTo: $document[0].body
+      appendTo: $ionicBody.get()
     });
     var contentPromise = options.templateUrl ?
       $ionicTemplateLoader.load(options.templateUrl) :
@@ -370,7 +370,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
     .then(function(popup) {
       if (!previousPopup) {
         //Add popup-open & backdrop if this is first popup
-        document.body.classList.add('popup-open');
+        $ionicBody.addClass('popup-open');
         $ionicBackdrop.retain();
         //only show the backdrop on the first popup
         $ionicPopup._backButtonActionDone = $ionicPlatform.registerBackButtonAction(
@@ -398,7 +398,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
           previousPopup.show();
         } else {
           //Remove popup-open & backdrop if this is last popup
-          document.body.classList.remove('popup-open');
+          $ionicBody.removeClass('popup-open');
           $ionicBackdrop.release();
           ($ionicPopup._backButtonActionDone || angular.noop)();
         }

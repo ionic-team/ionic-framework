@@ -4,8 +4,8 @@ IonicModule
   '$attrs',
   '$ionicSideMenuDelegate',
   '$ionicPlatform',
-  '$document',
-function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $document) {
+  '$ionicBody',
+function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody) {
   var self = this;
   var rightShowing, leftShowing, isDragging;
   var startX, lastX, offsetX, isAsideExposed;
@@ -132,11 +132,9 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $document) {
       self.openAmount(self.right.width * p);
     }
 
-    if(percentage !== 0) {
-      $document[0].body.classList.add('menu-open');
-    } else {
-      $document[0].body.classList.remove('menu-open');
-    }
+    // add the CSS class "menu-open" if the percentage does not
+    // equal 0, otherwise remove the class from the body element
+    $ionicBody.enableClass( (percentage !== 0), 'menu-open');
   };
 
   /**
@@ -269,11 +267,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $document) {
   };
 
   self.activeAsideResizing = function(isResizing) {
-    if(isResizing) {
-      $document[0].body.classList.add('aside-resizing');
-    } else {
-      $document[0].body.classList.remove('aside-resizing');
-    }
+    $ionicBody.enableClass(isResizing, 'aside-resizing');
   };
 
   // End a drag with the given event

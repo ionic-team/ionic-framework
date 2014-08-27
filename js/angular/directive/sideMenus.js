@@ -64,10 +64,7 @@ IonicModule
  * with {@link ionic.service:$ionicSideMenuDelegate}.
  *
  */
-.directive('ionSideMenus', ['$document', function($document) {
-
-  var ASIDE_OPEN_CSS = 'aside-open';
-
+.directive('ionSideMenus', ['$ionicBody', function($ionicBody) {
   return {
     restrict: 'ECA',
     controller: '$ionicSideMenus',
@@ -76,21 +73,15 @@ IonicModule
 
       return { pre: prelink };
       function prelink($scope) {
-        var bodyClassList = $document[0].body.classList;
 
         $scope.$on('$ionicExposeAside', function(evt, isAsideExposed){
           if(!$scope.$exposeAside) $scope.$exposeAside = {};
           $scope.$exposeAside.active = isAsideExposed;
-          if(isAsideExposed) {
-            bodyClassList.add(ASIDE_OPEN_CSS);
-          } else {
-            bodyClassList.remove(ASIDE_OPEN_CSS);
-          }
+          $ionicBody.enableClass(isAsideExposed, 'aside-open');
         });
 
         $scope.$on('$destroy', function(){
-          bodyClassList.remove('menu-open');
-          bodyClassList.remove(ASIDE_OPEN_CSS);
+          $ionicBody.removeClass('menu-open', 'aside-open');
         });
 
       }
