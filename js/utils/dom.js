@@ -1,11 +1,13 @@
-(function(window, document, ionic) {
+(function (window, document, ionic) {
 
   var readyCallbacks = [];
   var isDomReady = false;
 
   function domReady() {
     isDomReady = true;
-    for(var x=0; x<readyCallbacks.length; x++) {
+    var x = 0,
+      l = readyCallbacks.length;
+    for (x, l; x < l; x += 1) {
       ionic.requestAnimationFrame(readyCallbacks[x]);
     }
     readyCallbacks = [];
@@ -17,13 +19,13 @@
   // The requestAnimationFrame polyfill
   // Put it on window just to preserve its context
   // without having to use .call
-  window._rAF = (function(){
-    return  window.requestAnimationFrame       ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame    ||
-            function( callback ){
-              window.setTimeout(callback, 16);
-            };
+  window._rAF = (function () {
+    return window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      function (callback) {
+        window.setTimeout(callback, 16);
+      };
   })();
 
   var cancelAnimationFrame = window.cancelAnimationFrame ||
@@ -32,10 +34,10 @@
     window.webkitCancelRequestAnimationFrame;
 
   /**
-  * @ngdoc utility
-  * @name ionic.DomUtil
-  * @module ionic
-  */
+   * @ngdoc utility
+   * @name ionic.DomUtil
+   * @module ionic
+   */
   ionic.DomUtil = {
     //Call with proper context
     /**
@@ -46,11 +48,11 @@
      * @param {function} callback The function to call when the next frame
      * happens.
      */
-    requestAnimationFrame: function(cb) {
+    requestAnimationFrame: function (cb) {
       return window._rAF(cb);
     },
 
-    cancelAnimationFrame: function(requestId) {
+    cancelAnimationFrame: function (requestId) {
       cancelAnimationFrame(requestId);
     },
 
@@ -69,14 +71,14 @@
      * The passed in callback will receive the context the returned function is
      * called with.
      */
-    animationFrameThrottle: function(cb) {
+    animationFrameThrottle: function (cb) {
       var args, isQueued, context;
-      return function() {
+      return function () {
         args = arguments;
         context = this;
         if (!isQueued) {
           isQueued = true;
-          ionic.requestAnimationFrame(function() {
+          ionic.requestAnimationFrame(function () {
             cb.apply(context, args);
             isQueued = false;
           });
@@ -94,7 +96,7 @@
      *   - `{number}` `left` The left offset of the element.
      *   - `{number}` `top` The top offset of the element.
      */
-    getPositionInParent: function(el) {
+    getPositionInParent: function (el) {
       return {
         left: el.offsetLeft,
         top: el.offsetTop
@@ -109,8 +111,8 @@
      * call the function immediately.
      * @param {function} callback The function to be called.
      */
-    ready: function(cb) {
-      if(isDomReady || document.readyState === "complete") {
+    ready: function (cb) {
+      if (isDomReady || document.readyState === "complete") {
         ionic.requestAnimationFrame(cb);
       } else {
         readyCallbacks.push(cb);
@@ -131,13 +133,13 @@
      *   - `{number}` `width` The width of the textNode.
      *   - `{number}` `height` The height of the textNode.
      */
-    getTextBounds: function(textNode) {
-      if(document.createRange) {
+    getTextBounds: function (textNode) {
+      if (document.createRange) {
         var range = document.createRange();
         range.selectNodeContents(textNode);
-        if(range.getBoundingClientRect) {
+        if (range.getBoundingClientRect) {
           var rect = range.getBoundingClientRect();
-          if(rect) {
+          if (rect) {
             var sx = window.scrollX;
             var sy = window.scrollY;
 
@@ -165,14 +167,14 @@
      * @param {string} type The nodeName to match children of element against.
      * @returns {number} The index, or -1, of a child with nodeName matching type.
      */
-    getChildIndex: function(element, type) {
-      if(type) {
+    getChildIndex: function (element, type) {
+      if (type) {
         var ch = element.parentNode.children;
         var c;
-        for(var i = 0, k = 0, j = ch.length; i < j; i++) {
+        for (var i = 0, k = 0, j = ch.length; i < j; i++) {
           c = ch[i];
-          if(c.nodeName && c.nodeName.toLowerCase() == type) {
-            if(c == element) {
+          if (c.nodeName && c.nodeName.toLowerCase() == type) {
+            if (c == element) {
               return k;
             }
             k++;
@@ -185,11 +187,11 @@
     /**
      * @private
      */
-    swapNodes: function(src, dest) {
+    swapNodes: function (src, dest) {
       dest.parentNode.insertBefore(src, dest);
     },
 
-    elementIsDescendant: function(el, parent, stopAt) {
+    elementIsDescendant: function (el, parent, stopAt) {
       var current = el;
       do {
         if (current === parent) return true;
@@ -206,10 +208,10 @@
      * @returns {DOMElement} The closest parent of element matching the
      * className, or null.
      */
-    getParentWithClass: function(e, className, depth) {
+    getParentWithClass: function (e, className, depth) {
       depth = depth || 10;
-      while(e.parentNode && depth--) {
-        if(e.parentNode.classList && e.parentNode.classList.contains(className)) {
+      while (e.parentNode && depth--) {
+        if (e.parentNode.classList && e.parentNode.classList.contains(className)) {
           return e.parentNode;
         }
         e = e.parentNode;
@@ -224,10 +226,10 @@
      * @returns {DOMElement} The closest parent or self matching the
      * className, or null.
      */
-    getParentOrSelfWithClass: function(e, className, depth) {
+    getParentOrSelfWithClass: function (e, className, depth) {
       depth = depth || 10;
-      while(e && depth--) {
-        if(e.classList && e.classList.contains(className)) {
+      while (e && depth--) {
+        if (e.classList && e.classList.contains(className)) {
           return e;
         }
         e = e.parentNode;
@@ -247,9 +249,9 @@
      * @returns {boolean} Whether {x,y} fits within the rectangle defined by
      * {x1,y1,x2,y2}.
      */
-    rectContains: function(x, y, x1, y1, x2, y2) {
-      if(x < x1 || x > x2) return false;
-      if(y < y1 || y > y2) return false;
+    rectContains: function (x, y, x1, y1, x2, y2) {
+      if (x < x1 || x > x2) return false;
+      if (y < y1 || y > y2) return false;
       return true;
     }
   };
