@@ -16,5 +16,5 @@ function($document, $ionicBody) {
     hide: function() {
       cb.classList.add('hide');
     }
-  }
+  };
 }]);
