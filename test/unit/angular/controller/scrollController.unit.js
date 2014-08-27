@@ -323,7 +323,7 @@ describe('$ionicScroll Controller', function() {
       }
     };
     module('ionic', function($provide) {
-      $provide.value('$document', [ { getElementById: function(){ return ele; } } ]);
+      $provide.value('$document', [ { getElementById: function(){ return ele; }, createElement: function(tagName){ return document.createElement(tagName); } } ]);
     });
     inject(function($controller, $rootScope, $location, $timeout) {
       var scrollCtrl = $controller('$ionicScroll', {
