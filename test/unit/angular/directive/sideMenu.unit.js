@@ -159,7 +159,7 @@ describe('Ionic Angular Side Menu', function() {
 
     e.target.dataset = undefined;
     e.target.getAttribute = function(val){
-      return (val == 'data-prevent-default' ? 'true' : undefined);
+      return (val == 'data-prevent-scroll' ? 'true' : undefined);
     };
     expect(ctrl.isDraggableTarget(e)).toBe(false);
 

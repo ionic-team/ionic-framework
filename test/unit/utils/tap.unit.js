@@ -1129,11 +1129,11 @@ describe('Ionic Tap', function() {
     expect( ionic.tap.ignoreScrollStart(e) ).toEqual(true);
   });
 
-  it('Should prevent scrolling if the browser doesnt support dataset but target has data-prevent-default attribute', function() {
+  it('Should prevent scrolling if the browser doesnt support dataset but target has data-prevent-scroll attribute', function() {
     var target = {
       tagName: 'div',
       getAttribute: function(val) {
-        if(val === 'data-prevent-default') {
+        if(val === 'data-prevent-scroll') {
           return 'true';
         }
       }
