@@ -66,6 +66,8 @@ function($timeout, $ionicGesture, $window) {
             e.gesture.srcEvent.preventDefault();
             startCoord = null;
             primaryScrollAxis = null;
+          } else if(gestureEvt && gestureEvt.gesture && !startCoord) {
+            startCoord = ionic.tap.pointerCoord(gestureEvt.gesture.srcEvent);
           }
         }
 
@@ -113,7 +115,7 @@ function($timeout, $ionicGesture, $window) {
               var xDistance = Math.abs(endCoord.x - startCoord.x);
               var yDistance = Math.abs(endCoord.y - startCoord.y);
 
-              var scrollAxis = ( xDistance > yDistance ? 'x' : 'y' );
+              var scrollAxis = ( xDistance < yDistance ? 'y' : 'x' );
 
               if( Math.max(xDistance, yDistance) > 30 ) {
                 // ok, we pretty much know which way they're going
@@ -123,8 +125,8 @@ function($timeout, $ionicGesture, $window) {
 
               return scrollAxis;
             }
-
           }
+          return 'x';
         }
 
         var content = {
@@ -166,12 +168,12 @@ function($timeout, $ionicGesture, $window) {
         sideMenuCtrl.setContent(content);
 
         // add gesture handlers
+        var contentTapGesture = $ionicGesture.on('tap', onContentTap, $element);
         var dragRightGesture = $ionicGesture.on('dragright', onDragX, $element);
         var dragLeftGesture = $ionicGesture.on('dragleft', onDragX, $element);
         var dragUpGesture = $ionicGesture.on('dragup', onDragY, $element);
         var dragDownGesture = $ionicGesture.on('dragdown', onDragY, $element);
         var releaseGesture = $ionicGesture.on('release', onDragRelease, $element);
-        var contentTapGesture = $ionicGesture.on('tap', onContentTap, $element);
 
         // Cleanup
         $scope.$on('$destroy', function() {
