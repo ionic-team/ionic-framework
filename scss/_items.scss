@@ -740,13 +740,12 @@ button.item.item-button-right {
 
 
 /**
- * The hidden right-side buttons that can be exposed under a list item
- * with dragging.
+ * The hidden side buttons that can be exposed under a list item with
+ * dragging.
  */
-.item-options {
+.item-options-left, .item-options-right {
   position: absolute;
   top: 0;
-  right: 0;
   z-index: $z-index-item-options;
   height: 100%;
 
@@ -755,4 +754,12 @@ button.item.item-button-right {
     border: none;
     border-radius: 0;
   }
+}
+
+.item-options-left {
+  left: 0;
+}
+
+.item-options-right {
+  right: 0;
 }
