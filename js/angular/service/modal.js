@@ -15,6 +15,9 @@
  * scope, passing in itself as an event argument. Both the modal.removed and modal.hidden events are
  * called when the modal is removed.
  *
+ * Note2: if you whant to have the modal html in the main html file, use tag script with the id of path.
+ * Then when if you folow next example, and place the modal in other file, you should take off the script tag
+ * 
  * @usage
  * ```html
  * <script id="my-modal.html" type="text/ng-template">
