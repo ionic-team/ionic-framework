@@ -20,7 +20,7 @@ describe('ionNavBackButton directive', function() {
     }).toThrow();
   }));
 
-  it('should should have class', function() {
+  it('should have class', function() {
     var el = setup();
     expect(el.hasClass('button back-button')).toBe(true);
   });
