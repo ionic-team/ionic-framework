@@ -104,9 +104,7 @@
      * @returns {object} The device object.
      */
     device: function() {
-      if(window.device) return window.device;
-      if(this.isWebView()) console.error('device plugin required');
-      return {};
+      return window.device || {};
     },
 
     _checkPlatforms: function(platforms) {
