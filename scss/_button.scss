@@ -235,6 +235,13 @@ input.button.button-block  {
 
 a.button {
   text-decoration: none;
+
+  .icon:before,
+  &.icon:before,
+  &.icon-left:before,
+  &.icon-right:before {
+    margin-top: 2px;
+  }
 }
 
 .button.disabled,
