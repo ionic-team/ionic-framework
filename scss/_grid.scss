@@ -15,7 +15,7 @@
 }
 
 .row-wrap {
-  flex-wrap: wrap;
+  @include flex-wrap(wrap);
 }
 
 .row + .row {
