@@ -726,7 +726,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.__enableScrollY = true;
       self.__hasStarted = true;
       self.doTouchStart(getEventTouches(e), e.timeStamp);
-      e.preventDefault();
+      if (self.options.stopPropagation !== true) {
+        e.preventDefault();
+      }
     };
 
     self.touchMove = function(e) {
@@ -906,7 +908,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     this.mouseMove = this.mouseDown = this.mouseUp = this.mouseWheel =
       this.touchStart = this.touchMove = this.touchEnd = this.touchCancel = angular.noop;
 
-    this.resize = this.scrollTo = this.zoomTo = 
+    this.resize = this.scrollTo = this.zoomTo =
       this.__scrollingComplete = angular.noop;
     container = null;
   },
