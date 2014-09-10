@@ -18,8 +18,8 @@ IonicModule
      * @param {element} $element The angular element to listen for the event on.
      * @returns {ionic.Gesture} The gesture object (use this to remove the gesture later on).
      */
-    on: function(eventType, cb, $element) {
-      return window.ionic.onGesture(eventType, cb, $element[0]);
+    on: function(eventType, cb, $element, options) {
+      return window.ionic.onGesture(eventType, cb, $element[0], options);
     },
     /**
      * @ngdoc method

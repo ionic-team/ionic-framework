@@ -152,9 +152,8 @@ ionic.tap = {
 
   ignoreScrollStart: function(e) {
     return (e.defaultPrevented) ||  // defaultPrevented has been assigned by another component handling the event
-           (e.target.isContentEditable) ||
            (/^(file|range)$/i).test(e.target.type) ||
-           (e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-default')) == 'true' || // manually set within an elements attributes
+           (e.target.dataset ? e.target.dataset.preventScroll : e.target.getAttribute('data-prevent-scroll')) == 'true' || // manually set within an elements attributes
            (!!(/^(object|embed)$/i).test(e.target.tagName)) ||  // flash/movie/object touches should not try to scroll
            ionic.tap.isElementTapDisabled(e.target); // check if this element, or an ancestor, has `data-tap-disabled` attribute
   },
@@ -199,6 +198,10 @@ ionic.tap = {
           clonedInput.className = focusInput.className;
           clonedInput.classList.add('cloned-text-input');
           clonedInput.readOnly = true;
+          if (focusInput.isContentEditable) {
+            clonedInput.contentEditable = focusInput.contentEditable;
+            clonedInput.innerHTML = focusInput.innerHTML;
+          }
           focusInput.parentElement.insertBefore(clonedInput, focusInput);
           focusInput.style.top = focusInput.offsetTop;
           focusInput.classList.add('previous-input-focus');
@@ -480,7 +483,7 @@ function tapHandleFocus(ele) {
     // already is the active element and has focus
     triggerFocusIn = true;
 
-  } else if( (/^(input|textarea)$/i).test(ele.tagName) ) {
+  } else if( (/^(input|textarea)$/i).test(ele.tagName) || ele.isContentEditable ) {
     triggerFocusIn = true;
     ele.focus && ele.focus();
     ele.value = ele.value;
@@ -502,7 +505,7 @@ function tapHandleFocus(ele) {
 
 function tapFocusOutActive() {
   var ele = tapActiveElement();
-  if(ele && (/^(input|textarea|select)$/i).test(ele.tagName) ) {
+  if(ele && ((/^(input|textarea|select)$/i).test(ele.tagName) || ele.isContentEditable) ) {
     console.log('tapFocusOutActive', ele.tagName);
     ele.blur();
   }

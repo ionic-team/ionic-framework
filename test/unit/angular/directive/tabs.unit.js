@@ -100,33 +100,6 @@ describe('tabs', function() {
       expect(ctrl.selectedTab()).toBe('foo');
     });
 
-    it('.select should throw error if tab doesnt exist', function() {
-      var tab = {};
-      ctrl.add(tab);
-      expect(function() {
-        ctrl.select({});
-      }).toThrow();
-      expect(function() {
-        ctrl.select(null);
-      }).toThrow();
-      expect(function() {
-        ctrl.select(tab);
-      }).not.toThrow();
-    });
-
-    it('.select should throw error if number is bad', function() {
-      ctrl.add({});
-      expect(function() {
-        ctrl.select(1);
-      }).toThrow();
-      expect(function() {
-        ctrl.select(-1);
-      }).toThrow();
-      expect(function() {
-        ctrl.select(0);
-      }).not.toThrow();
-    });
-
     it('.select should allow number', function() {
       var tab1 = {}, tab2 = {};
       ctrl.add(tab1);
@@ -513,7 +486,7 @@ describe('tabs', function() {
 
       tabEl.scope().$broadcast('$stateChangeSuccess');
       expect(tabMatchesState).toHaveBeenCalled();
-      expect(tabsCtrl.select).toHaveBeenCalledWith(tabEl.scope());
+      expect(tabsCtrl.select).toHaveBeenCalledWith(tabEl.scope(), false);
     });
 
     it('should transclude on $tabSelected=true', function() {

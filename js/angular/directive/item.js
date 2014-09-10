@@ -21,6 +21,9 @@ var ITEM_TPL_CONTENT =
 * ```html
 * <ion-list>
 *   <ion-item>Hello!</ion-item>
+*   <ion-item href="#/detail">
+*     Link to detail page
+*   <ion-item>
 * </ion-list>
 * ```
 */
@@ -65,4 +68,3 @@ function($animate, $compile) {
     }
   };
 }]);
-

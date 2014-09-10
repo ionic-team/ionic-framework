@@ -116,8 +116,10 @@ function($stateProvider, $ionicConfigProvider) {
 }])
 
 // process the templateUrls collected by the $stateProvider, adding them to the cache
-.run(function($ionicTemplateCache) {
-    $ionicTemplateCache();
-});
+.run([
+'$ionicTemplateCache',
+function($ionicTemplateCache) {
+  $ionicTemplateCache();
+}]);
 
 })();

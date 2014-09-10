@@ -51,6 +51,8 @@
      * When the app is within a WebView (Cordova), it'll fire
      * the callback once the device is ready. If the app is within
      * a web browser, it'll fire the callback after `window.load`.
+     * Please remember that Cordova features (Camera, FileSystem, etc) still
+     * will not work in a web browser.
      * @param {function} callback The function to call.
      */
     ready: function(cb) {
@@ -104,9 +106,7 @@
      * @returns {object} The device object.
      */
     device: function() {
-      if(window.device) return window.device;
-      if(this.isWebView()) console.error('device plugin required');
-      return {};
+      return window.device || {};
     },
 
     _checkPlatforms: function(platforms) {
@@ -331,6 +331,11 @@
       ionic.DomUtil.ready(function(){
         // run this only when or if the DOM is ready
         ionic.requestAnimationFrame(function(){
+          // fixing pane height before we adjust this
+          panes = document.getElementsByClassName('pane');
+          for(var i = 0;i<panes.length;i++){
+            panes[i].style.height = panes[i].offsetHeight+"px";
+          }
           if(ionic.Platform.isFullScreen) {
             document.body.classList.add('fullscreen');
           } else {

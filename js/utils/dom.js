@@ -189,27 +189,6 @@
       dest.parentNode.insertBefore(src, dest);
     },
 
-    /**
-     * @private
-     */
-    centerElementByMargin: function(el) {
-      el.style.marginLeft = (-el.offsetWidth) / 2 + 'px';
-      el.style.marginTop = (-el.offsetHeight) / 2 + 'px';
-    },
-    //Center twice, after raf, to fix a bug with ios and showing elements
-    //that have just been attached to the DOM.
-    centerElementByMarginTwice: function(el) {
-      ionic.requestAnimationFrame(function() {
-        ionic.DomUtil.centerElementByMargin(el);
-        setTimeout(function() {
-          ionic.DomUtil.centerElementByMargin(el);
-          setTimeout(function() {
-            ionic.DomUtil.centerElementByMargin(el);
-          });
-        });
-      });
-    },
-
     elementIsDescendant: function(el, parent, stopAt) {
       var current = el;
       do {

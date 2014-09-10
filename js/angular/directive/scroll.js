@@ -8,7 +8,7 @@
  *
  * @description
  * Creates a scrollable container for all content inside.
- * 
+ *
  * @usage
  *
  * Basic usage:
@@ -18,15 +18,16 @@
  *   <div style="width: 5000px; height: 5000px; background: url('https://upload.wikimedia.org/wikipedia/commons/a/ad/Europe_geological_map-en.jpg') repeat"></div>
  *  </ion-scroll>
  * ```
- * 
+ *
  * Note that it's important to set the height of the scroll box as well as the height of the inner
  * content to enable scrolling. This makes it possible to have full control over scrollable areas.
- * 
+ *
  * If you'd just like to have a center content scrolling area, use {@link ionic.directive:ionContent} instead.
  *
  * @param {string=} delegate-handle The handle used to identify this scrollView
  * with {@link ionic.service:$ionicScrollDelegate}.
  * @param {string=} direction Which way to scroll. 'x' or 'y' or 'xy'. Default 'y'.
+ * @param {boolean=} locking Whether to lock scrolling in one direction at a time. Useful to set to false when zoomed in or scrolling in two directions. Default true.
  * @param {boolean=} paging Whether to scroll with paging.
  * @param {expression=} on-refresh Called on pull-to-refresh, triggered by an {@link ionic.directive:ionRefresher}.
  * @param {expression=} on-scroll Called whenever the user scrolls.
@@ -88,6 +89,7 @@ function($timeout, $controller, $ionicBind) {
         var scrollViewOptions= {
           el: $element[0],
           delegateHandle: $attr.delegateHandle,
+          locking: ($attr.locking || 'true') === 'true',
           bouncing: $scope.$eval($attr.hasBouncing),
           paging: isPaging,
           scrollbarX: $scope.$eval($scope.scrollbarX) !== false,

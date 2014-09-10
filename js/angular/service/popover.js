@@ -65,8 +65,8 @@
 
 
 IonicModule
-.factory('$ionicPopover', ['$ionicModal', '$ionicPosition', '$document',
-function($ionicModal, $ionicPosition, $document) {
+.factory('$ionicPopover', ['$ionicModal', '$ionicPosition', '$document', '$window',
+function($ionicModal, $ionicPosition, $document, $window) {
 
   var POPOVER_BODY_PADDING = 6;
 
@@ -81,23 +81,35 @@ function($ionicModal, $ionicPosition, $document) {
     var targetEle = angular.element(target.target || target);
     var buttonOffset = $ionicPosition.offset( targetEle );
     var popoverWidth = popoverEle.prop('offsetWidth');
+    var popoverHeight = popoverEle.prop('offsetHeight');
     var bodyWidth = $document[0].body.clientWidth;
-    var bodyHeight = $document[0].body.clientHeight;
+    // clientHeight doesn't work on all platforms for body
+    var bodyHeight = $window.innerHeight;
 
     var popoverCSS = {
-      top: buttonOffset.top + buttonOffset.height,
       left: buttonOffset.left + buttonOffset.width / 2 - popoverWidth / 2
     };
+    var arrowEle = jqLite(popoverEle[0].querySelector('.popover-arrow'));
 
-    if(popoverCSS.left < POPOVER_BODY_PADDING) {
+    if (popoverCSS.left < POPOVER_BODY_PADDING) {
       popoverCSS.left = POPOVER_BODY_PADDING;
     } else if(popoverCSS.left + popoverWidth + POPOVER_BODY_PADDING > bodyWidth) {
       popoverCSS.left = bodyWidth - popoverWidth - POPOVER_BODY_PADDING;
     }
 
-    var arrowEle = popoverEle[0].querySelector('.popover-arrow');
-    angular.element(arrowEle).css({
-      left: (buttonOffset.left - popoverCSS.left) + (buttonOffset.width / 2) - (arrowEle.offsetWidth / 2) + 'px'
+    // If the popover when popped down stretches past bottom of screen,
+    // make it pop up
+    if (buttonOffset.top + buttonOffset.height + popoverHeight > bodyHeight) {
+      popoverCSS.top = buttonOffset.top - popoverHeight;
+      popoverEle.removeClass('popover-top').addClass('popover-bottom');
+    } else {
+      popoverCSS.top = buttonOffset.top + buttonOffset.height;
+      popoverEle.removeClass('popover-bottom').addClass('popover-top');
+    }
+
+    arrowEle.css({
+      left: buttonOffset.left + buttonOffset.width / 2 -
+        arrowEle.prop('offsetWidth') / 2 - popoverCSS.left + 'px'
     });
 
     popoverEle.css({

@@ -306,7 +306,7 @@
           return i;
         }
       } else if (dragOffsetTop > el.offsetTop - el.offsetHeight / 2 &&
-                 dragOffsetTop < el.offsetTop + el.offsetHeight * 1.5) {
+                 dragOffsetTop < el.offsetTop + el.offsetHeight) {
         return i;
       }
     }

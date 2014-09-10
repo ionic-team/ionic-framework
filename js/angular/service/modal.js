@@ -61,14 +61,14 @@
 IonicModule
 .factory('$ionicModal', [
   '$rootScope',
-  '$document',
+  '$ionicBody',
   '$compile',
   '$timeout',
   '$ionicPlatform',
   '$ionicTemplateLoader',
   '$q',
   '$log',
-function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $q, $log) {
+function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $q, $log) {
 
   /**
    * @ngdoc controller
@@ -124,12 +124,12 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
 
       self.el.classList.remove('hide');
       $timeout(function(){
-        $document[0].body.classList.add(self.viewType + '-open');
+        $ionicBody.addClass(self.viewType + '-open');
       }, 400);
 
       if(!self.el.parentElement) {
         modalEl.addClass(self.animation);
-        $document[0].body.appendChild(self.el);
+        $ionicBody.append(self.el);
       }
 
       if(target && self.positionView) {
@@ -192,9 +192,9 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
       ionic.views.Modal.prototype.hide.call(self);
 
       return $timeout(function(){
-        $document[0].body.classList.remove(self.viewType + '-open');
+        $ionicBody.removeClass(self.viewType + '-open');
         self.el.classList.add('hide');
-      }, self.hideDelay || 500);
+      }, self.hideDelay || 320);
     },
 
     /**

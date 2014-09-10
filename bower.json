@@ -47,7 +47,7 @@
     "js/_license.js",
     "js/ionic.js"
   ],
-  "dependencies": {
+  "devDependencies": {
     "angular": "~1.2.17",
     "angular-animate": "~1.2.17",
     "angular-sanitize": "~1.2.17",

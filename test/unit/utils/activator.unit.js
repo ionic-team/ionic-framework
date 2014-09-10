@@ -76,6 +76,35 @@ describe('Ionic Element Activator', function() {
     expect(itemContentEle.classList.contains('activated')).toEqual(false);
     expect(aEle.classList.contains('activated')).toEqual(true);
   });
+  it('Should activate 5 levels up, but not 6', function() {
+    var itemEle = document.createElement('div');
+    itemEle.className = 'item';
+
+    var itemContentEle = document.createElement('a');
+    itemContentEle.className = 'item-content';
+    itemEle.appendChild(itemContentEle);
+
+    var div1 = document.createElement('div');
+    itemContentEle.appendChild(div1);
+    var div2 = document.createElement('div');
+    div1.appendChild(div2);
+    var div3 = document.createElement('div');
+    div2.appendChild(div3);
+    var div4 = document.createElement('div');
+    div3.appendChild(div4);
+    var div5 = document.createElement('div');
+    div4.appendChild(div5);
+    var div6 = document.createElement('div');
+    div5.appendChild(div6);
+
+    var e = { target: div6 };
+    ionic.activator.start(e);
+    expect(itemContentEle.classList.contains('activated')).toEqual(false);
+
+    var e = { target: div5 };
+    ionic.activator.start(e);
+    expect(itemContentEle.classList.contains('activated')).toEqual(true);
+  });
 
   it('Should activate child "div.item-content div[ng-click]" of a .item', function() {
     var itemEle = document.createElement('div');

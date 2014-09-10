@@ -543,9 +543,6 @@ $menu-animation-speed:            200ms !default;
 
 $menu-side-shadow:                -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0,0,0,0.2) !default;
 
-$split-pane-menu-width:           320px !default;
-$split-pane-menu-border-color:    #eee !default;
-
 
 // Modals
 // -------------------------------
@@ -674,34 +671,35 @@ $badge-default-text:              #AAAAAA !default;
 // Z-Indexes
 // -------------------------------
 
-$z-index-action-sheet:            11 !default;
-$z-index-badge:                   1 !default;
-$z-index-backdrop:                11 !default;
-$z-index-bar:                     10 !default;
 $z-index-bar-title:               0 !default;
-$z-index-bar-button:              1 !default;
-$z-index-item:                    2 !default;
-$z-index-item-reorder:            3 !default;
-$z-index-item-checkbox:           3 !default;
 $z-index-item-drag:               0 !default;
 $z-index-item-edit:               0 !default;
-$z-index-item-options:            1 !default;
-$z-index-item-radio:              3 !default;
-$z-index-item-reordering:         9 !default;
-$z-index-item-toggle:             3 !default;
-$z-index-loading:                 13 !default;
 $z-index-menu:                    0 !default;
-$z-index-menu-bar-header:         11 !default;
+$z-index-badge:                   1 !default;
+$z-index-bar-button:              1 !default;
+$z-index-item-options:            1 !default;
+$z-index-pane:                    1 !default;
+$z-index-slider-pager:            1 !default;
+$z-index-view:                    1 !default;
+$z-index-item:                    2 !default;
+$z-index-item-checkbox:           3 !default;
+$z-index-item-radio:              3 !default;
+$z-index-item-reorder:            3 !default;
+$z-index-item-toggle:             3 !default;
+$z-index-tabs:                    5 !default;
+$z-index-item-reordering:         9 !default;
+$z-index-bar:                     10 !default;
 $z-index-menu-scroll-content:     10 !default;
 $z-index-modal:                   10 !default;
-$z-index-pane:                    1 !default;
-$z-index-popup:                   12 !default;
 $z-index-popover:                 10 !default;
-$z-index-scroll-bar:              9999 !default;
+$z-index-action-sheet:            11 !default;
+$z-index-backdrop:                11 !default;
+$z-index-menu-bar-header:         11 !default;
 $z-index-scroll-content-false:    11 !default;
-$z-index-slider-pager:            1 !default;
-$z-index-tabs:                    5 !default;
-$z-index-view:                    1 !default;
+$z-index-popup:                   12 !default;
+$z-index-loading:                 13 !default;
+$z-index-scroll-bar:              9999 !default;
+$z-index-click-block:             99999 !default;
 
 
 // Platform

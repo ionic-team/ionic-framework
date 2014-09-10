@@ -95,6 +95,24 @@ IonicModule
   'scrollBy',
   /**
    * @ngdoc method
+   * @name $ionicScrollDelegate#zoomTo
+   * @param {number} level Level to zoom to.
+   * @param {boolean=} animate Whether to animate the zoom.
+   * @param {number=} originLeft Zoom in at given left coordinate.
+   * @param {number=} originTop Zoom in at given top coordinate.
+   */
+  'zoomTo',
+  /**
+   * @ngdoc method
+   * @name $ionicScrollDelegate#zoomBy
+   * @param {number} factor The factor to zoom by.
+   * @param {boolean=} animate Whether to animate the zoom.
+   * @param {number=} originLeft Zoom in at given left coordinate.
+   * @param {number=} originTop Zoom in at given top coordinate.
+   */
+  'zoomBy',
+  /**
+   * @ngdoc method
    * @name $ionicScrollDelegate#getScrollPosition
    * @returns {object} The scroll position of this view, with the following properties:
    *  - `{number}` `left` The distance the user has scrolled from the left (starts at 0).
