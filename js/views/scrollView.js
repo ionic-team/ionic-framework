@@ -372,7 +372,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         return Math.max(self.__content.scrollWidth, self.__content.offsetWidth);
       },
       getContentHeight: function() {
-        return Math.max(self.__content.scrollHeight, self.__content.offsetHeight + self.__content.offsetTop);
+        return Math.max(self.__content.scrollHeight, self.__content.offsetHeight + (self.__content.offsetTop * 2));
       }
     };
 
@@ -906,7 +906,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     this.mouseMove = this.mouseDown = this.mouseUp = this.mouseWheel =
       this.touchStart = this.touchMove = this.touchEnd = this.touchCancel = angular.noop;
 
-    this.resize = this.scrollTo = this.zoomTo = 
+    this.resize = this.scrollTo = this.zoomTo =
       this.__scrollingComplete = angular.noop;
     container = null;
   },
