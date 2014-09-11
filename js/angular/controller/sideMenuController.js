@@ -82,6 +82,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody) {
    * Close all menus.
    */
   self.close = function() {
+    if(isAsideExposed) return;
     self.openPercentage(0);
   };
 
