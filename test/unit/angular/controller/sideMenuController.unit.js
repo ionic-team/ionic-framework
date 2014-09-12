@@ -47,7 +47,9 @@ describe('$ionicSideMenus controller', function() {
         el: document.createElement('div'),
         isEnabled: true
       });
-      ctrl.setContent(new Controller({ el: document.createElement('div') }));
+      var content = new Controller({ el: document.createElement('div') });
+      content.setMarginLeft = function(){};
+      ctrl.setContent(content);
     });
 
   });
@@ -101,6 +103,34 @@ describe('$ionicSideMenus controller', function() {
     ctrl.toggleLeft();
     expect(ctrl.getOpenPercentage()).toEqual(100);
     ctrl.toggleLeft();
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+  });
+
+  it('should not toggle left with exposed aside', function() {
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+    ctrl.exposeAside(true);
+    ctrl.toggleLeft();
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+  });
+
+  it('should not toggle right with exposed aside', function() {
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+    ctrl.exposeAside(true);
+    ctrl.toggleRight();
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+  });
+
+  it('should close left menu on expose aside', function() {
+    ctrl.toggleLeft();
+    expect(ctrl.getOpenPercentage()).toEqual(100);
+    ctrl.exposeAside(true);
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+  });
+
+  it('should close right menu on expose aside', function() {
+    ctrl.toggleRight();
+    expect(ctrl.getOpenPercentage()).toEqual(-100);
+    ctrl.exposeAside(true);
     expect(ctrl.getOpenPercentage()).toEqual(0);
   });
 
@@ -217,9 +247,6 @@ describe('$ionicSideMenus controller', function() {
       }
     });
     expect(ctrl.getOpenPercentage()).toEqual(-100);
-  });
-
-  it('Should test content drag events', function() {
   });
 
   it('should register with backButton on open and dereg on close', inject(function($ionicPlatform) {
