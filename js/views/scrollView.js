@@ -1114,6 +1114,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
   },
 
   resize: function() {
+    if(!this.__container || !this.options) return;
+
     // Update Scroller dimensions for changed content
     // Add padding to bottom of content
     this.setDimensions(
