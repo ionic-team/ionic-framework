@@ -80,6 +80,7 @@
 
   .button {
     @include flex(1);
+    display: block;
     min-height: $popup-button-min-height;
     border-radius: $popup-button-border-radius;
     line-height: $popup-button-line-height;
