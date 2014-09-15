@@ -134,6 +134,16 @@ describe('$ionicSideMenus controller', function() {
     expect(ctrl.getOpenPercentage()).toEqual(0);
   });
 
+  it('should set enabled/disabled exposeAside', function() {
+    expect(ctrl.isAsideExposed()).toEqual(false);
+    ctrl.left.setIsEnabled(false);
+    ctrl.exposeAside(true);
+    expect(ctrl.isAsideExposed()).toEqual(false);
+    ctrl.left.setIsEnabled(true);
+    ctrl.exposeAside(true);
+    expect(ctrl.isAsideExposed()).toEqual(true);
+  });
+
   it('should toggle right', function() {
     ctrl.toggleRight();
     expect(ctrl.getOpenPercentage()).toEqual(-100);
