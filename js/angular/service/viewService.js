@@ -30,6 +30,11 @@ function($rootScope, $state, $location, $document, $animate, $ionicPlatform, $io
     $ionicViewService.disableRegisterByTagName('ion-side-menus');
   }
 
+  // always reset the keyboard state when change stage
+  $rootScope.$on('$stateChangeStart', function(){
+    ionic.keyboard.hide();
+  });
+
   $rootScope.$on('viewState.changeHistory', function(e, data) {
     if(!data) return;
 

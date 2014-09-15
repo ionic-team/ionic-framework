@@ -66,6 +66,7 @@ var keyboardIsOpen;
 var keyboardActiveElement;
 var keyboardFocusOutTimer;
 var keyboardFocusInTimer;
+var keyboardPollHeightTimer;
 var keyboardLastShow = 0;
 
 var KEYBOARD_OPEN_CSS = 'keyboard-open';
@@ -75,6 +76,41 @@ ionic.keyboard = {
   isOpen: false,
   height: null,
   landscape: false,
+
+  hide: function() {
+    clearTimeout(keyboardFocusInTimer);
+    clearTimeout(keyboardFocusOutTimer);
+    clearTimeout(keyboardPollHeightTimer);
+
+    console.log('keyboardHide');
+    ionic.keyboard.isOpen = false;
+
+    ionic.trigger('resetScrollView', {
+      target: keyboardActiveElement
+    }, true);
+
+    ionic.requestAnimationFrame(function(){
+      document.body.classList.remove(KEYBOARD_OPEN_CSS);
+    });
+
+    // the keyboard is gone now, remove the touchmove that disables native scroll
+    if (window.navigator.msPointerEnabled) {
+      document.removeEventListener("MSPointerMove", keyboardPreventDefault);
+    } else {
+      document.removeEventListener('touchmove', keyboardPreventDefault);
+    }
+    document.removeEventListener('keydown', keyboardOnKeyDown);
+
+    if( keyboardHasPlugin() ) {
+      cordova.plugins.Keyboard.close();
+    }
+  },
+
+  show: function() {
+    if( keyboardHasPlugin() ) {
+      cordova.plugins.Keyboard.show();
+    }
+  }
 };
 
 function keyboardInit() {
@@ -126,22 +162,23 @@ function keyboardSetShow(e) {
 
   keyboardFocusInTimer = setTimeout(function(){
     if ( keyboardLastShow + 350 > Date.now() ) return;
+    console.log('keyboardSetShow');
     keyboardLastShow = Date.now();
     var keyboardHeight;
     var elementBounds = keyboardActiveElement.getBoundingClientRect();
     var count = 0;
 
-    var pollKeyboardHeight = setInterval(function(){
+    keyboardPollHeightTimer = setInterval(function(){
 
       keyboardHeight = keyboardGetHeight();
       if (count > 10){
-        clearInterval(pollKeyboardHeight);
+        clearInterval(keyboardPollHeightTimer);
         //waited long enough, just guess
         keyboardHeight = 275;
       }
       if (keyboardHeight){
+        clearInterval(keyboardPollHeightTimer);
         keyboardShow(e.target, elementBounds.top, elementBounds.bottom, keyboardViewportHeight, keyboardHeight);
-        clearInterval(pollKeyboardHeight);
       }
       count++;
 
@@ -192,28 +229,7 @@ function keyboardShow(element, elementTop, elementBottom, viewportHeight, keyboa
 function keyboardFocusOut(e) {
   clearTimeout(keyboardFocusOutTimer);
 
-  keyboardFocusOutTimer = setTimeout(keyboardHide, 350);
-}
-
-function keyboardHide() {
-  console.log('keyboardHide');
-  ionic.keyboard.isOpen = false;
-
-  ionic.trigger('resetScrollView', {
-    target: keyboardActiveElement
-  }, true);
-
-  ionic.requestAnimationFrame(function(){
-    document.body.classList.remove(KEYBOARD_OPEN_CSS);
-  });
-
-  // the keyboard is gone now, remove the touchmove that disables native scroll
-  if (window.navigator.msPointerEnabled) {
-    document.removeEventListener("MSPointerMove", keyboardPreventDefault);
-  } else {
-    document.removeEventListener('touchmove', keyboardPreventDefault);
-  }
-  document.removeEventListener('keydown', keyboardOnKeyDown);
+  keyboardFocusOutTimer = setTimeout(ionic.keyboard.hide, 350);
 }
 
 function keyboardUpdateViewportHeight() {
