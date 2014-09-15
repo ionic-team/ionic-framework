@@ -101,10 +101,10 @@ function($ionicModal, $ionicPosition, $document, $window) {
     // make it pop up
     if (buttonOffset.top + buttonOffset.height + popoverHeight > bodyHeight) {
       popoverCSS.top = buttonOffset.top - popoverHeight;
-      popoverEle.removeClass('popover-top').addClass('popover-bottom');
+      popoverEle.addClass('popover-bottom');
     } else {
       popoverCSS.top = buttonOffset.top + buttonOffset.height;
-      popoverEle.removeClass('popover-bottom').addClass('popover-top');
+      popoverEle.removeClass('popover-bottom');
     }
 
     arrowEle.css({
