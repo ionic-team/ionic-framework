@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.11
+ * Ionic, v1.0.0-beta.12
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -3848,6 +3848,7 @@ a.subdued {
   left: 50%;
   z-index: 10;
   display: block;
+  margin-top: 12px;
   margin-left: -110px;
   height: 280px;
   width: 220px;
@@ -3858,8 +3859,6 @@ a.subdued {
     border-top: 0; }
   .popover .item:last-child {
     border-bottom: 0; }
-  .popover.popover-top {
-    margin-top: 12px; }
   .popover.popover-bottom {
     margin-top: -12px; }
 
@@ -3893,6 +3892,7 @@ a.subdued {
 .platform-ios .popover-arrow {
   position: absolute;
   display: block;
+  top: -17px;
   width: 30px;
   height: 19px;
   overflow: hidden; }
@@ -3908,22 +3908,20 @@ a.subdued {
     -webkit-transform: rotate(-45deg);
     -moz-transform: rotate(-45deg);
     transform: rotate(-45deg); }
-.platform-ios .popover-top .popover-arrow {
-  top: -17px; }
 .platform-ios .popover-bottom .popover-arrow {
+  top: auto;
   bottom: -10px; }
   .platform-ios .popover-bottom .popover-arrow:after {
     top: -6px; }
 
 .platform-android .popover {
+  margin-top: -32px;
   background-color: #fafafa;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35); }
   .platform-android .popover .item {
     border-color: #fafafa;
     background-color: #fafafa;
     color: #4d4d4d; }
-  .platform-android .popover.popover-top {
-    margin-top: -32px; }
   .platform-android .popover.popover-bottom {
     margin-top: 32px; }
 .platform-android .popover-backdrop, .platform-android .popover-backdrop.active {
@@ -4017,7 +4015,7 @@ a.subdued {
     flex-direction: column; }
 
 .popup-head {
-  padding: 15px 0px;
+  padding: 15px 10px;
   border-bottom: 1px solid #eee;
   text-align: center; }
 
@@ -4058,6 +4056,7 @@ a.subdued {
     -moz-flex: 1;
     -ms-flex: 1;
     flex: 1;
+    display: block;
     min-height: 45px;
     border-radius: 2px;
     line-height: 20px;
@@ -4764,7 +4763,7 @@ a.item-content {
 .card {
   padding-top: 1px;
   padding-bottom: 1px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25); }
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
 
 .padding .card, .padding .list-inset {
   margin-left: 0;
@@ -7223,6 +7222,9 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
   width: 100%; }
 
 .row-wrap {
+  -webkit-flex-wrap: wrap;
+  -moz-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap; }
 
 .row + .row {

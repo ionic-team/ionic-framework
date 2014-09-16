@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.11
+ * Ionic, v1.0.0-beta.12
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -188,7 +188,11 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
 
       scope.removed = true;
       sheetEl.removeClass('action-sheet-up');
-      $ionicBody.removeClass('action-sheet-open');
+      $timeout(function(){
+        // wait to remove this due to a 300ms delay native
+        // click which would trigging whatever was underneath this
+        $ionicBody.removeClass('action-sheet-open');
+      }, 400);
       scope.$deregisterBackButton();
       stateChangeListenDone();
 
@@ -1071,7 +1075,7 @@ function($rootScope, $timeout) {
     renderItem: function(dataIndex, primaryPos, secondaryPos) {
       // Attach an item, and set its transform position to the required value
       var item = this.dataSource.attachItemAtIndex(dataIndex);
-      console.log(dataIndex, item);
+      //console.log(dataIndex, item);
       if (item && item.element) {
         if (item.primaryPos !== primaryPos || item.secondaryPos !== secondaryPos) {
           item.element.css(ionic.CSS.TRANSFORM, this.transformString(
@@ -2105,6 +2109,28 @@ IonicModule
 
         /**
          * @ngdoc method
+         * @name $ionicPlatform#on
+         * @description
+         * Add Cordova event listeners, such as `pause`, `resume`, `volumedownbutton`, `batterylow`,
+         * `offline`, etc. More information about available event types can be found in
+         * [Cordova's event documentation](https://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
+         * @param {string} type Cordova [event type](https://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
+         * @param {function} callback Called when the Cordova event is fired.
+         * @returns {function} Returns a deregistration function to remove the event listener.
+         */
+        on: function(type, cb) {
+          ionic.Platform.ready(function(){
+            document.addEventListener(type, cb, false);
+          });
+          return function() {
+            ionic.Platform.ready(function(){
+              document.removeEventListener(type, cb);
+            });
+          };
+        },
+
+        /**
+         * @ngdoc method
          * @name $ionicPlatform#ready
          * @description
          * Trigger a callback once the device is ready,
@@ -2233,10 +2259,10 @@ function($ionicModal, $ionicPosition, $document, $window) {
     // make it pop up
     if (buttonOffset.top + buttonOffset.height + popoverHeight > bodyHeight) {
       popoverCSS.top = buttonOffset.top - popoverHeight;
-      popoverEle.removeClass('popover-top').addClass('popover-bottom');
+      popoverEle.addClass('popover-bottom');
     } else {
       popoverCSS.top = buttonOffset.top + buttonOffset.height;
-      popoverEle.removeClass('popover-bottom').addClass('popover-top');
+      popoverEle.removeClass('popover-bottom');
     }
 
     arrowEle.css({
@@ -2740,7 +2766,11 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
           previousPopup.show();
         } else {
           //Remove popup-open & backdrop if this is last popup
-          $ionicBody.removeClass('popup-open');
+          $timeout(function(){
+            // wait to remove this due to a 300ms delay native
+            // click which would trigging whatever was underneath this
+            $ionicBody.removeClass('popup-open');
+          }, 400);
           $ionicBackdrop.release();
           ($ionicPopup._backButtonActionDone || angular.noop)();
         }
@@ -3520,7 +3550,7 @@ function($stateProvider, $ionicConfigProvider) {
   var stateProviderState = $stateProvider.state;
   $stateProvider.state = function(stateName, definition) {
     // don't even bother if it's disabled. note, another config may run after this, so it's not a catch-all
-    if($ionicConfigProvider.prefetchTemplates() !== false){
+    if(typeof definition === 'object' && $ionicConfigProvider.prefetchTemplates() !== false){
       var enabled = definition.prefetchTemplate !== false;
       if(enabled && isString(definition.templateUrl))templatesToCache.push(definition.templateUrl);
       if(angular.isObject(definition.views)){
@@ -3641,6 +3671,11 @@ function($rootScope, $state, $location, $document, $animate, $ionicPlatform, $io
     $ionicViewService.disableRegisterByTagName('ion-tabs');
     $ionicViewService.disableRegisterByTagName('ion-side-menus');
   }
+
+  // always reset the keyboard state when change stage
+  $rootScope.$on('$stateChangeStart', function(){
+    ionic.keyboard.hide();
+  });
 
   $rootScope.$on('viewState.changeHistory', function(e, data) {
     if(!data) return;
@@ -3817,8 +3852,17 @@ function($rootScope, $state, $location, $window, $injector, $animate, $ionicNavV
                 hist.cursor > -1 && hist.stack.length > 0 && hist.cursor < hist.stack.length &&
                 hist.stack[hist.cursor].stateId === currentStateId) {
         // they just changed to a different history and the history already has views in it
-        rsp.viewId = hist.stack[hist.cursor].viewId;
+        var switchToView = hist.stack[hist.cursor];
+        rsp.viewId = switchToView.viewId;
         rsp.navAction = 'moveBack';
+
+        // if switching to a different history, and the history of the view we're switching
+        // to has an existing back view from a different history than itself, then
+        // it's back view would be better represented using the current view as its back view
+        var switchToViewBackView = this._getViewById(switchToView.backViewId);
+        if(switchToViewBackView && switchToView.historyId !== switchToViewBackView.historyId) {
+          hist.stack[hist.cursor].backViewId = currentView.viewId;
+        }
 
       } else {
 
@@ -3835,8 +3879,9 @@ function($rootScope, $state, $location, $window, $injector, $animate, $ionicNavV
           }
           rsp.navAction = 'newView';
 
-          // check if there is a new forward view
-          if(forwardView && currentView.stateId !== forwardView.stateId) {
+          // check if there is a new forward view within the same history
+          if(forwardView && currentView.stateId !== forwardView.stateId &&
+             currentView.historyId === forwardView.historyId) {
             // they navigated to a new view but the stack already has a forward view
             // since its a new view remove any forwards that existed
             var forwardsHistory = this._getHistoryById(forwardView.historyId);
@@ -4447,7 +4492,7 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
     currentTitles = $element[0].querySelectorAll('.title');
     if (currentTitles.length) {
       oldTitleEl = $compile('<h1 class="title" ng-bind-html="oldTitle"></h1>')($scope);
-      jqLite(currentTitles[0]).replaceWith(oldTitleEl);
+      jqLite(currentTitles[currentTitles.length-1]).replaceWith(oldTitleEl);
     }
     //Compile new title
     newTitleEl = $compile('<h1 class="title invisible" ng-bind-html="title"></h1>')($scope);
@@ -4598,7 +4643,7 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
   });
 
   $timeout(function() {
-    scrollView.run();
+    scrollView && scrollView.run && scrollView.run();
   });
 
   this._rememberScrollId = null;
@@ -4613,7 +4658,7 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
 
   this.resize = function() {
     return $timeout(resize).then(function() {
-      $element.triggerHandler('scroll.resize');
+      $element && $element.triggerHandler('scroll.resize');
     });
   };
 
@@ -4688,7 +4733,7 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     var values = $$scrollValueCache[this._rememberScrollId];
     if (values) {
       this.resize().then(function() {
-        scrollView.scrollTo(+values.left, +values.top, shouldAnimate);
+        scrollView && scrollView.scrollTo && scrollView.scrollTo(+values.left, +values.top, shouldAnimate);
       });
     }
   };
@@ -4777,6 +4822,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody) {
    * Toggle the left menu to open 100%
    */
   self.toggleLeft = function(shouldOpen) {
+    if(isAsideExposed) return;
     var openAmount = self.getOpenAmount();
     if (arguments.length === 0) {
       shouldOpen = openAmount <= 0;
@@ -4793,6 +4839,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody) {
    * Toggle the right menu to open 100%
    */
   self.toggleRight = function(shouldOpen) {
+    if(isAsideExposed) return;
     var openAmount = self.getOpenAmount();
     if (arguments.length === 0) {
       shouldOpen = openAmount >= 0;
@@ -4984,6 +5031,9 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody) {
   };
 
   self.exposeAside = function(shouldExposeAside) {
+    if(!self.left || !self.left.isEnabled) return;
+
+    self.close();
     isAsideExposed = shouldExposeAside;
 
     // set the left marget width if it should be exposed
@@ -6410,7 +6460,8 @@ IonicModule
       });
 
       $scope.$on('$destroy', function() {
-        scrollCtrl.$element.off('scroll', checkBounds);
+        console.log(scrollCtrl);
+        if(scrollCtrl && scrollCtrl.$element)scrollCtrl.$element.off('scroll', checkBounds);
       });
 
       var checkBounds = ionic.animationFrameThrottle(checkInfiniteBounds);
@@ -6889,7 +6940,7 @@ function keyboardAttachGetClientHeight(element) {
 *
 * @param {string=} delegate-handle The handle used to identify this list with
 * {@link ionic.service:$ionicListDelegate}.
-* @param type {string=} The type of list to use (for example, list-inset for an inset list)
+* @param type {string=} The type of list to use (list-inset or card)
 * @param show-delete {boolean=} Whether the delete buttons for the items in the list are
 * currently shown or hidden.
 * @param show-reorder {boolean=} Whether the reorder buttons for the items in the list are
@@ -6992,7 +7043,7 @@ function($animate, $timeout) {
           function setButtonShown(el, shown) {
             shown() && el.addClass('visible') || el.removeClass('active');
             ionic.requestAnimationFrame(function() {
-              shown() && el.addClass('active') || el.removeClass('invisible');
+              shown() && el.addClass('active') || el.removeClass('visible');
             });
           }
         }
@@ -8134,7 +8185,7 @@ IonicModule
         $scope.side = $attr.side || 'left';
 
         var sideMenu = sideMenuCtrl[$scope.side] = new ionic.views.SideMenu({
-          width: 275,
+          width: attr.width,
           el: $element[0],
           isEnabled: true
         });
@@ -8301,6 +8352,7 @@ function($timeout, $ionicGesture, $window) {
           }),
           setMarginLeft: ionic.animationFrameThrottle(function(amount) {
             if(amount) {
+              amount = parseInt(amount, 10);
               $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + amount + 'px,0,0)';
               $element[0].style.width = ($window.innerWidth - amount) + 'px';
               content.offsetX = amount;
@@ -8728,7 +8780,13 @@ function($rootScope, $animate, $ionicBind, $compile) {
 
         tabsCtrl.add($scope);
         $scope.$on('$destroy', function() {
-          tabsCtrl.remove($scope);
+          if(!$scope.$tabsDestroy) {
+            // if the containing ionTabs directive is being destroyed
+            // then don't bother going through the controllers remove
+            // method, since remove will reset the active tab as each tab
+            // is being destroyed, causing unnecessary view loads and transitions
+            tabsCtrl.remove($scope);
+          }
           tabNavElement.isolateScope().$destroy();
           tabNavElement.remove();
         });
@@ -8886,9 +8944,9 @@ IonicModule.constant('$ionicTabsConfig', {
 
 IonicModule
 .directive('ionTabs', [
-  '$ionicViewService', 
-  '$ionicTabsDelegate', 
-  '$ionicTabsConfig', 
+  '$ionicViewService',
+  '$ionicTabsDelegate',
+  '$ionicTabsConfig',
 function($ionicViewService, $ionicTabsDelegate, $ionicTabsConfig) {
   return {
     restrict: 'E',
@@ -8910,7 +8968,14 @@ function($ionicViewService, $ionicTabsDelegate, $ionicTabsConfig) {
           tabsCtrl, $attr.delegateHandle
         );
 
-        $scope.$on('$destroy', deregisterInstance);
+        $scope.$on('$destroy', function(){
+          // variable to inform child tabs that they're all being blown away
+          // used so that while destorying an individual tab, each one
+          // doesn't select the next tab as the active one, which causes unnecessary
+          // loading of tab views when each will eventually all go away anyway
+          $scope.$tabsDestroy = true;
+          deregisterInstance();
+        });
 
         tabsCtrl.$scope = $scope;
         tabsCtrl.$element = $element;
