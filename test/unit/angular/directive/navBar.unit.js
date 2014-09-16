@@ -208,8 +208,7 @@ describe('ionNavBar', function() {
         ctrl._animateTitles();
         var titles = el[0].querySelectorAll('.title');
         expect(titles.length).toBe(2);
-        expect(titles[0].getAttribute('ng-bind-html')).toEqual('oldTitle');
-        expect(titles[1].classList.contains('filler-element')).toBe(true);
+        expect(titles[1].getAttribute('ng-bind-html')).toEqual('oldTitle');
       });
 
       it('after raf should have changed titles & cleaned up', inject(function($animate) {
