@@ -157,21 +157,21 @@ body.grade-c {
 
 @keyframes refresh-spin {
   0% { transform: translate3d(0,0,0) rotate(0); }
-  100% { transform: translate3d(0,0,0) rotate(-180deg); }
+  100% { transform: translate3d(0,0,0) rotate(180deg); }
 }
 
 @-webkit-keyframes refresh-spin {
   0% {-webkit-transform: translate3d(0,0,0) rotate(0); }
-  100% {-webkit-transform: translate3d(0,0,0) rotate(-180deg); }
+  100% {-webkit-transform: translate3d(0,0,0) rotate(180deg); }
 }
 
 @keyframes refresh-spin-back {
-  0% { transform: translate3d(0,0,0) rotate(-180deg); }
+  0% { transform: translate3d(0,0,0) rotate(180deg); }
   100% { transform: translate3d(0,0,0) rotate(0); }
 }
 
 @-webkit-keyframes refresh-spin-back {
-  0% {-webkit-transform: translate3d(0,0,0) rotate(-180deg); }
+  0% {-webkit-transform: translate3d(0,0,0) rotate(180deg); }
   100% {-webkit-transform: translate3d(0,0,0) rotate(0); }
 }
 
@@ -230,12 +230,16 @@ body.grade-c {
   }
 
   &.active {
-    .icon-pulling {
+    .icon-pulling:not(.pulling-rotation-disabled) {
       @include animation-name(refresh-spin);
       -webkit-transform: translate3d(0,0,0) rotate(-180deg);
       transform: translate3d(0,0,0) rotate(-180deg);
     }
     &.refreshing {
+      @include transition(transform .2s);
+      @include transition(-webkit-transform .2s);
+      -webkit-transform: scale(1,1);
+      transform: scale(1,1);
       .icon-pulling,
       .text-pulling {
         display: none;
@@ -243,6 +247,10 @@ body.grade-c {
       .icon-refreshing,
       .text-refreshing {
         display: block;
+      }
+      &.refreshing-tail{
+        -webkit-transform: scale(0,0);
+        transform: scale(0,0);
       }
     }
   }
