@@ -98,7 +98,13 @@ function($rootScope, $animate, $ionicBind, $compile) {
 
         tabsCtrl.add($scope);
         $scope.$on('$destroy', function() {
-          tabsCtrl.remove($scope);
+          if(!$scope.$tabsDestroy) {
+            // if the containing ionTabs directive is being destroyed
+            // then don't bother going through the controllers remove
+            // method, since remove will reset the active tab as each tab
+            // is being destroyed, causing unnecessary view loads and transitions
+            tabsCtrl.remove($scope);
+          }
           tabNavElement.isolateScope().$destroy();
           tabNavElement.remove();
         });

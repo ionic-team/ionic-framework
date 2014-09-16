@@ -1,8 +1,8 @@
 {
   "name": "ionic",
   "private": false,
-  "version": "1.0.0-beta.11",
-  "codename": "indium-iguana",
+  "version": "1.0.0-beta.12",
+  "codename": "krypton-koala",
   "repository": {
     "url": "git://github.com/driftyco/ionic.git"
   },

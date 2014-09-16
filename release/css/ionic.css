@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.11
+ * Ionic, v1.0.0-beta.12
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -2227,6 +2227,7 @@ body.grade-b, body.grade-c {
   left: 0;
   overflow: hidden;
   margin-top: -1px;
+  padding-top: 1px;
   width: auto;
   height: auto; }
 
@@ -2428,7 +2429,12 @@ ion-infinite-scroll {
 .overflow-scroll {
   overflow-x: hidden;
   overflow-y: scroll;
-  -webkit-overflow-scrolling: touch; }
+  -webkit-overflow-scrolling: touch;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute; }
   .overflow-scroll .scroll {
     position: static;
     height: 100%;
@@ -2481,6 +2487,14 @@ ion-infinite-scroll {
   height: 100%;
   background-color: #fff;
   overflow: hidden; }
+
+ion-nav-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000; }
 
 /**
  * Typography
@@ -3742,6 +3756,9 @@ a.subdued {
 .menu-right {
   right: 0; }
 
+.aside-open.aside-resizing .menu-right {
+  display: none; }
+
 .menu-animated {
   -webkit-transition: -webkit-transform 200ms ease;
   -moz-transition: -moz-transform 200ms ease;
@@ -3832,7 +3849,6 @@ a.subdued {
   z-index: 10;
   display: block;
   margin-left: -110px;
-  margin-top: 12px;
   height: 280px;
   width: 220px;
   background-color: #fff;
@@ -3842,6 +3858,10 @@ a.subdued {
     border-top: 0; }
   .popover .item:last-child {
     border-bottom: 0; }
+  .popover.popover-top {
+    margin-top: 12px; }
+  .popover.popover-bottom {
+    margin-top: -12px; }
 
 .popover, .popover .bar-header {
   border-radius: 2px; }
@@ -3872,8 +3892,6 @@ a.subdued {
   margin-top: 0; }
 .platform-ios .popover-arrow {
   position: absolute;
-  top: -17px;
-  left: 43%;
   display: block;
   width: 30px;
   height: 19px;
@@ -3890,15 +3908,24 @@ a.subdued {
     -webkit-transform: rotate(-45deg);
     -moz-transform: rotate(-45deg);
     transform: rotate(-45deg); }
+.platform-ios .popover-top .popover-arrow {
+  top: -17px; }
+.platform-ios .popover-bottom .popover-arrow {
+  bottom: -10px; }
+  .platform-ios .popover-bottom .popover-arrow:after {
+    top: -6px; }
 
 .platform-android .popover {
   background-color: #fafafa;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-  margin-top: -32px; }
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35); }
   .platform-android .popover .item {
     border-color: #fafafa;
     background-color: #fafafa;
     color: #4d4d4d; }
+  .platform-android .popover.popover-top {
+    margin-top: -32px; }
+  .platform-android .popover.popover-bottom {
+    margin-top: 32px; }
 .platform-android .popover-backdrop, .platform-android .popover-backdrop.active {
   background-color: transparent; }
 
@@ -3917,17 +3944,34 @@ a.subdued {
  * Popups
  * --------------------------------------------------
  */
-.popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
+.popup-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
   z-index: 12;
-  visibility: hidden;
-  width: 250px;
-  max-width: 100%;
-  border-radius: 0px;
-  background-color: rgba(255, 255, 255, 0.9); }
-  .popup.popup-hidden {
+  visibility: hidden; }
+  .popup-container.popup-showing {
+    visibility: visible; }
+  .popup-container.popup-hidden .popup {
     -webkit-animation-name: scaleOut;
     -moz-animation-name: scaleOut;
     animation-name: scaleOut;
@@ -3940,9 +3984,7 @@ a.subdued {
     -webkit-animation-fill-mode: both;
     -moz-animation-fill-mode: both;
     animation-fill-mode: both; }
-  .popup.popup-showing {
-    visibility: visible; }
-  .popup.active {
+  .popup-container.active .popup {
     -webkit-animation-name: superScaleIn;
     -moz-animation-name: superScaleIn;
     animation-name: superScaleIn;
@@ -3955,10 +3997,24 @@ a.subdued {
     -webkit-animation-fill-mode: both;
     -moz-animation-fill-mode: both;
     animation-fill-mode: both; }
-  .popup.popup-tall {
-    overflow: hidden; }
-    .popup.popup-tall .popup-body {
-      overflow: auto; }
+  .popup-container .popup {
+    width: 250px;
+    max-width: 100%;
+    max-height: 90%;
+    border-radius: 0px;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -webkit-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column; }
 
 .popup-head {
   padding: 15px 0px;
@@ -3977,19 +4033,37 @@ a.subdued {
   font-size: 11px; }
 
 .popup-body {
-  padding: 10px; }
+  padding: 10px;
+  overflow: scroll; }
 
-.popup-buttons.row {
-  padding: 10px 10px; }
-.popup-buttons .button {
-  margin: 0px 5px;
-  min-height: 45px;
-  border-radius: 2px;
-  line-height: 20px; }
-  .popup-buttons .button:first-child {
-    margin-left: 0px; }
-  .popup-buttons .button:last-child {
-    margin-right: 0px; }
+.popup-buttons {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  padding: 10px;
+  min-height: 65px; }
+  .popup-buttons .button {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -moz-box-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    min-height: 45px;
+    border-radius: 2px;
+    line-height: 20px;
+    margin-right: 5px; }
+    .popup-buttons .button:last-child {
+      margin-right: 0px; }
 
 .popup-open {
   pointer-events: none; }
@@ -4820,48 +4894,6 @@ a.item-content {
       -moz-transition: opacity 0.4s ease-in;
       transition: opacity 0.4s ease-in;
       opacity: 1; }
-
-/**
- * Split Pane
- * --------------------------------------------------
- */
-.split-pane {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -moz-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  -webkit-align-items: stretch;
-  -moz-align-items: stretch;
-  align-items: stretch;
-  width: 100%;
-  height: 100%; }
-
-.split-pane-menu {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 320px;
-  -moz-box-flex: 0;
-  -moz-flex: 0 0 320px;
-  -ms-flex: 0 0 320px;
-  flex: 0 0 320px;
-  overflow-y: auto;
-  width: 320px;
-  height: 100%;
-  border-right: 1px solid #eee; }
-  @media all and (max-width: 568px) {
-    .split-pane-menu {
-      border-right: none; } }
-
-.split-pane-content {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 auto;
-  -moz-box-flex: 1;
-  -moz-flex: 1 0 auto;
-  -ms-flex: 1 0 auto;
-  flex: 1 0 auto; }
 
 /**
  * Forms
@@ -6048,6 +6080,8 @@ button.button-block, button.button-full, .button-full > button.button, input.but
 
 a.button {
   text-decoration: none; }
+  a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button.icon-right:before {
+    margin-top: 2px; }
 
 .button.disabled, .button[disabled] {
   opacity: 0.4;
@@ -6494,67 +6528,67 @@ a.button {
   transform: translate3d(100%, 0, 0); }
 
 /**
- * iOS7 style slide left to right
+ * iOS style slide left to right
  * --------------------------------------------------
  */
-.slide-left-right-ios7 > .ng-enter, .slide-left-right-ios7.ng-enter, .slide-left-right-ios7 > .ng-leave, .slide-left-right-ios7.ng-leave, .slide-right-left-ios7.reverse > .ng-enter, .slide-right-left-ios7.reverse.ng-enter, .slide-right-left-ios7.reverse > .ng-leave, .slide-right-left-ios7.reverse.ng-leave {
-  -webkit-transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 340ms;
-  -moz-transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 340ms;
-  transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 340ms;
+/*
+$ios-transition-box-shadow-start: -200px 0px 200px rgba(0,0,0,0), -5px 0px 5px rgba(0,0,0,0.01);
+$ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px rgba(0,0,0,0.18);
+*/
+.slide-ios > .ng-enter, .slide-ios.ng-enter, .slide-ios > .ng-leave, .slide-ios.ng-leave, .slide-left-right-ios7 > .ng-enter, .slide-left-right-ios7.ng-enter, .slide-left-right-ios7 > .ng-leave, .slide-left-right-ios7.ng-leave, .slide-right-left-ios7.reverse > .ng-enter, .slide-right-left-ios7.reverse.ng-enter, .slide-right-left-ios7.reverse > .ng-leave, .slide-right-left-ios7.reverse.ng-leave {
+  -webkit-transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 400ms;
+  -moz-transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 400ms;
+  transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 400ms;
   position: absolute;
   top: 0;
-  right: -1px;
   bottom: 0;
-  left: -1px;
   width: auto;
   border-right: none;
   border-left: none; }
-  .slide-left-right-ios7 > .ng-enter:not(.bar), .slide-left-right-ios7.ng-enter:not(.bar), .slide-left-right-ios7 > .ng-leave:not(.bar), .slide-left-right-ios7.ng-leave:not(.bar), .slide-right-left-ios7.reverse > .ng-enter:not(.bar), .slide-right-left-ios7.reverse.ng-enter:not(.bar), .slide-right-left-ios7.reverse > .ng-leave:not(.bar), .slide-right-left-ios7.reverse.ng-leave:not(.bar) {
+  .slide-ios > .ng-enter:not(.bar), .slide-ios.ng-enter:not(.bar), .slide-ios > .ng-leave:not(.bar), .slide-ios.ng-leave:not(.bar), .slide-left-right-ios7 > .ng-enter:not(.bar), .slide-left-right-ios7.ng-enter:not(.bar), .slide-left-right-ios7 > .ng-leave:not(.bar), .slide-left-right-ios7.ng-leave:not(.bar), .slide-right-left-ios7.reverse > .ng-enter:not(.bar), .slide-right-left-ios7.reverse.ng-enter:not(.bar), .slide-right-left-ios7.reverse > .ng-leave:not(.bar), .slide-right-left-ios7.reverse.ng-leave:not(.bar) {
     border-right: none;
     border-left: none; }
-.slide-left-right-ios7 > .ng-enter, .slide-left-right-ios7.ng-enter, .slide-right-left-ios7.reverse > .ng-enter, .slide-right-left-ios7.reverse.ng-enter {
+.slide-ios > .ng-enter, .slide-ios.ng-enter, .slide-left-right-ios7 > .ng-enter, .slide-left-right-ios7.ng-enter, .slide-right-left-ios7.reverse > .ng-enter, .slide-right-left-ios7.reverse.ng-enter {
   /* NEW content placed far RIGHT BEFORE it slides IN from the RIGHT */
   -webkit-transform: translate3d(100%, 0, 0);
   -moz-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0); }
-.slide-left-right-ios7 > .ng-leave, .slide-left-right-ios7.ng-leave, .slide-right-left-ios7.reverse > .ng-leave, .slide-right-left-ios7.reverse.ng-leave {
+.slide-ios > .ng-leave, .slide-ios.ng-leave, .slide-left-right-ios7 > .ng-leave, .slide-left-right-ios7.ng-leave, .slide-right-left-ios7.reverse > .ng-leave, .slide-right-left-ios7.reverse.ng-leave {
   z-index: 1; }
-.slide-left-right-ios7 > .ng-enter.ng-enter-active, .slide-left-right-ios7.ng-enter.ng-enter-active, .slide-right-left-ios7.reverse > .ng-enter.ng-enter-active, .slide-right-left-ios7.reverse.ng-enter.ng-enter-active {
+.slide-ios > .ng-enter.ng-enter-active, .slide-ios.ng-enter.ng-enter-active, .slide-left-right-ios7 > .ng-enter.ng-enter-active, .slide-left-right-ios7.ng-enter.ng-enter-active, .slide-right-left-ios7.reverse > .ng-enter.ng-enter-active, .slide-right-left-ios7.reverse.ng-enter.ng-enter-active {
   /* NEW content ACTIVELY sliding IN from the RIGHT */
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0); }
-.slide-left-right-ios7 > .ng-leave.ng-leave-active, .slide-left-right-ios7.ng-leave.ng-leave-active, .slide-right-left-ios7.reverse > .ng-leave.ng-leave-active, .slide-right-left-ios7.reverse.ng-leave.ng-leave-active {
+.slide-ios > .ng-leave.ng-leave-active, .slide-ios.ng-leave.ng-leave-active, .slide-left-right-ios7 > .ng-leave.ng-leave-active, .slide-left-right-ios7.ng-leave.ng-leave-active, .slide-right-left-ios7.reverse > .ng-leave.ng-leave-active, .slide-right-left-ios7.reverse.ng-leave.ng-leave-active {
   /* OLD content ACTIVELY sliding OUT to the LEFT */
-  -webkit-transform: translate3d(-15%, 0, 0);
-  -moz-transform: translate3d(-15%, 0, 0);
-  transform: translate3d(-15%, 0, 0); }
+  -webkit-transform: translate3d(-20%, 0, 0);
+  -moz-transform: translate3d(-20%, 0, 0);
+  transform: translate3d(-20%, 0, 0); }
 
-.slide-left-right-ios7.reverse > .ng-enter, .slide-left-right-ios7.reverse.ng-enter, .slide-left-right-ios7.reverse > .ng-leave, .slide-left-right-ios7.reverse.ng-leave, .slide-right-left-ios7 > .ng-enter, .slide-right-left-ios7.ng-enter, .slide-right-left-ios7 > .ng-leave, .slide-right-left-ios7.ng-leave {
-  -webkit-transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 340ms;
-  -moz-transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 340ms;
-  transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 340ms;
+.slide-ios.reverse > .ng-enter, .slide-ios.reverse.ng-enter, .slide-ios.reverse > .ng-leave, .slide-ios.reverse.ng-leave, .slide-left-right-ios7.reverse > .ng-enter, .slide-left-right-ios7.reverse.ng-enter, .slide-left-right-ios7.reverse > .ng-leave, .slide-left-right-ios7.reverse.ng-leave, .slide-right-left-ios7 > .ng-enter, .slide-right-left-ios7.ng-enter, .slide-right-left-ios7 > .ng-leave, .slide-right-left-ios7.ng-leave {
+  -webkit-transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 400ms;
+  -moz-transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 400ms;
+  transition: all cubic-bezier(0.4, 0.6, 0.2, 1) 400ms;
   position: absolute;
   top: 0;
-  right: -1px;
   bottom: 0;
-  left: -1px;
   width: auto;
   border-right: none;
   border-left: none; }
-.slide-left-right-ios7.reverse > .ng-enter, .slide-left-right-ios7.reverse.ng-enter, .slide-right-left-ios7 > .ng-enter, .slide-right-left-ios7.ng-enter {
+.slide-ios.reverse > .ng-enter, .slide-ios.reverse.ng-enter, .slide-left-right-ios7.reverse > .ng-enter, .slide-left-right-ios7.reverse.ng-enter, .slide-right-left-ios7 > .ng-enter, .slide-right-left-ios7.ng-enter {
   /* NEW content placed far LEFT BEFORE it slides IN from the LEFT */
-  -webkit-transform: translate3d(-15%, 0, 0);
-  -moz-transform: translate3d(-15%, 0, 0);
-  transform: translate3d(-15%, 0, 0); }
-.slide-left-right-ios7.reverse > .ng-leave, .slide-left-right-ios7.reverse.ng-leave, .slide-right-left-ios7 > .ng-leave, .slide-right-left-ios7.ng-leave {
+  -webkit-transform: translate3d(-20%, 0, 0);
+  -moz-transform: translate3d(-20%, 0, 0);
+  transform: translate3d(-20%, 0, 0); }
+.slide-ios.reverse > .ng-leave, .slide-ios.reverse.ng-leave, .slide-left-right-ios7.reverse > .ng-leave, .slide-left-right-ios7.reverse.ng-leave, .slide-right-left-ios7 > .ng-leave, .slide-right-left-ios7.ng-leave {
   z-index: 2; }
-.slide-left-right-ios7.reverse > .ng-enter.ng-enter-active, .slide-left-right-ios7.reverse.ng-enter.ng-enter-active, .slide-right-left-ios7 > .ng-enter.ng-enter-active, .slide-right-left-ios7.ng-enter.ng-enter-active {
+.slide-ios.reverse > .ng-enter.ng-enter-active, .slide-ios.reverse.ng-enter.ng-enter-active, .slide-left-right-ios7.reverse > .ng-enter.ng-enter-active, .slide-left-right-ios7.reverse.ng-enter.ng-enter-active, .slide-right-left-ios7 > .ng-enter.ng-enter-active, .slide-right-left-ios7.ng-enter.ng-enter-active {
   /* NEW content ACTIVELY sliding IN from the LEFT */
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0); }
-.slide-left-right-ios7.reverse > .ng-leave.ng-leave-active, .slide-left-right-ios7.reverse.ng-leave.ng-leave-active, .slide-right-left-ios7 > .ng-leave.ng-leave-active, .slide-right-left-ios7.ng-leave.ng-leave-active {
+.slide-ios.reverse > .ng-leave.ng-leave-active, .slide-ios.reverse.ng-leave.ng-leave-active, .slide-left-right-ios7.reverse > .ng-leave.ng-leave-active, .slide-left-right-ios7.reverse.ng-leave.ng-leave-active, .slide-right-left-ios7 > .ng-leave.ng-leave-active, .slide-right-left-ios7.ng-leave.ng-leave-active {
   /* OLD content ACTIVELY sliding OUT to the RIGHT */
   -webkit-transform: translate3d(100%, 0, 0);
   -moz-transform: translate3d(100%, 0, 0);
@@ -6563,67 +6597,86 @@ a.button {
 /**
  * iPad doesn't like box shadows
  */
-/*
-.grade-a:not(.platform-ipad) {
-  .slide-left-right-ios7, .slide-right-left-ios7.reverse {
-    > .ng-enter, &.ng-enter {
-      box-shadow: $ios-transition-box-shadow-start;
-    }
-    > .ng-enter.ng-enter-active, &.ng-enter.ng-enter-active {
-      box-shadow: $ios-transition-box-shadow-end;
-    }
-  }
-  .slide-left-right-ios7.reverse, .slide-right-left-ios7 {
-    > .ng-leave, &.ng-leave {
-      //box-shadow: $ios-transition-box-shadow-end;
-    }
-    > .ng-leave.ng-leave-active, &.ng-leave.ng-leave-active {
-      //box-shadow: $ios-transition-box-shadow-start;
-    }
-  }
-}
-*/
-.grade-a.platform-ipad .slide-left-right-ios7 > .ng-enter, .grade-a.platform-ipad .slide-left-right-ios7.ng-enter, .grade-a.platform-ipad .slide-right-left-ios7.reverse > .ng-enter, .grade-a.platform-ipad .slide-right-left-ios7.reverse.ng-enter {
-  border-left: 1px solid #ddd; }
-.grade-a.platform-ipad .slide-left-right-ios7.reverse > .ng-leave, .grade-a.platform-ipad .slide-left-right-ios7.reverse.ng-leave, .grade-a.platform-ipad .slide-right-left-ios7 > .ng-leave, .grade-a.platform-ipad .slide-right-left-ios7.ng-leave {
-  border-left: 1px solid #ddd; }
+.grade-a .slide-ios > .ng-enter:not(.platform-ipad), .grade-a .slide-ios.ng-enter:not(.platform-ipad), .grade-a .slide-left-right-ios7 > .ng-enter:not(.platform-ipad), .grade-a .slide-left-right-ios7.ng-enter:not(.platform-ipad), .grade-a .slide-right-left-ios7.reverse > .ng-enter:not(.platform-ipad), .grade-a .slide-right-left-ios7.reverse.ng-enter:not(.platform-ipad) {
+  box-shadow: none; }
+.grade-a .slide-ios > .ng-enter.ng-enter-active:not(.platform-ipad), .grade-a .slide-ios.ng-enter.ng-enter-active:not(.platform-ipad), .grade-a .slide-left-right-ios7 > .ng-enter.ng-enter-active:not(.platform-ipad), .grade-a .slide-left-right-ios7.ng-enter.ng-enter-active:not(.platform-ipad), .grade-a .slide-right-left-ios7.reverse > .ng-enter.ng-enter-active:not(.platform-ipad), .grade-a .slide-right-left-ios7.reverse.ng-enter.ng-enter-active:not(.platform-ipad) {
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.5); }
+.grade-a .slide-ios > .ng-leave, .grade-a .slide-ios.ng-leave, .grade-a .slide-left-right-ios7 > .ng-leave, .grade-a .slide-left-right-ios7.ng-leave, .grade-a .slide-right-left-ios7.reverse > .ng-leave, .grade-a .slide-right-left-ios7.reverse.ng-leave {
+  opacity: 1; }
+.grade-a .slide-ios > .ng-leave.ng-leave-active, .grade-a .slide-ios.ng-leave.ng-leave-active, .grade-a .slide-left-right-ios7 > .ng-leave.ng-leave-active, .grade-a .slide-left-right-ios7.ng-leave.ng-leave-active, .grade-a .slide-right-left-ios7.reverse > .ng-leave.ng-leave-active, .grade-a .slide-right-left-ios7.reverse.ng-leave.ng-leave-active {
+  opacity: 0.9; }
+.grade-a .slide-ios.reverse > .ng-enter, .grade-a .slide-ios.reverse.ng-enter, .grade-a .slide-left-right-ios7.reverse > .ng-enter, .grade-a .slide-left-right-ios7.reverse.ng-enter, .grade-a .slide-right-left-ios7 > .ng-enter, .grade-a .slide-right-left-ios7.ng-enter {
+  opacity: 0.9; }
+.grade-a .slide-ios.reverse > .ng-enter.ng-enter-active, .grade-a .slide-ios.reverse.ng-enter.ng-enter-active, .grade-a .slide-left-right-ios7.reverse > .ng-enter.ng-enter-active, .grade-a .slide-left-right-ios7.reverse.ng-enter.ng-enter-active, .grade-a .slide-right-left-ios7 > .ng-enter.ng-enter-active, .grade-a .slide-right-left-ios7.ng-enter.ng-enter-active {
+  opacity: 1; }
+.grade-a .slide-ios.reverse > .ng-leave, .grade-a .slide-ios.reverse.ng-leave, .grade-a .slide-left-right-ios7.reverse > .ng-leave, .grade-a .slide-left-right-ios7.reverse.ng-leave, .grade-a .slide-right-left-ios7 > .ng-leave, .grade-a .slide-right-left-ios7.ng-leave {
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.5);
+  opacity: 1; }
+.grade-a .slide-ios.reverse > .ng-leave.ng-leave-active, .grade-a .slide-ios.reverse.ng-leave.ng-leave-active, .grade-a .slide-left-right-ios7.reverse > .ng-leave.ng-leave-active, .grade-a .slide-left-right-ios7.reverse.ng-leave.ng-leave-active, .grade-a .slide-right-left-ios7 > .ng-leave.ng-leave-active, .grade-a .slide-right-left-ios7.ng-leave.ng-leave-active {
+  box-shadow: none; }
 
-/**
- * Android style "pop in" with fade and scale
- */
-.fade-explode > .ng-enter, .fade-explode.ng-enter, .fade-explode > .ng-leave, .fade-explode.ng-leave {
-  -webkit-transition: all ease-out 300ms;
-  -moz-transition: all ease-out 300ms;
-  transition: all ease-out 300ms;
+.slide-full > .ng-enter, .slide-full.ng-enter, .slide-full > .ng-leave, .slide-full.ng-leave {
+  -webkit-transition: all ease-in-out 400ms;
+  -moz-transition: all ease-in-out 400ms;
+  transition: all ease-in-out 400ms;
   position: absolute;
   top: 0;
   right: -1px;
   bottom: 0;
   left: -1px;
-  width: auto; }
-  .fade-explode > .ng-enter:not(.bar), .fade-explode.ng-enter:not(.bar), .fade-explode > .ng-leave:not(.bar), .fade-explode.ng-leave:not(.bar) {
-    border-right: 1px solid #ddd;
-    border-left: 1px solid #ddd; }
-.fade-explode > .ng-enter, .fade-explode.ng-enter {
+  width: auto;
+  border-right: none;
+  border-left: none; }
+  .slide-full > .ng-enter:not(.bar), .slide-full.ng-enter:not(.bar), .slide-full > .ng-leave:not(.bar), .slide-full.ng-leave:not(.bar) {
+    border-right: none;
+    border-left: none; }
+.slide-full > .ng-enter, .slide-full.ng-enter {
   /* NEW content placed far RIGHT BEFORE it slides IN from the RIGHT */
-  -webkit-transform: scale(1.6);
-  -moz-transform: scale(1.6);
-  transform: scale(1.6);
-  opacity: 0;
-  z-index: 2; }
-.fade-explode > .ng-leave, .fade-explode.ng-leave {
+  -webkit-transform: translate3d(100%, 0, 0);
+  -moz-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0); }
+.slide-full > .ng-leave, .slide-full.ng-leave {
   z-index: 1; }
-.fade-explode > .ng-enter.ng-enter-active, .fade-explode.ng-enter.ng-enter-active {
+.slide-full > .ng-enter.ng-enter-active, .slide-full.ng-enter.ng-enter-active {
   /* NEW content ACTIVELY sliding IN from the RIGHT */
-  -webkit-transform: scale(1);
-  -moz-transform: scale(1);
-  transform: scale(1);
-  opacity: 1; }
-.fade-explode > .ng-leave.ng-leave-active, .fade-explode.ng-leave.ng-leave-active {
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0); }
+.slide-full > .ng-leave.ng-leave-active, .slide-full.ng-leave.ng-leave-active {
   /* OLD content ACTIVELY sliding OUT to the LEFT */
-  -webkit-transform: scale(0.95);
-  -moz-transform: scale(0.95);
-  transform: scale(0.95); }
+  -webkit-transform: translate3d(-100%, 0, 0);
+  -moz-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0); }
+
+.slide-full.reverse > .ng-enter, .slide-full.reverse.ng-enter, .slide-full.reverse > .ng-leave, .slide-full.reverse.ng-leave {
+  -webkit-transition: all ease-in-out 400ms;
+  -moz-transition: all ease-in-out 400ms;
+  transition: all ease-in-out 400ms;
+  position: absolute;
+  top: 0;
+  right: -1px;
+  bottom: 0;
+  left: -1px;
+  width: auto;
+  border-right: none;
+  border-left: none; }
+.slide-full.reverse > .ng-enter, .slide-full.reverse.ng-enter {
+  /* NEW content placed far LEFT BEFORE it slides IN from the LEFT */
+  -webkit-transform: translate3d(-100%, 0, 0);
+  -moz-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0); }
+.slide-full.reverse > .ng-leave, .slide-full.reverse.ng-leave {
+  z-index: 2; }
+.slide-full.reverse > .ng-enter.ng-enter-active, .slide-full.reverse.ng-enter.ng-enter-active {
+  /* NEW content ACTIVELY sliding IN from the LEFT */
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0); }
+.slide-full.reverse > .ng-leave.ng-leave-active, .slide-full.reverse.ng-leave.ng-leave-active {
+  /* OLD content ACTIVELY sliding OUT to the RIGHT */
+  -webkit-transform: translate3d(100%, 0, 0);
+  -moz-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0); }
 
 .fade-explode.reverse > .ng-enter, .fade-explode.reverse.ng-enter, .fade-explode.reverse > .ng-leave, .fade-explode.reverse.ng-leave {
   -webkit-transition: all ease-out 300ms;
@@ -6973,10 +7026,10 @@ a.button {
 /**
  * Some component specific animations
  */
-.nav-title-slide-ios7:not(.no-animation) .button.back-button {
-  -webkit-transition: all 340ms;
-  -moz-transition: all 340ms;
-  transition: all 340ms;
+.nav-title-slide-ios:not(.no-animation) .button.back-button, .nav-title-slide-ios7:not(.no-animation) .button.back-button {
+  -webkit-transition: all 400ms;
+  -moz-transition: all 400ms;
+  transition: all 400ms;
   -webkit-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
   -moz-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
   transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
@@ -6984,63 +7037,139 @@ a.button {
   -moz-transform: translate3d(0%, 0, 0);
   transform: translate3d(0%, 0, 0);
   opacity: 1; }
-  .nav-title-slide-ios7:not(.no-animation) .button.back-button.active, .nav-title-slide-ios7:not(.no-animation) .button.back-button.activated {
+  .nav-title-slide-ios:not(.no-animation) .button.back-button.active, .nav-title-slide-ios:not(.no-animation) .button.back-button.activated, .nav-title-slide-ios7:not(.no-animation) .button.back-button.active, .nav-title-slide-ios7:not(.no-animation) .button.back-button.activated {
     opacity: 0.5; }
-  .nav-title-slide-ios7:not(.no-animation) .button.back-button.ng-hide {
+  .nav-title-slide-ios:not(.no-animation) .button.back-button.ng-hide, .nav-title-slide-ios7:not(.no-animation) .button.back-button.ng-hide {
     opacity: 0;
     -webkit-transform: translate3d(30%, 0, 0);
     -moz-transform: translate3d(30%, 0, 0);
     transform: translate3d(30%, 0, 0); }
-  .nav-title-slide-ios7:not(.no-animation) .button.back-button.ng-hide-add, .nav-title-slide-ios7:not(.no-animation) .button.back-button.ng-hide-remove {
+  .nav-title-slide-ios:not(.no-animation) .button.back-button.ng-hide-add, .nav-title-slide-ios:not(.no-animation) .button.back-button.ng-hide-remove, .nav-title-slide-ios7:not(.no-animation) .button.back-button.ng-hide-add, .nav-title-slide-ios7:not(.no-animation) .button.back-button.ng-hide-remove {
     display: block !important; }
-  .nav-title-slide-ios7:not(.no-animation) .button.back-button.ng-hide-add {
+  .nav-title-slide-ios:not(.no-animation) .button.back-button.ng-hide-add, .nav-title-slide-ios7:not(.no-animation) .button.back-button.ng-hide-add {
     position: absolute; }
-.nav-title-slide-ios7 > .ng-enter, .nav-title-slide-ios7.ng-enter, .nav-title-slide-ios7 > .ng-leave, .nav-title-slide-ios7.ng-leave {
-  -webkit-transition: all 340ms;
-  -moz-transition: all 340ms;
-  transition: all 340ms;
+.nav-title-slide-ios > .ng-enter, .nav-title-slide-ios.ng-enter, .nav-title-slide-ios > .ng-leave, .nav-title-slide-ios.ng-leave, .nav-title-slide-ios7 > .ng-enter, .nav-title-slide-ios7.ng-enter, .nav-title-slide-ios7 > .ng-leave, .nav-title-slide-ios7.ng-leave {
+  -webkit-transition: all 400ms;
+  -moz-transition: all 400ms;
+  transition: all 400ms;
   -webkit-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
   -moz-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
   transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
   opacity: 1; }
-.nav-title-slide-ios7 > .ng-enter, .nav-title-slide-ios7.ng-enter {
+.nav-title-slide-ios > .ng-enter, .nav-title-slide-ios.ng-enter, .nav-title-slide-ios7 > .ng-enter, .nav-title-slide-ios7.ng-enter {
   -webkit-transform: translate3d(30%, 0, 0);
   -moz-transform: translate3d(30%, 0, 0);
   transform: translate3d(30%, 0, 0);
   opacity: 0; }
-  .nav-title-slide-ios7 > .ng-enter.title, .nav-title-slide-ios7.ng-enter.title {
+  .nav-title-slide-ios > .ng-enter.title, .nav-title-slide-ios.ng-enter.title, .nav-title-slide-ios7 > .ng-enter.title, .nav-title-slide-ios7.ng-enter.title {
     -webkit-transform: translate3d(100%, 0, 0);
     -moz-transform: translate3d(100%, 0, 0);
     transform: translate3d(100%, 0, 0); }
-.nav-title-slide-ios7 > .ng-enter.ng-enter-active, .nav-title-slide-ios7.ng-enter.ng-enter-active {
+.nav-title-slide-ios > .ng-enter.ng-enter-active, .nav-title-slide-ios.ng-enter.ng-enter-active, .nav-title-slide-ios7 > .ng-enter.ng-enter-active, .nav-title-slide-ios7.ng-enter.ng-enter-active {
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   opacity: 1; }
-.nav-title-slide-ios7 > .ng-leave.ng-leave-active, .nav-title-slide-ios7.ng-leave.ng-leave-active {
+.nav-title-slide-ios > .ng-leave.ng-leave-active, .nav-title-slide-ios.ng-leave.ng-leave-active, .nav-title-slide-ios7 > .ng-leave.ng-leave-active, .nav-title-slide-ios7.ng-leave.ng-leave-active {
   -webkit-transform: translate3d(-30%, 0, 0);
   -moz-transform: translate3d(-30%, 0, 0);
   transform: translate3d(-30%, 0, 0);
   opacity: 0; }
-.nav-title-slide-ios7.reverse > .ng-enter, .nav-title-slide-ios7.reverse.ng-enter, .nav-title-slide-ios7.reverse > .ng-leave, .nav-title-slide-ios7.reverse.ng-leave {
-  -webkit-transition: all 340ms;
-  -moz-transition: all 340ms;
-  transition: all 340ms;
+.nav-title-slide-ios.reverse > .ng-enter, .nav-title-slide-ios.reverse.ng-enter, .nav-title-slide-ios.reverse > .ng-leave, .nav-title-slide-ios.reverse.ng-leave, .nav-title-slide-ios7.reverse > .ng-enter, .nav-title-slide-ios7.reverse.ng-enter, .nav-title-slide-ios7.reverse > .ng-leave, .nav-title-slide-ios7.reverse.ng-leave {
+  -webkit-transition: all 400ms;
+  -moz-transition: all 400ms;
+  transition: all 400ms;
   -webkit-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
   -moz-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
   transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1);
   opacity: 1; }
-.nav-title-slide-ios7.reverse > .ng-enter, .nav-title-slide-ios7.reverse.ng-enter {
+.nav-title-slide-ios.reverse > .ng-enter, .nav-title-slide-ios.reverse.ng-enter, .nav-title-slide-ios7.reverse > .ng-enter, .nav-title-slide-ios7.reverse.ng-enter {
   -webkit-transform: translate3d(-30%, 0, 0);
   -moz-transform: translate3d(-30%, 0, 0);
   transform: translate3d(-30%, 0, 0);
   opacity: 0; }
-.nav-title-slide-ios7.reverse > .ng-enter.ng-enter-active, .nav-title-slide-ios7.reverse.ng-enter.ng-enter-active {
+.nav-title-slide-ios.reverse > .ng-enter.ng-enter-active, .nav-title-slide-ios.reverse.ng-enter.ng-enter-active, .nav-title-slide-ios7.reverse > .ng-enter.ng-enter-active, .nav-title-slide-ios7.reverse.ng-enter.ng-enter-active {
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   opacity: 1; }
-.nav-title-slide-ios7.reverse > .ng-leave.ng-leave-active, .nav-title-slide-ios7.reverse.ng-leave.ng-leave-active {
+.nav-title-slide-ios.reverse > .ng-leave.ng-leave-active, .nav-title-slide-ios.reverse.ng-leave.ng-leave-active, .nav-title-slide-ios7.reverse > .ng-leave.ng-leave-active, .nav-title-slide-ios7.reverse.ng-leave.ng-leave-active {
+  -webkit-transform: translate3d(100%, 0, 0);
+  -moz-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+  opacity: 0; }
+
+/**
+ * Some component specific animations
+ */
+.nav-title-slide-full:not(.no-animation) .button.back-button {
+  -webkit-transition: all 400ms;
+  -moz-transition: all 400ms;
+  transition: all 400ms;
+  -webkit-transition-timing-function: ease-in-out;
+  -moz-transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in-out;
+  -webkit-transform: translate3d(0%, 0, 0);
+  -moz-transform: translate3d(0%, 0, 0);
+  transform: translate3d(0%, 0, 0);
+  opacity: 1; }
+  .nav-title-slide-full:not(.no-animation) .button.back-button.active, .nav-title-slide-full:not(.no-animation) .button.back-button.activated {
+    opacity: 0.5; }
+  .nav-title-slide-full:not(.no-animation) .button.back-button.ng-hide {
+    opacity: 0;
+    -webkit-transform: translate3d(30%, 0, 0);
+    -moz-transform: translate3d(30%, 0, 0);
+    transform: translate3d(30%, 0, 0); }
+  .nav-title-slide-full:not(.no-animation) .button.back-button.ng-hide-add, .nav-title-slide-full:not(.no-animation) .button.back-button.ng-hide-remove {
+    display: block !important; }
+  .nav-title-slide-full:not(.no-animation) .button.back-button.ng-hide-add {
+    position: absolute; }
+.nav-title-slide-full > .ng-enter, .nav-title-slide-full.ng-enter, .nav-title-slide-full > .ng-leave, .nav-title-slide-full.ng-leave {
+  -webkit-transition: all 400ms;
+  -moz-transition: all 400ms;
+  transition: all 400ms;
+  -webkit-transition-timing-function: ease-in-out;
+  -moz-transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in-out;
+  opacity: 1; }
+.nav-title-slide-full > .ng-enter, .nav-title-slide-full.ng-enter {
+  -webkit-transform: translate3d(30%, 0, 0);
+  -moz-transform: translate3d(30%, 0, 0);
+  transform: translate3d(30%, 0, 0);
+  opacity: 0; }
+  .nav-title-slide-full > .ng-enter.title, .nav-title-slide-full.ng-enter.title {
+    -webkit-transform: translate3d(100%, 0, 0);
+    -moz-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0); }
+.nav-title-slide-full > .ng-enter.ng-enter-active, .nav-title-slide-full.ng-enter.ng-enter-active {
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  opacity: 1; }
+.nav-title-slide-full > .ng-leave.ng-leave-active, .nav-title-slide-full.ng-leave.ng-leave-active {
+  -webkit-transform: translate3d(-30%, 0, 0);
+  -moz-transform: translate3d(-30%, 0, 0);
+  transform: translate3d(-30%, 0, 0);
+  opacity: 0; }
+.nav-title-slide-full.reverse > .ng-enter, .nav-title-slide-full.reverse.ng-enter, .nav-title-slide-full.reverse > .ng-leave, .nav-title-slide-full.reverse.ng-leave {
+  -webkit-transition: all 400ms;
+  -moz-transition: all 400ms;
+  transition: all 400ms;
+  -webkit-transition-timing-function: ease-in-out;
+  -moz-transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in-out;
+  opacity: 1; }
+.nav-title-slide-full.reverse > .ng-enter, .nav-title-slide-full.reverse.ng-enter {
+  -webkit-transform: translate3d(-30%, 0, 0);
+  -moz-transform: translate3d(-30%, 0, 0);
+  transform: translate3d(-30%, 0, 0);
+  opacity: 0; }
+.nav-title-slide-full.reverse > .ng-enter.ng-enter-active, .nav-title-slide-full.reverse.ng-enter.ng-enter-active {
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  opacity: 1; }
+.nav-title-slide-full.reverse > .ng-leave.ng-leave-active, .nav-title-slide-full.reverse.ng-leave.ng-leave-active {
   -webkit-transform: translate3d(100%, 0, 0);
   -moz-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0);
@@ -7092,6 +7221,12 @@ a.button {
   display: flex;
   padding: 5px;
   width: 100%; }
+
+.row-wrap {
+  -webkit-flex-wrap: wrap;
+  -moz-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap; }
 
 .row + .row {
   margin-top: -5px;
@@ -7394,6 +7529,15 @@ a.button {
   -webkit-user-drag: none;
   -ms-touch-action: none;
   -ms-content-zooming: none; }
+
+.click-block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  width: 100%;
+  height: 100%;
+  background: transparent; }
 
 .no-resize {
   resize: none; }

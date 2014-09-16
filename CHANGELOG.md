@@ -1,3 +1,52 @@
+### 1.0.0-beta.12 "krypton-koala" (2014-09-10)
+
+
+#### Bug Fixes
+
+* **back button:** do not animate back button transition if the title doesn't change. ([d3c8a1b2](https://github.com/driftyco/ionic/commit/d3c8a1b2a4a87c20639f11a2402c68b4e740db6f), closes [#1858](https://github.com/driftyco/ionic/issues/1858))
+* **buttons:** centering icons on <a> tag buttons. ([69442d5a](https://github.com/driftyco/ionic/commit/69442d5a8ebb34295ea8d5f8b85b262d6a72e75a), closes [#2074](https://github.com/driftyco/ionic/issues/2074))
+* **classList:** error on svg elements ([98629d42](https://github.com/driftyco/ionic/commit/98629d424351c823a055b2c358d642adaa8e78f1), closes [#1795](https://github.com/driftyco/ionic/issues/1795))
+* **collectionRepeat:**
+  * always render data correctly with before/after isblings ([120f99ee](https://github.com/driftyco/ionic/commit/120f99ee79fe37feab6401290526298bf7834951), closes [#2025](https://github.com/driftyco/ionic/issues/2025))
+  * simplify item reusing process to fix rare reuse error ([8c6d5f2c](https://github.com/driftyco/ionic/commit/8c6d5f2c96b132c8a54b3ff4f9bf6effa7411d8d), closes [#1777](https://github.com/driftyco/ionic/issues/1777))
+  * with ngHref, make href attr erase if falsy ([977f6818](https://github.com/driftyco/ionic/commit/977f681818d1a86a4a5b1890ef24cf0412b6d1ff), closes [#1674](https://github.com/driftyco/ionic/issues/1674))
+  * rerender when $ionicScrollDelegate resizes ([5e025fbb](https://github.com/driftyco/ionic/commit/5e025fbb016c2c3f36f18e35355e0f30cf55ff96), closes [#1777](https://github.com/driftyco/ionic/issues/1777))
+  * ignore spacing of hidden elements (ion-refresher) ([9bfa3bd1](https://github.com/driftyco/ionic/commit/9bfa3bd18b099be14be2e99e0ba380c09702b75b), closes [#1970](https://github.com/driftyco/ionic/issues/1970))
+* **ionContent:** fix rare positioning bug when overflow-scroll is enabled ([84b5e919](https://github.com/driftyco/ionic/commit/84b5e91975c04cd6f5778086f711f8ac436cf588), closes [#1281](https://github.com/driftyco/ionic/issues/1281))
+* **item:** clicks climb 5 levels looking for an item to activate, but not 6. ([840c014b](https://github.com/driftyco/ionic/commit/840c014b27b5cf0616f4f1191555ee20c772ab85), closes [#1921](https://github.com/driftyco/ionic/issues/1921))
+* **keyboard:** screen.height fallback for window.innerHeight ([77847f49](https://github.com/driftyco/ionic/commit/77847f4963143b9443d0ecde65622daa6c64ef9f), closes [#2168](https://github.com/driftyco/ionic/issues/2168))
+* **loading:** potential race condition with showing and hiding loading in same watch cycle ([65aece2a](https://github.com/driftyco/ionic/commit/65aece2aadb47c3f7d692aaa687afe6872581179))
+* **menuContent:** gestures do not stop_browser_behavior ([df578585](https://github.com/driftyco/ionic/commit/df5785852111f7bb5c913ac9e3237b107d5b9838), closes [#421](https://github.com/driftyco/ionic/issues/421))
+* **platform:** fullscreen method will not offset footer by 20px ([b1f94da2](https://github.com/driftyco/ionic/commit/b1f94da27e265ca32698b86785073d53208e6679))
+* **popup:**
+  * fix alignment, backdrop not fading out ([6d859f48](https://github.com/driftyco/ionic/commit/6d859f4876e07c4650e459b9e0d850aff380521c))
+  * only override prompt input if template includes HTML ([044fac4d](https://github.com/driftyco/ionic/commit/044fac4d77a9c6dad94bdd5708ec0cea0a4b2922))
+* **refresher:** finish animating before changing icon, hide when not in use ([c336e8ed](https://github.com/driftyco/ionic/commit/c336e8ede8a1f83ef2a4a567121cce0d82aa78e8))
+* **reorder:**
+  * reorder drag threshold are equal for going up and down. ([6f5b6c24](https://github.com/driftyco/ionic/commit/6f5b6c24c607d4fe609756616ff6ea4a6e1a4ef1), closes [#1394](https://github.com/driftyco/ionic/issues/1394))
+  * item click handlers dont fire when tapping on reorder icon ([cc18a64b](https://github.com/driftyco/ionic/commit/cc18a64bf4ad2fc474d6d83288b8fcdcc368e02d))
+* **scroll:**
+  * calculate padding-bottom ([ba3600df](https://github.com/driftyco/ionic/commit/ba3600dfb4d2652b6ded87e085c4186c5bf22f31), closes [#2174](https://github.com/driftyco/ionic/issues/2174))
+  * remove isContentEditable from ignoreScrollStart ([caf12721](https://github.com/driftyco/ionic/commit/caf12721869a9efc7ca660e4f4b7943ad3eb4b44), closes [#2091](https://github.com/driftyco/ionic/issues/2091))
+* **scrollView:** resolve memory leaks with holding element references ([c5966bba](https://github.com/driftyco/ionic/commit/c5966bba054001bfc719140bc25ab10e717f7193))
+* **sideMenu:**
+  * close menu w/ drag on Android 4.4 ([a49f3747](https://github.com/driftyco/ionic/commit/a49f37470629a730dd8a16785409eb11bf4fc1db), closes [#2102](https://github.com/driftyco/ionic/issues/2102))
+  * fix stopping content scrolling ([944d2595](https://github.com/driftyco/ionic/commit/944d2595af5435dd8efa38ed1e54b9ce504a195b))
+
+
+#### Features
+
+* **$ionicBody:** service to simplify body ele interaction ([2c3f1c9f](https://github.com/driftyco/ionic/commit/2c3f1c9f02ea3f2a90054556637a11f142010764))
+* **$ionicConfigProvider:** add $ionicConfigProvider ([2643cffc](https://github.com/driftyco/ionic/commit/2643cffc19c65ad292ecc7069516427a71b43332))
+* **$ionicScrollDelegate:** expose zoomBy and zoomTo methods ([029f8f33](https://github.com/driftyco/ionic/commit/029f8f33533115f7da95722d6fd596adfadd6a48), closes [#1977](https://github.com/driftyco/ionic/issues/1977))
+* **ionContent:** add `locking` option ([af229072](https://github.com/driftyco/ionic/commit/af229072dfce16709bcd213333005e523fa9b162), closes [#2034](https://github.com/driftyco/ionic/issues/2034))
+* **ionScroll:** add locking option ([cc8f31d8](https://github.com/driftyco/ionic/commit/cc8f31d8e8cd145bdcc7f3a0309c3c3b21506a88), closes [#2034](https://github.com/driftyco/ionic/issues/2034))
+* **popover:** support popping from bottom or top of screen ([5d06c4ae](https://github.com/driftyco/ionic/commit/5d06c4aef8bf39703f9f4f32de52dad7749d1de5), closes [#1986](https://github.com/driftyco/ionic/issues/1986))
+* **scroll-content:** add 1px padding-top ([e5b5906c](https://github.com/driftyco/ionic/commit/e5b5906cb7693b63e4c8059893b791214aed26c1))
+* **splitView:** expose side menu on large viewport ([b69aa548](https://github.com/driftyco/ionic/commit/b69aa5485f90efb295547732dcaa87507abc0bdd))
+* **templateCache:** automatically cache template files to prevent flicker on page navigation and imp ([944a92b0](https://github.com/driftyco/ionic/commit/944a92b08d40a7a4fb7e1e4727af9a2f8df3774f))
+
+
 ### 1.0.0-beta.11 "indium-iguana" (2014-08-06)
 
 

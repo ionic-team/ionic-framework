@@ -372,7 +372,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         return Math.max(self.__content.scrollWidth, self.__content.offsetWidth);
       },
       getContentHeight: function() {
-        return Math.max(self.__content.scrollHeight, self.__content.offsetHeight + self.__content.offsetTop);
+        return Math.max(self.__content.scrollHeight, self.__content.offsetHeight + (self.__content.offsetTop * 2));
       }
     };
 
@@ -687,11 +687,13 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     self.resetScrollView = function(e) {
       //return scrollview to original height once keyboard has hidden
-      self.isScrolledIntoView = false;
-      container.style.height = "";
-      container.style.overflow = "";
-      self.resize();
-      ionic.scroll.isScrolling = false;
+      if(self.isScrolledIntoView) {
+        self.isScrolledIntoView = false;
+        container.style.height = "";
+        container.style.overflow = "";
+        self.resize();
+        ionic.scroll.isScrolling = false;
+      }
     };
 
     //Broadcasted when keyboard is shown on some platforms.
@@ -1116,6 +1118,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
   },
 
   resize: function() {
+    if(!this.__container || !this.options) return;
+
     // Update Scroller dimensions for changed content
     // Add padding to bottom of content
     this.setDimensions(

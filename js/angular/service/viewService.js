@@ -30,6 +30,11 @@ function($rootScope, $state, $location, $document, $animate, $ionicPlatform, $io
     $ionicViewService.disableRegisterByTagName('ion-side-menus');
   }
 
+  // always reset the keyboard state when change stage
+  $rootScope.$on('$stateChangeStart', function(){
+    ionic.keyboard.hide();
+  });
+
   $rootScope.$on('viewState.changeHistory', function(e, data) {
     if(!data) return;
 
@@ -205,8 +210,17 @@ function($rootScope, $state, $location, $window, $injector, $animate, $ionicNavV
                 hist.cursor > -1 && hist.stack.length > 0 && hist.cursor < hist.stack.length &&
                 hist.stack[hist.cursor].stateId === currentStateId) {
         // they just changed to a different history and the history already has views in it
-        rsp.viewId = hist.stack[hist.cursor].viewId;
+        var switchToView = hist.stack[hist.cursor];
+        rsp.viewId = switchToView.viewId;
         rsp.navAction = 'moveBack';
+
+        // if switching to a different history, and the history of the view we're switching
+        // to has an existing back view from a different history than itself, then
+        // it's back view would be better represented using the current view as its back view
+        var switchToViewBackView = this._getViewById(switchToView.backViewId);
+        if(switchToViewBackView && switchToView.historyId !== switchToViewBackView.historyId) {
+          hist.stack[hist.cursor].backViewId = currentView.viewId;
+        }
 
       } else {
 
@@ -223,8 +237,9 @@ function($rootScope, $state, $location, $window, $injector, $animate, $ionicNavV
           }
           rsp.navAction = 'newView';
 
-          // check if there is a new forward view
-          if(forwardView && currentView.stateId !== forwardView.stateId) {
+          // check if there is a new forward view within the same history
+          if(forwardView && currentView.stateId !== forwardView.stateId &&
+             currentView.historyId === forwardView.historyId) {
             // they navigated to a new view but the stack already has a forward view
             // since its a new view remove any forwards that existed
             var forwardsHistory = this._getHistoryById(forwardView.historyId);

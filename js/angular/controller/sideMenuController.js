@@ -50,6 +50,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody) {
    * Toggle the left menu to open 100%
    */
   self.toggleLeft = function(shouldOpen) {
+    if(isAsideExposed) return;
     var openAmount = self.getOpenAmount();
     if (arguments.length === 0) {
       shouldOpen = openAmount <= 0;
@@ -66,6 +67,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody) {
    * Toggle the right menu to open 100%
    */
   self.toggleRight = function(shouldOpen) {
+    if(isAsideExposed) return;
     var openAmount = self.getOpenAmount();
     if (arguments.length === 0) {
       shouldOpen = openAmount >= 0;
@@ -257,6 +259,9 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody) {
   };
 
   self.exposeAside = function(shouldExposeAside) {
+    if(!self.left || !self.left.isEnabled) return;
+
+    self.close();
     isAsideExposed = shouldExposeAside;
 
     // set the left marget width if it should be exposed

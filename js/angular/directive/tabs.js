@@ -50,9 +50,9 @@ IonicModule.constant('$ionicTabsConfig', {
 
 IonicModule
 .directive('ionTabs', [
-  '$ionicViewService', 
-  '$ionicTabsDelegate', 
-  '$ionicTabsConfig', 
+  '$ionicViewService',
+  '$ionicTabsDelegate',
+  '$ionicTabsConfig',
 function($ionicViewService, $ionicTabsDelegate, $ionicTabsConfig) {
   return {
     restrict: 'E',
@@ -74,7 +74,14 @@ function($ionicViewService, $ionicTabsDelegate, $ionicTabsConfig) {
           tabsCtrl, $attr.delegateHandle
         );
 
-        $scope.$on('$destroy', deregisterInstance);
+        $scope.$on('$destroy', function(){
+          // variable to inform child tabs that they're all being blown away
+          // used so that while destorying an individual tab, each one
+          // doesn't select the next tab as the active one, which causes unnecessary
+          // loading of tab views when each will eventually all go away anyway
+          $scope.$tabsDestroy = true;
+          deregisterInstance();
+        });
 
         tabsCtrl.$scope = $scope;
         tabsCtrl.$element = $element;

@@ -25,6 +25,7 @@
   left: 50%;
   z-index: $z-index-popover;
   display: block;
+  margin-top: 12px;
   margin-left: -$popover-width / 2;
   height: $popover-height;
   width: $popover-width;
@@ -40,9 +41,6 @@
     border-bottom: 0;
   }
 
-  &.popover-top {
-    margin-top: 12px;
-  }
   &.popover-bottom {
     margin-top: -12px;
   }
@@ -92,6 +90,7 @@
   .popover-arrow {
     position: absolute;
     display: block;
+    top: -17px;
     width: 30px;
     height: 19px;
     overflow: hidden;
@@ -108,10 +107,8 @@
       @include rotate(-45deg);
     }
   }
-  .popover-top .popover-arrow {
-    top: -17px;
-  }
   .popover-bottom .popover-arrow {
+    top: auto;
     bottom: -10px;
     &:after {
       top: -6px;
@@ -124,6 +121,7 @@
 .platform-android {
 
   .popover {
+    margin-top: -32px;
     background-color: $popover-bg-color-android;
     box-shadow: $popover-box-shadow-android;
 
@@ -131,9 +129,6 @@
       border-color: $popover-bg-color-android;
       background-color: $popover-bg-color-android;
       color: #4d4d4d;
-    }
-    &.popover-top {
-      margin-top: -32px;
     }
     &.popover-bottom {
       margin-top: 32px;
