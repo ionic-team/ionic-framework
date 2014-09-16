@@ -79,7 +79,7 @@ function($ionicViewService, $ionicTabsDelegate, $ionicTabsConfig) {
           // used so that while destorying an individual tab, each one
           // doesn't select the next tab as the active one, which causes unnecessary
           // loading of tab views when each will eventually all go away anyway
-          $scope.$tabsDestory = true;
+          $scope.$tabsDestroy = true;
           deregisterInstance();
         });
 
