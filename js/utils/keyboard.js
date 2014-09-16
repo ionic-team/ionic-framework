@@ -82,7 +82,6 @@ ionic.keyboard = {
     clearTimeout(keyboardFocusOutTimer);
     clearTimeout(keyboardPollHeightTimer);
 
-    console.log('keyboardHide');
     ionic.keyboard.isOpen = false;
 
     ionic.trigger('resetScrollView', {
