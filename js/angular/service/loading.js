@@ -54,7 +54,7 @@ var LOADING_SET_DEPRECATED = '$ionicLoading instance.setContent() has been depre
  */
 IonicModule
 .constant('$ionicLoadingConfig', {
-  template: '<i class="ion-loading-d"></i>'
+  template: '<i class="icon ion-loading-d"></i>'
 })
 .factory('$ionicLoading', [
   '$ionicLoadingConfig',
