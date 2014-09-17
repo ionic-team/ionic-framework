@@ -113,10 +113,12 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 
 * The demo site is generated into `dist/ionic-demo`. To test the demos, follow these steps:
   1. Run `gulp demos [--demo-version=(versionName|nightly)]`
-  2. Start an http server from `dist/ionic-demo`:
+  2. Create a symlink to dist so that the demos can use your current dist folder:
+    - `cd dist/ionic-demo && ln -s ../ dist`
+  3. Start an http server from `dist/ionic-demo`:
     - `cd dist/ionic-demo && python -m SimpleHTTPServer`
-  3. Navigate to `http://localhost:8000/{versionName|nightly}` and use the demos
-  4. Run `gulp demos` again whenever you change the demos
+  4. Navigate to `http://localhost:8000/{versionName|nightly}` and use the demos
+  5. Run `gulp demos` again whenever you change the demos
 
 ### Commit Conventions
 
