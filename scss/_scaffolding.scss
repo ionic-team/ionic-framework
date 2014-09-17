@@ -137,10 +137,9 @@ body.grade-c {
   border-radius: 4px;
   background: rgba(0,0,0,0.3);
   opacity: 1;
-
+  @include transition(opacity .3s linear);
 
   &.scroll-bar-fade-out {
-    @include transition(opacity 0.3s linear);
     opacity: 0;
   }
 }
