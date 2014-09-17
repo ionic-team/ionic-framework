@@ -619,13 +619,13 @@ describe('Ionic Tap', function() {
 
   it('Should get coordinates from page mouse event', function() {
     var e = { pageX: 77, pageY: 77 };
-    var c = getPointerCoordinates(e);
+    var c = ionic.tap.pointerCoord(e);
     expect(c).toEqual({x:77, y: 77});
   });
 
   it('Should get coordinates from client mouse event', function() {
     var e = { clientX: 77, clientY: 77 };
-    var c = getPointerCoordinates(e);
+    var c = ionic.tap.pointerCoord(e);
     expect(c).toEqual({x:77, y: 77});
   });
 
@@ -634,7 +634,7 @@ describe('Ionic Tap', function() {
       touches: [{ clientX: 99, clientY: 99 }],
       changedTouches: [{ clientX: 88, clientY: 88 }]
     };
-    var c = getPointerCoordinates(e);
+    var c = ionic.tap.pointerCoord(e);
     expect(c).toEqual({x:88, y: 88});
   });
 
@@ -642,7 +642,7 @@ describe('Ionic Tap', function() {
     var e = {
       touches: [{ pageX: 99, pageY: 99 }]
     };
-    var c = getPointerCoordinates(e);
+    var c = ionic.tap.pointerCoord(e);
     expect(c).toEqual({x:99, y: 99});
   });
 
@@ -650,13 +650,13 @@ describe('Ionic Tap', function() {
     var e = {
       touches: [{ clientX: 99, clientY: 99 }]
     };
-    var c = getPointerCoordinates(e);
+    var c = ionic.tap.pointerCoord(e);
     expect(c).toEqual({x:99, y: 99});
   });
 
   it('Should get 0 coordinates', function() {
     var e = {};
-    var c = getPointerCoordinates(e);
+    var c = ionic.tap.pointerCoord(e);
     expect(c).toEqual({x:0, y: 0});
   });
 
@@ -902,6 +902,18 @@ describe('Ionic Tap', function() {
     expect( tapTouchFocusedInput ).toEqual(null);
   });
 
+  it('Should focus contenteditable div', function() {
+    var ele = {
+      tagName: 'DIV',
+      isContentEditable: true,
+      focus: function(){ this.hasFocus=true; },
+      dispatchEvent: function(){}
+    };
+    tapHandleFocus(ele);
+    expect( ele.hasFocus ).toEqual(true);
+    expect( tapTouchFocusedInput ).toEqual(null);
+  });
+
   it('Should not focus on common elements', function() {
     var tags = ['div', 'span', 'i', 'body', 'section', 'article', 'aside', 'li', 'p', 'header', 'button', 'ion-content'];
     function setFocus() {
@@ -956,6 +968,17 @@ describe('Ionic Tap', function() {
       tapFocusOutActive(ele);
       expect( ele.hasBlurred ).toEqual(true);
     }
+  });
+
+  it('Should focus out on contenteditable elements', function() {
+    var ele = {
+      tagName: 'DIV',
+      isContentEditable: true,
+      blur: function() { this.hasBlurred=true; }
+    };
+    tapActiveElement(ele);
+    tapFocusOutActive(ele);
+    expect( ele.hasBlurred ).toEqual(true);
   });
 
   it('Should get containing element of label when passed a deeply nested div', function() {
@@ -1106,11 +1129,11 @@ describe('Ionic Tap', function() {
     expect( ionic.tap.ignoreScrollStart(e) ).toEqual(true);
   });
 
-  it('Should prevent scrolling if the browser doesnt support dataset but target has data-prevent-default attribute', function() {
+  it('Should prevent scrolling if the browser doesnt support dataset but target has data-prevent-scroll attribute', function() {
     var target = {
       tagName: 'div',
       getAttribute: function(val) {
-        if(val === 'data-prevent-default') {
+        if(val === 'data-prevent-scroll') {
           return 'true';
         }
       }
@@ -1232,8 +1255,8 @@ describe('Ionic Tap', function() {
 
     ele.type = 'text';
     expect( ionic.tap.isDateInput(ele) ).toEqual(false);
-    
-    
+
+
   });
 
   it('Should isLabelWithTextInput', function() {

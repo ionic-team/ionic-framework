@@ -34,6 +34,7 @@ describe('Ionic ActionSheet Service', function() {
     spyOn(scope, '$destroy');
     spyOn(scope.element, 'remove');
     scope.removeSheet();
+    $timeout.flush()
     expect($document[0].body.classList.contains('action-sheet-open')).toBe(false);
     expect(scope.element.hasClass('active')).toBe(false);
     expect(scope.$destroy).toHaveBeenCalled();

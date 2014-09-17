@@ -1,9 +1,12 @@
 var pkg = require('../package.json');
 var fs = require('fs');
 
+var DISCOURSE_FILE = __dirname + '/DISCOURSE_POST_URL';
+
 module.exports = {
   dist: 'dist',
-  releasePostUrl: fs.readFileSync('config/RELEASE_POST_URL'),
+  releasePostUrl: fs.readFileSync(DISCOURSE_FILE).toString(),
+  releasePostFile: DISCOURSE_FILE,
 
   protractorPort: 8876,
 
@@ -36,7 +39,6 @@ module.exports = {
     'js/ionic.js',
 
     // Utils
-    'js/utils/animate.js',
     'js/utils/dom.js',
     'js/utils/events.js',
     'js/utils/gestures.js',
@@ -61,13 +63,6 @@ module.exports = {
     // Controllers
     'js/controllers/viewController.js',
     'js/controllers/sideMenuController.js',
-
-    // Animation
-    'js/animation/animation.js',
-    'js/animation/bezier.js',
-    'js/animation/dynamics.js',
-    'js/animation/timing-functions.js',
-    'js/animation/instance.js'
   ],
 
   angularIonicFiles: [
@@ -75,6 +70,7 @@ module.exports = {
     'js/angular/service/**/*.js',
     'js/angular/controller/**/*.js',
     'js/angular/directive/**/*.js',
+    'bower_components/collide/collide.js'
   ],
 
   //Which vendor files to include in dist, used by build

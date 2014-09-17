@@ -23,10 +23,10 @@ Ionic is also not a good solution if you need to support older generation device
 ## Quick Start
 
 To start using ionic, you have two options: copy over the built JS and CSS files, or
-use the `ionic` tool ([ionic-cli](https://github.com/driftyco/ionic-cli)) which can be installed through npm:
+use the `ionic` tool ([ionic-cli](https://github.com/driftyco/ionic-cli)) which can be installed through npm: _(You may need to prefix the command with `sudo` depending on your OS and setup.)_
 
 ```bash
-$ sudo npm install -g ionic
+$ npm install -g ionic
 ```
 
 Then, you can start a new ionic project by running:
@@ -127,7 +127,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 - Almost all of the logic for releasing Ionic is done on the Travis server
 - To push a new release:
   1. Update package.json version to new version
-  2. Generate changelog with `gulp changelog` 
+  2. Generate changelog with `gulp changelog`
   3. Go through the changelog, and fix any mistakes or clarify any unclear commit messages
   4. Commit package.json and CHANGELOG.md and push to master
 - Travis will detect that this commit changed the version in package.json and push out all necessary for this new release (tags, release files, site config, ...)

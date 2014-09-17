@@ -44,6 +44,9 @@
       .scroll {
         background: lightgreen;
       }
+      .keyboard-open .scroll-content{
+        background: green;
+      }
 
       input,
       textarea {
@@ -56,136 +59,279 @@
 
     <div id="logs" style="position:fixed; top:0; left:0; z-index:9999; background: #eee; font-size:8px; line-height:10px; display:block; "></div>
 
-    <ion-view id="view">
-      <ion-header-bar>
-        <label class="item item-input">
-          <span class="input-label">Header</span>
-          <input type="text" value="header input">
-        </label>
-      </ion-header-bar>
+    <ion-nav-view></ion-nav-view>
 
-      <ion-content class="padding">
+    <script id="input1.html" type="text/ng-template">
 
-        <form ng-submit="formSubmit()">
+      <ion-view id="view">
+        <ion-header-bar>
+          <div class="buttons">
 
-        <div class="list">
+          </div>
+          <h1 class="title">Input Tests</h1>
+          <div class="buttons">
+            <a class="button" href="#/input2">Page 2</a>
+          </div>
+        </ion-header-bar>
 
-          <label class="item item-input item-stacked-label">
-            <span class="input-label">Email</span>
-            <textarea>
-                          Line 1
-                          Line 2
-                          Line 3
-                          Line 4
-                          Line 5
-            </textarea>
-          </label>
+        <ion-content class="padding">
 
-          <label class="item item-input">
-            <span class="input-label">Your Name</span>
-            <input type="text" value="name input" id="name">
-          </label>
+          <form ng-submit="formSubmit()">
 
-          <div class="item item-checkbox">
-            <span class="input-label">Remember me</span>
-            <label class="checkbox">
-                <input type="checkbox" id="remember-me">
+          <div class="list">
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Email</span>
+              <textarea>
+                            Line 1
+                            Line 2
+                            Line 3
+                            Line 4
+                            Line 5
+              </textarea>
             </label>
+
+            <label class="item item-input">
+              <span class="input-label">Your Name</span>
+              <input type="text" value="name input" id="name">
+            </label>
+
+            <div class="item item-checkbox">
+              <span class="input-label">Remember me</span>
+              <label class="checkbox">
+                  <input type="checkbox" id="remember-me">
+              </label>
+            </div>
+
+            <label class="item item-input">
+              <span class="input-label">From 1</span>
+              <input type="text" value="from input" id="from1">
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">To 1</span>
+              <input type="text" value="to input" id="to1">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 1</span>
+              <textarea id="textarea" id="comment1">comment textarea</textarea>
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">From 2</span>
+              <input type="text" value="" id="from2">
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">To 2</span>
+              <input type="text" value="" id="to2">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 2</span>
+              <textarea id="textarea" id="comment2"></textarea>
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">From 3</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">To 3</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 3</span>
+              <textarea id="textarea"></textarea>
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">From 4</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">To 4</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 4</span>
+              <textarea id="textarea"></textarea>
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">From 5</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">To 5</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 5</span>
+              <textarea id="textarea"></textarea>
+            </label>
+
+            <button type="button" class="button button-block button-energized" ng-click="openModal()">
+              Open Modal
+            </button>
+
+            <button type="submit" class="button button-block button-calm">
+              Submit!
+            </button>
           </div>
 
+          </form>
+
+          <p>
+            <a href="clickTests.html">Click Tests</a> -
+            <a href="tapInputs.html">Tap Inputs</a> -
+            <a href="/test/">CSS Tests</a>
+          </p>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="input2.html" type="text/ng-template">
+
+      <ion-view id="view">
+        <ion-header-bar>
           <label class="item item-input">
-            <span class="input-label">From 1</span>
-            <input type="text" value="from input" id="from1">
+            <span class="input-label">Header</span>
+            <input type="text" value="header input">
           </label>
+        </ion-header-bar>
 
-          <label class="item item-input">
-            <span class="input-label">To 1</span>
-            <input type="text" value="to input" id="to1">
-          </label>
+        <ion-content class="padding">
 
-          <label class="item item-input item-stacked-label">
-            <span class="input-label">Comment 1</span>
-            <textarea id="textarea" id="comment1">comment textarea</textarea>
-          </label>
+          <form ng-submit="formSubmit()">
 
-          <label class="item item-input">
-            <span class="input-label">From 2</span>
-            <input type="text" value="" id="from2">
-          </label>
+          <div class="list">
 
-          <label class="item item-input">
-            <span class="input-label">To 2</span>
-            <input type="text" value="" id="to2">
-          </label>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Email</span>
+              <textarea>
+                            Line 1
+                            Line 2
+                            Line 3
+                            Line 4
+                            Line 5
+              </textarea>
+            </label>
 
-          <label class="item item-input item-stacked-label">
-            <span class="input-label">Comment 2</span>
-            <textarea id="textarea" id="comment2"></textarea>
-          </label>
+            <label class="item item-input">
+              <span class="input-label">Your Name</span>
+              <input type="text" value="name input" id="name">
+            </label>
 
-          <label class="item item-input">
-            <span class="input-label">From 3</span>
-            <input type="text" value="">
-          </label>
+            <div class="item item-checkbox">
+              <span class="input-label">Remember me</span>
+              <label class="checkbox">
+                  <input type="checkbox" id="remember-me">
+              </label>
+            </div>
 
-          <label class="item item-input">
-            <span class="input-label">To 3</span>
-            <input type="text" value="">
-          </label>
+            <label class="item item-input">
+              <span class="input-label">From 1</span>
+              <input type="text" value="from input" id="from1">
+            </label>
 
-          <label class="item item-input item-stacked-label">
-            <span class="input-label">Comment 3</span>
-            <textarea id="textarea"></textarea>
-          </label>
+            <label class="item item-input">
+              <span class="input-label">To 1</span>
+              <input type="text" value="to input" id="to1">
+            </label>
 
-          <label class="item item-input">
-            <span class="input-label">From 4</span>
-            <input type="text" value="">
-          </label>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 1</span>
+              <textarea id="textarea" id="comment1">comment textarea</textarea>
+            </label>
 
-          <label class="item item-input">
-            <span class="input-label">To 4</span>
-            <input type="text" value="">
-          </label>
+            <label class="item item-input">
+              <span class="input-label">From 2</span>
+              <input type="text" value="" id="from2">
+            </label>
 
-          <label class="item item-input item-stacked-label">
-            <span class="input-label">Comment 4</span>
-            <textarea id="textarea"></textarea>
-          </label>
+            <label class="item item-input">
+              <span class="input-label">To 2</span>
+              <input type="text" value="" id="to2">
+            </label>
 
-          <label class="item item-input">
-            <span class="input-label">From 5</span>
-            <input type="text" value="">
-          </label>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 2</span>
+              <textarea id="textarea" id="comment2"></textarea>
+            </label>
 
-          <label class="item item-input">
-            <span class="input-label">To 5</span>
-            <input type="text" value="">
-          </label>
+            <label class="item item-input">
+              <span class="input-label">From 3</span>
+              <input type="text" value="">
+            </label>
 
-          <label class="item item-input item-stacked-label">
-            <span class="input-label">Comment 5</span>
-            <textarea id="textarea"></textarea>
-          </label>
+            <label class="item item-input">
+              <span class="input-label">To 3</span>
+              <input type="text" value="">
+            </label>
 
-          <button type="button" class="button button-block button-energized" ng-click="openModal()">
-            Open Modal
-          </button>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 3</span>
+              <textarea id="textarea"></textarea>
+            </label>
 
-          <button type="submit" class="button button-block button-calm">
-            Submit!
-          </button>
-        </div>
+            <label class="item item-input">
+              <span class="input-label">From 4</span>
+              <input type="text" value="">
+            </label>
 
-        </form>
+            <label class="item item-input">
+              <span class="input-label">To 4</span>
+              <input type="text" value="">
+            </label>
 
-        <p>
-          <a href="clickTests.html">Click Tests</a> -
-          <a href="tapInputs.html">Tap Inputs</a> -
-          <a href="/test/">CSS Tests</a>
-        </p>
-      </ion-content>
-    </ion-view>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 4</span>
+              <textarea id="textarea"></textarea>
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">From 5</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">To 5</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 5</span>
+              <textarea id="textarea"></textarea>
+            </label>
+
+            <button type="button" class="button button-block button-energized" ng-click="openModal()">
+              Open Modal
+            </button>
+
+            <button type="submit" class="button button-block button-calm">
+              Submit!
+            </button>
+          </div>
+
+          </form>
+
+          <p>
+            <a href="clickTests.html">Click Tests</a> -
+            <a href="tapInputs.html">Tap Inputs</a> -
+            <a href="/test/">CSS Tests</a>
+          </p>
+        </ion-content>
+      </ion-view>
+    </script>
+
 
     <script id="modal.html" type="text/ng-template">
       <div class="modal" ng-controller="ModalCtrl">
@@ -250,6 +396,21 @@
 
 
       angular.module('navTest', ['ionic'])
+
+      .config(function($stateProvider, $urlRouterProvider) {
+
+        $stateProvider
+          .state('input1', {
+            url: "/input1",
+            templateUrl: "input1.html"
+          })
+          .state('input2', {
+            url: "/input2",
+            templateUrl: "input2.html"
+          });
+
+         $urlRouterProvider.otherwise("/input1");
+      })
 
       .controller('AppCtrl', function($scope, $ionicModal) {
 

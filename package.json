@@ -1,14 +1,14 @@
 {
   "name": "ionic",
   "private": false,
-  "version": "1.0.0-beta.9",
-  "codename": "gadolinium-gator",
+  "version": "1.0.0-beta.12",
+  "codename": "krypton-koala",
   "repository": {
     "url": "git://github.com/driftyco/ionic.git"
   },
   "devDependencies": {
-    "karma": "^0.12.16",
-    "karma-chrome-launcher": "~0.1.2",
+    "karma": "^0.12.22",
+    "karma-chrome-launcher": "^0.1.4",
     "karma-jasmine": "~0.1.5",
     "karma-phantomjs-launcher": "~0.1.2",
     "karma-sauce-launcher": "~0.2.0",
@@ -53,7 +53,8 @@
     "node-uuid": "^1.4.1",
     "js-yaml": "^3.0.2",
     "protractor": "^0.23.1",
-    "q": "^1.0.1"
+    "q": "^1.0.1",
+    "github": "^0.2.1"
   },
   "licenses": [
     {

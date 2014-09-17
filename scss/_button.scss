@@ -33,9 +33,9 @@
     // used to create a larger button "hit" area
     position: absolute;
     top: -6px;
-    right: -8px;
+    right: -6px;
     bottom: -6px;
-    left: -8px;
+    left: -6px;
     content: ' ';
   }
 
@@ -235,6 +235,13 @@ input.button.button-block  {
 
 a.button {
   text-decoration: none;
+
+  .icon:before,
+  &.icon:before,
+  &.icon-left:before,
+  &.icon-right:before {
+    margin-top: 2px;
+  }
 }
 
 .button.disabled,

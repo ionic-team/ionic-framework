@@ -1,0 +1,112 @@
+<html ng-app="ionicApp">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <title>Tabs Example</title>
+
+  <link href="../../../../dist/css/ionic.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<ion-nav-bar class="nav-title-slide-ios7 bar-positive">
+  <ion-nav-back-button class="button-icon ion-arrow-left-c">
+  </ion-nav-back-button>
+</ion-nav-bar>
+
+<ion-nav-view animation="slide-left-right"></ion-nav-view>
+
+<script id="tabs-templates/contact.html" type="text/ng-template">
+  <ion-view title="Contact">
+    <ion-content>
+      <div class="list">
+        <div class="item">
+          @IonicFramework
+        </div>
+        <div class="item">
+          @DriftyTeam
+        </div>
+      </div>
+    </ion-content>
+  </ion-view>
+</script>
+
+
+<script src="../../../../dist/js/ionic.bundle.js"></script>
+<script>
+  angular.module('ionicApp', ['ionic'])
+
+      .config(function($stateProvider, $ionicConfigProvider) {
+
+        $ionicConfigProvider.prefetchTemplates(false);
+
+        $stateProvider
+            .state('tabs', {
+              url: "/tab",
+              abstract: true,
+              templateUrl: "tabs-templates/tabs.html"
+            })
+            .state('tabs.home', {
+              url: "/home",
+              views: {
+                'home-tab': {
+                  templateUrl: "tabs-templates/home.html",
+                  controller: 'HomeTabCtrl'
+                }
+              }
+            })
+            .state('tabs.facts', {
+              url: "/facts",
+              views: {
+                'home-tab': {
+                  templateUrl: "tabs-templates/facts.html"
+                }
+              }
+            })
+            .state('tabs.facts2', {
+              url: "/facts2",
+              views: {
+                'home-tab': {
+                  templateUrl: "tabs-templates/facts2.html"
+                }
+              }
+            })
+            .state('tabs.about', {
+              url: "/about",
+              views: {
+                'about-tab': {
+                  templateUrl: "tabs-templates/about.html"
+                }
+              }
+            })
+            .state('tabs.navstack', {
+              url: "/navstack",
+              views: {
+                'about-tab': {
+                  templateUrl: "tabs-templates/nav-stack.html",
+                  prefetchTemplate:false
+                }
+              }
+            })
+            .state('tabs.contact', {
+              url: "/contact",
+              views: {
+                'contact-tab': {
+                  templateUrl: "tabs-templates/contact.html"
+                }
+              }
+            });
+
+
+        $urlRouterProvider.otherwise("/tab/home");
+
+      })
+
+      .controller('HomeTabCtrl', function($scope, $ionicTemplateCache) {
+        $ionicTemplateCache('test');
+      });
+</script>
+</body>
+</html>

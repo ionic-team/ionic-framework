@@ -1,7 +1,7 @@
 {
   "name": "ionic",
-  "version": "1.0.0-beta.9",
-  "codename": "gadolinium-gator",
+  "version": "1.0.0-beta.12",
+  "codename": "krypton-koala",
   "homepage": "https://github.com/driftyco/ionic",
   "authors": [
     "Max Lynch <max@drifty.com>",
@@ -51,6 +51,7 @@
     "angular": "~1.2.17",
     "angular-animate": "~1.2.17",
     "angular-sanitize": "~1.2.17",
-    "angular-ui-router": "0.2.10"
+    "angular-ui-router": "0.2.10",
+    "collide": "1.0.0-beta.1"
   }
 }

@@ -98,11 +98,11 @@ describe('ionicInfiniteScroll directive', function() {
     ].forEach(function(opts) {
 
       describe('with scrollingX='+opts.scrollingX+', scrollingY='+opts.scrollingY, function() {
-        it('should default to 1%', function() {
+        it('should default to 2.5%', function() {
           var el = setup('', {}, opts);
           expect(ctrl.getMaxScroll()).toEqual({
-            left: opts.scrollingX ? scrollLeftMaxValue * 0.99 : -1,
-            top: opts.scrollingY ? scrollTopMaxValue * 0.99 : -1
+            left: opts.scrollingX ? scrollLeftMaxValue * 0.975 : -1,
+            top: opts.scrollingY ? scrollTopMaxValue * 0.975 : -1
           });
         });
 

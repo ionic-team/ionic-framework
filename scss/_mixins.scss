@@ -171,7 +171,7 @@
 // Placeholder text
 // --------------------------------------------------
 
-@mixin placeholder($color: $input-color-placeholder) {
+@mixin placeholder($color: $input-color-placeholder, $text-indent: 0) {
   &::-moz-placeholder { /* Firefox 19+ */
     color: $color;
   }
@@ -180,6 +180,8 @@
   }
   &::-webkit-input-placeholder {
     color: $color;
+    // Safari placeholder margin issue
+    text-indent: $text-indent;
   }
 }
 

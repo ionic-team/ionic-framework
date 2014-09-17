@@ -1,8 +1,7 @@
 describe('gesture directive', function() {
   beforeEach(module('ionic'));
 
-  'onHold onTap onTouch onRelease onDrag onDragUp onDragRight onDragDown onDragLeft onSwipe onSwipeUp onSwipeRight onSwipeBottom onSwipeLeft'
-  .split(' ')
+  GESTURE_DIRECTIVES
   .map(function(directiveName) {
     return {
       gestureName: directiveName.substr(2).toLowerCase(),
@@ -12,7 +11,7 @@ describe('gesture directive', function() {
       })
     };
   })
-  .forEach(function(directive){ 
+  .forEach(function(directive){
     it('should compile', inject(function($compile, $rootScope, $ionicGesture) {
       var fakeGesture = {};
       spyOn($ionicGesture, 'on').andCallFake(function(eventType, listener, el) {
@@ -24,7 +23,7 @@ describe('gesture directive', function() {
       $rootScope.$apply();
 
       el.scope().foo = jasmine.createSpy('foo');
-      
+
       expect($ionicGesture.on.mostRecentCall.args[0]).toBe(directive.gestureName);
       var event = {};
       callback(event);

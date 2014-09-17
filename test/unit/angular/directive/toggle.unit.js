@@ -69,4 +69,15 @@ describe('Ionic Toggle', function() {
 
   });
 
+  it('Should have toggle class', function() {
+
+    // Init with not disabled
+    rootScope.data = { isDisabled: false };
+    el = compile('<ion-toggle toggle-class="toggle-dark" ng-model="data.name" ng-disabled="data.isDisabled"></ion-toggle>')(rootScope);
+
+    // Grab fields
+    var label = el.find('label');
+    expect(label.hasClass('toggle-dark')).toEqual(true);
+  });
+
 });

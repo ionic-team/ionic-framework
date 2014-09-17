@@ -4,48 +4,55 @@
  * --------------------------------------------------
  */
 
-.popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
+.popup-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0,0,0,0);
+
+  @include display-flex();
+  @include justify-content(center);
+  @include align-items(center);
+
   z-index: $z-index-popup;
 
   // Start hidden
   visibility: hidden;
+  &.popup-showing {
+    visibility: visible;
+  }
 
-  width: $popup-width;
-  max-width: 100%;
-
-  border-radius: $popup-border-radius;
-  background-color: $popup-background-color;
-
-  &.popup-hidden {
+  &.popup-hidden .popup {
     @include animation-name(scaleOut);
     @include animation-duration($popup-leave-animation-duration);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
   }
 
-  &.popup-showing {
-    visibility: visible;
-  }
-
-  &.active {
+  &.active .popup {
     @include animation-name(superScaleIn);
     @include animation-duration($popup-enter-animation-duration);
     @include animation-timing-function(ease-in-out);
     @include animation-fill-mode(both);
   }
-  &.popup-tall{
-    overflow:hidden;
-    .popup-body{
-      overflow:auto;
-    }
+
+  .popup {
+    width: $popup-width;
+    max-width: 100%;
+    max-height: 90%;
+
+    border-radius: $popup-border-radius;
+    background-color: $popup-background-color;
+
+    @include display-flex();
+    @include flex-direction(column);
   }
 }
 
 .popup-head {
-  padding: 15px 0px;
+  padding: 15px 10px;
   border-bottom: 1px solid #eee;
   text-align: center;
 }
@@ -62,22 +69,23 @@
 }
 .popup-body {
   padding: 10px;
+  overflow: scroll;
 }
 
 .popup-buttons {
-  &.row {
-    padding: 10px 10px;
-  }
+  @include display-flex();
+  @include flex-direction(row);
+  padding: 10px;
+  min-height: $popup-button-min-height + 20;
 
   .button {
-    margin: 0px 5px;
+    @include flex(1);
+    display: block;
     min-height: $popup-button-min-height;
     border-radius: $popup-button-border-radius;
     line-height: $popup-button-line-height;
 
-    &:first-child {
-      margin-left: 0px;
-    }
+    margin-right: 5px;
     &:last-child {
       margin-right: 0px;
     }

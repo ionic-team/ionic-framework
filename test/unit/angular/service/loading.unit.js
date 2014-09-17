@@ -1,5 +1,8 @@
 describe('$ionicLoading service', function() {
-  beforeEach(module('ionic'));
+  beforeEach(module('ionic', function($provide) {
+    //Set default options to blank for the sake of tests
+    $provide.constant('$ionicLoadingConfig', {});
+  }));
   it('should reuse loader instance for getLoader', inject(function($ionicLoading) {
     var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
     var loader2 = TestUtil.unwrapPromise($ionicLoading._getLoader());
@@ -189,5 +192,29 @@ describe('$ionicLoading service', function() {
       expect(deregisterSpy).toHaveBeenCalled();
     }));
   });
+});
+describe('$ionicLoadingConfig', function() {
+  beforeEach(module('ionic', function($provide) {
+    $provide.constant('$ionicLoadingConfig', {
+      template: 'some template'
+    });
+  }));
+
+  it('should use $ionicLoadingConfig options by default', inject(function($ionicLoading, $timeout) {
+    var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+    $ionicLoading.show();
+    $timeout.flush();
+    expect(loader.element.text()).toBe('some template');
+  }));
+
+  it('should allow override', inject(function($ionicLoading, $timeout) {
+    var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+    $ionicLoading.show({
+      template: 'some other template'
+    });
+    $timeout.flush();
+    expect(loader.element.text()).toBe('some other template');
+  }));
 
 });
+

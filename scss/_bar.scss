@@ -237,6 +237,10 @@
   .buttons.right-buttons {
     display: inherit;
   }
+  .buttons span {
+    display: inline-flex;
+  }
+
   // Place the last button in a bar on the right of the bar
   .title + .button:last-child,
   > .button + .button:last-child,
@@ -312,6 +316,9 @@
   top: 0;
   border-top-width: 0;
   border-bottom-width: 1px;
+  &.has-tabs-top{
+    border-bottom-width: 0px;
+  }
 }
 
 // Footer at bottom

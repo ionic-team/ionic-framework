@@ -144,7 +144,7 @@ describe('$ionicScroll Controller', function() {
     setup();
     spyOn(ctrl.scrollView, 'getValues');
     scope.$destroy();
-    expect(ctrl.scrollView.getValues).not.toHaveBeenCalled();
+    expect(ctrl.scrollView).toEqual(null);
     expect($$scrollValueCache).toEqual({});
   }));
 
@@ -155,7 +155,7 @@ describe('$ionicScroll Controller', function() {
       return 'scrollValues';
     });
     scope.$destroy();
-    expect(ctrl.scrollView.getValues).toHaveBeenCalled();
+    expect(ctrl.scrollView).toEqual(null);
     expect($$scrollValueCache).toEqual({
       'super': 'scrollValues'
     });
@@ -292,7 +292,12 @@ describe('$ionicScroll Controller', function() {
         }));
         it('.anchorScroll with el matching hash should scroll to it', inject(function($location, $document) {
           $document[0].getElementById = jasmine.createSpy('byId').andCallFake(function() {
-            return { offsetLeft: 8, offsetTop: 9 };
+            return {
+              offsetLeft: 8,
+              offsetTop: 9,
+              attributes:[],
+              offsetParent:{}
+            };
           });
           spyOn($location, 'hash').andCallFake(function() {
             return 'foo';
@@ -302,6 +307,37 @@ describe('$ionicScroll Controller', function() {
           expect(ctrl.scrollView.scrollTo).toHaveBeenCalledWith(8, 9, shouldAnimate);
         }));
       });
+    });
+  });
+
+  it('.anchorScroll with el matching hash should scroll to it, even if the el is not directly below the list', function() {
+    var ele = {
+      offsetLeft: 8,
+      offsetTop: 9,
+      attributes:[],
+      offsetParent:{
+        offsetLeft: 10,
+        offsetTop: 11,
+        attributes:[],
+        offsetParent:{}
+      }
+    };
+    module('ionic', function($provide) {
+      $provide.value('$document', [ { getElementById: function(){ return ele; }, createElement: function(tagName){ return document.createElement(tagName); } } ]);
+    });
+    inject(function($controller, $rootScope, $location, $timeout) {
+      var scrollCtrl = $controller('$ionicScroll', {
+        $scope: $rootScope.$new(),
+        $element: jqLite('<div><div></div></div>'),
+        scrollViewOptions: { el: jqLite('<div><div></div></div>')[0] }
+      });
+      spyOn($location, 'hash').andCallFake(function() {
+           return 'bar';
+      });
+      spyOn(scrollCtrl.scrollView, 'scrollTo')
+      scrollCtrl.anchorScroll()
+      $timeout.flush();
+      expect(scrollCtrl.scrollView.scrollTo.mostRecentCall.args).toEqual([18, 20, false]);
     });
   });
 
@@ -318,10 +354,12 @@ describe('$ionicScroll Controller', function() {
     setup({
       el: angular.element('<div><div class="scroll-refresher"></div></div>')[0]
     });
-    spyOn(ctrl.scrollView, 'activatePullToRefresh').andCallFake(function(height, start, refreshing, done) {
+    spyOn(ctrl.scrollView, 'activatePullToRefresh').andCallFake(function(height, start, refreshing, done, show, hide) {
       startCb = start;
       refreshingCb = refreshing;
       doneCb = done;
+      showCb = show;
+      hideCb = hide;
     });
     ctrl._setRefresher(scope, ctrl.element);
 
@@ -342,15 +380,26 @@ describe('$ionicScroll Controller', function() {
     expect(scope.$onPulling).toHaveBeenCalled();
 
     refreshingCb();
-    expect(refresher.classList.contains('active')).toBe(false);
+    expect(refresher.classList.contains('active')).toBe(true);
     expect(refresher.classList.contains('refreshing')).toBe(false);
 
     expect(scope.$onRefresh).not.toHaveBeenCalled();
 
     doneCb();
-    expect(refresher.classList.contains('active')).toBe(false);
+    expect(refresher.classList.contains('active')).toBe(true);
     expect(refresher.classList.contains('refreshing')).toBe(true);
     expect(scope.$onRefresh).toHaveBeenCalled();
+    timeout.flush();
+
+    expect(refresher.classList.contains('active')).toBe(false);
+    expect(refresher.classList.contains('refreshing')).toBe(false);
+    expect(refresher.classList.contains('invisible')).toBe(true);
+
+    showCb();
+    expect(refresher.classList.contains('invisible')).toBe(false);
+
+    hideCb();
+    expect(refresher.classList.contains('invisible')).toBe(true);
   });
 
 });
