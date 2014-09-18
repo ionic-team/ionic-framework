@@ -44,7 +44,7 @@
  *     });
  *   };
  *
- *   $scope.$on('stateChangeSuccess', function() {
+ *   $scope.$on('$stateChangeSuccess', function() {
  *     $scope.loadMore();
  *   });
  * }
