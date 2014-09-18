@@ -167,6 +167,17 @@
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
     padding-top: $tabs-striped-border-width;
   }
+  .tab-item {
+    // default android tab style
+    &.tab-item-active,
+    &.active,
+    &.activated {
+      margin-top: -$tabs-striped-border-width;
+      border-style: solid;
+      border-width: $tabs-striped-border-width 0 0 0;
+      border-color: $dark;
+    }
+  }
   @include tabs-striped('tabs-light', $light, $dark);
   @include tabs-striped('tabs-stable', $stable, $dark);
   @include tabs-striped('tabs-positive', $positive, $light);
