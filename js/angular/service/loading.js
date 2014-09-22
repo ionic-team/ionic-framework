@@ -23,7 +23,7 @@ var LOADING_SET_DEPRECATED = '$ionicLoading instance.setContent() has been depre
  * .controller('LoadingCtrl', function($scope, $ionicLoading) {
  *   $scope.show = function() {
  *     $ionicLoading.show({
- *       template: 'Loading...'
+ *       content: 'Loading...'
  *     });
  *   };
  *   $scope.hide = function(){
@@ -79,12 +79,15 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
      * @name $ionicLoading#show
      * @description Shows a loading indicator. If the indicator is already shown,
      * it will set the options given and keep the indicator shown.
-     * @param {object} opts The options for the loading indicator. Available properties:
-     *  - `{string=}` `template` The html content of the indicator.
-     *  - `{string=}` `templateUrl` The url of an html template to load as the content of the indicator.
-     *  - `{boolean=}` `noBackdrop` Whether to hide the backdrop. By default it will be shown.
-     *  - `{number=}` `delay` How many milliseconds to delay showing the indicator. By default there is no delay.
-     *  - `{number=}` `duration` How many milliseconds to wait until automatically
+     * @param {object} opts The options for the indicator. Available properties:
+     *  - `{string=}` `content` The content of the indicator. Default: none.
+     *  - `{string=}` `animation` The animation of the indicator.
+     *    Default: 'fade-in'.
+     *  - `{boolean=}` `showBackdrop` Whether to show a backdrop. Default: true.
+     *  - `{number=}` `maxWidth` The maximum width of the indicator, in pixels.
+     *    Default: 200.
+     *  - `{number=}` `showDelay` How many milliseconds to delay showing the
+     *    indicator.  Default: 0.
      *  hiding the indicator. By default, the indicator will be shown until `.hide()` is called.
      */
     show: showLoader,
