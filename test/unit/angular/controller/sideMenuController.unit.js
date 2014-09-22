@@ -120,6 +120,26 @@ describe('$ionicSideMenus controller', function() {
     expect(ctrl.getOpenPercentage()).toEqual(0);
   });
 
+  it('should not toggle left when disabled', function() {
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+    ctrl.left.isEnabled = false;
+    ctrl.toggleLeft();
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+    ctrl.left.isEnabled = true;
+    ctrl.toggleLeft();
+    expect(ctrl.getOpenPercentage()).toNotEqual(0);
+  });
+
+  it('should not toggle right when disabled', function() {
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+    ctrl.right.isEnabled = false;
+    ctrl.toggleRight();
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+    ctrl.right.isEnabled = true;
+    ctrl.toggleRight();
+    expect(ctrl.getOpenPercentage()).toNotEqual(0);
+  });
+
   it('should close left menu on expose aside', function() {
     ctrl.toggleLeft();
     expect(ctrl.getOpenPercentage()).toEqual(100);
