@@ -86,7 +86,7 @@ module.exports = {
         demoData.name = firstDoc.name;
         demoData.component = firstDoc.component;
         demoData.href = path.join(
-          '/',
+          '/dist/ionic-demo/',
           contentsFolder,
           _.template(assetOutputPath, _.assign({}, firstDoc, { fileName: '' }))
         );
