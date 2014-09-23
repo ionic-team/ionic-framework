@@ -64,7 +64,7 @@ var POPUP_TPL =
  *             return $scope.data.wifi;
  *           }
  *         }
- *       },
+ *       }
  *     ]
  *   });
  *   myPopup.then(function(res) {
