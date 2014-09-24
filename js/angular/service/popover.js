@@ -37,7 +37,7 @@
  * angular.module('testApp', ['ionic'])
  * .controller('MyController', function($scope, $ionicPopover) {
  *   $ionicPopover.fromTemplateUrl('my-popover.html', {
- *     scope: $scope,
+ *     scope: $scope;
  *   }).then(function(popover) {
  *     $scope.popover = popover;
  *   });
