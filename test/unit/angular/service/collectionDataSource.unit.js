@@ -105,10 +105,10 @@ describe('$collectionDataSource service', function() {
       var item = {
         scope: {},
       };
-      spyOn(window, 'reconnectScope');
+      spyOn(ionic.Utils, 'reconnectScope');
       source.backupItemsArray = [item];
       expect(source.getItem('123')).toBe(item);
-      expect(reconnectScope).toHaveBeenCalledWith(item.scope);
+      expect(ionic.Utils.reconnectScope).toHaveBeenCalledWith(item.scope);
     });
 
     it('should last resort create an item', function() {
@@ -172,11 +172,11 @@ describe('$collectionDataSource service', function() {
       };
       source.backupItemsArray = [];
       source.attachedItems[1] = item;
-      spyOn(window, 'disconnectScope');
+      spyOn(ionic.Utils, 'disconnectScope');
       source.detachItem(item);
       expect(source.attachedItems).toEqual({});
       expect(source.backupItemsArray).toEqual([item]);
-      expect(disconnectScope).toHaveBeenCalledWith(item.scope);
+      expect(ionic.Utils.disconnectScope).toHaveBeenCalledWith(item.scope);
     });
     it('should remove element from parent and disconnectScope if backupItemsArray is full', function() {
       var source = setup();
