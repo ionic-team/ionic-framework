@@ -58,19 +58,14 @@ module.exports = {
     'js/views/modalView.js',
     'js/views/sideMenuView.js',
     'js/views/sliderView.js',
-    'js/views/toggleView.js',
-
-    // Controllers
-    'js/controllers/viewController.js',
-    'js/controllers/sideMenuController.js',
+    'js/views/toggleView.js'
   ],
 
   angularIonicFiles: [
     'js/angular/*.js',
     'js/angular/service/**/*.js',
     'js/angular/controller/**/*.js',
-    'js/angular/directive/**/*.js',
-    'bower_components/collide/collide.js'
+    'js/angular/directive/**/*.js'
   ],
 
   //Which vendor files to include in dist, used by build
