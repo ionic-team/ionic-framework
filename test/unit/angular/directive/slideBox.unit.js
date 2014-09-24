@@ -1,73 +1,104 @@
-/**
- * Test the side menu directive. For more test coverage of the side menu,
- * see the core Ionic sideMenu controller tests.
- */
-describe('Ionic Angular Slide Box', function() {
-  var el, compile, rootScope, timeout;
-
+describe('ionSlideBox directive', function() {
   beforeEach(module('ionic'));
+  beforeEach(function() {
+    spyOn(ionic, 'requestAnimationFrame').andCallFake(function(cb) { cb(); });
+  });
 
-  beforeEach(inject(function($compile, $rootScope, $timeout) {
-    timeout = $timeout;
-    rootScope = $rootScope;
-    compile = $compile;
-
-    el = $compile('<ion-slide-box>' +
-      '<ion-slide>' +
-        '<div class="box blue">' +
-          '<h1>BLUE {{slideBox.slideIndex}}</h1>' +
-        '</div>' +
-      '</ion-slide>' +
-      '<ion-slide>' +
-        '<div class="box yellow">' +
-          '<h1>YELLOW {{slideBox.slideIndex}}</h1>' +
-        '</div>' +
-      '</ion-slide>' +
-      '<ion-slide>' +
-      '<div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>' +
-      '</ion-slide>' +
-    '</ion-slide-box>')($rootScope);
-  }));
-
-  it('should register with $ionicSlideBoxDelegate', inject(function($compile, $rootScope, $ionicSlideBoxDelegate) {
-    var deregisterSpy = jasmine.createSpy('deregister');
-    spyOn($ionicSlideBoxDelegate, '_registerInstance').andCallFake(function() {
-      return deregisterSpy;
+  function makeSlideBox(template) {
+    var el;
+    inject(function($compile, $rootScope) {
+      el = $compile('<ion-scroll>' + template + '</ion-scroll>')($rootScope);
+      $rootScope.$apply();
     });
-    var el = $compile('<ion-slide-box delegate-handle="superHandle">')($rootScope.$new());
-    $rootScope.$apply();
+    return el.find('ion-slide-box');
+  }
 
-    expect($ionicSlideBoxDelegate._registerInstance)
-      .toHaveBeenCalledWith(el.controller('ionSlideBox').__slider, 'superHandle');
+  it('should bind to selected attr', inject(function($rootScope, $timeout) {
+    var slideBox = makeSlideBox('<ion-slide-box selected="$root.currentIndex">' +
+                              '<ion-slide>A</ion-slide>' +
+                              '<ion-slide>B</ion-slide>' +
+                              '<ion-slide>C</ion-slide>' +
+                            '</ion-slide-box>');
 
-    expect(deregisterSpy).not.toHaveBeenCalled();
-    el.scope().$destroy();
-    expect(deregisterSpy).toHaveBeenCalled();
+    var slideBoxCtrl = slideBox.controller('ionSlideBox');
+
+    expect(slideBoxCtrl.selected()).toBe(0);
+    $timeout.flush();
+    expect($rootScope.currentIndex).toBe(0);
+
+    $rootScope.$apply('currentIndex = 2');
+    expect(slideBoxCtrl.selected()).toBe(2);
+
+    slideBoxCtrl.select(1);
+    $timeout.flush();
+    expect($rootScope.currentIndex).toBe(1);
+
+    // No out of bounds
+    expect(slideBoxCtrl.selected()).toBe(1);
+    $rootScope.$apply('currentIndex = -1');
+    expect(slideBoxCtrl.selected()).toBe(1);
+    $rootScope.$apply('currentIndex = 3');
+    expect(slideBoxCtrl.selected()).toBe(1);
   }));
-});
 
-describe('ionSlideBox with active slide', function() {
-  beforeEach(module('ionic'));
+  it('should loop depending on attr.loop', inject(function($rootScope) {
+    var slideBox = makeSlideBox('<ion-slide-box loop="shouldLoop">' +
+                              '<ion-slide>A</ion-slide>' +
+                              '<ion-slide>B</ion-slide>' +
+                              '<ion-slide>C</ion-slide>' +
+                            '</ion-slide-box>');
 
-  it('Should set initial active slide', inject(function($ionicSlideBoxDelegate, $rootScope, $compile) {
-    el = $compile('<ion-slide-box active-slide="2">' +
-      '<ion-slide>' +
-        '<div class="box blue">' +
-          '<h1>BLUE {{slideBox.slideIndex}}</h1>' +
-        '</div>' +
-      '</ion-slide>' +
-      '<ion-slide>' +
-        '<div class="box yellow">' +
-          '<h1>YELLOW {{slideBox.slideIndex}}</h1>' +
-        '</div>' +
-      '</ion-slide>' +
-      '<ion-slide>' +
-      '<div class="box pink"><h1>PINK {{slideBox.slideIndex}}</h1></div>' +
-      '</ion-slide>' +
-    '</ion-slide-box>')($rootScope.$new());
+    $rootScope.$apply('shouldLoop = true');
 
-   var scope = el.scope();
-   scope.$apply();
-   expect($ionicSlideBoxDelegate.currentIndex()).toBe(2);
+    var slideBoxCtrl = slideBox.controller('ionSlideBox');
+    expect(slideBoxCtrl.selected()).toBe(0);
+    slideBoxCtrl.select(slideBoxCtrl.previous());
+    expect(slideBoxCtrl.selected()).toBe(2);
+    slideBoxCtrl.select(slideBoxCtrl.next());
+    expect(slideBoxCtrl.selected()).toBe(0);
+
+    // Disable looping
+    $rootScope.$apply('shouldLoop = false');
+
+    // No loop at previous boundary
+    expect(slideBoxCtrl.selected()).toBe(0);
+    slideBoxCtrl.select(slideBoxCtrl.previous());
+    expect(slideBoxCtrl.selected()).toBe(0);
+
+    // No loop at next boundary
+    slideBoxCtrl.select(2);
+    expect(slideBoxCtrl.selected()).toBe(2);
+    slideBoxCtrl.select(slideBoxCtrl.next());
+    expect(slideBoxCtrl.selected()).toBe(2);
+  }));
+
+  it('should autoplay depending on attr.autoPlay', inject(function($rootScope, $interval) {
+    var slideBox = makeSlideBox('<ion-slide-box loop="shouldLoop" auto-play="playInterval">' +
+                              '<ion-slide>A</ion-slide>' +
+                              '<ion-slide>B</ion-slide>' +
+                              '<ion-slide>C</ion-slide>' +
+                            '</ion-slide-box>');
+
+    $rootScope.$apply('shouldLoop = false; playInterval = 1000;');
+
+    var slideBoxCtrl = slideBox.controller('ionSlideBox');
+    expect(slideBoxCtrl.selected()).toBe(0);
+    $interval.flush(1000);
+    expect(slideBoxCtrl.selected()).toBe(1);
+    $interval.flush(1000);
+    expect(slideBoxCtrl.selected()).toBe(2);
+    // Should not go beyond limit with loop disabled
+    $interval.flush(1000);
+    expect(slideBoxCtrl.selected()).toBe(2);
+
+    // Should loop
+    $rootScope.$apply('shouldLoop = true');
+    $interval.flush(1000);
+    expect(slideBoxCtrl.selected()).toBe(0);
+
+    // Should deactivate and stop looping
+    $rootScope.$apply('playInterval = -1');
+    $interval.flush();
+    expect(slideBoxCtrl.selected()).toBe(0);
   }));
 });

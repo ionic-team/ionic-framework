@@ -47,6 +47,7 @@ module.exports = {
     'js/utils/tap.js',
     'js/utils/activator.js',
     'js/utils/utils.js',
+    'js/utils/list.js',
     'js/utils/keyboard.js',
     'js/utils/viewport.js',
 
@@ -57,12 +58,7 @@ module.exports = {
     'js/views/listView.js',
     'js/views/modalView.js',
     'js/views/sideMenuView.js',
-    'js/views/sliderView.js',
     'js/views/toggleView.js',
-
-    // Controllers
-    'js/controllers/viewController.js',
-    'js/controllers/sideMenuController.js',
   ],
 
   angularIonicFiles: [
