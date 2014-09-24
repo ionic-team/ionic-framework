@@ -1,3 +1,39 @@
+### 1.0.0-beta.13 "lanthanum-leopard" (2014-09-24)
+
+
+#### Bug Fixes
+
+* **card:** less intense box shadow ([95d3f2e3](https://github.com/driftyco/ionic/commit/95d3f2e3c99dd9bae8c2394e945aaf3060ace5ec))
+* **click:** remove native click prevent 400ms later ([20d567f8](https://github.com/driftyco/ionic/commit/20d567f81c1dcdb537d7acf83a7afae7961e8286), closes [#2204](https://github.com/driftyco/ionic/issues/2204))
+* **exposeAsideWhen:** disable with isEnabled=false ([6f79a5e5](https://github.com/driftyco/ionic/commit/6f79a5e5c8c334756b03da85a6a4992fb2f6b92b), closes [#2210](https://github.com/driftyco/ionic/issues/2210))
+* **history:** tabs lose history after switching tabs ([68de8ed9](https://github.com/driftyco/ionic/commit/68de8ed91064c45da505192d154138395bd9dad1), closes [#1978](https://github.com/driftyco/ionic/issues/1978))
+* **keyboard:** android scroll stuck ([74de015c](https://github.com/driftyco/ionic/commit/74de015c221962aae8e48c1a81481ec6fc706f5e))
+* **loading:** prevent spinners in loading view from causing reflows when hidden. ([767ce6a3](https://github.com/driftyco/ionic/commit/767ce6a3b4d6e20d383c47ea72efe4208301a108), closes [#2013](https://github.com/driftyco/ionic/issues/2013))
+* **menuClose:** do not close if aside exposed ([b239eb9e](https://github.com/driftyco/ionic/commit/b239eb9ed3d53c3a194d82f3ca25e66cd20f0de8))
+* **nav:** prevent flickers between views ([03086ed2](https://github.com/driftyco/ionic/commit/03086ed2288284ebacb4eb075e65e622a9947dfa))
+* **popup:**
+  * set popup head padding equal to popup body padding ([b873190b](https://github.com/driftyco/ionic/commit/b873190bc625a48e2523701f170334bb4ab9fe81))
+  * fill popup width of Android 4.1-4.3 buttons ([581656fd](https://github.com/driftyco/ionic/commit/581656fda4444fc4b46d3ef07b96da4b93a39fec), closes [#2209](https://github.com/driftyco/ionic/issues/2209))
+* **scroll:** ensure scrollView objects exist ([8883c6cc](https://github.com/driftyco/ionic/commit/8883c6ccc5877fcc8a55910f77fa04a7742285c0))
+* **scrollView:** check that element has not yet been GC'd before removing event listeners in $des ([5e8250b1](https://github.com/driftyco/ionic/commit/5e8250b119063a9ba533db62a3aad317afaf75a5))
+* **sideMenu:**
+  * Prevent is-enabled="false" from blocking current view interaction. ([cedee574](https://github.com/driftyco/ionic/commit/cedee5749a892452809ae115b0e180ed1d62fbd7), closes [#1973](https://github.com/driftyco/ionic/issues/1973))
+  * allow `edge-drag-threshold` for right side menus. ([cb066434](https://github.com/driftyco/ionic/commit/cb0664340355d0d4455f504ac6b4a232e8e9fd85), closes [#2081](https://github.com/driftyco/ionic/issues/2081))
+* **splitView:** disable menu toggles on exposed aside ([ed3e9e30](https://github.com/driftyco/ionic/commit/ed3e9e30ce93c3ec91177352709900aff32bec26), closes [#2182](https://github.com/driftyco/ionic/issues/2182))
+* **tabs:** fix android untyled android tab ([aa7e9dd7](https://github.com/driftyco/ionic/commit/aa7e9dd7a961c7f7706531934c74a6e99cc8fc08))
+* **templateCache:** make sure $state is passed config options before checking what they are ([cb9b81d5](https://github.com/driftyco/ionic/commit/cb9b81d57ed7da84c0d1429e6dfde2e12bf1d9fc))
+* **titles:** error during quick transition changes ([fe9f43d1](https://github.com/driftyco/ionic/commit/fe9f43d17f11263e64a0168cabce28b8365fe9a8))
+
+
+#### Features
+
+* **angular:**
+  * upgrade to AngularJS v1.2.25 ([bcfecb4f](https://github.com/driftyco/ionic/commit/bcfecb4f585955a9a1b81a5e7ad6b762e2a872f7))
+  * upgrade to AngularJS v1.2.24 ([487e7a97](https://github.com/driftyco/ionic/commit/487e7a97967339b4542f6177923660dacaa2cd42))
+* **cordovaEvents:** $ionicPlatform.on method ([046ad53b](https://github.com/driftyco/ionic/commit/046ad53b20dcbcfdbc5f48e63975920486de596f), closes [#2219](https://github.com/driftyco/ionic/issues/2219))
+* **refresher:** Improve refresher animation. Allow pulling icon rotation to be disabled. ([db27fb11](https://github.com/driftyco/ionic/commit/db27fb116cd3139b271cf9d20c462fb3746f25df))
+
+
 ### 1.0.0-beta.12 "krypton-koala" (2014-09-10)
 
 

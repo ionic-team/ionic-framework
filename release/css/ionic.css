@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.12
+ * Ionic, v1.0.0-beta.13
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -2287,11 +2287,11 @@ body.grade-b, body.grade-c {
   position: absolute;
   border-radius: 4px;
   background: rgba(0, 0, 0, 0.3);
-  opacity: 1; }
+  opacity: 1;
+  -webkit-transition: opacity 0.3s linear;
+  -moz-transition: opacity 0.3s linear;
+  transition: opacity 0.3s linear; }
   .scroll-bar-indicator.scroll-bar-fade-out {
-    -webkit-transition: opacity 0.3s linear;
-    -moz-transition: opacity 0.3s linear;
-    transition: opacity 0.3s linear;
     opacity: 0; }
 
 .grade-b .scroll-bar-indicator, .grade-c .scroll-bar-indicator {
@@ -2307,25 +2307,25 @@ body.grade-b, body.grade-c {
     transform: translate3d(0, 0, 0) rotate(0); }
 
   100% {
-    transform: translate3d(0, 0, 0) rotate(-180deg); } }
+    transform: translate3d(0, 0, 0) rotate(180deg); } }
 
 @-webkit-keyframes refresh-spin {
   0% {
     -webkit-transform: translate3d(0, 0, 0) rotate(0); }
 
   100% {
-    -webkit-transform: translate3d(0, 0, 0) rotate(-180deg); } }
+    -webkit-transform: translate3d(0, 0, 0) rotate(180deg); } }
 
 @keyframes refresh-spin-back {
   0% {
-    transform: translate3d(0, 0, 0) rotate(-180deg); }
+    transform: translate3d(0, 0, 0) rotate(180deg); }
 
   100% {
     transform: translate3d(0, 0, 0) rotate(0); } }
 
 @-webkit-keyframes refresh-spin-back {
   0% {
-    -webkit-transform: translate3d(0, 0, 0) rotate(-180deg); }
+    -webkit-transform: translate3d(0, 0, 0) rotate(180deg); }
 
   100% {
     -webkit-transform: translate3d(0, 0, 0) rotate(0); } }
@@ -2378,16 +2378,28 @@ body.grade-b, body.grade-c {
     -webkit-animation-duration: 1.5s;
     -moz-animation-duration: 1.5s;
     animation-duration: 1.5s; }
-  .scroll-refresher.active .icon-pulling {
+  .scroll-refresher.active .icon-pulling:not(.pulling-rotation-disabled) {
     -webkit-animation-name: refresh-spin;
     -moz-animation-name: refresh-spin;
     animation-name: refresh-spin;
     -webkit-transform: translate3d(0, 0, 0) rotate(-180deg);
     transform: translate3d(0, 0, 0) rotate(-180deg); }
-  .scroll-refresher.active.refreshing .icon-pulling, .scroll-refresher.active.refreshing .text-pulling {
-    display: none; }
-  .scroll-refresher.active.refreshing .icon-refreshing, .scroll-refresher.active.refreshing .text-refreshing {
-    display: block; }
+  .scroll-refresher.active.refreshing {
+    -webkit-transition: transform 0.2s;
+    -moz-transition: transform 0.2s;
+    transition: transform 0.2s;
+    -webkit-transition: -webkit-transform 0.2s;
+    -moz-transition: -webkit-transform 0.2s;
+    transition: -webkit-transform 0.2s;
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1); }
+    .scroll-refresher.active.refreshing .icon-pulling, .scroll-refresher.active.refreshing .text-pulling {
+      display: none; }
+    .scroll-refresher.active.refreshing .icon-refreshing, .scroll-refresher.active.refreshing .text-refreshing {
+      display: block; }
+    .scroll-refresher.active.refreshing.refreshing-tail {
+      -webkit-transform: scale(0, 0);
+      transform: scale(0, 0); }
 
 ion-infinite-scroll {
   height: 60px;
@@ -3267,6 +3279,11 @@ a.subdued {
   border: none;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
   padding-top: 2px; }
+.tabs-striped .tab-item.tab-item-active, .tabs-striped .tab-item.active, .tabs-striped .tab-item.activated {
+  margin-top: -2px;
+  border-style: solid;
+  border-width: 2px 0 0 0;
+  border-color: #444; }
 .tabs-striped.tabs-light .tabs {
   background-color: #444; }
 .tabs-striped.tabs-light .tab-item {
@@ -3848,6 +3865,7 @@ a.subdued {
   left: 50%;
   z-index: 10;
   display: block;
+  margin-top: 12px;
   margin-left: -110px;
   height: 280px;
   width: 220px;
@@ -3858,8 +3876,6 @@ a.subdued {
     border-top: 0; }
   .popover .item:last-child {
     border-bottom: 0; }
-  .popover.popover-top {
-    margin-top: 12px; }
   .popover.popover-bottom {
     margin-top: -12px; }
 
@@ -3893,6 +3909,7 @@ a.subdued {
 .platform-ios .popover-arrow {
   position: absolute;
   display: block;
+  top: -17px;
   width: 30px;
   height: 19px;
   overflow: hidden; }
@@ -3908,22 +3925,20 @@ a.subdued {
     -webkit-transform: rotate(-45deg);
     -moz-transform: rotate(-45deg);
     transform: rotate(-45deg); }
-.platform-ios .popover-top .popover-arrow {
-  top: -17px; }
 .platform-ios .popover-bottom .popover-arrow {
+  top: auto;
   bottom: -10px; }
   .platform-ios .popover-bottom .popover-arrow:after {
     top: -6px; }
 
 .platform-android .popover {
+  margin-top: -32px;
   background-color: #fafafa;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35); }
   .platform-android .popover .item {
     border-color: #fafafa;
     background-color: #fafafa;
     color: #4d4d4d; }
-  .platform-android .popover.popover-top {
-    margin-top: -32px; }
   .platform-android .popover.popover-bottom {
     margin-top: 32px; }
 .platform-android .popover-backdrop, .platform-android .popover-backdrop.active {
@@ -4017,7 +4032,7 @@ a.subdued {
     flex-direction: column; }
 
 .popup-head {
-  padding: 15px 0px;
+  padding: 15px 10px;
   border-bottom: 1px solid #eee;
   text-align: center; }
 
@@ -4058,6 +4073,7 @@ a.subdued {
     -moz-flex: 1;
     -ms-flex: 1;
     flex: 1;
+    display: block;
     min-height: 45px;
     border-radius: 2px;
     line-height: 20px;
@@ -4104,6 +4120,8 @@ a.subdued {
   transition: 0.2s opacity linear;
   visibility: hidden;
   opacity: 0; }
+  .loading-container:not(.visible) .icon {
+    display: none; }
   .loading-container.visible {
     visibility: visible; }
   .loading-container.active {
@@ -4764,7 +4782,7 @@ a.item-content {
 .card {
   padding-top: 1px;
   padding-bottom: 1px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25); }
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
 
 .padding .card, .padding .list-inset {
   margin-left: 0;

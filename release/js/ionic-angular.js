@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.12
+ * Ionic, v1.0.0-beta.13
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -188,7 +188,11 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
 
       scope.removed = true;
       sheetEl.removeClass('action-sheet-up');
-      $ionicBody.removeClass('action-sheet-open');
+      $timeout(function(){
+        // wait to remove this due to a 300ms delay native
+        // click which would trigging whatever was underneath this
+        $ionicBody.removeClass('action-sheet-open');
+      }, 400);
       scope.$deregisterBackButton();
       stateChangeListenDone();
 
@@ -1071,7 +1075,7 @@ function($rootScope, $timeout) {
     renderItem: function(dataIndex, primaryPos, secondaryPos) {
       // Attach an item, and set its transform position to the required value
       var item = this.dataSource.attachItemAtIndex(dataIndex);
-      void 0;
+      //console.log(dataIndex, item);
       if (item && item.element) {
         if (item.primaryPos !== primaryPos || item.secondaryPos !== secondaryPos) {
           item.element.css(ionic.CSS.TRANSFORM, this.transformString(
@@ -1360,7 +1364,7 @@ var LOADING_SET_DEPRECATED = '$ionicLoading instance.setContent() has been depre
  */
 IonicModule
 .constant('$ionicLoadingConfig', {
-  template: '<i class="ion-loading-d"></i>'
+  template: '<i class="icon ion-loading-d"></i>'
 })
 .factory('$ionicLoading', [
   '$ionicLoadingConfig',
@@ -1535,10 +1539,14 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
  *
  * Put the content of the modal inside of an `<ion-modal-view>` element.
  *
- * Note: a modal will broadcast 'modal.shown', 'modal.hidden', and 'modal.removed' events from its originating
+ * **Notes:**
+ * - A modal will broadcast 'modal.shown', 'modal.hidden', and 'modal.removed' events from its originating
  * scope, passing in itself as an event argument. Both the modal.removed and modal.hidden events are
  * called when the modal is removed.
  *
+ * - This example assumes your modal is in your main index file or another template file. If it is in its own
+ * template file, remove the script tags and call it by file name.
+ * 
  * @usage
  * ```html
  * <script id="my-modal.html" type="text/ng-template">
@@ -2105,6 +2113,28 @@ IonicModule
 
         /**
          * @ngdoc method
+         * @name $ionicPlatform#on
+         * @description
+         * Add Cordova event listeners, such as `pause`, `resume`, `volumedownbutton`, `batterylow`,
+         * `offline`, etc. More information about available event types can be found in
+         * [Cordova's event documentation](https://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
+         * @param {string} type Cordova [event type](https://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
+         * @param {function} callback Called when the Cordova event is fired.
+         * @returns {function} Returns a deregistration function to remove the event listener.
+         */
+        on: function(type, cb) {
+          ionic.Platform.ready(function(){
+            document.addEventListener(type, cb, false);
+          });
+          return function() {
+            ionic.Platform.ready(function(){
+              document.removeEventListener(type, cb);
+            });
+          };
+        },
+
+        /**
+         * @ngdoc method
          * @name $ionicPlatform#ready
          * @description
          * Trigger a callback once the device is ready,
@@ -2233,10 +2263,10 @@ function($ionicModal, $ionicPosition, $document, $window) {
     // make it pop up
     if (buttonOffset.top + buttonOffset.height + popoverHeight > bodyHeight) {
       popoverCSS.top = buttonOffset.top - popoverHeight;
-      popoverEle.removeClass('popover-top').addClass('popover-bottom');
+      popoverEle.addClass('popover-bottom');
     } else {
       popoverCSS.top = buttonOffset.top + buttonOffset.height;
-      popoverEle.removeClass('popover-bottom').addClass('popover-top');
+      popoverEle.removeClass('popover-bottom');
     }
 
     arrowEle.css({
@@ -2740,7 +2770,11 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
           previousPopup.show();
         } else {
           //Remove popup-open & backdrop if this is last popup
-          $ionicBody.removeClass('popup-open');
+          $timeout(function(){
+            // wait to remove this due to a 300ms delay native
+            // click which would trigging whatever was underneath this
+            $ionicBody.removeClass('popup-open');
+          }, 400);
           $ionicBackdrop.release();
           ($ionicPopup._backButtonActionDone || angular.noop)();
         }
@@ -3520,7 +3554,7 @@ function($stateProvider, $ionicConfigProvider) {
   var stateProviderState = $stateProvider.state;
   $stateProvider.state = function(stateName, definition) {
     // don't even bother if it's disabled. note, another config may run after this, so it's not a catch-all
-    if($ionicConfigProvider.prefetchTemplates() !== false){
+    if(typeof definition === 'object' && $ionicConfigProvider.prefetchTemplates() !== false){
       var enabled = definition.prefetchTemplate !== false;
       if(enabled && isString(definition.templateUrl))templatesToCache.push(definition.templateUrl);
       if(angular.isObject(definition.views)){
@@ -3641,6 +3675,11 @@ function($rootScope, $state, $location, $document, $animate, $ionicPlatform, $io
     $ionicViewService.disableRegisterByTagName('ion-tabs');
     $ionicViewService.disableRegisterByTagName('ion-side-menus');
   }
+
+  // always reset the keyboard state when change stage
+  $rootScope.$on('$stateChangeStart', function(){
+    ionic.keyboard.hide();
+  });
 
   $rootScope.$on('viewState.changeHistory', function(e, data) {
     if(!data) return;
@@ -3817,8 +3856,17 @@ function($rootScope, $state, $location, $window, $injector, $animate, $ionicNavV
                 hist.cursor > -1 && hist.stack.length > 0 && hist.cursor < hist.stack.length &&
                 hist.stack[hist.cursor].stateId === currentStateId) {
         // they just changed to a different history and the history already has views in it
-        rsp.viewId = hist.stack[hist.cursor].viewId;
+        var switchToView = hist.stack[hist.cursor];
+        rsp.viewId = switchToView.viewId;
         rsp.navAction = 'moveBack';
+
+        // if switching to a different history, and the history of the view we're switching
+        // to has an existing back view from a different history than itself, then
+        // it's back view would be better represented using the current view as its back view
+        var switchToViewBackView = this._getViewById(switchToView.backViewId);
+        if(switchToViewBackView && switchToView.historyId !== switchToViewBackView.historyId) {
+          hist.stack[hist.cursor].backViewId = currentView.viewId;
+        }
 
       } else {
 
@@ -3835,8 +3883,9 @@ function($rootScope, $state, $location, $window, $injector, $animate, $ionicNavV
           }
           rsp.navAction = 'newView';
 
-          // check if there is a new forward view
-          if(forwardView && currentView.stateId !== forwardView.stateId) {
+          // check if there is a new forward view within the same history
+          if(forwardView && currentView.stateId !== forwardView.stateId &&
+             currentView.historyId === forwardView.historyId) {
             // they navigated to a new view but the stack already has a forward view
             // since its a new view remove any forwards that existed
             var forwardsHistory = this._getHistoryById(forwardView.historyId);
@@ -4447,7 +4496,7 @@ function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionic
     currentTitles = $element[0].querySelectorAll('.title');
     if (currentTitles.length) {
       oldTitleEl = $compile('<h1 class="title" ng-bind-html="oldTitle"></h1>')($scope);
-      jqLite(currentTitles[0]).replaceWith(oldTitleEl);
+      jqLite(currentTitles[currentTitles.length-1]).replaceWith(oldTitleEl);
     }
     //Compile new title
     newTitleEl = $compile('<h1 class="title invisible" ng-bind-html="title"></h1>')($scope);
@@ -4598,7 +4647,7 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
   });
 
   $timeout(function() {
-    scrollView.run();
+    scrollView && scrollView.run && scrollView.run();
   });
 
   this._rememberScrollId = null;
@@ -4613,7 +4662,7 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
 
   this.resize = function() {
     return $timeout(resize).then(function() {
-      $element.triggerHandler('scroll.resize');
+      $element && $element.triggerHandler('scroll.resize');
     });
   };
 
@@ -4688,7 +4737,7 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     var values = $$scrollValueCache[this._rememberScrollId];
     if (values) {
       this.resize().then(function() {
-        scrollView.scrollTo(+values.left, +values.top, shouldAnimate);
+        scrollView && scrollView.scrollTo && scrollView.scrollTo(+values.left, +values.top, shouldAnimate);
       });
     }
   };
@@ -4698,7 +4747,7 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
    */
   this._setRefresher = function(refresherScope, refresherElement) {
     var refresher = this.refresher = refresherElement;
-    var refresherHeight = self.refresher.clientHeight || 0;
+    var refresherHeight = self.refresher.clientHeight || 60;
     scrollView.activatePullToRefresh(refresherHeight, function() {
       // activateCallback
       refresher.classList.add('active');
@@ -4708,6 +4757,7 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
       $timeout(function(){
         refresher.classList.remove('active');
         refresher.classList.remove('refreshing');
+        refresher.classList.remove('refreshing-tail');
         refresher.classList.add('invisible');
       },300);
     }, function() {
@@ -4720,6 +4770,9 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     },function(){
       // hideCallback
       refresher.classList.add('invisible');
+    },function(){
+      // tailCallback
+      refresher.classList.add('refreshing-tail');
     });
   };
 }]);
@@ -4777,6 +4830,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody) {
    * Toggle the left menu to open 100%
    */
   self.toggleLeft = function(shouldOpen) {
+    if(isAsideExposed || !self.left.isEnabled) return;
     var openAmount = self.getOpenAmount();
     if (arguments.length === 0) {
       shouldOpen = openAmount <= 0;
@@ -4793,6 +4847,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody) {
    * Toggle the right menu to open 100%
    */
   self.toggleRight = function(shouldOpen) {
+    if(isAsideExposed || !self.right.isEnabled) return;
     var openAmount = self.getOpenAmount();
     if (arguments.length === 0) {
       shouldOpen = openAmount >= 0;
@@ -4984,6 +5039,9 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody) {
   };
 
   self.exposeAside = function(shouldExposeAside) {
+    if(!self.left || !self.left.isEnabled) return;
+
+    self.close();
     isAsideExposed = shouldExposeAside;
 
     // set the left marget width if it should be exposed
@@ -5068,7 +5126,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody) {
 
     var dragIsWithinBounds = !shouldOnlyAllowEdgeDrag ||
       startX <= self.edgeThreshold ||
-      startX >= self.content.offsetWidth - self.edgeThreshold;
+      startX >= self.content.element.offsetWidth - self.edgeThreshold;
 
     return ($scope.dragContent || self.isOpen()) &&
            dragIsWithinBounds &&
@@ -5874,7 +5932,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
  * @restrict A
  *
  * @description
- * Touch stays at the same location for 500ms.
+ * Touch stays at the same location for 500ms. Similar to long touch events available for AngularJS and jQuery.
  *
  * @usage
  * ```html
@@ -6335,7 +6393,7 @@ function headerFooterBarDirective(isHeader) {
  *     });
  *   };
  *
- *   $scope.$on('stateChangeSuccess', function() {
+ *   $scope.$on('$stateChangeSuccess', function() {
  *     $scope.loadMore();
  *   });
  * }
@@ -6410,7 +6468,8 @@ IonicModule
       });
 
       $scope.$on('$destroy', function() {
-        scrollCtrl.$element.off('scroll', checkBounds);
+        void 0;
+        if(scrollCtrl && scrollCtrl.$element)scrollCtrl.$element.off('scroll', checkBounds);
       });
 
       var checkBounds = ionic.animationFrameThrottle(checkInfiniteBounds);
@@ -6889,7 +6948,7 @@ function keyboardAttachGetClientHeight(element) {
 *
 * @param {string=} delegate-handle The handle used to identify this list with
 * {@link ionic.service:$ionicListDelegate}.
-* @param type {string=} The type of list to use (for example, list-inset for an inset list)
+* @param type {string=} The type of list to use (list-inset or card)
 * @param show-delete {boolean=} Whether the delete buttons for the items in the list are
 * currently shown or hidden.
 * @param show-reorder {boolean=} Whether the reorder buttons for the items in the list are
@@ -6992,7 +7051,7 @@ function($animate, $timeout) {
           function setButtonShown(el, shown) {
             shown() && el.addClass('visible') || el.removeClass('active');
             ionic.requestAnimationFrame(function() {
-              shown() && el.addClass('active') || el.removeClass('invisible');
+              shown() && el.addClass('active') || el.removeClass('visible');
             });
           }
         }
@@ -7925,6 +7984,8 @@ IonicModule
  * refresher.
  * @param {string=} refreshing-text The text to display after the user lets go of
  * the refresher.
+ * @param {boolean=} disable-pulling-rotation Disables the rotation animation of the pulling
+ * icon when it reaches its activated threshold. To be used with a custom `pulling-icon`.
  *
  */
 IonicModule
@@ -7937,7 +7998,7 @@ IonicModule
     '<div class="scroll-refresher" collection-repeat-ignore>' +
       '<div class="ionic-refresher-content" ' +
       'ng-class="{\'ionic-refresher-with-text\': pullingText || refreshingText}">' +
-        '<div class="icon-pulling">' +
+        '<div class="icon-pulling" ng-class="{\'pulling-rotation-disabled\':disablePullingRotation}">' +
           '<i class="icon {{pullingIcon}}"></i>' +
         '</div>' +
         '<div class="text-pulling" ng-bind-html="pullingText"></div>' +
@@ -7947,7 +8008,7 @@ IonicModule
     '</div>',
     compile: function($element, $attrs) {
       if (angular.isUndefined($attrs.pullingIcon)) {
-        $attrs.$set('pullingIcon', 'ion-arrow-down-c');
+        $attrs.$set('pullingIcon', 'ion-ios7-arrow-down');
       }
       if (angular.isUndefined($attrs.refreshingIcon)) {
         $attrs.$set('refreshingIcon', 'ion-loading-d');
@@ -7958,6 +8019,7 @@ IonicModule
           pullingText: '@',
           refreshingIcon: '@',
           refreshingText: '@',
+          disablePullingRotation: '@',
           $onRefresh: '&onRefresh',
           $onPulling: '&onPulling'
         });
@@ -8131,7 +8193,7 @@ IonicModule
         $scope.side = $attr.side || 'left';
 
         var sideMenu = sideMenuCtrl[$scope.side] = new ionic.views.SideMenu({
-          width: 275,
+          width: attr.width,
           el: $element[0],
           isEnabled: true
         });
@@ -8298,6 +8360,7 @@ function($timeout, $ionicGesture, $window) {
           }),
           setMarginLeft: ionic.animationFrameThrottle(function(amount) {
             if(amount) {
+              amount = parseInt(amount, 10);
               $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + amount + 'px,0,0)';
               $element[0].style.width = ($window.innerWidth - amount) + 'px';
               content.offsetX = amount;
@@ -8721,7 +8784,13 @@ function($rootScope, $animate, $ionicBind, $compile) {
 
         tabsCtrl.add($scope);
         $scope.$on('$destroy', function() {
-          tabsCtrl.remove($scope);
+          if(!$scope.$tabsDestroy) {
+            // if the containing ionTabs directive is being destroyed
+            // then don't bother going through the controllers remove
+            // method, since remove will reset the active tab as each tab
+            // is being destroyed, causing unnecessary view loads and transitions
+            tabsCtrl.remove($scope);
+          }
           tabNavElement.isolateScope().$destroy();
           tabNavElement.remove();
         });
@@ -8879,9 +8948,9 @@ IonicModule.constant('$ionicTabsConfig', {
 
 IonicModule
 .directive('ionTabs', [
-  '$ionicViewService', 
-  '$ionicTabsDelegate', 
-  '$ionicTabsConfig', 
+  '$ionicViewService',
+  '$ionicTabsDelegate',
+  '$ionicTabsConfig',
 function($ionicViewService, $ionicTabsDelegate, $ionicTabsConfig) {
   return {
     restrict: 'E',
@@ -8903,7 +8972,14 @@ function($ionicViewService, $ionicTabsDelegate, $ionicTabsConfig) {
           tabsCtrl, $attr.delegateHandle
         );
 
-        $scope.$on('$destroy', deregisterInstance);
+        $scope.$on('$destroy', function(){
+          // variable to inform child tabs that they're all being blown away
+          // used so that while destorying an individual tab, each one
+          // doesn't select the next tab as the active one, which causes unnecessary
+          // loading of tab views when each will eventually all go away anyway
+          $scope.$tabsDestroy = true;
+          deregisterInstance();
+        });
 
         tabsCtrl.$scope = $scope;
         tabsCtrl.$element = $element;
@@ -9109,1125 +9185,4 @@ IonicModule
   };
 }]);
 
-!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.collide=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
-(function (process){
-// Generated by CoffeeScript 1.6.3
-(function() {
-  var getNanoSeconds, hrtime, loadTime;
-
-  if ((typeof performance !== "undefined" && performance !== null) && performance.now) {
-    module.exports = function() {
-      return performance.now();
-    };
-  } else if ((typeof process !== "undefined" && process !== null) && process.hrtime) {
-    module.exports = function() {
-      return (getNanoSeconds() - loadTime) / 1e6;
-    };
-    hrtime = process.hrtime;
-    getNanoSeconds = function() {
-      var hr;
-      hr = hrtime();
-      return hr[0] * 1e9 + hr[1];
-    };
-    loadTime = getNanoSeconds();
-  } else if (Date.now) {
-    module.exports = function() {
-      return Date.now() - loadTime;
-    };
-    loadTime = Date.now();
-  } else {
-    module.exports = function() {
-      return new Date().getTime() - loadTime;
-    };
-    loadTime = new Date().getTime();
-  }
-
-}).call(this);
-
-/*
-//@ sourceMappingURL=performance-now.map
-*/
-
-}).call(this,_dereq_("qhDIRT"))
-},{"qhDIRT":13}],2:[function(_dereq_,module,exports){
-var now = _dereq_('performance-now')
-  , global = typeof window === 'undefined' ? {} : window
-  , vendors = ['moz', 'webkit']
-  , suffix = 'AnimationFrame'
-  , raf = global['request' + suffix]
-  , caf = global['cancel' + suffix] || global['cancelRequest' + suffix]
-
-for(var i = 0; i < vendors.length && !raf; i++) {
-  raf = global[vendors[i] + 'Request' + suffix]
-  caf = global[vendors[i] + 'Cancel' + suffix]
-      || global[vendors[i] + 'CancelRequest' + suffix]
-}
-
-// Some versions of FF have rAF but not cAF
-if(!raf || !caf) {
-  var last = 0
-    , id = 0
-    , queue = []
-    , frameDuration = 1000 / 60
-
-  raf = function(callback) {
-    if(queue.length === 0) {
-      var _now = now()
-        , next = Math.max(0, frameDuration - (_now - last))
-      last = next + _now
-      setTimeout(function() {
-        var cp = queue.slice(0)
-        // Clear queue here to prevent
-        // callbacks from appending listeners
-        // to the current frame's queue
-        queue.length = 0
-        for (var i = 0; i < cp.length; i++) {
-          if (!cp[i].cancelled) {
-            cp[i].callback(last)
-          }
-        }
-      }, next)
-    }
-    queue.push({
-      handle: ++id,
-      callback: callback,
-      cancelled: false
-    })
-    return id
-  }
-
-  caf = function(handle) {
-    for(var i = 0; i < queue.length; i++) {
-      if(queue[i].handle === handle) {
-        queue[i].cancelled = true
-      }
-    }
-  }
-}
-
-module.exports = function() {
-  // Wrap in a new function to prevent
-  // `cancel` potentially being assigned
-  // to the native rAF function
-  return raf.apply(global, arguments)
-}
-module.exports.cancel = function() {
-  caf.apply(global, arguments)
-}
-
-},{"performance-now":3}],3:[function(_dereq_,module,exports){
-module.exports=_dereq_(1)
-},{"qhDIRT":13}],4:[function(_dereq_,module,exports){
-
-// Interpolation disabled for now
-// var interpolate = require('./core/interpolate');
-// var cssFeature = require('feature/css');
-
-var timeline = _dereq_('./core/timeline');
-var dynamics = _dereq_('./core/dynamics');
-var easingFunctions = _dereq_('./core/easing-functions');
-
-var uid = _dereq_('./util/uid');
-var EventEmitter = _dereq_('./util/simple-emitter');
-
-function clamp(min, n, max) { return Math.max(min, Math.min(n, max)); }
-
-module.exports = Animator;
-
-function Animator(opts) {
-  //if `new` keyword isn't provided, do it for user
-  if (!(this instanceof Animator)) {
-    return new Animator(opts);
-  }
-
-  opts = opts || {};
-
-  //Private state goes in this._
-  this._ = {
-    id: uid(),
-    percent: 0,
-    duration: 500,
-    isReverse: false
-  };
-
-  var emitter = this._.emitter = new EventEmitter();
-  this._.onDestroy = function() {
-    emitter.emit('destroy');
-  };
-  this._.onStop = function(wasCompleted) {
-    emitter.emit('stop', wasCompleted);
-    wasCompleted && emitter.emit('complete');
-  };
-  this._.onStart = function() {
-    emitter.emit('start');
-  };
-  this._.onStep = function(v) {
-    emitter.emit('step', v);
-  };
-
-  opts.duration && this.duration(opts.duration);
-  opts.percent && this.percent(opts.percent);
-  opts.easing && this.easing(opts.easing);
-  opts.reverse && this.reverse(opts.reverse);
-}
-
-Animator.prototype = {
-
-  reverse: function(reverse) {
-    if (arguments.length) {
-      this._.isReverse = !!reverse;
-      return this;
-    }
-    return this._.isReverse;
-  },
-
-  easing: function(easing) {
-    var type = typeof easing;
-    if (arguments.length) {
-      if (type === 'function' || type === 'string' || type === 'object') {
-        this._.easing = figureOutEasing(easing);
-      }
-      return this;
-    }
-    return this._.easing;
-  },
-
-  percent: function(percent) {
-    if (arguments.length) {
-      if (typeof percent === 'number') {
-        this._.percent = clamp(0, percent, 1);
-      }
-      if (!this.isRunning()) {
-        this._.onStep(this._getValueForPercent(this._.percent));
-      }
-      return this;
-    }
-    return this._.percent;
-  },
-
-  duration: function(duration) {
-    if (arguments.length) {
-      if (typeof duration === 'number' && duration > 0) {
-        this._.duration = duration;
-      }
-      return this;
-    }
-    return this._.duration;
-  },
-
-  /**
-   * Interpolation is disabled for now.
-   */
-  // addInterpolation: function(el, startingStyles, endingStyles) {
-  //   var interpolators;
-  //   if (arguments.length) {
-  //     syncStyles(startingStyles, endingStyles, window.getComputedStyle(el));
-  //     interpolators = makePropertyInterpolators(startingStyles, endingStyles);
-
-  //     this.on('step', setStyles);
-  //     return function unbind() {
-  //       this.off('step', setStyles);
-  //     };
-  //   }
-  //   function setStyles(v) {
-  //     for (var property in interpolators) {
-  //       el.style[property] = interpolators[property](v);
-  //     }
-  //   }
-  // },
-
-  isRunning: function() { 
-    return !!this._.isRunning; 
-  },
-
-  promise: function() {
-    var self = this;
-    return {
-      then: function(cb) {
-        self.once('stop', cb);
-      }
-    };
-  },
-
-  on: function(eventType, listener) {
-    this._.emitter.on(eventType, listener);
-    return this;
-  },
-  once: function(eventType, listener) {
-    this._.emitter.once(eventType, listener);
-    return this;
-  },
-  off: function(eventType, listener) {
-    this._.emitter.off(eventType, listener);
-    return this;
-  },
-
-  destroy: function() {
-    this.stop();
-    this._.onDestroy();
-    this.off();
-    return this;
-  },
-
-  stop: function() {
-    if (!this._.isRunning) return;
-
-    this._.isRunning = false;
-    timeline.animationStopped(this);
-
-    this._.onStop(this._isComplete());
-    return this;
-  },
-
-  restart: function(immediate) {
-    if (this._.isRunning) return;
-
-    this._.percent = this._getStartPercent();
-
-    return this.start(!!immediate);
-  },
-
-  start: function(immediate) {
-    if (this._.isRunning) return;
-
-    if (immediate) {
-      this._.onStep(this._getValueForPercent(this._.percent));
-    } else {
-      this._.isStarting = true;
-    }
-
-    this._.isRunning = true;
-    timeline.animationStarted(this);
-
-    this._.onStart();
-    return this;
-  },
-
-  _isComplete: function() {
-    return !this._.isRunning && 
-      this._.percent === this._getEndPercent();
-  },
-  _getEndPercent: function() {
-    return this._.isReverse ? 0 : 1;
-  },
-  _getStartPercent: function() {
-    return this._.isReverse ? 1 : 0;
-  },
-
-  _getValueForPercent: function(percent) {
-    if (this._.easing) {
-      return this._.easing(percent, this._.duration);
-    }
-    return percent;
-  },
-
-  _tick: function(deltaT) {
-    var state = this._;
-
-    //First tick, don't up the percent
-    if (state.isStarting) {
-      state.isStarting = false;
-    } else if (state.isReverse) {
-      state.percent = Math.max(0, state.percent - (deltaT / state.duration));
-    } else {
-      state.percent = Math.min(1, state.percent + (deltaT / state.duration));
-    }
-    
-    state.onStep(this._getValueForPercent(state.percent));
-
-    if (state.percent === this._getEndPercent()) {
-      this.stop();
-    }
-  },
-
-};
-
-function figureOutEasing(easing) {
-  if (typeof easing === 'object') {
-    var dynamicType = typeof easing.type === 'string' &&
-      easing.type.toLowerCase().trim();
-
-    if (!dynamics[dynamicType]) {
-      throw new Error(
-        'Invalid easing dynamics object type "' + easing.type + '". ' +
-        'Available dynamics types: ' + Object.keys(dynamics).join(', ') + '.'
-      );
-    }
-    return dynamics[dynamicType](easing);
-
-  } else if (typeof easing === 'string') {
-    easing = easing.toLowerCase().trim();
-    
-    if (easing.indexOf('cubic-bezier(') === 0) {
-      var parts = easing
-        .replace('cubic-bezier(', '')
-        .replace(')', '')
-        .split(',')
-        .map(function(v) {
-          return v.trim();
-        });
-      return easingFunctions['cubic-bezier'](parts[0], parts[1], parts[2], parts[3]);
-    } else {
-      var fn = easingFunctions[easing];
-      if (!fn) {
-        throw new Error(
-          'Invalid easing function "' + easing + '". ' +
-          'Available easing functions: ' + Object.keys(easingFunctions).join(', ') + '.'
-        );
-      }
-      return easingFunctions[easing]();
-    }
-  } else if (typeof easing === 'function') {
-    return easing;
-  }
-}
-
-// /*
-//  * Tweening helpers
-//  */
-// function syncStyles(startingStyles, endingStyles, computedStyle) {
-//   var property;
-//   for (property in startingStyles) {
-//     if (!endingStyles.hasOwnProperty(property)) {
-//       delete startingStyles[property];
-//     }
-//   }
-//   for (property in endingStyles) {
-//     if (!startingStyles.hasOwnProperty(property)) {
-//       startingStyles[property] = computedStyle[vendorizePropertyName(property)];
-//     }
-//   }
-// }
-
-// function makePropertyInterpolators(startingStyles, endingStyles) {
-//   var interpolators = {};
-//   var property;
-//   for (property in startingStyles) {
-//     interpolators[vendorizePropertyName(property)] = interpolate.propertyInterpolator(
-//       property, startingStyles[property], endingStyles[property]
-//     );
-//   }
-//   return interpolators;
-// }
-
-// var transformProperty;
-// function vendorizePropertyName(property) {
-//   if (property === 'transform') {
-//     //Set transformProperty lazily, to be sure DOM has loaded already when using it
-//     return transformProperty || 
-//       (transformProperty = cssFeature('transform').property);
-//   } else {
-//     return property;
-//   }
-// }
-
-},{"./core/dynamics":6,"./core/easing-functions":7,"./core/timeline":8,"./util/simple-emitter":11,"./util/uid":12}],5:[function(_dereq_,module,exports){
-/*
- * Copyright (C) 2008 Apple Inc. All Rights Reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL APPLE INC. OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
- * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
-// http://www.w3.org/TR/css3-transitions/#transition-easing-function
-module.exports =  {
-  /*
-   * @param x {number} the value of x along the bezier curve, 0.0 <= x <= 1.0
-   * @param duration {number} the duration of the animation in milliseconds
-   * @return {number} the y value along the bezier curve
-   */
-  linear: unitBezier(0.0, 0.0, 1.0, 1.0),
-
-  /*
-   * @param x {number} the value of x along the bezier curve, 0.0 <= x <= 1.0
-   * @param duration {number} the duration of the animation in milliseconds
-   * @return {number} the y value along the bezier curve
-   */
-  ease: unitBezier(0.25, 0.1, 0.25, 1.0),
-
-  /*
-   * @param x {number} the value of x along the bezier curve, 0.0 <= x <= 1.0
-   * @param duration {number} the duration of the animation in milliseconds
-   * @return {number} the y value along the bezier curve
-   */
-  easeIn: unitBezier(0.42, 0, 1.0, 1.0),
-
-  /*
-   * @param x {number} the value of x along the bezier curve, 0.0 <= x <= 1.0
-   * @param duration {number} the duration of the animation in milliseconds
-   * @return {number} the y value along the bezier curve
-   */
-  easeOut: unitBezier(0, 0, 0.58, 1.0),
-
-  /*
-   * @param x {number} the value of x along the bezier curve, 0.0 <= x <= 1.0
-   * @param duration {number} the duration of the animation in milliseconds
-   * @return {number} the y value along the bezier curve
-   */
-  easeInOut: unitBezier(0.42, 0, 0.58, 1.0),
-
-  /*
-   * @param p1x {number} X component of control point 1
-   * @param p1y {number} Y component of control point 1
-   * @param p2x {number} X component of control point 2
-   * @param p2y {number} Y component of control point 2
-   * @param x {number} the value of x along the bezier curve, 0.0 <= x <= 1.0
-   * @param duration {number} the duration of the animation in milliseconds
-   * @return {number} the y value along the bezier curve
-   */
-  cubicBezier: function(p1x, p1y, p2x, p2y) {
-    return unitBezier(p1x, p1y, p2x, p2y);
-  }
-};
-
-function B1(t) { return t*t*t; }
-function B2(t) { return 3*t*t*(1-t); }
-function B3(t) { return 3*t*(1-t)*(1-t); }
-function B4(t) { return (1-t)*(1-t)*(1-t); }
-
-/*
- * JavaScript port of Webkit implementation of CSS cubic-bezier(p1x.p1y,p2x,p2y) by http://mck.me
- * http://svn.webkit.org/repository/webkit/trunk/Source/WebCore/platform/graphics/UnitBezier.h
- */
-
-/*
- * Duration value to use when one is not specified (400ms is a common value).
- * @const
- * @type {number}
- */
-var DEFAULT_DURATION = 400;//ms
-
-/*
- * The epsilon value we pass to UnitBezier::solve given that the animation is going to run over |dur| seconds.
- * The longer the animation, the more precision we need in the easing function result to avoid ugly discontinuities.
- * http://svn.webkit.org/repository/webkit/trunk/Source/WebCore/page/animation/AnimationBase.cpp
- */
-function solveEpsilon(duration) {
-  return 1.0 / (200.0 * duration);
-}
-
-/*
- * Defines a cubic-bezier curve given the middle two control points.
- * NOTE: first and last control points are implicitly (0,0) and (1,1).
- * @param p1x {number} X component of control point 1
- * @param p1y {number} Y component of control point 1
- * @param p2x {number} X component of control point 2
- * @param p2y {number} Y component of control point 2
- */
-function unitBezier(p1x, p1y, p2x, p2y) {
-
-  // private members --------------------------------------------
-
-  // Calculate the polynomial coefficients, implicit first and last control points are (0,0) and (1,1).
-
-  /*
-   * X component of Bezier coefficient C
-   * @const
-   * @type {number}
-   */
-  var cx = 3.0 * p1x;
-
-  /*
-   * X component of Bezier coefficient B
-   * @const
-   * @type {number}
-   */
-  var bx = 3.0 * (p2x - p1x) - cx;
-
-  /*
-   * X component of Bezier coefficient A
-   * @const
-   * @type {number}
-   */
-  var ax = 1.0 - cx -bx;
-
-  /*
-   * Y component of Bezier coefficient C
-   * @const
-   * @type {number}
-   */
-  var cy = 3.0 * p1y;
-
-  /*
-   * Y component of Bezier coefficient B
-   * @const
-   * @type {number}
-   */
-  var by = 3.0 * (p2y - p1y) - cy;
-
-  /*
-   * Y component of Bezier coefficient A
-   * @const
-   * @type {number}
-   */
-  var ay = 1.0 - cy - by;
-
-  /*
-   * @param t {number} parametric easing value
-   * @return {number}
-   */
-  var sampleCurveX = function(t) {
-    // `ax t^3 + bx t^2 + cx t' expanded using Horner's rule.
-    return ((ax * t + bx) * t + cx) * t;
-  };
-
-  /*
-   * @param t {number} parametric easing value
-   * @return {number}
-   */
-  var sampleCurveY = function(t) {
-    return ((ay * t + by) * t + cy) * t;
-  };
-
-  /*
-   * @param t {number} parametric easing value
-   * @return {number}
-   */
-  var sampleCurveDerivativeX = function(t) {
-    return (3.0 * ax * t + 2.0 * bx) * t + cx;
-  };
-
-  /*
-   * Given an x value, find a parametric value it came from.
-   * @param x {number} value of x along the bezier curve, 0.0 <= x <= 1.0
-   * @param epsilon {number} accuracy limit of t for the given x
-   * @return {number} the t value corresponding to x
-   */
-  var solveCurveX = function(x, epsilon) {
-    var t0;
-    var t1;
-    var t2;
-    var x2;
-    var d2;
-    var i;
-
-    // First try a few iterations of Newton's method -- normally very fast.
-    for (t2 = x, i = 0; i < 8; i++) {
-      x2 = sampleCurveX(t2) - x;
-      if (Math.abs (x2) < epsilon) {
-        return t2;
-      }
-      d2 = sampleCurveDerivativeX(t2);
-      if (Math.abs(d2) < 1e-6) {
-        break;
-      }
-      t2 = t2 - x2 / d2;
-    }
-
-    // Fall back to the bisection method for reliability.
-    t0 = 0.0;
-    t1 = 1.0;
-    t2 = x;
-
-    if (t2 < t0) {
-      return t0;
-    }
-    if (t2 > t1) {
-      return t1;
-    }
-
-    while (t0 < t1) {
-      x2 = sampleCurveX(t2);
-      if (Math.abs(x2 - x) < epsilon) {
-        return t2;
-      }
-      if (x > x2) {
-        t0 = t2;
-      } else {
-        t1 = t2;
-      }
-      t2 = (t1 - t0) * 0.5 + t0;
-    }
-
-    // Failure.
-    return t2;
-  };
-
-  /*
-   * @param x {number} the value of x along the bezier curve, 0.0 <= x <= 1.0
-   * @param epsilon {number} the accuracy of t for the given x
-   * @return {number} the y value along the bezier curve
-   */
-  var solve = function(x, epsilon) {
-    return sampleCurveY(solveCurveX(x, epsilon));
-  };
-
-  // public interface --------------------------------------------
-
-  /*
-   * Find the y of the cubic-bezier for a given x with accuracy determined by the animation duration.
-   * @param x {number} the value of x along the bezier curve, 0.0 <= x <= 1.0
-   * @param duration {number} the duration of the animation in milliseconds
-   * @return {number} the y value along the bezier curve
-   */
-  return function(x, duration) {
-    return solve(x, solveEpsilon(+duration || DEFAULT_DURATION));
-  };
-}
-
-
-},{}],6:[function(_dereq_,module,exports){
-/**
- * A HUGE thank you to dynamics.js which inspired these dynamics simulations.
- * https://github.com/michaelvillar/dynamics.js
- *
- * Also licensed under MIT
- */
-
-var extend = _dereq_('../util/extend');
-
-module.exports = {
-  spring: dynamicsSpring,
-  gravity: dynamicsGravity
-};
-
-var springDefaults = {
-  frequency: 15,
-  friction: 200,
-  anticipationStrength: 0,
-  anticipationSize: 0
-};
-function dynamicsSpring(opts) {
-  opts = extend({}, springDefaults, opts || {});
-
-  return function at(t, duration) {
-    var A, At, a, angle, b, decal, frequency, friction, frictionT, s, v, y0, yS,
-    _opts = opts;
-    frequency = Math.max(1, opts.frequency);
-    friction = Math.pow(20, opts.friction / 100);
-    s = opts.anticipationSize / 100;
-    decal = Math.max(0, s);
-    frictionT = (t / (1 - s)) - (s / (1 - s));
-    if (t < s) {
-      A = function(t) {
-        var M, a, b, x0, x1;
-        M = 0.8;
-        x0 = s / (1 - s);
-        x1 = 0;
-        b = (x0 - (M * x1)) / (x0 - x1);
-        a = (M - b) / x0;
-        return (a * t * _opts.anticipationStrength / 100) + b;
-      };
-      yS = (s / (1 - s)) - (s / (1 - s));
-      y0 = (0 / (1 - s)) - (s / (1 - s));
-      b = Math.acos(1 / A(yS));
-      a = (Math.acos(1 / A(y0)) - b) / (frequency * (-s));
-    } else {
-      A = function(t) {
-        return Math.pow(friction / 10, -t) * (1 - t);
-      };
-      b = 0;
-      a = 1;
-    }
-    At = A(frictionT);
-    angle = frequency * (t - s) * a + b;
-    v = 1 - (At * Math.cos(angle));
-    //return [t, v, At, frictionT, angle];
-    return v;
-  };
-}
-
-var gravityDefaults = {
-  bounce: 40,
-  gravity: 1000,
-  initialForce: false
-};
-function dynamicsGravity(opts) {
-  opts = extend({}, gravityDefaults, opts || {});
-  var curves = [];
-
-  init();
-
-  return at;
-
-  function length() {
-    var L, b, bounce, curve, gravity;
-    bounce = Math.min(opts.bounce / 100, 80);
-    gravity = opts.gravity / 100;
-    b = Math.sqrt(2 / gravity);
-    curve = {
-      a: -b,
-      b: b,
-      H: 1
-    };
-    if (opts.initialForce) {
-      curve.a = 0;
-      curve.b = curve.b * 2;
-    }
-    while (curve.H > 0.001) {
-      L = curve.b - curve.a;
-      curve = {
-        a: curve.b,
-        b: curve.b + L * bounce,
-        H: curve.H * bounce * bounce
-      };
-    }
-    return curve.b;
-  }
-
-  function init() {
-    var L, b, bounce, curve, gravity, _results;
-
-    L = length();
-    gravity = (opts.gravity / 100) * L * L;
-    bounce = Math.min(opts.bounce / 100, 80);
-    b = Math.sqrt(2 / gravity);
-    curves = [];
-    curve = {
-      a: -b,
-      b: b,
-      H: 1
-    };
-    if (opts.initialForce) {
-      curve.a = 0;
-      curve.b = curve.b * 2;
-    }
-    curves.push(curve);
-    _results = [];
-    while (curve.b < 1 && curve.H > 0.001) {
-      L = curve.b - curve.a;
-      curve = {
-        a: curve.b,
-        b: curve.b + L * bounce,
-        H: curve.H * bounce * bounce
-      };
-      _results.push(curves.push(curve));
-    }
-    return _results;
-  }
-
-  function calculateCurve(a, b, H, t){
-    var L, c, t2;
-    L = b - a;
-    t2 = (2 / L) * t - 1 - (a * 2 / L);
-    c = t2 * t2 * H - H + 1;
-    if (opts.initialForce) {
-      c = 1 - c;
-    }
-    return c;
-  }
-
-  function at(t, duration) {
-    var bounce, curve, gravity, i, v;
-    bounce = opts.bounce / 100;
-    gravity = opts.gravity;
-    i = 0;
-    curve = curves[i];
-    while (!(t >= curve.a && t <= curve.b)) {
-      i += 1;
-      curve = curves[i];
-      if (!curve) {
-        break;
-      }
-    }
-    if (!curve) {
-      v = opts.initialForce ? 0 : 1;
-    } else {
-      v = calculateCurve(curve.a, curve.b, curve.H, t);
-    }
-    //return [t, v];
-    return v;
-  }
-
-};
-
-},{"../util/extend":10}],7:[function(_dereq_,module,exports){
-var dynamics = _dereq_('./dynamics');
-var bezier = _dereq_('./bezier');
-
-module.exports = {
-  'linear': function() {
-    return function(t, duration) {
-      return bezier.linear(t, duration);
-    };
-  },
-  'ease': function() {
-    return function(t, duration) {
-      return bezier.ease(t, duration);
-    };
-  },
-  'ease-in': function() {
-    return function(t, duration) {
-      return bezier.easeIn(t, duration);
-    };
-  },
-  'ease-out': function() {
-    return function(t, duration) {
-      return bezier.easeOut(t, duration);
-    };
-  },
-  'ease-in-out': function() {
-    return function(t, duration) {
-      return bezier.easeInOut(t, duration);
-    };
-  },
-  'cubic-bezier': function(x1, y1, x2, y2, duration) {
-    var bz = bezier.cubicBezier(x1, y1, x2, y2);//, t, duration);
-    return function(t, duration) {
-      return bz(t, duration);
-    };
-  }
-};
-
-},{"./bezier":5,"./dynamics":6}],8:[function(_dereq_,module,exports){
-
-var raf = _dereq_('raf');
-var time = _dereq_('performance-now');
-
-var self = module.exports = {
-  _running: {},
-
-  animationStarted: function(instance) {
-    self._running[instance._.id] = instance;
-
-    if (!self.isTicking) {
-      self.tick();
-    }
-  },
-
-  animationStopped: function(instance) {
-    delete self._running[instance._.id];
-    self.maybeStopTicking();
-  },
-
-  tick: function() {
-    var lastFrame = time();
-
-    self.isTicking = true;
-    self._rafId = raf(step);
-
-    function step() {
-      self._rafId = raf(step);
-
-      // Get current time
-      var now = time();
-      var deltaT = now - lastFrame;
-
-      for (var animationId in self._running) {
-        self._running[animationId]._tick(deltaT);
-      }
-
-      lastFrame = now;
-    }
-  },
-
-  maybeStopTicking: function() {
-    if (self.isTicking && !Object.keys(self._running).length) {
-      raf.cancel(self._rafId);
-      self.isTicking = false;
-    }
-  },
-
-};
-
-
-},{"performance-now":1,"raf":2}],9:[function(_dereq_,module,exports){
-module.exports = {
-  animator: _dereq_('./animator')
-};
-
-},{"./animator":4}],10:[function(_dereq_,module,exports){
-
-/*
- * There really is no tiny minimal extend() on npm to find,
- * so we just use our own.
- */
-
-module.exports = function extend(obj) {
-   var args = Array.prototype.slice.call(arguments, 1);
-   for(var i = 0; i < args.length; i++) {
-     var source = args[i];
-     if (source) {
-       for (var prop in source) {
-         obj[prop] = source[prop];
-       }
-     }
-   }
-   return obj;
-};
-
-},{}],11:[function(_dereq_,module,exports){
-
-// All we want is an eventEmitter that doesn't use #call or #apply,
-// by expecting 0-1 arguments. 
-// We couldn't find this on npm, so we make our own.
-
-module.exports = SimpleEventEmitter;
-
-function SimpleEventEmitter() {
-}
-
-SimpleEventEmitter.prototype = {
-  listeners: [],
-  on: function(eventType, fn) {
-    if (typeof fn !== 'function') return;
-    this.listeners[eventType] || (this.listeners[eventType] = []);
-    this.listeners[eventType].push(fn);
-  },
-  once: function(eventType, fn) {
-    var self = this;
-    function onceFn() {
-      self.off(eventType, fn);
-      self.off(eventType, onceFn);
-    }
-    this.on(eventType, fn);
-    this.on(eventType, onceFn);
-  },
-  // Built-in limitation: we only expect 0-1 arguments
-  // This is to save as much perf as possible when sending
-  // events every frame.
-  emit: function(eventType, eventArg) {
-    var listeners = this.listeners[eventType] || [];
-    var i = 0;
-    var len = listeners.length;
-    if (arguments.length === 2) {
-      for (i; i < len; i++) listeners[i] && listeners[i](eventArg);
-    } else {
-      for (i; i < len; i++) listeners[i] && listeners[i]();
-    }
-  },
-  off: function(eventType, fnToRemove) {
-    if (!eventType) {
-      //Remove all listeners
-      for (var type in this.listeners) {
-        this.off(type);
-      }
-    } else  {
-      var listeners = this.listeners[eventType];
-      if (listeners) {
-        if (!fnToRemove) {
-          listeners.length = 0;
-        } else {
-          var index = listeners.indexOf(fnToRemove);
-          listeners.splice(index, 1);
-        }
-      }
-    }
-  } 
-};
-
-},{}],12:[function(_dereq_,module,exports){
-
-/**
- * nextUid() from angular.js
- * License MIT
- * http://github.com/angular/angular.js
- *
- * A consistent way of creating unique IDs in angular. The ID is a sequence of alpha numeric
- * characters such as '012ABC'. The reason why we are not using simply a number counter is that
- * the number string gets longer over time, and it can also overflow, where as the nextId
- * will grow much slower, it is a string, and it will never overflow.
- *
- * @returns an unique alpha-numeric string
- */
-var uid = [];
-
-module.exports = function nextUid() {
-  var index = uid.length;
-  var digit;
-
-  while(index) {
-    index--;
-    digit = uid[index].charCodeAt(0);
-    if (digit == 57 /*'9'*/) {
-      uid[index] = 'A';
-      return uid.join('');
-    }
-    if (digit == 90  /*'Z'*/) {
-      uid[index] = '0';
-    } else {
-      uid[index] = String.fromCharCode(digit + 1);
-      return uid.join('');
-    }
-  }
-  uid.unshift('0');
-  return uid.join('');
-};
-
-},{}],13:[function(_dereq_,module,exports){
-// shim for using process in browser
-
-var process = module.exports = {};
-
-process.nextTick = (function () {
-    var canSetImmediate = typeof window !== 'undefined'
-    && window.setImmediate;
-    var canPost = typeof window !== 'undefined'
-    && window.postMessage && window.addEventListener
-    ;
-
-    if (canSetImmediate) {
-        return function (f) { return window.setImmediate(f) };
-    }
-
-    if (canPost) {
-        var queue = [];
-        window.addEventListener('message', function (ev) {
-            var source = ev.source;
-            if ((source === window || source === null) && ev.data === 'process-tick') {
-                ev.stopPropagation();
-                if (queue.length > 0) {
-                    var fn = queue.shift();
-                    fn();
-                }
-            }
-        }, true);
-
-        return function nextTick(fn) {
-            queue.push(fn);
-            window.postMessage('process-tick', '*');
-        };
-    }
-
-    return function nextTick(fn) {
-        setTimeout(fn, 0);
-    };
-})();
-
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-}
-
-// TODO(shtylman)
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-
-},{}]},{},[9])
-(9)
-});
 })();
