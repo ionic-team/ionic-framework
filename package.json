@@ -7,8 +7,6 @@
     "url": "git://github.com/driftyco/ionic.git"
   },
   "devDependencies": {
-    "karma": "^0.12.22",
-    "karma-chrome-launcher": "^0.1.4",
     "karma-jasmine": "~0.1.5",
     "karma-phantomjs-launcher": "~0.1.2",
     "karma-sauce-launcher": "~0.2.0",
@@ -54,7 +52,9 @@
     "js-yaml": "^3.0.2",
     "protractor": "^0.23.1",
     "q": "^1.0.1",
-    "github": "^0.2.1"
+    "github": "^0.2.1",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma": "^0.12.23"
   },
   "licenses": [
     {

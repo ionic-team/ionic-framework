@@ -38,63 +38,54 @@ IonicModule
 .service('$ionicSlideBoxDelegate', delegateService([
   /**
    * @ngdoc method
-   * @name $ionicSlideBoxDelegate#update
-   * @description
-   * Update the slidebox (for example if using Angular with ng-repeat,
-   * resize it for the elements inside).
+   * @name $ionicSlideBoxDelegate#select
+   * @param {number} to The index to select to.
    */
-  'update',
-  /**
-   * @ngdoc method
-   * @name $ionicSlideBoxDelegate#slide
-   * @param {number} to The index to slide to.
-   * @param {number=} speed The number of milliseconds for the change to take.
-   */
-  'slide',
+  'select',
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#enableSlide
    * @param {boolean=} shouldEnable Whether to enable sliding the slidebox.
    * @returns {boolean} Whether sliding is enabled.
    */
-  'enableSlide',
+  // 'enableSlide',
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#previous
    * @description Go to the previous slide. Wraps around if at the beginning.
    */
-  'previous',
+  // 'previous',
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#next
    * @description Go to the next slide. Wraps around if at the end.
    */
-  'next',
+  // 'next',
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#stop
    * @description Stop sliding. The slideBox will not move again until
    * explicitly told to do so.
    */
-  'stop',
+  // 'stop',
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#start
-   * @description Start sliding again if the slideBox was stopped. 
+   * @description Start sliding again if the slideBox was stopped.
    */
-  'start',
+  // 'start',
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#currentIndex
    * @returns number The index of the current slide.
    */
-  'currentIndex',
+  // 'currentIndex',
   /**
    * @ngdoc method
-   * @name $ionicSlideBoxDelegate#slidesCount
+   * @name $ionicSlideBoxDelegate#count
    * @returns number The number of slides there are currently.
    */
-  'slidesCount'
+  'count'
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#$getByHandle
