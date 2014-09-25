@@ -127,7 +127,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
      *
      * A complex popup has a `buttons` array, with each button having a `text` and `type`
      * field, in addition to an `onTap` function.  The `onTap` function, called when
-     * the correspondingbutton on the popup is tapped, will by default close the popup
+     * the corresponding button on the popup is tapped, will by default close the popup
      * and resolve the popup promise with its return value.  If you wish to prevent the
      * default and keep the popup open on button tap, call `event.preventDefault()` on the
      * passed in tap event.  Details below.
@@ -142,7 +142,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
      *   template: '', // String (optional). The html template to place in the popup body.
      *   templateUrl: '', // String (optional). The URL of an html template to place in the popup   body.
      *   scope: null, // Scope (optional). A scope to link to the popup content.
-     *   buttons: [{ //Array[Object] (optional). Buttons to place in the popup footer.
+     *   buttons: [{ // Array[Object] (optional). Buttons to place in the popup footer.
      *     text: 'Cancel',
      *     type: 'button-default',
      *     onTap: function(e) {
