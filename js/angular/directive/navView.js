@@ -74,7 +74,7 @@ IonicModule.constant('$ionicNavViewConfig', {
  * ```html
  * <script id="home" type="text/ng-template">
  *   <!-- The title of the ion-view will be shown on the navbar -->
- *   <ion-view title="'Home'">
+ *   <ion-view title="Home">
  *     <ion-content ng-controller="HomeCtrl">
  *       <!-- The content of the page -->
  *       <a href="#/music">Go to music page!</a>
