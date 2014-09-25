@@ -1342,6 +1342,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
         if (self.__refreshDeactivate) {
           self.__refreshDeactivate();
         }
+        if(self.__refreshHide){
+          self.__refreshHide();
+        }
 
         self.scrollTo(self.__scrollLeft, self.__scrollTop, true);
       },self.__refreshTailTime);

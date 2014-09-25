@@ -221,12 +221,7 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
       refresherScope.$onPulling();
     }, function() {
       // deactivateCallback
-      $timeout(function(){
-        refresher.classList.remove('active');
-        refresher.classList.remove('refreshing');
-        refresher.classList.remove('refreshing-tail');
-        refresher.classList.add('invisible');
-      },300);
+        refresher.classList.remove('active', 'refreshing', 'refreshing-tail');
     }, function() {
       // startCallback
       refresher.classList.add('refreshing');
