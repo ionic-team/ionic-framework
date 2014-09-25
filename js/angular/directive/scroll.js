@@ -70,7 +70,8 @@ function($timeout, $controller, $ionicBind) {
           scrollbarY: '@',
           zooming: '@',
           minZoom: '@',
-          maxZoom: '@'
+          maxZoom: '@',
+          stopPropagation: '@'
         });
         $scope.direction = $scope.direction || 'y';
 
@@ -85,6 +86,7 @@ function($timeout, $controller, $ionicBind) {
 
         if(!$scope.direction) { $scope.direction = 'y'; }
         var isPaging = $scope.$eval($scope.paging) === true;
+        var stopPropagation = $scope.$eval($scope.stopPropagation) === true;
 
         var scrollViewOptions= {
           el: $element[0],
@@ -92,6 +94,7 @@ function($timeout, $controller, $ionicBind) {
           locking: ($attr.locking || 'true') === 'true',
           bouncing: $scope.$eval($attr.hasBouncing),
           paging: isPaging,
+          stopPropagation: stopPropagation,
           scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
           scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
           scrollingX: $scope.direction.indexOf('x') >= 0,

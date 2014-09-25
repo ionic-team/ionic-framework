@@ -728,7 +728,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.__enableScrollY = true;
       self.__hasStarted = true;
       self.doTouchStart(getEventTouches(e), e.timeStamp);
-      e.preventDefault();
+      if (self.options.stopPropagation !== true) {
+        e.preventDefault();
+      }
     };
 
     self.touchMove = function(e) {
