@@ -24,7 +24,7 @@
             eleToActivate = ele;
             break;
           }
-          if( ele.tagName == 'A' || ele.tagName == 'BUTTON' || ele.hasAttribute('ng-click') ) {
+          if( ele.tagName == 'A' || ele.tagName == 'BUTTON' || ele.hasAttribute('ng-click') || ele.hasAttribute('ui-sref') ) {
             eleToActivate = ele;
             break;
           }
