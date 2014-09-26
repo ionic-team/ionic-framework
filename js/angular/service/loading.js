@@ -177,7 +177,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
   }
 
   function showLoader(options) {
-    options = extend($ionicLoadingConfig || {}, options || {});
+    options = extend({}, $ionicLoadingConfig || {}, options || {});
     var delay = options.delay || options.showDelay || 0;
 
     //If loading.show() was called previously, cancel it and show with our new options
