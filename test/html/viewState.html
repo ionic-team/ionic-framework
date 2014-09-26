@@ -8,27 +8,21 @@
 
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <script src="../../../../dist/js/ionic.bundle.js"></script>
-    <script src="dom-trace.js"></script>
   </head>
-  <body>
+  <body ng-controller="AppCtrl">
 
-    <div ng-controller="AppCtrl">
-      <ion-nav-bar class="nav-title-slide-ios7 bar-positive">
-        <ion-nav-back-button class="button-icon icon ion-arrow-left-c">
-          Back
-        </ion-nav-back-button>
-      </ion-nav-bar>
-      <ion-nav-view animation="slide-left-right-ios7"></ion-nav-view>
-    </div>
+    <ion-nav-bar class="bar-positive">
+      <ion-nav-back-button class="button-icon icon ion-arrow-left-c">
+        Back
+      </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view></ion-nav-view>
 
     <script id="sign-in.html" type="text/ng-template">
       <ion-view title="Sign-In">
 
-<ion-nav-buttons side="left">
-            <button
-                class="button button-icon icon ion-navicon"
-                menu-toggle="left">
-            </button>
+        <ion-nav-buttons side="left">
+          <button class="button button-icon icon ion-navicon"></button>
         </ion-nav-buttons>
         <ion-nav-buttons side="right">
             <button
@@ -199,11 +193,6 @@
     <script id="auto-detail.html" type="text/ng-template">
       <ion-view title="Auto Details">
 
-        <!-- <ion-nav-buttons side="left"> -->
-        <!--   <button class="button button-icon icon ion-home" ng-click="foo()"> -->
-        <!--     Home -->
-        <!--   </button> -->
-        <!-- </ion-nav-buttons> -->
         <ion-nav-buttons side="right">
           <button class="button button-icon icon ion-home" ng-click="foo()">
             Home
@@ -459,8 +448,6 @@
         ];
 
       });
-
-      domTrace.observe();
 
     </script>
   </body>
