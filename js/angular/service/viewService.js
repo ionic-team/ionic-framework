@@ -454,7 +454,7 @@ function($rootScope, $state, $location, $window, $injector, $animate, $ionicNavV
       function getParentAnimationClass(el) {
         var className = '';
         while(!className && el) {
-          className = el.getAttribute('animation');
+          className = navViewScope.$eval(el.getAttribute('animation')) || el.getAttribute('animation');
           el = el.parentElement;
         }
 
