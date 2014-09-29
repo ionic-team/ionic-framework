@@ -63,7 +63,7 @@ IonicModule
         });
       }, 300, false);
 
-      checkAsideExpose();
+      onResize();
 
       ionic.on('resize', onResize, $window);
 
