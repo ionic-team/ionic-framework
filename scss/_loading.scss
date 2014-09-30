@@ -4,6 +4,12 @@
  * --------------------------------------------------
  */
 
+.backdrop-loading {
+  background-color: $loading-backdrop-bg-color;
+
+  @include transition($loading-backdrop-fadein-duration opacity linear);
+}
+
 .loading-container {
   position: absolute;
   left: 0;
@@ -17,7 +23,7 @@
   @include justify-content(center);
   @include align-items(center);
 
-  @include transition(0.2s opacity linear);
+  @include transition($loading-backdrop-fadein-duration opacity linear);
   visibility: hidden;
   opacity: 0;
 
