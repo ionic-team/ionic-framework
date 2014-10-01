@@ -8,7 +8,7 @@
   width: 100%;
   height: 100%;
 
-  background-color: rgba(0,0,0,0.4);
+  background-color: $loading-backdrop-bg-color;
 
   visibility: hidden;
   opacity: 0;
@@ -20,5 +20,5 @@
     opacity: 1;
   }
 
-  @include transition(0.1s opacity linear);
+  @include transition($loading-backdrop-fadein-duration opacity linear);
 }
