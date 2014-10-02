@@ -138,6 +138,11 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
       if(target && self.positionView) {
         self.positionView(target, modalEl);
+        // set up a listener for in case the window size changes
+        ionic.on('resize',function(){
+          ionic.off('resize',null,window);
+          self.positionView(target,modalEl);
+        },window);
       }
 
       modalEl.addClass('ng-enter active')
@@ -194,6 +199,11 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       self._deregisterBackButton && self._deregisterBackButton();
 
       ionic.views.Modal.prototype.hide.call(self);
+
+      // clean up event listeners
+      if(self.positionView) {
+        ionic.off('resize',null,window);
+      }
 
       return $timeout(function(){
         $ionicBody.removeClass(self.viewType + '-open');
