@@ -155,6 +155,18 @@ function($timeout, $ionicGesture, $window) {
               content.offsetX = 0;
             }
           }),
+          setMarginRight: ionic.animationFrameThrottle(function(amount) {
+            if(amount) {
+              amount = parseInt(amount, 10);
+              $element[0].style.width = ($window.innerWidth - amount) + 'px';
+              content.offsetX = amount;
+            } else {
+              $element[0].style.width = '';
+              content.offsetX = 0;
+            }
+            // reset incase left gets grabby
+            $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(0,0,0)';
+          }),
           enableAnimation: function() {
             $scope.animationEnabled = true;
             $element[0].classList.add('menu-animated');

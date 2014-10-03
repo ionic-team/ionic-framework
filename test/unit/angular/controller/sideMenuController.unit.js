@@ -49,6 +49,7 @@ describe('$ionicSideMenus controller', function() {
       });
       var content = new Controller({ el: document.createElement('div') });
       content.setMarginLeft = function(){};
+      content.setMarginRight = function(){};
       ctrl.setContent(content);
     });
 
@@ -157,6 +158,7 @@ describe('$ionicSideMenus controller', function() {
   it('should set enabled/disabled exposeAside', function() {
     expect(ctrl.isAsideExposed()).toEqual(false);
     ctrl.left.setIsEnabled(false);
+    ctrl.right.setIsEnabled(false);
     ctrl.exposeAside(true);
     expect(ctrl.isAsideExposed()).toEqual(false);
     ctrl.left.setIsEnabled(true);
