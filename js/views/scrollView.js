@@ -629,7 +629,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
       if( !self.isScrolledIntoView ) {
         // shrink scrollview so we can actually scroll if the input is hidden
         // if it isn't shrink so we can scroll to inputs under the keyboard
-        if (ionic.Platform.isIOS() || ionic.Platform.isFullScreen){
+        if((ionic.Platform.isIOS() || ionic.Platform.isFullScreen) && !container.parentNode.classList.contains('modal')){
+
           // if there are things below the scroll view account for them and
           // subtract them from the keyboard height when resizing
           scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
