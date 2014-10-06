@@ -69,6 +69,7 @@ function($cacheFactory, $parse, $rootScope) {
       return item;
     },
     getItem: function(index) {
+      var item;
       if ( (item = this.attachedItems[index]) ) {
         //do nothing, the item is good
       } else if ( (item = this.backupItemsArray.pop()) ) {
