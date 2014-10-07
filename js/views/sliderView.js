@@ -63,6 +63,11 @@ ionic.views.Slider = ionic.views.View.inherit({
       width = container.offsetWidth || container.getBoundingClientRect().width;
 
       element.style.width = (slides.length * width) + 'px';
+      
+      // ensure index is within 0..length for non-continuous sliders
+      if (!options.continuous) {
+        index = Math.min(index, Math.max(slides.length - 1, 0));
+      }
 
       // stack elements
       var pos = slides.length;

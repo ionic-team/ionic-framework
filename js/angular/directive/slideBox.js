@@ -108,6 +108,10 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
 
       var deregisterInstance = $ionicSlideBoxDelegate._registerInstance(slider, $attrs.delegateHandle);
       $scope.$on('$destroy', deregisterInstance);
+      
+      this.updateSlides = function() {
+        slider.setup();
+      };
 
       this.slidesCount = function() {
         return slider.slidesCount();
@@ -144,9 +148,18 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
     require: '^ionSlideBox',
     compile: function(element, attr) {
       element.addClass('slider-slide');
-      return function($scope, $element, $attr) {
+      return function($scope, $element, $attr, slideBoxCtrl) {
+        // Tell the slideBox controller that this slide has been added.
+        slideBoxCtrl.updateSlides();
+
+        // When this slide is destroyed, tell the slideBox controller.
+        $scope.$on('$destroy', function() {
+          // Prevent ng-animate from delaying the removal of this element.
+          $element.detach();
+          slideBoxCtrl.updateSlides();
+        });
       };
-    },
+    }
   };
 })
 
