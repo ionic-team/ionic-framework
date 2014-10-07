@@ -189,6 +189,7 @@ describe('$ionicLoading service', function() {
       $timeout.flush();
       expect(deregisterSpy).not.toHaveBeenCalled();
       $ionicLoading.hide();
+      $timeout.flush();
       expect(deregisterSpy).toHaveBeenCalled();
     }));
   });
