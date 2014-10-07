@@ -48,6 +48,7 @@ ionic.views.Slider = ionic.views.View.inherit({
 
       // set continuous to false if only one slide
       if (slides.length < 2) options.continuous = false;
+      else options.continuous = true;
 
       //special case if two slides
       if (browser.transitions && options.continuous && slides.length < 3) {
