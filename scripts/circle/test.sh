@@ -14,12 +14,17 @@ function init {
 function run {
   cd ../..
 
+  if [[ "$(git symbolic-ref --short HEAD)" == "master" ]]; then
+    IS_MASTER=true
+  fi
+
   node_modules/.bin/gulp demos --demo-version=nightly
   TEST_ID=$CIRCLE_SHA1-$CIRCLE_BUILD_NUM
 
   case $INDEX in
   0)
-    node_modules/.bin/gulp jshint ddescribe-iit
+    [ -z $IS_MASTER ] || node_modules/.bin/gulp ddescribe-iit
+    node_modules/.bin/gulp jshint
     node_modules/.bin/gulp karma --browsers=PhantomJS --reporters=dots
     ;;
   1)
