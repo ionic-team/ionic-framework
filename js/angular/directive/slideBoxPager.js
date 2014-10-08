@@ -62,7 +62,9 @@ function($parse) {
 
     function onPagerClicked(index) {
       clickFn(scope.$parent, {
-        $slideIndex: index
+        $slideIndex: index,
+        // DEPRECATED pass in `index` variable
+        index: index
       });
     }
 
