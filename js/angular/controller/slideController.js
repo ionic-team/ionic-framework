@@ -7,6 +7,7 @@ function(scope, element, $q) {
   var self = this;
 
   scope.$on('$destroy', function() {
+    // Re-attach the element so it can be properly removed
     attachSlide();
   });
   element.on(ionic.CSS.TRANSITIONEND, onTransitionEnd);
