@@ -9,6 +9,8 @@
  *
  * ![SlideBox](http://ionicframework.com.s3.amazonaws.com/docs/controllers/slideBox.gif)
  *
+ * Note: The slideBox will take up the whole width and height of its parent element.
+ *
  * @usage
  * ```html
  * <ion-slide-box on-slide-changed="slideHasChanged($index)"
