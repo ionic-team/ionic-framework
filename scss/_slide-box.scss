@@ -5,14 +5,22 @@
  */
 
 .slider {
-  display: block;
   overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .slider-slides {
   height: 100%;
   width: 100%;
   position: relative;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .slider-slide {
