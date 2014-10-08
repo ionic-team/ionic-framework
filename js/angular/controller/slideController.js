@@ -7,8 +7,7 @@ function(scope, element, $q) {
   var self = this;
 
   scope.$on('$destroy', function() {
-    element.removeData();
-    detachSlide();
+    attachSlide();
   });
   element.on(ionic.CSS.TRANSITIONEND, onTransitionEnd);
 

@@ -20,9 +20,9 @@ IonicModule
     var dragEndGesture = ionic.onGesture('dragend', handleDragEnd, element[0]);
 
     scope.$on('$destroy', function() {
-      ionic.offGesture(dragStartGesture);
-      ionic.offGesture(dragGesture);
-      ionic.offGesture(dragEndGesture);
+      ionic.offGesture(dragStartGesture, 'dragstart', handleDragStart);
+      ionic.offGesture(dragGesture, 'drag', handleDrag);
+      ionic.offGesture(dragEndGesture, 'dragend', handleDragEnd);
     });
 
     var dragState;

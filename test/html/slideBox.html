@@ -45,7 +45,7 @@
 
     <div ng-controller="SlideCtrl">
       <ion-content>
-          <ion-slide-box selected="$root.selectedIndex" loop="true">
+          <ion-slide-box selected="$root.selectedIndex" loop="true" ng-if="$root.hasBox">
             <ion-slide ng-controller="FirstSlideCtrl">
               <h3>Thank you for choosing the Awesome App!</h3>
               <div id="logo">
@@ -94,7 +94,7 @@
 
       .controller('SlideCtrl', function($scope, $timeout) {
           $scope.items = [];
-          for (var i = 0; i < 10; i++) {
+          for (var i = 0; i < 1000; i++) {
             $scope.items.push(i);
           }
 
