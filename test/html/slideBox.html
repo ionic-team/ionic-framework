@@ -43,7 +43,7 @@
   </head>
   <body>
 
-    <div ng-controller="SlideCtrl">
+    <div ng-controller="SlideCtrl" ng-init="$root.hasBox = true">
       <ion-content>
           <ion-slide-box selected="$root.selectedIndex" loop="true" ng-if="$root.hasBox">
             <ion-slide ng-controller="FirstSlideCtrl">
