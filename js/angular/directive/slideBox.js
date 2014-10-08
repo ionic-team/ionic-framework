@@ -45,7 +45,7 @@ function($ionicSlideBoxDelegate, $window) {
   return {
     restrict: 'E',
     controller: '$ionSlideBox',
-    require: ['ionSlideBox'],
+    require: 'ionSlideBox',
     transclude: true,
     scope: {
       selectedIndex: '=?selected',

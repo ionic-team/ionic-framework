@@ -63,6 +63,7 @@ function(scope, element, $$ionicAttachDrag, $interval) {
     // If we only have two slides and loop is enabled, we cannot have a previous
     // because previous === next. In this case, return -1.
     if (self.loop() && self.count() === 2) {
+      console.log('lying about previous');
       return -1;
     }
     return slideList.previous(index);
@@ -187,16 +188,17 @@ function(scope, element, $$ionicAttachDrag, $interval) {
     if (Math.abs(percent) > 0.5 || velocity > SLIDE_SUCCESS_VELOCITY) {
       nextIndex = percent > 0 ? self.next() : self.previous();
     }
-    var transitionDuration = Math.min(
-      slidesParent.prop('offsetWidth') / (3 * velocity),
-      SLIDE_TRANSITION_DURATION
-    );
 
     // Select a new slide if it's avaiable
-    self.select(
-      self.isInRange(nextIndex) ? nextIndex : self.selected(),
-      transitionDuration
-    );
+    if (self.isInRange(nextIndex)) {
+      var transitionDuration = Math.min(
+        slidesParent.prop('offsetWidth') / (3 * velocity),
+        SLIDE_TRANSITION_DURATION
+      );
+      self.select(nextIndex, transitionDuration);
+    } else {
+      self.select(selectedIndex);
+    }
   }
 
   // ***
