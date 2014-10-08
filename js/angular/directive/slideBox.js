@@ -45,7 +45,7 @@ function($ionicSlideBoxDelegate, $window) {
   return {
     restrict: 'E',
     controller: '$ionSlideBox',
-    require: ['ionSlideBox', '^?$ionicScroll'],
+    require: ['ionSlideBox'],
     transclude: true,
     scope: {
       selectedIndex: '=?selected',
@@ -62,10 +62,7 @@ function($ionicSlideBoxDelegate, $window) {
     return postLink;
   }
 
-  function postLink(scope, element, attr, ctrls) {
-    var slideBoxCtrl = ctrls[0];
-    var scrollCtrl = ctrls[1];
-
+  function postLink(scope, element, attr, slideBoxCtrl) {
     element.addClass('slider');
 
     var deregister = $ionicSlideBoxDelegate._registerInstance(slideBoxCtrl, attr.delegateHandle);
@@ -79,15 +76,7 @@ function($ionicSlideBoxDelegate, $window) {
     throttledReposition();
     angular.element($window).on('resize', throttledReposition);
 
-    if (scrollCtrl) {
-      var oldScrollingY = scrollCtrl.scrollView.options.scrollingY;
-      scrollCtrl.scrollView.options.scrollingY = false;
-    }
-
     scope.$on('$destroy', function() {
-      if (scrollCtrl) {
-        scrollCtrl.scrollView.options.scrollingY = oldScrollingY;
-      }
       angular.element($window).off('resize', throttledReposition);
     });
 

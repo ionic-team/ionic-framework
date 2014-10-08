@@ -25,6 +25,10 @@ IonicModule
       ionic.offGesture(dragEndGesture, 'dragend', handleDragEnd);
     });
 
+    element.on('touchmove pointermove mousemove', function(ev) {
+      if (dragState && dragState.dragging) ev.preventDefault();
+    });
+
     var dragState;
     function handleDragStart(ev) {
       if (dragState) return;
