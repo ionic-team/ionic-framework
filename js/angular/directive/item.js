@@ -23,7 +23,7 @@ var ITEM_TPL_CONTENT =
 *   <ion-item>Hello!</ion-item>
 *   <ion-item href="#/detail">
 *     Link to detail page
-*   <ion-item>
+*   </ion-item>
 * </ion-list>
 * ```
 */
