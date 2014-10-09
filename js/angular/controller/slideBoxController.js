@@ -207,8 +207,9 @@ function(scope, element, $$ionicAttachDrag, $interval) {
 
     // Select a new slide if it's avaiable
     if (self.isInRange(nextIndex)) {
+      var distanceRemaining = (1 - Math.abs(percent)) * slidesParent.prop('offsetWidth');
       var transitionDuration = Math.min(
-        slidesParent.prop('offsetWidth') / (velocity),
+        distanceRemaining / velocity,
         SLIDE_TRANSITION_DURATION
       );
       self.select(nextIndex, transitionDuration);

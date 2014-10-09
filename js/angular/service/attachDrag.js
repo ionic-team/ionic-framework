@@ -45,7 +45,7 @@ IonicModule
       var deltaY = dragState.startY - ev.gesture.center.pageY;
       var isVertical = ev.gesture.direction === 'up' || ev.gesture.direction === 'down';
 
-      if (isVertical && Math.abs(deltaY) > Math.abs(deltaX)) {
+      if (isVertical && Math.abs(deltaY) > Math.abs(deltaX) * 2) {
         handleDragEnd(ev);
         return;
       }
