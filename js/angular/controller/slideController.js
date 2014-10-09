@@ -26,9 +26,7 @@ function(scope, element, $q) {
   // Public Methods
   // ***
 
-  function onAdded(parentElement) {
-    self.parentElement = parentElement;
-
+  function onAdded() {
     // Set default state
     self.setState('detached');
   }
@@ -85,19 +83,21 @@ function(scope, element, $q) {
   // ***
 
   function attachSlide() {
-    if (!self.element[0].parentNode) {
-      self.parentElement.append(self.element);
-      ionic.Utils.reconnectScope(scope);
-    }
+    // if (!self.element[0].parentNode) {
+    //   self.parentElement.append(self.element);
+    //   ionic.Utils.reconnectScope(scope);
+    // }
+    ionic.Utils.reconnectScope(scope);
   }
 
   function detachSlide() {
     // Don't use self.element.remove(), that will destroy the element's data
-    var parent = self.element[0].parentNode;
-    if (parent) {
-      parent.removeChild(self.element[0]);
-      ionic.Utils.disconnectScope(scope);
-    }
+    // var parent = self.element[0].parentNode;
+    // if (parent) {
+    //   parent.removeChild(self.element[0]);
+    //   ionic.Utils.disconnectScope(scope);
+    // }
+    ionic.Utils.disconnectScope(scope);
   }
 
   var transitionDeferred;

@@ -88,7 +88,16 @@ IonicModule
    * @name $ionicSlideBoxDelegate#count
    * @returns `number` The number of slides there are currently.
    */
-  'count'
+  'count',
+  /**
+   * @ngdoc method
+   * @name $ionicSlideBoxDelegate#update
+   * @description Causes the slidebox to re-scan all of the child slide
+   * elements and reorganize itself again.
+   * You only need to call update if you are moving slides around in the DOM
+   * (for example, ng-repeat moving an element from the middle to the end).
+   */
+  'update',
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#$getByHandle

@@ -28,28 +28,23 @@ describe('$ionSlide controller', function() {
 
   it('#setState()', function() {
     var ctrl = makeCtrl();
-    ctrl.onAdded(angular.element('<div>'));
+    ctrl.onAdded();
 
-    expect(ctrl.element.parent().length).toBe(0);
     ctrl.setState('selected');
     expect(ctrl.element.attr('slide-state')).toBe('selected');
     expect(ctrl.element.attr('slide-previous-state')).toBe('detached');
-    expect(ctrl.element.parent()[0]).toBe(ctrl.parentElement[0]);
 
     ctrl.setState('previous');
     expect(ctrl.element.attr('slide-state')).toBe('previous');
     expect(ctrl.element.attr('slide-previous-state')).toBe('selected');
-    expect(ctrl.element.parent()[0]).toBe(ctrl.parentElement[0]);
 
     ctrl.setState('detached');
     expect(ctrl.element.attr('slide-state')).toBe('detached');
     expect(ctrl.element.attr('slide-previous-state')).toBe('previous');
-    expect(ctrl.element.parent().length).toBe(0);
 
     ctrl.setState('next');
     expect(ctrl.element.attr('slide-state')).toBe('next');
     expect(ctrl.element.attr('slide-previous-state')).toBe('detached');
-    expect(ctrl.element.parent()[0]).toBe(ctrl.parentElement[0]);
 
   });
 });

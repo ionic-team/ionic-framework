@@ -38,18 +38,6 @@ IonicModule
       slideBoxCtrl.remove(slideCtrl);
     });
 
-    element.one('$animate:after', watchNgRepeatIndexOnInsertElement);
-    element.on('$animate:after', refreshStateOnInsertElement);
-
-    // If this element is inserted later by an ng-if or ng-repeat, remove it
-    // from the DOM again if it's irrelevant (not selected or adjacent).
-    function refreshStateOnInsertElement() {
-      var slideIndex = slideBoxCtrl.indexOf(slideCtrl);
-      if (!slideBoxCtrl.isRelevant(slideIndex)) {
-        slideCtrl.setState('detached');
-      }
-    }
-
     // Move with ng-repeat if this slide is part of ng-repeat.
     // scope.$index only appears after the first time ng-repaet inserts the element.
     function watchNgRepeatIndexOnInsertElement() {

@@ -41,7 +41,7 @@
       }
     </style>
   </head>
-  <body ng-init="$root.selectedIndex = 3">
+  <body ng-init="$root.selectedIndex = 0">
 
     <div ng-controller="SlideCtrl" ng-init="$root.hasBox = true">
       <ion-content>
@@ -94,7 +94,7 @@
 
       .controller('SlideCtrl', function($scope, $timeout) {
           $scope.items = [];
-          for (var i = 0; i < 50; i++) {
+          for (var i = 0; i < 1000; i++) {
             $scope.items.push(i);
           }
 

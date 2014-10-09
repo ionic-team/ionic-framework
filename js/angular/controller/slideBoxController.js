@@ -36,6 +36,7 @@ function(scope, element, $$ionicAttachDrag, $interval) {
   self.loop = slideList.loop;
   self.delta = slideList.delta;
 
+  self.update = update;
   self.enableSlide = enableSlide;
   self.autoPlay = autoPlay;
   self.add = add;
@@ -73,6 +74,18 @@ function(scope, element, $$ionicAttachDrag, $interval) {
     return slideList.next(index);
   }
 
+  function update() {
+    var selectedIndex = scope.selectedIndex;
+    for (var i = self.count() - 1; i >= 0; i--) {
+      slideList.remove(i);
+    }
+    var slideNodes = element[0].querySelectorAll('ion-slide');
+    for (var j = 0, jj = slideNodes.length; j < jj; j++) {
+      slideList.add(jqLite(slideNodes[j]).controller('ionSlide'));
+    }
+    self.select(selectedIndex);
+  }
+
   function enableSlide(isEnabled) {
     if (arguments.length) {
       self.dragDisabled = !isEnabled;
@@ -95,7 +108,7 @@ function(scope, element, $$ionicAttachDrag, $interval) {
    */
   function add(slide, index) {
     var newIndex = slideList.add(slide, index);
-    slide.onAdded(slidesParent);
+    slide.onAdded();
 
     // If we are waiting for a certain scope.selectedIndex and this is it,
     // select the slide
@@ -126,12 +139,12 @@ function(scope, element, $$ionicAttachDrag, $interval) {
     if (index === -1) return;
 
     // If the slide is current, next, or previous, save so we can re-select after moving.
-    var isRelevant = self.isRelevant(targetIndex);
+    var isRelevant = self.selected() === index || self.isRelevant(targetIndex);
     slideList.remove(index);
     slideList.add(slide, targetIndex);
 
     if (isRelevant) {
-      enqueueRefresh();
+      self.select(targetIndex);
     }
   }
 
