@@ -144,6 +144,8 @@ function( $ionicViewService,   $state,   $compile,   $controller,   $animate) {
           viewIsUpdating = false;
         };
 
+        $ionicViewService.registerHistory(scope);
+
         scope.$on('$stateChangeSuccess', eventHook);
         // scope.$on('$viewContentLoading', eventHook);
         updateView(false);
