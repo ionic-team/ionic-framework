@@ -120,4 +120,22 @@ describe('ionSlideBox directive', function() {
     $interval.flush();
     expect(slideBoxCtrl.selected()).toBe(0);
   }));
+
+  it('should call onSlideChanged', inject(function($rootScope, $timeout) {
+    $rootScope.changed = jasmine.createSpy('slideChanged');
+    var el = makeSlideBox('<ion-slide-box on-slide-changed="changed($slideIndex)">' +
+                    '<ion-slide>A</ion-slide>' +
+                    '<ion-slide>B</ion-slide>' +
+                    '<ion-slide>C</ion-slide>' +
+                '</ion-slide-box>');
+
+    $rootScope.$apply();
+    var slideBoxCtrl = el.controller('ionSlideBox');
+    $timeout.flush();
+    expect($rootScope.changed).toHaveBeenCalledWith(0);
+
+    slideBoxCtrl.select(1);
+    $rootScope.$apply();
+    expect($rootScope.changed).toHaveBeenCalledWith(1);
+  }));
 });

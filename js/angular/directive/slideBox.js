@@ -13,7 +13,7 @@
  *
  * @usage
  * ```html
- * <ion-slide-box on-slide-changed="slideHasChanged($index)" loop="shouldLoop" auto-play="3000">
+ * <ion-slide-box on-slide-changed="slideHasChanged($slideIndex)" loop="shouldLoop" auto-play="3000">
  *   <ion-slide>
  *     <div class="box blue"><h1>BLUE</h1></div>
  *   </ion-slide>
@@ -29,7 +29,7 @@
  * @param {expression=} selected A model bound to the selected slide index.
  * @param {boolean=} loop Whether the slide box should loop. Default false.
  * @param {number=} auto-play If a positive number, then every time the given number of milliseconds have passed, slideBox will go to the next slide. Set to a non-positive number to disable. Default: -1.
- * @param {expression=} on-slide-changed Expression called whenever the slide is changed.  Is passed an '$index' variable.
+ * @param {expression=} on-slide-changed Expression called whenever the slide is changed.  Is passed a '$slideIndex' variable.
  * @param {string=} delegate-handle The handle used to identify this slideBox with
  * {@link ionic.service:$ionicSlideBoxDelegate}.
  */
@@ -65,8 +65,8 @@ function($ionicSlideBoxDelegate, $window) {
     var deregister = $ionicSlideBoxDelegate._registerInstance(slideBoxCtrl, attr.delegateHandle);
     scope.$on('$destroy', deregister);
 
+    watchSelected();
     isDefined(attr.loop) && watchLoop();
-    isDefined(attr.selected) && watchSelected();
     isDefined(attr.autoPlay) && watchAutoPlay();
 
     var throttledReposition = ionic.animationFrameThrottle(repositionSlideBox);
@@ -91,21 +91,24 @@ function($ionicSlideBoxDelegate, $window) {
       });
     }
 
+    function watchSelected() {
+      scope.$watch('selectedIndex', function selectedAttrWatchAction(newIndex) {
+        if (slideBoxCtrl.isInRange(newIndex)) {
+          scope.onSlideChanged({
+            //DEPRECATED $index
+            $index: newIndex,
+            $slideIndex: newIndex
+          });
+          if (slideBoxCtrl.selected() !== newIndex) {
+            slideBoxCtrl.select(newIndex);
+          }
+        }
+      });
+    }
+
     function watchLoop() {
       var unwatchParent = scope.$parent.$watch(attr.loop, slideBoxCtrl.loop);
       scope.$on('$destroy', unwatchParent);
-    }
-
-    function watchSelected() {
-      scope.$watch('selectedIndex', function selectedAttrWatchAction(newIndex, oldIndex) {
-        if (slideBoxCtrl.isInRange(newIndex) &&
-            slideBoxCtrl.selected() !== newIndex) {
-          slideBoxCtrl.select(newIndex);
-          scope.onSlideChanged({
-            $index: newIndex
-          });
-        }
-      });
     }
 
     function watchAutoPlay() {
