@@ -13,7 +13,7 @@ describe('ionSlideBox directive', function() {
     return el.find('ion-slide-box');
   }
 
-  it('should bind to selected attr', inject(function($rootScope, $timeout) {
+  it('should bind to select - > selected attr', inject(function($rootScope, $timeout) {
     var slideBox = makeSlideBox('<ion-slide-box selected="$root.currentIndex">' +
                               '<ion-slide>A</ion-slide>' +
                               '<ion-slide>B</ion-slide>' +
@@ -33,12 +33,31 @@ describe('ionSlideBox directive', function() {
     $timeout.flush();
     expect($rootScope.currentIndex).toBe(1);
 
-    // No out of bounds
+    // Out of bounds should apply
     expect(slideBoxCtrl.selected()).toBe(1);
     $rootScope.$apply('currentIndex = -1');
-    expect(slideBoxCtrl.selected()).toBe(1);
+    expect(slideBoxCtrl.selected()).toBe(-1);
     $rootScope.$apply('currentIndex = 3');
-    expect(slideBoxCtrl.selected()).toBe(1);
+    expect(slideBoxCtrl.selected()).toBe(-1);
+  }));
+
+  it('should bind to selected attr to slide', inject(function($rootScope, $timeout) {
+    $rootScope.currentIndex = 2;
+    var slideBox = makeSlideBox('<ion-slide-box selected="$root.currentIndex">' +
+                              '<ion-slide>A</ion-slide>' +
+                              '<ion-slide>B</ion-slide>' +
+                              '<ion-slide>C</ion-slide>' +
+                            '</ion-slide-box>');
+
+    var slideBoxCtrl = slideBox.controller('ionSlideBox');
+
+    expect(slideBoxCtrl.selected()).toBe(2);
+    expect($rootScope.currentIndex).toBe(2);
+    $timeout.flush();
+
+    slideBoxCtrl.select(1);
+    $timeout.flush();
+    expect($rootScope.currentIndex).toBe(1);
   }));
 
   it('should loop depending on attr.loop', inject(function($rootScope) {

@@ -97,17 +97,14 @@ function($ionicSlideBoxDelegate, $window) {
     }
 
     function watchSelected() {
-      scope.$watch('selectedIndex', function selectedAttrWatchAction(newIndex) {
+      scope.$watch('selectedIndex', function selectedAttrWatchAction(newIndex, oldIndex) {
         if (slideBoxCtrl.isInRange(newIndex) &&
             slideBoxCtrl.selected() !== newIndex) {
           slideBoxCtrl.select(newIndex);
+          scope.onSlideChanged({
+            $index: newIndex
+          });
         }
-      });
-      scope.$watch(slideBoxCtrl.selected, function shownWatchAction(newIndex) {
-        scope.selectedIndex = newIndex;
-        scope.onSlideChanged({
-          $index: newIndex
-        });
       });
     }
 

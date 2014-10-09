@@ -11,7 +11,6 @@ IonicModule
 function(scope, element, $$ionicAttachDrag, $interval) {
   var self = this;
   var slideList = ionic.Utils.list([]);
-  var selectedIndex = -1;
   var slidesParent = angular.element(element[0].querySelector('.slider-slides'));
 
   // Successful slide requires velocity to be greater than this amount
@@ -54,24 +53,23 @@ function(scope, element, $$ionicAttachDrag, $interval) {
   // Gets whether the given index is relevant to selected
   // That is, whether the given index is previous, selected, or next
   function isRelevant(index) {
-    return slideList.isRelevant(index, selectedIndex);
+    return slideList.isRelevant(index, scope.selectedIndex);
   }
 
-  // Gets the index to the previous of the given slide, default selectedIndex
+  // Gets the index to the previous of the given slide, default scope.selectedIndex
   function previous(index) {
-    index = arguments.length ? index : selectedIndex;
+    index = arguments.length ? index : scope.selectedIndex;
     // If we only have two slides and loop is enabled, we cannot have a previous
     // because previous === next. In this case, return -1.
     if (self.loop() && self.count() === 2) {
-      console.log('lying about previous');
       return -1;
     }
     return slideList.previous(index);
   }
 
-  // Gets the index to the next of the given slide, default selectedIndex
+  // Gets the index to the next of the given slide, default scope.selectedIndex
   function next(index) {
-    index = arguments.length ? index : selectedIndex;
+    index = arguments.length ? index : scope.selectedIndex;
     return slideList.next(index);
   }
 
@@ -99,7 +97,12 @@ function(scope, element, $$ionicAttachDrag, $interval) {
     var newIndex = slideList.add(slide, index);
     slide.onAdded(slidesParent);
 
-    if (selectedIndex === -1) {
+    // If we are waiting for a certain scope.selectedIndex and this is it,
+    // select the slide
+    if (scope.selectedIndex === index) {
+      self.select(newIndex);
+    // If we don't have a selectedIndex yet, select the first one available
+    } else if (!isNumber(scope.selectedIndex) || scope.selectedIndex === -1) {
       self.select(newIndex);
     } else if (newIndex === self.previous() || newIndex === self.next()) {
       // if the new slide is adjacent to selected, refresh the selection
@@ -115,7 +118,7 @@ function(scope, element, $$ionicAttachDrag, $interval) {
     slide.onRemoved();
 
     if (isSelected) {
-      self.select( self.isInRange(selectedIndex) ? selectedIndex : selectedIndex - 1 );
+      self.select( self.isInRange(scope.selectedIndex) ? scope.selectedIndex : scope.selectedIndex - 1 );
     }
   }
   function move(slide, targetIndex) {
@@ -133,7 +136,7 @@ function(scope, element, $$ionicAttachDrag, $interval) {
   }
 
   function selected() {
-    return selectedIndex;
+    return self.isInRange(scope.selectedIndex) ? scope.selectedIndex : -1;
   }
 
   /*
@@ -142,15 +145,15 @@ function(scope, element, $$ionicAttachDrag, $interval) {
   function select(newIndex, transitionDuration) {
     if (!self.isInRange(newIndex)) return;
 
-    var delta = self.delta(selectedIndex, newIndex);
+    var delta = self.delta(scope.selectedIndex, newIndex);
 
     slidesParent.css(
       ionic.CSS.TRANSITION_DURATION,
       (transitionDuration || SLIDE_TRANSITION_DURATION) + 'ms'
     );
-    selectedIndex = newIndex;
+    scope.selectedIndex = newIndex;
 
-    if (self.isInRange(selectedIndex) && Math.abs(delta) > 1) {
+    if (self.isInRange(scope.selectedIndex) && Math.abs(delta) > 1) {
       // if the new slide is > 1 away, then it is currently not attached to the DOM.
       // Attach it in the position from which it will slide in.
       self.at(newIndex).setState(delta > 1 ? 'next' : 'previous');
@@ -163,9 +166,9 @@ function(scope, element, $$ionicAttachDrag, $interval) {
 
     function doSelect() {
       // If a new selection has happened before this frame, abort.
-      if (selectedIndex !== newIndex) return;
+      if (scope.selectedIndex !== newIndex) return;
       scope.$evalAsync(function() {
-        if (selectedIndex !== newIndex) return;
+        if (scope.selectedIndex !== newIndex) return;
         arrangeSlides(newIndex);
       });
     }
@@ -197,7 +200,7 @@ function(scope, element, $$ionicAttachDrag, $interval) {
       );
       self.select(nextIndex, transitionDuration);
     } else {
-      self.select(selectedIndex);
+      self.select(scope.selectedIndex);
     }
   }
 
@@ -257,7 +260,7 @@ function(scope, element, $$ionicAttachDrag, $interval) {
     if (!enqueueRefresh.queued) {
       enqueueRefresh.queued = true;
       scope.$$postDigest(function() {
-        self.select(selectedIndex);
+        self.select(scope.selectedIndex);
         enqueueRefresh.queued = false;
       });
     }
