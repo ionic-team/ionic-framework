@@ -34,23 +34,9 @@ IonicModule
     element.addClass('slider-slide');
 
     slideBoxCtrl.add(slideCtrl);
-    scope.$on('$destroy', function() {
+    element.on('$destroy', function() {
       slideBoxCtrl.remove(slideCtrl);
     });
-
-    // Move with ng-repeat if this slide is part of ng-repeat.
-    // scope.$index only appears after the first time ng-repaet inserts the element.
-    function watchNgRepeatIndexOnInsertElement() {
-      if (angular.isNumber(scope.$index)) {
-        scope.$watch('$index', function(newIndex, oldIndex) {
-          if (!isDefined(oldIndex)) return;
-          var difference = newIndex - oldIndex;
-          var currentIndex = slideBoxCtrl.indexOf(slideCtrl);
-
-          slideBoxCtrl.move(slideCtrl, currentIndex + difference);
-        });
-      }
-    }
 
   }
 }]);

@@ -93,9 +93,10 @@ IonicModule
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#update
    * @description Causes the slidebox to re-scan all of the child slide
-   * elements and reorganize itself again.
+   * elements and reorganize itself again. This will rarely be needed.
    * You only need to call update if you are moving slides around in the DOM
-   * (for example, ng-repeat moving an element from the middle to the end).
+   * (for example, ng-repeat moving an element from the middle to the end of
+   * the list).
    */
   'update',
   /**
