@@ -15,7 +15,7 @@ describe('ionSlide directive', function() {
     expect(slideBoxCtrl.count()).toBe(1);
     expect(slideBoxCtrl.at(0)).toBe(slideCtrl);
 
-    slide.scope().$broadcast('$destroy');
+    slide.triggerHandler('$destroy');
     expect(slideBoxCtrl.count()).toBe(0);
   }));
 
