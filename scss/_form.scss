@@ -5,7 +5,7 @@
 
 // Make all forms have space below them
 form {
-  margin: 0 0 $line-height-base;
+  margin: 0 0 $line-height-base + px;
 }
 
 // Groups of fields with labels on top (legends)
@@ -17,11 +17,11 @@ legend {
   border: $input-border-width solid $input-border;
   color: $dark;
   font-size: $font-size-base * 1.5;
-  line-height: $line-height-base * 2;
+  line-height: $line-height-base * 2 + px;
 
   small {
     color: $stable;
-    font-size: $line-height-base * .75;
+    font-size: $line-height-base * .75 + px;
   }
 }
 
