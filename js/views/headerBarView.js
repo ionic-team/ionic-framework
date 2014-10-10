@@ -36,7 +36,7 @@
         // Once we encounter a titleEl, realize we are now counting the right-buttons, not left
         for(i = 0; i < childNodes.length; i++) {
           c = childNodes[i];
-          if (c.tagName && c.tagName.toLowerCase() == 'h1') {
+          if (c.classList && c.classList.contains('title')) {
             isCountingRightWidth = true;
             continue;
           }
