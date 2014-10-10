@@ -100,7 +100,7 @@ function($animate, $rootScope, $sanitize, $ionicNavBarConfig, $ionicNgClick) {
           if(isDefined($attr.fromTitle)) {
             $element[0].innerHTML = '<span class="back-button-title">' + $sanitize($scope.oldTitle) + '</span>';
           }
-          return !!(backIsShown && $scope.backButtonShown);
+          return navBarCtrl.showBackButton(backIsShown);
         }, ionic.animationFrameThrottle(function(show) {
           if (show) $animate.removeClass($element, 'ng-hide');
           else $animate.addClass($element, 'ng-hide');
