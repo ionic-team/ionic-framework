@@ -117,6 +117,13 @@ function($animate, $timeout) {
             }
           });
 
+          $scope.$on('$destroy', function() {
+            if(listView) {
+              listView.deregister && listView.deregister();
+              listView = null;
+            }
+          });
+
           if (isDefined($attr.canSwipe)) {
             $scope.$watch('!!(' + $attr.canSwipe + ')', function(value) {
               listCtrl.canSwipeItems(value);
