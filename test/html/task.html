@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="toggleTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Task</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body>
+
+    <header class="bar bar-header bar-danger">
+      <h1 class="title">Web Workers (Task)</h1>
+    </header>
+    <ion-content class="has-header reveal-animation">
+      <div ng-controller="TestCtrl">
+      </div>
+    </ion-content>
+
+    <script>
+      angular.module('toggleTest', ['ionic'])
+      .controller('TestCtrl', function($scope, $ionicTask) {
+        var t = $ionicTask('tasks/task1.js', function(msg) {
+          console.log('POST RESP', msg);
+        });
+
+        t.post({
+          'operation': 'load'
+        });
+        t.post({
+          'operation': 'eat'
+        });
+      });
+    </script>
+  </body>
+</html>
