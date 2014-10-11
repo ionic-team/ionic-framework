@@ -21,9 +21,13 @@
 
     <script>
       angular.module('toggleTest', ['ionic'])
-      .controller('TestCtrl', function($scope, $ionicTask) {
+      .controller('TestCtrl', function($scope, $timeout, $ionicTask) {
         var t = $ionicTask('tasks/task1.js', function(msg) {
           console.log('POST RESP', msg);
+        }, function(err) {
+          console.error('POST ERR', msg);
+        }, function() {
+          console.log('Worker done!');
         });
 
         t.post({
@@ -32,6 +36,13 @@
         t.post({
           'operation': 'eat'
         });
+       
+        $timeout(function() {
+          t.close();
+        }, 200);
+        $timeout(function() {
+          t.terminate();
+        }, 400);
       });
     </script>
   </body>
