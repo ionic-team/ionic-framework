@@ -1148,6 +1148,9 @@ function $UrlRouterProvider(  $urlMatcherFactory) {
         for (i=0; i<n; i++) {
           if (check(rules[i])) return;
         }
+        if($location.$$path && $location.$$path !== '/') {
+          console.warn('Routing: No route matched for', $location.$$path + '. Check your Ionic route definitions.');
+        }
         // always check otherwise last to allow dynamic updates to the set of rules
         if (otherwise) check(otherwise);
       }
