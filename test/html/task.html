@@ -16,33 +16,31 @@
     </header>
     <ion-content class="has-header reveal-animation">
       <div ng-controller="TestCtrl">
+        <div>Running.</div>
+        <p>
+          Current value: {{value}};
+        </p>
       </div>
     </ion-content>
 
     <script>
       angular.module('toggleTest', ['ionic'])
       .controller('TestCtrl', function($scope, $timeout, $ionicTask) {
+        $scope.value = 0;
         var t = $ionicTask('tasks/task1.js', function(msg) {
-          console.log('POST RESP', msg);
+          $scope.value = msg;
         }, function(err) {
           console.error('POST ERR', msg);
         }, function() {
           console.log('Worker done!');
         });
 
-        t.post({
-          'operation': 'load'
-        });
-        t.post({
-          'operation': 'eat'
-        });
-       
-        $timeout(function() {
-          t.close();
-        }, 200);
-        $timeout(function() {
-          t.terminate();
-        }, 400);
+        setInterval(function() {
+          t.post({
+            'op': 'increment',
+            'value': $scope.value
+          });
+        }, 100);
       });
     </script>
   </body>

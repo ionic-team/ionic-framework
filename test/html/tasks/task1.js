@@ -1,5 +1,4 @@
-postMessage("I\'m working before postMessage(\'ali\').");
-
-onmessage = function (oEvent) {
-  postMessage("Hi " + oEvent.data.operation);
+onmessage = function (e) {
+  console.log(e.data.value);
+  postMessage(e.data.value + 1);
 };
