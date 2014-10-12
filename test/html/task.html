@@ -23,9 +23,15 @@
       </div>
     </ion-content>
 
+    <script id="worker1">
+      onmessage = function (e) {
+        postMessage('I like ' + e.data.type);
+      };
+    </script>
+
     <script>
       angular.module('toggleTest', ['ionic'])
-      .controller('TestCtrl', function($scope, $timeout, $ionicTask) {
+      .controller('TestCtrl', function($scope, $timeout, $ionicTask, $http) {
         $scope.value = 0;
         var t = $ionicTask('tasks/task1.js', function(msg) {
           $scope.value = msg;
@@ -41,6 +47,13 @@
             'value': $scope.value
           });
         }, 100);
+
+        var t2 = $ionicTask(document.getElementById('worker1'), function(msg) {
+          console.log('Worker 1 message', msg);
+        });
+        t2.post({
+          'type': 'Ice Cream'
+        });
       });
     </script>
   </body>
