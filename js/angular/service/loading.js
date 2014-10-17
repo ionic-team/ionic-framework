@@ -114,6 +114,9 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
             $ionicTemplateLoader.load(options.templateUrl) :
             //options.content: deprecated
             $q.when(options.template || options.content || '');
+            
+        
+          self.scope = options.scope || self.scope;
 
 
           if (!this.isShown) {
