@@ -38,7 +38,9 @@
 .#{$ionicons-prefix}refreshing,
 .#{$ionicons-prefix}ios7-reloading {
   @extend .ion;
-  @extend .#{$ionicons-prefix}spin;
+  &:before{
+    @extend .#{$ionicons-prefix}spin;
+  }
 }
 
 .#{$ionicons-prefix}loading-a {
