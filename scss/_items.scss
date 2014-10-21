@@ -754,5 +754,11 @@ button.item.item-button-right {
     height: 100%;
     border: none;
     border-radius: 0;
+    @include display-inline-flex();
+    @include align-items(center);
+    
+    &:before{
+      margin: 0 auto;
+    }
   }
 }
