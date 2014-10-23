@@ -126,7 +126,7 @@ function($timeout, $ionicGesture, $window) {
               return scrollAxis;
             }
           }
-          return 'x';
+          return 'y';
         }
 
         var content = {
