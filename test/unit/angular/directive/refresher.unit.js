@@ -80,12 +80,12 @@ describe('ionRefresher directive', function() {
 
   it('should have default refreshingIcon', function() {
     var el = setup();
-    expect(el[0].querySelector('.icon.icon-refreshing.ion-loading-d')).toBeTruthy();
+    expect(el[0].querySelector('.ion-loading-d')).toBeTruthy();
   });
   it('should allow custom refreshingIcon', function() {
     var el = setup('refreshing-icon="monkey-icon"');
     expect(el[0].querySelector('.icon.icon-refreshing.ion-arrow-down-c')).toBeFalsy();
-    expect(el[0].querySelector('.icon.icon-refreshing.monkey-icon')).toBeTruthy();
+    expect(el[0].querySelector('.monkey-icon')).toBeTruthy();
   });
 
   it('should allow pullingText', function() {
