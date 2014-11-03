@@ -16,10 +16,10 @@ $dark:                            #444 !default;
 // Base
 // -------------------------------
 
-$font-family-sans-serif:          "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !default;
-$font-family-light-sans-serif:    "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !default;
-$font-family-serif:               Georgia, "Times New Roman", Times, serif !default;
-$font-family-monospace:           Monaco, Menlo, Consolas, "Courier New", monospace !default;
+$font-family-sans-serif:          "Helvetica Neue", "Roboto" sans-serif !default;
+$font-family-light-sans-serif:    "HelveticaNeue-Light", "Roboto-Light", sans-serif-light !default;
+$font-family-serif:               serif !default;
+$font-family-monospace:           monospace !default;
 
 $font-family-base:                $font-family-sans-serif !default;
 $font-size-base:                  14px !default;
