@@ -34,7 +34,7 @@ module.exports = function(config) {
   ]);
 
   config.append('processing.processors', [
-    require('../docs/processors/version-data'),
+    require('./processors/version-data'),
     require('./processors/demos')
   ]);
 
