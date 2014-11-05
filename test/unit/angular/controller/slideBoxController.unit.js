@@ -1,14 +1,23 @@
 describe('$ionSlideBox controller', function() {
   beforeEach(module('ionic'));
+  beforeEach(function() {
+    ionic.animationFrameThrottle = function(cb) {
+      return function() {
+        cb.apply(this, arguments);
+      };
+    };
+  });
 
 
-  function mockSlide() {
-    return {
-      onAdded: jasmine.createSpy('onAdded'),
-      onRemoved: jasmine.createSpy('onRemoved'),
+  function mockSlide(slideBoxCtrl) {
+    var slideCtrl = {
       setState: jasmine.createSpy('setState'),
       transform: jasmine.createSpy('transform')
     };
+    var slide = angular.element('<ion-slide>');
+    slide.data('$ionSlideController', slideCtrl);
+    slideBoxCtrl.element.append(slide);
+    return slideCtrl;
   }
   function makeCtrl(locals) {
     var ctrl;
@@ -21,62 +30,11 @@ describe('$ionSlideBox controller', function() {
     return ctrl;
   }
 
-  it('#add()', inject(function($rootScope, $timeout) {
-    var ctrl = makeCtrl();
-    var slide1 = mockSlide();
-    var slide2 = mockSlide();
-
-    expect(ctrl.selected()).toBe(-1);
-    ctrl.add(slide1);
-    expect(ctrl.selected()).toBe(0);
-    expect(ctrl.count()).toBe(1);
-    $timeout.flush();
-    expect(slide1.setState).toHaveBeenCalledWith('selected');
-
-    ctrl.add(slide2);
-    $rootScope.$apply();
-    expect(ctrl.selected()).toBe(0);
-    expect(ctrl.count()).toBe(2);
-    $timeout.flush();
-    expect(slide2.setState).toHaveBeenCalledWith('next');
-  }));
-
-  it('#remove()', function() {
-    var ctrl = makeCtrl();
-    var slide0, slide1, slide2;
-    ctrl.add(slide0 = mockSlide());
-    ctrl.add(slide1 = mockSlide());
-    ctrl.add(slide2 = mockSlide());
-
-    ctrl.select(1);
-    expect(ctrl.selected()).toBe(1);
-
-    ctrl.remove(slide1);
-    expect(ctrl.selected()).toBe(1);
-    expect(ctrl.at(1)).toBe(slide2);
-
-    ctrl.remove(slide2);
-    expect(ctrl.selected()).toBe(0);
-  });
-
-  it('#move()', function() {
-    var ctrl = makeCtrl();
-    var slide0, slide1;
-    ctrl.add(slide0 = mockSlide());
-    ctrl.add(slide1 = mockSlide());
-
-    expect(ctrl.at(1)).toBe(slide1);
-    ctrl.move(slide1, 0);
-    expect(ctrl.at(0)).toBe(slide1);
-    expect(ctrl.at(1)).toBe(slide0);
-  });
-
   it('#onDrag()', function() {
     var ctrl = makeCtrl();
-    var slide0, slide1, slide2;
-    ctrl.add(slide0 = mockSlide());
-    ctrl.add(slide1 = mockSlide());
-    ctrl.add(slide2 = mockSlide());
+    var slide0 = mockSlide(ctrl);
+    var slide1 = mockSlide(ctrl);
+    var slide2 = mockSlide(ctrl);
 
     ctrl.select(1);
     // Transforming forward should move current and next
@@ -98,10 +56,9 @@ describe('$ionSlideBox controller', function() {
 
   it('#onDragEnd()', function() {
     var ctrl = makeCtrl();
-    var slide0, slide1, slide2;
-    ctrl.add(slide0 = mockSlide());
-    ctrl.add(slide1 = mockSlide());
-    ctrl.add(slide2 = mockSlide());
+    var slide0 = mockSlide(ctrl);
+    var slide1 = mockSlide(ctrl);
+    var slide2 = mockSlide(ctrl);
 
     ctrl.select(1);
     // Greater than 0.5 should change slide
@@ -116,11 +73,9 @@ describe('$ionSlideBox controller', function() {
 
   it('#isRelevant()', function() {
     var ctrl = makeCtrl();
-    ctrl.add(mockSlide());
-    ctrl.add(mockSlide());
-    ctrl.add(mockSlide());
-    ctrl.add(mockSlide());
-    ctrl.add(mockSlide());
+    for (var i = 0; i < 5; i++) {
+      mockSlide(ctrl);
+    }
 
     ctrl.loop(false);
     ctrl.select(0);
@@ -139,9 +94,9 @@ describe('$ionSlideBox controller', function() {
 
   it('#previous()', function() {
     var ctrl = makeCtrl();
-    ctrl.add(mockSlide());
-    ctrl.add(mockSlide());
-    ctrl.add(mockSlide());
+    for (var i = 0; i < 3; i++) {
+      mockSlide(ctrl);
+    }
 
     ctrl.loop(false);
     ctrl.select(0);
@@ -158,9 +113,9 @@ describe('$ionSlideBox controller', function() {
 
   it('#next()', function() {
     var ctrl = makeCtrl();
-    ctrl.add(mockSlide());
-    ctrl.add(mockSlide());
-    ctrl.add(mockSlide());
+    for (var i = 0; i < 3; i++) {
+      mockSlide(ctrl);
+    }
 
     ctrl.loop(false);
     ctrl.select(2);

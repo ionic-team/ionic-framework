@@ -32,12 +32,13 @@ IonicModule
     var dragState;
     function handleDragStart(ev) {
       if (dragState) return;
-      dragState = {
-        startX: ev.gesture.center.pageX,
-        startY: ev.gesture.center.pageY,
-        distance: opts.getDistance()
-      };
-      opts.onDragStart();
+      if (opts.onDragStart() !== false) {
+        dragState = {
+          startX: ev.gesture.center.pageX,
+          startY: ev.gesture.center.pageY,
+          distance: opts.getDistance()
+        };
+      }
     }
     function handleDrag(ev) {
       if (!dragState) return;

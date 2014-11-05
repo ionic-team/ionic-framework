@@ -2,29 +2,97 @@
 
 function trueFn() { return true; }
 
-ionic.Utils.list = list;
+ionic.Utils.list = wrapList;
 
-function list(initialArray) {
+// Expose previous and next publicly so we can use them
+// without having to instantiate a whole list wrapper.
+ionic.Utils.list.next = listNext;
+ionic.Utils.list.previous = listPrevious;
 
-  var array =  angular.isArray(initialArray) ? initialArray : [];
+// Get the index after the given index.
+// Takes looping and the given filterFn into account.
+function listNext(list, isLooping, index, filterFn) {
+  filterFn = filterFn || trueFn;
+  if (index < 0 || index >= list.length) return -1;
+
+  // Keep adding 1 to index, trying to find an index that passes filterFn.
+  // If we loop through *everything* and get back to our original index, return -1.
+  // We don't use recursion here because Javascript sucks at recursion.
+  var nextIndex = index + 1;
+  while ( nextIndex !== index ) {
+
+    if (nextIndex === list.length) {
+      if (isLooping) nextIndex -= list.length;
+      else break;
+    } else {
+      if (filterFn(list[nextIndex], nextIndex)) {
+        return nextIndex;
+      }
+      nextIndex++;
+    }
+  }
+  return -1;
+}
+
+// Get the index before the given index.
+// Takes looping and the given filterFn into account.
+function listPrevious(list, isLooping, index, filterFn) {
+  filterFn = filterFn || trueFn;
+  if (index < 0 || index >= list.length) return -1;
+
+  // Keep subtracting 1 from index, trying to find an index that passes filterFn.
+  // If we loop through *everything* and get back to our original index, return -1.
+  // We don't use recursion here because Javascript sucks at recursion.
+  var prevIndex = index - 1;
+  while ( prevIndex !== index ) {
+
+    if (prevIndex === -1) {
+      if (isLooping) prevIndex += list.length;
+      else break;
+    } else {
+      if (filterFn(list[prevIndex], prevIndex)) {
+        return prevIndex;
+      }
+      prevIndex--;
+    }
+  }
+  return -1;
+}
+
+
+// initialList may be a nodeList or an list,
+// so we don't expect it to have any list methods
+function wrapList(initialList) {
+
+  var list = initialList || [];
   var self = {};
   var isLooping = false;
 
   // The Basics
   self.items = items;
-  self.add = add;
-  self.remove = remove;
+
+  // add and remove are array-ONLY, if we're given a nodeList
+  // it's immutable
+  if (angular.isArray(list)) {
+    self.add = add;
+    self.remove = remove;
+  }
+
   self.at = at;
   self.count = count;
-  self.indexOf = angular.bind(array, array.indexOf);
+  self.indexOf = indexOf;
   self.isInRange = isInRange;
   self.loop = loop;
 
   // The Crazy Ones
   self.delta = delta;
   self.isRelevant = isRelevant;
-  self.previous = previous;
-  self.next = next;
+  self.previous = function(index, filterFn) {
+    return listPrevious(list, isLooping, index, filterFn);
+  };
+  self.next = function(index, filterFn) {
+    return listNext(list, isLooping, index, filterFn);
+  };
 
   return self;
 
@@ -32,29 +100,37 @@ function list(initialArray) {
   // Public methods
   // ***************
   function items() {
-    return array;
+    return list;
   }
   function add(item, index) {
-    if (!self.isInRange(index)) index = array.length;
-    array.splice(index, 0, item);
+    if (!self.isInRange(index)) index = list.length;
+    list.splice(index, 0, item);
+
     return index;
   }
 
   function remove(index) {
     if (!self.isInRange(index)) return;
-    array.splice(index, 1);
+    list.splice(index, 1);
   }
 
   function at(index) {
-    return array[index];
+    return list[index];
   }
 
   function count() {
-    return array.length;
+    return list.length;
+  }
+
+  function indexOf(item) {
+    for (var i = 0, ii = list.length; i < ii; i++) {
+      if (list[i] === item) return i;
+    }
+    return -1;
   }
 
   function isInRange(index) {
-    return index > -1 && index < array.length;
+    return index > -1 && index < list.length;
   }
 
   function loop(newIsLooping) {
@@ -93,56 +169,6 @@ function list(initialArray) {
       index === self.previous(someIndex) ||
       index === self.next(someIndex)
     );
-  }
-
-  // Get the index after the given index.
-  // Takes looping and the given filterFn into account.
-  function next(index, filterFn) {
-    filterFn = filterFn || trueFn;
-    if (!self.isInRange(index)) return -1;
-
-    // Keep adding 1 to index, trying to find an index that passes filterFn.
-    // If we loop through *everything* and get back to our original index, return -1.
-    // We don't use recursion here because Javascript sucks at recursion.
-    var nextIndex = index + 1;
-    while ( nextIndex !== index ) {
-
-      if (nextIndex === array.length) {
-        if (isLooping) nextIndex -= array.length;
-        else break;
-      } else {
-        if (filterFn(array[nextIndex], nextIndex)) {
-          return nextIndex;
-        }
-        nextIndex++;
-      }
-    }
-    return -1;
-  }
-
-  // Get the index before the given index.
-  // Takes looping and the given filterFn into account.
-  function previous(index, filterFn) {
-    filterFn = filterFn || trueFn;
-    if (!self.isInRange(index)) return -1;
-
-    // Keep subtracting 1 from index, trying to find an index that passes filterFn.
-    // If we loop through *everything* and get back to our original index, return -1.
-    // We don't use recursion here because Javascript sucks at recursion.
-    var prevIndex = index - 1;
-    while ( prevIndex !== index ) {
-
-      if (prevIndex === -1) {
-        if (isLooping) prevIndex += array.length;
-        else break;
-      } else {
-        if (filterFn(array[prevIndex], prevIndex)) {
-          return prevIndex;
-        }
-        prevIndex--;
-      }
-    }
-    return -1;
   }
 
 }

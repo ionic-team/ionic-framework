@@ -41,49 +41,31 @@
       }
     </style>
   </head>
-  <body ng-init="$root.selectedIndex = 0">
+  <body ng-init="$root.selectedIndex = 4">
 
     <div ng-controller="SlideCtrl" ng-init="$root.hasBox = true">
+      <ion-header-bar class="bar-positive">
+        <button class="button" ng-click="$root.items.shift()">
+          shift
+        </button>
+        <button class="button" ng-click="$root.items.unshift($root.random())">
+          unshift
+        </button>
+        <h1 class="title">Hi</h1>
+        <div class="right-buttons">
+          <button class="button" ng-click="$root.items.pop()">
+            pop
+          </button>
+          <button class="button" ng-click="$root.items.push($root.random())">
+            push
+          </button>
+        </div>
+      </ion-header-bar>
       <ion-content>
           <ion-slide-box selected="$root.selectedIndex" loop="true" ng-if="$root.hasBox">
-            <ion-slide ng-controller="FirstSlideCtrl">
-              <h3>Thank you for choosing the Awesome App!</h3>
-              <div id="logo">
-                <img src="app_icon.png">
-              </div>
-              <p>
-                We've worked super hard to make you happy.
-              </p>
-              <p>
-                But if you are angry, too bad.
-              </p>
-              <p>
-                <button class="button button-dark" ng-click="toLast()">Skip to last</button>
-              </p>
-              <p>
-                <button class="button button-dark" ng-click="clickTest()">Click Test</button>
-              </p>
-            </ion-slide>
-            <ion-slide>
-              <h3>Using Awesome</h3>
-
-              <div id="list">
-                <h5>Just three steps:</h5>
-                <ol>
-                  <li>Be awesome</li>
-                  <li>Stay awesome</li>
-                  <li>There is no step 3</li>
-                </ol>
-              </div>
-            </ion-slide>
-            <ion-slide>
-              <ion-content class="has-header">
-                <div style="width: 300px; height: 2000px; background: url('tree_bark.png') repeat"></div>
-              </ion-content>
-            </ion-slide>
             <ion-slide ng-repeat="i in items">
-             <h3>item {{i}}</h3>
-             <img ng-src="http://placekitten.com/{{200 + (i%50)}}/{{200 + (i%50)}}">
+              <h3>item {{$index}} / {{items.length - 1}}</h3>
+              <img ng-src="http://placekitten.com/{{200 + (i%50)}}/{{200 + (i%50)}}">
             </ion-slide>
 
           </ion-slide-box>
@@ -93,13 +75,15 @@
       angular.module('slideBoxTest', ['ionic'])
 
       .controller('SlideCtrl', function($scope, $timeout) {
-          $scope.items = [];
+          $scope.items = $scope.$root.items = [];
           for (var i = 0; i < 10; i++) {
             $scope.items.push(i);
           }
 
+          $scope.$root.random = Math.random.bind(Math);
+
           setTimeout(function() {
-            window.box = angular.element(document.querySelector('ion-slide-box')).controller('ionSlideBox');
+            window.els = document.querySelector('ion-slide-box').getElementsByTagName('ion-slide');
           });
       })
 

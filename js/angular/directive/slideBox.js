@@ -63,7 +63,6 @@ function($ionicSlideBoxDelegate, $window) {
     element.addClass('slider');
 
     var deregister = $ionicSlideBoxDelegate._registerInstance(slideBoxCtrl, attr.delegateHandle);
-    scope.$on('$destroy', deregister);
 
     watchSelected();
     isDefined(attr.loop) && watchLoop();
@@ -74,6 +73,7 @@ function($ionicSlideBoxDelegate, $window) {
     angular.element($window).on('resize', throttledReposition);
 
     scope.$on('$destroy', function() {
+      deregister();
       angular.element($window).off('resize', throttledReposition);
     });
 

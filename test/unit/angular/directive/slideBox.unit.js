@@ -41,25 +41,6 @@ describe('ionSlideBox directive', function() {
     expect(slideBoxCtrl.selected()).toBe(-1);
   }));
 
-  it('should bind to selected attr to slide', inject(function($rootScope, $timeout) {
-    $rootScope.currentIndex = 2;
-    var slideBox = makeSlideBox('<ion-slide-box selected="$root.currentIndex">' +
-                              '<ion-slide>A</ion-slide>' +
-                              '<ion-slide>B</ion-slide>' +
-                              '<ion-slide>C</ion-slide>' +
-                            '</ion-slide-box>');
-
-    var slideBoxCtrl = slideBox.controller('ionSlideBox');
-
-    expect(slideBoxCtrl.selected()).toBe(2);
-    expect($rootScope.currentIndex).toBe(2);
-    $timeout.flush();
-
-    slideBoxCtrl.select(1);
-    $timeout.flush();
-    expect($rootScope.currentIndex).toBe(1);
-  }));
-
   it('should loop depending on attr.loop', inject(function($rootScope) {
     var slideBox = makeSlideBox('<ion-slide-box loop="shouldLoop">' +
                               '<ion-slide>A</ion-slide>' +

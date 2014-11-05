@@ -10,7 +10,12 @@ IonicModule
    */
 function(scope, element, $$ionicAttachDrag, $interval) {
   var self = this;
-  var slideList = ionic.Utils.list([]);
+
+  // This is a live nodeList that is updated whenever child ion-slides
+  // are added or removed.
+  var slideNodes = element[0].getElementsByTagName('ion-slide');
+  var slideList = ionic.Utils.list(slideNodes);
+
   var slidesParent = angular.element(element[0].querySelector('.slider-slides'));
 
   // Successful slide requires velocity to be greater than this amount
@@ -27,29 +32,37 @@ function(scope, element, $$ionicAttachDrag, $interval) {
   self.isRelevant = isRelevant;
   self.previous = previous;
   self.next = next;
+  self.onSlidesChanged = ionic.animationFrameThrottle(onSlidesChanged);
 
   // Methods calling straight back to Utils.list
-  self.at = slideList.at;
+  self.at = at;
   self.count = slideList.count;
-  self.indexOf = slideList.indexOf;
+  self.indexOf = indexOf;
   self.isInRange = slideList.isInRange;
   self.loop = slideList.loop;
   self.delta = slideList.delta;
 
-  self.update = update;
   self.enableSlide = enableSlide;
   self.autoPlay = autoPlay;
-  self.add = add;
-  self.remove = remove;
-  self.move = move;
   self.selected = selected;
   self.select = select;
+  self.onDragStart = onDragStart;
   self.onDrag = onDrag;
   self.onDragEnd = onDragEnd;
+
+  scope.$watchCollection(function() { return slideNodes; }, self.onSlidesChanged);
 
   // ***
   // Public Methods
   // ***
+  function at(index) {
+    return jqLite( slideList.at(index) ).controller('ionSlide');
+  }
+
+  function indexOf(slide) {
+    return slide && slideList.indexOf(slide.node) || -1;
+  }
+
 
   // Gets whether the given index is relevant to selected
   // That is, whether the given index is previous, selected, or next
@@ -74,18 +87,6 @@ function(scope, element, $$ionicAttachDrag, $interval) {
     return slideList.next(index);
   }
 
-  function update() {
-    var selectedIndex = scope.selectedIndex;
-    for (var i = self.count() - 1; i >= 0; i--) {
-      slideList.remove(i);
-    }
-    var slideNodes = element[0].querySelectorAll('ion-slide');
-    for (var j = 0, jj = slideNodes.length; j < jj; j++) {
-      slideList.add(jqLite(slideNodes[j]).controller('ionSlide'));
-    }
-    self.select(selectedIndex);
-  }
-
   function enableSlide(isEnabled) {
     if (arguments.length) {
       self.dragDisabled = !isEnabled;
@@ -100,51 +101,6 @@ function(scope, element, $$ionicAttachDrag, $interval) {
       self.autoPlayTimeout = $interval(function() {
         self.select(self.next());
       }, newInterval);
-    }
-  }
-
-  /*
-   * Add/remove/move slides
-   */
-  function add(slide, index) {
-    var newIndex = slideList.add(slide, index);
-    slide.onAdded();
-
-    // If we are waiting for a certain scope.selectedIndex and this is it,
-    // select the slide
-    if (scope.selectedIndex === index) {
-      self.select(newIndex);
-    // If we don't have a selectedIndex yet, select the first one available
-    } else if (!isNumber(scope.selectedIndex) || scope.selectedIndex === -1) {
-      self.select(newIndex);
-    } else if (newIndex === self.previous() || newIndex === self.next()) {
-      // if the new slide is adjacent to selected, refresh the selection
-      enqueueRefresh();
-    }
-  }
-  function remove(slide) {
-    var index = self.indexOf(slide);
-    if (index === -1) return;
-
-    var isSelected = self.selected() === index;
-    slideList.remove(index);
-    slide.onRemoved();
-
-    if (isSelected) {
-      self.select( self.isInRange(scope.selectedIndex) ? scope.selectedIndex : scope.selectedIndex - 1 );
-    }
-  }
-  function move(slide, targetIndex) {
-    var index = self.indexOf(slide);
-    if (index === -1) return;
-
-    // If the slide is current, next, or previous, save so we can re-select after moving.
-    var isRelevant = self.selected() === index || self.isRelevant(targetIndex);
-    slideList.remove(index);
-    slideList.add(slide, targetIndex);
-
-    if (isRelevant) {
-      self.select(targetIndex);
     }
   }
 
@@ -187,11 +143,13 @@ function(scope, element, $$ionicAttachDrag, $interval) {
     }
   }
 
+  function onDragStart() {
+    if (self.dragDisabled) return false;
+  }
+
   // percent is negative 0-1 for backward slide
   // positive 0-1 for forward slide
   function onDrag(percent) {
-    if (self.dragDisabled) return;
-
     var target = self.at(percent > 0 ? self.next() : self.previous());
     var current = self.at(self.selected());
 
@@ -221,6 +179,49 @@ function(scope, element, $$ionicAttachDrag, $interval) {
   // ***
   // Private Methods
   // ***
+
+  var oldNodes = [];
+  function onSlidesChanged() {
+    var newSelected = slideNodes[scope.selectedIndex];
+    var oldSelected = oldNodes[scope.selectedIndex];
+    if (!newSelected && !oldSelected) {
+      if (slideNodes[scope.selectedIndex]) {
+        // If we don't have a selected slide and are waiting for a certain selectedIndex,
+        // then select it now.
+        self.select(scope.selectedIndex);
+      } else if (slideNodes.length) {
+        // If we don't have a selectedIndex yet, go ahead and select the first available
+        self.select(0);
+      }
+    } else {
+      if (newSelected !== oldSelected) {
+        // If the item at newList[selectedIndex] isn't the same as the item at
+        // oldList[selectedIndex], that means the selected slide was either moved
+        // in the list or was removed.
+        var newIndex = slideList.indexOf(oldSelected);
+        if (newIndex === -1) {
+          // If the selected slide was removed, try to select the nearest available slide
+          self.select(scope.selectedIndex > 0 ? scope.selectedIndex - 1 : scope.selectedIndex);
+        } else {
+          // If the selected slide moved, select the selected slide's new index
+          self.select(newIndex);
+        }
+      } else {
+        // Figure out the next and previous index based upon the old list.
+        // That way, if the old list had a previous item that's out of range
+        // in the new list, our check below will catch that the next/previous
+        // have changed.
+        var oldNextIndex = ionic.Utils.list.next(oldNodes, slideList.loop(), scope.selectedIndex);
+        var oldPrevIndex = ionic.Utils.list.previous(oldNodes, slideList.loop(), scope.selectedIndex);
+        if (slideNodes[self.next()] !== oldNodes[oldNextIndex] ||
+            slideNodes[self.previous()] !== oldNodes[oldPrevIndex]) {
+          //If the next or previous slides have changed, just refresh selection of the current slide.
+          self.select(scope.selectedIndex);
+        }
+      }
+    }
+    oldNodes = Array.prototype.slice.call(slideNodes);
+  }
 
   var oldSlides;
   function arrangeSlides(newShownIndex) {
@@ -264,19 +265,5 @@ function(scope, element, $$ionicAttachDrag, $interval) {
     }
 
     oldSlides = newSlides;
-  }
-
-  // When adding/moving slides, we sometimes need to refresh
-  // the currently selected slides to reflect new data.
-  // We don't want to refresh more than once per digest cycle,
-  // so we do this.
-  function enqueueRefresh() {
-    if (!enqueueRefresh.queued) {
-      enqueueRefresh.queued = true;
-      scope.$$postDigest(function() {
-        self.select(scope.selectedIndex);
-        enqueueRefresh.queued = false;
-      });
-    }
   }
 }]);
