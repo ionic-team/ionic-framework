@@ -6,33 +6,21 @@ IonicModule
 function(scope, element, $q) {
   var self = this;
 
-  scope.$on('$destroy', function() {
-    // Re-attach the element so it can be properly removed
-    attachSlide();
-  });
   element.on(ionic.CSS.TRANSITIONEND, onTransitionEnd);
 
   self.element = element;
-
-  self.onAdded = onAdded;
-  self.onRemoved = onRemoved;
+  self.node = element[0];
 
   self.transform = transform;
 
   self.state = '';
   self.setState = setState;
 
+  self.setState('detached');
+
   // ***
   // Public Methods
   // ***
-
-  function onAdded() {
-    // Set default state
-    self.setState('detached');
-  }
-  function onRemoved() {
-    self.setState('detached');
-  }
 
   var isTransforming;
   // percent is negative 0-1 for dragging left
@@ -83,20 +71,10 @@ function(scope, element, $q) {
   // ***
 
   function attachSlide() {
-    // if (!self.element[0].parentNode) {
-    //   self.parentElement.append(self.element);
-    //   ionic.Utils.reconnectScope(scope);
-    // }
     ionic.Utils.reconnectScope(scope);
   }
 
   function detachSlide() {
-    // Don't use self.element.remove(), that will destroy the element's data
-    // var parent = self.element[0].parentNode;
-    // if (parent) {
-    //   parent.removeChild(self.element[0]);
-    //   ionic.Utils.disconnectScope(scope);
-    // }
     ionic.Utils.disconnectScope(scope);
   }
 

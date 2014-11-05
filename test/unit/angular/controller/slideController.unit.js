@@ -12,23 +12,8 @@ describe('$ionSlide controller', function() {
     return ctrl;
   }
 
-  it('#onAdded()', function() {
-    var ctrl = makeCtrl();
-    expect(ctrl.state).toBeFalsy();
-    ctrl.onAdded(parent);
-    expect(ctrl.state).toBe('detached');
-  });
-
-  it('#onRemoved()', function() {
-    var ctrl = makeCtrl();
-    expect(ctrl.state).toBeFalsy();
-    ctrl.onRemoved();
-    expect(ctrl.state).toBe('detached');
-  });
-
   it('#setState()', function() {
     var ctrl = makeCtrl();
-    ctrl.onAdded();
 
     ctrl.setState('selected');
     expect(ctrl.element.attr('slide-state')).toBe('selected');

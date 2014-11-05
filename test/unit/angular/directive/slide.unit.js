@@ -1,7 +1,7 @@
 describe('ionSlide directive', function() {
   beforeEach(module('ionic'));
 
-  it('should add and remove itself from parent ctrl', inject(function($compile, $rootScope) {
+  it('should add and remove itself from parent ctrl', inject(function($compile, $rootScope, $timeout) {
     var parent = $compile('<ion-scroll><ion-slide-box>' +
                           '<ion-slide>Hello</ion-slide>' +
                           '</ion-slide-box></ion-scroll>')($rootScope.$new());
@@ -15,7 +15,8 @@ describe('ionSlide directive', function() {
     expect(slideBoxCtrl.count()).toBe(1);
     expect(slideBoxCtrl.at(0)).toBe(slideCtrl);
 
-    slide.triggerHandler('$destroy');
+    slide.remove();
+    $timeout.flush();
     expect(slideBoxCtrl.count()).toBe(0);
   }));
 

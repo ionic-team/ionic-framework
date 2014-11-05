@@ -18,25 +18,21 @@
  * ```
  */
 IonicModule
-.directive('ionSlide', [function() {
+.directive('ionSlide', ['$timeout', function($timeout) {
   return {
     restrict: 'E',
     controller: '$ionSlide',
+    require: '^ionSlideBox',
     scope: true,
-    require: ['^ionSlideBox', 'ionSlide'],
     link: postLink
   };
 
-  function postLink(scope, element, attr, ctrls) {
-    var slideBoxCtrl = ctrls[0];
-    var slideCtrl = ctrls[1];
-
+  function postLink(scope, element, attr, slideBoxCtrl) {
     element.addClass('slider-slide');
 
-    slideBoxCtrl.add(slideCtrl);
+    $timeout(angular.noop);
     element.on('$destroy', function() {
-      slideBoxCtrl.remove(slideCtrl);
+      $timeout(angular.noop);
     });
-
   }
 }]);

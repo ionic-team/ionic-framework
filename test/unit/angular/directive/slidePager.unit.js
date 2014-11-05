@@ -1,5 +1,10 @@
 describe('<ion-slide-pager> directive', function() {
   beforeEach(module('ionic'));
+  beforeEach(function() {
+    ionic.animationFrameThrottle = function(cb) {
+      return function() { cb.apply(this, arguments); };
+    };
+  });
 
   it('should create pager elements', inject(function($compile, $rootScope, $timeout) {
     var el = $compile('<ion-slide-box>' +
@@ -19,7 +24,7 @@ describe('<ion-slide-pager> directive', function() {
     $rootScope.$apply('showThird = false');
     $timeout.flush();
     expect(pager.find('.slider-pager-page').length).toBe(2);
-    
+
   }));
 
   it('should by default select on click', inject(function($compile, $rootScope, $timeout) {
@@ -39,7 +44,7 @@ describe('<ion-slide-pager> directive', function() {
 
     pagers.eq(2).click();
     expect(slideBoxCtrl.selected()).toBe(2);
-    
+
   }));
 
   it('should allow custom click action which overrides default', inject(function($compile, $rootScope, $timeout) {
@@ -62,7 +67,7 @@ describe('<ion-slide-pager> directive', function() {
     pagers.eq(2).click();
     expect(slideBoxCtrl.selected()).toBe(0);
     expect($rootScope.click).toHaveBeenCalledWith(2);
-    
+
   }));
 
 });
