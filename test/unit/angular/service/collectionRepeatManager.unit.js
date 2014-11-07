@@ -251,7 +251,7 @@ describe('collectionRepeatManager service', function() {
     it('should work without data', function() {
       var manager = setup();
       spyOn(manager, 'render');
-      spyOn(manager, 'calculateDimensions').andReturn({ 
+      spyOn(manager, 'calculateDimensions').andReturn({
         dimensions: [],
         beforeSize: 0,
         totalSize: 0
@@ -265,7 +265,7 @@ describe('collectionRepeatManager service', function() {
     });
     it('should work with data', function() {
       var manager = setup();
-      spyOn(manager, 'calculateDimensions').andReturn({ 
+      spyOn(manager, 'calculateDimensions').andReturn({
         dimensions: [{
           primaryPos: 100, primarySize: 30
         }],
