@@ -73,7 +73,10 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
 
   $scope.$on('$destroy', function() {
     deregisterInstance();
-    scrollView.__cleanup();
+    //Windows: make sure the scrollView.__cleanup exists before calling it
+    if (scrollView.__cleanup) {
+        scrollView.__cleanup();
+    }
     ionic.off('resize', resize, $window);
     $window.removeEventListener('resize', resize);
     viewContentLoaded();

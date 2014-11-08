@@ -32,7 +32,10 @@ function($rootScope, $state, $location, $document, $animate, $ionicPlatform, $io
 
   // always reset the keyboard state when change stage
   $rootScope.$on('$stateChangeStart', function(){
-    ionic.keyboard.hide();
+      //Windows: no hide method available
+      if (ionic.keyboard.hide) {
+          ionic.keyboard.hide();
+      }
   });
 
   $rootScope.$on('viewState.changeHistory', function(e, data) {

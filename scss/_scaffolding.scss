@@ -41,6 +41,7 @@ body,
   text-rendering: optimizeLegibility;
   -webkit-backface-visibility: hidden;
   -webkit-user-drag: none;
+  -ms-content-zooming: none;
 }
 
 body.grade-b,
