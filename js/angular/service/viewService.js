@@ -9,6 +9,10 @@ IonicModule
     $log.warn('$ionicViewService' + oldMethod + ' is deprecated, please use $ionicHistory' + newMethod + ' instead: http://ionicframework.com/docs/nightly/api/service/$ionicHistory/');
   }
 
+    //Windows: no hide method available
+      if (ionic.keyboard.hide) {
+          ionic.keyboard.hide();
+      }
   warn('', '');
 
   var methodsMap = {
