@@ -41,6 +41,66 @@ describe('Ionic View Service', function() {
     window.history.go = function(val) { return val; };
   }));
 
+  it('should fire the $viewHistory.historyChange event with showBack falsy', function() {
+    var eventData;
+    rootScope.$on('$viewHistory.historyChange', function (e, data) {
+      eventData = data;
+    });
+    var viewHistory = rootScope.$viewHistory;
+
+    viewHistory.views.a = {
+      historyId: '1',
+      viewId: 'a'
+    };
+    viewService.setNavViews('a');
+
+    expect(viewHistory.currentView).toBe(viewHistory.views.a);
+    expect(viewHistory.backView).toBe(null);
+    expect(viewHistory.forwardView).toBe(null);
+    rootScope.$apply();
+    expect(eventData).toBeDefined();
+    expect(eventData.showBack).toBe(viewHistory.backView);
+
+    viewHistory.views.b = {
+      historyId: '1',
+      backViewId: 'a',
+      viewId: 'b'
+    };
+
+    viewService.setNavViews('b');
+    rootScope.$apply();
+
+    expect(eventData.showBack).toBe(false);
+  });
+
+  it('should fire the $viewHistory.historyChange event with showBack true', function() {
+    var eventData;
+    rootScope.$on('$viewHistory.historyChange', function (e, data) {
+      eventData = data;
+    });
+    var viewHistory = rootScope.$viewHistory;
+
+    viewHistory.views.a = {
+      historyId: '1',
+      viewId: 'a'
+    };
+
+    viewHistory.views.b = {
+      historyId: '2',
+      backViewId: 'a',
+      viewId: 'b'
+    };
+
+    viewService.setNavViews('b');
+
+    expect(viewHistory.currentView).toBe(viewHistory.views.b);
+    expect(viewHistory.backView).toBe(viewHistory.views.a);
+    expect(viewHistory.forwardView).toBe(null);
+    rootScope.$apply();
+    expect(eventData).toBeDefined();
+    expect(eventData.showBack).toBe(true);
+  });
+
   it('should do nothing if the same state happens', inject(function($state) {
     var uiViewScope = {};
     $state.go('home');

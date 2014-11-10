@@ -15,6 +15,16 @@ describe('Ionic nav-view', function() {
     expect(view.controller('ionNavView')).toBeTruthy();
   });
 
+  it('should register the history', inject(function($ionicViewService) {
+    spyOn($ionicViewService, 'registerHistory');
+
+    var view = angular.element('<ion-nav-view></ion-nav-view>');
+    compile(view)(scope)
+    scope.$apply();
+
+    expect($ionicViewService.registerHistory).toHaveBeenCalled();
+  }));
+
   /*
    * TODO adapt the tests from uiRouter
    */

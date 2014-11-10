@@ -301,7 +301,7 @@ function($rootScope, $state, $location, $window, $injector, $animate, $ionicNavV
       viewHistory.forwardView = this._getForwardView(viewHistory.currentView);
 
       $rootScope.$broadcast('$viewHistory.historyChange', {
-        showBack: (viewHistory.backView && viewHistory.backView.historyId === viewHistory.currentView.historyId)
+        showBack: (viewHistory.backView && viewHistory.backView.historyId !== viewHistory.currentView.historyId)
       });
     },
 
