@@ -78,7 +78,7 @@ var POPUP_TPL =
  *  $scope.showConfirm = function() {
  *    var confirmPopup = $ionicPopup.confirm({
  *      title: 'Consume Ice Cream',
- *      template: 'Are you sure you want to eat this ice cream?'
+ *      subTitle: 'Are you sure you want to eat this ice cream?'
  *    });
  *    confirmPopup.then(function(res) {
  *      if(res) {
@@ -93,7 +93,7 @@ var POPUP_TPL =
  *  $scope.showAlert = function() {
  *    var alertPopup = $ionicPopup.alert({
  *      title: 'Don\'t eat that!',
- *      template: 'It might taste good'
+ *      subTitle: 'It might taste good'
  *    });
  *    alertPopup.then(function(res) {
  *      console.log('Thank you for not eating my delicious ice cream cone');
@@ -230,7 +230,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
      * ```javascript
      *  $ionicPopup.prompt({
      *    title: 'Password Check',
-     *    template: 'Enter your secret password',
+     *    subTitle: 'Enter your secret password',
      *    inputType: 'password',
      *    inputPlaceholder: 'Your password'
      *  }).then(function(res) {
