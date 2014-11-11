@@ -255,6 +255,7 @@
       if(y < y1 || y > y2) return false;
       return true;
     },
+
     /**
      * @ngdoc method
      * @name ionic.DomUtil#blurAll
@@ -268,6 +269,33 @@
         return document.activeElement;
       }
       return null;
+    },
+
+    cachedAttr: function(ele, key, value) {
+      ele = ele && ele.length && ele[0] || ele;
+      if (ele && ele.setAttribute) {
+        var dataKey = '$attr-' + key;
+        if (arguments.length > 2) {
+          if (ele[dataKey] !== value) {
+            ele.setAttribute(key, value);
+            ele[dataKey] = value;
+          }
+        } else if (typeof ele[dataKey] == 'undefined') {
+          ele[dataKey] = ele.getAttribute(key);
+        }
+        return ele[dataKey];
+      }
+    },
+
+    cachedStyles: function(ele, styles) {
+      ele = ele && ele.length && ele[0] || ele;
+      if (ele && ele.style) {
+        for (var prop in styles) {
+          if ( ele['$style-' + prop] !== styles[prop] ) {
+            ele.style[prop] = ele['$style-' + prop] = styles[prop];
+          }
+        }
+      }
     }
   };
 

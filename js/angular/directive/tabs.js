@@ -1,8 +1,3 @@
-IonicModule.constant('$ionicTabsConfig', {
-  position: '',
-  type: ''
-});
-
 /**
  * @ngdoc directive
  * @name ionTabs
@@ -50,29 +45,39 @@ IonicModule.constant('$ionicTabsConfig', {
 
 IonicModule
 .directive('ionTabs', [
-  '$ionicViewService',
   '$ionicTabsDelegate',
-  '$ionicTabsConfig',
-function($ionicViewService, $ionicTabsDelegate, $ionicTabsConfig) {
+  '$ionicConfig',
+function($ionicTabsDelegate, $ionicConfig) {
   return {
     restrict: 'E',
     scope: true,
     controller: '$ionicTabs',
-    compile: function(element, attr) {
-      element.addClass('view');
+    compile: function(tElement) {
       //We cannot use regular transclude here because it breaks element.data()
       //inheritance on compile
-      var innerElement = jqLite('<div class="tabs"></div>');
-      innerElement.append(element.contents());
-      element.append(innerElement);
-      element.addClass($ionicTabsConfig.position);
-      element.addClass($ionicTabsConfig.type);
+      var innerElement = jqLite('<div class="tab-nav tabs">');
+      innerElement.append(tElement.contents());
 
-      return { pre: prelink };
+      tElement.append(innerElement)
+              .addClass( 'tabs-' + $ionicConfig.tabs.position() )
+              .addClass( 'tabs-' + $ionicConfig.tabs.style() );
+
+      return { pre: prelink, post: postLink };
       function prelink($scope, $element, $attr, tabsCtrl) {
         var deregisterInstance = $ionicTabsDelegate._registerInstance(
           tabsCtrl, $attr.delegateHandle
         );
+
+        tabsCtrl.$scope = $scope;
+        tabsCtrl.$element = $element;
+        tabsCtrl.$tabsElement = jqLite($element[0].querySelector('.tabs'));
+
+        $scope.$watch(function() { return $element[0].className; }, function(value) {
+          var isTabsTop = value.indexOf('tabs-top') !== -1;
+          var isHidden = value.indexOf('tabs-item-hide') !== -1;
+          $scope.$hasTabs = !isTabsTop && !isHidden;
+          $scope.$hasTabsTop = isTabsTop && !isHidden;
+        });
 
         $scope.$on('$destroy', function(){
           // variable to inform child tabs that they're all being blown away
@@ -81,23 +86,18 @@ function($ionicViewService, $ionicTabsDelegate, $ionicTabsConfig) {
           // loading of tab views when each will eventually all go away anyway
           $scope.$tabsDestroy = true;
           deregisterInstance();
-        });
-
-        tabsCtrl.$scope = $scope;
-        tabsCtrl.$element = $element;
-        tabsCtrl.$tabsElement = jqLite($element[0].querySelector('.tabs'));
-
-        var el = $element[0];
-        $scope.$watch(function() { return el.className; }, function(value) {
-          var isTabsTop = value.indexOf('tabs-top') !== -1;
-          var isHidden = value.indexOf('tabs-item-hide') !== -1;
-          $scope.$hasTabs = !isTabsTop && !isHidden;
-          $scope.$hasTabsTop = isTabsTop && !isHidden;
-        });
-        $scope.$on('$destroy', function() {
+          tabsCtrl.$tabsElement = tabsCtrl.$element = tabsCtrl.$scope = innerElement = null;
           delete $scope.$hasTabs;
           delete $scope.$hasTabsTop;
         });
+      }
+
+      function postLink($scope, $element, $attr, tabsCtrl) {
+        if (!tabsCtrl.selectedTab()) {
+          // all the tabs have been added
+          // but one hasn't been selected yet
+          tabsCtrl.select(0);
+        }
       }
     }
   };

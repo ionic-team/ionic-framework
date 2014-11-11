@@ -39,6 +39,7 @@
     background-size: 100% 1px;
     background-repeat: no-repeat;
   }
+  pointer-events: auto;
 
   &.bar-clear {
     border: none;
@@ -205,13 +206,11 @@
     }
 
     &.back-button {
+      display: block;
+      margin-right: 5px;
       padding: 0;
       opacity: 0.8;
-      .back-button-title {
-        display: inline-block;
-        vertical-align: middle;
-        margin-left: 4px;
-      }
+      white-space: nowrap;
     }
 
     &.back-button.active,
@@ -233,12 +232,18 @@
 
   // Android 4.4 messes with the display property
   .buttons,
-  .buttons.left-buttons,
-  .buttons.right-buttons {
+  .buttons.primary-buttons,
+  .buttons.secondary-buttons {
     display: inherit;
   }
   .buttons span {
-    display: inline-flex;
+    display: inline-block;
+  }
+  .buttons-left span {
+    margin-right: 5px;
+  }
+  .buttons-right span {
+    margin-left: 5px;
   }
 
   // Place the last button in a bar on the right of the bar
@@ -346,3 +351,18 @@
   bottom: $bar-height;
   display: block;
 }
+
+.nav-bar-block {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: $z-index-bar;
+}
+
+.bar .back-button.hide,
+.bar .buttons .hide {
+  display: none;
+}
+

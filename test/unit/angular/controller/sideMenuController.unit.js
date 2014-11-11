@@ -107,6 +107,27 @@ describe('$ionicSideMenus controller', function() {
     expect(ctrl.getOpenPercentage()).toEqual(0);
   });
 
+  it('should toggle, default left', function() {
+    ctrl.toggle();
+    expect(ctrl.getOpenPercentage()).toEqual(100);
+    ctrl.toggle();
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+  });
+
+  it('should toggle with "left" param', function() {
+    ctrl.toggle('left');
+    expect(ctrl.getOpenPercentage()).toEqual(100);
+    ctrl.toggle('left');
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+  });
+
+  it('should toggle with "right" param', function() {
+    ctrl.toggle('right');
+    expect(ctrl.getOpenPercentage()).toEqual(-100);
+    ctrl.toggle('right');
+    expect(ctrl.getOpenPercentage()).toEqual(0);
+  });
+
   it('should not toggle left with exposed aside', function() {
     expect(ctrl.getOpenPercentage()).toEqual(0);
     ctrl.exposeAside(true);

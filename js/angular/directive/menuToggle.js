@@ -24,14 +24,21 @@ IonicModule
 .directive('menuToggle', function() {
   return {
     restrict: 'AC',
-    require: '^ionSideMenus',
-    link: function($scope, $element, $attr, sideMenuCtrl) {
-      $element.bind('click', function(){
-        if ($attr.menuToggle === 'right') {
-          sideMenuCtrl.toggleRight();
+    link: function($scope, $element, $attr) {
+      $scope.$on('$ionicView.beforeEnter', function(ev, viewData){
+        if (viewData.showBack) {
+          var sideMenuCtrl = $element.inheritedData('$ionSideMenusController');
+          if ( !sideMenuCtrl.enableMenuWithBackViews() ) {
+            $element.addClass('hide');
+          }
         } else {
-          sideMenuCtrl.toggleLeft();
+          $element.removeClass('hide');
         }
+      });
+
+      $element.bind('click', function(){
+        var sideMenuCtrl = $element.inheritedData('$ionSideMenusController');
+        sideMenuCtrl && sideMenuCtrl.toggle($attr.menuToggle);
       });
     }
   };

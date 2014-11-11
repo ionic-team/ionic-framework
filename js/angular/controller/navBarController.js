@@ -1,139 +1,378 @@
 IonicModule
+
 .controller('$ionicNavBar', [
   '$scope',
   '$element',
   '$attrs',
-  '$ionicViewService',
-  '$animate',
   '$compile',
+  '$timeout',
   '$ionicNavBarDelegate',
-function($scope, $element, $attrs, $ionicViewService, $animate, $compile, $ionicNavBarDelegate) {
-  //Let the parent know about our controller too so that children of
-  //sibling content elements can know about us
-  $element.parent().data('$ionNavBarController', this);
+  '$ionicConfig',
+function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $ionicConfig) {
 
-  var deregisterInstance = $ionicNavBarDelegate._registerInstance(this, $attrs.delegateHandle);
-
-  $scope.$on('$destroy', deregisterInstance);
-
-  $scope.$on('$viewHistory.historyChange', function(e, data) {
-    backIsShown = !!data.showBack;
-  });
+  var CSS_HIDE = 'hide';
+  var DATA_NAV_BAR_CTRL = '$ionNavBarController';
+  var PRIMARY_BUTTONS = 'primaryButtons';
+  var SECONDARY_BUTTONS = 'secondaryButtons';
+  var BACK_BUTTON = 'backButton';
+  var BUTTON_TYPES = 'primaryButtons secondaryButtons leftButtons rightButtons'.split(' ');
 
   var self = this;
+  var headerBars = [];
+  var navElementHtml = {};
+  var isVisible = true;
+  var navBarConfig = $ionicConfig.navBar;
+  var queuedTransitionStart, queuedTransitionEnd, latestTransitionId;
 
-  this.leftButtonsElement = jqLite(
-    $element[0].querySelector('.buttons.left-buttons')
-  );
-  this.rightButtonsElement = jqLite(
-    $element[0].querySelector('.buttons.right-buttons')
-  );
+  $element.parent().data(DATA_NAV_BAR_CTRL, self);
 
-  this.back = function() {
-    var backView = $ionicViewService.getBackView();
-    backView && backView.go();
-    return false;
+  var delegateHandle = $attrs.delegateHandle || 'navBar' + ionic.Utils.nextUid();
+
+  var deregisterInstance = $ionicNavBarDelegate._registerInstance(self, delegateHandle);
+
+
+  self.init = function() {
+    $element.addClass('nav-bar-container');
+    ionic.DomUtil.cachedAttr($element, 'nav-bar-transition', $ionicConfig.navBar.transition());
+
+    // create two nav bar blocks which will trade out which one is shown
+    self.createHeaderBar(false);
+    self.createHeaderBar(true);
+
+    $scope.$emit('ionNavBar.init', delegateHandle);
   };
 
-  this.align = function(direction) {
-    this._headerBarView.align(direction);
-  };
 
-  this.showBackButton = function(show) {
-    if (arguments.length) {
-      $scope.backButtonShown = !!show;
-    }
-    return !!($scope.hasBackButton && $scope.backButtonShown);
-  };
+  self.createHeaderBar = function(isActive, navBarClass) {
+    var containerEle = jqLite( '<div class="nav-bar-block">' );
+    ionic.DomUtil.cachedAttr(containerEle, 'nav-bar', isActive ? 'active' : 'cached');
 
-  this.showBar = function(show) {
-    if (arguments.length) {
-      $scope.isInvisible = !show;
-      $scope.$parent.$hasHeader = !!show;
-    }
-    return !$scope.isInvisible;
-  };
+    var headerBarEle = jqLite( '<ion-header-bar>' ).addClass($attrs.class);
+    var titleEle = jqLite('<div class="title title-' + $ionicConfig.navBar.alignTitle() + '">');
+    var navEle = {};
+    var lastViewBtnsEle = {};
+    var leftButtonsEle, rightButtonsEle;
 
-  this.setTitle = function(title) {
-    if ($scope.title === title) {
-      return;
-    }
-    $scope.oldTitle = $scope.title;
-    $scope.title = title || '';
-  };
+    //navEle[BACK_BUTTON] = self.createBackButtonElement(headerBarEle);
+    navEle[BACK_BUTTON] = createNavElement(BACK_BUTTON);
+    navEle[BACK_BUTTON] && headerBarEle.append(navEle[BACK_BUTTON]);
 
-  this.changeTitle = function(title, direction) {
-    if ($scope.title === title) {
-      // if we're not animating the title, but the back button becomes invisible
-      if(typeof backIsShown != 'undefined' && !backIsShown && $scope.backButtonShown){
-        jqLite($element[0].querySelector('.back-button')).addClass('ng-hide');
-      }
-      return false;
-    }
-    this.setTitle(title);
-    $scope.isReverse = direction == 'back';
-    $scope.shouldAnimate = !!direction;
+    // append title in the header, this is the rock to where buttons append
+    headerBarEle.append(titleEle);
 
-    if (!$scope.shouldAnimate) {
-      //We're done!
-      this._headerBarView.align();
-    } else {
-      this._animateTitles();
-    }
-    return true;
-  };
-
-  this.getTitle = function() {
-    return $scope.title || '';
-  };
-
-  this.getPreviousTitle = function() {
-    return $scope.oldTitle || '';
-  };
-
-  /**
-   * Exposed for testing
-   */
-  this._animateTitles = function() {
-    var oldTitleEl, newTitleEl, currentTitles;
-
-    //If we have any title right now
-    //(or more than one, they could be transitioning on switch),
-    //replace the first one with an oldTitle element
-    currentTitles = $element[0].querySelectorAll('.title');
-    if (currentTitles.length) {
-      oldTitleEl = $compile('<h1 class="title" ng-bind-html="oldTitle"></h1>')($scope);
-      jqLite(currentTitles[currentTitles.length-1]).replaceWith(oldTitleEl);
-    }
-    //Compile new title
-    newTitleEl = $compile('<h1 class="title invisible" ng-bind-html="title"></h1>')($scope);
-
-    //Animate in on next frame
-    ionic.requestAnimationFrame(function() {
-
-      oldTitleEl && $animate.leave(jqLite(oldTitleEl));
-
-      var insert = oldTitleEl && jqLite(oldTitleEl) || null;
-      $animate.enter(newTitleEl, $element, insert, function() {
-        self._headerBarView.align();
-      });
-
-      //Cleanup any old titles leftover (besides the one we already did replaceWith on)
-      forEach(currentTitles, function(el) {
-        if (el && el.parentNode) {
-          //Use .remove() to cleanup things like .data()
-          jqLite(el).remove();
-        }
-      });
-
-      //$apply so bindings fire
-      $scope.$digest();
-
-      //Stop flicker of new title on ios7
-      ionic.requestAnimationFrame(function() {
-        newTitleEl[0].classList.remove('invisible');
-      });
+    forEach(BUTTON_TYPES, function(buttonType){
+      // create default button elements
+      navEle[buttonType] = createNavElement(buttonType);
+      // append and position buttons
+      positionButtons(navEle[buttonType], buttonType);
     });
+
+    // compile header and append to the DOM
+    containerEle.append(headerBarEle);
+    $element.append( $compile(containerEle)($scope.$new()) );
+
+    var headerBarCtrl = headerBarEle.data('$ionHeaderBarController');
+
+    var headerBarInstance = {
+      isActive: isActive,
+      showBack: function(shouldShow) {
+        headerBarCtrl.showBack(shouldShow);
+      },
+      title: function(newTitleText) {
+        headerBarCtrl.title(newTitleText);
+      },
+      setButtons: function(viewBtnsEle, side) {
+        // first make sure any exiting view buttons have been removed
+        headerBarInstance.removeButtons(side);
+
+        if (viewBtnsEle) {
+          // there's a view button for this side
+          positionButtons(viewBtnsEle, side);
+
+          // make sure the default button on this side is hidden
+          if (navEle[side]) {
+            navEle[side].addClass(CSS_HIDE);
+          }
+          lastViewBtnsEle[side] = viewBtnsEle;
+
+        } else if (navEle[side]) {
+          // there's a default button for this side and no view button
+          navEle[side].removeClass(CSS_HIDE);
+        }
+      },
+      removeButtons: function(side) {
+        if (lastViewBtnsEle[side]) {
+          lastViewBtnsEle[side].scope().$destroy();
+          lastViewBtnsEle[side].remove();
+          lastViewBtnsEle[side] = null;
+        }
+      },
+      containerEle: function() {
+        return containerEle;
+      },
+      headerBarEle: function() {
+        return headerBarEle;
+      },
+      afterLeave: function() {
+        forEach(BUTTON_TYPES, function(buttonType){
+          headerBarInstance.removeButtons(buttonType);
+        });
+        headerBarCtrl.resetBackButton();
+      },
+      controller: function() {
+        return headerBarCtrl;
+      },
+      destroy: function() {
+        forEach(BUTTON_TYPES, function(buttonType){
+          headerBarInstance.removeButtons(buttonType);
+        });
+        containerEle.scope().$destroy();
+        for (var n in navEle) {
+          if (navEle[n]) {
+            navEle[n].removeData();
+            navEle[n] = null;
+          }
+        }
+        leftButtonsEle && leftButtonsEle.removeData();
+        rightButtonsEle && rightButtonsEle.removeData();
+        titleEle.removeData();
+        headerBarEle.removeData();
+        containerEle.remove();
+        containerEle = headerBarEle = titleEle = leftButtonsEle = rightButtonsEle = null;
+      }
+    };
+
+    function positionButtons(btnsEle, buttonType) {
+      if (!btnsEle) return;
+
+      var appendToRight = (buttonType == 'rightButtons') ||
+                          (buttonType == SECONDARY_BUTTONS && navBarConfig.positionSecondaryButtons() != 'left') ||
+                          (buttonType == PRIMARY_BUTTONS && navBarConfig.positionPrimaryButtons() == 'right');
+
+      if (appendToRight) {
+        // right side
+        if (!rightButtonsEle) {
+          rightButtonsEle = jqLite('<div class="buttons buttons-right">');
+          headerBarEle.append(rightButtonsEle);
+        }
+        if (buttonType == SECONDARY_BUTTONS) {
+          rightButtonsEle.append(btnsEle);
+        } else {
+          rightButtonsEle.prepend(btnsEle);
+        }
+
+      } else {
+        // left side
+        if (!leftButtonsEle) {
+          leftButtonsEle = jqLite('<div class="buttons buttons-left">');
+          if (navEle[BACK_BUTTON]) {
+            navEle[BACK_BUTTON].after(leftButtonsEle);
+          } else {
+            headerBarEle.prepend(leftButtonsEle);
+          }
+        }
+        if (buttonType == SECONDARY_BUTTONS) {
+          leftButtonsEle.append(btnsEle);
+        } else {
+          leftButtonsEle.prepend(btnsEle);
+        }
+      }
+
+    }
+
+    headerBars.push(headerBarInstance);
+
+    return headerBarInstance;
   };
+
+
+  self.navElement = function(type, html) {
+    if ( isDefined(html) ) {
+      navElementHtml[type] = html;
+    }
+    return navElementHtml[type];
+  };
+
+
+  self.update = function(viewData) {
+    var showNavBar = !viewData.hasHeaderBar;
+    viewData.transition = $ionicConfig.navBar.transition();
+
+    if (!showNavBar) {
+      viewData.direction = 'none';
+    }
+
+    self.enable(showNavBar);
+    var enteringHeaderBar = self.isInitialized ? getOffScreenHeaderBar() : getOnScreenHeaderBar();
+    var leavingHeaderBar = self.isInitialized ? getOnScreenHeaderBar() : null;
+
+    // update if the entering header should show the back button or not
+    self.showBackButton(viewData.showBack, enteringHeaderBar);
+
+    // update the entering header bar's title
+    self.title(viewData.title, enteringHeaderBar);
+
+    // update the buttons, depending if the view has their own or not
+    if (viewData.buttons) {
+      forEach(BUTTON_TYPES, function(buttonType){
+        enteringHeaderBar.setButtons(viewData.buttons[buttonType], buttonType);
+      });
+    }
+
+    // begin transition of entering and leaving header bars
+    self.transition(enteringHeaderBar, leavingHeaderBar, viewData);
+
+    self.isInitialized = true;
+  };
+
+
+  self.transition = function(enteringHeaderBar, leavingHeaderBar, viewData) {
+    var enteringHeaderBarCtrl = enteringHeaderBar.controller();
+    var transitionFn = navBarConfig.transitionFn();
+    var transitionId = viewData.transitionId;
+
+    enteringHeaderBarCtrl.beforeEnter(viewData);
+
+    var navBarTransition = transitionFn(enteringHeaderBar, leavingHeaderBar, viewData.direction, viewData.shouldAnimate && self.isInitialized);
+
+    ionic.DomUtil.cachedAttr($element, 'nav-bar-transition', $ionicConfig.navBar.transition());
+    ionic.DomUtil.cachedAttr($element, 'nav-bar-direction', viewData.direction);
+
+    navBarAttr(enteringHeaderBar, navBarTransition.shouldAnimate ? 'stage' : 'entering');
+
+    enteringHeaderBarCtrl.resetBackButton();
+
+    navBarTransition.run(0);
+
+    $timeout(enteringHeaderBarCtrl.alignTitle, 16);
+
+    queuedTransitionStart = function() {
+      if (latestTransitionId !== transitionId) return;
+
+      navBarAttr(enteringHeaderBar, 'entering');
+      navBarAttr(leavingHeaderBar, 'leaving');
+
+      navBarTransition.run(1);
+
+      queuedTransitionEnd = function() {
+        if (latestTransitionId == transitionId || !navBarTransition.shouldAnimate) {
+          for (var x=0; x<headerBars.length; x++) {
+            headerBars[x].isActive = false;
+          }
+          enteringHeaderBar.isActive = true;
+
+          navBarAttr(enteringHeaderBar, 'active');
+          navBarAttr(leavingHeaderBar, 'cached');
+
+          queuedTransitionEnd = null;
+        }
+      };
+
+      queuedTransitionStart = null;
+    };
+
+    queuedTransitionStart();
+
+  };
+
+
+  self.triggerTransitionStart = function(triggerTransitionId) {
+    latestTransitionId = triggerTransitionId;
+    queuedTransitionStart && queuedTransitionStart();
+  };
+
+
+  self.triggerTransitionEnd = function() {
+    queuedTransitionEnd && queuedTransitionEnd();
+  };
+
+
+  self.showBar = function(shouldShow) {
+    self.visibleBar(shouldShow);
+    $scope.$parent.$hasHeader = !!shouldShow;
+  };
+
+
+  self.visibleBar = function(shouldShow) {
+    if (shouldShow && !isVisible) {
+      $element.removeClass(CSS_HIDE);
+    } else if (!shouldShow && isVisible) {
+      $element.addClass(CSS_HIDE);
+    }
+    isVisible = shouldShow;
+  };
+
+
+  self.enable = function(val) {
+    // set primary to show first
+    self.visibleBar(val);
+
+    // set non primary to hide second
+    for (var x=0; x<$ionicNavBarDelegate._instances.length; x++) {
+      if ($ionicNavBarDelegate._instances[x] !== self) $ionicNavBarDelegate._instances[x].visibleBar(false);
+    }
+  };
+
+
+  self.showBackButton = function(show, headerBar) {
+    headerBar = headerBar || getOnScreenHeaderBar();
+    headerBar && headerBar.showBack(show);
+    $scope.$isBackButtonShown = !!show;
+  };
+
+
+  self.title = function(newTitleText, headerBar) {
+    if (arguments.length) {
+      newTitleText = newTitleText || '';
+      headerBar = headerBar || getOnScreenHeaderBar();
+      headerBar && headerBar.title(newTitleText);
+      $scope.$title = newTitleText;
+    }
+    return $scope.$title;
+  };
+
+
+  function createNavElement(type) {
+    if ( navElementHtml[type] ) {
+      return jqLite(navElementHtml[type]);
+    }
+  }
+
+
+  function getOnScreenHeaderBar() {
+    for (var x=0; x<headerBars.length; x++) {
+      if (headerBars[x].isActive) return headerBars[x];
+    }
+  }
+
+
+  function getOffScreenHeaderBar() {
+    for (var x=0; x<headerBars.length; x++) {
+      if (!headerBars[x].isActive) return headerBars[x];
+    }
+  }
+
+
+  function navBarAttr(ctrl, val) {
+    ctrl && ionic.DomUtil.cachedAttr(ctrl.containerEle(), 'nav-bar', val);
+  }
+
+
+  $scope.$on('ionHeaderBar.init', function(ev){
+    ev.stopPropagation();
+  });
+
+
+  $scope.$on('$destroy', function(){
+    $scope.$parent.$hasHeader = false;
+    $element.parent().removeData(DATA_NAV_BAR_CTRL);
+    for (var x = 0; x < headerBars.length; x++) {
+      headerBars[x].destroy();
+    }
+    $element.remove();
+    $element = headerBars = null;
+    deregisterInstance();
+  });
+
 }]);
 

@@ -58,7 +58,7 @@
 
     end: function() {
       // clear out any active/queued elements after XX milliseconds
-      clearTimeout(this._activateTimeout);
+      clearTimeout(self._activateTimeout);
       setTimeout(clear, 200);
     }
 
@@ -84,6 +84,11 @@
   }
 
   function deactivateElements() {
+    if (ionic.transition && ionic.transition.isActive) {
+      setTimeout(deactivateElements, 500);
+      return;
+    }
+
     for(var key in activeElements) {
       if(activeElements[key]) {
         activeElements[key].classList.remove(ACTIVATED_CLASS);

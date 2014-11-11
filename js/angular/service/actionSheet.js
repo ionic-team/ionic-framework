@@ -127,11 +127,11 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
       scope.$deregisterBackButton();
       stateChangeListenDone();
 
-      $animate.removeClass(element, 'active', function() {
+      $animate.removeClass(element, 'active').then(function() {
         scope.$destroy();
         element.remove();
         // scope.cancel.$scope is defined near the bottom
-        scope.cancel.$scope = null;
+        scope.cancel.$scope = sheetEl = null;
         (done || angular.noop)();
       });
     };
@@ -142,7 +142,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
       $ionicBody.append(element)
                 .addClass('action-sheet-open');
 
-      $animate.addClass(element, 'active', function() {
+      $animate.addClass(element, 'active').then(function() {
         if (scope.removed) return;
         (done || angular.noop)();
       });

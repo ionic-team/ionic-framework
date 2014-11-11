@@ -5,69 +5,6 @@ var PLATFORM_BACK_BUTTON_PRIORITY_ACTION_SHEET = 300;
 var PLATFORM_BACK_BUTTON_PRIORITY_POPUP = 400;
 var PLATFORM_BACK_BUTTON_PRIORITY_LOADING = 500;
 
-function componentConfig(defaults) {
-  defaults.$get = function() { return defaults; };
-  return defaults;
-}
-
-IonicModule
-.constant('$ionicPlatformDefaults', {
-  'ios': {
-    '$ionicNavBarConfig': {
-      transition: 'nav-title-slide-ios',//nav-title-slide-ios7',
-      alignTitle: 'center',
-      backButtonIcon: 'ion-ios7-arrow-back'
-    },
-    '$ionicNavViewConfig': {
-      //transition: 'slide-left-right-ios'
-      transition: 'slide-ios'
-    },
-    '$ionicTabsConfig': {
-      type: '',
-      position: ''
-    }
-  },
-  'android': {
-    '$ionicNavBarConfig': {
-      transition: 'nav-title-slide-full',
-      alignTitle: 'center',
-      backButtonIcon: 'ion-ios7-arrow-back'
-    },
-    '$ionicNavViewConfig': {
-      transition: 'slide-full'
-    },
-    '$ionicTabsConfig': {
-      type: 'tabs-striped',
-      position: ''
-    }
-  }
-});
-
-
-IonicModule.config([
-  '$ionicPlatformDefaults',
-
-  '$injector',
-
-function($ionicPlatformDefaults, $injector) {
-  var platform = ionic.Platform.platform();
-
-  var applyConfig = function(platformDefaults) {
-    forEach(platformDefaults, function(defaults, constantName) {
-      extend($injector.get(constantName), defaults);
-    });
-  };
-
-  switch(platform) {
-    case 'ios':
-      applyConfig($ionicPlatformDefaults.ios);
-      break;
-    case 'android':
-      applyConfig($ionicPlatformDefaults.android);
-      break;
-  }
-}]);
-
 /**
  * @ngdoc service
  * @name $ionicPlatform

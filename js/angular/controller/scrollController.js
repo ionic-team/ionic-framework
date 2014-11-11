@@ -3,21 +3,16 @@
  */
 IonicModule
 
-.factory('$$scrollValueCache', function() {
-  return {};
-})
-
 .controller('$ionicScroll', [
   '$scope',
   'scrollViewOptions',
   '$timeout',
   '$window',
-  '$$scrollValueCache',
   '$location',
   '$rootScope',
   '$document',
   '$ionicScrollDelegate',
-function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $location, $rootScope, $document, $ionicScrollDelegate) {
+function($scope, scrollViewOptions, $timeout, $window, $location, $rootScope, $document, $ionicScrollDelegate) {
 
   var self = this;
   // for testing
@@ -48,7 +43,6 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
         scrollView.options.bouncing = false;
         // Faster scroll decel
         scrollView.options.deceleration = 0.95;
-      } else {
       }
     });
   }
@@ -56,9 +50,6 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
   var resize = angular.bind(scrollView, scrollView.resize);
   ionic.on('resize', resize, $window);
 
-  // set by rootScope listener if needed
-  var backListenDone = angular.noop;
-  var viewContentLoaded = angular.noop;
 
   var scrollFunc = function(e) {
     var detail = (e.originalEvent || e).detail || {};
@@ -76,48 +67,21 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     scrollView.__cleanup();
     ionic.off('resize', resize, $window);
     $window.removeEventListener('resize', resize);
-    viewContentLoaded();
-    backListenDone();
-    if (self._rememberScrollId) {
-      $$scrollValueCache[self._rememberScrollId] = scrollView.getValues();
-    }
     scrollViewOptions = null;
+    self._scrollViewOptions.el = null;
     self._scrollViewOptions = null;
-    self.element = null;
     $element.off('scroll', scrollFunc);
     $element = null;
     self.$element = null;
+    element = null;
+    self.element = null;
     self.scrollView = null;
     scrollView = null;
-  });
-
-  viewContentLoaded = $scope.$on('$viewContentLoaded', function(e, historyData) {
-    //only the top-most scroll area under a view should remember that view's
-    //scroll position
-    if (e.defaultPrevented) { return; }
-    e.preventDefault();
-
-    var viewId = historyData && historyData.viewId || $scope.$historyId;
-    if (viewId) {
-      $timeout(function() {
-        self.rememberScrollPosition(viewId);
-        self.scrollToRememberedPosition();
-
-        backListenDone = $rootScope.$on('$viewHistory.viewBack', function(e, fromViewId, toViewId) {
-          //When going back from this view, forget its saved scroll position
-          if (viewId === fromViewId) {
-            self.forgetScrollPosition();
-          }
-        });
-      }, 0, false);
-    }
   });
 
   $timeout(function() {
     scrollView && scrollView.run && scrollView.run();
   });
-
-  this._rememberScrollId = null;
 
   this.getScrollView = function() {
     return this.scrollView;
@@ -197,25 +161,6 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     });
   };
 
-  this.rememberScrollPosition = function(id) {
-    if (!id) {
-      throw new Error("Must supply an id to remember the scroll by!");
-    }
-    this._rememberScrollId = id;
-  };
-  this.forgetScrollPosition = function() {
-    delete $$scrollValueCache[this._rememberScrollId];
-    this._rememberScrollId = null;
-  };
-  this.scrollToRememberedPosition = function(shouldAnimate) {
-    ionic.DomUtil.blurAll();
-    var values = $$scrollValueCache[this._rememberScrollId];
-    if (values) {
-      this.resize().then(function() {
-        scrollView && scrollView.scrollTo && scrollView.scrollTo(+values.left, +values.top, shouldAnimate);
-      });
-    }
-  };
 
   /**
    * @private

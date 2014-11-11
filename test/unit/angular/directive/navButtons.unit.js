@@ -1,4 +1,5 @@
 describe('ionNavButtons directive', function() {
+  var outputEle;
 
   beforeEach(module('ionic', function($compileProvider) {
     $compileProvider.directive('needsScroll', function() {
@@ -11,73 +12,64 @@ describe('ionNavButtons directive', function() {
       };
     });
   }));
-  beforeEach(function() {
-    ionic.requestAnimationFrame = function(cb) { cb(); };
-  });
 
-  function setup(side, tpl) {
+  function setup(side, content) {
     var el;
     inject(function($compile, $rootScope) {
-      el = $compile('<div>' +
-       '<ion-nav-bar></ion-nav-bar>' +
-       '<ion-view>' +
-         '<ion-content>' +
-           '<ion-nav-buttons side="'+(side)+'">' +
-             (tpl || '') + 
-           '</ion-nav-buttons>' +
-         '</ion-content>' +
-       '</ion-view>' +
-      '</div>')($rootScope.$new());
+      el = angular.element('<ion-nav-buttons side="'+(side)+'">'+(content||'')+'</ion-nav-buttons>');
+      el.data('$ionNavBarController', {
+        navElement: function(buttonType, buttonHtml) {
+          outputEle = angular.element(buttonHtml);
+        }
+      });
+      el = $compile(el)($rootScope.$new());
       $rootScope.$apply();
     });
     return el;
   }
 
-  it('should add buttons to left side by default', function() {
-    var el = setup(null, '<button id="my-btn">');
-    expect(el[0].querySelector('.left-buttons #my-btn')).toBeTruthy();
-    expect(el[0].querySelector('.right-buttons #my-btn')).toBeFalsy();
+  it('should error without a parent ionNavBar', inject(function($compile, $rootScope) {
+    expect(function() {
+      $compile('<ion-nav-buttons>')($rootScope);
+    }).toThrow();
+  }));
+
+  it('should hide and empty its original self', function() {
+    var el = setup();
+    expect(el.hasClass('hide')).toBe(true);
+    expect(el.html()).toBe('');
   });
 
-  it('should add buttons to left side', function() {
-    var el = setup('left', '<button id="my-btn">');
-    expect(el[0].querySelector('.left-buttons #my-btn')).toBeTruthy();
-    expect(el[0].querySelector('.right-buttons #my-btn')).toBeFalsy();
+  it('should default to left-buttons class and add inner element', function() {
+    var el = setup(null, '<button>');
+    expect(outputEle.hasClass('left-buttons'));
+    expect(outputEle.children().eq(0)[0].tagName).toBe('BUTTON');
   });
 
-  it('should add buttons to right side', function() {
-    var el = setup('right', '<button id="my-btn">');
-    expect(el[0].querySelector('.left-buttons #my-btn')).toBeFalsy();
-    expect(el[0].querySelector('.right-buttons #my-btn')).toBeTruthy();
+  it('should default to left-buttons class with unknown side', function() {
+    var el = setup('whatever', '<button>');
+    expect(outputEle.hasClass('left-buttons'));
+    expect(outputEle.children().eq(0)[0].tagName).toBe('BUTTON');
   });
 
-  it('should remove buttons on content destroy', function() {
-    var el = setup('', '<button id="my-btn">');
-    expect(el[0].querySelector('.left-buttons #my-btn')).toBeTruthy();
-    el.find('ion-nav-buttons').scope().$destroy();
-    el.scope().$apply();
-    expect(el[0].querySelector('.left-buttons #my-btn')).toBeFalsy();
+  it('should set left-buttons class', function() {
+    var el = setup('left', '<button>');
+    expect(outputEle.hasClass('left-buttons'));
   });
 
-  it('should compile buttons with same scope & access the same data on compile', function() { 
-    var el = setup('left', '<button needs-scroll>Hello!</button>');
-    expect(jqLite(el[0].querySelector('ion-content')).children().scope().$id)
-      .toBe(jqLite(el[0].querySelector('.left-buttons button')).scope().$id);
-
-    //Test if the button was compiled able to access the parents of ion-nav-buttons
-    var scrollCtrl = el.find('ion-content').controller('$ionicScroll');
-    expect(scrollCtrl).toBeTruthy();
-    expect(el.find('button[needs-scroll]').data('scrollCtrl')).toBe(scrollCtrl);
+  it('should set right-buttons class', function() {
+    var el = setup('right', '<button>');
+    expect(outputEle.hasClass('right-buttons'));
   });
 
-  it('should not enter if button is destroyed before raf', function() {
-    var rafCb;
-    ionic.requestAnimationFrame = function(cb) { rafCb = cb; };
-    var el = setup('left', '<button id="my-btn">');
-    el.find('ion-content').scope().$destroy();
-    el.scope().$apply();
-    rafCb();
-    expect(el[0].querySelector('.left-buttons #my-btn')).toBeFalsy();
+  it('should set primary-buttons class', function() {
+    var el = setup('primary', '<button>');
+    expect(outputEle.hasClass('primary-buttons'));
+  });
+
+  it('should set secondary-buttons class', function() {
+    var el = setup('secondary', '<button>');
+    expect(outputEle.hasClass('secondary-buttons'));
   });
 
 });

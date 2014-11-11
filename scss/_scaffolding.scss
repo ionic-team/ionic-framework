@@ -143,10 +143,13 @@ body.grade-c {
     opacity: 0;
   }
 }
+.platform-android .scroll-bar-indicator {
+  // android doesn't have rounded ends on scrollbar
+  border-radius: 0;
+}
 .grade-b .scroll-bar-indicator,
 .grade-c .scroll-bar-indicator {
   // disable rgba background and border radius for low end devices
-  border-radius: 0;
   background: #aaa;
 
   &.scroll-bar-fade-out {
@@ -336,6 +339,7 @@ ion-infinite-scroll {
 // A full screen section with a solid background
 .pane {
   @include translate3d(0,0,0);
+  @include transition-duration(0);
   z-index: $z-index-pane;
 }
 .view {
@@ -353,12 +357,8 @@ ion-infinite-scroll {
   background-color: $base-background-color;
   overflow: hidden;
 }
-
-ion-nav-view {
-  position: absolute;
-  top: 0;
-  left: 0;
+.view-container {
+  display: block;
   width: 100%;
   height: 100%;
-  background-color: #000;
 }

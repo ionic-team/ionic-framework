@@ -28,15 +28,15 @@ describe('Ionic Checkbox', function() {
   });
 
   it('should pass down attrs', function() {
-    el = compile('<ion-checkbox name="name" ng-model="model" ng-checked="checked" ng-disabled="disabled" ng-true-value="true-value" ng-false-value="false-value" ng-change="change">')(scope);
+    el = compile('<ion-checkbox name="name" ng-model="model" ng-checked="checked" ng-disabled="disabled" ng-true-value="true" ng-false-value="false" ng-change="change">')(scope);
     scope.$apply();
     var input = el.find('input');
     expect(input.attr('name')).toBe('name');
     expect(input.attr('ng-model')).toBe('model');
     expect(input.attr('ng-checked')).toBe('checked');
     expect(input.attr('ng-disabled')).toBe('disabled');
-    expect(input.attr('ng-true-value')).toBe('true-value');
-    expect(input.attr('ng-false-value')).toBe('false-value');
+    expect(input.attr('ng-true-value')).toBe('true');
+    expect(input.attr('ng-false-value')).toBe('false');
     expect(input.attr('ng-change')).toBe('change');
   });
 
