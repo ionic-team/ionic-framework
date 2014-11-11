@@ -102,8 +102,13 @@ function($animate, $rootScope, $sanitize, $ionicNavBarConfig, $ionicNgClick) {
           }
           return !!(backIsShown && $scope.backButtonShown);
         }, ionic.animationFrameThrottle(function(show) {
-          if (show) $animate.removeClass($element, 'ng-hide');
-          else $animate.addClass($element, 'ng-hide');
+          if($scope.shouldAnimate) {
+            if (show) $animate.removeClass($element, 'ng-hide');
+            else $animate.addClass($element, 'ng-hide');
+          } else {
+            if (show) $element.removeClass('ng-hide');
+            else $element.addClass('ng-hide');
+          }
         }));
       };
     }
