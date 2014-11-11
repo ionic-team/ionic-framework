@@ -1,13 +1,17 @@
 describe('ionNavBackButton directive', function() {
+  var ctrl;
+
   beforeEach(module('ionic'));
 
   function setup(attr, content) {
     var el;
+    ctrl = {
+      back: jasmine.createSpy('back'),
+      showBackButton: function (a) { return !!a; }
+    };
     inject(function($compile, $rootScope) {
       el = angular.element('<ion-nav-back-button '+(attr||'')+'>'+(content||'')+'</ion-nav-back-button>');
-      el.data('$ionNavBarController', {
-        back: jasmine.createSpy('back'),
-      });
+      el.data('$ionNavBarController', ctrl);
       el = $compile(el)($rootScope.$new());
       $rootScope.$apply();
     });
@@ -38,20 +42,27 @@ describe('ionNavBackButton directive', function() {
     expect(el.hasClass('ng-hide')).toBe(true);
   }));
 
-  it('should hide based on backButtonShown', inject(function($rootScope) {
+  it('should hide based on navBarCtrl.showBackButton', inject(function($rootScope) {
     ionic.animationFrameThrottle = function(cb) { return cb; };
     var el = setup();
+    spyOn(ctrl, 'showBackButton').andCallThrough();
+    expect(ctrl.showBackButton.calls.length).toBe(0);
     expect(el.hasClass('ng-hide')).toBe(true);
     $rootScope.$broadcast('$viewHistory.historyChange', {showBack:true});
-    el.scope().$apply('backButtonShown = true');
+    el.scope().$apply();
+    expect(ctrl.showBackButton.calls.length).toBe(2);
     expect(el.hasClass('ng-hide')).toBe(false);
-    el.scope().$apply('backButtonShown = false');
-    expect(el.hasClass('ng-hide')).toBe(true);
+    $rootScope.$broadcast('$viewHistory.historyChange', {showBack:true});
+    el.scope().$apply();
+    expect(ctrl.showBackButton.calls.length).toBe(3);
+    expect(el.hasClass('ng-hide')).toBe(false);
     $rootScope.$broadcast('$viewHistory.historyChange', {showBack:false});
-    el.scope().$apply('backButtonShown = true');
+    el.scope().$apply();
+    expect(ctrl.showBackButton.calls.length).toBe(5);
     expect(el.hasClass('ng-hide')).toBe(true);
     $rootScope.$broadcast('$viewHistory.historyChange', {showBack:true});
-    el.scope().$apply('backButtonShown = true');
+    el.scope().$apply();
+    expect(ctrl.showBackButton.calls.length).toBe(7);
     expect(el.hasClass('ng-hide')).toBe(false);
   }));
 
