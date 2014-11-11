@@ -411,11 +411,3 @@
   cursor: default;
   pointer-events: none;
 }
-
-/** Platform styles **/
-
-.tab-item.tab-item-ios {
-}
-.tab-item.tab-item-android {
-  border-top: 2px solid inherit;
-}
