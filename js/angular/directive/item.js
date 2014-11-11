@@ -28,10 +28,7 @@ var ITEM_TPL_CONTENT =
 * ```
 */
 IonicModule
-.directive('ionItem', [
-  '$animate',
-  '$compile',
-function($animate, $compile) {
+.directive('ionItem', function() {
   return {
     restrict: 'E',
     controller: ['$scope', '$element', function($scope, $element) {
@@ -41,8 +38,8 @@ function($animate, $compile) {
     scope: true,
     compile: function($element, $attrs) {
       var isAnchor = angular.isDefined($attrs.href) ||
-        angular.isDefined($attrs.ngHref) ||
-        angular.isDefined($attrs.uiSref);
+                     angular.isDefined($attrs.ngHref) ||
+                     angular.isDefined($attrs.uiSref);
       var isComplexItem = isAnchor ||
         //Lame way of testing, but we have to know at compile what to do with the element
         /ion-(delete|option|reorder)-button/i.test($element.html());
@@ -67,4 +64,4 @@ function($animate, $compile) {
         };
     }
   };
-}]);
+});

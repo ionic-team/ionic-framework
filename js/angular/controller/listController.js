@@ -77,39 +77,38 @@ IonicModule
 .controller('$ionicList', [
   '$scope',
   '$attrs',
-  '$parse',
   '$ionicListDelegate',
-function($scope, $attrs, $parse, $ionicListDelegate) {
-
+function($scope, $attrs, $ionicListDelegate) {
+  var self = this;
   var isSwipeable = true;
   var isReorderShown = false;
   var isDeleteShown = false;
 
-  var deregisterInstance = $ionicListDelegate._registerInstance(this, $attrs.delegateHandle);
+  var deregisterInstance = $ionicListDelegate._registerInstance(self, $attrs.delegateHandle);
   $scope.$on('$destroy', deregisterInstance);
 
-  this.showReorder = function(show) {
+  self.showReorder = function(show) {
     if (arguments.length) {
       isReorderShown = !!show;
     }
     return isReorderShown;
   };
 
-  this.showDelete = function(show) {
+  self.showDelete = function(show) {
     if (arguments.length) {
       isDeleteShown = !!show;
     }
     return isDeleteShown;
   };
 
-  this.canSwipeItems = function(can) {
+  self.canSwipeItems = function(can) {
     if (arguments.length) {
       isSwipeable = !!can;
     }
     return isSwipeable;
   };
 
-  this.closeOptionButtons = function() {
-    this.listView && this.listView.clearDragEffects();
+  self.closeOptionButtons = function() {
+    self.listView && self.listView.clearDragEffects();
   };
 }]);

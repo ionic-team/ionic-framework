@@ -30,7 +30,7 @@ var ITEM_TPL_DELETE_BUTTON =
 * ```
 */
 IonicModule
-.directive('ionDeleteButton', ['$animate', function($animate) {
+.directive('ionDeleteButton', function() {
   return {
     restrict: 'E',
     require: ['^ionItem', '^?ionList'],
@@ -54,4 +54,4 @@ IonicModule
       };
     }
   };
-}]);
+});

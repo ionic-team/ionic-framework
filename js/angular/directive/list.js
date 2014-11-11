@@ -75,9 +75,8 @@
 */
 IonicModule
 .directive('ionList', [
-  '$animate',
   '$timeout',
-function($animate, $timeout) {
+function($timeout) {
   return {
     restrict: 'E',
     require: ['ionList', '^?$ionicScroll'],

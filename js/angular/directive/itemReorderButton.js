@@ -47,7 +47,7 @@ var ITEM_TPL_REORDER_BUTTON =
 * Parameters given: $fromIndex, $toIndex.
 */
 IonicModule
-.directive('ionReorderButton', ['$animate', '$parse', function($animate, $parse) {
+.directive('ionReorderButton', ['$parse', function($parse) {
   return {
     restrict: 'E',
     require: ['^ionItem', '^?ionList'],
