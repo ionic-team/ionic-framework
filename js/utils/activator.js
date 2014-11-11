@@ -10,6 +10,7 @@
 
     start: function(e) {
       var self = this;
+      var parent_ele;
 
       // when an element is touched/clicked, it climbs up a few
       // parents to see if it is an .item or .button element
@@ -45,7 +46,22 @@
 
           // in XX milliseconds, set the queued elements to active
           if(e.type === 'touchstart') {
-            self._activateTimeout = setTimeout(activateElements, 80);
+            
+            //activate element immediately
+            if (ele.hasAttribute('data-instantActivate')) {
+              self._activateTimeout = setTimeout(activateElements, 1);
+            } else {
+            	
+            	//if we are tapping an element on a side menu, 'data-instantActivate' is set on the parent element
+            	parent_ele = angular.element(ele).parent();
+            	
+            	if(parent_ele[0].hasAttribute('data-instantActivate')){
+            		self._activateTimeout = setTimeout(activateElements, 1);
+            	}
+            	else{
+            		self._activateTimeout = setTimeout(activateElements, 80);
+            	}	
+            }
           } else {
             ionic.requestAnimationFrame(activateElements);
           }

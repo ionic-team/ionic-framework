@@ -2958,7 +2958,7 @@ ionic.DomUtil.ready(function(){
 
           // in XX milliseconds, set the queued elements to active
           if(e.type === 'touchstart') {
-            self._activateTimeout = setTimeout(activateElements, 80);
+			 self._activateTimeout = setTimeout(activateElements, 80);
           } else {
             ionic.requestAnimationFrame(activateElements);
           }
