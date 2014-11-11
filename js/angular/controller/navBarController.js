@@ -238,7 +238,12 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     ionic.DomUtil.cachedAttr($element, 'nav-bar-transition', $ionicConfig.navBar.transition());
     ionic.DomUtil.cachedAttr($element, 'nav-bar-direction', viewData.direction);
 
-    navBarAttr(enteringHeaderBar, navBarTransition.shouldAnimate ? 'stage' : 'entering');
+    if(navBarTransition.shouldAnimate) {
+      navBarAttr(enteringHeaderBar, 'stage');
+    } else {
+      navBarAttr(enteringHeaderBar, 'entering');
+      navBarAttr(leavingHeaderBar, 'leaving');
+    }
 
     enteringHeaderBarCtrl.resetBackButton();
 
