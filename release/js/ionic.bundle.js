@@ -6906,7 +6906,7 @@ ionic.views.Slider = ionic.views.View.inherit({
     var index = parseInt(options.startSlide, 10) || 0;
     var speed = options.speed || 300;
     options.continuous = options.continuous !== undefined ? options.continuous : true;
-
+    options.sliderWidth = options.sliderWidth||1;
     function setup() {
 
       // cache slides
@@ -6933,11 +6933,29 @@ ionic.views.Slider = ionic.views.View.inherit({
 
       // stack elements
       var pos = slides.length;
+
+      //slider width = .9 then margin first is 5 and margin left for other slides is 2.5
+      //sliderWidth defaults to 1
+      var sliderWidth = options.sliderWidth;
+
+      var sliderMarginLeft = width * (1-sliderWidth)*0.25;
+
+      width = width * sliderWidth + sliderMarginLeft;
       while(pos--) {
 
         var slide = slides[pos];
 
-        slide.style.width = width + 'px';
+        if(pos == 0){
+          slide.style.marginLeft=sliderMarginLeft*2 + "px";
+        }
+        else{
+          slide.style.marginLeft=sliderMarginLeft + "px";
+        }
+
+        //the width doesn't include the margin, we subtract here rather than
+        //changing the value of width because we don't want to modify the original value
+        slide.style.width = width - sliderMarginLeft + 'px';
+
         slide.setAttribute('data-index', pos);
 
         if (browser.transitions) {
@@ -43790,7 +43808,8 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
       pagerClick: '&',
       disableScroll: '@',
       onSlideChanged: '&',
-      activeSlide: '=?'
+      activeSlide: '=?',
+      sliderWidth: "@"
     },
     controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
       var _this = this;
@@ -43804,6 +43823,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
         auto: slideInterval,
         continuous: continuous,
         startSlide: $scope.activeSlide,
+        sliderWidth: $scope.$eval($scope.sliderWidth),
         slidesChanged: function() {
           $scope.currentSlide = slider.currentIndex();
 
