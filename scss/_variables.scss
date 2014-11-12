@@ -6,9 +6,9 @@ $light:                           #fff !default;
 $stable:                          #f8f8f8 !default;
 $positive:                        #387ef5 !default;
 $calm:                            #11c1f3 !default;
-$balanced:                        #30d472 !default;
+$balanced:                        #33cd5f !default;
 $energized:                       #ffc900 !default;
-$assertive:                       #e74b4b !default;
+$assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
 
@@ -106,39 +106,39 @@ $button-stable-active-border:     #a2a2a2 !default;
 
 $button-positive-bg:              $positive !default;
 $button-positive-text:            #fff !default;
-$button-positive-border:          darken($positive, 15%) !default;
-$button-positive-active-bg:       darken($positive, 15%) !default;
-$button-positive-active-border:   darken($positive, 15%) !default;
+$button-positive-border:          darken($positive, 10%) !default;
+$button-positive-active-bg:       darken($positive, 10%) !default;
+$button-positive-active-border:   darken($positive, 10%) !default;
 
 $button-calm-bg:                  $calm !default;
 $button-calm-text:                #fff !default;
-$button-calm-border:              darken($calm, 15%) !default;
-$button-calm-active-bg:           darken($calm, 15%) !default;
-$button-calm-active-border:       darken($calm, 15%) !default;
+$button-calm-border:              darken($calm, 10%) !default;
+$button-calm-active-bg:           darken($calm, 10%) !default;
+$button-calm-active-border:       darken($calm, 10%) !default;
 
 $button-assertive-bg:             $assertive !default;
 $button-assertive-text:           #fff !default;
-$button-assertive-border:         darken($assertive, 15%) !default;
-$button-assertive-active-bg:      darken($assertive, 15%) !default;
-$button-assertive-active-border:  darken($assertive, 15%) !default;
+$button-assertive-border:         darken($assertive, 10%) !default;
+$button-assertive-active-bg:      darken($assertive, 10%) !default;
+$button-assertive-active-border:  darken($assertive, 10%) !default;
 
 $button-balanced-bg:              $balanced !default;
 $button-balanced-text:            #fff !default;
-$button-balanced-border:          darken($balanced, 15%) !default;
-$button-balanced-active-bg:       darken($balanced, 15%) !default;
-$button-balanced-active-border:   darken($balanced, 15%) !default;
+$button-balanced-border:          darken($balanced, 10%) !default;
+$button-balanced-active-bg:       darken($balanced, 10%) !default;
+$button-balanced-active-border:   darken($balanced, 10%) !default;
 
 $button-energized-bg:             $energized !default;
 $button-energized-text:           #fff !default;
-$button-energized-border:         darken($energized, 15%) !default;
-$button-energized-active-bg:      darken($energized, 15%) !default;
-$button-energized-active-border:  darken($energized, 15%) !default;
+$button-energized-border:         darken($energized, 5%) !default;
+$button-energized-active-bg:      darken($energized, 5%) !default;
+$button-energized-active-border:  darken($energized, 5%) !default;
 
 $button-royal-bg:                 $royal !default;
 $button-royal-text:               #fff !default;
-$button-royal-border:             darken($royal, 15%) !default;
-$button-royal-active-bg:          darken($royal, 15%) !default;
-$button-royal-active-border:      darken($royal, 15%) !default;
+$button-royal-border:             darken($royal, 8%) !default;
+$button-royal-active-bg:          darken($royal, 8%) !default;
+$button-royal-active-border:      darken($royal, 8%) !default;
 
 $button-dark-bg:                  $dark !default;
 $button-dark-text:                #fff !default;
