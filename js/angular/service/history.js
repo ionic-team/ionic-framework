@@ -49,8 +49,7 @@ function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory
   });
 
   $rootScope.$ionicGoBack = function() {
-    var backView = $ionicHistory.backView();
-    backView && backView.go();
+    $ionicHistory.goBack();
   };
 
   // Set the document title when a new view is shown
@@ -502,6 +501,10 @@ function($rootScope, $state, $location, $window) {
           hist.stack[0].go();
         }
       }
+    },
+
+    goBack: function() {
+      viewHistory.backView && viewHistory.backView.go();
     },
 
     clearHistory: function() {
