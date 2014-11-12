@@ -28,6 +28,7 @@ IonicModule
           // lower priority than navAnimation which allows navTransition
           // to override this directive's nextTransition() call
           $ionicViewSwitcher.nextTransition('none');
+          $ionicViewSwitcher.nextShowBack(false);
           sideMenuCtrl.close();
         }
       });

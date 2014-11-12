@@ -79,6 +79,47 @@ describe('Ionic View Switcher', function() {
     expect(d.direction).toEqual('forward');
   }));
 
+  it('should set showBack when the view data sets it', inject(function($ionicViewSwitcher) {
+    var d = $ionicViewSwitcher.getTransitionData(null, null, null, null, true);
+    expect(d.showBack).toEqual(true);
+
+    d = $ionicViewSwitcher.getTransitionData(null, null, null, null, false);
+    expect(d.showBack).toEqual(false);
+
+    d = $ionicViewSwitcher.getTransitionData(null, null, null, null, null);
+    expect(d.showBack).toEqual(false);
+  }));
+
+  it('should override showBack from view data w/ $ionicViewSwitcher.nextShowBack() setting', inject(function($ionicViewSwitcher) {
+    $ionicViewSwitcher.nextShowBack(true);
+    var d = $ionicViewSwitcher.getTransitionData(null, null, null, null, true);
+    expect(d.showBack).toEqual(true);
+
+    $ionicViewSwitcher.nextShowBack(false);
+    var d = $ionicViewSwitcher.getTransitionData(null, null, null, null, true);
+    expect(d.showBack).toEqual(false);
+
+    $ionicViewSwitcher.nextShowBack(true);
+    d = $ionicViewSwitcher.getTransitionData(null, null, null, null, false);
+    expect(d.showBack).toEqual(true);
+
+    $ionicViewSwitcher.nextShowBack(false);
+    d = $ionicViewSwitcher.getTransitionData(null, null, null, null, false);
+    expect(d.showBack).toEqual(false);
+
+    $ionicViewSwitcher.nextShowBack(true);
+    d = $ionicViewSwitcher.getTransitionData(null, null, null, null, null);
+    expect(d.showBack).toEqual(true);
+
+    $ionicViewSwitcher.nextShowBack(false);
+    d = $ionicViewSwitcher.getTransitionData(null, null, null, null, null);
+    expect(d.showBack).toEqual(false);
+
+    $ionicViewSwitcher.nextShowBack(null);
+    d = $ionicViewSwitcher.getTransitionData(null, null, null, null, true);
+    expect(d.showBack).toEqual(true);
+  }));
+
   it('should get an empty entering element with an empty navViewElement', inject(function($ionicViewSwitcher) {
     var navViewElement = angular.element('<div class="view-container">');
     var switcher = $ionicViewSwitcher.create(null, navViewElement, {}, {});
