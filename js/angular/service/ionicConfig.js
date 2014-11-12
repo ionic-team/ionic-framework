@@ -414,6 +414,7 @@ IonicModule
         providerObj[namespace] = function(newValue) {
           if (arguments.length) {
             configObj[namespace] = newValue;
+            return providerObj;
           }
           if (configObj[namespace] == PLATFORM) {
             // if the config is set to 'platform', then get this config's platform value

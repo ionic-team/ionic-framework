@@ -127,4 +127,19 @@ describe('$ionicConfigProvider', function() {
     });
   });
 
+  it('should set defaults by chaining', function() {
+    module('ionic', function($ionicConfigProvider) {
+      $ionicConfigProvider.navBar.transition('my-transition')
+                                 .alignTitle('right')
+                                 .positionPrimaryButtons('right')
+                                 .positionSecondaryButtons('left');
+    });
+    inject(function($ionicConfig) {
+      expect($ionicConfig.navBar.transition()).toBe('my-transition');
+      expect($ionicConfig.navBar.alignTitle()).toBe('right');
+      expect($ionicConfig.navBar.positionPrimaryButtons()).toBe('right');
+      expect($ionicConfig.navBar.positionSecondaryButtons()).toBe('left');
+    });
+  });
+
 });
