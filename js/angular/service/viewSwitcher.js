@@ -8,10 +8,11 @@ IonicModule
   '$timeout',
   '$compile',
   '$controller',
+  '$document',
   '$ionicClickBlock',
   '$ionicConfig',
   '$ionicNavBarDelegate',
-function($timeout, $compile, $controller, $ionicClickBlock, $ionicConfig, $ionicNavBarDelegate) {
+function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicConfig, $ionicNavBarDelegate) {
 
   var TRANSITIONEND_EVENT = 'webkitTransitionEnd transitionend';
   var DATA_NO_CACHE = '$noCache';
@@ -36,19 +37,16 @@ function($timeout, $compile, $controller, $ionicClickBlock, $ionicConfig, $ionic
 
 
   function createViewElement(viewLocals) {
-    var div = jqLite('<div>');
+    var containerEle = $document[0].createElement('div');
     if (viewLocals && viewLocals.$template) {
-      div.html(viewLocals.$template);
-      var nodes = div.contents();
-      for (var i = 0; i < nodes.length; i++) {
-        if (nodes[i].nodeType == 1) {
-          // first try to get just a child element
-          return nodes.eq(i);
-        }
+      containerEle.innerHTML = viewLocals.$template;
+      if (containerEle.children.length === 1) {
+        containerEle.children[0].classList.add('pane');
+        return jqLite(containerEle.children[0]);
       }
     }
-    // fallback to return the div so it has one parent element
-    return div;
+    containerEle.className = "pane";
+    return jqLite(containerEle);
   }
 
   function getViewElementIdentifier(locals, view) {
