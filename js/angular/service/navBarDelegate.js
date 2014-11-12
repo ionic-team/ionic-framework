@@ -29,13 +29,6 @@ IonicModule
 .service('$ionicNavBarDelegate', delegateService([
   /**
    * @ngdoc method
-   * @name $ionicNavBarDelegate#back
-   * @description Goes back in the view history.
-   * @param {DOMEvent=} event The event object (eg from a tap event)
-   */
-  'back',
-  /**
-   * @ngdoc method
    * @name $ionicNavBarDelegate#align
    * @description Aligns the title with the buttons in a given direction.
    * @param {string=} direction The direction to the align the title text towards.
@@ -63,41 +56,19 @@ IonicModule
   'showBar',
   /**
    * @ngdoc method
-   * @name $ionicNavBarDelegate#setTitle
+   * @name $ionicNavBarDelegate#title
    * @description
    * Set the title for the {@link ionic.directive:ionNavBar}.
    * @param {string} title The new title to show.
    */
-  'setTitle',
+  'title',
   /**
    * @ngdoc method
-   * @name $ionicNavBarDelegate#changeTitle
+   * @name $ionicNavBarDelegate#update
    * @description
-   * Change the title, transitioning the new title in and the old one out in a given direction.
-   * @param {string} title The new title to show.
-   * @param {string} direction The direction to transition the new title in.
-   * Available: 'forward', 'back'.
+   * Updates the {@link ionic.directive:ionNavBar} with a transition using the
+   * supplied view data.
+   * @param {object} viewData An object containing `title`, `showBar` properties.
    */
-  'changeTitle',
-  /**
-   * @ngdoc method
-   * @name $ionicNavBarDelegate#getTitle
-   * @returns {string} The current title of the navbar.
-   */
-  'getTitle',
-  /**
-   * @ngdoc method
-   * @name $ionicNavBarDelegate#getPreviousTitle
-   * @returns {string} The previous title of the navbar.
-   */
-  'getPreviousTitle'
-  /**
-   * @ngdoc method
-   * @name $ionicNavBarDelegate#$getByHandle
-   * @param {string} handle
-   * @returns `delegateInstance` A delegate instance that controls only the
-   * navBars with delegate-handle matching the given handle.
-   *
-   * Example: `$ionicNavBarDelegate.$getByHandle('myHandle').setTitle('newTitle')`
-   */
+  'update'
 ]));
