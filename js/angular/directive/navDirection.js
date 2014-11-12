@@ -20,8 +20,8 @@ IonicModule
     restrict: 'A',
     priority: 1000,
     link: function($scope, $element, $attr) {
-      $element.bind('click', function(){
-        $ionicViewSwitcher.nextDirection( $attr.navDirection );
+      $element.bind('click', function() {
+        $ionicViewSwitcher.nextDirection($attr.navDirection);
       });
     }
   };

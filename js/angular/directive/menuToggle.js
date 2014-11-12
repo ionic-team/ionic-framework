@@ -25,10 +25,10 @@ IonicModule
   return {
     restrict: 'AC',
     link: function($scope, $element, $attr) {
-      $scope.$on('$ionicView.beforeEnter', function(ev, viewData){
+      $scope.$on('$ionicView.beforeEnter', function(ev, viewData) {
         if (viewData.showBack) {
           var sideMenuCtrl = $element.inheritedData('$ionSideMenusController');
-          if ( !sideMenuCtrl.enableMenuWithBackViews() ) {
+          if (!sideMenuCtrl.enableMenuWithBackViews()) {
             $element.addClass('hide');
           }
         } else {
@@ -36,11 +36,10 @@ IonicModule
         }
       });
 
-      $element.bind('click', function(){
+      $element.bind('click', function() {
         var sideMenuCtrl = $element.inheritedData('$ionSideMenusController');
         sideMenuCtrl && sideMenuCtrl.toggle($attr.menuToggle);
       });
     }
   };
 });
-

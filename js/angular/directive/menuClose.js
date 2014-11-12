@@ -22,7 +22,7 @@ IonicModule
   return {
     restrict: 'AC',
     link: function($scope, $element, $attr) {
-      $element.bind('click', function(){
+      $element.bind('click', function() {
         var sideMenuCtrl = $element.inheritedData('$ionSideMenusController');
         if (sideMenuCtrl) {
           // lower priority than navAnimation which allows navTransition

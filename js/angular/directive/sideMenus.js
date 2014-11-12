@@ -80,15 +80,15 @@ IonicModule
       return { pre: prelink };
       function prelink($scope, $element, $attrs, ctrl) {
 
-        ctrl.enableMenuWithBackViews( $scope.$eval($attrs.enableMenuWithBackViews) );
+        ctrl.enableMenuWithBackViews($scope.$eval($attrs.enableMenuWithBackViews));
 
-        $scope.$on('$ionicExposeAside', function(evt, isAsideExposed){
-          if(!$scope.$exposeAside) $scope.$exposeAside = {};
+        $scope.$on('$ionicExposeAside', function(evt, isAsideExposed) {
+          if (!$scope.$exposeAside) $scope.$exposeAside = {};
           $scope.$exposeAside.active = isAsideExposed;
           $ionicBody.enableClass(isAsideExposed, 'aside-open');
         });
 
-        $scope.$on('$destroy', function(){
+        $scope.$on('$destroy', function() {
           $ionicBody.removeClass('menu-open', 'aside-open');
         });
 

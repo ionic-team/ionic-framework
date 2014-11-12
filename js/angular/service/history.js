@@ -13,7 +13,7 @@ IonicModule
 function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory) {
 
   // always reset the keyboard state when change stage
-  $rootScope.$on('$stateChangeStart', function(){
+  $rootScope.$on('$stateChangeStart', function() {
     ionic.keyboard.hide();
   });
 
@@ -22,7 +22,7 @@ function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory
 
     var viewHistory = $ionicHistory.viewHistory();
 
-    var hist = (data.historyId ? viewHistory.histories[ data.historyId ] : null );
+    var hist = (data.historyId ? viewHistory.histories[ data.historyId ] : null);
     if (hist && hist.cursor > -1 && hist.cursor < hist.stack.length) {
       // the history they're going to already exists
       // go to it's last view in its stack
@@ -113,10 +113,10 @@ function($rootScope, $state, $location, $window) {
     currentView: null
   };
 
-  var View = function(){};
+  var View = function() {};
   View.prototype.initialize = function(data) {
     if (data) {
-      for(var name in data) this[name] = data[name];
+      for (var name in data) this[name] = data[name];
       return this;
     }
     return null;
@@ -150,25 +150,25 @@ function($rootScope, $state, $location, $window) {
 
 
   function getViewById(viewId) {
-    return (viewId ? viewHistory.views[ viewId ] : null );
+    return (viewId ? viewHistory.views[ viewId ] : null);
   }
 
   function getBackView(view) {
-    return (view ? getViewById(view.backViewId) : null );
+    return (view ? getViewById(view.backViewId) : null);
   }
 
   function getForwardView(view) {
-    return (view ? getViewById(view.forwardViewId) : null );
+    return (view ? getViewById(view.forwardViewId) : null);
   }
 
   function getHistoryById(historyId) {
-    return (historyId ? viewHistory.histories[ historyId ] : null );
+    return (historyId ? viewHistory.histories[ historyId ] : null);
   }
 
   function getHistory(scope) {
     var histObj = getParentHistoryObj(scope);
 
-    if ( !viewHistory.histories[ histObj.historyId ] ) {
+    if (!viewHistory.histories[ histObj.historyId ]) {
       // this history object exists in parent scope, but doesn't
       // exist in the history data yet
       viewHistory.histories[ histObj.historyId ] = {
@@ -183,7 +183,7 @@ function($rootScope, $state, $location, $window) {
 
   function getParentHistoryObj(scope) {
     var parentScope = scope;
-    while(parentScope) {
+    while (parentScope) {
       if (parentScope.hasOwnProperty('$historyId')) {
         // this parent scope has a historyId
         return { historyId: parentScope.$historyId, scope: parentScope };
@@ -206,7 +206,7 @@ function($rootScope, $state, $location, $window) {
     if ($state && $state.current && $state.current.name) {
       id = $state.current.name;
       if ($state.params) {
-        for(var key in $state.params) {
+        for (var key in $state.params) {
           if ($state.params.hasOwnProperty(key) && $state.params[key]) {
             id += "_" + key + "=" + $state.params[key];
           }
@@ -221,7 +221,7 @@ function($rootScope, $state, $location, $window) {
   function getCurrentStateParams() {
     var rtn;
     if ($state && $state.params) {
-      for(var key in $state.params) {
+      for (var key in $state.params) {
         if ($state.params.hasOwnProperty(key)) {
           rtn = rtn || {};
           rtn[key] = $state.params[key];
@@ -247,7 +247,7 @@ function($rootScope, $state, $location, $window) {
           historyId = hist.historyId,
           tmp;
 
-      if ( isAbstractView ) {
+      if (isAbstractView) {
         // abstract states should not register themselves in the history stack
         return {
           action: 'abstractView',
@@ -366,7 +366,7 @@ function($rootScope, $state, $location, $window) {
             tmp = getHistoryById(forwardView.historyId);
             if (tmp) {
               // the forward has a history
-              for(var x=tmp.stack.length - 1; x >= forwardView.index; x--) {
+              for (var x=tmp.stack.length - 1; x >= forwardView.index; x--) {
                 // starting from the end destroy all forwards in this history from this point
                 tmp.stack[x].destroy();
                 tmp.stack.splice(x);
@@ -510,7 +510,7 @@ function($rootScope, $state, $location, $window) {
       currentView = viewHistory.currentView;
 
       if (histories) {
-        for(var historyId in histories) {
+        for (var historyId in histories) {
 
           if (histories[historyId].stack) {
             histories[historyId].stack = [];
@@ -527,7 +527,7 @@ function($rootScope, $state, $location, $window) {
         }
       }
 
-      for(var viewId in viewHistory.views) {
+      for (var viewId in viewHistory.views) {
         if (viewId !== currentView.viewId) {
           delete viewHistory.views[viewId];
         }

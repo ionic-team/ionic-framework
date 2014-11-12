@@ -50,8 +50,8 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
   }
 
   function getViewElementIdentifier(locals, view) {
-    if ( viewState(locals).abstract ) return viewState(locals).name;
-    if ( view ) return view.stateId || view.viewId;
+    if (viewState(locals).abstract) return viewState(locals).name;
+    if (view) return view.stateId || view.viewId;
     return ionic.Utils.nextUid();
   }
 
@@ -113,7 +113,7 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
           $ionicClickBlock.show();
           switcher.loadViewElements();
 
-          switcher.render(registerData, function(){
+          switcher.render(registerData, function() {
             callback && callback();
           });
         },
@@ -123,7 +123,7 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
           var enteringEleIdentifier = getViewElementIdentifier(viewLocals, enteringView);
           var navViewActiveEleId = navViewElement.data(DATA_ACTIVE_ELE_IDENTIFIER);
 
-          for (var x=0, l=viewElements.length; x<l; x++) {
+          for (var x=0, l=viewElements.length; x < l; x++) {
             viewEle = viewElements.eq(x);
 
             if (viewEle.data(DATA_ELE_IDENTIFIER) === enteringEleIdentifier) {
@@ -152,9 +152,9 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
         },
 
         render: function(registerData, callback) {
-          if ( alreadyInDom ) {
+          if (alreadyInDom) {
             // it was already found in the dom, just reconnect the scope
-            ionic.Utils.reconnectScope( enteringEle.scope() );
+            ionic.Utils.reconnectScope(enteringEle.scope());
 
           } else {
             // the entering element is not already in the DOM
@@ -169,7 +169,7 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
 
             // if the current state has cache:false
             // or the element has cache-view="false" attribute
-            if ( viewState(viewLocals).cache === false || enteringEle.attr('cache-view') == 'false' ) {
+            if (viewState(viewLocals).cache === false || enteringEle.attr('cache-view') == 'false') {
               enteringEle.data(DATA_NO_CACHE, true);
             }
 
@@ -204,7 +204,7 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
           ionic.DomUtil.cachedAttr(enteringEle.parent(), 'nav-view-direction', transData.direction);
 
           // cancel any previous transition complete fallbacks
-          $timeout.cancel( enteringEle.data(DATA_FALLBACK_TIMER) );
+          $timeout.cancel(enteringEle.data(DATA_FALLBACK_TIMER));
 
           switcher.emit('before', transData);
 
@@ -256,7 +256,7 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
 
             enteringEle.off(TRANSITIONEND_EVENT, transitionComplete);
             leavingEle && leavingEle.off(TRANSITIONEND_EVENT, transitionComplete);
-            $timeout.cancel( enteringEle.data(DATA_FALLBACK_TIMER) );
+            $timeout.cancel(enteringEle.data(DATA_FALLBACK_TIMER));
 
             switcher.emit('after', transData);
 
@@ -299,24 +299,24 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
           var x, viewElement, removableEle;
 
           // check if any views should be removed
-          if ( leavingEle && transData.direction == 'back' && !$ionicConfig.views.forwardCache() ) {
+          if (leavingEle && transData.direction == 'back' && !$ionicConfig.views.forwardCache()) {
             // if they just navigated back we can destroy the forward view
             // do not remove forward views if cacheForwardViews config is true
             removableEle = leavingEle;
 
-          } else if ( leavingEle && leavingEle.data(DATA_NO_CACHE) ) {
+          } else if (leavingEle && leavingEle.data(DATA_NO_CACHE)) {
             // remove if the leaving element has DATA_NO_CACHE===false
             removableEle = leavingEle;
 
-          } else if ( (viewElementsLength - 1) > $ionicConfig.views.maxCache() ) {
+          } else if ((viewElementsLength - 1) > $ionicConfig.views.maxCache()) {
             // check to see if we have more cached views than we should
             // the total number of child elements has exceeded how many to keep in the DOM
             var oldestAccess = Date.now();
 
-            for (x=0; x<viewElementsLength; x++) {
+            for (x=0; x < viewElementsLength; x++) {
               viewElement = viewElements.eq(x);
 
-              if ( viewElement.data(DATA_VIEW_ACCESSED) < oldestAccess ) {
+              if (viewElement.data(DATA_VIEW_ACCESSED) < oldestAccess) {
                 // remove the element that was the oldest to be accessed
                 oldestAccess = viewElement.data(DATA_VIEW_ACCESSED);
                 removableEle = viewElements.eq(x);
@@ -332,11 +332,11 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
             removableEle.remove();
           }
 
-          ionic.Utils.disconnectScope( leavingEle && leavingEle.scope() );
+          ionic.Utils.disconnectScope(leavingEle && leavingEle.scope());
         },
 
-        enteringEle: function(){ return enteringEle; },
-        leavingEle: function(){ return leavingEle; }
+        enteringEle: function() { return enteringEle; },
+        leavingEle: function() { return leavingEle; }
 
       };
 
@@ -350,7 +350,7 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
       var x, viewElement;
       var isHistoryRoot;
 
-      for (x=0; x<viewElementsLength; x++) {
+      for (x=0; x < viewElementsLength; x++) {
         viewElement = viewElements.eq(x);
 
         if (viewElement.data(DATA_ELE_IDENTIFIER) === navViewActiveEleId) {
@@ -358,13 +358,13 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
           isHistoryRoot = ionic.DomUtil.cachedAttr(viewElement, HISTORY_CURSOR_ATTR) === HISTORY_ROOT;
 
         } else if (ionic.DomUtil.cachedAttr(viewElement, NAV_VIEW_ATTR) === 'leaving' ||
-                  (ionic.DomUtil.cachedAttr(viewElement, NAV_VIEW_ATTR) === VIEW_STATUS_ACTIVE && viewElement.data(DATA_ELE_IDENTIFIER) !== navViewActiveEleId) ) {
+                  (ionic.DomUtil.cachedAttr(viewElement, NAV_VIEW_ATTR) === VIEW_STATUS_ACTIVE && viewElement.data(DATA_ELE_IDENTIFIER) !== navViewActiveEleId)) {
           navViewAttr(viewElement, VIEW_STATUS_CACHED);
         }
       }
 
       if (isHistoryRoot) {
-        for (x=0; x<viewElementsLength; x++) {
+        for (x=0; x < viewElementsLength; x++) {
           viewElement = viewElements.eq(x);
 
           if (ionic.DomUtil.cachedAttr(viewElement, HISTORY_CURSOR_ATTR) === HISTORY_ROOT &&
@@ -394,7 +394,7 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
         ionic.transition.isActive = !!val;
         $timeout.cancel(isActiveTimer);
         if (val) {
-          isActiveTimer = $timeout(function(){
+          isActiveTimer = $timeout(function() {
             ionicViewSwitcher.isTransitioning(false);
           }, 999);
         }

@@ -84,11 +84,11 @@ function($scope, $element, $attrs, $ionicNavBarDelegate, $ionicHistory, $ionicVi
     var switcher = $ionicViewSwitcher.create($scope, $element, viewLocals, enteringView);
 
     // init the rendering of views for this navView directive
-    switcher.init(registerData, function(){
+    switcher.init(registerData, function() {
       // the view is now compiled, in the dom and linked, now lets transition the views.
       // this uses a callback incase THIS nav-view has a nested nav-view, and after the NESTED
       // nav-view links, the NESTED nav-view would update which direction THIS nav-view should use
-      switcher.transition( self.direction(), registerData.showBack );
+      switcher.transition(self.direction(), registerData.showBack);
     });
 
   };
@@ -134,7 +134,7 @@ function($scope, $element, $attrs, $ionicNavBarDelegate, $ionicHistory, $ionicVi
 
   function getAssociatedNavBarCtrl() {
     if (navBarDelegate) {
-      for (var x=0; x<$ionicNavBarDelegate._instances.length; x++) {
+      for (var x=0; x < $ionicNavBarDelegate._instances.length; x++) {
         if ($ionicNavBarDelegate._instances[x].$$delegateHandle == navBarDelegate) {
           return $ionicNavBarDelegate._instances[x];
         }

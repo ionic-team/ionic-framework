@@ -94,7 +94,7 @@ function($state, $ionicConfig) {
     priority: 2000,
     transclude: true,
     controller: '$ionicNavView',
-    compile: function (tElement, tAttrs, transclude) {
+    compile: function(tElement, tAttrs, transclude) {
 
       // a nav view element is a container for numerous views
       tElement.addClass('view-container');
@@ -104,8 +104,8 @@ function($state, $ionicConfig) {
         var latestLocals;
 
         // Put in the compiled initial view
-        transclude($scope, function(clone){
-          $element.append( clone );
+        transclude($scope, function(clone) {
+          $element.append(clone);
         });
 
         var viewData = navViewCtrl.init();
@@ -142,4 +142,3 @@ function($state, $ionicConfig) {
     }
   };
 }]);
-

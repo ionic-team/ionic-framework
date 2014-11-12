@@ -52,7 +52,7 @@ function($scope, $ionicHistory, $element) {
     var tabIndex;
     if (angular.isNumber(tab)) {
       tabIndex = tab;
-      if(tabIndex >= self.tabs.length) return;
+      if (tabIndex >= self.tabs.length) return;
       tab = self.tabs[tabIndex];
     } else {
       tabIndex = self.tabs.indexOf(tab);
@@ -92,4 +92,3 @@ function($scope, $ionicHistory, $element) {
     }
   };
 }]);
-

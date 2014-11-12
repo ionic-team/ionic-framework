@@ -72,7 +72,7 @@ IonicModule
         $backButtonActions: {},
         registerBackButtonAction: function(fn, priority, actionId) {
 
-          if(!self._hasBackButtonHandler) {
+          if (!self._hasBackButtonHandler) {
             // add a back button listener if one hasn't been setup yet
             self.$backButtonActions = {};
             self.onHardwareBackButton(self.hardwareBackButtonClick);
@@ -95,16 +95,16 @@ IonicModule
         /**
          * @private
          */
-        hardwareBackButtonClick: function(e){
+        hardwareBackButtonClick: function(e) {
           // loop through all the registered back button actions
           // and only run the last one of the highest priority
           var priorityAction, actionId;
-          for(actionId in self.$backButtonActions) {
-            if(!priorityAction || self.$backButtonActions[actionId].priority >= priorityAction.priority) {
+          for (actionId in self.$backButtonActions) {
+            if (!priorityAction || self.$backButtonActions[actionId].priority >= priorityAction.priority) {
               priorityAction = self.$backButtonActions[actionId];
             }
           }
-          if(priorityAction) {
+          if (priorityAction) {
             priorityAction.fn(e);
             return priorityAction;
           }
@@ -126,11 +126,11 @@ IonicModule
          * @returns {function} Returns a deregistration function to remove the event listener.
          */
         on: function(type, cb) {
-          ionic.Platform.ready(function(){
+          ionic.Platform.ready(function() {
             document.addEventListener(type, cb, false);
           });
           return function() {
-            ionic.Platform.ready(function(){
+            ionic.Platform.ready(function() {
               document.removeEventListener(type, cb);
             });
           };
@@ -148,7 +148,7 @@ IonicModule
         ready: function(cb) {
           var q = $q.defer();
 
-          ionic.Platform.ready(function(){
+          ionic.Platform.ready(function() {
             q.resolve();
             cb && cb();
           });
@@ -161,4 +161,3 @@ IonicModule
   };
 
 });
-

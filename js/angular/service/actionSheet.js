@@ -119,7 +119,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
 
       scope.removed = true;
       sheetEl.removeClass('action-sheet-up');
-      $timeout(function(){
+      $timeout(function() {
         // wait to remove this due to a 300ms delay native
         // click which would trigging whatever was underneath this
         $ionicBody.removeClass('action-sheet-open');
@@ -146,7 +146,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
         if (scope.removed) return;
         (done || angular.noop)();
       });
-      $timeout(function(){
+      $timeout(function() {
         if (scope.removed) return;
         sheetEl.addClass('action-sheet-up');
       }, 20, false);

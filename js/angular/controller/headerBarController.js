@@ -54,7 +54,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
 
   self.titleTextWidth = function() {
     if (!titleTextWidth) {
-      var bounds = ionic.DomUtil.getTextBounds( getEle(TITLE) );
+      var bounds = ionic.DomUtil.getTextBounds(getEle(TITLE));
       titleTextWidth = Math.min(bounds && bounds.width || 30);
     }
     return titleTextWidth;
@@ -84,7 +84,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
   self.backButtonTextLeft = function() {
     var offsetLeft = 0;
     var ele = getEle(BACK_TEXT);
-    while(ele) {
+    while (ele) {
       offsetLeft += ele.offsetLeft;
       ele = ele.parentElement;
     }
@@ -93,7 +93,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
 
 
   self.resetBackButton = function() {
-    if ( $ionicConfig.backButton.previousTitleText() ) {
+    if ($ionicConfig.backButton.previousTitleText()) {
       var previousTitleEle = getEle(PREVIOUS_TITLE);
       if (previousTitleEle) {
         previousTitleEle.classList.remove(HIDE);
@@ -119,7 +119,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
 
     var widths = self.calcWidths(align, false);
 
-    if ( isBackShown && previousTitleText && $ionicConfig.backButton.previousTitleText() ) {
+    if (isBackShown && previousTitleText && $ionicConfig.backButton.previousTitleText()) {
       var previousTitleWidths = self.calcWidths(align, true);
 
       var availableTitleWidth = $element[0].offsetWidth - previousTitleWidths.titleLeft - previousTitleWidths.titleRight;
@@ -176,10 +176,10 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
                   d = b.children[z];
 
                   if (isPreviousTitle) {
-                    if ( d.classList.contains(DEFAULT_TITLE) ) continue;
+                    if (d.classList.contains(DEFAULT_TITLE)) continue;
                     backButtonWidth += d.offsetWidth;
                   } else {
-                    if ( d.classList.contains(PREVIOUS_TITLE) ) continue;
+                    if (d.classList.contains(PREVIOUS_TITLE)) continue;
                     backButtonWidth += d.offsetWidth;
                   }
                 }
@@ -283,7 +283,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
       defaultTitle && defaultTitle.classList[ showPreviousTitle ? 'add' : 'remove'](HIDE);
     }
 
-    ionic.requestAnimationFrame(function(){
+    ionic.requestAnimationFrame(function() {
       if (titleEle && titleEle.offsetWidth + 10 < titleEle.scrollWidth) {
         var minRight = buttonsRight + 5;
         var testRight = $element[0].offsetWidth - titleLeft - self.titleTextWidth() - 20;
@@ -301,7 +301,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
 
 
   self.setCss = function(elementClassname, css) {
-    ionic.DomUtil.cachedStyles( getEle(elementClassname), css);
+    ionic.DomUtil.cachedStyles(getEle(elementClassname), css);
   };
 
 
@@ -315,8 +315,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
 
 
   $scope.$on('$destroy', function() {
-    for(var n in eleCache) eleCache[n] = null;
+    for (var n in eleCache) eleCache[n] = null;
   });
 
 }]);
-

@@ -44,10 +44,10 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
 
   self.createHeaderBar = function(isActive, navBarClass) {
-    var containerEle = jqLite( '<div class="nav-bar-block">' );
+    var containerEle = jqLite('<div class="nav-bar-block">');
     ionic.DomUtil.cachedAttr(containerEle, 'nav-bar', isActive ? 'active' : 'cached');
 
-    var headerBarEle = jqLite( '<ion-header-bar>' ).addClass($attrs.class);
+    var headerBarEle = jqLite('<ion-header-bar>').addClass($attrs.class);
     var titleEle = jqLite('<div class="title title-' + $ionicConfig.navBar.alignTitle() + '">');
     var navEle = {};
     var lastViewBtnsEle = {};
@@ -60,7 +60,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     // append title in the header, this is the rock to where buttons append
     headerBarEle.append(titleEle);
 
-    forEach(BUTTON_TYPES, function(buttonType){
+    forEach(BUTTON_TYPES, function(buttonType) {
       // create default button elements
       navEle[buttonType] = createNavElement(buttonType);
       // append and position buttons
@@ -69,7 +69,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
     // compile header and append to the DOM
     containerEle.append(headerBarEle);
-    $element.append( $compile(containerEle)($scope.$new()) );
+    $element.append($compile(containerEle)($scope.$new()));
 
     var headerBarCtrl = headerBarEle.data('$ionHeaderBarController');
 
@@ -114,7 +114,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
         return headerBarEle;
       },
       afterLeave: function() {
-        forEach(BUTTON_TYPES, function(buttonType){
+        forEach(BUTTON_TYPES, function(buttonType) {
           headerBarInstance.removeButtons(buttonType);
         });
         headerBarCtrl.resetBackButton();
@@ -123,7 +123,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
         return headerBarCtrl;
       },
       destroy: function() {
-        forEach(BUTTON_TYPES, function(buttonType){
+        forEach(BUTTON_TYPES, function(buttonType) {
           headerBarInstance.removeButtons(buttonType);
         });
         containerEle.scope().$destroy();
@@ -187,7 +187,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
 
   self.navElement = function(type, html) {
-    if ( isDefined(html) ) {
+    if (isDefined(html)) {
       navElementHtml[type] = html;
     }
     return navElementHtml[type];
@@ -214,7 +214,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
     // update the buttons, depending if the view has their own or not
     if (viewData.buttons) {
-      forEach(BUTTON_TYPES, function(buttonType){
+      forEach(BUTTON_TYPES, function(buttonType) {
         enteringHeaderBar.setButtons(viewData.buttons[buttonType], buttonType);
       });
     }
@@ -238,7 +238,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     ionic.DomUtil.cachedAttr($element, 'nav-bar-transition', $ionicConfig.navBar.transition());
     ionic.DomUtil.cachedAttr($element, 'nav-bar-direction', viewData.direction);
 
-    if(navBarTransition.shouldAnimate) {
+    if (navBarTransition.shouldAnimate) {
       navBarAttr(enteringHeaderBar, 'stage');
     } else {
       navBarAttr(enteringHeaderBar, 'entering');
@@ -261,7 +261,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
       queuedTransitionEnd = function() {
         if (latestTransitionId == transitionId || !navBarTransition.shouldAnimate) {
-          for (var x=0; x<headerBars.length; x++) {
+          for (var x = 0; x < headerBars.length; x++) {
             headerBars[x].isActive = false;
           }
           enteringHeaderBar.isActive = true;
@@ -313,7 +313,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     self.visibleBar(val);
 
     // set non primary to hide second
-    for (var x=0; x<$ionicNavBarDelegate._instances.length; x++) {
+    for (var x = 0; x < $ionicNavBarDelegate._instances.length; x++) {
       if ($ionicNavBarDelegate._instances[x] !== self) $ionicNavBarDelegate._instances[x].visibleBar(false);
     }
   };
@@ -338,21 +338,21 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
 
   function createNavElement(type) {
-    if ( navElementHtml[type] ) {
+    if (navElementHtml[type]) {
       return jqLite(navElementHtml[type]);
     }
   }
 
 
   function getOnScreenHeaderBar() {
-    for (var x=0; x<headerBars.length; x++) {
+    for (var x = 0; x < headerBars.length; x++) {
       if (headerBars[x].isActive) return headerBars[x];
     }
   }
 
 
   function getOffScreenHeaderBar() {
-    for (var x=0; x<headerBars.length; x++) {
+    for (var x = 0; x < headerBars.length; x++) {
       if (!headerBars[x].isActive) return headerBars[x];
     }
   }
@@ -363,12 +363,12 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   }
 
 
-  $scope.$on('ionHeaderBar.init', function(ev){
+  $scope.$on('ionHeaderBar.init', function(ev) {
     ev.stopPropagation();
   });
 
 
-  $scope.$on('$destroy', function(){
+  $scope.$on('$destroy', function() {
     $scope.$parent.$hasHeader = false;
     $element.parent().removeData(DATA_NAV_BAR_CTRL);
     for (var x = 0; x < headerBars.length; x++) {
@@ -380,4 +380,3 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   });
 
 }]);
-

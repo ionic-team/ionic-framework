@@ -173,11 +173,11 @@ IonicModule
         return {
           run: function(step) {
             if (direction == 'forward') {
-              setStyles(enteringEle, 1, (1-step) * 99); // starting at 98% prevents a flicker
+              setStyles(enteringEle, 1, (1 - step) * 99); // starting at 98% prevents a flicker
               setStyles(leavingEle, (1 - 0.1 * step), step * -33);
 
             } else if (direction == 'back') {
-              setStyles(enteringEle, (1 - 0.1 * (1-step)), (1-step) * -33);
+              setStyles(enteringEle, (1 - 0.1 * (1 - step)), (1 - step) * -33);
               setStyles(leavingEle, 1, step * 100);
 
             } else {
@@ -235,8 +235,8 @@ IonicModule
             var enteringHeaderCtrl = enteringHeaderBar.controller();
             var leavingHeaderCtrl = leavingHeaderBar && leavingHeaderBar.controller();
             if (direction == 'back') {
-              leave(enteringHeaderCtrl, leavingHeaderCtrl, 1-step);
-              enter(leavingHeaderCtrl, enteringHeaderCtrl, 1-step);
+              leave(enteringHeaderCtrl, leavingHeaderCtrl, 1 - step);
+              enter(leavingHeaderCtrl, enteringHeaderCtrl, 1 - step);
             } else {
               enter(enteringHeaderCtrl, leavingHeaderCtrl, step);
               leave(leavingHeaderCtrl, enteringHeaderCtrl, step);
@@ -296,12 +296,12 @@ IonicModule
         return {
           run: function(step) {
             if (direction == 'forward') {
-              setStyles(enteringEle, step, (1-step) * startX);
+              setStyles(enteringEle, step, (1 - step) * startX);
               setStyles(leavingEle, 1, 0);
 
             } else if (direction == 'back') {
               setStyles(enteringEle, 1, 0);
-              setStyles(leavingEle, (1-step), step * startX);
+              setStyles(leavingEle, (1 - step), step * startX);
 
             } else {
               // swap, enter, exit
@@ -339,12 +339,12 @@ IonicModule
             var leavingEle = leavingHeaderBar && leavingHeaderBar.containerEle();
 
             if (direction == 'forward') {
-              setStyles(enteringEle, step, (1-step) * startX, 10);
+              setStyles(enteringEle, step, (1 - step) * startX, 10);
               setStyles(leavingEle, 1, 0, 9);
 
             } else if (direction == 'back') {
               setStyles(enteringEle, 1, 0, 9);
-              setStyles(leavingEle, (1-step), step * startX, 10);
+              setStyles(leavingEle, (1 - step), step * startX, 10);
 
             } else {
               // swap, enter, exit
@@ -386,13 +386,13 @@ IonicModule
   function addConfig(configObj, platformObj) {
     for (var n in configObj) {
       if (n != PLATFORM && configObj.hasOwnProperty(n)) {
-        if ( angular.isObject(configObj[n]) ) {
+        if (angular.isObject(configObj[n])) {
           if (!isDefined(platformObj[n])) {
             platformObj[n] = {};
           }
           addConfig(configObj[n], platformObj[n]);
 
-        } else if( !isDefined(platformObj[n]) ) {
+        } else if (!isDefined(platformObj[n])) {
           platformObj[n] = null;
         }
       }
@@ -402,7 +402,7 @@ IonicModule
 
   // private: create methods for each config to get/set
   function createConfig(configObj, providerObj, platformPath) {
-    forEach(configObj, function(value, namespace){
+    forEach(configObj, function(value, namespace) {
 
       if (angular.isObject(configObj[namespace])) {
         // recursively drill down the config object so we can create a method for each one
@@ -434,7 +434,7 @@ IonicModule
   function stringObj(obj, str) {
     str = str.split(".");
     for (var i = 0; i < str.length; i++) {
-      if ( obj && isDefined(obj[str[i]]) ) {
+      if (obj && isDefined(obj[str[i]])) {
         obj = obj[str[i]];
       } else {
         return null;

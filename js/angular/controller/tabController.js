@@ -15,7 +15,7 @@ function($scope, $ionicHistory, $attrs, $location, $state) {
     ) === 0;
   };
   this.srefMatchesState = function() {
-    return $attrs.uiSref && $state.includes( $attrs.uiSref.split('(')[0] );
+    return $attrs.uiSref && $state.includes($attrs.uiSref.split('(')[0]);
   };
   this.navNameMatchesState = function() {
     return this.navViewName && $ionicHistory.isCurrentStateNavView(this.navViewName);
