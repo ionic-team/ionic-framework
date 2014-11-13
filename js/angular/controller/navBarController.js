@@ -21,7 +21,6 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   var headerBars = [];
   var navElementHtml = {};
   var isVisible = true;
-  var navBarConfig = $ionicConfig.navBar;
   var queuedTransitionStart, queuedTransitionEnd, latestTransitionId;
 
   $element.parent().data(DATA_NAV_BAR_CTRL, self);
@@ -146,8 +145,8 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
       if (!btnsEle) return;
 
       var appendToRight = (buttonType == 'rightButtons') ||
-                          (buttonType == SECONDARY_BUTTONS && navBarConfig.positionSecondaryButtons() != 'left') ||
-                          (buttonType == PRIMARY_BUTTONS && navBarConfig.positionPrimaryButtons() == 'right');
+                          (buttonType == SECONDARY_BUTTONS && $ionicConfig.navBar.positionSecondaryButtons() != 'left') ||
+                          (buttonType == PRIMARY_BUTTONS && $ionicConfig.navBar.positionPrimaryButtons() == 'right');
 
       if (appendToRight) {
         // right side
@@ -230,7 +229,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
   self.transition = function(enteringHeaderBar, leavingHeaderBar, viewData) {
     var enteringHeaderBarCtrl = enteringHeaderBar.controller();
-    var transitionFn = navBarConfig.transitionFn();
+    var transitionFn = $ionicConfig.transitions.navBar[$ionicConfig.navBar.transition()];
     var transitionId = viewData.transitionId;
 
     enteringHeaderBarCtrl.beforeEnter(viewData);

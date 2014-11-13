@@ -138,7 +138,6 @@ describe('Ionic nav-view', function() {
     elem = angular.element('<div>');
 
     ionic.Platform.setPlatform('ios');
-    $ionicConfig.views.transition('none');
     $ionicConfig.views.maxCache(30);
     $ionicConfig.views.forwardCache(false);
     ionic.requestAnimationFrame = function(cb){cb()};

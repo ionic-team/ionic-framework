@@ -188,95 +188,14 @@ IonicModule
     views: {
       maxCache: 10,
       forwardCache: false,
-      transition: 'ios',
-
-      transitionFn: function(enteringEle, leavingEle, direction, shouldAnimate) {
-        shouldAnimate = shouldAnimate && (direction == 'forward' || direction == 'back');
-
-        function setStyles(ele, opacity, x) {
-          var css = {};
-          css[ionic.CSS.TRANSITION_DURATION] = shouldAnimate ? '' : 0;
-          css.opacity = opacity;
-          css[ionic.CSS.TRANSFORM] = 'translate3d(' + x + '%,0,0)';
-          ionic.DomUtil.cachedStyles(ele, css);
-        }
-
-        return {
-          run: function(step) {
-            if (direction == 'forward') {
-              setStyles(enteringEle, 1, (1 - step) * 99); // starting at 98% prevents a flicker
-              setStyles(leavingEle, (1 - 0.1 * step), step * -33);
-
-            } else if (direction == 'back') {
-              setStyles(enteringEle, (1 - 0.1 * (1 - step)), (1 - step) * -33);
-              setStyles(leavingEle, 1, step * 100);
-
-            } else {
-              // swap, enter, exit
-              setStyles(enteringEle, 1, 0);
-              setStyles(leavingEle, 0, 0);
-            }
-          },
-          shouldAnimate: shouldAnimate
-        };
-      }
+      transition: 'ios'
     },
 
     navBar: {
       alignTitle: 'center',
       positionPrimaryButtons: 'left',
       positionSecondaryButtons: 'right',
-      transition: 'ios',
-
-      transitionFn: function(enteringHeaderBar, leavingHeaderBar, direction, shouldAnimate) {
-
-        shouldAnimate = shouldAnimate && (direction == 'forward' || direction == 'back');
-
-        function setStyles(ctrl, opacity, titleX, backTextX) {
-          var css = {};
-          css[ionic.CSS.TRANSITION_DURATION] = shouldAnimate ? '' : 0;
-          css.opacity = opacity;
-
-          ctrl.setCss('buttons-left', css);
-          ctrl.setCss('buttons-right', css);
-          ctrl.setCss('back-button', css);
-
-          css[ionic.CSS.TRANSFORM] = 'translate3d(' + backTextX + 'px,0,0)';
-          ctrl.setCss('back-text', css);
-
-          css[ionic.CSS.TRANSFORM] = 'translate3d(' + titleX + 'px,0,0)';
-          ctrl.setCss('title', css);
-        }
-
-        function enter(ctrlA, ctrlB, step) {
-          if (!ctrlA) return;
-          var titleX = (ctrlA.titleTextX() + ctrlA.titleWidth()) * (1 - step);
-          var backTextX = (ctrlB && (ctrlB.titleTextX() - ctrlA.backButtonTextLeft()) * (1 - step)) || 0;
-          setStyles(ctrlA, step, titleX, backTextX);
-        }
-
-        function leave(ctrlA, ctrlB, step) {
-          if (!ctrlA) return;
-          var titleX = (-(ctrlA.titleTextX() - ctrlB.backButtonTextLeft()) - (ctrlA.titleLeftRight())) * step;
-          setStyles(ctrlA, 1 - step, titleX, 0);
-        }
-
-        return {
-          run: function(step) {
-            var enteringHeaderCtrl = enteringHeaderBar.controller();
-            var leavingHeaderCtrl = leavingHeaderBar && leavingHeaderBar.controller();
-            if (direction == 'back') {
-              leave(enteringHeaderCtrl, leavingHeaderCtrl, 1 - step);
-              enter(leavingHeaderCtrl, enteringHeaderCtrl, 1 - step);
-            } else {
-              enter(enteringHeaderCtrl, leavingHeaderCtrl, step);
-              leave(leavingHeaderCtrl, enteringHeaderCtrl, step);
-            }
-          },
-          shouldAnimate: shouldAnimate
-        };
-      }
-
+      transition: 'ios'
     },
 
     backButton: {
@@ -309,83 +228,14 @@ IonicModule
   setPlatformConfig('android', {
 
     views: {
-      transition: 'android',
-
-      transitionFn: function(enteringEle, leavingEle, direction, shouldAnimate) {
-        shouldAnimate = shouldAnimate && (direction == 'forward' || direction == 'back');
-
-        function setStyles(ele, opacity, y) {
-          var css = {};
-          css[ionic.CSS.TRANSITION_DURATION] = shouldAnimate ? '' : 0;
-          css.opacity = opacity;
-          css[ionic.CSS.TRANSFORM] = 'translate3d(0,' + y + 'px,0)';
-          ionic.DomUtil.cachedStyles(ele, css);
-        }
-
-        var startX = Math.max(window.innerHeight, screen.height) * 0.15;
-
-        return {
-          run: function(step) {
-            if (direction == 'forward') {
-              setStyles(enteringEle, step, (1 - step) * startX);
-              setStyles(leavingEle, 1, 0);
-
-            } else if (direction == 'back') {
-              setStyles(enteringEle, 1, 0);
-              setStyles(leavingEle, (1 - step), step * startX);
-
-            } else {
-              // swap, enter, exit
-              setStyles(enteringEle, 1, 0);
-              setStyles(leavingEle, 0, 0);
-            }
-          },
-          shouldAnimate: shouldAnimate
-        };
-      }
+      transition: 'android'
     },
 
     navBar: {
       alignTitle: 'left',
       positionPrimaryButtons: 'right',
       positionSecondaryButtons: 'right',
-      transition: 'android',
-
-      transitionFn: function(enteringHeaderBar, leavingHeaderBar, direction, shouldAnimate) {
-        shouldAnimate = shouldAnimate && (direction == 'forward' || direction == 'back');
-
-        function setStyles(ele, opacity, y) {
-          var css = {};
-          css[ionic.CSS.TRANSITION_DURATION] = shouldAnimate ? '' : 0;
-          css.opacity = opacity;
-          css[ionic.CSS.TRANSFORM] = 'translate3d(0,' + y + 'px,0)';
-          ionic.DomUtil.cachedStyles(ele, css);
-        }
-
-        var startX = Math.max(window.innerHeight, screen.height) * 0.15;
-
-        return {
-          run: function(step) {
-            var enteringEle = enteringHeaderBar.containerEle();
-            var leavingEle = leavingHeaderBar && leavingHeaderBar.containerEle();
-
-            if (direction == 'forward') {
-              setStyles(enteringEle, step, (1 - step) * startX, 10);
-              setStyles(leavingEle, 1, 0, 9);
-
-            } else if (direction == 'back') {
-              setStyles(enteringEle, 1, 0, 9);
-              setStyles(leavingEle, (1 - step), step * startX, 10);
-
-            } else {
-              // swap, enter, exit
-              setStyles(enteringEle, 1, 0, 9);
-              setStyles(leavingEle, 0, 0, 10);
-            }
-          },
-          shouldAnimate: shouldAnimate
-        };
-      }
+      transition: 'android'
     },
 
     backButton: {
@@ -400,6 +250,137 @@ IonicModule
     }
 
   });
+
+
+  provider.transitions = {
+    views: {},
+    navBar: {}
+  };
+
+
+  // iOS Transitions
+  // -----------------------
+  provider.transitions.views.ios = function(enteringEle, leavingEle, direction, shouldAnimate) {
+    shouldAnimate = shouldAnimate && (direction == 'forward' || direction == 'back');
+
+    function setStyles(ele, opacity, x) {
+      var css = {};
+      css[ionic.CSS.TRANSITION_DURATION] = shouldAnimate ? '' : 0;
+      css.opacity = opacity;
+      css[ionic.CSS.TRANSFORM] = 'translate3d(' + x + '%,0,0)';
+      ionic.DomUtil.cachedStyles(ele, css);
+    }
+
+    return {
+      run: function(step) {
+        if (direction == 'forward') {
+          setStyles(enteringEle, 1, (1 - step) * 99); // starting at 98% prevents a flicker
+          setStyles(leavingEle, (1 - 0.1 * step), step * -33);
+
+        } else if (direction == 'back') {
+          setStyles(enteringEle, (1 - 0.1 * (1 - step)), (1 - step) * -33);
+          setStyles(leavingEle, 1, step * 100);
+
+        } else {
+          // swap, enter, exit
+          setStyles(enteringEle, 1, 0);
+          setStyles(leavingEle, 0, 0);
+        }
+      },
+      shouldAnimate: shouldAnimate
+    };
+  };
+
+  provider.transitions.navBar.ios = function(enteringHeaderBar, leavingHeaderBar, direction, shouldAnimate) {
+    shouldAnimate = shouldAnimate && (direction == 'forward' || direction == 'back');
+
+    function setStyles(ctrl, opacity, titleX, backTextX) {
+      var css = {};
+      css[ionic.CSS.TRANSITION_DURATION] = shouldAnimate ? '' : 0;
+      css.opacity = opacity;
+
+      ctrl.setCss('buttons-left', css);
+      ctrl.setCss('buttons-right', css);
+      ctrl.setCss('back-button', css);
+
+      css[ionic.CSS.TRANSFORM] = 'translate3d(' + backTextX + 'px,0,0)';
+      ctrl.setCss('back-text', css);
+
+      css[ionic.CSS.TRANSFORM] = 'translate3d(' + titleX + 'px,0,0)';
+      ctrl.setCss('title', css);
+    }
+
+    function enter(ctrlA, ctrlB, step) {
+      if (!ctrlA) return;
+      var titleX = (ctrlA.titleTextX() + ctrlA.titleWidth()) * (1 - step);
+      var backTextX = (ctrlB && (ctrlB.titleTextX() - ctrlA.backButtonTextLeft()) * (1 - step)) || 0;
+      setStyles(ctrlA, step, titleX, backTextX);
+    }
+
+    function leave(ctrlA, ctrlB, step) {
+      if (!ctrlA) return;
+      var titleX = (-(ctrlA.titleTextX() - ctrlB.backButtonTextLeft()) - (ctrlA.titleLeftRight())) * step;
+      setStyles(ctrlA, 1 - step, titleX, 0);
+    }
+
+    return {
+      run: function(step) {
+        var enteringHeaderCtrl = enteringHeaderBar.controller();
+        var leavingHeaderCtrl = leavingHeaderBar && leavingHeaderBar.controller();
+        if (direction == 'back') {
+          leave(enteringHeaderCtrl, leavingHeaderCtrl, 1 - step);
+          enter(leavingHeaderCtrl, enteringHeaderCtrl, 1 - step);
+        } else {
+          enter(enteringHeaderCtrl, leavingHeaderCtrl, step);
+          leave(leavingHeaderCtrl, enteringHeaderCtrl, step);
+        }
+      },
+      shouldAnimate: shouldAnimate
+    };
+  };
+
+
+  // Android Transitions
+  // -----------------------
+
+  provider.transitions.views.android = function(enteringEle, leavingEle, direction, shouldAnimate) {
+    shouldAnimate = shouldAnimate && (direction == 'forward' || direction == 'back');
+
+    function setStyles(ele, opacity, y) {
+      var css = {};
+      css[ionic.CSS.TRANSITION_DURATION] = shouldAnimate ? '' : 0;
+      css.opacity = opacity;
+      css[ionic.CSS.TRANSFORM] = 'translate3d(0,' + y + 'px,0)';
+      ionic.DomUtil.cachedStyles(ele, css);
+    }
+
+    var startX = Math.max(window.innerHeight, screen.height) * 0.15;
+
+    return {
+      run: function(step) {
+        if (direction == 'forward') {
+          setStyles(enteringEle, step, (1 - step) * startX);
+          setStyles(leavingEle, 1, 0);
+
+        } else if (direction == 'back') {
+          setStyles(enteringEle, 1, 0);
+          setStyles(leavingEle, (1 - step), step * startX);
+
+        } else {
+          // swap, enter, exit
+          setStyles(enteringEle, 1, 0);
+          setStyles(leavingEle, 0, 0);
+        }
+      },
+      shouldAnimate: shouldAnimate
+    };
+  };
+
+  provider.transitions.navBar.android = function(enteringHeaderBar, leavingHeaderBar, direction, shouldAnimate) {
+    return provider.transitions.views.android(enteringHeaderBar.containerEle(),
+                                              leavingHeaderBar && leavingHeaderBar.containerEle(),
+                                              direction, shouldAnimate);
+  };
 
 
   // private: used to set platform configs
