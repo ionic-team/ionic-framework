@@ -29,7 +29,7 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
   var VIEW_STATUS_STAGED = 'stage';
 
   var transitionCounter = 0;
-  var nextTransition, nextDirection, nextShowBack;
+  var nextTransition, nextDirection;
   ionic.transition = ionic.transition || {};
   ionic.transition.isActive = false;
   var isActiveTimer;
@@ -73,7 +73,6 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
     var transition = nextTransition || ionic.DomUtil.cachedAttr(enteringEle, 'view-transition') || state.viewTransition || $ionicConfig.views.transition() || 'none';
     direction = nextDirection || ionic.DomUtil.cachedAttr(enteringEle, 'view-direction') || state.viewDirection || direction || 'none';
     var shouldAnimate = (transition !== 'none' && direction !== 'none');
-    showBack = (nextShowBack === true || nextShowBack === false ? nextShowBack : !!showBack);
 
     return {
       transition: transition,
@@ -83,7 +82,7 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
       stateId: enteringView.stateId,
       stateName: enteringView.stateName,
       stateParams: enteringView.stateParams,
-      showBack: showBack
+      showBack: !!showBack
     };
   }
 
@@ -274,7 +273,7 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
             }
 
             // remove any references that could cause memory issues
-            nextTransition = nextDirection = nextShowBack = enteringView = enteringEle = leavingEle = null;
+            nextTransition = nextDirection = enteringView = enteringEle = leavingEle = null;
           }
 
         },
@@ -381,10 +380,6 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
 
     nextDirection: function(val) {
       nextDirection = val;
-    },
-
-    nextShowBack: function(val) {
-      nextShowBack = val;
     },
 
     getTransitionData: getTransitionData,
