@@ -45,6 +45,24 @@ describe('ionView directive', function() {
     expect(el.html()).toBe('<b>some</b> html');
   });
 
+  it('should call ionNavViewController.beforeEnter with showNavBar=false and hide-nav-bar=true attr', inject(function($rootScope) {
+    var el = setup('hide-nav-bar="true"');
+    $rootScope.$broadcast('$ionicView.beforeEnter', {});
+    expect( beforeEnterData.showNavBar ).toBe(false);
+  }));
+
+  it('should call ionNavViewController.beforeEnter with showNavBar=false and hide-nav-bar="" attr', inject(function($rootScope) {
+    var el = setup('hide-nav-bar');
+    $rootScope.$broadcast('$ionicView.beforeEnter', {});
+    expect( beforeEnterData.showNavBar ).toBe(false);
+  }));
+
+  it('should call ionNavViewController.beforeEnter with showNavBar=true and hide-nav-bar=false attr', inject(function($rootScope) {
+    var el = setup('hide-nav-bar="false"');
+    $rootScope.$broadcast('$ionicView.beforeEnter', {});
+    expect( beforeEnterData.showNavBar ).toBe(true);
+  }));
+
   it('should call ionNavViewController.beforeEnter with title attr', inject(function($rootScope) {
     var el = setup('title="my title"');
     $rootScope.$broadcast('$ionicView.beforeEnter', {
@@ -54,6 +72,7 @@ describe('ionView directive', function() {
     expect( beforeEnterData.direction ).toBe('forward');
     expect( beforeEnterData.hasHeaderBar ).toBe(false);
     expect( beforeEnterData.navBarDelegate ).toBe(null);
+    expect( beforeEnterData.showNavBar ).toBe(true);
   }));
 
   it('should call ionNavViewController.beforeEnter with view-title attr', inject(function($rootScope) {

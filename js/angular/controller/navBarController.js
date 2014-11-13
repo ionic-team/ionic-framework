@@ -195,7 +195,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
 
   self.update = function(viewData) {
-    var showNavBar = !viewData.hasHeaderBar;
+    var showNavBar = !viewData.hasHeaderBar && viewData.showNavBar;
     viewData.transition = $ionicConfig.navBar.transition();
 
     if (!showNavBar) {
@@ -211,6 +211,8 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
     // update the entering header bar's title
     self.title(viewData.title, enteringHeaderBar);
+
+    self.showBar(showNavBar);
 
     // update the buttons, depending if the view has their own or not
     if (viewData.buttons) {
@@ -293,8 +295,11 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
 
   self.showBar = function(shouldShow) {
-    self.visibleBar(shouldShow);
-    $scope.$parent.$hasHeader = !!shouldShow;
+    if (arguments.length) {
+      self.visibleBar(shouldShow);
+      $scope.$parent.$hasHeader = !!shouldShow;
+    }
+    return !!$scope.$parent.$hasHeader;
   };
 
 

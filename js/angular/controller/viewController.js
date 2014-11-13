@@ -71,6 +71,7 @@ function($scope, $element, $attrs, $compile, $ionicHistory, $ionicViewSwitcher) 
         showBack: transData.showBack && !$attrs.hideBackButton,
         buttons: buttons,
         navBarDelegate: navBarDelegateHandle || null,
+        showNavBar: !($attrs.hideNavBar === "true" || $attrs.hideNavBar === ""),
         hasHeaderBar: !!hasViewHeaderBar
       });
     }

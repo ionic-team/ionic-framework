@@ -57,6 +57,33 @@ describe('ionNavBar', function() {
       expect(ctrl.title()).toBe('foo');
     });
 
+    it('should showBar=true with update data showNavBar=true', function() {
+      setup();
+      ctrl.update({
+        showNavBar: true,
+        hasHeaderBar: false
+      });
+      expect(ctrl.showBar()).toBe(true);
+    });
+
+    it('should showBar=false with update data showNavBar=false', function() {
+      setup();
+      ctrl.update({
+        showNavBar: false,
+        hasHeaderBar: false
+      });
+      expect(ctrl.showBar()).toBe(false);
+    });
+
+    it('should showBar=false with update data showNavBar=true and hasHeaderBar=true', function() {
+      setup();
+      ctrl.update({
+        showNavBar: false,
+        hasHeaderBar: true
+      });
+      expect(ctrl.showBar()).toBe(false);
+    });
+
   });
 
   describe('directive', function() {
