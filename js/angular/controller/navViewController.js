@@ -104,15 +104,21 @@ function($scope, $element, $attrs, $ionicNavBarDelegate, $ionicHistory, $ionicVi
   };
 
 
-  self.showBar = function(val) {
+  self.title = function(val) {
     var associatedNavBarCtrl = getAssociatedNavBarCtrl();
-    associatedNavBarCtrl && associatedNavBarCtrl.showBar(val);
+    associatedNavBarCtrl && associatedNavBarCtrl.title(val);
   };
 
 
   self.showBackButton = function(val) {
     var associatedNavBarCtrl = getAssociatedNavBarCtrl();
     associatedNavBarCtrl && associatedNavBarCtrl.showBackButton(val);
+  };
+
+
+  self.showBar = function(val) {
+    var associatedNavBarCtrl = getAssociatedNavBarCtrl();
+    associatedNavBarCtrl && associatedNavBarCtrl.showBar(val);
   };
 
 
