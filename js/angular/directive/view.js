@@ -33,6 +33,19 @@
  * </ion-nav-view>
  * ```
  *
+ * ## Events
+ *
+ * Views can be cached which means controllers may only load once, which could change how you'd
+ * expected data to load. To know when a view has entered or left, events have been added that
+ * get emitted from the view's scope. These events also contain data about the view,
+ * such as the title and if the back button should show, along with transition data, such as the
+ * transition type and direction that will be or was used.
+ *
+ * * `$ionicView.beforeEnter`
+ * * `$ionicView.beforeLeave`
+ * * `$ionicView.afterEnter`
+ * * `$ionicView.afterLeave`
+ *
  * @param {string=} view-title The title to display on the parent {@link ionic.directive:ionNavBar}.
  * @param {boolean=} cache-view If this view should be allowed to be cached or not. Default `true`
  * @param {boolean=} hide-back-button Whether to hide the back button on the parent

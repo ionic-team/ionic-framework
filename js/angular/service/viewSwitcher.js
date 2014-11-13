@@ -287,7 +287,7 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
           if (leavingEle) {
             scope = leavingEle.scope();
             if (scope) {
-              scope.$emit('$ionicView.' + step + 'Leaving', transData);
+              scope.$emit('$ionicView.' + step + 'Leave', transData);
             }
           }
         },
