@@ -142,7 +142,7 @@ describe('ionView directive', function() {
   }));
 
   it('should only observe hideNavBar attr after afterEnter and before beforeLeave', inject(function($rootScope) {
-    var el = setup('hide-nav-bar="{{ hide }}"', {hide: false});
+    var el = setup('hide-nav-bar="hide"', {hide: false});
     $rootScope.$broadcast('$ionicView.beforeEnter', {});
     var spy = el.data('$ionNavViewController').showBar;
     expect(spy).not.toHaveBeenCalled();
@@ -165,7 +165,7 @@ describe('ionView directive', function() {
   }));
 
   it('should only observe hideBackButton attr after afterEnter and before beforeLeave', inject(function($rootScope) {
-    var el = setup('hide-back-button="{{ hide }}"', {hide: false});
+    var el = setup('hide-back-button="hide"', {hide: false});
     $rootScope.$broadcast('$ionicView.beforeEnter', {});
     var spy = el.data('$ionNavViewController').showBackButton;
     expect(spy).not.toHaveBeenCalled();
