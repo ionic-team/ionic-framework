@@ -40,7 +40,7 @@ module.exports = function(gulp, argv) {
   gulp.task('demos', function(done) {
     var demoVersion = argv['demo-version'] || 'nightly';
     if (demoVersion != 'nightly' && !semver.valid(demoVersion)) {
-      console.log('Usage: gulp docs --doc-version=(nightly|versionName)');
+      console.log('Usage: gulp demos --demo-version=(nightly|versionName)');
       return process.exit(1);
     }
 
@@ -49,9 +49,10 @@ module.exports = function(gulp, argv) {
     config.set('dist', buildConfig.dist);
     config.set(
       'rendering.outputFolder',
-      argv.dist ? argv.dist : path.resolve(projectRoot, buildConfig.dist, 'nightly')
+      argv.dist ? argv.dist : path.resolve(projectRoot, buildConfig.dist, 'ionic-demo')
     );
-    config.set('demoFolderPrefix', argv.release ? '' : '/dist/ionic-demo');
+    config.set('demoFolderPrefix', argv.release ? '' : '');
+
 
     dgeni.generator(config)().then(function() {
       gutil.log('Demos for', gutil.colors.cyan(demoVersion), 'generated!');
