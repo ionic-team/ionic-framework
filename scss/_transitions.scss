@@ -107,6 +107,10 @@ $android-transition-timing-leaving:          cubic-bezier(0.4, 0, 1, 1) !default
     top: $bar-height;
   }
 
+  .tabs-top.tabs-striped > .view-container {
+    position: static;
+  }
+
 }
 
 
