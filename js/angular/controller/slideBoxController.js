@@ -24,6 +24,7 @@ function(scope, element, $$ionicAttachDrag, $interval) {
 
   $$ionicAttachDrag(scope, element, {
     getDistance: function() { return slidesParent.prop('offsetWidth'); },
+    onDragStart: onDragStart,
     onDrag: onDrag,
     onDragEnd: onDragEnd
   });
