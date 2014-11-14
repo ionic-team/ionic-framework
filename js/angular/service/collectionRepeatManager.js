@@ -13,6 +13,7 @@ function($rootScope, $timeout) {
     this.dataSource = options.dataSource;
     this.element = options.element;
     this.scrollView = options.scrollView;
+    this.startPos = options.startPos;
 
     this.isVertical = !!this.scrollView.options.scrollingY;
     this.renderedItems = {};
@@ -107,7 +108,7 @@ function($rootScope, $timeout) {
       previousItem = null;
 
       var dimensions = this.dataSource.dimensions.map(calculateSize, this);
-      var totalSize = primaryPos + (previousItem ? previousItem.primarySize : 0);
+      var totalSize = primaryPos + (previousItem ? previousItem.primarySize : 0) + this.startPos;
 
       return {
         beforeSize: beforeSize,
