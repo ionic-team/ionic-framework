@@ -70,6 +70,33 @@
  * This is good to do because the template will be cached for very fast loading, instead of
  * having to fetch them from the network.
  *
+ *## Caching
+ *
+ *Caching can disabled/enabled by multiple ways. By default, Ionic will cache a maximum of 10 views.
+ *You could choose to disable caching through `$stateProvider.state`.
+ *
+ *```
+ *$stateProvider.state('myState', {
+ *  cache: false,
+ *  url : '/myUrl',
+ *  abstract: true,
+ *  cache: true,
+ *  templateUrl : 'my-template.html'
+ *})
+ *```
+ *
+ *If you wish to disable caching globally in an app, you can edit the `$ionicConfigProvider.views.maxCache`
+ *
+ *```
+ *$ionicConfigProvider.views.maxCache(0);
+ *```
+ *
+ *In this instance we’re setting the number of cached views to 0, essentially disabling the caching functionality.
+ *
+ *Note that because we are caching these views, we aren’t destroying scopes. Instead, scopes are being disconnected.
+ *Then when you travel back to that cached view, the scopes get reconnected.
+ *
+ *
  * Please visit [AngularUI Router's docs](https://github.com/angular-ui/ui-router/wiki) for
  * more info. Below is a great video by the AngularUI Router guys that may help to explain
  * how it all works:
