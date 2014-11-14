@@ -5514,6 +5514,8 @@ input[type="range"] {
     background-color: #fff;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 1px 3px 5px rgba(0, 0, 0, 0.25);
     cursor: pointer;
+    outline: none;
+    border: none;
     -webkit-appearance: none; }
   input[type="range"]::-webkit-slider-thumb:before {
     /* what creates the colorful line on the left side of the slider */

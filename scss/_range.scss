@@ -29,6 +29,8 @@ input[type="range"] {
     background-color: $toggle-handle-off-bg-color;
     box-shadow: 0 0 2px rgba(0,0,0,.5), 1px 3px 5px rgba(0,0,0,0.25);
     cursor: pointer;
+    outline: none;
+    border: none;
     -webkit-appearance: none;
   }
 
