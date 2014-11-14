@@ -24,17 +24,17 @@
  * ```
  */
 IonicModule
-.directive('menuClose', ['$ionicViewSwitcher', '$ionicHistory', function($ionicViewSwitcher, $ionicHistory) {
+.directive('menuClose', ['$ionicHistory', function($ionicHistory) {
   return {
     restrict: 'AC',
     link: function($scope, $element, $attr) {
       $element.bind('click', function() {
         var sideMenuCtrl = $element.inheritedData('$ionSideMenusController');
         if (sideMenuCtrl) {
-          // lower priority than navTransition which allows navTransition
-          // to override this directive's nextTransition() call
-          $ionicViewSwitcher.nextTransition('none');
-          $ionicHistory.resetHistory();
+          $ionicHistory.nextViewOptions({
+            historyRoot: true,
+            disableAnimate: true
+          });
           sideMenuCtrl.close();
         }
       });

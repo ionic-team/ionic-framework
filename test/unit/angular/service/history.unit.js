@@ -971,6 +971,68 @@ describe('Ionic History', function() {
     expect(homeReg.direction).toEqual('exit');
   }));
 
+  it('should set nextViewOptions disableAnimate', inject(function($state) {
+    $state.go('home');
+    rootScope.$apply();
+    var homeReg = ionicHistory.register({}, false);
+    expect(homeReg.direction).toEqual('none');
+
+    ionicHistory.nextViewOptions({ disableAnimate: true });
+
+    $state.go('info');
+    rootScope.$apply();
+    var infoReg = ionicHistory.register({}, false);
+    expect(infoReg.direction).toEqual('none');
+    expect(infoReg.showBack).toEqual(true);
+    expect(ionicHistory.viewHistory().histories[infoReg.historyId].stack.length).toEqual(2);
+    expect(ionicHistory.viewHistory().backView.viewId).toBe(homeReg.viewId);
+  }));
+
+  it('should set nextViewOptions disableBack', inject(function($state) {
+    $state.go('home');
+    rootScope.$apply();
+    var homeReg = ionicHistory.register({}, false);
+    expect(homeReg.direction).toEqual('none');
+
+    ionicHistory.nextViewOptions({ disableBack: true });
+
+    $state.go('info');
+    rootScope.$apply();
+    var infoReg = ionicHistory.register({}, false);
+    expect(infoReg.showBack).toEqual(false);
+    expect(infoReg.direction).toEqual('forward');
+    expect(ionicHistory.viewHistory().histories[infoReg.historyId].stack.length).toEqual(2);
+    expect(ionicHistory.viewHistory().backView).toBe(null);
+  }));
+
+  it('should set nextViewOptions historyRoot', inject(function($state) {
+    $state.go('home');
+    rootScope.$apply();
+    var homeReg = ionicHistory.register({}, false);
+    expect(homeReg.direction).toEqual('none');
+
+    ionicHistory.nextViewOptions({ historyRoot: true });
+
+    $state.go('info');
+    rootScope.$apply();
+    var infoReg = ionicHistory.register({}, false);
+    expect(infoReg.showBack).toEqual(false);
+    expect(infoReg.direction).toEqual('forward');
+    expect(ionicHistory.viewHistory().histories[infoReg.historyId].stack.length).toEqual(1);
+    expect(ionicHistory.viewHistory().backView).toBe(null);
+  }));
+
+  it('should set and overwrite nextViewOptions', inject(function($state) {
+    expect( ionicHistory.nextViewOptions() ).toBeUndefined();
+    expect( ionicHistory.nextViewOptions({}) ).toEqual({});
+    ionicHistory.nextViewOptions(null);
+    expect( ionicHistory.nextViewOptions({ historyRoot: true }) ).toEqual({ historyRoot: true });
+    expect( ionicHistory.nextViewOptions({ disableBack: true }) ).toEqual({ historyRoot: true, disableBack: true });
+    expect( ionicHistory.nextViewOptions({ historyRoot: false }) ).toEqual({ historyRoot: false, disableBack: true });
+    ionicHistory.nextViewOptions(null);
+    expect( ionicHistory.nextViewOptions({}) ).toEqual({});
+  }));
+
   it('should be an abstract view', inject(function($document) {
     var reg = ionicHistory.register({}, false);
     expect(reg.action).not.toEqual('abstractView');
@@ -1058,13 +1120,13 @@ describe('Ionic History', function() {
   it('should update document title', inject(function($document) {
     $document[0].title = 'Original Title';
 
-    rootScope.$broadcast("viewState.viewEnter");
+    rootScope.$broadcast("$ionicView.afterEnter");
     expect($document[0].title).toEqual('Original Title');
 
-    rootScope.$broadcast("viewState.viewEnter", {});
+    rootScope.$broadcast("$ionicView.afterEnter", {});
     expect($document[0].title).toEqual('Original Title');
 
-    rootScope.$broadcast("viewState.viewEnter", { title: 'New Title' });
+    rootScope.$broadcast("$ionicView.afterEnter", { title: 'New Title' });
     expect($document[0].title).toEqual('New Title');
   }));
 
