@@ -250,7 +250,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
     navBarTransition.run(0);
 
-    $timeout(enteringHeaderBarCtrl.alignTitle, 16);
+    $timeout(enteringHeaderBarCtrl.align, 16);
 
     queuedTransitionStart = function() {
       if (latestTransitionId !== transitionId) return;
@@ -327,6 +327,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     headerBar = headerBar || getOnScreenHeaderBar();
     headerBar && headerBar.showBack(show);
     $scope.$isBackButtonShown = !!show;
+    return !!show;
   };
 
 
@@ -338,6 +339,12 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
       $scope.$title = newTitleText;
     }
     return $scope.$title;
+  };
+
+
+  self.align = function(val, headerBar) {
+    headerBar = headerBar || getOnScreenHeaderBar();
+    headerBar && headerBar.controller().align(val);
   };
 
 

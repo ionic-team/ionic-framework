@@ -139,7 +139,7 @@ function headerFooterBarDirective(isHeader) {
               delete $scope.$hasHeader;
               delete $scope.$hasSubheader;
             });
-            ctrl.alignTitle();
+            ctrl.align();
             $scope.$emit('ionHeaderBar.init');
 
           } else {

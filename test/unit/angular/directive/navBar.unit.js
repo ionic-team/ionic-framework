@@ -125,6 +125,46 @@ describe('ionNavBar', function() {
       expect(deregisterSpy).toHaveBeenCalled();
     }));
 
+    it('should align title w/ $ionicNavBarDelegate', inject(function($ionicNavBarDelegate) {
+      var el = setup('delegate-handle="theBestHandle"');
+      var instance = $ionicNavBarDelegate.$getByHandle('theBestHandle');
+      instance.align('right');
+      expect(el[0].querySelector('[nav-bar="active"] .title').classList.contains('title-right')).toEqual(true);
+    }));
+
+    it('should showBackButton w/ $ionicNavBarDelegate', inject(function($ionicNavBarDelegate) {
+      var el = setup('delegate-handle="theBestHandle"');
+      var instance = $ionicNavBarDelegate.$getByHandle('theBestHandle');
+      instance.showBackButton(true);
+      instance.showBackButton(false);
+    }));
+
+    it('should showBar w/ $ionicNavBarDelegate', inject(function($ionicNavBarDelegate) {
+      var el = setup('delegate-handle="theBestHandle"');
+      var instance = $ionicNavBarDelegate.$getByHandle('theBestHandle');
+      instance.showBar(true);
+      expect(el.hasClass('hide')).toBe(false);
+      instance.showBar(false);
+      expect(el.hasClass('hide')).toBe(true);
+    }));
+
+    it('should set title w/ $ionicNavBarDelegate', inject(function($ionicNavBarDelegate) {
+      var el = setup('delegate-handle="theBestHandle"');
+      var instance = $ionicNavBarDelegate.$getByHandle('theBestHandle');
+      expect(el[0].querySelector('[nav-bar="active"] .title').innerText).toEqual('');
+      instance.title('Night Ranger')
+      expect(el[0].querySelector('[nav-bar="active"] .title').innerText).toEqual('Night Ranger');
+    }));
+
+    it('should update w/ $ionicNavBarDelegate', inject(function($ionicNavBarDelegate) {
+      var el = setup('delegate-handle="theBestHandle"');
+      var instance = $ionicNavBarDelegate.$getByHandle('theBestHandle');
+      instance.update({
+        showBar: false
+      });
+      expect(el.hasClass('hide')).toBe(true);
+    }));
+
   });
 
 });
