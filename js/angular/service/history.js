@@ -3,7 +3,16 @@
  * @name $ionicHistory
  * @module ionic
  * @description
- * $ionicHistory
+ * $ionicHistory is what keeps track of an app's views as the user navigates. Like browser,
+ * an Ionic app is able to know what the previous view was, the current view, and what the
+ * forward view was (if there was one). However, a typical web browser only keeps track of one
+ * history stack in a linear fashion.
+ *
+ * Ionic's `$ionicHistory` is able to keep track of multiple histories, and persist where the
+ * user is as they navigate between different views, and different histories. For example, an
+ * app with tabs has it's own history stack for each tab. This meaning you can navigate a few
+ * views in Tab A, then navigate a few in Tab B, and when you return to Tab A, the existing
+ * stack is maintained.
  */
 
 IonicModule
@@ -384,19 +393,41 @@ function($rootScope, $state, $location, $window) {
       scope.$historyId = ionic.Utils.nextUid();
     },
 
-    viewHistory: function() {
-      return viewHistory;
-    },
-
     createView: function(data) {
       var newView = new View();
       return newView.initialize(data);
     },
 
+    getViewById: getViewById,
+
+    /**
+     * @ngdoc method
+     * @name $ionicHistory#viewHistory
+     * @description The app's view history data, such as all the views and histories, along
+     * with how they are ordered and linked together within the navigation stack.
+     * @returns {object} Returns an object containing the apps view history data.
+     */
+    viewHistory: function() {
+      return viewHistory;
+    },
+
+    /**
+     * @ngdoc method
+     * @name $ionicHistory#currentView
+     * @description The app's current view.
+     * @returns {object} Returns the current view.
+     */
     currentView: function() {
       return viewHistory.currentView;
     },
 
+    /**
+     * @ngdoc method
+     * @name $ionicHistory#currentTitle
+     * @description Gets and sets the current view's title.
+     * @param {string=} val The title to update the current view with.
+     * @returns {string} Returns the current view's title.
+     */
     currentTitle: function(val) {
       if (viewHistory.currentView) {
         if (arguments.length) {
@@ -406,22 +437,49 @@ function($rootScope, $state, $location, $window) {
       }
     },
 
+    /**
+     * @ngdoc method
+     * @name $ionicHistory#backView
+     * @description Returns the view that was before the current view in the history stack.
+     * If the user navigated from View A to View B, then View A would be the back view, and
+     * View B would be the current view.
+     * @returns {string} Returns the back view.
+     */
     backView: function() {
       return viewHistory.backView;
     },
 
+    /**
+     * @ngdoc method
+     * @name $ionicHistory#backTitle
+     * @description Gets the back view's title.
+     * @returns {string} Returns the back view's title.
+     */
     backTitle: function() {
       if (viewHistory.backView) {
         return viewHistory.backView.title;
       }
     },
 
+    /**
+     * @ngdoc method
+     * @name $ionicHistory#forwardView
+     * @description Returns the view that was in front of the current view in the history stack.
+     * A forward view would exist if the user navigated from View A to View B, then
+     * navigated back to View A. At this point then View B would be the forward view, and View
+     * A would be the current view.
+     * @returns {string} Returns the back view.
+     */
     forwardView: function() {
       return viewHistory.forwardView;
     },
 
-    getViewById: getViewById,
-
+    /**
+     * @ngdoc method
+     * @name $ionicHistory#currentStateName
+     * @description Returns the current state name.
+     * @returns {string}
+     */
     currentStateName: function() {
       return ($state && $state.current ? $state.current.name : null);
     },
@@ -447,10 +505,20 @@ function($rootScope, $state, $location, $window) {
       }
     },
 
+    /**
+     * @ngdoc method
+     * @name $ionicHistory#goBack
+     * @description Navigates the app to the back view, if a back view exists.
+     */
     goBack: function() {
       viewHistory.backView && viewHistory.backView.go();
     },
 
+    /**
+     * @ngdoc method
+     * @name $ionicHistory#clearHistory
+     * @description Clears out the app's entire history, except for the current view.
+     */
     clearHistory: function() {
       var
       histories = viewHistory.histories,
@@ -485,6 +553,29 @@ function($rootScope, $state, $location, $window) {
       }
     },
 
+    /**
+     * @ngdoc method
+     * @name $ionicHistory#nextViewOptions
+     * @description Sets options for the next view. This method can be useful to override
+     * certain view/transition defaults right before a view transition happens. For example,
+     * the {@link ionic.directive:menuClose} directive uses this methond internally to ensure
+     * an animated view transition does not happen when a menu is closed, and also sets that
+     * the next view should become this root of its history stack. After the next view has
+     * entered then these options are set back to null.
+     *
+     * Available options:
+     *
+     * * `disableAnimate`: Do not animate the next transition.
+     * * `disableBack`: The next view should forget its back view, and set it to null.
+     * * `historyRoot`: The next view should become the root view in its history stack.
+     *
+     * ```js
+     * $ionicHistory.nextViewOptions({
+     *   disableAnimate: true,
+     *   disableBack: true
+     * });
+     * ```
+     */
     nextViewOptions: function(opts) {
       if (arguments.length) {
         if (opts === null) {
