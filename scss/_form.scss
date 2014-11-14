@@ -308,3 +308,14 @@ input[type="radio"][readonly],
 input[type="checkbox"][readonly] {
   background-color: transparent;
 }
+
+
+// Clear input text button
+// -------------------------------
+.ion-clear-button {
+  margin: 0 10px 0 0;
+  border: 0;
+  background: transparent;
+  color: lighten($dark, 20%);
+  font-size: 1em;
+}
