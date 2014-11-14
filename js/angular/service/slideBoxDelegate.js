@@ -35,7 +35,7 @@
  * ```
  */
 IonicModule
-.service('$ionicSlideBoxDelegate', delegateService([
+.service('$ionicSlideBoxDelegate', ionic.delegateService([
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#select

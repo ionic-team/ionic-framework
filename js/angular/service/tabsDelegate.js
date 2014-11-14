@@ -34,7 +34,7 @@
  * ```
  */
 IonicModule
-.service('$ionicTabsDelegate', delegateService([
+.service('$ionicTabsDelegate', ionic.delegateService([
   /**
    * @ngdoc method
    * @name $ionicTabsDelegate#select

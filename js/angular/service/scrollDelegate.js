@@ -58,7 +58,7 @@
  * ```
  */
 IonicModule
-.service('$ionicScrollDelegate', delegateService([
+.service('$ionicScrollDelegate', ionic.delegateService([
   /**
    * @ngdoc method
    * @name $ionicScrollDelegate#resize
