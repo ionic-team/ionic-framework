@@ -22,7 +22,7 @@ function($scope, scrollViewOptions, $timeout, $window, $location, $rootScope, $d
 
   var element = this.element = scrollViewOptions.el;
   var $element = this.$element = jqLite(element);
-  var scrollView = this.scrollView = new ionic.views.Scroll(scrollViewOptions);
+  var scrollView = $scope.$parent.scrollView = this.scrollView = new ionic.views.Scroll(scrollViewOptions);
 
   //Attach self to element as a controller so other directives can require this controller
   //through `require: '$ionicScroll'
@@ -76,6 +76,7 @@ function($scope, scrollViewOptions, $timeout, $window, $location, $rootScope, $d
     element = null;
     self.element = null;
     self.scrollView = null;
+    $scope.$parent.scrollView = null;
     scrollView = null;
   });
 

@@ -7,7 +7,7 @@ describe('$ionicScroll Controller', function() {
     ionic.requestAnimationFrame = function(cb) { cb(); };
   });
 
-  var scope, ctrl, timeout;
+  var rootScope, scope, ctrl, timeout;
   function setup(options) {
     options = options || {};
 
@@ -18,6 +18,7 @@ describe('$ionicScroll Controller', function() {
     angular.element('<div>').append(options.el);
 
     inject(function($controller, $rootScope, $timeout) {
+      rootScope = $rootScope;
       scope = $rootScope.$new();
       ctrl = $controller('$ionicScroll', {
         $scope: scope,
@@ -82,6 +83,7 @@ describe('$ionicScroll Controller', function() {
   it('should register scrollView as this.scrollView', function() {
     setup();
     expect(ctrl.scrollView instanceof ionic.views.Scroll).toBe(true);
+    expect(scope.$parent.scrollView).toBe(ctrl.scrollView);
   });
 
   it('should register controller on element.data', function() {
@@ -102,7 +104,6 @@ describe('$ionicScroll Controller', function() {
     ionic.trigger('resize', { target: window });
     expect(ctrl.scrollView.resize).toHaveBeenCalled();
   });
-
 
   it('should unbind window event listener on scope destroy', inject(function($window) {
     spyOn(ionic, 'on');

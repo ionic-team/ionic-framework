@@ -109,7 +109,7 @@ function($timeout, $controller, $ionicBind) {
           $scope: $scope,
           scrollViewOptions: scrollViewOptions
         });
-        scrollView = $scope.$parent.scrollView = scrollCtrl.scrollView;
+        scrollView = scrollCtrl.scrollView;
       }
     }
   };
