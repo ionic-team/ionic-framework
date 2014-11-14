@@ -374,11 +374,6 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   }
 
 
-  $scope.$on('ionHeaderBar.init', function(ev) {
-    ev.stopPropagation();
-  });
-
-
   $scope.$on('$destroy', function() {
     $scope.$parent.$hasHeader = false;
     $element.parent().removeData(DATA_NAV_BAR_CTRL);

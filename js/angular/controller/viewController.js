@@ -20,16 +20,9 @@ function($scope, $element, $attrs, $compile, $ionicHistory, $ionicViewSwitcher) 
     navBarDelegateHandle = delegateHandle;
   });
 
-  var deregIonHeaderBarInit = $scope.$on('ionHeaderBar.init', function(ev){
-    // this view has its own ion-header-bar, remember it should trump other nav bars
-    ev.stopPropagation();
-    hasViewHeaderBar = true;
-  });
-
 
   self.init = function() {
     deregIonNavBarInit();
-    deregIonHeaderBarInit();
 
     var modalCtrl = $element.inheritedData('$ionModalController');
     navViewCtrl = $element.inheritedData('$ionNavViewController');

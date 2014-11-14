@@ -112,12 +112,6 @@ describe('ionView directive', function() {
     expect( beforeEnterData.navBarDelegate ).toBe('myViewNavBar');
   }));
 
-  it('should be receive header bar init from child ionHeaderBar', inject(function($rootScope) {
-    var el = setup(null, null, '<ion-header-bar>');
-    $rootScope.$broadcast('$ionicView.beforeEnter', {});
-    expect( beforeEnterData.hasHeaderBar ).toBe(true);
-  }));
-
   it('should only observe title attr after afterEnter and before beforeLeave', inject(function($rootScope) {
     var el = setup('view-title="{{ myTitle }}"', {myTitle: 'My Title'});
     $rootScope.$broadcast('$ionicView.beforeEnter', {});
