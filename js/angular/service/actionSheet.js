@@ -25,6 +25,7 @@
  *    var hideSheet = $ionicActionSheet.show({
  *      buttons: [
  *        { text: '<b>Share</b> This' },
+ *        { text: 'Hide This', invisible: true },
  *        { text: 'Move' }
  *      ],
  *      destructiveText: 'Delete',
@@ -74,7 +75,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
    *
    * @param {object} options The options for this ActionSheet. Properties:
    *
-   *  - `[Object]` `buttons` Which buttons to show.  Each button is an object with a `text` field.
+   *  - `[Object]` `buttons` Which buttons to show.  Each button is an object with a `text` field.  Buttons can be made invisible by using the parameter invisible (standard buttons are visible)
    *  - `{string}` `titleText` The title to show on the action sheet.
    *  - `{string=}` `cancelText` the text for a 'cancel' button on the action sheet.
    *  - `{string=}` `destructiveText` The text for a 'danger' on the action sheet.
