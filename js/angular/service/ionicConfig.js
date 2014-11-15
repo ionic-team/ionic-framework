@@ -153,15 +153,12 @@ IonicModule
     views: {
       maxCache: PLATFORM,
       forwardCache: PLATFORM,
-      transition: PLATFORM,
-      transitionFn: PLATFORM
+      transition: PLATFORM
     },
     navBar: {
       alignTitle: PLATFORM,
       positionPrimaryButtons: PLATFORM,
-      positionSecondaryButtons: PLATFORM,
-      transition: PLATFORM,
-      transitionFn: PLATFORM
+      positionSecondaryButtons: PLATFORM
     },
     backButton: {
       icon: PLATFORM,
@@ -194,8 +191,7 @@ IonicModule
     navBar: {
       alignTitle: 'center',
       positionPrimaryButtons: 'left',
-      positionSecondaryButtons: 'right',
-      transition: 'ios'
+      positionSecondaryButtons: 'right'
     },
 
     backButton: {
@@ -234,8 +230,7 @@ IonicModule
     navBar: {
       alignTitle: 'left',
       positionPrimaryButtons: 'right',
-      positionSecondaryButtons: 'right',
-      transition: 'android'
+      positionSecondaryButtons: 'right'
     },
 
     backButton: {
@@ -380,6 +375,27 @@ IonicModule
     return provider.transitions.views.android(enteringHeaderBar.containerEle(),
                                               leavingHeaderBar && leavingHeaderBar.containerEle(),
                                               direction, shouldAnimate);
+  };
+
+
+  // No Transition
+  // -----------------------
+
+  provider.transitions.views.none = function(enteringEle, leavingEle) {
+    return {
+      run: function(step) {
+        provider.transitions.views.android(enteringEle, leavingEle, false, false).run(step);
+      }
+    }
+  };
+
+  provider.transitions.navBar.none = function(enteringHeaderBar, leavingHeaderBar) {
+    return {
+      run: function(step) {
+        provider.transitions.navBar.ios(enteringHeaderBar, leavingHeaderBar, false, false).run(step);
+        provider.transitions.navBar.android(enteringHeaderBar, leavingHeaderBar, false, false).run(step);
+      }
+    }
   };
 
 
