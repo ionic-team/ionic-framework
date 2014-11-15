@@ -8,7 +8,8 @@ IonicModule
   '$timeout',
   '$ionicNavBarDelegate',
   '$ionicConfig',
-function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $ionicConfig) {
+  '$ionicHistory',
+function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $ionicConfig, $ionicHistory) {
 
   var CSS_HIDE = 'hide';
   var DATA_NAV_BAR_CTRL = '$ionNavBarController';
@@ -346,6 +347,34 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     headerBar = headerBar || getOnScreenHeaderBar();
     headerBar && headerBar.controller().align(val);
   };
+
+
+  // DEPRECATED, as of v1.0.0-beta14 -------
+  self.changeTitle = function(val) {
+    deprecatedWarning('changeTitle(val)', 'title(val)');
+    self.title(val);
+  };
+  self.setTitle = function(val) {
+    deprecatedWarning('setTitle(val)', 'title(val)');
+    self.title(val);
+  };
+  self.getTitle = function() {
+    deprecatedWarning('getTitle()', 'title()');
+    return self.title();
+  };
+  self.back = function() {
+    deprecatedWarning('back()', '$ionicHistory.goBack()');
+    $ionicHistory.goBack();
+  };
+  self.getPreviousTitle = function() {
+    deprecatedWarning('getPreviousTitle()', '$ionicHistory.backTitle()');
+    $ionicHistory.goBack();
+  };
+  function deprecatedWarning(oldMethod, newMethod) {
+    var warn = console.warn || console.log;
+    warn && warn('navBarController.' + oldMethod + ' is deprecated, please use ' + newMethod + ' instead');
+  }
+  // END DEPRECATED -------
 
 
   function createNavElement(type) {

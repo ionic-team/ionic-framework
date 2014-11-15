@@ -70,5 +70,13 @@ IonicModule
    * supplied view data.
    * @param {object} viewData An object containing `title`, `showBar` properties.
    */
-  'update'
+  'update',
+
+  // DEPRECATED, as of v1.0.0-beta14 -------
+  'changeTitle',
+  'setTitle',
+  'getTitle',
+  'back',
+  'getPreviousTitle'
+  // END DEPRECATED -------
 ]));
