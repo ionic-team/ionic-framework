@@ -386,7 +386,7 @@ IonicModule
       run: function(step) {
         provider.transitions.views.android(enteringEle, leavingEle, false, false).run(step);
       }
-    }
+    };
   };
 
   provider.transitions.navBar.none = function(enteringHeaderBar, leavingHeaderBar) {
@@ -395,7 +395,7 @@ IonicModule
         provider.transitions.navBar.ios(enteringHeaderBar, leavingHeaderBar, false, false).run(step);
         provider.transitions.navBar.android(enteringHeaderBar, leavingHeaderBar, false, false).run(step);
       }
-    }
+    };
   };
 
 
