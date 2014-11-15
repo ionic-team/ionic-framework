@@ -170,11 +170,10 @@
 
 
       // Kill the current drag
-      if (_this._lastDrag) {
-        _this._lastDrag.buttons = null;
-        _this._lastDrag.content = null;
+      if (!_this._lastDrag) {
+        _this._lastDrag = {};
       }
-      _this._lastDrag = _this._currentDrag;
+      angular.extend(_this._lastDrag, _this._currentDrag);
       if (_this._currentDrag) {
         _this._currentDrag.buttons = null;
         _this._currentDrag.content = null;
@@ -516,6 +515,11 @@
 
       var lastDragOp = this._lastDragOp;
       var item;
+
+      // If we have an open SlideDrag and we're scrolling the list. Clear it.
+      if (this._didDragUpOrDown && lastDragOp instanceof SlideDrag) {
+          lastDragOp.clean && lastDragOp.clean();
+      }
 
       // Check if this is a reorder drag
       if (ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_REORDER_BTN_CLASS) && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
