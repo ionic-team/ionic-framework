@@ -35,7 +35,7 @@ IonicModule
             historyRoot: true,
             disableAnimate: true
           });
-          sideMenuCtrl.close();
+          if (!sideMenuCtrl.isAsideExposed()) { sideMenuCtrl.close(); }
         }
       });
     }
