@@ -33,8 +33,7 @@ function($scope, $element, $attrs, $ionicNavBarDelegate, $ionicHistory, $ionicVi
 
   self.register = function(viewLocals) {
     // register that a view is coming in and get info on how it should transition
-    var isAbstractView = viewLocals && viewLocals.$$state && viewLocals.$$state.self && viewLocals.$$state.self.abstract;
-    var registerData = $ionicHistory.register($scope, isAbstractView);
+    var registerData = $ionicHistory.register($scope, viewLocals);
 
     // update which direction
     self.update(registerData);

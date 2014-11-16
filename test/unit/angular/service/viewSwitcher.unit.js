@@ -93,14 +93,14 @@ describe('Ionic View Switcher', function() {
   it('should get an empty entering element with an empty navViewElement', inject(function($ionicViewSwitcher) {
     var navViewElement = angular.element('<div class="view-container">');
     var switcher = $ionicViewSwitcher.create(null, navViewElement, {}, {});
-    switcher.loadViewElements();
+    switcher.loadViewElements({});
     expect(switcher.enteringEle().length).toBe(1);
   }));
 
   it('should not get a leaving element with an empty navViewElement', inject(function($ionicViewSwitcher) {
     var navViewElement = angular.element('<div class="view-container">');
     var switcher = $ionicViewSwitcher.create(null, navViewElement, {}, {});
-    switcher.loadViewElements();
+    switcher.loadViewElements({});
     expect(switcher.leavingEle()).toBeUndefined();
   }));
 
@@ -113,7 +113,7 @@ describe('Ionic View Switcher', function() {
       stateId: 'STATE_ID'
     };
     var switcher = $ionicViewSwitcher.create(null, navViewElement, viewLocals, enteringView);
-    switcher.loadViewElements();
+    switcher.loadViewElements({});
     expect(switcher.enteringEle().hasClass('locals-template')).toBe(true);
     expect(switcher.enteringEle().data('$eleId')).toBe('STATE_ID');
   }));
@@ -132,7 +132,7 @@ describe('Ionic View Switcher', function() {
       stateId: 'STATE_ID'
     };
     var switcher = $ionicViewSwitcher.create($rootScope, navViewElement, viewLocals, enteringView);
-    switcher.loadViewElements();
+    switcher.loadViewElements({});
     switcher.render({});
     expect(switcher.enteringEle().data('$noCache')).toBe(true);
   }));
@@ -146,7 +146,7 @@ describe('Ionic View Switcher', function() {
       stateId: 'STATE_ID'
     };
     var switcher = $ionicViewSwitcher.create($rootScope, navViewElement, viewLocals, enteringView);
-    switcher.loadViewElements();
+    switcher.loadViewElements({});
     switcher.render({});
     expect(switcher.enteringEle().data('$noCache')).toBe(true);
   }));
@@ -162,7 +162,7 @@ describe('Ionic View Switcher', function() {
       viewId: 'VIEW_ID'
     };
     var switcher = $ionicViewSwitcher.create(null, navViewElement, {}, enteringView);
-    switcher.loadViewElements();
+    switcher.loadViewElements({});
     expect(switcher.enteringEle().hasClass('existing')).toBe(true);
     expect(switcher.enteringEle().data('$eleId')).toBe('STATE_ID');
   }));
@@ -177,7 +177,7 @@ describe('Ionic View Switcher', function() {
       viewId: 'VIEW_ID'
     };
     var switcher = $ionicViewSwitcher.create(null, navViewElement, {}, enteringView);
-    switcher.loadViewElements();
+    switcher.loadViewElements({});
     expect(switcher.enteringEle().hasClass('existing')).toBe(true);
     expect(switcher.enteringEle().data('$eleId')).toBe('VIEW_ID');
   }));
@@ -201,7 +201,7 @@ describe('Ionic View Switcher', function() {
       viewId: 'VIEW_ID'
     };
     var switcher = $ionicViewSwitcher.create(null, navViewElement, viewLocals, enteringView);
-    switcher.loadViewElements();
+    switcher.loadViewElements({});
     expect(switcher.enteringEle().hasClass('existing')).toBe(true);
     expect(switcher.enteringEle().data('$eleId')).toBe('ABSTRACT_STATE');
   }));
@@ -210,7 +210,7 @@ describe('Ionic View Switcher', function() {
     var navViewElement = angular.element('<div class="view-container">');
 
     var switcher = $ionicViewSwitcher.create($rootScope, navViewElement, {});
-    switcher.loadViewElements();
+    switcher.loadViewElements({});
     switcher.render(function(){});
     expect(switcher.enteringEle().length).toBe(1);
     expect(switcher.enteringEle().attr('nav-view')).toBe('stage');

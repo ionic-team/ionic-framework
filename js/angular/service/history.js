@@ -21,7 +21,8 @@ IonicModule
   '$state',
   '$location',
   '$window',
-function($rootScope, $state, $location, $window) {
+  '$ionicViewSwitcher',
+function($rootScope, $state, $location, $window, $ionicViewSwitcher) {
 
   // history actions while navigating views
   var ACTION_INITIAL_VIEW = 'initialView';
@@ -169,7 +170,7 @@ function($rootScope, $state, $location, $window) {
 
   return {
 
-    register: function(parentScope, isAbstractView) {
+    register: function(parentScope, viewLocals) {
 
       var currentStateId = getCurrentStateId(),
           hist = getHistory(parentScope),
@@ -180,15 +181,8 @@ function($rootScope, $state, $location, $window) {
           action = null,
           direction = DIRECTION_NONE,
           historyId = hist.historyId,
-          tmp, x;
-
-      if (isAbstractView) {
-        // abstract states should not register themselves in the history stack
-        return {
-          action: 'abstractView',
-          direction: DIRECTION_NONE
-        };
-      }
+          url = $location.url(),
+          tmp, x, ele;
 
       if (lastStateId !== currentStateId) {
         lastStateId = currentStateId;
@@ -284,6 +278,17 @@ function($rootScope, $state, $location, $window) {
 
       } else {
 
+        // create an element from the viewLocals template
+        ele = $ionicViewSwitcher.createViewEle(viewLocals);
+        if (this.isAbstractEle(ele)) {
+          console.log('VIEW', 'abstractView', DIRECTION_NONE, viewHistory.currentView);
+          return {
+            action: 'abstractView',
+            direction: DIRECTION_NONE,
+            ele: ele
+          };
+        }
+
         // set a new unique viewId
         viewId = ionic.Utils.nextUid();
 
@@ -349,7 +354,7 @@ function($rootScope, $state, $location, $window) {
           stateId: currentStateId,
           stateName: this.currentStateName(),
           stateParams: getCurrentStateParams(),
-          url: $location.url()
+          url: url
         });
 
         // add the new view to this history's stack
@@ -375,9 +380,24 @@ function($rootScope, $state, $location, $window) {
 
       setNavViews(viewId);
 
-      hist.cursor = viewHistory.currentView.index;
+      if (viewHistory.backView && historyId == viewHistory.backView.historyId && currentStateId == viewHistory.backView.stateId && url == viewHistory.backView.url) {
+        for (x = 0; x < hist.stack.length; x++) {
+          if (hist.stack[x].viewId == viewId) {
+            action = 'dupNav';
+            direction = DIRECTION_NONE;
+            hist.stack[x - 1].forwardViewId = viewHistory.forwardView = null;
+            viewHistory.currentView.index = viewHistory.backView.index;
+            viewHistory.currentView.backViewId = viewHistory.backView.backViewId;
+            viewHistory.backView = getBackView(viewHistory.backView);
+            hist.stack.splice(x, 1);
+            break;
+          }
+        }
+      }
 
-      console.log('VIEW:', viewId, (viewHistory.views[viewId] && viewHistory.views[viewId].url), '  history:', historyId, '  action:', action, '  direction:', direction, '  ishistoryRoot:', viewHistory.currentView.index === 0);
+      console.log('VIEW', action, direction, viewHistory.currentView);
+
+      hist.cursor = viewHistory.currentView.index;
 
       return {
         viewId: viewId,
@@ -385,7 +405,8 @@ function($rootScope, $state, $location, $window) {
         direction: direction,
         historyId: historyId,
         showBack: !!(viewHistory.backView && viewHistory.backView.historyId === viewHistory.currentView.historyId),
-        isHistoryRoot: (viewHistory.currentView.index === 0)
+        isHistoryRoot: (viewHistory.currentView.index === 0),
+        ele: ele
       };
     },
 
@@ -586,9 +607,17 @@ function($rootScope, $state, $location, $window) {
         }
       }
       return nextViewOptions;
+    },
+
+    isAbstractEle: function(ele) {
+      return !!(ele && (isAbstractTag(ele) || isAbstractTag(ele.children())));
     }
 
   };
+
+  function isAbstractTag(ele) {
+    return ele && ele.length && /ion-side-menus|ion-tabs/i.test(ele[0].tagName);
+  }
 
 }])
 

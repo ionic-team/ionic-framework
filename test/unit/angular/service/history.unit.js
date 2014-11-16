@@ -1033,11 +1033,33 @@ describe('Ionic History', function() {
     expect( ionicHistory.nextViewOptions({}) ).toEqual({});
   }));
 
-  it('should be an abstract view', inject(function($document) {
-    var reg = ionicHistory.register({}, false);
-    expect(reg.action).not.toEqual('abstractView');
+  it('should should find ion-tabs as an abstract element', inject(function($ionicHistory, $document) {
+    var ele = angular.element('<ion-tabs>');
+    expect($ionicHistory.isAbstractEle(ele)).toBe(true);
 
-    reg = ionicHistory.register({}, true);
+    ele = angular.element('<ion-tab>');
+    expect($ionicHistory.isAbstractEle(ele)).toBe(false);
+  }));
+
+  it('should should find ion-side-menus as an abstract element', inject(function($ionicHistory, $document) {
+    var ele = angular.element('<ion-side-menus>');
+    expect($ionicHistory.isAbstractEle(ele)).toBe(true);
+
+    ele = angular.element('<ion-side-menu>');
+    expect($ionicHistory.isAbstractEle(ele)).toBe(false);
+  }));
+
+  it('should should find first child thats an ion-tabs as an abstract element', inject(function($ionicHistory, $document) {
+    var div = angular.element('<div>');
+    var ionTabs = angular.element('<ion-tabs>');
+    div.append(ionTabs);
+    expect($ionicHistory.isAbstractEle(div)).toBe(true);
+  }));
+
+  it('should be an abstract view', inject(function($document) {
+    var reg = ionicHistory.register({}, {
+      $template: '<ion-tabs></ion-tabs>'
+    });
     expect(reg.action).toEqual('abstractView');
   }));
 
