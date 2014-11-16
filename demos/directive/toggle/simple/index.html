@@ -1,0 +1,25 @@
+---
+name: simple
+component: ionToggle
+---
+
+<ion-header-bar class="bar-positive">
+  <h1 class="title">
+    Toggle: Simple Usage
+  </h1>
+</ion-header-bar>
+<ion-content ng-controller="MainCtrl" class="padding">
+  <h4>Your pizza has {{toppings()}}!</h4>
+  <ion-toggle ng-model="pizza.pepperoni">
+    Pepperoni?
+  </ion-toggle>
+  <ion-toggle ng-model="pizza.sausage" toggle-class="toggle-energized">
+    Sausage?
+  </ion-toggle>
+  <ion-toggle ng-model="pizza.jalapenos" toggle-class="toggle-calm">
+    Jalapeno?
+  </ion-toggle>
+  <ion-toggle ng-model="pizza.anchovies" toggle-class="toggle-royal">
+    Anchovies?
+  </ion-toggle>
+</ion-content>

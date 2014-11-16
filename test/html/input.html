@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html ng-app="navTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Inputs</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, height=device-height">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="../../dist/css/ionic.css">
+    <style>
+      input,
+      textarea {
+        background: #ddd !important;
+      }
+
+      input[type=text],
+      textarea {
+        background: orange !important;
+      }
+
+      input[type=text]:focus,
+      textarea:focus {
+        background: yellow !important;
+      }
+
+      input[type=text].cloned-text-input,
+      textarea.cloned-text-input {
+        background: red !important;
+      }
+
+      header .item {
+        background: lightblue !important;
+      }
+      body {
+        background: purple;
+      }
+      .pane {
+        background: black;
+      }
+      .scroll-content {
+        background: pink;
+        overflow: hidden !important;
+      }
+      .scroll {
+        background: lightgreen;
+      }
+      .keyboard-open .scroll-content{
+        background: green;
+      }
+
+      input,
+      textarea {
+        border: 1px solid blue !important;
+      }
+
+    </style>
+  </head>
+  <body ng-controller="AppCtrl">
+
+    <div id="logs" style="position:fixed; top:0; left:0; z-index:9999; background: #eee; font-size:8px; line-height:10px; display:block; "></div>
+
+    <ion-nav-view></ion-nav-view>
+
+    <script id="input1.html" type="text/ng-template">
+
+      <ion-view id="view">
+        <ion-header-bar>
+          <div class="buttons">
+
+          </div>
+          <h1 class="title">Input Tests</h1>
+          <div class="buttons">
+            <a class="button" href="#/input2">Page 2</a>
+          </div>
+        </ion-header-bar>
+
+        <ion-content class="padding">
+
+          <form ng-submit="formSubmit()">
+
+          <div class="list">
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Email</span>
+              <textarea>
+                            Line 1
+                            Line 2
+                            Line 3
+                            Line 4
+                            Line 5
+              </textarea>
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">Your Name</span>
+              <input type="text" value="name input" id="name">
+            </label>
+
+            <div class="item item-checkbox">
+              <span class="input-label">Remember me</span>
+              <label class="checkbox">
+                  <input type="checkbox" id="remember-me">
+              </label>
+            </div>
+
+            <label class="item item-input">
+              <span class="input-label">From 1</span>
+              <input type="text" value="from input" id="from1">
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">To 1</span>
+              <input type="text" value="to input" id="to1">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 1</span>
+              <textarea id="textarea" id="comment1">comment textarea</textarea>
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">From 2</span>
+              <input type="text" value="" id="from2">
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">To 2</span>
+              <input type="text" value="" id="to2">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 2</span>
+              <textarea id="textarea" id="comment2"></textarea>
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">From 3</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">To 3</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 3</span>
+              <textarea id="textarea"></textarea>
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">From 4</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">To 4</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 4</span>
+              <textarea id="textarea"></textarea>
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">From 5</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">To 5</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 5</span>
+              <textarea id="textarea"></textarea>
+            </label>
+
+            <button type="button" class="button button-block button-energized" ng-click="openModal()">
+              Open Modal
+            </button>
+
+            <button type="submit" class="button button-block button-calm">
+              Submit!
+            </button>
+          </div>
+
+          </form>
+
+          <p>
+            <a href="clickTests.html">Click Tests</a> -
+            <a href="tapInputs.html">Tap Inputs</a> -
+            <a href="/test/">CSS Tests</a>
+          </p>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="input2.html" type="text/ng-template">
+
+      <ion-view id="view">
+        <ion-header-bar>
+          <label class="item item-input">
+            <span class="input-label">Header</span>
+            <input type="text" value="header input">
+          </label>
+        </ion-header-bar>
+
+        <ion-content class="padding">
+
+          <form ng-submit="formSubmit()">
+
+          <div class="list">
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Email</span>
+              <textarea>
+                            Line 1
+                            Line 2
+                            Line 3
+                            Line 4
+                            Line 5
+              </textarea>
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">Your Name</span>
+              <input type="text" value="name input" id="name">
+            </label>
+
+            <div class="item item-checkbox">
+              <span class="input-label">Remember me</span>
+              <label class="checkbox">
+                  <input type="checkbox" id="remember-me">
+              </label>
+            </div>
+
+            <label class="item item-input">
+              <span class="input-label">From 1</span>
+              <input type="text" value="from input" id="from1">
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">To 1</span>
+              <input type="text" value="to input" id="to1">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 1</span>
+              <textarea id="textarea" id="comment1">comment textarea</textarea>
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">From 2</span>
+              <input type="text" value="" id="from2">
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">To 2</span>
+              <input type="text" value="" id="to2">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 2</span>
+              <textarea id="textarea" id="comment2"></textarea>
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">From 3</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">To 3</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 3</span>
+              <textarea id="textarea"></textarea>
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">From 4</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">To 4</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 4</span>
+              <textarea id="textarea"></textarea>
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">From 5</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">To 5</span>
+              <input type="text" value="">
+            </label>
+
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Comment 5</span>
+              <textarea id="textarea"></textarea>
+            </label>
+
+            <button type="button" class="button button-block button-energized" ng-click="openModal()">
+              Open Modal
+            </button>
+
+            <button type="submit" class="button button-block button-calm">
+              Submit!
+            </button>
+          </div>
+
+          </form>
+
+          <p>
+            <a href="clickTests.html">Click Tests</a> -
+            <a href="tapInputs.html">Tap Inputs</a> -
+            <a href="/test/">CSS Tests</a>
+          </p>
+        </ion-content>
+      </ion-view>
+    </script>
+
+
+    <script id="modal.html" type="text/ng-template">
+      <div class="modal" ng-controller="ModalCtrl">
+        <header class="bar bar-header bar-positive">
+          <h1 class="title">New Contact</h1>
+          <button class="button button-clear button-primary" ng-click="closeModal()" ion-stop-event="click">Cancel</button>
+        </header>
+        <ion-content class='has-header'>
+          <div class="padding">
+            <div class="list">
+              <label class="item item-input">
+                <span class="input-label">First Name</span>
+                <input type="text" placeholder="">
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Last Name</span>
+                <input type="text" placeholder="">
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Email</span>
+                <input type="text" placeholder="">
+              </label>
+              <button class="button button-full button-positive" ng-click="closeModal()">Create</button>
+            </div>
+          </div>
+        </ion-content>
+      </div>
+    </script>
+
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <script>
+
+      var msgs = [];
+      var timerId;
+
+      document.addEventListener('touchstart', function(e){
+        console.log('touchstart');
+      });
+      document.addEventListener('touchstart', function(e){
+        console.log('touchend');
+      });
+      document.addEventListener('mousedown', function(e){
+        console.log('mousedown');
+      });
+      document.addEventListener('mouseup', function(e){
+        console.log('mouseup');
+      });
+      document.addEventListener('MSPointerDown', function(e){
+        console.log('MSPointerDown');
+      });
+      document.addEventListener('MSPointerUp', function(e){
+        console.log('MSPointerUp');
+      });
+      document.addEventListener('click', function(event){
+        console.log('click', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY);
+      });
+
+      function getTime() {
+        var d = new Date();
+        return d.getSeconds() + '.' + d.getMilliseconds();
+      }
+
+
+      angular.module('navTest', ['ionic'])
+
+      .config(function($stateProvider, $urlRouterProvider) {
+
+        $stateProvider
+          .state('input1', {
+            url: "/input1",
+            templateUrl: "input1.html"
+          })
+          .state('input2', {
+            url: "/input2",
+            templateUrl: "input2.html"
+          });
+
+         $urlRouterProvider.otherwise("/input1");
+      })
+
+      .controller('AppCtrl', function($scope, $ionicModal) {
+
+        $scope.openModal = function() {
+          $scope.modal.show();
+        };
+        $ionicModal.fromTemplateUrl('modal.html', function(modal) {
+          $scope.modal = modal;
+        }, {
+          animation: 'slide-in-up',
+          focusFirstInput: true
+        });
+
+        $scope.formSubmit = function(){
+          alert('SUBMIT!');
+        };
+
+      })
+
+      .controller('ModalCtrl', function($scope) {
+        $scope.closeModal = function() {
+          $scope.modal.hide();
+        }
+      });
+
+      var msgs = [];
+      var index = 0;
+      var timeId;
+      var consoleDebug = console.log;
+      var consoleError = console.log;
+
+      function getTime() {
+        var d = new Date();
+        return d.getMilliseconds();
+      }
+
+      console.error = function() {
+        consoleError.apply(this, arguments);
+        var args = ['ERROR!'];
+        for (var i = 0, j = arguments.length; i < j; i++){
+          args.push(arguments[i]);
+        }
+        console.log.apply(this, args);
+      };
+
+      console.log = function() {
+        index++;
+        var msg = [];
+        msg.push(index);
+        for (var i = 0, j = arguments.length; i < j; i++){
+          msg.push(arguments[i]);
+        }
+        //msg.push(getTime());
+
+        msg = msg.join(', ');
+
+        if(arguments[0] === 'ERROR!') msg = '<span style="color:red;font-weight:bold">' + msg + '</span>';
+
+        if(arguments[0] === 'touchstart') msg = '<span style="color:pink">' + msg + '</span>';
+        if(arguments[0] === 'touchend') msg = '<span style="color:red">' + msg + '</span>';
+
+        if(arguments[0] === 'mousedown') msg = '<span style="color:lightblue">' + msg + '</span>';
+        if(arguments[0] === 'mouseup') msg = '<span style="color:blue">' + msg + '</span>';
+
+        if(arguments[0] === 'focusin') msg = '<span style="color:orange">' + msg + '</span>';
+        if(arguments[0] === 'focusout') msg = '<span style="color:orangered">' + msg + '</span>';
+
+        if(arguments[0] === 'click') msg = '<span style="color:green;font-weight:bold">' + msg + '</span>';
+
+        if(arguments[0] === 'clickPrevent') msg = '<span style="color:gray;">' + msg + '</span>';
+
+        msgs.unshift( msg );
+
+        if(msgs.length > 30) {
+          msgs.splice(40);
+        }
+
+        // do this so we try not to interfere with the device performance
+        clearTimeout(timeId);
+        timeId = setTimeout(function(){
+          document.getElementById('logs').innerHTML = msgs.join('<br>');
+        }, 150);
+
+        consoleDebug.apply(this, arguments);
+      }
+
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html ng-app="ionic">
+  <head>
+    <script src="../../dist/js/ionic.bundle.js"></script>
+    <meta charset="utf-8">
+    <title>Textarea</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link href="../../dist/css/ionic.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Textarea</h1>
+    </header>
+
+    <div class="content has-header overflow-scroll">
+
+      <h3>Default Textarea, Not Inset, No Content Padding</h3>
+      <div class="list">
+        <label class="item item-input">
+          <textarea placeholder="First Name" class="no-resize"></textarea>
+        </label>
+        <label class="item item-input">
+          <textarea placeholder="Last Name"></textarea>
+        </label>
+      </div>
+
+      <h3>Default Textarea, list-inset, No Content Padding</h3>
+      <div class="list list-inset">
+        <label class="item item-input">
+          <textarea placeholder="First Name"></textarea>
+        </label>
+        <label class="item item-input">
+          <textarea placeholder="Last Name" class="no-resize"></textarea>
+        </label>
+      </div>
+
+      <h3>Default Textarea, card, No Content Padding</h3>
+      <div class="list card">
+        <label class="item item-input">
+          <textarea placeholder="First Name"></textarea>
+        </label>
+        <label class="item item-input">
+          <textarea placeholder="Last Name"></textarea>
+        </label>
+      </div>
+
+      <div class="padding">
+
+        <h3>Default Textarea, With Parent Content Padding</h3>
+        <div class="list">
+          <label class="item item-input">
+            <textarea placeholder="Username"></textarea>
+          </label>
+        </div>
+
+        <div class="list">
+          <label class="item item-input">
+            <textarea placeholder="Filter by name"></textarea>
+          </label>
+        </div>
+
+        <h3>Default Textarea, list-inset, With Parent Content Padding</h3>
+        <div class="list list-inset">
+          <label class="item item-input">
+            <textarea placeholder="Email"></textarea>
+          </label>
+          <label class="item item-input">
+            <textarea placeholder="Name"></textarea>
+          </label>
+        </div>
+
+      </div>
+
+
+      <h3>Label left of input, No Parent Content Padding</h3>
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Username</span>
+          <textarea placeholder="@drifty"></textarea>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">First Name</span>
+          <textarea placeholder="Sir Derp"></textarea>
+        </label>
+      </div>
+
+
+      <h3>Label left of input, No Parent Content Padding</h3>
+      <div class="list">
+        <label class="item item-input">
+          <i class="icon ion-person"></i>
+          <span class="input-label">Username</span>
+          <textarea placeholder="@drifty"></textarea>
+        </label>
+        <label class="item item-input">
+          <i class="icon ion-email"></i>
+          <span class="input-label">Email</span>
+          <textarea placeholder="your@email.com"></textarea>
+        </label>
+      </div>
+
+      <h3>Inline Label On Top Of Textarea, list-inset, No Parent Content Padding</h3>
+      <div class="list list-inset">
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <textarea placeholder="your@email.com"></textarea>
+        </label>
+      </div>
+
+      <div class="padding">
+
+        <h3>Inline Label On Top Of Textarea, With Parent Content Padding</h3>
+        <div class="list">
+          <label class="item item-input">
+            <span class="input-label">First Name</span>
+            <textarea placeholder="John"></textarea>
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Last Name</span>
+            <textarea placeholder="Suhr"></textarea>
+          </label>
+        </div>
+
+        <h3>Inline Label On Top Of Textarea, list-inset, With Parent Content Padding</h3>
+        <div class="list list-inset">
+          <label class="item item-input">
+            <span class="input-label">Email</span>
+            <textarea placeholder="your@email.com"></textarea>
+          </label>
+        </div>
+        <div class="list list-inset">
+          <label class="item item-input">
+            <span class="input-label">Filter By Name</span>
+            <textarea placeholder="Enter keywords"></textarea>
+          </label>
+        </div>
+
+      </div>
+
+
+
+
+      <h3>Stacked Label On Top Of Textarea, No Parent Content Padding</h3>
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">First Name</span>
+          <textarea placeholder="Drifty"></textarea>
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Last Name</span>
+          <textarea placeholder="Co"></textarea>
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Email</span>
+          <textarea placeholder="your@email.com"></textarea>
+        </label>
+      </div>
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Filter By Name</span>
+          <textarea placeholder=""></textarea>
+        </label>
+      </div>
+
+      <h3>Stacked Label On Top Of Textarea, list-inset, No Parent Content Padding</h3>
+      <div class="list list-inset">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Email</span>
+          <textarea placeholder="your@email.com"></textarea>
+        </label>
+      </div>
+
+      <div class="padding">
+
+        <h3>Stacked Label On Top Of Textarea, With Parent Content Padding</h3>
+        <div class="list">
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Email</span>
+            <textarea placeholder="your@email.com"></textarea>
+          </label>
+        </div>
+
+        <h3>Stacked Label On Top Of Textarea, list-inset, With Parent Content Padding</h3>
+        <div class="list list-inset">
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Email</span>
+            <textarea placeholder="your@email.com"></textarea>
+          </label>
+        </div>
+
+      </div>
+
+      <h3>Default Textarea, No Parent Content Padding</h3>
+      <div class="list">
+        <label class="item item-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <textarea placeholder="Favorites"></textarea>
+        </label>
+      </div>
+
+      <h3>Default Textarea, list-inset, No Parent Content Padding</h3>
+      <div class="list list-inset">
+        <label class="item item-input">
+          <i class="icon ion-star placeholder-icon"></i>
+          <textarea placeholder="Favorites"></textarea>
+        </label>
+      </div>
+
+
+      <h3>Stacked Label On Top Of Textarea, No Parent Content Padding</h3>
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          <i class="icon ion-email"></i>
+          <span class="input-label">Email</span>
+          <textarea placeholder="your@email.com"></textarea>
+        </label>
+      </div>
+
+      <div class="padding">
+
+        <h3>Stacked Label On Top Of Textarea, With Parent Content Padding</h3>
+        <div class="list">
+          <label class="item item-input item-stacked-label">
+            <i class="icon ion-cloud"></i>
+            <span class="input-label">SaaS</span>
+            <textarea placeholder="Codiqa"></textarea>
+          </label>
+        </div>
+
+        <h3>Stacked Label On Top Of Textarea, list-inset, With Parent Content Padding</h3>
+        <div class="list list-inset">
+          <label class="item item-input item-stacked-label">
+            <i class="icon ion-headphone"></i>
+            <span class="input-label">Favorite Music</span>
+            <textarea placeholder="Bee Gees"></textarea>
+          </label>
+        </div>
+
+      </div>
+
+      <p><a class="button button-secondary" href="./">All CSS Tests</a></p>
+
+    </div>
+
+  </body>
+</html>

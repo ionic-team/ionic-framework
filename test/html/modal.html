@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html ng-app="modalTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Modal</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <script src="dom-trace.js"></script>
+  </head>
+  <body>
+    <ion-pane ng-controller="AppCtrl">
+        <ion-header-bar class="bar-positive" title="Contacts">
+          <h1 class="title">Modal</h1>
+          <div class="buttons">
+            <button class="button" ng-click="modal.show()">Modal</button>
+          </div>
+        </ion-header-bar>
+        <ion-content class="has-header">
+          <ion-list>
+
+            <div class="item item-input-inset">
+              <label class="item-input-wrapper">
+                <input ng-focus="openModal()" type="text" placeholder="Email">
+              </label>
+              <button class="button button-small">
+                Cancel
+              </button>
+            </div>
+
+            <ion-item ng-repeat="contact in contacts">
+              {{contact.name}}
+            </ion-item>
+          </ion-list>
+        </ion-content>
+    </ion-pane>
+
+    <script id="modal.html" type="text/ng-template">
+      <ion-modal-view ng-controller="ModalCtrl">
+        <ion-header-bar>
+          <h1 class="title">New Contact</h1>
+          <button class="button button-positive" ng-click="hideModal()">Close</button>
+        </ion-header-bar>
+        <ion-content>
+          <div class="padding">
+            <div class="list">
+              <label class="item item-input">
+                <span class="input-label">First Name</span>
+                <input type="text" placeholder="">
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Last Name</span>
+                <input type="text" placeholder="">
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Email</span>
+                <input type="text" placeholder="">
+              </label>
+              <button class="button button-block button-positive" ng-click="hideModal()">Hide Modal</button>
+              <button class="button button-block button-positive" ng-click="removeModal()">Remove Modal</button>
+              <button class="button button-block button-positive" ng-click="openActionSheet()">ActionSheet</button>
+              <button class="button button-block button-positive" ng-click="openPopup()">Popup</button>
+            </div>
+          </div>
+        </ion-content>
+      </ion-modal-view>
+    </script>
+
+    <script>
+      angular.module('modalTest', ['ionic'])
+
+      .controller('AppCtrl', function($scope, $ionicModal) {
+        $scope.contacts = [
+          { name: 'Gordon Freeman' },
+          { name: 'Barney Calhoun' },
+          { name: 'Lamarr the Headcrab' },
+        ];
+        $scope.openModal = function() {
+          $scope.modal.show();
+        };
+        $ionicModal.fromTemplateUrl('modal.html', function(modal) {
+          $scope.modal = modal;
+        }, {
+          animation: 'slide-in-up',
+          focusFirstInput: true
+        });
+
+      })
+
+      .controller('ModalCtrl', function($scope, $ionicActionSheet, $ionicPopup) {
+        $scope.hideModal = function() {
+          $scope.modal.hide();
+        };
+        $scope.removeModal = function() {
+          $scope.modal.remove();
+        };
+
+        $scope.openActionSheet = function() {
+          $ionicActionSheet.show({
+
+            // The various non-destructive button choices
+            buttons: [
+              { text: 'Share' },
+              { text: 'Move' },
+            ],
+
+            // The text of the red destructive button
+            destructiveText: 'Delete',
+
+            // The title text at the top
+            titleText: 'Modify your album',
+
+            // The text of the cancel button
+            cancelText: 'Cancel',
+
+            // Called when the sheet is cancelled, either from triggering the
+            // cancel button, or tapping the backdrop, or using escape on the keyboard
+            cancel: function() {
+            },
+
+            // Called when one of the non-destructive buttons is clicked, with
+            // the index of the button that was clicked. Return
+            // "true" to tell the action sheet to close. Return false to not close.
+            buttonClicked: function(index) {
+              return true;
+            },
+
+            // Called when the destructive button is clicked. Return true to close the
+            // action sheet. False to keep it open
+            destructiveButtonClicked: function() {
+              return true;
+            }
+          });
+        };
+
+        $scope.openPopup = function() {
+          $ionicPopup.alert({
+           title: 'Hey!',
+           content: 'Don\'t do that!'
+          }).then(function(res) {});
+        };
+
+      });
+
+      domTrace.observe();
+    </script>
+  </body>
+</html>

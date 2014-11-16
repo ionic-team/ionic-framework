@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="toggleTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Toggle</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body>
+
+    <header class="bar bar-header bar-danger">
+      <h1 class="title">Toggle</h1>
+    </header>
+    <ion-content class="has-header reveal-animation">
+      <div ng-controller="TestCtrl">
+
+        <div class="list">
+          <ion-toggle ng-model="checkModel2" ng-change="myChange = checkModel2">
+            Main Check
+          </ion-toggle>
+          <ion-checkbox ng-model="checkModel" ng-change="myChange = checkModel">
+            Main Check
+          </ion-checkbox>
+          <ion-checkbox ng-checked="myChange">
+            Follows ng-change of Main Check
+          </ion-checkbox>
+          <ion-toggle ng-model="myModel" ng-disabled="isDisabled">myModel ({{!!myModel}})</ion-toggle>
+          <ion-toggle ng-model="catModel" ng-disabled="isDisabled" ng-true-value="cats" ng-false-value="dogs">Cats or dogs? ({{catModel}})</ion-toggle>
+          <ion-toggle ng-model="isDisabled">Disable myModel ({{!!isDisabled}})</ion-toggle>
+          <ion-toggle toggle-class="toggle-assertive" ng-checked="true">Set toggle class to toggle-assertive</ion-toggle>
+        </div>
+      </div>
+    </ion-content>
+
+    <script>
+      angular.module('toggleTest', ['ionic'])
+      .controller('TestCtrl', function($scope) {
+        $scope.catModel = 'dogs';
+      });
+    </script>
+  </body>
+</html>

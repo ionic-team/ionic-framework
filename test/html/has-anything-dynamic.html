@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app="ionic">
+  <head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css" />
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body ng-init="$root.footerExists = true; $root.headerExists = true">
+    <ion-tabs class="tabs-energized" ng-class="{'tabs-top': $root.isTabsTop}">
+
+      <ion-tab title="So Tabular!">
+
+        <ion-header-bar ng-show="$root.headerExists"
+          class="bar-positive"
+          ng-class="{'bar-subheader': $root.isSubheader}">
+          <h1 class="title">Header Bar</h1>
+        </ion-header-bar>
+        </div>
+
+        <ion-footer-bar ng-show="$root.footerExists"
+          class="bar-assertive"
+          ng-class="{'bar-subfooter': $root.isSubfooter}">
+          <h1 class="title">Footer bar</h1>
+        </ion-footer-bar>
+
+        <ion-content>
+          <div class="card">
+            <div class="item item-text-wrap">
+              <h3>Header</h3>
+              <ion-toggle ng-model="$root.isSubheader"> isSubheader?</ion-toggle>
+              <ion-toggle ng-model="$root.headerExists"> headerExists?</ion-toggle>
+            </div>
+          </div>
+          <div class="card">
+            <div class="item item-text-wrap">
+              <h3>Footer</h3>
+              <ion-toggle ng-model="$root.isSubfooter"> isSubfooter?</ion-toggle>
+              <ion-toggle ng-model="$root.footerExists"> footerExists?</ion-toggle>
+            </div>
+          </div>
+          <div class="card">
+            <div class="item item-text-wrap">
+              <h3>Tabs</h3>
+              <ion-toggle ng-model="$root.isTabsTop"> isTabsTop?</ion-toggle>
+            </div>
+          </div>
+        </ion-content>
+
+      </ion-tab>
+
+    </ion-tabs>
+  </body>
+</html>

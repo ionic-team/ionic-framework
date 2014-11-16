@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html ng-app="sideMenuTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Sub Controllers</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body>
+
+    <ion-side-menus>
+      <ion-side-menu-content>
+        <header class="bar bar-header bar-dark">
+          <a href="#" class="button"><i class="icon-reorder"></i></a>
+          <h1 class="title">Slide me</h1>
+        </header>
+        <div class="content has-header">
+          <h1>Slide me side to side!</h1>
+        </div>
+      </ion-side-menu-content>
+      <ion-side-menu side="left">
+        <h2>Left</h2>
+        <ul class="list">
+          <a href="#" class="list-item" ng-repeat="item in list">
+            {{item.text}}
+          </a>
+        </ul>
+      </ion-side-menu>
+      <ion-side-menu side="right">
+        <ion-tabs>
+          <ion-tab title="Home" icon="ion-home" class="tab-content">
+            <header class="bar bar-header bar-dark">
+              <h1 class="title">Tab Bars</h1>
+            </header>
+            <ion-content class="has-header has-tabs">
+              <h1>Home</h1>
+              <ul class="list">
+                <a href="#" class="list-item" ng-repeat="item in items">
+                  {{item.title}}
+                </a>
+              </ul>
+            </ion-content>
+          </ion-tab>
+
+          <ion-tab title="About" icon="ion-info" class="tab-content">
+            <header class="bar bar-header bar-success">
+              <h1 class="title">About</h1>
+            </header>
+            <ion-content class="has-header has-tabs">
+              <h1>About Us</h1>
+            </ion-content>
+          </ion-tab>
+
+          <ion-tab title="Settings" icon="icon-gear" class="tab-content">
+            <header class="bar bar-header bar-dark">
+              <h1 class="title">Settings</h1>
+            </header>
+            <ion-content class="has-header has-tabs">
+              <h1>Settings</h1>
+            </ion-content>
+          </ion-tab>
+        </ion-tabs>
+      </ion-side-menu>
+    </ion-side-menus>
+    <script>
+      angular.module('sideMenuTest', ['ionic']);
+
+      /*
+      var Controller = function(opts) {
+        var _this = this;
+
+        this.el = opts.el;
+        this.animateClass = opts.animateClass;
+
+        // Bind release and drag listeners
+        window.ionic.onGesture('drag', function(e) {
+          _this.onDrag && _this.onDrag(e);
+        }, this.el);
+
+        window.ionic.onGesture('release', function(e) {
+          _this.endDrag && _this._endDrag(e);
+        }, this.el);
+      };
+      Controller.prototype = {
+        onDrag: function(e) {},
+        endDrag: function(e) {},
+        getTranslateX: function() {
+          var r = /translate3d\((-?.+)px/;
+          var d = r.exec(this.el.style[ionic.CSS.TRANSFORM]);
+
+          if(d && d.length > 0) {
+            return parseFloat(d[1]);
+          }
+          return 0;
+        },
+        setTranslateX: function(amount) {
+          this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + amount + 'px, 0, 0)';
+        },
+        enableAnimation: function() {
+          this.el.classList.add(this.animateClass);
+        },
+        disableAnimation: function() {
+          this.el.classList.remove(this.animateClass);
+        }
+      };
+
+      var l = new SideMenu({ el: document.getElementById('my-left-panel'), width: 270 });
+      var r = new SideMenu({ el: document.getElementById('my-right-panel'), width: 270 });
+      var c = new Controller({ el: document.createElement('content') });
+
+      var ctrl = new SideMenuController({
+        left: l,
+        right: r,
+        content: c
+      });
+      */
+    </script>
+  </body>
+</html>

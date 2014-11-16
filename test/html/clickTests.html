@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Click Tests</title>
+
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+
+  <script src="../../../../dist/js/ionic.bundle.js"></script>
+  <style>
+    .item-content, .item {
+      padding: 6px !important;
+    }
+    .list {
+      margin: 1px !important;
+    }
+    .button {
+      line-height: 16px !important;
+      min-height: 28px !important;
+    }
+    .dot {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background-color: red;
+      z-index: 1000;
+      pointer-events: none;
+    }
+    .touch-pointer {
+      background: #CCFFFF;
+    }
+    .mouse-pointer {
+      background: #FFFFCC;
+    }
+  </style>
+  <script>
+    var cordova = {};
+  </script>
+</head>
+
+<body ng-controller="MyCtrl">
+ <form id="form">
+  <button class="button" ng-click="buttonClick()">button</button>
+  <div class="div button" ng-click="divClick()">div</div>
+  <input type="file">
+  {{ buttonValue }} -
+  {{ radioModel.data }}
+
+  <div ng-show="testBtnText == 'HTML'">
+
+    <ion-list>
+
+      <ion-item ng-repeat="item in menuItems" ion-item="item" ng-click="item.actionItem()">ng-click="item.actionItem()"</ion-item>
+
+      <ion-checkbox>checkbox with no ng-click</ion-checkbox>
+
+      <ion-toggle ng-click="{{ stringClick }}">Toggle with ng-click="{{ stringClick }]"</ion-toggle>
+
+      <ion-radio ng-change="radioChange()"
+             ng-click="radioClick(radioModel.data)"
+             ng-model="radioModel.data"
+             ng-value="'Radio A'">Radio A</ion-radio>
+
+      <ion-radio ng-change="radioChange()"
+             ng-click="radioClick(radioModel.data)"
+             ng-model="radioModel.data"
+             ng-value="'Radio B'">Radio B</ion-radio>
+
+    </ion-list>
+
+    <label class="label1">
+      <input type="radio" name="radio" id="radio1" class="radio1">
+    </label> &nbsp;
+    <input type="radio" name="radio" id="radio2" class="radio2"> &nbsp;
+
+    <label class="label2">
+      <input type="checkbox" name="checkbox1" id="checkbox1" class="checkbox1">
+    </label> &nbsp;
+    <input type="checkbox" name="checkbox2" id="checkbox2" class="checkbox2">
+
+  </div>
+
+  <div ng-show="testBtnText == 'AngJS'">
+    <div class="list">
+
+      <div class="item item-toggle">
+         HTML5
+         <label class="toggle">
+           <input type="checkbox">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </div>
+
+      <div class="item item-toggle">
+         JavaScript
+         <label class="toggle">
+           <input type="checkbox" ng-click="htmlToggleClick()">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </div>
+
+      <label class="item item-radio">
+        <input type="radio" name="group">
+        <div class="item-content">
+          Go
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+
+      <label class="item item-radio">
+        <input type="radio" name="group">
+        <div class="item-content">
+          Python
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+
+      <div class="item item-checkbox" style="padding-left: 58px !important">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="htmlCheckboxData.checkedValue">
+        </label>
+        Checkbox {{ htmlCheckboxData.checkedValue }}</a>
+      </div>
+
+    </div>
+  </div>
+
+  <button id="clear">Clear</button>
+  <button id="stop">Stop</button>
+  <button ng-click="otherTests()">{{ testBtnText }}</button>
+  <a href="tapInputs.html">TapInputs</a> -
+  <a href="/test/">CSSTests</a> -
+  <a href="./">All</a>
+
+  <div id="logs"></div>
+
+
+  <script>
+  angular.module('ionicApp', ['ionic'])
+
+  .controller('MyCtrl', function($scope) {
+
+    $scope.htmlCheckboxData = {};
+
+    $scope.otherTests = function() {
+      if($scope.testBtnText == 'HTML') {
+        $scope.testBtnText = 'AngJS';
+      } else {
+        $scope.testBtnText = 'HTML';
+      }
+    };
+    $scope.otherTests();
+
+    $scope.htmlToggleClick = function() {
+      console.debug('htmlToggleClick', 'click');
+      $scope.buttonValue = 'html' + Math.floor(Math.random() * 999);
+    };
+
+    $scope.stringClick = 'stringMethod()';
+    $scope.stringMethod = function() {
+      console.debug('toggle {{ stringClick }]', 'click');
+      $scope.buttonValue = 'tg' + Math.floor(Math.random() * 999);
+    };
+
+    $scope.itemClick = function() {
+      console.debug('itemClick()', 'click');
+      $scope.buttonValue = 'itm' + Math.floor(Math.random() * 999);
+    };
+
+    $scope.menuItems = [
+      {
+        label: 'Item 1',
+        actionItem: function() {
+          console.debug('item.actionItem()', 'click')
+          $scope.buttonValue = 'itm' + Math.floor(Math.random() * 999);
+        }
+      }
+    ];
+
+    $scope.buttonClick = function() {
+      console.debug('button ng-click', 'click')
+      $scope.buttonValue = 'btn' + Math.floor(Math.random() * 999);
+    };
+
+    $scope.divClick = function() {
+      console.debug('div ng-click', 'click')
+      $scope.buttonValue = 'div' + Math.floor(Math.random() * 999);
+    };
+    $scope.radioModel = {}
+    $scope.radioChange = function() {
+      console.debug('radio ng-change', 'change', $scope.radioModel.data);
+    };
+
+    $scope.radioClick = function(val) {
+      console.debug('radio ng-click', 'click', val);
+      $scope.buttonValue = 'rd' + Math.floor(Math.random() * 999);
+    };
+
+  });
+
+  function getTime() {
+    var d = new Date();
+    return d.getSeconds() + '.' + d.getMilliseconds();
+  }
+
+  document.getElementById('radio1').addEventListener('change', function(){
+    console.debug('radio 1', 'change');
+  });
+  document.getElementById('radio1').addEventListener('click', function(){
+    console.debug('radio 1', 'click');
+  });
+  document.getElementById('radio2').addEventListener('change', function(){
+    console.debug('radio 2', 'change');
+  });
+  document.getElementById('radio2').addEventListener('click', function(){
+    console.debug('radio 2', 'click');
+  });
+
+  document.addEventListener('touchstart', function(e){
+    console.debug('touchstart');
+  });
+  document.addEventListener('touchend', function(e){
+    console.debug('touchend');
+    if(!e.changedTouches || !e.changedTouches.length) return;
+
+    var dot = document.createElement('div');
+    dot.style.left = (e.changedTouches[0].clientX - 1) + 'px';
+    dot.style.top = (e.changedTouches[0].clientY - 1) + 'px';
+    dot.className = 'dot';
+    dot.id = 'dot' + Date.now();
+    document.body.appendChild(dot);
+    setTimeout(function(){
+      var oldDot = document.getElementById(dot.id);
+      oldDot.parentElement.removeChild(oldDot)
+    }, 3000);
+  });
+  // document.addEventListener('mousedown', function(){
+  //   console.debug('mousedown');
+  // });
+  document.addEventListener('mouseup', function(){
+    console.debug('mouseup');
+  });
+  // document.addEventListener('mousemove', function(event){
+  //   console.debug('mousemove', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY);
+  // });
+  document.addEventListener('click', function(event){
+    console.debug('click', 'clientX: ' + event.clientX, 'clientY: ' + event.clientY, event.target.tagName);
+  });
+  document.getElementById('clear').addEventListener('click', function(){
+    setTimeout(clearMsgs, 200);
+  });
+  document.getElementById('stop').addEventListener('click', function(){
+    if(stopped) {
+      this.innerText = 'Stop';
+      window.stopped = false;
+    } else {
+      this.innerText = 'Start';
+      window.stopped = true;
+    }
+  });
+
+  var msgs = [];
+  var index = 0;
+  window.stopped = false;
+  var winConsoleError = console.error;
+
+  console.error = function() {
+    winConsoleError.apply(this, arguments);
+    var args = ['ERROR!'];
+    for (var i = 0, j = arguments.length; i < j; i++){
+      args.push(arguments[i]);
+    }
+    console.debug.apply(this, args);
+  };
+
+  console.debug = function() {
+    //return;
+    if(stopped) return;
+
+    index++;
+    var msg = [];
+    msg.push(index);
+    for (var i = 0, j = arguments.length; i < j; i++){
+      msg.push(arguments[i]);
+    }
+    msg.push(getTime());
+
+    msg = msg.join(', ');
+
+    if(arguments[0] === 'ERROR!') msg = '<span style="color:red;font-weight:bold">' + msg + '</span>';
+
+    if(arguments[0] === 'touchstart') msg = '<span style="color:blue">' + msg + '</span>';
+    if(arguments[0] === 'touchend') msg = '<span style="color:darkblue">' + msg + '</span>';
+
+    if(arguments[0] === 'mousedown') msg = '<span style="color:red">' + msg + '</span>';
+    if(arguments[0] === 'mouseup') msg = '<span style="color:maroon">' + msg + '</span>';
+
+    if(arguments[0] === 'click') msg = '<span style="color:purple">' + msg + '</span>';
+
+    if(arguments[1] === 'click') msg = '<span style="color:green;font-weight:bold">' + msg + '</span>';
+    if(arguments[1] === 'change') msg = '<span style="color:orange;font-weight:bold">' + msg + '</span>';
+
+    msgs.unshift( msg );
+
+    if(msgs.length > 30) {
+      msgs.splice(30);
+    }
+
+    // do this so we try not to interfere with the device performance
+    clearTimeout(timeId);
+    timeId = setTimeout(function(){
+      document.getElementById('logs').innerHTML = msgs.join('<br>');
+    }, 150);
+
+  }
+
+  var timeId;
+
+  function clearMsgs() {
+    msgs = [];
+    index = 0;
+    document.getElementById('logs').innerHTML = '';
+    document.getElementById('form').reset();
+  }
+
+  </script>
+
+ </form>
+</body>
+
+</html>

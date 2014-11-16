@@ -5,24 +5,56 @@
  */
 
 .slider {
-  position: relative;
-  visibility: hidden;
-  // Make sure items don't scroll over ever
   overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .slider-slides {
-  position: relative;
   height: 100%;
+  width: 100%;
+  position: relative;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .slider-slide {
-  position: relative;
   display: block;
-  float: left;
-  width: 100%;
-  height: 100%;
-  vertical-align: top;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  &[slide-state="previous"] {
+    @include translate3d(-100%, 0, 0);
+  }
+  &[slide-state="selected"] {
+    @include translate3d(0, 0, 0);
+  }
+  &[slide-state="next"] {
+    @include translate3d(100%, 0, 0);
+  }
+  &[slide-state="detached"] {
+    display: none;
+  }
+
+  // Only transition elements going into or out of selection.
+  &[slide-previous-state="selected"],
+  &[slide-state="selected"] {
+    transition: transform ease-out;
+    -webkit-transition: -webkit-transform ease-out;
+    @include transition-duration(inherit);
+    z-index: 1;
+  }
+  &.no-animate {
+    @include transition-duration(0ms !important);
+  }
 }
 
 .slider-slide-image {
@@ -38,12 +70,18 @@
   width: 100%;
   height: 15px;
   text-align: center;
+  z-index: 2;
+
+  @include display-flex();
+  @include align-items(center);
+  @include justify-content(center);
 
   .slider-pager-page {
-    display: inline-block;
     margin: 0px 3px;
     width: 15px;
-    color: #000;
+    height: 15px;
+    border-radius: 15px;
+    background-color: black;
     text-decoration: none;
 
     opacity: 0.3;

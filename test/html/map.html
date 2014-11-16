@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html ng-app="test">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+    <title>Maps</title>
+
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.15&sensor=true&region=PL&language=pl"></script>
+    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerwithlabel/1.1.9/src/markerwithlabel.js"></script>
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body ng-controller="mainCtrl">
+  <ion-nav-view></ion-nav-view>
+
+  <script id="main.html" type="text/ng-template">
+  <ion-side-menus>
+  <!-- Center content -->
+  <ion-side-menu-content drag-content="false">
+  <ion-nav-bar class="nav-title-slide-ios7 bar-stable">
+    <ion-nav-back-button class="button-icon ion-arrow-left-c"></ion-nav-back-button>
+    </ion-nav-back-button>
+  </ion-nav-bar>
+
+  <ion-nav-buttons side="left">
+    <button class="button button-icon ion-navicon-round" ng-click="toggleLeft()"></button>
+    </ion-nav-buttons>
+  <ion-nav-view name="mainView" animation="slide-left-right"></ion-nav-view>
+  </ion-pane>
+  <ion-side-menu side="left">
+  <ion-header-bar class="bar bar-header bar-positive">
+    <h1 class="title">Menu</h1>
+  </ion-header-bar>
+  <ion-content scroll="false">
+    <input type="hidden" ng-model="zalogowany">
+    <div class="list">
+    <a class="item item-icon-left" nav-clear menu-close href="#/ps/index">
+      <i class="icon ion-home"></i>
+      Strona główna
+    </a>
+
+    </div>
+  </ion-content>
+  </ion-side-menu>
+</ion-side-menus>
+  </script>
+
+  <script id="index.html" type="text/ng-template">
+  <ion-view title="Issue" right-buttons="rightButtons">
+  <ion-content has-header="true" padding="false" scroll="true">
+    <div id="google_maps"></div>
+  </ion-content>
+  </ion-view>
+  </script>
+
+  <script id="popup.html" type="text/ng-template">
+  <label class="item item-radio" ng-repeat="item in opts">
+  <input type="radio" name="ocena" ng-model="test.option" ng-value="item.id">
+  <div class="item-content">{{ item.title }}</div>
+  <i class="radio-icon ion-checkmark"></i>
+  </label>
+  </script>
+  <script>
+
+var AppCtrl = angular.module('test', ['ionic']);
+AppCtrl.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+      // setup an abstract state for the tabs directive
+      .state('ps', {
+      url: "/ps",
+      abstract: true,
+      templateUrl: "main.html"
+      })
+
+      .state('ps.index', {
+      url: '/index',
+      views: {
+        "mainView": {
+        templateUrl: 'index.html',
+        controller: 'indexCtrl'
+        }
+      }
+      });
+  // if none of the above states are matched, use this as the fallback
+  $urlRouterProvider.otherwise('/ps/index');
+});
+AppCtrl.controller('mainCtrl', function($scope, $ionicSideMenuDelegate) {
+    $scope.toggleLeft = function() {
+      $ionicSideMenuDelegate.toggleLeft();
+    };
+});
+AppCtrl.controller('indexCtrl', function($scope) {
+  var poczX = 51.9874;
+  var poczY = 19.0162;
+  var poczZoom = 5;
+  var mapOptions = {
+  center: new google.maps.LatLng(poczX, poczY),
+  zoom: poczZoom,
+  mapTypeId: google.maps.MapTypeId.ROADMAP,
+  mapTypeControl: false,
+  zoomControl: false,
+  panControl: false,
+  streetViewControl: false
+  };
+  map = new google.maps.Map(document.getElementById("google_maps"), mapOptions);
+  //google.maps.event.addDomListener(document.getElementById("google_maps"), 'mousedown', function(e) {
+  //e.preventDefault();
+  //return false;
+  //});
+  var point = new google.maps.LatLng(poczX, poczY);
+  //var chmurkaText = '<a href="#/ps/atrakcja/' + atrakcja.id + '" class="mapa_chmurka">' + atrakcja.tytul + '</a>';
+  var div = document.createElement('div');
+  div.className = "moj-marker";
+  var s = '<img src="http://img1.polskieszlaki.pl/zdjecia/planer_2014_3/100_100/2-xr-1394795777.jpg">';
+  div.innerHTML = s;
+
+  var image = {
+  url: "http://img1.polskieszlaki.pl/zdjecia/planer_2014_3/100_100/2-xr-1394795777.jpg",
+  anchor: new google.maps.Point(28, 28),
+  };
+  var marker = new MarkerWithLabel({
+  position: point,
+  map: map,
+  icon: image,
+  draggable: false,
+  labelContent: div,
+  labelAnchor: new google.maps.Point(28, 28),
+  labelClass: "marker-label", // the CSS class for the label
+  //chmurka: chmurkaText,
+  zIndex: 10,
+  });
+  console.log(marker);
+  google.maps.event.addListener(marker, 'click', function() {
+  console.log("marker");
+  //chmurka.setContent(this.chmurka);
+  //chmurka.open(map, this);
+  });
+});
+  </script>
+  <style>
+#google_maps {
+  width:100%;
+  height:500px;
+}
+  </style>
+</body>
+</html>

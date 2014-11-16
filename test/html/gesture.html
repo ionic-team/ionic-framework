@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html ng-app="gestureTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Gestures</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <style>
+      #box {
+        position: absolute;
+        top: 250px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 100, 100, 0.5);
+        overflow: auto;
+      }
+      .swipe-vertical {
+        position: absolute;
+        background: gray;
+        width:150px;
+        height: 400px;
+        top: 0;
+        right: 0;
+        z-index: 99999;
+      }
+      .swipe-up {
+        right: 150px;
+        background: #ddd;
+      }
+    </style>
+  </head>
+  <body ng-controller="AppCtrl">
+
+    <p>
+      <button class="button" on-hold="gestureTest($event, 'hold')">
+        Hold
+      </button>
+
+      <button class="button" on-tap="gestureTest($event, 'tap')">
+        Tap
+      </button>
+
+      <button class="button" on-touch="gestureTest($event, 'touch')">
+        Touch
+      </button>
+
+      <button class="button" on-release="gestureTest($event, 'release')">
+        Release
+      </button>
+
+      <button class="button" ng-click="gestureTest($event, 'ng-click')">
+        Click
+      </button>
+
+      <button class="button" on-drag="gestureTest($event, 'drag')">
+        Drag
+      </button>
+    </p>
+
+    <div class="list">
+      <div class="item" on-swipe="gestureTest($event, 'swipe (any direction)')">
+        Swipe (any direction)
+      </div>
+      <div class="item" on-swipe-left="gestureTest($event, 'swipe left')">
+        Swipe Left
+      </div>
+      <div class="item" on-swipe-right="gestureTest($event, 'swipe right')">
+        Swipe Right
+      </div>
+    </div>
+
+    <div on-swipe-down="gestureTest($event, 'swipe down')" class="swipe-vertical">
+      Swipe Down
+    </div>
+
+    <div on-swipe-up="gestureTest($event, 'swipe up')" class="swipe-vertical swipe-up">
+      Swipe Up
+    </div>
+
+    <div id="box" class="box">
+      <span id="output"></span>
+    </div>
+
+    <script>
+      angular.module('gestureTest', ['ionic'])
+
+      .controller('AppCtrl', function($scope) {
+
+        $scope.gestureTest = function($event, data) {
+          o('gesture directive test', [$event.type, data])
+        };
+
+      })
+
+      .directive('box', function($ionicGesture) {
+        return {
+          restrict: 'C',
+          link: function($scope, $element, $attr) {
+
+            var tapFn = function(e) {
+              o('tap', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY]);
+            };
+            var tapGesture = $ionicGesture.on('tap', tapFn, $element);
+
+            var releaseFn = function(e) {
+              o('release', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY]);
+            };
+            var releaseGesture = $ionicGesture.on('release', releaseFn, $element);
+
+            var holdFn = function(e) {
+              o('hold', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY]);
+            };
+            var holdGesture = $ionicGesture.on('hold', holdFn, $element);
+
+            var dragFn = function(e) {
+              o('drag', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY, e.gesture.deltaX, e.gesture.deltaY]);
+            };
+            var dragGesture = $ionicGesture.on('drag', dragFn, $element);
+
+            var swipeFn = function(e) {
+              o('swipe', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY, e.gesture.direction]);
+            };
+            var swipeGesture = $ionicGesture.on('swipe', swipeFn, $element);
+
+            var transformFn = function(e) {
+              o('transform', [e.gesture.touches[0].pageX, e.gesture.touches[0].pageY, e.gesture.direction]);
+            };
+            var transformGesture = $ionicGesture.on('transform', transformFn, $element);
+
+            $scope.$on('$destroy', function () {
+              $ionicGesture.off(dragGesture, 'drag', dragFn);
+              $ionicGesture.off(holdGesture, 'hold', holdFn);
+              $ionicGesture.off(releaseGesture, 'release', releaseFn);
+              $ionicGesture.off(swipeGesture, 'swipe', swipeFn);
+              $ionicGesture.off(tapGesture, 'tap', tapFn);
+              $ionicGesture.off(transformGesture, 'transform', transformFn);
+            });
+          }
+        };
+      });
+
+      var output = document.getElementById('output');
+
+      function o(type, d) {
+        var p = ['<div>' + type + ' event: '];
+        if(d) {
+          for(var i = 0; i < d.length; i++) {
+            p.push(d[i]);
+          }
+        }
+        p.push('</div>');
+        output.innerHTML = p.join(', ') + output.innerHTML;
+      }
+    </script>
+  </body>
+</html>

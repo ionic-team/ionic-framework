@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Tap Inputs</title>
+
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+
+  <script src="../../../../dist/js/ionic.bundle.js"></script>
+</head>
+
+<body>
+
+  <div ng-controller="MyCtrl">
+    <ion-header-bar title="'Tap Inputs'" type="bar-positive"></ion-header-bar>
+
+    <ion-content class="has-header">
+      <form name="myForm">
+
+        <div class="list">
+
+          <div class="item item-divider">
+            Checkbox
+          </div>
+          <ion-checkbox ng-model="value1">
+            Checkbox Value 1
+          </ion-checkbox>
+          <div class="item">
+            Value 1:
+            <input type="checkbox" ng-model="value1">
+            {{value1}}
+          </div>
+          <ion-checkbox ng-model="value2" ng-true-value="YES" ng-false-value="NO">
+            Checkbox Value 2
+          </ion-checkbox>
+          <div class="item">
+            Value 2:
+            <input type="checkbox" ng-model="value2" ng-true-value="YES" ng-false-value="NO">
+            {{value2}}
+          </div>
+          <ion-checkbox ng-model="value3" ng-checked="true" ng-true-value="yup" ng-false-value="nope">
+            Checkbox Initially checked with ng-checked=true, value: {{ value3 }}
+          </ion-checkbox>
+          <ion-checkbox ng-model="value4" ng-change="checkboxChange()" ng-true-value="yup" ng-false-value="nope">
+            Checkbox Change: {{ value4ChangeValue }}
+          </ion-checkbox>
+
+          <div class="item item-divider">
+            Toggle
+          </div>
+          <ion-toggle ng-model="toggle1">
+            Toggle 1: {{ toggle1 }}
+          </ion-toggle>
+          <ion-toggle ng-model="toggle2" ng-true-value="yup" ng-false-value="nope">
+            Toggle 2: {{ toggle2 }}
+          </ion-toggle>
+          <ion-toggle ng-model="toggle3" ng-checked="true">
+            Toggle 3, ng-checked initially set to true, {{ toggle3 }}
+          </ion-toggle>
+          <ion-toggle ng-model="toggle4" ng-change="toggleChange()" ng-true-value="yup" ng-false-value="nope">
+            Toggle Change: {{ toggle4ChangeValue }}
+          </ion-toggle>
+          <div class="item">
+            Toggle 1:
+            <input type="checkbox" ng-model="toggle1">,
+            Toggle 2:
+            <input type="checkbox" ng-model="toggle2" ng-true-value="yup" ng-false-value="nope">,
+          </div>
+
+          <li ng-if="true" class="item item-toggle">
+            <label class="toggle">
+              <input type="checkbox">
+              <div class="track">
+                <div class="handle"></div>
+              </div>
+            </label>
+            HTML Only
+          </li>
+
+          <div class="item item-divider">
+            Radio
+          </div>
+          <ion-radio
+            ng-repeat="radioItem in radioItems"
+            ng-value="radioItem.value"
+            ng-model="selectedValues.radio"
+            ng-change="radioChanged()">
+              {{ radioItem.text }}
+          </ion-radio>
+          <div class="item">
+            Selected Radio Value: {{ selectedValues.radio }},
+            Changed: {{ radioChangeCount }},
+            Watch Count: {{ radioWatchCount }}
+          </div>
+
+          <div class="item item-divider">
+            Select
+          </div>
+
+          <div class="item item-input item-select">
+            <div class="input-label">
+              Div Wrapped Select
+            </div>
+            <select>
+              <option>Blue</option>
+              <option selected="">Green</option>
+              <option>Red</option>
+            </select>
+          </div>
+
+          <div class="item item-input item-select">
+            <div class="input-label">
+              Div Wrapped Select
+            </div>
+            <select>
+              <option>ARC-170</option>
+              <option>A-wing</option>
+              <option>Delta-7</option>
+              <option>Naboo N-1</option>
+              <option>TIE</option>
+              <option selected="">X-wing</option>
+              <option>Y-wing</option>
+            </select>
+          </div>
+
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Label Wrapped Select
+            </div>
+            <select>
+              <option>2-1B</option>
+              <option>B1</option>
+              <option>C-3PO</option>
+              <option>IG-88</option>
+              <option>IT-O</option>
+              <option selected="">R2-D2</option>
+            </select>
+          </label>
+
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Label Wrapped Select
+            </div>
+            <select>
+              <option>Alderaan</option>
+              <option selected="">Dagobah</option>
+              <option>Felucia</option>
+              <option>Geonosis </option>
+              <option>Hoth</option>
+              <option>Kamino</option>
+              <option>Mygeeto</option>
+              <option>Naboo</option>
+              <option>Tataouine</option>
+              <option>Utapau</option>
+              <option>Yavin</option>
+            </select>
+          </label>
+
+          <div class="item item-input item-select">
+            <div class="input-label">
+              Country
+            </div>
+            <select>
+              <option>Great Britain</option>
+              <option selected>Saint Vincent and the Grenadines option should be a text overflow issue</option>
+              <option>United States</option>
+            </select>
+          </div>
+          <div class="item item-divider">
+            File Input
+          </div>
+          <label class="item item-input">
+            <div class="input-label">
+              <i class="icon ion-document-text"></i> File
+            </div>
+            <input type="file"/>
+          </label>
+
+          <div class="item item-divider">
+            Other Tests
+          </div>
+
+          <a href="clickTests.html" class="item">
+            Click Tests
+          </a>
+
+          <a href="/test/" class="item">
+            CSS Tests
+          </a>
+
+          <a href="./" class="item">
+            All JS Tests
+          </a>
+
+        </div>
+
+      </form>
+
+    </ion-content>
+  </div>
+
+  <script>
+  angular.module('ionicApp', ['ionic'])
+
+  .controller('MyCtrl', function($scope) {
+    $scope.value1 = true;
+    $scope.value2 = 'NO';
+
+    $scope.checkboxChange = function() {
+      $scope.value4ChangeValue = 'Random number: ' + Math.floor(Math.random() * 1000);
+    };
+
+    $scope.toggleChange = function() {
+      $scope.toggle4ChangeValue = 'Random number: ' + Math.floor(Math.random() * 1000);
+    };
+
+    $scope.radioItems = [
+      { text: 'Green Back Packers', value: 'packers' },
+      { text: 'Minnesota Vikings', value: 'vikings' },
+      { text: 'Chicago Bears', value: 'bears' },
+    ];
+    $scope.selectedValues = { radio: 'packers' };
+
+    $scope.radioChangeCount = 0;
+    $scope.radioChanged = function() {
+      $scope.radioChangeCount++;
+    };
+
+    $scope.radioWatchCount = 0;
+    $scope.$watch('selectedValues.radio', function(val) {
+      $scope.radioWatchCount++;
+    })
+
+  });
+</script>
+
+</body>
+
+</html>

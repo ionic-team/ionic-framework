@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Ionic List Directive</title>
+
+    <link href="../../dist/css/ionic.min.css" rel="stylesheet">
+    <script src="../../dist/js/ionic.bundle.min.js"></script>
+  </head>
+
+  <body ng-controller="MyCtrl">
+
+    <ion-header-bar class="bar-positive">
+      <div class="buttons">
+        <button class="button button-icon icon ion-ios7-minus-outline"
+          ng-click="data.showDelete = !data.showDelete; data.showReorder = false"></button>
+      </div>
+      <h1 class="title">Ionic Delete/Option Buttons</h1>
+      <button class="button"
+          ng-click="data.showDelete = false; data.showReorder = !data.showReorder">
+            Reorder
+          </button>
+      </div>
+    </ion-header-bar>
+
+    <ion-header-bar class="bar-positive bar-assertive bar-subheader">
+      <h1 class="title">Subheader</h1>
+    </ion-header-bar>
+
+    <ion-content>
+      <!--
+        Search bar
+      -->
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+            <i class="icon ion-ios7-search placeholder-icon"></i>
+            <input id="searchKey" type="search" ng-model="query" ng-change="search()" placeholder="search" ng-model="searchKey" autocorrect="off" >
+            <button class="button button-clear icon ion-close-circled placeholder-icon smallicon" ng-click="clearSearch()"></button>
+            <!--i class="icon ion-close-circled placeholder-icon" ng-click="clearSearch()"></i-->
+        </label>
+      </div>
+      <!--
+        Buttons  Tipo - Tarjeta - Ordenar
+      -->
+      <div class="padding">
+        <div class="button-bar bar-outline bar-positive">
+          <a class="button-block button button-positive" ng-click="toggleCanSwipe()">Toggle Can Swipe (is {{canSwipe()}})</a>
+        </div>
+      </div>
+
+      <ion-list show-delete="data.showDelete" show-reorder="data.showReorder" can-swipe="true">
+  		<div class="item item-divider">
+  		Type 1
+  		</div>
+        <ion-item ng-repeat="item in items"
+                  ng-click="alert(item.id)"
+                  class="item item-avatar-left item-icon-right"
+                  type="item-avatar" >
+          <img src="{{item.image}}">
+          <h2>Item {{ item.id }}</h2>
+          <p>{{item.id}}</p>
+          <i class="icon ion-chevron-right icon-accessory"></i>
+          <ion-delete-button class="ion-minus-circled"
+                             ng-click="onItemDelete(item)">
+          </ion-delete-button>
+          <ion-option-button class="button-assertive"
+                             ng-click="edit(item)">
+            Edit
+          </ion-option-button>
+          <ion-option-button class="button-calm"
+                             ng-click="share(item)">
+            Share
+          </ion-option-button>
+          <ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
+        </ion-item>
+
+      </ion-list>
+
+    </ion-content>
+
+    <script>
+angular.module('ionicApp', ['ionic'])
+
+.controller('MyCtrl', function($scope, $ionicListDelegate) {
+
+  $scope.toggleCanSwipe = function() {
+  $ionicListDelegate.canSwipeItems(!$scope.canSwipe());
+  };
+  $scope.canSwipe = function() {
+  return $ionicListDelegate.canSwipeItems();
+  };
+
+
+  $scope.data = {
+    showDelete: false
+  };
+
+  $scope.moveItem = function(item, from, to) {
+    console.log('beforeReorder', item.id, from, to, $scope.items.slice(0,5));
+    $scope.items.splice(from, 1);
+    $scope.items.splice(to, 0, item);
+  };
+
+  $scope.alert = window.alert.bind(window);
+
+  $scope.edit = function(item) {
+    alert('Edit Item: ' + item.id);
+  };
+  $scope.share = function(item) {
+    alert('Share Item: ' + item.id);
+  };
+
+  $scope.onItemDelete = function(item) {
+    $scope.items.splice($scope.items.indexOf(item), 1);
+  };
+
+  $scope.items = [];
+  for (var i=0; i<15; i++) {
+    $scope.items.push({id:i});
+  }
+
+});
+    </script>
+  </body>
+</html>

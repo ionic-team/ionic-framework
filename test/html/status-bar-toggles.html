@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+<head>
+  <meta charset="utf-8">
+  <title>Status Bar</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <link href="../../dist/css/ionic.css" rel="stylesheet">
+  <style>
+    #ios-status-bar {
+      position: absolute;
+      width: 100%;
+      height: 20px;
+      background: blue;
+      color: white;
+      text-align: center;
+      z-index: 9999;
+      display: none;
+    }
+    .platform-cordova.platform-ios #ios-status-bar {
+      display: block;
+    }
+  </style>
+  <script src="../../dist/js/ionic.bundle.js"></script>
+  <script>
+    angular.module('ionicApp', ['ionic'])
+
+        .controller('AppCtrl', function($scope, $timeout){
+
+          $scope.fullScreenTrueTrue = function() {
+            ionic.Platform.fullScreen(true, true);
+            showBodyClass();
+          };
+
+          $scope.fullScreenFalseTrue = function() {
+            ionic.Platform.fullScreen(false, true);
+            showBodyClass();
+          };
+
+          $scope.fullScreenFalseFalse = function() {
+            ionic.Platform.fullScreen(false, false);
+            showBodyClass();
+          };
+
+          $scope.fullScreenTrueFalse = function() {
+            ionic.Platform.fullScreen(true, false);
+            showBodyClass();
+          };
+
+          $scope.fullScreenDefault = function() {
+            ionic.Platform.fullScreen();
+            showBodyClass();
+          };
+
+          $scope.fullScreenTrueDefault = function() {
+            ionic.Platform.fullScreen(true);
+            showBodyClass();
+          };
+
+          $scope.fullScreenFalseDefault = function() {
+            ionic.Platform.fullScreen(false);
+            showBodyClass();
+          };
+
+          $scope.ios = function() {
+            document.body.classList.toggle('platform-ios');
+            showBodyClass();
+          };
+
+          $scope.android = function() {
+            document.body.classList.toggle('platform-android');
+            showBodyClass();
+          };
+
+          $scope.cordova = function() {
+            document.body.classList.toggle('platform-cordova');
+            showBodyClass();
+          };
+
+          $scope.init = function() {
+            showBodyClass();
+          };
+
+          function showBodyClass() {
+            $timeout(function(){
+              $scope.bodyClass = document.body.className;
+              $scope.isFullScreen = ionic.Platform.isFullScreen;
+              $scope._showStatusBar = ionic.Platform._showStatusBar;
+            }, 50);
+          }
+
+        });
+
+    // fake cordova
+    window.StatusBar = {
+      show: function() {
+        console.log('StatusBar show');
+        document.getElementById('ios-status-bar').style.display = '';
+      },
+      hide: function() {
+        console.log('StatusBar hide');
+        document.getElementById('ios7-status-bar').style.display = 'none';
+      }
+    }
+
+  </script>
+</head>
+<body ng-controller="AppCtrl" ng-init="init()">
+
+<div id="ios-status-bar">Fake iOS Status Bar</div>
+
+<header class="bar bar-header">
+  <a class="button" href="./">Back</a>
+  <h1 class="title">Status Bar</h1>
+  <a class="button icon ion-home" href="./"> Home</a>
+</header>
+
+<div class="content padding" style="padding-top: 100px">
+
+  <p><code>fullScreen: function(showFullScreen, showStatusBar)</code></p>
+
+  <p><code>Body Class: {{ bodyClass }}</code></p>
+
+  <p><code>isFullScreen: {{ isFullScreen }}</code></p>
+
+  <p><code>_showStatusBar: {{ _showStatusBar }}</code></p>
+
+  <p>
+    <button ng-click="fullScreenDefault()">fullScreen()</button>
+    <button ng-click="fullScreenTrueDefault()">fullScreen(true)</button>
+    <button ng-click="fullScreenFalseDefault()">fullScreen(false)</button>
+    <button ng-click="fullScreenTrueTrue()">fullScreen(true, true)</button>
+    <button ng-click="fullScreenFalseTrue()">fullScreen(false, true)</button>
+    <button ng-click="fullScreenFalseFalse()">fullScreen(false, false)</button>
+    <button ng-click="fullScreenTrueFalse()">fullScreen(true, false)</button>
+  </p>
+
+  <p>
+    <button ng-click="cordova()">.platform-cordova</button>
+    <button ng-click="ios()">.platform-ios</button>
+    <button ng-click="android()">.platform-android</button>
+  </p>
+
+</div>
+
+</body>
+</html>

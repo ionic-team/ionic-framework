@@ -10,6 +10,11 @@ If not, then [create a codepen.io](http://codepen.io/ionic/public-list) that dem
 
 Next, [create a new issue](http://ionicframework.com/submit-issue/) that briefly explains the problem, and provides a bit of background as to the circumstances that triggered it. Don't forget to include the link to that [codepen.io](http://codepen.io/ionic/public-list) you created!
 
+### Issue Etiquette Guidelines
+
+Poor  attitude, ranting, name-calling, bullying, being a jerk, complaining, or spamming are fruitless and unacceptable. Issues that violate the open source spirit of this community, or  any of the guidelines listed here, may result in your Issue being deleted or reposted to our Forum, a better place for debate and discussion. If you wish to contribute, either make your response respectful or do not bother to respond. You’ll find it’s pretty ineffective.
+
+Simply put: be respectful and act like an adult. Critiques are better made on the Forum. If you can’t do that, this isn’t a community  for you.
 
 
 ### Pull Request Guidelines

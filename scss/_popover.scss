@@ -1,0 +1,168 @@
+
+/**
+ * Popovers
+ * --------------------------------------------------
+ * Popovers are independent views which float over content
+ */
+
+.popover-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $z-index-popover;
+  width: 100%;
+  height: 100%;
+  background-color: $popover-backdrop-bg-inactive;
+
+  &.active {
+    background-color: $popover-backdrop-bg-active;
+  }
+}
+
+.popover {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  z-index: $z-index-popover;
+  display: block;
+  margin-top: 12px;
+  margin-left: -$popover-width / 2;
+  height: $popover-height;
+  width: $popover-width;
+  background-color: $popover-bg-color;
+  box-shadow: $popover-box-shadow;
+  opacity: 0;
+
+  .item:first-child {
+    border-top: 0;
+  }
+
+  .item:last-child {
+    border-bottom: 0;
+  }
+
+  &.popover-bottom {
+    margin-top: -12px;
+  }
+}
+
+
+// Set popover border-radius
+.popover,
+.popover .bar-header {
+  border-radius: $popover-border-radius;
+}
+.popover .scroll-content {
+  z-index: 1;
+  margin: 2px 0;
+}
+.popover .bar-header {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.popover .has-header {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+.popover-arrow {
+  display: none;
+}
+
+
+// iOS Popover
+.platform-ios {
+
+  .popover {
+    box-shadow: $popover-box-shadow-ios;
+  }
+
+  .popover,
+  .popover .bar-header {
+    border-radius: $popover-border-radius-ios;
+  }
+  .popover .scroll-content {
+    margin: 8px 0;
+    border-radius: $popover-border-radius-ios;
+  }
+  .popover .scroll-content.has-header {
+    margin-top: 0;
+  }
+  .popover-arrow {
+    position: absolute;
+    display: block;
+    top: -17px;
+    width: 30px;
+    height: 19px;
+    overflow: hidden;
+
+    &:after {
+      position: absolute;
+      top: 12px;
+      left: 5px;
+      width: 20px;
+      height: 20px;
+      background-color: $popover-bg-color;
+      border-radius: 3px;
+      content: '';
+      @include rotate(-45deg);
+    }
+  }
+  .popover-bottom .popover-arrow {
+    top: auto;
+    bottom: -10px;
+    &:after {
+      top: -6px;
+    }
+  }
+}
+
+
+// Android Popover
+.platform-android {
+
+  .popover {
+    margin-top: -32px;
+    background-color: $popover-bg-color-android;
+    box-shadow: $popover-box-shadow-android;
+
+    .item {
+      border-color: $popover-bg-color-android;
+      background-color: $popover-bg-color-android;
+      color: #4d4d4d;
+    }
+    &.popover-bottom {
+      margin-top: 32px;
+    }
+  }
+
+  .popover-backdrop,
+  .popover-backdrop.active {
+    background-color: transparent;
+  }
+}
+
+
+// disable clicks on all but the popover
+.popover-open {
+  pointer-events: none;
+
+  .popover,
+  .popover-backdrop {
+    pointer-events: auto;
+  }
+  // prevent clicks on popover when loading overlay is active though
+  &.loading-active {
+    .popover,
+    .popover-backdrop {
+      pointer-events: none;
+    }
+  }
+}
+
+
+// wider popover on larger viewports
+@media (min-width: $popover-large-break-point) {
+  .popover {
+    width: $popover-large-width;
+  }
+}

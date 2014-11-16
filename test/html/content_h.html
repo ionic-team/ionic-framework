@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html ng-app="navTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Content</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <style>
+      .reveal-animation {
+        /*
+        -webkit-transform: translate3d(0%, 0, 0);
+                transform: translate3d(0%, 0, 0);
+
+       -webkit-transition: -webkit-transform 1s ease-in-out;
+               transition:         transform 1s ease-in-out;
+        */
+      }
+      .reveal-animation.ng-enter {
+        -webkit-transition: .2s ease-in-out all;
+        -webkit-transform:translate3d(100%,0,0) ;
+      }
+      .reveal-animation.ng-enter-active {
+        -webkit-transform:translate3d(0,0,0) ;
+      }
+      .reveal-animation.ng-leave {
+        -webkit-transition: .2s ease-in-out all;
+        -webkit-transform:translate3d(0%,0,0);
+      }
+      .reveal-animation.ng-leave-active {
+        -webkit-transition: .2s ease-in-out all;
+        -webkit-transform:translate3d(-100%,0,0);
+      }
+
+      .scroll-refresher {
+        border-bottom: 1px solid #eee;
+      }
+      #refresh-content {
+        color: #999;
+        text-align: center;
+        font-size: 48px;
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+      }
+    </style>
+
+  </head>
+  <body ng-controller="ThisCtrl">
+    <ion-pane>
+      <ion-header-bar id="header" class="bar-primary">>
+        <h1 class="title">Title</h1>
+      </ion-header-bar>
+
+      <ion-content id="container"
+        has-scroll-x="true"
+        class="has-header has-tabs">
+        <div style="height: 4000px; width: 4000px; background: url('tree_bark.png') repeat"></div>
+      </ion-content>
+      <nav id="tab-bar" class="tabs tabs-icon-top">
+        <a class="tab-item" href="#">
+          <i class="icon ion-game-controller-a"></i>
+          Fun
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-locked"></i>
+          Security
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-heart"></i>
+          Simple
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-leaf"></i>
+          Light
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-waterdrop"></i>
+          Clean
+        </a>
+      </nav>
+
+    </ion-pane>
+
+    <script>
+      angular.module('navTest', ['ionic'])
+
+      .directive('hidesHeader', function() {
+        return {
+          link: function($scope, $element, $attr) {
+            var startTop = $element[0].offsetTop;
+            console.log("Starting", startTop);
+          }
+        }
+      })
+
+      .controller('ThisCtrl', function($scope) {
+        var header = document.getElementById('header');
+        var content = document.getElementById('container');
+        var startTop = header.offsetTop;
+        $scope.onScrollComplete = function(event, scrollTop, scrollLeft) {
+          console.log('Scroll complete', scrollTop, scrollLeft);
+        }
+        $scope.onScroll = function(event, scrollTop, scrollLeft) {
+        /*
+          if(scrollTop > startTop) {
+            var diff = scrollTop - startTop;
+            console.log(diff);
+            header.style[ionic.CSS.TRANSFORM] = 'translate3d(0px, -' + diff + 'px, 0)';
+            content.style.marginTop = -diff + 'px';
+          }
+          console.log('Scroll', scrollTop, scrollLeft);
+          */
+        };
+      })
+
+      .controller('AppCtrl', function($scope, $compile, $timeout, $element) {
+        $scope.items = [];
+        for(var i = 0; i < 70; i++) {
+          $scope.items.push({
+          });
+        }
+        $timeout(function() {
+          $scope.scrollView.resize();
+        }, 1000);
+      })
+    </script>
+  </body>
+</html>

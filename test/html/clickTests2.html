@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+<head>
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<style>
+  html, body {
+    width: 100%;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    -webkit-user-select: none;
+  }
+  div {
+    background-color: #eee;
+  }
+  input {
+    -webkit-user-select: auto;
+  }
+  button {
+    font-size: 24px;
+    background: gray;
+  }
+  .activated {
+    background: red !important;
+  }
+  .notifiers div {
+    position: fixed;
+    right: 0;
+    color: white;
+    padding: 1px;
+    width: 70px;
+    text-align: center;
+    display: none;
+    font-size: 10px;
+  }
+  #click {
+    top: 0;
+    background: green;
+  }
+  #mousedown {
+    top: 15px;
+    background: lightblue;
+  }
+  #mouseup {
+    top: 30px;
+    background: blue;
+  }
+  #mousemove {
+    top: 45px;
+    background: darkblue;
+  }
+  #touchstart {
+    top: 60px;
+    background: pink;
+  }
+  #touchend {
+    top: 75px;
+    background: red;
+  }
+  #touchmove {
+    top: 90px;
+    background: maroon;
+  }
+  #touchcancel {
+    top: 105px;
+    background: purple;
+  }
+  #focusin {
+    top: 120px;
+    background: orange;
+  }
+  #focusout {
+    top: 135px;
+    background: orangered;
+  }
+  #clickblocked {
+    top: 150px;
+    background: darkgray;
+  }
+</style>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+<script src="../../../../dist/js/ionic.bundle.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+
+  <div style="margin-bottom: 20px">
+    <button style="padding: 5px">Btn</button>
+    <a href="#" style="display:inline-block; padding:10px; background:#eee">Link</a>
+    <label style="background: yellow; padding: 12px 0 12px 40px">
+      <input type="checkbox" style="width:25px;height:25px">
+    </label>
+    <label style="background: orange; padding: 12px 0 12px 40px">
+      <input type="radio" name="radio" style="width:25px;height:25px">
+    </label>
+    <label style="background: orangered; padding: 12px 0 12px 40px">
+      <input type="radio" name="radio" style="width:25px;height:25px">
+    </label>
+  </div>
+
+  <div style="margin-bottom: 20px">
+    <label style="background: green; padding: 12px 0 12px 50px">
+      <input style="width: 60px; height: 28px">
+    </label>
+    <label style="background: blue; padding: 12px 0 12px 50px;">
+      <select>
+        <option>Opt 1</option>
+        <option>Opt 2</option>
+        <option>Opt 3</option>
+        <option>Opt 4</option>
+        <option>Opt 5</option>
+      </select>
+    </label>
+    <div id="myDiv" style="display:inline-block; width: 20px; background: gray; padding: 12px 0 12px 60px;">div</div>
+  </div>
+
+  <div>
+    <div style="padding: 10px 16px; display:inline-block; background:maroon" ng-click="buttonClick()">ng</div>
+    <a ng-click="linkClick()" href="#" style="display:inline-block; padding:10px; background:#eee">Link</a>
+    <label style="background: yellow; padding: 12px 0 12px 40px">
+      <input ng-click="checkboxClick()" type="checkbox" style="width:25px;height:25px">
+    </label>
+    <label style="background: orange; padding: 12px 0 12px 40px">
+      <input type="radio" name="radio" style="width:25px;height:25px">
+    </label>
+    <label style="background: orangered; padding: 12px 0 12px 40px">
+      <input type="radio" name="radio" style="width:25px;height:25px">
+    </label>
+  </div>
+
+  <div style="margin:20px 0 10px;">
+    <input type="range" style="width: 150px">
+    <input type="file" style="width: 100px">
+  </div>
+
+  <div data-tap-disabled="true" style="display:none">
+    <leaflet id="map" events="events" center="center" testing="no-testing" markers="markers" defaults="defaults" style="width:80px; height:100px; right: 0; top: 170px; position:absolute; overflow:hidden;"></leaflet>
+  </div>
+
+  <div style="position:absolute; right:0; top: 270px; width: 80px; height:80px; overflow:hidden">
+    <img style="width:100%; height:100%;" src="" onclick="imgClick()">
+  </div>
+
+  <!--
+  <video controls width=320 height=200 poster="https://www.apple.com/home/images/promo_iphone5s.jpg">
+    <source src="http://mastbaumbishop.wikispaces.com/file/view/sample.m4v/77739109/sample.m4v">
+    <source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4">
+    <source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.webm">
+  </video>
+-->
+
+  <div class="notifiers">
+    <div id="click">click</div>
+    <div id="mousedown">mousedown</div>
+    <div id="mouseup">mouseup</div>
+    <div id="mousemove">mousemove</div>
+    <div id="touchstart">touchstart</div>
+    <div id="touchend">touchend</div>
+    <div id="touchmove">touchmove</div>
+    <div id="touchcancel">touchcancel</div>
+    <div id="focusin">focusin</div>
+    <div id="focusout">focusout</div>
+    <div id="clickblocked">clickblocked</div>
+  </div>
+
+  <div id="logs"></div>
+
+</body>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<script src="/tmp/angular-leaflet-directive.js"></script>
+<script>
+  window.timers = {};
+  var duration = 1000;
+
+  document.addEventListener('mousedown', setEvent, false);
+  document.addEventListener('mouseup', setEvent, false);
+  //document.addEventListener('mousemove', setEvent, false);
+  document.addEventListener('touchstart', setEvent, false);
+  document.addEventListener('touchend', setEvent, false);
+  document.addEventListener('touchmove', setEvent, false);
+  document.addEventListener('touchcancel', setEvent, false);
+  document.addEventListener('focusin', onFocusIn, false);
+  document.addEventListener('focusout', onFocusOut, false);
+
+  function setEvent(e) {
+    if(e.type.indexOf('move') < 0) {
+      console.debug(e.type, e.target.tagName);
+    }
+    var timerId = e.type + 'timerId';
+    clearTimeout(timerId);
+    var el = document.getElementById(e.type);
+    window.timers[timerId] = setTimeout(function(e2){
+      document.getElementById(e.type).style.display = '';
+    }, duration);
+    el.style.display = 'block';
+  }
+
+  function onFocusIn(e) {
+    console.debug('focusin', e.target.tagName, e.isSimulated);
+    clearTimeout( window.timers['focusin_timer'] );
+    document.getElementById('focusin').style.display = 'block';
+    window.timers['focusin_timer'] = setTimeout(function(){
+      document.getElementById('focusin').style.display = '';
+    }, duration);
+  }
+
+  function onFocusOut(e) {
+    console.debug('focusout', e.target.tagName);
+    clearTimeout( window.timers['focusout_timer'] );
+    document.getElementById('focusout').style.display = 'block';
+    window.timers['focusout_timer'] = setTimeout(function(){
+      document.getElementById('focusout').style.display = '';
+    }, duration);
+  }
+
+  function onClick(e) {
+    console.debug('click', (e.pointerType ? e.pointerType : 'mouse'), e.target.tagName)
+    clearTimeout( window.timers['onClick_timer'] );
+    document.getElementById('click').style.display = 'block';
+    document.getElementById('click').innerText = (e.pointerType ? e.pointerType : '') + ' click';
+    window.timers['onClick_timer'] = setTimeout(function(){
+      document.getElementById('click').style.display = '';
+    }, duration);
+  }
+  document.addEventListener('click', onClick, false);
+
+  function imgClick() {
+    console.debug('img click')
+  }
+
+
+  document.getElementById('myDiv').addEventListener('click', function(e){
+    console.debug('div clicked!');
+  }, false);
+
+
+  var msgs = [];
+  var index = 0;
+  var timeId;
+  var winConsoleError = console.error;
+
+  function getTime() {
+    var d = new Date();
+    return d.getSeconds() + '.' + d.getMilliseconds();
+  }
+
+  console.error = function() {
+    winConsoleError.apply(this, arguments);
+    var args = ['ERROR!'];
+    for (var i = 0, j = arguments.length; i < j; i++){
+      args.push(arguments[i]);
+    }
+    console.debug.apply(this, args);
+  };
+
+  console.debug = function() {
+    index++;
+    var msg = [];
+    msg.push(index);
+    for (var i = 0, j = arguments.length; i < j; i++){
+      msg.push(arguments[i]);
+    }
+    msg.push(getTime());
+
+    msg = msg.join(', ');
+
+    if(arguments[0] === 'ERROR!') msg = '<span style="color:red;font-weight:bold">' + msg + '</span>';
+
+    if(arguments[0] === 'touchstart') msg = '<span style="color:pink">' + msg + '</span>';
+    if(arguments[0] === 'touchend') msg = '<span style="color:red">' + msg + '</span>';
+
+    if(arguments[0] === 'mousedown') msg = '<span style="color:lightblue">' + msg + '</span>';
+    if(arguments[0] === 'mouseup') msg = '<span style="color:blue">' + msg + '</span>';
+
+    if(arguments[0] === 'focusin') msg = '<span style="color:orange">' + msg + '</span>';
+    if(arguments[0] === 'focusout') msg = '<span style="color:orangered">' + msg + '</span>';
+
+    if(arguments[0] === 'click') msg = '<span style="color:green;font-weight:bold">' + msg + '</span>';
+
+    if(arguments[0] === 'clickPrevent') msg = '<span style="color:gray;">' + msg + '</span>';
+
+    msgs.unshift( msg );
+
+    if(msgs.length > 30) {
+      msgs.splice(40);
+    }
+
+    // do this so we try not to interfere with the device performance
+    clearTimeout(timeId);
+    timeId = setTimeout(function(){
+      document.getElementById('logs').innerHTML = msgs.join('<br>');
+    }, 150);
+
+  }
+
+
+  angular.module('ionicApp', ['ionic', 'leaflet-directive'])
+
+  .controller('MainCtrl', function($scope){
+
+    $scope.buttonClick = function() {
+      console.debug('ng-click div');
+    };
+
+    $scope.linkClick = function() {
+      console.debug('ng-click link');
+    };
+
+    $scope.checkboxClick = function() {
+      console.debug('ng-click checkbox');
+    };
+
+   $scope.events = {
+      map: {
+        enable: ['click', 'moveend'],
+        logic: 'emit'
+      }
+    };
+
+    angular.extend($scope, {
+      defaults: {
+        tileLayer: "http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg",
+        maxZoom: 17,
+        minZoom: 3,
+        attributionControl: false,
+        detectRetina: true,
+        zoomControl: false
+      },
+      center: {
+        lat: 47.366667,
+        lng: 8.55,
+        zoom: 12
+      },
+      markers: {}
+    });
+
+    $scope.$on("leafletDirectiveMap.click", function(e, args) {
+      console.debug('map click');
+    });
+
+  });
+
+</script>
+</html>

@@ -1,14 +1,17 @@
-<a href="https://travis-ci.org/driftyco/ionic"><img src="https://travis-ci.org/driftyco/ionic.svg?branch=master" data-bindattr-164="164" title="Build Status Images"></a>
+[![Build Status](https://circleci.com/gh/driftyco/ionic.png?circle-token=7388822b8691078560c4f057d8eb0df0e8d7f1b5)](https://circleci.com/gh/driftyco/ionic)
+
+
+[![Issues Ready](https://badge.waffle.io/driftyco/ionic.png?label=ready&title=Ready)](https://waffle.io/driftyco/ionic)
 
 The best place to start with Ionic is our [documentation page](http://ionicframework.com/docs/).
 
-Note: Ionic currently best supports iOS 6+ and Android 4.1+, with limited support for Android 2.3. Ionic is changing quickly as we work towards the beta.
+Ionic currently best supports iOS 6+ and Android 4.1+, with scaled-down support for Android 2.3.
 
 # What is Ionic?
 
-Ionic is the open source HTML5 Mobile Framework for building amazing, cross-platform hybrid native apps with HTML, JavaScript, and CSS. Just like this one:
+Ionic is the open source HTML5 Mobile Framework for building amazing, cross-platform hybrid native apps with HTML, JavaScript, and CSS.
 
-![Weather Demo](http://ionicframework.com/img/weather1x.png)
+![Ionic GUI](http://ionicframework.com/img/gui_screen.jpg)
 
 We built Ionic because we wanted a framework that focused on building hybrid native apps, rather than mobile websites. We wanted this framework to be obsessive about great design and performance. A framework that left the past behind and focused on the future where mobile devices could make HTML5 feel native.
 
@@ -17,14 +20,13 @@ of great solutions that work well for websites, like [jQuery Mobile](http://jque
 
 Ionic is also not a good solution if you need to support older generation devices. Our [compatibility](http://ionicframework.com/docs/#browser-support) *starts* at iOS 6 and Android 4.1. We will never support versions earlier than those. This is a framework for the future. Learn more: [Where does the Ionic Framework fit in?](http://ionicframework.com/blog/where-does-the-ionic-framework-fit-in/)
 
-
 ## Quick Start
 
 To start using ionic, you have two options: copy over the built JS and CSS files, or
-use the `ionic` tool ([ionic-cli](https://github.com/driftyco/ionic-cli)) which can be installed through npm:
+use the `ionic` tool ([ionic-cli](https://github.com/driftyco/ionic-cli)) which can be installed through npm: _(You may need to prefix the command with `sudo` depending on your OS and setup.)_
 
 ```bash
-$ sudo npm install -g ionic
+$ npm install -g ionic
 ```
 
 Then, you can start a new ionic project by running:
@@ -79,9 +81,9 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 + <https://twitter.com/adamdbradley>
 + <https://github.com/adamdbradley>
 
-**Andy Joslin**
+**Andrew Joslin**
 
-+ <https://twitter.com/andytjoslin>
++ <https://twitter.com/andrewtjoslin>
 + <https://github.com/ajoslin>
 
 ## Development
@@ -94,19 +96,27 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 * `gulp watch` to watch and rebuild on change
 * `gulp karma` to test one-time
 * `gulp karma-watch` to test and re-run on source change
-* `gulp protractor` to test e2e tests locally
-* `gulp cloudtest` to run e2e tests in the cloud
+* `gulp snapshot` to test e2e tests locally (run `gulp demos` first to generate e2e tests). Be sure to run `./node_modules/.bin/webdriver-manager update --chrome` to first install the chrome webdriver dependency.
 
 ### Documentation
 
-* To test documentation, follow these steps:
-  1. Clone ionic-site to `./tmp/ionic-site` - this is where the `gulp docs` task builds to.  `./tmp` is the folder that travis uses to do all of its tasks.
-    - `mkdir tmp && git clone git@github.com:driftyco/ionic-site tmp/ionic-site`
-  2. Make jekyll rebuild whenever you change the site.
-    - `cd tmp/ionic-site && jekyll serve -w`
+* Documentation is generated into `dist/ionic-site`.  To test documentation properly, follow these steps:
+  1. Clone ionic-site into `./dist/ionic-site`.
+    - `git clone git@github.com:driftyco/ionic-site dist/ionic-site`
+  2. Start jekyll, telling it to rebuild whenever the site changes.
+    - `cd dist/ionic-site && jekyll serve -w`
   3. Go back to project root and build the docs
-    - `gulp docs`
+    - `gulp docs [--doc-version=(versionName|nightly)]`
   4. Open localhost:4000 and see your changes! Re-run `gulp docs` again whenever you change something, and jekyll will update the site.
+
+### Demos / Kitchen Sink
+
+* The demo site is generated into `dist/ionic-demo`. To test the demos, follow these steps:
+  1. Run `gulp demos [--demo-version=(versionName|nightly)]`
+  2. Start an http server from `dist/ionic-demo`:
+    - `cd dist/ionic-demo && python -m SimpleHTTPServer`
+  3. Navigate to `http://localhost:8000/{versionName|nightly}` and use the demos
+  4. Run `gulp demos` again whenever you change the demos
 
 ### Commit Conventions
 
@@ -117,9 +127,9 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
 - Almost all of the logic for releasing Ionic is done on the Travis server
 - To push a new release:
   1. Update package.json version to new version
-  2. Update package.json codename to new codename
-  3. Generate changelog with `gulp changelog` and make sure it is OK
-  4. Commit these and push to master
+  2. Generate changelog with `gulp changelog`
+  3. Go through the changelog, and fix any mistakes or clarify any unclear commit messages
+  4. Commit package.json and CHANGELOG.md and push to master
 - Travis will detect that this commit changed the version in package.json and push out all necessary for this new release (tags, release files, site config, ...)
 
 ## LICENSE

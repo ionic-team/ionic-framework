@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="cardsApp">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <title>Ionic Swipeable Cards</title>
+
+  <link href="http://code.ionicframework.com/nightly/css/ionic.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+
+  <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.min.js"></script>
+  <script src="http://code.ionicframework.com/contrib/ionic-contrib-swipecards/ionic.swipecards.js"></script>
+  <script src="script.js"></script>
+
+</head>
+
+<body class="slide-left-right-ios7" no-scroll>
+
+  <ion-pane ng-controller="CardsCtrl">
+    <ion-header-bar class="bar-transparent">
+      <h1 class="title">Help Out</h1>
+    </ion-header-bar>
+
+    <swipe-cards on-swipe="onSwipe($event)">
+
+      <swipe-cards>
+        <swipe-card on-swipe="cardSwiped()" id="start-card">
+          Swipe down for a new card
+        </swipe-card>
+        <swipe-card ng-repeat="card in cards" on-destroy="cardDestroyed($index)" on-swipe="cardSwiped($index)">
+
+          <div ng-controller="CardCtrl">
+            <div class="title">
+              {{card.title}}
+            </div>
+            <div class="image">
+              <img ng-src="{{card.image}}">
+            </div>
+            <div class="button-bar">
+              <button class="button button-clear button-positive" ng-click="goAway()">Answer</button>
+              <button class="button button-clear button-positive" ng-click="goAway()">Decline</button>
+            </div>
+          </div>
+        </swipe-card>
+      </swipe-cards>
+  </ion-pane>
+
+  <!-- quick cache hack -->
+  <img src="http://ionicframework.com.s3.amazonaws.com/demos/ionic-contrib-swipecards/pic.png" style="display: none">
+  <img src="http://ionicframework.com.s3.amazonaws.com/demos/ionic-contrib-swipecards/pic1.png" style="display: none">
+  <img src="http://ionicframework.com.s3.amazonaws.com/demos/ionic-contrib-swipecards/pic2.png" style="display: none">
+  <img src="http://ionicframework.com.s3.amazonaws.com/demos/ionic-contrib-swipecards/pic3.png" style="display: none">
+  <img src="http://ionicframework.com.s3.amazonaws.com/demos/ionic-contrib-swipecards/pic4.png" style="display: none">
+
+</body>
+</html>

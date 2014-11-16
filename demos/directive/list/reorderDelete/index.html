@@ -1,0 +1,42 @@
+---
+name: reorderDelete
+component: ionList
+---
+<div ng-controller="ListCtrl">
+  <ion-header-bar class="bar-positive">
+    <a class="button" ng-click="toggleDelete()">
+      Delete
+    </a>
+    <h1 class="title">List</h1>
+    <a class="button" ng-click="toggleReorder()">
+      Reorder
+    </a>
+  </ion-header-bar>
+  <ion-content>
+    <ion-list show-delete="data.showDelete"
+              show-reorder="data.showReorder">
+      <ion-item ng-repeat="item in items"
+                class="item-thumbnail-left">
+
+        <img src="" style="background:black; width:80px; height:80px;">
+        <h2>Item {{item}}</h2>
+        <p>Here's an item description.</p>
+        <ion-option-button class="button-positive"
+                           ng-click="share(item)">
+          Share
+        </ion-option-button>
+        <ion-option-button class="button-info"
+                           ng-click="edit(item)">
+          Edit
+        </ion-option-button>
+        <ion-delete-button class="ion-minus-circled"
+                           ng-click="items.splice($index, 1)">
+        </ion-delete-button>
+        <ion-reorder-button class="ion-navicon"
+                            on-reorder="reorderItem(item, $fromIndex, $toIndex)">
+        </ion-reorder-button>
+
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</div>

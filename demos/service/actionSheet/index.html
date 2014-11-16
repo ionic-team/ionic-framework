@@ -1,0 +1,22 @@
+---
+name: takeAction
+component: $ionicActionSheet
+---
+<ion-header-bar class="bar-positive">
+  <h1 class="title">Action</h1>
+</ion-header-bar>
+<ion-content ng-controller="ActionSheetCtrl" class="padding">
+  <div class="button button-assertive button-block" ng-click="takeAction()">
+    Take Action!
+  </div>
+  <div class="card" ng-show="messages.length">
+    <div class="item item-divider">
+      User Log
+    </div>
+    <div class="item item-text-wrap">
+      <div ng-repeat="message in messages">
+        {{message.text}}
+      </div>
+    </div>
+  </div>
+</ion-content>

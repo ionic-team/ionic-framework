@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html ng-app="navTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Content</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body ng-controller="ThisCtrl">
+    <ion-pane>
+      <ion-header-bar id="header" class="bar-positive">
+        <h1 class="title">Title</h1>
+      </ion-header-bar>
+
+      <ion-content id="container"
+        start-y="55"
+        on-scroll="onScroll(event, scrollTop, scrollLeft)"
+        on-scroll-complete="onScrollComplete(scrollTop, scrollLeft)"
+        on-refresh="onRefresh()"
+        on-refresh-opening="onRefreshOpening(amount)"
+        padding="true"
+        header-shrink="60"
+        class="has-tabs has-header">
+        <ion-refresher></ion-refresher>
+        <div id="search-box" class="bar bar-header item-input-inset">
+          <label class="item-input-wrapper">
+            <i class="icon ion-ios7-search placeholder-icon"></i>
+            <input type="search" placeholder="Search">
+          </label>
+          <button class="button button-clear">
+            Cancel
+          </button>
+        </div>
+        <div ng-controller="TestCtrl"></div>
+        <button ng-click="add()">Click</button>
+        <ul class="list" ng-controller="AppCtrl">
+          <li class="list-item" ng-repeat="item in items">asdf{{$index}}</li>
+        </ul>
+        <input type="text" placeholder="INPUT TEXT">
+      </ion-content>
+      <nav id="tab-bar" class="tabs tabs-icon-top">
+        <a class="tab-item" href="#">
+          <i class="icon ion-game-controller-a"></i>
+          Fun
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-locked"></i>
+          Security
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-heart"></i>
+          Simple
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-leaf"></i>
+          Light
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-waterdrop"></i>
+          Clean
+        </a>
+      </nav>
+
+    </ion-pane>
+
+    <script>
+      angular.module('navTest', ['ionic'])
+
+      .directive('headerShrink', function($document) {
+        var fadeAmt;
+
+        var shrink = function(header, amt, max) {
+          console.log('Translating up', amt);
+          amt = Math.min(max - 20, amt);
+          fadeAmt = 1 - amt / (max - 20);
+          ionic.requestAnimationFrame(function() {
+            header.style[ionic.CSS.TRANSFORM] = 'translate3d(0, -' + amt + 'px, 0)';
+            for(var i = 0, j = header.children.length; i < j; i++) {
+              header.children[i].style.opacity = fadeAmt;
+            }
+          });
+        };
+
+        return {
+          restrict: 'A',
+          link: function($scope, $element, $attr) {
+            var starty = $scope.$eval($attr.headerShrink) || 0;
+            var shrinkAmt;
+
+            var header = $document[0].body.querySelector('.bar-header');
+            var headerHeight = header.offsetHeight;
+
+            $element.bind('scroll', function(e) {
+              if(e.detail.scrollTop > starty) {
+                // Start shrinking
+                shrinkAmt = headerHeight - Math.max(0, (starty + headerHeight) - e.detail.scrollTop);
+                shrink(header, shrinkAmt, headerHeight);
+              } else {
+                shrink(header, 0, headerHeight);
+              }
+            });
+          }
+        }
+      })
+
+
+
+      .directive('hidesHeader', function() {
+        return {
+          link: function($scope, $element, $attr) {
+            var startTop = $element[0].offsetTop;
+          }
+        }
+      })
+
+      .controller('TestCtrl', function($scope, $timeout) {
+        console.log('CONSTRUCT');
+        $timeout(function() {
+        });
+      })
+
+      .controller('ThisCtrl', function($scope, $timeout) {
+        var header = document.getElementById('header');
+        var content = document.getElementById('container');
+        var startTop = header.offsetTop;
+        $scope.onScrollComplete = function(event, scrollTop, scrollLeft) {
+        }
+        $scope.add = function() {
+          console.log('Adding!');
+        };
+        var last = 0;
+        $scope.onRefresh = function() {
+          $timeout(function() {
+            $scope.$broadcast('scroll.refreshComplete');
+          }, 1000);
+        };
+        $scope.onScroll = function(event, scrollTop, scrollLeft) {
+          console.log('Scroll', scrollTop, scrollLeft);
+        /*
+          if(scrollTop > startTop) {
+            var diff = scrollTop - startTop;
+            console.log(diff);
+            header.style[ionic.CSS.TRANSFORM] = 'translate3d(0px, -' + diff + 'px, 0)';
+            content.style.marginTop = -diff + 'px';
+          }
+          */
+        };
+      })
+
+      .controller('AppCtrl', function($scope, $compile, $timeout, $element) {
+        $scope.items = [];
+        for(var i = 0; i < 70; i++) {
+          $scope.items.push({
+          });
+        }
+      })
+    </script>
+  </body>
+</html>

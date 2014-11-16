@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="headerTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Header</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body ng-controller="TestCtrl">
+    <ion-header-bar class="bar-positive">
+      <div class="buttons">
+        <button class="button">
+          Hello <b>Hello</b>
+        </button>
+      </div>
+      <h1 class="title">{{headerTitle}}</h1>
+      <div class="buttons">
+        <button class="button">
+          Farewell!
+        </button>
+      </div>
+    </ion-header-bar>
+    <ion-content class="has-header">
+      <input type="text" ng-model="$parent.headerTitle">
+      <br/>
+      <input type="text" ng-model="$parent.align">
+    </ion-content>
+    <script>
+      angular.module('headerTest', ['ionic'])
+
+      .controller('TestCtrl', function($scope) {
+        $scope.headerTitle = 'A really really <u>really</u> really really long title here';
+      });
+      var midPoint = window.clientWidth / 2;
+      var box = document.createElement('div');
+      box.style.backgroundColor = 'red';
+      box.style.opacity = '0.6';
+      box.style.width = '2px';
+      box.style.height = '44px';
+      box.style.left = '50%';
+      box.style.position = 'fixed';
+      box.style.zIndex = 100;
+      box.style.top = '0px';
+      box.style.marginLeft = '-1px';
+      document.body.appendChild(box);
+      window.onresize = function() {
+        var s = angular.element(document.getElementsByTagName('header')[0]).scope();
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="ionic">
+  <head>
+    <script src="../../dist/js/ionic.bundle.js"></script>
+    <meta charset="utf-8">
+    <title>Status Bar</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link href="../../dist/css/ionic.css" rel="stylesheet">
+    <style>
+      #ios7-status-bar {
+        position: absolute;
+        width: 100%;
+        height: 20px;
+        background: blue;
+        color: white;
+        text-align: center;
+        z-index: 9999;
+        display: none;
+      }
+      .platform-cordova.platform-ios7 #ios7-status-bar {
+        display: block;
+      }
+    </style>
+  </head>
+  <body ng-controller="AppCtrl" ng-init="init()">
+
+    <div id="ios7-status-bar">Fake iOS7 Status Bar</div>
+
+    <header class="bar bar-header">
+      <a class="button" href="./">Back</a>
+      <h1 class="title">Status Bar</h1>
+      <a class="button icon ion-home" href="./"> Home</a>
+    </header>
+  </body>
+</html>

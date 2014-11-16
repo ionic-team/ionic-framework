@@ -1,0 +1,32 @@
+---
+name: complete
+component: $ionicLoading
+---
+<div ng-controller="LoadingCtrl">
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Loading Demo</h1>
+    <a class="button" ng-click="showLoading()">
+      <i class="icon ion-more"></i> Load
+    </a>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Loading Duration (ms)</span>
+        <input type="number" ng-model="loadingOptions.duration">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Loading Delay (ms)</span>
+        <input type="number" ng-model="loadingOptions.delay">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Loading Template</span>
+        <textarea rows="3" ng-model="loadingOptions.template"></textarea>
+      </label>
+      <ion-toggle class="item item-toggle"
+                  ng-model="loadingOptions.noBackdrop">
+        Hide Backdrop?
+      </ion-toggle>
+    </div>
+  </ion-content>
+</div>

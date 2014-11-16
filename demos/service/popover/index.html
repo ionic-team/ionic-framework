@@ -1,0 +1,76 @@
+---
+name: popover
+component: $ionicPopover
+---
+
+<ion-header-bar class="bar-positive" title="Popover" ng-controller="HeaderCtrl">
+  <div class="buttons">
+    <button class="button button-icon ion-android-more" ng-click="openPopover($event)" id="icon-btn"></button>
+  </div>
+  <h1 class="title">Popover</h1>
+  <div class="buttons">
+    <button class="button" ng-click="openPopover2($event)" id="mid-btn">Popover 2</button>
+    <button class="button" ng-click="openPopover($event)" id="right-btn">Popover</button>
+  </div>
+</ion-header-bar>
+
+<ion-content class="padding has-header" ng-controller="PlatformCtrl">
+  <p>
+    <button class="button" ng-click="setPlatform('ios')" id="ios">iOS</button>
+    <button class="button" ng-click="setPlatform('android')" id="android">Android</button>
+    <button class="button" ng-click="setPlatform('base')" id="base">Base</button>
+  </p>
+</ion-content>
+
+<script id="popover.html" type="text/ng-template">
+  <ion-popover-view>
+    <ion-header-bar>
+      <h1 class="title">Popover Header</h1>
+    </ion-header-bar>
+    <ion-content>
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">First Name</span>
+          <input type="text" placeholder="">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Last Name</span>
+          <input type="text" placeholder="">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <input type="text" placeholder="">
+        </label>
+        <button class="button button-block button-positive">Submit</button>
+      </div>
+    </ion-content>
+  </ion-popover-view>
+</script>
+
+
+<script id="popover2.html" type="text/ng-template">
+  <ion-popover-view>
+    <ion-content>
+      <div class="list">
+        <div class="item">
+          Item 1
+        </div>
+        <div class="item">
+          Item 2
+        </div>
+        <div class="item">
+          Item 3
+        </div>
+        <div class="item">
+          Item 4
+        </div>
+        <div class="item">
+          Item 5
+        </div>
+        <div class="item">
+          Item 6
+        </div>
+      </div>
+    </ion-content>
+  </ion-popover-view>
+</script>

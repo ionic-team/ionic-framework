@@ -1,0 +1,113 @@
+<html ng-app="nav">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <title>navViews and ion-tabs w/ nested navViews</title>
+
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <script src="dom-trace.js"></script>
+  </head>
+  <body>
+
+    <div>
+      <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-icon" from-title>
+          Back
+        </ion-nav-back-button>
+      </ion-nav-bar>
+      <ion-nav-view></ion-nav-view>
+    </div>
+
+    <script id="page1.html" type="text/ng-template">
+      <ion-view title="Page 1">
+        <ion-nav-buttons side="right">
+          <button class="button button-icon ion-android-search"></button>
+        </ion-nav-buttons>
+        <ion-content padding="true">
+          <ion-list>
+            <div class="item item-divider">
+              Things
+            </div>
+            <ion-item ng-repeat="item in items" href="#/page2">
+              Item {{$index}}
+            </ion-item>
+            <div class="item item-divider">
+              Stuff
+            </div>
+            <ion-item ng-repeat="item in items2" href="#/page2">
+              Item {{$index}}
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-view>
+    </script>
+    <script id="page2.html" type="text/ng-template">
+      <ion-view title="Page 2">
+        <ion-content padding="true">
+          <a ng-click="goBack()" class="button button-positive">Back</a>
+          <a href="#/page3" class="button button-positive">Page 3</a>
+        </ion-content>
+      </ion-view>
+    </script>
+    <script id="page3.html" type="text/ng-template">
+      <ion-view title="Page 3">
+        <ion-content padding="true">
+          <a ng-click="goBack()" class="button button-positive">Back</a>
+          <a href="#/page1" class="button button-positive">Page 1</a>
+        </ion-content>
+      </ion-view>
+    </script>
+    <script>
+      angular.module('nav', ['ionic'])
+
+      .config(function($stateProvider, $urlRouterProvider) {
+
+        $stateProvider
+          .state('page1', {
+            url: "/page1",
+            templateUrl: "page1.html",
+            controller: 'Page1Ctrl'
+          })
+          .state('page2', {
+            url: "/page2",
+            templateUrl: "page2.html",
+            controller: 'Page2Ctrl'
+          })
+          .state('page3', {
+            url: "/page3",
+            templateUrl: "page3.html",
+            controller: 'Page3Ctrl'
+          })
+
+         $urlRouterProvider.otherwise("/page1");
+       })
+
+       .controller('Page1Ctrl', function($scope) {
+         $scope.items = [];
+         for(var i = 0; i < 4; i++) {
+          $scope.items.push({});
+         }
+
+         $scope.items2 = [];
+         for(var i = 0; i < 4; i++) {
+          $scope.items2.push({});
+         }
+       })
+
+       .controller('Page2Ctrl', function($scope, $ionicNavBarDelegate) {
+        $scope.goBack = function() {
+          $ionicNavBarDelegate.back();
+        };
+       })
+
+       .controller('Page3Ctrl', function($scope, $ionicNavBarDelegate) {
+        $scope.goBack = function() {
+          $ionicNavBarDelegate.back();
+        };
+       })
+      
+    </script>
+  </body>
+</html>

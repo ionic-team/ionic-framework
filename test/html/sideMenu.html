@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html ng-app="sideMenuTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Side Menus</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body>
+
+    <div ng-controller="MenuCtrl">
+
+      <ion-side-menus>
+
+        <ion-side-menu-content edge-drag-threshold="true" drag-content="!$root.disableDrag">
+          <header class="bar bar-header bar-positive">
+            <button class="button button-icon ion-navicon" ng-click="toggleLeft()" ng-hide="$exposeAside.active"></button>
+            <h1 class="title">Slide me</h1>
+            <button class="button button-icon ion-navicon" ng-click="toggleRight()"></button>
+          </header>
+          <ion-content class="has-header">
+            <ion-toggle ng-model="$root.disableDrag">Disable Drag Content?</ion-toggle>
+            <input type="range" ng-model="$root.menuWidth" min="0" max="300">
+            <h1>Content</h1>
+            <ion-list>
+              <ion-item>
+                Sup
+                <ion-option-button class="button-positive">Hello</ion-option-button>
+              </ion-item>
+            </ion-list>
+          </ion-content>
+        </ion-side-menu-content>
+
+        <ion-side-menu side="left" width="$root.menuWidth || 275" ng-controller="LeftCtrl" expose-aside-when="(min-width:750px) and (max-width:1200px)">
+          <header class="bar bar-header bar-assertive">
+            <h1 class="title">Left</h1>
+          </header>
+          <ion-content class="has-header">
+            <h3>value = {{value}}</h3>
+            <ul class="list">
+              <a href="#" class="item" ng-repeat="item in list">
+                {{item.text}}
+              </a>
+            </ul>
+          </ion-content>
+        </ion-side-menu>
+
+        <ion-side-menu side="right">
+          <header class="bar bar-header bar-royal">
+            <h1 class="title">Right</h1>
+          </header>
+          <ion-content>
+            <ul class="list">
+              <a href="#" class="item" ng-repeat="item in list">
+                {{item.text}}
+              </a>
+            </ul>
+          </ion-content>
+        </ion-side-menu>
+
+      </ion-side-menus>
+
+    </div>
+    <script>
+      angular.module('sideMenuTest', ['ionic'])
+
+      .controller('MenuCtrl', function($scope, $ionicSideMenuDelegate) {
+
+        $scope.toggleLeft = $ionicSideMenuDelegate.toggleLeft;
+        $scope.toggleRight = $ionicSideMenuDelegate.toggleRight;
+
+        $scope.list = [];
+        for(var i = 0; i < 20; i++) {
+          $scope.list.push({
+            text: 'Item ' + i
+          });
+        }
+      })
+
+      .controller('LeftCtrl', function($scope) {
+        $scope.value = true;
+        $scope.list = [{text:1},{text:2},{text:3}];
+      });
+
+    </script>
+  </body>
+</html>

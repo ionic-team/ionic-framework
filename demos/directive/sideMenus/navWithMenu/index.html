@@ -1,0 +1,83 @@
+---
+name: navWithMenu
+component: ionSideMenus
+---
+<ion-nav-view>
+</ion-nav-view>
+
+<script type="text/ng-template" id="templates/menu.html">
+  <ion-side-menus>
+
+    <ion-pane ion-side-menu-content>
+      <ion-nav-bar class="bar-stable nav-title-slide-ios7">
+        <ion-nav-back-button class="button-clear"><i class="icon ion-chevron-left"></i> Back</ion-nav-back-button>
+      </ion-nav-bar>
+      <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+    </ion-pane>
+
+    <ion-side-menu side="left">
+      <header class="bar bar-header bar-stable">
+        <h1 class="title">Left</h1>
+      </header>
+      <ion-content class="has-header" scroll="false">
+        <ion-list>
+          <ion-item nav-clear menu-close href="#/app/search">
+            Search
+          </ion-item>
+          <ion-item nav-clear menu-close href="#/app/browse">
+            Browse
+          </ion-item>
+          <ion-item nav-clear menu-close href="#/app/playlists">
+            Playlists
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-side-menu>
+
+  </ion-side-menus>
+</script>
+
+<script type="text/ng-template" id="templates/browse.html">
+  <ion-view title="Browse">
+    <ion-nav-buttons side="left">
+      <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-header">
+      <h1>Browse</h1>
+    </ion-content>
+  </ion-view>
+</script>
+
+<script type="text/ng-template" id="templates/playlist.html">
+  <ion-view title="Playlist">
+    <ion-content class="has-header">
+      <h1>Playlist</h1>
+    </ion-content>
+  </ion-view>
+</script>
+
+<script type="text/ng-template" id="templates/playlists.html">
+  <ion-view title="Playlists">
+    <ion-nav-buttons side="left">
+      <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-header">
+      <ion-list>
+        <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
+          {{playlist.title}}
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-view>
+</script>
+
+<script type="text/ng-template" id="templates/search.html">
+  <ion-view title="Search">
+    <ion-nav-buttons side="left">
+      <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-header">
+      <h1>Search</h1>
+    </ion-content>
+  </ion-view>
+</script>

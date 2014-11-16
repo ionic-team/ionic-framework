@@ -1,7 +1,14 @@
+var pkg = require('../package.json');
+var fs = require('fs');
+
+var DISCOURSE_FILE = __dirname + '/DISCOURSE_POST_URL';
+
 module.exports = {
   dist: 'dist',
-  distJs: 'dist/js',
-  distCss: 'dist/css',
+  releasePostUrl: fs.readFileSync(DISCOURSE_FILE).toString(),
+  releasePostFile: DISCOURSE_FILE,
+
+  protractorPort: 8876,
 
   banner:
     '/*!\n' +
@@ -21,7 +28,8 @@ module.exports = {
     '/*!\n' +
     ' * ionic.bundle.js is a concatenation of:\n' +
     ' * ionic.js, angular.js, angular-animate.js,\n'+
-    ' * angular-ui-router.js, and ionic-angular.js\n'+
+    ' * angular-sanitize.js, angular-ui-router.js,\n'+
+    ' * and ionic-angular.js\n'+
     ' */\n\n',
   closureStart: '(function() {\n',
   closureEnd: '\n})();',
@@ -31,7 +39,6 @@ module.exports = {
     'js/ionic.js',
 
     // Utils
-    'js/utils/animate.js',
     'js/utils/dom.js',
     'js/utils/events.js',
     'js/utils/gestures.js',
@@ -40,38 +47,24 @@ module.exports = {
     'js/utils/tap.js',
     'js/utils/activator.js',
     'js/utils/utils.js',
+    'js/utils/list.js',
     'js/utils/keyboard.js',
+    'js/utils/viewport.js',
 
     // Views
     'js/views/view.js',
-
     'js/views/scrollView.js',
-
-    'js/views/actionSheetView.js',
-    'js/views/headerBarView.js',
     'js/views/listView.js',
-    'js/views/loadingView.js',
     'js/views/modalView.js',
-    'js/views/navBarView.js',
     'js/views/sideMenuView.js',
-    'js/views/sliderView.js',
-    'js/views/tabBarView.js',
-    'js/views/toggleView.js',
-
-    // Controllers
-    'js/controllers/viewController.js',
-
-    'js/controllers/navController.js',
-    'js/controllers/sideMenuController.js',
-    'js/controllers/tabBarController.js'
-
+    'js/views/toggleView.js'
   ],
 
   angularIonicFiles: [
-    'js/ext/angular/src/ionicAngular.js',
-    'js/ext/angular/src/service/**/*.js',
-    'js/ext/angular/src/directive/**/*.js',
-    'js/ext/angular/src/controller/**/*.js'
+    'js/angular/*.js',
+    'js/angular/service/**/*.js',
+    'js/angular/controller/**/*.js',
+    'js/angular/directive/**/*.js'
   ],
 
   //Which vendor files to include in dist, used by build
@@ -94,11 +87,25 @@ module.exports = {
   ],
 
   ionicBundleFiles: [
-    'dist/js/ionic.js',
-    'dist/js/angular/angular.js',
-    'dist/js/angular/angular-animate.js',
-    'dist/js/angular/angular-sanitize.js',
-    'dist/js/angular-ui/angular-ui-router.js',
-    'dist/js/ionic-angular.js'
-  ]
+    'js/ionic.js',
+    'js/angular/angular.js',
+    'js/angular/angular-animate.js',
+    'js/angular/angular-sanitize.js',
+    'js/angular-ui/angular-ui-router.js',
+    'js/ionic-angular.js'
+  ],
+
+  //Exclamation can be no longer than 14 chars
+  exclamations: [
+    "Aah","Ah","Aha","All right","Aw","Ay","Aye","Bah","Boy","By golly","Boom","Cheerio","Cheers","Come on","Crikey","Dear me","Egads","Fiddle-dee-dee","Gadzooks","Gangway","G'day","Gee whiz","Gesundheit","Get outta here","Gosh","Gracious","Great","Gulp","Ha","Ha-ha","Hah","Harrumph","Hey","Hooray","Hurray","Huzzah","I say","Look","Look here","Long time","Lordy","Most certainly","My my","My word","Oh","Oh-oh","Oh no","Okay","Okey-dokey","Ooh","Oye","Phew","Quite","Ready","Right on","Roger that","Rumble","Say","See ya","Snap","Sup","Ta-da","Take that","Tally ho","Thanks","Toodles","Touche","Tut-tut","Very nice","Very well","Voila","Vroom","Well done","Well, well","Whoa","Whoopee","Whew","Word up","Wow","Wuzzup","Ya","Yea","Yeah","Yippee","Yo","Yoo-hoo","You bet","You don't say","You know","Yow","Yum","Yummy","Zap","Zounds","Zowie"
+  ],
+
+  //Message can be no longer than it is. Currently it's 126 chars with the short git urls,
+  //and can have up to a 14 char long exclamation prepended.
+  releaseMessage: function() {
+    return this.exclamations[Math.floor(Math.random()*this.exclamations.length)] + '! ' +
+      'Just released @IonicFramework v' + pkg.version + ' "' + pkg.codename + '"! ' +
+      this.releasePostUrl;
+  },
+
 };

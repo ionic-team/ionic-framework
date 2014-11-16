@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+    <title>Sample UL</title>
+
+    <link  href="../../../../dist/css/ionic.css" rel="stylesheet">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+
+  <body ng-controller="MyCtrl">
+    <ion-content>
+
+      <ion-list>
+        <ion-item ng-repeat="item in data.items">
+          {{item.title}}
+        </ion-item>
+      </ion-list>
+
+      <ion-infinite-scroll on-infinite="onInfinite()" distance="5px"></ion-infinite-scroll>
+
+    </ion-content>
+
+  <script>
+  angular.module('ionicApp', ['ionic'])
+
+  .controller('MyCtrl', ['$scope', '$timeout', function($scope, $timeout) {
+
+    $scope.data = { items: [] };
+
+    var fetchItems = function() {
+      $scope.data.items.push({
+        title: 'Item ' + $scope.data.items.length
+      });
+
+      $scope.$broadcast('scroll.infiniteScrollComplete');
+    };
+
+    $scope.onInfinite = function() {
+      $timeout(fetchItems, 2000);
+    };
+
+    for(var i = 0; i < 10; i++) {
+      $scope.data.items.push({ title: 'Item ' + i });
+    }
+
+  }]);
+  </script>
+
+  </body>
+</html>

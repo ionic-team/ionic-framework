@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <title>Ionic Radio Buttons</title>
+
+  <link href="http://code.ionicframework.com/nightly/css/ionic.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+
+  <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.min.js"></script>
+  <script src="script.js"></script>
+
+</head>
+
+<body ng-controller="MainCtrl">
+
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Radio Buttons</h1>
+  </ion-header-bar>
+
+  <ion-content>
+
+    <div class="list">
+
+      <div class="item item-divider">
+        Clientside, Selected Value: {{ data.clientSide }}
+      </div>
+
+      <ion-radio ng-repeat="item in clientSideList" ng-value="item.value" ng-model="data.clientSide">
+        {{ item.text }}
+      </ion-radio>
+
+      <div class="item item-divider">
+        Serverside, Selected Value: {{ data.serverSide }}
+      </div>
+
+      <ion-radio ng-repeat="item in serverSideList" ng-value="item.value" ng-model="data.serverSide" ng-change="serverSideChange(item)" name="server-side">
+        {{ item.text }}
+      </ion-radio>
+
+    </div>
+
+  </ion-content>
+
+</body>
+</html>

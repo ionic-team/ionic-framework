@@ -1,0 +1,120 @@
+---
+name: tabsAndNav
+component: ionTabs
+---
+<ion-nav-bar class="nav-title-slide-ios7 bar-positive">
+  <ion-nav-back-button class="button-icon ion-arrow-left-c">
+  </ion-nav-back-button>
+</ion-nav-bar>
+
+<ion-nav-view animation="slide-left-right"></ion-nav-view>
+
+<script id="tabs.html" type="text/ng-template">
+  <ion-tabs class="tabs-icon-top tabs-positive">
+
+    <ion-tab title="Home" icon="ion-home" href="#/tab/home">
+      <ion-nav-view name="home-tab"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="About" icon="ion-ios7-information" href="#/tab/about">
+      <ion-nav-view name="about-tab"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="Contact" icon="ion-ios7-world" ui-sref="tabs.contact">
+      <ion-nav-view name="contact-tab"></ion-nav-view>
+    </ion-tab>
+
+  </ion-tabs>
+</script>
+
+<script id="home.html" type="text/ng-template">
+  <ion-view title="Home">
+    <ion-content class="padding">
+      <p>Example of Ionic tabs. Navigate to each tab, and
+      navigate to child views of each tab and notice how
+      each tab has its own navigation history.</p>
+      <p>
+        <a class="button icon icon-right ion-chevron-right" href="#/tab/facts">Scientific Facts</a>
+      </p>
+    </ion-content>
+  </ion-view>
+</script>
+
+<script id="facts.html" type="text/ng-template">
+  <ion-view title="Facts" class="padding">
+    <ion-content>
+      <p>Banging your head against a wall uses 150 calories an hour.</p>
+      <p>Dogs have four toes on their hind feet, and five on their front feet.</p>
+      <p>The ant can lift 50 times its own weight, can pull 30 times its own weight and always falls over on its right side when intoxicated.</p>
+      <p>A cockroach will live nine days without it's head, before it starves to death.</p>
+      <p>Polar bears are left handed.</p>
+      <p>
+        <a class="button icon ion-home" href="#/tab/home"> Home</a>
+        <a class="button icon icon-right ion-chevron-right" href="#/tab/facts2">More Facts</a>
+      </p>
+    </ion-content>
+  </ion-view>
+</script>
+
+<script id="facts2.html" type="text/ng-template">
+  <ion-view title="Also Factual">
+    <ion-content class="padding">
+      <p>111,111,111 x 111,111,111 = 12,345,678,987,654,321</p>
+      <p>1 in every 4 Americans has appeared on T.V.</p>
+      <p>11% of the world is left-handed.</p>
+      <p>1 in 8 Americans has worked at a McDonalds restaurant.</p>
+      <p>$283,200 is the absolute highest amount of money you can win on Jeopardy.</p>
+      <p>101 Dalmatians, Peter Pan, Lady and the Tramp, and Mulan are the only Disney cartoons where both parents are present and don't die throughout the movie.</p>
+      <p>
+        <a class="button icon ion-home" href="#/tab/home"> Home</a>
+        <a class="button icon ion-chevron-left" href="#/tab/facts"> Scientific Facts</a>
+      </p>
+    </ion-content>
+  </ion-view>
+</script>
+
+<script id="about.html" type="text/ng-template">
+  <ion-view title="About">
+    <ion-content class="padding">
+      <h3>Create hybrid mobile apps with the web technologies you love.</h3>
+      <p>Free and open source, Ionic offers a library of mobile-optimized HTML, CSS and JS components for building highly interactive apps.</p>
+      <p>Built with Sass and optimized for AngularJS.</p>
+      <p>
+        <a class="button icon icon-right ion-chevron-right" href="#/tab/navstack">Tabs Nav Stack</a>
+      </p>
+    </ion-content>
+  </ion-view>
+</script>
+
+<script id="nav-stack.html" type="text/ng-template">
+  <ion-view title="Tab Nav Stack">
+    <ion-content class="padding">
+
+      <p>Almost every mobile application has some form of tab bar interface.</p>
+
+      <p>Ionic has a built-in <code>ion-tabs</code> directive that we can use in order to build our tabbed interface. Create the <code>ion-tabs</code> directive and we can start filling it with tabs. The directive to create a tab is just the <code>ion-tab</code> directive. This takes a title, and this specifies what the title of our tab will be. </p>
+
+      <p>When we save this, we now have a tab that pops up with the text of “Home tab”.</p>
+
+      <p>Let’s add a second tab, because a single-tabbed app is pretty boring. I’m just going to call this one “About”. I’m going to create some equally interesting content.</p>
+
+      <p>We can now swap between our tabs, and see that things happen! We may want to change the color scheme of our tabs. Ionic ships with several colors that are detailed in the documentation in the notes, but if we want to update that, we can set a class of <code>ion-tabs</code>.</p>
+
+      <p>Now, if we look in the documentation, the colors are unprefixed. If we want the blue color, we use the <code>positive</code> class. However, in the case of tabs, we want those to be able to be sub-customizable. For this, we have to prefix this class with ‘tabs-‘. Saving, we now see the nice color.</p>
+
+      <p>Let’s add a header. This can be added with the <code>ion-header-bar</code> directive. Inside, we can set what we want the title to be. Let’s set a color on it. This is interesting, but what if we want a different title for each section of the application?</p>
+
+      <p>You can set a navigation system up, which is detailed in more advanced videos and formulas. For the sake of simplicity in this video, we will create an <code>ion-header-bar</code> in each tab of our app. Copy the header bar, change the titles, and save. We now have updating headers across our tabs!</p>
+
+    </ion-content>
+  </ion-view>
+</script>
+
+<script id="contact.html" type="text/ng-template">
+  <ion-view title="Contact">
+    <ion-content>
+      <p>@IonicFramework</p>
+      <p>@DriftyCo</p>
+    </ion-content>
+  </ion-view>
+</script>

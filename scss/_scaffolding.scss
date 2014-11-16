@@ -10,6 +10,12 @@
   @include box-sizing(border-box);
 }
 
+html {
+  overflow: hidden;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
+}
+
 body,
 .ionic-body {
   @include touch-callout(none);
@@ -18,7 +24,6 @@ body,
   @include tap-highlight-transparent();
   @include user-select(none);
 
-  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
@@ -60,13 +65,21 @@ body.grade-c {
   // Hide the top border if any
   margin-top: -1px;
 
+  // Prevents any distortion of lines
+  padding-top:1px;
+
   width: auto;
   height: auto;
 }
 
+.scroll-content-false,
+.menu .scroll-content.scroll-content-false{
+  z-index: $z-index-scroll-content-false;
+}
+
 .scroll-view {
-  display: block;
   position: relative;
+  display: block;
   overflow: hidden;
 
   // Hide the top border if any
@@ -82,7 +95,11 @@ body.grade-c {
   @include touch-callout(none);
   @include text-size-adjust(none);
   @include transform-origin(left, top);
-  -webkit-backface-visibility: hidden;
+}
+
+// hide webkit scrollbars
+::-webkit-scrollbar {
+  display:none;
 }
 
 // Scroll bar styles
@@ -120,17 +137,19 @@ body.grade-c {
   border-radius: 4px;
   background: rgba(0,0,0,0.3);
   opacity: 1;
-
+  @include transition(opacity .3s linear);
 
   &.scroll-bar-fade-out {
-    @include transition(opacity 0.3s linear);
     opacity: 0;
   }
+}
+.platform-android .scroll-bar-indicator {
+  // android doesn't have rounded ends on scrollbar
+  border-radius: 0;
 }
 .grade-b .scroll-bar-indicator,
 .grade-c .scroll-bar-indicator {
   // disable rgba background and border radius for low end devices
-  border-radius: 0;
   background: #aaa;
 
   &.scroll-bar-fade-out {
@@ -139,23 +158,23 @@ body.grade-c {
 }
 
 @keyframes refresh-spin {
-  0% { transform: rotate(0); }
-  100% { transform: rotate(-180deg); }
+  0% { transform: translate3d(0,0,0) rotate(0); }
+  100% { transform: translate3d(0,0,0) rotate(180deg); }
 }
 
 @-webkit-keyframes refresh-spin {
-  0% {-webkit-transform: rotate(0); }
-  100% {-webkit-transform: rotate(-180deg); }
+  0% {-webkit-transform: translate3d(0,0,0) rotate(0); }
+  100% {-webkit-transform: translate3d(0,0,0) rotate(180deg); }
 }
 
 @keyframes refresh-spin-back {
-  0% { transform: rotate(-180deg); }
-  100% { transform: rotate(0); }
+  0% { transform: translate3d(0,0,0) rotate(180deg); }
+  100% { transform: translate3d(0,0,0) rotate(0); }
 }
 
 @-webkit-keyframes refresh-spin-back {
-  0% {-webkit-transform: rotate(-180deg); }
-  100% {-webkit-transform: rotate(0); }
+  0% {-webkit-transform: translate3d(0,0,0) rotate(180deg); }
+  100% {-webkit-transform: translate3d(0,0,0) rotate(0); }
 }
 
 // Scroll refresher (for pull to refresh)
@@ -180,16 +199,29 @@ body.grade-c {
 
     .text-refreshing,
     .text-pulling {
-      line-height: 16px;
       font-size: 16px;
+      line-height: 16px;
+    }
+    &.ionic-refresher-with-text {
+      bottom: 10px;
     }
   }
 
+  .icon-refreshing,
+  .icon-pulling {
+    width: 100%;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
   .icon-pulling {
     @include animation-name(refresh-spin-back);
     @include animation-duration(200ms);
     @include animation-timing-function(linear);
-    @include animation-fill-mode(both);
+    @include animation-fill-mode(none);
+    -webkit-transform: translate3d(0,0,0) rotate(0deg);
+    transform: translate3d(0,0,0) rotate(0deg);
   }
   .icon-refreshing,
   .text-refreshing {
@@ -200,19 +232,16 @@ body.grade-c {
   }
 
   &.active {
-    .icon-pulling,
-    .text-pulling {
-      display: block;
-    }
-    .icon-pulling {
+    .icon-pulling:not(.pulling-rotation-disabled) {
       @include animation-name(refresh-spin);
+      -webkit-transform: translate3d(0,0,0) rotate(-180deg);
+      transform: translate3d(0,0,0) rotate(-180deg);
     }
-    .icon-refreshing,
-    .text-refreshing {
-      display: none;
-    }
-
     &.refreshing {
+      @include transition(transform .2s);
+      @include transition(-webkit-transform .2s);
+      -webkit-transform: scale(1,1);
+      transform: scale(1,1);
       .icon-pulling,
       .text-pulling {
         display: none;
@@ -221,64 +250,54 @@ body.grade-c {
       .text-refreshing {
         display: block;
       }
+      &.refreshing-tail{
+        -webkit-transform: scale(0,0);
+        transform: scale(0,0);
+      }
     }
   }
 }
 
-.scroll-refresher-content {
-  position: absolute;
-  bottom: 15px;
-  left: 0;
-  width: 100%;
-  color: $scroll-refresh-icon-color;
-  text-align: center;
-
-  font-size: 30px;
-}
-
-// Infinite scroll
-ion-infinite-scroll .scroll-infinite {
-  position: relative;
-  overflow: hidden;
-  margin-top: -70px;
+ion-infinite-scroll {
   height: 60px;
-}
-
-.scroll-infinite-content {
-  position: absolute;
-  bottom: 15px;
-  left: 0;
   width: 100%;
-  color: #666666;
-  text-align: center;
-  font-size: 30px; }
+  opacity: 0;
+  display: block;
 
-ion-infinite-scroll.active .scroll-infinite {
-  margin-top: -30px;
+  @include transition(opacity 0.25s);
+  @include display-flex();
+  @include flex-direction(row);
+  @include justify-content(center);
+  @include align-items(center);
+
+  .icon {
+    color: #666666;
+    font-size: 30px;
+    color: $scroll-refresh-icon-color;
+  }
+
+  &.active {
+    opacity: 1;
+  }
 }
 
 .overflow-scroll {
   overflow-x: hidden;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
 
   .scroll {
     position: static;
     height: 100%;
+    -webkit-transform: translate3d(0, 0, 0);   // fix iOS bug where relative children of scroller disapear while scrolling.  see: http://stackoverflow.com/questions/9807620/ipad-safari-scrolling-causes-html-elements-to-disappear-and-reappear-with-a-dela
   }
 }
 
-
-.overflow-scroll {
-  overflow-x: hidden;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-
-  .scroll {
-    position: static;
-    height: 100%;
-  }
-}
 
 // Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
 // Note: For these to work, content must come after both bars in the markup
@@ -304,6 +323,9 @@ ion-infinite-scroll.active .scroll-infinite {
 .has-footer {
   bottom: $bar-height;
 }
+.has-subfooter {
+  bottom: $bar-height * 2;
+}
 
 .has-tabs,
 .bar-footer.has-tabs {
@@ -317,6 +339,7 @@ ion-infinite-scroll.active .scroll-infinite {
 // A full screen section with a solid background
 .pane {
   @include translate3d(0,0,0);
+  @include transition-duration(0);
   z-index: $z-index-pane;
 }
 .view {
@@ -332,4 +355,11 @@ ion-infinite-scroll.active .scroll-infinite {
   width: 100%;
   height: 100%;
   background-color: $base-background-color;
+  overflow: hidden;
+}
+.view-container {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
 }

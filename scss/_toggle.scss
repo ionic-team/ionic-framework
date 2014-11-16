@@ -4,13 +4,17 @@
  * --------------------------------------------------
  */
 
-/* the overall container of the toggle */
+.item-toggle {
+  pointer-events: none;
+}
+
 .toggle {
   // set the color defaults
   @include toggle-style($toggle-on-default-border, $toggle-on-default-bg);
 
   position: relative;
   display: inline-block;
+  pointer-events: auto;
   margin: -$toggle-hit-area-expansion;
   padding: $toggle-hit-area-expansion;
 
@@ -49,8 +53,8 @@
   }
 }
 
-/* hide the actual input checkbox */
 .toggle input {
+  // hide the actual input checkbox
   display: none;
 }
 
@@ -69,6 +73,13 @@
   background-color: $toggle-off-bg-color;
   content: ' ';
   cursor: pointer;
+  pointer-events: none;
+}
+
+/* Fix to avoid background color bleeding */
+/* (occured on (at least) Android 4.2, Asus MeMO Pad HD7 ME173X) */
+.platform-android4_2 .toggle .track {
+  -webkit-background-clip: padding-box;
 }
 
 /* the handle (circle) thats inside the toggle's track area */
@@ -76,16 +87,16 @@
 .toggle .handle {
   @include transition($toggle-transition-duration ease-in-out);
   position: absolute;
-  top: $toggle-border-width + $toggle-hit-area-expansion;
-  left: $toggle-border-width + $toggle-hit-area-expansion;
   display: block;
   width: $toggle-handle-width;
   height: $toggle-handle-height;
   border-radius: $toggle-handle-radius;
   background-color: $toggle-handle-off-bg-color;
+  top: $toggle-border-width + $toggle-hit-area-expansion;
+  left: $toggle-border-width + $toggle-hit-area-expansion;
 
-  /* used to create a larger (but hidden) hit area to slide the handle */
   &:before {
+    // used to create a larger (but hidden) hit area to slide the handle
     position: absolute;
     top: -4px;
     left: ( ($toggle-handle-width / 2) * -1) - 8;
@@ -94,23 +105,28 @@
   }
 }
 
-  /* the handle when the toggle is "on" */
 .toggle input:checked + .track .handle {
+  // the handle when the toggle is "on"
   @include translate3d($toggle-width - $toggle-handle-width - ($toggle-border-width * 2), 0, 0);
   background-color: $toggle-handle-on-bg-color;
 }
 
-/* make sure list item content have enough padding on right to fit the toggle */
-.item-toggle {
-  padding-right: ($item-padding * 3) + $toggle-width;
-
-  &.active {
-    box-shadow: none;
-  }
+.item-toggle.active {
+  box-shadow: none;
 }
 
-/* position the toggle to the right within a list item */
+.item-toggle,
+.item-toggle.item-complex .item-content {
+  // make sure list item content have enough padding on right to fit the toggle
+  padding-right: ($item-padding * 3) + $toggle-width;
+}
+
+.item-toggle.item-complex {
+  padding-right: 0;
+}
+
 .item-toggle .toggle {
+  // position the toggle to the right within a list item
   position: absolute;
   top: $item-padding / 2;
   right: $item-padding;

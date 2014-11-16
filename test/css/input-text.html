@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html ng-app="ionic">
+  <head>
+    <script src="../../dist/js/ionic.bundle.js"></script>
+    <meta charset="utf-8">
+    <title>Text Inputs</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link href="../../dist/css/ionic.css" rel="stylesheet">
+    <script src="../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body>
+
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Text Inputs</h1>
+    </header>
+
+    <ion-content class="has-header">
+
+      <h3>Default Text Input, Not Inset, No Content Padding</h3>
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="First Name">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Last Name">
+        </label>
+        <label class="item item-input">
+          <input type="email" placeholder="Email">
+        </label>
+        <label class="item item-input">
+          <input type="date" value="2011-03-14">
+        </label>
+        <label class="item item-input">
+          <input type="datetime-local" value="2013-12-09T18:38">
+        </label>
+        <label class="item item-input">
+          <input type="month" value="2011-03">
+        </label>
+        <label class="item item-input">
+          <input type="time" value="04:24">
+        </label>
+        <label class="item item-input">
+          <input type="week" value="2011-W11">
+        </label>
+      </div>
+
+      <h3>Default Text Input, list-inset, No Content Padding</h3>
+      <div class="list list-inset">
+        <label class="item item-input">
+          <input type="text" placeholder="First Name">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Last Name">
+        </label>
+        <label class="item item-input">
+          <input type="email" placeholder="Email">
+        </label>
+      </div>
+
+      <h3>Default Text Input, card, No Content Padding</h3>
+      <div class="list card">
+        <label class="item item-input">
+          <input type="text" placeholder="First Name">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Last Name">
+        </label>
+        <label class="item item-input">
+          <input type="email" placeholder="Email">
+        </label>
+      </div>
+
+      <div class="padding">
+
+        <h3>Default Text Input, With Parent Content Padding</h3>
+        <div class="list">
+          <label class="item item-input">
+            <input type="text" placeholder="Username">
+          </label>
+          <label class="item item-input">
+            <input type="email" placeholder="Email">
+          </label>
+        </div>
+
+        <div class="list">
+          <label class="item item-input">
+            <input type="text" placeholder="Filter by name">
+          </label>
+        </div>
+
+        <h3>Default Text Input, list-inset, With Parent Content Padding</h3>
+        <div class="list list-inset">
+          <label class="item item-input">
+            <input type="email" placeholder="Email">
+          </label>
+          <label class="item item-input">
+            <input type="text" placeholder="Name">
+          </label>
+        </div>
+
+      </div>
+
+
+      <h3>Label left of input, No Parent Content Padding</h3>
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Username</span>
+          <input type="text" placeholder="@drifty">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <input type="email" placeholder="your@email.com">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">First Name</span>
+          <input type="text" placeholder="Sir Derp">
+        </label>
+      </div>
+
+
+      <h3>Label left of input (with icon), No Parent Content Padding</h3>
+      <div class="list">
+        <label class="item item-input">
+          <i class="icon ion-person"></i>
+          <span class="input-label">Username</span>
+          <input type="text" placeholder="@drifty">
+        </label>
+        <label class="item item-input">
+          <i class="icon ion-email"></i>
+          <span class="input-label">Email</span>
+          <input type="email" placeholder="your@email.com">
+        </label>
+      </div>
+
+
+      <h3>Placeholder icon</h3>
+      <div class="list">
+        <label class="item item-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="text" placeholder="Search">
+        </label>
+      </div>
+
+
+      <h3>Inline Label On Top Of Text Input, list-inset, No Parent Content Padding</h3>
+      <div class="list list-inset">
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <input type="text" placeholder="your@email.com">
+        </label>
+      </div>
+
+      <div class="padding">
+
+        <h3>Inline Label On Top Of Text Input, With Parent Content Padding</h3>
+        <div class="list">
+          <label class="item item-input">
+            <span class="input-label">First Name</span>
+            <input type="text" placeholder="John">
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Last Name</span>
+            <input type="text" placeholder="Suhr">
+          </label>
+        </div>
+
+        <h3>Inline Label On Top Of Text Input, list-inset, With Parent Content Padding</h3>
+        <div class="list list-inset">
+          <label class="item item-input">
+            <span class="input-label">Email</span>
+            <input type="text" placeholder="your@email.com">
+          </label>
+        </div>
+        <div class="list list-inset">
+          <label class="item item-input">
+            <span class="input-label">Filter By Name</span>
+            <input type="text" placeholder="Enter keywords">
+          </label>
+        </div>
+
+      </div>
+
+
+
+
+      <h3>Stacked Label On Top Of Text Input, No Parent Content Padding</h3>
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">First Name</span>
+          <input type="text" placeholder="Drifty">
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Last Name</span>
+          <input type="text" placeholder="Co">
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Email</span>
+          <input type="text" placeholder="your@email.com">
+        </label>
+      </div>
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Filter By Name</span>
+          <input type="text" placeholder="">
+        </label>
+      </div>
+
+      <h3>Stacked Label On Top Of Text Input, list-inset, No Parent Content Padding</h3>
+      <div class="list list-inset">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Email</span>
+          <input type="text" placeholder="your@email.com">
+        </label>
+      </div>
+
+      <div class="padding">
+
+        <h3>Stacked Label On Top Of Text Input, With Parent Content Padding</h3>
+        <div class="list">
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Email</span>
+            <input type="text" placeholder="your@email.com">
+          </label>
+        </div>
+
+        <h3>Stacked Label On Top Of Text Input, list-inset, With Parent Content Padding</h3>
+        <div class="list list-inset">
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Email</span>
+            <input type="text" placeholder="your@email.com">
+          </label>
+        </div>
+
+      </div>
+
+      <h3>Default Text Input, No Parent Content Padding</h3>
+      <div class="list">
+        <label class="item item-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="search" placeholder="Search">
+        </label>
+      </div>
+
+      <h3>Default Text Input, list-inset, No Parent Content Padding</h3>
+      <div class="list list-inset">
+        <label class="item item-input">
+          <i class="icon ion-star placeholder-icon"></i>
+          <input type="text" placeholder="Favorites">
+        </label>
+      </div>
+
+
+      <h3>Stacked Label On Top Of Text Input, No Parent Content Padding</h3>
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          <i class="icon ion-email"></i>
+          <span class="input-label">Email</span>
+          <input type="text" placeholder="your@email.com">
+        </label>
+      </div>
+
+      <div class="padding">
+
+        <h3>Stacked Label On Top Of Text Input, With Parent Content Padding</h3>
+        <div class="list">
+          <label class="item item-input item-stacked-label">
+            <i class="icon ion-cloud"></i>
+            <span class="input-label">SaaS</span>
+            <input type="text" placeholder="Codiqa">
+          </label>
+        </div>
+
+        <h3>Stacked Label On Top Of Text Input, list-inset, With Parent Content Padding</h3>
+        <div class="list list-inset">
+          <label class="item item-input item-stacked-label">
+            <i class="icon ion-headphone"></i>
+            <span class="input-label">Favorite Music</span>
+            <input type="text" placeholder="Bee Gees">
+          </label>
+        </div>
+
+      </div>
+
+      <p><a class="button button-secondary" href="./">All CSS Tests</a></p>
+
+    </ion-content>
+
+  </body>
+</html>

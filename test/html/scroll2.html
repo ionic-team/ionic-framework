@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html ng-app="navTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Scroll Click Tests</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <!--<link rel="stylesheet" href="../../../../dist/css/ionic.css">-->
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <style>
+      #click-notify {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 9997;
+        display: none;
+        padding: 8px;
+        background: red;
+        color: white;
+      }
+      #mousemove-notify {
+        position: absolute;
+        top: 40px;
+        left: 0;
+        z-index: 9998;
+        display: none;
+        padding: 8px;
+        background: orange;
+      }
+      #touchmove-notify {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        z-index: 9999;
+        display: none;
+        padding: 8px;
+        background: yellow;
+      }
+      #touchcancel-notify {
+        position: absolute;
+        top: 120px;
+        left: 0;
+        z-index: 9999;
+        display: none;
+        padding: 8px;
+        background: purple;
+        color: white;
+      }
+      a {
+        display: block;
+        background: blue;
+        margin: 40px 80px;
+        padding: 40px;
+        -webkit-tap-highlight-color: transparent;
+        text-decoration: none;
+      }
+      .activated {
+        background: yellow;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="click-notify">CLICK!</div>
+    <div id="mousemove-notify">Mouse Move!</div>
+    <div id="touchmove-notify">Touch Move!</div>
+    <div id="touchcancel-notify">Touch Cancel!</div>
+
+    <ion-view title="Home" hide-nav-bar="true">
+
+      <ion-content class="" scroll="false">
+
+        <a href='#' id="link">&nbsp;</a>
+
+        <div id="logs"></div>
+
+      </ion-content>
+
+    </ion-view>
+
+    <script>
+      angular.module('navTest', ['ionic']);
+
+      var mouseTimerId;
+      var mouseMoveCount = 0;
+      function onMouseMove(e) {
+        clearTimeout(mouseTimerId);
+        mouseTimerId = setTimeout(function(){
+          var el = document.getElementById('mousemove-notify');
+          el.style.display = 'block';
+          mouseMoveCount++;
+          el.innerText = 'Mouse Move! ' + mouseMoveCount;
+          clearTimeout(mouseTimerId);
+          mouseTimerId = setTimeout(function(){
+            el.style.display = 'none';
+          }, 1000);
+        }, 0);
+      }
+
+      var touchTimerId;
+      var touchMoveCount = 0;
+      function onTouchMove(e) {
+        clearTimeout(touchTimerId);
+        touchTimerId = setTimeout(function(){
+          var el = document.getElementById('touchmove-notify');
+          el.style.display = 'block';
+          touchMoveCount++;
+          el.innerText = 'Touch Move! ' + touchMoveCount;
+          clearTimeout(touchTimerId);
+          touchTimerId = setTimeout(function(){
+            el.style.display = 'none';
+          }, 1000);
+        }, 0);
+      }
+
+      var touchCancelTimerId;
+      var touchCancelMoveCount = 0;
+      function onTouchCancel(e) {
+        clearTimeout(touchCancelTimerId);
+        touchCancelTimerId = setTimeout(function(){
+          var el = document.getElementById('touchcancel-notify');
+          el.style.display = 'block';
+          touchCancelMoveCount++;
+          el.innerText = 'Touch Cancel! ' + touchCancelMoveCount;
+          clearTimeout(touchCancelTimerId);
+          touchCancelTimerId = setTimeout(function(){
+            el.style.display = 'none';
+          }, 1000);
+        }, 0);
+      }
+
+      document.getElementById('link').addEventListener('click', onClick, false);
+
+      function onClick(e) {
+        var el = document.getElementById('click-notify');
+        el.style.display = 'block';
+        el.innerText = 'Click!';
+
+        setTimeout(function(){
+          document.getElementById('click-notify').style.display = 'none';
+        }, 300);
+      }
+
+      document.addEventListener('touchmove', onTouchMove, false);
+      document.addEventListener('touchcancel', onTouchCancel, false);
+      document.addEventListener('mousemove', onMouseMove, false);
+
+
+      var index = 0;
+      var timeId;
+      var msgs = [];
+
+      console.debug = function() {
+        index++;
+        var msg = [];
+        msg.push(index);
+        for (var i = 0, j = arguments.length; i < j; i++){
+          msg.push(arguments[i]);
+        }
+        msg.push(getTime());
+
+        msg = msg.join(', ');
+
+        if(arguments[0] === 'ERROR!') msg = '<span style="color:red;font-weight:bold">' + msg + '</span>';
+
+        if(arguments[0] === 'touchstart') msg = '<span style="color:blue">' + msg + '</span>';
+        if(arguments[0] === 'touchend') msg = '<span style="color:darkblue">' + msg + '</span>';
+
+        if(arguments[0] === 'mousedown') msg = '<span style="color:red">' + msg + '</span>';
+        if(arguments[0] === 'mouseup') msg = '<span style="color:maroon">' + msg + '</span>';
+
+        if(arguments[0] === 'click') msg = '<span style="color:purple">' + msg + '</span>';
+
+        if(arguments[1] === 'click') msg = '<span style="color:green;font-weight:bold">' + msg + '</span>';
+        if(arguments[1] === 'change') msg = '<span style="color:orange;font-weight:bold">' + msg + '</span>';
+
+        msgs.unshift( msg );
+
+        if(msgs.length > 30) {
+          msgs.splice(30);
+        }
+
+        // do this so we try not to interfere with the device performance
+        clearTimeout(timeId);
+        timeId = setTimeout(function(){
+          document.getElementById('logs').innerHTML = msgs.join('<br>');
+        }, 150);
+
+      };
+
+      function getTime() {
+        var d = new Date();
+        return d.getSeconds() + '.' + d.getMilliseconds();
+      }
+
+    </script>
+  </body>
+</html>

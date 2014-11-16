@@ -1,4 +1,3 @@
-
 /**
  * Grid
  * --------------------------------------------------
@@ -13,6 +12,10 @@
   @include display-flex();
   padding: ($grid-padding-width / 2);
   width: 100%;
+}
+
+.row-wrap {
+  @include flex-wrap(wrap);
 }
 
 .row + .row {
@@ -38,6 +41,12 @@
 }
 .row-center {
   @include align-items(center);
+}
+.row-stretch {
+  @include align-items(stretch);
+}
+.row-baseline {
+  @include align-items(baseline);
 }
 
 /* .col-* vertically aligns an individual .col */

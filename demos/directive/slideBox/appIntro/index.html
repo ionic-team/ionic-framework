@@ -1,0 +1,79 @@
+---
+name: appIntro
+component: ionSlideBox
+---
+<ion-nav-bar class="nav-title-slide-ios7 bar-light">
+  <ion-nav-back-button class="button-icon ion-arrow-left-c">
+  </ion-nav-back-button>
+</ion-nav-bar>
+
+<ion-nav-view animation="slide-left-right-ios7"></ion-nav-view>
+
+<script id="intro.html" type="text/ng-template">
+  <ion-view>
+
+    <ion-nav-buttons side="left">
+      <button class="button button-positive button-clear no-animation"
+              ng-click="startApp()" ng-if="!slideIndex">
+        Skip Intro
+      </button>
+      <button class="button button-positive button-clear no-animation"
+              ng-click="previous()" ng-if="slideIndex > 0">
+        Previous Slide
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+      <button class="button button-positive button-clear no-animation"
+              ng-click="next()" ng-if="slideIndex != 2">
+        Next
+      </button>
+      <button class="button button-positive button-clear no-animation"
+              ng-click="startApp()" ng-if="slideIndex == 2">
+        Start using MyApp
+      </button>
+    </ion-nav-buttons>
+
+    <ion-slide-box on-slide-changed="slideChanged($index)">
+      <ion-slide>
+        <h3>Thank you for choosing the Awesome App!</h3>
+        <div id="logo">
+          <img src="" style="background: black; width: 152px; height: 152px;">
+        </div>
+        <p>
+          We've worked super hard to make you happy.
+        </p>
+        <p>
+          But if you are angry, too bad.
+        </p>
+      </ion-slide>
+      <ion-slide>
+        <h3>Using Awesome</h3>
+
+        <div id="list">
+          <h5>Just three steps:</h5>
+          <ol>
+            <li>Be awesome</li>
+            <li>Stay awesome</li>
+            <li>There is no step 3</li>
+          </ol>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <h3>Any questions?</h3>
+        <p>
+          Too bad!
+        </p>
+      </ion-slide>
+    </ion-slide-box>
+
+  </ion-view>
+</script>
+
+<script id="main.html" type="text/ng-template">
+  <ion-view hide-back-button="true" title="Awesome">
+    <ion-content padding="true">
+      <h1>Main app here</h1>
+      <button class="button" ng-click="toIntro()">Do Tutorial Again</button>
+    </ion-content>
+  </ion-view>
+</script>

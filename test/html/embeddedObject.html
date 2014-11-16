@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html ng-app="navTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Content</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <style>
+      .reveal-animation {
+        /*
+        -webkit-transform: translate3d(0%, 0, 0);
+                transform: translate3d(0%, 0, 0);
+
+       -webkit-transition: -webkit-transform 1s ease-in-out;
+               transition:         transform 1s ease-in-out;
+        */
+      }
+      .reveal-animation.ng-enter {
+        -webkit-transition: .2s ease-in-out all;
+        -webkit-transform:translate3d(100%,0,0) ;
+      }
+      .reveal-animation.ng-enter-active {
+        -webkit-transform:translate3d(0,0,0) ;
+      }
+      .reveal-animation.ng-leave {
+        -webkit-transition: .2s ease-in-out all;
+        -webkit-transform:translate3d(0%,0,0);
+      }
+      .reveal-animation.ng-leave-active {
+        -webkit-transition: .2s ease-in-out all;
+        -webkit-transform:translate3d(-100%,0,0);
+      }
+
+      .scroll-refresher {
+        border-bottom: 1px solid #eee;
+      }
+      #refresh-content {
+        color: #999;
+        text-align: center;
+        font-size: 48px;
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+      }
+      #search-box {
+        margin-bottom: 20px;
+      }
+      .scroll {
+      }
+    </style>
+
+  </head>
+  <body>
+    <ion-pane>
+      <ion-header-bar id="header" class="bar-primary">
+        <h1 class="title">Title</h1>
+      </ion-header-bar>
+
+      <ion-content id="container" padding="true">
+           <object width="560" height="315">
+        <param name="movie" value="//www.youtube.com/v/WzhW20hLp6M?version=3&amp;hl=uk_UA&amp;rel=0"></param>
+        <param name="allowFullScreen" value="true"></param
+        <param name="allowscriptaccess" value="always"></param>
+        <embed src="//www.youtube.com/v/WzhW20hLp6M?version=3&amp;hl=uk_UA&amp;rel=0" type="application/x-shockwave-flash" width="560" height="315" allowscriptaccess="always" allowfullscreen="true"></embed>
+      </object>
+      </ion-content>
+    </ion-pane>
+
+    <script>
+      angular.module('navTest', ['ionic'])
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <title>Ionic Loading Bar</title>
+
+  <link href="http://code.ionicframework.com/nightly/css/ionic.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+
+  <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.min.js"></script>
+  <script src="script.js"></script>
+
+</head>
+
+<body ng-controller="MainCtrl">
+
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Hello!</h1>
+  </ion-header-bar>
+
+  <div class="bar bar-loading bar-assertive" ng-if="data.isLoading">
+    Loading...
+  </div>
+
+  <ion-content ng-class="{'has-loading': data.isLoading}">
+    <ion-toggle ng-model="data.isLoading">Toggle me to toggle loading!</ion-toggle>
+  </ion-content>
+
+</body>
+</html>

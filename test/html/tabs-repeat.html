@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app="ionic">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Inline Tabs</title>
+
+    <link href="../../../../dist/css/ionic.css" rel="stylesheet">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+   <body ng-init="pages=[
+    {'id':'first',
+    'icon':'ion-link'
+    },
+
+    {'id':'second',
+    'icon':'icon ion-link'
+
+     },
+
+    {'id':'third',
+    'icon':'ion-link'
+
+    }
+
+    ]">
+    <ion-tabs class="tabs-top tabs-positive tabs-icon-top">
+      <ion-tab ng-repeat="p in pages" title="{{p.id}}" icon="{{p.icon}}">
+        <ion-header-bar class="bar-positive">
+          <h1 class="title">Hello</h1>
+        </ion-header-bar>
+        <ion-content>
+          <b>{{p.id}}</b>
+          <p>...</p>
+          <p>...</p>
+          <p>...</p>
+          <p>...</p>
+          <p>...</p>
+        </ion-content>
+      </ion-tab>
+    </ion-tabs>
+  </body>
+
+</html>

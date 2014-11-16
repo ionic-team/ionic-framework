@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html ng-app="navTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Scroll Click Tests</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <!--<link rel="stylesheet" href="../../../../dist/css/ionic.css">-->
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <style>
+      #click-notify {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 9997;
+        display: none;
+        padding: 8px;
+        background: red;
+        color: white;
+      }
+      #mousemove-notify {
+        position: absolute;
+        top: 40px;
+        left: 0;
+        z-index: 9998;
+        display: none;
+        padding: 8px;
+        background: orange;
+      }
+      #touchmove-notify {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        z-index: 9999;
+        display: none;
+        padding: 8px;
+        background: yellow;
+      }
+      #touchcancel-notify {
+        position: absolute;
+        top: 120px;
+        left: 0;
+        z-index: 9999;
+        display: none;
+        padding: 8px;
+        background: purple;
+        color: white;
+      }
+      a {
+        display: block;
+        background: blue;
+        margin: 40px 80px;
+        padding: 40px;
+        -webkit-tap-highlight-color: transparent;
+        text-decoration: none;
+      }
+      .activated {
+        background: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <ion-view title="Home" hide-nav-bar="true">
+      <ion-scroll zooming="true" direction="xy" style="width: 500px; height: 500px">
+        <div style="width: 5000px; height: 5000px; background: url('https://upload.wikimedia.org/wikipedia/commons/a/ad/Europe_geological_map-en.jpg') repeat"></div>
+      </ion-scroll>
+    </ion-view>
+    <script>
+      angular.module('navTest', ['ionic']);
+    </script>
+  </body>
+</html>

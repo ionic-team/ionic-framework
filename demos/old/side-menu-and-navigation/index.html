@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <title>Ionic Side Menus</title>
+
+  <link href="http://code.ionicframework.com/nightly/css/ionic.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+
+  <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.min.js"></script>
+  <script src="script.js"></script>
+
+</head>
+
+<body>
+
+  <div ng-controller="MainCtrl">
+    <ion-nav-view></ion-nav-view>
+  </div>
+
+  <script id="event-menu.html" type="text/ng-template">
+    <ion-side-menus>
+
+      <ion-side-menu-content>
+        <ion-nav-bar class="bar-positive">
+          <ion-nav-back-button class="button-icon ion-arrow-left-c">
+          </ion-nav-back-button>
+        </ion-nav-bar>
+        <ion-nav-buttons side="left">
+          <button class="button button-icon button-clear ion-navicon" ng-click="toggleLeft()">
+          </button>
+        </ion-nav-buttons>
+        <ion-nav-view name="menuContent"></ion-nav-view>
+      </ion-side-menu-content>
+
+      <ion-side-menu side="left">
+        <ion-header-bar class="bar-assertive">
+          <h1 class="title">Left Menu</h1>
+        </ion-header-bar>
+        <ion-content>
+          <ul class="list">
+            <a href="#/event/check-in" class="item" menu-toggle="left">Check-in</a>
+            <a href="#/event/attendees" class="item" menu-toggle="left">Attendees</a>
+          </ul>
+        </ion-content>
+      </ion-side-menu>
+
+    </ion-side-menus>
+  </script>
+
+  <script id="home.html" type="text/ng-template">
+    <ion-view title="Welcome">
+      <ion-content padding="true">
+        <p>Swipe to the right to reveal the left menu.</p>
+        <p>(On desktop click and drag from left to right)</p>
+      </ion-content>
+    </ion-view>
+  </script>
+
+  <script id="check-in.html" type="text/ng-template">
+    <ion-view title="Event Check-in">
+      <ion-content>
+        <form class="list" ng-show="showForm">
+          <div class="item item-divider">
+            Attendee Info
+          </div>
+          <label class="item item-input">
+            <input type="text" placeholder="First Name" ng-model="attendee.firstname">
+          </label>
+          <label class="item item-input">
+            <input type="text" placeholder="Last Name" ng-model="attendee.lastname">
+          </label>
+          <div class="item item-divider">
+            Shirt Size
+          </div>
+          <ion-radio ng-repeat="shirtSize in shirtSizes"
+                     ng-value="shirtSize.value"
+                     ng-model="attendee.shirtSize">
+            {{ shirtSize.text }}
+          </ion-radio>
+          <div class="item item-divider">
+            Lunch
+          </div>
+          <ion-toggle ng-model="attendee.vegetarian">
+            Vegetarian
+          </ion-toggle>
+          <div class="padding">
+            <button class="button button-block" ng-click="submit()">Checkin</button>
+          </div>
+        </form>
+
+        <div ng-hide="showForm">
+          <pre ng-bind="attendee | json"></pre>
+          <a href="#/event/attendees">View attendees</a>
+        </div>
+      </ion-content>
+    </ion-view>
+  </script>
+
+  <script id="attendees.html" type="text/ng-template">
+    <ion-view title="Event Attendees" left-buttons="leftButtons">
+      <ion-content>
+        <div class="list">
+          <ion-toggle ng-repeat="attendee in attendees | orderBy:'firstname' | orderBy:'lastname'"
+                      ng-model="attendee.arrived"
+                      ng-change="arrivedChange(attendee)">
+            {{ attendee.firstname }}
+            {{ attendee.lastname }}
+          </ion-toggle>
+          <div class="item item-divider">
+            Activity
+          </div>
+          <div class="item" ng-repeat="msg in activity">
+            {{ msg }}
+          </div>
+        </div>
+      </ion-content>
+    </ion-view>
+  </script>
+
+</body>
+</html>

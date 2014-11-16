@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>Ionic List</title>
+
+  <link href="http://code.ionicframework.com/nightly/css/ionic.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+
+  <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.min.js"></script>
+  <script src="script.js"></script>
+
+</head>
+
+<body ng-controller="MyCtrl">
+
+  <ion-header-bar class="bar-positive">
+    <div class="buttons">
+      <button class="button button-icon icon ion-ios7-minus-outline" ng-click="data.showDelete = !data.showDelete"></button>
+    </div>
+    <h1 class="title">Ionic Delete/Option Buttons</h1>
+  </ion-header-bar>
+
+  <ion-content>
+
+    <ion-list show-delete="data.showDelete" on-delete="onItemDelete(item)" option-buttons="itemButtons">
+
+      <ion-item ng-repeat="item in items" item="item" href="#/item/{{item.id}}">
+        Item {{ item.id }}
+      </ion-item>
+
+    </ion-list>
+
+  </ion-content>
+
+</body>
+</html>

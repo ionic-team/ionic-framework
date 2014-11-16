@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html ng-app="navTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Content</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <style>
+      .reveal-animation {
+        /*
+        -webkit-transform: translate3d(0%, 0, 0);
+                transform: translate3d(0%, 0, 0);
+
+       -webkit-transition: -webkit-transform 1s ease-in-out;
+               transition:         transform 1s ease-in-out;
+        */
+      }
+      .reveal-animation.ng-enter {
+        -webkit-transition: .2s ease-in-out all;
+        -webkit-transform:translate3d(100%,0,0) ;
+      }
+      .reveal-animation.ng-enter-active {
+        -webkit-transform:translate3d(0,0,0) ;
+      }
+      .reveal-animation.ng-leave {
+        -webkit-transition: .2s ease-in-out all;
+        -webkit-transform:translate3d(0%,0,0);
+      }
+      .reveal-animation.ng-leave-active {
+        -webkit-transition: .2s ease-in-out all;
+        -webkit-transform:translate3d(-100%,0,0);
+      }
+
+      .scroll-refresher {
+        border-bottom: 1px solid #eee;
+      }
+      #refresh-content {
+        color: #999;
+        text-align: center;
+        font-size: 48px;
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+      }
+    </style>
+
+  </head>
+  <body ng-controller="AppCtrl">
+      <ion-side-menus>
+        <ion-side-menu-content>
+          <ion-header-bar class="bar-primary">
+            <h1 class="title">Title</h1>
+          </ion-header-bar>
+
+          <div class="bar bar-subheader">
+            <div class="button-bar">
+              <a class="button">Success</a>
+              <a class="button">Warning</a>
+              <a class="button">Danger</a>
+            </div>
+          </div>
+
+          <ion-content class="has-header has-subheader has-footer overflow-scroll">
+            <div style="height: 3000px; width: 100%; background: url('tree_bark.png') repeat"></div>
+          </ion-content>
+
+          <ion-footer-bar class="bar-assertive">
+            <h1 class="title">Footer</h1>
+          </ion-footer-bar>
+        </ion-pane>
+        <ion-side-menu side="left">
+          <header class="bar bar-header bar-assertive">
+            <h1 class="title">Left</h1>
+          </header>
+          <ion-content has-header="true" overflow-scroll="true">
+            <ul class="list">
+              <a href="#" class="item" ng-repeat="item in list">
+                {{item.text}}
+              </a>
+            </ul>
+          </ion-content>
+        </ion-side-menu>
+        <ion-side-menu side="right">
+          <header class="bar bar-header bar-assertive">
+            <h1 class="title">Right</h1>
+          </header>
+          <ion-content class="has-header">
+            <ul class="list">
+              <a href="#" class="item" ng-repeat="item in list">
+                {{item.text}}
+              </a>
+            </ul>
+          </ion-content>
+        </ion-side-menu>
+      </ion-side-menus>
+
+    <script>
+      angular.module('navTest', ['ionic'])
+
+      .controller('AppCtrl', function($scope, $compile, $timeout, $element) {
+        $scope.items = [];
+        for(var i = 0; i < 200; i++) {
+          $scope.items.push({
+          });
+        }
+        $scope.what = {};
+        $scope.onRefresh = function() {
+          console.log('On refresh');
+          $timeout(function() {
+            $scope.refreshComplete();
+          }, 2000);
+        }
+        $scope.onRefreshOpening = function(amt) {
+          console.log('On refresh opening', amt);
+        }
+
+      })
+    </script>
+  </body>
+</html>

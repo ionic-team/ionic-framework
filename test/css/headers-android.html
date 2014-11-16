@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="ionic">
+  <head>
+    <script src="../../dist/js/ionic.bundle.js"></script>
+    <meta charset="utf-8">
+    <title>Header</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link href="../../dist/css/ionic.css" rel="stylesheet">
+    <script src="../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body>
+
+  <ion-header-bar align-title="left" class="bar-positive">
+    <div class="buttons">
+      <button class="button" ng-click="doSomething()">Left Button</button>
+    </div>
+    <h1 class="title">Title!</h1>
+    <div class="buttons">
+      <button class="button">Right Button</button>
+    </div>
+  </ion-header-bar>
+  <div class="tabs-background-positive tabs-color-stable tabs-top tabs-striped">
+    <nav class="tabs">
+      <a class="tab-item active" href="#"><i class="icon ion-game-controller-a"></i> Fun</a>
+      <a class="tab-item"><i class="icon ion-locked"></i>Security</a>
+      <a class="tab-item has-badge"><i class="badge badge-assertive">3</i><i class="icon ion-leaf"></i>Light</a>
+      <a disabled class="tab-item"><i class="icon ion-close"></i>Inactive</a>
+    </nav>
+  </div>
+  <div class="view tabs-dark tabs-striped">
+    <nav class="tabs">
+      <a class="tab-item active" href="#"><i class="icon ion-game-controller-a"></i> Fun</a>
+      <a class="tab-item"><i class="icon ion-locked"></i>Security</a>
+      <a class="tab-item has-badge"><i class="badge badge-assertive">3</i><i class="icon ion-leaf"></i>Light</a>
+      <a disabled class="tab-item"><i class="icon ion-close"></i>Inactive</a>
+    </nav>
+  </div>
+  </body>
+</html>

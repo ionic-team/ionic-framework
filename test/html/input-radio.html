@@ -1,75 +1,36 @@
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Radio Inputs</title>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <link href="../../dist/css/ionic.css" rel="stylesheet">
-  </head>
-  <body>
+<html ng-app="ionicApp">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
-    <header class="bar bar-header bar-dark">
-      <h1 class="title">Radio Buttons</h1>
-    </header>
+  <title>Radio Buttons</title>
 
-    <div class="content has-header">
+  <link rel="stylesheet" href="../../dist/css/ionic.css">
+  <script src="../../../../dist/js/ionic.bundle.js"></script>
+</head>
 
-      <div class="list">
+<body ng-controller="MainCtrl">
 
-        <label class="item item-radio">
-          <input type="radio" name="group" value="go" checked="checked">
-          <div class="item-content">
-            Go
-          </div>
-          <i class="radio-icon icon ion-checkmark"></i>
-        </label>
+<ion-header-bar class="bar-positive">
+  <h1 class="title">Radio Buttons</h1>
+</ion-header-bar>
 
-        <label class="item item-radio">
-          <input type="radio" name="group" value="python">
-          <div class="item-content">
-            Python
-          </div>
-          <i class="radio-icon icon ion-checkmark"></i>
-        </label>
+<ion-content>
+  {{ $parent.formData }}
+  <div class="list">
 
-        <label class="item item-radio">
-          <input type="radio" name="group" value="ruby">
-          <div class="item-content">
-            Ruby
-          </div>
-          <i class="radio-icon icon ion-checkmark"></i>
-        </label>
+    <ion-radio ng-model="$parent.formData.applyDisabled" ng-value="true" name="applyDisabled">Apply Disabled</ion-radio>
+    <ion-radio ng-model="$parent.formData.applyDisabled" ng-value="false" name="applyDisabled">Enable</ion-radio>
 
-        <label class="item item-radio">
-          <input type="radio" name="group" value=".net">
-          <div class="item-content">
-            .Net
-          </div>
-          <i class="radio-icon icon ion-checkmark"></i>
-        </label>
+    <ion-radio ng-model="$parent.formData.color" ng-value="'red'" name="color" ng-disabled="$parent.formData.applyDisabled">gets disabled Red</ion-radio>
+    <ion-radio ng-model="$parent.formData.color" ng-value="'blue'" name="color" ng-disabled="$parent.formData.applyDisabled">gets disabled Blue</ion-radio>
+  </div>
+</ion-content>
+<script>
+angular.module('ionicApp', ['ionic'])
+.controller('MainCtrl', function($scope) {
 
-        <label class="item item-radio">
-          <input type="radio" name="group" value="java">
-          <div class="item-content">
-            Java
-          </div>
-          <i class="radio-icon icon ion-checkmark"></i>
-        </label>
-
-        <label class="item item-radio">
-          <input type="radio" name="group" value="php">
-          <div class="item-content">
-            PHP
-          </div>
-          <i class="radio-icon icon ion-checkmark"></i>
-        </label>
-
-      </div>
-
-      <div class="padding">
-        <p><a class="button button-secondary" href="./">All CSS Tests</a></p>
-      </div>
-
-    </div>
-
-  </body>
+});
+</script>
+</body>
 </html>

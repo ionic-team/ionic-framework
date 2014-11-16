@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="ionic">
+  <head>
+    <meta charset="utf-8">
+    <title>List</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body>
+   <ion-toggle ng-model="shouldShowScrollView"></ion-toggle>
+   <ion-scroll delegate-handle="myScroll" ng-if="shouldShowScrollView">
+     <div ng-controller="ScrollCtrl">
+       <ion-list>
+         <ion-item ng-repeat="i in items">{{i}}</ion-item>
+       </ion-list>
+     </div>
+   </ion-scroll>
+   <script>
+   function ScrollCtrl($scope, $ionicScrollDelegate) {
+     var delegate = $ionicScrollDelegate.$getByHandle('myScroll');
+
+     delegate.rememberScrollPosition('my-scroll-id');
+     delegate.scrollToRememberedPosition();
+
+     $scope.items = [];
+     for (var i=0; i<100; i++) {
+       $scope.items.push(i);
+     }
+   }
+   </script>
+  </body>
+</html>

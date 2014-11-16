@@ -1,0 +1,121 @@
+<!doctype html>
+<html ng-app="{% if doc.demoData %}{$ doc.demoData.name $}{% else %}demoApp{% endif %}" ng-controller="IonicDemoCtrl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<link rel="stylesheet" href="{$ demoFolderPrefix $}/{$ version.current.folder $}/ionic/css/ionic.min.css">
+<script src="{$ demoFolderPrefix $}/{$ version.current.folder $}/ionic/js/ionic.bundle.min.js"></script>
+<script src="{$ demoFolderPrefix $}/{$ version.current.folder $}/pages-data.js"></script>
+
+{% for file in doc.demoData.files.css %}
+<link rel="stylesheet" href="{$ file.fileName $}">
+{% endfor %}
+{% for file in doc.demoData.files.js %}
+  <script src="{$ file.fileName $}"></script>
+{% endfor %}
+<script src="index-ionic-demo-app.js"></script>
+</head>
+<body>
+
+{% if doc.demoData %}
+
+<div class="demo-content-pane">
+  {% for file in doc.demoData.files.html %}
+  {$ file.contents $}
+  {% endfor %}
+</div>
+<div class="bar bar-footer bar-light demo-footer" ng-click="$demoModal.show()">
+  <div class="demo-footer-icon" ng-hide="$demoModal.isShown()">
+    <i class="icon ion-chevron-up"></i>
+  </div>
+  <h1 class="title" style="right:auto;"
+      ng-bind="$demo.component + ': ' + ($demo.name | humanize)">
+  </h1>
+  <div class="buttons right-buttons">
+    <a class="button" ng-click="demoScratch($demo); $event.stopPropagation()">
+      <i class="icon ion-code"></i>
+      Source
+    </a>
+  </div>
+</div>
+
+{% else %}
+
+<div class="pane">
+  <div ng-include="'demo-list.html'">
+  </div>
+</div>
+
+{% endif %}
+
+  <script type="text/ng-template" id="ionic-demo-modal.html">
+    <div class="modal">
+      <div ng-include="'demo-list.html'">
+      </div>
+    </div>
+  </script>
+
+  <script type="text/ng-template" id="demo-list.html">
+    <ion-header-bar class="bar-light">
+      <a class="button" ng-click="$demoModal.hide()" ng-if="$demo">
+        Cancel
+      </a>
+      <h1 class="title">All Demos</h1>
+    </ion-header-bar>
+    <ion-content>
+
+      <div class="list">
+        <div class="item item-input-inset">
+          <label class="item-input-wrapper">
+            <input type="text" placeholder="Filter Demos..." ng-model="demoFilter">
+          </label>
+          <button class="button button-small" ng-click="demoFilter = ''">
+            Clear
+          </button>
+        </div>
+
+        <a class="item item-icon-right"
+          ng-class="{active: demo.id == $demo.id }"
+          ng-repeat="demo in $demos | filter:demoFilter"
+          ng-href="{{demo.href}}"
+          ng-bind="demo.component + ': ' + (demo.name | humanize)">
+          <i class="icon icon-accessory ion-chevron-right"></i>
+        </a>
+      </div>
+
+    </ion-content>
+  </script>
+
+  <style>
+    body {
+      margin-bottom: 44px;
+    }
+    .demo-content-pane {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 44px;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+    }
+    .demo-footer-icon {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -3px;
+      margin: auto;
+      text-align: center;
+      -webkit-transform: scaleX(1.3);
+      -moz-transform: scaleX(1.3);
+      transform: scaleX(1.3);
+    }
+    .demo-footer-icon .icon {
+      color: #CCC;
+      font-size: 18px;
+    }
+  </style>
+
+</body>
+</html>
+

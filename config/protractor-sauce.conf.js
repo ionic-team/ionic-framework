@@ -1,14 +1,17 @@
+var _ = require('lodash');
 var config = require('./protractor.conf').config;
 
 config.chromeOnly = false;
 
-config.sauceUser = process.env.SAUCE_USER;
-config.sauceKey = process.env.SAUCE_KEY;
-config.capabilities = {
-  build: process.env.TRAVIS_BUILD_NUMBER,
-  'tunnel-identifier': process.env.TRAVIS_BUILD_NUMBER,
-  name: 'Ionic!',
-  browserName: 'chrome'
-};
+exports.config = _.merge({}, config, {
+  sauceUser: process.env.SAUCE_USER,
+  sauceKey: process.env.SAUCE_KEY,
 
-exports.config = config;
+  capabilities: {
+    build: process.env.SAUCE_BUILD_ID || 1,
+    'tunnel-identifier': process.env.SAUCE_TUNNEL_ID || 0,
+    name: 'Ionic!',
+    browserName: 'chrome'
+  }
+});
+

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html ng-app="navState">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <title>navViews and ion-tabs w/ nested navViews</title>
+
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body ng-controller="AppCtrl">
+
+    <ion-nav-bar class="bar-positive">
+      <ion-nav-back-button class="button-icon icon ion-arrow-left-c">
+        Back
+      </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view></ion-nav-view>
+
+    <script id="sign-in.html" type="text/ng-template">
+      <ion-view title="Sign-In">
+
+        <ion-nav-buttons side="left">
+          <button class="button button-icon icon ion-navicon"></button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+            <button
+                class="button button-icon icon ion-close-circled"
+                ng-click="requestClearNotifications()">
+            </button>
+            <button
+                class="button button-icon icon ion-alert-circled"
+                ng-show="$root.showButton">
+            </button>
+        </ion-nav-buttons>
+
+        <ion-content>
+        <ion-toggle ng-model="$root.showButton"></ion-toggle>
+          <div class="list">
+            <label class="item item-input">
+              <span class="input-label">Username</span>
+              <input type="text">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password">
+            </label>
+          </div>
+          <div class="padding">
+            <button class="button button-block button-positive" ng-click="signIn(user)">
+              Sign-In
+            </button>
+            <form ng-submit="something()">
+              <input type="text">
+              <button type="submit"></button>
+            </form>
+            <p class="text-center">
+              <a href="#/sign-in">Sign-In</a> -
+              <a href="#/forgot-password">Forgot password</a> -
+              <a ui-sref="contact">Contact</a>
+            </p>
+            <p>
+              Current View: {{ $viewHistory.currentView }}<br>
+              Back View: {{ $viewHistory.backView }}<br>
+              Forward View: {{ $viewHistory.forwardView }}
+            </p>
+          </div>
+        </ion-content>
+
+      </ion-view>
+    </script>
+
+    <script id="forgot-password.html" type="text/ng-template">
+      <ion-view title="Forgot Password" hide-nav-bar="true">
+        <ion-content padding="true">
+          <p>This ion-view hides the nav bar using the hideNavBar attribute.</p>
+          <p>
+            <button ng-click="hideNavBar()">Hide Nav Bar</button>
+            <button ng-click="showNavBar()">Show Nav Bar</button>
+          </p>
+          <p>
+            <button ng-click="clearViewHistory()">Clear View History</button>
+          </p>
+          <p class="text-center">
+            <a href="#/sign-in">Sign-In</a> -
+            <a href="#/forgot-password">Forgot password</a> -
+            <a href="#/contact">Contact</a>
+          </p>
+          <p>
+            Current View: {{ $viewHistory.currentView }}<br>
+            Back View: {{ $viewHistory.backView }}<br>
+            Forward View: {{ $viewHistory.forwardView }}
+          </p>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="contact.html" type="text/ng-template">
+      <ion-view hide-back-button="true">
+        <ion-content padding="true">
+          <p>The views title is blank on purpose.</p>
+          <p>The hideBackButton attribute is "true" for this view.</p>
+          <p>@drifty</p>
+          <p class="text-center">
+            <a href="#/sign-in">Sign-In</a> -
+            <a href="#/forgot-password">Forgot password</a> -
+            <a href="#/contact">Contact</a>
+          </p>
+          <p>
+            Current View: {{ $viewHistory.currentView }}<br>
+            Back View: {{ $viewHistory.backView }}<br>
+            Forward View: {{ $viewHistory.forwardView }}
+          </p>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="tabs.html" type="text/ng-template">
+
+      <ion-tabs class="tabs-icon-top tabs-positive">
+
+        <ion-tab title="Automobiles" icon="ion-model-s" href="#/tabs/autos">
+          <ion-nav-view name="auto-nav-view"></ion-nav-view>
+        </ion-tab>
+
+        <ion-tab title="Add" icon="ion-plus-circled" href="#/tabs/add-auto">
+          <ion-nav-view name="add-autos-nav-view"></ion-nav-view>
+        </ion-tab>
+
+        <ion-tab title="About" icon="ion-ios7-world" ui-sref="tabs.about">
+          <ion-nav-view name="about-nav-view"></ion-nav-view>
+        </ion-tab>
+
+        <ion-tab title="Info" icon="ion-information-circled">
+          <ion-view title="Information">
+            <ion-content padding="true">
+              <h3>Information</h3>
+              <p>
+                This is a sample seed project for the Ionic Framework. Please change it to match your needs.
+              </p>
+              <p>
+                Current View: {{ $viewHistory.currentView }}<br>
+                Back View: {{ $viewHistory.backView }}<br>
+                Forward View: {{ $viewHistory.forwardView }}
+              </p>
+            </ion-content>
+          </ion-view>
+        </ion-tab>
+
+        <ion-tab title="Sign-Out" icon="ion-log-out" href="#/sign-in">
+        </ion-tab>
+
+      </ion-tabs>
+
+    </script>
+
+    <script id="auto-list.html" type="text/ng-template">
+
+      <ion-view title="Auto List">
+        <ion-nav-buttons side="left">
+          <button class="button button-icon icon ion-home" ng-click="foo()">
+            What?
+          </button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+          <button class="button button-icon icon ion-navicon" ng-click="foo()">
+          </button>
+        </ion-nav-buttons>
+
+        <ion-header-bar class="bar bar-subheader bar-energized">
+          <h1 class="title">some subheader</h1>
+        </ion-header-bar>
+        <ion-content padding="true">
+          <ion-list>
+            <ion-item ng-repeat="auto in autos"
+              ng-href="#/tabs/autos/{{ $index }}" >
+              {{ auto.year }} {{ auto.make }} {{ auto.model }}
+            </ion-item>
+          </ion-list>
+          <p>
+            <button ng-click="testStateGo()">Test State Go</button>
+          </p>
+          <p>
+            Current View: {{ $viewHistory.currentView }}<br>
+            Back View: {{ $viewHistory.backView }}<br>
+            Forward View: {{ $viewHistory.forwardView }}
+          </p>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="auto-detail.html" type="text/ng-template">
+      <ion-view title="Auto Details">
+
+        <ion-nav-buttons side="right">
+          <button class="button button-icon icon ion-home" ng-click="foo()">
+            Home
+          </button>
+        </ion-nav-buttons>
+
+        <ion-content padding="true">
+
+          <h2>{{ auto.year }} {{ auto.make }} {{ auto.model }}</h2>
+          <ul>
+            <li>
+              <a ng-href="#/tabs/autos/0" class="ng-binding" href="#/tabs/autos/0">1936 Cord 810</a>
+            </li><li>
+              <a ng-href="#/tabs/autos/1" class="ng-binding" href="#/tabs/autos/1">1981 DeLorean DMC-12</a>
+            </li><li>
+              <a ng-href="#/tabs/autos/2" class="ng-binding" href="#/tabs/autos/2">1933 Duesenberg Model SJ</a>
+            </li><li>
+              <a ng-href="#/tabs/autos/3" class="ng-binding" href="#/tabs/autos/3">1951 Hudson Hornet</a>
+            </li><li>
+              <a ng-href="#/tabs/autos/4" class="ng-binding" href="#/tabs/autos/4">1965 Shelby Cobra</a>
+            </li><li>
+              <a ng-href="#/tabs/autos/5" class="ng-binding" href="#/tabs/autos/5">2008 Tesla Roadster</a>
+            </li><li>
+              <a ng-href="#/tabs/autos/6" class="ng-binding" href="#/tabs/autos/6">1948 Tucker 48</a>
+            </li>
+          </ul>
+          <p><a class="button button-small" href="#/tabs/autos">Auto List</a></p>
+          <p ng-bind="auto.desc"></p>
+          <p>
+            Current View: {{ $viewHistory.currentView }}<br>
+            Back View: {{ $viewHistory.backView }}<br>
+            Forward View: {{ $viewHistory.forwardView }}
+          </p>
+          <p>
+            <button ng-click="hideBackButton()">Hide Back Button</button>
+            <button ng-click="showBackButton()">Show Back Button</button>
+          </p>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="add-auto.html" type="text/ng-template">
+      <ion-view title="Add Auto">
+        <ion-content padding="true">
+
+          <div class="list">
+            <label class="item item-input">
+              <input type="text" placeholder="Make">
+            </label>
+            <label class="item item-input">
+              <input type="text" placeholder="Model">
+            </label>
+            <label class="item item-input">
+              <input type="text" placeholder="Year">
+            </label>
+            <label class="item item-input">
+              <textarea placeholder="Description"></textarea>
+            </label>
+            <label class="item item-input">
+              <textarea placeholder="Description"></textarea>
+            </label>
+            <label class="item item-input">
+              <textarea placeholder="Description"></textarea>
+            </label>
+            <label class="item item-input">
+              <textarea placeholder="Description"></textarea>
+            </label>
+            <label class="item item-input">
+              <textarea placeholder="Description"></textarea>
+            </label>
+            <label class="item item-input">
+              <textarea placeholder="Description"></textarea>
+            </label>
+            <label class="item item-input">
+              <textarea placeholder="Description"></textarea>
+            </label>
+            <label class="item item-input">
+              <textarea placeholder="Description"></textarea>
+            </label>
+            <label class="item item-input">
+              <textarea placeholder="Description"></textarea>
+            </label>
+            <label class="item item-input">
+              <textarea placeholder="Description"></textarea>
+            </label>
+            <label class="item item-input">
+              <textarea placeholder="Description"></textarea>
+            </label>
+            <label class="item item-input">
+              <textarea placeholder="Description"></textarea>
+            </label>
+            <label class="item item-input">
+              <textarea placeholder="Description"></textarea>
+            </label>
+          </div>
+
+          <div class="padding">
+            <p>
+              Current View: {{ $viewHistory.currentView }}<br>
+              Back View: {{ $viewHistory.backView }}<br>
+              Forward View: {{ $viewHistory.forwardView }}
+            </p>
+          </div>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="about.html" type="text/ng-template">
+      <ion-view title="About">
+        <ion-content padding="true">
+          <h3>About this app!</h3>
+          <p>
+            Current View: {{ $viewHistory.currentView }}<br>
+            Back View: {{ $viewHistory.backView }}<br>
+            Forward View: {{ $viewHistory.forwardView }}
+          </p>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script>
+      angular.module('navState', ['ionic'])
+
+
+      .config(function($stateProvider, $urlRouterProvider) {
+
+        $stateProvider
+          .state('signin', {
+            url: "/sign-in",
+            templateUrl: "sign-in.html",
+            controller: 'SignInCtrl'
+          })
+          .state('forgotpassword', {
+            url: "/forgot-password",
+            templateUrl: "forgot-password.html",
+            controller: 'ForgotPasswordCtrl'
+          })
+          .state('contact', {
+            url: "/contact",
+            templateUrl: "contact.html"
+          })
+          .state('tabs', {
+            url: "/tabs",
+            abstract: true,
+            templateUrl: "tabs.html"
+          })
+          .state('tabs.autolist', {
+            url: "/autos",
+            views: {
+              'auto-nav-view': {
+                templateUrl: "auto-list.html",
+                controller: 'AutoListCtrl'
+              }
+            }
+          })
+          .state('tabs.addauto', {
+            url: "/add-auto",
+            views: {
+              'add-autos-nav-view': {
+                templateUrl: "add-auto.html",
+                controller: 'AutoAddCtrl'
+              }
+            }
+          })
+          .state('tabs.autodetail', {
+            url: "/autos/:id",
+            views: {
+              'auto-nav-view': {
+                templateUrl: "auto-detail.html",
+                controller: 'AutoDetailCtrl'
+              }
+            }
+          })
+          .state('tabs.about', {
+            url: "/about",
+            views: {
+              'about-nav-view': {
+                templateUrl: "about.html"
+              }
+            }
+          });
+
+
+         $urlRouterProvider.otherwise("/sign-in");
+
+      })
+
+      .controller('SignInCtrl', function($scope, $state) {
+          $scope.foo = function() {
+            alert('foo');
+          };
+          $scope.something = function() {
+          alert('something');
+          };
+
+        $scope.signIn = function(user) {
+          $state.go('tabs.autolist');
+        };
+
+      })
+
+      .controller('ForgotPasswordCtrl', function($ionicHistory, $rootScope, $scope, $state, $ionicNavBarDelegate) {
+        $scope.clearViewHistory = function() {
+          $ionicHistory.clearHistory();
+        };
+
+        $scope.hideNavBar = function() {
+          $ionicNavBarDelegate.showBar(false);
+        };
+
+        $scope.showNavBar = function() {
+          $ionicNavBarDelegate.showBar(true);
+        };
+      })
+
+      .controller('AutoListCtrl', function($scope, $state) {
+        $scope.autoListData = "AutoListCtrl Data";
+
+        $scope.testStateGo = function() {
+          var toParams = { id: 4 };
+          $state.go('tabs.autodetail', toParams);
+        };
+      })
+
+      .controller('AutoDetailCtrl', function($scope, $state, $stateParams, $ionicNavBarDelegate) {
+        $scope.autoDetailData = "AutoDetailCtrl Data";
+
+        $scope.hideBackButton = function() {
+          $ionicNavBarDelegate.showBackButton(false);
+        };
+        $scope.showBackButton = function() {
+          $ionicNavBarDelegate.showBackButton(true);
+        };
+
+        $scope.auto = $scope.autos[$stateParams.id];
+      })
+
+      .controller('AutoAddCtrl', function($scope) {
+        $scope.newAutoData = "AutoAddCtrl Data";
+      })
+
+      .controller('AppCtrl', function($scope, $state) {
+
+        $scope.autos = [
+          { make: 'Cord', model: '810', year: '1936', desc: 'Styled by Gordon M. Buehrig, it featured front-wheel drive and independent front suspension;[ the front drive enabled the 810 to be so low, runningboards were unnecessary. Powered by a 4,739 cc (289 cu in) Lycoming V8 of the same 125 hp (93 kW) as the L-29, The 810 had a four-speed electrically-selected semi-automatic transmission, among other innovative features.', url: 'http://en.wikipedia.org/wiki/Cord_810/812' },
+          { make: 'DeLorean', model: 'DMC-12', year: '1981', desc: 'The DeLorean DMC-12 is a sports car manufactured by John DeLorean\'s DeLorean Motor Company for the American market in 1981–82. Featuring gull-wing doors with a fiberglass "underbody", to which non-structural brushed stainless steel panels are affixed, the car became iconic for its appearance as a modified time machine in the Back to the Future film trilogy.', url: 'http://en.wikipedia.org/wiki/DeLorean_DMC-12' },
+          { make: 'Duesenberg', model: 'Model SJ', year: '1933', desc: 'The rare supercharged Model J version, with 320 hp (239 kW) was also created by Fred Duesenberg and introduced in May 1932, only 36 units were built. Special-bodied models, such as the later "Mormon Meteor" chassis, achieved an average speed of over 135 mph (217 km/h)[17] and a one-hour average of over 152 mph (245 km/h) at Bonneville Salt Flats, Utah.', url: 'http://en.wikipedia.org/wiki/Duesenberg_Model_J' },
+          { make: 'Hudson', model: 'Hornet', year: '1951', desc: 'The Hornet, introduced for the 1951 model year, was based on Hudson\'s "step-down" design that was first seen in the 1948 model year on the Commodore. The design merged body and chassis frame into a single structure, with the floor pan recessed between the car\'s chassis rails instead of sitting on top of them. Thus one "stepped down" into a Hudson. The step-down chassis\'s "lower center of gravity...was both functional and stylish. The car not only handled well, but treated its six passengers to a sumptuous ride. The low-slung look also had a sleekness about it that was accentuated by the nearly enclosed rear wheels.', url: 'http://en.wikipedia.org/wiki/Hudson_Hornet' },
+          { make: 'Shelby', model: 'Cobra', year: '1965', desc: 'Shelby wanted the AC Cobras to be "Corvette-Beaters" and at nearly 500 lb (227 kg) less than the Chevrolet Corvette, the lightweight roadster accomplished that goal at Riverside International Raceway on 2 February 1963. Driver Dave MacDonald piloted CSX2026 past a field of Corvettes, Jaguars, Porsches, and Maseratis and recorded the Cobra\'s historic first-ever victory.', url: 'http://en.wikipedia.org/wiki/Shelby_Cobra' },
+          { make: 'Tesla', model: 'Roadster', year: '2008', desc: 'Tesla Motors\' first production vehicle, the Tesla Roadster, was an all-electric sports car. The Roadster was the first highway-capable all-electric vehicle in serial production for sale in the United States in the modern era. The Roadster was also the first production automobile to use lithium-ion battery cells and the first production BEV (all-electric) to travel more than 200 miles (320 km) per charge.', url: 'http://en.wikipedia.org/wiki/Tesla_Roadster' },
+          { make: 'Tucker', model: '48', year: '1948', desc: 'The Tucker 48 (named after its model year) was an advanced automobile conceived by Preston Tucker and briefly produced in Chicago in 1948. Only 51 cars were made before the company folded on March 3, 1949, due to negative publicity initiated by the news media, a Securities and Exchange Commission investigation and a heavily publicized stock fraud trial (in which allegations were proven baseless in court with a full acquittal). Speculation exists that the Big Three automakers and Michigan senator Homer S. Ferguson also had a role in the Tucker Corporation\'s demise.', url: 'http://en.wikipedia.org/wiki/Tucker_Torpedo' },
+        ];
+
+      });
+
+    </script>
+  </body>
+</html>

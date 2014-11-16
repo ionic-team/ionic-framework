@@ -11,7 +11,7 @@
   position: relative;
   display: inline-block;
   margin: 0;
-  padding: 1px $button-padding 0 $button-padding;
+  padding: 0 $button-padding;
 
   min-width: ($button-padding * 3) + $button-font-size;
   min-height: $button-height + 5px;
@@ -33,14 +33,15 @@
     // used to create a larger button "hit" area
     position: absolute;
     top: -6px;
-    right: -8px;
+    right: -6px;
     bottom: -6px;
-    left: -8px;
+    left: -6px;
     content: ' ';
   }
 
   .icon {
     vertical-align: top;
+    pointer-events: none;
   }
 
   .icon:before,
@@ -51,7 +52,8 @@
     padding: 0 0 $button-border-width 0;
     vertical-align: inherit;
     font-size: $button-icon-size;
-    line-height: $button-height - $button-border-width + 1;
+    line-height: $button-height - $button-border-width;
+    pointer-events: none;
   }
   &.icon-left:before {
     float: left;
@@ -125,18 +127,19 @@
 }
 
 .button-small {
-  padding: 0 $button-small-padding;
+  padding: 2px $button-small-padding 1px;
   min-width: $button-small-height;
-  min-height: $button-small-height + 3;
+  min-height: $button-small-height + 2;
   font-size: $button-small-font-size;
-  line-height: $button-small-height - $button-border-width + 1;
+  line-height: $button-small-height - $button-border-width - 1;
 
   .icon:before,
   &.icon:before,
   &.icon-left:before,
   &.icon-right:before {
     font-size: $button-small-icon-size;
-    line-height: $button-small-height - $button-border-width - 1;
+    line-height: $button-small-icon-size + 3;
+    margin-top: 3px;
   }
 }
 
@@ -232,6 +235,13 @@ input.button.button-block  {
 
 a.button {
   text-decoration: none;
+
+  .icon:before,
+  &.icon:before,
+  &.icon-left:before,
+  &.icon-right:before {
+    margin-top: 2px;
+  }
 }
 
 .button.disabled,

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+  <script src="../../../../dist/js/ionic.bundle.js"></script>
+</head>
+
+<body ng-app="starter" animation="slide-left-right-ios7">
+  <ion-nav-bar type="bar-light" animation="nav-title-slide-ios7">
+    <ion-nav-back-button class="button-icon button-clear ion-ios7-arrow-back">
+    </ion-nav-back-button>
+  </ion-nav-bar>
+
+  <ion-nav-view></ion-nav-view>
+
+  <script>
+    angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
+    .run(function($templateCache){
+      $templateCache.put("templates/about.html","<ion-view title='About Ionic'><ion-content class='has-header has-tabs' padding='true'></ion-content></ion-view>");
+
+      $templateCache.put("templates/tabs.html","<ion-tabs tabs-style='tabs-icon-top' tabs-type='tabs-default'><ion-tab title='Pets' icon='icon ion-home' href='#/tab/pets'><ion-nav-view name='pets-tab'></ion-nav-view></ion-tab><ion-tab title='About' icon='icon ion-search' href='#/tab/about'><ion-nav-view name='about-tab'></ion-nav-view></ion-tab></ion-tabs>");
+      $templateCache.put("templates/pet-index.html","<ion-view title='Pet Information'><ion-content class='has-header has-tabs'><div class='list'><a class='item item-thumbnail-left' ng-repeat='pet in pets' ng-href='#/tab/pet/{{pet.id}}' ><img ng-src='{{pet.thumbnail}}'><h3>{{pet.title}}</h3><p>{{pet.description}}</p></a></div></ion-content></ion-view>");
+      $templateCache.put("templates/pet-detail.html","<ion-view title='{{pet.title}}'><ion-content class='has-header' padding='true'><p>{{ pet.description }}</p><p><a class='button button-small icon ion-arrow-left-b' href='#/tab/pets'> All Pets</a></p><button class='button button-small' ng-click='clearViewHistories()'>clearViewHistories</button><button class='button button-small' ng-click='historyConsole()'>Console Log</button><pre>{{ $viewHistory | json }}</pre></ion-content></ion-view>");
+
+    })
+    .config(function($stateProvider, $urlRouterProvider) {
+      $stateProvider
+        .state('tab', {
+          url: "/tab",
+          abstract: true,
+          templateUrl: "templates/tabs.html"
+        })
+        .state('tab.pet-index', {
+          url: '/pets',
+          views: {
+            'pets-tab': {
+              templateUrl: 'templates/pet-index.html',
+              controller: 'PetIndexCtrl'
+            }
+          }
+        })
+        .state('tab.pet-detail', {
+          url: '/pet/:petId',
+          views: {
+            'pets-tab': {
+              templateUrl: 'templates/pet-detail.html',
+              controller: 'PetDetailCtrl'
+            }
+          }
+        })
+        .state('tab.about', {
+          url: '/about',
+          views: {
+            'about-tab': {
+              templateUrl: 'templates/about.html'
+            }
+          }
+        });
+      $urlRouterProvider.otherwise('/tab/pets');
+
+    });
+
+    angular.module('starter.controllers', [])
+    .controller('PetIndexCtrl', function($scope, PetService) {
+      $scope.pets = PetService.all();
+    })
+
+    .controller('PetDetailCtrl', function($scope, $stateParams, PetService, $ionicModal, $rootScope, $ionicHistory) {
+      $scope.pet = PetService.get($stateParams.petId);
+      $scope.historyConsole = function () {
+        console.log($rootScope.$viewHistory);
+      };
+      $scope.clearViewHistories = function() {
+        $ionicHistory.clearHistory();
+      };
+    })
+
+    angular.module('starter.services', [])
+    .factory('PetService', function() {
+      var pets = [
+        {
+          id: 0,
+          title: 'Cats',
+          description: 'Furry little creatures. Obsessed with plotting assassination, but never following through on it.',
+          thumbnail: 'http://4.bp.blogspot.com/-MzZCzWI_6Xc/UIUQp1qPfzI/AAAAAAAAHpA/OTwHCJSWFAY/s1600/cats_animals_kittens_cat_kitten_cute_desktop_1680x1050_hd-wallpaper-753974.jpeg'
+        },
+        {
+          id: 1,
+          title: 'Dogs',
+          description: 'Lovable. Loyal almost to a fault. Smarter than they let on.' ,
+          thumbnail: 'http://davidfeldmanshow.com/wp-content/uploads/2014/01/dogs-wallpaper.jpg'
+        },
+        {
+          id: 2,
+          title: 'Turtles',
+          description: 'Everyone likes turtles.' ,
+          thumbnail: 'https://www.wildlifedepartment.com/wildlifemgmt/turtles/Common%20Map%20Turtle.jpg'
+        },
+        {
+          id: 3,
+          title: 'Sharks',
+          description: 'An advanced pet. Needs millions of gallons of salt water. Will happily eat you.' ,
+          thumbnail: 'http://upload.wikimedia.org/wikipedia/commons/e/ea/Prionace_glauca_1.jpg'
+        },
+        {
+          id: 4,
+          title: 'Cats',
+          description: 'Furry little creatures. Obsessed with plotting assassination, but never following through on it.',
+          thumbnail: 'http://4.bp.blogspot.com/-MzZCzWI_6Xc/UIUQp1qPfzI/AAAAAAAAHpA/OTwHCJSWFAY/s1600/cats_animals_kittens_cat_kitten_cute_desktop_1680x1050_hd-wallpaper-753974.jpeg'
+        },
+        {
+          id: 5,
+          title: 'Dogs',
+          description: 'Lovable. Loyal almost to a fault. Smarter than they let on.' ,
+          thumbnail: 'http://davidfeldmanshow.com/wp-content/uploads/2014/01/dogs-wallpaper.jpg'
+        },
+        {
+          id: 6,
+          title: 'Turtles',
+          description: 'Everyone likes turtles.' ,
+          thumbnail: 'https://www.wildlifedepartment.com/wildlifemgmt/turtles/Common%20Map%20Turtle.jpg'
+        }
+      ];
+
+      return {
+        all: function() {
+          return pets;
+        },
+        get: function(petId) {
+          // Simple index lookup
+          return pets[petId];
+        }
+      }
+    });
+
+  </script>
+</body>
+</html>

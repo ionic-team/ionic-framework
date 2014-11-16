@@ -1,22 +1,34 @@
-// An example configuration file.
+var buildConfig = require('./build.config');
+var path = require('canonical-path');
+var projectRoot = path.resolve(__dirname, '..');
+
 exports.config = {
 
   // Spec patterns are relative to the location of the spec file. They may
   // include glob patterns.
-  specs: ['../test/e2e/**/*.js'],
+  specs: [
+    path.resolve(projectRoot, 'test/css/**/*.scenario.js'),
+    path.resolve(projectRoot, 'dist/ionic-demo/**/*.scenario.js'),
+  ],
 
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {
     showColors: true, // Use colors in the command line report.
-    defaultTimeoutInterval: 120000
+    defaultTimeoutInterval: 120000,
+    isVerbose: true
   },
 
-  baseUrl: 'http://localhost:8765',
+  baseUrl: 'http://localhost:' + buildConfig.protractorPort,
 
-  //local build: chrome
-  chromeOnly: true,
-  capabilities: {
-    'browserName': 'chrome'
+  onPrepare: function() {
+    var ionicSnapshot = require('./lib/ionic-snapshot.js');
+    ionicSnapshot({
+      groupId: 'ionic',
+      appId: 'kitchen-sink',
+      accessKey: process.env.IONIC_SNAPSHOT_KEY
+    });
   }
+
 };
 
+// protractor config/protractor.conf.js --browser chrome --params.width 400 --params.height 800 --params.test_id 123

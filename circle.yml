@@ -1,0 +1,19 @@
+machine:
+  node:
+    version: v0.10.26
+  ruby:
+    version: 2.1.2
+checkout:
+  post:
+    - "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
+dependencies: 
+  post:
+    - bower install
+test:
+  override:
+    - ./scripts/circle/test.sh --index=$CIRCLE_NODE_INDEX --total=$CIRCLE_NODE_TOTAL: {parallel: true}
+deployment:
+  tasks:
+    branch: master
+    commands:
+      - ./scripts/circle/deploy.sh --sha1=$CIRCLE_SHA1 --index=$CIRCLE_NODE_INDEX --build-number=$CIRCLE_BUILD_NUM: {parallel: true}

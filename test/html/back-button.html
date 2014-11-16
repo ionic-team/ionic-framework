@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html ng-app="ionic">
+<head>
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="../../dist/css/ionic.css">
+<script src="../../dist/js/ionic.bundle.js"></script>
+</head>
+<body>
+
+  <ion-nav-bar>
+    <h1 class="title">Back Button</h1>
+    <ion-nav-back-button ng-class="$root.backClass" ng-bind-html="$root.backHtml">
+    </ion-nav-back-button>
+  </ion-nav-bar>
+
+  <div class="list has-header">
+    <button class="button button-block"
+      ng-click="$root.backHtml='Text!'">
+      Content: Text Only
+    </button>
+    <button class="button button-block"
+      ng-click="$root.backHtml='<i class=\'ion-chevron-left\'></i>'">
+      Content: Icon Only
+    </button>
+    <button class="button button-block"
+      ng-click="$root.backHtml='<i class=\'ion-chevron-left\'></i> Text!'">
+      Content: Icon and Text
+    </button>
+    <button class="button button-block"
+      ng-click="$root.backClass=''">
+      Class: .button
+    </button>
+    <button class="button button-block"
+      ng-click="$root.backClass='button-icon'">
+      Class: .button.button-icon
+    </button>
+    <button class="button button-block"
+      ng-click="$root.backClass='button-clear'">
+      Class: .button.button-clear
+    </button>
+  </div>
+
+</body>
+<style>
+.ng-hide {
+  display: block !important;
+}
+.invisible {
+  visibility: visible !important;
+}
+</style>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html ng-app="slideBoxTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Dynamic Slide Box</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <style>
+      .slider-slide {
+        padding-top: 80px;
+        color: #000;
+        background-color: #fff;
+        text-align: center;
+
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-weight: 300;
+      }
+      .slider-pager .slider-pager-page {
+        color: #000;
+      }
+
+      #logo {
+        margin: 30px 0px;
+      }
+
+      #list {
+        width: 170px;
+        margin: 30px auto;
+        font-size: 20px;
+      }
+      #list ol {
+        margin-top: 30px;
+      }
+      #list ol li {
+        text-align: left;
+        list-style: decimal;
+        margin: 10px 0px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div ng-controller="SlideCtrl">
+      <ion-pane>
+        <ion-header-bar left-buttons="leftButtons" right-buttons="rightButtons" title=""></ion-header-bar>
+        <ion-content class="has-header">
+          <ion-slide-box>
+            <ion-slide ng-repeat="page in pages">
+              {{page.text}}
+            </ion-slide>
+          </ion-slide-box>
+        </ion-content>
+      </ion-pane>
+    </div>
+    <script>
+      angular.module('slideBoxTest', ['ionic'])
+
+      .controller('SlideCtrl', function($scope, $timeout) {
+
+        $timeout(function() {
+          $scope.pages = [ {
+              text:
+              'This is a really long page text\
+              This is a really long page text\
+              This is a really long page text\
+              This is a really long page text\
+              This is a really long page text\
+              This is a really long page text\
+              This is a really long page text'
+            }
+          ];
+        }, 100);
+      })
+
+    </script>
+  </body>
+</html>

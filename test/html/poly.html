@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="ionicTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Polyfill Tests</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <style>
+      .supported,
+      .support1.support2 {
+        background: green;
+        color: white;
+      }
+      .not-supported,
+      .not-supported1.not-supported2 {
+        background: red;
+      }
+    </style>
+  </head>
+  <body ng-controller="AppCtrl" class="padding">
+
+    <header>
+      <h1 class="title">Polyfill Tests</h1>
+    </header>
+
+    <p id="supportsClassList">
+      Should be green if classList.add is supported
+    </p>
+
+    <p id="supportsClassListArgs">
+      Should be green if classList.add with multiple arguments is supported
+    </p>
+
+    <p ng-class="ngClassTest">
+      Should be green by using ng-class
+    </p>
+
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+    <script>
+
+      document.getElementById('supportsClassList').classList.add('supported');
+      document.getElementById('supportsClassList').classList.remove('not-supported');
+
+      document.getElementById('supportsClassListArgs').classList.add('support1', 'support2', 'support2');
+      document.getElementById('supportsClassListArgs').classList.remove('not-supported1', 'not-supported2');
+
+      angular.module('ionicTest', ['ionic'])
+
+      .controller('AppCtrl', function($scope) {
+
+        $scope.ngClassTest = 'supported';
+
+        var body = angular.element( document.body );
+        body.addClass('class1 class2 class2');
+
+      });
+
+    </script>
+  </body>
+</html>
