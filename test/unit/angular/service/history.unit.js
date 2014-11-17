@@ -971,6 +971,28 @@ describe('Ionic History', function() {
     expect(homeReg.direction).toEqual('exit');
   }));
 
+  it('should goToHistoryRoot', inject(function($state) {
+    var tab1Container = {};
+    ionicHistory.registerHistory(tab1Container);
+
+    $state.go('tabs.tab1view1');
+    var tab1view1 = ionicHistory.register(tab1Container, false);
+    rootScope.$apply();
+
+    $state.go('tabs.tab1view2');
+    var tab1view2 = ionicHistory.register(tab1Container, false);
+    rootScope.$apply();
+
+    ionicHistory.goToHistoryRoot(tab1Container.$historyId);
+    var tab1view1Tap = ionicHistory.register(tab1Container, false);
+    rootScope.$apply();
+
+    expect(ionicHistory.viewHistory().currentView.viewId).toBe(tab1view1.viewId);
+    expect(tab1view1Tap.viewId).toBe(tab1view1.viewId);
+    expect(tab1view1Tap.action).toBe('moveBack');
+    expect(tab1view1Tap.direction).toBe('back');
+  }));
+
   it('should set nextViewOptions disableAnimate', inject(function($state) {
     $state.go('home');
     rootScope.$apply();
