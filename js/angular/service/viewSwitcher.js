@@ -64,7 +64,7 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
       direction: direction,
       shouldAnimate: (transition !== 'none' && direction !== 'none'),
       showBack: !!showBack
-    })
+    });
   }
 
   function getViewData(view) {

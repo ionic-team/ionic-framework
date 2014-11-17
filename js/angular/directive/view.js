@@ -33,18 +33,26 @@
  * </ion-nav-view>
  * ```
  *
- * ## Events
+ * ## View LifeCycle and Events
  *
  * Views can be cached which means controllers may only load once, which could change how you'd
- * expected data to load. To know when a view has entered or left, events have been added that
+ * expect controllers to fire. To know when a view has entered or left, events have been added that
  * get emitted from the view's scope. These events also contain data about the view,
  * such as the title and if the back button should show, along with transition data, such as the
  * transition type and direction that will be or was used.
  *
- * * `$ionicView.beforeEnter`
- * * `$ionicView.beforeLeave`
- * * `$ionicView.afterEnter`
- * * `$ionicView.afterLeave`
+ * * `$ionicView.loaded`: The view has loaded. This event only happens once per the scope being created
+ * and view element added to the DOM. If a view leaves and is cached, then a subsequent time it enters
+ * this this event will not fire again, rather it would only fire again if the view was not cached
+ * and accessed again. This is good place to put your setup code for the View.
+ * * `$ionicView.enter`: The view has fully entered and is now the active view. This event will fire
+ * no matter if it was the first load or it was a cached view.
+ * * `$ionicView.leave`: The view has finished leaving and is no longer the active view. This event will
+ * fire no matter if it will be cached or destroyed.
+ * * `$ionicView.beforeEnter`: The view is about to enter and become the active view.
+ * * `$ionicView.beforeLeave`: The view is about to leave and no longer be the active view.
+ * * `$ionicView.afterEnter`: The view has fully entered and is now the active view.
+ * * `$ionicView.afterLeave`: The view has finished leaving and is no longer the active view.
  *
  *## Caching
  *
