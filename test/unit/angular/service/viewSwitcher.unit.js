@@ -80,13 +80,13 @@ describe('Ionic View Switcher', function() {
   }));
 
   it('should set showBack when the view data sets it', inject(function($ionicViewSwitcher) {
-    var d = $ionicViewSwitcher.getTransitionData(null, null, null, null, true);
+    var d = $ionicViewSwitcher.getTransitionData(null, null, null, true);
     expect(d.showBack).toEqual(true);
 
-    d = $ionicViewSwitcher.getTransitionData(null, null, null, null, false);
+    d = $ionicViewSwitcher.getTransitionData(null, null, null, false);
     expect(d.showBack).toEqual(false);
 
-    d = $ionicViewSwitcher.getTransitionData(null, null, null, null, null);
+    d = $ionicViewSwitcher.getTransitionData(null, null, null, null);
     expect(d.showBack).toEqual(false);
   }));
 

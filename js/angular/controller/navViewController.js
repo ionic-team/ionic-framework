@@ -32,6 +32,8 @@ function($scope, $element, $attrs, $ionicNavBarDelegate, $ionicHistory, $ionicVi
 
 
   self.register = function(viewLocals) {
+    var leavingView = extend({}, $ionicHistory.currentView());
+
     // register that a view is coming in and get info on how it should transition
     var registerData = $ionicHistory.register($scope, viewLocals);
 
@@ -39,7 +41,7 @@ function($scope, $element, $attrs, $ionicNavBarDelegate, $ionicHistory, $ionicVi
     self.update(registerData);
 
     // begin rendering and transitioning
-    self.render(registerData, viewLocals);
+    self.render(registerData, viewLocals, leavingView);
   };
 
 
@@ -75,12 +77,12 @@ function($scope, $element, $attrs, $ionicNavBarDelegate, $ionicHistory, $ionicVi
   };
 
 
-  self.render = function(registerData, viewLocals) {
+  self.render = function(registerData, viewLocals, leavingView) {
     var enteringView = $ionicHistory.getViewById(registerData.viewId) || {};
 
     // register the view and figure out where it lives in the various
     // histories and nav stacks, along with how views should enter/leave
-    var switcher = $ionicViewSwitcher.create($scope, $element, viewLocals, enteringView);
+    var switcher = $ionicViewSwitcher.create($scope, $element, viewLocals, enteringView, leavingView);
 
     // init the rendering of views for this navView directive
     switcher.init(registerData, function() {

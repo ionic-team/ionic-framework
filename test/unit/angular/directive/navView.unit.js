@@ -679,6 +679,140 @@ describe('Ionic nav-view', function() {
     expect(divs.eq(3).text()).toBe('page5');
   }));
 
+  it('should emit $ionicView loaded event only once if cached', inject(function ($state, $q, $timeout, $compile) {
+    var loaded;
+    scope.$on('$ionicView.loaded', function(ev, d){
+      loaded = d;
+    });
+
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    $state.go(page1State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    expect(loaded.stateName).toEqual('page1');
+    loaded = null;
+
+    $state.go(page2State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+    expect(loaded.stateName).toEqual('page2');
+    loaded = null;
+
+    $state.go(page1State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    expect(loaded).toEqual(null);
+
+    $state.go(page2State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    expect(loaded.stateName).toEqual('page2');
+    loaded = null;
+  }));
+
+  it('should emit $ionicView enter events', inject(function ($state, $q, $timeout, $compile) {
+    var beforeEnter, afterEnter, enter;
+    scope.$on('$ionicView.beforeEnter', function(ev, d){
+      beforeEnter = d;
+    });
+    scope.$on('$ionicView.afterEnter', function(ev, d){
+      afterEnter = d;
+    });
+    scope.$on('$ionicView.enter', function(ev, d){
+      enter = d;
+    });
+
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    $state.go(page1State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    expect(beforeEnter.stateName).toEqual('page1');
+    expect(afterEnter.stateName).toEqual('page1');
+    expect(enter.stateName).toEqual('page1');
+    expect(enter.transitionId).toEqual(1);
+
+    $state.go(page2State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    expect(beforeEnter.stateName).toEqual('page2');
+    expect(afterEnter.stateName).toEqual('page2');
+    expect(enter.stateName).toEqual('page2');
+    expect(enter.transitionId).toEqual(2);
+
+    $state.go(page1State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    expect(beforeEnter.stateName).toEqual('page1');
+    expect(afterEnter.stateName).toEqual('page1');
+    expect(enter.stateName).toEqual('page1');
+    expect(enter.transitionId).toEqual(3);
+  }));
+
+  it('should emit $ionicView leave events', inject(function ($state, $q, $timeout, $compile) {
+    var beforeLeave, afterLeave, leave;
+    scope.$on('$ionicView.beforeLeave', function(ev, d){
+      beforeLeave = d;
+    });
+    scope.$on('$ionicView.afterLeave', function(ev, d){
+      afterLeave = d;
+    });
+    scope.$on('$ionicView.leave', function(ev, d){
+      leave = d;
+    });
+
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    $state.go(page1State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    $state.go(page2State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    expect(beforeLeave.stateName).toEqual('page1');
+    expect(afterLeave.stateName).toEqual('page1');
+    expect(leave.stateName).toEqual('page1');
+    expect(leave.transitionId).toEqual(2);
+
+    $state.go(page1State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    expect(beforeLeave.stateName).toEqual('page2');
+    expect(afterLeave.stateName).toEqual('page2');
+    expect(leave.stateName).toEqual('page2');
+    expect(leave.transitionId).toEqual(3);
+
+    $state.go(page2State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    expect(beforeLeave.stateName).toEqual('page1');
+    expect(afterLeave.stateName).toEqual('page1');
+    expect(leave.stateName).toEqual('page1');
+    expect(leave.transitionId).toEqual(4);
+  }));
+
 });
 
 angular.module('ngMock').config(function ($provide) {
