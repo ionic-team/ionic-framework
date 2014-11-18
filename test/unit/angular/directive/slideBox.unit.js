@@ -13,7 +13,7 @@ describe('ionSlideBox directive', function() {
     return el.find('ion-slide-box');
   }
 
-  it('should bind to select - > selected attr', inject(function($rootScope, $timeout) {
+  it('should bind .select(i) to selected attr', inject(function($rootScope, $timeout) {
     var slideBox = makeSlideBox('<ion-slide-box selected="$root.currentIndex">' +
                               '<ion-slide>A</ion-slide>' +
                               '<ion-slide>B</ion-slide>' +
@@ -22,23 +22,58 @@ describe('ionSlideBox directive', function() {
 
     var slideBoxCtrl = slideBox.controller('ionSlideBox');
 
-    expect(slideBoxCtrl.selected()).toBe(0);
     $timeout.flush();
+    expect(slideBoxCtrl.selected()).toBe(0);
     expect($rootScope.currentIndex).toBe(0);
-
-    $rootScope.$apply('currentIndex = 2');
-    expect(slideBoxCtrl.selected()).toBe(2);
 
     slideBoxCtrl.select(1);
     $timeout.flush();
     expect($rootScope.currentIndex).toBe(1);
 
-    // Out of bounds should apply
+    // Should not select out of bounds
+    slideBoxCtrl.select(-1);
+    $timeout.verifyNoPendingTasks();
+    expect($rootScope.currentIndex).toBe(1);
+
+    slideBoxCtrl.select(3);
+    $timeout.verifyNoPendingTasks();
     expect(slideBoxCtrl.selected()).toBe(1);
-    $rootScope.$apply('currentIndex = -1');
+  }));
+
+  it('should bind selected attr to .select()', inject(function($rootScope, $timeout) {
+    $rootScope.$apply('current = 3; add0 = true');
+    var slideBox = makeSlideBox('<ion-slide-box selected="$root.current">' +
+                              '<ion-slide ng-if="add0">0</ion-slide>' +
+                              '<ion-slide>1</ion-slide>' +
+                              '<ion-slide>2</ion-slide>' +
+                              '<ion-slide ng-if="add3">3</ion-slide>' +
+                            '</ion-slide-box>');
+    var slideBoxCtrl = slideBox.controller('ionSlideBox');
+
     expect(slideBoxCtrl.selected()).toBe(-1);
-    $rootScope.$apply('currentIndex = 3');
-    expect(slideBoxCtrl.selected()).toBe(-1);
+    expect($rootScope.current).toBe(3);
+
+    $rootScope.$apply('add3 = true');
+    expect($rootScope.current).toBe(3);
+    expect(slideBoxCtrl.selected()).toBe(3);
+
+    $rootScope.$apply('current = 1');
+    expect(slideBoxCtrl.selected()).toBe(1);
+
+    $rootScope.$apply('current = 2');
+    expect(slideBoxCtrl.selected()).toBe(2);
+
+    $rootScope.$apply('current = 0');
+    expect(slideBoxCtrl.selected()).toBe(0);
+
+    $rootScope.$apply('add0 = false');
+    expect(slideBoxCtrl.selected()).toBe(0);
+
+    $rootScope.$apply('current = 2');
+    expect(slideBoxCtrl.selected()).toBe(2);
+
+    $rootScope.$apply('add3 = false');
+    expect(slideBoxCtrl.selected()).toBe(1);
   }));
 
   it('should loop depending on attr.loop', inject(function($rootScope) {

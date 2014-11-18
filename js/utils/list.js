@@ -130,7 +130,7 @@ function wrapList(initialList) {
   }
 
   function isInRange(index) {
-    return index > -1 && index < list.length;
+    return angular.isNumber(index) && index > -1 && index < list.length;
   }
 
   function loop(newIsLooping) {

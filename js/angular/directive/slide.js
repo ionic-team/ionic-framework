@@ -29,10 +29,5 @@ IonicModule
 
   function postLink(scope, element, attr, slideBoxCtrl) {
     element.addClass('slider-slide');
-
-    $timeout(angular.noop);
-    element.on('$destroy', function() {
-      $timeout(angular.noop);
-    });
   }
 }]);

@@ -99,9 +99,7 @@ function($ionicSlideBoxDelegate, $window) {
             $index: newIndex,
             $slideIndex: newIndex
           });
-          if (slideBoxCtrl.selected() !== newIndex) {
-            slideBoxCtrl.select(newIndex);
-          }
+          slideBoxCtrl.select(newIndex);
         }
       });
     }

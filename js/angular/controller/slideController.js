@@ -8,6 +8,7 @@ function(scope, element, $q) {
 
   element.on(ionic.CSS.TRANSITIONEND, onTransitionEnd);
 
+  self.scope = scope;
   self.element = element;
   self.node = element[0];
 

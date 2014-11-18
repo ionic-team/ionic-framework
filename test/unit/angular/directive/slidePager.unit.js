@@ -23,6 +23,7 @@ describe('<ion-slide-pager> directive', function() {
 
     $rootScope.$apply('showThird = false');
     $timeout.flush();
+    $rootScope.$apply();
     expect(pager.find('.slider-pager-page').length).toBe(2);
 
   }));

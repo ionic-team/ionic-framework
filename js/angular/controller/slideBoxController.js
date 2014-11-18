@@ -4,15 +4,20 @@ IonicModule
   '$element',
   '$$ionicAttachDrag',
   '$interval',
-  /*
-   * This can be abstracted into a controller that will work for views, tabs, and
-   * slidebox.
-   */
-function(scope, element, $$ionicAttachDrag, $interval) {
+  '$rootScope',
+  '$timeout',
+function(scope, element, $$ionicAttachDrag, $interval, $rootScope, $timeout) {
   var self = this;
 
+  var relevantSlides = {
+    previous: null,
+    selected: null,
+    next: null
+  };
+  var oldRelevantSlides = relevantSlides;
+
   // This is a live nodeList that is updated whenever child ion-slides
-  // are added or removed.
+  // are added or removed
   var slideNodes = element[0].getElementsByTagName('ion-slide');
   var slideList = ionic.Utils.list(slideNodes);
 
@@ -29,11 +34,21 @@ function(scope, element, $$ionicAttachDrag, $interval) {
     onDragEnd: onDragEnd
   });
 
+  // At the very end of every digest, check if slides changed
+  // This is because our nodes won't be added until after data has been processed
+  // (eg you add a slide to data with ng-if, then the ng-if processes and the element
+  // now exists)
+  $rootScope.$watch(function() {
+    if (!checkSlidesChanged.queued) {
+      $rootScope.$$postDigest(checkSlidesChanged);
+    }
+    return true;
+  });
+
   self.element = element;
   self.isRelevant = isRelevant;
   self.previous = previous;
   self.next = next;
-  self.onSlidesChanged = ionic.animationFrameThrottle(onSlidesChanged);
 
   // Methods calling straight back to Utils.list
   self.at = at;
@@ -50,8 +65,6 @@ function(scope, element, $$ionicAttachDrag, $interval) {
   self.onDragStart = onDragStart;
   self.onDrag = onDrag;
   self.onDragEnd = onDragEnd;
-
-  scope.$watchCollection(function() { return slideNodes; }, self.onSlidesChanged);
 
   // ***
   // Public Methods
@@ -115,14 +128,29 @@ function(scope, element, $$ionicAttachDrag, $interval) {
   function select(newIndex, transitionDuration) {
     if (!self.isInRange(newIndex)) return;
 
-    var delta = self.delta(scope.selectedIndex, newIndex);
+    scope.selectedIndex = newIndex;
+
+    oldRelevantSlides = relevantSlides;
+    relevantSlides = {
+      previous: self.at(self.previous()),
+      selected: self.at(newIndex),
+      next: self.at(self.next())
+    };
+
+    if (oldRelevantSlides.next === relevantSlides.next &&
+        oldRelevantSlides.previous === relevantSlides.previous &&
+        oldRelevantSlides.selected === relevantSlides.selected) {
+      // do nothing;
+      return;
+    }
+
 
     slidesParent.css(
       ionic.CSS.TRANSITION_DURATION,
       (transitionDuration || SLIDE_TRANSITION_DURATION) + 'ms'
     );
-    scope.selectedIndex = newIndex;
 
+    var delta = self.delta(scope.selectedIndex, newIndex);
     if (self.isInRange(scope.selectedIndex) && Math.abs(delta) > 1) {
       // if the new slide is > 1 away, then it is currently not attached to the DOM.
       // Attach it in the position from which it will slide in.
@@ -181,90 +209,77 @@ function(scope, element, $$ionicAttachDrag, $interval) {
   // Private Methods
   // ***
 
-  var oldNodes = [];
-  function onSlidesChanged() {
-    var newSelected = slideNodes[scope.selectedIndex];
-    var oldSelected = oldNodes[scope.selectedIndex];
-    if (!newSelected && !oldSelected) {
-      if (slideNodes[scope.selectedIndex]) {
-        // If we don't have a selected slide and are waiting for a certain selectedIndex,
-        // then select it now.
-        self.select(scope.selectedIndex);
-      } else if (slideNodes.length) {
-        // If we don't have a selectedIndex yet, go ahead and select the first available
-        self.select(0);
-      }
-    } else {
-      if (newSelected !== oldSelected) {
-        // If the item at newList[selectedIndex] isn't the same as the item at
-        // oldList[selectedIndex], that means the selected slide was either moved
-        // in the list or was removed.
-        var newIndex = slideList.indexOf(oldSelected);
-        if (newIndex === -1) {
-          // If the selected slide was removed, try to select the nearest available slide
-          self.select(scope.selectedIndex > 0 ? scope.selectedIndex - 1 : scope.selectedIndex);
-        } else {
-          // If the selected slide moved, select the selected slide's new index
-          self.select(newIndex);
-        }
-      } else {
-        // Figure out the next and previous index based upon the old list.
-        // That way, if the old list had a previous item that's out of range
-        // in the new list, our check below will catch that the next/previous
-        // have changed.
-        var oldNextIndex = ionic.Utils.list.next(oldNodes, slideList.loop(), scope.selectedIndex);
-        var oldPrevIndex = ionic.Utils.list.previous(oldNodes, slideList.loop(), scope.selectedIndex);
-        if (slideNodes[self.next()] !== oldNodes[oldNextIndex] ||
-            slideNodes[self.previous()] !== oldNodes[oldPrevIndex]) {
-          //If the next or previous slides have changed, just refresh selection of the current slide.
-          self.select(scope.selectedIndex);
-        }
+  function checkSlidesChanged() {
+    checkSlidesChanged.queued = false;
+
+    // If one of the child nodes was destroyed but not yet removed
+    // from the DOM, we'll enqueue a new digest to re-check
+    // once the element is actually removed.
+    for (var i = 0; i < slideNodes.length; i++) {
+      if (angular.element(slideNodes[i]).scope().$$destroyed) {
+        $timeout(angular.noop);
+        break;
       }
     }
-    oldNodes = Array.prototype.slice.call(slideNodes);
+
+    if (!relevantSlides.selected) {
+      if (!angular.isNumber(scope.selectedIndex) || scope.selectedIndex === -1) {
+        self.select(0);
+      } else if (self.isInRange(scope.selectedIndex)) {
+        // If we are waiting for a certain scope.selectedIndex that isn't yet selected, select it now.
+        self.select(scope.selectedIndex);
+      }
+
+    } else if (relevantSlides.selected !== self.at(scope.selectedIndex) ||
+               relevantSlides.next !== self.next() ||
+               relevantSlides.previous !== self.previous()) {
+      // If the next, previous, or selected item has been moved or removed,
+      // find what to reselect.
+      var newIndex = self.indexOf(relevantSlides.selected);
+      if (newIndex === -1) {
+        // If the selected slide was removed, try to select the nearest available slide
+        self.select(scope.selectedIndex > 0 ? scope.selectedIndex - 1 : scope.selectedIndex);
+      } else {
+        // Else, reselect the selected slide.
+        self.select(newIndex);
+      }
+    }
+
   }
 
-  var oldSlides;
-  function arrangeSlides(newShownIndex) {
-    var newSlides = {
-      previous: self.at(self.previous(newShownIndex)),
-      selected: self.at(newShownIndex),
-      next: self.at(self.next(newShownIndex))
-    };
+  function arrangeSlides() {
+    relevantSlides.previous && relevantSlides.previous.setState('previous');
+    relevantSlides.selected && relevantSlides.selected.setState('selected');
+    relevantSlides.next && relevantSlides.next.setState('next');
 
-    newSlides.previous && newSlides.previous.setState('previous');
-    newSlides.selected && newSlides.selected.setState('selected');
-    newSlides.next && newSlides.next.setState('next');
-
-    if (oldSlides) {
-      var oldShown = oldSlides.selected;
-      var delta = self.delta(self.indexOf(oldSlides.selected), self.indexOf(newSlides.selected));
+    if (oldRelevantSlides) {
+      var oldShown = oldRelevantSlides.selected;
+      var delta = self.delta(self.indexOf(oldRelevantSlides.selected), self.indexOf(relevantSlides.selected));
       if (Math.abs(delta) > 1) {
         // If we're changing by more than one slide, we need to manually transition
         // the current slide out and then put it into its new state.
         oldShown.setState(delta > 1 ? 'previous' : 'next').then(function() {
           oldShown.setState(
-            newSlides.previous === oldShown ?  'previous' :
-            newSlides.next === oldShown ? 'next' :
+            relevantSlides.previous === oldShown ?  'previous' :
+            relevantSlides.next === oldShown ? 'next' :
             'detached'
           );
         });
       } else {
-        detachIfUnused(oldSlides.selected);
+        detachIfUnused(oldRelevantSlides.selected);
       }
       //Additionally, we need to detach both of the old slides.
-      detachIfUnused(oldSlides.previous);
-      detachIfUnused(oldSlides.next);
+      detachIfUnused(oldRelevantSlides.previous);
+      detachIfUnused(oldRelevantSlides.next);
     }
 
     function detachIfUnused(oldSlide) {
-      if (oldSlide && oldSlide !== newSlides.previous &&
-          oldSlide !== newSlides.selected &&
-          oldSlide !== newSlides.next) {
+      if (oldSlide && oldSlide !== relevantSlides.previous &&
+          oldSlide !== relevantSlides.selected &&
+          oldSlide !== relevantSlides.next) {
         oldSlide.setState('detached');
       }
     }
-
-    oldSlides = newSlides;
   }
+
 }]);
