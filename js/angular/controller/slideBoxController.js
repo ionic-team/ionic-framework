@@ -87,7 +87,6 @@ function(scope, element, $$ionicAttachDrag, $interval, $rootScope, $timeout) {
      console.warn,
      self.count
   );
-  self.slidesCount =
   self.stop = deprecated.method(
     '$ionicSlideBoxDelegate.stop() has been deprecated! Use $ionicSlideBoxDelegate.autoPlay(0) to stop instead.',
     console.warn,
