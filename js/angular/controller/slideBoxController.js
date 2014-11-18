@@ -125,7 +125,7 @@ function(scope, element, $$ionicAttachDrag, $interval, $rootScope, $timeout) {
   /*
    * Select and change slides
    */
-  function select(newIndex, transitionDuration) {
+  function select(newIndex, transitionDuration, force) {
     if (!self.isInRange(newIndex)) return;
 
     scope.selectedIndex = newIndex;
@@ -137,7 +137,8 @@ function(scope, element, $$ionicAttachDrag, $interval, $rootScope, $timeout) {
       next: self.at(self.next())
     };
 
-    if (oldRelevantSlides.next === relevantSlides.next &&
+    if (!force &&
+        oldRelevantSlides.next === relevantSlides.next &&
         oldRelevantSlides.previous === relevantSlides.previous &&
         oldRelevantSlides.selected === relevantSlides.selected) {
       // do nothing;
@@ -201,7 +202,7 @@ function(scope, element, $$ionicAttachDrag, $interval, $rootScope, $timeout) {
       );
       self.select(nextIndex, transitionDuration);
     } else {
-      self.select(scope.selectedIndex);
+      self.select(scope.selectedIndex, 0, true);
     }
   }
 
