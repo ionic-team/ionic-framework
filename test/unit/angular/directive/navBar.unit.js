@@ -110,6 +110,29 @@ describe('ionNavBar', function() {
       expect(parentScope.$hasHeader).toBe(false);
     });
 
+    it('should set header align-title attr from ion-nav-bar', inject(function($ionicConfig) {
+      $ionicConfig.navBar.alignTitle('left');
+
+      var el = setup();
+      expect(el[0].querySelector('ion-header-bar').getAttribute('align-title')).toEqual('left');
+      expect(el[0].querySelector('ion-header-bar .title').classList.contains('title-left')).toEqual(true);
+
+      el = setup('align-title="right"');
+      expect(el[0].querySelector('ion-header-bar').getAttribute('align-title')).toEqual('right');
+      expect(el[0].querySelector('ion-header-bar .title').classList.contains('title-right')).toEqual(true);
+    }));
+
+    it('should set header no-tap-scroll attr from ion-nav-bar', function() {
+      var el = setup();
+      expect(el[0].querySelector('ion-header-bar').getAttribute('no-tap-scroll')).toEqual(null);
+
+      el = setup('no-tap-scroll="true"');
+      expect(el[0].querySelector('ion-header-bar').getAttribute('no-tap-scroll')).toEqual('true');
+
+      el = setup('no-tap-scroll="false"');
+      expect(el[0].querySelector('ion-header-bar').getAttribute('no-tap-scroll')).toEqual('false');
+    });
+
     it('should register with $ionicNavBarDelegate', inject(function($ionicNavBarDelegate) {
       var deregisterSpy = jasmine.createSpy('deregister');
       spyOn($ionicNavBarDelegate, '_registerInstance').andCallFake(function() {
