@@ -62,15 +62,6 @@ IonicModule
    * @param {string} title The new title to show.
    */
   'title',
-  /**
-   * @ngdoc method
-   * @name $ionicNavBarDelegate#update
-   * @description
-   * Updates the {@link ionic.directive:ionNavBar} with a transition using the
-   * supplied view data.
-   * @param {object} viewData An object containing `title`, `showBar` properties.
-   */
-  'update',
 
   // DEPRECATED, as of v1.0.0-beta14 -------
   'changeTitle',

@@ -32,7 +32,7 @@ describe('$ionicScroll Controller', function() {
     spyOn($ionicScrollDelegate, '_registerInstance');
     var el = setup();
     expect($ionicScrollDelegate._registerInstance)
-      .toHaveBeenCalledWith(ctrl, undefined);
+      .toHaveBeenCalledWith(ctrl, undefined, jasmine.any(Function));
   }));
 
   it('should register with given handle and deregister on destroy', inject(function($ionicScrollDelegate) {
@@ -44,7 +44,7 @@ describe('$ionicScroll Controller', function() {
       delegateHandle: 'something'
     });
     expect($ionicScrollDelegate._registerInstance)
-      .toHaveBeenCalledWith(ctrl, 'something');
+      .toHaveBeenCalledWith(ctrl, 'something', jasmine.any(Function));
 
     expect(deregisterSpy).not.toHaveBeenCalled();
     scope.$destroy();

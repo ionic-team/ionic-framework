@@ -211,6 +211,7 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
           var enteringData = getTransitionData(viewLocals, enteringEle, direction, showBack, enteringView);
           var leavingData = extend(extend({}, enteringData), getViewData(leavingView));
           enteringData.transitionId = leavingData.transitionId = transitionId;
+          enteringData.fromCache = !!alreadyInDom;
 
           cachedAttr(enteringEle.parent(), 'nav-view-transition', enteringData.transition);
           cachedAttr(enteringEle.parent(), 'nav-view-direction', enteringData.direction);

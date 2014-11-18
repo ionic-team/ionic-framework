@@ -87,6 +87,44 @@ describe('DelegateFactory', function() {
     expect(delegate.fn()).toBe('ret2');
   });
 
+  it('should return the first active instance return value when multiple instances w/ undefined handle', function() {
+    var delegate = setup(['fn']);
+    var instance1 = {
+      fn: jasmine.createSpy('fn').andReturn('ret1')
+    };
+    var instance2 = {
+      fn: jasmine.createSpy('fn').andReturn('ret2')
+    };
+    delegate._registerInstance(instance1, undefined, function() {
+      return false;
+    });
+    delegate._registerInstance(instance2, undefined, function() {
+      return true;
+    });
+
+    expect(instance1.fn).not.toHaveBeenCalled();
+    expect(delegate.fn()).toBe('ret2');
+  });
+
+  it('should return the first active instance return value when multiple instances w/ same handle', function() {
+    var delegate = setup(['fn']);
+    var instance1 = {
+      fn: jasmine.createSpy('fn').andReturn('ret1')
+    };
+    var instance2 = {
+      fn: jasmine.createSpy('fn').andReturn('ret2')
+    };
+    delegate._registerInstance(instance1, 'myhandle', function() {
+      return true;
+    });
+    delegate._registerInstance(instance2, 'myhandle', function() {
+      return false;
+    });
+
+    expect(instance2.fn).not.toHaveBeenCalled();
+    expect(delegate.fn()).toBe('ret1');
+  });
+
   it('$getByHandle should return this for blank handle', function() {
     var delegate = setup();
     expect(delegate.$getByHandle()).toBe(delegate);
@@ -106,11 +144,13 @@ describe('DelegateFactory', function() {
         a: jasmine.createSpy('a3').andReturn('a3')
       };
     });
+
     it('should return an InstanceWithHandle object with fields', function() {
       expect(delegate.$getByHandle('one').a).toEqual(jasmine.any(Function));
       expect(delegate.$getByHandle('two').a).toEqual(jasmine.any(Function));
       expect(delegate.$getByHandle('invalid').a).toEqual(jasmine.any(Function));
     });
+
     it('should noop & warn if calling for a non-added instance', inject(function($log) {
       spyOn($log, 'warn');
       expect(delegate.$getByHandle('one').a()).toBeUndefined();
@@ -157,5 +197,42 @@ describe('DelegateFactory', function() {
       expect(instance3.a).not.toHaveBeenCalled();
       expect(result).toBe('a2');
     });
+
+    it('should get the only active instance from multiple instances with the same handle', function() {
+      delegate._registerInstance(instance1, 'myhandle', function() { return false; });
+      delegate._registerInstance(instance2, 'myhandle', function() { return true; });
+      delegate._registerInstance(instance3, 'myhandle', function() { return false; });
+
+      var delegateInstance = delegate.$getByHandle('myhandle');
+
+      expect(instance1.a).not.toHaveBeenCalled();
+      expect(instance2.a).not.toHaveBeenCalled();
+      expect(instance3.a).not.toHaveBeenCalled();
+
+      var result = delegateInstance.a('test-a');
+      expect(instance1.a).not.toHaveBeenCalled();
+      expect(instance2.a).toHaveBeenCalledWith('test-a');
+      expect(instance3.a).not.toHaveBeenCalled();
+      expect(result).toBe('a2');
+    });
+
+    it('should get active instance when multiple sname name handles, among multiple active instances', function() {
+      delegate._registerInstance(instance1, 'myhandle-1', function() { return true; });
+      delegate._registerInstance(instance2, 'myhandle-2', function() { return false; });
+      delegate._registerInstance(instance3, 'myhandle-2', function() { return true; });
+
+      var delegateInstance = delegate.$getByHandle('myhandle-2');
+
+      expect(instance1.a).not.toHaveBeenCalled();
+      expect(instance2.a).not.toHaveBeenCalled();
+      expect(instance3.a).not.toHaveBeenCalled();
+
+      var result = delegateInstance.a('test-a');
+      expect(instance1.a).not.toHaveBeenCalled();
+      expect(instance2.a).not.toHaveBeenCalled();
+      expect(instance3.a).toHaveBeenCalledWith('test-a');
+      expect(result).toBe('a3');
+    });
+
   });
 });

@@ -740,6 +740,7 @@ describe('Ionic nav-view', function() {
     expect(beforeEnter.stateName).toEqual('page1');
     expect(afterEnter.stateName).toEqual('page1');
     expect(enter.stateName).toEqual('page1');
+    expect(enter.fromCache).toEqual(false);
     expect(enter.transitionId).toEqual(1);
 
     $state.go(page2State);
@@ -750,6 +751,7 @@ describe('Ionic nav-view', function() {
     expect(beforeEnter.stateName).toEqual('page2');
     expect(afterEnter.stateName).toEqual('page2');
     expect(enter.stateName).toEqual('page2');
+    expect(enter.fromCache).toEqual(false);
     expect(enter.transitionId).toEqual(2);
 
     $state.go(page1State);
@@ -760,6 +762,7 @@ describe('Ionic nav-view', function() {
     expect(beforeEnter.stateName).toEqual('page1');
     expect(afterEnter.stateName).toEqual('page1');
     expect(enter.stateName).toEqual('page1');
+    expect(enter.fromCache).toEqual(true);
     expect(enter.transitionId).toEqual(3);
   }));
 

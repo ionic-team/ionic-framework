@@ -156,15 +156,6 @@ describe('ionNavBar', function() {
       expect(el[0].querySelector('[nav-bar="active"] .title').innerText).toEqual('Night Ranger');
     }));
 
-    it('should update w/ $ionicNavBarDelegate', inject(function($ionicNavBarDelegate) {
-      var el = setup('delegate-handle="theBestHandle"');
-      var instance = $ionicNavBarDelegate.$getByHandle('theBestHandle');
-      instance.update({
-        showBar: false
-      });
-      expect(el.hasClass('hide')).toBe(true);
-    }));
-
   });
 
 });
