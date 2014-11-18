@@ -236,7 +236,7 @@ function(scope, element, $$ionicAttachDrag, $interval, $rootScope, $timeout) {
     if (self.isInRange(nextIndex)) {
       var distanceRemaining = (1 - Math.abs(percent)) * slidesParent.prop('offsetWidth');
       var transitionDuration = Math.min(
-        distanceRemaining / velocity,
+        distanceRemaining / velocity * 1.25,
         SLIDE_TRANSITION_DURATION
       );
       self.select(nextIndex, transitionDuration);
