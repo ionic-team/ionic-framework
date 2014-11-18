@@ -86,20 +86,20 @@
  * being disconnected from the watch cycle. Because scopes are not being destroyed and recreated,
  * then controllers are not loading again on a subsequent viewing. If the app/controller needs to
  * know when a view has entered or has left, then view events emitted from the
- * {@link ionic.directive:ionView} scope, such as `$ionicView.afterEnter`, may be useful.
+ * {@link ionic.directive:ionView} scope, such as `$ionicView.enter`, may be useful.
  *
  * #### Disable cache globally
  *
  * The {@link ionic.provider:$ionicConfigProvider} can be used to set the maximum allowable views
  * which can be cached, but this can also be use to disable all caching by setting it to 0.
  *
- * ```
+ * ```js
  * $ionicConfigProvider.views.maxCache(0);
  * ```
  *
  * #### Disable cache within state provider
  *
- * ```
+ * ```js
  * $stateProvider.state('myState', {
  *    cache: false,
  *    url : '/myUrl',
@@ -109,7 +109,7 @@
  *
  * #### Disable cache with an attribute
  *
- * ```
+ * ```html
  * <ion-view cache-view="false" view-title="My Title!">
  *   ...
  * </ion-view>
