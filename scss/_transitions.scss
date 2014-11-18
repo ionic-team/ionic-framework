@@ -54,14 +54,10 @@ $ios-transition-container-bg-color:    #000 !default;
   [nav-bar="active"],
   [nav-bar="entering"] {
     z-index: $z-index-bar-above;
-
-   .bar {
-      background: transparent;
-    }
   }
 
   [nav-bar="cached"] {
-    display: block;
+    display: none;
   }
 
 }
