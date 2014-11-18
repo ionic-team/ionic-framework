@@ -1,5 +1,9 @@
 function delegateService(methodNames) {
 
+  if (methodNames.indexOf('$getByHandle') > -1) {
+    throw new Error("Method '$getByHandle' is implicitly added to each delegate service. Do not list it as a method.");
+  }
+
   function trueFn() { return true; }
 
   return ['$log', function($log) {
@@ -90,7 +94,7 @@ function delegateService(methodNames) {
 
         //This logic is repeated above
         instances.forEach(function(instance, index) {
-          if (instance.$$filterFn()) {
+          if (instance.$$filterFn(instance)) {
             matchingInstancesFound++;
             result = instance[methodName].apply(instance, args);
             //Only return the value from the first call

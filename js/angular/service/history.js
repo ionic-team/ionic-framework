@@ -446,6 +446,16 @@ function($rootScope, $state, $location, $window, $ionicViewSwitcher) {
 
     /**
      * @ngdoc method
+     * @name $ionicHistory#currentHistoryId
+     * @description The ID of the history stack which is the parent container of the current view.
+     * @returns {string} Returns the current history ID.
+     */
+    currentHistoryId: function() {
+      return viewHistory.currentView ? viewHistory.currentView.historyId : null;
+    },
+
+    /**
+     * @ngdoc method
      * @name $ionicHistory#currentTitle
      * @description Gets and sets the current view's title.
      * @param {string=} val The title to update the current view with.

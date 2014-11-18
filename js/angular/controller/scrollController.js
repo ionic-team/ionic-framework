@@ -11,7 +11,8 @@ IonicModule
   '$location',
   '$document',
   '$ionicScrollDelegate',
-function($scope, scrollViewOptions, $timeout, $window, $location, $document, $ionicScrollDelegate) {
+  '$ionicHistory',
+function($scope, scrollViewOptions, $timeout, $window, $location, $document, $ionicScrollDelegate, $ionicHistory) {
 
   var self = this;
   // for testing
@@ -31,7 +32,7 @@ function($scope, scrollViewOptions, $timeout, $window, $location, $document, $io
 
   var deregisterInstance = $ionicScrollDelegate._registerInstance(
     self, scrollViewOptions.delegateHandle, function() {
-      return !$scope.$$disconnected;
+      return !$scope.$$disconnected && $ionicHistory.currentHistoryId() == $scope.$historyId;
     }
   );
 

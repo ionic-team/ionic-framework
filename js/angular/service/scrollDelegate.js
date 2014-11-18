@@ -145,6 +145,5 @@ IonicModule
    *
    * Example: `$ionicScrollDelegate.$getByHandle('my-handle').scrollTop();`
    */
-   '$getByHandle'
 ]));
 

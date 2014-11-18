@@ -4,9 +4,8 @@ IonicModule
   '$element',
   '$attrs',
   '$compile',
-  '$ionicHistory',
   '$ionicViewSwitcher',
-function($scope, $element, $attrs, $compile, $ionicHistory, $ionicViewSwitcher) {
+function($scope, $element, $attrs, $compile, $ionicViewSwitcher) {
   var self = this;
   var navElementHtml = {};
   var navViewCtrl;
@@ -44,8 +43,6 @@ function($scope, $element, $attrs, $compile, $ionicHistory, $ionicViewSwitcher) 
 
       var viewTitle = $attrs.viewTitle || $attrs.title;
 
-      $ionicHistory.currentTitle(viewTitle);
-
       var buttons = {};
       for (var n in navElementHtml) {
         buttons[n] = generateButton(navElementHtml[n]);
@@ -77,7 +74,6 @@ function($scope, $element, $attrs, $compile, $ionicHistory, $ionicViewSwitcher) 
     if (viewTitleAttr) {
       deregisters.push($attrs.$observe(viewTitleAttr, function(val) {
         navViewCtrl.title(val);
-        $ionicHistory.currentTitle(val);
       }));
     }
 
