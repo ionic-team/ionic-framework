@@ -4,59 +4,59 @@
  * --------------------------------------------------
  */
 
-input[type="range"] {
-  display: inline-block;
-  overflow: hidden;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  padding-right: 2px;
-  padding-left: 1px;
-  width: auto;
-  height: $range-slider-height + 15;
-  outline: none;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $range-default-track-bg), color-stop(100%, $range-default-track-bg));
-  background: linear-gradient(to right, $range-default-track-bg 0%, $range-default-track-bg 100%);
-  background-position: center;
-  background-size: 99% $range-track-height;
-  background-repeat: no-repeat;
-  -webkit-appearance: none;
-
-  &::-webkit-slider-thumb {
-    position: relative;
-    width: $range-slider-width;
-    height: $range-slider-height;
-    border-radius: $range-slider-border-radius;
-    background-color: $toggle-handle-off-bg-color;
-    box-shadow: 0 0 2px rgba(0,0,0,.5), 1px 3px 5px rgba(0,0,0,0.25);
-    cursor: pointer;
-    -webkit-appearance: none;
-  }
-
-  &::-webkit-slider-thumb:before {
-    /* what creates the colorful line on the left side of the slider */
-    position: absolute;
-    top: ($range-slider-height / 2) - ($range-track-height / 2);
-    left: -2001px;
-    width: 2000px;
-    height: $range-track-height;
-    background: $dark;
-    content: ' ';
-  }
-
-  &::-webkit-slider-thumb:after {
-    /* create a larger (but hidden) hit area */
-    position: absolute;
-    top: -20px;
-    left: -20px;
-    padding: 30px;
-    content: ' ';
-    //background: red;
-    //opacity: .5;
-  }
-
-}
-
 .range {
+  input[type="range"] {
+    display: inline-block;
+    overflow: hidden;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-right: 2px;
+    padding-left: 1px;
+    width: auto;
+    height: $range-slider-height + 15;
+    outline: none;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $range-default-track-bg), color-stop(100%, $range-default-track-bg));
+    background: linear-gradient(to right, $range-default-track-bg 0%, $range-default-track-bg 100%);
+    background-position: center;
+    background-size: 99% $range-track-height;
+    background-repeat: no-repeat;
+    -webkit-appearance: none;
+
+    &::-webkit-slider-thumb {
+      position: relative;
+      width: $range-slider-width;
+      height: $range-slider-height;
+      border-radius: $range-slider-border-radius;
+      background-color: $toggle-handle-off-bg-color;
+      box-shadow: 0 0 2px rgba(0,0,0,.5), 1px 3px 5px rgba(0,0,0,0.25);
+      cursor: pointer;
+      -webkit-appearance: none;
+    }
+
+    &::-webkit-slider-thumb:before {
+      /* what creates the colorful line on the left side of the slider */
+      position: absolute;
+      top: ($range-slider-height / 2) - ($range-track-height / 2);
+      left: -2001px;
+      width: 2000px;
+      height: $range-track-height;
+      background: $dark;
+      content: ' ';
+    }
+
+    &::-webkit-slider-thumb:after {
+      /* create a larger (but hidden) hit area */
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      padding: 30px;
+      content: ' ';
+      //background: red;
+      //opacity: .5;
+    }
+
+  }
+
   @include display-flex();
   @include align-items(center);
   padding: 2px 11px;
@@ -118,4 +118,3 @@ input[type="range"] {
   padding-right: 5px;
   padding-left: 0;
 }
-
