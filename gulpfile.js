@@ -26,6 +26,7 @@ var footer = require('gulp-footer');
 var gulpif = require('gulp-if');
 var header = require('gulp-header');
 var jshint = require('gulp-jshint');
+var jscs = require('gulp-jscs');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
@@ -125,6 +126,13 @@ gulp.task('bundle', [
     .pipe(header(buildConfig.bundleBanner))
     .pipe(concat('ionic.bundle.js'))
     .pipe(gulp.dest(buildConfig.dist + '/js'));
+});
+
+gulp.task('jscs', function() {
+  return gulp.src(['js/angular/**/*.js'])
+    .pipe(jscs({
+      configPath: '.jscs.json'
+    }));
 });
 
 gulp.task('jshint', function() {
