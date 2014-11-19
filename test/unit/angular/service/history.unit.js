@@ -1005,7 +1005,7 @@ describe('Ionic History', function() {
     rootScope.$apply();
     var infoReg = ionicHistory.register({}, false);
     expect(infoReg.direction).toEqual('none');
-    expect(infoReg.showBack).toEqual(true);
+    expect(infoReg.enableBack).toEqual(true);
     expect(ionicHistory.viewHistory().histories[infoReg.historyId].stack.length).toEqual(2);
     expect(ionicHistory.viewHistory().backView.viewId).toBe(homeReg.viewId);
   }));
@@ -1021,7 +1021,7 @@ describe('Ionic History', function() {
     $state.go('info');
     rootScope.$apply();
     var infoReg = ionicHistory.register({}, false);
-    expect(infoReg.showBack).toEqual(false);
+    expect(infoReg.enableBack).toEqual(false);
     expect(infoReg.direction).toEqual('forward');
     expect(ionicHistory.viewHistory().histories[infoReg.historyId].stack.length).toEqual(2);
     expect(ionicHistory.viewHistory().backView).toBe(null);
@@ -1038,7 +1038,7 @@ describe('Ionic History', function() {
     $state.go('info');
     rootScope.$apply();
     var infoReg = ionicHistory.register({}, false);
-    expect(infoReg.showBack).toEqual(false);
+    expect(infoReg.enableBack).toEqual(false);
     expect(infoReg.direction).toEqual('forward');
     expect(ionicHistory.viewHistory().histories[infoReg.historyId].stack.length).toEqual(1);
     expect(ionicHistory.viewHistory().backView).toBe(null);

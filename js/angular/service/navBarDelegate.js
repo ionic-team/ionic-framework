@@ -40,7 +40,7 @@ IonicModule
    * @name $ionicNavBarDelegate#showBackButton
    * @description
    * Set/get whether the {@link ionic.directive:ionNavBackButton} is shown
-   * (if it exists).
+   * (if it exists and there is a previous view that can be navigated to).
    * @param {boolean=} show Whether to show the back button.
    * @returns {boolean} Whether the back button is shown.
    */

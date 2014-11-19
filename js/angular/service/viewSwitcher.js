@@ -46,7 +46,7 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
     return locals && locals.$$state && locals.$$state.self || {};
   }
 
-  function getTransitionData(viewLocals, enteringEle, direction, showBack, view) {
+  function getTransitionData(viewLocals, enteringEle, direction, enableBack, view) {
     // Priority
     // 1) attribute directive on the button/link to this view
     // 2) entering element's attribute
@@ -63,7 +63,7 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
       transition: transition,
       direction: direction,
       shouldAnimate: (transition !== 'none' && direction !== 'none'),
-      showBack: !!showBack
+      enableBack: !!enableBack
     });
   }
 
@@ -207,8 +207,8 @@ function($timeout, $compile, $controller, $document, $ionicClickBlock, $ionicCon
           $timeout(callback, 16);
         },
 
-        transition: function(direction, showBack) {
-          var enteringData = getTransitionData(viewLocals, enteringEle, direction, showBack, enteringView);
+        transition: function(direction, enableBack) {
+          var enteringData = getTransitionData(viewLocals, enteringEle, direction, enableBack, enteringView);
           var leavingData = extend(extend({}, enteringData), getViewData(leavingView));
           enteringData.transitionId = leavingData.transitionId = transitionId;
           enteringData.fromCache = !!alreadyInDom;

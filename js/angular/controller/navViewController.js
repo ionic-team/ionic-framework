@@ -89,7 +89,7 @@ function($scope, $element, $attrs, $ionicNavBarDelegate, $ionicHistory, $ionicVi
       // the view is now compiled, in the dom and linked, now lets transition the views.
       // this uses a callback incase THIS nav-view has a nested nav-view, and after the NESTED
       // nav-view links, the NESTED nav-view would update which direction THIS nav-view should use
-      switcher.transition(self.direction(), registerData.showBack);
+      switcher.transition(self.direction(), registerData.enableBack);
     });
 
   };
@@ -111,9 +111,15 @@ function($scope, $element, $attrs, $ionicNavBarDelegate, $ionicHistory, $ionicVi
   };
 
 
-  self.showBackButton = function(val) {
+  self.enableBackButton = function(shouldEnable) {
     var associatedNavBarCtrl = getAssociatedNavBarCtrl();
-    associatedNavBarCtrl && associatedNavBarCtrl.showBackButton(val);
+    associatedNavBarCtrl && associatedNavBarCtrl.enableBackButton(shouldEnable);
+  };
+
+
+  self.showBackButton = function(shouldShow) {
+    var associatedNavBarCtrl = getAssociatedNavBarCtrl();
+    associatedNavBarCtrl && associatedNavBarCtrl.showBackButton(shouldShow);
   };
 
 

@@ -26,7 +26,7 @@ IonicModule
     restrict: 'AC',
     link: function($scope, $element, $attr) {
       $scope.$on('$ionicView.beforeEnter', function(ev, viewData) {
-        if (viewData.showBack) {
+        if (viewData.enableBack) {
           var sideMenuCtrl = $element.inheritedData('$ionSideMenusController');
           if (!sideMenuCtrl.enableMenuWithBackViews()) {
             $element.addClass('hide');

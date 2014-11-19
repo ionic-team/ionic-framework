@@ -54,7 +54,8 @@ function($scope, $element, $attrs, $compile, $ionicViewSwitcher) {
         transition: transData.transition,
         transitionId: transData.transitionId,
         shouldAnimate: transData.shouldAnimate,
-        showBack: transData.showBack && !attrTrue('hideBackButton'),
+        enableBack: transData.enableBack,
+        showBack: !attrTrue('hideBackButton'),
         buttons: buttons,
         navBarDelegate: navBarDelegateHandle || null,
         showNavBar: !attrTrue('hideNavBar'),
@@ -111,7 +112,7 @@ function($scope, $element, $attrs, $compile, $ionicViewSwitcher) {
 
 
   function attrTrue(key) {
-    return $attrs[key] == 'true' || $attrs[key] === '';
+    return !!$scope.$eval($attrs[key]);
   }
 
 

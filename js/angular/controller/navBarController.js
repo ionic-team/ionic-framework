@@ -77,6 +77,9 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
     var headerBarInstance = {
       isActive: isActive,
+      enableBack: function(shouldEnable) {
+        headerBarCtrl.enableBack(shouldEnable);
+      },
       showBack: function(shouldShow) {
         headerBarCtrl.showBack(shouldShow);
       },
@@ -209,6 +212,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     var leavingHeaderBar = self.isInitialized ? getOnScreenHeaderBar() : null;
 
     // update if the entering header should show the back button or not
+    self.enableBackButton(viewData.enableBack, enteringHeaderBar);
     self.showBackButton(viewData.showBack, enteringHeaderBar);
 
     // update the entering header bar's title
@@ -326,11 +330,17 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   };
 
 
-  self.showBackButton = function(show, headerBar) {
+  self.enableBackButton = function(shouldEnable, headerBar) {
     headerBar = headerBar || getOnScreenHeaderBar();
-    headerBar && headerBar.showBack(show);
-    $scope.$isBackButtonShown = !!show;
-    return !!show;
+    headerBar && headerBar.enableBack(shouldEnable);
+  };
+
+
+  self.showBackButton = function(shouldShow, headerBar) {
+    headerBar = headerBar || getOnScreenHeaderBar();
+    headerBar && headerBar.showBack(shouldShow);
+    $scope.$isBackButtonShown = !!shouldShow;
+    return !!shouldShow;
   };
 
 

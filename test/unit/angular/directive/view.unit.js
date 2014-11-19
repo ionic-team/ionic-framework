@@ -13,6 +13,7 @@ describe('ionView directive', function() {
         beforeEnter: function(d) { beforeEnterData = d; },
         title: jasmine.createSpy('title'),
         showBar: jasmine.createSpy('showBar'),
+        enableBackButton: jasmine.createSpy('enableBackButton'),
         showBackButton: jasmine.createSpy('showBackButton')
       });
       content && el.html(content);
@@ -47,19 +48,13 @@ describe('ionView directive', function() {
     expect(el.html()).toBe('<b>some</b> html');
   });
 
-  it('should call ionNavViewController.beforeEnter with showNavBar=false and hide-nav-bar=true attr', inject(function($rootScope) {
+  it('should call ionNavViewController.beforeEnter with showNavBar=false w/ hide-nav-bar="true" attr', inject(function($rootScope) {
     var el = setup('hide-nav-bar="true"');
     $rootScope.$broadcast('$ionicView.beforeEnter', {});
     expect( beforeEnterData.showNavBar ).toBe(false);
   }));
 
-  it('should call ionNavViewController.beforeEnter with showNavBar=false and hide-nav-bar="" attr', inject(function($rootScope) {
-    var el = setup('hide-nav-bar');
-    $rootScope.$broadcast('$ionicView.beforeEnter', {});
-    expect( beforeEnterData.showNavBar ).toBe(false);
-  }));
-
-  it('should call ionNavViewController.beforeEnter with showNavBar=true and hide-nav-bar=false attr', inject(function($rootScope) {
+  it('should call ionNavViewController.beforeEnter with showNavBar=true and hide-nav-bar="false" attr', inject(function($rootScope) {
     var el = setup('hide-nav-bar="false"');
     $rootScope.$broadcast('$ionicView.beforeEnter', {});
     expect( beforeEnterData.showNavBar ).toBe(true);
@@ -83,27 +78,27 @@ describe('ionView directive', function() {
     expect( beforeEnterData.title ).toBe('my title');
   }));
 
-  it('should not showBack with hide-back-button attr', inject(function($rootScope) {
+  it('should not enableBack with hide-back-button attr', inject(function($rootScope) {
     var el = setup('hide-back-button="true"');
     $rootScope.$broadcast('$ionicView.beforeEnter', {
-      showBack: true
+      enableBack: true
     });
     expect( beforeEnterData.showBack ).toBe(false);
 
     $rootScope.shouldShowBack = false;
     var el = setup('hide-back-button="shouldShowBack"');
     $rootScope.$broadcast('$ionicView.beforeEnter', {
-      showBack: true
+      enableBack: true
     });
     expect( beforeEnterData.showBack ).toBe(false);
   }));
 
-  it('should showBack without hide-back-button but no showBack from transition', inject(function($rootScope) {
+  it('should enableBack without hide-back-button but no enableBack from transition', inject(function($rootScope) {
     var el = setup();
     $rootScope.$broadcast('$ionicView.beforeEnter', {
-      showBack: false
+      enableBack: false
     });
-    expect( beforeEnterData.showBack ).toBe(false);
+    expect( beforeEnterData.enableBack ).toBe(false);
   }));
 
   it('should be receive delegateHandle from child ionNavBar', inject(function($rootScope) {

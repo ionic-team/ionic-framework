@@ -21,7 +21,8 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
   var titleLeft = 0;
   var titleRight = 0;
   var titleCss = '';
-  var isBackShown;
+  var isBackEnabled = false;
+  var isBackShown = false;
   var titleTextWidth = 0;
 
 
@@ -40,13 +41,25 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
   };
 
 
+  self.enableBack = function(shouldEnable) {
+    // whether or not the back button show be visible, according
+    // to the navigation and history
+    if (arguments.length && shouldEnable !== isBackEnabled) {
+      var backBtnEle = getEle(BACK_BUTTON);
+      backBtnEle && backBtnEle.classList[ shouldEnable ? 'remove' : 'add' ](HIDE);
+      isBackEnabled = shouldEnable;
+    }
+    return isBackEnabled;
+  };
+
+
   self.showBack = function(shouldShow) {
+    // different from enableBack() because this will always have the back
+    // visually hidden if false, even if the history says it should show
     if (arguments.length && shouldShow !== isBackShown) {
       var backBtnEle = getEle(BACK_BUTTON);
-      if (backBtnEle) {
-        backBtnEle.classList[ shouldShow ? 'remove' : 'add' ](HIDE);
-        isBackShown = shouldShow;
-      }
+      if (backBtnEle) backBtnEle.style.display = (shouldShow ? '' : 'none');
+      isBackShown = shouldShow;
     }
     return isBackShown;
   };
@@ -109,6 +122,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
         defaultTitleEle.classList.remove(HIDE);
       }
     }
+    self.showBack(true);
   };
 
 

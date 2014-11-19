@@ -406,7 +406,7 @@ function($rootScope, $state, $location, $window, $ionicViewSwitcher) {
         action: action,
         direction: direction,
         historyId: historyId,
-        showBack: !!(viewHistory.backView && viewHistory.backView.historyId === viewHistory.currentView.historyId),
+        enableBack: !!(viewHistory.backView && viewHistory.backView.historyId === viewHistory.currentView.historyId),
         isHistoryRoot: (viewHistory.currentView.index === 0),
         ele: ele
       };
