@@ -105,7 +105,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
     - `git clone git@github.com:driftyco/ionic-site dist/ionic-site`
   2. Start jekyll, telling it to rebuild whenever the site changes.
     - `cd dist/ionic-site && jekyll serve -w`
-  3. Go back to project root and build the docs
+  3. Go back to project root and build the docs.
     - `gulp docs [--doc-version=(versionName|nightly)]`
   4. Open localhost:4000 and see your changes! Re-run `gulp docs` again whenever you change something, and jekyll will update the site.
 
