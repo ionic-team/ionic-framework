@@ -69,6 +69,11 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
       positionButtons(navEle[buttonType], buttonType);
     });
 
+    // add header-item to the root children
+    for (var x = 0; x < headerBarEle[0].children.length; x++) {
+      headerBarEle[0].children[x].classList.add('header-item');
+    }
+
     // compile header and append to the DOM
     containerEle.append(headerBarEle);
     $element.append($compile(containerEle)($scope.$new()));

@@ -62,6 +62,10 @@ $ios-transition-container-bg-color:    #000 !default;
 
   [nav-bar="cached"] {
     display: block;
+
+    .header-item {
+      display: none;
+    }
   }
 
 }

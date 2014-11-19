@@ -361,6 +361,7 @@
   z-index: $z-index-bar;
 }
 
+.bar .back-button.back-disabled,
 .bar .back-button.hide,
 .bar .buttons .hide {
   display: none;
