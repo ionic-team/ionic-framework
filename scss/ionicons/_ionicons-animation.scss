@@ -38,9 +38,8 @@
 .#{$ionicons-prefix}refreshing,
 .#{$ionicons-prefix}ios7-reloading {
   @extend .ion;
-  &:before{
-    @extend .#{$ionicons-prefix}spin;
-  }
+  // must spin entire element for android 4.3 and below
+  @extend .#{$ionicons-prefix}spin;
 }
 
 .#{$ionicons-prefix}loading-a {
