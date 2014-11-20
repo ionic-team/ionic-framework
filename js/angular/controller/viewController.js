@@ -89,8 +89,6 @@ function($scope, $element, $attrs, $compile, $ionicViewSwitcher) {
         navViewCtrl.showBar(!val);
       }));
     }
-
-    $ionicViewSwitcher.setActiveView($element.parent());
   }
 
 

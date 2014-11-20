@@ -172,7 +172,6 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
 
         $scope.$on('$ionicView.afterEnter', function() {
           $ionicViewSwitcher.viewEleIsActive(childElement, $scope.$tabSelected);
-          $ionicViewSwitcher.setActiveView($element.parent());
         });
 
       };

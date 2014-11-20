@@ -4,12 +4,30 @@ describe('Ionic View Switcher', function() {
   beforeEach(module('ionic'));
 
   beforeEach(inject(function($ionicConfig){
-    $ionicConfig.views.transition('platform');
+    $ionicConfig.views.transition('none');
   }));
+
+  function setup(attrs) {
+    var navViewCtrl;
+    inject(function($controller, $rootScope, $ionicNavBarDelegate, $ionicHistory, $ionicViewSwitcher) {
+      var scope = $rootScope.$new();
+      var navViewElement = angular.element('<div class="view-container">');
+      navViewCtrl = $controller('$ionicNavView', {
+        $scope: scope,
+        $element: navViewElement,
+        $attrs: attrs || {},
+        $ionicNavBarDelegate: $ionicNavBarDelegate,
+        $ionicHistory: $ionicHistory,
+        $ionicViewSwitcher: $ionicViewSwitcher
+      });
+      navViewCtrl.$scope = scope;
+    });
+    return navViewCtrl;
+  }
 
   it('should get fallback transition', inject(function($ionicViewSwitcher) {
     var d = $ionicViewSwitcher.getTransitionData();
-    expect(d.transition).toEqual('ios');
+    expect(d.transition).toEqual('none');
   }));
 
   it('should get transition from $ionicConfig.views.transition()', inject(function($ionicViewSwitcher, $ionicConfig) {
@@ -79,47 +97,36 @@ describe('Ionic View Switcher', function() {
     expect(d.direction).toEqual('forward');
   }));
 
-  it('should set enableBack when the view data sets it', inject(function($ionicViewSwitcher) {
-    var d = $ionicViewSwitcher.getTransitionData(null, null, null, true);
-    expect(d.enableBack).toEqual(true);
-
-    d = $ionicViewSwitcher.getTransitionData(null, null, null, false);
-    expect(d.enableBack).toEqual(false);
-
-    d = $ionicViewSwitcher.getTransitionData(null, null, null, null);
-    expect(d.enableBack).toEqual(false);
-  }));
-
   it('should get an empty entering element with an empty navViewElement', inject(function($ionicViewSwitcher) {
-    var navViewElement = angular.element('<div class="view-container">');
-    var switcher = $ionicViewSwitcher.create(null, navViewElement, {}, {});
+    var navViewCtrl = setup();
+    var switcher = $ionicViewSwitcher.create(navViewCtrl, {}, {});
     switcher.loadViewElements({});
     expect(switcher.enteringEle().length).toBe(1);
   }));
 
   it('should not get a leaving element with an empty navViewElement', inject(function($ionicViewSwitcher) {
-    var navViewElement = angular.element('<div class="view-container">');
-    var switcher = $ionicViewSwitcher.create(null, navViewElement, {}, {});
+    var navViewCtrl = setup();
+    var switcher = $ionicViewSwitcher.create(navViewCtrl, {}, {});
     switcher.loadViewElements({});
     expect(switcher.leavingEle()).toBeUndefined();
   }));
 
   it('should create a new entering element from locals template navViewElement', inject(function($ionicViewSwitcher) {
-    var navViewElement = angular.element('<div class="view-container">');
+    var navViewCtrl = setup();
     var viewLocals = {
       $template: '<div class="locals-template"></div>'
     };
     var enteringView = {
       stateId: 'STATE_ID'
     };
-    var switcher = $ionicViewSwitcher.create(null, navViewElement, viewLocals, enteringView);
+    var switcher = $ionicViewSwitcher.create(navViewCtrl, viewLocals, enteringView);
     switcher.loadViewElements({});
     expect(switcher.enteringEle().hasClass('locals-template')).toBe(true);
     expect(switcher.enteringEle().data('$eleId')).toBe('STATE_ID');
   }));
 
   it('should create a new entering element and set no cache data from view locals', inject(function($rootScope, $ionicViewSwitcher) {
-    var navViewElement = angular.element('<div class="view-container">');
+    var navViewCtrl = setup();
     var viewLocals = {
       $template: '<div class="locals-template"></div>',
       $$state: {
@@ -131,62 +138,62 @@ describe('Ionic View Switcher', function() {
     var enteringView = {
       stateId: 'STATE_ID'
     };
-    var switcher = $ionicViewSwitcher.create($rootScope, navViewElement, viewLocals, enteringView);
+    var switcher = $ionicViewSwitcher.create(navViewCtrl, viewLocals, enteringView);
     switcher.loadViewElements({});
     switcher.render({});
     expect(switcher.enteringEle().data('$noCache')).toBe(true);
   }));
 
   it('should create a new entering element and set no cache data from cache-view=false attr', inject(function($rootScope, $ionicViewSwitcher) {
-    var navViewElement = angular.element('<div class="view-container">');
+    var navViewCtrl = setup();
     var viewLocals = {
       $template: '<div class="locals-template" cache-view="false"></div>'
     };
     var enteringView = {
       stateId: 'STATE_ID'
     };
-    var switcher = $ionicViewSwitcher.create($rootScope, navViewElement, viewLocals, enteringView);
+    var switcher = $ionicViewSwitcher.create(navViewCtrl, viewLocals, enteringView);
     switcher.loadViewElements({});
     switcher.render({});
     expect(switcher.enteringEle().data('$noCache')).toBe(true);
   }));
 
   it('should get an existing entering element within navViewElement by state id', inject(function($ionicViewSwitcher) {
-    var navViewElement = angular.element('<div class="view-container">');
+    var navViewCtrl = setup();
     var enteringEle = angular.element('<div class="existing">');
     enteringEle.data('$eleId', 'STATE_ID');
-    navViewElement.append(enteringEle);
+    navViewCtrl.appendViewElement(enteringEle);
 
     var enteringView = {
       stateId: 'STATE_ID',
       viewId: 'VIEW_ID'
     };
-    var switcher = $ionicViewSwitcher.create(null, navViewElement, {}, enteringView);
+    var switcher = $ionicViewSwitcher.create(navViewCtrl, {}, enteringView);
     switcher.loadViewElements({});
     expect(switcher.enteringEle().hasClass('existing')).toBe(true);
     expect(switcher.enteringEle().data('$eleId')).toBe('STATE_ID');
   }));
 
   it('should get an existing entering element within navViewElement by view id', inject(function($ionicViewSwitcher) {
-    var navViewElement = angular.element('<div class="view-container">');
+    var navViewCtrl = setup();
     var enteringEle = angular.element('<div class="existing">');
     enteringEle.data('$eleId', 'VIEW_ID');
-    navViewElement.append(enteringEle);
+    navViewCtrl.appendViewElement(enteringEle);
 
     var enteringView = {
       viewId: 'VIEW_ID'
     };
-    var switcher = $ionicViewSwitcher.create(null, navViewElement, {}, enteringView);
+    var switcher = $ionicViewSwitcher.create(navViewCtrl, {}, enteringView);
     switcher.loadViewElements({});
     expect(switcher.enteringEle().hasClass('existing')).toBe(true);
     expect(switcher.enteringEle().data('$eleId')).toBe('VIEW_ID');
   }));
 
   it('should get an existing entering element within navViewElement by abstract state name', inject(function($ionicViewSwitcher) {
-    var navViewElement = angular.element('<div class="view-container">');
+    var navViewCtrl = setup();
     var enteringEle = angular.element('<div class="existing">');
     enteringEle.data('$eleId', 'ABSTRACT_STATE');
-    navViewElement.append(enteringEle);
+    navViewCtrl.appendViewElement(enteringEle);
 
     var viewLocals = {
       $$state: {
@@ -200,16 +207,16 @@ describe('Ionic View Switcher', function() {
       stateId: 'STATE_ID',
       viewId: 'VIEW_ID'
     };
-    var switcher = $ionicViewSwitcher.create(null, navViewElement, viewLocals, enteringView);
+    var switcher = $ionicViewSwitcher.create(navViewCtrl, viewLocals, enteringView);
     switcher.loadViewElements({});
     expect(switcher.enteringEle().hasClass('existing')).toBe(true);
     expect(switcher.enteringEle().data('$eleId')).toBe('ABSTRACT_STATE');
   }));
 
   it('should append the new entering element to the navViewElement', inject(function($ionicViewSwitcher, $rootScope) {
-    var navViewElement = angular.element('<div class="view-container">');
+    var navViewCtrl = setup();
 
-    var switcher = $ionicViewSwitcher.create($rootScope, navViewElement, {});
+    var switcher = $ionicViewSwitcher.create(navViewCtrl, {});
     switcher.loadViewElements({});
     switcher.render(function(){});
     expect(switcher.enteringEle().length).toBe(1);
