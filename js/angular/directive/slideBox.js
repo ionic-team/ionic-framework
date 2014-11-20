@@ -13,17 +13,19 @@
  *
  * @usage
  * ```html
- * <ion-slide-box on-slide-changed="slideHasChanged($slideIndex)" loop="shouldLoop" auto-play="3000">
- *   <ion-slide>
- *     <div class="box blue"><h1>BLUE</h1></div>
- *   </ion-slide>
- *   <ion-slide>
- *     <div class="box yellow"><h1>YELLOW</h1></div>
- *   </ion-slide>
- *   <ion-slide>
- *     <div class="box pink"><h1>PINK</h1></div>
- *   </ion-slide>
- * </ion-slide-box>
+ * <ion-content>
+ *   <ion-slide-box on-slide-changed="slideHasChanged($slideIndex)" loop="shouldLoop" auto-play="3000">
+ *     <ion-slide>
+ *       <div class="box blue"><h1>BLUE</h1></div>
+ *     </ion-slide>
+ *     <ion-slide>
+ *       <div class="box yellow"><h1>YELLOW</h1></div>
+ *     </ion-slide>
+ *     <ion-slide>
+ *       <div class="box pink"><h1>PINK</h1></div>
+ *     </ion-slide>
+ *   </ion-slide-box>
+ * </ion-content>
  * ```
  *
  * @param {expression=} selected A model bound to the selected slide index.
