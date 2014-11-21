@@ -22,7 +22,8 @@ IonicModule
   '$location',
   '$window',
   '$ionicViewSwitcher',
-function($rootScope, $state, $location, $window, $ionicViewSwitcher) {
+  '$ionicNavViewDelegate',
+function($rootScope, $state, $location, $window, $ionicViewSwitcher, $ionicNavViewDelegate) {
 
   // history actions while navigating views
   var ACTION_INITIAL_VIEW = 'initialView';
@@ -584,6 +585,18 @@ function($rootScope, $state, $location, $window, $ionicViewSwitcher) {
       if (currentView) {
         setNavViews(currentView.viewId);
       }
+    },
+
+    /**
+     * @ngdoc method
+     * @name $ionicHistory#clearCache
+     * @description Removes all cached views within every {@link ionic.directive:ionNavView}.
+     * This both removes the view element from the DOM, and destroy it's scope.
+     */
+    clearCache: function() {
+      $ionicNavViewDelegate._instances.forEach(function(instance) {
+        instance.clearCache();
+      });
     },
 
     /**

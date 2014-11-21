@@ -6,9 +6,10 @@ IonicModule
   '$compile',
   '$controller',
   '$ionicNavBarDelegate',
+  '$ionicNavViewDelegate',
   '$ionicHistory',
   '$ionicViewSwitcher',
-function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, $ionicHistory, $ionicViewSwitcher) {
+function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, $ionicNavViewDelegate, $ionicHistory, $ionicViewSwitcher) {
 
   var DATA_ELE_IDENTIFIER = '$eleId';
   var VIEW_STATUS_ACTIVE = 'active';
@@ -35,6 +36,9 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
     var viewData = { name: navViewName, state: null };
     $element.data('$uiView', viewData);
+
+    var deregisterInstance = $ionicNavViewDelegate._registerInstance(self, $attrs.delegateHandle);
+    $scope.$on('$destroy', deregisterInstance);
 
     return viewData;
   };
@@ -151,6 +155,18 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
         }
       }
     }
+  };
+
+
+  self.clearCache = function() {
+    var viewElements = $element.children();
+
+    for (var x = 0, l = viewElements.length; x < l; x++) {
+      if (navViewAttr(viewElements.eq(x)) == VIEW_STATUS_CACHED) {
+        $ionicViewSwitcher.destroyViewEle(viewElements.eq(x));
+      }
+    }
+
   };
 
 
