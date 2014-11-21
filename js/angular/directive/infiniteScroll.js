@@ -125,7 +125,7 @@ IonicModule
       var checkBounds = ionic.animationFrameThrottle(checkInfiniteBounds);
 
       // Optionally check bounds on start after scrollView is fully rendered
-      var doImmediateCheck = $scope.$eval($attrs.immediateCheck);
+      var doImmediateCheck = angular.isDefined($attrs.immediateCheck) ? $scope.$eval($attrs.immediateCheck) : true;
 
       if (doImmediateCheck) {
         setTimeout(checkBounds);
