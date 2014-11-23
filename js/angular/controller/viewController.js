@@ -41,7 +41,7 @@ function($scope, $element, $attrs, $compile, $ionicViewSwitcher) {
     if (transData && !transData.viewNotified) {
       transData.viewNotified = true;
 
-      var viewTitle = $attrs.viewTitle || $attrs.title;
+      var viewTitle = isDefined($attrs.viewTitle) ? $attrs.viewTitle : $attrs.title;
 
       var buttons = {};
       for (var n in navElementHtml) {
