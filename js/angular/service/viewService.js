@@ -1,6 +1,6 @@
 /**
  * @private
- * DEPRECATED
+ * DEPRECATED, as of v1.0.0-beta14 -------
  */
 IonicModule
 .factory('$ionicViewService', ['$ionicHistory', '$log', function($ionicHistory, $log) {

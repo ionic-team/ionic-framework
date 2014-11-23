@@ -6,7 +6,8 @@ IonicModule
   '$interval',
   '$rootScope',
   '$timeout',
-function(scope, element, $$ionicAttachDrag, $interval, $rootScope, $timeout) {
+  '$log',
+function(scope, element, $$ionicAttachDrag, $interval, $rootScope, $timeout, $log) {
   var self = this;
 
   var relevantSlides = {
@@ -66,30 +67,30 @@ function(scope, element, $$ionicAttachDrag, $interval, $rootScope, $timeout) {
   self.onDrag = onDrag;
   self.onDragEnd = onDragEnd;
 
-  /** DEPRECATED METHODS **/
+  // DEPRECATED, as of v1.0.0-beta14 -------
   self.update = deprecated.method(
     '$ionicSlideBoxDelegate.update() has been deprecated! Slidebox updates on its own now.',
-    console.warn,
+    $log.warn,
     angular.noop
   );
   self.currentIndex = deprecated.method(
      '$ionicSlideBoxDelegate.currentIndex() has been deprecated! Use self.selected() instead.',
-     console.warn,
+     $log.warn,
      self.selected
   );
   self.slide = deprecated.method(
      '$ionicSlideBoxDelegate.slide(newIndex[, speed]) has been deprecated! Use self.select(newIndex[, speed]) instead.',
-     console.warn,
+     $log.warn,
      self.select
   );
   self.slidesCount = deprecated.method(
      '$ionicSlideBoxDelegate.slidesCount has been deprecated! Use self.slidesCount() instead.',
-     console.warn,
+     $log.warn,
      self.count
   );
   self.stop = deprecated.method(
     '$ionicSlideBoxDelegate.stop() has been deprecated! Use $ionicSlideBoxDelegate.autoPlay(0) to stop instead.',
-    console.warn,
+    $log.warn,
     function() {
       self._stoppedInterval = self.autoPlayInterval;
       self.autoPlay(0);
@@ -97,11 +98,12 @@ function(scope, element, $$ionicAttachDrag, $interval, $rootScope, $timeout) {
   );
   self.start = deprecated.method(
     '$ionicSlideBoxDelegate.start() has been deprecated! Use $ionicSlideBoxDelegate.autoPlay(newInterval) to start instead.',
-    console.warn,
+    $log.warn,
     function() {
       self.autoPlay(self._stoppedInterval);
     }
   );
+  // END DEPRECATED -------
 
 
   // ***
