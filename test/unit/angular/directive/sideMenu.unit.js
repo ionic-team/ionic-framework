@@ -17,7 +17,7 @@ describe('Ionic Angular Side Menu', function() {
 
     expect(el.controller('ionSideMenus')).toBeDefined();
     expect($ionicSideMenuDelegate._registerInstance)
-      .toHaveBeenCalledWith(el.controller('ionSideMenus'), 'superHandle');
+      .toHaveBeenCalledWith(el.controller('ionSideMenus'), 'superHandle', jasmine.any(Function));
 
     expect(deregisterSpy).not.toHaveBeenCalled();
     el.scope().$destroy();

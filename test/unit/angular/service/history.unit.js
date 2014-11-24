@@ -1108,6 +1108,62 @@ describe('Ionic History', function() {
     expect(newView.stateName).toEqual('about');
   }));
 
+  it('should not be active when scope null', function() {
+    expect(ionicHistory.isActiveScope(null)).toEqual(false);
+    expect(ionicHistory.isActiveScope(undefined)).toEqual(false);
+    expect(ionicHistory.isActiveScope()).toEqual(false);
+  });
+
+  it('should not be active when scope disconnected', function() {
+    var scope = {
+      $$disconnected: true
+    };
+    expect(ionicHistory.isActiveScope(scope)).toEqual(false);
+  });
+
+  it('should be active w/ scope but no current history id', function() {
+    ionicHistory.registerHistory('1234');
+    expect(ionicHistory.isActiveScope(scope)).toEqual(true);
+  });
+
+  it('should be active w/ scope same history id as current view', function() {
+    ionicHistory.currentView({
+      historyId: '123'
+    });
+
+    var scope = {
+      $historyId: '123'
+    }
+    expect(ionicHistory.isActiveScope(scope)).toEqual(true);
+  });
+
+  it('should be not active w/ scope different history id as current view', function() {
+    ionicHistory.currentView({
+      historyId: '123'
+    });
+
+    var scope = {
+      $historyId: 'abc'
+    }
+    expect(ionicHistory.isActiveScope(scope)).toEqual(false);
+  });
+
+  it('should be active when scope w/ unknown history and current view root history id', function() {
+    ionicHistory.currentView({
+      historyId: 'root'
+    });
+
+    expect(ionicHistory.isActiveScope({})).toEqual(true);
+  });
+
+  it('should not be active when scope w/ unknown history and current view not root history id', function() {
+    ionicHistory.currentView({
+      historyId: '123'
+    });
+
+    expect(ionicHistory.isActiveScope({})).toEqual(false);
+  });
+
   it('should go() to a view', inject(function($location) {
     var newView = ionicHistory.createView({ stateName: 'about' });
     newView.go();

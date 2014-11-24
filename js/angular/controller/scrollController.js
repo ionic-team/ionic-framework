@@ -32,16 +32,7 @@ function($scope, scrollViewOptions, $timeout, $window, $location, $document, $io
 
   var deregisterInstance = $ionicScrollDelegate._registerInstance(
     self, scrollViewOptions.delegateHandle, function() {
-      if ($scope.$$disconnected) {
-        return false;
-      }
-
-      var currentHistoryId = $ionicHistory.currentHistoryId();
-      if (currentHistoryId) {
-        return currentHistoryId == (isDefined($scope.$historyId) ? $scope.$historyId : 'root');
-      }
-
-      return true;
+      return $ionicHistory.isActiveScope($scope);
     }
   );
 

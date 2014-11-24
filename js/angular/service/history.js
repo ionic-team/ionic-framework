@@ -441,7 +441,10 @@ function($rootScope, $state, $location, $window, $ionicViewSwitcher, $ionicNavVi
      * @description The app's current view.
      * @returns {object} Returns the current view.
      */
-    currentView: function() {
+    currentView: function(view) {
+      if (arguments.length) {
+        viewHistory.currentView = view;
+      }
       return viewHistory.currentView;
     },
 
@@ -636,6 +639,17 @@ function($rootScope, $state, $location, $window, $ionicViewSwitcher, $ionicNavVi
 
     isAbstractEle: function(ele) {
       return !!(ele && (isAbstractTag(ele) || isAbstractTag(ele.children())));
+    },
+
+    isActiveScope: function(scope) {
+      if (!scope || scope.$$disconnected) return false;
+
+      var currentHistoryId = this.currentHistoryId();
+      if (currentHistoryId) {
+        return currentHistoryId == (isDefined(scope.$historyId) ? scope.$historyId : 'root');
+      }
+
+      return true;
     }
 
   };

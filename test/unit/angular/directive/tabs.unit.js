@@ -206,7 +206,7 @@ describe('tabs', function() {
       var el = setup('delegate-handle="banana"');
 
       expect($ionicTabsDelegate._registerInstance)
-        .toHaveBeenCalledWith(el.controller('ionTabs'), 'banana');
+        .toHaveBeenCalledWith(el.controller('ionTabs'), 'banana', jasmine.any(Function));
 
       expect(deregisterSpy).not.toHaveBeenCalled();
       el.scope().$destroy();

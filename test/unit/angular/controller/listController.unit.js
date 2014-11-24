@@ -17,7 +17,7 @@ describe('$ionicList controller', function() {
     spyOn($ionicListDelegate, '_registerInstance');
     var ctrl = setup({delegateHandle: 'foobar'});
     expect($ionicListDelegate._registerInstance)
-      .toHaveBeenCalledWith(ctrl, 'foobar');
+      .toHaveBeenCalledWith(ctrl, 'foobar', jasmine.any(Function));
   }));
 
   it('should register with given handle and deregister on destroy', inject(function($ionicListDelegate) {
@@ -29,7 +29,7 @@ describe('$ionicList controller', function() {
       delegateHandle: 'something'
     });
     expect($ionicListDelegate._registerInstance)
-      .toHaveBeenCalledWith(ctrl, 'something');
+      .toHaveBeenCalledWith(ctrl, 'something', jasmine.any(Function));
 
     expect(deregisterSpy).not.toHaveBeenCalled();
     ctrl.$scope.$destroy();

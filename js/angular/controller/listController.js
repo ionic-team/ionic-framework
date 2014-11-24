@@ -78,13 +78,18 @@ IonicModule
   '$scope',
   '$attrs',
   '$ionicListDelegate',
-function($scope, $attrs, $ionicListDelegate) {
+  '$ionicHistory',
+function($scope, $attrs, $ionicListDelegate, $ionicHistory) {
   var self = this;
   var isSwipeable = true;
   var isReorderShown = false;
   var isDeleteShown = false;
 
-  var deregisterInstance = $ionicListDelegate._registerInstance(self, $attrs.delegateHandle);
+  var deregisterInstance = $ionicListDelegate._registerInstance(
+    self, $attrs.delegateHandle, function() {
+      return $ionicHistory.isActiveScope($scope);
+    }
+  );
   $scope.$on('$destroy', deregisterInstance);
 
   self.showReorder = function(show) {

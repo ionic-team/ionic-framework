@@ -39,7 +39,8 @@ IonicModule
 .directive('ionSlideBox', [
   '$ionicSlideBoxDelegate',
   '$window',
-function($ionicSlideBoxDelegate, $window) {
+  '$ionicHistory',
+function($ionicSlideBoxDelegate, $window, $ionicHistory) {
 
   return {
     restrict: 'E',
@@ -64,7 +65,11 @@ function($ionicSlideBoxDelegate, $window) {
   function postLink(scope, element, attr, slideBoxCtrl) {
     element.addClass('slider');
 
-    var deregister = $ionicSlideBoxDelegate._registerInstance(slideBoxCtrl, attr.delegateHandle);
+    var deregister = $ionicSlideBoxDelegate._registerInstance(
+      slideBoxCtrl, attr.delegateHandle, function() {
+        return $ionicHistory.isActiveScope(scope);
+      }
+    );
 
     watchSelected();
     isDefined(attr.loop) && watchLoop();
