@@ -17,7 +17,7 @@
  */
 
 IonicModule
-.directive('ionCheckbox', function() {
+.directive('ionCheckbox', ['$ionicConfig', function($ionicConfig) {
   return {
     restrict: 'E',
     replace: true,
@@ -47,7 +47,8 @@ IonicModule
           input.attr(name, value);
         }
       });
+      var checkboxWrapper = element[0].querySelector('.checkbox');
+      checkboxWrapper.classList.add('checkbox-' + $ionicConfig.form.checkbox());
     }
-
   };
-});
+}]);

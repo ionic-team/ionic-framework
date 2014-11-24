@@ -49,7 +49,6 @@ describe('Ionic Checkbox', function() {
     expect(input[0].hasAttribute('checked')).toBe(true);
     scope.$apply('shouldCheck = false');
     expect(input[0].hasAttribute('checked')).toBe(false);
-
   });
 
   it('should ngChange properly', function() {
@@ -71,5 +70,17 @@ describe('Ionic Checkbox', function() {
 
     expect(scope.change).toHaveBeenCalledWith(false);
   });
+
+  it('should add config setting class', inject(function($ionicConfig){
+    $ionicConfig.form.checkbox('square');
+    el = compile('<ion-checkbox>')(scope);
+    scope.$apply();
+    expect(el[0].querySelector('.checkbox').classList.contains('checkbox-square')).toBe(true);
+
+    $ionicConfig.form.checkbox('circle');
+    el = compile('<ion-checkbox>')(scope);
+    scope.$apply();
+    expect(el[0].querySelector('.checkbox').classList.contains('checkbox-circle')).toBe(true);
+  }));
 
 });

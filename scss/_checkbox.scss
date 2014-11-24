@@ -6,7 +6,7 @@
 
 .checkbox {
   // set the color defaults
-  @include checkbox-style($checkbox-off-border-default, $checkbox-on-bg-default);
+  @include checkbox-style($checkbox-off-border-default, $checkbox-on-bg-default, $checkbox-on-border-default);
 
   position: relative;
   display: inline-block;
@@ -14,31 +14,31 @@
   cursor: pointer;
 }
 .checkbox-light  {
-  @include checkbox-style($checkbox-off-border-light, $checkbox-on-bg-light);
+  @include checkbox-style($checkbox-off-border-light, $checkbox-on-bg-light, $checkbox-off-border-light);
 }
 .checkbox-stable  {
-  @include checkbox-style($checkbox-off-border-stable, $checkbox-on-bg-stable);
+  @include checkbox-style($checkbox-off-border-stable, $checkbox-on-bg-stable, $checkbox-off-border-stable);
 }
 .checkbox-positive  {
-  @include checkbox-style($checkbox-off-border-positive, $checkbox-on-bg-positive);
+  @include checkbox-style($checkbox-off-border-positive, $checkbox-on-bg-positive, $checkbox-off-border-positive);
 }
 .checkbox-calm  {
-  @include checkbox-style($checkbox-off-border-calm, $checkbox-on-bg-calm);
+  @include checkbox-style($checkbox-off-border-calm, $checkbox-on-bg-calm, $checkbox-off-border-calm);
 }
 .checkbox-assertive  {
-  @include checkbox-style($checkbox-off-border-assertive, $checkbox-on-bg-assertive);
+  @include checkbox-style($checkbox-off-border-assertive, $checkbox-on-bg-assertive, $checkbox-off-border-assertive);
 }
 .checkbox-balanced  {
-  @include checkbox-style($checkbox-off-border-balanced, $checkbox-on-bg-balanced);
+  @include checkbox-style($checkbox-off-border-balanced, $checkbox-on-bg-balanced, $checkbox-off-border-balanced);
 }
 .checkbox-energized{
-  @include checkbox-style($checkbox-off-border-energized, $checkbox-on-bg-energized);
+  @include checkbox-style($checkbox-off-border-energized, $checkbox-on-bg-energized, $checkbox-off-border-energized);
 }
 .checkbox-royal  {
-  @include checkbox-style($checkbox-off-border-royal, $checkbox-on-bg-royal);
+  @include checkbox-style($checkbox-off-border-royal, $checkbox-on-bg-royal, $checkbox-off-border-royal);
 }
 .checkbox-dark  {
-  @include checkbox-style($checkbox-off-border-dark, $checkbox-on-bg-dark);
+  @include checkbox-style($checkbox-off-border-dark, $checkbox-on-bg-dark, $checkbox-off-border-dark);
 }
 
 .checkbox input:disabled:before,
@@ -77,7 +77,7 @@
     border-radius: $checkbox-border-radius;
     background: $checkbox-off-bg-color;
     content: ' ';
-    transition: background-color 20ms ease-in-out;
+    @include transition(background-color 20ms ease-in-out);
   }
 }
 
@@ -92,16 +92,39 @@ input:checked + .checkbox-icon:before {
   @include transition(opacity .05s ease-in-out);
   @include rotate(-45deg);
   position: absolute;
-  top: 30%;
-  left: 26%;
+  top: 33%;
+  left: 25%;
   display: table;
-  width: ($checkbox-width / 2) + 1;
-  height: ($checkbox-width / 3) + 1;
+  width: ($checkbox-width / 2);
+  height: ($checkbox-width / 4) - 1;
   border: $checkbox-check-width solid $checkbox-check-color;
   border-top: 0;
   border-right: 0;
   content: ' ';
   opacity: 0;
+}
+
+.platform-android .checkbox-platform input:before,
+.platform-android .checkbox-platform .checkbox-icon:before,
+.checkbox-square input:before,
+.checkbox-square .checkbox-icon:before {
+  border-radius: 2px;
+  width: 72%;
+  height: 72%;
+  margin-top: 14%;
+  margin-left: 14%;
+  border-width: 2px;
+}
+
+.platform-android .checkbox-platform input:after,
+.platform-android .checkbox-platform .checkbox-icon:after,
+.checkbox-square input:after,
+.checkbox-square .checkbox-icon:after {
+  border-width: 2px;
+  top: 19%;
+  left: 25%;
+  width: ($checkbox-width / 2) - 1;
+  height: 7px;
 }
 
 .grade-c .checkbox input:after,

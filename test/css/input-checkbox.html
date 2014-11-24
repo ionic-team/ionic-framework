@@ -18,22 +18,22 @@
       <h1 class="title">Input: Checkbox</h1>
     </header>
 
-    <main class="content has-header">
+    <ion-content class="content has-header">
 
       <ul class="list" ng-controller="MainCtrl">
-        <li class="item item-checkbox">
+        <li class="item item-checkbox checkbox-circle">
            <label class="checkbox">
              <input type="checkbox" checked>
            </label>
            Flux Capacitor
         </li>
-        <li class="item item-checkbox">
+        <li class="item item-checkbox checkbox-square">
            <label class="checkbox">
              <input type="checkbox" checked>
            </label>
            1.21 Gigawatts
         </li>
-        <li class="item item-checkbox">
+        <li class="item item-checkbox checkbox-platform">
            <label class="checkbox">
              <input type="checkbox" checked>
            </label>
@@ -70,7 +70,7 @@
         <ion-checkbox ng-model="test" ng-checked="test" class="checkbox-dark">Dark Directive</ion-checkbox>
       </ul>
 
-    </main>
+    </ion-content>
     <script type="text/javascript">
       angular.module('ionicApp', ['ionic'])
 
