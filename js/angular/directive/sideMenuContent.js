@@ -30,19 +30,20 @@ IonicModule
 .directive('ionSideMenuContent', [
   '$timeout',
   '$ionicGesture',
-function($timeout, $ionicGesture) {
+  '$window',
+function($timeout, $ionicGesture, $window) {
 
   return {
     restrict: 'EA', //DEPRECATED 'A'
     require: '^ionSideMenus',
     scope: true,
     compile: function(element, attr) {
+      element.addClass('menu-content pane');
+
       return { pre: prelink };
       function prelink($scope, $element, $attr, sideMenuCtrl) {
         var startCoord = null;
         var primaryScrollAxis = null;
-
-        $element.addClass('menu-content pane');
 
         if (isDefined(attr.dragContent)) {
           $scope.$watch(attr.dragContent, function(value) {
@@ -59,26 +60,28 @@ function($timeout, $ionicGesture) {
         }
 
         // Listen for taps on the content to close the menu
-        function onContentTap(e) {
-          if(sideMenuCtrl.getOpenAmount() !== 0) {
+        function onContentTap(gestureEvt) {
+          if (sideMenuCtrl.getOpenAmount() !== 0) {
             sideMenuCtrl.close();
-            e.gesture.srcEvent.preventDefault();
+            gestureEvt.gesture.srcEvent.preventDefault();
             startCoord = null;
             primaryScrollAxis = null;
+          } else if (!startCoord) {
+            startCoord = ionic.tap.pointerCoord(gestureEvt.gesture.srcEvent);
           }
         }
 
         function onDragX(e) {
-          if(!sideMenuCtrl.isDraggableTarget(e)) return;
+          if (!sideMenuCtrl.isDraggableTarget(e)) return;
 
-          if( getPrimaryScrollAxis(e) == 'x') {
+          if ( getPrimaryScrollAxis(e) == 'x') {
             sideMenuCtrl._handleDrag(e);
             e.gesture.srcEvent.preventDefault();
           }
         }
 
         function onDragY(e) {
-          if( getPrimaryScrollAxis(e) == 'x' ) {
+          if ( getPrimaryScrollAxis(e) == 'x' ) {
             e.gesture.srcEvent.preventDefault();
           }
         }
@@ -94,14 +97,14 @@ function($timeout, $ionicGesture) {
           // If a majority of the drag has been on the Y since the start of
           // the drag, but the X has moved a little bit, it's still a Y drag
 
-          if(primaryScrollAxis) {
+          if (primaryScrollAxis) {
             // we already figured out which way they're scrolling
             return primaryScrollAxis;
           }
 
-          if(gestureEvt && gestureEvt.gesture) {
+          if (gestureEvt && gestureEvt.gesture) {
 
-            if(!startCoord) {
+            if (!startCoord) {
               // get the starting point
               startCoord = ionic.tap.pointerCoord(gestureEvt.gesture.srcEvent);
 
@@ -112,9 +115,9 @@ function($timeout, $ionicGesture) {
               var xDistance = Math.abs(endCoord.x - startCoord.x);
               var yDistance = Math.abs(endCoord.y - startCoord.y);
 
-              var scrollAxis = ( xDistance > yDistance ? 'x' : 'y' );
+              var scrollAxis = ( xDistance < yDistance ? 'y' : 'x' );
 
-              if( Math.max(xDistance, yDistance) > 30 ) {
+              if ( Math.max(xDistance, yDistance) > 30 ) {
                 // ok, we pretty much know which way they're going
                 // let's lock it in
                 primaryScrollAxis = scrollAxis;
@@ -122,11 +125,11 @@ function($timeout, $ionicGesture) {
 
               return scrollAxis;
             }
-
           }
+          return 'y';
         }
 
-        sideMenuCtrl.setContent({
+        var content = {
           element: element[0],
           onDrag: function(e) {},
           endDrag: function(e) {},
@@ -134,10 +137,35 @@ function($timeout, $ionicGesture) {
             return $scope.sideMenuContentTranslateX || 0;
           },
           setTranslateX: ionic.animationFrameThrottle(function(amount) {
-            $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + amount + 'px, 0, 0)';
+            var xTransform = content.offsetX + amount;
+            $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + xTransform + 'px,0,0)';
             $timeout(function() {
               $scope.sideMenuContentTranslateX = amount;
             });
+          }),
+          setMarginLeft: ionic.animationFrameThrottle(function(amount) {
+            if (amount) {
+              amount = parseInt(amount, 10);
+              $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + amount + 'px,0,0)';
+              $element[0].style.width = ($window.innerWidth - amount) + 'px';
+              content.offsetX = amount;
+            } else {
+              $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(0,0,0)';
+              $element[0].style.width = '';
+              content.offsetX = 0;
+            }
+          }),
+          setMarginRight: ionic.animationFrameThrottle(function(amount) {
+            if (amount) {
+              amount = parseInt(amount, 10);
+              $element[0].style.width = ($window.innerWidth - amount) + 'px';
+              content.offsetX = amount;
+            } else {
+              $element[0].style.width = '';
+              content.offsetX = 0;
+            }
+            // reset incase left gets grabby
+            $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(0,0,0)';
           }),
           enableAnimation: function() {
             $scope.animationEnabled = true;
@@ -146,19 +174,27 @@ function($timeout, $ionicGesture) {
           disableAnimation: function() {
             $scope.animationEnabled = false;
             $element[0].classList.remove('menu-animated');
-          }
-        });
+          },
+          offsetX: 0
+        };
+
+        sideMenuCtrl.setContent(content);
 
         // add gesture handlers
-        var dragRightGesture = $ionicGesture.on('dragright', onDragX, $element);
-        var dragLeftGesture = $ionicGesture.on('dragleft', onDragX, $element);
-        var dragUpGesture = $ionicGesture.on('dragup', onDragY, $element);
-        var dragDownGesture = $ionicGesture.on('dragdown', onDragY, $element);
-        var releaseGesture = $ionicGesture.on('release', onDragRelease, $element);
-        var contentTapGesture = $ionicGesture.on('tap', onContentTap, $element);
+        var gestureOpts = { stop_browser_behavior: false };
+        var contentTapGesture = $ionicGesture.on('tap', onContentTap, $element, gestureOpts);
+        var dragRightGesture = $ionicGesture.on('dragright', onDragX, $element, gestureOpts);
+        var dragLeftGesture = $ionicGesture.on('dragleft', onDragX, $element, gestureOpts);
+        var dragUpGesture = $ionicGesture.on('dragup', onDragY, $element, gestureOpts);
+        var dragDownGesture = $ionicGesture.on('dragdown', onDragY, $element, gestureOpts);
+        var releaseGesture = $ionicGesture.on('release', onDragRelease, $element, gestureOpts);
 
         // Cleanup
         $scope.$on('$destroy', function() {
+          if (content) {
+            content.element = null;
+            content = null;
+          }
           $ionicGesture.off(dragLeftGesture, 'dragleft', onDragX);
           $ionicGesture.off(dragRightGesture, 'dragright', onDragX);
           $ionicGesture.off(dragUpGesture, 'dragup', onDragY);

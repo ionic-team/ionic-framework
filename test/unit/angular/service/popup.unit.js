@@ -265,8 +265,9 @@ describe('$ionicPopup service', function() {
       $ionicPopup.show();
       fakePopup.responseDeferred.resolve();
       $timeout.flush();
-      expect($ionicBackdrop.release).toHaveBeenCalled();
       expect(backDoneSpy).toHaveBeenCalled();
+      $timeout.flush();
+      expect($ionicBackdrop.release).toHaveBeenCalled();
       expect(document.body.classList.contains('popup-open')).toBe(false);
     }));
     it('template should only overwrite prompt input if it includes html', inject(function($timeout) {

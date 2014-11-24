@@ -29,7 +29,7 @@
  * ```js
  * function MyCtrl($scope, $ionicSlideBoxDelegate) {
  *   $scope.nextSlide = function() {
- *     $ionicSlideBoxDelegate.next();
+ *     $ionicSlideBoxDelegate.select( $ionicSlideBoxDelegate.next() );
  *   }
  * }
  * ```
@@ -38,63 +38,57 @@ IonicModule
 .service('$ionicSlideBoxDelegate', delegateService([
   /**
    * @ngdoc method
-   * @name $ionicSlideBoxDelegate#update
-   * @description
-   * Update the slidebox (for example if using Angular with ng-repeat,
-   * resize it for the elements inside).
+   * @name $ionicSlideBoxDelegate#select
+   * @param {number} slideIndex The index to select.
    */
-  'update',
+  'select',
   /**
    * @ngdoc method
-   * @name $ionicSlideBoxDelegate#slide
-   * @param {number} to The index to slide to.
-   * @param {number=} speed The number of milliseconds for the change to take.
+   * @name $ionicSlideBoxDelegate#selected
+   * @returns `slideIndex` The index of the currently selected slide.
    */
-  'slide',
+  'selected',
   /**
    * @ngdoc method
-   * @name $ionicSlideBoxDelegate#enableSlide
-   * @param {boolean=} shouldEnable Whether to enable sliding the slidebox.
-   * @returns {boolean} Whether sliding is enabled.
+   * @name $ionicSlideBoxDelegate#loop
+   * @description Sets/gets the looping state of the slidebox (whether going next from the last slide will go back to the first slide, and vice versa).
+   * @param {boolean=} shouldLoop Set whether the slidebox should loop.
+   * @returns `isLoop` Whether looping is currently enabled.
    */
-  'enableSlide',
+ 'loop',
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#previous
-   * @description Go to the previous slide. Wraps around if at the beginning.
+   * @returns `slideIndex` The index of the previous slide. Wraps around if loop is enabled.
    */
   'previous',
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#next
-   * @description Go to the next slide. Wraps around if at the end.
+   * @returns `slideIndex` The index of the next slide. Wraps around if loop is enabled.
    */
   'next',
   /**
    * @ngdoc method
-   * @name $ionicSlideBoxDelegate#stop
-   * @description Stop sliding. The slideBox will not move again until
-   * explicitly told to do so.
+   * @name $ionicSlideBoxDelegate#autoPlay
+   * @description Set whether the slidebox should automatically play, and at what rate.
+   * @param {*} autoPlayInterval How many milliseconds delay until changing to the next slide.
+   * Set to zero or false to stop autoPlay.
    */
-  'stop',
+  'autoPlay',
   /**
    * @ngdoc method
-   * @name $ionicSlideBoxDelegate#start
-   * @description Start sliding again if the slideBox was stopped. 
+   * @name $ionicSlideBoxDelegate#enableSlide
+   * @param {boolean=} shouldEnable Whether to enable sliding the slidebox.
+   * @returns `boolean` Whether sliding is enabled.
    */
-  'start',
+  'enableSlide',
   /**
    * @ngdoc method
-   * @name $ionicSlideBoxDelegate#currentIndex
-   * @returns number The index of the current slide.
+   * @name $ionicSlideBoxDelegate#count
+   * @returns `number` The number of slides there are currently.
    */
-  'currentIndex',
-  /**
-   * @ngdoc method
-   * @name $ionicSlideBoxDelegate#slidesCount
-   * @returns number The number of slides there are currently.
-   */
-  'slidesCount'
+  'count',
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#$getByHandle
@@ -103,7 +97,16 @@ IonicModule
    * {@link ionic.directive:ionSlideBox} directives with `delegate-handle` matching
    * the given handle.
    *
-   * Example: `$ionicSlideBoxDelegate.$getByHandle('my-handle').stop();`
+   * Example: `$ionicSlideBoxDelegate.$getByHandle('my-handle').select(0);`
    */
+
+   // DEPRECATED, as of v1.0.0-beta14 -------
+   'update',
+   'currentIndex',
+   'slide',
+   'slidesCount',
+   'stop',
+   'start'
+   // END DEPRECATED -------
 ]));
 

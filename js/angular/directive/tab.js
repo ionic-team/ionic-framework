@@ -1,7 +1,3 @@
-IonicModule.constant('$ionicTabConfig', {
-  type: ''
-});
-
 /**
  * @ngdoc directive
  * @name ionTab
@@ -32,18 +28,18 @@ IonicModule.constant('$ionicTabConfig', {
  * @param {string=} icon-on The icon of the tab while it is selected.
  * @param {string=} icon-off The icon of the tab while it is not selected.
  * @param {expression=} badge The badge to put on this tab (usually a number).
- * @param {expression=} badge-style The style of badge to put on this tab (eg tabs-positive).
+ * @param {expression=} badge-style The style of badge to put on this tab (eg: badge-positive).
  * @param {expression=} on-select Called when this tab is selected.
  * @param {expression=} on-deselect Called when this tab is deselected.
  * @param {expression=} ng-click By default, the tab will be selected on click. If ngClick is set, it will not.  You can explicitly switch tabs using {@link ionic.service:$ionicTabsDelegate#select $ionicTabsDelegate.select()}.
  */
 IonicModule
 .directive('ionTab', [
-  '$rootScope',
-  '$animate',
-  '$ionicBind',
   '$compile',
-function($rootScope, $animate, $ionicBind, $compile) {
+  '$ionicConfig',
+  '$ionicBind',
+  '$ionicViewSwitcher',
+function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
 
   //Returns ' key="value"' if value exists
   function attrStr(k,v) {
@@ -52,7 +48,6 @@ function($rootScope, $animate, $ionicBind, $compile) {
   return {
     restrict: 'E',
     require: ['^ionTabs', 'ionTab'],
-    replace: true,
     controller: '$ionicTab',
     scope: true,
     compile: function(element, attr) {
@@ -73,34 +68,47 @@ function($rootScope, $animate, $ionicBind, $compile) {
         '></ion-tab-nav>';
 
       //Remove the contents of the element so we can compile them later, if tab is selected
-      //We don't use regular transclusion because it breaks element inheritance
-      var tabContent = jqLite('<div class="pane">')
-        .append( element.contents().remove() );
+      var tabContent = document.createElement('div');
+      tabContent.innerHTML = element.html();
+      var childElementCount = tabContent.childElementCount;
+      element.empty();
+
+      var navViewName, innerHtml;
+      if (childElementCount && tabContent.children[0].tagName === 'ION-NAV-VIEW') {
+        navViewName = tabContent.children[0].getAttribute('name');
+        innerHtml = tabContent.children[0].outerHTML;
+      } else {
+        innerHtml = tabContent.innerHTML;
+      }
+      tabContent = null;
 
       return function link($scope, $element, $attr, ctrls) {
         var childScope;
         var childElement;
         var tabsCtrl = ctrls[0];
         var tabCtrl = ctrls[1];
-
-        var navView = tabContent[0].querySelector('ion-nav-view') ||
-          tabContent[0].querySelector('data-ion-nav-view');
-        var navViewName = navView && navView.getAttribute('name');
+        var isTabContentAttached = false;
 
         $ionicBind($scope, $attr, {
-          animate: '=',
           onSelect: '&',
           onDeselect: '&',
           title: '@',
           uiSref: '@',
-          href: '@',
+          href: '@'
         });
 
         tabsCtrl.add($scope);
         $scope.$on('$destroy', function() {
-          tabsCtrl.remove($scope);
+          if (!$scope.$tabsDestroy) {
+            // if the containing ionTabs directive is being destroyed
+            // then don't bother going through the controllers remove
+            // method, since remove will reset the active tab as each tab
+            // is being destroyed, causing unnecessary view loads and transitions
+            tabsCtrl.remove($scope);
+          }
           tabNavElement.isolateScope().$destroy();
           tabNavElement.remove();
+          tabNavElement = childElement = null;
         });
 
         //Remove title attribute so browser-tooltip does not apear
@@ -122,17 +130,48 @@ function($rootScope, $animate, $ionicBind, $compile) {
         tabNavElement.data('$ionTabController', tabCtrl);
         tabsCtrl.$tabsElement.append($compile(tabNavElement)($scope));
 
-        $scope.$watch('$tabSelected', function(value) {
-          childScope && childScope.$destroy();
-          childScope = null;
-          childElement && $animate.leave(childElement);
-          childElement = null;
-          if (value) {
-            childScope = $scope.$new();
-            childElement = tabContent.clone();
-            $animate.enter(childElement, tabsCtrl.$element);
-            $compile(childElement)(childScope);
+
+        function tabSelected(isSelected) {
+          if (isSelected && childElementCount) {
+            // this tab is being selected
+
+            // check if the tab is already in the DOM
+            // only do this if the tab has child elements
+            if (!isTabContentAttached) {
+              // tab should be selected and is NOT in the DOM
+              // create a new scope and append it
+              childScope = $scope.$new();
+              childElement = jqLite(innerHtml);
+              $ionicViewSwitcher.viewEleIsActive(childElement, true);
+              tabsCtrl.$element.append( childElement );
+              $compile(childElement)(childScope);
+              isTabContentAttached = true;
+            }
+
+            // remove the hide class so the tabs content shows up
+            $ionicViewSwitcher.viewEleIsActive(childElement, true);
+
+          } else if (isTabContentAttached && childElement) {
+            // this tab should NOT be selected, and it is already in the DOM
+
+            if ( $ionicConfig.views.maxCache() > 0 ) {
+              // keep the tabs in the DOM, only css hide it
+              $ionicViewSwitcher.viewEleIsActive(childElement, false);
+
+            } else {
+              // do not keep tabs in the DOM
+              childScope && childScope.$destroy();
+              childElement && childElement.remove();
+              isTabContentAttached = childScope = childElement = null;
+            }
+
           }
+        }
+
+        $scope.$watch('$tabSelected', tabSelected);
+
+        $scope.$on('$ionicView.afterEnter', function() {
+          $ionicViewSwitcher.viewEleIsActive(childElement, $scope.$tabSelected);
         });
 
       };

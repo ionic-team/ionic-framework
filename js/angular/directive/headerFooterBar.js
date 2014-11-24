@@ -1,6 +1,5 @@
 
 IonicModule
-.directive('ionNavBar', tapScrollToTopDirective())
 .directive('ionHeaderBar', tapScrollToTopDirective())
 
 /**
@@ -15,13 +14,12 @@ IonicModule
  * Can also be a subheader (lower down) if the 'bar-subheader' class is applied.
  * See [the header CSS docs](/docs/components/#subheader).
  *
- * Note: If you use ionHeaderBar in combination with ng-if, the surrounding content
- * will not align correctly.  This will be fixed soon.
- *
- * @param {string=} align-title Where to align the title. 
- * Available: 'left', 'right', or 'center'.  Defaults to 'center'.
+ * @param {string=} align-title How to align the title. By default the title
+ * will be aligned the same as how the platform aligns its titles (iOS centers
+ * titles, Android aligns them left).
+ * Available: 'left', 'right', or 'center'.  Defaults to the same as the platform.
  * @param {boolean=} no-tap-scroll By default, the header bar will scroll the
- * content to the top when tapped.  Set no-tap-scroll to true to disable this 
+ * content to the top when tapped.  Set no-tap-scroll to true to disable this
  * behavior.
  * Available: true or false.  Defaults to false.
  *
@@ -123,21 +121,15 @@ function headerFooterBarDirective(isHeader) {
   return [function() {
     return {
       restrict: 'E',
-      compile: function($element, $attr) {
-        $element.addClass(isHeader ? 'bar bar-header' : 'bar bar-footer');
-        var parent = $element[0].parentNode;
-        if(parent.querySelector('.tabs-top'))$element.addClass('has-tabs-top');
+      controller: '$ionicHeaderBar',
+      compile: function(tElement, $attr) {
+        tElement.addClass(isHeader ? 'bar bar-header' : 'bar bar-footer');
+        if (tElement[0].parentNode.querySelector('.tabs-top')) tElement.addClass('has-tabs-top');
+
         return { pre: prelink };
-        function prelink($scope, $element, $attr) {
-          var hb = new ionic.views.HeaderBar({
-            el: $element[0],
-            alignTitle: $attr.alignTitle || 'center'
-          });
-
-          var el = $element[0];
-
+        function prelink($scope, $element, $attr, ctrl) {
           if (isHeader) {
-            $scope.$watch(function() { return el.className; }, function(value) {
+            $scope.$watch(function() { return $element[0].className; }, function(value) {
               var isShown = value.indexOf('ng-hide') === -1;
               var isSubheader = value.indexOf('bar-subheader') !== -1;
               $scope.$hasHeader = isShown && !isSubheader;
@@ -147,8 +139,10 @@ function headerFooterBarDirective(isHeader) {
               delete $scope.$hasHeader;
               delete $scope.$hasSubheader;
             });
+            ctrl.align();
+
           } else {
-            $scope.$watch(function() { return el.className; }, function(value) {
+            $scope.$watch(function() { return $element[0].className; }, function(value) {
               var isShown = value.indexOf('ng-hide') === -1;
               var isSubfooter = value.indexOf('bar-subfooter') !== -1;
               $scope.$hasFooter = isShown && !isSubfooter;

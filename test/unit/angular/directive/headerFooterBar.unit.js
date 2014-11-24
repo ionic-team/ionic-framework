@@ -1,7 +1,7 @@
 describe('bar directives', function() {
   beforeEach(module('ionic'));
 
-  ['ion-header-bar', 'ion-nav-bar'].forEach(function(tpl) {
+  ['ion-header-bar'].forEach(function(tpl) {
     describe('tapScrollToTop ' + tpl, function() {
       function setup(attrs) {
         var el;

@@ -65,7 +65,7 @@
 *
 * @param {string=} delegate-handle The handle used to identify this list with
 * {@link ionic.service:$ionicListDelegate}.
-* @param type {string=} The type of list to use (for example, list-inset for an inset list)
+* @param type {string=} The type of list to use (list-inset or card)
 * @param show-delete {boolean=} Whether the delete buttons for the items in the list are
 * currently shown or hidden.
 * @param show-reorder {boolean=} Whether the reorder buttons for the items in the list are
@@ -75,9 +75,8 @@
 */
 IonicModule
 .directive('ionList', [
-  '$animate',
   '$timeout',
-function($animate, $timeout) {
+function($timeout) {
   return {
     restrict: 'E',
     require: ['ionList', '^?$ionicScroll'],
@@ -114,6 +113,13 @@ function($animate, $timeout) {
             },
             canSwipe: function() {
               return listCtrl.canSwipeItems();
+            }
+          });
+
+          $scope.$on('$destroy', function() {
+            if(listView) {
+              listView.deregister && listView.deregister();
+              listView = null;
             }
           });
 
@@ -168,7 +174,7 @@ function($animate, $timeout) {
           function setButtonShown(el, shown) {
             shown() && el.addClass('visible') || el.removeClass('active');
             ionic.requestAnimationFrame(function() {
-              shown() && el.addClass('active') || el.removeClass('invisible');
+              shown() && el.addClass('active') || el.removeClass('visible');
             });
           }
         }

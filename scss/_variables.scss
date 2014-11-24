@@ -4,22 +4,22 @@
 
 $light:                           #fff !default;
 $stable:                          #f8f8f8 !default;
-$positive:                        #4a87ee !default;
-$calm:                            #43cee6 !default;
-$balanced:                        #66cc33 !default;
-$energized:                       #f0b840 !default;
-$assertive:                       #ef4e3a !default;
-$royal:                           #8a6de9 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
 $dark:                            #444 !default;
 
 
 // Base
 // -------------------------------
 
-$font-family-sans-serif:          "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !default;
-$font-family-light-sans-serif:    "Helvetica Neue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !default;
-$font-family-serif:               Georgia, "Times New Roman", Times, serif !default;
-$font-family-monospace:           Monaco, Menlo, Consolas, "Courier New", monospace !default;
+$font-family-sans-serif:          "Helvetica Neue", "Roboto" sans-serif !default;
+$font-family-light-sans-serif:    "HelveticaNeue-Light", "Roboto-Light", sans-serif-light !default;
+$font-family-serif:               serif !default;
+$font-family-monospace:           monospace !default;
 
 $font-family-base:                $font-family-sans-serif !default;
 $font-size-base:                  14px !default;
@@ -106,39 +106,39 @@ $button-stable-active-border:     #a2a2a2 !default;
 
 $button-positive-bg:              $positive !default;
 $button-positive-text:            #fff !default;
-$button-positive-border:          darken($positive, 15%) !default;
-$button-positive-active-bg:       darken($positive, 15%) !default;
-$button-positive-active-border:   darken($positive, 15%) !default;
+$button-positive-border:          darken($positive, 10%) !default;
+$button-positive-active-bg:       darken($positive, 10%) !default;
+$button-positive-active-border:   darken($positive, 10%) !default;
 
 $button-calm-bg:                  $calm !default;
 $button-calm-text:                #fff !default;
-$button-calm-border:              darken($calm, 15%) !default;
-$button-calm-active-bg:           darken($calm, 15%) !default;
-$button-calm-active-border:       darken($calm, 15%) !default;
+$button-calm-border:              darken($calm, 10%) !default;
+$button-calm-active-bg:           darken($calm, 10%) !default;
+$button-calm-active-border:       darken($calm, 10%) !default;
 
 $button-assertive-bg:             $assertive !default;
 $button-assertive-text:           #fff !default;
-$button-assertive-border:         darken($assertive, 15%) !default;
-$button-assertive-active-bg:      darken($assertive, 15%) !default;
-$button-assertive-active-border:  darken($assertive, 15%) !default;
+$button-assertive-border:         darken($assertive, 10%) !default;
+$button-assertive-active-bg:      darken($assertive, 10%) !default;
+$button-assertive-active-border:  darken($assertive, 10%) !default;
 
 $button-balanced-bg:              $balanced !default;
 $button-balanced-text:            #fff !default;
-$button-balanced-border:          darken($balanced, 15%) !default;
-$button-balanced-active-bg:       darken($balanced, 15%) !default;
-$button-balanced-active-border:   darken($balanced, 15%) !default;
+$button-balanced-border:          darken($balanced, 10%) !default;
+$button-balanced-active-bg:       darken($balanced, 10%) !default;
+$button-balanced-active-border:   darken($balanced, 10%) !default;
 
 $button-energized-bg:             $energized !default;
 $button-energized-text:           #fff !default;
-$button-energized-border:         darken($energized, 15%) !default;
-$button-energized-active-bg:      darken($energized, 15%) !default;
-$button-energized-active-border:  darken($energized, 15%) !default;
+$button-energized-border:         darken($energized, 5%) !default;
+$button-energized-active-bg:      darken($energized, 5%) !default;
+$button-energized-active-border:  darken($energized, 5%) !default;
 
 $button-royal-bg:                 $royal !default;
 $button-royal-text:               #fff !default;
-$button-royal-border:             darken($royal, 15%) !default;
-$button-royal-active-bg:          darken($royal, 15%) !default;
-$button-royal-active-border:      darken($royal, 15%) !default;
+$button-royal-border:             darken($royal, 8%) !default;
+$button-royal-active-bg:          darken($royal, 8%) !default;
+$button-royal-active-border:      darken($royal, 8%) !default;
 
 $button-dark-bg:                  $dark !default;
 $button-dark-text:                #fff !default;
@@ -232,7 +232,6 @@ $tabs-text-font-size-side-icon:   12px !default;
 $tabs-icon-size:                  32px !default;
 $tabs-badge-padding:              1px 6px !default;
 $tabs-badge-font-size:            12px !default;
-$tabs-text-font-size:             14px !default;
 
 $tabs-light-bg:                   $button-light-bg !default;
 $tabs-light-border:               $button-light-border !default;
@@ -543,9 +542,6 @@ $menu-animation-speed:            200ms !default;
 
 $menu-side-shadow:                -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0,0,0,0.2) !default;
 
-$split-pane-menu-width:           320px !default;
-$split-pane-menu-border-color:    #eee !default;
-
 
 // Modals
 // -------------------------------
@@ -628,8 +624,8 @@ $loading-padding:                 20px !default;
 $loading-border-radius:           5px !default;
 $loading-font-size:               15px !default;
 
-$loading-backdrop-fadein-duration:0.3s !default;
-$loading-backdrop-bg-color:       rgba(0,0,0,0.7) !default;
+$loading-backdrop-fadein-duration:0.1s !default;
+$loading-backdrop-bg-color:       rgba(0,0,0,0.4) !default;
 
 
 // Badges
@@ -674,34 +670,38 @@ $badge-default-text:              #AAAAAA !default;
 // Z-Indexes
 // -------------------------------
 
-$z-index-action-sheet:            11 !default;
-$z-index-badge:                   1 !default;
-$z-index-backdrop:                11 !default;
-$z-index-bar:                     10 !default;
 $z-index-bar-title:               0 !default;
-$z-index-bar-button:              1 !default;
-$z-index-item:                    2 !default;
-$z-index-item-reorder:            3 !default;
-$z-index-item-checkbox:           3 !default;
 $z-index-item-drag:               0 !default;
 $z-index-item-edit:               0 !default;
-$z-index-item-options:            1 !default;
-$z-index-item-radio:              3 !default;
-$z-index-item-reordering:         9 !default;
-$z-index-item-toggle:             3 !default;
-$z-index-loading:                 13 !default;
 $z-index-menu:                    0 !default;
-$z-index-menu-bar-header:         11 !default;
+$z-index-badge:                   1 !default;
+$z-index-bar-button:              1 !default;
+$z-index-item-options:            1 !default;
+$z-index-pane:                    1 !default;
+$z-index-slider-pager:            1 !default;
+$z-index-view:                    1 !default;
+$z-index-view-below:              2 !default;
+$z-index-item:                    2 !default;
+$z-index-item-checkbox:           3 !default;
+$z-index-item-radio:              3 !default;
+$z-index-item-reorder:            3 !default;
+$z-index-item-toggle:             3 !default;
+$z-index-view-above:              3 !default;
+$z-index-tabs:                    5 !default;
+$z-index-item-reordering:         9 !default;
+$z-index-bar:                     9 !default;
+$z-index-bar-above:               10 !default;
 $z-index-menu-scroll-content:     10 !default;
 $z-index-modal:                   10 !default;
-$z-index-pane:                    1 !default;
-$z-index-popup:                   12 !default;
 $z-index-popover:                 10 !default;
-$z-index-scroll-bar:              9999 !default;
+$z-index-action-sheet:            11 !default;
+$z-index-backdrop:                11 !default;
+$z-index-menu-bar-header:         11 !default;
 $z-index-scroll-content-false:    11 !default;
-$z-index-slider-pager:            1 !default;
-$z-index-tabs:                    5 !default;
-$z-index-view:                    1 !default;
+$z-index-popup:                   12 !default;
+$z-index-loading:                 13 !default;
+$z-index-scroll-bar:              9999 !default;
+$z-index-click-block:             99999 !default;
 
 
 // Platform

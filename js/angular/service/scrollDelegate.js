@@ -138,68 +138,6 @@ IonicModule
   'getScrollView',
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate#rememberScrollPosition
-   * @description
-   * Will make it so, when this scrollView is destroyed (user leaves the page),
-   * the last scroll position the page was on will be saved, indexed by the
-   * given id.
-   *
-   * Note: for pages associated with a view under an ion-nav-view,
-   * rememberScrollPosition automatically saves their scroll.
-   *
-   * Related methods: scrollToRememberedPosition, forgetScrollPosition (below).
-   *
-   * In the following example, the scroll position of the ion-scroll element
-   * will persist, even when the user changes the toggle switch.
-   *
-   * ```html
-   * <ion-toggle ng-model="shouldShowScrollView"></ion-toggle>
-   * <ion-scroll delegate-handle="myScroll" ng-if="shouldShowScrollView">
-   *   <div ng-controller="ScrollCtrl">
-   *     <ion-list>
-   *       {% raw %}<ion-item ng-repeat="i in items">{{i}}</ion-item>{% endraw %}
-   *     </ion-list>
-   *   </div>
-   * </ion-scroll>
-   * ```
-   * ```js
-   * function ScrollCtrl($scope, $ionicScrollDelegate) {
-   *   var delegate = $ionicScrollDelegate.$getByHandle('myScroll');
-   *
-   *   // Put any unique ID here.  The point of this is: every time the controller is recreated
-   *   // we want to load the correct remembered scroll values.
-   *   delegate.rememberScrollPosition('my-scroll-id');
-   *   delegate.scrollToRememberedPosition();
-   *   $scope.items = [];
-   *   for (var i=0; i<100; i++) {
-   *     $scope.items.push(i);
-   *   }
-   * }
-   * ```
-   *
-   * @param {string} id The id to remember the scroll position of this
-   * scrollView by.
-   */
-  'rememberScrollPosition',
-  /**
-   * @ngdoc method
-   * @name $ionicScrollDelegate#forgetScrollPosition
-   * @description
-   * Stop remembering the scroll position for this scrollView.
-   */
-  'forgetScrollPosition',
-  /**
-   * @ngdoc method
-   * @name $ionicScrollDelegate#scrollToRememberedPosition
-   * @description
-   * If this scrollView has an id associated with its scroll position,
-   * (through calling rememberScrollPosition), and that position is remembered,
-   * load the position and scroll to it.
-   * @param {boolean=} shouldAnimate Whether to animate the scroll.
-   */
-  'scrollToRememberedPosition'
-  /**
-   * @ngdoc method
    * @name $ionicScrollDelegate#$getByHandle
    * @param {string} handle
    * @returns `delegateInstance` A delegate instance that controls only the

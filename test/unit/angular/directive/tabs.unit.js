@@ -1,17 +1,5 @@
 describe('tabs', function() {
 
-  describe('miscellaneous', function() {
-    beforeEach(module('ionic', function($provide) {
-      $provide.value('$ionicViewService', {
-        disableRegisterByTagName: jasmine.createSpy('disableRegisterByTagName')
-      });
-    }));
-    it('should register tabs', inject(function($ionicViewService, $compile, $rootScope) {
-      $compile('<ion-tabs>')($rootScope.$new());
-      expect($ionicViewService.disableRegisterByTagName).toHaveBeenCalledWith('ion-tabs');
-    }));
-  });
-
   describe('$ionicTabs controller', function() {
     beforeEach(module('ionic'));
     var ctrl, scope;
@@ -28,27 +16,37 @@ describe('tabs', function() {
       var tab1 = {}, tab2 = {};
       ctrl.add(tab1);
       ctrl.add(tab2);
+
+      // .add does not automatically select the first anymore
+      expect(ctrl.selectedIndex()).toBe(-1);
+
+      ctrl.select(tab1);
       expect(ctrl.selectedIndex()).toBe(0);
+
+      ctrl.select(0);
+      expect(ctrl.selectedIndex()).toBe(0);
+
       ctrl.select(tab2);
       expect(ctrl.selectedIndex()).toBe(1);
       ctrl.deselect(tab2);
       expect(ctrl.selectedIndex()).toBe(-1);
     });
 
-    it('.add should add tab and select if empty, & set historyId', inject(function($ionicViewService) {
+    it('.add should add tab and NOT select if empty, & set historyId', inject(function($ionicHistory) {
       var tab1 = {};
       var tab2 = {};
-      spyOn($ionicViewService, 'registerHistory');
+      spyOn($ionicHistory, 'registerHistory');
       spyOn(ctrl, 'select');
 
       ctrl.add(tab1);
-      expect($ionicViewService.registerHistory).toHaveBeenCalledWith(tab1);
+      ctrl.select(tab1);
+      expect($ionicHistory.registerHistory).toHaveBeenCalledWith(tab1);
       expect(ctrl.tabs).toEqual([tab1]);
       expect(ctrl.select).toHaveBeenCalledWith(tab1);
 
       ctrl.select.reset();
       ctrl.add(tab2);
-      expect($ionicViewService.registerHistory).toHaveBeenCalledWith(tab2);
+      expect($ionicHistory.registerHistory).toHaveBeenCalledWith(tab2);
       expect(ctrl.tabs).toEqual([tab1, tab2]);
       expect(ctrl.select).not.toHaveBeenCalled();
     }));
@@ -58,6 +56,7 @@ describe('tabs', function() {
       ctrl.add(tab1);
       ctrl.add(tab2);
       ctrl.add(tab3);
+      ctrl.select(tab1);
       expect(ctrl.selectedTab()).toBe(tab1);
 
       ctrl.select(tab3);
@@ -118,18 +117,19 @@ describe('tabs', function() {
       expect(ctrl.selectedTab()).toBe(tab1);
     });
 
-    it('.select on selected tab should do nothing or go to history root', inject(function($ionicViewService) {
-      spyOn($ionicViewService, 'goToHistoryRoot');
+    it('.select on selected tab should do nothing or go to history root', inject(function($ionicHistory) {
+      spyOn($ionicHistory, 'goToHistoryRoot');
       var tab = { $historyId: '1' };
       ctrl.add(tab);
+      ctrl.select(tab);
       expect(ctrl.selectedTab()).toBe(tab);
 
       //Do nothing unless emit event is passed
       ctrl.select(tab);
-      expect($ionicViewService.goToHistoryRoot).not.toHaveBeenCalled();
+      expect($ionicHistory.goToHistoryRoot).not.toHaveBeenCalled();
 
       ctrl.select(tab, true);
-      expect($ionicViewService.goToHistoryRoot).toHaveBeenCalledWith(tab.$historyId);
+      expect($ionicHistory.goToHistoryRoot).toHaveBeenCalledWith(tab.$historyId);
     }));
 
     it('.select should deselect all other tabs and set selected', function() {
@@ -172,7 +172,7 @@ describe('tabs', function() {
       expect(scope.$emit).not.toHaveBeenCalled();
       ctrl.select(tab3, true);
       expect(scope.$emit).toHaveBeenCalled();
-      expect(eName).toBe('viewState.changeHistory');
+      expect(eName).toBe('$ionicHistory.change');
       expect(eData).toEqual({
         type: 'tab',
         tabIndex: 2,
@@ -215,6 +215,7 @@ describe('tabs', function() {
 
 
     it('should $hasTabs and $hasTabsTop', function() {
+      TestUtil.setPlatform('ios');
       var el = setup();
       var scope = el.scope();
       expect(scope.$hasTabs).toBe(true);
@@ -234,34 +235,6 @@ describe('tabs', function() {
       expect(el[0].querySelector('.tabs .content')).toBeTruthy();
     });
 
-    describe('platform Styles', function() {
-      describe('iOS', function() {
-        beforeEach(module('ionic', function($provide) {
-          TestUtil.setPlatform('ios');
-          $provide.constant('$ionicTabsConfig', { 
-            type: ''
-          });
-        }));
-
-        it('should set iOS style', function() {
-          var el = setup();
-          expect(el.hasClass('tabs-striped')).not.toBe(true);
-        });
-      });
-      describe('android', function() {
-        beforeEach(module('ionic', function($provide) {
-          TestUtil.setPlatform('android');
-          $provide.constant('$ionicTabsConfig', {
-            type: 'tabs-striped'
-          });
-        }));
-
-        it('should set Android style', function() {
-          var el = setup();
-          expect(el.hasClass('tabs-striped')).toBe(true);
-        });
-      });
-    });
   });
 
   describe('ionicTab controller', function() {
@@ -328,15 +301,15 @@ describe('tabs', function() {
       expect($state.includes).toHaveBeenCalledWith('def');
     }));
 
-    it('.navNameMatchesState', inject(function($ionicViewService) {
-      spyOn($ionicViewService, 'isCurrentStateNavView').andReturn(123);
+    it('.navNameMatchesState', inject(function($ionicHistory) {
+      spyOn($ionicHistory, 'isCurrentStateNavView').andReturn(123);
 
       var ctrl = setup();
       expect(ctrl.navNameMatchesState()).toBeFalsy();
 
       ctrl.navViewName = 'foo';
       expect(ctrl.navNameMatchesState()).toBe(123);
-      expect($ionicViewService.isCurrentStateNavView).toHaveBeenCalledWith('foo');
+      expect($ionicHistory.isCurrentStateNavView).toHaveBeenCalledWith('foo');
     }));
   });
 
@@ -450,15 +423,13 @@ describe('tabs', function() {
       expect(tabEl.controller('ionTab').navViewName).toBeUndefined();
     });
 
-    angular.forEach(['ion-nav-view', 'data-ion-nav-view'], function(directive) {
-      it('should set navViewName if a child '+directive, inject(function($ionicViewService, $rootScope) {
-        setup('', '<' + directive + ' name="banana"></' + directive + '>');
-        spyOn(tabsCtrl, 'select');
-        var tab = tabsCtrl.tabs[0];
+    it('should set navViewName if a child ion-nav-view', inject(function($ionicHistory, $rootScope) {
+      setup('', '<ion-nav-view name="banana"></ion-nav-view>');
+      spyOn(tabsCtrl, 'select');
+      var tab = tabsCtrl.tabs[0];
 
-        expect(tabEl.controller('ionTab').navViewName).toBe('banana');
-      }));
-    });
+      expect(tabEl.controller('ionTab').navViewName).toBe('banana');
+    }));
 
     it('should call tabMatchesState on compile and if match select', function() {
       setup();
@@ -470,7 +441,7 @@ describe('tabs', function() {
     });
 
     it('should call selectIfMatchesState on $stateChangeSuccess', function() {
-      setup();
+      setup('', '<ion-nav-view name="banana"></ion-nav-view>');
       var tabMatchesState = tabEl.controller('ionTab').tabMatchesState;
 
       tabMatchesState.reset();
@@ -497,24 +468,23 @@ describe('tabs', function() {
 
       spyOn(tab, '$broadcast');
 
-      var tabContent = tabsEl.find('.pane');
-      expect(tabContent.length).toBe(0);
+      var tabContent = tabsEl.find('.inside-content');
+      expect(tabContent.length).toBe(1);
+      expect(tabContent.attr('nav-view')).toBe('cached');
 
       tab.$apply('$tabSelected = true');
 
-      tabContent = tabsEl.find('.pane');
+      tabContent = tabsEl.find('.inside-content');
       expect(tabContent.parent()[0]).toBe(tabsCtrl.$element[0]);
       var contentScope = tabContent.scope();
       expect(tabContent.length).toBe(1);
-      expect(tabContent.find('.inside-content').length).toBe(1);
 
       spyOn(tabContent, 'remove');
       spyOn(contentScope, '$destroy');
       tab.$broadcast.reset();
 
       tab.$apply('$tabSelected = false');
-      expect(tabContent.parent().length).toBe(0); //removed check
-      expect(contentScope.$destroy).toHaveBeenCalled();
+      expect(tabContent.attr('nav-view')).toBe('cached');
     });
 
   });
@@ -544,6 +514,16 @@ describe('tabs', function() {
       });
       return element;
     }
+
+    it('should set tabs css from $ionicConfig', inject(function($rootScope, $compile, $ionicConfig){
+      $ionicConfig.tabs.position('top');
+      $ionicConfig.tabs.style('striped');
+      var scope = $rootScope.$new();
+      var element = angular.element('<ion-tabs></ion-tabs>');
+      element = $compile(element)(scope);
+      expect(element.hasClass('tabs-striped')).toBe(true);
+      expect(element.hasClass('tabs-top')).toBe(true);
+    }));
 
     it('should remove title attribute', function() {
       var el = setup('title="something"');

@@ -115,9 +115,6 @@ describe('collectionRepeat directive', function() {
     expect(function() {
       el.scope().$apply('items = {}');
     }).toThrow();
-    expect(function() {
-      el.scope().$apply('items = []');
-    }).not.toThrow();
   });
 
   it('should rerender on list change', function() {

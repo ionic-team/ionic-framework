@@ -21,6 +21,9 @@
   visibility: hidden;
   opacity: 0;
 
+  &:not(.visible) .icon {
+    display: none;
+  }
   &.visible {
     visibility: visible;
   }

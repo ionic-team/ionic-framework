@@ -1,4 +1,6 @@
 describe('ionView directive', function() {
+  var beforeEnterData;
+
   beforeEach(module('ionic'));
 
   function setup(attrs, scopeProps, content) {
@@ -7,11 +9,12 @@ describe('ionView directive', function() {
       var scope = angular.extend($rootScope.$new(), scopeProps || {});
 
       el = angular.element('<ion-view '+(attrs||'')+'>');
-      el.data('$ionNavBarController', {
-        changeTitle: jasmine.createSpy('changeTitle'),
-        setTitle: jasmine.createSpy('setTitle'),
-        showBackButton: jasmine.createSpy('showBackButton'),
-        showBar: jasmine.createSpy('showBar')
+      el.data('$ionNavViewController', {
+        beforeEnter: function(d) { beforeEnterData = d; },
+        title: jasmine.createSpy('title'),
+        showBar: jasmine.createSpy('showBar'),
+        enableBackButton: jasmine.createSpy('enableBackButton'),
+        showBackButton: jasmine.createSpy('showBackButton')
       });
       content && el.html(content);
 
@@ -21,18 +24,22 @@ describe('ionView directive', function() {
     return el;
   }
 
-  it('should only remove title & add pane with no navbar', inject(function($compile, $rootScope) {
-    var el = $compile('<ion-view title="1">')($rootScope.$new());
+  it('should add pane', inject(function($compile, $rootScope) {
+    var el = $compile('<ion-view>')($rootScope.$new());
     $rootScope.$apply();
     expect(el.hasClass('pane')).toBe(true);
+  }));
+
+  it('should remove title attribute', inject(function($compile, $rootScope) {
+    var el = $compile('<ion-view title="view title">')($rootScope.$new());
+    $rootScope.$apply();
     expect(el[0].getAttribute('title')).toBe(null);
   }));
 
-  it('should only remove title & add pane in a modal',inject(function($compile, $rootScope) {
+  it('should remove title attribute from view in modal',inject(function($compile, $rootScope) {
     var el = $compile('<ion-modal><ion-view title="1"></ion-modal>')($rootScope.$new());
     var view = jqLite(el[0].querySelector('.pane'));
     $rootScope.$apply();
-    expect(view.hasClass('pane')).toBe(true);
     expect(view[0].getAttribute('title')).toBe(null);
   }));
 
@@ -41,54 +48,132 @@ describe('ionView directive', function() {
     expect(el.html()).toBe('<b>some</b> html');
   });
 
-  it('should not changeTitle with undefined title attr', function() {
+  it('should call ionNavViewController.beforeEnter with showNavBar=false w/ hide-nav-bar="true" attr', inject(function($rootScope) {
+    var el = setup('hide-nav-bar="true"');
+    $rootScope.$broadcast('$ionicView.beforeEnter', {});
+    expect( beforeEnterData.showNavBar ).toBe(false);
+  }));
+
+  it('should call ionNavViewController.beforeEnter with showNavBar=true and hide-nav-bar="false" attr', inject(function($rootScope) {
+    var el = setup('hide-nav-bar="false"');
+    $rootScope.$broadcast('$ionicView.beforeEnter', {});
+    expect( beforeEnterData.showNavBar ).toBe(true);
+  }));
+
+  it('should call ionNavViewController.beforeEnter with title attr', inject(function($rootScope) {
+    var el = setup('title="my title"');
+    $rootScope.$broadcast('$ionicView.beforeEnter', {
+      direction: 'forward'
+    });
+    expect( beforeEnterData.title ).toBe('my title');
+    expect( beforeEnterData.direction ).toBe('forward');
+    expect( beforeEnterData.hasHeaderBar ).toBe(false);
+    expect( beforeEnterData.navBarDelegate ).toBe(null);
+    expect( beforeEnterData.showNavBar ).toBe(true);
+  }));
+
+  it('should call ionNavViewController.beforeEnter with view-title attr', inject(function($rootScope) {
+    var el = setup('view-title="my title"');
+    $rootScope.$broadcast('$ionicView.beforeEnter', {});
+    expect( beforeEnterData.title ).toBe('my title');
+  }));
+
+  it('should not enableBack with hide-back-button attr', inject(function($rootScope) {
+    var el = setup('hide-back-button="true"');
+    $rootScope.$broadcast('$ionicView.beforeEnter', {
+      enableBack: true
+    });
+    expect( beforeEnterData.showBack ).toBe(false);
+
+    $rootScope.shouldShowBack = false;
+    var el = setup('hide-back-button="shouldShowBack"');
+    $rootScope.$broadcast('$ionicView.beforeEnter', {
+      enableBack: true
+    });
+    expect( beforeEnterData.showBack ).toBe(false);
+  }));
+
+  it('should enableBack without hide-back-button but no enableBack from transition', inject(function($rootScope) {
     var el = setup();
-    expect(el.controller('ionNavBar').changeTitle).not.toHaveBeenCalled();
-  });
+    $rootScope.$broadcast('$ionicView.beforeEnter', {
+      enableBack: false
+    });
+    expect( beforeEnterData.enableBack ).toBe(false);
+  }));
 
-  it('should changeTitle with blank if title attr is blank', function() {
-    var el = setup('title=""', {$navDirection: 'someDirection'});
-    expect(el.controller('ionNavBar').changeTitle).toHaveBeenCalledWith('', 'someDirection');
-  });
+  it('should be receive delegateHandle from child ionNavBar', inject(function($rootScope) {
+    var el = setup(null, null, '<ion-nav-bar delegate-handle="myViewNavBar">');
+    $rootScope.$broadcast('$ionicView.beforeEnter', {});
+    expect( beforeEnterData.navBarDelegate ).toBe('myViewNavBar');
+  }));
 
-  it('should changeTitle with a navDirection if title set', function() {
-    var el = setup('title="Hi, {{1}}!"', {$navDirection: 'foo'});
-    expect(el.controller('ionNavBar').changeTitle).toHaveBeenCalledWith('Hi, 1!', 'foo');
-  });
+  it('should only observe title attr after afterEnter and before beforeLeave', inject(function($rootScope) {
+    var el = setup('view-title="{{ myTitle }}"', {myTitle: 'My Title'});
+    $rootScope.$broadcast('$ionicView.beforeEnter', {});
+    var spy = el.data('$ionNavViewController').title;
+    expect(spy).not.toHaveBeenCalled();
+    spy.reset();
 
-  it('should showBackButton depending on what is given', function() {
-    var el = setup('hide-back-button="shouldHideBack"');
-    expect(el.controller('ionNavBar').showBackButton).toHaveBeenCalledWith(true);
-    el.scope().$apply('shouldHideBack = true');
-    expect(el.controller('ionNavBar').showBackButton).toHaveBeenCalledWith(false);
-    el.scope().$apply('shouldHideBack = false');
-    expect(el.controller('ionNavBar').showBackButton).toHaveBeenCalledWith(true);
-  });
+    $rootScope.$broadcast('$ionicView.afterEnter', {});
+    expect(spy).not.toHaveBeenCalled();
+    spy.reset();
 
-  it('should show back button by default', function() {
-    var el = setup();
-    expect(el.controller('ionNavBar').showBackButton).toHaveBeenCalledWith(true);
-  });
+    el.scope().myTitle = 'My New Title';
+    $rootScope.$digest();
+    expect(spy).toHaveBeenCalledWith('My New Title');
+    spy.reset();
 
-  it('should showBar depending on what is given', function() {
-    var el = setup('hide-nav-bar="shouldHide"');
-    expect(el.controller('ionNavBar').showBar).toHaveBeenCalledWith(true);
-    el.scope().$apply('shouldHide = true');
-    expect(el.controller('ionNavBar').showBar).toHaveBeenCalledWith(false);
-    el.scope().$apply('shouldHide = false');
-    expect(el.controller('ionNavBar').showBar).toHaveBeenCalledWith(true);
-  });
+    $rootScope.$broadcast('$ionicView.beforeLeave', {});
+    el.scope().myTitle = 'My Other New Title';
+    $rootScope.$digest();
+    expect(spy).not.toHaveBeenCalled();
+    spy.reset();
+  }));
 
-  it('should showBar by default', function() {
-    var el = setup();
-    expect(el.controller('ionNavBar').showBar).toHaveBeenCalledWith(true);
-  });
+  it('should only observe hideNavBar attr after afterEnter and before beforeLeave', inject(function($rootScope) {
+    var el = setup('hide-nav-bar="hide"', {hide: false});
+    $rootScope.$broadcast('$ionicView.beforeEnter', {});
+    var spy = el.data('$ionNavViewController').showBar;
+    expect(spy).not.toHaveBeenCalled();
+    spy.reset();
 
-  it('should setTitle on change', function() {
-    var el = setup('title="{{something}}-1"');
-    //Should not setTitle with initial value
-    expect(el.controller('ionNavBar').setTitle).toHaveBeenCalledWith('-1');
-    el.scope().$apply('something = 2');
-    expect(el.controller('ionNavBar').setTitle).toHaveBeenCalledWith('2-1');
-  });
+    $rootScope.$broadcast('$ionicView.afterEnter', {});
+    expect(spy).not.toHaveBeenCalled();
+    spy.reset();
+
+    el.scope().hide = true;
+    $rootScope.$digest();
+    expect(spy).toHaveBeenCalledWith(false);
+    spy.reset();
+
+    $rootScope.$broadcast('$ionicView.beforeLeave', {});
+    el.scope().hide = false;
+    $rootScope.$digest();
+    expect(spy).not.toHaveBeenCalled();
+    spy.reset();
+  }));
+
+  it('should only observe hideBackButton attr after afterEnter and before beforeLeave', inject(function($rootScope) {
+    var el = setup('hide-back-button="hide"', {hide: false});
+    $rootScope.$broadcast('$ionicView.beforeEnter', {});
+    var spy = el.data('$ionNavViewController').showBackButton;
+    expect(spy).not.toHaveBeenCalled();
+    spy.reset();
+
+    $rootScope.$broadcast('$ionicView.afterEnter', {});
+    expect(spy).not.toHaveBeenCalled();
+    spy.reset();
+
+    el.scope().hide = true;
+    $rootScope.$digest();
+    expect(spy).toHaveBeenCalledWith(false);
+    spy.reset();
+
+    $rootScope.$broadcast('$ionicView.beforeLeave', {});
+    el.scope().hide = false;
+    $rootScope.$digest();
+    expect(spy).not.toHaveBeenCalled();
+    spy.reset();
+  }));
+
 });

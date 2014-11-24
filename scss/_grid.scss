@@ -14,6 +14,10 @@
   width: 100%;
 }
 
+.row-wrap {
+  @include flex-wrap(wrap);
+}
+
 .row + .row {
   margin-top: ($grid-padding-width / 2) * -1;
   padding-top: 0;

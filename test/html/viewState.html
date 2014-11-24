@@ -8,27 +8,21 @@
 
     <link rel="stylesheet" href="../../../../dist/css/ionic.css">
     <script src="../../../../dist/js/ionic.bundle.js"></script>
-    <script src="dom-trace.js"></script>
   </head>
-  <body>
+  <body ng-controller="AppCtrl">
 
-    <div ng-controller="AppCtrl">
-      <ion-nav-bar class="nav-title-slide-ios7 bar-positive">
-        <ion-nav-back-button class="button-icon icon ion-arrow-left-c">
-          Back
-        </ion-nav-back-button>
-      </ion-nav-bar>
-      <ion-nav-view animation="slide-left-right-ios7"></ion-nav-view>
-    </div>
+    <ion-nav-bar class="bar-positive">
+      <ion-nav-back-button class="button-icon icon ion-arrow-left-c">
+        Back
+      </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view></ion-nav-view>
 
     <script id="sign-in.html" type="text/ng-template">
       <ion-view title="Sign-In">
 
-<ion-nav-buttons side="left">
-            <button
-                class="button button-icon icon ion-navicon"
-                menu-toggle="left">
-            </button>
+        <ion-nav-buttons side="left">
+          <button class="button button-icon icon ion-navicon"></button>
         </ion-nav-buttons>
         <ion-nav-buttons side="right">
             <button
@@ -199,11 +193,6 @@
     <script id="auto-detail.html" type="text/ng-template">
       <ion-view title="Auto Details">
 
-        <!-- <ion-nav-buttons side="left"> -->
-        <!--   <button class="button button-icon icon ion-home" ng-click="foo()"> -->
-        <!--     Home -->
-        <!--   </button> -->
-        <!-- </ion-nav-buttons> -->
         <ion-nav-buttons side="right">
           <button class="button button-icon icon ion-home" ng-click="foo()">
             Home
@@ -213,8 +202,6 @@
         <ion-content padding="true">
 
           <h2>{{ auto.year }} {{ auto.make }} {{ auto.model }}</h2>
-          <p ng-bind="auto.desc"></p>
-          <p><a class="button" ng-href="{{ auto.url }}">Read More</a></p>
           <ul>
             <li>
               <a ng-href="#/tabs/autos/0" class="ng-binding" href="#/tabs/autos/0">1936 Cord 810</a>
@@ -232,15 +219,16 @@
               <a ng-href="#/tabs/autos/6" class="ng-binding" href="#/tabs/autos/6">1948 Tucker 48</a>
             </li>
           </ul>
-          <p>
-            <button ng-click="hideBackButton()">Hide Back Button</button>
-            <button ng-click="showBackButton()">Show Back Button</button>
-          </p>
-          <p><a class="button" href="#/tabs/autos">Auto List</a></p>
+          <p><a class="button button-small" href="#/tabs/autos">Auto List</a></p>
+          <p ng-bind="auto.desc"></p>
           <p>
             Current View: {{ $viewHistory.currentView }}<br>
             Back View: {{ $viewHistory.backView }}<br>
             Forward View: {{ $viewHistory.forwardView }}
+          </p>
+          <p>
+            <button ng-click="hideBackButton()">Hide Back Button</button>
+            <button ng-click="showBackButton()">Show Back Button</button>
           </p>
         </ion-content>
       </ion-view>
@@ -406,9 +394,9 @@
 
       })
 
-      .controller('ForgotPasswordCtrl', function($ionicViewService, $rootScope, $scope, $state, $ionicNavBarDelegate) {
+      .controller('ForgotPasswordCtrl', function($ionicHistory, $rootScope, $scope, $state, $ionicNavBarDelegate) {
         $scope.clearViewHistory = function() {
-          $ionicViewService.clearHistory();
+          $ionicHistory.clearHistory();
         };
 
         $scope.hideNavBar = function() {
@@ -459,8 +447,6 @@
         ];
 
       });
-
-      domTrace.observe();
 
     </script>
   </body>

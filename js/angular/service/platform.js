@@ -5,69 +5,6 @@ var PLATFORM_BACK_BUTTON_PRIORITY_ACTION_SHEET = 300;
 var PLATFORM_BACK_BUTTON_PRIORITY_POPUP = 400;
 var PLATFORM_BACK_BUTTON_PRIORITY_LOADING = 500;
 
-function componentConfig(defaults) {
-  defaults.$get = function() { return defaults; };
-  return defaults;
-}
-
-IonicModule
-.constant('$ionicPlatformDefaults', {
-  'ios': {
-    '$ionicNavBarConfig': {
-      transition: 'nav-title-slide-ios',//nav-title-slide-ios7',
-      alignTitle: 'center',
-      backButtonIcon: 'ion-ios7-arrow-back'
-    },
-    '$ionicNavViewConfig': {
-      //transition: 'slide-left-right-ios'
-      transition: 'slide-ios'
-    },
-    '$ionicTabsConfig': {
-      type: '',
-      position: ''
-    }
-  },
-  'android': {
-    '$ionicNavBarConfig': {
-      transition: 'nav-title-slide-full',
-      alignTitle: 'center',
-      backButtonIcon: 'ion-ios7-arrow-back'
-    },
-    '$ionicNavViewConfig': {
-      transition: 'slide-full'
-    },
-    '$ionicTabsConfig': {
-      type: 'tabs-striped',
-      position: ''
-    }
-  }
-});
-
-
-IonicModule.config([
-  '$ionicPlatformDefaults',
-
-  '$injector',
-
-function($ionicPlatformDefaults, $injector) {
-  var platform = ionic.Platform.platform();
-
-  var applyConfig = function(platformDefaults) {
-    forEach(platformDefaults, function(defaults, constantName) {
-      extend($injector.get(constantName), defaults);
-    });
-  };
-
-  switch(platform) {
-    case 'ios':
-      applyConfig($ionicPlatformDefaults.ios);
-      break;
-    case 'android':
-      applyConfig($ionicPlatformDefaults.android);
-      break;
-  }
-}]);
-
 /**
  * @ngdoc service
  * @name $ionicPlatform
@@ -135,7 +72,7 @@ IonicModule
         $backButtonActions: {},
         registerBackButtonAction: function(fn, priority, actionId) {
 
-          if(!self._hasBackButtonHandler) {
+          if (!self._hasBackButtonHandler) {
             // add a back button listener if one hasn't been setup yet
             self.$backButtonActions = {};
             self.onHardwareBackButton(self.hardwareBackButtonClick);
@@ -158,16 +95,16 @@ IonicModule
         /**
          * @private
          */
-        hardwareBackButtonClick: function(e){
+        hardwareBackButtonClick: function(e) {
           // loop through all the registered back button actions
           // and only run the last one of the highest priority
           var priorityAction, actionId;
-          for(actionId in self.$backButtonActions) {
-            if(!priorityAction || self.$backButtonActions[actionId].priority >= priorityAction.priority) {
+          for (actionId in self.$backButtonActions) {
+            if (!priorityAction || self.$backButtonActions[actionId].priority >= priorityAction.priority) {
               priorityAction = self.$backButtonActions[actionId];
             }
           }
-          if(priorityAction) {
+          if (priorityAction) {
             priorityAction.fn(e);
             return priorityAction;
           }
@@ -175,6 +112,28 @@ IonicModule
 
         is: function(type) {
           return ionic.Platform.is(type);
+        },
+
+        /**
+         * @ngdoc method
+         * @name $ionicPlatform#on
+         * @description
+         * Add Cordova event listeners, such as `pause`, `resume`, `volumedownbutton`, `batterylow`,
+         * `offline`, etc. More information about available event types can be found in
+         * [Cordova's event documentation](https://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
+         * @param {string} type Cordova [event type](https://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
+         * @param {function} callback Called when the Cordova event is fired.
+         * @returns {function} Returns a deregistration function to remove the event listener.
+         */
+        on: function(type, cb) {
+          ionic.Platform.ready(function() {
+            document.addEventListener(type, cb, false);
+          });
+          return function() {
+            ionic.Platform.ready(function() {
+              document.removeEventListener(type, cb);
+            });
+          };
         },
 
         /**
@@ -189,7 +148,7 @@ IonicModule
         ready: function(cb) {
           var q = $q.defer();
 
-          ionic.Platform.ready(function(){
+          ionic.Platform.ready(function() {
             q.resolve();
             cb && cb();
           });
@@ -202,4 +161,3 @@ IonicModule
   };
 
 });
-

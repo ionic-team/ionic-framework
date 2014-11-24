@@ -189,6 +189,7 @@ describe('$ionicLoading service', function() {
       $timeout.flush();
       expect(deregisterSpy).not.toHaveBeenCalled();
       $ionicLoading.hide();
+      $timeout.flush();
       expect(deregisterSpy).toHaveBeenCalled();
     }));
   });
@@ -214,6 +215,20 @@ describe('$ionicLoadingConfig', function() {
     });
     $timeout.flush();
     expect(loader.element.text()).toBe('some other template');
+  }));
+
+  it('should use the original defaults with subsequent calls', inject(function($ionicLoading, $timeout) {
+    var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+    $ionicLoading.show({
+      template: 'some other template'
+    });
+    $timeout.flush();
+    expect(loader.element.text()).toBe('some other template');
+    $ionicLoading.hide();
+    $timeout.flush();
+    $ionicLoading.show();
+    $timeout.flush();
+    expect(loader.element.text()).toBe('some template');
   }));
 
 });

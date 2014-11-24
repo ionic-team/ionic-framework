@@ -29,10 +29,10 @@ angular.module('appIntro', ['ionic'])
     $state.go('main');
   };
   $scope.next = function () {
-    $ionicSlideBoxDelegate.next();
+    $ionicSlideBoxDelegate.select($ionicSlideBoxDelegate.next());
   };
   $scope.previous = function () {
-    $ionicSlideBoxDelegate.previous();
+    $ionicSlideBoxDelegate.select($ionicSlideBoxDelegate.previous());
   };
 
   // Called each time the slide changes

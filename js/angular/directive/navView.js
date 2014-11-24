@@ -1,7 +1,3 @@
-IonicModule.constant('$ionicNavViewConfig', {
-  transition: 'slide-left-right-ios7'
-});
-
 /**
  * @ngdoc directive
  * @name ionNavView
@@ -12,9 +8,9 @@ IonicModule.constant('$ionicNavViewConfig', {
  * @description
  * As a user navigates throughout your app, Ionic is able to keep track of their
  * navigation history. By knowing their history, transitions between views
- * correctly slide either left or right, or no transition at all. An additional
+ * correctly enter and exit using the platform's transition style. An additional
  * benefit to Ionic's navigation system is its ability to manage multiple
- * histories.
+ * histories. For example, each tab can have it's own navigation history stack.
  *
  * Ionic uses the AngularUI Router module so app interfaces can be organized
  * into various "states". Like Angular's core $route service, URLs can be used
@@ -35,18 +31,6 @@ IonicModule.constant('$ionicNavViewConfig', {
  * To do this, in our markup we use ionNavView top level directive. To display a header bar we use
  * the {@link ionic.directive:ionNavBar} directive that updates as we navigate through the
  * navigation stack.
- *
- * You can use any [animation class](/docs/components#animation) on the navView's `animation` attribute
- * to have its pages animate.
- *
- * Recommended for page transitions: 'slide-left-right', 'slide-left-right-ios7', 'slide-in-up'.
- *
- * ```html
- * <ion-nav-bar></ion-nav-bar>
- * <ion-nav-view animation="slide-left-right">
- *   <!-- Center content -->
- * </ion-nav-view>
- * ```
  *
  * Next, we need to setup our states that will be rendered.
  *
@@ -74,7 +58,7 @@ IonicModule.constant('$ionicNavViewConfig', {
  * ```html
  * <script id="home" type="text/ng-template">
  *   <!-- The title of the ion-view will be shown on the navbar -->
- *   <ion-view title="'Home'">
+ *   <ion-view view-title="Home">
  *     <ion-content ng-controller="HomeCtrl">
  *       <!-- The content of the page -->
  *       <a href="#/music">Go to music page!</a>
@@ -86,8 +70,56 @@ IonicModule.constant('$ionicNavViewConfig', {
  * This is good to do because the template will be cached for very fast loading, instead of
  * having to fetch them from the network.
  *
+ * ## Caching
+ *
+ * By default views are cached to improve performance. When a view is navigated away from,
+ * its element is left in the DOM, and its scope is disconnected from the cycle. When navigating
+ * to a view which is already cached, its scope is then reconnected, and the existing element which
+ * was left in the DOM becomes the active view. This also allows for scroll position of previous
+ * views to be maintained.
+ *
+ * Caching can be disabled and enabled in multiple ways. By default, Ionic will cache a maximum
+ * of 10 views, and not only can this be configured, but apps can also explicitly state
+ * which views should and should not be cached.
+ *
+ * Note that because we are caching these views, we aren’t destroying scopes. Instead, scopes are
+ * being disconnected from the watch cycle. Because scopes are not being destroyed and recreated,
+ * then controllers are not loading again on a subsequent viewing. If the app/controller needs to
+ * know when a view has entered or has left, then view events emitted from the
+ * {@link ionic.directive:ionView} scope, such as `$ionicView.enter`, may be useful.
+ *
+ * #### Disable cache globally
+ *
+ * The {@link ionic.provider:$ionicConfigProvider} can be used to set the maximum allowable views
+ * which can be cached, but this can also be use to disable all caching by setting it to 0.
+ *
+ * ```js
+ * $ionicConfigProvider.views.maxCache(0);
+ * ```
+ *
+ * #### Disable cache within state provider
+ *
+ * ```js
+ * $stateProvider.state('myState', {
+ *    cache: false,
+ *    url : '/myUrl',
+ *    templateUrl : 'my-template.html'
+ * })
+ * ```
+ *
+ * #### Disable cache with an attribute
+ *
+ * ```html
+ * <ion-view cache-view="false" view-title="My Title!">
+ *   ...
+ * </ion-view>
+ * ```
+ *
+ *
+ * ## AngularUI Router
+ *
  * Please visit [AngularUI Router's docs](https://github.com/angular-ui/ui-router/wiki) for
- * more info. Below is a great video by the AngularUI Router guys that may help to explain
+ * more info. Below is a great video by the AngularUI Router team that may help to explain
  * how it all works:
  *
  * <iframe width="560" height="315" src="//www.youtube.com/embed/dqJRoh8MnBo"
@@ -95,116 +127,67 @@ IonicModule.constant('$ionicNavViewConfig', {
  *
  * @param {string=} name A view name. The name should be unique amongst the other views in the
  * same state. You can have views of the same name that live in different states. For more
- * information, see ui-router's [ui-view documentation](http://angular-ui.github.io/ui-router/site/#/api/ui.router.state.directive:ui-view).
+ * information, see ui-router's
+ * [ui-view documentation](http://angular-ui.github.io/ui-router/site/#/api/ui.router.state.directive:ui-view).
  */
 IonicModule
 .directive('ionNavView', [
-  '$ionicViewService',
   '$state',
-  '$compile',
-  '$controller',
-  '$animate',
-function( $ionicViewService,   $state,   $compile,   $controller,   $animate) {
-  // IONIC's fork of Angular UI Router, v0.2.7
-  // the navView handles registering views in the history, which animation to use, and which
-  var viewIsUpdating = false;
-
-  var directive = {
+  '$ionicConfig',
+function($state, $ionicConfig) {
+  // IONIC's fork of Angular UI Router, v0.2.10
+  // the navView handles registering views in the history and how to transition between them
+  return {
     restrict: 'E',
     terminal: true,
     priority: 2000,
     transclude: true,
-    controller: function(){},
-    compile: function (element, attr, transclude) {
-      return function(scope, element, attr, navViewCtrl) {
-        var viewScope, viewLocals,
-          name = attr[directive.name] || attr.name || '',
-          onloadExp = attr.onload || '',
-          initialView = transclude(scope);
+    controller: '$ionicNavView',
+    compile: function(tElement, tAttrs, transclude) {
 
-        // Put back the compiled initial view
-        element.append(initialView);
+      // a nav view element is a container for numerous views
+      tElement.addClass('view-container');
+      ionic.DomUtil.cachedAttr(tElement, 'nav-view-transition', $ionicConfig.views.transition());
 
-        // Find the details of the parent view directive (if any) and use it
-        // to derive our own qualified view name, then hang our own details
-        // off the DOM so child directives can find it.
-        var parent = element.parent().inheritedData('$uiView');
-        if (name.indexOf('@') < 0) name  = name + '@' + ((parent && parent.state) ? parent.state.name : '');
-        var view = { name: name, state: null };
-        element.data('$uiView', view);
+      return function($scope, $element, $attr, navViewCtrl) {
+        var latestLocals;
 
-        var eventHook = function() {
-          if (viewIsUpdating) return;
-          viewIsUpdating = true;
+        // Put in the compiled initial view
+        transclude($scope, function(clone) {
+          $element.append(clone);
+        });
 
-          try { updateView(true); } catch (e) {
-            viewIsUpdating = false;
-            throw e;
-          }
-          viewIsUpdating = false;
-        };
+        var viewData = navViewCtrl.init();
 
-        scope.$on('$stateChangeSuccess', eventHook);
-        // scope.$on('$viewContentLoading', eventHook);
-        updateView(false);
+        // listen for $stateChangeSuccess
+        $scope.$on('$stateChangeSuccess', function() {
+          updateView(false);
+        });
+        $scope.$on('$viewContentLoading', function() {
+          updateView(false);
+        });
 
-        function updateView(doAnimate) {
-          //===false because $animate.enabled() is a noop without angular-animate included
-          if ($animate.enabled() === false) {
-            doAnimate = false;
-          }
+        // initial load, ready go
+        updateView(true);
 
-          var locals = $state.$current && $state.$current.locals[name];
-          if (locals === viewLocals) return; // nothing to do
-          var renderer = $ionicViewService.getRenderer(element, attr, scope);
 
-          // Destroy previous view scope
-          if (viewScope) {
-            viewScope.$destroy();
-            viewScope = null;
-          }
+        function updateView(firstTime) {
+          // get the current local according to the $state
+          var viewLocals = $state.$current && $state.$current.locals[viewData.name];
 
-          if (!locals) {
-            viewLocals = null;
-            view.state = null;
+          // do not update THIS nav-view if its is not the container for the given state
+          // if the viewLocals are the same as THIS latestLocals, then nothing to do
+          if (!viewLocals || (!firstTime && viewLocals === latestLocals)) return;
 
-            // Restore the initial view
-            return element.append(initialView);
-          }
+          // update the latestLocals
+          latestLocals = viewLocals;
+          viewData.state = viewLocals.$$state;
 
-          var newElement = jqLite('<div></div>').html(locals.$template).contents();
-          var viewRegisterData = renderer().register(newElement);
-
-          // Remove existing content
-          renderer(doAnimate).leave();
-
-          viewLocals = locals;
-          view.state = locals.$$state;
-
-          renderer(doAnimate).enter(newElement);
-
-          var link = $compile(newElement);
-          viewScope = scope.$new();
-
-          viewScope.$navDirection = viewRegisterData.navDirection;
-
-          if (locals.$$controller) {
-            locals.$scope = viewScope;
-            var controller = $controller(locals.$$controller, locals);
-            element.children().data('$ngControllerController', controller);
-          }
-          link(viewScope);
-
-          var viewHistoryData = $ionicViewService._getViewById(viewRegisterData.viewId) || {};
-          viewScope.$broadcast('$viewContentLoaded', viewHistoryData);
-
-          if (onloadExp) viewScope.$eval(onloadExp);
-
-          newElement = null;
+          // register, update and transition to the new view
+          navViewCtrl.register(viewLocals);
         }
+
       };
     }
   };
-  return directive;
 }]);
-

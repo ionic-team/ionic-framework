@@ -15,7 +15,7 @@
 
         <ion-side-menu-content edge-drag-threshold="true" drag-content="!$root.disableDrag">
           <header class="bar bar-header bar-positive">
-            <button class="button button-icon ion-navicon" ng-click="toggleLeft()"></button>
+            <button class="button button-icon ion-navicon" ng-click="toggleLeft()" ng-hide="$exposeAside.active"></button>
             <h1 class="title">Slide me</h1>
             <button class="button button-icon ion-navicon" ng-click="toggleRight()"></button>
           </header>
@@ -32,7 +32,7 @@
           </ion-content>
         </ion-side-menu-content>
 
-        <ion-side-menu side="left" width="$root.menuWidth || 270" ng-controller="LeftCtrl">
+        <ion-side-menu side="left" width="$root.menuWidth || 275" ng-controller="LeftCtrl" expose-aside-when="(min-width:750px) and (max-width:1200px)">
           <header class="bar bar-header bar-assertive">
             <h1 class="title">Left</h1>
           </header>

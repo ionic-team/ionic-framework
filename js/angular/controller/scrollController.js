@@ -3,52 +3,58 @@
  */
 IonicModule
 
-.factory('$$scrollValueCache', function() {
-  return {};
-})
-
 .controller('$ionicScroll', [
   '$scope',
   'scrollViewOptions',
   '$timeout',
   '$window',
-  '$$scrollValueCache',
   '$location',
-  '$rootScope',
   '$document',
   '$ionicScrollDelegate',
-function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $location, $rootScope, $document, $ionicScrollDelegate) {
+  '$ionicHistory',
+function($scope, scrollViewOptions, $timeout, $window, $location, $document, $ionicScrollDelegate, $ionicHistory) {
 
   var self = this;
   // for testing
-  this.__timeout = $timeout;
+  self.__timeout = $timeout;
 
-  this._scrollViewOptions = scrollViewOptions; //for testing
+  self._scrollViewOptions = scrollViewOptions; //for testing
 
-  var element = this.element = scrollViewOptions.el;
-  var $element = this.$element = jqLite(element);
-  var scrollView = this.scrollView = new ionic.views.Scroll(scrollViewOptions);
+  var element = self.element = scrollViewOptions.el;
+  var $element = self.$element = jqLite(element);
+  var scrollView = self.scrollView = new ionic.views.Scroll(scrollViewOptions);
 
   //Attach self to element as a controller so other directives can require this controller
   //through `require: '$ionicScroll'
   //Also attach to parent so that sibling elements can require this
   ($element.parent().length ? $element.parent() : $element)
-    .data('$$ionicScrollController', this);
+    .data('$$ionicScrollController', self);
 
   var deregisterInstance = $ionicScrollDelegate._registerInstance(
-    this, scrollViewOptions.delegateHandle
+    self, scrollViewOptions.delegateHandle, function() {
+      if ($scope.$$disconnected) {
+        return false;
+      }
+
+      var currentHistoryId = $ionicHistory.currentHistoryId();
+      if (currentHistoryId) {
+        return currentHistoryId == (isDefined($scope.$historyId) ? $scope.$historyId : 'root');
+      }
+
+      return true;
+    }
   );
 
   if (!angular.isDefined(scrollViewOptions.bouncing)) {
     ionic.Platform.ready(function() {
-      scrollView.options.bouncing = true;
-
-      if(ionic.Platform.isAndroid()) {
-        // No bouncing by default on Android
-        scrollView.options.bouncing = false;
-        // Faster scroll decel
-        scrollView.options.deceleration = 0.95;
-      } else {
+      if (scrollView.options) {
+        scrollView.options.bouncing = true;
+        if (ionic.Platform.isAndroid()) {
+          // No bouncing by default on Android
+          scrollView.options.bouncing = false;
+          // Faster scroll decel
+          scrollView.options.deceleration = 0.95;
+        }
       }
     });
   }
@@ -56,110 +62,99 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
   var resize = angular.bind(scrollView, scrollView.resize);
   ionic.on('resize', resize, $window);
 
-  // set by rootScope listener if needed
-  var backListenDone = angular.noop;
 
-  $scope.$on('$destroy', function() {
-    deregisterInstance();
-    scrollView.__cleanup();
-    ionic.off('resize', resize, $window);
-    $window.removeEventListener('resize', resize);
-    backListenDone();
-    if (self._rememberScrollId) {
-      $$scrollValueCache[self._rememberScrollId] = scrollView.getValues();
-    }
-  });
-
-  $element.on('scroll', function(e) {
+  var scrollFunc = function(e) {
     var detail = (e.originalEvent || e).detail || {};
     $scope.$onScroll && $scope.$onScroll({
       event: e,
       scrollTop: detail.scrollTop || 0,
       scrollLeft: detail.scrollLeft || 0
     });
-  });
+  };
 
-  $scope.$on('$viewContentLoaded', function(e, historyData) {
-    //only the top-most scroll area under a view should remember that view's
-    //scroll position
-    if (e.defaultPrevented) { return; }
-    e.preventDefault();
+  $element.on('scroll', scrollFunc);
 
-    var viewId = historyData && historyData.viewId || $scope.$historyId;
-    if (viewId) {
-      $timeout(function() {
-        self.rememberScrollPosition(viewId);
-        self.scrollToRememberedPosition();
-
-        backListenDone = $rootScope.$on('$viewHistory.viewBack', function(e, fromViewId, toViewId) {
-          //When going back from this view, forget its saved scroll position
-          if (viewId === fromViewId) {
-            self.forgetScrollPosition();
-          }
-        });
-      }, 0, false);
-    }
+  $scope.$on('$destroy', function() {
+    deregisterInstance();
+    scrollView.__cleanup();
+    ionic.off('resize', resize, $window);
+    $window.removeEventListener('resize', resize);
+    scrollViewOptions = null;
+    self._scrollViewOptions.el = null;
+    self._scrollViewOptions = null;
+    $element.off('scroll', scrollFunc);
+    $element = null;
+    self.$element = null;
+    element = null;
+    self.element = null;
+    self.scrollView = null;
+    scrollView = null;
   });
 
   $timeout(function() {
-    scrollView.run();
+    scrollView && scrollView.run && scrollView.run();
   });
 
-  this._rememberScrollId = null;
-
-  this.getScrollView = function() {
-    return this.scrollView;
+  self.getScrollView = function() {
+    return self.scrollView;
   };
 
-  this.getScrollPosition = function() {
-    return this.scrollView.getValues();
+  self.getScrollPosition = function() {
+    return self.scrollView.getValues();
   };
 
-  this.resize = function() {
+  self.resize = function() {
     return $timeout(resize).then(function() {
-      $element.triggerHandler('scroll.resize');
+      $element && $element.triggerHandler('scroll.resize');
     });
   };
 
-  this.scrollTop = function(shouldAnimate) {
-    this.resize().then(function() {
+  self.scrollTop = function(shouldAnimate) {
+    ionic.DomUtil.blurAll();
+    self.resize().then(function() {
       scrollView.scrollTo(0, 0, !!shouldAnimate);
     });
   };
 
-  this.scrollBottom = function(shouldAnimate) {
-    this.resize().then(function() {
+  self.scrollBottom = function(shouldAnimate) {
+    ionic.DomUtil.blurAll();
+    self.resize().then(function() {
       var max = scrollView.getScrollMax();
       scrollView.scrollTo(max.left, max.top, !!shouldAnimate);
     });
   };
 
-  this.scrollTo = function(left, top, shouldAnimate) {
-    this.resize().then(function() {
+  self.scrollTo = function(left, top, shouldAnimate) {
+    ionic.DomUtil.blurAll();
+    self.resize().then(function() {
       scrollView.scrollTo(left, top, !!shouldAnimate);
     });
   };
 
-  this.zoomTo = function(zoom, shouldAnimate, originLeft, originTop) {
-    this.resize().then(function() {
+  self.zoomTo = function(zoom, shouldAnimate, originLeft, originTop) {
+    ionic.DomUtil.blurAll();
+    self.resize().then(function() {
       scrollView.zoomTo(zoom, !!shouldAnimate, originLeft, originTop);
     });
   };
 
-  this.zoomBy = function(zoom, shouldAnimate, originLeft, originTop) {
-    this.resize().then(function() {
+  self.zoomBy = function(zoom, shouldAnimate, originLeft, originTop) {
+    ionic.DomUtil.blurAll();
+    self.resize().then(function() {
       scrollView.zoomBy(zoom, !!shouldAnimate, originLeft, originTop);
     });
   };
 
-  this.scrollBy = function(left, top, shouldAnimate) {
-    this.resize().then(function() {
+  self.scrollBy = function(left, top, shouldAnimate) {
+    ionic.DomUtil.blurAll();
+    self.resize().then(function() {
       scrollView.scrollBy(left, top, !!shouldAnimate);
     });
   };
 
-  this.anchorScroll = function(shouldAnimate) {
-    this.resize().then(function() {
+  self.anchorScroll = function(shouldAnimate) {
+    ionic.DomUtil.blurAll();
+    self.resize().then(function() {
       var hash = $location.hash();
       var elm = hash && $document[0].getElementById(hash);
       if (!(hash && elm)) {
@@ -169,8 +164,8 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
       var curElm = elm;
       var scrollLeft = 0, scrollTop = 0, levelsClimbed = 0;
       do {
-        if(curElm !== null)scrollLeft += curElm.offsetLeft;
-        if(curElm !== null)scrollTop += curElm.offsetTop;
+        if (curElm !== null) scrollLeft += curElm.offsetLeft;
+        if (curElm !== null) scrollTop += curElm.offsetTop;
         curElm = curElm.offsetParent;
         levelsClimbed++;
       } while (curElm.attributes != self.element.attributes && curElm.offsetParent);
@@ -178,53 +173,34 @@ function($scope, scrollViewOptions, $timeout, $window, $$scrollValueCache, $loca
     });
   };
 
-  this.rememberScrollPosition = function(id) {
-    if (!id) {
-      throw new Error("Must supply an id to remember the scroll by!");
-    }
-    this._rememberScrollId = id;
-  };
-  this.forgetScrollPosition = function() {
-    delete $$scrollValueCache[this._rememberScrollId];
-    this._rememberScrollId = null;
-  };
-  this.scrollToRememberedPosition = function(shouldAnimate) {
-    var values = $$scrollValueCache[this._rememberScrollId];
-    if (values) {
-      this.resize().then(function() {
-        scrollView.scrollTo(+values.left, +values.top, shouldAnimate);
-      });
-    }
-  };
 
   /**
    * @private
    */
-  this._setRefresher = function(refresherScope, refresherElement) {
-    var refresher = this.refresher = refresherElement;
-    var refresherHeight = self.refresher.clientHeight || 0;
+  self._setRefresher = function(refresherScope, refresherElement) {
+    var refresher = self.refresher = refresherElement;
+    var refresherHeight = self.refresher.clientHeight || 60;
     scrollView.activatePullToRefresh(refresherHeight, function() {
       // activateCallback
       refresher.classList.add('active');
       refresherScope.$onPulling();
     }, function() {
-      // deactivateCallback
-      $timeout(function(){
         refresher.classList.remove('active');
         refresher.classList.remove('refreshing');
-        refresher.classList.add('invisible');
-      },300);
+        refresher.classList.remove('refreshing-tail');
     }, function() {
       // startCallback
       refresher.classList.add('refreshing');
       refresherScope.$onRefresh();
-    },function(){
+    }, function() {
       // showCallback
       refresher.classList.remove('invisible');
-    },function(){
+    }, function() {
       // hideCallback
       refresher.classList.add('invisible');
+    }, function() {
+      // tailCallback
+      refresher.classList.add('refreshing-tail');
     });
   };
 }]);
-

@@ -18,7 +18,7 @@ We built Ionic because we wanted a framework that focused on building hybrid nat
 It's important to realize that Ionic is not a replacement for frameworks used for building mobile web apps. There are a lot
 of great solutions that work well for websites, like [jQuery Mobile](http://jquerymobile.com/).
 
-Ionic is also not a good solution if you need to support older generation devices. Our [compatibility](http://ionicframework.com/docs/#browser-support) *starts* at iOS 6 and Android 4.1. We will never support versions earlier than those. This is a framework for the future. Learn more: [Where does the Ionic Framework fit in?](http://ionicframework.com/blog/where-does-the-ionic-framework-fit-in/)
+Ionic is also not a good solution if you need to support older generation devices. Our compatibility *starts* at iOS 6 and Android 4.1. We will never support versions earlier than those. This is a framework for the future. Learn more: [Where does the Ionic Framework fit in?](http://ionicframework.com/blog/where-does-the-ionic-framework-fit-in/)
 
 ## Quick Start
 
@@ -105,7 +105,7 @@ For most cases, you'll need AngularJS as well.  This is bundled in `js/angular/`
     - `git clone git@github.com:driftyco/ionic-site dist/ionic-site`
   2. Start jekyll, telling it to rebuild whenever the site changes.
     - `cd dist/ionic-site && jekyll serve -w`
-  3. Go back to project root and build the docs
+  3. Go back to project root and build the docs.
     - `gulp docs [--doc-version=(versionName|nightly)]`
   4. Open localhost:4000 and see your changes! Re-run `gulp docs` again whenever you change something, and jekyll will update the site.
 

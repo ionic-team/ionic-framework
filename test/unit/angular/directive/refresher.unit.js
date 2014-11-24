@@ -70,7 +70,7 @@ describe('ionRefresher directive', function() {
 
   it('should have default pullingIcon', function() {
     var el = setup();
-    expect(el[0].querySelector('.icon-pulling .ion-arrow-down-c')).toBeTruthy();
+    expect(el[0].querySelector('.icon-pulling .ion-ios7-arrow-down')).toBeTruthy();
   });
   it('should allow custom pullingIcon', function() {
     var el = setup('pulling-icon="super-icon"');
@@ -80,12 +80,12 @@ describe('ionRefresher directive', function() {
 
   it('should have default refreshingIcon', function() {
     var el = setup();
-    expect(el[0].querySelector('.icon.icon-refreshing.ion-loading-d')).toBeTruthy();
+    expect(el[0].querySelector('.ion-loading-d')).toBeTruthy();
   });
   it('should allow custom refreshingIcon', function() {
     var el = setup('refreshing-icon="monkey-icon"');
     expect(el[0].querySelector('.icon.icon-refreshing.ion-arrow-down-c')).toBeFalsy();
-    expect(el[0].querySelector('.icon.icon-refreshing.monkey-icon')).toBeTruthy();
+    expect(el[0].querySelector('.monkey-icon')).toBeTruthy();
   });
 
   it('should allow pullingText', function() {
@@ -97,4 +97,8 @@ describe('ionRefresher directive', function() {
     expect(el[0].querySelector('.text-refreshing').innerHTML).toBe('5 <b>text</b>');
   });
 
+  it('should allow pulling rotation animation to be disabled', function() {
+    var el = setup('disable-pulling-rotation="true"');
+    expect(el[0].querySelector('.pulling-rotation-disabled').innerHTML).toBeTruthy();
+  });
 });

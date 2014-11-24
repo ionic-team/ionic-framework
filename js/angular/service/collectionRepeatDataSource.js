@@ -69,10 +69,11 @@ function($cacheFactory, $parse, $rootScope) {
       return item;
     },
     getItem: function(index) {
+      var item;
       if ( (item = this.attachedItems[index]) ) {
         //do nothing, the item is good
       } else if ( (item = this.backupItemsArray.pop()) ) {
-        reconnectScope(item.scope);
+        ionic.Utils.reconnectScope(item.scope);
       } else {
         item = this.createItem();
       }
@@ -131,7 +132,7 @@ function($cacheFactory, $parse, $rootScope) {
         this.backupItemsArray.push(item);
         hideWithTransform(item.element);
         //Don't .$destroy(), just stop watchers and events firing
-        disconnectScope(item.scope);
+        ionic.Utils.disconnectScope(item.scope);
       }
 
     },
@@ -153,44 +154,3 @@ function($cacheFactory, $parse, $rootScope) {
 
   return CollectionRepeatDataSource;
 }]);
-
-function disconnectScope(scope) {
-  if (scope.$root === scope) {
-    return; // we can't disconnect the root node;
-  }
-  var parent = scope.$parent;
-  scope.$$disconnected = true;
-  // See Scope.$destroy
-  if (parent.$$childHead === scope) {
-    parent.$$childHead = scope.$$nextSibling;
-  }
-  if (parent.$$childTail === scope) {
-    parent.$$childTail = scope.$$prevSibling;
-  }
-  if (scope.$$prevSibling) {
-    scope.$$prevSibling.$$nextSibling = scope.$$nextSibling;
-  }
-  if (scope.$$nextSibling) {
-    scope.$$nextSibling.$$prevSibling = scope.$$prevSibling;
-  }
-  scope.$$nextSibling = scope.$$prevSibling = null;
-}
-
-function reconnectScope(scope) {
-  if (scope.$root === scope) {
-    return; // we can't disconnect the root node;
-  }
-  if (!scope.$$disconnected) {
-    return;
-  }
-  var parent = scope.$parent;
-  scope.$$disconnected = false;
-  // See Scope.$new for this logic...
-  scope.$$prevSibling = parent.$$childTail;
-  if (parent.$$childHead) {
-    parent.$$childTail.$$nextSibling = scope;
-    parent.$$childTail = scope;
-  } else {
-    parent.$$childHead = parent.$$childTail = scope;
-  }
-}

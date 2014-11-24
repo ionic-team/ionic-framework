@@ -22,7 +22,7 @@
  *   .config(function($stateProvider, $ionicConfigProvider) {
  *
  *     // disable preemptive template caching globally
- *     $ionicConfigProvider.prefetchTemplates(false);
+ *     $ionicConfigProvider.templates.prefetch(false);
  *
  *     // disable individual states
  *     $stateProvider
@@ -50,42 +50,44 @@ IonicModule
 '$http',
 '$templateCache',
 '$timeout',
-'$ionicConfig',
-function($http, $templateCache, $timeout, $ionicConfig) {
+function($http, $templateCache, $timeout) {
   var toCache = templatesToCache,
-      hasRun = false;
+      hasRun;
 
-  function $ionicTemplateCache(templates){
-    if(toCache.length > 500) return false;
-    if(typeof templates === 'undefined')return run();
-    if(isString(templates))templates = [templates];
-    forEach(templates, function(template){
+  function $ionicTemplateCache(templates) {
+    if (typeof templates === 'undefined') {
+      return run();
+    }
+    if (isString(templates)) {
+      templates = [templates];
+    }
+    forEach(templates, function(template) {
       toCache.push(template);
     });
-    // is this is being called after the initial IonicModule.run()
-    if(hasRun) run();
+    if (hasRun) {
+      run();
+    }
   }
 
   // run through methods - internal method
-  var run = function(){
-    if($ionicConfig.prefetchTemplates === false)return;
-    //console.log('prefetching', toCache);
-    //for testing
+  function run() {
     $ionicTemplateCache._runCount++;
 
     hasRun = true;
     // ignore if race condition already zeroed out array
-    if(toCache.length === 0)return;
-    //console.log(toCache);
+    if (toCache.length === 0) return;
+
     var i = 0;
-    while ( i < 5 && (template = toCache.pop()) ) {
+    while (i < 4 && (template = toCache.pop())) {
       // note that inline templates are ignored by this request
       if (isString(template)) $http.get(template, { cache: $templateCache });
       i++;
     }
-    // only preload 5 templates a second
-    if(toCache.length)$timeout(function(){run();}, 1000);
-  };
+    // only preload 3 templates a second
+    if (toCache.length) {
+      $timeout(run, 1000);
+    }
+  }
 
   // exposing for testing
   $ionicTemplateCache._runCount = 0;
@@ -101,13 +103,13 @@ function($stateProvider, $ionicConfigProvider) {
   var stateProviderState = $stateProvider.state;
   $stateProvider.state = function(stateName, definition) {
     // don't even bother if it's disabled. note, another config may run after this, so it's not a catch-all
-    if($ionicConfigProvider.prefetchTemplates() !== false){
-      var enabled = definition.prefetchTemplate !== false;
-      if(enabled && isString(definition.templateUrl))templatesToCache.push(definition.templateUrl);
-      if(angular.isObject(definition.views)){
-        for (var key in definition.views){
-          enabled = definition.views[key].prefetchTemplate !== false;
-          if(enabled && isString(definition.views[key].templateUrl)) templatesToCache.push(definition.views[key].templateUrl);
+    if (typeof definition === 'object') {
+      var enabled = definition.prefetchTemplate !== false && templatesToCache.length < $ionicConfigProvider.templates.maxPrefetch();
+      if (enabled && isString(definition.templateUrl)) templatesToCache.push(definition.templateUrl);
+      if (angular.isObject(definition.views)) {
+        for (var key in definition.views) {
+          enabled = definition.views[key].prefetchTemplate !== false && templatesToCache.length < $ionicConfigProvider.templates.maxPrefetch();
+          if (enabled && isString(definition.views[key].templateUrl)) templatesToCache.push(definition.views[key].templateUrl);
         }
       }
     }
@@ -116,8 +118,8 @@ function($stateProvider, $ionicConfigProvider) {
 }])
 
 // process the templateUrls collected by the $stateProvider, adding them to the cache
-.run(function($ionicTemplateCache) {
-    $ionicTemplateCache();
-});
+.run(['$ionicTemplateCache', function($ionicTemplateCache) {
+  $ionicTemplateCache();
+}]);
 
 })();

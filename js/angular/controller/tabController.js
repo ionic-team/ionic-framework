@@ -1,11 +1,11 @@
 IonicModule
 .controller('$ionicTab', [
   '$scope',
-  '$ionicViewService',
+  '$ionicHistory',
   '$attrs',
   '$location',
   '$state',
-function($scope, $ionicViewService, $attrs, $location, $state) {
+function($scope, $ionicHistory, $attrs, $location, $state) {
   this.$scope = $scope;
 
   //All of these exposed for testing
@@ -15,10 +15,10 @@ function($scope, $ionicViewService, $attrs, $location, $state) {
     ) === 0;
   };
   this.srefMatchesState = function() {
-    return $attrs.uiSref && $state.includes( $attrs.uiSref.split('(')[0] );
+    return $attrs.uiSref && $state.includes($attrs.uiSref.split('(')[0]);
   };
   this.navNameMatchesState = function() {
-    return this.navViewName && $ionicViewService.isCurrentStateNavView(this.navViewName);
+    return this.navViewName && $ionicHistory.isCurrentStateNavView(this.navViewName);
   };
 
   this.tabMatchesState = function() {

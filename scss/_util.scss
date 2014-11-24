@@ -60,6 +60,22 @@
   -ms-content-zooming: none;
 }
 
+// Fill the screen to block clicks (a better pointer-events: none) for the body
+// to avoid full-page reflows and paints which can cause flickers
+.click-block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: $z-index-click-block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  @include translate3d(0, 0, 0);
+}
+.click-block-hide {
+  @include translate3d(-9999px, 0, 0);
+}
+
 .no-resize {
   resize: none;
 }

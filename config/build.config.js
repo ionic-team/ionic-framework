@@ -47,30 +47,24 @@ module.exports = {
     'js/utils/tap.js',
     'js/utils/activator.js',
     'js/utils/utils.js',
+    'js/utils/list.js',
     'js/utils/keyboard.js',
     'js/utils/viewport.js',
 
     // Views
     'js/views/view.js',
     'js/views/scrollView.js',
-    'js/views/headerBarView.js',
     'js/views/listView.js',
     'js/views/modalView.js',
     'js/views/sideMenuView.js',
-    'js/views/sliderView.js',
-    'js/views/toggleView.js',
-
-    // Controllers
-    'js/controllers/viewController.js',
-    'js/controllers/sideMenuController.js',
+    'js/views/toggleView.js'
   ],
 
   angularIonicFiles: [
     'js/angular/*.js',
     'js/angular/service/**/*.js',
     'js/angular/controller/**/*.js',
-    'js/angular/directive/**/*.js',
-    'bower_components/collide/collide.js'
+    'js/angular/directive/**/*.js'
   ],
 
   //Which vendor files to include in dist, used by build

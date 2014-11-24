@@ -1,0 +1,179 @@
+
+// iOS View Transitions
+// -------------------------------
+
+$ios-transition-duration:              450ms !default;
+$ios-transition-timing-function:       cubic-bezier(.3, .9, .4, 1) !default;
+$ios-transition-container-bg-color:    #000 !default;
+
+
+[nav-view-transition="ios"] {
+
+  [nav-view="entering"],
+  [nav-view="leaving"] {
+    @include transition-duration( $ios-transition-duration );
+    @include transition-timing-function( $ios-transition-timing-function );
+    -webkit-transition-property: opacity, -webkit-transform;
+            transition-property: opacity, transform;
+  }
+
+  &[nav-view-direction="forward"],
+  &[nav-view-direction="back"] {
+    background-color: $ios-transition-container-bg-color;
+  }
+
+  [nav-view="active"],
+  &[nav-view-direction="forward"] [nav-view="entering"],
+  &[nav-view-direction="back"] [nav-view="leaving"] {
+    z-index: $z-index-view-above;
+  }
+
+  &[nav-view-direction="back"] [nav-view="entering"],
+  &[nav-view-direction="forward"] [nav-view="leaving"] {
+    z-index: $z-index-view-below;
+  }
+
+}
+
+
+
+// iOS Nav Bar Transitions
+// -------------------------------
+
+[nav-bar-transition="ios"] {
+
+  .title,
+  .buttons,
+  .back-text {
+    @include transition-duration( $ios-transition-duration );
+    @include transition-timing-function( $ios-transition-timing-function );
+    -webkit-transition-property: opacity, -webkit-transform;
+            transition-property: opacity, transform;
+  }
+
+  [nav-bar="active"],
+  [nav-bar="entering"] {
+    z-index: $z-index-bar-above;
+
+   .bar {
+      background: transparent;
+    }
+  }
+
+  [nav-bar="cached"] {
+    display: block;
+
+    .header-item {
+      display: none;
+    }
+  }
+
+}
+
+
+
+// Android View Transitions
+// -------------------------------
+
+$android-transition-duration-entering:       250ms !default;
+$android-transition-duration-leaving:        160ms !default;
+$android-transition-timing-entering:         cubic-bezier(0.4, 0.6, 0.2, 1) !default;
+$android-transition-timing-leaving:          cubic-bezier(0.4, 0, 1, 1) !default;
+
+
+[nav-view-transition="android"] {
+
+  [nav-view="entering"],
+  [nav-view="leaving"] {
+    @include transition-duration( $android-transition-duration-entering );
+    @include transition-timing-function( $android-transition-timing-entering );
+    -webkit-transition-property: opacity, -webkit-transform;
+            transition-property: opacity, transform;
+  }
+
+  [nav-view="leaving"] {
+    @include transition-duration( $android-transition-duration-leaving );
+    @include transition-timing-function( $android-transition-timing-leaving );
+  }
+
+  [nav-view="active"],
+  &[nav-view-direction="forward"] [nav-view="entering"],
+  &[nav-view-direction="back"] [nav-view="leaving"] {
+    z-index: $z-index-view-above;
+  }
+
+  &[nav-view-direction="back"] [nav-view="entering"],
+  &[nav-view-direction="forward"] [nav-view="leaving"] {
+    z-index: $z-index-view-below;
+  }
+
+  .tabs-top > .view-container > [history-cursor="after-root"] {
+    z-index: $z-index-tabs + 1;
+  }
+
+  [history-cursor="after-root"] > .has-tabs-top {
+    top: $bar-height;
+  }
+
+  .tabs-top.tabs-striped > .view-container {
+    position: static;
+  }
+
+}
+
+
+
+// Android Nav Bar Transitions
+// -------------------------------
+
+[nav-bar-transition="android"] {
+
+  [nav-bar="entering"],
+  [nav-bar="leaving"] {
+    @include transition-duration( $android-transition-duration-entering );
+    @include transition-timing-function( $android-transition-timing-entering );
+    -webkit-transition-property: opacity, -webkit-transform;
+            transition-property: opacity, transform;
+  }
+
+  [nav-bar="leaving"] {
+    @include transition-duration( $android-transition-duration-leaving );
+    @include transition-timing-function( $android-transition-timing-leaving );
+  }
+
+  [nav-bar="cached"] {
+    display: none;
+  }
+
+  [nav-bar="active"],
+  &[nav-bar-direction="forward"] [nav-bar="entering"],
+  &[nav-bar-direction="back"] [nav-bar="leaving"] {
+    z-index: $z-index-bar-above;
+  }
+
+}
+
+
+
+// Transition Settings
+// -------------------------------
+
+[nav-view="cached"],
+[nav-bar="cached"] {
+  display: none;
+}
+
+[nav-view="stage"] {
+  opacity: 0;
+  @include transition-duration( 0 );
+}
+
+[nav-bar="stage"] {
+  .title,
+  .buttons,
+  .back-text {
+    opacity: 0;
+    @include transition-duration(0s);
+  }
+}
+

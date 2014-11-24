@@ -49,7 +49,7 @@ module.exports = function(gulp, argv) {
     config.set('dist', buildConfig.dist);
     config.set(
       'rendering.outputFolder',
-      argv.dist ? argv.dist : path.resolve(projectRoot, buildConfig.dist, 'ionic-demo')
+      argv.dist ? argv.dist : path.resolve(projectRoot, buildConfig.dist, 'nightly')
     );
     config.set('demoFolderPrefix', argv.release ? '' : '/dist/ionic-demo');
 

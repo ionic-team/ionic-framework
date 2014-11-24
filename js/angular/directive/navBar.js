@@ -1,10 +1,4 @@
 
-IonicModule.constant('$ionicNavBarConfig', {
-  transition: 'nav-title-slide-ios7',
-  alignTitle: 'center',
-  backButtonIcon: 'ion-ios7-arrow-back'
-});
-
 /**
  * @ngdoc directive
  * @name ionNavBar
@@ -21,10 +15,6 @@ IonicModule.constant('$ionicNavBarConfig', {
  * We can add buttons depending on the currently visible view using
  * {@link ionic.directive:ionNavButtons}.
  *
- * Add an [animation class](/docs/components#animations) to the element via the
- * `animation` attribute to enable animated changing of titles 
- * (recommended: 'nav-title-slide-ios7').
- *
  * Note that the ion-nav-bar element will only work correctly if your content has an
  * ionView around it.
  *
@@ -33,7 +23,7 @@ IonicModule.constant('$ionicNavBarConfig', {
  * ```html
  * <body ng-app="starter">
  *   <!-- The nav bar that will be updated as we navigate -->
- *   <ion-nav-bar class="bar-positive" animation="nav-title-slide-ios7">
+ *   <ion-nav-bar class="bar-positive">
  *   </ion-nav-bar>
  *
  *   <!-- where the initial view template will be rendered -->
@@ -65,14 +55,13 @@ IonicModule.constant('$ionicNavBarConfig', {
  *
  *
  * ```html
- * <ion-view title="myTitle">
+ * <ion-view view-title="myTitle">
  *   <ion-nav-bar class="bar-positive">
  *     <ion-nav-back-button>
- *       Back
  *     </ion-nav-back-button>
- *     <div class="buttons right-buttons">
+ *     <div class="buttons primary-buttons">
  *       <button class="button">
- *         Right Button
+            Button
  *       </button>
  *     </div>
  *   </ion-nav-bar>
@@ -80,64 +69,14 @@ IonicModule.constant('$ionicNavBarConfig', {
  * ```
  */
 IonicModule
-.directive('ionNavBar', [
-  '$ionicViewService',
-  '$rootScope',
-  '$animate',
-  '$compile',
-  '$ionicNavBarConfig',
-function($ionicViewService, $rootScope, $animate, $compile, $ionicNavBarConfig) {
-
+.directive('ionNavBar', function() {
   return {
     restrict: 'E',
     controller: '$ionicNavBar',
     scope: true,
-    compile: function(tElement, tAttrs) {
-      //We cannot transclude here because it breaks element.data() inheritance on compile
-      tElement
-        .addClass('bar bar-header nav-bar')
-        .append(
-          '<div class="buttons left-buttons"> ' +
-          '</div>' +
-          '<h1 ng-bind-html="title" class="title"></h1>' +
-          '<div class="buttons right-buttons"> ' +
-          '</div>'
-        );
-
-      if (isDefined(tAttrs.animation)) {
-        tElement.addClass(tAttrs.animation);
-      } else {
-        tElement.addClass($ionicNavBarConfig.transition);
-      }
-
-      return { pre: prelink };
-      function prelink($scope, $element, $attr, navBarCtrl) {
-        navBarCtrl._headerBarView = new ionic.views.HeaderBar({
-          el: $element[0],
-          alignTitle: $attr.alignTitle || $ionicNavBarConfig.alignTitle || 'center'
-        });
-
-        //defaults
-        $scope.backButtonShown = false;
-        $scope.shouldAnimate = true;
-        $scope.isReverse = false;
-        $scope.isInvisible = true;
-
-        $scope.$on('$destroy', function() {
-          $scope.$parent.$hasHeader = false;
-        });
-
-        $scope.$watch(function() {
-          return ($scope.isReverse ? ' reverse' : '') +
-            ($scope.isInvisible ? ' invisible' : '') +
-            (!$scope.shouldAnimate ? ' no-animation' : '');
-        }, function(className, oldClassName) {
-          $element.removeClass(oldClassName);
-          $element.addClass(className);
-        });
-
-      }
+    link: function($scope, $element, $attr, ctrl) {
+      ctrl.init();
     }
   };
-}]);
+});
 
