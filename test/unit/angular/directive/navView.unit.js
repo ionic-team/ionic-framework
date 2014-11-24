@@ -2,7 +2,7 @@
 describe('Ionic nav-view', function() {
   beforeEach(module('ionic'));
 
-  var compile, viewService, $rootScope, elem;
+  var compile, $rootScope, elem;
 
   var aState = {
     template: 'aState template'
@@ -131,8 +131,7 @@ describe('Ionic nav-view', function() {
       .state('ionViewCacheFalseProperty', ionViewCacheFalsePropertyState);
   }));
 
-  beforeEach(inject(function(_$compile_, $ionicHistory, $ionicConfig, $rootScope) {
-    viewService = $ionicHistory;
+  beforeEach(inject(function(_$compile_, $ionicConfig, $rootScope) {
     $compile = _$compile_;
     scope = $rootScope.$new();
     elem = angular.element('<div>');
@@ -814,6 +813,64 @@ describe('Ionic nav-view', function() {
     expect(afterLeave.stateName).toEqual('page1');
     expect(leave.stateName).toEqual('page1');
     expect(leave.transitionId).toEqual(4);
+  }));
+
+  it('should clear ion-nav-view cache', inject(function ($state, $q, $timeout, $compile, $ionicHistory) {
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    $state.go(page1State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    $state.go(page2State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    $state.go(page3State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    var divs = elem.find('ion-nav-view').find('div');
+    expect(divs.length).toBe(3);
+
+    expect(divs.eq(0).attr('nav-view')).toBe('cached');
+    expect(divs.eq(0).text()).toBe('page1');
+
+    expect(divs.eq(1).attr('nav-view')).toBe('cached');
+    expect(divs.eq(1).text()).toBe('page2');
+
+    expect(divs.eq(2).attr('nav-view')).toBe('active');
+    expect(divs.eq(2).text()).toBe('page3');
+
+    $ionicHistory.clearCache();
+
+    var divs = elem.find('ion-nav-view').find('div');
+    expect(divs.length).toBe(1);
+
+    expect(divs.eq(0).attr('nav-view')).toBe('active');
+    expect(divs.eq(0).text()).toBe('page3');
+
+    $ionicHistory.clearCache();
+
+    var divs = elem.find('ion-nav-view').find('div');
+    expect(divs.length).toBe(1);
+
+    expect(divs.eq(0).attr('nav-view')).toBe('active');
+    expect(divs.eq(0).text()).toBe('page3');
+
+    $state.go(page2State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    var divs = elem.find('ion-nav-view').find('div');
+    expect(divs.length).toBe(1);
+
+    expect(divs.eq(0).attr('nav-view')).toBe('active');
+    expect(divs.eq(0).text()).toBe('page2');
   }));
 
 });

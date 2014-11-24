@@ -99,5 +99,14 @@ IonicModule
    *
    * Example: `$ionicSlideBoxDelegate.$getByHandle('my-handle').select(0);`
    */
+
+   // DEPRECATED, as of v1.0.0-beta14 -------
+   'update',
+   'currentIndex',
+   'slide',
+   'slidesCount',
+   'stop',
+   'start'
+   // END DEPRECATED -------
 ]));
 

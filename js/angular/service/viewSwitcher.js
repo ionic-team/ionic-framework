@@ -90,7 +90,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
   function destroyViewEle(ele) {
     // we found an element that should be removed
     // destroy its scope, then remove the element
-    if (ele) {
+    if (ele && ele.length) {
       var viewScope = ele.scope();
       viewScope && viewScope.$destroy();
       ele.remove();
@@ -172,14 +172,14 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
 
             // set the styles of where this element will end up going so
             // the DOM has some time to render its correct starting point
-            transitionFn(enteringEle, null, registerData.direction, false).run(0);
+            transitionFn(enteringEle, null, enteringData.direction, false).run(0);
 
           } else {
             // the entering element is not already in the DOM
             // set that the entering element should be "staged" and its
             // styles of where this element will go before it hits the DOM
             navViewAttr(enteringEle, VIEW_STATUS_STAGED);
-            transitionFn(enteringEle, null, registerData.direction, true).run(0);
+            transitionFn(enteringEle, null, enteringData.direction, true).run(0);
 
             historyCursorAttr(enteringEle, registerData.isHistoryRoot ? HISTORY_ROOT : HISTORY_AFTER_ROOT);
 
@@ -223,7 +223,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
 
           // 1) get the transition ready and see if it'll animate
           var transitionFn = $ionicConfig.transitions.views[enteringData.transition];
-          var viewTransition = transitionFn(enteringEle, leavingEle, direction, enteringData.shouldAnimate);
+          var viewTransition = transitionFn(enteringEle, leavingEle, enteringData.direction, enteringData.shouldAnimate);
 
           if (viewTransition.shouldAnimate) {
             // 2) attach transitionend events (and fallback timer)
@@ -253,9 +253,9 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             // 7) start the transition
             viewTransition.run(1);
 
-            for (var x = 0; x < $ionicNavBarDelegate._instances.length; x++) {
-              $ionicNavBarDelegate._instances[x].triggerTransitionStart(transitionId);
-            }
+            $ionicNavBarDelegate._instances.forEach(function(instance) {
+              instance.triggerTransitionStart(transitionId);
+            });
 
             if (!viewTransition.shouldAnimate) {
               // no animated transition
@@ -285,9 +285,9 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
               switcher.cleanup(enteringData);
             }
 
-            for (var x = 0; x < $ionicNavBarDelegate._instances.length; x++) {
-              $ionicNavBarDelegate._instances[x].triggerTransitionEnd();
-            }
+            $ionicNavBarDelegate._instances.forEach(function(instance) {
+              instance.triggerTransitionEnd();
+            });
 
             // remove any references that could cause memory issues
             nextTransition = nextDirection = enteringView = leavingView = enteringEle = leavingEle = null;
@@ -338,7 +338,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
               oldestAccess = viewElement.data(DATA_VIEW_ACCESSED);
               removableEle = viewElements.eq(x);
 
-            } else if (viewElement.data(DATA_DESTROY_ELE) && cachedAttr(viewElement) != VIEW_STATUS_ACTIVE) {
+            } else if (viewElement.data(DATA_DESTROY_ELE) && navViewAttr(viewElement) != VIEW_STATUS_ACTIVE) {
               destroyViewEle(viewElement);
             }
           }
@@ -415,6 +415,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
     getTransitionData: getTransitionData,
     historyCursorAttr: historyCursorAttr,
     navViewAttr: navViewAttr,
+    destroyViewEle: destroyViewEle
 
   };
 

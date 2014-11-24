@@ -185,8 +185,9 @@ function($scope, scrollViewOptions, $timeout, $window, $location, $document, $io
       refresher.classList.add('active');
       refresherScope.$onPulling();
     }, function() {
-      // deactivateCallback
-        refresher.classList.remove('active', 'refreshing', 'refreshing-tail');
+        refresher.classList.remove('active');
+        refresher.classList.remove('refreshing');
+        refresher.classList.remove('refreshing-tail');
     }, function() {
       // startCallback
       refresher.classList.add('refreshing');
