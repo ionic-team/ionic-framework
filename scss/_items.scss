@@ -579,7 +579,23 @@ button.item.item-button-right {
   min-height: 30px;
   background-color: $item-divider-bg;
   color: $item-divider-color;
-  font-weight: bold;
+  font-weight: 500;
+}
+
+.platform-ios .item-divider-platform,
+.item-divider-ios {
+  padding-top: 26px;
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 13px;
+  background-color: #ebebeb;
+  color: #555;
+}
+
+.platform-android .item-divider-platform,
+.item-divider-android {
+  font-weight: 300;
+  font-size: 13px;
 }
 
 
