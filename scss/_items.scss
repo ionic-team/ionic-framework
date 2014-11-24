@@ -102,6 +102,11 @@
 
 }
 
+.list-borderless .item,
+.item-borderless {
+  border-width: 0;
+}
+
 // Link and Button Active States
 .item.active,
 .item.activated,
@@ -588,7 +593,7 @@ button.item.item-button-right {
   text-transform: uppercase;
   font-weight: 300;
   font-size: 13px;
-  background-color: #ebebeb;
+  background-color: #efeff4;
   color: #555;
 }
 
