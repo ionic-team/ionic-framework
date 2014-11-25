@@ -1121,6 +1121,17 @@ describe('Ionic History', function() {
     expect(ionicHistory.isActiveScope(scope)).toEqual(false);
   });
 
+  it('should not be active when parent scope is disconnected', function() {
+    var scope = {
+      $parent: {
+        $parent: {
+          $$disconnected: true
+        }
+      }
+    };
+    expect(ionicHistory.isActiveScope(scope)).toEqual(false);
+  });
+
   it('should be active w/ scope but no current history id', function() {
     ionicHistory.registerHistory('1234');
     expect(ionicHistory.isActiveScope(scope)).toEqual(true);
@@ -1133,6 +1144,19 @@ describe('Ionic History', function() {
 
     var scope = {
       $historyId: '123'
+    }
+    expect(ionicHistory.isActiveScope(scope)).toEqual(true);
+  });
+
+  it('should be active w/ scopes parent the same history id as current view', function() {
+    ionicHistory.currentView({
+      historyId: '123'
+    });
+
+    var scope = {
+      $parent: {
+        $historyId: '123'
+      }
     }
     expect(ionicHistory.isActiveScope(scope)).toEqual(true);
   });
