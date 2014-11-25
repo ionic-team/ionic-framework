@@ -27,9 +27,10 @@ input[type="range"] {
     height: $range-slider-height;
     border-radius: $range-slider-border-radius;
     background-color: $toggle-handle-off-bg-color;
-    box-shadow: 0 0 2px rgba(0,0,0,.5), 1px 3px 5px rgba(0,0,0,0.25);
+    box-shadow: $range-slider-box-shadow;
     cursor: pointer;
     -webkit-appearance: none;
+    border: 0;
   }
 
   &::-webkit-slider-thumb:before {
@@ -46,8 +47,8 @@ input[type="range"] {
   &::-webkit-slider-thumb:after {
     /* create a larger (but hidden) hit area */
     position: absolute;
-    top: -20px;
-    left: -20px;
+    top: -15px;
+    left: -15px;
     padding: 30px;
     content: ' ';
     //background: red;

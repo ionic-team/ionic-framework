@@ -517,11 +517,12 @@ $checkbox-check-color:            #fff !default;
 // Range
 // -------------------------------
 
-$range-track-height:              4px !default;
-$range-slider-width:              20px !default;
-$range-slider-height:             20px !default;
-$range-slider-border-radius:      10px !default;
+$range-track-height:              2px !default;
+$range-slider-width:              28px !default;
+$range-slider-height:             28px !default;
+$range-slider-border-radius:      50% !default;
 $range-icon-size:                 24px !default;
+$range-slider-box-shadow:         0 0 2px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,0.2) !default;
 
 $range-light-track-bg:            $button-light-border !default;
 $range-stable-track-bg:           $button-stable-border !default;
