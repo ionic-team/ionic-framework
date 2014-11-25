@@ -1161,6 +1161,25 @@ describe('Ionic History', function() {
     expect(ionicHistory.isActiveScope(scope)).toEqual(true);
   });
 
+  it('should be active when one of the parent scopes is the same history id as current view', function() {
+    ionicHistory.currentView({
+      historyId: '123'
+    });
+
+    var scope = {
+      $parent: {
+        $historyId: 'abc',
+        $parent: {
+          $historyId: 'xyz',
+          $parent: {
+            $historyId: '123'
+          }
+        }
+      }
+    }
+    expect(ionicHistory.isActiveScope(scope)).toEqual(true);
+  });
+
   it('should be not active w/ scope different history id as current view', function() {
     ionicHistory.currentView({
       historyId: '123'

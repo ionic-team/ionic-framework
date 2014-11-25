@@ -645,23 +645,18 @@ function($rootScope, $state, $location, $window, $ionicViewSwitcher, $ionicNavVi
       if (!scope) return false;
 
       var climbScope = scope;
-      var historyId;
+      var currentHistoryId = this.currentHistoryId();
       while (climbScope) {
         if (climbScope.$$disconnected) {
           return false;
         }
-        if (!historyId && climbScope.hasOwnProperty('$historyId')) {
-          historyId = climbScope.$historyId;
+        if (currentHistoryId && currentHistoryId == climbScope.$historyId) {
+          return true;
         }
         climbScope = climbScope.$parent;
       }
 
-      var currentHistoryId = this.currentHistoryId();
-      if (currentHistoryId) {
-        return currentHistoryId == (historyId || 'root');
-      }
-
-      return true;
+      return currentHistoryId ? currentHistoryId == 'root' : true;
     }
 
   };
