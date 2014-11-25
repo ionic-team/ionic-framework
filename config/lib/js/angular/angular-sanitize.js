@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.3.3
+ * @license AngularJS v1.3.4
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -661,13 +661,13 @@ angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
     function addLink(url, text) {
       html.push('<a ');
       if (angular.isDefined(target)) {
-        html.push('target="');
-        html.push(target);
-        html.push('" ');
+        html.push('target="',
+                  target,
+                  '" ');
       }
-      html.push('href="');
-      html.push(url);
-      html.push('">');
+      html.push('href="',
+                url.replace('"', '&quot;'),
+                '">');
       addText(text);
       html.push('</a>');
     }
