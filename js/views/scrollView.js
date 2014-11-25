@@ -709,6 +709,19 @@ ionic.views.Scroll = ionic.views.View.inherit({
       }];
     }
 
+    function hasParentScrollWithDifferentDirection() {
+      if (self.options.scrollingX && self.options.scrollingY) {
+        return false;
+      }
+      if (self.options.scrollingX && ionic.DomUtil.getParentWithClass(self.__container, 'scroll-y')) {
+        return true;
+      }
+      if (self.options.scrollingY && ionic.DomUtil.getParentWithClass(self.__container, 'scroll-y')) {
+        return true;
+      }
+      return false;
+    }
+
     self.touchStart = function(e) {
       self.startCoordinates = ionic.tap.pointerCoord(e);
 
@@ -729,7 +742,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.__enableScrollY = true;
       self.__hasStarted = true;
       self.doTouchStart(getEventTouches(e), e.timeStamp);
-      e.preventDefault();
+      if (!hasParentScrollWithDifferentDirection()) {
+        e.preventDefault();
+      }
     };
 
     self.touchMove = function(e) {
@@ -818,7 +833,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         }
         self.doTouchStart(getEventTouches(e), e.timeStamp);
 
-        if ( !ionic.tap.isTextInput(e.target) ) {
+        if ( !ionic.tap.isTextInput(e.target) && !hasParentScrollWithDifferentDirection() ) {
           e.preventDefault();
         }
         mousedown = true;
