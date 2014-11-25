@@ -143,11 +143,9 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
     transclude: 'element',
     terminal: true,
     $$tlb: true,
-    require: ['^$ionicScroll', '^?ionNavView'],
+    require: '^$ionicScroll',
     controller: [function(){}],
-    link: function($scope, $element, $attr, ctrls, $transclude) {
-      var scrollCtrl = ctrls[0];
-      var navViewCtrl = ctrls[1];
+    link: function($scope, $element, $attr, scrollCtrl, $transclude) {
       var wrap = jqLite('<div style="position:relative;">');
       $element.parent()[0].insertBefore(wrap[0], $element[0]);
       wrap.append($element);
@@ -207,8 +205,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         scrollView: scrollCtrl.scrollView,
       });
 
-      var listExprParsed = $parse(listExpr);
-      $scope.$watchCollection(listExprParsed, function(value) {
+      $scope.$watchCollection(listExpr, function(value) {
         if (value && !angular.isArray(value)) {
           throw new Error("collection-repeat expects an array to repeat over, but instead got '" + typeof value + "'.");
         }
@@ -248,21 +245,16 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         collectionRepeatManager.resize();
       }
       function rerenderOnResize() {
-        rerender(listExprParsed($scope));
+        rerender($scope.$eval(listExpr));
       }
 
       scrollCtrl.$element.on('scroll.resize', rerenderOnResize);
       ionic.on('resize', rerenderOnResize, window);
-      var deregisterViewListener;
-      if (navViewCtrl) {
-        deregisterViewListener = navViewCtrl.scope.$on('$ionicView.beforeEnter', rerenderOnResize);
-      }
 
       $scope.$on('$destroy', function() {
         collectionRepeatManager.destroy();
         dataSource.destroy();
         ionic.off('resize', rerenderOnResize, window);
-        (deregisterViewListener || noop)();
       });
     }
   };
