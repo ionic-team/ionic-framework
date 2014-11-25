@@ -480,6 +480,34 @@ describe('Ionic nav-view', function() {
     expect(divs.eq(0).attr('nav-view')).toBe('active');
   }));
 
+  it('should disconnect and reconnect view scopes', inject(function ($state, $q, $timeout, $compile) {
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    $state.go(page1State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    var divs = elem.find('ion-nav-view').find('div');
+    expect(divs.eq(0).scope().$$disconnected).toBeUndefined();
+
+    $state.go(page2State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    divs = elem.find('ion-nav-view').find('div');
+    expect(divs.eq(0).scope().$$disconnected).toBe(true);
+    expect(divs.eq(1).scope().$$disconnected).toBeUndefined();
+
+    $state.go(page1State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+    divs = elem.find('ion-nav-view').find('div');
+    expect(divs.eq(0).scope().$$disconnected).toBe(false);
+  }));
+
   it('should not cache ion-nav-views that were forward when moving back', inject(function ($state, $q, $timeout, $compile, $ionicConfig) {
     elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
 
