@@ -23,6 +23,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
   var activeEleId;
   var navViewAttr = $ionicViewSwitcher.navViewAttr;
 
+  self.scope = $scope;
 
   self.init = function() {
     var navViewName = $attrs.name || '';
