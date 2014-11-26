@@ -41,11 +41,11 @@ module.exports = function(gulp, argv) {
   /*
    * Karma
    */
+  argv.browsers && (karmaConf.browsers = argv.browsers.trim().split(','));
+  argv.reporters && (karmaConf.reporters = argv.reporters.trim().split(','));
+
   gulp.task('karma', function(done) {
     karmaConf.singleRun = true;
-    argv.browsers && (karmaConf.browsers = argv.browsers.trim().split(','));
-    argv.reporters && (karmaConf.reporters = argv.reporters.trim().split(','));
-
     karma.start(karmaConf, done);
   });
 
