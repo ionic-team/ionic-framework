@@ -20,6 +20,7 @@ function($document, $ionicBody, $timeout) {
           cb.classList.remove(CSS_HIDE);
         } else {
           $ionicBody.append(cb);
+          isAttached = true;
         }
       });
 

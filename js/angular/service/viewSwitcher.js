@@ -231,8 +231,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
           if (viewTransition.shouldAnimate) {
             // 2) attach transitionend events (and fallback timer)
             enteringEle.on(TRANSITIONEND_EVENT, transitionComplete);
-            leavingEle && leavingEle.on(TRANSITIONEND_EVENT, transitionComplete);
-            enteringEle.data(DATA_FALLBACK_TIMER, $timeout(transitionComplete, 750));
+            enteringEle.data(DATA_FALLBACK_TIMER, $timeout(transitionComplete, 1000));
           }
 
           // 3) stage entering element, opacity 0, no transition duration
@@ -271,8 +270,8 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             transitionComplete.x = true;
 
             enteringEle.off(TRANSITIONEND_EVENT, transitionComplete);
-            leavingEle && leavingEle.off(TRANSITIONEND_EVENT, transitionComplete);
             $timeout.cancel(enteringEle.data(DATA_FALLBACK_TIMER));
+            leavingEle && $timeout.cancel(leavingEle.data(DATA_FALLBACK_TIMER));
 
             // 8) emit that the views have finished transitioning
             // each parent nav-view will update which views are active and cached
