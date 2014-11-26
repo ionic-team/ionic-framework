@@ -1,157 +1,358 @@
-describe('ionSlideBox directive', function() {
+describe('ionSlideBox', function() {
+
   beforeEach(module('ionic'));
   beforeEach(function() {
-    spyOn(ionic, 'requestAnimationFrame').andCallFake(function(cb) { cb(); });
+    spyOn(ionic, 'requestAnimationFrame').andCallFake(function(cb) {
+      cb();
+    });
   });
 
-  function makeSlideBox(template) {
+  function setup(attrs, children) {
     var el;
+    children = children || ['A','B','C'].map(function(content) {
+      return '  <ion-slide>' + content + '</ion-slide>';
+    }).join('\n');
+
     inject(function($compile, $rootScope) {
-      el = $compile('<ion-scroll>' + template + '</ion-scroll>')($rootScope);
+      el = $compile('<ion-slide-box '+(attrs||'')+'>' +
+                      (children||'') +
+                    '</ion-slide-box>')($rootScope.$new());
       $rootScope.$apply();
     });
-    return el.find('ion-slide-box');
+
+    return el;
   }
 
-  it('should bind .select(i) to selected attr', inject(function($rootScope, $timeout) {
-    var slideBox = makeSlideBox('<ion-slide-box selected="$root.currentIndex">' +
-                              '<ion-slide>A</ion-slide>' +
-                              '<ion-slide>B</ion-slide>' +
-                              '<ion-slide>C</ion-slide>' +
-                            '</ion-slide-box>');
+  function slides(el) {
+    return el.find('ion-slide');
+  }
+  function slideDisplays(el) {
+    var slides = el.find('ion-slide');
+    var displays = [];
+    for (var i = 0; i < slides.length; i++) {
+      displays.push( slides[i].getAttribute('slide-display') || '' );
+    }
+    return displays;
+  }
 
-    var slideBoxCtrl = slideBox.controller('ionSlideBox');
 
-    $timeout.flush();
-    expect(slideBoxCtrl.selected()).toBe(0);
-    expect($rootScope.currentIndex).toBe(0);
+  describe('directive', function() {
+    describe('selection', function() {
+      it('should select first slide automatically', inject(function($rootScope, $timeout) {
+        var el = setup('selected="$root.current"');
+        $timeout.flush();
+        expect($rootScope.current).toBe(0);
+        expect(slideDisplays(el)).toEqual(['selected', 'next', '']);
+      }));
 
-    slideBoxCtrl.select(1);
-    $timeout.flush();
-    expect($rootScope.currentIndex).toBe(1);
+      it('should pre-select slide matching binding', inject(function($rootScope, $timeout) {
+        $rootScope.current = 1;
+        var el = setup('selected="$root.current"');
+        $timeout.flush();
+        expect($rootScope.current).toBe(1);
+        expect(slideDisplays(el)).toEqual(['previous','selected', 'next']);
+      }));
 
-    // Should not select out of bounds
-    slideBoxCtrl.select(-1);
-    $timeout.verifyNoPendingTasks();
-    expect($rootScope.currentIndex).toBe(1);
+      it('should change selection to match binding', inject(function($rootScope, $timeout) {
+        var el = setup('selected="$root.current"');
+        $timeout.flush();
+        expect($rootScope.current).toBe(0);
+        $rootScope.$apply('current = 2');
+        $timeout.flush();
+        expect(slideDisplays(el)).toEqual(['', 'previous', 'selected']);
 
-    slideBoxCtrl.select(3);
-    $timeout.verifyNoPendingTasks();
-    expect(slideBoxCtrl.selected()).toBe(1);
-  }));
+        // Nothing should change for invalid index
+        $rootScope.$apply('current = 3');
+        $timeout.flush();
+        expect(slideDisplays(el)).toEqual(['', 'previous', 'selected']);
 
-  it('should bind selected attr to .select()', inject(function($rootScope, $timeout) {
-    $rootScope.$apply('current = 3; add0 = true');
-    var slideBox = makeSlideBox('<ion-slide-box selected="$root.current">' +
-                              '<ion-slide ng-if="add0">0</ion-slide>' +
-                              '<ion-slide>1</ion-slide>' +
-                              '<ion-slide>2</ion-slide>' +
-                              '<ion-slide ng-if="add3">3</ion-slide>' +
-                            '</ion-slide-box>');
-    var slideBoxCtrl = slideBox.controller('ionSlideBox');
+        // Going back to valid index should act as normal
+        $rootScope.$apply('current = 1');
+        $timeout.flush();
+        expect(slideDisplays(el)).toEqual(['previous', 'selected', 'next']);
+      }));
 
-    expect(slideBoxCtrl.selected()).toBe(-1);
-    expect($rootScope.current).toBe(3);
+      it('should change selection when slides are added', inject(function($rootScope, $timeout) {
+        var el = setup('selected="$root.current"',
+          '<ion-slide>A</ion-slide><ion-slide ng-if="B">B</ion-slide>');
+        $timeout.flush();
+        expect(slideDisplays(el)).toEqual(['selected']);
+        $rootScope.$apply('B = true');
+        expect(slideDisplays(el)).toEqual(['selected', 'next']);
+      }));
 
-    $rootScope.$apply('add3 = true');
-    expect($rootScope.current).toBe(3);
-    expect(slideBoxCtrl.selected()).toBe(3);
+      it('should change selection when slides are removed', inject(function($rootScope, $timeout) {
+        $rootScope.items = [1,2,3];
+        var el = setup('selected="$root.current"',
+          '<ion-slide ng-repeat="i in items">{{i}}</ion-slide>');
+        $timeout.flush();
+        expect(slideDisplays(el)).toEqual(['selected', 'next', '']);
+        $rootScope.$apply('items.shift()');
+        expect(slideDisplays(el)).toEqual(['selected', 'next']);
+        $rootScope.$apply('items.pop()');
+        expect(slideDisplays(el)).toEqual(['selected']);
+      }));
 
-    $rootScope.$apply('current = 1');
-    expect(slideBoxCtrl.selected()).toBe(1);
+    });
 
-    $rootScope.$apply('current = 2');
-    expect(slideBoxCtrl.selected()).toBe(2);
+    describe('loop', function() {
+      it('should reflect next/prev with loop', inject(function($rootScope, $timeout) {
+        $rootScope.shouldLoop = true;
+        var el = setup('selected="$root.current" loop="$root.shouldLoop"');
+        $timeout.flush();
+        expect(slideDisplays(el)).toEqual(['selected', 'next', 'previous']);
+      }));
+    });
 
-    $rootScope.$apply('current = 0');
-    expect(slideBoxCtrl.selected()).toBe(0);
+    describe('autoPlay', function() {
+      it('should autoPlay with attr', inject(function($rootScope, $timeout, $interval) {
+        $rootScope.play = 400;
+        var el = setup('selected="$root.current" auto-play="$root.play" loop="$root.loopy"');
+        $timeout.flush();
+        expect($rootScope.current).toBe(0);
+        $interval.flush(400); // autoplay
+        $timeout.flush(); // transition
+        expect($rootScope.current).toBe(1);
 
-    $rootScope.$apply('add0 = false');
-    expect(slideBoxCtrl.selected()).toBe(0);
+        $rootScope.$apply('play = 333');
+        $interval.flush(333); // autoplay
+        $timeout.flush(); // transition
+        expect($rootScope.current).toBe(2);
 
-    $rootScope.$apply('current = 2');
-    expect(slideBoxCtrl.selected()).toBe(2);
+        $interval.flush(333); // autoplay
+        $timeout.flush(); // transitionkkk
+        expect($rootScope.current).toBe(2);
 
-    $rootScope.$apply('add3 = false');
-    expect(slideBoxCtrl.selected()).toBe(1);
-  }));
+        $rootScope.$apply('loopy = true');
+        $interval.flush(333); // autoplay
+        $timeout.flush(); // transition
+        expect($rootScope.current).toBe(0);
 
-  it('should loop depending on attr.loop', inject(function($rootScope) {
-    var slideBox = makeSlideBox('<ion-slide-box loop="shouldLoop">' +
-                              '<ion-slide>A</ion-slide>' +
-                              '<ion-slide>B</ion-slide>' +
-                              '<ion-slide>C</ion-slide>' +
-                            '</ion-slide-box>');
+        // turn autoPlay off, no change
+        $rootScope.$apply('play = 0');
+        $interval.flush(9999);
+        $timeout.verifyNoPendingTasks(); //nothing happens
+        expect($rootScope.current).toBe(0);
+      }));
+    });
 
-    $rootScope.$apply('shouldLoop = true');
+    describe('onSlideChanged', function() {
+      it('should call when selected changes', inject(function($rootScope, $timeout) {
+        $rootScope.changed = jasmine.createSpy('changed');
+        var el = setup('selected="$root.current" on-slide-changed="changed($slideIndex)"');
+        $timeout.flush();
+        expect($rootScope.changed).toHaveBeenCalledWith(0);
 
-    var slideBoxCtrl = slideBox.controller('ionSlideBox');
-    expect(slideBoxCtrl.selected()).toBe(0);
-    slideBoxCtrl.select(slideBoxCtrl.previous());
-    expect(slideBoxCtrl.selected()).toBe(2);
-    slideBoxCtrl.select(slideBoxCtrl.next());
-    expect(slideBoxCtrl.selected()).toBe(0);
+        $rootScope.changed.reset();
+        $rootScope.$apply('current = 2');
+        $timeout.flush();
+        expect($rootScope.changed).toHaveBeenCalledWith(2);
+      }));
+    });
 
-    // Disable looping
-    $rootScope.$apply('shouldLoop = false');
+  });
 
-    // No loop at previous boundary
-    expect(slideBoxCtrl.selected()).toBe(0);
-    slideBoxCtrl.select(slideBoxCtrl.previous());
-    expect(slideBoxCtrl.selected()).toBe(0);
+  describe('delegate', function() {
 
-    // No loop at next boundary
-    slideBoxCtrl.select(2);
-    expect(slideBoxCtrl.selected()).toBe(2);
-    slideBoxCtrl.select(slideBoxCtrl.next());
-    expect(slideBoxCtrl.selected()).toBe(2);
-  }));
+    var $del;
+    beforeEach(inject(function($ionicSlideBoxDelegate) {
+      $del = $ionicSlideBoxDelegate;
+    }));
 
-  it('should autoplay depending on attr.autoPlay', inject(function($rootScope, $interval) {
-    var slideBox = makeSlideBox('<ion-slide-box loop="shouldLoop" auto-play="playInterval">' +
-                              '<ion-slide>A</ion-slide>' +
-                              '<ion-slide>B</ion-slide>' +
-                              '<ion-slide>C</ion-slide>' +
-                            '</ion-slide-box>');
+    describe('loop()', function() {
+      it('should set & get, false by default', inject(function($timeout) {
+        var el = setup();
+        $timeout.flush();
+        expect($del.loop()).toBe(false);
+        expect($del.loop(true)).toBe(true);
+        expect($del.loop()).toBe(true);
+        expect($del.loop(false)).toBe(false);
+        expect($del.loop()).toBe(false);
+      }));
+    });
 
-    $rootScope.$apply('shouldLoop = false; playInterval = 1000;');
+    describe('selected()', function() {
+      it('should return selected index', inject(function($timeout) {
+        setup();
+        $timeout.flush();
+        expect($del.selected()).toBe(0);
+        $del.select(1);
+        $timeout.flush();
+        expect($del.selected()).toBe(1);
+      }));
+    });
 
-    var slideBoxCtrl = slideBox.controller('ionSlideBox');
-    expect(slideBoxCtrl.selected()).toBe(0);
-    $interval.flush(1000);
-    expect(slideBoxCtrl.selected()).toBe(1);
-    $interval.flush(1000);
-    expect(slideBoxCtrl.selected()).toBe(2);
-    // Should not go beyond limit with loop disabled
-    $interval.flush(1000);
-    expect(slideBoxCtrl.selected()).toBe(2);
+    describe('next()', function() {
 
-    // Should loop
-    $rootScope.$apply('shouldLoop = true');
-    $interval.flush(1000);
-    expect(slideBoxCtrl.selected()).toBe(0);
+      it('without loop', inject(function($timeout) {
+        setup('selected="$root.current"');
+        $del.loop(false);
+        $timeout.flush();
+        expect($del.selected()).toBe(0);
+        expect($del.next()).toBe(1);
 
-    // Should deactivate and stop looping
-    $rootScope.$apply('playInterval = -1');
-    $interval.flush();
-    expect(slideBoxCtrl.selected()).toBe(0);
-  }));
+        $del.select(2);
+        $timeout.flush();
+        expect($del.selected()).toBe(2);
+        expect($del.next()).toBe(-1);
+      }));
 
-  it('should call onSlideChanged', inject(function($rootScope, $timeout) {
-    $rootScope.changed = jasmine.createSpy('slideChanged');
-    var el = makeSlideBox('<ion-slide-box on-slide-changed="changed($slideIndex)">' +
-                    '<ion-slide>A</ion-slide>' +
-                    '<ion-slide>B</ion-slide>' +
-                    '<ion-slide>C</ion-slide>' +
-                '</ion-slide-box>');
+      it('with loop', inject(function($timeout) {
+        setup('selected="$root.current"');
+        $del.loop(true);
+        $timeout.flush();
+        expect($del.selected()).toBe(0);
+        expect($del.next()).toBe(1);
 
-    $rootScope.$apply();
-    var slideBoxCtrl = el.controller('ionSlideBox');
-    $timeout.flush();
-    expect($rootScope.changed).toHaveBeenCalledWith(0);
+        $del.select(2);
+        $timeout.flush();
+        expect($del.selected()).toBe(2);
+        expect($del.next()).toBe(0);
+      }));
 
-    slideBoxCtrl.select(1);
-    $rootScope.$apply();
-    expect($rootScope.changed).toHaveBeenCalledWith(1);
-  }));
+    });
+
+    describe('previous()', function() {
+
+      it('without loop', inject(function($timeout) {
+        setup('selected="$root.current"');
+        $del.loop(false);
+        $timeout.flush();
+        expect($del.selected()).toBe(0);
+        expect($del.previous()).toBe(-1);
+
+        $del.select(1);
+        $timeout.flush();
+        expect($del.selected()).toBe(1);
+        expect($del.previous()).toBe(0);
+      }));
+
+      it('with loop', inject(function($timeout) {
+        setup('selected="$root.current"');
+        $del.loop(true);
+        $timeout.flush();
+        expect($del.selected()).toBe(0);
+        expect($del.previous()).toBe(2);
+
+        $del.select(1);
+        $timeout.flush();
+        expect($del.selected()).toBe(1);
+        expect($del.previous()).toBe(0);
+      }));
+
+      it('edge case of 2 slides and loop', inject(function($timeout) {
+        setup('selected="$root.current"', '<ion-slide>A</ion-slide><ion-slide>B</ion-slide>');
+        $del.loop(true);
+        $timeout.flush();
+        expect($del.selected()).toBe(0);
+        expect($del.previous()).toBe(-1);
+
+        $del.select(1);
+        $timeout.flush();
+        expect($del.selected()).toBe(1);
+        expect($del.previous()).toBe(0);
+      }));
+
+    });
+
+    describe('count()', function() {
+
+      it('should change with slides', inject(function($timeout, $rootScope) {
+        $rootScope.items = [1,2,3];
+        setup('','<ion-slide ng-repeat="i in items"></ion-slide>');
+        $timeout.flush();
+        expect($del.count()).toBe(3);
+        $rootScope.$apply('items.pop()');
+        expect($del.count()).toBe(2);
+        $rootScope.$apply('items.unshift(0)');
+        expect($del.count()).toBe(3);
+      }));
+
+    });
+
+    describe('autoPlay()', function() {
+
+      it('should start/stop', inject(function($timeout, $interval) {
+        var el = setup();
+        $del.autoPlay(100);
+        $timeout.flush();
+        expect($del.selected()).toBe(0);
+        $interval.flush(100); // autoplay
+        $timeout.flush(); // transition
+        expect($del.selected()).toBe(1);
+
+        $del.autoPlay(150);
+        $interval.flush(150); // autoplay
+        $timeout.flush(); // transition
+        expect($del.selected()).toBe(2);
+
+        $interval.flush(150); // autoplay
+        $timeout.flush(); // transition
+        expect($del.selected()).toBe(2); //boundary
+
+        $del.loop(true);
+        $interval.flush(150); // autoplay
+        $timeout.flush(); // transition
+        expect($del.selected()).toBe(0);
+
+        // turn autoPlay off, no change
+        $del.autoPlay(0);
+        $interval.flush(9999);
+        $timeout.flush();
+        expect($del.selected()).toBe(0);
+      }));
+
+    });
+
+    describe('select()', function() {
+      it('basic', inject(function($timeout, $rootScope) {
+        var el = setup('selected="$root.current"');
+        $timeout.flush();
+        expect($rootScope.current).toBe(0);
+
+        $del.select(2);
+        $timeout.flush();
+        expect($rootScope.current).toBe(2);
+        expect(slideDisplays(el)).toEqual(['', 'previous', 'selected']);
+
+        $del.loop(true);
+        $del.select(0);
+        $timeout.flush();
+        expect($rootScope.current).toBe(0);
+        expect(slideDisplays(el)).toEqual(['selected', 'next', 'previous']);
+      }));
+
+      it('when queueing, should only publish after final slide', inject(function($timeout, $rootScope) {
+        $rootScope.changed = jasmine.createSpy('changed');
+        var el = setup('selected="$root.current" on-slide-changed="$root.changed($slideIndex)"');
+        $timeout.flush();
+        $rootScope.changed.reset();
+
+        $del.select(1);
+        $del.select(2);
+        $del.select(1);
+
+        $timeout.flush();
+        // Scope data bindings not published
+        expect($rootScope.changed).not.toHaveBeenCalled();
+        expect($rootScope.current).toBe(0);
+        // Elements look different, though.
+        expect(slideDisplays(el)).toEqual(['previous', 'selected', 'next']);
+
+        $timeout.flush();
+        expect($rootScope.changed).not.toHaveBeenCalled();
+        expect($rootScope.current).toBe(0);
+        expect(slideDisplays(el)).toEqual(['', 'previous', 'selected']);
+
+        $timeout.flush();
+        expect($rootScope.changed).toHaveBeenCalledWith(1);
+        expect($rootScope.current).toBe(1);
+        expect(slideDisplays(el)).toEqual(['previous', 'selected', 'next']);
+      }));
+
+    });
+
+  });
+
 });
+

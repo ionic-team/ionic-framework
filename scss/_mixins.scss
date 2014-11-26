@@ -598,6 +598,7 @@
   -webkit-order: $n;
   -ms-flex-order: $n;
   order: $n;
+  -webkit-box-ordinal-group: $n;
 }
 
 @mixin responsive-grid-break($selector, $max-width) {

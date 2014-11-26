@@ -1,9 +1,7 @@
 describe('<ion-slide-pager> directive', function() {
-  beforeEach(module('ionic'));
+  beforeEach(module('ionic', 'ngAnimateMock'));
   beforeEach(function() {
-    ionic.animationFrameThrottle = function(cb) {
-      return function() { cb.apply(this, arguments); };
-    };
+    spyOn(ionic, 'requestAnimationFrame').andCallFake(function(cb) { cb(); });
   });
 
   it('should create pager elements', inject(function($compile, $rootScope, $timeout) {
@@ -15,6 +13,7 @@ describe('<ion-slide-pager> directive', function() {
                       '</ion-slide-box>')($rootScope);
     $rootScope.$apply();
     var pager = el.find('ion-slide-pager');
+    var slideBoxCtrl = el.controller('ionSlideBox');
 
     expect(pager.find('.slider-pager-page').length).toBe(2);
 
@@ -22,10 +21,7 @@ describe('<ion-slide-pager> directive', function() {
     expect(pager.find('.slider-pager-page').length).toBe(3);
 
     $rootScope.$apply('showThird = false');
-    $timeout.flush();
-    $rootScope.$apply();
     expect(pager.find('.slider-pager-page').length).toBe(2);
-
   }));
 
   it('should by default select on click', inject(function($compile, $rootScope, $timeout) {
@@ -36,14 +32,16 @@ describe('<ion-slide-pager> directive', function() {
                         '<ion-slide-pager></ion-slide-pager>' +
                       '</ion-slide-box>')($rootScope);
     $rootScope.$apply();
+    $timeout.flush();
     var slideBoxCtrl = el.controller('ionSlideBox');
     var pagers = el.find('.slider-pager-page');
 
     expect(slideBoxCtrl.selected()).toBe(0);
     pagers.eq(1).click();
+    $timeout.flush();
     expect(slideBoxCtrl.selected()).toBe(1);
-
     pagers.eq(2).click();
+    $timeout.flush();
     expect(slideBoxCtrl.selected()).toBe(2);
 
   }));

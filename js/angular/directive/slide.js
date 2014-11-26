@@ -21,13 +21,27 @@ IonicModule
 .directive('ionSlide', ['$timeout', function($timeout) {
   return {
     restrict: 'E',
-    controller: '$ionSlide',
     require: '^ionSlideBox',
-    scope: true,
+    transclude: true,
     link: postLink
   };
 
-  function postLink(scope, element, attr, slideBoxCtrl) {
+  function postLink(scope, element, attr, slideBoxCtrl, transclude) {
     element.addClass('slider-slide');
+
+    slideBoxCtrl.onAddSlide();
+
+    var childScope = scope.$new();
+    // Disconnect by default, will be reconnected if shown
+    ionic.Utils.disconnectScope(childScope);
+
+    transclude(childScope, function(contents) {
+      element.append(contents);
+    });
+
+    scope.$on('$destroy', function() {
+      slideBoxCtrl.onRemoveSlide();
+      element.remove();
+    });
   }
 }]);

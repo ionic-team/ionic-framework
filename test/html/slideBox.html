@@ -51,21 +51,26 @@
         <button class="button" ng-click="$root.items.unshift($root.random())">
           unshift
         </button>
+        <button class="button" ng-click="$root.items.pop()">
+          pop
+        </button>
+        <button class="button" ng-click="$root.items.push($root.random())">
+          push
+        </button>
         <h1 class="title">Hi</h1>
-        <div class="right-buttons">
-          <button class="button" ng-click="$root.items.pop()">
-            pop
-          </button>
-          <button class="button" ng-click="$root.items.push($root.random())">
-            push
-          </button>
-        </div>
+        <button class="button" ng-click="next()">
+           next
+        </button>
+        <button class="button" ng-click="previous()">
+           previous
+        </button>
       </ion-header-bar>
       <ion-content>
           <ion-slide-box selected="$root.selectedIndex" loop="true" ng-if="$root.hasBox">
+          <ion-slide-pager></ion-slide-pager>
             <ion-slide ng-repeat="i in items">
-              <h3>item {{$index}} / {{items.length - 1}}</h3>
-              <img ng-src="http://placekitten.com/{{200 + (i%50)}}/{{200 + (i%50)}}">
+              <h3>index {{$index}} / length {{items.length}}</h3>
+              <img ng-src="http://placehold.it/{{100 + (i*10)}}x{{100 + (i*10)}}">
             </ion-slide>
 
           </ion-slide-box>
@@ -74,7 +79,7 @@
     <script>
       angular.module('slideBoxTest', ['ionic'])
 
-      .controller('SlideCtrl', function($scope, $timeout) {
+      .controller('SlideCtrl', function($scope, $timeout, $ionicSlideBoxDelegate) {
           $scope.items = $scope.$root.items = [];
           for (var i = 0; i < 10; i++) {
             $scope.items.push(i);
@@ -82,9 +87,8 @@
 
           $scope.$root.random = Math.random.bind(Math);
 
-          setTimeout(function() {
-            window.els = document.querySelector('ion-slide-box').getElementsByTagName('ion-slide');
-          });
+          $scope.next = function() { $ionicSlideBoxDelegate.select( $ionicSlideBoxDelegate.next() ); };
+          $scope.previous = function() { $ionicSlideBoxDelegate.select( $ionicSlideBoxDelegate.previous() ); };
       })
 
       .controller('FirstSlideCtrl', function($scope, $ionicSlideBoxDelegate) {

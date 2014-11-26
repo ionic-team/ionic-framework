@@ -48,13 +48,6 @@ function($parse) {
   return {
     restrict: 'E',
     require: '^ionSlideBox',
-    scope: {},
-    template:
-      '<div class="slider-pager-page" ' +
-           'ng-repeat="i in pages" ' +
-           'ng-class="{active: i === slideBoxCtrl.selected()}" ' +
-           'ng-click="click(i)">' +
-      '</div>',
     link: postLink
   };
 
@@ -64,27 +57,62 @@ function($parse) {
       function(scope, locals) {
         slideBoxCtrl.select(locals.$slideIndex);
       };
+    var node = element[0];
+
+    // Put it outside the slides container it was transcluded into
+    slideBoxCtrl.element.append(element);
 
     element.addClass('slider-pager');
     scope.slideBoxCtrl = slideBoxCtrl;
     scope.pages = [];
 
-    scope.click = onPagerClicked;
+    element.on('click', onPagerClicked);
     scope.$watch(slideBoxCtrl.count, watchCountAction);
+    scope.$watch(slideBoxCtrl.selected, watchSelectedAction);
 
-    function onPagerClicked(index) {
-      clickFn(scope.$parent, {
-        // DEPRECATED pass in `index` variable
-        index: index,
-        $slideIndex: index,
-      });
+    function onPagerClicked(ev) {
+      for (var i = 0, pager; (pager = node.children[i]); i++) {
+        if (pager === ev.target) {
+          return doClick(i);
+        }
+      }
     }
 
-    function watchCountAction(slidesCount) {
-      scope.pages.length = slidesCount;
-      for (var i = 0; i < slidesCount; i++) {
-        scope.pages[i] = i;
+    function watchCountAction(count, oldCount) {
+      var i;
+      for (i = node.children.length; i < count; i++) {
+        addPager();
       }
+      for (i = count; i < oldCount; i++) {
+        removePager(i);
+      }
+    }
+
+    function watchSelectedAction(selected, oldSelected) {
+      var old = node.children[oldSelected];
+      if (old) old.classList.remove('active');
+      var current = node.children[selected];
+      if (current) current.classList.add('active');
+    }
+
+    //* Extra methods *//
+
+    function doClick(index) {
+      scope.$apply(function() {
+        clickFn(scope, {
+          index: index, // DEPRECATED `index`
+          $slideIndex: index,
+        });
+      });
+    }
+    function addPager() {
+      var pager = document.createElement('div');
+      pager.className = 'slider-pager-page';
+      node.appendChild(pager);
+    }
+    function removePager(i) {
+      var pager = node.children[i];
+      pager && node.removeChild(pager);
     }
   }
 

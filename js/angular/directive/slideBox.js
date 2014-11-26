@@ -40,7 +40,8 @@ IonicModule
   '$ionicSlideBoxDelegate',
   '$window',
   '$ionicHistory',
-function($ionicSlideBoxDelegate, $window, $ionicHistory) {
+  '$parse',
+function($ionicSlideBoxDelegate, $window, $ionicHistory, $parse) {
 
   return {
     restrict: 'E',
@@ -48,7 +49,7 @@ function($ionicSlideBoxDelegate, $window, $ionicHistory) {
     require: 'ionSlideBox',
     transclude: true,
     scope: {
-      selectedIndex: '=?selected',
+      selected: '=?',
       onSlideChanged: '&'
     },
     template: '<div class="slider-slides" ng-transclude></div>',
@@ -56,6 +57,7 @@ function($ionicSlideBoxDelegate, $window, $ionicHistory) {
   };
 
   function compile(element, attr) {
+    element.addClass('slider');
     // DEPRECATED attr.doesContinue
     isDefined(attr.doesContinue) && attr.$set('loop', attr.doesContinue);
 
@@ -63,7 +65,6 @@ function($ionicSlideBoxDelegate, $window, $ionicHistory) {
   }
 
   function postLink(scope, element, attr, slideBoxCtrl) {
-    element.addClass('slider');
 
     var deregister = $ionicSlideBoxDelegate._registerInstance(
       slideBoxCtrl, attr.delegateHandle, function() {
@@ -75,38 +76,16 @@ function($ionicSlideBoxDelegate, $window, $ionicHistory) {
     isDefined(attr.loop) && watchLoop();
     isDefined(attr.autoPlay) && watchAutoPlay();
 
-    var throttledReposition = ionic.animationFrameThrottle(repositionSlideBox);
-    throttledReposition();
-    angular.element($window).on('resize', throttledReposition);
-
-    scope.$on('$destroy', function() {
-      deregister();
-      angular.element($window).off('resize', throttledReposition);
-    });
+    scope.$on('$destroy', deregister);
 
     // ***
     // Methods
     // ***
 
-    // There is no way to make the slidebox stretch to a large enough size
-    // when its children are all position: absolute elements.
-    // We just make it so the slidebox is *always* as large as its offsetParent.
-    function repositionSlideBox() {
-      element.css({
-        width: (element[0].offsetParent || element[0].parentNode || {}).offsetWidth + 'px',
-        height: (element[0].offsetParent || element[0].parentNode || {}).offsetHeight + 'px'
-      });
-    }
-
     function watchSelected() {
-      scope.$watch('selectedIndex', function selectedAttrWatchAction(newIndex) {
-        if (slideBoxCtrl.isInRange(newIndex)) {
-          scope.onSlideChanged({
-            //DEPRECATED $index
-            $index: newIndex,
-            $slideIndex: newIndex
-          });
-          slideBoxCtrl.select(newIndex);
+      scope.$watch('selected', function(index) {
+        if (slideBoxCtrl.selected() !== index) {
+          slideBoxCtrl.select(index);
         }
       });
     }
