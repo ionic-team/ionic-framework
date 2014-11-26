@@ -125,11 +125,6 @@ describe('DelegateFactory', function() {
     expect(delegate.fn()).toBe('ret1');
   });
 
-  it('$getByHandle should return this for blank handle', function() {
-    var delegate = setup();
-    expect(delegate.$getByHandle()).toBe(delegate);
-  });
-
   describe('$getByHandle', function() {
     var delegate, instance1, instance2, instance3;
     beforeEach(function() {
