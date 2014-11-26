@@ -1,14 +1,15 @@
 describe('$ionicNavBar controller', function() {
   beforeEach(module('ionic'));
-  var scope;
+  var scope, ele;
 
   function makeNavBarCtrl(css) {
     var ctrl;
+    ele = angular.element('<div>');
     inject(function($rootScope, $controller, $ionicHistory, $ionicViewSwitcher) {
       scope = $rootScope.$new();
       ctrl = $controller('$ionicNavBar', {
         $scope: scope,
-        $element: angular.element('<div>'),
+        $element: ele,
         $attrs: { class: css },
         $ionicHistory: $ionicHistory,
         $ionicViewSwitcher: $ionicViewSwitcher
@@ -251,6 +252,85 @@ describe('$ionicNavBar controller', function() {
     scope.$digest();
     var backButtonEle = headerBar.headerBarEle().find('button');
     expect(backButtonEle.text()).toBe(scope.buttonText);
+  });
+
+  it('should show the active back button on update() w/ showBack false', function() {
+    var ctrl = makeNavBarCtrl();
+    ctrl.navElement('backButton', '<button class="back-button hide"></button>');
+    ctrl.init();
+
+    ctrl.update({
+      enableBack: true,
+      showBack: false
+    });
+
+    var backButtonEle1 = ele[0].querySelector('[nav-bar]:first-child .back-button');
+    var backButtonEle2 = ele[0].querySelector('[nav-bar]:last-child .back-button');
+    expect(backButtonEle1.classList.contains('hide')).toBe(true);
+    expect(backButtonEle2.classList.contains('hide')).toBe(true);
+
+    ctrl.update({
+      enableBack: true,
+      showBack: true
+    });
+
+    expect(backButtonEle1.classList.contains('hide')).toBe(false);
+    expect(backButtonEle2.classList.contains('hide')).toBe(true);
+  });
+
+  it('should not show the back button on update() w/ enableBack false', function() {
+    var ctrl = makeNavBarCtrl();
+    ctrl.navElement('backButton', '<button class="back-button hide"></button>');
+    ctrl.init();
+
+    ctrl.update({
+      enableBack: false,
+      showBack: true
+    });
+
+    var backButtonEle1 = ele[0].querySelector('[nav-bar]:first-child .back-button');
+    var backButtonEle2 = ele[0].querySelector('[nav-bar]:last-child .back-button');
+    expect(backButtonEle1.classList.contains('hide')).toBe(true);
+    expect(backButtonEle2.classList.contains('hide')).toBe(true);
+
+    ctrl.update({
+      enableBack: true,
+      showBack: true
+    });
+    expect(backButtonEle1.classList.contains('hide')).toBe(false);
+    expect(backButtonEle2.classList.contains('hide')).toBe(true);
+  });
+
+  it('should always hide the back buttons on showBackButton(false)', function() {
+    var ctrl = makeNavBarCtrl();
+    ctrl.navElement('backButton', '<button class="back-button hide"></button>');
+    ctrl.init();
+
+    ctrl.showBackButton(false);
+    ctrl.update({
+      enableBack: true,
+      showBack: true
+    });
+
+    var backButtonEle1 = ele[0].querySelector('[nav-bar]:first-child .back-button');
+    var backButtonEle2 = ele[0].querySelector('[nav-bar]:last-child .back-button');
+    expect(backButtonEle1.classList.contains('hide')).toBe(true);
+    expect(backButtonEle2.classList.contains('hide')).toBe(true);
+
+    ctrl.showBackButton(true);
+    ctrl.update({
+      enableBack: true,
+      showBack: true
+    });
+    expect(backButtonEle1.classList.contains('hide')).toBe(false);
+    expect(backButtonEle2.classList.contains('hide')).toBe(false);
+
+    ctrl.update({
+      enableBack: false,
+      showBack: true
+    });
+    expect(backButtonEle1.classList.contains('hide')).toBe(true);
+    expect(backButtonEle2.classList.contains('hide')).toBe(false);
   });
 
 });

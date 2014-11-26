@@ -82,12 +82,6 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
     var headerBarInstance = {
       isActive: isActive,
-      enableBack: function(shouldEnable) {
-        headerBarCtrl.enableBack(shouldEnable);
-      },
-      showBack: function(shouldShow) {
-        headerBarCtrl.showBack(shouldShow);
-      },
       title: function(newTitleText) {
         headerBarCtrl.title(newTitleText);
       },
@@ -215,10 +209,12 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     self.enable(showNavBar);
     var enteringHeaderBar = self.isInitialized ? getOffScreenHeaderBar() : getOnScreenHeaderBar();
     var leavingHeaderBar = self.isInitialized ? getOnScreenHeaderBar() : null;
+    var enteringHeaderCtrl = enteringHeaderBar.controller();
 
     // update if the entering header should show the back button or not
-    self.enableBackButton(viewData.enableBack, enteringHeaderBar);
-    self.showBackButton(viewData.showBack, enteringHeaderBar);
+    enteringHeaderCtrl.enableBack(viewData.enableBack, true);
+    enteringHeaderCtrl.showBack(viewData.showBack, true);
+    enteringHeaderCtrl.updateBackButton();
 
     // update the entering header bar's title
     self.title(viewData.title, enteringHeaderBar);
@@ -335,17 +331,31 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   };
 
 
-  self.enableBackButton = function(shouldEnable, headerBar) {
-    headerBar = headerBar || getOnScreenHeaderBar();
-    headerBar && headerBar.enableBack(shouldEnable);
+  /**
+   * @ngdoc method
+   * @name $ionicNavBar#showBackButton
+   * @description Show/hide the nav bar back button when there is a
+   * back view. If the back button is not possible, for example, the
+   * first view in the stack, then this will not force the back button
+   * to show.
+   */
+  self.showBackButton = function(shouldShow) {
+    for (var x = 0; x < headerBars.length; x++) {
+      headerBars[x].controller().showNavBack(!!shouldShow);
+    }
+    $scope.$isBackButtonShown = !!shouldShow;
+    return $scope.$isBackButtonShown;
   };
 
 
-  self.showBackButton = function(shouldShow, headerBar) {
-    headerBar = headerBar || getOnScreenHeaderBar();
-    headerBar && headerBar.showBack(shouldShow);
-    $scope.$isBackButtonShown = !!shouldShow;
-    return !!shouldShow;
+  /**
+   * @ngdoc method
+   * @name $ionicNavBar#showActiveBackButton
+   * @description Show/hide only the active header bar's back button.
+   */
+  self.showActiveBackButton = function(shouldShow) {
+    var headerBar = getOnScreenHeaderBar();
+    headerBar && headerBar.controller().showBack(shouldShow);
   };
 
 

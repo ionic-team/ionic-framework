@@ -34,7 +34,7 @@ describe('ionNavBackButton directive', function() {
     expect( outputEle[0].tagName ).toBe('BUTTON');
     expect( outputEle.hasClass('button') ).toBe(true);
     expect( outputEle.hasClass('back-button') ).toBe(true);
-    expect( outputEle.hasClass('back-disabled') ).toBe(true);
+    expect( outputEle.hasClass('hide') ).toBe(true);
     expect( outputEle.hasClass('buttons') ).toBe(true);
   }));
 

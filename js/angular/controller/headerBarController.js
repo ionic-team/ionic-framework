@@ -23,6 +23,8 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
   var titleCss = '';
   var isBackEnabled = false;
   var isBackShown = true;
+  var isNavBackShown = true;
+  var isBackElementShown = false;
   var titleTextWidth = 0;
 
 
@@ -41,27 +43,42 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
   };
 
 
-  self.enableBack = function(shouldEnable) {
+  self.enableBack = function(shouldEnable, disableReset) {
     // whether or not the back button show be visible, according
     // to the navigation and history
-    if (arguments.length && shouldEnable !== isBackEnabled) {
-      var backBtnEle = getEle(BACK_BUTTON);
-      backBtnEle && backBtnEle.classList[ shouldEnable ? 'remove' : 'add' ]('back-disabled');
+    if (arguments.length) {
       isBackEnabled = shouldEnable;
+      if (!disableReset) self.updateBackButton();
     }
     return isBackEnabled;
   };
 
 
-  self.showBack = function(shouldShow) {
+  self.showBack = function(shouldShow, disableReset) {
     // different from enableBack() because this will always have the back
     // visually hidden if false, even if the history says it should show
-    if (arguments.length && shouldShow !== isBackShown) {
-      var backBtnEle = getEle(BACK_BUTTON);
-      backBtnEle && backBtnEle.classList[ shouldShow ? 'remove' : 'add' ](HIDE);
+    if (arguments.length) {
       isBackShown = shouldShow;
+      if (!disableReset) self.updateBackButton();
     }
     return isBackShown;
+  };
+
+
+  self.showNavBack = function(shouldShow) {
+    // different from showBack() because this is for the entire nav bar's
+    // setting for all of it's child headers. For internal use.
+    isNavBackShown = shouldShow;
+    self.updateBackButton();
+  };
+
+
+  self.updateBackButton = function() {
+    if ( (isBackShown && isNavBackShown && isBackEnabled) !== isBackElementShown) {
+      isBackElementShown = isBackShown && isNavBackShown && isBackEnabled;
+      var backBtnEle = getEle(BACK_BUTTON);
+      backBtnEle && backBtnEle.classList[ isBackElementShown ? 'remove' : 'add' ](HIDE);
+    }
   };
 
 
@@ -320,7 +337,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
 
   var eleCache = {};
   function getEle(className) {
-    if (!eleCache[className]) {
+    if (!isDefined(eleCache[className])) {
       eleCache[className] = $element[0].querySelector('.' + className);
     }
     return eleCache[className];

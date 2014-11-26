@@ -202,15 +202,29 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
   };
 
 
+  /**
+   * @ngdoc method
+   * @name $ionicNavView#enableBackButton
+   * @description Enable/disable if the back button can be shown or not. For
+   * example, the very first view in the navigation stack would not have a
+   * back view, so the back button would be disabled.
+   */
   self.enableBackButton = function(shouldEnable) {
     var associatedNavBarCtrl = getAssociatedNavBarCtrl();
     associatedNavBarCtrl && associatedNavBarCtrl.enableBackButton(shouldEnable);
   };
 
 
+  /**
+   * @ngdoc method
+   * @name $ionicNavView#showBackButton
+   * @description Show/hide the nav bar active back button. If the back button
+   * is not possible this will not force the back button to show. The
+   * `enableBackButton()` method handles if a back button is even possible or not.
+   */
   self.showBackButton = function(shouldShow) {
     var associatedNavBarCtrl = getAssociatedNavBarCtrl();
-    associatedNavBarCtrl && associatedNavBarCtrl.showBackButton(shouldShow);
+    associatedNavBarCtrl && associatedNavBarCtrl.showActiveBackButton(shouldShow);
   };
 
 
