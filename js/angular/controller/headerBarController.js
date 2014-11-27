@@ -337,7 +337,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
 
   var eleCache = {};
   function getEle(className) {
-    if (!isDefined(eleCache[className])) {
+    if (!eleCache[className]) {
       eleCache[className] = $element[0].querySelector('.' + className);
     }
     return eleCache[className];
