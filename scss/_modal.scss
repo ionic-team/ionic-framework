@@ -65,13 +65,13 @@
       top: $bar-height;
     }
     .has-subheader {
-      top: (2 * $bar-height);
+      top: $bar-height + $bar-subheader-height;
     }
     .has-tabs-top {
       top: $bar-height + $tabs-height;
     }
     .has-header.has-subheader.has-tabs-top {
-      top: 2 * $bar-height + $tabs-height;
+      top: $bar-height + $bar-subheader-height + $tabs-height;
     }
   }
 }
