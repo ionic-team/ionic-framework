@@ -247,15 +247,24 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         dataSource.setData(value, beforeSiblings, afterSiblings);
         collectionRepeatManager.resize();
       }
+
+      var requiresRerender;
       function rerenderOnResize() {
         rerender(listExprParsed($scope));
+        requiresRerender = (!scrollViewContent.clientWidth && !scrollViewContent.clientHeight);
+      }
+
+      function viewEnter() {
+        if (requiresRerender) {
+          rerenderOnResize();
+        }
       }
 
       scrollCtrl.$element.on('scroll.resize', rerenderOnResize);
       ionic.on('resize', rerenderOnResize, window);
       var deregisterViewListener;
       if (navViewCtrl) {
-        deregisterViewListener = navViewCtrl.scope.$on('$ionicView.beforeEnter', rerenderOnResize);
+        deregisterViewListener = navViewCtrl.scope.$on('$ionicView.afterEnter', viewEnter);
       }
 
       $scope.$on('$destroy', function() {
