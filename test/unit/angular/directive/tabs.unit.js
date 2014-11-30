@@ -357,6 +357,28 @@ describe('tabs', function() {
       expect($rootScope.elephant).toBe('banana');
     }));
 
+    it('should wrap multiple child elements in a tab with one pane element', inject(function($compile, $rootScope) {
+      var el = $compile('<ion-tabs>' +
+        '<ion-tab><div>div1</div><div>div2</div></ion-tab>' +
+      '</ion-tabs>')($rootScope);
+      $rootScope.$apply();
+
+      expect(el[0].querySelector('.tab-content').children.length).toEqual(2);
+      expect(el[0].querySelector('.tab-content').classList.contains('pane')).toEqual(true);
+      expect(el[0].querySelector('.tab-content').children[0].innerHTML).toEqual('div1');
+      expect(el[0].querySelector('.tab-content').children[1].innerHTML).toEqual('div2');
+    }));
+
+    it('should add pane and tab-content class to tab w/ one element', inject(function($compile, $rootScope) {
+      var el = $compile('<ion-tabs>' +
+        '<ion-tab><div>div1</div></ion-tab>' +
+      '</ion-tabs>')($rootScope);
+      $rootScope.$apply();
+
+      expect(el[0].querySelector('.tab-content').children.length).toEqual(0);
+      expect(el[0].querySelector('.tab-content').classList.contains('pane')).toEqual(true);
+    }));
+
     it('should add itself to tabsCtrl and remove on $destroy', function() {
       setup();
       var tab = tabsCtrl.tabs[0];

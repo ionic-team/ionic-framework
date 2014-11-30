@@ -68,19 +68,26 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
         '></ion-tab-nav>';
 
       //Remove the contents of the element so we can compile them later, if tab is selected
-      var tabContent = document.createElement('div');
-      tabContent.innerHTML = element.html();
-      var childElementCount = tabContent.childElementCount;
+      var tabContentEle = document.createElement('div');
+      for (var x = 0; x < element[0].children.length; x++) {
+        tabContentEle.appendChild(element[0].children[x].cloneNode(true));
+      }
+      var childElementCount = tabContentEle.childElementCount;
       element.empty();
 
-      var navViewName, innerHtml;
-      if (childElementCount && tabContent.children[0].tagName === 'ION-NAV-VIEW') {
-        navViewName = tabContent.children[0].getAttribute('name');
-        innerHtml = tabContent.children[0].outerHTML;
-      } else {
-        innerHtml = tabContent.innerHTML;
+      var navViewName;
+      if (childElementCount) {
+        if (tabContentEle.children[0].tagName === 'ION-NAV-VIEW') {
+          // get the name if it's a nav-view
+          navViewName = tabContentEle.children[0].getAttribute('name');
+        }
+        if(childElementCount === 1) {
+          // make the 1 child element the primary tab content container
+          tabContentEle = tabContentEle.children[0];
+        }
+        tabContentEle.classList.add('pane');
+        tabContentEle.classList.add('tab-content');
       }
-      tabContent = null;
 
       return function link($scope, $element, $attr, ctrls) {
         var childScope;
@@ -108,7 +115,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
           }
           tabNavElement.isolateScope().$destroy();
           tabNavElement.remove();
-          tabNavElement = childElement = null;
+          tabNavElement = tabContentEle = childElement = null;
         });
 
         //Remove title attribute so browser-tooltip does not apear
@@ -141,7 +148,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
               // tab should be selected and is NOT in the DOM
               // create a new scope and append it
               childScope = $scope.$new();
-              childElement = jqLite(innerHtml);
+              childElement = jqLite(tabContentEle);
               $ionicViewSwitcher.viewEleIsActive(childElement, true);
               tabsCtrl.$element.append( childElement );
               $compile(childElement)(childScope);
