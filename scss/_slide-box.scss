@@ -23,6 +23,8 @@ ion-slide {
   @include translate3d(0,0,0);
 
   &:not([slide-display]) {
+    // This !important flag is here because it lets the end-developer specify display styles
+    // for slides as specifically as he wants, but still not show the slides that should be hidden.
     display: none !important;
   }
   &[slide-display="previous"] {
