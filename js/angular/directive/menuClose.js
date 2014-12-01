@@ -33,7 +33,8 @@ IonicModule
         if (sideMenuCtrl) {
           $ionicHistory.nextViewOptions({
             historyRoot: true,
-            disableAnimate: true
+            disableAnimate: true,
+            expire: 300
           });
           sideMenuCtrl.close();
         }
