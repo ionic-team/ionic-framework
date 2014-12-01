@@ -850,8 +850,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
           self.hintResize();
           self.scrollBy(
-            e.wheelDeltaX/self.options.wheelDampen,
-            -e.wheelDeltaY/self.options.wheelDampen
+            (e.wheelDeltaX || e.deltaX)/self.options.wheelDampen,
+            (-e.wheelDeltaY || e.deltaY)/self.options.wheelDampen
           );
 
           self.__fadeScrollbars('in');
@@ -866,6 +866,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       document.addEventListener("mousemove", self.mouseMove, false);
       document.addEventListener("mouseup", self.mouseUp, false);
       document.addEventListener('mousewheel', self.mouseWheel, false);
+      document.addEventListener('wheel', self.mouseWheel, false);
     }
   },
 
@@ -892,6 +893,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     document.removeEventListener("mousemove", self.mouseMove);
     document.removeEventListener("mouseup", self.mouseUp);
     document.removeEventListener('mousewheel', self.mouseWheel);
+    document.removeEventListener('wheel', self.mouseWheel);
 
     container.removeEventListener('scrollChildIntoView', self.scrollChildIntoView);
     container.removeEventListener('resetScrollView', self.resetScrollView);
