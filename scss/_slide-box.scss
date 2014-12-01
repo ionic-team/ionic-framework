@@ -15,14 +15,15 @@
   transition: linear transform;
 }
 
+ion-slide {
+  display: block;
+}
 .slider-slide {
   width: 100%;
-  height: 100%;
-  display: none;
   @include translate3d(0,0,0);
 
-  &[slide-display] {
-    display: inline-block;
+  &:not([slide-display]) {
+    display: none;
   }
   &[slide-display="previous"] {
     position: absolute;
