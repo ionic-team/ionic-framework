@@ -4,14 +4,16 @@ IonicModule
   '$element',
   '$attrs',
   '$compile',
+  '$rootScope',
   '$ionicViewSwitcher',
-function($scope, $element, $attrs, $compile, $ionicViewSwitcher) {
+function($scope, $element, $attrs, $compile, $rootScope, $ionicViewSwitcher) {
   var self = this;
   var navElementHtml = {};
   var navViewCtrl;
   var navBarDelegateHandle;
   var hasViewHeaderBar;
   var deregisters = [];
+  var viewTitle;
 
   var deregIonNavBarInit = $scope.$on('ionNavBar.init', function(ev, delegateHandle){
     // this view has its own ion-nav-bar, remember the navBarDelegateHandle for this view
@@ -41,7 +43,8 @@ function($scope, $element, $attrs, $compile, $ionicViewSwitcher) {
     if (transData && !transData.viewNotified) {
       transData.viewNotified = true;
 
-      var viewTitle = isDefined($attrs.viewTitle) ? $attrs.viewTitle : $attrs.title;
+      if (!$rootScope.$$phase) $scope.$digest();
+      viewTitle = isDefined($attrs.viewTitle) ? $attrs.viewTitle : $attrs.title;
 
       var buttons = {};
       for (var n in navElementHtml) {
@@ -73,9 +76,8 @@ function($scope, $element, $attrs, $compile, $ionicViewSwitcher) {
     // but also deregister the observe before it leaves
     var viewTitleAttr = isDefined($attrs.viewTitle) && 'viewTitle' || isDefined($attrs.title) && 'title';
     if (viewTitleAttr) {
-      deregisters.push($attrs.$observe(viewTitleAttr, function(val) {
-        navViewCtrl.title(val);
-      }));
+      titleUpdate($attrs[viewTitleAttr]);
+      deregisters.push($attrs.$observe(viewTitleAttr, titleUpdate));
     }
 
     if (isDefined($attrs.hideBackButton)) {
@@ -88,6 +90,14 @@ function($scope, $element, $attrs, $compile, $ionicViewSwitcher) {
       deregisters.push($scope.$watch($attrs.hideNavBar, function(val) {
         navViewCtrl.showBar(!val);
       }));
+    }
+  }
+
+
+  function titleUpdate(newTitle) {
+    if (isDefined(newTitle) && newTitle !== viewTitle) {
+      viewTitle = newTitle;
+      navViewCtrl.title(viewTitle);
     }
   }
 
