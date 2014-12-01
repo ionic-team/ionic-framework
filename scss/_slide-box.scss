@@ -23,7 +23,7 @@ ion-slide {
   @include translate3d(0,0,0);
 
   &:not([slide-display]) {
-    display: none;
+    display: none !important;
   }
   &[slide-display="previous"] {
     position: absolute;
