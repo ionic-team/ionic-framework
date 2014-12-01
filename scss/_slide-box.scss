@@ -10,6 +10,7 @@
 
 .slider-slides {
   width: 100%;
+  position: relative;
   @include translate3d(0,0,0);
   &.transition {
     -webkit-transition: linear -webkit-transform;
@@ -31,10 +32,12 @@
   &[slide-display="previous"] {
     position: absolute;
     left: -100%;
+    top: 0;
   }
   &[slide-display="next"] {
     position: absolute;
     left: 100%;
+    top: 0;
   }
 }
 
