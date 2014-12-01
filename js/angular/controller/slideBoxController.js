@@ -306,7 +306,7 @@ function(scope, element, $log, $document, $$q, $timeout, $interval, $$ionicAttac
       oldSlide = currentDisplayed[i];
       if (oldSlide && newDisplayed.indexOf(oldSlide) === -1) {
         oldSlide.removeAttribute('slide-display');
-        ionic.Utils.disconnectScope( jqLite(oldSlide).children().scope() );
+        ionic.Utils.disconnectScope( jqLite(oldSlide).data('$ionSlideScope') );
       }
     }
 
@@ -316,7 +316,7 @@ function(scope, element, $log, $document, $$q, $timeout, $interval, $$ionicAttac
 
     function setDisplay(slide, display) {
       if (!slide) return;
-      var slideScope = jqLite(slide).children().scope();
+      var slideScope = jqLite(slide).data('$ionSlideScope');
       if (slideScope) {
         ionic.Utils.reconnectScope(slideScope);
         // Digest the slide so it updates before being shown
