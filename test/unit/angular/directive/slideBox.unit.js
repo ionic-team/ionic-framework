@@ -37,6 +37,12 @@ describe('ionSlideBox', function() {
 
 
   describe('directive', function() {
+    it('should error with nested ion-slides', function() {
+      expect(function() {
+        setup('', '<ion-slide> <ion-slide>Nested</ion-slide> </ion-slide>');
+      }).toThrow();
+    });
+
     describe('selection', function() {
       it('should select first slide automatically', inject(function($rootScope, $timeout) {
         var el = setup('selected="$root.current"');
@@ -140,13 +146,25 @@ describe('ionSlideBox', function() {
       it('should call when selected changes', inject(function($rootScope, $timeout) {
         $rootScope.changed = jasmine.createSpy('changed');
         var el = setup('selected="$root.current" on-slide-changed="changed($slideIndex)"');
+        expect($rootScope.changed).not.toHaveBeenCalled();
         $timeout.flush();
         expect($rootScope.changed).toHaveBeenCalledWith(0);
 
         $rootScope.changed.reset();
         $rootScope.$apply('current = 2');
+        expect($rootScope.changed).not.toHaveBeenCalled();
         $timeout.flush();
         expect($rootScope.changed).toHaveBeenCalledWith(2);
+      }));
+    });
+
+    describe('onSlideStart', function() {
+      it('should call when animation starts', inject(function($rootScope, $timeout) {
+        $rootScope.start = jasmine.createSpy('start');
+        $rootScope.current = 1;
+        var el = setup('selected="$root.current" on-slide-start="$root.start($slideIndex)">');
+        expect($rootScope.start).toHaveBeenCalledWith(1);
+        $timeout.flush();
       }));
     });
 
@@ -324,27 +342,38 @@ describe('ionSlideBox', function() {
 
       it('when queueing, should only publish after final slide', inject(function($timeout, $rootScope) {
         $rootScope.changed = jasmine.createSpy('changed');
-        var el = setup('selected="$root.current" on-slide-changed="$root.changed($slideIndex)"');
+        $rootScope.start = jasmine.createSpy('start');
+        var el = setup('selected="$root.current" on-slide-changed="$root.changed($slideIndex)" on-slide-start="$root.start($slideIndex)"');
         $timeout.flush();
         $rootScope.changed.reset();
+        $rootScope.start.reset();
 
         $del.select(1);
         $del.select(2);
         $del.select(1);
 
+        expect($rootScope.start).toHaveBeenCalledWith(1);
+        $rootScope.start.reset();
         $timeout.flush();
+
         // Scope data bindings not published
         expect($rootScope.changed).not.toHaveBeenCalled();
         expect($rootScope.current).toBe(0);
         // Elements look different, though.
         expect(slideDisplays(el)).toEqual(['previous', 'selected', 'next']);
 
+        expect($rootScope.start).toHaveBeenCalledWith(2);
+        $rootScope.start.reset();
         $timeout.flush();
+
         expect($rootScope.changed).not.toHaveBeenCalled();
         expect($rootScope.current).toBe(0);
         expect(slideDisplays(el)).toEqual(['', 'previous', 'selected']);
 
+        expect($rootScope.start).toHaveBeenCalledWith(1);
+        $rootScope.start.reset();
         $timeout.flush();
+
         expect($rootScope.changed).toHaveBeenCalledWith(1);
         expect($rootScope.current).toBe(1);
         expect(slideDisplays(el)).toEqual(['previous', 'selected', 'next']);

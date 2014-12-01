@@ -59,7 +59,6 @@ describe('<ion-slide-pager> directive', function() {
     var slideBoxCtrl = el.controller('ionSlideBox');
     var pagers = el.find('.slider-pager-page');
 
-    expect(slideBoxCtrl.selected()).toBe(0);
     pagers.eq(1).click();
     expect(slideBoxCtrl.selected()).toBe(0);
     expect($rootScope.click).toHaveBeenCalledWith(1);

@@ -240,6 +240,8 @@ function(scope, element, $log, $document, $$q, $timeout, $interval, $$ionicAttac
     var direction;
     var translatePx;
 
+    element.triggerHandler('$ionSlideBox.slide', newIndex);
+
     // We're interested in isDrag, because a failed drag is the only case
     // where we want to run a slide animation yet have no change in selectedIndex
     if (!isDrag && (delta === 0 || selectedIndex === -1)) {
@@ -284,8 +286,8 @@ function(scope, element, $log, $document, $$q, $timeout, $interval, $$ionicAttac
 
   function setSelectedSlide(newIndex) {
     selectedIndex = newIndex;
-    container.css(ionic.CSS.TRANSFORM, '');
     setDisplayedSlides(self.previous(newIndex), newIndex, self.next(newIndex));
+    container.css(ionic.CSS.TRANSFORM, '');
   }
 
   /**
@@ -375,7 +377,7 @@ function(scope, element, $log, $document, $$q, $timeout, $interval, $$ionicAttac
 
     if (isSuccess) {
       var distanceRemaining = (1 - Math.abs(percent)) * dragWidth;
-      var transitionDuration = Math.min(distanceRemaining / velocity, SLIDE_TRANSITION_DURATION);
+      var transitionDuration = Math.min((distanceRemaining / velocity) - 34, SLIDE_TRANSITION_DURATION);
 
       self.select(function getIndex() {
         // This will be called once this dragend is reached in the select queue.

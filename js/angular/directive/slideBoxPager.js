@@ -48,6 +48,7 @@ function($parse) {
   return {
     restrict: 'E',
     require: '^ionSlideBox',
+    scope: {},
     link: postLink
   };
 
@@ -60,15 +61,26 @@ function($parse) {
     var node = element[0];
 
     // Put it outside the slides container it was transcluded into
-    slideBoxCtrl.element.append(element);
+    slideBoxCtrl.element.prepend(element);
 
-    element.addClass('slider-pager');
-    scope.slideBoxCtrl = slideBoxCtrl;
-    scope.pages = [];
 
     element.on('click', onPagerClicked);
     scope.$watch(slideBoxCtrl.count, watchCountAction);
     scope.$watch(slideBoxCtrl.selected, watchSelectedAction);
+
+    slideBoxCtrl.element.on('$ionSlideBox.slide', onSlideStart);
+    scope.$on('$destroy', function() {
+      slideBoxCtrl.element.off('$ionSlideBox.slide', onSlideStart);
+    });
+
+    element.addClass('ng-hide');
+    ionic.requestAnimationFrame(function() {
+      element.removeClass('ng-hide').addClass('slider-pager');
+    });
+
+    function onSlideStart(ev, index) {
+      watchSelectedAction(index);
+    }
 
     function onPagerClicked(ev) {
       for (var i = 0, pager; (pager = node.children[i]); i++) {
@@ -88,18 +100,20 @@ function($parse) {
       }
     }
 
-    function watchSelectedAction(selected, oldSelected) {
+    var oldSelected;
+    function watchSelectedAction(selected) {
       var old = node.children[oldSelected];
       if (old) old.classList.remove('active');
       var current = node.children[selected];
       if (current) current.classList.add('active');
+      oldSelected = selected;
     }
 
     //* Extra methods *//
 
     function doClick(index) {
       scope.$apply(function() {
-        clickFn(scope, {
+        clickFn(scope.$parent, {
           index: index, // DEPRECATED `index`
           $slideIndex: index,
         });

@@ -30,18 +30,22 @@
  *
  * @param {expression=} selected A model bound to the selected slide index.
  * @param {boolean=} loop Whether the slide box should loop. Default false.
- * @param {number=} auto-play If a positive number, then every time the given number of milliseconds have passed, slideBox will go to the next slide. Set to a non-positive number to disable. Default: -1.
- * @param {expression=} on-slide-changed Expression called whenever the slide is changed.  Is passed a '$slideIndex' variable.
+ * @param {number=} auto-play If a positive number, then every time the given number of
+ * milliseconds have passed, slideBox will go to the next slide. Set to a non-positive number
+ * to disable. Default: -1.
+ * @param {expression=} on-slide-changed Expression called when all currently queued slide
+ * animations finish.  Is passed a '$slideIndex' variable.
+ * @param {expression=} on-slide-start Expression called whenever a slide animation starts.
+ * Is passed a '$slideIndex' variable.
  * @param {string=} delegate-handle The handle used to identify this slideBox with
  * {@link ionic.service:$ionicSlideBoxDelegate}.
  */
 IonicModule
 .directive('ionSlideBox', [
   '$ionicSlideBoxDelegate',
-  '$window',
   '$ionicHistory',
-  '$parse',
-function($ionicSlideBoxDelegate, $window, $ionicHistory, $parse) {
+  '$timeout',
+function($ionicSlideBoxDelegate, $ionicHistory, $timeout) {
 
   return {
     restrict: 'E',
@@ -50,7 +54,8 @@ function($ionicSlideBoxDelegate, $window, $ionicHistory, $parse) {
     transclude: true,
     scope: {
       selected: '=?',
-      onSlideChanged: '&'
+      onSlideChanged: '&',
+      onSlideStart: '&'
     },
     template: '<div class="slider-slides" ng-transclude></div>',
     compile: compile
@@ -72,6 +77,7 @@ function($ionicSlideBoxDelegate, $window, $ionicHistory, $parse) {
       }
     );
 
+    listenForSlide();
     watchSelected();
     isDefined(attr.loop) && watchLoop();
     isDefined(attr.autoPlay) && watchAutoPlay();
@@ -81,6 +87,15 @@ function($ionicSlideBoxDelegate, $window, $ionicHistory, $parse) {
     // ***
     // Methods
     // ***
+
+    function listenForSlide() {
+      element.on('$ionSlideBox.slide', function(ev, index) {
+        scope.onSlideStart({
+          $slideIndex: index
+        });
+        $timeout(angular.noop);
+      });
+    }
 
     function watchSelected() {
       scope.$watch('selected', function(index) {
