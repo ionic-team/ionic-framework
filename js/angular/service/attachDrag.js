@@ -54,7 +54,9 @@ IonicModule
         handleDragEnd(ev);
         return;
       }
-      isDragging = true;
+      if (Math.abs(deltaX) > Math.abs(deltaY) * 2) {
+        isDragging = true;
+      }
 
       var percent = getDragPercent(ev.gesture.center.pageX);
       opts.onDrag(percent);
