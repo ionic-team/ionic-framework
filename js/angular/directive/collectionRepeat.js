@@ -170,16 +170,16 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
       var heightGetter = function(scope, locals) {
         var result = heightParsed(scope, locals);
         if (isString(result) && result.indexOf('%') > -1) {
-          return Math.floor(parseInt(result, 10) / 100 * scrollView.__clientHeight);
+          return Math.floor(parseInt(result) / 100 * scrollView.__clientHeight);
         }
-        return result;
+        return parseInt(result);
       };
       var widthGetter = function(scope, locals) {
         var result = widthParsed(scope, locals);
         if (isString(result) && result.indexOf('%') > -1) {
-          return Math.floor(parseInt(result, 10) / 100 * scrollView.__clientWidth);
+          return Math.floor(parseInt(result) / 100 * scrollView.__clientWidth);
         }
-        return result;
+        return parseInt(result);
       };
 
       var match = $attr.collectionRepeat.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
