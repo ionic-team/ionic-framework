@@ -236,7 +236,7 @@ function(scope, element, $log, $document, $$q, $timeout, $interval, $$ionicAttac
 
     var deferred = $$q.defer();
     var delta = getDelta(selectedIndex, newIndex);
-    var width = slideNodes[newIndex].offsetWidth;
+    var width = (slideNodes[selectedIndex] || slideNodes[newIndex] || {}).offsetWidth || 0;
     var direction;
     var translatePx;
 
