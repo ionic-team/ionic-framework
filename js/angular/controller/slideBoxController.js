@@ -14,21 +14,15 @@ function(scope, element, $log, $document, $$q, $timeout, $interval, $$ionicAttac
   var SLIDE_TRANSITION_DURATION = 250;
   var SLIDE_SUCCESS_VELOCITY = (1 / 4); // pixels / ms
 
-  var container = angular.element(element[0].querySelector('.slider-slides'));
-  var containerId = 'slides_' + ionic.Utils.nextUid();
-  container.attr('id', containerId);
+  var container = jqLite(element[0].querySelector('.slider-slides'));
 
   // Live-updated list of slides
   var slideNodes = container[0].getElementsByTagName('ion-slide');
 
-  // Used in setDisplayedSlides() below
-  var styleElement = angular.element('<style>');
-  $document[0].body.appendChild(styleElement[0]);
-  scope.$on('$destroy', function() { styleElement.remove(); });
-
   // If we're already sliding and a new selection is triggered, add it to the queue,
   // to be taken off once the current slide animation is done
   var slideQueue = [];
+
   // Whether we're currently sliding through the slideQueue
   var isSliding = false;
 
@@ -132,25 +126,11 @@ function(scope, element, $log, $document, $$q, $timeout, $interval, $$ionicAttac
     index = arguments.length ? index : selectedIndex;
     var nextIndex = index + 1;
     if (nextIndex >= self.count()) {
-      // We can't have a next if there's only one item...
+      // We can only have a next if there's more than one item
       if (isLoop && self.count() > 1) return 0;
       return -1;
     }
     return nextIndex;
-  }
-
-
-  // If slides are added or removed, we only want to re-set the selected index
-  // once per digest.
-  function enqueueSelect(index) {
-    enqueueSelect.index = index;
-    if (!enqueueSelect.queued) {
-      enqueueSelect.queued = true;
-      scope.$$postDigest(function() {
-        enqueueSelect.queued = false;
-        select(enqueueSelect.index);
-      });
-    }
   }
 
   // Called by ionSlide directive
@@ -198,16 +178,11 @@ function(scope, element, $log, $document, $$q, $timeout, $interval, $$ionicAttac
   // adds data to the queue for selection.
   // Index can be either a number or a getter (to be called when starting the slide)
   function select(newIndex, transitionDuration, isDrag) {
-    // Don't add selection to queue if the last selection in the list is already
-    // the same index
-    if ( (slideQueue[0] || {}).index === newIndex ) return;
-
     slideQueue.unshift([
       angular.isFunction(newIndex) ? newIndex : function() { return newIndex; },
       transitionDuration || SLIDE_TRANSITION_DURATION,
       !!isDrag
     ]);
-
     if (!isSliding) {
       runSelectQueue();
     }
@@ -221,23 +196,17 @@ function(scope, element, $log, $document, $$q, $timeout, $interval, $$ionicAttac
    * Private Methods
    ***************************/
 
-  function getDelta(fromIndex, toIndex) {
-    var difference = toIndex - fromIndex;
-    if (!isLoop) return difference;
-
-    // If looping is on, check for the looped difference.
-    // For example, going from the first item to the last item
-    // is actually a change of -1.
-    var loopedDifference = 0;
-    if (toIndex > fromIndex) {
-      loopedDifference = toIndex - fromIndex - self.count();
-    } else {
-      loopedDifference = self.count() - fromIndex + toIndex;
+  // If slides are added or removed, we only want to re-set the selected index
+  // once per digest.
+  function enqueueSelect(index) {
+    enqueueSelect.index = index;
+    if (!enqueueSelect.queued) {
+      enqueueSelect.queued = true;
+      scope.$$postDigest(function() {
+        enqueueSelect.queued = false;
+        select(enqueueSelect.index);
+      });
     }
-    if (Math.abs(loopedDifference) < Math.abs(difference)) {
-      return loopedDifference;
-    }
-    return difference;
   }
 
   // Recursively takes an item off slideQueue array, selects it,
@@ -358,6 +327,25 @@ function(scope, element, $log, $document, $$q, $timeout, $interval, $$ionicAttac
 
     // Save the now displayed slides so we can check next time
     currentDisplayed = newDisplayed;
+  }
+
+  function getDelta(fromIndex, toIndex) {
+    var difference = toIndex - fromIndex;
+    if (!isLoop) return difference;
+
+    // If looping is on, check for the looped difference.
+    // For example, going from the first item to the last item
+    // is actually a change of -1.
+    var loopedDifference = 0;
+    if (toIndex > fromIndex) {
+      loopedDifference = toIndex - fromIndex - self.count();
+    } else {
+      loopedDifference = self.count() - fromIndex + toIndex;
+    }
+    if (Math.abs(loopedDifference) < Math.abs(difference)) {
+      return loopedDifference;
+    }
+    return difference;
   }
 
 

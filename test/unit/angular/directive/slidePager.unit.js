@@ -55,6 +55,7 @@ describe('<ion-slide-pager> directive', function() {
                         '<ion-slide-pager ng-click="click($slideIndex)"></ion-slide-pager>' +
                       '</ion-slide-box>')($rootScope);
     $rootScope.$apply();
+    $timeout.flush();
     var slideBoxCtrl = el.controller('ionSlideBox');
     var pagers = el.find('.slider-pager-page');
 
