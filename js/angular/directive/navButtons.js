@@ -6,8 +6,10 @@
  * @parent ionNavView
  *
  * @description
- * Use ionNavButtons to set the buttons on your {@link ionic.directive:ionNavBar}
- * from within an {@link ionic.directive:ionView}.
+ * Use nav buttons to set the buttons on your {@link ionic.directive:ionNavBar}
+ * from within an {@link ionic.directive:ionView}. This gives each individual
+ * view the ability to specify which buttons should show in the nav bar, and
+ * overriding any default buttons already placed in the nav bar.
  *
  * Any buttons you declare will be placed onto the navbar's corresponding side. Primary
  * buttons generally map to the left side of the header, and secondary buttons are
@@ -23,7 +25,8 @@
  * example, a toggle button for a left side menu should be on the left side, in this case
  * we'd recommend uses `side="left"` so it's always on the left, no matter what platform.
  *
- * Note that the `ion-nav-buttons` must be an immediate descendant of the `ion-view` element.
+ * Note that `ion-nav-buttons` must be an immediate descendant of the `ion-view` or
+ * `ion-nav-bar` element (basically don't wrap it in another div).
  *
  * @usage
  * ```html

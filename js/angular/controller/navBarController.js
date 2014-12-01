@@ -16,7 +16,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   var PRIMARY_BUTTONS = 'primaryButtons';
   var SECONDARY_BUTTONS = 'secondaryButtons';
   var BACK_BUTTON = 'backButton';
-  var BUTTON_TYPES = 'primaryButtons secondaryButtons leftButtons rightButtons'.split(' ');
+  var ITEM_TYPES = 'primaryButtons secondaryButtons leftButtons rightButtons title'.split(' ');
 
   var self = this;
   var headerBars = [];
@@ -52,7 +52,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     if (isDefined($attrs.noTapScroll)) headerBarEle.attr('no-tap-scroll', $attrs.noTapScroll);
     var titleEle = jqLite('<div class="title title-' + alignTitle + '">');
     var navEle = {};
-    var lastViewBtnsEle = {};
+    var lastViewItemEle = {};
     var leftButtonsEle, rightButtonsEle;
 
     //navEle[BACK_BUTTON] = self.createBackButtonElement(headerBarEle);
@@ -62,11 +62,11 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     // append title in the header, this is the rock to where buttons append
     headerBarEle.append(titleEle);
 
-    forEach(BUTTON_TYPES, function(buttonType) {
+    forEach(ITEM_TYPES, function(itemType) {
       // create default button elements
-      navEle[buttonType] = createNavElement(buttonType);
+      navEle[itemType] = createNavElement(itemType);
       // append and position buttons
-      positionButtons(navEle[buttonType], buttonType);
+      positionItem(navEle[itemType], itemType);
     });
 
     // add header-item to the root children
@@ -85,30 +85,35 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
       title: function(newTitleText) {
         headerBarCtrl.title(newTitleText);
       },
-      setButtons: function(viewBtnsEle, side) {
-        // first make sure any exiting view buttons have been removed
-        headerBarInstance.removeButtons(side);
+      setItem: function(navBarItemEle, itemType) {
+        // first make sure any exiting nav bar item has been removed
+        headerBarInstance.removeItem(itemType);
 
-        if (viewBtnsEle) {
-          // there's a view button for this side
-          positionButtons(viewBtnsEle, side);
-
-          // make sure the default button on this side is hidden
-          if (navEle[side]) {
-            navEle[side].addClass(CSS_HIDE);
+        if (navBarItemEle) {
+          if (itemType === 'title') {
+            // clear out the text based title
+            headerBarInstance.title("");
           }
-          lastViewBtnsEle[side] = viewBtnsEle;
 
-        } else if (navEle[side]) {
+          // there's a custom nav bar item
+          positionItem(navBarItemEle, itemType);
+
+          if (navEle[itemType]) {
+            // make sure the default on this itemType is hidden
+            navEle[itemType].addClass(CSS_HIDE);
+          }
+          lastViewItemEle[itemType] = navBarItemEle;
+
+        } else if (navEle[itemType]) {
           // there's a default button for this side and no view button
-          navEle[side].removeClass(CSS_HIDE);
+          navEle[itemType].removeClass(CSS_HIDE);
         }
       },
-      removeButtons: function(side) {
-        if (lastViewBtnsEle[side]) {
-          lastViewBtnsEle[side].scope().$destroy();
-          lastViewBtnsEle[side].remove();
-          lastViewBtnsEle[side] = null;
+      removeItem: function(itemType) {
+        if (lastViewItemEle[itemType]) {
+          lastViewItemEle[itemType].scope().$destroy();
+          lastViewItemEle[itemType].remove();
+          lastViewItemEle[itemType] = null;
         }
       },
       containerEle: function() {
@@ -118,8 +123,8 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
         return headerBarEle;
       },
       afterLeave: function() {
-        forEach(BUTTON_TYPES, function(buttonType) {
-          headerBarInstance.removeButtons(buttonType);
+        forEach(ITEM_TYPES, function(itemType) {
+          headerBarInstance.removeItem(itemType);
         });
         headerBarCtrl.resetBackButton();
       },
@@ -127,8 +132,8 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
         return headerBarCtrl;
       },
       destroy: function() {
-        forEach(BUTTON_TYPES, function(buttonType) {
-          headerBarInstance.removeButtons(buttonType);
+        forEach(ITEM_TYPES, function(itemType) {
+          headerBarInstance.removeItem(itemType);
         });
         containerEle.scope().$destroy();
         for (var n in navEle) {
@@ -146,23 +151,25 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
       }
     };
 
-    function positionButtons(btnsEle, buttonType) {
-      if (!btnsEle) return;
+    function positionItem(ele, itemType) {
+      if (!ele) return;
 
-      var appendToRight = (buttonType == 'rightButtons') ||
-                          (buttonType == SECONDARY_BUTTONS && $ionicConfig.navBar.positionSecondaryButtons() != 'left') ||
-                          (buttonType == PRIMARY_BUTTONS && $ionicConfig.navBar.positionPrimaryButtons() == 'right');
+      if (itemType === 'title') {
+        // title element
+        titleEle.append(ele);
 
-      if (appendToRight) {
+      } else if (itemType == 'rightButtons' ||
+                (itemType == SECONDARY_BUTTONS && $ionicConfig.navBar.positionSecondaryButtons() != 'left') ||
+                (itemType == PRIMARY_BUTTONS && $ionicConfig.navBar.positionPrimaryButtons() == 'right')) {
         // right side
         if (!rightButtonsEle) {
           rightButtonsEle = jqLite('<div class="buttons buttons-right">');
           headerBarEle.append(rightButtonsEle);
         }
-        if (buttonType == SECONDARY_BUTTONS) {
-          rightButtonsEle.append(btnsEle);
+        if (itemType == SECONDARY_BUTTONS) {
+          rightButtonsEle.append(ele);
         } else {
-          rightButtonsEle.prepend(btnsEle);
+          rightButtonsEle.prepend(ele);
         }
 
       } else {
@@ -175,10 +182,10 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
             headerBarEle.prepend(leftButtonsEle);
           }
         }
-        if (buttonType == SECONDARY_BUTTONS) {
-          leftButtonsEle.append(btnsEle);
+        if (itemType == SECONDARY_BUTTONS) {
+          leftButtonsEle.append(ele);
         } else {
-          leftButtonsEle.prepend(btnsEle);
+          leftButtonsEle.prepend(ele);
         }
       }
 
@@ -221,10 +228,10 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
     self.showBar(showNavBar);
 
-    // update the buttons, depending if the view has their own or not
-    if (viewData.buttons) {
-      forEach(BUTTON_TYPES, function(buttonType) {
-        enteringHeaderBar.setButtons(viewData.buttons[buttonType], buttonType);
+    // update the nav bar items, depending if the view has their own or not
+    if (viewData.navBarItems) {
+      forEach(ITEM_TYPES, function(itemType) {
+        enteringHeaderBar.setItem(viewData.navBarItems[itemType], itemType);
       });
     }
 

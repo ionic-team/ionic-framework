@@ -46,9 +46,9 @@ function($scope, $element, $attrs, $compile, $rootScope, $ionicViewSwitcher) {
       if (!$rootScope.$$phase) $scope.$digest();
       viewTitle = isDefined($attrs.viewTitle) ? $attrs.viewTitle : $attrs.title;
 
-      var buttons = {};
+      var navBarItems = {};
       for (var n in navElementHtml) {
-        buttons[n] = generateButton(navElementHtml[n]);
+        navBarItems[n] = generateNavBarItem(navElementHtml[n]);
       }
 
       navViewCtrl.beforeEnter({
@@ -59,7 +59,7 @@ function($scope, $element, $attrs, $compile, $rootScope, $ionicViewSwitcher) {
         shouldAnimate: transData.shouldAnimate,
         enableBack: transData.enableBack,
         showBack: !attrTrue('hideBackButton'),
-        buttons: buttons,
+        navBarItems: navBarItems,
         navBarDelegate: navBarDelegateHandle || null,
         showNavBar: !attrTrue('hideNavBar'),
         hasHeaderBar: !!hasViewHeaderBar
@@ -111,7 +111,7 @@ function($scope, $element, $attrs, $compile, $rootScope, $ionicViewSwitcher) {
   }
 
 
-  function generateButton(html) {
+  function generateNavBarItem(html) {
     if (html) {
       // every time a view enters we need to recreate its view buttons if they exist
       return $compile(html)($scope.$new());

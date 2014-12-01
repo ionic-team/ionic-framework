@@ -63,7 +63,8 @@
  * either an individual view basis, or by global configuration. Please see the
  * _Caching_ section in {@link ionic.directive:ionNavView} for more info.
  *
- * @param {string=} view-title The title to display on the parent {@link ionic.directive:ionNavBar}.
+ * @param {string=} view-title A text-only title to display on the parent {@link ionic.directive:ionNavBar}.
+ * For an HTML title, such as an image, see {@link ionic.directive:ionNavTitle} instead.
  * @param {boolean=} cache-view If this view should be allowed to be cached or not.
  * Please see the _Caching_ section in {@link ionic.directive:ionNavView} for
  * more info. Default `true`
