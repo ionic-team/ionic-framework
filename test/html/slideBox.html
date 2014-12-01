@@ -66,11 +66,12 @@
         </button>
       </ion-header-bar>
       <ion-content>
-          <ion-slide-box selected="$root.selectedIndex" loop="true" ng-if="$root.hasBox">
+          <ion-slide-box selected="$root.selectedIndex" loop="true" ng-if="$root.hasBox" ng-init=colors=['darkred','blue','darkgreen','darkred','indigo','brown','black']>
           <ion-slide-pager></ion-slide-pager>
             <ion-slide ng-repeat="i in items">
-              <h3>index {{$index}} / length {{items.length}}</h3>
-              <img ng-src="http://placehold.it/{{100 + (i*10)}}x{{100 + (i*10)}}">
+              <div style="height: 250px; background-color: {{colors[i % colors.length]}}; padding-top: 100px; opacity: 0.5;">
+                <h3 style="color: white;">index {{$index}} / length {{items.length}}</h3>
+              </div>
             </ion-slide>
 
           </ion-slide-box>
