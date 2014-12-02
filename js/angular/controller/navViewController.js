@@ -161,10 +161,15 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
   self.clearCache = function() {
     var viewElements = $element.children();
+    var viewElement, viewScope;
 
     for (var x = 0, l = viewElements.length; x < l; x++) {
-      if (navViewAttr(viewElements.eq(x)) == VIEW_STATUS_CACHED) {
-        $ionicViewSwitcher.destroyViewEle(viewElements.eq(x));
+      viewElement = viewElements.eq(x);
+      if (navViewAttr(viewElement) == VIEW_STATUS_CACHED) {
+        $ionicViewSwitcher.destroyViewEle(viewElement);
+      } else if (navViewAttr(viewElement) == VIEW_STATUS_ACTIVE) {
+        viewScope = viewElement.scope();
+        viewScope && viewScope.$broadcast('$ionicView.clearCache');
       }
     }
 

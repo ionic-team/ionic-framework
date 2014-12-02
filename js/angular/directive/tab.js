@@ -169,18 +169,28 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
 
             } else {
               // do not keep tabs in the DOM
-              childScope && childScope.$destroy();
-              childElement && childElement.remove();
-              isTabContentAttached = childScope = childElement = null;
+              destroyTab();
             }
 
           }
+        }
+
+        function destroyTab() {
+          childScope && childScope.$destroy();
+          isTabContentAttached && childElement && childElement.remove();
+          isTabContentAttached = childScope = childElement = null;
         }
 
         $scope.$watch('$tabSelected', tabSelected);
 
         $scope.$on('$ionicView.afterEnter', function() {
           $ionicViewSwitcher.viewEleIsActive(childElement, $scope.$tabSelected);
+        });
+
+        $scope.$on('$ionicView.clearCache', function() {
+          if (!$scope.$tabSelected) {
+            destroyTab();
+          }
         });
 
       };
