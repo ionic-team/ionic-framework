@@ -66,9 +66,7 @@ function($ionicTabsDelegate, $ionicConfig, $ionicHistory) {
       return { pre: prelink, post: postLink };
       function prelink($scope, $element, $attr, tabsCtrl) {
         var deregisterInstance = $ionicTabsDelegate._registerInstance(
-          tabsCtrl, $attr.delegateHandle, function() {
-            return $ionicHistory.isActiveScope($scope);
-          }
+          tabsCtrl, $attr.delegateHandle, tabsCtrl.hasActiveScope
         );
 
         tabsCtrl.$scope = $scope;
