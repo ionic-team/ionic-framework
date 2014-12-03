@@ -16,7 +16,7 @@ IonicModule
      * @returns {$ionicBody} The $ionicBody service so methods can be chained.
      */
     addClass: function() {
-      for(var x=0; x<arguments.length; x++) {
+      for (var x = 0; x < arguments.length; x++) {
         $document[0].body.classList.add(arguments[x]);
       }
       return this;
@@ -29,7 +29,7 @@ IonicModule
      * @returns {$ionicBody} The $ionicBody service so methods can be chained.
      */
     removeClass: function() {
-      for(var x=0; x<arguments.length; x++) {
+      for (var x = 0; x < arguments.length; x++) {
         $document[0].body.classList.remove(arguments[x]);
       }
       return this;
@@ -48,7 +48,7 @@ IonicModule
      */
     enableClass: function(shouldEnableClass) {
       var args = Array.prototype.slice.call(arguments).slice(1);
-      if(shouldEnableClass) {
+      if (shouldEnableClass) {
         this.addClass.apply(this, args);
       } else {
         this.removeClass.apply(this, args);
@@ -64,7 +64,7 @@ IonicModule
      * @returns {$ionicBody} The $ionicBody service so methods can be chained.
      */
     append: function(ele) {
-      $document[0].body.appendChild( ele.length ? ele[0] : ele );
+      $document[0].body.appendChild(ele.length ? ele[0] : ele);
       return this;
     },
     /**

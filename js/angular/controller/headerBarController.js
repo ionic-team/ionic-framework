@@ -74,7 +74,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
 
 
   self.updateBackButton = function() {
-    if ( (isBackShown && isNavBackShown && isBackEnabled) !== isBackElementShown) {
+    if ((isBackShown && isNavBackShown && isBackEnabled) !== isBackElementShown) {
       isBackElementShown = isBackShown && isNavBackShown && isBackEnabled;
       var backBtnEle = getEle(BACK_BUTTON);
       backBtnEle && backBtnEle.classList[ isBackElementShown ? 'remove' : 'add' ](HIDE);

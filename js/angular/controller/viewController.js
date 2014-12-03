@@ -15,7 +15,7 @@ function($scope, $element, $attrs, $compile, $rootScope, $ionicViewSwitcher) {
   var deregisters = [];
   var viewTitle;
 
-  var deregIonNavBarInit = $scope.$on('ionNavBar.init', function(ev, delegateHandle){
+  var deregIonNavBarInit = $scope.$on('ionNavBar.init', function(ev, delegateHandle) {
     // this view has its own ion-nav-bar, remember the navBarDelegateHandle for this view
     ev.stopPropagation();
     navBarDelegateHandle = delegateHandle;
@@ -129,4 +129,3 @@ function($scope, $element, $attrs, $compile, $rootScope, $ionicViewSwitcher) {
   };
 
 }]);
-

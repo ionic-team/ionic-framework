@@ -35,10 +35,10 @@ IonicModule
   };
 }])
 
-.directive('ionStopEvent', function () {
+.directive('ionStopEvent', function() {
   return {
     restrict: 'A',
-    link: function (scope, element, attr) {
+    link: function(scope, element, attr) {
       element.bind(attr.ionStopEvent, eventStopPropagation);
     }
   };

@@ -12,7 +12,7 @@ IonicModule
       getDistance: function() { return opts.element.prop('offsetWidth'); },
       onDragStart: angular.noop,
       onDrag: angular.noop,
-      onDragEnd: angular.noop,
+      onDragEnd: angular.noop
     }, options);
 
     var dragStartGesture = ionic.onGesture('dragstart', handleDragStart, element[0]);

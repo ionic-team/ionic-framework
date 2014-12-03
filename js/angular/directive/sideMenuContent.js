@@ -74,14 +74,14 @@ function($timeout, $ionicGesture, $window) {
         function onDragX(e) {
           if (!sideMenuCtrl.isDraggableTarget(e)) return;
 
-          if ( getPrimaryScrollAxis(e) == 'x') {
+          if (getPrimaryScrollAxis(e) == 'x') {
             sideMenuCtrl._handleDrag(e);
             e.gesture.srcEvent.preventDefault();
           }
         }
 
         function onDragY(e) {
-          if ( getPrimaryScrollAxis(e) == 'x' ) {
+          if (getPrimaryScrollAxis(e) == 'x') {
             e.gesture.srcEvent.preventDefault();
           }
         }
@@ -115,9 +115,9 @@ function($timeout, $ionicGesture, $window) {
               var xDistance = Math.abs(endCoord.x - startCoord.x);
               var yDistance = Math.abs(endCoord.y - startCoord.y);
 
-              var scrollAxis = ( xDistance < yDistance ? 'y' : 'x' );
+              var scrollAxis = (xDistance < yDistance ? 'y' : 'x');
 
-              if ( Math.max(xDistance, yDistance) > 30 ) {
+              if (Math.max(xDistance, yDistance) > 30) {
                 // ok, we pretty much know which way they're going
                 // let's lock it in
                 primaryScrollAxis = scrollAxis;

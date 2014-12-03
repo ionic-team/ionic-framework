@@ -20,7 +20,7 @@ IonicModule
     clearHistory: 'clearHistory'
   };
 
-  forEach(methodsMap, function(newMethod, oldMethod){
+  forEach(methodsMap, function(newMethod, oldMethod) {
     methodsMap[oldMethod] = function() {
       warn('.' + oldMethod, '.' + newMethod);
       return $ionicHistory[newMethod].apply(this, arguments);

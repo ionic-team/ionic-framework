@@ -8,7 +8,7 @@
 var deprecated = {
   method: function(msg, log, fn) {
     var called = false;
-    return function deprecatedMethod(){
+    return function deprecatedMethod() {
       if (!called) {
         called = true;
         log(msg);
@@ -19,7 +19,7 @@ var deprecated = {
 
   field: function(msg, log, parent, field, val) {
     var called = false;
-    var getter = function(){
+    var getter = function() {
       if (!called) {
         called = true;
         log(msg);
@@ -42,4 +42,3 @@ var deprecated = {
     return;
   }
 };
-

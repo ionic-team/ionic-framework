@@ -43,7 +43,7 @@ IonicModule
         }
 
         $scope.isHidden = function() {
-          if($attrs.hidden === 'true' || $attrs.hidden === true)return true;
+          if ($attrs.hidden === 'true' || $attrs.hidden === true) return true;
           return false;
         };
 

@@ -64,7 +64,7 @@ function($document, $timeout) {
   };
 
   function retain() {
-    if ( (++backdropHolds) === 1 ) {
+    if ((++backdropHolds) === 1) {
       el.addClass('visible');
       ionic.requestAnimationFrame(function() {
         backdropHolds && el.addClass('active');
@@ -72,7 +72,7 @@ function($document, $timeout) {
     }
   }
   function release() {
-    if ( (--backdropHolds) === 0 ) {
+    if ((--backdropHolds) === 0) {
       el.removeClass('active');
       $timeout(function() {
         !backdropHolds && el.removeClass('visible');

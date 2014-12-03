@@ -42,7 +42,7 @@ IonicModule
 function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
 
   //Returns ' key="value"' if value exists
-  function attrStr(k,v) {
+  function attrStr(k, v) {
     return angular.isDefined(v) ? ' ' + k + '="' + v + '"' : '';
   }
   return {
@@ -83,7 +83,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
           tabContentEle.children[0].classList.add('view-container');
           isNavView = true;
         }
-        if(childElementCount === 1) {
+        if (childElementCount === 1) {
           // make the 1 child element the primary tab content container
           tabContentEle = tabContentEle.children[0];
         }
@@ -152,7 +152,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
               childScope = $scope.$new();
               childElement = jqLite(tabContentEle);
               $ionicViewSwitcher.viewEleIsActive(childElement, true);
-              tabsCtrl.$element.append( childElement );
+              tabsCtrl.$element.append(childElement);
               $compile(childElement)(childScope);
               isTabContentAttached = true;
             }
@@ -163,7 +163,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
           } else if (isTabContentAttached && childElement) {
             // this tab should NOT be selected, and it is already in the DOM
 
-            if ( $ionicConfig.views.maxCache() > 0 ) {
+            if ($ionicConfig.views.maxCache() > 0) {
               // keep the tabs in the DOM, only css hide it
               $ionicViewSwitcher.viewEleIsActive(childElement, false);
 
