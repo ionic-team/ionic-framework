@@ -107,8 +107,31 @@ describe('ionView directive', function() {
     expect( beforeEnterData.navBarDelegate ).toBe('myViewNavBar');
   }));
 
-  it('should only observe title attr after afterEnter and before beforeLeave', inject(function($rootScope) {
+  it('should only observe view-title attr after afterEnter and before beforeLeave', inject(function($rootScope) {
     var el = setup('view-title="{{ myTitle }}"', {myTitle: 'My Title'});
+    $rootScope.$broadcast('$ionicView.beforeEnter', {});
+    var spy = el.data('$ionNavViewController').title;
+    expect(spy).not.toHaveBeenCalled();
+    spy.reset();
+
+    $rootScope.$broadcast('$ionicView.afterEnter', {});
+    expect(spy).not.toHaveBeenCalled();
+    spy.reset();
+
+    el.scope().myTitle = 'My New Title';
+    $rootScope.$digest();
+    expect(spy).toHaveBeenCalledWith('My New Title');
+    spy.reset();
+
+    $rootScope.$broadcast('$ionicView.beforeLeave', {});
+    el.scope().myTitle = 'My Other New Title';
+    $rootScope.$digest();
+    expect(spy).not.toHaveBeenCalled();
+    spy.reset();
+  }));
+
+  it('should only observe title attr after afterEnter and before beforeLeave', inject(function($rootScope) {
+    var el = setup('title="{{ myTitle }}"', {myTitle: 'My Title'});
     $rootScope.$broadcast('$ionicView.beforeEnter', {});
     var spy = el.data('$ionNavViewController').title;
     expect(spy).not.toHaveBeenCalled();
