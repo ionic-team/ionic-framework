@@ -163,9 +163,6 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
         },
 
         render: function(registerData, callback) {
-          var enteringData = getTransitionData(viewLocals, enteringEle, registerData.direction, enteringView);
-          var transitionFn = $ionicConfig.transitions.views[enteringData.transition];
-
           // disconnect the leaving scope before reconnecting or creating a scope for the entering view
           leavingEle && ionic.Utils.disconnectScope(leavingEle.scope());
 
@@ -173,15 +170,14 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             // it was already found in the DOM, just reconnect the scope
             ionic.Utils.reconnectScope(enteringEle.scope());
 
-            // set the styles of where this element will end up going so
-            // the DOM has some time to render its correct starting point
-            transitionFn(enteringEle, null, enteringData.direction, false).run(0);
-
           } else {
             // the entering element is not already in the DOM
             // set that the entering element should be "staged" and its
             // styles of where this element will go before it hits the DOM
             navViewAttr(enteringEle, VIEW_STATUS_STAGED);
+
+            var enteringData = getTransitionData(viewLocals, enteringEle, registerData.direction, enteringView);
+            var transitionFn = $ionicConfig.transitions.views[enteringData.transition];
             transitionFn(enteringEle, null, enteringData.direction, true).run(0);
 
             historyCursorAttr(enteringEle, registerData.isHistoryRoot ? HISTORY_ROOT : HISTORY_AFTER_ROOT);
@@ -203,7 +199,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
           // update that this view was just accessed
           enteringEle.data(DATA_VIEW_ACCESSED, Date.now());
 
-          $timeout(callback, 16);
+          callback && callback();
         },
 
         transition: function(direction, enableBack) {
