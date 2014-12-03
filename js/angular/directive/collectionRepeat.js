@@ -125,6 +125,8 @@
  *
  * @param {expression} collection-item-width The width of the repeated element.  Can be a number (in pixels) or a percentage.
  * @param {expression} collection-item-height The height of the repeated element.  Can be a number (in pixels), or a percentage.
+ * @param {expression} collection-list-top A boolean switch indicating that the list should scroll to the top upon list change or 
+ *   scrollView resize.  Defaults to `true`.
  *
  */
 var COLLECTION_REPEAT_SCROLLVIEW_XY_ERROR = "Cannot create a collection-repeat within a scrollView that is scrollable on both x and y axis.  Choose either x direction or y direction.";
