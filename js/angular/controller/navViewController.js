@@ -12,6 +12,7 @@ IonicModule
 function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, $ionicNavViewDelegate, $ionicHistory, $ionicViewSwitcher) {
 
   var DATA_ELE_IDENTIFIER = '$eleId';
+  var DATA_DESTROY_ELE = '$destroyEle';
   var VIEW_STATUS_ACTIVE = 'active';
   var VIEW_STATUS_CACHED = 'cached';
   var HISTORY_AFTER_ROOT = 'after-root';
@@ -40,6 +41,8 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
     var deregisterInstance = $ionicNavViewDelegate._registerInstance(self, $attrs.delegateHandle);
     $scope.$on('$destroy', deregisterInstance);
+
+    $scope.$on('$ionicHistory.deselect', self.cacheCleanup);
 
     return viewData;
   };
@@ -154,6 +157,16 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
         if ($ionicViewSwitcher.isHistoryRoot(viewElement) && navViewAttr(viewElement) !== VIEW_STATUS_ACTIVE) {
           $ionicViewSwitcher.historyCursorAttr(viewElement, HISTORY_AFTER_ROOT);
         }
+      }
+    }
+  };
+
+
+  self.cacheCleanup = function() {
+    var viewElements = $element.children();
+    for (var x = 0, l = viewElements.length; x < l; x++) {
+      if (viewElements.eq(x).data(DATA_DESTROY_ELE)) {
+        $ionicViewSwitcher.destroyViewEle(viewElements.eq(x));
       }
     }
   };

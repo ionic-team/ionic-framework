@@ -45,6 +45,7 @@ function($scope, $ionicHistory, $element) {
       _selectedTab = null;
       tab.$tabSelected = false;
       (tab.onDeselect || angular.noop)();
+      tab.$broadcast && tab.$broadcast('$ionicHistory.deselect');
     }
   };
 

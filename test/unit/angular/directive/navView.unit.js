@@ -102,8 +102,49 @@ describe('Ionic nav-view', function() {
   ionViewCacheFalsePropertyState = {
     template: '<ion-view>ionViewCacheFalsePropertyState</ion-view>',
     cache: false
-  };
-
+  },
+  tabAbstractState = {
+    abstract: true,
+    views: {
+      'root': {
+        template: '<ion-tabs>' +
+                    '<ion-tab><ion-nav-view name="tab1"></ion-nav-view></ion-tab>' +
+                    '<ion-tab><ion-nav-view name="tab2"></ion-nav-view></ion-tab>' +
+                    '<ion-tab><ion-nav-view name="tab3"></ion-nav-view></ion-tab>' +
+                    '<ion-tab><ion-view><h2>Inline Tab</h2></ion-view></ion-tab>' +
+                   '</ion-tabs>'
+      }
+    }
+  },
+  tab1page1State = {
+    views: {
+      'tab1': {
+        template: 'tab1page1'
+      }
+    }
+  },
+  tab2page1State = {
+    views: {
+      'tab2': {
+        template: 'tab2page1'
+      }
+    }
+  },
+  tab3page1State = {
+    views: {
+      'tab3': {
+        template: 'tab3page1'
+      }
+    }
+  },
+  tab3page2NoCacheState = {
+    cache: false,
+    views: {
+      'tab3': {
+        template: 'tab3page2NoCache'
+      }
+    }
+  }
   beforeEach(module(function ($stateProvider) {
     $stateProvider
       .state('a', aState)
@@ -128,7 +169,12 @@ describe('Ionic nav-view', function() {
       .state('ionView1', ionView1State)
       .state('ionView2', ionView2State)
       .state('ionViewCacheFalseAttr', ionViewCacheFalseAttrState)
-      .state('ionViewCacheFalseProperty', ionViewCacheFalsePropertyState);
+      .state('ionViewCacheFalseProperty', ionViewCacheFalsePropertyState)
+      .state('tabAbstract', tabAbstractState)
+      .state('tabAbstract.tab1page1', tab1page1State)
+      .state('tabAbstract.tab2page1', tab2page1State)
+      .state('tabAbstract.tab3page1', tab3page1State)
+      .state('tabAbstract.tab3page2', tab3page2NoCacheState);
   }));
 
   beforeEach(inject(function(_$compile_, $ionicConfig, $rootScope) {
@@ -899,6 +945,70 @@ describe('Ionic nav-view', function() {
 
     expect(divs.eq(0).attr('nav-view')).toBe('active');
     expect(divs.eq(0).text()).toBe('page2');
+  }));
+
+  it('should create and cache tabs', inject(function ($state, $q, $timeout, $compile, $ionicConfig) {
+    elem.append($compile('<ion-nav-view name="root"></ion-nav-view>')(scope));
+
+    $state.go(tab1page1State);
+    $q.flush();
+    $timeout.flush();
+
+    var tab1Ele = elem[0].querySelector('ion-nav-view[name="tab1"]');
+    expect(tab1Ele.getAttribute('nav-view')).toBe('active');
+
+    $state.go(tab2page1State);
+    $q.flush();
+    $timeout.flush();
+
+    var tab2Ele = elem[0].querySelector('ion-nav-view[name="tab2"]');
+    expect(tab1Ele.getAttribute('nav-view')).toBe('cached');
+    expect(tab2Ele.getAttribute('nav-view')).toBe('active');
+
+    $state.go(tab3page1State);
+    $q.flush();
+    $timeout.flush();
+
+    var tab3Ele = elem[0].querySelector('ion-nav-view[name="tab3"]');
+    expect(tab1Ele.getAttribute('nav-view')).toBe('cached');
+    expect(tab2Ele.getAttribute('nav-view')).toBe('cached');
+    expect(tab3Ele.getAttribute('nav-view')).toBe('active');
+
+    $state.go(tab1page1State);
+    $q.flush();
+    $timeout.flush();
+
+    expect(tab1Ele.getAttribute('nav-view')).toBe('active');
+    expect(tab2Ele.getAttribute('nav-view')).toBe('cached');
+    expect(tab3Ele.getAttribute('nav-view')).toBe('cached');
+  }));
+
+  it('should not cache a tab with cache false state property', inject(function ($state, $q, $timeout, $compile, $ionicConfig) {
+    elem.append($compile('<ion-nav-view name="root"></ion-nav-view>')(scope));
+
+    $state.go(tab3page2NoCacheState);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    var tab3NoCacheEle = elem[0].querySelector('ion-nav-view[name="tab3"]');
+    expect(tab3NoCacheEle.getAttribute('nav-view')).toBe('active');
+
+    var tab3InnerEle = tab3NoCacheEle.querySelector('[nav-view="active"]');
+    expect(tab3InnerEle.innerText).toEqual('tab3page2NoCache');
+
+    $state.go(tab1page1State);
+    $q.flush();
+    $timeout.flush();
+    $timeout.flush();
+
+    var tab1Ele = elem[0].querySelector('ion-nav-view[name="tab1"]');
+    expect(tab3NoCacheEle.getAttribute('nav-view')).toBe('cached');
+    expect(tab1Ele.getAttribute('nav-view')).toBe('active');
+    expect(tab1Ele.innerText).toEqual('tab1page1');
+
+    tab3InnerEle = tab3NoCacheEle.querySelector('[nav-view="active"]');
+    expect(tab3InnerEle).toBe(null);
   }));
 
 });
