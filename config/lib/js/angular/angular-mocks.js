@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.3.4
+ * @license AngularJS v1.3.5
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -1149,7 +1149,7 @@ function createHttpBackendMock($rootScope, $delegate, $browser) {
     return function() {
       return angular.isNumber(status)
           ? [status, data, headers, statusText]
-          : [200, status, data];
+          : [200, status, data, headers];
     };
   }
 
@@ -2054,7 +2054,7 @@ angular.mock.e2e.$httpBackendDecorator =
  *
  * In addition to all the regular `Scope` methods, the following helper methods are available:
  */
-angular.mock.$RootScopeDecorator = function($delegate) {
+angular.mock.$RootScopeDecorator = ['$delegate', function($delegate) {
 
   var $rootScopePrototype = Object.getPrototypeOf($delegate);
 
@@ -2126,7 +2126,7 @@ angular.mock.$RootScopeDecorator = function($delegate) {
 
     return count;
   }
-};
+}];
 
 
 if (window.jasmine || window.mocha) {
