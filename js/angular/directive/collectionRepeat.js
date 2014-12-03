@@ -166,6 +166,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
 
       var heightParsed = $parse($attr.collectionItemHeight || '"100%"');
       var widthParsed = $parse($attr.collectionItemWidth || '"100%"');
+      var listTopParsed = $parse($attr.collectionListTop || true);
 
       var heightGetter = function(scope, locals) {
         var result = heightParsed(scope, locals);
@@ -246,6 +247,9 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         scrollView.resize();
         dataSource.setData(value, beforeSiblings, afterSiblings);
         collectionRepeatManager.resize();
+        if (listTopParsed) {
+          scrollView.scrollTo(0,0, false, null, true);
+        }
       }
 
       var requiresRerender;
