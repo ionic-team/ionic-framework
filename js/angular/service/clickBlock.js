@@ -11,12 +11,12 @@ function($document, $ionicBody, $timeout) {
   cb.className = 'click-block';
 
   return {
-    show: function() {
+    show: function(autoExpire) {
       // cancel the fallback timer
-      $timeout.cancel( fallbackTimer );
+      $timeout.cancel(fallbackTimer);
 
-      ionic.requestAnimationFrame(function(){
-        if(isAttached) {
+      ionic.requestAnimationFrame(function() {
+        if (isAttached) {
           cb.classList.remove(CSS_HIDE);
         } else {
           $ionicBody.append(cb);
@@ -24,18 +24,13 @@ function($document, $ionicBody, $timeout) {
         }
       });
 
-      fallbackTimer = $timeout(function(){
+      fallbackTimer = $timeout(function() {
         cb.classList.add(CSS_HIDE);
-      }, 750);
+      }, autoExpire || 300);
     },
     hide: function() {
-      // cancel the fallback timer
-      $timeout.cancel( fallbackTimer );
-
-      // should be a minimum time it should hide
-      ionic.requestAnimationFrame(function(){
-        cb.classList.add(CSS_HIDE);
-      });
+      $timeout.cancel(fallbackTimer);
+      cb.classList.add(CSS_HIDE);
     }
   };
 }]);
