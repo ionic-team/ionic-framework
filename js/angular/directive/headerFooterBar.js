@@ -140,6 +140,9 @@ function headerFooterBarDirective(isHeader) {
               delete $scope.$hasSubheader;
             });
             ctrl.align();
+            $scope.$on('$ionicHeader.align', function() {
+              ctrl.align();
+            });
 
           } else {
             $scope.$watch(function() { return $element[0].className; }, function(value) {
