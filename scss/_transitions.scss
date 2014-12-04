@@ -75,8 +75,8 @@ $ios-transition-container-bg-color:    #000 !default;
 // Android View Transitions
 // -------------------------------
 
-$android-transition-duration-entering:       250ms !default;
-$android-transition-duration-leaving:        160ms !default;
+$android-transition-duration-entering:       300ms !default;
+$android-transition-duration-leaving:        200ms !default;
 $android-transition-timing-entering:         cubic-bezier(0.4, 0.6, 0.2, 1) !default;
 $android-transition-timing-leaving:          cubic-bezier(0.4, 0, 1, 1) !default;
 
