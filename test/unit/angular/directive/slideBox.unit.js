@@ -340,6 +340,24 @@ describe('ionSlideBox', function() {
         expect(slideDisplays(el)).toEqual(['selected', 'next', 'previous']);
       }));
 
+      it('strings and negative numbers', inject(function($timeout, $rootScope) {
+        var el = setup();
+        $timeout.flush();
+
+        // Do nothing for -1
+        $del.select(-1);
+        $timeout.verifyNoPendingTasks();
+
+        // Do nothing for NaN
+        $del.select(NaN);
+        $timeout.verifyNoPendingTasks();
+
+        // parse to int
+        $del.select('1');
+        $timeout.flush();
+        expect($del.selected()).toBe(1);
+      }));
+
       it('when queueing, should only publish after final slide', inject(function($timeout, $rootScope) {
         $rootScope.changed = jasmine.createSpy('changed');
         $rootScope.start = jasmine.createSpy('start');

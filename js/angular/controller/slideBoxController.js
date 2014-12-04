@@ -178,6 +178,8 @@ function(scope, element, $log, $document, $$q, $timeout, $interval, $$ionicAttac
   // adds data to the queue for selection.
   // Index can be either a number or a getter (to be called when starting the slide)
   function select(newIndex, transitionDuration, isDrag) {
+    newIndex = parseInt(newIndex);
+    if (isNaN(newIndex) || newIndex < 0) return;
     slideQueue.unshift([
       angular.isFunction(newIndex) ? newIndex : function() { return newIndex; },
       transitionDuration || SLIDE_TRANSITION_DURATION,
