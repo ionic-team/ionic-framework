@@ -170,6 +170,55 @@ describe('Ionic Angular Side Menu', function() {
     expect(ctrl.isDraggableTarget(e)).toBe(true);
 
   }));
+
+  it('should isDraggableTarget w/ enableMenuWithBackViews', inject(function($compile, $rootScope, $ionicHistory) {
+    var el = $compile('<ion-side-menus><ion-side-menu-content></ion-side-menu-content></ion-side-menus>')($rootScope.$new());
+    $rootScope.$apply();
+
+    var ctrl = el.controller('ionSideMenus');
+
+    var e = {
+      gesture: {
+        srcEvent: {
+          defaultPrevented: false
+        }
+      },
+      target: {
+        tagName: 'DIV',
+        dataset: {
+          preventScroll: false
+        }
+      }
+    };
+
+    ctrl.enableMenuWithBackViews(true);
+    expect(ctrl.isDraggableTarget(e)).toBe(true);
+
+    ctrl.enableMenuWithBackViews(false);
+    expect(ctrl.isDraggableTarget(e)).toBe(true);
+
+    ctrl.enableMenuWithBackViews(false);
+    $ionicHistory.currentView({historyId: 'root'});
+    $ionicHistory.backView({historyId: 'root'});
+    expect(ctrl.isDraggableTarget(e)).toBe(false);
+
+    ctrl.enableMenuWithBackViews(false);
+    $ionicHistory.currentView({historyId: 'root'});
+    $ionicHistory.backView(null);
+    expect(ctrl.isDraggableTarget(e)).toBe(true);
+
+    ctrl.enableMenuWithBackViews(true);
+    $ionicHistory.currentView({historyId: 'root'});
+    $ionicHistory.backView({historyId: 'root'});
+    expect(ctrl.isDraggableTarget(e)).toBe(true);
+
+    ctrl.enableMenuWithBackViews(false);
+    $ionicHistory.currentView({historyId: '003'});
+    $ionicHistory.backView({historyId: 'root'});
+    expect(ctrl.isDraggableTarget(e)).toBe(true);
+
+  }));
+
 });
 
 describe('Ionic Side Menu Content Directive', function () {

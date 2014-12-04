@@ -368,7 +368,12 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
       startX <= self.edgeThreshold ||
       startX >= self.content.element.offsetWidth - self.edgeThreshold;
 
-    var menuEnabled = self.enableMenuWithBackViews() ? true : !$ionicHistory.backView();
+    var backView = $ionicHistory.backView();
+    var menuEnabled = enableMenuWithBackViews ? true : !backView;
+    if (!menuEnabled) {
+      var currentView = $ionicHistory.currentView() || {};
+      return backView.historyId !== currentView.historyId;
+    }
 
     return ($scope.dragContent || self.isOpen()) &&
       dragIsWithinBounds &&
