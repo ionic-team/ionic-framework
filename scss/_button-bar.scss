@@ -45,10 +45,10 @@
   }
 
   &:first-child {
-    border-radius: 2px 0px 0px 2px;
+    border-radius: $button-border-radius 0px 0px $button-border-radius;
   }
   &:last-child {
     border-right-width: 1px;
-    border-radius: 0px 2px 2px 0px;
+    border-radius: 0px $button-border-radius $button-border-radius 0px;
   }
 }
