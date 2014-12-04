@@ -213,12 +213,10 @@
      * @private
      */
     setPlatform: function(n) {
-      var override;
-
       if (typeof n != 'undefined' && n !== null && n.length) {
         platformName = n.toLowerCase();
-      } else if(override = getParameterByName('ionicplatform')) {
-        platformName = override;
+      } else if(getParameterByName('ionicplatform')) {
+        platformName = getParameterByName('ionicplatform');
       } else if (this.ua.indexOf('Android') > 0) {
         platformName = ANDROID;
       } else if (this.ua.indexOf('iPhone') > -1 || this.ua.indexOf('iPad') > -1 || this.ua.indexOf('iPod') > -1) {
