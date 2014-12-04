@@ -172,6 +172,7 @@ $android-transition-timing-leaving:          cubic-bezier(0.4, 0, 1, 1) !default
   .title,
   .buttons,
   .back-text {
+    position: absolute;
     opacity: 0;
     @include transition-duration(0s);
   }
