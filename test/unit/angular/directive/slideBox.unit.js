@@ -346,11 +346,13 @@ describe('ionSlideBox', function() {
 
         // Do nothing for -1
         $del.select(-1);
-        $timeout.verifyNoPendingTasks();
+        $timeout.flush();
+        expect($del.selected()).toBe(0);
 
         // Do nothing for NaN
         $del.select(NaN);
-        $timeout.verifyNoPendingTasks();
+        $timeout.flush();
+        expect($del.selected()).toBe(0);
 
         // parse to int
         $del.select('1');
