@@ -1,4 +1,4 @@
-describe('$ionicLoading service', function() {
+ddescribe('$ionicLoading service', function() {
   beforeEach(module('ionic', function($provide) {
     //Set default options to blank for the sake of tests
     $provide.constant('$ionicLoadingConfig', {});
@@ -193,6 +193,32 @@ describe('$ionicLoading service', function() {
       expect(deregisterSpy).toHaveBeenCalled();
     }));
   });
+
+  it('should use options.hideOnStateChange', inject(function($ionicLoading, $rootScope, $timeout) {
+    var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+    $ionicLoading.show({
+      hideOnStateChange: true,
+      template: ''
+    });
+    spyOn(loader, 'hide');
+    $timeout.flush();
+    $rootScope.$broadcast('$stateChangeSuccess');
+    $rootScope.$apply();
+    expect(loader.hide).toHaveBeenCalled();
+  }));
+
+  it('should default false options.hideOnStateChange', inject(function($ionicLoading, $rootScope, $timeout) {
+    var loader = TestUtil.unwrapPromise($ionicLoading._getLoader());
+    $ionicLoading.show({
+      template: ''
+    });
+    spyOn(loader, 'hide');
+    $timeout.flush();
+    $rootScope.$broadcast('$stateChangeSuccess');
+    $rootScope.$apply();
+    expect(loader.hide).not.toHaveBeenCalled();
+  }));
+
 });
 describe('$ionicLoadingConfig', function() {
   beforeEach(module('ionic', function($provide) {
