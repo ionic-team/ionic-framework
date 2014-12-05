@@ -210,13 +210,13 @@
       display: block;
       margin-right: 5px;
       padding: 0;
-      opacity: 0.8;
       white-space: nowrap;
+      @include transition-duration(0);
     }
 
     &.back-button.active,
     &.back-button.activated {
-      opacity: 1;
+      opacity: 0.2;
     }
   }
 
