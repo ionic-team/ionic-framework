@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html ng-app="tabsTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Tab Bars</title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body ng-controller="RootCtrl">
+    <ion-tabs
+          class="tabs-color-active-positive tabs-icon-top"
+          animation="fade-in-out"
+          controller-changed="onControllerChanged(oldController, oldIndex, newController, newIndex)">
+
+          <ion-tab title="<img src='http://placekitten.com/40/40'>" ng-controller="HomeCtrl">
+        <header class="bar bar-header bar-positive">
+          <h1 class="title">Tasks</h1>
+        </header>
+        <ion-content class="has-header has-subheader" on-refresh="onRefresh()" on-scroll="scroll(scrollTop, scrollLeft)">
+
+          <ion-refresher></ion-refresher>
+
+          <ion-list>
+            <ion-item ng-repeat="item in items">
+              {{item.title}}
+            </list-item>
+          </ion-list>
+          <button ng-click="goTop()">Go Top</button>
+        </ion-content>
+      </ion-tab>
+
+      <ion-tab title="Deadlines" icon-on="icon ion-ios7-clock" icon-off="icon ion-ios7-clock-outline" badge-style="badge-light" badge="unreadDeadlines">
+        <header class="bar bar-header bar-positive">
+          <h1 class="title">Deadlines</h1>
+        </header>
+        <ion-content clsas="has-header" padding="true">
+          <h1>Deadlines</h1>
+        </ion-content>
+      </ion-tab>
+
+      <ion-tab title="Settings" icon-on="icon ion-ios7-gear" icon-off="icon ion-ios7-gear-outline">
+        <header class="bar bar-header bar-positive">
+          <h1 class="title">Settings</h1>
+        </header>
+        <ion-content class="has-header" padding="true">
+          <h1>Settings</h1>
+        </ion-content>
+      </ion-tab>
+
+      <ion-tab title="Settings" icon-on="icon ion-ios7-gear" icon-off="icon ion-ios7-gear-outline">
+        <header class="bar bar-header bar-positive">
+          <h1 class="title">Settings</h1>
+        </header>
+        <ion-content class="has-header" padding="true">
+          <h1>Settings</h1>
+        </ion-content>
+      </ion-tab>
+
+      <ion-tab title="Hidden" icon-on="icon ion-ionic" icon-off="icon ion-ionic" hidden="true">
+        <header class="bar bar-header bar-positive">
+          <h1 class="title">Hidden Tab</h1>
+        </header>
+        <ion-content class="has-header" padding="true">
+          <h1>This tab should be hidden</h1>
+        </ion-content>
+      </ion-tab>
+
+    </ion-tabs>
+
+    <script id="newTask.html" type="text/ng-template">
+      <div id="task-view" class="modal slide-in-up" ng-controller="TaskCtrl">
+        <header class="bar bar-header bar-secondary">
+          <h1 class="title">New Task</h1>
+          <button class="button button-clear button-primary" ng-click="close()">Done</button>
+        </header>
+        <main class="content padding has-header">
+          <input type="text" placeholder="I need to do this...">
+        </main>
+      </div>
+    </script>
+
+    <script type="text/javascript">
+      angular.module('tabsTest', ['ionic'])
+
+      .controller('RootCtrl', function($scope, $timeout) {
+
+        $scope.$on('tab.shown', function() { console.error('tab.shown Root this should not happen'); });
+        $scope.$on('tab.hidden', function() { console.error('tab.hidden Root this should not happen'); });
+
+        $scope.controllerChanged = function(event) {
+          console.log('Controller changed', event);
+
+          // Tab badge demo
+          if (event.newIndex == 1) {
+            $scope.unreadDeadlines = false;
+          } else {
+            if (!$scope.unreadDeadlines)
+              $scope.unreadDeadlines = 1;
+            updateRandomDeadlines();
+          }
+        };
+
+        $scope.scroll = function(scrollTop, scrollLeft) {
+          console.log('Scroll', scrollTop, scrollLeft);
+        };
+
+        // Tab badge demo
+        $scope.unreadDeadlines = false;
+        function updateRandomDeadlines() {
+          $timeout(function() {
+            if (!$scope.unreadDeadlines)
+              return;
+            $scope.unreadDeadlines += 1;
+            updateRandomDeadlines();
+          }, Math.random() * 10000);
+        }
+        updateRandomDeadlines();
+      })
+
+
+      .controller('HomeCtrl', function($scope, $timeout, $ionicModal, $ionicActionSheet) {
+
+        $ionicModal.fromTemplateUrl('newTask.html', function(modal) {
+          $scope.settingsModal = modal;
+        });
+
+        $scope.$on('tab.shown', function() { console.log('tab.shown Home'); });
+        $scope.$on('tab.hidden', function() { console.log('tab.hidden Home'); });
+
+        var removeItem = function(item, button) {
+          $ionicActionSheet.show({
+            buttons: [],
+            destructiveText: 'Delete Task',
+            cancelText: 'Cancel',
+            cancel: function() {
+              return true;
+            },
+            destructiveButtonClicked: function() {
+              $scope.items.splice($scope.items.indexOf(item), 1);
+              return true;
+            }
+          });
+        };
+
+        var completeItem = function(item, button) {
+          item.isCompleted = true;
+        };
+
+        $scope.onReorder = function(el, start, end) {
+          ionic.Utils.arrayMove($scope.items, start, end);
+        };
+
+        $scope.onRefresh = function() {
+          console.log('ON REFRESH');
+
+          $timeout(function() {
+            buildMockData();
+			      $scope.$broadcast('scroll.refreshComplete');
+          }, 1000);
+        }
+
+
+        $scope.deleteItem = function(item) {
+          removeItem(item);
+        };
+
+        $scope.newTask = function() {
+          $scope.settingsModal.show();
+        };
+
+        function buildMockData() {
+          // Create the items
+          $scope.items = [];
+          for(var i = 0; i < 25; i++) {
+            $scope.items.push({
+              title: 'Task ' + (i + 1)
+            });
+          }
+        }
+        buildMockData();
+
+        $scope.goTop = function() {
+			    $scope.$broadcast('scroll.scrollTop', false);
+        };
+      })
+
+      .controller('TaskCtrl', function($scope) {
+        $scope.close = function() {
+          $scope.modal.hide();
+        }
+      });
+
+    </script>
+  </body>
+</html>

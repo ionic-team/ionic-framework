@@ -208,6 +208,32 @@
   @include tabs-color('tabs-color-energized',$energized);
   @include tabs-color('tabs-color-royal', $royal);
   @include tabs-color('tabs-color-dark', $dark);
+
+}
+
+@mixin tabs-standard-color($style, $color, $off-color:$dark) {
+  &.#{$style} {
+    .tab-item {
+      color: $off-color;
+      &.tab-item-active,
+      &.active,
+      &.activated {
+        color: $color;
+      }
+    }
+  }
+}
+
+ion-tabs {
+  @include tabs-standard-color('tabs-color-active-light', $light, $dark);
+  @include tabs-standard-color('tabs-color-active-stable', $stable, $dark);
+  @include tabs-standard-color('tabs-color-active-positive', $positive, $dark);
+  @include tabs-standard-color('tabs-color-active-calm', $calm, $dark);
+  @include tabs-standard-color('tabs-color-active-assertive', $assertive, $dark);
+  @include tabs-standard-color('tabs-color-active-balanced', $balanced, $dark);
+  @include tabs-standard-color('tabs-color-active-energized',$energized, $dark);
+  @include tabs-standard-color('tabs-color-active-royal', $royal, $dark);
+  @include tabs-standard-color('tabs-color-active-dark', $dark, $light);
 }
 
 .tabs-top {
