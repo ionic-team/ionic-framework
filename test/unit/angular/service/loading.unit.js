@@ -1,4 +1,4 @@
-ddescribe('$ionicLoading service', function() {
+describe('$ionicLoading service', function() {
   beforeEach(module('ionic', function($provide) {
     //Set default options to blank for the sake of tests
     $provide.constant('$ionicLoadingConfig', {});
