@@ -664,7 +664,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
         if (climbScope.$$disconnected) {
           return false;
         }
-        if (currentHistoryId && currentHistoryId == climbScope.$historyId) {
+        if (currentHistoryId && (currentHistoryId == climbScope.$historyId || currentHistoryId == climbScope.$activeHistoryId)) {
           return true;
         }
         climbScope = climbScope.$parent;
