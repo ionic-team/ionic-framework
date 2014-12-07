@@ -11,6 +11,7 @@
       this.el = opts.el;
       this.isEnabled = (typeof opts.isEnabled === 'undefined') ? true : opts.isEnabled;
       this.setWidth(opts.width);
+      this.setHideWhenClosed((typeof opts.hideWhenClosed === 'undefined') ? false : opts.hideWhenClosed);
     },
     getFullWidth: function() {
       return this.width;
@@ -22,6 +23,12 @@
     setIsEnabled: function(isEnabled) {
       this.isEnabled = isEnabled;
     },
+    setHideWhenClosed: function(hideWhenClosed) {
+    	this.hideWhenClosed = hideWhenClosed;
+        if (this.hideWhenClosed) {
+          this.hide();
+        }
+    },
     bringUp: function() {
       if(this.el.style.zIndex !== '0') {
         this.el.style.zIndex = '0';
@@ -31,6 +38,12 @@
       if(this.el.style.zIndex !== '-1') {
         this.el.style.zIndex = '-1';
       }
+    },
+    hide: function() {
+    	this.el.style.visibility = 'hidden';
+    },
+    unhide: function() {
+    	this.el.style.visibility = 'visible';
     }
   });
 

@@ -14,7 +14,13 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody) {
 
   self.initialize = function(options) {
     self.left = options.left;
+    if (!isAsideExposed && self.left.hideWhenClosed) {
+    	self.left.hide();
+    }
     self.right = options.right;
+    if (!isAsideExposed && self.right.hideWhenClosed) {
+    	self.right.hide();
+    }
     self.setContent(options.content);
     self.dragThresholdX = options.dragThresholdX || 10;
   };
@@ -176,10 +182,16 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody) {
       rightShowing = false;
 
       if(amount > 0) {
+      	if (self.left.hideWhenClosed) {
+      		self.left.unhide();
+      	}
         // Push the z-index of the right menu down
         self.right && self.right.pushDown && self.right.pushDown();
         // Bring the z-index of the left menu up
         self.left && self.left.bringUp && self.left.bringUp();
+      }
+      else if(self.left.hideWhenClosed) {
+      	self.left.hide();
       }
     } else {
       rightShowing = true;
@@ -268,6 +280,9 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody) {
     // otherwise set false so there's no left margin
     self.content.setMarginLeft( isAsideExposed ? self.left.width : 0 );
 
+    if(self.left.hideWhenClosed) {
+      self.left.unhide();
+    }
     self.$scope.$emit('$ionicExposeAside', isAsideExposed);
   };
 

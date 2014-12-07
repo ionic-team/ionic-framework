@@ -13,7 +13,8 @@
  * <ion-side-menu
  *   side="left"
  *   width="myWidthValue + 20"
- *   is-enabled="shouldLeftSideMenuBeEnabled()">
+ *   is-enabled="shouldLeftSideMenuBeEnabled()"
+ *   hide-when-closed="true">
  * </ion-side-menu>
  * ```
  * For a complete side menu example, see the
@@ -22,6 +23,8 @@
  * @param {string} side Which side the side menu is currently on.  Allowed values: 'left' or 'right'.
  * @param {boolean=} is-enabled Whether this side menu is enabled.
  * @param {number=} width How many pixels wide the side menu should be.  Defaults to 275.
+ * @param {boolean=} hide-when-closed If true the menu will have visibility set to hidden whenever it is closed. Defaults to false.
+ * 
  */
 IonicModule
 .directive('ionSideMenu', function() {
@@ -32,7 +35,8 @@ IonicModule
     compile: function(element, attr) {
       angular.isUndefined(attr.isEnabled) && attr.$set('isEnabled', 'true');
       angular.isUndefined(attr.width) && attr.$set('width', '275');
-
+      angular.isUndefined(attr.hideWhenClosed) && attr.$set('hideWhenClosed', 'false');
+      
       element.addClass('menu menu-' + attr.side);
 
       return function($scope, $element, $attr, sideMenuCtrl) {
@@ -41,7 +45,8 @@ IonicModule
         var sideMenu = sideMenuCtrl[$scope.side] = new ionic.views.SideMenu({
           width: attr.width,
           el: $element[0],
-          isEnabled: true
+          isEnabled: true,
+          hideWhenClosed: false
         });
 
         $scope.$watch($attr.width, function(val) {
@@ -52,6 +57,9 @@ IonicModule
         });
         $scope.$watch($attr.isEnabled, function(val) {
           sideMenu.setIsEnabled(!!val);
+        });
+        $scope.$watch($attr.hideWhenClosed, function(val) {
+          sideMenu.setHideWhenClosed(!!val);
         });
       };
     }
