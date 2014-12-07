@@ -284,7 +284,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
         // create an element from the viewLocals template
         ele = $ionicViewSwitcher.createViewEle(viewLocals);
-        if (this.isAbstractEle(ele)) {
+        if (this.isAbstractEle(ele, viewLocals)) {
           console.log('VIEW', 'abstractView', DIRECTION_NONE, viewHistory.currentView);
           return {
             action: 'abstractView',
@@ -651,7 +651,10 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
       return nextViewOptions;
     },
 
-    isAbstractEle: function(ele) {
+    isAbstractEle: function(ele, viewLocals) {
+      if (viewLocals && viewLocals.$$state && viewLocals.$$state.self.abstract) {
+        return true;
+      }
       return !!(ele && (isAbstractTag(ele) || isAbstractTag(ele.children())));
     },
 

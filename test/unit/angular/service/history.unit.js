@@ -1078,6 +1078,25 @@ describe('Ionic History', function() {
     expect($ionicHistory.isAbstractEle(div)).toBe(true);
   }));
 
+  it('should should be an abstract element from the viewLocals', inject(function($ionicHistory, $document) {
+    var div = angular.element('<div>');
+    var viewLocals = {
+      $$state: {
+        self: {
+          abstract: true
+        }
+      }
+    };
+    expect($ionicHistory.isAbstractEle(div, viewLocals)).toBe(true);
+
+    var viewLocals = {
+      $$state: {
+        self: {}
+      }
+    };
+    expect($ionicHistory.isAbstractEle(div, viewLocals)).toBe(false);
+  }));
+
   it('should be an abstract view', inject(function($document) {
     var reg = ionicHistory.register({}, {
       $template: '<ion-tabs></ion-tabs>'
