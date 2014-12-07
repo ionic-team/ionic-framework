@@ -25,7 +25,7 @@
 
   text-overflow: ellipsis;
   font-size: $button-font-size;
-  line-height: $button-height - $button-border-width + 1px;
+  line-height: $button-height + 5px;
 
   cursor: pointer;
 
