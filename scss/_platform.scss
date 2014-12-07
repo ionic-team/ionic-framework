@@ -31,13 +31,13 @@
       top: $bar-height + $ios-statusbar-height;
     }
     .has-subheader {
-      top: (2 * $bar-height) + $ios-statusbar-height;
+      top: $bar-height + $bar-subheader-height + $ios-statusbar-height;
     }
     .has-tabs-top {
       top: $bar-height + $tabs-height + $ios-statusbar-height;
     }
     .has-header.has-subheader.has-tabs-top {
-      top: 2 * $bar-height + $tabs-height + $ios-statusbar-height;
+      top: $bar-height + $bar-subheader-height + $tabs-height + $ios-statusbar-height;
     }
   }
   &.status-bar-hide {
@@ -57,4 +57,3 @@
   -webkit-transition: none !important;
   transition: none !important;
 }
-

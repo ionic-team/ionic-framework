@@ -334,6 +334,8 @@
   border-bottom-width: 0;
   background-position: top;
 
+  height: $bar-footer-height;
+
   &.item-input-inset {
     position: absolute;
   }
@@ -347,10 +349,14 @@
 .bar-subheader {
   top: $bar-height;
   display: block;
+
+  height: $bar-subheader-height;
 }
 .bar-subfooter {
-  bottom: $bar-height;
+  bottom: $bar-footer-height;
   display: block;
+
+  height: $bar-subfooter-height;
 }
 
 .nav-bar-block {
@@ -366,4 +372,3 @@
 .bar .buttons .hide {
   display: none;
 }
-
