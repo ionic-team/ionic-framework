@@ -691,7 +691,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory) {
 
   // always reset the keyboard state when change stage
-  $rootScope.$on('$stateChangeStart', function() {
+  $rootScope.$on('$ionicView.beforeEnter', function() {
     ionic.keyboard && ionic.keyboard.hide && ionic.keyboard.hide();
   });
 
