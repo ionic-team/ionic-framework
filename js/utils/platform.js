@@ -231,7 +231,7 @@
     /**
      * @ngdoc method
      * @name ionic.Platform#version
-     * @returns {string} The version of the current device platform.
+     * @returns {number} The version of the current device platform.
      */
     version: function() {
       // singleton to get the platform version
