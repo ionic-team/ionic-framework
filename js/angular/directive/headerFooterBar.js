@@ -141,7 +141,7 @@ function headerFooterBarDirective(isHeader) {
             });
             ctrl.align();
             $scope.$on('$ionicHeader.align', function() {
-              ctrl.align();
+              ionic.requestAnimationFrame(ctrl.align);
             });
 
           } else {
