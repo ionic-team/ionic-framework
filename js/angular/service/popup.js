@@ -272,7 +272,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     options = extend({
       scope: null,
       title: '',
-      buttons: [],
+      buttons: []
     }, options || {});
 
     var popupPromise = $ionicTemplateLoader.compile({
@@ -398,13 +398,13 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
           previousPopup.show();
         } else {
           //Remove popup-open & backdrop if this is last popup
-          $timeout(function(){
+          $timeout(function() {
             // wait to remove this due to a 300ms delay native
             // click which would trigging whatever was underneath this
             $ionicBody.removeClass('popup-open');
           }, 400);
-          $timeout(function(){
-            if(popupStack.length === 0)$ionicBackdrop.release();
+          $timeout(function() {
+            $ionicBackdrop.release();
           }, config.stackPushDelay || 0);
           ($ionicPopup._backButtonActionDone || angular.noop)();
         }
@@ -432,7 +432,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
   }
 
   function showAlert(opts) {
-    return showPopup( extend({
+    return showPopup(extend({
       buttons: [{
         text: opts.okText || 'OK',
         type: opts.okType || 'button-positive',
@@ -440,13 +440,13 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
           return true;
         }
       }]
-    }, opts || {}) );
+    }, opts || {}));
   }
 
   function showConfirm(opts) {
-    return showPopup( extend({
+    return showPopup(extend({
       buttons: [{
-        text: opts.cancelText || 'Cancel' ,
+        text: opts.cancelText || 'Cancel',
         type: opts.cancelType || 'button-default',
         onTap: function(e) { return false; }
       }, {
@@ -454,24 +454,24 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
         type: opts.okType || 'button-positive',
         onTap: function(e) { return true; }
       }]
-    }, opts || {}) );
+    }, opts || {}));
   }
 
   function showPrompt(opts) {
     var scope = $rootScope.$new(true);
     scope.data = {};
     var text = '';
-    if(opts.template && /<[a-z][\s\S]*>/i.test(opts.template) === false){
-      text = '<span>'+opts.template+'</span>';
+    if (opts.template && /<[a-z][\s\S]*>/i.test(opts.template) === false) {
+      text = '<span>' + opts.template + '</span>';
       delete opts.template;
     }
-    return showPopup( extend({
-      template: text+'<input ng-model="data.response" type="' + (opts.inputType || 'text') +
+    return showPopup(extend({
+      template: text + '<input ng-model="data.response" type="' + (opts.inputType || 'text') +
         '" placeholder="' + (opts.inputPlaceholder || '') + '">',
       scope: scope,
       buttons: [{
         text: opts.cancelText || 'Cancel',
-        type: opts.cancelType|| 'button-default',
+        type: opts.cancelType || 'button-default',
         onTap: function(e) {}
       }, {
         text: opts.okText || 'OK',
@@ -480,7 +480,6 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
           return scope.data.response || '';
         }
       }]
-    }, opts || {}) );
+    }, opts || {}));
   }
 }]);
-
