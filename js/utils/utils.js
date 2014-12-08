@@ -217,6 +217,15 @@
       } else {
         parent.$$childHead = parent.$$childTail = scope;
       }
+    },
+
+    isScopeDisconnected: function(scope) {
+      var climbScope = scope;
+      while (climbScope) {
+        if (climbScope.$$disconnected) return true;
+        climbScope = climbScope.$parent;
+      }
+      return false;
     }
   };
 

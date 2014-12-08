@@ -98,7 +98,9 @@ function(scope, element, $log, $document, $$q, $timeout, $interval, $$ionicAttac
 
     if (angular.isNumber(newInterval) && newInterval > 0) {
       self.autoPlayTimeout = $interval(function() {
-        self.select(self.next());
+        if (!ionic.Utils.isScopeDisconnected(scope)) {
+          self.select(self.next());
+        }
       }, newInterval);
     }
   }
