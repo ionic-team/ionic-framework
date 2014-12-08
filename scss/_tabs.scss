@@ -164,7 +164,7 @@
     background-color: white;
     background-image: none;
     border: none;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid #ddd;
     padding-top: $tabs-striped-border-width;
   }
   .tab-item {
