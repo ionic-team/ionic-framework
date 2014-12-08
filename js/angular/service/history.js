@@ -615,7 +615,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
      * @name $ionicHistory#nextViewOptions
      * @description Sets options for the next view. This method can be useful to override
      * certain view/transition defaults right before a view transition happens. For example,
-     * the {@link ionic.directive:menuClose} directive uses this methond internally to ensure
+     * the {@link ionic.directive:menuClose} directive uses this method internally to ensure
      * an animated view transition does not happen when a menu is closed, and also sets that
      * the next view should become this root of its history stack. After the next view has
      * entered then these options are set back to null.
