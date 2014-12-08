@@ -3,16 +3,17 @@
  * @name $ionicHistory
  * @module ionic
  * @description
- * $ionicHistory is what keeps track of an app's views as the user navigates. Like browser,
- * an Ionic app is able to know what the previous view was, the current view, and what the
- * forward view was (if there was one). However, a typical web browser only keeps track of one
+ * $ionicHistory keeps track of views as the user navigates through an app. Similar to the way a
+ * browser behaves, an Ionic app is able to keep track of the previous view, the current view, and
+ * the forward view (if there is one).  However, a typical web browser only keeps track of one
  * history stack in a linear fashion.
  *
- * Ionic's `$ionicHistory` is able to keep track of multiple histories, and persist where the
- * user is as they navigate between different views, and different histories. For example, an
- * app with tabs has it's own history stack for each tab. This meaning you can navigate a few
- * views in Tab A, then navigate a few in Tab B, and when you return to Tab A, the existing
- * stack is maintained.
+ * Unlike a traditional browser environment, apps and webapps have parallel independent histories,
+ * such as with tabs. Should a user navigate few pages deep on one tab, and then switch to a new
+ * tab and back, the back button relates not to the previous tab, but to the previous pages
+ * visited within _that_ tab.
+ *
+ * `$ionicHistory` facilitates this parallel history architecture.
  */
 
 IonicModule
@@ -615,10 +616,10 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
      * @name $ionicHistory#nextViewOptions
      * @description Sets options for the next view. This method can be useful to override
      * certain view/transition defaults right before a view transition happens. For example,
-     * the {@link ionic.directive:menuClose} directive uses this methond internally to ensure
-     * an animated view transition does not happen when a menu is closed, and also sets that
-     * the next view should become this root of its history stack. After the next view has
-     * entered then these options are set back to null.
+     * the {@link ionic.directive:menuClose} directive uses this method internally to ensure
+     * an animated view transition does not happen when a side menu is open, and also sets
+     * the next view as the root of its history stack. After the transition these options
+     * are set back to null.
      *
      * Available options:
      *

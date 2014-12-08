@@ -6,9 +6,10 @@
  * @parent ionNavView
  *
  * @description
- * Use the nav title directive to set custom HTML as the {@link ionic.directive:ionNavBar}
- * title, from within an {@link ionic.directive:ionView}. This gives each
- * view the ability to specify its own custom title, such as an image or any HTML,
+ *
+ * The nav title directive replaces an {@link ionic.directive:ionNavBar} title text with
+ * custom HTML from within an {@link ionic.directive:ionView} template. This gives each
+ * view the ability to specify its own custom title element, such as an image or any HTML,
  * rather than being text-only. Alternatively, text-only titles can be updated using the
  * `view-title` {@link ionic.directive:ionView} attribute.
  *

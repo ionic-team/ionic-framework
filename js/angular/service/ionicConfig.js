@@ -3,23 +3,21 @@
  * @name $ionicConfigProvider
  * @module ionic
  * @description
- * Ionic automatically takes platform configurations into account to adjust things like
- * what transition style to use, and if tab icons should show on the top or bottom.
- * For example, iOS will move forward by transitioning the entering view from right to
- * center, and the leaving view from center to left. However, Android will transition
- * with the entering view going from bottom to center, covering the previous view which
- * remains stationary. Platform transitions are automatically applied by default, but
- * config variables. It should be noted that when a platform is not iOS or Android, then
- * it'll default to iOS. So if you are developing on a desktop browser it'd going to
- * take on iOS default configs.
+ * Ionic automatically takes platform configurations into account to adjust things like what
+ * transition style to use and whether tab icons should show on the top or bottom. For example,
+ * iOS will move forward by transitioning the entering view from right to center and the leaving
+ * view from center to left. However, Android will transition with the entering view going from
+ * bottom to center, covering the previous view, which remains stationary. It should be noted
+ * that when a platform is not iOS or Android, then it'll default to iOS. So if you are
+ * developing on a desktop browser, it's going to take on iOS default configs.
  *
- * These configs can be changed using the `$ionicConfigProvider` during the
- * configuration phase of your app. Additionally, `$ionicConfig` can also set and get
- * config values during the run phase and within the app itself.
+ * These configs can be changed using the `$ionicConfigProvider` during the configuration phase
+ * of your app. Additionally, `$ionicConfig` can also set and get config values during the run
+ * phase and within the app itself.
  *
  * By default, all base config variables are set to `'platform'`, which means it'll take on the
- * default config of the platform it's running on. Config variables can be set
- * at this level so all platforms follow the same setting, rather than its platform config.
+ * default config of the platform on which it's running. Config variables can be set at this
+ * level so all platforms follow the same setting, rather than its platform config.
  * The following code would set the same config variable for all platforms:
  *
  * ```js
@@ -66,13 +64,13 @@
 /**
  * @ngdoc method
  * @name $ionicConfigProvider#views.maxCache
- * @description Maximum number of view elements to cache in the DOM. When the max number is
- * exceeded, the view with the longest time period since it was accessed is removed. Views
- * which stay in the DOM essentially caches the view's scope, current state and scroll position.
- * However, the scope is disconnected from the cycle when it is cached, and reconnected when it enters again.
- * When the maximum cached is `0`, then after each view transition, the leaving view's element will
- * be removed from the DOM, and the next time the same view is shown it will have to
- * re-compile, attach to the DOM, and link the element again.
+ * @description  Maximum number of view elements to cache in the DOM. When the max number is
+ * exceeded, the view with the longest time period since it was accessed is removed. Views that
+ * stay in the DOM cache the view's scope, current state, and scroll position. The scope is
+ * disconnected from the `$watch` cycle when it is cached and reconnected when it enters again.
+ * When the maximum cache is `0`, the leaving view's element will be removed from the DOM after
+ * each view transition, and the next time the same view is shown, it will have to re-compile,
+ * attach to the DOM, and link the element again. This disables caching, in effect.
  * @param {number} maxNumber Maximum number of views to retain. Default `10`.
  * @returns {number} How many views Ionic will hold onto until the a view is removed.
  */
@@ -80,11 +78,11 @@
 /**
  * @ngdoc method
  * @name $ionicConfigProvider#views.forwardCache
- * @description When navigating between views, by default, views that were recently visited
- * are cached, and the same data and DOM elements are referenced when navigating back. However,
- * when navigating back in the history, the "forward" view is removed so its not cached. If
- * you navigate forward to the same view again it'll create a new DOM element, re-compiled and
- * link. Basically any forward views are reset each time. Set this config to `true` to have
+ * @description  By default, when navigating, views that were recently visited are cached, and
+ * the same instance data and DOM elements are referenced when navigating back. However, when
+ * navigating back in the history, the "forward" views are removed from the cache. If you
+ * navigate forward to the same view again, it'll create a new DOM element and controller
+ * instance. Basically, any forward views are reset each time. Set this config to `true` to have
  * forward views cached and not reset on each load.
  * @param {boolean} value
  * @returns {boolean}

@@ -70,23 +70,23 @@
  * This is good to do because the template will be cached for very fast loading, instead of
  * having to fetch them from the network.
  *
- * ## Caching
+ ## Caching
  *
- * By default views are cached to improve performance. When a view is navigated away from,
- * its element is left in the DOM, and its scope is disconnected from the cycle. When navigating
- * to a view which is already cached, its scope is then reconnected, and the existing element which
- * was left in the DOM becomes the active view. This also allows for scroll position of previous
- * views to be maintained.
+ * By default, views are cached to improve performance. When a view is navigated away from, its
+ * element is left in the DOM, and its scope is disconnected from the `$watch` cycle. When
+ * navigating to a view that is already cached, its scope is then reconnected, and the existing
+ * element that was left in the DOM becomes the active view. This also allows for the scroll
+ * position of previous views to be maintained.
  *
- * Caching can be disabled and enabled in multiple ways. By default, Ionic will cache a maximum
- * of 10 views, and not only can this be configured, but apps can also explicitly state
- * which views should and should not be cached.
+ * Caching can be disabled and enabled in multiple ways. By default, Ionic will cache a maximum of
+ * 10 views, and not only can this be configured, but apps can also explicitly state which views
+ * should and should not be cached.
  *
- * Note that because we are caching these views, we aren’t destroying scopes. Instead, scopes are
- * being disconnected from the watch cycle. Because scopes are not being destroyed and recreated,
- * then controllers are not loading again on a subsequent viewing. If the app/controller needs to
- * know when a view has entered or has left, then view events emitted from the
- * {@link ionic.directive:ionView} scope, such as `$ionicView.enter`, may be useful.
+ * Note that because we are caching these views, *we aren’t destroying scopes*. Instead, scopes
+ * are being disconnected from the watch cycle. Because scopes are not being destroyed and
+ * recreated, controllers are not loading again on a subsequent viewing. If the app/controller
+ * needs to know when a view has entered or has left, then view events emitted from the
+ * {@link ionic.directive:ionView} scope, such as `$ionicView.enter`, may be useful
  *
  * #### Disable cache globally
  *

@@ -5,14 +5,13 @@
  * @restrict AC
  *
  * @description
- * Attribute directive which closes a currently opened side menu. By default,
- * navigation transitions will not animate between views when the menu is open and
- * this directive is used to close the menu. Additionally, this directive
- * will reset the history and make the entering view the root of its history
- * stack. Having the entering view become the root of the history stack is done
- * to replicate the user experience seen on most side menu implementations, which is
- * to not show the back button at the root of the stack, and only show the
- * menu button. It's recommended to also use the `enable-menu-with-back-views="false"`
+ * `menu-close` is an attribute directive that closes a currently opened side menu.
+ * Note that by default, navigation transitions will not animate between views when
+ * the menu is open. Additionally, this directive will reset the entering view's
+ * history stack, making the new page the root of the history stack. This is done
+ * to replicate the user experience seen in most side menu implementations, which is
+ * to not show the back button at the root of the stack and show only the
+ * menu button. We recommend that you also use the `enable-menu-with-back-views="false"`
  * {@link ionic.directive:ionSideMenus} attribute when using the menuClose directive.
  *
  * @usage
@@ -27,7 +26,7 @@ IonicModule
 .directive('menuClose', ['$ionicHistory', function($ionicHistory) {
   return {
     restrict: 'AC',
-    link: function($scope, $element, $attr) {
+    link: function($scope, $element) {
       $element.bind('click', function() {
         var sideMenuCtrl = $element.inheritedData('$ionSideMenusController');
         if (sideMenuCtrl) {

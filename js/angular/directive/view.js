@@ -6,17 +6,18 @@
  * @parent ionNavView
  *
  * @description
- * A container for view content and any navigational and header bar information.
- * When a view enters and exists its parent {@link ionic.directive:ionNavView}, the view
- * also emits view information, such as its title, if the back button should show or not, if
- * the corresponding {@link ionic.directive:ionNavBar} should show or not, which transition the view
- * should use to animate, and what direction to animate.
+ * A container for view content and any navigational and header bar information. When a view
+ * enters and exists its parent {@link ionic.directive:ionNavView}, the view also emits view
+ * information, such as its title, whether the back button should show or not, whether the
+ * corresponding {@link ionic.directive:ionNavBar} should show or not, which transition the view
+ * should use to animate, and which direction to animate.
  *
- * Views are cached to improve performance. When a view is navigated away from, its
- * element is left in the DOM, and its scope is disconnected from the cycle. When navigating
- * to a view which is already cached, its scope is reconnected, and the existing element which
- * was left in the DOM becomes the active view. Config variables can be used to disable this
- * feature, or change the maximum number of views which can be cached.
+ * *Views are cached to improve performance.* When a view is navigated away from, its element is
+ * left in the DOM, and its scope is disconnected from the `$watch` cycle. When navigating to a
+ * view that is already cached, its scope is reconnected, and the existing element, which was
+ * left in the DOM, becomes active again. This can be disabled, or the maximum number of cached
+ * views changed in {@link ionic.directive:ionicConfig}, in the view's `$state` configuration, or
+ * as an attribute on the view itself (see below).
  *
  * @usage
  * Below is an example where our page will load with a {@link ionic.directive:ionNavBar} containing
@@ -33,28 +34,28 @@
  * </ion-nav-view>
  * ```
  *
- * ## View LifeCycle and Events
- *
- * Views can be cached which means controllers normally only load once, which may
- * affect your controller logic. To know when a view has entered or left, events
- * have been added that are emitted from the view's scope. These events also
- * contain data about the view, such as the title and if the back button should
- * show. Also contained is transitiondata, such as the transition type and
- * direction that will be or was used.
- *
- * * `$ionicView.loaded`: The view has loaded. This event only happens once per
- * view being created and added to the DOM. If a view leaves, but is cached,
- * then on a subsequent viewing this event will not fire again. The loaded event
- * is good place to put your setup code for the view, however, it is not the
- * recommended event to listen to when a view becomes active.
- * * `$ionicView.enter`: The view has fully entered and is now the active view.
- * This event will fire no matter if it was the first load or it was a cached view.
- * * `$ionicView.leave`: The view has finished leaving and is no longer the
- * active view. This event will fire no matter if it will be cached or destroyed.
- * * `$ionicView.beforeEnter`: The view is about to enter and become the active view.
- * * `$ionicView.beforeLeave`: The view is about to leave and no longer be the active view.
- * * `$ionicView.afterEnter`: The view has fully entered and is now the active view.
- * * `$ionicView.afterLeave`: The view has finished leaving and is no longer the active view.
+ ## View LifeCycle and Events
+
+ Views can be cached, which means *controllers normally only load once*, which may
+ affect your controller logic. To know when a view has entered or left, events
+ have been added that are emitted from the view's scope. These events also
+ contain data about the view, such as the title and whether the back button should
+ show. Also contained is transition data, such as the transition type and
+ direction that will be or was used.
+
+ * `$ionicView.loaded`: The view has loaded. This event only happens once per
+ view being created and added to the DOM. If a view leaves but is cached,
+ then this event will not fire again on a subsequent viewing. The loaded event
+ is good place to put your setup code for the view; however, it is not the
+ recommended event to listen to when a view becomes active.
+ * `$ionicView.enter`: The view has fully entered and is now the active view.
+ This event will fire, whether it was the first load or a cached view.
+ * `$ionicView.leave`: The view has finished leaving and is no longer the
+ active view. This event will fire, whether it is cached or destroyed.
+ * `$ionicView.beforeEnter`: The view is about to enter and become the active view.
+ * `$ionicView.beforeLeave`: The view is about to leave and no longer be the active view.
+ * `$ionicView.afterEnter`: The view has fully entered and is now the active view.
+ * `$ionicView.afterLeave`: The view has finished leaving and is no longer the active view.
  *
  * ## Caching
  *

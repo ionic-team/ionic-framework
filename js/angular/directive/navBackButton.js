@@ -7,13 +7,13 @@
  * @description
  * Creates a back button inside an {@link ionic.directive:ionNavBar}.
  *
- * Will show up when the user is able to go back in the current navigation stack. By default,
- * the inner HTML of the back button is automatically built using platform defaults (iOS back button
- * icon on iOS, and Android icon on Android).
+ * The back button will appear when the user is able to go back in the current navigation stack. By
+ * default, the markup of the back button is automatically built using platform-appropriate defaults
+ * (iOS back button icon on iOS and Android icon on Android).
  *
- * Additionally, it's click behavior is automatically wired up to `$ionicGoBack()`.By default the
- * app will navigation back one view when the back button is clicked.  If you wish for more
- * advanced behavior, see the examples below.
+ * Additionally, the button is automatically set to `$ionicGoBack()` on click/tap. By default, the
+ * app will navigate back one view when the back button is clicked.  More advanced behavior is also
+ * possible, as outlined below.
  *
  * @usage
  *
