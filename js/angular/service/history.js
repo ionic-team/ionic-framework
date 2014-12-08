@@ -663,13 +663,37 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
       var climbScope = scope;
       var currentHistoryId = this.currentHistoryId();
+      var foundHistoryId;
+
       while (climbScope) {
         if (climbScope.$$disconnected) {
           return false;
         }
-        if (currentHistoryId && (currentHistoryId == climbScope.$historyId || currentHistoryId == climbScope.$activeHistoryId)) {
-          return true;
+
+        if (!foundHistoryId && climbScope.hasOwnProperty('$historyId')) {
+          foundHistoryId = true;
         }
+
+        if (currentHistoryId) {
+          if (climbScope.hasOwnProperty('$historyId') && currentHistoryId == climbScope.$historyId) {
+            return true;
+          }
+          if (climbScope.hasOwnProperty('$activeHistoryId')) {
+            if (currentHistoryId == climbScope.$activeHistoryId) {
+              if (climbScope.hasOwnProperty('$historyId')) {
+                return true;
+              }
+              if (!foundHistoryId) {
+                return true;
+              }
+            }
+          }
+        }
+
+        if (foundHistoryId && climbScope.hasOwnProperty('$activeHistoryId')) {
+          foundHistoryId = false;
+        }
+
         climbScope = climbScope.$parent;
       }
 

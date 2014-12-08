@@ -1195,7 +1195,43 @@ describe('Ionic History', function() {
           }
         }
       }
-    }
+    };
+    expect(ionicHistory.isActiveScope(scope)).toEqual(true);
+  });
+
+  it('should be active when activeHistoryId found before historyId, for tabs controller', function() {
+    ionicHistory.currentView({
+      historyId: '123'
+    });
+
+    var scope = {
+      $parent: {
+        $parent: {
+          $activeHistoryId: '123',
+          $parent: {
+            $historyId: 'xyz'
+          }
+        }
+      }
+    };
+    expect(ionicHistory.isActiveScope(scope)).toEqual(true);
+  });
+
+  it('should be active when historyId found before activeHistoryId', function() {
+    ionicHistory.currentView({
+      historyId: '123'
+    });
+
+    var scope = {
+      $parent: {
+        $parent: {
+          $activeHistoryId: 'xyz',
+          $parent: {
+            $historyId: '123'
+          }
+        }
+      }
+    };
     expect(ionicHistory.isActiveScope(scope)).toEqual(true);
   });
 

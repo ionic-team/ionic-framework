@@ -69,6 +69,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
     view = view || {};
     return {
       viewId: view.viewId,
+      historyId: view.historyId,
       stateId: view.stateId,
       stateName: view.stateName,
       stateParams: view.stateParams
