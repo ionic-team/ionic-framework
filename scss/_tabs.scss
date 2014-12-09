@@ -107,10 +107,6 @@
         border-style: solid;
         border-width: $tabs-striped-border-width 0 0 0;
         border-color: $color;
-        .badge{
-          top:$tabs-striped-border-width;
-          opacity: 1;
-        }
       }
     }
   }
@@ -176,17 +172,21 @@
       border-style: solid;
       border-width: $tabs-striped-border-width 0 0 0;
       border-color: $dark;
+      .badge{
+        top:$tabs-striped-border-width;
+        opacity: 1;
+      }
     }
   }
-  @include tabs-striped('tabs-light', $light, $dark);
-  @include tabs-striped('tabs-stable', $stable, $dark);
-  @include tabs-striped('tabs-positive', $positive, $light);
-  @include tabs-striped('tabs-calm', $calm, $light);
-  @include tabs-striped('tabs-assertive', $assertive, $light);
-  @include tabs-striped('tabs-balanced', $balanced, $light);
-  @include tabs-striped('tabs-energized', $energized, $light);
-  @include tabs-striped('tabs-royal', $royal, $light);
-  @include tabs-striped('tabs-dark', $dark, $light);
+  @include tabs-striped('tabs-light', $dark, $light);
+  @include tabs-striped('tabs-stable', $dark, $stable);
+  @include tabs-striped('tabs-positive', $light, $positive);
+  @include tabs-striped('tabs-calm', $light, $calm);
+  @include tabs-striped('tabs-assertive', $light, $assertive);
+  @include tabs-striped('tabs-balanced', $light, $balanced);
+  @include tabs-striped('tabs-energized', $light, $energized);
+  @include tabs-striped('tabs-royal', $light, $royal);
+  @include tabs-striped('tabs-dark', $light, $dark);
 
 
   @include tabs-background('tabs-background-light', $light);
