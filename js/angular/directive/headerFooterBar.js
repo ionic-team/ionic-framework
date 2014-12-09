@@ -118,14 +118,16 @@ function tapScrollToTopDirective() {
 }
 
 function headerFooterBarDirective(isHeader) {
-  return ['$document',function($document) {
+  return ['$document', '$timeout',function($document, $timeout) {
     return {
       restrict: 'E',
       controller: '$ionicHeaderBar',
       compile: function(tElement, $attr) {
         tElement.addClass(isHeader ? 'bar bar-header' : 'bar bar-footer');
         // android style tabs? if so, remove bottom border for seamless display
-        if ($document[0].getElementsByClassName('tabs-top')) tElement.addClass('has-tabs-top');
+        $timeout(function() {
+          if ($document[0].getElementsByClassName('tabs-top').length) tElement.addClass('has-tabs-top');
+        });
 
         return { pre: prelink };
         function prelink($scope, $element, $attr, ctrl) {
