@@ -1245,6 +1245,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
   setDimensions: function(clientWidth, clientHeight, contentWidth, contentHeight) {
     var self = this;
 
+    if (!clientWidth && !clientHeight && !contentWidth && !contentHeight) {
+      // this scrollview isn't rendered, don't bother
+      return;
+    }
+
     // Only update values which are defined
     if (clientWidth === +clientWidth) {
       self.__clientWidth = clientWidth;

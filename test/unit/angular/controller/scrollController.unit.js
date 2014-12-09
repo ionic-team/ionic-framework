@@ -95,14 +95,6 @@ describe('$ionicScroll Controller', function() {
     expect(ctrl.scrollView.run).toHaveBeenCalled();
   });
 
-  it('should resize the scrollview on window resize', function() {
-    setup();
-    timeout.flush();
-    spyOn(ctrl.scrollView, 'resize');
-    ionic.trigger('resize', { target: window });
-    expect(ctrl.scrollView.resize).toHaveBeenCalled();
-  });
-
 
   it('should unbind window event listener on scope destroy', inject(function($window) {
     spyOn(ionic, 'on');
@@ -129,16 +121,6 @@ describe('$ionicScroll Controller', function() {
     expect(scope.$onScroll.mostRecentCall.args[0].scrollLeft).toBe(4);
     expect(scope.$onScroll.mostRecentCall.args[0].scrollTop).toBe(3);
   });
-
-  it('.resize() should resize after timeout', inject(function($timeout) {
-    setup();
-    $timeout.flush();
-    spyOn(ctrl.scrollView, 'resize');
-    ctrl.resize();
-    expect(ctrl.scrollView.resize).not.toHaveBeenCalled();
-    $timeout.flush();
-    expect(ctrl.scrollView.resize).toHaveBeenCalled();
-  }));
 
   it('.getScrollView', function() {
     setup();
