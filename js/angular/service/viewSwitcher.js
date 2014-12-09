@@ -184,7 +184,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
 
             // if the current state has cache:false
             // or the element has cache-view="false" attribute
-            if (viewState(viewLocals).cache === false || enteringEle.attr('cache-view') == 'false') {
+            if (viewState(viewLocals).cache === false || viewState(viewLocals).cache === 'false' || enteringEle.attr('cache-view') == 'false') {
               enteringEle.data(DATA_NO_CACHE, true);
             }
 
