@@ -41,61 +41,141 @@
       }
     </style>
   </head>
-  <body ng-init="$root.selectedIndex = 0">
+  <body>
 
-    <div ng-controller="SlideCtrl" ng-init="$root.hasBox = true">
-      <ion-header-bar class="bar-positive">
-        <button class="button" ng-click="$root.items.shift()">
-          shift
-        </button>
-        <button class="button" ng-click="$root.items.unshift($root.random())">
-          unshift
-        </button>
-        <button class="button" ng-click="$root.items.pop()">
-          pop
-        </button>
-        <button class="button" ng-click="$root.items.push($root.random())">
-          push
-        </button>
-        <h1 class="title">Hi</h1>
-        <button class="button" ng-click="next()">
-           next
-        </button>
-        <button class="button" ng-click="previous()">
-           previous
-        </button>
-      </ion-header-bar>
-      <ion-content>
-          <ion-slide-box selected="$root.selectedIndex" loop="true" ng-if="$root.hasBox" ng-init="colors=['darkred','blue','darkgreen','darkred','indigo','brown','black']">
-          <ion-slide-pager></ion-slide-pager>
-            <ion-slide ng-repeat="i in items">
-              <div style="height: 250px; background-color: {{colors[i % colors.length]}}; padding-top: 100px; opacity: 0.5;">
-                <h3 style="color: white;">index {{$index}} / length {{items.length}}</h3>
+    <div ng-controller="SlideCtrl">
+      <ion-side-menus>
+        <ion-side-menu-content>
+          <ion-header-bar left-buttons="leftButtons" right-buttons="rightButtons" title=""></ion-header-bar>
+          <ion-slide-box on-slide-changed="slideChanged(index)" show-pager="true" pager-click="pagerClick(index)" does-continue="true" auto-play="false">
+            <ion-slide ng-controller="FirstSlideCtrl">
+              <h3>Thank you for choosing the Awesome App!</h3>
+              <div id="logo">
+                <img src="app_icon.png">
+              </div>
+              <p>
+                We've worked super hard to make you happy.
+              </p>
+              <p>
+                But if you are angry, too bad.
+              </p>
+              <p>
+                <button class="button button-dark" ng-click="toLast()">Skip to last</button>
+              </p>
+              <p>
+                <button class="button button-dark" ng-click="clickTest()">Click Test</button>
+              </p>
+            </ion-slide>
+            <ion-slide>
+              <h3>Using Awesome</h3>
+
+              <div id="list">
+                <h5>Just three steps:</h5>
+                <ol>
+                  <li>Be awesome</li>
+                  <li>Stay awesome</li>
+                  <li>There is no step 3</li>
+                </ol>
               </div>
             </ion-slide>
-
+            <ion-slide>
+              <ion-content class="has-header">
+                <div style="width: 300px; height: 2000px; background: url('tree_bark.png') repeat"></div>
+              </ion-content>
+            </ion-slide>
           </ion-slide-box>
-        </ion-content>
+        </ion-side-menu-content>
+        <ion-side-menu side="left">
+          <header class="bar bar-header bar-assertive">
+            <h1 class="title">Right</h1>
+          </header>
+          <ion-content>
+          </ion-content>
+        </ion-side-menu>
+      </ion-side-menus>
     </div>
     <script>
       angular.module('slideBoxTest', ['ionic'])
 
-      .controller('SlideCtrl', function($scope, $timeout, $ionicSlideBoxDelegate) {
-          $scope.items = $scope.$root.items = [];
-          for (var i = 0; i < 10; i++) {
-            $scope.items.push(i);
+      .controller('SlideCtrl', function($scope, $timeout) {
+
+        $scope.next = function() {
+          console.log('NEXT');
+          $scope.$broadcast('slideBox.nextSlide');
+        };
+
+        var clickCount = 0;
+
+        $scope.clickTest = function() {
+          clickCount++;
+          console.log('click', clickCount);
+        };
+
+        var rightButtons = [
+          {
+            content: 'Next',
+            type: 'button-positive button-clear',
+            tap: function(e) {
+              console.log('NEXT');
+              $scope.next();
+            }
+          }
+        ];
+        var leftButtons = [
+          {
+            content: 'Skip',
+            type: 'button-positive button-clear',
+            tap: function(e) {
+              alert('Skipping');
+            }
+          }
+        ];
+
+        $scope.leftButtons = leftButtons;
+        $scope.rightButtons = rightButtons;
+
+        $scope.pagerClick = function(index) {
+          alert('pagerClick ' + index);
+        };
+
+        $scope.slideChanged = function(index) {
+          console.log('Slide changed', index);
+
+          if(index > 0) {
+            $scope.leftButtons = [
+              {
+                content: 'Back',
+                type: 'button-positive button-clear',
+                tap: function(e) {
+                  $scope.$broadcast('slideBox.prevSlide');
+                }
+              }
+            ];
+          } else {
+            $scope.leftButtons = leftButtons;
           }
 
-          $scope.$root.random = Math.random.bind(Math);
-
-          $scope.next = function() { $ionicSlideBoxDelegate.select( $ionicSlideBoxDelegate.next() ); };
-          $scope.previous = function() { $ionicSlideBoxDelegate.select( $ionicSlideBoxDelegate.previous() ); };
+          if(index == 2) {
+            $scope.rightButtons = [
+              {
+                content: 'Start using MyApp',
+                type: 'button-positive button-clear',
+                tap: function(e) {
+                  alert('Done!');
+                }
+              }
+            ];
+          } else {
+            $scope.rightButtons = rightButtons;
+          }
+        };
       })
 
       .controller('FirstSlideCtrl', function($scope, $ionicSlideBoxDelegate) {
+        $scope.derp = function() {
+        }
         $scope.toLast = function() {
-          console.log('tolast');
-          $ionicSlideBoxDelegate.select($ionicSlideBoxDelegate.count() - 1);
+          $ionicSlideBoxDelegate.slide(2);
         }
       });
 
