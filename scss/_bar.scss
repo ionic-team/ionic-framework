@@ -39,7 +39,6 @@
     background-size: 100% 1px;
     background-repeat: no-repeat;
   }
-  pointer-events: auto;
 
   &.bar-clear {
     border: none;
@@ -365,7 +364,6 @@
   top: 0;
   right: 0;
   left: 0;
-  pointer-events: none;
   z-index: $z-index-bar;
 }
 
