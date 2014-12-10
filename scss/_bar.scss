@@ -211,7 +211,6 @@
       padding: 0;
       white-space: nowrap;
       font-weight: 400;
-      @include transition-duration(0);
     }
 
     &.back-button.active,

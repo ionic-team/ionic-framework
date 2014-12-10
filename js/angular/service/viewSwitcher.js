@@ -21,8 +21,6 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
   var DATA_FALLBACK_TIMER = '$fallbackTimer';
   var NAV_VIEW_ATTR = 'nav-view';
   var HISTORY_CURSOR_ATTR = 'history-cursor';
-  var HISTORY_ROOT = 'root';
-  var HISTORY_AFTER_ROOT = 'after-root';
   var VIEW_STATUS_ACTIVE = 'active';
   var VIEW_STATUS_CACHED = 'cached';
   var VIEW_STATUS_STAGED = 'stage';
@@ -55,13 +53,15 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
     // 6) fallback value
 
     var state = viewState(viewLocals);
-    var transition = nextTransition || cachedAttr(enteringEle, 'view-transition') || state.viewTransition || $ionicConfig.views.transition() || 'ios';
+    var viewTransition = nextTransition || cachedAttr(enteringEle, 'view-transition') || state.viewTransition || $ionicConfig.views.transition() || 'ios';
+    var navBarTransition = $ionicConfig.navBar.transition();
     direction = nextDirection || cachedAttr(enteringEle, 'view-direction') || state.viewDirection || direction || 'none';
 
     return extend(getViewData(view), {
-      transition: transition,
+      transition: viewTransition,
+      navBarTransition: navBarTransition === 'view' ? viewTransition : navBarTransition,
       direction: direction,
-      shouldAnimate: (transition !== 'none' && direction !== 'none')
+      shouldAnimate: (viewTransition !== 'none' && direction !== 'none')
     });
   }
 
@@ -82,10 +82,6 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
     } else {
       return cachedAttr(ele, NAV_VIEW_ATTR);
     }
-  }
-
-  function historyCursorAttr(ele, value) {
-    cachedAttr(ele, HISTORY_CURSOR_ATTR, value);
   }
 
   function destroyViewEle(ele) {
@@ -177,10 +173,8 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             navViewAttr(enteringEle, VIEW_STATUS_STAGED);
 
             var enteringData = getTransitionData(viewLocals, enteringEle, registerData.direction, enteringView);
-            var transitionFn = $ionicConfig.transitions.views[enteringData.transition];
+            var transitionFn = $ionicConfig.transitions.views[enteringData.transition] || $ionicConfig.transitions.views.none;
             transitionFn(enteringEle, null, enteringData.direction, true).run(0);
-
-            historyCursorAttr(enteringEle, registerData.isHistoryRoot ? HISTORY_ROOT : HISTORY_AFTER_ROOT);
 
             // if the current state has cache:false
             // or the element has cache-view="false" attribute
@@ -221,7 +215,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
           switcher.emit('before', enteringData, leavingData);
 
           // 1) get the transition ready and see if it'll animate
-          var transitionFn = $ionicConfig.transitions.views[enteringData.transition];
+          var transitionFn = $ionicConfig.transitions.views[enteringData.transition] || $ionicConfig.transitions.views.none;
           var viewTransition = transitionFn(enteringEle, leavingEle, enteringData.direction, enteringData.shouldAnimate);
 
           if (viewTransition.shouldAnimate) {
@@ -233,10 +227,6 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
 
           // 3) stage entering element, opacity 0, no transition duration
           navViewAttr(enteringEle, VIEW_STATUS_STAGED);
-
-          if (enteringData.direction == 'swap') {
-            historyCursorAttr(enteringEle, HISTORY_ROOT);
-          }
 
           // 4) place the elements in the correct step to begin
           viewTransition.run(0);
@@ -405,12 +395,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
       navViewAttr(viewEle, isActiveAttr ? VIEW_STATUS_ACTIVE : VIEW_STATUS_CACHED);
     },
 
-    isHistoryRoot: function(viewElement) {
-      return cachedAttr(viewElement, HISTORY_CURSOR_ATTR) === HISTORY_ROOT;
-    },
-
     getTransitionData: getTransitionData,
-    historyCursorAttr: historyCursorAttr,
     navViewAttr: navViewAttr,
     destroyViewEle: destroyViewEle
 

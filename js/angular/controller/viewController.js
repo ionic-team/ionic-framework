@@ -55,6 +55,7 @@ function($scope, $element, $attrs, $compile, $rootScope, $ionicViewSwitcher) {
         title: viewTitle,
         direction: transData.direction,
         transition: transData.transition,
+        navBarTransition: transData.navBarTransition,
         transitionId: transData.transitionId,
         shouldAnimate: transData.shouldAnimate,
         enableBack: transData.enableBack,

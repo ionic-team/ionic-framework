@@ -244,14 +244,14 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
   self.transition = function(enteringHeaderBar, leavingHeaderBar, viewData) {
     var enteringHeaderBarCtrl = enteringHeaderBar.controller();
-    var transitionFn = $ionicConfig.transitions.navBar[viewData.transition];
+    var transitionFn = $ionicConfig.transitions.navBar[viewData.navBarTransition] || $ionicConfig.transitions.navBar.none;
     var transitionId = viewData.transitionId;
 
     enteringHeaderBarCtrl.beforeEnter(viewData);
 
     var navBarTransition = transitionFn(enteringHeaderBar, leavingHeaderBar, viewData.direction, viewData.shouldAnimate && self.isInitialized);
 
-    ionic.DomUtil.cachedAttr($element, 'nav-bar-transition', viewData.transition);
+    ionic.DomUtil.cachedAttr($element, 'nav-bar-transition', viewData.navBarTransition);
     ionic.DomUtil.cachedAttr($element, 'nav-bar-direction', viewData.direction);
 
     if (navBarTransition.shouldAnimate) {
