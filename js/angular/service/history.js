@@ -692,7 +692,9 @@ function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory
 
   // always reset the keyboard state when change stage
   $rootScope.$on('$stateChangeStart', function() {
-    ionic.keyboard && ionic.keyboard.hide && ionic.keyboard.hide();
+    if ( !toState || !toState.data || !toState.data.keepKeyboard ) {
+      ionic.keyboard && ionic.keyboard.hide && ionic.keyboard.hide();
+    }
   });
 
   $rootScope.$on('$ionicHistory.change', function(e, data) {
