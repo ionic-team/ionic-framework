@@ -193,7 +193,7 @@
     &.button-clear {
       padding-right: 2px;
       padding-left: 2px;
-      font-weight: 400;
+      font-weight: 300;
       font-size: $bar-title-font-size;
 
       .icon:before,
@@ -210,6 +210,7 @@
       margin-right: 5px;
       padding: 0;
       white-space: nowrap;
+      font-weight: 400;
       @include transition-duration(0);
     }
 
