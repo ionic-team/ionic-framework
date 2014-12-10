@@ -38,7 +38,7 @@ describe('Ionic Angular Slide Box', function() {
     $rootScope.$apply();
 
     expect($ionicSlideBoxDelegate._registerInstance)
-      .toHaveBeenCalledWith(el.controller('ionSlideBox').__slider, 'superHandle');
+      .toHaveBeenCalledWith(el.controller('ionSlideBox').__slider, 'superHandle', jasmine.any(Function));
 
     expect(deregisterSpy).not.toHaveBeenCalled();
     el.scope().$destroy();

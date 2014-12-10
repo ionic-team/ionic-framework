@@ -40,7 +40,8 @@ IonicModule
   '$timeout',
   '$compile',
   '$ionicSlideBoxDelegate',
-function($timeout, $compile, $ionicSlideBoxDelegate) {
+  '$ionicHistory',
+function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
   return {
     restrict: 'E',
     replace: true,
@@ -106,7 +107,11 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
       //Exposed for testing
       this.__slider = slider;
 
-      var deregisterInstance = $ionicSlideBoxDelegate._registerInstance(slider, $attrs.delegateHandle);
+      var deregisterInstance = $ionicSlideBoxDelegate._registerInstance(
+        slider, $attrs.delegateHandle, function() {
+          return $ionicHistory.isActiveScope($scope);
+        }
+      );
       $scope.$on('$destroy', deregisterInstance);
 
       this.slidesCount = function() {
