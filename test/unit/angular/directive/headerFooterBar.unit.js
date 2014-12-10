@@ -159,7 +159,7 @@ describe('bar directives', function() {
           scope.$apply('$hasTabs = false');
           expect(el.hasClass('has-tabs')).toBe(false);
         });
-        iit('.has-tabs-top', inject(function($document, $timeout) {
+        it('.has-tabs-top', inject(function($document, $timeout) {
           $document[0].body.appendChild(angular.element('<div class="tabs-top"></div>')[0]);
           var el = setup();
           $document[0].body.appendChild(el[0]);
