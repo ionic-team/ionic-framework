@@ -45,6 +45,8 @@ IonicModule
         }
         itemCtrl.optionsContainer.append($element);
 
+        itemCtrl.$element.addClass('item-right-editable');
+
         //Don't bubble click up to main .item
         $element.on('click', stopPropagation);
       };
