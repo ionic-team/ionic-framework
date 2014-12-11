@@ -639,6 +639,36 @@ button.item.item-button-right {
   @include translate3d(-$item-right-edit-open-width, 0, 0);
 }
 
+.item-remove-animate {
+  &.ng-leave {
+    @include transition-duration( $item-remove-transition-duration );
+  }
+  &.ng-leave .item-content,
+  &.ng-leave:last-of-type {
+    @include transition-duration( $item-remove-transition-duration );
+    @include transition-timing-function( $item-remove-transition-function );
+    @include transition-property( all );
+  }
+
+  &.ng-leave.ng-leave-active .item-content {
+    opacity:0;
+    -webkit-transform: translate3d(-100%, 0, 0) !important;
+    transform: translate3d(-100%, 0, 0) !important;
+  }
+  &.ng-leave.ng-leave-active:last-of-type {
+    opacity: 0;
+  }
+
+  &.ng-leave.ng-leave-active ~ ion-item:not(.ng-leave) {
+    -webkit-transform: translate3d(0, unquote('-webkit-calc(-100% + 1px)'), 0);
+    transform: translate3d(0, calc(-100% + 1px), 0);
+    @include transition-duration( $item-remove-transition-duration );
+    @include transition-timing-function( $item-remove-descendents-transition-function );
+    @include transition-property( all );
+  }
+}
+
+
 
 // Item Left Edit Button
 // -------------------------------
