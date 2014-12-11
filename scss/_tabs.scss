@@ -200,7 +200,6 @@
     &.tab-item-active,
     &.active,
     &.activated {
-      color: inherit !important;
       margin-top: -$tabs-striped-border-width;
       border-style: solid;
       border-width: $tabs-striped-border-width 0 0 0;
