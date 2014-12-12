@@ -164,8 +164,10 @@ describe('bar directives', function() {
           var el = setup();
           $document[0].body.appendChild(el[0]);
           expect(el.hasClass('has-tabs-top')).toBe(false);
-          $timeout.flush();
-          expect(el.hasClass('has-tabs-top')).toBe(true);
+          if (data.tag === 'ion-header-bar') {
+            $timeout.flush();
+            expect(el.hasClass('has-tabs-top')).toBe(true);
+          }
         }));
       }
 
