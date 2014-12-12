@@ -799,7 +799,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     if ('ontouchstart' in window) {
       // Touch Events
       container.addEventListener("touchstart", self.touchStart, false);
-      container.addEventListener("touchmove", self.touchMoveBubble, false);
+      if(self.options.preventDefault) container.addEventListener("touchmove", self.touchMoveBubble, false);
       document.addEventListener("touchmove", self.touchMove, false);
       document.addEventListener("touchend", self.touchEnd, false);
       document.addEventListener("touchcancel", self.touchEnd, false);
@@ -807,7 +807,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     } else if (window.navigator.pointerEnabled) {
       // Pointer Events
       container.addEventListener("pointerdown", self.touchStart, false);
-      container.addEventListener("pointermove", self.touchMoveBubble, false);
+      if(self.options.preventDefault) container.addEventListener("pointermove", self.touchMoveBubble, false);
       document.addEventListener("pointermove", self.touchMove, false);
       document.addEventListener("pointerup", self.touchEnd, false);
       document.addEventListener("pointercancel", self.touchEnd, false);
@@ -815,7 +815,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     } else if (window.navigator.msPointerEnabled) {
       // IE10, WP8 (Pointer Events)
       container.addEventListener("MSPointerDown", self.touchStart, false);
-      container.addEventListener("MSPointerMove", self.touchMoveBubble, false);
+      if(self.options.preventDefault) container.addEventListener("MSPointerMove", self.touchMoveBubble, false);
       document.addEventListener("MSPointerMove", self.touchMove, false);
       document.addEventListener("MSPointerUp", self.touchEnd, false);
       document.addEventListener("MSPointerCancel", self.touchEnd, false);
@@ -847,11 +847,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       };
 
       self.mouseMoveBubble = function(e) {
-        if (!mousedown) {
-          return;
-        }
-
-        if(self.options.preventDefault) {
+        if (mousedown && self.options.preventDefault) {
           e.preventDefault();
         }
       };
@@ -885,7 +881,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       });
 
       container.addEventListener("mousedown", self.mouseDown, false);
-      container.addEventListener("mousemove", self.mouseMoveBubble, false);
+      if(self.options.preventDefault) container.addEventListener("mousemove", self.mouseMoveBubble, false);
       document.addEventListener("mousemove", self.mouseMove, false);
       document.addEventListener("mouseup", self.mouseUp, false);
       document.addEventListener('mousewheel', self.mouseWheel, false);
