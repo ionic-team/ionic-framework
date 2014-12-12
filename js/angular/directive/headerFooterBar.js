@@ -124,9 +124,9 @@ function headerFooterBarDirective(isHeader) {
       controller: '$ionicHeaderBar',
       compile: function(tElement, $attr) {
         tElement.addClass(isHeader ? 'bar bar-header' : 'bar bar-footer');
-        // android style tabs? if so, remove bottom border for seamless display
+        // top style tabs? if so, remove bottom border for seamless display
         $timeout(function() {
-          if ($document[0].getElementsByClassName('tabs-top').length) tElement.addClass('has-tabs-top');
+          if (isHeader && $document[0].getElementsByClassName('tabs-top').length) tElement.addClass('has-tabs-top');
         });
 
         return { pre: prelink };

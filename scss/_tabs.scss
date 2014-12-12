@@ -94,10 +94,10 @@
       background-color: $background;
     }
     .tab-item {
-      color: rgba($color, $tabs-off-opacity);
+      color: rgba($color, $tabs-striped-off-opacity);
       opacity: 1;
       .badge{
-        opacity:$tabs-off-opacity;
+        opacity:$tabs-striped-off-opacity;
       }
       &.tab-item-active,
       &.active,
@@ -166,10 +166,10 @@
 @mixin tabs-striped-color($style, $color) {
   &.#{$style} {
     .tab-item {
-      color: rgba($color, $tabs-off-opacity);
+      color: rgba($color, $tabs-striped-off-opacity);
       opacity: 1;
       .badge{
-        opacity:$tabs-off-opacity;
+        opacity:$tabs-striped-off-opacity;
       }
       &.tab-item-active,
       &.active,
@@ -325,6 +325,8 @@ ion-tabs {
   top: $bar-height;
   padding-top: 0;
   background-position: bottom;
+  border-top-width: 0;
+  border-bottom-width: 1px;
   .tab-item {
     &.tab-item-active,
     &.active,
