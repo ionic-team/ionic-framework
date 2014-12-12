@@ -565,6 +565,11 @@ describe('Ionic nav-view', function() {
   it('should not cache ion-nav-views that were forward when moving back', inject(function ($state, $q, $timeout, $compile, $ionicConfig) {
     elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
 
+    var unloaded;
+    scope.$on('$ionicView.unloaded', function(ev, d){
+      unloaded = d;
+    });
+
     $ionicConfig.views.maxCache(2);
 
     $state.go(page1State);
@@ -581,26 +586,32 @@ describe('Ionic nav-view', function() {
     $q.flush();
     $timeout.flush();
     expect(elem.find('ion-nav-view').find('div').length).toBe(3);
+    expect(unloaded).toBeUndefined();
 
     $state.go(page4State);
     $q.flush();
     $timeout.flush();
     expect(elem.find('ion-nav-view').find('div').length).toBe(3);
+    expect(unloaded.historyId).toBe('root');
+    expect(unloaded.stateName).toBe('page1');
 
     $state.go(page3State);
     $q.flush();
     $timeout.flush();
     expect(elem.find('ion-nav-view').find('div').length).toBe(2);
+    expect(unloaded.stateName).toBe('page4');
 
     $state.go(page2State);
     $q.flush();
     $timeout.flush();
     expect(elem.find('ion-nav-view').find('div').length).toBe(1);
+    expect(unloaded.stateName).toBe('page3');
 
     $state.go(page1State);
     $q.flush();
     $timeout.flush();
     expect(elem.find('ion-nav-view').find('div').length).toBe(1);
+    expect(unloaded.stateName).toBe('page2');
   }));
 
   it('should cache ion-nav-views that were forward when moving back with $ionicConfig.cacheForwardViews=true', inject(function ($state, $q, $timeout, $compile, $ionicConfig) {
@@ -870,6 +881,11 @@ describe('Ionic nav-view', function() {
   it('should clear ion-nav-view cache', inject(function ($state, $q, $timeout, $compile, $ionicHistory) {
     elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
 
+    var clearCacheCollection = [];
+    scope.$on('$ionicView.unloaded', function(ev, d){
+      clearCacheCollection.push(d);
+    });
+
     $state.go(page1State);
     $q.flush();
     $timeout.flush();
@@ -894,7 +910,13 @@ describe('Ionic nav-view', function() {
     expect(divs.eq(2).attr('nav-view')).toBe('active');
     expect(divs.eq(2).text()).toBe('page3');
 
+    expect(clearCacheCollection.length).toBe(0);
     $ionicHistory.clearCache();
+
+    expect(clearCacheCollection.length).toBe(2);
+    expect(clearCacheCollection[0].stateName).toBe('page1');
+    expect(clearCacheCollection[1].stateName).toBe('page2');
+    clearCacheCollection = [];
 
     var divs = elem.find('ion-nav-view').find('div');
     expect(divs.length).toBe(1);
@@ -903,6 +925,7 @@ describe('Ionic nav-view', function() {
     expect(divs.eq(0).text()).toBe('page3');
 
     $ionicHistory.clearCache();
+    expect(clearCacheCollection.length).toBe(0);
 
     var divs = elem.find('ion-nav-view').find('div');
     expect(divs.length).toBe(1);
@@ -919,6 +942,7 @@ describe('Ionic nav-view', function() {
 
     expect(divs.eq(0).attr('nav-view')).toBe('active');
     expect(divs.eq(0).text()).toBe('page2');
+    expect(clearCacheCollection[0].stateName).toBe('page3');
   }));
 
   it('should create and cache tabs', inject(function ($state, $q, $timeout, $compile, $ionicConfig) {

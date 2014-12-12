@@ -68,9 +68,6 @@ $ios-transition-container-bg-color:    #000 !default;
     }
   }
 
-  .back-button {
-    @include transition-duration(0);
-  }
 }
 
 
