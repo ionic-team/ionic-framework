@@ -254,4 +254,28 @@ describe('Ionic Popover', function() {
     expect(done).toBe(true);
   });
 
+  it('Should set animation defined in options for static template', function() {
+    var template = '<div class="popover"></div>';
+    var instance = popover.fromTemplate(template, {
+        animation: 'slide-in-up'
+    });
+    expect(instance.viewType).toEqual('popover');
+    expect(instance.animation).toEqual('slide-in-up');
+  });
+
+  it('Should set animation defined in options for dynamic template', function() {
+      
+    var done = false;
+    popover.fromTemplateUrl('popover.html', {
+        animation: 'slide-in-up'
+    }).then(function (instance) {
+        done = true;
+        expect(instance.viewType).toEqual('popover');
+        expect(instance.animation).toEqual('slide-in-up');
+    });
+      
+    timeout.flush();
+    expect(done).toBe(true);
+  });
+
 });
