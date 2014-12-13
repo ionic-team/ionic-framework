@@ -87,6 +87,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
    *     Return true to close the action sheet, or false to keep it opened.
    *  -  `{boolean=}` `cancelOnStateChange` Whether to cancel the actionSheet when navigating
    *     to a new state.  Default true.
+   *  - `{string}` `cssClass` The custom CSS class name.
    *
    * @returns {function} `hideSheet` A function which, when called, hides & cancels the action sheet.
    */
@@ -104,7 +105,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
 
 
     // Compile the template
-    var element = scope.element = $compile('<ion-action-sheet buttons="buttons"></ion-action-sheet>')(scope);
+    var element = scope.element = $compile('<ion-action-sheet ng-class="cssClass" buttons="buttons"></ion-action-sheet>')(scope);
 
     // Grab the sheet element for animation
     var sheetEl = jqLite(element[0].querySelector('.action-sheet-wrapper'));

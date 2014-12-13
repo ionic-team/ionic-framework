@@ -103,4 +103,12 @@ describe('Ionic ActionSheet Service', function() {
     expect(scope.cancel).not.toHaveBeenCalled();
   }));
 
+  it('should add css class to element from cssClass option', inject(function($rootScope) {
+    var scope = setup({
+      cssClass: 'custom-class'
+    });
+    scope.showSheet();
+    expect(scope.element.hasClass('custom-class')).toBe(true);
+  }));
+
 });
