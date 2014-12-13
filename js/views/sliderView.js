@@ -435,6 +435,7 @@ ionic.views.Slider = ionic.views.View.inherit({
               move(index-1, -width, speed);
               move(index, 0, speed);
               move(index+1, width, speed);
+              offloadFn(options.lastSlideSlided && options.lastSlideSlided());
             }
 
           }
