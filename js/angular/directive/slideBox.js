@@ -56,7 +56,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
       disableScroll: '@',
       onSlideChanged: '&',
       activeSlide: '=?',
-      onLastSlideSlided: '&',
+      onSlideResisted: '&',
     },
     controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
       var _this = this;
@@ -84,9 +84,9 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
           // Try to trigger a digest
           $timeout(function() {});
         },
-        lastSlideSlided: function() {
-          $scope.onLastSlideSlided();
-          $scope.$parent.$broadcast('slideBox.lastSlideSlided');
+        slideResisted: function() {
+          $scope.onSlideResisted();
+          $scope.$parent.$broadcast('slideBox.slideResisted');
           $timeout(function() {});
         }
       });
