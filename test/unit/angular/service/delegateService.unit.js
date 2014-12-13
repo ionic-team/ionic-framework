@@ -2,7 +2,7 @@ describe('DelegateFactory', function() {
   function setup(methods) {
     var delegate;
     inject(function($log, $injector) {
-      delegate = $injector.instantiate(delegateService(methods || []));
+      delegate = $injector.instantiate(ionic.DelegateService(methods || []));
     });
     return delegate;
   }

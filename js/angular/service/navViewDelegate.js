@@ -1,6 +1,6 @@
 
 IonicModule
-.service('$ionicNavViewDelegate', delegateService([
+.service('$ionicNavViewDelegate', ionic.DelegateService([
   'clearCache'
 ]));
 

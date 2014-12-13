@@ -36,7 +36,7 @@
  * ```
  */
 IonicModule
-.service('$ionicSideMenuDelegate', delegateService([
+.service('$ionicSideMenuDelegate', ionic.DelegateService([
   /**
    * @ngdoc method
    * @name $ionicSideMenuDelegate#toggleLeft

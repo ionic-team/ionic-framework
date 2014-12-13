@@ -35,7 +35,7 @@
  * ```
  */
 IonicModule
-.service('$ionicSlideBoxDelegate', delegateService([
+.service('$ionicSlideBoxDelegate', ionic.DelegateService([
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#update

@@ -39,6 +39,7 @@ module.exports = {
     'js/ionic.js',
 
     // Utils
+    'js/utils/delegateService.js',
     'js/utils/dom.js',
     'js/utils/events.js',
     'js/utils/gestures.js',

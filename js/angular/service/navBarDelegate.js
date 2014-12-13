@@ -26,7 +26,7 @@
  * ```
  */
 IonicModule
-.service('$ionicNavBarDelegate', delegateService([
+.service('$ionicNavBarDelegate', ionic.DelegateService([
   /**
    * @ngdoc method
    * @name $ionicNavBarDelegate#align
