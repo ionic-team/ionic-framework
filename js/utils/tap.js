@@ -79,7 +79,7 @@ var tapLastTouchTarget;
 var tapTouchMoveListener = 'touchmove';
 
 // how much the coordinates can be off between start/end, but still a click
-var TAP_RELEASE_TOLERANCE = 6; // default tolerance
+var TAP_RELEASE_TOLERANCE = 12; // default tolerance
 var TAP_RELEASE_BUTTON_TOLERANCE = 50; // button elements should have a larger tolerance
 
 var tapEventListeners = {
