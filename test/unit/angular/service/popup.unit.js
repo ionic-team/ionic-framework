@@ -55,7 +55,7 @@ describe('$ionicPopup service', function() {
     it('should set the specified custom CSS class to popup container', function() {
       var popup = TestUtil.unwrapPromise($ionicPopup._createPopup({
         template: 'Hello, friend!',
-        class: 'mycustomclass'
+        cssClass: 'mycustomclass'
       }));
       expect(popup.element.hasClass('mycustomclass')).toBe(true);
     });

@@ -1,6 +1,6 @@
 
 var POPUP_TPL =
-  '<div class="popup-container" ng-class="class">' +
+  '<div class="popup-container" ng-class="cssClass">' +
     '<div class="popup">' +
       '<div class="popup-head">' +
         '<h3 class="popup-title" ng-bind-html="title"></h3>' +
@@ -138,7 +138,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
      * ```
      * {
      *   title: '', // String. The title of the popup.
-     *   class: '', // String, The custom CSS class name
+     *   cssClass: '', // String, The custom CSS class name
      *   subTitle: '', // String (optional). The sub-title of the popup.
      *   template: '', // String (optional). The html template to place in the popup body.
      *   templateUrl: '', // String (optional). The URL of an html template to place in the popup   body.
@@ -177,7 +177,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
      * ```
      * {
      *   title: '', // String. The title of the popup.
-     *   class: '', // String, The custom CSS class name
+     *   cssClass: '', // String, The custom CSS class name
      *   subTitle: '', // String (optional). The sub-title of the popup.
      *   template: '', // String (optional). The html template to place in the popup body.
      *   templateUrl: '', // String (optional). The URL of an html template to place in the popup   body.
@@ -206,7 +206,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
      * ```
      * {
      *   title: '', // String. The title of the popup.
-     *   class: '', // String, The custom CSS class name
+     *   cssClass: '', // String, The custom CSS class name
      *   subTitle: '', // String (optional). The sub-title of the popup.
      *   template: '', // String (optional). The html template to place in the popup body.
      *   templateUrl: '', // String (optional). The URL of an html template to place in the popup   body.
@@ -245,7 +245,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
      * ```
      * {
      *   title: '', // String. The title of the popup.
-     *   class: '', // String, The custom CSS class name
+     *   cssClass: '', // String, The custom CSS class name
      *   subTitle: '', // String (optional). The sub-title of the popup.
      *   template: '', // String (optional). The html template to place in the popup body.
      *   templateUrl: '', // String (optional). The URL of an html template to place in the popup   body.
@@ -310,7 +310,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
         title: options.title,
         buttons: options.buttons,
         subTitle: options.subTitle,
-        class: options.class,
+        cssClass: options.cssClass,
         $buttonTapped: function(button, event) {
           var result = (button.onTap || angular.noop)(event);
           event = event.originalEvent || event; //jquery events
