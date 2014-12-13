@@ -202,6 +202,16 @@ describe('Ionic Popover', function() {
     expect(instance.scope.$parent.$broadcast).toHaveBeenCalledWith('popover.shown', instance);
   });
 
+  it('should set custom options', function() {
+    var template = '<div class="popover"></div>';
+    var instance = popover.fromTemplate(template, {
+      animation: 'custom-animation'
+    });
+    instance.show();
+    timeout.flush();
+    expect(instance.$el[0].querySelector('.popover').classList.contains('custom-animation')).toBe(true);
+  });
+
   it('should broadcast "popover.hidden" on hide with self', function() {
     var template = '<div class="popover"></div>';
     var instance = popover.fromTemplate(template, {});
