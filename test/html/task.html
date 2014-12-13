@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="toggleTest">
+  <head>
+    <meta charset="utf-8">
+    <title>Task</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../../../dist/css/ionic.css">
+    <script src="../../../../dist/js/ionic.bundle.js"></script>
+  </head>
+  <body>
+
+    <header class="bar bar-header bar-danger">
+      <h1 class="title">Web Workers (Task)</h1>
+    </header>
+    <ion-content class="has-header reveal-animation">
+      <div ng-controller="TestCtrl">
+        <div>Running.</div>
+        <p>
+          Current value: {{value}};
+        </p>
+      </div>
+    </ion-content>
+
+    <script id="worker1">
+      onmessage = function (e) {
+        postMessage('I like ' + e.data.type);
+      };
+    </script>
+
+    <script>
+      angular.module('toggleTest', ['ionic'])
+      .controller('TestCtrl', function($scope, $timeout, $ionicTask, $http) {
+        $scope.value = 0;
+        var t = $ionicTask('tasks/task1.js', function(msg) {
+          $scope.value = msg;
+        }, function(err) {
+          console.error('POST ERR', msg);
+        }, function() {
+          console.log('Worker done!');
+        });
+
+        setInterval(function() {
+          t.post({
+            'op': 'increment',
+            'value': $scope.value
+          });
+        }, 100);
+
+        var t2 = $ionicTask(document.getElementById('worker1'), function(msg) {
+          console.log('Worker 1 message', msg);
+        });
+        t2.post({
+          'type': 'Ice Cream'
+        });
+      });
+    </script>
+  </body>
+</html>
