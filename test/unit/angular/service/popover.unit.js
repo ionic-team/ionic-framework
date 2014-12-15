@@ -36,7 +36,7 @@ describe('Ionic Popover', function() {
 
     var done = false;
 
-    var instance = popover.fromTemplateUrl('popover.html', function(instance) {
+    popover.fromTemplateUrl('popover.html').then(function(instance) {
       done = true;
       instance.show();
       expect(instance.el.classList.contains('popover-backdrop')).toBe(true);
