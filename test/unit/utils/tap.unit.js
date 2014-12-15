@@ -572,16 +572,16 @@ describe('Ionic Tap', function() {
   it('Should tapHasPointerMoved true if greater than or equal to release tolerance', function() {
     tapPointerStart = { x: 100, y: 100 };
 
-    var s = tapHasPointerMoved({ clientX: 111, clientY: 100, target: document.createElement('button') });
+    var s = tapHasPointerMoved({ clientX: 113, clientY: 100, target: document.createElement('button') });
     expect(s).toEqual(true);
 
-    s = tapHasPointerMoved({ clientX: 89, clientY: 100, target: document.createElement('button') });
+    s = tapHasPointerMoved({ clientX: 87, clientY: 100, target: document.createElement('button') });
     expect(s).toEqual(true);
 
-    s = tapHasPointerMoved({ clientX: 100, clientY: 109, target: document.createElement('button') });
+    s = tapHasPointerMoved({ clientX: 100, clientY: 113, target: document.createElement('button') });
     expect(s).toEqual(true);
 
-    s = tapHasPointerMoved({ clientX: 100, clientY: 91, target: document.createElement('button') });
+    s = tapHasPointerMoved({ clientX: 100, clientY: 87, target: document.createElement('button') });
     expect(s).toEqual(true);
 
     s = tapHasPointerMoved({ clientX: 100, clientY: 200, target: document.createElement('button') });
