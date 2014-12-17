@@ -19,6 +19,7 @@
  * </ion-nav-bar>
  * ```
  * 
+ * 
  *  **Note**: By default, the menu toggle button will only appear on a root
  * level side-menu page. Navigating in to child views will hide the menu-
  * toggle button. They can be made visible on child pages by setting the
