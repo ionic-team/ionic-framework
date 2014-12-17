@@ -16,6 +16,11 @@ IonicModule
  * `ion-side-menu-content`, so that when the element is clicked, the opened side menu will
  * automatically close.
  *
+ * "Burger Icon" toggles can be added to the header with the {@link ionic.directive:menuToggle}
+ * attribute directive. Clicking the toggle will open and close the side menu like the `menu-close`
+ * directive. The side menu will automatically hide on child pages, but can be overridden with the
+ * enable-menu-with-back-views attribute mentioned below.
+ *
  * By default, side menus are hidden underneath their side menu content and can be opened by swiping
  * the content left or right or by toggling a button to show the side menu. Additionally, by adding the
  * {@link ionic.directive:exposeAsideWhen} attribute directive to an

@@ -25,7 +25,7 @@
  * example, a toggle button for a left side menu should be on the left side; in this case,
  * we'd recommend using `side="left"`, so it's always on the left, no matter the platform.
  *
- * Note that `ion-nav-buttons` must be immediate descendants of the `ion-view` or
+ * ***Note*** that `ion-nav-buttons` must be immediate descendants of the `ion-view` or
  * `ion-nav-bar` element (basically, don't wrap it in another div).
  *
  * @usage
