@@ -712,6 +712,24 @@ ionic.views.Scroll = ionic.views.View.inherit({
       }];
     }
 
+    /**
+     * Scroll view has ancestor element with another scroll direction?
+     *
+     * @returns {Boolean}
+     */
+    function hasAncestorScrollWithDifferentDirection() {
+      if (self.options.scrollingX && self.options.scrollingY) {
+        return false;
+      }
+      if (self.options.scrollingX && ionic.DomUtil.getParentWithClass(self.__container, 'scroll-y')) {
+        return true;
+      }
+      if (self.options.scrollingY && ionic.DomUtil.getParentWithClass(self.__container, 'scroll-y')) {
+        return true;
+      }
+      return false;
+    }
+
     self.touchStart = function(e) {
       self.startCoordinates = ionic.tap.pointerCoord(e);
 
@@ -732,7 +750,12 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.__enableScrollY = true;
       self.__hasStarted = true;
       self.doTouchStart(getEventTouches(e), e.timeStamp);
-      e.preventDefault();
+
+      // Disable default event action only if not have ancestor node with scroll.
+      // When event propagation into ancestor node, then preventDefault() will be performed.
+      if (!hasAncestorScrollWithDifferentDirection()) {
+        e.preventDefault();
+      }
     };
 
     self.touchMove = function(e) {
@@ -830,7 +853,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         }
         self.doTouchStart(getEventTouches(e), e.timeStamp);
 
-        if ( !ionic.tap.isTextInput(e.target) ) {
+        if ( !ionic.tap.isTextInput(e.target) && !hasAncestorScrollWithDifferentDirection() ) {
           e.preventDefault();
         }
         mousedown = true;

@@ -105,6 +105,12 @@ function($timeout, $controller, $ionicBind) {
           scrollViewOptions.speedMultiplier = 0.8;
           scrollViewOptions.bouncing = false;
         }
+        if (scrollViewOptions.scrollingX) {
+          innerElement.addClass('scroll-x');
+        }
+        if (scrollViewOptions.scrollingY) {
+          innerElement.addClass('scroll-y');
+        }
 
         scrollCtrl = $controller('$ionicScroll', {
           $scope: $scope,
