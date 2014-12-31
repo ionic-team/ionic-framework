@@ -143,7 +143,7 @@
 /**
  * @ngdoc method
  * @name $ionicConfigProvider#navBar.alignTitle
- * @description Which side of the navBar to align the title. Default `center`.
+ * @description Which side of the navBar to align the title. Default `platform`.
  *
  * @param {string} value side of the navBar to align the title.
  *
