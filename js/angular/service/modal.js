@@ -154,8 +154,6 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
         PLATFORM_BACK_BUTTON_PRIORITY_MODAL
       );
 
-      self._isOpenPromise = $q.defer();
-
       ionic.views.Modal.prototype.show.call(self);
 
       $timeout(function() {
