@@ -118,6 +118,14 @@ IonicModule
    *  - `{number}` `left` The distance the user has scrolled from the left (starts at 0).
    *  - `{number}` `top` The distance the user has scrolled from the top (starts at 0).
    */
+  'getScrollMax',
+  /**
+   * @ngdoc method
+   * @name $ionicScrollDelegate#getScrollMax
+   * @returns {object} The maximum scroll position of this view, with the following properties:
+   *  - `{number}` `left` The maximum distance the user is able to scroll from the left.
+   *  - `{number}` `top` The maximum distance the user is able to scroll from the top.
+   */
   'getScrollPosition',
   /**
    * @ngdoc method
