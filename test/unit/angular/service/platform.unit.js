@@ -119,6 +119,14 @@ describe('Ionic Platform Service', function() {
     expect(ionic.Platform.isIPad()).toEqual(false);
   });
 
+  it('is not iOS', function() {
+    ionic.Platform.ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36';
+    ionic.Platform.navigator = {};
+    ionic.Platform.setPlatform(undefined);
+    ionic.Platform.setVersion(undefined);
+    expect(ionic.Platform.isIOS()).toEqual(false);
+  });
+
   it('is iOS', function() {
     ionic.Platform.setPlatform('iOS');
     expect(ionic.Platform.isIOS()).toEqual(true);
