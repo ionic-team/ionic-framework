@@ -19,7 +19,7 @@
         var eleToActivate;
 
         for (var x = 0; x < 6; x++) {
-          if (!ele || ele.nodeType !== 1) break;
+          if (!ele || ele.nodeType !== 1 || ele.classList == undefined) break;
           if (eleToActivate && ele.classList.contains('item')) {
             eleToActivate = ele;
             break;
