@@ -42,36 +42,41 @@
     padding: 1px;
     width: 100%;
     border-radius: 0;
-    border-color: $sheet-options-borer-color;
+    border-color: $sheet-options-border-color;
     background-color: transparent;
 
     color: $sheet-options-text-color;
-    font-size: 18px;
+    font-size: 21px;
 
     &:hover {
       color: $sheet-options-text-color;
     }
     &.destructive {
-      color: $assertive;
+      color: #ff3b30;
       &:hover {
-        color: $assertive;
+        color: #ff3b30;
       }
     }
   }
 
   .button.active, .button.activated {
     box-shadow: none;
-    border-color: $sheet-options-borer-color;
+    border-color: $sheet-options-border-color;
     color: $sheet-options-text-color;
     background: $sheet-options-bg-active-color;
   }
 }
 
+.action-sheet-has-icons .icon {
+  position: absolute;
+  left: 16px;
+}
+
 .action-sheet-title {
-  padding: $sheet-margin;
-  color: lighten($base-color, 40%);
+  padding: $sheet-margin * 2;
+  color: #8f8f8f;
   text-align: center;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .action-sheet-group {
@@ -108,4 +113,54 @@
   .action-sheet-backdrop {
     pointer-events: auto;
   }
+}
+
+
+.platform-android {
+
+  .action-sheet-backdrop.active {
+    background-color: rgba(0,0,0,0.2);
+  }
+
+  .action-sheet {
+    margin: 0;
+
+    .action-sheet-title,
+    .button {
+      text-align: left;
+      border-color: transparent;
+      font-size: 16px;
+      color: inherit;
+    }
+
+    .action-sheet-title {
+      font-size: 14px;
+      padding: 16px;
+      color: #666;
+    }
+
+    .button.active,
+    .button.activated {
+      background: #e8e8e8;
+    }
+  }
+
+  .action-sheet-group {
+    margin: 0;
+    border-radius: 0;
+    background-color: #fafafa;
+  }
+
+  .action-sheet-cancel {
+    display: none;
+  }
+
+  .action-sheet-has-icons {
+
+    .button {
+      padding-left: 56px;
+    }
+
+  }
+
 }
