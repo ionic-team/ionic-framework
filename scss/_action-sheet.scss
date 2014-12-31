@@ -14,7 +14,7 @@
   background-color: rgba(0,0,0,0);
 
   &.active {
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.4);
   }
 }
 
@@ -31,8 +31,8 @@
 }
 
 .action-sheet {
-  margin-left: 15px;
-  margin-right: 15px;
+  margin-left: $sheet-margin;
+  margin-right: $sheet-margin;
   width: auto;
   z-index: $z-index-action-sheet;
   overflow: hidden;
@@ -42,40 +42,59 @@
     padding: 1px;
     width: 100%;
     border-radius: 0;
-
+    border-color: $sheet-options-borer-color;
     background-color: transparent;
 
-    color: $positive;
+    color: $sheet-options-text-color;
     font-size: 18px;
 
+    &:hover {
+      color: $sheet-options-text-color;
+    }
     &.destructive {
       color: $assertive;
+      &:hover {
+        color: $assertive;
+      }
     }
+  }
+
+  .button.active, .button.activated {
+    box-shadow: none;
+    border-color: $sheet-options-borer-color;
+    color: $sheet-options-text-color;
+    background: $sheet-options-bg-active-color;
   }
 }
 
 .action-sheet-title {
-  padding: 10px;
+  padding: $sheet-margin;
   color: lighten($base-color, 40%);
   text-align: center;
   font-size: 12px;
 }
 
 .action-sheet-group {
-  margin-bottom: 5px;
+  margin-bottom: $sheet-margin;
   border-radius: $sheet-border-radius;
   background-color: #fff;
+  overflow: hidden;
+
   .button {
     border-width: 1px 0px 0px 0px;
-    border-radius: 0;
-
-    &.active {
-      background-color: transparent;
-      color: inherit;
-    }
   }
   .button:first-child:last-child {
     border-width: 0;
+  }
+}
+
+.action-sheet-options {
+  background: $sheet-options-bg-color;
+}
+
+.action-sheet-cancel {
+  .button {
+    font-weight: 500;
   }
 }
 

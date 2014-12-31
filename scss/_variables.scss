@@ -603,12 +603,13 @@ $grid-responsive-lg-break:        1023px !default; // smaller than landscape tab
 // Action Sheets
 // -------------------------------
 
-$sheet-bg-color:                  rgba(255, 255, 255, 0.6) !default;
-$sheet-opacity:                   0.95 !default;
+$sheet-margin:                    8px !default;
+$sheet-border-radius:             4px !default;
 
-$sheet-border-radius:             3px 3px 3px 3px !default;
-$sheet-border-radius-top:         3px 3px 0px 0px !default;
-$sheet-border-radius-bottom:      0px 0px 3px 3px !default;
+$sheet-options-bg-color:          #f6f7f8 !default;
+$sheet-options-bg-active-color:   #ecedee !default;
+$sheet-options-text-color:        $positive !default;
+$sheet-options-borer-color:       #d1d3d6 !default;
 
 
 // Popups
