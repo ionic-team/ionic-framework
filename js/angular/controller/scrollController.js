@@ -93,6 +93,10 @@ function($scope, scrollViewOptions, $timeout, $window, $location, $document, $io
   self.getScrollPosition = function() {
     return self.scrollView.getValues();
   };
+  
+  self.getScrollMax = function() {
+    return self.scrollView.getScrollMax();
+  };
 
   self.resize = function() {
     return $timeout(resize).then(function() {
