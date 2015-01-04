@@ -731,7 +731,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.__isSelectable = true;
       self.__enableScrollY = true;
       self.__hasStarted = true;
-      self.__scrollLockFix = {direction: null};
+      self.__scrollLockFix = {direction: null, doFix: false};
       self.doTouchStart(getEventTouches(e), e.timeStamp);
       e.preventDefault();
     };
@@ -773,15 +773,21 @@ ionic.views.Scroll = ionic.views.View.inherit({
         }
       }
 
-      if(self.options.locking){
-        if(!self.__scrollLockFix.direction){
-          self.__scrollLockFix.direction = Math.abs(e.touches[0].pageX - self.__initialTouchLeft) > Math.abs(e.touches[0].pageY - self.__initialTouchTop);
+      if(self.options.locking && self.__scrollLockFix.direction === null){
+        var detect = 5,
+            dx = Math.abs(e.touches[0].pageX - self.__initialTouchLeft), dy = Math.abs(e.touches[0].pageY - self.__initialTouchTop);
+        if(dx > detect || dy > detect){
+          self.__scrollLockFix.direction = dx > dy;
+          self.__scrollLockFix.doFix = true;
         }
-        var dir = self.__scrollLockFix.direction;
+      }
+      var dir = self.__scrollLockFix.direction;
+      if(self.__scrollLockFix.doFix){
         self.doTouchMove([{pageX: dir ? e.touches[0].pageX : self.__initialTouchLeft, pageY: dir ? self.__initialTouchTop : e.touches[0].pageY}], e.timeStamp, e.scale);
       }else{
         self.doTouchMove(getEventTouches(e), e.timeStamp, e.scale);
       }
+
       self.__isDown = true;
     };
 
