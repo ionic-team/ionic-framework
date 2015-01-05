@@ -483,6 +483,8 @@ function tapHandleFocus(ele) {
     // already is the active element and has focus
     triggerFocusIn = true;
 
+  } else if (ionic.tap.isDateInput(ele)) {
+    triggerFocusIn = true;
   } else if ((/^(input|textarea)$/i).test(ele.tagName) || ele.isContentEditable) {
     triggerFocusIn = true;
     ele.focus && ele.focus();
