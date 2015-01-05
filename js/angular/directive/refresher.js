@@ -48,6 +48,10 @@
  * of the refresher.
  * @param {expression=} on-pulling Called when the user starts to pull down
  * on the refresher.
+ * @param {expression=} on-pull-progress Repeatedly called as the user is pulling down
+ * the refresher. The callback should have a `progress` argument which will be a number
+ * from `0` and `1`. For example, if the user has pulled the refresher halfway
+ * down, its progress would be `0.5`.
  * @param {string=} pulling-icon The icon to display while the user is pulling down.
  * Default: 'ion-arrow-down-c'.
  * @param {string=} pulling-text The text to display while the user is pulling down.
@@ -60,7 +64,7 @@
  *
  */
 IonicModule
-.directive('ionRefresher', ['$ionicBind', function($ionicBind) {
+.directive('ionRefresher', ['$ionicBind', '$parse', function($ionicBind, $parse) {
   return {
     restrict: 'E',
     replace: true,
@@ -94,6 +98,15 @@ IonicModule
           $onRefresh: '&onRefresh',
           $onPulling: '&onPulling'
         });
+
+        if (isDefined($attrs.onPullProgress)) {
+          var onPullProgressFn = $parse($attrs.onPullProgress);
+          $scope.$onPullProgress = function(progress) {
+            onPullProgressFn($scope, {
+              progress: progress
+            });
+          };
+        }
 
         scrollCtrl._setRefresher($scope, $element[0]);
         $scope.$on('scroll.refreshComplete', function() {

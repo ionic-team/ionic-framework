@@ -175,10 +175,12 @@ function($scope, scrollViewOptions, $timeout, $window, $location, $document, $io
       // activateCallback
       refresher.classList.add('active');
       refresherScope.$onPulling();
+      onPullProgress(1);
     }, function() {
-        refresher.classList.remove('active');
-        refresher.classList.remove('refreshing');
-        refresher.classList.remove('refreshing-tail');
+      // deactivateCallback
+      refresher.classList.remove('active');
+      refresher.classList.remove('refreshing');
+      refresher.classList.remove('refreshing-tail');
     }, function() {
       // startCallback
       refresher.classList.add('refreshing');
@@ -192,6 +194,11 @@ function($scope, scrollViewOptions, $timeout, $window, $location, $document, $io
     }, function() {
       // tailCallback
       refresher.classList.add('refreshing-tail');
-    });
+    }, onPullProgress);
+
+    function onPullProgress(progress) {
+      $scope.$broadcast('$ionicRefresher.pullProgress', progress);
+      (refresherScope.$onPullProgress || angular.noop)(progress);
+    }
   };
 }]);
