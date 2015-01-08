@@ -5,7 +5,7 @@
 
 The best place to start with Ionic is our [documentation page](http://ionicframework.com/docs/).
 
-Ionic currently best supports iOS 6+ and Android 4.1+, with scaled-down support for Android 2.3.
+Ionic currently best supports iOS 7+ and Android 4.1+.
 
 # What is Ionic?
 
