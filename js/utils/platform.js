@@ -247,7 +247,7 @@
         platformName = getParameterByName('ionicplatform');
       } else if (self.ua.indexOf('Android') > 0) {
         platformName = ANDROID;
-      } else if (self.ua.indexOf('iPhone') > -1 || self.ua.indexOf('iPad') > -1 || self.ua.indexOf('iPod') > -1) {
+      } else if (/iPhone|iPad|iPod/.test(self.ua)) {
         platformName = IOS;
       } else if (self.ua.indexOf('Windows Phone') > -1) {
         platformName = WINDOWS_PHONE;
