@@ -13,6 +13,7 @@ function($rootScope, $timeout) {
     this.dataSource = options.dataSource;
     this.element = options.element;
     this.scrollView = options.scrollView;
+    this.redraw = options.redraw || true;
 
     this.isVertical = !!this.scrollView.options.scrollingY;
     this.renderedItems = {};
@@ -153,7 +154,7 @@ function($rootScope, $timeout) {
       this.viewportSize = result.totalSize;
       this.beforeSize = result.beforeSize;
       this.setCurrentIndex(0);
-      this.render(true);
+      this.render(this.redraw);
       this.dataSource.setup();
     },
     /*

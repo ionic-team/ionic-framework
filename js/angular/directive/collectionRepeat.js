@@ -166,6 +166,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
 
       var heightParsed = $parse($attr.collectionItemHeight || '"100%"');
       var widthParsed = $parse($attr.collectionItemWidth || '"100%"');
+      var shouldRedraw = $parse($attr.collectionRedraw || true)();
 
       var heightGetter = function(scope, locals) {
         var result = heightParsed(scope, locals);
@@ -205,6 +206,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         dataSource: dataSource,
         element: scrollCtrl.$element,
         scrollView: scrollCtrl.scrollView,
+        redraw: shouldRedraw
       });
 
       var listExprParsed = $parse(listExpr);

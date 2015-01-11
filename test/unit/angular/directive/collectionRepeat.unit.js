@@ -17,7 +17,8 @@ describe('collectionRepeat directive', function() {
       jasmine.createSpy('$repeatManager').andCallFake(function(opts) {
         repeatManager = {
           options: opts,
-          resize: jasmine.createSpy('resize')
+          resize: jasmine.createSpy('resize'),
+          render: jasmine.createSpy('render')
         };
         return repeatManager;
       })
@@ -123,6 +124,25 @@ describe('collectionRepeat directive', function() {
     spyOn(scrollView, 'resize');
     dataSource.setData.reset();
     repeatManager.resize.reset();
+
+    el.scope().$apply('items = [ 1,2,3 ]');
+    expect(dataSource.setData).toHaveBeenCalledWith(el.scope().items, [], []);
+    expect(repeatManager.resize.callCount).toBe(1);
+    expect(scrollView.resize.callCount).toBe(1);
+    el.scope().$apply('items = null');
+    expect(dataSource.setData).toHaveBeenCalledWith(null, [], []);
+    expect(repeatManager.resize.callCount).toBe(2);
+    expect(scrollView.resize.callCount).toBe(2);
+  });
+
+  it('should not rerender on list change if elements have been added', function() {
+    var el = setup('collection-repeat="item in items" collection-item-height="50" collection-redraw="false"');
+    var scrollView = el.controller('$ionicScroll').scrollView;
+    spyOn(scrollView, 'resize');
+    dataSource.setData.reset();
+    repeatManager.resize.reset();
+
+    expect(repeatManager.options.redraw).toBe(false);
 
     el.scope().$apply('items = [ 1,2,3 ]');
     expect(dataSource.setData).toHaveBeenCalledWith(el.scope().items, [], []);
