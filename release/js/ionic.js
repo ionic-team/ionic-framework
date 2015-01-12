@@ -5701,8 +5701,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
           var currentTouchTopRel = currentTouchTop - self.__clientTop;
 
           // Recompute left and top coordinates based on new zoom level
-          scrollLeft = ((currentTouchLeftRel + scrollLeft) * level / oldLevel) - currentTouchLeftRel;
-          scrollTop = ((currentTouchTopRel + scrollTop) * level / oldLevel) - currentTouchTopRel;
+          // if self-centering enabled and dimension of content less than client , set cordinate as zero
+          scrollLeft = (self.__clientWidth>(self.__contentWidth*level))?0:((currentTouchLeftRel + scrollLeft) * level / oldLevel) - currentTouchLeftRel;
+          scrollTop = (self.__clientHeight>(self.__contentHeight*level))?0:((currentTouchTopRel + scrollTop) * level / oldLevel) - currentTouchTopRel;
 
           // Recompute max scroll values
           self.__computeScrollMax(level);
