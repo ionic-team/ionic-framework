@@ -4221,7 +4221,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.options = {
 
       /** Enable self centering when the content is smaller in dimension than client */
-      selfCentre: false,
+      selfCenter: false,
 
       /** Disable scrolling on x-axis by default */
       scrollingX: false,
@@ -4482,9 +4482,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
   __scheduledZoom: 0,
 
   /* Self centering offsets */
-  __selfCentreLeftOffset : 0,
+  __selfCenterLeftOffset : 0,
 
-  __selfCentreTopOffset : 0,
+  __selfCenterTopOffset : 0,
 
 
 
@@ -5097,7 +5097,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     if (!self.__container || !self.options) return;
      
      //if selfcentering is on, content width should not be stretched to 100% (which is the default behaviour of display:block)
-    if(self.options.selfCentre)
+    if(self.options.selfCenter)
       self.__content.style.display="inline-block";
     
     // Update Scroller dimensions for changed content
@@ -5836,9 +5836,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
 /** calculate selfcentering offsets @oxylab
   */
-  calcSelfCentre : function(zoom)
+  calcSelfCenter : function(zoom)
   {         var self=this;
-    if(!self.options.selfCentre)return;
+    if(!self.options.selfCenter)return;
             var xoffset = 0;
             var yoffset = 0;
 
@@ -5853,8 +5853,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
                 }else{
                     yoffset = 0;
                 }
-            self.__selfCentreLeftOffset = xoffset;
-            self.__selfCentreTopOffset = yoffset;
+            self.__selfCenterLeftOffset = xoffset;
+            self.__selfCenterTopOffset = yoffset;
         },
 
 
@@ -6029,7 +6029,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
           // Push values out
           if (self.__callback) {
-            self.__callback(self.__scrollLeft-self.__selfCentreLeftOffset,self.__scrollTop-self.__selfCentreTopOffset,
+            self.__callback(self.__scrollLeft-self.__selfCenterLeftOffset,self.__scrollTop-self.__selfCenterTopOffset,
               self.__zoomLevel, wasResize);
          }
 
@@ -6064,7 +6064,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       // Push values out
       if (self.__callback) {
-        self.__callback(left-self.__selfCentreLeftOffset, top-self.__selfCentreTopOffset, zoom, wasResize);
+        self.__callback(left-self.__selfCenterLeftOffset, top-self.__selfCenterTopOffset, zoom, wasResize);
       }
 
       // Fix max scroll ranges
@@ -6094,7 +6094,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     }
     
     //Recompute deadOffsets @oxylab
-          self.calcSelfCentre(zoomLevel);
+          self.calcSelfCenter(zoomLevel);
     
   },
 
