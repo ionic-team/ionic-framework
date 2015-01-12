@@ -4226,6 +4226,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
     });
 
     self.options = {
+ 
+      /** Enable self centering when the content is smaller in dimension than client */
+      selfCentre: false,
 
       /** Disable scrolling on x-axis by default */
       scrollingX: false,
@@ -4485,6 +4488,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
   /* Scheduled zoom level (final scale when animating) */
   __scheduledZoom: 0,
 
+  /* Self centering offsets */
+  __selfCentreLeftOffset : 0,
+
+  __selfCentreTopOffset : 0,
 
 
   /*
@@ -5095,6 +5102,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
     var self = this;
     if (!self.__container || !self.options) return;
 
+     //if selfcentering is on, content width should not be stretched to 100% (which is the default behaviour of display:block)
+    if(self.options.selfCentre)
+      self.__content.style.display="inline-block";
+    
     // Update Scroller dimensions for changed content
     // Add padding to bottom of content
     self.setDimensions(
@@ -5828,6 +5839,28 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
   },
 
+/** calculate selfcentering offsets @oxylab
+  */
+  calcSelfCentre : function(zoom)
+  {         var self=this;
+    if(!self.options.selfCentre)return;
+            var xoffset = 0;
+            var yoffset = 0;
+
+                if (self.__clientWidth>(self.__contentWidth*zoom)){
+                    xoffset = (self.__clientWidth-(self.__contentWidth*zoom))/2;
+                }else{
+                    xoffset = 0;
+                }
+
+                if (self.__clientHeight>(self.__contentHeight*zoom)){
+                    yoffset = (self.__clientHeight-(self.__contentHeight*zoom))/2;
+                }else{
+                    yoffset = 0;
+                }
+            self.__selfCentreLeftOffset = xoffset;
+            self.__selfCentreTopOffset = yoffset;
+        },
 
   /**
    * Touch end handler for scrolling support
@@ -6000,8 +6033,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
           // Push values out
           if (self.__callback) {
-            self.__callback(self.__scrollLeft, self.__scrollTop, self.__zoomLevel, wasResize);
-          }
+           self.__callback(self.__scrollLeft-self.__selfCentreLeftOffset,self.__scrollTop-self.__selfCentreTopOffset,
+              self.__zoomLevel, wasResize);
+         }
 
         }
       };
@@ -6034,7 +6068,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       // Push values out
       if (self.__callback) {
-        self.__callback(left, top, zoom, wasResize);
+        self.__callback(left-self.__selfCentreLeftOffset, top-self.__selfCentreTopOffset, zoom, wasResize);
       }
 
       // Fix max scroll ranges
@@ -6062,6 +6096,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.__didWaitForSize = true;
       self.__waitForSize();
     }
+     //Recompute deadOffsets @oxylab
+          self.calcSelfCentre(zoomLevel);
+   
   },
 
 
@@ -51182,7 +51219,9 @@ function($timeout, $controller, $ionicBind) {
           scrollbarY: '@',
           zooming: '@',
           minZoom: '@',
-          maxZoom: '@'
+          maxZoom: '@',
+          selfCentre: '@'
+        
         });
         $scope.direction = $scope.direction || 'y';
 
@@ -51211,6 +51250,7 @@ function($timeout, $controller, $ionicBind) {
           zooming: $scope.$eval($scope.zooming) === true,
           maxZoom: $scope.$eval($scope.maxZoom) || 3,
           minZoom: $scope.$eval($scope.minZoom) || 0.5,
+          selfCentre: $scope.$eval($scope.selfCentre) === true,
           preventDefault: true
         };
         if (isPaging) {
