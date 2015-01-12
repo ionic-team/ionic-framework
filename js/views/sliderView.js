@@ -309,7 +309,8 @@ ionic.views.Slider = ionic.views.View.inherit({
         // ensure sliding is enabled
         if (event.touches.length > 1 ||
             event.scale && event.scale !== 1 ||
-            slider.slideIsDisabled) {
+            slider.slideIsDisabled ||
+            event.target.getAttribute('data-tap-disabled') == 'true') {
           return;
         }
 
