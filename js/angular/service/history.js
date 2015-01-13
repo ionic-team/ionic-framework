@@ -553,6 +553,15 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
     /**
      * @ngdoc method
+     * @name $ionicHistory#forcedNav
+     * @description Forces the next transition to have the specified direction/action.
+     */
+    forcedNav: function(force){
+      forcedNav = force;
+    },
+
+    /**
+     * @ngdoc method
      * @name $ionicHistory#goBack
      * @description Navigates the app to the back view, if a back view exists.
      */
