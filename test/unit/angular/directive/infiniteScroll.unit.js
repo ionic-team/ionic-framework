@@ -192,8 +192,9 @@ describe('ionicInfiniteScroll directive', function() {
       expect(el.scope().foo).not.toBe(1);
 
       var el = setupNative('on-infinite="foo=1"');
-      var scrollEvent = new Event('scroll');
-      ctrl.scrollEl.dispatchEvent(scrollEvent);
+      var evObj = document.createEvent('HTMLEvents');
+      evObj.initEvent('scroll', true, true, window, 1, 12, 345, 7, 220, false, false, true, false, 0, null);
+      ctrl.scrollEl.dispatchEvent(evObj);
 
       expect(el.hasClass('active')).toBe(false);
       expect(ctrl.isLoading).toBe(false);
