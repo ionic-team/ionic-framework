@@ -45,7 +45,8 @@ IonicModule
   '$timeout',
   '$controller',
   '$ionicBind',
-function($timeout, $controller, $ionicBind) {
+  '$ionicConfig',
+function($timeout, $controller, $ionicBind, $ionicConfig) {
   return {
     restrict: 'E',
     require: '^?ionNavView',
@@ -108,7 +109,8 @@ function($timeout, $controller, $ionicBind) {
 
         if ($attr.scroll === "false") {
           //do nothing
-        } else if(attr.overflowScroll === "true") {
+        } else if (attr.overflowScroll === "true" || !$ionicConfig.scrolling.jsScrolling()) {
+          // use native scrolling
           $element.addClass('overflow-scroll');
         } else {
           var scrollViewOptions = {

@@ -222,6 +222,9 @@ IonicModule
     form: {
       checkbox: PLATFORM
     },
+    scrolling: {
+      jsScrolling: PLATFORM
+    },
     tabs: {
       style: PLATFORM,
       position: PLATFORM
@@ -260,6 +263,10 @@ IonicModule
 
     form: {
       checkbox: 'circle'
+    },
+
+    scrolling: {
+      jsScrolling: true
     },
 
     tabs: {
