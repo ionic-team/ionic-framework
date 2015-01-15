@@ -85,7 +85,7 @@
 /* the handle (circle) thats inside the toggle's track area */
 /* also the handle's appearance when it is "off" */
 .toggle .handle {
-  @include transition($toggle-transition-duration ease-in-out);
+  @include transition($toggle-transition-duration cubic-bezier(0, 1.1, 1, 1.1));
   position: absolute;
   display: block;
   width: $toggle-handle-width;
@@ -94,6 +94,7 @@
   background-color: $toggle-handle-off-bg-color;
   top: $toggle-border-width + $toggle-hit-area-expansion;
   left: $toggle-border-width + $toggle-hit-area-expansion;
+  box-shadow: 0 2px 7px rgba(0,0,0,.35), 0 1px 1px rgba(0,0,0,.15);
 
   &:before {
     // used to create a larger (but hidden) hit area to slide the handle
@@ -128,7 +129,7 @@
 .item-toggle .toggle {
   // position the toggle to the right within a list item
   position: absolute;
-  top: $item-padding / 2;
+  top: ($item-padding / 2) + 2;
   right: $item-padding;
   z-index: $z-index-item-toggle;
 }
