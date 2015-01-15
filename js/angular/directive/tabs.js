@@ -24,15 +24,15 @@
  * ```html
  * <ion-tabs class="tabs-positive tabs-icon-only">
  *
- *   <ion-tab title="Home" icon-on="ion-ios7-filing" icon-off="ion-ios7-filing-outline">
+ *   <ion-tab title="Home" icon-on="ion-ios-filing" icon-off="ion-ios-filing-outline">
  *     <!-- Tab 1 content -->
  *   </ion-tab>
  *
- *   <ion-tab title="About" icon-on="ion-ios7-clock" icon-off="ion-ios7-clock-outline">
+ *   <ion-tab title="About" icon-on="ion-ios-clock" icon-off="ion-ios-clock-outline">
  *     <!-- Tab 2 content -->
  *   </ion-tab>
  *
- *   <ion-tab title="Settings" icon-on="ion-ios7-gear" icon-off="ion-ios7-gear-outline">
+ *   <ion-tab title="Settings" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline">
  *     <!-- Tab 3 content -->
  *   </ion-tab>
  *

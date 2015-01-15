@@ -1,4 +1,5 @@
 describe('ionRefresher directive', function() {
+
   beforeEach(module('ionic'));
   function setup(attrs, scopeProps) {
     var el;
@@ -17,6 +18,7 @@ describe('ionRefresher directive', function() {
       el.data('$$ionicScrollController', ionicScrollCtrl);
 
       $compile(el)(scope);
+      ionic.requestAnimationFrame = function() {};
       $rootScope.$apply();
     });
     return el;
@@ -68,9 +70,9 @@ describe('ionRefresher directive', function() {
     expect(ctrl.scrollView.finishPullToRefresh).toHaveBeenCalled();
   });
 
-  it('should have default pullingIcon', function() {
+  it('should not have default pullingIcon', function() {
     var el = setup();
-    expect(el[0].querySelector('.icon-pulling .ion-ios7-arrow-down')).toBeTruthy();
+    expect(el[0].querySelector('.icon-pulling .ion-ios-arrow-down')).toBeFalsy();
   });
   it('should allow custom pullingIcon', function() {
     var el = setup('pulling-icon="super-icon"');
@@ -78,9 +80,13 @@ describe('ionRefresher directive', function() {
     expect(el[0].querySelector('.icon-pulling .super-icon')).toBeTruthy();
   });
 
-  it('should have default refreshingIcon', function() {
+  it('should have default loader', function() {
     var el = setup();
-    expect(el[0].querySelector('.ion-loading-d')).toBeTruthy();
+    expect(el[0].querySelector('ion-loader')).toBeTruthy();
+  });
+  it('should have loader', function() {
+    var el = setup('loader="android"');
+    expect(el[0].querySelector('.loader-android')).toBeTruthy();
   });
   it('should allow custom refreshingIcon', function() {
     var el = setup('refreshing-icon="monkey-icon"');

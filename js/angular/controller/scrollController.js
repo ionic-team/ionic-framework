@@ -198,7 +198,8 @@ function($scope, scrollViewOptions, $timeout, $window, $location, $document, $io
 
     function onPullProgress(progress) {
       $scope.$broadcast('$ionicRefresher.pullProgress', progress);
-      (refresherScope.$onPullProgress || angular.noop)(progress);
+      refresherScope.$onPullProgress && refresherScope.$onPullProgress(progress);
     }
   };
+
 }]);
