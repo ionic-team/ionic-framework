@@ -144,8 +144,27 @@ describe('ionOptionButton directive', function() {
     $compile(el)($rootScope.$new());
     $rootScope.$apply();
 
-    var optionContainer = angular.element(el[0].querySelector('.item-options'));
+    var optionContainer = angular.element(el[0].querySelector('.item-options-right'));
     expect(optionContainer.length).toBe(1);
     expect(optionContainer.children().hasClass('button')).toBe(true);
+  }));
+  it('should support left option buttons', inject(function($compile, $rootScope) {
+    var setSpy = jasmine.createSpy('setOptionButton');
+    var el = angular.element('<ion-item><ion-option-button side="left">L</ion-option-button><ion-option-button>R</ion-option-button></ion-item>');
+    el.data('$ionListController', {
+      showDelete: function() { return false; }
+    });
+    $compile(el)($rootScope.$new());
+    $rootScope.$apply();
+
+    var leftContainer = angular.element(el[0].querySelector('.item-options-left'));
+    expect(leftContainer.length).toBe(1);
+    expect(leftContainer.children().hasClass('button')).toBe(true);
+    expect(leftContainer.text()).toBe('L');
+
+    var rightContainer = angular.element(el[0].querySelector('.item-options-right'));
+    expect(rightContainer.length).toBe(1);
+    expect(rightContainer.children().hasClass('button')).toBe(true);
+    expect(rightContainer.text()).toBe('R');
   }));
 });
