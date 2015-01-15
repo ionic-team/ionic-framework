@@ -260,6 +260,22 @@
 
 }
 
+.platform-android {
+
+  .bar {
+
+    .back-button .icon:before {
+      font-size: 24px;
+    }
+
+    .title {
+      font-size: 19px;
+      line-height: 43px;
+    }
+  }
+
+}
+
 // Default styles for buttons inside of styled bars
 .bar-light {
   .button {
