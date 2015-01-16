@@ -24,6 +24,9 @@
     }
   }
 
+}
+
+.toggle {
   &.toggle-light  {
     @include toggle-style($toggle-on-light-border, $toggle-on-light-bg);
   }
@@ -50,6 +53,36 @@
   }
   &.toggle-dark  {
     @include toggle-style($toggle-on-dark-border, $toggle-on-dark-bg);
+  }
+}
+
+.platform-android .toggle {
+  &.toggle-light  {
+    @include toggle-android-style($toggle-on-light-bg);
+  }
+  &.toggle-stable  {
+    @include toggle-android-style($toggle-on-stable-bg);
+  }
+  &.toggle-positive  {
+    @include toggle-android-style($toggle-on-positive-bg);
+  }
+  &.toggle-calm  {
+    @include toggle-android-style($toggle-on-calm-bg);
+  }
+  &.toggle-assertive  {
+    @include toggle-android-style($toggle-on-assertive-bg);
+  }
+  &.toggle-balanced  {
+    @include toggle-android-style($toggle-on-balanced-bg);
+  }
+  &.toggle-energized  {
+    @include toggle-android-style($toggle-on-energized-bg);
+  }
+  &.toggle-royal  {
+    @include toggle-android-style($toggle-on-royal-bg);
+  }
+  &.toggle-dark  {
+    @include toggle-android-style($toggle-on-dark-bg);
   }
 }
 
@@ -86,6 +119,7 @@
 /* also the handle's appearance when it is "off" */
 .toggle .handle {
   @include transition($toggle-transition-duration cubic-bezier(0, 1.1, 1, 1.1));
+  @include transition-property((background-color, transform));
   position: absolute;
   display: block;
   width: $toggle-handle-width;
@@ -136,4 +170,30 @@
 
 .toggle input:disabled + .track {
   opacity: .6;
+}
+
+.platform-android {
+  .toggle .track {
+    border: 0;
+    width: 34px;
+    height: 15px;
+    background: #9e9e9e;
+  }
+  .toggle input:checked + .track {
+    background: rgba(0,150,137,.5);
+  }
+  .toggle .handle {
+    top: 2px;
+    left: 4px;
+    width: 21px;
+    height: 21px;
+    box-shadow: 0 2px 5px rgba(0,0,0,.25);
+  }
+  .toggle input:checked + .track .handle {
+    @include translate3d(16px, 0, 0);
+    background: rgb(0,150,137);
+  }
+  .item-toggle .toggle {
+    top: 19px;
+  }
 }
