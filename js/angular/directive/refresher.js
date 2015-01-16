@@ -54,11 +54,11 @@
  * down, its progress would be `0.5`.
  * @param {string=} pulling-icon The icon to display while the user is pulling down.
  * Default: 'ion-android-arrow-down'.
- * @param {string=} pulling-text The text to display while the user is pulling down.
- * @param {string=} refreshing-icon The icon to display after user lets go of the
- * refresher.
- * @param {string=} refreshing-text The text to display after the user lets go of
- * the refresher.
+ * @param {string=} loader The {@link ionic.directive:ionLoader} icon to display
+ * after user lets go of the refresher. The SVG ionLoader is now the default, replacing
+ * rotating font icons.
+ * @param {string=} refreshing-icon The font icon to display after user lets go of the
+ * refresher. This is depreicated in favor of the SVG {@link ionic.directive:ionLoader}.
  * @param {boolean=} disable-pulling-rotation Disables the rotation animation of the pulling
  * icon when it reaches its activated threshold. To be used with a custom `pulling-icon`.
  *
