@@ -63,6 +63,14 @@
 * </ion-list>
 * ```
 *
+*```javascript
+* app.controller('MyCtrl', function($scope, $ionicLoading) {
+*  $scope.shouldShowDelete = false;
+*  $scope.shouldShowReorder = false;
+*  $scope.listCanSwipe = true
+* });
+*```
+*
 * @param {string=} delegate-handle The handle used to identify this list with
 * {@link ionic.service:$ionicListDelegate}.
 * @param type {string=} The type of list to use (list-inset or card)
