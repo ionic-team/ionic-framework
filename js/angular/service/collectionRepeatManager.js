@@ -1,9 +1,8 @@
 
 IonicModule
 .factory('$collectionRepeatManager', [
-  '$rootScope',
   '$timeout',
-function($rootScope, $timeout) {
+function($timeout) {
   /**
    * Vocabulary: "primary" and "secondary" size/direction/position mean
    * "y" and "x" for vertical scrolling, or "x" and "y" for horizontal scrolling.
