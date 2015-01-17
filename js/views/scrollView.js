@@ -264,6 +264,29 @@ var Scroller;
   /**
    * @param pos {Number} position between 0 (start of effect) and 1 (end of effect)
   **/
+  
+  var EasingJsFunctions = {
+    linear: function (t) { return t },
+    easeInQuad: function (t) { return t*t },
+    easeOutQuad: function (t) { return t*(2-t) }, //default
+    easeInOutQuad: function (t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t },
+    easeInCubic: function (t) { return t*t*t },
+    easeOutCubic: function (t) { return (--t)*t*t+1 },
+    easeInOutCubic: function (t) { return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1 },
+    easeInQuart: function (t) { return t*t*t*t },
+    easeOutQuart: function (t) { return 1-(--t)*t*t*t },
+    easeInOutQuart: function (t) { return t<.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t },
+    easeInQuint: function (t) { return t*t*t*t*t },
+    easeOutQuint: function (t) { return 1+(--t)*t*t*t*t },
+    easeInOutQuint: function (t) { return t<.5 ? 16*t*t*t*t*t : 1+16*(--t)*t*t*t*t }
+  }
+  
+  var EasingCssFunctions = {
+    default: "cubic-bezier(.3,.55,.6,1)", //default
+    easeOutQuad: "cubic-bezier(0.250, 0.460, 0.450, 0.940)",
+    easeOutCubic: "0.215, 0.61, 0.355, 1",
+  }
+  
   var easeInOutCubic = function(pos) {
     if ((pos /= 0.5) < 1) {
       return 0.5 * Math.pow(pos, 3);
@@ -272,11 +295,9 @@ var Scroller;
     return 0.5 * (Math.pow((pos - 2), 3) + 2);
   };
   
-  var quadratic = function (pos) {
-      return pos * ( 2 - pos );
-  };
+  var transitionJsFunction = EasingJsFunctions.easeOutQuad;
   
-  var quadraticTransition = "cubic-bezier(.3,.55,.6,1)";
+  var transitionCssFunction = EasingCssFunctions.default;
 
 /**
  * ionic.views.Scroll
@@ -333,7 +354,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       /** duration for animations triggered by scrollTo/zoomTo */
       animationDuration: 250,
 	  
-	  decelerationTransition: 0.0016, // Default 0.0006
+      decelerationTransition: 0.0016, // Default 0.0006
 
       /** Enable bouncing (content can be slowly moved outside and jumps back after releasing) */
       bouncing: true,
@@ -1237,7 +1258,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.__transitionDurationProperty = transitionDurationProperty;
     self.__transitionEndProperty = transitionEndProperty;
 	
-    content.style[transitionProperty] = "all "+quadraticTransition+" 0s";
+    content.style[transitionProperty] = "all "+transitionCssFunction+" 0s";
 	
     content.addEventListener(transitionEndProperty, angular.bind(this, self.__transitionEnd), false)
     
@@ -1922,7 +1943,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       // Sync scroll position
       self.__publish(scrollLeft, scrollTop, level);
-	  if(self.__onScrollTransition) self.__onScrollTransition(self.__scrollLeft, self.__scrollTop);
+      if(self.__onScrollTransition) self.__onScrollTransition(self.__scrollLeft, self.__scrollTop);
 
     // Otherwise figure out whether we are switching into dragging mode now.
     } else {
@@ -2299,9 +2320,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
       }
       
       if ( self.__isDecelerating ) {
-          self.__isDecelerating = zyngaCore.effect.Animate.start(repositionScrollbars, isScrolled, scrollEnd, time, quadratic);
+          self.__isDecelerating = zyngaCore.effect.Animate.start(repositionScrollbars, isScrolled, scrollEnd, time, transitionJsFunction);
       } else if ( self.__isAnimating ) {
-          self.__isAnimating = zyngaCore.effect.Animate.start(repositionScrollbars, isScrolled, scrollEnd, time, quadratic);
+          self.__isAnimating = zyngaCore.effect.Animate.start(repositionScrollbars, isScrolled, scrollEnd, time, transitionJsFunction);
       }
   },
 
