@@ -5,6 +5,7 @@
 $ios-transition-duration:              500ms !default;
 $ios-transition-timing-function:       cubic-bezier(.36, .66, .04, 1) !default;
 $ios-transition-container-bg-color:    #000 !default;
+$ios-transition-box-shadow:            -5px 0px 20px 0px rgba(150, 150, 150, 0.5) !default;
 
 
 [nav-view-transition="ios"] {
@@ -15,6 +16,8 @@ $ios-transition-container-bg-color:    #000 !default;
     @include transition-timing-function( $ios-transition-timing-function );
     -webkit-transition-property: opacity, -webkit-transform;
             transition-property: opacity, transform;
+    -webkit-box-shadow: $ios-transition-box-shadow;
+            box-shadow: $ios-transition-box-shadow;
   }
 
   &[nav-view-direction="forward"],
