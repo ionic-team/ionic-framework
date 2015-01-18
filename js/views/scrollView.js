@@ -2252,7 +2252,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
       var distance = current - start,
           speed = Math.abs(distance) / time,
           destination,
-          duration;
+          duration,
+          deceleration;
 
       deceleration = this.options.decelerationTransition;
 
@@ -2280,9 +2281,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
       var self = this;
 
       var scrollLeft = self.__scrollLeft,
-            scrollTop = self.__scrollTop,
-            distanceX = left - scrollLeft,
-            distanceY = top - scrollTop;
+          scrollTop = self.__scrollTop,
+          distanceX = left - scrollLeft,
+          distanceY = top - scrollTop;
       
       function repositionScrollbars ( offset, now, render ) {
         if ( render ) {
