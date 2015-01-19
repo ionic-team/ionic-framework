@@ -154,6 +154,7 @@ function($rootScope, $timeout) {
       this.beforeSize = result.beforeSize;
       this.setCurrentIndex(0);
       this.render(true);
+      this.dataSource.transcludeParent[0].style.height = result.totalSize + "px";
       this.dataSource.setup();
     },
     /*
