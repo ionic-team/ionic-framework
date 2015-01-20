@@ -18,89 +18,123 @@
  * builds the required SVG element, which allows Ionic to provide all ten of the animated SVGs
  * within 3KB.
  *
- * <table class="table" style="max-width: 240px;" ng-app="ionic">
+ * <style>
+ * .spinner-table {
+ *   max-width: 280px;
+ * }
+ * .spinner-table tbody > tr > th, .spinner-table tbody > tr > td {
+ *   vertical-align: middle;
+ *   width: 42px;
+ *   height: 42px;
+ * }
+ * .spinner {
+ *   stroke: #444;
+ *   fill: #444; }
+ *   .spinner svg {
+ *     width: 28px;
+ *     height: 28px; }
+ *   .spinner.spinner-inverse {
+ *     stroke: #fff;
+ *     fill: #fff; }
+ *
+ * .spinner-android {
+ *   stroke: #4b8bf4; }
+ *
+ * .spinner-ios, .spinner-ios-small {
+ *   stroke: #69717d; }
+ *
+ * .spinner-spiral .stop1 {
+ *   stop-color: #fff;
+ *   stop-opacity: 0; }
+ * .spinner-spiral.spinner-inverse .stop1 {
+ *   stop-color: #000; }
+ * .spinner-spiral.spinner-inverse .stop2 {
+ *   stop-color: #fff; }
+ * </style>
+ *
+ * <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.min.js"></script>
+ * <table class="table spinner-table" ng-app="ionic">
  *  <tr>
- *    <th style="vertical-align:middle">
+ *    <th>
  *      <code>android</code>
  *    </th>
- *    <td style="width:42px;height:42px;">
- *      <ion-spinner icon="android" style="stroke:#4b8bf4;"></ion-spinner>
+ *    <td>
+ *      <ion-spinner icon="android"></ion-spinner>
  *    </td>
  *  </tr>
  *  <tr>
- *    <th style="vertical-align:middle">
+ *    <th>
  *      <code>ios</code>
  *    </th>
- *    <td style="width:42px;height:42px;">
- *      <ion-spinner icon="ios" style="stroke:#69717d;"></ion-spinner>
+ *    <td>
+ *      <ion-spinner icon="ios"></ion-spinner>
  *    </td>
  *  </tr>
  *  <tr>
- *    <th style="vertical-align:middle">
+ *    <th>
  *      <code>ios-small</code>
  *    </th>
- *    <td style="width:42px;height:42px;">
- *      <ion-spinner icon="ios-small" style="stroke:#69717d;"></ion-spinner>
+ *    <td>
+ *      <ion-spinner icon="ios-small"></ion-spinner>
  *    </td>
  *  </tr>
  *  <tr>
- *    <th style="vertical-align:middle">
+ *    <th>
  *      <code>bubbles</code>
  *    </th>
- *    <td style="width:42px;height:42px;">
- *      <ion-spinner icon="bubbles" style="stroke:#333;"></ion-spinner>
+ *    <td>
+ *      <ion-spinner icon="bubbles"></ion-spinner>
  *    </td>
  *  </tr>
  *  <tr>
- *    <th style="vertical-align:middle">
+ *    <th>
  *      <code>circles</code>
  *    </th>
- *    <td style="width:42px;height:42px;">
- *      <ion-spinner icon="circles" style="stroke:#333;"></ion-spinner>
+ *    <td>
+ *      <ion-spinner icon="circles"></ion-spinner>
  *    </td>
  *  </tr>
  *  <tr>
- *    <th style="vertical-align:middle">
+ *    <th>
  *      <code>crescent</code>
  *    </th>
- *    <td style="width:42px;height:42px;">
- *      <ion-spinner icon="crescent" style="stroke:#333;"></ion-spinner>
+ *    <td>
+ *      <ion-spinner icon="crescent"></ion-spinner>
  *    </td>
  *  </tr>
  *  <tr>
- *    <th style="vertical-align:middle">
+ *    <th>
  *      <code>dots</code>
  *    </th>
- *    <td style="width:42px;height:42px;">
- *      <ion-spinner icon="dots" style="stroke:#333;"></ion-spinner>
+ *    <td>
+ *      <ion-spinner icon="dots"></ion-spinner>
  *    </td>
  *  </tr>
  *  <tr>
- *    <th style="vertical-align:middle">
+ *    <th>
  *      <code>lines</code>
  *    </th>
- *    <td style="width:42px;height:42px;">
- *      <ion-spinner icon="lines" style="stroke:#333;"></ion-spinner>
+ *    <td>
+ *      <ion-spinner icon="lines"></ion-spinner>
  *    </td>
  *  </tr>
  *  <tr>
- *    <th style="vertical-align:middle">
+ *    <th>
  *      <code>ripple</code>
  *    </th>
- *    <td style="width:42px;height:42px;">
- *      <ion-spinner icon="ripple" style="stroke:#333;"></ion-spinner>
+ *    <td>
+ *      <ion-spinner icon="ripple"></ion-spinner>
  *    </td>
  *  </tr>
  *  <tr>
- *    <th style="vertical-align:middle">
+ *    <th>
  *      <code>spiral</code>
  *    </th>
- *    <td style="width:42px;height:42px;">
- *      <ion-spinner icon="spiral" style="stroke:#333;"></ion-spinner>
+ *    <td>
+ *      <ion-spinner icon="spiral"></ion-spinner>
  *    </td>
  *  </tr>
  * </table>
- * <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.min.js"></script>
  *
  * Each spinner uses SVG with SMIL animations, however, the Android spinner also uses JavaScript
  * so it also works on Android 4.0-4.3. Additionally, each spinner can be styled with CSS,
@@ -131,8 +165,8 @@
  * .spinner svg {
  *   width: 28px;
  *   height: 28px;
- *   stroke: #333;
- *   fill: #333;
+ *   stroke: #444;
+ *   fill: #444;
  * }
  * ```
  *
