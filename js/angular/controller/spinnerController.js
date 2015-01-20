@@ -29,7 +29,7 @@
     dur: DURATION
   };
 
-  function createSvgElement(tagName, data, parent, loaderName) {
+  function createSvgElement(tagName, data, parent, spinnerName) {
     var ele = document.createElement(SHORTCUTS[tagName] || tagName);
     var k, x, y;
 
@@ -39,10 +39,10 @@
         for (x = 0; x < data[k].length; x++) {
           if (data[k][x].fn) {
             for (y = 0; y < data[k][x].t; y++) {
-              createSvgElement(k, data[k][x].fn(y, loaderName), ele, loaderName);
+              createSvgElement(k, data[k][x].fn(y, spinnerName), ele, spinnerName);
             }
           } else {
-            createSvgElement(k, data[k][x], ele, loaderName);
+            createSvgElement(k, data[k][x], ele, spinnerName);
           }
         }
 
@@ -70,10 +70,10 @@
     sw: 4,
     lc: ROUND,
     line: [{
-      fn: function(i, loaderName) {
+      fn: function(i, spinnerName) {
         return {
-          y1: loaderName == 'ios' ? 17 : 12,
-          y2: loaderName == 'ios' ? 29 : 20,
+          y1: spinnerName == 'ios' ? 17 : 12,
+          y2: spinnerName == 'ios' ? 29 : 20,
           t: TRANSLATE32 + ' rotate(' + (30 * i + (i < 6 ? 180: -180)) + ')',
           a: [{
             fn: function() {
@@ -92,7 +92,7 @@
     }]
   };
 
-  var loaders = {
+  var spinners = {
 
     android: {
       c: [{
@@ -110,49 +110,8 @@
 
     'ios-small': IOS_SPINNER,
 
-    blip: {
-      f: NONE,
-      'fill-rule': 'evenodd',
-      sw: 3,
-      circle: [{
-        fn: function(i) {
-          return {
-            cx: 32,
-            cy: 32,
-            a: [{
-              fn: function() {
-                return {
-                  an: 'r',
-                  begin: (i * -1) + 's',
-                  dur: '2s',
-                  v: '0;24',
-                  keyTimes: '0;1',
-                  keySplines: '0.1,0.2,0.3,1',
-                  calcMode: 'spline',
-                  rc: INDEFINITE
-                };
-              },
-              t: 1
-            },{
-              fn: function() {
-                return {
-                  an: STROKE_OPACITY,
-                  begin: (i * -1) + 's',
-                  dur: '2s',
-                  v: '.2;1;.2;0',
-                  rc: INDEFINITE
-                };
-              },
-              t: 1
-            }]
-          };
-        },
-        t: 2
-      }]
-    },
-
     bubbles: {
-
+      sw: 0,
       c: [{
         fn: function(i) {
           return {
@@ -296,6 +255,47 @@
       }]
     },
 
+    ripple: {
+      f: NONE,
+      'fill-rule': 'evenodd',
+      sw: 3,
+      circle: [{
+        fn: function(i) {
+          return {
+            cx: 32,
+            cy: 32,
+            a: [{
+              fn: function() {
+                return {
+                  an: 'r',
+                  begin: (i * -1) + 's',
+                  dur: '2s',
+                  v: '0;24',
+                  keyTimes: '0;1',
+                  keySplines: '0.1,0.2,0.3,1',
+                  calcMode: 'spline',
+                  rc: INDEFINITE
+                };
+              },
+              t: 1
+            },{
+              fn: function() {
+                return {
+                  an: STROKE_OPACITY,
+                  begin: (i * -1) + 's',
+                  dur: '2s',
+                  v: '.2;1;.2;0',
+                  rc: INDEFINITE
+                };
+              },
+              t: 1
+            }]
+          };
+        },
+        t: 2
+      }]
+    },
+
     spiral: {
       defs: [{
         linearGradient: [{
@@ -304,9 +304,10 @@
           x1: 55, y1: 46, x2: 2, y2: 46,
           stop: [{
             offset: 0.1,
-            style: 'stop-color:white;stop-opacity:0'
+            class: 'stop1'
           }, {
-            offset: 1
+            offset: 1,
+            class: 'stop2'
           }]
         }]
       }],
@@ -386,26 +387,25 @@
 
 
   IonicModule
-  .controller('$ionicLoader', [
+  .controller('$ionicSpinner', [
     '$element',
     '$attrs',
   function($element, $attrs) {
-    var loaderName, loader;
+    var spinnerName, spinner;
 
     this.init = function() {
-      loaderName = $attrs.icon || ionic.Platform.platform();
-      loader = loaders[loaderName];
-      if (!loader) {
-        loaderName = 'ios';
-        loader = loaders.ios;
+      spinnerName = $attrs.icon || ionic.Platform.platform();
+      spinner = spinners[spinnerName];
+      if (!spinner) {
+        spinnerName = 'ios';
+        spinner = spinners.ios;
       }
 
       var container = document.createElement('div');
       createSvgElement('svg', {
         viewBox: '0 0 64 64',
-        'class': 'loader loader-' + loaderName,
-        g: [ loaders[loaderName] ]
-      }, container, loaderName);
+        g: [ spinners[spinnerName] ]
+      }, container, spinnerName);
 
       // Specifically for animations to work,
       // Android 4.3 and below requires the element to be
@@ -414,10 +414,12 @@
       $element.html(container.innerHTML);
 
       this.start();
+
+      return spinnerName;
     };
 
     this.start = function() {
-      animations[loaderName] && animations[loaderName]($element[0])();
+      animations[spinnerName] && animations[spinnerName]($element[0])();
     };
 
   }]);

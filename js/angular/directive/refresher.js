@@ -54,11 +54,11 @@
  * down, its progress would be `0.5`.
  * @param {string=} pulling-icon The icon to display while the user is pulling down.
  * Default: 'ion-android-arrow-down'.
- * @param {string=} loader The {@link ionic.directive:ionLoader} icon to display
- * after user lets go of the refresher. The SVG ionLoader is now the default, replacing
- * rotating font icons.
+ * @param {string=} spinner The {@link ionic.directive:ionSpinner} icon to display
+ * after user lets go of the refresher. The SVG {@link ionic.directive:ionSpinner}
+ * is now the default, replacing rotating font icons.
  * @param {string=} refreshing-icon The font icon to display after user lets go of the
- * refresher. This is depreicated in favor of the SVG {@link ionic.directive:ionLoader}.
+ * refresher. This is depreicated in favor of the SVG {@link ionic.directive:ionSpinner}.
  * @param {boolean=} disable-pulling-rotation Disables the rotation animation of the pulling
  * icon when it reaches its activated threshold. To be used with a custom `pulling-icon`.
  *
@@ -78,8 +78,8 @@ IonicModule
         '</div>' +
         '<div class="text-pulling" ng-bind-html="pullingText"></div>' +
         '<div class="icon-refreshing">' +
-          '<ion-loader ng-if="showLoader" icon="{{loader}}"></ion-loader>' +
-          '<i ng-if="!showLoader" class="icon {{refreshingIcon}}"></i>' +
+          '<ion-spinner ng-if="showSpinner" icon="{{spinner}}"></ion-spinner>' +
+          '<i ng-if="!showSpinner" class="icon {{refreshingIcon}}"></i>' +
         '</div>' +
         '<div class="text-refreshing" ng-bind-html="refreshingText"></div>' +
       '</div>' +
@@ -88,14 +88,14 @@ IonicModule
       if (angular.isUndefined($attrs.pullingIcon)) {
         $attrs.$set('pullingIcon', 'ion-android-arrow-down');
       }
-      $scope.showLoader = angular.isUndefined($attrs.refreshingIcon);
+      $scope.showSpinner = angular.isUndefined($attrs.refreshingIcon);
 
       $ionicBind($scope, $attrs, {
         pullingIcon: '@',
         pullingText: '@',
         refreshingIcon: '@',
         refreshingText: '@',
-        loader: '@',
+        spinner: '@',
         disablePullingRotation: '@',
         $onRefresh: '&onRefresh',
         $onPulling: '&onPulling'
