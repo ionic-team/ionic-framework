@@ -24,9 +24,9 @@
  */
 IonicModule
 .directive('ionToggle', [
-  '$ionicGesture',
   '$timeout',
-function($ionicGesture, $timeout) {
+  '$ionicConfig',
+function($timeout, $ionicConfig) {
 
   return {
     restrict: 'E',
@@ -65,34 +65,32 @@ function($ionicGesture, $timeout) {
         element[0].getElementsByTagName('label')[0].classList.add(attr.toggleClass);
       }
 
-      return function($scope, $element, $attr) {
-         var el, checkbox, track, handle;
+      element.addClass('toggle-' + $ionicConfig.form.toggle());
 
-         el = $element[0].getElementsByTagName('label')[0];
-         checkbox = el.children[0];
-         track = el.children[1];
-         handle = track.children[0];
+      return function($scope, $element) {
+        var el = $element[0].getElementsByTagName('label')[0];
+        var checkbox = el.children[0];
+        var track = el.children[1];
+        var handle = track.children[0];
 
-         var ngModelController = jqLite(checkbox).controller('ngModel');
+        var ngModelController = jqLite(checkbox).controller('ngModel');
 
-         $scope.toggle = new ionic.views.Toggle({
-           el: el,
-           track: track,
-           checkbox: checkbox,
-           handle: handle,
-           onChange: function() {
-             if(checkbox.checked) {
-               ngModelController.$setViewValue(true);
-             } else {
-               ngModelController.$setViewValue(false);
-             }
-             $scope.$apply();
-           }
-         });
+        $scope.toggle = new ionic.views.Toggle({
+          el: el,
+          track: track,
+          checkbox: checkbox,
+          handle: handle,
+          onChange: function() {
+            if (ngModelController) {
+              ngModelController.$setViewValue(checkbox.checked);
+              $scope.$apply();
+            }
+          }
+        });
 
-         $scope.$on('$destroy', function() {
-           $scope.toggle.destroy();
-         });
+        $scope.$on('$destroy', function() {
+          $scope.toggle.destroy();
+        });
       };
     }
 

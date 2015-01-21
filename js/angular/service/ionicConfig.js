@@ -115,6 +115,22 @@
 
 /**
  * @ngdoc method
+ * @name $ionicConfigProvider#form.checkbox
+ * @description Checkbox style. Android defaults to `square` and iOS defaults to `circle`.
+ * @param {string} value
+ * @returns {string}
+ */
+
+/**
+ * @ngdoc method
+ * @name $ionicConfigProvider#form.toggle
+ * @description Toggle item style. Android defaults to `small` and iOS defaults to `large`.
+ * @param {string} value
+ * @returns {string}
+ */
+
+/**
+ * @ngdoc method
  * @name $ionicConfigProvider#tabs.style
  * @description Tab style. Android defaults to `striped` and iOS defaults to `standard`.
  * @param {string} value Available values include `striped` and `standard`.
@@ -220,7 +236,8 @@ IonicModule
       previousTitleText: PLATFORM
     },
     form: {
-      checkbox: PLATFORM
+      checkbox: PLATFORM,
+      toggle: PLATFORM
     },
     scrolling: {
       jsScrolling: PLATFORM
@@ -262,7 +279,8 @@ IonicModule
     },
 
     form: {
-      checkbox: 'circle'
+      checkbox: 'circle',
+      toggle: 'large'
     },
 
     scrolling: {
@@ -309,7 +327,8 @@ IonicModule
     },
 
     form: {
-      checkbox: 'square'
+      checkbox: 'square',
+      toggle: 'small'
     },
 
     tabs: {
