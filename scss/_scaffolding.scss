@@ -160,36 +160,30 @@ body.grade-c {
 ion-infinite-scroll {
   height: 60px;
   width: 100%;
-
   display: block;
 
-//  @include transition(opacity 0.25s);
   @include display-flex();
   @include flex-direction(row);
   @include justify-content(center);
   @include align-items(center);
 
   .icon {
-
     color: #666666;
     font-size: 30px;
     color: $scroll-refresh-icon-color;
-    &:before{
-      -webkit-transform: translate3d(0,0,0);
-      transform: translate3d(0,0,0);
-    }
   }
-  &:not(.active) .icon:before{
+  .icon:before,
+  .spinner{
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+  }
+  &:not(.active){
+    .spinner,
+    .icon:before{
       -webkit-transform: translate3d(-1000px,0,0);
       transform: translate3d(-1000px,0,0);
-
+    }
   }
-}
-// removing the animation when the spinner isn't shown
-// this breaks up animations on iOS, so they are left with unnecessary reflows
-body:not(.platform-ios) ion-infinite-scroll:not(.active) .icon{
-  -webkit-animation: none;
-  animation:none;
 }
 
 .overflow-scroll {

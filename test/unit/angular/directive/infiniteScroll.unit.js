@@ -1,6 +1,5 @@
 describe('ionicInfiniteScroll directive', function() {
   beforeEach(module('ionic'));
-
   var scrollTopValue  = 50;
   var scrollTopMaxValue = 60;
   var scrollLeftValue = 101;
@@ -37,6 +36,7 @@ describe('ionicInfiniteScroll directive', function() {
         $element: angular.element('<div>')
       });
       $compile(element)(scope);
+      ionic.requestAnimationFrame = function() {};
       ctrl = element.controller('ionInfiniteScroll');
       scope.$apply();
     });
@@ -55,6 +55,7 @@ describe('ionicInfiniteScroll directive', function() {
       element = parent.find('ion-infinite-scroll');
       ionic.animationFrameThrottle = function(cb) { return function() { cb(); }; };
       $compile(element)(scope);
+      ionic.requestAnimationFrame = function() {};
       ctrl = element.controller('ionInfiniteScroll');
       // create a fake scrollEl since they can't be faked if we're passing in scroll data
       if (options) {
@@ -85,6 +86,7 @@ describe('ionicInfiniteScroll directive', function() {
   });
 
   it('should not have class or be loading by default', function() {
+    ionic.requestAnimationFrame = function() {};
     var el = setupJS();
     expect(el.hasClass('active')).toBe(false);
     expect(ctrl.isLoading).toBe(false);
@@ -107,22 +109,30 @@ describe('ionicInfiniteScroll directive', function() {
   });
 
   describe('icon', function() {
-    it('should have default icon ion-loading-d', function() {
+    it('should have platform appropriate default spinner', function() {
       var el = setupJS();
-      var icon = angular.element(el[0].querySelector('.icon'));
-      expect(icon.hasClass('ion-loading-d')).toBe(true);
+      var icon = angular.element(el[0].querySelector('.spinner'));
+      if (ionic.Platform.isAndroid()) {
+        expect(icon[0].className.indexOf('spinner-android')).not.toBe(-1);
+      }else {
+        expect(icon[0].className.indexOf('spinner-ios')).not.toBe(-1);
+      }
     });
 
     it('should allow icon attr blank', function() {
       var el = setupJS('icon=""');
-      var icon = angular.element(el[0].querySelector('.icon'));
-      expect(icon.hasClass('ion-loading-d')).toBe(false);
+      var icon = angular.element(el[0].querySelector('.spinner'));
+      if (ionic.Platform.isAndroid()) {
+        expect(icon[0].className.indexOf('spinner-android')).not.toBe(-1);
+      }else {
+        expect(icon[0].className.indexOf('spinner-ios')).not.toBe(-1);
+      }
     });
 
     it('should allow interpolated icon attr', function() {
       var el = setupJS('icon="{{someIcon}}"');
       var icon = angular.element(el[0].querySelector('.icon'));
-      expect(icon.hasClass('ion-loading-d')).toBe(false);
+      expect(icon.hasClass('ion-load-d')).toBe(false);
       el.scope().$apply('someIcon = "super-icon"');
       expect(icon.hasClass('super-icon')).toBe(true);
     });
@@ -194,42 +204,52 @@ describe('ionicInfiniteScroll directive', function() {
       var el = setupNative('on-infinite="foo=1"');
       var evObj = document.createEvent('HTMLEvents');
       evObj.initEvent('scroll', true, true, window, 1, 12, 345, 7, 220, false, false, true, false, 0, null);
+      ionic.requestAnimationFrame = function(cb) { cb(); };
       ctrl.scrollEl.dispatchEvent(evObj);
 
       expect(el.hasClass('active')).toBe(false);
+      ionic.requestAnimationFrame = function() {};
       expect(ctrl.isLoading).toBe(false);
       expect(el.scope().foo).not.toBe(1);
     });
     it('should add active and call attr.onInfinite if >= top', function() {
       var el = setupJS('on-infinite="foo=1"');
       scrollTopValue = scrollTopMaxValue;
+      ionic.requestAnimationFrame = function(cb) { cb(); };
       el.controller('$ionicScroll').$element.triggerHandler('scroll');
 
       expect(el.hasClass('active')).toBe(true);
+      ionic.requestAnimationFrame = function() {};
       expect(ctrl.isLoading).toBe(true);
       expect(el.scope().foo).toBe(1);
 
       scrollTopValue = scrollTopMaxValue;
       var el = setupNative('on-infinite="foo=1"', {}, { scrollingX: true, scrollingY: true });
+      ionic.requestAnimationFrame = function(cb) { cb(); };
       ctrl.checkBounds();
       expect(el.hasClass('active')).toBe(true);
+      ionic.requestAnimationFrame = function() {};
       expect(ctrl.isLoading).toBe(true);
       expect(el.scope().foo).toBe(1);
     });
     it('should add active and call attr.onInfinite if >= left', function() {
       var el = setupJS('on-infinite="foo=1"');
       scrollLeftValue = scrollLeftMaxValue;
+      ionic.requestAnimationFrame = function(cb) { cb(); };
       el.controller('$ionicScroll').$element.triggerHandler('scroll');
 
       expect(el.hasClass('active')).toBe(true);
+      ionic.requestAnimationFrame = function() {};
       expect(ctrl.isLoading).toBe(true);
       expect(el.scope().foo).toBe(1);
 
       scrollLeftValue = scrollLeftMaxValue;
       var el = setupNative('on-infinite="foo=1"', {}, { scrollingX: true, scrollingY: true });
+      ionic.requestAnimationFrame = function(cb) { cb(); };
       ctrl.checkBounds();
 
       expect(el.hasClass('active')).toBe(true);
+      ionic.requestAnimationFrame = function() {};
       expect(ctrl.isLoading).toBe(true);
       expect(el.scope().foo).toBe(1);
     });
@@ -237,6 +257,7 @@ describe('ionicInfiniteScroll directive', function() {
       var onScrollSpy = jasmine.createSpy('onInfiniteScroll');
       var el = setupJS('', { $onInfiniteScroll: onScrollSpy });
       scrollTopValue = scrollTopMaxValue;
+      ionic.requestAnimationFrame = function(cb) { cb(); };
       el.controller('$ionicScroll').$element.triggerHandler('scroll');
 
       expect(el.hasClass('active')).toBe(true);
@@ -245,6 +266,7 @@ describe('ionicInfiniteScroll directive', function() {
 
       el.controller('$ionicScroll').$element.triggerHandler('scroll');
       expect(el.hasClass('active')).toBe(false);
+      ionic.requestAnimationFrame = function() {};
     });
 
   });
@@ -269,9 +291,11 @@ describe('ionicInfiniteScroll directive', function() {
     var el = setupJS();
     ctrl.isLoading = true;
     el.addClass('active');
+    ionic.requestAnimationFrame = function(cb) { cb(); };
     el.scope().$broadcast('scroll.infiniteScrollComplete');
     expect(ctrl.isLoading).toBe(false);
     expect(el.hasClass('active')).toBe(false);
+    ionic.requestAnimationFrame = function() {};
     expect(el.controller('$ionicScroll').scrollView.resize).not.toHaveBeenCalled();
     $timeout.flush();
     expect(el.controller('$ionicScroll').scrollView.resize).toHaveBeenCalled();
