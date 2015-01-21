@@ -86,9 +86,8 @@ function($cacheFactory, $parse, $rootScope) {
       // Subtract so we start at the beginning of this.data, after
       // this.beforeSiblings.
       index -= this.dataStartIndex;
-
       if (index > this.data.length - 1) {
-        return this.afterSiblings[index - this.dataStartIndex];
+        return this.afterSiblings[index - this.data.length];
       }
 
       var item = this.getItem(index);

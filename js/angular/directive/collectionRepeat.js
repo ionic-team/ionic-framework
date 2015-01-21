@@ -228,7 +228,6 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
             before = false;
           } else {
             if (node.hasAttribute('collection-repeat-ignore')) return;
-            if (node.nodeName === 'ION-INFINITE-SCROLL')return;
             var width = node.offsetWidth;
             var height = node.offsetHeight;
             if (width && height) {
