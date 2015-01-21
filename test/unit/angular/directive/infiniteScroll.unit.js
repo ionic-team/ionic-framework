@@ -136,6 +136,12 @@ describe('ionicInfiniteScroll directive', function() {
       el.scope().$apply('someIcon = "super-icon"');
       expect(icon.hasClass('super-icon')).toBe(true);
     });
+
+    it('should allow interpolated spinner attr', function() {
+      var el = setupJS('spinner="lines"');
+      var icon = angular.element(el[0].querySelector('.spinner'));
+      expect(icon[0].className.indexOf('lines')).not.toBe(-1);
+    });
   });
 
   describe('getMaxScroll', function() {
