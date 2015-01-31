@@ -33,7 +33,7 @@
     .has-subheader {
       top: $bar-height + $bar-subheader-height + $ios-statusbar-height;
     }
-    .has-tabs-top {
+    .has-header.has-tabs-top {
       top: $bar-height + $tabs-height + $ios-statusbar-height;
     }
     .has-header.has-subheader.has-tabs-top {
