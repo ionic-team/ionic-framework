@@ -64,7 +64,7 @@
 * ```
 *
 *```javascript
-* app.controller('MyCtrl', function($scope, $ionicLoading) {
+* app.controller('MyCtrl', function($scope) {
 *  $scope.shouldShowDelete = false;
 *  $scope.shouldShowReorder = false;
 *  $scope.listCanSwipe = true
