@@ -101,7 +101,7 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
         });
         $scope.direction = $scope.direction || 'y';
 
-        if (angular.isDefined($attr.padding)) {
+        if (isDefined($attr.padding)) {
           $scope.$watch($attr.padding, function(newVal) {
               (innerElement || $element).toggleClass('padding', !!newVal);
           });
@@ -138,7 +138,7 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
           });
 
           $scope.$on('$destroy', function() {
-            scrollViewOptions.scrollingComplete = angular.noop;
+            scrollViewOptions.scrollingComplete = noop;
             delete scrollViewOptions.el;
             innerElement = null;
             $element = null;

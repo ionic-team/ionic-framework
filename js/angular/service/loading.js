@@ -71,8 +71,8 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
 
   var loaderInstance;
   //default values
-  var deregisterBackAction = angular.noop;
-  var deregisterStateListener = angular.noop;
+  var deregisterBackAction = noop;
+  var deregisterStateListener = noop;
   var loadingShowDelay = $q.when();
 
   return {
@@ -142,7 +142,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
           deregisterBackAction();
           //Disable hardware back button while loading
           deregisterBackAction = $ionicPlatform.registerBackButtonAction(
-            angular.noop,
+            noop,
             PLATFORM_BACK_BUTTON_PRIORITY_LOADING
           );
 
@@ -197,7 +197,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
 
     //If loading.show() was called previously, cancel it and show with our new options
     loadingShowDelay && $timeout.cancel(loadingShowDelay);
-    loadingShowDelay = $timeout(angular.noop, delay);
+    loadingShowDelay = $timeout(noop, delay);
 
     loadingShowDelay.then(getLoader).then(function(loader) {
       if (options.hideOnStateChange) {

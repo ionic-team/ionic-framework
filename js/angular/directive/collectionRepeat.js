@@ -144,7 +144,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
     terminal: true,
     $$tlb: true,
     require: ['^$ionicScroll', '^?ionNavView'],
-    controller: [function(){}],
+    controller: [function() {}],
     link: function($scope, $element, $attr, ctrls, $transclude) {
       var scrollCtrl = ctrls[0];
       var navViewCtrl = ctrls[1];
@@ -204,7 +204,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
       var collectionRepeatManager = new $collectionRepeatManager({
         dataSource: dataSource,
         element: scrollCtrl.$element,
-        scrollView: scrollCtrl.scrollView,
+        scrollView: scrollCtrl.scrollView
       });
 
       var listExprParsed = $parse(listExpr);
@@ -224,7 +224,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         var before = true;
 
         forEach(scrollViewContent.children, function(node, i) {
-          if ( ionic.DomUtil.elementIsDescendant($element[0], node, scrollViewContent) ) {
+          if (ionic.DomUtil.elementIsDescendant($element[0], node, scrollViewContent)) {
             before = false;
           } else {
             if (node.hasAttribute('collection-repeat-ignore')) return;
@@ -271,7 +271,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         collectionRepeatManager.destroy();
         dataSource.destroy();
         ionic.off('resize', rerenderOnResize, window);
-        (deregisterViewListener || angular.noop)();
+        (deregisterViewListener || noop)();
       });
     }
   };

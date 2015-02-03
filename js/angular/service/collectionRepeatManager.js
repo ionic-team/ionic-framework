@@ -41,7 +41,7 @@ function($rootScope, $timeout) {
         return this.scrollView.__clientWidth;
       };
       this.transformString = function(y, x) {
-        return 'translate3d('+x+'px,'+y+'px,0)';
+        return 'translate3d(' + x + 'px,' + y + 'px,0)';
       };
       this.primaryDimension = function(dim) {
         return dim.height;
@@ -65,7 +65,7 @@ function($rootScope, $timeout) {
         return this.scrollView.__clientHeight;
       };
       this.transformString = function(x, y) {
-        return 'translate3d('+x+'px,'+y+'px,0)';
+        return 'translate3d(' + x + 'px,' + y + 'px,0)';
       };
       this.primaryDimension = function(dim) {
         return dim.width;
@@ -79,8 +79,8 @@ function($rootScope, $timeout) {
   CollectionRepeatManager.prototype = {
     destroy: function() {
       this.renderedItems = {};
-      this.render = angular.noop;
-      this.calculateDimensions = angular.noop;
+      this.render = noop;
+      this.calculateDimensions = noop;
       this.dimensions = [];
     },
 
@@ -225,7 +225,7 @@ function($rootScope, $timeout) {
         }
       //Scrolling down
       } else {
-        while ( (rect = this.dimensions[i + 1]) && rect.primaryPos < scrollValue) {
+        while ((rect = this.dimensions[i + 1]) && rect.primaryPos < scrollValue) {
           i++;
         }
       }
@@ -238,7 +238,7 @@ function($rootScope, $timeout) {
     render: function(shouldRedrawAll) {
       var self = this;
       var i;
-      var isOutOfBounds = ( this.currentIndex >= this.dataSource.getLength() );
+      var isOutOfBounds = (this.currentIndex >= this.dataSource.getLength());
       // We want to remove all the items and redraw everything if we're out of bounds
       // or a flag is passed in.
       if (isOutOfBounds || shouldRedrawAll) {

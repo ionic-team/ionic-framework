@@ -89,7 +89,7 @@ function($ionicModal, $ionicPosition, $document, $window) {
   };
 
   function positionView(target, popoverEle) {
-    var targetEle = angular.element(target.target || target);
+    var targetEle = jqLite(target.target || target);
     var buttonOffset = $ionicPosition.offset(targetEle);
     var popoverWidth = popoverEle.prop('offsetWidth');
     var popoverHeight = popoverEle.prop('offsetHeight');

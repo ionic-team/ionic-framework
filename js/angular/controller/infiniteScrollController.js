@@ -9,11 +9,11 @@ IonicModule
   self.isLoading = false;
 
   $scope.icon = function() {
-    return angular.isDefined($attrs.icon) ? $attrs.icon : 'ion-load-d';
+    return isDefined($attrs.icon) ? $attrs.icon : 'ion-load-d';
   };
 
   $scope.spinner = function() {
-    return angular.isDefined($attrs.spinner) ? $attrs.spinner : '';
+    return isDefined($attrs.spinner) ? $attrs.spinner : '';
   };
 
   $scope.$on('scroll.infiniteScrollComplete', function() {

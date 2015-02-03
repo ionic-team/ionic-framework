@@ -70,7 +70,7 @@ IonicModule
   return {
     restrict: 'E',
     require: ['?^$ionicScroll', 'ionInfiniteScroll'],
-    template: function($element, $attrs){
+    template: function($element, $attrs) {
       if ($attrs.icon) return '<i class="icon {{icon()}} icon-refreshing {{scrollingType}}"></i>';
       return '<ion-spinner icon="{{spinner()}}"></ion-spinner>';
     },
@@ -100,7 +100,7 @@ IonicModule
         infiniteScrollCtrl.scrollEl.addEventListener('scroll', infiniteScrollCtrl.checkBounds);
       }
       // Optionally check bounds on start after scrollView is fully rendered
-      var doImmediateCheck = angular.isDefined($attrs.immediateCheck) ? $scope.$eval($attrs.immediateCheck) : true;
+      var doImmediateCheck = isDefined($attrs.immediateCheck) ? $scope.$eval($attrs.immediateCheck) : true;
       if (doImmediateCheck) {
         $timeout(function() { infiniteScrollCtrl.checkBounds(); });
       }

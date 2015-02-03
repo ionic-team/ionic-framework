@@ -87,7 +87,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
       slider.enableSlide($scope.$eval($attrs.disableScroll) !== true);
 
       $scope.$watch('activeSlide', function(nv) {
-        if(angular.isDefined(nv)){
+        if(isDefined(nv)){
           slider.slide(nv);
         }
       });

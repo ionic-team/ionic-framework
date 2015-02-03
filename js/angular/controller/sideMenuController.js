@@ -348,7 +348,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
   self.edgeThresholdEnabled = false;
   self.edgeDragThreshold = function(value) {
     if (arguments.length) {
-      if (angular.isNumber(value) && value > 0) {
+      if (isNumber(value) && value > 0) {
         self.edgeThreshold = value;
         self.edgeThresholdEnabled = true;
       } else {
@@ -386,7 +386,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
 
   $scope.sideMenuContentTranslateX = 0;
 
-  var deregisterBackButtonAction = angular.noop;
+  var deregisterBackButtonAction = noop;
   var closeSideMenu = angular.bind(self, self.close);
 
   $scope.$watch(function() {

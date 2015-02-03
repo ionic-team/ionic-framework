@@ -173,7 +173,7 @@
       if (!_this._lastDrag) {
         _this._lastDrag = {};
       }
-      angular.extend(_this._lastDrag, _this._currentDrag);
+      extend(_this._lastDrag, _this._currentDrag);
       if (_this._currentDrag) {
         _this._currentDrag.buttons = null;
         _this._currentDrag.content = null;

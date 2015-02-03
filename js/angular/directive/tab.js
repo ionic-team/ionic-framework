@@ -43,7 +43,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
 
   //Returns ' key="value"' if value exists
   function attrStr(k, v) {
-    return angular.isDefined(v) ? ' ' + k + '="' + v + '"' : '';
+    return isDefined(v) ? ' ' + k + '="' + v + '"' : '';
   }
   return {
     restrict: 'E',

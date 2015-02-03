@@ -94,11 +94,11 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
   function actionSheet(opts) {
     var scope = $rootScope.$new(true);
 
-    angular.extend(scope, {
-      cancel: angular.noop,
-      destructiveButtonClicked: angular.noop,
-      buttonClicked: angular.noop,
-      $deregisterBackButton: angular.noop,
+    extend(scope, {
+      cancel: noop,
+      destructiveButtonClicked: noop,
+      buttonClicked: noop,
+      $deregisterBackButton: noop,
       buttons: [],
       cancelOnStateChange: true
     }, opts || {});
@@ -123,7 +123,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
 
     var stateChangeListenDone = scope.cancelOnStateChange ?
       $rootScope.$on('$stateChangeSuccess', function() { scope.cancel(); }) :
-      angular.noop;
+      noop;
 
     // removes the actionSheet from the screen
     scope.removeSheet = function(done) {
@@ -144,7 +144,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
         element.remove();
         // scope.cancel.$scope is defined near the bottom
         scope.cancel.$scope = sheetEl = null;
-        (done || angular.noop)();
+        (done || noop)();
       });
     };
 
@@ -156,7 +156,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
 
       $animate.addClass(element, 'active').then(function() {
         if (scope.removed) return;
-        (done || angular.noop)();
+        (done || noop)();
       });
       $timeout(function() {
         if (scope.removed) return;
