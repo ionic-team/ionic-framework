@@ -214,10 +214,13 @@ input[type="color"] {
   }
 }
 
-input,
-textarea {
-  width: 100%;
+.item-input {
+  input,
+  textarea {
+    width: 100%;
+  }
 }
+
 textarea {
   padding-left: 0;
   @include placeholder($input-color-placeholder, -3px);
@@ -255,14 +258,16 @@ input[type="checkbox"] {
 }
 
 // Reset width of input images, buttons, radios, checkboxes
-input[type="file"],
-input[type="image"],
-input[type="submit"],
-input[type="reset"],
-input[type="button"],
-input[type="radio"],
-input[type="checkbox"] {
-  width: auto; // Override of generic input selector
+.item-input {
+  input[type="file"],
+  input[type="image"],
+  input[type="submit"],
+  input[type="reset"],
+  input[type="button"],
+  input[type="radio"],
+  input[type="checkbox"] {
+    width: auto; // Override of generic input selector
+  }
 }
 
 // Set the height of file to match text inputs
