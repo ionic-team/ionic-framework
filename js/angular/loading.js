@@ -199,21 +199,11 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
     loadingShowDelay && $timeout.cancel(loadingShowDelay);
     loadingShowDelay = $timeout(noop, delay);
     
-    // This is not to show the loader, if the state change happens during the delay.
-    var stateAlreadyChanged = false;
     if (options.hideOnStateChange) {
-      $rootScope.$on('$stateChangeSuccess', function(){ stateAlreadyChanged = true });
+      deregisterStateListener = $rootScope.$on('$stateChangeSuccess', hideLoader);
     }
 
     loadingShowDelay.then(getLoader).then(function(loader) {
-      if (options.hideOnStateChange) {
-        if (stateAlreadyChanged) {
-          hideLoader();
-          return null;
-        } else {
-          deregisterStateListener = $rootScope.$on('$stateChangeSuccess', hideLoader);
-        }
-      }
       return loader.show(options);
     });
 
