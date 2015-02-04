@@ -4,12 +4,16 @@
   var queueElements = {};   // elements that should get an active state in XX milliseconds
   var activeElements = {};  // elements that are currently active
   var keyId = 0;            // a counter for unique keys for the above ojects
+  var activateDelay = 0;  // Delay before activating certain elements
   var ACTIVATED_CLASS = 'activated';
+  var ITEM_ACTIVATE_DELAY = 150;
 
   ionic.activator = {
 
     start: function(e) {
       var self = this;
+
+      activateDelay = 0;
 
       // when an element is touched/clicked, it climbs up a few
       // parents to see if it is an .item or .button element
@@ -20,6 +24,12 @@
 
         for (var x = 0; x < 6; x++) {
           if (!ele || ele.nodeType !== 1) break;
+
+          // Check if we should use item-delay mechanics on this (longer delay)
+          if(ele.classList.contains('item')) {
+            activateDelay = ITEM_ACTIVATE_DELAY;
+          }
+
           if (eleToActivate && ele.classList.contains('item')) {
             eleToActivate = ele;
             break;
@@ -44,7 +54,9 @@
           queueElements[keyId] = eleToActivate;
 
           // on the next frame, set the queued elements to active
-          ionic.requestAnimationFrame(activateElements);
+          self.activateTimeout = setTimeout(function() {
+            ionic.requestAnimationFrame(activateElements);
+          }, activateDelay);
 
           keyId = (keyId > 29 ? 0 : keyId + 1);
         }
@@ -54,6 +66,7 @@
 
     end: function() {
       // clear out any active/queued elements after XX milliseconds
+      clearTimeout(this.activateTimeout);
       setTimeout(clear, 200);
     }
 
