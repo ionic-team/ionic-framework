@@ -1,5 +1,7 @@
 Please read the contributing guide on the ionic website: http://ionicframework.com/contribute/
 
+Please do not manually create issues on GitHub.
+
 ### Creating an Issue
 
 If you have a question on how something works, or its expected functionality, you might want to visit the [Ionic Forum](http://forum.ionicframework.com/) first.
