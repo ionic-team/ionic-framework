@@ -25,6 +25,7 @@
   var SlideDrag = function(opts) {
     this.dragThresholdX = opts.dragThresholdX || 10;
     this.el = opts.el;
+    this.item = opts.item;
     this.canSwipe = opts.canSwipe;
   };
 
@@ -189,7 +190,7 @@
     this.dragThresholdY = opts.dragThresholdY || 0;
     this.onReorder = opts.onReorder;
     this.listEl = opts.listEl;
-    this.el = opts.el;
+    this.el = this.item = opts.el;
     this.scrollEl = opts.scrollEl;
     this.scrollView = opts.scrollView;
     // Get the True Top of the list el http://www.quirksmode.org/js/findpos.html
@@ -546,7 +547,11 @@
         // Make sure this is an item with buttons
         item = this._getItem(e.target);
         if (item && item.querySelector('.item-options')) {
-          this._dragOp = new SlideDrag({ el: this.el, canSwipe: this.canSwipe });
+          this._dragOp = new SlideDrag({
+            el: this.el,
+            item: item,
+            canSwipe: this.canSwipe
+          });
           this._dragOp.start(e);
           e.preventDefault();
         }
