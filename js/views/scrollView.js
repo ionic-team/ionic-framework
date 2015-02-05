@@ -538,9 +538,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
   /** Callback to execute to start the actual refresh. Call {@link #refreshFinish} when done */
   __refreshStart: null,
 
-  /** Callback to state the progress while pulling to refresh */
-  __refreshPullProgress: null,
-
   /** Zoom level */
   __zoomLevel: 1,
 
@@ -1347,17 +1344,16 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * @param tailCallback {Function} Callback to execute just before the refresher returns to it's original state. This is for zooming out the refresher.
    * @param pullProgressCallback Callback to state the progress while pulling to refresh
    */
-  activatePullToRefresh: function(height, activateCallback, deactivateCallback, startCallback, showCallback, hideCallback, tailCallback, pullProgressCallback) {
+  activatePullToRefresh: function(height, refresherMethods) {
     var self = this;
 
     self.__refreshHeight = height;
-    self.__refreshActivate = function() {ionic.requestAnimationFrame(activateCallback);};
-    self.__refreshDeactivate = function() {ionic.requestAnimationFrame(deactivateCallback);};
-    self.__refreshStart = function() {ionic.requestAnimationFrame(startCallback);};
-    self.__refreshShow = function() {ionic.requestAnimationFrame(showCallback);};
-    self.__refreshHide = function() {ionic.requestAnimationFrame(hideCallback);};
-    self.__refreshTail = function() {ionic.requestAnimationFrame(tailCallback);};
-    self.__refreshPullProgress = pullProgressCallback;
+    self.__refreshActivate = function() {ionic.requestAnimationFrame(refresherMethods.activate);};
+    self.__refreshDeactivate = function() {ionic.requestAnimationFrame(refresherMethods.deactivate);};
+    self.__refreshStart = function() {ionic.requestAnimationFrame(refresherMethods.start);};
+    self.__refreshShow = function() {ionic.requestAnimationFrame(refresherMethods.show);};
+    self.__refreshHide = function() {ionic.requestAnimationFrame(refresherMethods.hide);};
+    self.__refreshTail = function() {ionic.requestAnimationFrame(refresherMethods.tail);};
     self.__refreshTailTime = 100;
     self.__minSpinTime = 600;
   },
@@ -1849,9 +1845,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
                 if (self.__refreshDeactivate) {
                   self.__refreshDeactivate();
                 }
-
-              } else if (!self.__refreshActive && self.__refreshPullProgress) {
-                self.__refreshPullProgress(scrollTop / -self.__refreshHeight);
 
               }
             }

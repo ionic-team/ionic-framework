@@ -12,7 +12,16 @@ IonicModule
   '$document',
   '$ionicScrollDelegate',
   '$ionicHistory',
-function($scope, scrollViewOptions, $timeout, $window, $location, $document, $ionicScrollDelegate, $ionicHistory) {
+  '$controller',
+function($scope,
+         scrollViewOptions,
+         $timeout,
+         $window,
+         $location,
+         $document,
+         $ionicScrollDelegate,
+         $ionicHistory,
+         $controller) {
 
   var self = this;
   // for testing
@@ -171,38 +180,17 @@ function($scope, scrollViewOptions, $timeout, $window, $location, $document, $io
   /**
    * @private
    */
-  self._setRefresher = function(refresherScope, refresherElement) {
-    var refresher = self.refresher = refresherElement;
+  self._setRefresher = function(
+    refresherScope,
+    refresherElement,
+    refresherMethods
+  ) {
+    self.refresher = refresherElement;
     var refresherHeight = self.refresher.clientHeight || 60;
-    scrollView.activatePullToRefresh(refresherHeight, function() {
-      // activateCallback
-      refresher.classList.add('active');
-      refresherScope.$onPulling();
-      onPullProgress(1);
-    }, function() {
-      // deactivateCallback
-      refresher.classList.remove('active');
-      refresher.classList.remove('refreshing');
-      refresher.classList.remove('refreshing-tail');
-    }, function() {
-      // startCallback
-      refresher.classList.add('refreshing');
-      refresherScope.$onRefresh();
-    }, function() {
-      // showCallback
-      refresher.classList.remove('invisible');
-    }, function() {
-      // hideCallback
-      refresher.classList.add('invisible');
-    }, function() {
-      // tailCallback
-      refresher.classList.add('refreshing-tail');
-    }, onPullProgress);
-
-    function onPullProgress(progress) {
-      $scope.$broadcast('$ionicRefresher.pullProgress', progress);
-      refresherScope.$onPullProgress && refresherScope.$onPullProgress(progress);
-    }
+    scrollView.activatePullToRefresh(
+      refresherHeight,
+      refresherMethods
+    );
   };
 
 }]);
