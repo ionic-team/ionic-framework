@@ -250,6 +250,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
 
       var requiresRerender;
       function rerenderOnResize() {
+        if ($scope.$$disconnected) return;
         rerender(listExprParsed($scope));
         requiresRerender = (!scrollViewContent.clientWidth && !scrollViewContent.clientHeight);
       }
