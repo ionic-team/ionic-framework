@@ -43,9 +43,15 @@ IonicModule
       var isComplexItem = isAnchor ||
         //Lame way of testing, but we have to know at compile what to do with the element
         /ion-(delete|option|reorder)-button/i.test($element.html());
+      var hasDirection = isAnchor && angular.isDefined($attrs.navDirection);
 
         if (isComplexItem) {
           var innerElement = jqLite(isAnchor ? ITEM_TPL_CONTENT_ANCHOR : ITEM_TPL_CONTENT);
+
+          if (hasDirection) {
+            innerElement.attr('nav-direction', $attrs.navDirection);
+          }
+
           innerElement.append($element.contents());
 
           $element.append(innerElement);

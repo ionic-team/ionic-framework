@@ -33,6 +33,11 @@ describe('ionItem directive', function() {
       el.scope().$apply('foo = 44');
       expect(el.children().attr('href')).toBe('something/44');
     });
+    it('complex item should have nav-direction if specified', function() {
+      var el = setup(attr+'="something" nav-direction="back"');
+      var link = el.find('a');
+      expect(link.attr('nav-direction')).toBe('back');
+    });
   });
   it('complex item should have target self by default', function() {
     var el = setup('href="foo"');
