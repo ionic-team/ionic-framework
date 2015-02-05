@@ -41,12 +41,12 @@
  *   var template = '<ion-popover-view><ion-header-bar> <h1 class="title">My Popover Title</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
  *
  *   $scope.popover = $ionicPopover.fromTemplate(template, {
- *     scope: $scope,
+ *     scope: $scope
  *   });
  *
  *   // .fromTemplateUrl() method
  *   $ionicPopover.fromTemplateUrl('my-popover.html', {
- *     scope: $scope,
+ *     scope: $scope
  *   }).then(function(popover) {
  *     $scope.popover = popover;
  *   });
