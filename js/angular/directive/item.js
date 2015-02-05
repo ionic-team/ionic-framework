@@ -70,7 +70,8 @@ IonicModule
           listCtrl || (listCtrl = $element.controller('ionList'));
           if (!listCtrl || !listCtrl.listView) return;
 
-          if (listCtrl.listView._lastDragOp) {
+          var lastDragOp = listCtrl.listView._lastDragOp || {};
+          if (lastDragOp.item === $element[0]) {
             listCtrl.listView.clearDragEffects();
           }
 
