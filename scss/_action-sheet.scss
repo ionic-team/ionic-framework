@@ -4,7 +4,7 @@
  */
 
 .action-sheet-backdrop {
-  @include transition(background-color 300ms ease-in-out);
+  @include transition(background-color 150ms ease-in-out);
   position: fixed;
   top: 0;
   left: 0;
@@ -20,7 +20,7 @@
 
 .action-sheet-wrapper {
   @include translate3d(0, 100%, 0);
-  @include transition(all ease-in-out 300ms);
+  @include transition(all cubic-bezier(.36, .66, .04, 1) 500ms);
   position: absolute;
   bottom: 0;
   width: 100%;
