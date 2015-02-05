@@ -70,7 +70,8 @@ function($timeout, $controller, $ionicBind) {
           scrollbarY: '@',
           zooming: '@',
           minZoom: '@',
-          maxZoom: '@'
+          maxZoom: '@',
+          hasTransition: '@'
         });
         $scope.direction = $scope.direction || 'y';
 
@@ -92,6 +93,7 @@ function($timeout, $controller, $ionicBind) {
           locking: ($attr.locking || 'true') === 'true',
           bouncing: $scope.$eval($attr.hasBouncing),
           paging: isPaging,
+          transition: $scope.$eval($scope.hasTransition) || false,
           scrollbarX: $scope.$eval($scope.scrollbarX) !== false,
           scrollbarY: $scope.$eval($scope.scrollbarY) !== false,
           scrollingX: $scope.direction.indexOf('x') >= 0,

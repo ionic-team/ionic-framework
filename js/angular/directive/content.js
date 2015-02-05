@@ -97,7 +97,8 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
           scrollbarY: '@',
           startX: '@',
           startY: '@',
-          scrollEventInterval: '@'
+          scrollEventInterval: '@',
+          hasTransition: '@'
         });
         $scope.direction = $scope.direction || 'y';
 
@@ -118,6 +119,7 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
             delegateHandle: attr.delegateHandle,
             locking: (attr.locking || 'true') === 'true',
             bouncing: $scope.$eval($scope.hasBouncing),
+            transition: $scope.$eval($scope.hasTransition) || 0,
             startX: $scope.$eval($scope.startX) || 0,
             startY: $scope.$eval($scope.startY) || 0,
             scrollbarX: $scope.$eval($scope.scrollbarX) !== false,

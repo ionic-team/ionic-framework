@@ -264,6 +264,29 @@ var Scroller;
   /**
    * @param pos {Number} position between 0 (start of effect) and 1 (end of effect)
   **/
+  
+  var EasingJsFunctions = {
+    linear: function (t) { return t },
+    easeInQuad: function (t) { return t*t },
+    easeOutQuad: function (t) { return t*(2-t) }, //default
+    easeInOutQuad: function (t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t },
+    easeInCubic: function (t) { return t*t*t },
+    easeOutCubic: function (t) { return (--t)*t*t+1 },
+    easeInOutCubic: function (t) { return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1 },
+    easeInQuart: function (t) { return t*t*t*t },
+    easeOutQuart: function (t) { return 1-(--t)*t*t*t },
+    easeInOutQuart: function (t) { return t<.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t },
+    easeInQuint: function (t) { return t*t*t*t*t },
+    easeOutQuint: function (t) { return 1+(--t)*t*t*t*t },
+    easeInOutQuint: function (t) { return t<.5 ? 16*t*t*t*t*t : 1+16*(--t)*t*t*t*t }
+  }
+  
+  var EasingCssFunctions = {
+    default: "cubic-bezier(.3,.55,.6,1)", //default
+    easeOutQuad: "cubic-bezier(0.250, 0.460, 0.450, 0.940)",
+    easeOutCubic: "0.215, 0.61, 0.355, 1",
+  }
+  
   var easeInOutCubic = function(pos) {
     if ((pos /= 0.5) < 1) {
       return 0.5 * Math.pow(pos, 3);
@@ -271,7 +294,10 @@ var Scroller;
 
     return 0.5 * (Math.pow((pos - 2), 3) + 2);
   };
-
+  
+  var transitionJsFunction = EasingJsFunctions.easeOutQuad;
+  
+  var transitionCssFunction = EasingCssFunctions.default;
 
 /**
  * ionic.views.Scroll
@@ -327,6 +353,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       /** duration for animations triggered by scrollTo/zoomTo */
       animationDuration: 250,
+	  
+      decelerationTransition: 0.0016, // Default 0.0006
 
       /** The velocity required to make the scroll view "slide" after touchend */
       decelVelocityThreshold: 4,
@@ -490,6 +518,12 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * Smoothly animating the currently configured change
    */
   __isAnimating: false,
+  
+  
+  __isBadAndroid: /Android /.test(window.navigator.appVersion) && !(/Chrome\/\d/.test(window.navigator.appVersion)),
+  
+  
+  __onScrollTransition: null,
 
 
 
@@ -566,7 +600,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
   __scheduledZoom: 0,
 
 
-
   /*
   ---------------------------------------------------------------------------
     INTERNAL FIELDS :: LAST POSITIONS
@@ -610,7 +643,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
   /** Current factor to modify vertical scroll position with on every step */
   __decelerationVelocityY: null,
-
 
   /** the browser-specific property to use for transforms */
   __transformProperty: null,
@@ -1219,33 +1251,56 @@ ionic.views.Scroll = ionic.views.View.inherit({
     var perspectiveProperty = vendorPrefix + "Perspective";
     var transformProperty = vendorPrefix + "Transform";
     var transformOriginProperty = vendorPrefix + 'TransformOrigin';
+    
+    var transitionProperty = vendorPrefix ? vendorPrefix + "Transition" : "transition";
+    var transitionDurationProperty = vendorPrefix ? vendorPrefix + "TransitionDuration" : "transitionDuration";
+    var transitionEndProperty = vendorPrefix ? vendorPrefix.toLowerCase() + "TransitionEnd" : "transitionEnd";
 
     self.__perspectiveProperty = transformProperty;
     self.__transformProperty = transformProperty;
     self.__transformOriginProperty = transformOriginProperty;
+    
+    self.__transitionProperty = transitionProperty;
+    self.__transitionDurationProperty = transitionDurationProperty;
+    self.__transitionEndProperty = transitionEndProperty;
+	
+    content.style[transitionProperty] = "all "+transitionCssFunction+" 0s";
+	
+    content.addEventListener(transitionEndProperty, angular.bind(this, self.__transitionEnd), false)
+    
+    function isTransition (left, top, zoom, wasResize, time) {
+        if ( self.options.transition && ( self.__isDecelerating || self.__isAnimating ) ) {
+            content.style[transitionDurationProperty] = time + "ms";
+        } else if ( self.options.transition && ( !self.__isDecelerating || !self.__isAnimating ) ) {
+            content.style[transitionDurationProperty] = "0ms";
+        }
+        
+        if ( self.options.transition && ( self.__isDecelerating || self.__isAnimating ) ) {
+            self.__repositionTransition(left, top, zoom, wasResize, time);
+        } else {
+            self.__repositionScrollbars();
+            if(!wasResize) {
+                self.triggerScrollEvent();
+            }
+        }
+    }
 
     if (helperElem.style[perspectiveProperty] !== undef) {
 
-      return function(left, top, zoom, wasResize) {
+      return function(left, top, zoom, wasResize, time) {
         var translate3d = 'translate3d(' + (-left) + 'px,' + (-top) + 'px,0) scale(' + zoom + ')';
         if (translate3d !== self.contentTransform) {
           content.style[transformProperty] = translate3d;
           self.contentTransform = translate3d;
         }
-        self.__repositionScrollbars();
-        if (!wasResize) {
-          self.triggerScrollEvent();
-        }
+        isTransition(left, top, zoom, wasResize, time);
       };
 
     } else if (helperElem.style[transformProperty] !== undef) {
 
-      return function(left, top, zoom, wasResize) {
+      return function(left, top, zoom, wasResize, time) {
         content.style[transformProperty] = 'translate(' + (-left) + 'px,' + (-top) + 'px) scale(' + zoom + ')';
-        self.__repositionScrollbars();
-        if (!wasResize) {
-          self.triggerScrollEvent();
-        }
+        isTransition(left, top, zoom, wasResize, time);
       };
 
     } else {
@@ -1254,10 +1309,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         content.style.marginLeft = left ? (-left/zoom) + 'px' : '';
         content.style.marginTop = top ? (-top/zoom) + 'px' : '';
         content.style.zoom = zoom || '';
-        self.__repositionScrollbars();
-        if (!wasResize) {
-          self.triggerScrollEvent();
-        }
+        isTransition(left, top, zoom, wasResize, time);
       };
 
     }
@@ -1649,6 +1701,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       zyngaCore.effect.Animate.stop(self.__isDecelerating);
       self.__isDecelerating = false;
       self.__interruptedAnimation = true;
+      self.__callback(self.__scrollLeft, self.__scrollTop, self.__zoomLevel, 0);
     }
 
     // Stop animation
@@ -1656,6 +1709,11 @@ ionic.views.Scroll = ionic.views.View.inherit({
       zyngaCore.effect.Animate.stop(self.__isAnimating);
       self.__isAnimating = false;
       self.__interruptedAnimation = true;
+      self.__callback(self.__scrollLeft, self.__scrollTop, self.__zoomLevel, 0);
+    }
+	
+    if ( self.__isBadAndroid && self.options.transition ) {
+        self.__content.style[self.__transitionDurationProperty] = "1ms";
     }
 
     // Use center point when dealing with two fingers
@@ -1707,7 +1765,16 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     // Clearing data structure
     self.__positions = [];
-
+    
+    // Start scroll time 
+    self.__startTime = Date.now();
+    
+    // start position top
+    self.__startScrollTop = self.__scrollTop;
+    
+    //start position left
+    self.__startScrollLeft = self.__scrollLeft;
+    
   },
 
 
@@ -1882,6 +1949,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       // Sync scroll position
       self.__publish(scrollLeft, scrollTop, level);
+      if(self.__onScrollTransition) self.__onScrollTransition(self.__scrollLeft, self.__scrollTop);
 
     // Otherwise figure out whether we are switching into dragging mode now.
     } else {
@@ -1910,6 +1978,12 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.__lastTouchTop = currentTouchTop;
     self.__lastTouchMove = timeStamp;
     self.__lastScale = scale;
+    
+    if ( timeStamp - self.__startTime > 300 ) {
+        self.__startTime = timeStamp;
+        self.__startScrollLeft = self.__scrollLeft;
+        self.__startScrollTop = self.__scrollTop;
+    }
 
   },
 
@@ -1978,8 +2052,14 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
             // Deactivate pull-to-refresh when decelerating
             if (!self.__refreshActive) {
-              self.__startDeceleration(timeStamp);
+              if (self.options.transition) {
+                  self.__startTransitionDeceleration();
+              } else {
+                  self.__startDeceleration(timeStamp);
+              }
             }
+          } else {
+              self.__scrollingComplete();
           }
         } else {
           self.__scrollingComplete();
@@ -2060,7 +2140,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.__isAnimating = false;
     }
 
-    if (animate && self.options.animating) {
+    if (animate && self.options.animating && !self.options.transition ) {
 
       // Keep scheduled positions for scrollBy/zoomBy functionality
       self.__scheduledLeft = left;
@@ -2111,6 +2191,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
       // When continuing based on previous animation we choose an ease-out animation instead of ease-in-out
       self.__isAnimating = zyngaCore.effect.Animate.start(step, verify, completed, self.options.animationDuration, wasAnimating ? easeOutCubic : easeInOutCubic);
 
+    } else if ( animate && self.options.animating && self.options.transition ) {
+        self.__isAnimating = true;
+        self.__callback(left, top, zoom, wasResize, self.options.animationDuration);
     } else {
 
       self.__scheduledLeft = self.__scrollLeft = left;
@@ -2168,6 +2251,86 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     sizer();
     self.__sizerTimeout = setTimeout(sizer, 1000);
+  },
+  
+  __momentum: function (current, start, time, lowerMargin, wrapperSize) {
+      
+      var distance = current - start,
+          speed = Math.abs(distance) / time,
+          destination,
+          duration,
+          deceleration;
+
+      deceleration = this.options.decelerationTransition;
+
+      destination = current + ( speed * speed ) / ( 2 * deceleration ) * ( distance < 0 ? -1 : 1 );
+      duration = speed / deceleration;
+
+      if ( destination > lowerMargin ) {
+          destination = wrapperSize ? lowerMargin + ( wrapperSize / 2.5 * ( speed / 8 ) ) : lowerMargin;
+          distance = Math.abs(destination - current);
+          duration = distance / speed;
+      } else if ( destination < 0 ) {
+          destination =  -(wrapperSize ? wrapperSize / 2.5 * ( speed / 8 ) : 0);
+          distance = Math.abs(current) + destination;
+          duration = distance / speed;
+      }
+
+      return {
+          destination: Math.round(destination),
+          duration: duration
+      };
+  },
+  
+  __repositionTransition: function (left, top, zoom, wasResize, time) {
+
+      var self = this;
+
+      var scrollLeft = self.__scrollLeft,
+          scrollTop = self.__scrollTop,
+          distanceX = left - scrollLeft,
+          distanceY = top - scrollTop;
+      
+      function repositionScrollbars ( offset, now, render ) {
+        if ( render ) {
+            self.__scrollLeft = scrollLeft + distanceX * offset;
+            self.__scrollTop =  scrollTop + distanceY * offset;
+            
+            self.__repositionScrollbars();
+            if(!wasResize) {
+              if(self.__onScrollTransition) self.__onScrollTransition(self.__scrollLeft, self.__scrollTop);
+              self.triggerScrollEvent();
+            }
+        }
+      }
+      
+      function scrollEnd (frame, id) {
+        if ( self.__isDecelerating === id || self.__isAnimating === id ) {
+            if ( self.__isDecelerating === id ) {
+                self.__isDecelerating = false;
+            } else if ( self.__isAnimating === id ) {
+                self.__isAnimating = false;
+            }
+            self.__scrollingComplete();
+            if (self.options.zooming) {
+              self.__computeScrollMax();
+            }
+        }
+      }
+      
+      function isScrolled (id) {
+          if (self.__isAnimating === id || self.__isDecelerating === id) {
+            return true;
+          } else {
+            return false;  
+          }
+      }
+      
+      if ( self.__isDecelerating ) {
+          self.__isDecelerating = zyngaCore.effect.Animate.start(repositionScrollbars, isScrolled, scrollEnd, time, transitionJsFunction);
+      } else if ( self.__isAnimating ) {
+          self.__isAnimating = zyngaCore.effect.Animate.start(repositionScrollbars, isScrolled, scrollEnd, time, transitionJsFunction);
+      }
   },
 
   /*
@@ -2250,6 +2413,71 @@ ionic.views.Scroll = ionic.views.View.inherit({
     // Start animation and switch on flag
     self.__isDecelerating = zyngaCore.effect.Animate.start(step, verify, completed);
 
+  },
+  
+  
+  __startTransitionDeceleration: function() {
+      
+      var self = this;
+       
+      var momentumX,
+          momentumY,
+          isBouncingX = true,
+          isBouncingY = true,
+          duration = Date.now() - self.__startTime;
+          scrollLeft = Math.round(self.__scrollLeft),
+          scrollTop = Math.round(self.__scrollTop),
+          distanceX = Math.abs(scrollLeft - self.__startScrollLeft),
+          distanceY = Math.abs(scrollTop - self.__startScrollTop),
+          time = 0;
+          
+     if ( duration < 300 ) {
+          momentumX = self.__enableScrollX ? self.__momentum(self.__scrollLeft, self.__startScrollLeft, duration, self.__maxScrollLeft, self.options.bouncing ? self.__clientWidth : 0 ) : { destination: scrollLeft, duration: 0 };
+          momentumY = self.__enableScrollY ? self.__momentum(self.__scrollTop, self.__startScrollTop, duration, self.__maxScrollTop, self.options.bouncing ? self.__clientHeight : 0 ) : { destination: scrollTop, duration: 0 };
+          scrollLeft = momentumX.destination;
+          scrollTop = momentumY.destination;
+          time = Math.max(momentumX.duration, momentumY.duration);
+
+          if ( ( self.__scrollLeft >= 0 && self.__scrollLeft <=  self.__maxScrollLeft ) && ( self.__scrollTop >= 0 && self.__scrollTop <= self.__maxScrollTop ) ) {
+            self.__isDecelerating = true;
+              self.__callback(scrollLeft, scrollTop, self.__zoomLevel, 0, time);
+          } else {
+            self.__isAnimating = true;
+              self.__callback(scrollLeft, scrollTop, self.__zoomLevel, 0, self.options.animationDuration);  
+          } 
+            
+      }
+            
+  },
+  
+  __transitionEnd: function(){
+	  var self = this;
+	  var scrollLeft = self.__scrollLeft,
+	  	  scrollTop = self.__scrollTop,
+	  	  isBouncingY = true,
+	  	  isBouncingX = true;
+	  
+	  if ( scrollLeft < 0 ) {
+	  	  scrollLeft = 0;
+	  } else if ( scrollLeft > self.__maxScrollLeft ) {
+	  	  scrollLeft = self.__maxScrollLeft;
+	  } else {
+	  	  isBouncingX = false;
+	  }
+	  
+	  if ( scrollTop < 0 ) {
+	  	  scrollTop = 0;
+	  } else if ( scrollTop > self.__maxScrollTop ) {
+	  	  scrollTop = self.__maxScrollTop;
+	  } else {
+	  	  isBouncingY = false;
+	  }
+
+	  if ( isBouncingX || isBouncingY ) {
+	  	  self.__isDecelerating = false;
+	  	  self.__isAnimating = true;
+	  	  self.__callback(scrollLeft, scrollTop, self.__zoomLevel, 0, self.options.animationDuration);
+	  }
   },
 
 

@@ -20,8 +20,12 @@ function($rootScope, $timeout) {
     this.setCurrentIndex(0);
 
     //Override scrollview's render callback
-    this.scrollView.__$callback = this.scrollView.__callback;
-    this.scrollView.__callback = angular.bind(this, this.renderScroll);
+    if(this.scrollView.options.transition){
+      this.scrollView.__onScrollTransition = angular.bind(this, this.renderScrollTransition);
+    }else{
+      this.scrollView.__$callback = this.scrollView.__callback;
+      this.scrollView.__callback = angular.bind(this, this.renderScroll);
+    }
 
     function getViewportSize() { return self.viewportSize; }
     //Set getters and setters to match whether this scrollview is vertical or not
@@ -193,6 +197,13 @@ function($rootScope, $timeout) {
       return this.scrollView.__$callback(transformLeft, transformTop, zoom, wasResize);
     }),
 
+    renderScrollTransition: function(transformLeft, transformTop){
+      if (this.isVertical) {
+        this.renderIfNeeded(transformTop);
+      } else {
+        this.renderIfNeeded(transformLeft);
+      }
+    },
     renderIfNeeded: function(scrollPos) {
       if ((this.hasNextIndex && scrollPos >= this.nextPos) ||
           (this.hasPrevIndex && scrollPos < this.previousPos)) {
