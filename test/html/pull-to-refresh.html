@@ -23,7 +23,7 @@
 <script>
   angular.module('ionicApp', ['ionic'])
     .config(function($ionicConfigProvider) {
-      //$ionicConfigProvider.scrolling.jsScrolling(false);
+      if(!ionic.Platform.isIOS())$ionicConfigProvider.scrolling.jsScrolling(false);
     })
     .controller('MyCtrl', function($scope, $timeout) {
       $scope.items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6','Item 7','Item 8','Item 9','Item 10'];
