@@ -334,6 +334,8 @@ ionic.views.Slider = ionic.views.View.inherit({
           // prevent native scrolling
           event.preventDefault();
 
+          ionic.slide.isSliding = true;
+
           // stop slideshow
           stop();
 
@@ -365,6 +367,8 @@ ionic.views.Slider = ionic.views.View.inherit({
 
       },
       end: function(event) {
+
+        ionic.slide.isSliding = false;
 
         // measure duration
         var duration = +new Date() - start.time;
@@ -612,5 +616,9 @@ ionic.views.Slider = ionic.views.View.inherit({
 
   }
 });
+
+ionic.slide = {
+  isSliding: false
+};
 
 })(ionic);
