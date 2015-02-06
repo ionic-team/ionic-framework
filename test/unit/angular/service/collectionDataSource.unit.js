@@ -88,7 +88,6 @@ describe('$collectionDataSource service', function() {
       expect(item.scope.$parent).toBe(source.scope);
 
       expect(item.element).toBeTruthy();
-      expect(item.element.css('position')).toBe('absolute');
       expect(item.element.scope()).toBe(item.scope);
 
       expect(item.element.parent()[0]).toBe(source.transcludeParent[0]);
