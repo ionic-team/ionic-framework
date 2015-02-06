@@ -248,3 +248,9 @@
 .dark-border {
   border-color: $button-dark-border;
 }
+
+[collection-repeat] {
+  /* Position is set by transforms */
+  left: 0 !important;
+  position: absolute !important;
+}
