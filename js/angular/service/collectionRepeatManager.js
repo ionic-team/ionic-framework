@@ -324,10 +324,12 @@ function($rootScope, $timeout) {
         var width = this.isVertical ? itemDimensions.secondarySize : itemDimensions.primarySize;
         var height = this.isVertical ? itemDimensions.primarySize : itemDimensions.secondarySize;
         if (item.cssWidth !== width) {
-          item.element[0].style.width = (item.cssWidth = width) + 'px';
+          item.element[0].style.width = width + 'px';
+          item.cssWidth = width;
         }
         if (item.cssHeight !== height) {
-          item.element[0].style.height = (item.cssHeight = height) + 'px';
+          item.element[0].style.height = height + 'px';
+          item.cssHeight = height;
         }
         // Save the item in rendered items
         this.renderedItems[dataIndex] = item;
