@@ -45,7 +45,7 @@ function($scope,
     }
   );
 
-  if (!angular.isDefined(scrollViewOptions.bouncing)) {
+  if (!isDefined(scrollViewOptions.bouncing)) {
     ionic.Platform.ready(function() {
       if (scrollView.options) {
         scrollView.options.bouncing = true;
@@ -76,22 +76,11 @@ function($scope,
 
   $scope.$on('$destroy', function() {
     deregisterInstance();
-    //Windows: make sure the scrollView.__cleanup exists before calling it
-    if (scrollView.__cleanup) {
-        scrollView.__cleanup();
-    }
+    scrollView && scrollView.__cleanup && scrollView.__cleanup();
     ionic.off('resize', resize, $window);
     $window.removeEventListener('resize', resize);
-    scrollViewOptions = null;
-    self._scrollViewOptions.el = null;
-    self._scrollViewOptions = null;
     $element.off('scroll', scrollFunc);
-    $element = null;
-    self.$element = null;
-    element = null;
-    self.element = null;
-    self.scrollView = null;
-    scrollView = null;
+    scrollView = self.scrollView = scrollViewOptions = self._scrollViewOptions = scrollViewOptions.el = self._scrollViewOptions.el = $element = self.$element = element = null;
   });
 
   $timeout(function() {
@@ -99,11 +88,11 @@ function($scope,
   });
 
   self.getScrollView = function() {
-    return self.scrollView;
+    return scrollView;
   };
 
   self.getScrollPosition = function() {
-    return self.scrollView.getValues();
+    return scrollView.getValues();
   };
 
   self.resize = function() {
@@ -167,6 +156,11 @@ function($scope,
       } while (curElm.attributes != self.element.attributes && curElm.offsetParent);
       scrollView.scrollTo(scrollLeft, scrollTop, !!shouldAnimate);
     });
+  };
+
+  self.freezeScroll = function(shouldFreeze) {
+    if (arguments.length) scrollView.options.freeze = shouldFreeze;
+    return scrollView.options.freeze;
   };
 
 

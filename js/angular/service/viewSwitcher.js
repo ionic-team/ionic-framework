@@ -33,10 +33,11 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
   var isActiveTimer;
   var cachedAttr = ionic.DomUtil.cachedAttr;
   var transitionPromises = [];
+  var defaultTimeout = 1100;
 
   var ionicViewSwitcher = {
 
-    create: function(navViewCtrl, viewLocals, enteringView, leavingView) {
+    create: function(navViewCtrl, viewLocals, enteringView, leavingView, renderStart, renderEnd) {
       // get a reference to an entering/leaving element if they exist
       // loop through to see if the view is already in the navViewElement
       var enteringEle, leavingEle;
@@ -56,11 +57,12 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
         },
 
         loadViewElements: function(registerData) {
-          var viewEle, viewElements = navViewCtrl.getViewElements();
+          var x, l, viewEle;
+          var viewElements = navViewCtrl.getViewElements();
           var enteringEleIdentifier = getViewElementIdentifier(viewLocals, enteringView);
           var navViewActiveEleId = navViewCtrl.activeEleId();
 
-          for (var x = 0, l = viewElements.length; x < l; x++) {
+          for (x = 0, l = viewElements.length; x < l; x++) {
             viewEle = viewElements.eq(x);
 
             if (viewEle.data(DATA_ELE_IDENTIFIER) === enteringEleIdentifier) {
@@ -92,7 +94,9 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             enteringEle.data(DATA_ELE_IDENTIFIER, enteringEleIdentifier);
           }
 
-          navViewCtrl.activeEleId(enteringEleIdentifier);
+          if (renderEnd) {
+            navViewCtrl.activeEleId(enteringEleIdentifier);
+          }
 
           registerData.ele = null;
         },
@@ -143,15 +147,15 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
           callback && callback();
         },
 
-        transition: function(direction, enableBack) {
-          var deferred = $q.defer();
-          transitionPromises.push(deferred.promise);
-
+        transition: function(direction, enableBack, allowAnimate) {
+          var deferred;
           var enteringData = getTransitionData(viewLocals, enteringEle, direction, enteringView);
           var leavingData = extend(extend({}, enteringData), getViewData(leavingView));
           enteringData.transitionId = leavingData.transitionId = transitionId;
           enteringData.fromCache = !!alreadyInDom;
           enteringData.enableBack = !!enableBack;
+          enteringData.renderStart = renderStart;
+          enteringData.renderEnd = renderEnd;
 
           cachedAttr(enteringEle.parent(), 'nav-view-transition', enteringData.transition);
           cachedAttr(enteringEle.parent(), 'nav-view-direction', enteringData.direction);
@@ -159,42 +163,87 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
           // cancel any previous transition complete fallbacks
           $timeout.cancel(enteringEle.data(DATA_FALLBACK_TIMER));
 
-          switcher.emit('before', enteringData, leavingData);
-
-          // 1) get the transition ready and see if it'll animate
+          // get the transition ready and see if it'll animate
           var transitionFn = $ionicConfig.transitions.views[enteringData.transition] || $ionicConfig.transitions.views.none;
-          var viewTransition = transitionFn(enteringEle, leavingEle, enteringData.direction, enteringData.shouldAnimate);
+          var viewTransition = transitionFn(enteringEle, leavingEle, enteringData.direction,
+                                            enteringData.shouldAnimate && allowAnimate && renderEnd);
 
           if (viewTransition.shouldAnimate) {
-            // 2) attach transitionend events (and fallback timer)
+            // attach transitionend events (and fallback timer)
             enteringEle.on(TRANSITIONEND_EVENT, transitionComplete);
-            enteringEle.data(DATA_FALLBACK_TIMER, $timeout(transitionComplete, 1000));
-            $ionicClickBlock.show();
+            enteringEle.data(DATA_FALLBACK_TIMER, $timeout(transitionComplete, defaultTimeout));
+            $ionicClickBlock.show(defaultTimeout);
           }
 
-          // 3) stage entering element, opacity 0, no transition duration
-          navViewAttr(enteringEle, VIEW_STATUS_STAGED);
+          if (renderStart) {
+            // notify the views "before" the transition starts
+            switcher.emit('before', enteringData, leavingData);
 
-          // 4) place the elements in the correct step to begin
-          viewTransition.run(0);
+            // stage entering element, opacity 0, no transition duration
+            navViewAttr(enteringEle, VIEW_STATUS_STAGED);
 
-          // 5) wait a frame so the styles apply
-          $timeout(onReflow, 16);
+            // render the elements in the correct location for their starting point
+            viewTransition.run(0);
+          }
+
+          if (renderEnd) {
+            // create a promise so we can keep track of when all transitions finish
+            // only required if this transition should complete
+            deferred = $q.defer();
+            transitionPromises.push(deferred.promise);
+          }
+
+          if (renderStart && renderEnd) {
+            // CSS "auto" transitioned, not manually transitioned
+            // wait a frame so the styles apply before auto transitioning
+            $timeout(onReflow, 16);
+
+          } else if (!renderEnd) {
+            // just the start of a manual transition
+            // but it will not render the end of the transition
+            navViewAttr(enteringEle, 'entering');
+            navViewAttr(leavingEle, 'leaving');
+
+            // return the transition run method so each step can be ran manually
+            return {
+              run: viewTransition.run,
+              cancel: function(shouldAnimate) {
+                if (shouldAnimate) {
+                  enteringEle.on(TRANSITIONEND_EVENT, cancelTransition);
+                  enteringEle.data(DATA_FALLBACK_TIMER, $timeout(cancelTransition, defaultTimeout));
+                  $ionicClickBlock.show(defaultTimeout);
+                } else {
+                  cancelTransition();
+                }
+                viewTransition.shouldAnimate = shouldAnimate;
+                viewTransition.run(0);
+                viewTransition = null;
+              }
+            };
+
+          } else if (renderEnd) {
+            // just the end of a manual transition
+            // happens after the manual transition has completed
+            // and a full history change has happened
+            onReflow();
+          }
+
 
           function onReflow() {
-            // 6) remove that we're staging the entering element so it can transition
+            // remove that we're staging the entering element so it can auto transition
             navViewAttr(enteringEle, viewTransition.shouldAnimate ? 'entering' : VIEW_STATUS_ACTIVE);
             navViewAttr(leavingEle, viewTransition.shouldAnimate ? 'leaving' : VIEW_STATUS_CACHED);
 
-            // 7) start the transition
+            // start the auto transition and let the CSS take over
             viewTransition.run(1);
 
+            // trigger auto transitions on the associated nav bars
             $ionicNavBarDelegate._instances.forEach(function(instance) {
               instance.triggerTransitionStart(transitionId);
             });
 
             if (!viewTransition.shouldAnimate) {
-              // no animated transition
+              // no animated auto transition
               transitionComplete();
             }
           }
@@ -207,26 +256,35 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             $timeout.cancel(enteringEle.data(DATA_FALLBACK_TIMER));
             leavingEle && $timeout.cancel(leavingEle.data(DATA_FALLBACK_TIMER));
 
-            // 8) emit that the views have finished transitioning
+            // emit that the views have finished transitioning
             // each parent nav-view will update which views are active and cached
             switcher.emit('after', enteringData, leavingData);
 
-            // 9) resolve that this one transition (there could be many w/ nested views)
-            deferred.resolve(navViewCtrl);
+            // resolve that this one transition (there could be many w/ nested views)
+            deferred && deferred.resolve(navViewCtrl);
 
-            // 10) the most recent transition added has completed and all the active
+            // the most recent transition added has completed and all the active
             // transition promises should be added to the services array of promises
             if (transitionId === transitionCounter) {
               $q.all(transitionPromises).then(ionicViewSwitcher.transitionEnd);
               switcher.cleanup(enteringData);
             }
 
+            // tell the nav bars that the transition has ended
             $ionicNavBarDelegate._instances.forEach(function(instance) {
               instance.triggerTransitionEnd();
             });
 
             // remove any references that could cause memory issues
             nextTransition = nextDirection = enteringView = leavingView = enteringEle = leavingEle = null;
+          }
+
+          function cancelTransition() {
+            navViewAttr(enteringEle, VIEW_STATUS_CACHED);
+            navViewAttr(leavingEle, VIEW_STATUS_ACTIVE);
+            enteringEle.off(TRANSITIONEND_EVENT, cancelTransition);
+            $timeout.cancel(enteringEle.data(DATA_FALLBACK_TIMER));
+            ionicViewSwitcher.transitionEnd([navViewCtrl]);
           }
 
         },
@@ -295,7 +353,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
     },
 
     transitionEnd: function(navViewCtrls) {
-      forEach(navViewCtrls, function(navViewCtrl){
+      forEach(navViewCtrls, function(navViewCtrl) {
         navViewCtrl.transitionEnd();
       });
 

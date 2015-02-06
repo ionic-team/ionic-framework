@@ -377,6 +377,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
       // The ms interval for triggering scroll events
       scrollEventInterval: 10,
 
+      freeze: false,
+
       getContentWidth: function() {
         return Math.max(self.__content.scrollWidth, self.__content.offsetWidth);
       },
@@ -742,7 +744,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     };
 
     self.touchMove = function(e) {
-      if (!self.__isDown ||
+      if (self.options.freeze || !self.__isDown ||
         (!self.__isDown && e.defaultPrevented) ||
         (e.target.tagName === 'TEXTAREA' && e.target.parentElement.querySelector(':focus')) ) {
         return;
@@ -843,7 +845,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       };
 
       self.mouseMove = function(e) {
-        if (!mousedown || (!mousedown && e.defaultPrevented)) {
+        if (self.options.freeze || !mousedown || (!mousedown && e.defaultPrevented)) {
           return;
         }
 
@@ -935,13 +937,13 @@ ionic.views.Scroll = ionic.views.View.inherit({
     delete self.__indicatorY;
     delete self.options.el;
 
-    self.__callback = self.scrollChildIntoView = self.resetScrollView = angular.noop;
+    self.__callback = self.scrollChildIntoView = self.resetScrollView = NOOP;
 
     self.mouseMove = self.mouseDown = self.mouseUp = self.mouseWheel =
-      self.touchStart = self.touchMove = self.touchEnd = self.touchCancel = angular.noop;
+      self.touchStart = self.touchMove = self.touchEnd = self.touchCancel = NOOP;
 
     self.resize = self.scrollTo = self.zoomTo =
-      self.__scrollingComplete = angular.noop;
+      self.__scrollingComplete = NOOP;
     container = null;
   },
 
