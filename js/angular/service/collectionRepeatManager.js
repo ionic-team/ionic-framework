@@ -310,13 +310,13 @@ function($rootScope, $timeout) {
     renderItem: function(dataIndex, primaryPos, secondaryPos) {
       // Attach an item, and set its transform position to the required value
       var item = this.dataSource.attachItemAtIndex(dataIndex);
-      var itemDimensions = this.dimensions[dataIndex];
+      var itemDimensions = this.dimensions[dataIndex] || {};
       //console.log(dataIndex, item);
       if (item && item.element) {
         if (item.primaryPos !== primaryPos || item.secondaryPos !== secondaryPos) {
-          item.element[0].style[ionic.CSS.TRANSFORM] = this.transformString(
+          item.element.css(ionic.CSS.TRANSFORM, this.transformString(
             primaryPos, secondaryPos
-          );
+          ));
           item.primaryPos = primaryPos;
           item.secondaryPos = secondaryPos;
         }
