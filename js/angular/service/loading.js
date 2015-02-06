@@ -198,11 +198,12 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
     //If loading.show() was called previously, cancel it and show with our new options
     loadingShowDelay && $timeout.cancel(loadingShowDelay);
     loadingShowDelay = $timeout(noop, delay);
+    
+    if (options.hideOnStateChange) {
+      deregisterStateListener = $rootScope.$on('$stateChangeSuccess', hideLoader);
+    }
 
     loadingShowDelay.then(getLoader).then(function(loader) {
-      if (options.hideOnStateChange) {
-        deregisterStateListener = $rootScope.$on('$stateChangeSuccess', hideLoader);
-      }
       return loader.show(options);
     });
 
