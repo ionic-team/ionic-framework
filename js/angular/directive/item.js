@@ -72,10 +72,10 @@ IonicModule
 
           var lastDragOp = listCtrl.listView._lastDragOp || {};
           if (lastDragOp.item === $element[0]) {
-            listCtrl.listView.clearDragEffects();
+            listCtrl.listView.clearDragEffects(true);
           }
-
         }
+
       };
 
     }

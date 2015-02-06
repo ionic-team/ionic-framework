@@ -84,18 +84,27 @@
     return false;
   };
 
-  SlideDrag.prototype.clean = function(e) {
+  SlideDrag.prototype.clean = function(isInstant) {
     var lastDrag = this._lastDrag;
 
     if (!lastDrag || !lastDrag.content) return;
 
     lastDrag.content.style[ionic.CSS.TRANSITION] = '';
     lastDrag.content.style[ionic.CSS.TRANSFORM] = '';
-    ionic.requestAnimationFrame(function() {
-      setTimeout(function() {
-        lastDrag.buttons && lastDrag.buttons.classList.add('invisible');
-      }, 250);
-    });
+    if (isInstant) {
+      lastDrag.content.style[ionic.CSS.TRANSITION] = 'none';
+      makeInvisible();
+      ionic.requestAnimationFrame(function() {
+        lastDrag.content.style[ionic.CSS.TRANSITION] = '';
+      });
+    } else {
+      ionic.requestAnimationFrame(function() {
+        setTimeout(makeInvisible, 250);
+      });
+    }
+    function makeInvisible() {
+      lastDrag.buttons && lastDrag.buttons.classList.add('invisible');
+    }
   };
 
   SlideDrag.prototype.drag = ionic.animationFrameThrottle(function(e) {
@@ -475,9 +484,9 @@
     /**
      * Clear any active drag effects on the list.
      */
-    clearDragEffects: function() {
+    clearDragEffects: function(isInstant) {
       if (this._lastDragOp) {
-        this._lastDragOp.clean && this._lastDragOp.clean();
+        this._lastDragOp.clean && this._lastDragOp.clean(isInstant);
         this._lastDragOp.deregister && this._lastDragOp.deregister();
         this._lastDragOp = null;
       }
