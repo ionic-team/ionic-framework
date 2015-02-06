@@ -113,14 +113,12 @@ function($scope,
   };
 
   self.scrollTop = function(shouldAnimate) {
-    ionic.DomUtil.blurAll();
     self.resize().then(function() {
       scrollView.scrollTo(0, 0, !!shouldAnimate);
     });
   };
 
   self.scrollBottom = function(shouldAnimate) {
-    ionic.DomUtil.blurAll();
     self.resize().then(function() {
       var max = scrollView.getScrollMax();
       scrollView.scrollTo(max.left, max.top, !!shouldAnimate);
@@ -128,35 +126,30 @@ function($scope,
   };
 
   self.scrollTo = function(left, top, shouldAnimate) {
-    ionic.DomUtil.blurAll();
     self.resize().then(function() {
       scrollView.scrollTo(left, top, !!shouldAnimate);
     });
   };
 
   self.zoomTo = function(zoom, shouldAnimate, originLeft, originTop) {
-    ionic.DomUtil.blurAll();
     self.resize().then(function() {
       scrollView.zoomTo(zoom, !!shouldAnimate, originLeft, originTop);
     });
   };
 
   self.zoomBy = function(zoom, shouldAnimate, originLeft, originTop) {
-    ionic.DomUtil.blurAll();
     self.resize().then(function() {
       scrollView.zoomBy(zoom, !!shouldAnimate, originLeft, originTop);
     });
   };
 
   self.scrollBy = function(left, top, shouldAnimate) {
-    ionic.DomUtil.blurAll();
     self.resize().then(function() {
       scrollView.scrollBy(left, top, !!shouldAnimate);
     });
   };
 
   self.anchorScroll = function(shouldAnimate) {
-    ionic.DomUtil.blurAll();
     self.resize().then(function() {
       var hash = $location.hash();
       var elm = hash && $document[0].getElementById(hash);
@@ -180,11 +173,7 @@ function($scope,
   /**
    * @private
    */
-  self._setRefresher = function(
-    refresherScope,
-    refresherElement,
-    refresherMethods
-  ) {
+  self._setRefresher = function(refresherScope, refresherElement, refresherMethods) {
     self.refresher = refresherElement;
     var refresherHeight = self.refresher.clientHeight || 60;
     scrollView.activatePullToRefresh(
