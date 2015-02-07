@@ -61,7 +61,7 @@ function($timeout, $ionicConfig) {
         }
       });
 
-      if(attr.toggleClass) {
+      if (attr.toggleClass) {
         element[0].getElementsByTagName('label')[0].classList.add(attr.toggleClass);
       }
 

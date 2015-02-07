@@ -87,7 +87,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
       slider.enableSlide($scope.$eval($attrs.disableScroll) !== true);
 
       $scope.$watch('activeSlide', function(nv) {
-        if(isDefined(nv)){
+        if (isDefined(nv)) {
           slider.slide(nv);
         }
       });
@@ -134,7 +134,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
 
     link: function($scope, $element, $attr, slideBoxCtrl) {
       // If the pager should show, append it to the slide box
-      if($scope.$eval($scope.showPager) !== false) {
+      if ($scope.$eval($scope.showPager) !== false) {
         var childScope = $scope.$new();
         var pager = jqLite('<ion-pager></ion-pager>');
         $element.append(pager);
@@ -151,7 +151,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
       element.addClass('slider-slide');
       return function($scope, $element, $attr) {
       };
-    },
+    }
   };
 })
 
@@ -165,8 +165,8 @@ function($timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory) {
       var selectPage = function(index) {
         var children = $element[0].children;
         var length = children.length;
-        for(var i = 0; i < length; i++) {
-          if(i == index) {
+        for (var i = 0; i < length; i++) {
+          if (i == index) {
             children[i].classList.add('active');
           } else {
             children[i].classList.remove('active');
