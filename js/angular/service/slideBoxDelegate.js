@@ -99,7 +99,7 @@ IonicModule
    */
   'slidesCount',
   'count',
-  'loop',
+  'loop'
   /**
    * @ngdoc method
    * @name $ionicSlideBoxDelegate#$getByHandle

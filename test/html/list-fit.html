@@ -31,11 +31,10 @@
           ng-click="alert(item)"
           collection-repeat="item in items"
           collection-item-height="85"
-          collection-item-width="'100%'"
-          ng-style="{height: '85px'}"
-          style="left: 0; right: 0;">
+          collection-item-width="'25%'">
           <h2>{{item.text}}</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porttitor diam urna, vitae consectetur lectus aliquet quis.</p>
+          <ion-option-button>DEL</ion-option-button>
         </ion-item>
       </ion-list>
       <ion-infinite-scroll on-infinite="loadMore()"></ion-infinite-scroll>
@@ -44,6 +43,7 @@
       </div>
     </ion-content>
   <script>
+angular.module('ionic').controller('MainCtrl',MainCtrl)
 function MainCtrl($scope, $ionicScrollDelegate, $timeout, $q, $ionicLoading) {
   $scope.items = [];
   function addImage() {

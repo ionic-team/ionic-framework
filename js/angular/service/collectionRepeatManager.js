@@ -310,6 +310,7 @@ function($rootScope, $timeout) {
     renderItem: function(dataIndex, primaryPos, secondaryPos) {
       // Attach an item, and set its transform position to the required value
       var item = this.dataSource.attachItemAtIndex(dataIndex);
+      var itemDimensions = this.dimensions[dataIndex] || {};
       //console.log(dataIndex, item);
       if (item && item.element) {
         if (item.primaryPos !== primaryPos || item.secondaryPos !== secondaryPos) {
@@ -318,6 +319,17 @@ function($rootScope, $timeout) {
           ));
           item.primaryPos = primaryPos;
           item.secondaryPos = secondaryPos;
+        }
+
+        var width = this.isVertical ? itemDimensions.secondarySize : itemDimensions.primarySize;
+        var height = this.isVertical ? itemDimensions.primarySize : itemDimensions.secondarySize;
+        if (item.cssWidth !== width) {
+          item.element[0].style.width = width + 'px';
+          item.cssWidth = width;
+        }
+        if (item.cssHeight !== height) {
+          item.element[0].style.height = height + 'px';
+          item.cssHeight = height;
         }
         // Save the item in rendered items
         this.renderedItems[dataIndex] = item;

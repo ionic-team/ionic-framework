@@ -61,7 +61,6 @@ function($cacheFactory, $parse, $rootScope) {
 
       item.scope = this.scope.$new();
       this.transcludeFn(item.scope, function(clone) {
-        clone.css('position', 'absolute');
         item.element = clone;
       });
       this.transcludeParent.append(item.element);

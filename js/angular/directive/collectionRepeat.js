@@ -18,14 +18,11 @@
  * Here are a few things to keep in mind while using collection-repeat:
  *
  * 1. The data supplied to collection-repeat must be an array.
- * 2. You must explicitly tell the directive what size your items will be in the DOM, using directive attributes.
- * Pixel amounts or percentages are allowed (see below).
- * 3. The elements rendered will be absolutely positioned: be sure to let your CSS work with
- * this (see below).
- * 4. Each collection-repeat list will take up all of its parent scrollView's space.
+ * 2. You must explicitly tell the directive what size your items will be in the DOM, using directive attributes. Pixel amounts or percentages are allowed (see usage examples below).
+ * 3. Each collection-repeat list will take up all of its parent scrollView's space.
  * If you wish to have multiple lists on one page, put each list within its own
  * {@link ionic.directive:ionScroll ionScroll} container.
- * 5. You should not use the ng-show and ng-hide directives on your ion-content/ion-scroll elements that
+ * 4. You should not use the ng-show and ng-hide directives on your ion-content/ion-scroll elements that
  * have a collection-repeat inside.  ng-show and ng-hide apply the `display: none` css rule to the content's
  * style, causing the scrollView to read the width and height of the content as 0.  Resultingly,
  * collection-repeat will render elements that have just been un-hidden incorrectly.
@@ -43,11 +40,10 @@
  * ```html
  * <ion-content ng-controller="ContentCtrl">
  *   <div class="list">
- *     <div class="item my-item"
+ *     <div class="item"
  *       collection-repeat="item in items"
  *       collection-item-width="'100%'"
- *       collection-item-height="getItemHeight(item, $index)"
- *       ng-style="{height: getItemHeight(item, $index)}">
+ *       collection-item-height="getItemHeight(item, $index)">
  *       {% raw %}{{item}}{% endraw %}
  *     </div>
  *   </div>
@@ -66,12 +62,6 @@
  *   };
  * }
  * ```
- * ```css
- * .my-item {
- *   left: 0;
- *   right: 0;
- * }
- * ```
  *
  * #### Grid Usage (three items per row)
  *
@@ -85,13 +75,7 @@
  *   </div>
  * </ion-content>
  * ```
- * Percentage of total visible list dimensions. This example shows a 3 by 3 matrix that fits on the screen (3 rows and 3 colums). Note that dimensions are used in the creation of the element and therefore a measurement of the item cannnot be used as an input dimension.
- * ```css
- * .my-image-item img {
- *   height: 33%;
- *   width: 33%;
- * }
- * ```
+ * This example shows a 3 by 3 matrix that fits on the screen (3 rows and 3 colums).
  *
  * @param {expression} collection-repeat The expression indicating how to enumerate a collection. These
  *   formats are currently supported:
@@ -250,6 +234,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
 
       var requiresRerender;
       function rerenderOnResize() {
+        if ($scope.$$disconnected) return;
         rerender(listExprParsed($scope));
         requiresRerender = (!scrollViewContent.clientWidth && !scrollViewContent.clientHeight);
       }

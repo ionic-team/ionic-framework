@@ -8,7 +8,6 @@
   overflow: hidden;
   margin: auto;
   height: 60px;
-
   .ionic-refresher-content {
     position: absolute;
     bottom: 15px;
@@ -79,6 +78,13 @@
       }
     }
   }
+}
+.overflow-scroll > .scroll{
+  &.overscroll{
+    position:fixed;
+  }
+  -webkit-overflow-scrolling:touch;
+  width:100%;
 }
 
 @-webkit-keyframes refresh-spin {

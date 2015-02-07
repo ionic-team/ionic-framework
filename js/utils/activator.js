@@ -11,6 +11,11 @@
     start: function(e) {
       var self = this;
 
+      var hitX = ionic.tap.pointerCoord(e).x;
+      if (hitX > 0 && hitX < 45) {
+        return;
+      }
+
       // when an element is touched/clicked, it climbs up a few
       // parents to see if it is an .item or .button element
       ionic.requestAnimationFrame(function() {

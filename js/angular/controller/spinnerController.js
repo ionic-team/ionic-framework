@@ -74,7 +74,7 @@
         return {
           y1: spinnerName == 'ios' ? 17 : 12,
           y2: spinnerName == 'ios' ? 29 : 20,
-          t: TRANSLATE32 + ' rotate(' + (30 * i + (i < 6 ? 180: -180)) + ')',
+          t: TRANSLATE32 + ' rotate(' + (30 * i + (i < 6 ? 180 : -180)) + ')',
           a: [{
             fn: function() {
               return {
@@ -380,9 +380,9 @@
 
   function easeInOutCubic(t, c) {
     t /= c / 2;
-    if (t < 1) return 1/2*t*t*t;
+    if (t < 1) return 1 / 2 * t * t * t;
     t -= 2;
-    return 1/2*(t*t*t + 2);
+    return 1 / 2 * (t * t * t + 2);
   }
 
 
@@ -404,7 +404,7 @@
       var container = document.createElement('div');
       createSvgElement('svg', {
         viewBox: '0 0 64 64',
-        g: [ spinners[spinnerName] ]
+        g: [spinners[spinnerName]]
       }, container, spinnerName);
 
       // Specifically for animations to work,

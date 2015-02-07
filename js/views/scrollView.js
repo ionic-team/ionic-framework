@@ -377,6 +377,8 @@ ionic.views.Scroll = ionic.views.View.inherit({
       // The ms interval for triggering scroll events
       scrollEventInterval: 10,
 
+      freeze: false,
+
       getContentWidth: function() {
         return Math.max(self.__content.scrollWidth, self.__content.offsetWidth);
       },
@@ -537,9 +539,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
   /** Callback to execute to start the actual refresh. Call {@link #refreshFinish} when done */
   __refreshStart: null,
-
-  /** Callback to state the progress while pulling to refresh */
-  __refreshPullProgress: null,
 
   /** Zoom level */
   __zoomLevel: 1,
@@ -745,7 +744,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     };
 
     self.touchMove = function(e) {
-      if (!self.__isDown ||
+      if (self.options.freeze || !self.__isDown ||
         (!self.__isDown && e.defaultPrevented) ||
         (e.target.tagName === 'TEXTAREA' && e.target.parentElement.querySelector(':focus')) ) {
         return;
@@ -846,7 +845,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       };
 
       self.mouseMove = function(e) {
-        if (!mousedown || (!mousedown && e.defaultPrevented)) {
+        if (self.options.freeze || !mousedown || (!mousedown && e.defaultPrevented)) {
           return;
         }
 
@@ -938,13 +937,13 @@ ionic.views.Scroll = ionic.views.View.inherit({
     delete self.__indicatorY;
     delete self.options.el;
 
-    self.__callback = self.scrollChildIntoView = self.resetScrollView = angular.noop;
+    self.__callback = self.scrollChildIntoView = self.resetScrollView = NOOP;
 
     self.mouseMove = self.mouseDown = self.mouseUp = self.mouseWheel =
-      self.touchStart = self.touchMove = self.touchEnd = self.touchCancel = angular.noop;
+      self.touchStart = self.touchMove = self.touchEnd = self.touchCancel = NOOP;
 
     self.resize = self.scrollTo = self.zoomTo =
-      self.__scrollingComplete = angular.noop;
+      self.__scrollingComplete = NOOP;
     container = null;
   },
 
@@ -1347,17 +1346,16 @@ ionic.views.Scroll = ionic.views.View.inherit({
    * @param tailCallback {Function} Callback to execute just before the refresher returns to it's original state. This is for zooming out the refresher.
    * @param pullProgressCallback Callback to state the progress while pulling to refresh
    */
-  activatePullToRefresh: function(height, activateCallback, deactivateCallback, startCallback, showCallback, hideCallback, tailCallback, pullProgressCallback) {
+  activatePullToRefresh: function(height, refresherMethods) {
     var self = this;
 
     self.__refreshHeight = height;
-    self.__refreshActivate = function() {ionic.requestAnimationFrame(activateCallback);};
-    self.__refreshDeactivate = function() {ionic.requestAnimationFrame(deactivateCallback);};
-    self.__refreshStart = function() {ionic.requestAnimationFrame(startCallback);};
-    self.__refreshShow = function() {ionic.requestAnimationFrame(showCallback);};
-    self.__refreshHide = function() {ionic.requestAnimationFrame(hideCallback);};
-    self.__refreshTail = function() {ionic.requestAnimationFrame(tailCallback);};
-    self.__refreshPullProgress = pullProgressCallback;
+    self.__refreshActivate = function() {ionic.requestAnimationFrame(refresherMethods.activate);};
+    self.__refreshDeactivate = function() {ionic.requestAnimationFrame(refresherMethods.deactivate);};
+    self.__refreshStart = function() {ionic.requestAnimationFrame(refresherMethods.start);};
+    self.__refreshShow = function() {ionic.requestAnimationFrame(refresherMethods.show);};
+    self.__refreshHide = function() {ionic.requestAnimationFrame(refresherMethods.hide);};
+    self.__refreshTail = function() {ionic.requestAnimationFrame(refresherMethods.tail);};
     self.__refreshTailTime = 100;
     self.__minSpinTime = 600;
   },
@@ -1849,9 +1847,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
                 if (self.__refreshDeactivate) {
                   self.__refreshDeactivate();
                 }
-
-              } else if (!self.__refreshActive && self.__refreshPullProgress) {
-                self.__refreshPullProgress(scrollTop / -self.__refreshHeight);
 
               }
             }

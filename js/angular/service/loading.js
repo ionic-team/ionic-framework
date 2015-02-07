@@ -111,10 +111,8 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
         template: LOADING_TPL,
         appendTo: $ionicBody.get()
       })
-      .then(function(loader) {
-        var self = loader;
-
-        loader.show = function(options) {
+      .then(function(self) {
+        self.show = function(options) {
           var templatePromise = options.templateUrl ?
             $ionicTemplateLoader.load(options.templateUrl) :
             //options.content: deprecated
@@ -122,19 +120,19 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
 
           self.scope = options.scope || self.scope;
 
-          if (!this.isShown) {
+          if (!self.isShown) {
             //options.showBackdrop: deprecated
-            this.hasBackdrop = !options.noBackdrop && options.showBackdrop !== false;
-            if (this.hasBackdrop) {
+            self.hasBackdrop = !options.noBackdrop && options.showBackdrop !== false;
+            if (self.hasBackdrop) {
               $ionicBackdrop.retain();
               $ionicBackdrop.getElement().addClass('backdrop-loading');
             }
           }
 
           if (options.duration) {
-            $timeout.cancel(this.durationTimeout);
-            this.durationTimeout = $timeout(
-              angular.bind(this, this.hide),
+            $timeout.cancel(self.durationTimeout);
+            self.durationTimeout = $timeout(
+              angular.bind(self, self.hide),
               +options.duration
             );
           }
@@ -157,7 +155,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
             if (self.isShown) {
               self.element.addClass('visible');
               ionic.requestAnimationFrame(function() {
-                if(self.isShown) {
+                if (self.isShown) {
                   self.element.addClass('active');
                   $ionicBody.addClass('loading-active');
                 }
@@ -165,13 +163,13 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
             }
           });
 
-          this.isShown = true;
+          self.isShown = true;
         };
-        loader.hide = function() {
+        self.hide = function() {
 
           deregisterBackAction();
-          if (this.isShown) {
-            if (this.hasBackdrop) {
+          if (self.isShown) {
+            if (self.hasBackdrop) {
               $ionicBackdrop.release();
               $ionicBackdrop.getElement().removeClass('backdrop-loading');
             }
@@ -181,11 +179,11 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
               !self.isShown && self.element.removeClass('visible');
             }, 200);
           }
-          $timeout.cancel(this.durationTimeout);
-          this.isShown = false;
+          $timeout.cancel(self.durationTimeout);
+          self.isShown = false;
         };
 
-        return loader;
+        return self;
       });
     }
     return loaderInstance;
@@ -195,14 +193,15 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
     options = extend({}, $ionicLoadingConfig || {}, options || {});
     var delay = options.delay || options.showDelay || 0;
 
-    //If loading.show() was called previously, cancel it and show with our new options
-    loadingShowDelay && $timeout.cancel(loadingShowDelay);
-    loadingShowDelay = $timeout(noop, delay);
+    deregisterStateListener();
+    if (options.hideOnStateChange) {
+      deregisterStateListener = $rootScope.$on('$stateChangeSuccess', hideLoader);
+    }
 
+    //If loading.show() was called previously, cancel it and show with our new options
+    $timeout.cancel(loadingShowDelay);
+    loadingShowDelay = $timeout(noop, delay);
     loadingShowDelay.then(getLoader).then(function(loader) {
-      if (options.hideOnStateChange) {
-        deregisterStateListener = $rootScope.$on('$stateChangeSuccess', hideLoader);
-      }
       return loader.show(options);
     });
 
