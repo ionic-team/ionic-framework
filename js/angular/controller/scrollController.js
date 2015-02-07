@@ -101,44 +101,65 @@ function($scope,
     });
   };
 
-  self.scrollTop = function(shouldAnimate) {
+  self.scrollTop = function(shouldAnimate, avoidBlur) {
+    if (avoidBlur !== true) {
+      ionic.DomUtil.blurAll();
+    }
     self.resize().then(function() {
       scrollView.scrollTo(0, 0, !!shouldAnimate);
     });
   };
 
-  self.scrollBottom = function(shouldAnimate) {
+  self.scrollBottom = function(shouldAnimate, avoidBlur) {
+    if (avoidBlur !== true) {
+      ionic.DomUtil.blurAll();
+    }
     self.resize().then(function() {
       var max = scrollView.getScrollMax();
       scrollView.scrollTo(max.left, max.top, !!shouldAnimate);
     });
   };
 
-  self.scrollTo = function(left, top, shouldAnimate) {
+  self.scrollTo = function(left, top, shouldAnimate, avoidBlur) {
+    if (avoidBlur !== true) {
+      ionic.DomUtil.blurAll();
+    }
     self.resize().then(function() {
       scrollView.scrollTo(left, top, !!shouldAnimate);
     });
   };
 
-  self.zoomTo = function(zoom, shouldAnimate, originLeft, originTop) {
+  self.zoomTo = function(zoom, shouldAnimate, originLeft, originTop, avoidBlur) {
+    if (avoidBlur !== true) {
+      ionic.DomUtil.blurAll();
+    }
     self.resize().then(function() {
       scrollView.zoomTo(zoom, !!shouldAnimate, originLeft, originTop);
     });
   };
 
-  self.zoomBy = function(zoom, shouldAnimate, originLeft, originTop) {
+  self.zoomBy = function(zoom, shouldAnimate, originLeft, originTop, avoidBlur) {
+    if (avoidBlur !== true) {
+      ionic.DomUtil.blurAll();
+    }
     self.resize().then(function() {
       scrollView.zoomBy(zoom, !!shouldAnimate, originLeft, originTop);
     });
   };
 
-  self.scrollBy = function(left, top, shouldAnimate) {
+  self.scrollBy = function(left, top, shouldAnimate, avoidBlur) {
+    if (avoidBlur !== true) {
+      ionic.DomUtil.blurAll();
+    }
     self.resize().then(function() {
       scrollView.scrollBy(left, top, !!shouldAnimate);
     });
   };
 
-  self.anchorScroll = function(shouldAnimate) {
+  self.anchorScroll = function(shouldAnimate, avoidBlur) {
+    if (avoidBlur !== true) {
+      ionic.DomUtil.blurAll();
+    }
     self.resize().then(function() {
       var hash = $location.hash();
       var elm = hash && $document[0].getElementById(hash);
