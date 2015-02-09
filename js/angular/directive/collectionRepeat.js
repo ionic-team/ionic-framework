@@ -227,7 +227,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
               element: (el = jqLite(child)),
               scope: el.isolateScope() || el.scope(),
               isOutside: true
-            })
+            });
           }
         }
 

@@ -323,7 +323,7 @@ function($rootScope, $timeout) {
             primaryPos, secondaryPos
           ));
           item.primaryPos = primaryPos;
-          item.secondaryPos = secondaryPos
+          item.secondaryPos = secondaryPos;
         }
 
         var width = this.isVertical ? itemDimensions.secondarySize : itemDimensions.primarySize;
