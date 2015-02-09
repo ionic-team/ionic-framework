@@ -219,7 +219,7 @@ ion-infinite-scroll {
 .has-subheader {
   top: $bar-height + $bar-subheader-height;
 }
-.has-tabs-top {
+.has-header.has-tabs-top {
   top: $bar-height + $tabs-height;
 }
 .has-header.has-subheader.has-tabs-top {
