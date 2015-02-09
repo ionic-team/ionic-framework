@@ -102,7 +102,7 @@ Originally created by [Adam Bradley](http://twitter.com/adamdbradley), [Ben Sper
 
 ### Commit Conventions
 
-* Uses http://github.com/ajoslin/conventional-changelog conventions
+* Uses these [commit conventions](http://github.com/ajoslin/conventional-changelog)
 
 ### Pushing New Release of Ionic
 
