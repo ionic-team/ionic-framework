@@ -213,7 +213,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         // Loop through all of the children of scrollViewContent. Put every child BEFORE
         // the collectionRepeatNode in `beforeSiblings`, and all of the children AFTER
         // the collectionRepeatNode in `afterSiblings`.
-        for (var i = 0; child = children[i]; i++) {
+        for (var i = 0; (child = children[i]); i++) {
           if (child.hasAttribute('collection-repeat-ignore')) continue;
           if (child.contains(collectionRepeatNode)) {
             // Once we reach the collectionRepeatNode, we're now counting siblings AFTER the repeater.
