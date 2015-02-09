@@ -39,13 +39,20 @@ function run {
     JSON.stringify(b,null,2);" \
     > $BOWER_DIR/bower.json
 
+  echo "-- Copying bower.package.json from project_dir and renaming it to package.json"
+  node -p "var b = require('./bower.package.json');
+    JSON.stringify(b,null,2);" \
+    > $BOWER_DIR/package.json
+
   cd $BOWER_DIR
 
   echo "-- Updating version in ionic-bower to $VERSION"
   replaceJsonProp "bower.json" "version" "$VERSION"
+  replaceJsonProp "package.json" "version" "$VERSION"
 
   echo "-- Updating codename in ionic-bower to $CODENAME"
   replaceJsonProp "bower.json" "codename" "$CODENAME"
+  replaceJsonProp "package.json" "codename" "$CODENAME"
 
   git add -A
   git commit -am "release: v$VERSION"

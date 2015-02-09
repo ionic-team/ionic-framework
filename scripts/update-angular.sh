@@ -21,6 +21,12 @@ function run {
   replaceJsonProp "bower.json" "angular" "$VERSION"
   replaceJsonProp "bower.json" "angular-animate" "$VERSION"
   replaceJsonProp "bower.json" "angular-sanitize" "$VERSION"
+
+  echo "Setting bower.package.json angular versions to $VERSION"
+  
+  replaceJsonProp "bower.package.json" "angular" "$VERSION"
+  replaceJsonProp "bower.package.json" "angular-animate" "$VERSION"
+  replaceJsonProp "bower.package.json" "angular-sanitize" "$VERSION"
 }
 
 source $(dirname $0)/utils.inc
