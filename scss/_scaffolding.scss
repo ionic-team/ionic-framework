@@ -236,6 +236,10 @@ ion-infinite-scroll {
 .has-tabs,
 .bar-footer.has-tabs {
   bottom: $tabs-height;
+  &.pane{
+    bottom: $tabs-height;
+    height:auto;
+  }
 }
 
 .has-footer.has-tabs {
