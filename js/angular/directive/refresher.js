@@ -52,7 +52,8 @@
  * Default: 'ion-android-arrow-down'.
  * @param {string=} spinner The {@link ionic.directive:ionSpinner} icon to display
  * after user lets go of the refresher. The SVG {@link ionic.directive:ionSpinner}
- * is now the default, replacing rotating font icons.
+ * is now the default, replacing rotating font icons. Set to `none` to disable both the
+ * spinner and the icon.
  * @param {string=} refreshing-icon The font icon to display after user lets go of the
  * refresher. This is depreicated in favor of the SVG {@link ionic.directive:ionSpinner}.
  * @param {boolean=} disable-pulling-rotation Disables the rotation animation of the pulling
@@ -76,7 +77,7 @@ IonicModule
         '<div class="text-pulling" ng-bind-html="pullingText"></div>' +
         '<div class="icon-refreshing">' +
           '<ion-spinner ng-if="showSpinner" icon="{{spinner}}"></ion-spinner>' +
-          '<i ng-if="!showSpinner" class="icon {{refreshingIcon}}"></i>' +
+          '<i ng-if="showIcon" class="icon {{refreshingIcon}}"></i>' +
         '</div>' +
         '<div class="text-refreshing" ng-bind-html="refreshingText"></div>' +
       '</div>' +

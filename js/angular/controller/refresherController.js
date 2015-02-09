@@ -24,7 +24,9 @@ IonicModule
       $attrs.$set('pullingIcon', 'ion-android-arrow-down');
     }
 
-    $scope.showSpinner = !isDefined($attrs.refreshingIcon);
+    $scope.showSpinner = !isDefined($attrs.refreshingIcon) && $attrs.spinner != 'none';
+
+    $scope.showIcon = isDefined($attrs.refreshingIcon);
 
     $ionicBind($scope, $attrs, {
       pullingIcon: '@',

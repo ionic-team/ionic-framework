@@ -88,9 +88,14 @@ describe('ionRefresher directive', function() {
     var el = setup();
     expect(el[0].querySelector('ion-spinner')).toBeTruthy();
   });
-  it('should have spinner', function() {
+  it('should allow a custom spinner', function() {
     var el = setup('spinner="android"');
     expect(el[0].querySelector('.spinner-android')).toBeTruthy();
+  });
+  it('should allow spinner to be none', function() {
+    var el = setup('spinner="none"');
+    expect(el[0].querySelector('ion-spinner')).not.toBeTruthy();
+    expect(el[0].querySelector('.icon.icon-refreshing')).not.toBeTruthy();
   });
   it('should allow custom refreshingIcon', function() {
     var el = setup('refreshing-icon="monkey-icon"');
