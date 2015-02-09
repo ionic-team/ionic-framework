@@ -391,6 +391,10 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
           if (hist.stack[x].viewId == viewId) {
             action = 'dupNav';
             direction = DIRECTION_NONE;
+            if (x != 0) {
+              hist.stack[x - 1].forwardViewId = null;
+            }
+            viewHistory.forwardView = null;
             hist.stack[x - 1].forwardViewId = viewHistory.forwardView = null;
             viewHistory.currentView.index = viewHistory.backView.index;
             viewHistory.currentView.backViewId = viewHistory.backView.backViewId;
