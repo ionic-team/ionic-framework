@@ -53,8 +53,10 @@ IonicModule
       }
 
       function onResize() {
-        sideMenuCtrl.activeAsideResizing(true);
-        debouncedCheck();
+        if(!ionic.keyboard.isOpen) {
+          sideMenuCtrl.activeAsideResizing(true);
+          debouncedCheck();
+        }
       }
 
       var debouncedCheck = ionic.debounce(function() {
