@@ -170,7 +170,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
 
           if (viewTransition.shouldAnimate) {
             // attach transitionend events (and fallback timer)
-            enteringEle.on(TRANSITIONEND_EVENT, transitionComplete);
+            enteringEle.on(TRANSITIONEND_EVENT, completeOnTransitionEnd);
             enteringEle.data(DATA_FALLBACK_TIMER, $timeout(transitionComplete, defaultTimeout));
             $ionicClickBlock.show(defaultTimeout);
           }
@@ -209,7 +209,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
               run: viewTransition.run,
               cancel: function(shouldAnimate) {
                 if (shouldAnimate) {
-                  enteringEle.on(TRANSITIONEND_EVENT, cancelTransition);
+                  enteringEle.on(TRANSITIONEND_EVENT, cancelOnTransitionEnd);
                   enteringEle.data(DATA_FALLBACK_TIMER, $timeout(cancelTransition, defaultTimeout));
                   $ionicClickBlock.show(defaultTimeout);
                 } else {
@@ -248,11 +248,17 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             }
           }
 
+          // Make sure that transitionend events bubbling up from children won't fire
+          // transitionComplete. Will only go forward if ev.target == the element listening.
+          function completeOnTransitionEnd(ev) {
+            if (ev.target !== this) return;
+            transitionComplete();
+          }
           function transitionComplete() {
             if (transitionComplete.x) return;
             transitionComplete.x = true;
 
-            enteringEle.off(TRANSITIONEND_EVENT, transitionComplete);
+            enteringEle.off(TRANSITIONEND_EVENT, completeOnTransitionEnd);
             $timeout.cancel(enteringEle.data(DATA_FALLBACK_TIMER));
             leavingEle && $timeout.cancel(leavingEle.data(DATA_FALLBACK_TIMER));
 
@@ -279,10 +285,16 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             nextTransition = nextDirection = enteringView = leavingView = enteringEle = leavingEle = null;
           }
 
+          // Make sure that transitionend events bubbling up from children won't fire
+          // transitionComplete. Will only go forward if ev.target == the element listening.
+          function cancelOnTransitionEnd(ev) {
+            if (ev.target !== this) return;
+            cancelTransition();
+          }
           function cancelTransition() {
             navViewAttr(enteringEle, VIEW_STATUS_CACHED);
             navViewAttr(leavingEle, VIEW_STATUS_ACTIVE);
-            enteringEle.off(TRANSITIONEND_EVENT, cancelTransition);
+            enteringEle.off(TRANSITIONEND_EVENT, cancelOnTransitionEnd);
             $timeout.cancel(enteringEle.data(DATA_FALLBACK_TIMER));
             ionicViewSwitcher.transitionEnd([navViewCtrl]);
           }

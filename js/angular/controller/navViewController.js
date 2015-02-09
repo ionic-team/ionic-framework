@@ -29,6 +29,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
   var transitionDuration, transitionTiming;
 
   self.scope = $scope;
+  self.element = $element;
 
   self.init = function() {
     var navViewName = $attrs.name || '';
@@ -399,7 +400,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
       ionic.offGesture(deregDragStart, 'dragstart', onDragStart);
       ionic.offGesture(deregDrag, 'drag', onDrag);
       ionic.offGesture(deregRelease, 'release', onRelease);
-      viewTransition = associatedNavBarCtrl = null;
+      self.element = viewTransition = associatedNavBarCtrl = null;
     });
   };
 
