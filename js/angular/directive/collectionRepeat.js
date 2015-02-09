@@ -205,27 +205,31 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
       function rerender(value) {
         var beforeSiblings = [];
         var afterSiblings = [];
+        var collectionRepeatNode = $element[0];
         var before = true;
+        var children = scrollViewContent.children;
+        var width, height, el, child;
 
-        forEach(scrollViewContent.children, function(node, i) {
-          if (ionic.DomUtil.elementIsDescendant($element[0], node, scrollViewContent)) {
+        // Loop through all of the children of scrollViewContent. Put every child BEFORE
+        // the collectionRepeatNode in `beforeSiblings`, and all of the children AFTER
+        // the collectionRepeatNode in `afterSiblings`.
+        for (var i = 0; child = children[i]; i++) {
+          if (child.hasAttribute('collection-repeat-ignore')) continue;
+          if (child.contains(collectionRepeatNode)) {
+            // Once we reach the collectionRepeatNode, we're now counting siblings AFTER the repeater.
             before = false;
-          } else {
-            if (node.hasAttribute('collection-repeat-ignore')) return;
-            var width = node.offsetWidth;
-            var height = node.offsetHeight;
-            if (width && height) {
-              var element = jqLite(node);
-              (before ? beforeSiblings : afterSiblings).push({
-                width: node.offsetWidth,
-                height: node.offsetHeight,
-                element: element,
-                scope: element.isolateScope() || element.scope(),
-                isOutside: true
-              });
-            }
+            continue;
           }
-        });
+          if ( (width = child.offsetWidth) && (height = child.offsetHeight) ) {
+            (before ? beforeSiblings : afterSiblings).push({
+              width: width,
+              height: height,
+              element: (el = jqLite(child)),
+              scope: el.isolateScope() || el.scope(),
+              isOutside: true
+            })
+          }
+        }
 
         scrollView.resize();
         dataSource.setData(value, beforeSiblings, afterSiblings);
@@ -233,10 +237,18 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
       }
 
       var requiresRerender;
+      var lastDim = {};
+      var newDim = {};
       function rerenderOnResize() {
-        if ($scope.$$disconnected) return;
-        rerender(listExprParsed($scope));
-        requiresRerender = (!scrollViewContent.clientWidth && !scrollViewContent.clientHeight);
+        newDim = {
+          width: scrollViewContent.clientWidth,
+          height: scrollViewContent.clientHeight
+        };
+        if (!angular.equals(lastDim, newDim) && !$scope.$$disconnected) {
+          rerender(listExprParsed($scope));
+        }
+        requiresRerender = (!newDim.width && !newDim.height);
+        lastDim = newDim;
       }
 
       function viewEnter() {

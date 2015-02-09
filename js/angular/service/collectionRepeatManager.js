@@ -95,19 +95,27 @@ function($rootScope, $timeout) {
        * vertically: Items are laid out with primarySize being height,
        * secondarySize being width.
        */
+      var self = this;
       var primaryPos = 0;
       var secondaryPos = 0;
-      var secondaryScrollSize = this.secondaryScrollSize();
+      var secondaryScrollSize = self.secondaryScrollSize();
       var previousItem;
+      var i, len;
 
-      this.dataSource.beforeSiblings && this.dataSource.beforeSiblings.forEach(calculateSize, this);
-      var beforeSize = primaryPos + (previousItem ? previousItem.primarySize : 0);
+      // Skip past every beforeSibling, we want our list to start after those.
+      for (i = 0, len = (self.dataSource.beforeSiblings || []).length; i < len; i++) {
+        calculateSize(self.dataSource.beforeSiblings[i]);
+      }
+      var beforeSize = primaryPos + (previousItem && previousItem.primarySize || 0);
 
       primaryPos = secondaryPos = 0;
       previousItem = null;
 
-      var dimensions = this.dataSource.dimensions.map(calculateSize, this);
-      var totalSize = primaryPos + (previousItem ? previousItem.primarySize : 0);
+      var dimensions = [];
+      for (i = 0, len = self.dataSource.dimensions.length; i < len; i++) {
+        dimensions.push( calculateSize(self.dataSource.dimensions[i]) );
+      }
+      var totalSize = primaryPos + (previousItem && previousItem.primarySize || 0);
 
       return {
         beforeSize: beforeSize,
@@ -121,12 +129,12 @@ function($rootScope, $timeout) {
         //the dataSource
         var rect = {
           //Get the height out of the dimension object
-          primarySize: this.primaryDimension(dim),
+          primarySize: self.primaryDimension(dim),
           //Max out the item's width to the width of the scrollview
-          secondarySize: Math.min(this.secondaryDimension(dim), secondaryScrollSize)
+          secondarySize: Math.min(self.secondaryDimension(dim), secondaryScrollSize)
         };
 
-        //If this isn't the first item
+        //If self isn't the first item
         if (previousItem) {
           //Move the item's x position over by the width of the previous item
           secondaryPos += previousItem.secondarySize;
@@ -147,6 +155,7 @@ function($rootScope, $timeout) {
         return rect;
       }
     },
+
     resize: function() {
       var result = this.calculateDimensions();
       this.dimensions = result.dimensions;
@@ -217,15 +226,16 @@ function($rootScope, $timeout) {
      * to fully optimize it.
      */
     getIndexForScrollValue: function(i, scrollValue) {
+      var dimensions = this.dimensions;
       var rect;
       //Scrolling up
-      if (scrollValue <= this.dimensions[i].primaryPos) {
-        while ( (rect = this.dimensions[i - 1]) && rect.primaryPos > scrollValue) {
+      if (scrollValue <= dimensions[i].primaryPos) {
+        while ( (rect = dimensions[i - 1]) && rect.primaryPos > scrollValue) {
           i--;
         }
       //Scrolling down
       } else {
-        while ((rect = this.dimensions[i + 1]) && rect.primaryPos < scrollValue) {
+        while ((rect = dimensions[i + 1]) && rect.primaryPos < scrollValue) {
           i++;
         }
       }
@@ -279,15 +289,10 @@ function($rootScope, $timeout) {
         doRender(i, rect);
         i++;
       }
-
       // Render two extra items at the end as a buffer
-      if (self.dimensions[i]) {
-        doRender(i, self.dimensions[i]);
-        i++;
-      }
-      if (self.dimensions[i]) {
-        doRender(i, self.dimensions[i]);
-      }
+      if ( (rect = self.dimensions[i]) ) doRender(i++, rect);
+      if ( (rect = self.dimensions[i]) ) doRender(i, rect);
+
       var renderEndIndex = i;
 
       // Remove any items that were rendered and aren't visible anymore
@@ -318,7 +323,7 @@ function($rootScope, $timeout) {
             primaryPos, secondaryPos
           ));
           item.primaryPos = primaryPos;
-          item.secondaryPos = secondaryPos;
+          item.secondaryPos = secondaryPos
         }
 
         var width = this.isVertical ? itemDimensions.secondarySize : itemDimensions.primarySize;

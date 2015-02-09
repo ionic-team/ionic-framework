@@ -16,6 +16,9 @@
       <a class="button" ng-click="scrollBottom(true)">
         Bottom
       </a>
+      <a class="button" ng-click="openModal()">
+        MODAL
+      </a>
     </ion-header-bar>
     <ion-content>
         <ion-refresher on-refresh="loadMore()"></ion-refresher>
@@ -44,7 +47,7 @@
     </ion-content>
   <script>
 angular.module('ionic').controller('MainCtrl',MainCtrl)
-function MainCtrl($scope, $ionicScrollDelegate, $timeout, $q, $ionicLoading) {
+function MainCtrl($scope, $ionicScrollDelegate, $timeout, $q, $ionicLoading, $ionicModal) {
   $scope.items = [];
   function addImage() {
     var i = $scope.items.length;
@@ -64,6 +67,10 @@ function MainCtrl($scope, $ionicScrollDelegate, $timeout, $q, $ionicLoading) {
       $scope.$broadcast('scroll.infiniteScrollComplete');
       $scope.$broadcast('scroll.refreshComplete');
     }, 1);
+  };
+
+  $scope.openModal = function() {
+    $ionicModal.fromTemplate('<ion-modal-view>hello</ion-modal-view>').show();
   };
 }
   </script>
