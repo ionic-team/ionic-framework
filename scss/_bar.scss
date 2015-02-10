@@ -355,7 +355,12 @@
   background-position: top;
 
   height: $bar-footer-height;
-
+  @if $bar-height != $bar-footer-height {
+    .title {
+      height: $bar-footer-height - 1;
+    }
+  }
+  
   &.item-input-inset {
     position: absolute;
   }
@@ -371,12 +376,24 @@
   display: block;
 
   height: $bar-subheader-height;
+  
+  @if $bar-height != $bar-subheader-height {
+    .title {
+      height: $bar-subheader-height - 1;
+    }
+  }
 }
 .bar-subfooter {
   bottom: $bar-footer-height;
   display: block;
 
   height: $bar-subfooter-height;
+  
+  @if $bar-height != $bar-subfooter-height {
+    .title {
+      height: $bar-subfooter-height - 1;
+    }
+  }
 }
 
 .nav-bar-block {
