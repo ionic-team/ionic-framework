@@ -121,6 +121,7 @@ describe('collectionRepeat directive', function() {
     var el = setup('collection-repeat="item in items" collection-item-height="50"');
     var scrollView = el.controller('$ionicScroll').scrollView;
     spyOn(scrollView, 'resize');
+    spyOn(scrollView, 'scrollTo');
     dataSource.setData.reset();
     repeatManager.resize.reset();
 
@@ -128,16 +129,33 @@ describe('collectionRepeat directive', function() {
     expect(dataSource.setData).toHaveBeenCalledWith(el.scope().items, [], []);
     expect(repeatManager.resize.callCount).toBe(1);
     expect(scrollView.resize.callCount).toBe(1);
+    expect(scrollView.scrollTo).toHaveBeenCalledWith(0, 0, false, null, true);
     el.scope().$apply('items = null');
     expect(dataSource.setData).toHaveBeenCalledWith(null, [], []);
     expect(repeatManager.resize.callCount).toBe(2);
     expect(scrollView.resize.callCount).toBe(2);
+    expect(scrollView.scrollTo).toHaveBeenCalledWith(0, 0, false, null, true);
+  });
+
+  it('should rerender not scroll top of list', function() {
+    var el = setup('collection-repeat="item in items" collection-item-height="50" collection-list-top=false');
+    var scrollView = el.controller('$ionicScroll').scrollView;
+    spyOn(scrollView, 'resize');
+    spyOn(scrollView, 'scrollTo');
+    dataSource.setData.reset();
+    repeatManager.resize.reset();
+
+    el.scope().$apply('items = [ 1,2,3 ]');
+    expect(scrollView.scrollTo).not.toHaveBeenCalled;
+    el.scope().$apply('items = null');
+    expect(scrollView.scrollTo).not.toHaveBeenCalled;
   });
 
   it('should rerender on window resize', function() {
     var el = setup('collection-repeat="item in items" collection-item-height="50"');
     var scrollView = el.controller('$ionicScroll').scrollView;
     spyOn(scrollView, 'resize');
+    spyOn(scrollView, 'scrollTo');
     dataSource.setData.reset();
     repeatManager.resize.reset();
 
@@ -147,6 +165,21 @@ describe('collectionRepeat directive', function() {
     expect(dataSource.setData).toHaveBeenCalledWith(el.scope().items, [], []);
     expect(repeatManager.resize.callCount).toBe(1);
     expect(scrollView.resize.callCount).toBe(1);
+    expect(scrollView.scrollTo).toHaveBeenCalledWith(0, 0, false, null, true);
+  });
+
+  it('should rerender not scroll top on window resize', function() {
+    var el = setup('collection-repeat="item in items" collection-item-height="50" collection-list-top=false');
+    var scrollView = el.controller('$ionicScroll').scrollView;
+    spyOn(scrollView, 'resize');
+    spyOn(scrollView, 'scrollTo');
+    dataSource.setData.reset();
+    repeatManager.resize.reset();
+
+    el.scope().items = [1,2,3];
+
+    ionic.trigger('resize', { target: window });
+    expect(scrollView.scrollTo).not.toHaveBeenCalled;
   });
 
   it('should rerender on scrollCtrl resize', inject(function($timeout) {
