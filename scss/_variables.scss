@@ -680,6 +680,43 @@ $badge-default-bg:                transparent !default;
 $badge-default-text:              #AAAAAA !default;
 
 
+// Spinners
+// -------------------------------
+
+$spinner-width:                   28px !default;
+$spinner-height:                  28px !default;
+
+$spinner-light-stroke:            $light !default;
+$spinner-light-fill:              $light !default;
+
+$spinner-stable-stroke:           $stable !default;
+$spinner-stable-fill:             $stable !default;
+
+$spinner-positive-stroke:         $positive !default;
+$spinner-positive-fill:           $positive !default;
+
+$spinner-calm-stroke:             $calm !default;
+$spinner-calm-fill:               $calm !default;
+
+$spinner-balanced-stroke:         $balanced !default;
+$spinner-balanced-fill:           $balanced !default;
+
+$spinner-assertive-stroke:        $assertive !default;
+$spinner-assertive-fill:          $assertive !default;
+
+$spinner-energized-stroke:        $energized !default;
+$spinner-energized-fill:          $energized !default;
+
+$spinner-royal-stroke:            $royal !default;
+$spinner-royal-fill:              $royal !default;
+
+$spinner-dark-stroke:             $dark !default;
+$spinner-dark-fill:               $dark !default;
+
+$spinner-default-stroke:          $dark !default;
+$spinner-default-fill:            $dark !default;
+
+
 // Z-Indexes
 // -------------------------------
 

@@ -156,6 +156,15 @@
  * <ion-spinner icon="spiral"></ion-spinner>
  * ```
  *
+ * ## Spinner Colors
+ * Like with most of Ionic's other components, spinners can also be styled using
+ * Ionic's standard color naming convention. For example:
+ *
+ * ```html
+ * <ion-spinner class="spinner-energized"></ion-spinner>
+ * ```
+ *
+ *
  * ## Styling SVG with CSS
  * One cool thing about SVG is its ability to be styled with CSS! Some of the properties
  * have different names, for example, SVG uses the term `stroke` instead of `border`, and
@@ -169,10 +178,6 @@
  *   fill: #444;
  * }
  * ```
- *
- * By default, the spinners are designed to be above a light background color. If the spinner
- * is going to be sitting on a dark background color you can add the `.spinner-inverse` CSS
- * class to the directive.
  *
 */
 IonicModule
