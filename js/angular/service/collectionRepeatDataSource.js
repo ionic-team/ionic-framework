@@ -160,7 +160,7 @@ function($cacheFactory, $parse, $rootScope) {
     var i, len, img, src;
     for (i = 0, len = imgNodes.length; i < len; i++) {
       img = imgNodes[i];
-      var src = img.src;
+      src = img.src;
       img.src = ONE_PX_TRANSPARENT_IMG_SRC;
       img.src = src;
     }

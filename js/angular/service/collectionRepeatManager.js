@@ -251,6 +251,7 @@ function($rootScope, $timeout) {
      * the data source to render the correct items into the DOM.
      */
     render: function(shouldRedrawAll) {
+      var i;
       var self = this;
       var isOutOfBounds = (this.currentIndex >= this.dataSource.getLength());
       // We want to remove all the items and redraw everything if we're out of bounds
@@ -276,7 +277,7 @@ function($rootScope, $timeout) {
       renderStartIndex = this.addRowsToIndex(startIndex, -this.bufferSize);
 
       // Keep rendering items, adding them until we are past the end of the visible scroll area
-      var i = renderStartIndex;
+      i = renderStartIndex;
       while ((rect = this.dimensions[i]) && (rect.primaryPos - rect.primarySize < viewportBottom) &&
             this.dimensions[i + 1]) {
         i++;
