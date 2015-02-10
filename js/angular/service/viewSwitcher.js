@@ -76,7 +76,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
                 enteringEle = viewEle;
               }
 
-            } else if (viewEle.data(DATA_ELE_IDENTIFIER) === navViewActiveEleId) {
+            } else if (isDefined(navViewActiveEleId) && viewEle.data(DATA_ELE_IDENTIFIER) === navViewActiveEleId) {
               leavingEle = viewEle;
             }
 
