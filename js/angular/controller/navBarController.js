@@ -433,7 +433,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   };
   function deprecatedWarning(oldMethod, newMethod) {
     var warn = console.warn || console.log;
-    warn && warn('navBarController.' + oldMethod + ' is deprecated, please use ' + newMethod + ' instead');
+    warn && warn.call(console, 'navBarController.' + oldMethod + ' is deprecated, please use ' + newMethod + ' instead');
   }
   // END DEPRECATED -------
 
