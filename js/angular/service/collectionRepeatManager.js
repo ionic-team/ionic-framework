@@ -14,6 +14,9 @@ function($rootScope, $timeout) {
     this.element = options.element;
     this.scrollView = options.scrollView;
 
+    this.bufferSize = options.bufferSize || 2;
+    this.bufferItems = Math.max(this.bufferSize * 10, 50);
+
     this.isVertical = !!this.scrollView.options.scrollingY;
     this.renderedItems = {};
     this.dimensions = [];
@@ -75,6 +78,7 @@ function($rootScope, $timeout) {
       };
     }
   }
+
 
   CollectionRepeatManager.prototype = {
     destroy: function() {
@@ -241,13 +245,13 @@ function($rootScope, $timeout) {
       }
       return i;
     },
+
     /*
      * render: Figure out the scroll position, the index matching it, and then tell
      * the data source to render the correct items into the DOM.
      */
     render: function(shouldRedrawAll) {
       var self = this;
-      var i;
       var isOutOfBounds = (this.currentIndex >= this.dataSource.getLength());
       // We want to remove all the items and redraw everything if we're out of bounds
       // or a flag is passed in.
@@ -260,57 +264,37 @@ function($rootScope, $timeout) {
       }
 
       var rect;
+      // The bottom of the viewport
       var scrollValue = this.scrollValue();
-      // Scroll size = how many pixels are visible in the scroller at one time
-      var scrollSize = this.scrollSize();
-      // We take the current scroll value and add it to the scrollSize to get
-      // what scrollValue the current visible scroll area ends at.
-      var scrollSizeEnd = scrollSize + scrollValue;
+      var viewportBottom = scrollValue + this.scrollSize();
+
       // Get the new start index for scrolling, based on the current scrollValue and
       // the most recent known index
       var startIndex = this.getIndexForScrollValue(this.currentIndex, scrollValue);
 
-      // If we aren't on the first item, add one row of items before so that when the user is
-      // scrolling up he sees the previous item
-      var renderStartIndex = Math.max(startIndex - 1, 0);
-      // Keep adding items to the 'extra row above' until we get to a new row.
-      // This is for the case where there are multiple items on one row above
-      // the current item; we want to keep adding items above until
-      // a new row is reached.
-      while (renderStartIndex > 0 &&
-         (rect = this.dimensions[renderStartIndex]) &&
-         rect.primaryPos === this.dimensions[startIndex - 1].primaryPos) {
-        renderStartIndex--;
-      }
+      // Add two extra rows above the visible area
+      renderStartIndex = this.addRowsToIndex(startIndex, -this.bufferSize);
 
       // Keep rendering items, adding them until we are past the end of the visible scroll area
-      i = renderStartIndex;
-      while ((rect = this.dimensions[i]) && (rect.primaryPos - rect.primarySize < scrollSizeEnd)) {
-        doRender(i, rect);
+      var i = renderStartIndex;
+      while ((rect = this.dimensions[i]) && (rect.primaryPos - rect.primarySize < viewportBottom) &&
+            this.dimensions[i + 1]) {
         i++;
       }
-      // Render two extra items at the end as a buffer
-      if ( (rect = self.dimensions[i]) ) doRender(i++, rect);
-      if ( (rect = self.dimensions[i]) ) doRender(i, rect);
 
-      var renderEndIndex = i;
+      var renderEndIndex = this.addRowsToIndex(i, this.bufferSize);
+
+      for (i = renderStartIndex; i <= renderEndIndex; i++) {
+        rect = this.dimensions[i];
+        self.renderItem(i, rect.primaryPos - self.beforeSize, rect.secondaryPos);
+      }
 
       // Remove any items that were rendered and aren't visible anymore
-      for (var renderIndex in this.renderedItems) {
-        if (renderIndex < renderStartIndex || renderIndex > renderEndIndex) {
-          this.removeItem(renderIndex);
-        }
+      for (i in this.renderedItems) {
+        if (i < renderStartIndex || i > renderEndIndex) this.removeItem(i);
       }
 
       this.setCurrentIndex(startIndex);
-
-      function doRender(dataIndex, rect) {
-        if (dataIndex < self.dataSource.dataStartIndex) {
-          // do nothing
-        } else {
-          self.renderItem(dataIndex, rect.primaryPos - self.beforeSize, rect.secondaryPos);
-        }
-      }
     },
     renderItem: function(dataIndex, primaryPos, secondaryPos) {
       // Attach an item, and set its transform position to the required value
@@ -352,6 +336,27 @@ function($rootScope, $timeout) {
         this.dataSource.detachItem(item);
         delete this.renderedItems[dataIndex];
       }
+    },
+    /*
+     * Given an index, how many items do we have to change to get `rowDelta` number of rows up or down?
+     * Eg if we are at index 0 and there are 2 items on the first row and 3 items on the second row,
+     * to move forward two rows we have to go to index 5.
+     * In that case, addRowsToIndex(dim, 0, 2) == 5.
+     */
+    addRowsToIndex: function(index, rowDelta) {
+      var dimensions = this.dimensions;
+      var direction = rowDelta > 0 ? 1 : -1;
+      var rect;
+      var positionOfRow;
+      rowDelta = Math.abs(rowDelta);
+      do {
+        positionOfRow = dimensions[index] && dimensions[index].primaryPos;
+        while ((rect = dimensions[index]) && rect.primaryPos === positionOfRow &&
+               dimensions[index + direction]) {
+          index += direction;
+        }
+      } while (rowDelta--);
+      return index;
     }
   };
 

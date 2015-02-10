@@ -30,13 +30,14 @@
       </div>
       <ion-list>
         <ion-item
-          class="item-avatar-left item-icon-right"
+          class="item"
           ng-click="alert(item)"
           collection-repeat="item in items"
-          collection-item-height="85"
-          collection-item-width="'25%'">
+          collection-item-height="100"
+          collection-buffer-size="10"
+          collection-refresh-images="true">
+          <img style="height: 80px;" src="http://lorempixel.com/90/90?q={{$index}}">
           <h2>{{item.text}}</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porttitor diam urna, vitae consectetur lectus aliquet quis.</p>
           <ion-option-button>DEL</ion-option-button>
         </ion-item>
       </ion-list>

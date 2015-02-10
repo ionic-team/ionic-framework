@@ -109,6 +109,9 @@
  *
  * @param {expression} collection-item-width The width of the repeated element.  Can be a number (in pixels) or a percentage.
  * @param {expression} collection-item-height The height of the repeated element.  Can be a number (in pixels), or a percentage.
+ * @param {number=} collection-buffer-size The number of rows (or columns in a vertical scroll view) to load above and below the visible items. Default 2. This is good to set higher if you have lots of images to preload. Warning: the larger the buffer size, the worse performance will be. After ten or so you will see a difference.
+ * @param {boolean=} collection-refresh-images Whether to force images to refresh their `src` when an item's element is recycled. If provided, this stops problems with images still showing their old src when item's elements are recycled.
+ * If set to true, this comes with a small performance loss. Default false.
  *
  */
 var COLLECTION_REPEAT_SCROLLVIEW_XY_ERROR = "Cannot create a collection-repeat within a scrollView that is scrollable on both x and y axis.  Choose either x direction or y direction.";
@@ -183,12 +186,15 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         listExpr: listExpr,
         trackByExpr: trackByExpr,
         heightGetter: heightGetter,
-        widthGetter: widthGetter
+        widthGetter: widthGetter,
+        shouldRefreshImages: angular.isDefined($attr.collectionRefreshImages) &&
+          $attr.collectionRefreshImages !== 'false'
       });
       var collectionRepeatManager = new $collectionRepeatManager({
         dataSource: dataSource,
         element: scrollCtrl.$element,
-        scrollView: scrollCtrl.scrollView
+        scrollView: scrollCtrl.scrollView,
+        bufferSize: parseInt($attr.collectionBufferSize)
       });
 
       var listExprParsed = $parse(listExpr);
