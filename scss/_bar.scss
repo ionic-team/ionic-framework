@@ -325,6 +325,13 @@
     border-bottom-width: 0px;
     background-image: none;
   }
+  @if $bar-height != $bar-header-height {
+    height: $bar-header-height;
+    .title {
+      height: $bar-header-height - 1;
+      line-height: $bar-header-height - 1;
+    }
+  }
 }
 
 // Footer at bottom
@@ -338,6 +345,7 @@
   @if $bar-height != $bar-footer-height {
     .title {
       height: $bar-footer-height - 1;
+      line-height: $bar-footer-height - 1;
     }
   }
   
@@ -360,6 +368,7 @@
   @if $bar-height != $bar-subheader-height {
     .title {
       height: $bar-subheader-height - 1;
+      line-height: $bar-subheader-height - 1;
     }
   }
 }
@@ -372,6 +381,7 @@
   @if $bar-height != $bar-subfooter-height {
     .title {
       height: $bar-subfooter-height - 1;
+      line-height: $bar-subfooter-height - 1;
     }
   }
 }
