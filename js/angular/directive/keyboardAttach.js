@@ -49,7 +49,7 @@ IonicModule
       var keyboardHeight = e.keyboardHeight || e.detail.keyboardHeight;
       element.css('bottom', keyboardHeight + "px");
       scrollCtrl = element.controller('$ionicScroll');
-      if ( scrollCtrl ) {
+      if (scrollCtrl) {
         scrollCtrl.scrollView.__container.style.bottom = keyboardHeight + keyboardAttachGetClientHeight(element[0]) + "px";
       }
     }
@@ -60,7 +60,7 @@ IonicModule
       }
 
       element.css('bottom', '');
-      if ( scrollCtrl ) {
+      if (scrollCtrl) {
         scrollCtrl.scrollView.__container.style.bottom = '';
       }
     }

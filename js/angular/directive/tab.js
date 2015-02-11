@@ -43,7 +43,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
 
   //Returns ' key="value"' if value exists
   function attrStr(k, v) {
-    return angular.isDefined(v) ? ' ' + k + '="' + v + '"' : '';
+    return isDefined(v) ? ' ' + k + '="' + v + '"' : '';
   }
   return {
     restrict: 'E',
@@ -178,6 +178,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
         function destroyTab() {
           childScope && childScope.$destroy();
           isTabContentAttached && childElement && childElement.remove();
+          tabContentEle.innerHTML = '';
           isTabContentAttached = childScope = childElement = null;
         }
 

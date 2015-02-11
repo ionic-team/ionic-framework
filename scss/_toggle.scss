@@ -24,6 +24,9 @@
     }
   }
 
+}
+
+.toggle {
   &.toggle-light  {
     @include toggle-style($toggle-on-light-border, $toggle-on-light-bg);
   }
@@ -85,7 +88,8 @@
 /* the handle (circle) thats inside the toggle's track area */
 /* also the handle's appearance when it is "off" */
 .toggle .handle {
-  @include transition($toggle-transition-duration ease-in-out);
+  @include transition($toggle-transition-duration cubic-bezier(0, 1.1, 1, 1.1));
+  @include transition-property((background-color, transform));
   position: absolute;
   display: block;
   width: $toggle-handle-width;
@@ -94,6 +98,7 @@
   background-color: $toggle-handle-off-bg-color;
   top: $toggle-border-width + $toggle-hit-area-expansion;
   left: $toggle-border-width + $toggle-hit-area-expansion;
+  box-shadow: 0 2px 7px rgba(0,0,0,.35), 0 1px 1px rgba(0,0,0,.15);
 
   &:before {
     // used to create a larger (but hidden) hit area to slide the handle
@@ -128,11 +133,66 @@
 .item-toggle .toggle {
   // position the toggle to the right within a list item
   position: absolute;
-  top: $item-padding / 2;
+  top: ($item-padding / 2) + 2;
   right: $item-padding;
   z-index: $z-index-item-toggle;
 }
 
 .toggle input:disabled + .track {
   opacity: .6;
+}
+
+.toggle-small {
+
+  .track {
+    border: 0;
+    width: 34px;
+    height: 15px;
+    background: #9e9e9e;
+  }
+  input:checked + .track {
+    background: rgba(0,150,137,.5);
+  }
+  .handle {
+    top: 2px;
+    left: 4px;
+    width: 21px;
+    height: 21px;
+    box-shadow: 0 2px 5px rgba(0,0,0,.25);
+  }
+  input:checked + .track .handle {
+    @include translate3d(16px, 0, 0);
+    background: rgb(0,150,137);
+  }
+  &.item-toggle .toggle {
+    top: 19px;
+  }
+
+  .toggle-light  {
+    @include toggle-small-style($toggle-on-light-bg);
+  }
+  .toggle-stable  {
+    @include toggle-small-style($toggle-on-stable-bg);
+  }
+  .toggle-positive  {
+    @include toggle-small-style($toggle-on-positive-bg);
+  }
+  .toggle-calm  {
+    @include toggle-small-style($toggle-on-calm-bg);
+  }
+  .toggle-assertive  {
+    @include toggle-small-style($toggle-on-assertive-bg);
+  }
+  .toggle-balanced  {
+    @include toggle-small-style($toggle-on-balanced-bg);
+  }
+  .toggle-energized  {
+    @include toggle-small-style($toggle-on-energized-bg);
+  }
+  .toggle-royal  {
+    @include toggle-small-style($toggle-on-royal-bg);
+  }
+  .toggle-dark  {
+    @include toggle-small-style($toggle-on-dark-bg);
+  }
 }

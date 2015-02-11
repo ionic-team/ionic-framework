@@ -4,6 +4,7 @@ IonicModule
   '$parse',
   '$rootScope',
 function($cacheFactory, $parse, $rootScope) {
+  var ONE_PX_TRANSPARENT_IMG_SRC = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
   function hideWithTransform(element) {
     element.css(ionic.CSS.TRANSFORM, 'translate3d(-2000px,-2000px,0)');
   }
@@ -14,6 +15,7 @@ function($cacheFactory, $parse, $rootScope) {
     this.transcludeFn = options.transcludeFn;
     this.transcludeParent = options.transcludeParent;
     this.element = options.element;
+    this.shouldRefreshImages = options.shouldRefreshImages;
 
     this.keyExpr = options.keyExpr;
     this.listExpr = options.listExpr;
@@ -60,9 +62,9 @@ function($cacheFactory, $parse, $rootScope) {
       var item = {};
 
       item.scope = this.scope.$new();
-      this.transcludeFn(item.scope, function(clone) {
-        clone.css('position', 'absolute');
-        item.element = clone;
+      this.transcludeFn(item.scope, function(el) {
+        item.element = el;
+        item.images = el[0].getElementsByTagName('img');
       });
       this.transcludeParent.append(item.element);
 
@@ -86,9 +88,8 @@ function($cacheFactory, $parse, $rootScope) {
       // Subtract so we start at the beginning of this.data, after
       // this.beforeSiblings.
       index -= this.dataStartIndex;
-
       if (index > this.data.length - 1) {
-        return this.afterSiblings[index - this.dataStartIndex];
+        return this.afterSiblings[index - this.data.length];
       }
 
       var item = this.getItem(index);
@@ -105,6 +106,7 @@ function($cacheFactory, $parse, $rootScope) {
         //We changed the scope, so digest if needed
         if (!$rootScope.$$phase) {
           item.scope.$digest();
+          this.shouldRefreshImages && refreshImages(item.images);
         }
       }
       this.attachedItems[index] = item;
@@ -153,4 +155,15 @@ function($cacheFactory, $parse, $rootScope) {
   };
 
   return CollectionRepeatDataSource;
+
+  function refreshImages(imgNodes) {
+    var i, len, img, src;
+    for (i = 0, len = imgNodes.length; i < len; i++) {
+      img = imgNodes[i];
+      src = img.src;
+      img.src = ONE_PX_TRANSPARENT_IMG_SRC;
+      img.src = src;
+    }
+  }
 }]);
+

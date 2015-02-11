@@ -14,6 +14,9 @@ function($rootScope, $timeout) {
     this.element = options.element;
     this.scrollView = options.scrollView;
 
+    this.bufferSize = options.bufferSize || 2;
+    this.bufferItems = Math.max(this.bufferSize * 10, 50);
+
     this.isVertical = !!this.scrollView.options.scrollingY;
     this.renderedItems = {};
     this.dimensions = [];
@@ -41,7 +44,7 @@ function($rootScope, $timeout) {
         return this.scrollView.__clientWidth;
       };
       this.transformString = function(y, x) {
-        return 'translate3d('+x+'px,'+y+'px,0)';
+        return 'translate3d(' + x + 'px,' + y + 'px,0)';
       };
       this.primaryDimension = function(dim) {
         return dim.height;
@@ -65,7 +68,7 @@ function($rootScope, $timeout) {
         return this.scrollView.__clientHeight;
       };
       this.transformString = function(x, y) {
-        return 'translate3d('+x+'px,'+y+'px,0)';
+        return 'translate3d(' + x + 'px,' + y + 'px,0)';
       };
       this.primaryDimension = function(dim) {
         return dim.width;
@@ -76,11 +79,12 @@ function($rootScope, $timeout) {
     }
   }
 
+
   CollectionRepeatManager.prototype = {
     destroy: function() {
       this.renderedItems = {};
-      this.render = angular.noop;
-      this.calculateDimensions = angular.noop;
+      this.render = noop;
+      this.calculateDimensions = noop;
       this.dimensions = [];
     },
 
@@ -95,19 +99,27 @@ function($rootScope, $timeout) {
        * vertically: Items are laid out with primarySize being height,
        * secondarySize being width.
        */
+      var self = this;
       var primaryPos = 0;
       var secondaryPos = 0;
-      var secondaryScrollSize = this.secondaryScrollSize();
+      var secondaryScrollSize = self.secondaryScrollSize();
       var previousItem;
+      var i, len;
 
-      this.dataSource.beforeSiblings && this.dataSource.beforeSiblings.forEach(calculateSize, this);
-      var beforeSize = primaryPos + (previousItem ? previousItem.primarySize : 0);
+      // Skip past every beforeSibling, we want our list to start after those.
+      for (i = 0, len = (self.dataSource.beforeSiblings || []).length; i < len; i++) {
+        calculateSize(self.dataSource.beforeSiblings[i]);
+      }
+      var beforeSize = primaryPos + (previousItem && previousItem.primarySize || 0);
 
       primaryPos = secondaryPos = 0;
       previousItem = null;
 
-      var dimensions = this.dataSource.dimensions.map(calculateSize, this);
-      var totalSize = primaryPos + (previousItem ? previousItem.primarySize : 0);
+      var dimensions = [];
+      for (i = 0, len = self.dataSource.dimensions.length; i < len; i++) {
+        dimensions.push( calculateSize(self.dataSource.dimensions[i]) );
+      }
+      var totalSize = primaryPos + (previousItem && previousItem.primarySize || 0);
 
       return {
         beforeSize: beforeSize,
@@ -121,12 +133,12 @@ function($rootScope, $timeout) {
         //the dataSource
         var rect = {
           //Get the height out of the dimension object
-          primarySize: this.primaryDimension(dim),
+          primarySize: self.primaryDimension(dim),
           //Max out the item's width to the width of the scrollview
-          secondarySize: Math.min(this.secondaryDimension(dim), secondaryScrollSize)
+          secondarySize: Math.min(self.secondaryDimension(dim), secondaryScrollSize)
         };
 
-        //If this isn't the first item
+        //If self isn't the first item
         if (previousItem) {
           //Move the item's x position over by the width of the previous item
           secondaryPos += previousItem.secondarySize;
@@ -147,6 +159,7 @@ function($rootScope, $timeout) {
         return rect;
       }
     },
+
     resize: function() {
       var result = this.calculateDimensions();
       this.dimensions = result.dimensions;
@@ -154,6 +167,7 @@ function($rootScope, $timeout) {
       this.beforeSize = result.beforeSize;
       this.setCurrentIndex(0);
       this.render(true);
+      this.dataSource.transcludeParent[0].style.height = result.totalSize + "px";
       this.dataSource.setup();
     },
     /*
@@ -216,28 +230,30 @@ function($rootScope, $timeout) {
      * to fully optimize it.
      */
     getIndexForScrollValue: function(i, scrollValue) {
+      var dimensions = this.dimensions;
       var rect;
       //Scrolling up
-      if (scrollValue <= this.dimensions[i].primaryPos) {
-        while ( (rect = this.dimensions[i - 1]) && rect.primaryPos > scrollValue) {
+      if (scrollValue <= dimensions[i].primaryPos) {
+        while ( (rect = dimensions[i - 1]) && rect.primaryPos > scrollValue) {
           i--;
         }
       //Scrolling down
       } else {
-        while ( (rect = this.dimensions[i + 1]) && rect.primaryPos < scrollValue) {
+        while ((rect = dimensions[i + 1]) && rect.primaryPos < scrollValue) {
           i++;
         }
       }
       return i;
     },
+
     /*
      * render: Figure out the scroll position, the index matching it, and then tell
      * the data source to render the correct items into the DOM.
      */
     render: function(shouldRedrawAll) {
-      var self = this;
       var i;
-      var isOutOfBounds = ( this.currentIndex >= this.dataSource.getLength() );
+      var self = this;
+      var isOutOfBounds = (this.currentIndex >= this.dataSource.getLength());
       // We want to remove all the items and redraw everything if we're out of bounds
       // or a flag is passed in.
       if (isOutOfBounds || shouldRedrawAll) {
@@ -249,66 +265,42 @@ function($rootScope, $timeout) {
       }
 
       var rect;
+      // The bottom of the viewport
       var scrollValue = this.scrollValue();
-      // Scroll size = how many pixels are visible in the scroller at one time
-      var scrollSize = this.scrollSize();
-      // We take the current scroll value and add it to the scrollSize to get
-      // what scrollValue the current visible scroll area ends at.
-      var scrollSizeEnd = scrollSize + scrollValue;
+      var viewportBottom = scrollValue + this.scrollSize();
+
       // Get the new start index for scrolling, based on the current scrollValue and
       // the most recent known index
       var startIndex = this.getIndexForScrollValue(this.currentIndex, scrollValue);
 
-      // If we aren't on the first item, add one row of items before so that when the user is
-      // scrolling up he sees the previous item
-      var renderStartIndex = Math.max(startIndex - 1, 0);
-      // Keep adding items to the 'extra row above' until we get to a new row.
-      // This is for the case where there are multiple items on one row above
-      // the current item; we want to keep adding items above until
-      // a new row is reached.
-      while (renderStartIndex > 0 &&
-         (rect = this.dimensions[renderStartIndex]) &&
-         rect.primaryPos === this.dimensions[startIndex - 1].primaryPos) {
-        renderStartIndex--;
-      }
+      // Add two extra rows above the visible area
+      renderStartIndex = this.addRowsToIndex(startIndex, -this.bufferSize);
 
       // Keep rendering items, adding them until we are past the end of the visible scroll area
       i = renderStartIndex;
-      while ((rect = this.dimensions[i]) && (rect.primaryPos - rect.primarySize < scrollSizeEnd)) {
-        doRender(i, rect);
+      while ((rect = this.dimensions[i]) && (rect.primaryPos - rect.primarySize < viewportBottom) &&
+            this.dimensions[i + 1]) {
         i++;
       }
 
-      // Render two extra items at the end as a buffer
-      if (self.dimensions[i]) {
-        doRender(i, self.dimensions[i]);
-        i++;
+      var renderEndIndex = this.addRowsToIndex(i, this.bufferSize);
+
+      for (i = renderStartIndex; i <= renderEndIndex; i++) {
+        rect = this.dimensions[i];
+        self.renderItem(i, rect.primaryPos - self.beforeSize, rect.secondaryPos);
       }
-      if (self.dimensions[i]) {
-        doRender(i, self.dimensions[i]);
-      }
-      var renderEndIndex = i;
 
       // Remove any items that were rendered and aren't visible anymore
-      for (var renderIndex in this.renderedItems) {
-        if (renderIndex < renderStartIndex || renderIndex > renderEndIndex) {
-          this.removeItem(renderIndex);
-        }
+      for (i in this.renderedItems) {
+        if (i < renderStartIndex || i > renderEndIndex) this.removeItem(i);
       }
 
       this.setCurrentIndex(startIndex);
-
-      function doRender(dataIndex, rect) {
-        if (dataIndex < self.dataSource.dataStartIndex) {
-          // do nothing
-        } else {
-          self.renderItem(dataIndex, rect.primaryPos - self.beforeSize, rect.secondaryPos);
-        }
-      }
     },
     renderItem: function(dataIndex, primaryPos, secondaryPos) {
       // Attach an item, and set its transform position to the required value
       var item = this.dataSource.attachItemAtIndex(dataIndex);
+      var itemDimensions = this.dimensions[dataIndex] || {};
       //console.log(dataIndex, item);
       if (item && item.element) {
         if (item.primaryPos !== primaryPos || item.secondaryPos !== secondaryPos) {
@@ -317,6 +309,17 @@ function($rootScope, $timeout) {
           ));
           item.primaryPos = primaryPos;
           item.secondaryPos = secondaryPos;
+        }
+
+        var width = this.isVertical ? itemDimensions.secondarySize : itemDimensions.primarySize;
+        var height = this.isVertical ? itemDimensions.primarySize : itemDimensions.secondarySize;
+        if (item.cssWidth !== width) {
+          item.element[0].style.width = width + 'px';
+          item.cssWidth = width;
+        }
+        if (item.cssHeight !== height) {
+          item.element[0].style.height = height + 'px';
+          item.cssHeight = height;
         }
         // Save the item in rendered items
         this.renderedItems[dataIndex] = item;
@@ -334,6 +337,27 @@ function($rootScope, $timeout) {
         this.dataSource.detachItem(item);
         delete this.renderedItems[dataIndex];
       }
+    },
+    /*
+     * Given an index, how many items do we have to change to get `rowDelta` number of rows up or down?
+     * Eg if we are at index 0 and there are 2 items on the first row and 3 items on the second row,
+     * to move forward two rows we have to go to index 5.
+     * In that case, addRowsToIndex(dim, 0, 2) == 5.
+     */
+    addRowsToIndex: function(index, rowDelta) {
+      var dimensions = this.dimensions;
+      var direction = rowDelta > 0 ? 1 : -1;
+      var rect;
+      var positionOfRow;
+      rowDelta = Math.abs(rowDelta);
+      do {
+        positionOfRow = dimensions[index] && dimensions[index].primaryPos;
+        while ((rect = dimensions[index]) && rect.primaryPos === positionOfRow &&
+               dimensions[index + direction]) {
+          index += direction;
+        }
+      } while (rowDelta--);
+      return index;
     }
   };
 

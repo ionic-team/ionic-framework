@@ -2,7 +2,7 @@ describe('$collectionDataSource service', function() {
 
   beforeEach(module('ionic'));
 
-  function setup(options, template) {
+  function setup(options, template, dataSourceOptions) {
     var dataSource;
     inject(function($rootScope, $compile, $collectionDataSource) {
       options = angular.extend({
@@ -24,6 +24,9 @@ describe('$collectionDataSource service', function() {
       dataSource.dataStartIndex = 0;
       dataSource.beforeSiblings = [];
       dataSource.afterSiblings = [];
+      if (dataSourceOptions && dataSourceOptions.afterSiblings) {
+        dataSource.afterSiblings = dataSourceOptions.afterSiblings;
+      }
     });
     return dataSource;
   }
@@ -85,7 +88,6 @@ describe('$collectionDataSource service', function() {
       expect(item.scope.$parent).toBe(source.scope);
 
       expect(item.element).toBeTruthy();
-      expect(item.element.css('position')).toBe('absolute');
       expect(item.element.scope()).toBe(item.scope);
 
       expect(item.element.parent()[0]).toBe(source.transcludeParent[0]);
@@ -123,7 +125,13 @@ describe('$collectionDataSource service', function() {
     it('should return a value with index values set and put in attachedItems', inject(function($rootScope) {
       var source = setup({
         keyExpr: 'value'
-      });
+      }, null, {afterSiblings:[{
+        width: 50,
+        height: 50,
+        element: angular.element('<div class="tail"></div>'),
+        scope: null,
+        isOutside: true
+      }]});
       source.data = ['a', 'b', 'c'];
       source.dimensions = ['a','b','c'];
       spyOn(source, 'getItem').andCallFake(function() {
@@ -159,6 +167,11 @@ describe('$collectionDataSource service', function() {
         1: item2,
         2: item3
       });
+
+      var item4 = source.attachItemAtIndex(3);
+
+      expect(item4.width).toEqual(50);
+      expect(item4.isOutside).toEqual(true);
     }));
   });
 

@@ -86,6 +86,14 @@ describe('Ionic Platform Service', function() {
     expect(ionic.Platform.version()).toEqual(7.0);
   });
 
+  it('set ios with iPod user agent', function() {
+    ionic.Platform.ua = 'Mozilla/5.0 (iPod touch; CPU OS 8_1_3 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11B511 Safari/9537.53';
+    ionic.Platform.setPlatform(undefined);
+    ionic.Platform.setVersion(undefined);
+    expect(ionic.Platform.platform()).toEqual('ios');
+    expect(ionic.Platform.version()).toEqual(8.1);
+  });
+
   it('should not be iPad from none iPad user agent', function() {
     ionic.Platform.ua = 'Mozilla/5.0 (iPhone; CPU OS 7_0_4 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11B554a Safari/9537.53';
     ionic.Platform.setPlatform(undefined);
@@ -117,6 +125,14 @@ describe('Ionic Platform Service', function() {
     ionic.Platform.setPlatform(undefined);
     ionic.Platform.setVersion(undefined);
     expect(ionic.Platform.isIPad()).toEqual(false);
+  });
+
+  it('is not iOS', function() {
+    ionic.Platform.ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36';
+    ionic.Platform.navigator = {};
+    ionic.Platform.setPlatform(undefined);
+    ionic.Platform.setVersion(undefined);
+    expect(ionic.Platform.isIOS()).toEqual(false);
   });
 
   it('is iOS', function() {

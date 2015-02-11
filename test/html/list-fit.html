@@ -16,6 +16,9 @@
       <a class="button" ng-click="scrollBottom(true)">
         Bottom
       </a>
+      <a class="button" ng-click="openModal()">
+        MODAL
+      </a>
     </ion-header-bar>
     <ion-content>
         <ion-refresher on-refresh="loadMore()"></ion-refresher>
@@ -27,15 +30,15 @@
       </div>
       <ion-list>
         <ion-item
-          class="item-avatar-left item-icon-right"
+          class="item"
           ng-click="alert(item)"
           collection-repeat="item in items"
-          collection-item-height="85"
-          collection-item-width="'100%'"
-          ng-style="{height: '85px'}"
-          style="left: 0; right: 0;">
+          collection-item-height="100"
+          collection-buffer-size="10"
+          collection-refresh-images="true">
+          <img style="height: 80px;" src="http://lorempixel.com/90/90?q={{$index}}">
           <h2>{{item.text}}</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porttitor diam urna, vitae consectetur lectus aliquet quis.</p>
+          <ion-option-button>DEL</ion-option-button>
         </ion-item>
       </ion-list>
       <ion-infinite-scroll on-infinite="loadMore()"></ion-infinite-scroll>
@@ -44,7 +47,8 @@
       </div>
     </ion-content>
   <script>
-function MainCtrl($scope, $ionicScrollDelegate, $timeout, $q, $ionicLoading) {
+angular.module('ionic').controller('MainCtrl',MainCtrl)
+function MainCtrl($scope, $ionicScrollDelegate, $timeout, $q, $ionicLoading, $ionicModal) {
   $scope.items = [];
   function addImage() {
     var i = $scope.items.length;
@@ -64,6 +68,10 @@ function MainCtrl($scope, $ionicScrollDelegate, $timeout, $q, $ionicLoading) {
       $scope.$broadcast('scroll.infiniteScrollComplete');
       $scope.$broadcast('scroll.refreshComplete');
     }, 1);
+  };
+
+  $scope.openModal = function() {
+    $ionicModal.fromTemplate('<ion-modal-view>hello</ion-modal-view>').show();
   };
 }
   </script>

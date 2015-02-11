@@ -150,11 +150,9 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
       self._isShown = true;
       self._deregisterBackButton = $ionicPlatform.registerBackButtonAction(
-        self.hardwareBackButtonClose ? angular.bind(self, self.hide) : angular.noop,
+        self.hardwareBackButtonClose ? angular.bind(self, self.hide) : noop,
         PLATFORM_BACK_BUTTON_PRIORITY_MODAL
       );
-
-      self._isOpenPromise = $q.defer();
 
       ionic.views.Modal.prototype.show.call(self);
 

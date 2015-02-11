@@ -132,10 +132,17 @@ IonicModule
   'anchorScroll',
   /**
    * @ngdoc method
+   * @name $ionicScrollDelegate#freezeScroll
+   * @description Does not allow the scrollView to scroll in either x or y.
+   * @returns {object} If the scroll view is being prevented from scrolling or not.
+   */
+  'freezeScroll',
+  /**
+   * @ngdoc method
    * @name $ionicScrollDelegate#getScrollView
    * @returns {object} The scrollView associated with this delegate.
    */
-  'getScrollView',
+  'getScrollView'
   /**
    * @ngdoc method
    * @name $ionicScrollDelegate#$getByHandle

@@ -225,4 +225,58 @@ describe('Ionic View Switcher', function() {
     expect(switcher.enteringEle().data('$accessed')).toBeDefined();
   }));
 
+  it('should end the transition on transitionend', inject(function($ionicViewSwitcher, $rootScope, $ionicConfig, $compile) {
+    $ionicConfig.views.transition('test');
+    $ionicConfig.transitions.views.test = function() {
+      return { run: angular.noop, shouldAnimate: true };
+    };
+    var afterEnterSpy = jasmine.createSpy('afterEnter');
+    var navViewCtrl = setup();
+    var enteringEle = $compile('<enter>')($rootScope);
+    navViewCtrl.element.append(enteringEle);
+
+    enteringEle.data('$eleId', 'foo');
+    var switcher = $ionicViewSwitcher.create(navViewCtrl, {}, {
+      viewId: 'foo'
+    });
+
+    switcher.loadViewElements({});
+    $rootScope.$on('$ionicView.afterEnter', afterEnterSpy);
+    switcher.transition('forward');
+
+    expect(afterEnterSpy).not.toHaveBeenCalled();
+    enteringEle.triggerHandler('transitionend');
+    expect(afterEnterSpy).toHaveBeenCalled();
+  }));
+
+  it('should not end the transition on bubbled transitionend', inject(function($ionicViewSwitcher, $rootScope, $ionicConfig, $compile) {
+    $ionicConfig.views.transition('test');
+    $ionicConfig.transitions.views.test = function() {
+      return { run: angular.noop, shouldAnimate: true };
+    };
+    var afterEnterSpy = jasmine.createSpy('afterEnter');
+    var navViewCtrl = setup();
+    var enteringEle = $compile('<enter>')($rootScope);
+    navViewCtrl.element.append(enteringEle);
+
+    var enteringEleChild = angular.element('<child>');
+    enteringEle.append(enteringEleChild);
+
+    enteringEle.data('$eleId', 'foo');
+    var switcher = $ionicViewSwitcher.create(navViewCtrl, {}, {
+      viewId: 'foo'
+    });
+
+    switcher.loadViewElements({});
+    $rootScope.$on('$ionicView.afterEnter', afterEnterSpy);
+    switcher.transition('forward');
+
+    expect(afterEnterSpy).not.toHaveBeenCalled();
+    enteringEle.triggerHandler({
+      type: 'transitionend',
+      target: enteringEleChild[0]
+    });
+    expect(afterEnterSpy).not.toHaveBeenCalled();
+  }));
+
 });

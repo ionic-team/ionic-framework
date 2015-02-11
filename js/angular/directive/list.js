@@ -63,6 +63,14 @@
 * </ion-list>
 * ```
 *
+*```javascript
+* app.controller('MyCtrl', function($scope) {
+*  $scope.shouldShowDelete = false;
+*  $scope.shouldShowReorder = false;
+*  $scope.listCanSwipe = true
+* });
+*```
+*
 * @param {string=} delegate-handle The handle used to identify this list with
 * {@link ionic.service:$ionicListDelegate}.
 * @param type {string=} The type of list to use (list-inset or card)
@@ -83,8 +91,8 @@ function($timeout) {
     controller: '$ionicList',
     compile: function($element, $attr) {
       var listEl = jqLite('<div class="list">')
-      .append( $element.contents() )
-      .addClass($attr.type);
+        .append( $element.contents() )
+        .addClass($attr.type);
       $element.append(listEl);
 
       return function($scope, $element, $attrs, ctrls) {

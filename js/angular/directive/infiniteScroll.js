@@ -18,7 +18,11 @@
  * bottom.
  * @param {string=} distance The distance from the bottom that the scroll must
  * reach to trigger the on-infinite expression. Default: 1%.
- * @param {string=} icon The icon to show while loading. Default: 'ion-loading-d'.
+ * @param {string=} spinner The {@link ionic.directive:ionSpinner} to show while loading. The SVG
+ * {@link ionic.directive:ionSpinner} is now the default, replacing rotating font icons.
+ * @param {string=} icon The icon to show while loading. Default: 'ion-load-d'.  This is depreicated
+ * in favor of the SVG {@link ionic.directive:ionSpinner}.
+ * @param {boolean=} immediate-check Whether to check the infinite scroll bounds immediately on load.
  *
  * @usage
  * ```html
@@ -63,83 +67,42 @@
  */
 IonicModule
 .directive('ionInfiniteScroll', ['$timeout', function($timeout) {
-  function calculateMaxValue(distance, maximum, isPercent) {
-    return isPercent ?
-      maximum * (1 - parseFloat(distance,10) / 100) :
-      maximum - parseFloat(distance, 10);
-  }
   return {
     restrict: 'E',
-    require: ['^$ionicScroll', 'ionInfiniteScroll'],
-    template: '<i class="icon {{icon()}} icon-refreshing"></i>',
-    scope: {
-      load: '&onInfinite'
+    require: ['?^$ionicScroll', 'ionInfiniteScroll'],
+    template: function($element, $attrs) {
+      if ($attrs.icon) return '<i class="icon {{icon()}} icon-refreshing {{scrollingType}}"></i>';
+      return '<ion-spinner icon="{{spinner()}}"></ion-spinner>';
     },
-    controller: ['$scope', '$attrs', function($scope, $attrs) {
-      this.isLoading = false;
-      this.scrollView = null; //given by link function
-      this.getMaxScroll = function() {
-        var distance = ($attrs.distance || '2.5%').trim();
-        var isPercent = distance.indexOf('%') !== -1;
-        var maxValues = this.scrollView.getScrollMax();
-        return {
-          left: this.scrollView.options.scrollingX ?
-            calculateMaxValue(distance, maxValues.left, isPercent) :
-            -1,
-          top: this.scrollView.options.scrollingY ?
-            calculateMaxValue(distance, maxValues.top, isPercent) :
-            -1
-        };
-      };
-    }],
+    scope: true,
+    controller: '$ionInfiniteScroll',
     link: function($scope, $element, $attrs, ctrls) {
-      var scrollCtrl = ctrls[0];
       var infiniteScrollCtrl = ctrls[1];
-      var scrollView = infiniteScrollCtrl.scrollView = scrollCtrl.scrollView;
-
-      $scope.icon = function() {
-        return angular.isDefined($attrs.icon) ? $attrs.icon : 'ion-loading-d';
-      };
-
-      var onInfinite = function() {
-        $element[0].classList.add('active');
-        infiniteScrollCtrl.isLoading = true;
-        $scope.load();
-      };
-
-      var finishInfiniteScroll = function() {
-        $element[0].classList.remove('active');
-        $timeout(function() {
-          scrollView.resize();
-          checkBounds();
-        }, 0, false);
-        infiniteScrollCtrl.isLoading = false;
-      };
-
-      $scope.$on('scroll.infiniteScrollComplete', function() {
-        finishInfiniteScroll();
-      });
-
-      $scope.$on('$destroy', function() {
-        if(scrollCtrl && scrollCtrl.$element)scrollCtrl.$element.off('scroll', checkBounds);
-      });
-
-      var checkBounds = ionic.animationFrameThrottle(checkInfiniteBounds);
-
-      //Check bounds on start, after scrollView is fully rendered
-      $timeout(checkBounds, 0, false);
-      scrollCtrl.$element.on('scroll', checkBounds);
-
-      function checkInfiniteBounds() {
-        if (infiniteScrollCtrl.isLoading) return;
-
-        var scrollValues = scrollView.getValues();
-        var maxScroll = infiniteScrollCtrl.getMaxScroll();
-
-        if ((maxScroll.left !== -1 && scrollValues.left >= maxScroll.left) ||
-            (maxScroll.top !== -1 && scrollValues.top >= maxScroll.top)) {
-          onInfinite();
+      var scrollCtrl = infiniteScrollCtrl.scrollCtrl = ctrls[0];
+      var jsScrolling = infiniteScrollCtrl.jsScrolling = !!scrollCtrl;
+      // if this view is not beneath a scrollCtrl, it can't be injected, proceed w/ native scrolling
+      if (jsScrolling) {
+        infiniteScrollCtrl.scrollView = scrollCtrl.scrollView;
+      } else {
+        // grabbing the scrollable element, to determine dimensions, and current scroll pos
+        var scrollEl = ionic.DomUtil.getParentOrSelfWithClass($element[0].parentNode,'overflow-scroll');
+        infiniteScrollCtrl.scrollEl = scrollEl;
+        // if there's no scroll controller, and no overflow scroll div, infinite scroll wont work
+        if (!scrollEl) {
+          throw 'Infinite scroll must be used inside a scrollable div';
         }
+      }
+      //bind to appropriate scroll event
+      if (jsScrolling) {
+        $scope.scrollingType = 'js-scrolling';
+        scrollCtrl.$element.on('scroll', infiniteScrollCtrl.checkBounds);
+      } else {
+        infiniteScrollCtrl.scrollEl.addEventListener('scroll', infiniteScrollCtrl.checkBounds);
+      }
+      // Optionally check bounds on start after scrollView is fully rendered
+      var doImmediateCheck = isDefined($attrs.immediateCheck) ? $scope.$eval($attrs.immediateCheck) : true;
+      if (doImmediateCheck) {
+        $timeout(function() { infiniteScrollCtrl.checkBounds(); });
       }
     }
   };

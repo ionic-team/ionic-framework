@@ -45,14 +45,14 @@ function($scope, $element, $ionicHistory) {
     if (tab.$tabSelected) {
       selectedTab = selectedTabIndex = null;
       tab.$tabSelected = false;
-      (tab.onDeselect || angular.noop)();
+      (tab.onDeselect || noop)();
       tab.$broadcast && tab.$broadcast('$ionicHistory.deselect');
     }
   };
 
   self.select = function(tab, shouldEmitEvent) {
     var tabIndex;
-    if (angular.isNumber(tab)) {
+    if (isNumber(tab)) {
       tabIndex = tab;
       if (tabIndex >= self.tabs.length) return;
       tab = self.tabs[tabIndex];
@@ -83,7 +83,7 @@ function($scope, $element, $ionicHistory) {
 
       //Use a funny name like $tabSelected so the developer doesn't overwrite the var in a child scope
       tab.$tabSelected = true;
-      (tab.onSelect || angular.noop)();
+      (tab.onSelect || noop)();
 
       if (shouldEmitEvent) {
         $scope.$emit('$ionicHistory.change', {

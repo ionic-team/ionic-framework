@@ -37,31 +37,47 @@ IonicModule
     }],
     scope: true,
     compile: function($element, $attrs) {
-      var isAnchor = angular.isDefined($attrs.href) ||
-                     angular.isDefined($attrs.ngHref) ||
-                     angular.isDefined($attrs.uiSref);
+      var isAnchor = isDefined($attrs.href) ||
+                     isDefined($attrs.ngHref) ||
+                     isDefined($attrs.uiSref);
       var isComplexItem = isAnchor ||
         //Lame way of testing, but we have to know at compile what to do with the element
         /ion-(delete|option|reorder)-button/i.test($element.html());
 
-        if (isComplexItem) {
-          var innerElement = jqLite(isAnchor ? ITEM_TPL_CONTENT_ANCHOR : ITEM_TPL_CONTENT);
-          innerElement.append($element.contents());
+      if (isComplexItem) {
+        var innerElement = jqLite(isAnchor ? ITEM_TPL_CONTENT_ANCHOR : ITEM_TPL_CONTENT);
+        innerElement.append($element.contents());
 
-          $element.append(innerElement);
-          $element.addClass('item item-complex');
-        } else {
-          $element.addClass('item');
+        $element.append(innerElement);
+        $element.addClass('item item-complex');
+      } else {
+        $element.addClass('item');
+      }
+
+      return function link($scope, $element, $attrs) {
+        var listCtrl;
+        $scope.$href = function() {
+          return $attrs.href || $attrs.ngHref;
+        };
+        $scope.$target = function() {
+          return $attrs.target || '_self';
+        };
+
+        $scope.$on('$ionic.disconnectScope', cleanupDragOp);
+
+        function cleanupDragOp() {
+          // lazily fetch list parent controller
+          listCtrl || (listCtrl = $element.controller('ionList'));
+          if (!listCtrl || !listCtrl.listView) return;
+
+          var lastDragOp = listCtrl.listView._lastDragOp || {};
+          if (lastDragOp.item === $element[0]) {
+            listCtrl.listView.clearDragEffects(true);
+          }
         }
 
-        return function link($scope, $element, $attrs) {
-          $scope.$href = function() {
-            return $attrs.href || $attrs.ngHref;
-          };
-          $scope.$target = function() {
-            return $attrs.target || '_self';
-          };
-        };
+      };
+
     }
   };
 });

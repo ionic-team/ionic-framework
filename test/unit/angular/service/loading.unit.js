@@ -201,7 +201,6 @@ describe('$ionicLoading service', function() {
       template: ''
     });
     spyOn(loader, 'hide');
-    $timeout.flush();
     $rootScope.$broadcast('$stateChangeSuccess');
     $rootScope.$apply();
     expect(loader.hide).toHaveBeenCalled();
@@ -213,7 +212,6 @@ describe('$ionicLoading service', function() {
       template: ''
     });
     spyOn(loader, 'hide');
-    $timeout.flush();
     $rootScope.$broadcast('$stateChangeSuccess');
     $rootScope.$apply();
     expect(loader.hide).not.toHaveBeenCalled();

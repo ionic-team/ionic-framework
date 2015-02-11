@@ -18,14 +18,11 @@
  * Here are a few things to keep in mind while using collection-repeat:
  *
  * 1. The data supplied to collection-repeat must be an array.
- * 2. You must explicitly tell the directive what size your items will be in the DOM, using directive attributes.
- * Pixel amounts or percentages are allowed (see below).
- * 3. The elements rendered will be absolutely positioned: be sure to let your CSS work with
- * this (see below).
- * 4. Each collection-repeat list will take up all of its parent scrollView's space.
+ * 2. You must explicitly tell the directive what size your items will be in the DOM, using directive attributes. Pixel amounts or percentages are allowed (see usage examples below).
+ * 3. Each collection-repeat list will take up all of its parent scrollView's space.
  * If you wish to have multiple lists on one page, put each list within its own
  * {@link ionic.directive:ionScroll ionScroll} container.
- * 5. You should not use the ng-show and ng-hide directives on your ion-content/ion-scroll elements that
+ * 4. You should not use the ng-show and ng-hide directives on your ion-content/ion-scroll elements that
  * have a collection-repeat inside.  ng-show and ng-hide apply the `display: none` css rule to the content's
  * style, causing the scrollView to read the width and height of the content as 0.  Resultingly,
  * collection-repeat will render elements that have just been un-hidden incorrectly.
@@ -43,11 +40,10 @@
  * ```html
  * <ion-content ng-controller="ContentCtrl">
  *   <div class="list">
- *     <div class="item my-item"
+ *     <div class="item"
  *       collection-repeat="item in items"
  *       collection-item-width="'100%'"
- *       collection-item-height="getItemHeight(item, $index)"
- *       ng-style="{height: getItemHeight(item, $index)}">
+ *       collection-item-height="getItemHeight(item, $index)">
  *       {% raw %}{{item}}{% endraw %}
  *     </div>
  *   </div>
@@ -66,12 +62,6 @@
  *   };
  * }
  * ```
- * ```css
- * .my-item {
- *   left: 0;
- *   right: 0;
- * }
- * ```
  *
  * #### Grid Usage (three items per row)
  *
@@ -85,13 +75,7 @@
  *   </div>
  * </ion-content>
  * ```
- * Percentage of total visible list dimensions. This example shows a 3 by 3 matrix that fits on the screen (3 rows and 3 colums). Note that dimensions are used in the creation of the element and therefore a measurement of the item cannnot be used as an input dimension.
- * ```css
- * .my-image-item img {
- *   height: 33%;
- *   width: 33%;
- * }
- * ```
+ * This example shows a 3 by 3 matrix that fits on the screen (3 rows and 3 colums).
  *
  * @param {expression} collection-repeat The expression indicating how to enumerate a collection. These
  *   formats are currently supported:
@@ -125,6 +109,9 @@
  *
  * @param {expression} collection-item-width The width of the repeated element.  Can be a number (in pixels) or a percentage.
  * @param {expression} collection-item-height The height of the repeated element.  Can be a number (in pixels), or a percentage.
+ * @param {number=} collection-buffer-size The number of rows (or columns in a vertical scroll view) to load above and below the visible items. Default 2. This is good to set higher if you have lots of images to preload. Warning: the larger the buffer size, the worse performance will be. After ten or so you will see a difference.
+ * @param {boolean=} collection-refresh-images Whether to force images to refresh their `src` when an item's element is recycled. If provided, this stops problems with images still showing their old src when item's elements are recycled.
+ * If set to true, this comes with a small performance loss. Default false.
  *
  */
 var COLLECTION_REPEAT_SCROLLVIEW_XY_ERROR = "Cannot create a collection-repeat within a scrollView that is scrollable on both x and y axis.  Choose either x direction or y direction.";
@@ -144,7 +131,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
     terminal: true,
     $$tlb: true,
     require: ['^$ionicScroll', '^?ionNavView'],
-    controller: [function(){}],
+    controller: [function() {}],
     link: function($scope, $element, $attr, ctrls, $transclude) {
       var scrollCtrl = ctrls[0];
       var navViewCtrl = ctrls[1];
@@ -199,12 +186,15 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         listExpr: listExpr,
         trackByExpr: trackByExpr,
         heightGetter: heightGetter,
-        widthGetter: widthGetter
+        widthGetter: widthGetter,
+        shouldRefreshImages: angular.isDefined($attr.collectionRefreshImages) &&
+          $attr.collectionRefreshImages !== 'false'
       });
       var collectionRepeatManager = new $collectionRepeatManager({
         dataSource: dataSource,
         element: scrollCtrl.$element,
         scrollView: scrollCtrl.scrollView,
+        bufferSize: parseInt($attr.collectionBufferSize)
       });
 
       var listExprParsed = $parse(listExpr);
@@ -221,27 +211,31 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
       function rerender(value) {
         var beforeSiblings = [];
         var afterSiblings = [];
+        var collectionRepeatNode = $element[0];
         var before = true;
+        var children = scrollViewContent.children;
+        var width, height, el, child;
 
-        forEach(scrollViewContent.children, function(node, i) {
-          if ( ionic.DomUtil.elementIsDescendant($element[0], node, scrollViewContent) ) {
+        // Loop through all of the children of scrollViewContent. Put every child BEFORE
+        // the collectionRepeatNode in `beforeSiblings`, and all of the children AFTER
+        // the collectionRepeatNode in `afterSiblings`.
+        for (var i = 0; (child = children[i]); i++) {
+          if (child.hasAttribute('collection-repeat-ignore')) continue;
+          if (child.contains(collectionRepeatNode)) {
+            // Once we reach the collectionRepeatNode, we're now counting siblings AFTER the repeater.
             before = false;
-          } else {
-            if (node.hasAttribute('collection-repeat-ignore')) return;
-            var width = node.offsetWidth;
-            var height = node.offsetHeight;
-            if (width && height) {
-              var element = jqLite(node);
-              (before ? beforeSiblings : afterSiblings).push({
-                width: node.offsetWidth,
-                height: node.offsetHeight,
-                element: element,
-                scope: element.isolateScope() || element.scope(),
-                isOutside: true
-              });
-            }
+            continue;
           }
-        });
+          if ( (width = child.offsetWidth) && (height = child.offsetHeight) ) {
+            (before ? beforeSiblings : afterSiblings).push({
+              width: width,
+              height: height,
+              element: (el = jqLite(child)),
+              scope: el.isolateScope() || el.scope(),
+              isOutside: true
+            });
+          }
+        }
 
         scrollView.resize();
         dataSource.setData(value, beforeSiblings, afterSiblings);
@@ -249,9 +243,18 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
       }
 
       var requiresRerender;
+      var lastDim = {};
+      var newDim = {};
       function rerenderOnResize() {
-        rerender(listExprParsed($scope));
-        requiresRerender = (!scrollViewContent.clientWidth && !scrollViewContent.clientHeight);
+        newDim = {
+          width: scrollViewContent.clientWidth,
+          height: scrollViewContent.clientHeight
+        };
+        if (!angular.equals(lastDim, newDim) && !$scope.$$disconnected) {
+          rerender(listExprParsed($scope));
+        }
+        requiresRerender = (!newDim.width && !newDim.height);
+        lastDim = newDim;
       }
 
       function viewEnter() {
@@ -271,7 +274,7 @@ function($collectionRepeatManager, $collectionDataSource, $parse) {
         collectionRepeatManager.destroy();
         dataSource.destroy();
         ionic.off('resize', rerenderOnResize, window);
-        (deregisterViewListener || angular.noop)();
+        (deregisterViewListener || noop)();
       });
     }
   };

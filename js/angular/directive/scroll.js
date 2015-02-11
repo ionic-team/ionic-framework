@@ -74,7 +74,7 @@ function($timeout, $controller, $ionicBind) {
         });
         $scope.direction = $scope.direction || 'y';
 
-        if (angular.isDefined($attr.padding)) {
+        if (isDefined($attr.padding)) {
           $scope.$watch($attr.padding, function(newVal) {
             innerElement.toggleClass('padding', !!newVal);
           });

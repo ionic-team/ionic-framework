@@ -4,5 +4,5 @@ var IonicModule = angular.module('ionic', ['ngAnimate', 'ngSanitize', 'ui.router
   isDefined = angular.isDefined,
   isNumber = angular.isNumber,
   isString = angular.isString,
-  jqLite = angular.element;
-
+  jqLite = angular.element,
+  noop = angular.noop;

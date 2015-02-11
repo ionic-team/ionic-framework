@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.3.6
+ * @license AngularJS v1.3.11
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -302,21 +302,28 @@ ngAriaModule.directive('ngShow', ['$aria', function($aria) {
     }
   };
 })
-.directive('ngClick',['$aria', function($aria) {
+.directive('ngClick',['$aria', '$parse', function($aria, $parse) {
   return {
     restrict: 'A',
-    link: function(scope, elem, attr) {
-      if ($aria.config('tabindex') && !elem.attr('tabindex')) {
-        elem.attr('tabindex', 0);
-      }
+    compile: function(elem, attr) {
+      var fn = $parse(attr.ngClick, /* interceptorFn */ null, /* expensiveChecks */ true);
+      return function(scope, elem, attr) {
+        if ($aria.config('tabindex') && !elem.attr('tabindex')) {
+          elem.attr('tabindex', 0);
+        }
 
-      if ($aria.config('bindKeypress') && !elem.attr('ng-keypress')) {
-        elem.on('keypress', function(event) {
-          if (event.keyCode === 32 || event.keyCode === 13) {
-            scope.$eval(attr.ngClick);
-          }
-        });
-      }
+        if ($aria.config('bindKeypress') && !attr.ngKeypress) {
+          elem.on('keypress', function(event) {
+            if (event.keyCode === 32 || event.keyCode === 13) {
+              scope.$apply(callback);
+            }
+
+            function callback() {
+              fn(scope, { $event: event });
+            }
+          });
+        }
+      };
     }
   };
 }])
