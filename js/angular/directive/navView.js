@@ -184,6 +184,11 @@ function($state, $ionicConfig) {
           // get the current local according to the $state
           var viewLocals = $state.$current && $state.$current.locals[viewData.name];
 
+          // add name of view to the view-container (for styling on a per view basis)
+          if($state.$current.name) {
+            tElement.attr('class', 'view-container' + ' ' + $state.$current.name);
+          }
+
           // do not update THIS nav-view if its is not the container for the given state
           // if the viewLocals are the same as THIS latestLocals, then nothing to do
           if (!viewLocals || (!firstTime && viewLocals === latestLocals)) return;
