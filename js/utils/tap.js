@@ -188,24 +188,19 @@ ionic.tap = {
     ionic.requestAnimationFrame(function() {
       var focusInput = container.querySelector(':focus');
       if (ionic.tap.isTextInput(focusInput)) {
-        var clonedInput = focusInput.parentElement.querySelector('.cloned-text-input');
-        if (!clonedInput) {
-          clonedInput = document.createElement(focusInput.tagName);
-          clonedInput.placeholder = focusInput.placeholder;
-          clonedInput.type = focusInput.type;
-          clonedInput.value = focusInput.value;
-          clonedInput.style = focusInput.style;
-          clonedInput.className = focusInput.className;
-          clonedInput.classList.add('cloned-text-input');
-          clonedInput.readOnly = true;
-          if (focusInput.isContentEditable) {
-            clonedInput.contentEditable = focusInput.contentEditable;
-            clonedInput.innerHTML = focusInput.innerHTML;
-          }
-          focusInput.parentElement.insertBefore(clonedInput, focusInput);
-          focusInput.style.top = focusInput.offsetTop;
-          focusInput.classList.add('previous-input-focus');
+        var clonedInput = focusInput.cloneNode(true);
+        
+        clonedInput.value = focusInput.value;
+        clonedInput.classList.add('cloned-text-input');
+        clonedInput.readOnly = true;
+        if (focusInput.isContentEditable) {
+          clonedInput.contentEditable = focusInput.contentEditable;
+          clonedInput.innerHTML = focusInput.innerHTML;
         }
+        focusInput.parentElement.insertBefore(clonedInput, focusInput);
+        focusInput.classList.add('previous-input-focus');
+
+        clonedInput.scrollTop = focusInput.scrollTop;
       }
     });
   },
