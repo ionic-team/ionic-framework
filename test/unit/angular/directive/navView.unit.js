@@ -570,6 +570,40 @@ describe('Ionic nav-view', function() {
     expect(divs.eq(0).scope().$$disconnected).toBe(false);
   }));
 
+  it('should have connected scopes at the time of lifecycle events', inject(function ($state, $q, $timeout, $compile) {
+    elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
+
+    $state.go(page1State);
+    $q.flush();
+    $timeout.flush();
+
+    var beforeEnterDisconnected, afterEnterDisconnected, beforeLeaveDisconnected, afterLeaveDisconnected;
+    scope.$on('$ionicView.beforeEnter', function(ev, d){
+      beforeEnterDisconnected = elem.find('ion-nav-view').find('div').eq(1).scope().$$disconnected;
+    });
+    scope.$on('$ionicView.afterEnter', function(ev, d){
+      afterEnterDisconnected = elem.find('ion-nav-view').find('div').eq(1).scope().$$disconnected;
+    });
+    scope.$on('$ionicView.beforeLeave', function(ev, d){
+      beforeLeaveDisconnected = elem.find('ion-nav-view').find('div').eq(0).scope().$$disconnected;
+    });
+    scope.$on('$ionicView.afterLeave', function(ev, d){
+      afterLeaveDisconnected = elem.find('ion-nav-view').find('div').eq(0).scope().$$disconnected;
+    });
+
+    $state.go(page2State);
+    $q.flush();
+    $timeout.flush();
+
+    expect(beforeEnterDisconnected).toBeUndefined();
+    expect(afterEnterDisconnected).toBeUndefined();
+    expect(beforeLeaveDisconnected).toBeUndefined();
+    expect(afterLeaveDisconnected).toBeUndefined();
+
+    expect(elem.find('ion-nav-view').find('div').eq(0).scope().$$disconnected).toBe(true);
+    expect(elem.find('ion-nav-view').find('div').eq(1).scope().$$disconnected).toBeUndefined();
+  }));
+
   it('should not cache ion-nav-views that were forward when moving back', inject(function ($state, $q, $timeout, $compile, $ionicConfig) {
     elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
 

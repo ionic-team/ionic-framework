@@ -164,9 +164,13 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
         if (viewElement.data(DATA_DESTROY_ELE) || viewElement.data(DATA_NO_CACHE)) {
           // this element shouldn't stay cached
           $ionicViewSwitcher.destroyViewEle(viewElement);
+
         } else {
           // keep in the DOM, mark as cached
           navViewAttr(viewElement, VIEW_STATUS_CACHED);
+
+          // disconnect the leaving scope
+          ionic.Utils.disconnectScope(viewElement.scope());
         }
       }
     }

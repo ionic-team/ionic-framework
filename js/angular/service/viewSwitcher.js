@@ -102,9 +102,6 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
         },
 
         render: function(registerData, callback) {
-          // disconnect the leaving scope before reconnecting or creating a scope for the entering view
-          leavingEle && ionic.Utils.disconnectScope(leavingEle.scope());
-
           if (alreadyInDom) {
             // it was already found in the DOM, just reconnect the scope
             ionic.Utils.reconnectScope(enteringEle.scope());
