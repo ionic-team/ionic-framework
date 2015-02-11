@@ -241,9 +241,11 @@
   }
   .buttons-left span {
     margin-right: 5px;
+    display: inherit;
   }
   .buttons-right span {
     margin-left: 5px;
+    display: inherit;
   }
 
   // Place the last button in a bar on the right of the bar
