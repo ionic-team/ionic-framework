@@ -209,7 +209,7 @@ ion-infinite-scroll {
 // Note: For these to work, content must come after both bars in the markup
 /* If you change these, change platform.scss as well */
 .has-header {
-  top: $bar-height;
+  top: $bar-header-height;
 }
 // Force no header
 .no-header {
@@ -217,13 +217,13 @@ ion-infinite-scroll {
 }
 
 .has-subheader {
-  top: $bar-height + $bar-subheader-height;
+  top: $bar-header-height + $bar-subheader-height;
 }
 .has-tabs-top {
-  top: $bar-height + $tabs-height;
+  top: $bar-header-height + $tabs-height;
 }
 .has-header.has-subheader.has-tabs-top {
-  top: $bar-height + $bar-subheader-height + $tabs-height;
+  top: $bar-header-height + $bar-subheader-height + $tabs-height;
 }
 
 .has-footer {
