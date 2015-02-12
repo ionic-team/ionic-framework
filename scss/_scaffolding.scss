@@ -98,11 +98,6 @@ body.grade-c {
   @include transform-origin(left, top);
 }
 
-// hide webkit scrollbars
-::-webkit-scrollbar {
-  display:none;
-}
-
 // Scroll bar styles
 .scroll-bar {
   position: absolute;
