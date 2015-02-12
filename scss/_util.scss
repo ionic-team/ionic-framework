@@ -143,6 +143,23 @@
 
 
 /**
+ * Scrollable iFrames
+ * --------------------------------------------------
+ */
+
+.iframe-wrapper {
+  position: fixed;
+  -webkit-overflow-scrolling: touch;
+  overflow: scroll;
+
+  iframe {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+
+/**
  * Rounded
  * --------------------------------------------------
  */
