@@ -45,7 +45,14 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     $element.data('$uiView', viewData);
 
     var deregisterInstance = $ionicNavViewDelegate._registerInstance(self, $attrs.delegateHandle);
-    $scope.$on('$destroy', deregisterInstance);
+    $scope.$on('$destroy', function() {
+      deregisterInstance();
+
+      // ensure no scrolls have been left frozen
+      if (self.isSwipeFreeze) {
+        $ionicScrollDelegate.freezeAllScrolls(false);
+      }
+    });
 
     $scope.$on('$ionicHistory.deselect', self.cacheCleanup);
 
@@ -176,6 +183,11 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     }
 
     navSwipeAttr('');
+
+    // ensure no scrolls have been left frozen
+    if (self.isSwipeFreeze) {
+      $ionicScrollDelegate.freezeAllScrolls(false);
+    }
   };
 
 
@@ -303,7 +315,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
       if (!windowWidth) windowWidth = window.innerWidth;
 
-      freezeScrolls(true);
+      self.isSwipeFreeze = $ionicScrollDelegate.freezeAllScrolls(true);
 
       var registerData = {
         direction: 'back'
@@ -387,7 +399,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
       windowWidth = viewTransition = dragPoints = null;
 
-      freezeScrolls(false);
+      self.isSwipeFreeze = $ionicScrollDelegate.freezeAllScrolls(false);
     }
 
     function getDragX(ev) {
@@ -407,13 +419,6 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
       self.element = viewTransition = associatedNavBarCtrl = null;
     });
   };
-
-
-  function freezeScrolls(freeze) {
-    forEach($ionicScrollDelegate._instances, function(instance) {
-      instance.freezeScroll(freeze);
-    });
-  }
 
 
   function navSwipeAttr(val) {

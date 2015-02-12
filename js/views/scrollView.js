@@ -406,6 +406,13 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     };
 
+    self.freeze = function(shouldFreeze) {
+      if (arguments.length) {
+        self.options.freeze = shouldFreeze;
+      }
+      return self.options.freeze;
+    };
+
     self.setScrollStart = function() {
       ionic.scroll.isScrolling = Math.abs(ionic.scroll.lastTop - self.__scrollTop) > 1;
       clearTimeout(self.scrollTimer);
@@ -872,7 +879,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       self.mouseWheel = ionic.animationFrameThrottle(function(e) {
         var scrollParent = ionic.DomUtil.getParentOrSelfWithClass(e.target, 'ionic-scroll');
-        if (scrollParent === self.__container) {
+        if (!self.options.freeze && scrollParent === self.__container) {
 
           self.hintResize();
           self.scrollBy(

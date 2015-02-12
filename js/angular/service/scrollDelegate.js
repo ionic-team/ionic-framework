@@ -133,10 +133,18 @@ IonicModule
   /**
    * @ngdoc method
    * @name $ionicScrollDelegate#freezeScroll
-   * @description Does not allow the scrollView to scroll in either x or y.
+   * @description Does not allow this scroll view to scroll either x or y.
+   * @param {boolean=} shouldFreeze Should this scroll view be prevented from scrolling or not.
    * @returns {object} If the scroll view is being prevented from scrolling or not.
    */
   'freezeScroll',
+  /**
+   * @ngdoc method
+   * @name $ionicScrollDelegate#freezeAllScrolls
+   * @description Does not allow any of the app's scroll views to scroll either x or y.
+   * @param {boolean=} shouldFreeze Should all app scrolls be prevented from scrolling or not.
+   */
+  'freezeAllScrolls',
   /**
    * @ngdoc method
    * @name $ionicScrollDelegate#getScrollView

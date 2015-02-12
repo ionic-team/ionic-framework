@@ -91,15 +91,16 @@ function($timeout) {
     controller: '$ionicList',
     compile: function($element, $attr) {
       var listEl = jqLite('<div class="list">')
-        .append( $element.contents() )
+        .append($element.contents())
         .addClass($attr.type);
+
       $element.append(listEl);
 
       return function($scope, $element, $attrs, ctrls) {
         var listCtrl = ctrls[0];
         var scrollCtrl = ctrls[1];
 
-        //Wait for child elements to render...
+        // Wait for child elements to render...
         $timeout(init);
 
         function init() {
@@ -111,9 +112,9 @@ function($timeout) {
             onReorder: function(el, oldIndex, newIndex) {
               var itemScope = jqLite(el).scope();
               if (itemScope && itemScope.$onReorder) {
-                //Make sure onReorder is called in apply cycle,
-                //but also make sure it has no conflicts by doing
-                //$evalAsync
+                // Make sure onReorder is called in apply cycle,
+                // but also make sure it has no conflicts by doing
+                // $evalAsync
                 $timeout(function() {
                   itemScope.$onReorder(oldIndex, newIndex);
                 });
@@ -125,7 +126,7 @@ function($timeout) {
           });
 
           $scope.$on('$destroy', function() {
-            if(listView) {
+            if (listView) {
               listView.deregister && listView.deregister();
               listView = null;
             }

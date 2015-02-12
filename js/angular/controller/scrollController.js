@@ -158,9 +158,12 @@ function($scope,
     });
   };
 
-  self.freezeScroll = function(shouldFreeze) {
-    if (arguments.length) scrollView.options.freeze = shouldFreeze;
-    return scrollView.options.freeze;
+  self.freezeScroll = scrollView.freeze;
+
+  self.freezeAllScrolls = function(shouldFreeze) {
+    for (var i = 0; i < $ionicScrollDelegate._instances.length; i++) {
+      $ionicScrollDelegate._instances[x].freezeScroll(shouldFreeze);
+    }
   };
 
 
