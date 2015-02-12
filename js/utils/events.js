@@ -144,10 +144,10 @@
      * @param {ionic.Gesture} gesture The gesture that should be removed.
      * @param {string} eventType The gesture event to remove the listener for.
      * @param {function(e)} callback The listener to remove.
-     
+
      */
     offGesture: function(gesture, type, callback) {
-      gesture.off(type, callback);
+      gesture && gesture.off(type, callback);
     },
 
     handlePopState: function(event) {}
