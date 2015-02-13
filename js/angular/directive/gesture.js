@@ -36,6 +36,23 @@ GESTURE_DIRECTIVES.forEach(function(name) {
  * <button on-tap="onTap()" class="button">Test</button>
  * ```
  */
+ 
+ 
+ /**
+ * @ngdoc directive
+ * @name onDoubleTap
+ * @module ionic
+ * @restrict A
+ *
+ * @description
+ * Quick double touch at a location. If the interval between both touches goes
+ * longer than 250ms it is no longer a double tap gesture.
+ *
+ * @usage
+ * ```html
+ * <button on-double-tap="onDoubleTap()" class="button">Test</button>
+ * ```
+ */
 
 
 /**
