@@ -59,6 +59,48 @@ describe('$ionicPopup service', function() {
       }));
       expect(popup.element.hasClass('mycustomclass')).toBe(true);
     });
+    it('should use the specified template for the whole popup', function() {
+      var popupTemplate = '<div>my popup</div>';
+      var popup = TestUtil.unwrapPromise($ionicPopup._createPopup({
+        popupTemplate: popupTemplate
+      }));
+      var renderedTemplate, holder = document.createElement("div");
+      holder.appendChild(popup.element[0].cloneNode(true));
+      renderedTemplate = holder.innerHTML;
+      expect(renderedTemplate).toBe(popupTemplate);
+    });
+
+    it('should remove .popup-head if no title nor subtitle is set', function() {
+      var popup = TestUtil.unwrapPromise($ionicPopup._createPopup());
+      var popupBody = popup.element[0].querySelector('.popup-head');
+      expect(popupBody).toBe(null);
+    });
+    it('should keep .popup-head if title is set', function() {
+      var popup = TestUtil.unwrapPromise($ionicPopup._createPopup({
+        title: 'I like'
+      }));
+      var popupButtons = popup.element[0].querySelector('.popup-head');
+      expect(popupButtons).not.toBe(null);
+    });
+    it('should keep .popup-head if subtitle is set', function() {
+      var popup = TestUtil.unwrapPromise($ionicPopup._createPopup({
+        subTitle: 'Turtles'
+      }));
+      var popupButtons = popup.element[0].querySelector('.popup-head');
+      expect(popupButtons).not.toBe(null);
+    });
+    it('should remove .popup-buttons if no buttons are set', function() {
+      var popup = TestUtil.unwrapPromise($ionicPopup._createPopup());
+      var popupButtons = popup.element[0].querySelector('.popup-buttons');
+      expect(popupButtons).toBe(null);
+    });
+    it('should keep .popup-buttons if a button is set', function() {
+      var popup = TestUtil.unwrapPromise($ionicPopup._createPopup({
+        buttons: [{ text: 'Cancel' }]
+      }));
+      var popupButtons = popup.element[0].querySelector('.popup-buttons');
+      expect(popupButtons).not.toBe(null);
+    });
 
     describe('$buttonTapped', function() {
       var popup;
