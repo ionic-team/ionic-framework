@@ -126,4 +126,16 @@ describe('$ionicRefresh Controller', function() {
     ctrl.getRefresherDomMethods().hide();
     expect(refresher.classList.contains('invisible')).toBe(true);
   });
+
+  it('should cleanup when done', function() {
+    setup();
+
+    expect(ctrl.__getScrollChild()).not.toBe(null);
+    expect(ctrl.__getScrollParent()).not.toBe(null);
+
+    scope.$broadcast('$destroy');
+
+    expect(ctrl.__getScrollChild()).toBe(null);
+    expect(ctrl.__getScrollParent()).toBe(null);
+  });
 });
