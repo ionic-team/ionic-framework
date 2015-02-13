@@ -162,7 +162,7 @@ function($scope,
 
   self.freezeAllScrolls = function(shouldFreeze) {
     for (var i = 0; i < $ionicScrollDelegate._instances.length; i++) {
-      $ionicScrollDelegate._instances[x].freezeScroll(shouldFreeze);
+      $ionicScrollDelegate._instances[i].freezeScroll(shouldFreeze);
     }
   };
 
