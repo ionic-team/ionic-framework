@@ -406,14 +406,14 @@ IonicModule
     }
 
     function enter(ctrlA, ctrlB, step) {
-      if (!ctrlA) return;
+      if (!ctrlA || !ctrlB) return;
       var titleX = (ctrlA.titleTextX() + ctrlA.titleWidth()) * (1 - step);
       var backTextX = (ctrlB && (ctrlB.titleTextX() - ctrlA.backButtonTextLeft()) * (1 - step)) || 0;
       setStyles(ctrlA, step, titleX, backTextX);
     }
 
     function leave(ctrlA, ctrlB, step) {
-      if (!ctrlA) return;
+      if (!ctrlA || !ctrlB) return;
       var titleX = (-(ctrlA.titleTextX() - ctrlB.backButtonTextLeft()) - (ctrlA.titleLeftRight())) * step;
       setStyles(ctrlA, 1 - step, titleX, 0);
     }
