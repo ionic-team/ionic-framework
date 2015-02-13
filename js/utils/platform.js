@@ -413,8 +413,6 @@
     window.addEventListener("load", onWindowLoad, false);
   }
 
-  window.addEventListener("load", onWindowLoad, false);
-
   function onPlatformReady() {
     // the device is all set to go, init our own stuff then fire off our event
     self.isReady = true;
