@@ -35,11 +35,9 @@
  * ```js
  * angular.module('testApp', ['ionic'])
  * .controller('MyController', function($scope, $ionicModal) {
- *   $ionicModal.fromTemplateUrl('my-modal.html', {
+ *   $scope.modal = $ionicModal.fromTemplateUrl('my-modal.html', {
  *     scope: $scope,
  *     animation: 'slide-in-up'
- *   }).then(function(modal) {
- *     $scope.modal = modal;
  *   });
  *   $scope.openModal = function() {
  *     $scope.modal.show();
