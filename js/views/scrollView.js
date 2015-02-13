@@ -811,6 +811,24 @@ ionic.views.Scroll = ionic.views.View.inherit({
       }
     };
 
+    self.mouseWheel = ionic.animationFrameThrottle(function(e) {
+      var scrollParent = ionic.DomUtil.getParentOrSelfWithClass(e.target, 'ionic-scroll');
+      if (!self.options.freeze && scrollParent === self.__container) {
+
+        self.hintResize();
+        self.scrollBy(
+          (e.wheelDeltaX || e.deltaX || 0) / self.options.wheelDampen,
+          (-e.wheelDeltaY || e.deltaY || 0) / self.options.wheelDampen
+        );
+
+        self.__fadeScrollbars('in');
+        clearTimeout(self.__wheelHideBarTimeout);
+        self.__wheelHideBarTimeout = setTimeout(function() {
+          self.__fadeScrollbars('out');
+        }, 100);
+      }
+    });
+
     if ('ontouchstart' in window) {
       // Touch Events
       container.addEventListener("touchstart", self.touchStart, false);
@@ -826,6 +844,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       document.addEventListener("pointermove", self.touchMove, false);
       document.addEventListener("pointerup", self.touchEnd, false);
       document.addEventListener("pointercancel", self.touchEnd, false);
+      document.addEventListener("wheel", self.mouseWheel, false);
 
     } else if (window.navigator.msPointerEnabled) {
       // IE10, WP8 (Pointer Events)
@@ -834,6 +853,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       document.addEventListener("MSPointerMove", self.touchMove, false);
       document.addEventListener("MSPointerUp", self.touchEnd, false);
       document.addEventListener("MSPointerCancel", self.touchEnd, false);
+      document.addEventListener("wheel", self.mouseWheel, false);
 
     } else {
       // Mouse Events
@@ -876,24 +896,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
         mousedown = false;
       };
-
-      self.mouseWheel = ionic.animationFrameThrottle(function(e) {
-        var scrollParent = ionic.DomUtil.getParentOrSelfWithClass(e.target, 'ionic-scroll');
-        if (!self.options.freeze && scrollParent === self.__container) {
-
-          self.hintResize();
-          self.scrollBy(
-            (e.wheelDeltaX || e.deltaX || 0) / self.options.wheelDampen,
-            (-e.wheelDeltaY || e.deltaY || 0) / self.options.wheelDampen
-          );
-
-          self.__fadeScrollbars('in');
-          clearTimeout(self.__wheelHideBarTimeout);
-          self.__wheelHideBarTimeout = setTimeout(function() {
-            self.__fadeScrollbars('out');
-          }, 100);
-        }
-      });
 
       container.addEventListener("mousedown", self.mouseDown, false);
       if(self.options.preventDefault) container.addEventListener("mousemove", self.mouseMoveBubble, false);
