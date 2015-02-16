@@ -315,6 +315,12 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
                 scope.$emit('$ionicView.leave', leavingData);
               }
             }
+
+          } else if (scope && leavingData && leavingData.viewId) {
+            scope.$emit('$ionicNavView.' + step + 'Leave', leavingData);
+            if (step == 'after') {
+              scope.$emit('$ionicNavView.leave', leavingData);
+            }
           }
         },
 

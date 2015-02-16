@@ -82,6 +82,18 @@ function($ionicTabsDelegate, $ionicConfig, $ionicHistory) {
           $scope.$hasTabsTop = isTabsTop && !isHidden;
         });
 
+        function emitLifecycleEvent(ev, data) {
+          ev.stopPropagation();
+          var selectedTab = tabsCtrl.selectedTab();
+          if (selectedTab) {
+            selectedTab.$emit(ev.name.replace('NavView', 'View'), data);
+          }
+        }
+
+        $scope.$on('$ionicNavView.beforeLeave', emitLifecycleEvent);
+        $scope.$on('$ionicNavView.afterLeave', emitLifecycleEvent);
+        $scope.$on('$ionicNavView.leave', emitLifecycleEvent);
+
         $scope.$on('$destroy', function() {
           // variable to inform child tabs that they're all being blown away
           // used so that while destorying an individual tab, each one

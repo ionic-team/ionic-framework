@@ -920,6 +920,96 @@ describe('Ionic nav-view', function() {
     expect(leave.transitionId).toEqual(4);
   }));
 
+  it('should emit tab leaving events', inject(function ($state, $q, $timeout, $compile, $ionicConfig) {
+    var beforeLeave, afterLeave, leave;
+    scope.$on('$ionicView.beforeLeave', function(ev, d){
+      beforeLeave = d;
+    });
+    scope.$on('$ionicView.afterLeave', function(ev, d){
+      afterLeave = d;
+    });
+    scope.$on('$ionicView.leave', function(ev, d){
+      leave = d;
+    });
+
+    elem.append($compile('<ion-nav-view name="root"></ion-nav-view>')(scope));
+
+    $state.go(tab1page1State);
+    $q.flush();
+    $timeout.flush();
+
+    $state.go(tab1page2State);
+    $q.flush();
+    $timeout.flush();
+
+    expect(beforeLeave.stateName).toEqual('tabAbstract.tab1page1');
+    expect(afterLeave.stateName).toEqual('tabAbstract.tab1page1');
+    expect(leave.stateName).toEqual('tabAbstract.tab1page1');
+
+    $state.go(tab2page1State);
+    $q.flush();
+    $timeout.flush();
+
+    expect(beforeLeave.stateName).toEqual('tabAbstract.tab1page2');
+    expect(afterLeave.stateName).toEqual('tabAbstract.tab1page2');
+    expect(leave.stateName).toEqual('tabAbstract.tab1page2');
+
+    $state.go(tab3page1State);
+    $q.flush();
+    $timeout.flush();
+
+    expect(beforeLeave.stateName).toEqual('tabAbstract.tab2page1');
+    expect(afterLeave.stateName).toEqual('tabAbstract.tab2page1');
+    expect(leave.stateName).toEqual('tabAbstract.tab2page1');
+
+    $state.go(tab1page1State);
+    $q.flush();
+    $timeout.flush();
+
+    expect(beforeLeave.stateName).toEqual('tabAbstract.tab3page1');
+    expect(afterLeave.stateName).toEqual('tabAbstract.tab3page1');
+    expect(leave.stateName).toEqual('tabAbstract.tab3page1');
+  }));
+
+  it('should emit tab $ionicView.unloaded event', inject(function ($state, $q, $timeout, $compile, $ionicConfig) {
+    $ionicConfig.views.maxCache(0);
+
+    var unloadedEvent;
+    scope.$on('$ionicView.unloaded', function(ev, d){
+      unloadedEvent = d;
+    });
+
+    elem.append($compile('<ion-nav-view name="root"></ion-nav-view>')(scope));
+
+    $state.go(tab1page1State);
+    $q.flush();
+    $timeout.flush();
+
+    $state.go(tab1page2State);
+    $q.flush();
+    $timeout.flush();
+
+    expect(unloadedEvent.stateName).toEqual('tabAbstract.tab1page1');
+
+    $state.go(tab2page1State);
+    $q.flush();
+    $timeout.flush();
+
+    expect(unloadedEvent.stateName).toEqual('tabAbstract.tab1page2');
+
+    $state.go(tab3page1State);
+    $q.flush();
+    $timeout.flush();
+
+    expect(unloadedEvent.stateName).toEqual('tabAbstract.tab2page1');
+
+    $state.go(tab1page1State);
+    $q.flush();
+    $timeout.flush();
+
+    expect(unloadedEvent.stateName).toEqual('tabAbstract.tab3page1');
+  }));
+
   it('should clear ion-nav-view cache', inject(function ($state, $q, $timeout, $compile, $ionicHistory) {
     elem.append($compile('<div><ion-nav-view></ion-nav-view></div>')(scope));
 
