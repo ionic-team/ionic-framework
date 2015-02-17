@@ -4,7 +4,7 @@
  * @module ionic
  * @delegate ionic.service:$ionicTabsDelegate
  * @restrict E
- * @codepen KbrzJ
+ * @codepen odqCz
  *
  * @description
  * Powers a multi-tabbed interface with a Tab Bar and a set of "pages" that can be tabbed
