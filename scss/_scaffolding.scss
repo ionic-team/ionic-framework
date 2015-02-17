@@ -87,11 +87,6 @@ body.grade-c {
   margin-top: -1px;
 }
 
-// hide scrollbars on desktop. they take up witdh of the scroll area
-body:not(.platform-webview) .scroll-content::-webkit-scrollbar{
-  display:none;
-}
-
 /**
  * Scroll is the scroll view component available for complex and custom
  * scroll view functionality.
