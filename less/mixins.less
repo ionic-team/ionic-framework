@@ -150,7 +150,7 @@
 .toggle-small-style(@on-bg-color) {
   // the track when the toggle is "on"
   & input:checked + .track {
-    background-color: rgba(@on-bg-color, .5);
+    background-color: rgba(red(@on-bg-color),green(@on-bg-color),blue(@on-bg-color), .5);
   }
   & input:checked + .track .handle {
     background-color: @on-bg-color;

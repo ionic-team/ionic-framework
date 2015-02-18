@@ -14,7 +14,7 @@
 
 .item-radio .item-content {
   /* give some room to the right for the checkmark icon */
-  padding-right: $item-padding * 4;
+  padding-right: @item-padding * 4;
 }
 
 .item-radio .radio-icon {
@@ -22,9 +22,9 @@
   position: absolute;
   top: 0;
   right: 0;
-  z-index: $z-index-item-radio;
+  z-index: @z-index-item-radio;
   visibility: hidden;
-  padding: $item-padding - 2;
+  padding: @item-padding - 2;
   height: 100%;
   font-size: 24px;
 }

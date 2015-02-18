@@ -10,17 +10,17 @@
 
 .toggle {
   // set the color defaults
-  @include toggle-style($toggle-on-default-border, $toggle-on-default-bg);
+  .toggle-style(@toggle-on-default-border, @toggle-on-default-bg);
 
   position: relative;
   display: inline-block;
   pointer-events: auto;
-  margin: -$toggle-hit-area-expansion;
-  padding: $toggle-hit-area-expansion;
+  margin: -@toggle-hit-area-expansion;
+  padding: @toggle-hit-area-expansion;
 
   &.dragging {
     .handle {
-      background-color: $toggle-handle-dragging-bg-color !important;
+      background-color: @toggle-handle-dragging-bg-color !important;
     }
   }
 
@@ -28,31 +28,31 @@
 
 .toggle {
   &.toggle-light  {
-    @include toggle-style($toggle-on-light-border, $toggle-on-light-bg);
+    .toggle-style(@toggle-on-light-border, @toggle-on-light-bg);
   }
   &.toggle-stable  {
-    @include toggle-style($toggle-on-stable-border, $toggle-on-stable-bg);
+    .toggle-style(@toggle-on-stable-border, @toggle-on-stable-bg);
   }
   &.toggle-positive  {
-    @include toggle-style($toggle-on-positive-border, $toggle-on-positive-bg);
+    .toggle-style(@toggle-on-positive-border, @toggle-on-positive-bg);
   }
   &.toggle-calm  {
-    @include toggle-style($toggle-on-calm-border, $toggle-on-calm-bg);
+    .toggle-style(@toggle-on-calm-border, @toggle-on-calm-bg);
   }
   &.toggle-assertive  {
-    @include toggle-style($toggle-on-assertive-border, $toggle-on-assertive-bg);
+    .toggle-style(@toggle-on-assertive-border, @toggle-on-assertive-bg);
   }
   &.toggle-balanced  {
-    @include toggle-style($toggle-on-balanced-border, $toggle-on-balanced-bg);
+    .toggle-style(@toggle-on-balanced-border, @toggle-on-balanced-bg);
   }
   &.toggle-energized  {
-    @include toggle-style($toggle-on-energized-border, $toggle-on-energized-bg);
+    .toggle-style(@toggle-on-energized-border, @toggle-on-energized-bg);
   }
   &.toggle-royal  {
-    @include toggle-style($toggle-on-royal-border, $toggle-on-royal-bg);
+   .toggle-style(@toggle-on-royal-border, @toggle-on-royal-bg);
   }
   &.toggle-dark  {
-    @include toggle-style($toggle-on-dark-border, $toggle-on-dark-bg);
+   .toggle-style(@toggle-on-dark-border, @toggle-on-dark-bg);
   }
 }
 
@@ -63,17 +63,17 @@
 
 /* the track appearance when the toggle is "off" */
 .toggle .track {
-  @include transition-timing-function(ease-in-out);
-  @include transition-duration($toggle-transition-duration);
-  @include transition-property((background-color, border));
+  transition-timing-function: ease-in-out;
+  transition-duration: @toggle-transition-duration;
+  transition-property: background-color, border;
 
   display: inline-block;
   box-sizing: border-box;
-  width: $toggle-width;
-  height: $toggle-height;
-  border: solid $toggle-border-width $toggle-off-border-color;
-  border-radius: $toggle-border-radius;
-  background-color: $toggle-off-bg-color;
+  width: @toggle-width;
+  height: @toggle-height;
+  border: solid @toggle-border-width @toggle-off-border-color;
+  border-radius: @toggle-border-radius;
+  background-color: @toggle-off-bg-color;
   content: ' ';
   cursor: pointer;
   pointer-events: none;
@@ -88,32 +88,32 @@
 /* the handle (circle) thats inside the toggle's track area */
 /* also the handle's appearance when it is "off" */
 .toggle .handle {
-  @include transition($toggle-transition-duration cubic-bezier(0, 1.1, 1, 1.1));
-  @include transition-property((background-color, transform));
+  transition: @toggle-transition-duration cubic-bezier(0, 1.1, 1, 1.1);
+  transition-property: background-color, transform;
   position: absolute;
   display: block;
-  width: $toggle-handle-width;
-  height: $toggle-handle-height;
-  border-radius: $toggle-handle-radius;
-  background-color: $toggle-handle-off-bg-color;
-  top: $toggle-border-width + $toggle-hit-area-expansion;
-  left: $toggle-border-width + $toggle-hit-area-expansion;
+  width: @toggle-handle-width;
+  height: @toggle-handle-height;
+  border-radius: @toggle-handle-radius;
+  background-color: @toggle-handle-off-bg-color;
+  top: @toggle-border-width + @toggle-hit-area-expansion;
+  left: @toggle-border-width + @toggle-hit-area-expansion;
   box-shadow: 0 2px 7px rgba(0,0,0,.35), 0 1px 1px rgba(0,0,0,.15);
 
   &:before {
     // used to create a larger (but hidden) hit area to slide the handle
     position: absolute;
     top: -4px;
-    left: ( ($toggle-handle-width / 2) * -1) - 8;
-    padding: ($toggle-handle-height / 2) + 5 ($toggle-handle-width + 7);
+    left: ( (@toggle-handle-width / 2) * -1) - 8;
+    padding: (@toggle-handle-height / 2) + 5 (@toggle-handle-width + 7);
     content: " ";
   }
 }
 
 .toggle input:checked + .track .handle {
   // the handle when the toggle is "on"
-  @include translate3d($toggle-width - $toggle-handle-width - ($toggle-border-width * 2), 0, 0);
-  background-color: $toggle-handle-on-bg-color;
+  transform: translate3d(@toggle-width - @toggle-handle-width - (@toggle-border-width * 2), 0, 0);
+  background-color: @toggle-handle-on-bg-color;
 }
 
 .item-toggle.active {
@@ -123,7 +123,7 @@
 .item-toggle,
 .item-toggle.item-complex .item-content {
   // make sure list item content have enough padding on right to fit the toggle
-  padding-right: ($item-padding * 3) + $toggle-width;
+  padding-right: (@item-padding * 3) + @toggle-width;
 }
 
 .item-toggle.item-complex {
@@ -133,9 +133,9 @@
 .item-toggle .toggle {
   // position the toggle to the right within a list item
   position: absolute;
-  top: ($item-padding / 2) + 2;
-  right: $item-padding;
-  z-index: $z-index-item-toggle;
+  top: (@item-padding / 2) + 2;
+  right: @item-padding;
+  z-index: @z-index-item-toggle;
 }
 
 .toggle input:disabled + .track {
@@ -161,7 +161,7 @@
     box-shadow: 0 2px 5px rgba(0,0,0,.25);
   }
   input:checked + .track .handle {
-    @include translate3d(16px, 0, 0);
+    transform: translate3d(16px, 0, 0);
     background: rgb(0,150,137);
   }
   &.item-toggle .toggle {
@@ -169,30 +169,30 @@
   }
 
   .toggle-light  {
-    @include toggle-small-style($toggle-on-light-bg);
+    .toggle-small-style(@toggle-on-light-bg);
   }
   .toggle-stable  {
-    @include toggle-small-style($toggle-on-stable-bg);
+    .toggle-small-style(@toggle-on-stable-bg);
   }
   .toggle-positive  {
-    @include toggle-small-style($toggle-on-positive-bg);
+    .toggle-small-style(@toggle-on-positive-bg);
   }
   .toggle-calm  {
-    @include toggle-small-style($toggle-on-calm-bg);
+    .toggle-small-style(@toggle-on-calm-bg);
   }
   .toggle-assertive  {
-    @include toggle-small-style($toggle-on-assertive-bg);
+    .toggle-small-style(@toggle-on-assertive-bg);
   }
   .toggle-balanced  {
-    @include toggle-small-style($toggle-on-balanced-bg);
+    .toggle-small-style(@toggle-on-balanced-bg);
   }
   .toggle-energized  {
-    @include toggle-small-style($toggle-on-energized-bg);
+    .toggle-small-style(@toggle-on-energized-bg);
   }
   .toggle-royal  {
-    @include toggle-small-style($toggle-on-royal-bg);
+    .toggle-small-style(@toggle-on-royal-bg);
   }
   .toggle-dark  {
-    @include toggle-small-style($toggle-on-dark-bg);
+    .toggle-small-style(@toggle-on-dark-bg);
   }
 }

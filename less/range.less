@@ -12,22 +12,22 @@
   padding-right: 2px;
   padding-left: 1px;
   width: auto;
-  height: $range-slider-height + 15;
+  height: @range-slider-height + 15;
   outline: none;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $range-default-track-bg), color-stop(100%, $range-default-track-bg));
-  background: linear-gradient(to right, $range-default-track-bg 0%, $range-default-track-bg 100%);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, @range-default-track-bg), color-stop(100%, @range-default-track-bg));
+  background: linear-gradient(to right, @range-default-track-bg 0%, @range-default-track-bg 100%);
   background-position: center;
-  background-size: 99% $range-track-height;
+  background-size: 99% @range-track-height;
   background-repeat: no-repeat;
   -webkit-appearance: none;
 
   &::-webkit-slider-thumb {
     position: relative;
-    width: $range-slider-width;
-    height: $range-slider-height;
-    border-radius: $range-slider-border-radius;
-    background-color: $toggle-handle-off-bg-color;
-    box-shadow: $range-slider-box-shadow;
+    width: @range-slider-width;
+    height: @range-slider-height;
+    border-radius: @range-slider-border-radius;
+    background-color: @toggle-handle-off-bg-color;
+    box-shadow: @range-slider-box-shadow;
     cursor: pointer;
     -webkit-appearance: none;
     border: 0;
@@ -36,11 +36,11 @@
   &::-webkit-slider-thumb:before {
     /* what creates the colorful line on the left side of the slider */
     position: absolute;
-    top: ($range-slider-height / 2) - ($range-track-height / 2);
+    top: (@range-slider-height / 2) - (@range-track-height / 2);
     left: -2001px;
     width: 2000px;
-    height: $range-track-height;
-    background: $dark;
+    height: @range-track-height;
+    background: @dark;
     content: ' ';
   }
 
@@ -58,56 +58,56 @@
 }
 
 .range {
-  @include display-flex();
-  @include align-items(center);
+  display: flex;
+  align-items: center;
   padding: 2px 11px;
 
   &.range-light {
-    input { @include range-style($range-light-track-bg); }
+    input { .range-style(@range-light-track-bg); }
   }
   &.range-stable {
-    input { @include range-style($range-stable-track-bg); }
+    input { .range-style(@range-stable-track-bg); }
   }
   &.range-positive {
-    input { @include range-style($range-positive-track-bg); }
+    input { .range-style(@range-positive-track-bg); }
   }
   &.range-calm {
-    input { @include range-style($range-calm-track-bg); }
+    input { .range-style(@range-calm-track-bg); }
   }
   &.range-balanced {
-    input { @include range-style($range-balanced-track-bg); }
+    input { .range-style(@range-balanced-track-bg); }
   }
   &.range-assertive {
-    input { @include range-style($range-assertive-track-bg); }
+    input { .range-style(@range-assertive-track-bg); }
   }
   &.range-energized {
-    input { @include range-style($range-energized-track-bg); }
+    input { .range-style(@range-energized-track-bg); }
   }
   &.range-royal {
-    input { @include range-style($range-royal-track-bg); }
+    input { .range-style(@range-royal-track-bg); }
   }
   &.range-dark {
-    input { @include range-style($range-dark-track-bg); }
+    input { .range-style(@range-dark-track-bg); }
   }
 }
 
 .range .icon {
-  @include flex(0);
+  flex: 0;
   display: block;
-  min-width: $range-icon-size;
+  min-width: @range-icon-size;
   text-align: center;
-  font-size: $range-icon-size;
+  font-size: @range-icon-size;
 }
 
 .range input {
-  @include flex(1);
+  flex: 1;
   display: block;
   margin-right: 10px;
   margin-left: 10px;
 }
 
 .range-label {
-  @include flex(0, 0, auto);
+  flex: 0, 0, auto;
   display: block;
   white-space: nowrap;
 }

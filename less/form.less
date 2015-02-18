@@ -5,23 +5,23 @@
 
 // Make all forms have space below them
 form {
-  margin: 0 0 $line-height-base;
+  margin: 0 0 @line-height-base;
 }
 
 // Groups of fields with labels on top (legends)
 legend {
   display: block;
-  margin-bottom: $line-height-base;
+  margin-bottom: @line-height-base;
   padding: 0;
   width: 100%;
-  border: $input-border-width solid $input-border;
-  color: $dark;
-  font-size: $font-size-base * 1.5;
-  line-height: $line-height-base * 2;
+  border: @input-border-width solid @input-border;
+  color: @dark;
+  font-size: @font-size-base * 1.5;
+  line-height: @line-height-base * 2;
 
   small {
-    color: $stable;
-    font-size: $line-height-base * .75;
+    color: @stable;
+    font-size: @line-height-base * .75;
   }
 }
 
@@ -31,13 +31,13 @@ input,
 button,
 select,
 textarea {
-  @include font-shorthand($font-size-base, normal, $line-height-base); // Set size, weight, line-height here
+  .font-shorthand(@font-size-base, normal, @line-height-base); // Set size, weight, line-height here
 }
 input,
 button,
 select,
 textarea {
-  font-family: $font-family-base; // And only set font-family here for those that need it (note the missing label element)
+  font-family: @font-family-base; // And only set font-family here for those that need it (note the missing label element)
 }
 
 
@@ -45,23 +45,23 @@ textarea {
 // -------------------------------
 
 .item-input {
-  @include display-flex();
-  @include align-items(center);
+  display: flex;
+  align-items: center;
   position: relative;
   overflow: hidden;
   padding: 6px 0 5px 16px;
 
   input {
-    @include border-radius(0);
-    @include flex(1, 0, 220px);
-    @include appearance(none);
+    border-radius: 0;
+    flex: 1, 0, 220px;
+    appearance: none;
     margin: 0;
     padding-right: 24px;
     background-color: transparent;
   }
 
   .button .icon {
-    @include flex(0, 0, 24px);
+    flex: 0, 0, 24px;
     position: static;
     display: inline-block;
     height: auto;
@@ -70,9 +70,9 @@ textarea {
   }
 
   .button-bar {
-    @include border-radius(0);
-    @include flex(1, 0, 220px);
-    @include appearance(none);
+    border-radius: 0;
+    flex: 1, 0, 220px;
+    appearance: none;
   }
 
   .icon {
@@ -81,18 +81,18 @@ textarea {
 }
 
 .item-input-inset {
-  @include display-flex();
-  @include align-items(center);
+  display: flex;
+  align-items: center;
   position: relative;
   overflow: hidden;
-  padding: ($item-padding / 3) * 2;
+  padding: (@item-padding / 3) * 2;
 }
 
 .item-input-wrapper {
-  @include display-flex();
-  @include flex(1, 0);
-  @include align-items(center);
-  @include border-radius(4px);
+  display: flex;
+  flex: 1, 0;
+  align-items: center;
+  border-radius: 4px;
   padding-right: 8px;
   padding-left: 8px;
   background: #eee;
@@ -106,16 +106,16 @@ textarea {
 }
 
 .item-input-wrapper ~ .button {
-  margin-left: ($item-padding / 3) * 2;
+  margin-left: (@item-padding / 3) * 2;
 }
 
 .input-label {
-  @include flex(1, 0, 100px);
+  flex: 1, 0, 100px;
   display: table;
   padding: 7px 10px 7px 0px;
   max-width: 200px;
   width: 35%;
-  color: $input-label-color;
+  color: @input-label-color;
   font-size: 16px;
 }
 
@@ -143,14 +143,14 @@ textarea {
 
 .item-stacked-label input,
 .item-stacked-label textarea {
-  @include border-radius(2px);
+  border-radius: 2px;
   padding: 4px 8px 3px 0;
   border: none;
-  background-color: $input-bg;
+  background-color: @input-bg;
 }
 .item-stacked-label input {
   overflow: hidden;
-  height: $line-height-computed + $font-size-base + 12px;
+  height: @line-height-computed + @font-size-base + 12px;
 }
 
 .item-floating-label {
@@ -163,12 +163,12 @@ textarea {
     padding: 5px 0 0 0;
     opacity: 0;
     top: 10px;
-    @include transition(opacity .15s ease-in, top .2s linear);
+    transition: opacity .15s ease-in, top .2s linear;
 
     &.has-input {
       opacity: 1;
       top: 0;
-      @include transition(opacity .15s ease-in, top .2s linear);
+      transition: opacity .15s ease-in, top .2s linear;
     }
   }
 }
@@ -196,11 +196,11 @@ input[type="color"] {
   display: block;
   padding-top: 2px;
   padding-left: 0;
-  height: $line-height-computed + $font-size-base;
-  color: $input-color;
+  height: @line-height-computed + @font-size-base;
+  color: @input-color;
   vertical-align: middle;
-  font-size: $font-size-base;
-  line-height: $font-size-base + 2;
+  font-size: @font-size-base;
+  line-height: @font-size-base + 2;
 }
 
 .platform-ios,
@@ -223,7 +223,7 @@ input[type="color"] {
 
 textarea {
   padding-left: 0;
-  @include placeholder($input-color-placeholder, -3px);
+  .placeholder(@input-color-placeholder, -3px);
 }
 
 // Reset height since textareas have rows
@@ -272,7 +272,7 @@ input[type="checkbox"] {
 
 // Set the height of file to match text inputs
 input[type="file"] {
-  line-height: $input-height-base;
+  line-height: @input-height-base;
 }
 
 // Text input classes to hide text caret during scroll
@@ -289,7 +289,7 @@ input[type="file"] {
 // -------------------------------
 input,
 textarea {
-  @include placeholder();
+  .placeholder();
 }
 
 
@@ -303,7 +303,7 @@ textarea[disabled],
 input[readonly]:not(.cloned-text-input),
 textarea[readonly]:not(.cloned-text-input),
 select[readonly] {
-  background-color: $input-bg-disabled;
+  background-color: @input-bg-disabled;
   cursor: not-allowed;
 }
 // Explicitly reset the colors here

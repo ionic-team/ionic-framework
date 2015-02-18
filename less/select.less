@@ -8,15 +8,15 @@
   position: relative;
 
   select {
-    @include appearance(none);
+    appearance: none;
     position: absolute;
     top: 0;
     right: 0;
-    padding: ($item-padding - 2) ($item-padding * 3) ($item-padding) $item-padding;
+    padding: (@item-padding - 2) (@item-padding * 3) (@item-padding) @item-padding;
     max-width: 65%;
 
     border: none;
-    background: $item-default-bg;
+    background: @item-default-bg;
     color: #333;
 
     // hack to hide default dropdown arrow in FF
@@ -24,7 +24,7 @@
     text-overflow: '';
 
     white-space: nowrap;
-    font-size: $font-size-base;
+    font-size: @font-size-base;
 
     cursor: pointer;
     direction: rtl; // right align the select text
@@ -42,7 +42,7 @@
   &:after {
     position: absolute;
     top: 50%;
-    right: $item-padding;
+    right: @item-padding;
     margin-top: -3px;
     width: 0;
     height: 0;
@@ -55,80 +55,80 @@
   }
   &.item-light {
     select{
-      background:$item-light-bg;
-      color:$item-light-text;
+      background:@item-light-bg;
+      color:@item-light-text;
     }
   }
   &.item-stable {
     select{
-      background:$item-stable-bg;
-      color:$item-stable-text;
+      background:@item-stable-bg;
+      color:@item-stable-text;
     }
     &:after, .input-label{
-      color:darken($item-stable-border,30%);
+      color:darken(@item-stable-border,30%);
     }
   }
   &.item-positive {
     select{
-      background:$item-positive-bg;
-      color:$item-positive-text;
+      background:@item-positive-bg;
+      color:@item-positive-text;
     }
     &:after, .input-label{
-      color:$item-positive-text;
+      color:@item-positive-text;
     }
   }
   &.item-calm {
     select{
-      background:$item-calm-bg;
-      color:$item-calm-text;
+      background:@item-calm-bg;
+      color:@item-calm-text;
     }
     &:after, .input-label{
-      color:$item-calm-text;
+      color:@item-calm-text;
     }
   }
   &.item-assertive {
     select{
-      background:$item-assertive-bg;
-      color:$item-assertive-text;
+      background:@item-assertive-bg;
+      color:@item-assertive-text;
     }
     &:after, .input-label{
-      color:$item-assertive-text;
+      color:@item-assertive-text;
     }
   }
   &.item-balanced {
     select{
-      background:$item-balanced-bg;
-      color:$item-balanced-text;
+      background:@item-balanced-bg;
+      color:@item-balanced-text;
     }
     &:after, .input-label{
-      color:$item-balanced-text;
+      color:@item-balanced-text;
     }
   }
   &.item-energized  {
     select{
-      background:$item-energized-bg;
-      color:$item-energized-text;
+      background:@item-energized-bg;
+      color:@item-energized-text;
     }
     &:after, .input-label{
-      color:$item-energized-text;
+      color:@item-energized-text;
     }
   }
   &.item-royal {
     select{
-      background:$item-royal-bg;
-      color:$item-royal-text;
+      background:@item-royal-bg;
+      color:@item-royal-text;
     }
     &:after, .input-label{
-      color:$item-royal-text;
+      color:@item-royal-text;
     }
   }
   &.item-dark  {
     select{
-      background:$item-dark-bg;
-      color:$item-dark-text;
+      background:@item-dark-bg;
+      color:@item-dark-text;
     }
     &:after, .input-label{
-      color:$item-dark-text;
+      color:@item-dark-text;
     }
   }
 }
