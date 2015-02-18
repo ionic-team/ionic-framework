@@ -1,0 +1,269 @@
+
+/**
+ * Scaffolding
+ * --------------------------------------------------
+ */
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow: hidden;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
+}
+
+body,
+.ionic-body {
+  
+  -webkit-touch-callout: none;
+  -webkit-font-smoothing: antialiased;
+  text-size-adjust: none; 
+  .tap-highlight-transparent();
+  user-select: none;
+
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+
+  margin: 0;
+  padding: 0;
+
+  color: @base-color;
+  word-wrap: break-word;
+  font-size: @font-size-base;
+  font-family: @font-family-base;
+  line-height: @line-height-computed;
+  text-rendering: optimizeLegibility;
+  -webkit-backface-visibility: hidden;
+  -webkit-user-drag: none;
+  -ms-content-zooming: none;
+}
+
+body.grade-b,
+body.grade-c {
+  // disable optimizeLegibility for low end devices
+  text-rendering: auto;
+}
+
+.content {
+  // used for content areas not using the content directive
+  position: relative;
+}
+
+.scroll-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+
+  // Hide the top border if any
+  margin-top: -1px;
+
+  // Prevents any distortion of lines
+  padding-top:1px;
+
+  width: auto;
+  height: auto;
+}
+
+.scroll-content-false,
+.menu .scroll-content.scroll-content-false{
+  z-index: @z-index-scroll-content-false;
+}
+
+.scroll-view {
+  position: relative;
+  display: block;
+  overflow: hidden;
+
+  // Hide the top border if any
+  margin-top: -1px;
+}
+
+/**
+ * Scroll is the scroll view component available for complex and custom
+ * scroll view functionality.
+ */
+.scroll {
+  user-select: none;
+  -webkit-touch-callout: none;
+  text-size-adjust: none; 
+  transform-origin:left, top;
+}
+
+// Scroll bar styles
+.scroll-bar {
+  position: absolute;
+  z-index: @z-index-scroll-bar;
+}
+// hide the scroll-bar during animations
+.ng-animate .scroll-bar {
+  visibility: hidden;
+}
+.scroll-bar-h {
+  right: 2px;
+  bottom: 3px;
+  left: 2px;
+  height: 3px;
+
+  .scroll-bar-indicator {
+    height: 100%;
+  }
+}
+
+.scroll-bar-v {
+  top: 2px;
+  right: 3px;
+  bottom: 2px;
+  width: 3px;
+
+  .scroll-bar-indicator {
+    width: 100%;
+  }
+}
+.scroll-bar-indicator {
+  position: absolute;
+  border-radius: 4px;
+  background: rgba(0,0,0,0.3);
+  opacity: 1;
+  transition: opacity .3s linear;
+
+  &.scroll-bar-fade-out {
+    opacity: 0;
+  }
+}
+.platform-android .scroll-bar-indicator {
+  // android doesn't have rounded ends on scrollbar
+  border-radius: 0;
+}
+.grade-b .scroll-bar-indicator,
+.grade-c .scroll-bar-indicator {
+  // disable rgba background and border radius for low end devices
+  background: #aaa;
+
+  &.scroll-bar-fade-out {
+    transition: none;
+  }
+}
+
+ion-infinite-scroll {
+  height: 60px;
+  width: 100%;
+  display: block;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  .icon {
+    color: #666666;
+    font-size: 30px;
+    color: @scroll-refresh-icon-color;
+  }
+  .icon:before,
+  .spinner{
+    transform: translate3d(0,0,0);
+  }
+  &:not(.active){
+    .spinner,
+    .icon:before{
+      transform: translate3d(-1000px,0,0);
+    }
+  }
+}
+
+.overflow-scroll {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+
+  .scroll {
+    position: static;
+    height: 100%;
+    -webkit-transform: translate3d(0, 0, 0);   // fix iOS bug where relative children of scroller disapear while scrolling.  see: http://stackoverflow.com/questions/9807620/ipad-safari-scrolling-causes-html-elements-to-disappear-and-reappear-with-a-dela
+  }
+}
+
+
+// Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
+// Note: For these to work, content must come after both bars in the markup
+/* If you change these, change platform.scss as well */
+.has-header {
+  top: @bar-height;
+}
+// Force no header
+.no-header {
+  top: 0;
+}
+
+.has-subheader {
+  top: @bar-height + @bar-subheader-height;
+}
+.has-tabs-top {
+  top: @bar-height + @tabs-height;
+}
+.has-header.has-subheader.has-tabs-top {
+  top: @bar-height + @bar-subheader-height + @tabs-height;
+}
+
+.has-footer {
+  bottom: @bar-footer-height;
+}
+.has-subfooter {
+  bottom: @bar-footer-height + @bar-subfooter-height;
+}
+
+.has-tabs,
+.bar-footer.has-tabs {
+  bottom: @tabs-height;
+  &.pane{
+    bottom: @tabs-height;
+    height:auto;
+  }
+}
+
+.has-footer.has-tabs {
+  bottom: @tabs-height + @bar-footer-height;
+}
+
+// A full screen section with a solid background
+.pane {
+  translate: translate3d(0,0,0);
+  transition-duration: 0;
+  z-index: @z-index-pane;
+}
+.view {
+  z-index: @z-index-view;
+}
+.pane,
+.view {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: @base-background-color;
+  overflow: hidden;
+}
+.view-container {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+}

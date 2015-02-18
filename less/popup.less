@@ -1,0 +1,105 @@
+
+/**
+ * Popups
+ * --------------------------------------------------
+ */
+
+.popup-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0,0,0,0);
+
+  @include display-flex();
+  @include justify-content(center);
+  @include align-items(center);
+
+  z-index: $z-index-popup;
+
+  // Start hidden
+  visibility: hidden;
+  &.popup-showing {
+    visibility: visible;
+  }
+
+  &.popup-hidden .popup {
+    @include animation-name(scaleOut);
+    @include animation-duration($popup-leave-animation-duration);
+    @include animation-timing-function(ease-in-out);
+    @include animation-fill-mode(both);
+  }
+
+  &.active .popup {
+    @include animation-name(superScaleIn);
+    @include animation-duration($popup-enter-animation-duration);
+    @include animation-timing-function(ease-in-out);
+    @include animation-fill-mode(both);
+  }
+
+  .popup {
+    width: $popup-width;
+    max-width: 100%;
+    max-height: 90%;
+
+    border-radius: $popup-border-radius;
+    background-color: $popup-background-color;
+
+    @include display-flex();
+    @include flex-direction(column);
+  }
+}
+
+.popup-head {
+  padding: 15px 10px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+.popup-title {
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+}
+.popup-sub-title {
+  margin: 5px 0 0 0;
+  padding: 0;
+  font-weight: normal;
+  font-size: 11px;
+}
+.popup-body {
+  padding: 10px;
+  overflow: scroll;
+}
+
+.popup-buttons {
+  @include display-flex();
+  @include flex-direction(row);
+  padding: 10px;
+  min-height: $popup-button-min-height + 20;
+
+  .button {
+    @include flex(1);
+    display: block;
+    min-height: $popup-button-min-height;
+    border-radius: $popup-button-border-radius;
+    line-height: $popup-button-line-height;
+
+    margin-right: 5px;
+    &:last-child {
+      margin-right: 0px;
+    }
+  }
+}
+
+.popup-open {
+  pointer-events: none;
+
+  &.modal-open .modal {
+    pointer-events: none;
+  }
+
+  .popup-backdrop, .popup {
+    pointer-events: auto;
+  }
+}

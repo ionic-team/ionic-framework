@@ -1,0 +1,815 @@
+/**
+ * Items
+ * --------------------------------------------------
+ */
+
+.item {
+  @include item-style($item-default-bg, $item-default-border, $item-default-text);
+
+  position: relative;
+  z-index: $z-index-item; // Make sure the borders and stuff don't get hidden by children
+  display: block;
+
+  margin: $item-border-width * -1;
+  padding: $item-padding;
+
+  border-width: $item-border-width;
+  border-style: solid;
+  font-size: $item-font-size;
+
+  h2 {
+    margin: 0 0 2px 0;
+    font-size: 16px;
+    font-weight: normal;
+  }
+  h3 {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+  }
+  h4 {
+    margin: 0 0 4px 0;
+    font-size: 12px;
+  }
+  h5, h6 {
+    margin: 0 0 3px 0;
+    font-size: 10px;
+  }
+  p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  h1:last-child,
+  h2:last-child,
+  h3:last-child,
+  h4:last-child,
+  h5:last-child,
+  h6:last-child,
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  // Align badges within items
+  .badge {
+    @include display-flex();
+    position: absolute;
+    top: $item-padding;
+    right: ($item-padding * 2);
+  }
+  &.item-button-right .badge {
+    right: ($item-padding * 2) + 35;
+  }
+  &.item-divider .badge {
+    top: ceil($item-padding / 2);
+  }
+  .badge + .badge {
+    margin-right: 5px;
+  }
+
+  // Different themes for items
+  &.item-light {
+    @include item-style($item-light-bg, $item-light-border, $item-light-text);
+  }
+  &.item-stable {
+    @include item-style($item-stable-bg, $item-stable-border, $item-stable-text);
+  }
+  &.item-positive {
+    @include item-style($item-positive-bg, $item-positive-border, $item-positive-text);
+  }
+  &.item-calm {
+    @include item-style($item-calm-bg, $item-calm-border, $item-calm-text);
+  }
+  &.item-assertive {
+    @include item-style($item-assertive-bg, $item-assertive-border, $item-assertive-text);
+  }
+  &.item-balanced {
+    @include item-style($item-balanced-bg, $item-balanced-border, $item-balanced-text);
+  }
+  &.item-energized {
+    @include item-style($item-energized-bg, $item-energized-border, $item-energized-text);
+  }
+  &.item-royal {
+    @include item-style($item-royal-bg, $item-royal-border, $item-royal-text);
+  }
+  &.item-dark {
+    @include item-style($item-dark-bg, $item-dark-border, $item-dark-text);
+  }
+
+  &[ng-click]:hover {
+    cursor: pointer;
+  }
+
+}
+
+.list-borderless .item,
+.item-borderless {
+  border-width: 0;
+}
+
+// Link and Button Active States
+.item.active,
+.item.activated,
+.item-complex.active .item-content,
+.item-complex.activated .item-content,
+.item .item-content.active,
+.item .item-content.activated {
+  @include item-active-style($item-default-active-bg, $item-default-active-border);
+
+  // Different active themes for <a> and <button> items
+  &.item-light {
+    @include item-active-style($item-light-active-bg, $item-light-active-border);
+  }
+  &.item-stable {
+    @include item-active-style($item-stable-active-bg, $item-stable-active-border);
+  }
+  &.item-positive {
+    @include item-active-style($item-positive-active-bg, $item-positive-active-border);
+  }
+  &.item-calm {
+    @include item-active-style($item-calm-active-bg, $item-calm-active-border);
+  }
+  &.item-assertive {
+    @include item-active-style($item-assertive-active-bg, $item-assertive-active-border);
+  }
+  &.item-balanced {
+    @include item-active-style($item-balanced-active-bg, $item-balanced-active-border);
+  }
+  &.item-energized {
+    @include item-active-style($item-energized-active-bg, $item-energized-active-border);
+  }
+  &.item-royal {
+    @include item-active-style($item-royal-active-bg, $item-royal-active-border);
+  }
+  &.item-dark {
+    @include item-active-style($item-dark-active-bg, $item-dark-active-border);
+  }
+}
+
+// Handle text overflow
+.item,
+.item h1,
+.item h2,
+.item h3,
+.item h4,
+.item h5,
+.item h6,
+.item p,
+.item-content,
+.item-content h1,
+.item-content h2,
+.item-content h3,
+.item-content h4,
+.item-content h5,
+.item-content h6,
+.item-content p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Linked list items
+a.item {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+
+/**
+ * Complex Items
+ * --------------------------------------------------
+ * Adding .item-complex allows the .item to be slidable and
+ * have options underneath the button, but also requires an
+ * additional .item-content element inside .item.
+ * Basically .item-complex removes any default settings which
+ * .item added, so that .item-content looks them as just .item.
+ */
+
+.item-complex,
+a.item.item-complex,
+button.item.item-complex {
+  padding: 0;
+}
+.item-complex .item-content,
+.item-radio .item-content {
+  position: relative;
+  z-index: $z-index-item;
+  padding: $item-padding (ceil( ($item-padding * 3) + ($item-padding / 3) ) - 5) $item-padding $item-padding;
+  border: none;
+  background-color: white;
+}
+
+a.item-content {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.item-text-wrap .item,
+.item-text-wrap .item-content,
+.item-text-wrap,
+.item-text-wrap h1,
+.item-text-wrap h2,
+.item-text-wrap h3,
+.item-text-wrap h4,
+.item-text-wrap h5,
+.item-text-wrap h6,
+.item-text-wrap p,
+.item-complex.item-text-wrap .item-content,
+.item-body h1,
+.item-body h2,
+.item-body h3,
+.item-body h4,
+.item-body h5,
+.item-body h6,
+.item-body p {
+  overflow: visible;
+  white-space: normal;
+}
+.item-complex.item-text-wrap,
+.item-complex.item-text-wrap h1,
+.item-complex.item-text-wrap h2,
+.item-complex.item-text-wrap h3,
+.item-complex.item-text-wrap h4,
+.item-complex.item-text-wrap h5,
+.item-complex.item-text-wrap h6,
+.item-complex.item-text-wrap p {
+  overflow: visible;
+  white-space: normal;
+}
+
+// Link and Button Active States
+
+.item-complex{
+  // Stylized items
+  &.item-light > .item-content{
+    @include item-style($item-light-bg, $item-light-border, $item-light-text);
+    &.active, &:active {
+      @include item-active-style($item-light-active-bg, $item-light-active-border);
+    }
+  }
+  &.item-stable > .item-content{
+    @include item-style($item-stable-bg, $item-stable-border, $item-stable-text);
+    &.active, &:active {
+      @include item-active-style($item-stable-active-bg, $item-stable-active-border);
+    }
+  }
+  &.item-positive > .item-content{
+    @include item-style($item-positive-bg, $item-positive-border, $item-positive-text);
+    &.active, &:active {
+      @include item-active-style($item-positive-active-bg, $item-positive-active-border);
+    }
+  }
+  &.item-calm > .item-content{
+    @include item-style($item-calm-bg, $item-calm-border, $item-calm-text);
+    &.active, &:active {
+      @include item-active-style($item-calm-active-bg, $item-calm-active-border);
+    }
+  }
+  &.item-assertive > .item-content{
+    @include item-style($item-assertive-bg, $item-assertive-border, $item-assertive-text);
+    &.active, &:active {
+      @include item-active-style($item-assertive-active-bg, $item-assertive-active-border);
+    }
+  }
+  &.item-balanced > .item-content{
+    @include item-style($item-balanced-bg, $item-balanced-border, $item-balanced-text);
+    &.active, &:active {
+      @include item-active-style($item-balanced-active-bg, $item-balanced-active-border);
+    }
+  }
+  &.item-energized > .item-content{
+    @include item-style($item-energized-bg, $item-energized-border, $item-energized-text);
+    &.active, &:active {
+      @include item-active-style($item-energized-active-bg, $item-energized-active-border);
+    }
+  }
+  &.item-royal > .item-content{
+    @include item-style($item-royal-bg, $item-royal-border, $item-royal-text);
+    &.active, &:active {
+      @include item-active-style($item-royal-active-bg, $item-royal-active-border);
+    }
+  }
+  &.item-dark > .item-content{
+    @include item-style($item-dark-bg, $item-dark-border, $item-dark-text);
+    &.active, &:active {
+      @include item-active-style($item-dark-active-bg, $item-dark-active-border);
+    }
+  }
+}
+
+
+/**
+ * Item Icons
+ * --------------------------------------------------
+ */
+
+.item-icon-left .icon,
+.item-icon-right .icon {
+  @include display-flex();
+  @include align-items(center);
+  position: absolute;
+  top: 0;
+  height: 100%;
+  font-size: $item-icon-font-size;
+
+  &:before {
+    display: block;
+    width: $item-icon-font-size;
+    text-align: center;
+  }
+}
+
+.item .fill-icon {
+  min-width: $item-icon-fill-font-size + 2;
+  min-height: $item-icon-fill-font-size + 2;
+  font-size: $item-icon-fill-font-size;
+}
+
+.item-icon-left {
+  padding-left: ceil( ($item-padding * 3) + ($item-padding / 3) );
+
+  .icon {
+    left: ceil( ($item-padding / 3) * 2);
+  }
+}
+.item-complex.item-icon-left {
+  padding-left: 0;
+
+  .item-content {
+    padding-left: ceil( ($item-padding * 3) + ($item-padding / 3) );
+  }
+}
+
+.item-icon-right {
+  padding-right: ceil( ($item-padding * 3) + ($item-padding / 3) );
+
+  .icon {
+    right: ceil( ($item-padding / 3) * 2);
+  }
+}
+.item-complex.item-icon-right {
+  padding-right: 0;
+
+  .item-content {
+    padding-right: ceil( ($item-padding * 3) + ($item-padding / 3) );
+  }
+}
+
+.item-icon-left.item-icon-right .icon:first-child {
+  right: auto;
+}
+.item-icon-left.item-icon-right .icon:last-child,
+.item-icon-left .item-delete .icon {
+  left: auto;
+}
+
+.item-icon-left .icon-accessory,
+.item-icon-right .icon-accessory {
+  color: $item-icon-accessory-color;
+  font-size: $item-icon-accessory-font-size;
+}
+.item-icon-left .icon-accessory {
+  left: floor($item-padding / 5);
+}
+.item-icon-right .icon-accessory {
+  right: floor($item-padding / 5);
+}
+
+
+/**
+ * Item Button
+ * --------------------------------------------------
+ * An item button is a child button inside an .item (not the entire .item)
+ */
+
+.item-button-left {
+  padding-left: ceil($item-padding * 4.5);
+}
+
+.item-button-left > .button,
+.item-button-left .item-content > .button {
+  @include display-flex();
+  @include align-items(center);
+  position: absolute;
+  top: ceil($item-padding / 2);
+  left: ceil( ($item-padding / 3) * 2);
+  min-width: $item-icon-font-size + ($button-border-width * 2);
+  min-height: $item-icon-font-size + ($button-border-width * 2);
+  font-size: $item-button-font-size;
+  line-height: $item-button-line-height;
+
+  .icon:before {
+    position: relative;
+    left: auto;
+    width: auto;
+    line-height: $item-icon-font-size - 1;
+  }
+
+  > .button {
+    margin: 0px 2px;
+    min-height: $item-icon-font-size + ($button-border-width * 2);
+    font-size: $item-button-font-size;
+    line-height: $item-button-line-height;
+  }
+}
+
+.item-button-right,
+a.item.item-button-right,
+button.item.item-button-right {
+  padding-right: $item-padding * 5;
+}
+
+.item-button-right > .button,
+.item-button-right .item-content > .button,
+.item-button-right > .buttons,
+.item-button-right .item-content > .buttons {
+  @include display-flex();
+  @include align-items(center);
+  position: absolute;
+  top: ceil($item-padding / 2);
+  right: $item-padding;
+  min-width: $item-icon-font-size + ($button-border-width * 2);
+  min-height: $item-icon-font-size + ($button-border-width * 2);
+  font-size: $item-button-font-size;
+  line-height: $item-button-line-height;
+
+  .icon:before {
+    position: relative;
+    left: auto;
+    width: auto;
+    line-height: $item-icon-font-size - 1;
+  }
+
+  > .button {
+    margin: 0px 2px;
+    min-width: $item-icon-font-size + ($button-border-width * 2);
+    min-height: $item-icon-font-size + ($button-border-width * 2);
+    font-size: $item-button-font-size;
+    line-height: $item-button-line-height;
+  }
+}
+
+
+// Item Avatar
+// -------------------------------
+
+.item-avatar,
+.item-avatar .item-content,
+.item-avatar-left,
+.item-avatar-left .item-content {
+  padding-left: $item-avatar-width + ($item-padding * 2);
+  min-height: $item-avatar-width + ($item-padding * 2);
+
+  > img:first-child,
+  .item-image {
+    position: absolute;
+    top: $item-padding;
+    left: $item-padding;
+    max-width: $item-avatar-width;
+    max-height: $item-avatar-height;
+    width: 100%;
+    height: 100%;
+    border-radius: $item-avatar-border-radius;
+  }
+}
+
+.item-avatar-right,
+.item-avatar-right .item-content {
+  padding-right: $item-avatar-width + ($item-padding * 2);
+  min-height: $item-avatar-width + ($item-padding * 2);
+
+  > img:first-child,
+  .item-image {
+    position: absolute;
+    top: $item-padding;
+    right: $item-padding;
+    max-width: $item-avatar-width;
+    max-height: $item-avatar-height;
+    width: 100%;
+    height: 100%;
+    border-radius: $item-avatar-border-radius;
+  }
+}
+
+
+// Item Thumbnails
+// -------------------------------
+
+.item-thumbnail-left,
+.item-thumbnail-left .item-content {
+  padding-top: $item-padding / 2;
+  padding-left: $item-thumbnail-width + $item-thumbnail-margin + $item-padding;
+  min-height: $item-thumbnail-height + ($item-thumbnail-margin * 2);
+
+  > img:first-child,
+  .item-image {
+    position: absolute;
+    top: $item-thumbnail-margin;
+    left: $item-thumbnail-margin;
+    max-width: $item-thumbnail-width;
+    max-height: $item-thumbnail-height;
+    width: 100%;
+    height: 100%;
+  }
+}
+.item-avatar.item-complex,
+.item-avatar-left.item-complex,
+.item-thumbnail-left.item-complex {
+  padding-top: 0;
+  padding-left: 0;
+}
+
+.item-thumbnail-right,
+.item-thumbnail-right .item-content {
+  padding-top: $item-padding / 2;
+  padding-right: $item-thumbnail-width + $item-thumbnail-margin + $item-padding;
+  min-height: $item-thumbnail-height + ($item-thumbnail-margin * 2);
+
+  > img:first-child,
+  .item-image {
+    position: absolute;
+    top: $item-thumbnail-margin;
+    right: $item-thumbnail-margin;
+    max-width: $item-thumbnail-width;
+    max-height: $item-thumbnail-height;
+    width: 100%;
+    height: 100%;
+  }
+}
+.item-avatar-right.item-complex,
+.item-thumbnail-right.item-complex {
+  padding-top: 0;
+  padding-right: 0;
+}
+
+
+// Item Image
+// -------------------------------
+
+.item-image {
+  padding: 0;
+  text-align: center;
+
+  img:first-child, .list-img {
+    width: 100%;
+    vertical-align: middle;
+  }
+}
+
+
+// Item Body
+// -------------------------------
+
+.item-body {
+  overflow: auto;
+  padding: $item-padding;
+  text-overflow: inherit;
+  white-space: normal;
+
+  h1, h2, h3, h4, h5, h6, p {
+    margin-top: $item-padding;
+    margin-bottom: $item-padding;
+  }
+}
+
+
+// Item Divider
+// -------------------------------
+
+.item-divider {
+  padding-top: ceil($item-padding / 2);
+  padding-bottom: ceil($item-padding / 2);
+  min-height: 30px;
+  background-color: $item-divider-bg;
+  color: $item-divider-color;
+  font-weight: 500;
+}
+
+.platform-ios .item-divider-platform,
+.item-divider-ios {
+  padding-top: 26px;
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 13px;
+  background-color: #efeff4;
+  color: #555;
+}
+
+.platform-android .item-divider-platform,
+.item-divider-android {
+  font-weight: 300;
+  font-size: 13px;
+}
+
+
+// Item Note
+// -------------------------------
+
+.item-note {
+  float: right;
+  color: #aaa;
+  font-size: 14px;
+}
+
+
+// Item Editing
+// -------------------------------
+
+.item-left-editable .item-content,
+.item-right-editable .item-content {
+  // setup standard transition settings
+  @include transition-duration( $item-edit-transition-duration );
+  @include transition-timing-function( $item-edit-transition-function );
+  -webkit-transition-property: -webkit-transform;
+     -moz-transition-property: -moz-transform;
+          transition-property: transform;
+}
+
+.list-left-editing .item-left-editable .item-content,
+.item-left-editing.item-left-editable .item-content {
+  // actively editing the left side of the item
+  @include translate3d($item-left-edit-open-width, 0, 0);
+}
+
+.item-remove-animate {
+  &.ng-leave {
+    @include transition-duration( $item-remove-transition-duration );
+  }
+  &.ng-leave .item-content,
+  &.ng-leave:last-of-type {
+    @include transition-duration( $item-remove-transition-duration );
+    @include transition-timing-function( $item-remove-transition-function );
+    @include transition-property( all );
+  }
+
+  &.ng-leave.ng-leave-active .item-content {
+    opacity:0;
+    -webkit-transform: translate3d(-100%, 0, 0) !important;
+    transform: translate3d(-100%, 0, 0) !important;
+  }
+  &.ng-leave.ng-leave-active:last-of-type {
+    opacity: 0;
+  }
+
+  &.ng-leave.ng-leave-active ~ ion-item:not(.ng-leave) {
+    -webkit-transform: translate3d(0, unquote('-webkit-calc(-100% + 1px)'), 0);
+    transform: translate3d(0, calc(-100% + 1px), 0);
+    @include transition-duration( $item-remove-transition-duration );
+    @include transition-timing-function( $item-remove-descendents-transition-function );
+    @include transition-property( all );
+  }
+}
+
+
+
+// Item Left Edit Button
+// -------------------------------
+
+.item-left-edit {
+  @include transition(all $item-edit-transition-function $item-edit-transition-duration / 2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: $z-index-item-edit;
+  width: $item-left-edit-open-width;
+  height: 100%;
+  line-height: 100%;
+
+  .button {
+    height: 100%;
+
+    &.icon {
+      @include display-flex();
+      @include align-items(center);
+      position: absolute;
+      top: 0;
+      height: 100%;
+    }
+  }
+
+  display: none;
+  opacity: 0;
+  @include translate3d( ($item-left-edit-left - $item-left-edit-open-width) / 2, 0, 0);
+  &.visible {
+    display: block;
+    &.active {
+      opacity: 1;
+      @include translate3d($item-left-edit-left, 0, 0);
+    }
+  }
+}
+.list-left-editing .item-left-edit {
+  @include transition-delay($item-edit-transition-duration / 2);
+}
+
+// Item Delete (Left side edit button)
+// -------------------------------
+
+.item-delete .button.icon {
+  color: $item-delete-icon-color;
+  font-size: $item-delete-icon-size;
+
+  &:hover {
+    opacity: .7;
+  }
+}
+
+
+// Item Right Edit Button
+// -------------------------------
+
+.item-right-edit {
+  @include transition(all $item-edit-transition-function $item-edit-transition-duration);
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: $z-index-item-reorder;
+  width: $item-right-edit-open-width *  1.5;
+  height: 100%;
+  background: inherit;
+  padding-left: 20px;
+
+  .button {
+    min-width: $item-right-edit-open-width;
+    height: 100%;
+
+    &.icon {
+      @include display-flex();
+      @include align-items(center);
+      position: absolute;
+      top: 0;
+      height: 100%;
+      font-size: $item-reorder-icon-size;
+    }
+  }
+
+  display: block;
+  opacity: 0;
+  @include translate3d($item-right-edit-open-width *  1.5, 0, 0);
+  &.visible {
+    display: block;
+    &.active {
+      opacity: 1;
+      @include translate3d(0, 0, 0);
+    }
+  }
+}
+
+
+// Item Reordering (Right side edit button)
+// -------------------------------
+
+.item-reorder .button.icon {
+  color: $item-reorder-icon-color;
+  font-size: $item-reorder-icon-size;
+}
+
+.item-reordering {
+  // item is actively being reordered
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: $z-index-item-reordering;
+  width: 100%;
+  box-shadow: 0px 0px 10px 0px #aaa;
+
+  .item-reorder {
+    z-index: $z-index-item-reordering;
+  }
+}
+
+.item-placeholder {
+  // placeholder for the item that's being reordered
+  opacity: 0.7;
+}
+
+
+/**
+ * The hidden right-side buttons that can be exposed under a list item
+ * with dragging.
+ */
+.item-options {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: $z-index-item-options;
+  height: 100%;
+
+  .button {
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    @include display-inline-flex();
+    @include align-items(center);
+
+    &:before{
+      margin: 0 auto;
+    }
+  }
+}

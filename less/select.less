@@ -1,0 +1,141 @@
+
+/**
+ * Select
+ * --------------------------------------------------
+ */
+
+.item-select {
+  position: relative;
+
+  select {
+    @include appearance(none);
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: ($item-padding - 2) ($item-padding * 3) ($item-padding) $item-padding;
+    max-width: 65%;
+
+    border: none;
+    background: $item-default-bg;
+    color: #333;
+
+    // hack to hide default dropdown arrow in FF
+    text-indent: .01px;
+    text-overflow: '';
+
+    white-space: nowrap;
+    font-size: $font-size-base;
+
+    cursor: pointer;
+    direction: rtl; // right align the select text
+  }
+
+  select::-ms-expand {
+    // hide default dropdown arrow in IE
+    display: none;
+  }
+
+  option {
+    direction: ltr;
+  }
+
+  &:after {
+    position: absolute;
+    top: 50%;
+    right: $item-padding;
+    margin-top: -3px;
+    width: 0;
+    height: 0;
+    border-top: 5px solid;
+    border-right: 5px solid rgba(0, 0, 0, 0);
+    border-left: 5px solid rgba(0, 0, 0, 0);
+    color: #999;
+    content: "";
+    pointer-events: none;
+  }
+  &.item-light {
+    select{
+      background:$item-light-bg;
+      color:$item-light-text;
+    }
+  }
+  &.item-stable {
+    select{
+      background:$item-stable-bg;
+      color:$item-stable-text;
+    }
+    &:after, .input-label{
+      color:darken($item-stable-border,30%);
+    }
+  }
+  &.item-positive {
+    select{
+      background:$item-positive-bg;
+      color:$item-positive-text;
+    }
+    &:after, .input-label{
+      color:$item-positive-text;
+    }
+  }
+  &.item-calm {
+    select{
+      background:$item-calm-bg;
+      color:$item-calm-text;
+    }
+    &:after, .input-label{
+      color:$item-calm-text;
+    }
+  }
+  &.item-assertive {
+    select{
+      background:$item-assertive-bg;
+      color:$item-assertive-text;
+    }
+    &:after, .input-label{
+      color:$item-assertive-text;
+    }
+  }
+  &.item-balanced {
+    select{
+      background:$item-balanced-bg;
+      color:$item-balanced-text;
+    }
+    &:after, .input-label{
+      color:$item-balanced-text;
+    }
+  }
+  &.item-energized  {
+    select{
+      background:$item-energized-bg;
+      color:$item-energized-text;
+    }
+    &:after, .input-label{
+      color:$item-energized-text;
+    }
+  }
+  &.item-royal {
+    select{
+      background:$item-royal-bg;
+      color:$item-royal-text;
+    }
+    &:after, .input-label{
+      color:$item-royal-text;
+    }
+  }
+  &.item-dark  {
+    select{
+      background:$item-dark-bg;
+      color:$item-dark-text;
+    }
+    &:after, .input-label{
+      color:$item-dark-text;
+    }
+  }
+}
+
+select {
+  &[multiple],
+  &[size] {
+    height: auto;
+  }
+}

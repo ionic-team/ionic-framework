@@ -1,0 +1,56 @@
+
+/**
+ * Slide Box
+ * --------------------------------------------------
+ */
+
+.slider {
+  position: relative;
+  visibility: hidden;
+  // Make sure items don't scroll over ever
+  overflow: hidden;
+}
+
+.slider-slides {
+  position: relative;
+  height: 100%;
+}
+
+.slider-slide {
+  position: relative;
+  display: block;
+  float: left;
+  width: 100%;
+  height: 100%;
+  vertical-align: top;
+}
+
+.slider-slide-image {
+  > img {
+    width: 100%;
+  }
+}
+
+.slider-pager {
+  position: absolute;
+  bottom: 20px;
+  z-index: $z-index-slider-pager;
+  width: 100%;
+  height: 15px;
+  text-align: center;
+
+  .slider-pager-page {
+    display: inline-block;
+    margin: 0px 3px;
+    width: 15px;
+    color: #000;
+    text-decoration: none;
+
+    opacity: 0.3;
+
+    &.active {
+      @include transition(opacity 0.4s ease-in);
+      opacity: 1;
+    }
+  }
+}

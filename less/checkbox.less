@@ -1,0 +1,176 @@
+
+/**
+ * Checkbox
+ * --------------------------------------------------
+ */
+
+.checkbox {
+  // set the color defaults
+  @include checkbox-style($checkbox-off-border-default, $checkbox-on-bg-default, $checkbox-on-border-default);
+
+  position: relative;
+  display: inline-block;
+  padding: ($checkbox-height / 4) ($checkbox-width / 4);
+  cursor: pointer;
+}
+.checkbox-light  {
+  @include checkbox-style($checkbox-off-border-light, $checkbox-on-bg-light, $checkbox-off-border-light);
+}
+.checkbox-stable  {
+  @include checkbox-style($checkbox-off-border-stable, $checkbox-on-bg-stable, $checkbox-off-border-stable);
+}
+.checkbox-positive  {
+  @include checkbox-style($checkbox-off-border-positive, $checkbox-on-bg-positive, $checkbox-off-border-positive);
+}
+.checkbox-calm  {
+  @include checkbox-style($checkbox-off-border-calm, $checkbox-on-bg-calm, $checkbox-off-border-calm);
+}
+.checkbox-assertive  {
+  @include checkbox-style($checkbox-off-border-assertive, $checkbox-on-bg-assertive, $checkbox-off-border-assertive);
+}
+.checkbox-balanced  {
+  @include checkbox-style($checkbox-off-border-balanced, $checkbox-on-bg-balanced, $checkbox-off-border-balanced);
+}
+.checkbox-energized{
+  @include checkbox-style($checkbox-off-border-energized, $checkbox-on-bg-energized, $checkbox-off-border-energized);
+}
+.checkbox-royal  {
+  @include checkbox-style($checkbox-off-border-royal, $checkbox-on-bg-royal, $checkbox-off-border-royal);
+}
+.checkbox-dark  {
+  @include checkbox-style($checkbox-off-border-dark, $checkbox-on-bg-dark, $checkbox-off-border-dark);
+}
+
+.checkbox input:disabled:before,
+.checkbox input:disabled + .checkbox-icon:before {
+  border-color: $checkbox-off-border-light;
+}
+
+.checkbox input:disabled:checked:before,
+.checkbox input:disabled:checked + .checkbox-icon:before {
+  background: $checkbox-on-bg-light;
+}
+
+
+.checkbox.checkbox-input-hidden input {
+  display: none !important;
+}
+
+.checkbox input,
+.checkbox-icon {
+  position: relative;
+  width: $checkbox-width;
+  height: $checkbox-height;
+  display: block;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-appearance: none;
+
+  &:before {
+    // what the checkbox looks like when its not checked
+    display: table;
+    width: 100%;
+    height: 100%;
+    border-width: $checkbox-border-width;
+    border-style: solid;
+    border-radius: $checkbox-border-radius;
+    background: $checkbox-off-bg-color;
+    content: ' ';
+    @include transition(background-color 20ms ease-in-out);
+  }
+}
+
+.checkbox input:checked:before,
+input:checked + .checkbox-icon:before {
+  border-width: $checkbox-border-width + 1;
+}
+
+// the checkmark within the box
+.checkbox input:after,
+.checkbox-icon:after {
+  @include transition(opacity .05s ease-in-out);
+  @include rotate(-45deg);
+  position: absolute;
+  top: 33%;
+  left: 25%;
+  display: table;
+  width: ($checkbox-width / 2);
+  height: ($checkbox-width / 4) - 1;
+  border: $checkbox-check-width solid $checkbox-check-color;
+  border-top: 0;
+  border-right: 0;
+  content: ' ';
+  opacity: 0;
+}
+
+.platform-android .checkbox-platform input:before,
+.platform-android .checkbox-platform .checkbox-icon:before,
+.checkbox-square input:before,
+.checkbox-square .checkbox-icon:before {
+  border-radius: 2px;
+  width: 72%;
+  height: 72%;
+  margin-top: 14%;
+  margin-left: 14%;
+  border-width: 2px;
+}
+
+.platform-android .checkbox-platform input:after,
+.platform-android .checkbox-platform .checkbox-icon:after,
+.checkbox-square input:after,
+.checkbox-square .checkbox-icon:after {
+  border-width: 2px;
+  top: 19%;
+  left: 25%;
+  width: ($checkbox-width / 2) - 1;
+  height: 7px;
+}
+
+.grade-c .checkbox input:after,
+.grade-c .checkbox-icon:after {
+  @include rotate(0);
+  top: 3px;
+  left: 4px;
+  border: none;
+  color: $checkbox-check-color;
+  content: '\2713';
+  font-weight: bold;
+  font-size: 20px;
+}
+
+// what the checkmark looks like when its checked
+.checkbox input:checked:after,
+input:checked + .checkbox-icon:after {
+  opacity: 1;
+}
+
+// make sure item content have enough padding on left to fit the checkbox
+.item-checkbox {
+  padding-left: ($item-padding * 2) + $checkbox-width;
+
+  &.active {
+    box-shadow: none;
+  }
+}
+
+// position the checkbox to the left within an item
+.item-checkbox .checkbox {
+  position: absolute;
+  top: 50%;
+  right: $item-padding / 2;
+  left: $item-padding / 2;
+  z-index: $z-index-item-checkbox;
+  margin-top: (($checkbox-height + ($checkbox-height / 2)) / 2) * -1;
+}
+
+
+.item-checkbox.item-checkbox-right {
+  padding-right: ($item-padding * 2) + $checkbox-width;
+  padding-left: $item-padding;
+}
+
+.item-checkbox-right .checkbox input,
+.item-checkbox-right .checkbox-icon {
+  float: right;
+}

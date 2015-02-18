@@ -1,0 +1,166 @@
+/**
+ * Action Sheets
+ * --------------------------------------------------
+ */
+
+.action-sheet-backdrop {
+  @include transition(background-color 150ms ease-in-out);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $z-index-action-sheet;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0);
+
+  &.active {
+    background-color: rgba(0,0,0,0.4);
+  }
+}
+
+.action-sheet-wrapper {
+  @include translate3d(0, 100%, 0);
+  @include transition(all cubic-bezier(.36, .66, .04, 1) 500ms);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.action-sheet-up {
+  @include translate3d(0, 0, 0);
+}
+
+.action-sheet {
+  margin-left: $sheet-margin;
+  margin-right: $sheet-margin;
+  width: auto;
+  z-index: $z-index-action-sheet;
+  overflow: hidden;
+
+  .button {
+    display: block;
+    padding: 1px;
+    width: 100%;
+    border-radius: 0;
+    border-color: $sheet-options-border-color;
+    background-color: transparent;
+
+    color: $sheet-options-text-color;
+    font-size: 21px;
+
+    &:hover {
+      color: $sheet-options-text-color;
+    }
+    &.destructive {
+      color: #ff3b30;
+      &:hover {
+        color: #ff3b30;
+      }
+    }
+  }
+
+  .button.active, .button.activated {
+    box-shadow: none;
+    border-color: $sheet-options-border-color;
+    color: $sheet-options-text-color;
+    background: $sheet-options-bg-active-color;
+  }
+}
+
+.action-sheet-has-icons .icon {
+  position: absolute;
+  left: 16px;
+}
+
+.action-sheet-title {
+  padding: $sheet-margin * 2;
+  color: #8f8f8f;
+  text-align: center;
+  font-size: 13px;
+}
+
+.action-sheet-group {
+  margin-bottom: $sheet-margin;
+  border-radius: $sheet-border-radius;
+  background-color: #fff;
+  overflow: hidden;
+
+  .button {
+    border-width: 1px 0px 0px 0px;
+  }
+  .button:first-child:last-child {
+    border-width: 0;
+  }
+}
+
+.action-sheet-options {
+  background: $sheet-options-bg-color;
+}
+
+.action-sheet-cancel {
+  .button {
+    font-weight: 500;
+  }
+}
+
+.action-sheet-open {
+  pointer-events: none;
+
+  &.modal-open .modal {
+    pointer-events: none;
+  }
+
+  .action-sheet-backdrop {
+    pointer-events: auto;
+  }
+}
+
+
+.platform-android {
+
+  .action-sheet-backdrop.active {
+    background-color: rgba(0,0,0,0.2);
+  }
+
+  .action-sheet {
+    margin: 0;
+
+    .action-sheet-title,
+    .button {
+      text-align: left;
+      border-color: transparent;
+      font-size: 16px;
+      color: inherit;
+    }
+
+    .action-sheet-title {
+      font-size: 14px;
+      padding: 16px;
+      color: #666;
+    }
+
+    .button.active,
+    .button.activated {
+      background: #e8e8e8;
+    }
+  }
+
+  .action-sheet-group {
+    margin: 0;
+    border-radius: 0;
+    background-color: #fafafa;
+  }
+
+  .action-sheet-cancel {
+    display: none;
+  }
+
+  .action-sheet-has-icons {
+
+    .button {
+      padding-left: 56px;
+    }
+
+  }
+
+}

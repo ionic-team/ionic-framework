@@ -1,0 +1,54 @@
+
+/**
+ * Button Bar
+ * --------------------------------------------------
+ */
+
+.button-bar {
+  @include display-flex();
+  @include flex(1);
+  width: 100%;
+
+  &.button-bar-inline {
+    display: block;
+    width: auto;
+
+    @include clearfix();
+
+    > .button {
+      width: auto;
+      display: inline-block;
+      float: left;
+    }
+  }
+}
+
+.button-bar > .button {
+  @include flex(1);
+  display: block;
+  
+  overflow: hidden;
+
+  padding: 0 16px;
+
+  width: 0;
+
+  border-width: 1px 0px 1px 1px;
+  border-radius: 0;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:before,
+  .icon:before {
+    line-height: 44px;
+  }
+
+  &:first-child {
+    border-radius: $button-border-radius 0px 0px $button-border-radius;
+  }
+  &:last-child {
+    border-right-width: 1px;
+    border-radius: 0px $button-border-radius $button-border-radius 0px;
+  }
+}

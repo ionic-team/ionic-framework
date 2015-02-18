@@ -1,0 +1,125 @@
+
+/**
+ * Lists
+ * --------------------------------------------------
+ */
+
+.list {
+  position: relative;
+  padding-top: $item-border-width;
+  padding-bottom: $item-border-width;
+  padding-left: 0; // reset padding because ul and ol
+  margin-bottom: 20px;
+}
+.list:last-child {
+  margin-bottom: 0px;
+  &.card{
+    margin-bottom:40px;
+  }
+}
+
+
+/**
+ * List Header
+ * --------------------------------------------------
+ */
+
+.list-header {
+  margin-top: $list-header-margin-top;
+  padding: $list-header-padding;
+  background-color: $list-header-bg;
+  color: $list-header-color;
+  font-weight: bold;
+}
+
+// when its a card make sure it doesn't duplicate top and bottom borders
+.card.list .list-item {
+  padding-right: 1px;
+  padding-left: 1px;
+}
+
+
+/**
+ * Cards and Inset Lists
+ * --------------------------------------------------
+ * A card and list-inset are close to the same thing, except a card as a box shadow.
+ */
+
+.card,
+.list-inset {
+  overflow: hidden;
+  margin: ($content-padding * 2) $content-padding;
+  border-radius: $card-border-radius;
+  background-color: $card-body-bg;
+}
+
+.card {
+  padding-top: $item-border-width;
+  padding-bottom: $item-border-width;
+  box-shadow: $card-box-shadow;
+
+  .item {
+    border-left: 0;
+    border-right: 0;
+  }
+  .item:first-child {
+    border-top: 0;
+  }
+  .item:last-child {
+    border-bottom: 0;
+  }
+}
+
+.padding {
+  .card, .list-inset {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.card .item,
+.list-inset .item,
+.padding > .list .item
+{
+  &:first-child {
+    border-top-left-radius: $card-border-radius;
+    border-top-right-radius: $card-border-radius;
+
+    .item-content {
+      border-top-left-radius: $card-border-radius;
+      border-top-right-radius: $card-border-radius;
+    }
+  }
+  &:last-child {
+    border-bottom-right-radius: $card-border-radius;
+    border-bottom-left-radius: $card-border-radius;
+
+    .item-content {
+      border-bottom-right-radius: $card-border-radius;
+      border-bottom-left-radius: $card-border-radius;
+    }
+  }
+}
+
+.card .item:last-child,
+.list-inset .item:last-child {
+  margin-bottom: $item-border-width * -1;
+}
+
+.card .item,
+.list-inset .item,
+.padding > .list .item,
+.padding-horizontal > .list .item {
+  margin-right: 0;
+  margin-left: 0;
+
+  &.item-input input {
+    padding-right: 44px;
+  }
+}
+.padding-left > .list .item {
+  margin-left: 0;
+}
+.padding-right > .list .item {
+  margin-right: 0;
+}

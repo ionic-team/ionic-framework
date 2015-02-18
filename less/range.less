@@ -1,0 +1,121 @@
+
+/**
+ * Range
+ * --------------------------------------------------
+ */
+
+ .range input{
+  display: inline-block;
+  overflow: hidden;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-right: 2px;
+  padding-left: 1px;
+  width: auto;
+  height: $range-slider-height + 15;
+  outline: none;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $range-default-track-bg), color-stop(100%, $range-default-track-bg));
+  background: linear-gradient(to right, $range-default-track-bg 0%, $range-default-track-bg 100%);
+  background-position: center;
+  background-size: 99% $range-track-height;
+  background-repeat: no-repeat;
+  -webkit-appearance: none;
+
+  &::-webkit-slider-thumb {
+    position: relative;
+    width: $range-slider-width;
+    height: $range-slider-height;
+    border-radius: $range-slider-border-radius;
+    background-color: $toggle-handle-off-bg-color;
+    box-shadow: $range-slider-box-shadow;
+    cursor: pointer;
+    -webkit-appearance: none;
+    border: 0;
+  }
+
+  &::-webkit-slider-thumb:before {
+    /* what creates the colorful line on the left side of the slider */
+    position: absolute;
+    top: ($range-slider-height / 2) - ($range-track-height / 2);
+    left: -2001px;
+    width: 2000px;
+    height: $range-track-height;
+    background: $dark;
+    content: ' ';
+  }
+
+  &::-webkit-slider-thumb:after {
+    /* create a larger (but hidden) hit area */
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    padding: 30px;
+    content: ' ';
+    //background: red;
+    //opacity: .5;
+  }
+
+}
+
+.range {
+  @include display-flex();
+  @include align-items(center);
+  padding: 2px 11px;
+
+  &.range-light {
+    input { @include range-style($range-light-track-bg); }
+  }
+  &.range-stable {
+    input { @include range-style($range-stable-track-bg); }
+  }
+  &.range-positive {
+    input { @include range-style($range-positive-track-bg); }
+  }
+  &.range-calm {
+    input { @include range-style($range-calm-track-bg); }
+  }
+  &.range-balanced {
+    input { @include range-style($range-balanced-track-bg); }
+  }
+  &.range-assertive {
+    input { @include range-style($range-assertive-track-bg); }
+  }
+  &.range-energized {
+    input { @include range-style($range-energized-track-bg); }
+  }
+  &.range-royal {
+    input { @include range-style($range-royal-track-bg); }
+  }
+  &.range-dark {
+    input { @include range-style($range-dark-track-bg); }
+  }
+}
+
+.range .icon {
+  @include flex(0);
+  display: block;
+  min-width: $range-icon-size;
+  text-align: center;
+  font-size: $range-icon-size;
+}
+
+.range input {
+  @include flex(1);
+  display: block;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.range-label {
+  @include flex(0, 0, auto);
+  display: block;
+  white-space: nowrap;
+}
+
+.range-label:first-child {
+  padding-left: 5px;
+}
+.range input + .range-label {
+  padding-right: 5px;
+  padding-left: 0;
+}

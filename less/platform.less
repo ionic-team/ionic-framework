@@ -1,0 +1,59 @@
+
+/**
+ * Platform
+ * --------------------------------------------------
+ * Platform specific tweaks
+ */
+
+.platform-ios.platform-cordova {
+  // iOS has a status bar which sits on top of the header.
+  // Bump down everything to make room for it. However, if
+  // if its in Cordova, and set to fullscreen, then disregard the bump.
+  &:not(.fullscreen) {
+    .bar-header:not(.bar-subheader) {
+      height: $bar-height + $ios-statusbar-height;
+
+      &.item-input-inset .item-input-wrapper {
+        margin-top: 19px !important;
+      }
+
+      > * {
+        margin-top: $ios-statusbar-height;
+      }
+    }
+    .tabs-top > .tabs,
+    .tabs.tabs-top {
+      top: $bar-height + $ios-statusbar-height;
+    }
+
+    .has-header,
+    .bar-subheader {
+      top: $bar-height + $ios-statusbar-height;
+    }
+    .has-subheader {
+      top: $bar-height + $bar-subheader-height + $ios-statusbar-height;
+    }
+    .has-header.has-tabs-top {
+      top: $bar-height + $tabs-height + $ios-statusbar-height;
+    }
+    .has-header.has-subheader.has-tabs-top {
+      top: $bar-height + $bar-subheader-height + $tabs-height + $ios-statusbar-height;
+    }
+  }
+  &.status-bar-hide {
+    // Cordova doesn't adjust the body height correctly, this makes up for it
+    margin-bottom: 20px;
+  }
+}
+
+@media (orientation:landscape) {
+  .platform-ios.platform-browser.platform-ipad {
+    position: fixed; // required for iPad 7 Safari
+  }
+}
+
+.platform-c:not(.enable-transitions) * {
+  // disable transitions on grade-c devices (Android 2)
+  -webkit-transition: none !important;
+  transition: none !important;
+}

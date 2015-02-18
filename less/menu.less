@@ -1,0 +1,64 @@
+
+/**
+ * Menus
+ * --------------------------------------------------
+ * Side panel structure
+ */
+
+.menu {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: $z-index-menu;
+  overflow: hidden;
+
+  min-height: 100%;
+  max-height: 100%;
+  width: $menu-width;
+
+  background-color: $menu-bg;
+
+  .scroll-content {
+    z-index: $z-index-menu-scroll-content;
+  }
+
+  .bar-header {
+    z-index: $z-index-menu-bar-header;
+  }
+}
+
+.menu-content {
+  @include transform(none);
+  box-shadow: $menu-side-shadow;
+}
+
+.menu-open .menu-content .pane,
+.menu-open .menu-content .scroll-content {
+  pointer-events: none;
+}
+
+.grade-b .menu-content,
+.grade-c .menu-content {
+  @include box-sizing(content-box);
+  right: -1px;
+  left: -1px;
+  border-right: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  box-shadow: none;
+}
+
+.menu-left {
+  left: 0;
+}
+
+.menu-right {
+  right: 0;
+}
+
+.aside-open.aside-resizing .menu-right {
+  display: none;
+}
+
+.menu-animated {
+  @include transition-transform($menu-animation-speed ease);
+}

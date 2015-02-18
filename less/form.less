@@ -1,0 +1,315 @@
+/**
+ * Forms
+ * --------------------------------------------------
+ */
+
+// Make all forms have space below them
+form {
+  margin: 0 0 $line-height-base;
+}
+
+// Groups of fields with labels on top (legends)
+legend {
+  display: block;
+  margin-bottom: $line-height-base;
+  padding: 0;
+  width: 100%;
+  border: $input-border-width solid $input-border;
+  color: $dark;
+  font-size: $font-size-base * 1.5;
+  line-height: $line-height-base * 2;
+
+  small {
+    color: $stable;
+    font-size: $line-height-base * .75;
+  }
+}
+
+// Set font for forms
+label,
+input,
+button,
+select,
+textarea {
+  @include font-shorthand($font-size-base, normal, $line-height-base); // Set size, weight, line-height here
+}
+input,
+button,
+select,
+textarea {
+  font-family: $font-family-base; // And only set font-family here for those that need it (note the missing label element)
+}
+
+
+// Input List
+// -------------------------------
+
+.item-input {
+  @include display-flex();
+  @include align-items(center);
+  position: relative;
+  overflow: hidden;
+  padding: 6px 0 5px 16px;
+
+  input {
+    @include border-radius(0);
+    @include flex(1, 0, 220px);
+    @include appearance(none);
+    margin: 0;
+    padding-right: 24px;
+    background-color: transparent;
+  }
+
+  .button .icon {
+    @include flex(0, 0, 24px);
+    position: static;
+    display: inline-block;
+    height: auto;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .button-bar {
+    @include border-radius(0);
+    @include flex(1, 0, 220px);
+    @include appearance(none);
+  }
+
+  .icon {
+    min-width: 14px;
+  }
+}
+
+.item-input-inset {
+  @include display-flex();
+  @include align-items(center);
+  position: relative;
+  overflow: hidden;
+  padding: ($item-padding / 3) * 2;
+}
+
+.item-input-wrapper {
+  @include display-flex();
+  @include flex(1, 0);
+  @include align-items(center);
+  @include border-radius(4px);
+  padding-right: 8px;
+  padding-left: 8px;
+  background: #eee;
+}
+
+.item-input-inset .item-input-wrapper input {
+  padding-left: 4px;
+  height: 29px;
+  background: transparent;
+  line-height: 18px;
+}
+
+.item-input-wrapper ~ .button {
+  margin-left: ($item-padding / 3) * 2;
+}
+
+.input-label {
+  @include flex(1, 0, 100px);
+  display: table;
+  padding: 7px 10px 7px 0px;
+  max-width: 200px;
+  width: 35%;
+  color: $input-label-color;
+  font-size: 16px;
+}
+
+.placeholder-icon {
+  color: #aaa;
+  &:first-child {
+    padding-right: 6px;
+  }
+  &:last-child {
+    padding-left: 6px;
+  }
+}
+
+.item-stacked-label {
+  display: block;
+  background-color: transparent;
+  box-shadow: none;
+
+  .input-label, .icon {
+    display: inline-block;
+    padding: 4px 0 0 0px;
+    vertical-align: middle;
+  }
+}
+
+.item-stacked-label input,
+.item-stacked-label textarea {
+  @include border-radius(2px);
+  padding: 4px 8px 3px 0;
+  border: none;
+  background-color: $input-bg;
+}
+.item-stacked-label input {
+  overflow: hidden;
+  height: $line-height-computed + $font-size-base + 12px;
+}
+
+.item-floating-label {
+  display: block;
+  background-color: transparent;
+  box-shadow: none;
+
+  .input-label {
+    position: relative;
+    padding: 5px 0 0 0;
+    opacity: 0;
+    top: 10px;
+    @include transition(opacity .15s ease-in, top .2s linear);
+
+    &.has-input {
+      opacity: 1;
+      top: 0;
+      @include transition(opacity .15s ease-in, top .2s linear);
+    }
+  }
+}
+
+
+// Form Controls
+// -------------------------------
+
+// Shared size and type resets
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"] {
+  display: block;
+  padding-top: 2px;
+  padding-left: 0;
+  height: $line-height-computed + $font-size-base;
+  color: $input-color;
+  vertical-align: middle;
+  font-size: $font-size-base;
+  line-height: $font-size-base + 2;
+}
+
+.platform-ios,
+.platform-android {
+  input[type="datetime-local"],
+  input[type="date"],
+  input[type="month"],
+  input[type="time"],
+  input[type="week"] {
+    padding-top: 8px;
+  }
+}
+
+.item-input {
+  input,
+  textarea {
+    width: 100%;
+  }
+}
+
+textarea {
+  padding-left: 0;
+  @include placeholder($input-color-placeholder, -3px);
+}
+
+// Reset height since textareas have rows
+textarea {
+  height: auto;
+}
+
+// Everything else
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"] {
+  border: 0;
+}
+
+// Position radios and checkboxes better
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 0;
+  line-height: normal;
+}
+
+// Reset width of input images, buttons, radios, checkboxes
+.item-input {
+  input[type="file"],
+  input[type="image"],
+  input[type="submit"],
+  input[type="reset"],
+  input[type="button"],
+  input[type="radio"],
+  input[type="checkbox"] {
+    width: auto; // Override of generic input selector
+  }
+}
+
+// Set the height of file to match text inputs
+input[type="file"] {
+  line-height: $input-height-base;
+}
+
+// Text input classes to hide text caret during scroll
+.previous-input-focus,
+.cloned-text-input + input,
+.cloned-text-input + textarea {
+  position: absolute !important;
+  left: -9999px;
+  width: 200px;
+}
+
+
+// Placeholder
+// -------------------------------
+input,
+textarea {
+  @include placeholder();
+}
+
+
+// DISABLED STATE
+// -------------------------------
+
+// Disabled and read-only inputs
+input[disabled],
+select[disabled],
+textarea[disabled],
+input[readonly]:not(.cloned-text-input),
+textarea[readonly]:not(.cloned-text-input),
+select[readonly] {
+  background-color: $input-bg-disabled;
+  cursor: not-allowed;
+}
+// Explicitly reset the colors here
+input[type="radio"][disabled],
+input[type="checkbox"][disabled],
+input[type="radio"][readonly],
+input[type="checkbox"][readonly] {
+  background-color: transparent;
+}
