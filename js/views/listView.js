@@ -18,7 +18,31 @@
     end: function(e) {
     },
     isSameItem: function(item) {
-      return false;
+      return false; ReorderDrag.prototype.end = function(e, doneCallback) {
+
+    for (var i = 0; i < this._currentDrag.items.length; i ++) {
+      this._currentDrag.items[i].style[ionic.CSS.TRANSFORM] = 'translate3d(0, 0, 0)';;
+    }
+
+    if (!this._currentDrag) {
+      doneCallback && doneCallback();
+      return;
+    }
+
+    // Reposition the element
+    this.el.classList.remove(ITEM_REORDERING_CLASS);
+    this.el.style[ionic.CSS.TRANSFORM] = '';
+
+    this.onReorder && this.onReorder(this.el, this._currentDrag.startIndex, this._currentDrag.finalIndex);
+
+    this._currentDrag = {
+      placeholder: null,
+      content: null
+    };
+
+    this._currentDrag = null;
+    doneCallback && doneCallback();
+  };
     }
   };
 
@@ -224,30 +248,56 @@
       (this._currentDrag.elementHeight / 2) -
       this.listElTrueTop;
     this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(0, ' + y + 'px, 0)';
+
+    var pos = this._currentDrag.currentY;
+    if (this._currentDrag.dropSpots) {
+      this._currentDrag.finalIndex = 0;
+      for (var i = 0; i < this._currentDrag.items.length; i ++) {
+        if (pos >= this._currentDrag.dropSpots[i]) {
+          this._currentDrag.finalIndex = i;
+        }
+      }
+      for (var i = 0; i < this._currentDrag.items.length; i ++) {
+        if (this._currentDrag.items[i] != this.el) {
+          if (i < this._currentDrag.finalIndex || (i === this._currentDrag.finalIndex && this._currentDrag.finalIndex > this._currentDrag.startIndex)) {
+            this._currentDrag.items[i].style[ionic.CSS.TRANSFORM] = 'translate3d(0, 0, 0)';;
+          } else  {
+            this._currentDrag.items[i].style[ionic.CSS.TRANSFORM] = 'translate3d(0, ' + this._currentDrag.elementHeight + 'px, 0)';;
+          }
+        }
+      }
+    }
   };
 
   ReorderDrag.prototype.deregister = function() {
     this.listEl = this.el = this.scrollEl = this.scrollView = null;
   };
 
-  ReorderDrag.prototype.start = function(e) {
+   ReorderDrag.prototype.start = function(e) {
     var content;
 
     var startIndex = ionic.DomUtil.getChildIndex(this.el, this.el.nodeName.toLowerCase());
     var elementHeight = this.el.scrollHeight;
-    var placeholder = this.el.cloneNode(true);
+    var self = this;
+    var items = Array.prototype.slice.call(this.el.parentNode.children)
+      .filter(function(el) {
+        return el.nodeName === self.el.nodeName;
+      });
+    var dropSpots = [];
+    for (var i = 0, len = items.length; i < len; i++) {
+      dropSpots.push(items[i].offsetTop);
+    }
 
-    placeholder.classList.add(ITEM_PLACEHOLDER_CLASS);
-
-    this.el.parentNode.insertBefore(placeholder, this.el);
     this.el.classList.add(ITEM_REORDERING_CLASS);
 
     this._currentDrag = {
       elementHeight: elementHeight,
       startIndex: startIndex,
-      placeholder: placeholder,
+      finalIndex: startIndex,
       scrollHeight: scroll,
-      list: placeholder.parentNode
+      list: this.el.parentNode,
+      dropSpots: dropSpots,
+      items: items
     };
 
     this._moveElement(e);
@@ -307,62 +357,31 @@
     }
   });
 
-  // When an item is dragged, we need to reorder any items for sorting purposes
-  ReorderDrag.prototype._getReorderIndex = function() {
-    var self = this;
+   ReorderDrag.prototype.end = function(e, doneCallback) {
 
-    var placeholder = self._currentDrag.placeholder;
-    var siblings = Array.prototype.slice.call(self._currentDrag.placeholder.parentNode.children)
-      .filter(function(el) {
-        return el.nodeName === self.el.nodeName && el !== self.el;
-      });
-
-    var dragOffsetTop = self._currentDrag.currentY;
-    var el;
-    for (var i = 0, len = siblings.length; i < len; i++) {
-      el = siblings[i];
-      if (i === len - 1) {
-        if (dragOffsetTop > el.offsetTop) {
-          return i;
-        }
-      } else if (i === 0) {
-        if (dragOffsetTop < el.offsetTop + el.offsetHeight) {
-          return i;
-        }
-      } else if (dragOffsetTop > el.offsetTop - el.offsetHeight / 2 &&
-                 dragOffsetTop < el.offsetTop + el.offsetHeight) {
-        return i;
-      }
+    for (var i = 0; i < this._currentDrag.items.length; i ++) {
+      this._currentDrag.items[i].style[ionic.CSS.TRANSFORM] = 'translate3d(0, 0, 0)';;
     }
-    return self._currentDrag.startIndex;
-  };
 
-  ReorderDrag.prototype.end = function(e, doneCallback) {
     if (!this._currentDrag) {
       doneCallback && doneCallback();
       return;
     }
 
-    var placeholder = this._currentDrag.placeholder;
-    var finalIndex = this._getReorderIndex();
-
     // Reposition the element
     this.el.classList.remove(ITEM_REORDERING_CLASS);
     this.el.style[ionic.CSS.TRANSFORM] = '';
 
-    placeholder.parentNode.insertBefore(this.el, placeholder);
-    placeholder.parentNode.removeChild(placeholder);
-
-    this.onReorder && this.onReorder(this.el, this._currentDrag.startIndex, finalIndex);
+    this.onReorder && this.onReorder(this.el, this._currentDrag.startIndex, this._currentDrag.finalIndex);
 
     this._currentDrag = {
       placeholder: null,
       content: null
     };
+
     this._currentDrag = null;
     doneCallback && doneCallback();
   };
-
 
 
   /**
