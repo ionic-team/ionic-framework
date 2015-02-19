@@ -1,0 +1,13 @@
+// Bar Mixins
+// --------------------------------------------------
+
+.bar-style(@bg-color, @border-color, @color) {
+  border-color: @border-color;
+  background-color: @bg-color;
+  background-image: linear-gradient(0deg, @border-color, @border-color 50%, transparent 50%);
+  color: @color;
+
+  .title {
+    color: @color;
+  }
+}

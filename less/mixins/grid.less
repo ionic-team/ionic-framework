@@ -1,0 +1,22 @@
+// Flexbox Mixins
+// --------------------------------------------------
+// http://philipwalton.github.io/solved-by-flexbox/
+// https://github.com/philipwalton/solved-by-flexbox
+
+
+.responsive-grid-break(@selector, @max-width) {
+  @media (max-width: @max-width) {
+   @sel: ~"@{selector}";
+   @{sel} {
+      flex-direction: column;
+
+      .col, .col-10, .col-20, .col-25, .col-33, .col-34, .col-50, .col-66, .col-67, .col-75, .col-80, .col-90 {
+        flex: 1;
+        margin-bottom: (@grid-padding-width * 3) / 2;
+        margin-left: 0;
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+  }
+}

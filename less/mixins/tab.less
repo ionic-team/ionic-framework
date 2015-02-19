@@ -1,0 +1,139 @@
+// Tabs Mixins
+// --------------------------------------------------
+
+
+.tabs-striped(@style, @color, @background) {
+  @styleselector: ~"@{style}";
+  &.@{styleselector} {
+    .tabs{
+      background-color: @background;
+    }
+    .tab-item {
+      color: rgba(red(@color), green(@color), blue(@color), @tabs-striped-off-opacity);
+      opacity: 1;
+      .badge{
+        opacity:@tabs-striped-off-opacity;
+      }
+      &.tab-item-active,
+      &.active,
+      &.activated {
+        margin-top: -@tabs-striped-border-width;
+        color: @color;
+        border-style: solid;
+        border-width: @tabs-striped-border-width 0 0 0;
+        border-color: @color;
+      }
+    }
+  }
+  &.tabs-top{
+    .tab-item {
+      &.tab-item-active,
+      &.active,
+      &.activated {
+        .badge {
+          top: 4%;
+        }
+      }
+    }
+  }
+}
+
+.tabs-background(@style, @color, @border-color) {
+  @styleselector: ~"@{style}";
+  .@{styleselector} {
+    .tabs,
+    &> .tabs{
+      background-color: @color;
+      background-image: linear-gradient(0deg, @border-color, @border-color 50%, transparent 50%);
+      border-color: @border-color;
+    }
+  }
+}
+
+.tabs-striped-background(@style, @color) {
+  @styleselector: ~"@{style}";
+  &.@{styleselector} {
+    .tabs {
+      background-color: @color;
+      background-image:none;
+    }
+  }
+}
+
+.tabs-color(@style, @color) {
+  @styleselector: ~"@{style}";
+  .@{styleselector} {
+    .tab-item {
+      color: rgba(red(@color), green(@color), blue(@color), @tabs-off-opacity);
+      opacity: 1;
+      .badge{
+        opacity:@tabs-off-opacity;
+      }
+      &.tab-item-active,
+      &.active,
+      &.activated {
+        color: @color;
+        border: 0 solid @color;
+        .badge{
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+.tabs-striped-color(@style, @color) {
+  @styleselector: ~"@{style}";
+  &.@{styleselector} {
+    .tab-item {
+      color: rgba(red(@color), green(@color), blue(@color), @tabs-striped-off-opacity);
+      opacity: 1;
+      .badge{
+        opacity:@tabs-striped-off-opacity;
+      }
+      &.tab-item-active,
+      &.active,
+      &.activated {
+        margin-top: -@tabs-striped-border-width;
+        color: @color;
+        border: 0 solid @color;
+        border-top-width: @tabs-striped-border-width;
+        .badge{
+          top:@tabs-striped-border-width;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+.tabs-standard-color(@style, @color, @off-color:@dark) {
+  @styleselector: ~"@{style}";
+  &.@{styleselector} {
+    .tab-item {
+      color: @off-color;
+      &.tab-item-active,
+      &.active,
+      &.activated {
+        color: @color;
+      }
+    }
+  }
+}
+
+// Tab Mixins
+// --------------------------------------------------
+
+.tab-style(@bg-color, @border-color, @color) {
+  border-color: @border-color;
+  background-color: @bg-color;
+  background-image: linear-gradient(0deg, @border-color, @border-color 50%, transparent 50%);
+  color: @color;
+}
+
+.tab-badge-style(@bg-color, @color) {
+  .tab-item .badge {
+    background-color: @bg-color;
+    color: @color;
+  }
+}

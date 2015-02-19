@@ -1,0 +1,29 @@
+// Font Mixins
+// --------------------------------------------------
+
+.font-family-serif() {
+  font-family: @serif-font-family;
+}
+.font-family-sans-serif() {
+  font-family: @sans-font-family;
+}
+.font-family-monospace() {
+  font-family: @mono-font-family;
+}
+.font-shorthand(@size: @base-font-size, @weight: normal, @line-height: @base-line-height) {
+  font-weight: @weight;
+  font-size: @size;
+  line-height: @line-height;
+}
+.font-serif(@size: @base-font-size, @weight: normal, @line-height: @base-line-height) {
+  .font-family-serif();
+  .font-shorthand(@size, @weight, @line-height);
+}
+.font-sans-serif(@size: @base-font-size, @weight: normal, @line-height: @base-line-height) {
+  .font-family-sans-serif();
+  .font-shorthand(@size, @weight, @line-height);
+}
+.font-monospace(@size: @base-font-size, @weight: normal, @line-height: @base-line-height) {
+  .font-family-monospace();
+  .font-shorthand(@size, @weight, @line-height);
+}

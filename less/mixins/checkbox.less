@@ -1,0 +1,16 @@
+// Checkbox Mixins
+// --------------------------------------------------
+
+.checkbox-style(@off-border-color, @on-bg-color, @on-border-color) {
+  & input:before,
+  & .checkbox-icon:before {
+    border-color: @off-border-color;
+  }
+
+  // what the background looks like when its checked
+  & input:checked:before,
+  & input:checked + .checkbox-icon:before {
+    background: @on-bg-color;
+    border-color: @on-border-color;
+  }
+}
