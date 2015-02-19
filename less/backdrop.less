@@ -3,12 +3,12 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: $z-index-backdrop;
+  z-index: @z-index-backdrop;
 
   width: 100%;
   height: 100%;
 
-  background-color: $loading-backdrop-bg-color;
+  background-color: @loading-backdrop-bg-color;
 
   visibility: hidden;
   opacity: 0;
@@ -20,5 +20,5 @@
     opacity: 1;
   }
 
-  @include transition($loading-backdrop-fadein-duration opacity linear);
+  transition: @loading-backdrop-fadein-duration opacity linear;
 }

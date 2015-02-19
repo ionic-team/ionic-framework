@@ -5,25 +5,25 @@
  */
 
 .bar {
-  @include display-flex();
-  @include translate3d(0,0,0);
-  @include user-select(none);
+  display: flex;
+  transform: translate3d(0,0,0);
+  user-select: none;
   position: absolute;
   right: 0;
   left: 0;
-  z-index: $z-index-bar;
+  z-index: @z-index-bar;
 
   box-sizing: border-box;
-  padding: $bar-padding-portrait;
+  padding: @bar-padding-portrait;
 
   width: 100%;
-  height: $bar-height;
+  height: @bar-height;
   border-width: 0;
   border-style: solid;
   border-top: 1px solid transparent;
-  border-bottom: 1px solid $bar-default-border;
+  border-bottom: 1px solid @bar-default-border;
 
-  background-color: $bar-default-bg;
+  background-color: @bar-default-bg;
 
   /* border-width: 1px will actually create 2 device pixels on retina */
   /* this nifty trick sets an actual 1px border on hi-res displays */
@@ -34,7 +34,7 @@
          (min-resolution: 144dpi),
          (min-resolution: 1.5dppx) {
     border: none;
-    background-image: linear-gradient(0deg, $bar-default-border, $bar-default-border 50%, transparent 50%);
+    background-image: linear-gradient(0deg, @bar-default-border, @bar-default-border 50%, transparent 50%);
     background-position: bottom;
     background-size: 100% 1px;
     background-repeat: no-repeat;
@@ -67,57 +67,57 @@
   }
 
   &.bar-light {
-    @include bar-style($bar-light-bg, $bar-light-border, $bar-light-text);
+	.bar-style(@bar-light-bg, @bar-light-border, @bar-light-text);
     &.bar-footer{
-      background-image: linear-gradient(180deg, $bar-light-border, $bar-light-border 50%, transparent 50%);
+      background-image: linear-gradient(180deg, @bar-light-border, @bar-light-border 50%, transparent 50%);
     }
   }
   &.bar-stable {
-    @include bar-style($bar-stable-bg, $bar-stable-border, $bar-stable-text);
+    .bar-style(@bar-stable-bg, @bar-stable-border, @bar-stable-text);
     &.bar-footer{
-      background-image: linear-gradient(180deg, $bar-stable-border, $bar-stable-border 50%, transparent 50%);
+      background-image: linear-gradient(180deg, @bar-stable-border, @bar-stable-border 50%, transparent 50%);
     }
   }
   &.bar-positive {
-    @include bar-style($bar-positive-bg, $bar-positive-border, $bar-positive-text);
+    .bar-style(@bar-positive-bg, @bar-positive-border, @bar-positive-text);
     &.bar-footer{
-      background-image: linear-gradient(180deg, $bar-positive-border, $bar-positive-border 50%, transparent 50%);
+      background-image: linear-gradient(180deg, @bar-positive-border, @bar-positive-border 50%, transparent 50%);
     }
   }
   &.bar-calm {
-    @include bar-style($bar-calm-bg, $bar-calm-border, $bar-calm-text);
+    .bar-style(@bar-calm-bg, @bar-calm-border, @bar-calm-text);
     &.bar-footer{
-      background-image: linear-gradient(180deg, $bar-calm-border, $bar-calm-border 50%, transparent 50%);
+      background-image: linear-gradient(180deg, @bar-calm-border, @bar-calm-border 50%, transparent 50%);
     }
   }
   &.bar-assertive {
-    @include bar-style($bar-assertive-bg, $bar-assertive-border, $bar-assertive-text);
+    .bar-style(@bar-assertive-bg, @bar-assertive-border, @bar-assertive-text);
     &.bar-footer{
-      background-image: linear-gradient(180deg, $bar-assertive-border, $bar-assertive-border 50%, transparent 50%);
+      background-image: linear-gradient(180deg, @bar-assertive-border, @bar-assertive-border 50%, transparent 50%);
     }
   }
   &.bar-balanced {
-    @include bar-style($bar-balanced-bg, $bar-balanced-border, $bar-balanced-text);
+    .bar-style(@bar-balanced-bg, @bar-balanced-border, @bar-balanced-text);
     &.bar-footer{
-      background-image: linear-gradient(180deg, $bar-balanced-border, $bar-positive-border 50%, transparent 50%);
+      background-image: linear-gradient(180deg, @bar-balanced-border, @bar-positive-border 50%, transparent 50%);
     }
   }
   &.bar-energized {
-    @include bar-style($bar-energized-bg, $bar-energized-border, $bar-energized-text);
+    .bar-style(@bar-energized-bg, @bar-energized-border, @bar-energized-text);
     &.bar-footer{
-      background-image: linear-gradient(180deg, $bar-energized-border, $bar-energized-border 50%, transparent 50%);
+      background-image: linear-gradient(180deg, @bar-energized-border, @bar-energized-border 50%, transparent 50%);
     }
   }
   &.bar-royal {
-    @include bar-style($bar-royal-bg, $bar-royal-border, $bar-royal-text);
+    .bar-style(@bar-royal-bg, @bar-royal-border, @bar-royal-text);
     &.bar-footer{
-      background-image: linear-gradient(180deg, $bar-royal-border, $bar-royal-border 50%, transparent 50%);
+      background-image: linear-gradient(180deg, @bar-royal-border, @bar-royal-border 50%, transparent 50%);
     }
   }
   &.bar-dark {
-    @include bar-style($bar-dark-bg, $bar-dark-border, $bar-dark-text);
+    .bar-style(@bar-dark-bg, @bar-dark-border, @bar-dark-text);
     &.bar-footer{
-      background-image: linear-gradient(180deg, $bar-dark-border, $bar-dark-border 50%, transparent 50%);
+      background-image: linear-gradient(180deg, @bar-dark-border, @bar-dark-border 50%, transparent 50%);
     }
   }
 
@@ -128,13 +128,13 @@
     top: 0;
     right: 0;
     left: 0;
-    z-index: $z-index-bar-title;
+    z-index: @z-index-bar-title;
     overflow: hidden;
 
     margin: 0 10px;
 
     min-width: 30px;
-    height: $bar-height - 1;
+    height: @bar-height - 1;
 
     text-align: center;
 
@@ -142,10 +142,10 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    font-size: $bar-title-font-size;
-    font-weight: $headings-font-weight;
+    font-size: @bar-title-font-size;
+    font-weight: @headings-font-weight;
 
-    line-height: $bar-height;
+    line-height: @bar-height;
 
     &.title-left {
       text-align: left;
@@ -160,13 +160,13 @@
   }
 
   .button {
-    z-index: $z-index-bar-button;
-    padding: 0 $button-bar-button-padding;
+    z-index: @z-index-bar-button;
+    padding: 0 @button-bar-button-padding;
     min-width: initial;
-    min-height: $button-bar-button-height - 1;
+    min-height: @button-bar-button-height - 1;
     font-weight: 400;
-    font-size: $button-bar-button-font-size;
-    line-height: $button-bar-button-height;
+    font-size: @button-bar-button-font-size;
+    line-height: @button-bar-button-height;
 
     &.button-icon:before,
     .icon:before,
@@ -175,33 +175,33 @@
     &.icon-right:before {
       padding-right: 2px;
       padding-left: 2px;
-      font-size: $button-bar-button-icon-size;
-      line-height: $button-bar-button-height;
+      font-size: @button-bar-button-icon-size;
+      line-height: @button-bar-button-height;
     }
 
     &.button-icon {
-      font-size: $bar-title-font-size;
+      font-size: @bar-title-font-size;
       .icon:before,
       &:before,
       &.icon-left:before,
       &.icon-right:before {
         vertical-align: top;
-        font-size: $button-large-icon-size;
-        line-height: $button-bar-button-height;
+        font-size: @button-large-icon-size;
+        line-height: @button-bar-button-height;
       }
     }
     &.button-clear {
       padding-right: 2px;
       padding-left: 2px;
       font-weight: 300;
-      font-size: $bar-title-font-size;
+      font-size: @bar-title-font-size;
 
       .icon:before,
       &.icon:before,
       &.icon-left:before,
       &.icon-right:before {
-        font-size: $button-large-icon-size;
-        line-height: $button-bar-button-height;
+        font-size: @button-large-icon-size;
+        line-height: @button-bar-button-height;
       }
     }
 
@@ -221,8 +221,8 @@
 
   .button-bar > .button,
   .buttons > .button {
-    min-height: $button-bar-button-height - 1;
-    line-height: $button-bar-button-height;
+    min-height: @button-bar-button-height - 1;
+    line-height: @button-bar-button-height;
   }
 
   .button-bar + .button,
@@ -281,56 +281,56 @@
 // Default styles for buttons inside of styled bars
 .bar-light {
   .button {
-    @include button-style($bar-light-bg, $bar-light-border, $bar-light-active-bg, $bar-light-active-border, $bar-light-text);
-    @include button-clear($bar-light-text, $bar-title-font-size);
+    .button-style(@bar-light-bg, @bar-light-border, @bar-light-active-bg, @bar-light-active-border, @bar-light-text);
+    .button-clear(@bar-light-text, @bar-title-font-size);
   }
 }
 .bar-stable {
   .button {
-    @include button-style($bar-stable-bg, $bar-stable-border, $bar-stable-active-bg, $bar-stable-active-border, $bar-stable-text);
-    @include button-clear($bar-stable-text, $bar-title-font-size);
+    .button-style(@bar-stable-bg, @bar-stable-border, @bar-stable-active-bg, @bar-stable-active-border, @bar-stable-text);
+    .button-clear(@bar-stable-text, @bar-title-font-size);
   }
 }
 .bar-positive {
   .button {
-    @include button-style($bar-positive-bg, $bar-positive-border, $bar-positive-active-bg, $bar-positive-active-border, $bar-positive-text);
-    @include button-clear(#fff, $bar-title-font-size);
+    .button-style(@bar-positive-bg, @bar-positive-border, @bar-positive-active-bg, @bar-positive-active-border, @bar-positive-text);
+    .button-clear(#fff, @bar-title-font-size);
   }
 }
 .bar-calm {
   .button {
-    @include button-style($bar-calm-bg, $bar-calm-border, $bar-calm-active-bg, $bar-calm-active-border, $bar-calm-text);
-    @include button-clear(#fff, $bar-title-font-size);
+    .button-style(@bar-calm-bg, @bar-calm-border, @bar-calm-active-bg, @bar-calm-active-border, @bar-calm-text);
+    .button-clear(#fff, @bar-title-font-size);
   }
 }
 .bar-assertive {
   .button {
-    @include button-style($bar-assertive-bg, $bar-assertive-border, $bar-assertive-active-bg, $bar-assertive-active-border, $bar-assertive-text);
-    @include button-clear(#fff, $bar-title-font-size);
+    .button-style(@bar-assertive-bg, @bar-assertive-border, @bar-assertive-active-bg, @bar-assertive-active-border, @bar-assertive-text);
+    .button-clear(#fff, @bar-title-font-size);
   }
 }
 .bar-balanced {
   .button {
-    @include button-style($bar-balanced-bg, $bar-balanced-border, $bar-balanced-active-bg, $bar-balanced-active-border, $bar-balanced-text);
-    @include button-clear(#fff, $bar-title-font-size);
+    .button-style(@bar-balanced-bg, @bar-balanced-border, @bar-balanced-active-bg, @bar-balanced-active-border, @bar-balanced-text);
+    .button-clear(#fff, @bar-title-font-size);
   }
 }
 .bar-energized {
   .button {
-    @include button-style($bar-energized-bg, $bar-energized-border, $bar-energized-active-bg, $bar-energized-active-border, $bar-energized-text);
-    @include button-clear(#fff, $bar-title-font-size);
+    .button-style(@bar-energized-bg, @bar-energized-border, @bar-energized-active-bg, @bar-energized-active-border, @bar-energized-text);
+    .button-clear(#fff, @bar-title-font-size);
   }
 }
 .bar-royal {
   .button {
-    @include button-style($bar-royal-bg, $bar-royal-border, $bar-royal-active-bg, $bar-royal-active-border, $bar-royal-text);
-    @include button-clear(#fff, $bar-title-font-size);
+    .button-style(@bar-royal-bg, @bar-royal-border, @bar-royal-active-bg, @bar-royal-active-border, @bar-royal-text);
+    .button-clear(#fff, @bar-title-font-size);
   }
 }
 .bar-dark {
   .button {
-    @include button-style($bar-dark-bg, $bar-dark-border, $bar-dark-active-bg, $bar-dark-active-border, $bar-dark-text);
-    @include button-clear(#fff, $bar-title-font-size);
+    .button-style(@bar-dark-bg, @bar-dark-border, @bar-dark-active-bg, @bar-dark-active-border, @bar-dark-text);
+    .button-clear(#fff, @bar-title-font-size);
   }
 }
 
@@ -356,7 +356,7 @@
   border-bottom-width: 0;
   background-position: top;
 
-  height: $bar-footer-height;
+  height: @bar-footer-height;
 
   &.item-input-inset {
     position: absolute;
@@ -369,16 +369,16 @@
 }
 
 .bar-subheader {
-  top: $bar-height;
+  top: @bar-height;
   display: block;
 
-  height: $bar-subheader-height;
+  height: @bar-subheader-height;
 }
 .bar-subfooter {
-  bottom: $bar-footer-height;
+  bottom: @bar-footer-height;
   display: block;
 
-  height: $bar-subfooter-height;
+  height: @bar-subfooter-height;
 }
 
 .nav-bar-block {
@@ -386,7 +386,7 @@
   top: 0;
   right: 0;
   left: 0;
-  z-index: $z-index-bar;
+  z-index: @z-index-bar;
 }
 
 .bar .back-button.hide,

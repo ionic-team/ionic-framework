@@ -9,13 +9,13 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: $z-index-popover;
+  z-index: @z-index-popover;
   width: 100%;
   height: 100%;
-  background-color: $popover-backdrop-bg-inactive;
+  background-color: @popover-backdrop-bg-inactive;
 
   &.active {
-    background-color: $popover-backdrop-bg-active;
+    background-color: @popover-backdrop-bg-active;
   }
 }
 
@@ -23,14 +23,14 @@
   position: absolute;
   top: 25%;
   left: 50%;
-  z-index: $z-index-popover;
+  z-index: @z-index-popover;
   display: block;
   margin-top: 12px;
-  margin-left: -$popover-width / 2;
-  height: $popover-height;
-  width: $popover-width;
-  background-color: $popover-bg-color;
-  box-shadow: $popover-box-shadow;
+  margin-left: -@popover-width / 2;
+  height: @popover-height;
+  width: @popover-width;
+  background-color: @popover-bg-color;
+  box-shadow: @popover-box-shadow;
   opacity: 0;
 
   .item:first-child {
@@ -50,7 +50,7 @@
 // Set popover border-radius
 .popover,
 .popover .bar-header {
-  border-radius: $popover-border-radius;
+  border-radius: @popover-border-radius;
 }
 .popover .scroll-content {
   z-index: 1;
@@ -73,16 +73,16 @@
 .platform-ios {
 
   .popover {
-    box-shadow: $popover-box-shadow-ios;
+    box-shadow: @popover-box-shadow-ios;
   }
 
   .popover,
   .popover .bar-header {
-    border-radius: $popover-border-radius-ios;
+    border-radius: @popover-border-radius-ios;
   }
   .popover .scroll-content {
     margin: 8px 0;
-    border-radius: $popover-border-radius-ios;
+    border-radius: @popover-border-radius-ios;
   }
   .popover .scroll-content.has-header {
     margin-top: 0;
@@ -101,10 +101,10 @@
       left: 5px;
       width: 20px;
       height: 20px;
-      background-color: $popover-bg-color;
+      background-color: @popover-bg-color;
       border-radius: 3px;
       content: '';
-      @include rotate(-45deg);
+      transform: rotate(-45deg);
     }
   }
   .popover-bottom .popover-arrow {
@@ -122,12 +122,12 @@
 
   .popover {
     margin-top: -32px;
-    background-color: $popover-bg-color-android;
-    box-shadow: $popover-box-shadow-android;
+    background-color: @popover-bg-color-android;
+    box-shadow: @popover-box-shadow-android;
 
     .item {
-      border-color: $popover-bg-color-android;
-      background-color: $popover-bg-color-android;
+      border-color: @popover-bg-color-android;
+      background-color: @popover-bg-color-android;
       color: #4d4d4d;
     }
     &.popover-bottom {
@@ -161,8 +161,8 @@
 
 
 // wider popover on larger viewports
-@media (min-width: $popover-large-break-point) {
+@media (min-width: @popover-large-break-point) {
   .popover {
-    width: $popover-large-width;
+    width: @popover-large-width;
   }
 }
