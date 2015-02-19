@@ -50,9 +50,9 @@
   // used to prevent the browser from doing its native behavior. this doesnt
   // prevent the scrolling, but cancels the contextmenu, tap highlighting, etc
 
-  @include user-select(none);
-  @include touch-callout(none);
-  @include tap-highlight-transparent();
+  user-select: none;
+  -webkit-touch-callout: none;
+  .tap-highlight-transparent();
 
   -webkit-user-drag: none;
 
@@ -69,12 +69,12 @@
   bottom: 0;
   left: 0;
   opacity: 0;
-  z-index: $z-index-click-block;
-  @include translate3d(0, 0, 0);
+  z-index: @z-index-click-block;
+  transform: translate3d(0, 0, 0);
   overflow: hidden;
 }
 .click-block-hide {
-  @include translate3d(-9999px, 0, 0);
+  transform: translate3d(-9999px, 0, 0);
 }
 
 .no-resize {
@@ -118,27 +118,27 @@
  */
 
 .padding {
-  padding: $content-padding;
+  padding: @content-padding;
 }
 
 .padding-top,
 .padding-vertical {
-  padding-top: $content-padding;
+  padding-top: @content-padding;
 }
 
 .padding-right,
 .padding-horizontal {
-  padding-right: $content-padding;
+  padding-right: @content-padding;
 }
 
 .padding-bottom,
 .padding-vertical {
-  padding-bottom: $content-padding;
+  padding-bottom: @content-padding;
 }
 
 .padding-left,
 .padding-horizontal {
-  padding-left: $content-padding;
+  padding-left: @content-padding;
 }
 
 
@@ -165,7 +165,7 @@
  */
 
 .rounded {
-  border-radius: $border-radius-base;
+  border-radius: @border-radius-base;
 }
 
 
@@ -178,93 +178,93 @@
  */
 
 .light, a.light {
-  color: $light;
+  color: @light;
 }
 .light-bg {
-  background-color: $light;
+  background-color: @light;
 }
 .light-border {
-  border-color: $button-light-border;
+  border-color: @button-light-border;
 }
 
 .stable, a.stable {
-  color: $stable;
+  color: @stable;
 }
 .stable-bg {
-  background-color: $stable;
+  background-color: @stable;
 }
 .stable-border {
-  border-color: $button-stable-border;
+  border-color: @button-stable-border;
 }
 
 .positive, a.positive {
-  color: $positive;
+  color: @positive;
 }
 .positive-bg {
-  background-color: $positive;
+  background-color: @positive;
 }
 .positive-border {
-  border-color: $button-positive-border;
+  border-color: @button-positive-border;
 }
 
 .calm, a.calm {
-  color: $calm;
+  color: @calm;
 }
 .calm-bg {
-  background-color: $calm;
+  background-color: @calm;
 }
 .calm-border {
-  border-color: $button-calm-border;
+  border-color: @button-calm-border;
 }
 
 .assertive, a.assertive {
-  color: $assertive;
+  color: @assertive;
 }
 .assertive-bg {
-  background-color: $assertive;
+  background-color: @assertive;
 }
 .assertive-border {
-  border-color: $button-assertive-border;
+  border-color: @button-assertive-border;
 }
 
 .balanced, a.balanced {
-  color: $balanced;
+  color: @balanced;
 }
 .balanced-bg {
-  background-color: $balanced;
+  background-color: @balanced;
 }
 .balanced-border {
-  border-color: $button-balanced-border;
+  border-color: @button-balanced-border;
 }
 
 .energized, a.energized {
-  color: $energized;
+  color: @energized;
 }
 .energized-bg {
-  background-color: $energized;
+  background-color: @energized;
 }
 .energized-border {
-  border-color: $button-energized-border;
+  border-color: @button-energized-border;
 }
 
 .royal, a.royal {
-  color: $royal;
+  color: @royal;
 }
 .royal-bg {
-  background-color: $royal;
+  background-color: @royal;
 }
 .royal-border {
-  border-color: $button-royal-border;
+  border-color: @button-royal-border;
 }
 
 .dark, a.dark {
-  color: $dark;
+  color: @dark;
 }
 .dark-bg {
-  background-color: $dark;
+  background-color: @dark;
 }
 .dark-border {
-  border-color: $button-dark-border;
+  border-color: @button-dark-border;
 }
 
 [collection-repeat] {

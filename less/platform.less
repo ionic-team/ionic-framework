@@ -11,33 +11,33 @@
   // if its in Cordova, and set to fullscreen, then disregard the bump.
   &:not(.fullscreen) {
     .bar-header:not(.bar-subheader) {
-      height: $bar-height + $ios-statusbar-height;
+      height: @bar-height + @ios-statusbar-height;
 
       &.item-input-inset .item-input-wrapper {
         margin-top: 19px !important;
       }
 
       > * {
-        margin-top: $ios-statusbar-height;
+        margin-top: @ios-statusbar-height;
       }
     }
     .tabs-top > .tabs,
     .tabs.tabs-top {
-      top: $bar-height + $ios-statusbar-height;
+      top: @bar-height + @ios-statusbar-height;
     }
 
     .has-header,
     .bar-subheader {
-      top: $bar-height + $ios-statusbar-height;
+      top: @bar-height + @ios-statusbar-height;
     }
     .has-subheader {
-      top: $bar-height + $bar-subheader-height + $ios-statusbar-height;
+      top: @bar-height + @bar-subheader-height + @ios-statusbar-height;
     }
     .has-header.has-tabs-top {
-      top: $bar-height + $tabs-height + $ios-statusbar-height;
+      top: @bar-height + @tabs-height + @ios-statusbar-height;
     }
     .has-header.has-subheader.has-tabs-top {
-      top: $bar-height + $bar-subheader-height + $tabs-height + $ios-statusbar-height;
+      top: @bar-height + @bar-subheader-height + @tabs-height + @ios-statusbar-height;
     }
   }
   &.status-bar-hide {
