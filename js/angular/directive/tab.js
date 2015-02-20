@@ -100,6 +100,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
         var tabsCtrl = ctrls[0];
         var tabCtrl = ctrls[1];
         var isTabContentAttached = false;
+        $scope.$tabSelected = false;
 
         $ionicBind($scope, $attr, {
           onSelect: '&',
