@@ -47,9 +47,9 @@
  * </ion-nav-bar>
  * ```
  * ```js
- * function MyCtrl($scope, $ionicNavBarDelegate) {
+ * function MyCtrl($scope, $ionicHistory) {
  *   $scope.myGoBack = function() {
- *     $ionicNavBarDelegate.back();
+ *     $ionicHistory.goBack();
  *   };
  * }
  * ```
