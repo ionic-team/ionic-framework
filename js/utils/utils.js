@@ -183,6 +183,7 @@
       var parent = scope.$parent;
       scope.$$disconnected = true;
       scope.$broadcast('$ionic.disconnectScope');
+
       // See Scope.$destroy
       if (parent.$$childHead === scope) {
         parent.$$childHead = scope.$$nextSibling;

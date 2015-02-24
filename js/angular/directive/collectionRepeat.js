@@ -190,15 +190,21 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window) {
       repeatManager && repeatManager.destroy();
       repeatManager = null;
     });
+
+    var isDisconnected;
+    scope.$on('$ionic.disconnectScope', function() {
+      isDisconnected = true;
+    });
+    scope.$on('$ionic.reconnectScope', function() {
+      isDisconnected = false;
+    });
     navViewCtrl && navViewCtrl.scope.$on('$ionicView.afterEnter', function() {
-      if (refreshDimensions.queued) {
-        refreshDimensions();
-      }
+      if (refreshDimensions.queued) refreshDimensions();
     });
 
     // Make sure this resize actually changed the size of the screen
     function validateResize() {
-      var h = window.innerHeight || screen.height, w = window.innerWidth || screen.width;
+      var h = element[0].offsetHeight, w = element[0].offsetWidth;
       if (w && h && (validateResize.height !== h || validateResize.width !== w)) {
         refreshDimensions();
       }
@@ -208,7 +214,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window) {
     function refreshDimensions() {
       // If we're disconnected, don't refresh the dimensions. But mark that we need to once
       // the scope reconnects.
-      if (scope.$$disconnected) return (refreshDimensions.queued = true);
+      if (isDisconnected) return (refreshDimensions.queued = true);
       refreshDimensions.queued = false;
 
       if (heightData.computed || widthData.computed) {
