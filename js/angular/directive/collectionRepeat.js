@@ -446,6 +446,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
 
       isDataReady = true;
       if (isLayoutReady && isDataReady) {
+        scrollView.resize();
         forceRerender();
       }
     };
