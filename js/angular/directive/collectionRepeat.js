@@ -4,7 +4,6 @@
  * @restrict A
  * @name collectionRepeat
  * @module ionic
- * @description
  * @codepen mFygh
  * @description
  * `collection-repeat` allows an app to show huge lists of items much more performantly than
