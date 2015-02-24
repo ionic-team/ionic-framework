@@ -190,7 +190,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window) {
       repeatManager = null;
     });
     scope.$on('$ionic.reconnectScope', function() {
-      if (refreshDimensions.queued) refreshDimensions();
+      refreshDimensions();
     });
 
     // Make sure this resize actually changed the size of the screen
@@ -510,8 +510,8 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
           item = itemsShownMap[i];
           delete itemsShownMap[i];
           itemsLeaving.push(item);
-          item.scope.$broadcast('$collectionRepeatChange');
           item.isShown = false;
+          item.scope.$broadcast('$collectionRepeatChange');
         }
       }
 
