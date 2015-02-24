@@ -81,8 +81,8 @@ var ONE_PX_TRANSPARENT_IMG_SRC = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP//
 var WIDTH_HEIGHT_REGEX = /height:.*?px;\s*width:.*?px/;
 var DEFAULT_RENDER_BUFFER = 10;
 
-CollectionRepeatDirective.$inject = ['$ionicCollectionManager', '$parse', '$window'];
-function CollectionRepeatDirective($ionicCollectionManager, $parse, $window) {
+CollectionRepeatDirective.$inject = ['$ionicCollectionManager', '$parse', '$window', '$$rAF'];
+function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$rAF) {
   return {
     restrict: 'A',
     priority: 1000,
@@ -173,6 +173,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window) {
       scrollView.__content.appendChild(afterItemsContainer[0]);
     }
 
+    $$rAF(refreshDimensions);
     scrollCtrl.$element.one('scroll.init', refreshDimensions);
 
     var onWindowResize = ionic.animationFrameThrottle(validateResize);
@@ -298,6 +299,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window) {
           computedStyleNode = clone[0];
         });
       }
+      computedStyleScope[keyExpr] = ($parse(listExpr)(scope) || [])[0];
       containerNode.appendChild(computedStyleNode);
 
       var style = $window.getComputedStyle(computedStyleNode);
