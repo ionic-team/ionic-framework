@@ -86,12 +86,13 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window) {
     priority: 1000,
     transclude: 'element',
     $$tlb: true,
-    require: '^$ionicScroll',
+    require: ['^$ionicScroll', '^?ionNavView'],
     link: postLink
   };
 
-  function postLink(scope, element, attr, scrollCtrl, transclude) {
-
+  function postLink(scope, element, attr, ctrls, transclude) {
+    var scrollCtrl = ctrls[0];
+    var navViewCtrl = ctrls[1];
     var scrollView = scrollCtrl.scrollView;
     var node = element[0];
     var containerNode = angular.element('<div class="collection-repeat-container">')[0];
@@ -189,18 +190,16 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window) {
       repeatManager && repeatManager.destroy();
       repeatManager = null;
     });
-    scope.$on('$ionic.reconnectScope', function() {
+    navViewCtrl && navViewCtrl.scope.$on('$ionicView.afterEnter', function() {
       if (refreshDimensions.queued) {
-        $$rAF(function() {
-          $$rAF(refreshDimensions);
-        });
+        refreshDimensions();
       }
     });
 
     // Make sure this resize actually changed the size of the screen
     function validateResize() {
       var h = window.innerHeight || screen.height, w = window.innerWidth || screen.width;
-      if (validateResize.height !== h || validateResize.width !== w) {
+      if (w && h && (validateResize.height !== h || validateResize.width !== w)) {
         refreshDimensions();
       }
       validateResize.height = h;
