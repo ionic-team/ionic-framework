@@ -29,6 +29,7 @@ var ITEM_TPL_CONTENT =
 */
 IonicModule
 .directive('ionItem', function() {
+      var nextId = 0;
   return {
     restrict: 'E',
     controller: ['$scope', '$element', function($scope, $element) {
@@ -63,19 +64,12 @@ IonicModule
           return $attrs.target || '_self';
         };
 
-        $scope.$on('$ionic.disconnectScope', cleanupDragOp);
-
-        function cleanupDragOp() {
-          // lazily fetch list parent controller
-          listCtrl || (listCtrl = $element.controller('ionList'));
-          if (!listCtrl || !listCtrl.listView) return;
-
-          var lastDragOp = listCtrl.listView._lastDragOp || {};
-          if (lastDragOp.item === $element[0]) {
-            listCtrl.listView.clearDragEffects(true);
-          }
+        var content = $element[0].querySelector('.item-content');
+        if (content) {
+          $scope.$on('$collectionRepeatChange', function() {
+            content && (content.style[ionic.CSS.TRANSFORM] = 'translate3d(0,0,0)');
+          });
         }
-
       };
 
     }

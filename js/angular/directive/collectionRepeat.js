@@ -510,6 +510,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
           item = itemsShownMap[i];
           delete itemsShownMap[i];
           itemsLeaving.push(item);
+          item.scope.$broadcast('$collectionRepeatChange');
           item.isShown = false;
         }
       }

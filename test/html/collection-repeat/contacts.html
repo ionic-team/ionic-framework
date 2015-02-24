@@ -24,16 +24,17 @@
   </ion-header-bar>
   <ion-content direction="y">
     <h2> stuff before</h2>
-    <div class="list">
+    <ion-list can-swipe="true">
       <div collection-repeat="item in contacts | filter:filter | orderBy:'last_name' | ionLetterDividers:'last_name'"
         divider-collection-repeat
         force-refresh-images>
-        <a class="item item-avatar">
+        <ion-item class="item item-avatar">
           <img ng-src="http://lorempixel.com/60/60?q={{$index}}">
           <h2>{{item.first_name+' '+item.last_name}}</h2>
           <p>{{$index}}</p>
-        </a>
-      </div>
+          <ion-option-button>HELLO</ion-option-button>
+        </ion-item>
+      </ion-item>
     </div>
       HELLO
       <div class="card">interim</div>
