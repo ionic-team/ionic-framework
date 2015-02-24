@@ -173,9 +173,9 @@ describe('collectionRepeat', function() {
       scrollView.__clientHeight = 40;
       angular.element($window).triggerHandler('resize');
 
-      expect(activeItems().length).toBe(2);
-      expect(activeItemContents()).toEqual(['2','3'])
-      expect(activeItemIds()).toEqual(['item_2','item_0']);
+      expect(activeItems().length).toBe(3);
+      expect(activeItemContents()).toEqual(['2','3','4'])
+      expect(activeItemIds()).toEqual(['item_2','item_0','item_1']);
     }));
   });
 
@@ -229,9 +229,9 @@ describe('collectionRepeat', function() {
       scrollView.__clientHeight = 40;
       angular.element($window).triggerHandler('resize');
 
-      expect(activeItems().length).toBe(2);
-      expect(activeItemContents()).toEqual(['2','3'])
-      expect(activeItemIds()).toEqual(['item_2','item_3']);
+      expect(activeItems().length).toBe(5);
+      expect(activeItemContents()).toEqual(['2','3','4','5','6'])
+      expect(activeItemIds()).toEqual(['item_2','item_3','item_4','item_0','item_1']);
     }));
 
   });

@@ -89,13 +89,11 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window) {
     priority: 1000,
     transclude: 'element',
     $$tlb: true,
-    require: ['^$ionicScroll', '^?ionNavView'],
+    require: '^$ionicScroll',
     link: postLink
   };
 
-  function postLink(scope, element, attr, ctrls, transclude) {
-    var scrollCtrl = ctrls[0];
-    var navViewCtrl = ctrls[1];
+  function postLink(scope, element, attr, scrollCtrl, transclude) {
     var scrollView = scrollCtrl.scrollView;
     var node = element[0];
     var containerNode = angular.element('<div class="collection-repeat-container">')[0];
@@ -194,17 +192,6 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window) {
       repeatManager = null;
     });
 
-    var isDisconnected;
-    scope.$on('$ionic.disconnectScope', function() {
-      isDisconnected = true;
-    });
-    scope.$on('$ionic.reconnectScope', function() {
-      isDisconnected = false;
-    });
-    navViewCtrl && navViewCtrl.scope.$on('$ionicView.afterEnter', function() {
-      if (refreshDimensions.queued) refreshDimensions();
-    });
-
     // Make sure this resize actually changed the size of the screen
     function validateResize() {
       var h = element[0].offsetHeight, w = element[0].offsetWidth;
@@ -215,11 +202,6 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window) {
       validateResize.width = w;
     }
     function refreshDimensions() {
-      // If we're disconnected, don't refresh the dimensions. But mark that we need to once
-      // the scope reconnects.
-      if (isDisconnected) return (refreshDimensions.queued = true);
-      refreshDimensions.queued = false;
-
       if (heightData.computed || widthData.computed) {
         computeStyleDimensions();
       }
