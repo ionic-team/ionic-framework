@@ -15,11 +15,14 @@
  * This means that on a phone screen that can fit eight items, only the eight items matching
  * the current scroll position will be rendered.
  *
- * **Basics**:
+ * **The Basics**:
  *
  * - The data given to collection-repeat must be an array.
  * - If the `item-height` and `item-width` attributes are not supplied, it will be assumed that
  *   every item in the list's dimensions are the same as the first item's dimensions.
+ * - Don't use angular one-time binding (`::`) with collection-repeat. The scope of each item is
+ *   assigned new data and re-digested as you scroll. Bindings need to update, and one-time bindings
+ *   won't.
  *
  * **Performance Tips**:
  *
