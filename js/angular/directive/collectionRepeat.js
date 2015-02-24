@@ -190,7 +190,11 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window) {
       repeatManager = null;
     });
     scope.$on('$ionic.reconnectScope', function() {
-      refreshDimensions();
+      if (refreshDimensions.queued) {
+        $$rAF(function() {
+          $$rAF(refreshDimensions);
+        });
+      }
     });
 
     // Make sure this resize actually changed the size of the screen
