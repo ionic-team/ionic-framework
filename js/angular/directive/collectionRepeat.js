@@ -202,7 +202,6 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       }
     }
     function refreshDimensions() {
-      console.log('refreshDimensions', validateResize.height, validateResize.width);
       if (heightData.computed || widthData.computed) {
         computeStyleDimensions();
       }
@@ -450,7 +449,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       isDataReady = true;
       if (isLayoutReady && isDataReady) {
         forceRerender();
-        setTimeout(scrollView.resize.bind(scrollView));
+        setTimeout(angular.bind(scrollView, scrollView.resize));
       }
     };
 
