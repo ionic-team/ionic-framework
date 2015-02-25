@@ -448,8 +448,8 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
 
       isDataReady = true;
       if (isLayoutReady && isDataReady) {
-        scrollView.resize();
         forceRerender();
+        setTimeout(scrollView.resize.bind(scrollView));
       }
     };
 
@@ -888,7 +888,6 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
         oldScrollValue = scrollValue;
         oldRenderStartIndex = renderStartIndex;
       };
-
     }
 
 
