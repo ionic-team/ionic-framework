@@ -74,11 +74,10 @@
 
   .popover {
     box-shadow: $popover-box-shadow-ios;
-  }
-
-  .popover,
-  .popover .bar-header {
     border-radius: $popover-border-radius-ios;
+  }
+  .popover .bar-header {
+    @include border-top-radius($popover-border-radius-ios);
   }
   .popover .scroll-content {
     margin: 8px 0;
