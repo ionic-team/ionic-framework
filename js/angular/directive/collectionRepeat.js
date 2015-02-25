@@ -267,7 +267,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
 
       var withoutQuotes = attrValue.replace(/(\'|\"|px|%)/g, '').trim();
       var isConstant = withoutQuotes.length && !/([a-zA-Z]|\$|:|\?)/.test(withoutQuotes);
-      dimensionData.attrValue = attrValue;;
+      dimensionData.attrValue = attrValue;
 
       // If it's a constant, it's either a percent or just a constant pixel number.
       if (isConstant) {
@@ -536,7 +536,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
 
         item = itemsShownMap[i] || (itemsShownMap[i] = itemsLeaving.length ? itemsLeaving.pop() :
                                     itemsPool.length ? itemsPool.shift() :
-                                    new RepeatItem())
+                                    new RepeatItem());
         itemsEntering.push(item);
         item.isShown = true;
 

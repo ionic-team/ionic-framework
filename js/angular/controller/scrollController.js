@@ -12,7 +12,6 @@ IonicModule
   '$document',
   '$ionicScrollDelegate',
   '$ionicHistory',
-  '$controller',
 function($scope,
          scrollViewOptions,
          $timeout,
@@ -20,8 +19,7 @@ function($scope,
          $location,
          $document,
          $ionicScrollDelegate,
-         $ionicHistory,
-         $controller) {
+         $ionicHistory) {
 
   var self = this;
   // for testing
