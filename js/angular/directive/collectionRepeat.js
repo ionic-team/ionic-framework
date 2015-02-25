@@ -210,7 +210,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
         heightData.value = computedStyleDimensions.height;
         if (!heightData.value) {
           throw new Error('collection-repeat tried to compute the height of elements "' +
-            listExpression + '", but was unable to. Please provide the "item-height" attribute. ' +
+            listExpr + '", but was unable to. Please provide the "item-height" attribute. ' +
             'http://ionicframework.com/docs/api/directive/collectionRepeat/');
         }
       } else if (!heightData.dynamic && heightData.getValue) {
@@ -221,7 +221,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
         widthData.value = computedStyleDimensions.width;
         if (!widthData.value) {
           throw new Error('collection-repeat tried to compute the width of elements in "' +
-            listExpression + '", but was unable to. Please provide the "item-width" attribute. ' +
+            listExpr + '", but was unable to. Please provide the "item-width" attribute. ' +
             'http://ionicframework.com/docs/api/directive/collectionRepeat/');
         }
       } else if (!widthData.dynamic && widthData.getValue) {
@@ -259,16 +259,18 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       } catch(e) {
         // If the parse fails and the value has `px` or `%` in it, surround the attr in
         // quotes, to attempt to let the user provide a simple `attr="100%"` or `attr="100px"`
-        if (attrValue.indexOf('%') !== -1 || attrValue.indexOf('px') !== -1) {
+        if (attrValue.trim().match(/\d+(px|%)$/)) {
           attrValue = '"' + attrValue + '"';
         }
         parsedValue = $parse(attrValue);
       }
 
-      dimensionData.attrValue = attrValue;
+      var withoutQuotes = attrValue.replace(/(\'|\"|px|%)/g, '').trim();
+      var isConstant = withoutQuotes.length && !/([a-zA-Z]|\$|:|\?)/.test(withoutQuotes);
+      dimensionData.attrValue = attrValue;;
 
       // If it's a constant, it's either a percent or just a constant pixel number.
-      if (parsedValue.constant) {
+      if (isConstant) {
         var intValue = parseInt(parsedValue());
 
         // For percents, store the percent getter on .getValue()
@@ -638,7 +640,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
     function RepeatItem() {
       var self = this;
       this.scope = scope.$new();
-      this.id = 'item_'+ (nextItemId++);
+      this.id = 'item'+ (nextItemId++);
       transclude(this.scope, function(clone) {
         self.element = clone;
         self.element.data('$$collectionRepeatItem', self);
@@ -696,7 +698,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
 
     function GridViewType() {
       this.getEstimatedSecondaryPos = function(index) {
-        return (index % this.estimatedItemsAcross) * this.estimatedPrimarySize;
+        return (index % this.estimatedItemsAcross) * this.estimatedSecondarySize;
       };
       this.getEstimatedPrimaryPos = function(index) {
         return Math.floor(index / this.estimatedItemsAcross) * this.estimatedPrimarySize;
@@ -762,6 +764,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       var calculateDimensions = isGridView ? calculateDimensionsGrid : calculateDimensionsList;
       var dimensionsIndex;
       var dimensions = [];
+
 
       // Get the dimensions at index. {width, height, left, top}.
       // We start with no dimensions calculated, then any time dimensions are asked for at an

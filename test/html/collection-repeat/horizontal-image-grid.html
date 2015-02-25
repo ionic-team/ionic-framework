@@ -12,11 +12,11 @@
   </head>
 
   <body ng-controller="MainCtrl">
-    <ion-content direction="x">
+    <ion-content direction="y">
       <img
         collection-repeat="item in items"
-        collection-item-width="8*($index%10)+100"
-        collection-item-height="33%"
+        item-width="33%"
+        item-height="33%"
         ng-src="http://lorempixel.com/180/180?q={{$index}}">
     </ion-content>
   <script>

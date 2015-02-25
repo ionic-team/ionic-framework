@@ -10,6 +10,7 @@ describe('collectionRepeat', function() {
         cb.apply(this, arguments);
       };
     });
+    spyOn(ionic, 'debounce').andCallFake(function(cb) { return cb; });
   }));
 
   var scrollView;
@@ -30,6 +31,7 @@ describe('collectionRepeat', function() {
       },
       __callback: angular.noop,
       resize: angular.noop,
+      setDimensions: angular.noop
     }, scrollViewData || {});
     var scrollCtrl = {
       scrollView: scrollView,
@@ -73,7 +75,7 @@ describe('collectionRepeat', function() {
     scrollView.__callback();
   }
 
-  function items() {
+  function getItems() {
     return [].slice.call(scrollView.__content.querySelectorAll('[collection-repeat]'))
       .map(function(node) {
         return angular.element(node).data('$$collectionRepeatItem')
@@ -84,13 +86,25 @@ describe('collectionRepeat', function() {
       });
   }
   function activeItems() {
-    return items()
-      .filter(function(item) {
-        return item.isShown;
-      })
-      .sort(function(a, b) {
-        return a.primaryPos + a.secondaryPos > b.primaryPos + b.secondaryPos ? 1 : -1;
+    var items = getItems().filter(function(item) {
+      return item.isShown;
+    });
+    //Group items by their primary position, sort those groups by secondary position,
+    //then concat them all together.
+    var activeItems = {};
+    var result = [];
+    items.forEach(function(item) {
+      (activeItems[item.primaryPos] || (activeItems[item.primaryPos] = [])).push(item);
+    });
+    for (var primaryPos in activeItems) {
+      activeItems[primaryPos] = activeItems[primaryPos].sort(function(a,b) {
+        return a.secondaryPos > b.secondaryPos ? 1 : -1;
       });
+    }
+    for (var primaryPos in activeItems) {
+      result = result.concat(activeItems[primaryPos]);
+    }
+    return result;
   }
   function activeItemContents() {
     return activeItems().map(function(item) {
@@ -100,6 +114,18 @@ describe('collectionRepeat', function() {
   function activeItemIds() {
     return activeItems().map(function(item) {
       return item.id;
+    });
+  }
+
+  function activeItemDimensions() {
+    return activeItems().map(function(item) {
+      return scrollView.options.scrollingX ?  (
+        'x:' + item.primaryPos + ',y:' + item.secondaryPos +
+        ',w:' + item.primarySize + ',h:' + item.secondarySize
+      ) : (
+        'x:' + item.secondaryPos + ',y:' + item.primaryPos +
+        ',w:' + item.secondarySize + ',h:' + item.primarySize
+      );
     });
   }
 
@@ -123,7 +149,7 @@ describe('collectionRepeat', function() {
   it('should destroy', inject(function($compile, $rootScope) {
     var scope = $rootScope.$new();
     var content = $compile('<ion-content>' +
-             '<div collection-repeat="item in items"></div>' +
+             '<div collection-repeat="item in items" item-height="5" item-width="5"></div>' +
              '</ion-content>')(scope);
     $rootScope.$apply();
     content.triggerHandler('scroll.init');
@@ -148,19 +174,19 @@ describe('collectionRepeat', function() {
     it('should switch out as you scroll', function() {
       expect(activeItems().length).toBe(3);
       expect(activeItemContents()).toEqual(['0','1','2'])
-      expect(activeItemIds()).toEqual(['item_0','item_1','item_2']);
+      expect(activeItemIds()).toEqual(['item0','item1','item2']);
 
       // Item 0 gets sent down to the bottom after scrolling past it
       scrollTo(31);
       expect(activeItems().length).toBe(3);
       expect(activeItemContents()).toEqual(['1','2','3'])
-      expect(activeItemIds()).toEqual(['item_1','item_2','item_0']);
+      expect(activeItemIds()).toEqual(['item1','item2','item0']);
 
       // Item 1 gets sent down
       scrollTo(61);
       expect(activeItems().length).toBe(3);
       expect(activeItemContents()).toEqual(['2','3','4'])
-      expect(activeItemIds()).toEqual(['item_2','item_0','item_1']);
+      expect(activeItemIds()).toEqual(['item2','item0','item1']);
     });
     it('should start with the same items when resizing', inject(function($window) {
       scrollTo(31);
@@ -168,7 +194,7 @@ describe('collectionRepeat', function() {
 
       expect(activeItems().length).toBe(3);
       expect(activeItemContents()).toEqual(['2','3','4'])
-      expect(activeItemIds()).toEqual(['item_2','item_0','item_1']);
+      expect(activeItemIds()).toEqual(['item2','item0','item1']);
 
       scrollView.__clientWidth = 50;
       scrollView.__clientHeight = 40;
@@ -176,7 +202,7 @@ describe('collectionRepeat', function() {
 
       expect(activeItems().length).toBe(2);
       expect(activeItemContents()).toEqual(['2','3'])
-      expect(activeItemIds()).toEqual(['item_2','item_0']);
+      expect(activeItemIds()).toEqual(['item2','item0']);
     }));
   });
 
@@ -193,19 +219,19 @@ describe('collectionRepeat', function() {
     it('should switch out as you scroll', function() {
       expect(activeItems().length).toBe(5);
       expect(activeItemContents()).toEqual(['0','1','2','3','4'])
-      expect(activeItemIds()).toEqual(['item_0','item_1','item_2','item_3','item_4']);
+      expect(activeItemIds()).toEqual(['item0','item1','item2','item3','item4']);
 
       // Item 0 gets sent down to the bottom after scrolling past it
       scrollTo(26);
       expect(activeItems().length).toBe(5);
       expect(activeItemContents()).toEqual(['1','2','3','4','5'])
-      expect(activeItemIds()).toEqual(['item_1','item_2','item_3','item_4','item_0']);
+      expect(activeItemIds()).toEqual(['item1','item2','item3','item4','item0']);
 
       // Item 1 gets sent down
       scrollTo(51);
       expect(activeItems().length).toBe(5);
       expect(activeItemContents()).toEqual(['2','3','4','5','6'])
-      expect(activeItemIds()).toEqual(['item_2','item_3','item_4','item_0','item_1']);
+      expect(activeItemIds()).toEqual(['item2','item3','item4','item0','item1']);
 
       // scroll to bottom incrementally
       // items are traded our until it's the first case again
@@ -214,17 +240,16 @@ describe('collectionRepeat', function() {
       scrollTo(126);
       expect(activeItems().length).toBe(5);
       expect(activeItemContents()).toEqual(['5','6','7','8','9'])
-      expect(activeItemIds()).toEqual(['item_0','item_1','item_2','item_3','item_4']);
+      expect(activeItemIds()).toEqual(['item0','item1','item2','item3','item4']);
     });
 
     it('should start with the same items when resizing', inject(function($window) {
-      setup(10);
       scrollTo(26);
       scrollTo(51);
 
       expect(activeItems().length).toBe(5);
       expect(activeItemContents()).toEqual(['2','3','4','5','6'])
-      expect(activeItemIds()).toEqual(['item_2','item_3','item_4','item_0','item_1']);
+      expect(activeItemIds()).toEqual(['item2','item3','item4','item0','item1']);
 
       scrollView.__clientWidth = 200;
       scrollView.__clientHeight = 40;
@@ -232,9 +257,131 @@ describe('collectionRepeat', function() {
 
       expect(activeItems().length).toBe(2);
       expect(activeItemContents()).toEqual(['2','3'])
-      expect(activeItemIds()).toEqual(['item_2','item_3']);
+      expect(activeItemIds()).toEqual(['item2','item3']);
     }));
 
+  });
+
+  describe('vertical static grid', function() {
+    beforeEach(function() {
+      setup(10, 'item-width="33%" item-height="25"', {
+        __clientWidth: 120,
+        __clientHeight: 30
+      });
+    });
+
+    it('should show initial screen of items', function() {
+      expect(activeItems().length).toBe(3 * 2);
+      expect(activeItemContents()).toEqual(['0','1','2','3','4','5'])
+    });
+
+    it('should switch out as you scroll', function() {
+      expect(activeItems().length).toBe(6);
+      expect(activeItemContents()).toEqual(['0','1','2','3','4','5'])
+      expect(activeItemIds().sort()).toEqual(['item0','item1','item2','item3','item4','item5']);
+
+      scrollTo(26);
+      expect(activeItems().length).toBe(6);
+      expect(activeItemContents()).toEqual(['3','4','5','6','7','8'])
+      expect(activeItemIds().sort()).toEqual(['item0','item1','item2','item3','item4','item5']);
+
+      scrollTo(51);
+      expect(activeItems().length).toBe(4);
+      expect(activeItemContents()).toEqual(['6','7','8','9'])
+      expect(activeItemIds().sort()).toEqual(['item0','item1','item2','item5']);
+    });
+
+    it('should start with the same items when resizing', inject(function($window) {
+      scrollTo(26);
+
+      expect(activeItems().length).toBe(6);
+      expect(activeItemContents()).toEqual(['3','4','5','6','7','8'])
+      expect(activeItemIds().sort()).toEqual(['item0','item1','item2','item3','item4','item5']);
+
+      scrollView.__clientWidth = 200;
+      scrollView.__clientHeight = 20;
+      angular.element($window).triggerHandler('resize');
+
+      expect(activeItems().length).toBe(3);
+      expect(activeItemContents()).toEqual(['3','4','5'])
+      expect(activeItemIds().sort()).toEqual(['item3','item4','item5']);
+    }));
+  });
+
+  describe('vertical dynamic grid', function() {
+    beforeEach(function() {
+      // Odd rows 25 height, even rows 50 height
+      setup(10, 'item-width="(16 * (1+($index % 5))) + \'%\'" ' +
+                'item-height="($index % 2) ? 25 : 50"', {
+        __clientWidth: 100,
+        __clientHeight: 60
+      });
+    });
+
+    it('should show initial screen of items', function() {
+      // row 0, index 0: 50 height, 3 items (widths 16%, 32%, 48%)
+      // row 1, index 3: 25 height, 2 items (widths 64%)
+      expect(activeItems().length).toBe(4);
+      expect(activeItemContents()).toEqual(['0','1','2','3'])
+
+      var dim = activeItemDimensions();
+      //Row 0
+      expect(dim[0]).toBe('x:0,y:0,w:16,h:50');
+      expect(dim[1]).toBe('x:16,y:0,w:32,h:50');
+      expect(dim[2]).toBe('x:48,y:0,w:48,h:50');
+      // Row 1
+      expect(dim[3]).toBe('x:0,y:50,w:64,h:25');
+    });
+
+    it('should switch out as you scroll', function() {
+      // Scroll past row 0, height 50
+      scrollTo(51);
+      // row 1, index 3: 25 height, 1 item (width 64%)
+      // row 2, index 4: 50 height, 2 items (width 80%, 16%)
+      expect(activeItems().length).toBe(3);
+      expect(activeItemContents()).toEqual(['3','4','5'])
+      expect(activeItemIds().sort()).toEqual(['item1','item2','item3']);
+
+      var dim = activeItemDimensions();
+      //Row 1
+      expect(dim[0]).toBe('x:0,y:50,w:64,h:25');
+      //Row 2
+      expect(dim[1]).toBe('x:0,y:75,w:80,h:50');
+      expect(dim[2]).toBe('x:80,y:75,w:16,h:50');
+
+      // row 3, index 6: 50 height, 2 items (width 32%, 48%)
+
+      //Scroll past row 2 and row 3 to the end
+      scrollTo(176);
+      // row 4, index 8: 50 height, 1 item (width 64%)
+      // row 5, index 9: 25 height, 2 items (width 80%, 16%)
+      expect(activeItems().length).toBe(2);
+      expect(activeItemContents()).toEqual(['8', '9'])
+
+      var dim = activeItemDimensions();
+      //Row 3
+      expect(dim[0]).toBe('x:0,y:175,w:64,h:50');
+      //Row 4
+      expect(dim[1]).toBe('x:0,y:225,w:80,h:25');
+    });
+
+    it('should start with the same items when resizing', inject(function($window) {
+      // Scroll past row 0, height 50
+      scrollTo(51);
+      // row 1, index 3: 25 height, 1 item (width 64%)
+      // row 2, index 4: 50 height, 2 items (width 80%, 16%)
+      expect(activeItems().length).toBe(3);
+      expect(activeItemContents()).toEqual(['3','4','5'])
+      expect(activeItemIds().sort()).toEqual(['item1','item2','item3']);
+
+      scrollView.__clientWidth = 50;
+      scrollView.__clientHeight = 50;
+      angular.element($window).triggerHandler('resize');
+
+      expect(activeItems().length).toBe(3);
+      expect(activeItemContents()).toEqual(['3','4','5'])
+      expect(activeItemIds().sort()).toEqual(['item1','item2','item3']);
+    }));
   });
 
 });
