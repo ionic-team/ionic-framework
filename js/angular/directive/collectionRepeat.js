@@ -194,14 +194,15 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
 
     // Make sure this resize actually changed the size of the screen
     function validateResize() {
-      var h = element[0].offsetHeight, w = element[0].offsetWidth;
+      var h = scrollView.__clientHeight, w = scrollView.__clientWidth;
       if (w && h && (validateResize.height !== h || validateResize.width !== w)) {
+        validateResize.height = h;
+        validateResize.width = w;
         refreshDimensions();
       }
-      validateResize.height = h;
-      validateResize.width = w;
     }
     function refreshDimensions() {
+      console.log('refreshDimensions', validateResize.height, validateResize.width);
       if (heightData.computed || widthData.computed) {
         computeStyleDimensions();
       }

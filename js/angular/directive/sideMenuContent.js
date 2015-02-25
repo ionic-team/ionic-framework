@@ -154,6 +154,7 @@ function($timeout, $ionicGesture, $window) {
               $element[0].style.width = '';
               content.offsetX = 0;
             }
+            ionic.trigger('resize', null, window);
           }),
           setMarginRight: ionic.animationFrameThrottle(function(amount) {
             if (amount) {
