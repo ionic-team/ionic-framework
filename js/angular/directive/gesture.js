@@ -254,7 +254,7 @@ function gestureDirective(directiveName) {
     var eventType = directiveName.substr(2).toLowerCase();
 
     return function(scope, element, attr) {
-      var fn = $parse( attr[directiveName] );
+      var fn = $parse(attr[directiveName]);
 
       var listener = function(ev) {
         scope.$apply(function() {
