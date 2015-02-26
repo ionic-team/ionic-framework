@@ -406,6 +406,21 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
     (isGridView ? GridViewType : ListViewType).call(view);
     (isStaticView ? StaticViewType : DynamicViewType).call(view);
 
+    var contentSizeStr = isVertical ? 'getContentHeight' : 'getContentWidth';
+    var originalGetContentSize = scrollView.options[contentSizeStr];
+    scrollView.options[contentSizeStr] = angular.bind(view, view.getContentSize);
+
+    scrollView.__$callback = scrollView.__callback;
+    scrollView.__callback = function(transformLeft, transformTop, zoom, wasResize) {
+      var scrollValue = view.getScrollValue();
+      if (renderStartIndex === -1 ||
+          scrollValue + view.scrollPrimarySize > renderAfterBoundary ||
+          scrollValue < renderBeforeBoundary) {
+        render();
+      }
+      scrollView.__$callback(transformLeft, transformTop, zoom, wasResize);
+    };
+
     var isLayoutReady = false;
     var isDataReady = false;
     this.refreshLayout = function(itemsAfterRepeater) {
@@ -448,6 +463,8 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       }
     };
 
+
+
     this.refreshData = function(newData) {
       newData || (newData = []);
 
@@ -471,7 +488,6 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       render.destroyed = true;
       unwatch();
 
-      scrollView.__calback = scrollView.__$callback;
       itemsPool.forEach(function(item) {
         item.scope.$destroy();
         item.scope = item.element = item.node = item.images = null;
@@ -479,23 +495,13 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       itemsPool.length = itemsEntering.length = itemsLeaving.length = 0;
       itemsShownMap = {};
 
+      //Restore the scrollView's normal behavior and resize it to normal size.
+      scrollView.options[contentSizeStr] = originalGetContentSize;
+      scrollView.__callback = scrollView.__$callback;
+      scrollView.resize();
+
       (view.onDestroy || angular.noop)();
     };
-
-    scrollView.options[isVertical ? 'getContentHeight' : 'getContentWidth'] =
-      angular.bind(view, view.getContentSize);
-
-    scrollView.__$callback = scrollView.__callback;
-    scrollView.__callback = function(transformLeft, transformTop, zoom, wasResize) {
-      var scrollValue = view.getScrollValue();
-      if (renderStartIndex === -1 ||
-          scrollValue + view.scrollPrimarySize > renderAfterBoundary ||
-          scrollValue < renderBeforeBoundary) {
-        render();
-      }
-      scrollView.__$callback(transformLeft, transformTop, zoom, wasResize);
-    };
-
 
     function forceRerender() {
       return render(true);

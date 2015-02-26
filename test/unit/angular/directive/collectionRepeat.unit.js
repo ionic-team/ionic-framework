@@ -156,14 +156,30 @@ describe('collectionRepeat', function() {
     }).toThrow();
   }));
 
-  it('should destroy', inject(function($compile, $rootScope) {
+  it('should destroy and restore normal scrollView behavior', inject(function($compile, $rootScope) {
     var scope = $rootScope.$new();
-    var content = $compile('<ion-content>' +
-             '<div collection-repeat="item in items" item-height="5" item-width="5"></div>' +
-             '</ion-content>')(scope);
+    var content = $compile('<ion-content>')(scope);
+    var scrollView = content.data('$$ionicScrollController').scrollView;
+
+    var originalCallback = scrollView.__callback;
+    var originalGetContentHeight = scrollView.options.getContentHeight;
+
+    var repeater = angular.element(
+      '<div collection-repeat="item in items" item-height="5" item-width="5"></div>'
+    );
+    content.append(repeater);
+    $compile(repeater)(content.scope());
     $rootScope.$apply();
     content.triggerHandler('scroll.init');
+    $rootScope.$apply();
+
+    expect(scrollView.__callback).not.toBe(originalCallback);
+    expect(scrollView.options.getContentHeight).not.toBe(originalGetContentHeight);
+
     scope.$destroy();
+
+    expect(scrollView.__callback).toBe(originalCallback);
+    expect(scrollView.options.getContentHeight).toBe(originalGetContentHeight);
   }));
 
   describe('automatic dimensions', function() {
