@@ -103,7 +103,8 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
                       "an xy scrollView.");
     }
 
-    var match = attr.collectionRepeat.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
+    var repeatExpr = attr.collectionRepeat;
+    var match = repeatExpr.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
     if (!match) {
       throw new Error("collection-repeat expected expression in form of '_item_ in " +
                       "_collection_[ track by _id_]' but got '" + attr.collectionRepeat + "'.");
@@ -202,6 +203,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       }
     }
     function refreshDimensions() {
+      if (window.debug) debugger;
       if (heightData.computed || widthData.computed) {
         computeStyleDimensions();
       }
@@ -209,8 +211,8 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       if (heightData.computed) {
         heightData.value = computedStyleDimensions.height;
         if (!heightData.value) {
-          throw new Error('collection-repeat tried to compute the height of elements "' +
-            listExpr + '", but was unable to. Please provide the "item-height" attribute. ' +
+          throw new Error('collection-repeat tried to compute the height of repeated elements "' +
+            repeatExpr + '", but was unable to. Please provide the "item-height" attribute. ' +
             'http://ionicframework.com/docs/api/directive/collectionRepeat/');
         }
       } else if (!heightData.dynamic && heightData.getValue) {
@@ -220,8 +222,8 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       if (widthData.computed) {
         widthData.value = computedStyleDimensions.width;
         if (!widthData.value) {
-          throw new Error('collection-repeat tried to compute the width of elements in "' +
-            listExpr + '", but was unable to. Please provide the "item-width" attribute. ' +
+          throw new Error('collection-repeat tried to compute the width of repeated elements "' +
+            repeatExpr + '", but was unable to. Please provide the "item-width" attribute. ' +
             'http://ionicframework.com/docs/api/directive/collectionRepeat/');
         }
       } else if (!widthData.dynamic && widthData.getValue) {
