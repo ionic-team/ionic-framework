@@ -23,12 +23,12 @@
       this.isEnabled = isEnabled;
     },
     bringUp: function() {
-      if(this.el.style.zIndex !== '0') {
+      if (this.el.style.zIndex !== '0') {
         this.el.style.zIndex = '0';
       }
     },
     pushDown: function() {
-      if(this.el.style.zIndex !== '-1') {
+      if (this.el.style.zIndex !== '-1') {
         this.el.style.zIndex = '-1';
       }
     }

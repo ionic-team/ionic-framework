@@ -8,7 +8,7 @@
         unfocusOnHide: true,
         focusFirstDelay: 600,
         backdropClickToClose: true,
-        hardwareBackButtonClose: true,
+        hardwareBackButtonClose: true
       }, opts);
 
       ionic.extend(this, opts);
@@ -18,7 +18,7 @@
     show: function() {
       var self = this;
 
-      if(self.focusFirstInput) {
+      if (self.focusFirstInput) {
         // Let any animations run first
         window.setTimeout(function() {
           var input = self.el.querySelector('input, textarea');
@@ -28,11 +28,11 @@
     },
     hide: function() {
       // Unfocus all elements
-      if(this.unfocusOnHide) {
+      if (this.unfocusOnHide) {
         var inputs = this.el.querySelectorAll('input, textarea');
         // Let any animations run first
         window.setTimeout(function() {
-          for(var i = 0; i < inputs.length; i++) {
+          for (var i = 0; i < inputs.length; i++) {
             inputs[i].blur && inputs[i].blur();
           }
         });

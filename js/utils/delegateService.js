@@ -1,4 +1,4 @@
-(function (ionic) {
+(function(ionic) {
 
   ionic.DelegateService = function(methodNames) {
 

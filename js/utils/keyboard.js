@@ -88,7 +88,7 @@ ionic.keyboard = {
       target: keyboardActiveElement
     }, true);
 
-    ionic.requestAnimationFrame(function(){
+    ionic.requestAnimationFrame(function() {
       document.body.classList.remove(KEYBOARD_OPEN_CSS);
     });
 
@@ -100,20 +100,20 @@ ionic.keyboard = {
     }
     document.removeEventListener('keydown', keyboardOnKeyDown);
 
-    if( keyboardHasPlugin() ) {
+    if (keyboardHasPlugin()) {
       cordova.plugins.Keyboard.close();
     }
   },
 
   show: function() {
-    if( keyboardHasPlugin() ) {
+    if (keyboardHasPlugin()) {
       cordova.plugins.Keyboard.show();
     }
   }
 };
 
 function keyboardInit() {
-  if( keyboardHasPlugin() ) {
+  if (keyboardHasPlugin()) {
     window.addEventListener('native.keyboardshow', keyboardNativeShow);
     window.addEventListener('native.keyboardhide', keyboardFocusOut);
 
@@ -143,7 +143,7 @@ function keyboardNativeShow(e) {
 }
 
 function keyboardBrowserFocusIn(e) {
-  if( !e.target || e.target.readOnly || !ionic.tap.isTextInput(e.target) || ionic.tap.isDateInput(e.target) || !keyboardIsWithinScroll(e.target) ) return;
+  if (!e.target || e.target.readOnly || !ionic.tap.isTextInput(e.target) || ionic.tap.isDateInput(e.target) || !keyboardIsWithinScroll(e.target)) return;
 
   document.addEventListener('keydown', keyboardOnKeyDown, false);
 
@@ -159,23 +159,23 @@ function keyboardSetShow(e) {
   clearTimeout(keyboardFocusInTimer);
   clearTimeout(keyboardFocusOutTimer);
 
-  keyboardFocusInTimer = setTimeout(function(){
-    if ( keyboardLastShow + 350 > Date.now() ) return;
+  keyboardFocusInTimer = setTimeout(function() {
+    if (keyboardLastShow + 350 > Date.now()) return;
     console.log('keyboardSetShow');
     keyboardLastShow = Date.now();
     var keyboardHeight;
     var elementBounds = keyboardActiveElement.getBoundingClientRect();
     var count = 0;
 
-    keyboardPollHeightTimer = setInterval(function(){
+    keyboardPollHeightTimer = setInterval(function() {
 
       keyboardHeight = keyboardGetHeight();
-      if (count > 10){
+      if (count > 10) {
         clearInterval(keyboardPollHeightTimer);
         //waited long enough, just guess
         keyboardHeight = 275;
       }
-      if (keyboardHeight){
+      if (keyboardHeight) {
         clearInterval(keyboardPollHeightTimer);
         keyboardShow(e.target, elementBounds.top, elementBounds.bottom, keyboardViewportHeight, keyboardHeight);
       }
@@ -209,7 +209,7 @@ function keyboardShow(element, elementTop, elementBottom, viewportHeight, keyboa
   keyboardActiveElement = element;
   ionic.trigger('scrollChildIntoView', details, true);
 
-  ionic.requestAnimationFrame(function(){
+  ionic.requestAnimationFrame(function() {
     document.body.classList.add(KEYBOARD_OPEN_CSS);
   });
 
@@ -232,19 +232,19 @@ function keyboardFocusOut(e) {
 }
 
 function keyboardUpdateViewportHeight() {
-  if( getViewportHeight() > keyboardViewportHeight ) {
+  if (getViewportHeight() > keyboardViewportHeight) {
     keyboardViewportHeight = getViewportHeight();
   }
 }
 
 function keyboardOnKeyDown(e) {
-  if( ionic.scroll.isScrolling ) {
+  if (ionic.scroll.isScrolling) {
     keyboardPreventDefault(e);
   }
 }
 
 function keyboardPreventDefault(e) {
-  if( e.target.tagName !== 'TEXTAREA' ) {
+  if (e.target.tagName !== 'TEXTAREA') {
     e.preventDefault();
   }
 }
@@ -253,18 +253,18 @@ function keyboardOrientationChange() {
   var updatedViewportHeight = getViewportHeight();
 
   //too slow, have to wait for updated height
-  if (updatedViewportHeight === keyboardViewportHeight){
+  if (updatedViewportHeight === keyboardViewportHeight) {
     var count = 0;
-    var pollViewportHeight = setInterval(function(){
+    var pollViewportHeight = setInterval(function() {
       //give up
-      if (count > 10){
+      if (count > 10) {
         clearInterval(pollViewportHeight);
       }
 
       updatedViewportHeight = getViewportHeight();
 
-      if (updatedViewportHeight !== keyboardViewportHeight){
-        if (updatedViewportHeight < keyboardViewportHeight){
+      if (updatedViewportHeight !== keyboardViewportHeight) {
+        if (updatedViewportHeight < keyboardViewportHeight) {
           ionic.keyboard.landscape = true;
         } else {
           ionic.keyboard.landscape = false;
@@ -282,17 +282,17 @@ function keyboardOrientationChange() {
 
 function keyboardGetHeight() {
   // check if we are already have a keyboard height from the plugin
-  if ( ionic.keyboard.height ) {
+  if (ionic.keyboard.height) {
     return ionic.keyboard.height;
   }
 
-  if ( ionic.Platform.isAndroid() ){
+  if (ionic.Platform.isAndroid()) {
     //should be using the plugin, no way to know how big the keyboard is, so guess
-    if ( ionic.Platform.isFullScreen ){
+    if (ionic.Platform.isFullScreen) {
       return 275;
     }
     //otherwise, wait for the screen to resize
-    if ( getViewportHeight() < keyboardViewportHeight ){
+    if (getViewportHeight() < keyboardViewportHeight) {
       return keyboardViewportHeight - getViewportHeight();
     } else {
       return 0;
@@ -301,12 +301,12 @@ function keyboardGetHeight() {
 
   // fallback for when its the webview without the plugin
   // or for just the standard web browser
-  if( ionic.Platform.isIOS() ) {
-    if ( ionic.keyboard.landscape ){
+  if (ionic.Platform.isIOS()) {
+    if (ionic.keyboard.landscape) {
       return 206;
     }
 
-    if (!ionic.Platform.isWebView()){
+    if (!ionic.Platform.isWebView()) {
       return 216;
     }
 
@@ -322,8 +322,8 @@ function getViewportHeight() {
 }
 
 function keyboardIsWithinScroll(ele) {
-  while(ele) {
-    if(ele.classList.contains(SCROLL_CONTAINER_CSS)) {
+  while (ele) {
+    if (ele.classList.contains(SCROLL_CONTAINER_CSS)) {
       return true;
     }
     ele = ele.parentElement;
