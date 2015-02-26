@@ -96,21 +96,25 @@ describe('collectionRepeat', function() {
     var items = getItems().filter(function(item) {
       return item.isShown;
     });
-    //Group items by their primary position, sort those groups by secondary position,
-    //then concat them all together.
+    //1. Group items by their primary position (row),
+    //2. Sort those groups by secondary position (column),
+    //3. Concat them all together.
     var activeItems = {};
-    var result = [];
     items.forEach(function(item) {
       (activeItems[item.primaryPos] || (activeItems[item.primaryPos] = [])).push(item);
     });
-    for (var primaryPos in activeItems) {
-      activeItems[primaryPos] = activeItems[primaryPos].sort(function(a,b) {
-        return a.secondaryPos > b.secondaryPos ? 1 : -1;
+
+    var result = [];
+    Object.keys(activeItems)
+      .sort(function(pos1, pos2) {
+        return (+pos1) > (+pos2) ? 1 : -1;
+      })
+      .forEach(function(primaryPos) {
+        var sortedRow = activeItems[primaryPos].sort(function(a,b) {
+          return a.secondaryPos > b.secondaryPos ? 1 : -1;
+        });
+        result = result.concat(sortedRow);
       });
-    }
-    for (var primaryPos in activeItems) {
-      result = result.concat(activeItems[primaryPos]);
-    }
     return result;
   }
   function activeItemContents() {
