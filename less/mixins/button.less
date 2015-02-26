@@ -1,0 +1,53 @@
+// Button Mixins
+// --------------------------------------------------
+
+.button-style(@bg-color, @border-color, @active-bg-color, @active-border-color, @color) {
+  border-color: @border-color;
+  background-color: @bg-color;
+  color: @color;
+
+  // Give desktop users something to play with
+  &:hover {
+    color: @color;
+    text-decoration: none;
+  }
+  &.active,
+  &.activated {
+    border-color: @active-border-color;
+    background-color: @active-bg-color;
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.1);
+  }
+}
+
+.button-clear(@color, @font-size:"") {
+  &.button-clear {
+    border-color: transparent;
+    background: none;
+    box-shadow: none;
+    color: @color;
+
+    & when (ispixel(@font-size)),(isem(@font-size)),(isunit(@font-size,rem)) { //isrem(@font-size)
+    font-size: @font-size;
+    }
+  }
+  &.button-icon {
+    border-color: transparent;
+    background: none;
+  }
+}
+
+.button-outline(@color, @text-color: @color) {
+  &.button-outline {
+    border-color: @color;
+    background: transparent;
+    color: @text-color;
+    &.active,
+    &.activated {
+      background-color: @color;
+      box-shadow: none;
+      color: #fff;
+    }
+  }
+}
+
+

@@ -30,6 +30,7 @@ var jscs = require('gulp-jscs');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
+var less = require('gulp-less');
 var stripDebug = require('gulp-strip-debug');
 var template = require('gulp-template');
 var uglify = require('gulp-uglify');
@@ -195,6 +196,31 @@ gulp.task('sass', function(done) {
   gulp.src('scss/ionic.scss')
     .pipe(header(banner))
     .pipe(sass({
+      onError: function(err) {
+        //If we're watching, don't exit on error
+        if (IS_WATCH) {
+          console.log(gutil.colors.red(err));
+        } else {
+          done(err);
+        }
+      }
+    }))
+    .pipe(concat('ionic.css'))
+    .pipe(gulp.dest(buildConfig.dist + '/css'))
+    .pipe(gulpif(IS_RELEASE_BUILD, minifyCss()))
+    .pipe(rename({ extname: '.min.css' }))
+    .pipe(gulp.dest(buildConfig.dist + '/css'))
+    .on('end', done);
+});
+
+gulp.task('less', function(done) {
+  var LessPluginAutoprefix = require('less-plugin-autoprefix'),
+  autoprefix = new LessPluginAutoprefix({ browsers: ["Android >= 2.1","BlackBerry >= 7","Chrome >= 20","Firefox >= 21","Explorer >= 10","iOS >= 3.2","Opera > 12","Safari > 6","OperaMobile >= 12.1","ChromeAndroid >= 40","FirefoxAndroid >= 30","ExplorerMobile >= 10"] });
+  
+  gulp.src('less/ionic.less')
+    .pipe(header(banner))
+    .pipe(less({
+      plugins: [autoprefix],
       onError: function(err) {
         //If we're watching, don't exit on error
         if (IS_WATCH) {

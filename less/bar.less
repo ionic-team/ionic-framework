@@ -1,0 +1,395 @@
+
+/**
+ * Bar (Headers and Footers)
+ * --------------------------------------------------
+ */
+
+.bar {
+  display: flex;
+  transform: translate3d(0,0,0);
+  user-select: none;
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: @z-index-bar;
+
+  box-sizing: border-box;
+  padding: @bar-padding-portrait;
+
+  width: 100%;
+  height: @bar-height;
+  border-width: 0;
+  border-style: solid;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid @bar-default-border;
+
+  background-color: @bar-default-bg;
+
+  /* border-width: 1px will actually create 2 device pixels on retina */
+  /* this nifty trick sets an actual 1px border on hi-res displays */
+  background-size: 0;
+  @media (min--moz-device-pixel-ratio: 1.5),
+         (-webkit-min-device-pixel-ratio: 1.5),
+         (min-device-pixel-ratio: 1.5),
+         (min-resolution: 144dpi),
+         (min-resolution: 1.5dppx) {
+    border: none;
+    background-image: linear-gradient(0deg, @bar-default-border, @bar-default-border 50%, transparent 50%);
+    background-position: bottom;
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+  }
+
+  &.bar-clear {
+    border: none;
+    background: none;
+    color: #fff;
+
+    .button {
+      color: #fff;
+    }
+    .title {
+      color: #fff;
+    }
+  }
+
+  &.item-input-inset {
+    .item-input-wrapper {
+      margin-top: -1px;
+
+      input {
+        padding-left: 8px;
+        width: 94%;
+        height: 28px;
+        background: transparent;
+      }
+    }
+  }
+
+  &.bar-light {
+	.bar-style(@bar-light-bg, @bar-light-border, @bar-light-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, @bar-light-border, @bar-light-border 50%, transparent 50%);
+    }
+  }
+  &.bar-stable {
+    .bar-style(@bar-stable-bg, @bar-stable-border, @bar-stable-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, @bar-stable-border, @bar-stable-border 50%, transparent 50%);
+    }
+  }
+  &.bar-positive {
+    .bar-style(@bar-positive-bg, @bar-positive-border, @bar-positive-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, @bar-positive-border, @bar-positive-border 50%, transparent 50%);
+    }
+  }
+  &.bar-calm {
+    .bar-style(@bar-calm-bg, @bar-calm-border, @bar-calm-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, @bar-calm-border, @bar-calm-border 50%, transparent 50%);
+    }
+  }
+  &.bar-assertive {
+    .bar-style(@bar-assertive-bg, @bar-assertive-border, @bar-assertive-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, @bar-assertive-border, @bar-assertive-border 50%, transparent 50%);
+    }
+  }
+  &.bar-balanced {
+    .bar-style(@bar-balanced-bg, @bar-balanced-border, @bar-balanced-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, @bar-balanced-border, @bar-positive-border 50%, transparent 50%);
+    }
+  }
+  &.bar-energized {
+    .bar-style(@bar-energized-bg, @bar-energized-border, @bar-energized-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, @bar-energized-border, @bar-energized-border 50%, transparent 50%);
+    }
+  }
+  &.bar-royal {
+    .bar-style(@bar-royal-bg, @bar-royal-border, @bar-royal-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, @bar-royal-border, @bar-royal-border 50%, transparent 50%);
+    }
+  }
+  &.bar-dark {
+    .bar-style(@bar-dark-bg, @bar-dark-border, @bar-dark-text);
+    &.bar-footer{
+      background-image: linear-gradient(180deg, @bar-dark-border, @bar-dark-border 50%, transparent 50%);
+    }
+  }
+
+  // Title inside of a bar is centered
+  .title {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: @z-index-bar-title;
+    overflow: hidden;
+
+    margin: 0 10px;
+
+    min-width: 30px;
+    height: @bar-height - 1;
+
+    text-align: center;
+
+    // Go into ellipsis if too small
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: @bar-title-font-size;
+    font-weight: @headings-font-weight;
+
+    line-height: @bar-height;
+
+    &.title-left {
+      text-align: left;
+    }
+    &.title-right {
+      text-align: right;
+    }
+  }
+
+  .title a {
+    color: inherit;
+  }
+
+  .button {
+    z-index: @z-index-bar-button;
+    padding: 0 @button-bar-button-padding;
+    min-width: initial;
+    min-height: @button-bar-button-height - 1;
+    font-weight: 400;
+    font-size: @button-bar-button-font-size;
+    line-height: @button-bar-button-height;
+
+    &.button-icon:before,
+    .icon:before,
+    &.icon:before,
+    &.icon-left:before,
+    &.icon-right:before {
+      padding-right: 2px;
+      padding-left: 2px;
+      font-size: @button-bar-button-icon-size;
+      line-height: @button-bar-button-height;
+    }
+
+    &.button-icon {
+      font-size: @bar-title-font-size;
+      .icon:before,
+      &:before,
+      &.icon-left:before,
+      &.icon-right:before {
+        vertical-align: top;
+        font-size: @button-large-icon-size;
+        line-height: @button-bar-button-height;
+      }
+    }
+    &.button-clear {
+      padding-right: 2px;
+      padding-left: 2px;
+      font-weight: 300;
+      font-size: @bar-title-font-size;
+
+      .icon:before,
+      &.icon:before,
+      &.icon-left:before,
+      &.icon-right:before {
+        font-size: @button-large-icon-size;
+        line-height: @button-bar-button-height;
+      }
+    }
+
+    &.back-button {
+      display: block;
+      margin-right: 5px;
+      padding: 0;
+      white-space: nowrap;
+      font-weight: 400;
+    }
+
+    &.back-button.active,
+    &.back-button.activated {
+      opacity: 0.2;
+    }
+  }
+
+  .button-bar > .button,
+  .buttons > .button {
+    min-height: @button-bar-button-height - 1;
+    line-height: @button-bar-button-height;
+  }
+
+  .button-bar + .button,
+  .button + .button-bar {
+    margin-left: 5px;
+  }
+
+  // Android 4.4 messes with the display property
+  .buttons,
+  .buttons.primary-buttons,
+  .buttons.secondary-buttons {
+    display: inherit;
+  }
+  .buttons span {
+    display: inline-block;
+  }
+  .buttons-left span {
+    margin-right: 5px;
+    display: inherit;
+  }
+  .buttons-right span {
+    margin-left: 5px;
+    display: inherit;
+  }
+
+  // Place the last button in a bar on the right of the bar
+  .title + .button:last-child,
+  > .button + .button:last-child,
+  > .button.pull-right,
+  .buttons.pull-right,
+  .title + .buttons {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    bottom: 5px;
+  }
+
+}
+
+.platform-android {
+
+  .bar {
+
+    .back-button .icon:before {
+      font-size: 24px;
+    }
+
+    .title {
+      font-size: 19px;
+      line-height: 43px;
+    }
+  }
+
+}
+
+// Default styles for buttons inside of styled bars
+.bar-light {
+  .button {
+    .button-style(@bar-light-bg, @bar-light-border, @bar-light-active-bg, @bar-light-active-border, @bar-light-text);
+    .button-clear(@bar-light-text, @bar-title-font-size);
+  }
+}
+.bar-stable {
+  .button {
+    .button-style(@bar-stable-bg, @bar-stable-border, @bar-stable-active-bg, @bar-stable-active-border, @bar-stable-text);
+    .button-clear(@bar-stable-text, @bar-title-font-size);
+  }
+}
+.bar-positive {
+  .button {
+    .button-style(@bar-positive-bg, @bar-positive-border, @bar-positive-active-bg, @bar-positive-active-border, @bar-positive-text);
+    .button-clear(#fff, @bar-title-font-size);
+  }
+}
+.bar-calm {
+  .button {
+    .button-style(@bar-calm-bg, @bar-calm-border, @bar-calm-active-bg, @bar-calm-active-border, @bar-calm-text);
+    .button-clear(#fff, @bar-title-font-size);
+  }
+}
+.bar-assertive {
+  .button {
+    .button-style(@bar-assertive-bg, @bar-assertive-border, @bar-assertive-active-bg, @bar-assertive-active-border, @bar-assertive-text);
+    .button-clear(#fff, @bar-title-font-size);
+  }
+}
+.bar-balanced {
+  .button {
+    .button-style(@bar-balanced-bg, @bar-balanced-border, @bar-balanced-active-bg, @bar-balanced-active-border, @bar-balanced-text);
+    .button-clear(#fff, @bar-title-font-size);
+  }
+}
+.bar-energized {
+  .button {
+    .button-style(@bar-energized-bg, @bar-energized-border, @bar-energized-active-bg, @bar-energized-active-border, @bar-energized-text);
+    .button-clear(#fff, @bar-title-font-size);
+  }
+}
+.bar-royal {
+  .button {
+    .button-style(@bar-royal-bg, @bar-royal-border, @bar-royal-active-bg, @bar-royal-active-border, @bar-royal-text);
+    .button-clear(#fff, @bar-title-font-size);
+  }
+}
+.bar-dark {
+  .button {
+    .button-style(@bar-dark-bg, @bar-dark-border, @bar-dark-active-bg, @bar-dark-active-border, @bar-dark-text);
+    .button-clear(#fff, @bar-title-font-size);
+  }
+}
+
+// Header at top
+.bar-header {
+  top: 0;
+  border-top-width: 0;
+  border-bottom-width: 1px;
+  &.has-tabs-top{
+    border-bottom-width: 0px;
+    background-image: none;
+  }
+}
+.tabs-top .bar-header{
+  border-bottom-width: 0px;
+  background-image: none;
+}
+
+// Footer at bottom
+.bar-footer {
+  bottom: 0;
+  border-top-width: 1px;
+  border-bottom-width: 0;
+  background-position: top;
+
+  height: @bar-footer-height;
+
+  &.item-input-inset {
+    position: absolute;
+  }
+}
+
+// Don't render padding if the bar is just for tabs
+.bar-tabs {
+  padding: 0;
+}
+
+.bar-subheader {
+  top: @bar-height;
+  display: block;
+
+  height: @bar-subheader-height;
+}
+.bar-subfooter {
+  bottom: @bar-footer-height;
+  display: block;
+
+  height: @bar-subfooter-height;
+}
+
+.nav-bar-block {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: @z-index-bar;
+}
+
+.bar .back-button.hide,
+.bar .buttons .hide {
+  display: none;
+}

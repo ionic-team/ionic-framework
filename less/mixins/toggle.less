@@ -1,0 +1,19 @@
+// Toggle Mixins
+// --------------------------------------------------
+
+.toggle-style(@on-border-color, @on-bg-color) {
+  // the track when the toggle is "on"
+  & input:checked + .track {
+    border-color: @on-border-color;
+    background-color: @on-bg-color;
+  }
+}
+.toggle-small-style(@on-bg-color) {
+  // the track when the toggle is "on"
+  & input:checked + .track {
+    background-color: rgba(red(@on-bg-color),green(@on-bg-color),blue(@on-bg-color), .5);
+  }
+  & input:checked + .track .handle {
+    background-color: @on-bg-color;
+  }
+}

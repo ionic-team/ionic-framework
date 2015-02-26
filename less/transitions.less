@@ -1,0 +1,183 @@
+
+// iOS View Transitions
+// -------------------------------
+
+@ios-transition-duration:              500ms;
+@ios-transition-timing-function:       cubic-bezier(.36, .66, .04, 1);
+@ios-transition-container-bg-color:    #000;
+
+
+[nav-view-transition="ios"] {
+
+  [nav-view="entering"],
+  [nav-view="leaving"] {
+    transition-duration: @ios-transition-duration;
+    transition-timing-function: @ios-transition-timing-function;
+    transition-property: opacity, transform, box-shadow;
+  }
+
+  &[nav-view-direction="forward"],
+  &[nav-view-direction="back"] {
+    background-color: @ios-transition-container-bg-color;
+  }
+
+  [nav-view="active"],
+  &[nav-view-direction="forward"] [nav-view="entering"],
+  &[nav-view-direction="back"] [nav-view="leaving"] {
+    z-index: @z-index-view-above;
+  }
+
+  &[nav-view-direction="back"] [nav-view="entering"],
+  &[nav-view-direction="forward"] [nav-view="leaving"] {
+    z-index: @z-index-view-below;
+  }
+
+}
+
+
+
+// iOS Nav Bar Transitions
+// -------------------------------
+
+[nav-bar-transition="ios"] {
+
+  .title,
+  .buttons,
+  .back-text {
+    transition-duration: @ios-transition-duration;
+    transition-timing-function: @ios-transition-timing-function;
+    transition-property: opacity, transform;
+  }
+
+  [nav-bar="active"],
+  [nav-bar="entering"] {
+    z-index: @z-index-bar-above;
+
+   .bar {
+      background: transparent;
+    }
+  }
+
+  [nav-bar="cached"] {
+    display: block;
+
+    .header-item {
+      display: none;
+    }
+  }
+
+}
+
+
+
+// Android View Transitions
+// -------------------------------
+
+@android-transition-duration:             200ms;
+@android-transition-timing-function:      cubic-bezier(0.4, 0.6, 0.2, 1);
+
+
+[nav-view-transition="android"] {
+
+  [nav-view="entering"],
+  [nav-view="leaving"] {
+    transition-duration: @android-transition-duration;
+    transition-timing-function: @android-transition-timing-function;
+    transition-property: transform;
+  }
+
+  [nav-view="active"],
+  &[nav-view-direction="forward"] [nav-view="entering"],
+  &[nav-view-direction="back"] [nav-view="leaving"] {
+    z-index: @z-index-view-above;
+  }
+
+  &[nav-view-direction="back"] [nav-view="entering"],
+  &[nav-view-direction="forward"] [nav-view="leaving"] {
+    z-index: @z-index-view-below;
+  }
+
+}
+
+
+
+// Android Nav Bar Transitions
+// -------------------------------
+
+[nav-bar-transition="android"] {
+
+  .title,
+  .buttons {
+    transition-duration: @android-transition-duration;
+    transition-timing-function: @android-transition-timing-function;
+    transition-property: opacity;
+  }
+
+  [nav-bar="active"],
+  [nav-bar="entering"] {
+    z-index: @z-index-bar-above;
+
+   .bar {
+      background: transparent;
+    }
+  }
+
+  [nav-bar="cached"] {
+    display: block;
+
+    .header-item {
+      display: none;
+    }
+  }
+
+}
+
+
+
+// Nav Swipe
+// -------------------------------
+
+[nav-swipe="fast"] {
+  [nav-view],
+  .title,
+  .buttons,
+  .back-text {
+    transition-duration: 50ms;
+    transition-timing-function: linear;
+  }
+}
+
+[nav-swipe="slow"] {
+  [nav-view],
+  .title,
+  .buttons,
+  .back-text {
+    transition-duration: 160ms;
+    transition-timing-function: linear;
+  }
+}
+
+
+
+// Transition Settings
+// -------------------------------
+
+[nav-view="cached"],
+[nav-bar="cached"] {
+  display: none;
+}
+
+[nav-view="stage"] {
+  opacity: 0;
+  transition-duration: 0;
+}
+
+[nav-bar="stage"] {
+  .title,
+  .buttons,
+  .back-text {
+    position: absolute;
+    opacity: 0;
+    transition-duration: 0;
+  }
+}
