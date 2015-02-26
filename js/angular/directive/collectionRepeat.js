@@ -203,7 +203,6 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       }
     }
     function refreshDimensions() {
-      if (window.debug) debugger;
       if (heightData.computed || widthData.computed) {
         computeStyleDimensions();
       }
