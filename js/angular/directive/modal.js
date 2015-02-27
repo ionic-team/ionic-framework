@@ -10,9 +10,8 @@ IonicModule
     replace: true,
     controller: [function() {}],
     template: 	'<div class="modal-fix">' +
-    			'<div class="modal-backdrop">' +
+    			'<div class="modal-backdrop"></div>' +
                 '<div class="modal-wrapper" ng-transclude></div>' +
-                '</div>' +
                 '</div>'
   };
 }]);
