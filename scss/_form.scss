@@ -53,7 +53,7 @@ textarea {
 
   input {
     @include border-radius(0);
-    @include flex(1, 0, 220px);
+    @include flex(1, 220px);
     @include appearance(none);
     margin: 0;
     padding-right: 24px;
@@ -110,7 +110,6 @@ textarea {
 }
 
 .input-label {
-  @include flex(1, 0, 100px);
   display: table;
   padding: 7px 10px 7px 0px;
   max-width: 200px;
