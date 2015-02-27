@@ -69,6 +69,7 @@
     }
   }
   .modal-fix{
+    height: 100%;
     .modal-backdrop {
       @include transition(opacity 300ms ease-in-out);
       background-color: black;
