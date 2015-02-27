@@ -68,13 +68,16 @@
       top: $bar-height + $bar-subheader-height + $tabs-height;
     }
   }
-
-  .modal-backdrop {
-    @include transition(background-color 300ms ease-in-out);
-    background-color: $modal-backdrop-bg-inactive;
-
-    &.active {
-      background-color: $modal-backdrop-bg-active;
+  .modal-fix{
+    .modal-backdrop {
+      @include transition(opacity 300ms ease-in-out);
+      background-color: black;
+      opacity: 0;
+    }
+    &.active{
+      .modal-backdrop{
+        opacity: .5;
+      }
     }
   }
 }
