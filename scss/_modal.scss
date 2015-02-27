@@ -74,7 +74,7 @@
       background-color: black;
       opacity: 0;
     }
-    .active{
+    &.active{
       .modal-backdrop{
         background-color: $modal-backdrop-bg-active;
         opacity: .5;
