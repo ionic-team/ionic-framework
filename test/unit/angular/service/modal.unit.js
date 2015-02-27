@@ -17,7 +17,7 @@ describe('Ionic Modal', function() {
     var template = '<div class="modal"></div>';
     var instance = modal.fromTemplate(template);
     instance.show();
-    expect(instance.el.classList.contains('modal-backdrop')).toBe(true);
+    expect(instance.el.classList.contains('modal-fix')).toBe(true);
     expect(instance.modalEl.classList.contains('modal')).toBe(true);
     expect(instance.modalEl.classList.contains('slide-in-up')).toBe(true);
   });
@@ -30,7 +30,7 @@ describe('Ionic Modal', function() {
     var instance = modal.fromTemplateUrl('modal.html', function(instance) {
       done = true;
       instance.show();
-      expect(instance.el.classList.contains('modal-backdrop')).toBe(true);
+      expect(instance.el.classList.contains('modal-fix')).toBe(true);
       expect(instance.modalEl.classList.contains('modal')).toBe(true);
       expect(instance.modalEl.classList.contains('active')).toBe(true);
     });
