@@ -61,6 +61,19 @@ IonicModule
          * close the actionsheet, but it should not also go back a page view
          * or close a modal which may be open.
          *
+         * The priorities for the existing back button hooks are as follows:
+         *   Return to previous view = 100
+         *   Close side menu = 150
+         *   Dismiss modal = 200
+         *   Close action sheet = 300
+         *   Dismiss popup = 400
+         *   Dismiss loading overlay = 500
+         * 
+         * Your back button action will override each of the above actions
+         * whose priority is less than the priority you provide. For example,
+         * an action assigned a priority of 101 will override the 'return to
+         * previous view' action, but not any of the other actions.
+         * 
          * @param {function} callback Called when the back button is pressed,
          * if this listener is the highest priority.
          * @param {number} priority Only the highest priority will execute.
