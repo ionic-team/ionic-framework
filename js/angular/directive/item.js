@@ -1,5 +1,5 @@
 var ITEM_TPL_CONTENT_ANCHOR =
-  '<a class="item-content" ng-href="{{$href()}}" target="{{$target()}}"></a>';
+  '<a class="item-content" ng-href="{{$href()}}" target="{{$target()}}" nav-direction="{{$navDirection()}}"></a>';
 var ITEM_TPL_CONTENT =
   '<div class="item-content"></div>';
 /**
@@ -61,6 +61,9 @@ IonicModule
         };
         $scope.$target = function() {
           return $attrs.target || '_self';
+        };
+        $scope.$navDirection = function() {
+          return $attrs.navDirection || '';
         };
 
         $scope.$on('$ionic.disconnectScope', cleanupDragOp);
