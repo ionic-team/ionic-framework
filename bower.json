@@ -10,10 +10,10 @@
   ],
   "description": "Advanced HTML5 hybrid mobile app development framework.",
   "main": [
-    "release/css/ionic.css",
-    "release/fonts/*",
-    "release/js/ionic.js",
-    "release/js/ionic-angular.js"
+    "dist/css/ionic.css",
+    "dist/fonts/*",
+    "dist/js/ionic.js",
+    "dist/js/ionic-angular.js"
   ],
   "keywords": [
     "mobile",
