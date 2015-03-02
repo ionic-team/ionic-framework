@@ -1,8 +1,8 @@
 {
-  "name": "ionic",
+  "name": "ionicFork",
   "version": "1.0.0-beta.14",
   "codename": "magnesium-mongoose",
-  "homepage": "https://github.com/driftyco/ionic",
+  "homepage": "https://github.com/jabyrd3/ionic",
   "authors": [
     "Max Lynch <max@drifty.com>",
     "Adam Bradley <adam@drifty.com>",
