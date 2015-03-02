@@ -1,0 +1,184 @@
+<!doctype html>
+<html ng-app="popover" ng-controller="IonicDemoCtrl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<link rel="stylesheet" href="/dist/ionic-demo/nightly/ionic/css/ionic.min.css">
+<script src="/dist/ionic-demo/nightly/ionic/js/ionic.bundle.min.js"></script>
+<script src="/dist/ionic-demo/nightly/pages-data.js"></script>
+
+
+
+  <script src="index.js"></script>
+
+<script src="index-ionic-demo-app.js"></script>
+</head>
+<body>
+
+
+
+<div class="demo-content-pane">
+  
+  
+
+<ion-header-bar class="bar-positive" title="Popover" ng-controller="HeaderCtrl">
+  <div class="buttons">
+    <button class="button button-icon ion-android-more" ng-click="openPopover($event)" id="icon-btn"></button>
+  </div>
+  <h1 class="title">Popover</h1>
+  <div class="buttons">
+    <button class="button" ng-click="openPopover2($event)" id="mid-btn">Popover 2</button>
+    <button class="button" ng-click="openPopover($event)" id="right-btn">Popover</button>
+  </div>
+</ion-header-bar>
+
+<ion-content class="padding has-header" ng-controller="PlatformCtrl">
+  <p>
+    <button class="button" ng-click="setPlatform('ios')" id="ios">iOS</button>
+    <button class="button" ng-click="setPlatform('android')" id="android">Android</button>
+    <button class="button" ng-click="setPlatform('base')" id="base">Base</button>
+  </p>
+</ion-content>
+
+<script id="popover.html" type="text/ng-template">
+  <ion-popover-view>
+    <ion-header-bar>
+      <h1 class="title">Popover Header</h1>
+    </ion-header-bar>
+    <ion-content>
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">First Name</span>
+          <input type="text" placeholder="">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Last Name</span>
+          <input type="text" placeholder="">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <input type="text" placeholder="">
+        </label>
+        <button class="button button-block button-positive">Submit</button>
+      </div>
+    </ion-content>
+  </ion-popover-view>
+</script>
+
+
+<script id="popover2.html" type="text/ng-template">
+  <ion-popover-view>
+    <ion-content>
+      <div class="list">
+        <div class="item">
+          Item 1
+        </div>
+        <div class="item">
+          Item 2
+        </div>
+        <div class="item">
+          Item 3
+        </div>
+        <div class="item">
+          Item 4
+        </div>
+        <div class="item">
+          Item 5
+        </div>
+        <div class="item">
+          Item 6
+        </div>
+      </div>
+    </ion-content>
+  </ion-popover-view>
+</script>
+  
+</div>
+<div class="bar bar-footer bar-light demo-footer" ng-click="$demoModal.show()">
+  <div class="demo-footer-icon" ng-hide="$demoModal.isShown()">
+    <i class="icon ion-chevron-up"></i>
+  </div>
+  <h1 class="title" style="right:auto;"
+      ng-bind="$demo.component + ': ' + ($demo.name | humanize)">
+  </h1>
+  <div class="buttons right-buttons">
+    <a class="button" ng-click="demoScratch($demo); $event.stopPropagation()">
+      <i class="icon ion-code"></i>
+      Source
+    </a>
+  </div>
+</div>
+
+
+
+  <script type="text/ng-template" id="ionic-demo-modal.html">
+    <div class="modal">
+      <div ng-include="'demo-list.html'">
+      </div>
+    </div>
+  </script>
+
+  <script type="text/ng-template" id="demo-list.html">
+    <ion-header-bar class="bar-light">
+      <a class="button" ng-click="$demoModal.hide()" ng-if="$demo">
+        Cancel
+      </a>
+      <h1 class="title">All Demos</h1>
+    </ion-header-bar>
+    <ion-content>
+
+      <div class="list">
+        <div class="item item-input-inset">
+          <label class="item-input-wrapper">
+            <input type="text" placeholder="Filter Demos..." ng-model="demoFilter">
+          </label>
+          <button class="button button-small" ng-click="demoFilter = ''">
+            Clear
+          </button>
+        </div>
+
+        <a class="item item-icon-right"
+          ng-class="{active: demo.id == $demo.id }"
+          ng-repeat="demo in $demos | filter:demoFilter"
+          ng-href="{{demo.href}}"
+          ng-bind="demo.component + ': ' + (demo.name | humanize)">
+          <i class="icon icon-accessory ion-chevron-right"></i>
+        </a>
+      </div>
+
+    </ion-content>
+  </script>
+
+  <style>
+    body {
+      margin-bottom: 44px;
+    }
+    .demo-content-pane {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 44px;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+    }
+    .demo-footer-icon {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -3px;
+      margin: auto;
+      text-align: center;
+      -webkit-transform: scaleX(1.3);
+      -moz-transform: scaleX(1.3);
+      transform: scaleX(1.3);
+    }
+    .demo-footer-icon .icon {
+      color: #CCC;
+      font-size: 18px;
+    }
+  </style>
+
+</body>
+</html>
+
