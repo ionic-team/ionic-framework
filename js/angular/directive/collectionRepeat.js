@@ -71,7 +71,8 @@
  * @param {expression=} item-height The height of the repeated element. The expression must return
  *   a number (pixels) or a percentage. Defaults to the height of the first item in the list.
  * @param {number=} item-render-buffer The number of items to load before and after the visible
- *   items in the list. Default 10. This is good to set higher if you have lots of images to preload.
+ *   items in the list. Default 3. Tip: set this higher if you have lots of images to preload, but
+ *   don't set it too high or you'll see performance loss.
  * @param {boolean=} force-refresh-images Force images to refresh as you scroll. This fixes a problem
  *   where, when an element is interchanged as scrolling, its image will still have the old src
  *   while the new src loads. Setting this to true comes with a small performance loss.
@@ -83,7 +84,7 @@ IonicModule
 
 var ONE_PX_TRANSPARENT_IMG_SRC = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 var WIDTH_HEIGHT_REGEX = /height:.*?px;\s*width:.*?px/;
-var DEFAULT_RENDER_BUFFER = 2;
+var DEFAULT_RENDER_BUFFER = 3;
 
 CollectionRepeatDirective.$inject = ['$ionicCollectionManager', '$parse', '$window', '$$rAF'];
 function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$rAF) {
