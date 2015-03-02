@@ -280,7 +280,9 @@
 .collection-repeat-after-container {
   z-index: 0;
   display: block;
-  &.vertical {
+
+  /* when scrolling horizontally, make sure the after container doesn't take up 100% width */
+  &.horizontal {
     display: inline-block;
   }
 }
