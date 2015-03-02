@@ -83,7 +83,7 @@ IonicModule
 
 var ONE_PX_TRANSPARENT_IMG_SRC = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 var WIDTH_HEIGHT_REGEX = /height:.*?px;\s*width:.*?px/;
-var DEFAULT_RENDER_BUFFER = 10;
+var DEFAULT_RENDER_BUFFER = 2;
 
 CollectionRepeatDirective.$inject = ['$ionicCollectionManager', '$parse', '$window', '$$rAF'];
 function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$rAF) {
@@ -454,8 +454,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       // Create the pool of items for reuse, setting the size to (estimatedItemsOnScreen) * 2,
       // plus the size of the renderBuffer.
       if (!isLayoutReady) {
-        var poolSize = 2 * view.scrollPrimarySize /
-          view.estimatedPrimarySize * view.estimatedItemsAcross + (renderBuffer * 2);
+        var poolSize = Math.max(20, renderBuffer * 3);
         for (var i = 0; i < poolSize; i++) {
           itemsPool.push(new RepeatItem());
         }

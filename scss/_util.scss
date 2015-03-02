@@ -279,7 +279,8 @@
 }
 .collection-repeat-after-container {
   z-index: 0;
-  &.horizontal {
+  display: block;
+  &.vertical {
     display: inline-block;
   }
 }
