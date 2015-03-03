@@ -171,7 +171,7 @@ ionic.tap = {
   },
 
   isKeyboardElement: function(ele) {
-    if ( !ionic.Platform.isIOS() ) {
+    if ( !ionic.Platform.isIOS() || ionic.Platform.isIPad() ) {
       return ionic.tap.isTextInput(ele) && !ionic.tap.isDateInput(ele);
     } else {
       return ionic.tap.isTextInput(ele) || ( !!ele && ele.tagName == "SELECT");
