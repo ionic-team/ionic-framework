@@ -500,7 +500,6 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
 
     this.destroy = function() {
       render.destroyed = true;
-      unwatch();
 
       itemsPool.forEach(function(item) {
         item.scope.$destroy();

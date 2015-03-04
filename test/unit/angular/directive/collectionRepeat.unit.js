@@ -47,7 +47,7 @@ describe('collectionRepeat', function() {
     }
 
     var element;
-    inject(function($compile, $rootScope) {
+    inject(function($compile, $rootScope, $timeout) {
       repeaterScope = $rootScope.$new();
       attrs = attrs || '';
       if (!/item-height/.test(attrs)) attrs += ' item-height="25px"';
@@ -61,6 +61,7 @@ describe('collectionRepeat', function() {
       $compile(element)(repeaterScope);
       $rootScope.$apply();
       content.triggerHandler('scroll.init');
+      $timeout.flush();
       $rootScope.$apply();
     });
     return element;
