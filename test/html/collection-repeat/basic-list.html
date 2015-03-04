@@ -27,8 +27,9 @@
     </ion-content>
   <script>
 angular.module('ionic').controller('MainCtrl',MainCtrl)
-function MainCtrl($scope, $ionicScrollDelegate, $timeout, $q, $ionicLoading, $ionicModal) {
+function MainCtrl($scope, $timeout) {
   $scope.items = [];
+
   function addImage() {
     var i = $scope.items.length;
     $scope.items.push({
@@ -36,7 +37,10 @@ function MainCtrl($scope, $ionicScrollDelegate, $timeout, $q, $ionicLoading, $io
       image: 'http://placekitten.com/'+(100+50%i)+'/'+(100+50%i)
     });
   }
-  for (var i = 0; i < 100; i++) addImage();
+
+  $timeout(function() {
+    for (var i = 0; i < 100; i++) addImage();
+  }, 1000);
 }
   </script>
   <style>
