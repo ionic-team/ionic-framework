@@ -61,7 +61,7 @@ IonicModule
    * @name $ionicListDelegate#closeOptionButtons
    * @description Closes any option buttons on the list that are swiped open.
    */
-  'closeOptionButtons',
+  'closeOptionButtons'
   /**
    * @ngdoc method
    * @name $ionicListDelegate#$getByHandle

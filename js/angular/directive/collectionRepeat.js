@@ -251,7 +251,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
           renderBuffer: renderBuffer,
           scope: scope,
           scrollView: scrollCtrl.scrollView,
-          transclude: transclude,
+          transclude: transclude
         });
       }
       repeatManager.refreshLayout();
@@ -264,7 +264,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       // Try to just parse the plain attr value
       try {
         parsedValue = $parse(attrValue);
-      } catch(e) {
+      } catch (e) {
         // If the parse fails and the value has `px` or `%` in it, surround the attr in
         // quotes, to attempt to let the user provide a simple `attr="100%"` or `attr="100px"`
         if (attrValue.trim().match(/\d+(px|%)$/)) {
@@ -449,7 +449,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       var current = containerNode;
       do {
         repeaterBeforeSize += current[isVertical ? 'offsetTop' : 'offsetLeft'];
-      } while ( scrollView.__content.contains(current = current.offsetParent) );
+      } while (scrollView.__content.contains(current = current.offsetParent));
 
       (view.onRefreshLayout || angular.noop)();
       view.refreshDirection();
@@ -633,7 +633,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       digestEnteringItems.running = true;
 
       $$rAF(function process() {
-        if( (len = itemsEntering.length) ) {
+        if ((len = itemsEntering.length)) {
           var rootScopePhase = $rootScope.$$phase;
           var count = Math.floor(len / 1.25) || 1;
           while (count && itemsEntering.length) {
@@ -653,7 +653,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
     function RepeatItem() {
       var self = this;
       this.scope = scope.$new();
-      this.id = 'item'+ (nextItemId++);
+      this.id = 'item' + (nextItemId++);
       transclude(this.scope, function(clone) {
         self.element = clone;
         self.element.data('$$collectionRepeatItem', self);
@@ -865,7 +865,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
         var dim;
 
         // Calculate more dimensions than we estimate we'll need, to be sure.
-        this.getDimensions( this.getEstimatedIndex(scrollValueEnd) * 2 );
+        this.getDimensions(this.getEstimatedIndex(scrollValueEnd) * 2);
 
         // -- Calculate renderStartIndex
         // base case: start at 0

@@ -65,7 +65,7 @@ IonicModule
 
       ionic.on('resize', onResize, $window);
 
-      $scope.$on('$destroy', function(){
+      $scope.$on('$destroy', function() {
         ionic.off('resize', onResize, $window);
       });
 

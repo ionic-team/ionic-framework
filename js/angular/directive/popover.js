@@ -8,7 +8,7 @@ IonicModule
     restrict: 'E',
     transclude: true,
     replace: true,
-    controller: [function(){}],
+    controller: [function() {}],
     template: '<div class="popover-backdrop">' +
                 '<div class="popover-wrapper" ng-transclude></div>' +
               '</div>'

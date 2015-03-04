@@ -79,11 +79,11 @@ function($timeout, $controller, $ionicBind) {
             innerElement.toggleClass('padding', !!newVal);
           });
         }
-        if($scope.$eval($scope.paging) === true) {
+        if ($scope.$eval($scope.paging) === true) {
           innerElement.addClass('scroll-paging');
         }
 
-        if(!$scope.direction) { $scope.direction = 'y'; }
+        if (!$scope.direction) { $scope.direction = 'y'; }
         var isPaging = $scope.$eval($scope.paging) === true;
 
         var scrollViewOptions= {

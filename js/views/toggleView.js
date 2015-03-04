@@ -41,13 +41,13 @@
     },
 
     tap: function(e) {
-      if(this.el.getAttribute('disabled') !== 'disabled') {
-        this.val( !this.checkbox.checked );
+      if (this.el.getAttribute('disabled') !== 'disabled') {
+        this.val(!this.checkbox.checked);
       }
     },
 
     dragStart: function(e) {
-      if(this.checkbox.disabled) return;
+      if (this.checkbox.disabled) return;
 
       this._dragInfo = {
         width: this.el.offsetWidth,
@@ -66,7 +66,7 @@
 
     drag: function(e) {
       var self = this;
-      if(!this._dragInfo) { return; }
+      if (!this._dragInfo) { return; }
 
       // Stop any parent dragging
       e.gesture.srcEvent.preventDefault();
@@ -82,17 +82,17 @@
         var mx = self._dragInfo.width - self.triggerThreshold;
 
         // The initial state was on, so "tend towards" on
-        if(self._dragInfo.initialState) {
-          if(px < self.triggerThreshold) {
+        if (self._dragInfo.initialState) {
+          if (px < self.triggerThreshold) {
             self.setOpenPercent(0);
-          } else if(px > self._dragInfo.triggerX) {
+          } else if (px > self._dragInfo.triggerX) {
             self.setOpenPercent(100);
           }
         } else {
           // The initial state was off, so "tend towards" off
-          if(px < self._dragInfo.triggerX) {
+          if (px < self._dragInfo.triggerX) {
             self.setOpenPercent(0);
-          } else if(px > mx) {
+          } else if (px > mx) {
             self.setOpenPercent(100);
           }
         }
@@ -114,15 +114,15 @@
 
     setOpenPercent: function(openPercent) {
       // only make a change if the new open percent has changed
-      if(this.openPercent < 0 || (openPercent < (this.openPercent - 3) || openPercent > (this.openPercent + 3) ) ) {
+      if (this.openPercent < 0 || (openPercent < (this.openPercent - 3) || openPercent > (this.openPercent + 3))) {
         this.openPercent = openPercent;
 
-        if(openPercent === 0) {
+        if (openPercent === 0) {
           this.val(false);
-        } else if(openPercent === 100) {
+        } else if (openPercent === 100) {
           this.val(true);
         } else {
-          var openPixel = Math.round( (openPercent / 100) * this.track.offsetWidth - (this.handle.offsetWidth) );
+          var openPixel = Math.round((openPercent / 100) * this.track.offsetWidth - (this.handle.offsetWidth));
           openPixel = (openPixel < 1 ? 0 : openPixel);
           this.handle.style[ionic.CSS.TRANSFORM] = 'translate3d(' + openPixel + 'px,0,0)';
         }
@@ -130,8 +130,8 @@
     },
 
     val: function(value) {
-      if(value === true || value === false) {
-        if(this.handle.style[ionic.CSS.TRANSFORM] !== "") {
+      if (value === true || value === false) {
+        if (this.handle.style[ionic.CSS.TRANSFORM] !== "") {
           this.handle.style[ionic.CSS.TRANSFORM] = "";
         }
         this.checkbox.checked = value;

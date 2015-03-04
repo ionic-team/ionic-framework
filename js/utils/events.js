@@ -14,7 +14,7 @@
 
   // Custom event polyfill
   ionic.CustomEvent = (function() {
-    if( typeof window.CustomEvent === 'function' ) return CustomEvent;
+    if (typeof window.CustomEvent === 'function') return CustomEvent;
 
     var customEvent = function(event, params) {
       var evt;
@@ -85,8 +85,8 @@
       var e = element || window;
 
       // Bind a gesture if it's a virtual event
-      for(var i = 0, j = this.VIRTUALIZED_EVENTS.length; i < j; i++) {
-        if(type == this.VIRTUALIZED_EVENTS[i]) {
+      for (var i = 0, j = this.VIRTUALIZED_EVENTS.length; i < j; i++) {
+        if (type == this.VIRTUALIZED_EVENTS[i]) {
           var gesture = new ionic.Gesture(element);
           gesture.on(type, callback);
           return gesture;
