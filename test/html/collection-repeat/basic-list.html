@@ -16,11 +16,14 @@
       <h1 class="title">Basic List: Static Dimensions</h1>
     </ion-header-bar>
     <ion-content>
+      <h4>WHATS UP</h4>
       <ion-list can-swipe="true">
         <ion-item class="item" collection-repeat="item in items">
           <h2>{{item.text}}</h2>
         </ion-item>
       </ion-list>
+      <h2>Stuff after list</h2>
+      <div class="card">Hello</div>
     </ion-content>
   <script>
 angular.module('ionic').controller('MainCtrl',MainCtrl)
@@ -33,7 +36,7 @@ function MainCtrl($scope, $ionicScrollDelegate, $timeout, $q, $ionicLoading, $io
       image: 'http://placekitten.com/'+(100+50%i)+'/'+(100+50%i)
     });
   }
-  for (var i = 0; i < 10000; i++) addImage();
+  for (var i = 0; i < 100; i++) addImage();
 }
   </script>
   <style>

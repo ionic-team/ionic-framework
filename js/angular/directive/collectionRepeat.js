@@ -167,7 +167,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
     if (!afterItemsContainer.length) {
       var elementIsAfterRepeater = false;
       var afterNodes = [].filter.call(scrollView.__content.childNodes, function(node) {
-        if (node.contains(containerNode)) {
+        if (ionic.DomUtil.contains(node, containerNode)) {
           elementIsAfterRepeater = true;
           return false;
         }
@@ -449,7 +449,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       var current = containerNode;
       do {
         repeaterBeforeSize += current[isVertical ? 'offsetTop' : 'offsetLeft'];
-      } while ( scrollView.__content.contains(current = current.offsetParent) );
+      } while( ionic.DomUtil.contains(scrollView.__content, current = current.offsetParent) );
 
       (view.onRefreshLayout || angular.noop)();
       view.refreshDirection();
