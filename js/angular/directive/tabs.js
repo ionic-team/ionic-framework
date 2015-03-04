@@ -80,6 +80,7 @@ function($ionicTabsDelegate, $ionicConfig, $ionicHistory) {
           var isHidden = value.indexOf('tabs-item-hide') !== -1;
           $scope.$hasTabs = !isTabsTop && !isHidden;
           $scope.$hasTabsTop = isTabsTop && !isHidden;
+          $scope.$emit('$ionicTabs.top', $scope.$hasTabsTop);
         });
 
         function emitLifecycleEvent(ev, data) {

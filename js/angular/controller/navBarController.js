@@ -410,6 +410,11 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   };
 
 
+  self.hasTabsTop = function(isTabsTop) {
+    $element[isTabsTop ? 'addClass' : 'removeClass']('nav-bar-tabs-top');
+  };
+
+
   // DEPRECATED, as of v1.0.0-beta14 -------
   self.changeTitle = function(val) {
     deprecatedWarning('changeTitle(val)', 'title(val)');
