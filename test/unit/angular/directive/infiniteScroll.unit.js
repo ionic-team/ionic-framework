@@ -159,10 +159,13 @@ describe('ionicInfiniteScroll directive', function() {
           });
 
           setupNative('', {}, opts);
+          var tmp = window.getComputedStyle;
+          window.getComputedStyle = function() {return {};};
           expect(ctrl.getNativeMaxScroll()).toEqual({
             left: opts.scrollingX ? scrollLeftMaxValue * 0.975 : -1,
             top: opts.scrollingY ? scrollTopMaxValue * 0.975 : -1
           });
+          window.getComputedStyle = tmp;
         });
 
         it('should use attr.distance as number', function() {
@@ -173,10 +176,14 @@ describe('ionicInfiniteScroll directive', function() {
           });
 
           setupNative('distance=3', {}, opts);
+
+          var tmp = window.getComputedStyle;
+          window.getComputedStyle = function() {return {};};
           expect(ctrl.getNativeMaxScroll()).toEqual({
             left: opts.scrollingX ? scrollLeftMaxValue - 3 : -1,
             top: opts.scrollingY ? scrollTopMaxValue - 3 : -1
           });
+          window.getComputedStyle = tmp;
         });
 
         it('should use attr.distance as percent', function() {
@@ -187,10 +194,14 @@ describe('ionicInfiniteScroll directive', function() {
           });
 
           setupNative('distance=5%', {}, opts);
+
+          var tmp = window.getComputedStyle;
+          window.getComputedStyle = function() {return {};};
           expect(ctrl.getNativeMaxScroll()).toEqual({
             left: opts.scrollingX ? scrollLeftMaxValue * 0.95 : -1,
             top: opts.scrollingY ? scrollTopMaxValue * 0.95 : -1
           });
+          window.getComputedStyle = tmp;
         });
       });
 
@@ -232,7 +243,11 @@ describe('ionicInfiniteScroll directive', function() {
       scrollTopValue = scrollTopMaxValue;
       var el = setupNative('on-infinite="foo=1"', {}, { scrollingX: true, scrollingY: true });
       ionic.requestAnimationFrame = function(cb) { cb(); };
+
+      var tmp = window.getComputedStyle;
+      window.getComputedStyle = function() {return {};};
       ctrl.checkBounds();
+      window.getComputedStyle = tmp;
       expect(el.hasClass('active')).toBe(true);
       ionic.requestAnimationFrame = function() {};
       expect(ctrl.isLoading).toBe(true);
@@ -252,7 +267,11 @@ describe('ionicInfiniteScroll directive', function() {
       scrollLeftValue = scrollLeftMaxValue;
       var el = setupNative('on-infinite="foo=1"', {}, { scrollingX: true, scrollingY: true });
       ionic.requestAnimationFrame = function(cb) { cb(); };
+
+      var tmp = window.getComputedStyle;
+      window.getComputedStyle = function() {return {};};
       ctrl.checkBounds();
+      window.getComputedStyle = tmp;
 
       expect(el.hasClass('active')).toBe(true);
       ionic.requestAnimationFrame = function() {};
